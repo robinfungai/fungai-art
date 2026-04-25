@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'  // Changed from @vitejs/react-swc
+import react from '@vitejs/plugin-react-swc'  // Add "plugin" here
 import path from "path"
 
 export default defineConfig({
