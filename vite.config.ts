@@ -1,3 +1,4 @@
+// Version 1.0.1 - Force Sync
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'  // Add "plugin" here
 import path from "path"
