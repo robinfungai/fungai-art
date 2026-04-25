@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap');
+
+@font-face {
+  font-family: 'Dream Avenue';
+  src: url('/fonts/dream-avenue.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Mystical Forest Color Palette */
+    --background: 25 15% 8%;
+    --foreground: 45 25% 92%;
+
+    --card: 25 20% 12%;
+    --card-foreground: 45 25% 92%;
+
+    --popover: 25 20% 12%;
+    --popover-foreground: 45 25% 92%;
+
+    --primary: 140 35% 45%;
+    --primary-foreground: 25 15% 8%;
+    --primary-glow: 140 45% 55%;
+
+    --secondary: 35 25% 25%;
+    --secondary-foreground: 45 25% 92%;
+
+    --muted: 25 15% 18%;
+    --muted-foreground: 40 15% 65%;
+
+    --accent: 45 65% 70%;
+    --accent-foreground: 25 15% 8%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 25 15% 22%;
+    --input: 25 15% 18%;
+    --ring: 140 35% 45%;
+
+    --radius: 0.75rem;
+
+    /* Custom Fungai Design Tokens */
+    --forest-deep: 140 35% 15%;
+    --forest-medium: 140 35% 25%;
+    --forest-light: 140 35% 45%;
+    --earth-brown: 35 25% 25%;
+    --mushroom-cap: 15 35% 35%;
+    --golden-spore: 45 65% 70%;
+    --mystical-purple: 270 35% 35%;
+
+    /* Gradients */
+    --gradient-forest: linear-gradient(135deg, hsl(var(--forest-deep)), hsl(var(--primary)));
+    --gradient-earth: linear-gradient(180deg, hsl(var(--earth-brown)), hsl(var(--mushroom-cap)));
+    --gradient-mystical: linear-gradient(45deg, hsl(var(--mystical-purple)), hsl(var(--primary-glow)));
+    --gradient-golden: linear-gradient(135deg, hsl(var(--golden-spore)), hsl(var(--accent)));
+
+    /* Shadows */
+    --shadow-mystical: 0 8px 32px hsl(var(--primary) / 0.3);
+    --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.4);
+    --shadow-organic: 0 12px 48px hsl(var(--forest-deep) / 0.5);
+
+    /* Transitions */
+    --transition-organic: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-gentle: all 0.3s ease-out;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Enhanced dark mode for mystical theme */
+    --background: 25 20% 6%;
+    --foreground: 45 25% 95%;
+    --card: 25 25% 10%;
+    --card-foreground: 45 25% 95%;
+    --border: 25 15% 15%;
+    --input: 25 15% 12%;
+    --primary-glow: 140 50% 60%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sora;
+  }
+}

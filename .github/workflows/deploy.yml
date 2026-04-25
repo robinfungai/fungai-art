@@ -1,0 +1,16 @@
+name: 🚀 Deploy to Beta Subdomain
+on:
+  push:
+    branches:
+      - beta
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    # THIS TELLS GITHUB THE CODE IS INSIDE THE SUBFOLDER
+    defaults:
+      run:
+        working-directory: ./fungai-art-main 
+    steps:
+      - name: 🚚 Checkout Code
+        uses: actions/checkout@v3
