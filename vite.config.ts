@@ -1,11 +1,10 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import react from '@vitejs/plugin-react-swc'  // Changed from @vitejs/react-swc
 import path from "path"
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: './', // <--- ADD THIS LINE. It tells the app to look for files relative to where it is.
+  base: './',
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
