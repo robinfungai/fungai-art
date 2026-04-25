@@ -1,16 +1,31 @@
-name: 🚀 Deploy to Beta Subdomain
+name: 🚀 Deploy
 on:
   push:
     branches:
       - beta
-
 jobs:
-  build-and-deploy:
+  web-deploy:
+    name: 🎉 Deploy
     runs-on: ubuntu-latest
-    # THIS TELLS GITHUB THE CODE IS INSIDE THE SUBFOLDER
-    defaults:
-      run:
-        working-directory: ./fungai-art-main 
     steps:
-      - name: 🚚 Checkout Code
+      - name: 🚚 Get latest code
         uses: actions/checkout@v3
+
+      - name: ⚙️ Use Node.js 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: 🔨 Install and Build
+        run: |
+          npm install
+          npm run build
+
+      - name: 🚀 FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: ./beta/
