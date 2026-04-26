@@ -9474,4 +9474,197 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
 status: 'EDUCATIONAL AND RESEARCH-CONTEXTUAL ENTRY — legal status is Schedule I or equivalent in most jurisdictions. Multiple controlled human trials for TRD, MDD, cancer-related anxiety/depression, AUD and tobacco dependence. 5-HT2A agonism; DMN reduction; neuroplasticity confirmed. ABSOLUTE CONTRAINDICATIONS: personal/family psychosis or schizophrenia, bipolar I disorder. SERIOUS DRUG INTERACTIONS: MAOIs (serotonin syndrome risk), lithium (seizure risk), SSRIs/SNRIs (receptor downregulation). Low physiological toxicity; risk is psychological and contextual. Complete therapeutic protocol (preparation, session, integration) is the effective clinical unit. Only discuss in context of licensed therapeutic services or clinical trials.'
 }
+// ─────────────────────────────────────────────
+// RASPBERRY LEAF
+// ─────────────────────────────────────────────
+
+id: 204,
+name: 'Raspberry Leaf',
+botanical: 'Rubus idaeus (leaf)',
+tcm_meridians: ['Liver', 'Spleen', 'Uterus'],
+tcm_element: 'Earth + Wood',
+energetics: ['Neutral', 'Slightly Cool', 'Astringent', 'Toning', 'Drying', 'Mineral-Rich'],
+primary_functions: [
+'Uterine tonification — classic Western reproductive tonic that supports uterine tone and pelvic tissue resilience',
+'Menstrual support — gentle long-game ally for cycle regularity, pelvic steadiness and mild cramping patterns',
+'Pregnancy and postpartum support — traditionally used to strengthen and restore reproductive tissues across the childbearing arc',
+'GI astringent — useful for mild diarrhea or irritated bowel states where gentle toning is appropriate',
+'Tissue integrity support — tannin-rich leaf firms relaxed or boggy tissue without being overly harsh',
+],
+secondary_benefits: [
+'Nutritive mineral support in daily tea formulas',
+'Oral and mucosal astringent support',
+'Pairs well in women’s tonic formulas with nettle, oatstraw and rose',
+'Can provide gentle pelvic containment in lax or depleted constitutions',
+],
+pharmacology:
+'Tannin-rich Rosaceae leaf with flavonoids, minerals, antioxidant polyphenols and the traditional fragarine-associated reputation for uterine tone. Mechanistically best understood as a food-like astringent reproductive tonic: tones tissues, supports pelvic integrity, offers mild GI astringency and long-term nutritive support. Evidence grade B for traditional uterine tonic use; B for pregnancy-tonic tradition with mixed modern evidence; A for safety in typical tea use.',
+flavor_profile: 'Mildly herbaceous, softly green, gently astringent and slightly sweet',
+contraindications: [
+'Generally very safe and food-like in typical tea doses',
+'Pregnancy timing — commonly used in pregnancy, but some practitioners prefer reserving stronger tonic use for later pregnancy rather than early pregnancy',
+'Constipation or marked dryness — astringent nature may aggravate overly dry or bound constitutions',
+'No major drug interactions commonly emphasized, though medication review remains good practice',
+],
+herb_to_herb_synergy: [
+'Nettle — mineral-rich reproductive and nutritive tonic pairing',
+'Oatstraw — long-term nervous system and tissue nourishment in women’s blends',
+'Rose — emotional, reproductive and astringent-softening synergy',
+"Lady's Mantle — classic pairing for pelvic tone and menstrual tissue support",
+'Shatavari — combines astringent tissue tone with moistening reproductive nourishment',
+'Chamomile — digestive and menstrual soothing support',
+],
+herb_to_herb_caution: [
+'Other strong astringents in constipated or very dry constitutions — may over-dry tissues',
+],
+herb_to_drug_interactions: [
+'No major herb-drug interactions prominently documented at typical tea doses',
+],
+herb_interactions: [
+"Synergy: Nettle, Oatstraw, Rose, Lady's Mantle, Shatavari, Chamomile",
+'Caution: stacked strong astringents in dry / constipated constitutions',
+'Drug interactions: no major interactions commonly emphasized',
+],
+dosage_range:
+'Tea / infusion: 2–4 g dried leaf per 250 ml, steep 10–15 minutes, 1–3 cups daily. Strong tonic infusion: 5–10 g per 500 ml. Tincture (1:5): 2–4 ml, 2–3× daily. Best used consistently over 4–12 weeks for tissue-toning effects.',
+spiritual_layer:
+'Raspberry Leaf teaches resilient softness. She strengthens the container without hardening it, helping the body hold itself with dignity, steadiness and grounded feminine intelligence. She is the medicine of supple integrity — neither collapsed nor rigid, but quietly capable. She whispers: I am held. My tissues are strong and supple. I trust my body’s rhythm and resilience.',
+best_preparation:
+'Long infusion or daily tea is ideal for tonic uterine and mineral support. Tincture works well in compact formulas, but tea best expresses its food-like long-game nature. Especially beautiful in nutritive women’s blends with Nettle, Oatstraw and Rose.',
+caution_level: 'LOW',
+safe_pregnancy: null,
+status:
+'Very safe food-like reproductive tonic. Best framed as a long-term uterine and pelvic tissue ally rather than an acute intervention. Excellent in daily tea formulas, pregnancy support plans with practitioner discretion, postpartum recovery and mild astringent digestive formulas.',
+},
+
+// ─────────────────────────────────────────────
+// ROSEHIP
+// ─────────────────────────────────────────────
+{
+id: 305,
+name: 'Rosehip',
+botanical: 'Rosa canina / Rosa rubiginosa / Rosa spp. (fruit)',
+tcm_meridians: ['Lung', 'Spleen', 'Liver', 'Heart'],
+tcm_element: 'Earth + Metal',
+energetics: ['Neutral', 'Slightly Cool', 'Sour', 'Nutritive', 'Restorative', 'Gently Astringent'],
+primary_functions: [
+'Nutritive antioxidant tonic — broad-spectrum polyphenol and vitamin-rich rebuilding support',
+'Seasonal immune resilience — classic winter fruit ally for recovery, vitality and general resistance',
+'Connective tissue support — useful for skin, collagen and tissue resilience formulas',
+'Convalescence support — gentle rebuilding medicine after illness, depletion or low-vitality periods',
+'Joint wellness support — rosehip powders used in longer-term inflammatory and stiffness protocols',
+],
+secondary_benefits: [
+'Family-friendly syrup herb with broad compliance',
+'Pectin-containing fruit with gentle digestive support depending on preparation',
+'Useful bridge between food and medicine in tonic blends',
+'Excellent source of tart brightness in immune and berry formulas',
+],
+pharmacology:
+'Nutritive Rosaceae fruit rich in vitamin C and related antioxidant cofactors, carotenoids, flavonoids, polyphenols, fruit acids, pectin and galactolipids. Mechanistically supports antioxidant status, connective tissue nourishment, seasonal immune resilience and gentle long-term tissue rebuilding. Rosehip powder also appears in joint wellness literature with variable but meaningful support. Evidence grade A for food-like antioxidant/nutritive use; B for seasonal immune support and connective tissue rationale; B for joint support with variable human outcomes.',
+flavor_profile: 'Bright, tart, fruity, slightly floral and pleasantly sour',
+contraindications: [
+'Generally very safe and food-like when properly prepared',
+'Kidney stone susceptibility — very high intake of concentrated vitamin-C-rich products may warrant caution in susceptible individuals',
+'Improperly processed internal seed hairs can irritate the throat or GI tract',
+'Significant acidity or sensitive stomach — tart preparations may aggravate some people on an empty stomach',
+'Concentrated extracts in complex medication contexts should still be reviewed clinically',
+],
+herb_to_herb_synergy: [
+'Hibiscus — tart antioxidant and seasonal immune synergy',
+'Elderberry — classic winter resilience pairing',
+'Nettle — nutritive mineral plus vitamin-rich rebuilding formula',
+'Rose Petals — full-spectrum rose medicine with emotional and tissue support',
+'Hawthorn — cardiovascular and antioxidant berry-heart combination',
+'Cinnamon — warming circulatory contrast to tart fruit tonicity',
+],
+herb_to_herb_caution: [
+'Highly acidic or very sour formulas in sensitive stomachs — may aggravate irritation',
+],
+herb_to_drug_interactions: [
+'No major interactions at normal food-like doses; concentrated products in complex anticoagulant or medication contexts warrant routine review',
+],
+herb_interactions: [
+'Synergy: Hibiscus, Elderberry, Nettle, Rose Petals, Hawthorn, Cinnamon',
+'Caution: very sour stacked formulas in acid-sensitive individuals',
+'Drug interactions: minimal at food doses; review concentrated extracts in medicated individuals',
+],
+dosage_range:
+'Tea / decoction: 2–5 g dried hips per 250 ml, simmer or steep covered 10–20 minutes. Powder: 2–5 g daily. Syrup: typically 5–10 ml daily or as needed depending on preparation. Best used daily over weeks to months for nutritive and seasonal-resilience effects.',
+spiritual_layer:
+'Rosehip is the fruit that remains after the flower has passed. She teaches nourishment after blossoming, the medicine of ripening, and the quiet strength that appears when beauty matures into substance. Tart yet generous, she reminds us that vitality is not only brilliance — it is endurance, resilience and sweetness carried into every season. She whispers: I ripen into strength. My vitality is nourished. I carry beauty and resilience through every season.',
+best_preparation:
+'Tea, syrup and powder are ideal. Syrup is especially accessible for family formulas and winter tonics; powder suits longer-term joint and nutritive protocols. Best framed as a food-herb bridge ingredient with broad formulation versatility.',
+caution_level: 'LOW',
+safe_pregnancy: null,
+status:
+'Very safe, food-like and broadly useful. Excellent for seasonal immune formulas, recovery support, connective tissue nourishment and gentle long-term vitality tonics. Prioritise well-cleaned deseeded material and moderate intake in those with significant acidity or kidney-stone susceptibility.',
+},
+
+// ─────────────────────────────────────────────
+// SHATAVARI
+// ─────────────────────────────────────────────
+{
+id: 306,
+name: 'Shatavari',
+botanical: 'Asparagus racemosus (root)',
+tcm_meridians: ['Kidney', 'Lung', 'Stomach', 'Reproductive'],
+tcm_element: 'Water + Earth',
+energetics: ['Cool', 'Moist', 'Sweet', 'Bitter', 'Demulcent', 'Reproductive-Tonifying', 'Yin-Building'],
+primary_functions: [
+'Reproductive and hormonal nourishment — premier Ayurvedic female tonic for dryness, depletion and cyclical restoration',
+'Demulcent GI support — soothes irritated mucosa, hyperacidity, dryness and inflammatory digestive heat',
+'Nervous system restoration — replenishing adaptogenic ally in depleted, overworked and burnt-out constitutions',
+'Cooling endocrine support — reduces heat and overdrive patterns, especially in pitta-type hormonal irritability',
+'Postpartum and lactation support — traditionally used to rebuild fluids, strength and milk production where appropriate',
+],
+secondary_benefits: [
+'Moistening support for dry constitutions and depleted tissues',
+'Respiratory mucosal soothing through demulcent action',
+'Fertility and peri-menopausal support in traditional use',
+'Pairs well with nutritive and reproductive restoratives',
+],
+pharmacology:
+'Cooling Ayurvedic rasayana root rich in steroidal saponins (especially shatavarins), mucilage, flavonoids, alkaloids and trace phytoestrogen-like constituents. Mechanistically acts as a moistening demulcent and reproductive restorative: supports female tissues, soothes irritated GI and respiratory mucosa, buffers depletion and overdrive, and is traditionally used as a galactagogue. Evidence grade B for reproductive and GI support from strong traditional use with supportive emerging modern data; C for galactagogue and broader adaptogenic claims; B for safety with hormone-sensitive cautions.',
+flavor_profile: 'Mildly sweet, earthy, starchy, slightly bitter and nourishing',
+contraindications: [
+'Generally well tolerated and relatively gentle when used appropriately',
+'Estrogen-sensitive conditions — use cautiously where hormone-sensitive cancers, fibroids or endometriosis require practitioner oversight',
+'Excess Kapha, congestion or very sluggish damp constitutions — heavy moistening nature may be less suitable in high doses',
+'Diuretic or blood-sugar medications — monitor for possible additive effects in larger medicinal use',
+'Allergy — rare asparagus-family sensitivity possible',
+'Pregnancy and breastfeeding — traditionally used in these contexts, but higher-dose medicinal use should still be individualized',
+],
+herb_to_herb_synergy: [
+'Rose — cooling reproductive and emotional nourishment',
+'Nettle — mineral-rich replenishment and postpartum support',
+'Raspberry Leaf — tissue tone plus moistening reproductive support',
+'Licorice — demulcent adrenal and mucosal synergy',
+'Ashwagandha — balanced adaptogenic rebuilding in depleted constitutions',
+'Oatstraw — deep nervous system and tissue nourishment',
+],
+herb_to_herb_caution: [
+'Heavy tonic stacking in damp or congested constitutions — may feel too rich or reduce digestibility',
+],
+herb_to_drug_interactions: [
+'Blood-sugar medications — monitor glucose in larger medicinal dosing',
+'Diuretics — monitor for additive fluid-shifting effects',
+'Hormone-sensitive medication contexts — practitioner review appropriate',
+],
+herb_interactions: [
+'Synergy: Rose, Nettle, Raspberry Leaf, Licorice, Ashwagandha, Oatstraw',
+'Caution: overly heavy tonic stacking in damp / congested constitutions',
+'Drug interactions: monitor blood sugar meds, diuretics and hormone-sensitive contexts',
+],
+dosage_range:
+'Powder: 2–6 g daily, often in warm milk, plant milk or water. Decoction: 3–6 g dried root simmered gently 10–15 minutes, 1–2× daily. Tincture (1:5): 2–5 ml, 2–3× daily. Best effects build over 6–12 weeks of consistent restorative use.',
+spiritual_layer:
+'Shatavari is the cooling intelligence of replenishment after depletion. She restores moisture where life has become too hot, too dry, too driven. Rather than pushing, she nourishes; rather than stimulating, she rebuilds the waters of the body and the softness of the heart. She whispers: I replenish with grace. My body remembers how to nourish itself. Softness is strength. I restore my inner waters.',
+best_preparation:
+'Powder is classic for long-term rasayana use, especially in milk-based or nourishing preparations. Decoction suits digestive and demulcent formulas; tincture offers practical daily use. Best for dry, hot, depleted constitutions rather than cold, damp or congested ones.',
+caution_level: 'MEDIUM',
+safe_pregnancy: null,
+status:
+'Excellent cooling, moistening reproductive tonic and demulcent restorative. Especially useful where reproductive, digestive and nervous-system depletion overlap. Strong traditional use with a gentle safety profile, but screen hormone-sensitive conditions and damp/congested constitutions before recommending higher-dose tonic protocols.',
+},
 ];
