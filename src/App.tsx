@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { Search, Plus, X, Leaf, Activity } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Search, Plus, X, Leaf, Activity, Sparkles } from 'lucide-react';
 import { HERBS } from './data/herbs'; 
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -8,34 +8,29 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-// This tells TypeScript exactly what to expect from your herbs data
 interface Herb {
-  id: string;
+  id: string | number;
   name: string;
-  description?: string; // The '?' means it might be missing
-  details?: string;     // Adding common alternatives
+  description?: string;
+  details?: string;
   category?: string;
-  benefits?: string[];
 }
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedHerbs, setSelectedHerbs] = useState<any[]>([]);
+  const [selectedHerbs, setSelectedHerbs] = useState<Herb[]>([]);
 
-  // 1. FILTER LOGIC: Adjusted to be more flexible with property names
   const filteredHerbs = useMemo(() => {
-    return (HERBS as any[]).filter((herb) => {
-      const nameMatch = herb.name?.toLowerCase().includes(searchQuery.toLowerCase());
-      // We check for description OR details just in case
-      const descMatch = (herb.description || herb.details || "")
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase());
-      
-      return nameMatch || descMatch;
+    return (HERBS as Herb[]).filter((herb) => {
+      const query = searchQuery.toLowerCase();
+      return (
+        herb.name.toLowerCase().includes(query) ||
+        (herb.description || herb.details || "").toLowerCase().includes(query)
+      );
     });
   }, [searchQuery]);
 
-  const toggleHerb = (herb: any) => {
+  const toggleHerb = (herb: Herb) => {
     if (selectedHerbs.find((h) => h.id === herb.id)) {
       setSelectedHerbs(selectedHerbs.filter((h) => h.id !== herb.id));
     } else if (selectedHerbs.length < 5) {
@@ -43,104 +38,140 @@ function App() {
     }
   };
 
+  const isComplete = selectedHerbs.length === 5;
+
   return (
-    <div className="min-h-screen bg-[#0a0f1e] text-white flex">
-      <main className="flex-1 p-8">
-        <header className="mb-12">
-          <h1 className="text-4xl font-bold mb-4 flex items-center gap-3">
-            <Leaf className="text-blue-500" /> Fungai Art
-          </h1>
+    <div className="flex h-screen bg-[#0a0f1e] text-slate-200 overflow-hidden font-sans">
+      
+      {/* MAIN EXPLORER AREA */}
+      <main className="flex-1 flex flex-col min-w-0">
+        <header className="p-8 pb-4">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 bg-blue-500/10 rounded-lg">
+              <Leaf className="text-blue-500 w-8 h-8" />
+            </div>
+            <h1 className="text-3xl font-bold tracking-tight text-white">Fungai Art</h1>
+          </div>
           
-          <div className="relative max-w-xl">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <div className="relative max-w-2xl group">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5 group-focus-within:text-blue-500 transition-colors" />
             <input
               type="text"
-              placeholder="Search herbs, roots, and botanicals..."
+              placeholder="Search botanical library..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#161d31] border border-gray-700 rounded-lg py-3 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+              className="w-full bg-[#161d31] border border-slate-800 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all text-lg"
             />
           </div>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredHerbs.map((herb) => {
-            const isSelected = selectedHerbs.find((h) => h.id === herb.id);
-            return (
-              <div
-                key={herb.id}
-                className={cn(
-                  "bg-[#161d31] border-2 rounded-xl p-6 transition-all cursor-pointer hover:scale-[1.02]",
-                  isSelected ? "border-blue-500 bg-[#1e2746]" : "border-transparent"
-                )}
-              >
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-xl font-bold">{herb.name}</h3>
-                  <button
-                    onClick={() => toggleHerb(herb)}
-                    className={cn(
-                      "p-2 rounded-lg transition-colors",
-                      isSelected ? "bg-red-500/20 text-red-500" : "bg-blue-500 text-white"
-                    )}
-                  >
-                    {isSelected ? <X size={20} /> : <Plus size={20} />}
-                  </button>
-                </div>
-                {/* SAFE ACCESS: Using herb.description or herb.details */}
-                <p className="text-gray-400 text-sm leading-relaxed mb-4">
-                  {herb.description || herb.details || "No description available"}
-                </p>
-                <div className="flex gap-2">
-                  {herb.category && (
-                    <span className="text-xs bg-gray-800 px-2 py-1 rounded border border-gray-700">
-                      {herb.category}
-                    </span>
+        {/* SCROLLABLE GRID */}
+        <section className="flex-1 overflow-y-auto p-8 pt-2 custom-scrollbar">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            {filteredHerbs.map((herb) => {
+              const isSelected = selectedHerbs.some((h) => h.id === herb.id);
+              return (
+                <div
+                  key={herb.id}
+                  onClick={() => toggleHerb(herb)}
+                  className={cn(
+                    "group relative p-5 rounded-2xl border transition-all duration-300 cursor-pointer flex flex-col justify-between min-h-[180px]",
+                    isSelected 
+                      ? "bg-blue-600/10 border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.15)]" 
+                      : "bg-[#161d31] border-slate-800 hover:border-slate-600 hover:bg-[#1c253d]"
                   )}
+                >
+                  <div>
+                    <div className="flex justify-between items-start mb-3">
+                      <h3 className="font-bold text-lg text-white group-hover:text-blue-400 transition-colors leading-tight">
+                        {herb.name}
+                      </h3>
+                      <div className={cn(
+                        "p-1.5 rounded-full border transition-all",
+                        isSelected ? "bg-blue-500 border-blue-400 text-white" : "border-slate-700 text-slate-500"
+                      )}>
+                        {isSelected ? <Sparkles size={16} /> : <Plus size={16} />}
+                      </div>
+                    </div>
+                    <p className="text-slate-400 text-sm leading-relaxed line-clamp-3">
+                      {herb.description || herb.details || "Integrative botanical profile pending analysis."}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        </section>
       </main>
 
-      <aside className="w-96 bg-[#161d31] border-l border-gray-800 p-8 flex flex-col">
-        <div className="flex items-center gap-2 mb-8">
-          <Activity className="text-blue-500" />
-          <h2 className="text-2xl font-bold">Current Protocol</h2>
-        </div>
-
-        <div className="flex-1 space-y-4">
-          {selectedHerbs.length === 0 ? (
-            <div className="text-center py-12 border-2 border-dashed border-gray-700 rounded-xl text-gray-500">
-              Select up to 5 herbs to build your protocol
+      {/* FIXED SIDEBAR */}
+      <aside className="w-[400px] bg-[#0d1425] border-l border-slate-800 flex flex-col shadow-2xl">
+        <div className="p-8 flex-1 flex flex-col min-h-0">
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-2">
+              <Activity className="text-blue-500 w-5 h-5" />
+              <h2 className="text-xl font-bold text-white uppercase tracking-wider text-sm">Protocol Builder</h2>
             </div>
-          ) : (
-            selectedHerbs.map((herb) => (
-              <div key={herb.id} className="bg-[#1e2746] p-4 rounded-lg flex justify-between items-center">
-                <span>{herb.name}</span>
-                <button onClick={() => toggleHerb(herb)} className="text-gray-500 hover:text-red-500">
-                  <X size={16} />
-                </button>
+            <span className={cn(
+              "px-3 py-1 rounded-full text-xs font-bold transition-all",
+              isComplete ? "bg-green-500/20 text-green-400" : "bg-slate-800 text-slate-400"
+            )}>
+              {selectedHerbs.length} / 5
+            </span>
+          </div>
+
+          {/* PROGRESS BAR */}
+          <div className="h-1.5 w-full bg-slate-800 rounded-full mb-8 overflow-hidden">
+            <div 
+              className={cn("h-full transition-all duration-500 ease-out", isComplete ? "bg-green-500" : "bg-blue-500")}
+              style={{ width: `${(selectedHerbs.length / 5) * 100}%` }}
+            />
+          </div>
+
+          {/* SELECTED LIST */}
+          <div className="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
+            {selectedHerbs.length === 0 ? (
+              <div className="h-full flex flex-col items-center justify-center text-center opacity-40">
+                <Leaf size={48} className="mb-4 text-slate-600" />
+                <p className="text-sm">Select 5 botanicals to<br/>begin your formulation</p>
               </div>
-            ))
-          )}
+            ) : (
+              selectedHerbs.map((herb) => (
+                <div 
+                  key={herb.id} 
+                  className="group flex items-center justify-between p-4 bg-[#161d31] rounded-xl border border-slate-800 hover:border-blue-500/50 transition-all animate-in slide-in-from-right-4 duration-300"
+                >
+                  <span className="font-medium text-slate-200">{herb.name}</span>
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); toggleHerb(herb); }}
+                    className="p-1 text-slate-500 hover:text-red-400 hover:bg-red-400/10 rounded-md transition-all"
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-gray-800">
-          <div className="flex justify-between text-sm text-gray-400 mb-6">
-            <span>Selection Progress</span>
-            <span>{selectedHerbs.length} / 5</span>
-          </div>
-          
-          {selectedHerbs.length === 5 && (
-            <button 
-              onClick={() => alert("Protocol Generated!")}
-              className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-blue-900/20 flex items-center justify-center gap-2 group"
-            >
-              Generate My Protocol
-              <Leaf size={18} className="group-hover:rotate-12 transition-transform" />
-            </button>
-          )}
+        {/* FINAL ACTION AREA - LOCKED TO BOTTOM */}
+        <div className="p-8 bg-[#0a0f1e]/50 border-t border-slate-800">
+          <button 
+            disabled={!isComplete}
+            onClick={() => alert("Protocol Optimized. Preparing botanical summary...")}
+            className={cn(
+              "w-full flex items-center justify-center gap-3 py-4 rounded-2xl font-bold text-lg transition-all duration-300",
+              isComplete 
+                ? "bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/20 active:scale-95" 
+                : "bg-slate-800 text-slate-500 cursor-not-allowed opacity-50"
+            )}
+          >
+            {isComplete ? <Sparkles className="animate-pulse" /> : null}
+            Generate My Protocol
+          </button>
+          <p className="text-center text-xs text-slate-600 mt-4">
+            Custom biological algorithm active.
+          </p>
         </div>
       </aside>
     </div>
