@@ -1,27 +1,41 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Plus, X, Leaf, Info, Activity } from 'lucide-react';
-import { HERBS } from './data/herbs'; // Ensure this path matches your file structure
+import { Search, Plus, X, Leaf, Activity } from 'lucide-react';
+import { HERBS } from './data/herbs'; 
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-// Utility for Tailwind classes
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// This tells TypeScript exactly what to expect from your herbs data
+interface Herb {
+  id: string;
+  name: string;
+  description?: string; // The '?' means it might be missing
+  details?: string;     // Adding common alternatives
+  category?: string;
+  benefits?: string[];
+}
+
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedHerbs, setSelectedHerbs] = useState<typeof herbs>([]);
+  const [selectedHerbs, setSelectedHerbs] = useState<any[]>([]);
 
-  // 1. FILTER LOGIC: This filters the list based on your search input
+  // 1. FILTER LOGIC: Adjusted to be more flexible with property names
   const filteredHerbs = useMemo(() => {
-    return herbs.filter((herb) =>
-      herb.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      herb.description.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    return (HERBS as any[]).filter((herb) => {
+      const nameMatch = herb.name?.toLowerCase().includes(searchQuery.toLowerCase());
+      // We check for description OR details just in case
+      const descMatch = (herb.description || herb.details || "")
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
+      
+      return nameMatch || descMatch;
+    });
   }, [searchQuery]);
 
-  const toggleHerb = (herb: typeof herbs[0]) => {
+  const toggleHerb = (herb: any) => {
     if (selectedHerbs.find((h) => h.id === herb.id)) {
       setSelectedHerbs(selectedHerbs.filter((h) => h.id !== herb.id));
     } else if (selectedHerbs.length < 5) {
@@ -31,14 +45,12 @@ function App() {
 
   return (
     <div className="min-h-screen bg-[#0a0f1e] text-white flex">
-      {/* MAIN CONTENT AREA */}
       <main className="flex-1 p-8">
         <header className="mb-12">
           <h1 className="text-4xl font-bold mb-4 flex items-center gap-3">
             <Leaf className="text-blue-500" /> Fungai Art
           </h1>
           
-          {/* SEARCH INPUT LOCATION: This is inside the main header */}
           <div className="relative max-w-xl">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
@@ -51,7 +63,6 @@ function App() {
           </div>
         </header>
 
-        {/* HERB GRID: Uses filteredHerbs instead of the raw herbs list */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredHerbs.map((herb) => {
             const isSelected = selectedHerbs.find((h) => h.id === herb.id);
@@ -75,13 +86,16 @@ function App() {
                     {isSelected ? <X size={20} /> : <Plus size={20} />}
                   </button>
                 </div>
+                {/* SAFE ACCESS: Using herb.description or herb.details */}
                 <p className="text-gray-400 text-sm leading-relaxed mb-4">
-                  {herb.description}
+                  {herb.description || herb.details || "No description available"}
                 </p>
                 <div className="flex gap-2">
-                  <span className="text-xs bg-gray-800 px-2 py-1 rounded border border-gray-700">
-                    {herb.category}
-                  </span>
+                  {herb.category && (
+                    <span className="text-xs bg-gray-800 px-2 py-1 rounded border border-gray-700">
+                      {herb.category}
+                    </span>
+                  )}
                 </div>
               </div>
             );
@@ -89,7 +103,6 @@ function App() {
         </div>
       </main>
 
-      {/* SIDEBAR JSX LOCATION: This is the right-hand panel */}
       <aside className="w-96 bg-[#161d31] border-l border-gray-800 p-8 flex flex-col">
         <div className="flex items-center gap-2 mb-8">
           <Activity className="text-blue-500" />
@@ -103,7 +116,7 @@ function App() {
             </div>
           ) : (
             selectedHerbs.map((herb) => (
-              <div key={herb.id} className="bg-[#1e2746] p-4 rounded-lg flex justify-between items-center group">
+              <div key={herb.id} className="bg-[#1e2746] p-4 rounded-lg flex justify-between items-center">
                 <span>{herb.name}</span>
                 <button onClick={() => toggleHerb(herb)} className="text-gray-500 hover:text-red-500">
                   <X size={16} />
@@ -113,7 +126,6 @@ function App() {
           )}
         </div>
 
-        {/* GENERATE BUTTON: Only appears when you have 5 selections */}
         <div className="mt-8 pt-8 border-t border-gray-800">
           <div className="flex justify-between text-sm text-gray-400 mb-6">
             <span>Selection Progress</span>
