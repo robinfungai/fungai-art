@@ -1,28 +1,42 @@
-name: 🚀 Deploy
+name: 🚀 Deploy Website
+
 on:
   push:
     branches:
       - beta
+
+permissions:
+  contents: write
+
 jobs:
-  web-deploy:
-    name: 🎉 Deploy
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
+        with:
+          ref: beta
+
+      - name: 🕵️ PRINT THE TRUTH (Debugging Step)
+        run: |
+          echo "=== SHOWING VITE CONFIG CONTENT ==="
+          cat vite.config.ts
+          echo "=== SHOWING PACKAGE.JSON CONTENT ==="
+          cat package.json
+
+      - name: ⚙️ Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
 
       - name: 🔨 Install and Build
-        # ADD THE LINE BELOW (Make sure it matches your folder name exactly)
-        working-directory: ./fungai-art 
         run: |
+          rm -f package-lock.json
           npm install --legacy-peer-deps
           npm run build
 
-      - name: 🚀 FTP Deploy
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: 📂 Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: ./beta/
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
