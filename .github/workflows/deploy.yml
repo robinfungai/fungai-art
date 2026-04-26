@@ -30,16 +30,13 @@ jobs:
       - name: 🔨 Build
         run: npm run build
 
-      - name: 🚀 Sync changes back to Beta
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          # This only pushes if something actually changed, and uses [skip ci] to prevent a loop
-          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: auto-sync from action [skip ci]" && git push origin beta)
+      - name: 🌐 Force Custom Domain
+        # This creates the hidden file GitHub needs to link your domain
+        run: echo "beta.fungai.art" > dist/CNAME
 
       - name: 📂 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+          publish_branch: gh-pages
