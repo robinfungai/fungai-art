@@ -1,178 +1,197 @@
 import { useState, useMemo } from 'react';
-import { Search, Plus, X, Leaf, Activity, Sparkles } from 'lucide-react';
-import { HERBS } from './data/herbs'; 
+import { Search, Plus, X, Leaf, Sparkles, ArrowLeft, ShieldCheck, Flame, Droplets, Wind, Mountain } from 'lucide-react';
+import { HERBS, type Herb } from './data/herbs'; 
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
-
-interface Herb {
-  id: string | number;
-  name: string;
-  description?: string;
-  details?: string;
-  category?: string;
-}
+function cn(...inputs: ClassValue[]) { return twMerge(clsx(inputs)); }
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedHerbs, setSelectedHerbs] = useState<Herb[]>([]);
+  const [showResults, setShowResults] = useState(false);
 
   const filteredHerbs = useMemo(() => {
-    return (HERBS as Herb[]).filter((herb) => {
-      const query = searchQuery.toLowerCase();
-      return (
-        herb.name.toLowerCase().includes(query) ||
-        (herb.description || herb.details || "").toLowerCase().includes(query)
-      );
-    });
+    const query = searchQuery.toLowerCase().trim();
+    if (!query) return HERBS;
+    return HERBS.filter(h => h.name.toLowerCase().includes(query) || h.botanical.toLowerCase().includes(query));
   }, [searchQuery]);
 
   const toggleHerb = (herb: Herb) => {
-    if (selectedHerbs.find((h) => h.id === herb.id)) {
-      setSelectedHerbs(selectedHerbs.filter((h) => h.id !== herb.id));
+    if (selectedHerbs.find(h => h.id === herb.id)) {
+      setSelectedHerbs(selectedHerbs.filter(h => h.id !== herb.id));
     } else if (selectedHerbs.length < 5) {
       setSelectedHerbs([...selectedHerbs, herb]);
     }
   };
 
-  const isComplete = selectedHerbs.length === 5;
+  // --- FULL DEPTH RESULTS VIEW ---
+  if (showResults) {
+    return (
+      <div className="min-h-screen bg-[#020617] text-slate-300 p-4 md:p-12 font-serif animate-in fade-in duration-1000">
+        <button onClick={() => setShowResults(false)} className="flex items-center gap-2 text-amber-500/80 mb-10 font-sans uppercase tracking-[0.2em] text-xs font-bold hover:text-amber-400">
+          <ArrowLeft size={16} /> Re-Formulate Matrix
+        </button>
+
+        <div className="max-w-5xl mx-auto space-y-8">
+          {/* Header Card */}
+          <div className="bg-[#0f172a] border border-amber-500/20 p-10 rounded-3xl relative overflow-hidden shadow-2xl">
+            <div className="absolute top-0 right-0 p-8 opacity-10"><Sparkles size={120} className="text-amber-500" /></div>
+            <h2 className="text-amber-500 font-sans uppercase tracking-[0.4em] text-sm mb-4">Protocol Synthesis Active</h2>
+            <h1 className="text-5xl md:text-6xl text-white font-bold mb-6">Synergistic Formulation</h1>
+            <p className="max-w-2xl text-lg text-slate-400 italic">This protocol balances five distinct biological pathways to create a unified field of restoration.</p>
+          </div>
+
+          {/* Deep Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Left: The Components */}
+            <div className="lg:col-span-2 space-y-6">
+              {selectedHerbs.map((herb, i) => (
+                <div key={herb.id} className="bg-[#1e293b]/40 border border-slate-800 p-6 rounded-2xl flex gap-6 group hover:border-amber-500/30 transition-all">
+                  <div className="text-3xl font-mono text-amber-500/20">0{i+1}</div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-white mb-1 group-hover:text-amber-400 transition-colors">{herb.name}</h3>
+                    <p className="text-amber-500/60 text-sm italic mb-4 font-sans uppercase tracking-wider">{herb.botanical}</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                      <div><span className="text-slate-500 block text-[10px] uppercase font-bold mb-1">Function</span> {herb.primary_functions.join(", ")}</div>
+                      <div><span className="text-slate-500 block text-[10px] uppercase font-bold mb-1">Spirit Layer</span> {herb.spiritual_layer}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Right: Synthesis Panel */}
+            <div className="space-y-6">
+              <div className="bg-amber-500/5 border border-amber-500/20 p-8 rounded-3xl">
+                <h4 className="text-white font-bold mb-6 flex items-center gap-2"><Droplets size={18} className="text-amber-500" /> Energetic Pulse</h4>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-slate-500">TCM Element Match</span>
+                    <span className="text-amber-200">Mixed Synergy</span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-slate-500">Caution Level</span>
+                    <span className="text-amber-500 font-bold">Stable</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-[#0f172a] border border-slate-800 p-8 rounded-3xl">
+                <h4 className="text-white font-bold mb-4">Ritual Preparation</h4>
+                <p className="text-sm text-slate-400 leading-relaxed italic">
+                  Combine these elements in a quiet space. The extraction should be slow, allowing the water or spirit to pull the heavy minerals and light aromatics into balance.
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-xs text-amber-500/50 uppercase font-bold tracking-widest">
+                  <ShieldCheck size={14} /> Verified Formulation
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex h-screen bg-[#0a0f1e] text-slate-200 overflow-hidden font-sans">
-      
-      {/* MAIN EXPLORER AREA */}
-      <main className="flex-1 flex flex-col min-w-0">
-        <header className="p-8 pb-4">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-blue-500/10 rounded-lg">
-              <Leaf className="text-blue-500 w-8 h-8" />
+    <div className="flex flex-col lg:flex-row h-screen bg-[#020617] text-slate-300 font-sans overflow-hidden">
+      {/* EXPLORER */}
+      <main className="flex-1 flex flex-col min-w-0 bg-[#020617]">
+        <header className="p-8 border-b border-slate-800/50 bg-[#020617]">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="p-2 bg-amber-500/10 rounded-xl border border-amber-500/20">
+              <Leaf className="text-amber-500 w-6 h-6" />
             </div>
-            <h1 className="text-3xl font-bold tracking-tight text-white">Fungai Art</h1>
+            <h1 className="text-2xl font-serif font-bold text-white tracking-widest uppercase">Fungai Art</h1>
           </div>
-          
           <div className="relative max-w-2xl group">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5 group-focus-within:text-blue-500 transition-colors" />
+            <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within:text-amber-500 transition-colors" />
             <input
               type="text"
-              placeholder="Search botanical library..."
+              placeholder="Query the Materia Medica..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#161d31] border border-slate-800 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all text-lg"
+              className="w-full bg-[#0f172a] border border-slate-800 rounded-2xl py-5 pl-14 pr-6 focus:outline-none focus:border-amber-500/50 text-white placeholder:text-slate-600 transition-all shadow-inner"
             />
           </div>
         </header>
 
-        {/* SCROLLABLE GRID */}
-        <section className="flex-1 overflow-y-auto p-8 pt-2 custom-scrollbar">
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-            {filteredHerbs.map((herb) => {
-              const isSelected = selectedHerbs.some((h) => h.id === herb.id);
-              return (
-                <div
-                  key={herb.id}
-                  onClick={() => toggleHerb(herb)}
-                  className={cn(
-                    "group relative p-5 rounded-2xl border transition-all duration-300 cursor-pointer flex flex-col justify-between min-h-[180px]",
-                    isSelected 
-                      ? "bg-blue-600/10 border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.15)]" 
-                      : "bg-[#161d31] border-slate-800 hover:border-slate-600 hover:bg-[#1c253d]"
-                  )}
-                >
+        <section className="flex-1 overflow-y-auto p-8 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 custom-scrollbar">
+          {filteredHerbs.map((herb) => {
+            const isSelected = selectedHerbs.some(h => h.id === herb.id);
+            return (
+              <div
+                key={herb.id}
+                onClick={() => toggleHerb(herb)}
+                className={cn(
+                  "p-6 rounded-3xl border-2 transition-all duration-500 cursor-pointer flex flex-col justify-between min-h-[160px] group",
+                  isSelected 
+                    ? "bg-amber-500/10 border-amber-500 shadow-[0_0_30px_rgba(251,191,36,0.1)]" 
+                    : "bg-[#0f172a] border-slate-800 hover:border-slate-600 shadow-xl"
+                )}
+              >
+                <div className="flex justify-between items-start">
                   <div>
-                    <div className="flex justify-between items-start mb-3">
-                      <h3 className="font-bold text-lg text-white group-hover:text-blue-400 transition-colors leading-tight">
-                        {herb.name}
-                      </h3>
-                      <div className={cn(
-                        "p-1.5 rounded-full border transition-all",
-                        isSelected ? "bg-blue-500 border-blue-400 text-white" : "border-slate-700 text-slate-500"
-                      )}>
-                        {isSelected ? <Sparkles size={16} /> : <Plus size={16} />}
-                      </div>
-                    </div>
-                    <p className="text-slate-400 text-sm leading-relaxed line-clamp-3">
-                      {herb.description || herb.details || "Integrative botanical profile pending analysis."}
-                    </p>
+                    <h3 className="font-bold text-white text-xl mb-1 group-hover:text-amber-400 transition-colors leading-tight">{herb.name}</h3>
+                    <p className="text-[10px] text-amber-500/50 uppercase tracking-[0.2em] font-bold">{herb.botanical}</p>
+                  </div>
+                  <div className={cn("p-2 rounded-xl transition-all", isSelected ? "bg-amber-500 text-[#020617]" : "bg-slate-800 text-slate-500")}>
+                    {isSelected ? <X size={16} /> : <Plus size={16} />}
                   </div>
                 </div>
-              );
-            })}
-          </div>
+                <div className="flex gap-2 mt-4">
+                  {herb.tcm_meridians.slice(0, 2).map(m => (
+                    <span key={m} className="text-[9px] bg-slate-800 px-2 py-1 rounded-md text-slate-400 uppercase font-bold tracking-tighter">{m}</span>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </section>
       </main>
 
-      {/* FIXED SIDEBAR */}
-      <aside className="w-[400px] bg-[#0d1425] border-l border-slate-800 flex flex-col shadow-2xl">
-        <div className="p-8 flex-1 flex flex-col min-h-0">
-          <div className="flex items-center justify-between mb-8">
+      {/* MATRIX SIDEBAR */}
+      <aside className="w-full lg:w-[400px] bg-[#0f172a] border-t lg:border-t-0 lg:border-l border-slate-800 p-8 flex flex-col shadow-2xl z-10">
+        <div className="flex-1">
+          <div className="flex justify-between items-center mb-10">
+            <h2 className="text-xs font-bold uppercase tracking-[0.3em] text-slate-500">Selection Matrix</h2>
             <div className="flex items-center gap-2">
-              <Activity className="text-blue-500 w-5 h-5" />
-              <h2 className="text-xl font-bold text-white uppercase tracking-wider text-sm">Protocol Builder</h2>
+              <div className="h-1 w-20 bg-slate-800 rounded-full overflow-hidden">
+                <div className="h-full bg-amber-500 transition-all duration-700" style={{ width: `${(selectedHerbs.length/5)*100}%` }} />
+              </div>
+              <span className="text-amber-500 font-mono text-sm">{selectedHerbs.length}/5</span>
             </div>
-            <span className={cn(
-              "px-3 py-1 rounded-full text-xs font-bold transition-all",
-              isComplete ? "bg-green-500/20 text-green-400" : "bg-slate-800 text-slate-400"
-            )}>
-              {selectedHerbs.length} / 5
-            </span>
           </div>
 
-          {/* PROGRESS BAR */}
-          <div className="h-1.5 w-full bg-slate-800 rounded-full mb-8 overflow-hidden">
-            <div 
-              className={cn("h-full transition-all duration-500 ease-out", isComplete ? "bg-green-500" : "bg-blue-500")}
-              style={{ width: `${(selectedHerbs.length / 5) * 100}%` }}
-            />
-          </div>
-
-          {/* SELECTED LIST */}
-          <div className="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
+          <div className="space-y-4 max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
             {selectedHerbs.length === 0 ? (
-              <div className="h-full flex flex-col items-center justify-center text-center opacity-40">
-                <Leaf size={48} className="mb-4 text-slate-600" />
-                <p className="text-sm">Select 5 botanicals to<br/>begin your formulation</p>
+              <div className="h-40 flex flex-col items-center justify-center border-2 border-dashed border-slate-800 rounded-3xl text-slate-600 text-center p-6 italic">
+                <Sparkles className="mb-3 opacity-20" size={32} />
+                Select 5 signatures to begin the alchemy.
               </div>
             ) : (
-              selectedHerbs.map((herb) => (
-                <div 
-                  key={herb.id} 
-                  className="group flex items-center justify-between p-4 bg-[#161d31] rounded-xl border border-slate-800 hover:border-blue-500/50 transition-all animate-in slide-in-from-right-4 duration-300"
-                >
-                  <span className="font-medium text-slate-200">{herb.name}</span>
-                  <button 
-                    onClick={(e) => { e.stopPropagation(); toggleHerb(herb); }}
-                    className="p-1 text-slate-500 hover:text-red-400 hover:bg-red-400/10 rounded-md transition-all"
-                  >
-                    <X size={18} />
-                  </button>
+              selectedHerbs.map(h => (
+                <div key={h.id} className="flex justify-between items-center p-5 bg-[#020617] border border-amber-500/20 rounded-2xl animate-in slide-in-from-right-4">
+                  <span className="text-sm font-bold text-white uppercase tracking-wider">{h.name}</span>
+                  <X size={16} className="text-slate-600 cursor-pointer hover:text-red-400" onClick={() => toggleHerb(h)} />
                 </div>
               ))
             )}
           </div>
         </div>
 
-        {/* FINAL ACTION AREA - LOCKED TO BOTTOM */}
-        <div className="p-8 bg-[#0a0f1e]/50 border-t border-slate-800">
-          <button 
-            disabled={!isComplete}
-            onClick={() => alert("Protocol Optimized. Preparing botanical summary...")}
-            className={cn(
-              "w-full flex items-center justify-center gap-3 py-4 rounded-2xl font-bold text-lg transition-all duration-300",
-              isComplete 
-                ? "bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/20 active:scale-95" 
-                : "bg-slate-800 text-slate-500 cursor-not-allowed opacity-50"
-            )}
-          >
-            {isComplete ? <Sparkles className="animate-pulse" /> : null}
-            Generate My Protocol
-          </button>
-          <p className="text-center text-xs text-slate-600 mt-4">
-            Custom biological algorithm active.
-          </p>
-        </div>
+        <button 
+          disabled={selectedHerbs.length !== 5}
+          onClick={() => setShowResults(true)}
+          className={cn(
+            "w-full py-6 rounded-3xl font-bold uppercase tracking-[0.2em] transition-all duration-500 shadow-2xl mt-8",
+            selectedHerbs.length === 5 
+              ? "bg-amber-500 text-[#020617] hover:bg-amber-400 hover:scale-[1.02] active:scale-95" 
+              : "bg-slate-800 text-slate-600 cursor-not-allowed opacity-50"
+          )}
+        >
+          {selectedHerbs.length === 5 ? "Generate Protocol" : "Incomplete Matrix"}
+        </button>
       </aside>
     </div>
   );
