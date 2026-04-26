@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Search, Plus, X, Leaf, Info, Activity } from 'lucide-react';
-import { herbs } from './data/herbs'; // Ensure this path matches your file structure
+import { HERBS } from './data/herbs'; // Ensure this path matches your file structure
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
