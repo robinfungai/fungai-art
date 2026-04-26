@@ -1,142 +1,136 @@
-import { useState, useMemo } from 'react';
-import { HERBS } from './data/herbs';
+import React, { useState, useMemo } from 'react';
+import { Search, Plus, X, Leaf, Info, Activity } from 'lucide-react';
+import { herbs } from './data/herbs'; // Ensure this path matches your file structure
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+// Utility for Tailwind classes
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedElement, setSelectedElement] = useState('All');
-  const [activeProtocol, setActiveProtocol] = useState<any[]>([]);
-  const [selectedHerb, setSelectedHerb] = useState<any>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedHerbs, setSelectedHerbs] = useState<typeof herbs>([]);
 
-  // --- LOGIC: FILTERING ---
-  const filteredHerbs = HERBS.filter(herb => {
-    const matchesSearch = herb.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesElement = selectedElement === 'All' || herb.tcm_element.includes(selectedElement);
-    return matchesSearch && matchesElement;
-  });
+  // 1. FILTER LOGIC: This filters the list based on your search input
+  const filteredHerbs = useMemo(() => {
+    return herbs.filter((herb) =>
+      herb.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      herb.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [searchQuery]);
 
-  // --- LOGIC: SYNERGY & SAFETY ANALYSIS ---
-  const analysis = useMemo(() => {
-    const alerts: string[] = [];
-    let tempBalance = 0; // Negative for Cold, Positive for Hot
-
-    activeProtocol.forEach(herb => {
-      // Temperature check
-      const eng = herb.energetics.join(' ').toLowerCase();
-      if (eng.includes('cold') || eng.includes('cool')) tempBalance -= 1;
-      if (eng.includes('warm') || eng.includes('hot')) tempBalance += 1;
-
-      // Interaction check (Safety Engine)
-      activeProtocol.forEach(otherHerb => {
-        if (herb.id !== otherHerb.id) {
-          // Check if herb name appears in other herb's caution list
-          const cautionString = JSON.stringify(otherHerb.herb_interactions).toLowerCase();
-          if (cautionString.includes(herb.name.toLowerCase())) {
-            alerts.push(`⚠️ ALERT: Potential clash between ${herb.name} and ${otherHerb.name}`);
-          }
-        }
-      });
-    });
-
-    return { tempBalance, alerts: [...new Set(alerts)] };
-  }, [activeProtocol]);
-
-  const toggleHerbInProtocol = (herb: any) => {
-    if (activeProtocol.find(h => h.id === herb.id)) {
-      setActiveProtocol(activeProtocol.filter(h => h.id !== herb.id));
-    } else {
-      if (activeProtocol.length < 5) setActiveProtocol([...activeProtocol, herb]);
+  const toggleHerb = (herb: typeof herbs[0]) => {
+    if (selectedHerbs.find((h) => h.id === herb.id)) {
+      setSelectedHerbs(selectedHerbs.filter((h) => h.id !== herb.id));
+    } else if (selectedHerbs.length < 5) {
+      setSelectedHerbs([...selectedHerbs, herb]);
     }
   };
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#020617', color: '#f8fafc', fontFamily: 'Inter, sans-serif' }}>
-      
-      {/* LEFT SIDE: SEARCH & LIBRARY */}
-      <main style={{ flex: 1, padding: '40px', overflowY: 'auto' }}>
-        <header style={{ marginBottom: '40px' }}>
-          <h1 style={{ fontSize: '2.5rem', fontWeight: '800', background: 'linear-gradient(to right, #22d3ee, #818cf8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            FUNG.AI WORKBENCH
+    <div className="min-h-screen bg-[#0a0f1e] text-white flex">
+      {/* MAIN CONTENT AREA */}
+      <main className="flex-1 p-8">
+        <header className="mb-12">
+          <h1 className="text-4xl font-bold mb-4 flex items-center gap-3">
+            <Leaf className="text-blue-500" /> Fungai Art
           </h1>
-          <input 
-            type="text" placeholder="Search mushrooms..." 
-            onChange={(e) => setSearchTerm(e.target.value)}
-            style={{ width: '100%', maxWidth: '500px', padding: '12px', marginTop: '20px', borderRadius: '8px', border: '1px solid #1e293b', backgroundColor: '#0f172a', color: 'white' }}
-          />
+          
+          {/* SEARCH INPUT LOCATION: This is inside the main header */}
+          <div className="relative max-w-xl">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <input
+              type="text"
+              placeholder="Search herbs, roots, and botanicals..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-[#161d31] border border-gray-700 rounded-lg py-3 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+          </div>
         </header>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px' }}>
-          {filteredHerbs.map(herb => (
-            <div key={herb.id} 
-              style={{ padding: '20px', borderRadius: '12px', backgroundColor: '#0f172a', border: activeProtocol.find(h => h.id === herb.id) ? '2px solid #3b82f6' : '1px solid #1e293b', cursor: 'pointer' }}
-              onClick={() => setSelectedHerb(herb)}
-            >
-              <h3>{herb.name}</h3>
-              <p style={{ fontSize: '0.8rem', color: '#64748b' }}>{herb.botanical}</p>
-              <button 
-                onClick={(e) => { e.stopPropagation(); toggleHerbInProtocol(herb); }}
-                style={{ marginTop: '10px', width: '100%', padding: '8px', borderRadius: '6px', border: 'none', backgroundColor: activeProtocol.find(h => h.id === herb.id) ? '#ef4444' : '#3b82f6', color: 'white', fontWeight: 'bold', cursor: 'pointer' }}
+        {/* HERB GRID: Uses filteredHerbs instead of the raw herbs list */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredHerbs.map((herb) => {
+            const isSelected = selectedHerbs.find((h) => h.id === herb.id);
+            return (
+              <div
+                key={herb.id}
+                className={cn(
+                  "bg-[#161d31] border-2 rounded-xl p-6 transition-all cursor-pointer hover:scale-[1.02]",
+                  isSelected ? "border-blue-500 bg-[#1e2746]" : "border-transparent"
+                )}
               >
-                {activeProtocol.find(h => h.id === herb.id) ? 'Remove' : 'Add to Protocol'}
-              </button>
-            </div>
-          ))}
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="text-xl font-bold">{herb.name}</h3>
+                  <button
+                    onClick={() => toggleHerb(herb)}
+                    className={cn(
+                      "p-2 rounded-lg transition-colors",
+                      isSelected ? "bg-red-500/20 text-red-500" : "bg-blue-500 text-white"
+                    )}
+                  >
+                    {isSelected ? <X size={20} /> : <Plus size={20} />}
+                  </button>
+                </div>
+                <p className="text-gray-400 text-sm leading-relaxed mb-4">
+                  {herb.description}
+                </p>
+                <div className="flex gap-2">
+                  <span className="text-xs bg-gray-800 px-2 py-1 rounded border border-gray-700">
+                    {herb.category}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </main>
 
-      {/* RIGHT SIDE: THE ANALYZER SIDEBAR */}
-      <aside style={{ width: '350px', backgroundColor: '#0f172a', borderLeft: '1px solid #1e293b', padding: '30px', position: 'sticky', top: 0, height: '100vh', overflowY: 'auto' }}>
-        <h2 style={{ color: '#22d3ee', marginBottom: '20px' }}>Current Protocol</h2>
-        
-        {activeProtocol.length === 0 && <p style={{ color: '#64748b' }}>Select up to 5 herbs to begin analysis...</p>}
-
-        {activeProtocol.map(herb => (
-          <div key={herb.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#1e293b', padding: '10px', borderRadius: '8px', marginBottom: '10px' }}>
-            <span>{herb.name}</span>
-            <button onClick={() => toggleHerbInProtocol(herb)} style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer' }}>✕</button>
-          </div>
-        ))}
-
-        {activeProtocol.length > 0 && (
-          <div style={{ marginTop: '30px', borderTop: '1px solid #334155', paddingTop: '20px' }}>
-            <h3>Energetic Balance</h3>
-            <div style={{ width: '100%', height: '10px', backgroundColor: '#020617', borderRadius: '5px', margin: '15px 0', position: 'relative' }}>
-               <div style={{ 
-                 position: 'absolute', 
-                 left: '50%', 
-                 height: '20px', 
-                 width: '4px', 
-                 backgroundColor: '#fff', 
-                 top: '-5px',
-                 transform: `translateX(${analysis.tempBalance * 20}px)`,
-                 transition: '0.3s'
-               }} />
-            </div>
-            <p style={{ fontSize: '0.8rem', textAlign: 'center' }}>
-              {analysis.tempBalance < 0 ? 'Cooling Pattern' : analysis.tempBalance > 0 ? 'Warming Pattern' : 'Neutral / Balanced'}
-            </p>
-
-            {analysis.alerts.length > 0 && (
-              <div style={{ marginTop: '20px', padding: '15px', backgroundColor: '#450a0a', border: '1px solid #ef4444', borderRadius: '8px' }}>
-                <h4 style={{ color: '#f87171', margin: 0 }}>Safety Warnings</h4>
-                {analysis.alerts.map((alert, i) => <p key={i} style={{ fontSize: '0.8rem', margin: '5px 0' }}>{alert}</p>)}
-              </div>
-            )}
-          </div>
-        )}
-      </aside>
-
-      {/* MODAL (For reading full details) */}
-      {selectedHerb && (
-        <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100 }} onClick={() => setSelectedHerb(null)}>
-          <div style={{ backgroundColor: '#0f172a', padding: '40px', borderRadius: '20px', maxWidth: '600px', border: '1px solid #3b82f6' }} onClick={e => e.stopPropagation()}>
-            <h2>{selectedHerb.name}</h2>
-            <p style={{ fontStyle: 'italic', color: '#94a3b8' }}>{selectedHerb.spiritual_layer}</p>
-            <h4 style={{ marginTop: '20px', color: '#22d3ee' }}>Interactions</h4>
-            <p style={{ fontSize: '0.9rem' }}>{JSON.stringify(selectedHerb.herb_interactions)}</p>
-            <button onClick={() => setSelectedHerb(null)} style={{ marginTop: '20px', padding: '10px 20px', borderRadius: '8px', border: 'none', backgroundColor: '#334155', color: 'white' }}>Close</button>
-          </div>
+      {/* SIDEBAR JSX LOCATION: This is the right-hand panel */}
+      <aside className="w-96 bg-[#161d31] border-l border-gray-800 p-8 flex flex-col">
+        <div className="flex items-center gap-2 mb-8">
+          <Activity className="text-blue-500" />
+          <h2 className="text-2xl font-bold">Current Protocol</h2>
         </div>
-      )}
+
+        <div className="flex-1 space-y-4">
+          {selectedHerbs.length === 0 ? (
+            <div className="text-center py-12 border-2 border-dashed border-gray-700 rounded-xl text-gray-500">
+              Select up to 5 herbs to build your protocol
+            </div>
+          ) : (
+            selectedHerbs.map((herb) => (
+              <div key={herb.id} className="bg-[#1e2746] p-4 rounded-lg flex justify-between items-center group">
+                <span>{herb.name}</span>
+                <button onClick={() => toggleHerb(herb)} className="text-gray-500 hover:text-red-500">
+                  <X size={16} />
+                </button>
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* GENERATE BUTTON: Only appears when you have 5 selections */}
+        <div className="mt-8 pt-8 border-t border-gray-800">
+          <div className="flex justify-between text-sm text-gray-400 mb-6">
+            <span>Selection Progress</span>
+            <span>{selectedHerbs.length} / 5</span>
+          </div>
+          
+          {selectedHerbs.length === 5 && (
+            <button 
+              onClick={() => alert("Protocol Generated!")}
+              className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-blue-900/20 flex items-center justify-center gap-2 group"
+            >
+              Generate My Protocol
+              <Leaf size={18} className="group-hover:rotate-12 transition-transform" />
+            </button>
+          )}
+        </div>
+      </aside>
     </div>
   );
 }
