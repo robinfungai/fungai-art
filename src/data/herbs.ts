@@ -9475,7 +9475,7 @@ export const HERBS: Herb[] = [
     status: 'EDUCATIONAL AND RESEARCH-CONTEXTUAL ENTRY — legal status is Schedule I or equivalent in most jurisdictions. Multiple controlled human trials for TRD, MDD, cancer-related anxiety/depression, AUD and tobacco dependence. 5-HT2A agonism; DMN reduction; neuroplasticity confirmed. ABSOLUTE CONTRAINDICATIONS: personal/family psychosis or schizophrenia, bipolar I disorder. SERIOUS DRUG INTERACTIONS: MAOIs (serotonin syndrome risk), lithium (seizure risk), SSRIs/SNRIs (receptor downregulation). Low physiological toxicity; risk is psychological and contextual. Complete therapeutic protocol (preparation, session, integration) is the effective clinical unit. Only discuss in context of licensed therapeutic services or clinical trials.'
   },
   {
-    id: 304,
+    id: 404,
     name: 'Raspberry Leaf',
     botanical: 'Rubus idaeus',
     tcm_meridians: ['Uterus', 'Kidney', 'Liver', 'Spleen'],
@@ -9511,7 +9511,7 @@ export const HERBS: Herb[] = [
     status: 'Gentle, mineral-rich tonic. Excellent long-game herb for tissue resilience.'
   },
   {
-    id: 305,
+    id: 405,
     name: 'Rosehip',
     botanical: 'Rosa canina / Rosa spp. (fruit)',
     tcm_meridians: ['Lung', 'Spleen', 'Liver', 'Heart'],
@@ -9547,7 +9547,7 @@ export const HERBS: Herb[] = [
     status: 'Very safe, food-like restorative. Prioritize deseeded material.'
   },
   {
-    id: 306,
+    id: 406,
     name: 'Shatavari',
     botanical: 'Asparagus racemosus (root)',
     tcm_meridians: ['Kidney', 'Lung', 'Stomach', 'Reproductive'],

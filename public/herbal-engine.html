@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fungai Art Elixirs · Herbal Engine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #050507;
+      --bg2: #101218;
+      --bg3: #161821;
+      --accent: #f4c16f;
+      --accent-soft: #3b2e13;
+      --border: rgba(255,255,255,0.14);
+      --border-soft: rgba(255,255,255,0.06);
+      --text: #f7f3ea;
+      --text-soft: #b9b3a6;
+      --text-softer: #82807a;
+      --radius: 12px;
+      --radius-lg: 18px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1e202a 0, #050507 55%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 1.5rem 1.2rem 3.5rem;
+    }
+
+    .shell {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr);
+      gap: 14px;
+    }
+
+    .left {
+      background: radial-gradient(circle at top left, #20232f 0, #0a0b11 55%);
+      border-radius: 22px;
+      border: 0.5px solid var(--border-soft);
+      padding: 14px 15px 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .left::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at top left, rgba(244,193,111,0.12), transparent 65%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .left-inner { position: relative; z-index: 1; }
+
+    .right {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .panel {
+      background: rgba(5,6,11,0.96);
+      border-radius: 16px;
+      border: 0.5px solid var(--border-soft);
+      padding: 9px 10px 8px;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .panel-header {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-softer);
+      margin-bottom: 4px;
+    }
+
+    .panel-title {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .panel-muted {
+      font-size: 10px;
+      color: var(--text-soft);
+      margin-top: 2px;
+    }
+
+    .hdr-chiprow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      gap: 10px;
+    }
+
+    .hdr-proto {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 0.5px solid var(--border);
+      background: rgba(0,0,0,0.5);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hdr-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top, #f97373 0, #b91c1c 80%);
+    }
+
+    .hdr-brand { font-size: 11px; font-weight: 500; }
+
+    .hdr-strap {
+      font-size: 10px;
+      color: var(--text-soft);
+      white-space: nowrap;
+    }
+
+    .intro-block {
+      margin-bottom: 10px;
+      padding: 10px 11px 10px;
+      border-radius: 18px;
+      border: 0.5px solid var(--border-soft);
+      background: rgba(2,3,7,0.75);
+    }
+
+    .intro-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .intro-sub {
+      font-size: 11px;
+      color: var(--text-soft);
+      max-width: 460px;
+      line-height: 1.55;
+      margin-bottom: 7px;
+    }
+
+    .intro-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .intro-chip {
+      font-size: 10px;
+      border-radius: 999px;
+      padding: 4px 8px;
+      border: 0.5px solid var(--border-soft);
+      background: rgba(5,6,11,0.85);
+      color: var(--text-soft);
+    }
+
+    .prog {
+      display: flex;
+      gap: 4px;
+      margin: 10px 0 10px;
+    }
+
+    .pd {
+      flex: 1;
+      height: 3px;
+      border-radius: 999px;
+      background: #252834;
+    }
+
+    .pd.on { background: var(--accent-soft); }
+    .pd.done { background: var(--accent); }
+
+    .step { display: none; }
+    .step.vis { display: block; }
+
+    .sn {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-softer);
+      margin-bottom: 4px;
+    }
+
+    .st { font-size: 16px; font-weight: 500; margin-bottom: 5px; }
+
+    .sh {
+      font-size: 11px;
+      color: var(--text-soft);
+      margin-bottom: 10px;
+      line-height: 1.55;
+    }
+
+    /* Q1 grid – 3 across */
+    .intent-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .intent-card {
+      border-radius: 14px;
+      border: 0.5px solid rgba(255,255,255,0.08);
+      padding: 10px 10px 9px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(circle at top, rgba(245,245,244,0.08), rgba(8,8,11,0.9) 65%);
+    }
+
+    .intent-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(244,193,111,0.2), transparent 70%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s ease;
+    }
+
+    .intent-card:hover::before { opacity: 1; }
+
+    .intent-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .intent-card.sel {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(244,193,111,0.32);
+    }
+
+    .intent-tag {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-softer);
+      margin-bottom: 2px;
+    }
+
+    .intent-name { font-size: 12px; font-weight: 500; margin-bottom: 3px; }
+
+    .intent-desc {
+      font-size: 10px;
+      color: var(--text-soft);
+      line-height: 1.45;
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 12px;
+    }
+
+    .pill {
+      border-radius: 999px;
+      border: 0.5px solid var(--border-soft);
+      padding: 6px 11px;
+      font-size: 11px;
+      cursor: pointer;
+      color: var(--text-soft);
+      background: rgba(7,8,12,0.95);
+      transition: all 0.15s ease;
+    }
+
+    .pill.sel {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .chklist {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .chk {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 8px 9px;
+      border-radius: 11px;
+      border: 0.5px solid var(--border-soft);
+      background: rgba(7,8,12,0.96);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-size: 11px;
+    }
+
+    .chk:hover { border-color: var(--accent); }
+
+    .chk.sel {
+      border-color: #f97373;
+      background: #2a1414;
+    }
+
+    .cb {
+      width: 13px;
+      height: 13px;
+      border-radius: 3px;
+      border: 0.5px solid var(--border-soft);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      color: transparent;
+      margin-top: 2px;
+    }
+
+    .chk.sel .cb {
+      background: #f97373;
+      border-color: #f97373;
+      color: #050507;
+    }
+
+    .cl { color: var(--text); line-height: 1.4; }
+    .cs { display: block; font-size: 10px; color: var(--text-soft); }
+    .chk.sel .cl { color: #fecaca; }
+
+    .bm-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .bmc {
+      border-radius: 14px;
+      border: 0.5px solid var(--border-soft);
+      background: rgba(7,8,12,0.96);
+      padding: 10px 10px 9px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.18s ease;
+    }
+
+    .bmc:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .bmc.sel {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(244,193,111,0.3);
+      background: radial-gradient(circle at top, #252223 0, #08070a 55%);
+    }
+
+    .bmc-g { font-size: 18px; line-height: 1; margin-bottom: 3px; display: block; }
+    .bmc-n { font-size: 12px; font-weight: 500; margin-bottom: 2px; }
+    .bmc-s { font-size: 10px; color: var(--text-soft); }
+
+    .body-followup { margin-top: 6px; }
+
+    .bf-title {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-softer);
+      margin-bottom: 4px;
+    }
+
+    .bf-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .bf-card {
+      border-radius: 999px;
+      border: 0.5px solid var(--border-soft);
+      padding: 6px 8px;
+      font-size: 10px;
+      cursor: pointer;
+      color: var(--text-soft);
+      background: rgba(7,8,12,0.96);
+      text-align: center;
+      transition: all 0.16s ease;
+    }
+
+    .bf-card.sel {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .deliv-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .dc {
+      border-radius: 14px;
+      border: 0.5px solid var(--border-soft);
+      background: rgba(7,8,12,0.96);
+      padding: 12px 8px 10px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.18s ease;
+    }
+
+    .dc:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .dc.sel {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(244,193,111,0.3);
+      background: radial-gradient(circle at top, #26211d 0, #08070a 55%);
+    }
+
+    .dc-icon { font-size: 18px; display: block; margin-bottom: 5px; }
+    .dc-name { font-size: 12px; font-weight: 500; margin-bottom: 3px; }
+    .dc-desc { font-size: 10px; color: var(--text-soft); line-height: 1.4; }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 7px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: 0.5px solid var(--border-soft);
+      padding: 7px 15px;
+      font-size: 11px;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn.p { background: var(--accent); border-color: var(--accent); color: #1a130a; }
+    .btn:active { transform: scale(0.98); }
+
+    .result {
+      margin-top: 14px;
+      border-radius: 20px;
+      border: 0.5px solid var(--border);
+      background: radial-gradient(circle at top, #1b1f27 0, #050507 60%);
+      padding: 11px 11px 10px;
+      font-size: 11px;
+      line-height: 1.55;
+      display: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result::before {
+      content: "";
+      position: absolute;
+      inset: -30%;
+      background: radial-gradient(circle at top, rgba(244,193,111,0.12), transparent 60%);
+      pointer-events: none;
+    }
+
+    .res-inner { position: relative; z-index: 1; }
+
+    .res-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.6fr);
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .res-img-shell {
+      position: relative;
+      border-radius: 18px;
+      background: radial-gradient(circle at top, rgba(0,0,0,0.8), rgba(0,0,0,0.95));
+      border: 0.5px solid var(--border-soft);
+      padding: 9px 8px 9px;
+    }
+
+    .res-bottle-neck {
+      position: absolute;
+      top: -10px;
+      left: 22%;
+      width: 56%;
+      height: 16px;
+      border-radius: 999px 999px 3px 3px;
+      border: 0.5px solid rgba(255,255,255,0.18);
+      background: radial-gradient(circle at top, rgba(255,255,255,0.18), rgba(0,0,0,0.9));
+      box-shadow: 0 0 14px rgba(0,0,0,0.9);
+    }
+
+    .res-bottle {
+      border-radius: 999px 999px 14px 14px;
+      overflow: hidden;
+      border: 0.5px solid rgba(255,255,255,0.14);
+      background: radial-gradient(circle at top, #252a32 0, #050507 60%);
+      aspect-ratio: 3 / 4;
+    }
+
+    .res-img-inner {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      filter: saturate(1.05);
+      opacity: 0.7;
+      transition: opacity 0.4s ease;
+    }
+
+    .res-img-label {
+      position: absolute;
+      left: 8px;
+      bottom: 7px;
+      font-size: 9px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.6);
+      color: var(--text-soft);
+    }
+
+    .res-title { font-size: 13px; margin-bottom: 3px; font-weight: 500; }
+
+    .res-subtitle {
+      font-size: 11px;
+      color: var(--text-soft);
+      margin-bottom: 4px;
+    }
+
+    .res-synergy {
+      font-size: 10px;
+      color: var(--text-soft);
+      margin-bottom: 4px;
+    }
+
+    .res-dose { font-size: 10px; color: var(--text-softer); }
+
+    .res-accent-dot {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      margin-right: 5px;
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(244,193,111,0.7);
+    }
+
+    .res-herb-block {
+      margin-top: 4px;
+      padding-top: 5px;
+      border-top: 0.5px solid rgba(255,255,255,0.09);
+    }
+
+    .res-herb-heading {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-softer);
+      margin-bottom: 4px;
+    }
+
+    .res-hero-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 3px;
+    }
+
+    .res-hero-name {
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: radial-gradient(circle at top, rgba(244,193,111,0.22), rgba(7,8,12,0.97));
+      border: 0.5px solid rgba(244,193,111,0.7);
+      color: var(--text);
+      transform: translateY(6px);
+      opacity: 0;
+      transition: all 0.26s ease;
+    }
+
+    .res-support-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .res-support-pill {
+      border-radius: 999px;
+      border: 0.5px solid var(--border-soft);
+      padding: 4px 8px;
+      font-size: 10px;
+      background: rgba(7,8,12,0.97);
+      color: var(--text-soft);
+      transform: translateY(6px);
+      opacity: 0;
+      transition: all 0.26s ease;
+    }
+
+    .res-support-pill span {
+      font-weight: 500;
+      margin-right: 4px;
+      color: var(--text-soft);
+    }
+
+    .tonic-note {
+      margin-top: 6px;
+      font-size: 10px;
+      color: var(--text-soft);
+    }
+
+    .tonic-label {
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 9px;
+      color: var(--text-softer);
+    }
+
+    .tonic-name {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .warn {
+      margin-top: 6px;
+      border-radius: 10px;
+      border: 0.5px solid rgba(252, 211, 77, 0.4);
+      background: rgba(35, 27, 10, 0.85);
+      color: #fef3c7;
+      padding: 6px 8px;
+      font-size: 9px;
+    }
+
+    .warn-title {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 500;
+      margin-bottom: 1px;
+    }
+
+    @media (max-width: 900px) {
+      .shell { grid-template-columns: minmax(0, 1fr); }
+      .right { order: -1; }
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 1.1rem 0.8rem 3rem; }
+      .intent-grid { grid-template-columns: 1fr; }
+      .bm-grid, .deliv-grid, .bf-grid, .res-top { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <!-- LEFT -->
+    <div class="left">
+      <div class="left-inner">
+        <div class="hdr-chiprow">
+          <div class="hdr-proto">
+            <span class="hdr-dot"></span>
+            <span class="hdr-brand">Fungai Art Elixirs</span>
+          </div>
+          <div class="hdr-strap">Lab prototype · herbal engine</div>
+        </div>
+
+        <div class="intro-block">
+          <div class="intro-title">Check in, then meet your herbal ally.</div>
+          <div class="intro-sub">
+            This prototype works like a mood check‑in for your body and ritual, then quietly ranks herbs and mushrooms by fit, caution, and how well they suit the chosen elixir format.
+          </div>
+          <div class="intro-chips">
+            <div class="intro-chip">Fit · Caution · Preparation</div>
+            <div class="intro-chip">How you feel – inspired flow</div>
+            <div class="intro-chip">Prototype – no code changes needed</div>
+          </div>
+        </div>
+
+        <div class="prog" id="pg">
+          <div class="pd on"></div>
+          <div class="pd"></div>
+          <div class="pd"></div>
+          <div class="pd"></div>
+          <div class="pd"></div>
+        </div>
+
+        <!-- Step 0 -->
+        <section class="step vis" id="s0">
+          <div class="sn">Step 1 of 5 · Primary intention</div>
+          <div class="st">What is the primary intention?</div>
+          <p class="sh">Choose the clearest headline need. Everything else will stack gently around this.</p>
+          <div class="intent-grid" id="intentGrid"></div>
+          <div class="nav">
+            <span></span>
+            <button class="btn p" onclick="go(1)">Next</button>
+          </div>
+        </section>
+
+        <!-- Step 1 -->
+        <section class="step" id="s1">
+          <div class="sn">Step 2 of 5 · Layers in the field</div>
+          <div class="st">What else is in the mix right now?</div>
+          <p class="sh">Tap a few that feel alive today. They fine‑tune the pattern; they don’t have to be perfect.</p>
+          <div class="pills" id="layerPills"></div>
+          <div class="nav">
+            <button class="btn" onclick="go(0)">Back</button>
+            <button class="btn p" onclick="go(2)">Next</button>
+          </div>
+        </section>
+
+        <!-- Step 2 -->
+        <section class="step" id="s2">
+          <div class="sn">Step 3 of 5 · Safety filter</div>
+          <div class="st">Anything we absolutely should not mess with?</div>
+          <p class="sh">This doesn’t diagnose you. It just quietly removes herbs that don’t belong in your field.</p>
+          <div class="chklist" id="safetyList"></div>
+          <div class="nav">
+            <button class="btn" onclick="go(1)">Back</button>
+            <button class="btn p" onclick="go(3)">Next</button>
+          </div>
+        </section>
+
+        <!-- Step 3 -->
+        <section class="step" id="s3">
+          <div class="sn">Step 4 of 5 · Body pattern</div>
+          <div class="st">Right now, your body feels more like…</div>
+          <p class="sh">One tap. Go with your gut. We’ll bias warming, cooling and deep nourishment around this.</p>
+          <div class="bm-grid" id="bodyGrid"></div>
+
+          <div class="body-followup" id="bodyFollowup" style="display:none;">
+            <div class="bf-title">Zoom in on how that feels</div>
+            <div class="bf-grid" id="bfGrid"></div>
+          </div>
+
+          <div class="nav">
+            <button class="btn" onclick="go(2)">Back</button>
+            <button class="btn p" onclick="go(4)">Next</button>
+          </div>
+        </section>
+
+        <!-- Step 4 -->
+        <section class="step" id="s4">
+          <div class="sn">Step 5 of 5 · Delivery</div>
+          <div class="st">How would you like the liquid medicine delivered?</div>
+          <p class="sh">Format shapes extraction, bottle logic, dosing and daily ritual. Pick what feels real in your life.</p>
+          <div class="deliv-grid" id="delivGrid"></div>
+          <div class="nav">
+            <button class="btn" onclick="go(3)">Back</button>
+            <button class="btn p" id="buildBtn" onclick="buildFormula()">Build my elixir pattern</button>
+          </div>
+        </section>
+
+        <!-- RESULT -->
+        <section class="result" id="result">
+          <div class="res-inner">
+            <div class="res-top">
+              <div class="res-img-shell">
+                <div class="res-bottle-neck"></div>
+                <div class="res-bottle">
+                  <div class="res-img-inner" id="resImgInner"></div>
+                  <div class="res-img-label" id="resImgLabel">Elixir atmosphere · brewing…</div>
+                </div>
+              </div>
+              <div>
+                <div class="res-title" id="resTitle"></div>
+                <div class="res-subtitle" id="resSubtitle"></div>
+                <div class="res-synergy" id="resSynergy"></div>
+                <div class="res-dose" id="resDose"></div>
+                <div class="tonic-note" id="tonicNote" style="display:none;"></div>
+              </div>
+            </div>
+
+            <div class="res-herb-block">
+              <div class="res-herb-heading">Anchor herbs in this pattern</div>
+              <div class="res-hero-row" id="resHeroRow"></div>
+              <div class="res-support-row" id="resSupportRow"></div>
+            </div>
+
+            <div class="warn">
+              <div class="warn-title">Gentle reminder</div>
+              This engine is for ritual and design. Herb choices are inspiration, not prescription. Always cross‑check with a practitioner for pregnancy, bipolar, liver, SSRI and cardiovascular stories.
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- RIGHT SUMMARY -->
+    <div class="right">
+      <div class="panel">
+        <div class="panel-header">Live herbal story</div>
+        <div class="panel-title" id="summaryTitle">The engine sees this moment as…</div>
+        <div class="panel-muted" id="summaryLine">Not yet mapped. Start by picking the primary intention.</div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">Primary intention</div>
+        <div class="panel-title" id="summaryInt">Not chosen yet</div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">Body systems</div>
+        <div class="panel-title" id="summaryLayers">None selected</div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">Constitution & pattern</div>
+        <div class="panel-title" id="summaryBody">Not chosen yet</div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">Safety flags</div>
+        <div class="panel-title" id="summarySafety">None selected</div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">Ritual style</div>
+        <div class="panel-title" id="summaryDelivery">Not chosen yet</div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">Best ally preview</div>
+        <div class="panel-title" id="summaryBest">Not generated yet</div>
+        <div class="panel-muted">Once the pattern is built, lead allies and tonic pairing will appear here.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Intention, layers, safety etc are unchanged
+    const INTS = [
+      { id: "adaptogenic", tag: "Adaptogenic", name: "Stress resilience", desc: "For when life is a lot and you need steady capacity, not more stimulation." },
+      { id: "hypnotic", tag: "Hypnotic", name: "Sleep & restoration", desc: "For soft landings at night, deeper sleep, and actually waking up restored." },
+      { id: "tonic", tag: "Tonic", name: "Energy & vitality", desc: "For clean, sustainable energy and focus without the wired‑then‑crash loop." },
+      { id: "anxiolytic", tag: "Anxiolytic", name: "Anxiety & calm", desc: "For nervous system softening, less edge, and more breathable space inside." },
+      { id: "nervine", tag: "Nervine", name: "Mood & emotion", desc: "For grief, flatness, tenderness and emotional resilience that doesn’t bypass." },
+      { id: "carminative", tag: "Carminative", name: "Digestive reset", desc: "For bloating, IBS spirals and the gut–liver–mind knot that needs unwinding." },
+      { id: "immune", tag: "Immune", name: "Immune defence", desc: "For getting sick less often, recovering more easily, and shoring up your edges." },
+      { id: "analgesic", tag: "Analgesic", name: "Pain & inflammation", desc: "For aching joints, old injuries and the slow burn of chronic inflammation." },
+      { id: "endocrine", tag: "Endocrine", name: "Hormonal balance", desc: "For cycle repair, menopause transitions, libido and testosterone‑adjacent stories." },
+      { id: "nootropic", tag: "Nootropic", name: "Cognitive clarity", desc: "For focus, recall and plasticity – remembering what you came here to do." },
+      { id: "trophic", tag: "Trophic", name: "Skin & beauty", desc: "For skin as an organ, not a surface – hydration, barrier, glow and repair." },
+      { id: "hepatic", tag: "Hepatic", name: "Detox & liver", desc: "For liver load, stagnation, and the ‘clear sludge, not just take more things’ moment." }
+    ];
+
+    const LAYERS = [
+      "Brain fog / foggy focus",
+      "Fragile mood / low days",
+      "Social anxiety / over‑thinking",
+      "Gut tightness / IBS",
+      "Cycle chaos / peri‑stuff",
+      "Chronic pain / old injury",
+      "Burnout / no reserves",
+      "Skin flares / reactive skin",
+      "Low libido / low spark",
+      "Frequent infections / low immunity"
+    ];
+
+    const SAFETY = [
+      { id: "pregnancy", label: "Pregnant or trying to conceive", sub: "Avoids emmenagogues and high‑risk pregnancy herbs." },
+      { id: "breastfeeding", label: "Breastfeeding", sub: "Skips herbs with infant‑safety question marks." },
+      { id: "ssri", label: "On SSRIs / SNRIs / other antidepressants", sub: "Avoids serotonin‑stacking and destabilising combinations." },
+      { id: "bipolar", label: "Bipolar spectrum", sub: "Avoids herbs that can push into hypomania or mixed states." },
+      { id: "liver", label: "Liver disease / high liver enzymes / heavy alcohol history", sub: "Removes hepatotoxic herbs and ones that burden clearance." },
+      { id: "bp", label: "Uncontrolled high blood pressure", sub: "Avoids strong stimulants and herbs that reliably raise BP." },
+      { id: "autoimmune", label: "Autoimmune or on immunosuppressants", sub: "Down‑weights immune‑stimulating herbs and mushrooms." },
+      { id: "none", label: "None of these apply right now", sub: "Keep the safe part of the full apothecary open." }
+    ];
+
+    const BODY = [
+      { id: "hot", glyph: "☀", name: "A lit match", sub: "Warm, reactive, inflamed" },
+      { id: "cold", glyph: "◯", name: "A cold stone", sub: "Cool, slow, low energy" },
+      { id: "mixed", glyph: "⌁", name: "A flickering flame", sub: "Sometimes hot, sometimes cold" },
+      { id: "depleted", glyph: "◌", name: "An empty cup", sub: "Exhausted, depleted, dry" }
+    ];
+
+    const BODY_FOLLOWUPS = {
+      hot: [
+        "Short‑tempered / irritable",
+        "Skin feels hot or flushed",
+        "Sleep is light / racy",
+        "Crave cooling foods",
+        "Tend toward headaches",
+        "Feel ‘wired but tired’"
+      ],
+      cold: [
+        "Hard to get going",
+        "Cold hands and feet",
+        "Slow digestion",
+        "Prefer warm drinks",
+        "Low appetite",
+        "Heavy / sluggish body"
+      ],
+      mixed: [
+        "Energy crashes and spikes",
+        "Sometimes sweating, sometimes freezing",
+        "Mood swings up and down",
+        "Sleep pattern is irregular",
+        "Sometimes constipated, sometimes loose",
+        "Crave both sweet and salty"
+      ],
+      depleted: [
+        "Feel purposeless / flat",
+        "Dry skin, eyes or mouth",
+        "No reserves for stress",
+        "Tired after social contact",
+        "Need naps to function",
+        "Hard to feel joyful"
+      ]
+    };
+
+    const DELIVERY = [
+      { id: "tincture", icon: "⋔", name: "Tincture drops", desc: "Fast, concentrated, precise. 30–40 drops into a splash of water, 1–3× daily." },
+      { id: "tonic", icon: "✧", name: "Wild alchemical tonic", desc: "Drinkable elixir with ceremony and flavour – chaga cola, blue lotus soda, forest spritz." },
+      { id: "bottle", icon: "☾", name: "15 / 30 ml altar bottle", desc: "Compact bottle that lives on your altar, desk or nightstand for daily micro‑rituals." }
+    ];
+
+    // Tonics to pair with wild alchemical tonic
+    const TONICS = [
+      { id: "blue_lotus", name: "Blue Lotus Elixir", line: "Dream‑softening, heart‑opening, good for night‑time or soft‑focus evenings." },
+      { id: "chaga_cola", name: "Chaga Cola", line: "Earthy, mineralising cola with forest bitters and gentle caffeine‑free lift." },
+      { id: "wild_soda", name: "Wild Probiotic Soda", line: "Lively, gut‑forward and effervescent – for microbiome play and lightness." },
+      { id: "mineral_shot", name: "Mineral Replenisher Shot", line: "Short, salty‑sweet mineral shot to refill trace elements and deep hydration." }
+    ];
+
+    // placeholder matrix – still used until your backend is wired
+    const HERB_MATRIX = {
+      adaptogenic: {
+        hot: ["Schisandra", "Reishi", "Linden", "Cordyceps", "Nettle"],
+        cold: ["Ashwagandha", "Astragalus", "Ginger", "Cordyceps", "Reishi"],
+        mixed: ["Rhodiola", "Holy Basil", "Skullcap", "Reishi", "Oatstraw"],
+        depleted: ["Ashwagandha", "Oatstraw", "Reishi", "Shatavari", "He Shou Wu"]
+      },
+      hypnotic: {
+        hot: ["Passionflower", "Blue lotus", "Skullcap", "Reishi", "California Poppy"],
+        cold: ["Valerian", "Hops", "Chamomile", "Linden", "Reishi"],
+        mixed: ["Lemon balm", "Linden", "Jasmine", "Blue lotus", "Reishi"],
+        depleted: ["Oatstraw", "Reishi", "Red dates", "Shatavari", "Milky Oats"]
+      },
+      carminative: {
+        hot: ["Meadowsweet", "Chamomile", "Marshmallow", "Reishi", "Calendula"],
+        cold: ["Cardamom", "Fennel", "Ginger", "Licorice", "Chaga"],
+        mixed: ["Lemon balm", "Gotu kola", "Dandelion root", "Reishi", "Nettle"],
+        depleted: ["Slippery elm", "Licorice (DGL)", "Oatstraw", "Chaga", "Marshmallow"]
+      },
+      hepatic: {
+        hot: ["Dandelion root", "Milk thistle", "Schisandra", "Burdock root", "Reishi"],
+        cold: ["Artichoke", "Ginger", "Cardamom", "Chaga", "Nettle"],
+        mixed: ["Burdock root", "Nettle", "Iceland moss", "Reishi", "Dandelion leaf"],
+        depleted: ["Lucerne / Alfalfa", "Nettle", "Oatstraw", "Chaga", "Reishi"]
+      }
+    };
+
+    let S = { int: null, layers: [], safety: [], body: null, bodyFollow: [], delivery: null };
+
+    function renderIntents() {
+      const g = document.getElementById("intentGrid");
+      g.innerHTML = INTS.map(i => `
+        <div class="intent-card" id="int-${i.id}" onclick="selInt('${i.id}')">
+          <div class="intent-tag">${i.tag}</div>
+          <div class="intent-name">${i.name}</div>
+          <div class="intent-desc">${i.desc}</div>
+        </div>
+      `).join("");
+    }
+
+    function renderLayers() {
+      const g = document.getElementById("layerPills");
+      g.innerHTML = LAYERS.map(l => `
+        <button class="pill" id="layer-${l}" onclick="togLayer('${l}')">${l}</button>
+      `).join("");
+    }
+
+    function renderSafety() {
+      const g = document.getElementById("safetyList");
+      g.innerHTML = SAFETY.map(s => `
+        <div class="chk" id="sf-${s.id}" onclick="togSafety('${s.id}')">
+          <div class="cb">✓</div>
+          <div>
+            <span class="cl">${s.label}</span>
+            <span class="cs">${s.sub}</span>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderBody() {
+      const g = document.getElementById("bodyGrid");
+      g.innerHTML = BODY.map(b => `
+        <div class="bmc" id="body-${b.id}" onclick="selBody('${b.id}')">
+          <span class="bmc-g">${b.glyph}</span>
+          <span class="bmc-n">${b.name}</span>
+          <span class="bmc-s">${b.sub}</span>
+        </div>
+      `).join("");
+    }
+
+    function renderDelivery() {
+      const g = document.getElementById("delivGrid");
+      g.innerHTML = DELIVERY.map(d => `
+        <div class="dc" id="deliv-${d.id}" onclick="selDelivery('${d.id}')">
+          <span class="dc-icon">${d.icon}</span>
+          <div class="dc-name">${d.name}</div>
+          <div class="dc-desc">${d.desc}</div>
+        </div>
+      `).join("");
+    }
+
+    function selInt(id) {
+      S.int = id;
+      document.querySelectorAll("#intentGrid .intent-card").forEach(c => c.classList.remove("sel"));
+      const el = document.getElementById("int-" + id);
+      if (el) el.classList.add("sel");
+
+      const intObj = INTS.find(i => i.id === id);
+      document.getElementById("summaryInt").textContent = intObj ? intObj.name : "Not chosen yet";
+      document.getElementById("summaryTitle").textContent = "The engine sees this moment as…";
+      document.getElementById("summaryLine").textContent =
+        intObj ? intObj.desc : "Not yet mapped. Start by picking the primary intention.";
+    }
+
+    function togLayer(name) {
+      const idx = S.layers.indexOf(name);
+      const el = document.getElementById("layer-" + name);
+      if (!el) return;
+      if (idx === -1) {
+        S.layers.push(name);
+        el.classList.add("sel");
+      } else {
+        S.layers.splice(idx, 1);
+        el.classList.remove("sel");
+      }
+      document.getElementById("summaryLayers").textContent =
+        S.layers.length ? S.layers.join(", ") : "None selected";
+    }
+
+    function togSafety(id) {
+      if (id === "none") {
+        S.safety = ["none"];
+        document.querySelectorAll("#safetyList .chk").forEach(c => c.classList.remove("sel"));
+        const el = document.getElementById("sf-none");
+        if (el) el.classList.add("sel");
+      } else {
+        const noneIdx = S.safety.indexOf("none");
+        if (noneIdx !== -1) S.safety.splice(noneIdx, 1);
+        const idx = S.safety.indexOf(id);
+        const el = document.getElementById("sf-" + id);
+        if (!el) return;
+        if (idx === -1) {
+          S.safety.push(id);
+          el.classList.add("sel");
+        } else {
+          S.safety.splice(idx, 1);
+          el.classList.remove("sel");
+        }
+        const noneEl = document.getElementById("sf-none");
+        if (noneEl && S.safety.length) noneEl.classList.remove("sel");
+      }
+
+      const labels = S.safety.includes("none")
+        ? []
+        : S.safety.map(id => SAFETY.find(s => s.id === id)?.label).filter(Boolean);
+      document.getElementById("summarySafety").textContent =
+        labels.length ? labels.join(", ") : "None selected";
+    }
+
+    function selBody(id) {
+      S.body = id;
+      S.bodyFollow = [];
+      document.querySelectorAll(".bm-grid .bmc").forEach(c => c.classList.remove("sel"));
+      const el = document.getElementById("body-" + id);
+      if (el) el.classList.add("sel");
+
+      const bObj = BODY.find(b => b.id === id);
+      document.getElementById("summaryBody").textContent =
+        bObj ? `${bObj.name} · ${bObj.sub}` : "Not chosen yet";
+
+      const follow = BODY_FOLLOWUPS[id] || [];
+      const wrap = document.getElementById("bodyFollowup");
+      const grid = document.getElementById("bfGrid");
+      if (!follow.length) {
+        wrap.style.display = "none";
+        grid.innerHTML = "";
+        return;
+      }
+      wrap.style.display = "block";
+      grid.innerHTML = follow.map(t => `
+        <button class="bf-card" id="bf-${t}" onclick="togBodyFollow('${t}')">${t}</button>
+      `).join("");
+    }
+
+    function togBodyFollow(text) {
+      const idx = S.bodyFollow.indexOf(text);
+      const el = document.getElementById("bf-" + text);
+      if (!el) return;
+      if (idx === -1) {
+        S.bodyFollow.push(text);
+        el.classList.add("sel");
+      } else {
+        S.bodyFollow.splice(idx, 1);
+        el.classList.remove("sel");
+      }
+    }
+
+    function selDelivery(id) {
+      S.delivery = id;
+      document.querySelectorAll(".deliv-grid .dc").forEach(c => c.classList.remove("sel"));
+      const el = document.getElementById("deliv-" + id);
+      if (el) el.classList.add("sel");
+      const dObj = DELIVERY.find(d => d.id === id);
+      document.getElementById("summaryDelivery").textContent =
+        dObj ? dObj.name : "Not chosen yet";
+    }
+
+    function go(stepIndex) {
+      if (stepIndex > 0 && !S.int) {
+        alert("Choose a primary intention first.");
+        return;
+      }
+      if (stepIndex > 3 && !S.body) {
+        alert("Choose the body pattern that feels most true right now.");
+        return;
+      }
+      document.querySelectorAll(".step").forEach((s, i) => {
+        s.classList.toggle("vis", i === stepIndex);
+      });
+      document.querySelectorAll(".pd").forEach((b, i) => {
+        b.classList.toggle("on", i === stepIndex);
+        b.classList.toggle("done", i < stepIndex);
+      });
+      document.getElementById("result").style.display = "none";
+    }
+
+    function buildFormulaName(intentionObj, bodyObj) {
+      const words = [];
+      if (bodyObj?.id === "depleted") words.push("Replenishing");
+      if (bodyObj?.id === "hot") words.push("Cooling");
+      if (bodyObj?.id === "cold") words.push("Kindling");
+      if (bodyObj?.id === "mixed") words.push("Regulating");
+
+      if (intentionObj?.id === "adaptogenic") words.push("Nerve");
+      if (intentionObj?.id === "nervine") words.push("Heart");
+      if (intentionObj?.id === "hepatic") words.push("Liver");
+      if (intentionObj?.id === "carminative") words.push("Gut");
+      if (intentionObj?.id === "hypnotic") words.push("Dream");
+      if (!words.length) words.push("Field");
+
+      words.push("Elixir");
+      return words.join(" ");
+    }
+
+    function buildSynergyText(intentionObj, bodyObj, herbs, bodyFollow, delivery) {
+      const five = herbs.slice(0, 5);
+      const lead = five.join(" · ") || "these plants";
+
+      const mood =
+        bodyObj?.id === "hot" ? "cooling inflamed edges and settling over‑heat" :
+        bodyObj?.id === "cold" ? "kindling gentle warmth and circulation" :
+        bodyObj?.id === "depleted" ? "refilling empty reserves and moistening dryness" :
+        "smoothing swings and bringing you back to centre";
+
+      const axis = intentionObj
+        ? intentionObj.name.toLowerCase()
+        : "your current system";
+
+      const extra = bodyFollow.length
+        ? " It especially listens to how you described this moment: " + bodyFollow.join(", ") + "."
+        : "";
+
+      const vessel =
+        delivery === "tonic"
+          ? "poured as a wild alchemical tonic"
+          : delivery === "tincture"
+          ? "held in tincture form"
+          : "kept as a small altar bottle";
+
+      return `${lead} are woven here to lean into ${axis}, ${mood}, and ${vessel}.${extra}`;
+    }
+
+    function buildDoseText(delivObj) {
+      if (!delivObj) return "";
+      if (delivObj.id === "tincture") {
+        return "Suggested ritual: 30–40 drops in a little water, 1–3× per day, pausing one day each week to listen.";
+      }
+      if (delivObj.id === "tonic") {
+        return "Suggested ritual: 50–150 ml poured over ice or warm, once daily or as a ceremonial drink when you need to feel this pattern most.";
+      }
+      if (delivObj.id === "bottle") {
+        return "Suggested ritual: 5–15 drops under the tongue or into tea when you pass your altar or desk, letting repetition, not volume, do the work.";
+      }
+      return "";
+    }
+
+    function pickTonic(intentionId, bodyId) {
+      // simple mapping – refine later
+      if (intentionId === "hypnotic" || bodyId === "hot") return TONICS[0]; // Blue Lotus
+      if (intentionId === "hepatic" || intentionId === "carminative") return TONICS[1]; // Chaga Cola
+      if (intentionId === "immune" || intentionId === "adaptogenic") return TONICS[2]; // Wild soda
+      return TONICS[3]; // Mineral shot
+    }
+
+    async function buildFormula() {
+      if (!S.int || !S.body || !S.delivery) {
+        alert("Please choose intention, body pattern and delivery format.");
+        return;
+      }
+
+      const buildBtn = document.getElementById("buildBtn");
+      const originalText = buildBtn.textContent;
+      buildBtn.textContent = "Brewing…";
+      buildBtn.disabled = true;
+
+      // still using local HERB_MATRIX until backend is ready
+      const pool = HERB_MATRIX[S.int] || HERB_MATRIX.adaptogenic;
+      let herbs = (pool && pool[S.body]) || pool.mixed || [];
+      // ensure we always show 5 plants if available
+      herbs = herbs.slice(0, 5);
+
+      const intentionObj = INTS.find(i => i.id === S.int);
+      const bodyObj = BODY.find(b => b.id === S.body);
+      const delivObj = DELIVERY.find(d => d.id === S.delivery);
+
+      const formulaName = buildFormulaName(intentionObj, bodyObj);
+      const accentDot = '<span class="res-accent-dot"></span>';
+
+      document.getElementById("resTitle").innerHTML =
+        accentDot + formulaName +
+        (herbs.length ? " · " + herbs.slice(0,2).join(" + ") : "");
+
+      document.getElementById("resSubtitle").textContent =
+        intentionObj && bodyObj
+          ? `${intentionObj.name} through the lens of ${bodyObj.name.toLowerCase()}`
+          : "Custom elixir pattern";
+
+      const synergy = buildSynergyText(intentionObj, bodyObj, herbs, S.bodyFollow, S.delivery);
+      document.getElementById("resSynergy").textContent = synergy;
+
+      const doseText = buildDoseText(delivObj);
+      document.getElementById("resDose").textContent = doseText;
+
+      // tonic pairing
+      const tonicNote = document.getElementById("tonicNote");
+      if (delivObj && delivObj.id === "tonic") {
+        const t = pickTonic(S.int, S.body);
+        tonicNote.style.display = "block";
+        tonicNote.innerHTML =
+          `<span class="tonic-label">Suggested tonic vessel</span><br>` +
+          `<span class="tonic-name">${t.name}</span> — ${t.line}`;
+        document.getElementById("summaryBest").textContent =
+          herbs.length ? `${herbs[0]} in ${t.name}` : t.name;
+      } else {
+        tonicNote.style.display = "none";
+        document.getElementById("summaryBest").textContent =
+          herbs.length ? herbs[0] : "No ally generated yet";
+      }
+
+      const heroRow = document.getElementById("resHeroRow");
+      const supportRow = document.getElementById("resSupportRow");
+      heroRow.innerHTML = "";
+      supportRow.innerHTML = "";
+
+      if (herbs.length) {
+        const heroes = herbs.slice(0,2);
+        const support = herbs.slice(2);
+
+        heroRow.innerHTML = heroes
+          .map(name => `<div class="res-hero-name">${name}</div>`)
+          .join("");
+
+        supportRow.innerHTML = support
+          .map(name => `<div class="res-support-pill"><span>Support</span>${name}</div>`)
+          .join("");
+      } else {
+        supportRow.innerHTML =
+          `<div class="res-support-pill"><span>Note</span>No herbs mapped yet. Plug in your full herbs matrix to populate this.</div>`;
+      }
+
+      const frame = document.getElementById("resImgInner");
+      frame.style.opacity = "0.6";
+      frame.style.backgroundImage =
+        "radial-gradient(circle at top, #252a32 0, #050507 60%)";
+      document.getElementById("resImgLabel").textContent = "Elixir atmosphere · brewing…";
+
+      document.getElementById("result").style.display = "block";
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+
+      // animate herb reveal
+      requestAnimationFrame(() => {
+        document.querySelectorAll(".res-hero-name").forEach((el, idx) => {
+          setTimeout(() => {
+            el.style.opacity = "1";
+            el.style.transform = "translateY(0)";
+          }, 80 * idx);
+        });
+        document.querySelectorAll(".res-support-pill").forEach((el, idx) => {
+          setTimeout(() => {
+            el.style.opacity = "1";
+            el.style.transform = "translateY(0)";
+          }, 100 + 60 * idx);
+        });
+      });
+
+      // DALL·E hook – still optional
+      try {
+        const res = await fetch("/api/elixir-image", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            intention: intentionObj?.id,
+            body: bodyObj?.id,
+            delivery: delivObj?.id,
+            herbs
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data?.imageUrl) {
+            frame.style.backgroundImage = `url(${data.imageUrl})`;
+            frame.style.opacity = "1";
+            document.getElementById("resImgLabel").textContent = "Elixir atmosphere · AI‑imagined";
+          } else {
+            frame.style.opacity = "0.8";
+            document.getElementById("resImgLabel").textContent = "Elixir atmosphere · gradient";
+          }
+        } else {
+          frame.style.opacity = "0.8";
+          document.getElementById("resImgLabel").textContent = "Elixir atmosphere · gradient";
+        }
+      } catch {
+        frame.style.opacity = "0.8";
+        document.getElementById("resImgLabel").textContent = "Elixir atmosphere · gradient";
+      } finally {
+        buildBtn.textContent = "Brew another pattern";
+        buildBtn.disabled = false;
+      }
+    }
+
+    // init
+    renderIntents();
+    renderLayers();
+    renderSafety();
+    renderBody();
+    renderDelivery();
+  </script>
+</body>
+</html>
