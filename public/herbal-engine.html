@@ -936,33 +936,103 @@
       { id: "mineral_shot", name: "Mineral Replenisher Shot", line: "Short, salty‑sweet mineral shot to refill trace elements and deep hydration." }
     ];
 
-    // placeholder matrix – still used until your backend is wired
-    const HERB_MATRIX = {
-      adaptogenic: {
-        hot: ["Schisandra", "Reishi", "Linden", "Cordyceps", "Nettle"],
-        cold: ["Ashwagandha", "Astragalus", "Ginger", "Cordyceps", "Reishi"],
-        mixed: ["Rhodiola", "Holy Basil", "Skullcap", "Reishi", "Oatstraw"],
-        depleted: ["Ashwagandha", "Oatstraw", "Reishi", "Shatavari", "He Shou Wu"]
-      },
-      hypnotic: {
-        hot: ["Passionflower", "Blue lotus", "Skullcap", "Reishi", "California Poppy"],
-        cold: ["Valerian", "Hops", "Chamomile", "Linden", "Reishi"],
-        mixed: ["Lemon balm", "Linden", "Jasmine", "Blue lotus", "Reishi"],
-        depleted: ["Oatstraw", "Reishi", "Red dates", "Shatavari", "Milky Oats"]
-      },
-      carminative: {
-        hot: ["Meadowsweet", "Chamomile", "Marshmallow", "Reishi", "Calendula"],
-        cold: ["Cardamom", "Fennel", "Ginger", "Licorice", "Chaga"],
-        mixed: ["Lemon balm", "Gotu kola", "Dandelion root", "Reishi", "Nettle"],
-        depleted: ["Slippery elm", "Licorice (DGL)", "Oatstraw", "Chaga", "Marshmallow"]
-      },
-      hepatic: {
-        hot: ["Dandelion root", "Milk thistle", "Schisandra", "Burdock root", "Reishi"],
-        cold: ["Artichoke", "Ginger", "Cardamom", "Chaga", "Nettle"],
-        mixed: ["Burdock root", "Nettle", "Iceland moss", "Reishi", "Dandelion leaf"],
-        depleted: ["Lucerne / Alfalfa", "Nettle", "Oatstraw", "Chaga", "Reishi"]
+    // --- Real herb database loaded from herbs.ts export ---
+    let HERBS_DB = null;
+
+    async function fetchHerbs() {
+      try {
+        const res = await fetch("/herb-engine-pool.json");
+        if (res.ok) HERBS_DB = await res.json();
+      } catch {
+        console.warn("Could not load herb-engine-pool.json");
       }
-    };
+    }
+
+    function scoreHerb(herb, intentionId, bodyId, safetyFlags) {
+      const pf = herb.primary_functions.join(" ").toLowerCase();
+      const energetics = herb.energetics.join(" ").toLowerCase();
+      const meridians = herb.tcm_meridians.join(" ").toLowerCase();
+      const caution = herb.caution_level;
+
+      // Hard safety exclusions
+      if (safetyFlags.includes("pregnancy") && (pf.includes("emmenagog") || pf.includes("uterine stimulant"))) return -999;
+      if (safetyFlags.includes("ssri") && (herb.name === "St. John's Wort" || pf.includes("serotonin reuptake"))) return -999;
+      if (safetyFlags.includes("liver") && (caution === "HIGH" || caution === "VERY HIGH")) return -999;
+      if (safetyFlags.includes("autoimmune") && pf.includes("immune stimulat")) return -999;
+
+      let score = 0;
+
+      // Intention → keyword match in primary functions or meridians
+      const kmap = {
+        adaptogenic: ["adaptogen"],
+        hypnotic:    ["sleep", "insomnia", "sedative", "hypnotic"],
+        tonic:       ["tonic", "vitality", "stamina"],
+        anxiolytic:  ["anxiolytic", "anxiety", "nervine", "calming"],
+        nervine:     ["nervine", "mood", "depression", "uplift"],
+        carminative: ["digestive", "carminative", "gi ", "gut", "bloat", "ibs"],
+        immune:      ["immune", "immunomodulat", "antimicrobial", "antiviral"],
+        analgesic:   ["analgesic", "anti-inflammatory", "pain", "inflammation"],
+        endocrine:   ["hormone", "estrogen", "testosterone", "cycle", "menopause", "hpa"],
+        nootropic:   ["nootropic", "cognitive", "memory", "focus", "neurogenesis"],
+        trophic:     ["skin", "collagen", "wound", "hair", "beauty"],
+        hepatic:     ["liver", "hepatic", "detox", "bile"]
+      };
+
+      const keys = kmap[intentionId] || [];
+      for (const kw of keys) {
+        if (pf.includes(kw) || meridians.includes(kw)) { score += 4; break; }
+      }
+
+      // Body pattern vs energetics
+      if (bodyId === "hot"      && (energetics.includes("cool") || energetics.includes("cold"))) score += 3;
+      if (bodyId === "cold"     && (energetics.includes("warm") || energetics.includes("hot")))  score += 3;
+      if (bodyId === "depleted" && (energetics.includes("nourish") || energetics.includes("tonic") || energetics.includes("build"))) score += 4;
+      if (bodyId === "mixed"    && (energetics.includes("balanc") || energetics.includes("neutral"))) score += 2;
+
+      // Prefer lower-caution herbs
+      if      (caution === "LOW")         score += 1;
+      else if (caution === "LOW-MEDIUM")  score += 0.5;
+      else if (caution === "MEDIUM-HIGH" || caution === "HIGH") score -= 1;
+      else if (caution === "VERY HIGH")   score -= 3;
+
+      return score;
+    }
+
+    // --- Learning engine ---
+    // Stores how often each herb was recommended per intention+body combo.
+    // Format: { "adaptogenic_hot": { "Reishi": 7, "Ashwagandha": 3, ... }, ... }
+    function _learnKey(intentionId, bodyId) { return intentionId + '_' + bodyId; }
+
+    function getLearning() {
+      try { return JSON.parse(localStorage.getItem('he1_learning') || '{}'); } catch { return {}; }
+    }
+
+    function recordLearning(intentionId, bodyId, herbNames) {
+      const data = getLearning();
+      const key = _learnKey(intentionId, bodyId);
+      if (!data[key]) data[key] = {};
+      herbNames.forEach(name => { data[key][name] = (data[key][name] || 0) + 1; });
+      try { localStorage.setItem('he1_learning', JSON.stringify(data)); } catch {}
+    }
+
+    function learnedBoost(intentionId, bodyId, herbName) {
+      const freq = (getLearning()[_learnKey(intentionId, bodyId)] || {})[herbName] || 0;
+      return Math.min(freq * 0.4, 2.0); // caps at +2 so it nudges, not overrides
+    }
+
+    function getTopHerbs(intentionId, bodyId, safetyFlags) {
+      if (!HERBS_DB) return [];
+      return HERBS_DB
+        .map(h => ({
+          herb: h,
+          score: scoreHerb(h, intentionId, bodyId, safetyFlags)
+                 + learnedBoost(intentionId, bodyId, h.name)
+        }))
+        .filter(x => x.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 5)
+        .map(x => x.herb.name);
+    }
 
     let S = { int: null, layers: [], safety: [], body: null, bodyFollow: [], delivery: null };
 
@@ -1223,11 +1293,8 @@
       buildBtn.textContent = "Brewing…";
       buildBtn.disabled = true;
 
-      // still using local HERB_MATRIX until backend is ready
-      const pool = HERB_MATRIX[S.int] || HERB_MATRIX.adaptogenic;
-      let herbs = (pool && pool[S.body]) || pool.mixed || [];
-      // ensure we always show 5 plants if available
-      herbs = herbs.slice(0, 5);
+      let herbs = getTopHerbs(S.int, S.body, S.safety);
+      if (herbs.length) recordLearning(S.int, S.body, herbs);
 
       const intentionObj = INTS.find(i => i.id === S.int);
       const bodyObj = BODY.find(b => b.id === S.body);
@@ -1349,6 +1416,7 @@
     }
 
     // init
+    fetchHerbs();
     renderIntents();
     renderLayers();
     renderSafety();

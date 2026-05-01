@@ -1,0 +1,3815 @@
+[
+  {
+    "id": 201,
+    "name": "Bilberry",
+    "primary_functions": [
+      "Retinoprotection — anthocyanins shield retinal cells from light-induced oxidative damage",
+      "Eye strain and VDT fatigue relief — improves ciliary muscle function and accommodative strain",
+      "Microvascular strengthening — reduces capillary fragility and improves venous tone",
+      "Cardiometabolic antioxidant — modestly improves lipids and glucose via polyphenol action",
+      "GI astringent — traditional dried berry use for diarrhea via tannin and antimicrobial action"
+    ],
+    "energetics": [
+      "Neutral",
+      "Slightly Cool",
+      "Sweet",
+      "Sour",
+      "Astringent",
+      "Vasoprotective"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Kidney",
+      "Heart"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 202,
+    "name": "Angelica (Dong Quai)",
+    "primary_functions": [
+      "Blood tonification — ferulic acid, iron and folate nourish red blood cells and restore depleted blood quality",
+      "Menstrual regulation — normalises both heavy and light flow through blood-moving vasodilatory action",
+      "Dysmenorrhea relief — ligustilide vasodilation plus ferulic acid anti-inflammatory reduce cramping",
+      "Circulation enhancement — smooth muscle relaxation improves blood flow to pelvic and peripheral regions",
+      "Post-haemorrhage recovery — intensive blood repletion after miscarriage, heavy bleeding or surgery"
+    ],
+    "energetics": [
+      "Warm",
+      "Moist",
+      "Sweet",
+      "Aromatic",
+      "Blood-Moving",
+      "Blood-Tonifying",
+      "Regulating"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Spleen",
+      "Pericardium"
+    ],
+    "caution_level": "MEDIUM-HIGH"
+  },
+  {
+    "id": 203,
+    "name": "Aronia Berry",
+    "primary_functions": [
+      "Cardiometabolic polyphenol powerhouse — blood pressure, LDL and triglyceride reduction",
+      "Endothelial and myocardial protection — improved cardiac function markers in metabolic syndrome",
+      "Glycaemic modulation — improved glucose tolerance and insulin sensitivity",
+      "Hepatoprotection — reduces oxidative stress and fatty liver changes in metabolic syndrome",
+      "Global antioxidant and anti-inflammatory support across cardiovascular and metabolic tissue"
+    ],
+    "energetics": [
+      "Neutral",
+      "Slightly Cool",
+      "Very Astringent",
+      "Sour",
+      "Protective",
+      "Dense"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Spleen",
+      "Stomach"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 103,
+    "name": "Ashwagandha",
+    "primary_functions": [
+      "HPA axis adaptogenic modulation — true cortisol adaptation (not suppression); stress resilience restoration",
+      "GABAergic anxiolytic — GABA-A receptor binding; anxiety reduction without tolerance development",
+      "Thyroid modulation — increases T3/T4 (beneficial hypothyroid; DANGEROUS hyperthyroid — screening critical)",
+      "Testosterone enhancement — LH stimulation and cortisol reduction yields 15–20% testosterone increase",
+      "Neuroprotection — reduces β-amyloid and tau pathology; increases BDNF; cognitive aging prevention"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Grounding",
+      "Nourishing",
+      "Tonifying",
+      "Yang-Activating"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Spleen",
+      "Heart"
+    ],
+    "caution_level": "MEDIUM-HIGH"
+  },
+  {
+    "id": 204,
+    "name": "Astragalus",
+    "primary_functions": [
+      "Balanced immune enhancement — polysaccharides strengthen T-cells, NK cells and macrophages WITHOUT overstimulation",
+      "Wei Qi protection — strengthens defensive energy; pathogen entry resistance and barrier immunity",
+      "Illness prevention — seasonal and year-round infection resistance building",
+      "Post-illness recovery — rebuilds qi foundations; speeds immune recovery after serious illness",
+      "Mild adaptogenic stress resilience — HPA axis modulation; gentle vitality restoration"
+    ],
+    "energetics": [
+      "Warm",
+      "Sweet",
+      "Tonifying",
+      "Protective",
+      "Immune-Supporting",
+      "Wei-Qi-Strengthening"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Lung",
+      "Kidney",
+      "Heart"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 4,
+    "name": "Bacopa",
+    "primary_functions": [
+      "BDNF stimulation — bacosides directly stimulate brain-derived neurotrophic factor; synaptic fertiliser",
+      "Memory enhancement and learning — long-term potentiation (LTP) support; information retention and recall",
+      "Acetylcholine enhancement — increases cognitive neurotransmitter critical for memory and attention",
+      "Anxiolytic without sedation — mild GABA modulation produces paradoxical calm-clarity state",
+      "Antioxidant neuroprotection — flavonoids protect neural tissue from oxidative damage; cognitive aging prevention"
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Slightly Bitter",
+      "Memory-Enhancing",
+      "Consciousness-Expanding",
+      "Calming"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Spleen",
+      "Kidney"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 205,
+    "name": "Barberry",
+    "primary_functions": [
+      "Gut antimicrobial — berberine broad-spectrum antimicrobial against bacteria, fungi and protozoa",
+      "Metabolic regulation — berberine lowers glucose, HbA1c, LDL and triglycerides (AMPK activation)",
+      "Hepatobiliary support — stimulates bile flow; hepatoprotective; liver-gut-skin axis clearing",
+      "Dysbiosis and SIBO support — berberine modulates gut microbiota and reduces bacterial overgrowth",
+      "Anti-inflammatory — downregulates pro-inflammatory cytokines; reduces oxidative stress"
+    ],
+    "energetics": [
+      "Cooling",
+      "Very Bitter",
+      "Astringent",
+      "Antimicrobial",
+      "Boundary-Setting",
+      "Liver-Clearing"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Gallbladder",
+      "Stomach",
+      "Large Intestine"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 206,
+    "name": "Barley",
+    "primary_functions": [
+      "LDL cholesterol reduction — β-glucan forms viscous intestinal gel; entraps bile acids and cholesterol; forces hepatic cholesterol clearance",
+      "Glycaemic modulation — β-glucan slows gastric emptying and carbohydrate absorption; blunts postprandial glucose and insulin peaks",
+      "Prebiotic gut support — β-glucan and arabinoxylans feed beneficial bacteria; increases SCFA production",
+      "Barley grass antioxidant — saponarin, chlorophyll, vitamins and minerals support oxidative stress reduction",
+      "Cardiovascular risk reduction — combined LDL, glucose and anti-inflammatory effects; EFSA-recognised health claim"
+    ],
+    "energetics": [
+      "Neutral",
+      "Slightly Cool",
+      "Moistening",
+      "Nourishing",
+      "Grounding",
+      "Stabilising"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Liver"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 126,
+    "name": "Blue Lotus",
+    "primary_functions": [
+      "Dream lucidity and vividness — nuciferine dopamine + acetylcholine modulation enhances REM access and dream recall",
+      "Subtle consciousness expansion — non-hallucinogenic shift toward symbolic perception, intuitive knowing and dream-logic",
+      "Anxiety and restlessness relief — paradoxical calm-openness via linalool anxiolytic and dopamine confidence",
+      "Heart-centre opening — apomorphine promotes oxytocin release; pericardium emotional barriers soften",
+      "Meditation deepening — shifts brainwaves toward theta states (4–8 Hz); enhances hypnagogic and liminal consciousness"
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Dreamlike",
+      "Consciousness-Shifting",
+      "Portal-Opening",
+      "Heart-Opening"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Pericardium",
+      "Third Eye"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 207,
+    "name": "Calamus",
+    "primary_functions": [
+      "Consciousness expansion and spirit opening — traditional Ayurvedic, Chinese and Native American cognitive-spiritual herb",
+      "Meditation deepening — aromatic volatile compounds support altered awareness and inner stillness",
+      "Cognitive support — traditional memory and mental clarity (limited modern RCT evidence)",
+      "Digestive bitter — aromatic bitters support digestive secretion and carminative relief",
+      "Grounding aromatherapy — rhizome aroma used for centering and presence practices"
+    ],
+    "energetics": [
+      "Warm",
+      "Pungent",
+      "Aromatic",
+      "Spirit-Opening",
+      "Consciousness-Expanding",
+      "Cognitively-Activating"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Kidney",
+      "Spleen"
+    ],
+    "caution_level": "VERY HIGH"
+  },
+  {
+    "id": 208,
+    "name": "Black Cumin",
+    "primary_functions": [
+      "Immune activation — thymoquinone enhances immune cell function and infection resistance",
+      "Potent antioxidant — thymoquinone free-radical scavenging comparable to turmeric (Grade B+)",
+      "Systemic anti-inflammatory — thymoquinone suppresses inflammatory pathways; joint and systemic support",
+      "Respiratory support — volatile oil and thymoquinone provide bronchial clearing and sinus support",
+      "Neuroprotection — thymoquinone brain health and cognitive aging support (cumulative)"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Bitter",
+      "Immune-Boosting",
+      "Respiratory-Supporting",
+      "Antioxidant"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Spleen",
+      "Liver"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 209,
+    "name": "Black Walnut",
+    "primary_functions": [
+      "Antiparasitic — juglone directly eliminates intestinal parasites; traditional specialist anti-parasitic herb",
+      "Broad-spectrum antimicrobial — juglone and tannins eliminate pathogenic bacteria while preserving beneficial flora",
+      "Antifungal — juglone eliminates Candida and other fungal overgrowth",
+      "Detoxification support — promotes elimination pathways and bowel movement as part of cleansing protocols",
+      "Iodine content — trace iodine provides mild thyroid and antimicrobial support"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Bitter",
+      "Antiparasitic",
+      "Antimicrobial",
+      "Antifungal",
+      "Detoxifying"
+    ],
+    "tcm_meridians": [
+      "Large Intestine",
+      "Liver",
+      "Spleen"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 210,
+    "name": "Bladderwrack",
+    "primary_functions": [
+      "Thyroid support — highest natural iodine source (2–5%); supports T3/T4 synthesis in hypothyroid states",
+      "Metabolic enhancement — iodine-driven thyroid improvement increases metabolic rate and energy",
+      "Comprehensive mineral nutrition — potassium, calcium, magnesium, iron and trace minerals in bioavailable form",
+      "Immune activation — fucoidan polysaccharides enhance NK cells and macrophages",
+      "Cognitive support — iodine essential for brain development and neurological function"
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Salty",
+      "Mineral-Dense",
+      "Tonifying",
+      "Thyroid-Supporting"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Spleen"
+    ],
+    "caution_level": "MEDIUM-HIGH"
+  },
+  {
+    "id": 211,
+    "name": "Blueberry",
+    "primary_functions": [
+      "BDNF stimulation — anthocyanins cross blood-brain barrier and increase brain-derived neurotrophic factor; synaptic strengthening",
+      "Memory enhancement — long-term potentiation (LTP) support; improved information retention and recall",
+      "Brain-specific antioxidant protection — anthocyanins uniquely accumulate in hippocampus and frontal cortex",
+      "Neuroprotection — reduces β-amyloid and tau aggregation; neuroinflammation prevention; Alzheimer\\",
+      ",\r\n      "
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Sweet",
+      "Nourishing",
+      "Protective",
+      "Memory-Enhancing"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Kidney",
+      "Heart"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 102,
+    "name": "Bobinsana",
+    "primary_functions": [
+      "Emotional heart opening — dissolves emotional armour; facilitates grief processing and heartbreak healing",
+      "Serotonin and dopamine modulation — proposed alkaloid-mediated monoamine activity (traditional evidence; limited modern pharmacology)",
+      "Cardiovascular heart tonic — gentle heart tissue support; heart-centering and mild vasodilation",
+      "Mood support and elevation — cumulative mood improvement over weeks of consistent use",
+      "Visionary and dream enhancement — consciousness expansion in ceremonial context (traditional Amazonian use)"
+    ],
+    "energetics": [
+      "Warm",
+      "Slightly Moist",
+      "Heart-Opening",
+      "Grounding",
+      "Consciousness-Expanding"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Spleen"
+    ],
+    "caution_level": "MEDIUM-HIGH"
+  },
+  {
+    "id": 104,
+    "name": "Broadleaf Plantain",
+    "primary_functions": [
+      "Topical vulnerary — fresh leaf poultice for rapid relief of bites, stings, burns, minor cuts and splinters",
+      "Respiratory demulcent — soothes hot, raw, irritated respiratory mucosa; reduces cough and hemoptysis",
+      "Mucosal protector — anti-ulcer and GI demulcent for gastritis, peptic ulcers and irritable bowel",
+      "Anti-inflammatory — iridoid glycosides (aucubin, catalpol) reduce inflammatory mediators in tissue",
+      "Antimicrobial — leaf extracts show antibacterial activity; supports respiratory and urinary tract infections"
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Slightly Astringent",
+      "Demulcent",
+      "Cooling",
+      "Vulnerary"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Kidney",
+      "Liver"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 212,
+    "name": "Burdock",
+    "primary_functions": [
+      "Prebiotic microbiome feeding — inulin (30–50% of dried root) selectively feeds Bifidobacteria and Lactobacillus",
+      "Liver detoxification support — chlorogenic acid, caffeic acid and arctiin support phase I and phase II pathways",
+      "Anti-inflammatory — arctiin sesquiterpene lactone reduces TNF-α, IL-6 and NF-κB; skin and GI inflammation",
+      "Foundational mineral nutrition — dense bioavailable minerals (K, Ca, Mg, Fe, Zn, Cr)",
+      "Dysbiosis healing — prebiotic action restores gut flora balance; improves gut barrier and reduces endotoxin"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Sweet",
+      "Blood-Purifying",
+      "Tonifying",
+      "Detoxifying",
+      "Grounding"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Spleen",
+      "Stomach",
+      "Large Intestine"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 213,
+    "name": "Butcher",
+    "primary_functions": [
+      "Chronic venous insufficiency (CVI) — alpha-adrenergic venoconstriction reduces venous pooling, leg heaviness, cramping and ankle oedema",
+      "Varicose vein support — ruscogenins tighten lax venous smooth muscle; reduces venous capacity",
+      "Haemorrhoid relief — venotonic and capillary-protective action on haemorrhoidal plexus",
+      "Capillary protection — reduces capillary permeability and improves lymphatic drainage",
+      "Orthostatic hypotension adjunct — venoconstrictive properties reduce venous pooling on standing"
+    ],
+    "energetics": [
+      "Neutral",
+      "Slightly Warming",
+      "Bitter",
+      "Astringent",
+      "Venotonic",
+      "Structuring"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Spleen",
+      "Kidney"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 214,
+    "name": "Butterbur",
+    "primary_functions": [
+      "Migraine prevention — petasin and isopetasin inhibit leukotrienes, prostaglandins and TRPA1; reduces attack frequency (multiple RCTs)",
+      "Allergic rhinitis — as effective as cetirizine in seasonal hay fever without sedation (clinical trial evidence)",
+      "Bronchial antispasmodic — leukotriene and calcium-channel modulation supports asthma and bronchial spasm relief",
+      "Vascular smooth muscle relaxation — reduces vasospasm associated with migraine pathophysiology",
+      "Anti-inflammatory — systemic leukotriene and prostaglandin inhibition across respiratory and vascular tissues"
+    ],
+    "energetics": [
+      "Slightly Cool",
+      "Slightly Dry",
+      "Bitter-Aromatic",
+      "Antispasmodic",
+      "Anti-Allergic"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Lung",
+      "Heart"
+    ],
+    "caution_level": "MEDIUM-HIGH"
+  },
+  {
+    "id": 215,
+    "name": "Damiana",
+    "primary_functions": [
+      "Sexual vitality and arousal — volatile oils and alkaloids increase blood flow to genitals and enhance tactile sensation",
+      "Confidence and embodied presence — sacral activation removes psychological blocks to desire and social ease",
+      "Paradoxical calm-stimulation — mild sympathomimetic activation without agitation or jitteriness",
+      "Mood elevation and social confidence — dopamine modulation; embodied charisma and authentic expression",
+      "Nervous system activation for tired, dull, withdrawn states — restores functional energy without overstimulation"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Stimulating",
+      "Sensory-Enhancing",
+      "Confidence-Building",
+      "Pleasure-Promoting"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Kidney",
+      "Heart"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 107,
+    "name": "Dandelion Root",
+    "primary_functions": [
+      "Liver detoxification — bitter sesquiterpenes stimulate bile production; supports phase I and phase II enzyme pathways",
+      "Prebiotic microbiome feeding — inulin (2–10% root) selectively feeds Bifidobacterium and Lactobacillus",
+      "Digestive bitters — stimulates HCl, digestive enzymes and bile; activates entire digestive chain",
+      "Potassium-rich diuretic — richest herbal potassium source; supports kidney function and electrolyte balance",
+      "Blood sugar regulation support — inulin modulates glucose absorption; improves insulin sensitivity"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Bitter",
+      "Cleansing",
+      "Detoxifying",
+      "Liver-Moving",
+      "Foundational"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Stomach",
+      "Lung"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 216,
+    "name": "Elderberry",
+    "primary_functions": [
+      "Antiviral — anthocyanins block influenza hemagglutinin surface proteins; inhibit viral entry and replication",
+      "Cold and flu duration reduction — clinical trials show reduced duration and severity when taken early",
+      "Balanced immune modulation — polysaccharides and polyphenols modulate cytokines without overstimulation",
+      "Wei Qi protection — strengthens respiratory mucosal defence at the body\\",
+      ",\r\n      "
+    ],
+    "energetics": [
+      "Cool",
+      "Slightly Moistening",
+      "Sweet-Tart",
+      "Dispersing",
+      "Antiviral",
+      "Protective"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Spleen"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 132,
+    "name": "Calea Zacatachichi",
+    "primary_functions": [
+      "REM sleep architecture modulation — sesquiterpene lactones increase REM density, duration and dream vividness",
+      "Dream lucidity enhancement — optimal neurochemical conditions for lucid dreaming; improved dream recall",
+      "Consciousness bridge — retains observing awareness within dream state; liminal state facilitation",
+      "Hypnagogic state enhancement — enriches falling-asleep threshold imagery and intuitive insight access",
+      "Visionary and shamanic journeying support — traditional Chontal Mazatec ceremonial plant teacher"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Intensely Bitter",
+      "Consciousness-Altering",
+      "Oneiric",
+      "Dream-Opening"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Third Eye",
+      "Pericardium"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 217,
+    "name": "Cardamom",
+    "primary_functions": [
+      "Digestive carminative and antispasmodic — 1,8-cineole and α-terpinyl acetate relax GI smooth muscle and reduce gas and cramping",
+      "Respiratory expectorant — 1,8-cineole (eucalyptol) supports bronchodilation, expectoration and phlegm clearance",
+      "Cardiometabolic modulation — clinical trials (3 g/day) show improved blood pressure, lipids and glycaemic parameters",
+      "Nausea relief — warming aromatic oils soothe gastric hypermotility and settle digestion",
+      "Heart-opening aromatic — sattvic Ayurvedic quality; uplifts mood, clears heaviness and supports prana"
+    ],
+    "energetics": [
+      "Warm",
+      "Aromatic",
+      "Pungent",
+      "Slightly Sweet",
+      "Qi-Moving",
+      "Damp-Resolving",
+      "Heart-Opening"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Spleen",
+      "Stomach",
+      "Large Intestine"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 218,
+    "name": "Catuaba",
+    "primary_functions": [
+      "Sexual vitality and arousal — catuabine alkaloids provide mild sympathomimetic activation; increased blood flow to sexual organs",
+      "Sexual endurance and performance — sustained sympathetic tone supports sexual stamina without fatigue",
+      "Mood elevation and confidence — dopamine and norepinephrine modulation; uplifting and embodied presence",
+      "Energy building — warming, activating effect without agitation or jitteriness",
+      "Traditional Amazonian aphrodisiac — 400+ years indigenous use; regional reputation as the ",
+      ""
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Stimulating",
+      "Arousal-Promoting",
+      "Energy-Building",
+      "Confidence-Activating"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Liver",
+      "Heart"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 219,
+    "name": "Cayenne",
+    "primary_functions": [
+      "Circulation catalyst — capsaicin TRPV1 receptor agonism causes genuine thermogenesis and vasodilation",
+      "Topical analgesic — TRPV1 desensitisation depletes Substance P; effective for chronic musculoskeletal and neuropathic pain",
+      "Metabolic activation — sympathetic stimulation increases oxygen consumption, ATP production and metabolic rate",
+      "Digestive fire ignition — stimulates HCl, digestive enzymes and bile; carminative and warming",
+      "Cardiovascular protective — improves blood flow, reduces platelet aggregation and supports vascular health"
+    ],
+    "energetics": [
+      "Very Warm",
+      "Very Dry",
+      "Moving",
+      "Penetrating",
+      "Activating",
+      "Transforming",
+      "Fierce"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Spleen",
+      "Liver"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 128,
+    "name": "Chamomile",
+    "primary_functions": [
+      "Nervous system soothing via apigenin GABA-A receptor modulation — gentle calm without sedation or dependence",
+      "Sleep quality improvement — mild anxiolytic and parasympathetic activation supports sleep onset and depth",
+      "Digestive anti-inflammatory and antispasmodic — soothes gastritis, IBS, cramping and colic",
+      "Anxiety and nervous tension relief — foundational nervine safe for continuous daily long-term use",
+      "Anti-inflammatory via azulene, bisabolol and flavonoids — systemic and topical tissue support"
+    ],
+    "energetics": [
+      "Warm",
+      "Moist",
+      "Sweet",
+      "Gentle",
+      "Soothing",
+      "Nervine-Tonifying"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Liver",
+      "Heart"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 220,
+    "name": "Devil",
+    "primary_functions": [
+      "Osteoarthritis analgesia — harpagoside and harpagide inhibit COX-2, LOX and TNF-α; pain reduction comparable to low-dose NSAIDs in trials",
+      "Chronic low back pain relief — multiple RCTs show moderate benefit for pain and functional improvement",
+      "Anti-inflammatory modulation — iridoid glycosides reduce inflammatory markers and joint swelling",
+      "Digestive bitter — stimulates digestive secretions; traditional choleretic and hepatic tonic",
+      "Possible chondroprotective effects — preliminary in vitro data on cartilage metabolism protection"
+    ],
+    "energetics": [
+      "Cool",
+      "Bitter",
+      "Anti-inflammatory",
+      "Analgesic",
+      "Drying",
+      "Damp-Resolving"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Kidney",
+      "Spleen"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 221,
+    "name": "Echinacea",
+    "primary_functions": [
+      "Acute cold and flu duration reduction — 100+ RCTs confirm 1–2 day reduction when started within 12–24 hours of symptoms",
+      "Rapid immune overstimulation — alkamides and polysaccharides dramatically enhance macrophages, NK cells, interferon-γ and TNF-α within hours",
+      "Symptom severity reduction — reduces sore throat, cough, fatigue and body ache severity during acute illness",
+      "Upper respiratory infection support — adjunctive acute antimicrobial via polysaccharide macrophage activation",
+      "Early intervention specialist — efficacy critically dependent on starting within 12–24 hours of first symptoms"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Bitter",
+      "Stimulating",
+      "Immune-Activating",
+      "Acute-Responsive"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Spleen",
+      "Heart"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 106,
+    "name": "Calendula",
+    "primary_functions": [
+      "Topical wound healing — carotenoids stimulate fibroblasts (collagen synthesis), angiogenesis and re-epithelialisation",
+      "Skin anti-inflammatory — soothes eczema, dermatitis, sunburn and inflamed skin conditions",
+      "Lymphatic movement — polysaccharides activate macrophages; improve lymphatic drainage and reduce lymph stagnation",
+      "Topical antimicrobial — volatile oils prevent wound infection; broad-spectrum antibacterial activity",
+      "Scar tissue reduction — collagen remodelling and tissue regeneration with consistent topical use"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Stimulating",
+      "Healing",
+      "Radiant",
+      "Lymph-Moving"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 222,
+    "name": "Caraway",
+    "primary_functions": [
+      "Digestive carminative — d-carvone and d-limonene relax GI smooth muscle; relieves gas, colic and bloating",
+      "GI antispasmodic — reduces intestinal cramping and hypermotility; IBS and functional dyspepsia support",
+      "Infant colic support — traditional gripe water preparation; topical abdominal application",
+      "Mild expectorant — respiratory aromatic support for catarrh and productive cough with cold-damp pattern",
+      "Traditional galactagogue — used in lactation blends (fennel, anise, fenugreek, caraway)"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Pungent",
+      "Aromatic",
+      "Carminative",
+      "Spasmolytic"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Lung",
+      "Large Intestine"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 223,
+    "name": "Cat",
+    "primary_functions": [
+      "Balanced immune activation — oxindole alkaloids stimulate white blood cell proliferation and immune function",
+      "Systemic anti-inflammatory — oxindole alkaloids and polyphenols reduce pro-inflammatory cytokines and NF-κB",
+      "Arthritis and joint support — anti-inflammatory and immune-modulating action reduces joint pain and improves mobility",
+      "DNA protective — alkaloids and polyphenols show preliminary DNA repair support and cellular integrity protection",
+      "Detoxification support — polyphenols support phase I/II liver detoxification pathways"
+    ],
+    "energetics": [
+      "Warm",
+      "Bitter",
+      "Immune-Tonifying",
+      "Anti-Inflammatory",
+      "Detoxifying",
+      "DNA-Protective"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 224,
+    "name": "Vitex (Chaste Tree)",
+    "primary_functions": [
+      "Pituitary dopaminergic modulation — diterpenes bind D2 receptors; reduce elevated prolactin and normalise luteal phase",
+      "PMS and PMDD symptom relief — breast tenderness, irritability, mood swings and headaches; multiple RCTs confirmed",
+      "Hyperprolactinaemia support — normalises prolactin, restores GnRH pulsatility, supports corpus luteum progesterone",
+      "Menstrual cycle regulation — amenorrhoea and oligomenorrhoea where stress and elevated prolactin are factors",
+      "PCOS adjunct — lowers elevated testosterone and normalises cycles in some PCOS presentations"
+    ],
+    "energetics": [
+      "Neutral",
+      "Slightly Cool",
+      "Bitter",
+      "Pungent",
+      "Aromatic",
+      "Cycle-Regulating"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Spleen",
+      "Uterus"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 225,
+    "name": "Chickweed",
+    "primary_functions": [
+      "Skin anti-itch and vulnerary — saponins, mucilage and anti-inflammatory compounds calm itching and irritation in eczema, psoriasis and rashes",
+      "Demulcent anti-ulcer — mucilage and anti-inflammatory action protect gastric mucosa and support healing in gastritis and peptic ulcers",
+      "Cooling and moistening — refrigerant action for hot, inflamed, hypersensitive tissues inside and out",
+      "Lymph and damp-heat modulator — gently moves lymph, reduces heat-swollen glands and clears damp accumulation",
+      "Mild diuretic and urinary soother — increases urine output and soothes urinary tract in hot, irritated states"
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Mild",
+      "Salty-Green",
+      "Demulcent",
+      "Anti-Itch",
+      "Lymph-Moving"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Liver",
+      "Spleen"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 226,
+    "name": "Chilcuague",
+    "primary_functions": [
+      "Oral analgesic and local anaesthetic — affinin alkamide creates intense tingling then transient numbness; traditional toothache and gum pain relief",
+      "Oral antimicrobial — antifungal and antibacterial against oral pathogens including Candida",
+      "Digestive stimulant — pungent compounds stimulate salivation and gastric secretions; sialagogue action",
+      "Antifungal — in vitro antifungal properties against Candida and oral fungal pathogens",
+      "Respiratory support — reflex secretomotor effects via increased salivation and mucosa circulation"
+    ],
+    "energetics": [
+      "Hot",
+      "Stimulating",
+      "Pungent",
+      "Numbing",
+      "Sialagogue",
+      "Antimicrobial"
+    ],
+    "tcm_meridians": [
+      "Stomach",
+      "Spleen",
+      "Lung"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 227,
+    "name": "Cinnamon",
+    "primary_functions": [
+      "Digestive warming and carminative — cinnamaldehyde stimulates digestion, resolves cold-damp patterns and reduces gas",
+      "Blood sugar modulation — cassia polyphenols improve insulin receptor signalling; modest RCT evidence for glucose and lipid reduction",
+      "Circulatory stimulant — warming, vasodilatory action supports cold constitutions and poor peripheral circulation",
+      "Antimicrobial and antifungal — cinnamaldehyde significant activity against bacteria and fungi",
+      "Anti-inflammatory and antioxidant — phenolic compounds and procyanidins reduce oxidative stress"
+    ],
+    "energetics": [
+      "Warming to Hot",
+      "Sweet",
+      "Pungent",
+      "Aromatic",
+      "Slightly Astringent",
+      "Circulatory-Stimulating"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Kidney",
+      "Heart"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 228,
+    "name": "Cloves",
+    "primary_functions": [
+      "Dental pain relief — eugenol local anaesthetic action; traditional and evidence-based toothache and gum pain relief",
+      "Broad-spectrum antimicrobial — eugenol and polyphenols against bacteria, fungi and parasites",
+      "Digestive warming and carminative — essential oil stimulates digestive fire and reduces gas and bloating",
+      "Antiparasitic — eugenol component in classic antiparasitic trio with Black Walnut and Wormwood",
+      "Anti-inflammatory — eugenol and polyphenols reduce inflammatory cytokines and support tissue comfort"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Pungent",
+      "Digestive-Warming",
+      "Antimicrobial",
+      "Antiparasitic",
+      "Dental-Numbing"
+    ],
+    "tcm_meridians": [
+      "Stomach",
+      "Spleen",
+      "Kidney"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 229,
+    "name": "Coca Leaf",
+    "primary_functions": [
+      "Altitude sickness (soroche) support — traditional Andean use for headache, fatigue and nausea at high altitude",
+      "Fatigue and labour endurance — sustained energy for physical work at altitude without extreme stimulant profile",
+      "Mild CNS stimulant and mood brightening — gentle wakefulness and hunger suppression at traditional doses",
+      "Digestive tonic — nausea, sluggish digestion and stomach discomfort relief",
+      "Mild pain and mood support — traditional context within Andean cultural practice"
+    ],
+    "energetics": [
+      "Mildly Warm",
+      "Stimulating",
+      "Hunger-Suppressing",
+      "Altitude-Adapted"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Kidney",
+      "Heart"
+    ],
+    "caution_level": "VERY HIGH"
+  },
+  {
+    "id": 230,
+    "name": "Cranberry",
+    "primary_functions": [
+      "UTI prevention — A-type PAC linkages (unique to cranberry) prevent E. coli P-fimbriae adhesion to uroepithelial cells",
+      "Recurrent UTI prevention — most researched and evidence-based application; 40+ RCTs",
+      "Urine acidification — quinic acid metabolises to hippuric acid; creates antimicrobial urine pH",
+      "Urinary tract protection — persistent daily use maintains anti-adhesion barrier against bacterial colonisation",
+      "Acute UTI adjunct — higher PAC dosing alongside antibiotic treatment to accelerate bacterial clearance"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Slightly Astringent",
+      "Protective",
+      "Cleansing",
+      "Urinary-Guardian"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Bladder"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 231,
+    "name": "Iceland Moss",
+    "primary_functions": [
+      "Demulcent respiratory support — lichenan and isolichenan polysaccharides coat and protect dry, irritated throat and upper airways",
+      "Dry cough and hoarseness relief — mucilaginous polysaccharides reduce cough reflex and soothe tickling throat",
+      "Gastroprotective — demulcent polysaccharides plus lichen acids protect gastric mucosa; useful for gastritis, reflux and ulcers",
+      "Mild antimicrobial — lichen acids (cetraric acid, fumarprotocetraric acid) show antibiotic-like activity against respiratory and GI pathogens",
+      "Immunomodulatory — polysaccharides stimulate aspects of innate immunity in experimental models"
+    ],
+    "energetics": [
+      "Cool",
+      "Slightly Bitter",
+      "Sweet",
+      "Demulcent",
+      "Dryness-Soothing",
+      "Mildly Tonic"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Stomach"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 232,
+    "name": "Elderflower",
+    "primary_functions": [
+      "Immune activation — sambucyanin anthocyanin and quercetin stimulate white blood cell proliferation and antiviral defence",
+      "Antiviral support — flavonoids inhibit viral replication; documented activity against influenza, COVID-19 and rhinovirus",
+      "Fever reduction — diaphoretic action promotes gentle sweating; flavonoids and volatile oils support temperature regulation",
+      "Respiratory support — volatile oils and tannins provide antimicrobial respiratory tract support and congestion relief",
+      "Antioxidant defence — potent free-radical scavenging via rutin, quercetin and sambucyanin"
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Immune-Boosting",
+      "Antiviral",
+      "Respiratory-Supporting",
+      "Fever-Reducing"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 233,
+    "name": "Ephedra (Ma Huang)",
+    "primary_functions": [
+      "SAFETY REFERENCE ONLY — NOT for consumer recommendation",
+      "Bronchodilation — ephedrine alkaloids open airways dramatically (also increases cardiac workload dangerously)",
+      "CNS stimulation — most powerful herbal stimulant; matches amphetamine mechanism",
+      "Cardiovascular stress — increases heart rate, blood pressure and cardiac workload",
+      "Historical TCM respiratory and energy herb — 5000+ years traditional use before modern safety recognition"
+    ],
+    "energetics": [
+      "Very Warm",
+      "Dry",
+      "Acrid",
+      "Strongly-Stimulating",
+      "Respiratory-Opening"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Heart",
+      "Kidney"
+    ],
+    "caution_level": "VERY HIGH"
+  },
+  {
+    "id": 234,
+    "name": "Eucalyptus",
+    "primary_functions": [
+      "Respiratory opening — eucalyptol (1,8-cineole 50–90% of essential oil) is among the fastest-acting natural bronchodilators and mucolytics",
+      "Decongestant — direct sinus and nasal passage clearing within 15–30 minutes of inhalation",
+      "Antimicrobial — eucalyptol provides broad-spectrum antibacterial activity against respiratory pathogens",
+      "Antiviral — polyphenols and terpenes support respiratory antiviral defence",
+      "Mucolytic — clears and mobilises mucus; makes cough productive"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Respiratory-Opening",
+      "Antimicrobial",
+      "Antiviral",
+      "Decongestant"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Liver"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 235,
+    "name": "Eyebright",
+    "primary_functions": [
+      "Conjunctivitis and ocular catarrh — astringent tannins and anti-inflammatory iridoids reduce redness, tearing, discharge and itching",
+      "Allergic eye symptoms and hayfever — cooling anti-inflammatory astringent for hypersensitive ocular and nasal mucosa",
+      "Upper respiratory anticatarrhal — addresses the full catarrhal arc: eyes, sinuses, nasopharynx, Eustachian tubes",
+      "Sinusitis and chronic catarrh — reduces sinus discharge, postnasal drip and sinus headache",
+      "Eye strain and visual fatigue — traditional use for VDT overuse and reading strain"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Bitter",
+      "Astringent",
+      "Anticatarrhal",
+      "Mucosal-Toning"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Lung",
+      "Stomach"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 236,
+    "name": "Fadogia",
+    "primary_functions": [
+      "SAFETY REFERENCE ONLY — NOT RECOMMENDED: no human clinical trials; animal toxicity documented",
+      "Purported testosterone boosting (animals only — no human RCT evidence)",
+      "Purported libido and sexual function enhancement (animals only)",
+      "Traditional West African use for pain and fever (limited evidence)"
+    ],
+    "energetics": [
+      "Warm",
+      "Yang-Driving",
+      "Potentially Damaging to Liver and Kidney"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Liver"
+    ],
+    "caution_level": "VERY HIGH"
+  },
+  {
+    "id": 237,
+    "name": "Fennel",
+    "primary_functions": [
+      "Digestive carminative — anethole and fenchone relax GI smooth muscle; premier herb for gas, bloating and cramping",
+      "GI antispasmodic — reduces intestinal spasm; IBS, colic and functional dyspepsia support",
+      "Phytoestrogenic endocrine modulation — anethole-like compounds gently influence oestrogen signalling; menstrual and menopausal support",
+      "Galactagogue — increases milk flow in breastfeeding; traditional use confirmed in small trials",
+      "Respiratory support — mild expectorant and antispasmodic for upper respiratory catarrh"
+    ],
+    "energetics": [
+      "Warm",
+      "Sweet",
+      "Aromatic",
+      "Slightly Pungent",
+      "Carminative",
+      "Spasmolytic",
+      "Gently Phytoestrogenic"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Kidney",
+      "Spleen",
+      "Stomach"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 238,
+    "name": "Garlic",
+    "primary_functions": [
+      "Broad-spectrum antimicrobial — allicin (fresh-crushed only) is potent bactericidal, fungicidal and virucidal; MUST be fresh for efficacy",
+      "Cardiovascular support — ajoene and polysulfides provide modest cholesterol reduction (10–15% LDL) and BP lowering (5–10 mmHg)",
+      "Immune activation — polysulfides (survive cooking) enhance NK cells, macrophages and T-cell function",
+      "Antiplatelet — ajoene reduces platelet aggregation; mild blood-thinning without pharmaceutical anticoagulation",
+      "Traditional antiparasitic — anthelmintic activity via allicin; traditional parasite elimination support"
+    ],
+    "energetics": [
+      "Warm",
+      "Pungent",
+      "Acrid",
+      "Stimulating",
+      "Antimicrobial",
+      "Moving"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Lung",
+      "Heart",
+      "Stomach"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 239,
+    "name": "Ginkgo",
+    "primary_functions": [
+      "Cerebral blood flow enhancement — ginkgolides (PAF antagonism) gently thin blood and improve microcirculation to brain",
+      "Memory and cognitive support — particularly age-related cognitive decline where cerebral hypoperfusion is a factor",
+      "PAF antagonism — reduces platelet aggregation via a different mechanism to aspirin; gentle blood-thinning",
+      "Antioxidant neuroprotection — flavones and bilobalide protect neural tissue from oxidative damage",
+      "Peripheral circulation enhancement — benefits for Raynaud\\"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Ascending",
+      "Circulation-Promoting",
+      "Memory-Supporting",
+      "Precision-Enhancing"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 240,
+    "name": "Ginseng",
+    "primary_functions": [
+      "Balanced adaptogenic stress response — ginsenosides contain both stimulating (Rg1) and sedating (Rb1) compounds; true HPA axis adaptation not suppression",
+      "Energy and physical endurance — increases glucose mobilisation, ATP production and reduces fatigue perception",
+      "Sexual function enhancement — increased NO production; improved penile blood flow; erectile function support",
+      "Immune activation — balanced polysaccharide enhancement of NK cells, macrophages and T-cells without overstimulation",
+      "Cognitive enhancement — improved memory, neurotransmitter synthesis (dopamine, acetylcholine) and neuroprotection"
+    ],
+    "energetics": [
+      "Warm",
+      "Moist",
+      "Sweet",
+      "Tonifying",
+      "Qi-Activating",
+      "Yang-Enhancing",
+      "Adaptogenic"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Lung",
+      "Heart"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 241,
+    "name": "Goji Berry",
+    "primary_functions": [
+      "Liver and Kidney yin and blood tonification — LBP polysaccharides plus carotenoids nourish the foundational yin-blood axis",
+      "Vision and retinal support — zeaxanthin and lutein provide macular pigment protection; antioxidant retinal defence",
+      "Antioxidant and anti-aging — LBPs increase antioxidant enzyme activity; reduce lipid peroxidation across tissues",
+      "Metabolic support — improved glucose tolerance, insulin sensitivity and lipid modulation in animal and some human studies",
+      "Immune modulation — LBP polysaccharides enhance macrophage, NK and T-cell function"
+    ],
+    "energetics": [
+      "Neutral",
+      "Slightly Warming",
+      "Sweet",
+      "Mildly Sour",
+      "Blood-Nourishing",
+      "Yin-Tonifying",
+      "Eye-Brightening"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Kidney",
+      "Lung"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 108,
+    "name": "Gotu Kola",
+    "primary_functions": [
+      "Cognitive enhancement — asiatic and madecassic acid increase BDNF and stimulate dendritic arborisation; neuroplasticity support",
+      "Memory and learning — enhanced synaptic transmission; improved information retention and recall",
+      "Venous insufficiency — triterpenoids strengthen vein walls via collagen I and III induction; reduce capillary permeability",
+      "Wound healing and collagen synthesis — fibroblast stimulation and angiogenesis via asiaticoside",
+      "Mild anxiolytic without sedation — modest GABA modulation produces calm alertness unique among cognitive herbs"
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Bitter",
+      "Nourishing",
+      "Mind-Clarifying",
+      "Neuroplasticity-Enhancing"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Kidney",
+      "Spleen"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 242,
+    "name": "Ground Ivy",
+    "primary_functions": [
+      "Anticatarrhal for sinuses, ears and lungs — aromatic oils and astringent tannins dry and clear excess mucus from ENT and bronchial passages",
+      "Chronic sinus catarrh and glue ear — loosens and drains stubborn mucus accumulation in sinuses and Eustachian tubes",
+      "Mild expectorant — promotes clearance of thick respiratory mucus in chronic bronchitis patterns",
+      "Digestive bitter carminative — stimulates digestion and clears GI mucus in cold-damp digestive patterns",
+      "Mild diuretic and urinary drainage — supports kidney and urinary tract drainage"
+    ],
+    "energetics": [
+      "Warming",
+      "Drying",
+      "Aromatic",
+      "Slightly Bitter",
+      "Pungent",
+      "Anticatarrhal"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Spleen",
+      "Kidney",
+      "Liver"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 109,
+    "name": "Guarana",
+    "primary_functions": [
+      "Acute mental energy and focus — highest natural caffeine (3–5%); adenosine receptor blockade; dopamine and norepinephrine increase",
+      "Physical endurance — reduces perceived exertion; psychological stamina enhancement",
+      "Thermogenic metabolism — increases metabolic rate 3–11%; stimulates fat oxidation",
+      "Sympathetic nervous system activation — full-body arousal for acute demand situations",
+      "Traditional Amazonian warrior energy — 1000+ years indigenous use for hunting stamina and endurance"
+    ],
+    "energetics": [
+      "Very Warm",
+      "Dry",
+      "Stimulating",
+      "Potent",
+      "Activating",
+      "Warrior-Energy"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Spleen",
+      "Kidney Yang"
+    ],
+    "caution_level": "MEDIUM-HIGH"
+  },
+  {
+    "id": 110,
+    "name": "Holy Basil (Tulsi)",
+    "primary_functions": [
+      "Adaptogenic HPA axis modulation — ursolic and oleanolic acids regulate cortisol with true adaptation; calms anxiety without sedation",
+      "Anxiolytic without sedation — eugenol, linalool and apigenin activate multiple GABA-A pathways; NO tolerance development",
+      "Potent anti-inflammatory — eugenol plus ursolic and oleanolic acids inhibit NF-κB master inflammatory switch",
+      "Blood sugar regulation — polyphenols improve insulin sensitivity; 20–30% blood sugar improvement documented",
+      "Balanced immune modulation — glycoproteins and polysaccharides enhance T-cell activity without overstimulation"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Stimulating",
+      "Purifying",
+      "Sacred",
+      "Heart-Opening",
+      "Adaptogenic"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Lung",
+      "Spleen"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 243,
+    "name": "Hops",
+    "primary_functions": [
+      "Potent sleep promotion — humulone bitter acids act as positive GABA-A modulators; reduce sleep latency and improve non-REM sleep depth",
+      "Anxiolytic and nervous tension relief — GABA-A modulation quiets mental chatter, restlessness and somatic agitation",
+      "Sedative nervine for wired-but-tired states — heavy, grounding sedative for sympathetic overdrive with underlying fatigue",
+      "Bitter digestive — stimulates gastric secretions and bile; appetite activation; GI motility improvement",
+      "Mild phytoestrogen — 8-prenylnaringenin and related prenylflavonoids; potential for menopausal symptom and hot flush support"
+    ],
+    "energetics": [
+      "Cool",
+      "Bitter",
+      "Heavy",
+      "Sedating",
+      "Grounding",
+      "Sleep-Inducing"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Spleen"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 244,
+    "name": "Horsetail",
+    "primary_functions": [
+      "Diuretic urinary flushing — EMA-recognised; standardised extract clinically comparable to hydrochlorothiazide for urine volume increase",
+      "Bone and connective tissue support — silica (5–8% dry weight) promotes collagen synthesis and matrix mineralisation",
+      "Hair, nail and skin structural support — silica provides collagen cross-linking and structural integrity throughout connective tissue",
+      "Anti-inflammatory and antioxidant — flavonoids (quercetin, kaempferol, apigenin) and phenolic acids reduce oxidative stress",
+      "Urinary tract gravel and minor infection adjunct — urinary flushing action supports renal gravel clearance"
+    ],
+    "energetics": [
+      "Cool",
+      "Drying",
+      "Astringent",
+      "Mineral-Rich",
+      "Diuretic",
+      "Structurally-Tonifying"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Bladder",
+      "Lung"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 245,
+    "name": "Guayusa",
+    "primary_functions": [
+      "Extreme mental energy and wakefulness — highest natural caffeine concentration (2.5–3.5%); longer duration than coffee",
+      "Mental clarity and cognitive enhancement — caffeine plus polyphenols sharpen thinking and focus acutely",
+      "Lucid dreaming facilitation — traditional Amazonian preparation before sleep raises consciousness baseline during REM",
+      "Antioxidant neuroprotection — chlorogenic acid and polyphenols provide free-radical scavenging",
+      "Mood elevation via dopamine and theobromine — sustained positive affect alongside stimulation"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Highly Stimulating",
+      "Consciousness-Elevating",
+      "Lucidity-Enhancing"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "MEDIUM-HIGH"
+  },
+  {
+    "id": 246,
+    "name": "Hawthorn",
+    "primary_functions": [
+      "Positive inotropic — quercetin and hyperoside increase cardiac contractility through improved cardiomyocyte calcium handling; heart beats more efficiently",
+      "Vasodilation and blood pressure reduction — flavonoids enhance endothelial NO production; gentle cumulative BP lowering",
+      "Antioxidant cardiovascular protection — OPC proanthocyanidins scavenge free radicals in cardiac and vascular tissue",
+      "Endothelial function improvement — vascular lining health; atherosclerosis risk reduction",
+      "Emotional heart opening — traditional and anecdotal evidence for grief processing, emotional vulnerability and heart-centred presence"
+    ],
+    "energetics": [
+      "Warm",
+      "Moist",
+      "Sweet",
+      "Heart-Opening",
+      "Tonifying",
+      "Nourishing",
+      "Emotionally-Supportive"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Pericardium",
+      "Spleen",
+      "Liver"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 247,
+    "name": "Horny Goat Weed",
+    "primary_functions": [
+      "Sexual function and erectile support — icariin PDE5 inhibition (identical mechanism to sildenafil/Viagra) increases cGMP and penile blood flow",
+      "Vasodilation and circulation — systemic vascular dilation improving blood flow throughout body",
+      "Bone density support — polysaccharides support osteoblast activation and bone remodelling",
+      "Energy and endurance — warm, tonifying Yang energy; reduces fatigue and increases stamina baseline",
+      "Traditional Yang tonification — ",
+      " (herbal fire for yang); 2000+ years TCM foundational herb"
+    ],
+    "energetics": [
+      "Warm",
+      "Tonifying",
+      "Sexual-Fire-Activating",
+      "Yang-Boosting",
+      "Circulation-Enhancing",
+      "Essence-Nourishing"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Liver",
+      "Ming Men"
+    ],
+    "caution_level": "MEDIUM-HIGH"
+  },
+  {
+    "id": 248,
+    "name": "Moringa",
+    "primary_functions": [
+      "Supreme nutritive tonification — most nutrient-dense food on Earth; complete amino acid profile (all 9 essential); comprehensive micronutrient repletion",
+      "True nourishment-based energy — B vitamins, iron and complete protein support cellular ATP production without stimulation or depletion",
+      "Anti-inflammatory — quercetin, kaempferol and polyphenols reduce systemic inflammatory cytokines",
+      "Antioxidant defence — exceptional carotenoid, vitamin C, flavonoid and polyphenol density; potent free-radical scavenging",
+      "Blood sugar stabilisation — chlorogenic acid and dietary fibre support stable post-meal glucose; alpha-glucosidase inhibition"
+    ],
+    "energetics": [
+      "Warm",
+      "Tonifying",
+      "Nutritive",
+      "Energy-Building",
+      "Anti-Inflammatory",
+      "Blood-Nourishing"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Lung",
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 249,
+    "name": "Motherwort",
+    "primary_functions": [
+      "Cardiotonic support — leonurine alkaloid increases cardiac contractility (positive inotropic) and lowers excessive heart rate (negative chronotropic); improves cardiac efficiency without stimulation",
+      "Anxiety with palpitations — dual action: physical heart strengthening plus GABAergic nervous system calming eliminates the fear-palpitation feedback loop",
+      "Emotional courage and heart opening — Fire element activation facilitates vulnerability, grief processing and boundary-setting from strength not fear",
+      "Menstrual regulation — leonurine mild emmenagogue; stimulates uterine contractions; promotes menstrual flow; regulates delayed or scanty cycles over 3–6 months",
+      "PMS support — antispasmodic, emotional tension relief and nervous system grounding for agitation, cramping and premenstrual anxiety"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Bitter",
+      "Stimulating",
+      "Heart-Courageous",
+      "Emotionally-Moving",
+      "Uterine-Tonifying"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Uterus / Chong Mai",
+      "Pericardium"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 250,
+    "name": "Kratom",
+    "primary_functions": [
+      "SAFETY REFERENCE ONLY — NOT FOR CONSUMER RECOMMENDATION: opioid-like addiction risk",
+      "Pain relief via opioid receptor agonism (mitragynine and 7-hydroxymitragynine) — potent acute analgesia comparable to mild opioids",
+      "CNS stimulation (low dose) or sedation/euphoria (high dose) — dose-dependent opioid-like effects",
+      "Physiological dependency develops within 2–8 weeks of regular use — identical pattern to pharmaceutical opioid analgesics",
+      "Withdrawal syndrome on cessation — anxiety, insomnia, muscle aches, sweating, depression, pain rebound lasting 5–10 days"
+    ],
+    "energetics": [
+      "Warm",
+      "Bitter",
+      "Pain-Relieving",
+      "Opioid-Like",
+      "Dependency-Creating"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Spleen",
+      "Heart"
+    ],
+    "caution_level": "VERY HIGH"
+  },
+  {
+    "id": 105,
+    "name": "Lady",
+    "primary_functions": [
+      "Uterine tonification — tannins (6–10% gallotannins and ellagitannins) provide astringent tissue toning; improves uterine structural integrity and contractile efficiency over months of use",
+      "Menstrual regulation — improved uterine tone enables more regular and efficient menstrual contractions; normalises heavy or irregular cycles",
+      "Haemostatic — astringent tannins plus flavonoids tighten capillaries and reduce vascular permeability; reduces excessive menstrual bleeding",
+      "Postpartum recovery — accelerates uterine involution; reduces lochia; supports tissue healing in weeks 2–12 postpartum",
+      "Connective tissue tonification — astringent action strengthens vascular integrity and collagen throughout the body; varicose veins, haemorrhoids and easy bruising"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Astringent",
+      "Tonifying",
+      "Grounding",
+      "Patient",
+      "Restorative"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Liver",
+      "Uterus / Chong Mai"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 251,
+    "name": "Lavender",
+    "primary_functions": [
+      "Dual-pathway anxiolytic — linalool enhances GABA and simultaneously reduces glutamate; produces relaxed alertness without sedation or cognitive impairment (unique among nervines)",
+      "Parasympathetic activation — linalool plus linalyl acetate shift nervous system toward rest-and-digest while maintaining sympathetic alertness (the calm-alert paradox)",
+      "Tension headache and muscle relaxation — linalyl acetate antispasmodic relaxes both skeletal and smooth muscle; topical plus internal synergy for cervicogenic and tension headaches",
+      "Sleep quality — removes anxiety barriers to natural sleep onset without suppressing REM or sleep architecture",
+      "Daytime-appropriate nervine — maintains full cognitive function while reducing anxiety; safe at work, while driving, during parenting"
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Aromatic",
+      "Dual GABA + Glutamate",
+      "Calm-Alert",
+      "Balancing"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Lung"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 252,
+    "name": "Lemon Balm",
+    "primary_functions": [
+      "Nervous system soothing without sedation — volatile oils, rosmarinic acid and flavonoids enhance GABAergic tone without direct receptor agonism; paradoxical calm-clarity effect",
+      "Antiviral for HSV and EBV — rosmarinic acid inhibits herpes simplex virus replication and blocks viral attachment to cells; topical plus internal protocol for cold sores",
+      "Mood elevation — citral, limonene and monoamine modulation produce simultaneous calm and uplift; emotional lightness without overstimulation",
+      "Anxiety-driven insomnia — calms racing mind; removes anxiety barriers to sleep onset; supports deeper sleep quality",
+      "Heart calming — palpitations, emotional safety, grief processing; opens the pericardial protective space"
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Gentle",
+      "Calming without Sedation",
+      "Mood-Uplifting",
+      "Viral-Protective"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Heart",
+      "Pericardium"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 253,
+    "name": "Linden",
+    "primary_functions": [
+      "Non-sedating anxiolytic — quercetin and kaempferol flavonoids provide gentle GABA modulation without CNS suppression; calm alertness maintained",
+      "Gentle sleep support — mucilage soothes nervous system; flavonoids remove anxiety barriers to natural sleep without forcing or suppressing architecture",
+      "Heart opening and emotional facilitation — facilitates vulnerability, grief processing and emotional opening at the nervous system\\",
+      ",\r\n      ",
+      ",\r\n      "
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Sweet",
+      "Gentle",
+      "Soothing",
+      "Heart-Centering",
+      "Non-Sedating"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Spleen"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 254,
+    "name": "Jasmine",
+    "primary_functions": [
+      "Heart-centre opening — 200+ aromatic compounds in essential oil activate olfactory limbic system (amygdala, hippocampus); profound emotional and spiritual opening",
+      "Mood elevation and joy — linalool, methyl anthranilate and indole compounds lift mood and promote pleasure; antidepressant-like effect",
+      "Sleep support — linalool-rich aromatic relaxation eases sleep onset; emotional ease facilitates rest",
+      "Aphrodisiac and sensuality — traditional night-blooming aromatic; indole compounds provide animalic pheromone-like qualities",
+      "Spiritual and emotional connection — centuries of Persian, Indian and Middle Eastern ceremonial flower medicine"
+    ],
+    "energetics": [
+      "Warm",
+      "Aromatic",
+      "Heart-Opening",
+      "Spirit-Calming",
+      "Joy-Promoting",
+      "Sleep-Supporting"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 255,
+    "name": "Juniper",
+    "primary_functions": [
+      "Diuretic urinary flushing — terpinen-4-ol and essential oils increase urinary volume; EMA-assessed primary action is water diuresis",
+      "Digestive carminative — aromatic essential oils (α-pinene, limonene) reduce gas and stimulate gastric secretions; bloating and dyspepsia in cold-damp patterns",
+      "Short-term urinary tract support — traditional urinary antiseptic; antimicrobial activity of essential oil against urinary pathogens",
+      "Warming circulation — aromatic drying quality warms cold stagnation patterns in lower burner",
+      "Traditional gin flavouring herb — centuries European food-medicine integration"
+    ],
+    "energetics": [
+      "Warm",
+      "Pungent",
+      "Aromatic",
+      "Drying",
+      "Diuretic",
+      "Carminative"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Bladder",
+      "Lung",
+      "Spleen"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 256,
+    "name": "Kanna",
+    "primary_functions": [
+      "Mood elevation via serotonin reuptake inhibition — mesembrine alkaloid mechanism similar to SSRIs but natural and gentler",
+      "Anxiety relief — serotonin support combined with direct anxiolytic action; calm accessible within 15–30 minutes",
+      "Social connection enhancement — uniquely elevates comfort in social situations and pleasure in shared presence",
+      "Pleasure enhancement — heightens sensory and emotional pleasure; increases life satisfaction",
+      "Natural SSRI-like alternative — fermented Sceletium as gentler, non-pharmaceutical mood support"
+    ],
+    "energetics": [
+      "Cool",
+      "Mood-Lifting",
+      "Anxiety-Relieving",
+      "Spirit-Calming",
+      "Social-Connecting",
+      "Pleasure-Enhancing"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Spleen"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 257,
+    "name": "Kava Kava",
+    "primary_functions": [
+      "Potent anxiolytic — kavalactones modulate GABA-A receptors at distinct non-benzodiazepine sites; multiple RCTs show significant generalised anxiety reduction",
+      "Muscle relaxation — voltage-gated channel interaction produces skeletal and smooth muscle relaxation",
+      "Sleep promotion — sedative GABAergic action supports sleep onset and maintenance",
+      "Mild analgesia — kavalactone CNS modulation provides mild analgesic effects",
+      "Traditional Pacific ceremonial herb — centuries of Polynesian, Melanesian and Micronesian use for social and spiritual purposes"
+    ],
+    "energetics": [
+      "Cool",
+      "Peppery",
+      "Numbing",
+      "Anxiolytic",
+      "Sedative",
+      "Muscle-Relaxant"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 258,
+    "name": "Licorice Root",
+    "primary_functions": [
+      "Demulcent and anti-ulcer — coats and soothes GI and respiratory mucosa; DGL form preferred for long-term GI use (minimal mineralocorticoid risk)",
+      "Formula harmoniser — TCM ",
+      " herb; smooths and moderates other herbs in formulas; enhances palatability and synergy",
+      "Antitussive and expectorant — soothes dry spasmodic cough; moistens respiratory mucosa; used in respiratory formulas",
+      "Anti-inflammatory — downregulates COX, LOX and pro-inflammatory cytokines; glycyrrhizin-based hepatoprotection",
+      "Hepatoprotective and antiviral — glycyrrhizin preparations used clinically for chronic hepatitis in Japan and China"
+    ],
+    "energetics": [
+      "Neutral to Slightly Warm",
+      "Sweet",
+      "Moistening",
+      "Harmonising",
+      "Tonifying",
+      "Anti-Spasmodic"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Lung",
+      "Heart",
+      "Stomach"
+    ],
+    "caution_level": "MEDIUM-HIGH"
+  },
+  {
+    "id": 259,
+    "name": "Lingonberry",
+    "primary_functions": [
+      "UTI prevention — A-type PACs prevent E. coli P-fimbriae adhesion to uroepithelial cells; more potent than cranberry in clinical comparison",
+      "Metabolic and blood sugar regulation — anthocyanins improve insulin sensitivity and blood glucose; superior to cranberry in direct comparison studies",
+      "Antioxidant defence — highest ORAC capacity among common berries; systemic free-radical protection",
+      "Broad-spectrum antimicrobial — PACs plus benzoic acid provide direct antibacterial and antifungal activity beyond the anti-adhesion mechanism",
+      "Urinary tract nourishment — kidney and bladder essence support in traditional Scandinavian food-medicine"
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Slightly Astringent",
+      "Nourishing",
+      "Protective",
+      "Metabolically-Supporting"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Bladder",
+      "Liver"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 260,
+    "name": "Lobelia (Indian Tobacco)",
+    "primary_functions": [
+      "RESTRICTED PRACTITIONER-ONLY HERB — not for consumer self-recommendation",
+      "Historical bronchodilator — lobeline binds nicotinic acetylcholine receptors; low doses provide bronchial smooth muscle relaxation at a steep toxicity curve",
+      "Historical expectorant — carotid body stimulation increases respiratory depth and cough productivity",
+      "Neuromuscular relaxant — ",
+      " herb in Thomsonian and Eclectic traditions for acute muscular spasm",
+      "Nicotine dependence research interest — dopamine modulation; clinical trials limited by adverse effects"
+    ],
+    "energetics": [
+      "Warm",
+      "Acrid",
+      "Pungent",
+      "Dispersing",
+      "Bronchodilatory",
+      "Narrow Therapeutic Window"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Heart",
+      "Stomach"
+    ],
+    "caution_level": "VERY HIGH"
+  },
+  {
+    "id": 261,
+    "name": "Lucerne (Alfalfa)",
+    "primary_functions": [
+      "Nutritive remineralisation — concentrates calcium, magnesium, iron, potassium, trace minerals and vitamin K from deep soil; ",
+      " foundational tonic",
+      "Cardiometabolic support — saponins and fibre support LDL reduction and lipid profile improvement; mild blood sugar modulation",
+      "Gentle digestive tonic — fibre-rich, mildly bitter; supports digestive atony, mild constipation and liver-gallbladder bile flow",
+      "Phytoestrogenic women\\",
+      ",\r\n      "
+    ],
+    "energetics": [
+      "Neutral",
+      "Slightly Cool",
+      "Mildly Moistening",
+      "Mild",
+      "Sweet-Grassy",
+      "Nutritive"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 262,
+    "name": "Maca",
+    "primary_functions": [
+      "All-gender sexual vitality support — alkaloids and glucosinolates enhance arousal, sexual response and satisfaction across male and female physiology",
+      "Hormonal homeostasis — glucosinolates support hormone balance (not artificial hormone increase but natural balancing)",
+      "Energy and endurance — polysaccharides plus B vitamins and minerals support sustained energy and stamina without stimulant mechanism",
+      "Nutritive tonification — food-like root vegetable providing complete amino acids, B vitamins, iron, zinc and phytosterol precursors",
+      "Cumulative sexual and hormonal benefit — 4–12 weeks for full baseline improvement; not acute"
+    ],
+    "energetics": [
+      "Warm",
+      "Nutritive",
+      "Sexual-Vitality-Supporting",
+      "Energy-Building",
+      "Hormone-Balancing",
+      "Endurance-Enhancing"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Spleen"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 263,
+    "name": "Maca Negra (Black Maca)",
+    "primary_functions": [
+      "Male sexual vitality — higher alkaloid concentration (0.2–0.6%) and zinc content in black variety specifically supports erectile function and male sexual confidence",
+      "Yang and physical strength — tonifies constitutional Yang energy; strengthens physical vitality and masculine presence",
+      "Testosterone health support — concentrated glucosinolates and zinc support testosterone balance (not artificial increase)",
+      "Physical stamina and endurance — polysaccharide tonification for sustained physical and sexual performance",
+      "Male sexual confidence — comprehensive virility support distinguishes black variety from general-purpose yellow/red maca"
+    ],
+    "energetics": [
+      "Warm",
+      "Strongly Tonifying",
+      "Yang-Strengthening",
+      "Virility-Enhancing",
+      "Male-Sexual-Vitality-Supporting"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Liver"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 264,
+    "name": "Marjoram (Sweet Marjoram)",
+    "primary_functions": [
+      "Digestive carminative — aromatic volatile oils reduce GI spasm, relieve bloating and gas; EU traditional monograph indication for mild spasmodic GI complaints",
+      "Antispasmodic — smooth muscle relaxation for digestive cramping and spasm",
+      "Mild expectorant and respiratory support — aromatic oils support catarrh clearance and simple coughs",
+      "Nervine for tension — warming, aromatic nervine for tension headaches and mild nervous stress",
+      "Kitchen-level spice medicine — Mediterranean culinary tradition; gentle enough for regular food use"
+    ],
+    "energetics": [
+      "Warming",
+      "Aromatic",
+      "Slightly Drying",
+      "Carminative",
+      "Antispasmodic",
+      "Mild Nervine"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Lung"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 265,
+    "name": "Meadowsweet",
+    "primary_functions": [
+      "Gentle digestive antacid — natural salicylates reduce gastric acid excess while tannins simultaneously protect stomach lining; opposite of NSAIDs which irritate",
+      "Salicylate analgesia without gastric irritation — aspirin precursor herb providing mild pain relief (headaches, muscle, joint, period pain) with stomach protection",
+      "NSAID alternative — gentle, sustainable pain and inflammation management without cumulative GI damage",
+      "Anti-inflammatory — COX inhibition (salicylates) plus cytokine reduction (flavonoids) for systemic and joint inflammation",
+      "Stomach demulcent — tannins coat and protect gastric mucosa; ulcer healing support"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Gentle",
+      "Soothing",
+      "Anti-Inflammatory",
+      "GI-Protecting"
+    ],
+    "tcm_meridians": [
+      "Stomach",
+      "Liver",
+      "Spleen"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 266,
+    "name": "Milk Thistle",
+    "primary_functions": [
+      "Hepatoprotection — silymarin complex binds liver cell membranes; blocks toxin entry; prevents hepatotoxicity from drugs, alcohol, chemicals and mushroom poisoning",
+      "Liver regeneration — stimulates hepatocyte protein synthesis; accelerates liver cell regeneration after damage",
+      "Liver-specific antioxidant — scavenges free radicals specifically in hepatic tissue; reduces lipid peroxidation",
+      "Anti-inflammatory for liver — reduces TNF-α and IL-6 in liver tissue; prevents fibrosis development",
+      "Hepatitis support and drug-induced liver injury recovery — clinical evidence across multiple causes of liver damage"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Bitter",
+      "Moving",
+      "Detoxifying",
+      "Hepatoprotective"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Gallbladder"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 267,
+    "name": "Mugwort",
+    "primary_functions": [
+      "Menstrual regulation and cramp relief — flavonoid estrogenic support plus spasmolytic volatile oils ease dysmenorrhoea and oligomenorrhoea in cold-stagnant patterns",
+      "Digestive bitter tonic — sesquiterpene lactones stimulate gastric and bile secretion; aromatic oils reduce GI spasm; cold-damp sluggish digestion",
+      "Dream enhancement — thujone and volatile oils modulate GABAergic systems; traditional and user-reported vivid, symbolic and lucid dreaming",
+      "Warming circulation and channel opening — aromatic oils and coumarins warm cold stagnation patterns; pelvic circulation and Raynaud-like cold",
+      "Traditional moxa herb — dried Mugwort burned near acupoints for channel warming in TCM practice"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Bitter",
+      "Aromatic",
+      "Qi-Moving",
+      "Blood-Activating",
+      "Dream-Enhancing"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Spleen",
+      "Kidney"
+    ],
+    "caution_level": "MEDIUM-HIGH"
+  },
+  {
+    "id": 268,
+    "name": "Mullein",
+    "primary_functions": [
+      "Demulcent cough soothing — mucilage (5–10% dried leaf) physically coats inflamed respiratory mucosa; immediate relief of dry irritating cough; throat protection",
+      "Expectorant — saponins (3–5%) lower surface tension of respiratory secretions; thin and mobilise mucus for productive clearance",
+      "Respiratory anti-inflammatory — verbascoside (iridoid glycoside 0.5–1%) reduces TNF-α and IL-6 in airway tissue; cumulative healing",
+      "Long-term respiratory tonification — baseline respiratory function improves with months of consistent use; chronic bronchitis and cough frequency reduction",
+      "Children\\"
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Sweet",
+      "Demulcent",
+      "Expectorant",
+      "Clearing",
+      "Tonifying"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Kidney",
+      "Spleen"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 269,
+    "name": "Muira Puama",
+    "primary_functions": [
+      "Sexual vitality and libido — small human trials report improved sexual desire, frequency of intercourse and erection quality; traditional centuries Amazonian ",
+      "",
+      "CNS tonic and cognitive support — reported improved mental clarity, focus and mood; traditional use for nervous exhaustion and cognitive fog",
+      "Anti-fatigue and physical performance — traditional use for increased energy, endurance and recovery",
+      "Rooted masculine drive — Yang-activating without scattered stimulation; directed vital force",
+      "Amazonian traditional aphrodisiac — centuries of indigenous Brazilian use"
+    ],
+    "energetics": [
+      "Warm",
+      "Bitter",
+      "Pungent",
+      "Yang-Activating",
+      "Libido-Enhancing",
+      "Nervine-Tonic"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Liver",
+      "Heart"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 270,
+    "name": "Nettle",
+    "primary_functions": [
+      "Foundational mineral tonification — most mineral-rich commonly available herb; one cup infusion provides more bioavailable minerals than most supplements (potassium 50 mg, calcium 480 mg, magnesium 280 mg, iron 8 mg, silica 500+ mg per cup)",
+      "Silica for connective tissue — 500+ mg silica per cup crosslinks collagen fibres; cumulative strengthening of hair, skin, nails, bones and tendons over 4–12 weeks",
+      "Potassium-sparing diuretic — gentle detoxification that preserves potassium (unlike pharmaceutical diuretics which deplete it)",
+      "Quercetin antihistamine — mast cell stabilisation; cumulative reduction in baseline histamine; allergy, eczema and asthma support",
+      "Immune support via beta-glucans — foundational NK cell and innate immunity activation (not stimulating; tonifying)"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Nutritive",
+      "Mineral-Rich",
+      "Grounding",
+      "Strengthening"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Spleen",
+      "Liver"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 271,
+    "name": "Oatstraw",
+    "primary_functions": [
+      "Nervous system nourishment and rebuilding — rebuilds resilience in burnout, chronic stress, sensory overload and post-illness nervous exhaustion through mineral and B-vitamin supply",
+      "Gentle non-sedating anxiolytic — reduces baseline anxiety and reactivity through steady mineral support without cognitive impairment or drowsiness",
+      "Mineral-rich nutritive tonic — calcium, magnesium, potassium, silica and iron in bioavailable form; supports bones, connective tissue, skin, hair and nails",
+      "Cognitive support — oat extracts show modest improvements in attention and information processing in human studies",
+      "Long-term foundational tonic — weeks to months of consistent use; fundamentally rebuilding rather than acutely stimulating"
+    ],
+    "energetics": [
+      "Neutral to Slightly Cool",
+      "Sweet",
+      "Moistening",
+      "Tonifying",
+      "Gentle Nervine",
+      "Rebuilding"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Heart"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 272,
+    "name": "Oregano",
+    "primary_functions": [
+      "Broadest-spectrum herbal antimicrobial — carvacrol (20–80% of volatile oil) disrupts bacterial cell membranes and inhibits cell wall synthesis; effective against E. coli, S. aureus, H. pylori, C. difficile, Salmonella, Listeria and others",
+      "Antifungal (fungicidal) — carvacrol inhibits ergosterol synthesis (fungal cell membrane component); kills Candida albicans and Aspergillus rather than merely inhibiting growth",
+      "Antiparasitic — carvacrol and thymol disrupt parasite metabolism; effective against roundworms, tapeworms and intestinal parasites",
+      "Anti-inflammatory (potent NF-κB inhibitor) — rosmarinic acid (1–4%) inhibits NF-κB transcription factor (master switch controlling 100+ inflammatory genes); reduces TNF-α and IL-6",
+      "Antioxidant — highest ORAC capacity among culinary herbs; rosmarinic acid and flavonoids; exceeds some antioxidant supplements"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Pungent",
+      "Stimulating",
+      "Antimicrobial",
+      "Protective",
+      "Purifying"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Spleen",
+      "Liver"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 273,
+    "name": "Passionflower",
+    "primary_functions": [
+      "Clinically proven anxiolytic — apigenin flavonoid positively modulates GABA-A receptors; multiple human RCTs show anxiety reduction comparable to benzodiazepines, but non-addictive",
+      "Sleep onset for racing mind — quiets overactive thinking and rumination rather than forcing sedation; specifically indicated for anxiety-driven insomnia where mental chatter prevents sleep",
+      "Muscle relaxation and antispasmodic — GABA modulation reduces skeletal and smooth muscle tension; tension headaches, TMJ, menstrual cramping, physical stress holding",
+      "Emotional intensity processing — facilitates grief, anxiety and overwhelm as a safe parasympathetic container; emotional gripping dissolves",
+      "Panic and palpitation support — calms both anxious nervous system and anxiety-linked racing heart via vagal tone and GABA modulation simultaneously"
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Gently Sedating",
+      "Anxiety-Releasing",
+      "Emotionally-Softening",
+      "Parasympathetic-Activating"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 274,
+    "name": "Pau d",
+    "primary_functions": [
+      "Broad antifungal and antimicrobial — lapachol and beta-lapachone (naphthoquinones) show potent in vitro activity against Candida spp., dermatophytes, bacteria (gram+ and gram-), viruses and parasites",
+      "Anti-inflammatory and analgesic — NSAID-like prostaglandin (PGE2) modulation; open-label trial (1050 mg/day, 8 weeks) showed significant dysmenorrhoea pain reduction",
+      "Antiplatelet and mild anticoagulant — lapachol reduces platelet aggregation and may interfere with vitamin K-dependent coagulation; MAJOR SAFETY RISK at higher doses",
+      "Experimental antitumour properties — naphthoquinones show cytotoxicity against tumour cell lines in vitro; human cancer evidence sparse and inconsistent; NOT for cancer self-treatment",
+      "Conservative short-term antimicrobial adjunct — best reserved for cases where safer alternatives are insufficient; topical use has better safety margin"
+    ],
+    "energetics": [
+      "Cool",
+      "Bitter",
+      "Astringent",
+      "Heat-Clearing",
+      "Damp-Drying",
+      "Antimicrobial",
+      "Narrow Therapeutic Window"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Large Intestine",
+      "Immune System"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 275,
+    "name": "Pine Pollen",
+    "primary_functions": [
+      "Nutritional foundation — 200+ bioactive nutrients; complete amino acid profile (all 20 amino acids, 9 essential — rare for a plant source, 15–25% by weight); comprehensive mineral cofactors",
+      "Gentle phytoandrogen endocrine support — plant-derived DHEA precursors and weak androgen receptor agonists modulate HPA axis without direct testosterone replacement; slow cumulative hormonal support",
+      "Energy and stamina — complete amino acid profile plus mineral cofactors (magnesium, iron, copper, manganese) support mitochondrial ATP production; traditional marathon runner and martial artist fuel",
+      "Anti-ageing and cellular resilience — polysaccharides (15–20%; beta-glucans, arabinogalactans) support cellular resilience; antioxidants (flavonoids, carotenoids, vitamin E) scavenge free radicals",
+      "Immune baseline modulation — polysaccharides stimulate NK cells and macrophages without overstimulation; zinc and selenium support immune enzyme systems"
+    ],
+    "energetics": [
+      "Warm",
+      "Sweet",
+      "Dense",
+      "Tonifying",
+      "Nourishing",
+      "Masculine",
+      "Grounding"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Kidney"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 276,
+    "name": "Rhodiola",
+    "primary_functions": [
+      "Adaptogenic stress resilience — rosavins modulate HPA axis; increases DHEA (recovery hormone); normalises cortisol in chronic stress without suppressing natural daily cortisol rhythm; improves capacity to handle stress rather than sedating the response",
+      "SSRI-equivalent antidepressant — salidroside inhibits serotonin reuptake (same mechanism as SSRIs); clinical trials show comparable efficacy to fluoxetine and paroxetine for mild-moderate depression with fewer side effects (no sexual dysfunction, weight gain or emotional blunting)",
+      "Physical endurance enhancement — increases mitochondrial ATP production; reduces lactate accumulation; improves VO2 max; traditional athletic and military endurance herb",
+      "Mental performance under stress — improves prefrontal cortex executive function; increases dopamine (sustained focus and motivation); decision-making quality under pressure",
+      "Burnout recovery — rebuilds energy and resilience after stress exhaustion; reduces stress-related fatigue"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Stimulating",
+      "Tonifying",
+      "Resilience-Building",
+      "Grounding-in-Action"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Spleen",
+      "Kidney Yang"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 277,
+    "name": "Rosemary",
+    "primary_functions": [
+      "Mental clarity and cognitive focus — rosmarinic acid inhibits acetylcholinesterase (increases acetylcholine — the memory and focus neurotransmitter); camphor and cineole activate prefrontal cortex function; acute and cumulative cognitive enhancement",
+      "Memory support — acetylcholinesterase inhibition mechanism (same target as pharmaceutical Alzheimer\\",
+      ",\r\n      ",
+      ",\r\n      ",
+      "s prevention (preliminary research)",
+      "Liver qi movement and detoxification — bitter principles stimulate bile production; detoxification pathway support; stagnation clearance"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Ascending",
+      "Moving",
+      "Stimulating",
+      "Clarifying"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Heart",
+      "Head-Brain"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 278,
+    "name": "Saffron",
+    "primary_functions": [
+      "Clinically proven mood elevation — crocin (10–15%) is a mild serotonin reuptake inhibitor; multiple RCTs show efficacy comparable to low-dose SSRIs for mild-to-moderate depression; UNIQUE advantage: no sexual dysfunction side effects unlike pharmaceutical SSRIs",
+      "Blood circulation and vitality — vasodilatory; mild anticoagulant; increases blood flow to extremities and organs; traditional warming and enlivening effect",
+      "Heart opening and emotional warmth — facilitates emotional vulnerability, self-love and compassion; traditional ceremonial medicine for the heart",
+      "Neuroprotection — safranal crosses blood-brain barrier; inhibits tau protein aggregation (Alzheimer\\",
+      ",\r\n      "
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Precious",
+      "Radiance-Giving",
+      "Heart-Opening",
+      "Mood-Elevating"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 279,
+    "name": "Schisandra (Five-Flavour Fruit)",
+    "primary_functions": [
+      "Unique adaptogenic HPA modulation — lignans (schizandrin A/B/C; deoxyschizandrin; gomisin) modulate HPA axis WITHOUT direct hormone agonism; unique paradox: supports both cortisol normalisation AND energy maintenance simultaneously",
+      "Endurance and stamina — lignan-driven ATP production support builds deep reserves (TCM jing); sustained endurance not acute stimulation; traditional Chinese athlete, martial artist and Soviet cosmonaut endurance herb",
+      "Liver detoxification support — lignans activate cytochrome P450 Phase I and glutathione S-transferase Phase II enzymes; hepatoprotection; bile production support; lipid peroxidation reduction",
+      "Sleep quality and dream enhancement — paradoxical effect: stimulating early (weeks 1–4), then sleep-deepening; REM support; dream vividness; traditionally combined with Reishi for dreamwork",
+      "Mental clarity without overstimulation — supports neurotransmitter balance (dopamine, serotonin, GABA) simultaneously; cognitive clarity plus emotional stability; scattered minds settle"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Sweet-Sour",
+      "Astringent",
+      "Adaptogenic",
+      "All-Seasons-Integrating"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Lung",
+      "Liver",
+      "Kidney",
+      "Spleen"
+    ],
+    "caution_level": "MEDIUM-HIGH"
+  },
+  {
+    "id": 280,
+    "name": "Shilajit (Mineral Pitch)",
+    "primary_functions": [
+      "Mitochondrial ATP enhancement — fulvic acid stabilises CoQ10 in inner mitochondrial membrane; increases electron transport chain efficiency up to 40%; stimulates mitochondrial biogenesis; cellular energy multiplication",
+      "Testosterone support (hypogonadal men) — increases LH release and enhances Leydig cell steroidogenesis; documented 15–20% testosterone increase in hypogonadal men",
+      "Neuroprotection via tau inhibition — fulvic acid crosses blood-brain barrier; specifically inhibits tau protein aggregation (hallmark of Alzheimer\\",
+      ",\r\n      ",
+      ",\r\n      "
+    ],
+    "energetics": [
+      "Warm",
+      "Moist",
+      "Dense",
+      "Tonifying",
+      "Jing-Restoring",
+      "Mineral-Rich"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Spleen"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 281,
+    "name": "Skullcap",
+    "primary_functions": [
+      "Non-sedating anxiolytic — baicalin and baicalein flavonoids allosterically modulate GABA-A receptors WITHOUT binding the benzodiazepine site; anxiety reduces while alertness, cognitive function and presence are fully maintained",
+      "Physical tension release — catalpol iridoid glycoside (0.1–0.3%) relaxes skeletal and smooth muscle; tension headaches, jaw clenching (bruxism), neck and shoulder rigidity, physical anxiety holding patterns",
+      "Cumulative nervous system baseline reset — daily use 4–8 weeks shifts baseline anxiety downward through HPA axis recalibration; stress threshold raises; chronic anxiety becomes manageable",
+      "Neuroprotection — baicalein crosses blood-brain barrier; neuronal antioxidant; TNF-α and IL-6 reduction in brain tissue; potential cognitive ageing prevention",
+      "Daytime anxiety management — unique among nervines; maintains full work, driving and parenting function while reducing anxiety"
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Calming",
+      "Non-Sedating",
+      "Grounding",
+      "Steadying"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Spleen"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 279,
+    "name": "Goldenrod",
+    "primary_functions": [
+      "Urinary irrigation and diuretic — flavonoids (quercetin, hyperoside, rutin) and glycosides (leiocarposide) increase urine volume via neutral endopeptidase inhibition and natriuretic peptide modulation; pharmacopoeial ",
+      " for lower urinary tract inflammation",
+      "Anti-inflammatory and antispasmodic in urinary tract — flavonoids and saponins reduce inflammatory mediators and smooth muscle spasm; clinical improvement in burning, urgency and pain in cystitis and irritable bladder",
+      "Antimicrobial adjunct — extracts show antibacterial activity against common urinary pathogens and reduce bacterial adherence; adjunctive, not standalone antibiotic",
+      "Upper respiratory anti-catarrhal — astringent tannins and anti-inflammatory volatile oils tone lax mucous membranes; thins and reduces excessive secretions in allergy-driven catarrh (itchy watery eyes, drippy nose, post-nasal drip)",
+      "Kidney flushing and post-UTI recovery — promotes clearance of post-infection inflammatory debris and supports mucosal resilience to reduce recurrence risk"
+    ],
+    "energetics": [
+      "Warm to Neutral",
+      "Drying",
+      "Aromatic",
+      "Slightly Bitter",
+      "Astringent",
+      "Diuretic",
+      "Anti-Catarrhal"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Kidney",
+      "Bladder",
+      "Spleen"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 280,
+    "name": "Spirulina",
+    "primary_functions": [
+      "Foundational nutritive tonification — 60–70% complete protein (all 9 essential amino acids; bioavailability comparable to animal proteins); comprehensive mineral matrix (iron 15–25 mg/100g in heme-like forms; calcium, magnesium, zinc, selenium, chromium); B-vitamin complex; GLA omega-6 fatty acid; densest plant-source nutrition available",
+      "Immune stimulation and resilience — polysaccharides (rhamnose and arabinose) directly activate macrophages and NK cells (innate immunity); phycocyanin (1–2%) provides additional anti-inflammatory and immune-modulating activity",
+      "Heavy-metal binding detoxification (adjunctive) — chlorophyll binds lead, mercury and cadmium; polysaccharides support elimination pathways; NOT a standalone detox — requires comprehensive protocol",
+      "Antioxidant and neuroprotective — phycocyanin crosses blood-brain barrier; scavenges free radicals in brain tissue; reduces neuroinflammation; emerging neuroprotective potential (Alzheimer\\",
+      ",\r\n      "
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Dense",
+      "Nutritive",
+      "Tonifying",
+      "Grounding",
+      "Detoxifying"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 281,
+    "name": "St. John",
+    "primary_functions": [
+      "SSRI-equivalent antidepressant (mild-moderate depression) — hyperforin inhibits reuptake of serotonin, dopamine and norepinephrine; multiple RCTs and Cochrane meta-analysis confirm efficacy equal to SSRIs (fluoxetine, sertraline, paroxetine) for mild-to-moderate depression with fewer side effects",
+      "Seasonal affective disorder — light-absorbing hypericin (red pigment; harvested at peak solar solstice) makes this particularly effective for SAD; synergises powerfully with morning bright-light therapy",
+      "Neuropathic pain and nerve repair — hypericin plus flavonoids support nerve regeneration and reduce neuropathic pain; relevant for diabetic neuropathy, post-herpetic neuralgia and chemotherapy-induced neuropathy",
+      "Neuroprotection and anti-inflammatory brain support — flavonoids (quercetin, kaempferol, rutin) and phenolic acids cross blood-brain barrier; reduce neuroinflammation (IL-6, TNF-alpha); potential cognitive aging support",
+      "CYP3A4 enzyme induction — hyperforin induces CYP3A4, CYP2C9 and CYP1A2; accelerates metabolism of approximately 50% of all medications; PRIMARY drug interaction mechanism (not toxicity)"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Uplifting",
+      "Clarifying",
+      "Light-Bringing",
+      "Protective",
+      "Boundary-Setting"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Solar Plexus",
+      "Nervous System"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 282,
+    "name": "Star Anise",
+    "primary_functions": [
+      "Carminative and gas relief — anethole (80–90% of essential oil, 5–8% of pod) is the defining carminative compound; one of the most potent natural gas and bloating relievers (alongside Fennel, Ginger and Cardamom); reduces intestinal cramping and fermentation",
+      "Digestive fire warming — anethole plus volatile oil matrix stimulates digestive secretions; warms stomach and spleen; increases appetite; supports sluggish cold digestion patterns",
+      "Antispasmodic — anethole relaxes intestinal smooth muscle; relieves cramping and spasms; supports comfortable digestion after meals",
+      "Antimicrobial digestive support — anethole and polyphenols show broad-spectrum antimicrobial activity against digestive pathogens; traditional food-preservation and post-meal infection-protection role",
+      "Respiratory expectorant support — anethole is a mild expectorant; loosens and moves respiratory congestion; traditional use in coughs and bronchial congestion"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Pungent",
+      "Sweet",
+      "Digestive-Warming",
+      "Carminative",
+      "Antispasmodic",
+      "Aromatic"
+    ],
+    "tcm_meridians": [
+      "Stomach",
+      "Spleen",
+      "Kidney"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 283,
+    "name": "Thyme",
+    "primary_functions": [
+      "Expectorant (primary respiratory action) — thymol and carvacrol volatile oils mildly irritate respiratory mucosa triggering a reflex increase in mucus production and cilia activation; mobilises and clears respiratory congestion; makes productive coughing more efficient",
+      "Antispasmodic bronchial relaxant — thymol, carvacrol and linalool relax bronchial smooth muscle; eases bronchospasm and spasmodic exhausting cough; improves airway patency",
+      "Potent antimicrobial — thymol is one of the strongest herbal bactericidal and virucidal compounds documented; effective against E. coli, S. aureus, H. influenzae, Streptococcus species and respiratory viruses via cell membrane disruption and enzyme inhibition",
+      "Anti-inflammatory and tissue-healing — flavonoids (apigenin, luteolin 1–2%) reduce TNF-α, IL-6, IL-8; support airway tissue repair after infection; prevent lingering post-infection inflammation",
+      "Respiratory tonification (long-term) — consistent use builds baseline respiratory resilience; reduces chronic inflammation; strengthens breathing capacity cumulatively over months"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Pungent",
+      "Stimulating",
+      "Antimicrobial",
+      "Clearing",
+      "Tonifying",
+      "Expectorant"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Spleen",
+      "Liver",
+      "Throat/Voice"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 284,
+    "name": "Tongkat Ali",
+    "primary_functions": [
+      "Endogenous testosterone support — eurycomanone stimulates pituitary LH (luteinizing hormone) release; LH signals Leydig cells to increase testosterone synthesis; may also inhibit aromatase (testosterone to estrogen conversion); documented 15–25% testosterone increase in 40+ human RCTs over 10–12 weeks",
+      "Sexual function enhancement — testosterone increase plus possible direct quassinoid smooth-muscle relaxation (penile arterial vasodilation); improves erectile quality, libido and sexual satisfaction; multiple RCTs confirm",
+      "Sperm quality and male fertility support — testosterone is critical for spermatogenesis; studies show improvement in sperm count, motility and morphology (conception enhancement)",
+      "Athletic performance and body composition — testosterone drives muscle protein synthesis, bone mineralisation and red blood cell production; documented strength, muscle mass, endurance and recovery improvement",
+      "Adaptogenic stress resilience — HPA axis modulation reduces stress-induced cortisol elevation; beta-carboline alkaloids contribute dopaminergic mood elevation, motivation and confidence"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Stimulating",
+      "Tonifying",
+      "Yang-Activating",
+      "Masculine Vitality"
+    ],
+    "tcm_meridians": [
+      "Kidney Yang",
+      "Spleen",
+      "Heart"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 285,
+    "name": "Tremella",
+    "primary_functions": [
+      "Deep yin and fluid nourishment — polysaccharides (TFP: high-molecular-weight glucuronoxylomannans) attract and retain water in tissues; moistens Lung and Stomach yin; soothes dry cough, dry throat and dry mucosa; comparable to or exceeding hyaluronic acid for tissue hydration",
+      "Skin hydration and anti-ageing — TF polysaccharides form hydrating film on skin; bind large amounts of water; improve moisture, texture and elasticity; protect skin fibroblasts from oxidative stress; clinically used in cosmetics and nutraceuticals",
+      "Immunomodulation and leukopenia support — TF polysaccharides developed into enteric-coated capsules approved in China as biological response modifiers for leukopenia from chemotherapy and radiotherapy; enhance NK cells, macrophages and T/B cells",
+      "Neuroprotection and cognitive support — neurotrophic effects (promote neurite outgrowth) and neuroprotection in cell and animal studies; double-blind RCT (600–1200 mg/day, 8 weeks) improved short-term memory and executive function in subjective cognitive impairment",
+      "Metabolic and cardiometabolic support — TFPS reduce blood glucose, improve insulin sensitivity and lower lipids in preclinical and clinical studies; anti-inflammatory actions ameliorate atopic dermatitis models via immune and gut microbiota modulation"
+    ],
+    "energetics": [
+      "Neutral to Cool",
+      "Sweet",
+      "Moistening",
+      "Yin-Nourishing",
+      "Jing-Restorative",
+      "Gently Qi-Supporting"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Stomach",
+      "Spleen",
+      "Kidney"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 286,
+    "name": "Turmeric",
+    "primary_functions": [
+      "Potent multi-pathway anti-inflammatory — curcumin inhibits NF-κB transcription factor (master switch for 100+ inflammatory genes); suppresses TNF-α, IL-1β, IL-6, COX-2 and inducible nitric oxide synthase; multiple RCTs confirm efficacy in osteoarthritis comparable to ibuprofen with better tolerability",
+      "Antioxidant and cytoprotective — direct free-radical scavenging plus upregulation of endogenous antioxidant enzymes (superoxide dismutase, catalase, glutathione); activates Nrf2 antioxidant master pathway",
+      "Hepatoprotective and choleretic — enhances bile secretion and flow; supports phase II hepatic detoxification pathways; protects hepatocytes from toxin-induced damage in models; digestive fat-metabolism support",
+      "Metabolic and cardiovascular support — improves insulin sensitivity, modulates adipokines; improves endothelial function; reduces LDL oxidation; favourable shifts in metabolic syndrome markers in RCTs",
+      "BIOAVAILABILITY CRITICAL — curcumin has inherently low oral absorption; ALWAYS require piperine (black pepper) and dietary fat to enhance absorption 20-fold; without these, therapeutic doses are wasted"
+    ],
+    "energetics": [
+      "Warm",
+      "Bitter",
+      "Pungent",
+      "Drying",
+      "Moving",
+      "Anti-Inflammatory",
+      "Blood-Invigorating",
+      "Stagnation-Clearing"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Spleen",
+      "Heart"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 287,
+    "name": "Vanilla",
+    "primary_functions": [
+      "Limbic mood elevation and anxiety reduction — vanillin crosses the blood-brain barrier and directly activates limbic structures (amygdala, hippocampus); triggers reward pathway activation (nucleus accumbens, VTA); RCTs confirm 25–35% reduction in anxiety scores with vanillin aromatherapy; immediate via scent; cumulative via oral ingestion (2–4 weeks)",
+      "Parasympathetic activation and cortisol reduction — mild GABAergic properties plus parasympathetic nervous system activation reduce sympathetic overdrive; HPA axis modulation reduces cortisol response to stress; signals safety without sedation",
+      "Neurotransmitter receptor sensitisation — does NOT directly increase serotonin or dopamine; rather enhances receptor sensitivity and signal transduction efficiency; no downregulation; no tolerance; sustainable mood support that amplifies the body\\",
+      ",\r\n      ",
+      ",\r\n      "
+    ],
+    "energetics": [
+      "Warm",
+      "Moist",
+      "Sweet",
+      "Pleasure-Inducing",
+      "Grounding",
+      "Parasympathetic-Activating",
+      "Limbic-Opening"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Spleen",
+      "Liver",
+      "Digestive System"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 288,
+    "name": "Valerian",
+    "primary_functions": [
+      "Sedative and hypnotic for anxiety-related insomnia — valerenic acids enhance GABAergic tone (GABA-A receptor positive modulation + GABA reuptake inhibition); shortens sleep-onset latency; improves sleep maintenance; EMA monograph supports use for mild nervous tension and sleep disturbance; multiple RCTs confirm",
+      "Anxiolytic and daytime calming — at moderate doses reduces subjective anxiety, muscle tension and restlessness without strong daytime sedation; mild serotonin receptor interaction contributes anxiolytic effect",
+      "Antispasmodic — smooth muscle relaxation in GI and uterine tissues; useful for tension headaches, menstrual cramps and stress-related gut spasm",
+      "Nervine tonic (cumulative) — ongoing appropriate use supports more balanced stress response and nervous system resilience; best combined with lifestyle and sleep hygiene",
+      "Non-habit-forming alternative to pharmaceuticals — does not act as a classical benzodiazepine; dependence risk much lower at appropriate doses and duration"
+    ],
+    "energetics": [
+      "Cool to Neutral",
+      "Slightly Bitter",
+      "Pungent-Aromatic",
+      "Sedative",
+      "Relaxing",
+      "Antispasmodic",
+      "Shen-Calming"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Gallbladder"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 289,
+    "name": "Vervain",
+    "primary_functions": [
+      "Relaxing nervine and anxiolytic — iridoid glycosides (verbenalin, hastatoside) and flavonoids (luteolin, apigenin) provide anxiolytic, sedative and anticonvulsant effects; animal models show efficacy comparable to diazepam; indicated for overtaxed, hyper-vigilant, wired-tired nervous systems",
+      "ANS rebalancing and burnout support — clinically used by herbalists to reduce sympathetic overdrive; ideal for those whose stress is held in the neck, head and liver; bridges overwork and recovery",
+      "Bitter hepatic and digestive support — bitter principles stimulate bile flow and digestion; addresses liver-qi stagnation patterns manifesting as irritability, poor appetite, slow fat digestion and PMS with breast tenderness",
+      "Tension headache and migraine — relaxes skeletal muscles (neck and shoulders), modulates ANS and supports liver; classic herb in liver-nervine migraine formulas for the tense, overworked, liverish constitution",
+      "PMS, menstrual tension and mild hypertension — nervine, antispasmodic and hepatic actions reduce PMS irritability, breast tenderness and mild cramps; mild BP modulation in stress-driven cases"
+    ],
+    "energetics": [
+      "Slightly Cool to Neutral",
+      "Bitter",
+      "Slightly Acrid",
+      "Aromatic",
+      "Nervine-Relaxant",
+      "Hepatic",
+      "Antispasmodic"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Heart",
+      "Nervous System"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 290,
+    "name": "Vitex",
+    "primary_functions": [
+      "Luteal phase support and progesterone enhancement — iridoids (agnuside, aucubin; 0.5–1%) modulate pituitary LH release; enhance progesterone production via improved corpus luteum function; progesterone-like activity WITHOUT being a phytoprogesterone (unique mechanism); German Commission E monograph; 100+ RCTs",
+      "PMS and PMDD symptom reduction — progesterone enhancement reduces breast tenderness, bloating, mood swings, irritability and depression linked to luteal phase (progesterone deficiency); particularly effective for mood-related PMS",
+      "Cycle regulation and normalisation — regulates FSH/LH ratio; normalises cycle length; reduces anovulatory cycles; irregular cycles (late or early) become regular",
+      "Fertility support via luteal strengthening — stronger luteal phase and improved progesterone during implantation window; NOT a direct fertility drug but supports fertility for luteal-phase insufficiency",
+      "Perimenopausal cycle stabilisation — supports cycle regularity and hormonal balance during the transition of perimenopause"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Bitter",
+      "Regulating",
+      "Hormonally-Balancing",
+      "Cycle-Normalising"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Kidney",
+      "Uterus"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 291,
+    "name": "Wild Dagga",
+    "primary_functions": [
+      "Gentle relaxation with preserved clarity — leonurine and related alkaloids (0.1–0.5%) create mild nervous-system ease and tension release; paradoxical calm-alert state (relaxation without drowsiness); non-intoxicating at normal doses; no impairment or altered perception",
+      "Mild mood elevation and euphoria — leonurine plus aromatic essential-oil compounds lift mood and create gentle non-intoxicating pleasure; non-addictive; no tolerance development; safe ongoing use",
+      "Spirit calming and emotional ease — calms nervous system; accessible emotional vulnerability; slight heart-opening; presence deepens; tension releases at emotional level",
+      "Antioxidant and anti-inflammatory support (secondary) — polyphenols and flavonoids provide free-radical scavenging and cytokine modulation",
+      "Traditional South African relaxation and pleasure herb — centuries ceremonial and everyday use for relaxation, mild euphoria and spiritual connection"
+    ],
+    "energetics": [
+      "Warm",
+      "Moist",
+      "Relaxing",
+      "Mood-Lifting",
+      "Mildly Psychoactive",
+      "Spirit-Calming",
+      "Pleasure-Promoting"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 292,
+    "name": "Willow Bark",
+    "primary_functions": [
+      "Natural aspirin-equivalent pain relief — salicin (converted to salicylic acid in the body; 1–2% of inner bark) provides COX inhibition and analgesia comparable to aspirin; ADVANTAGE: natural salicylates are gentler on GI tract than synthetic aspirin (tannins provide simultaneous mucosal protection)",
+      "Anti-inflammatory — salicylate COX inhibition plus polyphenol cytokine reduction (dual mechanism); reduces systemic inflammation; supports arthritis, joint pain and chronic inflammatory conditions",
+      "Fever reduction — salicylate fever-modulating properties; traditional and effective for acute febrile states",
+      "GI-protective pain relief (unique advantage) — unlike synthetic aspirin and NSAIDs which damage GI lining, Willow Bark tannins (5–10%) actively protect the stomach mucosa; superior tolerability for long-term use",
+      "Traditional pain management with 2000+ year history — the original source of aspirin; synthetic salicylate was isolated from Willow Bark in 1897"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Bitter",
+      "Pain-Relieving",
+      "Anti-Inflammatory",
+      "Fever-Reducing",
+      "Detoxifying"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Kidney",
+      "Heart"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 293,
+    "name": "Wormwood",
+    "primary_functions": [
+      "Potent antiparasitic — thujone (α and β; 0.3–1.5% dried herb) plus absinthin (sesquiterpene lactone; 0.2–0.8%) immobilise and expel roundworms, tapeworms and intestinal parasites via cell membrane disruption and metabolic enzyme inhibition; centuries of empirical effectiveness",
+      "Broad-spectrum antimicrobial — thymol-like bactericidal and fungicidal activity against E. coli, Staphylococcus, Candida and others; dysbiosis adjunct",
+      "Intense digestive bitters — absinthin is one of the most intensely bitter compounds in the plant kingdom; bitter receptor cascade triggers HCl, pepsin, bile and pancreatic enzyme release; powerful digestive activation and appetite stimulation",
+      "Liver choleretic and bile movement — sesquiterpene lactones stimulate bile production and flow; move stagnant bile; support liver detoxification pathways",
+      "NEUROTOXIC RISK (thujone) — thujone crosses BBB at high doses; convulsant at excessive concentrations; absinthe liqueur toxicity from alcohol-enhanced CNS penetration; MANDATES strict short-term protocols and absolute contraindication screening"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Very Bitter",
+      "Stimulating Detoxification",
+      "Parasite-Expelling",
+      "Boundary-Setting",
+      "Fierce Purifier"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Gallbladder",
+      "Stomach",
+      "Large Intestine"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 294,
+    "name": "Yarrow",
+    "primary_functions": [
+      "Haemostatic and wound healing — astringent tannins plus local vasoconstriction and anti-inflammatory effects stop minor bleeding and accelerate wound repair; fresh-crushed leaf or powdered dry herb applied directly to cuts, scrapes and nosebleeds; the legendary battlefield herb of Achilles",
+      "Diaphoretic and fever management — promotes sweating and peripheral circulation when taken hot; assists the body\\",
+      ",\r\n      ",
+      ",\r\n      ",
+      ",\r\n      "
+    ],
+    "energetics": [
+      "Warm",
+      "Bitter",
+      "Pungent",
+      "Drying",
+      "Astringent",
+      "Dispersing",
+      "Circulatory",
+      "Diaphoretic"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Spleen",
+      "Lung",
+      "Kidney"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 295,
+    "name": "Yellow Dock Root",
+    "primary_functions": [
+      "Digestive bitter and hepatic stimulant — bitter anthraquinone and tannin complex stimulates bile flow, supports liver function and improves fat digestion; classic sluggish-liver bitter for poor appetite and digestive congestion",
+      "Mild stimulant laxative (short-term) — anthraquinones (emodin, chrysophanol) increase colonic motility and secretion; useful for short-term constipation correction especially in iron-supplementation protocols that cause constipation as a side effect",
+      "Iron-supportive mineral herb — significant iron content in bioavailable forms; traditionally combined with Nettle and vitamin C for anaemia and iron-deficiency support; works best as part of a comprehensive dietary iron protocol",
+      "Skin and lymphatic clearing — liver-stimulating action supports clearance of inflammatory skin conditions linked to sluggish liver and bowel; traditional blood-cleansing role"
+    ],
+    "energetics": [
+      "Cool to Neutral",
+      "Bitter",
+      "Astringent",
+      "Hepatic",
+      "Mild Laxative",
+      "Iron-Supportive"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Large Intestine",
+      "Spleen"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 296,
+    "name": "Yerba Mate",
+    "primary_functions": [
+      "Balanced sustained energy without jitteriness — caffeine (0.7–1.7% by dry weight; MODERATE — lower than coffee at 1–2%; higher than green tea at 0.5–1%) blocks adenosine receptors and increases dopamine and norepinephrine; produces strong energy without the excessive jitteriness or crash common to higher-caffeine sources",
+      "Mental clarity and cognitive stamina — caffeine plus polyphenols (chlorogenic acid 2–4%) enhance prefrontal cortex function; focus, working memory and sustained attention; unique social confidence and presence dimension from traditional shared use",
+      "Antioxidant defence and metabolic support — polyphenols provide free-radical scavenging and modest fat oxidation (metabolic support for energy metabolism); theobromine and theophylline (trace xanthines) contribute additional mild stimulation and mood lift",
+      "Unique social ease and community dimension — the only major stimulant herb with a deeply encoded traditional ceremonial sharing practice (mate gourd and bombilla); social confidence, conversational ease and group connection are documented traditional uses",
+      "Mild adaptogenic stress support — trace saponins provide mild adaptogenic properties; sustainable energy without crash; not crash-prone unlike pure caffeine"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Moderately Stimulating",
+      "Consciousness-Enhancing",
+      "Social-Ease-Promoting",
+      "Metabolic-Supporting"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Spleen"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 297,
+    "name": "Slippery Elm Bark",
+    "primary_functions": [
+      "Mucilaginous GI demulcent — rich mucilaginous polysaccharides coat and protect irritated mucosa throughout the gastrointestinal tract from oesophagus to large intestine; physical barrier protection against acid, inflammation and irritation; first choice for GERD, oesophagitis, gastritis and IBD flares",
+      "Respiratory demulcent and throat soother — mucilage coats and soothes irritated throat and upper respiratory mucosa; immediate symptom relief for sore throat, dry cough and laryngitis",
+      "IBD flare soothing — observational and case data show symptom relief in IBD (Crohn\\",
+      ",\r\n      ",
+      ",\r\n      "
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Demulcent",
+      "Soothing",
+      "Nutritive",
+      "Protective"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Stomach",
+      "Large Intestine"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 298,
+    "name": "Peppermint",
+    "primary_functions": [
+      "IBS and functional gut antispasmodic — L-menthol blocks smooth-muscle calcium channels; enteric-coated peppermint oil is the most evidence-supported herbal treatment for IBS; multiple RCTs and systematic reviews confirm significant improvement in global IBS symptoms and abdominal pain vs placebo",
+      "Carminative and gas relief — volatile oil relaxes gastric and intestinal smooth muscle; rapidly reduces bloating, flatulence and intestinal cramping; one of the most effective natural carminatives",
+      "Tension headache analgesic — topical menthol applied to forehead and temples produces cooling analgesia comparable to paracetamol in RCTs; inhibits serotonin receptors and stimulates cold-sensitive receptors",
+      "Nasal decongestant — menthol stimulates cold receptors in nasal mucosa creating sensation of improved airflow; mild genuine mucosal decongestant activity in respiratory passages",
+      "Antispasmodic for functional dyspepsia and biliary pain — smooth-muscle relaxation extends to biliary tree and oesophagus (benefit AND risk: may worsen GERD via lower oesophageal sphincter relaxation)"
+    ],
+    "energetics": [
+      "Cool",
+      "Aromatic",
+      "Drying",
+      "Antispasmodic",
+      "Carminative",
+      "Dispersing",
+      "Analgesic"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Lung",
+      "Stomach",
+      "Large Intestine"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 299,
+    "name": "Pine Needles",
+    "primary_functions": [
+      "Respiratory support and mild decongestant — aromatic terpenes (α-pinene, β-pinene, limonene, bornyl acetate) act as mild expectorants and decongestants; vapour inhalation opens nasal passages and supports respiratory ease in colds and flu",
+      "Antiviral adjunct — shikimic acid (precursor to oseltamivir/Tamiflu) present in notable amounts; terpenes show inhibitory effects against certain viruses in vitro; used as a complementary antiviral support during respiratory illness (NOT a standalone treatment)",
+      "Antioxidant and vitamin C source — fresh needles contain vitamin C, flavonoids and polyphenol antioxidants; historical use as scurvy prevention; free-radical scavenging activity",
+      "Anti-inflammatory — shikimic acid exhibits anti-inflammatory properties in models; may support reduction of upper respiratory inflammatory burden",
+      "Forest-bathing in a cup — aromatic terpene profile provides mood-elevating, grounding and stress-reducing properties analogous to forest-bathing (shinrin-yoku); psychological and physiological benefit from aromatic exposure"
+    ],
+    "energetics": [
+      "Warming",
+      "Aromatic",
+      "Mildly Expectorant",
+      "Antimicrobial",
+      "Antioxidant",
+      "Forest-Grounding"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Kidney",
+      "Liver"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 300,
+    "name": "Red Dates",
+    "primary_functions": [
+      "Blood and qi tonification — polysaccharides (20–50%) plus natural iron and B vitamins support red blood cell production and haemoglobin synthesis; sweet nature tonifies Spleen qi (foundational energy production); traditional TCM foundational blood-building food-medicine for 3000+ years",
+      "Immune baseline modulation — polysaccharides activate macrophages and NK cells in a balanced way similar to Astragalus (NOT overstimulation); strengthens immune resilience without triggering autoimmune flares",
+      "Gentle sleep support and spirit calming — polysaccharides, cyclic nucleotides and minor saponins provide mild anxiolytic and Shen-calming activity; traditional children\\",
+      ",\r\n      ",
+      ",\r\n      "
+    ],
+    "energetics": [
+      "Warm",
+      "Sweet",
+      "Tonifying",
+      "Nourishing",
+      "Blood-Building",
+      "Spirit-Calming",
+      "Grounding"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Heart"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 301,
+    "name": "Rhubarb Root",
+    "primary_functions": [
+      "Powerful stimulant laxative for heat-constipation — anthraquinone glycosides (emodin, rhein, chrysophanol, aloe-emodin) stimulate colonic motility and secretion; reduce water reabsorption; drug-strength purgative action with 6–8 hour onset; Grade A evidence as a laxative",
+      "Damp-heat drainer for liver, gallbladder and intestines — classic TCM indication: acute constipation with fever, abdominal fullness, jaundice, acute dysentery and damp-heat accumulation in the Liver and Gallbladder meridians",
+      "Blood-moving and toxin-clearing (prepared forms) — wine-fried or cooked Da Huang has stronger blood-stasis and heat-toxin clearing with somewhat reduced purgation; used in TCM formulas for abscesses, trauma and deep tissue heat-stasis under supervision",
+      "Antibacterial and dysentery adjunct — emodin and related compounds show antibacterial activity against dysentery bacilli and reduce inflammatory mediators in gut; traditional acute damp-heat dysentery formula component",
+      "RESTRICTED HERB — drug-strength purgative requiring practitioner mode and strict duration enforcement; NOT for casual consumer recommendation"
+    ],
+    "energetics": [
+      "Cold",
+      "Bitter",
+      "Sour",
+      "Purgative",
+      "Damp-Heat Draining",
+      "Blood-Moving",
+      "Boundary-Enforcing"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Stomach",
+      "Large Intestine",
+      "Kidney"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 302,
+    "name": "Rose Petals",
+    "primary_functions": [
+      "Emotional heart support and grief companion — volatile oils (citronellol, geraniol, phenylethyl alcohol) modulate the limbic system via olfactory and ingestion pathways; reduce sympathetic overactivation and support parasympathetic tone; particularly indicated for grief, heartbreak, emotional constriction and chest tightness",
+      "Anxiolytic and antidepressant — human aromatherapy and ingestion studies show mood elevation and anxiety reduction; activates parasympathetic nervous system; softens emotional constriction and allows authentic feeling while gently uplifting mood",
+      "Astringent and demulcent mucosal toner — tannins tone and soothe irritated mucous membranes in throat, GI tract and vaginal tissues; minor diarrhoea; hoarseness; helps where tissues are simultaneously inflamed and lax",
+      "Anti-inflammatory and antioxidant — polyphenols reduce oxidative stress and inflammatory mediators; cardiovascular and skin support; capillary strengthening",
+      "PMS with irritability and Liver qi stagnation — moves constrained Liver qi; softens emotional swings; reduces breast tenderness through gentle Liver-calming and blood-moving action"
+    ],
+    "energetics": [
+      "Slightly Warm",
+      "Sweet",
+      "Astringent",
+      "Moistening",
+      "Shen-Calming",
+      "Qi-Regulating",
+      "Heart-Opening"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Spleen",
+      "Heart"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 303,
+    "name": "Sage",
+    "primary_functions": [
+      "Sore throat specialist — tannins (5–15%) tighten throat tissues reducing swelling and pain; thujone plus volatile oils (cineole, camphor, pinene) kill gram-positive bacteria (especially Streptococcus) and viruses; topical gargling is the most effective route; German Commission E monograph for throat inflammation",
+      "Antimicrobial broad-spectrum — thymol-related compounds plus volatile oils show bactericidal activity against gram-positive bacteria, fungi and viruses; primarily effective topically (gargling) and at mucosal surfaces",
+      "Menopausal hot flashes and night sweats — centuries traditional use for menopausal symptoms; mechanism unconfirmed (possibly thermoregulation modulation or hormonal pathway interaction); variable individual response — strong responders exist; 4-week trial appropriate",
+      "Respiratory support — volatile oils provide mild bronchodilation and antimicrobial action; tannins dry excess secretions; traditional cough support and respiratory clarity",
+      "Digestive bitter and astringent — bitters stimulate digestive secretions; astringent tannins reduce excess secretions and provide mild antimicrobial GI protection"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Astringent",
+      "Antimicrobial",
+      "Protective",
+      "Throat-Healing",
+      "Wisdom-Bringing"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Throat",
+      "Spleen",
+      "Heart"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 304,
+    "name": "Saw Palmetto",
+    "primary_functions": [
+      "BPH and lower urinary tract symptom support — lipophilic berry extract inhibits 5-alpha-reductase (testosterone to DHT conversion in prostate tissue); reduces intraprostatic inflammation; modulates alpha-adrenergic smooth muscle tone; multiple RCTs show modest but consistent improvement in IPSS scores, nocturia, urgency and flow rate in mild-moderate BPH",
+      "Prostate anti-inflammatory and anti-proliferative — fatty acids (lauric, oleic, linoleic) and phytosterols (beta-sitosterol) reduce COX/LOX inflammatory signalling and modulate apoptosis pathways in prostate stromal and epithelial cells; supports slowing of prostatic enlargement",
+      "Androgenic modulation without pharmaceutical side effects — unlike finasteride, saw palmetto tends to preserve libido and erectile function while providing DHT-pathway modulation; fewer sexual side effects in most clinical observations",
+      "Urinary frequency and nocturia reduction — alpha-adrenergic smooth muscle modulation improves urine flow and reduces urgency and nighttime waking; quality-of-life improvement for mild-moderate BPH",
+      "ALWAYS requires medical evaluation first — LUTS must be assessed by a clinician to rule out prostate cancer, acute retention and other serious pathology before herbal recommendation"
+    ],
+    "energetics": [
+      "Warm to Neutral",
+      "Slightly Sweet",
+      "Astringent",
+      "Tonifying",
+      "Lower-Burner Grounding",
+      "Qi-Moving in Pelvis"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Bladder",
+      "Liver"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 305,
+    "name": "Senna",
+    "primary_functions": [
+      "Reliable short-term stimulant laxative — sennosides A and B (anthraquinone glycosides) are metabolised by colonic bacteria into rhein anthrone; directly stimulates peristalsis and increases colonic secretion; reduces water reabsorption; produces bowel movement within 6–12 hours; Grade A evidence as a laxative",
+      "Acute constipation relief when bulk and osmotic measures are insufficient — second-line or adjunct for acute constipation where dietary fibre, osmotic laxatives and lifestyle measures have not provided relief; well-established OTC use across regulatory systems",
+      "Pre-procedural bowel clearance — used under medical direction in bowel preparation regimens alongside other agents",
+      "SHORT-TERM BRIDGE only — NOT a solution for chronic constipation; must be followed by addressing root causes (fibre, hydration, movement, microbiome, medications causing constipation)",
+      "RESTRICTED BY DURATION: maximum 1–2 weeks without medical supervision; chronic use causes dependence and serious harm"
+    ],
+    "energetics": [
+      "Cold",
+      "Bitter",
+      "Purgative",
+      "Drying",
+      "Strongly Downward-Moving",
+      "Heat-Clearing"
+    ],
+    "tcm_meridians": [
+      "Large Intestine",
+      "Liver"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 306,
+    "name": "Birch Polypore",
+    "primary_functions": [
+      "Antiparasitic and gut terrain cleansing — piptamine and related antibacterial compounds active against E. coli and multiple bacteria; historically linked to Ötzi the Iceman (5300 years old) who carried it likely for intestinal whipworm (Trichuris trichiura); nematotoxic compounds plus mild laxative action supports worm expulsion",
+      "Broad-spectrum antimicrobial — piptamine and phenolics inhibit gram-positive and gram-negative bacteria and multiple fungal strains; broad-spectrum antibacterial activity confirmed across multiple pathogen strains",
+      "Antiviral — betulinic acid and lanostane-type triterpenes inhibit replication of HIV, influenza, poxvirus, yellow fever, West Nile, encephalitis and herpes viruses in vitro; protects cells from lethal viral infection in experimental models",
+      "Immunomodulation — beta-glucans stimulate macrophages, NK cells and T cells via pattern-recognition receptors; improve tumor surveillance and help calibrate immune responses; train innate immunity rather than simply boosting it",
+      "Anticancer potential — cytotoxic to prostate, melanoma and colorectal cancer cell lines in vitro with relatively low toxicity to normal cells; betulinic acid, polyporenic acids and phenolics show pro-apoptotic and anti-angiogenic mechanisms"
+    ],
+    "energetics": [
+      "Cool to Neutral",
+      "Bitter",
+      "Astringent",
+      "Antiseptic",
+      "Antiparasitic",
+      "Drying",
+      "Boundary-Cleansing",
+      "Grounding"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Spleen",
+      "Large Intestine",
+      "Immune System"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 307,
+    "name": "Chaga",
+    "primary_functions": [
+      "Exceptional antioxidant and Nrf2 activation — highest SOD-related antioxidant capacity among medicinal mushrooms; polyphenols and melanin-like pigments scavenge superoxide, hydroxyl radicals and ROS; phelligridin D and related compounds activate Nrf2-ARE antioxidant master pathway; DNA, lipid and protein protection from oxidative damage",
+      "Immunomodulation — beta-glucans and IOPS (Inonotus obliquus polysaccharides) activate macrophages, NK cells and dendritic cells via Dectin-1, TLR2/4 and complement receptors; balanced Th1/Th2 immune training rather than simple overstimulation; enhanced tumor surveillance and cytokine coordination",
+      "Antiviral — extracts inhibit HCV, HSV-1 replication and protect cells from feline influenza H3N2/H5N6, FPV, FIPV and FHV-1 in vitro and in animal models; mechanisms include interference with viral entry/replication plus immune-mediated antiviral support",
+      "Antitumour support (preclinical) — inotodiol and ergosterol inhibit colorectal and other cancers in animal models; betulinic acid induces apoptosis in melanoma, lung, liver, colon and breast cancer cell lines; 60% tumor volume reduction and 25% metastasis reduction reported in mouse melanoma models",
+      "Metabolic and renal protection — IOPS improve insulin sensitivity, reduce fasting blood glucose, upregulate GLUT4/PI3K/Akt signalling and improve diabetic nephropathy markers in experimental models; anti-inflammatory NF-kB suppression protects kidney, liver and cardiovascular tissues"
+    ],
+    "energetics": [
+      "Neutral to Cool",
+      "Bitter",
+      "Slightly Sweet",
+      "Astringent",
+      "Deep Yin-Protective",
+      "Jing-Supporting",
+      "Heat-Toxin Clearing"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Liver",
+      "Spleen",
+      "Stomach",
+      "Lung"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 308,
+    "name": "Cordyceps",
+    "primary_functions": [
+      "ATP production and mitochondrial energy amplification — cordycepin (3-deoxyadenosine) and related nucleosides upregulate AMPK, GLUT4, PDH (pyruvate dehydrogenase) and PPAR-gamma; increase phosphocreatine and ATP in skeletal muscle; enhance mitochondrial biogenesis; primary mechanism underlying endurance and anti-fatigue effects",
+      "Exercise performance and anti-fatigue — increases time to exhaustion; reduces lactate accumulation, BUN, CK and LDH during intense exercise; increases glycogen reserves; human RCT with C. militaris blend improved VO2max and endurance vs placebo; faster recovery and less subjective fatigue",
+      "Renal protection and CKD adjunct — polysaccharides downregulate TLR4/NF-kB inflammatory pathway and reduce oxidative stress in kidney tissue; CKD RCT: 100 mg/day C. militaris for 3 months reduced urinary protein -36.7%, BUN -12.5% and creatinine -18.3% vs placebo; 2025 meta-analysis confirms C. sinensis as dependable adjunctive CKD treatment",
+      "Immunomodulation and NK activation — polysaccharides and cordycepin enhance NK cell activity, macrophage function and T-cell responses; human studies with C. militaris capsules and beverages confirmed increased NK cell activity and favourable immune markers in healthy adults",
+      "TCM Jing-Qi tonic: Lung-Kidney axis — tonifies Kidney Yang and Jing for fatigue, low libido and poor recovery; tonifies Lung Yin and Yang for chronic cough, dyspnoea and asthma; rebuilds from deep depletion after illness or overwork"
+    ],
+    "energetics": [
+      "Mildly Warm",
+      "Sweet",
+      "Tonifying",
+      "Yang-Building",
+      "Jing-Replenishing",
+      "Breath-Opening",
+      "ATP-Amplifying"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Kidney"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 309,
+    "name": "Shiitake",
+    "primary_functions": [
+      "Immune enhancement through daily food consumption — 4-week human RCT (5–10 g dried shiitake daily): ~60% increase in gamma-delta T cell proliferation, ~2-fold increase in NK-T cells, increased secretory IgA (mucosal immunity), reduced CRP and favourable cytokine shifts (increased IL-4, IL-10, TNF-alpha, IL-1alpha; decreased MIP-1alpha); improved immune function in less inflammatory milieu in healthy adults",
+      "Lentinan as cancer adjuvant — purified beta-(1,3)-glucan with beta-(1,6) branches; clinically approved injectable adjuvant in Japan and China for gastric and lung cancer; binds Dectin-1 and complement receptor 3 on leukocytes; enhances IL-12, IFN-gamma, NK cell cytotoxicity and ADCC; synergises with monoclonal antibodies (e.g., trastuzumab) in tumour models",
+      "Cholesterol and lipid modulation — eritadenine (unique adenosine-derived compound) enhances cholesterol clearance and alters phospholipid metabolism; 90 g fresh shiitake daily for 1 week lowered serum cholesterol ~12% in human experiment; rat studies show ~20–27% triglyceride reduction",
+      "LEM (mycelial extract) cancer quality-of-life adjunct — double-blind RCT in breast cancer patients on anthracycline chemotherapy: LEM attenuated declines in quality of life and preserved NK cell activity and regulatory T cell balance vs placebo; supports use as oral adjuvant during chemotherapy",
+      "Antioxidant and cytoprotective — ergothioneine (sulfur-containing amino acid with strong antioxidant properties) plus polyphenols reduce oxidative stress and provide anti-inflammatory and organ-protective effects"
+    ],
+    "energetics": [
+      "Neutral",
+      "Slightly Warm",
+      "Sweet",
+      "Umami",
+      "Tonifying",
+      "Immune-Training",
+      "Cholesterol-Modulating"
+    ],
+    "tcm_meridians": [
+      "Stomach",
+      "Spleen",
+      "Liver"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 310,
+    "name": "Tremella",
+    "primary_functions": [
+      "Skin hydration and barrier protection — TF polysaccharides (glucuronoxylomannans) form hydrating film on skin; bind and retain water comparable to or exceeding hyaluronic acid in some assessments; topical emulsion with 0.1% Tremella extract increased epidermal hydration and reduced TEWL by ~12.4% in human volunteers; anti-photoaging and fibroblast protection from oxidative stress",
+      "Neuroprotection and cognitive support — double-blind RCT: TFP supplementation in individuals with cognitive impairment significantly improved subjective memory complaints, short-term memory and executive function with increased grey matter volume; animal models show enhanced hippocampal CREB neurons, glucose uptake and cholinergic activity; reverses scopolamine-induced memory deficits",
+      "Immunomodulation — TF polysaccharides activate NK cells, macrophages and T/B cells; clinically used in China as CFDA-approved enteric-coated capsule for leukopenia from chemotherapy and radiotherapy; NF-kB inhibition via Akt/p38MAPK/miR-155 suppression; Treg cell ratio increase in atopic dermatitis models",
+      "Anti-inflammatory at innate immune level — polysaccharides decrease ROS and pro-inflammatory cytokines (TNF-alpha, IL-6) in LPS-stimulated macrophages; reduces NF-kB activation; anti-atopic-dermatitis effects (topical and oral) comparable to prednisolone in mouse models via gut-skin-immune axis",
+      "Deep Lung-Stomach yin nourishment (TCM) — moistens Lung yin and Stomach yin; soothes dry cough, dry throat and dry mucosa; post-illness yin depletion recovery; rebuilds fluids and essence after fever, overwork or fluid loss"
+    ],
+    "energetics": [
+      "Neutral to Cool",
+      "Sweet",
+      "Moistening",
+      "Yin-Nourishing",
+      "Jing-Restorative",
+      "Skin-Hydrating",
+      "Neuroprotective"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Stomach",
+      "Spleen",
+      "Kidney"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 311,
+    "name": "Amanita Muscaria",
+    "primary_functions": [
+      "GABA-A receptor agonist via muscimol — muscimol (3-isoxazolol GABA analog) is a potent direct agonist at GABA-A receptors (same binding site as GABA, NOT benzodiazepine or barbiturate sites); produces pronounced CNS inhibition, sedation, muscle relaxation, ataxia and altered sensory perception; also partial agonist at GABA-A-rho receptors",
+      "Glutamate receptor agonism via ibotenic acid — ibotenic acid is a structural analog of glutamate/aspartate acting as NMDA and metabotropic glutamate receptor agonist; neuroexcitatory; decarboxylated in vivo to muscimol (both compounds present after ingestion); used experimentally to induce focal brain lesions in neuroscience research",
+      "Mixed excitatory-depressive neurotoxidrome — ibotenic acid produces early agitation, hallucinations and delirium (excitatory phase); muscimol produces subsequent sedation, ataxia, stupor and coma-like sleep (inhibitory phase); onset 30 min–2 hours; typical duration 6–24 hours; seizures, respiratory depression and rare fatality documented",
+      "Ethnomycological entheogenic use — long record of ritual use among indigenous Siberian peoples (Khanty, Evenki and others); shamanic divination, spirit travel and healing; traditional practices included urine recycling to reuse muscimol while reducing ibotenic acid; cannot be equated with modern unstructured consumption",
+      "TOXICOLOGICAL WARNING — not a therapeutic fungus: case series document severe poisonings including fatalities; rising commercial Amanita products are creating public health concerns; no approved clinical indications exist"
+    ],
+    "energetics": [
+      "Mixed Excitatory-Sedative",
+      "Deliriant",
+      "Threshold-Opening",
+      "GABA-Agonist",
+      "Glutamate-Agonist",
+      "Liminal",
+      "Unpredictable"
+    ],
+    "tcm_meridians": [],
+    "caution_level": "VERY HIGH"
+  },
+  {
+    "id": 312,
+    "name": "Amanita Pantherina",
+    "primary_functions": [
+      "Higher-potency muscimol and ibotenic acid mushroom — same core pharmacology as Amanita muscaria (GABA-A agonism via muscimol; NMDA/mGluR agonism via ibotenic acid) but generally higher combined alkaloid concentrations per gram; narrower safety margin; more severe toxicity at lower ingested doses",
+      "More severe neurological presentations than A. muscaria — case literature documents more frequent seizures, deeper coma, significant respiratory depression and fatalities compared to typical A. muscaria cases at similar ingested weights; fatal cases documented particularly in children and adults with large ingestions",
+      "Mixed excitatory-depressive toxidrome — identical mechanism to A. muscaria: early ibotenic acid neuroexcitation (agitation, confusion, hallucinations, myoclonus, seizures) followed by muscimol-mediated CNS depression (somnolence, ataxia, stupor, respiratory compromise); onset 30 min–3 hours; significant symptoms 6–24 hours",
+      "TOXICOLOGICAL CLASSIFICATION — poisonous mushroom: universally classified as dangerous in all medical and mycological references; variable potency and unpredictable toxicity make it particularly hazardous; misidentification with edible brown Amanita species is a significant risk",
+      "Public health concern — rising Amanita commercial products (often containing or confused with A. pantherina) are creating increased severe poisonings; consumers treating these as benign legal highs is an emerging emergency"
+    ],
+    "energetics": [
+      "High-Potency Excitatory-Sedative",
+      "Deliriant",
+      "Neurotoxic",
+      "Narrow Safety Margin",
+      "Unpredictable",
+      "Dangerous"
+    ],
+    "tcm_meridians": [],
+    "caution_level": "VERY HIGH"
+  },
+  {
+    "id": 313,
+    "name": "Shaggy Mane",
+    "primary_functions": [
+      "Potent antidiabetic and hypoglycaemic — comatin (low-MW antidiabetic compound) reduced blood glucose from 5.14 to 4.28 mmol/L within 3 hours in normal rats; 28-day comatin treatment in diabetic rabbits lowered fasting blood glucose, fructosamine, triglycerides and total cholesterol, often outperforming metformin at equivalent dose; DPP-4 inhibitory activity (incretin pathway) also documented",
+      "Cholesterol and lipid reduction — comatin treatment reduced total cholesterol up to 49.3% and triglycerides 28.7% in diabetic rabbits; fruiting body extracts lower LDL, total cholesterol and triglycerides while raising HDL in diabetic rat models",
+      "Hepatoprotective and antioxidant — polysaccharides and extracts improved antioxidant capacity and protected against CCl4-induced liver damage in 42-day rat study; reduced aminotransferases and lipid peroxidation; increased glutathione and normalised liver histology; alcohol-induced liver inflammation attenuated via IL-6, iNOS and COX-2 reduction",
+      "Anti-inflammatory and anti-arthritic — C. comatus nanogels in rheumatoid arthritis model showed significant reductions in TNF-alpha, IL-1beta, IL-6, COX-2, paw oedema (-27.75%) and arthritis index (-45.45%); potent anti-inflammatory profile",
+      "Antiandrogenic and anticancer — ethyl acetate extract inhibited androgen-sensitive prostate cancer cells (LNCaP) by suppressing androgen receptor transcriptional activity and PSA expression; activity against leukemia and various tumour cell lines documented"
+    ],
+    "energetics": [
+      "Cool",
+      "Neutral",
+      "Bitter",
+      "Astringent",
+      "Hypoglycaemic",
+      "Hepatoprotective",
+      "Ephemeral"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Liver"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 314,
+    "name": "Button Mushroom",
+    "primary_functions": [
+      "Trained immunity via beta-glucans — beta-glucan-rich fractions train bone-marrow-derived macrophages: after 24-hour exposure and 7-day rest, cells show enhanced TNF and IL-6 responses to LPS or Pam3CSK4 restimulation; metabolic reprogramming via increased oxidative phosphorylation and glycolysis supporting epigenetic changes (histone demethylase inhibition); fractionation confirms beta-glucans as the active component",
+      "Vitamin D status improvement — ergosterol (vitamin D2 precursor) enriched by UV exposure during cultivation; UV-treated button mushrooms significantly improve human vitamin D status in clinical trials; most accessible dietary source of plant-based vitamin D2",
+      "Cardiometabolic support — reduce plasma total cholesterol, LDL and triglycerides while increasing HDL and lowering blood glucose in clinical and animal studies; cardiovascular protective mechanisms include endothelial support and LDL oxidation reduction; hydroalcoholic extract reduced markers of chemically-induced cardiac damage",
+      "Gut microbiota prebiotic effect — polysaccharides promote beneficial bacteria (Bifidobacterium, Bacteroidetes) and increase SCFA production while reducing Firmicutes; gut barrier integrity improvement; anti-inflammatory microbiome modulation",
+      "Everyday accessible food medicine — globally most consumed edible mushroom; delivers beta-glucans, ergothioneine, B-vitamins and functional compounds through routine daily meals without any protocol burden"
+    ],
+    "energetics": [
+      "Neutral",
+      "Sweet",
+      "Nourishing",
+      "Grounding",
+      "Immune-Training",
+      "Metabolic-Supporting",
+      "Daily-Foundation"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Kidney"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 315,
+    "name": "Enoki",
+    "primary_functions": [
+      "Antioxidant and anti-ageing — sulfated FVP polysaccharides (SFPS) from F. velutipes residue show strong DPPH, hydroxyl and superoxide radical scavenging; in D-galactose-induced aging mice, SFPS increases SOD, GSH-Px, CAT and total antioxidant capacity, reduces MDA and lipid peroxidation, improves inflammatory markers and aging signs; NOS activity elevation and AChE reduction suggest neuroprotective and cognitive support in aging",
+      "Periodontal and tissue protection (anti-inflammaging) — FVP polysaccharides protect human gingival fibroblasts from AGEs/LPS-induced damage: scavenges ROS, inhibits NLRP3 inflammasome activation, prevents caspase-1-mediated pyroptosis, reduces IL-1beta/IL-18 release, IL-6/IL-8 and senescence markers (p16, SA-beta-gal); restores cell survival and wound healing",
+      "Renoprotective and metabolic — residue polysaccharides (En-RPS) decrease serum creatinine, BUN and glucose; increase renal SOD, CAT and GSH-Px while lowering MDA in STZ-induced diabetic mice; antioxidant and renoprotective mechanisms in diabetic kidney disease model",
+      "Antimicrobial and antifungal — extracts inhibit adhesion of Candida albicans and Sporothrix schenckii to epithelial cells via mannose-rich polysaccharides; anti-adhesive and antifungal properties; broader antibacterial activity against multiple pathogens",
+      "Traditional and folk longevity — longstanding use in Japan, China and Korea for longevity, cardiovascular health, immune support and cognitive clarity; now framed as anti-ageing culinary-medicinal strategy"
+    ],
+    "energetics": [
+      "Neutral to Cool",
+      "Sweet",
+      "Antioxidant",
+      "Anti-Ageing",
+      "Neuroprotective",
+      "Renoprotective",
+      "Gentle"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Kidney",
+      "Spleen"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 316,
+    "name": "Fu Ling",
+    "primary_functions": [
+      "Spleen qi tonification and damp draining — bland sweet taste tonifies Spleen qi (foundational energy production); promotes urination and leaches dampness; addresses oedema, urinary difficulty and phlegm-fluid accumulation; strengthens digestion and assimilation in spleen deficiency patterns with poor appetite, loose stools and fatigue",
+      "Renoprotective and diuretic — surface layer (Fu Ling Pi) shows particular diuretic potency and targeted renoprotective effects in models of acute kidney injury, diabetic kidney disease, nephrotic syndrome and tubulointerstitial nephropathy; mechanisms include TGF-beta1/Smad, Wnt/beta-catenin, NF-kB, Nrf2/MAPK, renin-angiotensin system and matrix metalloproteinase modulation",
+      "Antitumour and organ protection — polysaccharides and triterpenes show broad antitumour activity in lung, breast, gastric, liver, pancreatic and kidney cancer models; CMP polysaccharides significantly mitigate 5-fluorouracil-induced colon damage by decreasing ROS and inflammatory markers while increasing antioxidant enzymes; chemotherapy protection and adjunct role",
+      "Immunomodulation — PCP and PCP-I polysaccharides activate macrophages via Ca2+/PKC/p38/NF-kB; act as immune adjuvants enhancing innate and adaptive responses; lanostane triterpenoids activate NK cells and skew Th1/Th2 toward Th1 (IFN-gamma increase, IL-4/IL-5 decrease); anti-allergic potential via Th1/Th2 rebalancing",
+      "Shen calming and sleep support — traditional use for palpitations, insomnia and anxiety from heart-spleen disharmony; Fu Shen (sclerotium with pine root) emphasises spirit calming; mechanistic work on gut-brain-serotonin axis and TCM heart-spirit integration is still developing but supported by centuries of clinical use"
+    ],
+    "energetics": [
+      "Neutral",
+      "Bland",
+      "Sweet",
+      "Slightly Drying",
+      "Damp-Draining",
+      "Spleen-Tonifying",
+      "Shen-Calming",
+      "Diuretic"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Spleen",
+      "Kidney"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 317,
+    "name": "Lion",
+    "primary_functions": [
+      "NGF and BDNF stimulation — hericenones C-H (fruiting body aromatic meroterpenoids) stimulate NGF synthesis via PKA pathway; erinacines A-K (mycelium cyathane diterpenoids) stimulate both NGF and BDNF expression; erinacine C and Z1 increase both simultaneously; whole extracts also increase BDNF in stress and neurodegenerative models; these neurotrophins drive neuronal survival, synaptic plasticity, hippocampal neurogenesis and cognitive function",
+      "Cognitive improvement in MCI — double-blind placebo-controlled RCT (30 Japanese adults 50–80 years with mild cognitive impairment): 0.8 g/day dried fruiting body powder for 16 weeks produced significantly higher cognitive scores (HDS-R) at weeks 8, 12 and 16 vs placebo; scores declined after discontinuation indicating continued intake needed; no adverse effects",
+      "Cognitive benefit in mild Alzheimer\\",
+      ",\r\n      ",
+      "s and Parkinson\\",
+      ",\r\n      "
+    ],
+    "energetics": [
+      "Neutral",
+      "Sweet",
+      "Nourishing",
+      "Neurotropic",
+      "Cognitively-Clarifying",
+      "Neuroprotective",
+      "Psychoplastogenic"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Spleen",
+      "Kidney"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 318,
+    "name": "Maitake",
+    "primary_functions": [
+      "Potent beta-glucan immunomodulation — MaitakeGold 404 and D-fraction/MD-fraction (partially purified beta-glucan formulations); bind Dectin-1, complement receptor 3 and other PRRs on macrophages, dendritic cells, NK cells and T cells; enhance phagocytic activity, NK cell cytotoxicity and cytokine production (IL-6, IL-12, IFN-gamma); oral Maitake glucan studies show MaitakeGold outperforming AHCC per dose; Maitake+Shiitake combination is strongest in comparative studies",
+      "Cancer adjuvant immunomodulation — Phase I/II dose-escalation trial (30 postmenopausal breast cancer survivors): oral Maitake polysaccharide extract at 2 mg/kg/day produced ~300% increase in CD3+CD25+ and CD4+CD25+ T cells; higher doses maximised IL-2 (NKT cells) and IL-10 (T cells) production; safe without serious adverse events; non-randomised Japanese case series reported clinical responses in liver (58%), breast (69%), lung (63%) cancers",
+      "Blood glucose and insulin sensitivity — single oral dose FXM water-soluble extract (140 mg/mouse) reduced circulating glucose ~25% at 8–18 hours; chronic dosing significantly lowered glucose AND insulin (peripheral insulin sensitisation); Maitake SX fraction improved glucose-insulin metabolism and reduced blood pressure via renin-angiotensin and NO pathway modulation in diabetic model",
+      "Potent oral immune activator — animal studies show significant NK cell cytotoxicity increase, phagocytic activation and IL-6, IL-12, IFN-gamma cytokine production; in combination with Shiitake the strongest oral beta-glucan immune activation recorded in comparative mushroom studies",
+      "Antitumour (preclinical) — D-fraction enhances antitumour effects and reduces chemotherapy toxicity in mice; direct antitumour effects on triple-negative breast cancer cells; anti-angiogenic potential from blazeispirols-type lipid components"
+    ],
+    "energetics": [
+      "Neutral",
+      "Slightly Sweet",
+      "Immunomodulating",
+      "Metabolic-Balancing",
+      "Insulin-Sensitising",
+      "NK-Activating"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Kidney",
+      "Immune System"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 319,
+    "name": "Mesima",
+    "primary_functions": [
+      "Antitumour and immune biological response modulator — protein-bound polysaccharides (PL proteoglycans) stimulate T-lymphocyte proliferation, B-cell activation, NK cell activity and macrophage responses; used as nonspecific immunostimulant in cancer patients in East Asia; fruiting body extracts (PL-H and PL-A) showed 71–73% solid tumour growth inhibition in mouse models comparable to commercial Krestin (PSK)",
+      "Wnt/beta-catenin pathway suppression in colon cancer — PL at 125–1000 µg/mL inhibited SW480 colon cancer cell proliferation, decreased beta-catenin expression and cyclin D1, reduced TCF/LEF transcriptional activity; inhibited MMP-2 and MMP-9 anti-invasive activity; direct anti-metastatic potential",
+      "Anti-asthmatic and Th2 modulation — OVA-induced asthma model: P. linteus ethanol extract reduced eosinophilic airway inflammation and airway hyperresponsiveness; significantly attenuated Th2 cytokines (IL-4, IL-5, IL-13), eotaxin and adhesion molecules; inhibited p38 MAPK and NF-kB activation; positions Mesima as anti-allergic Th2-modulating mushroom",
+      "Immune NK and Th1/Th2 balance — WAFL water-soluble extract increased IFN-gamma (Th1) while modulating IgE-mediated Th2 responses; anti-allergic and Th1/Th2 rebalancing relevant to allergy, asthma and immune-mediated conditions",
+      "Breast tissue and hormone-sensitive cancer support — hispolon and phenylpropanoids show anti-proliferative and pro-apoptotic effects in ER-positive breast cancer lines with ER-alpha expression reduction; aqueous fruiting body extracts dose-dependent antiproliferative effects on MDA-MB-231 breast cancer cells"
+    ],
+    "energetics": [
+      "Neutral to Slightly Cool",
+      "Bitter",
+      "Astringent",
+      "Immune-Sculpting",
+      "Antitumour",
+      "Anti-Allergic",
+      "Haemostatic"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Spleen",
+      "Lung",
+      "Immune System"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 320,
+    "name": "Morels",
+    "primary_functions": [
+      "Hepatoprotection — M. esculenta fruiting body extract reduced serum ALT and AST, decreased lipid accumulation and improved liver histology in alcohol-induced acute liver injury model; mechanisms: Nrf-2 pathway activation (upregulated antioxidant defences) and NF-kB inhibition (reduced pro-inflammatory cytokines); morel polysaccharides (MEP) reduce MDA, MPO and inflammatory markers while improving SOD, catalase and glutathione",
+      "Antioxidant — significant in vitro hydroxyl and superoxide radical scavenging; phenolics, polysaccharides and tocopherols all contribute; higher MW polysaccharides linked to stronger immunomodulation; lower MW linked to stronger direct antioxidant activity; consistent across multiple morel species",
+      "Immunomodulatory and gut health — polysaccharides and beta-glucans enhance immune function including macrophage activity and lymphocyte proliferation; prebiotic fibre effects support gut microbiota composition; SCFA production; gut barrier integrity",
+      "Anticancer (preclinical) — heteropolysaccharide (81 kDa) from M. esculenta showed growth-inhibitory effects on HT29 colon cancer cells; hexane oil extract from Himalayan M. esculenta inhibited breast cancer cell proliferation and migration",
+      "ABSOLUTE SPECIES DISTINCTION: True morels (Morchella) are safe when cooked; false morels (Gyromitra) are highly toxic (gyromitrin/MMH — seizures, liver damage, haemolysis, coma, death) and must never be consumed or confused with true morels"
+    ],
+    "energetics": [
+      "Neutral",
+      "Sweet",
+      "Nourishing",
+      "Hepatoprotective",
+      "Antioxidant",
+      "Immuno-Supportive",
+      "Regenerative"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Spleen",
+      "Stomach"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 321,
+    "name": "Oyster Mushroom",
+    "primary_functions": [
+      "Pleuran beta-glucan for respiratory immunity — double-blind placebo-controlled trial (50 athletes): 3-month pleuran supplementation reduced incidence of upper respiratory tract infection symptoms and increased circulating NK cells; in children with recurrent respiratory tract infections: 6-month pleuran significantly reduced both number and duration of RTIs with good safety profile; additional trials show benefits against herpes labialis and improvements in immune parameters",
+      "Antidiabetic and hypolipidaemic — STZ-induced diabetic rat extracts reduced blood glucose, lowered serum triglycerides, total cholesterol and LDL-C, raised HDL-C; total polysaccharides (POP) improve hyperglycaemia, hyperlipidaemia, insulin resistance and glycogen storage while boosting SOD, CAT and GSH-Px and reducing MDA; alpha-amylase and alpha-glucosidase inhibition supports postprandial glucose control",
+      "Cardiovascular protection — antihypercholesterolaemic and antihypertensive; reduces cholesterol and blood pressure in animal and small human studies; endothelial protection; LDL oxidation reduction; lovastatin-like statin compounds contribute to cholesterol-lowering effect",
+      "Antimicrobial including MDR pathogens — ethanolic and acetonic extracts antibacterial against multiple Gram-positive and Gram-negative pathogens including multidrug-resistant strains; minimum bactericidal concentrations at 10-3 to 10-6 mg/mL for some fractions; activity linked to phenolics, flavonoids and secondary metabolites",
+      "Gut microbiota prebiotic and barrier support — high dietary fibre and complex carbohydrates with prebiotic effects; SCFA production; gut barrier integrity; anti-inflammatory microbiome modulation; roles in obesity, diabetes, cardiovascular and IBD prevention frameworks"
+    ],
+    "energetics": [
+      "Neutral",
+      "Sweet",
+      "Cardiometabolic-Balancing",
+      "Glucose-Modulating",
+      "Immune-Training",
+      "Respiratory-Supportive"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Stomach",
+      "Spleen",
+      "Large Intestine"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 322,
+    "name": "Red-Belted Polypore",
+    "primary_functions": [
+      "Anti-angiogenic and anti-inflammatory polysaccharides — polysaccharides show strong anti-angiogenic and anti-inflammatory effects in endothelial cell models WITHOUT endothelial cytotoxicity; inhibit neovascularisation and inflammatory responses; 32 lanostane triterpenoids including pinicolasin J potently inhibit superoxide anion generation and elastase release in human neutrophils (IC50 ~1.8–2.5 µM)",
+      "Anticancer (preclinical) — extracts show pro-apoptotic, antioxidant and anti-inflammatory effects in multiple cancer cell lines; two of three animal studies reported tumour growth inhibition and prolonged survival; colon, rectum, stomach and liver cancer models showed reduced tumour growth, shifts in ROS and apoptosis markers in mice",
+      "Metabolic: antihyperglycaemic and hypolipidaemic — striking preclinical data: F. pinicola extract lowered blood glucose by 77% after 20 days, increased HDL by 73% and decreased LDL by 76% in animal metabolic disturbance models; alkaline polysaccharide-rich extracts show antihyperglycaemic activity via improved insulin sensitivity and hepatic glucose metabolism modulation",
+      "Antimicrobial and anti-biofilm — ethanolic extracts show antibacterial, anti-biofilm, anti-quorum-sensing and efflux pump inhibitory activities against important pathogens; potential antibiotic adjuvant strategy; broad antimicrobial and antiviral properties",
+      "Traditional use for pain and inflammation — extensive use in Chinese and Korean traditional medicine for headache, nausea, liver problems, haemorrhage (haemostatic), inflammation and fatigue; COX-2 inhibition (fomitoside E) confirms anti-inflammatory mechanism"
+    ],
+    "energetics": [
+      "Neutral to Cool",
+      "Bitter",
+      "Astringent",
+      "Anti-Angiogenic",
+      "Metabolic-Regulating",
+      "Anti-Inflammatory",
+      "Slowly Corrective"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Kidney",
+      "Heart",
+      "Spleen"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 323,
+    "name": "Reishi",
+    "primary_functions": [
+      "Shen calming and sleep facilitation — aqueous extract potentiates pentobarbital-induced sleep via GABAergic mechanism (antagonised by flumazenil); GLAA acidic polysaccharide promotes sleep via gut microbiota-dependent serotonin-associated pathway; spore extract improved total, REM and NREM sleep and prevented cognitive deficits in Alzheimer\\",
+      ",\r\n      ",
+      ",\r\n      ",
+      ",\r\n      ",
+      ",\r\n      "
+    ],
+    "energetics": [
+      "Neutral to Slightly Warm",
+      "Slightly Bitter",
+      "Sweet",
+      "Shen-Calming",
+      "Qi-Tonifying",
+      "Adaptogenic",
+      "Foundational"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Lung",
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 324,
+    "name": "Royal Sun Mushroom",
+    "primary_functions": [
+      "Potent NK cell and Th1 immune activation — beta-1,3/1,6-D-glucans and proteoglycans bind Dectin-1, complement receptor 3 (CR3) and other PRRs; trigger IL-12 and IFN-gamma production; NK cell proliferation and T cell activation; independent of TLR-4; mouse models confirm NK cytotoxicity augmentation via IL-12/IFN-gamma pathway; human reviews confirm encouraging NK-cell-mediated immune support",
+      "Antitumour (preclinical) — Agarol ergosterol derivative induces caspase-independent apoptosis in multiple human carcinoma cell lines (A549, MKN45, HSC-3, HSC-4) via ROS generation, mitochondrial membrane depolarisation, AIF release, Bax upregulation and Bcl-2 downregulation; blazeispirols anti-angiogenic; beta-glucans cause tumour regression in sarcoma and solid tumour mouse models",
+      "Anti-allergic and Th1/Th2 rebalancing — Th1-leaning immune activation reduces IgE and Th2 skewing in animal models; potential benefit for allergy-driven conditions; WAFL extract increased IFN-gamma while modulating IgE-mediated Th2 responses",
+      "Antigenotoxic and hepatoprotective (preclinical) — CCl4-induced liver damage in rats: supplementation normalised ALT, AST, LDH, GSH and antioxidant vitamins while reducing malondialdehyde; antigenotoxic properties against hydrogen peroxide-induced DNA damage in vitro",
+      "CRITICAL HEPATOTOXICITY: case series — three advanced cancer patients developed severe hepatic damage including two fatalities after consuming A. blazei extract; Memorial Sloan Kettering explicitly warns of severe hepatic dysfunction induction; idiosyncratic hepatotoxicity in cancer patients is the defining safety concern"
+    ],
+    "energetics": [
+      "Neutral to Warm",
+      "Sweet",
+      "Pungent",
+      "Strongly Immune-Activating",
+      "NK-Stimulating",
+      "Th1-Leaning",
+      "Antitumour"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Lung",
+      "Liver",
+      "Immune System"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 325,
+    "name": "Shaggy Bracket",
+    "primary_functions": [
+      "Lipid metabolism, obesity and NAFLD reversal — HFD-fed mice: I. hispidus extract reversed hepatic steatosis and adipose hypertrophy, lowered serum LDL-C, total cholesterol, triglycerides and leptin, increased HDL-C; reduced liver ALT/AST and inflammatory cytokines (IL-1beta, IL-6, TNF-alpha, PAI-1); mechanism: Nrf2/HO-1 antioxidant pathway activation and NF-kB/IKKalpha/beta/IkBa phosphorylation inhibition plus significant gut microbiota and lipidomics modulation",
+      "Hepatoprotection in alcoholic liver disease — chronic ALD model: improved liver histology, reduced fibrosis and inflammation, lowered ALT/AST and increased antioxidant enzyme activity; positions I. hispidus as hepatoprotective agent for alcohol-related liver damage",
+      "Antiviral (influenza A and B) — hispidin and hispolon polyphenols show significant activity against influenza A and B viruses in allantoic membrane assays; combined with immunomodulation this positions the mushroom near other Inonotus/Sanghuang species in respiratory-viral defence potential",
+      "Immunomodulation — ethanolic fruiting body extract increases activation but reduces proliferation of human activated T-cells, enhances NK cell activity and promotes dendritic cell maturation; hispidin and hispolon reproduce many effects suggesting multi-compound synergy; broad immune-modulating potential",
+      "Anticancer potential — polyphenols hispidin and hispolon show cytotoxic and pro-apoptotic actions in cancer cell lines; mycelial cyclic peptide fraction (CCM) induces mitochondrial-mediated apoptosis in HeLa cells (upregulating Bax, cytochrome c, caspase-9, cleaved caspase-3; downregulating Bcl-2); lead compounds for cervical cancer drug development"
+    ],
+    "energetics": [
+      "Neutral to Warm",
+      "Bitter",
+      "Anti-Inflammatory",
+      "Hepatoprotective",
+      "Hypolipidaemic",
+      "Immunomodulating",
+      "Antiviral"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Spleen",
+      "Lung",
+      "Immune System"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 326,
+    "name": "Tinder Fungus",
+    "primary_functions": [
+      "Immune and inflammatory terrain modulation — polysaccharides and insoluble cell wall fibers modulate innate and adaptive immune responses, enhancing deficient functions while down-regulating excessive inflammation; fomentariol (benzotropolone phenolic) specifically suppresses ERK/JNK signalling, reducing NO, ROS and pro-inflammatory cytokines in LPS-stimulated macrophages; normalises dysregulated cytokine patterns in chronic multi-system illness",
+      "Anti-inflammatory and anti-nociceptive — methanol extracts reduce carrageenan-induced oedema and pain behaviours in animals; in vitro inhibition of NO, PGE2, TNF-alpha and ROS; Grade B+ evidence from animal models and in vitro macrophage studies",
+      "Antioxidant buffering — strong radical-scavenging (DPPH), beta-carotene bleaching inhibition and FRAP activity; ethanol and methanol extracts show high antioxidant potency; Grade A antioxidant evidence from multiple in vitro and chemical assay methods",
+      "Gut-liver-kidney detoxification support — purified insoluble cell wall fibers (chitin-glucan matrix) bind heavy metals, organic dyes and radionuclides; support intestinal microbiota and barrier integrity; early clinical and ex vivo work suggests liver and kidney function normalisation in contexts of environmental toxic load",
+      "Antitumour and antimicrobial — extracts and isolated compounds induce apoptosis and inhibit proliferation in cancer cell lines; broad-spectrum antimicrobial activity against bacteria (E. coli and others) and pathogenic fungi including dermatophytes; supports chronic infection terrain alongside immune modulation"
+    ],
+    "energetics": [
+      "Warm to Neutral",
+      "Drying",
+      "Astringent",
+      "Anti-Inflammatory",
+      "Antioxidant",
+      "Terrain-Modulating",
+      "Slow and Deep"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Spleen",
+      "Liver",
+      "Large Intestine"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 327,
+    "name": "Turkey Tail",
+    "primary_functions": [
+      "PSK and PSP cancer adjuvant — PSK (polysaccharide-K/Krestin) prescription-approved in Japan since 1977; PSP (polysaccharopeptide) approved in China; protein-bound beta-(1,3)-D-glucans with beta-(1,4) and (1,6) branches plus peptide chain (~100 kDa); meta-analysis across 23 RCTs (4246 patients) shows hazard ratio ~0.82 mortality reduction vs control in gastric, colorectal, breast, lung and other cancers alongside chemo/radiation; improved disease-free survival and treatment response rates",
+      "Comprehensive immunomodulation — PSP/PSK and beta-glucans bind Dectin-1, TLR2/4 and CR3 on macrophages, dendritic cells and NK cells; increase IL-2, IL-12, IL-18, IFN-gamma and TNF-alpha; enhance NK cell cytotoxicity, CD4+ and CD8+ T-cell activity and antigen presentation; reprogramme tumour microenvironment (reduce Treg and MDSCs, increase effector T cells); phase I breast cancer trial: dose-dependent NK cell and lymphocyte increases at 3–9 g/day mycelial product",
+      "Microbiome prebiotic effect — human RCT (PSP vs amoxicillin vs control): PSP induced distinct prebiotic microbiome shifts with increased Bifidobacterium and Lactobacillus, increased SCFAs and lower pH; amoxicillin caused marked dysbiosis persisting 42 days; PSP is a confirmed human prebiotic; in vitro fermentation of PSP with human fecal microbes shows classic prebiotic signature; supports butyrate production and intestinal barrier integrity",
+      "Chemotherapy protection and synergy — PSP prolongs anti-cancer drug half-life and increases cytotoxicity of agents such as cyclophosphamide in HepG2 cells; PSK/PSP reduce treatment-related immunosuppression and support bone marrow function; improved quality of life during chemotherapy and radiation across cancer types",
+      "TCM Qi tonification and toxin-clearing — Spleen Qi (post-natal vitality, digestion); Lung and Wei Qi (defensive boundary, mucosal immunity); heat-toxin clearing (chronic infection, inflammation, tumour patterns); fatigue, poor appetite, weakness after illness; chronic hepatitis and recurrent respiratory infections"
+    ],
+    "energetics": [
+      "Neutral to Slightly Cool",
+      "Slightly Sweet",
+      "Bland",
+      "Qi-Tonifying",
+      "Damp-Transforming",
+      "Immune-Regulating",
+      "Toxin-Clearing"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Lung",
+      "Liver"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 328,
+    "name": "Willow Bracket",
+    "primary_functions": [
+      "Anti-gout and hyperuricaemia — polyphenols from wild and cultivated P. igniarius lower serum uric acid and improve kidney function in hyperuricaemic rats; in MSU-induced acute gouty arthritis models: polyphenols suppressed ankle swelling and reduced ICAM-1, IL-1beta and IL-6 expression; strong anti-inflammatory and anti-gout profile aligning with traditional Chinese use for joint and inflammatory conditions",
+      "Antidiabetic and gut microbiota remodelling — SH-P polysaccharides significantly lowered blood glucose, improved insulin sensitivity and restored pancreatic, liver and kidney function in high-fat diet/STZ diabetic mice; SH-P rebalanced gut microbiota increasing Lactobacillus and Parabacteroides; fecal microbiota transplantation confirmed microbiome remodelling mediated much of the antidiabetic effect; polyphenol-rich extracts (PI-PRE) reduced fasting glucose and improved glucose tolerance in KK-Ay diabetic mice with identified actives 7,8-dihydroxycoumarin and inoscavin C",
+      "Antitumour and immunomodulation — water, ethanol and ethyl acetate extracts show broad antitumour activity against multiple cell lines (S180, PC-3, SK-HEP-1, HT-29) reducing tumour growth in mice; network pharmacology study linked key compounds to mitochondrial apoptosis pathways and inflammatory signalling in colon cancer; PIP polysaccharides enhanced NK cell and macrophage function and increased cytokines (potency varies by geographic origin)",
+      "Neuroprotection — polyphenol extract protected against acrolein toxicity in vitro and reduced brain infarct volume, oedema and neurobehavioural deficits in a mouse stroke model; emerging neuroprotective profile alongside Chaga and other Hymenochaetaceae",
+      "Hepatoprotective and cardiovascular — extracts show hepatoprotective effects in chemical liver injury models; LDL oxidation inhibition and lipid profile improvement support anti-atherogenic cardiovascular role; TCM traditional use for blood circulation and gastroenteric dysfunction"
+    ],
+    "energetics": [
+      "Neutral to Cool",
+      "Bitter",
+      "Astringent",
+      "Blood-Moving",
+      "Hypoglycaemic",
+      "Anti-Gout",
+      "Hepatoprotective",
+      "Neuroprotective"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Spleen",
+      "Kidney",
+      "Immune System"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 329,
+    "name": "Zhu Ling",
+    "primary_functions": [
+      "Diuretic and TCM damp-draining — classical TCM primary function: promotes urination and leaches out dampness for oedema, difficult urination, urinary tract damp-heat, jaundice and water retention; Zhu Ling decoctions in classical Chinese formulas for these patterns for centuries; modern studies confirm increased urine output and improved renal function in various kidney disease models",
+      "Renoprotective and anti-fibrotic — PPS (P. umbellatus polysaccharide) improves renal histology, reduces collagen deposition and fibrosis, and modulates epithelial-mesenchymal transition and matrix metalloproteinases in kidney models; mechanisms include anti-inflammatory, antioxidative and anti-fibrotic actions in renal tissue; kidney ",
+      " that drains but also protects structure simultaneously",
+      "Antitumour and oncology adjunct — PUPs (P. umbellatus polysaccharides) show antineoplastic effects against multiple tumour cell lines in vitro and in vivo; approved in China as adjuvant for chronic hepatitis B and cancer support (alongside other treatments); mechanisms include immune activation, apoptosis induction, ROS modulation and inhibition of proliferation and metastasis",
+      "Hepatoprotective and anti-hepatitis — PUPs help repair liver injury in hepatitis models, improving histology and accelerating hepatocyte regeneration; clinically approved in China as adjuvant for chronic hepatitis B, lowering serum transaminases and improving symptoms; complementary to Fu Ling in liver-kidney support protocols",
+      "Immune modulation and anti-ageing — polysaccharides enhance macrophage activation and cytokine modulation; anti-mutagenic and DNA-protective effects; anti-ageing via reduction of oxidative damage and antioxidant enzyme improvement; TCM foundational maintenance mushroom for chronic conditions"
+    ],
+    "energetics": [
+      "Neutral",
+      "Bland",
+      "Sweet",
+      "Diuretic",
+      "Damp-Draining",
+      "Renoprotective",
+      "Anti-Fibrotic",
+      "Hepatoprotective"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Bladder",
+      "Spleen",
+      "Liver"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 330,
+    "name": "Psilocybe Cubensis",
+    "primary_functions": [
+      "Psilocybin/psilocin 5-HT2A agonism and neuroplasticity — psilocybin (0.37–1.30% dry weight in caps) is dephosphorylated in vivo to psilocin; high affinity for 5-HT2A receptors on cortical layer V pyramidal neurons increases neuronal excitability and glutamate release; acute decreases in 5-HT2A receptor density and increased SV2A (synaptic vesicle glycoprotein marker of synaptic density) consistent with enhanced synaptogenesis; increased dendritic spine density and BDNF upregulation in preclinical models; mTOR-related pathway modulation",
+      "Default Mode Network reduction and global connectivity increase — fMRI and PET neuroimaging shows reduced activity and connectivity within DMN (medial prefrontal cortex, posterior cingulate); increased global functional connectivity across normally segregated networks (",
+      "); altered limbic-cortical connectivity correlating with emotional processing changes; these neurobiological changes correlate with sustained reductions in depressive symptoms weeks after dosing",
+      "Treatment-resistant depression — multiple controlled trials: rapid, large effect-size reductions in depressive symptoms in MDD and TRD after one or two psilocybin-assisted psychotherapy sessions; changes in DMN and executive network connectivity correlate with symptom improvements sustained weeks to months; pooled analyses confirm clinical significance",
+      "Cancer-related anxiety and depression — Johns Hopkins RCT (51 patients): ~80% maintained clinically significant reductions in anxiety and depression at 6-month follow-up from single psilocybin dose plus psychotherapy; earlier 29-patient trial: durable anti-anxiety and antidepressant effects with single psilocybin dose",
+      "Substance use disorders — psilocybin-assisted therapy positive signals in alcohol use disorder (AUD) and tobacco dependence: increased abstinence rates, reduced drinking days; mechanisms include increased cognitive flexibility, altered reward learning and heightened salience of values-consistent behaviour"
+    ],
+    "energetics": [
+      "Neutral to Warm",
+      "Consciousness-Expanding",
+      "Neuroplastogenic",
+      "DMN-Dissolving",
+      "Serotonergic",
+      "Psychoplastogenic",
+      "Liminal"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Pericardium",
+      "Third Eye"
+    ],
+    "caution_level": "VERY HIGH"
+  },
+  {
+    "id": 404,
+    "name": "Raspberry Leaf",
+    "primary_functions": [
+      "Uterine tonic — premier ally for pelvic and uterine tissue resonance",
+      "Tissue firming — gentle astringent for mucosal and reproductive integrity",
+      "Nutritive support — rich in minerals and vitamins for long-term vitality",
+      "Digestive astringent — useful for mild loose stools and GI irritation"
+    ],
+    "energetics": [
+      "Slightly Cooling",
+      "Drying",
+      "Astringent",
+      "Toning",
+      "Tissue-firming"
+    ],
+    "tcm_meridians": [
+      "Uterus",
+      "Kidney",
+      "Liver",
+      "Spleen"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 405,
+    "name": "Rosehip",
+    "primary_functions": [
+      "Nutritive antioxidant tonic — broad-spectrum vitamin-rich rebuilding",
+      "Seasonal immune resilience — classic winter fruit ally for vitality",
+      "Connective tissue support — useful for skin, collagen, and joint formulas",
+      "Convalescence support — gentle rebuilding medicine after illness"
+    ],
+    "energetics": [
+      "Neutral",
+      "Slightly Cool",
+      "Sour",
+      "Nutritive",
+      "Restorative",
+      "Gently Astringent"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Spleen",
+      "Liver",
+      "Heart"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 406,
+    "name": "Shatavari",
+    "primary_functions": [
+      "Reproductive nourishment — premier Ayurvedic tonic for hormonal restoration",
+      "Demulcent GI support — soothes hyperacidity and inflammatory digestive heat",
+      "Nervous system restoration — replenishing ally for burnout and depletion",
+      "Cooling endocrine support — reduces pitta-type hormonal irritability"
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Sweet",
+      "Bitter",
+      "Demulcent",
+      "Yin-Building"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Lung",
+      "Stomach",
+      "Reproductive"
+    ],
+    "caution_level": "MEDIUM"
+  }
+]
