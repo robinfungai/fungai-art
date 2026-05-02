@@ -856,10 +856,8 @@
             <div class="intro-card">
               <div class="intro-title">Invitation</div>
               <p>
-                One option is a long‑term investment with revenue share on Fungai Art
-                Elixirs and Skogens Nektar experiences. Another is to secure the build
-                with <span class="intro-highlight">Gabi’s safe bridge funding</span>,
-                then reopen the cap table later.
+                This is a herbal protocol maker prototype- more text will be revealed soon Another is to secure the build
+                <span class="intro-highlight"></span>,
               </p>
             </div>
           </div>
@@ -1001,15 +999,14 @@
     <!-- RIGHT COLUMN: STORY / NUMBERS / OPTIONS -->
     <div>
       <div class="side-card">
-        <div class="side-label">Fungai Art cosmology</div>
-        <div class="side-heading">Skogens Nektar, Moder Jord & Tyme Tonics</div>
-        <p>
-          Fungai Art sits where forest, apothecary and altar meet. Skogens Nektar is the
-          forest‑bar expression. Moder Jord anchors deep earth‑tonics and sound ritual.
-          Tyme Tonics carries the everyday micro‑rituals – adaptogenic sodas, altar
-          bottles and multisensory drops.
-        </p>
-      </div>
+  <div class="side-label">Current traction</div>
+  <div class="side-heading">Early signal, real-world testing</div>
+  <p>
+    Fungai Art is already moving through events, tincture concepts and ritual beverage
+    formats across Sweden and Portugal. The apothecary is no longer an idea — it is an
+    active body of work, now being translated into a living herbal interface.
+  </p>
+</div>
 
       <div class="side-card">
         <div class="side-label">Numbers · early signal</div>
@@ -1022,20 +1019,16 @@
         </p>
       </div>
 
-      <div class="side-card">
-        <div class="side-label">Capital paths</div>
-        <p>
-          <span class="side-tag">Option A · Long‑term</span><br />
-          Deep partnership with revenue share on Fungai Art Elixirs, Skogens Nektar and
-          digital herbal intelligence. A slow, regenerative build with aligned co‑owners.
-        </p>
-        <p style="margin-top: 6px">
-          <span class="side-tag">Option B · Secure bridge</span><br />
-          Receive Gabi’s secure capital to complete this lab layer, ship a focused beta
-          and open the next investment window once traction is visible and less
-          speculative.
-        </p>
-      </div>
+<div class="side-card">
+  <div class="side-label">Ecosystem</div>
+  <div class="side-heading">Skogens Nektar · Moder Jord · Tyme Tonics</div>
+  <p>
+    Fungai Art connects forest ritual, apothecary craft and sensory experience. Skogens
+    Nektar is the immersive forest-facing expression. Moder Jord grounds the earth altar,
+    sound and devotional layer. Tyme Tonics carries the everyday portal — functional
+    drinks, altar bottles and botanical micro-rituals.
+  </p>
+</div>
     </div>
   </div>
 
@@ -1391,30 +1384,31 @@
       if (el) el.classList.add("sel");
     }
 
-    function go(n) {
-      if (n === 1 && !S.int) {
-        alert("Choose a primary intention first.");
-        return;
-      }
-      if (n === 3 && !S.body) {
-        alert("Choose the body pattern that feels most true right now.");
-        return;
-      }
-      if (n === 4 && !S.body) {
-        alert("Body pattern first; then we talk format.");
-        return;
-      }
-
-      document.querySelectorAll(".step").forEach((s, i) => {
-        s.classList.toggle("vis", i === n);
-      });
-      const bars = document.querySelectorAll(".pd");
-      bars.forEach((b, i) => {
-        b.classList.toggle("on", i === n);
-        b.classList.toggle("done", i < n);
-      });
-      document.getElementById("result").style.display = "none";
+  function go(n) {
+    // entering layers requires intention
+    if (n >= 1 && !S.int) {
+      alert("Choose a primary intention first.");
+      return;
     }
+
+    // entering delivery requires body selected
+    if (n >= 4 && !S.body) {
+      alert("Choose the body pattern that feels most true right now.");
+      return;
+    }
+
+    document.querySelectorAll(".step").forEach((s, i) => {
+      s.classList.toggle("vis", i === n);
+    });
+
+    const bars = document.querySelectorAll(".pd");
+    bars.forEach((b, i) => {
+      b.classList.toggle("on", i === n);
+      b.classList.toggle("done", i < n);
+    });
+
+    document.getElementById("result").style.display = "none";
+  }
 
     // ----- BUILD FORMULA -----
 
