@@ -5,7 +5,9 @@
       "Bash(git fetch *)",
       "Bash(git commit --allow-empty -m 'ci: retrigger deploy after HerbalEngine.tsx fix *)",
       "Bash(git push *)",
-      "Bash(git commit -m 'fix: add missing scripts/build-herb-pool.cjs to repo *)"
+      "Bash(git commit -m 'fix: add missing scripts/build-herb-pool.cjs to repo *)",
+      "Bash(ls dist/herbal-engine-2/)",
+      "Bash(ls public/herbal-engine-2/)"
     ]
   }
 }
