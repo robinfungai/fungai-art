@@ -303,9 +303,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 <div class="hdr">
   <div class="hdr-top">
     <div>
-      <div class="brand-label">Fung.ai Herbal Engine</div>
+      <div class="brand-label">Fung.ai Herbal Engine 2.0</div>
       <div class="brand-name">Fungai Art Elixirs</div>
-      <div class="brand-sub">Tailored Tinctures · Conference Edition</div>
+      <div class="brand-sub">Personalised Elixir Formula</div>
     </div>
     <div class="hdr-btns">
       <button class="mbtn on" id="modeStd" onclick="setMode('standard')">Standard</button>
@@ -354,7 +354,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
   <div class="st" id="subTitle">What kind of sleep?</div>
   <p class="sh" id="subDesc"></p>
   <div class="sub-grid" id="subGrid"></div>
-  <div class="nav"><span></span><button class="btn p" onclick="go(1)">Continue →</button></div>
+  <!-- No Continue button needed — selecting a sub-card auto-advances -->
 </div>
 
 <!-- S1: WHAT ELSE -->
@@ -450,7 +450,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
       <div class="boost-grid" id="boostGrid"></div>
     </div>
     <div id="dd_tincture" style="display:none">
-      <p style="font-size:11px;color:var(--text2);line-height:1.6">1:5 dual-extracted tincture. Add 30–40 drops to water or juice and drink.</p>
+      <p style="font-size:11px;color:var(--text2);line-height:1.6">1:3 full spectrum spagyric extract. Take 30–40 drops directly or add to a small glass of water.</p>
     </div>
     <div id="dd_sublingual" style="display:none">
       <p style="font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:.7rem">One dose held under the tongue 60–90 seconds before swallowing. Fastest absorption.</p>
@@ -598,7 +598,7 @@ const BCCON={hot:'#E24B4A',cold:'#5B8FE8',depleted:'#c9a84c',mixed:'#1D9E75'};
 
 const DELIVERY=[
   {id:'tonic',icon:'⊕',name:'In a tonic',desc:'Drops in a flavoured carrier'},
-  {id:'tincture',icon:'◌',name:'As a tincture',desc:'Classic dropper — drops in water'},
+  {id:'tincture',icon:'◌',name:'As a 15/30ml Elixir bottle',desc:'Full spectrum spagyric extract'},
   {id:'sublingual',icon:'◎',name:'Sublingual',desc:'Under the tongue — fastest onset'},
 ];
 const CARRIERS=[
@@ -729,6 +729,7 @@ function updProg(){
 }
 function go(n,back){
   if(n===1&&!S.int){alert('Please choose an intention first.');return;}
+  if(stockOpen)toggleStock();
   document.querySelectorAll('.step').forEach(s=>s.classList.remove('vis','back'));
   S.step=n;
   var el=document.getElementById('s'+n);el.classList.add('vis');
@@ -763,6 +764,7 @@ function selSub(id){
   S.subInt=id;
   document.querySelectorAll('.scard').forEach(c=>c.classList.remove('sel'));
   document.getElementById('sc_'+id).classList.add('sel');
+  setTimeout(function(){go(1);},220);
 }
 
 /* ─── STEP 1: WHAT ELSE ─────────────────────────────────── */
@@ -1072,21 +1074,28 @@ function genBottle(name,herbs,intention,delivery){
   '<line x1="74" y1="92" x2="106" y2="92" stroke="#111" stroke-width="1.5"/>'+
   '<path d="M60,98 C56,100 52,106 50,115 L48,295 C48,304 53,310 60,312 L120,312 C127,312 132,304 132,295 L130,115 C128,106 124,100 120,98 Z" fill="url(#bgl)"/>'+
   '<path d="M64,102 C62,108 61,120 61,135 L61,295 C61,303 63,308 66,310 L68,310 C65,308 63,302 63,294 L63,135 C63,119 64,107 66,102 Z" fill="white" opacity="0.07"/>'+
-  '<rect x="54" y="158" width="72" height="108" rx="3" fill="#F9F6EF"/>'+
-  '<rect x="54" y="158" width="72" height="108" rx="3" fill="none" stroke="rgba(0,0,0,.07)" stroke-width="0.5"/>'+
-  '<rect x="57" y="161" width="66" height="102" rx="2" fill="none" stroke="rgba(0,0,0,.08)" stroke-width="0.4"/>'+
-  '<text x="90" y="171" text-anchor="middle" font-family="Georgia,serif" font-size="5" letter-spacing="1.8" fill="#5a4030" font-style="italic">fung.ai entheobotanicals</text>'+
-  '<line x1="58" y1="174" x2="122" y2="174" stroke="rgba(0,0,0,.1)" stroke-width="0.4"/>'+
-  '<text x="90" y="186" text-anchor="middle" font-family="Georgia,serif" font-size="9" font-weight="bold" letter-spacing="0.3" fill="#0d0a07">'+name.toUpperCase()+'</text>'+
-  '<line x1="58" y1="190" x2="122" y2="190" stroke="rgba(0,0,0,.1)" stroke-width="0.4"/>'+
-  '<text x="90" y="199" text-anchor="middle" font-family="Georgia,serif" font-size="5" fill="#3d3020" letter-spacing="0.2">'+h1+'</text>'+
-  (h2?'<text x="90" y="206" text-anchor="middle" font-family="Georgia,serif" font-size="5" fill="#3d3020" letter-spacing="0.2">'+h2+'</text>  ':'')+
-  '<line x1="64" y1="211" x2="116" y2="211" stroke="rgba(0,0,0,.07)" stroke-width="0.4"/>'+
-  '<text x="90" y="221" text-anchor="middle" font-family="Georgia,serif" font-size="5" letter-spacing="1.5" fill="#5a4030">'+p[0].toUpperCase()+'</text>'+
-  '<text x="90" y="229" text-anchor="middle" font-family="Georgia,serif" font-size="5" letter-spacing="1.5" fill="#5a4030">'+p[1].toUpperCase()+'</text>'+
-  '<text x="90" y="237" text-anchor="middle" font-family="Georgia,serif" font-size="5" letter-spacing="1.5" fill="#5a4030">'+p[2].toUpperCase()+'</text>'+
-  '<line x1="58" y1="243" x2="122" y2="243" stroke="rgba(0,0,0,.1)" stroke-width="0.4"/>'+
-  '<text x="90" y="254" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" fill="#0d0a07" font-style="italic">1:5 dual extracted · 30ml</text>'+
+  '<rect x="54" y="150" width="72" height="122" rx="3" fill="#F8F5EE"/>'+
+  '<rect x="54" y="150" width="72" height="122" rx="3" fill="none" stroke="rgba(0,0,0,.08)" stroke-width="0.5"/>'+
+  '<rect x="57" y="153" width="66" height="116" rx="2" fill="none" stroke="rgba(0,0,0,.06)" stroke-width="0.4"/>'+
+  '<text x="90" y="161" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" letter-spacing="1.5" fill="#4a3520" font-style="italic">fungai art</text>'+
+  '<text x="90" y="167" text-anchor="middle" font-family="Georgia,serif" font-size="3.5" letter-spacing="2" fill="#7a6040">ENTHEOBOTANICALS</text>'+
+  '<line x1="60" y1="169" x2="120" y2="169" stroke="rgba(0,0,0,.08)" stroke-width="0.3"/>'+
+  '<ellipse cx="90" cy="181" rx="10" ry="4" fill="#4a6e5a" opacity=".18"/>'+
+  '<path d="M80,181 Q90,165 100,181" fill="#3d5c4a" opacity=".35"/>'+
+  '<path d="M84,181 Q90,169 96,181" fill="#3d5c4a" opacity=".45"/>'+
+  '<ellipse cx="90" cy="181" rx="6" ry="2.5" fill="#3d5c4a" opacity=".3"/>'+
+  '<rect x="89" y="181" width="2" height="5" rx="1" fill="#3d5c4a" opacity=".4"/>'+
+  '<line x1="60" y1="189" x2="120" y2="189" stroke="rgba(0,0,0,.07)" stroke-width="0.3"/>'+
+  '<text x="90" y="199" text-anchor="middle" font-family="Georgia,serif" font-size="8.5" font-weight="bold" letter-spacing="0.2" fill="#0d0a07">'+name.toUpperCase()+'</text>'+
+  '<line x1="60" y1="203" x2="120" y2="203" stroke="rgba(0,0,0,.07)" stroke-width="0.3"/>'+
+  '<text x="90" y="211" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" fill="#3d3020" letter-spacing="0.2">'+h1+'</text>'+
+  (h2?'<text x="90" y="217" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" fill="#3d3020" letter-spacing="0.2">'+h2+'</text>  ':'')+
+  '<line x1="66" y1="222" x2="114" y2="222" stroke="rgba(0,0,0,.06)" stroke-width="0.3"/>'+
+  '<text x="90" y="230" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" letter-spacing="1.2" fill="#5a4030">'+p[0].toUpperCase()+'</text>'+
+  '<text x="90" y="237" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" letter-spacing="1.2" fill="#5a4030">'+p[1].toUpperCase()+'</text>'+
+  '<text x="90" y="244" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" letter-spacing="1.2" fill="#5a4030">'+p[2].toUpperCase()+'</text>'+
+  '<line x1="60" y1="248" x2="120" y2="248" stroke="rgba(0,0,0,.08)" stroke-width="0.3"/>'+
+  '<text x="90" y="258" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" fill="#0d0a07" font-style="italic">1:3 full spectrum spagyric · 15/30ml</text>'+
   '<ellipse cx="90" cy="308" rx="36" ry="5" fill="black" opacity=".12"/></svg>';
 }
 
@@ -1138,7 +1147,7 @@ function renderFormula(){
   }else if(S.delivery==='sublingual'){
     serveBlock='<div class="serve-block"><div style="font-size:12px;font-weight:500;margin-bottom:8px">◎ Sublingual protocol</div><div class="ss"><div class="ss-n">1</div><div class="ss-t">Draw 1 ml into dropper</div></div><div class="ss"><div class="ss-n">2</div><div class="ss-t">Hold under tongue 60-90 s then swallow</div></div><div class="ss"><div class="ss-n">3</div><div class="ss-t">Up to 3× daily. No food or drink 10 min before.</div></div></div>';
   }else{
-    serveBlock='<div class="serve-block"><div style="font-size:12px;font-weight:500;margin-bottom:8px">◌ Tincture protocol</div><div class="ss"><div class="ss-n">1</div><div class="ss-t">30–40 drops in a small glass</div></div><div class="ss"><div class="ss-n">2</div><div class="ss-t">Add water or juice — drink slowly</div></div><div class="ss"><div class="ss-n">3</div><div class="ss-t">'+tim+'</div></div></div>';
+    serveBlock='<div class="serve-block"><div style="font-size:12px;font-weight:500;margin-bottom:8px">◌ Elixir protocol</div><div class="ss"><div class="ss-n">1</div><div class="ss-t">30–40 drops directly or in a small glass of water</div></div><div class="ss"><div class="ss-n">2</div><div class="ss-t">Hold briefly in the mouth before swallowing</div></div><div class="ss"><div class="ss-n">3</div><div class="ss-t">'+tim+'</div></div></div>';
   }
 
   var bottleHtml='';

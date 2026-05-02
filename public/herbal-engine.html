@@ -603,7 +603,7 @@
           <div class="header-top">
             <div class="brand-wrap">
               <div class="logo">
-                <img src="/logo-fungai-art.png" alt="Fungai Art logo" />
+                <img src="/fungai-art-logo.png" alt="Fungai Art logo" />
               </div>
               <div>
                 <div class="brand-title">Fungai Art Elixirs</div>
@@ -618,24 +618,24 @@
           </div>
 
           <p class="lead">
-            A living herbal engine shaped from your materia medica. Answer a few ritual questions,
-            and the system surfaces a formula field with anchor herbs, support herbs and a visual
-            atmosphere for the blend.
+            A personalised herbal engine rooted in botanical science. Answer a few questions and
+            receive a formula shaped to your body, intention and daily rhythm — drawn from our
+            hand-foraged, ethically sourced materia medica.
           </p>
 
           <div class="mini-grid">
             <div class="mini-card">
-              <div class="mini-label">Current traction</div>
+              <div class="mini-label">Hand-foraged · ethical</div>
               <p>
-                Fungai Art is already moving through events, tincture concepts and ritual beverage
-                formats across Sweden and Portugal. The apothecary is becoming a living interface.
+                Every herb in this engine comes from regeneratively sourced material — wild-foraged
+                or small-batch grown, zero-waste processed, and prepared as full-spectrum extracts.
               </p>
             </div>
             <div class="mini-card">
-              <div class="mini-label">Investment paths</div>
+              <div class="mini-label">Ancient roots · modern living</div>
               <p>
-                One path is long-term aligned capital with revenue participation. Another is a secure
-                bridge that stabilises the build now and reopens structure later.
+                This engine bridges TCM, Ayurveda and European herbalism with contemporary
+                physiology — treating nature as an active, daily partner in well-being.
               </p>
             </div>
           </div>
@@ -647,13 +647,14 @@
           <div class="bar"></div>
           <div class="bar"></div>
           <div class="bar"></div>
+          <div class="bar"></div>
         </div>
 
         <section class="step vis" id="s0">
-          <div class="eyebrow">1 of 5 · Primary intention</div>
-          <h2>What is the centre of gravity for this formula?</h2>
-          <p class="sub">Choose one main intention. The rest of the pattern will orbit around it.</p>
-          <div class="grid-2" id="intentGrid"></div>
+          <div class="eyebrow">1 of 6 · Your herbal background</div>
+          <h2>Where are you in your relationship with botanical medicine?</h2>
+          <p class="sub">This shapes how we build your formula — complexity, potency and herb selection all adapt to your experience.</p>
+          <div class="grid-2" id="expGrid"></div>
           <div class="nav">
             <span></span>
             <button class="btn primary" id="btn0" onclick="go(1)">Continue</button>
@@ -661,10 +662,10 @@
         </section>
 
         <section class="step" id="s1">
-          <div class="eyebrow">2 of 5 · Layers in the field</div>
-          <h2>What else is shaping the field?</h2>
-          <p class="sub">Choose any supporting layers that feel alive today.</p>
-          <div class="pills" id="layerPills"></div>
+          <div class="eyebrow">2 of 6 · Primary intention</div>
+          <h2>What is the centre of gravity for this formula?</h2>
+          <p class="sub">Choose one main intention. The rest of the pattern will orbit around it.</p>
+          <div class="grid-2" id="intentGrid"></div>
           <div class="nav">
             <button class="btn" onclick="go(0)">Back</button>
             <button class="btn primary" id="btn1" onclick="go(2)">Continue</button>
@@ -672,10 +673,10 @@
         </section>
 
         <section class="step" id="s2">
-          <div class="eyebrow">3 of 5 · Safety filter</div>
-          <h2>Anything this formula should respectfully avoid?</h2>
-          <p class="sub">This does not diagnose. It simply narrows the field more safely.</p>
-          <div class="safety-list" id="safetyList"></div>
+          <div class="eyebrow">3 of 6 · Supporting layers</div>
+          <h2>What else is shaping the picture?</h2>
+          <p class="sub">Choose any secondary patterns that feel alive right now — these guide the supporting herbs.</p>
+          <div class="pills" id="layerPills"></div>
           <div class="nav">
             <button class="btn" onclick="go(1)">Back</button>
             <button class="btn primary" id="btn2" onclick="go(3)">Continue</button>
@@ -683,23 +684,34 @@
         </section>
 
         <section class="step" id="s3">
-          <div class="eyebrow">4 of 5 · Body pattern</div>
-          <h2>Which body pattern feels closest right now?</h2>
-          <p class="sub">One choice unlocks the final delivery step.</p>
-          <div class="body-grid" id="bodyGrid"></div>
+          <div class="eyebrow">4 of 6 · Safety check</div>
+          <h2>Anything this formula should respectfully avoid?</h2>
+          <p class="sub">This does not diagnose. It simply narrows the field more safely.</p>
+          <div class="safety-list" id="safetyList"></div>
           <div class="nav">
             <button class="btn" onclick="go(2)">Back</button>
-            <button class="btn primary" id="btn3" onclick="go(4)" disabled>Continue</button>
+            <button class="btn primary" id="btn3" onclick="go(4)">Continue</button>
           </div>
         </section>
 
         <section class="step" id="s4">
-          <div class="eyebrow">5 of 5 · Ritual format</div>
+          <div class="eyebrow">5 of 6 · Body pattern</div>
+          <h2>Which body pattern feels closest right now?</h2>
+          <p class="sub">One choice unlocks the final step.</p>
+          <div class="body-grid" id="bodyGrid"></div>
+          <div class="nav">
+            <button class="btn" onclick="go(3)">Back</button>
+            <button class="btn primary" id="btn4" onclick="go(5)" disabled>Continue</button>
+          </div>
+        </section>
+
+        <section class="step" id="s5">
+          <div class="eyebrow">6 of 6 · Ritual format</div>
           <h2>How will you most likely take this?</h2>
           <p class="sub">Format shapes extraction, use ritual and bottle logic.</p>
           <div class="delivery-grid" id="deliveryGrid"></div>
           <div class="nav">
-            <button class="btn" onclick="go(3)">Back</button>
+            <button class="btn" onclick="go(4)">Back</button>
             <button class="btn primary" id="buildBtn" onclick="buildFormula()" disabled>Compose formula field</button>
           </div>
         </section>
@@ -742,36 +754,45 @@
 
     <aside class="side">
       <div class="side-card">
-        <div class="side-label">Ecosystem</div>
-        <h4>Skogens Nektar · Moder Jord · Tyme Tonics</h4>
+        <div class="side-label">What we are</div>
+        <h4>Community · Botany · Craft</h4>
         <p>
-          Fungai Art connects forest ritual, apothecary craft and sensory experience.
-          Skogens Nektar is the immersive forest-facing expression. Moder Jord grounds the
-          earth altar and sound layer. Tyme Tonics carries the everyday portal:
-          drinks, altar bottles and botanical micro-rituals.
+          Fungai Art merges creative expression with botanical science to foster a deeper connection
+          between humans and the natural world. We produce hand-foraged, ethical tinctures and
+          adaptogenic blends designed to support physiological health, mental clarity and
+          emotional stability.
         </p>
       </div>
 
       <div class="side-card">
-        <div class="side-label">Numbers · early signal</div>
+        <div class="side-label">How we work</div>
         <ul>
-          <li>200+ herbs and fungi in a monograph-grade database</li>
-          <li>10+ confirmed herb-forward gigs and collaborations</li>
-          <li>First traction through tonics, events and interactive formula design</li>
+          <li>Zero-waste practices and regenerative sourcing</li>
+          <li>Full-spectrum and spagyric extractions at 1:3 ratio</li>
+          <li>Interactive art installations and educational hubs at European festivals</li>
+          <li>Transforming high-intensity event cultures into spaces for grounding and shared presence</li>
         </ul>
       </div>
 
       <div class="side-card">
-        <div class="side-label">Capital paths</div>
+        <div class="side-label">The bigger picture</div>
         <p>
-          One path supports a long-term revenue-aligned build. Another secures a safer bridge for
-          finishing the engine, proving traction and reopening the larger structure later.
+          This engine is a bridge between ancient herbalism and modern living — inviting you to
+          treat nature as an active, daily partner in well-being. Built on ecological accountability
+          and a living materia medica of 149 plants.
         </p>
       </div>
     </aside>
   </div>
 
   <script>
+    const EXPERIENCE = [
+      { id: "beginner",     name: "First encounter",      desc: "Herb-curious and just beginning — keep it gentle and clear." },
+      { id: "casual",       name: "Casually exploring",   desc: "Teas, supermarket supplements, some awareness of adaptogens." },
+      { id: "regular",      name: "Active practitioner",  desc: "Regular daily use, building real formulating knowledge." },
+      { id: "deep",         name: "Deep roots",           desc: "Long practice — TCM, Ayurveda, or trained Western herbalism." }
+    ];
+
     const INTS = [
       { id: "adaptogenic", tag: "adaptogenic", name: "Stress resilience", desc: "Steadying capacity, pressure support and restoration." },
       { id: "hypnotic", tag: "hypnotic", name: "Sleep restoration", desc: "Gentle descent, deeper rest and soft evening support." },
@@ -812,6 +833,7 @@
     ];
 
     const STATE = {
+      experience: null,
       int: null,
       layers: [],
       safety: [],
@@ -858,6 +880,11 @@
       if (caution === "LOW-MEDIUM") score += 0.5;
       if (["MEDIUM-HIGH", "HIGH", "VERY HIGH"].includes(caution)) score -= 2;
 
+      // Experience level filters: beginners/casual stay on gentle herbs
+      const exp = STATE.experience;
+      if (exp === "beginner" && ["MEDIUM", "MEDIUM-HIGH", "HIGH", "VERY HIGH"].includes(caution)) score -= 5;
+      if (exp === "casual" && ["MEDIUM-HIGH", "HIGH", "VERY HIGH"].includes(caution)) score -= 4;
+
       if (STATE.safety.includes("pregnancy") && /emmenagogue|uterine|abortifacient/.test(pf)) score -= 6;
       if (STATE.safety.includes("ssri") && /serotonin|mao|stimulant/.test(pf)) score -= 4;
       if (STATE.safety.includes("bipolar") && /stimulant/.test(pf)) score -= 4;
@@ -866,6 +893,21 @@
       if (STATE.safety.includes("autoimmune") && /immunostimulant|immune stimulant/.test(pf)) score -= 3;
 
       return score;
+    }
+
+    function renderExperience() {
+      document.getElementById("expGrid").innerHTML = EXPERIENCE.map(e => `
+        <div class="option" id="exp-${e.id}" onclick="selectExp('${e.id}')">
+          <div class="option-name">${e.name}</div>
+          <div class="option-desc">${e.desc}</div>
+        </div>
+      `).join("");
+    }
+
+    function selectExp(id) {
+      STATE.experience = id;
+      document.querySelectorAll("#expGrid .option").forEach(el => el.classList.remove("sel"));
+      document.getElementById("exp-" + id)?.classList.add("sel");
     }
 
     function renderIntents() {
@@ -959,7 +1001,7 @@
       STATE.body = id;
       document.querySelectorAll("#bodyGrid .body-card").forEach(el => el.classList.remove("sel"));
       document.getElementById("body-" + id)?.classList.add("sel");
-      document.getElementById("btn3").disabled = false;
+      document.getElementById("btn4").disabled = false;
     }
 
     function selectDelivery(id) {
@@ -970,12 +1012,17 @@
     }
 
     function go(n) {
-      if (n >= 1 && !STATE.int) {
+      if (n >= 1 && !STATE.experience) {
+        alert("Choose your herbal experience level first.");
+        return;
+      }
+
+      if (n >= 2 && !STATE.int) {
         alert("Choose a primary intention first.");
         return;
       }
 
-      if (n >= 4 && !STATE.body) {
+      if (n >= 5 && !STATE.body) {
         alert("Choose the body pattern that feels most true right now.");
         return;
       }
@@ -1105,6 +1152,7 @@
       return String(str).replace(/'/g, "\\'");
     }
 
+    renderExperience();
     renderIntents();
     renderLayers();
     renderSafety();
