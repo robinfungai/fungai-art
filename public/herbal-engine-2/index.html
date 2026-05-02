@@ -1055,48 +1055,78 @@ function genName(herbs,intention){
 
 function genBottle(name,herbs,intention,delivery){
   var isAmber=delivery!=='tonic';
-  var bg=isAmber?'#7a4e12':'#12256b';var mid=isAmber?'#b87830':'#1e3d9f';var hi=isAmber?'#d4a040':'#3a5fc4';
+  var bg=isAmber?'#7a4e12':'#12256b';
+  var mid=isAmber?'#c08428':'#1e3d9f';
+  var hi=isAmber?'#e8b050':'#3a5fc4';
   var props={stress:['Cortisol balance','Nervous calm','HPA support'],sleep:['Sleep onset','Deep restoration','Night repair'],energy:['Sustained vitality','Mental clarity','Adrenal tone'],anxiety:['GABA modulation','Nervous ease','Tension release'],mood:['Emotional lift','Heart opening','Resilience'],digestion:['Gut harmony','Liver support','Microbiome'],immunity:['Innate defence','Immune training','Resilience'],pain:['Anti-inflammatory','COX inhibition','Pain relief'],hormones:['Endocrine balance','Cycle support','Tonic'],cognitive:['Neuroplasticity','Focus','Memory'],beauty:['Skin vitality','Collagen','Radiance'],detox:['Liver clearance','Lymphatic','Detox']};
   var p=props[intention]||props.stress;
-  var h1=herbs.slice(0,2).map(h=>h.n).join(', '),h2=herbs.slice(2,4).map(h=>h.n).join(', ');
-  return'<svg viewBox="0 0 180 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:200px;display:block;margin:0 auto">'+
-  '<defs><linearGradient id="bgl" x1="0" x2="1" y1="0" y2="0">'+
-  '<stop offset="0%" stop-color="'+bg+'" stop-opacity=".95"/>'+
-  '<stop offset="40%" stop-color="'+mid+'"/><stop offset="60%" stop-color="'+hi+'"/>'+
-  '<stop offset="100%" stop-color="'+bg+'" stop-opacity=".85"/>'+
-  '</linearGradient></defs>'+
-  '<ellipse cx="90" cy="24" rx="14" ry="16" fill="#111"/>'+
-  '<rect x="84" y="38" width="12" height="32" rx="3" fill="#1e1e1e"/>'+
-  '<path d="M74,68 C74,66 76,64 90,64 C104,64 106,66 106,68 L108,96 C108,98 106,100 90,100 C74,100 72,98 72,96 Z" fill="#181818"/>'+
-  '<line x1="74" y1="74" x2="106" y2="74" stroke="#111" stroke-width="1.5"/>'+
-  '<line x1="74" y1="80" x2="106" y2="80" stroke="#111" stroke-width="1.5"/>'+
-  '<line x1="74" y1="86" x2="106" y2="86" stroke="#111" stroke-width="1.5"/>'+
-  '<line x1="74" y1="92" x2="106" y2="92" stroke="#111" stroke-width="1.5"/>'+
-  '<path d="M60,98 C56,100 52,106 50,115 L48,295 C48,304 53,310 60,312 L120,312 C127,312 132,304 132,295 L130,115 C128,106 124,100 120,98 Z" fill="url(#bgl)"/>'+
-  '<path d="M64,102 C62,108 61,120 61,135 L61,295 C61,303 63,308 66,310 L68,310 C65,308 63,302 63,294 L63,135 C63,119 64,107 66,102 Z" fill="white" opacity="0.07"/>'+
-  '<rect x="54" y="150" width="72" height="122" rx="3" fill="#F8F5EE"/>'+
-  '<rect x="54" y="150" width="72" height="122" rx="3" fill="none" stroke="rgba(0,0,0,.08)" stroke-width="0.5"/>'+
-  '<rect x="57" y="153" width="66" height="116" rx="2" fill="none" stroke="rgba(0,0,0,.06)" stroke-width="0.4"/>'+
-  '<text x="90" y="161" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" letter-spacing="1.5" fill="#4a3520" font-style="italic">fungai art</text>'+
-  '<text x="90" y="167" text-anchor="middle" font-family="Georgia,serif" font-size="3.5" letter-spacing="2" fill="#7a6040">ENTHEOBOTANICALS</text>'+
-  '<line x1="60" y1="169" x2="120" y2="169" stroke="rgba(0,0,0,.08)" stroke-width="0.3"/>'+
-  '<ellipse cx="90" cy="181" rx="10" ry="4" fill="#4a6e5a" opacity=".18"/>'+
-  '<path d="M80,181 Q90,165 100,181" fill="#3d5c4a" opacity=".35"/>'+
-  '<path d="M84,181 Q90,169 96,181" fill="#3d5c4a" opacity=".45"/>'+
-  '<ellipse cx="90" cy="181" rx="6" ry="2.5" fill="#3d5c4a" opacity=".3"/>'+
-  '<rect x="89" y="181" width="2" height="5" rx="1" fill="#3d5c4a" opacity=".4"/>'+
-  '<line x1="60" y1="189" x2="120" y2="189" stroke="rgba(0,0,0,.07)" stroke-width="0.3"/>'+
-  '<text x="90" y="199" text-anchor="middle" font-family="Georgia,serif" font-size="8.5" font-weight="bold" letter-spacing="0.2" fill="#0d0a07">'+name.toUpperCase()+'</text>'+
-  '<line x1="60" y1="203" x2="120" y2="203" stroke="rgba(0,0,0,.07)" stroke-width="0.3"/>'+
-  '<text x="90" y="211" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" fill="#3d3020" letter-spacing="0.2">'+h1+'</text>'+
-  (h2?'<text x="90" y="217" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" fill="#3d3020" letter-spacing="0.2">'+h2+'</text>  ':'')+
-  '<line x1="66" y1="222" x2="114" y2="222" stroke="rgba(0,0,0,.06)" stroke-width="0.3"/>'+
-  '<text x="90" y="230" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" letter-spacing="1.2" fill="#5a4030">'+p[0].toUpperCase()+'</text>'+
-  '<text x="90" y="237" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" letter-spacing="1.2" fill="#5a4030">'+p[1].toUpperCase()+'</text>'+
-  '<text x="90" y="244" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" letter-spacing="1.2" fill="#5a4030">'+p[2].toUpperCase()+'</text>'+
-  '<line x1="60" y1="248" x2="120" y2="248" stroke="rgba(0,0,0,.08)" stroke-width="0.3"/>'+
-  '<text x="90" y="258" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" fill="#0d0a07" font-style="italic">1:3 full spectrum spagyric · 15/30ml</text>'+
-  '<ellipse cx="90" cy="308" rx="36" ry="5" fill="black" opacity=".12"/></svg>';
+  // Truncate herb names so they never overflow label
+  function shortN(n){return n.length>14?n.slice(0,13)+'…':n;}
+  var h1=herbs.slice(0,2).map(h=>shortN(h.n)).join(', ');
+  var h2=herbs.slice(2,4).map(h=>shortN(h.n)).join(', ');
+  // cx=110, label width=92 (x=64..156), usable text width=82
+  return'<svg viewBox="0 0 220 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:240px;display:block;margin:0 auto">'+
+  '<defs>'+
+  '<linearGradient id="bgl2" x1="0" x2="1" y1="0" y2="0">'+
+  '<stop offset="0%" stop-color="'+bg+'" stop-opacity=".92"/>'+
+  '<stop offset="35%" stop-color="'+mid+'"/>'+
+  '<stop offset="55%" stop-color="'+hi+'"/>'+
+  '<stop offset="100%" stop-color="'+bg+'" stop-opacity=".88"/>'+
+  '</linearGradient>'+
+  '<linearGradient id="capg" x1="0" x2="1" y1="0" y2="0">'+
+  '<stop offset="0%" stop-color="#111"/>'+
+  '<stop offset="45%" stop-color="#333"/>'+
+  '<stop offset="100%" stop-color="#111"/>'+
+  '</linearGradient>'+
+  '</defs>'+
+  // — shadow —
+  '<ellipse cx="110" cy="388" rx="46" ry="6" fill="black" opacity=".18"/>'+
+  // — rubber dropper bulb —
+  '<ellipse cx="110" cy="30" rx="18" ry="22" fill="url(#capg)"/>'+
+  '<ellipse cx="110" cy="30" rx="14" ry="18" fill="#222" opacity=".5"/>'+
+  // — dropper stem —
+  '<rect x="104" y="50" width="12" height="36" rx="3" fill="#1c1c1c"/>'+
+  // — cap collar —
+  '<path d="M90,84 C88,82 88,80 110,80 C132,80 132,82 130,84 L134,118 C134,121 131,124 110,124 C89,124 86,121 86,118 Z" fill="url(#capg)"/>'+
+  '<line x1="88" y1="91" x2="132" y2="91" stroke="#111" stroke-width="1.8"/>'+
+  '<line x1="87" y1="98" x2="133" y2="98" stroke="#111" stroke-width="1.8"/>'+
+  '<line x1="86" y1="105" x2="134" y2="105" stroke="#111" stroke-width="1.8"/>'+
+  '<line x1="86" y1="112" x2="134" y2="112" stroke="#111" stroke-width="1.8"/>'+
+  // — bottle shoulder —
+  '<path d="M86,122 C78,124 68,132 64,144 L62,148" fill="none" stroke="url(#bgl2)" stroke-width="0"/>'+
+  // — bottle body —
+  '<path d="M86,122 C78,124 66,134 63,148 L60,358 C60,368 66,376 76,378 L144,378 C154,378 160,368 160,358 L157,148 C154,134 142,124 134,122 Z" fill="url(#bgl2)"/>'+
+  // — glass highlight —
+  '<path d="M72,130 C70,138 69,152 69,168 L69,355 C69,364 71,370 74,373 L76,373 C73,370 71,364 71,355 L71,168 C71,152 72,138 74,130 Z" fill="white" opacity="0.09"/>'+
+  // — label background —
+  '<rect x="64" y="178" width="92" height="162" rx="4" fill="#F7F3EC"/>'+
+  '<rect x="64" y="178" width="92" height="162" rx="4" fill="none" stroke="rgba(0,0,0,.09)" stroke-width="0.6"/>'+
+  '<rect x="67" y="181" width="86" height="156" rx="3" fill="none" stroke="rgba(0,0,0,.05)" stroke-width="0.4"/>'+
+  // — brand header on label —
+  '<text x="110" y="191" text-anchor="middle" font-family="Georgia,serif" font-size="5.5" letter-spacing="1.8" fill="#3a2810" font-style="italic">fungai art</text>'+
+  '<text x="110" y="198" text-anchor="middle" font-family="Georgia,serif" font-size="3.8" letter-spacing="2.2" fill="#6a5030">ENTHEOBOTANICALS</text>'+
+  '<line x1="68" y1="201" x2="152" y2="201" stroke="rgba(0,0,0,.09)" stroke-width="0.4"/>'+
+  // — mushroom cap motif —
+  '<path d="M98,218 Q110,200 122,218" fill="#3d5c4a" opacity=".42"/>'+
+  '<path d="M101,218 Q110,204 119,218" fill="#3d5c4a" opacity=".55"/>'+
+  '<ellipse cx="110" cy="218" rx="9" ry="3" fill="#3d5c4a" opacity=".35"/>'+
+  '<rect x="109" y="218" width="2" height="7" rx="1" fill="#3d5c4a" opacity=".45"/>'+
+  '<line x1="68" y1="228" x2="152" y2="228" stroke="rgba(0,0,0,.07)" stroke-width="0.4"/>'+
+  // — formula name — textLength clamps it to 78px no matter how long —
+  '<text x="110" y="241" text-anchor="middle" font-family="Georgia,serif" font-size="9" font-weight="bold" fill="#0d0a07" textLength="78" lengthAdjust="spacingAndGlyphs">'+name.toUpperCase()+'</text>'+
+  '<line x1="68" y1="246" x2="152" y2="246" stroke="rgba(0,0,0,.07)" stroke-width="0.4"/>'+
+  // — herb names —
+  '<text x="110" y="254" text-anchor="middle" font-family="Georgia,serif" font-size="4.8" fill="#3d3020" textLength="80" lengthAdjust="spacingAndGlyphs">'+h1+'</text>'+
+  (h2?'<text x="110" y="261" text-anchor="middle" font-family="Georgia,serif" font-size="4.8" fill="#3d3020" textLength="80" lengthAdjust="spacingAndGlyphs">'+h2+'</text>':'<text y="0"></text>')+
+  '<line x1="74" y1="265" x2="146" y2="265" stroke="rgba(0,0,0,.05)" stroke-width="0.3"/>'+
+  // — action properties —
+  '<text x="110" y="273" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" letter-spacing="1.1" fill="#5a4030">'+p[0].toUpperCase()+'</text>'+
+  '<text x="110" y="280" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" letter-spacing="1.1" fill="#5a4030">'+p[1].toUpperCase()+'</text>'+
+  '<text x="110" y="287" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" letter-spacing="1.1" fill="#5a4030">'+p[2].toUpperCase()+'</text>'+
+  '<line x1="68" y1="292" x2="152" y2="292" stroke="rgba(0,0,0,.09)" stroke-width="0.4"/>'+
+  // — extract info —
+  '<text x="110" y="301" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" fill="#0d0a07" font-style="italic">1:3 full spectrum spagyric · 15/30ml</text>'+
+  '</svg>';
 }
 
 function setPhiFilter(p){
