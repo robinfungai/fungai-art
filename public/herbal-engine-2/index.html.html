@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Dispensary — Fungai Art Elixirs</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f0e0c;--bg2:#171512;--bg3:#1e1b16;
+  --text:#f0ede6;--text2:#a09890;--text3:#5a5550;
+  --bd:rgba(255,255,255,0.07);--bd2:rgba(255,255,255,0.13);
+  --rad:12px;--radl:18px;
+  --gold:#c9a84c;--gold2:#e8cc85;--gold3:#7a6228;
+  --teal:#1D9E75;--teal2:#9FE1CB;
+  --danger:#B91C1C;
+}
+html,body{background:var(--bg);color:var(--text)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;padding:0 0 100px}
+.app{max-width:640px;margin:0 auto;padding:0 1rem}
+
+/* HEADER */
+.hdr{padding:1.2rem 0 1rem;border-bottom:0.5px solid var(--bd);margin-bottom:1.2rem}
+.hdr-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:.7rem}
+.brand-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:4px}
+.brand-name{font-size:20px;font-weight:500;letter-spacing:-.01em;margin-bottom:1px}
+.brand-sub{font-size:12px;color:var(--text3)}
+.hdr-btns{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;flex-shrink:0}
+.mbtn{padding:5px 10px;border-radius:var(--rad);font-size:10px;font-family:inherit;cursor:pointer;border:0.5px solid var(--bd2);background:transparent;color:var(--text2);transition:all .15s;white-space:nowrap}
+.mbtn.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.mbtn:hover:not(.on){border-color:var(--text3);color:var(--text)}
+.preset-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.pl{font-size:10px;color:var(--text3);flex-shrink:0}
+.prbtn{padding:4px 12px;border-radius:100px;border:0.5px solid var(--bd2);font-size:10px;cursor:pointer;background:var(--bg2);color:var(--text2);transition:all .15s;white-space:nowrap}
+.prbtn:hover{color:var(--text);border-color:var(--text3)}
+.prbtn.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+
+/* STOCK */
+.stock-panel{background:var(--bg2);border:0.5px solid var(--bd2);border-radius:var(--radl);padding:.9rem 1rem;margin-bottom:1.1rem;display:none}
+.stock-panel.open{display:block}
+.sp-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;flex-wrap:wrap;gap:5px}
+.sp-title{font-size:11px;font-weight:500}
+.sp-count{font-size:10px;color:var(--text3)}
+.sp-acts{display:flex;gap:5px}
+.spa{font-size:10px;padding:3px 9px;border-radius:100px;border:0.5px solid var(--bd2);cursor:pointer;background:var(--bg);color:var(--text2)}
+.spa:hover{color:var(--text)}
+.sp-search{width:100%;padding:7px 10px;border-radius:var(--rad);border:0.5px solid var(--bd2);background:var(--bg);color:var(--text);font-size:11px;font-family:inherit;margin-bottom:.6rem;outline:none}
+.sp-search:focus{border-color:var(--text3)}
+.sp-cat{font-size:9px;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px;margin-top:8px;font-weight:500}
+.sp-herbs{display:flex;flex-wrap:wrap;gap:4px}
+.sph{padding:4px 10px;border-radius:100px;border:0.5px solid var(--bd);font-size:10px;cursor:pointer;background:var(--bg);color:var(--text3);line-height:1;user-select:none}
+.sph:hover{color:var(--text);border-color:var(--text3)}
+.sph.in{background:var(--text);color:var(--bg);border-color:var(--text)}
+.sph.mush{color:#c9784c;border-color:rgba(201,120,76,.3)}
+.sph.mush.in{background:#7a3a10;border-color:#c9784c;color:#f5c4a0}
+.sph.rx::after{content:'⚠';font-size:8px;margin-left:2px;opacity:.6}
+
+/* PROGRESS */
+.prog{display:flex;gap:4px;margin-bottom:1.4rem}
+.pd{flex:1;height:2px;border-radius:2px;transition:background .4s}
+.pd.done{background:var(--text3)}.pd.on{background:var(--text)}.pd.off{background:var(--bd)}
+
+/* STEPS + TRANSITIONS */
+.step{display:none}.step.vis{display:block;animation:slideIn .28s cubic-bezier(.4,0,.2,1)}
+.step.back{animation:slideBack .28s cubic-bezier(.4,0,.2,1)}
+@keyframes slideIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideBack{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:translateX(0)}}
+.sn{font-size:10px;color:var(--text3);margin-bottom:3px;letter-spacing:.04em}
+.st{font-size:17px;font-weight:500;margin-bottom:5px;line-height:1.3}
+.sh{font-size:12px;color:var(--text2);margin-bottom:1.1rem;line-height:1.6}
+
+/* INTENTION CARDS — rounded, coloured, live */
+.intent-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:1.2rem}
+.icard{
+  border-radius:20px;padding:16px 15px 14px;cursor:pointer;
+  border:1px solid transparent;
+  transition:transform .18s,filter .18s,box-shadow .18s;
+  position:relative;overflow:hidden;user-select:none
+}
+.icard:hover{transform:scale(1.02);filter:brightness(1.12)}
+.icard:active{transform:scale(0.97)}
+.icard.sel{box-shadow:inset 0 0 0 2px rgba(255,255,255,0.6),0 0 0 3px rgba(255,255,255,0.12)}
+.icard-icon{font-size:22px;margin-bottom:7px;display:block;line-height:1}
+.icard-name{font-size:13px;font-weight:600;color:rgba(255,255,255,0.95);margin-bottom:3px;line-height:1.25}
+.icard-desc{font-size:10px;color:rgba(255,255,255,0.5);line-height:1.4}
+
+/* SUB-BRANCH — full-width expanding cards */
+.sub-back{display:inline-flex;align-items:center;gap:7px;padding:6px 13px 6px 9px;border-radius:100px;border:0.5px solid var(--bd2);background:var(--bg2);font-size:11px;color:var(--text2);cursor:pointer;margin-bottom:1.1rem;transition:all .15s;user-select:none}
+.sub-back:hover{color:var(--text);border-color:var(--text3)}
+.sub-dot{width:10px;height:10px;border-radius:50%}
+.sub-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:1.2rem}
+.scard{
+  border-radius:18px;padding:17px 18px;cursor:pointer;
+  border:1px solid rgba(255,255,255,0.08);
+  transition:all .2s;display:flex;align-items:center;gap:14px;
+  user-select:none
+}
+.scard:hover{transform:translateX(4px);border-color:rgba(255,255,255,0.22)}
+.scard:active{transform:scale(0.98)}
+.scard.sel{border-color:rgba(255,255,255,0.45);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.2)}
+.sc-icon{font-size:22px;width:36px;text-align:center;flex-shrink:0}
+.sc-text{flex:1}
+.sc-name{font-size:14px;font-weight:600;color:rgba(255,255,255,0.95);margin-bottom:2px}
+.sc-desc{font-size:11px;color:rgba(255,255,255,0.48);line-height:1.4}
+.sc-arrow{font-size:16px;color:rgba(255,255,255,0.25);flex-shrink:0;transition:transform .2s}
+.scard:hover .sc-arrow{transform:translateX(3px);color:rgba(255,255,255,0.5)}
+.scard.sel .sc-arrow{color:rgba(255,255,255,0.7)}
+
+/* WHAT ELSE — bubble pills that feel alive */
+.else-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.2rem}
+.else-pill{
+  padding:9px 16px;border-radius:100px;cursor:pointer;font-size:12px;
+  border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);
+  color:rgba(255,255,255,0.7);transition:all .18s;user-select:none
+}
+.else-pill:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.25);color:#fff;transform:scale(1.03)}
+.else-pill:active{transform:scale(0.96)}
+.else-pill.sel{background:var(--gold3);border-color:var(--gold);color:var(--gold2)}
+
+/* BODY PATTERN — cards that expand to sub-questions */
+.body-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:.9rem}
+.bpcard{
+  border-radius:18px;padding:16px 13px 14px;cursor:pointer;text-align:center;
+  background:var(--bg2);border:1px solid var(--bd2);
+  transition:all .2s;user-select:none
+}
+.bpcard:hover{border-color:var(--text3);transform:translateY(-2px)}
+.bpcard:active{transform:scale(0.96)}
+.bpcard.sel{border-color:rgba(255,255,255,0.4);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.15)}
+.bpcard-g{font-size:24px;line-height:1;margin-bottom:7px;display:block}
+.bpcard-n{font-size:12px;font-weight:600;margin-bottom:2px;display:block}
+.bpcard-s{font-size:10px;color:var(--text3);line-height:1.35;display:block}
+.bp-reveal{overflow:hidden;max-height:0;opacity:0;transition:max-height .35s ease,opacity .25s;margin-bottom:0}
+.bp-reveal.open{max-height:500px;opacity:1;margin-bottom:1rem}
+.bp-sub-grid{display:flex;flex-direction:column;gap:7px;padding:.5rem 0}
+.bpsub{
+  border-radius:14px;padding:13px 16px;cursor:pointer;
+  border:1px solid rgba(255,255,255,0.1);
+  transition:all .18s;display:flex;align-items:center;gap:12px;user-select:none
+}
+.bpsub:hover{border-color:rgba(255,255,255,0.25);transform:translateX(3px)}
+.bpsub:active{transform:scale(0.97)}
+.bpsub.sel{border-color:rgba(255,255,255,0.4);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.15)}
+.bpsub-icon{font-size:18px;width:28px;text-align:center;flex-shrink:0}
+.bpsub-n{font-size:12px;font-weight:500;margin-bottom:1px;color:rgba(255,255,255,0.92)}
+.bpsub-d{font-size:10px;color:rgba(255,255,255,0.45);line-height:1.35}
+
+/* BODY MAP (advanced) */
+.body-stage{position:relative;width:100%;height:440px;background:#000;border-radius:var(--radl);overflow:hidden;margin-bottom:.8rem;cursor:crosshair}
+.body-stage canvas{position:absolute;inset:0;width:100%;height:100%}
+.bmarkers-layer{position:absolute;inset:0;pointer-events:none}
+.body-label{position:absolute;bottom:12px;left:16px;right:120px;font-size:13px;font-weight:500;color:var(--gold);pointer-events:none}
+.bgrid-wrap{position:absolute;bottom:10px;right:10px;display:none}
+.bmarker-el{position:absolute;transform:translate(-50%,-50%);cursor:pointer;pointer-events:all}
+.bmarker-ring{width:22px;height:22px;border-radius:50%;border:1.5px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 5px rgba(255,255,255,.07);transition:all .2s}
+.bmarker-dot{width:8px;height:8px;border-radius:50%;background:#fff;transition:background .2s}
+.bm-pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:.6rem}
+.bm-pill-item{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:100px;font-size:10px;border:0.5px solid;cursor:pointer;user-select:none}
+.sens-picker{background:var(--bg2);border:0.5px solid var(--bd2);border-radius:var(--radl);padding:.9rem;margin-bottom:.8rem;display:none}
+.sens-picker.open{display:block}
+.sp2-title{font-size:12px;font-weight:500;margin-bottom:2px}
+.sp2-sub{font-size:10px;color:var(--text3);margin-bottom:.7rem}
+.stags-grid{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:.7rem}
+.stag{padding:6px 12px;border-radius:100px;border:0.5px solid var(--bd2);font-size:10px;cursor:pointer;background:var(--bg3);color:var(--text2);transition:all .12s;user-select:none}
+.stag:hover{color:var(--text);border-color:var(--text3)}
+.stag.on{background:var(--gold3);color:var(--gold2);border-color:var(--gold)}
+
+/* SAFETY */
+.safety-grid{display:flex;flex-direction:column;gap:6px;margin-bottom:1.2rem}
+.sfcard{display:flex;align-items:flex-start;gap:10px;padding:12px 13px;background:var(--bg2);border:0.5px solid var(--bd2);border-radius:14px;cursor:pointer;transition:all .15s;user-select:none}
+.sfcard:hover{border-color:var(--text3)}
+.sfcard.sel{border-color:rgba(185,28,28,.5);background:rgba(185,28,28,.08)}
+.sfcb{width:16px;height:16px;border:0.5px solid var(--bd2);border-radius:5px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;transition:all .15s}
+.sfcard.sel .sfcb{background:var(--danger);border-color:var(--danger);color:#fff}
+.sf-label{font-size:11px;line-height:1.4}
+.sf-sub{font-size:10px;color:var(--text3);display:block;margin-top:1px}
+.sfcard.sel .sf-label{color:#fca5a5}
+
+/* FORMULA PREFERENCES — new freeform */
+.pref-section{margin-bottom:1.2rem}
+.pref-label{font-size:10px;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.6rem;font-weight:500}
+.pref-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+.pref-card{border-radius:14px;padding:12px 13px;border:0.5px solid var(--bd2);background:var(--bg2);cursor:pointer;transition:all .15s;user-select:none}
+.pref-card:hover{border-color:var(--text3)}
+.pref-card.sel{border-color:var(--text);box-shadow:inset 0 0 0 .5px var(--text)}
+.pref-card-icon{font-size:18px;margin-bottom:6px;display:block}
+.pref-card-n{font-size:11px;font-weight:500;margin-bottom:2px}
+.pref-card-d{font-size:10px;color:var(--text2);line-height:1.35}
+.pref-slider{margin-bottom:1.2rem}
+.pref-slider label{font-size:11px;color:var(--text2);display:block;margin-bottom:.4rem}
+.pref-slider input[type=range]{width:100%;accent-color:var(--text)}
+.pref-slider-val{font-size:11px;font-weight:500;float:right}
+
+/* DELIVERY */
+.deliv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.1rem}
+.dc{background:var(--bg2);border:0.5px solid var(--bd2);border-radius:18px;padding:16px 10px 14px;cursor:pointer;text-align:center;transition:all .18s;user-select:none}
+.dc:hover{border-color:var(--text3);transform:translateY(-2px)}
+.dc:active{transform:scale(0.97)}
+.dc.sel{border-color:var(--text);box-shadow:inset 0 0 0 1px var(--text)}
+.dc-icon{font-size:22px;display:block;margin-bottom:7px;line-height:1}
+.dc-name{font-size:12px;font-weight:600;display:block;margin-bottom:3px}
+.dc-desc{font-size:10px;color:var(--text2);line-height:1.4;display:block}
+.deliv-detail{border-radius:var(--rad);padding:11px 13px;border:0.5px solid var(--bd);background:var(--bg2);margin-bottom:1rem;display:none}
+.deliv-detail.open{display:block}
+.carrier-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:1rem}
+.cc{background:var(--bg);border:0.5px solid var(--bd2);border-radius:var(--radl);padding:11px 12px;cursor:pointer;transition:all .15s;user-select:none}
+.cc:hover{border-color:var(--text3)}
+.cc.sel{border-color:var(--text);box-shadow:inset 0 0 0 .5px var(--text)}
+.cc-icon{font-size:15px;margin-bottom:4px;display:block}
+.cc-name{font-size:12px;font-weight:500;margin-bottom:2px}
+.cc-desc{font-size:10px;color:var(--text2);line-height:1.35}
+.boost-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:1rem}
+.bc{background:var(--bg);border:0.5px solid var(--bd2);border-radius:var(--rad);padding:8px 9px;cursor:pointer;transition:all .15s;text-align:center;user-select:none}
+.bc:hover{border-color:var(--text3)}
+.bc.sel{border-color:var(--text);box-shadow:inset 0 0 0 .5px var(--text)}
+.bc-icon{font-size:13px;display:block;margin-bottom:2px}
+.bc-name{font-size:10px;font-weight:500;display:block;margin-bottom:1px}
+.bc-desc{font-size:9px;color:var(--text3);line-height:1.3;display:block}
+
+/* NAV */
+.nav{display:flex;gap:7px;justify-content:space-between;align-items:center;margin-top:1.2rem;flex-wrap:wrap}
+.btn{padding:9px 16px;border-radius:var(--rad);font-size:11px;font-family:inherit;cursor:pointer;border:0.5px solid var(--bd2);background:transparent;color:var(--text);transition:all .15s;user-select:none}
+.btn:hover{background:var(--bg2)}
+.btn:active{transform:scale(.97)}
+.btn.p{background:var(--text);color:var(--bg);border-color:var(--text);font-weight:500}
+.btn.p:hover{opacity:.87}
+.sep{display:flex;align-items:center;gap:7px;margin:.9rem 0 .7rem}
+.sep span{font-size:9px;color:var(--text3);letter-spacing:.09em;text-transform:uppercase;white-space:nowrap}
+.sep::before,.sep::after{content:'';flex:1;height:.5px;background:var(--bd)}
+.warn{display:flex;gap:7px;padding:9px 11px;border-radius:var(--rad);background:rgba(120,53,15,.2);border:0.5px solid rgba(180,83,9,.3);color:#fb923c;font-size:11px;line-height:1.5;margin-bottom:.9rem}
+
+/* FORMULA OUTPUT */
+.fhdr{background:var(--text);color:var(--bg);border-radius:var(--radl) var(--radl) 0 0;padding:1rem 1.2rem}
+.ft{font-size:15px;font-weight:600;margin-bottom:2px}
+.fs{font-size:9px;opacity:.45;letter-spacing:.06em;text-transform:uppercase}
+.fbody{background:var(--bg2);border:0.5px solid var(--bd2);border-top:none;border-radius:0 0 var(--radl) var(--radl);margin-bottom:.9rem}
+.hr{display:flex;align-items:flex-start;gap:8px;padding:9px 12px;border-bottom:0.5px solid var(--bd)}
+.hr:last-child{border-bottom:none}
+.hn{font-size:9px;color:var(--text3);width:18px;flex-shrink:0;margin-top:1px}
+.hi{flex:1}.hname{font-size:12px;font-weight:500}.hbot{font-size:9px;color:var(--text3);font-style:italic;margin-top:1px}
+.hact{font-size:10px;color:var(--text2);margin-top:2px;line-height:1.35}
+.hpct{font-size:10px;font-weight:500;color:var(--text2);flex-shrink:0;margin-top:1px}
+.brow{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.bn{font-size:10px;color:var(--text2);width:95px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0}
+.bt{flex:1;height:3px;background:var(--bd);border-radius:2px;overflow:hidden}
+.bf{height:100%;background:var(--text);border-radius:2px}
+.bp{font-size:9px;color:var(--text3);width:24px;text-align:right;flex-shrink:0}
+.tags{display:flex;flex-wrap:wrap;gap:4px;padding:8px 12px}
+.tag{font-size:9px;padding:2px 8px;border-radius:100px;border:0.5px solid}
+.ttcm{color:#085041;background:#E1F5EE;border-color:#9FE1CB}
+.teur{color:#3C3489;background:#EEEDFE;border-color:#CECBF6}
+.tmush{color:#9f4a20;background:#FEF0E8;border-color:#F5C4A3}
+.tdeliv{color:#0C447C;background:#E6F1FB;border-color:#B5D4F4}
+.inst{background:var(--bg3);padding:10px 12px;border-top:0.5px solid var(--bd)}
+.ir{display:flex;gap:6px;font-size:10px;color:var(--text2);margin-bottom:3px;line-height:1.5}
+.il{color:var(--text);font-weight:500;flex-shrink:0;min-width:72px}
+.serve-block{background:var(--bg2);border:0.5px solid var(--bd2);border-radius:var(--radl);padding:11px 13px;margin-bottom:.9rem}
+.ss{display:flex;gap:8px;margin-bottom:5px;align-items:flex-start}
+.ss-n{width:16px;height:16px;border-radius:50%;background:var(--text);color:var(--bg);font-size:8px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.ss-t{font-size:11px;color:var(--text2);line-height:1.45}
+.caut{padding:8px 12px;background:rgba(185,28,28,.07);border-top:0.5px solid rgba(185,28,28,.2)}
+.ct{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:#fca5a5;margin-bottom:3px;font-weight:500}
+.ci{font-size:10px;color:#fca5a5;line-height:1.55}
+.mcards{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:.9rem}
+.mc{background:var(--bg2);border-radius:var(--rad);padding:8px 10px}
+.ml{font-size:9px;color:var(--text3);margin-bottom:2px}
+.mv{font-size:12px;font-weight:500}
+.acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:.9rem}
+
+/* BOTTLE */
+.bottle-wrap{background:var(--bg2);border:0.5px solid var(--bd);border-radius:var(--radl);padding:1.5rem 1rem 1.2rem;margin-bottom:.9rem;text-align:center}
+.bottle-name-display{font-size:18px;font-weight:500;margin-bottom:1.2rem;letter-spacing:-.01em}
+
+/* TRADITION FILTER */
+.trad-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:.9rem}
+.tt{padding:6px 14px;border-radius:100px;border:0.5px solid var(--bd2);font-size:10px;cursor:pointer;background:var(--bg2);color:var(--text2);transition:all .15s;user-select:none}
+.tt:hover{color:var(--text);border-color:var(--text3)}
+.tt.on{background:var(--text);color:var(--bg);border-color:var(--text);font-weight:500}
+
+/* FORMULA LOG */
+.log-panel{background:var(--bg2);border:0.5px solid var(--bd2);border-radius:var(--radl);padding:.9rem 1rem;margin-top:1rem}
+.log-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem;flex-wrap:wrap;gap:6px}
+.log-title{font-size:11px;font-weight:500}
+.log-acts{display:flex;gap:5px}
+.log-btn{font-size:10px;padding:4px 10px;border-radius:100px;border:0.5px solid var(--bd2);background:var(--bg);color:var(--text2);cursor:pointer;transition:all .12s;user-select:none}
+.log-btn:hover{color:var(--text);border-color:var(--text3)}
+.log-btn.danger{border-color:rgba(185,28,28,.3);color:rgba(252,165,165,.7)}
+.log-btn.danger:hover{color:#fca5a5;border-color:rgba(185,28,28,.6)}
+.log-btn.dl{border-color:rgba(29,158,117,.3);color:var(--teal2)}
+.log-btn.dl:hover{border-color:var(--teal)}
+.log-empty{font-size:11px;color:var(--text3);text-align:center;padding:.5rem 0}
+.log-entry{padding:8px 0;border-bottom:0.5px solid var(--bd);cursor:pointer}
+.log-entry:last-child{border-bottom:none}
+.log-entry:hover .log-name{color:var(--gold2)}
+.log-name{font-size:11px;font-weight:500;margin-bottom:2px;transition:color .15s}
+.log-meta{font-size:10px;color:var(--text3);line-height:1.4}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-top">
+    <div>
+      <div class="brand-label">Fung.ai Herbal Engine</div>
+      <div class="brand-name">Fungai Art Elixirs</div>
+      <div class="brand-sub">Tailored Tinctures · Conference Edition</div>
+    </div>
+    <div class="hdr-btns">
+      <button class="mbtn on" id="modeStd" onclick="setMode('standard')">Standard</button>
+      <button class="mbtn" id="modeAdv" onclick="setMode('advanced')">Advanced</button>
+      <button class="mbtn" id="practBtn" onclick="togglePract()">Practitioner</button>
+      <button class="mbtn" id="stockToggle" onclick="toggleStock()">Stock</button>
+    </div>
+  </div>
+  <div class="preset-row">
+    <span class="pl">Pool:</span>
+    <button class="prbtn on" id="preset_all" onclick="applyPreset('all')">All herbs <span id="pc_all" style="font-size:9px;opacity:.6"></span></button>
+    <button class="prbtn" id="preset_tryp" onclick="applyPreset('tryp')">Tryp <span id="pc_tryp" style="font-size:9px;opacity:.6"></span></button>
+    <button class="prbtn" id="preset_custom" onclick="applyPreset('custom')">Custom <span id="pc_custom" style="font-size:9px;opacity:.6"></span></button>
+  </div>
+</div>
+
+<!-- STOCK PANEL -->
+<div class="stock-panel" id="stockPanel">
+  <div class="sp-hdr">
+    <div><div class="sp-title">Custom stock</div><div class="sp-count" id="spCount">0 herbs</div></div>
+    <div class="sp-acts">
+      <span class="spa" onclick="stockAll()">Select all</span>
+      <span class="spa" onclick="stockClear()">Clear</span>
+      <span class="spa" onclick="stockTryp()">Load Tryp</span>
+    </div>
+  </div>
+  <input class="sp-search" id="spSearch" placeholder="Search herbs and mushrooms..." oninput="renderStock(this.value)">
+  <div id="spSections"></div>
+</div>
+
+<div class="prog" id="pg"></div>
+
+<!-- S0: INTENTION -->
+<div id="s0" class="step vis">
+  <div class="sn" id="sn0">What do you need right now?</div>
+  <div class="st">Choose your intention</div>
+  <p class="sh">One choice — we'll explore it together.</p>
+  <div class="intent-grid" id="ig"></div>
+  <div class="nav"><span></span><button class="btn p" onclick="go(1)">Begin →</button></div>
+</div>
+
+<!-- S0B: SUB-BRANCH -->
+<div id="s0b" class="step">
+  <div class="sub-back" id="subBack" onclick="goBack0b()"><span>←</span><div class="sub-dot" id="subDot"></div><span id="subBackLabel">Back</span></div>
+  <div class="sn">Go deeper</div>
+  <div class="st" id="subTitle">What kind of sleep?</div>
+  <p class="sh" id="subDesc"></p>
+  <div class="sub-grid" id="subGrid"></div>
+  <div class="nav"><span></span><button class="btn p" onclick="go(1)">Continue →</button></div>
+</div>
+
+<!-- S1: WHAT ELSE -->
+<div id="s1" class="step">
+  <div class="sn" id="sn1">2 of 6 · What else is alive in you right now?</div>
+  <div class="st">Anything else present?</div>
+  <p class="sh">These shape the supporting herbs. Select everything that feels true — even lightly.</p>
+  <div class="else-grid" id="sg"></div>
+  <div class="nav"><button class="btn" onclick="go(0)">← Back</button><button class="btn p" onclick="go(2)">Continue →</button></div>
+</div>
+
+<!-- S2: BODY PATTERN -->
+<div id="s2" class="step">
+  <div class="sn" id="sn2">3 of 6 · Your body right now</div>
+  <div id="s2std">
+    <div class="st">Your body feels more like —</div>
+    <p class="sh">Choose the closest match. It opens a few more questions.</p>
+    <div class="body-grid" id="bpGrid"></div>
+    <div class="bp-reveal" id="bpReveal"></div>
+  </div>
+  <div id="s2adv" style="display:none">
+    <div class="st">Where do you feel something?</div>
+    <p class="sh">Tap anywhere on the body. Describe what you notice there.</p>
+    <div class="body-stage" id="bsWrap">
+      <canvas id="bodyC"></canvas>
+      <div class="bmarkers-layer" id="bLayer"></div>
+      <div class="body-label" id="bLabel"></div>
+      <div class="bgrid-wrap" id="bgridWrap"><canvas id="bgridC" width="96" height="96" style="cursor:crosshair;display:block"></canvas></div>
+    </div>
+    <div class="bm-pills" id="bPills"></div>
+    <div class="sens-picker" id="sPicker">
+      <div class="sp2-title" id="sp2T">Sensation</div>
+      <div class="sp2-sub">Select all sensation words that feel true</div>
+      <div class="stags-grid" id="sTags"></div>
+      <div style="display:flex;gap:6px">
+        <button class="btn p" style="flex:1;font-size:11px" onclick="bSave()">Save</button>
+        <button class="btn" style="font-size:11px" onclick="bCancel()">Cancel</button>
+        <button class="btn" style="font-size:11px;color:#fca5a5;border-color:rgba(185,28,28,.3)" onclick="bDelete()">Remove</button>
+      </div>
+    </div>
+  </div>
+  <div class="nav"><button class="btn" onclick="go(1)">← Back</button><button class="btn p" onclick="goFromBody()">Continue →</button></div>
+</div>
+
+<!-- S3: SAFETY (condensed) -->
+<div id="s3" class="step">
+  <div class="sn" id="sn3">4 of 6 · Safety</div>
+  <div class="st">Any of these apply to you?</div>
+  <p class="sh">Tick everything relevant. Herbs that conflict will be silently removed from your formula.</p>
+  <div class="warn"><span>◈</span><span>Not a medical consultation — a clinical safety filter only.</span></div>
+  <div class="safety-grid" id="sfg"></div>
+  <div class="nav"><button class="btn" onclick="go(2)">← Back</button><button class="btn p" onclick="go(4)">Continue →</button></div>
+</div>
+
+<!-- S4: PREFERENCES (new freeform) -->
+<div id="s4" class="step">
+  <div class="sn" id="sn4">5 of 6 · Shape your formula</div>
+  <div class="st">How do you want to work with this?</div>
+  <p class="sh">These choices tune the depth and speed of your formula.</p>
+
+  <div class="pref-section">
+    <div class="pref-label">Approach</div>
+    <div class="pref-cards" id="approachCards"></div>
+  </div>
+
+  <div class="pref-section">
+    <div class="pref-label">Duration of use</div>
+    <div class="pref-cards" id="durationCards"></div>
+  </div>
+
+  <div class="pref-section">
+    <div class="pref-label">Formula size</div>
+    <div class="pref-slider">
+      <label>Focused — fewer, deeper herbs <span class="pref-slider-val" id="cntVal">5</span></label>
+      <input type="range" min="3" max="8" value="5" id="cntSlider" oninput="setCnt(this.value)">
+    </div>
+  </div>
+
+  <div class="nav"><button class="btn" onclick="go(3)">← Back</button><button class="btn p" onclick="go(5)">Continue →</button></div>
+</div>
+
+<!-- S5: DELIVERY -->
+<div id="s5" class="step">
+  <div class="sn" id="sn5">6 of 6 · Ritual</div>
+  <div class="st">How do you want this delivered?</div>
+  <p class="sh">This shapes both the formula and the experience of taking it.</p>
+  <div class="deliv-grid" id="delivGrid"></div>
+  <div class="deliv-detail" id="delivDetail">
+    <div id="dd_tonic" style="display:none">
+      <div class="sep"><span>Choose your carrier</span></div>
+      <div class="carrier-grid" id="carrierGrid"></div>
+      <div class="sep"><span>Add a boost</span></div>
+      <div class="boost-grid" id="boostGrid"></div>
+    </div>
+    <div id="dd_tincture" style="display:none">
+      <p style="font-size:11px;color:var(--text2);line-height:1.6">1:5 dual-extracted tincture. Add 30–40 drops to water or juice and drink.</p>
+    </div>
+    <div id="dd_sublingual" style="display:none">
+      <p style="font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:.7rem">One dose held under the tongue 60–90 seconds before swallowing. Fastest absorption.</p>
+      <div style="background:var(--bg);border:0.5px solid var(--bd2);border-radius:var(--rad);padding:10px 12px;font-size:11px;color:var(--text2);line-height:1.6"><strong style="font-weight:500;display:block;margin-bottom:3px">Protocol</strong>1 ml (approx. 20 drops) under tongue, hold 60–90 s, swallow. Up to 3× daily.</div>
+    </div>
+  </div>
+  <div class="nav"><button class="btn" onclick="go(4)">← Back</button><button class="btn p" onclick="build()">Build my formula →</button></div>
+</div>
+
+<!-- S6: RESULT -->
+<div id="s6" class="step">
+  <div id="fo"></div>
+  <div class="acts">
+    <button class="btn" onclick="go(5)">← Adjust</button>
+    <button class="btn" onclick="rebuild()">↻ Variation</button>
+    <button class="btn p" id="explainBtn">Copy formula ↗</button>
+  </div>
+  <div class="log-panel" id="logPanel">
+    <div class="log-hdr">
+      <div class="log-title">Formula log <span id="logCount" style="font-size:9px;color:var(--text3)"></span></div>
+      <div class="log-acts">
+        <button class="log-btn dl" onclick="exportLog('json')">↓ JSON</button>
+        <button class="log-btn dl" onclick="exportLog('csv')">↓ CSV</button>
+        <button class="log-btn danger" onclick="clearLog()">✕ Clear all</button>
+      </div>
+    </div>
+    <div id="logEntries"><div class="log-empty">No formulas saved yet — generate one above.</div></div>
+  </div>
+</div>
+
+</div>
+<script>
+const HB = [{"id": "ashwagandha", "n": "Ashwagandha", "b": "Withania somnifera", "cat": "Adaptogen", "t": ["Kidney", "Spleen", "Heart"], "i": ["stress", "energy", "sleep", "anxiety", "hormones"], "c": ["cold", "depleted"], "x": ["thyroid", "autoimmune", "pregnancy"], "p": ["ayurvedic", "tcm"], "m": false, "r": 25, "restricted": false, "a": "Adaptogenic HPA modulation; cortisol normalisation"}, {"id": "holy_basil", "n": "Holy Basil", "b": "Ocimum tenuiflorum", "cat": "Adaptogen", "t": ["Lung", "Heart", "Spleen"], "i": ["stress", "energy", "mood", "immunity"], "c": ["mixed", "depleted"], "x": [], "p": ["ayurvedic"], "m": false, "r": 20, "restricted": false, "a": "Cortisol adaptation; cognitive clarity; anti-inflammatory"}, {"id": "licorice_root", "n": "Licorice Root", "b": "Glycyrrhiza glabra", "cat": "Adaptogen", "t": ["Lung", "Spleen", "Stomach", "Liver", "Heart"], "i": ["stress", "digestion", "immunity", "hormones"], "c": ["cold", "depleted"], "x": ["hypertension", "pregnancy", "digoxin", "kidney"], "p": ["tcm", "ayurvedic", "european"], "m": false, "r": 15, "restricted": false, "a": "Glycyrrhizin cortisol-sparing adaptogen; demulcent gut healing; adrenal support; harmonising herb"}, {"id": "rhodiola", "n": "Rhodiola", "b": "Rhodiola rosea", "cat": "Adaptogen", "t": ["Heart", "Spleen", "Kidney"], "i": ["energy", "stress", "mood", "cognitive"], "c": ["cold", "depleted"], "x": ["bipolar", "ssri", "pregnancy"], "p": ["tcm"], "m": false, "r": 20, "restricted": false, "a": "SSRI-equivalent rosavins; adaptogenic resilience"}, {"id": "schisandra", "n": "Schisandra", "b": "Schisandra chinensis", "cat": "Adaptogen", "t": ["Heart", "Lung", "Kidney"], "i": ["stress", "detox", "cognitive", "energy"], "c": ["depleted", "cold"], "x": [], "p": ["tcm"], "m": false, "r": 18, "restricted": false, "a": "Five-flavour adaptogen; hepatoprotective; anti-ageing"}, {"id": "shilajit", "n": "Shilajit", "b": "Asphaltum punjabianum", "cat": "Adaptogen", "t": ["Kidney", "Spleen"], "i": ["energy", "hormones", "cognitive"], "c": ["cold", "depleted"], "x": [], "p": ["ayurvedic"], "m": false, "r": 18, "restricted": false, "a": "Fulvic acid and mineral complex; mitochondrial ATP production; Jing tonic; anti-ageing"}, {"id": "boswellia", "n": "Boswellia", "b": "Boswellia serrata", "cat": "Anti-inflammatory", "t": ["Liver", "Kidney"], "i": ["pain"], "c": ["hot", "mixed"], "x": [], "p": ["ayurvedic"], "m": false, "r": 20, "restricted": false, "a": "LOX pathway inhibition; boswellic acids; joint inflammation"}, {"id": "butterbur", "n": "Butterbur", "b": "Petasites hybridus", "cat": "Anti-inflammatory", "t": ["Liver", "Lung", "Heart"], "i": ["pain", "immunity"], "c": ["hot", "mixed"], "x": ["liver", "pregnancy", "asteraceae"], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "PA-FREE extract only — petasin TRPA1 desensitisation; migraine prophylaxis RCT-confirmed; allergic rhinitis"}, {"id": "cayenne", "n": "Cayenne", "b": "Capsicum annuum", "cat": "Anti-inflammatory", "t": ["Heart", "Spleen", "Liver"], "i": ["pain", "digestion", "energy", "immunity"], "c": ["cold", "depleted"], "x": ["gerd", "gallstones"], "p": ["european", "ayurvedic"], "m": false, "r": 10, "restricted": false, "a": "Capsaicin TRPV1 substance P depletion; topical analgesic; circulatory stimulant; gut motility"}, {"id": "devils_claw", "n": "Devil's Claw", "b": "Harpagophytum procumbens", "cat": "Anti-inflammatory", "t": ["Liver", "Kidney", "Spleen"], "i": ["pain"], "c": ["hot", "mixed"], "x": ["gallstones", "pregnancy"], "p": ["european"], "m": false, "r": 20, "restricted": false, "a": "COX inhibition; musculoskeletal anti-inflammatory"}, {"id": "turmeric", "n": "Turmeric", "b": "Curcuma longa", "cat": "Anti-inflammatory", "t": ["Liver", "Spleen", "Heart"], "i": ["pain", "digestion", "immunity", "mood", "detox"], "c": ["cold", "mixed"], "x": ["gallstones", "anticoag"], "p": ["ayurvedic", "tcm"], "m": false, "r": 20, "restricted": false, "a": "NF-kB inhibition; curcumin anti-inflammatory cascade"}, {"id": "willow_bark", "n": "Willow Bark", "b": "Salix alba", "cat": "Anti-inflammatory", "t": ["Liver", "Kidney"], "i": ["pain"], "c": ["hot", "mixed"], "x": ["aspirin_al", "anticoag", "pregnancy"], "p": ["european"], "m": false, "r": 20, "restricted": false, "a": "Natural salicylates; aspirin-equivalent; stomach-protective"}, {"id": "black_walnut", "n": "Black Walnut", "b": "Juglans nigra", "cat": "Antimicrobial", "t": ["Large Intestine", "Liver", "Spleen"], "i": ["detox", "immunity", "digestion"], "c": ["hot", "mixed"], "x": ["pregnancy", "kidney", "autoimmune"], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "Juglone antiparasitic and antifungal; gut terrain cleansing; antibiotic-resistant pathogen activity"}, {"id": "garlic", "n": "Garlic", "b": "Allium sativum", "cat": "Antimicrobial", "t": ["Lung", "Spleen", "Stomach"], "i": ["immunity", "pain", "detox", "digestion"], "c": ["cold", "mixed"], "x": ["anticoag", "gallstones"], "p": ["european", "tcm", "ayurvedic"], "m": false, "r": 15, "restricted": false, "a": "Allicin broad-spectrum antimicrobial; antifungal; cardiovascular protective; immune stimulant"}, {"id": "oregano", "n": "Oregano", "b": "Origanum vulgare", "cat": "Antimicrobial", "t": ["Lung", "Spleen", "Liver"], "i": ["immunity", "digestion", "pain"], "c": ["hot", "mixed"], "x": [], "p": ["european", "ayurvedic"], "m": false, "r": 15, "restricted": false, "a": "Carvacrol broad-spectrum antimicrobial; antifungal; NF-kB anti-inflammatory"}, {"id": "pau_darco", "n": "Pau d'Arco", "b": "Handroanthus impetiginosus", "cat": "Antimicrobial", "t": ["Liver", "Large Intestine"], "i": ["immunity", "detox"], "c": ["hot", "mixed"], "x": ["anticoag", "pregnancy", "liver"], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "Lapachol antifungal and antimicrobial; narrow therapeutic window — caution required"}, {"id": "thyme", "n": "Thyme", "b": "Thymus vulgaris", "cat": "Antimicrobial", "t": ["Lung", "Spleen", "Liver"], "i": ["immunity", "digestion", "pain"], "c": ["hot", "mixed"], "x": [], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Thymol and carvacrol antimicrobial; expectorant; antispasmodic; Commission E approved for bronchitis"}, {"id": "bacopa", "n": "Bacopa", "b": "Bacopa monnieri", "cat": "Cognitive", "t": ["Heart", "Spleen", "Kidney"], "i": ["cognitive", "stress"], "c": ["hot", "mixed"], "x": [], "p": ["ayurvedic"], "m": false, "r": 15, "restricted": false, "a": "Bacoside acetylcholinesterase inhibition; memory consolidation"}, {"id": "calamus", "n": "Calamus", "b": "Acorus calamus", "cat": "Cognitive", "t": ["Heart", "Kidney", "Spleen"], "i": ["cognitive", "digestion", "stress"], "c": ["cold", "depleted"], "x": ["pregnancy", "liver", "ssri"], "p": ["ayurvedic", "tcm"], "m": false, "r": 10, "restricted": true, "a": "Asarone cognitive and digestive stimulant; Ayurvedic Vacha — memory tonic; beta-asarone limit important", "restrictedNote": "Beta-asarone content varies by variety; regulatory limits apply in EU and elsewhere. Practitioner context only."}, {"id": "ginkgo", "n": "Ginkgo", "b": "Ginkgo biloba", "cat": "Cognitive", "t": ["Lung", "Heart", "Liver"], "i": ["cognitive", "energy"], "c": ["cold", "mixed"], "x": ["anticoag", "ssri", "pregnancy"], "p": ["tcm"], "m": false, "r": 15, "restricted": false, "a": "PAF inhibition; cerebral circulation; neuroprotection"}, {"id": "gotu_kola", "n": "Gotu Kola", "b": "Centella asiatica", "cat": "Cognitive", "t": ["Heart", "Liver", "Spleen"], "i": ["cognitive", "energy", "mood", "beauty"], "c": ["hot", "mixed"], "x": ["liver"], "p": ["ayurvedic", "tcm"], "m": false, "r": 15, "restricted": false, "a": "Triterpene BDNF stimulation; neuroprotection and focus"}, {"id": "rosemary", "n": "Rosemary", "b": "Rosmarinus officinalis", "cat": "Cognitive", "t": ["Liver", "Heart"], "i": ["cognitive", "energy", "detox"], "c": ["cold", "mixed"], "x": [], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Acetylcholinesterase inhibition; cerebral circulation"}, {"id": "barley", "n": "Barley", "b": "Hordeum vulgare", "cat": "Digestive", "t": ["Spleen", "Stomach", "Liver"], "i": ["digestion", "detox", "energy"], "c": ["cold", "depleted"], "x": [], "p": ["tcm", "european"], "m": false, "r": 12, "restricted": false, "a": "Beta-glucan prebiotic; gut barrier and cholesterol support; Spleen Qi tonic; blood sugar buffering"}, {"id": "caraway", "n": "Caraway", "b": "Carum carvi", "cat": "Digestive", "t": ["Spleen", "Stomach", "Lung", "Large Intestine"], "i": ["digestion"], "c": ["cold", "depleted"], "x": [], "p": ["european", "ayurvedic"], "m": false, "r": 12, "restricted": false, "a": "Carvone and limonene antispasmodic; carminative; IBS and bloating; traditional digestive seed"}, {"id": "cardamom", "n": "Cardamom", "b": "Elettaria cardamomum", "cat": "Digestive", "t": ["Lung", "Spleen", "Stomach", "Large Intestine"], "i": ["digestion", "energy", "stress"], "c": ["cold", "depleted"], "x": [], "p": ["ayurvedic", "tcm"], "m": false, "r": 12, "restricted": false, "a": "Volatile oil carminative; gut antispasmodic; Ayurvedic tridosha balancer; warming aromatic digestive"}, {"id": "chamomile", "n": "Chamomile", "b": "Matricaria chamomilla", "cat": "Nervine", "t": ["Spleen", "Stomach", "Liver"], "i": ["digestion", "anxiety", "sleep"], "c": ["cold", "depleted"], "x": ["asteraceae", "pregnancy"], "p": ["european", "tcm"], "m": false, "r": 20, "restricted": false, "a": "Apigenin GABA-A binding; antispasmodic and calming"}, {"id": "cinnamon", "n": "Cinnamon", "b": "Cinnamomum verum", "cat": "Digestive", "t": ["Spleen", "Stomach", "Kidney", "Heart"], "i": ["digestion", "energy", "hormones", "pain"], "c": ["cold", "depleted"], "x": ["liver", "anticoag"], "p": ["tcm", "ayurvedic", "european"], "m": false, "r": 12, "restricted": false, "a": "Cinnamaldehyde insulin sensitiser; warming carminative; antimicrobial; Kidney Yang tonic"}, {"id": "cloves", "n": "Cloves", "b": "Syzygium aromaticum", "cat": "Digestive", "t": ["Stomach", "Spleen", "Kidney"], "i": ["digestion", "pain", "immunity"], "c": ["cold", "depleted"], "x": ["anticoag", "pregnancy"], "p": ["ayurvedic", "tcm", "european"], "m": false, "r": 10, "restricted": false, "a": "Eugenol COX inhibitor and analgesic; antimicrobial; antiparasitic; warming Kidney Yang digestive"}, {"id": "fennel", "n": "Fennel", "b": "Foeniculum vulgare", "cat": "Digestive", "t": ["Stomach", "Spleen", "Kidney"], "i": ["digestion"], "c": ["cold", "depleted"], "x": [], "p": ["european", "ayurvedic"], "m": false, "r": 15, "restricted": false, "a": "Anethole carminative; antispasmodic; gas relief"}, {"id": "ginger", "n": "Ginger", "b": "Zingiber officinale", "cat": "Digestive", "t": ["Lung", "Spleen", "Stomach"], "i": ["digestion", "immunity", "energy", "pain"], "c": ["cold", "depleted"], "x": ["anticoag", "gallstones"], "p": ["european", "tcm", "ayurvedic"], "m": false, "r": 15, "restricted": false, "a": "Anti-inflammatory; carminative; circulation enhancement"}, {"id": "meadowsweet", "n": "Meadowsweet", "b": "Filipendula ulmaria", "cat": "Digestive", "t": ["Stomach", "Spleen", "Liver"], "i": ["digestion", "pain", "detox"], "c": ["hot", "mixed"], "x": ["aspirin_al", "anticoag"], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Natural salicylate and tannin gastric protector; antacid; anti-inflammatory; original aspirin plant"}, {"id": "peppermint", "n": "Peppermint", "b": "Mentha piperita", "cat": "Digestive", "t": ["Liver", "Lung", "Stomach"], "i": ["digestion", "pain"], "c": ["hot", "mixed"], "x": ["gerd", "gallstones"], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Menthol calcium channel blockade; IBS antispasmodic"}, {"id": "rhubarb_root", "n": "Rhubarb Root", "b": "Rheum palmatum", "cat": "Digestive", "t": ["Heart", "Liver", "Stomach", "Large Intestine"], "i": ["digestion", "detox"], "c": ["hot", "mixed"], "x": ["pregnancy", "kidney", "digoxin"], "p": ["tcm", "european"], "m": false, "r": 10, "restricted": false, "a": "Anthraquinone laxative at higher doses; bitter tonic and hepatic at low doses; TCM Da Huang"}, {"id": "senna", "n": "Senna", "b": "Senna alexandrina", "cat": "Digestive", "t": ["Large Intestine", "Liver"], "i": ["detox", "digestion"], "c": ["hot", "mixed"], "x": ["pregnancy", "kidney", "digoxin", "gerd", "cns_dep"], "p": ["european", "ayurvedic"], "m": false, "r": 8, "restricted": false, "a": "Anthraquinone stimulant laxative; short-term constipation relief only — not for chronic use"}, {"id": "slippery_elm", "n": "Slippery Elm", "b": "Ulmus rubra", "cat": "Digestive", "t": ["Lung", "Stomach", "Large Intestine"], "i": ["digestion", "immunity", "pain"], "c": ["cold", "depleted"], "x": [], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Mucilage gut lining protection; IBS and IBD soothing; throat and gastric mucosa repair"}, {"id": "star_anise", "n": "Star Anise", "b": "Illicium verum", "cat": "Digestive", "t": ["Stomach", "Spleen", "Kidney"], "i": ["digestion", "immunity"], "c": ["cold", "depleted"], "x": [], "p": ["tcm", "european"], "m": false, "r": 12, "restricted": false, "a": "Anethole carminative and antispasmodic; antimicrobial; shikimic acid antiviral (Tamiflu precursor)"}, {"id": "wormwood", "n": "Wormwood", "b": "Artemisia absinthium", "cat": "Digestive", "t": ["Liver", "Gallbladder", "Stomach", "Large Intestine"], "i": ["digestion", "detox", "immunity"], "c": ["hot", "mixed"], "x": ["pregnancy", "liver", "ssri", "cns_dep"], "p": ["european", "tcm"], "m": false, "r": 10, "restricted": false, "a": "Absinthin bitter tonic; bile stimulation; antiparasitic; short-term use only — thujone toxicity risk"}, {"id": "barberry", "n": "Barberry", "b": "Berberis vulgaris", "cat": "Hepatic", "t": ["Liver", "Gallbladder", "Stomach", "Large Intestine"], "i": ["digestion", "detox", "immunity"], "c": ["hot", "mixed"], "x": ["pregnancy", "digoxin"], "p": ["european", "tcm", "ayurvedic"], "m": false, "r": 15, "restricted": false, "a": "Berberine AMPK activation; bile stimulant; antimicrobial; blood sugar modulation; bitter hepatic tonic"}, {"id": "burdock", "n": "Burdock Root", "b": "Arctium lappa", "cat": "Hepatic", "t": ["Liver", "Spleen", "Stomach"], "i": ["detox", "beauty"], "c": ["hot", "mixed"], "x": [], "p": ["european", "tcm"], "m": false, "r": 15, "restricted": false, "a": "Blood-purifying bitter; lymphatic and skin clearing"}, {"id": "dandelion", "n": "Dandelion Root", "b": "Taraxacum officinale", "cat": "Hepatic", "t": ["Liver", "Stomach", "Lung"], "i": ["digestion", "detox"], "c": ["hot", "mixed"], "x": ["asteraceae", "gallstones"], "p": ["european", "tcm"], "m": false, "r": 20, "restricted": false, "a": "Hepatic bitter; bile stimulation; liver qi movement"}, {"id": "milk_thistle", "n": "Milk Thistle", "b": "Silybum marianum", "cat": "Hepatic", "t": ["Liver", "Spleen"], "i": ["detox", "digestion"], "c": ["hot", "mixed"], "x": ["asteraceae"], "p": ["european"], "m": false, "r": 20, "restricted": false, "a": "Silymarin hepatoprotection; liver membrane stabilisation"}, {"id": "yellow_dock", "n": "Yellow Dock Root", "b": "Rumex crispus", "cat": "Hepatic", "t": ["Liver", "Large Intestine", "Spleen"], "i": ["detox", "hormones"], "c": ["hot", "mixed"], "x": ["pregnancy", "kidney"], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "Iron-supportive hepatic bitter; oxalate metabolism; anthraquinone gentle laxative; skin and liver clearing"}, {"id": "catuaba", "n": "Catuaba", "b": "Trichilia catigua", "cat": "Hormonal", "t": ["Kidney", "Liver", "Heart"], "i": ["hormones", "mood", "energy", "cognitive"], "c": ["cold", "depleted"], "x": [], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Yohimbine-free Amazonian libido and nerve tonic; dopaminergic; anti-fatigue; cognitive uplift"}, {"id": "damiana", "n": "Damiana", "b": "Turnera diffusa", "cat": "Hormonal", "t": ["Liver", "Kidney", "Heart"], "i": ["hormones", "mood", "energy"], "c": ["cold", "mixed"], "x": [], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Nerve tonic; mild aphrodisiac; mood and libido lift"}, {"id": "dong_quai", "n": "Dong Quai", "b": "Angelica sinensis", "cat": "Hormonal", "t": ["Heart", "Liver", "Spleen", "Pericardium"], "i": ["hormones", "mood", "pain", "beauty"], "c": ["cold", "depleted"], "x": ["pregnancy", "anticoag", "ssri"], "p": ["tcm"], "m": false, "r": 18, "restricted": false, "a": "Blood and Yin nourishing; phytoestrogen modulation; menstrual regulation; warming pelvic circulation"}, {"id": "fadogia", "n": "Fadogia Agrestis", "b": "Fadogia agrestis", "cat": "Hormonal", "t": ["Kidney", "Liver"], "i": ["hormones", "energy"], "c": ["cold", "depleted"], "x": ["liver", "autoimmune"], "p": ["ayurvedic"], "m": false, "r": 15, "restricted": false, "a": "LH-mediated testosterone support; saponin-driven Leydig cell stimulation; hepatic monitoring required"}, {"id": "horny_goat_weed", "n": "Horny Goat Weed", "b": "Epimedium grandiflorum", "cat": "Hormonal", "t": ["Kidney", "Liver", "Ming Men"], "i": ["hormones", "energy", "pain"], "c": ["cold", "depleted"], "x": ["anticoag", "hypertension", "ssri"], "p": ["tcm"], "m": false, "r": 18, "restricted": false, "a": "Icariin PDE5 inhibition; Kidney Yang and Jing tonic; bone protection; libido and erectile support"}, {"id": "ladys_mantle", "n": "Lady's Mantle", "b": "Alchemilla vulgaris", "cat": "Hormonal", "t": ["Liver", "Spleen", "Kidney"], "i": ["hormones", "digestion"], "c": ["cold", "mixed"], "x": ["pregnancy", "anticoag"], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "Tannin uterine tonic; menstrual regulator; gut astringent; peri-menopausal and menstrual irregularity"}, {"id": "maca", "n": "Maca", "b": "Lepidium meyenii", "cat": "Hormonal", "t": ["Kidney", "Spleen"], "i": ["hormones", "energy", "cognitive"], "c": ["cold", "depleted"], "x": [], "p": ["ayurvedic"], "m": false, "r": 20, "restricted": false, "a": "Glucosinolate endocrine modulation; HPA adaptogen; libido; fertility; energy and stamina without stimulants"}, {"id": "maca_negra", "n": "Maca Negra", "b": "Lepidium meyenii (black)", "cat": "Hormonal", "t": ["Kidney", "Spleen", "Heart"], "i": ["hormones", "energy", "cognitive"], "c": ["cold", "depleted"], "x": [], "p": ["ayurvedic"], "m": false, "r": 18, "restricted": false, "a": "Black maca — strongest glucosinolate profile; cognitive and memory focus; spermatogenesis; deeper Yang tonic"}, {"id": "mugwort", "n": "Mugwort", "b": "Artemisia vulgaris", "cat": "Hormonal", "t": ["Liver", "Spleen", "Kidney"], "i": ["hormones", "digestion", "stress"], "c": ["cold", "depleted"], "x": ["pregnancy", "asteraceae", "ssri"], "p": ["european", "tcm"], "m": false, "r": 12, "restricted": false, "a": "Artemisinin-relative bitter tonic; emmenagogue; digestive stimulant; moxibustion herb; vivid dream support"}, {"id": "muira_puama", "n": "Muira Puama", "b": "Ptychopetalum olacoides", "cat": "Hormonal", "t": ["Kidney", "Heart", "Liver"], "i": ["hormones", "cognitive", "stress", "energy"], "c": ["cold", "depleted"], "x": [], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Potency wood — dopaminergic and cholinergic nervine tonic; libido; memory; anti-fatigue adaptogen"}, {"id": "nettle", "n": "Nettle", "b": "Urtica dioica", "cat": "Hormonal", "t": ["Kidney", "Liver", "Lung"], "i": ["hormones", "energy", "immunity"], "c": ["hot", "mixed"], "x": [], "p": ["european"], "m": false, "r": 20, "restricted": false, "a": "Mineral-rich blood building; SHBG modulation"}, {"id": "pine_pollen", "n": "Pine Pollen", "b": "Pinus sylvestris", "cat": "Hormonal", "t": ["Spleen", "Stomach", "Kidney"], "i": ["hormones", "energy"], "c": ["cold", "depleted"], "x": [], "p": ["tcm"], "m": false, "r": 15, "restricted": false, "a": "Phytoandrogen precursors; complete amino acid nutrition"}, {"id": "sage", "n": "Sage", "b": "Salvia officinalis", "cat": "Hormonal", "t": ["Lung", "Throat", "Spleen"], "i": ["hormones", "immunity"], "c": ["hot", "mixed"], "x": ["pregnancy"], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "Traditional menopause support; antimicrobial; throat tonic"}, {"id": "saw_palmetto", "n": "Saw Palmetto", "b": "Serenoa repens", "cat": "Hormonal", "t": ["Kidney", "Bladder"], "i": ["hormones"], "c": ["depleted", "cold"], "x": ["anticoag"], "p": ["european"], "m": false, "r": 20, "restricted": false, "a": "5-alpha-reductase inhibition; prostate anti-inflammatory"}, {"id": "tongkat_ali", "n": "Tongkat Ali", "b": "Eurycoma longifolia", "cat": "Hormonal", "t": ["Kidney Yang", "Spleen"], "i": ["hormones", "energy"], "c": ["cold", "depleted"], "x": ["hypertension", "autoimmune"], "p": ["ayurvedic"], "m": false, "r": 20, "restricted": false, "a": "LH-mediated endogenous testosterone support"}, {"id": "vitex", "n": "Vitex", "b": "Vitex agnus-castus", "cat": "Hormonal", "t": ["Liver", "Kidney"], "i": ["hormones"], "c": ["mixed"], "x": ["pregnancy", "contraceptive", "dopamine_d"], "p": ["european"], "m": false, "r": 20, "restricted": false, "a": "Luteal phase support; progesterone-like LH modulation"}, {"id": "yarrow", "n": "Yarrow", "b": "Achillea millefolium", "cat": "Hormonal", "t": ["Liver", "Spleen", "Lung"], "i": ["hormones", "immunity", "pain"], "c": ["mixed"], "x": ["pregnancy", "asteraceae"], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Haemostatic; menstrual regulation; diaphoretic"}, {"id": "astragalus", "n": "Astragalus", "b": "Astragalus membranaceus", "cat": "Immune", "t": ["Spleen", "Lung"], "i": ["immunity", "energy", "stress"], "c": ["cold", "depleted"], "x": ["autoimmune"], "p": ["tcm"], "m": false, "r": 20, "restricted": false, "a": "Polysaccharide innate immunity; Wei Qi building"}, {"id": "black_cumin", "n": "Black Cumin", "b": "Nigella sativa", "cat": "Immune", "t": ["Lung", "Spleen", "Liver"], "i": ["immunity", "pain", "digestion", "hormones"], "c": ["cold", "mixed"], "x": [], "p": ["ayurvedic", "european"], "m": false, "r": 15, "restricted": false, "a": "Thymoquinone multi-pathway anti-inflammatory; immunomodulatory; antihistamine; hormonal tonic"}, {"id": "broadleaf_plantain", "n": "Broadleaf Plantain", "b": "Plantago major", "cat": "Immune", "t": ["Lung", "Kidney", "Liver"], "i": ["immunity", "digestion", "pain", "beauty"], "c": ["cold", "mixed"], "x": [], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "Aucubin anti-inflammatory; mucilage respiratory and gut soothing; wound healing; antimicrobial"}, {"id": "calendula", "n": "Calendula", "b": "Calendula officinalis", "cat": "Immune", "t": ["Heart", "Liver"], "i": ["beauty", "immunity", "digestion", "hormones"], "c": ["hot", "mixed"], "x": ["pregnancy", "asteraceae"], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Flavonoid and triterpene wound healing; anti-inflammatory; lymphatic; gut mucosal and skin repair"}, {"id": "cats_claw", "n": "Cat's Claw", "b": "Uncaria tomentosa", "cat": "Immune", "t": ["Liver", "Large Intestine", "Immune System"], "i": ["immunity", "pain", "detox"], "c": ["hot", "mixed"], "x": ["pregnancy", "autoimmune", "anticoag"], "p": ["european", "ayurvedic"], "m": false, "r": 15, "restricted": false, "a": "Oxindole alkaloid immune modulator; NF-kB anti-inflammatory; antiviral; Amazonian immune tonic"}, {"id": "chickweed", "n": "Chickweed", "b": "Stellaria media", "cat": "Immune", "t": ["Lung", "Liver", "Spleen"], "i": ["beauty", "detox", "pain"], "c": ["hot", "mixed"], "x": [], "p": ["european"], "m": false, "r": 10, "restricted": false, "a": "Cooling anti-inflammatory; topical itch and skin soothing; gentle lymphatic; nutritive mineral herb"}, {"id": "chilcuague", "n": "Chilcuague", "b": "Heliopsis longipes", "cat": "Immune", "t": ["Stomach", "Spleen", "Lung"], "i": ["immunity", "pain", "digestion"], "c": ["hot", "mixed"], "x": ["pregnancy", "autoimmune"], "p": ["european"], "m": false, "r": 10, "restricted": false, "a": "Affinin TRPV1 analgesic; Mexican tongue-numbing plant; antimicrobial; traditional pain and immune herb"}, {"id": "echinacea", "n": "Echinacea", "b": "Echinacea purpurea", "cat": "Immune", "t": ["Lung", "Spleen"], "i": ["immunity"], "c": ["hot", "mixed"], "x": ["autoimmune", "asteraceae"], "p": ["european"], "m": false, "r": 20, "restricted": false, "a": "Acute immune activation; antiviral innate response"}, {"id": "elderberry", "n": "Elderberry", "b": "Sambucus nigra (berry)", "cat": "Immune", "t": ["Lung", "Spleen"], "i": ["immunity"], "c": ["hot", "mixed"], "x": ["autoimmune"], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Antiviral; acute immune activation; cytokine modulation"}, {"id": "elderflower", "n": "Elderflower", "b": "Sambucus nigra (flowers)", "cat": "Immune", "t": ["Lung", "Spleen", "Skin"], "i": ["immunity", "beauty", "detox"], "c": ["hot", "mixed"], "x": ["autoimmune", "asteraceae"], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Diaphoretic and decongestant; bioflavonoids for upper respiratory immunity; mild antiviral"}, {"id": "eyebright", "n": "Eyebright", "b": "Euphrasia officinalis", "cat": "Immune", "t": ["Lung", "Liver"], "i": ["immunity", "detox"], "c": ["hot", "mixed"], "x": ["asteraceae"], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "Anti-catarrhal and anti-inflammatory for eyes and upper respiratory mucosa; hay fever and sinusitis"}, {"id": "pine_needles", "n": "Pine Needles", "b": "Pinus sylvestris (needles)", "cat": "Immune", "t": ["Lung", "Kidney", "Liver"], "i": ["immunity", "energy", "detox"], "c": ["cold", "mixed"], "x": [], "p": ["european", "tcm"], "m": false, "r": 12, "restricted": false, "a": "Vitamin C-rich; antioxidant terpenes; respiratory antimicrobial and expectoration"}, {"id": "blue_lotus", "n": "Blue Lotus", "b": "Nymphaea caerulea", "cat": "Nervine", "t": ["Heart", "Pericardium", "Third Eye"], "i": ["sleep", "anxiety", "mood", "stress"], "c": ["hot", "mixed"], "x": ["pregnancy", "cns_dep", "ssri"], "p": ["european", "ayurvedic"], "m": false, "r": 12, "restricted": false, "a": "Nuciferine dopamine and apomorphine oxytocin; dreamy anxiolytic; heart-opening; dreamwork and ceremony"}, {"id": "bobinsana", "n": "Bobinsana", "b": "Calliandra angustifolia", "cat": "Nervine", "t": ["Heart", "Liver", "Spleen"], "i": ["mood", "stress", "anxiety", "pain"], "c": ["cold", "depleted"], "x": ["pregnancy", "autoimmune"], "p": ["ayurvedic"], "m": false, "r": 12, "restricted": false, "a": "Amazonian heart-opening adaptogen; anti-inflammatory; mild psychoactive; empathogenic dreamwork plant"}, {"id": "calea", "n": "Calea Zacatachichi", "b": "Calea ternifolia", "cat": "Nervine", "t": ["Heart", "Third Eye", "Pericardium"], "i": ["sleep", "stress"], "c": ["mixed"], "x": ["pregnancy", "asteraceae", "cns_dep"], "p": ["european"], "m": false, "r": 8, "restricted": true, "a": "Mexican dream herb; oneirogenic; REM enhancement; bitter digestive; ethnobotanical dreamwork use", "restrictedNote": "Legal status varies by country. Classified as controlled in some jurisdictions. Practitioner and educational context only."}, {"id": "hops", "n": "Hops", "b": "Humulus lupulus", "cat": "Nervine", "t": ["Heart", "Liver", "Spleen"], "i": ["sleep", "anxiety", "hormones"], "c": ["hot", "depleted"], "x": ["liver", "depression", "ssri", "cns_dep"], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "2-methyl-3-buten-2-ol sedative; GABA-A potentiation; phytoestrogen lupulone for menopause support"}, {"id": "jasmine", "n": "Jasmine", "b": "Jasminum officinale", "cat": "Nervine", "t": ["Heart", "Liver", "Lung"], "i": ["mood", "anxiety", "beauty", "stress"], "c": ["hot", "mixed"], "x": [], "p": ["ayurvedic", "tcm"], "m": false, "r": 12, "restricted": false, "a": "Limbic uplift via linalool and benzyl acetate; mild antidepressant; skin and spirit opening"}, {"id": "kanna", "n": "Kanna", "b": "Sceletium tortuosum", "cat": "Nervine", "t": ["Heart", "Liver", "Spleen"], "i": ["mood", "anxiety", "stress", "cognitive"], "c": ["hot", "mixed"], "x": ["ssri", "liver", "cns_dep"], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "PDE4 inhibition and weak serotonin reuptake; anxiolytic euphoric; South African sacred mood herb"}, {"id": "kava_kava", "n": "Kava Kava", "b": "Piper methysticum", "cat": "Nervine", "t": ["Heart", "Liver", "Kidney"], "i": ["anxiety", "sleep", "pain"], "c": ["hot", "mixed"], "x": ["liver", "ssri", "cns_dep", "pregnancy", "anticoag"], "p": ["european", "ayurvedic"], "m": false, "r": 15, "restricted": false, "a": "Kavalactone GABA-A and ion channel anxiolytic; non-addictive; hepatotoxicity risk — noble varieties only; no alcohol"}, {"id": "kratom", "n": "Kratom", "b": "Mitragyna speciosa", "cat": "Nervine", "t": ["Liver", "Spleen", "Heart"], "i": ["pain", "energy", "mood"], "c": ["mixed"], "x": ["liver", "ssri", "cns_dep", "pregnancy", "autoimmune"], "p": ["ayurvedic"], "m": false, "r": 8, "restricted": true, "a": "Mitragynine partial opioid agonism at low dose (stimulant) and high dose (sedative/analgesic); dependence risk — practitioner use only", "restrictedNote": "Controlled or restricted in many jurisdictions including EU countries, Australia, and several US states. High dependence risk. Practitioner supervision only."}, {"id": "lavender", "n": "Lavender", "b": "Lavandula angustifolia", "cat": "Nervine", "t": ["Heart", "Liver", "Lung"], "i": ["anxiety", "sleep", "mood", "beauty"], "c": ["hot", "mixed"], "x": [], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Limbic calming via volatile oils; mild GABA modulation"}, {"id": "lemon_balm", "n": "Lemon Balm", "b": "Melissa officinalis", "cat": "Nervine", "t": ["Heart", "Liver", "Stomach"], "i": ["anxiety", "sleep", "digestion", "mood"], "c": ["hot", "mixed"], "x": ["thyroid"], "p": ["european"], "m": false, "r": 20, "restricted": false, "a": "GABA modulation; nervous system calming and uplift"}, {"id": "linden", "n": "Linden", "b": "Tilia cordata", "cat": "Nervine", "t": ["Heart", "Liver", "Lung"], "i": ["anxiety", "sleep", "stress", "immunity"], "c": ["hot", "mixed"], "x": [], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Flavonoid anxiolytic and diaphoretic; nervous heart and hypertensive anxiety; gentle sedative tilia tea"}, {"id": "marjoram", "n": "Marjoram", "b": "Origanum majorana", "cat": "Nervine", "t": ["Lung", "Spleen", "Heart"], "i": ["digestion", "anxiety", "sleep", "pain"], "c": ["cold", "depleted"], "x": ["pregnancy", "anticoag"], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "Terpinen-4-ol parasympathetic nervine; digestive antispasmodic; gentle relaxant; grief and sorrow herb"}, {"id": "motherwort", "n": "Motherwort", "b": "Leonurus cardiaca", "cat": "Nervine", "t": ["Heart", "Liver"], "i": ["anxiety", "mood", "sleep", "hormones"], "c": ["hot", "mixed"], "x": ["pregnancy", "anticoag"], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Iridoid calming; palpitation and anxiety support"}, {"id": "oatstraw", "n": "Oatstraw", "b": "Avena sativa", "cat": "Nervine", "t": ["Spleen", "Heart"], "i": ["stress", "sleep", "anxiety"], "c": ["depleted", "cold"], "x": [], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Deep nervous system nourishment; burnout recovery"}, {"id": "passionflower", "n": "Passionflower", "b": "Passiflora incarnata", "cat": "Nervine", "t": ["Heart", "Liver"], "i": ["anxiety", "sleep", "mood"], "c": ["hot", "mixed"], "x": ["ssri", "pregnancy", "cns_dep"], "p": ["european"], "m": false, "r": 20, "restricted": false, "a": "GABA-A modulation; non-addictive anxiolytic"}, {"id": "rose", "n": "Rose Petals", "b": "Rosa damascena", "cat": "Nervine", "t": ["Liver", "Spleen", "Heart"], "i": ["mood", "stress", "anxiety", "beauty", "hormones"], "c": ["hot", "mixed"], "x": [], "p": ["european", "ayurvedic"], "m": false, "r": 15, "restricted": false, "a": "Limbic modulation; grief processing; heart-opening"}, {"id": "saffron", "n": "Saffron", "b": "Crocus sativus", "cat": "Nervine", "t": ["Heart", "Liver"], "i": ["mood", "sleep", "stress"], "c": ["cold", "mixed"], "x": ["anticoag"], "p": ["ayurvedic", "tcm"], "m": false, "r": 10, "restricted": false, "a": "Crocin serotonin reuptake inhibition; no sexual side effects"}, {"id": "skullcap", "n": "Skullcap", "b": "Scutellaria lateriflora", "cat": "Nervine", "t": ["Heart", "Liver"], "i": ["anxiety", "sleep", "mood"], "c": ["hot", "mixed"], "x": ["liver"], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Baicalin GABA potentiation; nervous tension release"}, {"id": "st_johns_wort", "n": "St. John's Wort", "b": "Hypericum perforatum", "cat": "Nervine", "t": ["Heart", "Liver"], "i": ["mood", "energy"], "c": ["cold", "mixed"], "x": ["ssri", "contraceptive", "anticoag", "bipolar", "pregnancy"], "p": ["european"], "m": false, "r": 20, "restricted": false, "a": "SSRI-equivalent hyperforin; light-bringing antidepressant"}, {"id": "valerian", "n": "Valerian", "b": "Valeriana officinalis", "cat": "Nervine", "t": ["Heart", "Liver"], "i": ["sleep", "anxiety"], "c": ["depleted", "cold"], "x": ["liver", "pregnancy", "cns_dep"], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "GABAergic sedative; sleep onset and quality"}, {"id": "vanilla", "n": "Vanilla", "b": "Vanilla planifolia", "cat": "Nervine", "t": ["Heart", "Spleen"], "i": ["mood", "anxiety", "stress"], "c": ["mixed"], "x": [], "p": ["european", "ayurvedic"], "m": false, "r": 10, "restricted": false, "a": "Limbic activation; dopamine sensitisation; comfort response"}, {"id": "vervain", "n": "Vervain", "b": "Verbena officinalis", "cat": "Nervine", "t": ["Liver", "Heart"], "i": ["stress", "anxiety", "mood"], "c": ["hot", "mixed"], "x": ["pregnancy"], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Liver-Shen nervine; tension headache; overwork exhaustion; perfectionist and driven nervous system"}, {"id": "wild_dagga", "n": "Wild Dagga", "b": "Leonotis leonurus", "cat": "Nervine", "t": ["Heart", "Liver", "Kidney"], "i": ["anxiety", "mood", "pain"], "c": ["hot", "mixed"], "x": ["pregnancy", "anticoag"], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "Mild euphoric nervine; leonurine anxiolytic; pain modulation; ceremonial and relaxation use"}, {"id": "ephedra", "n": "Ephedra", "b": "Ephedra sinica", "cat": "Respiratory", "t": ["Lung", "Heart", "Kidney"], "i": ["energy", "immunity", "pain"], "c": ["cold", "depleted"], "x": ["hypertension", "pregnancy", "ssri", "thyroid", "cns_dep", "anticoag"], "p": ["tcm"], "m": false, "r": 8, "restricted": true, "a": "Ma Huang — ephedrine bronchodilator and diaphoretic; TCM exterior-releasing; high caution required", "restrictedNote": "Ephedrine is a controlled substance in many jurisdictions. Banned in OTC products in the US, Canada and EU. Prescription or practitioner-only context."}, {"id": "eucalyptus", "n": "Eucalyptus", "b": "Eucalyptus globulus", "cat": "Respiratory", "t": ["Lung", "Large Intestine"], "i": ["immunity", "pain"], "c": ["hot", "mixed"], "x": ["liver", "gerd"], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "1,8-cineole expectorant and antimicrobial; bronchial decongestant; topical and inhalation herb"}, {"id": "ground_ivy", "n": "Ground Ivy", "b": "Glechoma hederacea", "cat": "Respiratory", "t": ["Lung", "Kidney", "Bladder"], "i": ["immunity", "detox"], "c": ["hot", "mixed"], "x": ["pregnancy"], "p": ["european"], "m": false, "r": 10, "restricted": false, "a": "Anti-catarrhal and astringent; upper respiratory and sinus congestion; urinary anti-inflammatory"}, {"id": "iceland_moss", "n": "Iceland Moss", "b": "Cetraria islandica", "cat": "Respiratory", "t": ["Lung", "Stomach", "Large Intestine"], "i": ["immunity", "digestion"], "c": ["cold", "depleted"], "x": [], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "Lichen mucilage; demulcent respiratory and gut soothing; antimicrobial usnic acid; EMA approved"}, {"id": "lobelia", "n": "Lobelia", "b": "Lobelia inflata", "cat": "Respiratory", "t": ["Lung", "Heart", "Stomach"], "i": ["immunity", "anxiety", "pain"], "c": ["hot", "mixed"], "x": ["pregnancy", "hypertension", "cns_dep"], "p": ["european"], "m": false, "r": 8, "restricted": false, "a": "Lobeline nicotinic ACh modulator; bronchodilator antispasmodic; emetic at high doses — practitioner use only"}, {"id": "mullein", "n": "Mullein", "b": "Verbascum thapsus", "cat": "Respiratory", "t": ["Lung", "Large Intestine"], "i": ["immunity", "pain"], "c": ["cold", "depleted"], "x": [], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Mucilage and saponin expectorant; soothing bronchial demulcent; lymphatic and ear support; gentle respiratory"}, {"id": "aronia", "n": "Aronia Berry", "b": "Aronia melanocarpa", "cat": "Tonic", "t": ["Heart", "Liver", "Spleen", "Stomach"], "i": ["immunity", "beauty", "detox", "cognitive"], "c": ["hot", "mixed"], "x": [], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Highest anthocyanin berry; cardiovascular antioxidant; anti-inflammatory; vascular endothelial protection"}, {"id": "bilberry", "n": "Bilberry", "b": "Vaccinium myrtillus", "cat": "Tonic", "t": ["Liver", "Kidney", "Heart"], "i": ["beauty", "cognitive", "immunity", "pain"], "c": ["mixed"], "x": ["anticoag"], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Anthocyanin retinal and vascular protection; neuroprotective; anti-inflammatory; microcirculation support"}, {"id": "bladderwrack", "n": "Bladderwrack", "b": "Fucus vesiculosus", "cat": "Tonic", "t": ["Kidney", "Spleen"], "i": ["hormones", "energy", "detox"], "c": ["cold", "depleted"], "x": ["thyroid", "autoimmune", "anticoag", "pregnancy"], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "Iodine-rich thyroid support; fucoidan immune modulation; metabolic enhancement — hypothyroid use only"}, {"id": "blueberry", "n": "Blueberry", "b": "Vaccinium corymbosum", "cat": "Tonic", "t": ["Liver", "Kidney", "Heart"], "i": ["cognitive", "beauty", "immunity"], "c": ["mixed"], "x": [], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "Anthocyanin neuroprotection; BDNF support; antioxidant; cardiovascular and gut microbiome prebiotic"}, {"id": "butchers_broom", "n": "Butcher's Broom", "b": "Ruscus aculeatus", "cat": "Tonic", "t": ["Liver", "Spleen", "Kidney"], "i": ["pain", "detox"], "c": ["hot", "mixed"], "x": ["hypertension", "pregnancy", "autoimmune"], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "Ruscogenin vascular tonic; chronic venous insufficiency; leg oedema and haemorrhoid support"}, {"id": "coca_leaf", "n": "Coca Leaf", "b": "Erythroxylum coca", "cat": "Tonic", "t": ["Spleen", "Kidney", "Heart"], "i": ["energy", "cognitive", "stress"], "c": ["cold", "depleted"], "x": ["pregnancy", "hypertension", "ssri", "cns_dep", "autoimmune"], "p": ["ayurvedic"], "m": false, "r": 8, "restricted": true, "a": "Traditional Andean adaptogen — altitude, fatigue, hunger; cocaine alkaloids in leaf are mild whole-plant only — LEGAL IN ANDEAN CONTEXTS ONLY; Schedule I internationally", "restrictedNote": "Schedule I or equivalent in most countries outside the Andean region. Whole-leaf use is traditional and legal only in specific Andean jurisdictions. Not suitable for standard consumer formulas."}, {"id": "ginseng", "n": "Ginseng", "b": "Panax ginseng", "cat": "Tonic", "t": ["Spleen", "Lung", "Heart"], "i": ["energy", "immunity", "stress"], "c": ["cold", "depleted"], "x": ["hypertension", "pregnancy"], "p": ["tcm"], "m": false, "r": 20, "restricted": false, "a": "Ginsenoside adaptogenic HPA and immune modulation"}, {"id": "goji", "n": "Goji Berry", "b": "Lycium barbarum", "cat": "Tonic", "t": ["Liver", "Kidney"], "i": ["beauty", "energy", "cognitive", "immunity"], "c": ["cold", "depleted"], "x": [], "p": ["tcm"], "m": false, "r": 15, "restricted": false, "a": "Liver-Kidney yin nourishment; zeaxanthin antioxidant"}, {"id": "guarana", "n": "Guarana", "b": "Paullinia cupana", "cat": "Tonic", "t": ["Heart", "Liver", "Spleen"], "i": ["energy", "cognitive"], "c": ["cold", "mixed"], "x": ["hypertension", "pregnancy", "ssri", "cns_dep"], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "Slow-release caffeine-methylxanthine complex; sustained alertness; antioxidant catechins"}, {"id": "guayusa", "n": "Guayusa", "b": "Ilex guayusa", "cat": "Tonic", "t": ["Heart", "Liver", "Spleen"], "i": ["energy", "cognitive", "stress"], "c": ["cold", "mixed"], "x": ["hypertension", "pregnancy"], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "Balanced caffeine and theobromine energy; L-theanine calm-focus; antioxidant-rich Amazonian tea"}, {"id": "hawthorn", "n": "Hawthorn", "b": "Crataegus monogyna", "cat": "Tonic", "t": ["Heart", "Spleen", "Liver"], "i": ["mood", "stress"], "c": ["cold", "depleted"], "x": ["digoxin", "pregnancy"], "p": ["european"], "m": false, "r": 20, "restricted": false, "a": "OPC cardioprotection; coronary vasodilation"}, {"id": "horsetail", "n": "Horsetail", "b": "Equisetum arvense", "cat": "Tonic", "t": ["Lung", "Kidney", "Bladder"], "i": ["beauty", "detox", "hormones"], "c": ["mixed"], "x": ["kidney", "pregnancy"], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "Silica-rich connective tissue support; hair, skin and nails; mild diuretic; bone mineral support"}, {"id": "lingonberry", "n": "Lingonberry", "b": "Vaccinium vitis-idaea", "cat": "Urinary", "t": ["Kidney", "Bladder", "Liver"], "i": ["immunity", "detox", "beauty"], "c": ["hot", "mixed"], "x": [], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "Proanthocyanidin anti-adhesion in urinary tract; antioxidant; anti-inflammatory; Scandinavian tonic berry"}, {"id": "lucerne", "n": "Lucerne (Alfalfa)", "b": "Medicago sativa", "cat": "Tonic", "t": ["Kidney", "Liver", "Spleen"], "i": ["energy", "hormones", "beauty"], "c": ["cold", "depleted"], "x": ["autoimmune", "anticoag"], "p": ["european", "ayurvedic"], "m": false, "r": 12, "restricted": false, "a": "Mineral-dense phytoestrogenic tonic; vitamin K2; alkalising; connective tissue and hormonal support"}, {"id": "moringa", "n": "Moringa", "b": "Moringa oleifera", "cat": "Tonic", "t": ["Spleen", "Liver", "Kidney"], "i": ["energy", "beauty", "immunity", "hormones"], "c": ["mixed"], "x": ["pregnancy", "thyroid", "anticoag"], "p": ["ayurvedic"], "m": false, "r": 15, "restricted": false, "a": "Complete amino acid and mineral profile; antioxidant isothiocyanates; anti-inflammatory; adaptogenic tonic"}, {"id": "red_dates", "n": "Red Dates", "b": "Ziziphus jujuba", "cat": "Tonic", "t": ["Spleen", "Stomach", "Heart"], "i": ["stress", "sleep", "energy", "immunity"], "c": ["cold", "depleted"], "x": [], "p": ["tcm"], "m": false, "r": 15, "restricted": false, "a": "Blood and Qi tonification; gentle Shen calming"}, {"id": "spirulina", "n": "Spirulina", "b": "Arthrospira platensis", "cat": "Tonic", "t": ["Spleen", "Stomach", "Liver"], "i": ["energy", "immunity", "beauty"], "c": ["mixed"], "x": ["autoimmune"], "p": ["ayurvedic", "tcm"], "m": false, "r": 15, "restricted": false, "a": "Complete protein; immune polysaccharides; phycocyanin"}, {"id": "yerba_mate", "n": "Yerba Mate", "b": "Ilex paraguariensis", "cat": "Tonic", "t": ["Heart", "Liver", "Spleen"], "i": ["energy", "cognitive"], "c": ["cold", "mixed"], "x": ["hypertension", "pregnancy", "ssri"], "p": ["european", "ayurvedic"], "m": false, "r": 15, "restricted": false, "a": "Methylxanthine sustained energy; MAOB inhibition; thermogenic; antioxidant polyphenols"}, {"id": "cranberry", "n": "Cranberry", "b": "Vaccinium macrocarpon", "cat": "Urinary", "t": ["Kidney", "Bladder"], "i": ["immunity", "detox"], "c": ["hot", "mixed"], "x": ["anticoag", "kidney"], "p": ["european"], "m": false, "r": 12, "restricted": false, "a": "A-type proanthocyanidins anti-adhesion in urinary tract; recurrent UTI prevention; antioxidant berry"}, {"id": "goldenrod", "n": "Goldenrod", "b": "Solidago virgaurea", "cat": "Urinary", "t": ["Lung", "Kidney", "Bladder", "Spleen"], "i": ["detox", "immunity", "pain"], "c": ["hot", "mixed"], "x": ["kidney", "asteraceae"], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Urinary irrigation; anti-catarrhal; flavonoid diuretic and antispasmodic"}, {"id": "juniper", "n": "Juniper", "b": "Juniperus communis", "cat": "Urinary", "t": ["Kidney", "Bladder", "Spleen"], "i": ["detox", "pain", "digestion"], "c": ["hot", "mixed"], "x": ["kidney", "pregnancy"], "p": ["european"], "m": false, "r": 10, "restricted": false, "a": "Terpinen-4-ol renal irritant diuretic; antimicrobial in urinary tract; digestive carminative; short-term use"}, {"id": "birch_poly", "n": "Birch Polypore", "b": "Fomitopsis betulina", "cat": "Mushroom", "t": ["Lung", "Spleen"], "i": ["immunity", "detox"], "c": ["mixed"], "x": ["autoimmune", "anticoag"], "p": ["european"], "m": true, "r": 15, "restricted": false, "a": "Antiparasitic; antiviral; beta-glucan immune terrain"}, {"id": "button_mushroom", "n": "Button Mushroom", "b": "Agaricus bisporus", "cat": "Mushroom", "t": ["Spleen", "Stomach", "Kidney"], "i": ["immunity", "digestion", "energy"], "c": ["mixed"], "x": ["autoimmune"], "p": ["european", "tcm"], "m": true, "r": 15, "restricted": false, "a": "Beta-glucan trained immunity via macrophage epigenetic reprogramming; vitamin D2; gut microbiome prebiotic"}, {"id": "chaga", "n": "Chaga", "b": "Inonotus obliquus", "cat": "Mushroom", "t": ["Kidney", "Liver", "Spleen"], "i": ["immunity", "stress", "detox", "energy"], "c": ["mixed"], "x": ["kidney", "autoimmune", "anticoag"], "p": ["tcm"], "m": true, "r": 15, "restricted": false, "a": "Nrf2 antioxidant powerhouse; beta-glucan immune training"}, {"id": "cordyceps", "n": "Cordyceps", "b": "Cordyceps militaris", "cat": "Mushroom", "t": ["Lung", "Kidney"], "i": ["energy", "immunity", "hormones"], "c": ["cold", "depleted"], "x": ["autoimmune", "anticoag"], "p": ["tcm"], "m": true, "r": 20, "restricted": false, "a": "ATP/AMPK amplification; Jing tonic; mitochondrial energy"}, {"id": "enoki", "n": "Enoki", "b": "Flammulina velutipes", "cat": "Mushroom", "t": ["Liver", "Kidney", "Spleen"], "i": ["cognitive", "beauty", "immunity"], "c": ["hot", "mixed"], "x": ["autoimmune"], "p": ["tcm", "european"], "m": true, "r": 15, "restricted": false, "a": "FVP polysaccharides; antioxidant anti-ageing; periodontal and renal protection; NLRP3 inflammasome inhibition"}, {"id": "fu_ling", "n": "Fu Ling", "b": "Wolfiporia cocos", "cat": "Mushroom", "t": ["Heart", "Spleen", "Kidney"], "i": ["stress", "sleep", "digestion", "immunity"], "c": ["mixed"], "x": [], "p": ["tcm"], "m": true, "r": 18, "restricted": false, "a": "Spleen Qi tonic; damp-draining; Shen calming spirit"}, {"id": "lions_mane", "n": "Lion's Mane", "b": "Hericium erinaceus", "cat": "Mushroom", "t": ["Heart", "Spleen", "Kidney"], "i": ["cognitive", "mood", "stress", "immunity"], "c": ["mixed"], "x": ["anticoag"], "p": ["tcm", "european"], "m": true, "r": 20, "restricted": false, "a": "NGF and BDNF stimulation; neuroplasticity; MCI improvement"}, {"id": "maitake", "n": "Maitake", "b": "Grifola frondosa", "cat": "Mushroom", "t": ["Spleen", "Stomach", "Kidney"], "i": ["immunity", "energy", "hormones"], "c": ["mixed"], "x": ["autoimmune"], "p": ["tcm", "european"], "m": true, "r": 20, "restricted": false, "a": "D-fraction beta-glucan; NK activation; insulin sensitivity"}, {"id": "mesima", "n": "Mesima", "b": "Phellinus linteus", "cat": "Mushroom", "t": ["Liver", "Spleen", "Lung"], "i": ["immunity", "hormones", "pain"], "c": ["mixed"], "x": ["autoimmune"], "p": ["tcm"], "m": true, "r": 15, "restricted": false, "a": "Proteoglycan NK and T-cell immunomodulator; anti-asthmatic Th2 modulation; women\\"}, {"id": "morels", "n": "Morels", "b": "Morchella esculenta", "cat": "Mushroom", "t": ["Liver", "Spleen", "Stomach"], "i": ["detox", "immunity", "digestion"], "c": ["mixed"], "x": [], "p": ["european", "tcm"], "m": true, "r": 12, "restricted": false, "a": "Polysaccharide hepatoprotection via Nrf2/NF-kB; antioxidant; prebiotic; must be cooked — never raw"}, {"id": "oyster_mushroom", "n": "Oyster Mushroom", "b": "Pleurotus ostreatus", "cat": "Mushroom", "t": ["Lung", "Stomach", "Spleen", "Large Intestine"], "i": ["immunity", "digestion", "pain", "energy"], "c": ["mixed"], "x": ["autoimmune"], "p": ["tcm", "european"], "m": true, "r": 18, "restricted": false, "a": "Pleuran beta-glucan respiratory immunity RCTs; antidiabetic; lovastatin-like cholesterol reduction; gut prebiotic"}, {"id": "red_belted_polypore", "n": "Red-Belted Polypore", "b": "Fomitopsis pinicola", "cat": "Mushroom", "t": ["Liver", "Kidney", "Heart", "Spleen"], "i": ["immunity", "detox", "pain"], "c": ["mixed"], "x": ["autoimmune", "anticoag"], "p": ["european", "tcm"], "m": true, "r": 12, "restricted": false, "a": "Lanostane triterpenoid anti-inflammatory and anti-angiogenic; antihyperglycaemic; antimicrobial polypore"}, {"id": "reishi", "n": "Reishi", "b": "Ganoderma lucidum", "cat": "Mushroom", "t": ["Heart", "Lung", "Liver", "Kidney"], "i": ["stress", "sleep", "immunity", "mood"], "c": ["mixed"], "x": ["anticoag", "autoimmune"], "p": ["tcm"], "m": true, "r": 20, "restricted": false, "a": "GABAergic Shen calming; immune modulation; HPA adaptation"}, {"id": "royal_sun", "n": "Royal Sun Mushroom", "b": "Agaricus subrufescens", "cat": "Mushroom", "t": ["Spleen", "Lung", "Liver"], "i": ["immunity", "detox"], "c": ["mixed"], "x": ["autoimmune", "liver"], "p": ["european", "tcm"], "m": true, "r": 12, "restricted": false, "a": "Agarol NK cell and Th1 immune activation; antitumour; CAUTION — idiosyncratic hepatotoxicity in cancer patients (MSK warning)"}, {"id": "shaggy_bracket", "n": "Shaggy Bracket", "b": "Inonotus hispidus", "cat": "Mushroom", "t": ["Liver", "Spleen", "Lung"], "i": ["detox", "immunity", "pain"], "c": ["mixed"], "x": ["autoimmune"], "p": ["european", "tcm"], "m": true, "r": 12, "restricted": false, "a": "Hispidin and hispolon antiviral influenza A/B; NAFLD reversal; hepatoprotective; lipid-lowering Sanghuang polypore"}, {"id": "shaggy_mane", "n": "Shaggy Mane", "b": "Coprinus comatus", "cat": "Mushroom", "t": ["Spleen", "Stomach", "Liver"], "i": ["digestion", "detox"], "c": ["mixed"], "x": ["autoimmune"], "p": ["european", "tcm"], "m": true, "r": 12, "restricted": false, "a": "Comatin potent antidiabetic; hepatoprotective; anti-inflammatory; culinary use only when very young — autolysis risk"}, {"id": "shiitake", "n": "Shiitake", "b": "Lentinula edodes", "cat": "Mushroom", "t": ["Stomach", "Spleen", "Liver"], "i": ["immunity", "digestion"], "c": ["mixed"], "x": ["autoimmune"], "p": ["tcm"], "m": true, "r": 15, "restricted": false, "a": "Lentinan immune training; cholesterol modulation"}, {"id": "tinder_fungus", "n": "Tinder Fungus", "b": "Fomes fomentarius", "cat": "Mushroom", "t": ["Lung", "Spleen", "Liver", "Large Intestine"], "i": ["immunity", "detox", "pain"], "c": ["mixed"], "x": ["autoimmune", "anticoag"], "p": ["european"], "m": true, "r": 12, "restricted": false, "a": "Fomentariol ERK/JNK anti-inflammatory; antioxidant terrain modulator; Ötzi the Iceman\\"}, {"id": "tremella", "n": "Tremella", "b": "Tremella fuciformis", "cat": "Mushroom", "t": ["Lung", "Stomach", "Spleen", "Kidney"], "i": ["beauty", "cognitive", "immunity"], "c": ["hot", "mixed"], "x": ["autoimmune"], "p": ["tcm"], "m": true, "r": 20, "restricted": false, "a": "TFP polysaccharides; skin hydration; neuroprotection"}, {"id": "turkey_tail", "n": "Turkey Tail", "b": "Trametes versicolor", "cat": "Mushroom", "t": ["Spleen", "Lung", "Liver"], "i": ["immunity", "digestion", "detox"], "c": ["mixed"], "x": ["autoimmune"], "p": ["tcm", "european"], "m": true, "r": 20, "restricted": false, "a": "PSP/PSK beta-glucan; trained immunity; microbiome prebiotic"}, {"id": "willow_bracket", "n": "Willow Bracket", "b": "Phellinus igniarius", "cat": "Mushroom", "t": ["Liver", "Spleen", "Kidney"], "i": ["detox", "immunity", "pain"], "c": ["mixed"], "x": ["autoimmune"], "p": ["tcm", "european"], "m": true, "r": 12, "restricted": false, "a": "False Chaga — anti-gout uric acid reduction; antidiabetic via gut microbiome remodelling; hepatoprotective polypore"}, {"id": "zhu_ling", "n": "Zhu Ling", "b": "Polyporus umbellatus", "cat": "Mushroom", "t": ["Kidney", "Bladder", "Spleen", "Liver"], "i": ["detox", "immunity"], "c": ["mixed"], "x": [], "p": ["tcm"], "m": true, "r": 15, "restricted": false, "a": "Sclerotial diuretic and renoprotective; anti-fibrotic; CFDA-approved hepatitis B adjuvant; TCM damp-draining"}, {"id": "rosehip", "n": "Rosehip", "b": "Rosa canina / Rosa spp.", "cat": "Tonic", "t": ["Lung", "Spleen", "Skin", "Kidney"], "i": ["immunity", "beauty", "detox", "pain"], "c": ["cold", "depleted"], "x": ["kidney"], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Vitamin C and carotenoid antioxidant tonic; connective tissue and skin nourishment; seasonal immune resilience; gentle joint support"}, {"id": "raspberry_leaf", "n": "Raspberry Leaf", "b": "Rubus idaeus", "cat": "Hormonal", "t": ["Liver", "Spleen", "Uterus"], "i": ["hormones", "digestion"], "c": ["mixed", "hot"], "x": ["pregnancy"], "p": ["european"], "m": false, "r": 15, "restricted": false, "a": "Tannin uterine tonic; pelvic tissue tone and menstrual resilience; gentle astringent digestive; postpartum recovery"}, {"id": "shatavari", "n": "Shatavari", "b": "Asparagus racemosus", "cat": "Hormonal", "t": ["Kidney", "Lung", "Reproductive", "Stomach"], "i": ["hormones", "digestion", "stress", "anxiety"], "c": ["hot", "depleted"], "x": ["autoimmune"], "p": ["ayurvedic"], "m": false, "r": 18, "restricted": false, "a": "Shatavarin steroidal saponins; cooling reproductive tonic; demulcent GI and mucosal soothing; nervous system restoration in depletion"}];
+
+/* ─── DATA ─────────────────────────────────────────────── */
+const IN=[
+  {id:'stress',name:'Stress & Resilience',icon:'🌊',col:'#0d2a1a',bdr:'#1d5c38',subs:[
+    {id:'burnout',icon:'🌿',name:'Burnout recovery',desc:'Deep depletion — nourish before you push again'},
+    {id:'acute',icon:'⚡',name:'Acute pressure',desc:'High-demand moments, deadlines, performance anxiety'},
+    {id:'nervous',icon:'〰',name:'Nervous system reset',desc:'Chronic tension, hypervigilance, wound-up body'},
+  ]},
+  {id:'sleep',name:'Sleep & Restoration',icon:'🌙',col:'#0d0d2a',bdr:'#1d1d5c',subs:[
+    {id:'deep_rest',icon:'💤',name:'Deep rest',desc:'Slow down, quiet the mind, long uninterrupted sleep'},
+    {id:'lucid',icon:'✦',name:'Lucid exploration',desc:'Vivid intentional dreamwork and night awareness'},
+    {id:'unwind',icon:'🍵',name:'Evening unwind',desc:'Transition from doing to being — the wind-down ritual'},
+  ]},
+  {id:'energy',name:'Energy & Vitality',icon:'☀',col:'#2a1a00',bdr:'#7a4a00',subs:[
+    {id:'clean',icon:'◉',name:'Clean sustained energy',desc:'Long-steep tea quality — no spike, no crash'},
+    {id:'caffeinated',icon:'⚡',name:'Caffeinated synergy',desc:'Works with your morning coffee or yerba mate'},
+    {id:'athletic',icon:'◎',name:'Athletic & recovery',desc:'Mitochondrial support, endurance, post-workout repair'},
+  ]},
+  {id:'anxiety',name:'Anxiety & Calm',icon:'◌',col:'#1a0d2a',bdr:'#4a1d5c',subs:[
+    {id:'social',icon:'○',name:'Social ease',desc:'Open, present and comfortable in company'},
+    {id:'racing',icon:'〰',name:'Racing mind',desc:'Overthinking, loops, intrusive thoughts'},
+    {id:'physical',icon:'◈',name:'Physical tension',desc:'Chest tight, breath shallow, anxiety held in the body'},
+  ]},
+  {id:'mood',name:'Mood & Emotion',icon:'🌸',col:'#2a0d0d',bdr:'#7a2020',subs:[
+    {id:'grief',icon:'🌿',name:'Grief & loss',desc:'Gentle herbal support through emotional heaviness'},
+    {id:'flat',icon:'◑',name:'Flat or low mood',desc:'Bring warmth and colour back — mild uplift'},
+    {id:'heart',icon:'✦',name:'Heart opening',desc:'Empathy, connection, ceremonial heart expansion'},
+  ]},
+  {id:'digestion',name:'Digestion & Gut',icon:'🌱',col:'#0d2a0d',bdr:'#1d5c1d',subs:[
+    {id:'ibs',icon:'◌',name:'IBS & bloating',desc:'Antispasmodic, carminative, settle the gut'},
+    {id:'liver_dig',icon:'◎',name:'Liver & bile flow',desc:'Bitter tonics, hepatic support, clearing'},
+    {id:'microbiome',icon:'⚬',name:'Microbiome',desc:'Prebiotics, gut lining integrity, bacterial diversity'},
+  ]},
+  {id:'immunity',name:'Immunity & Defence',icon:'🛡',col:'#0d1f2a',bdr:'#1d4a5c',subs:[
+    {id:'acute_imm',icon:'⚡',name:'Acute support',desc:'First sign — antiviral, fast innate activation'},
+    {id:'chronic_imm',icon:'◎',name:'Long-term resilience',desc:'Training the immune system over weeks and months'},
+    {id:'inflam',icon:'🌊',name:'Inflammation',desc:'Systemic anti-inflammatory and cooling support'},
+  ]},
+  {id:'pain',name:'Pain & Inflammation',icon:'◈',col:'#2a1a0d',bdr:'#7a4a1a',subs:[
+    {id:'joints',icon:'◎',name:'Joints & mobility',desc:'COX inhibition, connective tissue, movement ease'},
+    {id:'headache',icon:'○',name:'Head & migraine',desc:'Vascular, tension-type and hormonal headache'},
+    {id:'muscle',icon:'◈',name:'Muscle & recovery',desc:'DOMS, overuse, post-exercise inflammation'},
+  ]},
+  {id:'hormones',name:'Hormonal Balance',icon:'🌙',col:'#2a0d1f',bdr:'#7a1d4a',subs:[
+    {id:'cycle',icon:'◑',name:'Cycle support',desc:'Luteal phase, PMS, menstrual regulation and tone'},
+    {id:'menopause',icon:'🌸',name:'Menopause transition',desc:'Hot flashes, dryness, sleep disruption and mood'},
+    {id:'testosterone',icon:'◉',name:'Testosterone & libido',desc:'LH-mediated support, endogenous androgen, drive'},
+  ]},
+  {id:'cognitive',name:'Cognitive & Memory',icon:'◎',col:'#0d1a2a',bdr:'#1d3a7a',subs:[
+    {id:'focus',icon:'◉',name:'Focus & productivity',desc:'Flow state, single-task clarity, sustained attention'},
+    {id:'memory',icon:'◎',name:'Memory & learning',desc:'Consolidation, BDNF, neurogenesis support'},
+    {id:'neuroprot',icon:'✦',name:'Neuroprotection',desc:'Long-term brain health, anti-ageing, resilience'},
+  ]},
+  {id:'beauty',name:'Skin & Beauty',icon:'✦',col:'#2a1a0d',bdr:'#7a4a2a',subs:[
+    {id:'glow',icon:'◌',name:'Skin glow & hydration',desc:'Collagen support, ceramides, antioxidant protection'},
+    {id:'ageing',icon:'◎',name:'Healthy ageing',desc:'Longevity, cellular protection, anti-ageing terrain'},
+    {id:'lymph',icon:'🌊',name:'Lymphatic flow',desc:'Lymph drainage, skin clearing, congestion relief'},
+  ]},
+  {id:'detox',name:'Detox & Liver',icon:'🌿',col:'#0d2a0d',bdr:'#1d7a1d',subs:[
+    {id:'liver_detox',icon:'◎',name:'Liver cleanse',desc:'Phase I/II detox pathways, bile flow, hepatoprotection'},
+    {id:'metals',icon:'◈',name:'Heavy metal support',desc:'Chelation-supportive herbs and mineral binding'},
+    {id:'reset',icon:'⚡',name:'Recovery & reset',desc:'Post-alcohol, post-medication, post-stress recovery'},
+  ]},
+];
+
+const SC=[
+  '🌫 Brain fog','💤 Poor sleep','😔 Low mood','😮‍💨 Gut tension','🔄 Hormonal shifts',
+  '🔥 Chronic pain','🛡 Low immunity','🔋 Burnout','😰 Anxiety waves','🧠 Poor memory',
+  '🔥 Inflammation','❤️‍🔥 Low libido','✨ Skin issues','😤 Irritability','🥶 Cold extremities',
+  '🌀 Dizziness','💧 Dry skin / mouth','⚡ Fatigue crashes',
+];
+
+// BODY PATTERN with TCM sub-questions
+const BP=[
+  {id:'hot',g:'☀',name:'A lit match',sub:'Warm, reactive, inflamed or intense',col:'#3a1010',bdr:'#8a2020',
+   desc:'Running hot — Heat Excess (实热). Your Liver Qi may be stagnant and rising. Cooling and dispersing herbs.',
+   subs:[
+    {id:'anger',icon:'🔥',name:'Short tempered, irritable',desc:'Liver Heat rising — Gan Huo Shang Yan'},
+    {id:'flushed',icon:'♨',name:'Red face, flushed easily',desc:'Heart Fire or Stomach Heat pattern'},
+    {id:'inflamed',icon:'🌡',name:'Inflammation, burning sensations',desc:'Toxic Heat — Du Re in tissues'},
+    {id:'hot_night',icon:'🌙',name:'Hot at night, night sweats',desc:'Yin Deficiency with Heat rising — Yin Xu Fire'},
+   ]},
+  {id:'cold',g:'◯',name:'A cold stone',sub:'Cool, slow, low energy or sluggish',col:'#0d1a2a',bdr:'#1d3a6a',
+   desc:'Running cold — Yang Deficiency (阳虚). Kidney Yang may be low. Warming and circulation-building herbs.',
+   subs:[
+    {id:'cold_hands',icon:'🧊',name:'Cold hands and feet always',desc:'Yang Deficiency — Wei Yang Bu Zu, poor circulation'},
+    {id:'heavy',icon:'🏋',name:'Heavy body, hard to move',desc:'Dampness accumulating — Tan Shi Zu Zhi'},
+    {id:'pale',icon:'⬜',name:'Pale, low appetite, loose stools',desc:'Spleen Qi Deficiency — Pi Qi Xu'},
+    {id:'low_drive',icon:'🌑',name:'No drive, apathetic',desc:'Kidney Yang Xu — the pilot light is low'},
+   ]},
+  {id:'mixed',g:'⌁',name:'A flickering flame',sub:'Sometimes hot, sometimes cold — variable',col:'#1a1a0d',bdr:'#4a4a1d',
+   desc:'Mixed and variable — Liver Qi Stagnation (肝气郁结). Things are stuck, not flowing. Regulating and moving herbs.',
+   subs:[
+    {id:'stuck',icon:'🌀',name:'Stuck, stagnant, cannot move forward',desc:'Qi Stagnation — Qi Zhi, Liver constraint'},
+    {id:'up_down',icon:'↕',name:'Up and down moods, unpredictable',desc:'Liver and Heart disharmony'},
+    {id:'tension',icon:'〰',name:'Tension that moves around',desc:'Wind in the meridians — Gan Feng Nei Dong'},
+    {id:'sighing',icon:'💨',name:'Sighing often, chest tight',desc:'Lung Qi constrained by Liver Qi — classic stagnation pattern'},
+   ]},
+  {id:'depleted',g:'◌',name:'An empty cup',sub:'Exhausted, depleted, dried out',col:'#1f1a0d',bdr:'#5c4a1d',
+   desc:'Running on empty — Kidney Yin and Jing Deficiency (肾精亏虚). The deepest reserves are low. Nourishing and building first.',
+   subs:[
+    {id:'purposeless',icon:'🕳',name:'Feel purposeless, hollow',desc:'Shen disturbance — Spirit has lost its anchor'},
+    {id:'dry',icon:'🍂',name:'Dry everything — skin, eyes, throat',desc:'Yin Deficiency dryness — Yin Xu Zao Re'},
+    {id:'overworked',icon:'🕐',name:'Overworked for too long',desc:'Jing depletion — overdrawn on constitutional reserves'},
+    {id:'anxious_empty',icon:'💫',name:'Anxious but exhausted',desc:'Heart Blood Deficiency — Xin Xue Bu Zu, floating anxiety'},
+   ]},
+];
+
+const BSENS=['Easy breaths','Expanding','Light','Buzzing','Warm','Tight','Heavy','Hollow','Aching','Burning','Cold','Numb','Electric','Pulsing','Tender','Restless','Constricted','Pressured','Raw','Vibrating','Scattered','Frozen'];
+const BS2C={tight:'hot',burning:'hot',warm:'hot',restless:'hot',electric:'hot',pressured:'hot',raw:'hot',hollow:'depleted','easy breaths':'depleted',expanding:'depleted',scattered:'depleted',frozen:'depleted',heavy:'cold',numb:'cold',cold:'cold',constricted:'mixed',aching:'cold',tender:'hot',pulsing:'mixed',buzzing:'mixed',vibrating:'mixed',light:'depleted'};
+const BCCON={hot:'#E24B4A',cold:'#5B8FE8',depleted:'#c9a84c',mixed:'#1D9E75'};
+
+const DELIVERY=[
+  {id:'tonic',icon:'⊕',name:'In a tonic',desc:'Drops in a flavoured carrier'},
+  {id:'tincture',icon:'◌',name:'As a tincture',desc:'Classic dropper — drops in water'},
+  {id:'sublingual',icon:'◎',name:'Sublingual',desc:'Under the tongue — fastest onset'},
+];
+const CARRIERS=[
+  {id:'wild_soda',icon:'⌘',name:'Wild soda + Probiotics',desc:'Live, fermented, effervescent.',steps:['Pour 150 ml wild probiotic soda over ice','Add drops last — preserve cultures','Garnish with lemon thyme']},
+  {id:'photon_mate',icon:'✿',name:'Photon Mate',desc:'Pineapple and lemon thyme.',steps:['Brew yerba mate 4 min','Add pineapple juice; cool','Add drops and stir']},
+  {id:'dark_matter',icon:'◉',name:'Dark Matter Elixir',desc:'Introspective dark flavours.',steps:['Cold brew chaga with blackcurrant and bitters','Add wild kefir splash','Add drops; garnish with lemon']},
+  {id:'jasmine',icon:'❋',name:'Jasmine & Elderflower',desc:'Delicate and grounding.',steps:['Steep jasmine tea and elderflower 3 min','Strain; cool','Add drops and stir gently']},
+  {id:'chaga_cola',icon:'◈',name:'Chaga Cola',desc:'Dark, complex and spiced.',steps:['Simmer chaga 30 min with star anise, cinnamon, licorice','Sweeten with muscovado; cool','Top sparkling 2:1; add drops']},
+  {id:'blue_lotus_e',icon:'◌',name:'Blue Lotus Elixir',desc:'Dreamy and heart-opening.',steps:['Steep 1-2 g blue lotus 200 ml warm water 8 min','Strain; touch of honey','Add drops; drink slowly with intention']},
+];
+const BOOSTS=[
+  {id:'probiotics',icon:'⚬',name:'Probiotics',desc:'Live cultures'},
+  {id:'prebiotics',icon:'◎',name:'Prebiotics',desc:'Microbiome'},
+  {id:'electrolytes',icon:'⌗',name:'Electrolytes',desc:'Minerals'},
+  {id:'collagen',icon:'◈',name:'Collagen',desc:'Skin & joints'},
+  {id:'mct',icon:'◇',name:'MCT oil',desc:'Fat-soluble uptake'},
+  {id:'adaptogen',icon:'✦',name:'Adaptogen dust',desc:'Extra mushroom'},
+];
+const SF_GROUPS=[
+  {id:'pregnancy',icon:'🤰',label:'Pregnancy, conception or breastfeeding',sub:'Removes emmenagogues, uterine stimulants and herbs with infant transfer risk',flags:['pregnancy','breastfeeding']},
+  {id:'cardio_meds',icon:'💊',label:'Blood thinners, heart medications or digoxin',sub:'Removes antiplatelet herbs, stimulant laxatives and cardiac-interactive herbs',flags:['anticoag','digoxin']},
+  {id:'psych_meds',icon:'🧠',label:'Antidepressants, antipsychotics or mood stabilisers',sub:'Prevents serotonin syndrome, removes MAOIs and dopaminergic interactions',flags:['ssri','bipolar','dopamine_d']},
+  {id:'immune_cond',icon:'🛡',label:'Autoimmune condition or immunosuppressants',sub:'Removes immune-stimulating herbs that may trigger flares',flags:['autoimmune']},
+  {id:'liver_cond',icon:'🫁',label:'Liver or kidney disease',sub:'Removes hepatotoxic and oxalate-rich herbs',flags:['liver','kidney']},
+  {id:'thyroid_cond',icon:'🦋',label:'Thyroid condition or thyroid medications',sub:'Removes iodine-affecting and thyroid-active herbs',flags:['thyroid']},
+  {id:'bp_cond',icon:'❤️',label:'Uncontrolled high blood pressure',sub:'Removes stimulating and vasoconstrictive herbs',flags:['hypertension']},
+  {id:'contraceptive',icon:'💊',label:'On oral contraceptive pill',sub:'Removes CYP3A4 enzyme inducers',flags:['contraceptive']},
+  {id:'gut_cond',icon:'🌿',label:'GERD, gallstones or biliary obstruction',sub:'Removes oesophageal sphincter relaxants and choleretics',flags:['gerd','gallstones']},
+  {id:'allergy',icon:'🌸',label:'Ragweed / daisy family allergy or salicylate sensitivity',sub:'Removes Asteraceae herbs and willow bark',flags:['asteraceae','aspirin_al']},
+  {id:'sedatives',icon:'😴',label:'On benzodiazepines or sedatives',sub:'Removes additive CNS depressants',flags:['cns_dep']},
+  {id:'depression_dx',icon:'🌑',label:'Diagnosed depressive disorder',sub:'Removes sedating nervines that can worsen low mood',flags:['depression']},
+  {id:'none_above',icon:'✓',label:'None of the above apply to me',sub:'No safety filters will be applied',flags:['none']},
+];
+const APPROACHES=[
+  {id:'gentle',icon:'🌿',name:'Gentle & nourishing',desc:'Slow burn — build over weeks. Tonics and adaptogens.'},
+  {id:'acute',icon:'⚡',name:'Acute & targeted',desc:'Fast-acting. Specific symptoms, direct action.'},
+  {id:'ceremonial',icon:'✦',name:'Ceremonial & intentional',desc:'Ritual-grade. Consciousness-supportive herbs.'},
+  {id:'clinical',icon:'◎',name:'Clinical & evidence-based',desc:'RCT-informed. Mechanisms over tradition.'},
+];
+const DURATIONS=[
+  {id:'days',icon:'⚡',name:'Days to a week',desc:'Acute support — immediate need'},
+  {id:'weeks',icon:'◑',name:'2–6 weeks',desc:'Short course — symptom-focused'},
+  {id:'months',icon:'🌿',name:'3–6 months',desc:'Protocol — constitutional shift'},
+  {id:'ongoing',icon:'◎',name:'Ongoing tonic',desc:'Lifestyle herb — daily maintenance'},
+];
+const TM={stress:'morning and afternoon',sleep:'30–60 min before bed',energy:'morning only',anxiety:'throughout the day',mood:'morning and afternoon',digestion:'15 min before meals',immunity:'morning and evening',pain:'with meals three times daily',hormones:'consistent daily timing',cognitive:'morning with food',beauty:'morning with food',detox:'morning away from medications'};
+const TRYP_IDS=new Set(['blue_lotus','bobinsana','calea','wild_dagga','kanna','passionflower','valerian','skullcap','lemon_balm','lavender','saffron','rose','vanilla','oatstraw','ashwagandha','rhodiola','holy_basil','schisandra','reishi','lions_mane','fu_ling','cordyceps','mugwort','shatavari','motherwort','linden','hops','chamomile','jasmine','vervain']);
+
+/* ─── STATE ────────────────────────────────────────────── */
+var mode='standard',practitionerMode=false,activePreset='all',stockOpen=false;
+var customStock=new Set();
+var S={int:null,subInt:null,sec:[],con:null,conSub:null,saf:[],approach:'gentle',duration:'months',cnt:5,delivery:'tonic',carrier:'wild_soda',boosts:[],formula:[],step:0};
+var formulaLog=[];
+var bMarkers=[],bActive=null,bCurSens=[],bParticles=[],bReady=false,bGX=.65,bGY=.35,bTapAF=null,bTapStr=0,bTapX=0,bTapY=0;
+var activePhiFilter='all';
+var curExtractName='';
+
+/* ─── PRESET / STOCK ────────────────────────────────────── */
+function getActiveStock(){
+  if(activePreset==='all')return new Set(HB.filter(h=>!h.restricted||practitionerMode).map(h=>h.id));
+  if(activePreset==='tryp')return new Set([...TRYP_IDS].filter(id=>{var h=HB.find(h=>h.id===id);return h&&(!h.restricted||practitionerMode);}));
+  // custom
+  return new Set([...customStock].filter(id=>{var h=HB.find(h=>h.id===id);return h&&(!h.restricted||practitionerMode);}));
+}
+function applyPreset(p){
+  activePreset=p;
+  document.querySelectorAll('.prbtn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('preset_'+p).classList.add('on');
+  updateCounts();
+  if(stockOpen)renderStock(document.getElementById('spSearch').value||'');
+}
+function updateCounts(){
+  var all=HB.filter(h=>!h.restricted||practitionerMode).length;
+  var tryp=[...TRYP_IDS].filter(id=>{var h=HB.find(h=>h.id===id);return h&&(!h.restricted||practitionerMode);}).length;
+  document.getElementById('pc_all').textContent='('+all+')';
+  document.getElementById('pc_tryp').textContent='('+tryp+')';
+  document.getElementById('pc_custom').textContent='('+(customStock?customStock.size:0)+')';
+}
+function toggleStock(){
+  stockOpen=!stockOpen;
+  document.getElementById('stockPanel').classList.toggle('open',stockOpen);
+  document.getElementById('stockToggle').classList.toggle('on',stockOpen);
+  if(stockOpen)renderStock('');
+}
+function stockAll(){customStock=new Set(HB.filter(h=>!h.restricted||practitionerMode).map(h=>h.id));renderStock(document.getElementById('spSearch').value||'');updateCounts();}
+function stockClear(){customStock=new Set();renderStock(document.getElementById('spSearch').value||'');updateCounts();}
+function stockTryp(){
+  customStock=new Set([...TRYP_IDS].filter(id=>{var h=HB.find(h=>h.id===id);return h&&(!h.restricted||practitionerMode);}));
+  renderStock(document.getElementById('spSearch').value||'');updateCounts();
+}
+function renderStock(q){
+  q=(q||'').toLowerCase();
+  var cats=[...new Set(HB.map(h=>h.cat))].sort();
+  var html='';
+  cats.forEach(function(cat){
+    var herbs=HB.filter(h=>h.cat===cat&&(!h.restricted||practitionerMode)&&(h.n.toLowerCase().includes(q)||cat.toLowerCase().includes(q)));
+    if(!herbs.length)return;
+    html+='<div class="sp-cat">'+cat+'</div><div class="sp-herbs">';
+    herbs.forEach(function(h){
+      var isIn=customStock.has(h.id);
+      var cls='sph'+(h.m?' mush':'')+(isIn?' in':'')+(h.restricted?' rx':'');
+      html+='<div class="'+cls+'" onclick="togStock(\''+h.id+'\')" title="'+(h.restrictedNote||'')+'">'+h.n+'</div>';
+    });
+    html+='</div>';
+  });
+  document.getElementById('spSections').innerHTML=html;
+  document.getElementById('spCount').textContent=customStock.size+' herbs selected';
+}
+function togStock(id){
+  if(customStock.has(id))customStock.delete(id);else customStock.add(id);
+  updateCounts();
+  renderStock(document.getElementById('spSearch').value||'');
+}
+function setMode(m){
+  mode=m;
+  document.getElementById('modeStd').classList.toggle('on',m==='standard');
+  document.getElementById('modeAdv').classList.toggle('on',m==='advanced');
+  document.getElementById('s2std').style.display=m==='standard'?'block':'none';
+  document.getElementById('s2adv').style.display=m==='advanced'?'block':'none';
+  if(m==='advanced'&&S.step===2)setTimeout(function(){bReady=false;initBody();},120);
+}
+function togglePract(){practitionerMode=!practitionerMode;document.getElementById('practBtn').classList.toggle('on',practitionerMode);updateCounts();if(stockOpen)renderStock('');}
+
+/* ─── NAVIGATION ────────────────────────────────────────── */
+function updProg(){
+  var pg=document.getElementById('pg');pg.innerHTML='';
+  for(var i=0;i<6;i++){var d=document.createElement('div');d.className='pd '+(i<S.step?'done':i===S.step?'on':'off');pg.appendChild(d);}
+}
+function go(n,back){
+  if(n===1&&!S.int){alert('Please choose an intention first.');return;}
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('vis','back'));
+  S.step=n;
+  var el=document.getElementById('s'+n);el.classList.add('vis');
+  if(back)el.classList.add('back');
+  updProg();window.scrollTo(0,0);
+  if(n===2&&mode==='advanced')setTimeout(function(){bReady=false;initBody();},120);
+}
+function showStep(id,back){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('vis','back'));
+  var el=document.getElementById(id);el.classList.add('vis');if(back)el.classList.add('back');
+  window.scrollTo(0,0);
+}
+function goBack0b(){S.subInt=null;showStep('s0',true);}
+
+/* ─── STEP 0: INTENTION ─────────────────────────────────── */
+function selIntent(id){
+  S.int=id;S.subInt=null;
+  document.querySelectorAll('.icard').forEach(c=>c.classList.remove('sel'));
+  document.getElementById('ic_'+id).classList.add('sel');
+  // open sub-branch
+  var branch=IN.find(i=>i.id===id);
+  document.getElementById('subDot').style.background=branch.bdr;
+  document.getElementById('subBackLabel').textContent=branch.name;
+  document.getElementById('subTitle').textContent='Which kind of '+branch.name.split('&')[0].trim().toLowerCase()+'?';
+  document.getElementById('subDesc').textContent='Choose what feels most true right now — this shapes the entire formula.';
+  document.getElementById('subGrid').innerHTML=branch.subs.map(function(s){
+    return'<div class="scard'+(S.subInt===s.id?' sel':'')+'" id="sc_'+s.id+'" style="background:'+branch.col+';border-color:'+branch.bdr+'" onclick="selSub(\''+s.id+'\')">'+'<span class="sc-icon">'+s.icon+'</span><div class="sc-text"><div class="sc-name">'+s.name+'</div><div class="sc-desc">'+s.desc+'</div></div><span class="sc-arrow">→</span></div>';
+  }).join('');
+  showStep('s0b',false);
+}
+function selSub(id){
+  S.subInt=id;
+  document.querySelectorAll('.scard').forEach(c=>c.classList.remove('sel'));
+  document.getElementById('sc_'+id).classList.add('sel');
+}
+
+/* ─── STEP 1: WHAT ELSE ─────────────────────────────────── */
+function togSec(s){
+  var id='se_'+s.replace(/[^a-z]/gi,'_');var el=document.getElementById(id);
+  var idx=S.sec.indexOf(s);if(idx>-1){S.sec.splice(idx,1);el.classList.remove('sel');}else{S.sec.push(s);el.classList.add('sel');}
+}
+
+/* ─── STEP 2: BODY PATTERN ──────────────────────────────── */
+function selBodyPat(id){
+  S.con=id;S.conSub=null;
+  document.querySelectorAll('.bpcard').forEach(c=>c.classList.remove('sel'));
+  document.getElementById('bp_'+id).classList.add('sel');
+  document.querySelectorAll('.bp-reveal').forEach(r=>r.classList.remove('open'));
+  document.getElementById('bpr_'+id).classList.add('open');
+  // Build sub questions
+  var bp=BP.find(b=>b.id===id);
+  document.getElementById('bpr_'+id).innerHTML='<div style="font-size:11px;color:var(--text2);margin-bottom:.8rem;line-height:1.6;padding:.7rem .5rem;background:'+bp.col+'88;border-radius:10px;border:0.5px solid '+bp.bdr+'44">'+bp.desc+'</div>'+
+    '<div class="bp-sub-grid">'+bp.subs.map(function(s){return'<div class="bpsub'+(S.conSub===s.id?' sel':'')+'" id="bps_'+s.id+'" style="background:'+bp.col+';border-color:'+bp.bdr+'66" onclick="selBodySub(\''+s.id+'\')">'+'<span class="bpsub-icon">'+s.icon+'</span><div><div class="bpsub-n">'+s.name+'</div><div class="bpsub-d">'+s.desc+'</div></div></div>';}).join('')+'</div>';
+}
+function selBodySub(id){
+  S.conSub=id;
+  document.querySelectorAll('.bpsub').forEach(c=>c.classList.remove('sel'));
+  document.getElementById('bps_'+id).classList.add('sel');
+}
+function goFromBody(){
+  if(mode==='standard'&&!S.con){alert('Please choose your body pattern.');return;}
+  if(mode==='advanced'&&!bMarkers.filter(m=>m.types.length).length){alert('Tap the body and describe at least one sensation.');return;}
+  go(3);
+}
+
+/* ─── STEP 3: SAFETY ────────────────────────────────────── */
+function togSf(id){
+  var el=document.getElementById('sfc_'+id);
+  var group=SF_GROUPS.find(g=>g.id===id);
+  if(id==='none_above'){
+    S.saf=S.saf.some(x=>x==='none')?[]:[...group.flags];
+    document.querySelectorAll('.sfcard').forEach(c=>c.classList.remove('sel'));
+    if(S.saf.length)el.classList.add('sel');
+    return;
+  }
+  // Remove none
+  S.saf=S.saf.filter(x=>x!=='none');document.getElementById('sfc_none_above').classList.remove('sel');
+  // Toggle group flags
+  var allIn=group.flags.every(f=>S.saf.includes(f));
+  if(allIn){S.saf=S.saf.filter(f=>!group.flags.includes(f));el.classList.remove('sel');}
+  else{group.flags.forEach(f=>{if(!S.saf.includes(f))S.saf.push(f);});el.classList.add('sel');}
+}
+
+/* ─── STEP 4: PREFERENCES ──────────────────────────────── */
+function selApproach(id){
+  S.approach=id;
+  document.querySelectorAll('.approach-card').forEach(c=>c.classList.remove('sel'));
+  document.getElementById('ap_'+id).classList.add('sel');
+}
+function selDuration(id){
+  S.duration=id;
+  document.querySelectorAll('.dur-card').forEach(c=>c.classList.remove('sel'));
+  document.getElementById('dur_'+id).classList.add('sel');
+}
+function setCnt(v){S.cnt=parseInt(v);document.getElementById('cntVal').textContent=v;}
+
+/* ─── STEP 5: DELIVERY ──────────────────────────────────── */
+function selDelivery(id){
+  S.delivery=id;
+  document.querySelectorAll('.dc').forEach(c=>c.classList.remove('sel'));
+  document.getElementById('dc_'+id).classList.add('sel');
+  ['dd_tonic','dd_tincture','dd_sublingual'].forEach(d=>document.getElementById(d).style.display='none');
+  document.getElementById('delivDetail').classList.add('open');
+  document.getElementById('dd_'+id).style.display='block';
+}
+function selCarrier(id){S.carrier=id;document.querySelectorAll('.cc').forEach(c=>c.classList.remove('sel'));document.getElementById('cc_'+id).classList.add('sel');}
+function togBoost(id){
+  var el=document.getElementById('bc_'+id);var idx=S.boosts.indexOf(id);
+  if(idx>-1){S.boosts.splice(idx,1);el.classList.remove('sel');}else{S.boosts.push(id);el.classList.add('sel');}
+}
+
+/* ─── BODY MAP (ADVANCED) ───────────────────────────────── */
+function initBody(){
+  var wrap=document.getElementById('bsWrap');if(!wrap||bReady)return;
+  var c=document.getElementById('bodyC');
+  var W=wrap.offsetWidth,H=wrap.offsetHeight;
+  if(!W||!H){setTimeout(function(){bReady=false;initBody();},200);return;}
+  var dpr=window.devicePixelRatio||2;
+  c.width=W*dpr;c.height=H*dpr;c.style.width=W+'px';c.style.height=H+'px';
+  bParticles=bBuild(W,H);bReady=true;bDraw();
+  wrap.onclick=function(e){if(e.target===wrap||e.target===c)bTap(e);};
+  document.getElementById('bgridC').onclick=bGridClick;
+  document.getElementById('sTags').innerHTML=BSENS.map(function(s){return'<div class="stag" id="bst_'+s.replace(/ /g,'_')+'" onclick="bTogSens(\''+s+'\')">'+s+'</div>';}).join('');
+}
+function bBuild(W,H){
+  var dpr=window.devicePixelRatio||2;
+  var SW=Math.round(W*dpr),SH=Math.round(H*dpr);
+  var off=document.createElement('canvas');off.width=SW;off.height=SH;
+  var ctx=off.getContext('2d');ctx.fillStyle='#fff';
+  var sx=SW/100,sy=SH/240;
+  function draw(fn){ctx.save();ctx.scale(sx,sy);ctx.beginPath();fn();ctx.closePath();ctx.fill();ctx.restore();}
+  function C(x1,y1,x2,y2,x,y){ctx.bezierCurveTo(x1,y1,x2,y2,x,y);}
+  draw(function(){ctx.ellipse(50,16,13,16,0,0,Math.PI*2);});
+  draw(function(){ctx.rect(44,31,12,9);});
+  draw(function(){ctx.moveTo(32,38);C(20,39,13,42,11,47);C(9,52,10,57,14,60);C(17,62,20,62,22,61);C(24,60,25,62,25,66);C(25,72,26,80,27,86);C(28,91,31,95,36,97);C(40,99,45,100,50,100);C(55,100,60,99,64,97);C(69,95,72,91,73,86);C(74,80,75,72,75,66);C(75,62,76,60,78,61);C(80,62,83,62,86,60);C(90,57,91,52,89,47);C(87,42,80,39,68,38);C(62,37,56,36,50,36);C(44,36,38,37,32,38);});
+  draw(function(){ctx.moveTo(13,48);C(8,52,5,60,4,70);C(3,79,6,87,10,91);C(13,94,17,93,19,89);C(21,85,21,77,20,69);C(19,61,17,53,13,48);});
+  draw(function(){ctx.moveTo(10,91);C(6,95,3,104,3,114);C(3,121,6,127,10,128);C(14,130,19,127,21,120);C(23,113,22,103,19,96);C(17,91,14,90,10,91);});
+  draw(function(){ctx.ellipse(9,134,7,9,0,0,Math.PI*2);});
+  draw(function(){ctx.moveTo(87,48);C(83,53,81,61,80,69);C(79,77,79,85,81,89);C(83,93,87,94,90,91);C(94,87,97,79,96,70);C(95,60,92,52,87,48);});
+  draw(function(){ctx.moveTo(90,91);C(86,90,83,91,81,96);C(78,103,77,113,79,120);C(81,127,86,130,90,128);C(94,127,97,121,97,114);C(97,104,94,95,90,91);});
+  draw(function(){ctx.ellipse(91,134,7,9,0,0,Math.PI*2);});
+  draw(function(){ctx.moveTo(36,99);C(30,102,25,110,23,121);C(21,132,23,144,27,153);C(31,160,36,163,41,161);C(46,159,49,152,49,141);C(49,130,46,118,42,109);C(40,103,38,100,36,99);});
+  draw(function(){ctx.moveTo(27,153);C(23,158,21,168,22,179);C(23,188,27,194,32,195);C(37,196,42,191,44,182);C(46,173,45,162,42,156);C(40,151,35,150,30,152);C(28,152,27,153,27,153);});
+  draw(function(){ctx.moveTo(21,192);C(17,196,16,203,19,209);C(22,213,30,215,42,214);C(50,213,53,210,52,205);C(51,200,47,196,42,194);C(36,192,26,190,21,192);});
+  draw(function(){ctx.moveTo(64,99);C(62,100,60,103,58,109);C(54,118,51,130,51,141);C(51,152,54,159,59,161);C(64,163,69,160,73,153);C(77,144,79,132,77,121);C(75,110,70,102,64,99);});
+  draw(function(){ctx.moveTo(73,153);C(73,153,72,152,70,152);C(65,150,60,151,58,156);C(55,162,54,173,56,182);C(58,191,63,196,68,195);C(73,194,77,188,78,179);C(79,168,77,158,73,153);});
+  draw(function(){ctx.moveTo(48,205);C(49,210,52,213,60,214);C(72,215,80,213,83,209);C(86,203,85,196,81,192);C(76,190,64,192,58,194);C(53,196,49,200,48,205);});
+  var imgData=ctx.getImageData(0,0,SW,SH).data;
+  var pts=[];var step=3;
+  for(var y=step;y<SH-step;y+=step){for(var x=step;x<SW-step;x+=step){
+    if(imgData[(y*SW+x)*4]>128){
+      var jx=(x+(Math.random()-.5)*step)/dpr,jy=(y+(Math.random()-.5)*step)/dpr;
+      var e=(imgData[((y-step)*SW+x)*4]<128||imgData[((y+step)*SW+x)*4]<128||imgData[(y*SW+(x-step))*4]<128||imgData[(y*SW+(x+step))*4]<128);
+      pts.push({x:jx,y:jy,a:e?(.55+Math.random()*.4):(.04+Math.random()*.07),r:e?(.9+Math.random()*1):(.2+Math.random()*.3)});
+    }
+  }}
+  return pts;
+}
+function bDraw(hx,hy,hs){
+  var c=document.getElementById('bodyC');if(!c)return;
+  var W=c.offsetWidth,H=c.offsetHeight,dpr=window.devicePixelRatio||2;
+  var ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);ctx.save();ctx.scale(dpr,dpr);
+  bParticles.forEach(function(p){
+    var warm=0;
+    if(hx!==undefined){var dx=p.x-hx,dy=p.y-hy,d=Math.sqrt(dx*dx+dy*dy),rad=Math.min(W,H)*.22,t=Math.max(0,1-d/rad);warm=Math.pow(t,1.6)*(hs||1);}
+    bMarkers.forEach(function(m){var mx=m.px*W,my=m.py*H,dx=p.x-mx,dy=p.y-my,d=Math.sqrt(dx*dx+dy*dy),rad=Math.min(W,H)*.18,t=Math.max(0,1-d/rad);warm=Math.max(warm,Math.pow(t,1.8)*.8);});
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r*(1+warm*.6),0,Math.PI*2);
+    if(warm>.01){var r=Math.min(255,Math.round(201+warm*54)),g=Math.max(0,Math.round(168-warm*80)),b=Math.max(0,Math.round(76-warm*60));ctx.fillStyle='rgba('+r+','+g+','+b+','+Math.min(1,p.a+warm*.75)+')';}
+    else ctx.fillStyle='rgba(210,210,210,'+p.a+')';
+    ctx.fill();
+  });ctx.restore();
+}
+function bTap(e){
+  var wrap=document.getElementById('bsWrap'),rect=wrap.getBoundingClientRect();
+  var px=(e.clientX-rect.left)/rect.width,py=(e.clientY-rect.top)/rect.height;
+  for(var i=0;i<bMarkers.length;i++){var m=bMarkers[i],dx=(m.px-px)*rect.width,dy=(m.py-py)*rect.height;if(Math.sqrt(dx*dx+dy*dy)<24){bActivate(i);return;}}
+  var idx=bMarkers.length;bMarkers.push({px:px,py:py,types:[],col:'rgba(255,255,255,.9)',intensity:.5,valence:.65});
+  bPlaceMarker(idx);bActivate(idx);
+  bTapX=px*wrap.offsetWidth;bTapY=py*wrap.offsetHeight;bTapStr=0;
+  if(bTapAF)cancelAnimationFrame(bTapAF);
+  (function anim(){bTapStr=Math.min(1,bTapStr+.07);bDraw(bTapX,bTapY,bTapStr);if(bTapStr<1)bTapAF=requestAnimationFrame(anim);})();
+}
+function bLbl(px,py){
+  if(py<.14)return'Head';if(py<.19)return'Neck';
+  if(py<.29){if(px<.27||px>.73)return'Shoulder';return'Chest';}
+  if(py<.43){if(px<.25||px>.75)return'Upper arm';return'Heart area';}
+  if(py<.57){if(px<.22||px>.78)return'Forearm';return'Belly';}
+  if(py<.65){if(px<.19||px>.81)return'Hand';return'Lower abdomen';}
+  if(py<.78)return'Upper leg';if(py<.91)return'Lower leg';return'Foot';
+}
+function bPlaceMarker(idx){
+  var m=bMarkers[idx];var layer=document.getElementById('bLayer');
+  var el=document.createElement('div');el.className='bmarker-el';el.id='bm_'+idx;
+  el.style.cssText='position:absolute;left:'+(m.px*100)+'%;top:'+(m.py*100)+'%;transform:translate(-50%,-50%);pointer-events:all;cursor:pointer;z-index:10';
+  el.innerHTML='<div class="bmarker-ring" id="bmr_'+idx+'"><div class="bmarker-dot" id="bmd_'+idx+'"></div></div>';
+  el.onclick=function(e){e.stopPropagation();bActivate(idx);};
+  layer.appendChild(el);
+}
+function bActivate(idx){
+  bActive=idx;var m=bMarkers[idx];bCurSens=[...m.types];
+  bGX=m.valence||.65;bGY=m.intensity||.35;
+  BSENS.forEach(function(s){var el=document.getElementById('bst_'+s.replace(/ /g,'_'));if(el)el.classList.toggle('on',m.types.includes(s));});
+  document.getElementById('sp2T').textContent=bLbl(m.px,m.py);
+  document.getElementById('sPicker').classList.add('open');
+  document.getElementById('bgridWrap').style.display='block';
+  bDrawGrid();bUpdateLabel();
+  document.getElementById('sPicker').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function bCancel(){
+  document.getElementById('sPicker').classList.remove('open');
+  if(bActive!==null&&bMarkers[bActive]&&!bMarkers[bActive].types.length){document.getElementById('bm_'+bActive)?.remove();bMarkers.splice(bActive,1);}
+  bActive=null;bCurSens=[];
+}
+function bDelete(){
+  if(bActive===null)return;
+  document.getElementById('bm_'+bActive)?.remove();bMarkers.splice(bActive,1);
+  document.getElementById('sPicker').classList.remove('open');bActive=null;bCurSens=[];
+  bUpdatePills();bDraw();deriveConSoma();
+}
+function bTogSens(s){
+  if(bActive===null)return;
+  var types=bMarkers[bActive].types,idx=types.indexOf(s);
+  if(idx>-1)types.splice(idx,1);else types.push(s);
+  bCurSens=[...types];
+  var el=document.getElementById('bst_'+s.replace(/ /g,'_'));if(el)el.classList.toggle('on',types.includes(s));
+  bUpdateMarkerCol(bActive);bUpdatePills();bUpdateLabel();bDraw();deriveConSoma();
+}
+function bSave(){
+  if(bActive===null)return;
+  if(!bMarkers[bActive].types.length){var g=document.getElementById('sTags');g.style.outline='1px solid rgba(201,168,76,.5)';setTimeout(()=>g.style.outline='',700);return;}
+  bMarkers[bActive].intensity=bGY;bMarkers[bActive].valence=bGX;
+  document.getElementById('sPicker').classList.remove('open');bActive=null;bCurSens=[];
+  bUpdatePills();bDraw();deriveConSoma();
+}
+function bUpdateMarkerCol(idx){
+  var m=bMarkers[idx];if(!m.types.length)return;
+  var sc={hot:0,cold:0,mixed:0,depleted:0};m.types.forEach(s=>{var c=BS2C[s.toLowerCase()];if(c)sc[c]++;});
+  var top=Object.entries(sc).sort((a,b)=>b[1]-a[1])[0];m.col=BCCON[top[0]]||'#c9a84c';
+  var dot=document.getElementById('bmd_'+idx),ring=document.getElementById('bmr_'+idx);
+  if(dot)dot.style.background=m.col;if(ring){ring.style.borderColor=m.col;ring.style.boxShadow='0 0 0 5px '+m.col+'22';}
+}
+function bUpdatePills(){
+  var el=document.getElementById('bPills');if(!el)return;
+  el.innerHTML=bMarkers.filter(m=>m.types.length).map((m,i)=>'<div class="bm-pill-item" onclick="bActivate('+bMarkers.indexOf(m)+')" style="background:'+m.col+'18;border-color:'+m.col+'44;color:'+m.col+'"><span style="width:7px;height:7px;border-radius:50%;background:'+m.col+';display:inline-block;margin-right:3px"></span>'+bLbl(m.px,m.py)+': '+m.types.slice(0,1).join('')+'</div>').join('');
+}
+function bUpdateLabel(){
+  var il=bGY>.65?'high intensity':bGY<.35?'low intensity':'moderate';
+  var vl=bGX>.65?'pleasant':bGX<.35?'unpleasant':'neutral';
+  var label=vl.charAt(0).toUpperCase()+vl.slice(1)+' & '+il;
+  if(bCurSens.length)label=bCurSens.slice(0,3).join(', ');
+  var el=document.getElementById('bLabel');if(el)el.textContent=label;
+}
+function bGridClick(e){
+  var c=document.getElementById('bgridC'),rect=c.getBoundingClientRect(),p=7,W=96,H=96;
+  bGX=Math.max(0,Math.min(1,(e.clientX-rect.left-p)/(W-p*2)));
+  bGY=Math.max(0,Math.min(1,1-(e.clientY-rect.top-p)/(H-p*2)));
+  if(bActive!==null){bMarkers[bActive].intensity=bGY;bMarkers[bActive].valence=bGX;}
+  bDrawGrid();bUpdateLabel();
+}
+function bDrawGrid(){
+  var c=document.getElementById('bgridC');if(!c)return;
+  var ctx=c.getContext('2d'),W=96,H=96,p=7;
+  ctx.clearRect(0,0,W,H);ctx.fillStyle='rgba(10,8,6,.92)';ctx.beginPath();ctx.roundRect(0,0,W,H,7);ctx.fill();
+  var cols=7,rows=7,cw=(W-p*2)/cols,ch=(H-p*2)/rows;
+  for(var r=0;r<rows;r++){for(var cc=0;cc<cols;cc++){
+    var nx=(cc+.5)/cols,ny=1-(r+.5)/rows,dx=nx-bGX,dy=ny-bGY,dist=Math.sqrt(dx*dx+dy*dy),warm=Math.max(0,1-dist*2.6);
+    var x=p+cc*cw+cw/2,y=p+r*ch+ch/2,rad=warm>.1?2.5+warm*2:1.4;
+    ctx.beginPath();ctx.arc(x,y,rad,0,Math.PI*2);
+    ctx.fillStyle=warm>.05?'rgba('+(Math.round(201+warm*54))+','+(Math.round(168-warm*80))+','+(Math.round(76-warm*60))+','+(0.15+warm*.85)+')':'rgba(55,55,55,'+(0.15+warm*.3)+')';
+    ctx.fill();
+  }}
+  var tx=p+bGX*(W-p*2),ty=p+(1-bGY)*(H-p*2);
+  ctx.beginPath();ctx.arc(tx,ty,4.5,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+  ctx.beginPath();ctx.arc(tx,ty,8,0,Math.PI*2);ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=1;ctx.stroke();
+}
+function deriveConSoma(){
+  var sc={hot:0,cold:0,mixed:0,depleted:0};
+  bMarkers.forEach(m=>m.types.forEach(t=>{var c=BS2C[t.toLowerCase()];if(c)sc[c]++;}));
+  var top=Object.entries(sc).sort((a,b)=>b[1]-a[1])[0];S.con=top&&top[1]>0?top[0]:'mixed';
+}
+
+/* ─── BUILD / RENDER ─────────────────────────────────────── */
+function getPool(){return HB.filter(h=>getActiveStock().has(h.id));}
+function scoreH(h){
+  var s=0;if(h.i.includes(S.int))s+=3;if(S.con&&h.c&&h.c.includes(S.con))s+=2;
+  return s;
+}
+function build(){
+  var flags=S.saf.filter(x=>x!=='none');
+  var pool=getPool().filter(h=>{
+    if(!h.i.includes(S.int))return false;
+    if(h.m&&S.approach==='clinical'&&!h.i.includes(S.int))return false;
+    for(var f of flags)if(h.x.includes(f))return false;
+    return true;
+  });
+  pool.sort((a,b)=>scoreH(b)-scoreH(a));
+  S.formula=pool.slice(0,S.cnt);
+  curExtractName=genName(S.formula,S.int);
+  saveToLog();
+  renderFormula();
+  go(6);
+}
+function rebuild(){
+  var flags=S.saf.filter(x=>x!=='none');
+  var pool=getPool().filter(h=>{if(!h.i.includes(S.int))return false;for(var f of flags)if(h.x.includes(f))return false;return!S.formula.some(f=>f.id===h.id);});
+  if(pool.length<S.cnt)pool=getPool().filter(h=>{if(!h.i.includes(S.int))return false;for(var f of flags)if(h.x.includes(f))return false;return true;});
+  pool.sort(()=>Math.random()-.5);S.formula=pool.slice(0,S.cnt);
+  curExtractName=genName(S.formula,S.int);
+  saveToLog();renderFormula();
+}
+
+function genName(herbs,intention){
+  var pre={stress:['Still','Anchor','Ground'],sleep:['Lunar','Dusk','Night'],energy:['Dawn','Solar','Arc'],anxiety:['Quiet','Clear','Open'],mood:['Rose','Warm','Bloom'],digestion:['Ember','Inner','Flow'],immunity:['Shield','Wild','Vital'],pain:['Resin','Stone','Ease'],hormones:['Tide','Cycle','Pearl'],cognitive:['Lens','Focus','Deep'],beauty:['Dew','Bloom','Silk'],detox:['Clear','Flow','Root']};
+  var suf=['Extract','Elixir','Reserve','No.'+(Math.floor(Math.random()*12)+1),'Formula'];
+  var mod=['Wild','Forest','Sacred','Ancient','Deep'];
+  var p=(pre[intention]||pre.stress)[Math.floor(Math.random()*3)];
+  var s=suf[Math.floor(Math.random()*suf.length)];
+  var h0=herbs[0]?herbs[0].n.split(' ')[0]:'';
+  var opts=[p+' '+s,mod[Math.floor(Math.random()*5)]+' '+p+' '+s,h0+' & '+p+' '+s];
+  return opts[Math.floor(Math.random()*opts.length)];
+}
+
+function genBottle(name,herbs,intention,delivery){
+  var isAmber=delivery!=='tonic';
+  var bg=isAmber?'#7a4e12':'#12256b';var mid=isAmber?'#b87830':'#1e3d9f';var hi=isAmber?'#d4a040':'#3a5fc4';
+  var props={stress:['Cortisol balance','Nervous calm','HPA support'],sleep:['Sleep onset','Deep restoration','Night repair'],energy:['Sustained vitality','Mental clarity','Adrenal tone'],anxiety:['GABA modulation','Nervous ease','Tension release'],mood:['Emotional lift','Heart opening','Resilience'],digestion:['Gut harmony','Liver support','Microbiome'],immunity:['Innate defence','Immune training','Resilience'],pain:['Anti-inflammatory','COX inhibition','Pain relief'],hormones:['Endocrine balance','Cycle support','Tonic'],cognitive:['Neuroplasticity','Focus','Memory'],beauty:['Skin vitality','Collagen','Radiance'],detox:['Liver clearance','Lymphatic','Detox']};
+  var p=props[intention]||props.stress;
+  var h1=herbs.slice(0,2).map(h=>h.n).join(', '),h2=herbs.slice(2,4).map(h=>h.n).join(', ');
+  return'<svg viewBox="0 0 180 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:200px;display:block;margin:0 auto">'+
+  '<defs><linearGradient id="bgl" x1="0" x2="1" y1="0" y2="0">'+
+  '<stop offset="0%" stop-color="'+bg+'" stop-opacity=".95"/>'+
+  '<stop offset="40%" stop-color="'+mid+'"/><stop offset="60%" stop-color="'+hi+'"/>'+
+  '<stop offset="100%" stop-color="'+bg+'" stop-opacity=".85"/>'+
+  '</linearGradient></defs>'+
+  '<ellipse cx="90" cy="24" rx="14" ry="16" fill="#111"/>'+
+  '<rect x="84" y="38" width="12" height="32" rx="3" fill="#1e1e1e"/>'+
+  '<path d="M74,68 C74,66 76,64 90,64 C104,64 106,66 106,68 L108,96 C108,98 106,100 90,100 C74,100 72,98 72,96 Z" fill="#181818"/>'+
+  '<line x1="74" y1="74" x2="106" y2="74" stroke="#111" stroke-width="1.5"/>'+
+  '<line x1="74" y1="80" x2="106" y2="80" stroke="#111" stroke-width="1.5"/>'+
+  '<line x1="74" y1="86" x2="106" y2="86" stroke="#111" stroke-width="1.5"/>'+
+  '<line x1="74" y1="92" x2="106" y2="92" stroke="#111" stroke-width="1.5"/>'+
+  '<path d="M60,98 C56,100 52,106 50,115 L48,295 C48,304 53,310 60,312 L120,312 C127,312 132,304 132,295 L130,115 C128,106 124,100 120,98 Z" fill="url(#bgl)"/>'+
+  '<path d="M64,102 C62,108 61,120 61,135 L61,295 C61,303 63,308 66,310 L68,310 C65,308 63,302 63,294 L63,135 C63,119 64,107 66,102 Z" fill="white" opacity="0.07"/>'+
+  '<rect x="54" y="158" width="72" height="108" rx="3" fill="#F9F6EF"/>'+
+  '<rect x="54" y="158" width="72" height="108" rx="3" fill="none" stroke="rgba(0,0,0,.07)" stroke-width="0.5"/>'+
+  '<rect x="57" y="161" width="66" height="102" rx="2" fill="none" stroke="rgba(0,0,0,.08)" stroke-width="0.4"/>'+
+  '<text x="90" y="171" text-anchor="middle" font-family="Georgia,serif" font-size="5" letter-spacing="1.8" fill="#5a4030" font-style="italic">fung.ai entheobotanicals</text>'+
+  '<line x1="58" y1="174" x2="122" y2="174" stroke="rgba(0,0,0,.1)" stroke-width="0.4"/>'+
+  '<text x="90" y="186" text-anchor="middle" font-family="Georgia,serif" font-size="9" font-weight="bold" letter-spacing="0.3" fill="#0d0a07">'+name.toUpperCase()+'</text>'+
+  '<line x1="58" y1="190" x2="122" y2="190" stroke="rgba(0,0,0,.1)" stroke-width="0.4"/>'+
+  '<text x="90" y="199" text-anchor="middle" font-family="Georgia,serif" font-size="5" fill="#3d3020" letter-spacing="0.2">'+h1+'</text>'+
+  (h2?'<text x="90" y="206" text-anchor="middle" font-family="Georgia,serif" font-size="5" fill="#3d3020" letter-spacing="0.2">'+h2+'</text>  ':'')+
+  '<line x1="64" y1="211" x2="116" y2="211" stroke="rgba(0,0,0,.07)" stroke-width="0.4"/>'+
+  '<text x="90" y="221" text-anchor="middle" font-family="Georgia,serif" font-size="5" letter-spacing="1.5" fill="#5a4030">'+p[0].toUpperCase()+'</text>'+
+  '<text x="90" y="229" text-anchor="middle" font-family="Georgia,serif" font-size="5" letter-spacing="1.5" fill="#5a4030">'+p[1].toUpperCase()+'</text>'+
+  '<text x="90" y="237" text-anchor="middle" font-family="Georgia,serif" font-size="5" letter-spacing="1.5" fill="#5a4030">'+p[2].toUpperCase()+'</text>'+
+  '<line x1="58" y1="243" x2="122" y2="243" stroke="rgba(0,0,0,.1)" stroke-width="0.4"/>'+
+  '<text x="90" y="254" text-anchor="middle" font-family="Georgia,serif" font-size="4.5" fill="#0d0a07" font-style="italic">1:5 dual extracted · 30ml</text>'+
+  '<ellipse cx="90" cy="308" rx="36" ry="5" fill="black" opacity=".12"/></svg>';
+}
+
+function setPhiFilter(p){
+  activePhiFilter=p;
+  document.querySelectorAll('.tt').forEach(el=>el.classList.remove('on'));
+  var el=document.getElementById('tt_'+p);if(el)el.classList.add('on');
+  renderFormula();
+}
+
+function renderFormula(){
+  var out=document.getElementById('fo');
+  if(!S.formula||!S.formula.length){out.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text3)">No herbs matched — adjust pool or safety filters.</div>';return;}
+  var io=IN.find(i=>i.id===S.int);
+  var bt=S.con?BP.find(b=>b.id===S.con):null;
+  var carrier=S.delivery==='tonic'?CARRIERS.find(c=>c.id===S.carrier):null;
+  var tot=S.formula.reduce((s,h)=>s+h.r,0);
+  var tim=TM[S.int]||'twice daily';
+  var hasMush=S.formula.some(h=>h.m);
+  var flags=S.saf.filter(x=>x!=='none');
+  var boostNames=S.boosts.map(id=>BOOSTS.find(b=>b.id===id)?.name).filter(Boolean);
+  var delivLabel=DELIVERY.find(d=>d.id===S.delivery)?.name||S.delivery;
+  var poolLabel=activePreset==='tryp'?'Tryp':activePreset==='custom'?'Custom':'All herbs';
+  var name=curExtractName;
+
+  var displayHerbs=activePhiFilter==='all'?S.formula:S.formula.filter(h=>h.p&&h.p.includes(activePhiFilter));
+  if(!displayHerbs.length)displayHerbs=S.formula;
+
+  var rows=displayHerbs.map((h,i)=>{var pct=Math.round(h.r/tot*100);return'<div class="hr"><span class="hn">'+String(i+1).padStart(2,'0')+'</span><div class="hi"><div class="hname">'+h.n+(h.m?' <span style="font-size:9px;color:var(--text3)">(mushroom)</span>':'')+'</div><div class="hbot">'+h.b+'</div><div class="hact">'+h.a+'</div></div><span class="hpct">'+pct+'%</span></div>';}).join('');
+  var bars=displayHerbs.map(h=>{var pct=Math.round(h.r/tot*100);return'<div class="brow"><span class="bn">'+h.n+'</span><div class="bt"><div class="bf" style="width:'+pct+'%"></div></div><span class="bp">'+pct+'%</span></div>';}).join('');
+  var meridians=[...new Set(S.formula.flatMap(h=>h.t||[]))].slice(0,6);
+  var phils=[...new Set(S.formula.flatMap(h=>h.p||[]))];
+  var tgs='<div class="tags">';
+  meridians.forEach(m=>tgs+='<span class="tag ttcm">'+m+'</span>');
+  phils.forEach(p=>tgs+='<span class="tag teur">'+(p==='european'?'European folk':p==='tcm'?'Chinese medicine':'Ayurvedic')+'</span>');
+  if(hasMush)tgs+='<span class="tag tmush">includes mushrooms</span>';
+  tgs+='<span class="tag tdeliv">'+delivLabel+'</span>';
+  if(carrier)tgs+='<span class="tag" style="color:#5C4A1E;background:#FAF3E0;border-color:#E8D8A0">'+carrier.icon+' '+carrier.name+'</span>';
+  tgs+='</div>';
+
+  var cauts=['Review individual herb cautions with your herbalist.'];
+  if(flags.length)cauts.unshift('Formula filtered for your safety profile.');
+
+  var serveBlock='';
+  if(S.delivery==='tonic'&&carrier){
+    var steps=carrier.steps.map((s,i)=>'<div class="ss"><div class="ss-n">'+(i+1)+'</div><div class="ss-t">'+s+'</div></div>').join('');
+    var bs=boostNames.length?'<div class="ss"><div class="ss-n">+</div><div class="ss-t">'+boostNames.join(', ')+'</div></div>':'';
+    serveBlock='<div class="serve-block"><div style="font-size:12px;font-weight:500;margin-bottom:8px">'+carrier.icon+' '+carrier.name+'</div>'+steps+bs+'</div>';
+  }else if(S.delivery==='sublingual'){
+    serveBlock='<div class="serve-block"><div style="font-size:12px;font-weight:500;margin-bottom:8px">◎ Sublingual protocol</div><div class="ss"><div class="ss-n">1</div><div class="ss-t">Draw 1 ml into dropper</div></div><div class="ss"><div class="ss-n">2</div><div class="ss-t">Hold under tongue 60-90 s then swallow</div></div><div class="ss"><div class="ss-n">3</div><div class="ss-t">Up to 3× daily. No food or drink 10 min before.</div></div></div>';
+  }else{
+    serveBlock='<div class="serve-block"><div style="font-size:12px;font-weight:500;margin-bottom:8px">◌ Tincture protocol</div><div class="ss"><div class="ss-n">1</div><div class="ss-t">30–40 drops in a small glass</div></div><div class="ss"><div class="ss-n">2</div><div class="ss-t">Add water or juice — drink slowly</div></div><div class="ss"><div class="ss-n">3</div><div class="ss-t">'+tim+'</div></div></div>';
+  }
+
+  var bottleHtml='';
+  if(S.delivery!=='tonic'){
+    bottleHtml='<div class="bottle-wrap"><div style="font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">Your extract</div><div class="bottle-name-display">'+name+'</div>'+genBottle(name,S.formula,S.int,S.delivery)+'</div>';
+  }
+
+  var tradToggle='<div style="margin-bottom:.8rem"><div style="font-size:9px;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">Filter by tradition</div><div class="trad-row"><div class="tt on" id="tt_all" onclick="setPhiFilter(\'all\')">All</div><div class="tt" id="tt_european" onclick="setPhiFilter(\'european\')">European folk</div><div class="tt" id="tt_tcm" onclick="setPhiFilter(\'tcm\')">Chinese medicine</div><div class="tt" id="tt_ayurvedic" onclick="setPhiFilter(\'ayurvedic\')">Ayurvedic</div></div></div>';
+
+  out.innerHTML=
+    bottleHtml+
+    '<div class="fhdr"><div class="ft">'+io.name+' formula</div><div class="fs">'+name+' · '+S.formula.length+' '+(hasMush?'herbs & mushrooms':'herbs')+' · '+poolLabel+'</div></div>'+
+    '<div class="fbody">'+rows+'<div style="padding:9px 12px;border-top:0.5px solid var(--bd)">'+bars+'</div>'+tgs+
+    '<div class="inst">'+(bt?'<div class="ir"><span class="il">TCM pattern</span>'+bt.g+' '+bt.name+'</div>':'')+
+    (S.conSub?'<div class="ir"><span class="il">Sub-pattern</span>'+S.conSub+'</div>':'')+
+    '<div class="ir"><span class="il">Delivery</span>'+delivLabel+'</div>'+
+    (carrier?'<div class="ir"><span class="il">Carrier</span>'+carrier.name+'</div>':'')+
+    '<div class="ir"><span class="il">Timing</span>'+tim+'</div>'+
+    '<div class="ir"><span class="il">Approach</span>'+S.approach+'</div>'+
+    '<div class="ir"><span class="il">Duration</span>'+S.duration+'</div>'+
+    (boostNames.length?'<div class="ir"><span class="il">Boosts</span>'+boostNames.join(', ')+'</div>':'')+
+    '</div><div class="caut"><div class="ct">Important</div>'+cauts.map(c=>'<div class="ci">· '+c+'</div>').join('')+'</div></div>'+
+    serveBlock+
+    tradToggle+
+    '<div class="mcards"><div class="mc"><div class="ml">Herbs</div><div class="mv">'+S.formula.length+'</div></div><div class="mc"><div class="ml">Pool</div><div class="mv">'+poolLabel+' · '+getPool().length+'</div></div><div class="mc"><div class="ml">Safety</div><div class="mv">'+flags.length+' filters</div></div></div>';
+
+  // Wire up copy button
+  document.getElementById('explainBtn').onclick=doExplain;
+  renderLog();
+}
+
+function doExplain(){
+  if(!S.formula||!S.formula.length){alert('Build your formula first.');return;}
+  var io=IN.find(i=>i.id===S.int);var bt=BP.find(b=>b.id===S.con);
+  var carrier=S.delivery==='tonic'?CARRIERS.find(c=>c.id===S.carrier):null;
+  var boostNames=S.boosts.map(id=>BOOSTS.find(b=>b.id===id)?.name).filter(Boolean);
+  var delivLabel=DELIVERY.find(d=>d.id===S.delivery)?.name||S.delivery;
+  var poolLabel=activePreset==='tryp'?'Tryp':activePreset==='custom'?'Custom':'All herbs';
+  var somaNote='';
+  if(mode==='advanced'&&bMarkers.filter(m=>m.types.length).length)
+    somaNote='\n\nSomatic map:\n'+bMarkers.filter(m=>m.types.length).map(m=>bLbl(m.px,m.py)+': '+m.types.join(', ')).join('\n');
+  var summary='FUNGAI ART ELIXIRS — TAILORED TINCTURE\n'+'='.repeat(45)+
+    '\nExtract name: '+curExtractName+
+    '\nIntention: '+io.name+(S.subInt?'\nSub-path: '+S.subInt:'')+
+    '\nTCM body pattern: '+(bt?bt.name+' — '+bt.desc:'not specified')+
+    (S.conSub?'\nSub-pattern: '+S.conSub:'')+
+    somaNote+
+    '\nHerbs: '+S.formula.map(h=>h.n+' ('+h.b+')').join(', ')+
+    '\nDelivery: '+delivLabel+(carrier?'\nCarrier: '+carrier.name:'')+
+    '\nBoosts: '+(boostNames.length?boostNames.join(', '):'none')+
+    '\nApproach: '+S.approach+' · Duration: '+S.duration+
+    '\nPool: '+poolLabel+'\n'+'='.repeat(45)+
+    '\n\nPaste this into Claude and ask:\n"Please explain each herb and why it was chosen for this intention and TCM body pattern. How should I use this formula day by day? What can I expect over 8–12 weeks? Are there any synergies between these herbs?"';
+  navigator.clipboard.writeText(summary)
+    .then(()=>alert('Formula copied to clipboard! Paste it into a new Claude conversation to get a full explanation.'))
+    .catch(()=>{var ta=document.createElement('textarea');ta.value=summary;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);alert('Formula copied!');});
+}
+
+/* ─── FORMULA LOG (localStorage) ───────────────────────── */
+function saveToLog(){
+  var entry={
+    id:Date.now(),
+    ts:new Date().toISOString(),
+    name:curExtractName,
+    intention:S.int,subInt:S.subInt,
+    con:S.con,conSub:S.conSub,
+    herbs:S.formula.map(h=>({id:h.id,n:h.n,b:h.b,cat:h.cat})),
+    delivery:S.delivery,carrier:S.carrier,
+    approach:S.approach,duration:S.duration,
+    pool:activePreset,poolSize:getPool().length,
+    safetyFlags:S.saf.filter(x=>x!=='none'),
+    boosts:S.boosts,
+  };
+  formulaLog.unshift(entry);
+  try{localStorage.setItem('fungai_log',JSON.stringify(formulaLog));}catch(e){}
+}
+function loadLog(){
+  try{var raw=localStorage.getItem('fungai_log');if(raw)formulaLog=JSON.parse(raw);}catch(e){formulaLog=[];}
+}
+function clearLog(){
+  if(!confirm('Clear all '+formulaLog.length+' saved formulas? This cannot be undone.'))return;
+  formulaLog=[];try{localStorage.removeItem('fungai_log');}catch(e){}
+  renderLog();
+}
+function renderLog(){
+  var el=document.getElementById('logEntries');if(!el)return;
+  document.getElementById('logCount').textContent='('+formulaLog.length+')';
+  if(!formulaLog.length){el.innerHTML='<div class="log-empty">No formulas saved yet.</div>';return;}
+  el.innerHTML=formulaLog.slice(0,20).map(function(e,i){
+    var dt=new Date(e.ts);
+    var dtStr=dt.toLocaleDateString()+' '+dt.toLocaleTimeString().slice(0,5);
+    return'<div class="log-entry" onclick="restoreEntry('+i+')">'+
+      '<div class="log-name">'+e.name+'</div>'+
+      '<div class="log-meta">'+e.intention+(e.subInt?' · '+e.subInt:'')+' · '+(e.herbs?e.herbs.length:0)+' herbs · '+e.delivery+' · '+dtStr+'</div>'+
+    '</div>';
+  }).join('');
+}
+function restoreEntry(idx){
+  var e=formulaLog[idx];
+  if(!e||!e.herbs)return;
+  // Restore formula to view
+  S.formula=e.herbs.map(function(h){return HB.find(hb=>hb.id===h.id)||h;}).filter(Boolean);
+  S.int=e.intention;S.subInt=e.subInt;
+  S.con=e.con;S.conSub=e.conSub;
+  S.delivery=e.delivery||'tonic';S.carrier=e.carrier||'wild_soda';
+  S.approach=e.approach||'gentle';S.duration=e.duration||'months';
+  curExtractName=e.name;
+  renderFormula();
+  alert('Formula "'+e.name+'" restored to view.');
+}
+
+function exportLog(fmt){
+  if(!formulaLog.length){alert('No formulas to export yet.');return;}
+  var content,filename,mime;
+  if(fmt==='json'){
+    content=JSON.stringify(formulaLog,null,2);
+    filename='fungai_formula_log_'+new Date().toISOString().slice(0,10)+'.json';
+    mime='application/json';
+  }else{
+    // CSV
+    var headers=['id','timestamp','extract_name','intention','sub_intention','tcm_pattern','sub_pattern','herbs','delivery','carrier','approach','duration','pool','pool_size','safety_flags','boosts'];
+    var rows=formulaLog.map(function(e){
+      return[
+        e.id,e.ts,'"'+e.name+'"',e.intention,e.subInt||'',e.con||'',e.conSub||'',
+        '"'+(e.herbs?e.herbs.map(h=>h.n).join(', '):'')+'"',
+        e.delivery,e.carrier,e.approach,e.duration,e.pool,e.poolSize,
+        '"'+(e.safetyFlags?e.safetyFlags.join(', '):'')+'"',
+        '"'+(e.boosts?e.boosts.join(', '):'')+'"',
+      ].join(',');
+    });
+    content=[headers.join(','),...rows].join('\n');
+    filename='fungai_formula_log_'+new Date().toISOString().slice(0,10)+'.csv';
+    mime='text/csv';
+  }
+  var blob=new Blob([content],{type:mime});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+}
+
+/* ─── INIT ───────────────────────────────────────────────── */
+function init(){
+  customStock=new Set(HB.map(h=>h.id));
+  loadLog();
+
+  // Intention grid
+  document.getElementById('ig').innerHTML=IN.map(function(i){
+    return'<div class="icard" id="ic_'+i.id+'" style="background:'+i.col+';border-color:'+i.bdr+'" onclick="selIntent(\''+i.id+'\')">'+
+      '<span class="icard-icon">'+i.icon+'</span>'+
+      '<div class="icard-name">'+i.name+'</div>'+
+      '<div class="icard-desc">'+i.desc+'</div></div>';
+  }).join('');
+
+  // What else
+  document.getElementById('sg').innerHTML=SC.map(function(s){
+    var id='se_'+s.replace(/[^a-z]/gi,'_');
+    return'<div class="else-pill" id="'+id+'" onclick="togSec(\''+s+'\')">'+s+'</div>';
+  }).join('');
+
+  // Body pattern
+  document.getElementById('bpGrid').innerHTML=BP.map(function(b){
+    return'<div class="bpcard" id="bp_'+b.id+'" onclick="selBodyPat(\''+b.id+'\')">'+
+      '<span class="bpcard-g">'+b.g+'</span>'+
+      '<span class="bpcard-n">'+b.name+'</span>'+
+      '<span class="bpcard-s">'+b.sub+'</span></div>';
+  }).join('');
+  // Empty reveal divs
+  BP.forEach(function(b){
+    var d=document.createElement('div');d.id='bpr_'+b.id;d.className='bp-reveal';
+    document.getElementById('bpGrid').after(d);
+  });
+
+  // Safety — grouped
+  document.getElementById('sfg').innerHTML=SF_GROUPS.map(function(g){
+    return'<div class="sfcard" id="sfc_'+g.id+'" onclick="togSf(\''+g.id+'\')">'+
+      '<div class="sfcb">✓</div>'+
+      '<div><span style="font-size:15px;margin-right:6px">'+g.icon+'</span>'+
+      '<span class="sf-label">'+g.label+'<span class="sf-sub">'+g.sub+'</span></span></div></div>';
+  }).join('');
+
+  // Preferences
+  document.getElementById('approachCards').innerHTML=APPROACHES.map(function(a){
+    return'<div class="pref-card approach-card'+(a.id==='gentle'?' sel':'')+'" id="ap_'+a.id+'" onclick="selApproach(\''+a.id+'\')">'+
+      '<span class="pref-card-icon">'+a.icon+'</span>'+
+      '<div class="pref-card-n">'+a.name+'</div>'+
+      '<div class="pref-card-d">'+a.desc+'</div></div>';
+  }).join('');
+  document.getElementById('durationCards').innerHTML=DURATIONS.map(function(d){
+    return'<div class="pref-card dur-card'+(d.id==='months'?' sel':'')+'" id="dur_'+d.id+'" onclick="selDuration(\''+d.id+'\')">'+
+      '<span class="pref-card-icon">'+d.icon+'</span>'+
+      '<div class="pref-card-n">'+d.name+'</div>'+
+      '<div class="pref-card-d">'+d.desc+'</div></div>';
+  }).join('');
+
+  // Delivery
+  document.getElementById('delivGrid').innerHTML=DELIVERY.map(function(d){
+    return'<div class="dc" id="dc_'+d.id+'" onclick="selDelivery(\''+d.id+'\')">'+
+      '<span class="dc-icon">'+d.icon+'</span><span class="dc-name">'+d.name+'</span>'+
+      '<span class="dc-desc">'+d.desc+'</span></div>';
+  }).join('');
+  document.getElementById('carrierGrid').innerHTML=CARRIERS.map(function(c){
+    return'<div class="cc'+(c.id==='wild_soda'?' sel':'')+'" id="cc_'+c.id+'" onclick="selCarrier(\''+c.id+'\')">'+
+      '<span class="cc-icon">'+c.icon+'</span><div class="cc-name">'+c.name+'</div>'+
+      '<div class="cc-desc">'+c.desc+'</div></div>';
+  }).join('');
+  document.getElementById('boostGrid').innerHTML=BOOSTS.map(function(b){
+    return'<div class="bc" id="bc_'+b.id+'" onclick="togBoost(\''+b.id+'\')">'+
+      '<span class="bc-icon">'+b.icon+'</span><span class="bc-name">'+b.name+'</span>'+
+      '<span class="bc-desc">'+b.desc+'</span></div>';
+  }).join('');
+
+  // Wire explain button (will be re-wired after render)
+  var eb=document.getElementById('explainBtn');if(eb)eb.onclick=doExplain;
+
+  updateCounts();updProg();
+}
+
+init();
+</script>
+</body>
+</html>
