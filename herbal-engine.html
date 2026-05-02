@@ -5,1180 +5,813 @@
   <title>Fungai Art Elixirs · Herbal Engine</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Fonts -->
-  <!-- Display / logo font -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Space+Grotesk:wght@400;500;600&display=swap"
-    rel="stylesheet"
-  />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #050607;
-      --bg2: #101412;
-      --bg3: #171d1a;
-      --accent: #7bd4a1;
-      --accent-soft: #16382a;
-      --accent-soft-2: #10231a;
-      --border: rgba(255, 255, 255, 0.16);
-      --border-soft: rgba(255, 255, 255, 0.08);
-      --text: #f6f3ea;
-      --text-soft: #b9b3a6;
-      --text-softer: #7a766c;
-      --danger-bg: #2a1414;
-      --danger-border: #f97373;
-      --danger-text: #fecaca;
-      --warn-bg: #2a1f10;
-      --warn-border: #facc15;
-      --warn-text: #fde68a;
-      --radius: 11px;
-      --radius-lg: 18px;
+      --bg: #040606;
+      --bg-soft: #0a0f0d;
+      --panel: rgba(8, 11, 10, 0.96);
+      --panel-2: rgba(11, 15, 13, 0.98);
+      --line: rgba(162, 255, 208, 0.14);
+      --line-strong: rgba(137, 246, 190, 0.5);
+      --text: #f3efe5;
+      --muted: #b7b09f;
+      --faint: #7f7a6f;
+      --accent: #8ce8b5;
+      --accent-2: #5ccf96;
+      --accent-bg: rgba(92, 207, 150, 0.12);
+      --danger: #ff8b8b;
+      --danger-bg: rgba(120, 22, 22, 0.24);
+      --warn: #f6dd8f;
+      --warn-bg: rgba(83, 61, 12, 0.28);
+      --radius: 16px;
+      --radius-lg: 22px;
+      --shadow: 0 24px 80px rgba(0,0,0,0.35);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Space Grotesk",
-        "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #1d2623 0, #050606 55%);
-      color: var(--text);
       min-height: 100vh;
-      padding: 1.5rem 1rem 4rem;
+      background:
+        radial-gradient(circle at top, rgba(40,70,55,0.42), transparent 32%),
+        linear-gradient(180deg, #06100d 0%, #040606 65%);
+      color: var(--text);
+      font-family: "Inter", system-ui, sans-serif;
+      padding: 24px 16px 48px;
     }
 
     .app {
-      max-width: 1120px;
+      max-width: 1180px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1.1fr);
-      gap: 1.25rem;
+      grid-template-columns: minmax(0, 1.6fr) minmax(320px, 1fr);
+      gap: 18px;
     }
 
-    @media (max-width: 900px) {
-      .app {
-        grid-template-columns: minmax(0, 1fr);
-      }
+    @media (max-width: 980px) {
+      .app { grid-template-columns: 1fr; }
     }
 
-    .card-shell {
-      background: radial-gradient(circle at top, #1e2623 0, #050606 60%);
-      border-radius: 24px;
-      border: 0.5px solid var(--border-soft);
-      padding: 1rem;
-      position: relative;
-      overflow: hidden;
+    .shell, .side-card {
+      background: linear-gradient(180deg, rgba(7,10,9,0.98), rgba(4,6,6,0.98));
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
     }
 
-    .card-shell::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(
-        circle at top left,
-        rgba(123, 212, 161, 0.12),
-        transparent 60%
-      );
-      opacity: 0.75;
-      pointer-events: none;
+    .shell { padding: 18px; }
+    .inner { position: relative; }
+
+    .header {
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 14px;
+      margin-bottom: 16px;
     }
 
-    .card-inner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hdr {
-      padding-bottom: 0.9rem;
-      border-bottom: 0.5px solid var(--border-soft);
-      margin-bottom: 0.9rem;
-    }
-
-    .hdr-top {
+    .header-top {
       display: flex;
       justify-content: space-between;
-      gap: 0.9rem;
+      gap: 14px;
       align-items: flex-start;
-      margin-bottom: 0.6rem;
+      margin-bottom: 10px;
     }
 
-    .hdr-left {
+    @media (max-width: 740px) {
+      .header-top { flex-direction: column; }
+    }
+
+    .brand-wrap {
       display: flex;
       align-items: center;
-      gap: 0.9rem;
+      gap: 14px;
     }
 
-    .logo-shell {
-      width: 42px;
-      height: 42px;
+    .logo {
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
-      border: 0.5px solid rgba(255, 255, 255, 0.35);
-      background: radial-gradient(circle at top, #323f3b 0, #050606 70%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
       overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: #101615;
+      flex-shrink: 0;
     }
 
-    .logo-shell img {
+    .logo img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
-    .title-block {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .brand-line {
+    .brand-title {
       font-family: "Cormorant Garamond", serif;
-      font-size: 22px;
-      letter-spacing: 0.18em;
+      font-size: 20px;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: #f9fafb;
+      line-height: 1;
+      margin-bottom: 4px;
     }
 
     .brand-sub {
-      font-size: 10px;
-      color: var(--text-soft);
-      text-transform: uppercase;
+      font-size: 11px;
+      color: var(--muted);
       letter-spacing: 0.22em;
+      text-transform: uppercase;
     }
 
-    .hdr-badges {
+    .header-badges {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
       align-items: flex-end;
+    }
+
+    @media (max-width: 740px) {
+      .header-badges { align-items: flex-start; }
     }
 
     .badge {
       font-size: 10px;
-      padding: 4px 9px;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 999px;
-      border: 0.5px solid var(--border);
-      color: var(--text-soft);
-      background: rgba(0, 0, 0, 0.4);
-      white-space: nowrap;
+      padding: 6px 10px;
+      background: rgba(255,255,255,0.03);
     }
 
     .badge.on {
-      background: var(--accent-soft);
       color: var(--accent);
-      border-color: var(--accent);
+      border-color: var(--line-strong);
+      background: var(--accent-bg);
     }
 
-    .hdr-sub {
-      font-size: 11px;
-      color: var(--text-soft);
-      max-width: 520px;
-      line-height: 1.6;
+    .lead {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 740px;
     }
 
-    .intro-grid {
+    .mini-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-      margin-top: 0.7rem;
+      gap: 10px;
+      margin-top: 12px;
     }
 
     @media (max-width: 700px) {
-      .hdr-top {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .hdr-badges {
-        align-items: flex-start;
-      }
-      .intro-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
+      .mini-grid { grid-template-columns: 1fr; }
     }
 
-    .intro-card {
-      border-radius: 14px;
-      border: 0.5px solid rgba(255, 255, 255, 0.09);
-      background: rgba(7, 10, 9, 0.96);
-      padding: 9px 10px 9px;
-      font-size: 10px;
-      line-height: 1.55;
-      color: var(--text-soft);
+    .mini-card {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(8,11,10,0.78);
+      border-radius: 16px;
+      padding: 11px 12px;
     }
 
-    .intro-title {
+    .mini-label {
       font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.18em;
-      color: var(--text-softer);
-      margin-bottom: 3px;
-    }
-
-    .intro-highlight {
-      color: var(--accent);
-    }
-
-    .prog {
-      display: flex;
-      gap: 4px;
-      margin-bottom: 1rem;
-      margin-top: 0.4rem;
-    }
-
-    .pd {
-      flex: 1;
-      height: 3px;
-      border-radius: 999px;
-      background: #242b27;
-    }
-
-    .pd.on {
-      background: var(--accent-soft);
-    }
-
-    .pd.done {
-      background: var(--accent);
-    }
-
-    .step {
-      display: none;
-    }
-
-    .step.vis {
-      display: block;
-    }
-
-    .sn {
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-softer);
-      margin-bottom: 3px;
-    }
-
-    .st {
-      font-size: 16px;
-      font-weight: 500;
+      color: var(--faint);
       margin-bottom: 4px;
     }
 
-    .sh {
+    .mini-card p {
       font-size: 11px;
-      color: var(--text-soft);
-      margin-bottom: 0.9rem;
-      line-height: 1.55;
+      color: var(--muted);
+      line-height: 1.6;
     }
 
-    .cgrid {
+    .progress {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .bar {
+      height: 3px;
+      flex: 1;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .bar.on { background: var(--line-strong); }
+    .bar.done { background: var(--accent); }
+
+    .step { display: none; }
+    .step.vis { display: block; }
+
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 6px;
+    }
+
+    .step h2 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .step p.sub {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .grid-2 {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-      margin-bottom: 0.9rem;
+      gap: 10px;
+      margin-bottom: 14px;
     }
 
-    @media (max-width: 650px) {
-      .cgrid {
-        grid-template-columns: minmax(0, 1fr);
-      }
+    @media (max-width: 720px) {
+      .grid-2 { grid-template-columns: 1fr; }
     }
 
-    .card {
-      background: rgba(9, 11, 10, 0.96);
-      border-radius: var(--radius-lg);
-      border: 0.5px solid var(--border-soft);
-      padding: 9px 10px;
+    .option, .body-card, .delivery-card, .safety-item {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(7,10,9,0.96);
+      border-radius: 18px;
+      transition: 180ms ease;
+    }
+
+    .option, .body-card, .delivery-card {
+      padding: 12px;
       cursor: pointer;
-      transition: all 0.15s ease;
-      position: relative;
-      overflow: hidden;
     }
 
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(
-        circle at top left,
-        rgba(123, 212, 161, 0.06),
-        transparent 60%
-      );
-      opacity: 0;
-      transition: opacity 0.2s ease;
-      pointer-events: none;
-    }
-
-    .card:hover::before {
-      opacity: 1;
-    }
-
-    .card:hover {
-      border-color: var(--accent);
+    .option:hover, .body-card:hover, .delivery-card:hover, .safety-item:hover {
+      border-color: var(--line-strong);
       transform: translateY(-1px);
     }
 
-    .card.sel {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px var(--accent-soft);
-      background: radial-gradient(
-          circle at top left,
-          #1b3327 0,
-          #080b09 55%
-        ),
-        rgba(5, 6, 7, 0.95);
+    .option.sel, .body-card.sel, .delivery-card.sel {
+      border-color: var(--line-strong);
+      background: linear-gradient(180deg, rgba(18,34,27,0.96), rgba(7,10,9,0.96));
+      box-shadow: inset 0 0 0 1px rgba(140,232,181,0.08);
     }
 
-    .ctag {
-      font-size: 9px;
-      letter-spacing: 0.07em;
+    .option-tag {
+      font-size: 10px;
       text-transform: uppercase;
-      color: var(--text-softer);
-      margin-bottom: 2px;
+      letter-spacing: 0.12em;
+      color: var(--faint);
+      margin-bottom: 4px;
     }
 
-    .cname {
-      font-size: 12px;
-      font-weight: 500;
-      margin-bottom: 2px;
+    .option-name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
     }
 
-    .cdesc {
+    .option-desc {
       font-size: 11px;
-      color: var(--text-soft);
-      line-height: 1.35;
+      color: var(--muted);
+      line-height: 1.5;
     }
 
     .pills {
       display: flex;
       flex-wrap: wrap;
-      gap: 7px;
-      margin-bottom: 1rem;
+      gap: 8px;
+      margin-bottom: 14px;
     }
 
     .pill {
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(7,10,9,0.9);
+      color: var(--muted);
       border-radius: 999px;
-      border: 0.5px solid var(--border-soft);
-      padding: 6px 12px;
+      padding: 8px 12px;
       font-size: 11px;
       cursor: pointer;
-      color: var(--text-soft);
-      background: rgba(9, 11, 10, 0.9);
-      transition: all 0.15s ease;
+      transition: 180ms ease;
     }
 
     .pill.sel {
-      background: var(--accent-soft);
       color: var(--accent);
-      border-color: var(--accent);
+      border-color: var(--line-strong);
+      background: var(--accent-bg);
     }
 
-    .chklist {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      margin-bottom: 1rem;
-    }
-
-    .chk {
-      display: flex;
-      align-items: flex-start;
+    .safety-list {
+      display: grid;
       gap: 8px;
-      padding: 8px 10px;
-      border-radius: var(--radius);
-      border: 0.5px solid var(--border-soft);
-      background: rgba(9, 11, 10, 0.96);
+      margin-bottom: 14px;
+    }
+
+    .safety-item {
+      padding: 10px 12px;
       cursor: pointer;
-      transition: all 0.15s ease;
-      font-size: 11px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
     }
 
-    .chk:hover {
-      border-color: var(--accent);
-    }
-
-    .chk.sel {
-      border-color: var(--danger-border);
+    .safety-item.sel {
+      border-color: rgba(255,139,139,0.5);
       background: var(--danger-bg);
     }
 
-    .cb {
-      width: 13px;
-      height: 13px;
-      border-radius: 3px;
-      border: 0.5px solid var(--border-soft);
+    .check {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.12);
       flex-shrink: 0;
+      margin-top: 1px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 8px;
-      color: transparent;
-      margin-top: 2px;
-    }
-
-    .chk.sel .cb {
-      background: var(--danger-border);
-      border-color: var(--danger-border);
-      color: #050607;
-    }
-
-    .cl {
-      line-height: 1.4;
-      color: var(--text);
-    }
-
-    .cs {
-      display: block;
       font-size: 10px;
-      color: var(--text-soft);
-      margin-top: 1px;
+      color: transparent;
     }
 
-    .chk.sel .cl {
-      color: var(--danger-text);
+    .safety-item.sel .check {
+      color: #1a0808;
+      background: var(--danger);
+      border-color: var(--danger);
     }
 
-    .bm-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-      margin-bottom: 0.9rem;
-    }
-
-    .bmc {
-      border-radius: var(--radius-lg);
-      border: 0.5px solid var(--border-soft);
-      background: rgba(9, 11, 10, 0.95);
-      padding: 11px 11px 10px;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.18s ease;
-    }
-
-    .bmc:hover {
-      border-color: var(--accent);
-      transform: translateY(-1px);
-    }
-
-    .bmc.sel {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px var(--accent-soft);
-      background: radial-gradient(circle at top, #173227 0, #080b09 55%);
-    }
-
-    .bmc-g {
-      font-size: 18px;
-      line-height: 1;
-      margin-bottom: 5px;
-      display: block;
-    }
-
-    .bmc-n {
+    .safety-title {
       font-size: 12px;
-      font-weight: 500;
       margin-bottom: 2px;
     }
 
-    .bmc-s {
+    .safety-sub {
       font-size: 10px;
-      color: var(--text-soft);
-      line-height: 1.35;
+      color: var(--muted);
+      line-height: 1.5;
     }
 
-    .deliv-grid {
+    .body-grid, .delivery-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-      margin-bottom: 1rem;
+      gap: 10px;
+      margin-bottom: 14px;
     }
 
-    @media (max-width: 650px) {
-      .deliv-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+    .body-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .delivery-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    @media (max-width: 720px) {
+      .body-grid, .delivery-grid { grid-template-columns: 1fr; }
     }
 
-    .dc {
-      border-radius: var(--radius-lg);
-      border: 0.5px solid var(--border-soft);
-      background: rgba(9, 11, 10, 0.95);
-      padding: 13px 9px 11px;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.18s ease;
-    }
-
-    .dc:hover {
-      border-color: var(--accent);
-      transform: translateY(-1px);
-    }
-
-    .dc.sel {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px var(--accent-soft);
-      background: radial-gradient(circle at top, #193227 0, #080b09 52%);
-    }
-
-    .dc-icon {
+    .body-glyph, .delivery-icon {
       font-size: 18px;
+      margin-bottom: 7px;
       display: block;
-      margin-bottom: 5px;
-      line-height: 1;
     }
 
-    .dc-name {
-      font-size: 12px;
-      font-weight: 500;
+    .body-name, .delivery-name {
+      font-size: 13px;
+      font-weight: 600;
       margin-bottom: 3px;
     }
 
-    .dc-desc {
-      font-size: 10px;
-      color: var(--text-soft);
-      line-height: 1.4;
+    .body-sub, .delivery-desc {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.5;
     }
 
     .nav {
       display: flex;
       justify-content: space-between;
-      gap: 7px;
-      flex-wrap: wrap;
-      margin-top: 0.7rem;
+      gap: 8px;
+      margin-top: 6px;
     }
 
     .btn {
-      border-radius: var(--radius);
-      border: 0.5px solid var(--border-soft);
-      padding: 8px 15px;
-      font-size: 11px;
-      background: transparent;
+      border: 1px solid rgba(255,255,255,0.09);
       color: var(--text);
+      background: transparent;
+      border-radius: 14px;
+      padding: 9px 15px;
+      font-size: 11px;
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: 180ms ease;
     }
 
-    .btn.p {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #06100b;
-    }
-
-    .btn:active {
-      transform: scale(0.97);
+    .btn.primary {
+      color: #05100b;
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+      border-color: rgba(140,232,181,0.4);
     }
 
     .btn[disabled] {
-      opacity: 0.35;
+      opacity: 0.4;
       cursor: not-allowed;
     }
 
-    /* RESULT PANEL */
-
     .result {
-      margin-top: 1rem;
-      background: radial-gradient(circle at top, #151d1a 0, #050607 60%);
-      border-radius: 20px;
-      border: 0.5px solid var(--border);
-      padding: 12px 12px 11px;
-      font-size: 11px;
-      line-height: 1.55;
       display: none;
-      position: relative;
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(10,14,12,0.98), rgba(5,7,6,0.98));
       overflow: hidden;
     }
 
-    .result::before {
-      content: "";
-      position: absolute;
-      inset: -20%;
-      background: radial-gradient(
-        circle at top,
-        rgba(123, 212, 161, 0.06),
-        transparent 60%
-      );
-      opacity: 0.7;
-      pointer-events: none;
+    .result-inner {
+      padding: 14px;
     }
 
-    .res-inner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .res-hero {
+    .result-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr);
-      gap: 10px;
-      margin-bottom: 0.9rem;
+      grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+      gap: 14px;
     }
 
-    @media (max-width: 780px) {
-      .app {
-        max-width: 820px;
-      }
-      .res-hero {
-        grid-template-columns: minmax(0, 1fr);
-      }
+    @media (max-width: 840px) {
+      .result-grid { grid-template-columns: 1fr; }
     }
 
-    .res-img-shell {
+    .bottle-shell {
       position: relative;
+      padding: 12px;
       border-radius: 18px;
-      padding: 8px 9px 10px;
-      background: radial-gradient(circle at top, rgba(0, 0, 0, 0.7), #000 95%);
-      border: 0.5px solid var(--border-soft);
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.28);
     }
 
-    .res-bottle {
+    .bottle-neck {
+      width: 42%;
+      height: 18px;
+      margin: 0 auto -4px;
+      border-radius: 999px 999px 4px 4px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(0,0,0,0.8));
+      border: 1px solid rgba(255,255,255,0.12);
       position: relative;
-      border-radius: 999px 999px 14px 14px;
-      overflow: hidden;
-      border: 0.5px solid rgba(255, 255, 255, 0.18);
-      background: radial-gradient(circle at top, #24332d 0, #050606 60%);
-      aspect-ratio: 3 / 4;
+      z-index: 2;
     }
 
-    .res-img-inner {
+    .bottle {
+      aspect-ratio: 3 / 4;
+      border-radius: 999px 999px 18px 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: radial-gradient(circle at top, #21352d 0, #050606 70%);
+      position: relative;
+    }
+
+    .bottle-image {
       width: 100%;
       height: 100%;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(166,255,210,0.15), transparent 25%),
+        radial-gradient(circle at top, #20342d 0, #050606 65%);
       background-size: cover;
       background-position: center;
-      filter: saturate(1.05);
-      transition: opacity 0.4s ease;
-      opacity: 0.7;
+      opacity: 0.96;
+      transition: opacity 220ms ease;
     }
 
-    .res-bottle-neck {
+    .bottle-label {
       position: absolute;
-      top: -10px;
-      left: 22%;
-      width: 56%;
-      height: 16px;
-      border-radius: 999px 999px 3px 3px;
-      border: 0.5px solid rgba(255, 255, 255, 0.18);
-      background: radial-gradient(
-        circle at top,
-        rgba(255, 255, 255, 0.12),
-        rgba(0, 0, 0, 0.9)
-      );
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
-    }
-
-    .res-img-label {
-      position: absolute;
-      left: 8px;
-      bottom: 8px;
-      font-size: 9px;
-      padding: 3px 7px;
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.58);
-      color: var(--text-soft);
-    }
-
-    .res-meta h3 {
-      font-size: 13px;
-      margin-bottom: 4px;
-    }
-
-    .res-meta-mainline {
-      font-size: 11px;
-      color: var(--text-soft);
-      margin-bottom: 4px;
-    }
-
-    .res-meta-format {
+      left: 12px;
+      bottom: 12px;
       font-size: 10px;
-      color: var(--text-softer);
-    }
-
-    .res-accent-dot {
-      display: inline-block;
-      width: 9px;
-      height: 9px;
+      color: var(--muted);
+      background: rgba(0,0,0,0.48);
+      border: 1px solid rgba(255,255,255,0.08);
       border-radius: 999px;
-      margin-right: 5px;
-      background: var(--accent);
-      box-shadow: 0 0 8px rgba(123, 212, 161, 0.6);
+      padding: 5px 8px;
     }
 
-    .res-herbs {
-      margin-top: 0.4rem;
+    .result h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
     }
 
-    .res-herb-title {
+    .result-main {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+
+    .result-format {
       font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-softer);
-      margin-bottom: 4px;
+      color: var(--faint);
+      margin-bottom: 14px;
     }
 
-    .res-herb-grid {
+    .pill-group-title {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      color: var(--faint);
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .result-pills {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 8px;
     }
 
-    .res-herb-pill {
+    .result-pill {
       border-radius: 999px;
-      border: 0.5px solid var(--border-soft);
-      padding: 5px 9px;
+      padding: 7px 10px;
       font-size: 10px;
-      background: rgba(9, 11, 10, 0.97);
-      color: var(--text-soft);
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      transform: translateY(6px);
-      opacity: 0;
-      transition: all 0.26s ease;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
     }
 
-    .res-herb-pill.hero {
-      border-color: var(--accent);
-      background: radial-gradient(
-        circle at top,
-        rgba(123, 212, 161, 0.18),
-        rgba(9, 11, 10, 0.96)
-      );
+    .result-pill span {
       color: var(--text);
+      font-weight: 600;
+      margin-right: 6px;
     }
 
-    .res-herb-pill span {
-      font-weight: 500;
-      color: var(--text);
+    .result-pill.hero {
+      border-color: rgba(140,232,181,0.3);
+      background: rgba(140,232,181,0.1);
     }
 
-    .res-herb-pill.support span {
-      color: var(--text-soft);
-    }
-
-    .warn {
-      margin-top: 0.8rem;
-      border-radius: var(--radius);
-      border: 0.5px solid var(--warn-border);
+    .warning {
+      margin-top: 12px;
+      border: 1px solid rgba(246,221,143,0.28);
       background: var(--warn-bg);
-      color: var(--warn-text);
-      padding: 8px 10px;
+      color: var(--warn);
+      border-radius: 14px;
+      padding: 10px 12px;
       font-size: 10px;
-      line-height: 1.55;
+      line-height: 1.6;
     }
 
-    .warn-title {
+    .warning strong {
+      display: block;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-weight: 500;
-      margin-bottom: 3px;
+      letter-spacing: 0.14em;
+      margin-bottom: 2px;
+      font-size: 10px;
     }
 
-    /* RIGHT COLUMN: Cosmology / numbers / options */
+    .side {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
     .side-card {
-      background: rgba(7, 9, 8, 0.96);
-      border-radius: 22px;
-      border: 0.5px solid var(--border-soft);
-      padding: 12px 12px 11px;
-      font-size: 11px;
-      line-height: 1.5;
-      margin-bottom: 10px;
+      padding: 14px;
     }
 
     .side-label {
-      font-size: 9px;
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--text-softer);
-      margin-bottom: 5px;
+      letter-spacing: 0.18em;
+      color: var(--faint);
+      margin-bottom: 6px;
     }
 
-    .side-heading {
-      font-size: 13px;
-      font-weight: 500;
-      margin-bottom: 4px;
+    .side-card h4 {
+      font-size: 14px;
+      margin-bottom: 6px;
     }
 
-    .side-list {
-      list-style: none;
-      padding-left: 0;
+    .side-card p, .side-card li {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.65;
     }
 
-    .side-list li {
-      margin-bottom: 2px;
-    }
-
-    .side-tag {
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--accent);
+    .side-card ul {
+      padding-left: 16px;
     }
   </style>
 </head>
 <body>
   <div class="app">
-    <!-- LEFT: ENGINE -->
-    <div class="card-shell">
-      <div class="card-inner">
-        <header class="hdr">
-          <div class="hdr-top">
-            <div class="hdr-left">
-              <div class="logo-shell">
-                <!-- replace with your actual logo path -->
-                <img src="/logo-fungai-art.png" alt="Fungai Art" />
+    <main class="shell">
+      <div class="inner">
+        <header class="header">
+          <div class="header-top">
+            <div class="brand-wrap">
+              <div class="logo">
+                <img src="/logo-fungai-art.png" alt="Fungai Art logo" />
               </div>
-              <div class="title-block">
-                <div class="brand-line">Fungai Art Elixirs</div>
-                <div class="brand-sub">Mystical nature · herbal intelligence engine</div>
+              <div>
+                <div class="brand-title">Fungai Art Elixirs</div>
+                <div class="brand-sub">Mystical nature · herbal intelligence engine</div>
               </div>
             </div>
-            <div class="hdr-badges">
+
+            <div class="header-badges">
               <div class="badge on">Lab prototype · connected to materia medica</div>
               <div class="badge">Skogens Nektar · Moder Jord · Tyme Tonics</div>
             </div>
           </div>
-          <p class="hdr-sub">
-            A living herbal engine sitting on top of our Fungai Art materia medica. Answer
-            a few ritual questions, we map a pattern and surface 2–3 anchor herbs with
-            gentle supports, ready to interpret with your practitioner.
+
+          <p class="lead">
+            A living herbal engine shaped from your materia medica. Answer a few ritual questions,
+            and the system surfaces a formula field with anchor herbs, support herbs and a visual
+            atmosphere for the blend.
           </p>
 
-          <div class="intro-grid">
-            <div class="intro-card">
-              <div class="intro-title">Where we’re at</div>
+          <div class="mini-grid">
+            <div class="mini-card">
+              <div class="mini-label">Current traction</div>
               <p>
-                <span class="intro-highlight">10+ confirmed herb‑forward gigs</span> in
-                Sweden and Portugal, early traction with <span class="intro-highlight">Tyme Tonics</span>,
-                and a growing apothecary of 200+ monograph‑grade herbs and fungi.
+                Fungai Art is already moving through events, tincture concepts and ritual beverage
+                formats across Sweden and Portugal. The apothecary is becoming a living interface.
               </p>
             </div>
-            <div class="intro-card">
-              <div class="intro-title">Invitation</div>
+            <div class="mini-card">
+              <div class="mini-label">Investment paths</div>
               <p>
-                This is a herbal protocol maker prototype- more text will be revealed soon Another is to secure the build
-                <span class="intro-highlight"></span>,
+                One path is long-term aligned capital with revenue participation. Another is a secure
+                bridge that stabilises the build now and reopens structure later.
               </p>
             </div>
           </div>
         </header>
 
-        <div class="prog" id="pg">
-          <div class="pd on"></div>
-          <div class="pd"></div>
-          <div class="pd"></div>
-          <div class="pd"></div>
-          <div class="pd"></div>
+        <div class="progress" id="progress">
+          <div class="bar on"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
         </div>
 
-        <!-- Step 0 Primary intention -->
         <section class="step vis" id="s0">
-          <div class="sn">1 of 5 · Primary intention</div>
-          <div class="st">What is this elixir really for?</div>
-          <p class="sh">
-            Choose one centre of gravity. Everything else will orbit this.
-          </p>
-          <div class="cgrid" id="intentGrid"></div>
+          <div class="eyebrow">1 of 5 · Primary intention</div>
+          <h2>What is the centre of gravity for this formula?</h2>
+          <p class="sub">Choose one main intention. The rest of the pattern will orbit around it.</p>
+          <div class="grid-2" id="intentGrid"></div>
           <div class="nav">
             <span></span>
-            <button class="btn p" id="btn0" onclick="go(1)">Continue</button>
+            <button class="btn primary" id="btn0" onclick="go(1)">Continue</button>
           </div>
         </section>
 
-        <!-- Step 1 Layers -->
         <section class="step" id="s1">
-          <div class="sn">2 of 5 · Layers in the field</div>
-          <div class="st">What else is in the mix right now?</div>
-          <p class="sh">
-            Tap a few that feel alive today. They fine‑tune the pattern; they do not have
-            to be perfect.
-          </p>
+          <div class="eyebrow">2 of 5 · Layers in the field</div>
+          <h2>What else is shaping the field?</h2>
+          <p class="sub">Choose any supporting layers that feel alive today.</p>
           <div class="pills" id="layerPills"></div>
           <div class="nav">
             <button class="btn" onclick="go(0)">Back</button>
-            <button class="btn p" id="btn1" onclick="go(2)">Continue</button>
+            <button class="btn primary" id="btn1" onclick="go(2)">Continue</button>
           </div>
         </section>
 
-        <!-- Step 2 Safety -->
         <section class="step" id="s2">
-          <div class="sn">3 of 5 · Safety filter</div>
-          <div class="st">Anything we absolutely should not mess with?</div>
-          <p class="sh">
-            This does not diagnose you. It just silently down‑weights herbs that do not
-            belong in your field.
-          </p>
-          <div class="chklist" id="safetyList"></div>
+          <div class="eyebrow">3 of 5 · Safety filter</div>
+          <h2>Anything this formula should respectfully avoid?</h2>
+          <p class="sub">This does not diagnose. It simply narrows the field more safely.</p>
+          <div class="safety-list" id="safetyList"></div>
           <div class="nav">
             <button class="btn" onclick="go(1)">Back</button>
-            <button class="btn p" id="btn2" onclick="go(3)">Continue</button>
+            <button class="btn primary" id="btn2" onclick="go(3)">Continue</button>
           </div>
         </section>
 
-        <!-- Step 3 Body pattern -->
         <section class="step" id="s3">
-          <div class="sn">4 of 5 · Body pattern</div>
-          <div class="st">Right now, your body feels more like…</div>
-          <p class="sh">
-            One tap. Go with the first pattern that lands – we will bias warming,
-            cooling or deep replenishing around it.
-          </p>
-          <div class="bm-grid" id="bodyGrid"></div>
+          <div class="eyebrow">4 of 5 · Body pattern</div>
+          <h2>Which body pattern feels closest right now?</h2>
+          <p class="sub">One choice unlocks the final delivery step.</p>
+          <div class="body-grid" id="bodyGrid"></div>
           <div class="nav">
             <button class="btn" onclick="go(2)">Back</button>
-            <button class="btn p" id="btn3" onclick="go(4)">Continue</button>
+            <button class="btn primary" id="btn3" onclick="go(4)" disabled>Continue</button>
           </div>
         </section>
 
-        <!-- Step 4 Delivery -->
         <section class="step" id="s4">
-          <div class="sn">5 of 5 · How you will take it</div>
-          <div class="st">How will you most likely take this?</div>
-          <p class="sh">
-            Format shapes extraction, bottle logic, dosing and daily ritual. Pick what
-            feels real in your actual life.
-          </p>
-          <div class="deliv-grid" id="delivGrid"></div>
+          <div class="eyebrow">5 of 5 · Ritual format</div>
+          <h2>How will you most likely take this?</h2>
+          <p class="sub">Format shapes extraction, use ritual and bottle logic.</p>
+          <div class="delivery-grid" id="deliveryGrid"></div>
           <div class="nav">
             <button class="btn" onclick="go(3)">Back</button>
-            <button class="btn p" id="buildBtn" onclick="buildFormula()">
-              Build my elixir pattern
-            </button>
+            <button class="btn primary" id="buildBtn" onclick="buildFormula()" disabled>Compose formula field</button>
           </div>
         </section>
 
-        <!-- Result -->
         <section class="result" id="result">
-          <div class="res-inner">
-            <div class="res-hero">
-              <div class="res-img-shell">
-                <div class="res-bottle-neck"></div>
-                <div class="res-bottle">
-                  <div
-                    class="res-img-inner"
-                    id="resImgInner"
-                    style="background-image: radial-gradient(circle at top, #24332d 0, #050606 60%)"
-                  ></div>
-                </div>
-                <div class="res-img-label" id="resImgLabel">
-                  Elixir atmosphere · brewing…
+          <div class="result-inner">
+            <div class="result-grid">
+              <div class="bottle-shell">
+                <div class="bottle-neck"></div>
+                <div class="bottle">
+                  <div class="bottle-image" id="resImgInner"></div>
+                  <div class="bottle-label" id="resImgLabel">Elixir atmosphere</div>
                 </div>
               </div>
-              <div class="res-meta">
-                <h3 id="resTitle">
-                  <span class="res-accent-dot"></span>Custom pattern
-                </h3>
-                <p class="res-meta-mainline" id="resLine">
-                  Your custom elixir centred on stress resilience.
-                </p>
-                <p class="res-meta-format" id="resFormat">
-                  Preferred ritual format: tincture drops.
-                </p>
 
-                <div class="res-herbs">
-                  <div class="res-herb-title">Anchor herbs in this pattern</div>
-                  <div class="res-herb-grid" id="resHerbGrid"></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="warn">
-              <div class="warn-title">Important</div>
               <div>
-                This engine is a ritual and design tool, not a medical device. Herb
-                choices are for inspiration and practitioner dialogue, not a prescription.
-                Always cross‑check pregnancy, bipolar spectrum, liver, SSRI and blood
-                pressure safety with a qualified practitioner.
+                <h3 id="resTitle">Custom formula field</h3>
+                <div class="result-main" id="resLine">
+                  A custom formula pattern shaped from your answers.
+                </div>
+                <div class="result-format" id="resFormat">
+                  Preferred ritual format: tincture drops.
+                </div>
+
+                <div class="pill-group-title">Suggested herbs</div>
+                <div class="result-pills" id="resHerbGrid"></div>
+
+                <div class="warning">
+                  <strong>Important</strong>
+                  This engine is a design and ritual tool, not a medical device. Always cross-check
+                  herb safety around pregnancy, psychiatric medication, liver conditions, blood pressure
+                  and practitioner context.
+                </div>
               </div>
             </div>
           </div>
         </section>
       </div>
-    </div>
+    </main>
 
-    <!-- RIGHT COLUMN: STORY / NUMBERS / OPTIONS -->
-    <div>
+    <aside class="side">
       <div class="side-card">
-  <div class="side-label">Current traction</div>
-  <div class="side-heading">Early signal, real-world testing</div>
-  <p>
-    Fungai Art is already moving through events, tincture concepts and ritual beverage
-    formats across Sweden and Portugal. The apothecary is no longer an idea — it is an
-    active body of work, now being translated into a living herbal interface.
-  </p>
-</div>
-
-      <div class="side-card">
-        <div class="side-label">Numbers · early signal</div>
+        <div class="side-label">Ecosystem</div>
+        <h4>Skogens Nektar · Moder Jord · Tyme Tonics</h4>
         <p>
-          • 200+ herbs and fungi in monograph‑grade database<br />
-          • 10+ confirmed herb‑forward gigs and collaborations<br />
-          • First revenue from Tyme Tonics beverage tests and Skogens Nektar events<br />
-          • Pipeline of practitioners wanting a safe, pattern‑aware engine to co‑design
-          formulas with clients.
+          Fungai Art connects forest ritual, apothecary craft and sensory experience.
+          Skogens Nektar is the immersive forest-facing expression. Moder Jord grounds the
+          earth altar and sound layer. Tyme Tonics carries the everyday portal:
+          drinks, altar bottles and botanical micro-rituals.
         </p>
       </div>
 
-<div class="side-card">
-  <div class="side-label">Ecosystem</div>
-  <div class="side-heading">Skogens Nektar · Moder Jord · Tyme Tonics</div>
-  <p>
-    Fungai Art connects forest ritual, apothecary craft and sensory experience. Skogens
-    Nektar is the immersive forest-facing expression. Moder Jord grounds the earth altar,
-    sound and devotional layer. Tyme Tonics carries the everyday portal — functional
-    drinks, altar bottles and botanical micro-rituals.
-  </p>
-</div>
-    </div>
+      <div class="side-card">
+        <div class="side-label">Numbers · early signal</div>
+        <ul>
+          <li>200+ herbs and fungi in a monograph-grade database</li>
+          <li>10+ confirmed herb-forward gigs and collaborations</li>
+          <li>First traction through tonics, events and interactive formula design</li>
+        </ul>
+      </div>
+
+      <div class="side-card">
+        <div class="side-label">Capital paths</div>
+        <p>
+          One path supports a long-term revenue-aligned build. Another secures a safer bridge for
+          finishing the engine, proving traction and reopening the larger structure later.
+        </p>
+      </div>
+    </aside>
   </div>
 
   <script>
-    // ----- STATE -----
     const INTS = [
-      {
-        id: "adaptogenic",
-        tag: "adaptogenic",
-        name: "Stress resilience",
-        desc: "For when life is a lot and you need steady capacity, not more stimulation."
-      },
-      {
-        id: "hypnotic",
-        tag: "hypnotic",
-        name: "Sleep restoration",
-        desc: "For soft landings at night, deeper sleep, and waking up restored."
-      },
-      {
-        id: "carminative",
-        tag: "carminative",
-        name: "Digestion & gut",
-        desc: "For bloating, IBS spirals and the gut‑liver‑mind knot that needs unwinding."
-      },
-      {
-        id: "hepatic",
-        tag: "hepatic",
-        name: "Detox & liver",
-        desc: "For liver load, stagnation, and the clear sludge, not just take more things moment."
-      },
-      {
-        id: "nervine",
-        tag: "nervine",
-        name: "Mood & emotion",
-        desc: "For grief, flatness, tenderness and emotional resilience that does not bypass."
-      },
-      {
-        id: "nootropic",
-        tag: "nootropic",
-        name: "Cognitive field",
-        desc: "For focus, recall and remembering what you came here to do."
-      }
+      { id: "adaptogenic", tag: "adaptogenic", name: "Stress resilience", desc: "Steadying capacity, pressure support and restoration." },
+      { id: "hypnotic", tag: "hypnotic", name: "Sleep restoration", desc: "Gentle descent, deeper rest and soft evening support." },
+      { id: "carminative", tag: "carminative", name: "Digestion & gut", desc: "For the gut-liver-mind knot, stagnation and post-meal discomfort." },
+      { id: "hepatic", tag: "hepatic", name: "Detox & liver", desc: "For drainage, liver support and clearer metabolic flow." },
+      { id: "nervine", tag: "nervine", name: "Mood & emotion", desc: "For tenderness, nervous system support and emotional steadiness." },
+      { id: "nootropic", tag: "nootropic", name: "Cognitive field", desc: "For clarity, focus, memory and directed mental energy." }
     ];
 
     const LAYERS = [
-      "Brain fog & foggy focus",
-      "Fragile mood / low days",
-      "Social anxiety / overthinking",
-      "Gut tightness / IBS patterns",
-      "Cycle chaos / peri‑stuff",
-      "Chronic pain / old injury",
-      "Burnout / no reserves",
-      "Skin flares / reactive skin",
-      "Low libido / low spark",
-      "Frequent infections"
+      "Brain fog", "Fragile mood", "Overthinking", "Gut tightness",
+      "Cycle chaos", "Chronic pain", "Burnout", "Skin flares",
+      "Low spark", "Frequent infections"
     ];
 
     const SAFETY = [
-      {
-        id: "pregnancy",
-        label: "Pregnant or trying to conceive",
-        sub: "Avoids emmenagogues and high‑risk pregnancy herbs."
-      },
-      {
-        id: "breastfeeding",
-        label: "Breastfeeding",
-        sub: "Skips herbs with infant‑safety question marks."
-      },
-      {
-        id: "ssri",
-        label: "On SSRIs / SNRIs or other antidepressants",
-        sub: "Avoids serotonin‑stacking and destabilising combinations."
-      },
-      {
-        id: "bipolar",
-        label: "Bipolar spectrum",
-        sub: "Avoids herbs that can push into hypomania or mixed states."
-      },
-      {
-        id: "liver",
-        label: "Liver disease / high liver enzymes / heavy alcohol",
-        sub: "Removes hepatotoxic herbs and ones that burden clearance."
-      },
-      {
-        id: "bp",
-        label: "Uncontrolled high blood pressure",
-        sub: "Avoids strong stimulants and herbs that reliably raise BP."
-      },
-      {
-        id: "autoimmune",
-        label: "Autoimmune or on immunosuppressants",
-        sub: "Down‑weights immune‑stimulating herbs and mushrooms."
-      },
-      {
-        id: "none",
-        label: "None of these apply",
-        sub: "Keep the safe part of the full apothecary open."
-      }
+      { id: "pregnancy", label: "Pregnant or trying to conceive", sub: "Avoids pregnancy-sensitive herbs." },
+      { id: "breastfeeding", label: "Breastfeeding", sub: "Down-weights herbs with uncertain infant safety." },
+      { id: "ssri", label: "On SSRIs / SNRIs or antidepressants", sub: "Avoids destabilising interaction zones." },
+      { id: "bipolar", label: "Bipolar spectrum", sub: "Avoids herbs that may overstimulate vulnerable states." },
+      { id: "liver", label: "Liver disease / high liver enzymes", sub: "Reduces burdening herbs." },
+      { id: "bp", label: "Uncontrolled high blood pressure", sub: "Avoids strong stimulants." },
+      { id: "autoimmune", label: "Autoimmune or immunosuppressants", sub: "Down-weights immune-stimulating herbs and fungi." },
+      { id: "none", label: "None of these apply", sub: "Keep the safer part of the wider field open." }
     ];
 
     const BODY = [
       { id: "hot", glyph: "✺", name: "A lit match", sub: "Warm, reactive, inflamed" },
       { id: "cold", glyph: "☾", name: "A cold stone", sub: "Cool, slow, low energy" },
       { id: "mixed", glyph: "⟁", name: "A flickering flame", sub: "Sometimes hot, sometimes cold" },
-      { id: "depleted", glyph: "☉", name: "An empty cup", sub: "Exhausted, depleted, dry" }
+      { id: "depleted", glyph: "◌", name: "An empty cup", sub: "Exhausted, depleted, dry" }
     ];
 
     const DELIVERY = [
-      {
-        id: "tincture",
-        icon: "✶",
-        name: "Tincture drops",
-        desc: "Fast, concentrated, precise. 30–40 drops in water, 1–3 daily."
-      },
-      {
-        id: "tonic",
-        icon: "✺",
-        name: "Wild tonic",
-        desc: "Drinkable elixir with ceremony and flavour – forest sodas, lunar tonics."
-      },
-      {
-        id: "bottle",
-        icon: "◎",
-        name: "15–30 ml altar bottle",
-        desc: "Lives on your altar, desk or nightstand for daily micro‑rituals."
-      }
+      { id: "tincture", icon: "✶", name: "Tincture drops", desc: "Fast, concentrated and precise." },
+      { id: "tonic", icon: "✺", name: "Wild tonic", desc: "Drinkable ritual with flavour and body." },
+      { id: "bottle", icon: "◎", name: "15–30 ml altar bottle", desc: "A compact daily micro-ritual." }
     ];
 
-    const COLORMAP = {
-      adaptogenic: {
-        hot: "#f97373",
-        cold: "#38bdf8",
-        mixed: "#a855f7",
-        depleted: "#fbbf24"
-      },
-      hypnotic: {
-        hot: "#6366f1",
-        cold: "#22c1c3",
-        mixed: "#7c3aed",
-        depleted: "#0f172a"
-      },
-      hepatic: {
-        hot: "#facc15",
-        cold: "#16a34a",
-        mixed: "#4ade80",
-        depleted: "#78350f"
-      }
-    };
-
-    const S = {
+    const STATE = {
       int: null,
       layers: [],
       safety: [],
@@ -1188,398 +821,290 @@
 
     let HERB_POOL = [];
 
-    // ----- DB BRIDGE -----
-
     async function loadHerbPool() {
       try {
-        const res = await fetch("/herb-engine-pool.json");
-        if (!res.ok) return;
-        HERB_POOL = await res.json();
-      } catch (e) {
-        console.error("Failed to load herb engine pool", e);
+        const res = await fetch("/herb-engine-pool.json", { cache: "no-store" });
+        if (!res.ok) throw new Error("Missing herb-engine-pool.json");
+        const data = await res.json();
+        HERB_POOL = Array.isArray(data) ? data : [];
+        console.log("HERB_POOL loaded:", HERB_POOL.length);
+      } catch (err) {
+        console.error("Failed to load herb pool", err);
+        HERB_POOL = [];
       }
     }
 
     function scoreHerb(h, intentionId, bodyId) {
-      const pf = (h.primaryfunctions || "").toLowerCase();
-      const energetics = (h.energetics || "").toLowerCase();
-      const meridians = (h.tcmmeridians || "").toLowerCase();
-      const caution = h.cautionlevel || "";
+      const pf = String(h.primaryfunctions || "").toLowerCase();
+      const energetics = String(h.energetics || "").toLowerCase();
+      const meridians = String(h.tcmmeridians || "").toLowerCase();
+      const caution = String(h.cautionlevel || "").toUpperCase();
 
       let score = 0;
 
-      // Intention matches
       if (intentionId === "adaptogenic" && pf.includes("adaptogen")) score += 4;
-      if (intentionId === "hypnotic" && (pf.includes("sleep") || pf.includes("insomnia")))
-        score += 4;
-      if (intentionId === "carminative" && (pf.includes("digestive") || pf.includes("gi ")))
-        score += 4;
-      if (intentionId === "hepatic" && (pf.includes("liver") || meridians.includes("liver")))
-        score += 4;
-      if (intentionId === "nervine" && (pf.includes("mood") || pf.includes("nervine")))
-        score += 4;
-      if (intentionId === "nootropic" && (pf.includes("memory") || pf.includes("focus")))
-        score += 4;
+      if (intentionId === "hypnotic" && (pf.includes("sleep") || pf.includes("insomnia") || pf.includes("sedative"))) score += 4;
+      if (intentionId === "carminative" && (pf.includes("digest") || pf.includes("carminative") || pf.includes("gas") || pf.includes("bloat"))) score += 4;
+      if (intentionId === "hepatic" && (pf.includes("liver") || pf.includes("hepatic") || meridians.includes("liver"))) score += 4;
+      if (intentionId === "nervine" && (pf.includes("nervine") || pf.includes("anxiety") || pf.includes("mood") || pf.includes("calm"))) score += 4;
+      if (intentionId === "nootropic" && (pf.includes("memory") || pf.includes("focus") || pf.includes("cognitive") || pf.includes("brain"))) score += 4;
 
-      // Body pattern vs energetics
-      if (
-        bodyId === "hot" &&
-        (energetics.includes("cool") || energetics.includes("slightly cool"))
-      )
-        score += 3;
-      if (bodyId === "cold" && energetics.includes("warm")) score += 3;
-      if (
-        bodyId === "depleted" &&
-        (energetics.includes("nourishing") || energetics.includes("building"))
-      )
-        score += 4;
-      if (bodyId === "mixed" && energetics.includes("balancing")) score += 2;
+      if (bodyId === "hot" && (energetics.includes("cool") || energetics.includes("slightly cool"))) score += 3;
+      if (bodyId === "cold" && (energetics.includes("warm") || energetics.includes("slightly warm"))) score += 3;
+      if (bodyId === "depleted" && (energetics.includes("nourishing") || energetics.includes("building") || energetics.includes("tonic"))) score += 4;
+      if (bodyId === "mixed" && (energetics.includes("neutral") || energetics.includes("balancing"))) score += 2;
 
-      // Caution bias
       if (caution === "LOW") score += 1;
       if (caution === "LOW-MEDIUM") score += 0.5;
-      if (
-        caution === "MEDIUM-HIGH" ||
-        caution === "HIGH" ||
-        caution === "VERY HIGH"
-      )
-        score -= 2;
+      if (["MEDIUM-HIGH", "HIGH", "VERY HIGH"].includes(caution)) score -= 2;
+
+      if (STATE.safety.includes("pregnancy") && /emmenagogue|uterine|abortifacient/.test(pf)) score -= 6;
+      if (STATE.safety.includes("ssri") && /serotonin|mao|stimulant/.test(pf)) score -= 4;
+      if (STATE.safety.includes("bipolar") && /stimulant/.test(pf)) score -= 4;
+      if (STATE.safety.includes("liver") && /hepatotoxic/.test(pf)) score -= 6;
+      if (STATE.safety.includes("bp") && /stimulant|hypertensive/.test(pf)) score -= 4;
+      if (STATE.safety.includes("autoimmune") && /immunostimulant|immune stimulant/.test(pf)) score -= 3;
 
       return score;
     }
 
-    function accentColorFor(intentionId, bodyId) {
-      const pack = COLORMAP[intentionId];
-      if (!pack) return getComputedStyle(document.documentElement).getPropertyValue(
-        "--accent"
-      );
-      return pack[bodyId] || "#7bd4a1";
-    }
-
-    // ----- RENDERERS -----
-
     function renderIntents() {
-      const g = document.getElementById("intentGrid");
-      g.innerHTML = INTS.map(
-        (i) =>
-          `<div class="card" id="int-${i.id}" onclick="selInt('${i.id}')">
-            <div class="ctag">${i.tag}</div>
-            <div class="cname">${i.name}</div>
-            <div class="cdesc">${i.desc}</div>
-          </div>`
-      ).join("");
+      document.getElementById("intentGrid").innerHTML = INTS.map(i => `
+        <div class="option" id="int-${i.id}" onclick="selectInt('${i.id}')">
+          <div class="option-tag">${i.tag}</div>
+          <div class="option-name">${i.name}</div>
+          <div class="option-desc">${i.desc}</div>
+        </div>
+      `).join("");
     }
 
     function renderLayers() {
-      const g = document.getElementById("layerPills");
-      g.innerHTML = LAYERS.map(
-        (l) =>
-          `<button class="pill" id="layer-${l}" onclick="togLayer('${l}')">${l}</button>`
-      ).join("");
+      document.getElementById("layerPills").innerHTML = LAYERS.map(l => `
+        <button class="pill" id="layer-${cssId(l)}" onclick="toggleLayer('${escapeSingle(l)}')">${l}</button>
+      `).join("");
     }
 
     function renderSafety() {
-      const g = document.getElementById("safetyList");
-      g.innerHTML = SAFETY.map(
-        (s) =>
-          `<div class="chk" id="sf-${s.id}" onclick="togSafety('${s.id}')">
-            <div class="cb">✕</div>
-            <div>
-              <span class="cl">${s.label}</span>
-              <span class="cs">${s.sub}</span>
-            </div>
-          </div>`
-      ).join("");
+      document.getElementById("safetyList").innerHTML = SAFETY.map(s => `
+        <div class="safety-item" id="safe-${s.id}" onclick="toggleSafety('${s.id}')">
+          <div class="check">✓</div>
+          <div>
+            <div class="safety-title">${s.label}</div>
+            <div class="safety-sub">${s.sub}</div>
+          </div>
+        </div>
+      `).join("");
     }
 
     function renderBody() {
-      const g = document.getElementById("bodyGrid");
-      g.innerHTML = BODY.map(
-        (b) =>
-          `<div class="bmc" id="body-${b.id}" onclick="selBody('${b.id}')">
-            <span class="bmc-g">${b.glyph}</span>
-            <span class="bmc-n">${b.name}</span>
-            <span class="bmc-s">${b.sub}</span>
-          </div>`
-      ).join("");
+      document.getElementById("bodyGrid").innerHTML = BODY.map(b => `
+        <div class="body-card" id="body-${b.id}" onclick="selectBody('${b.id}')">
+          <span class="body-glyph">${b.glyph}</span>
+          <div class="body-name">${b.name}</div>
+          <div class="body-sub">${b.sub}</div>
+        </div>
+      `).join("");
     }
 
     function renderDelivery() {
-      const g = document.getElementById("delivGrid");
-      g.innerHTML = DELIVERY.map(
-        (d) =>
-          `<div class="dc" id="deliv-${d.id}" onclick="selDelivery('${d.id}')">
-            <span class="dc-icon">${d.icon}</span>
-            <div class="dc-name">${d.name}</div>
-            <div class="dc-desc">${d.desc}</div>
-          </div>`
-      ).join("");
+      document.getElementById("deliveryGrid").innerHTML = DELIVERY.map(d => `
+        <div class="delivery-card" id="del-${d.id}" onclick="selectDelivery('${d.id}')">
+          <span class="delivery-icon">${d.icon}</span>
+          <div class="delivery-name">${d.name}</div>
+          <div class="delivery-desc">${d.desc}</div>
+        </div>
+      `).join("");
     }
 
-    // ----- SELECTORS -----
-
-    function selInt(id) {
-      S.int = id;
-      document
-        .querySelectorAll("#intentGrid .card")
-        .forEach((c) => c.classList.remove("sel"));
-      const el = document.getElementById("int-" + id);
-      if (el) el.classList.add("sel");
+    function selectInt(id) {
+      STATE.int = id;
+      document.querySelectorAll("#intentGrid .option").forEach(el => el.classList.remove("sel"));
+      document.getElementById("int-" + id)?.classList.add("sel");
     }
 
-    function togLayer(label) {
-      const idx = S.layers.indexOf(label);
-      const el = document.getElementById("layer-" + label);
-      if (!el) return;
-      if (idx === -1) {
-        S.layers.push(label);
-        el.classList.add("sel");
+    function toggleLayer(label) {
+      const i = STATE.layers.indexOf(label);
+      const el = document.getElementById("layer-" + cssId(label));
+      if (i === -1) {
+        STATE.layers.push(label);
+        el?.classList.add("sel");
       } else {
-        S.layers.splice(idx, 1);
-        el.classList.remove("sel");
+        STATE.layers.splice(i, 1);
+        el?.classList.remove("sel");
       }
     }
 
-    function togSafety(id) {
+    function toggleSafety(id) {
       if (id === "none") {
-        S.safety = ["none"];
-        document
-          .querySelectorAll("#safetyList .chk")
-          .forEach((c) => c.classList.remove("sel"));
-        const el = document.getElementById("sf-none");
-        if (el) el.classList.add("sel");
+        STATE.safety = ["none"];
+        document.querySelectorAll("#safetyList .safety-item").forEach(el => el.classList.remove("sel"));
+        document.getElementById("safe-none")?.classList.add("sel");
         return;
       }
-      const withoutNone = S.safety.filter((x) => x !== "none");
-      const idx = withoutNone.indexOf(id);
-      const el = document.getElementById("sf-" + id);
-      if (!el) return;
+
+      STATE.safety = STATE.safety.filter(x => x !== "none");
+      document.getElementById("safe-none")?.classList.remove("sel");
+
+      const idx = STATE.safety.indexOf(id);
       if (idx === -1) {
-        withoutNone.push(id);
-        el.classList.add("sel");
+        STATE.safety.push(id);
+        document.getElementById("safe-" + id)?.classList.add("sel");
       } else {
-        withoutNone.splice(idx, 1);
-        el.classList.remove("sel");
+        STATE.safety.splice(idx, 1);
+        document.getElementById("safe-" + id)?.classList.remove("sel");
       }
-      S.safety = withoutNone;
-      const noneEl = document.getElementById("sf-none");
-      if (noneEl && S.safety.length) noneEl.classList.remove("sel");
     }
 
-    function selBody(id) {
-      S.body = id;
-      document
-        .querySelectorAll(".bm-grid .bmc")
-        .forEach((c) => c.classList.remove("sel"));
-      const el = document.getElementById("body-" + id);
-      if (el) el.classList.add("sel");
+    function selectBody(id) {
+      STATE.body = id;
+      document.querySelectorAll("#bodyGrid .body-card").forEach(el => el.classList.remove("sel"));
+      document.getElementById("body-" + id)?.classList.add("sel");
+      document.getElementById("btn3").disabled = false;
     }
 
-    function selDelivery(id) {
-      S.delivery = id;
-      document
-        .querySelectorAll(".deliv-grid .dc")
-        .forEach((c) => c.classList.remove("sel"));
-      const el = document.getElementById("deliv-" + id);
-      if (el) el.classList.add("sel");
+    function selectDelivery(id) {
+      STATE.delivery = id;
+      document.querySelectorAll("#deliveryGrid .delivery-card").forEach(el => el.classList.remove("sel"));
+      document.getElementById("del-" + id)?.classList.add("sel");
+      document.getElementById("buildBtn").disabled = false;
     }
 
-  function go(n) {
-    // entering layers requires intention
-    if (n >= 1 && !S.int) {
-      alert("Choose a primary intention first.");
-      return;
-    }
-
-    // entering delivery requires body selected
-    if (n >= 4 && !S.body) {
-      alert("Choose the body pattern that feels most true right now.");
-      return;
-    }
-
-    document.querySelectorAll(".step").forEach((s, i) => {
-      s.classList.toggle("vis", i === n);
-    });
-
-    const bars = document.querySelectorAll(".pd");
-    bars.forEach((b, i) => {
-      b.classList.toggle("on", i === n);
-      b.classList.toggle("done", i < n);
-    });
-
-    document.getElementById("result").style.display = "none";
-  }
-
-    // ----- BUILD FORMULA -----
-
-    async function buildFormula() {
-      if (!S.int || !S.body || !S.delivery) {
-        alert("Choose intention, body pattern and delivery format.");
+    function go(n) {
+      if (n >= 1 && !STATE.int) {
+        alert("Choose a primary intention first.");
         return;
       }
-      const buildBtn = document.getElementById("buildBtn");
-      const originalText = buildBtn.textContent;
-      buildBtn.textContent = "Brewing…";
-      buildBtn.disabled = true;
 
-      // safety: ensure pool is loaded
-      if (!HERB_POOL.length) {
-        await loadHerbPool();
+      if (n >= 4 && !STATE.body) {
+        alert("Choose the body pattern that feels most true right now.");
+        return;
       }
 
-      // 1. score and pick herbs
-      let candidates = HERB_POOL.map((h) => ({
-        herb: h,
-        score: scoreHerb(h, S.int, S.body)
-      }))
-        .filter((x) => x.score > 0)
-        .sort((a, b) => b.score - a.score);
-
-      if (!candidates.length) {
-        // fallback: no scoring restriction
-        candidates = HERB_POOL.slice(0, 12).map((h) => ({ herb: h, score: 1 }));
-      }
-
-      const hero = candidates.slice(0, 2).map((x) => x.herb);
-      const support = candidates.slice(2, 6).map((x) => x.herb);
-      const herbs = [...hero, ...support];
-
-      const intentionObj = INTS.find((i) => i.id === S.int);
-      const bodyObj = BODY.find((b) => b.id === S.body);
-      const delivObj = DELIVERY.find((d) => d.id === S.delivery);
-
-      const accentColor = accentColorFor(S.int, S.body);
-      document.documentElement.style.setProperty("--accent", accentColor);
-      document.documentElement.style.setProperty("--accent-soft", accentColor + "33");
-
-      const accentDot =
-        '<span class="res-accent-dot" style="background:' +
-        accentColor +
-        ";box-shadow:0 0 8px " +
-        accentColor +
-        '88;"></span>';
-
-      document.getElementById("resTitle").innerHTML =
-        accentDot +
-        (intentionObj ? intentionObj.name : "Custom pattern") +
-        " · " +
-        (bodyObj ? bodyObj.name : "Body field");
-
-      const layers =
-        S.layers.length > 0 ? S.layers.join(", ") : "no additional layers surfaced";
-      const safety =
-        !S.safety.length || S.safety.includes("none")
-          ? "no specific safety filters"
-          : S.safety
-              .map((id) => SAFETY.find((s) => s.id === id)?.label || id)
-              .join(", ");
-
-      document.getElementById("resLine").textContent =
-        "You centred this elixir on " +
-        (intentionObj ? intentionObj.name.toLowerCase() : "a custom theme") +
-        ", with layers " +
-        layers +
-        ". Your body feels " +
-        (bodyObj ? bodyObj.sub.toLowerCase() : "as it is") +
-        ", and we are quietly respecting " +
-        safety +
-        " in the background.";
-
-      document.getElementById("resFormat").textContent = delivObj
-        ? "Preferred ritual format: " + delivObj.name + " – " + delivObj.desc
-        : "Preferred ritual format: custom.";
-
-      const herbGrid = document.getElementById("resHerbGrid");
-      if (herbs.length) {
-        const heroHtml = hero
-          .map(
-            (h) =>
-              `<div class="res-herb-pill hero res-hero-name">
-                <span>Hero</span>${h.name}
-              </div>`
-          )
-          .join("");
-        const supportHtml = support
-          .map(
-            (h) =>
-              `<div class="res-herb-pill support res-support-pill">
-                <span>Support</span>${h.name}
-              </div>`
-          )
-          .join("");
-        herbGrid.innerHTML = heroHtml + supportHtml;
-      } else {
-        herbGrid.innerHTML =
-          '<div class="res-herb-pill support"><span>Note</span>No herbs are mapped yet. Connect this engine to your stocked herbs and fungi.</div>';
-      }
-
-      // reset image placeholder
-      const frame = document.getElementById("resImgInner");
-      frame.style.opacity = "0.6";
-      frame.style.backgroundImage =
-        "radial-gradient(circle at top, #252a32 0, #050507 60%)";
-      document.getElementById("resImgLabel").textContent =
-        "Elixir atmosphere · brewing…";
-
-      document.getElementById("result").style.display = "block";
-      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-
-      // animate herb reveal
-      requestAnimationFrame(() => {
-        document.querySelectorAll(".res-hero-name").forEach((el, idx) => {
-          setTimeout(() => {
-            el.style.opacity = "1";
-            el.style.transform = "translateY(0)";
-          }, 80 * idx);
-        });
-        document.querySelectorAll(".res-support-pill").forEach((el, idx) => {
-          setTimeout(() => {
-            el.style.opacity = "1";
-            el.style.transform = "translateY(0)";
-          }, 100 + 60 * idx);
-        });
+      document.querySelectorAll(".step").forEach((step, i) => {
+        step.classList.toggle("vis", i === n);
       });
 
-      // DALL·E hook – optional
+      document.querySelectorAll(".bar").forEach((bar, i) => {
+        bar.classList.toggle("on", i === n);
+        bar.classList.toggle("done", i < n);
+      });
+
+      document.getElementById("result").style.display = "none";
+    }
+
+    async function buildFormula() {
+      if (!STATE.int || !STATE.body || !STATE.delivery) {
+        alert("Choose intention, body pattern and ritual format.");
+        return;
+      }
+
+      const buildBtn = document.getElementById("buildBtn");
+      const original = buildBtn.textContent;
+      buildBtn.textContent = "Brewing...";
+      buildBtn.disabled = true;
+
       try {
-        const res = await fetch("/api/elixir-image", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            intention: intentionObj?.id,
-            body: bodyObj?.id,
-            delivery: delivObj?.id,
-            herbs: herbs.map((h) => h.name)
-          })
-        });
-        if (res.ok) {
-          const data = await res.json();
-          if (data?.imageUrl) {
-            frame.style.backgroundImage = `url(${data.imageUrl})`;
-            frame.style.opacity = "1";
-            document.getElementById("resImgLabel").textContent =
-              "Elixir atmosphere · AI‑imagined";
-          } else {
-            frame.style.opacity = "0.8";
-            document.getElementById("resImgLabel").textContent =
-              "Elixir atmosphere · gradient";
-          }
-        } else {
-          frame.style.opacity = "0.8";
-          document.getElementById("resImgLabel").textContent =
-            "Elixir atmosphere · gradient";
+        if (!HERB_POOL.length) {
+          await loadHerbPool();
         }
-      } catch (e) {
-        frame.style.opacity = "0.8";
-        document.getElementById("resImgLabel").textContent =
-          "Elixir atmosphere · gradient";
+
+        let candidates = HERB_POOL
+          .map(h => ({ herb: h, score: scoreHerb(h, STATE.int, STATE.body) }))
+          .filter(x => x.score > 0)
+          .sort((a, b) => b.score - a.score);
+
+        if (!candidates.length && HERB_POOL.length) {
+          candidates = HERB_POOL.slice(0, 6).map(h => ({ herb: h, score: 1 }));
+        }
+
+        const hero = candidates.slice(0, 2).map(x => x.herb);
+        const support = candidates.slice(2, 6).map(x => x.herb);
+        const herbs = [...hero, ...support];
+
+        const intention = INTS.find(x => x.id === STATE.int);
+        const body = BODY.find(x => x.id === STATE.body);
+        const delivery = DELIVERY.find(x => x.id === STATE.delivery);
+
+        document.getElementById("resTitle").textContent =
+          (intention?.name || "Custom formula") + " · " + (body?.name || "body pattern");
+
+        document.getElementById("resLine").textContent =
+          "Built around " +
+          (intention?.name.toLowerCase() || "your chosen intention") +
+          ", shaped for " +
+          (body?.sub.toLowerCase() || "your body pattern") +
+          ", with a practical format for daily use.";
+
+        document.getElementById("resFormat").textContent =
+          "Preferred ritual format: " + (delivery?.name || "custom");
+
+        const herbGrid = document.getElementById("resHerbGrid");
+        if (herbs.length) {
+          herbGrid.innerHTML = [
+            ...hero.map(h => `<div class="result-pill hero"><span>Hero</span>${h.name}</div>`),
+            ...support.map(h => `<div class="result-pill"><span>Support</span>${h.name}</div>`)
+          ].join("");
+        } else {
+          herbGrid.innerHTML = `<div class="result-pill"><span>Note</span>No herb pool loaded yet.</div>`;
+        }
+
+        const result = document.getElementById("result");
+        result.style.display = "block";
+        result.scrollIntoView({ behavior: "smooth", block: "start" });
+
+        const frame = document.getElementById("resImgInner");
+        const label = document.getElementById("resImgLabel");
+
+        frame.style.backgroundImage =
+          "radial-gradient(circle at 30% 20%, rgba(166,255,210,0.15), transparent 25%), radial-gradient(circle at top, #20342d 0, #050606 65%)";
+        label.textContent = "Formula built";
+
+        try {
+          const res = await fetch("/api/elixir-image", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              intention: intention?.id || null,
+              body: body?.id || null,
+              delivery: delivery?.id || null,
+              herbs: herbs.map(h => h.name)
+            })
+          });
+
+          if (res.ok) {
+            const data = await res.json();
+            if (data?.imageUrl) {
+              frame.style.backgroundImage = `url(${data.imageUrl})`;
+              frame.style.backgroundSize = "cover";
+              frame.style.backgroundPosition = "center";
+              label.textContent = "AI-generated elixir vision";
+            } else {
+              label.textContent = "Formula built · image unavailable";
+            }
+          } else {
+            label.textContent = "Formula built · image endpoint unavailable";
+          }
+        } catch (err) {
+          console.error("Image generation failed", err);
+          label.textContent = "Formula built · image generation offline";
+        }
+      } catch (err) {
+        console.error("Build failed", err);
+        alert("Formula build failed. Check herb-engine-pool.json and console.");
       } finally {
-        buildBtn.textContent = originalText;
+        buildBtn.textContent = original;
         buildBtn.disabled = false;
       }
     }
 
-    // init
+    function cssId(str) {
+      return String(str).toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    }
+
+    function escapeSingle(str) {
+      return String(str).replace(/'/g, "\\'");
+    }
+
     renderIntents();
     renderLayers();
     renderSafety();
