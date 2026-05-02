@@ -500,6 +500,28 @@ export default function App() {
           </button>
         </div>
 
+        {/* Engine links — mobile only */}
+        <div className="lg:hidden flex gap-2 mb-4 flex-shrink-0">
+          <a
+            href="/herbal-engine.html"
+            target="_blank"
+            rel="noreferrer"
+            className="flex-1 text-center text-[10px] uppercase tracking-[0.18em] py-2 rounded-lg transition-opacity hover:opacity-70"
+            style={{ background: "#101412", border: "0.5px solid rgba(123,212,161,0.2)", color: "rgba(123,212,161,0.6)" }}
+          >
+            Engine 1.0 →
+          </a>
+          <a
+            href="/herbal-engine-2/"
+            target="_blank"
+            rel="noreferrer"
+            className="flex-1 text-center text-[10px] uppercase tracking-[0.18em] py-2 rounded-lg transition-opacity hover:opacity-80"
+            style={{ background: "#101412", border: "0.5px solid rgba(123,212,161,0.35)", color: "#7bd4a1" }}
+          >
+            Engine 2.0 →
+          </a>
+        </div>
+
         {/* Empty state */}
         {selectedHerbs.length === 0 && (
           <div className="flex-1 flex flex-col items-center justify-center text-center px-3 gap-3">
