@@ -7,14 +7,14 @@ const INTENTIONS = [
   { id: "sleep", label: "Sleep & restoration" },
   { id: "gut", label: "Digestive reset" },
   { id: "mood", label: "Mood & emotion" },
-  { id: "liver", label: "Detox & liver" }
+  { id: "liver", label: "Detox & liver" },
 ];
 
 const BODY_PATTERNS = [
   { id: "hot", label: "A lit match (hot / inflamed)" },
   { id: "cold", label: "A cold stone (cold / slow)" },
   { id: "mixed", label: "A flickering flame (mixed)" },
-  { id: "depleted", label: "An empty cup (depleted)" }
+  { id: "depleted", label: "An empty cup (depleted)" },
 ];
 
 type BodyId = "hot" | "cold" | "mixed" | "depleted";
@@ -27,11 +27,10 @@ function text(v: unknown): string {
 function scoreHerb(herb: Herb, intentionId: string, bodyId: BodyId): number {
   let score = 0;
 
-  // these are plain strings in your real type
-  const pf = text(herb.primaryfunctions);
-  const energetics = text(herb.energetics);
-  const meridians = text(herb.tcmmeridians);
-  const caution = herb.cautionlevel;
+  const pf = herb.primary_functions.map(text).join(" ");
+  const energetics = herb.energetics.map(text).join(" ");
+  const meridians = herb.tcm_meridians.map(text).join(" ");
+  const caution = herb.caution_level;
 
   // Intention matches
   if (intentionId === "adaptogenic" && pf.includes("adaptogen")) score += 4;
@@ -54,29 +53,24 @@ function scoreHerb(herb: Herb, intentionId: string, bodyId: BodyId): number {
   return score;
 }
 
-type ScoredHerb = Herb & {
-  role: "hero" | "support";
-  score: number;
-};
-
 export default function HerbalEngine() {
   const [intention, setIntention] = useState<string | null>(null);
   const [body, setBody] = useState<BodyId | null>(null);
   const [built, setBuilt] = useState(false);
 
-  const topHerbs: ScoredHerb[] = useMemo(() => {
+  const topHerbs = useMemo(() => {
     if (!intention || !body) return [];
     const scored = HERBS.map((h) => ({
       herb: h,
-      score: scoreHerb(h, intention, body)
+      score: scoreHerb(h, intention, body),
     }))
       .filter((x) => x.score > 0)
       .sort((a, b) => b.score - a.score);
 
     return scored.slice(0, 5).map((x, idx) => ({
       ...x.herb,
-      role: (idx < 2 ? "hero" : "support") as const,
-      score: x.score
+      role: idx < 2 ? "hero" : "support" as const,
+      score: x.score,
     }));
   }, [intention, body]);
 
@@ -174,7 +168,6 @@ export default function HerbalEngine() {
             <div className="text-[10px] uppercase tracking-[0.3em] text-slate-500">
               Result · Anchor herbs in this pattern
             </div>
-
             {topHerbs.length === 0 && (
               <p className="text-xs text-slate-400">
                 No obvious matches yet. This just means the current scoring is too strict –
@@ -217,7 +210,7 @@ export default function HerbalEngine() {
                         {h.botanical}
                       </div>
                       <div className="mt-1 text-[10px] text-slate-500">
-                        Energetics: {herbEnergeticsDisplay(h)}
+                        Energetics: {h.energetics.join(", ")}
                       </div>
                     </div>
                   ))}
@@ -239,11 +232,4 @@ export default function HerbalEngine() {
       </div>
     </div>
   );
-}
-
-// helper to show energetics nicely even though it's a string
-function herbEnergeticsDisplay(h: Herb): string {
-  const e = h.energetics ?? "";
-  // if you later store them as comma‑separated lists, you can keep as-is
-  return e;
 }
