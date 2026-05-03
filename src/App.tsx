@@ -1,9 +1,23 @@
-import { useState, useMemo } from "react";
-import { Search, X, ArrowLeft, Menu, Leaf } from "lucide-react";
+import { useState, useMemo, useEffect } from "react";
+import { Search, X, ArrowLeft, Menu, Leaf, BookmarkPlus, Clock } from "lucide-react";
 import { HERBS, type Herb } from "./data/herbs";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import FungaiArtLogo from "./assets/fungai-art-logo.png";
+
+// Deduplicate herb list once at module level (guards against duplicate ids in data)
+const _seen = new Set<number>();
+const HERBS_CLEAN = HERBS.filter(h => _seen.has(h.id) ? false : !!_seen.add(h.id));
+
+interface SavedFormula {
+  id: number;
+  savedAt: string;
+  herbIds: number[];
+  herbNames: string[];
+  themes: string[];
+  tempLabel: string;
+  synergyCount: number;
+}
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -34,14 +48,26 @@ function shortFunction(fn: string): string {
 
 export default function App() {
   const [searchQuery, setSearchQuery]   = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
   const [selectedHerbs, setSelectedHerbs] = useState<Herb[]>([]);
   const [showResults, setShowResults]   = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [savedFormulas, setSavedFormulas] = useState<SavedFormula[]>(() => {
+    try { return JSON.parse(localStorage.getItem("fungai_formulas") ?? "[]"); }
+    catch { return []; }
+  });
+  const [saveFlash, setSaveFlash] = useState(false);
+
+  // Debounce search — prevents lag on large herb list
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedQuery(searchQuery), 200);
+    return () => clearTimeout(t);
+  }, [searchQuery]);
 
   const filteredHerbs = useMemo(() => {
-    const q = searchQuery.toLowerCase().trim();
-    if (!q) return HERBS;
-    return HERBS.filter(
+    const q = debouncedQuery.toLowerCase().trim();
+    if (!q) return HERBS_CLEAN;
+    return HERBS_CLEAN.filter(
       (h) =>
         h.name.toLowerCase().includes(q) ||
         (h.botanical && h.botanical.toLowerCase().includes(q)) ||
@@ -49,7 +75,7 @@ export default function App() {
         h.primary_functions.some((f) => f.toLowerCase().includes(q)) ||
         h.energetics.some((e) => e.toLowerCase().includes(q))
     );
-  }, [searchQuery]);
+  }, [debouncedQuery]);
 
   // per-herb synergy pairs within the current selection
   const synergyMap = useMemo(() => {
@@ -111,7 +137,10 @@ export default function App() {
     // TCM elements
     const elements = [...new Set(
       selectedHerbs.flatMap(h => h.tcm_element.split(/\s*\+\s*/).map(e => e.trim()))
-    )].filter(Boolean).slice(0, 5);
+    )].filter(Boolean).slice(0, 6);
+
+    // Meridians coverage
+    const meridians = [...new Set(selectedHerbs.flatMap(h => h.tcm_meridians))].slice(0, 6);
 
     // Synergy pairs (deduplicated)
     const synergyPairs: { a: string; b: string }[] = [];
@@ -146,34 +175,64 @@ export default function App() {
       ["digest","Digestive"], ["immune","Immune"], ["hormon","Hormonal"],
       ["cognitive","Cognitive"], ["anti-inflamm","Anti-inflammatory"],
       ["anxiolytic","Anxiolytic"], ["sleep","Hypnotic"], ["tonic","Tonic"],
+      ["antioxidant","Antioxidant"], ["antimicrobial","Antimicrobial"],
     ];
     const themes = THEMES
       .filter(([kw]) => selectedHerbs.some(h => h.primary_functions.some(f => f.toLowerCase().includes(kw))))
       .map(([, label]) => label);
 
-    // Narrative
-    const THEME_WORDS: Record<string, string> = {
-      Adaptogenic: "HPA axis adaptation and stress resilience",
-      Nervine: "nervous system regulation",
-      Hepatoprotective: "hepatic clearing and metabolic flow",
-      Digestive: "digestive restoration and gut balance",
-      Immune: "innate immune training",
-      Hormonal: "endocrine modulation",
-      Cognitive: "neuroplasticity and cognitive clarity",
-      "Anti-inflammatory": "systemic anti-inflammatory action",
-      Anxiolytic: "anxiolytic calm without sedation",
-      Hypnotic: "sleep restoration and night repair",
-      Tonic: "deep tonic nourishment and vital restoration",
-    };
-    const top2 = themes.slice(0, 2).map(t => THEME_WORDS[t] || t);
-    const themeStr = top2.length >= 2 ? `${top2[0]} and ${top2[1]}` : top2[0] || "broad botanical support";
-    const narrative = `A ${tempLabel.toLowerCase()} formula of ${selectedHerbs.length} constituents converging on ${themeStr}. ${
-      synergyPairs.length > 0
-        ? `${synergyPairs.length} synergistic pair${synergyPairs.length !== 1 ? "s" : ""} amplify the combined field.`
-        : "Each herb contributes a distinct therapeutic lane."
-    }${cautionPairs.length > 0 ? ` ${cautionPairs.length} interaction${cautionPairs.length !== 1 ? "s" : ""} flagged — review before compounding.` : ""}`;
+    // Key mechanisms — extract the action phrase before "—" from each herb's top function
+    const mechanisms = selectedHerbs.map(h => ({
+      herb: h.name,
+      action: h.primary_functions[0]
+        ? h.primary_functions[0].split("—")[0].trim().replace(/\.$/, "")
+        : "",
+    })).filter(m => m.action.length > 3 && m.action.length < 80);
 
-    return { tempLabel, elements, synergyPairs, cautionPairs, maxCaution, themes, narrative };
+    // Herb roles
+    const anchor1 = selectedHerbs[0]?.name ?? "";
+    const anchor2 = selectedHerbs[1]?.name ?? "";
+    const anchorStr = anchor2 ? `${anchor1} and ${anchor2}` : anchor1;
+    const supportCount = selectedHerbs.length - 2;
+
+    // Narrative (deep version)
+    const THEME_WORDS: Record<string, string> = {
+      Adaptogenic: "HPA axis adaptation and cortisol regulation",
+      Nervine: "nervous system toning and emotional steadiness",
+      Hepatoprotective: "hepatic clearing and metabolic detox flow",
+      Digestive: "gut-liver restoration and microbiome support",
+      Immune: "innate immune training and pathogen defence",
+      Hormonal: "endocrine modulation and cycle support",
+      Cognitive: "neuroplasticity, focus and memory consolidation",
+      "Anti-inflammatory": "COX/LOX cascade inhibition and systemic inflammation reduction",
+      Anxiolytic: "GABAergic anxiolytic calm without sedation",
+      Hypnotic: "sleep onset, REM architecture and night repair",
+      Tonic: "deep Jing/Qi tonic nourishment and vital restoration",
+      Antioxidant: "Nrf2-mediated antioxidant cascade and cellular protection",
+      Antimicrobial: "broad-spectrum antimicrobial and terrain restoration",
+    };
+    const top2themes = themes.slice(0, 2).map(t => THEME_WORDS[t] || t);
+    const themeStr = top2themes.length >= 2
+      ? `${top2themes[0]}, and ${top2themes[1]}`
+      : top2themes[0] || "broad botanical support";
+
+    const narrative = [
+      `${anchorStr} form the anchor pair of this ${tempLabel.toLowerCase()}, ${selectedHerbs.length}-constituent formula — working primarily through ${themeStr}.`,
+      supportCount > 0
+        ? `${supportCount} supporting herb${supportCount !== 1 ? "s" : ""} (${selectedHerbs.slice(2).map(h => h.name).join(", ")}) extend the field through ${themes.slice(2, 4).join(", ") || "complementary action"}.`
+        : "",
+      elements.length > 0
+        ? `The formula spans the ${elements.join(" · ")} element${elements.length !== 1 ? "s" : ""}, engaging ${meridians.slice(0, 4).join(", ")} meridians.`
+        : "",
+      synergyPairs.length > 0
+        ? `${synergyPairs.length} synergistic pair${synergyPairs.length !== 1 ? "s" : ""} detected — the herb interactions amplify the combined therapeutic field beyond individual actions.`
+        : "Each constituent contributes a distinct therapeutic lane with no detected cross-interactions.",
+      cautionPairs.length > 0
+        ? `⚠ ${cautionPairs.length} caution interaction${cautionPairs.length !== 1 ? "s" : ""} flagged — review before compounding or dispensing.`
+        : "",
+    ].filter(Boolean).join(" ");
+
+    return { tempLabel, elements, meridians, synergyPairs, cautionPairs, maxCaution, themes, mechanisms, narrative };
   }, [selectedHerbs, synergyMap, cautionFlags]);
 
   const toggleHerb = (herb: Herb) => {
@@ -184,6 +243,48 @@ export default function App() {
       setSelectedHerbs([...selectedHerbs, herb]);
     }
   };
+
+  function saveFormula() {
+    if (!mixologySummary) return;
+    const entry: SavedFormula = {
+      id: Date.now(),
+      savedAt: new Date().toISOString(),
+      herbIds: selectedHerbs.map(h => h.id),
+      herbNames: selectedHerbs.map(h => h.name),
+      themes: mixologySummary.themes,
+      tempLabel: mixologySummary.tempLabel,
+      synergyCount: mixologySummary.synergyPairs.length,
+    };
+    const updated = [entry, ...savedFormulas].slice(0, 30);
+    setSavedFormulas(updated);
+    localStorage.setItem("fungai_formulas", JSON.stringify(updated));
+    setSaveFlash(true);
+    setTimeout(() => setSaveFlash(false), 1800);
+    // Log human interaction to backend (silent fail — endpoint may not exist yet)
+    fetch("/api/formula-log", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        event: "human_formula_synthesis",
+        timestamp: entry.savedAt,
+        herbs: entry.herbNames,
+        themes: entry.themes,
+        temperature: entry.tempLabel,
+        synergy_pairs: mixologySummary.synergyPairs,
+        caution_pairs: mixologySummary.cautionPairs,
+        meridians: mixologySummary.meridians,
+        elements: mixologySummary.elements,
+        note: "User-generated formula from Materia Medica selection — Fungai Art Herbal Engine",
+      }),
+    }).catch(() => {});
+  }
+
+  function loadFormula(f: SavedFormula) {
+    const herbs = HERBS_CLEAN.filter(h => f.herbIds.includes(h.id));
+    setSelectedHerbs(herbs);
+    setShowResults(true);
+    setIsSidebarOpen(false);
+  }
 
   // ─── RESULTS VIEW ────────────────────────────────────────────────────────
   if (showResults) {
@@ -198,14 +299,28 @@ export default function App() {
         }}
       >
         <div className="max-w-3xl mx-auto">
-          {/* Back */}
-          <button
-            onClick={() => setShowResults(false)}
-            className="flex items-center gap-2 mb-8 text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
-            style={{ color: "#7bd4a1" }}
-          >
-            <ArrowLeft size={13} /> Return to Materia Medica
-          </button>
+          {/* Back + Save row */}
+          <div className="flex items-center justify-between mb-8">
+            <button
+              onClick={() => setShowResults(false)}
+              className="flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
+              style={{ color: "#7bd4a1" }}
+            >
+              <ArrowLeft size={13} /> Return to Materia Medica
+            </button>
+            <button
+              onClick={saveFormula}
+              className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.18em] px-3 py-1.5 rounded-full transition-all"
+              style={{
+                border: "0.5px solid rgba(123,212,161,0.35)",
+                color: saveFlash ? "#0d1410" : "#7bd4a1",
+                background: saveFlash ? "#7bd4a1" : "rgba(123,212,161,0.07)",
+              }}
+            >
+              <BookmarkPlus size={11} />
+              {saveFlash ? "Saved" : "Save formula"}
+            </button>
+          </div>
 
           {/* Page header */}
           <header className="mb-10 text-center px-2">
@@ -310,6 +425,36 @@ export default function App() {
                         style={{ background: "rgba(123,212,161,0.08)", color: "#7bd4a1", border: "0.5px solid rgba(123,212,161,0.22)" }}
                       >
                         {a} × {b}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Key mechanisms */}
+              {mixologySummary.mechanisms.length > 0 && (
+                <div className="px-5 py-3" style={{ borderBottom: "0.5px solid rgba(255,255,255,0.05)" }}>
+                  <div className="text-[9px] uppercase tracking-[0.15em] mb-2.5" style={{ color: "#7a766c" }}>Key mechanisms</div>
+                  <div className="space-y-1.5">
+                    {mixologySummary.mechanisms.map(({ herb, action }) => (
+                      <div key={herb} className="flex gap-2 text-[10px]" style={{ color: "#b9b3a6" }}>
+                        <span className="flex-shrink-0 font-medium" style={{ color: "#7bd4a1", minWidth: 90 }}>{herb}</span>
+                        <span className="leading-snug" style={{ color: "#7a766c" }}>— {action}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Meridians */}
+              {mixologySummary.meridians.length > 0 && (
+                <div className="px-5 py-3" style={{ borderBottom: "0.5px solid rgba(255,255,255,0.05)" }}>
+                  <div className="text-[9px] uppercase tracking-[0.15em] mb-2" style={{ color: "#7a766c" }}>Meridian coverage</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {mixologySummary.meridians.map(m => (
+                      <span key={m} className="text-[9px] px-2 py-0.5 rounded-full"
+                        style={{ background: "rgba(255,255,255,0.03)", color: "#7a766c", border: "0.5px solid rgba(255,255,255,0.08)" }}>
+                        {m}
                       </span>
                     ))}
                   </div>
@@ -820,6 +965,38 @@ export default function App() {
             ? `Select ${2 - selectedHerbs.length} more to analyse`
             : `Analyse ${selectedHerbs.length} herb${selectedHerbs.length > 1 ? "s" : ""} →`}
         </button>
+
+        {/* Saved formulas */}
+        {savedFormulas.length > 0 && (
+          <div className="mt-3 flex-shrink-0">
+            <div className="flex items-center gap-1.5 mb-2">
+              <Clock size={9} style={{ color: "#7a766c" }} />
+              <div className="text-[9px] uppercase tracking-[0.2em]" style={{ color: "#7a766c" }}>Saved formulas</div>
+            </div>
+            <div
+              className="space-y-1.5 overflow-y-auto"
+              style={{ maxHeight: 180, scrollbarWidth: "thin", scrollbarColor: "#1e2b24 transparent" }}
+            >
+              {savedFormulas.map(f => (
+                <button
+                  key={f.id}
+                  onClick={() => loadFormula(f)}
+                  className="w-full text-left rounded-xl px-3 py-2 transition-opacity hover:opacity-80"
+                  style={{ background: "#101412", border: "0.5px solid rgba(255,255,255,0.06)" }}
+                >
+                  <div className="text-[10px] font-medium text-white truncate">
+                    {f.herbNames.slice(0, 3).join(", ")}{f.herbNames.length > 3 ? ` +${f.herbNames.length - 3}` : ""}
+                  </div>
+                  <div className="text-[9px] mt-0.5 flex gap-2" style={{ color: "#7a766c" }}>
+                    <span>{f.tempLabel}</span>
+                    {f.synergyCount > 0 && <span style={{ color: "#7bd4a1" }}>· {f.synergyCount} synergy</span>}
+                    <span>· {new Date(f.savedAt).toLocaleDateString("en-GB", { day:"numeric", month:"short" })}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </aside>
 
       {/* Mobile overlay */}
