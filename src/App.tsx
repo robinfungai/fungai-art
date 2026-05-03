@@ -1,9 +1,16 @@
 import { useState, useMemo, useEffect } from "react";
-import { Search, X, ArrowLeft, Menu, Leaf, BookmarkPlus, Clock } from "lucide-react";
+import { Search, X, ArrowLeft, Menu, Leaf, BookmarkPlus, Clock, Cloud, CloudOff } from "lucide-react";
 import { HERBS, type Herb } from "./data/herbs";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import FungaiArtLogo from "./assets/fungai-art-logo.png";
+import { supabase } from "./lib/supabaseClient";
+
+function getDeviceId(): string {
+  let id = localStorage.getItem("fungai_device_id");
+  if (!id) { id = crypto.randomUUID(); localStorage.setItem("fungai_device_id", id); }
+  return id;
+}
 
 // Deduplicate herb list once at module level
 const _seen = new Set<number>();
@@ -151,6 +158,34 @@ export default function App() {
   });
   const [saveFlash, setSaveFlash] = useState(false);
   const [loadedFromSavedId, setLoadedFromSavedId] = useState<number | null>(null);
+  const [syncStatus, setSyncStatus] = useState<"idle" | "syncing" | "synced" | "offline">("idle");
+  const deviceId = useMemo(() => getDeviceId(), []);
+
+  // Load saved formulas from Supabase on mount (falls back to localStorage if offline/unconfigured)
+  useEffect(() => {
+    if (!supabase) return;
+    setSyncStatus("syncing");
+    supabase
+      .from("saved_formulas")
+      .select("*")
+      .eq("device_id", deviceId)
+      .order("saved_at", { ascending: false })
+      .then(({ data, error }) => {
+        if (error || !data) { setSyncStatus("offline"); return; }
+        const cloud: SavedFormula[] = data.map((r) => ({
+          id: r.id,
+          savedAt: r.saved_at,
+          herbIds: r.herb_ids,
+          herbNames: r.herb_names,
+          themes: r.themes,
+          tempLabel: r.temp_label,
+          synergyCount: r.synergy_count,
+        }));
+        setSavedFormulas(cloud);
+        localStorage.setItem("fungai_formulas", JSON.stringify(cloud));
+        setSyncStatus("synced");
+      });
+  }, [deviceId]);
   const [activeCategories, setActiveCategories] = useState<string[]>([]);
   const [activeElements, setActiveElements] = useState<string[]>([]);
   const [showForageable, setShowForageable] = useState(false);
@@ -385,6 +420,21 @@ export default function App() {
     localStorage.setItem("fungai_formulas", JSON.stringify(updated));
     setSaveFlash(true);
     setTimeout(() => setSaveFlash(false), 1800);
+    // Sync to Supabase cloud (silent fail if not configured)
+    if (supabase) {
+      setSyncStatus("syncing");
+      supabase.from("saved_formulas").insert({
+        id: entry.id,
+        device_id: deviceId,
+        saved_at: entry.savedAt,
+        herb_ids: entry.herbIds,
+        herb_names: entry.herbNames,
+        themes: entry.themes,
+        temp_label: entry.tempLabel,
+        synergy_count: entry.synergyCount,
+      }).then(({ error }) => setSyncStatus(error ? "offline" : "synced"));
+    }
+
     // Log human interaction to backend (silent fail — endpoint may not exist yet)
     fetch("/api/formula-log", {
       method: "POST",
@@ -417,6 +467,11 @@ export default function App() {
     setSavedFormulas(updated);
     localStorage.setItem("fungai_formulas", JSON.stringify(updated));
     if (loadedFromSavedId === id) setLoadedFromSavedId(null);
+    if (supabase) {
+      supabase.from("saved_formulas").delete()
+        .eq("id", id).eq("device_id", deviceId)
+        .then(({ error }) => { if (!error) setSyncStatus("synced"); });
+    }
   }
 
   // ─── RESULTS VIEW ────────────────────────────────────────────────────────
@@ -1094,6 +1149,16 @@ export default function App() {
                   Saved · {savedFormulas.length}
                 </div>
               </div>
+              {supabase && (
+                <div className="flex items-center gap-1">
+                  {syncStatus === "synced"   && <Cloud    size={9} style={{ color: "#7bd4a1" }} />}
+                  {syncStatus === "syncing"  && <Cloud    size={9} style={{ color: "#f6dd8f" }} />}
+                  {syncStatus === "offline"  && <CloudOff size={9} style={{ color: "#ff8b8b" }} />}
+                  <span className="text-[8px]" style={{ color: syncStatus === "synced" ? "#7bd4a1" : syncStatus === "syncing" ? "#f6dd8f" : "#ff8b8b" }}>
+                    {syncStatus}
+                  </span>
+                </div>
+              )}
             </div>
             <div className="space-y-1.5 overflow-y-auto" style={{ maxHeight: 220, scrollbarWidth: "thin", scrollbarColor: "#1e2b24 transparent" }}>
               {savedFormulas.map(f => {
