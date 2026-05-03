@@ -3811,5 +3811,55 @@
       "Reproductive"
     ],
     "caution_level": "MEDIUM"
+  },
+  {
+    "id": 240,
+    "name": "Ginger",
+    "primary_functions": [
+      "Digestive carminative and anti-nausea — gingerols and shogaols reduce nausea, bloating, gas and gastric stagnation",
+      "Circulation enhancement — warming peripheral blood flow; cold extremities and sluggish patterns",
+      "Anti-inflammatory — COX and LOX modulation reduces inflammatory pain in joints and muscles",
+      "Respiratory warming expectorant — opens cold, damp congestion; supports early cold states",
+      "Cardiometabolic support — modest support for glucose regulation, triglycerides and inflammatory load"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Pungent",
+      "Aromatic",
+      "Circulation-Enhancing",
+      "Dispersing"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Spleen",
+      "Stomach"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 241,
+    "name": "Boswellia",
+    "primary_functions": [
+      "Anti-inflammatory joint and tissue support — boswellic acids inhibit 5-LOX and reduce leukotriene-driven inflammation",
+      "Osteoarthritis and musculoskeletal pain — improves pain, stiffness and function over weeks",
+      "Gut inflammatory support — useful in inflamed mucosal patterns including IBD (practitioner-guided)",
+      "Respiratory inflammatory modulation — reduces inflammatory signalling in airway tissue",
+      "Tissue repair and post-injury support — where inflammation and stagnation persist together"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Bitter",
+      "Aromatic",
+      "Anti-inflammatory",
+      "Pain-Relieving"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Lung",
+      "Kidney"
+    ],
+    "caution_level": "MEDIUM"
   }
 ]
