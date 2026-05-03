@@ -60,6 +60,36 @@ const FORAGEABLE_EU = new Set([
   "Rhodiola",
 ]);
 
+// ─── Tryp pool (Fungai Art ceremonial / consciousness herbs) ───────────────
+const TRYP_HERBS = new Set([
+  "Ashwagandha","Holy Basil","Rhodiola","Schisandra","Chamomile",
+  "Damiana","Dong Quai","Lady's Mantle","Maca","Maca Negra","Muira Puama","Shatavari",
+  "Blue Lotus","Passionflower","Valerian","Lemon Balm","Lavender","Skullcap",
+  "Kanna","Rose Petals","Saffron","Oatstraw",
+  "Astragalus","Elderberry","Echinacea",
+  "Milk Thistle","Dandelion Root",
+  "Cayenne","Turmeric","Star Anise","Cardamom","Ginger","Fennel",
+  "Chaga","Cordyceps","Lion's Mane","Reishi","Tremella","Turkey Tail","Fu Ling","Shiitake","Maitake",
+]);
+
+// ─── Symptom → herb mapping (western-accessible language) ──────────────────
+const SYMPTOM_HERBS: Record<string, string[]> = {
+  "Stress & Anxiety":    ["Ashwagandha","Holy Basil","Rhodiola","Passionflower","Valerian","Lemon Balm","Lavender","Chamomile","Skullcap","Oatstraw","Motherwort","Linden","Schisandra","Reishi","Kanna","Saffron"],
+  "Poor Sleep":          ["Valerian","Passionflower","Lemon Balm","Chamomile","Hops","Blue Lotus","Skullcap","Lavender","Oatstraw","Saffron","Fu Ling","Reishi","Calea Zacatachichi"],
+  "Low Energy / Fatigue":["Ashwagandha","Rhodiola","Maca","Maca Negra","Schisandra","Cordyceps","Ginseng","Guarana","Holy Basil","Shilajit","Pine Pollen","Yerba Mate"],
+  "Digestive Issues":    ["Chamomile","Ginger","Fennel","Peppermint","Caraway","Cardamom","Licorice Root","Slippery Elm","Meadowsweet","Star Anise","Wormwood","Dandelion Root","Barley"],
+  "Immune Support":      ["Echinacea","Elderberry","Astragalus","Cat's Claw","Turkey Tail","Chaga","Reishi","Shiitake","Maitake","Black Cumin","Elderflower","Birch Polypore"],
+  "Pain & Inflammation": ["Turmeric","Boswellia","Willow Bark","Devil's Claw","Cayenne","Ginger","Meadowsweet","Black Cumin","Butterbur"],
+  "Hormonal Balance":    ["Vitex","Maca","Maca Negra","Dong Quai","Shatavari","Lady's Mantle","Saw Palmetto","Raspberry Leaf","Yarrow","Mugwort","Nettle"],
+  "Focus & Memory":      ["Lion's Mane","Ginkgo","Bacopa","Gotu Kola","Rosemary","Rhodiola","Schisandra","Maca Negra","Calamus"],
+  "Liver & Detox":       ["Milk Thistle","Dandelion Root","Schisandra","Yellow Dock Root","Burdock Root","Barberry","Turmeric","Wormwood"],
+  "Skin & Beauty":       ["Burdock Root","Nettle","Calendula","Chickweed","Turmeric","Elderflower","Tremella","Gotu Kola","Rosehip"],
+  "Low Libido":          ["Maca","Maca Negra","Damiana","Muira Puama","Ashwagandha","Tongkat Ali","Horny Goat Weed","Catuaba","Pine Pollen","Fadogia Agrestis"],
+  "Blood Sugar":         ["Cinnamon","Barberry","Milk Thistle","Ginseng","Shilajit","Berberis"],
+  "Mood & Depression":   ["Saffron","St. John's Wort","Lemon Balm","Rose Petals","Damiana","Kanna","Rhodiola","Ashwagandha","Jasmine"],
+  "Frequent Illness":    ["Astragalus","Echinacea","Elderberry","Turkey Tail","Chaga","Reishi","Black Cumin","Cat's Claw"],
+};
+
 // Precompute all available categories & elements for filter UI
 const ALL_HERB_CATEGORIES = [...new Set(
   HERBS_CLEAN.flatMap(h => getHerbCategories(h))
@@ -122,6 +152,9 @@ export default function App() {
   const [activeCategories, setActiveCategories] = useState<string[]>([]);
   const [activeElements, setActiveElements] = useState<string[]>([]);
   const [showForageable, setShowForageable] = useState(false);
+  const [showTryp, setShowTryp] = useState(false);
+  const [activeSymptom, setActiveSymptom] = useState<string | null>(null);
+  const [symptomOpen, setSymptomOpen] = useState(false);
 
   // Debounce search — prevents lag on large herb list
   useEffect(() => {
@@ -157,8 +190,15 @@ export default function App() {
     if (showForageable) {
       result = result.filter(h => FORAGEABLE_EU.has(h.name));
     }
+    if (showTryp) {
+      result = result.filter(h => TRYP_HERBS.has(h.name));
+    }
+    if (activeSymptom && SYMPTOM_HERBS[activeSymptom]) {
+      const names = new Set(SYMPTOM_HERBS[activeSymptom]);
+      result = result.filter(h => names.has(h.name));
+    }
     return result;
-  }, [debouncedQuery, activeCategories, activeElements, showForageable]);
+  }, [debouncedQuery, activeCategories, activeElements, showForageable, showTryp, activeSymptom]);
 
   // per-herb synergy pairs within the current selection
   const synergyMap = useMemo(() => {
@@ -790,9 +830,11 @@ export default function App() {
             )}
           </div>
           {/* Result count */}
-          {(debouncedQuery || activeCategories.length > 0 || activeElements.length > 0 || showForageable) && (
+          {(debouncedQuery || activeCategories.length > 0 || activeElements.length > 0 || showForageable || showTryp || activeSymptom) && (
             <p className="text-[10px] mt-1.5" style={{ color: "#7a766c" }}>
               {filteredHerbs.length} herb{filteredHerbs.length !== 1 ? "s" : ""}
+              {showTryp && " · Tryp"}
+              {activeSymptom && ` · ${activeSymptom}`}
               {activeCategories.length > 0 && ` · ${activeCategories.join(", ")}`}
               {activeElements.length > 0 && ` · ${activeElements.join(", ")}`}
               {showForageable && " · Forageable EU"}
@@ -802,8 +844,23 @@ export default function App() {
           {/* ── Filter bar ── */}
           <div className="mt-3 flex flex-col gap-2">
 
-            {/* Category chips */}
+            {/* Row 1: Category chips + Tryp */}
             <div className="flex gap-1.5 overflow-x-auto pb-1" style={{ scrollbarWidth: "none" }}>
+              {/* Tryp special pill */}
+              <button
+                onClick={() => setShowTryp(p => !p)}
+                className="flex-shrink-0 text-[9px] px-2.5 py-1 rounded-full transition-all font-medium"
+                style={{
+                  border: showTryp ? "0.5px solid rgba(167,139,250,0.6)" : "0.5px solid rgba(167,139,250,0.25)",
+                  background: showTryp ? "rgba(167,139,250,0.15)" : "rgba(167,139,250,0.05)",
+                  color: showTryp ? "#c4b5fd" : "#9d7fd4",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                }}
+              >
+                ✦ Tryp
+              </button>
+
               {ALL_HERB_CATEGORIES.map(cat => {
                 const on = activeCategories.includes(cat);
                 return (
@@ -827,8 +884,58 @@ export default function App() {
               })}
             </div>
 
-            {/* Element + Forageable chips */}
+            {/* Row 2: Symptom button + Element chips + Forageable */}
             <div className="flex gap-1.5 overflow-x-auto pb-0.5" style={{ scrollbarWidth: "none" }}>
+              {/* Symptom dropdown trigger */}
+              <div className="relative flex-shrink-0">
+                <button
+                  onClick={() => setSymptomOpen(p => !p)}
+                  className="flex items-center gap-1 text-[9px] px-2.5 py-1 rounded-full transition-all"
+                  style={{
+                    border: (activeSymptom || symptomOpen) ? "0.5px solid rgba(246,221,143,0.5)" : "0.5px solid rgba(255,255,255,0.08)",
+                    background: (activeSymptom || symptomOpen) ? "rgba(246,221,143,0.1)" : "rgba(255,255,255,0.03)",
+                    color: (activeSymptom || symptomOpen) ? "#f6dd8f" : "#7a766c",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {activeSymptom ? activeSymptom : "◈ By symptom"} {symptomOpen ? "▲" : "▾"}
+                </button>
+
+                {symptomOpen && (
+                  <div
+                    className="absolute left-0 top-8 z-50 rounded-2xl p-3 flex flex-wrap gap-1.5"
+                    style={{
+                      background: "#0d1410",
+                      border: "0.5px solid rgba(246,221,143,0.2)",
+                      boxShadow: "0 16px 40px rgba(0,0,0,0.5)",
+                      width: 280,
+                    }}
+                  >
+                    <div className="w-full text-[9px] uppercase tracking-[0.15em] mb-1 pb-1" style={{ color: "#7a766c", borderBottom: "0.5px solid rgba(255,255,255,0.06)" }}>
+                      Common symptoms
+                    </div>
+                    {Object.keys(SYMPTOM_HERBS).map(sym => (
+                      <button
+                        key={sym}
+                        onClick={() => {
+                          setActiveSymptom(activeSymptom === sym ? null : sym);
+                          setSymptomOpen(false);
+                        }}
+                        className="text-[10px] px-2.5 py-1 rounded-full transition-all"
+                        style={{
+                          border: activeSymptom === sym ? "0.5px solid rgba(246,221,143,0.5)" : "0.5px solid rgba(255,255,255,0.08)",
+                          background: activeSymptom === sym ? "rgba(246,221,143,0.12)" : "rgba(255,255,255,0.03)",
+                          color: activeSymptom === sym ? "#f6dd8f" : "#b9b3a6",
+                        }}
+                      >
+                        {sym}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
               {/* Forageable toggle */}
               <button
                 onClick={() => setShowForageable(p => !p)}
@@ -867,10 +974,10 @@ export default function App() {
                 );
               })}
 
-              {/* Clear all filters */}
-              {(activeCategories.length > 0 || activeElements.length > 0 || showForageable) && (
+              {/* Clear all */}
+              {(activeCategories.length > 0 || activeElements.length > 0 || showForageable || showTryp || activeSymptom) && (
                 <button
-                  onClick={() => { setActiveCategories([]); setActiveElements([]); setShowForageable(false); }}
+                  onClick={() => { setActiveCategories([]); setActiveElements([]); setShowForageable(false); setShowTryp(false); setActiveSymptom(null); }}
                   className="flex-shrink-0 text-[9px] px-2.5 py-1 rounded-full transition-all"
                   style={{ border: "0.5px solid rgba(255,139,139,0.3)", background: "rgba(255,139,139,0.06)", color: "#ff8b8b", letterSpacing: "0.08em" }}
                 >
