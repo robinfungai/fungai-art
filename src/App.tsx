@@ -50,7 +50,7 @@ const FORAGEABLE_EU = new Set([
   "Chamomile","St. John's Wort","Valerian","Linden","Meadowsweet",
   "Rosehip","Raspberry Leaf","Pine Needles","Mugwort","Broadleaf Plantain",
   "Chickweed","Horsetail","Goldenrod","Motherwort","Lemon Balm",
-  "Burdock Root","Dandelion Root","Ground Ivy","Eyebright","Skullcap",
+  "Burdock","Dandelion Root","Ground Ivy","Eyebright","Skullcap",
   "Milk Thistle","Willow Bark","Rose Petals","Hawthorn","Vervain",
   "Thyme","Lavender","Calendula","Rosemary","Passionflower",
   // Nordic mushrooms
