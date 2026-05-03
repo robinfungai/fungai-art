@@ -9581,5 +9581,132 @@ export const HERBS: Herb[] = [
     caution_level: 'MEDIUM',
     safe_pregnancy: null,
     status: 'Excellent cooling restorative. Best for dry/hot/depleted presentations.'
-  }
+  },
+  {
+    id: 240,
+    name: 'Ginger',
+    botanical: 'Zingiber officinale (rhizome — fresh or dried)',
+    tcm_meridians: ['Lung', 'Spleen', 'Stomach'],
+    tcm_element: 'Earth + Metal',
+    energetics: ['Warm', 'Dry', 'Pungent', 'Aromatic', 'Circulation-Enhancing', 'Dispersing'],
+    primary_functions: [
+      'Digestive carminative and anti-nausea — gingerols and shogaols reduce nausea, bloating, gas and gastric stagnation',
+      'Circulation enhancement — warming peripheral blood flow; cold extremities and sluggish patterns',
+      'Anti-inflammatory — COX and LOX modulation reduces inflammatory pain in joints and muscles',
+      'Respiratory warming expectorant — opens cold, damp congestion; supports early cold states',
+      'Cardiometabolic support — modest support for glucose regulation, triglycerides and inflammatory load',
+    ],
+    secondary_benefits: [
+      'Motion sickness and pregnancy-related nausea support with appropriate dosing context',
+      'Menstrual cramp relief through anti-inflammatory and antispasmodic action',
+      'Cold-pattern digestive weakness with poor appetite and post-meal heaviness',
+      'Exercise recovery and DOMS reduction through inflammatory modulation',
+      'Synergist herb — improves formula warmth, movement and compliance',
+    ],
+    pharmacology:
+      'Primary bioactives — gingerols (fresh) and shogaols (dried/heated) modulate COX-2, LOX, NF-kB and inflammatory cytokines while improving gastric motility and reducing nausea signalling. Volatile oils contribute aromatic carminative and circulatory actions. Clinical evidence strongest for nausea, osteoarthritis pain and metabolic support.',
+    flavor_profile: 'Pungent, spicy, warm and aromatic with a sharp lemon-resin lift',
+    contraindications: [
+      'Anticoagulants and antiplatelets — additive bleeding risk at high medicinal doses; monitor in stacked protocols',
+      'Active gastritis, reflux or peptic irritation — large doses especially of dried ginger may aggravate',
+      'Gallstones or active biliary irritation — use cautiously due to choleretic action',
+      'Hot, inflamed constitutions — dried ginger may be too warming',
+      'Pregnancy — safe at moderate nausea-support doses; avoid excessive high-dose use without oversight',
+    ],
+    herb_to_herb_synergy: [
+      'Turmeric and Boswellia — comprehensive anti-inflammatory and joint pain',
+      'Cardamom and Fennel — digestive carminative and post-meal bloating',
+      'Elderberry and Cinnamon — warming antiviral syrup for cold season',
+      'Angelica (Dong Quai) and Cinnamon — cold circulation and menstrual support',
+      'Reishi and Astragalus — warming-adaptogenic immune resilience',
+    ],
+    herb_to_herb_caution: [
+      'Strongly warming herbs (Cayenne, high-dose Cinnamon) in hot constitutions — risk of excess heat',
+      'Anticoagulant herbs (Garlic, Ginkgo, high-dose Turmeric) in those on blood thinners — additive risk',
+    ],
+    herb_to_drug_interactions: [
+      'Anticoagulants and antiplatelets — monitor bleeding risk at higher medicinal doses',
+      'Diabetes medications — possible additive glucose-lowering; monitor',
+      'Antihypertensives — mild additive blood pressure lowering possible',
+      'Chemotherapy nausea protocols — usually compatible; coordinate timing with oncology team',
+    ],
+    herb_interactions: [
+      'Synergy: Turmeric, Boswellia, Cardamom, Fennel, Elderberry, Cinnamon, Angelica (Dong Quai), Reishi, Astragalus',
+      'Caution: strong warming herbs in hot constitutions; anticoagulant-stacking formulas',
+      'Drug interactions: anticoagulants (monitor), diabetes medications (monitor), antihypertensives (mild additive)',
+    ],
+    dosage_range:
+      'Tincture: 20–60 drops, 2–3× daily. Fresh tea: 3–6 thin slices per 250 ml, steeped 10–15 min, 1–3× daily. Powder: 1–2 g daily in divided doses. Dried ginger is hotter and stronger than fresh.',
+    spiritual_layer:
+      'Ginger is the spark that returns circulation to what has gone cold, damp or hesitant. She teaches movement, warmth and readiness. Where there is stagnation she brings flow; where there is collapse she brings a modest, intelligent flame. She whispers: Move. Warm. Begin again. Let the fire return without violence.',
+    best_preparation:
+      'Fresh infusion for nausea, colds and daily digestive use. Tincture for formula flexibility. Powder or decocted dried ginger for deeper warming and anti-inflammatory formulas. One of the best bridge herbs in formula design.',
+    caution_level: 'LOW-MEDIUM',
+    safe_pregnancy: null,
+    status:
+      'Widely used global food-medicine herb with strong evidence for nausea, digestive support, circulatory warming and anti-inflammatory support. Excellent formula bridge herb.',
+  },
+  {
+    id: 241,
+    name: 'Boswellia',
+    botanical: 'Boswellia serrata (resin — standardised extract or whole oleo-gum resin)',
+    tcm_meridians: ['Liver', 'Lung', 'Kidney'],
+    tcm_element: 'Wood + Metal + Water',
+    energetics: ['Warm', 'Dry', 'Bitter', 'Aromatic', 'Anti-inflammatory', 'Pain-Relieving'],
+    primary_functions: [
+      'Anti-inflammatory joint and tissue support — boswellic acids inhibit 5-LOX and reduce leukotriene-driven inflammation',
+      'Osteoarthritis and musculoskeletal pain — improves pain, stiffness and function over weeks',
+      'Gut inflammatory support — useful in inflamed mucosal patterns including IBD (practitioner-guided)',
+      'Respiratory inflammatory modulation — reduces inflammatory signalling in airway tissue',
+      'Tissue repair and post-injury support — where inflammation and stagnation persist together',
+    ],
+    secondary_benefits: [
+      'May support neuroinflammatory reduction and cognitive clarity in inflammatory states',
+      'Traditional incense resin — ceremonial, mood and nervous system orientation',
+      'Useful in chronic pain formulas where Turmeric alone is insufficient',
+      'Can pair with warming circulation herbs to reduce cold-stiff inflammatory patterns',
+    ],
+    pharmacology:
+      'Primary bioactives — boswellic acids (including AKBA) inhibit 5-lipoxygenase and leukotriene synthesis. Particularly relevant where leukotriene-driven inflammation is prominent. Evidence strongest for osteoarthritis, some IBD contexts and general pain-stiffness reduction. Extract quality is critical; standardise to ≥30% boswellic acids.',
+    flavor_profile: 'Bitter, resinous, pine-citrus aromatic and slightly astringent',
+    contraindications: [
+      'Pregnancy — insufficient safety data at therapeutic doses; avoid unless professionally guided',
+      'GI sensitivity — concentrated extracts may irritate if taken on empty stomach',
+      'Anticoagulants and antiplatelets — theoretical caution in multi-herb anti-inflammatory stacks',
+      'Autoimmune disease — use clinical judgment; not an absolute contraindication',
+      'Pre-surgery — caution with concentrated anti-inflammatory supplementation in surgical context',
+    ],
+    herb_to_herb_synergy: [
+      'Turmeric and Ginger — comprehensive anti-inflammatory and pain formula',
+      "Devil's Claw — chronic joint pain and mobility support",
+      "Cat's Claw — inflamed connective tissue and immune-inflammatory patterns",
+      'Reishi — chronic inflammatory resilience and systemic regulation',
+      'Myrrh and resinous aromatics — ceremonial or tissue-repair oriented formulas',
+    ],
+    herb_to_herb_caution: [
+      'Multiple strong anti-inflammatory herbs in GI-sensitive individuals — may be too drying; add demulcents',
+      'Very bitter and drying herbs in dry constitutions — use with nourishing herbs',
+    ],
+    herb_to_drug_interactions: [
+      'Anti-inflammatory medications — monitor for additive GI effects or protocol overlap',
+      'Anticoagulants and antiplatelets — theoretical caution at concentrated extract doses',
+      'Immunomodulating therapies — practitioner review in complex autoimmune cases',
+      'Generally low CYP interaction profile but review in polypharmacy',
+    ],
+    herb_interactions: [
+      "Synergy: Turmeric, Ginger, Devil's Claw, Cat's Claw, Reishi, Myrrh",
+      'Caution: very drying anti-inflammatory stacks in depleted or dry constitutions',
+      'Drug interactions: anti-inflammatory meds (review), anticoagulants (theoretical), complex polypharmacy (review)',
+    ],
+    dosage_range:
+      'Standardised extract: 300–500 mg, 2–3× daily (standardised to ≥30% boswellic acids). Tincture: 20–40 drops, 2–3× daily if used. Effects require 2–8 weeks of consistent use.',
+    spiritual_layer:
+      'Boswellia is the resin of sacred repair. She rises as smoke in temples and moves through tissues where pain has lingered too long. She teaches that inflammation is sometimes a cry for space, reverence and release. She whispers: Soften the fire. Clear the chamber. Let pain become prayer — and then let it loosen.',
+    best_preparation:
+      'Standardised extract is the best clinical form for reliable anti-inflammatory action. Whole resin suits ceremonial and traditional preparations. Pair with Ginger or Turmeric for broader anti-inflammatory formulas.',
+    caution_level: 'MEDIUM',
+    safe_pregnancy: false,
+    status:
+      'Valuable anti-inflammatory resin herb for joints, connective tissue and chronic inflammatory stiffness. Best as a quality standardised extract. Strong choice when common kitchen anti-inflammatories are insufficient.',
+  },
 ];
