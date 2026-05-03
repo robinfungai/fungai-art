@@ -62,30 +62,31 @@ const FORAGEABLE_EU = new Set([
 
 // ─── Tryp pool (Fungai Art ceremonial / consciousness herbs) ───────────────
 const TRYP_HERBS = new Set([
-  "Ashwagandha","Holy Basil","Rhodiola","Schisandra","Chamomile",
-  "Damiana","Dong Quai","Lady's Mantle","Maca","Maca Negra","Muira Puama","Shatavari",
+  "Ashwagandha","Holy Basil (Tulsi)","Rhodiola","Schisandra (Five-Flavour Fruit)","Chamomile",
+  "Damiana","Angelica (Dong Quai)","Lady's Mantle","Maca","Maca Negra (Black Maca)","Muira Puama","Shatavari",
   "Blue Lotus","Passionflower","Valerian","Lemon Balm","Lavender","Skullcap",
   "Kanna","Rose Petals","Saffron","Oatstraw",
   "Astragalus","Elderberry","Echinacea",
   "Milk Thistle","Dandelion Root",
-  "Cayenne","Turmeric","Star Anise","Cardamom","Ginger","Fennel",
+  "Cayenne","Turmeric","Star Anise","Cardamom","Fennel",
   "Chaga","Cordyceps","Lion's Mane","Reishi","Tremella","Turkey Tail","Fu Ling","Shiitake","Maitake",
+  "Bobinsana","Motherwort",
 ]);
 
-// ─── Symptom → herb mapping (western-accessible language) ──────────────────
+// ─── Symptom → herb mapping (exact names from herbs.ts) ───────────────────
 const SYMPTOM_HERBS: Record<string, string[]> = {
-  "Stress & Anxiety":    ["Ashwagandha","Holy Basil","Rhodiola","Passionflower","Valerian","Lemon Balm","Lavender","Chamomile","Skullcap","Oatstraw","Motherwort","Linden","Schisandra","Reishi","Kanna","Saffron"],
+  "Stress & Anxiety":    ["Ashwagandha","Holy Basil (Tulsi)","Rhodiola","Passionflower","Valerian","Lemon Balm","Lavender","Chamomile","Skullcap","Oatstraw","Motherwort","Linden","Schisandra (Five-Flavour Fruit)","Reishi","Kanna","Saffron"],
   "Poor Sleep":          ["Valerian","Passionflower","Lemon Balm","Chamomile","Hops","Blue Lotus","Skullcap","Lavender","Oatstraw","Saffron","Fu Ling","Reishi","Calea Zacatachichi"],
-  "Low Energy / Fatigue":["Ashwagandha","Rhodiola","Maca","Maca Negra","Schisandra","Cordyceps","Ginseng","Guarana","Holy Basil","Shilajit","Pine Pollen","Yerba Mate"],
-  "Digestive Issues":    ["Chamomile","Ginger","Fennel","Peppermint","Caraway","Cardamom","Licorice Root","Slippery Elm","Meadowsweet","Star Anise","Wormwood","Dandelion Root","Barley"],
+  "Low Energy / Fatigue":["Ashwagandha","Rhodiola","Maca","Maca Negra (Black Maca)","Schisandra (Five-Flavour Fruit)","Cordyceps","Ginseng","Guarana","Holy Basil (Tulsi)","Shilajit (Mineral Pitch)","Pine Pollen","Yerba Mate"],
+  "Digestive Issues":    ["Chamomile","Fennel","Peppermint","Caraway","Cardamom","Licorice Root","Slippery Elm Bark","Meadowsweet","Star Anise","Wormwood","Dandelion Root","Barley"],
   "Immune Support":      ["Echinacea","Elderberry","Astragalus","Cat's Claw","Turkey Tail","Chaga","Reishi","Shiitake","Maitake","Black Cumin","Elderflower","Birch Polypore"],
-  "Pain & Inflammation": ["Turmeric","Boswellia","Willow Bark","Devil's Claw","Cayenne","Ginger","Meadowsweet","Black Cumin","Butterbur"],
-  "Hormonal Balance":    ["Vitex","Maca","Maca Negra","Dong Quai","Shatavari","Lady's Mantle","Saw Palmetto","Raspberry Leaf","Yarrow","Mugwort","Nettle"],
-  "Focus & Memory":      ["Lion's Mane","Ginkgo","Bacopa","Gotu Kola","Rosemary","Rhodiola","Schisandra","Maca Negra","Calamus"],
-  "Liver & Detox":       ["Milk Thistle","Dandelion Root","Schisandra","Yellow Dock Root","Burdock Root","Barberry","Turmeric","Wormwood"],
-  "Skin & Beauty":       ["Burdock Root","Nettle","Calendula","Chickweed","Turmeric","Elderflower","Tremella","Gotu Kola","Rosehip"],
-  "Low Libido":          ["Maca","Maca Negra","Damiana","Muira Puama","Ashwagandha","Tongkat Ali","Horny Goat Weed","Catuaba","Pine Pollen","Fadogia Agrestis"],
-  "Blood Sugar":         ["Cinnamon","Barberry","Milk Thistle","Ginseng","Shilajit","Berberis"],
+  "Pain & Inflammation": ["Turmeric","Willow Bark","Devil's Claw","Cayenne","Meadowsweet","Black Cumin","Butterbur"],
+  "Hormonal Balance":    ["Vitex","Maca","Maca Negra (Black Maca)","Angelica (Dong Quai)","Shatavari","Lady's Mantle","Saw Palmetto","Raspberry Leaf","Yarrow","Mugwort","Nettle"],
+  "Focus & Memory":      ["Lion's Mane","Ginkgo","Bacopa","Gotu Kola","Rosemary","Rhodiola","Schisandra (Five-Flavour Fruit)","Maca Negra (Black Maca)","Calamus"],
+  "Liver & Detox":       ["Milk Thistle","Dandelion Root","Schisandra (Five-Flavour Fruit)","Yellow Dock Root","Burdock","Barberry","Turmeric","Wormwood"],
+  "Skin & Beauty":       ["Burdock","Nettle","Calendula","Chickweed","Turmeric","Elderflower","Tremella","Gotu Kola","Rosehip"],
+  "Low Libido":          ["Maca","Maca Negra (Black Maca)","Damiana","Muira Puama","Ashwagandha","Tongkat Ali","Horny Goat Weed","Catuaba","Pine Pollen","Fadogia"],
+  "Blood Sugar":         ["Cinnamon","Barberry","Milk Thistle","Ginseng","Shilajit (Mineral Pitch)"],
   "Mood & Depression":   ["Saffron","St. John's Wort","Lemon Balm","Rose Petals","Damiana","Kanna","Rhodiola","Ashwagandha","Jasmine"],
   "Frequent Illness":    ["Astragalus","Echinacea","Elderberry","Turkey Tail","Chaga","Reishi","Black Cumin","Cat's Claw"],
 };
@@ -149,6 +150,7 @@ export default function App() {
     catch { return []; }
   });
   const [saveFlash, setSaveFlash] = useState(false);
+  const [loadedFromSavedId, setLoadedFromSavedId] = useState<number | null>(null);
   const [activeCategories, setActiveCategories] = useState<string[]>([]);
   const [activeElements, setActiveElements] = useState<string[]>([]);
   const [showForageable, setShowForageable] = useState(false);
@@ -406,7 +408,15 @@ export default function App() {
     const herbs = HERBS_CLEAN.filter(h => f.herbIds.includes(h.id));
     setSelectedHerbs(herbs);
     setShowResults(true);
+    setLoadedFromSavedId(f.id);
     setIsSidebarOpen(false);
+  }
+
+  function removeFormula(id: number) {
+    const updated = savedFormulas.filter(f => f.id !== id);
+    setSavedFormulas(updated);
+    localStorage.setItem("fungai_formulas", JSON.stringify(updated));
+    if (loadedFromSavedId === id) setLoadedFromSavedId(null);
   }
 
   // ─── RESULTS VIEW ────────────────────────────────────────────────────────
@@ -422,27 +432,38 @@ export default function App() {
         }}
       >
         <div className="max-w-3xl mx-auto">
-          {/* Back + Save row */}
-          <div className="flex items-center justify-between mb-8">
+          {/* Back + Save/Remove row */}
+          <div className="flex items-center justify-between mb-6">
             <button
-              onClick={() => setShowResults(false)}
+              onClick={() => { setShowResults(false); setLoadedFromSavedId(null); }}
               className="flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
               style={{ color: "#7bd4a1" }}
             >
-              <ArrowLeft size={13} /> Return to Materia Medica
+              <ArrowLeft size={13} /> Materia Medica
             </button>
-            <button
-              onClick={saveFormula}
-              className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.18em] px-3 py-1.5 rounded-full transition-all"
-              style={{
-                border: "0.5px solid rgba(123,212,161,0.35)",
-                color: saveFlash ? "#0d1410" : "#7bd4a1",
-                background: saveFlash ? "#7bd4a1" : "rgba(123,212,161,0.07)",
-              }}
-            >
-              <BookmarkPlus size={11} />
-              {saveFlash ? "Saved" : "Save formula"}
-            </button>
+            <div className="flex items-center gap-2">
+              {loadedFromSavedId && (
+                <button
+                  onClick={() => { removeFormula(loadedFromSavedId); setShowResults(false); }}
+                  className="flex items-center gap-1 text-[10px] uppercase tracking-[0.15em] px-3 py-1.5 rounded-full"
+                  style={{ border: "0.5px solid rgba(255,139,139,0.3)", color: "#ff8b8b", background: "rgba(255,139,139,0.07)" }}
+                >
+                  <X size={10} /> Remove
+                </button>
+              )}
+              <button
+                onClick={saveFormula}
+                className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.15em] px-3 py-1.5 rounded-full transition-all"
+                style={{
+                  border: "0.5px solid rgba(123,212,161,0.35)",
+                  color: saveFlash ? "#0d1410" : "#7bd4a1",
+                  background: saveFlash ? "#7bd4a1" : "rgba(123,212,161,0.07)",
+                }}
+              >
+                <BookmarkPlus size={10} />
+                {saveFlash ? "Saved ✓" : "Save"}
+              </button>
+            </div>
           </div>
 
           {/* Page header */}
@@ -464,255 +485,92 @@ export default function App() {
             </p>
           </header>
 
-          {/* ── Mixology Summary ── */}
+          {/* ── Formula Intelligence (compact) ── */}
           {mixologySummary && (
-            <div
-              className="rounded-2xl overflow-hidden mb-8"
-              style={{ background: "#0d1410", border: "0.5px solid rgba(123,212,161,0.22)" }}
-            >
-              {/* Header */}
-              <div
-                className="px-5 py-4"
-                style={{ borderBottom: "0.5px solid rgba(255,255,255,0.06)", background: "rgba(123,212,161,0.03)" }}
-              >
-                <div className="text-[9px] uppercase tracking-[0.25em] mb-1" style={{ color: "#7bd4a1" }}>
-                  Synergy Mixology
-                </div>
-                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, fontWeight: 600, color: "#fff" }}>
-                  Formula Intelligence
-                </div>
+            <div className="rounded-2xl overflow-hidden mb-5 w-full" style={{ background: "#0d1410", border: "0.5px solid rgba(123,212,161,0.2)" }}>
+              <div className="px-4 pt-3 pb-2" style={{ borderBottom: "0.5px solid rgba(255,255,255,0.05)" }}>
+                <div className="text-[8px] uppercase tracking-[0.22em] mb-0.5" style={{ color: "#7bd4a1" }}>Synergy Mixology · Formula Intelligence</div>
+                <p className="text-[11px] leading-relaxed" style={{ color: "#b9b3a6" }}>{mixologySummary.narrative}</p>
               </div>
-
-              {/* Narrative */}
-              <div className="px-5 py-4" style={{ borderBottom: "0.5px solid rgba(255,255,255,0.05)" }}>
-                <p className="text-[12px] leading-relaxed" style={{ color: "#b9b3a6" }}>
-                  {mixologySummary.narrative}
-                </p>
+              {/* Stats strip */}
+              <div className="px-4 py-2 flex gap-5 flex-wrap" style={{ borderBottom: "0.5px solid rgba(255,255,255,0.05)" }}>
+                {([
+                  ["Temp", mixologySummary.tempLabel, "#f6f3ea"],
+                  ["Elements", mixologySummary.elements.join(" · "), "#f6f3ea"],
+                  ["Synergies", String(mixologySummary.synergyPairs.length), "#7bd4a1"],
+                ] as [string,string,string][]).map(([lbl,val,col]) => (
+                  <div key={lbl}><div className="text-[7px] uppercase tracking-[0.12em]" style={{ color: "#7a766c" }}>{lbl}</div><div className="text-[10px] font-medium mt-0.5" style={{ color: col }}>{val}</div></div>
+                ))}
+                <div><div className="text-[7px] uppercase tracking-[0.12em]" style={{ color: "#7a766c" }}>Max caution</div><div className={cn("text-[10px] font-medium mt-0.5", CAUTION_COLOR[mixologySummary.maxCaution])}>{mixologySummary.maxCaution}</div></div>
               </div>
-
-              {/* Stats grid */}
-              <div
-                className="px-5 py-4 grid grid-cols-2 sm:grid-cols-4 gap-4"
-                style={{ borderBottom: "0.5px solid rgba(255,255,255,0.05)" }}
-              >
-                <div>
-                  <div className="text-[9px] uppercase tracking-[0.15em] mb-1" style={{ color: "#7a766c" }}>Temperature</div>
-                  <div className="text-[13px] font-medium text-white">{mixologySummary.tempLabel}</div>
-                </div>
-                <div>
-                  <div className="text-[9px] uppercase tracking-[0.15em] mb-1" style={{ color: "#7a766c" }}>TCM elements</div>
-                  <div className="text-[11px] font-medium text-white leading-snug">{mixologySummary.elements.join(" · ")}</div>
-                </div>
-                <div>
-                  <div className="text-[9px] uppercase tracking-[0.15em] mb-1" style={{ color: "#7a766c" }}>Synergy pairs</div>
-                  <div className="text-[13px] font-medium" style={{ color: "#7bd4a1" }}>{mixologySummary.synergyPairs.length}</div>
-                </div>
-                <div>
-                  <div className="text-[9px] uppercase tracking-[0.15em] mb-1" style={{ color: "#7a766c" }}>Max caution</div>
-                  <div className={cn("text-[11px] font-medium", CAUTION_COLOR[mixologySummary.maxCaution])}>
-                    {mixologySummary.maxCaution}
-                  </div>
-                </div>
-              </div>
-
-              {/* Functional lanes */}
-              {mixologySummary.themes.length > 0 && (
-                <div className="px-5 py-3" style={{ borderBottom: "0.5px solid rgba(255,255,255,0.05)" }}>
-                  <div className="text-[9px] uppercase tracking-[0.15em] mb-2" style={{ color: "#7a766c" }}>Functional lanes</div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {mixologySummary.themes.map((t) => (
-                      <span
-                        key={t}
-                        className="text-[9px] px-2 py-0.5 rounded-full"
-                        style={{ background: "rgba(255,255,255,0.04)", color: "#7a766c", border: "0.5px solid rgba(255,255,255,0.1)" }}
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Synergy pairs */}
-              {mixologySummary.synergyPairs.length > 0 && (
-                <div
-                  className="px-5 py-3"
-                  style={{ borderBottom: mixologySummary.cautionPairs.length > 0 ? "0.5px solid rgba(255,255,255,0.05)" : "none" }}
-                >
-                  <div className="text-[9px] uppercase tracking-[0.15em] mb-2" style={{ color: "#7bd4a1" }}>Detected synergies</div>
-                  <div className="flex flex-wrap gap-2">
-                    {mixologySummary.synergyPairs.map(({ a, b }, i) => (
-                      <span
-                        key={i}
-                        className="text-[10px] px-2.5 py-1 rounded-full"
-                        style={{ background: "rgba(123,212,161,0.08)", color: "#7bd4a1", border: "0.5px solid rgba(123,212,161,0.22)" }}
-                      >
-                        {a} × {b}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Key mechanisms */}
+              {/* Key mechanisms 2-col */}
               {mixologySummary.mechanisms.length > 0 && (
-                <div className="px-5 py-3" style={{ borderBottom: "0.5px solid rgba(255,255,255,0.05)" }}>
-                  <div className="text-[9px] uppercase tracking-[0.15em] mb-2.5" style={{ color: "#7a766c" }}>Key mechanisms</div>
-                  <div className="space-y-1.5">
+                <div className="px-4 py-2" style={{ borderBottom: "0.5px solid rgba(255,255,255,0.05)" }}>
+                  <div className="text-[7px] uppercase tracking-[0.12em] mb-1" style={{ color: "#7a766c" }}>Key mechanisms</div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-0.5">
                     {mixologySummary.mechanisms.map(({ herb, action }) => (
-                      <div key={herb} className="flex gap-2 text-[10px]" style={{ color: "#b9b3a6" }}>
-                        <span className="flex-shrink-0 font-medium" style={{ color: "#7bd4a1", minWidth: 90 }}>{herb}</span>
-                        <span className="leading-snug" style={{ color: "#7a766c" }}>— {action}</span>
+                      <div key={herb} className="flex gap-1.5 text-[9px] leading-snug truncate">
+                        <span className="flex-shrink-0 font-medium" style={{ color: "#7bd4a1" }}>{herb}</span>
+                        <span className="truncate" style={{ color: "#7a766c" }}>— {action}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
-
-              {/* Meridians */}
-              {mixologySummary.meridians.length > 0 && (
-                <div className="px-5 py-3" style={{ borderBottom: "0.5px solid rgba(255,255,255,0.05)" }}>
-                  <div className="text-[9px] uppercase tracking-[0.15em] mb-2" style={{ color: "#7a766c" }}>Meridian coverage</div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {mixologySummary.meridians.map(m => (
-                      <span key={m} className="text-[9px] px-2 py-0.5 rounded-full"
-                        style={{ background: "rgba(255,255,255,0.03)", color: "#7a766c", border: "0.5px solid rgba(255,255,255,0.08)" }}>
-                        {m}
-                      </span>
-                    ))}
-                  </div>
+              {/* Lanes + meridians */}
+              <div className="px-4 py-2 flex flex-wrap gap-1" style={{ borderBottom: (mixologySummary.synergyPairs.length > 0 || mixologySummary.cautionPairs.length > 0) ? "0.5px solid rgba(255,255,255,0.05)" : "none" }}>
+                {mixologySummary.themes.map(t => <span key={t} className="text-[8px] px-1.5 py-0.5 rounded-full" style={{ background: "rgba(255,255,255,0.03)", color: "#7a766c", border: "0.5px solid rgba(255,255,255,0.07)" }}>{t}</span>)}
+                {mixologySummary.meridians.slice(0,5).map(m => <span key={m} className="text-[8px] px-1.5 py-0.5 rounded-full" style={{ color: "#3d4a43", border: "0.5px solid rgba(255,255,255,0.04)" }}>{m}</span>)}
+              </div>
+              {/* Synergies */}
+              {mixologySummary.synergyPairs.length > 0 && (
+                <div className="px-4 py-2" style={{ borderBottom: mixologySummary.cautionPairs.length > 0 ? "0.5px solid rgba(255,255,255,0.05)" : "none" }}>
+                  <div className="text-[7px] uppercase tracking-[0.12em] mb-1" style={{ color: "#7bd4a1" }}>Detected synergies · {mixologySummary.synergyPairs.length}</div>
+                  <p className="text-[9px] mb-1.5" style={{ color: "#7a766c" }}>These herb pairs actively amplify each other's action — combined they work harder than the sum of their parts.</p>
+                  <div className="flex flex-wrap gap-1.5">{mixologySummary.synergyPairs.map(({ a, b }, i) => <span key={i} className="text-[9px] px-2 py-0.5 rounded-full" style={{ background: "rgba(123,212,161,0.07)", color: "#7bd4a1", border: "0.5px solid rgba(123,212,161,0.18)" }}>{a} × {b}</span>)}</div>
                 </div>
               )}
-
-              {/* Caution interactions */}
+              {/* Cautions */}
               {mixologySummary.cautionPairs.length > 0 && (
-                <div className="px-5 py-3">
-                  <div className="text-[9px] uppercase tracking-[0.15em] mb-2 text-orange-400">Caution interactions</div>
-                  <div className="flex flex-wrap gap-2">
-                    {mixologySummary.cautionPairs.map(({ a, b }, i) => (
-                      <span
-                        key={i}
-                        className="text-[10px] px-2.5 py-1 rounded-full text-orange-300"
-                        style={{ background: "rgba(251,146,60,0.08)", border: "0.5px solid rgba(251,146,60,0.22)" }}
-                      >
-                        {a} × {b}
-                      </span>
-                    ))}
-                  </div>
+                <div className="px-4 py-2">
+                  <div className="text-[7px] uppercase tracking-[0.12em] mb-1 text-orange-400">Caution interactions · {mixologySummary.cautionPairs.length}</div>
+                  <p className="text-[9px] mb-1.5" style={{ color: "#7a766c" }}>These combinations may potentiate or conflict — affecting absorption, metabolism or contraindicated conditions. Review before dispensing.</p>
+                  <div className="flex flex-wrap gap-1.5">{mixologySummary.cautionPairs.map(({ a, b }, i) => <span key={i} className="text-[9px] px-2 py-0.5 rounded-full text-orange-300" style={{ background: "rgba(251,146,60,0.07)", border: "0.5px solid rgba(251,146,60,0.18)" }}>{a} × {b}</span>)}</div>
                 </div>
               )}
             </div>
           )}
 
-          {/* Per-herb cards */}
-          <div className="space-y-4">
+          {/* ── Herb grid — 3 columns ── */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
             {selectedHerbs.map((h) => {
               const synergies = synergyMap[h.id] ?? [];
               const cautions  = cautionFlags[h.id] ?? [];
               return (
-                <div
-                  key={h.id}
-                  className="rounded-2xl overflow-hidden"
-                  style={{ background: "#0d1410", border: "0.5px solid rgba(255,255,255,0.08)" }}
-                >
-                  {/* Card top */}
-                  <div
-                    className="px-4 sm:px-6 py-4 flex items-start justify-between gap-3"
-                    style={{ borderBottom: "0.5px solid rgba(255,255,255,0.06)" }}
-                  >
+                <div key={h.id} className="rounded-xl overflow-hidden flex flex-col"
+                  style={{ background: "#0d1410", border: "0.5px solid rgba(255,255,255,0.08)" }}>
+                  {/* Top */}
+                  <div className="px-3 pt-3 pb-2 flex items-start justify-between gap-2"
+                    style={{ borderBottom: "0.5px solid rgba(255,255,255,0.06)" }}>
                     <div className="min-w-0">
-                      <h3
-                        className="text-white mb-0.5 leading-tight"
-                        style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(18px, 4vw, 22px)", fontWeight: 600 }}
-                      >
-                        {h.name}
-                      </h3>
-                      <p className="text-[11px] italic truncate" style={{ color: "#7a766c" }}>{h.botanical}</p>
+                      <div className="text-white leading-tight truncate" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 15, fontWeight: 600 }}>{h.name}</div>
+                      <div className="text-[9px] italic truncate mt-0.5" style={{ color: "#7a766c" }}>{h.botanical}</div>
                     </div>
-                    <span className={cn("text-[9px] px-2 py-1 rounded-full border whitespace-nowrap flex-shrink-0 mt-0.5", CAUTION_COLOR[h.caution_level])}>
-                      {h.caution_level}
-                    </span>
+                    <span className={cn("text-[8px] px-1.5 py-0.5 rounded-full border flex-shrink-0", CAUTION_COLOR[h.caution_level])}>{CAUTION_SHORT[h.caution_level]}</span>
                   </div>
-
-                  {/* Card body */}
-                  <div className="px-4 sm:px-6 py-4 grid sm:grid-cols-2 gap-4">
-                    {/* Primary actions */}
-                    <div>
-                      <div className="text-[9px] uppercase tracking-[0.15em] mb-2" style={{ color: "#7bd4a1" }}>Primary actions</div>
-                      <ul className="space-y-1.5">
-                        {h.primary_functions.slice(0, 4).map((fn, i) => (
-                          <li key={i} className="text-[11px] leading-snug flex gap-2" style={{ color: "#b9b3a6" }}>
-                            <span style={{ color: "#7bd4a1", flexShrink: 0, marginTop: 2 }}>·</span>
-                            <span>{fn}</span>
-                          </li>
-                        ))}
-                      </ul>
+                  {/* Body */}
+                  <div className="px-3 py-2 flex-1">
+                    <p className="text-[10px] leading-snug mb-2" style={{ color: "#b9b3a6" }}>{shortFunction(h.primary_functions[0] ?? "")}</p>
+                    <div className="flex flex-wrap gap-1 mb-1.5">
+                      {h.energetics.slice(0, 3).map(e => <span key={e} className="text-[8px] px-1.5 py-0.5 rounded-full" style={{ background: "rgba(123,212,161,0.06)", color: "rgba(123,212,161,0.7)", border: "0.5px solid rgba(123,212,161,0.15)" }}>{e}</span>)}
                     </div>
-
-                    <div className="space-y-3">
-                      {/* Energetics */}
-                      <div>
-                        <div className="text-[9px] uppercase tracking-[0.15em] mb-2" style={{ color: "#7bd4a1" }}>Energetics</div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {h.energetics.map((e) => (
-                            <span key={e} className="text-[9px] px-2 py-0.5 rounded-full"
-                              style={{ background: "rgba(123,212,161,0.07)", color: "#7bd4a1", border: "0.5px solid rgba(123,212,161,0.2)" }}>
-                              {e}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      {/* Meridians */}
-                      <div>
-                        <div className="text-[9px] uppercase tracking-[0.15em] mb-1" style={{ color: "#7a766c" }}>TCM meridians</div>
-                        <div className="text-[11px]" style={{ color: "#b9b3a6" }}>{h.tcm_meridians.join(" · ")}</div>
-                      </div>
-                      {/* Dosage */}
-                      {h.dosage_range && (
-                        <div>
-                          <div className="text-[9px] uppercase tracking-[0.15em] mb-1" style={{ color: "#7a766c" }}>Dosage</div>
-                          <div className="text-[11px]" style={{ color: "#b9b3a6" }}>{h.dosage_range}</div>
-                        </div>
-                      )}
-                    </div>
+                    <div className="text-[8px] uppercase tracking-[0.08em]" style={{ color: "#3d4a43" }}>{h.tcm_element}</div>
                   </div>
-
-                  {/* Spiritual layer */}
-                  {h.spiritual_layer && (
-                    <div className="px-4 sm:px-6 pb-4">
-                      <div className="text-[9px] uppercase tracking-[0.15em] mb-1" style={{ color: "#7a766c" }}>Spiritual dimension</div>
-                      <p className="text-[11px] italic leading-relaxed" style={{ color: "#7a766c" }}>{h.spiritual_layer}</p>
-                    </div>
-                  )}
-
-                  {/* Synergy / caution */}
+                  {/* Synergy/caution footer */}
                   {(synergies.length > 0 || cautions.length > 0) && (
-                    <div
-                      className="px-4 sm:px-6 py-3 flex flex-wrap gap-x-4 gap-y-2"
-                      style={{ borderTop: "0.5px solid rgba(255,255,255,0.05)", background: "rgba(0,0,0,0.18)" }}
-                    >
-                      {synergies.length > 0 && (
-                        <div className="flex flex-wrap items-center gap-1.5">
-                          <span className="text-[9px] uppercase tracking-[0.1em]" style={{ color: "#7bd4a1" }}>Synergy:</span>
-                          {synergies.map((s) => (
-                            <span key={s} className="text-[10px] px-2 py-0.5 rounded-full"
-                              style={{ background: "rgba(123,212,161,0.1)", color: "#7bd4a1", border: "0.5px solid rgba(123,212,161,0.25)" }}>
-                              {s}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                      {cautions.length > 0 && (
-                        <div className="flex flex-wrap items-center gap-1.5">
-                          <span className="text-[9px] uppercase tracking-[0.1em] text-orange-400">Caution:</span>
-                          {cautions.map((c) => (
-                            <span key={c} className="text-[10px] px-2 py-0.5 rounded-full text-orange-300"
-                              style={{ background: "rgba(251,146,60,0.1)", border: "0.5px solid rgba(251,146,60,0.25)" }}>
-                              {c}
-                            </span>
-                          ))}
-                        </div>
-                      )}
+                    <div className="px-3 py-1.5 flex flex-wrap gap-x-3 gap-y-1" style={{ borderTop: "0.5px solid rgba(255,255,255,0.05)", background: "rgba(0,0,0,0.15)" }}>
+                      {synergies.length > 0 && <span className="text-[8px]" style={{ color: "#7bd4a1" }}>⟳ {synergies.join(", ")}</span>}
+                      {cautions.length > 0 && <span className="text-[8px] text-orange-400">⚠ {cautions.join(", ")}</span>}
                     </div>
                   )}
                 </div>
@@ -886,55 +744,20 @@ export default function App() {
 
             {/* Row 2: Symptom button + Element chips + Forageable */}
             <div className="flex gap-1.5 overflow-x-auto pb-0.5" style={{ scrollbarWidth: "none" }}>
-              {/* Symptom dropdown trigger */}
-              <div className="relative flex-shrink-0">
-                <button
-                  onClick={() => setSymptomOpen(p => !p)}
-                  className="flex items-center gap-1 text-[9px] px-2.5 py-1 rounded-full transition-all"
-                  style={{
-                    border: (activeSymptom || symptomOpen) ? "0.5px solid rgba(246,221,143,0.5)" : "0.5px solid rgba(255,255,255,0.08)",
-                    background: (activeSymptom || symptomOpen) ? "rgba(246,221,143,0.1)" : "rgba(255,255,255,0.03)",
-                    color: (activeSymptom || symptomOpen) ? "#f6dd8f" : "#7a766c",
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  {activeSymptom ? activeSymptom : "◈ By symptom"} {symptomOpen ? "▲" : "▾"}
-                </button>
-
-                {symptomOpen && (
-                  <div
-                    className="absolute left-0 top-8 z-50 rounded-2xl p-3 flex flex-wrap gap-1.5"
-                    style={{
-                      background: "#0d1410",
-                      border: "0.5px solid rgba(246,221,143,0.2)",
-                      boxShadow: "0 16px 40px rgba(0,0,0,0.5)",
-                      width: 280,
-                    }}
-                  >
-                    <div className="w-full text-[9px] uppercase tracking-[0.15em] mb-1 pb-1" style={{ color: "#7a766c", borderBottom: "0.5px solid rgba(255,255,255,0.06)" }}>
-                      Common symptoms
-                    </div>
-                    {Object.keys(SYMPTOM_HERBS).map(sym => (
-                      <button
-                        key={sym}
-                        onClick={() => {
-                          setActiveSymptom(activeSymptom === sym ? null : sym);
-                          setSymptomOpen(false);
-                        }}
-                        className="text-[10px] px-2.5 py-1 rounded-full transition-all"
-                        style={{
-                          border: activeSymptom === sym ? "0.5px solid rgba(246,221,143,0.5)" : "0.5px solid rgba(255,255,255,0.08)",
-                          background: activeSymptom === sym ? "rgba(246,221,143,0.12)" : "rgba(255,255,255,0.03)",
-                          color: activeSymptom === sym ? "#f6dd8f" : "#b9b3a6",
-                        }}
-                      >
-                        {sym}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
+              {/* Symptom trigger */}
+              <button
+                onClick={() => setSymptomOpen(p => !p)}
+                className="flex-shrink-0 flex items-center gap-1 text-[9px] px-2.5 py-1 rounded-full transition-all"
+                style={{
+                  border: (activeSymptom || symptomOpen) ? "0.5px solid rgba(246,221,143,0.5)" : "0.5px solid rgba(255,255,255,0.08)",
+                  background: (activeSymptom || symptomOpen) ? "rgba(246,221,143,0.1)" : "rgba(255,255,255,0.03)",
+                  color: (activeSymptom || symptomOpen) ? "#f6dd8f" : "#7a766c",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                }}
+              >
+                {activeSymptom ?? "◈ By symptom"} {symptomOpen ? "▲" : "▾"}
+              </button>
 
               {/* Forageable toggle */}
               <button
@@ -986,6 +809,26 @@ export default function App() {
               )}
             </div>
           </div>
+
+          {/* Symptom panel — inline so parent overflow:hidden doesn't clip it */}
+          {symptomOpen && (
+            <div className="mt-2 flex flex-wrap gap-1.5 pb-1">
+              {Object.keys(SYMPTOM_HERBS).map(sym => (
+                <button
+                  key={sym}
+                  onClick={() => { setActiveSymptom(activeSymptom === sym ? null : sym); setSymptomOpen(false); }}
+                  className="text-[10px] px-2.5 py-1 rounded-full transition-all"
+                  style={{
+                    border: activeSymptom === sym ? "0.5px solid rgba(246,221,143,0.5)" : "0.5px solid rgba(255,255,255,0.1)",
+                    background: activeSymptom === sym ? "rgba(246,221,143,0.12)" : "rgba(255,255,255,0.04)",
+                    color: activeSymptom === sym ? "#f6dd8f" : "#b9b3a6",
+                  }}
+                >
+                  {sym}
+                </button>
+              ))}
+            </div>
+          )}
         </header>
 
         {/* HERB GRID — scrolls independently */}
@@ -1241,34 +1084,38 @@ export default function App() {
             : `Analyse ${selectedHerbs.length} herb${selectedHerbs.length > 1 ? "s" : ""} →`}
         </button>
 
-        {/* Saved formulas */}
+        {/* Saved formulas folder */}
         {savedFormulas.length > 0 && (
           <div className="mt-3 flex-shrink-0">
-            <div className="flex items-center gap-1.5 mb-2">
-              <Clock size={9} style={{ color: "#7a766c" }} />
-              <div className="text-[9px] uppercase tracking-[0.2em]" style={{ color: "#7a766c" }}>Saved formulas</div>
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-1.5">
+                <Clock size={9} style={{ color: "#7a766c" }} />
+                <div className="text-[9px] uppercase tracking-[0.2em]" style={{ color: "#7a766c" }}>
+                  Saved · {savedFormulas.length}
+                </div>
+              </div>
             </div>
-            <div
-              className="space-y-1.5 overflow-y-auto"
-              style={{ maxHeight: 180, scrollbarWidth: "thin", scrollbarColor: "#1e2b24 transparent" }}
-            >
-              {savedFormulas.map(f => (
-                <button
-                  key={f.id}
-                  onClick={() => loadFormula(f)}
-                  className="w-full text-left rounded-xl px-3 py-2 transition-opacity hover:opacity-80"
-                  style={{ background: "#101412", border: "0.5px solid rgba(255,255,255,0.06)" }}
-                >
-                  <div className="text-[10px] font-medium text-white truncate">
-                    {f.herbNames.slice(0, 3).join(", ")}{f.herbNames.length > 3 ? ` +${f.herbNames.length - 3}` : ""}
+            <div className="space-y-1.5 overflow-y-auto" style={{ maxHeight: 220, scrollbarWidth: "thin", scrollbarColor: "#1e2b24 transparent" }}>
+              {savedFormulas.map(f => {
+                const isLoaded = loadedFromSavedId === f.id;
+                return (
+                  <div key={f.id} className="rounded-xl overflow-hidden" style={{ background: isLoaded ? "rgba(123,212,161,0.06)" : "#101412", border: isLoaded ? "0.5px solid rgba(123,212,161,0.3)" : "0.5px solid rgba(255,255,255,0.06)" }}>
+                    <button onClick={() => loadFormula(f)} className="w-full text-left px-3 pt-2 pb-1.5">
+                      <div className="text-[10px] font-medium text-white truncate">
+                        {f.herbNames.slice(0, 3).join(", ")}{f.herbNames.length > 3 ? ` +${f.herbNames.length - 3}` : ""}
+                      </div>
+                      <div className="text-[8px] mt-0.5 flex gap-2" style={{ color: "#7a766c" }}>
+                        <span>{f.tempLabel}</span>
+                        {f.synergyCount > 0 && <span style={{ color: "#7bd4a1" }}>· {f.synergyCount} ⟳</span>}
+                        <span>· {new Date(f.savedAt).toLocaleDateString("en-GB", { day:"numeric", month:"short" })}</span>
+                      </div>
+                    </button>
+                    <button onClick={() => removeFormula(f.id)} className="w-full text-left px-3 pb-1.5 text-[8px] transition-opacity hover:opacity-80" style={{ color: "#ff8b8b" }}>
+                      ✕ remove
+                    </button>
                   </div>
-                  <div className="text-[9px] mt-0.5 flex gap-2" style={{ color: "#7a766c" }}>
-                    <span>{f.tempLabel}</span>
-                    {f.synergyCount > 0 && <span style={{ color: "#7bd4a1" }}>· {f.synergyCount} synergy</span>}
-                    <span>· {new Date(f.savedAt).toLocaleDateString("en-GB", { day:"numeric", month:"short" })}</span>
-                  </div>
-                </button>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}
