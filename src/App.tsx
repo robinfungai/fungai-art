@@ -153,6 +153,9 @@ export default function App() {
   const [selectedHerbs, setSelectedHerbs] = useState<Herb[]>([]);
   const [showResults, setShowResults]   = useState(false);
   const [showExtraction, setShowExtraction] = useState(false);
+  const [extMethod, setExtMethod] = useState<ExtractionMethod | null>(null);
+  const [extSpagyric, setExtSpagyric] = useState(false);
+  const [extQuery, setExtQuery] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [savedFormulas, setSavedFormulas] = useState<SavedFormula[]>(() => {
     try { return JSON.parse(localStorage.getItem("fungai_formulas") ?? "[]"); }
@@ -479,9 +482,6 @@ export default function App() {
   // ─── EXTRACTION VIEW ─────────────────────────────────────────────────────
   if (showExtraction) {
     const methodFilters: ExtractionMethod[] = ["percolation", "maceration", "decoction"];
-    const [extMethod, setExtMethod] = useState<ExtractionMethod | null>(null);
-    const [extSpagyric, setExtSpagyric] = useState(false);
-    const [extQuery, setExtQuery] = useState("");
 
     const visible = EXTRACTION_HERBS.filter(h => {
       if (extMethod && !h.methods.includes(extMethod)) return false;
