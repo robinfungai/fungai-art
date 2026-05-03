@@ -5,6 +5,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import FungaiArtLogo from "./assets/fungai-art-logo.png";
 import { supabase } from "./lib/supabaseClient";
+import { EXTRACTION_HERBS, METHOD_COLOR, type ExtractionMethod } from "./data/extraction";
 
 function getDeviceId(): string {
   let id = localStorage.getItem("fungai_device_id");
@@ -151,6 +152,7 @@ export default function App() {
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [selectedHerbs, setSelectedHerbs] = useState<Herb[]>([]);
   const [showResults, setShowResults]   = useState(false);
+  const [showExtraction, setShowExtraction] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [savedFormulas, setSavedFormulas] = useState<SavedFormula[]>(() => {
     try { return JSON.parse(localStorage.getItem("fungai_formulas") ?? "[]"); }
@@ -474,6 +476,153 @@ export default function App() {
     }
   }
 
+  // ─── EXTRACTION VIEW ─────────────────────────────────────────────────────
+  if (showExtraction) {
+    const methodFilters: ExtractionMethod[] = ["percolation", "maceration", "decoction"];
+    const [extMethod, setExtMethod] = useState<ExtractionMethod | null>(null);
+    const [extSpagyric, setExtSpagyric] = useState(false);
+    const [extQuery, setExtQuery] = useState("");
+
+    const visible = EXTRACTION_HERBS.filter(h => {
+      if (extMethod && !h.methods.includes(extMethod)) return false;
+      if (extSpagyric && !h.spagyric) return false;
+      if (extQuery && !h.common.toLowerCase().includes(extQuery.toLowerCase()) &&
+          !h.botanical.toLowerCase().includes(extQuery.toLowerCase())) return false;
+      return true;
+    });
+
+    return (
+      <div className="min-h-[100dvh]" style={{ background: "#050607", color: "#f6f3ea", fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
+        <div className="max-w-5xl mx-auto px-4 py-6 pb-16">
+
+          {/* Header */}
+          <div className="flex items-center justify-between mb-6">
+            <button onClick={() => setShowExtraction(false)}
+              className="flex items-center gap-2 text-[11px] uppercase tracking-[0.22em]"
+              style={{ color: "#7bd4a1" }}>
+              <ArrowLeft size={13} /> Materia Medica
+            </button>
+            <div className="text-[9px] uppercase tracking-[0.2em]" style={{ color: "#7a766c" }}>
+              {visible.length} of {EXTRACTION_HERBS.length} protocols
+            </div>
+          </div>
+
+          <h1 className="mb-1" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(28px,7vw,44px)", fontWeight: 500, letterSpacing: "0.04em" }}>
+            Extraction Protocols
+          </h1>
+          <p className="text-[11px] mb-6" style={{ color: "#7a766c" }}>
+            Fungai Art apothecary reference — ethanol %, method, ratio and spagyric status.
+          </p>
+
+          {/* Filters */}
+          <div className="flex flex-wrap gap-2 mb-6">
+            <input value={extQuery} onChange={e => setExtQuery(e.target.value)}
+              placeholder="Search herb…"
+              className="rounded-lg text-[11px] outline-none"
+              style={{ background: "#101412", border: "0.5px solid rgba(255,255,255,0.1)", color: "#f6f3ea", padding: "7px 12px", minWidth: 160 }} />
+            {methodFilters.map(m => {
+              const c = METHOD_COLOR[m]; const on = extMethod === m;
+              return (
+                <button key={m} onClick={() => setExtMethod(on ? null : m)}
+                  className="text-[10px] px-3 py-1.5 rounded-full capitalize transition-all"
+                  style={{ border: on ? `0.5px solid ${c.border}` : "0.5px solid rgba(255,255,255,0.1)", background: on ? c.bg : "rgba(255,255,255,0.03)", color: on ? c.text : "#7a766c" }}>
+                  {m}
+                </button>
+              );
+            })}
+            <button onClick={() => setExtSpagyric(p => !p)}
+              className="text-[10px] px-3 py-1.5 rounded-full transition-all"
+              style={{ border: extSpagyric ? "0.5px solid rgba(167,139,250,0.5)" : "0.5px solid rgba(255,255,255,0.1)", background: extSpagyric ? "rgba(167,139,250,0.12)" : "rgba(255,255,255,0.03)", color: extSpagyric ? "#c4b5fd" : "#7a766c" }}>
+              ✦ Spagyric only
+            </button>
+            {(extMethod || extSpagyric || extQuery) && (
+              <button onClick={() => { setExtMethod(null); setExtSpagyric(false); setExtQuery(""); }}
+                className="text-[10px] px-3 py-1.5 rounded-full"
+                style={{ border: "0.5px solid rgba(255,139,139,0.3)", color: "#ff8b8b", background: "rgba(255,139,139,0.06)" }}>
+                ✕ Clear
+              </button>
+            )}
+          </div>
+
+          {/* Legend */}
+          <div className="flex flex-wrap gap-3 mb-5">
+            {methodFilters.map(m => { const c = METHOD_COLOR[m]; return (
+              <div key={m} className="flex items-center gap-1.5 text-[9px] uppercase tracking-[0.1em]" style={{ color: c.text }}>
+                <div className="w-2 h-2 rounded-full" style={{ background: c.text }} />
+                {m}
+              </div>
+            );})}
+            <div className="flex items-center gap-1.5 text-[9px] uppercase tracking-[0.1em]" style={{ color: "#c4b5fd" }}>
+              <span>✦</span> Spagyric
+            </div>
+          </div>
+
+          {/* Table */}
+          <div className="rounded-2xl overflow-hidden" style={{ border: "0.5px solid rgba(255,255,255,0.08)" }}>
+            {/* Column headers */}
+            <div className="grid px-4 py-2" style={{ gridTemplateColumns: "1.8fr 0.7fr 0.6fr 1.2fr 0.5fr 0.7fr 0.5fr", background: "#0a0f0c", borderBottom: "0.5px solid rgba(255,255,255,0.08)" }}>
+              {["Herb","Part","Ethanol","Method","Ratio","Time","Spagyric"].map(h => (
+                <div key={h} className="text-[8px] uppercase tracking-[0.15em]" style={{ color: "#7a766c" }}>{h}</div>
+              ))}
+            </div>
+
+            {visible.length === 0 && (
+              <div className="px-4 py-8 text-center text-[11px]" style={{ color: "#7a766c", background: "#0d1410" }}>No protocols match the current filters.</div>
+            )}
+
+            {visible.map((h, idx) => (
+              <div key={h.id} className="grid px-4 py-3 items-center"
+                style={{
+                  gridTemplateColumns: "1.8fr 0.7fr 0.6fr 1.2fr 0.5fr 0.7fr 0.5fr",
+                  background: idx % 2 === 0 ? "#0d1410" : "#0a0f0c",
+                  borderBottom: "0.5px solid rgba(255,255,255,0.05)",
+                }}>
+                {/* Herb name */}
+                <div>
+                  <div className="text-[12px] font-medium text-white">{h.common}</div>
+                  <div className="text-[9px] italic" style={{ color: "#7a766c" }}>{h.botanical}</div>
+                  {h.notes && <div className="text-[8px] mt-0.5" style={{ color: "#f6dd8f" }}>{h.notes}</div>}
+                </div>
+                {/* Part */}
+                <div className="text-[10px]" style={{ color: "#b9b3a6" }}>{h.part}</div>
+                {/* Ethanol */}
+                <div className="text-[10px]" style={{ color: "#b9b3a6" }}>
+                  {h.ethanol != null ? `${h.ethanol}%` : <span style={{ color: "#3d4a43" }}>water</span>}
+                </div>
+                {/* Methods */}
+                <div className="flex flex-wrap gap-1">
+                  {h.methods.map(m => { const c = METHOD_COLOR[m]; return (
+                    <span key={m} className="text-[8px] px-1.5 py-0.5 rounded-full capitalize"
+                      style={{ background: c.bg, color: c.text, border: `0.5px solid ${c.border}` }}>
+                      {m}
+                    </span>
+                  );})}
+                </div>
+                {/* Ratio */}
+                <div className="text-[10px] font-medium" style={{ color: "#f6f3ea" }}>{h.ratio}</div>
+                {/* Time */}
+                <div className="text-[9px]" style={{ color: "#b9b3a6" }}>
+                  {h.decoctionMin && <div>{h.decoctionMin} min</div>}
+                  {h.days && <div>{h.days}d mac.</div>}
+                </div>
+                {/* Spagyric */}
+                <div>
+                  {h.spagyric
+                    ? <span className="text-[9px] px-1.5 py-0.5 rounded-full" style={{ background: "rgba(167,139,250,0.12)", color: "#c4b5fd", border: "0.5px solid rgba(167,139,250,0.3)" }}>✦ yes</span>
+                    : <span className="text-[9px]" style={{ color: "#3d4a43" }}>—</span>}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-4 text-[9px]" style={{ color: "#3d4a43" }}>
+            {EXTRACTION_HERBS.length} protocols · more being added. Edit src/data/extraction.ts to add herbs.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   // ─── RESULTS VIEW ────────────────────────────────────────────────────────
   if (showResults) {
     return (
@@ -702,6 +851,13 @@ export default function App() {
               >
                 Engine 2.0 →
               </a>
+              <button
+                onClick={() => setShowExtraction(true)}
+                className="hidden sm:block text-[10px] uppercase tracking-[0.2em] whitespace-nowrap transition-opacity hover:opacity-80"
+                style={{ color: "#f6dd8f" }}
+              >
+                Extraction ⊕
+              </button>
               <button
                 onClick={() => setIsSidebarOpen(true)}
                 className="lg:hidden flex items-center justify-center rounded-xl transition-colors"
@@ -1010,26 +1166,25 @@ export default function App() {
           </button>
         </div>
 
-        {/* Engine links — mobile only */}
-        <div className="lg:hidden flex gap-2 mb-4 flex-shrink-0">
-          <a
-            href="/herbal-engine.html"
-            target="_blank"
-            rel="noreferrer"
-            className="flex-1 text-center text-[10px] uppercase tracking-[0.18em] py-2 rounded-lg transition-opacity hover:opacity-70"
-            style={{ background: "#101412", border: "0.5px solid rgba(123,212,161,0.2)", color: "rgba(123,212,161,0.6)" }}
-          >
-            Engine 1.0 →
-          </a>
-          <a
-            href="/herbal-engine-2/"
-            target="_blank"
-            rel="noreferrer"
-            className="flex-1 text-center text-[10px] uppercase tracking-[0.18em] py-2 rounded-lg transition-opacity hover:opacity-80"
-            style={{ background: "#101412", border: "0.5px solid rgba(123,212,161,0.35)", color: "#7bd4a1" }}
-          >
-            Engine 2.0 →
-          </a>
+        {/* Engine + Extraction links — mobile only */}
+        <div className="lg:hidden flex flex-col gap-2 mb-4 flex-shrink-0">
+          <div className="flex gap-2">
+            <a href="/herbal-engine.html" target="_blank" rel="noreferrer"
+              className="flex-1 text-center text-[10px] uppercase tracking-[0.18em] py-2 rounded-lg transition-opacity hover:opacity-70"
+              style={{ background: "#101412", border: "0.5px solid rgba(123,212,161,0.2)", color: "rgba(123,212,161,0.6)" }}>
+              Engine 1.0 →
+            </a>
+            <a href="/herbal-engine-2/" target="_blank" rel="noreferrer"
+              className="flex-1 text-center text-[10px] uppercase tracking-[0.18em] py-2 rounded-lg transition-opacity hover:opacity-80"
+              style={{ background: "#101412", border: "0.5px solid rgba(123,212,161,0.35)", color: "#7bd4a1" }}>
+              Engine 2.0 →
+            </a>
+          </div>
+          <button onClick={() => { setShowExtraction(true); setIsSidebarOpen(false); }}
+            className="w-full text-center text-[10px] uppercase tracking-[0.18em] py-2 rounded-lg transition-opacity hover:opacity-80"
+            style={{ background: "#101412", border: "0.5px solid rgba(246,221,143,0.3)", color: "#f6dd8f" }}>
+            ⊕ Extraction protocols
+          </button>
         </div>
 
         {/* Empty state */}
