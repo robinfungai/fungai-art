@@ -94,6 +94,88 @@ export default function App() {
     return flags;
   }, [selectedHerbs]);
 
+  const mixologySummary = useMemo(() => {
+    if (selectedHerbs.length < 2) return null;
+
+    // Temperature balance
+    const warmCount = selectedHerbs.filter(h =>
+      h.energetics.some(e => /^(hot|warm|slightly warm)/i.test(e))
+    ).length;
+    const coolCount = selectedHerbs.filter(h =>
+      h.energetics.some(e => /^(cold|cool|slightly cool)/i.test(e))
+    ).length;
+    const tempLabel = warmCount > coolCount + 1 ? "Warming"
+      : coolCount > warmCount + 1 ? "Cooling"
+      : "Balanced";
+
+    // TCM elements
+    const elements = [...new Set(
+      selectedHerbs.flatMap(h => h.tcm_element.split(/\s*\+\s*/).map(e => e.trim()))
+    )].filter(Boolean).slice(0, 5);
+
+    // Synergy pairs (deduplicated)
+    const synergyPairs: { a: string; b: string }[] = [];
+    const seenSyn = new Set<string>();
+    selectedHerbs.forEach(h => {
+      (synergyMap[h.id] ?? []).forEach(partner => {
+        const key = [h.name, partner].sort().join("|");
+        if (!seenSyn.has(key)) { seenSyn.add(key); synergyPairs.push({ a: h.name, b: partner }); }
+      });
+    });
+
+    // Caution pairs (deduplicated)
+    const cautionPairs: { a: string; b: string }[] = [];
+    const seenCaut = new Set<string>();
+    selectedHerbs.forEach(h => {
+      (cautionFlags[h.id] ?? []).forEach(partner => {
+        const key = [h.name, partner].sort().join("|");
+        if (!seenCaut.has(key)) { seenCaut.add(key); cautionPairs.push({ a: h.name, b: partner }); }
+      });
+    });
+
+    // Highest caution level
+    const cautionOrder = ["LOW","LOW-MEDIUM","MEDIUM","MEDIUM-HIGH","HIGH","VERY HIGH"];
+    const maxCaution = selectedHerbs.reduce<Herb["caution_level"]>(
+      (max, h) => cautionOrder.indexOf(h.caution_level) > cautionOrder.indexOf(max) ? h.caution_level : max,
+      "LOW"
+    );
+
+    // Functional themes
+    const THEMES: [string, string][] = [
+      ["adaptogen","Adaptogenic"], ["nervine","Nervine"], ["hepatic","Hepatoprotective"],
+      ["digest","Digestive"], ["immune","Immune"], ["hormon","Hormonal"],
+      ["cognitive","Cognitive"], ["anti-inflamm","Anti-inflammatory"],
+      ["anxiolytic","Anxiolytic"], ["sleep","Hypnotic"], ["tonic","Tonic"],
+    ];
+    const themes = THEMES
+      .filter(([kw]) => selectedHerbs.some(h => h.primary_functions.some(f => f.toLowerCase().includes(kw))))
+      .map(([, label]) => label);
+
+    // Narrative
+    const THEME_WORDS: Record<string, string> = {
+      Adaptogenic: "HPA axis adaptation and stress resilience",
+      Nervine: "nervous system regulation",
+      Hepatoprotective: "hepatic clearing and metabolic flow",
+      Digestive: "digestive restoration and gut balance",
+      Immune: "innate immune training",
+      Hormonal: "endocrine modulation",
+      Cognitive: "neuroplasticity and cognitive clarity",
+      "Anti-inflammatory": "systemic anti-inflammatory action",
+      Anxiolytic: "anxiolytic calm without sedation",
+      Hypnotic: "sleep restoration and night repair",
+      Tonic: "deep tonic nourishment and vital restoration",
+    };
+    const top2 = themes.slice(0, 2).map(t => THEME_WORDS[t] || t);
+    const themeStr = top2.length >= 2 ? `${top2[0]} and ${top2[1]}` : top2[0] || "broad botanical support";
+    const narrative = `A ${tempLabel.toLowerCase()} formula of ${selectedHerbs.length} constituents converging on ${themeStr}. ${
+      synergyPairs.length > 0
+        ? `${synergyPairs.length} synergistic pair${synergyPairs.length !== 1 ? "s" : ""} amplify the combined field.`
+        : "Each herb contributes a distinct therapeutic lane."
+    }${cautionPairs.length > 0 ? ` ${cautionPairs.length} interaction${cautionPairs.length !== 1 ? "s" : ""} flagged — review before compounding.` : ""}`;
+
+    return { tempLabel, elements, synergyPairs, cautionPairs, maxCaution, themes, narrative };
+  }, [selectedHerbs, synergyMap, cautionFlags]);
+
   const toggleHerb = (herb: Herb) => {
     const exists = selectedHerbs.find((h) => h.id === herb.id);
     if (exists) {
@@ -143,6 +225,116 @@ export default function App() {
               {selectedHerbs.length} constituents · clinical matrix active
             </p>
           </header>
+
+          {/* ── Mixology Summary ── */}
+          {mixologySummary && (
+            <div
+              className="rounded-2xl overflow-hidden mb-8"
+              style={{ background: "#0d1410", border: "0.5px solid rgba(123,212,161,0.22)" }}
+            >
+              {/* Header */}
+              <div
+                className="px-5 py-4"
+                style={{ borderBottom: "0.5px solid rgba(255,255,255,0.06)", background: "rgba(123,212,161,0.03)" }}
+              >
+                <div className="text-[9px] uppercase tracking-[0.25em] mb-1" style={{ color: "#7bd4a1" }}>
+                  Synergy Mixology
+                </div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, fontWeight: 600, color: "#fff" }}>
+                  Formula Intelligence
+                </div>
+              </div>
+
+              {/* Narrative */}
+              <div className="px-5 py-4" style={{ borderBottom: "0.5px solid rgba(255,255,255,0.05)" }}>
+                <p className="text-[12px] leading-relaxed" style={{ color: "#b9b3a6" }}>
+                  {mixologySummary.narrative}
+                </p>
+              </div>
+
+              {/* Stats grid */}
+              <div
+                className="px-5 py-4 grid grid-cols-2 sm:grid-cols-4 gap-4"
+                style={{ borderBottom: "0.5px solid rgba(255,255,255,0.05)" }}
+              >
+                <div>
+                  <div className="text-[9px] uppercase tracking-[0.15em] mb-1" style={{ color: "#7a766c" }}>Temperature</div>
+                  <div className="text-[13px] font-medium text-white">{mixologySummary.tempLabel}</div>
+                </div>
+                <div>
+                  <div className="text-[9px] uppercase tracking-[0.15em] mb-1" style={{ color: "#7a766c" }}>TCM elements</div>
+                  <div className="text-[11px] font-medium text-white leading-snug">{mixologySummary.elements.join(" · ")}</div>
+                </div>
+                <div>
+                  <div className="text-[9px] uppercase tracking-[0.15em] mb-1" style={{ color: "#7a766c" }}>Synergy pairs</div>
+                  <div className="text-[13px] font-medium" style={{ color: "#7bd4a1" }}>{mixologySummary.synergyPairs.length}</div>
+                </div>
+                <div>
+                  <div className="text-[9px] uppercase tracking-[0.15em] mb-1" style={{ color: "#7a766c" }}>Max caution</div>
+                  <div className={cn("text-[11px] font-medium", CAUTION_COLOR[mixologySummary.maxCaution])}>
+                    {mixologySummary.maxCaution}
+                  </div>
+                </div>
+              </div>
+
+              {/* Functional lanes */}
+              {mixologySummary.themes.length > 0 && (
+                <div className="px-5 py-3" style={{ borderBottom: "0.5px solid rgba(255,255,255,0.05)" }}>
+                  <div className="text-[9px] uppercase tracking-[0.15em] mb-2" style={{ color: "#7a766c" }}>Functional lanes</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {mixologySummary.themes.map((t) => (
+                      <span
+                        key={t}
+                        className="text-[9px] px-2 py-0.5 rounded-full"
+                        style={{ background: "rgba(255,255,255,0.04)", color: "#7a766c", border: "0.5px solid rgba(255,255,255,0.1)" }}
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Synergy pairs */}
+              {mixologySummary.synergyPairs.length > 0 && (
+                <div
+                  className="px-5 py-3"
+                  style={{ borderBottom: mixologySummary.cautionPairs.length > 0 ? "0.5px solid rgba(255,255,255,0.05)" : "none" }}
+                >
+                  <div className="text-[9px] uppercase tracking-[0.15em] mb-2" style={{ color: "#7bd4a1" }}>Detected synergies</div>
+                  <div className="flex flex-wrap gap-2">
+                    {mixologySummary.synergyPairs.map(({ a, b }, i) => (
+                      <span
+                        key={i}
+                        className="text-[10px] px-2.5 py-1 rounded-full"
+                        style={{ background: "rgba(123,212,161,0.08)", color: "#7bd4a1", border: "0.5px solid rgba(123,212,161,0.22)" }}
+                      >
+                        {a} × {b}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Caution interactions */}
+              {mixologySummary.cautionPairs.length > 0 && (
+                <div className="px-5 py-3">
+                  <div className="text-[9px] uppercase tracking-[0.15em] mb-2 text-orange-400">Caution interactions</div>
+                  <div className="flex flex-wrap gap-2">
+                    {mixologySummary.cautionPairs.map(({ a, b }, i) => (
+                      <span
+                        key={i}
+                        className="text-[10px] px-2.5 py-1 rounded-full text-orange-300"
+                        style={{ background: "rgba(251,146,60,0.08)", border: "0.5px solid rgba(251,146,60,0.22)" }}
+                      >
+                        {a} × {b}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Per-herb cards */}
           <div className="space-y-4">
