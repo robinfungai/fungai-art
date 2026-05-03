@@ -318,6 +318,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
     <span class="pl">Pool:</span>
     <button class="prbtn on" id="preset_all" onclick="applyPreset('all')">All herbs <span id="pc_all" style="font-size:9px;opacity:.6"></span></button>
     <button class="prbtn" id="preset_tryp" onclick="applyPreset('tryp')">Tryp <span id="pc_tryp" style="font-size:9px;opacity:.6"></span></button>
+    <button class="prbtn" id="preset_mystock" onclick="applyPreset('mystock')">My Stock <span id="pc_mystock" style="font-size:9px;opacity:.6"></span></button>
     <button class="prbtn" id="preset_custom" onclick="applyPreset('custom')">Custom <span id="pc_custom" style="font-size:9px;opacity:.6"></span></button>
   </div>
 </div>
@@ -645,6 +646,28 @@ const DURATIONS=[
   {id:'ongoing',icon:'◎',name:'Ongoing tonic',desc:'Lifestyle herb — daily maintenance'},
 ];
 const TM={stress:'morning and afternoon',sleep:'30–60 min before bed',energy:'morning only',anxiety:'throughout the day',mood:'morning and afternoon',digestion:'15 min before meals',immunity:'morning and evening',pain:'with meals three times daily',hormones:'consistent daily timing',cognitive:'morning with food',beauty:'morning with food',detox:'morning away from medications'};
+// My Stock — herbs available in the Fungai Art apothecary (from physical inventory)
+const MY_STOCK_IDS=new Set([
+  // Anti-inflammatory
+  'cayenne','turmeric',
+  // Digestive
+  'star_anise','cardamom','ginger','fennel','chamomile',
+  // Hormonal
+  'damiana','ladys_mantle','dong_quai','maca','maca_negra','muira_puama','shatavari',
+  // Nervine
+  'blue_lotus','passionflower','valerian','lemon_balm','lavender','skullcap',
+  'kanna','rose','saffron','oatstraw','ashwagandha','rhodiola','holy_basil',
+  // Immune / Tonic
+  'astragalus','elderberry','echinacea',
+  // Mushrooms
+  'chaga','cordyceps','lions_mane','reishi','tremella','turkey_tail',
+  'fu_ling','shiitake','maitake',
+  // Hepatic
+  'milk_thistle','dandelion',
+  // Adaptogen
+  'schisandra',
+]);
+
 const TRYP_IDS=new Set(['blue_lotus','bobinsana','calea','wild_dagga','kanna','passionflower','valerian','skullcap','lemon_balm','lavender','saffron','rose','vanilla','oatstraw','ashwagandha','rhodiola','holy_basil','schisandra','reishi','lions_mane','fu_ling','cordyceps','mugwort','shatavari','motherwort','linden','hops','chamomile','jasmine','vervain']);
 
 /* ─── STATE ────────────────────────────────────────────── */
@@ -660,6 +683,7 @@ var curExtractName='';
 function getActiveStock(){
   if(activePreset==='all')return new Set(HB.filter(h=>!h.restricted||practitionerMode).map(h=>h.id));
   if(activePreset==='tryp')return new Set([...TRYP_IDS].filter(id=>{var h=HB.find(h=>h.id===id);return h&&(!h.restricted||practitionerMode);}));
+  if(activePreset==='mystock')return new Set([...MY_STOCK_IDS].filter(id=>{var h=HB.find(h=>h.id===id);return h&&(!h.restricted||practitionerMode);}));
   // custom
   return new Set([...customStock].filter(id=>{var h=HB.find(h=>h.id===id);return h&&(!h.restricted||practitionerMode);}));
 }
@@ -673,8 +697,10 @@ function applyPreset(p){
 function updateCounts(){
   var all=HB.filter(h=>!h.restricted||practitionerMode).length;
   var tryp=[...TRYP_IDS].filter(id=>{var h=HB.find(h=>h.id===id);return h&&(!h.restricted||practitionerMode);}).length;
+  var mystock=[...MY_STOCK_IDS].filter(id=>{var h=HB.find(h=>h.id===id);return h&&(!h.restricted||practitionerMode);}).length;
   document.getElementById('pc_all').textContent='('+all+')';
   document.getElementById('pc_tryp').textContent='('+tryp+')';
+  document.getElementById('pc_mystock').textContent='('+mystock+')';
   document.getElementById('pc_custom').textContent='('+(customStock?customStock.size:0)+')';
 }
 function toggleStock(){
@@ -1148,7 +1174,7 @@ function renderFormula(){
   var flags=S.saf.filter(x=>x!=='none');
   var boostNames=S.boosts.map(id=>BOOSTS.find(b=>b.id===id)?.name).filter(Boolean);
   var delivLabel=DELIVERY.find(d=>d.id===S.delivery)?.name||S.delivery;
-  var poolLabel=activePreset==='tryp'?'Tryp':activePreset==='custom'?'Custom':'All herbs';
+  var poolLabel=activePreset==='tryp'?'Tryp':activePreset==='mystock'?'My Stock':activePreset==='custom'?'Custom':'All herbs';
   var name=curExtractName;
 
   var displayHerbs=activePhiFilter==='all'?S.formula:S.formula.filter(h=>h.p&&h.p.includes(activePhiFilter));
@@ -1215,7 +1241,7 @@ function doExplain(){
   var carrier=S.delivery==='tonic'?CARRIERS.find(c=>c.id===S.carrier):null;
   var boostNames=S.boosts.map(id=>BOOSTS.find(b=>b.id===id)?.name).filter(Boolean);
   var delivLabel=DELIVERY.find(d=>d.id===S.delivery)?.name||S.delivery;
-  var poolLabel=activePreset==='tryp'?'Tryp':activePreset==='custom'?'Custom':'All herbs';
+  var poolLabel=activePreset==='tryp'?'Tryp':activePreset==='mystock'?'My Stock':activePreset==='custom'?'Custom':'All herbs';
   var somaNote='';
   if(mode==='advanced'&&bMarkers.filter(m=>m.types.length).length)
     somaNote='\n\nSomatic map:\n'+bMarkers.filter(m=>m.types.length).map(m=>bLbl(m.px,m.py)+': '+m.types.join(', ')).join('\n');

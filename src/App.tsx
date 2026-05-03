@@ -5,9 +5,71 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import FungaiArtLogo from "./assets/fungai-art-logo.png";
 
-// Deduplicate herb list once at module level (guards against duplicate ids in data)
+// Deduplicate herb list once at module level
 const _seen = new Set<number>();
 const HERBS_CLEAN = HERBS.filter(h => _seen.has(h.id) ? false : !!_seen.add(h.id));
+
+// ─── Category derivation ────────────────────────────────────────────────────
+const MUSHROOM_NAMES = new Set([
+  "Birch Polypore","Button Mushroom","Chaga","Cordyceps","Enoki","Fu Ling",
+  "Lion's Mane","Maitake","Mesima","Morels","Oyster Mushroom",
+  "Red-Belted Polypore","Reishi","Royal Sun Mushroom","Shaggy Bracket",
+  "Shaggy Mane","Shiitake","Tinder Fungus","Tremella","Turkey Tail",
+  "Willow Bracket","Zhu Ling",
+]);
+
+const CATEGORY_RULES: [string, RegExp][] = [
+  ["Adaptogen",        /adaptogen|hpa axis|cortisol normaliz|withania|eleuthero/i],
+  ["Anti-inflammatory",/anti.inflamm|cox inhibit|lox|boswellic|curcumin|salicylat/i],
+  ["Antimicrobial",    /antimicrobial|antifungal|antiviral|carvacrol|allicin|thymol/i],
+  ["Nervine",          /nervine|anxiolytic|sedative|gaba|calming|antidepressant/i],
+  ["Cognitive",        /cognitive|memory|neuroplasticity|bdnf|ngf|acetylcholine|nootropic|cerebral/i],
+  ["Digestive",        /digest|carminative|gut|ibs|gastric|intestinal|bloat|prebiotic|carminative/i],
+  ["Hepatic",          /hepatic|hepatoprotect|bile|liver.*clear|silymarin|berberine/i],
+  ["Immune",           /immune|beta.glucan|innate|nk cell|macrophage|antiviral/i],
+  ["Hormonal",         /hormon|estrogen|testosterone|endocrine|menstrual|lh.mediat|phytoestrogen|progesterone/i],
+  ["Antioxidant",      /antioxidant|nrf2|anthocyanin|polyphenol|superoxide|flavonoid/i],
+  ["Tonic",            /\btonic\b|nourish.*jing|qi tonic|vital restoration|jing.*tonic/i],
+  ["Respiratory",      /respiratory|expectorant|bronch|lung.*mucilage|cough/i],
+  ["Urinary",          /urinary.*tract|renal.*protect|diuretic.*urin|bladder/i],
+];
+
+function getHerbCategories(herb: Herb): string[] {
+  const text = [...herb.primary_functions, ...(herb.secondary_benefits ?? [])].join(" ");
+  const cats = new Set<string>();
+  if (MUSHROOM_NAMES.has(herb.name)) cats.add("Mushroom");
+  for (const [cat, re] of CATEGORY_RULES) if (re.test(text)) cats.add(cat);
+  if (cats.size === 0) cats.add("Tonic");
+  return [...cats];
+}
+
+// ─── Forageable in Sweden & Germany ────────────────────────────────────────
+const FORAGEABLE_EU = new Set([
+  // Swedish & German forests / meadows
+  "Bilberry","Lingonberry","Elderberry","Elderflower","Nettle","Yarrow",
+  "Chamomile","St. John's Wort","Valerian","Linden","Meadowsweet",
+  "Rosehip","Raspberry Leaf","Pine Needles","Mugwort","Broadleaf Plantain",
+  "Chickweed","Horsetail","Goldenrod","Motherwort","Lemon Balm",
+  "Burdock Root","Dandelion Root","Ground Ivy","Eyebright","Skullcap",
+  "Milk Thistle","Willow Bark","Rose Petals","Hawthorn","Vervain",
+  "Thyme","Lavender","Calendula","Rosemary","Passionflower",
+  // Nordic mushrooms
+  "Birch Polypore","Chaga","Turkey Tail","Tinder Fungus","Shaggy Bracket",
+  "Red-Belted Polypore","Willow Bracket","Oyster Mushroom","Morels","Enoki",
+  // Arctic Scandinavia
+  "Rhodiola",
+]);
+
+// Precompute all available categories & elements for filter UI
+const ALL_HERB_CATEGORIES = [...new Set(
+  HERBS_CLEAN.flatMap(h => getHerbCategories(h))
+)].sort();
+
+const ALL_TCM_ELEMENTS = [...new Set(
+  HERBS_CLEAN.flatMap(h =>
+    h.tcm_element.split(/\s*\+\s*/).map(e => e.trim()).filter(Boolean)
+  )
+)].sort();
 
 interface SavedFormula {
   id: number;
@@ -57,6 +119,9 @@ export default function App() {
     catch { return []; }
   });
   const [saveFlash, setSaveFlash] = useState(false);
+  const [activeCategories, setActiveCategories] = useState<string[]>([]);
+  const [activeElements, setActiveElements] = useState<string[]>([]);
+  const [showForageable, setShowForageable] = useState(false);
 
   // Debounce search — prevents lag on large herb list
   useEffect(() => {
@@ -66,16 +131,34 @@ export default function App() {
 
   const filteredHerbs = useMemo(() => {
     const q = debouncedQuery.toLowerCase().trim();
-    if (!q) return HERBS_CLEAN;
-    return HERBS_CLEAN.filter(
-      (h) =>
+    let result = HERBS_CLEAN;
+
+    if (q) {
+      result = result.filter(h =>
         h.name.toLowerCase().includes(q) ||
         (h.botanical && h.botanical.toLowerCase().includes(q)) ||
         (h.tcm_element && h.tcm_element.toLowerCase().includes(q)) ||
-        h.primary_functions.some((f) => f.toLowerCase().includes(q)) ||
-        h.energetics.some((e) => e.toLowerCase().includes(q))
-    );
-  }, [debouncedQuery]);
+        h.primary_functions.some(f => f.toLowerCase().includes(q)) ||
+        h.energetics.some(e => e.toLowerCase().includes(q))
+      );
+    }
+    if (activeCategories.length > 0) {
+      result = result.filter(h => {
+        const cats = getHerbCategories(h);
+        return activeCategories.some(c => cats.includes(c));
+      });
+    }
+    if (activeElements.length > 0) {
+      result = result.filter(h => {
+        const els = h.tcm_element.split(/\s*\+\s*/).map(e => e.trim());
+        return activeElements.some(el => els.includes(el));
+      });
+    }
+    if (showForageable) {
+      result = result.filter(h => FORAGEABLE_EU.has(h.name));
+    }
+    return result;
+  }, [debouncedQuery, activeCategories, activeElements, showForageable]);
 
   // per-herb synergy pairs within the current selection
   const synergyMap = useMemo(() => {
@@ -706,11 +789,96 @@ export default function App() {
               />
             )}
           </div>
-          {searchQuery && (
+          {/* Result count */}
+          {(debouncedQuery || activeCategories.length > 0 || activeElements.length > 0 || showForageable) && (
             <p className="text-[10px] mt-1.5" style={{ color: "#7a766c" }}>
-              {filteredHerbs.length} result{filteredHerbs.length !== 1 ? "s" : ""}
+              {filteredHerbs.length} herb{filteredHerbs.length !== 1 ? "s" : ""}
+              {activeCategories.length > 0 && ` · ${activeCategories.join(", ")}`}
+              {activeElements.length > 0 && ` · ${activeElements.join(", ")}`}
+              {showForageable && " · Forageable EU"}
             </p>
           )}
+
+          {/* ── Filter bar ── */}
+          <div className="mt-3 flex flex-col gap-2">
+
+            {/* Category chips */}
+            <div className="flex gap-1.5 overflow-x-auto pb-1" style={{ scrollbarWidth: "none" }}>
+              {ALL_HERB_CATEGORIES.map(cat => {
+                const on = activeCategories.includes(cat);
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCategories(prev =>
+                      prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat]
+                    )}
+                    className="flex-shrink-0 text-[9px] px-2.5 py-1 rounded-full transition-all"
+                    style={{
+                      border: on ? "0.5px solid rgba(123,212,161,0.55)" : "0.5px solid rgba(255,255,255,0.08)",
+                      background: on ? "rgba(123,212,161,0.12)" : "rgba(255,255,255,0.03)",
+                      color: on ? "#7bd4a1" : "#7a766c",
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {cat}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Element + Forageable chips */}
+            <div className="flex gap-1.5 overflow-x-auto pb-0.5" style={{ scrollbarWidth: "none" }}>
+              {/* Forageable toggle */}
+              <button
+                onClick={() => setShowForageable(p => !p)}
+                className="flex-shrink-0 text-[9px] px-2.5 py-1 rounded-full transition-all"
+                style={{
+                  border: showForageable ? "0.5px solid rgba(123,212,161,0.55)" : "0.5px solid rgba(255,255,255,0.08)",
+                  background: showForageable ? "rgba(123,212,161,0.12)" : "rgba(255,255,255,0.03)",
+                  color: showForageable ? "#7bd4a1" : "#7a766c",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                }}
+              >
+                🌿 Forageable SE · DE
+              </button>
+
+              {/* Element chips */}
+              {ALL_TCM_ELEMENTS.map(el => {
+                const on = activeElements.includes(el);
+                return (
+                  <button
+                    key={el}
+                    onClick={() => setActiveElements(prev =>
+                      prev.includes(el) ? prev.filter(e => e !== el) : [...prev, el]
+                    )}
+                    className="flex-shrink-0 text-[9px] px-2.5 py-1 rounded-full transition-all"
+                    style={{
+                      border: on ? "0.5px solid rgba(255,255,255,0.3)" : "0.5px solid rgba(255,255,255,0.08)",
+                      background: on ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.03)",
+                      color: on ? "#f6f3ea" : "#7a766c",
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {el}
+                  </button>
+                );
+              })}
+
+              {/* Clear all filters */}
+              {(activeCategories.length > 0 || activeElements.length > 0 || showForageable) && (
+                <button
+                  onClick={() => { setActiveCategories([]); setActiveElements([]); setShowForageable(false); }}
+                  className="flex-shrink-0 text-[9px] px-2.5 py-1 rounded-full transition-all"
+                  style={{ border: "0.5px solid rgba(255,139,139,0.3)", background: "rgba(255,139,139,0.06)", color: "#ff8b8b", letterSpacing: "0.08em" }}
+                >
+                  ✕ Clear
+                </button>
+              )}
+            </div>
+          </div>
         </header>
 
         {/* HERB GRID — scrolls independently */}
