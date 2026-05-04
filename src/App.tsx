@@ -86,7 +86,7 @@ const TRYP_HERBS = new Set([
   "Milk Thistle","Dandelion Root",
   "Cayenne","Turmeric","Star Anise","Cardamom","Fennel",
   "Chaga","Cordyceps","Lion's Mane","Reishi","Tremella","Turkey Tail","Fu Ling","Shiitake","Maitake",
-  "Bobinsana","Motherwort",
+  "Bobinsana","Motherwort","Psilocybe Cubensis",
 ]);
 
 // ─── Symptom → herb mapping (exact names from herbs.ts) ───────────────────
@@ -679,22 +679,27 @@ export default function App() {
           </div>
 
           {/* Page header */}
-          <header className="mb-10 text-center px-2">
-            <img src={FungaiArtLogo} alt="Fungai Art" className="w-12 h-12 mx-auto mb-4 object-contain" />
-            <h1
-              className="mb-2 text-white leading-tight"
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontWeight: 500,
-                letterSpacing: "0.04em",
-                fontSize: "clamp(32px, 8vw, 56px)",
-              }}
-            >
-              Formula Synthesis
-            </h1>
-            <p className="text-[10px] uppercase tracking-[0.35em]" style={{ color: "#7bd4a1" }}>
-              {selectedHerbs.length} constituents · clinical matrix active
-            </p>
+          <header className="mb-6 px-1">
+            <div className="flex items-center gap-4 mb-4">
+              <img src={FungaiArtLogo} alt="Fungai Art" className="w-20 h-20 object-contain flex-shrink-0" style={{ filter: "drop-shadow(0 0 18px rgba(123,212,161,0.18))" }} />
+              <div>
+                <div className="text-[9px] uppercase tracking-[0.28em] mb-0.5" style={{ color: "#7a766c" }}>Fungai Art Elixirs</div>
+                <h1
+                  className="text-white leading-none"
+                  style={{
+                    fontFamily: "'Cormorant Garamond', serif",
+                    fontWeight: 500,
+                    letterSpacing: "0.03em",
+                    fontSize: "clamp(28px, 7vw, 48px)",
+                  }}
+                >
+                  Formula Synthesis
+                </h1>
+                <p className="text-[11px] uppercase tracking-[0.25em] mt-1" style={{ color: "#7bd4a1" }}>
+                  {selectedHerbs.length} constituents · clinical matrix active
+                </p>
+              </div>
+            </div>
           </header>
 
           {/* ── Formula Intelligence (compact) ── */}
@@ -754,35 +759,66 @@ export default function App() {
           )}
 
           {/* ── Herb grid — 3 columns ── */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {selectedHerbs.map((h) => {
               const synergies = synergyMap[h.id] ?? [];
               const cautions  = cautionFlags[h.id] ?? [];
               return (
                 <div key={h.id} className="rounded-xl overflow-hidden flex flex-col"
-                  style={{ background: "#0d1410", border: "0.5px solid rgba(255,255,255,0.08)" }}>
+                  style={{ background: "#0d1410", border: "0.5px solid rgba(255,255,255,0.09)" }}>
                   {/* Top */}
-                  <div className="px-3 pt-3 pb-2 flex items-start justify-between gap-2"
-                    style={{ borderBottom: "0.5px solid rgba(255,255,255,0.06)" }}>
+                  <div className="px-4 pt-4 pb-3 flex items-start justify-between gap-2"
+                    style={{ borderBottom: "0.5px solid rgba(255,255,255,0.07)" }}>
                     <div className="min-w-0">
-                      <div className="text-white leading-tight truncate" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 15, fontWeight: 600 }}>{h.name}</div>
-                      <div className="text-[9px] italic truncate mt-0.5" style={{ color: "#7a766c" }}>{h.botanical}</div>
+                      <div className="text-white leading-tight" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, fontWeight: 600 }}>{h.name}</div>
+                      <div className="text-[10px] italic mt-0.5" style={{ color: "#7a766c" }}>{h.botanical}</div>
                     </div>
-                    <span className={cn("text-[8px] px-1.5 py-0.5 rounded-full border flex-shrink-0", CAUTION_COLOR[h.caution_level])}>{CAUTION_SHORT[h.caution_level]}</span>
+                    <span className={cn("text-[8px] px-2 py-1 rounded-full border flex-shrink-0 font-medium", CAUTION_COLOR[h.caution_level])}>{CAUTION_SHORT[h.caution_level]}</span>
                   </div>
                   {/* Body */}
-                  <div className="px-3 py-2 flex-1">
-                    <p className="text-[10px] leading-snug mb-2" style={{ color: "#b9b3a6" }}>{shortFunction(h.primary_functions[0] ?? "")}</p>
-                    <div className="flex flex-wrap gap-1 mb-1.5">
-                      {h.energetics.slice(0, 3).map(e => <span key={e} className="text-[8px] px-1.5 py-0.5 rounded-full" style={{ background: "rgba(123,212,161,0.06)", color: "rgba(123,212,161,0.7)", border: "0.5px solid rgba(123,212,161,0.15)" }}>{e}</span>)}
+                  <div className="px-4 py-3 flex-1 flex flex-col gap-2.5">
+                    {/* Primary function — bigger text */}
+                    <p className="text-[12px] leading-relaxed" style={{ color: "#c8c2b6" }}>{shortFunction(h.primary_functions[0] ?? "")}</p>
+                    {/* Secondary function if present */}
+                    {h.primary_functions[1] && (
+                      <p className="text-[10px] leading-snug" style={{ color: "#7a766c" }}>{shortFunction(h.primary_functions[1])}</p>
+                    )}
+                    {/* Energetics tags */}
+                    <div className="flex flex-wrap gap-1">
+                      {h.energetics.slice(0, 4).map(e => <span key={e} className="text-[9px] px-1.5 py-0.5 rounded-full" style={{ background: "rgba(123,212,161,0.07)", color: "rgba(123,212,161,0.75)", border: "0.5px solid rgba(123,212,161,0.16)" }}>{e}</span>)}
                     </div>
-                    <div className="text-[8px] uppercase tracking-[0.08em]" style={{ color: "#3d4a43" }}>{h.tcm_element}</div>
+                    {/* Dosage + preparation row */}
+                    <div className="flex flex-col gap-1">
+                      {h.dosage_range && (
+                        <div className="flex items-start gap-1.5">
+                          <span className="text-[8px] uppercase tracking-[0.1em] flex-shrink-0 mt-px" style={{ color: "#5a6660" }}>Dose</span>
+                          <span className="text-[10px] leading-snug" style={{ color: "#9a9590" }}>{h.dosage_range}</span>
+                        </div>
+                      )}
+                      {h.best_preparation && (
+                        <div className="flex items-start gap-1.5">
+                          <span className="text-[8px] uppercase tracking-[0.1em] flex-shrink-0 mt-px" style={{ color: "#5a6660" }}>Prep</span>
+                          <span className="text-[10px] leading-snug" style={{ color: "#9a9590" }}>{h.best_preparation}</span>
+                        </div>
+                      )}
+                    </div>
+                    {/* Flavor + TCM row */}
+                    <div className="flex items-center justify-between gap-2">
+                      {h.flavor_profile && (
+                        <span className="text-[9px] italic" style={{ color: "#5a6660" }}>{h.flavor_profile}</span>
+                      )}
+                      <span className="text-[8px] uppercase tracking-[0.1em] ml-auto" style={{ color: "#3d4a43" }}>{h.tcm_element}</span>
+                    </div>
+                    {/* Spiritual layer */}
+                    {h.spiritual_layer && (
+                      <p className="text-[9px] leading-snug border-t pt-2" style={{ color: "#5a6660", borderColor: "rgba(255,255,255,0.04)" }}>✦ {h.spiritual_layer}</p>
+                    )}
                   </div>
                   {/* Synergy/caution footer */}
                   {(synergies.length > 0 || cautions.length > 0) && (
-                    <div className="px-3 py-1.5 flex flex-wrap gap-x-3 gap-y-1" style={{ borderTop: "0.5px solid rgba(255,255,255,0.05)", background: "rgba(0,0,0,0.15)" }}>
-                      {synergies.length > 0 && <span className="text-[8px]" style={{ color: "#7bd4a1" }}>⟳ {synergies.join(", ")}</span>}
-                      {cautions.length > 0 && <span className="text-[8px] text-orange-400">⚠ {cautions.join(", ")}</span>}
+                    <div className="px-4 py-2 flex flex-col gap-1" style={{ borderTop: "0.5px solid rgba(255,255,255,0.05)", background: "rgba(0,0,0,0.18)" }}>
+                      {synergies.length > 0 && <span className="text-[9px]" style={{ color: "#7bd4a1" }}>⟳ synergy: {synergies.join(" · ")}</span>}
+                      {cautions.length > 0 && <span className="text-[9px] text-orange-400">⚠ caution: {cautions.join(" · ")}</span>}
                     </div>
                   )}
                 </div>

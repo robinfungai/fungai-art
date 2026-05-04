@@ -1845,19 +1845,494 @@ export const EXTRACTION: ExtractionHerb[] = [
     synergy: ["Elecampane", "Wild Cherry Bark"],
     caution_level: "MEDIUM"
   },
-  { 
-    id: 1730, 
-    common: "Prickly Ash", 
-    botanical: "Zanthoxylum americanum", 
-    part: "bark/berry", 
+  {
+    id: 1730,
+    common: "Prickly Ash",
+    botanical: "Zanthoxylum americanum",
+    part: "bark/berry",
     ethanol: 60,
-    methods: ["maceration"], 
-    ratio: "1:5", 
+    methods: ["maceration"],
+    ratio: "1:5",
     days: 14,
     spagyric: true,
     notes: "Order: Cold maceration. The 'tingling' alkaloids (alkamides) are volatile; heat reduces the circulatory-stimulating effect.",
     tcm: { meridians: ["Spleen", "Stomach", "Kidney"], element: "Earth + Water" },
     synergy: ["Ginger", "Ginkgo"],
     caution_level: "LOW"
+  },
+  // ─── Additional herbs from Materia Medica (added to match herbs.ts catalog) ───
+  {
+    id: 1731, common: "Bilberry", botanical: "Vaccinium myrtillus", part: "berry/leaf",
+    ethanol: 40, methods: ["maceration"], ratio: "1:4", days: 14, spagyric: false,
+    notes: "Cold maceration preserves anthocyanins; berries yield a deep blue-purple tincture.",
+    tcm: { meridians: ["Liver", "Kidney"], element: "Water" }, synergy: ["Lingonberry", "Elderberry"], caution_level: "LOW"
+  },
+  {
+    id: 1732, common: "Lingonberry", botanical: "Vaccinium vitis-idaea", part: "berry/leaf",
+    ethanol: 40, methods: ["maceration"], ratio: "1:4", days: 14, spagyric: false,
+    notes: "Nordic berry — cold macerate fresh berries; high benzoic acid acts as natural preservative.",
+    tcm: { meridians: ["Kidney", "Bladder"], element: "Water" }, synergy: ["Bilberry", "Rosehip"], caution_level: "LOW"
+  },
+  {
+    id: 1733, common: "Blueberry", botanical: "Vaccinium corymbosum", part: "berry/leaf",
+    ethanol: 40, methods: ["maceration"], ratio: "1:4", days: 14, spagyric: false,
+    notes: "Similar to Bilberry; anthocyanins are water-soluble — low ethanol sufficient.",
+    tcm: { meridians: ["Liver", "Kidney"], element: "Water" }, synergy: ["Bilberry", "Elderberry"], caution_level: "LOW"
+  },
+  {
+    id: 1734, common: "Aronia Berry", botanical: "Aronia melanocarpa", part: "berry",
+    ethanol: 40, methods: ["maceration"], ratio: "1:4", days: 14, spagyric: false,
+    notes: "Highest anthocyanin content of any berry — cold macerate; avoid heat which degrades polyphenols.",
+    tcm: { meridians: ["Heart", "Liver"], element: "Fire + Wood" }, synergy: ["Elderberry", "Rosehip"], caution_level: "LOW"
+  },
+  {
+    id: 1735, common: "Rosehip", botanical: "Rosa canina", part: "hip/fruit",
+    ethanol: 40, methods: ["maceration", "decoction"], ratio: "1:4", days: 14, decoctionMin: 20, spagyric: false,
+    notes: "High vitamin C degrades with heat — prefer cold maceration; remove seeds before processing (irritant hairs).",
+    tcm: { meridians: ["Liver", "Stomach"], element: "Wood + Earth" }, synergy: ["Elderberry", "Hawthorn Berry"], caution_level: "LOW"
+  },
+  {
+    id: 1736, common: "Rose Petals", botanical: "Rosa damascena", part: "petals",
+    ethanol: 40, methods: ["maceration", "distillation"], ratio: "1:4", days: 14, spagyric: true,
+    notes: "Distillation yields rosewater hydrosol; macerate fresh petals in 40% for heart-opening nervine tincture.",
+    tcm: { meridians: ["Heart", "Liver"], element: "Fire + Wood" }, synergy: ["Saffron", "Lemon Balm"], caution_level: "LOW"
+  },
+  {
+    id: 1737, common: "Elderflower", botanical: "Sambucus nigra (flos)", part: "flower",
+    ethanol: 40, methods: ["maceration"], ratio: "1:4", days: 10, spagyric: false,
+    notes: "Delicate volatile aromatics; use cool maceration promptly after harvest. Fresh flowers preferred.",
+    tcm: { meridians: ["Lung", "Liver"], element: "Metal + Wood" }, synergy: ["Elderberry", "Yarrow"], caution_level: "LOW"
+  },
+  {
+    id: 1738, common: "Rosemary", botanical: "Salvia rosmarinus", part: "leaf/tip",
+    ethanol: 60, methods: ["maceration", "distillation"], ratio: "1:4", days: 14, spagyric: true,
+    notes: "60% ethanol captures rosmarinic acid and carnosol. Distillation yields potent essential oil — do not ingest neat.",
+    tcm: { meridians: ["Heart", "Liver"], element: "Fire + Wood" }, synergy: ["Sage", "Ginkgo"], caution_level: "LOW"
+  },
+  {
+    id: 1739, common: "Thyme", botanical: "Thymus vulgaris", part: "aerial",
+    ethanol: 60, methods: ["maceration", "distillation"], ratio: "1:4", days: 14, spagyric: false,
+    notes: "High thymol content; 60% captures volatile oils without over-extracting harsh tannins.",
+    tcm: { meridians: ["Lung", "Stomach"], element: "Metal + Earth" }, synergy: ["Oregano", "Mullein"], caution_level: "LOW"
+  },
+  {
+    id: 1740, common: "Oregano", botanical: "Origanum vulgare", part: "aerial",
+    ethanol: 60, methods: ["maceration", "distillation"], ratio: "1:4", days: 14, spagyric: false,
+    notes: "Carvacrol is the key antimicrobial constituent — 60% ethanol; distillation yields oil of oregano. Avoid therapeutic doses in pregnancy.",
+    tcm: { meridians: ["Lung", "Spleen"], element: "Metal + Earth" }, synergy: ["Thyme", "Garlic"], caution_level: "LOW-MEDIUM"
+  },
+  {
+    id: 1741, common: "Sage", botanical: "Salvia officinalis", part: "leaf",
+    ethanol: 60, methods: ["maceration", "distillation"], ratio: "1:4", days: 14, spagyric: true,
+    notes: "Thujone-containing; use at moderate doses. Distillation for hydrosol; maceration captures salvianolic acids.",
+    tcm: { meridians: ["Heart", "Liver"], element: "Fire + Wood" }, synergy: ["Rosemary", "Sage"], caution_level: "MEDIUM"
+  },
+  {
+    id: 1742, common: "Caraway", botanical: "Carum carvi", part: "seed",
+    ethanol: 60, methods: ["maceration"], ratio: "1:5", days: 14, spagyric: false,
+    notes: "Crush seeds lightly before macerating to release carvone. Short maceration prevents bitterness.",
+    tcm: { meridians: ["Spleen", "Stomach"], element: "Earth" }, synergy: ["Fennel Seed", "Cardamom"], caution_level: "LOW"
+  },
+  {
+    id: 1743, common: "Cloves", botanical: "Syzygium aromaticum", part: "bud",
+    ethanol: 70, methods: ["maceration"], ratio: "1:5", days: 14, spagyric: false,
+    notes: "Eugenol dominant — high ethanol extraction. Dilute well before use; neat eugenol is irritating to mucosa.",
+    tcm: { meridians: ["Spleen", "Kidney", "Stomach"], element: "Earth + Water" }, synergy: ["Cinnamon", "Cardamom"], caution_level: "MEDIUM"
+  },
+  {
+    id: 1744, common: "Vanilla", botanical: "Vanilla planifolia", part: "pod/bean",
+    ethanol: 35, methods: ["maceration"], ratio: "1:5", days: 21, spagyric: true,
+    notes: "Split and scrape pods; 35% ethanol optimal for vanillin extraction. Excellent spagyric base for elixirs.",
+    tcm: { meridians: ["Heart", "Spleen"], element: "Fire + Earth" }, synergy: ["Cacao", "Saffron"], caution_level: "LOW"
+  },
+  {
+    id: 1745, common: "Licorice Root", botanical: "Glycyrrhiza glabra", part: "root",
+    ethanol: 50, methods: ["decoction", "maceration"], ratio: "1:5", days: 14, decoctionMin: 25, spagyric: false,
+    notes: "Glycyrrhizin extracted well by decoction; 50% ethanol for full-spectrum. Avoid prolonged high-dose use (hypertension risk).",
+    tcm: { meridians: ["Spleen", "Lung", "Heart", "Stomach"], element: "Earth + Metal" }, synergy: ["Ashwagandha", "Eleuthero (Siberian Ginseng)"], caution_level: "MEDIUM"
+  },
+  {
+    id: 1746, common: "Linden", botanical: "Tilia europaea", part: "flower/bract",
+    ethanol: 40, methods: ["maceration"], ratio: "1:4", days: 10, spagyric: false,
+    notes: "Fresh or recently dried flowers; cold maceration preserves mucilaginous and sedative flavonoids.",
+    tcm: { meridians: ["Heart", "Lung"], element: "Fire + Metal" }, synergy: ["Lemon Balm", "Chamomile"], caution_level: "LOW"
+  },
+  {
+    id: 1747, common: "Meadowsweet", botanical: "Filipendula ulmaria", part: "aerial",
+    ethanol: 40, methods: ["maceration"], ratio: "1:4", days: 14, spagyric: false,
+    notes: "Salicylate-rich; avoid in aspirin sensitivity. Cold maceration preserves methyl salicylate (easily volatile).",
+    tcm: { meridians: ["Stomach", "Liver"], element: "Earth + Wood" }, synergy: ["Willow Bark", "Chamomile"], caution_level: "MEDIUM"
+  },
+  {
+    id: 1748, common: "Willow Bark", botanical: "Salix alba", part: "bark",
+    ethanol: 50, methods: ["decoction", "maceration"], ratio: "1:5", days: 14, decoctionMin: 25, spagyric: false,
+    notes: "Salicin requires decoction for deglycosylation; avoid in aspirin allergy, children under 16.",
+    tcm: { meridians: ["Liver", "Kidney"], element: "Wood + Water" }, synergy: ["Meadowsweet", "Devil's Claw"], caution_level: "MEDIUM"
+  },
+  {
+    id: 1749, common: "Wormwood", botanical: "Artemisia absinthium", part: "aerial",
+    ethanol: 60, methods: ["maceration"], ratio: "1:5", days: 14, spagyric: false,
+    notes: "Thujone content — use short maceration (10–14 days max). Not for long-term use. Bitter tonic in small doses.",
+    tcm: { meridians: ["Liver", "Gallbladder"], element: "Wood" }, synergy: ["Gentian", "Dandelion Root"], caution_level: "HIGH"
+  },
+  {
+    id: 1750, common: "Senna", botanical: "Senna alexandrina", part: "leaf/pod",
+    ethanol: 25, methods: ["decoction"], ratio: "1:5", decoctionMin: 10, spagyric: false,
+    notes: "Short decoction only — anthraquinones are water-soluble. High ethanol can extract harsh resins. Short-term use only.",
+    tcm: { meridians: ["Large Intestine", "Liver"], element: "Wood" }, caution_level: "HIGH"
+  },
+  {
+    id: 1751, common: "Rhubarb Root", botanical: "Rheum officinale", part: "root",
+    ethanol: 50, methods: ["decoction", "maceration"], ratio: "1:5", days: 14, decoctionMin: 20, spagyric: false,
+    notes: "Low dose: digestive tonic; high dose: purgative. Contains oxalic acid — avoid in kidney stones.",
+    tcm: { meridians: ["Large Intestine", "Liver", "Stomach"], element: "Wood + Earth" }, caution_level: "MEDIUM-HIGH"
+  },
+  {
+    id: 1752, common: "Horsetail", botanical: "Equisetum arvense", part: "aerial",
+    ethanol: 25, methods: ["decoction"], ratio: "1:5", decoctionMin: 20, spagyric: false,
+    notes: "Silica extraction best by decoction (water-soluble). Do not use high ethanol — mineral silicates are insoluble in alcohol.",
+    tcm: { meridians: ["Lung", "Bladder", "Kidney"], element: "Metal + Water" }, synergy: ["Nettle Leaf", "Oatstraw"], caution_level: "LOW"
+  },
+  {
+    id: 1753, common: "Broadleaf Plantain", botanical: "Plantago major", part: "leaf",
+    ethanol: 40, methods: ["maceration"], ratio: "1:4", days: 14, spagyric: false,
+    notes: "Fresh plant preferred; juice or fresh plant tincture captures mucilage and aucubin intact.",
+    tcm: { meridians: ["Lung", "Liver", "Kidney"], element: "Metal + Wood" }, synergy: ["Chickweed", "Calendula"], caution_level: "LOW"
+  },
+  {
+    id: 1754, common: "Chickweed", botanical: "Stellaria media", part: "aerial",
+    ethanol: 25, methods: ["maceration"], ratio: "1:4", days: 10, spagyric: false,
+    notes: "Delicate watery herb — use low ethanol or glycerite. Best fresh plant tincture; dries out very fast post-harvest.",
+    tcm: { meridians: ["Lung", "Large Intestine"], element: "Metal" }, synergy: ["Broadleaf Plantain", "Calendula"], caution_level: "LOW"
+  },
+  {
+    id: 1755, common: "Ground Ivy", botanical: "Glechoma hederacea", part: "aerial",
+    ethanol: 40, methods: ["maceration"], ratio: "1:4", days: 14, spagyric: false,
+    notes: "Harvest before flowering for highest rosmarinic acid. Fresh plant tincture ideal.",
+    tcm: { meridians: ["Lung", "Liver"], element: "Metal + Wood" }, synergy: ["Eyebright", "Elderflower"], caution_level: "LOW"
+  },
+  {
+    id: 1756, common: "Eyebright", botanical: "Euphrasia officinalis", part: "aerial",
+    ethanol: 40, methods: ["maceration"], ratio: "1:4", days: 14, spagyric: false,
+    notes: "Traditional use for eye and sinus conditions; delicate — avoid high ethanol. Wildcrafted sustainably.",
+    tcm: { meridians: ["Liver", "Lung"], element: "Wood + Metal" }, synergy: ["Ground Ivy", "Elderflower"], caution_level: "LOW"
+  },
+  {
+    id: 1757, common: "Iceland Moss", botanical: "Cetraria islandica", part: "lichen (thallus)",
+    ethanol: 25, methods: ["decoction"], ratio: "1:5", decoctionMin: 20, spagyric: false,
+    notes: "Lichen — not a true moss. Decoction extracts mucilaginous lichenin. Bitter compounds help appetite.",
+    tcm: { meridians: ["Lung", "Stomach"], element: "Metal + Earth" }, synergy: ["Marshmallow Root", "Mullein"], caution_level: "LOW"
+  },
+  {
+    id: 1758, common: "Jasmine", botanical: "Jasminum officinale", part: "flower",
+    ethanol: 40, methods: ["maceration", "cryo-maceration"], ratio: "1:4", days: 10, spagyric: true,
+    notes: "Extremely volatile aromatics — cryo-maceration preserves finest constituents. Room-temp maceration in 40% for tincture.",
+    tcm: { meridians: ["Heart", "Liver"], element: "Fire + Wood" }, synergy: ["Rose Petals", "Saffron"], caution_level: "LOW"
+  },
+  {
+    id: 1759, common: "Marjoram (Sweet Marjoram)", botanical: "Origanum majorana", part: "aerial",
+    ethanol: 60, methods: ["maceration", "distillation"], ratio: "1:4", days: 14, spagyric: false,
+    notes: "Gentler than oregano; 60% captures terpinen-4-ol. Distillation for essential oil. Calming sedative quality.",
+    tcm: { meridians: ["Lung", "Spleen"], element: "Metal + Earth" }, synergy: ["Thyme", "Lavender"], caution_level: "LOW"
+  },
+  {
+    id: 1760, common: "Lady's Mantle", botanical: "Alchemilla vulgaris", part: "aerial",
+    ethanol: 40, methods: ["maceration"], ratio: "1:4", days: 14, spagyric: false,
+    notes: "High tannin — do not over-macerate. 40% ethanol captures ellagitannins; traditional women's herb.",
+    tcm: { meridians: ["Liver", "Spleen"], element: "Wood + Earth" }, synergy: ["Raspberry Leaf", "Yarrow"], caution_level: "LOW"
+  },
+  {
+    id: 1761, common: "Vervain", botanical: "Verbena officinalis", part: "aerial",
+    ethanol: 40, methods: ["maceration"], ratio: "1:4", days: 14, spagyric: true,
+    notes: "Bitter nervine — harvested just before flowering. Low doses nervine; higher doses emetic. Spagyric enhances subtle action.",
+    tcm: { meridians: ["Liver", "Heart"], element: "Wood + Fire" }, synergy: ["Skullcap", "Passionflower"], caution_level: "LOW-MEDIUM"
+  },
+  {
+    id: 1762, common: "Echinacea", botanical: "Echinacea purpurea / angustifolia", part: "root/aerial",
+    ethanol: 60, methods: ["maceration", "percolation"], ratio: "1:5", days: 14, spagyric: false,
+    notes: "Root extracts highest in alkamides (60% ethanol); aerial 45%. Percolation gives consistent potency. Tingling on tongue is quality marker.",
+    tcm: { meridians: ["Lung", "Liver"], element: "Metal + Wood" }, synergy: ["Elderberry", "Astragalus"], caution_level: "LOW"
+  },
+  {
+    id: 1763, common: "Saw Palmetto", botanical: "Serenoa repens", part: "berry",
+    ethanol: 90, methods: ["maceration", "percolation"], ratio: "1:5", days: 21, spagyric: false,
+    notes: "Fatty sterols are lipophilic — requires high-proof ethanol (90%). Supercritical CO₂ extraction gold standard; 90% is closest home equivalent.",
+    tcm: { meridians: ["Kidney", "Liver"], element: "Water + Wood" }, synergy: ["Nettle Leaf", "Pumpkin Seed"], caution_level: "LOW"
+  },
+  {
+    id: 1764, common: "Shatavari", botanical: "Asparagus racemosus", part: "root",
+    ethanol: 45, methods: ["decoction", "maceration"], ratio: "1:5", days: 14, decoctionMin: 25, spagyric: true,
+    notes: "Saponins partially water-soluble; dual decoction + maceration captures full spectrum. Classic Ayurvedic female tonic.",
+    tcm: { meridians: ["Lung", "Stomach", "Kidney"], element: "Metal + Water" }, synergy: ["Ashwagandha", "Maca"], caution_level: "LOW"
+  },
+  {
+    id: 1765, common: "Shilajit (Mineral Pitch)", botanical: "Asphaltum punjabicum", part: "mineral resin",
+    ethanol: 25, methods: ["maceration"], ratio: "1:8", days: 7, spagyric: true,
+    notes: "Water-soluble fulvic/humic acids — low ethanol or water extraction. Raw resin dissolved in warm water is traditional. Spagyric increases mineral bioavailability.",
+    tcm: { meridians: ["Kidney", "Heart"], element: "Water + Fire" }, synergy: ["Ashwagandha", "Cordyceps"], caution_level: "LOW"
+  },
+  {
+    id: 1766, common: "Spirulina", botanical: "Arthrospira platensis", part: "whole alga",
+    ethanol: 0, methods: ["decoction"], ratio: "1:5", decoctionMin: 10, spagyric: false,
+    notes: "Aqueous extraction only; ethanol denatures phycocyanin. Typically consumed as powder in water/smoothie. Not suited to tincture.",
+    tcm: { meridians: ["Liver", "Kidney"], element: "Water + Wood" }, caution_level: "LOW"
+  },
+  {
+    id: 1767, common: "Moringa", botanical: "Moringa oleifera", part: "leaf",
+    ethanol: 40, methods: ["maceration", "decoction"], ratio: "1:4", days: 14, decoctionMin: 15, spagyric: false,
+    notes: "Isothiocyanates and glucosinolates partially volatile — avoid prolonged heat. Cold maceration preferred for antioxidant retention.",
+    tcm: { meridians: ["Liver", "Kidney", "Spleen"], element: "Wood + Water + Earth" }, caution_level: "LOW"
+  },
+  {
+    id: 1768, common: "Guarana", botanical: "Paullinia cupana", part: "seed",
+    ethanol: 60, methods: ["maceration"], ratio: "1:5", days: 14, spagyric: false,
+    notes: "High caffeine + tannins; 60% ethanol. Grind seeds coarsely before macerating. Stimulant — avoid late afternoon/evening.",
+    tcm: { meridians: ["Heart", "Spleen"], element: "Fire + Earth" }, synergy: ["Yerba Mate", "Rhodiola"], caution_level: "MEDIUM"
+  },
+  {
+    id: 1769, common: "Barley", botanical: "Hordeum vulgare", part: "seed/grass",
+    ethanol: 25, methods: ["decoction"], ratio: "1:5", decoctionMin: 20, spagyric: false,
+    notes: "Beta-glucans are water-soluble; decoction essential. Barley grass juice preferred fresh. Not suitable for gluten-sensitive individuals.",
+    tcm: { meridians: ["Spleen", "Stomach"], element: "Earth" }, synergy: ["Oatstraw", "Dandelion Root"], caution_level: "LOW"
+  },
+  {
+    id: 1770, common: "Goji Berry", botanical: "Lycium barbarum", part: "berry",
+    ethanol: 40, methods: ["maceration", "decoction"], ratio: "1:4", days: 14, decoctionMin: 20, spagyric: false,
+    notes: "Zeaxanthin and betaine partially water-soluble; dual extraction recommended. Traditional TCM longevity herb.",
+    tcm: { meridians: ["Liver", "Lung", "Kidney"], element: "Water + Wood + Metal" }, synergy: ["Schisandra", "Astragalus"], caution_level: "LOW"
+  },
+  {
+    id: 1771, common: "Red Dates", botanical: "Ziziphus jujuba", part: "fruit",
+    ethanol: 30, methods: ["decoction"], ratio: "1:5", decoctionMin: 30, spagyric: false,
+    notes: "Classic TCM tonic — long decoction with water. Triterpene saponins and polysaccharides are water-soluble. Pit before use.",
+    tcm: { meridians: ["Heart", "Spleen", "Stomach"], element: "Fire + Earth" }, synergy: ["Astragalus", "Dong Quai"], caution_level: "LOW"
+  },
+  {
+    id: 1772, common: "Kanna", botanical: "Sceletium tortuosum", part: "aerial",
+    ethanol: 60, methods: ["maceration", "cryo-maceration"], ratio: "1:5", days: 14, spagyric: true,
+    notes: "Mesembrine alkaloids are alcohol-soluble. Traditional fermented preparation enhances potency. Cryo-maceration preserves delicate alkaloids. Do not combine with SSRIs.",
+    tcm: { meridians: ["Heart", "Liver"], element: "Fire + Wood" }, synergy: ["Passionflower", "Saffron"], caution_level: "MEDIUM-HIGH"
+  },
+  {
+    id: 1773, common: "Wild Dagga", botanical: "Leonotis leonurus", part: "aerial/flower",
+    ethanol: 60, methods: ["maceration"], ratio: "1:5", days: 14, spagyric: false,
+    notes: "Leonurine alkaloid is alcohol-soluble. Traditional South African plant with mild sedative properties.",
+    tcm: { meridians: ["Heart", "Liver"], element: "Fire + Wood" }, synergy: ["Damiana", "Passionflower"], caution_level: "MEDIUM"
+  },
+  {
+    id: 1774, common: "Kratom", botanical: "Mitragyna speciosa", part: "leaf",
+    ethanol: 70, methods: ["maceration"], ratio: "1:5", days: 14, spagyric: false,
+    notes: "RESTRICTED — legal status varies by jurisdiction. Mitragynine is ethanol-soluble. High addiction potential at regular use; practitioner context only.",
+    tcm: { meridians: ["Kidney", "Liver"], element: "Water + Wood" }, caution_level: "VERY HIGH"
+  },
+  {
+    id: 1775, common: "Coca Leaf", botanical: "Erythroxylum coca", part: "leaf",
+    ethanol: 70, methods: ["maceration"], ratio: "1:5", days: 14, spagyric: false,
+    notes: "LEGALLY RESTRICTED in most countries. Traditional Andean medicinal and ceremonial use. Cocaine alkaloids are controlled substances — for reference only.",
+    tcm: { meridians: ["Kidney", "Spleen"], element: "Water + Earth" }, caution_level: "VERY HIGH"
+  },
+  {
+    id: 1776, common: "Ephedra (Ma Huang)", botanical: "Ephedra sinica", part: "stem",
+    ethanol: 50, methods: ["decoction", "maceration"], ratio: "1:5", days: 14, decoctionMin: 15, spagyric: false,
+    notes: "REGULATED in many countries; ephedrine is a controlled precursor. Classic TCM bronchodilator. Cardiovascular stimulant — practitioner context only.",
+    tcm: { meridians: ["Lung", "Bladder"], element: "Metal + Water" }, caution_level: "HIGH"
+  },
+  {
+    id: 1777, common: "Amanita Muscaria", botanical: "Amanita muscaria", part: "cap (dried)",
+    ethanol: 70, methods: ["maceration"], ratio: "1:5", days: 14, spagyric: true,
+    notes: "PSYCHOACTIVE — ibotenic acid converts to muscimol on drying/decarboxylation. Legal in most jurisdictions but powerful. Spagyric preferred for energetic safety. Practitioner context only.",
+    tcm: { meridians: ["Heart", "Kidney"], element: "Fire + Water" }, caution_level: "VERY HIGH"
+  },
+  {
+    id: 1778, common: "Amanita Pantherina", botanical: "Amanita pantherina", part: "cap (dried)",
+    ethanol: 70, methods: ["maceration"], ratio: "1:5", days: 14, spagyric: true,
+    notes: "PSYCHOACTIVE — higher muscimol/ibotenic ratio than muscaria, more potent and unpredictable. Extreme caution. Practitioner ceremonial use only.",
+    tcm: { meridians: ["Heart", "Kidney"], element: "Fire + Water" }, caution_level: "VERY HIGH"
+  },
+  {
+    id: 1779, common: "Psilocybe Cubensis", botanical: "Psilocybe cubensis", part: "fruiting body (dried)",
+    ethanol: 70, methods: ["maceration", "cryo-maceration"], ratio: "1:5", days: 14, spagyric: true,
+    notes: "CONTROLLED SUBSTANCE in most jurisdictions — for ceremonial/clinical research contexts only. Psilocybin/psilocin are ethanol-soluble. Cryo-maceration preserves full alkaloid spectrum. Spagyric calcination of body — traditional sacred protocol.",
+    tcm: { meridians: ["Heart", "Shen"], element: "Fire" }, synergy: ["Blue Lotus", "Lion's Mane"], caution_level: "VERY HIGH"
+  },
+  {
+    id: 1780, common: "Calea Zacatachichi", botanical: "Calea ternifolia", part: "leaf",
+    ethanol: 60, methods: ["maceration"], ratio: "1:5", days: 14, spagyric: false,
+    notes: "Mexican dream herb; germacranolide sesquiterpenes are alcohol-soluble. Small doses before sleep for lucid dreaming. Intensely bitter.",
+    tcm: { meridians: ["Liver", "Heart"], element: "Wood + Fire" }, synergy: ["Blue Lotus", "Mugwort"], caution_level: "MEDIUM"
+  },
+  {
+    id: 1781, common: "Calamus", botanical: "Acorus calamus", part: "rhizome",
+    ethanol: 60, methods: ["maceration"], ratio: "1:5", days: 14, spagyric: true,
+    notes: "β-asarone content varies by chemotype; North American variety (diploid) lower than Asian (tetraploid). Ayurvedic use vs. FDA restrictions — use cautiously in small doses.",
+    tcm: { meridians: ["Heart", "Liver", "Spleen"], element: "Fire + Wood + Earth" }, caution_level: "HIGH"
+  },
+  {
+    id: 1782, common: "Bobinsana", botanical: "Calliandra angustifolia", part: "bark/root",
+    ethanol: 50, methods: ["decoction", "maceration"], ratio: "1:5", days: 14, decoctionMin: 30, spagyric: true,
+    notes: "Amazonian master plant — long decoction is traditional. Heart-opening and dream-enhancing. Often used in dieta protocols. Limited Western extraction data.",
+    tcm: { meridians: ["Heart", "Kidney"], element: "Fire + Water" }, synergy: ["Blue Lotus", "Mugwort"], caution_level: "MEDIUM"
+  },
+  {
+    id: 1783, common: "Chilcuague", botanical: "Helenium mexicanum", part: "root",
+    ethanol: 60, methods: ["maceration"], ratio: "1:5", days: 14, spagyric: false,
+    notes: "Mexican plant producing strong tingling/numbing sensation (helenalin compounds). Antimicrobial and anti-parasitic. Small doses only.",
+    tcm: { meridians: ["Spleen", "Large Intestine"], element: "Earth" }, caution_level: "HIGH"
+  },
+  {
+    id: 1784, common: "Fadogia", botanical: "Fadogia agrestis", part: "stem",
+    ethanol: 60, methods: ["maceration"], ratio: "1:5", days: 14, spagyric: false,
+    notes: "West African plant; preliminary evidence for LH stimulation. High-dose animal studies show testicular toxicity — use conservative doses only.",
+    tcm: { meridians: ["Kidney", "Liver"], element: "Water + Wood" }, synergy: ["Tongkat Ali", "Pine Pollen"], caution_level: "HIGH"
+  },
+  {
+    id: 1785, common: "Eucalyptus", botanical: "Eucalyptus globulus", part: "leaf",
+    ethanol: 60, methods: ["maceration", "distillation"], ratio: "1:4", days: 14, spagyric: false,
+    notes: "1,8-cineole (eucalyptol) is the key constituent; distillation yields essential oil. Internal use requires extreme dilution. Primarily topical/inhalation use.",
+    tcm: { meridians: ["Lung", "Liver"], element: "Metal + Wood" }, synergy: ["Thyme", "Mullein"], caution_level: "MEDIUM-HIGH"
+  },
+  {
+    id: 1786, common: "Butcher's Broom", botanical: "Ruscus aculeatus", part: "rhizome",
+    ethanol: 50, methods: ["maceration", "decoction"], ratio: "1:5", days: 14, decoctionMin: 20, spagyric: false,
+    notes: "Ruscogenins are the active steroidal saponins; 50% ethanol + decoction dual extraction captures both classes. Traditional venous tonic.",
+    tcm: { meridians: ["Liver", "Kidney"], element: "Wood + Water" }, synergy: ["Hawthorn Berry", "Ginkgo"], caution_level: "LOW"
+  },
+  {
+    id: 1787, common: "Butterbur", botanical: "Petasites hybridus", part: "root/leaf (PA-free)",
+    ethanol: 50, methods: ["maceration"], ratio: "1:5", days: 14, spagyric: false,
+    notes: "ONLY use PA-free (pyrrolizidine alkaloid-free) certified extract. Petasin/isopetasin for migraine prevention. Raw plant hepatotoxic.",
+    tcm: { meridians: ["Lung", "Liver"], element: "Metal + Wood" }, caution_level: "MEDIUM-HIGH"
+  },
+  {
+    id: 1788, common: "Black Walnut", botanical: "Juglans nigra", part: "green hull",
+    ethanol: 60, methods: ["maceration"], ratio: "1:5", days: 14, spagyric: false,
+    notes: "Harvest green hulls only (before they blacken); juglone and tannins extracted in 60% ethanol. Stains everything — glove up.",
+    tcm: { meridians: ["Kidney", "Large Intestine"], element: "Water" }, synergy: ["Wormwood", "Cloves"], caution_level: "MEDIUM"
+  },
+  {
+    id: 1789, common: "Cordyceps", botanical: "Cordyceps militaris / sinensis", part: "fruiting body",
+    ethanol: 50, methods: ["decoction", "maceration"], ratio: "1:5", days: 14, decoctionMin: 30, spagyric: true,
+    notes: "Beta-glucans water-soluble (hot decoction); cordycepin and nucleosides alcohol-soluble. Dual extraction essential for full spectrum.",
+    tcm: { meridians: ["Lung", "Kidney"], element: "Metal + Water" }, synergy: ["Reishi", "Ashwagandha"], caution_level: "LOW"
+  },
+  {
+    id: 1790, common: "Shiitake", botanical: "Lentinula edodes", part: "fruiting body",
+    ethanol: 40, methods: ["decoction", "maceration"], ratio: "1:5", days: 14, decoctionMin: 40, spagyric: false,
+    notes: "Lentinan (beta-1,3-glucan) is water-soluble; eritadenine needs hot water. Dual extraction standard for culinary + medicinal mushrooms.",
+    tcm: { meridians: ["Spleen", "Stomach"], element: "Earth" }, synergy: ["Maitake", "Turkey Tail"], caution_level: "LOW"
+  },
+  {
+    id: 1791, common: "Maitake", botanical: "Grifola frondosa", part: "fruiting body",
+    ethanol: 40, methods: ["decoction", "maceration"], ratio: "1:5", days: 14, decoctionMin: 40, spagyric: false,
+    notes: "D-fraction beta-glucan is water-soluble; alcohol fraction captures triterpenoids. Classic dual extraction. Excellent glycaemic support.",
+    tcm: { meridians: ["Spleen", "Stomach", "Kidney"], element: "Earth + Water" }, synergy: ["Reishi", "Shiitake"], caution_level: "LOW"
+  },
+  {
+    id: 1792, common: "Tremella", botanical: "Tremella fuciformis", part: "fruiting body",
+    ethanol: 30, methods: ["decoction"], ratio: "1:5", decoctionMin: 30, spagyric: false,
+    notes: "Tremella polysaccharides are water-soluble and mucilaginous; ethanol unnecessary and counterproductive. Long hot decoction optimal.",
+    tcm: { meridians: ["Lung", "Stomach", "Kidney"], element: "Metal + Earth + Water" }, synergy: ["Goji Berry", "Schisandra"], caution_level: "LOW"
+  },
+  {
+    id: 1793, common: "Fu Ling", botanical: "Wolfiporia extensa (Poria cocos)", part: "sclerotium",
+    ethanol: 40, methods: ["decoction", "maceration"], ratio: "1:5", days: 14, decoctionMin: 45, spagyric: false,
+    notes: "Hard sclerotium — coarsely grind before decoction. Pachymaran beta-glucan water-soluble; triterpenoids need ethanol fraction.",
+    tcm: { meridians: ["Heart", "Spleen", "Lung", "Kidney"], element: "Earth + Metal + Water" }, synergy: ["Reishi", "Astragalus"], caution_level: "LOW"
+  },
+  {
+    id: 1794, common: "Birch Polypore", botanical: "Piptoporus betulinus", part: "fruiting body",
+    ethanol: 40, methods: ["decoction", "maceration"], ratio: "1:5", days: 14, decoctionMin: 40, spagyric: false,
+    notes: "Otzi the Iceman carried this. Betulinic acid (alcohol-soluble) + beta-glucans (water-soluble); dual extraction. Anti-parasitic, immune modulating.",
+    tcm: { meridians: ["Lung", "Liver"], element: "Metal + Wood" }, synergy: ["Chaga", "Turkey Tail"], caution_level: "LOW"
+  },
+  {
+    id: 1795, common: "Tinder Fungus", botanical: "Fomes fomentarius", part: "inner flesh",
+    ethanol: 40, methods: ["decoction", "maceration"], ratio: "1:5", days: 14, decoctionMin: 40, spagyric: false,
+    notes: "Nordic forageble fungus; polysaccharides water-soluble. Used as amadou and traditional medicine. Slow growing — wildcraft sustainably.",
+    tcm: { meridians: ["Spleen", "Lung"], element: "Earth + Metal" }, synergy: ["Chaga", "Birch Polypore"], caution_level: "LOW"
+  },
+  {
+    id: 1796, common: "Red-Belted Polypore", botanical: "Fomitopsis pinicola", part: "fruiting body",
+    ethanol: 40, methods: ["decoction", "maceration"], ratio: "1:5", days: 14, decoctionMin: 40, spagyric: false,
+    notes: "Nordic resin-rich polypore; laricifuranic acids anti-inflammatory. Grind well; hard consistency. Dual extraction standard.",
+    tcm: { meridians: ["Liver", "Lung"], element: "Wood + Metal" }, synergy: ["Birch Polypore", "Chaga"], caution_level: "LOW"
+  },
+  {
+    id: 1797, common: "Willow Bracket", botanical: "Phellinus igniarius", part: "fruiting body",
+    ethanol: 40, methods: ["decoction", "maceration"], ratio: "1:5", days: 14, decoctionMin: 40, spagyric: false,
+    notes: "Hard bracket fungus; hispolon is the key anti-inflammatory compound. Very long decoction; grind to powder if possible.",
+    tcm: { meridians: ["Liver", "Heart"], element: "Wood + Fire" }, synergy: ["Chaga", "Reishi"], caution_level: "LOW"
+  },
+  {
+    id: 1798, common: "Shaggy Bracket", botanical: "Inonotus hispidus", part: "fruiting body",
+    ethanol: 40, methods: ["decoction", "maceration"], ratio: "1:5", days: 14, decoctionMin: 40, spagyric: false,
+    notes: "Hispolon and hispolone compounds — anti-inflammatory and antimicrobial. Found on ash and apple trees. Annual fruiting body; harvest in autumn.",
+    tcm: { meridians: ["Lung", "Liver"], element: "Metal + Wood" }, caution_level: "LOW"
+  },
+  {
+    id: 1799, common: "Shaggy Mane", botanical: "Coprinus comatus", part: "fruiting body",
+    ethanol: 30, methods: ["decoction"], ratio: "1:5", decoctionMin: 15, spagyric: false,
+    notes: "Edible mushroom; autodigests quickly — extract fresh or recently dried only. Coprinus contains compounds that cause alcohol intolerance reaction when combined with ethanol.",
+    tcm: { meridians: ["Spleen", "Stomach"], element: "Earth" }, caution_level: "LOW-MEDIUM"
+  },
+  {
+    id: 1800, common: "Button Mushroom", botanical: "Agaricus bisporus", part: "fruiting body",
+    ethanol: 30, methods: ["decoction"], ratio: "1:5", decoctionMin: 30, spagyric: false,
+    notes: "Culinary mushroom with agaritine (potentially carcinogenic raw) — cooking/decoction destroys it. Ergothioneine is the key antioxidant. Water extraction sufficient.",
+    tcm: { meridians: ["Spleen", "Stomach"], element: "Earth" }, caution_level: "LOW"
+  },
+  {
+    id: 1801, common: "Mesima", botanical: "Phellinus linteus", part: "fruiting body",
+    ethanol: 40, methods: ["decoction", "maceration"], ratio: "1:5", days: 14, decoctionMin: 40, spagyric: false,
+    notes: "Korean TCM mushroom; hispolon and beta-glucan compounds. Hard texture — powder before decoction. Immune modulating, anti-tumour research.",
+    tcm: { meridians: ["Spleen", "Lung", "Liver"], element: "Earth + Metal + Wood" }, synergy: ["Reishi", "Turkey Tail"], caution_level: "LOW"
+  },
+  {
+    id: 1802, common: "Royal Sun Mushroom", botanical: "Agaricus subrufescens", part: "fruiting body",
+    ethanol: 40, methods: ["decoction", "maceration"], ratio: "1:5", days: 14, decoctionMin: 40, spagyric: false,
+    notes: "Beta-(1→3)-glucan rich. Brazilian Agaricus with strong immune and anti-tumour reputation. Dual extraction captures both polysaccharide and lipophilic fractions.",
+    tcm: { meridians: ["Spleen", "Lung"], element: "Earth + Metal" }, synergy: ["Reishi", "Turkey Tail"], caution_level: "LOW"
+  },
+  {
+    id: 1803, common: "Enoki", botanical: "Flammulina velutipes", part: "fruiting body",
+    ethanol: 30, methods: ["decoction"], ratio: "1:5", decoctionMin: 20, spagyric: false,
+    notes: "Flammulin and beta-glucans water-soluble. Edible mushroom with immune and cognitive research backing. Decoction extract sufficient.",
+    tcm: { meridians: ["Liver", "Spleen"], element: "Wood + Earth" }, synergy: ["Lion's Mane", "Reishi"], caution_level: "LOW"
+  },
+  {
+    id: 1804, common: "Morels", botanical: "Morchella esculenta", part: "fruiting body",
+    ethanol: 30, methods: ["decoction"], ratio: "1:5", decoctionMin: 20, spagyric: false,
+    notes: "Edible; raw morels mildly toxic (hydrazines destroyed by cooking). Decoction safe. Spring-foraged delicacy with antioxidant polysaccharides.",
+    tcm: { meridians: ["Spleen", "Stomach"], element: "Earth" }, caution_level: "LOW"
+  },
+  {
+    id: 1805, common: "Oyster Mushroom", botanical: "Pleurotus ostreatus", part: "fruiting body",
+    ethanol: 30, methods: ["decoction", "maceration"], ratio: "1:5", days: 14, decoctionMin: 25, spagyric: false,
+    notes: "Lovastatin and pleuran beta-glucan; dual extraction captures both. Cultivated and wild. Excellent immune modulator.",
+    tcm: { meridians: ["Spleen", "Lung"], element: "Earth + Metal" }, synergy: ["Shiitake", "Reishi"], caution_level: "LOW"
+  },
+  {
+    id: 1806, common: "Zhu Ling", botanical: "Polyporus umbellatus", part: "sclerotium",
+    ethanol: 40, methods: ["decoction", "maceration"], ratio: "1:5", days: 14, decoctionMin: 45, spagyric: false,
+    notes: "TCM urinary and immune tonic; polysaccharides water-soluble. Hard sclerotium — grind before decoction. Often combined with Fu Ling.",
+    tcm: { meridians: ["Bladder", "Kidney"], element: "Water" }, synergy: ["Fu Ling", "Astragalus"], caution_level: "LOW"
+  },
+  {
+    id: 1807, common: "Rowan Berry", botanical: "Sorbus aucuparia", part: "berry",
+    ethanol: 40, methods: ["maceration", "decoction"], ratio: "1:4", days: 14, decoctionMin: 20, spagyric: false,
+    notes: "Nordic berry; raw berries contain parasorbic acid (mildly toxic) which is destroyed by cooking or fermentation. Use processed/cooked berries for tincture.",
+    tcm: { meridians: ["Lung", "Spleen"], element: "Metal + Earth" }, synergy: ["Rosehip", "Elderberry"], caution_level: "LOW-MEDIUM"
+  },
+  {
+    id: 1808, common: "Cranberry", botanical: "Vaccinium macrocarpon", part: "berry",
+    ethanol: 40, methods: ["maceration"], ratio: "1:4", days: 14, spagyric: false,
+    notes: "Proanthocyanidins (A-type) inhibit bacterial adhesion; cold maceration preserves them. Juice more bioavailable than tincture for UTI prevention.",
+    tcm: { meridians: ["Bladder", "Kidney"], element: "Water" }, synergy: ["Uva Ursi", "Nettle Leaf"], caution_level: "LOW"
+  },
+  {
+    id: 1809, common: "Pine Needles", botanical: "Pinus sylvestris", part: "fresh needles",
+    ethanol: 40, methods: ["maceration", "cryo-maceration"], ratio: "1:4", days: 14, spagyric: false,
+    notes: "High vitamin C and volatile terpenes; cryo-maceration preserves aromatics. Do not use needles from toxic species (Yew, Norfolk Island Pine, etc.).",
+    tcm: { meridians: ["Lung", "Kidney"], element: "Metal + Water" }, synergy: ["Pine Pollen", "Rhodiola"], caution_level: "LOW"
   }
 ];
