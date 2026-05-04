@@ -5,7 +5,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import FungaiArtLogo from "./assets/fungai-art-logo.png";
 import { supabase } from "./lib/supabaseClient";
-import { EXTRACTION_HERBS, METHOD_COLOR, type ExtractionMethod } from "./data/extraction";
+import { ExtractionHerb, type ExtractionMethod, EXTRACTION as EXTRACTION_HERBS } from "./data/extraction";
 
 function getDeviceId(): string {
   let id = localStorage.getItem("fungai_device_id");
@@ -16,6 +16,12 @@ function getDeviceId(): string {
 // Deduplicate herb list once at module level
 const _seen = new Set<number>();
 const HERBS_CLEAN = HERBS.filter(h => _seen.has(h.id) ? false : !!_seen.add(h.id));
+
+const METHOD_COLOR: Record<ExtractionMethod, { text: string; bg: string; border: string }> = {
+  percolation: { text: "#7bd4a1", bg: "rgba(123,212,161,0.12)", border: "rgba(123,212,161,0.35)" },
+  maceration:   { text: "#c4b5fd", bg: "rgba(167,139,250,0.12)", border: "rgba(167,139,250,0.35)" },
+  decoction:    { text: "#f9e6ac", bg: "rgba(249,231,159,0.12)", border: "rgba(249,231,159,0.35)" },
+};
 
 // ─── Category derivation ────────────────────────────────────────────────────
 const MUSHROOM_NAMES = new Set([

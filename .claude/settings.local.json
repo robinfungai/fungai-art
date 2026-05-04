@@ -10,7 +10,8 @@
       "Bash(ls public/herbal-engine-2/)",
       "Bash(npm run *)",
       "Bash(git add *)",
-      "Bash(git commit -m 'feat: green theme, rich herb cards, synergy results, better sidebar *)"
+      "Bash(git commit -m 'feat: green theme, rich herb cards, synergy results, better sidebar *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }
