@@ -91,6 +91,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 .sub-back:hover{color:var(--text);border-color:var(--text3)}
 .sub-dot{width:10px;height:10px;border-radius:50%}
 .sub-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:1.2rem}
+
+/* INLINE SUB-TRAY — expands below intent grid */
+.sub-tray{max-height:0;overflow:hidden;opacity:0;transition:max-height .46s cubic-bezier(.22,.9,.36,1),opacity .28s ease;margin-bottom:0}
+.sub-tray.open{max-height:420px;opacity:1;margin-bottom:1rem}
+.sub-tray-arrow{width:0;height:0;border-left:11px solid transparent;border-right:11px solid transparent;margin-bottom:-1px;transition:margin-left .25s ease}
+.sub-tray-inner{border-radius:18px;padding:14px 15px 12px;border:1px solid rgba(255,255,255,0.14);transition:background .25s,border-color .25s}
+.sub-tray-hdr{display:flex;align-items:center;gap:7px;margin-bottom:.9rem}
+.sub-tray-label{font-size:11px;color:rgba(255,255,255,0.55);letter-spacing:.04em}
+/* dim non-selected icards */
+.icard.dimmed{opacity:.38;filter:saturate(.4);transform:scale(.97)!important}
 .scard{
   border-radius:18px;padding:17px 18px;cursor:pointer;
   border:1px solid rgba(255,255,255,0.08);
@@ -358,20 +368,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
   <div class="preset-row">
     <span class="pl">Pool:</span>
     <button class="prbtn on" id="preset_all" onclick="applyPreset('all')">All herbs <span id="pc_all" style="font-size:9px;opacity:.6"></span></button>
-    <button class="prbtn" id="preset_tryp" onclick="applyPreset('tryp')">Tryp <span id="pc_tryp" style="font-size:9px;opacity:.6"></span></button>
-    <button class="prbtn" id="preset_mystock" onclick="applyPreset('mystock')">My Stock <span id="pc_mystock" style="font-size:9px;opacity:.6"></span></button>
-    <button class="prbtn" id="preset_custom" onclick="applyPreset('custom')">Custom <span id="pc_custom" style="font-size:9px;opacity:.6"></span></button>
+    <button class="prbtn" id="preset_trypexpo" onclick="applyPreset('trypexpo')">TrypExpo <span id="pc_trypexpo" style="font-size:9px;opacity:.6"></span></button>
   </div>
 </div>
 
 <!-- STOCK PANEL -->
 <div class="stock-panel" id="stockPanel">
   <div class="sp-hdr">
-    <div><div class="sp-title">Custom stock</div><div class="sp-count" id="spCount">0 herbs</div></div>
+    <div><div class="sp-title">TrypExpo pool</div><div class="sp-count" id="spCount">0 herbs</div></div>
     <div class="sp-acts">
       <span class="spa" onclick="stockAll()">Select all</span>
       <span class="spa" onclick="stockClear()">Clear</span>
-      <span class="spa" onclick="stockTryp()">Load Tryp</span>
+      <span class="spa" onclick="stockLoadTryp()">Reset TrypExpo</span>
     </div>
   </div>
   <input class="sp-search" id="spSearch" placeholder="Search herbs and mushrooms..." oninput="renderStock(this.value)">
@@ -380,13 +388,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 
 <div class="prog" id="pg"></div>
 
-<!-- S0: INTENTION -->
+<!-- S0: INTENTION (sub-tray is inline — no navigation to s0b) -->
 <div id="s0" class="step vis">
   <div class="sn" id="sn0">What do you need right now?</div>
   <div class="st">Choose your intention</div>
   <p class="sh">One choice — we'll explore it together.</p>
   <div class="intent-grid" id="ig"></div>
-  <div class="nav"><span></span><button class="btn p" onclick="go(1)">Begin →</button></div>
+  <!-- Inline sub-tray: expands below the grid after an intention is selected -->
+  <div class="sub-tray" id="subTray">
+    <div class="sub-tray-arrow" id="subTrayArrow"></div>
+    <div class="sub-tray-inner" id="subTrayInner">
+      <div class="sub-tray-hdr">
+        <div id="subDot3" style="width:9px;height:9px;border-radius:50%;flex-shrink:0"></div>
+        <span class="sub-tray-label" id="subTrayLabel">Go deeper</span>
+      </div>
+      <div class="sub-grid" id="subGrid2"></div>
+    </div>
+  </div>
+  <div class="nav"><span></span><button class="btn p" onclick="go(1)" id="s0NextBtn" style="display:none">Begin →</button></div>
 </div>
 
 <!-- S0B: SUB-BRANCH -->
@@ -719,14 +738,17 @@ var activePhiFilter='all';
 var curExtractName='';
 
 /* ─── PRESET / STOCK ────────────────────────────────────── */
+// All herbs always eligible — Standard and Practitioner modes are equal
 function getActiveStock(){
-  if(activePreset==='all')return new Set(HB.filter(h=>!h.restricted||practitionerMode).map(h=>h.id));
-  if(activePreset==='tryp')return new Set([...TRYP_IDS].filter(id=>{var h=HB.find(h=>h.id===id);return h&&(!h.restricted||practitionerMode);}));
-  if(activePreset==='mystock')return new Set([...MY_STOCK_IDS].filter(id=>{var h=HB.find(h=>h.id===id);return h&&(!h.restricted||practitionerMode);}));
-  // custom
-  return new Set([...customStock].filter(id=>{var h=HB.find(h=>h.id===id);return h&&(!h.restricted||practitionerMode);}));
+  if(activePreset==='all') return new Set(HB.map(h=>h.id));
+  // trypexpo = user-editable custom pool
+  return new Set([...customStock].filter(id=>HB.find(h=>h.id===id)));
 }
 function applyPreset(p){
+  if(p==='trypexpo' && customStock.size===0){
+    // Pre-seed TrypExpo with TRYP_IDS on first use
+    customStock=new Set([...TRYP_IDS].filter(id=>HB.find(h=>h.id===id)));
+  }
   activePreset=p;
   document.querySelectorAll('.prbtn').forEach(b=>b.classList.remove('on'));
   document.getElementById('preset_'+p).classList.add('on');
@@ -734,13 +756,10 @@ function applyPreset(p){
   if(stockOpen)renderStock(document.getElementById('spSearch').value||'');
 }
 function updateCounts(){
-  var all=HB.filter(h=>!h.restricted||practitionerMode).length;
-  var tryp=[...TRYP_IDS].filter(id=>{var h=HB.find(h=>h.id===id);return h&&(!h.restricted||practitionerMode);}).length;
-  var mystock=[...MY_STOCK_IDS].filter(id=>{var h=HB.find(h=>h.id===id);return h&&(!h.restricted||practitionerMode);}).length;
+  var all=HB.length;
+  var expo=customStock.size;
   document.getElementById('pc_all').textContent='('+all+')';
-  document.getElementById('pc_tryp').textContent='('+tryp+')';
-  document.getElementById('pc_mystock').textContent='('+mystock+')';
-  document.getElementById('pc_custom').textContent='('+(customStock?customStock.size:0)+')';
+  document.getElementById('pc_trypexpo').textContent='('+(expo||TRYP_IDS.size)+')';
 }
 function toggleStock(){
   stockOpen=!stockOpen;
@@ -748,10 +767,10 @@ function toggleStock(){
   document.getElementById('stockToggle').classList.toggle('on',stockOpen);
   if(stockOpen)renderStock('');
 }
-function stockAll(){customStock=new Set(HB.filter(h=>!h.restricted||practitionerMode).map(h=>h.id));renderStock(document.getElementById('spSearch').value||'');updateCounts();}
+function stockAll(){customStock=new Set(HB.map(h=>h.id));renderStock(document.getElementById('spSearch').value||'');updateCounts();}
 function stockClear(){customStock=new Set();renderStock(document.getElementById('spSearch').value||'');updateCounts();}
-function stockTryp(){
-  customStock=new Set([...TRYP_IDS].filter(id=>{var h=HB.find(h=>h.id===id);return h&&(!h.restricted||practitionerMode);}));
+function stockLoadTryp(){
+  customStock=new Set([...TRYP_IDS].filter(id=>HB.find(h=>h.id===id)));
   renderStock(document.getElementById('spSearch').value||'');updateCounts();
 }
 function renderStock(q){
@@ -785,7 +804,7 @@ function setMode(m){
   document.getElementById('s2adv').style.display=m==='advanced'?'block':'none';
   if(m==='advanced'&&S.step===2)setTimeout(function(){bReady=false;initBody();},120);
 }
-function togglePract(){practitionerMode=!practitionerMode;document.getElementById('practBtn').classList.toggle('on',practitionerMode);updateCounts();if(stockOpen)renderStock('');}
+function togglePract(){practitionerMode=!practitionerMode;document.getElementById('practBtn').classList.toggle('on',practitionerMode);}
 
 /* ─── NAVIGATION ────────────────────────────────────────── */
 function updProg(){
@@ -809,27 +828,45 @@ function showStep(id,back){
 }
 function goBack0b(){S.subInt=null;showStep('s0',true);}
 
-/* ─── STEP 0: INTENTION ─────────────────────────────────── */
-function selIntent(id){
-  S.int=id;S.subInt=null;
-  document.querySelectorAll('.icard').forEach(c=>c.classList.remove('sel'));
-  document.getElementById('ic_'+id).classList.add('sel');
-  // open sub-branch
+/* ─── STEP 0: INTENTION — inline sub-tray ───────────────── */
+function selIntent(id, cardIdx){
+  S.int=id; S.subInt=null;
+  var cards=document.querySelectorAll('.icard');
+  cards.forEach(c=>{c.classList.remove('sel');c.classList.add('dimmed');});
+  var sel=document.getElementById('ic_'+id);
+  sel.classList.remove('dimmed'); sel.classList.add('sel');
+
   var branch=IN.find(i=>i.id===id);
-  document.getElementById('subDot').style.background=branch.bdr;
-  document.getElementById('subBackLabel').textContent=branch.name;
-  document.getElementById('subTitle').textContent='Which kind of '+branch.name.split('&')[0].trim().toLowerCase()+'?';
-  document.getElementById('subDesc').textContent='Choose what feels most true right now — this shapes the entire formula.';
-  document.getElementById('subGrid').innerHTML=branch.subs.map(function(s,idx){
-    return'<div class="scard scard-stagger'+(S.subInt===s.id?' sel':'')+'" id="sc_'+s.id+'" style="background:'+branch.col+';border-color:'+branch.bdr+';animation-delay:'+(idx*90)+'ms" onclick="selSub(\''+s.id+'\')">'+'<span class="sc-icon">'+s.icon+'</span><div class="sc-text"><div class="sc-name">'+s.name+'</div><div class="sc-desc">'+s.desc+'</div></div><span class="sc-arrow">→</span></div>';
+
+  // Arrow position — point toward selected card column
+  var isRightCol=(cardIdx%2===1);
+  var arrowEl=document.getElementById('subTrayArrow');
+  arrowEl.style.borderBottom='10px solid '+branch.col;
+  arrowEl.style.marginLeft=isRightCol?'calc(75% - 11px)':'calc(25% - 11px)';
+
+  // Tray color + label
+  var inner=document.getElementById('subTrayInner');
+  inner.style.background=branch.col;
+  inner.style.borderColor=branch.bdr;
+  document.getElementById('subDot3').style.background=branch.bdr;
+  document.getElementById('subTrayLabel').textContent='Which kind of '+branch.name.toLowerCase().split('&')[0].trim()+'?';
+
+  // Sub-cards with stagger
+  document.getElementById('subGrid2').innerHTML=branch.subs.map(function(s,idx){
+    return'<div class="scard scard-stagger" id="sc2_'+s.id+'" style="background:rgba(0,0,0,0.28);border-color:'+branch.bdr+'99;animation-delay:'+(idx*100)+'ms" onclick="selSub(\''+s.id+'\')">'
+      +'<span class="sc-icon">'+s.icon+'</span>'
+      +'<div class="sc-text"><div class="sc-name">'+s.name+'</div><div class="sc-desc">'+s.desc+'</div></div>'
+      +'<span class="sc-arrow">→</span></div>';
   }).join('');
-  showStep('s0b',false);
+
+  document.getElementById('subTray').classList.add('open');
 }
+
 function selSub(id){
   S.subInt=id;
-  document.querySelectorAll('.scard').forEach(c=>c.classList.remove('sel'));
-  document.getElementById('sc_'+id).classList.add('sel');
-  setTimeout(function(){go(1);},220);
+  document.querySelectorAll('#subGrid2 .scard').forEach(c=>c.classList.remove('sel'));
+  var el=document.getElementById('sc2_'+id); if(el)el.classList.add('sel');
+  setTimeout(function(){go(1);},240);
 }
 
 /* ─── STEP 1: WHAT ELSE ─────────────────────────────────── */
@@ -857,6 +894,8 @@ function selBodySub(id){
   S.conSub=id;
   document.querySelectorAll('.bpsub').forEach(c=>c.classList.remove('sel'));
   document.getElementById('bps_'+id).classList.add('sel');
+  // Auto-advance to safety step after sub-pattern chosen
+  setTimeout(function(){goFromBody();},300);
 }
 function goFromBody(){
   if(mode==='standard'&&!S.con){alert('Please choose your body pattern.');return;}
@@ -1391,7 +1430,7 @@ function init(){
 
   // Intention grid
   document.getElementById('ig').innerHTML=IN.map(function(i){
-    return'<div class="icard" id="ic_'+i.id+'" style="background:'+i.col+';border-color:'+i.bdr+'" onclick="selIntent(\''+i.id+'\')">'+
+    return'<div class="icard" id="ic_'+i.id+'" style="background:'+i.col+';border-color:'+i.bdr+'" onclick="selIntent(\''+i.id+'\','+idx+')">'+
       '<span class="icard-icon">'+i.icon+'</span>'+
       '<div class="icard-name">'+i.name+'</div>'+
       '<div class="icard-desc">'+i.desc+'</div></div>';
@@ -1405,7 +1444,7 @@ function init(){
 
   // Body pattern
   document.getElementById('bpGrid').innerHTML=BP.map(function(b){
-    return'<div class="bpcard" id="bp_'+b.id+'" onclick="selBodyPat(\''+b.id+'\')">'+
+    return'<div class="bpcard" id="bp_'+b.id+'" style="background:'+b.col+';border-color:'+b.bdr+'" onclick="selBodyPat(\''+b.id+'\')">'+
       '<span class="bpcard-g">'+b.g+'</span>'+
       '<span class="bpcard-n">'+b.name+'</span>'+
       '<span class="bpcard-s">'+b.sub+'</span></div>';
