@@ -129,33 +129,49 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 .else-pill:active{transform:scale(0.96)}
 .else-pill.sel{background:var(--gold3);border-color:var(--gold);color:var(--gold2)}
 
-/* BODY PATTERN — cards that expand to sub-questions */
-.body-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:.9rem}
+/* BODY PATTERN — How We Feel style circles */
+.body-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:.9rem}
 .bpcard{
-  border-radius:18px;padding:16px 13px 14px;cursor:pointer;text-align:center;
-  background:var(--bg2);border:1px solid var(--bd2);
-  transition:all .2s;user-select:none
+  border-radius:50%;aspect-ratio:1;cursor:pointer;text-align:center;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:1.1rem;border:none!important;
+  box-shadow:0 14px 52px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.18);
+  transition:transform .28s cubic-bezier(.22,.9,.36,1),filter .2s;user-select:none
 }
-.bpcard:hover{border-color:var(--text3);transform:translateY(-2px)}
-.bpcard:active{transform:scale(0.96)}
-.bpcard.sel{border-color:rgba(255,255,255,0.4);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.15)}
-.bpcard-g{font-size:24px;line-height:1;margin-bottom:7px;display:block}
-.bpcard-n{font-size:12px;font-weight:600;margin-bottom:2px;display:block}
-.bpcard-s{font-size:10px;color:var(--text3);line-height:1.35;display:block}
-.bp-reveal{overflow:hidden;max-height:0;opacity:0;transition:max-height .35s ease,opacity .25s;margin-bottom:0}
-.bp-reveal.open{max-height:500px;opacity:1;margin-bottom:1rem}
-.bp-sub-grid{display:flex;flex-direction:column;gap:7px;padding:.5rem 0}
-.bpsub{
-  border-radius:14px;padding:13px 16px;cursor:pointer;
-  border:1px solid rgba(255,255,255,0.1);
-  transition:all .18s;display:flex;align-items:center;gap:12px;user-select:none
+.bpcard:hover{transform:scale(1.05);filter:brightness(1.1)}
+.bpcard:active{transform:scale(.91)}
+.bpcard-g{display:none}
+.bpcard-n{font-size:14px;font-weight:700;color:rgba(255,255,255,.95);line-height:1.25;display:block}
+.bpcard-s{font-size:10px;color:rgba(255,255,255,.62);line-height:1.35;display:block;margin-top:4px}
+
+/* BP sub-circle reveal */
+.bp-full-reveal{display:none;animation:slideIn .28s cubic-bezier(.4,0,.2,1)}
+.bp-sub-circles{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:.8rem}
+.bp-sub-circle{
+  border-radius:50%;aspect-ratio:1;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:.9rem;
+  box-shadow:0 10px 36px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.15);
+  transition:transform .22s cubic-bezier(.22,.9,.36,1),filter .15s;user-select:none
 }
-.bpsub:hover{border-color:rgba(255,255,255,0.25);transform:translateX(3px)}
-.bpsub:active{transform:scale(0.97)}
-.bpsub.sel{border-color:rgba(255,255,255,0.4);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.15)}
-.bpsub-icon{font-size:18px;width:28px;text-align:center;flex-shrink:0}
-.bpsub-n{font-size:12px;font-weight:500;margin-bottom:1px;color:rgba(255,255,255,0.92)}
-.bpsub-d{font-size:10px;color:rgba(255,255,255,0.45);line-height:1.35}
+.bp-sub-circle:hover{transform:scale(1.06);filter:brightness(1.12)}
+.bp-sub-circle:active{transform:scale(.92)}
+.bp-sub-circle.sel{box-shadow:0 0 0 3px rgba(255,255,255,.55),0 10px 36px rgba(0,0,0,.45)}
+.bp-sub-ci{font-size:20px;line-height:1;margin-bottom:6px}
+.bp-sub-cn{font-size:11px;font-weight:700;color:rgba(255,255,255,.95);line-height:1.25}
+.bp-sub-cd{font-size:9px;color:rgba(255,255,255,.55);margin-top:3px;line-height:1.3}
+
+/* Universal back pill used in Q1 tray and Q3 */
+.back-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 14px;border-radius:100px;
+  border:0.5px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.06);
+  font-size:11px;color:rgba(255,255,255,.55);
+  cursor:pointer;margin-bottom:1rem;user-select:none;
+  transition:all .15s
+}
+.back-pill:hover{color:#fff;border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.1)}
 
 /* BODY MAP (advanced) */
 .body-stage{position:relative;width:100%;height:440px;background:#000;border-radius:var(--radl);overflow:hidden;margin-bottom:.8rem;cursor:crosshair}
@@ -399,8 +415,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
     <div class="sub-tray-arrow" id="subTrayArrow"></div>
     <div class="sub-tray-inner" id="subTrayInner">
       <div class="sub-tray-hdr">
-        <div id="subDot3" style="width:9px;height:9px;border-radius:50%;flex-shrink:0"></div>
-        <span class="sub-tray-label" id="subTrayLabel">Go deeper</span>
+        <button class="back-pill" style="margin-bottom:0;padding:4px 11px;font-size:10px" onclick="clearIntentSelection()">← back</button>
+        <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
+          <div id="subDot3" style="width:8px;height:8px;border-radius:50%;flex-shrink:0"></div>
+          <span class="sub-tray-label" id="subTrayLabel">Go deeper</span>
+        </div>
       </div>
       <div class="sub-grid" id="subGrid2"></div>
     </div>
@@ -431,10 +450,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 <div id="s2" class="step">
   <div class="sn" id="sn2">3 of 6 · Your body right now</div>
   <div id="s2std">
-    <div class="st">Your body feels more like —</div>
-    <p class="sh">Choose the closest match. It opens a few more questions.</p>
+    <div class="st" id="bpPrompt">Your body feels more like —</div>
+    <p class="sh" id="bpHint">Tap the one that resonates. It shapes the formula direction.</p>
     <div class="body-grid" id="bpGrid"></div>
-    <div class="bp-reveal" id="bpReveal"></div>
+    <!-- Full sub-circle view shown after pattern is selected -->
+    <div class="bp-full-reveal" id="bpFullReveal">
+      <button class="back-pill" onclick="clearBodyPat()">← choose differently</button>
+      <div class="bp-sub-circles" id="bpSubCircles"></div>
+    </div>
   </div>
   <div id="s2adv" style="display:none">
     <div class="st">Where do you feel something?</div>
@@ -762,6 +785,20 @@ var S={int:null,subInt:null,sec:[],con:null,conSub:null,saf:[],approach:'gentle'
 var formulaLog=[];
 var bMarkers=[],bActive=null,bCurSens=[],bParticles=[],bReady=false,bGX=.65,bGY=.35,bTapAF=null,bTapStr=0,bTapX=0,bTapY=0;
 var activePhiFilter='all';
+
+/* ─── BODY PATTERN GRADIENTS (How We Feel palette) ──────── */
+var BP_GRAD={
+  hot:      'radial-gradient(circle at 38% 30%, #ff9068, #d42020, #7a1010)',
+  cold:     'radial-gradient(circle at 38% 30%, #80c0f8, #2058d8, #101858)',
+  mixed:    'radial-gradient(circle at 38% 30%, #ffe060, #d89010, #a06010)',
+  depleted: 'radial-gradient(circle at 38% 30%, #c8a880, #886040, #503020)',
+};
+var BP_SUB_GRAD={
+  hot:      'radial-gradient(circle at 38% 30%, #ff7860, #c03020, #881010)',
+  cold:     'radial-gradient(circle at 38% 30%, #70b0f0, #1850c8, #101050)',
+  mixed:    'radial-gradient(circle at 38% 30%, #ffd850, #c88008, #907008)',
+  depleted: 'radial-gradient(circle at 38% 30%, #b89870, #785038, #482818)',
+};
 var curExtractName='';
 
 /* ─── PRESET / STOCK ────────────────────────────────────── */
@@ -853,11 +890,7 @@ function go(n,back){
     document.querySelectorAll('.icard').forEach(c=>{c.style.display='';c.classList.remove('sel','dimmed');});
     document.getElementById('subTray').classList.remove('open');
   }
-  if(n===2){
-    document.querySelectorAll('.bpcard').forEach(c=>{c.style.display='';c.classList.remove('sel');});
-    document.querySelectorAll('.bp-reveal').forEach(r=>r.classList.remove('open'));
-    S.con=null;S.conSub=null;
-  }
+  if(n===2){ clearBodyPat(); }
 }
 function showStep(id,back){
   document.querySelectorAll('.step').forEach(s=>s.classList.remove('vis','back'));
@@ -909,6 +942,11 @@ function selSub(id){
   var el=document.getElementById('sc2_'+id); if(el)el.classList.add('sel');
   setTimeout(function(){go(1);},240);
 }
+function clearIntentSelection(){
+  S.int=null; S.subInt=null;
+  document.querySelectorAll('.icard').forEach(c=>{c.style.display='';c.classList.remove('sel','dimmed');});
+  document.getElementById('subTray').classList.remove('open');
+}
 
 /* ─── STEP 1: WHAT ELSE ─────────────────────────────────── */
 function togSec(s){
@@ -917,30 +955,43 @@ function togSec(s){
 }
 
 /* ─── STEP 2: BODY PATTERN ──────────────────────────────── */
+function clearBodyPat(){
+  S.con=null;S.conSub=null;
+  document.getElementById('bpGrid').style.display='';
+  document.getElementById('bpFullReveal').style.display='none';
+  document.getElementById('bpPrompt').style.display='';
+  document.getElementById('bpHint').style.display='';
+}
 function selBodyPat(id){
   S.con=id;S.conSub=null;
-  // Hide all non-selected body cards
-  document.querySelectorAll('.bpcard').forEach(c=>{
-    c.classList.remove('sel','explode');
-    c.style.display=(c.id==='bp_'+id)?'':'none';
-  });
-  var card=document.getElementById('bp_'+id);card.classList.add('sel');
-  // Explosion animation — fires on every selection for tactile feel
+  var bp=BP.find(b=>b.id===id);
+  // Explosion animation on click
+  var card=document.getElementById('bp_'+id);
   card.classList.add('explode');
   card.addEventListener('animationend',function(){card.classList.remove('explode');},{once:true});
-  document.querySelectorAll('.bp-reveal').forEach(r=>r.classList.remove('open'));
-  document.getElementById('bpr_'+id).classList.add('open');
-  // Build sub questions
-  var bp=BP.find(b=>b.id===id);
-  document.getElementById('bpr_'+id).innerHTML='<div style="font-size:11px;color:var(--text2);margin-bottom:.8rem;line-height:1.6;padding:.7rem .5rem;background:'+bp.col+'88;border-radius:10px;border:0.5px solid '+bp.bdr+'44">'+bp.desc+'</div>'+
-    '<div class="bp-sub-grid">'+bp.subs.map(function(s){return'<div class="bpsub'+(S.conSub===s.id?' sel':'')+'" id="bps_'+s.id+'" style="background:'+bp.col+';border-color:'+bp.bdr+'66" onclick="selBodySub(\''+s.id+'\')">'+'<span class="bpsub-icon">'+s.icon+'</span><div><div class="bpsub-n">'+s.name+'</div><div class="bpsub-d">'+s.desc+'</div></div></div>';}).join('')+'</div>';
+  // Transition: hide grid, show sub-circles after brief pause
+  setTimeout(function(){
+    document.getElementById('bpGrid').style.display='none';
+    document.getElementById('bpPrompt').style.display='none';
+    document.getElementById('bpHint').style.display='none';
+    // Build sub-circles
+    document.getElementById('bpSubCircles').innerHTML=bp.subs.map(function(s,idx){
+      return'<div class="bp-sub-circle scard-stagger'+(S.conSub===s.id?' sel':'')+'" id="bps_'+s.id+'"'
+        +' style="background:'+BP_SUB_GRAD[id]+';animation-delay:'+(idx*80)+'ms"'
+        +' onclick="selBodySub(\''+s.id+'\')">'
+        +'<div class="bp-sub-ci">'+s.icon+'</div>'
+        +'<div class="bp-sub-cn">'+s.name+'</div>'
+        +'<div class="bp-sub-cd">'+s.desc+'</div>'
+        +'</div>';
+    }).join('');
+    document.getElementById('bpFullReveal').style.display='block';
+  },180);
 }
 function selBodySub(id){
   S.conSub=id;
-  document.querySelectorAll('.bpsub').forEach(c=>c.classList.remove('sel'));
-  document.getElementById('bps_'+id).classList.add('sel');
-  // Auto-advance to safety step after sub-pattern chosen
-  setTimeout(function(){goFromBody();},300);
+  document.querySelectorAll('.bp-sub-circle').forEach(c=>c.classList.remove('sel'));
+  var el=document.getElementById('bps_'+id); if(el)el.classList.add('sel');
+  setTimeout(function(){goFromBody();},320);
 }
 function goFromBody(){
   if(mode==='standard'&&!S.con){alert('Please choose your body pattern.');return;}
@@ -1495,18 +1546,12 @@ function init(){
     return'<div class="else-pill" id="'+id+'" onclick="togSec(\''+s+'\')">'+s+'</div>';
   }).join('');
 
-  // Body pattern
+  // Body pattern — How We Feel gradient circles
   document.getElementById('bpGrid').innerHTML=BP.map(function(b){
-    return'<div class="bpcard" id="bp_'+b.id+'" style="background:'+b.col+';border-color:'+b.bdr+'" onclick="selBodyPat(\''+b.id+'\')">'+
-      '<span class="bpcard-g">'+b.g+'</span>'+
+    return'<div class="bpcard" id="bp_'+b.id+'" style="background:'+BP_GRAD[b.id]+'" onclick="selBodyPat(\''+b.id+'\')">'+
       '<span class="bpcard-n">'+b.name+'</span>'+
       '<span class="bpcard-s">'+b.sub+'</span></div>';
   }).join('');
-  // Empty reveal divs
-  BP.forEach(function(b){
-    var d=document.createElement('div');d.id='bpr_'+b.id;d.className='bp-reveal';
-    document.getElementById('bpGrid').after(d);
-  });
 
   // Safety — grouped
   document.getElementById('sfg').innerHTML=SF_GROUPS.map(function(g){
