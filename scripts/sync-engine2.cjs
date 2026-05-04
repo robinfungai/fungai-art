@@ -127,9 +127,10 @@ function parseHerbs() {
     const idM    = block.match(/id:\s*(\d+)/);
     if (!idM) continue;
 
-    const nameM  = block.match(/name:\s*['"]([^'"]+)['"]/);
-    const botM   = block.match(/botanical:\s*['"]([^'"]+)['"]/);
-    const cautM  = block.match(/caution_level:\s*['"]([^'"]+)['"]/);
+    // Use separate single/double-quote regexes so apostrophes in names work
+    const nameM  = block.match(/name:\s*"([^"]+)"/) || block.match(/name:\s*'([^']+)'/);
+    const botM   = block.match(/botanical:\s*"([^"]+)"/) || block.match(/botanical:\s*'([^']+)'/);
+    const cautM  = block.match(/caution_level:\s*"([^"]+)"/) || block.match(/caution_level:\s*'([^']+)'/);
     const pregM  = block.match(/safe_pregnancy:\s*(true|false|null)/);
     if (!nameM || !botM || !cautM) continue;
 
