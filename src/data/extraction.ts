@@ -1,4 +1,4 @@
-export type ExtractionMethod = "percolation" | "maceration" | "decoction";
+export type ExtractionMethod = "percolation" | "maceration" | "decoction" | "distillation" | "cryo-maceration";
 
 export interface ExtractionHerb {
   id: number;
@@ -14,7 +14,7 @@ export interface ExtractionHerb {
   notes?: string;
   tcm?: { meridians: string[]; element: string };
   synergy?: string[];
-  caution_level: "LOW" | "MEDIUM" | "MEDIUM-HIGH" | "HIGH";
+  caution_level: string;
 }
 
 export const EXTRACTION: ExtractionHerb[] = [
@@ -1132,9 +1132,9 @@ export const EXTRACTION: ExtractionHerb[] = [
     tcm: { meridians: ["Spleen", "Stomach", "Heart"], element: "Earth + Fire" },
     synergy: ["Bacopa", "Ginkgo"],
     caution_level: "LOW"
-  }
-  { 
-    id: 790, 
+  },
+  {
+    id: 790,
     common: "Wild Cherry Bark", 
     botanical: "Prunus serotina", 
     part: "inner bark", 
@@ -1701,13 +1701,9 @@ export const EXTRACTION: ExtractionHerb[] = [
     tcm: { meridians: ["Liver", "Kidney", "Uterus"], element: "Wood + Water" },
     synergy: ["Nettle", "Alfalfa"],
     caution_level: "LOW"
-  }
-: ["Kidney", "Liver"], element: "Water + Wood" },
-    synergy: ["Tongkat Ali", "Cistanche"],
-    caution_level: "HIGH (Cycling required)"
   },
-  { 
-    id: 1270, 
+  {
+    id: 1270,
     common: "Epimedium (Horny Goat Weed)", 
     botanical: "Epimedium spp.", 
     part: "leaf", 
@@ -1736,7 +1732,7 @@ export const EXTRACTION: ExtractionHerb[] = [
     tcm: { meridians: ["Kidney", "Liver"], element: "Water" },
     synergy: ["Fadogia Agrestis", "Ashwagandha"],
     caution_level: "MEDIUM"
-  }
+  },
   { 
     id: 1295, 
     common: "Pine Pollen", 
@@ -1813,8 +1809,9 @@ export const EXTRACTION: ExtractionHerb[] = [
     tcm: { meridians: ["Kidney", "Liver"], element: "Fire + Water" },
     synergy: ["Catuaba", "Ginger"],
     caution_level: "LOW-MEDIUM"
-  }
-  id: 1370, 
+  },
+  {
+    id: 1370,
     common: "Saffron", 
     botanical: "Crocus sativus", 
     part: "stigma", 
@@ -1872,7 +1869,7 @@ export const EXTRACTION: ExtractionHerb[] = [
     tcm: { meridians: ["Spleen", "Liver", "Kidney"], element: "Earth + Wood" },
     synergy: ["Blue Lotus", "Ginger"],
     caution_level: "MEDIUM (Thujone content)"
-  }
+  },
   { 
     id: 1430, 
     common: "Cacao", 
@@ -1964,7 +1961,7 @@ export const EXTRACTION: ExtractionHerb[] = [
     tcm: { meridians: ["Lung", "Stomach", "Kidney"], element: "Water" },
     synergy: ["Bladderwrack", "Cinnamon"],
     caution_level: "LOW"
-  }
+  },
   { 
     id: 1520, 
     common: "Greater Celandine", 
@@ -2042,7 +2039,7 @@ export const EXTRACTION: ExtractionHerb[] = [
     tcm: { meridians: ["Lung", "Spleen"], element: "Metal + Earth" },
     synergy: ["Osha", "Echinacea"],
     caution_level: "MEDIUM (Skin sensitivity)"
-  }
+  },
   { 
     id: 1595, 
     common: "African Dream Root", 
