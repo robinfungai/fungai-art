@@ -183,15 +183,34 @@ function extractStringArray(block, field) {
 function injectHB(herbs) {
   let html = fs.readFileSync(ENGINE2, 'utf-8');
   const json = JSON.stringify(herbs);
-  // Replace the existing HB array (const HB = [...];)
-  const replaced = html.replace(
-    /const HB\s*=\s*\[[\s\S]*?\];/,
-    `const HB = ${json};`
-  );
-  if (replaced === html) {
-    console.error('✗  Could not find "const HB = [...];" in Engine 2 HTML — check the marker.');
+
+  // Use string indices instead of regex — the minified JSON can contain ]
+  // sequences that confuse non-greedy regex matching on second run.
+  const OPEN  = 'const HB = [';
+  const start = html.indexOf(OPEN);
+  if (start === -1) {
+    console.error('✗  Could not find "const HB = [" marker in Engine 2 HTML.');
     process.exit(1);
   }
+  // Find the matching closing ]; by bracket-counting from the opening [
+  let depth = 0, i = start + OPEN.length - 1; // point at '['
+  let inStr = false, escape = false;
+  for (; i < html.length; i++) {
+    const ch = html[i];
+    if (escape) { escape = false; continue; }
+    if (ch === '\\' && inStr) { escape = true; continue; }
+    if (ch === '"' && !escape) { inStr = !inStr; continue; }
+    if (inStr) continue;
+    if (ch === '[') depth++;
+    else if (ch === ']') { depth--; if (depth === 0) break; }
+  }
+  // i now points at the closing ], expect ';' at i+1
+  if (i >= html.length || html[i+1] !== ';') {
+    console.error('✗  Could not find closing ]; for const HB array.');
+    process.exit(1);
+  }
+  const end = i + 2; // position after ';'
+  const replaced = html.slice(0, start) + `const HB = ${json};` + html.slice(end);
   fs.writeFileSync(ENGINE2, replaced, 'utf-8');
 }
 
