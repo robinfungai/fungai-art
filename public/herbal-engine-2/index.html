@@ -727,12 +727,32 @@ const MY_STOCK_IDS=new Set([
 ]);
 
 const TRYP_IDS=new Set([
-  'reishi','lions_mane','fu_ling','cordyceps','chaga','tremella','turkey_tail','shiitake','maitake',
+  // ── Mushrooms ──────────────────────────────────────────────────────────
+  'reishi','lions_mane','fu_ling','cordyceps','chaga','tremella',
+  'turkey_tail','shiitake','maitake','birch_polypore',
+  // ── Adaptogens ─────────────────────────────────────────────────────────
   'ashwagandha','rhodiola','holy_basil_tulsi','schisandra_five_flavour_fruit',
-  'shatavari','oatstraw','chamomile','lemon_balm','lavender','skullcap',
-  'passionflower','valerian','hops','linden','motherwort','mugwort','jasmine','vervain',
+  'shatavari','maca','maca_negra_black_maca','shilajit_mineral_pitch',
+  // ── Nervines & sleep ───────────────────────────────────────────────────
+  'oatstraw','chamomile','lemon_balm','lavender','skullcap',
+  'passionflower','valerian','hops','linden','motherwort','jasmine','vervain',
+  // ── Ceremonial / consciousness ─────────────────────────────────────────
   'blue_lotus','bobinsana','calea_zacatachichi','wild_dagga','kanna',
-  'saffron','rose_petals','vanilla','damiana','psilocybe_cubensis',
+  'saffron','rose_petals','vanilla','damiana','mugwort','psilocybe_cubensis',
+  // ── Hormonal & libido ──────────────────────────────────────────────────
+  'muira_puama','angelica_dong_quai','ladys_mantle','vitex_chaste_tree',
+  'pine_pollen','nettle_leaf','yarrow','raspberry_leaf',
+  // ── Immune & tonic ─────────────────────────────────────────────────────
+  'astragalus','elderberry','echinacea','cats_claw','black_cumin',
+  'elderflower','goldenrod','goji_berry','red_dates','moringa',
+  // ── Digestive & warming ────────────────────────────────────────────────
+  'ginger','turmeric','cardamom','fennel','star_anise','cayenne','cinnamon',
+  // ── Liver & detox ──────────────────────────────────────────────────────
+  'milk_thistle','dandelion_root','burdock','schisandra_five_flavour_fruit',
+  // ── Nordic / forageable ────────────────────────────────────────────────
+  'bilberry','lingonberry','rosehip','meadowsweet','hawthorn',
+  // ── Energy & nootropic ────────────────────────────────────────────────
+  'guarana','guayusa','pine_pollen','spirulina',
 ]);
 
 /* ─── STATE ────────────────────────────────────────────── */
@@ -774,11 +794,12 @@ function toggleStock(){
   document.getElementById('stockToggle').classList.toggle('on',stockOpen);
   if(stockOpen)renderStock('');
 }
-function stockAll(){customStock=new Set(HB.map(h=>h.id));renderStock(document.getElementById('spSearch').value||'');updateCounts();}
-function stockClear(){customStock=new Set();renderStock(document.getElementById('spSearch').value||'');updateCounts();}
+function saveCustomStock(){try{localStorage.setItem('fungai_trypexpo',JSON.stringify([...customStock]));}catch(e){}}
+function stockAll(){customStock=new Set(HB.map(h=>h.id));saveCustomStock();renderStock(document.getElementById('spSearch').value||'');updateCounts();}
+function stockClear(){customStock=new Set();saveCustomStock();renderStock(document.getElementById('spSearch').value||'');updateCounts();}
 function stockLoadTryp(){
   customStock=new Set([...TRYP_IDS].filter(id=>HB.find(h=>h.id===id)));
-  renderStock(document.getElementById('spSearch').value||'');updateCounts();
+  saveCustomStock();renderStock(document.getElementById('spSearch').value||'');updateCounts();
 }
 function renderStock(q){
   q=(q||'').toLowerCase();
@@ -800,7 +821,7 @@ function renderStock(q){
 }
 function togStock(id){
   if(customStock.has(id))customStock.delete(id);else customStock.add(id);
-  updateCounts();
+  saveCustomStock();updateCounts();
   renderStock(document.getElementById('spSearch').value||'');
 }
 function setMode(m){
@@ -827,6 +848,16 @@ function go(n,back){
   if(back)el.classList.add('back');
   updProg();window.scrollTo(0,0);
   if(n===2&&mode==='advanced')setTimeout(function(){bReady=false;initBody();},120);
+  // Restore hidden cards when navigating back
+  if(n===0){
+    document.querySelectorAll('.icard').forEach(c=>{c.style.display='';c.classList.remove('sel','dimmed');});
+    document.getElementById('subTray').classList.remove('open');
+  }
+  if(n===2){
+    document.querySelectorAll('.bpcard').forEach(c=>{c.style.display='';c.classList.remove('sel');});
+    document.querySelectorAll('.bp-reveal').forEach(r=>r.classList.remove('open'));
+    S.con=null;S.conSub=null;
+  }
 }
 function showStep(id,back){
   document.querySelectorAll('.step').forEach(s=>s.classList.remove('vis','back'));
@@ -838,10 +869,13 @@ function goBack0b(){S.subInt=null;showStep('s0',true);}
 /* ─── STEP 0: INTENTION — inline sub-tray ───────────────── */
 function selIntent(id, cardIdx){
   S.int=id; S.subInt=null;
-  var cards=document.querySelectorAll('.icard');
-  cards.forEach(c=>{c.classList.remove('sel');c.classList.add('dimmed');});
+  // Hide all non-selected cards completely — selected card stays, highlighted
+  document.querySelectorAll('.icard').forEach(c=>{
+    c.classList.remove('sel','dimmed');
+    c.style.display=(c.id==='ic_'+id)?'':'none';
+  });
   var sel=document.getElementById('ic_'+id);
-  sel.classList.remove('dimmed'); sel.classList.add('sel');
+  sel.classList.add('sel');
 
   var branch=IN.find(i=>i.id===id);
 
@@ -885,7 +919,11 @@ function togSec(s){
 /* ─── STEP 2: BODY PATTERN ──────────────────────────────── */
 function selBodyPat(id){
   S.con=id;S.conSub=null;
-  document.querySelectorAll('.bpcard').forEach(c=>{c.classList.remove('sel','explode');});
+  // Hide all non-selected body cards
+  document.querySelectorAll('.bpcard').forEach(c=>{
+    c.classList.remove('sel','explode');
+    c.style.display=(c.id==='bp_'+id)?'':'none';
+  });
   var card=document.getElementById('bp_'+id);card.classList.add('sel');
   // Explosion animation — fires on every selection for tactile feel
   card.classList.add('explode');
@@ -1432,8 +1470,15 @@ function exportLog(fmt){
 
 /* ─── INIT ───────────────────────────────────────────────── */
 function init(){
-  // Seed TrypExpo with the Tryp pool — user can edit via Stock panel
-  customStock=new Set([...TRYP_IDS].filter(id=>HB.find(h=>h.id===id)));
+  // Load saved TrypExpo from localStorage; default to TRYP_IDS if never saved
+  try{
+    var saved=localStorage.getItem('fungai_trypexpo');
+    customStock=saved
+      ? new Set(JSON.parse(saved).filter(id=>HB.find(h=>h.id===id)))
+      : new Set([...TRYP_IDS].filter(id=>HB.find(h=>h.id===id)));
+  }catch(e){
+    customStock=new Set([...TRYP_IDS].filter(id=>HB.find(h=>h.id===id)));
+  }
   loadLog();
 
   // Intention grid — idx MUST be in the map callback so onclick receives column position
