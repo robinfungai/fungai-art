@@ -530,6 +530,7 @@ export default function App() {
               style={{ background: "#101412", border: "0.5px solid rgba(255,255,255,0.1)", color: "#f6f3ea", padding: "7px 12px", minWidth: 160 }} />
             {methodFilters.map(m => {
               const c = METHOD_COLOR[m]; const on = extMethod === m;
+              if (!c) return null;
               return (
                 <button key={m} onClick={() => setExtMethod(on ? null : m)}
                   className="text-[10px] px-3 py-1.5 rounded-full capitalize transition-all"
@@ -554,7 +555,7 @@ export default function App() {
 
           {/* Legend */}
           <div className="flex flex-wrap gap-3 mb-5">
-            {methodFilters.map(m => { const c = METHOD_COLOR[m]; return (
+            {methodFilters.map(m => { const c = METHOD_COLOR[m]; if (!c) return null; return (
               <div key={m} className="flex items-center gap-1.5 text-[9px] uppercase tracking-[0.1em]" style={{ color: c.text }}>
                 <div className="w-2 h-2 rounded-full" style={{ background: c.text }} />
                 {m}
@@ -599,7 +600,7 @@ export default function App() {
                 </div>
                 {/* Methods */}
                 <div className="flex flex-wrap gap-1">
-                  {h.methods.map(m => { const c = METHOD_COLOR[m]; return (
+                  {h.methods.map(m => { const c = METHOD_COLOR[m]; if (!c) return null; return (
                     <span key={m} className="text-[8px] px-1.5 py-0.5 rounded-full capitalize"
                       style={{ background: c.bg, color: c.text, border: `0.5px solid ${c.border}` }}>
                       {m}

@@ -28,5 +28,6 @@
     "baseUrl": ".",
     "ignoreDeprecations": "5.0"
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["src/components", "src/pages", "src/hooks", "src/stores", "src/HerbalEngine.tsx", "src/lib/shopify.ts"]
 }
