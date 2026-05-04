@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Dispensary — Fungai Art Elixirs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -23,7 +25,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 .hdr{padding:1.2rem 0 1rem;border-bottom:0.5px solid var(--bd);margin-bottom:1.2rem}
 .hdr-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:.7rem}
 .brand-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:4px}
-.brand-name{font-size:20px;font-weight:500;letter-spacing:-.01em;margin-bottom:1px}
+.brand-name{font-size:22px;font-weight:600;letter-spacing:.01em;margin-bottom:1px;font-family:'Fredoka',sans-serif;text-transform:lowercase;color:#d4a96a}
 .brand-sub{font-size:12px;color:var(--text3)}
 .hdr-btns{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;flex-shrink:0}
 .mbtn{padding:5px 10px;border-radius:var(--rad);font-size:10px;font-family:inherit;cursor:pointer;border:0.5px solid var(--bd2);background:transparent;color:var(--text2);transition:all .15s;white-space:nowrap}
@@ -277,6 +279,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 .tt:hover{color:var(--text);border-color:var(--text3)}
 .tt.on{background:var(--text);color:var(--bg);border-color:var(--text);font-weight:500}
 
+/* STAGGER ANIMATION for sub-branch cards */
+@keyframes staggerIn{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.scard-stagger{animation:staggerIn .32s cubic-bezier(.22,.9,.36,1) both}
+
+/* BODY PATTERN explosion on hot card */
+@keyframes bpExplode{0%{transform:scale(1)}30%{transform:scale(1.07)}60%{transform:scale(.97)}100%{transform:scale(1)}}
+.bpcard.explode{animation:bpExplode .38s cubic-bezier(.22,.9,.36,1)}
+
+/* DELIVERY CARD ANIMATIONS */
+@keyframes bubbleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes bottleGlow{0%,100%{filter:drop-shadow(0 0 4px rgba(200,160,76,0))}50%{filter:drop-shadow(0 0 10px rgba(200,160,76,0.55))}}
+@keyframes sublWave{0%{transform:scale(1)}33%{transform:scale(1.15) rotate(-5deg)}66%{transform:scale(0.9) rotate(4deg)}100%{transform:scale(1)}}
+.dc[data-id="tonic"] .dc-icon{display:inline-block;animation:bubbleFloat 2.4s ease-in-out infinite}
+.dc[data-id="tincture"] .dc-icon{display:inline-block;animation:bottleGlow 2.8s ease-in-out infinite}
+.dc[data-id="sublingual"] .dc-icon{display:inline-block;animation:sublWave 3.2s ease-in-out infinite}
+
+/* PREFERENCES — 3-column grid */
+.pref-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+@media(max-width:480px){.pref-cards{grid-template-columns:repeat(3,1fr);gap:5px}}
+.pref-card-n{font-size:10px;font-weight:500;margin-bottom:2px}
+.pref-card-d{font-size:9px;color:var(--text2);line-height:1.3}
+
+/* SAFETY — 2-column grid */
+.safety-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:1.2rem}
+@media(max-width:480px){.safety-grid{grid-template-columns:1fr}}
+
+/* RESULT PAGE — 2-column grid */
+.result-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:12px;margin-bottom:.9rem;align-items:start}
+@media(max-width:540px){.result-grid{grid-template-columns:1fr}}
+.result-bottle-col{position:sticky;top:12px}
+.result-formula-col{min-width:0}
+
 /* FORMULA LOG */
 .log-panel{background:var(--bg2);border:0.5px solid var(--bd2);border-radius:var(--radl);padding:.9rem 1rem;margin-top:1rem}
 .log-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem;flex-wrap:wrap;gap:6px}
@@ -302,12 +336,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 <!-- HEADER -->
 <div class="hdr">
   <div class="hdr-top">
-    <div>
-      <div class="brand-label">Fung.ai Herbal Engine 2.0</div>
-      <a href="https://beta.fungai.art" style="text-decoration:none;display:block" title="Return to Materia Medica">
-        <div class="brand-name" style="cursor:pointer">Fungai Art Elixirs</div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <a href="https://beta.fungai.art" title="Return to Materia Medica" style="flex-shrink:0;display:block">
+        <img src="../fungai-art-logo.png" alt="Fungai Art" style="width:42px;height:42px;object-fit:contain;border-radius:50%;border:0.5px solid rgba(255,255,255,0.12)">
       </a>
-      <div class="brand-sub">Personalised Elixir Formula</div>
+      <div>
+        <div class="brand-label">Herbal Engine 2.0</div>
+        <a href="https://beta.fungai.art" style="text-decoration:none;display:block" title="Return to Materia Medica">
+          <div class="brand-name" style="cursor:pointer">fungai art elixirs</div>
+        </a>
+        <div class="brand-sub">Personalised Elixir Formula</div>
+      </div>
     </div>
     <div class="hdr-btns">
       <button class="mbtn on" id="modeStd" onclick="setMode('standard')">Standard</button>
@@ -636,16 +675,14 @@ const SF_GROUPS=[
   {id:'none_above',icon:'✓',label:'None of the above apply to me',sub:'No safety filters will be applied',flags:['none']},
 ];
 const APPROACHES=[
-  {id:'gentle',icon:'🌿',name:'Gentle & nourishing',desc:'Slow burn — build over weeks. Tonics and adaptogens.'},
-  {id:'acute',icon:'⚡',name:'Acute & targeted',desc:'Fast-acting. Specific symptoms, direct action.'},
-  {id:'ceremonial',icon:'✦',name:'Ceremonial & intentional',desc:'Ritual-grade. Consciousness-supportive herbs.'},
-  {id:'clinical',icon:'◎',name:'Clinical & evidence-based',desc:'RCT-informed. Mechanisms over tradition.'},
+  {id:'gentle',icon:'🌿',name:'Gentle & nourishing',desc:'Build over weeks. Tonics and adaptogens.'},
+  {id:'acute',icon:'⚡',name:'Acute & targeted',desc:'Fast-acting. Direct symptom action.'},
+  {id:'ceremonial',icon:'✦',name:'Ceremonial',desc:'Ritual-grade. Consciousness-supportive.'},
 ];
 const DURATIONS=[
-  {id:'days',icon:'⚡',name:'Days to a week',desc:'Acute support — immediate need'},
-  {id:'weeks',icon:'◑',name:'2–6 weeks',desc:'Short course — symptom-focused'},
-  {id:'months',icon:'🌿',name:'3–6 months',desc:'Protocol — constitutional shift'},
-  {id:'ongoing',icon:'◎',name:'Ongoing tonic',desc:'Lifestyle herb — daily maintenance'},
+  {id:'days',icon:'⚡',name:'Days – 1 week',desc:'Acute support'},
+  {id:'weeks',icon:'◑',name:'2–6 weeks',desc:'Short course'},
+  {id:'months',icon:'🌿',name:'3–6 months+',desc:'Constitutional shift'},
 ];
 const TM={stress:'morning and afternoon',sleep:'30–60 min before bed',energy:'morning only',anxiety:'throughout the day',mood:'morning and afternoon',digestion:'15 min before meals',immunity:'morning and evening',pain:'with meals three times daily',hormones:'consistent daily timing',cognitive:'morning with food',beauty:'morning with food',detox:'morning away from medications'};
 // My Stock — herbs available in the Fungai Art apothecary (from physical inventory)
@@ -783,8 +820,8 @@ function selIntent(id){
   document.getElementById('subBackLabel').textContent=branch.name;
   document.getElementById('subTitle').textContent='Which kind of '+branch.name.split('&')[0].trim().toLowerCase()+'?';
   document.getElementById('subDesc').textContent='Choose what feels most true right now — this shapes the entire formula.';
-  document.getElementById('subGrid').innerHTML=branch.subs.map(function(s){
-    return'<div class="scard'+(S.subInt===s.id?' sel':'')+'" id="sc_'+s.id+'" style="background:'+branch.col+';border-color:'+branch.bdr+'" onclick="selSub(\''+s.id+'\')">'+'<span class="sc-icon">'+s.icon+'</span><div class="sc-text"><div class="sc-name">'+s.name+'</div><div class="sc-desc">'+s.desc+'</div></div><span class="sc-arrow">→</span></div>';
+  document.getElementById('subGrid').innerHTML=branch.subs.map(function(s,idx){
+    return'<div class="scard scard-stagger'+(S.subInt===s.id?' sel':'')+'" id="sc_'+s.id+'" style="background:'+branch.col+';border-color:'+branch.bdr+';animation-delay:'+(idx*90)+'ms" onclick="selSub(\''+s.id+'\')">'+'<span class="sc-icon">'+s.icon+'</span><div class="sc-text"><div class="sc-name">'+s.name+'</div><div class="sc-desc">'+s.desc+'</div></div><span class="sc-arrow">→</span></div>';
   }).join('');
   showStep('s0b',false);
 }
@@ -804,8 +841,11 @@ function togSec(s){
 /* ─── STEP 2: BODY PATTERN ──────────────────────────────── */
 function selBodyPat(id){
   S.con=id;S.conSub=null;
-  document.querySelectorAll('.bpcard').forEach(c=>c.classList.remove('sel'));
-  document.getElementById('bp_'+id).classList.add('sel');
+  document.querySelectorAll('.bpcard').forEach(c=>{c.classList.remove('sel','explode');});
+  var card=document.getElementById('bp_'+id);card.classList.add('sel');
+  // Explosion animation — fires on every selection for tactile feel
+  card.classList.add('explode');
+  card.addEventListener('animationend',function(){card.classList.remove('explode');},{once:true});
   document.querySelectorAll('.bp-reveal').forEach(r=>r.classList.remove('open'));
   document.getElementById('bpr_'+id).classList.add('open');
   // Build sub questions
@@ -1208,15 +1248,9 @@ function renderFormula(){
     serveBlock='<div class="serve-block"><div style="font-size:12px;font-weight:500;margin-bottom:8px">◌ Elixir protocol</div><div class="ss"><div class="ss-n">1</div><div class="ss-t">30–40 drops directly or in a small glass of water</div></div><div class="ss"><div class="ss-n">2</div><div class="ss-t">Hold briefly in the mouth before swallowing</div></div><div class="ss"><div class="ss-n">3</div><div class="ss-t">'+tim+'</div></div></div>';
   }
 
-  var bottleHtml='';
-  if(S.delivery!=='tonic'){
-    bottleHtml='<div class="bottle-wrap"><div style="font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">Your extract</div><div class="bottle-name-display">'+name+'</div>'+genBottle(name,S.formula,S.int,S.delivery)+'</div>';
-  }
-
   var tradToggle='<div style="margin-bottom:.8rem"><div style="font-size:9px;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">Filter by tradition</div><div class="trad-row"><div class="tt on" id="tt_all" onclick="setPhiFilter(\'all\')">All</div><div class="tt" id="tt_european" onclick="setPhiFilter(\'european\')">European folk</div><div class="tt" id="tt_tcm" onclick="setPhiFilter(\'tcm\')">Chinese medicine</div><div class="tt" id="tt_ayurvedic" onclick="setPhiFilter(\'ayurvedic\')">Ayurvedic</div></div></div>';
 
-  out.innerHTML=
-    bottleHtml+
+  var formulaColHtml=
     '<div class="fhdr"><div class="ft">'+io.name+' formula</div><div class="fs">'+name+' · '+S.formula.length+' '+(hasMush?'herbs & mushrooms':'herbs')+' · '+poolLabel+'</div></div>'+
     '<div class="fbody">'+rows+'<div style="padding:9px 12px;border-top:0.5px solid var(--bd)">'+bars+'</div>'+tgs+
     '<div class="inst">'+(bt?'<div class="ir"><span class="il">TCM pattern</span>'+bt.g+' '+bt.name+'</div>':'')+
@@ -1227,10 +1261,15 @@ function renderFormula(){
     '<div class="ir"><span class="il">Approach</span>'+S.approach+'</div>'+
     '<div class="ir"><span class="il">Duration</span>'+S.duration+'</div>'+
     (boostNames.length?'<div class="ir"><span class="il">Boosts</span>'+boostNames.join(', ')+'</div>':'')+
-    '</div><div class="caut"><div class="ct">Important</div>'+cauts.map(c=>'<div class="ci">· '+c+'</div>').join('')+'</div></div>'+
-    serveBlock+
-    tradToggle+
-    '<div class="mcards"><div class="mc"><div class="ml">Herbs</div><div class="mv">'+S.formula.length+'</div></div><div class="mc"><div class="ml">Pool</div><div class="mv">'+poolLabel+' · '+getPool().length+'</div></div><div class="mc"><div class="ml">Safety</div><div class="mv">'+flags.length+' filters</div></div></div>';
+    '</div><div class="caut"><div class="ct">Important</div>'+cauts.map(c=>'<div class="ci">· '+c+'</div>').join('')+'</div></div>';
+
+  if(S.delivery!=='tonic'){
+    // 2-column grid: bottle left, formula right
+    var bottleColHtml='<div class="result-bottle-col"><div class="bottle-wrap"><div style="font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">Your extract</div><div class="bottle-name-display" style="font-size:14px">'+name+'</div>'+genBottle(name,S.formula,S.int,S.delivery)+'</div></div>';
+    out.innerHTML='<div class="result-grid">'+bottleColHtml+'<div class="result-formula-col">'+formulaColHtml+'</div></div>'+serveBlock+tradToggle+'<div class="mcards"><div class="mc"><div class="ml">Herbs</div><div class="mv">'+S.formula.length+'</div></div><div class="mc"><div class="ml">Pool</div><div class="mv">'+poolLabel+' · '+getPool().length+'</div></div><div class="mc"><div class="ml">Safety</div><div class="mv">'+flags.length+' filters</div></div></div>';
+  } else {
+    out.innerHTML=formulaColHtml+serveBlock+tradToggle+'<div class="mcards"><div class="mc"><div class="ml">Herbs</div><div class="mv">'+S.formula.length+'</div></div><div class="mc"><div class="ml">Pool</div><div class="mv">'+poolLabel+' · '+getPool().length+'</div></div><div class="mc"><div class="ml">Safety</div><div class="mv">'+flags.length+' filters</div></div></div>';
+  }
 
   // Wire up copy button
   document.getElementById('explainBtn').onclick=doExplain;
@@ -1399,9 +1438,9 @@ function init(){
       '<div class="pref-card-d">'+d.desc+'</div></div>';
   }).join('');
 
-  // Delivery
+  // Delivery — data-id enables CSS animation targeting per card
   document.getElementById('delivGrid').innerHTML=DELIVERY.map(function(d){
-    return'<div class="dc" id="dc_'+d.id+'" onclick="selDelivery(\''+d.id+'\')">'+
+    return'<div class="dc" id="dc_'+d.id+'" data-id="'+d.id+'" onclick="selDelivery(\''+d.id+'\')">'+
       '<span class="dc-icon">'+d.icon+'</span><span class="dc-name">'+d.name+'</span>'+
       '<span class="dc-desc">'+d.desc+'</span></div>';
   }).join('');
