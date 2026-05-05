@@ -129,20 +129,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 .else-pill:active{transform:scale(0.96)}
 .else-pill.sel{background:var(--gold3);border-color:var(--gold);color:var(--gold2)}
 
-/* BODY PATTERN — How We Feel style circles */
-.body-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:.9rem}
-.bpcard{
-  border-radius:50%;aspect-ratio:1;cursor:pointer;text-align:center;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:1.1rem;border:none!important;
-  box-shadow:0 14px 52px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.18);
-  transition:transform .28s cubic-bezier(.22,.9,.36,1),filter .2s;user-select:none
+/* BODY PATTERN — overlapping colour-zone heatmap */
+.bphm{position:relative;width:100%;aspect-ratio:1;margin-bottom:1rem}
+.bphm-z{
+  position:absolute;width:59%;aspect-ratio:1;border-radius:50%;cursor:pointer;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9%;
+  box-shadow:0 16px 56px rgba(0,0,0,.55);
+  transition:filter .22s,transform .22s cubic-bezier(.22,.9,.36,1);user-select:none
 }
+.bphm-z:hover{filter:brightness(1.12);transform:scale(1.04)}
+.bphm-z:active{transform:scale(.93)}
+.bphm-z.sel{box-shadow:0 0 0 3px rgba(255,255,255,.55),0 16px 56px rgba(0,0,0,.55)}
+.bphm-z[data-id="hot"]     {top:2%;left:2%}
+.bphm-z[data-id="mixed"]   {top:2%;right:2%}
+.bphm-z[data-id="cold"]    {bottom:2%;left:2%}
+.bphm-z[data-id="depleted"]{bottom:2%;right:2%}
+.bphm-words{display:flex;flex-wrap:wrap;gap:3px;justify-content:center;margin-bottom:5px}
+.bphm-w{font-size:9px;padding:2px 7px;border-radius:100px;background:rgba(255,255,255,.13);color:rgba(255,255,255,.7);white-space:nowrap}
+.bphm-name{font-size:12px;font-weight:700;color:rgba(255,255,255,.94);text-align:center;line-height:1.2}
+.bphm-sub{font-size:9px;color:rgba(255,255,255,.45);text-align:center;margin-top:2px;line-height:1.3}
+/* legacy — kept for sub-circle reveal */
+.body-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:.9rem}
+.bpcard{border-radius:50%;aspect-ratio:1;cursor:pointer;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.1rem;border:none!important;box-shadow:0 14px 52px rgba(0,0,0,.5);transition:transform .28s cubic-bezier(.22,.9,.36,1),filter .2s;user-select:none}
 .bpcard:hover{transform:scale(1.05);filter:brightness(1.1)}
 .bpcard:active{transform:scale(.91)}
-.bpcard-g{display:none}
 .bpcard-n{font-size:14px;font-weight:700;color:rgba(255,255,255,.95);line-height:1.25;display:block}
 .bpcard-s{font-size:10px;color:rgba(255,255,255,.62);line-height:1.35;display:block;margin-top:4px}
+/* FORMULA ART CARD */
+.formula-art-card{position:relative;border-radius:var(--radl);overflow:hidden;background:#050403;margin-bottom:.9rem;min-height:380px;display:flex;flex-direction:column}
+.formula-art-canvas{position:absolute;inset:0;width:100%;height:100%}
+.formula-art-inner{position:relative;z-index:1;padding:1.4rem 1rem 1.2rem;text-align:center;display:flex;flex-direction:column;align-items:center;flex:1}
+.formula-art-tag{font-size:8px;color:rgba(255,255,255,.35);letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+.formula-art-name{font-size:18px;font-weight:500;color:#e8dcc8;letter-spacing:-.01em;margin-bottom:1rem}
 
 /* BP sub-circle reveal */
 .bp-full-reveal{display:none;animation:slideIn .28s cubic-bezier(.4,0,.2,1)}
@@ -464,7 +482,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
   <div id="s2std">
     <div class="st" id="bpPrompt">Your body feels more like —</div>
     <p class="sh" id="bpHint">Tap the one that resonates. It shapes the formula direction.</p>
-    <div class="body-grid" id="bpGrid"></div>
+    <div class="bphm" id="bpGrid"></div>
     <!-- Full sub-circle view shown after pattern is selected -->
     <div class="bp-full-reveal" id="bpFullReveal">
       <button class="back-pill" onclick="clearBodyPat()">← choose differently</button>
@@ -799,18 +817,24 @@ var formulaLog=[];
 var bMarkers=[],bActive=null,bCurSens=[],bParticles=[],bReady=false,bGX=.65,bGY=.35,bTapAF=null,bTapStr=0,bTapX=0,bTapY=0;
 var activePhiFilter='all';
 
-/* ─── BODY PATTERN GRADIENTS (How We Feel palette) ──────── */
+/* ─── BODY PATTERN GRADIENTS — desaturated palette ─────── */
 var BP_GRAD={
-  hot:      'radial-gradient(circle at 38% 30%, #ff9068, #d42020, #7a1010)',
-  cold:     'radial-gradient(circle at 38% 30%, #80c0f8, #2058d8, #101858)',
-  mixed:    'radial-gradient(circle at 38% 30%, #ffe060, #d89010, #a06010)',
-  depleted: 'radial-gradient(circle at 38% 30%, #c8a880, #886040, #503020)',
+  hot:      'radial-gradient(circle at 40% 36%, #b84838, #7a2018)',
+  cold:     'radial-gradient(circle at 40% 36%, #3870a8, #182a68)',
+  mixed:    'radial-gradient(circle at 40% 36%, #b89028, #786010)',
+  depleted: 'radial-gradient(circle at 40% 36%, #387868, #183828)',
 };
 var BP_SUB_GRAD={
-  hot:      'radial-gradient(circle at 38% 30%, #ff7860, #c03020, #881010)',
-  cold:     'radial-gradient(circle at 38% 30%, #70b0f0, #1850c8, #101050)',
-  mixed:    'radial-gradient(circle at 38% 30%, #ffd850, #c88008, #907008)',
-  depleted: 'radial-gradient(circle at 38% 30%, #b89870, #785038, #482818)',
+  hot:      'radial-gradient(circle at 38% 30%, #c85040, #902818)',
+  cold:     'radial-gradient(circle at 38% 30%, #4080b8, #183070)',
+  mixed:    'radial-gradient(circle at 38% 30%, #c09820, #887010)',
+  depleted: 'radial-gradient(circle at 38% 30%, #407868, #1c4030)',
+};
+const BP_WORDS={
+  hot:      ['Inflamed','Irritable','Burning','Flushed','Reactive','Wired','Overheated','Sharp'],
+  mixed:    ['Stuck','Variable','Sighing','Constrained','Up & down','Blocked','Shifting','Tight'],
+  cold:     ['Sluggish','Heavy','Cold','Slow','Pale','Stiff','Low drive','Dampness'],
+  depleted: ['Hollow','Dry','Exhausted','Empty','Drained','Fatigued','Flat','Purposeless'],
 };
 var curExtractName='';
 
@@ -1272,6 +1296,55 @@ function genName(herbs,intention){
   return opts[Math.floor(Math.random()*opts.length)];
 }
 
+/* ─── FORMULA ART GENERATION ────────────────────────────── */
+function hexAlpha(hex,a){
+  hex=hex.replace('#','');
+  if(hex.length===3)hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+  var r=parseInt(hex.slice(0,2),16),g=parseInt(hex.slice(2,4),16),b=parseInt(hex.slice(4,6),16);
+  return'rgba('+r+','+g+','+b+','+a+')';
+}
+function drawAtmoCanvas(uid,glowHex){
+  var c=document.getElementById(uid);if(!c)return;
+  var W=c.offsetWidth||320,H=c.offsetHeight||460,dpr=window.devicePixelRatio||2;
+  c.width=W*dpr;c.height=H*dpr;
+  var ctx=c.getContext('2d');ctx.scale(dpr,dpr);
+  ctx.fillStyle='#050403';ctx.fillRect(0,0,W,H);
+  // Primary radial glow
+  var g1=ctx.createRadialGradient(W*.5,H*.42,0,W*.5,H*.42,W*.8);
+  g1.addColorStop(0,hexAlpha(glowHex,.30));g1.addColorStop(.55,hexAlpha(glowHex,.10));g1.addColorStop(1,'transparent');
+  ctx.fillStyle=g1;ctx.fillRect(0,0,W,H);
+  // Soft secondary glow (off-centre)
+  var g2=ctx.createRadialGradient(W*.28,H*.68,0,W*.28,H*.68,W*.45);
+  g2.addColorStop(0,hexAlpha(glowHex,.14));g2.addColorStop(1,'transparent');
+  ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);
+  // Fine white dust particles
+  for(var i=0;i<70;i++){
+    var x=Math.random()*W,y=Math.random()*H,r=.3+Math.random()*1.6,a=.03+Math.random()*.18;
+    ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,'+a+')';ctx.fill();
+  }
+  // Coloured botanical dots
+  for(var j=0;j<24;j++){
+    var px=Math.random()*W,py=Math.random()*H,pr=.8+Math.random()*3,pa=.05+Math.random()*.2;
+    ctx.beginPath();ctx.arc(px,py,pr,0,Math.PI*2);ctx.fillStyle=hexAlpha(glowHex,pa);ctx.fill();
+  }
+  // Faint horizontal scan-line feel
+  ctx.fillStyle='rgba(0,0,0,.06)';
+  for(var l=0;l<H;l+=4){ctx.fillRect(0,l,W,1);}
+}
+function genFormulaArt(name,herbs,intention,delivery){
+  var io=IN.find(i=>i.id===intention);
+  var glowHex=io?io.bdr:'#7a4a00';
+  var uid='fc'+Math.random().toString(36).slice(2,8);
+  setTimeout(function(){drawAtmoCanvas(uid,glowHex);},90);
+  return'<div class="formula-art-card">'
+    +'<canvas id="'+uid+'" class="formula-art-canvas"></canvas>'
+    +'<div class="formula-art-inner">'
+    +'<div class="formula-art-tag">YOUR EXTRACT</div>'
+    +'<div class="formula-art-name">'+name+'</div>'
+    +genBottle(name,herbs,intention,delivery)
+    +'</div></div>';
+}
+
 function genBottle(name,herbs,intention,delivery){
   var isAmber=delivery!=='tonic';
   var bg=isAmber?'#7a4e12':'#12256b';
@@ -1414,8 +1487,8 @@ function renderFormula(){
     (boostNames.length?'<div class="ir"><span class="il">Boosts</span>'+boostNames.join(', ')+'</div>':'')+
     '</div><div class="caut"><div class="ct">Important</div>'+cauts.map(c=>'<div class="ci">· '+c+'</div>').join('')+'</div></div>';
 
-  // Always show the bottle — tonic gets the same bottle visual
-  var bottleColHtml='<div class="result-bottle-col"><div class="bottle-wrap"><div style="font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">Your extract</div><div class="bottle-name-display" style="font-size:14px">'+name+'</div>'+genBottle(name,S.formula,S.int,S.delivery)+'</div></div>';
+  // Formula art card — atmospheric canvas + bottle for all delivery types
+  var bottleColHtml='<div class="result-bottle-col">'+genFormulaArt(name,S.formula,S.int,S.delivery)+'</div>';
   out.innerHTML='<div class="result-grid">'+bottleColHtml+'<div class="result-formula-col">'+formulaColHtml+'</div></div>'+serveBlock+tradToggle+'<div class="mcards"><div class="mc"><div class="ml">Herbs</div><div class="mv">'+S.formula.length+'</div></div><div class="mc"><div class="ml">Pool</div><div class="mv">'+poolLabel+' · '+getPool().length+'</div></div><div class="mc"><div class="ml">Safety</div><div class="mv">'+flags.length+' filters</div></div></div>';
 
   // Wire up copy button
@@ -1558,11 +1631,14 @@ function init(){
     return'<div class="else-pill" id="'+id+'" onclick="togSec(\''+s+'\')">'+s+'</div>';
   }).join('');
 
-  // Body pattern — How We Feel gradient circles
+  // Body pattern — overlapping heatmap circles
   document.getElementById('bpGrid').innerHTML=BP.map(function(b){
-    return'<div class="bpcard" id="bp_'+b.id+'" style="background:'+BP_GRAD[b.id]+'" onclick="selBodyPat(\''+b.id+'\')">'+
-      '<span class="bpcard-n">'+b.name+'</span>'+
-      '<span class="bpcard-s">'+b.sub+'</span></div>';
+    var ws=(BP_WORDS[b.id]||[]).map(function(w){return'<span class="bphm-w">'+w+'</span>';}).join('');
+    return'<div class="bphm-z" id="bp_'+b.id+'" data-id="'+b.id+'" style="background:'+BP_GRAD[b.id]+'" onclick="selBodyPat(\''+b.id+'\')">'
+      +'<div class="bphm-words">'+ws+'</div>'
+      +'<div class="bphm-name">'+b.name+'</div>'
+      +'<div class="bphm-sub">'+b.sub.split('—')[0].trim()+'</div>'
+      +'</div>';
   }).join('');
 
   // Safety — grouped
