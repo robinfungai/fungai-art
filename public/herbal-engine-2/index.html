@@ -90,11 +90,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 .sub-back{display:inline-flex;align-items:center;gap:7px;padding:6px 13px 6px 9px;border-radius:100px;border:0.5px solid var(--bd2);background:var(--bg2);font-size:11px;color:var(--text2);cursor:pointer;margin-bottom:1.1rem;transition:all .15s;user-select:none}
 .sub-back:hover{color:var(--text);border-color:var(--text3)}
 .sub-dot{width:10px;height:10px;border-radius:50%}
-.sub-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:1.2rem}
+.sub-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:1.2rem}
+@media(max-width:380px){.sub-grid{grid-template-columns:1fr}}
 
 /* INLINE SUB-TRAY — expands below intent grid */
-.sub-tray{max-height:0;overflow:hidden;opacity:0;transition:max-height .46s cubic-bezier(.22,.9,.36,1),opacity .28s ease;margin-bottom:0}
-.sub-tray.open{max-height:420px;opacity:1;margin-bottom:1rem}
+.sub-tray{max-height:0;overflow:hidden;opacity:0;transition:max-height .5s cubic-bezier(.22,.9,.36,1),opacity .3s ease;margin-bottom:0}
+.sub-tray.open{max-height:600px;opacity:1;margin-bottom:1rem}
 .sub-tray-arrow{width:0;height:0;border-left:11px solid transparent;border-right:11px solid transparent;margin-bottom:-1px;transition:margin-left .25s ease}
 .sub-tray-inner{border-radius:18px;padding:14px 15px 12px;border:1px solid rgba(255,255,255,0.14);transition:background .25s,border-color .25s}
 .sub-tray-hdr{display:flex;align-items:center;gap:7px;margin-bottom:.9rem}
@@ -102,21 +103,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 /* dim non-selected icards */
 .icard.dimmed{opacity:.38;filter:saturate(.4);transform:scale(.97)!important}
 .scard{
-  border-radius:18px;padding:17px 18px;cursor:pointer;
-  border:1px solid rgba(255,255,255,0.08);
-  transition:all .2s;display:flex;align-items:center;gap:14px;
+  border-radius:18px;padding:16px 15px 14px;cursor:pointer;
+  border:1px solid rgba(255,255,255,0.1);
+  transition:transform .18s cubic-bezier(.22,.9,.36,1),border-color .15s,box-shadow .15s;
+  display:flex;flex-direction:column;gap:8px;
   user-select:none
 }
-.scard:hover{transform:translateX(4px);border-color:rgba(255,255,255,0.22)}
-.scard:active{transform:scale(0.98)}
-.scard.sel{border-color:rgba(255,255,255,0.45);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.2)}
-.sc-icon{font-size:22px;width:36px;text-align:center;flex-shrink:0}
+.scard:hover{transform:translateY(-3px) scale(1.02);border-color:rgba(255,255,255,0.28)}
+.scard:active{transform:scale(0.96)}
+.scard.sel{border-color:rgba(255,255,255,0.55);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.25),0 6px 24px rgba(0,0,0,.4)}
+.sc-icon{font-size:26px;line-height:1;display:block}
 .sc-text{flex:1}
-.sc-name{font-size:14px;font-weight:600;color:rgba(255,255,255,0.95);margin-bottom:2px}
-.sc-desc{font-size:11px;color:rgba(255,255,255,0.48);line-height:1.4}
-.sc-arrow{font-size:16px;color:rgba(255,255,255,0.25);flex-shrink:0;transition:transform .2s}
-.scard:hover .sc-arrow{transform:translateX(3px);color:rgba(255,255,255,0.5)}
-.scard.sel .sc-arrow{color:rgba(255,255,255,0.7)}
+.sc-name{font-size:13px;font-weight:600;color:rgba(255,255,255,0.95);margin-bottom:3px;line-height:1.25}
+.sc-desc{font-size:10px;color:rgba(255,255,255,0.45);line-height:1.4}
+.sc-arrow{display:none}
 
 /* WHAT ELSE — bubble pills that feel alive */
 .else-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.2rem}
@@ -312,9 +312,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 .tt:hover{color:var(--text);border-color:var(--text3)}
 .tt.on{background:var(--text);color:var(--bg);border-color:var(--text);font-weight:500}
 
-/* STAGGER ANIMATION for sub-branch cards */
-@keyframes staggerIn{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
-.scard-stagger{animation:staggerIn .32s cubic-bezier(.22,.9,.36,1) both}
+/* POP-IN animation for sub-branch cards */
+@keyframes cardPop{
+  0%{opacity:0;transform:scale(.6) translateY(24px)}
+  60%{opacity:1;transform:scale(1.06) translateY(-4px)}
+  80%{transform:scale(.97) translateY(2px)}
+  100%{opacity:1;transform:scale(1) translateY(0)}
+}
+.scard-stagger{animation:cardPop .44s cubic-bezier(.22,.9,.36,1) both}
 
 /* BODY PATTERN explosion on hot card */
 @keyframes bpExplode{0%{transform:scale(1)}30%{transform:scale(1.07)}60%{transform:scale(.97)}100%{transform:scale(1)}}
@@ -579,62 +584,62 @@ const HB = [{"id":"bilberry","n":"Bilberry","b":"Vaccinium myrtillus","cat":"Ant
 
 /* ─── DATA ─────────────────────────────────────────────── */
 const IN=[
-  {id:'stress',name:'Stress & Resilience',icon:'🌊',col:'#0d2a1a',bdr:'#1d5c38',subs:[
+  {id:'stress',name:'Stress & Resilience',icon:'🌊',desc:'Adapt, hold steady, recover',col:'#0d2a1a',bdr:'#1d5c38',subs:[
     {id:'burnout',icon:'🌿',name:'Burnout recovery',desc:'Deep depletion — nourish before you push again'},
     {id:'acute',icon:'⚡',name:'Acute pressure',desc:'High-demand moments, deadlines, performance anxiety'},
     {id:'nervous',icon:'〰',name:'Nervous system reset',desc:'Chronic tension, hypervigilance, wound-up body'},
   ]},
-  {id:'sleep',name:'Sleep & Restoration',icon:'🌙',col:'#0d0d2a',bdr:'#1d1d5c',subs:[
+  {id:'sleep',name:'Sleep & Restoration',icon:'🌙',desc:'Rest deeper, wake restored',col:'#0d0d2a',bdr:'#1d1d5c',subs:[
     {id:'deep_rest',icon:'💤',name:'Deep rest',desc:'Slow down, quiet the mind, long uninterrupted sleep'},
     {id:'lucid',icon:'✦',name:'Lucid exploration',desc:'Vivid intentional dreamwork and night awareness'},
     {id:'unwind',icon:'🍵',name:'Evening unwind',desc:'Transition from doing to being — the wind-down ritual'},
   ]},
-  {id:'energy',name:'Energy & Vitality',icon:'☀',col:'#2a1a00',bdr:'#7a4a00',subs:[
+  {id:'energy',name:'Energy & Vitality',icon:'☀',desc:'Sustained power, no crash',col:'#2a1a00',bdr:'#7a4a00',subs:[
     {id:'clean',icon:'◉',name:'Clean sustained energy',desc:'Long-steep tea quality — no spike, no crash'},
     {id:'caffeinated',icon:'⚡',name:'Caffeinated synergy',desc:'Works with your morning coffee or yerba mate'},
     {id:'athletic',icon:'◎',name:'Athletic & recovery',desc:'Mitochondrial support, endurance, post-workout repair'},
   ]},
-  {id:'anxiety',name:'Anxiety & Calm',icon:'◌',col:'#1a0d2a',bdr:'#4a1d5c',subs:[
+  {id:'anxiety',name:'Anxiety & Calm',icon:'◌',desc:'Quiet the mind, ease the body',col:'#1a0d2a',bdr:'#4a1d5c',subs:[
     {id:'social',icon:'○',name:'Social ease',desc:'Open, present and comfortable in company'},
     {id:'racing',icon:'〰',name:'Racing mind',desc:'Overthinking, loops, intrusive thoughts'},
     {id:'physical',icon:'◈',name:'Physical tension',desc:'Chest tight, breath shallow, anxiety held in the body'},
   ]},
-  {id:'mood',name:'Mood & Emotion',icon:'🌸',col:'#2a0d0d',bdr:'#7a2020',subs:[
+  {id:'mood',name:'Mood & Emotion',icon:'🌸',desc:'Lift, open, feel again',col:'#2a0d0d',bdr:'#7a2020',subs:[
     {id:'grief',icon:'🌿',name:'Grief & loss',desc:'Gentle herbal support through emotional heaviness'},
     {id:'flat',icon:'◑',name:'Flat or low mood',desc:'Bring warmth and colour back — mild uplift'},
     {id:'heart',icon:'✦',name:'Heart opening',desc:'Empathy, connection, ceremonial heart expansion'},
   ]},
-  {id:'digestion',name:'Digestion & Gut',icon:'🌱',col:'#0d2a0d',bdr:'#1d5c1d',subs:[
+  {id:'digestion',name:'Digestion & Gut',icon:'🌱',desc:'Settle, absorb, cleanse',col:'#0d2a0d',bdr:'#1d5c1d',subs:[
     {id:'ibs',icon:'◌',name:'IBS & bloating',desc:'Antispasmodic, carminative, settle the gut'},
     {id:'liver_dig',icon:'◎',name:'Liver & bile flow',desc:'Bitter tonics, hepatic support, clearing'},
     {id:'microbiome',icon:'⚬',name:'Microbiome',desc:'Prebiotics, gut lining integrity, bacterial diversity'},
   ]},
-  {id:'immunity',name:'Immunity & Defence',icon:'🛡',col:'#0d1f2a',bdr:'#1d4a5c',subs:[
+  {id:'immunity',name:'Immunity & Defence',icon:'🛡',desc:'Defend, strengthen, recover',col:'#0d1f2a',bdr:'#1d4a5c',subs:[
     {id:'acute_imm',icon:'⚡',name:'Acute support',desc:'First sign — antiviral, fast innate activation'},
     {id:'chronic_imm',icon:'◎',name:'Long-term resilience',desc:'Training the immune system over weeks and months'},
     {id:'inflam',icon:'🌊',name:'Inflammation',desc:'Systemic anti-inflammatory and cooling support'},
   ]},
-  {id:'pain',name:'Pain & Inflammation',icon:'◈',col:'#2a1a0d',bdr:'#7a4a1a',subs:[
+  {id:'pain',name:'Pain & Inflammation',icon:'◈',desc:'Ease, cool, move freely',col:'#2a1a0d',bdr:'#7a4a1a',subs:[
     {id:'joints',icon:'◎',name:'Joints & mobility',desc:'COX inhibition, connective tissue, movement ease'},
     {id:'headache',icon:'○',name:'Head & migraine',desc:'Vascular, tension-type and hormonal headache'},
     {id:'muscle',icon:'◈',name:'Muscle & recovery',desc:'DOMS, overuse, post-exercise inflammation'},
   ]},
-  {id:'hormones',name:'Hormonal Balance',icon:'🌙',col:'#2a0d1f',bdr:'#7a1d4a',subs:[
+  {id:'hormones',name:'Hormonal Balance',icon:'🌙',desc:'Regulate, balance, flow',col:'#2a0d1f',bdr:'#7a1d4a',subs:[
     {id:'cycle',icon:'◑',name:'Cycle support',desc:'Luteal phase, PMS, menstrual regulation and tone'},
     {id:'menopause',icon:'🌸',name:'Menopause transition',desc:'Hot flashes, dryness, sleep disruption and mood'},
     {id:'testosterone',icon:'◉',name:'Testosterone & libido',desc:'LH-mediated support, endogenous androgen, drive'},
   ]},
-  {id:'cognitive',name:'Cognitive & Memory',icon:'◎',col:'#0d1a2a',bdr:'#1d3a7a',subs:[
+  {id:'cognitive',name:'Cognitive & Memory',icon:'◎',desc:'Think sharp, remember more',col:'#0d1a2a',bdr:'#1d3a7a',subs:[
     {id:'focus',icon:'◉',name:'Focus & productivity',desc:'Flow state, single-task clarity, sustained attention'},
     {id:'memory',icon:'◎',name:'Memory & learning',desc:'Consolidation, BDNF, neurogenesis support'},
     {id:'neuroprot',icon:'✦',name:'Neuroprotection',desc:'Long-term brain health, anti-ageing, resilience'},
   ]},
-  {id:'beauty',name:'Skin & Beauty',icon:'✦',col:'#2a1a0d',bdr:'#7a4a2a',subs:[
+  {id:'beauty',name:'Skin & Beauty',icon:'✦',desc:'Glow from within',col:'#2a1a0d',bdr:'#7a4a2a',subs:[
     {id:'glow',icon:'◌',name:'Skin glow & hydration',desc:'Collagen support, ceramides, antioxidant protection'},
     {id:'ageing',icon:'◎',name:'Healthy ageing',desc:'Longevity, cellular protection, anti-ageing terrain'},
     {id:'lymph',icon:'🌊',name:'Lymphatic flow',desc:'Lymph drainage, skin clearing, congestion relief'},
   ]},
-  {id:'detox',name:'Detox & Liver',icon:'🌿',col:'#0d2a0d',bdr:'#1d7a1d',subs:[
+  {id:'detox',name:'Detox & Liver',icon:'🌿',desc:'Cleanse, clear, restore',col:'#0d2a0d',bdr:'#1d7a1d',subs:[
     {id:'liver_detox',icon:'◎',name:'Liver cleanse',desc:'Phase I/II detox pathways, bile flow, hepatoprotection'},
     {id:'metals',icon:'◈',name:'Heavy metal support',desc:'Chelation-supportive herbs and mineral binding'},
     {id:'reset',icon:'⚡',name:'Recovery & reset',desc:'Post-alcohol, post-medication, post-stress recovery'},
@@ -933,9 +938,9 @@ function selIntent(id, cardIdx){
   document.getElementById('subDot3').style.background=branch.bdr;
   document.getElementById('subTrayLabel').textContent='Which kind of '+branch.name.toLowerCase().split('&')[0].trim()+'?';
 
-  // Sub-cards with stagger
+  // Sub-cards with staggered pop-in
   document.getElementById('subGrid2').innerHTML=branch.subs.map(function(s,idx){
-    return'<div class="scard scard-stagger" id="sc2_'+s.id+'" style="background:rgba(0,0,0,0.28);border-color:'+branch.bdr+'99;animation-delay:'+(idx*100)+'ms" onclick="selSub(\''+s.id+'\')">'
+    return'<div class="scard scard-stagger" id="sc2_'+s.id+'" style="background:rgba(0,0,0,0.32);border-color:'+branch.bdr+'99;animation-delay:'+(idx*120)+'ms" onclick="selSub(\''+s.id+'\')">'
       +'<span class="sc-icon">'+s.icon+'</span>'
       +'<div class="sc-text"><div class="sc-name">'+s.name+'</div><div class="sc-desc">'+s.desc+'</div></div>'
       +'<span class="sc-arrow">→</span></div>';
