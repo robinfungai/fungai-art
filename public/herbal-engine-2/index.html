@@ -157,15 +157,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 .bpcard-s{font-size:10px;color:rgba(255,255,255,.62);line-height:1.35;display:block;margin-top:4px}
 /* FORMULA ART CARD */
 .formula-art-card{position:relative;border-radius:var(--radl);overflow:hidden;background:#050403 center 30%/cover;margin-bottom:.9rem;display:flex;flex-direction:column;min-height:360px}
-.formula-art-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(4,3,2,.82) 0%,rgba(4,3,2,.60) 40%,rgba(4,3,2,.78) 100%);pointer-events:none}
-.formula-art-inner{position:relative;z-index:1;padding:1.8rem 1.4rem 1.6rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.55rem;flex:1;justify-content:center}
-.fa-brand{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.38);font-family:Georgia,serif}
-.fa-name{font-size:22px;font-weight:400;color:#ece4d0;letter-spacing:.01em;font-family:Georgia,serif;line-height:1.2;text-shadow:0 2px 16px rgba(0,0,0,.7)}
-.fa-div{width:36px;height:.5px;background:rgba(255,255,255,.22);margin:.1rem auto}
-.fa-herbs{font-size:10px;color:rgba(255,255,255,.55);letter-spacing:.04em;font-family:Georgia,serif;font-style:italic;line-height:1.7}
-.fa-props{display:flex;flex-direction:column;gap:2px;margin-top:.2rem}
-.fa-prop{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)}
-.fa-extract{font-size:8px;color:rgba(255,255,255,.28);letter-spacing:.06em;font-style:italic;font-family:Georgia,serif;margin-top:.4rem}
+.formula-art-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(4,3,2,.72) 0%,rgba(4,3,2,.28) 30%,rgba(4,3,2,.18) 55%,rgba(4,3,2,.68) 100%);pointer-events:none}
+.formula-art-inner{position:relative;z-index:1;padding:0;text-align:center;display:flex;flex-direction:column;align-items:center;flex:1;justify-content:space-between}
+.fa-top{padding:1.4rem 1.2rem 1rem;background:linear-gradient(to bottom,rgba(4,3,2,.75),transparent);width:100%}
+.fa-bottom{padding:.9rem 1.2rem 1.3rem;background:linear-gradient(to top,rgba(4,3,2,.78),transparent);width:100%}
+.fa-brand{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);font-family:Georgia,serif}
+.fa-name{font-size:24px;font-weight:400;color:#ece4d0;letter-spacing:.01em;font-family:Georgia,serif;line-height:1.15;text-shadow:0 2px 20px rgba(0,0,0,.9);margin-top:4px}
+.fa-div{width:32px;height:.5px;background:rgba(255,255,255,.3);margin:.5rem auto}
+.fa-herbs{font-size:10px;color:rgba(255,255,255,.7);letter-spacing:.03em;font-family:Georgia,serif;font-style:italic;line-height:1.7;text-shadow:0 1px 8px rgba(0,0,0,.8)}
+.fa-props{display:flex;flex-direction:column;gap:2px;margin-top:.3rem}
+.fa-prop{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5);text-shadow:0 1px 6px rgba(0,0,0,.8)}
+.fa-extract{font-size:8px;color:rgba(255,255,255,.35);letter-spacing:.05em;font-style:italic;font-family:Georgia,serif;margin-top:.5rem}
 
 /* BP sub-circle reveal */
 .bp-full-reveal{display:none;animation:slideIn .28s cubic-bezier(.4,0,.2,1)}
@@ -1311,16 +1313,18 @@ function genFormulaArt(name,herbs,intention,delivery){
   return'<div class="formula-art-card" style="background-image:url(bottle-bg.png)">'
     +'<div class="formula-art-overlay"></div>'
     +'<div class="formula-art-inner">'
+    +'<div class="fa-top">'
     +'<div class="fa-brand">fungai art · entheobotanicals</div>'
-    +'<div class="fa-div"></div>'
     +'<div class="fa-name">'+name+'</div>'
+    +'</div>'
+    +'<div class="fa-bottom">'
     +'<div class="fa-div"></div>'
     +'<div class="fa-herbs">'+herbNames+'</div>'
     +'<div class="fa-props">'
     +p.map(function(x){return'<div class="fa-prop">'+x+'</div>';}).join('')
     +'</div>'
-    +'<div class="fa-div"></div>'
     +'<div class="fa-extract">1:3 full spectrum spagyric · '+dlabel+'</div>'
+    +'</div>'
     +'</div></div>';
 }
 
