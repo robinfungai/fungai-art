@@ -156,11 +156,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 .bpcard-n{font-size:14px;font-weight:700;color:rgba(255,255,255,.95);line-height:1.25;display:block}
 .bpcard-s{font-size:10px;color:rgba(255,255,255,.62);line-height:1.35;display:block;margin-top:4px}
 /* FORMULA ART CARD */
-.formula-art-card{position:relative;border-radius:var(--radl);overflow:hidden;background:#050403;margin-bottom:.9rem;min-height:380px;display:flex;flex-direction:column}
-.formula-art-canvas{position:absolute;inset:0;width:100%;height:100%}
-.formula-art-inner{position:relative;z-index:1;padding:1.4rem 1rem 1.2rem;text-align:center;display:flex;flex-direction:column;align-items:center;flex:1}
-.formula-art-tag{font-size:8px;color:rgba(255,255,255,.35);letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
-.formula-art-name{font-size:18px;font-weight:500;color:#e8dcc8;letter-spacing:-.01em;margin-bottom:1rem}
+.formula-art-card{position:relative;border-radius:var(--radl);overflow:hidden;background:#050403;margin-bottom:.9rem;display:flex;flex-direction:column;background-size:cover;background-position:center 28%}
+.formula-art-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(5,4,3,.60) 0%,rgba(5,4,3,.22) 35%,rgba(5,4,3,.30) 60%,rgba(5,4,3,.80) 100%);pointer-events:none}
+.formula-art-inner{position:relative;z-index:1;padding:1.4rem 1rem 1.4rem;text-align:center;display:flex;flex-direction:column;align-items:center}
+.formula-art-tag{font-size:8px;color:rgba(255,255,255,.55);letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px}
+.formula-art-name{font-size:19px;font-weight:500;color:#ece4d4;letter-spacing:-.01em;margin-bottom:1rem;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.formula-art-card svg{filter:drop-shadow(0 8px 32px rgba(0,0,0,.7))}
 
 /* BP sub-circle reveal */
 .bp-full-reveal{display:none;animation:slideIn .28s cubic-bezier(.4,0,.2,1)}
@@ -1297,47 +1298,9 @@ function genName(herbs,intention){
 }
 
 /* ─── FORMULA ART GENERATION ────────────────────────────── */
-function hexAlpha(hex,a){
-  hex=hex.replace('#','');
-  if(hex.length===3)hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-  var r=parseInt(hex.slice(0,2),16),g=parseInt(hex.slice(2,4),16),b=parseInt(hex.slice(4,6),16);
-  return'rgba('+r+','+g+','+b+','+a+')';
-}
-function drawAtmoCanvas(uid,glowHex){
-  var c=document.getElementById(uid);if(!c)return;
-  var W=c.offsetWidth||320,H=c.offsetHeight||460,dpr=window.devicePixelRatio||2;
-  c.width=W*dpr;c.height=H*dpr;
-  var ctx=c.getContext('2d');ctx.scale(dpr,dpr);
-  ctx.fillStyle='#050403';ctx.fillRect(0,0,W,H);
-  // Primary radial glow
-  var g1=ctx.createRadialGradient(W*.5,H*.42,0,W*.5,H*.42,W*.8);
-  g1.addColorStop(0,hexAlpha(glowHex,.30));g1.addColorStop(.55,hexAlpha(glowHex,.10));g1.addColorStop(1,'transparent');
-  ctx.fillStyle=g1;ctx.fillRect(0,0,W,H);
-  // Soft secondary glow (off-centre)
-  var g2=ctx.createRadialGradient(W*.28,H*.68,0,W*.28,H*.68,W*.45);
-  g2.addColorStop(0,hexAlpha(glowHex,.14));g2.addColorStop(1,'transparent');
-  ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);
-  // Fine white dust particles
-  for(var i=0;i<70;i++){
-    var x=Math.random()*W,y=Math.random()*H,r=.3+Math.random()*1.6,a=.03+Math.random()*.18;
-    ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,'+a+')';ctx.fill();
-  }
-  // Coloured botanical dots
-  for(var j=0;j<24;j++){
-    var px=Math.random()*W,py=Math.random()*H,pr=.8+Math.random()*3,pa=.05+Math.random()*.2;
-    ctx.beginPath();ctx.arc(px,py,pr,0,Math.PI*2);ctx.fillStyle=hexAlpha(glowHex,pa);ctx.fill();
-  }
-  // Faint horizontal scan-line feel
-  ctx.fillStyle='rgba(0,0,0,.06)';
-  for(var l=0;l<H;l+=4){ctx.fillRect(0,l,W,1);}
-}
 function genFormulaArt(name,herbs,intention,delivery){
-  var io=IN.find(i=>i.id===intention);
-  var glowHex=io?io.bdr:'#7a4a00';
-  var uid='fc'+Math.random().toString(36).slice(2,8);
-  setTimeout(function(){drawAtmoCanvas(uid,glowHex);},90);
-  return'<div class="formula-art-card">'
-    +'<canvas id="'+uid+'" class="formula-art-canvas"></canvas>'
+  return'<div class="formula-art-card" style="background-image:url(bottle-bg.jpg)">'
+    +'<div class="formula-art-overlay"></div>'
     +'<div class="formula-art-inner">'
     +'<div class="formula-art-tag">YOUR EXTRACT</div>'
     +'<div class="formula-art-name">'+name+'</div>'
@@ -1357,7 +1320,7 @@ function genBottle(name,herbs,intention,delivery){
   var h1=herbs.slice(0,2).map(h=>shortN(h.n)).join(', ');
   var h2=herbs.slice(2,4).map(h=>shortN(h.n)).join(', ');
   // cx=110, label width=92 (x=64..156), usable text width=82
-  return'<svg viewBox="0 0 220 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:240px;display:block;margin:0 auto">'+
+  return'<svg viewBox="0 0 220 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:200px;display:block;margin:0 auto">'+
   '<defs>'+
   '<linearGradient id="bgl2" x1="0" x2="1" y1="0" y2="0">'+
   '<stop offset="0%" stop-color="'+bg+'" stop-opacity=".92"/>'+
