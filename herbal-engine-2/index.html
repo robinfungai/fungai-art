@@ -174,24 +174,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 .back-pill:hover{color:#fff;border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.1)}
 
 /* BODY MAP (advanced) */
-.body-stage{position:relative;width:100%;height:440px;background:#000;border-radius:var(--radl);overflow:hidden;margin-bottom:.8rem;cursor:crosshair}
+.body-stage{position:relative;width:100%;height:min(72vh,580px);background:#000;border-radius:var(--radl);overflow:hidden;margin-bottom:.8rem;cursor:crosshair}
+@media(max-width:480px){.body-stage{height:min(68vh,520px)}}
 .body-stage canvas{position:absolute;inset:0;width:100%;height:100%}
 .bmarkers-layer{position:absolute;inset:0;pointer-events:none}
-.body-label{position:absolute;bottom:12px;left:16px;right:120px;font-size:13px;font-weight:500;color:var(--gold);pointer-events:none}
-.bgrid-wrap{position:absolute;bottom:10px;right:10px;display:none}
+.body-label{position:absolute;bottom:60px;left:16px;right:16px;font-size:13px;font-weight:500;color:var(--gold);pointer-events:none;text-shadow:0 1px 8px rgba(0,0,0,.8)}
+.bgrid-wrap{position:absolute;bottom:10px;right:10px}
 .bmarker-el{position:absolute;transform:translate(-50%,-50%);cursor:pointer;pointer-events:all}
 .bmarker-ring{width:22px;height:22px;border-radius:50%;border:1.5px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 5px rgba(255,255,255,.07);transition:all .2s}
 .bmarker-dot{width:8px;height:8px;border-radius:50%;background:#fff;transition:background .2s}
 .bm-pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:.6rem}
 .bm-pill-item{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:100px;font-size:10px;border:0.5px solid;cursor:pointer;user-select:none}
-.sens-picker{background:var(--bg2);border:0.5px solid var(--bd2);border-radius:var(--radl);padding:.9rem;margin-bottom:.8rem;display:none}
+/* Sensation sheet — slides up from inside the canvas */
+.sens-picker{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(5,4,3,.97) 80%,transparent);border-radius:0 0 var(--radl) var(--radl);padding:.75rem .85rem .9rem;display:none;z-index:20}
 .sens-picker.open{display:block}
-.sp2-title{font-size:12px;font-weight:500;margin-bottom:2px}
-.sp2-sub{font-size:10px;color:var(--text3);margin-bottom:.7rem}
-.stags-grid{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:.7rem}
-.stag{padding:6px 12px;border-radius:100px;border:0.5px solid var(--bd2);font-size:10px;cursor:pointer;background:var(--bg3);color:var(--text2);transition:all .12s;user-select:none}
-.stag:hover{color:var(--text);border-color:var(--text3)}
-.stag.on{background:var(--gold3);color:var(--gold2);border-color:var(--gold)}
+.sp2-title{font-size:12px;font-weight:500;margin-bottom:1px;color:#e8dcc8}
+.sp2-sub{font-size:10px;color:var(--text3);margin-bottom:.55rem}
+.stags-scroll{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:.6rem;scrollbar-width:none}
+.stags-scroll::-webkit-scrollbar{display:none}
+.stag{padding:6px 14px;border-radius:100px;border:0.5px solid rgba(255,255,255,.18);font-size:10px;cursor:pointer;background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);transition:all .12s;user-select:none;white-space:nowrap;flex-shrink:0}
+.stag:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.stag.on{background:rgba(201,168,76,.2);color:var(--gold2);border-color:var(--gold)}
+.bsens-actions{display:flex;gap:6px}
+.bsens-btn{padding:8px 20px;border-radius:100px;font-size:11px;font-family:inherit;cursor:pointer;border:0.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;transition:all .15s;user-select:none;flex:1}
+.bsens-btn.primary{background:#fff;color:#0a0806;border-color:#fff;font-weight:500;flex:2}
+.bsens-btn.danger{border-color:rgba(185,28,28,.4);color:rgba(252,165,165,.8);background:transparent;flex:1}
 
 /* SAFETY */
 .safety-grid{display:flex;flex-direction:column;gap:6px;margin-bottom:1.2rem}
@@ -333,7 +340,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 
 /* RESULT PAGE — 2-column grid */
 .result-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:12px;margin-bottom:.9rem;align-items:start}
-@media(max-width:540px){.result-grid{grid-template-columns:1fr}}
+@media(max-width:540px){.result-grid{grid-template-columns:1fr}.result-bottle-col{position:static}.bottle-wrap svg{max-height:260px}}
 .result-bottle-col{position:sticky;top:12px}
 .result-formula-col{min-width:0}
 
@@ -467,18 +474,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
       <div class="bmarkers-layer" id="bLayer"></div>
       <div class="body-label" id="bLabel"></div>
       <div class="bgrid-wrap" id="bgridWrap"><canvas id="bgridC" width="96" height="96" style="cursor:crosshair;display:block"></canvas></div>
-    </div>
-    <div class="bm-pills" id="bPills"></div>
-    <div class="sens-picker" id="sPicker">
-      <div class="sp2-title" id="sp2T">Sensation</div>
-      <div class="sp2-sub">Select all sensation words that feel true</div>
-      <div class="stags-grid" id="sTags"></div>
-      <div style="display:flex;gap:6px">
-        <button class="btn p" style="flex:1;font-size:11px" onclick="bSave()">Save</button>
-        <button class="btn" style="font-size:11px" onclick="bCancel()">Cancel</button>
-        <button class="btn" style="font-size:11px;color:#fca5a5;border-color:rgba(185,28,28,.3)" onclick="bDelete()">Remove</button>
+      <!-- Sensation sheet lives inside the canvas overlay -->
+      <div class="sens-picker" id="sPicker">
+        <div class="sp2-title" id="sp2T">Sensation</div>
+        <div class="sp2-sub">Select all that feel true</div>
+        <div class="stags-scroll" id="sTags"></div>
+        <div class="bsens-actions">
+          <button class="bsens-btn danger" onclick="bDelete()">Remove</button>
+          <button class="bsens-btn primary" onclick="bSave()">Save →</button>
+          <button class="bsens-btn" onclick="bCancel()">Cancel</button>
+        </div>
       </div>
     </div>
+    <div class="bm-pills" id="bPills"></div>
   </div>
   <div class="nav"><button class="btn" onclick="go(1)">← Back</button><button class="btn p" onclick="goFromBody()">Continue →</button></div>
 </div>
@@ -1082,12 +1090,12 @@ function bBuild(W,H){
   draw(function(){ctx.moveTo(73,153);C(73,153,72,152,70,152);C(65,150,60,151,58,156);C(55,162,54,173,56,182);C(58,191,63,196,68,195);C(73,194,77,188,78,179);C(79,168,77,158,73,153);});
   draw(function(){ctx.moveTo(48,205);C(49,210,52,213,60,214);C(72,215,80,213,83,209);C(86,203,85,196,81,192);C(76,190,64,192,58,194);C(53,196,49,200,48,205);});
   var imgData=ctx.getImageData(0,0,SW,SH).data;
-  var pts=[];var step=3;
+  var pts=[];var step=2;
   for(var y=step;y<SH-step;y+=step){for(var x=step;x<SW-step;x+=step){
     if(imgData[(y*SW+x)*4]>128){
       var jx=(x+(Math.random()-.5)*step)/dpr,jy=(y+(Math.random()-.5)*step)/dpr;
       var e=(imgData[((y-step)*SW+x)*4]<128||imgData[((y+step)*SW+x)*4]<128||imgData[(y*SW+(x-step))*4]<128||imgData[(y*SW+(x+step))*4]<128);
-      pts.push({x:jx,y:jy,a:e?(.55+Math.random()*.4):(.04+Math.random()*.07),r:e?(.9+Math.random()*1):(.2+Math.random()*.3)});
+      pts.push({x:jx,y:jy,a:e?(.6+Math.random()*.38):(.05+Math.random()*.08),r:e?(1.1+Math.random()*1.1):(.25+Math.random()*.35)});
     }
   }}
   return pts;
@@ -1138,19 +1146,20 @@ function bActivate(idx){
   BSENS.forEach(function(s){var el=document.getElementById('bst_'+s.replace(/ /g,'_'));if(el)el.classList.toggle('on',m.types.includes(s));});
   document.getElementById('sp2T').textContent=bLbl(m.px,m.py);
   document.getElementById('sPicker').classList.add('open');
-  document.getElementById('bgridWrap').style.display='block';
   bDrawGrid();bUpdateLabel();
-  document.getElementById('sPicker').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 function bCancel(){
   document.getElementById('sPicker').classList.remove('open');
+  document.getElementById('bLabel').style.bottom='60px';
   if(bActive!==null&&bMarkers[bActive]&&!bMarkers[bActive].types.length){document.getElementById('bm_'+bActive)?.remove();bMarkers.splice(bActive,1);}
   bActive=null;bCurSens=[];
 }
 function bDelete(){
   if(bActive===null)return;
   document.getElementById('bm_'+bActive)?.remove();bMarkers.splice(bActive,1);
-  document.getElementById('sPicker').classList.remove('open');bActive=null;bCurSens=[];
+  document.getElementById('sPicker').classList.remove('open');
+  document.getElementById('bLabel').style.bottom='60px';
+  bActive=null;bCurSens=[];
   bUpdatePills();bDraw();deriveConSoma();
 }
 function bTogSens(s){
@@ -1165,7 +1174,9 @@ function bSave(){
   if(bActive===null)return;
   if(!bMarkers[bActive].types.length){var g=document.getElementById('sTags');g.style.outline='1px solid rgba(201,168,76,.5)';setTimeout(()=>g.style.outline='',700);return;}
   bMarkers[bActive].intensity=bGY;bMarkers[bActive].valence=bGX;
-  document.getElementById('sPicker').classList.remove('open');bActive=null;bCurSens=[];
+  document.getElementById('sPicker').classList.remove('open');
+  document.getElementById('bLabel').style.bottom='60px';
+  bActive=null;bCurSens=[];
   bUpdatePills();bDraw();deriveConSoma();
 }
 function bUpdateMarkerCol(idx){
@@ -1398,13 +1409,9 @@ function renderFormula(){
     (boostNames.length?'<div class="ir"><span class="il">Boosts</span>'+boostNames.join(', ')+'</div>':'')+
     '</div><div class="caut"><div class="ct">Important</div>'+cauts.map(c=>'<div class="ci">· '+c+'</div>').join('')+'</div></div>';
 
-  if(S.delivery!=='tonic'){
-    // 2-column grid: bottle left, formula right
-    var bottleColHtml='<div class="result-bottle-col"><div class="bottle-wrap"><div style="font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">Your extract</div><div class="bottle-name-display" style="font-size:14px">'+name+'</div>'+genBottle(name,S.formula,S.int,S.delivery)+'</div></div>';
-    out.innerHTML='<div class="result-grid">'+bottleColHtml+'<div class="result-formula-col">'+formulaColHtml+'</div></div>'+serveBlock+tradToggle+'<div class="mcards"><div class="mc"><div class="ml">Herbs</div><div class="mv">'+S.formula.length+'</div></div><div class="mc"><div class="ml">Pool</div><div class="mv">'+poolLabel+' · '+getPool().length+'</div></div><div class="mc"><div class="ml">Safety</div><div class="mv">'+flags.length+' filters</div></div></div>';
-  } else {
-    out.innerHTML=formulaColHtml+serveBlock+tradToggle+'<div class="mcards"><div class="mc"><div class="ml">Herbs</div><div class="mv">'+S.formula.length+'</div></div><div class="mc"><div class="ml">Pool</div><div class="mv">'+poolLabel+' · '+getPool().length+'</div></div><div class="mc"><div class="ml">Safety</div><div class="mv">'+flags.length+' filters</div></div></div>';
-  }
+  // Always show the bottle — tonic gets the same bottle visual
+  var bottleColHtml='<div class="result-bottle-col"><div class="bottle-wrap"><div style="font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">Your extract</div><div class="bottle-name-display" style="font-size:14px">'+name+'</div>'+genBottle(name,S.formula,S.int,S.delivery)+'</div></div>';
+  out.innerHTML='<div class="result-grid">'+bottleColHtml+'<div class="result-formula-col">'+formulaColHtml+'</div></div>'+serveBlock+tradToggle+'<div class="mcards"><div class="mc"><div class="ml">Herbs</div><div class="mv">'+S.formula.length+'</div></div><div class="mc"><div class="ml">Pool</div><div class="mv">'+poolLabel+' · '+getPool().length+'</div></div><div class="mc"><div class="ml">Safety</div><div class="mv">'+flags.length+' filters</div></div></div>';
 
   // Wire up copy button
   document.getElementById('explainBtn').onclick=doExplain;
