@@ -11,7 +11,12 @@
       "Bash(npm run *)",
       "Bash(git add *)",
       "Bash(git commit -m 'feat: green theme, rich herb cards, synergy results, better sidebar *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\.claude\\\\worktrees\\\\naughty-babbage-f64a12\" -Force)",
+      "Bash(Select-Object Name, Mode)",
+      "Bash(Format-Table -AutoSize)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5174/community)",
+      "mcp__Claude_Preview__preview_start"
     ]
   }
 }
