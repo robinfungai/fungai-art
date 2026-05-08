@@ -5,7 +5,11 @@
       "Bash(git commit -m ' *)",
       "Bash(git commit *)",
       "Bash(npm install *)",
-      "Bash(node -e \"require\\('./src/data/herbs.ts'\\)\")"
+      "Bash(node -e \"require\\('./src/data/herbs.ts'\\)\")",
+      "Bash(node -e ' *)",
+      "Bash(node)",
+      "Bash(del \"src\\\\data\\\\notinuse.ts\")",
+      "Bash(node scripts/sync-engine2.cjs)"
     ]
   }
 }
