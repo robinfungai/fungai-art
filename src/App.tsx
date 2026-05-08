@@ -909,6 +909,13 @@ export default function App() {
               >
                 Extraction ⊕
               </button>
+              <a
+                href="/community"
+                className="hidden sm:block text-[10px] uppercase tracking-[0.2em] whitespace-nowrap transition-opacity hover:opacity-80"
+                style={{ color: "#c4b5fd" }}
+              >
+                Community ✦
+              </a>
               <button
                 onClick={() => setIsSidebarOpen(true)}
                 className="lg:hidden flex items-center justify-center rounded-xl transition-colors"
