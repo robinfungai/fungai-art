@@ -131,6 +131,63 @@ const PHASES = [
   { id:'LIVING',  name:'Living Network',num:'04', items:'Governance · staking · DAO' },
 ];
 
+const MEMBERS = [
+  {
+    id: 'remi',
+    name: 'Remi',
+    role: 'Community Weaver',
+    node: 'berlin',
+    rep: 10,
+    balance: 340,
+    focus: 'Facilitation · governance · network tending',
+  },
+  {
+    id: 'angela',
+    name: 'Angela',
+    role: 'Forager',
+    node: 'sweden',
+    rep: 6,
+    balance: 280,
+    focus: 'Wild harvest · species ID · Nordic forests',
+  },
+  {
+    id: 'gabi',
+    name: 'Gabi',
+    role: 'Herbalist',
+    node: 'berlin',
+    rep: 3,
+    balance: 195,
+    focus: 'Tincture making · plant medicine · formulation',
+  },
+  {
+    id: 'emil',
+    name: 'Emil',
+    role: 'Cultivator',
+    node: 'sweden',
+    rep: 3,
+    balance: 170,
+    focus: 'Mycelium cultivation · spawn · substrate work',
+  },
+  {
+    id: 'wissam',
+    name: 'Wissam',
+    role: 'Artist & Contributor',
+    node: 'festival',
+    rep: 1,
+    balance: 120,
+    focus: 'Visual art · event facilitation · content',
+  },
+  {
+    id: 'vi',
+    name: 'Vi',
+    role: 'Documenter',
+    node: 'lisbon',
+    rep: 1,
+    balance: 105,
+    focus: 'Photography · field notes · archive',
+  },
+];
+
 window.SporeData = {
-  NETWORK_NODES, PRODUCTS, EXPERIENCES, REPUTATION_TIERS, PHASES, reputationTier
+  NETWORK_NODES, PRODUCTS, EXPERIENCES, REPUTATION_TIERS, PHASES, MEMBERS, reputationTier
 };

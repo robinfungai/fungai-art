@@ -1252,3 +1252,58 @@ button { font-family: inherit; cursor: pointer; }
   .specimen-plate-art { aspect-ratio: 1 / 0.95; max-height: 280px; }
   .sp-name { font-size: 26px; }
 }
+
+/* ── Members ─────────────────────────────────────────────── */
+.members-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--rule);
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 0 16px 24px;
+}
+.member-card {
+  background: var(--soil-2);
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 14px 16px;
+  transition: background 0.15s;
+}
+.member-card:hover { background: var(--soil-3); }
+.member-avatar {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 20px; font-style: italic;
+  color: rgba(255,255,255,0.92);
+  flex-shrink: 0;
+}
+.member-body { flex: 1; min-width: 0; }
+.member-name {
+  font-family: var(--font-display);
+  font-size: 18px; font-style: italic;
+  color: var(--mycelium-l);
+  line-height: 1.1; margin-bottom: 2px;
+}
+.member-role {
+  font-size: 9.5px; text-transform: uppercase;
+  letter-spacing: 0.13em; color: var(--mycelium-d); margin-bottom: 2px;
+}
+.member-node { font-size: 10px; color: var(--mycelium-d); margin-bottom: 6px; }
+.member-focus {
+  font-size: 11.5px; color: var(--mycelium);
+  line-height: 1.5; margin-bottom: 9px;
+}
+.member-stats { display: flex; gap: 18px; }
+.member-stat { display: flex; flex-direction: column; gap: 1px; }
+.member-stat-val {
+  font-family: var(--font-mono);
+  font-size: 11px; color: var(--mycelium-l);
+}
+.member-stat-lbl {
+  font-size: 8.5px; letter-spacing: 0.09em;
+  text-transform: uppercase; color: var(--mycelium-d);
+}
