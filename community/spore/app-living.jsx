@@ -88,6 +88,7 @@ function TopBar({ state, tier, tab, onTab, onWallet }) {
     { id:'shop',    label:'Apothecary' },
     { id:'exp',     label:'Experiences' },
     { id:'econ',    label:'Economy' },
+    { id:'members', label:'Members' },
   ];
   return (
     <div className="topbar">
@@ -415,6 +416,51 @@ function ExperiencesPage({ economy, onToast }) {
   );
 }
 
+function MembersPage() {
+  return (
+    <div className="page-enter">
+      <div className="section">
+        <div className="section-eyebrow">The organism</div>
+        <h2 className="section-title">Who's <em>tending.</em></h2>
+        <p className="section-blurb">Six nodes in the living network. Each brings a different thread to the mycelium.</p>
+      </div>
+      <div className="members-grid">
+        {SporeData.MEMBERS.map(m => {
+          const tier = SporeData.reputationTier(m.rep);
+          const node = SporeData.NETWORK_NODES.find(n => n.id === m.node);
+          return (
+            <div key={m.id} className="member-card">
+              <div className="member-avatar" style={{ background: tier.color }}>
+                {m.name[0]}
+              </div>
+              <div className="member-body">
+                <div className="member-name">{m.name}</div>
+                <div className="member-role">{m.role}</div>
+                {node && <div className="member-node">{node.name}</div>}
+                <div className="member-focus">{m.focus}</div>
+                <div className="member-stats">
+                  <div className="member-stat">
+                    <span className="member-stat-val" style={{ color: tier.color }}>{tier.label}</span>
+                    <span className="member-stat-lbl">tier</span>
+                  </div>
+                  <div className="member-stat">
+                    <span className="member-stat-val">{m.balance} $H</span>
+                    <span className="member-stat-lbl">balance</span>
+                  </div>
+                  <div className="member-stat">
+                    <span className="member-stat-val">{m.rep} pts</span>
+                    <span className="member-stat-lbl">rep</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function EconomyPage({ economy, phase, onPhaseChange }) {
   const flowSteps = [
     { name:'Arrive',         sub:'enter the substrate' },
@@ -586,6 +632,7 @@ function App() {
       {tab === 'shop'    && <ApothecaryPage economy={economy} onToast={onToast} />}
       {tab === 'exp'     && <ExperiencesPage economy={economy} onToast={onToast} />}
       {tab === 'econ'    && <EconomyPage economy={economy} phase={tweaks.phase} onPhaseChange={(p) => setTweak('phase', p)} />}
+      {tab === 'members' && <MembersPage />}
 
       <div className="app-footer">
         <ProceduralMark size={32} />
