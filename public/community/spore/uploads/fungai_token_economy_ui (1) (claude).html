@@ -1,0 +1,503 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);color:var(--color-text-primary);background:var(--color-background-primary)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:52px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.brand{font-family:var(--font-serif);font-size:17px;font-style:italic}
+.brand-sub{font-size:10px;letter-spacing:.45em;color:var(--color-text-tertiary)}
+.nav-tabs{display:flex;gap:2px}
+.tab{font-size:11px;letter-spacing:.15em;padding:6px 14px;border:0.5px solid transparent;background:none;color:var(--color-text-secondary);cursor:pointer;border-radius:var(--border-radius-md)}
+.tab:hover{color:var(--color-text-primary);border-color:var(--color-border-tertiary)}
+.tab.on{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-secondary)}
+.wallet-pill{display:flex;align-items:center;gap:8px;background:#EAF3DE;border:0.5px solid #C0DD97;border-radius:var(--border-radius-md);padding:6px 12px;cursor:pointer}
+.wallet-bal{font-size:13px;font-weight:500;color:#27500A}
+.wallet-label{font-size:10px;color:#3B6D11;letter-spacing:.1em}
+.rep-dot{width:8px;height:8px;border-radius:50%;background:#639922;display:inline-block}
+.page{display:none}
+.page.on{display:block}
+.wrap{max-width:680px;margin:0 auto;padding:0 20px}
+
+/* ── HUD bar ── */
+.hud{background:var(--color-background-secondary);border-bottom:0.5px solid var(--color-border-tertiary);padding:10px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.hud-item{display:flex;flex-direction:column;gap:1px;padding-right:16px;border-right:0.5px solid var(--color-border-tertiary)}
+.hud-item:last-child{border:none}
+.hud-label{font-size:10px;color:var(--color-text-tertiary);letter-spacing:.08em}
+.hud-val{font-size:14px;font-weight:500;color:var(--color-text-primary)}
+.hud-val.green{color:#27500A}
+.hud-val.amber{color:#633806}
+.earn-btn{margin-left:auto;font-size:11px;padding:6px 14px;background:#EAF3DE;border:0.5px solid #C0DD97;color:#27500A;border-radius:var(--border-radius-md);cursor:pointer}
+.earn-btn:hover{background:#C0DD97}
+
+/* ── Section ── */
+.sec-head{padding:24px 0 16px}
+.sec-label{font-size:10px;letter-spacing:.45em;color:var(--color-text-tertiary);margin-bottom:6px}
+.sec-title{font-family:var(--font-serif);font-size:22px;font-weight:400;font-style:italic;color:var(--color-text-primary)}
+.sec-title em{color:#3B6D11}
+
+/* ── Experience card ── */
+.exp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:24px}
+.exp-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px;display:flex;flex-direction:column;gap:10px}
+.exp-card.locked{opacity:.7}
+.exp-card.featured{border:2px solid #3B6D11}
+.exp-tag{font-size:10px;letter-spacing:.18em;padding:3px 8px;border-radius:var(--border-radius-md);display:inline-block;width:fit-content}
+.tag-open{background:#EAF3DE;color:#27500A}
+.tag-locked{background:var(--color-background-secondary);color:var(--color-text-tertiary)}
+.tag-limited{background:#FAEEDA;color:#633806}
+.tag-work{background:#EEEDFE;color:#3C3489}
+.exp-title{font-family:var(--font-serif);font-size:16px;font-style:italic;font-weight:400}
+.exp-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.6;flex:1}
+.exp-price-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:8px;border-top:0.5px solid var(--color-border-tertiary)}
+.price-euro{font-size:13px;color:var(--color-text-secondary)}
+.price-or{font-size:10px;color:var(--color-text-tertiary)}
+.price-token{font-size:13px;font-weight:500;color:#27500A}
+.price-free{font-size:12px;color:#27500A;font-style:italic;font-family:var(--font-serif)}
+.exp-actions{display:flex;gap:6px}
+.btn-apply{flex:1;font-size:11px;padding:8px;border:0.5px solid #3B6D11;background:none;color:#3B6D11;border-radius:var(--border-radius-md);cursor:pointer}
+.btn-apply:hover{background:#EAF3DE}
+.btn-unlock{flex:1;font-size:11px;padding:8px;background:#3B6D11;color:#EAF3DE;border:none;border-radius:var(--border-radius-md);cursor:pointer}
+.btn-unlock:hover{background:#27500A}
+.btn-unlock:disabled{background:var(--color-background-secondary);color:var(--color-text-tertiary);cursor:not-allowed;border:0.5px solid var(--color-border-tertiary)}
+.lock-hint{font-size:10px;color:var(--color-text-tertiary);text-align:center;margin-top:4px}
+
+/* ── Product card ── */
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-bottom:24px}
+.prod-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px;display:flex;flex-direction:column;gap:8px}
+.prod-swatch{height:72px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center}
+.prod-name{font-family:var(--font-serif);font-size:14px;font-style:italic}
+.prod-cat{font-size:10px;color:var(--color-text-tertiary);letter-spacing:.1em}
+.prod-desc{font-size:11px;color:var(--color-text-secondary);line-height:1.55;flex:1}
+.dual-price{display:flex;flex-direction:column;gap:3px;padding-top:8px;border-top:0.5px solid var(--color-border-tertiary)}
+.dp-row{display:flex;justify-content:space-between;align-items:center}
+.dp-label{font-size:10px;color:var(--color-text-tertiary)}
+.dp-val{font-size:13px;font-weight:500}
+.dp-val.green{color:#27500A}
+.prod-add{font-size:10px;padding:7px;border:0.5px solid var(--color-border-secondary);background:none;color:var(--color-text-secondary);border-radius:var(--border-radius-md);cursor:pointer;margin-top:4px}
+.prod-add:hover{background:#EAF3DE;border-color:#3B6D11;color:#27500A}
+
+/* ── Network page ── */
+.network-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+.node-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px}
+.node-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.node-dot{width:10px;height:10px;border-radius:50%}
+.node-name{font-size:14px;font-weight:500}
+.node-sub{font-size:11px;color:var(--color-text-secondary)}
+.contrib-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:12px}
+.contrib-row:last-child{border:none}
+.contrib-label{color:var(--color-text-secondary)}
+.contrib-earn{font-size:11px;font-weight:500;color:#27500A}
+
+/* ── Flow diagram ── */
+.flow-row{display:flex;align-items:center;gap:0;overflow-x:auto;padding:16px 0}
+.flow-step{text-align:center;flex-shrink:0}
+.flow-box{background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:10px 14px;min-width:90px}
+.flow-box.active-step{background:#EAF3DE;border-color:#3B6D11}
+.flow-box-title{font-size:12px;font-weight:500}
+.flow-box-sub{font-size:10px;color:var(--color-text-secondary);margin-top:2px}
+.flow-arrow{color:var(--color-text-tertiary);font-size:16px;padding:0 8px;flex-shrink:0}
+.phase-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:24px}
+.phase-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px}
+.phase-card.current{background:#EAF3DE;outline:1.5px solid #3B6D11}
+.phase-num{font-size:10px;color:var(--color-text-tertiary);margin-bottom:4px}
+.phase-name{font-size:13px;font-weight:500;margin-bottom:6px}
+.phase-items{font-size:11px;color:var(--color-text-secondary);line-height:1.6}
+
+/* ── Earn modal ── */
+.modal-bg{display:none;min-height:300px;background:rgba(0,0,0,0.35);align-items:flex-start;justify-content:center;padding-top:40px}
+.modal-bg.on{display:flex}
+.modal{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:20px;width:320px}
+.modal-title{font-size:15px;font-weight:500;margin-bottom:12px}
+.earn-option{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer}
+.earn-option:last-child{border:none}
+.earn-option:hover .earn-claim{background:#3B6D11;color:#EAF3DE}
+.earn-name{font-size:13px}
+.earn-desc{font-size:11px;color:var(--color-text-secondary)}
+.earn-claim{font-size:11px;padding:5px 10px;background:#EAF3DE;color:#27500A;border:none;border-radius:var(--border-radius-md);cursor:pointer;white-space:nowrap}
+.modal-close{width:100%;margin-top:12px;font-size:12px;padding:8px;border:0.5px solid var(--color-border-secondary);background:none;color:var(--color-text-secondary);border-radius:var(--border-radius-md);cursor:pointer}
+.toast{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:#27500A;color:#EAF3DE;font-size:12px;padding:8px 16px;border-radius:var(--border-radius-md);opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap}
+.toast.on{opacity:1}
+</style>
+
+<h2 class="sr-only">Fungai token economy — interactive prototype showing shop, experiences, network, and earning flows</h2>
+
+<div style="position:relative">
+
+<div class="nav">
+  <div>
+    <div class="brand">Fungai Art</div>
+    <div class="brand-sub">$HYPHAE economy</div>
+  </div>
+  <div class="nav-tabs">
+    <button class="tab on" onclick="show('experiences')">Experiences</button>
+    <button class="tab" onclick="show('shop')">Shop</button>
+    <button class="tab" onclick="show('network')">Network</button>
+    <button class="tab" onclick="show('economy')">Economy</button>
+  </div>
+  <div class="wallet-pill" onclick="openEarn()">
+    <span class="rep-dot"></span>
+    <div>
+      <div class="wallet-bal" id="bal-nav">120 $HYPHAE</div>
+      <div class="wallet-label">tap to earn</div>
+    </div>
+  </div>
+</div>
+
+<div class="hud">
+  <div class="hud-item"><div class="hud-label">balance</div><div class="hud-val green" id="hud-bal">120 $HYPHAE</div></div>
+  <div class="hud-item"><div class="hud-label">reputation</div><div class="hud-val amber" id="hud-rep">Seedling</div></div>
+  <div class="hud-item"><div class="hud-label">contributions</div><div class="hud-val" id="hud-contribs">2</div></div>
+  <div class="hud-item"><div class="hud-label">access keys</div><div class="hud-val" id="hud-keys">0</div></div>
+  <button class="earn-btn" onclick="openEarn()">+ Earn $HYPHAE</button>
+</div>
+
+<!-- ── EXPERIENCES ── -->
+<div id="page-experiences" class="page on">
+<div class="wrap">
+  <div class="sec-head">
+    <div class="sec-label">token-gated access</div>
+    <div class="sec-title">Experiences <em>&amp; labs.</em></div>
+  </div>
+  <div class="exp-grid" id="exp-grid"></div>
+</div>
+</div>
+
+<!-- ── SHOP ── -->
+<div id="page-shop" class="page">
+<div class="wrap">
+  <div class="sec-head">
+    <div class="sec-label">dual pricing · € or $HYPHAE</div>
+    <div class="sec-title">The <em>apothecary.</em></div>
+  </div>
+  <div class="prod-grid" id="prod-grid"></div>
+</div>
+</div>
+
+<!-- ── NETWORK ── -->
+<div id="page-network" class="page">
+<div class="wrap">
+  <div class="sec-head">
+    <div class="sec-label">contribution = currency</div>
+    <div class="sec-title">The <em>network.</em></div>
+  </div>
+  <div class="network-grid">
+    <div class="node-card">
+      <div class="node-header">
+        <div class="node-dot" style="background:#639922"></div>
+        <div><div class="node-name">Berlin hub</div><div class="node-sub">Active · 12 contributors</div></div>
+      </div>
+      <div class="contrib-row"><span class="contrib-label">Kitchen help</span><span class="contrib-earn">+40 $HYPHAE / day</span></div>
+      <div class="contrib-row"><span class="contrib-label">Event hosting</span><span class="contrib-earn">+80 $HYPHAE</span></div>
+      <div class="contrib-row"><span class="contrib-label">Foraging guide</span><span class="contrib-earn">+60 $HYPHAE</span></div>
+      <div class="contrib-row"><span class="contrib-label">Documentation</span><span class="contrib-earn">+20 $HYPHAE</span></div>
+      <button class="btn-apply" style="margin-top:10px;width:100%" onclick="earnTokens(40,'Berlin contribution')">Apply to contribute</button>
+    </div>
+    <div class="node-card">
+      <div class="node-header">
+        <div class="node-dot" style="background:#97C459"></div>
+        <div><div class="node-name">Sweden origin</div><div class="node-sub">Seasonal · foraging</div></div>
+      </div>
+      <div class="contrib-row"><span class="contrib-label">Foraging expedition</span><span class="contrib-earn">+100 $HYPHAE</span></div>
+      <div class="contrib-row"><span class="contrib-label">Wild harvest</span><span class="contrib-earn">+60 $HYPHAE / day</span></div>
+      <div class="contrib-row"><span class="contrib-label">Species ID</span><span class="contrib-earn">+15 $HYPHAE</span></div>
+      <button class="btn-apply" style="margin-top:10px;width:100%" onclick="earnTokens(100,'Sweden expedition')">Join expedition</button>
+    </div>
+    <div class="node-card">
+      <div class="node-header">
+        <div class="node-dot" style="background:#EF9F27"></div>
+        <div><div class="node-name">Festival circuit</div><div class="node-sub">Travelling · EU+</div></div>
+      </div>
+      <div class="contrib-row"><span class="contrib-label">Stand setup</span><span class="contrib-earn">+50 $HYPHAE</span></div>
+      <div class="contrib-row"><span class="contrib-label">Facilitation help</span><span class="contrib-earn">+70 $HYPHAE</span></div>
+      <div class="contrib-row"><span class="contrib-label">Content creation</span><span class="contrib-earn">+30 $HYPHAE</span></div>
+      <button class="btn-apply" style="margin-top:10px;width:100%" onclick="earnTokens(50,'Festival contribution')">Apply</button>
+    </div>
+    <div class="node-card" style="border-style:dashed">
+      <div class="node-header">
+        <div class="node-dot" style="background:var(--color-border-secondary)"></div>
+        <div><div class="node-name">New node</div><div class="node-sub">Propose a location</div></div>
+      </div>
+      <p style="font-size:12px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:10px">The network expands mycelially. Any contributor with 300+ $HYPHAE can propose a new node.</p>
+      <div style="font-size:11px;color:var(--color-text-tertiary);padding:8px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)">Requires: 300 $HYPHAE + Forager reputation</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ── ECONOMY ── -->
+<div id="page-economy" class="page">
+<div class="wrap">
+  <div class="sec-head">
+    <div class="sec-label">token architecture · phase 1 active</div>
+    <div class="sec-title">How it <em>flows.</em></div>
+  </div>
+
+  <div class="flow-row">
+    <div class="flow-step">
+      <div class="flow-box"><div class="flow-box-title">Arrive</div><div class="flow-box-sub">explore</div></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-box active-step"><div class="flow-box-title">Contribute</div><div class="flow-box-sub">work · create · share</div></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-box active-step"><div class="flow-box-title">Earn $HYPHAE</div><div class="flow-box-sub">mock balance now</div></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-box"><div class="flow-box-title">Unlock access</div><div class="flow-box-sub">experiences · products</div></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-box"><div class="flow-box-title">Go deeper</div><div class="flow-box-sub">residency · governance</div></div>
+    </div>
+    <div class="flow-arrow">↺</div>
+  </div>
+
+  <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:20px;padding:10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)">Active steps highlighted — phases 2–4 unlock progressively. You are in phase 1.</div>
+
+  <div style="font-size:13px;font-weight:500;margin-bottom:10px">Token layers</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px">
+    <div style="background:#EAF3DE;border-radius:var(--border-radius-lg);padding:14px">
+      <div style="font-size:11px;color:#3B6D11;letter-spacing:.1em;margin-bottom:6px">$HYPHAE — currency</div>
+      <div style="font-size:12px;color:#27500A;line-height:1.6">Earned by contributing. Spent on experiences and products. Transferable in phase 3.</div>
+    </div>
+    <div style="background:#EEEDFE;border-radius:var(--border-radius-lg);padding:14px">
+      <div style="font-size:11px;color:#534AB7;letter-spacing:.1em;margin-bottom:6px">Access keys — NFTs</div>
+      <div style="font-size:12px;color:#3C3489;line-height:1.6">Non-transferable keys. Unlock specific events, labs, residencies. Limited by real-world seats.</div>
+    </div>
+    <div style="background:#FAEEDA;border-radius:var(--border-radius-lg);padding:14px">
+      <div style="font-size:11px;color:#854F0B;letter-spacing:.1em;margin-bottom:6px">Reputation — non-financial</div>
+      <div style="font-size:12px;color:#633806;line-height:1.6">Tracks trust and depth of participation. Prevents speculation culture. Required for deep access.</div>
+    </div>
+  </div>
+
+  <div style="font-size:13px;font-weight:500;margin-bottom:10px">Rollout phases</div>
+  <div class="phase-row">
+    <div class="phase-card current">
+      <div class="phase-num">Phase 1 — now</div>
+      <div class="phase-name">Mock economy</div>
+      <div class="phase-items">UI + fake balances<br/>dual pricing display<br/>unlock states<br/>earn flows</div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-num">Phase 2</div>
+      <div class="phase-name">Web2 bridge</div>
+      <div class="phase-items">Stripe payments<br/>off-chain points<br/>email accounts<br/>real access gates</div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-num">Phase 3</div>
+      <div class="phase-name">Token deployed</div>
+      <div class="phase-items">$HYPHAE on-chain<br/>wallet connect<br/>real balances<br/>NFT access keys</div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-num">Phase 4</div>
+      <div class="phase-name">Living network</div>
+      <div class="phase-items">Governance<br/>node staking<br/>DAO structures<br/>multi-location</div>
+    </div>
+  </div>
+
+  <button onclick="sendPrompt('Generate the mockProducts.ts and ExperienceCard.tsx files for the Fungai token economy, including dual pricing and unlock states ↗')" style="margin-top:8px;font-size:12px;padding:8px 16px;border:0.5px solid var(--color-border-secondary);background:none;border-radius:var(--border-radius-md);color:var(--color-text-secondary);cursor:pointer">Generate component files for this economy ↗</button>
+</div>
+</div>
+
+<!-- ── EARN MODAL ── -->
+<div class="modal-bg" id="earn-modal" onclick="closeEarnOnBg(event)">
+  <div class="modal">
+    <div class="modal-title">Earn $HYPHAE</div>
+    <div class="earn-option" onclick="earnTokens(40,'Kitchen help')">
+      <div><div class="earn-name">Kitchen help</div><div class="earn-desc">1 day · Berlin hub</div></div>
+      <button class="earn-claim">+40</button>
+    </div>
+    <div class="earn-option" onclick="earnTokens(20,'Content creation')">
+      <div><div class="earn-name">Content creation</div><div class="earn-desc">Photo / video / writing</div></div>
+      <button class="earn-claim">+20</button>
+    </div>
+    <div class="earn-option" onclick="earnTokens(60,'Foraging guide')">
+      <div><div class="earn-name">Foraging guide</div><div class="earn-desc">Lead a circle</div></div>
+      <button class="earn-claim">+60</button>
+    </div>
+    <div class="earn-option" onclick="earnTokens(80,'Event facilitation')">
+      <div><div class="earn-name">Event facilitation</div><div class="earn-desc">Help run an experience</div></div>
+      <button class="earn-claim">+80</button>
+    </div>
+    <div class="earn-option" onclick="earnTokens(15,'Species identification')">
+      <div><div class="earn-name">Species identification</div><div class="earn-desc">Document a find</div></div>
+      <button class="earn-claim">+15</button>
+    </div>
+    <button class="modal-close" onclick="closeEarn()">Close</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+</div>
+
+<script>
+var bal = 120, contribs = 2, keys = 0;
+
+var reps = [
+  {min:0,label:'Spore',color:'#854F0B'},
+  {min:50,label:'Seedling',color:'#3B6D11'},
+  {min:150,label:'Mycelium',color:'#0F6E56'},
+  {min:300,label:'Forager',color:'#534AB7'},
+  {min:500,label:'Root node',color:'#3C3489'}
+];
+function repLevel(b){
+  var r = reps[0];
+  for(var i=0;i<reps.length;i++){if(b>=reps[i].min)r=reps[i];}
+  return r;
+}
+
+var experiences = [
+  {id:'e1',title:'Sensual dinner',desc:'A multi-course ceremonial dinner exploring taste, scent, and plant intelligence.',tag:'limited',tagLabel:'2 seats left',pEur:65,pToken:50,minToken:50,category:'dinner'},
+  {id:'e2',title:'Mycelium Trance',desc:'111-minute embodied sensory awakening. Gong, tuning forks, sacred plant allies.',tag:'open',tagLabel:'Open',pEur:40,pToken:30,minToken:30,category:'ceremony',featured:true},
+  {id:'e3',title:'Foraging circle',desc:'Morning in the Berlin forest. Eight wild plants, their stories, their medicine.',tag:'open',tagLabel:'Free to earn',pEur:0,pToken:0,minToken:0,earnBack:40,category:'foraging'},
+  {id:'e4',title:'Fungi lab',desc:'Hands-on tincture making and species identification. Small group, deep practice.',tag:'locked',tagLabel:'Token-gated',pEur:null,pToken:80,minToken:80,category:'lab'},
+  {id:'e5',title:'Work exchange residency',desc:'1–2 weeks. Kitchen, farming, art. Earn tokens while deepening your practice.',tag:'work',tagLabel:'Work exchange',pEur:0,pToken:0,minToken:0,earnBack:300,category:'residency'},
+  {id:'e6',title:'Entheogenic dinner',desc:'A carefully held ceremonial space. Application required. Reputation: Forager.',tag:'locked',tagLabel:'Forager+ only',pEur:null,pToken:120,minToken:300,category:'ceremony',repReq:'Forager'}
+];
+
+var products = [
+  {id:'p1',name:'Temple Nectar',cat:'compositions',bg:'#C48838',desc:'Vitality · sensual · sacred energy.',pEur:48,pToken:35},
+  {id:'p2',name:'Chaga',cat:'fungi',bg:'#8A6040',desc:'Immunity · resilience · vitality.',pEur:38,pToken:28},
+  {id:'p3',name:'Lucid',cat:'compositions',bg:'#5050A0',desc:'Dreamwork · luminous · visionary.',pEur:48,pToken:35},
+  {id:'p4',name:'ADHD Support',cat:'compositions',bg:'#486038',desc:'Focus · clarity · resilience.',pEur:48,pToken:35},
+  {id:'p5',name:'Amanita muscaria',cat:'fungi',bg:'#A03028',desc:'Neuroalchemy · shamanic love · focus.',pEur:38,pToken:28},
+  {id:'p6',name:'Sleepy Sleepy',cat:'compositions',bg:'#506070',desc:'CNS ease · deep sleep · stress relief.',pEur:48,pToken:35}
+];
+
+function updateHUD(){
+  var r = repLevel(bal);
+  document.getElementById('hud-bal').textContent = bal + ' $HYPHAE';
+  document.getElementById('hud-rep').textContent = r.label;
+  document.getElementById('hud-rep').style.color = r.color;
+  document.getElementById('hud-contribs').textContent = contribs;
+  document.getElementById('hud-keys').textContent = keys;
+  document.getElementById('bal-nav').textContent = bal + ' $HYPHAE';
+}
+
+function show(page){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('on')});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});
+  document.getElementById('page-'+page).classList.add('on');
+  event.target.classList.add('on');
+}
+
+function renderExperiences(){
+  var grid = document.getElementById('exp-grid');
+  grid.innerHTML = experiences.map(function(e){
+    var canAfford = bal >= e.minToken;
+    var repOk = !e.repReq || repLevel(bal).label === e.repReq || bal >= 300;
+    var unlockable = canAfford && repOk;
+    var tagCls = {open:'tag-open',locked:'tag-locked',limited:'tag-limited',work:'tag-work'}[e.tag];
+    var priceHTML = '';
+    if(e.earnBack){
+      priceHTML = '<div class="price-free">Earn +'+e.earnBack+' $HYPHAE</div>';
+    } else if(e.pEur===0){
+      priceHTML = '<div class="price-free">Free</div>';
+    } else {
+      priceHTML = '<span class="price-euro">€'+e.pEur+'</span><span class="price-or">or</span><span class="price-token">'+e.pToken+' $HYPHAE</span>';
+    }
+    var actionHTML = '';
+    if(e.earnBack){
+      actionHTML = '<button class="btn-unlock" onclick="claimEarnBack(\''+e.id+'\','+e.earnBack+',\''+e.title+'\')">Join + earn</button>';
+    } else if(e.minToken===0){
+      actionHTML = '<button class="btn-apply" onclick="toast(\'Applied to '+e.title+'!\')">Apply</button>';
+    } else {
+      actionHTML = '<button class="btn-unlock"'+(unlockable?'':' disabled')+'onclick="spendTokens(\''+e.id+'\','+e.pToken+',\''+e.title+'\')">Unlock — '+e.pToken+' $H</button>';
+      if(!unlockable){
+        actionHTML += '<div class="lock-hint">Need '+(e.minToken-bal)+' more $HYPHAE</div>';
+      }
+    }
+    return '<div class="exp-card'+(e.featured?' featured':'')+(e.tag==='locked'?' locked':'')+'">'+
+      '<span class="exp-tag '+tagCls+'">'+e.tagLabel+'</span>'+
+      '<div class="exp-title">'+e.title+'</div>'+
+      '<div class="exp-desc">'+e.desc+'</div>'+
+      '<div class="exp-price-row">'+priceHTML+'</div>'+
+      '<div class="exp-actions">'+actionHTML+'</div>'+
+      '</div>';
+  }).join('');
+}
+
+function renderProducts(){
+  var grid = document.getElementById('prod-grid');
+  grid.innerHTML = products.map(function(p){
+    return '<div class="prod-card">'+
+      '<div class="prod-swatch" style="background:'+p.bg+'20">'+
+        '<svg viewBox="0 0 40 60" width="28" xmlns="http://www.w3.org/2000/svg">'+
+          '<rect x="14" y="0" width="12" height="6" rx="1.5" fill="'+p.bg+'" opacity=".7"/>'+
+          '<rect x="2" y="5" width="36" height="50" rx="5" fill="'+p.bg+'" opacity=".75"/>'+
+          '<rect x="5" y="18" width="30" height="28" fill="#F5EEE4" opacity=".88" rx="1"/>'+
+          '<text x="20" y="30" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="4" fill="#2A1800">fungai</text>'+
+          '<text x="20" y="38" text-anchor="middle" font-family="Georgia" font-size="3.5" fill="#6A4A20">30ml</text>'+
+        '</svg>'+
+      '</div>'+
+      '<div class="prod-name">'+p.name+'</div>'+
+      '<div class="prod-cat">'+p.cat+'</div>'+
+      '<div class="prod-desc">'+p.desc+'</div>'+
+      '<div class="dual-price">'+
+        '<div class="dp-row"><span class="dp-label">Pay in €</span><span class="dp-val">€'+p.pEur+'</span></div>'+
+        '<div class="dp-row"><span class="dp-label">Pay in $HYPHAE</span><span class="dp-val green">'+p.pToken+' $H</span></div>'+
+      '</div>'+
+      '<button class="prod-add" onclick="buyProduct(\''+p.name+'\','+p.pToken+')">+ Add to basket</button>'+
+      '</div>';
+  }).join('');
+}
+
+function earnTokens(amount, label){
+  bal += amount;
+  contribs += 1;
+  updateHUD();
+  renderExperiences();
+  showToast('+'+amount+' $HYPHAE — '+label);
+  closeEarn();
+}
+
+function claimEarnBack(id, amount, title){
+  bal += amount;
+  contribs += 1;
+  updateHUD();
+  renderExperiences();
+  showToast('Joined '+title+' · +'+amount+' $HYPHAE earned');
+}
+
+function spendTokens(id, amount, title){
+  if(bal < amount){showToast('Not enough $HYPHAE');return;}
+  bal -= amount;
+  keys += 1;
+  contribs += 1;
+  updateHUD();
+  renderExperiences();
+  showToast('Unlocked: '+title+' · Access key granted');
+}
+
+function buyProduct(name, amount){
+  if(bal >= amount){
+    bal -= amount;
+    updateHUD();
+    showToast('Purchased '+name+' with $HYPHAE · saved vs €');
+  } else {
+    showToast('Added '+name+' to basket (€ checkout)');
+  }
+}
+
+function openEarn(){
+  document.getElementById('earn-modal').classList.add('on');
+}
+function closeEarn(){
+  document.getElementById('earn-modal').classList.remove('on');
+}
+function closeEarnOnBg(e){
+  if(e.target===document.getElementById('earn-modal')) closeEarn();
+}
+
+function showToast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('on');
+  setTimeout(function(){t.classList.remove('on')},2800);
+}
+
+renderExperiences();
+renderProducts();
+updateHUD();
+</script>

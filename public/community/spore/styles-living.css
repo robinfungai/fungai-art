@@ -1,0 +1,1254 @@
+/* Spore Living — dark substrate, organic motion */
+
+:root {
+  --soil:        #0A0908;
+  --soil-2:      #11100D;
+  --soil-3:      #181612;
+  --soil-4:      #221F18;
+  --substrate:   #2A251C;
+  --mycelium:    #C9B894;   /* beige */
+  --mycelium-d:  #8B7E62;
+  --mycelium-l:  #E6D9B5;
+  --spore:       #6BD66F;   /* green */
+  --spore-d:     #2E7A35;
+  --spore-l:     #B6F0AE;
+  --fungal:      #4FA8E0;   /* blue */
+  --fungal-d:    #1F5B85;
+  --fungal-l:    #A6D5F2;
+  --nutrient:    #E8B14B;   /* amber */
+  --nutrient-d:  #8B6320;
+  --nutrient-l:  #F5D689;
+  --rule:        rgba(201,184,148,0.12);
+  --rule-strong: rgba(201,184,148,0.22);
+
+  --font-display: 'Zodiak', 'Cormorant Garamond', Georgia, serif;
+  --font-sans:    'Satoshi', -apple-system, 'Helvetica Neue', sans-serif;
+  --font-mono:    'Geist Mono', 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--soil);
+  color: var(--mycelium);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 30% 0%, rgba(79,168,224,0.06), transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(232,177,75,0.05), transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(107,214,111,0.03), transparent 60%),
+    var(--soil);
+  position: relative;
+}
+
+/* Ambient grain */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.79 0 0 0 0 0.72 0 0 0 0 0.58 0 0 0 0.06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+}
+
+button { font-family: inherit; cursor: pointer; }
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+/* — Top bar — */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: linear-gradient(to bottom, rgba(10,9,8,0.95), rgba(10,9,8,0.7));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.topbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px 10px;
+  gap: 10px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-mark {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  color: var(--mycelium-l);
+}
+
+.brand-sub {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 3px;
+}
+
+.wallet-pill {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 11px 6px 8px;
+  border: 0.5px solid var(--rule-strong);
+  background: rgba(107,214,111,0.06);
+  border-radius: 100px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.wallet-pill:hover { border-color: var(--spore-d); background: rgba(107,214,111,0.1); }
+
+.wallet-rep-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  position: relative;
+}
+.wallet-rep-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 0.3;
+  filter: blur(4px);
+}
+
+.wallet-stack { display: flex; flex-direction: column; line-height: 1.1; }
+
+.wallet-bal {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--spore-l);
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.wallet-cta {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--spore-d);
+  margin-top: 1px;
+}
+
+.tabs {
+  display: flex;
+  padding: 0 6px;
+  border-top: 0.5px solid var(--rule);
+}
+
+.tab {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 10px 4px 12px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  position: relative;
+}
+.tab:hover { color: var(--mycelium); }
+.tab.on { color: var(--spore-l); }
+.tab.on::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -0.5px;
+  transform: translateX(-50%);
+  width: 18px; height: 1.5px;
+  background: var(--spore);
+  box-shadow: 0 0 8px var(--spore);
+}
+
+/* — System stats bar — */
+.sys-stats {
+  margin: 10px 16px 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 0.5px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.sys-cell {
+  background: var(--soil-2);
+  padding: 11px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sys-label {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sys-val {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--mycelium-l);
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.sys-val.green { color: var(--spore-l); }
+.sys-val.amber { color: var(--nutrient-l); }
+.sys-val.blue  { color: var(--fungal-l); }
+
+.sys-bar {
+  height: 2px;
+  background: var(--soil-4);
+  border-radius: 1px;
+  overflow: hidden;
+}
+.sys-bar > span {
+  display: block;
+  height: 100%;
+  background: var(--spore);
+  box-shadow: 0 0 6px var(--spore);
+  transition: width 0.6s;
+}
+.sys-bar.amber > span { background: var(--nutrient); box-shadow: 0 0 6px var(--nutrient); }
+.sys-bar.blue  > span { background: var(--fungal);   box-shadow: 0 0 6px var(--fungal); }
+
+.live-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--spore);
+  box-shadow: 0 0 6px var(--spore);
+  animation: live-pulse 1.6s ease-in-out infinite;
+}
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* — Section — */
+.section {
+  padding: 24px 16px 6px;
+}
+
+.section-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-bottom: 6px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 30px;
+  letter-spacing: -0.02em;
+  color: var(--mycelium-l);
+  line-height: 1;
+}
+.section-title em { color: var(--spore); font-style: italic; }
+
+.section-blurb {
+  margin-top: 10px;
+  color: var(--mycelium);
+  font-size: 13px;
+  line-height: 1.55;
+  max-width: 38ch;
+  opacity: 0.85;
+}
+
+/* — Network canvas — */
+.net-canvas {
+  margin: 12px 16px 0;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(107,214,111,0.05), transparent 70%),
+    var(--soil-2);
+  border: 0.5px solid var(--rule);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.net-canvas svg { display: block; width: 100%; height: auto; }
+
+.net-overlay {
+  position: absolute;
+  bottom: 10px; left: 10px; right: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.net-overlay-stat {
+  background: rgba(10,9,8,0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 0.5px solid var(--rule);
+  border-radius: 6px;
+  padding: 7px 10px;
+  pointer-events: auto;
+}
+.net-overlay-stat .label-tiny {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+}
+.net-overlay-stat .v {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--mycelium-l);
+  margin-top: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* — Active nodes panel — */
+.active-nodes {
+  margin: 12px 16px 0;
+  background: var(--soil-2);
+  border: 0.5px solid var(--rule);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.an-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 0.5px solid var(--rule);
+  background: rgba(107,214,111,0.03);
+}
+
+.an-head-title {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mycelium-l);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.an-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 0.5px solid var(--rule);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.an-row:last-child { border-bottom: none; }
+.an-row:hover { background: rgba(107,214,111,0.04); }
+.an-row.selected { background: rgba(107,214,111,0.06); }
+
+.an-pulse {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
+}
+.an-pulse::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 0.25;
+  filter: blur(3px);
+  animation: an-breathe 2.4s ease-in-out infinite;
+}
+@keyframes an-breathe {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.4); }
+}
+
+.an-info { flex: 1; min-width: 0; }
+.an-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--mycelium-l);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.an-meta {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 3px;
+}
+
+.an-flow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--nutrient-l);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.an-flow .lbl {
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 2px;
+}
+
+/* — Contribution actions on node detail — */
+.node-actions {
+  margin: 12px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--rule);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 0.5px solid var(--rule);
+}
+
+.contrib {
+  background: var(--soil-2);
+  padding: 13px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  transition: background 0.2s, padding 0.2s;
+}
+.contrib:hover { background: var(--soil-3); padding-left: 18px; }
+
+.contrib-l { display: flex; flex-direction: column; gap: 3px; }
+.contrib-name { font-size: 13px; color: var(--mycelium-l); }
+.contrib-sub {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+}
+.contrib-r { display: flex; align-items: center; gap: 10px; }
+.contrib-earn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--spore-l);
+  font-variant-numeric: tabular-nums;
+}
+.contrib-arrow { color: var(--mycelium-d); font-size: 13px; }
+
+/* — Buttons — */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 11px 14px;
+  border: 0.5px solid var(--rule-strong);
+  background: var(--soil-2);
+  color: var(--mycelium-l);
+  border-radius: 6px;
+  transition: all 0.18s;
+}
+.btn:hover { background: var(--soil-3); border-color: var(--mycelium-d); }
+.btn-block { width: 100%; }
+
+.btn-primary {
+  background: var(--spore-d);
+  color: var(--soil);
+  border-color: var(--spore-d);
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary:hover { background: var(--spore); border-color: var(--spore); box-shadow: 0 0 14px rgba(107,214,111,0.4); }
+.btn-primary:disabled {
+  background: var(--soil-3);
+  color: var(--mycelium-d);
+  border-color: var(--rule);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--spore-d);
+  color: var(--spore-l);
+}
+.btn-ghost:hover { background: rgba(107,214,111,0.08); border-color: var(--spore); }
+
+/* — Toast — */
+.toast-wrap {
+  position: fixed;
+  left: 0; right: 0;
+  bottom: 24px;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 200;
+}
+.toast {
+  background: var(--soil-3);
+  color: var(--mycelium-l);
+  border: 0.5px solid var(--rule-strong);
+  padding: 10px 16px;
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+  animation: toast-in 0.25s ease-out;
+}
+.toast.success {
+  border-color: var(--spore-d);
+  color: var(--spore-l);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 0 16px rgba(107,214,111,0.2);
+}
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* — Sheet — */
+.sheet-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(6px);
+  z-index: 100;
+  display: flex; align-items: flex-end; justify-content: center;
+  animation: fade-in 0.2s;
+}
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+.sheet {
+  background: var(--soil-2);
+  border-radius: 18px 18px 0 0;
+  width: 100%;
+  max-width: 480px;
+  max-height: 85vh;
+  overflow-y: auto;
+  border-top: 0.5px solid var(--rule-strong);
+  animation: sheet-up 0.3s cubic-bezier(0.2,0.9,0.3,1);
+}
+@keyframes sheet-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+.sheet-handle {
+  width: 36px; height: 3px;
+  background: var(--mycelium-d);
+  border-radius: 2px;
+  margin: 10px auto 4px;
+  opacity: 0.5;
+}
+.sheet-head {
+  padding: 12px 18px 16px;
+  border-bottom: 0.5px solid var(--rule);
+}
+.sheet-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 24px;
+  color: var(--mycelium-l);
+  letter-spacing: -0.02em;
+}
+.sheet-body { padding: 12px 16px 24px; }
+
+.earn-opt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 4px;
+  border-bottom: 0.5px solid var(--rule);
+  cursor: pointer;
+  transition: padding 0.2s;
+}
+.earn-opt:hover { padding-left: 8px; }
+.earn-opt:last-child { border: none; }
+.earn-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--mycelium-l);
+  letter-spacing: -0.01em;
+}
+.earn-desc {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 3px;
+}
+.earn-amount {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--spore-l);
+  font-variant-numeric: tabular-nums;
+}
+
+/* — Apothecary — */
+.prod-grid {
+  margin: 14px 16px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.prod-card {
+  background: var(--soil-2);
+  border: 0.5px solid var(--rule);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.prod-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--rule-strong);
+  box-shadow: 0 16px 32px -16px rgba(107,214,111,0.2);
+}
+.prod-art {
+  aspect-ratio: 1 / 1;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+.prod-art-stripe {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(255,255,255,0.0) 0px, rgba(255,255,255,0.0) 8px,
+    rgba(255,255,255,0.06) 8px, rgba(255,255,255,0.06) 16px);
+}
+.prod-art-glow {
+  position: absolute;
+  inset: -10%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 60%);
+  pointer-events: none;
+}
+.prod-art-label {
+  position: absolute;
+  inset: 12px;
+  border: 0.5px solid rgba(255,255,255,0.25);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: rgba(255,255,255,0.92);
+  padding: 6px;
+}
+.prod-art-label .pl-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.1;
+}
+.prod-art-label .pl-vol {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 6px;
+  color: rgba(255,255,255,0.65);
+}
+.prod-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--mycelium-l);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.prod-cat {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 2px;
+}
+.prod-desc {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--mycelium);
+  flex: 1;
+  opacity: 0.85;
+}
+.prod-price {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 0.5px solid var(--rule);
+}
+.prod-price-eur {
+  font-size: 13px;
+  color: var(--mycelium-l);
+  font-variant-numeric: tabular-nums;
+}
+.prod-price-h {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--spore-l);
+  font-variant-numeric: tabular-nums;
+}
+.prod-add {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 8px 6px;
+  background: var(--soil-3);
+  border: 0.5px solid var(--rule);
+  border-radius: 4px;
+  color: var(--mycelium);
+  transition: all 0.15s;
+}
+.prod-add:hover {
+  background: rgba(107,214,111,0.08);
+  border-color: var(--spore-d);
+  color: var(--spore-l);
+}
+.prod-add.bought {
+  background: var(--spore-d);
+  color: var(--soil);
+  border-color: var(--spore-d);
+}
+
+/* — Experiences — */
+.exp-list {
+  margin: 14px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.exp-card {
+  background: var(--soil-2);
+  border: 0.5px solid var(--rule);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.exp-card.featured { border-color: var(--spore-d); box-shadow: 0 0 0 1px var(--spore-d); }
+.exp-card.unlocked { border-color: var(--spore-d); }
+
+.exp-art {
+  height: 92px;
+  position: relative;
+  overflow: hidden;
+}
+.exp-art::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent, rgba(10,9,8,0.55));
+}
+.exp-art-stripe {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(255,255,255,0.0) 0px, rgba(255,255,255,0.0) 12px,
+    rgba(255,255,255,0.04) 12px, rgba(255,255,255,0.04) 24px);
+}
+.exp-art-glow {
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle at 70% 30%, rgba(255,255,255,0.15), transparent 60%);
+}
+.exp-art-label {
+  position: absolute;
+  inset: 12px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.78);
+  z-index: 1;
+}
+.exp-body { padding: 13px 14px; }
+.exp-tag-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 0.5px solid;
+}
+.tag-spore   { background: rgba(107,214,111,0.1); color: var(--spore-l); border-color: var(--spore-d); }
+.tag-amber   { background: rgba(232,177,75,0.1);  color: var(--nutrient-l); border-color: var(--nutrient-d); }
+.tag-fungal  { background: rgba(79,168,224,0.1);  color: var(--fungal-l); border-color: var(--fungal-d); }
+.tag-mute    { background: var(--soil-3);         color: var(--mycelium-d); border-color: var(--rule); }
+
+.exp-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--mycelium-l);
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+.exp-desc {
+  font-size: 12px;
+  color: var(--mycelium);
+  line-height: 1.55;
+  opacity: 0.85;
+  margin-bottom: 12px;
+}
+.exp-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 0.5px solid var(--rule);
+}
+.exp-price-stack { display: flex; flex-direction: column; line-height: 1.1; }
+.exp-price-eur { font-size: 14px; color: var(--mycelium-l); }
+.exp-price-h {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--spore-l);
+}
+.exp-price-free {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--spore-l);
+}
+.exp-lock-hint {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 8px;
+}
+
+/* — Economy / token layers — */
+.flow-rail {
+  margin: 14px 16px 0;
+  padding: 14px;
+  border: 0.5px solid var(--rule);
+  border-radius: 10px;
+  background: var(--soil-2);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.flow-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  position: relative;
+}
+.flow-step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 11px; top: 24px; bottom: -14px;
+  width: 1px;
+  background: var(--rule);
+}
+.flow-step.active:not(:last-child)::before {
+  background: linear-gradient(to bottom, var(--spore), var(--rule));
+  box-shadow: 0 0 4px var(--spore);
+}
+.flow-bullet {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--soil-3);
+  border: 0.5px solid var(--rule);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--mycelium-d);
+  z-index: 1;
+}
+.flow-step.active .flow-bullet {
+  background: var(--spore);
+  border-color: var(--spore);
+  color: var(--soil);
+  box-shadow: 0 0 10px rgba(107,214,111,0.5);
+}
+.flow-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--mycelium-l);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.flow-sub {
+  font-size: 12px;
+  color: var(--mycelium);
+  margin-top: 4px;
+  opacity: 0.8;
+}
+
+.token-layers {
+  margin: 12px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.token-layer {
+  padding: 14px;
+  border-radius: 10px;
+  border: 0.5px solid;
+  background: var(--soil-2);
+}
+.token-layer.spore  { border-color: var(--spore-d);    background: linear-gradient(135deg, rgba(107,214,111,0.06), var(--soil-2)); }
+.token-layer.fungal { border-color: var(--fungal-d);   background: linear-gradient(135deg, rgba(79,168,224,0.06), var(--soil-2)); }
+.token-layer.amber  { border-color: var(--nutrient-d); background: linear-gradient(135deg, rgba(232,177,75,0.06), var(--soil-2)); }
+
+.token-layer-title {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.token-layer.spore  .token-layer-title { color: var(--spore-l); }
+.token-layer.fungal .token-layer-title { color: var(--fungal-l); }
+.token-layer.amber  .token-layer-title { color: var(--nutrient-l); }
+
+.token-layer-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--mycelium-l);
+  margin-top: 4px;
+  letter-spacing: -0.01em;
+}
+.token-layer-desc {
+  font-size: 12px;
+  color: var(--mycelium);
+  line-height: 1.55;
+  margin-top: 6px;
+  opacity: 0.85;
+}
+
+.phase-grid {
+  margin: 10px 16px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.phase-cell {
+  text-align: left;
+  padding: 12px;
+  border-radius: 6px;
+  border: 0.5px solid var(--rule);
+  background: var(--soil-2);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.phase-cell:hover { border-color: var(--rule-strong); }
+.phase-cell.on {
+  border-color: var(--spore-d);
+  background: linear-gradient(135deg, rgba(107,214,111,0.06), var(--soil-2));
+  box-shadow: 0 0 0 1px var(--spore-d);
+}
+.phase-cell .label-tiny {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+}
+.phase-cell.on .label-tiny { color: var(--spore-l); }
+.phase-cell .pn {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--mycelium-l);
+  margin-top: 4px;
+  letter-spacing: -0.01em;
+}
+.phase-cell .pi {
+  font-size: 11px;
+  color: var(--mycelium);
+  margin-top: 4px;
+  line-height: 1.5;
+  opacity: 0.78;
+}
+
+.reset-link {
+  display: inline-block;
+  margin: 22px 16px 8px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  background: none;
+  border: 0.5px solid var(--rule);
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+.reset-link:hover {
+  color: var(--mycelium-l);
+  border-color: var(--rule-strong);
+}
+
+/* — Footer — */
+.app-footer {
+  margin-top: 40px;
+  padding: 24px 16px 40px;
+  border-top: 0.5px solid var(--rule);
+  text-align: center;
+}
+.app-footer-fine {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 10px;
+}
+
+.page-enter {
+  animation: page-in 0.35s ease-out;
+}
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* — Specimen plate (apothecary) — */
+.specimen-plate {
+  margin: 14px 16px 4px;
+  padding: 18px;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(107,214,111,0.06), transparent 60%),
+    var(--soil-2);
+  border: 0.5px solid var(--rule);
+  border-radius: 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: stretch;
+  position: relative;
+  overflow: hidden;
+}
+.specimen-plate-art {
+  position: relative;
+  aspect-ratio: 1 / 1.1;
+  background:
+    radial-gradient(ellipse at 50% 60%, rgba(107,214,111,0.10), transparent 65%),
+    var(--soil-3);
+  border: 0.5px solid var(--rule);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sp-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(201,184,148,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,184,148,0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+.specimen-plate-art img {
+  position: relative;
+  width: 96%;
+  height: 96%;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 12px 24px rgba(0,0,0,0.55))
+    saturate(0.85)
+    brightness(0.9);
+  mix-blend-mode: screen;
+}
+.sp-crosshair {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  pointer-events: none;
+}
+.sp-crosshair span:first-child {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 0.5px;
+  background: var(--mycelium-d);
+  opacity: 0.5;
+}
+.sp-crosshair span:last-child {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 0.5px;
+  background: var(--mycelium-d);
+  opacity: 0.5;
+}
+.sp-crosshair em {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  color: var(--mycelium-d);
+  white-space: nowrap;
+}
+.sp-ch-tl { top: 10px; left: 10px; }
+.sp-ch-tl em { left: 30px; top: 9px; }
+.sp-ch-br { bottom: 10px; right: 10px; }
+.sp-ch-br em { right: 30px; bottom: 9px; }
+
+.specimen-plate-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 0.5px solid var(--rule);
+  padding-bottom: 8px;
+}
+.sp-row .k {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+}
+.sp-row .v {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--spore-l);
+  font-variant-numeric: tabular-nums;
+}
+.sp-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 30px;
+  letter-spacing: -0.02em;
+  color: var(--mycelium-l);
+  line-height: 0.96;
+  margin-top: 2px;
+}
+.sp-name em {
+  font-style: italic;
+  color: var(--spore-l);
+}
+.sp-grid-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+  margin-top: 4px;
+  border-top: 0.5px solid var(--rule);
+  padding-top: 10px;
+}
+.sp-grid-meta > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.sp-grid-meta .k {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+}
+.sp-grid-meta .v {
+  font-size: 11.5px;
+  color: var(--mycelium-l);
+}
+.sp-blurb {
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--mycelium);
+  opacity: 0.85;
+  margin-top: 4px;
+}
+@media (max-width: 480px) {
+  .specimen-plate {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+  .specimen-plate-art { aspect-ratio: 1 / 0.95; max-height: 280px; }
+  .sp-name { font-size: 26px; }
+}
