@@ -1,0 +1,676 @@
+/* Contribution Tracker — extends styles-living.css */
+
+/* User switcher banner */
+.trk-switcher {
+  position: relative;
+  margin: 12px 16px 0;
+}
+.trk-switcher-btn {
+  width: 100%;
+  background: var(--soil-2);
+  border: 0.5px solid var(--rule-strong);
+  border-radius: 8px;
+  padding: 10px 14px;
+  text-align: left;
+  color: var(--mycelium-l);
+  cursor: pointer;
+  font-family: inherit;
+}
+.trk-switcher-btn:hover { background: var(--soil-3); }
+.trk-switcher-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--nutrient-l);
+  margin-bottom: 6px;
+}
+.trk-switcher-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.trk-switcher-name { flex: 1; min-width: 0; }
+.trk-switcher-name > div:first-child {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--mycelium-l);
+  letter-spacing: -0.01em;
+}
+.trk-switcher-role {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 2px;
+}
+.trk-switcher-caret { color: var(--mycelium-d); font-size: 14px; }
+
+.trk-switcher-menu {
+  position: absolute;
+  inset: 100% 0 auto 0;
+  margin-top: 6px;
+  background: var(--soil-2);
+  border: 0.5px solid var(--rule-strong);
+  border-radius: 10px;
+  padding: 8px;
+  z-index: 50;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+}
+.trk-switcher-hint {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--mycelium-d);
+  padding: 6px 8px 10px;
+  border-bottom: 0.5px solid var(--rule);
+  margin-bottom: 6px;
+}
+.trk-switcher-opt {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--mycelium-l);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+}
+.trk-switcher-opt:hover { background: var(--soil-3); }
+.trk-switcher-opt.on { background: var(--soil-3); outline: 0.5px solid var(--spore-d); }
+.trk-switcher-opt-name { font-size: 13px; color: var(--mycelium-l); }
+.trk-switcher-opt-meta {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 2px;
+}
+
+.trk-role-pill {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 3px 6px;
+  border-radius: 4px;
+  border: 0.5px solid;
+}
+.role-admin   { color: var(--nutrient-l); border-color: var(--nutrient-d); background: rgba(232,177,75,0.1); }
+.role-steward { color: var(--spore-l);    border-color: var(--spore-d);    background: rgba(107,214,111,0.1); }
+.role-forager { color: var(--fungal-l);   border-color: var(--fungal-d);   background: rgba(79,168,224,0.1); }
+.role-member  { color: var(--mycelium-d); border-color: var(--rule);       background: var(--soil-3); }
+
+/* Avatar */
+.trk-avatar {
+  border-radius: 50%;
+  border: 0.5px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+/* Brand-dot fallback (the v1 brand used a separate class) */
+.brand-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--spore);
+  box-shadow: 0 0 8px var(--spore);
+  margin: 0 1px;
+  vertical-align: middle;
+}
+
+/* Page */
+.trk-page { padding-bottom: 80px; }
+
+/* Cards */
+.trk-card {
+  margin: 14px 16px 0;
+  background: var(--soil-2);
+  border: 0.5px solid var(--rule);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.trk-card.review {
+  border-color: var(--rule-strong);
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(232,177,75,0.06), transparent 60%),
+    var(--soil-2);
+}
+.trk-card-head {
+  padding: 16px 18px 4px;
+}
+.trk-card-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  color: var(--mycelium-l);
+  line-height: 1.05;
+  margin-top: 4px;
+}
+.trk-card-title em { color: var(--spore-l); font-style: italic; }
+.trk-card-blurb {
+  font-size: 12px;
+  color: var(--mycelium);
+  opacity: 0.8;
+  line-height: 1.5;
+  margin-top: 8px;
+  max-width: 44ch;
+}
+
+/* Wallet card */
+.trk-wallet {
+  margin: 14px 16px 0;
+  padding: 18px;
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(107,214,111,0.08), transparent 55%),
+    var(--soil-2);
+  border: 0.5px solid var(--rule-strong);
+  border-radius: 12px;
+}
+.trk-wallet-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+.trk-wallet-bal {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 40px;
+  color: var(--spore-l);
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+  margin-top: 4px;
+}
+.trk-wallet-bal span {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 13px;
+  color: var(--mycelium-d);
+  letter-spacing: 0.18em;
+  margin-left: 6px;
+}
+.trk-wallet-sub {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 6px;
+}
+.trk-wallet-side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+.trk-wallet-tier {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.trk-tier-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px currentColor;
+}
+.trk-tier-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--mycelium-l);
+  margin-top: 1px;
+}
+.trk-wallet-rep { text-align: right; }
+.trk-rep-val {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  color: var(--fungal-l);
+  margin-top: 1px;
+  font-variant-numeric: tabular-nums;
+}
+.trk-rep-val span { color: var(--mycelium-d); font-size: 11px; letter-spacing: 0.18em; }
+.trk-wallet-pending {
+  margin-top: 14px;
+  padding: 8px 12px;
+  background: rgba(232,177,75,0.08);
+  border: 0.5px solid var(--nutrient-d);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  color: var(--nutrient-l);
+}
+
+/* Form */
+.trk-form { padding: 12px 18px 18px; }
+.trk-form-row { margin-top: 14px; }
+.trk-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-bottom: 8px;
+}
+.trk-chip-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.trk-chip {
+  padding: 10px 12px;
+  background: var(--soil-3);
+  border: 0.5px solid var(--rule);
+  border-radius: 6px;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--mycelium);
+  transition: all 0.15s;
+}
+.trk-chip:hover { background: var(--soil-4); border-color: var(--mycelium-d); }
+.trk-chip.on {
+  background: rgba(107,214,111,0.08);
+  border-color: var(--spore-d);
+  color: var(--mycelium-l);
+}
+.trk-chip-label {
+  font-size: 13px;
+  color: var(--mycelium-l);
+}
+.trk-chip-meta {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 3px;
+}
+.trk-chip.on .trk-chip-meta { color: var(--spore-l); }
+
+.trk-node-pick {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+}
+.trk-node-opt {
+  padding: 10px 10px;
+  background: var(--soil-3);
+  border: 0.5px solid var(--rule);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: all 0.15s;
+}
+.trk-node-opt:hover { background: var(--soil-4); }
+.trk-node-opt.on {
+  border-color: var(--node-c);
+  background: color-mix(in srgb, var(--node-c) 8%, var(--soil-3));
+}
+.trk-node-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--node-c);
+  box-shadow: 0 0 6px var(--node-c);
+  flex-shrink: 0;
+}
+.trk-node-name {
+  font-size: 12px;
+  color: var(--mycelium-l);
+  line-height: 1.15;
+}
+.trk-node-region {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 2px;
+}
+
+.trk-textarea {
+  width: 100%;
+  background: var(--soil-3);
+  border: 0.5px solid var(--rule);
+  border-radius: 6px;
+  padding: 10px 12px;
+  color: var(--mycelium-l);
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 64px;
+}
+.trk-textarea:focus { outline: none; border-color: var(--spore-d); background: var(--soil-4); }
+.trk-textarea::placeholder { color: var(--mycelium-d); opacity: 0.7; }
+
+.trk-form-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-end;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+.trk-form-summary { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.trk-summary-k {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+}
+.trk-summary-v {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+.trk-arrow { color: var(--mycelium-d); font-size: 11px; }
+
+.trk-pill {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: 3px;
+  border: 0.5px solid var(--rule);
+  background: var(--soil-3);
+  color: var(--mycelium);
+}
+.trk-pill.green { color: var(--spore-l);    border-color: var(--spore-d);    background: rgba(107,214,111,0.08); }
+.trk-pill.amber { color: var(--nutrient-l); border-color: var(--nutrient-d); background: rgba(232,177,75,0.08); }
+.trk-pill.blue  { color: var(--fungal-l);   border-color: var(--fungal-d);   background: rgba(79,168,224,0.08); }
+.trk-pill.mute  { color: var(--mycelium-d); border-color: var(--rule);       background: var(--soil-3); }
+
+/* History */
+.trk-history { padding: 4px 14px 14px; }
+.trk-history-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 4px;
+  border-top: 0.5px solid var(--rule);
+}
+.trk-history-row:first-child { border-top: 0; }
+.trk-history-l { display: flex; gap: 10px; flex: 1; min-width: 0; }
+.trk-history-status-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+.status-approved .trk-history-status-dot { background: var(--spore); box-shadow: 0 0 6px var(--spore); }
+.status-pending  .trk-history-status-dot { background: var(--nutrient); box-shadow: 0 0 6px var(--nutrient); animation: pulse 1.6s infinite; }
+.status-rejected .trk-history-status-dot { background: var(--mycelium-d); }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+.trk-history-label {
+  font-size: 13px;
+  color: var(--mycelium-l);
+}
+.trk-history-at {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+}
+.trk-history-notes {
+  font-size: 12px;
+  color: var(--mycelium);
+  opacity: 0.85;
+  margin-top: 3px;
+  line-height: 1.5;
+}
+.trk-history-reject {
+  font-size: 11px;
+  color: var(--nutrient-l);
+  margin-top: 3px;
+  font-style: italic;
+}
+.trk-history-meta {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 5px;
+}
+.trk-earn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--spore-l);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  align-self: center;
+}
+.trk-earn.pending { color: var(--nutrient-l); opacity: 0.7; }
+.trk-earn.rejected { color: var(--mycelium-d); }
+
+/* Review queue */
+.trk-review-list { padding: 4px 14px 14px; }
+.trk-review-row {
+  border-top: 0.5px solid var(--rule);
+  padding: 14px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.trk-review-row:first-child { border-top: 0; }
+.trk-review-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+.trk-review-who { display: flex; gap: 10px; align-items: center; }
+.trk-review-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--mycelium-l);
+  letter-spacing: -0.01em;
+}
+.trk-review-handle {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--mycelium-d);
+  margin-left: 6px;
+}
+.trk-review-meta {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 2px;
+}
+.trk-review-amounts { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; }
+.trk-review-body {
+  padding: 10px 12px;
+  background: var(--soil-3);
+  border-radius: 6px;
+}
+.trk-review-type { display: flex; align-items: center; gap: 6px; }
+.trk-review-node {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.trk-review-notes {
+  margin-top: 8px;
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--mycelium-l);
+  line-height: 1.55;
+}
+.trk-review-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.trk-review-actions .btn { padding: 8px 14px; font-size: 11px; }
+
+/* Leaderboard */
+.trk-lb-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 0 18px 8px;
+}
+.trk-lb-tab {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  background: var(--soil-3);
+  border: 0.5px solid var(--rule);
+  border-radius: 4px;
+  color: var(--mycelium-d);
+  cursor: pointer;
+}
+.trk-lb-tab:hover { color: var(--mycelium); }
+.trk-lb-tab.on {
+  color: var(--spore-l);
+  border-color: var(--spore-d);
+  background: rgba(107,214,111,0.08);
+}
+.trk-lb-list { padding: 4px 14px 14px; }
+.trk-lb-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 4px;
+  border-top: 0.5px solid var(--rule);
+}
+.trk-lb-row:first-child { border-top: 0; }
+.trk-lb-rank {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--mycelium-d);
+  width: 28px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.trk-lb-row:nth-child(2) .trk-lb-rank { color: var(--spore-l); }  /* :first-child has no border anyway */
+.trk-lb-who { flex: 1; min-width: 0; }
+.trk-lb-name {
+  font-size: 13px;
+  color: var(--mycelium-l);
+}
+.trk-lb-meta {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 2px;
+}
+.trk-lb-stats { text-align: right; }
+.trk-lb-earn {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--spore-l);
+  font-variant-numeric: tabular-nums;
+}
+.trk-lb-earn span { color: var(--mycelium-d); font-size: 10px; letter-spacing: 0.16em; }
+.trk-lb-count {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 2px;
+}
+
+/* Feed */
+.trk-feed { padding: 4px 18px 16px; }
+.trk-feed-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 0.5px solid var(--rule);
+}
+.trk-feed-row:first-child { border-top: 0; }
+.trk-feed-text {
+  flex: 1;
+  font-size: 12px;
+  color: var(--mycelium);
+  line-height: 1.45;
+}
+.trk-feed-text strong {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--mycelium-l);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+.trk-feed-time {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--mycelium-d);
+  letter-spacing: 0.12em;
+}
+.trk-feed-earn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--spore-l);
+  font-variant-numeric: tabular-nums;
+}
+
+.trk-empty {
+  text-align: center;
+  padding: 24px;
+  font-size: 12.5px;
+  color: var(--mycelium-d);
+  font-style: italic;
+}
+
+.trk-reset {
+  display: block;
+  margin: 24px auto 40px;
+  padding: 8px 14px;
+  background: transparent;
+  border: 0.5px solid var(--rule);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  cursor: pointer;
+}
+.trk-reset:hover { color: var(--nutrient-l); border-color: var(--nutrient-d); }
+
+@media (max-width: 480px) {
+  .trk-chip-grid { grid-template-columns: 1fr; }
+  .trk-node-pick { grid-template-columns: 1fr; }
+  .trk-wallet-bal { font-size: 32px; }
+}
