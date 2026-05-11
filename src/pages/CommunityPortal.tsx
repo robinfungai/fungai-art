@@ -23,6 +23,7 @@ const DEFAULT_ADMIN_PW = "fungai2025";
 // ─── Storage ──────────────────────────────────────────────────────────────────
 
 interface Session { branch: Branch; start: number; end: number; sec: number }
+interface Sale    { branch: Branch; amount: number; note: string; ts: number }
 
 const K = {
   pattern:  (n: string) => `fa_com_pattern_${n}`,
@@ -30,6 +31,10 @@ const K = {
   acc:      (n: string, b: string) => `fa_com_acc_${n}_${b.replace(/ /g, "_")}`,
   branch:   (n: string) => `fa_com_branch_${n}`,
   sessions: (n: string) => `fa_com_sessions_${n}`,
+  sales:    (n: string) => `fa_com_sales_${n}`,
+  notes:    (n: string) => `fa_com_notes_${n}`,
+  goal:     (b: string) => `fa_com_goal_${b.replace(/ /g, "_")}`,
+  announce: "fa_com_announcement",
 };
 
 function lsGet<T>(key: string, fallback: T): T {
@@ -44,12 +49,30 @@ function lsSet(key: string, val: unknown) {
 
 function logSession(name: string, session: Session) {
   const existing = lsGet<Session[]>(K.sessions(name), []);
-  // keep latest 200 per member
-  const updated = [session, ...existing].slice(0, 200);
-  lsSet(K.sessions(name), updated);
+  lsSet(K.sessions(name), [session, ...existing].slice(0, 200));
+}
+
+function logSale(name: string, sale: Sale) {
+  const existing = lsGet<Sale[]>(K.sales(name), []);
+  lsSet(K.sales(name), [sale, ...existing].slice(0, 500));
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
+
+function weekStart(offsetWeeks = 0): number {
+  const d = new Date();
+  const day = d.getDay() === 0 ? 7 : d.getDay();
+  d.setDate(d.getDate() - day + 1 + offsetWeeks * 7);
+  d.setHours(0, 0, 0, 0);
+  return d.getTime();
+}
+function weekSec(sessions: Session[], from: number, to: number) {
+  return sessions.filter(s => s.start >= from && s.start < to).reduce((a, s) => a + s.sec, 0);
+}
+function weekSalesTotal(sales: Sale[], from: number, to: number) {
+  return sales.filter(s => s.ts >= from && s.ts < to).reduce((a, s) => a + s.amount, 0);
+}
+function fmtEur(n: number) { return `€${Number.isInteger(n) ? n : n.toFixed(2)}`; }
 
 function fmt(sec: number) {
   const h = Math.floor(sec / 3600);
@@ -314,6 +337,13 @@ function Dashboard({ member, onLogout }: DashboardProps) {
   const [branch, setBranch] = useState<Branch>(
     () => lsGet<Branch>(K.branch(member.name), "Fungai Art")
   );
+  // Sale modal
+  const [showSale, setShowSale] = useState(false);
+  const [saleBranch, setSaleBranch] = useState<Branch>(branch);
+  const [saleAmount, setSaleAmount] = useState("");
+  const [saleNote, setSaleNote] = useState("");
+  // Notes widget
+  const [notes, setNotes] = useState(() => lsGet<string>(K.notes(member.name), ""));
 
   function getActive() {
     return lsGet<{ branch: Branch; start: number } | null>(K.active(member.name), null);
@@ -355,6 +385,13 @@ function Dashboard({ member, onLogout }: DashboardProps) {
     setSessionSec(0);
   }
 
+  function submitSale() {
+    const amt = parseFloat(saleAmount);
+    if (!amt || amt <= 0) return;
+    logSale(member.name, { branch: saleBranch, amount: amt, note: saleNote.trim(), ts: Date.now() });
+    setSaleAmount(""); setSaleNote(""); setShowSale(false);
+  }
+
   function switchBranch(b: Branch) {
     if (b === branch) return;
     if (isRunning) stopTimer();
@@ -367,14 +404,50 @@ function Dashboard({ member, onLogout }: DashboardProps) {
 
   const sessions = lsGet<Session[]>(K.sessions(member.name), []).slice(0, 5);
 
+  const announcement = lsGet<string>(K.announce, "");
+  const thisW = weekStart(0); const lastW = weekStart(-1);
+  const allSessions = lsGet<Session[]>(K.sessions(member.name), []);
+  const allSales    = lsGet<Sale[]>(K.sales(member.name), []);
+  const thisHrs  = weekSec(allSessions, thisW, thisW + 7*86400*1000);
+  const lastHrs  = weekSec(allSessions, lastW, lastW + 7*86400*1000);
+  const thisSales = weekSalesTotal(allSales, thisW, thisW + 7*86400*1000);
+  const lastSales = weekSalesTotal(allSales, lastW, lastW + 7*86400*1000);
+
   return (
     <div style={{ minHeight: "100dvh", background: "#060809", color: "#f0ede5", fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
+      {/* Sale Modal */}
+      {showSale && (
+        <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(4,5,8,.9)", backdropFilter: "blur(12px)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}
+          onClick={() => setShowSale(false)}>
+          <div style={{ background: "#0e1015", border: `1px solid ${member.accent}33`, borderRadius: 24, padding: "28px 24px", width: "100%", maxWidth: 340 }}
+            onClick={e => e.stopPropagation()}>
+            <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 26, color: "#f0ede5", marginBottom: 16 }}>Log a Sale</h3>
+            <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 14 }}>
+              {BRANCHES.map(b => (
+                <button key={b} onClick={() => setSaleBranch(b as Branch)} style={{ padding: "6px 14px", borderRadius: 999, fontSize: 12, cursor: "pointer", border: saleBranch === b ? `1.5px solid ${member.accent}` : "1px solid rgba(255,255,255,0.12)", background: saleBranch === b ? member.glow : "transparent", color: saleBranch === b ? member.accent : "rgba(255,255,255,0.4)", fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>{b}</button>
+              ))}
+            </div>
+            <input type="number" min="0" step="0.01" value={saleAmount} onChange={e => setSaleAmount(e.target.value)} placeholder="Amount (€)" style={{ width: "100%", padding: "12px 14px", borderRadius: 12, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#f0ede5", fontSize: 15, outline: "none", marginBottom: 10, boxSizing: "border-box", fontFamily: "'Space Grotesk', system-ui, sans-serif" }} />
+            <input type="text" value={saleNote} onChange={e => setSaleNote(e.target.value)} placeholder="Note — product, event… (optional)" maxLength={80} style={{ width: "100%", padding: "12px 14px", borderRadius: 12, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#f0ede5", fontSize: 14, outline: "none", marginBottom: 18, boxSizing: "border-box", fontFamily: "'Space Grotesk', system-ui, sans-serif" }} />
+            <button onClick={submitSale} style={{ width: "100%", padding: "13px", borderRadius: 14, background: member.glow, border: `1.5px solid ${member.accent}55`, color: member.accent, fontSize: 15, fontWeight: 600, cursor: "pointer", fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>Save Sale</button>
+          </div>
+        </div>
+      )}
+
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "18px 20px 0" }}>
         <button onClick={() => window.location.href = "/"} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.35)", cursor: "pointer", fontSize: 13 }}>← Engine</button>
         <button onClick={onLogout} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.35)", cursor: "pointer", fontSize: 13 }}>Sign out</button>
       </div>
 
       <div style={{ maxWidth: 480, margin: "0 auto", padding: "28px 20px 60px" }}>
+        {/* Announcement banner */}
+        {announcement && (
+          <div style={{ background: "rgba(252,211,77,0.08)", border: "1px solid rgba(252,211,77,0.25)", borderRadius: 14, padding: "12px 16px", marginBottom: 24, display: "flex", gap: 10, alignItems: "flex-start" }}>
+            <span style={{ fontSize: 16, flexShrink: 0 }}>📣</span>
+            <p style={{ color: "#fcd34d", fontSize: 13, lineHeight: 1.5 }}>{announcement}</p>
+          </div>
+        )}
+
         {/* Greeting */}
         <div style={{ marginBottom: 32 }}>
           <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 44, color: member.accent, marginBottom: 4 }}>Hey, {member.name}</h1>
@@ -422,14 +495,28 @@ function Dashboard({ member, onLogout }: DashboardProps) {
           </button>
         </div>
 
-        {/* Branch totals */}
+        {/* Log Sale button */}
+        <button onClick={() => { setSaleBranch(branch); setShowSale(true); }} style={{ width: "100%", padding: "12px", borderRadius: 14, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.09)", color: "rgba(255,255,255,0.5)", fontSize: 13, cursor: "pointer", fontFamily: "'Space Grotesk', system-ui, sans-serif", marginBottom: 20, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+          <span style={{ fontSize: 15 }}>＋</span> Log a sale
+        </button>
+
+        {/* Branch totals with goal bars */}
         <div style={{ background: "rgba(255,255,255,0.025)", borderRadius: 20, border: "1px solid rgba(255,255,255,0.06)", padding: "4px 0", marginBottom: 20 }}>
           {BRANCHES.map((b, i) => {
             const sec = accSec(b as Branch) + (isRunning && activeBranch === b ? sessionSec : 0);
+            const goalHrs = lsGet<number>(K.goal(b), 0);
+            const progress = goalHrs > 0 ? Math.min(1, sec / (goalHrs * 3600)) : 0;
             return (
-              <div key={b} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "13px 20px", borderBottom: i < BRANCHES.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none" }}>
-                <span style={{ color: "rgba(255,255,255,0.45)", fontSize: 13 }}>{b}</span>
-                <span style={{ fontFamily: "monospace", color: sec > 0 ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.2)", fontSize: 13, fontVariantNumeric: "tabular-nums" }}>{fmt(sec)}</span>
+              <div key={b} style={{ padding: "12px 20px", borderBottom: i < BRANCHES.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: goalHrs > 0 ? 6 : 0 }}>
+                  <span style={{ color: "rgba(255,255,255,0.45)", fontSize: 13 }}>{b}</span>
+                  <span style={{ fontFamily: "monospace", color: sec > 0 ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.2)", fontSize: 13, fontVariantNumeric: "tabular-nums" }}>{fmt(sec)}</span>
+                </div>
+                {goalHrs > 0 && (
+                  <div style={{ height: 3, borderRadius: 99, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}>
+                    <div style={{ height: "100%", borderRadius: 99, background: progress >= 1 ? "#7bd4a1" : member.accent, width: `${progress * 100}%`, transition: "width 0.6s ease" }} />
+                  </div>
+                )}
               </div>
             );
           })}
@@ -453,9 +540,31 @@ function Dashboard({ member, onLogout }: DashboardProps) {
           </div>
         )}
 
-        {/* Widget slot */}
-        <div style={{ padding: "20px", borderRadius: 20, border: "1px dashed rgba(255,255,255,0.06)", textAlign: "center", color: "rgba(255,255,255,0.18)", fontSize: 12, letterSpacing: "0.06em" }}>
-          MORE WIDGETS COMING SOON
+        {/* Weekly summary */}
+        <div style={{ background: "rgba(255,255,255,0.025)", borderRadius: 20, border: "1px solid rgba(255,255,255,0.06)", padding: "18px 20px", marginBottom: 16 }}>
+          <p style={{ color: "rgba(255,255,255,0.25)", fontSize: 11, letterSpacing: "0.1em", marginBottom: 14 }}>THIS WEEK VS LAST WEEK</p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+            <div>
+              <div style={{ color: "rgba(255,255,255,0.35)", fontSize: 10, letterSpacing: "0.08em", marginBottom: 4 }}>HOURS</div>
+              <div style={{ fontSize: 20, fontFamily: "monospace", color: member.accent }}>{fmtDuration(thisHrs)}</div>
+              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>vs {fmtDuration(lastHrs)} last wk</div>
+            </div>
+            <div>
+              <div style={{ color: "rgba(255,255,255,0.35)", fontSize: 10, letterSpacing: "0.08em", marginBottom: 4 }}>SALES</div>
+              <div style={{ fontSize: 20, fontFamily: "monospace", color: thisSales > 0 ? "#7bd4a1" : "rgba(255,255,255,0.3)" }}>{fmtEur(thisSales)}</div>
+              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>vs {fmtEur(lastSales)} last wk</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Personal notes */}
+        <div style={{ marginBottom: 16 }}>
+          <p style={{ color: "rgba(255,255,255,0.25)", fontSize: 11, letterSpacing: "0.1em", marginBottom: 8 }}>MY NOTES</p>
+          <textarea value={notes} onChange={e => { setNotes(e.target.value); lsSet(K.notes(member.name), e.target.value); }}
+            placeholder="Tasks, reminders, what you're working on… only you see this."
+            rows={4}
+            style={{ width: "100%", background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 16, padding: "14px 16px", color: "rgba(255,255,255,0.7)", fontSize: 13, lineHeight: 1.6, resize: "vertical", outline: "none", fontFamily: "'Space Grotesk', system-ui, sans-serif", boxSizing: "border-box" }}
+          />
         </div>
       </div>
     </div>
@@ -468,7 +577,14 @@ function AdminPanel() {
   const [pw, setPw] = useState("");
   const [authed, setAuthed] = useState(false);
   const [pwError, setPwError] = useState(false);
-  const [tab, setTab] = useState<"overview" | "sessions" | "settings">("overview");
+  const [tab, setTab] = useState<"overview" | "sessions" | "sales" | "settings">("overview");
+  const [announcement, setAnnouncement] = useState(() => lsGet<string>(K.announce, ""));
+  const [annoSaved, setAnnoSaved] = useState(false);
+  const [goals, setGoals] = useState<Record<string, number>>(() => {
+    const g: Record<string, number> = {};
+    for (const b of BRANCHES) g[b] = lsGet<number>(K.goal(b), 0);
+    return g;
+  });
   const [newPw, setNewPw] = useState("");
   const [pwSaved, setPwSaved] = useState(false);
   const [tick, setTick] = useState(0);
@@ -519,10 +635,29 @@ function AdminPanel() {
   function getAllSessions(): Array<Session & { member: string; accent: string }> {
     const all: Array<Session & { member: string; accent: string }> = [];
     for (const m of MEMBERS) {
-      const sessions = lsGet<Session[]>(K.sessions(m.name), []);
-      for (const s of sessions) all.push({ ...s, member: m.name, accent: m.accent });
+      for (const s of lsGet<Session[]>(K.sessions(m.name), [])) all.push({ ...s, member: m.name, accent: m.accent });
     }
     return all.sort((a, b) => b.start - a.start);
+  }
+
+  function getAllSales(): Array<Sale & { member: string; accent: string }> {
+    const all: Array<Sale & { member: string; accent: string }> = [];
+    for (const m of MEMBERS) {
+      for (const s of lsGet<Sale[]>(K.sales(m.name), [])) all.push({ ...s, member: m.name, accent: m.accent });
+    }
+    return all.sort((a, b) => b.ts - a.ts);
+  }
+
+  function exportCSV() {
+    const sessions = getAllSessions();
+    const sales = getAllSales();
+    let csv = "TYPE,MEMBER,BRANCH,DATE,DURATION_SEC,AMOUNT_EUR,NOTE\n";
+    for (const s of sessions) csv += `time,${s.member},${s.branch},${fmtDate(s.start)},${s.sec},,\n`;
+    for (const s of sales)    csv += `sale,${s.member},${s.branch},${fmtDate(s.ts)},,${s.amount},"${s.note}"\n`;
+    const a = document.createElement("a");
+    a.href = "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
+    a.download = `fungai-data-${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
   }
 
   function resetMember(name: string) {
@@ -606,7 +741,7 @@ function AdminPanel() {
 
       {/* Tabs */}
       <div style={{ display: "flex", gap: 0, padding: "0 24px", borderBottom: `1px solid ${border}` }}>
-        {(["overview", "sessions", "settings"] as const).map(t => (
+        {(["overview", "sessions", "sales", "settings"] as const).map(t => (
           <button key={t} onClick={() => setTab(t)} style={{
             padding: "14px 20px", background: "none",
             border: "none", borderBottom: `2px solid ${tab === t ? "#7bd4a1" : "transparent"}`,
@@ -629,22 +764,22 @@ function AdminPanel() {
             {/* Grand totals per branch */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 12, marginBottom: 32 }}>
               {BRANCHES.map(b => {
-                let total = 0;
+                let totalSec = 0;
+                let totalRev = 0;
                 for (const m of MEMBERS) {
-                  total += lsGet<number>(K.acc(m.name, b), 0);
+                  totalSec += lsGet<number>(K.acc(m.name, b), 0);
                   const active = lsGet<{ branch: Branch; start: number } | null>(K.active(m.name), null);
-                  if (active?.branch === b) total += Math.floor((Date.now() - active.start) / 1000);
+                  if (active?.branch === b) totalSec += Math.floor((Date.now() - active.start) / 1000);
+                  const sales = lsGet<Sale[]>(K.sales(m.name), []);
+                  totalRev += sales.filter(s => s.branch === b).reduce((a, s) => a + s.amount, 0);
                 }
-                const colors: Record<string, string> = {
-                  "Fungai Art": "#7bd4a1",
-                  "New Tyme Tonics": "#f9a8d4",
-                  "Skogens Nektar": "#c4b5fd",
-                };
+                const colors: Record<string, string> = { "Fungai Art": "#7bd4a1", "New Tyme Tonics": "#f9a8d4", "Skogens Nektar": "#c4b5fd" };
                 return (
                   <div key={b} style={{ background: card, borderRadius: 18, border: `1px solid ${border}`, padding: "20px 18px" }}>
                     <div style={{ color: colors[b], fontSize: 11, letterSpacing: "0.1em", marginBottom: 8 }}>{b.toUpperCase()}</div>
-                    <div style={{ fontSize: 26, fontFamily: "monospace", fontWeight: 300, color: "#f0ede5" }}>{fmt(total)}</div>
-                    <div style={{ color: muted, fontSize: 11, marginTop: 4 }}>team total</div>
+                    <div style={{ fontSize: 26, fontFamily: "monospace", fontWeight: 300, color: "#f0ede5" }}>{fmt(totalSec)}</div>
+                    <div style={{ color: totalRev > 0 ? "#7bd4a1" : muted, fontSize: 14, fontFamily: "monospace", marginTop: 4 }}>{fmtEur(totalRev)}</div>
+                    <div style={{ color: muted, fontSize: 11, marginTop: 2 }}>team total</div>
                   </div>
                 );
               })}
@@ -708,15 +843,13 @@ function AdminPanel() {
         {/* ── SESSIONS TAB ── */}
         {tab === "sessions" && (
           <div>
-            <p style={{ color: muted, fontSize: 14, marginBottom: 20 }}>
-              {allSessions.length} recorded sessions across the team
-            </p>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+              <p style={{ color: muted, fontSize: 14 }}>{allSessions.length} recorded sessions</p>
+              <button onClick={exportCSV} style={{ padding: "8px 16px", borderRadius: 10, background: "rgba(123,212,161,0.1)", border: "1px solid #7bd4a1", color: "#7bd4a1", fontSize: 12, cursor: "pointer", fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>↓ Export CSV</button>
+            </div>
             <div style={{ background: card, borderRadius: 20, border: `1px solid ${border}`, overflow: "hidden" }}>
               {allSessions.slice(0, 50).map((s, i) => (
-                <div key={i} style={{
-                  display: "flex", alignItems: "center", gap: 12, padding: "12px 20px",
-                  borderBottom: i < Math.min(allSessions.length, 50) - 1 ? `1px solid rgba(255,255,255,0.05)` : "none",
-                }}>
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 20px", borderBottom: i < Math.min(allSessions.length, 50) - 1 ? `1px solid rgba(255,255,255,0.05)` : "none" }}>
                   <div style={{ width: 7, height: 7, borderRadius: "50%", background: s.accent, flexShrink: 0 }} />
                   <span style={{ color: s.accent, fontWeight: 600, fontSize: 13, width: 60 }}>{s.member}</span>
                   <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, flex: 1 }}>{s.branch}</span>
@@ -724,18 +857,88 @@ function AdminPanel() {
                   <span style={{ color: "#f0ede5", fontFamily: "monospace", fontSize: 12, width: 60, textAlign: "right" }}>{fmtDuration(s.sec)}</span>
                 </div>
               ))}
-              {allSessions.length === 0 && (
-                <div style={{ padding: "40px 20px", textAlign: "center", color: "rgba(255,255,255,0.25)", fontSize: 13 }}>
-                  No sessions recorded yet
-                </div>
-              )}
+              {allSessions.length === 0 && <div style={{ padding: "40px 20px", textAlign: "center", color: "rgba(255,255,255,0.25)", fontSize: 13 }}>No sessions recorded yet</div>}
             </div>
           </div>
         )}
 
+        {/* ── SALES TAB ── */}
+        {tab === "sales" && (() => {
+          const allSalesData = getAllSales();
+          return (
+            <div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 12, marginBottom: 28 }}>
+                {BRANCHES.map(b => {
+                  const rev = allSalesData.filter(s => s.branch === b).reduce((a, s) => a + s.amount, 0);
+                  const colors: Record<string, string> = { "Fungai Art": "#7bd4a1", "New Tyme Tonics": "#f9a8d4", "Skogens Nektar": "#c4b5fd" };
+                  return (
+                    <div key={b} style={{ background: card, borderRadius: 16, border: `1px solid ${border}`, padding: "16px 14px" }}>
+                      <div style={{ color: colors[b], fontSize: 10, letterSpacing: "0.1em", marginBottom: 6 }}>{b.toUpperCase()}</div>
+                      <div style={{ fontSize: 22, fontFamily: "monospace", color: "#f0ede5" }}>{fmtEur(rev)}</div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div style={{ background: card, borderRadius: 20, border: `1px solid ${border}`, overflow: "hidden" }}>
+                {allSalesData.slice(0, 100).map((s, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "11px 20px", borderBottom: i < Math.min(allSalesData.length, 100) - 1 ? `1px solid rgba(255,255,255,0.05)` : "none" }}>
+                    <div style={{ width: 7, height: 7, borderRadius: "50%", background: s.accent, flexShrink: 0 }} />
+                    <span style={{ color: s.accent, fontWeight: 600, fontSize: 13, width: 56 }}>{s.member}</span>
+                    <span style={{ color: "rgba(255,255,255,0.45)", fontSize: 12, flex: 1 }}>{s.branch}</span>
+                    {s.note && <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 11, flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{s.note}</span>}
+                    <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 11, marginLeft: "auto", flexShrink: 0 }}>{fmtDate(s.ts)}</span>
+                    <span style={{ color: "#7bd4a1", fontFamily: "monospace", fontSize: 13, width: 64, textAlign: "right", flexShrink: 0 }}>{fmtEur(s.amount)}</span>
+                  </div>
+                ))}
+                {allSalesData.length === 0 && <div style={{ padding: "40px 20px", textAlign: "center", color: "rgba(255,255,255,0.25)", fontSize: 13 }}>No sales logged yet</div>}
+              </div>
+            </div>
+          );
+        })()}
+
         {/* ── SETTINGS TAB ── */}
         {tab === "settings" && (
           <div style={{ maxWidth: 480 }}>
+            {/* Announcement */}
+            <div style={{ background: card, borderRadius: 20, border: `1px solid ${border}`, padding: "24px", marginBottom: 20 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 4, color: "#f0ede5" }}>Team Announcement</h3>
+              <p style={{ color: muted, fontSize: 13, marginBottom: 14 }}>Members see this as a banner when they open their portal.</p>
+              <textarea value={announcement} onChange={e => setAnnouncement(e.target.value)} maxLength={280} rows={3}
+                placeholder="e.g. Berlin focus this week — all hands on the lab event Thursday."
+                style={{ width: "100%", padding: "12px 14px", borderRadius: 12, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#f0ede5", fontSize: 14, outline: "none", resize: "none", fontFamily: "'Space Grotesk', system-ui, sans-serif", boxSizing: "border-box", marginBottom: 10 }}
+              />
+              <div style={{ display: "flex", gap: 8 }}>
+                <button onClick={() => { lsSet(K.announce, announcement); setAnnoSaved(true); setTimeout(() => setAnnoSaved(false), 2000); }}
+                  style={{ flex: 1, padding: "10px", borderRadius: 10, background: annoSaved ? "rgba(123,212,161,0.2)" : "rgba(123,212,161,0.1)", border: "1px solid #7bd4a1", color: "#7bd4a1", fontSize: 13, cursor: "pointer", fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
+                  {annoSaved ? "Published ✓" : "Publish"}
+                </button>
+                <button onClick={() => { setAnnouncement(""); lsSet(K.announce, ""); }}
+                  style={{ padding: "10px 16px", borderRadius: 10, background: "transparent", border: "1px solid rgba(255,255,255,0.1)", color: muted, fontSize: 13, cursor: "pointer", fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
+                  Clear
+                </button>
+              </div>
+            </div>
+
+            {/* Branch goals */}
+            <div style={{ background: card, borderRadius: 20, border: `1px solid ${border}`, padding: "24px", marginBottom: 20 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 4, color: "#f0ede5" }}>Weekly Hour Goals</h3>
+              <p style={{ color: muted, fontSize: 13, marginBottom: 14 }}>Members see a progress bar on their timer. Set 0 to disable.</p>
+              {BRANCHES.map(b => (
+                <div key={b} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+                  <span style={{ color: "rgba(255,255,255,0.6)", fontSize: 13 }}>{b}</span>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <input type="number" min="0" max="168" value={goals[b] ?? 0} onChange={e => setGoals(g => ({ ...g, [b]: Number(e.target.value) }))}
+                      style={{ width: 70, padding: "7px 10px", borderRadius: 9, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#f0ede5", fontSize: 14, outline: "none", textAlign: "right", fontFamily: "'Space Grotesk', system-ui, sans-serif" }} />
+                    <span style={{ color: muted, fontSize: 12 }}>hrs</span>
+                  </div>
+                </div>
+              ))}
+              <button onClick={() => { for (const b of BRANCHES) lsSet(K.goal(b), goals[b] ?? 0); setAnnoSaved(true); setTimeout(() => setAnnoSaved(false), 1500); }}
+                style={{ width: "100%", padding: "10px", borderRadius: 10, background: "rgba(123,212,161,0.1)", border: "1px solid #7bd4a1", color: "#7bd4a1", fontSize: 13, cursor: "pointer", fontFamily: "'Space Grotesk', system-ui, sans-serif", marginTop: 4 }}>
+                {annoSaved ? "Saved ✓" : "Save goals"}
+              </button>
+            </div>
+
             {/* Change password */}
             <div style={{ background: card, borderRadius: 20, border: `1px solid ${border}`, padding: "24px", marginBottom: 20 }}>
               <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 6, color: "#f0ede5" }}>Change Admin Password</h3>
@@ -815,21 +1018,25 @@ function MemberGrid({ onSelect }: GridProps) {
           The mycelial network of Fungai Art. Select your name and draw your pattern to enter your portal.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: 14 }}>
-          {MEMBERS.map(m => (
+          {MEMBERS.map(m => {
+            const isLive = lsGet<{ branch: Branch; start: number } | null>(K.active(m.name), null) !== null;
+            return (
             <button
               key={m.name}
               onClick={() => onSelect(m)}
-              style={{ background: m.glow, border: `1.5px solid ${m.accent}33`, borderRadius: 20, padding: "28px 16px", cursor: "pointer", transition: "all 0.22s ease", display: "flex", flexDirection: "column", alignItems: "center", gap: 10, fontFamily: "'Space Grotesk', system-ui, sans-serif" }}
+              style={{ background: m.glow, border: `1.5px solid ${m.accent}33`, borderRadius: 20, padding: "28px 16px", cursor: "pointer", transition: "all 0.22s ease", display: "flex", flexDirection: "column", alignItems: "center", gap: 10, fontFamily: "'Space Grotesk', system-ui, sans-serif", position: "relative" }}
               onMouseEnter={e => { const el = e.currentTarget; el.style.border = `1.5px solid ${m.accent}88`; el.style.transform = "translateY(-3px)"; el.style.boxShadow = `0 12px 32px ${m.glow}`; }}
               onMouseLeave={e => { const el = e.currentTarget; el.style.border = `1.5px solid ${m.accent}33`; el.style.transform = "translateY(0)"; el.style.boxShadow = "none"; }}
             >
+              {isLive && <div style={{ position: "absolute", top: 12, right: 12, width: 8, height: 8, borderRadius: "50%", background: m.accent, animation: "cp-pulse 1.5s ease-in-out infinite" }} />}
               <div style={{ width: 48, height: 48, borderRadius: "50%", background: `linear-gradient(135deg, ${m.accent}33, ${m.accent}11)`, border: `1.5px solid ${m.accent}55`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, fontFamily: "'Cormorant Garamond', serif", color: m.accent, fontWeight: 600 }}>
                 {m.name[0]}
               </div>
               <span style={{ color: "#f0ede5", fontSize: 17, fontWeight: 600 }}>{m.name}</span>
-              <span style={{ color: m.accent, fontSize: 10, letterSpacing: "0.08em", opacity: 0.6 }}>HYPHAE</span>
+              <span style={{ color: m.accent, fontSize: 10, letterSpacing: "0.08em", opacity: 0.6 }}>{isLive ? "● IN SESSION" : "HYPHAE"}</span>
             </button>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
