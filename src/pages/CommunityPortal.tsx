@@ -16,13 +16,26 @@ type Member = typeof MEMBERS[number];
 const BRANCHES = ["Fungai Art", "New Tyme Tonics", "Skogens Nektar"] as const;
 type Branch = typeof BRANCHES[number];
 
+const CONTRIB_TYPES = [
+  { id: "kitchen",   label: "Kitchen",   icon: "🍽",  desc: "Food prep & meals"          },
+  { id: "foraging",  label: "Foraging",  icon: "🌿",  desc: "Wild harvest & species ID"  },
+  { id: "content",   label: "Content",   icon: "◈",   desc: "Photo, video, copy"         },
+  { id: "events",    label: "Events",    icon: "✦",   desc: "Setup & facilitation"        },
+  { id: "lab",       label: "Lab",       icon: "⚗",   desc: "Extraction & tinctures"     },
+  { id: "workshop",  label: "Workshop",  icon: "◉",   desc: "Teaching & demos"           },
+  { id: "admin",     label: "Admin",     icon: "○",   desc: "Planning & logistics"       },
+  { id: "sales_rep", label: "Sales",     icon: "◎",   desc: "Customer & market"          },
+  { id: "other",     label: "Other",     icon: "•",   desc: "Anything else"              },
+] as const;
+type ContribId = typeof CONTRIB_TYPES[number]["id"];
+
 // Admin password stored in localStorage; default is revealed to Robin
 const ADMIN_PW_KEY = "fa_admin_password";
 const DEFAULT_ADMIN_PW = "fungai2025";
 
 // ─── Storage ──────────────────────────────────────────────────────────────────
 
-interface Session { branch: Branch; start: number; end: number; sec: number }
+interface Session { branch: Branch; start: number; end: number; sec: number; ct?: ContribId }
 interface Sale    { branch: Branch; amount: number; note: string; ts: number }
 
 const K = {
@@ -367,8 +380,14 @@ function Dashboard({ member, onLogout }: DashboardProps) {
 
   function accSec(b: Branch) { return lsGet<number>(K.acc(member.name, b), 0); }
 
-  function startTimer() {
-    lsSet(K.active(member.name), { branch, start: Date.now() });
+  function ctSec(ctId: ContribId): number {
+    return lsGet<Session[]>(K.sessions(member.name), [])
+      .filter(s => s.ct === ctId)
+      .reduce((a, s) => a + s.sec, 0);
+  }
+
+  function startTimer(ctId: ContribId) {
+    lsSet(K.active(member.name), { branch, ct: ctId, start: Date.now() });
     setIsRunning(true);
   }
 
@@ -378,11 +397,18 @@ function Dashboard({ member, onLogout }: DashboardProps) {
       const end = Date.now();
       const sec = Math.floor((end - a.start) / 1000);
       lsSet(K.acc(member.name, a.branch), accSec(a.branch as Branch) + sec);
-      logSession(member.name, { branch: a.branch as Branch, start: a.start, end, sec });
+      logSession(member.name, { branch: a.branch as Branch, ct: a.ct as ContribId | undefined, start: a.start, end, sec });
       lsSet(K.active(member.name), null);
     }
     setIsRunning(false);
     setSessionSec(0);
+  }
+
+  function toggleContrib(ctId: ContribId) {
+    const active = getActive();
+    if (active && active.ct === ctId) { stopTimer(); return; }
+    if (active) stopTimer();
+    startTimer(ctId);
   }
 
   function submitSale() {
@@ -399,7 +425,9 @@ function Dashboard({ member, onLogout }: DashboardProps) {
     lsSet(K.branch(member.name), b);
   }
 
-  const activeBranch: Branch = (getActive()?.branch as Branch) ?? branch;
+  const activeRec = getActive();
+  const activeCt = activeRec?.ct as ContribId | undefined;
+  const activeBranch: Branch = (activeRec?.branch as Branch) ?? branch;
   const totalSec = accSec(activeBranch) + (isRunning && activeBranch === branch ? sessionSec : 0);
 
   const sessions = lsGet<Session[]>(K.sessions(member.name), []).slice(0, 5);
@@ -448,73 +476,95 @@ function Dashboard({ member, onLogout }: DashboardProps) {
           </div>
         )}
 
-        {/* Greeting */}
-        <div style={{ marginBottom: 32 }}>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 44, color: member.accent, marginBottom: 4 }}>Hey, {member.name}</h1>
-          <p style={{ color: "rgba(255,255,255,0.32)", fontSize: 14 }}>Track your time across branches</p>
+        {/* ── Personal greeting ── */}
+        <div style={{ marginBottom: 28 }}>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 4 }}>
+            <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 42, color: member.accent, lineHeight: 1 }}>{member.name}</h1>
+            {isRunning && (
+              <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                <div style={{ width: 7, height: 7, borderRadius: "50%", background: member.accent, animation: "cp-pulse 1.5s ease-in-out infinite" }} />
+                <span style={{ color: member.accent, fontSize: 11, fontWeight: 600, letterSpacing: "0.1em" }}>LIVE</span>
+              </div>
+            )}
+          </div>
+          <p style={{ color: "rgba(255,255,255,0.28)", fontSize: 13 }}>
+            {isRunning
+              ? `${CONTRIB_TYPES.find(c => c.id === activeCt)?.label ?? "Working"} · ${branch}`
+              : "Select a contribution to start timing"}
+          </p>
         </div>
 
-        {/* Branch pills */}
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 28 }}>
+        {/* ── Branch selector ── */}
+        <div style={{ display: "flex", gap: 7, flexWrap: "wrap", marginBottom: 24 }}>
           {BRANCHES.map(b => (
             <button key={b} onClick={() => switchBranch(b as Branch)} style={{
-              padding: "9px 18px", borderRadius: 999,
-              border: b === branch ? `1.5px solid ${member.accent}` : "1.5px solid rgba(255,255,255,0.1)",
-              background: b === branch ? member.glow : "rgba(255,255,255,0.03)",
-              color: b === branch ? member.accent : "rgba(255,255,255,0.45)",
-              fontSize: 13, fontWeight: b === branch ? 600 : 400,
-              cursor: "pointer", transition: "all 0.2s ease",
+              padding: "7px 16px", borderRadius: 999, fontSize: 12,
+              border: b === branch ? `1.5px solid ${member.accent}` : "1.5px solid rgba(255,255,255,0.08)",
+              background: b === branch ? member.glow : "transparent",
+              color: b === branch ? member.accent : "rgba(255,255,255,0.38)",
+              fontWeight: b === branch ? 600 : 400, cursor: "pointer",
               fontFamily: "'Space Grotesk', system-ui, sans-serif",
-            }}>
-              {b}
-            </button>
+            }}>{b}</button>
           ))}
         </div>
 
-        {/* Timer card */}
-        <div style={{ background: "rgba(255,255,255,0.035)", borderRadius: 28, border: "1px solid rgba(255,255,255,0.07)", padding: "44px 28px 40px", textAlign: "center", position: "relative", overflow: "hidden", marginBottom: 20 }}>
-          <div style={{ position: "absolute", top: -60, left: "50%", transform: "translateX(-50%)", width: 240, height: 240, borderRadius: "50%", background: member.glow, filter: "blur(70px)", opacity: isRunning ? 1 : 0.35, transition: "opacity 1.2s ease", pointerEvents: "none" }} />
-          <div style={{ position: "absolute", top: 20, right: 20, display: "flex", alignItems: "center", gap: 6, opacity: isRunning ? 1 : 0, transition: "opacity 0.3s" }}>
-            <div style={{ width: 7, height: 7, borderRadius: "50%", background: member.accent, animation: "cp-pulse 1.5s ease-in-out infinite" }} />
-            <span style={{ color: member.accent, fontSize: 11, fontWeight: 600, letterSpacing: "0.08em" }}>REC</span>
+        {/* ── Active session banner (when running) ── */}
+        {isRunning && activeCt && (
+          <div style={{ background: member.glow, border: `1px solid ${member.accent}44`, borderRadius: 20, padding: "18px 20px", marginBottom: 18, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div>
+              <div style={{ color: member.accent, fontSize: 11, letterSpacing: "0.1em", marginBottom: 3 }}>NOW TIMING</div>
+              <div style={{ color: "#f0ede5", fontSize: 22, fontFamily: "monospace", fontWeight: 300, fontVariantNumeric: "tabular-nums" }}>{fmt(sessionSec)}</div>
+              <div style={{ color: "rgba(255,255,255,0.45)", fontSize: 12, marginTop: 2 }}>
+                {CONTRIB_TYPES.find(c => c.id === activeCt)?.label} · {activeBranch}
+              </div>
+            </div>
+            <button onClick={stopTimer} style={{ padding: "10px 20px", borderRadius: 999, background: "rgba(248,113,113,0.12)", border: "1.5px solid rgba(248,113,113,0.4)", color: "#f87171", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>
+              ■ Stop
+            </button>
           </div>
-          <div style={{ fontSize: "clamp(48px, 14vw, 72px)", fontWeight: 300, letterSpacing: "0.04em", color: "#f0ede5", fontVariantNumeric: "tabular-nums", fontFamily: "'Space Grotesk', monospace", marginBottom: 10, position: "relative" }}>
-            {fmt(totalSec)}
-          </div>
-          <div style={{ color: member.accent, fontSize: 13, opacity: 0.65, marginBottom: 36 }}>{branch}</div>
-          <button onClick={isRunning ? stopTimer : startTimer} style={{
-            display: "inline-flex", alignItems: "center", gap: 10, padding: "15px 40px", borderRadius: 999,
-            background: isRunning ? "rgba(248,113,113,0.1)" : member.glow,
-            border: isRunning ? "1.5px solid rgba(248,113,113,0.4)" : `1.5px solid ${member.accent}55`,
-            color: isRunning ? "#f87171" : member.accent,
-            fontSize: 17, fontWeight: 600, cursor: "pointer",
-            fontFamily: "'Space Grotesk', system-ui, sans-serif", transition: "all 0.2s ease",
-          }}>
-            <span style={{ fontSize: 14 }}>{isRunning ? "■" : "▶"}</span>
-            {isRunning ? "Stop" : "Start"}
-          </button>
+        )}
+
+        {/* ── Contribution type grid ── */}
+        <p style={{ color: "rgba(255,255,255,0.22)", fontSize: 10, letterSpacing: "0.12em", marginBottom: 12 }}>WHAT ARE YOU WORKING ON?</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 9, marginBottom: 24 }}>
+          {CONTRIB_TYPES.map(ct => {
+            const isActive = isRunning && activeCt === ct.id;
+            const logged = ctSec(ct.id);
+            return (
+              <button key={ct.id} onClick={() => toggleContrib(ct.id)} style={{
+                borderRadius: 16, padding: "14px 10px 12px",
+                background: isActive ? member.glow : "rgba(255,255,255,0.03)",
+                border: isActive ? `1.5px solid ${member.accent}` : "1px solid rgba(255,255,255,0.07)",
+                cursor: "pointer", textAlign: "center",
+                transition: "all 0.18s ease", fontFamily: "'Space Grotesk', system-ui, sans-serif",
+                display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
+                boxShadow: isActive ? `0 0 20px ${member.glow}` : "none",
+              }}>
+                <span style={{ fontSize: 20, lineHeight: 1 }}>{ct.icon}</span>
+                <span style={{ color: isActive ? member.accent : "rgba(255,255,255,0.75)", fontSize: 12, fontWeight: isActive ? 600 : 400 }}>{ct.label}</span>
+                <span style={{ color: logged > 0 ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.15)", fontSize: 10, fontFamily: "monospace" }}>
+                  {logged > 0 ? fmtDuration(logged + (isActive ? sessionSec : 0)) : "—"}
+                </span>
+              </button>
+            );
+          })}
         </div>
 
-        {/* Log Sale button */}
-        <button onClick={() => { setSaleBranch(branch); setShowSale(true); }} style={{ width: "100%", padding: "12px", borderRadius: 14, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.09)", color: "rgba(255,255,255,0.5)", fontSize: 13, cursor: "pointer", fontFamily: "'Space Grotesk', system-ui, sans-serif", marginBottom: 20, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-          <span style={{ fontSize: 15 }}>＋</span> Log a sale
-        </button>
-
-        {/* Branch totals with goal bars */}
-        <div style={{ background: "rgba(255,255,255,0.025)", borderRadius: 20, border: "1px solid rgba(255,255,255,0.06)", padding: "4px 0", marginBottom: 20 }}>
+        {/* ── Branch totals + goal progress ── */}
+        <div style={{ background: "rgba(255,255,255,0.025)", borderRadius: 18, border: "1px solid rgba(255,255,255,0.06)", padding: "4px 0", marginBottom: 18 }}>
           {BRANCHES.map((b, i) => {
             const sec = accSec(b as Branch) + (isRunning && activeBranch === b ? sessionSec : 0);
             const goalHrs = lsGet<number>(K.goal(b), 0);
             const progress = goalHrs > 0 ? Math.min(1, sec / (goalHrs * 3600)) : 0;
             return (
-              <div key={b} style={{ padding: "12px 20px", borderBottom: i < BRANCHES.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: goalHrs > 0 ? 6 : 0 }}>
-                  <span style={{ color: "rgba(255,255,255,0.45)", fontSize: 13 }}>{b}</span>
-                  <span style={{ fontFamily: "monospace", color: sec > 0 ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.2)", fontSize: 13, fontVariantNumeric: "tabular-nums" }}>{fmt(sec)}</span>
+              <div key={b} style={{ padding: "11px 18px", borderBottom: i < BRANCHES.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: goalHrs > 0 ? 5 : 0 }}>
+                  <span style={{ color: "rgba(255,255,255,0.4)", fontSize: 12 }}>{b}</span>
+                  <span style={{ fontFamily: "monospace", color: sec > 0 ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.18)", fontSize: 12 }}>{fmt(sec)}</span>
                 </div>
                 {goalHrs > 0 && (
-                  <div style={{ height: 3, borderRadius: 99, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}>
-                    <div style={{ height: "100%", borderRadius: 99, background: progress >= 1 ? "#7bd4a1" : member.accent, width: `${progress * 100}%`, transition: "width 0.6s ease" }} />
+                  <div style={{ height: 2, borderRadius: 99, background: "rgba(255,255,255,0.06)", overflow: "hidden" }}>
+                    <div style={{ height: "100%", background: progress >= 1 ? "#7bd4a1" : member.accent, width: `${progress * 100}%`, transition: "width 0.6s" }} />
                   </div>
                 )}
               </div>
@@ -522,48 +572,57 @@ function Dashboard({ member, onLogout }: DashboardProps) {
           })}
         </div>
 
-        {/* Recent sessions */}
-        {sessions.length > 0 && (
-          <div style={{ marginBottom: 20 }}>
-            <p style={{ color: "rgba(255,255,255,0.25)", fontSize: 11, letterSpacing: "0.1em", marginBottom: 10 }}>RECENT SESSIONS</p>
-            <div style={{ background: "rgba(255,255,255,0.02)", borderRadius: 16, border: "1px solid rgba(255,255,255,0.05)", padding: "2px 0" }}>
-              {sessions.map((s, i) => (
-                <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 16px", borderBottom: i < sessions.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
-                  <div>
-                    <span style={{ color: "rgba(255,255,255,0.6)", fontSize: 12 }}>{s.branch}</span>
-                    <span style={{ color: "rgba(255,255,255,0.25)", fontSize: 11, marginLeft: 8 }}>{fmtDate(s.start)}</span>
-                  </div>
-                  <span style={{ color: member.accent, fontSize: 12, fontFamily: "monospace" }}>{fmtDuration(s.sec)}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Weekly summary */}
-        <div style={{ background: "rgba(255,255,255,0.025)", borderRadius: 20, border: "1px solid rgba(255,255,255,0.06)", padding: "18px 20px", marginBottom: 16 }}>
-          <p style={{ color: "rgba(255,255,255,0.25)", fontSize: 11, letterSpacing: "0.1em", marginBottom: 14 }}>THIS WEEK VS LAST WEEK</p>
+        {/* ── Weekly summary ── */}
+        <div style={{ background: "rgba(255,255,255,0.025)", borderRadius: 18, border: "1px solid rgba(255,255,255,0.06)", padding: "16px 18px", marginBottom: 18 }}>
+          <p style={{ color: "rgba(255,255,255,0.22)", fontSize: 10, letterSpacing: "0.12em", marginBottom: 12 }}>THIS WEEK VS LAST</p>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             <div>
-              <div style={{ color: "rgba(255,255,255,0.35)", fontSize: 10, letterSpacing: "0.08em", marginBottom: 4 }}>HOURS</div>
-              <div style={{ fontSize: 20, fontFamily: "monospace", color: member.accent }}>{fmtDuration(thisHrs)}</div>
-              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>vs {fmtDuration(lastHrs)} last wk</div>
+              <div style={{ color: member.accent, fontSize: 18, fontFamily: "monospace" }}>{fmtDuration(thisHrs)}</div>
+              <div style={{ color: "rgba(255,255,255,0.28)", fontSize: 11, marginTop: 2 }}>vs {fmtDuration(lastHrs)} last wk</div>
             </div>
             <div>
-              <div style={{ color: "rgba(255,255,255,0.35)", fontSize: 10, letterSpacing: "0.08em", marginBottom: 4 }}>SALES</div>
-              <div style={{ fontSize: 20, fontFamily: "monospace", color: thisSales > 0 ? "#7bd4a1" : "rgba(255,255,255,0.3)" }}>{fmtEur(thisSales)}</div>
-              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>vs {fmtEur(lastSales)} last wk</div>
+              <div style={{ color: thisSales > 0 ? "#7bd4a1" : "rgba(255,255,255,0.28)", fontSize: 18, fontFamily: "monospace" }}>{fmtEur(thisSales)}</div>
+              <div style={{ color: "rgba(255,255,255,0.28)", fontSize: 11, marginTop: 2 }}>vs {fmtEur(lastSales)} last wk</div>
             </div>
           </div>
         </div>
 
-        {/* Personal notes */}
+        {/* ── Log a sale ── */}
+        <button onClick={() => { setSaleBranch(branch); setShowSale(true); }} style={{ width: "100%", padding: "11px", borderRadius: 14, background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.4)", fontSize: 12, cursor: "pointer", fontFamily: "'Space Grotesk', system-ui, sans-serif", marginBottom: 18, display: "flex", alignItems: "center", justifyContent: "center", gap: 7 }}>
+          <span style={{ fontSize: 14 }}>＋</span> Log a sale
+        </button>
+
+        {/* ── Recent sessions ── */}
+        {sessions.length > 0 && (
+          <div style={{ marginBottom: 18 }}>
+            <p style={{ color: "rgba(255,255,255,0.22)", fontSize: 10, letterSpacing: "0.12em", marginBottom: 10 }}>RECENT</p>
+            <div style={{ background: "rgba(255,255,255,0.02)", borderRadius: 16, border: "1px solid rgba(255,255,255,0.05)", overflow: "hidden" }}>
+              {sessions.map((s, i) => {
+                const ctInfo = CONTRIB_TYPES.find(c => c.id === s.ct);
+                return (
+                  <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 14px", borderBottom: i < sessions.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      {ctInfo && <span style={{ fontSize: 14, opacity: 0.7 }}>{ctInfo.icon}</span>}
+                      <div>
+                        <span style={{ color: "rgba(255,255,255,0.55)", fontSize: 12 }}>{ctInfo?.label ?? s.branch}</span>
+                        <span style={{ color: "rgba(255,255,255,0.22)", fontSize: 11, marginLeft: 7 }}>{fmtDate(s.start)}</span>
+                      </div>
+                    </div>
+                    <span style={{ color: member.accent, fontSize: 12, fontFamily: "monospace" }}>{fmtDuration(s.sec)}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ── Personal notes ── */}
         <div style={{ marginBottom: 16 }}>
-          <p style={{ color: "rgba(255,255,255,0.25)", fontSize: 11, letterSpacing: "0.1em", marginBottom: 8 }}>MY NOTES</p>
+          <p style={{ color: "rgba(255,255,255,0.22)", fontSize: 10, letterSpacing: "0.12em", marginBottom: 8 }}>MY NOTES</p>
           <textarea value={notes} onChange={e => { setNotes(e.target.value); lsSet(K.notes(member.name), e.target.value); }}
-            placeholder="Tasks, reminders, what you're working on… only you see this."
+            placeholder="Tasks, reminders, what you're working on…"
             rows={4}
-            style={{ width: "100%", background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 16, padding: "14px 16px", color: "rgba(255,255,255,0.7)", fontSize: 13, lineHeight: 1.6, resize: "vertical", outline: "none", fontFamily: "'Space Grotesk', system-ui, sans-serif", boxSizing: "border-box" }}
+            style={{ width: "100%", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 14, padding: "12px 14px", color: "rgba(255,255,255,0.65)", fontSize: 13, lineHeight: 1.6, resize: "vertical", outline: "none", fontFamily: "'Space Grotesk', system-ui, sans-serif", boxSizing: "border-box" }}
           />
         </div>
       </div>
@@ -849,12 +908,13 @@ function AdminPanel() {
             </div>
             <div style={{ background: card, borderRadius: 20, border: `1px solid ${border}`, overflow: "hidden" }}>
               {allSessions.slice(0, 50).map((s, i) => (
-                <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 20px", borderBottom: i < Math.min(allSessions.length, 50) - 1 ? `1px solid rgba(255,255,255,0.05)` : "none" }}>
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: "11px 20px", borderBottom: i < Math.min(allSessions.length, 50) - 1 ? `1px solid rgba(255,255,255,0.05)` : "none" }}>
                   <div style={{ width: 7, height: 7, borderRadius: "50%", background: s.accent, flexShrink: 0 }} />
-                  <span style={{ color: s.accent, fontWeight: 600, fontSize: 13, width: 60 }}>{s.member}</span>
-                  <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, flex: 1 }}>{s.branch}</span>
-                  <span style={{ color: "rgba(255,255,255,0.35)", fontSize: 11 }}>{fmtDate(s.start)}</span>
-                  <span style={{ color: "#f0ede5", fontFamily: "monospace", fontSize: 12, width: 60, textAlign: "right" }}>{fmtDuration(s.sec)}</span>
+                  <span style={{ color: s.accent, fontWeight: 600, fontSize: 13, width: 56, flexShrink: 0 }}>{s.member}</span>
+                  {s.ct && <span style={{ fontSize: 13, opacity: 0.6 }}>{CONTRIB_TYPES.find(c => c.id === s.ct)?.icon}</span>}
+                  <span style={{ color: "rgba(255,255,255,0.45)", fontSize: 12, flex: 1 }}>{s.ct ? CONTRIB_TYPES.find(c => c.id === s.ct)?.label : s.branch}</span>
+                  <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 11, flexShrink: 0 }}>{fmtDate(s.start)}</span>
+                  <span style={{ color: "#f0ede5", fontFamily: "monospace", fontSize: 12, width: 56, textAlign: "right", flexShrink: 0 }}>{fmtDuration(s.sec)}</span>
                 </div>
               ))}
               {allSessions.length === 0 && <div style={{ padding: "40px 20px", textAlign: "center", color: "rgba(255,255,255,0.25)", fontSize: 13 }}>No sessions recorded yet</div>}
