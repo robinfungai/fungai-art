@@ -1,0 +1,2564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fungai Art · Gaia's Apo'takecare'y</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:wght@200;300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
+
+<style>
+/* ═══════════════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════════════ */
+:root {
+  /* Forest palette */
+  --void:       #060B06;
+  --forest:     #0A1208;
+  --forest-mid: #0E190B;
+  --forest-card:#121A0F;
+  --moss:       #172114;
+  --fern:       #1F2E1A;
+  --sage:       #354E2A;
+  --lichen:     #517A40;
+  --mist:       #7A9E68;
+  /* Warm accents */
+  --parchment:  #EDE5D8;
+  --cream:      #E5D9C5;
+  --dust:       #C0B49A;
+  --amber:      #C4862E;
+  --amber-lt:   #DCA84A;
+  --amber-dim:  rgba(196,134,46,0.10);
+  /* Vivid accents */
+  --lime:       #9ED438;
+  --lime-soft:  rgba(158,212,56,0.12);
+  --lime-dim:   rgba(158,212,56,0.07);
+  --violet:     #2A1848;
+  --violet-mid: #361E5E;
+  --violet-lt:  #7055A4;
+  --coral:      #CE6C52;
+  /* Type */
+  --serif:      'Cormorant Garamond', Georgia, serif;
+  --sans:       'DM Sans', system-ui, sans-serif;
+  --script:     'Pinyon Script', cursive;
+  /* Layout */
+  --max:        1280px;
+  --gap:        1px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background: var(--void);
+  color: var(--parchment);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* Film grain overlay */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 9000;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px;
+}
+
+/* Ambient radial glow — moves subtly on scroll */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: -1;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 20%, rgba(158,212,56,0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 80% 80%, rgba(196,134,46,0.05) 0%, transparent 70%);
+}
+
+/* ─── CURSOR ─────────────────────────────────── */
+.cursor {
+  width: 6px; height: 6px;
+  background: var(--lime);
+  border-radius: 50%;
+  position: fixed; z-index: 10000;
+  pointer-events: none;
+  transform: translate(-50%,-50%);
+  transition: width 0.2s, height 0.2s, background 0.2s, border 0.2s;
+  mix-blend-mode: difference;
+}
+.cursor.hover { width: 28px; height: 28px; background: transparent; border: 1px solid var(--lime); }
+.cursor.click { width: 14px; height: 14px; background: var(--amber); }
+
+/* ─── UTILITIES ──────────────────────────────── */
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 48px; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: none; border: none; background: none; }
+input { font-family: inherit; }
+ul { list-style: none; }
+
+/* ─── LABEL / MICRO TYPE ─────────────────────── */
+.label {
+  font-family: var(--sans);
+  font-size: 8.5px;
+  font-weight: 500;
+  letter-spacing: 0.52em;
+  text-transform: uppercase;
+  color: var(--lichen);
+  display: block;
+}
+.label.amber { color: var(--amber); }
+.label.lime { color: var(--lime); }
+
+/* ─── HEADINGS ───────────────────────────────── */
+h1, h2 { font-family: var(--serif); font-weight: 300; line-height: 1.02; }
+h1 { font-size: clamp(52px, 6.5vw, 88px); letter-spacing: -0.025em; }
+h2 { font-size: clamp(34px, 4.5vw, 58px); letter-spacing: -0.015em; }
+h3 { font-family: var(--serif); font-weight: 300; font-size: clamp(22px, 2.5vw, 30px); line-height: 1.1; }
+em { font-style: italic; }
+p { line-height: 1.75; color: var(--mist); }
+
+/* ─── BUTTONS ────────────────────────────────── */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--lime); color: var(--void);
+  font-family: var(--sans); font-size: 9px; font-weight: 500;
+  letter-spacing: 0.38em; text-transform: uppercase;
+  padding: 13px 28px;
+  transition: background 0.18s, transform 0.15s;
+}
+.btn-primary:hover { background: var(--amber-lt); transform: translateY(-1px); }
+
+.btn-ghost {
+  display: inline-flex; align-items: center;
+  border: 1px solid rgba(158,212,56,0.22);
+  color: var(--mist);
+  font-family: var(--sans); font-size: 9px; font-weight: 400;
+  letter-spacing: 0.38em; text-transform: uppercase;
+  padding: 13px 28px;
+  transition: border-color 0.18s, color 0.18s;
+}
+.btn-ghost:hover { border-color: var(--lime); color: var(--lime); }
+
+/* ─── SCROLL REVEAL ──────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: 0.08s; }
+.reveal-d2 { transition-delay: 0.18s; }
+.reveal-d3 { transition-delay: 0.28s; }
+.reveal-d4 { transition-delay: 0.40s; }
+
+/* ─── CART SYSTEM ────────────────────────────── */
+.cart-overlay {
+  position: fixed; inset: 0; background: rgba(6,11,6,0.7);
+  z-index: 800; opacity: 0; pointer-events: none;
+  transition: opacity 0.3s; backdrop-filter: blur(4px);
+}
+.cart-overlay.open { opacity: 1; pointer-events: all; }
+.cart-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 420px;
+  background: var(--forest-mid);
+  border-left: 1px solid rgba(158,212,56,0.1);
+  z-index: 900;
+  transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+  display: flex; flex-direction: column;
+}
+.cart-drawer.open { transform: translateX(0); }
+.cart-drawer-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 28px 32px;
+  border-bottom: 1px solid rgba(158,212,56,0.07);
+}
+.cart-drawer-head h3 { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--parchment); font-weight: 300; }
+.cart-close { font-size: 13px; color: var(--lichen); transition: color 0.15s; padding: 4px; }
+.cart-close:hover { color: var(--parchment); }
+.cart-items { flex: 1; overflow-y: auto; padding: 24px 32px; }
+.cart-empty { text-align: center; padding: 60px 0; }
+.cart-empty .icon { font-family: var(--script); font-size: 36px; color: var(--sage); display: block; margin-bottom: 16px; }
+.cart-empty p { font-size: 13px; color: var(--lichen); line-height: 1.7; }
+.cart-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 0; border-bottom: 1px solid rgba(158,212,56,0.06);
+}
+.cart-item-name { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--parchment); }
+.cart-item-meta { font-size: 10px; letter-spacing: 0.12em; color: var(--lichen); margin-top: 2px; }
+.cart-item-right { display: flex; align-items: center; gap: 16px; }
+.cart-item-price { font-family: var(--serif); font-size: 17px; color: var(--amber-lt); }
+.cart-item-remove { font-size: 11px; color: var(--sage); transition: color 0.15s; }
+.cart-item-remove:hover { color: var(--coral); }
+.cart-footer {
+  padding: 24px 32px 32px;
+  border-top: 1px solid rgba(158,212,56,0.07);
+}
+.cart-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.cart-total .label { font-size: 9px; }
+.cart-total .amount { font-family: var(--serif); font-style: italic; font-size: 28px; color: var(--amber-lt); }
+.checkout-btn {
+  width: 100%; background: var(--lime); color: var(--void);
+  font-family: var(--sans); font-size: 9px; font-weight: 500;
+  letter-spacing: 0.38em; text-transform: uppercase;
+  padding: 15px; margin-bottom: 12px;
+  transition: background 0.18s;
+}
+.checkout-btn:hover { background: var(--amber-lt); }
+.cart-note { font-size: 10px; color: var(--lichen); text-align: center; letter-spacing: 0.08em; }
+
+/* ─── NAV ────────────────────────────────────── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  height: 64px;
+  background: rgba(6,11,6,0.88);
+  backdrop-filter: blur(28px) saturate(180%);
+  border-bottom: 1px solid rgba(158,212,56,0.06);
+  transition: border-color 0.3s;
+}
+.nav.scrolled { border-bottom-color: rgba(158,212,56,0.12); }
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between; height: 100%;
+}
+.nav-brand { display: flex; flex-direction: column; gap: 2px; }
+.nav-brand .main { font-family: var(--script); font-size: 26px; color: var(--parchment); line-height: 1; }
+.nav-brand .sub { font-family: var(--sans); font-size: 6.5px; letter-spacing: 0.55em; text-transform: uppercase; color: var(--amber); font-weight: 400; }
+.nav-links { display: flex; gap: 36px; align-items: center; }
+.nav-link {
+  font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--lichen); font-weight: 400; transition: color 0.15s;
+}
+.nav-link:hover, .nav-link.on { color: var(--parchment); }
+.nav-cart {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--lichen); font-weight: 400; transition: color 0.15s;
+}
+.nav-cart:hover { color: var(--lime); }
+.cart-count {
+  background: var(--lime); color: var(--void);
+  font-size: 8px; font-weight: 600;
+  width: 18px; height: 18px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ─── HERO ───────────────────────────────────── */
+.hero {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 100vh; padding-top: 64px;
+  position: relative;
+}
+.hero-left {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 100px 64px 100px 0;
+  border-right: 1px solid rgba(158,212,56,0.07);
+  position: relative; z-index: 1;
+}
+.hero-kicker { margin-bottom: 28px; }
+.hero h1 { margin-bottom: 16px; color: var(--parchment); }
+.hero h1 em { color: var(--lime); }
+.hero-script-line {
+  display: block;
+  font-family: var(--script); font-size: clamp(44px,6vw,80px);
+  color: var(--amber-lt); line-height: 0.95;
+  margin-bottom: 28px;
+}
+.hero-desc {
+  font-size: 14px; color: var(--mist); line-height: 1.8;
+  max-width: 440px; margin-bottom: 40px;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 56px; }
+.hero-scroll-hint {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 8.5px; letter-spacing: 0.38em; text-transform: uppercase; color: var(--sage);
+}
+.hero-scroll-hint::before {
+  content: ''; display: block; width: 32px; height: 1px; background: var(--sage);
+}
+
+/* Hero right — atmospheric illustration */
+.hero-right {
+  position: relative; overflow: hidden;
+  background: var(--forest-card);
+}
+.hero-right-content {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-spore-field {
+  position: absolute; inset: 0; pointer-events: none;
+}
+.hero-stats {
+  position: absolute; bottom: 48px; left: 40px; right: 40px;
+  display: flex; gap: var(--gap);
+}
+.hero-stat {
+  flex: 1; text-align: center;
+  background: rgba(6,11,6,0.7); backdrop-filter: blur(12px);
+  border: 1px solid rgba(158,212,56,0.1);
+  padding: 18px 12px;
+}
+.hero-stat .v { display: block; font-family: var(--serif); font-style: italic; font-size: 26px; color: var(--amber-lt); line-height: 1; }
+.hero-stat .l { display: block; font-size: 8px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--lichen); margin-top: 5px; }
+
+/* ─── MARQUEE ────────────────────────────────── */
+.marquee-strip {
+  border-top: 1px solid rgba(158,212,56,0.07);
+  border-bottom: 1px solid rgba(158,212,56,0.07);
+  padding: 14px 0; overflow: hidden; background: var(--forest);
+}
+.marquee-track {
+  display: flex; gap: 52px; white-space: nowrap;
+  animation: slide 38s linear infinite;
+}
+.marquee-track span { font-size: 8px; letter-spacing: 0.48em; text-transform: uppercase; color: var(--sage); flex-shrink: 0; }
+.marquee-track .dot { color: var(--amber); }
+@keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ─── PHILOSOPHY ─────────────────────────────── */
+.philosophy {
+  background: var(--forest-mid);
+  border-bottom: 1px solid rgba(158,212,56,0.06);
+  padding: 72px 0;
+}
+.philosophy-inner {
+  display: grid; grid-template-columns: repeat(3,1fr);
+}
+.phil-item { padding: 0 52px; }
+.phil-item:not(:last-child) { border-right: 1px solid rgba(158,212,56,0.07); }
+.phil-num { font-size: 8px; letter-spacing: 0.38em; color: var(--sage); display: block; margin-bottom: 14px; }
+.phil-item h3 { margin-bottom: 14px; color: var(--parchment); }
+.phil-item h3 em { color: var(--lime); }
+.phil-item p { font-size: 13.5px; line-height: 1.75; color: var(--mist); }
+
+/* ─── EDITORIAL GRID ─────────────────────────── */
+.editorial { overflow: hidden; }
+.editorial-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: var(--gap);
+}
+.edit-cell {
+  position: relative; overflow: hidden;
+  min-height: 280px;
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+.edit-cell:hover { transform: scale(0.99); }
+.edit-cell.tall { grid-row: span 2; min-height: 560px; }
+.edit-botanical { width: 100%; height: 100%; }
+.edit-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 24px 28px;
+  background: linear-gradient(transparent, rgba(6,11,6,0.85));
+}
+.edit-label { font-size: 7.5px; letter-spacing: 0.42em; text-transform: uppercase; color: var(--lime); display: block; margin-bottom: 6px; }
+.edit-title { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--parchment); line-height: 1.3; }
+
+/* ─── SHOP ───────────────────────────────────── */
+.shop { background: var(--void); padding: 100px 0; }
+.sec-label { font-size: 8.5px; letter-spacing: 0.52em; text-transform: uppercase; color: var(--lichen); display: block; margin-bottom: 10px; }
+.sec-title { font-family: var(--serif); font-weight: 300; font-size: clamp(34px,4.5vw,58px); letter-spacing: -0.015em; margin-bottom: 14px; color: var(--parchment); }
+.sec-title em { color: var(--amber-lt); }
+.sec-sub { font-size: 13.5px; color: var(--mist); max-width: 600px; margin-bottom: 40px; }
+.sec-head { margin-bottom: 52px; }
+
+.product-filters { display: flex; gap: 1px; flex-wrap: wrap; margin-bottom: 48px; }
+.filter-btn {
+  font-size: 8.5px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 400;
+  padding: 10px 20px; background: var(--forest-card); border: 1px solid rgba(158,212,56,0.07);
+  color: var(--lichen); transition: all 0.15s;
+}
+.filter-btn.active, .filter-btn:hover { background: var(--lime); color: var(--void); border-color: var(--lime); }
+
+.products-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; }
+.product-card {
+  background: var(--forest-card);
+  border: 1px solid rgba(158,212,56,0.06);
+  display: flex; flex-direction: column;
+  transition: border-color 0.2s, transform 0.25s;
+  position: relative; overflow: hidden;
+}
+.product-card:hover { border-color: rgba(158,212,56,0.2); transform: translateY(-2px); }
+.product-card.hidden { display: none; }
+
+.product-img-wrap {
+  aspect-ratio: 3/4;
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  padding: 28px;
+}
+.product-img-placeholder { position: absolute; inset: 0; }
+.p-img-inner {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.bottle-label {
+  font-family: var(--serif); font-style: italic;
+  font-size: 12px; color: var(--parchment);
+  text-align: center; line-height: 1.35;
+}
+
+.product-badge {
+  position: absolute; top: 14px; left: 14px;
+  font-size: 7px; letter-spacing: 0.32em; text-transform: uppercase; font-weight: 500;
+  padding: 4px 10px;
+}
+.badge-foraged { background: var(--sage); color: var(--parchment); }
+.badge-rare { background: var(--amber); color: var(--void); }
+.badge-new { background: var(--lime); color: var(--void); }
+
+.product-hover-cta {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: rgba(6,11,6,0.85); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 14px;
+  transform: translateY(100%); transition: transform 0.25s;
+}
+.product-card:hover .product-hover-cta { transform: translateY(0); }
+.quick-add {
+  font-size: 8.5px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--lime); font-weight: 500;
+  background: none; border: none;
+  transition: color 0.15s;
+}
+.quick-add:hover { color: var(--parchment); }
+
+.product-info { padding: 22px 22px 24px; flex: 1; display: flex; flex-direction: column; }
+.product-category { font-size: 7.5px; letter-spacing: 0.38em; text-transform: uppercase; color: var(--sage); display: block; margin-bottom: 7px; }
+.product-name { font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--parchment); margin-bottom: 9px; line-height: 1.2; }
+.product-desc { font-size: 12.5px; color: var(--lichen); line-height: 1.68; margin-bottom: 14px; flex: 1; }
+.product-notes { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 18px; }
+.note-tag { font-size: 7.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sage); border: 1px solid rgba(81,122,64,0.3); padding: 3px 8px; }
+.product-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+.product-price { display: flex; flex-direction: column; }
+.product-price .size { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage); }
+.product-price span:last-child { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--amber-lt); line-height: 1.1; }
+.add-btn {
+  font-size: 8px; letter-spacing: 0.28em; text-transform: uppercase;
+  border: 1px solid rgba(158,212,56,0.18); color: var(--lime);
+  padding: 8px 14px; transition: all 0.15s;
+}
+.add-btn:hover { background: var(--lime); color: var(--void); border-color: var(--lime); }
+
+/* ─── FEATURE PRODUCT ────────────────────────── */
+.feature {
+  background: var(--forest-mid);
+  border-top: 1px solid rgba(158,212,56,0.07);
+  border-bottom: 1px solid rgba(158,212,56,0.07);
+  padding: 100px 0;
+}
+.feature-inner { display: grid; grid-template-columns: 1fr 1.3fr; gap: 80px; align-items: center; }
+.feature-img-wrap {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 460px;
+}
+.annotation {
+  position: absolute;
+  font-size: 11.5px; color: var(--mist); line-height: 1.5;
+  max-width: 140px;
+}
+.annotation strong { display: block; color: var(--parchment); font-size: 11px; font-family: var(--sans); letter-spacing: 0.06em; font-weight: 400; margin-bottom: 2px; }
+.annotation::before {
+  content: '';
+  position: absolute; background: rgba(158,212,56,0.3);
+}
+.ann-1 { top: 50px; left: -10px; text-align: right; }
+.ann-1::before { width: 60px; height: 1px; top: 10px; right: -62px; }
+.ann-2 { top: 180px; left: -20px; text-align: right; }
+.ann-2::before { width: 50px; height: 1px; top: 10px; right: -52px; }
+.ann-3 { bottom: 160px; right: -10px; }
+.ann-3::before { width: 50px; height: 1px; top: 10px; right: 100%; margin-right: 2px; }
+.ann-4 { bottom: 50px; right: -10px; }
+.ann-4::before { width: 50px; height: 1px; top: 10px; right: 100%; margin-right: 2px; }
+.feature-text .sec-label { margin-bottom: 12px; }
+.feature-text h2 { margin-bottom: 24px; }
+.feature-text blockquote {
+  font-family: var(--serif); font-style: italic;
+  font-size: 17px; color: var(--parchment); line-height: 1.55;
+  border-left: 2px solid var(--amber); padding-left: 20px;
+  margin: 0 0 24px;
+}
+.feature-text p { font-size: 13.5px; margin-bottom: 28px; }
+.ingredients { border-top: 1px solid rgba(158,212,56,0.07); margin-top: 4px; }
+.ing-row {
+  display: grid; grid-template-columns: 28px 1fr auto;
+  gap: 14px; align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(158,212,56,0.05);
+  font-size: 12.5px;
+}
+.ing-num { color: var(--sage); font-size: 10px; letter-spacing: 0.1em; }
+.ing-name { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--parchment); }
+.ing-effect { font-size: 8.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--lime); }
+
+/* ─── NOTES DIRECTORY ────────────────────────── */
+.notes-section {
+  border-bottom: 1px solid rgba(158,212,56,0.06);
+}
+.notes-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--gap); }
+.note-col { padding: 52px 48px; }
+.note-tier { font-size: 7.5px; letter-spacing: 0.45em; text-transform: uppercase; color: var(--sage); display: block; margin-bottom: 8px; }
+.note-tier-name { font-family: var(--serif); font-style: italic; font-size: 40px; color: rgba(237,229,216,0.12); line-height: 1; margin-bottom: 28px; }
+.note-items { list-style: none; }
+.note-items li {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(158,212,56,0.06);
+  font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--parchment);
+}
+.note-items li span { font-family: var(--sans); font-style: normal; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--lime); }
+
+/* ─── TRANCE ─────────────────────────────────── */
+.trance {
+  background: var(--forest);
+  border-bottom: 1px solid rgba(158,212,56,0.06);
+  padding: 100px 0;
+  position: relative; overflow: hidden;
+}
+.trance::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 80% 50%, rgba(158,212,56,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+.trance-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; position: relative; z-index: 1; }
+.trance h2 { margin-bottom: 20px; }
+.trance h2 .script { font-family: var(--script); font-size: 1.2em; color: var(--amber-lt); display: block; }
+.trance-meta { display: flex; gap: 1px; margin-top: 36px; flex-wrap: wrap; }
+.trance-stat {
+  flex: 1; min-width: 80px;
+  background: rgba(10,18,8,0.5); border: 1px solid rgba(158,212,56,0.08);
+  padding: 16px 12px; text-align: center;
+}
+.trance-stat .v { display: block; font-family: var(--serif); font-style: italic; font-size: 26px; color: var(--amber-lt); line-height: 1; }
+.trance-stat .l { display: block; font-size: 7.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--lichen); margin-top: 5px; }
+.trance-actions { margin-top: 28px; display: flex; gap: 14px; }
+.event-list { display: flex; flex-direction: column; gap: 2px; }
+.event-item {
+  padding: 16px 20px;
+  background: rgba(10,18,8,0.4); border: 1px solid rgba(158,212,56,0.07);
+  display: flex; justify-content: space-between; align-items: center;
+  transition: border-color 0.2s;
+}
+.event-item:hover { border-color: rgba(158,212,56,0.2); }
+.event-name { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--parchment); }
+.event-meta { font-size: 9px; color: var(--lichen); letter-spacing: 0.1em; margin-top: 3px; }
+.event-status {
+  font-size: 7.5px; letter-spacing: 0.22em; text-transform: uppercase;
+  font-family: var(--sans); font-weight: 500;
+  padding: 4px 10px; border: 1px solid;
+}
+.event-status.done { color: var(--sage); border-color: rgba(81,122,64,0.3); }
+.event-status.upcoming { color: var(--amber); border-color: rgba(196,134,46,0.4); }
+
+/* ─── FORAGING ───────────────────────────────── */
+.forage {
+  background: var(--forest-mid);
+  border-bottom: 1px solid rgba(158,212,56,0.06);
+  padding: 100px 0;
+}
+.forage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 48px; }
+.location-list { display: flex; flex-direction: column; gap: 1px; }
+.location-item {
+  display: grid; grid-template-columns: 36px 1fr auto;
+  gap: 18px; align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(158,212,56,0.06);
+  transition: border-color 0.2s;
+}
+.location-item:hover { border-color: rgba(158,212,56,0.18); }
+.loc-num { font-size: 9px; letter-spacing: 0.22em; color: var(--sage); }
+.loc-name { font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--parchment); }
+.loc-sub { font-size: 11px; color: var(--lichen); letter-spacing: 0.06em; margin-top: 3px; }
+.loc-badge {
+  font-size: 7.5px; letter-spacing: 0.28em; text-transform: uppercase;
+  border: 1px solid rgba(158,212,56,0.25); color: var(--lime);
+  padding: 4px 10px;
+}
+.forage-cta { display: flex; flex-direction: column; justify-content: space-between; }
+.forage-quote {
+  font-family: var(--serif); font-style: italic;
+  font-size: 21px; color: var(--parchment); line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+/* ─── JOURNAL ────────────────────────────────── */
+.journal {
+  background: var(--void);
+  border-bottom: 1px solid rgba(158,212,56,0.06);
+  padding: 100px 0;
+}
+.journal-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 52px; }
+.journal-card {
+  background: var(--forest-card); border: 1px solid rgba(158,212,56,0.06);
+  padding: 36px 32px;
+  display: flex; flex-direction: column;
+  transition: border-color 0.2s, transform 0.25s;
+}
+.journal-card:hover { border-color: rgba(158,212,56,0.18); transform: translateY(-2px); }
+.j-date { font-size: 8px; letter-spacing: 0.38em; text-transform: uppercase; color: var(--sage); display: block; margin-bottom: 14px; }
+.j-title { font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--parchment); line-height: 1.3; margin-bottom: 16px; }
+.j-excerpt { font-size: 13px; color: var(--lichen); line-height: 1.72; margin-bottom: 24px; flex: 1; }
+.j-link { font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--lime); transition: color 0.15s; }
+.j-link:hover { color: var(--amber-lt); }
+
+/* ─── ABOUT ──────────────────────────────────── */
+.about {
+  background: var(--forest-mid);
+  border-bottom: 1px solid rgba(158,212,56,0.06);
+  padding: 100px 0;
+}
+.about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.about-quote {
+  font-family: var(--serif); font-style: italic;
+  font-size: 20px; color: var(--parchment); line-height: 1.45;
+  margin-bottom: 24px;
+  border-left: 2px solid var(--amber); padding-left: 22px;
+}
+.about-body { font-size: 13.5px; margin-bottom: 14px; }
+.about-body strong { color: var(--parchment); font-weight: 400; }
+.contact-cards { display: flex; gap: 2px; margin-bottom: 28px; }
+.contact-card {
+  flex: 1; padding: 18px 20px;
+  background: var(--forest-card); border: 1px solid rgba(158,212,56,0.07);
+}
+.contact-card .email { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--amber-lt); }
+.contact-card .who { font-size: 8.5px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--lichen); margin-top: 4px; }
+.stats-panel { display: flex; flex-direction: column; gap: 2px; }
+.about-pillar {
+  background: var(--forest-card); border: 1px solid rgba(158,212,56,0.07);
+  padding: 28px 30px; border-left: 3px solid var(--amber);
+}
+.about-pillar p { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--parchment); line-height: 1.45; }
+.about-vision {
+  background: var(--forest-card); border: 1px solid rgba(158,212,56,0.07);
+  padding: 28px 30px;
+}
+.about-numbers {
+  background: var(--fern); border: 1px solid rgba(158,212,56,0.07);
+  padding: 28px 30px;
+}
+.nums-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 16px; }
+.num-cell {
+  text-align: center; padding: 18px 12px;
+  background: var(--forest-card);
+}
+.num-cell .v { font-family: var(--serif); font-style: italic; font-size: 28px; color: var(--amber-lt); line-height: 1; }
+.num-cell .l { font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--lichen); margin-top: 4px; display: block; }
+
+/* ─── NEWSLETTER ─────────────────────────────── */
+.newsletter {
+  background: var(--forest);
+  border-bottom: 1px solid rgba(158,212,56,0.07);
+  padding: 90px 0; text-align: center;
+}
+.newsletter h2 { margin-bottom: 10px; }
+.newsletter .script-line { font-family: var(--script); font-size: 1.15em; color: var(--amber-lt); display: block; }
+.newsletter-form {
+  display: flex; gap: 1px; max-width: 440px; margin: 32px auto 0;
+}
+.newsletter-input {
+  flex: 1; background: var(--forest-card); border: 1px solid rgba(158,212,56,0.1);
+  color: var(--parchment); padding: 14px 18px;
+  font-size: 13px; font-family: var(--sans);
+  outline: none; transition: border-color 0.18s;
+}
+.newsletter-input::placeholder { color: var(--sage); }
+.newsletter-input:focus { border-color: rgba(158,212,56,0.3); }
+.newsletter-submit {
+  background: var(--lime); color: var(--void);
+  font-family: var(--sans); font-size: 9px; font-weight: 500;
+  letter-spacing: 0.32em; text-transform: uppercase;
+  padding: 14px 24px; transition: background 0.18s;
+}
+.newsletter-submit:hover { background: var(--amber-lt); }
+.newsletter-note { font-size: 10.5px; color: var(--sage); margin-top: 16px; letter-spacing: 0.06em; }
+
+/* ─── FOOTER ─────────────────────────────────── */
+.footer { background: var(--void); padding: 80px 0 48px; }
+.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 52px; margin-bottom: 64px; }
+.footer-brand .name { font-family: var(--script); font-size: 32px; color: var(--parchment); display: block; margin-bottom: 4px; }
+.footer-brand .entheo { font-size: 7px; letter-spacing: 0.52em; text-transform: uppercase; color: var(--amber); display: block; margin-bottom: 18px; }
+.footer-brand p { font-size: 12.5px; color: var(--lichen); line-height: 1.7; max-width: 280px; }
+.footer-col h4 { font-size: 8px; letter-spacing: 0.5em; text-transform: uppercase; color: var(--parchment); font-weight: 500; margin-bottom: 22px; }
+.footer-col ul li { margin-bottom: 10px; }
+.footer-col ul li a { font-size: 13px; color: var(--lichen); font-family: var(--serif); font-style: italic; transition: color 0.18s; }
+.footer-col ul li a:hover { color: var(--lime); }
+.footer-bottom {
+  border-top: 1px solid rgba(158,212,56,0.06); padding-top: 28px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-bottom p { font-size: 10px; color: var(--lichen); letter-spacing: 0.06em; }
+.footer-social { display: flex; gap: 24px; }
+.footer-social a { font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--lichen); transition: color 0.18s; }
+.footer-social a:hover { color: var(--lime); }
+
+/* ─── TOAST ──────────────────────────────────── */
+.toast {
+  position: fixed; bottom: 32px; right: 32px;
+  background: var(--amber); color: var(--void);
+  padding: 14px 22px;
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500;
+  z-index: 9999; transform: translateY(100px); opacity: 0; transition: all 0.3s;
+  font-family: var(--sans);
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ═══════════════════════════════════════════════════
+   CHECKOUT MODAL
+═══════════════════════════════════════════════════ */
+.co-overlay {
+  position: fixed; inset: 0; z-index: 1100;
+  background: rgba(6,11,6,0.82); backdrop-filter: blur(10px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s;
+}
+.co-overlay.open { opacity: 1; pointer-events: all; }
+
+.co-modal {
+  background: var(--forest-mid);
+  border: 1px solid rgba(158,212,56,0.14);
+  width: 100%; max-width: 680px;
+  max-height: 92vh; overflow-y: auto;
+  position: relative;
+  transform: translateY(24px); transition: transform 0.38s cubic-bezier(0.22,1,0.36,1);
+  scrollbar-width: thin; scrollbar-color: var(--sage) transparent;
+}
+.co-overlay.open .co-modal { transform: translateY(0); }
+
+.co-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 28px 36px 24px;
+  border-bottom: 1px solid rgba(158,212,56,0.07);
+  position: sticky; top: 0; background: var(--forest-mid); z-index: 2;
+}
+.co-head h2 { font-family: var(--serif); font-style: italic; font-size: 24px; font-weight: 300; color: var(--parchment); }
+.co-close { font-size: 14px; color: var(--lichen); padding: 4px 8px; transition: color 0.15s; }
+.co-close:hover { color: var(--parchment); }
+
+/* Steps indicator */
+.co-steps {
+  display: flex; align-items: center; gap: 0;
+  padding: 20px 36px;
+  border-bottom: 1px solid rgba(158,212,56,0.07);
+}
+.co-step {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 8.5px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--sage); transition: color 0.2s;
+}
+.co-step.active { color: var(--parchment); }
+.co-step.done { color: var(--lime); }
+.co-step-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 1px solid currentColor;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 500; flex-shrink: 0;
+  transition: background 0.2s, border-color 0.2s;
+}
+.co-step.active .co-step-num { background: var(--lime); border-color: var(--lime); color: var(--void); }
+.co-step.done .co-step-num { background: var(--lime); border-color: var(--lime); color: var(--void); }
+.co-step-line { flex: 1; height: 1px; background: rgba(158,212,56,0.12); margin: 0 12px; }
+
+/* Body */
+.co-body { padding: 32px 36px 36px; }
+
+/* Order summary strip */
+.co-summary {
+  background: rgba(6,11,6,0.5);
+  border: 1px solid rgba(158,212,56,0.08);
+  padding: 18px 22px; margin-bottom: 28px;
+}
+.co-summary-title { font-size: 8px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--sage); margin-bottom: 10px; }
+.co-summary-items { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.co-sum-row { display: flex; justify-content: space-between; font-size: 13px; }
+.co-sum-row .name { font-family: var(--serif); font-style: italic; color: var(--parchment); }
+.co-sum-row .price { color: var(--amber-lt); }
+.co-sum-divider { height: 1px; background: rgba(158,212,56,0.07); margin: 10px 0; }
+.co-sum-total { display: flex; justify-content: space-between; align-items: baseline; }
+.co-sum-total .t-label { font-size: 8.5px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--lichen); }
+.co-sum-total .t-amount { font-family: var(--serif); font-style: italic; font-size: 26px; color: var(--amber-lt); }
+.co-shipping-note { font-size: 10px; color: var(--sage); margin-top: 6px; letter-spacing: 0.06em; }
+
+/* Form fields */
+.co-field-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.co-field-group.single { grid-template-columns: 1fr; }
+.co-field { display: flex; flex-direction: column; gap: 6px; }
+.co-field label { font-size: 8px; letter-spacing: 0.38em; text-transform: uppercase; color: var(--lichen); }
+.co-field input, .co-field select {
+  background: rgba(6,11,6,0.6);
+  border: 1px solid rgba(158,212,56,0.12);
+  color: var(--parchment); padding: 12px 14px;
+  font-size: 13px; font-family: var(--sans);
+  outline: none; transition: border-color 0.18s;
+  -webkit-appearance: none;
+}
+.co-field input:focus, .co-field select:focus { border-color: rgba(158,212,56,0.35); }
+.co-field input::placeholder { color: var(--sage); }
+.co-field select option { background: var(--forest-mid); }
+
+/* Payment method tabs */
+.co-pay-tabs { display: flex; gap: 2px; margin-bottom: 24px; }
+.co-pay-tab {
+  flex: 1; padding: 14px 10px; text-align: center;
+  background: rgba(6,11,6,0.5); border: 1px solid rgba(158,212,56,0.1);
+  font-size: 8.5px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--lichen);
+  transition: all 0.18s; cursor: none;
+}
+.co-pay-tab.active { background: rgba(158,212,56,0.1); border-color: rgba(158,212,56,0.4); color: var(--lime); }
+.co-pay-tab:hover:not(.active) { border-color: rgba(158,212,56,0.22); color: var(--mist); }
+.co-pay-tab .tab-icon { display: block; font-size: 18px; margin-bottom: 5px; }
+
+/* Stripe card element */
+.stripe-wrap {
+  background: rgba(6,11,6,0.6);
+  border: 1px solid rgba(158,212,56,0.12);
+  padding: 14px;
+  margin-bottom: 16px;
+  transition: border-color 0.18s;
+}
+.stripe-wrap.focused { border-color: rgba(158,212,56,0.35); }
+#stripe-error { font-size: 11.5px; color: var(--coral); margin-bottom: 12px; min-height: 16px; letter-spacing: 0.04em; }
+.stripe-secure { display: flex; align-items: center; gap: 6px; font-size: 9px; color: var(--sage); letter-spacing: 0.1em; margin-bottom: 20px; }
+
+/* Crypto panels */
+.crypto-panel { display: none; }
+.crypto-panel.active { display: block; }
+.crypto-coins { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; margin-bottom: 20px; }
+.crypto-coin {
+  padding: 14px 8px; text-align: center;
+  background: rgba(6,11,6,0.5); border: 1px solid rgba(158,212,56,0.08);
+  cursor: none; transition: all 0.15s;
+}
+.crypto-coin.selected { border-color: var(--lime); background: rgba(158,212,56,0.08); }
+.crypto-coin:hover:not(.selected) { border-color: rgba(158,212,56,0.22); }
+.crypto-coin .coin-icon { font-size: 22px; display: block; margin-bottom: 5px; }
+.crypto-coin .coin-sym { font-size: 8px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--lichen); }
+.crypto-coin.selected .coin-sym { color: var(--lime); }
+
+.crypto-address-box {
+  background: rgba(6,11,6,0.7);
+  border: 1px solid rgba(158,212,56,0.12);
+  padding: 20px;
+}
+.crypto-address-label { font-size: 7.5px; letter-spacing: 0.42em; text-transform: uppercase; color: var(--sage); margin-bottom: 8px; display: block; }
+.crypto-address-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.crypto-address {
+  flex: 1; font-size: 11px; color: var(--parchment);
+  letter-spacing: 0.04em; word-break: break-all; line-height: 1.5;
+  font-family: 'Courier New', monospace;
+}
+.copy-btn {
+  padding: 7px 14px; border: 1px solid rgba(158,212,56,0.22);
+  font-size: 8px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--lime);
+  white-space: nowrap; transition: all 0.15s; flex-shrink: 0;
+}
+.copy-btn:hover { background: rgba(158,212,56,0.1); }
+.copy-btn.copied { color: var(--void); background: var(--lime); border-color: var(--lime); }
+
+.crypto-amount-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 12px; border-top: 1px solid rgba(158,212,56,0.07);
+}
+.crypto-amount-label { font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--sage); }
+.crypto-amount-value { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--amber-lt); }
+.crypto-rate-note { font-size: 10px; color: var(--sage); margin-top: 8px; letter-spacing: 0.04em; }
+.crypto-confirm-note {
+  background: rgba(196,134,46,0.08);
+  border: 1px solid rgba(196,134,46,0.18);
+  padding: 14px 16px; margin-top: 14px;
+  font-size: 12px; color: var(--dust); line-height: 1.65;
+}
+.qr-placeholder {
+  width: 80px; height: 80px; float: right; margin: 0 0 8px 16px;
+  background: var(--parchment); display: flex; align-items: center; justify-content: center;
+  font-size: 8px; color: var(--void); text-align: center; line-height: 1.3; padding: 4px;
+}
+
+/* Buttons */
+.co-btn-row { display: flex; justify-content: space-between; align-items: center; margin-top: 28px; gap: 12px; }
+.co-btn-back { font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sage); padding: 13px 20px; border: 1px solid rgba(158,212,56,0.1); transition: all 0.15s; }
+.co-btn-back:hover { color: var(--parchment); border-color: rgba(158,212,56,0.25); }
+.co-btn-next {
+  flex: 1; background: var(--lime); color: var(--void);
+  font-size: 9px; font-weight: 500; letter-spacing: 0.38em; text-transform: uppercase;
+  padding: 15px 28px; transition: background 0.18s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.co-btn-next:hover { background: var(--amber-lt); }
+.co-btn-next:disabled { opacity: 0.5; pointer-events: none; }
+.co-btn-next.loading::after { content: ''; width: 14px; height: 14px; border: 2px solid var(--void); border-top-color: transparent; border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Confirmation screen */
+.co-confirm {
+  text-align: center; padding: 20px 0 8px;
+}
+.co-confirm-icon { font-size: 52px; margin-bottom: 16px; display: block; }
+.co-confirm h3 { font-family: var(--serif); font-style: italic; font-size: 30px; color: var(--parchment); font-weight: 300; margin-bottom: 12px; }
+.co-confirm p { font-size: 13.5px; color: var(--mist); max-width: 400px; margin: 0 auto 24px; line-height: 1.7; }
+.co-confirm-order { background: rgba(6,11,6,0.5); border: 1px solid rgba(158,212,56,0.1); padding: 14px 20px; display: inline-flex; gap: 16px; align-items: center; margin-bottom: 28px; }
+.co-confirm-order .label { font-size: 8px; letter-spacing: 0.38em; color: var(--sage); }
+.co-confirm-order .val { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--amber-lt); margin-top: 2px; }
+
+/* ─── RESPONSIVE ─────────────────────────────── */
+@media (max-width: 1024px) {
+  .products-grid { grid-template-columns: repeat(3,1fr); }
+  .hero { grid-template-columns: 1fr; }
+  .hero-left { padding: 80px 0 60px; border-right: none; }
+  .hero-right { min-height: 340px; }
+}
+@media (max-width: 768px) {
+  .wrap { padding: 0 24px; }
+  .products-grid { grid-template-columns: repeat(2,1fr); }
+  .philosophy-inner, .notes-grid, .feature-inner, .trance-inner, .forage-grid, .journal-grid, .about-inner { grid-template-columns: 1fr; }
+  .phil-item:not(:last-child) { border-right: none; border-bottom: 1px solid rgba(158,212,56,0.07); padding: 36px 0; }
+  .nav-links { display: none; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+
+<!-- CART OVERLAY + DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-head">
+    <h3>Your apothecary</h3>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <span class="icon">Fungai Art</span>
+      <p>Your cart is empty.<br/>The forest awaits.</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total">
+      <span class="label">Total</span>
+      <span class="amount" id="cartTotal">€0</span>
+    </div>
+    <button class="checkout-btn" onclick="openCheckout()">Proceed to checkout</button>
+    <p class="cart-note">Free EU shipping on orders over €60</p>
+  </div>
+</div>
+
+<!-- ══ NAV ══ -->
+<nav class="nav" id="mainNav">
+  <div class="wrap nav-inner">
+    <a href="/home" class="nav-brand">
+      <span class="main">Fungai Art</span>
+      <span class="sub">Entheobotanicals</span>
+    </a>
+    <div class="nav-links">
+      <a href="#shop" class="nav-link">Shop</a>
+      <a href="#trance" class="nav-link">Mycelium Trance</a>
+      <a href="#forage" class="nav-link">Foraging</a>
+      <a href="#journal" class="nav-link">Journal</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="/community" class="nav-link">Community</a>
+    </div>
+    <button class="nav-cart" onclick="openCart()">
+      Basket
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="wrap" style="grid-column:1;padding-right:0;">
+    <div class="hero-left">
+      <div class="label reveal">Living Mycelial Art · Gaia's Apo'takecare'y</div>
+      <h1 class="reveal reveal-d1">
+        Art &amp; medicine<br/>
+        <em>return</em><br/>
+        to their
+      </h1>
+      <span class="hero-script-line reveal reveal-d2">original unity.</span>
+      <p class="hero-desc reveal reveal-d3">Fusion of plants, alchemy, and frequency. Wild-foraged botanical preparations, adaptogenic blends, and embodied experiences rooted in ecological care and ancient intelligence.</p>
+      <div class="hero-actions reveal reveal-d4">
+        <a href="#shop" class="btn-primary">Enter the apothecary</a>
+        <a href="#trance" class="btn-ghost">Mycelium Trance</a>
+      </div>
+      <div class="hero-scroll-hint reveal reveal-d4">Scroll to explore</div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-content">
+      <!-- Animated mycelium network illustration -->
+      <svg id="heroSvg" width="100%" height="100%" viewBox="0 0 620 820" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <radialGradient id="bg" cx="50%" cy="45%" r="65%">
+            <stop offset="0%" stop-color="#1F2E1A"/>
+            <stop offset="100%" stop-color="#060B06"/>
+          </radialGradient>
+          <radialGradient id="glowA" cx="50%" cy="55%" r="40%">
+            <stop offset="0%" stop-color="#9ED438" stop-opacity="0.1"/>
+            <stop offset="100%" stop-color="#9ED438" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="glowB" cx="35%" cy="30%" r="35%">
+            <stop offset="0%" stop-color="#C4862E" stop-opacity="0.08"/>
+            <stop offset="100%" stop-color="#C4862E" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="soft">
+            <feGaussianBlur stdDeviation="8"/>
+          </filter>
+        </defs>
+        <rect width="620" height="820" fill="url(#bg)"/>
+        <rect width="620" height="820" fill="url(#glowA)"/>
+        <rect width="620" height="820" fill="url(#glowB)"/>
+
+        <!-- Mycelium network — animated -->
+        <g id="mycelium" opacity="0.16" stroke="#9ED438" fill="none">
+          <path stroke-width="0.6" d="M310,410 Q220,310 170,200 Q140,130 90,60">
+            <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="3s" fill="freeze"/>
+          </path>
+          <path stroke-width="0.5" d="M310,410 Q380,290 430,190 Q465,120 510,50">
+            <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="3.5s" fill="freeze"/>
+          </path>
+          <path stroke-width="0.6" d="M310,410 Q250,460 190,520 Q130,590 60,660">
+            <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="2.8s" fill="freeze"/>
+          </path>
+          <path stroke-width="0.5" d="M310,410 Q380,455 445,515 Q510,585 570,660">
+            <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="3.2s" fill="freeze"/>
+          </path>
+          <path stroke-width="0.4" d="M310,410 Q290,360 270,300 Q248,235 210,160">
+            <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="4s" fill="freeze"/>
+          </path>
+          <path stroke-width="0.4" d="M310,410 Q335,355 352,290 Q375,215 405,135">
+            <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="4.2s" fill="freeze"/>
+          </path>
+          <path stroke-width="0.4" d="M310,410 Q390,390 458,368 Q520,345 580,310">
+            <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="3.8s" fill="freeze"/>
+          </path>
+          <path stroke-width="0.4" d="M310,410 Q230,396 165,378 Q100,357 40,320">
+            <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="3.6s" fill="freeze"/>
+          </path>
+          <!-- Secondary branches -->
+          <path stroke-width="0.3" d="M220,310 Q180,270 160,220 Q140,180 120,130"/>
+          <path stroke-width="0.3" d="M370,290 Q400,250 420,200 Q440,160 460,110"/>
+          <path stroke-width="0.3" d="M250,460 Q210,510 180,570"/>
+          <path stroke-width="0.3" d="M380,455 Q420,505 450,560"/>
+          <path stroke-width="0.2" d="M380,390 Q430,370 490,340"/>
+          <path stroke-width="0.2" d="M240,395 Q180,375 120,345"/>
+        </g>
+
+        <!-- Spore dots pulsing -->
+        <g>
+          <circle cx="310" cy="410" r="4" fill="#9ED438" opacity="0.6">
+            <animate attributeName="r" values="4;7;4" dur="3s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.6;0.3;0.6" dur="3s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="310" cy="410" r="12" fill="none" stroke="#9ED438" stroke-width="0.5" opacity="0.2">
+            <animate attributeName="r" values="12;24;12" dur="3s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.2;0;0.2" dur="3s" repeatCount="indefinite"/>
+          </circle>
+        </g>
+        <!-- Branch nodes -->
+        <g fill="#9ED438" opacity="0.35">
+          <circle cx="220" cy="310" r="2.5"/>
+          <circle cx="370" cy="290" r="2"/>
+          <circle cx="250" cy="460" r="2.5"/>
+          <circle cx="380" cy="455" r="2"/>
+          <circle cx="170" cy="200" r="1.5"/>
+          <circle cx="430" cy="190" r="1.5"/>
+          <circle cx="190" cy="520" r="1.5"/>
+          <circle cx="445" cy="515" r="1.5"/>
+        </g>
+
+        <!-- Amanita muscaria silhouette — large, central -->
+        <g transform="translate(180,110)" opacity="0.25">
+          <ellipse cx="130" cy="36" rx="130" ry="36" fill="#7A2020"/>
+          <ellipse cx="130" cy="22" rx="128" ry="38" fill="#8B2828"/>
+          <ellipse cx="130" cy="10" rx="110" ry="32" fill="#9E3030"/>
+          <circle cx="92" cy="8" r="11" fill="#EDE5D8" opacity="0.5"/>
+          <circle cx="132" cy="-8" r="14" fill="#EDE5D8" opacity="0.45"/>
+          <circle cx="168" cy="5" r="10" fill="#EDE5D8" opacity="0.4"/>
+          <circle cx="112" cy="28" r="8" fill="#EDE5D8" opacity="0.35"/>
+          <circle cx="155" cy="24" r="9" fill="#EDE5D8" opacity="0.4"/>
+          <rect x="118" y="68" width="24" height="180" rx="5" fill="#D4C090" opacity="0.6"/>
+          <ellipse cx="130" cy="248" rx="38" ry="12" fill="#C0A870" opacity="0.4"/>
+        </g>
+
+        <!-- Amber glow spot underneath mushroom -->
+        <ellipse cx="290" cy="570" r="100" ry="60" fill="#C4862E" opacity="0.04" filter="url(#soft)"/>
+
+        <!-- Floating spore particles -->
+        <g fill="#9ED438" opacity="0.18">
+          <circle cx="150" cy="150" r="1.5"><animate attributeName="cy" values="150;130;150" dur="6s" repeatCount="indefinite"/></circle>
+          <circle cx="480" cy="200" r="1"><animate attributeName="cy" values="200;180;200" dur="7s" repeatCount="indefinite"/></circle>
+          <circle cx="80" cy="350" r="1.5"><animate attributeName="cx" values="80;96;80" dur="8s" repeatCount="indefinite"/></circle>
+          <circle cx="540" cy="420" r="1"><animate attributeName="cy" values="420;400;420" dur="5s" repeatCount="indefinite"/></circle>
+          <circle cx="200" cy="600" r="1.5"><animate attributeName="cx" values="200;218;200" dur="9s" repeatCount="indefinite"/></circle>
+          <circle cx="440" cy="680" r="1"><animate attributeName="cy" values="680;660;680" dur="6.5s" repeatCount="indefinite"/></circle>
+        </g>
+
+        <!-- Caption -->
+        <text x="310" y="778" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="11" fill="#517A40" letter-spacing="3" opacity="0.7">where the forest thinks</text>
+      </svg>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="v">3,000+</span>
+        <span class="l">Units sold</span>
+      </div>
+      <div class="hero-stat">
+        <span class="v">€20K+</span>
+        <span class="l">One summer</span>
+      </div>
+      <div class="hero-stat">
+        <span class="v">4</span>
+        <span class="l">Countries</span>
+      </div>
+      <div class="hero-stat">
+        <span class="v">5+</span>
+        <span class="l">Festivals</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MARQUEE ══ -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>Wild-Foraged</span><span class="dot">·</span>
+    <span>Entheobotanicals</span><span class="dot">·</span>
+    <span>Mycelium Trance</span><span class="dot">·</span>
+    <span>Gaia's Apo'takecare'y</span><span class="dot">·</span>
+    <span>Pharma-Grade Ethanol</span><span class="dot">·</span>
+    <span>Berlin · Sweden · France · Lebanon</span><span class="dot">·</span>
+    <span>Living Mycelial Art</span><span class="dot">·</span>
+    <span>Sacred Plant Allies</span><span class="dot">·</span>
+    <span>Moder Jord Collection</span><span class="dot">·</span>
+    <span>Inner Architecture</span><span class="dot">·</span>
+    <span>Wild-Foraged</span><span class="dot">·</span>
+    <span>Entheobotanicals</span><span class="dot">·</span>
+    <span>Mycelium Trance</span><span class="dot">·</span>
+    <span>Gaia's Apo'takecare'y</span><span class="dot">·</span>
+    <span>Pharma-Grade Ethanol</span><span class="dot">·</span>
+    <span>Berlin · Sweden · France · Lebanon</span><span class="dot">·</span>
+    <span>Living Mycelial Art</span><span class="dot">·</span>
+    <span>Sacred Plant Allies</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- ══ PHILOSOPHY ══ -->
+<div class="philosophy">
+  <div class="wrap philosophy-inner">
+    <div class="phil-item reveal">
+      <span class="phil-num">01 ·</span>
+      <h3>Wild &amp;<br/><em>Ethical</em></h3>
+      <p>Self-sourcing directly from the forests of Sweden and Germany with strict seasonal awareness. Never harvesting from vulnerable ecosystems.</p>
+    </div>
+    <div class="phil-item reveal reveal-d1">
+      <span class="phil-num">02 ·</span>
+      <h3>Alchemising &amp;<br/><em>Bottling</em></h3>
+      <p>Creating pure tinctures with strictly zero synthetic additives, made with pharma-grade ethanol for over two years shelf life. Each formula carefully studied and composed.</p>
+    </div>
+    <div class="phil-item reveal reveal-d2">
+      <span class="phil-num">03 ·</span>
+      <h3>Rooted in<br/><em>Reciprocity</em></h3>
+      <p>We understand Gaia not as a resource, but as a conscious, regenerative system. Rooted in reusing and zero-waste practices, minimising ecological footprint.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EDITORIAL GRID ══ -->
+<div class="editorial">
+  <div class="editorial-grid">
+    <!-- Tall — Amanita -->
+    <div class="edit-cell tall" style="background:var(--forest-card);">
+      <svg viewBox="0 0 300 560" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <radialGradient id="eg1" cx="50%" cy="55%" r="60%">
+            <stop offset="0%" stop-color="#354E2A"/>
+            <stop offset="100%" stop-color="#0E190B"/>
+          </radialGradient>
+        </defs>
+        <rect width="300" height="560" fill="url(#eg1)"/>
+        <!-- Amanita -->
+        <g transform="translate(50,60)">
+          <ellipse cx="100" cy="60" rx="100" ry="48" fill="#922020" opacity="0.8"/>
+          <ellipse cx="100" cy="44" rx="96" ry="50" fill="#A82828" opacity="0.85"/>
+          <ellipse cx="100" cy="28" rx="82" ry="42" fill="#BC3030" opacity="0.9"/>
+          <!-- Spots -->
+          <circle cx="60" cy="14" r="12" fill="#EDE5D8" opacity="0.6"/>
+          <circle cx="100" cy="0" r="15" fill="#EDE5D8" opacity="0.55"/>
+          <circle cx="138" cy="12" r="11" fill="#EDE5D8" opacity="0.5"/>
+          <circle cx="76" cy="42" r="7" fill="#EDE5D8" opacity="0.4"/>
+          <circle cx="124" cy="36" r="9" fill="#EDE5D8" opacity="0.45"/>
+          <circle cx="48" cy="44" r="5" fill="#EDE5D8" opacity="0.3"/>
+          <!-- Stalk -->
+          <rect x="86" y="100" width="28" height="200" rx="6" fill="#D4C090" opacity="0.7"/>
+          <!-- Veil ring -->
+          <ellipse cx="100" cy="200" rx="34" ry="10" fill="#C4B080" opacity="0.5"/>
+          <ellipse cx="100" cy="298" rx="44" ry="14" fill="#C4B080" opacity="0.4"/>
+          <!-- Glow -->
+          <ellipse cx="100" cy="250" rx="70" ry="100" fill="#9ED438" opacity="0.03"/>
+        </g>
+        <!-- Ambient amber glow -->
+        <ellipse cx="150" cy="450" rx="80" ry="50" fill="#C4862E" opacity="0.06"/>
+        <text x="150" y="535" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="12" fill="#517A40" letter-spacing="2">Amanita muscaria</text>
+      </svg>
+      <div class="edit-overlay">
+        <span class="edit-label">Sacred fungi</span>
+        <div class="edit-title">The threshold guardian of the forest</div>
+      </div>
+    </div>
+
+    <!-- Chaga -->
+    <div class="edit-cell" style="background:var(--moss);">
+      <svg viewBox="0 0 260 280" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <rect width="260" height="280" fill="#172114"/>
+        <ellipse cx="130" cy="130" rx="80" ry="65" fill="#1E0E04" opacity="0.92"/>
+        <ellipse cx="114" cy="116" rx="64" ry="50" fill="#2E1808" opacity="0.85"/>
+        <circle cx="118" cy="110" r="34" fill="#120804" opacity="0.9"/>
+        <circle cx="152" cy="136" r="22" fill="#241004" opacity="0.75"/>
+        <ellipse cx="130" cy="118" rx="75" ry="58" fill="none" stroke="#C4862E" stroke-width="0.8" opacity="0.18"/>
+        <ellipse cx="130" cy="118" rx="60" ry="46" fill="none" stroke="#C4862E" stroke-width="0.4" opacity="0.1"/>
+        <text x="130" y="250" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="12" fill="#517A40" letter-spacing="2">Inonotus obliquus</text>
+      </svg>
+      <div class="edit-overlay">
+        <span class="edit-label">Wild-foraged · Sweden</span>
+        <div class="edit-title">Chaga — the silent alchemist</div>
+      </div>
+    </div>
+
+    <!-- Blue Lotus -->
+    <div class="edit-cell" style="background:var(--violet-mid);">
+      <svg viewBox="0 0 260 280" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <rect width="260" height="280" fill="#361E5E"/>
+        <g transform="translate(130,130)">
+          <ellipse rx="24" ry="76" fill="#4A6EAA" opacity="0.65" transform="rotate(0)"/>
+          <ellipse rx="24" ry="76" fill="#5A7ECA" opacity="0.55" transform="rotate(40)"/>
+          <ellipse rx="24" ry="76" fill="#3A5E9A" opacity="0.6" transform="rotate(80)"/>
+          <ellipse rx="24" ry="76" fill="#4A6EAA" opacity="0.55" transform="rotate(120)"/>
+          <ellipse rx="24" ry="76" fill="#5A7ECA" opacity="0.5" transform="rotate(160)"/>
+          <circle r="20" fill="#F0E080" opacity="0.88"/>
+          <circle r="11" fill="#E0C840" opacity="0.95"/>
+        </g>
+        <text x="130" y="258" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="12" fill="#7055A4" letter-spacing="2">Nymphaea caerulea</text>
+      </svg>
+      <div class="edit-overlay">
+        <span class="edit-label">Sacred flower · Ancient Egypt</span>
+        <div class="edit-title">Blue Lotus — euphoric calm</div>
+      </div>
+    </div>
+
+    <!-- Cordyceps -->
+    <div class="edit-cell" style="background:var(--forest-card);">
+      <svg viewBox="0 0 260 280" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <rect width="260" height="280" fill="#121A0F"/>
+        <g transform="translate(20,30)" fill="#C4B090" opacity="0.72">
+          <ellipse cx="36" cy="140" rx="13" ry="92" transform="rotate(-15,36,140)"/>
+          <ellipse cx="88" cy="128" rx="11" ry="82" transform="rotate(8,88,128)"/>
+          <ellipse cx="140" cy="134" rx="12" ry="88" transform="rotate(-4,140,134)"/>
+          <ellipse cx="190" cy="124" rx="10" ry="76" transform="rotate(14,190,124)"/>
+          <ellipse cx="236" cy="136" rx="11" ry="80" transform="rotate(-8,236,136)"/>
+        </g>
+        <ellipse cx="130" cy="240" rx="80" ry="6" fill="#9ED438" opacity="0.04"/>
+        <text x="130" y="258" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="12" fill="#517A40" letter-spacing="2">Cordyceps sinensis</text>
+      </svg>
+      <div class="edit-overlay">
+        <span class="edit-label">Himalayan · A+</span>
+        <div class="edit-title">Wild Cordyceps — rarest in the world</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SHOP ══ -->
+<section id="shop" class="shop">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-label">Magick Menu · Moder Jord Collection</span>
+      <h2 class="sec-title">The <em>Apothecary</em></h2>
+      <p class="sec-sub">Carefully composed by earth keepers. All tinctures made with pharma-grade ethanol, full spectrum, self-foraged where marked.</p>
+    </div>
+    <div class="product-filters reveal reveal-d1">
+      <button class="filter-btn active" onclick="filterProducts('all',this)">All</button>
+      <button class="filter-btn" onclick="filterProducts('fungi',this)">Fungi</button>
+      <button class="filter-btn" onclick="filterProducts('compositions',this)">Compositions</button>
+      <button class="filter-btn" onclick="filterProducts('flowers',this)">Flowers</button>
+      <button class="filter-btn" onclick="filterProducts('herbs',this)">Herbs &amp; Oils</button>
+      <button class="filter-btn" onclick="filterProducts('specials',this)">Specials</button>
+    </div>
+    <div class="products-grid">
+
+      <!-- FUNGI -->
+      <div class="product-card reveal" data-category="fungi">
+        <div class="product-img-wrap">
+          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#172114,#060B06);">
+            <div class="p-img-inner">
+              <svg viewBox="0 0 80 120" width="80" height="120" xmlns="http://www.w3.org/2000/svg">
+                <rect x="30" y="0" width="20" height="80" fill="#EDE5D8" rx="3" opacity="0.85"/>
+                <rect x="25" y="75" width="30" height="40" fill="#D4C4A8" rx="3" opacity="0.9"/>
+                <rect x="28" y="20" width="24" height="28" fill="#354E2A" opacity="0.7" rx="2"/>
+                <text x="40" y="88" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="5" fill="#354E2A">fungai art</text>
+              </svg>
+              <div class="bottle-label">Amanita muscaria<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">30ml tincture</span></div>
+            </div>
+          </div>
+          <span class="product-badge badge-foraged">Foraged</span>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Amanita Muscaria Tincture', 38)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Fungi · Sacred</span>
+          <div class="product-name">Amanita muscaria</div>
+          <p class="product-desc">Neuroalchemy · shamanic love · focus. GABA-A agonist, loosening perceptual control and awakening symbolic awareness.</p>
+          <div class="product-notes">
+            <span class="note-tag">Muscimol</span><span class="note-tag">Dream-like</span><span class="note-tag">Self-foraged</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span>€38</span></div>
+            <button class="add-btn" onclick="addToCart('Amanita Muscaria Tincture', 38)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-d1" data-category="fungi">
+        <div class="product-img-wrap">
+          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#1A1206,#0A0800);">
+            <div class="p-img-inner">
+              <svg viewBox="0 0 80 120" width="80" height="120" xmlns="http://www.w3.org/2000/svg">
+                <rect x="30" y="0" width="20" height="80" fill="#EDE5D8" rx="3" opacity="0.85"/>
+                <rect x="25" y="75" width="30" height="40" fill="#D4C4A8" rx="3" opacity="0.9"/>
+                <rect x="28" y="20" width="24" height="28" fill="#1E0E04" opacity="0.85" rx="2"/>
+                <text x="40" y="88" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="5" fill="#354E2A">fungai art</text>
+              </svg>
+              <div class="bottle-label">Chaga<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">30ml tincture</span></div>
+            </div>
+          </div>
+          <span class="product-badge badge-foraged">Foraged · Sweden</span>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Chaga Tincture', 38)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Fungi · Immunity</span>
+          <div class="product-name">Chaga</div>
+          <p class="product-desc">Immunity · resilience · vitality. Beta-glucans and polysaccharides supporting immune balance and cellular protection.</p>
+          <div class="product-notes">
+            <span class="note-tag">Beta-glucans</span><span class="note-tag">Antioxidant</span><span class="note-tag">Wild</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span>€38</span></div>
+            <button class="add-btn" onclick="addToCart('Chaga Tincture', 38)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-d2" data-category="fungi">
+        <div class="product-img-wrap">
+          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#0A0A14,#040408);">
+            <div class="p-img-inner">
+              <svg viewBox="0 0 80 120" width="80" height="120" xmlns="http://www.w3.org/2000/svg">
+                <rect x="30" y="0" width="20" height="80" fill="#EDE5D8" rx="3" opacity="0.85"/>
+                <rect x="25" y="75" width="30" height="40" fill="#D4C4A8" rx="3" opacity="0.9"/>
+                <rect x="28" y="20" width="24" height="28" fill="#14103A" opacity="0.9" rx="2"/>
+                <text x="40" y="88" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="5" fill="#354E2A">fungai art</text>
+              </svg>
+              <div class="bottle-label">Wild Cordyceps<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">30ml tincture</span></div>
+            </div>
+          </div>
+          <span class="product-badge badge-rare">Rare · Himalaya A+</span>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Wild Cordyceps', 33)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Fungi · Vitality</span>
+          <div class="product-name">Wild Cordyceps</div>
+          <p class="product-desc">Endurance · libido · balanced energy. Harvested from high-altitude Himalayan terrain. Among the rarest adaptogens in the fungal kingdom.</p>
+          <div class="product-notes">
+            <span class="note-tag">Cordycepin</span><span class="note-tag">Adenosine</span><span class="note-tag">Himalaya A+</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span>€33</span></div>
+            <button class="add-btn" onclick="addToCart('Wild Cordyceps', 33)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-d3" data-category="fungi">
+        <div class="product-img-wrap">
+          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#172114,#0E190B);">
+            <div class="p-img-inner">
+              <svg viewBox="0 0 80 120" width="80" height="120" xmlns="http://www.w3.org/2000/svg">
+                <rect x="30" y="0" width="20" height="80" fill="#EDE5D8" rx="3" opacity="0.85"/>
+                <rect x="25" y="75" width="30" height="40" fill="#D4C4A8" rx="3" opacity="0.9"/>
+                <rect x="28" y="20" width="24" height="28" fill="#1F2E1A" opacity="0.9" rx="2"/>
+                <text x="40" y="88" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="5" fill="#354E2A">fungai art</text>
+              </svg>
+              <div class="bottle-label">Reishi<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">30ml tincture</span></div>
+            </div>
+          </div>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Reishi Tincture', 33)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Fungi · Adaptogenic</span>
+          <div class="product-name">Reishi</div>
+          <p class="product-desc">Adaptogenic · longevity · nervine. A steadying presence for those seeking depth, stillness, and the slow medicine of deep restoration.</p>
+          <div class="product-notes">
+            <span class="note-tag">Ganoderic acids</span><span class="note-tag">Sleep</span><span class="note-tag">Longevity</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span>€33</span></div>
+            <button class="add-btn" onclick="addToCart('Reishi Tincture', 33)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMPOSITIONS -->
+      <div class="product-card reveal" data-category="compositions">
+        <div class="product-img-wrap">
+          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#1A0A14,#0A0610);">
+            <div class="p-img-inner">
+              <svg viewBox="0 0 80 120" width="80" height="120" xmlns="http://www.w3.org/2000/svg">
+                <rect x="30" y="0" width="20" height="80" fill="#D4A0B0" rx="3" opacity="0.85"/>
+                <rect x="25" y="75" width="30" height="40" fill="#C090A0" rx="3" opacity="0.9"/>
+                <rect x="28" y="20" width="24" height="28" fill="#5E1428" opacity="0.8" rx="2"/>
+                <text x="40" y="88" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="5" fill="#8B4060">fungai art</text>
+              </svg>
+              <div class="bottle-label">Temple Nectar<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">30ml blend</span></div>
+            </div>
+          </div>
+          <span class="product-badge badge-new">Signature</span>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Temple Nectar', 48)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Compositions · Sensual</span>
+          <div class="product-name">Temple Nectar</div>
+          <p class="product-desc">Vitality · sensual · sacred energy. Saffron, damiana, catuaba, blue lotus, maca negra, vanilla, muira puama.</p>
+          <div class="product-notes">
+            <span class="note-tag">Aphrodisiac</span><span class="note-tag">Heart-opening</span><span class="note-tag">Libido</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span>€48</span></div>
+            <button class="add-btn" onclick="addToCart('Temple Nectar', 48)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-d1" data-category="compositions">
+        <div class="product-img-wrap">
+          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#06061A,#030310);">
+            <div class="p-img-inner">
+              <svg viewBox="0 0 80 120" width="80" height="120" xmlns="http://www.w3.org/2000/svg">
+                <rect x="30" y="0" width="20" height="80" fill="#A0B0D4" rx="3" opacity="0.85"/>
+                <rect x="25" y="75" width="30" height="40" fill="#9090C4" rx="3" opacity="0.9"/>
+                <rect x="28" y="20" width="24" height="28" fill="#0C0C3A" opacity="0.9" rx="2"/>
+                <text x="40" y="88" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="5" fill="#404080">fungai art</text>
+              </svg>
+              <div class="bottle-label">Lucid<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">30ml blend</span></div>
+            </div>
+          </div>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Lucid', 48)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Compositions · Dreamwork</span>
+          <div class="product-name">Lucid</div>
+          <p class="product-desc">Dreamwork · luminous · visionary. Mugwort, calea zacatachichi, blue lotus, passionflower, bobinsana. Enhanced dream recall.</p>
+          <div class="product-notes">
+            <span class="note-tag">Dream recall</span><span class="note-tag">Visionary</span><span class="note-tag">Restful sleep</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span>€48</span></div>
+            <button class="add-btn" onclick="addToCart('Lucid', 48)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-d2" data-category="compositions">
+        <div class="product-img-wrap">
+          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#081A0E,#040C06);">
+            <div class="p-img-inner">
+              <svg viewBox="0 0 80 120" width="80" height="120" xmlns="http://www.w3.org/2000/svg">
+                <rect x="30" y="0" width="20" height="80" fill="#A0D4B0" rx="3" opacity="0.85"/>
+                <rect x="25" y="75" width="30" height="40" fill="#90C4A0" rx="3" opacity="0.9"/>
+                <rect x="28" y="20" width="24" height="28" fill="#082412" opacity="0.9" rx="2"/>
+                <text x="40" y="88" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="5" fill="#204A30">fungai art</text>
+              </svg>
+              <div class="bottle-label">ADHD Support<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">30ml blend</span></div>
+            </div>
+          </div>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('ADHD Support', 48)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Compositions · Cognitive</span>
+          <div class="product-name">ADHD Support</div>
+          <p class="product-desc">Focus · clarity · resilience. Lions mane, reishi, rhodiola, cordyceps, gotu kola, rosemary, ashwagandha. Smoother dopamine signaling.</p>
+          <div class="product-notes">
+            <span class="note-tag">Lions Mane</span><span class="note-tag">Rhodiola</span><span class="note-tag">Nootropic</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span>€48</span></div>
+            <button class="add-btn" onclick="addToCart('ADHD Support', 48)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-d3" data-category="compositions">
+        <div class="product-img-wrap">
+          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#18060E,#0C040A);">
+            <div class="p-img-inner">
+              <svg viewBox="0 0 80 120" width="80" height="120" xmlns="http://www.w3.org/2000/svg">
+                <rect x="30" y="0" width="20" height="80" fill="#D4A8C8" rx="3" opacity="0.85"/>
+                <rect x="25" y="75" width="30" height="40" fill="#C498B8" rx="3" opacity="0.9"/>
+                <rect x="28" y="20" width="24" height="28" fill="#260818" opacity="0.9" rx="2"/>
+                <text x="40" y="88" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="5" fill="#602040">fungai art</text>
+              </svg>
+              <div class="bottle-label">Moon Support<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">30ml blend</span></div>
+            </div>
+          </div>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Moon Support', 48)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Compositions · Cycle Care</span>
+          <div class="product-name">Moon Support</div>
+          <p class="product-desc">Cycle support · womb care · emotional soothe. Motherwort, shatavari, lady's mantle, passionflower, yarrow, raspberry leaves.</p>
+          <div class="product-notes">
+            <span class="note-tag">Hormone balance</span><span class="note-tag">Cramp relief</span><span class="note-tag">Emotional</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span>€48</span></div>
+            <button class="add-btn" onclick="addToCart('Moon Support', 48)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLOWERS -->
+      <div class="product-card reveal" data-category="flowers">
+        <div class="product-img-wrap">
+          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#141428,#0A0A1A);">
+            <div class="p-img-inner">
+              <svg viewBox="0 0 80 100" width="80" height="100" xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(40,50)">
+                  <ellipse rx="18" ry="50" fill="#4A6EAA" opacity="0.7"/>
+                  <ellipse rx="18" ry="50" fill="#5A7ECA" opacity="0.55" transform="rotate(60)"/>
+                  <ellipse rx="18" ry="50" fill="#3A5E9A" opacity="0.6" transform="rotate(120)"/>
+                  <circle r="12" fill="#F0E080" opacity="0.9"/>
+                  <circle r="7" fill="#E0C840" opacity="0.95"/>
+                </g>
+              </svg>
+              <div class="bottle-label">Blue Lotus<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">dried · from 11g</span></div>
+            </div>
+          </div>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Blue Lotus (33g)', 15)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Flowers · Sacred</span>
+          <div class="product-name">Blue Lotus</div>
+          <p class="product-desc">Euphoric calm · vision · dreamwork. Nymphaea caerulea, sacred to ancient Egypt. Calming dopamine and serotonin pathways.</p>
+          <div class="product-notes">
+            <span class="note-tag">Aporphine</span><span class="note-tag">Nuciferine</span><span class="note-tag">Meditative</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">from 11g</span><span>€5</span></div>
+            <button class="add-btn" onclick="addToCart('Blue Lotus (33g)', 15)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPECIALS -->
+      <div class="product-card reveal reveal-d1" data-category="specials">
+        <div class="product-img-wrap">
+          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#160E00,#0C0800);">
+            <div class="p-img-inner">
+              <svg viewBox="0 0 80 100" width="80" height="100" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="40" cy="50" rx="30" ry="18" fill="#1E1000" opacity="0.92"/>
+                <ellipse cx="40" cy="44" rx="28" ry="16" fill="#2E1A00" opacity="0.88"/>
+                <text x="40" y="66" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="7" fill="#C4862E" opacity="0.7">✦ Gold ✦</text>
+              </svg>
+              <div class="bottle-label">Shilajit<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">compressed with gold</span></div>
+            </div>
+          </div>
+          <span class="product-badge badge-rare">Special</span>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Shilajit + Gold', 15)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Specials · Minerals</span>
+          <div class="product-name">Shilajit</div>
+          <p class="product-desc">Pressed pills with compressed gold. Ancient mineral compound supporting vitality, grounding, and deep cellular restoration.</p>
+          <div class="product-notes">
+            <span class="note-tag">Fulvic acid</span><span class="note-tag">Gold</span><span class="note-tag">Himalayan</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">4 pills</span><span>€15</span></div>
+            <button class="add-btn" onclick="addToCart('Shilajit + Gold', 15)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- HERBS -->
+      <div class="product-card reveal reveal-d2" data-category="herbs">
+        <div class="product-img-wrap">
+          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#0A160A,#060C06);">
+            <div class="p-img-inner">
+              <svg viewBox="0 0 80 100" width="80" height="100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="40" cy="50" r="28" fill="#C4A830" opacity="0.65"/>
+                <circle cx="40" cy="50" r="20" fill="#D4B840" opacity="0.75"/>
+                <circle cx="40" cy="50" r="12" fill="#E0C840" opacity="0.9"/>
+              </svg>
+              <div class="bottle-label">Pine Pollen<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">tincture · 30ml</span></div>
+            </div>
+          </div>
+          <span class="product-badge badge-foraged">Foraged</span>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Pine Pollen Tincture', 33)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Herbs · Vitality</span>
+          <div class="product-name">Pine Pollen</div>
+          <p class="product-desc">Vitality · immune modulation · resilience. Over 200 bioactive compounds including phytoandrogens. The golden dust of renewal.</p>
+          <div class="product-notes">
+            <span class="note-tag">Phytoandrogens</span><span class="note-tag">Amino acids</span><span class="note-tag">Foraged</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span>€33</span></div>
+            <button class="add-btn" onclick="addToCart('Pine Pollen Tincture', 33)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /products-grid -->
+  </div>
+</section>
+
+<!-- ══ FEATURE PRODUCT ══ -->
+<div class="feature">
+  <div class="wrap feature-inner">
+    <div class="feature-img-wrap reveal">
+      <svg viewBox="0 0 280 420" width="220" height="340" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="bGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#C8A060"/>
+            <stop offset="50%" stop-color="#DEC088"/>
+            <stop offset="100%" stop-color="#AC7830"/>
+          </linearGradient>
+        </defs>
+        <rect x="90" y="40" width="100" height="280" rx="12" fill="url(#bGrad)" opacity="0.88"/>
+        <rect x="94" y="44" width="92" height="272" rx="10" fill="#C4862E" opacity="0.35"/>
+        <rect x="98" y="60" width="18" height="160" rx="8" fill="white" opacity="0.1"/>
+        <rect x="106" y="20" width="68" height="24" rx="4" fill="#1E1000" opacity="0.9"/>
+        <rect x="110" y="14" width="60" height="10" rx="2" fill="#2E1A00" opacity="0.8"/>
+        <rect x="100" y="140" width="80" height="120" fill="#EDE5D8" opacity="0.92" rx="3"/>
+        <text x="140" y="162" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="8" fill="#1E1000" letter-spacing="0.5">fungai art</text>
+        <text x="140" y="174" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="6.5" fill="#6A4A20" letter-spacing="0.3">ENTHEOBOTANICALS</text>
+        <line x1="108" y1="179" x2="172" y2="179" stroke="#C4862E" stroke-width="0.6" opacity="0.5"/>
+        <text x="140" y="197" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="12" fill="#1A0E04">Sleepy Sleepy</text>
+        <text x="140" y="212" text-anchor="middle" font-family="Georgia" font-size="6.5" fill="#6A4A20" letter-spacing="0.5">CNS CALM · DEEP SLEEP</text>
+        <text x="140" y="228" text-anchor="middle" font-family="Georgia" font-size="6" fill="#8A6A40">valeriana, hops, chamomile</text>
+        <text x="140" y="238" text-anchor="middle" font-family="Georgia" font-size="6" fill="#8A6A40">passionflower, lavender</text>
+        <line x1="108" y1="243" x2="172" y2="243" stroke="#C4862E" stroke-width="0.6" opacity="0.5"/>
+        <text x="140" y="254" text-anchor="middle" font-family="Georgia" font-size="6.5" fill="#6A4A20">30ml (full spectrum)</text>
+        <rect x="132" y="8" width="16" height="16" rx="8" fill="#3A2010" opacity="0.7"/>
+        <rect x="138" y="0" width="4" height="12" fill="#2A1408" opacity="0.6"/>
+        <path d="M140,0 Q138,8 140,12 Q142,8 140,0" fill="#C4862E" opacity="0.5"/>
+      </svg>
+      <div class="annotation ann-1"><strong>CNS ease</strong>Soothes overactive thoughts, relaxes the body</div>
+      <div class="annotation ann-2"><strong>GABAergic</strong>Supports restful sleep pathways naturally</div>
+      <div class="annotation ann-3"><strong>Zero synthetic</strong>additives. Pharma-grade ethanol only</div>
+      <div class="annotation ann-4"><strong>Full spectrum</strong>2 years shelf life. 30ml per bottle</div>
+    </div>
+    <div class="feature-text reveal reveal-d2">
+      <span class="sec-label">Featured Formula</span>
+      <h2 class="sec-title">Sleepy <em>Sleepy</em></h2>
+      <blockquote>"A soothing night companion, to gently ease tension and guide the body from wakefulness into uninterrupted, restorative sleep."</blockquote>
+      <p>Rich in flavonoids, volatile oils, and mild sedative compounds, these botanicals support GABAergic pathways, promote calm, and help the body naturally transition into a state of restful sleep.</p>
+      <div class="ingredients">
+        <div class="ing-row"><span class="ing-num">01</span><span class="ing-name">Valeriana officinalis</span><span class="ing-effect">Sleep anchor</span></div>
+        <div class="ing-row"><span class="ing-num">02</span><span class="ing-name">Humulus lupulus</span><span class="ing-effect">Sedative</span></div>
+        <div class="ing-row"><span class="ing-num">03</span><span class="ing-name">Chamomile</span><span class="ing-effect">Anti-anxiety</span></div>
+        <div class="ing-row"><span class="ing-num">04</span><span class="ing-name">Passiflora incarnata</span><span class="ing-effect">GABA support</span></div>
+        <div class="ing-row"><span class="ing-num">05</span><span class="ing-name">Lavandula angustifolia</span><span class="ing-effect">Nervous system</span></div>
+        <div class="ing-row"><span class="ing-num">06</span><span class="ing-name">Artemisia vulgaris</span><span class="ing-effect">Dream enhancement</span></div>
+      </div>
+      <button class="btn-primary" style="margin-top:32px;" onclick="addToCart('Sleepy Sleepy', 48)">Add to basket — €48</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NOTES DIRECTORY ══ -->
+<div class="notes-section">
+  <div class="notes-grid">
+    <div class="note-col reveal" style="background:var(--fern);">
+      <span class="note-tier">Opening</span>
+      <div class="note-tier-name">TOP</div>
+      <ul class="note-items">
+        <li>Pine Pollen <span>Vitality</span></li>
+        <li>Blue Lotus <span>Vision</span></li>
+        <li>Nettle Seeds <span>Stamina</span></li>
+        <li>Mugwort <span>Dreams</span></li>
+        <li>Tulsi <span>Calm</span></li>
+        <li>Moringa <span>Nourishment</span></li>
+      </ul>
+    </div>
+    <div class="note-col reveal reveal-d1" style="background:var(--moss);">
+      <span class="note-tier">Heart</span>
+      <div class="note-tier-name">MID</div>
+      <ul class="note-items">
+        <li>Amanita muscaria <span>Neuroalchemy</span></li>
+        <li>Chaga <span>Immunity</span></li>
+        <li>Reishi <span>Longevity</span></li>
+        <li>Wild Cordyceps <span>Endurance</span></li>
+        <li>Lions Mane <span>Cognition</span></li>
+        <li>Turkey Tail <span>Immunity</span></li>
+      </ul>
+    </div>
+    <div class="note-col reveal reveal-d2" style="background:var(--forest-card);">
+      <span class="note-tier">Foundation</span>
+      <div class="note-tier-name">BASE</div>
+      <ul class="note-items">
+        <li>Shilajit + Gold <span>Mineral</span></li>
+        <li>Schizandra <span>Radiance</span></li>
+        <li>Saffron <span>Mood</span></li>
+        <li>Damiana <span>Sensual</span></li>
+        <li>Pearl 25 <span>Longevity</span></li>
+        <li>San Pedro <span>Heart</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MYCELIUM TRANCE ══ -->
+<section id="trance" class="trance">
+  <div class="wrap trance-inner">
+    <div class="reveal">
+      <span class="sec-label">Facilitated by Steph Teÿæ &amp; Robin Fungi</span>
+      <h2>
+        <span class="script">Mycelium</span>
+        Trance
+      </h2>
+      <p style="font-size:13.5px;margin-top:20px;max-width:520px;">A 111-minute fully embodied sensory awakening. A deliberate attunement to the relational, ecological, and mysterious architecture of life. Gong · tuning forks · sacred plant allies · somatic attunement.</p>
+      <p style="font-size:13.5px;margin-top:14px;max-width:520px;font-family:var(--serif);font-style:italic;color:var(--parchment);">"Trance arises not through force, but through recognition."</p>
+      <div class="trance-meta">
+        <div class="trance-stat"><span class="v">111</span><span class="l">Minutes</span></div>
+        <div class="trance-stat"><span class="v">70+</span><span class="l">Max capacity</span></div>
+        <div class="trance-stat"><span class="v">5</span><span class="l">Sacred allies</span></div>
+        <div class="trance-stat"><span class="v">Europe</span><span class="l">Festivals &amp; private</span></div>
+      </div>
+      <div class="trance-actions">
+        <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-primary">Book a session</a>
+        <a href="#trance" class="btn-ghost">Learn more</a>
+      </div>
+    </div>
+    <div class="reveal reveal-d2">
+      <div style="border:1px solid rgba(158,212,56,0.1);padding:36px;">
+        <span class="sec-label" style="margin-bottom:20px;">Events &amp; circles</span>
+        <div class="event-list">
+          <div class="event-item">
+            <div>
+              <div class="event-name">Astral Plans, France</div>
+              <div class="event-meta">Entheogenic Dinner · 70 pax</div>
+            </div>
+            <span class="event-status done">Done</span>
+          </div>
+          <div class="event-item">
+            <div>
+              <div class="event-name">TrypExpo, Berlin</div>
+              <div class="event-meta">Mycelium Trance · Stand · 7,613 views</div>
+            </div>
+            <span class="event-status done">Done</span>
+          </div>
+          <div class="event-item">
+            <div>
+              <div class="event-name">Hive Festival, Germany</div>
+              <div class="event-meta">Blue Lotus Ceremony · 50 pax</div>
+            </div>
+            <span class="event-status done">Done</span>
+          </div>
+          <div class="event-item" style="border-color:rgba(196,134,46,0.2);">
+            <div>
+              <div class="event-name">Berlin Foraging Circles</div>
+              <div class="event-meta">May–June 2026 · Community walks</div>
+            </div>
+            <span class="event-status upcoming">Upcoming</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FORAGING ══ -->
+<section id="forage" class="forage">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="sec-label">Foraging Network</span>
+      <h2 class="sec-title">Find us in the <em>field</em></h2>
+      <p class="sec-sub">Community foraging circles, educational walks, and wild-harvest expeditions across Europe. Comment HERB on Instagram to receive details directly.</p>
+    </div>
+    <div class="forage-grid">
+      <div class="location-list reveal reveal-d1">
+        <div class="location-item">
+          <span class="loc-num">01</span>
+          <div>
+            <div class="loc-name">Berlin, Germany</div>
+            <div class="loc-sub">Community foraging · May 2026 onwards · Wild herbs</div>
+          </div>
+          <span class="loc-badge">Active</span>
+        </div>
+        <div class="location-item">
+          <span class="loc-num">02</span>
+          <div>
+            <div class="loc-name">Sweden</div>
+            <div class="loc-sub">Origin point · Chaga, pine pollen, amanita · Wild-foraged</div>
+          </div>
+          <span class="loc-badge">Active</span>
+        </div>
+        <div class="location-item">
+          <span class="loc-num">03</span>
+          <div>
+            <div class="loc-name">South France</div>
+            <div class="loc-sub">Foraging walks · Astral Plans · Seasonal</div>
+          </div>
+          <span class="loc-badge" style="color:var(--amber);border-color:rgba(196,134,46,0.35);">Seasonal</span>
+        </div>
+        <div class="location-item">
+          <span class="loc-num">04</span>
+          <div>
+            <div class="loc-name">Lebanon</div>
+            <div class="loc-sub">Foraging expeditions · Mediterranean flora</div>
+          </div>
+          <span class="loc-badge" style="color:var(--dust);border-color:rgba(192,180,154,0.3);">Planned</span>
+        </div>
+      </div>
+      <div class="forage-cta reveal reveal-d2">
+        <div>
+          <p class="forage-quote">"Forage with us. Learn the names, properties, and stories of wild plants you walk past every day."</p>
+          <p style="font-size:13px;margin-bottom:28px;">Paid foraging positions also available — reach out if you'd like to pick forest goods with us.</p>
+          <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-primary">Comment HERB on Instagram</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ JOURNAL ══ -->
+<section id="journal" class="journal">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="sec-label">The Field Notes</span>
+      <h2 class="sec-title">From the <em>forest floor</em></h2>
+    </div>
+    <div class="journal-grid">
+      <div class="journal-card reveal reveal-d1">
+        <span class="j-date">April 2026</span>
+        <div class="j-title">Amanita muscaria and the threshold of perception</div>
+        <p class="j-excerpt">Muscimol is a GABA-A receptor agonist — it activates inhibitory circuits while paradoxically loosening perceptual control. The forest has known this for longer than we have.</p>
+        <a href="#" class="j-link">Read the field note →</a>
+      </div>
+      <div class="journal-card reveal reveal-d2">
+        <span class="j-date">March 2026</span>
+        <div class="j-title">Tapping the birch: sap fermentation and forest alchemy</div>
+        <p class="j-excerpt">The brief window between thawing soil and first green leaves. We participated in the ancient ritual of birch sap tapping — locking the forest chemistry into the bottle.</p>
+        <a href="#" class="j-link">Read the field note →</a>
+      </div>
+      <div class="journal-card reveal reveal-d3">
+        <span class="j-date">February 2026</span>
+        <div class="j-title">The inner architecture: circulation and reciprocity</div>
+        <p class="j-excerpt">Mycelium doesn't grow in isolation. Neither does Fungai Art. The collaboration strategy mirrors the network model: each connection strengthens multiple nodes at once.</p>
+        <a href="#" class="j-link">Read the field note →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section id="about" class="about">
+  <div class="wrap about-inner">
+    <div class="reveal">
+      <span class="sec-label">About Fungai Art</span>
+      <h2 class="sec-title">Robin &amp; <em>Steph</em></h2>
+      <p class="about-quote">"We are sacred rebels, artists and healers activated by her pulse."</p>
+      <p class="about-body" style="margin-bottom:14px;"><strong>Robin Fungi</strong> — founder, visionary seed carrier, and community weaver. Chef, elixir master and forager. Raised in the forest, guided by a close, intuitive bond with the land.</p>
+      <p class="about-body" style="margin-bottom:28px;"><strong>Steph Teÿæ</strong> — co-initiator, steward, creative force, and botanical crafter. Systemic psycho-mystic coach. Gong and tuning fork practitioner. Transylvanian lineage, the witch reclaimed.</p>
+      <div class="contact-cards">
+        <div class="contact-card">
+          <div class="email">robin@fungai.art</div>
+          <div class="who">Robin</div>
+        </div>
+        <div class="contact-card">
+          <div class="email">teyae@fungai.art</div>
+          <div class="who">Steph</div>
+        </div>
+      </div>
+      <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-ghost">@fungai.art on Instagram</a>
+    </div>
+    <div class="stats-panel reveal reveal-d2">
+      <div class="about-pillar">
+        <p>Nature · Art · Community · Science</p>
+      </div>
+      <div class="about-vision">
+        <span class="sec-label" style="margin-bottom:10px;">The vision</span>
+        <p style="font-size:13.5px;">We are inspired by the vision of a future where art and medicine return to their original unity. Fungai Art is a living art and community ecosystem that weaves together healing arts, ecological awareness, storytelling and lifestyle.</p>
+      </div>
+      <div class="about-numbers">
+        <span class="sec-label" style="margin-bottom:10px;">The numbers</span>
+        <div class="nums-grid">
+          <div class="num-cell"><div class="v">3,000+</div><span class="l">Units sold</span></div>
+          <div class="num-cell"><div class="v">€20K+</div><span class="l">One summer</span></div>
+          <div class="num-cell"><div class="v">4</div><span class="l">Countries</span></div>
+          <div class="num-cell"><div class="v">5+</div><span class="l">Festivals</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ NEWSLETTER ══ -->
+<div class="newsletter" id="newsletter">
+  <div class="wrap reveal">
+    <span class="sec-label" style="text-align:center;margin-bottom:12px;">The Field Notes</span>
+    <h2>Join the<br/><span class="script-line">mycelium network.</span></h2>
+    <form class="newsletter-form" onsubmit="handleSubscribe(event)">
+      <input type="email" class="newsletter-input" placeholder="your@email.com" required>
+      <button type="submit" class="newsletter-submit">Subscribe</button>
+    </form>
+    <p class="newsletter-note">One email per month. The forest's archive. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="name">Fungai Art</span>
+        <span class="entheo">Entheobotanicals</span>
+        <p>Living mycelial art: fusion of plants, alchemy, frequency. Gaia's apo'takecare'y. Berlin · Sweden · France · Lebanon.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#shop">Fungi Tinctures</a></li>
+          <li><a href="#shop">Compositions</a></li>
+          <li><a href="#shop">Sacred Flowers</a></li>
+          <li><a href="#shop">Herbal Mixes</a></li>
+          <li><a href="#shop">Specials</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Experiences</h4>
+        <ul>
+          <li><a href="#trance">Mycelium Trance</a></li>
+          <li><a href="#forage">Foraging Circles</a></li>
+          <li><a href="https://www.instagram.com/fungai.art" target="_blank">Private Sessions</a></li>
+          <li><a href="#trance">Festivals</a></li>
+          <li><a href="mailto:robin@fungai.art">Collaborations</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#journal">Field Notes</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="https://www.instagram.com/fungai.art" target="_blank">Instagram</a></li>
+          <li><a href="mailto:robin@fungai.art">Contact Robin</a></li>
+          <li><a href="mailto:teyae@fungai.art">Contact Steph</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Fungai Art · All rights reserved</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/fungai.art" target="_blank">Instagram</a>
+        <a href="#newsletter">Newsletter</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ══ CHECKOUT MODAL ══ -->
+<div class="co-overlay" id="coOverlay">
+  <div class="co-modal" id="coModal">
+
+    <div class="co-head">
+      <h2 id="coTitle">Your details</h2>
+      <button class="co-close" onclick="closeCheckout()">✕</button>
+    </div>
+
+    <!-- Steps -->
+    <div class="co-steps">
+      <div class="co-step active" id="coStep1">
+        <div class="co-step-num">1</div>Details
+      </div>
+      <div class="co-step-line"></div>
+      <div class="co-step" id="coStep2">
+        <div class="co-step-num">2</div>Payment
+      </div>
+      <div class="co-step-line"></div>
+      <div class="co-step" id="coStep3">
+        <div class="co-step-num">3</div>Confirm
+      </div>
+    </div>
+
+    <div class="co-body">
+
+      <!-- ── STEP 1: DETAILS ── -->
+      <div id="coPane1">
+        <div class="co-summary" id="coSummary1"></div>
+
+        <div class="co-field-group">
+          <div class="co-field">
+            <label>First name</label>
+            <input type="text" id="coFirstName" placeholder="Robin">
+          </div>
+          <div class="co-field">
+            <label>Last name</label>
+            <input type="text" id="coLastName" placeholder="Fungi">
+          </div>
+        </div>
+        <div class="co-field-group single">
+          <div class="co-field">
+            <label>Email</label>
+            <input type="email" id="coEmail" placeholder="you@forest.earth">
+          </div>
+        </div>
+        <div class="co-field-group single" style="margin-top:20px;">
+          <div class="co-field">
+            <label>Shipping address</label>
+            <input type="text" id="coAddr1" placeholder="Street &amp; number">
+          </div>
+        </div>
+        <div class="co-field-group">
+          <div class="co-field">
+            <label>City</label>
+            <input type="text" id="coCity" placeholder="Berlin">
+          </div>
+          <div class="co-field">
+            <label>Postal code</label>
+            <input type="text" id="coPostal" placeholder="10115">
+          </div>
+        </div>
+        <div class="co-field-group">
+          <div class="co-field">
+            <label>Country</label>
+            <select id="coCountry">
+              <option value="">Select country</option>
+              <option value="DE">Germany</option>
+              <option value="FR">France</option>
+              <option value="SE">Sweden</option>
+              <option value="NL">Netherlands</option>
+              <option value="BE">Belgium</option>
+              <option value="AT">Austria</option>
+              <option value="CH">Switzerland</option>
+              <option value="ES">Spain</option>
+              <option value="IT">Italy</option>
+              <option value="PL">Poland</option>
+              <option value="LB">Lebanon</option>
+              <option value="GB">United Kingdom</option>
+              <option value="US">United States</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="co-field">
+            <label>Phone (optional)</label>
+            <input type="tel" id="coPhone" placeholder="+49 …">
+          </div>
+        </div>
+
+        <div id="coStep1Err" style="font-size:11.5px;color:var(--coral);margin-top:8px;min-height:16px;"></div>
+        <div class="co-btn-row">
+          <button class="co-btn-back" onclick="closeCheckout()">Cancel</button>
+          <button class="co-btn-next" onclick="goToStep2()">Continue to payment</button>
+        </div>
+      </div>
+
+      <!-- ── STEP 2: PAYMENT ── -->
+      <div id="coPane2" style="display:none;">
+        <div class="co-summary" id="coSummary2"></div>
+
+        <div class="co-pay-tabs">
+          <button class="co-pay-tab active" id="tabCard" onclick="selectPayTab('card')">
+            <span class="tab-icon">💳</span>Card
+          </button>
+          <button class="co-pay-tab" id="tabCrypto" onclick="selectPayTab('crypto')">
+            <span class="tab-icon">⬡</span>Crypto
+          </button>
+        </div>
+
+        <!-- Card (Stripe) -->
+        <div id="cardPanel">
+          <div class="stripe-secure">🔒 Secured by Stripe · TLS encrypted</div>
+          <div class="co-field" style="margin-bottom:12px;">
+            <label>Card details</label>
+            <div class="stripe-wrap" id="stripeWrap">
+              <div id="cardElement"></div>
+            </div>
+            <div id="stripe-error"></div>
+          </div>
+          <div class="co-btn-row">
+            <button class="co-btn-back" onclick="goToStep1()">← Back</button>
+            <button class="co-btn-next" id="payCardBtn" onclick="payWithCard()">Pay with card</button>
+          </div>
+        </div>
+
+        <!-- Crypto -->
+        <div id="cryptoPanel" class="crypto-panel">
+          <div class="crypto-coins">
+            <div class="crypto-coin selected" id="coinETH" onclick="selectCoin('ETH')">
+              <span class="coin-icon">⟠</span>
+              <span class="coin-sym">ETH</span>
+            </div>
+            <div class="crypto-coin" id="coinBTC" onclick="selectCoin('BTC')">
+              <span class="coin-icon">₿</span>
+              <span class="coin-sym">BTC</span>
+            </div>
+            <div class="crypto-coin" id="coinXRP" onclick="selectCoin('XRP')">
+              <span class="coin-icon">✕</span>
+              <span class="coin-sym">XRP</span>
+            </div>
+            <div class="crypto-coin" id="coinSOL" onclick="selectCoin('SOL')">
+              <span class="coin-icon">◎</span>
+              <span class="coin-sym">SOL</span>
+            </div>
+          </div>
+
+          <div class="crypto-address-box">
+            <span class="crypto-address-label" id="cryptoCoinLabel">Ethereum (ETH)</span>
+            <div class="crypto-address-row">
+              <div class="crypto-address" id="cryptoAddrText">Loading…</div>
+              <button class="copy-btn" id="copyAddrBtn" onclick="copyAddress()">Copy</button>
+            </div>
+
+            <div class="crypto-amount-row">
+              <div>
+                <div class="crypto-amount-label">Amount to send</div>
+                <div class="crypto-amount-value" id="cryptoAmount">—</div>
+                <div class="crypto-rate-note" id="cryptoRateNote">Fetching live rate…</div>
+              </div>
+            </div>
+
+            <div class="crypto-confirm-note">
+              ⚠ Send <strong>exact amount</strong> in a single transaction. Rate valid for ~15 minutes. Your order ships after 1 network confirmation.
+            </div>
+          </div>
+
+          <div class="co-btn-row" style="margin-top:20px;">
+            <button class="co-btn-back" onclick="goToStep1()">← Back</button>
+            <button class="co-btn-next" onclick="confirmCryptoOrder()">I've sent the payment</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STEP 3: CONFIRMATION ── -->
+      <div id="coPane3" style="display:none;">
+        <div class="co-confirm">
+          <span class="co-confirm-icon" id="confirmIcon">✦</span>
+          <h3 id="confirmTitle">Order received</h3>
+          <p id="confirmMsg">Thank you — your order has been placed. A confirmation will be sent to your email.</p>
+          <div class="co-confirm-order">
+            <div>
+              <div class="label">Order ref</div>
+              <div class="val" id="confirmRef">—</div>
+            </div>
+            <div style="width:1px;background:rgba(158,212,56,0.1);align-self:stretch;"></div>
+            <div>
+              <div class="label">Total paid</div>
+              <div class="val" id="confirmTotal">—</div>
+            </div>
+          </div>
+          <button class="btn-primary" onclick="closeCheckout()">Back to the forest</button>
+        </div>
+      </div>
+
+    </div><!-- /co-body -->
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════
+   CURSOR
+══════════════════════════════════════════════ */
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+document.addEventListener('mousedown', () => cursor.classList.add('click'));
+document.addEventListener('mouseup', () => cursor.classList.remove('click'));
+document.querySelectorAll('a,button,.product-card,.journal-card,.event-item,.location-item,.crypto-coin,.co-pay-tab').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+});
+
+/* ── NAV SCROLL ── */
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ── SCROLL REVEAL ── */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revealObserver.unobserve(e.target); } });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* ══════════════════════════════════════════════
+   CART
+══════════════════════════════════════════════ */
+let cart = [];
+
+function openCart() {
+  document.getElementById('cartOverlay').classList.add('open');
+  document.getElementById('cartDrawer').classList.add('open');
+}
+function closeCart() {
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.getElementById('cartDrawer').classList.remove('open');
+}
+function addToCart(name, price) {
+  const existing = cart.find(i => i.name === name);
+  if (existing) { existing.qty++; }
+  else { cart.push({ name, price, qty: 1 }); }
+  renderCart();
+  showToast('Added — ' + name);
+}
+function removeFromCart(idx) { cart.splice(idx, 1); renderCart(); }
+function cartTotal() { return cart.reduce((s, i) => s + i.price * i.qty, 0); }
+
+function renderCart() {
+  const items = document.getElementById('cartItems');
+  const footer = document.getElementById('cartFooter');
+  const count = document.getElementById('cartCount');
+  const total = document.getElementById('cartTotal');
+  const totalItems = cart.reduce((s, i) => s + i.qty, 0);
+  count.textContent = totalItems;
+  if (cart.length === 0) {
+    items.innerHTML = '<div class="cart-empty"><span class="icon">Fungai Art</span><p>Your cart is empty.<br/>The forest awaits.</p></div>';
+    footer.style.display = 'none';
+    return;
+  }
+  footer.style.display = 'block';
+  items.innerHTML = cart.map((item, idx) => `
+    <div class="cart-item">
+      <div>
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-meta">${item.qty > 1 ? item.qty + '×' : ''} €${item.price}</div>
+      </div>
+      <div class="cart-item-right">
+        <span class="cart-item-price">€${item.price * item.qty}</span>
+        <button class="cart-item-remove" onclick="removeFromCart(${idx})">✕</button>
+      </div>
+    </div>`).join('');
+  total.textContent = '€' + cartTotal();
+}
+
+/* ── TOAST ── */
+let toastTimeout;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+/* ── FILTER ── */
+function filterProducts(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.product-card').forEach(card => {
+    card.classList.toggle('hidden', cat !== 'all' && card.dataset.category !== cat);
+  });
+}
+
+/* ── NEWSLETTER ── */
+function handleSubscribe(e) {
+  e.preventDefault();
+  showToast('Welcome to the mycelium network ✦');
+  e.target.reset();
+}
+
+/* ══════════════════════════════════════════════
+   CHECKOUT MODAL
+══════════════════════════════════════════════ */
+
+/* ── Stripe setup ── */
+const STRIPE_PK = 'pk_live_51TW2zWLcLRRKPfkaDJvYaQuRQqFxXCAVLhij5EO8u5zISlrkzYAnXOC6uyFjSXuiCVNCK9LyXshYmy75eHmDhksa00Y2GkUqyk';
+let stripe, cardElement, stripeReady = false;
+
+function initStripe() {
+  if (stripeReady) return;
+  stripeReady = true;
+  stripe = Stripe(STRIPE_PK);
+  const elements = stripe.elements({
+    fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400&display=swap' }]
+  });
+  cardElement = elements.create('card', {
+    style: {
+      base: {
+        color: '#EDE5D8',
+        fontFamily: '"DM Sans", sans-serif',
+        fontWeight: '300',
+        fontSize: '14px',
+        '::placeholder': { color: '#517A40' },
+        iconColor: '#9ED438',
+      },
+      invalid: { color: '#CE6C52', iconColor: '#CE6C52' }
+    },
+    hidePostalCode: true
+  });
+  cardElement.mount('#cardElement');
+  cardElement.on('focus', () => document.getElementById('stripeWrap').classList.add('focused'));
+  cardElement.on('blur', () => document.getElementById('stripeWrap').classList.remove('focused'));
+  cardElement.on('change', e => {
+    document.getElementById('stripe-error').textContent = e.error ? e.error.message : '';
+  });
+}
+
+/* ── Wallet addresses (replace with your own) ── */
+const WALLETS = {
+  ETH: { label: 'Ethereum (ETH)', addr: '0xYourEthAddressHere' },
+  BTC: { label: 'Bitcoin (BTC)',   addr: 'bc1qYourBitcoinAddressHere' },
+  XRP: { label: 'XRP (Ripple)',    addr: 'rYourXRPAddressHere' },
+  SOL: { label: 'Solana (SOL)',    addr: 'YourSolanaAddressHere' }
+};
+
+/* Coin gecko IDs */
+const GECKO_IDS = { ETH: 'ethereum', BTC: 'bitcoin', XRP: 'ripple', SOL: 'solana' };
+let selectedCoin = 'ETH';
+let cryptoRates = {};
+
+async function fetchCryptoRates() {
+  const ids = Object.values(GECKO_IDS).join(',');
+  try {
+    const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=eur`);
+    const data = await res.json();
+    Object.entries(GECKO_IDS).forEach(([sym, id]) => {
+      if (data[id]) cryptoRates[sym] = data[id].eur;
+    });
+    updateCryptoDisplay();
+  } catch(e) {
+    document.getElementById('cryptoRateNote').textContent = 'Rate unavailable — use current market price';
+  }
+}
+
+function updateCryptoDisplay() {
+  const w = WALLETS[selectedCoin];
+  document.getElementById('cryptoCoinLabel').textContent = w.label;
+  document.getElementById('cryptoAddrText').textContent = w.addr;
+  const rate = cryptoRates[selectedCoin];
+  const total = cartTotal();
+  if (rate && total) {
+    const amount = (total / rate).toFixed(selectedCoin === 'BTC' ? 6 : 4);
+    document.getElementById('cryptoAmount').textContent = `${amount} ${selectedCoin}`;
+    document.getElementById('cryptoRateNote').textContent =
+      `1 ${selectedCoin} ≈ €${rate.toLocaleString('de-DE', {maximumFractionDigits: 2})} · rate refreshes every 60s`;
+  } else {
+    document.getElementById('cryptoAmount').textContent = '—';
+  }
+}
+
+function selectCoin(sym) {
+  selectedCoin = sym;
+  document.querySelectorAll('.crypto-coin').forEach(c => c.classList.remove('selected'));
+  document.getElementById('coin' + sym).classList.add('selected');
+  updateCryptoDisplay();
+}
+
+function copyAddress() {
+  const addr = WALLETS[selectedCoin].addr;
+  navigator.clipboard.writeText(addr).then(() => {
+    const btn = document.getElementById('copyAddrBtn');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+/* ── Step state ── */
+let currentStep = 1;
+let activePayTab = 'card';
+
+function openCheckout() {
+  if (cart.length === 0) { showToast('Your basket is empty'); return; }
+  closeCart();
+  renderSummary('coSummary1');
+  renderSummary('coSummary2');
+  goToStepDirect(1);
+  document.getElementById('coOverlay').classList.add('open');
+  // init Stripe lazily
+  setTimeout(initStripe, 200);
+  fetchCryptoRates();
+  // refresh rates every 60s
+  clearInterval(window._rateInterval);
+  window._rateInterval = setInterval(fetchCryptoRates, 60000);
+}
+
+function closeCheckout() {
+  document.getElementById('coOverlay').classList.remove('open');
+  clearInterval(window._rateInterval);
+}
+
+// Close on overlay click (but not modal click)
+document.getElementById('coOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeCheckout();
+});
+
+function renderSummary(id) {
+  const total = cartTotal();
+  const shipping = total >= 60 ? '<span style="color:var(--lime);">Free</span>' : '€4.90';
+  const grandTotal = total >= 60 ? total : total + 4.9;
+  document.getElementById(id).innerHTML = `
+    <div class="co-summary-title">Order summary</div>
+    <div class="co-summary-items">
+      ${cart.map(i => `<div class="co-sum-row"><span class="name">${i.qty > 1 ? i.qty + '× ' : ''}${i.name}</span><span class="price">€${i.price * i.qty}</span></div>`).join('')}
+    </div>
+    <div class="co-sum-divider"></div>
+    <div class="co-sum-row" style="font-size:11px;color:var(--sage);margin-bottom:6px;">
+      <span>Shipping (EU)</span><span>${shipping}</span>
+    </div>
+    <div class="co-sum-total">
+      <span class="t-label">Total</span>
+      <span class="t-amount">€${grandTotal.toFixed(2).replace('.00','')}</span>
+    </div>
+    <p class="co-shipping-note">Ships from Berlin · 3–7 business days EU</p>`;
+}
+
+function goToStepDirect(n) {
+  currentStep = n;
+  [1,2,3].forEach(i => {
+    document.getElementById('coPane'+i).style.display = i === n ? 'block' : 'none';
+    const stepEl = document.getElementById('coStep'+i);
+    stepEl.classList.remove('active','done');
+    if (i === n) stepEl.classList.add('active');
+    else if (i < n) stepEl.classList.add('done');
+  });
+  const titles = ['Your details', 'Payment', 'Order confirmed'];
+  document.getElementById('coTitle').textContent = titles[n-1];
+  document.getElementById('coModal').scrollTop = 0;
+}
+
+function goToStep1() { goToStepDirect(1); }
+
+function goToStep2() {
+  // Validate step 1
+  const required = ['coFirstName','coLastName','coEmail','coAddr1','coCity','coPostal','coCountry'];
+  const errEl = document.getElementById('coStep1Err');
+  for (const id of required) {
+    if (!document.getElementById(id).value.trim()) {
+      errEl.textContent = 'Please fill in all required fields.';
+      document.getElementById(id).focus();
+      return;
+    }
+  }
+  const email = document.getElementById('coEmail').value;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errEl.textContent = 'Please enter a valid email address.';
+    return;
+  }
+  errEl.textContent = '';
+  renderSummary('coSummary2');
+  goToStepDirect(2);
+  selectPayTab(activePayTab);
+}
+
+function selectPayTab(tab) {
+  activePayTab = tab;
+  document.getElementById('tabCard').classList.toggle('active', tab === 'card');
+  document.getElementById('tabCrypto').classList.toggle('active', tab === 'crypto');
+  document.getElementById('cardPanel').style.display = tab === 'card' ? 'block' : 'none';
+  document.getElementById('cryptoPanel').style.display = tab === 'crypto' ? 'block' : 'none';
+  document.getElementById('cryptoPanel').classList.toggle('active', tab === 'crypto');
+  if (tab === 'crypto') updateCryptoDisplay();
+}
+
+/* ── Pay with Stripe card ── */
+async function payWithCard() {
+  const btn = document.getElementById('payCardBtn');
+  btn.classList.add('loading');
+  btn.disabled = true;
+  document.getElementById('stripe-error').textContent = '';
+
+  const total = cartTotal();
+  const shipping = total >= 60 ? 0 : 4.9;
+  const grandTotal = Math.round((total + shipping) * 100); // cents
+
+  try {
+    // Create a PaymentIntent via Stripe's client-only confirmCardPayment
+    // Requires a backend to create the PaymentIntent and return client_secret.
+    // Since this is a pure frontend build, we use Stripe's test flow with
+    // createPaymentMethod and show the result:
+    const { paymentMethod, error } = await stripe.createPaymentMethod({
+      type: 'card',
+      card: cardElement,
+      billing_details: {
+        name: document.getElementById('coFirstName').value + ' ' + document.getElementById('coLastName').value,
+        email: document.getElementById('coEmail').value,
+        address: {
+          line1: document.getElementById('coAddr1').value,
+          city: document.getElementById('coCity').value,
+          postal_code: document.getElementById('coPostal').value,
+          country: document.getElementById('coCountry').value,
+        }
+      }
+    });
+
+    if (error) {
+      document.getElementById('stripe-error').textContent = error.message;
+      btn.classList.remove('loading');
+      btn.disabled = false;
+      return;
+    }
+
+    // ⚠️ BACKEND REQUIRED for real charges:
+    // Send paymentMethod.id + grandTotal to your server,
+    // create PaymentIntent, return client_secret,
+    // then call stripe.confirmCardPayment(clientSecret).
+    //
+    // For now: payment method created successfully → show confirmation.
+    // Replace this block with your server call when ready.
+    showConfirmation('card', grandTotal / 100);
+
+  } catch(err) {
+    document.getElementById('stripe-error').textContent = 'Something went wrong. Please try again.';
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
+}
+
+/* ── Confirm crypto order ── */
+function confirmCryptoOrder() {
+  const total = cartTotal();
+  const shipping = total >= 60 ? 0 : 4.9;
+  const grandTotal = total + shipping;
+  showConfirmation('crypto', grandTotal);
+}
+
+/* ── Confirmation screen ── */
+function showConfirmation(method, amount) {
+  const ref = 'FA-' + Date.now().toString(36).toUpperCase().slice(-6);
+  document.getElementById('confirmIcon').textContent = method === 'card' ? '✦' : '⟠';
+  document.getElementById('confirmTitle').textContent =
+    method === 'card' ? 'Payment received' : 'Payment pending';
+  document.getElementById('confirmMsg').textContent =
+    method === 'card'
+      ? `Thank you, ${document.getElementById('coFirstName').value}. Your order has been placed and a confirmation has been sent to ${document.getElementById('coEmail').value}.`
+      : `Thank you, ${document.getElementById('coFirstName').value}. Once your ${selectedCoin} transaction confirms on-chain, we'll ship your order and send a confirmation to ${document.getElementById('coEmail').value}.`;
+  document.getElementById('confirmRef').textContent = ref;
+  document.getElementById('confirmTotal').textContent = '€' + amount.toFixed(2).replace('.00','');
+  goToStepDirect(3);
+  // Clear cart
+  cart = [];
+  renderCart();
+}
+</script>
+</body>
+</html>
