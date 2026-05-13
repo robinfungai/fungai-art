@@ -2489,26 +2489,49 @@ async function payWithCard() {
 
   const total = cartTotal();
   const shipping = total >= 60 ? 0 : 4.9;
-  const grandTotal = Math.round((total + shipping) * 100); // cents
+  const grandTotal = total + shipping;
+
+  const name    = document.getElementById('coFirstName').value + ' ' + document.getElementById('coLastName').value;
+  const email   = document.getElementById('coEmail').value;
+  const address = [
+    document.getElementById('coAddr1').value,
+    document.getElementById('coCity').value,
+    document.getElementById('coPostal').value,
+    document.getElementById('coCountry').value,
+  ].filter(Boolean).join(', ');
+  const items = cart.map(i => `${i.qty > 1 ? i.qty + 'x ' : ''}${i.name} (€${i.price * i.qty})`).join('; ');
 
   try {
-    // Create a PaymentIntent via Stripe's client-only confirmCardPayment
-    // Requires a backend to create the PaymentIntent and return client_secret.
-    // Since this is a pure frontend build, we use Stripe's test flow with
-    // createPaymentMethod and show the result:
-    const { paymentMethod, error } = await stripe.createPaymentMethod({
-      type: 'card',
-      card: cardElement,
-      billing_details: {
-        name: document.getElementById('coFirstName').value + ' ' + document.getElementById('coLastName').value,
-        email: document.getElementById('coEmail').value,
-        address: {
-          line1: document.getElementById('coAddr1').value,
-          city: document.getElementById('coCity').value,
-          postal_code: document.getElementById('coPostal').value,
-          country: document.getElementById('coCountry').value,
-        }
-      }
+    // 1. Ask Netlify function to create a PaymentIntent and return client_secret
+    const res = await fetch('/.netlify/functions/create-payment-intent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount: grandTotal, metadata: { name, email, address, items } }),
+    });
+    const data = await res.json();
+
+    if (data.error) {
+      document.getElementById('stripe-error').textContent = data.error;
+      btn.classList.remove('loading');
+      btn.disabled = false;
+      return;
+    }
+
+    // 2. Confirm the payment — this is what actually charges the card
+    const { paymentIntent, error } = await stripe.confirmCardPayment(data.clientSecret, {
+      payment_method: {
+        card: cardElement,
+        billing_details: {
+          name,
+          email,
+          address: {
+            line1:       document.getElementById('coAddr1').value,
+            city:        document.getElementById('coCity').value,
+            postal_code: document.getElementById('coPostal').value,
+            country:     document.getElementById('coCountry').value,
+          },
+        },
+      },
     });
 
     if (error) {
@@ -2518,14 +2541,9 @@ async function payWithCard() {
       return;
     }
 
-    // ⚠️ BACKEND REQUIRED for real charges:
-    // Send paymentMethod.id + grandTotal to your server,
-    // create PaymentIntent, return client_secret,
-    // then call stripe.confirmCardPayment(clientSecret).
-    //
-    // For now: payment method created successfully → show confirmation.
-    // Replace this block with your server call when ready.
-    showConfirmation('card', grandTotal / 100);
+    if (paymentIntent.status === 'succeeded') {
+      showConfirmation('card', grandTotal);
+    }
 
   } catch(err) {
     document.getElementById('stripe-error').textContent = 'Something went wrong. Please try again.';
