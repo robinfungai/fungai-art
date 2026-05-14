@@ -1,16 +1,16 @@
-import Stripe from 'stripe';
+const Stripe = require('stripe');
 
-export const handler = async (event) => {
+exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
   try {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+    const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
     const { amount, metadata = {} } = JSON.parse(event.body);
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: Math.round(amount * 100), // euros → cents
+      amount: Math.round(amount * 100),
       currency: 'eur',
       receipt_email: metadata.email || undefined,
       metadata: {
