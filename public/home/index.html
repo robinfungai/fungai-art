@@ -395,6 +395,7 @@ p { line-height: 1.75; color: var(--mist); }
   padding: 28px;
 }
 .product-img-placeholder { position: absolute; inset: 0; }
+.product-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .p-img-inner {
   position: relative; z-index: 1;
   display: flex; flex-direction: column; align-items: center; gap: 10px;
@@ -1305,17 +1306,7 @@ p { line-height: 1.75; color: var(--mist); }
       <!-- FUNGI -->
       <div class="product-card reveal" data-category="fungi">
         <div class="product-img-wrap">
-          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#172114,#060B06);">
-            <div class="p-img-inner">
-              <svg viewBox="0 0 80 120" width="80" height="120" xmlns="http://www.w3.org/2000/svg">
-                <rect x="30" y="0" width="20" height="80" fill="#EDE5D8" rx="3" opacity="0.85"/>
-                <rect x="25" y="75" width="30" height="40" fill="#D4C4A8" rx="3" opacity="0.9"/>
-                <rect x="28" y="20" width="24" height="28" fill="#354E2A" opacity="0.7" rx="2"/>
-                <text x="40" y="88" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="5" fill="#354E2A">fungai art</text>
-              </svg>
-              <div class="bottle-label">Amanita muscaria<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">30ml tincture</span></div>
-            </div>
-          </div>
+          <img src="products/amanita.jpeg" alt="Amanita muscaria tincture" class="product-photo">
           <span class="product-badge badge-foraged">Foraged</span>
           <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Amanita Muscaria Tincture', 38)">Add to basket</button></div>
         </div>
@@ -1335,17 +1326,7 @@ p { line-height: 1.75; color: var(--mist); }
 
       <div class="product-card reveal reveal-d1" data-category="fungi">
         <div class="product-img-wrap">
-          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#1A1206,#0A0800);">
-            <div class="p-img-inner">
-              <svg viewBox="0 0 80 120" width="80" height="120" xmlns="http://www.w3.org/2000/svg">
-                <rect x="30" y="0" width="20" height="80" fill="#EDE5D8" rx="3" opacity="0.85"/>
-                <rect x="25" y="75" width="30" height="40" fill="#D4C4A8" rx="3" opacity="0.9"/>
-                <rect x="28" y="20" width="24" height="28" fill="#1E0E04" opacity="0.85" rx="2"/>
-                <text x="40" y="88" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="5" fill="#354E2A">fungai art</text>
-              </svg>
-              <div class="bottle-label">Chaga<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">30ml tincture</span></div>
-            </div>
-          </div>
+          <img src="products/chaga.jpeg" alt="Chaga tincture" class="product-photo">
           <span class="product-badge badge-foraged">Foraged · Sweden</span>
           <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Chaga Tincture', 38)">Add to basket</button></div>
         </div>
@@ -1425,17 +1406,7 @@ p { line-height: 1.75; color: var(--mist); }
       <!-- COMPOSITIONS -->
       <div class="product-card reveal" data-category="compositions">
         <div class="product-img-wrap">
-          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#1A0A14,#0A0610);">
-            <div class="p-img-inner">
-              <svg viewBox="0 0 80 120" width="80" height="120" xmlns="http://www.w3.org/2000/svg">
-                <rect x="30" y="0" width="20" height="80" fill="#D4A0B0" rx="3" opacity="0.85"/>
-                <rect x="25" y="75" width="30" height="40" fill="#C090A0" rx="3" opacity="0.9"/>
-                <rect x="28" y="20" width="24" height="28" fill="#5E1428" opacity="0.8" rx="2"/>
-                <text x="40" y="88" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="5" fill="#8B4060">fungai art</text>
-              </svg>
-              <div class="bottle-label">Temple Nectar<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">30ml blend</span></div>
-            </div>
-          </div>
+          <img src="products/temple-nectar.jpeg" alt="Temple Nectar blend" class="product-photo">
           <span class="product-badge badge-new">Signature</span>
           <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Temple Nectar', 48)">Add to basket</button></div>
         </div>
@@ -1536,6 +1507,27 @@ p { line-height: 1.75; color: var(--mist); }
           <div class="product-footer">
             <div class="product-price"><span class="size">30ml</span><span>€48</span></div>
             <button class="add-btn" onclick="addToCart('Moon Support', 48)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RUBY NO.7 -->
+      <div class="product-card reveal reveal-d3" data-category="compositions">
+        <div class="product-img-wrap">
+          <img src="products/ruby-no7.jpeg" alt="Ruby No.7 tincture" class="product-photo">
+          <span class="product-badge badge-new">New</span>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Ruby No.7', 48)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Compositions · Heart</span>
+          <div class="product-name">Ruby No.7</div>
+          <p class="product-desc">Cardioprotective · antioxidant · neuro-resilient. A deep-red composition for heart vitality, cellular defence, and long-range resilience.</p>
+          <div class="product-notes">
+            <span class="note-tag">Cardioprotective</span><span class="note-tag">Antioxidant</span><span class="note-tag">Neuro</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span>€48</span></div>
+            <button class="add-btn" onclick="addToCart('Ruby No.7', 48)">+ Add</button>
           </div>
         </div>
       </div>
