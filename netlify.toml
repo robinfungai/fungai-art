@@ -10,13 +10,6 @@
   VITE_SUPABASE_URL      = "https://cyhpvsyvxzfadtyvcuwp.supabase.co"
   VITE_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5aHB2c3l2eHpmYWR0eXZjdXdwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk3NDU5NTYsImV4cCI6MjA4NTMyMTk1Nn0.BFgP50enaZLWEzhvdfHoAYniLyJiFoo6rct7PYKx1k4"
 
-# Pass function calls through before the SPA catch-all
-[[redirects]]
-  from   = "/.netlify/functions/*"
-  to     = "/.netlify/functions/:splat"
-  status = 200
-  force  = true
-
 # SPA fallback — all routes go to index.html except real files
 [[redirects]]
   from   = "/*"
