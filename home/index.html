@@ -396,6 +396,10 @@ p { line-height: 1.75; color: var(--mist); }
 }
 .product-img-placeholder { position: absolute; inset: 0; }
 .product-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.product-card.no-photo { border-top: 1px solid rgba(158,212,56,0.22); }
+.product-card.no-photo .product-info { padding-top: 30px; }
+.product-img-placeholder.clean { background: linear-gradient(160deg,#0C140A,#060B06); }
+.product-img-placeholder.clean::after { content:''; position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 60%,rgba(158,212,56,0.06),transparent); }
 .p-img-inner {
   position: relative; z-index: 1;
   display: flex; flex-direction: column; align-items: center; gap: 10px;
@@ -999,8 +1003,9 @@ p { line-height: 1.75; color: var(--mist); }
   </div>
   <div class="hero-right">
     <div class="hero-right-content">
-      <!-- Animated mycelium network illustration -->
-      <svg id="heroSvg" width="100%" height="100%" viewBox="0 0 620 820" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <img src="amanita123.png" alt="Amanita muscaria" style="width:100%;height:100%;object-fit:cover;object-position:center;position:absolute;inset:0;">
+      <!-- REMOVED: animated mycelium SVG -->
+      <svg id="heroSvg" style="display:none" width="100%" height="100%" viewBox="0 0 620 820" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
         <defs>
           <radialGradient id="bg" cx="50%" cy="45%" r="65%">
             <stop offset="0%" stop-color="#1F2E1A"/>
@@ -1181,8 +1186,8 @@ p { line-height: 1.75; color: var(--mist); }
   </div>
 </div>
 
-<!-- ══ EDITORIAL GRID ══ -->
-<div class="editorial">
+<!-- EDITORIAL GRID REMOVED -->
+<div class="editorial" style="display:none">
   <div class="editorial-grid">
     <!-- Tall — Amanita -->
     <div class="edit-cell tall" style="background:var(--forest-card);">
@@ -1344,22 +1349,7 @@ p { line-height: 1.75; color: var(--mist); }
         </div>
       </div>
 
-      <div class="product-card reveal reveal-d2" data-category="fungi">
-        <div class="product-img-wrap">
-          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#0A0A14,#040408);">
-            <div class="p-img-inner">
-              <svg viewBox="0 0 80 120" width="80" height="120" xmlns="http://www.w3.org/2000/svg">
-                <rect x="30" y="0" width="20" height="80" fill="#EDE5D8" rx="3" opacity="0.85"/>
-                <rect x="25" y="75" width="30" height="40" fill="#D4C4A8" rx="3" opacity="0.9"/>
-                <rect x="28" y="20" width="24" height="28" fill="#14103A" opacity="0.9" rx="2"/>
-                <text x="40" y="88" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="5" fill="#354E2A">fungai art</text>
-              </svg>
-              <div class="bottle-label">Wild Cordyceps<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">30ml tincture</span></div>
-            </div>
-          </div>
-          <span class="product-badge badge-rare">Rare · Himalaya A+</span>
-          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Wild Cordyceps', 33)">Add to basket</button></div>
-        </div>
+      <div class="product-card no-photo reveal reveal-d2" data-category="fungi">
         <div class="product-info">
           <span class="product-category">Fungi · Vitality</span>
           <div class="product-name">Wild Cordyceps</div>
@@ -1374,21 +1364,7 @@ p { line-height: 1.75; color: var(--mist); }
         </div>
       </div>
 
-      <div class="product-card reveal reveal-d3" data-category="fungi">
-        <div class="product-img-wrap">
-          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#172114,#0E190B);">
-            <div class="p-img-inner">
-              <svg viewBox="0 0 80 120" width="80" height="120" xmlns="http://www.w3.org/2000/svg">
-                <rect x="30" y="0" width="20" height="80" fill="#EDE5D8" rx="3" opacity="0.85"/>
-                <rect x="25" y="75" width="30" height="40" fill="#D4C4A8" rx="3" opacity="0.9"/>
-                <rect x="28" y="20" width="24" height="28" fill="#1F2E1A" opacity="0.9" rx="2"/>
-                <text x="40" y="88" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="5" fill="#354E2A">fungai art</text>
-              </svg>
-              <div class="bottle-label">Reishi<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">30ml tincture</span></div>
-            </div>
-          </div>
-          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Reishi Tincture', 33)">Add to basket</button></div>
-        </div>
+      <div class="product-card no-photo reveal reveal-d3" data-category="fungi">
         <div class="product-info">
           <span class="product-category">Fungi · Adaptogenic</span>
           <div class="product-name">Reishi</div>
@@ -1426,17 +1402,7 @@ p { line-height: 1.75; color: var(--mist); }
 
       <div class="product-card reveal reveal-d1" data-category="compositions">
         <div class="product-img-wrap">
-          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#06061A,#030310);">
-            <div class="p-img-inner">
-              <svg viewBox="0 0 80 120" width="80" height="120" xmlns="http://www.w3.org/2000/svg">
-                <rect x="30" y="0" width="20" height="80" fill="#A0B0D4" rx="3" opacity="0.85"/>
-                <rect x="25" y="75" width="30" height="40" fill="#9090C4" rx="3" opacity="0.9"/>
-                <rect x="28" y="20" width="24" height="28" fill="#0C0C3A" opacity="0.9" rx="2"/>
-                <text x="40" y="88" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="5" fill="#404080">fungai art</text>
-              </svg>
-              <div class="bottle-label">Lucid<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">30ml blend</span></div>
-            </div>
-          </div>
+          <div class="product-img-placeholder clean"></div>
           <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Lucid', 48)">Add to basket</button></div>
         </div>
         <div class="product-info">
@@ -1453,21 +1419,7 @@ p { line-height: 1.75; color: var(--mist); }
         </div>
       </div>
 
-      <div class="product-card reveal reveal-d2" data-category="compositions">
-        <div class="product-img-wrap">
-          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#081A0E,#040C06);">
-            <div class="p-img-inner">
-              <svg viewBox="0 0 80 120" width="80" height="120" xmlns="http://www.w3.org/2000/svg">
-                <rect x="30" y="0" width="20" height="80" fill="#A0D4B0" rx="3" opacity="0.85"/>
-                <rect x="25" y="75" width="30" height="40" fill="#90C4A0" rx="3" opacity="0.9"/>
-                <rect x="28" y="20" width="24" height="28" fill="#082412" opacity="0.9" rx="2"/>
-                <text x="40" y="88" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="5" fill="#204A30">fungai art</text>
-              </svg>
-              <div class="bottle-label">ADHD Support<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">30ml blend</span></div>
-            </div>
-          </div>
-          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('ADHD Support', 48)">Add to basket</button></div>
-        </div>
+      <div class="product-card no-photo reveal reveal-d2" data-category="compositions">
         <div class="product-info">
           <span class="product-category">Compositions · Cognitive</span>
           <div class="product-name">ADHD Support</div>
@@ -1484,17 +1436,7 @@ p { line-height: 1.75; color: var(--mist); }
 
       <div class="product-card reveal reveal-d3" data-category="compositions">
         <div class="product-img-wrap">
-          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#18060E,#0C040A);">
-            <div class="p-img-inner">
-              <svg viewBox="0 0 80 120" width="80" height="120" xmlns="http://www.w3.org/2000/svg">
-                <rect x="30" y="0" width="20" height="80" fill="#D4A8C8" rx="3" opacity="0.85"/>
-                <rect x="25" y="75" width="30" height="40" fill="#C498B8" rx="3" opacity="0.9"/>
-                <rect x="28" y="20" width="24" height="28" fill="#260818" opacity="0.9" rx="2"/>
-                <text x="40" y="88" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="5" fill="#602040">fungai art</text>
-              </svg>
-              <div class="bottle-label">Moon Support<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">30ml blend</span></div>
-            </div>
-          </div>
+          <div class="product-img-placeholder clean"></div>
           <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Moon Support', 48)">Add to basket</button></div>
         </div>
         <div class="product-info">
@@ -1535,20 +1477,7 @@ p { line-height: 1.75; color: var(--mist); }
       <!-- FLOWERS -->
       <div class="product-card reveal" data-category="flowers">
         <div class="product-img-wrap">
-          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#141428,#0A0A1A);">
-            <div class="p-img-inner">
-              <svg viewBox="0 0 80 100" width="80" height="100" xmlns="http://www.w3.org/2000/svg">
-                <g transform="translate(40,50)">
-                  <ellipse rx="18" ry="50" fill="#4A6EAA" opacity="0.7"/>
-                  <ellipse rx="18" ry="50" fill="#5A7ECA" opacity="0.55" transform="rotate(60)"/>
-                  <ellipse rx="18" ry="50" fill="#3A5E9A" opacity="0.6" transform="rotate(120)"/>
-                  <circle r="12" fill="#F0E080" opacity="0.9"/>
-                  <circle r="7" fill="#E0C840" opacity="0.95"/>
-                </g>
-              </svg>
-              <div class="bottle-label">Blue Lotus<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">dried · from 11g</span></div>
-            </div>
-          </div>
+          <div class="product-img-placeholder clean" style="background:linear-gradient(160deg,#0A0A18,#060B06);"></div>
           <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Blue Lotus (33g)', 15)">Add to basket</button></div>
         </div>
         <div class="product-info">
@@ -1566,21 +1495,7 @@ p { line-height: 1.75; color: var(--mist); }
       </div>
 
       <!-- SPECIALS -->
-      <div class="product-card reveal reveal-d1" data-category="specials">
-        <div class="product-img-wrap">
-          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#160E00,#0C0800);">
-            <div class="p-img-inner">
-              <svg viewBox="0 0 80 100" width="80" height="100" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="40" cy="50" rx="30" ry="18" fill="#1E1000" opacity="0.92"/>
-                <ellipse cx="40" cy="44" rx="28" ry="16" fill="#2E1A00" opacity="0.88"/>
-                <text x="40" y="66" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="7" fill="#C4862E" opacity="0.7">✦ Gold ✦</text>
-              </svg>
-              <div class="bottle-label">Shilajit<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">compressed with gold</span></div>
-            </div>
-          </div>
-          <span class="product-badge badge-rare">Special</span>
-          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Shilajit + Gold', 15)">Add to basket</button></div>
-        </div>
+      <div class="product-card no-photo reveal reveal-d1" data-category="specials">
         <div class="product-info">
           <span class="product-category">Specials · Minerals</span>
           <div class="product-name">Shilajit</div>
@@ -1596,21 +1511,7 @@ p { line-height: 1.75; color: var(--mist); }
       </div>
 
       <!-- HERBS -->
-      <div class="product-card reveal reveal-d2" data-category="herbs">
-        <div class="product-img-wrap">
-          <div class="product-img-placeholder" style="background:linear-gradient(135deg,#0A160A,#060C06);">
-            <div class="p-img-inner">
-              <svg viewBox="0 0 80 100" width="80" height="100" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="40" cy="50" r="28" fill="#C4A830" opacity="0.65"/>
-                <circle cx="40" cy="50" r="20" fill="#D4B840" opacity="0.75"/>
-                <circle cx="40" cy="50" r="12" fill="#E0C840" opacity="0.9"/>
-              </svg>
-              <div class="bottle-label">Pine Pollen<br/><span style="font-size:9px;color:var(--sage);font-style:normal;letter-spacing:0.1em;">tincture · 30ml</span></div>
-            </div>
-          </div>
-          <span class="product-badge badge-foraged">Foraged</span>
-          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Pine Pollen Tincture', 33)">Add to basket</button></div>
-        </div>
+      <div class="product-card no-photo reveal reveal-d2" data-category="herbs">
         <div class="product-info">
           <span class="product-category">Herbs · Vitality</span>
           <div class="product-name">Pine Pollen</div>
