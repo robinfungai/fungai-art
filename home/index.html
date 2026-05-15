@@ -2396,7 +2396,7 @@ async function payWithCard() {
 
   try {
     // 1. Ask Netlify function to create a PaymentIntent and return client_secret
-    const res = await fetch('/.netlify/functions/create-payment-intent', {
+    const res = await fetch('/api/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ amount: grandTotal, metadata: { name, email, address, items } }),
