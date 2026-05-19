@@ -17,7 +17,21 @@
       "Bash(cat netlify.toml)",
       "Bash(ls -la .env*)",
       "Bash(git rm *)",
-      "mcp__Claude_Preview__preview_start"
+      "mcp__Claude_Preview__preview_start",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\" -Force)",
+      "Bash(ls \"c:\\\\Users\\\\Robin\\\\Desktop\\\\\" | grep -i fungai; ls \"c:\\\\Users\\\\Robin\\\\Downloads\\\\\" 2>/dev/null | grep -i fungai; ls \"c:\\\\Users\\\\Robin\\\\Desktop\\\\\" | head -30)",
+      "Read(//c/Users/Robin/**)",
+      "PowerShell(New-Item -ItemType Directory \"C:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\home\" -Force)",
+      "PowerShell(Copy-Item \"C:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\tailored tincture ai tool\\\\html codes\\\\fungai-art-v3-shop.html\" \"C:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\home\\\\index.html\")",
+      "WebFetch(domain:beta.fungai.art)",
+      "PowerShell(New-Item -ItemType Directory -Path \"C:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\home\\\\products\" -Force)",
+      "PowerShell(Copy-Item \"C:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\amanita123.png\" \"C:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\home\\\\amanita123.png\")",
+      "WebFetch(domain:fungai.netlify.app)",
+      "Bash(npx netlify-cli *)",
+      "Bash(netlify --version)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\Robin\\Desktop\\fungai art\\websiet\\tailored tincture ai tool\\html codes"
     ]
   }
 }

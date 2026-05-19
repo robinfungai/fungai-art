@@ -9455,7 +9455,7 @@ export const HERBS: Herb[] = [
     herb_to_drug_interactions: [
       'SSRIs and SNRIs — receptor downregulation may significantly reduce psilocybin effects; careful tapering under psychiatric supervision required if transitioning; must be disclosed in clinical protocols',
       'MAOIs (pharmaceutical and herbal — including Syrian Rue, Harmala) — SERIOUS: potentiates and prolongs psilocin effects; serotonin syndrome risk; contraindicated without careful clinical dose adjustment',
-      'Lithium — case reports of seizures when combined with psilocybin; CONTRAINDICATED',
+      'Lithium — case re ports of seizures when combined with psilocybin; CONTRAINDICATED',
       'Stimulants (amphetamines, MDMA) — cardiovascular strain; unpredictable CNS interactions; avoid',
       'Anticoagulants — no specific evidence but altered physiological state adds risk; clinical protocols screen for all medications',
     ],

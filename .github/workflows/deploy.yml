@@ -1,9 +1,7 @@
 name: 🚀 Deploy Website
 
 on:
-  push:
-    branches:
-      - beta
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -32,7 +30,7 @@ jobs:
 
       - name: 🌐 Force Custom Domain
         # This creates the hidden file GitHub needs to link your domain
-        run: echo "beta.fungai.art" > dist/CNAME
+        run: echo "www.fungai.art" > dist/CNAME
 
       - name: 📂 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

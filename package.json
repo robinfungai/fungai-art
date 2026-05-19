@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.105.1",
+    "@stripe/react-stripe-js": "^2.7.3",
+    "@stripe/stripe-js": "^4.1.0",
     "stripe": "^16.0.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.344.0",

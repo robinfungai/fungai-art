@@ -18,7 +18,7 @@
   --danger:#B91C1C;
 }
 html,body{background:var(--bg);color:var(--text)}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;padding:0 0 100px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;padding:0 0 80px;-webkit-text-size-adjust:100%}
 .app{max-width:640px;margin:0 auto;padding:0 1rem}
 
 /* HEADER */
@@ -92,6 +92,35 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 .sub-dot{width:10px;height:10px;border-radius:50%}
 .sub-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:1.2rem}
 @media(max-width:380px){.sub-grid{grid-template-columns:1fr}}
+
+/* ── MOBILE / TABLET ─────────────────────────────────── */
+@media(max-width:768px){
+  /* Hide power-user header controls — accessible via ⚙ button */
+  .hdr-btns{display:none}
+  .preset-row{display:none}
+  .hdr-mobile-toggle{display:flex!important}
+  /* Header compact */
+  .hdr{padding:.8rem 0 .7rem;margin-bottom:.9rem}
+  .brand-name{font-size:20px}
+  /* Larger touch targets for cards */
+  .icard{padding:18px 14px 16px;border-radius:18px;min-height:90px}
+  .icard-icon{font-size:26px;margin-bottom:8px}
+  .icard-name{font-size:14px}
+  .icard-desc{font-size:11px}
+  /* Sub-tray more room on mobile */
+  .sub-tray.open{max-height:900px}
+  .scard{padding:14px 13px}
+  /* Steps */
+  .st{font-size:18px}
+  .sh{font-size:13px;margin-bottom:1rem}
+  /* Body stage */
+  .body-stage{height:min(55vh,420px)}
+  /* Formula card */
+  .formula-art-card{min-height:340px}
+  /* Nav buttons */
+  .btn{padding:10px 18px;font-size:12px}
+  .btn.p{padding:12px 22px}
+}
 
 /* INLINE SUB-TRAY — expands below intent grid */
 .sub-tray{max-height:0;overflow:hidden;opacity:0;transition:max-height .5s cubic-bezier(.22,.9,.36,1),opacity .3s ease;margin-bottom:0}
@@ -416,12 +445,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 <div class="hdr">
   <div class="hdr-top">
     <div style="display:flex;align-items:center;gap:10px">
-      <a href="https://beta.fungai.art" title="Return to Materia Medica" style="flex-shrink:0;display:block">
+      <a href="https://www.fungai.art" title="Return to Materia Medica" style="flex-shrink:0;display:block">
         <img src="../fungai-art-logo.png" alt="Fungai Art" style="width:42px;height:42px;object-fit:contain;border-radius:50%;border:0.5px solid rgba(255,255,255,0.12)">
       </a>
       <div>
         <div class="brand-label">Herbal Engine 2.0</div>
-        <a href="https://beta.fungai.art" style="text-decoration:none;display:block" title="Return to Materia Medica">
+        <a href="https://www.fungai.art" style="text-decoration:none;display:block" title="Return to Materia Medica">
           <div class="brand-name" style="cursor:pointer">fungai art elixirs</div>
         </a>
         <div class="brand-sub">Personalised Elixir Formula</div>
@@ -432,6 +461,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
       <button class="mbtn" id="modeAdv" onclick="setMode('advanced')">Advanced</button>
       <button class="mbtn" id="practBtn" onclick="togglePract()">Practitioner</button>
       <button class="mbtn" id="stockToggle" onclick="toggleStock()">Stock</button>
+    </div>
+    <!-- mobile-only settings toggle -->
+    <button class="hdr-mobile-toggle" id="mobileToggle" onclick="toggleMobileControls()" style="display:none;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;border:0.5px solid var(--bd2);background:transparent;color:var(--text2);font-size:15px;cursor:pointer;flex-shrink:0">⚙</button>
+  </div>
+  <!-- mobile-only collapsed controls -->
+  <div id="mobileControls" style="display:none;flex-direction:column;gap:8px;padding:.6rem 0 .4rem;border-top:0.5px solid var(--bd);margin-top:.5rem">
+    <div style="display:flex;gap:4px;flex-wrap:wrap">
+      <button class="mbtn on" onclick="setMode('standard');toggleMobileControls()">Standard</button>
+      <button class="mbtn" onclick="setMode('advanced');toggleMobileControls()">Advanced</button>
+      <button class="mbtn" onclick="togglePract();toggleMobileControls()">Practitioner</button>
+      <button class="mbtn" onclick="toggleStock();toggleMobileControls()">Stock</button>
+    </div>
+    <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+      <span class="pl">Pool:</span>
+      <button class="prbtn on" id="preset_all_m" onclick="applyPreset('all');toggleMobileControls()">All herbs</button>
+      <button class="prbtn" id="preset_trypexpo_m" onclick="applyPreset('trypexpo');toggleMobileControls()">TrypExpo</button>
     </div>
   </div>
   <div class="preset-row">
