@@ -66,24 +66,24 @@ const Home = () => {
           ))}
         </div>
 
-        <div className="relative z-20 flex flex-col items-center text-center px-6 pt-24 pb-12 w-full max-w-2xl mx-auto">
+        <div className="relative z-20 flex flex-col items-center text-center px-6 pt-24 pb-12 w-full max-w-4xl mx-auto">
           <img
             src={logoImage}
             alt="Fungai Art"
-            className="w-20 h-20 rounded-full mb-5 border border-golden/30"
-            style={{ filter: "drop-shadow(0 0 20px rgba(212,175,55,0.3))" }}
+            className="w-32 h-32 object-contain mb-6"
+            style={{ filter: "drop-shadow(0 0 28px rgba(212,175,55,0.4))" }}
           />
 
-          <h1 className="font-dream-avenue text-5xl md:text-7xl mb-3 tracking-widest bg-gradient-to-r from-golden via-primary-glow to-golden bg-clip-text text-transparent">
+          <h1 className="font-dream-avenue text-6xl md:text-8xl mb-4 tracking-widest bg-gradient-to-r from-golden via-primary-glow to-golden bg-clip-text text-transparent">
             fungai art
           </h1>
 
-          <p className="text-muted-foreground text-sm md:text-base max-w-sm mb-10 leading-relaxed">
+          <p className="text-muted-foreground text-base md:text-lg max-w-lg mb-12 leading-relaxed">
             Ancient plant wisdom · modern craftsmanship · botanical intelligence
           </p>
 
           {/* 4 nav cards */}
-          <div className="grid grid-cols-2 gap-3 w-full">
+          <div className="grid grid-cols-2 gap-4 w-full max-w-3xl">
             {NAV_CARDS.map((card) => (
               <a
                 key={card.href}
@@ -104,10 +104,10 @@ const Home = () => {
                 }}
               >
                 <div className="text-xl mb-2">{card.symbol}</div>
-                <h2 className="text-foreground font-semibold text-sm mb-1 group-hover:text-golden transition-colors">
+                <h2 className="text-foreground font-semibold text-base mb-1 group-hover:text-golden transition-colors">
                   {card.label}
                 </h2>
-                <p className="text-muted-foreground text-xs leading-relaxed hidden sm:block">
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   {card.description}
                 </p>
               </a>
