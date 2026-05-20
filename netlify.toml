@@ -17,11 +17,11 @@
   to     = "/.netlify/functions/:splat"
   status = 200
 
-# Root → premium home HTML (force overrides the built index.html)
+# Root → premium home HTML
 [[redirects]]
   from   = "/"
-  to     = "/home/index.html"
-  status = 200
+  to     = "/home/"
+  status = 302
   force  = true
 
 # SPA routes
