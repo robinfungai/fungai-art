@@ -4,8 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Leaf, Sparkles, Droplets, Flower2 } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { useNavigate } from "react-router-dom";
-
 // Import category background images
 import tinctures from '@/assets/tinctures-bg.jpg';
 import powders from '@/assets/powders-bg.jpg';
@@ -18,7 +16,6 @@ import special from '@/assets/special-bg.jpg';
 import lipospagyrics from '@/assets/lipospagyrics-bg.jpg';
 
 const SacredOfferingsSection = () => {
-  const navigate = useNavigate();
 
   const categories = [
     { 
@@ -181,7 +178,7 @@ const SacredOfferingsSection = () => {
                           size="sm" 
                           variant="outline" 
                           className="border-primary/50 text-primary hover:bg-primary/10 w-full"
-                          onClick={() => navigate(`/products?category=${category.id}`)}
+                          onClick={() => window.location.href = `/products?category=${category.id}`}
                         >
                           Browse {category.name}
                         </Button>

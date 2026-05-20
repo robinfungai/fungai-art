@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Leaf, Loader2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { ShopifyProduct, STOREFRONT_PRODUCTS_QUERY, storefrontApiRequest } from '@/lib/shopify';
 import { useCartStore } from '@/stores/cartStore';
 
 const FeaturedProducts = () => {
-  const navigate = useNavigate();
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const addItem = useCartStore(state => state.addItem);
@@ -88,7 +86,7 @@ const FeaturedProducts = () => {
               <Card 
                 key={product.node.id} 
                 className="group hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
-                onClick={() => navigate(`/product/${product.node.handle}`)}
+                onClick={() => window.location.href = `/product/${product.node.handle}`}
               >
                 <div className="aspect-square overflow-hidden bg-secondary/20">
                   {firstImage ? (
@@ -136,7 +134,7 @@ const FeaturedProducts = () => {
         <div className="text-center">
           <Button 
             size="lg"
-            onClick={() => navigate('/products')}
+            onClick={() => window.location.href = '/products'}
             className="bg-gradient-mystical hover:shadow-glow transition-all duration-500"
           >
             View All Products
