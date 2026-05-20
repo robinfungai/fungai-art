@@ -17,6 +17,12 @@
   to     = "/.netlify/functions/:splat"
   status = 200
 
+# Redirect root to /home
+[[redirects]]
+  from   = "/"
+  to     = "/home"
+  status = 302
+
 # SPA fallback — all routes go to index.html except real files
 [[redirects]]
   from   = "/*"

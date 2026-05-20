@@ -39,9 +39,27 @@ const HeroSection = () => {
         </h1>
         
         <p className="font-inter text-base md:text-lg text-muted-foreground mb-8 max-w-xl mx-auto leading-relaxed">
-          Ancient plant wisdom meets modern craftsmanship. Discover premium botanical extracts, 
+          Ancient plant wisdom meets modern craftsmanship. Discover premium botanical extracts,
           mushroom medicines, and plant allies sourced with reverence and intention.
         </p>
+
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button
+            size="lg"
+            className="rounded-full px-8 bg-golden text-background hover:bg-golden/90 font-semibold"
+            onClick={() => window.location.href = '/mixology'}
+          >
+            Open Mixology Lab
+          </Button>
+          <Button
+            size="lg"
+            variant="outline"
+            className="rounded-full px-8 border-golden/40 text-golden hover:bg-golden/10"
+            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            Learn More
+          </Button>
+        </div>
       </div>
     </section>
   );
