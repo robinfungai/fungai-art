@@ -17,30 +17,23 @@
   to     = "/.netlify/functions/:splat"
   status = 200
 
-# Root → premium home HTML
-[[redirects]]
-  from   = "/"
-  to     = "/home/"
-  status = 302
-  force  = true
-
-# SPA routes
+# React app routes → app.html (React SPA entry)
 [[redirects]]
   from   = "/mixology*"
-  to     = "/index.html"
+  to     = "/app.html"
   status = 200
 
 [[redirects]]
   from   = "/products*"
-  to     = "/index.html"
+  to     = "/app.html"
   status = 200
 
 [[redirects]]
   from   = "/community*"
-  to     = "/index.html"
+  to     = "/app.html"
   status = 200
 
-# SPA fallback
+# Everything else (including /) → index.html (premium home design)
 [[redirects]]
   from   = "/*"
   to     = "/index.html"
