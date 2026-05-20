@@ -1,5 +1,11 @@
 import logoImage from "@/assets/fungai-art-logo.png";
 import heroImage from "@/assets/hero-fungi.jpg";
+import VisionSection from "@/components/VisionSection";
+import FlowingAboutSection from "@/components/FlowingAboutSection";
+import FeaturedProducts from "@/components/FeaturedProducts";
+import SacredOfferingsSection from "@/components/SacredOfferingsSection";
+import OrganicContactSection from "@/components/OrganicContactSection";
+import Navigation from "@/components/Navigation";
 
 const NAV_CARDS = [
   {
@@ -31,47 +37,58 @@ const NAV_CARDS = [
 const Home = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Hero */}
-      <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+      <Navigation />
+
+      {/* ── Hero + 4-card portal ── */}
+      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src={heroImage}
             alt="Fungai Art"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background/95" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background/90" />
         </div>
 
-        <div className="relative z-10 flex flex-col items-center text-center px-6 pt-16 pb-8">
+        {/* Floating spores */}
+        <div className="absolute inset-0 z-10 pointer-events-none">
+          {[...Array(8)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-2 h-2 bg-golden/30 rounded-full animate-float"
+              style={{
+                left: `${10 + i * 11}%`,
+                top: `${15 + (i % 3) * 25}%`,
+                animationDelay: `${i * 0.8}s`,
+                animationDuration: `${4 + (i % 3)}s`,
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="relative z-20 flex flex-col items-center text-center px-6 pt-24 pb-12 w-full max-w-2xl mx-auto">
           <img
             src={logoImage}
             alt="Fungai Art"
-            className="w-24 h-24 rounded-full mb-6 border border-golden/30"
-            style={{ filter: "drop-shadow(0 0 24px rgba(212,175,55,0.25))" }}
+            className="w-20 h-20 rounded-full mb-5 border border-golden/30"
+            style={{ filter: "drop-shadow(0 0 20px rgba(212,175,55,0.3))" }}
           />
 
-          <h1
-            className="font-dream-avenue text-5xl md:text-7xl mb-4 tracking-widest"
-            style={{
-              background: "linear-gradient(135deg, #d4af37, #f0d060, #c8961a)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
+          <h1 className="font-dream-avenue text-5xl md:text-7xl mb-3 tracking-widest bg-gradient-to-r from-golden via-primary-glow to-golden bg-clip-text text-transparent">
             fungai art
           </h1>
 
-          <p className="text-muted-foreground text-base md:text-lg max-w-md mb-12 leading-relaxed">
+          <p className="text-muted-foreground text-sm md:text-base max-w-sm mb-10 leading-relaxed">
             Ancient plant wisdom · modern craftsmanship · botanical intelligence
           </p>
 
-          {/* Nav Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-2xl">
+          {/* 4 nav cards */}
+          <div className="grid grid-cols-2 gap-3 w-full">
             {NAV_CARDS.map((card) => (
               <a
                 key={card.href}
                 href={card.href}
-                className="group block rounded-2xl p-6 text-left transition-all duration-300"
+                className="group block rounded-2xl p-5 text-left transition-all duration-300"
                 style={{
                   background: "rgba(255,255,255,0.04)",
                   border: "0.5px solid rgba(212,175,55,0.2)",
@@ -86,16 +103,40 @@ const Home = () => {
                   (e.currentTarget as HTMLElement).style.borderColor = "rgba(212,175,55,0.2)";
                 }}
               >
-                <div className="text-2xl mb-3">{card.symbol}</div>
-                <h2 className="text-foreground font-semibold text-lg mb-1 group-hover:text-golden transition-colors">
+                <div className="text-xl mb-2">{card.symbol}</div>
+                <h2 className="text-foreground font-semibold text-sm mb-1 group-hover:text-golden transition-colors">
                   {card.label}
                 </h2>
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <p className="text-muted-foreground text-xs leading-relaxed hidden sm:block">
                   {card.description}
                 </p>
               </a>
             ))}
           </div>
+
+          {/* Scroll hint */}
+          <button
+            className="mt-10 flex flex-col items-center gap-1 text-muted-foreground/50 hover:text-golden/60 transition-colors text-xs"
+            onClick={() => document.getElementById("landing")?.scrollIntoView({ behavior: "smooth" })}
+          >
+            <span>discover more</span>
+            <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
+              <path d="M1 1l7 7 7-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      {/* ── Full landing page content ── */}
+      <div id="landing">
+        <VisionSection />
+        <div id="about">
+          <FlowingAboutSection />
+        </div>
+        <FeaturedProducts />
+        <SacredOfferingsSection />
+        <div id="contact">
+          <OrganicContactSection />
         </div>
       </div>
     </div>
