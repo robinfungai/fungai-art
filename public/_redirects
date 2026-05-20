@@ -1,2 +1,6 @@
-/api/*  /.netlify/functions/:splat  200
-/*      /index.html                 200
+/api/*      /.netlify/functions/:splat  200
+/mixology*  /index.html                 200
+/products*  /index.html                 200
+/community* /index.html                 200
+/           /home/index.html             200
+/*          /index.html                 200
