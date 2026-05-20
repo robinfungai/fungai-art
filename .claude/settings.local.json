@@ -28,7 +28,8 @@
       "PowerShell(Copy-Item \"C:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\amanita123.png\" \"C:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\home\\\\amanita123.png\")",
       "WebFetch(domain:fungai.netlify.app)",
       "Bash(npx netlify-cli *)",
-      "Bash(netlify --version)"
+      "Bash(netlify --version)",
+      "Bash(git config *)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Robin\\Desktop\\fungai art\\websiet\\tailored tincture ai tool\\html codes"
