@@ -3,7 +3,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Leaf, ShoppingCart, Loader2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
 import botanicalFooter from '@/assets/botanical-footer-bg.jpg';
@@ -11,7 +10,6 @@ import { ShopifyProduct, STOREFRONT_PRODUCTS_QUERY, storefrontApiRequest } from 
 import { useCartStore } from '@/stores/cartStore';
 
 const Products = () => {
-  const navigate = useNavigate();
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -130,7 +128,7 @@ const Products = () => {
                 <Card 
                   key={product.node.id} 
                   className="group hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
-                  onClick={() => navigate(`/product/${product.node.handle}`)}
+                  onClick={() => window.location.href = `/product/${product.node.handle}`}
                 >
                   <div className="aspect-square overflow-hidden bg-secondary/20">
                     {firstImage ? (
