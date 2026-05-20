@@ -14,30 +14,30 @@
    TOKENS
 ═══════════════════════════════════════════════════ */
 :root {
-  /* Forest palette */
-  --void:       #060B06;
-  --forest:     #0A1208;
-  --forest-mid: #0E190B;
-  --forest-card:#121A0F;
-  --moss:       #172114;
-  --fern:       #1F2E1A;
-  --sage:       #354E2A;
-  --lichen:     #517A40;
-  --mist:       #7A9E68;
-  /* Warm accents */
+  /* Fungai Art palette */
+  --void:       #05090C;
+  --forest:     #080F13;
+  --forest-mid: #0D1619;
+  --forest-card:#111D22;
+  --moss:       #1A2E33;
+  --fern:       #1E3438;
+  --sage:       #336065;
+  --lichen:     #4D869B;
+  --mist:       #88BAC8;
+  /* Warm text tones */
   --parchment:  #EDE5D8;
   --cream:      #E5D9C5;
   --dust:       #C0B49A;
-  --amber:      #C4862E;
-  --amber-lt:   #DCA84A;
-  --amber-dim:  rgba(196,134,46,0.10);
-  /* Vivid accents */
-  --lime:       #9ED438;
-  --lime-soft:  rgba(158,212,56,0.12);
-  --lime-dim:   rgba(158,212,56,0.07);
-  --violet:     #2A1848;
-  --violet-mid: #361E5E;
-  --violet-lt:  #7055A4;
+  --amber:      #88BAC8;
+  --amber-lt:   #A8D4E0;
+  --amber-dim:  rgba(136,186,200,0.10);
+  /* Accents */
+  --lime:       #88BAC8;
+  --lime-soft:  rgba(136,186,200,0.12);
+  --lime-dim:   rgba(136,186,200,0.07);
+  --violet:     #333A57;
+  --violet-mid: #3D4568;
+  --violet-lt:  #556065;
   --coral:      #CE6C52;
   /* Type */
   --serif:      'Cormorant Garamond', Georgia, serif;
@@ -998,6 +998,12 @@ p { line-height: 1.75; color: var(--mist); }
         <a href="#shop" class="btn-primary">Enter the apothecary</a>
         <a href="#trance" class="btn-ghost">Mycelium Trance</a>
       </div>
+      <div class="hero-quick-nav reveal reveal-d4" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;">
+        <a href="/herbal-engine-2/index.html" style="padding:8px 18px;border:0.5px solid rgba(136,186,200,0.35);color:var(--mist);font-size:12px;letter-spacing:1.5px;text-decoration:none;text-transform:uppercase;border-radius:2px;transition:all 0.2s;" onmouseover="this.style.background='rgba(136,186,200,0.12)'" onmouseout="this.style.background='transparent'">Herbal Engine</a>
+        <a href="/community" style="padding:8px 18px;border:0.5px solid rgba(136,186,200,0.35);color:var(--mist);font-size:12px;letter-spacing:1.5px;text-decoration:none;text-transform:uppercase;border-radius:2px;transition:all 0.2s;" onmouseover="this.style.background='rgba(136,186,200,0.12)'" onmouseout="this.style.background='transparent'">Community</a>
+        <a href="/products" style="padding:8px 18px;border:0.5px solid rgba(136,186,200,0.35);color:var(--mist);font-size:12px;letter-spacing:1.5px;text-decoration:none;text-transform:uppercase;border-radius:2px;transition:all 0.2s;" onmouseover="this.style.background='rgba(136,186,200,0.12)'" onmouseout="this.style.background='transparent'">Shop</a>
+        <a href="/mixology" style="padding:8px 18px;border:0.5px solid rgba(136,186,200,0.35);color:var(--mist);font-size:12px;letter-spacing:1.5px;text-decoration:none;text-transform:uppercase;border-radius:2px;transition:all 0.2s;" onmouseover="this.style.background='rgba(136,186,200,0.12)'" onmouseout="this.style.background='transparent'">Mixology</a>
+      </div>
       <div class="hero-scroll-hint reveal reveal-d4">Scroll to explore</div>
     </div>
   </div>
@@ -1309,26 +1315,6 @@ p { line-height: 1.75; color: var(--mist); }
     <div class="products-grid">
 
       <!-- FUNGI -->
-      <div class="product-card reveal" data-category="fungi">
-        <div class="product-img-wrap">
-          <img src="/home/products/amanita.jpeg" alt="Amanita muscaria tincture" class="product-photo">
-          <span class="product-badge badge-foraged">Foraged</span>
-          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Amanita Muscaria Tincture', 38)">Add to basket</button></div>
-        </div>
-        <div class="product-info">
-          <span class="product-category">Fungi · Sacred</span>
-          <div class="product-name">Amanita muscaria</div>
-          <p class="product-desc">Neuroalchemy · shamanic love · focus. GABA-A agonist, loosening perceptual control and awakening symbolic awareness.</p>
-          <div class="product-notes">
-            <span class="note-tag">Muscimol</span><span class="note-tag">Dream-like</span><span class="note-tag">Self-foraged</span>
-          </div>
-          <div class="product-footer">
-            <div class="product-price"><span class="size">30ml</span><span>€38</span></div>
-            <button class="add-btn" onclick="addToCart('Amanita Muscaria Tincture', 38)">+ Add</button>
-          </div>
-        </div>
-      </div>
-
       <div class="product-card reveal reveal-d1" data-category="fungi">
         <div class="product-img-wrap">
           <img src="/home/products/chaga.jpeg" alt="Chaga tincture" class="product-photo">
@@ -1474,8 +1460,8 @@ p { line-height: 1.75; color: var(--mist); }
         </div>
       </div>
 
-      <!-- FLOWERS -->
-      <div class="product-card reveal" data-category="flowers">
+      <!-- FLOWERS — hidden on landing, see full shop -->
+      <div class="product-card reveal" data-category="flowers" style="display:none">
         <div class="product-img-wrap">
           <div class="product-img-placeholder clean" style="background:linear-gradient(160deg,#0A0A18,#060B06);"></div>
           <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Blue Lotus (33g)', 15)">Add to basket</button></div>
@@ -1494,8 +1480,8 @@ p { line-height: 1.75; color: var(--mist); }
         </div>
       </div>
 
-      <!-- SPECIALS -->
-      <div class="product-card no-photo reveal reveal-d1" data-category="specials">
+      <!-- SPECIALS — hidden on landing -->
+      <div class="product-card no-photo reveal reveal-d1" data-category="specials" style="display:none">
         <div class="product-info">
           <span class="product-category">Specials · Minerals</span>
           <div class="product-name">Shilajit</div>
@@ -1510,8 +1496,8 @@ p { line-height: 1.75; color: var(--mist); }
         </div>
       </div>
 
-      <!-- HERBS -->
-      <div class="product-card no-photo reveal reveal-d2" data-category="herbs">
+      <!-- HERBS — hidden on landing -->
+      <div class="product-card no-photo reveal reveal-d2" data-category="herbs" style="display:none">
         <div class="product-info">
           <span class="product-category">Herbs · Vitality</span>
           <div class="product-name">Pine Pollen</div>
@@ -1527,6 +1513,9 @@ p { line-height: 1.75; color: var(--mist); }
       </div>
 
     </div><!-- /products-grid -->
+    <div style="text-align:center;margin-top:48px;">
+      <a href="/products" class="btn-primary" style="text-decoration:none;">View full collection →</a>
+    </div>
   </div>
 </section>
 
@@ -1584,51 +1573,11 @@ p { line-height: 1.75; color: var(--mist); }
   </div>
 </div>
 
-<!-- ══ NOTES DIRECTORY ══ -->
-<div class="notes-section">
-  <div class="notes-grid">
-    <div class="note-col reveal" style="background:var(--fern);">
-      <span class="note-tier">Opening</span>
-      <div class="note-tier-name">TOP</div>
-      <ul class="note-items">
-        <li>Pine Pollen <span>Vitality</span></li>
-        <li>Blue Lotus <span>Vision</span></li>
-        <li>Nettle Seeds <span>Stamina</span></li>
-        <li>Mugwort <span>Dreams</span></li>
-        <li>Tulsi <span>Calm</span></li>
-        <li>Moringa <span>Nourishment</span></li>
-      </ul>
-    </div>
-    <div class="note-col reveal reveal-d1" style="background:var(--moss);">
-      <span class="note-tier">Heart</span>
-      <div class="note-tier-name">MID</div>
-      <ul class="note-items">
-        <li>Amanita muscaria <span>Neuroalchemy</span></li>
-        <li>Chaga <span>Immunity</span></li>
-        <li>Reishi <span>Longevity</span></li>
-        <li>Wild Cordyceps <span>Endurance</span></li>
-        <li>Lions Mane <span>Cognition</span></li>
-        <li>Turkey Tail <span>Immunity</span></li>
-      </ul>
-    </div>
-    <div class="note-col reveal reveal-d2" style="background:var(--forest-card);">
-      <span class="note-tier">Foundation</span>
-      <div class="note-tier-name">BASE</div>
-      <ul class="note-items">
-        <li>Shilajit + Gold <span>Mineral</span></li>
-        <li>Schizandra <span>Radiance</span></li>
-        <li>Saffron <span>Mood</span></li>
-        <li>Damiana <span>Sensual</span></li>
-        <li>Pearl 25 <span>Longevity</span></li>
-        <li>San Pedro <span>Heart</span></li>
-      </ul>
-    </div>
-  </div>
-</div>
 
 <!-- ══ MYCELIUM TRANCE ══ -->
-<section id="trance" class="trance">
-  <div class="wrap trance-inner">
+<section id="trance" class="trance" style="position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background-image:url('/home/abcabc.png');background-size:cover;background-position:center;opacity:0.18;pointer-events:none;"></div>
+  <div class="wrap trance-inner" style="position:relative;z-index:1;">
     <div class="reveal">
       <span class="sec-label">Facilitated by Steph Teÿæ &amp; Robin Fungi</span>
       <h2>
@@ -1644,12 +1593,12 @@ p { line-height: 1.75; color: var(--mist); }
         <div class="trance-stat"><span class="v">Europe</span><span class="l">Festivals &amp; private</span></div>
       </div>
       <div class="trance-actions">
-        <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-primary">Book a session</a>
-        <a href="#trance" class="btn-ghost">Learn more</a>
+        <a href="/mycelium-trance" class="btn-primary">Discover Mycelium Trance</a>
       </div>
     </div>
-    <div class="reveal reveal-d2">
-      <div style="border:1px solid rgba(158,212,56,0.1);padding:36px;">
+    <div class="reveal reveal-d2" style="display:flex;flex-direction:column;gap:24px;">
+      <img src="/home/abc.png" alt="Mycelium Trance" style="width:100%;max-width:420px;border-radius:4px;opacity:0.92;object-fit:cover;">
+      <div style="border:1px solid rgba(136,186,200,0.1);padding:36px;">
         <span class="sec-label" style="margin-bottom:20px;">Events &amp; circles</span>
         <div class="event-list">
           <div class="event-item">
@@ -1733,39 +1682,46 @@ p { line-height: 1.75; color: var(--mist); }
         <div>
           <p class="forage-quote">"Forage with us. Learn the names, properties, and stories of wild plants you walk past every day."</p>
           <p style="font-size:13px;margin-bottom:28px;">Paid foraging positions also available — reach out if you'd like to pick forest goods with us.</p>
-          <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-primary">Comment HERB on Instagram</a>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-primary">Comment HERB on Instagram</a>
+            <button onclick="document.getElementById('foragePopup').style.display='flex'" class="btn-ghost" style="cursor:pointer;">More info</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- Foraging popup -->
+<div id="foragePopup" style="display:none;position:fixed;inset:0;background:rgba(5,9,12,0.88);z-index:9999;align-items:center;justify-content:center;padding:24px;">
+  <div style="background:var(--forest-card);border:0.5px solid rgba(136,186,200,0.15);border-radius:4px;padding:48px;max-width:560px;width:100%;position:relative;">
+    <button onclick="document.getElementById('foragePopup').style.display='none'" style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--dust);font-size:18px;cursor:pointer;">✕</button>
+    <span style="font-size:10px;letter-spacing:2px;color:var(--lichen);text-transform:uppercase;">Foraging Circles</span>
+    <h3 style="font-family:var(--serif);font-size:28px;font-weight:400;margin:12px 0 20px;color:var(--parchment);">Join us in the <em style="color:var(--mist);">field</em></h3>
+    <p style="font-size:13.5px;color:var(--dust);line-height:1.7;margin-bottom:16px;">Our foraging circles are intimate, educational walks through forests and meadows across Europe. You'll learn to identify, ethically harvest, and work with wild plants and fungi hands-on.</p>
+    <p style="font-size:13.5px;color:var(--dust);line-height:1.7;margin-bottom:24px;"><strong style="color:var(--parchment);">How to join:</strong> Comment <strong style="color:var(--mist);">HERB</strong> on our latest Instagram post to receive upcoming dates and locations directly in your inbox. Walks are kept small (max 12 people) to preserve the quality of the experience.</p>
+    <p style="font-size:13px;color:var(--dust);margin-bottom:32px;">Paid positions also available for regular collectors — email <a href="mailto:robin@fungai.art" style="color:var(--mist);">robin@fungai.art</a></p>
+    <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-primary" style="text-decoration:none;">Comment HERB on Instagram</a>
+  </div>
+</div>
+
 <!-- ══ JOURNAL ══ -->
 <section id="journal" class="journal">
   <div class="wrap">
-    <div class="reveal">
+    <div class="reveal" style="text-align:center;">
       <span class="sec-label">The Field Notes</span>
-      <h2 class="sec-title">From the <em>forest floor</em></h2>
+      <h2 class="sec-title">Spore <em>Stories</em></h2>
     </div>
-    <div class="journal-grid">
-      <div class="journal-card reveal reveal-d1">
-        <span class="j-date">April 2026</span>
-        <div class="j-title">Amanita muscaria and the threshold of perception</div>
-        <p class="j-excerpt">Muscimol is a GABA-A receptor agonist — it activates inhibitory circuits while paradoxically loosening perceptual control. The forest has known this for longer than we have.</p>
-        <a href="#" class="j-link">Read the field note →</a>
-      </div>
-      <div class="journal-card reveal reveal-d2">
-        <span class="j-date">March 2026</span>
-        <div class="j-title">Tapping the birch: sap fermentation and forest alchemy</div>
-        <p class="j-excerpt">The brief window between thawing soil and first green leaves. We participated in the ancient ritual of birch sap tapping — locking the forest chemistry into the bottle.</p>
-        <a href="#" class="j-link">Read the field note →</a>
-      </div>
-      <div class="journal-card reveal reveal-d3">
-        <span class="j-date">February 2026</span>
-        <div class="j-title">The inner architecture: circulation and reciprocity</div>
-        <p class="j-excerpt">Mycelium doesn't grow in isolation. Neither does Fungai Art. The collaboration strategy mirrors the network model: each connection strengthens multiple nodes at once.</p>
-        <a href="#" class="j-link">Read the field note →</a>
-      </div>
+    <div style="display:flex;justify-content:center;margin-top:40px;" class="reveal reveal-d1">
+      <blockquote class="instagram-media" data-instgrm-captioned
+        data-instgrm-permalink="https://www.instagram.com/p/DTx5LGZjM0j/?utm_source=ig_embed"
+        data-instgrm-version="14"
+        style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:1px;max-width:540px;min-width:326px;padding:0;width:99.375%;">
+      </blockquote>
+      <script async src="//www.instagram.com/embed.js"></script>
+    </div>
+    <div style="text-align:center;margin-top:32px;" class="reveal reveal-d2">
+      <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-ghost">Follow @fungai.art</a>
     </div>
   </div>
 </section>
@@ -1798,15 +1754,6 @@ p { line-height: 1.75; color: var(--mist); }
       <div class="about-vision">
         <span class="sec-label" style="margin-bottom:10px;">The vision</span>
         <p style="font-size:13.5px;">We are inspired by the vision of a future where art and medicine return to their original unity. Fungai Art is a living art and community ecosystem that weaves together healing arts, ecological awareness, storytelling and lifestyle.</p>
-      </div>
-      <div class="about-numbers">
-        <span class="sec-label" style="margin-bottom:10px;">The numbers</span>
-        <div class="nums-grid">
-          <div class="num-cell"><div class="v">3,000+</div><span class="l">Units sold</span></div>
-          <div class="num-cell"><div class="v">€20K+</div><span class="l">One summer</span></div>
-          <div class="num-cell"><div class="v">4</div><span class="l">Countries</span></div>
-          <div class="num-cell"><div class="v">5+</div><span class="l">Festivals</span></div>
-        </div>
       </div>
     </div>
   </div>

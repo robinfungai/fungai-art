@@ -19,6 +19,16 @@
 
 # React app routes → app.html (React SPA entry)
 [[redirects]]
+  from   = "/shop*"
+  to     = "/products"
+  status = 301
+
+[[redirects]]
+  from   = "/mycelium-trance*"
+  to     = "/app.html"
+  status = 200
+
+[[redirects]]
   from   = "/mixology*"
   to     = "/app.html"
   status = 200
