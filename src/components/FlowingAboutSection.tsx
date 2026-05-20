@@ -1,3 +1,8 @@
+import logoImage from "@/assets/fungai-art-logo.png";
+import myceliumNetwork from "@/assets/mycelium-network.jpg";
+import pomelli1 from "@/assets/pomelli-image-1.png";
+import pomelli3 from "@/assets/pomelli-image-3.png";
+
 const FlowingAboutSection = () => {
   return <section className="relative py-0 px-6 bg-gradient-to-b from-background via-card to-background overflow-hidden">
       {/* Organic Flowing Background */}
@@ -45,7 +50,7 @@ const FlowingAboutSection = () => {
             <div className="space-y-8">
               {/* Mushroom Image positioned left of Pure and Potent */}
               <div className="absolute -left-12 top-96 z-0">
-                <img src="/lovable-uploads/2f64fa6d-9176-496c-a9f2-35b5342fadb8.png" alt="Sacred Mushroom" className="w-32 h-32 object-contain opacity-30 animate-float" style={{
+                <img src={myceliumNetwork} alt="Mycelium" className="w-32 h-32 object-cover rounded-full opacity-30 animate-float" style={{
                 animationDelay: '2s'
               }} />
               </div>
@@ -91,7 +96,7 @@ const FlowingAboutSection = () => {
               borderRadius: '60% 40% 70% 30% / 40% 60% 30% 70%',
               transform: 'rotate(-5deg)'
             }}>
-                <img src="/lovable-uploads/66e1f1f4-1ebf-4951-b819-5e126821f701.png" alt="Fungai Art Logo" className="w-80 h-80 object-contain opacity-90" />
+                <img src={logoImage} alt="Fungai Art Logo" className="w-80 h-80 object-contain opacity-90" />
                 <div className="absolute inset-0 bg-gradient-to-br from-forest-deep/10 to-earth/20 mix-blend-overlay" />
               </div>
               

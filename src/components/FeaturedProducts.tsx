@@ -5,6 +5,17 @@ import { ShoppingCart, Leaf, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { ShopifyProduct, STOREFRONT_PRODUCTS_QUERY, storefrontApiRequest } from '@/lib/shopify';
 import { useCartStore } from '@/stores/cartStore';
+import pomelli1 from "@/assets/pomelli-image-1.png";
+import pomelli3 from "@/assets/pomelli-image-3.png";
+import pomelli4 from "@/assets/pomelli-image-4.png";
+import pomelliMain from "@/assets/pomelli-image.png";
+
+const FALLBACK_PHOTOS = [
+  { src: pomelliMain,  label: "Botanical Extract" },
+  { src: pomelli1,     label: "Sacred Tincture" },
+  { src: pomelli3,     label: "Herbal Compound" },
+  { src: pomelli4,     label: "Plant Medicine" },
+];
 
 const FeaturedProducts = () => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
@@ -62,14 +73,42 @@ const FeaturedProducts = () => {
     );
   }
 
-  if (products.length === 0) return null;
+  if (products.length === 0) return (
+    <section className="py-20 px-6 bg-gradient-to-b from-background via-card/30 to-background">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="font-playfair text-4xl md:text-5xl font-semibold text-foreground mb-4">
+            Featured <span className="text-golden italic">Extracts</span>
+          </h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            Explore our premium botanical extracts
+          </p>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          {FALLBACK_PHOTOS.map((p) => (
+            <div key={p.src} className="group overflow-hidden rounded-xl border border-golden/10 bg-card/30">
+              <div className="aspect-square overflow-hidden">
+                <img src={p.src} alt={p.label} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+              </div>
+              <p className="text-center text-sm text-muted-foreground py-3 px-2">{p.label}</p>
+            </div>
+          ))}
+        </div>
+        <div className="text-center">
+          <Button size="lg" onClick={() => window.location.href = '/products'} className="bg-gradient-mystical hover:shadow-glow transition-all duration-500">
+            View All Products
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
 
   return (
     <section className="py-20 px-6 bg-gradient-to-b from-background via-card/30 to-background">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="font-playfair text-4xl md:text-5xl font-semibold text-foreground mb-4">
-            Featured <span className="text-golden italic">Tinctures</span>
+            Featured <span className="text-golden italic">Extracts</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Explore our premium botanical extracts
