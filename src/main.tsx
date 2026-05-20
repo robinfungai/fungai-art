@@ -10,7 +10,7 @@ const Root =
   path.startsWith("/community/admin") ? AdminPanel :
   path.startsWith("/community")       ? CommunityPortal :
   path.startsWith("/mixology")        ? App :
-  Index;
+  Index; // serves / and /home and everything else
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
