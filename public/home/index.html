@@ -1315,6 +1315,29 @@ p { line-height: 1.75; color: var(--mist); }
     <div class="products-grid">
 
       <!-- FUNGI -->
+      <!-- Amanita Muscaria -->
+      <div class="product-card reveal" data-category="fungi">
+        <div class="product-img-wrap">
+          <img src="/home/products/amanita.jpeg" alt="Amanita muscaria tincture" class="product-photo">
+          <span class="product-badge badge-foraged">Foraged · Sweden</span>
+          <span class="product-badge" style="top:auto;bottom:8px;background:rgba(136,186,200,0.15);color:var(--mist);font-size:9px;letter-spacing:1px;">SPAGYRIC</span>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Amanita Muscaria Tincture', 50)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Fungi · Sacred</span>
+          <div class="product-name">Amanita muscaria</div>
+          <p class="product-desc">Threshold guardian · neuroalchemy · dream states. GABA-A agonist, loosening perceptual control and awakening symbolic awareness.</p>
+          <div class="product-notes">
+            <span class="note-tag">Muscimol</span><span class="note-tag">Dream-like</span><span class="note-tag">Self-foraged</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span>€50</span></div>
+            <button class="add-btn" onclick="addToCart('Amanita Muscaria Tincture', 50)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chaga -->
       <div class="product-card reveal reveal-d1" data-category="fungi">
         <div class="product-img-wrap">
           <img src="/home/products/chaga.jpeg" alt="Chaga tincture" class="product-photo">
@@ -1324,7 +1347,7 @@ p { line-height: 1.75; color: var(--mist); }
         <div class="product-info">
           <span class="product-category">Fungi · Immunity</span>
           <div class="product-name">Chaga</div>
-          <p class="product-desc">Immunity · resilience · vitality. Beta-glucans and polysaccharides supporting immune balance and cellular protection.</p>
+          <p class="product-desc">Silent alchemist · immunity · resilience. Beta-glucans and polysaccharides supporting immune balance and cellular protection.</p>
           <div class="product-notes">
             <span class="note-tag">Beta-glucans</span><span class="note-tag">Antioxidant</span><span class="note-tag">Wild</span>
           </div>
@@ -1380,8 +1403,8 @@ p { line-height: 1.75; color: var(--mist); }
             <span class="note-tag">Aphrodisiac</span><span class="note-tag">Heart-opening</span><span class="note-tag">Libido</span>
           </div>
           <div class="product-footer">
-            <div class="product-price"><span class="size">30ml</span><span>€48</span></div>
-            <button class="add-btn" onclick="addToCart('Temple Nectar', 48)">+ Add</button>
+            <div class="product-price"><span class="size">30ml</span><span>€38</span></div>
+            <button class="add-btn" onclick="addToCart('Temple Nectar', 38)">+ Add</button>
           </div>
         </div>
       </div>
@@ -1444,7 +1467,7 @@ p { line-height: 1.75; color: var(--mist); }
         <div class="product-img-wrap">
           <img src="/home/products/ruby-no7.jpeg" alt="Ruby No.7 tincture" class="product-photo">
           <span class="product-badge badge-new">New</span>
-          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Ruby No.7', 48)">Add to basket</button></div>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Ruby No.7', 38)">Add to basket</button></div>
         </div>
         <div class="product-info">
           <span class="product-category">Compositions · Heart</span>
@@ -1454,17 +1477,33 @@ p { line-height: 1.75; color: var(--mist); }
             <span class="note-tag">Cardioprotective</span><span class="note-tag">Antioxidant</span><span class="note-tag">Neuro</span>
           </div>
           <div class="product-footer">
-            <div class="product-price"><span class="size">30ml</span><span>€48</span></div>
-            <button class="add-btn" onclick="addToCart('Ruby No.7', 48)">+ Add</button>
+            <div class="product-price"><span class="size">30ml</span><span>€38</span></div>
+            <button class="add-btn" onclick="addToCart('Ruby No.7', 38)">+ Add</button>
           </div>
         </div>
       </div>
 
-      <!-- FLOWERS — hidden on landing, see full shop -->
-      <div class="product-card reveal" data-category="flowers" style="display:none">
+      <!-- Healthy Aging -->
+      <div class="product-card no-photo reveal reveal-d2" data-category="compositions">
+        <div class="product-info">
+          <span class="product-category">Compositions · Longevity</span>
+          <div class="product-name">Healthy Aging</div>
+          <p class="product-desc">Longevity · cellular renewal · deep restoration. Reishi, schisandra, ashwagandha, saffron, pearl. A daily tonic for graceful, radiant aging.</p>
+          <div class="product-notes">
+            <span class="note-tag">Adaptogens</span><span class="note-tag">Longevity</span><span class="note-tag">Antioxidant</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span>€44</span></div>
+            <button class="add-btn" onclick="addToCart('Healthy Aging', 44)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blue Lotus -->
+      <div class="product-card reveal" data-category="flowers">
         <div class="product-img-wrap">
-          <div class="product-img-placeholder clean" style="background:linear-gradient(160deg,#0A0A18,#060B06);"></div>
-          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Blue Lotus (33g)', 15)">Add to basket</button></div>
+          <div class="product-img-placeholder clean" style="background:linear-gradient(160deg,#0D1A2E,#090F1A);"></div>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Blue Lotus Tincture', 44)">Add to basket</button></div>
         </div>
         <div class="product-info">
           <span class="product-category">Flowers · Sacred</span>
@@ -1474,8 +1513,8 @@ p { line-height: 1.75; color: var(--mist); }
             <span class="note-tag">Aporphine</span><span class="note-tag">Nuciferine</span><span class="note-tag">Meditative</span>
           </div>
           <div class="product-footer">
-            <div class="product-price"><span class="size">from 11g</span><span>€5</span></div>
-            <button class="add-btn" onclick="addToCart('Blue Lotus (33g)', 15)">+ Add</button>
+            <div class="product-price"><span class="size">30ml</span><span>€44</span></div>
+            <button class="add-btn" onclick="addToCart('Blue Lotus Tincture', 44)">+ Add</button>
           </div>
         </div>
       </div>
@@ -1522,8 +1561,14 @@ p { line-height: 1.75; color: var(--mist); }
 <!-- ══ FEATURE PRODUCT ══ -->
 <div class="feature">
   <div class="wrap feature-inner">
-    <div class="feature-img-wrap reveal">
-      <svg viewBox="0 0 280 420" width="220" height="340" xmlns="http://www.w3.org/2000/svg">
+    <div class="feature-img-wrap reveal" style="position:relative;">
+      <img src="/home/pomelli-3.png" alt="Sleepy Sleepy" style="width:260px;height:380px;object-fit:cover;border-radius:4px;opacity:0.92;">
+      <div class="annotation ann-1"><strong>CNS ease</strong>Soothes overactive thoughts, relaxes the body</div>
+      <div class="annotation ann-2"><strong>GABAergic</strong>Supports restful sleep pathways naturally</div>
+      <div class="annotation ann-3"><strong>Zero synthetic</strong>additives. Pharma-grade ethanol only</div>
+      <div class="annotation ann-4"><strong>Full spectrum</strong>2 years shelf life. 30ml per bottle</div>
+    </div>
+    <div style="display:none"><svg viewBox="0 0 280 420" width="220" height="340" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="bGrad" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stop-color="#C8A060"/>
@@ -1572,6 +1617,7 @@ p { line-height: 1.75; color: var(--mist); }
     </div>
   </div>
 </div>
+</div><!-- close hidden svg wrapper -->
 
 
 <!-- ══ MYCELIUM TRANCE ══ -->

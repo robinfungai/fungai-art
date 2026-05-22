@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mycelium Trance · Fungai Art</title>
+<link rel="icon" type="image/png" href="/fungai-art-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:wght@200;300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void:      #05090C;
+  --forest:    #080F13;
+  --card:      #111D22;
+  --moss:      #1A2E33;
+  --sage:      #336065;
+  --lichen:    #4D869B;
+  --mist:      #88BAC8;
+  --navy:      #333A57;
+  --purple:    #422C47;
+  --parchment: #EDE5D8;
+  --dust:      #C0B49A;
+  --serif:     'Cormorant Garamond', Georgia, serif;
+  --sans:      'DM Sans', system-ui, sans-serif;
+  --script:    'Pinyon Script', cursive;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--void);color:var(--parchment);font-family:var(--sans);font-weight:300;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* Film grain */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;opacity:0.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:20px 40px;display:flex;align-items:center;justify-content:space-between;transition:background 0.4s}
+.nav.scrolled{background:rgba(5,9,12,0.92);backdrop-filter:blur(12px);border-bottom:0.5px solid rgba(136,186,200,0.08)}
+.nav-brand{text-decoration:none;display:flex;flex-direction:column}
+.nav-brand .main{font-family:var(--serif);font-size:18px;color:var(--parchment);letter-spacing:1px}
+.nav-brand .sub{font-size:9px;letter-spacing:3px;color:var(--lichen);text-transform:uppercase}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{color:var(--dust);text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;transition:color 0.2s}
+.nav-links a:hover{color:var(--mist)}
+.nav-cta{padding:8px 20px;border:0.5px solid rgba(136,186,200,0.4);color:var(--mist);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;transition:all 0.2s;border-radius:2px}
+.nav-cta:hover{background:rgba(136,186,200,0.1)}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;overflow:hidden}
+.hero-bg{position:absolute;inset:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom, rgba(5,9,12,0.3) 0%, rgba(5,9,12,0.6) 60%, rgba(5,9,12,0.95) 100%)}
+.hero-content{position:relative;z-index:10;padding:80px 60px;max-width:900px}
+.hero-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--lichen);margin-bottom:24px;display:block}
+.hero-title{font-family:var(--serif);font-size:clamp(60px,10vw,120px);font-weight:300;line-height:0.95;margin-bottom:8px;color:var(--parchment)}
+.hero-title em{font-style:italic;color:var(--mist)}
+.hero-sub{font-family:var(--script);font-size:clamp(40px,6vw,80px);color:var(--mist);display:block;margin-bottom:32px}
+.hero-meta{display:flex;gap:40px;margin-bottom:48px}
+.hero-meta-item{font-size:11px;letter-spacing:1px;color:var(--dust)}
+.hero-meta-item strong{display:block;font-size:28px;font-family:var(--serif);font-weight:300;color:var(--parchment);letter-spacing:0}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap}
+.btn-primary{display:inline-block;padding:14px 32px;background:var(--lichen);color:var(--parchment);font-size:11px;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;transition:all 0.3s;font-family:var(--sans)}
+.btn-primary:hover{background:var(--mist);color:var(--void)}
+.btn-ghost{display:inline-block;padding:14px 32px;border:0.5px solid rgba(136,186,200,0.35);color:var(--mist);font-size:11px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all 0.3s;font-family:var(--sans);background:none;cursor:pointer}
+.btn-ghost:hover{background:rgba(136,186,200,0.08)}
+.scroll-hint{position:absolute;bottom:40px;right:60px;z-index:10;display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(192,180,154,0.4);font-size:9px;letter-spacing:2px;text-transform:uppercase}
+.scroll-hint::after{content:'';display:block;width:0.5px;height:60px;background:linear-gradient(to bottom, rgba(136,186,200,0.4), transparent)}
+
+/* WRAP */
+.wrap{max-width:1200px;margin:0 auto;padding:0 60px}
+
+/* SECTION LABELS */
+.sec-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--lichen);display:block;margin-bottom:16px}
+.sec-title{font-family:var(--serif);font-size:clamp(36px,5vw,64px);font-weight:300;line-height:1.1;margin-bottom:24px}
+.sec-title em{font-style:italic;color:var(--mist)}
+.sec-body{font-size:14px;color:var(--dust);line-height:1.8;max-width:680px}
+
+/* DIVIDER */
+.divider{width:60px;height:0.5px;background:var(--lichen);margin:60px 0;opacity:0.4}
+
+/* CONCEPT */
+.concept{padding:140px 0}
+.concept-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.concept-img{position:relative}
+.concept-img img{width:100%;height:500px;object-fit:cover;object-position:top;filter:contrast(1.05) saturate(0.9)}
+.concept-img::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(51,96,101,0.2),transparent);z-index:1}
+.concept-quote{font-family:var(--serif);font-size:22px;font-style:italic;color:var(--parchment);line-height:1.5;margin:32px 0;border-left:1px solid var(--lichen);padding-left:24px}
+
+/* PRINCIPLES */
+.principles{padding:100px 0;background:var(--forest)}
+.principles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:60px}
+.principle{padding:48px 40px;background:var(--card);border-top:0.5px solid rgba(136,186,200,0.1)}
+.principle-num{font-size:11px;letter-spacing:2px;color:var(--lichen);margin-bottom:20px;display:block}
+.principle-name{font-family:var(--serif);font-size:28px;font-weight:300;margin-bottom:12px;color:var(--parchment)}
+.principle-name em{color:var(--mist);font-style:italic}
+
+/* ARTISTS */
+.artists{padding:140px 0}
+.artists-header{text-align:center;margin-bottom:80px}
+.artists-header .hero-sub{font-size:60px;display:block;text-align:center}
+.artists-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.artist-card{position:relative;overflow:hidden;background:var(--card)}
+.artist-img{width:100%;height:480px;object-fit:cover;object-position:top;filter:grayscale(15%) contrast(1.05);transition:transform 0.6s}
+.artist-card:hover .artist-img{transform:scale(1.03)}
+.artist-info{padding:40px;background:linear-gradient(to top, rgba(5,9,12,0.95) 0%, rgba(5,9,12,0.6) 60%, transparent 100%);position:absolute;bottom:0;left:0;right:0}
+.artist-name{font-family:var(--serif);font-size:32px;font-weight:300;color:var(--parchment);margin-bottom:8px}
+.artist-role{font-size:11px;letter-spacing:2px;color:var(--lichen);text-transform:uppercase;margin-bottom:16px;display:block}
+.artist-bio{font-size:12px;color:var(--dust);line-height:1.7}
+
+/* SENSORY */
+.sensory{padding:140px 0;background:var(--forest)}
+.sensory-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:60px}
+.sensory-modules{display:flex;flex-direction:column;gap:1px}
+.sensory-module{padding:32px;background:var(--card);border-left:2px solid var(--lichen)}
+.sensory-module:hover{border-left-color:var(--mist)}
+.module-name{font-family:var(--serif);font-size:20px;font-weight:400;color:var(--parchment);margin-bottom:8px}
+.module-detail{font-size:12px;color:var(--dust);line-height:1.7}
+.module-hz{font-size:10px;letter-spacing:2px;color:var(--mist);text-transform:uppercase;margin-bottom:8px;display:block}
+.sensory-img{position:relative}
+.sensory-img img{width:100%;height:600px;object-fit:cover}
+
+/* ALLIES */
+.allies{padding:140px 0}
+.allies-header{margin-bottom:80px}
+.allies-list{display:flex;flex-direction:column;gap:1px}
+.ally{display:grid;grid-template-columns:200px 1fr 280px;gap:40px;padding:40px 0;border-bottom:0.5px solid rgba(136,186,200,0.08);align-items:start}
+.ally-name{font-family:var(--serif);font-size:28px;font-weight:300;color:var(--mist)}
+.ally-latin{font-size:11px;letter-spacing:1px;color:var(--lichen);display:block;margin-top:4px}
+.ally-role{font-size:11px;letter-spacing:2px;color:var(--lichen);text-transform:uppercase;display:block;margin-bottom:12px}
+.ally-body{font-size:13px;color:var(--dust);line-height:1.8}
+.ally-arrow{font-size:12px;color:var(--mist);line-height:1.6;font-family:var(--serif);font-style:italic}
+
+/* EVENTS */
+.events{padding:100px 0;background:var(--forest)}
+.events-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;margin-top:60px}
+.event-table{display:flex;flex-direction:column;gap:1px}
+.event-row{display:grid;grid-template-columns:1fr 1fr auto;gap:24px;padding:20px 24px;background:var(--card);align-items:center}
+.event-venue{font-family:var(--serif);font-size:16px;color:var(--parchment)}
+.event-act{font-size:11px;color:var(--dust)}
+.event-badge{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:2px}
+.event-badge.done{background:rgba(77,134,155,0.15);color:var(--lichen)}
+.event-badge.upcoming{background:rgba(136,186,200,0.12);color:var(--mist)}
+.events-img img{width:100%;height:400px;object-fit:cover}
+
+/* SAFETY */
+.safety{padding:140px 0}
+.safety-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-top:60px}
+.safety-block{padding:48px 36px;background:var(--card)}
+.safety-block h3{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--parchment);margin-bottom:20px}
+.safety-block ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.safety-block li{font-size:13px;color:var(--dust);line-height:1.6;padding-left:16px;position:relative}
+.safety-block li::before{content:'·';position:absolute;left:0;color:var(--lichen)}
+
+/* BOOKING */
+.booking{padding:140px 0;text-align:center;position:relative;overflow:hidden}
+.booking-bg{position:absolute;inset:0}
+.booking-bg img{width:100%;height:100%;object-fit:cover;opacity:0.12}
+.booking-bg::after{content:'';position:absolute;inset:0;background:var(--void);opacity:0.7}
+.booking-content{position:relative;z-index:1}
+.booking-title{font-family:var(--serif);font-size:clamp(40px,7vw,90px);font-weight:300;line-height:1.1;margin-bottom:16px}
+.booking-title em{font-style:italic;color:var(--mist)}
+.booking-contacts{display:flex;justify-content:center;gap:60px;margin:60px 0}
+.contact-item{text-align:center}
+.contact-name{font-family:var(--serif);font-size:18px;color:var(--parchment);margin-bottom:6px}
+.contact-email{font-size:13px;color:var(--lichen);text-decoration:none}
+.contact-email:hover{color:var(--mist)}
+
+/* FOOTER */
+.footer{padding:48px 60px;border-top:0.5px solid rgba(136,186,200,0.08);display:flex;justify-content:space-between;align-items:center}
+.footer-brand{font-family:var(--serif);font-size:16px;color:var(--dust)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{color:var(--dust);text-decoration:none;font-size:11px;letter-spacing:1px;transition:color 0.2s}
+.footer-links a:hover{color:var(--mist)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s,transform 0.7s}
+.reveal.in{opacity:1;transform:none}
+.reveal-d1{transition-delay:0.1s}
+.reveal-d2{transition-delay:0.2s}
+.reveal-d3{transition-delay:0.3s}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .wrap{padding:0 24px}
+  .hero-content{padding:60px 24px}
+  .concept-grid,.artists-grid,.sensory-grid,.events-grid,.safety-grid,.principles-grid{grid-template-columns:1fr}
+  .ally{grid-template-columns:1fr}
+  .booking-contacts{flex-direction:column;gap:32px}
+  .footer{flex-direction:column;gap:24px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <a href="/" class="nav-brand">
+    <span class="main">Fungai Art</span>
+    <span class="sub">Entheobotanicals</span>
+  </a>
+  <div class="nav-links">
+    <a href="/#shop">Shop</a>
+    <a href="/community">Community</a>
+    <a href="/mixology">Herbal Engine</a>
+    <a href="/#forage">Foraging</a>
+  </div>
+  <a href="mailto:robin@fungai.art" class="nav-cta">Book</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg">
+    <img src="/mycelium-trance/mushroom-gills.jpg" alt="Mycelium Trance">
+  </div>
+  <div class="hero-content">
+    <span class="hero-label">Fungai Art · 2026 · Facilitated by Stephanie Teÿæ & Robin Fungi</span>
+    <h1 class="hero-title">Mycelium<br><em>Trance</em></h1>
+    <span class="hero-sub">A rewilding of the nervous system</span>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><strong>111</strong>Minutes</div>
+      <div class="hero-meta-item"><strong>70+</strong>Max capacity</div>
+      <div class="hero-meta-item"><strong>5</strong>Sacred plant allies</div>
+      <div class="hero-meta-item"><strong>Europe</strong>Festivals & private</div>
+    </div>
+    <div class="hero-actions">
+      <a href="mailto:robin@fungai.art" class="btn-primary">Enquire to book</a>
+      <a href="#concept" class="btn-ghost">Discover</a>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</div>
+
+<!-- CONCEPT -->
+<section id="concept" class="concept">
+  <div class="wrap">
+    <div class="concept-grid">
+      <div class="reveal">
+        <span class="sec-label">Concept & Experience</span>
+        <h2 class="sec-title">A full-sense descent into the <em>vibrational architecture</em></h2>
+        <p class="sec-body">This 111-minute journey is a fully embodied sensory awakening — a deliberate attunement to the relational, ecological, and mysterious architecture of life. It tunes participants to the mycelial intelligence, allowing human perception and consciousness to resonate with the subtle, interconnected networks around us.</p>
+        <blockquote class="concept-quote">"Trance arises not through force, but through recognition."</blockquote>
+        <p class="sec-body">Through diverse sound modules, imagery, metaphor and somatic attunement, vibrations flow into bones, fascia, and energetic fields. Participants are invited to become hyphae — weaving mycorrhizal threads with each other and the morphing organism, experiencing reciprocity, vitality, and intelligence of the life-web.</p>
+        <div class="divider"></div>
+        <p class="sec-body" style="color:var(--mist);font-family:var(--serif);font-style:italic;font-size:16px;">Sacred Plant Allies — Chaga · Cordyceps · Pine pollen · Pine cones · Chilcuague — tether participants to the intelligence of the forest, opening sensory channels and transmuting archetypal wisdom.</p>
+      </div>
+      <div class="reveal reveal-d2">
+        <div class="concept-img">
+          <img src="/mycelium-trance/hero-stephanie.png" alt="Stephanie Teÿæ">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUIDING PRINCIPLES -->
+<section class="principles">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="sec-label">Guiding Principles</span>
+      <h2 class="sec-title">The <em>foundation</em></h2>
+    </div>
+    <div class="principles-grid">
+      <div class="principle reveal reveal-d1">
+        <span class="principle-num">01</span>
+        <div class="principle-name"><em>Reciprocity</em></div>
+        <p style="font-size:13px;color:var(--dust);line-height:1.7;">We understand Gaia not as a resource, but as a conscious, regenerative system. Each element of the experience is in conversation with every other.</p>
+      </div>
+      <div class="principle reveal reveal-d2">
+        <span class="principle-num">02</span>
+        <div class="principle-name"><em>Embodiment</em></div>
+        <p style="font-size:13px;color:var(--dust);line-height:1.7;">The body is the instrument. Somatic attunement brings the field into the flesh — fascia and connective tissue become listening pathways.</p>
+      </div>
+      <div class="principle reveal reveal-d3">
+        <span class="principle-num">03</span>
+        <div class="principle-name">Ecological<br><em>Consciousness</em></div>
+        <p style="font-size:13px;color:var(--dust);line-height:1.7;">Creating somatic memory and ecological awareness. Imprinting a visceral sense of belonging and reciprocity within the greater web of life.</p>
+      </div>
+      <div class="principle reveal reveal-d1">
+        <span class="principle-num">04</span>
+        <div class="principle-name">Integrity with<br><em>Plant Allies</em></div>
+        <p style="font-size:13px;color:var(--dust);line-height:1.7;">All plant allies are introduced with clarity regarding their effects and purpose. We work with micro-amounts. Abstention is always fully respected.</p>
+      </div>
+      <div class="principle reveal reveal-d2">
+        <span class="principle-num">05</span>
+        <div class="principle-name">Ritual<br><em>Devotion</em></div>
+        <p style="font-size:13px;color:var(--dust);line-height:1.7;">Intentional curation of frequencies, space, and time. Beta · theta · delta waves. Self-made gong at 111 Hz. Sound shifts the brain; vibration speaks to cells.</p>
+      </div>
+      <div class="principle reveal reveal-d3">
+        <span class="principle-num">06</span>
+        <div class="principle-name">Sensory<br><em>Intelligence</em></div>
+        <p style="font-size:13px;color:var(--dust);line-height:1.7;">Participants are invited to sense their place as givers and receivers within a greater ecology — a state of deep relational presence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTISTS -->
+<section class="artists">
+  <div class="wrap">
+    <div class="artists-header reveal">
+      <span class="sec-label">The Facilitators</span>
+      <span class="hero-sub">about the artists</span>
+      <p style="font-size:15px;font-family:var(--serif);font-style:italic;color:var(--dust);max-width:600px;margin:0 auto;">"Inspired by a future where medicine and art return to their original unity, we craft multidimensional portals as sacred rebels, artists and healers."</p>
+    </div>
+    <div class="artists-grid">
+      <div class="artist-card reveal">
+        <img src="/mycelium-trance/steph-tuning.png" alt="Stephanie Teÿæ" class="artist-img">
+        <div class="artist-info">
+          <div class="artist-name">Stephanie Teÿæ</div>
+          <span class="artist-role">Somatic ritualist · Gong practitioner</span>
+          <p class="artist-bio">5 years experienced facilitator of somatic rituals and group immersions. Systemic psycho-mystic coach (trauma informed). Gong and tuning fork practitioner. Guided sensual experiences. Botanical crafter & elixir master. Art installations.</p>
+        </div>
+      </div>
+      <div class="artist-card reveal reveal-d2">
+        <img src="/mycelium-trance/robin-mic.png" alt="Robin Fungi" class="artist-img" style="object-position:top">
+        <div class="artist-info">
+          <div class="artist-name">Robin Fungi</div>
+          <span class="artist-role">Forager · Elixir master · Ceremonial guide</span>
+          <p class="artist-bio">Facilitation of mushroom ceremonies and educative talks. Chef, forager & elixir master (herbalist-in-training). Guided sensual experiences. Art installations. Founder and visionary seed carrier of Fungai Art.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SENSORY ARCHITECTURE -->
+<section class="sensory">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="sec-label">The Sensory Architecture</span>
+      <h2 class="sec-title">Carefully, intentionally <em>curated</em></h2>
+    </div>
+    <div class="sensory-grid">
+      <div class="sensory-modules reveal reveal-d1">
+        <div class="sensory-module">
+          <span class="module-hz">Vibrational Immersion</span>
+          <div class="module-name">Sound Architecture</div>
+          <p class="module-detail">Beta waves at 18Hz (awakening pulse, sharpens presence) · Theta waves at 4–7Hz (trance threshold, porous self-boundaries) · Self-made Gong at 111Hz (sensory expansion, bodily, visceral) · Delta waves at 4Hz (deep integrative state, where re-patterning becomes possible).</p>
+        </div>
+        <div class="sensory-module">
+          <span class="module-hz">Sacred Plant Allies</span>
+          <div class="module-name">Botanical Elements</div>
+          <p class="module-detail">Pine pollen · Pine cones · Chaga · Chilcuague — opening sensory and consciousness pathways, tethering participants to the intelligence of the forest. Each element introduced with full clarity of effects and purpose.</p>
+        </div>
+        <div class="sensory-module">
+          <span class="module-hz">Somatic Attunement</span>
+          <div class="module-name">Intention & Presence</div>
+          <p class="module-detail">Intention is the directional force — it shapes the field and establishes coherence. Somatic cues, focused sensation, and scent keep the body tethered as perception expands. Fascia and connective tissue become listening pathways.</p>
+        </div>
+        <div class="sensory-module">
+          <span class="module-hz">Relational Ecology</span>
+          <div class="module-name">Mycelium Metaphor</div>
+          <p class="module-detail">Metaphor here is symbolic and operative — it reshapes perception by giving the body a living image through which new ways of sensing, relating, and belonging can be embodied. Reactivating cellular memory of interconnection.</p>
+        </div>
+      </div>
+      <div class="sensory-img reveal reveal-d2">
+        <img src="/mycelium-trance/gong.jpg" alt="Sacred gong" style="width:100%;height:600px;object-fit:cover">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANT ALLIES -->
+<section class="allies">
+  <div class="wrap">
+    <div class="allies-header reveal">
+      <span class="sec-label">Plant Allies as Initiatory Intelligence</span>
+      <h2 class="sec-title">The <em>forest speaks</em></h2>
+    </div>
+    <div class="allies-list">
+      <div class="ally reveal">
+        <div>
+          <div class="ally-name">Chaga</div>
+          <span class="ally-latin">Inonotus obliquus</span>
+        </div>
+        <div>
+          <span class="ally-role">Silent Alchemist</span>
+          <p class="ally-body">The elder who reminds us that decay is a form of devotion and that darkness is fertile. Drawing life from the wounded birch, it transmutes pain into nourishment — a living metaphor for regeneration. Active compounds: betulin, betulinic acid, polysaccharides, antioxidants.</p>
+        </div>
+        <p class="ally-arrow">→ Thriving in decay, weaving new foundations — shadow, resilience, slow transformation.</p>
+      </div>
+      <div class="ally reveal reveal-d1">
+        <div>
+          <div class="ally-name">Cordyceps</div>
+          <span class="ally-latin">Cordyceps sinensis</span>
+        </div>
+        <div>
+          <span class="ally-role">Vital Strategist</span>
+          <p class="ally-body">Moves along the thin line between life forces, teaching efficiency, endurance, and precise use of energy. It reminds the system how to stay awake, adaptive, and alive — carrying transformation out of the underground and into motion, breath, and action.</p>
+        </div>
+        <p class="ally-arrow">→ Restoring vitality and embodied will — energy, stamina, lucid presence.</p>
+      </div>
+      <div class="ally reveal reveal-d2">
+        <div>
+          <div class="ally-name">Pine Pollen</div>
+          <span class="ally-latin">Pinus sylvestris</span>
+        </div>
+        <div>
+          <span class="ally-role">Sovereign Axis</span>
+          <p class="ally-body">The golden dust of renewal — the breath of the forest made visible. A fine alchemy of masculine essence, cellular vitality, and trees remembering their youth. Pine cones are the forest's sacred geometry made tangible, each scale a hymn to the Fibonacci.</p>
+        </div>
+        <p class="ally-arrow">→ Earth–sky connection, regenerative energy, pattern of renewal.</p>
+      </div>
+      <div class="ally reveal">
+        <div>
+          <div class="ally-name">Chilcuague</div>
+          <span class="ally-latin">Golden root</span>
+        </div>
+        <div>
+          <span class="ally-role">Firekeeper of Voice</span>
+          <p class="ally-body">The moment it touches the tongue, a warm tingling vibration spreads through the mouth and into the breath. It clears, sharpens, and opens — the senses feel more alive. Spilanthol stimulates peripheral sensory nerves, increasing tactile awareness and bodily feedback.</p>
+        </div>
+        <p class="ally-arrow">→ Awakening vitality and authentic expression — tingling sensation, vocal release, presence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERFORMANCE HIGHLIGHTS -->
+<section class="events">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="sec-label">Performance Highlights</span>
+      <h2 class="sec-title">Previous <em>events</em></h2>
+    </div>
+    <div class="events-grid">
+      <div class="event-table reveal reveal-d1">
+        <div class="event-row">
+          <div><div class="event-venue">Astral Plans, France</div><div class="event-act">Entheogenic Dinner · 70 pax · Light Portal Activation · 50 pax</div></div>
+          <span class="event-badge done">Done</span>
+        </div>
+        <div class="event-row">
+          <div><div class="event-venue">Hive Festival, Germany</div><div class="event-act">Blue Lotus Ceremony · 50 pax · Somatic Exploration · 40 pax</div></div>
+          <span class="event-badge done">Done</span>
+        </div>
+        <div class="event-row">
+          <div><div class="event-venue">TrypExpo, Berlin</div><div class="event-act">Mycelium Trance · Stand · 7,613 views</div></div>
+          <span class="event-badge done">Done</span>
+        </div>
+        <div class="event-row">
+          <div><div class="event-venue">Private Event, Bali</div><div class="event-act">Mycelium Trance · 14 pax</div></div>
+          <span class="event-badge done">Done</span>
+        </div>
+        <div class="event-row">
+          <div><div class="event-venue">Devi Date, Berlin</div><div class="event-act">Blue Lotus & Gong Meditation · 40 pax</div></div>
+          <span class="event-badge done">Done</span>
+        </div>
+        <div class="event-row">
+          <div><div class="event-venue">Per Anhalter, Germany</div><div class="event-act">Pine Cone Meditation · 70 pax</div></div>
+          <span class="event-badge done">Done</span>
+        </div>
+        <div class="event-row" style="border-top:0.5px solid rgba(136,186,200,0.15)">
+          <div><div class="event-venue">Berlin Foraging Circles</div><div class="event-act">May–June 2026 · Community walks</div></div>
+          <span class="event-badge upcoming">Upcoming</span>
+        </div>
+      </div>
+      <div class="events-img reveal reveal-d2">
+        <img src="/mycelium-trance/robin-amanita.jpeg" alt="Robin Fungi" style="width:100%;height:500px;object-fit:cover;object-position:top">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAFETY -->
+<section class="safety">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="sec-label">Safety & Ethics</span>
+      <h2 class="sec-title">The <em>container</em></h2>
+    </div>
+    <div class="safety-grid">
+      <div class="safety-block reveal reveal-d1">
+        <h3>Plant Allies &<br><em style="font-family:var(--serif);font-style:italic;color:var(--mist);">Substances</em></h3>
+        <ul>
+          <li>We work with micro-amounts only</li>
+          <li>Each ally introduced with full clarity of effects and purpose</li>
+          <li>Participants recommended to arrive sober</li>
+          <li>No pressure to ingest — abstention fully respected</li>
+        </ul>
+      </div>
+      <div class="safety-block reveal reveal-d2">
+        <h3>Containment &<br><em style="font-family:var(--serif);font-style:italic;color:var(--mist);">Field Care</em></h3>
+        <ul>
+          <li>Space held as a closed, focused field</li>
+          <li>Clear boundaries and shared agreements</li>
+          <li>Participants respected as sovereign beings</li>
+          <li>All physical touch is consensual</li>
+          <li>Time held for grounding and integration</li>
+          <li>This offering is not therapy or medical treatment</li>
+        </ul>
+      </div>
+      <div class="safety-block reveal reveal-d3">
+        <h3>Ecological<br><em style="font-family:var(--serif);font-style:italic;color:var(--mist);">Respect</em></h3>
+        <ul>
+          <li>All materials sustainably sourced or self-foraged</li>
+          <li>We honour plants, fungi, and forests as partners and teachers — not tools</li>
+          <li>Strict seasonal awareness</li>
+          <li>Never harvesting from vulnerable ecosystems</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking">
+  <div class="booking-bg">
+    <img src="/mycelium-trance/mushroom-background.jpg" alt="">
+  </div>
+  <div class="booking-content wrap">
+    <div class="reveal">
+      <span class="sec-label" style="text-align:center;justify-content:center;display:flex;">Book a circle</span>
+      <div class="booking-title">Bring Mycelium<br>Trance to your <em>event</em></div>
+      <p style="font-size:15px;color:var(--dust);max-width:560px;margin:0 auto 48px;line-height:1.8;">Private events, festivals, retreats, ceremonies. We travel across Europe and beyond. All inquiries welcome — let's co-create something sacred.</p>
+      <div class="booking-contacts">
+        <div class="contact-item">
+          <div class="contact-name">Robin Fungi</div>
+          <a href="mailto:robin@fungai.art" class="contact-email">robin@fungai.art</a>
+        </div>
+        <div class="contact-item">
+          <div class="contact-name">Stephanie Teÿæ</div>
+          <a href="mailto:teyae@fungai.art" class="contact-email">teyae@fungai.art</a>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-primary">@fungai.art on Instagram</a>
+        <a href="/" class="btn-ghost">Back to Apothecary</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">Fungai Art · Mycelium Trance · 2026</div>
+  <div class="footer-links">
+    <a href="/">Home</a>
+    <a href="/#shop">Shop</a>
+    <a href="/community">Community</a>
+    <a href="https://www.instagram.com/fungai.art" target="_blank">Instagram</a>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 60);
+});
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

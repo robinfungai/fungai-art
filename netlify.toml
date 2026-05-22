@@ -23,10 +23,7 @@
   to     = "/products"
   status = 301
 
-[[redirects]]
-  from   = "/mycelium-trance*"
-  to     = "/app.html"
-  status = 200
+# mycelium-trance is a static HTML file — served directly, no redirect needed
 
 [[redirects]]
   from   = "/mixology*"
