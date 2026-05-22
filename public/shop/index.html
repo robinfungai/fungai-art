@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Apothecary · Fungai Art</title>
+<link rel="icon" type="image/png" href="/fungai-art-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@200;300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+:root{--void:#05090C;--forest:#080F13;--card:#111D22;--moss:#1A2E33;--sage:#336065;--lichen:#4D869B;--mist:#88BAC8;--navy:#333A57;--purple:#422C47;--parchment:#EDE5D8;--dust:#C0B49A;--coral:#CE6C52;--lime-soft:rgba(136,186,200,0.10);--serif:'Cormorant Garamond',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;--script:'Pinyon Script',cursive}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--void);color:var(--parchment);font-family:var(--sans);font-weight:300;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;opacity:0.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,9,12,0.88);backdrop-filter:blur(16px);border-bottom:0.5px solid rgba(136,186,200,0.07)}
+.nav-brand{text-decoration:none;display:flex;align-items:center;gap:12px}
+.nav-brand-text{display:flex;flex-direction:column}
+.nav-brand-text .main{font-family:var(--serif);font-size:17px;color:var(--parchment);letter-spacing:0.5px}
+.nav-brand-text .sub{font-size:8.5px;letter-spacing:3px;color:var(--lichen);text-transform:uppercase}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:var(--dust);text-decoration:none;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s}
+.nav-links a:hover,.nav-links a.active{color:var(--mist)}
+.nav-right{display:flex;align-items:center;gap:16px}
+.nav-cart{background:none;border:0.5px solid rgba(136,186,200,0.3);color:var(--mist);padding:8px 18px;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:var(--sans);display:flex;align-items:center;gap:8px;transition:all 0.2s}
+.nav-cart:hover{background:rgba(136,186,200,0.08)}
+.cart-count{background:var(--lichen);color:var(--parchment);border-radius:50%;width:18px;height:18px;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:500}
+
+/* HERO BANNER */
+.hero-banner{padding:140px 60px 80px;background:linear-gradient(to bottom,var(--forest),var(--void));border-bottom:0.5px solid rgba(136,186,200,0.06);text-align:center}
+.hero-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--lichen);display:block;margin-bottom:20px}
+.hero-title{font-family:var(--serif);font-size:clamp(52px,8vw,96px);font-weight:300;line-height:1.0;color:var(--parchment)}
+.hero-title em{font-style:italic;color:var(--mist)}
+.hero-script{font-family:var(--script);font-size:clamp(32px,5vw,56px);color:var(--dust);display:block;margin-top:8px}
+.hero-sub{font-size:14px;color:var(--dust);max-width:560px;margin:24px auto 0;line-height:1.8}
+
+/* FILTERS */
+.filters{padding:40px 60px;display:flex;gap:8px;flex-wrap:wrap;border-bottom:0.5px solid rgba(136,186,200,0.06);position:sticky;top:57px;z-index:100;background:rgba(5,9,12,0.95);backdrop-filter:blur(12px)}
+.filter-btn{padding:8px 20px;border:0.5px solid rgba(136,186,200,0.2);background:none;color:var(--dust);font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:all 0.2s;border-radius:2px}
+.filter-btn:hover{border-color:rgba(136,186,200,0.4);color:var(--mist)}
+.filter-btn.active{background:rgba(136,186,200,0.12);border-color:rgba(136,186,200,0.5);color:var(--mist)}
+
+/* SECTION HEADERS */
+.cat-header{padding:60px 60px 32px;display:flex;align-items:center;gap:24px}
+.cat-header h2{font-family:var(--serif);font-size:32px;font-weight:300;color:var(--parchment)}
+.cat-header h2 em{font-style:italic;color:var(--mist)}
+.cat-line{flex:1;height:0.5px;background:rgba(136,186,200,0.12)}
+.cat-count{font-size:10px;letter-spacing:2px;color:var(--lichen);text-transform:uppercase}
+
+/* PRODUCTS GRID */
+.products-section{padding:0 60px 80px}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px}
+.product-card{background:var(--card);transition:all 0.3s;cursor:pointer;display:flex;flex-direction:column}
+.product-card.hidden{display:none!important}
+.product-img-wrap{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--moss)}
+.product-photo{width:100%;height:100%;object-fit:cover;transition:transform 0.5s;filter:saturate(0.9)contrast(1.05)}
+.product-card:hover .product-photo{transform:scale(1.04)}
+.product-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--moss),var(--card))}
+.product-placeholder span{font-size:48px;opacity:0.3;font-family:var(--serif);font-style:italic;color:var(--mist)}
+.product-badge{position:absolute;top:12px;left:12px;font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;background:rgba(77,134,155,0.85);color:var(--parchment);border-radius:2px}
+.product-badge.spagyric{background:rgba(136,186,200,0.15);color:var(--mist);border:0.5px solid rgba(136,186,200,0.3)}
+.product-hover-cta{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(to top,rgba(5,9,12,0.9),transparent);transform:translateY(100%);transition:transform 0.3s}
+.product-card:hover .product-hover-cta{transform:none}
+.quick-add{width:100%;padding:10px;background:var(--lichen);border:none;color:var(--parchment);font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:background 0.2s}
+.quick-add:hover{background:var(--mist);color:var(--void)}
+.product-info{padding:24px;flex:1;display:flex;flex-direction:column}
+.product-category{font-size:9.5px;letter-spacing:2px;color:var(--lichen);text-transform:uppercase;margin-bottom:8px;display:block}
+.product-name{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--parchment);margin-bottom:10px;line-height:1.2}
+.product-desc{font-size:12.5px;color:var(--dust);line-height:1.7;flex:1;margin-bottom:16px}
+.product-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.tag{font-size:9.5px;letter-spacing:1px;padding:3px 10px;border:0.5px solid rgba(136,186,200,0.15);color:var(--lichen);border-radius:2px}
+.product-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:16px;border-top:0.5px solid rgba(136,186,200,0.08)}
+.product-price{display:flex;align-items:baseline;gap:8px}
+.product-price .size{font-size:10px;color:var(--lichen);letter-spacing:1px}
+.product-price .amount{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--mist)}
+.add-btn{padding:8px 18px;background:none;border:0.5px solid rgba(136,186,200,0.3);color:var(--mist);font-size:10.5px;letter-spacing:1px;cursor:pointer;font-family:var(--sans);transition:all 0.2s}
+.add-btn:hover{background:rgba(136,186,200,0.1);border-color:rgba(136,186,200,0.5)}
+
+/* COMPOSITIONS BANNER */
+.comp-banner{margin:0 60px 60px;padding:48px;background:var(--forest);border:0.5px solid rgba(136,186,200,0.1);display:flex;align-items:center;justify-content:space-between;gap:40px}
+.comp-banner h3{font-family:var(--serif);font-size:36px;font-weight:300;color:var(--parchment)}
+.comp-banner h3 em{color:var(--mist);font-style:italic}
+.comp-banner p{font-size:13px;color:var(--dust);max-width:400px;line-height:1.7}
+
+/* CART DRAWER */
+.cart-overlay{position:fixed;inset:0;background:rgba(5,9,12,0.6);z-index:800;opacity:0;pointer-events:none;transition:opacity 0.3s}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-drawer{position:fixed;top:0;right:0;bottom:0;width:400px;background:var(--card);z-index:900;transform:translateX(100%);transition:transform 0.35s;display:flex;flex-direction:column;border-left:0.5px solid rgba(136,186,200,0.1)}
+.cart-drawer.open{transform:none}
+.cart-head{padding:24px 28px;border-bottom:0.5px solid rgba(136,186,200,0.08);display:flex;justify-content:space-between;align-items:center}
+.cart-head h3{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--parchment)}
+.cart-close{background:none;border:none;color:var(--dust);font-size:18px;cursor:pointer;padding:4px 8px}
+.cart-body{flex:1;overflow-y:auto;padding:20px 28px}
+.cart-empty{text-align:center;padding:60px 0;color:var(--dust)}
+.cart-empty p{font-size:13px;margin-top:12px;font-family:var(--serif);font-style:italic}
+.cart-item{display:flex;justify-content:space-between;align-items:start;padding:16px 0;border-bottom:0.5px solid rgba(136,186,200,0.06)}
+.cart-item-name{font-size:13px;color:var(--parchment);margin-bottom:4px;font-family:var(--serif)}
+.cart-item-meta{font-size:11px;color:var(--lichen)}
+.cart-item-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.cart-item-price{font-family:var(--serif);font-size:16px;color:var(--mist)}
+.cart-item-remove{background:none;border:none;color:rgba(192,180,154,0.4);cursor:pointer;font-size:12px}
+.cart-footer{padding:20px 28px;border-top:0.5px solid rgba(136,186,200,0.08)}
+.cart-total{display:flex;justify-content:space-between;margin-bottom:16px}
+.cart-total .label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dust)}
+.cart-total .amount{font-family:var(--serif);font-size:22px;color:var(--parchment)}
+.checkout-btn{width:100%;padding:14px;background:var(--lichen);border:none;color:var(--parchment);font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:background 0.2s}
+.checkout-btn:hover{background:var(--mist);color:var(--void)}
+
+/* CHECKOUT MODAL */
+.co-overlay{position:fixed;inset:0;background:rgba(5,9,12,0.85);z-index:1000;display:none;align-items:center;justify-content:center;padding:24px}
+.co-overlay.open{display:flex}
+.co-modal{background:var(--card);border:0.5px solid rgba(136,186,200,0.12);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;border-radius:4px}
+.co-head{padding:24px 28px;border-bottom:0.5px solid rgba(136,186,200,0.08);display:flex;justify-content:space-between;align-items:center}
+.co-head h2{font-family:var(--serif);font-size:24px;font-weight:300;color:var(--parchment)}
+.co-close{background:none;border:none;color:var(--dust);font-size:18px;cursor:pointer}
+.co-body{padding:28px}
+.co-field{margin-bottom:16px}
+.co-field label{display:block;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--lichen);margin-bottom:8px}
+.co-field input,.co-field select{width:100%;padding:12px 16px;background:rgba(136,186,200,0.05);border:0.5px solid rgba(136,186,200,0.15);color:var(--parchment);font-family:var(--sans);font-size:13.5px}
+.co-field input:focus,.co-field select:focus{outline:none;border-color:rgba(136,186,200,0.4)}
+.co-field select option{background:var(--card)}
+.co-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.co-summary{background:rgba(136,186,200,0.05);border:0.5px solid rgba(136,186,200,0.1);padding:20px;margin-bottom:24px}
+.co-summary-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--lichen);margin-bottom:12px;display:block}
+.co-sum-row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--dust);margin-bottom:6px}
+.co-sum-row .name{color:var(--parchment)}
+.co-sum-total{display:flex;justify-content:space-between;padding-top:12px;border-top:0.5px solid rgba(136,186,200,0.1);margin-top:8px}
+.co-sum-total .t-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dust);align-self:flex-end}
+.co-sum-total .t-amount{font-family:var(--serif);font-size:24px;color:var(--mist)}
+.co-shipping-note{font-size:10.5px;color:var(--lichen);margin-top:8px}
+.stripe-wrap{padding:14px 16px;border:0.5px solid rgba(136,186,200,0.15);background:rgba(136,186,200,0.03)}
+.stripe-wrap.focused{border-color:rgba(136,186,200,0.4)}
+.stripe-secure{font-size:10.5px;color:var(--lichen);margin-bottom:12px;letter-spacing:0.5px}
+.co-pay-tabs{display:flex;gap:2px;margin-bottom:20px}
+.co-pay-tab{flex:1;padding:10px;background:rgba(136,186,200,0.05);border:0.5px solid rgba(136,186,200,0.1);color:var(--dust);font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.co-pay-tab.active{background:rgba(136,186,200,0.12);border-color:rgba(136,186,200,0.3);color:var(--mist)}
+.co-btn-row{display:flex;gap:12px;margin-top:20px}
+.co-btn-back{flex:1;padding:12px;background:none;border:0.5px solid rgba(136,186,200,0.2);color:var(--dust);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:var(--sans)}
+.co-btn-next{flex:2;padding:12px;background:var(--lichen);border:none;color:var(--parchment);font-size:10.5px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:background 0.2s}
+.co-btn-next:hover{background:var(--mist);color:var(--void)}
+.co-steps{display:flex;align-items:center;padding:20px 28px;border-bottom:0.5px solid rgba(136,186,200,0.08);gap:8px}
+.co-step{display:flex;align-items:center;gap:8px;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--dust)}
+.co-step-num{width:22px;height:22px;border:0.5px solid rgba(136,186,200,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px}
+.co-step.active{color:var(--mist)}
+.co-step.active .co-step-num{border-color:var(--mist);background:rgba(136,186,200,0.12)}
+.co-step.done .co-step-num{background:var(--lichen);border-color:var(--lichen);color:var(--parchment)}
+.co-step-line{flex:1;height:0.5px;background:rgba(136,186,200,0.1)}
+.co-confirm{text-align:center;padding:40px 20px}
+.co-confirm-icon{font-size:40px;display:block;margin-bottom:16px}
+.co-confirm h3{font-family:var(--serif);font-size:28px;font-weight:300;color:var(--parchment);margin-bottom:8px}
+.co-confirm p{font-size:13px;color:var(--dust)}
+.co-confirm-order{display:flex;gap:24px;justify-content:center;margin:24px 0;padding:20px;background:rgba(136,186,200,0.05);border:0.5px solid rgba(136,186,200,0.1)}
+.co-confirm-order .label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--lichen);margin-bottom:6px}
+.co-confirm-order .val{font-family:var(--serif);font-size:18px;color:var(--parchment)}
+.crypto-panel{padding-top:8px}
+.crypto-coins{display:flex;gap:8px;margin-bottom:20px}
+.crypto-coin{flex:1;padding:12px 8px;border:0.5px solid rgba(136,186,200,0.15);text-align:center;cursor:pointer;transition:all 0.2s;color:var(--dust);font-size:11px}
+.crypto-coin.selected{border-color:rgba(136,186,200,0.5);background:rgba(136,186,200,0.08);color:var(--mist)}
+.crypto-address-box{background:rgba(136,186,200,0.04);border:0.5px solid rgba(136,186,200,0.12);padding:20px;margin-bottom:16px}
+.crypto-address-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--lichen);display:block;margin-bottom:10px}
+.crypto-address-row{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.crypto-address{font-family:monospace;font-size:11px;color:var(--parchment);word-break:break-all;flex:1}
+.copy-btn{padding:6px 14px;background:none;border:0.5px solid rgba(136,186,200,0.25);color:var(--lichen);font-size:10px;cursor:pointer;white-space:nowrap;transition:all 0.2s}
+.copy-btn:hover,.copy-btn.copied{background:rgba(136,186,200,0.1);color:var(--mist)}
+.crypto-amount-label{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--lichen);margin-bottom:4px}
+.crypto-amount-value{font-family:var(--serif);font-size:20px;color:var(--mist)}
+.crypto-rate-note{font-size:10px;color:var(--dust);margin-top:4px}
+.crypto-confirm-note{font-size:11px;color:var(--dust);line-height:1.6;padding:12px;background:rgba(206,108,82,0.07);border:0.5px solid rgba(206,108,82,0.2)}
+
+/* TOAST */
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--lichen);color:var(--parchment);padding:12px 28px;font-size:12px;letter-spacing:1px;z-index:9999;transition:transform 0.3s;pointer-events:none;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* FOOTER */
+.footer{padding:48px 60px;border-top:0.5px solid rgba(136,186,200,0.07);display:flex;justify-content:space-between;align-items:center;margin-top:60px}
+.footer-brand{font-family:var(--serif);font-size:15px;color:var(--dust)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{color:var(--dust);text-decoration:none;font-size:10.5px;letter-spacing:1px;transition:color 0.2s}
+.footer-links a:hover{color:var(--mist)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s,transform 0.6s}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:768px){.nav-links{display:none}.hero-banner,.filters,.products-section,.comp-banner,.footer{padding-left:20px;padding-right:20px}.cat-header{padding:40px 20px 20px}.cart-drawer{width:100%}.products-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <a href="/" class="nav-brand">
+    <img src="/fungai-art-logo.png" alt="" style="width:32px;height:32px;border-radius:50%;opacity:0.85">
+    <div class="nav-brand-text">
+      <span class="main">Fungai Art</span>
+      <span class="sub">Entheobotanicals</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/mixology">Mixology</a>
+    <a href="/community">Community</a>
+    <a href="/mycelium-trance">Trance</a>
+    <a href="/products" class="active">Shop</a>
+  </div>
+  <div class="nav-right">
+    <button class="nav-cart" onclick="openCart()">
+      Basket <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero-banner">
+  <span class="hero-label">Gaia's Apo'takecare'y · Moder Jord Collection</span>
+  <h1 class="hero-title">The <em>Apothecary</em></h1>
+  <span class="hero-script">full spectrum · wild-foraged · zero synthetic</span>
+  <p class="hero-sub">Carefully composed by earth keepers. All tinctures made with pharma-grade ethanol. Full spectrum, self-foraged where marked. Ships from Berlin · 3–7 business days EU.</p>
+</div>
+
+<!-- FILTERS -->
+<div class="filters" id="filterBar">
+  <button class="filter-btn active" onclick="filterProducts('all',this)">All</button>
+  <button class="filter-btn" onclick="filterProducts('fungi',this)">Fungi</button>
+  <button class="filter-btn" onclick="filterProducts('compositions',this)">Compositions</button>
+  <button class="filter-btn" onclick="filterProducts('flowers',this)">Flowers & Herbs</button>
+  <button class="filter-btn" onclick="filterProducts('specials',this)">Specials</button>
+  <button class="filter-btn" onclick="filterProducts('smoke',this)">Herbal Smoke</button>
+</div>
+
+<!-- ══ FUNGI ══ -->
+<div class="cat-header reveal">
+  <h2>Sacred <em>Fungi</em></h2>
+  <div class="cat-line"></div>
+  <span class="cat-count">05 offerings</span>
+</div>
+<div class="products-section">
+  <div class="products-grid">
+
+    <div class="product-card reveal" data-category="fungi">
+      <div class="product-img-wrap">
+        <img src="/home/products/amanita.jpeg" alt="Amanita muscaria" class="product-photo">
+        <span class="product-badge">Foraged · Sweden</span>
+        <span class="product-badge spagyric" style="top:auto;bottom:0;left:0;right:0;text-align:center;border-radius:0;">Spagyric</span>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Amanita Muscaria',50)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Fungi · Sacred</span>
+        <div class="product-name">Amanita muscaria</div>
+        <p class="product-desc">Threshold guardian · neuroalchemy · dream states. GABA-A agonist, loosening perceptual control and awakening symbolic awareness. Self-foraged from Swedish forests.</p>
+        <div class="product-tags"><span class="tag">Muscimol</span><span class="tag">Dream-like</span><span class="tag">Self-foraged</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">30ml</span><span class="amount">€50</span></div>
+          <button class="add-btn" onclick="addToCart('Amanita Muscaria',50)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-d1" data-category="fungi">
+      <div class="product-img-wrap">
+        <img src="/home/products/chaga.jpeg" alt="Chaga" class="product-photo">
+        <span class="product-badge">Foraged · Sweden</span>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Chaga Tincture',38)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Fungi · Immunity</span>
+        <div class="product-name">Chaga Tincture</div>
+        <p class="product-desc">Silent alchemist · immunity · resilience. Beta-glucans and polysaccharides supporting immune balance, neuroprotection, and cellular protection.</p>
+        <div class="product-tags"><span class="tag">Beta-glucans</span><span class="tag">Antioxidant</span><span class="tag">Wild</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">30ml</span><span class="amount">€38</span></div>
+          <button class="add-btn" onclick="addToCart('Chaga Tincture',38)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-d2" data-category="fungi">
+      <div class="product-img-wrap">
+        <div class="product-placeholder"><span>Chaga</span></div>
+        <span class="product-badge">Foraged · Sweden</span>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Chaga Syrup',11)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Fungi · Elixir</span>
+        <div class="product-name">Chaga Syrup</div>
+        <p class="product-desc">A sweet, concentrated chaga elixir. Wild-foraged Swedish chaga slow-cooked into a rich forest syrup. Blend into drinks or take directly.</p>
+        <div class="product-tags"><span class="tag">Raw honey</span><span class="tag">Slow-cooked</span><span class="tag">Birch-foraged</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">100ml</span><span class="amount">€11</span></div>
+          <button class="add-btn" onclick="addToCart('Chaga Syrup',11)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-category="fungi">
+      <div class="product-img-wrap">
+        <div class="product-placeholder"><span>Cordyceps</span></div>
+        <span class="product-badge">Himalayan A+</span>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Wild Cordyceps',33)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Fungi · Vitality</span>
+        <div class="product-name">Wild Cordyceps</div>
+        <p class="product-desc">Endurance · libido · balanced energy. Harvested from high-altitude Himalayan terrain. Among the rarest adaptogens in the fungal kingdom. Cordycepin and adenosine support cellular energy metabolism.</p>
+        <div class="product-tags"><span class="tag">Cordycepin</span><span class="tag">Adenosine</span><span class="tag">Himalaya</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">30ml</span><span class="amount">€33</span></div>
+          <button class="add-btn" onclick="addToCart('Wild Cordyceps',33)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-d1" data-category="fungi">
+      <div class="product-img-wrap">
+        <div class="product-placeholder"><span>Reishi</span></div>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Reishi Tincture',33)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Fungi · Adaptogenic</span>
+        <div class="product-name">Reishi</div>
+        <p class="product-desc">Adaptogenic · longevity · nervine. A steadying presence for those seeking depth, stillness, and the slow medicine of deep restoration. Ganoderic acids modulate immune response.</p>
+        <div class="product-tags"><span class="tag">Ganoderic acids</span><span class="tag">Sleep</span><span class="tag">Longevity</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">30ml</span><span class="amount">€33</span></div>
+          <button class="add-btn" onclick="addToCart('Reishi Tincture',33)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ COMPOSITIONS ══ -->
+<div class="cat-header reveal" id="compositions">
+  <h2>Sacred <em>Compositions</em></h2>
+  <div class="cat-line"></div>
+  <span class="cat-count">07 formulas</span>
+</div>
+<div class="products-section">
+  <div class="products-grid">
+
+    <div class="product-card reveal" data-category="compositions">
+      <div class="product-img-wrap">
+        <img src="/home/products/temple-nectar.jpeg" alt="Temple Nectar" class="product-photo">
+        <span class="product-badge">Signature</span>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Temple Nectar',38)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Compositions · Sensual</span>
+        <div class="product-name">Temple Nectar</div>
+        <p class="product-desc">Vitality · sensual · sacred energy. Saffron, damiana, catuaba, blue lotus, maca negra, vanilla, muira puama.</p>
+        <div class="product-tags"><span class="tag">Aphrodisiac</span><span class="tag">Heart-opening</span><span class="tag">Libido</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">30ml</span><span class="amount">€38</span></div>
+          <button class="add-btn" onclick="addToCart('Temple Nectar',38)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-d1" data-category="compositions">
+      <div class="product-img-wrap">
+        <img src="/home/products/ruby-no7.jpeg" alt="Ruby No.7" class="product-photo">
+        <span class="product-badge">New</span>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Ruby No.7',33)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Compositions · Heart</span>
+        <div class="product-name">Ruby No.7</div>
+        <p class="product-desc">Cardioprotective · antioxidant · neuro-resilient. A deep-red composition for heart vitality, cellular defence, and long-range resilience.</p>
+        <div class="product-tags"><span class="tag">Cardioprotective</span><span class="tag">Antioxidant</span><span class="tag">Neuro</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">30ml</span><span class="amount">€33</span></div>
+          <button class="add-btn" onclick="addToCart('Ruby No.7',33)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-d2" data-category="compositions">
+      <div class="product-img-wrap">
+        <div class="product-placeholder"><span>Lucid</span></div>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Lucid',44)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Compositions · Dreamwork</span>
+        <div class="product-name">Lucid</div>
+        <p class="product-desc">Dreamwork · luminous · visionary. Mugwort, calea zacatachichi, blue lotus, passionflower, bobinsana. Enhanced dream recall and visionary depth.</p>
+        <div class="product-tags"><span class="tag">Dream recall</span><span class="tag">Visionary</span><span class="tag">Restful</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">30ml</span><span class="amount">€44</span></div>
+          <button class="add-btn" onclick="addToCart('Lucid',44)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-category="compositions">
+      <div class="product-img-wrap">
+        <div class="product-placeholder"><span>Moon</span></div>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Moon Support',33)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Compositions · Cycle Care</span>
+        <div class="product-name">Moon Support</div>
+        <p class="product-desc">Cycle support · womb care · emotional soothe. Motherwort, shatavari, lady's mantle, passionflower, yarrow, raspberry leaves.</p>
+        <div class="product-tags"><span class="tag">Hormone balance</span><span class="tag">Cramp relief</span><span class="tag">Emotional</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">30ml</span><span class="amount">€33</span></div>
+          <button class="add-btn" onclick="addToCart('Moon Support',33)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-d1" data-category="compositions">
+      <div class="product-img-wrap">
+        <div class="product-placeholder"><span>ADHD</span></div>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('ADHD Support',38)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Compositions · Cognitive</span>
+        <div class="product-name">ADHD Support</div>
+        <p class="product-desc">Focus · clarity · resilience. Lion's mane, reishi, rhodiola, cordyceps, gotu kola, rosemary, ashwagandha. Smoother dopamine signaling.</p>
+        <div class="product-tags"><span class="tag">Lion's Mane</span><span class="tag">Rhodiola</span><span class="tag">Nootropic</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">30ml</span><span class="amount">€38</span></div>
+          <button class="add-btn" onclick="addToCart('ADHD Support',38)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-d2" data-category="compositions">
+      <div class="product-img-wrap">
+        <div class="product-placeholder"><span>Mineral</span></div>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Mineral Tonic',38)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Compositions · Mineral</span>
+        <div class="product-name">Mineral Tonic</div>
+        <p class="product-desc">Deep mineralisation · grounding · cellular strength. Shilajit, nettle, horsetail, schisandra, rose hips. Earth intelligence in every drop.</p>
+        <div class="product-tags"><span class="tag">Fulvic acid</span><span class="tag">Minerals</span><span class="tag">Grounding</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">30ml</span><span class="amount">€38</span></div>
+          <button class="add-btn" onclick="addToCart('Mineral Tonic',38)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-category="compositions">
+      <div class="product-img-wrap">
+        <div class="product-placeholder"><span>Aging</span></div>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Healthy Aging',44)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Compositions · Longevity</span>
+        <div class="product-name">Healthy Aging</div>
+        <p class="product-desc">Longevity · cellular renewal · deep restoration. Reishi, schisandra, ashwagandha, saffron, pearl. A daily tonic for graceful, radiant aging.</p>
+        <div class="product-tags"><span class="tag">Adaptogens</span><span class="tag">Longevity</span><span class="tag">Antioxidant</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">30ml</span><span class="amount">€44</span></div>
+          <button class="add-btn" onclick="addToCart('Healthy Aging',44)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ FLOWERS & HERBS ══ -->
+<div class="cat-header reveal">
+  <h2>Flowers &amp; <em>Herbs</em></h2>
+  <div class="cat-line"></div>
+  <span class="cat-count">05 offerings</span>
+</div>
+<div class="products-section">
+  <div class="products-grid">
+
+    <div class="product-card reveal" data-category="flowers">
+      <div class="product-img-wrap">
+        <div class="product-placeholder"><span>Blue Lotus</span></div>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Blue Lotus Tincture',44)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Flowers · Sacred</span>
+        <div class="product-name">Blue Lotus</div>
+        <p class="product-desc">Euphoric calm · vision · dreamwork. Nymphaea caerulea — sacred to ancient Egypt. Aporphine and nuciferine calming dopamine and serotonin pathways.</p>
+        <div class="product-tags"><span class="tag">Aporphine</span><span class="tag">Nuciferine</span><span class="tag">Meditative</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">30ml</span><span class="amount">€44</span></div>
+          <button class="add-btn" onclick="addToCart('Blue Lotus Tincture',44)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-d1" data-category="flowers">
+      <div class="product-img-wrap">
+        <div class="product-placeholder"><span>Sencha</span></div>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Sencha Green Tea',33)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Tea · Ritual</span>
+        <div class="product-name">Sencha Green Tea</div>
+        <p class="product-desc">Clarity · focus · antioxidant. Premium Japanese sencha. L-theanine and EGCG for calm alertness without the crash. A daily ritual of presence.</p>
+        <div class="product-tags"><span class="tag">L-theanine</span><span class="tag">EGCG</span><span class="tag">Japanese</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">50g</span><span class="amount">€33</span></div>
+          <button class="add-btn" onclick="addToCart('Sencha Green Tea',33)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-d2" data-category="flowers">
+      <div class="product-img-wrap">
+        <div class="product-placeholder"><span>Nettle</span></div>
+        <span class="product-badge">Foraged</span>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Nettle Seeds Tincture',33)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Herbs · Vitality</span>
+        <div class="product-name">Nettle Seeds</div>
+        <p class="product-desc">Adrenal tonic · stamina · metabolic support. One of nature's most underrated powerhouses. Nettle seeds are a true adaptogen — energising without stimulating.</p>
+        <div class="product-tags"><span class="tag">Adrenal</span><span class="tag">Stamina</span><span class="tag">Wild-foraged</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">30ml</span><span class="amount">€33</span></div>
+          <button class="add-btn" onclick="addToCart('Nettle Seeds Tincture',33)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-category="flowers">
+      <div class="product-img-wrap">
+        <div class="product-placeholder"><span>Pine Pollen</span></div>
+        <span class="product-badge">Foraged · Sweden</span>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Pine Pollen Tincture',33)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Herbs · Vitality</span>
+        <div class="product-name">Pine Pollen</div>
+        <p class="product-desc">The golden dust of renewal. Over 200 bioactive compounds including phytoandrogens. Masculine essence, cellular vitality, trees remembering their youth.</p>
+        <div class="product-tags"><span class="tag">Phytoandrogens</span><span class="tag">Amino acids</span><span class="tag">Foraged</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">30ml</span><span class="amount">€33</span></div>
+          <button class="add-btn" onclick="addToCart('Pine Pollen Tincture',33)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ HERBAL SMOKE ══ -->
+<div class="cat-header reveal">
+  <h2>Herbal <em>Smoke</em></h2>
+  <div class="cat-line"></div>
+  <span class="cat-count">01 blend</span>
+</div>
+<div class="products-section">
+  <div class="products-grid">
+    <div class="product-card reveal" data-category="smoke" style="max-width:320px">
+      <div class="product-img-wrap">
+        <div class="product-placeholder"><span>Kumbaya</span></div>
+        <span class="product-badge" style="background:rgba(66,44,71,0.85)">Ritual blend</span>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Kumbaya Herbal Smoke Blend',7)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Herbal Smoke · Ritual</span>
+        <div class="product-name">Kumbaya</div>
+        <p class="product-desc">A sacred herbal smoke blend for ceremony, meditation, and intentional ritual. Tobacco-free. Mullein, damiana, mugwort, blue lotus petals, rose.</p>
+        <div class="product-tags"><span class="tag">Tobacco-free</span><span class="tag">Ceremonial</span><span class="tag">Ritual</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">10g</span><span class="amount">€7</span></div>
+          <button class="add-btn" onclick="addToCart('Kumbaya Herbal Smoke Blend',7)">+ Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SPECIALS ══ -->
+<div class="cat-header reveal">
+  <h2>Forest <em>Specials</em></h2>
+  <div class="cat-line"></div>
+  <span class="cat-count">02 offerings</span>
+</div>
+<div class="products-section">
+  <div class="products-grid">
+
+    <div class="product-card reveal" data-category="specials">
+      <div class="product-img-wrap">
+        <div class="product-placeholder"><span>Pine</span></div>
+        <span class="product-badge">Foraged · Sweden</span>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Pine Cones',33)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Specials · Sacred Geometry</span>
+        <div class="product-name">Pine Cones</div>
+        <p class="product-desc">The forest's sacred geometry made tangible. Each scale unfolds like a hymn to the Fibonacci. Ground, brew, or use in ceremony. Self-foraged from Swedish forests.</p>
+        <div class="product-tags"><span class="tag">Aromatic</span><span class="tag">Ceremony</span><span class="tag">Self-foraged</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">100g</span><span class="amount">€33</span></div>
+          <button class="add-btn" onclick="addToCart('Pine Cones',33)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-d1" data-category="specials">
+      <div class="product-img-wrap">
+        <div class="product-placeholder"><span>Shilajit</span></div>
+        <span class="product-badge">Himalayan</span>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Shilajit + Gold',33)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Specials · Minerals</span>
+        <div class="product-name">Shilajit + Gold</div>
+        <p class="product-desc">Pressed pills with compressed gold. Ancient mineral compound supporting vitality, grounding, and deep cellular restoration. Fulvic acid and over 84 trace minerals.</p>
+        <div class="product-tags"><span class="tag">Fulvic acid</span><span class="tag">Gold</span><span class="tag">Himalayan</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">4 pills</span><span class="amount">€33</span></div>
+          <button class="add-btn" onclick="addToCart('Shilajit + Gold',33)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h3>Basket</h3>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartItems"><div class="cart-empty"><p>Your basket is empty.<br>The forest awaits.</p></div></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total"><span class="label">Total</span><span class="amount" id="cartTotal">€0</span></div>
+    <button class="checkout-btn" onclick="openCheckout()">Proceed to checkout</button>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="co-overlay" id="coOverlay">
+  <div class="co-modal" id="coModal">
+    <div class="co-head"><h2 id="coTitle">Your details</h2><button class="co-close" onclick="closeCheckout()">✕</button></div>
+    <div class="co-steps">
+      <div class="co-step active" id="coStep1"><div class="co-step-num">1</div>Details</div>
+      <div class="co-step-line"></div>
+      <div class="co-step" id="coStep2"><div class="co-step-num">2</div>Payment</div>
+      <div class="co-step-line"></div>
+      <div class="co-step" id="coStep3"><div class="co-step-num">3</div>Confirm</div>
+    </div>
+    <div class="co-body">
+      <div id="coPane1">
+        <div class="co-summary" id="coSummary1"></div>
+        <div class="co-grid">
+          <div class="co-field"><label>First name</label><input type="text" id="coFirstName" placeholder="Robin"></div>
+          <div class="co-field"><label>Last name</label><input type="text" id="coLastName" placeholder="Fungi"></div>
+        </div>
+        <div class="co-field"><label>Email</label><input type="email" id="coEmail" placeholder="you@forest.earth"></div>
+        <div class="co-field"><label>Shipping address</label><input type="text" id="coAddr1" placeholder="Street & number"></div>
+        <div class="co-grid">
+          <div class="co-field"><label>City</label><input type="text" id="coCity" placeholder="Berlin"></div>
+          <div class="co-field"><label>Postal code</label><input type="text" id="coPostal" placeholder="10115"></div>
+        </div>
+        <div class="co-field"><label>Country</label>
+          <select id="coCountry">
+            <option value="">Select country</option>
+            <option value="DE">Germany</option><option value="FR">France</option><option value="SE">Sweden</option>
+            <option value="NL">Netherlands</option><option value="BE">Belgium</option><option value="AT">Austria</option>
+            <option value="CH">Switzerland</option><option value="ES">Spain</option><option value="IT">Italy</option>
+            <option value="PL">Poland</option><option value="LB">Lebanon</option><option value="GB">United Kingdom</option>
+            <option value="US">United States</option><option value="other">Other</option>
+          </select>
+        </div>
+        <div id="coStep1Err" style="font-size:11.5px;color:var(--coral);margin-top:8px;min-height:16px;"></div>
+        <div class="co-btn-row">
+          <button class="co-btn-back" onclick="closeCheckout()">Cancel</button>
+          <button class="co-btn-next" onclick="goToStep2()">Continue to payment →</button>
+        </div>
+      </div>
+      <div id="coPane2" style="display:none">
+        <div class="co-summary" id="coSummary2"></div>
+        <div class="co-pay-tabs">
+          <button class="co-pay-tab active" id="tabCard" onclick="selectPayTab('card')">💳 Card</button>
+          <button class="co-pay-tab" id="tabCrypto" onclick="selectPayTab('crypto')">⬡ Crypto</button>
+        </div>
+        <div id="cardPanel">
+          <div class="stripe-secure">🔒 Secured by Stripe · TLS encrypted</div>
+          <div class="co-field"><label>Card details</label><div class="stripe-wrap" id="stripeWrap"><div id="cardElement"></div></div><div id="stripe-error" style="font-size:11px;color:var(--coral);margin-top:6px;"></div></div>
+          <div class="co-btn-row"><button class="co-btn-back" onclick="goToStep1()">← Back</button><button class="co-btn-next" id="payCardBtn" onclick="payWithCard()">Pay with card</button></div>
+        </div>
+        <div id="cryptoPanel" style="display:none" class="crypto-panel">
+          <div class="crypto-coins">
+            <div class="crypto-coin selected" id="coinETH" onclick="selectCoin('ETH')"><span>⟠</span><span>ETH</span></div>
+            <div class="crypto-coin" id="coinBTC" onclick="selectCoin('BTC')"><span>₿</span><span>BTC</span></div>
+            <div class="crypto-coin" id="coinSOL" onclick="selectCoin('SOL')"><span>◎</span><span>SOL</span></div>
+          </div>
+          <div class="crypto-address-box">
+            <span class="crypto-address-label" id="cryptoCoinLabel">Ethereum (ETH)</span>
+            <div class="crypto-address-row"><div class="crypto-address" id="cryptoAddrText">Add your wallet address</div><button class="copy-btn" id="copyAddrBtn" onclick="copyAddress()">Copy</button></div>
+            <div><div class="crypto-amount-label">Amount to send</div><div class="crypto-amount-value" id="cryptoAmount">—</div><div class="crypto-rate-note" id="cryptoRateNote">Fetching live rate…</div></div>
+            <div class="crypto-confirm-note">⚠ Send exact amount in one transaction. Rate valid ~15 min. Order ships after 1 network confirmation.</div>
+          </div>
+          <div class="co-btn-row"><button class="co-btn-back" onclick="goToStep1()">← Back</button><button class="co-btn-next" onclick="confirmCryptoOrder()">I've sent the payment</button></div>
+        </div>
+      </div>
+      <div id="coPane3" style="display:none">
+        <div class="co-confirm">
+          <span class="co-confirm-icon">✦</span>
+          <h3 id="confirmTitle">Order received</h3>
+          <p id="confirmMsg">Thank you — your order has been placed. A confirmation will be sent to your email.</p>
+          <div class="co-confirm-order"><div><div class="label">Order ref</div><div class="val" id="confirmRef">—</div></div><div style="width:1px;background:rgba(136,186,200,0.1);align-self:stretch"></div><div><div class="label">Total paid</div><div class="val" id="confirmTotal">—</div></div></div>
+          <button class="checkout-btn" onclick="closeCheckout()" style="margin-top:24px">Back to the apothecary</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer class="footer">
+  <div class="footer-brand">Fungai Art · The Apothecary · Berlin</div>
+  <div class="footer-links">
+    <a href="/">Home</a>
+    <a href="/mycelium-trance">Mycelium Trance</a>
+    <a href="/community">Community</a>
+    <a href="https://www.instagram.com/fungai.art" target="_blank">Instagram</a>
+    <a href="mailto:robin@fungai.art">Contact</a>
+  </div>
+</footer>
+
+<script>
+const STRIPE_PK='pk_live_51TW2zWLcLRRKPfkaDJvYaQuRQqFxXCAVLhij5EO8u5zISlrkzYAnXOC6uyFjSXuiCVNCK9LyXshYmy75eHmDhksa00Y2GkUqyk';
+const WALLETS={ETH:{label:'Ethereum (ETH)',addr:'0x341fe52ba6e6ab62c577cfc3459d1426022b4c31'},BTC:{label:'Bitcoin (BTC)',addr:'— add wallet —'},SOL:{label:'Solana (SOL)',addr:'4HvN1VB3JRZDWVhYALShpa16aN9WehYBTpyUymTeqQcK'}};
+const GECKO_IDS={ETH:'ethereum',BTC:'bitcoin',SOL:'solana'};
+let cart=[],stripe,cardElement,stripeReady=false,selectedCoin='ETH',cryptoRates={},currentStep=1,activePayTab='card';
+
+// NAV SCROLL
+window.addEventListener('scroll',()=>document.getElementById('mainNav').classList.toggle('scrolled',scrollY>80));
+
+// REVEAL
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}}),{threshold:0.06,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// FILTER
+function filterProducts(cat,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.product-card').forEach(c=>c.classList.toggle('hidden',cat!=='all'&&c.dataset.category!==cat));
+}
+
+// CART
+function openCart(){document.getElementById('cartOverlay').classList.add('open');document.getElementById('cartDrawer').classList.add('open')}
+function closeCart(){document.getElementById('cartOverlay').classList.remove('open');document.getElementById('cartDrawer').classList.remove('open')}
+function addToCart(name,price){const ex=cart.find(i=>i.name===name);if(ex){ex.qty++}else{cart.push({name,price,qty:1})}renderCart();showToast('Added — '+name)}
+function removeFromCart(idx){cart.splice(idx,1);renderCart()}
+function cartTotal(){return cart.reduce((s,i)=>s+i.price*i.qty,0)}
+function renderCart(){
+  const items=document.getElementById('cartItems'),footer=document.getElementById('cartFooter'),count=document.getElementById('cartCount'),total=document.getElementById('cartTotal');
+  const totalItems=cart.reduce((s,i)=>s+i.qty,0);
+  count.textContent=totalItems;
+  if(!cart.length){items.innerHTML='<div class="cart-empty"><p>Your basket is empty.<br>The forest awaits.</p></div>';footer.style.display='none';return}
+  footer.style.display='block';
+  items.innerHTML=cart.map((item,idx)=>`<div class="cart-item"><div><div class="cart-item-name">${item.name}</div><div class="cart-item-meta">${item.qty>1?item.qty+'× ':''} €${item.price} each</div></div><div class="cart-item-right"><span class="cart-item-price">€${item.price*item.qty}</span><button class="cart-item-remove" onclick="removeFromCart(${idx})">✕</button></div></div>`).join('');
+  total.textContent='€'+cartTotal();
+}
+
+// TOAST
+let toastT;function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2600)}
+
+// CHECKOUT
+function renderSummary(id){
+  const total=cartTotal(),ship=total>=60?'<span style="color:var(--mist)">Free</span>':'€4.90',grand=total>=60?total:total+4.9;
+  document.getElementById(id).innerHTML=`<span class="co-summary-title">Order summary</span>${cart.map(i=>`<div class="co-sum-row"><span class="name">${i.qty>1?i.qty+'× ':''}${i.name}</span><span>€${i.price*i.qty}</span></div>`).join('')}<div class="co-sum-row" style="font-size:11px;color:var(--lichen);margin-top:8px"><span>Shipping (EU)</span><span>${ship}</span></div><div class="co-sum-total"><span class="t-label">Total</span><span class="t-amount">€${grand.toFixed(2).replace('.00','')}</span></div><p class="co-shipping-note">Ships from Berlin · 3–7 business days EU</p>`;
+}
+function goToStepDirect(n){
+  currentStep=n;
+  [1,2,3].forEach(i=>{document.getElementById('coPane'+i).style.display=i===n?'block':'none';const s=document.getElementById('coStep'+i);s.classList.remove('active','done');if(i===n)s.classList.add('active');else if(i<n)s.classList.add('done')});
+  document.getElementById('coTitle')=['Your details','Payment','Order confirmed'][n-1];
+  document.getElementById('coModal').scrollTop=0;
+}
+function openCheckout(){if(!cart.length){showToast('Basket is empty');return}closeCart();renderSummary('coSummary1');renderSummary('coSummary2');goToStepDirect(1);document.getElementById('coOverlay').classList.add('open');setTimeout(initStripe,200);fetchCryptoRates();clearInterval(window._ri);window._ri=setInterval(fetchCryptoRates,60000)}
+function closeCheckout(){document.getElementById('coOverlay').classList.remove('open');clearInterval(window._ri)}
+document.getElementById('coOverlay').addEventListener('click',function(e){if(e.target===this)closeCheckout()});
+function goToStep1(){goToStepDirect(1)}
+function goToStep2(){
+  const req=['coFirstName','coLastName','coEmail','coAddr1','coCity','coPostal','coCountry'];
+  const err=document.getElementById('coStep1Err');
+  for(const id of req){if(!document.getElementById(id).value.trim()){err.textContent='Please fill in all required fields.';document.getElementById(id).focus();return}}
+  err.textContent='';renderSummary('coSummary2');goToStepDirect(2);
+}
+function selectPayTab(tab){
+  activePayTab=tab;
+  document.getElementById('tabCard').classList.toggle('active',tab==='card');
+  document.getElementById('tabCrypto').classList.toggle('active',tab==='crypto');
+  document.getElementById('cardPanel').style.display=tab==='card'?'block':'none';
+  document.getElementById('cryptoPanel').style.display=tab==='crypto'?'block':'none';
+  if(tab==='card')initStripe();
+}
+function initStripe(){
+  if(stripeReady)return;stripeReady=true;
+  stripe=Stripe(STRIPE_PK);
+  const elements=stripe.elements({fonts:[{cssSrc:'https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400&display=swap'}]});
+  cardElement=elements.create('card',{style:{base:{color:'#EDE5D8',fontFamily:'"DM Sans",sans-serif',fontWeight:'300',fontSize:'14px','::placeholder':{color:'#4D869B'},iconColor:'#88BAC8'},invalid:{color:'#CE6C52'}},hidePostalCode:true});
+  cardElement.mount('#cardElement');
+  cardElement.on('focus',()=>document.getElementById('stripeWrap').classList.add('focused'));
+  cardElement.on('blur',()=>document.getElementById('stripeWrap').classList.remove('focused'));
+  cardElement.on('change',e=>{document.getElementById('stripe-error').textContent=e.error?e.error.message:''});
+}
+async function payWithCard(){
+  const btn=document.getElementById('payCardBtn');
+  btn.textContent='Processing…';btn.disabled=true;
+  try{
+    const res=await fetch('/api/create-payment-intent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:cartTotal()>=60?cartTotal():cartTotal()+4.9,metadata:{name:document.getElementById('coFirstName').value+' '+document.getElementById('coLastName').value,email:document.getElementById('coEmail').value,address:document.getElementById('coAddr1').value+', '+document.getElementById('coCity').value,items:cart.map(i=>`${i.name} x${i.qty}`).join(', ')}})});
+    const{clientSecret,error:ie}=await res.json();
+    if(ie)throw new Error(ie);
+    const{error,paymentIntent}=await stripe.confirmCardPayment(clientSecret,{payment_method:{card:cardElement,billing_details:{name:document.getElementById('coFirstName').value+' '+document.getElementById('coLastName').value,email:document.getElementById('coEmail').value}}});
+    if(error)throw new Error(error.message);
+    if(paymentIntent?.status==='succeeded'){
+      document.getElementById('confirmRef').textContent=paymentIntent.id.slice(-8).toUpperCase();
+      document.getElementById('confirmTotal').textContent='€'+(cartTotal()>=60?cartTotal():cartTotal()+4.9).toFixed(2).replace('.00','');
+      document.getElementById('confirmMsg').textContent='Thank you, '+document.getElementById('coFirstName').value+'. A receipt will be sent to '+document.getElementById('coEmail').value+'.';
+      cart=[];renderCart();goToStepDirect(3);
+    }
+  }catch(err){document.getElementById('stripe-error').textContent=err.message;showToast('Payment failed — '+err.message.slice(0,40))}
+  finally{btn.textContent='Pay with card';btn.disabled=false}
+}
+// Crypto
+async function fetchCryptoRates(){try{const ids=Object.values(GECKO_IDS).join(',');const res=await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=eur`);const data=await res.json();Object.entries(GECKO_IDS).forEach(([sym,id])=>{if(data[id])cryptoRates[sym]=data[id].eur});updateCryptoDisplay()}catch{document.getElementById('cryptoRateNote').textContent='Rate unavailable — use current market price'}}
+function updateCryptoDisplay(){const w=WALLETS[selectedCoin];document.getElementById('cryptoCoinLabel').textContent=w.label;document.getElementById('cryptoAddrText').textContent=w.addr;const rate=cryptoRates[selectedCoin];const total=cartTotal()>=60?cartTotal():cartTotal()+4.9;if(rate&&total){const amt=(total/rate).toFixed(selectedCoin==='BTC'?6:4);document.getElementById('cryptoAmount').textContent=`${amt} ${selectedCoin}`;document.getElementById('cryptoRateNote').textContent=`1 ${selectedCoin} ≈ €${rate.toLocaleString('de-DE',{maximumFractionDigits:2})} · refreshes every 60s`}else{document.getElementById('cryptoAmount').textContent='—'}}
+function selectCoin(sym){selectedCoin=sym;document.querySelectorAll('.crypto-coin').forEach(c=>c.classList.remove('selected'));document.getElementById('coin'+sym).classList.add('selected');updateCryptoDisplay()}
+function copyAddress(){navigator.clipboard.writeText(WALLETS[selectedCoin].addr).then(()=>{const b=document.getElementById('copyAddrBtn');b.textContent='Copied!';b.classList.add('copied');setTimeout(()=>{b.textContent='Copy';b.classList.remove('copied')},2000)})}
+function confirmCryptoOrder(){document.getElementById('confirmRef').textContent='CRYPTO-'+Date.now().toString(36).toUpperCase();document.getElementById('confirmTotal').textContent='Crypto';document.getElementById('confirmMsg').textContent='Send the exact crypto amount to complete your order. We will ship within 24h of confirmation.';cart=[];renderCart();goToStepDirect(3)}
+</script>
+</body>
+</html>

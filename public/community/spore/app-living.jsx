@@ -245,12 +245,15 @@ function LoginScreen({ onLogin }) {
 /* ── TopBar ──────────────────────────────────────────────── */
 
 function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) {
+  const isAdmin = currentMember && currentMember.admin;
   const tabs = [
-    { id:'network',  label:'Network' },
-    { id:'shop',     label:'Apothecary' },
-    { id:'exp',      label:'Experiences' },
-    { id:'academy',  label:'Alchemy Academy', accent: true },
-    { id:'members',  label:'Members' },
+    { id:'network',  label:'Network',          icon:'◉' },
+    { id:'shop',     label:'Apothecary',        icon:'🌿' },
+    { id:'exp',      label:'Experiences',       icon:'✦' },
+    { id:'members',  label:'Members',           icon:'◈' },
+    { id:'journal',  label:'Journal',           icon:'○' },
+    { id:'academy',  label:'Alchemy Academy',   icon:'⚗', accent:true, external:true },
+    ...(isAdmin ? [{ id:'admin', label:'Admin', icon:'⬡', adminTab:true }] : []),
   ];
   return (
     <div className="topbar">
@@ -285,10 +288,14 @@ function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) 
         {tabs.map(t => (
           <button
             key={t.id}
-            className={`tab ${tab === t.id ? 'on' : ''} ${t.accent ? 'tab-accent' : ''}`}
-            onClick={() => onTab(t.id)}
+            className={`tab ${tab === t.id ? 'on' : ''} ${t.accent ? 'tab-accent' : ''} ${t.adminTab ? 'tab-admin' : ''}`}
+            onClick={() => {
+              if (t.external) { window.open('/community/academy/', '_blank'); return; }
+              onTab(t.id);
+            }}
           >
-            {t.label}
+            <span className="tab-icon">{t.icon}</span>
+            <span className="tab-label">{t.label}</span>
           </button>
         ))}
       </div>
@@ -599,25 +606,62 @@ function ExperiencesPage({ economy, onToast }) {
 
 /* ── Members page ─────────────────────────────────────────── */
 
-function MembersPage() {
+function MembersPage({ currentMember }) {
+  const focusKey = (id) => `spore_focus_${id}`;
+  const [myFocus, setMyFocus] = useState(() => {
+    try { return localStorage.getItem(focusKey(currentMember.id)) || ''; } catch { return ''; }
+  });
+
+  function pickFocus(id) {
+    try { localStorage.setItem(focusKey(currentMember.id), id); } catch {}
+    setMyFocus(id);
+  }
+
   return (
     <div className="page-enter">
       <div className="section">
         <div className="section-eyebrow">The organism</div>
         <h2 className="section-title">Who's <em>tending.</em></h2>
-        <p className="section-blurb">Six nodes in the living network. Each brings a different thread to the mycelium.</p>
+        <p className="section-blurb">Each hyphae brings a different thread to the mycelium.</p>
       </div>
+
+      {/* My contribution type */}
+      <div style={{ margin:'0 16px 4px', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, padding:'14px 16px' }}>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.2em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:10 }}>Your work node</div>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:6 }}>
+          {SporeData.CONTRIBUTION_TYPES.map(ct => {
+            const isOn = myFocus === ct.id;
+            return (
+              <button key={ct.id} onClick={() => pickFocus(ct.id)} style={{ display:'flex', alignItems:'center', gap:8, padding:'10px 12px', borderRadius:7, border: isOn ? '1px solid var(--spore-d)' : '0.5px solid var(--rule)', background: isOn ? 'rgba(107,214,111,0.08)' : 'var(--soil-3)', cursor:'pointer', textAlign:'left', transition:'all 0.15s' }}>
+                <span style={{ fontSize:16 }}>{ct.icon}</span>
+                <div>
+                  <div style={{ fontFamily:'var(--font-sans)', fontSize:12, color: isOn ? 'var(--spore-l)' : 'var(--mycelium-l)', fontWeight: isOn ? 600 : 400 }}>{ct.label}</div>
+                  <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'var(--mycelium-d)', marginTop:1 }}>{ct.desc}</div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       <div className="members-grid">
         {SporeData.MEMBERS.map(m => {
-          const tier = SporeData.reputationTier(m.rep);
-          const node = SporeData.NETWORK_NODES.find(n => n.id === m.node);
+          const tier   = SporeData.reputationTier(m.rep);
+          const node   = SporeData.NETWORK_NODES.find(n => n.id === m.node);
+          const focus  = m.id === currentMember.id ? myFocus : ((() => { try { return localStorage.getItem(focusKey(m.id)) || ''; } catch { return ''; } })());
+          const ct     = focus ? SporeData.CONTRIBUTION_TYPES.find(c => c.id === focus) : null;
+          const isMe   = m.id === currentMember.id;
           return (
-            <div key={m.id} className="member-card">
+            <div key={m.id} className={`member-card ${isMe ? 'member-card-me' : ''}`}>
               <div className="member-avatar" style={{ background: tier.color }}>{m.name[0]}</div>
               <div className="member-body">
-                <div className="member-name">{m.name}</div>
+                <div style={{ display:'flex', alignItems:'center', gap:6 }}>
+                  <div className="member-name">{m.name}</div>
+                  {m.admin && <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.14em', background:'rgba(201,184,148,0.12)', border:'0.5px solid var(--rule-strong)', borderRadius:3, padding:'1px 5px', color:'var(--mycelium-d)' }}>ADMIN</span>}
+                </div>
                 <div className="member-role">{m.role}</div>
                 {node && <div className="member-node">{node.name}</div>}
+                {ct && <div style={{ display:'inline-flex', alignItems:'center', gap:4, padding:'2px 7px', borderRadius:4, background:'rgba(107,214,111,0.07)', border:'0.5px solid var(--spore-d)', marginBottom:5, fontSize:10, color:'var(--spore-l)', fontFamily:'var(--font-mono)', letterSpacing:'0.1em' }}>{ct.icon} {ct.label}</div>}
                 <div className="member-focus">{m.focus}</div>
                 <div className="member-stats">
                   <div className="member-stat">
@@ -642,7 +686,153 @@ function MembersPage() {
   );
 }
 
-/* ── Alchemy Academy page ─────────────────────────────────── */
+/* ── Journal page ─────────────────────────────────────────── */
+
+function JournalPage({ economy, currentMember }) {
+  const history = economy.state.history;
+  const tier    = SporeData.reputationTier(economy.state.reputation);
+
+  function fmtTime(ts) {
+    const d = new Date(ts);
+    return d.toLocaleDateString('en-GB', { day:'numeric', month:'short' })
+      + ' · ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+  }
+
+  return (
+    <div className="page-enter">
+      <div className="section">
+        <div className="section-eyebrow">Your thread</div>
+        <h2 className="section-title">The <em>journal.</em></h2>
+        <p className="section-blurb">Every earn, unlock, and purchase leaves a trace. The organism remembers.</p>
+      </div>
+
+      {/* Stats */}
+      <div style={{ margin:'0 16px', display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:8, marginTop:8 }}>
+        {[
+          { label:'Balance', val:`${economy.state.balance} $H`, color:'var(--spore-l)' },
+          { label:'Reputation', val:`${economy.state.reputation} pts`, color: tier.color },
+          { label:'Contributions', val:economy.state.contributions, color:'var(--mycelium-l)' },
+        ].map(s => (
+          <div key={s.label} style={{ background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:8, padding:'11px 10px', textAlign:'center' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:13, color:s.color, fontVariantNumeric:'tabular-nums' }}>{s.val}</div>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.16em', textTransform:'uppercase', color:'var(--mycelium-d)', marginTop:3 }}>{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Tier */}
+      <div style={{ margin:'10px 16px 0', padding:'12px 14px', background:'var(--soil-2)', border:`0.5px solid ${tier.color}44`, borderRadius:8, display:'flex', alignItems:'center', gap:10 }}>
+        <div style={{ width:10, height:10, borderRadius:'50%', background:tier.color, boxShadow:`0 0 8px ${tier.color}` }} />
+        <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:17, color:'var(--mycelium-l)' }}>{tier.label}</div>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', color:'var(--mycelium-d)', marginLeft:'auto' }}>current tier</div>
+      </div>
+
+      {/* History */}
+      <div className="section" style={{ paddingBottom:0 }}>
+        <div className="section-eyebrow">Activity log</div>
+      </div>
+      <div style={{ margin:'8px 16px 0', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, overflow:'hidden' }}>
+        {history.length === 0 && (
+          <div style={{ padding:'28px 16px', textAlign:'center', color:'var(--mycelium-d)', fontSize:12, fontStyle:'italic' }}>No activity yet. Start by tending a node.</div>
+        )}
+        {history.map((h, i) => (
+          <div key={i} style={{ display:'flex', alignItems:'center', gap:10, padding:'11px 14px', borderBottom: i < history.length-1 ? '0.5px solid var(--rule)' : 'none' }}>
+            <div style={{ width:7, height:7, borderRadius:'50%', flexShrink:0, background: h.type==='earn' ? 'var(--spore)' : h.type==='unlock' ? 'var(--fungal)' : 'var(--nutrient)' }} />
+            <div style={{ flex:1, fontSize:12, color:'var(--mycelium)', lineHeight:1.3 }}>{h.label}</div>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:11, color: h.delta > 0 ? 'var(--spore-l)' : 'var(--mycelium-d)', fontVariantNumeric:'tabular-nums', flexShrink:0 }}>
+              {h.delta > 0 ? '+' : ''}{h.delta} $H
+            </div>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--mycelium-d)', flexShrink:0, whiteSpace:'nowrap' }}>{fmtTime(h.ts)}</div>
+          </div>
+        ))}
+      </div>
+
+      <button className="reset-link" onClick={economy.reset}>↺ Reset my data</button>
+    </div>
+  );
+}
+
+/* ── Admin page ───────────────────────────────────────────── */
+
+function AdminPage({ onToast }) {
+  const [announcement, setAnnouncement] = useState(() => {
+    try { return localStorage.getItem('spore_announcement') || ''; } catch { return ''; }
+  });
+  const [saved, setSaved] = useState(false);
+
+  function saveAnnouncement() {
+    try { localStorage.setItem('spore_announcement', announcement); } catch {}
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+    onToast('Announcement published', 'success');
+  }
+
+  function getMemberState(id) {
+    try {
+      const raw = localStorage.getItem(`spore_state_${id}`);
+      return raw ? JSON.parse(raw) : null;
+    } catch { return null; }
+  }
+
+  return (
+    <div className="page-enter">
+      <div className="section">
+        <div className="section-eyebrow">Founder access</div>
+        <h2 className="section-title">Admin <em>panel.</em></h2>
+      </div>
+
+      {/* Announcement */}
+      <div style={{ margin:'8px 16px 0', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, padding:'16px' }}>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:8 }}>Network announcement</div>
+        <textarea
+          value={announcement}
+          onChange={e => setAnnouncement(e.target.value)}
+          maxLength={280}
+          rows={3}
+          placeholder="Message shown to all members on login…"
+          style={{ width:'100%', background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:6, padding:'10px 12px', color:'var(--mycelium-l)', fontSize:13, lineHeight:1.5, resize:'none', outline:'none', fontFamily:'var(--font-sans)', boxSizing:'border-box', marginBottom:10 }}
+        />
+        <button
+          onClick={saveAnnouncement}
+          className="btn btn-primary"
+          style={{ width:'100%' }}
+        >
+          {saved ? '✓ Published' : 'Publish to network'}
+        </button>
+      </div>
+
+      {/* Member overview */}
+      <div className="section" style={{ paddingBottom:0 }}>
+        <div className="section-eyebrow">All hyphae</div>
+      </div>
+      <div style={{ margin:'8px 16px 0', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, overflow:'hidden' }}>
+        {SporeData.MEMBERS.map((m, i) => {
+          const st   = getMemberState(m.id);
+          const bal  = st ? st.balance  : m.balance;
+          const rep  = st ? st.reputation : m.rep;
+          const tier = SporeData.reputationTier(rep);
+          return (
+            <div key={m.id} style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 14px', borderBottom: i < SporeData.MEMBERS.length-1 ? '0.5px solid var(--rule)' : 'none' }}>
+              <div style={{ width:32, height:32, borderRadius:'50%', background:tier.color, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:16, color:'rgba(255,255,255,0.9)', flexShrink:0 }}>{m.name[0]}</div>
+              <div style={{ flex:1, minWidth:0 }}>
+                <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:16, color:'var(--mycelium-l)', lineHeight:1 }}>
+                  {m.name} {m.admin && <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', color:tier.color, verticalAlign:'middle' }}>ADMIN</span>}
+                </div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.12em', textTransform:'uppercase', color:'var(--mycelium-d)', marginTop:2 }}>{m.role}</div>
+              </div>
+              <div style={{ textAlign:'right', flexShrink:0 }}>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:12, color:'var(--spore-l)' }}>{bal} $H</div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color: tier.color, marginTop:1 }}>{tier.label}</div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ── (Alchemy Academy is now a standalone page at /community/academy/) ── */
 
 const METHODS = [
   {
@@ -906,8 +1096,9 @@ function App() {
       {tab === 'network'  && <NetworkPage economy={economy} onToast={onToast} flowRate={tweaks.flowRate} />}
       {tab === 'shop'     && <ApothecaryPage economy={economy} onToast={onToast} />}
       {tab === 'exp'      && <ExperiencesPage economy={economy} onToast={onToast} />}
-      {tab === 'academy'  && <AcademyPage economy={economy} />}
-      {tab === 'members'  && <MembersPage />}
+      {tab === 'members'  && <MembersPage currentMember={currentMember} />}
+      {tab === 'journal'  && <JournalPage economy={economy} currentMember={currentMember} />}
+      {tab === 'admin'    && currentMember && currentMember.admin && <AdminPage onToast={onToast} />}
 
       <div className="app-footer">
         <ProceduralMark size={32} />

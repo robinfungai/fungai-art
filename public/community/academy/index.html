@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alchemy Academy — Fungai Art</title>
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=zodiak@400,500&f[]=geist-mono@400,500&display=swap" />
+  <style>
+    :root {
+      --soil:       #0A0908;
+      --soil-2:     #11100D;
+      --soil-3:     #181612;
+      --soil-4:     #221F18;
+      --substrate:  #2A251C;
+      --mycelium:   #C9B894;
+      --mycelium-d: #8B7E62;
+      --mycelium-l: #E6D9B5;
+      --spore:      #6BD66F;
+      --spore-d:    #2E7A35;
+      --spore-l:    #B6F0AE;
+      --nutrient:   #E8B14B;
+      --nutrient-d: #8B6320;
+      --nutrient-l: #F5D689;
+      --fungal:     #4FA8E0;
+      --fungal-d:   #1F5B85;
+      --rule:       rgba(201,184,148,0.12);
+      --rule-strong:rgba(201,184,148,0.22);
+      --font-display:'Zodiak','Cormorant Garamond',Georgia,serif;
+      --font-sans:  'Satoshi',-apple-system,'Helvetica Neue',sans-serif;
+      --font-mono:  'Geist Mono','JetBrains Mono',ui-monospace,monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+    html, body {
+      background: var(--soil);
+      color: var(--mycelium);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at 20% 0%, rgba(232,177,75,0.08), transparent 50%),
+        radial-gradient(ellipse at 80% 100%, rgba(107,214,111,0.05), transparent 50%),
+        var(--soil);
+    }
+    body::after {
+      content:'';
+      position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.35;
+      background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.79 0 0 0 0 0.72 0 0 0 0 0.58 0 0 0 0.06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+    }
+    .wrap { max-width:680px; margin:0 auto; padding:0 20px 80px; position:relative; z-index:1; }
+
+    /* Nav */
+    .nav {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:18px 0 0; margin-bottom:48px;
+    }
+    .nav-brand {
+      display:flex; align-items:center; gap:10px;
+    }
+    .nav-mark {
+      width:28px; height:28px;
+      background:radial-gradient(circle, var(--spore-l) 0%, var(--spore-d) 100%);
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:14px;
+    }
+    .nav-name {
+      font-family:var(--font-display); font-style:italic;
+      font-size:18px; color:var(--mycelium-l); letter-spacing:-0.02em;
+    }
+    .nav-back {
+      display:inline-flex; align-items:center; gap:6px;
+      font-family:var(--font-mono); font-size:9px;
+      letter-spacing:0.18em; text-transform:uppercase;
+      color:var(--mycelium-d); text-decoration:none;
+      padding:7px 12px; border:0.5px solid var(--rule);
+      border-radius:5px; transition:all 0.15s;
+    }
+    .nav-back:hover { color:var(--mycelium-l); border-color:var(--rule-strong); }
+
+    /* Hero */
+    .hero { margin-bottom:48px; }
+    .hero-eyebrow {
+      font-family:var(--font-mono); font-size:9px;
+      letter-spacing:0.32em; text-transform:uppercase;
+      color:var(--nutrient-d); margin-bottom:10px;
+    }
+    .hero-title {
+      font-family:var(--font-display); font-style:italic;
+      font-size:clamp(38px,8vw,64px); color:var(--mycelium-l);
+      letter-spacing:-0.03em; line-height:0.95; margin-bottom:16px;
+    }
+    .hero-title em { color:var(--nutrient); }
+    .hero-blurb {
+      font-size:15px; color:var(--mycelium); line-height:1.65;
+      max-width:52ch; opacity:0.9; margin-bottom:24px;
+    }
+    .hero-link {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:12px 20px; border:0.5px solid var(--nutrient-d);
+      border-radius:6px; background:rgba(232,177,75,0.1);
+      color:var(--nutrient-l); font-family:var(--font-mono);
+      font-size:10px; letter-spacing:0.2em; text-transform:uppercase;
+      text-decoration:none; transition:all 0.18s;
+    }
+    .hero-link:hover { background:rgba(232,177,75,0.2); border-color:var(--nutrient); box-shadow:0 0 20px rgba(232,177,75,0.2); }
+
+    /* Section heading */
+    .sec-head {
+      margin-bottom:24px; padding-bottom:16px;
+      border-bottom:0.5px solid var(--rule);
+    }
+    .sec-eyebrow {
+      font-family:var(--font-mono); font-size:8.5px;
+      letter-spacing:0.28em; text-transform:uppercase;
+      color:var(--mycelium-d); margin-bottom:8px;
+    }
+    .sec-title {
+      font-family:var(--font-display); font-style:italic;
+      font-size:26px; color:var(--mycelium-l);
+      letter-spacing:-0.02em; line-height:1;
+    }
+
+    /* Method accordion */
+    .methods { display:flex; flex-direction:column; gap:2px; margin-bottom:48px; }
+
+    .method {
+      border:0.5px solid var(--rule);
+      border-radius:10px; overflow:hidden;
+      background:var(--soil-2);
+      transition:border-color 0.2s;
+    }
+    .method.open { border-color:var(--rule-strong); }
+
+    .method-header {
+      display:flex; align-items:center; gap:14px;
+      padding:18px 20px; cursor:pointer;
+      transition:background 0.15s;
+    }
+    .method-header:hover { background:var(--soil-3); }
+
+    .method-dot {
+      width:10px; height:10px; border-radius:50%; flex-shrink:0;
+    }
+
+    .method-titles { flex:1; }
+    .method-name {
+      font-family:var(--font-display); font-style:italic;
+      font-size:22px; color:var(--mycelium-l);
+      letter-spacing:-0.02em; line-height:1;
+    }
+    .method-tag {
+      font-family:var(--font-mono); font-size:8.5px;
+      letter-spacing:0.18em; text-transform:uppercase;
+      color:var(--mycelium-d); margin-top:4px;
+    }
+
+    .method-toggle {
+      font-family:var(--font-mono); font-size:10px;
+      color:var(--mycelium-d); flex-shrink:0;
+      transition:color 0.2s;
+    }
+    .method.open .method-toggle { color:var(--nutrient); }
+
+    .method-body {
+      padding:0 20px 24px;
+      border-top:0.5px solid var(--rule);
+      animation:fade-drop 0.25s ease-out;
+    }
+    @keyframes fade-drop {
+      from { opacity:0; transform:translateY(-6px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .method-philosophy {
+      margin-top:18px; margin-bottom:18px;
+      padding:14px 16px;
+      background:var(--soil-3);
+      border-left:2px solid var(--nutrient-d);
+      border-radius:0 6px 6px 0;
+    }
+    .method-philosophy-label {
+      font-family:var(--font-mono); font-size:8px;
+      letter-spacing:0.22em; text-transform:uppercase;
+      color:var(--nutrient-d); margin-bottom:6px;
+    }
+    .method-philosophy p {
+      font-size:13px; color:var(--mycelium); line-height:1.65;
+    }
+
+    .method-meta {
+      display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:18px;
+    }
+    .meta-cell {
+      background:var(--soil-4); border:0.5px solid var(--rule);
+      border-radius:6px; padding:10px 12px;
+    }
+    .meta-label {
+      font-family:var(--font-mono); font-size:8px;
+      letter-spacing:0.2em; text-transform:uppercase;
+      color:var(--mycelium-d); margin-bottom:4px;
+    }
+    .meta-val { font-size:12.5px; color:var(--mycelium-l); }
+
+    .steps-head {
+      font-family:var(--font-mono); font-size:8.5px;
+      letter-spacing:0.2em; text-transform:uppercase;
+      color:var(--mycelium-d); margin-bottom:12px;
+    }
+    .step {
+      display:flex; gap:12px; align-items:flex-start; margin-bottom:12px;
+    }
+    .step-num {
+      width:22px; height:22px; border-radius:50%;
+      background:var(--soil-4); border:0.5px solid var(--rule);
+      display:flex; align-items:center; justify-content:center;
+      font-family:var(--font-mono); font-size:9px;
+      flex-shrink:0; margin-top:1px;
+    }
+    .step-title {
+      font-size:13px; font-weight:600; color:var(--mycelium-l);
+      margin-bottom:2px;
+    }
+    .step-desc { font-size:12.5px; color:var(--mycelium); line-height:1.6; }
+
+    /* Footer */
+    .footer {
+      padding-top:32px; border-top:0.5px solid var(--rule);
+      text-align:center; margin-top:32px;
+    }
+    .footer-fine {
+      font-family:var(--font-mono); font-size:9px;
+      letter-spacing:0.18em; text-transform:uppercase;
+      color:var(--mycelium-d);
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="nav">
+    <div class="nav-brand">
+      <div class="nav-mark">⚗</div>
+      <div class="nav-name">Alchemy Academy</div>
+    </div>
+    <a href="/community/" class="nav-back">← Portal</a>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Member access · Fungai Art</div>
+    <h1 class="hero-title">Five methods.<br/><em>One organism.</em></h1>
+    <p class="hero-blurb">Extraction science meets plant intelligence. Five ancient and modern methods — their philosophy, chemistry, and practice. Know your solvents, know your plant.</p>
+    <a href="/mixology" class="hero-link">⚗ Open Herbal Blending Engine →</a>
+  </div>
+
+  <div class="sec-head">
+    <div class="sec-eyebrow">Extraction science</div>
+    <div class="sec-title">The five methods.</div>
+  </div>
+
+  <div class="methods" id="methods"></div>
+
+  <div class="footer">
+    <div class="footer-fine">Fungai Art · Alchemy Academy · Member only</div>
+  </div>
+
+</div>
+
+<script>
+const METHODS = [
+  {
+    name: 'Spagyric',
+    tag: 'The Paracelsian Triple Separation',
+    color: '#C48838',
+    ratio: '1:5 — plant to high-proof alcohol',
+    time: '30–40 days total',
+    philosophy: 'Separating and recombining the body, soul, and spirit of the plant to create a hyper-potent, bio-available evolution of the medicine.',
+    steps: [
+      { title: 'Maceration (Spirit & Soul)', desc: 'Soak chopped plant material in 96% ethanol for 2–4 weeks in a warm, dark place; strain and set the liquid aside.' },
+      { title: 'Calcination (Body)', desc: 'Take the remaining pressed plant material and burn it outdoors until it turns to pure white ash.' },
+      { title: 'Leaching', desc: 'Dissolve the white ash in distilled water, filter out insoluble particulates, and evaporate the water to harvest pure, crystalline mineral salts.' },
+      { title: 'Recombination', desc: 'Dissolve the purified mineral salts back into the original alcohol tincture to complete the alchemical triad.' },
+    ],
+  },
+  {
+    name: 'Cold Tincture',
+    tag: 'Folk Herbalism Baseline',
+    color: '#3B6D11',
+    ratio: '1:5 (dried herbs) · 1:2 (fresh herbs) · 40–60% alcohol',
+    time: '4–6 weeks',
+    philosophy: 'A slow, gentle extraction relying entirely on time and ambient temperature to pull volatile and soluble compounds without breaking down delicate molecular structures.',
+    steps: [
+      { title: 'Prep', desc: 'Chop herbs finely and place them into a clean glass jar.' },
+      { title: 'Submerge', desc: 'Pour alcohol over the herbs, ensuring they are completely submerged with at least 2 cm of headspace above the plant line.' },
+      { title: 'Agitation', desc: 'Seal tightly and shake vigorously for 60 seconds every day for the first two weeks to maximize solvent contact.' },
+      { title: 'Harvest', desc: 'Strain through an ultra-fine nut milk bag or unbleached cheesecloth, pressing hard to extract every drop of liquid.' },
+    ],
+  },
+  {
+    name: 'Decoction',
+    tag: 'Roots · Bark · Hard Fungi',
+    color: '#7A4F2E',
+    ratio: '1:10 to 1:20 — material to water',
+    time: '45–120 minutes',
+    philosophy: 'Using continuous, aggressive heat to fracture tough, fibrous cell walls (like chitin and cellulose) that refuse to yield to cold extraction.',
+    steps: [
+      { title: 'Fracture', desc: 'Smash or coarsely shred the roots, bark, or hard fungi to expose maximum surface area.' },
+      { title: 'Simmer', desc: 'Place the material in cold water, bring to a gentle boil, then immediately drop the heat to a low simmer (80°C to 90°C).' },
+      { title: 'Reduction', desc: 'Keep uncovered or partially covered, allowing the liquid volume to reduce by half.' },
+      { title: 'Express', desc: 'Strain the hot liquid immediately, pressing the remaining dregs to catch the dense, water-soluble polysaccharides.' },
+    ],
+  },
+  {
+    name: 'Double Extraction',
+    tag: 'Chaga · Reishi · Medicinal Fungi',
+    color: '#0F6E56',
+    ratio: 'Combined final ratio ~1:5',
+    time: '4 weeks (alcohol) + 4 hours (water)',
+    philosophy: 'A comprehensive dual-solvent approach designed specifically for medicinal mushrooms, capturing both hydrophobic triterpenes and hydrophilic beta-glucans.',
+    steps: [
+      { title: 'Alcohol Maceration', desc: 'Soak dried, crushed mushroom biomass in 80–95% alcohol for 4 weeks to extract fat-soluble adaptogens; strain and save the liquid.' },
+      { title: 'Water Decoction', desc: 'Take the same "spent" mushroom biomass and simmer it in distilled water for 3–4 hours to extract water-soluble immune compounds.' },
+      { title: 'Concentration', desc: 'Strain the water extract and simmer it further until its volume matches the volume of your saved alcohol extract.' },
+      { title: 'Blended Lock', desc: 'Allow the water to cool below 35°C, then combine the alcohol and water extracts together, reaching a final shelf-stable alcohol target of 20–25%.' },
+    ],
+  },
+  {
+    name: 'Oleoresin',
+    tag: 'Fat-Soluble · Heat Infusion',
+    color: '#534AB7',
+    ratio: '1:4 to 1:5 — herb to carrier oil (Jojoba or MCT)',
+    time: '4–8 hours + 24h clarification',
+    philosophy: 'Capturing the oily, lipophilic resins and essential oils of a plant by using heat to melt them into a stable carrier oil base.',
+    steps: [
+      { title: 'Desiccation', desc: 'Ensure herbs are completely dry, as even a single drop of water can spoil the oil infusion with mold.' },
+      { title: 'Thermal Bath', desc: 'Combine herbs and oil in a water jacket or double boiler, keeping the temperature strictly between 45°C and 55°C to avoid cooking the plant.' },
+      { title: 'Infusion', desc: 'Maintain low heat for up to 8 hours, stirring occasionally to distribute the settling resins.' },
+      { title: 'Clarification', desc: 'Strain through a heavy-duty filter cloth while still warm, letting it sit undisturbed for 24 hours to clear any fine sediment before bottling.' },
+    ],
+  },
+];
+
+const container = document.getElementById('methods');
+
+METHODS.forEach((m, mi) => {
+  const div = document.createElement('div');
+  div.className = 'method';
+  div.innerHTML = `
+    <div class="method-header" onclick="toggle(${mi})">
+      <div class="method-dot" style="background:${m.color};box-shadow:0 0 8px ${m.color}88"></div>
+      <div class="method-titles">
+        <div class="method-name">${m.name}</div>
+        <div class="method-tag">${m.tag}</div>
+      </div>
+      <div class="method-toggle" id="toggle-${mi}">▾ expand</div>
+    </div>
+    <div class="method-body" id="body-${mi}" style="display:none">
+      <div class="method-philosophy">
+        <div class="method-philosophy-label">Philosophy</div>
+        <p>${m.philosophy}</p>
+      </div>
+      <div class="method-meta">
+        <div class="meta-cell">
+          <div class="meta-label">Ratio</div>
+          <div class="meta-val">${m.ratio}</div>
+        </div>
+        <div class="meta-cell">
+          <div class="meta-label">Time</div>
+          <div class="meta-val">${m.time}</div>
+        </div>
+      </div>
+      <div class="steps-head">Process — step by step</div>
+      ${m.steps.map((s, i) => `
+        <div class="step">
+          <div class="step-num" style="color:${m.color}">${i+1}</div>
+          <div>
+            <div class="step-title">${s.title}</div>
+            <div class="step-desc">${s.desc}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  container.appendChild(div);
+});
+
+function toggle(i) {
+  const body   = document.getElementById(`body-${i}`);
+  const toggle = document.getElementById(`toggle-${i}`);
+  const method = body.closest('.method');
+  const isOpen = body.style.display !== 'none';
+  body.style.display   = isOpen ? 'none' : 'block';
+  toggle.textContent   = isOpen ? '▾ expand' : '▴ close';
+  method.classList.toggle('open', !isOpen);
+}
+</script>
+</body>
+</html>

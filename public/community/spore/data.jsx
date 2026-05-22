@@ -133,6 +133,16 @@ const PHASES = [
 
 const MEMBERS = [
   {
+    id: 'robin',
+    name: 'Robin',
+    role: 'Founder',
+    node: 'berlin',
+    rep: 15,
+    balance: 500,
+    focus: 'Network architecture · product development · alchemy',
+    admin: true,
+  },
+  {
     id: 'remi',
     name: 'Remi',
     role: 'Community Weaver',
@@ -140,6 +150,15 @@ const MEMBERS = [
     rep: 10,
     balance: 340,
     focus: 'Facilitation · governance · network tending',
+  },
+  {
+    id: 'stephanie',
+    name: 'Stephanie',
+    role: 'Sound Healer',
+    node: 'berlin',
+    rep: 6,
+    balance: 260,
+    focus: 'Mycelium Trance · gong · tuning forks · plant ceremony',
   },
   {
     id: 'angela',
@@ -169,6 +188,33 @@ const MEMBERS = [
     focus: 'Mycelium cultivation · spawn · substrate work',
   },
   {
+    id: 'luna',
+    name: 'Luna',
+    role: 'Alchemist',
+    node: 'lisbon',
+    rep: 2,
+    balance: 140,
+    focus: 'Spagyric extraction · plant alchemy · lunar timing',
+  },
+  {
+    id: 'leni',
+    name: 'Leni',
+    role: 'Forager',
+    node: 'sweden',
+    rep: 2,
+    balance: 130,
+    focus: 'Nordic wild plants · mushroom ID · forest medicine',
+  },
+  {
+    id: 'acile',
+    name: 'Acile',
+    role: 'Artist',
+    node: 'festival',
+    rep: 1,
+    balance: 110,
+    focus: 'Visual art · illustration · botanical design',
+  },
+  {
     id: 'wissam',
     name: 'Wissam',
     role: 'Artist & Contributor',
@@ -188,6 +234,13 @@ const MEMBERS = [
   },
 ];
 
+const CONTRIBUTION_TYPES = [
+  { id: 'foraging',    label: 'Foraging',    icon: '🌿', desc: 'Wild harvest, species ID, field medicine' },
+  { id: 'laboratory',  label: 'Laboratory',  icon: '⚗',  desc: 'Extraction, tincture, formulation' },
+  { id: 'events',      label: 'Events',      icon: '✦',  desc: 'Setup, facilitation, hosting' },
+  { id: 'sales',       label: 'Sales',       icon: '◎',  desc: 'Customer, market, outreach' },
+];
+
 window.SporeData = {
-  NETWORK_NODES, PRODUCTS, EXPERIENCES, REPUTATION_TIERS, PHASES, MEMBERS, reputationTier
+  NETWORK_NODES, PRODUCTS, EXPERIENCES, REPUTATION_TIERS, PHASES, MEMBERS, CONTRIBUTION_TYPES, reputationTier
 };
