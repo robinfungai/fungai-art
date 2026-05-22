@@ -1,9 +1,12 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import Map, { Marker, NavigationControl } from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { ECO_NODES, HABITAT_COLORS, HABITAT_LABELS } from '../data/ecoNodes';
 import { EcoNode, Season, HabitatType } from '../types/EcoNode';
 import NodePanel from './NodePanel';
+
+// GBIF observation type
+interface GBIFObs { id: number; lat: number; lng: number; species: string; date: string | null; region: string | null; }
 
 // Organic earthy map style — CARTO Voyager (warm/natural tones, no account needed).
 const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json';
@@ -105,13 +108,33 @@ export default function ForagingApp() {
   const [seasons, setSeasons] = useState<Season[]>([getCurrentSeason()]);
   const [mapMode, setMapMode] = useState<'dark' | 'satellite'>('dark');
   const [habitatFilter, setHabitatFilter] = useState<HabitatType | 'all'>('all');
-  // popupNode reserved for future tooltip enhancement
+  const [gbifObs, setGbifObs] = useState<GBIFObs[]>([]);
+  const [gbifLoading, setGbifLoading] = useState(false);
+  const [gbifSpecies, setGbifSpecies] = useState<string>('');
+  const [hoveredObs, setHoveredObs] = useState<GBIFObs | null>(null);
 
   const mapRef = useRef<any>(null);
 
   const filteredNodes = ECO_NODES.filter(n =>
     habitatFilter === 'all' || n.nodeType === habitatFilter
   );
+
+  // Fetch GBIF observations when a node is selected
+  useEffect(() => {
+    if (!selectedNode) { setGbifObs([]); setGbifSpecies(''); return; }
+    // Pick the first species in the node that has a known GBIF name
+    const primarySpecies = selectedNode.species[0]?.name || '';
+    if (!primarySpecies) return;
+    const [lng, lat] = selectedNode.coordinates;
+    setGbifLoading(true);
+    setGbifObs([]);
+    setGbifSpecies(primarySpecies);
+    fetch(`/api/gbif-observations?taxon=${encodeURIComponent(primarySpecies)}&lat=${lat}&lng=${lng}&radius=200&limit=80`)
+      .then(r => r.json())
+      .then(data => { if (data.observations) setGbifObs(data.observations); })
+      .catch(() => {})
+      .finally(() => setGbifLoading(false));
+  }, [selectedNode?.id]);
 
   const handleNodeClick = useCallback((node: EcoNode) => {
     setSelectedNode(prev => prev?.id === node.id ? null : node);
@@ -239,6 +262,40 @@ export default function ForagingApp() {
       >
         <NavigationControl position="bottom-right" style={{ marginBottom: 80 }} />
 
+        {/* GBIF community observation dots */}
+        {gbifObs.map(obs => (
+          <Marker key={`gbif-${obs.id}`} longitude={obs.lng} latitude={obs.lat} anchor="center">
+            <div
+              onMouseEnter={() => setHoveredObs(obs)}
+              onMouseLeave={() => setHoveredObs(null)}
+              title={`${obs.species}${obs.date ? ' · ' + obs.date : ''}${obs.region ? ' · ' + obs.region : ''}`}
+              style={{
+                width: 7, height: 7, borderRadius: '50%',
+                background: 'rgba(245,215,105,0.55)',
+                border: '0.5px solid rgba(245,215,105,0.8)',
+                cursor: 'default',
+                transition: 'transform 0.15s',
+                boxShadow: '0 0 4px rgba(245,215,105,0.3)',
+              }}
+            />
+          </Marker>
+        ))}
+
+        {/* Hovered GBIF obs tooltip */}
+        {hoveredObs && (
+          <Marker longitude={hoveredObs.lng} latitude={hoveredObs.lat} anchor="bottom" offset={[0, -6]}>
+            <div style={{
+              background: 'rgba(7,17,13,0.95)', border: '0.5px solid rgba(245,215,105,0.35)',
+              borderRadius: 6, padding: '5px 10px', pointerEvents: 'none', whiteSpace: 'nowrap',
+            }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#F5D769', letterSpacing: '0.1em', fontStyle: 'italic' }}>{hoveredObs.species}</div>
+              {hoveredObs.date && <div style={{ fontFamily: 'monospace', fontSize: 8, color: '#8B7E62', marginTop: 2 }}>{hoveredObs.date}{hoveredObs.region ? ` · ${hoveredObs.region}` : ''}</div>}
+              <div style={{ fontFamily: 'monospace', fontSize: 7, color: '#4d5a52', marginTop: 2, letterSpacing: '0.1em' }}>GBIF · CC0</div>
+            </div>
+          </Marker>
+        )}
+
+        {/* Curated eco-nodes */}
         {filteredNodes.map(node => (
           <Marker
             key={node.id}
@@ -258,6 +315,33 @@ export default function ForagingApp() {
           </Marker>
         ))}
       </Map>
+
+      {/* GBIF loading pill */}
+      {gbifLoading && (
+        <div style={{
+          position: 'absolute', top: 72, left: '50%', transform: 'translateX(-50%)', zIndex: 15,
+          background: 'rgba(7,17,13,0.92)', border: '0.5px solid rgba(245,215,105,0.3)',
+          borderRadius: 20, padding: '5px 14px',
+          fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase',
+          color: 'rgba(245,215,105,0.7)',
+          animation: 'pulse 1.2s ease-in-out infinite',
+        }}>
+          ◎ Loading GBIF observations for {gbifSpecies}…
+        </div>
+      )}
+
+      {/* GBIF count badge when loaded */}
+      {!gbifLoading && gbifObs.length > 0 && (
+        <div style={{
+          position: 'absolute', top: 72, left: '50%', transform: 'translateX(-50%)', zIndex: 15,
+          background: 'rgba(7,17,13,0.88)', border: '0.5px solid rgba(245,215,105,0.2)',
+          borderRadius: 20, padding: '5px 14px',
+          fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase',
+          color: 'rgba(245,215,105,0.55)',
+        }}>
+          {gbifObs.length} community sightings · GBIF · CC0
+        </div>
+      )}
 
       {/* Legend */}
       <div style={{
@@ -280,9 +364,13 @@ export default function ForagingApp() {
             <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(107,214,111,0.6)', boxShadow: '0 0 6px rgba(107,214,111,0.5)' }} />
             <span style={{ fontFamily: 'monospace', fontSize: 8, color: '#6BD66F', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Active this season</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
             <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(255,255,255,0.2)' }} />
             <span style={{ fontFamily: 'monospace', fontSize: 8, color: '#4d5a52', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Off-season</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(245,215,105,0.55)', border: '0.5px solid rgba(245,215,105,0.8)' }} />
+            <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(245,215,105,0.6)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>GBIF sighting</span>
           </div>
         </div>
       </div>

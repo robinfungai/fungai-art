@@ -47,7 +47,9 @@
       "Bash(node scripts/export-herbs.cjs)",
       "Bash(node -e \"require\\('./node_modules/mapbox-gl/package.json'\\).version && console.log\\('mapbox-gl ok'\\)\")",
       "Bash(node -e \"require\\('./node_modules/react-map-gl/package.json'\\).version && console.log\\('react-map-gl ok'\\)\")",
-      "Bash(xargs grep -rL \"rel=\\\\\"icon\\\\\"\\\\|rel='icon'\")"
+      "Bash(xargs grep -rL \"rel=\\\\\"icon\\\\\"\\\\|rel='icon'\")",
+      "WebFetch(domain:www.skogsskafferiet.se)",
+      "WebFetch(domain:api.gbif.org)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Robin\\Desktop\\fungai art\\websiet\\tailored tincture ai tool\\html codes",
