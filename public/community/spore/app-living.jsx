@@ -247,12 +247,13 @@ function LoginScreen({ onLogin }) {
 function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) {
   const isAdmin = currentMember && currentMember.admin;
   const tabs = [
-    { id:'network',  label:'Network',          icon:'◉' },
-    { id:'shop',     label:'Apothecary',        icon:'🌿' },
-    { id:'exp',      label:'Experiences',       icon:'✦' },
-    { id:'members',  label:'Members',           icon:'◈' },
-    { id:'journal',  label:'Journal',           icon:'○' },
-    { id:'academy',  label:'Alchemy Academy',   icon:'⚗', accent:true, external:true },
+    { id:'network',  label:'Network',         icon:'◉' },
+    { id:'shop',     label:'Apothecary',       icon:'🌿' },
+    { id:'exp',      label:'Experiences',      icon:'✦' },
+    { id:'members',  label:'Members',          icon:'◈' },
+    { id:'journal',  label:'Journal',          icon:'○' },
+    { id:'academy',  label:'Alchemy Academy',  icon:'⚗', accent:true, external:'/community/academy/' },
+    { id:'store',    label:'Shop',             icon:'◎', external:'/shop' },
     ...(isAdmin ? [{ id:'admin', label:'Admin', icon:'⬡', adminTab:true }] : []),
   ];
   return (
@@ -272,7 +273,7 @@ function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) 
                 {currentMember.name[0]}
               </div>
               <div className="topbar-member-name">{currentMember.name}</div>
-              <button className="topbar-logout" onClick={onLogout}>out</button>
+              <button className="topbar-logout" onClick={onLogout}>Sign out</button>
             </div>
           )}
           <button className="wallet-pill" onClick={onWallet}>
@@ -290,7 +291,7 @@ function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) 
             key={t.id}
             className={`tab ${tab === t.id ? 'on' : ''} ${t.accent ? 'tab-accent' : ''} ${t.adminTab ? 'tab-admin' : ''}`}
             onClick={() => {
-              if (t.external) { window.open('/community/academy/', '_blank'); return; }
+              if (t.external) { window.open(t.external, '_blank'); return; }
               onTab(t.id);
             }}
           >

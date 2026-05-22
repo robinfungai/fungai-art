@@ -1617,16 +1617,21 @@ button { font-family: inherit; cursor: pointer; }
   line-height: 1;
 }
 .topbar-logout {
-  background: none;
-  border: 0.5px solid var(--rule);
-  border-radius: 4px;
-  padding: 3px 7px;
+  background: rgba(248,113,113,0.08);
+  border: 0.5px solid rgba(248,113,113,0.3);
+  border-radius: 5px;
+  padding: 5px 11px;
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 9px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--mycelium-d);
+  color: #f87171;
   cursor: pointer;
   transition: all 0.15s;
+  white-space: nowrap;
 }
-.topbar-logout:hover { border-color: var(--rule-strong); color: var(--mycelium); }
+.topbar-logout:hover {
+  background: rgba(248,113,113,0.18);
+  border-color: rgba(248,113,113,0.6);
+  color: #fca5a5;
+}
