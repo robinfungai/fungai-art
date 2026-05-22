@@ -2,6 +2,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import Map, { Marker, NavigationControl } from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { ECO_NODES, HABITAT_COLORS, HABITAT_LABELS } from '../data/ecoNodes';
+import { SKOGSSKAFFERIET_OBS } from '../data/skogsskafferietObs';
 import { EcoNode, Season, HabitatType } from '../types/EcoNode';
 import NodePanel from './NodePanel';
 
@@ -112,6 +113,8 @@ export default function ForagingApp() {
   const [gbifLoading, setGbifLoading] = useState(false);
   const [gbifSpecies, setGbifSpecies] = useState<string>('');
   const [hoveredObs, setHoveredObs] = useState<GBIFObs | null>(null);
+  const [showSkogsObs, setShowSkogsObs] = useState(true);
+  const [hoveredSkogsHerb, setHoveredSkogsHerb] = useState<string | null>(null);
 
   const mapRef = useRef<any>(null);
 
@@ -247,8 +250,24 @@ export default function ForagingApp() {
           })}
         </div>
 
+        {/* Skogsskafferiet toggle */}
+        <button
+          onClick={() => setShowSkogsObs(s => !s)}
+          style={{
+            marginLeft: 'auto',
+            fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', textTransform: 'uppercase',
+            background: showSkogsObs ? 'rgba(180,230,150,0.12)' : 'transparent',
+            border: `0.5px solid ${showSkogsObs ? 'rgba(180,230,150,0.45)' : 'rgba(255,255,255,0.12)'}`,
+            color: showSkogsObs ? 'rgba(180,230,150,0.85)' : '#4d5a52',
+            borderRadius: 4, padding: '4px 10px', cursor: 'pointer', flexShrink: 0,
+            transition: 'all 0.18s',
+          }}
+        >
+          {showSkogsObs ? '◉' : '○'} Skogsskafferiet
+        </button>
+
         {/* Node count */}
-        <div style={{ marginLeft: 'auto', fontFamily: 'monospace', fontSize: 9, color: '#4d5a52', flexShrink: 0 }}>
+        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#4d5a52', flexShrink: 0 }}>
           {filteredNodes.length} nodes · {filteredNodes.filter(n => n.best_season.some(s => seasons.includes(s))).length} active now
         </div>
       </div>
@@ -261,6 +280,38 @@ export default function ForagingApp() {
         mapStyle={mapMode === 'satellite' ? SATELLITE_STYLE : MAP_STYLE}
       >
         <NavigationControl position="bottom-right" style={{ marginBottom: 80 }} />
+
+        {/* Skogsskafferiet community observation dots — always visible layer */}
+        {showSkogsObs && SKOGSSKAFFERIET_OBS.map(entry =>
+          entry.points.map((pt, i) => (
+            <Marker key={`skogs-${entry.latin}-${i}`} longitude={pt[0]} latitude={pt[1]} anchor="center">
+              <div
+                onMouseEnter={() => setHoveredSkogsHerb(`${entry.herb} (${entry.latin}) · ${entry.county}`)}
+                onMouseLeave={() => setHoveredSkogsHerb(null)}
+                title={`${entry.herb} — ${entry.latin} · skogsskafferiet.se`}
+                style={{
+                  width: 5, height: 5, borderRadius: '50%',
+                  background: 'rgba(180,230,150,0.6)',
+                  border: '0.5px solid rgba(180,230,150,0.9)',
+                  cursor: 'default',
+                  boxShadow: '0 0 3px rgba(180,230,150,0.25)',
+                }}
+              />
+            </Marker>
+          ))
+        )}
+
+        {/* Skogsskafferiet hover tooltip */}
+        {hoveredSkogsHerb && (
+          <div style={{
+            position: 'absolute', top: 72, left: '50%', transform: 'translateX(-50%)', zIndex: 15,
+            background: 'rgba(7,17,13,0.95)', border: '0.5px solid rgba(180,230,150,0.3)',
+            borderRadius: 6, padding: '5px 12px', pointerEvents: 'none', whiteSpace: 'nowrap',
+          }}>
+            <span style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(180,230,150,0.85)', letterSpacing: '0.1em', fontStyle: 'italic' }}>{hoveredSkogsHerb}</span>
+            <span style={{ fontFamily: 'monospace', fontSize: 7.5, color: '#4d5a52', marginLeft: 8, letterSpacing: '0.1em' }}>skogsskafferiet.se</span>
+          </div>
+        )}
 
         {/* GBIF community observation dots */}
         {gbifObs.map(obs => (
@@ -368,9 +419,13 @@ export default function ForagingApp() {
             <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(255,255,255,0.2)' }} />
             <span style={{ fontFamily: 'monospace', fontSize: 8, color: '#4d5a52', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Off-season</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
             <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(245,215,105,0.55)', border: '0.5px solid rgba(245,215,105,0.8)' }} />
             <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(245,215,105,0.6)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>GBIF sighting</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(180,230,150,0.6)', border: '0.5px solid rgba(180,230,150,0.9)' }} />
+            <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(180,230,150,0.65)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Skogsskafferiet</span>
           </div>
         </div>
       </div>
