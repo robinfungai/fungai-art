@@ -1307,3 +1307,287 @@ button { font-family: inherit; cursor: pointer; }
   font-size: 8.5px; letter-spacing: 0.09em;
   text-transform: uppercase; color: var(--mycelium-d);
 }
+
+/* ── Login screen ─────────────────────────────────────────── */
+.login-screen {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 52px 20px 60px;
+  animation: page-in 0.4s ease-out;
+}
+
+.login-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.login-brand-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 34px;
+  letter-spacing: -0.02em;
+  color: var(--mycelium-l);
+  line-height: 1;
+}
+
+.login-brand-sub {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+}
+
+.login-prompt {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.login-member-grid {
+  width: 100%;
+  max-width: 440px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.login-member-btn {
+  background: var(--soil-2);
+  border: 0.5px solid var(--rule);
+  border-radius: 10px;
+  padding: 14px 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.18s;
+  text-align: left;
+}
+.login-member-btn:hover {
+  border-color: var(--rule-strong);
+  background: var(--soil-3);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px -12px rgba(107,214,111,0.25);
+}
+
+.login-member-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 18px; font-style: italic;
+  color: rgba(255,255,255,0.9);
+  flex-shrink: 0;
+}
+
+.login-member-info { flex: 1; min-width: 0; }
+.login-member-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--mycelium-l);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.login-member-role {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 3px;
+}
+
+/* PIN modal */
+.pin-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  animation: fade-in 0.2s;
+}
+
+.pin-sheet {
+  background: var(--soil-2);
+  border: 0.5px solid var(--rule-strong);
+  border-radius: 18px;
+  width: 100%;
+  max-width: 340px;
+  padding: 28px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  animation: pin-pop 0.28s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+@keyframes pin-pop {
+  from { opacity: 0; transform: scale(0.94) translateY(8px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+
+.pin-member-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.pin-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 20px; font-style: italic;
+  color: rgba(255,255,255,0.9);
+  flex-shrink: 0;
+}
+
+.pin-member-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 24px;
+  color: var(--mycelium-l);
+  letter-spacing: -0.02em;
+}
+
+.pin-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  text-align: center;
+  width: 100%;
+}
+
+.pin-dots {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+}
+
+.pin-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 1px solid var(--rule-strong);
+  transition: all 0.12s;
+}
+.pin-dot.filled {
+  background: var(--spore);
+  border-color: var(--spore);
+  box-shadow: 0 0 8px rgba(107,214,111,0.6);
+}
+.pin-dot.error {
+  background: #c0392b;
+  border-color: #c0392b;
+}
+
+.pin-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
+}
+
+.pin-key {
+  background: var(--soil-3);
+  border: 0.5px solid var(--rule);
+  border-radius: 8px;
+  padding: 14px 10px;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  color: var(--mycelium-l);
+  cursor: pointer;
+  transition: all 0.12s;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.pin-key:hover { background: var(--substrate); border-color: var(--rule-strong); }
+.pin-key:active { transform: scale(0.94); }
+.pin-key.del { color: var(--mycelium-d); font-size: 14px; }
+
+.pin-status {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  min-height: 14px;
+  text-align: center;
+}
+.pin-status.error { color: #e74c3c; }
+
+@keyframes pin-shake {
+  0%,100%  { transform: translateX(0); }
+  20%      { transform: translateX(-7px); }
+  40%      { transform: translateX(7px); }
+  60%      { transform: translateX(-5px); }
+  80%      { transform: translateX(4px); }
+}
+.pin-dots.shaking { animation: pin-shake 0.4s ease; }
+
+.pin-cancel {
+  background: none;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  cursor: pointer;
+  padding: 4px 8px;
+}
+.pin-cancel:hover { color: var(--mycelium); }
+
+/* Topbar member badge */
+.topbar-member {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.topbar-member-avatar {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 11px; font-style: italic;
+  color: rgba(255,255,255,0.85);
+  flex-shrink: 0;
+}
+.topbar-member-name {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  line-height: 1;
+}
+.topbar-logout {
+  background: none;
+  border: 0.5px solid var(--rule);
+  border-radius: 4px;
+  padding: 3px 7px;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.topbar-logout:hover { border-color: var(--rule-strong); color: var(--mycelium); }

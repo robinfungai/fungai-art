@@ -1,40 +1,51 @@
 /* Spore Living — main app */
 
-const { useState, useEffect, useCallback, useMemo } = React;
+const { useState, useEffect, useCallback, useRef } = React;
 
-const STORAGE_KEY = 'spore_living_v1';
+/* ── Per-member storage ───────────────────────────────────── */
 
-const DEFAULT_STATE = {
-  balance: 120,
-  reputation: 1,
-  contributions: 2,
-  keys: 0,
-  unlocked: [],
-  inventory: [],
-  history: [],
-};
+const storageKey  = (id) => `spore_state_${id}`;
+const pinKey      = (id) => `spore_pin_${id}`;
 
-function useEconomy() {
+function defaultState(member) {
+  return {
+    balance:       member ? member.balance : 120,
+    reputation:    member ? member.rep     : 1,
+    contributions: member ? 2              : 0,
+    keys:          0,
+    unlocked:      [],
+    inventory:     [],
+    history:       [],
+  };
+}
+
+function useEconomy(memberId) {
+  const member  = SporeData.MEMBERS.find(m => m.id === memberId);
+  const key     = storageKey(memberId);
+  const initial = defaultState(member);
+
   const [state, setState] = useState(() => {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) return { ...DEFAULT_STATE, ...JSON.parse(raw) };
+      const raw = localStorage.getItem(key);
+      if (raw) return { ...initial, ...JSON.parse(raw) };
     } catch (_) {}
-    return DEFAULT_STATE;
+    return initial;
   });
+
   useEffect(() => {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (_) {}
-  }, [state]);
+    try { localStorage.setItem(key, JSON.stringify(state)); } catch (_) {}
+  }, [state, key]);
 
   const earn = useCallback((amount, label, repGain = 1) => {
     setState(s => ({
       ...s,
-      balance: s.balance + amount,
-      reputation: s.reputation + repGain,
+      balance:       s.balance + amount,
+      reputation:    s.reputation + repGain,
       contributions: s.contributions + 1,
       history: [{ type:'earn', label, delta:+amount, ts:Date.now() }, ...s.history].slice(0, 30),
     }));
   }, []);
+
   const unlock = useCallback((expId, amount, label) => {
     let ok = false;
     setState(s => {
@@ -42,14 +53,15 @@ function useEconomy() {
       ok = true;
       return {
         ...s,
-        balance: s.balance - amount,
-        keys: s.keys + 1,
+        balance:  s.balance - amount,
+        keys:     s.keys + 1,
         unlocked: [...s.unlocked, expId],
-        history: [{ type:'unlock', label, delta:-amount, ts:Date.now() }, ...s.history].slice(0, 30),
+        history:  [{ type:'unlock', label, delta:-amount, ts:Date.now() }, ...s.history].slice(0, 30),
       };
     });
     return ok;
   }, []);
+
   const buy = useCallback((prodId, name, amount) => {
     let ok = false;
     setState(s => {
@@ -57,16 +69,19 @@ function useEconomy() {
       ok = true;
       return {
         ...s,
-        balance: s.balance - amount,
+        balance:   s.balance - amount,
         inventory: [...s.inventory, prodId],
-        history: [{ type:'buy', label:name, delta:-amount, ts:Date.now() }, ...s.history].slice(0, 30),
+        history:   [{ type:'buy', label:name, delta:-amount, ts:Date.now() }, ...s.history].slice(0, 30),
       };
     });
     return ok;
   }, []);
-  const reset = useCallback(() => setState(DEFAULT_STATE), []);
+
+  const reset = useCallback(() => setState(defaultState(member)), [member]);
   return { state, earn, unlock, buy, reset };
 }
+
+/* ── Toast ───────────────────────────────────────────────── */
 
 function Toast({ message, kind, onClose }) {
   useEffect(() => {
@@ -82,7 +97,154 @@ function Toast({ message, kind, onClose }) {
   );
 }
 
-function TopBar({ state, tier, tab, onTab, onWallet }) {
+/* ── PIN modal ───────────────────────────────────────────── */
+
+function PinModal({ member, onSuccess, onCancel }) {
+  const tier         = SporeData.reputationTier(member.rep);
+  const stored       = localStorage.getItem(pinKey(member.id));
+  const isNew        = !stored;
+  const [step, setStep]   = useState(isNew ? 'set1' : 'verify');
+  const [first, setFirst] = useState('');
+  const [pin, setPin]     = useState('');
+  const [shake, setShake] = useState(false);
+  const [status, setStatus] = useState(
+    isNew ? 'Choose a 4-digit code' : 'Enter your code'
+  );
+  const [isError, setIsError] = useState(false);
+
+  function triggerShake() {
+    setShake(true);
+    setTimeout(() => { setShake(false); setPin(''); }, 500);
+  }
+
+  function press(digit) {
+    if (pin.length >= 4) return;
+    const next = pin + digit;
+    setPin(next);
+    if (next.length === 4) setTimeout(() => handleFull(next), 80);
+  }
+
+  function del() { setPin(p => p.slice(0, -1)); }
+
+  function handleFull(code) {
+    if (step === 'set1') {
+      setFirst(code);
+      setPin('');
+      setStep('set2');
+      setStatus('Confirm your code');
+      setIsError(false);
+      return;
+    }
+    if (step === 'set2') {
+      if (code !== first) {
+        setIsError(true);
+        setStatus('Codes didn\'t match — try again');
+        triggerShake();
+        setTimeout(() => { setStep('set1'); setFirst(''); setIsError(false); setStatus('Choose a 4-digit code'); }, 600);
+        return;
+      }
+      localStorage.setItem(pinKey(member.id), code);
+      onSuccess();
+      return;
+    }
+    if (step === 'verify') {
+      if (code === stored) { onSuccess(); return; }
+      setIsError(true);
+      setStatus('Wrong code — try again');
+      triggerShake();
+    }
+  }
+
+  const keys = ['1','2','3','4','5','6','7','8','9','','0','⌫'];
+
+  return (
+    <div className="pin-backdrop" onClick={onCancel}>
+      <div className="pin-sheet" onClick={e => e.stopPropagation()}>
+        <div className="pin-member-row">
+          <div className="pin-avatar" style={{ background: tier.color }}>{member.name[0]}</div>
+          <div>
+            <div className="pin-member-name">{member.name}</div>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.12em', textTransform:'uppercase', color: tier.color, marginTop:2 }}>{tier.label}</div>
+          </div>
+        </div>
+
+        <div className={`pin-dots ${shake ? 'shaking' : ''}`}>
+          {[0,1,2,3].map(i => (
+            <div key={i} className={`pin-dot ${pin.length > i ? (isError ? 'error' : 'filled') : ''}`} />
+          ))}
+        </div>
+
+        <div className="pin-pad">
+          {keys.map((k, i) => {
+            if (k === '') return <div key={i} />;
+            if (k === '⌫') return (
+              <button key={i} className="pin-key del" onClick={del}>⌫</button>
+            );
+            return (
+              <button key={i} className="pin-key" onClick={() => press(k)}>{k}</button>
+            );
+          })}
+        </div>
+
+        <div className={`pin-status ${isError ? 'error' : ''}`}>{status}</div>
+        <button className="pin-cancel" onClick={onCancel}>cancel</button>
+      </div>
+    </div>
+  );
+}
+
+/* ── Login screen ─────────────────────────────────────────── */
+
+function LoginScreen({ onLogin }) {
+  const [selected, setSelected] = useState(null);
+
+  return (
+    <div className="login-screen">
+      <div className="login-brand">
+        <ProceduralMark size={48} />
+        <div className="login-brand-name">Spore</div>
+        <div className="login-brand-sub">Living network · $HYPHA</div>
+      </div>
+
+      <div className="login-prompt">Who are you in the mycelium?</div>
+
+      <div className="login-member-grid">
+        {SporeData.MEMBERS.map(m => {
+          const tier = SporeData.reputationTier(m.rep);
+          const node = SporeData.NETWORK_NODES.find(n => n.id === m.node);
+          return (
+            <button
+              key={m.id}
+              className="login-member-btn"
+              onClick={() => setSelected(m)}
+            >
+              <div className="login-member-avatar" style={{ background: tier.color }}>
+                {m.name[0]}
+              </div>
+              <div className="login-member-info">
+                <div className="login-member-name">{m.name}</div>
+                <div className="login-member-role">{m.role}</div>
+                {node && <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'var(--mycelium-d)', marginTop:2 }}>{node.name}</div>}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {selected && (
+        <PinModal
+          member={selected}
+          onSuccess={() => onLogin(selected)}
+          onCancel={() => setSelected(null)}
+        />
+      )}
+    </div>
+  );
+}
+
+/* ── TopBar ──────────────────────────────────────────────── */
+
+function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) {
   const tabs = [
     { id:'network', label:'Network' },
     { id:'shop',    label:'Apothecary' },
@@ -100,13 +262,24 @@ function TopBar({ state, tier, tab, onTab, onWallet }) {
             <div className="brand-sub">Living network · $HYPHA</div>
           </div>
         </div>
-        <button className="wallet-pill" onClick={onWallet}>
-          <span className="wallet-rep-dot" style={{ background: tier.color }} />
-          <div className="wallet-stack">
-            <div className="wallet-bal">{state.balance} $H</div>
-            <div className="wallet-cta">tap to flow</div>
-          </div>
-        </button>
+        <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+          {currentMember && (
+            <div className="topbar-member">
+              <div className="topbar-member-avatar" style={{ background: tier.color }}>
+                {currentMember.name[0]}
+              </div>
+              <div className="topbar-member-name">{currentMember.name}</div>
+              <button className="topbar-logout" onClick={onLogout}>out</button>
+            </div>
+          )}
+          <button className="wallet-pill" onClick={onWallet}>
+            <span className="wallet-rep-dot" style={{ background: tier.color }} />
+            <div className="wallet-stack">
+              <div className="wallet-bal">{state.balance} $H</div>
+              <div className="wallet-cta">tap to flow</div>
+            </div>
+          </button>
+        </div>
       </div>
       <div className="tabs">
         {tabs.map(t => (
@@ -119,32 +292,34 @@ function TopBar({ state, tier, tab, onTab, onWallet }) {
   );
 }
 
-/* — System stats — */
+/* ── System stats ────────────────────────────────────────── */
+
 function SystemStats({ state, tier, flowRate }) {
-  const health = Math.min(100, 40 + state.reputation * 6 + state.contributions * 3);
+  const health   = Math.min(100, 40 + state.reputation * 6 + state.contributions * 3);
   const activity = Math.min(100, 25 + state.contributions * 8);
   return (
     <div className="sys-stats">
       <div className="sys-cell">
         <div className="sys-label"><span className="live-dot" /> Health</div>
         <div className="sys-val green">{health}%</div>
-        <div className="sys-bar"><span style={{ width: `${health}%` }} /></div>
+        <div className="sys-bar"><span style={{ width:`${health}%` }} /></div>
       </div>
       <div className="sys-cell">
         <div className="sys-label">Flow</div>
         <div className="sys-val amber">{flowRate.toFixed(1)}<span style={{ fontSize:10, color:'var(--mycelium-d)', marginLeft:4 }}>$H/s</span></div>
-        <div className="sys-bar amber"><span style={{ width: `${Math.min(100, flowRate * 30)}%` }} /></div>
+        <div className="sys-bar amber"><span style={{ width:`${Math.min(100, flowRate * 30)}%` }} /></div>
       </div>
       <div className="sys-cell">
         <div className="sys-label">Activity</div>
         <div className="sys-val blue">{activity}%</div>
-        <div className="sys-bar blue"><span style={{ width: `${activity}%` }} /></div>
+        <div className="sys-bar blue"><span style={{ width:`${activity}%` }} /></div>
       </div>
     </div>
   );
 }
 
-/* — Active nodes panel — */
+/* ── Active nodes panel ───────────────────────────────────── */
+
 function ActiveNodesPanel({ selected, onSelect }) {
   const live = SporeData.NETWORK_NODES.filter(n => n.activity !== 'proposed');
   return (
@@ -173,9 +348,11 @@ function ActiveNodesPanel({ selected, onSelect }) {
   );
 }
 
+/* ── Network page ─────────────────────────────────────────── */
+
 function NetworkPage({ economy, onToast, flowRate }) {
   const [selected, setSelected] = useState('berlin');
-  const node = SporeData.NETWORK_NODES.find(n => n.id === selected);
+  const node      = SporeData.NETWORK_NODES.find(n => n.id === selected);
   const liveCount = SporeData.NETWORK_NODES.filter(n => n.activity !== 'proposed').length;
   const totalFlow = SporeData.NETWORK_NODES.reduce((a, n) =>
     a + n.contributions.reduce((b, c) => b + c.earn, 0), 0);
@@ -251,6 +428,8 @@ function NetworkPage({ economy, onToast, flowRate }) {
   );
 }
 
+/* ── Apothecary page ─────────────────────────────────────── */
+
 function ApothecaryPage({ economy, onToast }) {
   return (
     <div className="page-enter">
@@ -263,12 +442,8 @@ function ApothecaryPage({ economy, onToast }) {
       <div className="specimen-plate">
         <div className="specimen-plate-art">
           <div className="sp-grid" />
-          <div className="sp-crosshair sp-ch-tl">
-            <span /><span /><em>SPM·01</em>
-          </div>
-          <div className="sp-crosshair sp-ch-br">
-            <span /><span /><em>61.0°N</em>
-          </div>
+          <div className="sp-crosshair sp-ch-tl"><span /><span /><em>SPM·01</em></div>
+          <div className="sp-crosshair sp-ch-br"><span /><span /><em>61.0°N</em></div>
           <img src="spore/assets/specimen-fan.png" alt="Schizophyllum commune specimen" />
         </div>
         <div className="specimen-plate-meta">
@@ -330,6 +505,8 @@ function ApothecaryPage({ economy, onToast }) {
   );
 }
 
+/* ── Experiences page ─────────────────────────────────────── */
+
 function ExperiencesPage({ economy, onToast }) {
   const handle = (e, amount, isEarnBack) => {
     if (isEarnBack) {
@@ -352,8 +529,8 @@ function ExperiencesPage({ economy, onToast }) {
       </div>
       <div className="exp-list">
         {SporeData.EXPERIENCES.map(e => {
-          const repOk = !e.repReq || economy.state.reputation >= e.repReq;
-          const canAfford = economy.state.balance >= e.minH;
+          const repOk      = !e.repReq || economy.state.reputation >= e.repReq;
+          const canAfford  = economy.state.balance >= e.minH;
           const unlockable = canAfford && repOk;
           const isUnlocked = economy.state.unlocked.includes(e.id);
           const tagCls = ({ open:'tag-spore', locked:'tag-mute', limited:'tag-amber', work:'tag-fungal' })[e.tag];
@@ -416,6 +593,8 @@ function ExperiencesPage({ economy, onToast }) {
   );
 }
 
+/* ── Members page ─────────────────────────────────────────── */
+
 function MembersPage() {
   return (
     <div className="page-enter">
@@ -430,9 +609,7 @@ function MembersPage() {
           const node = SporeData.NETWORK_NODES.find(n => n.id === m.node);
           return (
             <div key={m.id} className="member-card">
-              <div className="member-avatar" style={{ background: tier.color }}>
-                {m.name[0]}
-              </div>
+              <div className="member-avatar" style={{ background: tier.color }}>{m.name[0]}</div>
               <div className="member-body">
                 <div className="member-name">{m.name}</div>
                 <div className="member-role">{m.role}</div>
@@ -461,13 +638,15 @@ function MembersPage() {
   );
 }
 
+/* ── Economy page ─────────────────────────────────────────── */
+
 function EconomyPage({ economy, phase, onPhaseChange }) {
   const flowSteps = [
-    { name:'Arrive',         sub:'enter the substrate' },
-    { name:'Contribute',     sub:'work · create · share' },
-    { name:'Earn $HYPHA',    sub:'nutrients flow inward' },
-    { name:'Unlock access',  sub:'experiences · products' },
-    { name:'Go deeper',      sub:'residency · governance' },
+    { name:'Arrive',        sub:'enter the substrate' },
+    { name:'Contribute',    sub:'work · create · share' },
+    { name:'Earn $HYPHA',   sub:'nutrients flow inward' },
+    { name:'Unlock access', sub:'experiences · products' },
+    { name:'Go deeper',     sub:'residency · governance' },
   ];
   const activeIdx = Math.min(4, Math.floor(economy.state.contributions / 2));
 
@@ -512,9 +691,7 @@ function EconomyPage({ economy, phase, onPhaseChange }) {
         </div>
       </div>
 
-      <div className="section">
-        <div className="section-eyebrow">Rollout phases</div>
-      </div>
+      <div className="section"><div className="section-eyebrow">Rollout phases</div></div>
       <div className="phase-grid">
         {SporeData.PHASES.map(p => (
           <button key={p.id} onClick={() => onPhaseChange(p.id)} className={`phase-cell ${phase === p.id ? 'on' : ''}`}>
@@ -525,19 +702,21 @@ function EconomyPage({ economy, phase, onPhaseChange }) {
         ))}
       </div>
 
-      <button className="reset-link" onClick={economy.reset}>↺ Reset prototype</button>
+      <button className="reset-link" onClick={economy.reset}>↺ Reset my data</button>
     </div>
   );
 }
 
+/* ── Earn sheet ───────────────────────────────────────────── */
+
 function EarnSheet({ open, onClose, economy, onToast }) {
   if (!open) return null;
   const opts = [
-    { earn:40, label:'Kitchen help',         desc:'1 day · Berlin hub',    rep:1 },
-    { earn:20, label:'Content creation',     desc:'Photo · video · words', rep:0 },
-    { earn:60, label:'Foraging guide',       desc:'Lead a circle',         rep:1 },
-    { earn:80, label:'Event facilitation',   desc:'Help run experience',   rep:2 },
-    { earn:15, label:'Species identification',desc:'Document a find',      rep:0 },
+    { earn:40, label:'Kitchen help',          desc:'1 day · Berlin hub',    rep:1 },
+    { earn:20, label:'Content creation',      desc:'Photo · video · words', rep:0 },
+    { earn:60, label:'Foraging guide',        desc:'Lead a circle',         rep:1 },
+    { earn:80, label:'Event facilitation',    desc:'Help run experience',   rep:2 },
+    { earn:15, label:'Species identification',desc:'Document a find',       rep:0 },
   ];
   return (
     <div className="sheet-backdrop" onClick={onClose}>
@@ -566,6 +745,8 @@ function EarnSheet({ open, onClose, economy, onToast }) {
     </div>
   );
 }
+
+/* ── Tweaks ───────────────────────────────────────────────── */
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "flowRate": 1.2,
@@ -597,25 +778,40 @@ function SporeTweaks({ tweaks, setTweak }) {
   );
 }
 
-function App() {
-  const economy = useEconomy();
-  const [tab, setTab] = useState('network');
-  const [earnOpen, setEarnOpen] = useState(false);
-  const [toast, setToast] = useState({ msg:'', kind:'' });
-  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+/* ── App root ─────────────────────────────────────────────── */
 
-  const tier = SporeData.reputationTier(economy.state.reputation);
+function App() {
+  const [currentMember, setCurrentMember] = useState(null);
+  const [tab,       setTab]      = useState('network');
+  const [earnOpen,  setEarnOpen] = useState(false);
+  const [toast,     setToast]    = useState({ msg:'', kind:'' });
+  const [tweaks,    setTweak]    = useTweaks(TWEAK_DEFAULTS);
+
+  const economy = useEconomy(currentMember ? currentMember.id : '__guest__');
+  const tier    = SporeData.reputationTier(economy.state.reputation);
   const onToast = (msg, kind) => setToast({ msg, kind });
+
+  function handleLogin(member) {
+    setCurrentMember(member);
+    setTab('network');
+  }
+
+  function handleLogout() {
+    setCurrentMember(null);
+    setTab('network');
+  }
 
   useEffect(() => {
     if (document.getElementById('spore-living-anim')) return;
     const s = document.createElement('style');
     s.id = 'spore-living-anim';
-    s.textContent = `
-      @keyframes grow-line { to { stroke-dashoffset: 0; } }
-    `;
+    s.textContent = `@keyframes grow-line { to { stroke-dashoffset: 0; } }`;
     document.head.appendChild(s);
   }, []);
+
+  if (!currentMember) {
+    return <LoginScreen onLogin={handleLogin} />;
+  }
 
   return (
     <div className="app">
@@ -625,13 +821,15 @@ function App() {
         tab={tab}
         onTab={setTab}
         onWallet={() => setEarnOpen(true)}
+        currentMember={currentMember}
+        onLogout={handleLogout}
       />
       <SystemStats state={economy.state} tier={tier} flowRate={tweaks.flowRate} />
 
-      {tab === 'network' && <NetworkPage economy={economy} onToast={onToast} flowRate={tweaks.flowRate} />}
+      {tab === 'network' && <NetworkPage  economy={economy} onToast={onToast} flowRate={tweaks.flowRate} />}
       {tab === 'shop'    && <ApothecaryPage economy={economy} onToast={onToast} />}
       {tab === 'exp'     && <ExperiencesPage economy={economy} onToast={onToast} />}
-      {tab === 'econ'    && <EconomyPage economy={economy} phase={tweaks.phase} onPhaseChange={(p) => setTweak('phase', p)} />}
+      {tab === 'econ'    && <EconomyPage economy={economy} phase={tweaks.phase} onPhaseChange={p => setTweak('phase', p)} />}
       {tab === 'members' && <MembersPage />}
 
       <div className="app-footer">
@@ -641,7 +839,6 @@ function App() {
 
       <EarnSheet open={earnOpen} onClose={() => setEarnOpen(false)} economy={economy} onToast={onToast} />
       <Toast message={toast.msg} kind={toast.kind} onClose={() => setToast({ msg:'', kind:'' })} />
-
       <SporeTweaks tweaks={tweaks} setTweak={setTweak} />
     </div>
   );

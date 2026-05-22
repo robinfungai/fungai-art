@@ -30,10 +30,7 @@
   to     = "/app.html"
   status = 200
 
-[[redirects]]
-  from   = "/community*"
-  to     = "/app.html"
-  status = 200
+# community is served as static HTML from public/community/index.html
 
 # Everything else (including /) → index.html (premium home design)
 [[redirects]]
