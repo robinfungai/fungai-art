@@ -1,11 +1,12 @@
 import React, { useState, useCallback, useRef } from 'react';
-import Map, { Marker, Popup, NavigationControl } from 'react-map-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import Map, { Marker, NavigationControl } from 'react-map-gl/maplibre';
+import 'maplibre-gl/dist/maplibre-gl.css';
 import { ECO_NODES, HABITAT_COLORS, HABITAT_LABELS, SEASON_PROBABILITY } from '../data/ecoNodes';
 import { EcoNode, Season, HabitatType } from '../types/EcoNode';
 import NodePanel from './NodePanel';
 
-const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN as string | undefined;
+// Free tile style — CARTO Dark Matter via MapLibre. No account or token needed.
+const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
 
 const SEASONS: Season[] = ['spring', 'summer', 'autumn', 'winter'];
 const SEASON_ICONS: Record<Season, string> = {
@@ -113,34 +114,6 @@ export default function ForagingApp() {
     }
   }, []);
 
-  const noToken = !MAPBOX_TOKEN || MAPBOX_TOKEN === 'YOUR_TOKEN';
-
-  if (noToken) {
-    return (
-      <div style={{ width: '100vw', height: '100vh', background: '#07110d', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#C9B894', fontFamily: "'Space Grotesk', system-ui, sans-serif", padding: 40, textAlign: 'center' }}>
-        <img src="/abc12345.png" alt="Fungai Art" style={{ height: 64, marginBottom: 32, opacity: 0.9 }} />
-        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 32, marginBottom: 12, color: '#E6D9B5' }}>
-          Foraging Map
-        </div>
-        <div style={{ fontSize: 13, color: '#8B7E62', lineHeight: 1.7, maxWidth: 480, marginBottom: 32 }}>
-          This map requires a Mapbox API token. Get one free at{' '}
-          <a href="https://mapbox.com" target="_blank" rel="noreferrer" style={{ color: '#6BD66F' }}>mapbox.com</a>
-          {' '}→ create account → copy your public token.
-        </div>
-        <div style={{ background: '#0d1a14', border: '0.5px solid rgba(107,214,111,0.2)', borderRadius: 10, padding: '20px 28px', fontFamily: 'monospace', fontSize: 12, color: '#6BD66F', textAlign: 'left', maxWidth: 480, width: '100%' }}>
-          <div style={{ color: '#8B7E62', marginBottom: 10, fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase' }}>Setup</div>
-          <div style={{ color: '#C9B894' }}>1. Go to Netlify → Environment Variables</div>
-          <div style={{ color: '#C9B894' }}>2. Add: <span style={{ color: '#6BD66F' }}>VITE_MAPBOX_TOKEN</span></div>
-          <div style={{ color: '#C9B894' }}>3. Trigger a redeploy</div>
-        </div>
-        <div style={{ marginTop: 24, display: 'flex', gap: 12 }}>
-          <a href="/" style={{ fontSize: 10, fontFamily: 'monospace', letterSpacing: '0.18em', textTransform: 'uppercase', padding: '8px 16px', border: '0.5px solid rgba(255,255,255,0.15)', borderRadius: 5, color: '#8B7E62', textDecoration: 'none' }}>← Home</a>
-          <a href="/community" style={{ fontSize: 10, fontFamily: 'monospace', letterSpacing: '0.18em', textTransform: 'uppercase', padding: '8px 16px', border: '0.5px solid rgba(107,214,111,0.3)', borderRadius: 5, color: '#6BD66F', textDecoration: 'none' }}>Community</a>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div style={{ width: '100vw', height: '100vh', position: 'relative', background: '#07110d', overflow: 'hidden' }}>
 
@@ -223,11 +196,9 @@ export default function ForagingApp() {
       {/* Map */}
       <Map
         ref={mapRef}
-        mapboxAccessToken={MAPBOX_TOKEN}
         initialViewState={{ longitude: 25, latitude: 38, zoom: 2.5 }}
         style={{ width: '100%', height: '100%' }}
-        mapStyle="mapbox://styles/mapbox/dark-v11"
-        onMouseMove={() => {}}
+        mapStyle={MAP_STYLE}
       >
         <NavigationControl position="bottom-right" style={{ marginBottom: 80 }} />
 
