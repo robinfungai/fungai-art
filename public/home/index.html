@@ -922,10 +922,14 @@ p { line-height: 1.75; color: var(--mist); }
   .hero-left { padding: 80px 0 60px; border-right: none; }
   .hero-right { min-height: 340px; }
 }
+@media (max-width: 1100px) {
+  .nav-links { gap: 20px; }
+  .nav-links .nav-link { font-size: 8px; letter-spacing: 0.2em; }
+}
 @media (max-width: 768px) {
   .wrap { padding: 0 24px; }
-  .products-grid { grid-template-columns: repeat(2,1fr); }
-  .philosophy-inner, .notes-grid, .feature-inner, .trance-inner, .forage-grid, .journal-grid, .about-inner { grid-template-columns: 1fr; }
+  .products-grid { grid-template-columns: repeat(2,1fr) !important; }
+  .philosophy-inner, .notes-grid, .feature-inner, .trance-inner, .journal-grid { grid-template-columns: 1fr; }
   .phil-item:not(:last-child) { border-right: none; border-bottom: 1px solid rgba(158,212,56,0.07); padding: 36px 0; }
   .nav-links { display: none; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
@@ -964,17 +968,15 @@ p { line-height: 1.75; color: var(--mist); }
 <nav class="nav" id="mainNav">
   <div class="wrap nav-inner">
     <a href="/" class="nav-brand">
-      <img src="/logo.png" alt="Fungai Art" style="height:32px;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:.88;" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-      <span style="display:none">
-        <span class="main">Fungai Art</span>
-        <span class="sub">Entheobotanicals</span>
-      </span>
+      <img src="/assets/fungai-art-logo.png" alt="Fungai Art" style="height:52px;width:auto;object-fit:contain;opacity:.95;" onerror="this.src='/logo.png';this.style.filter='brightness(0) invert(1)';this.style.opacity='.9';this.style.height='38px'">
     </a>
     <div class="nav-links">
-      <a href="#shop" class="nav-link">Shop</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="/shop" class="nav-link">Shop</a>
       <a href="#trance" class="nav-link">Mycelium Trance</a>
       <a href="/extraction" class="nav-link">Extraction</a>
-      <a href="#about" class="nav-link">About</a>
+      <a href="/mixology" class="nav-link">Mixology</a>
+      <a href="/foraging" class="nav-link">Foraging</a>
       <a href="/community" class="nav-link" target="_blank">Community</a>
     </div>
     <button class="nav-cart" onclick="openCart()">
@@ -997,16 +999,12 @@ p { line-height: 1.75; color: var(--mist); }
       <span class="hero-script-line reveal reveal-d2">original unity.</span>
       <p class="hero-desc reveal reveal-d3">Fusion of plants, alchemy, and frequency. Wild-foraged botanical preparations, adaptogenic blends, and embodied experiences rooted in ecological care and ancient intelligence.</p>
       <div class="hero-actions reveal reveal-d4">
-        <a href="#shop" class="btn-primary">Enter the apothecary</a>
+        <a href="/shop" class="btn-primary">Enter the apothecary</a>
         <a href="#trance" class="btn-ghost">Mycelium Trance</a>
       </div>
-      <div class="hero-quick-nav reveal reveal-d4" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;">
-        <a href="/shop" style="padding:8px 18px;border:0.5px solid rgba(136,186,200,0.35);color:var(--mist);font-size:12px;letter-spacing:1.5px;text-decoration:none;text-transform:uppercase;border-radius:2px;transition:all 0.2s;" onmouseover="this.style.background='rgba(136,186,200,0.12)'" onmouseout="this.style.background='transparent'">Elixirs</a>
-        <a href="/mixology" style="padding:8px 18px;border:0.5px solid rgba(136,186,200,0.35);color:var(--mist);font-size:12px;letter-spacing:1.5px;text-decoration:none;text-transform:uppercase;border-radius:2px;transition:all 0.2s;" onmouseover="this.style.background='rgba(136,186,200,0.12)'" onmouseout="this.style.background='transparent'">Herbal Engine</a>
-        <a href="/extraction" style="padding:8px 18px;border:0.5px solid rgba(196,134,46,0.45);color:var(--amber-lt);font-size:12px;letter-spacing:1.5px;text-decoration:none;text-transform:uppercase;border-radius:2px;transition:all 0.2s;" onmouseover="this.style.background='rgba(196,134,46,0.12)'" onmouseout="this.style.background='transparent'">⚗ Extraction</a>
-        <a href="/community" style="padding:8px 18px;border:0.5px solid rgba(136,186,200,0.35);color:var(--mist);font-size:12px;letter-spacing:1.5px;text-decoration:none;text-transform:uppercase;border-radius:2px;transition:all 0.2s;" onmouseover="this.style.background='rgba(136,186,200,0.12)'" onmouseout="this.style.background='transparent'">Community</a>
+      <div class="reveal reveal-d4" style="margin-top:22px;padding:14px 18px;border:0.5px solid rgba(196,134,46,0.2);background:rgba(196,134,46,0.04);border-radius:2px;max-width:420px;">
+        <p style="font-size:12px;color:var(--dust);line-height:1.65;font-family:var(--serif);font-style:italic;">Try our <strong style="color:var(--parchment);font-style:normal;">tailored formula service</strong> — we blend full-spectrum extracts fresh to your needs, à la minute. <a href="/mixology" style="color:var(--amber-lt);border-bottom:0.5px solid rgba(196,134,46,0.4);">Build your formula →</a></p>
       </div>
-      <div class="hero-scroll-hint reveal reveal-d4">Scroll to explore</div>
     </div>
   </div>
   <div class="hero-right">
@@ -1300,23 +1298,17 @@ p { line-height: 1.75; color: var(--mist); }
 <!-- ══ SHOP ══ -->
 <section id="shop" class="shop">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="sec-label">Magick Menu · Moder Jord Collection</span>
-      <h2 class="sec-title">The <em>Apothecary</em></h2>
-      <p class="sec-sub">Carefully composed by earth keepers. All tinctures made with pharma-grade ethanol, full spectrum, self-foraged where marked.</p>
+    <div class="sec-head reveal" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:20px;margin-bottom:48px;">
+      <div>
+        <span class="sec-label">Moder Jord Collection · Pharma-grade ethanol · Full spectrum</span>
+        <h2 class="sec-title">The <em>Apothecary</em></h2>
+        <p class="sec-sub" style="margin-bottom:0">Sacred plant preparations, wild-foraged where marked. Each formula composed by hand.</p>
+      </div>
+      <a href="/shop" style="display:inline-flex;align-items:center;gap:8px;border:0.5px solid rgba(136,186,200,0.3);color:var(--mist);font-size:9px;letter-spacing:2.5px;text-transform:uppercase;padding:10px 22px;text-decoration:none;white-space:nowrap;transition:all .2s;" onmouseover="this.style.borderColor='rgba(136,186,200,0.6)';this.style.color='var(--parchment)'" onmouseout="this.style.borderColor='rgba(136,186,200,0.3)';this.style.color='var(--mist)'">Enter full apothecary →</a>
     </div>
-    <div class="product-filters reveal reveal-d1">
-      <button class="filter-btn active" onclick="filterProducts('all',this)">All</button>
-      <button class="filter-btn" onclick="filterProducts('fungi',this)">Fungi</button>
-      <button class="filter-btn" onclick="filterProducts('compositions',this)">Compositions</button>
-      <button class="filter-btn" onclick="filterProducts('flowers',this)">Flowers</button>
-      <button class="filter-btn" onclick="filterProducts('herbs',this)">Herbs &amp; Oils</button>
-      <button class="filter-btn" onclick="filterProducts('specials',this)">Specials</button>
-    </div>
-    <div class="products-grid">
+    <div class="products-grid" style="grid-template-columns:repeat(4,1fr)">
 
-      <!-- FUNGI -->
-      <!-- Amanita Muscaria -->
+      <!-- AMANITA MUSCARIA -->
       <div class="product-card reveal" data-category="fungi">
         <div class="product-img-wrap">
           <img src="/home/products/amanita.jpeg" alt="Amanita muscaria tincture" class="product-photo">
@@ -1338,59 +1330,8 @@ p { line-height: 1.75; color: var(--mist); }
         </div>
       </div>
 
-      <!-- Chaga -->
-      <div class="product-card reveal reveal-d1" data-category="fungi">
-        <div class="product-img-wrap">
-          <img src="/home/products/chaga.jpeg" alt="Chaga tincture" class="product-photo">
-          <span class="product-badge badge-foraged">Foraged · Sweden</span>
-          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Chaga Tincture', 38)">Add to basket</button></div>
-        </div>
-        <div class="product-info">
-          <span class="product-category">Fungi · Immunity</span>
-          <div class="product-name">Chaga</div>
-          <p class="product-desc">Silent alchemist · immunity · resilience. Beta-glucans and polysaccharides supporting immune balance and cellular protection.</p>
-          <div class="product-notes">
-            <span class="note-tag">Beta-glucans</span><span class="note-tag">Antioxidant</span><span class="note-tag">Wild</span>
-          </div>
-          <div class="product-footer">
-            <div class="product-price"><span class="size">30ml</span><span>€38</span></div>
-            <button class="add-btn" onclick="addToCart('Chaga Tincture', 38)">+ Add</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="product-card no-photo reveal reveal-d2" data-category="fungi">
-        <div class="product-info">
-          <span class="product-category">Fungi · Vitality</span>
-          <div class="product-name">Wild Cordyceps</div>
-          <p class="product-desc">Endurance · libido · balanced energy. Harvested from high-altitude Himalayan terrain. Among the rarest adaptogens in the fungal kingdom.</p>
-          <div class="product-notes">
-            <span class="note-tag">Cordycepin</span><span class="note-tag">Adenosine</span><span class="note-tag">Himalaya A+</span>
-          </div>
-          <div class="product-footer">
-            <div class="product-price"><span class="size">30ml</span><span>€33</span></div>
-            <button class="add-btn" onclick="addToCart('Wild Cordyceps', 33)">+ Add</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="product-card no-photo reveal reveal-d3" data-category="fungi">
-        <div class="product-info">
-          <span class="product-category">Fungi · Adaptogenic</span>
-          <div class="product-name">Reishi</div>
-          <p class="product-desc">Adaptogenic · longevity · nervine. A steadying presence for those seeking depth, stillness, and the slow medicine of deep restoration.</p>
-          <div class="product-notes">
-            <span class="note-tag">Ganoderic acids</span><span class="note-tag">Sleep</span><span class="note-tag">Longevity</span>
-          </div>
-          <div class="product-footer">
-            <div class="product-price"><span class="size">30ml</span><span>€33</span></div>
-            <button class="add-btn" onclick="addToCart('Reishi Tincture', 33)">+ Add</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- COMPOSITIONS -->
-      <div class="product-card reveal" data-category="compositions">
+      <!-- TEMPLE NECTAR -->
+      <div class="product-card reveal reveal-d1" data-category="compositions">
         <div class="product-img-wrap">
           <img src="/home/products/temple-nectar.jpeg" alt="Temple Nectar blend" class="product-photo">
           <span class="product-badge badge-new">Signature</span>
@@ -1410,25 +1351,7 @@ p { line-height: 1.75; color: var(--mist); }
         </div>
       </div>
 
-      <div class="product-card reveal reveal-d1" data-category="compositions">
-        <div class="product-img-wrap">
-          <div class="product-img-placeholder clean"></div>
-          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Lucid', 48)">Add to basket</button></div>
-        </div>
-        <div class="product-info">
-          <span class="product-category">Compositions · Dreamwork</span>
-          <div class="product-name">Lucid</div>
-          <p class="product-desc">Dreamwork · luminous · visionary. Mugwort, calea zacatachichi, blue lotus, passionflower, bobinsana. Enhanced dream recall.</p>
-          <div class="product-notes">
-            <span class="note-tag">Dream recall</span><span class="note-tag">Visionary</span><span class="note-tag">Restful sleep</span>
-          </div>
-          <div class="product-footer">
-            <div class="product-price"><span class="size">30ml</span><span>€48</span></div>
-            <button class="add-btn" onclick="addToCart('Lucid', 48)">+ Add</button>
-          </div>
-        </div>
-      </div>
-
+      <!-- ADHD SUPPORT -->
       <div class="product-card no-photo reveal reveal-d2" data-category="compositions">
         <div class="product-info">
           <span class="product-category">Compositions · Cognitive</span>
@@ -1444,64 +1367,8 @@ p { line-height: 1.75; color: var(--mist); }
         </div>
       </div>
 
-      <div class="product-card reveal reveal-d3" data-category="compositions">
-        <div class="product-img-wrap">
-          <div class="product-img-placeholder clean"></div>
-          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Moon Support', 48)">Add to basket</button></div>
-        </div>
-        <div class="product-info">
-          <span class="product-category">Compositions · Cycle Care</span>
-          <div class="product-name">Moon Support</div>
-          <p class="product-desc">Cycle support · womb care · emotional soothe. Motherwort, shatavari, lady's mantle, passionflower, yarrow, raspberry leaves.</p>
-          <div class="product-notes">
-            <span class="note-tag">Hormone balance</span><span class="note-tag">Cramp relief</span><span class="note-tag">Emotional</span>
-          </div>
-          <div class="product-footer">
-            <div class="product-price"><span class="size">30ml</span><span>€48</span></div>
-            <button class="add-btn" onclick="addToCart('Moon Support', 48)">+ Add</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- RUBY NO.7 -->
-      <div class="product-card reveal reveal-d3" data-category="compositions">
-        <div class="product-img-wrap">
-          <img src="/home/products/ruby-no7.jpeg" alt="Ruby No.7 tincture" class="product-photo">
-          <span class="product-badge badge-new">New</span>
-          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Ruby No.7', 38)">Add to basket</button></div>
-        </div>
-        <div class="product-info">
-          <span class="product-category">Compositions · Heart</span>
-          <div class="product-name">Ruby No.7</div>
-          <p class="product-desc">Cardioprotective · antioxidant · neuro-resilient. A deep-red composition for heart vitality, cellular defence, and long-range resilience.</p>
-          <div class="product-notes">
-            <span class="note-tag">Cardioprotective</span><span class="note-tag">Antioxidant</span><span class="note-tag">Neuro</span>
-          </div>
-          <div class="product-footer">
-            <div class="product-price"><span class="size">30ml</span><span>€38</span></div>
-            <button class="add-btn" onclick="addToCart('Ruby No.7', 38)">+ Add</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Healthy Aging -->
-      <div class="product-card no-photo reveal reveal-d2" data-category="compositions">
-        <div class="product-info">
-          <span class="product-category">Compositions · Longevity</span>
-          <div class="product-name">Healthy Aging</div>
-          <p class="product-desc">Longevity · cellular renewal · deep restoration. Reishi, schisandra, ashwagandha, saffron, pearl. A daily tonic for graceful, radiant aging.</p>
-          <div class="product-notes">
-            <span class="note-tag">Adaptogens</span><span class="note-tag">Longevity</span><span class="note-tag">Antioxidant</span>
-          </div>
-          <div class="product-footer">
-            <div class="product-price"><span class="size">30ml</span><span>€44</span></div>
-            <button class="add-btn" onclick="addToCart('Healthy Aging', 44)">+ Add</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Blue Lotus -->
-      <div class="product-card reveal" data-category="flowers">
+      <!-- BLUE LOTUS -->
+      <div class="product-card reveal reveal-d3" data-category="flowers">
         <div class="product-img-wrap">
           <div class="product-img-placeholder clean" style="background:linear-gradient(160deg,#0D1A2E,#090F1A);"></div>
           <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Blue Lotus Tincture', 44)">Add to basket</button></div>
@@ -1520,41 +1387,29 @@ p { line-height: 1.75; color: var(--mist); }
         </div>
       </div>
 
-      <!-- SPECIALS — hidden on landing -->
-      <div class="product-card no-photo reveal reveal-d1" data-category="specials" style="display:none">
-        <div class="product-info">
-          <span class="product-category">Specials · Minerals</span>
-          <div class="product-name">Shilajit</div>
-          <p class="product-desc">Pressed pills with compressed gold. Ancient mineral compound supporting vitality, grounding, and deep cellular restoration.</p>
-          <div class="product-notes">
-            <span class="note-tag">Fulvic acid</span><span class="note-tag">Gold</span><span class="note-tag">Himalayan</span>
-          </div>
-          <div class="product-footer">
-            <div class="product-price"><span class="size">4 pills</span><span>€15</span></div>
-            <button class="add-btn" onclick="addToCart('Shilajit + Gold', 15)">+ Add</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- HERBS — hidden on landing -->
-      <div class="product-card no-photo reveal reveal-d2" data-category="herbs" style="display:none">
-        <div class="product-info">
-          <span class="product-category">Herbs · Vitality</span>
-          <div class="product-name">Pine Pollen</div>
-          <p class="product-desc">Vitality · immune modulation · resilience. Over 200 bioactive compounds including phytoandrogens. The golden dust of renewal.</p>
-          <div class="product-notes">
-            <span class="note-tag">Phytoandrogens</span><span class="note-tag">Amino acids</span><span class="note-tag">Foraged</span>
-          </div>
-          <div class="product-footer">
-            <div class="product-price"><span class="size">30ml</span><span>€33</span></div>
-            <button class="add-btn" onclick="addToCart('Pine Pollen Tincture', 33)">+ Add</button>
-          </div>
-        </div>
-      </div>
-
     </div><!-- /products-grid -->
-    <div style="text-align:center;margin-top:48px;">
-      <a href="/shop" class="btn-primary" style="text-decoration:none;">View full collection →</a>
+
+    <!-- Formula CTA + enter apothecary -->
+    <div style="margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:1px;" class="reveal">
+      <div style="padding:28px 32px;background:var(--forest-card);border:1px solid rgba(136,186,200,0.07);">
+        <div style="font-size:8px;letter-spacing:3.5px;text-transform:uppercase;color:var(--lichen);margin-bottom:10px;">Tailored Formula Service</div>
+        <p style="font-family:var(--serif);font-style:italic;font-size:18px;color:var(--parchment);line-height:1.45;margin-bottom:14px;">We blend full-spectrum extracts to your needs — mixed à la minute, shipped within 48h.</p>
+        <p style="font-size:12.5px;color:var(--dust);line-height:1.7;margin-bottom:20px;">Use the Herbal Engine to build your formula, then send it to us. We extract and combine each herb fresh, at the right ethanol concentration, for your exact protocol.</p>
+        <a href="/mixology" style="display:inline-flex;align-items:center;gap:6px;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--mist);border:0.5px solid rgba(136,186,200,0.3);padding:10px 20px;text-decoration:none;transition:all .2s;" onmouseover="this.style.borderColor='rgba(136,186,200,0.6)'" onmouseout="this.style.borderColor='rgba(136,186,200,0.3)'">Open the Herbal Engine →</a>
+      </div>
+      <div style="padding:28px 32px;background:rgba(136,186,200,0.04);border:1px solid rgba(136,186,200,0.12);display:flex;flex-direction:column;justify-content:space-between;">
+        <div>
+          <div style="font-size:8px;letter-spacing:3.5px;text-transform:uppercase;color:var(--lichen);margin-bottom:10px;">Full Collection</div>
+          <p style="font-family:var(--serif);font-style:italic;font-size:18px;color:var(--parchment);line-height:1.45;margin-bottom:14px;">30+ preparations. Fungi, flowers, compositions, specials, oils, and seasonal wildcrafts.</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;">
+            <span style="font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage);border:0.5px solid rgba(81,122,64,0.3);padding:3px 9px;">Fungi Tinctures</span>
+            <span style="font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage);border:0.5px solid rgba(81,122,64,0.3);padding:3px 9px;">Compositions</span>
+            <span style="font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage);border:0.5px solid rgba(81,122,64,0.3);padding:3px 9px;">Sacred Flowers</span>
+            <span style="font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage);border:0.5px solid rgba(81,122,64,0.3);padding:3px 9px;">Specials</span>
+          </div>
+        </div>
+        <a href="/shop" class="btn-primary" style="text-decoration:none;text-align:center;">Enter the full apothecary →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -1682,75 +1537,116 @@ p { line-height: 1.75; color: var(--mist); }
   </div>
 </section>
 
-<!-- ══ FORAGING ══ -->
-<section id="forage" class="forage">
+<!-- ══ FORAGING MAP PREVIEW ══ -->
+<section id="forage" style="background:var(--forest-mid);border-bottom:1px solid rgba(158,212,56,0.06);padding:100px 0;overflow:hidden;position:relative;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 30% 60%,rgba(107,214,111,0.03) 0%,transparent 70%);pointer-events:none;"></div>
   <div class="wrap">
-    <div class="reveal">
-      <span class="sec-label">Foraging Network</span>
-      <h2 class="sec-title">Find us in the <em>field</em></h2>
-      <p class="sec-sub">Community foraging circles, educational walks, and wild-harvest expeditions across Europe. Comment HERB on Instagram to receive details directly.</p>
-    </div>
-    <div class="forage-grid">
-      <div class="location-list reveal reveal-d1">
-        <div class="location-item">
-          <span class="loc-num">01</span>
-          <div>
-            <div class="loc-name">Berlin, Germany</div>
-            <div class="loc-sub">Community foraging · May 2026 onwards · Wild herbs</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;" class="reveal">
+      <div>
+        <span class="sec-label">Ecological Intelligence · fungai.art/foraging</span>
+        <h2 class="sec-title">The Foraging <em>Map</em></h2>
+        <p style="font-size:14px;color:var(--mist);line-height:1.8;margin-bottom:32px;">An ecological predictive foraging platform. Real coordinates, real plants, real seasons. 25 nodes across Sweden, Berlin, France, Germany, Denmark — and expanding.</p>
+
+        <!-- Map node previews -->
+        <div style="display:flex;flex-direction:column;gap:1px;margin-bottom:32px;">
+          <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:rgba(107,214,111,0.05);border:0.5px solid rgba(107,214,111,0.15);">
+            <div style="width:8px;height:8px;border-radius:50%;background:#6BD66F;flex-shrink:0;"></div>
+            <div style="flex:1">
+              <div style="font-family:var(--serif);font-style:italic;font-size:16px;color:var(--parchment);">Königshyttan, Sweden</div>
+              <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage);margin-top:2px;">Chanterelle · Lingonberry · Wild Chaga — Summer active</div>
+            </div>
+            <span style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#6BD66F;border:0.5px solid rgba(107,214,111,0.35);padding:3px 10px;">Active</span>
           </div>
-          <span class="loc-badge">Active</span>
+          <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:rgba(107,214,111,0.03);border:0.5px solid rgba(107,214,111,0.1);">
+            <div style="width:8px;height:8px;border-radius:50%;background:#C48838;flex-shrink:0;"></div>
+            <div style="flex:1">
+              <div style="font-family:var(--serif);font-style:italic;font-size:16px;color:var(--parchment);">Périgord, France</div>
+              <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage);margin-top:2px;">Truffle · Cèpe · Milkcap — Autumn peak</div>
+            </div>
+            <span style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#C48838;border:0.5px solid rgba(196,136,56,0.35);padding:3px 10px;">Autumn</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:rgba(107,214,111,0.03);border:0.5px solid rgba(107,214,111,0.1);">
+            <div style="width:8px;height:8px;border-radius:50%;background:#88BAC8;flex-shrink:0;"></div>
+            <div style="flex:1">
+              <div style="font-family:var(--serif);font-style:italic;font-size:16px;color:var(--parchment);">Berlin, Grunewald</div>
+              <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage);margin-top:2px;">Nettle · Elderflower · Wild Garlic — Spring–Summer</div>
+            </div>
+            <span style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#88BAC8;border:0.5px solid rgba(136,186,200,0.35);padding:3px 10px;">Active</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:rgba(107,214,111,0.03);border:0.5px solid rgba(107,214,111,0.1);">
+            <div style="width:8px;height:8px;border-radius:50%;background:#4FA8E0;flex-shrink:0;"></div>
+            <div style="flex:1">
+              <div style="font-family:var(--serif);font-style:italic;font-size:16px;color:var(--parchment);">Rold Skov, Denmark</div>
+              <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage);margin-top:2px;">Chanterelle · Bilberry · Wood Anemone — Autumn</div>
+            </div>
+            <span style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#4FA8E0;border:0.5px solid rgba(79,168,224,0.35);padding:3px 10px;">Autumn</span>
+          </div>
         </div>
-        <div class="location-item">
-          <span class="loc-num">02</span>
-          <div>
-            <div class="loc-name">Sweden</div>
-            <div class="loc-sub">Origin point · Chaga, pine pollen, amanita · Wild-foraged</div>
-          </div>
-          <span class="loc-badge">Active</span>
-        </div>
-        <div class="location-item">
-          <span class="loc-num">03</span>
-          <div>
-            <div class="loc-name">South France</div>
-            <div class="loc-sub">Foraging walks · Astral Plans · Seasonal</div>
-          </div>
-          <span class="loc-badge" style="color:var(--amber);border-color:rgba(196,134,46,0.35);">Seasonal</span>
-        </div>
-        <div class="location-item">
-          <span class="loc-num">04</span>
-          <div>
-            <div class="loc-name">Lebanon</div>
-            <div class="loc-sub">Foraging expeditions · Mediterranean flora</div>
-          </div>
-          <span class="loc-badge" style="color:var(--dust);border-color:rgba(192,180,154,0.3);">Planned</span>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="/foraging" class="btn-primary" style="text-decoration:none;">Open the foraging map</a>
+          <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-ghost">Comment HERB on Instagram</a>
         </div>
       </div>
-      <div class="forage-cta reveal reveal-d2">
-        <div>
-          <p class="forage-quote">"Forage with us. Learn the names, properties, and stories of wild plants you walk past every day."</p>
-          <p style="font-size:13px;margin-bottom:28px;">Paid foraging positions also available — reach out if you'd like to pick forest goods with us.</p>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;">
-            <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-primary">Comment HERB on Instagram</a>
-            <button onclick="document.getElementById('foragePopup').style.display='flex'" class="btn-ghost" style="cursor:pointer;">More info</button>
+
+      <!-- Right: atmospheric panel -->
+      <div class="reveal reveal-d2" style="display:flex;flex-direction:column;gap:16px;">
+        <!-- Mock map visual -->
+        <div style="background:var(--forest-card);border:0.5px solid rgba(107,214,111,0.12);padding:28px;border-radius:4px;position:relative;overflow:hidden;">
+          <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--sage);margin-bottom:16px;">25 ecological nodes · live season filter</div>
+          <!-- SVG mini-map abstraction -->
+          <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:2px;opacity:0.9;">
+            <rect width="360" height="220" fill="#080F13"/>
+            <g opacity="0.12" stroke="#6BD66F" stroke-width="0.5" fill="none">
+              <line x1="0" y1="55" x2="360" y2="55"/><line x1="0" y1="110" x2="360" y2="110"/>
+              <line x1="0" y1="165" x2="360" y2="165"/>
+              <line x1="90" y1="0" x2="90" y2="220"/><line x1="180" y1="0" x2="180" y2="220"/>
+              <line x1="270" y1="0" x2="270" y2="220"/>
+            </g>
+            <!-- Sweden nodes -->
+            <circle cx="195" cy="42" r="5" fill="#6BD66F" opacity="0.85"><animate attributeName="r" values="5;7;5" dur="3s" repeatCount="indefinite"/></circle>
+            <circle cx="188" cy="55" r="4" fill="#6BD66F" opacity="0.7"/>
+            <circle cx="204" cy="35" r="3.5" fill="#C48838" opacity="0.8"/>
+            <!-- Berlin -->
+            <circle cx="210" cy="88" r="4.5" fill="#88BAC8" opacity="0.8"><animate attributeName="r" values="4.5;6.5;4.5" dur="4s" repeatCount="indefinite"/></circle>
+            <!-- France -->
+            <circle cx="160" cy="128" r="4" fill="#C48838" opacity="0.75"/>
+            <circle cx="178" cy="140" r="3.5" fill="#A88FE0" opacity="0.7"/>
+            <circle cx="148" cy="118" r="3" fill="#6BD66F" opacity="0.6"/>
+            <!-- Germany -->
+            <circle cx="205" cy="105" r="3.5" fill="#6BD66F" opacity="0.65"/>
+            <circle cx="222" cy="96" r="3" fill="#88BAC8" opacity="0.6"/>
+            <!-- Denmark -->
+            <circle cx="196" cy="70" r="3.5" fill="#4FA8E0" opacity="0.75"/>
+            <circle cx="207" cy="62" r="3" fill="#88BAC8" opacity="0.6"/>
+            <!-- Labels -->
+            <text x="200" y="30" font-family="monospace" font-size="6" fill="#6BD66F" opacity="0.7">Sweden</text>
+            <text x="215" y="84" font-family="monospace" font-size="6" fill="#88BAC8" opacity="0.7">Berlin</text>
+            <text x="130" y="135" font-family="monospace" font-size="6" fill="#C48838" opacity="0.7">France</text>
+          </svg>
+        </div>
+        <!-- Stats row -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;">
+          <div style="padding:16px;background:var(--forest-card);border:0.5px solid rgba(107,214,111,0.08);text-align:center;">
+            <div style="font-family:var(--serif);font-style:italic;font-size:24px;color:var(--amber-lt);line-height:1;">25</div>
+            <div style="font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:var(--sage);margin-top:4px;">Eco nodes</div>
           </div>
+          <div style="padding:16px;background:var(--forest-card);border:0.5px solid rgba(107,214,111,0.08);text-align:center;">
+            <div style="font-family:var(--serif);font-style:italic;font-size:24px;color:var(--amber-lt);line-height:1;">6</div>
+            <div style="font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:var(--sage);margin-top:4px;">Countries</div>
+          </div>
+          <div style="padding:16px;background:var(--forest-card);border:0.5px solid rgba(107,214,111,0.08);text-align:center;">
+            <div style="font-family:var(--serif);font-style:italic;font-size:24px;color:var(--amber-lt);line-height:1;">4</div>
+            <div style="font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:var(--sage);margin-top:4px;">Seasons</div>
+          </div>
+        </div>
+        <div style="padding:20px;background:rgba(107,214,111,0.04);border:0.5px solid rgba(107,214,111,0.12);">
+          <p style="font-family:var(--serif);font-style:italic;font-size:16px;color:var(--parchment);line-height:1.5;">"Forage with us. Learn the names, properties, and stories of wild plants you walk past every day."</p>
         </div>
       </div>
     </div>
   </div>
 </section>
-
-<!-- Foraging popup -->
-<div id="foragePopup" style="display:none;position:fixed;inset:0;background:rgba(5,9,12,0.88);z-index:9999;align-items:center;justify-content:center;padding:24px;">
-  <div style="background:var(--forest-card);border:0.5px solid rgba(136,186,200,0.15);border-radius:4px;padding:48px;max-width:560px;width:100%;position:relative;">
-    <button onclick="document.getElementById('foragePopup').style.display='none'" style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--dust);font-size:18px;cursor:pointer;">✕</button>
-    <span style="font-size:10px;letter-spacing:2px;color:var(--lichen);text-transform:uppercase;">Foraging Circles</span>
-    <h3 style="font-family:var(--serif);font-size:28px;font-weight:400;margin:12px 0 20px;color:var(--parchment);">Join us in the <em style="color:var(--mist);">field</em></h3>
-    <p style="font-size:13.5px;color:var(--dust);line-height:1.7;margin-bottom:16px;">Our foraging circles are intimate, educational walks through forests and meadows across Europe. You'll learn to identify, ethically harvest, and work with wild plants and fungi hands-on.</p>
-    <p style="font-size:13.5px;color:var(--dust);line-height:1.7;margin-bottom:24px;"><strong style="color:var(--parchment);">How to join:</strong> Comment <strong style="color:var(--mist);">HERB</strong> on our latest Instagram post to receive upcoming dates and locations directly in your inbox. Walks are kept small (max 12 people) to preserve the quality of the experience.</p>
-    <p style="font-size:13px;color:var(--dust);margin-bottom:32px;">Paid positions also available for regular collectors — email <a href="mailto:robin@fungai.art" style="color:var(--mist);">robin@fungai.art</a></p>
-    <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-primary" style="text-decoration:none;">Comment HERB on Instagram</a>
-  </div>
-</div>
 
 <!-- ══ JOURNAL ══ -->
 <section id="journal" class="journal">
@@ -1774,35 +1670,98 @@ p { line-height: 1.75; color: var(--mist); }
 </section>
 
 <!-- ══ ABOUT ══ -->
-<section id="about" class="about">
-  <div class="wrap about-inner">
-    <div class="reveal">
-      <span class="sec-label">About Fungai Art</span>
-      <h2 class="sec-title">Robin &amp; <em>Steph</em></h2>
-      <p class="about-quote">"We are sacred rebels, artists and healers activated by her pulse."</p>
-      <p class="about-body" style="margin-bottom:14px;"><strong>Robin Fungi</strong> — founder, visionary seed carrier, and community weaver. Chef, elixir master and forager. Raised in the forest, guided by a close, intuitive bond with the land.</p>
-      <p class="about-body" style="margin-bottom:28px;"><strong>Steph Teÿæ</strong> — co-initiator, steward, creative force, and botanical crafter. Systemic psycho-mystic coach. Gong and tuning fork practitioner. Transylvanian lineage, the witch reclaimed.</p>
-      <div class="contact-cards">
-        <div class="contact-card">
-          <div class="email">robin@fungai.art</div>
-          <div class="who">Robin</div>
-        </div>
-        <div class="contact-card">
-          <div class="email">teyae@fungai.art</div>
-          <div class="who">Steph</div>
-        </div>
-      </div>
-      <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-ghost">@fungai.art on Instagram</a>
+<section id="about" style="background:var(--void);border-bottom:1px solid rgba(158,212,56,0.06);padding:100px 0;">
+  <div class="wrap">
+
+    <!-- Opening statement -->
+    <div class="reveal" style="text-align:center;margin-bottom:72px;">
+      <span class="sec-label" style="text-align:center;margin-bottom:14px;">About Fungai Art</span>
+      <h2 style="font-family:var(--serif);font-weight:300;font-size:clamp(34px,5vw,62px);letter-spacing:-0.025em;color:var(--parchment);line-height:1.05;max-width:700px;margin:0 auto 20px;">Art &amp; medicine return<br/>to their <em style="color:var(--mist);">original unity.</em></h2>
+      <p style="font-size:14px;color:var(--mist);max-width:560px;margin:0 auto;line-height:1.8;">"We are sacred rebels, artists and healers activated by her pulse." Living mycelial art — rooted in the forest, carried by frequency.</p>
     </div>
-    <div class="stats-panel reveal reveal-d2">
-      <div class="about-pillar">
-        <p>Nature · Art · Community · Science</p>
+
+    <!-- Two portraits -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px;" class="reveal reveal-d1">
+      <div style="position:relative;overflow:hidden;min-height:460px;background:var(--forest-card);">
+        <img src="/assets/robin-portrait.png" alt="Robin Fungi" style="width:100%;height:100%;object-fit:cover;object-position:center top;position:absolute;inset:0;opacity:0.88;" onerror="this.style.display='none'">
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(5,9,12,0.9) 0%,transparent 50%);pointer-events:none;"></div>
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:32px 36px;">
+          <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--lime);margin-bottom:8px;">Founder</div>
+          <div style="font-family:var(--serif);font-style:italic;font-size:28px;color:var(--parchment);margin-bottom:10px;">Robin Fungi</div>
+          <p style="font-size:13px;color:var(--mist);line-height:1.65;">Visionary seed carrier and community weaver. Chef, elixir master and forager. Raised in the forest, guided by a close, intuitive bond with the land.</p>
+          <a href="mailto:robin@fungai.art" style="display:inline-block;margin-top:14px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--lichen);border-bottom:0.5px solid rgba(77,134,155,0.3);padding-bottom:2px;text-decoration:none;">robin@fungai.art</a>
+        </div>
       </div>
-      <div class="about-vision">
-        <span class="sec-label" style="margin-bottom:10px;">The vision</span>
-        <p style="font-size:13.5px;">We are inspired by the vision of a future where art and medicine return to their original unity. Fungai Art is a living art and community ecosystem that weaves together healing arts, ecological awareness, storytelling and lifestyle.</p>
+      <div style="position:relative;overflow:hidden;min-height:460px;background:var(--forest-card);">
+        <img src="/assets/stephanie-portrait.png" alt="Steph Teÿæ" style="width:100%;height:100%;object-fit:cover;object-position:center top;position:absolute;inset:0;opacity:0.88;" onerror="this.style.display='none'">
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(5,9,12,0.9) 0%,transparent 50%);pointer-events:none;"></div>
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:32px 36px;">
+          <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--amber-lt);margin-bottom:8px;">Co-initiator</div>
+          <div style="font-family:var(--serif);font-style:italic;font-size:28px;color:var(--parchment);margin-bottom:10px;">Steph Teÿæ</div>
+          <p style="font-size:13px;color:var(--mist);line-height:1.65;">Steward, creative force, and botanical crafter. Systemic psycho-mystic coach. Gong and tuning fork practitioner. Transylvanian lineage — the witch reclaimed.</p>
+          <a href="mailto:teyae@fungai.art" style="display:inline-block;margin-top:14px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--lichen);border-bottom:0.5px solid rgba(77,134,155,0.3);padding-bottom:2px;text-decoration:none;">teyae@fungai.art</a>
+        </div>
       </div>
     </div>
+
+    <!-- Four pillars -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:2px;" class="reveal reveal-d2">
+      <div style="padding:28px 24px;background:var(--forest-card);border:0.5px solid rgba(158,212,56,0.07);">
+        <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--sage);margin-bottom:10px;">01</div>
+        <div style="font-family:var(--serif);font-style:italic;font-size:19px;color:var(--parchment);margin-bottom:8px;">Nature</div>
+        <p style="font-size:12px;color:var(--lichen);line-height:1.65;">Wild-foraged, seasonally aware, ecologically responsible. Every preparation begins in the forest.</p>
+      </div>
+      <div style="padding:28px 24px;background:var(--forest-card);border:0.5px solid rgba(158,212,56,0.07);">
+        <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--sage);margin-bottom:10px;">02</div>
+        <div style="font-family:var(--serif);font-style:italic;font-size:19px;color:var(--parchment);margin-bottom:8px;">Art</div>
+        <p style="font-size:12px;color:var(--lichen);line-height:1.65;">Medicine is aesthetic. Each elixir is composed, not manufactured — attention to frequency, form, and intention.</p>
+      </div>
+      <div style="padding:28px 24px;background:var(--forest-card);border:0.5px solid rgba(158,212,56,0.07);">
+        <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--sage);margin-bottom:10px;">03</div>
+        <div style="font-family:var(--serif);font-style:italic;font-size:19px;color:var(--parchment);margin-bottom:8px;">Community</div>
+        <p style="font-size:12px;color:var(--lichen);line-height:1.65;">Foraging circles, ceremonies, and education. The forest has always been a place of gathering.</p>
+      </div>
+      <div style="padding:28px 24px;background:var(--forest-card);border:0.5px solid rgba(158,212,56,0.07);">
+        <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--sage);margin-bottom:10px;">04</div>
+        <div style="font-family:var(--serif);font-style:italic;font-size:19px;color:var(--parchment);margin-bottom:8px;">Science</div>
+        <p style="font-size:12px;color:var(--lichen);line-height:1.65;">Evidence-graded protocols. 142 botanicals documented with research grades and active compounds.</p>
+      </div>
+    </div>
+
+    <!-- Vision + numbers + connect -->
+    <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:2px;" class="reveal reveal-d3">
+      <div style="padding:36px;background:var(--forest-mid);border:0.5px solid rgba(158,212,56,0.08);">
+        <span class="sec-label" style="margin-bottom:14px;">The vision</span>
+        <p style="font-family:var(--serif);font-style:italic;font-size:19px;color:var(--parchment);line-height:1.5;margin-bottom:16px;border-left:2px solid rgba(196,134,46,0.5);padding-left:18px;">"A future where art and medicine return to their original unity. Where the forest is curriculum and the body is the laboratory."</p>
+        <p style="font-size:13px;color:var(--mist);line-height:1.75;margin-bottom:28px;">Fungai Art is a living art and community ecosystem weaving together healing arts, ecological awareness, alchemy, and sacred experience. Born in the Swedish forest, alive across Europe.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-ghost" style="text-decoration:none;">@fungai.art</a>
+          <a href="mailto:robin@fungai.art" class="btn-ghost" style="text-decoration:none;">Email Robin</a>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;">
+        <div style="padding:28px 20px;background:var(--forest-card);border:0.5px solid rgba(158,212,56,0.07);text-align:center;">
+          <div style="font-family:var(--serif);font-style:italic;font-size:36px;color:var(--amber-lt);line-height:1;">142</div>
+          <div style="font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:var(--sage);margin-top:6px;">Botanicals</div>
+        </div>
+        <div style="padding:28px 20px;background:var(--forest-card);border:0.5px solid rgba(158,212,56,0.07);text-align:center;">
+          <div style="font-family:var(--serif);font-style:italic;font-size:36px;color:var(--amber-lt);line-height:1;">25</div>
+          <div style="font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:var(--sage);margin-top:6px;">Forage nodes</div>
+        </div>
+        <div style="padding:28px 20px;background:var(--forest-card);border:0.5px solid rgba(158,212,56,0.07);text-align:center;">
+          <div style="font-family:var(--serif);font-style:italic;font-size:36px;color:var(--amber-lt);line-height:1;">5</div>
+          <div style="font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:var(--sage);margin-top:6px;">Extraction methods</div>
+        </div>
+        <div style="padding:28px 20px;background:var(--forest-card);border:0.5px solid rgba(158,212,56,0.07);text-align:center;">
+          <div style="font-family:var(--serif);font-style:italic;font-size:36px;color:var(--amber-lt);line-height:1;">111</div>
+          <div style="font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:var(--sage);margin-top:6px;">Trance minutes</div>
+        </div>
+        <div style="grid-column:span 2;padding:20px;background:rgba(136,186,200,0.04);border:0.5px solid rgba(136,186,200,0.1);">
+          <p style="font-size:11.5px;color:var(--mist);line-height:1.65;font-family:var(--serif);font-style:italic;">Berlin · Sweden · France · Denmark · Germany · Lebanon — wherever the plants grow, we go.</p>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
