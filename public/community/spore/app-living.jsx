@@ -580,78 +580,156 @@ function NetworkPage({ economy, onToast, flowRate }) {
   );
 }
 
-/* ── Apothecary page ─────────────────────────────────────── */
+/* ── Apothecary page — exclusive member editions ─────────── */
+
+const EXCLUSIVE = [
+  {
+    id:'ex1', name:'Amanita Chocolate',
+    sub:'Dark single-origin · spagyric extract',
+    badge:'RARE · 12 units',
+    bg:'#2A1A10',
+    accent:'#C48838',
+    desc:'72% Peru cacao infused with a micro-dose spagyric Amanita muscaria extract. Sourced, processed, and poured in the Berlin lab.',
+    note:'Effects: warmth, dream-depth, creative clarity.',
+    pEur:28, pH:20,
+    vol:'2 × 15g bars',
+    season:'Berlin LAB · Q2',
+  },
+  {
+    id:'ex2', name:'Reishi Rose Gummies',
+    sub:'Adaptogenic · floral',
+    badge:'SEASONAL',
+    bg:'#3A1828',
+    accent:'#f9a8d4',
+    desc:'Reishi dual-extract (4-hour decoction + alcohol) set in rose water and raw honey. Gentle immune modulation, heart calming.',
+    note:'Dose: 2 gummies morning. 30-day supply.',
+    pEur:34, pH:25,
+    vol:'30 gummies',
+    season:'Sweden + Berlin · Q3',
+  },
+  {
+    id:'ex3', name:'Chaga & Pine Pollen Bar',
+    sub:'Nordic wild-foraged · tonic',
+    badge:'LIMITED',
+    bg:'#1A2210',
+    accent:'#7bd4a1',
+    desc:'Cold-pressed Chaga (Sweden birch) with solar-harvested Pine Pollen. Melanin-rich antioxidant profile. No sugar — sweetened with raw dates.',
+    note:'Effects: deep immunity, sustained energy, Yang vitality.',
+    pEur:22, pH:16,
+    vol:'40g block',
+    season:'Sweden Foraging · seasonal',
+  },
+  {
+    id:'ex4', name:'Blue Lotus Truffle',
+    sub:'Ceremonial · sensory',
+    badge:'VERY LIMITED · 6 left',
+    bg:'#151830',
+    accent:'#93c5fd',
+    desc:'Hand-rolled cacao truffle with Egyptian Blue Lotus extract, Cardamom, and Saffron. A slow ritual chocolate for the evening.',
+    note:'Effects: mild euphoria, sensory warmth, dream support.',
+    pEur:18, pH:14,
+    vol:'4 truffles',
+    season:'Festival Circuit · handmade',
+  },
+  {
+    id:'ex5', name:'Mycelium Trance Gummy',
+    sub:'Pre-ceremony · grounding',
+    badge:'EVENT ONLY',
+    bg:'#0F1820',
+    accent:'#6BD66F',
+    desc:'Developed for Mycelium Trance ceremonies. Cordyceps + Reishi + L-theanine base. Calms CNS without sedation. Enhances sound sensitivity.',
+    note:'Take 45 min before ceremony. One gummy.',
+    pEur:12, pH:9,
+    vol:'6 gummies',
+    season:'Mycelium Trance events only',
+  },
+  {
+    id:'ex6', name:'Lion\'s Mane Bark Bark',
+    sub:'Cognitive · daily ritual',
+    badge:'NEW',
+    bg:'#1C1A14',
+    accent:'#F5D689',
+    desc:'Lion\'s Mane hot-water extract pressed into a bark-chocolate hybrid. Focused NGF stimulation, memory, creative flow. Daily micro-dose format.',
+    note:'Effects: mental clarity, focus, nerve regeneration.',
+    pEur:24, pH:18,
+    vol:'20g × 2 bars',
+    season:'Berlin LAB · year-round',
+  },
+];
 
 function ApothecaryPage({ economy, onToast }) {
   return (
     <div className="page-enter">
       <div className="section">
-        <div className="section-eyebrow">Pay in € or $H</div>
-        <h2 className="section-title">The <em>apothecary.</em></h2>
-        <p className="section-blurb">Tinctures, fungi, compositions. Nutrients leave the network as physical things; contributors save vs retail.</p>
+        <div className="section-eyebrow">Member-only · exclusive editions</div>
+        <h2 className="section-title">The <em>rarities.</em></h2>
+        <p className="section-blurb">Not found in any shop. Small-batch gummies, chocolates, and ceremonial confections made in the Fungai Art labs. Available only to Hyphae members — pay in $H or €.</p>
       </div>
 
-      <div className="specimen-plate">
-        <div className="specimen-plate-art">
-          <div className="sp-grid" />
-          <div className="sp-crosshair sp-ch-tl"><span /><span /><em>SPM·01</em></div>
-          <div className="sp-crosshair sp-ch-br"><span /><span /><em>61.0°N</em></div>
-          <img src="spore/assets/specimen-fan.png" alt="Schizophyllum commune specimen" />
-        </div>
-        <div className="specimen-plate-meta">
-          <div className="sp-row"><span className="k">SPECIMEN</span><span className="v">№ 01 / 04</span></div>
-          <div className="sp-name">Schizophyllum<br/><em>commune.</em></div>
-          <div className="sp-grid-meta">
-            <div><span className="k">FAMILY</span><span className="v">Schizophyllaceae</span></div>
-            <div><span className="k">SUBSTRATE</span><span className="v">Hardwood, decaying</span></div>
-            <div><span className="k">FORAGED</span><span className="v">Sweden · 61.0°N</span></div>
-            <div><span className="k">OUTPUT</span><span className="v">Tincture line · Q4</span></div>
-            <div><span className="k">YIELD</span><span className="v">2.4 kg / cycle</span></div>
-            <div><span className="k">FLOW</span><span className="v">+18 $H per kg</span></div>
-          </div>
-          <p className="sp-blurb">Most widely distributed mushroom on Earth. The split gills regenerate after drying — a metaphor we keep returning to.</p>
+      {/* Exclusivity notice */}
+      <div style={{ margin:'0 16px 4px', padding:'12px 16px', background:'rgba(232,177,75,.06)', border:'0.5px solid rgba(232,177,75,.25)', borderRadius:10, display:'flex', alignItems:'center', gap:10 }}>
+        <span style={{ fontSize:18 }}>✦</span>
+        <div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--nutrient-l)', marginBottom:3 }}>Member discount active</div>
+          <div style={{ fontSize:11.5, color:'var(--mycelium)', opacity:.85 }}>Your {economy.state.balance} $H balance can be applied at checkout. Contributors pay in tokens and save vs the public price.</div>
         </div>
       </div>
 
-      <div className="prod-grid">
-        {SporeData.PRODUCTS.map(p => {
-          const owned = economy.state.inventory.includes(p.id);
+      <div className="prod-grid" style={{ marginTop:14 }}>
+        {EXCLUSIVE.map(p => {
+          const owned   = economy.state.inventory.includes(p.id);
+          const canPay  = economy.state.balance >= p.pH;
           return (
-            <div key={p.id} className="prod-card">
-              <div className="prod-art" style={{ background: p.bg }}>
+            <div key={p.id} className="prod-card" style={{ borderColor: owned ? p.accent + '55' : undefined }}>
+              {/* Art panel */}
+              <div className="prod-art" style={{ background: p.bg, border:`0.5px solid ${p.accent}22` }}>
                 <div className="prod-art-stripe" />
-                <div className="prod-art-glow" />
+                <div className="prod-art-glow" style={{ background:`radial-gradient(circle at 30% 30%, ${p.accent}33, transparent 60%)` }} />
+                {/* Badge */}
+                <div style={{ position:'absolute', top:8, left:8, fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.16em', textTransform:'uppercase', padding:'2px 7px', borderRadius:3, background:`${p.accent}22`, border:`0.5px solid ${p.accent}55`, color:p.accent }}>
+                  {p.badge}
+                </div>
                 <div className="prod-art-label">
-                  <div className="pl-name">{p.name}</div>
+                  <div className="pl-name" style={{ color:p.accent }}>{p.name}</div>
                   <div className="pl-vol">{p.vol}</div>
                 </div>
               </div>
+
               <div>
                 <div className="prod-name">{p.name}</div>
-                <div className="prod-cat">{p.cat}</div>
+                <div className="prod-cat">{p.sub}</div>
               </div>
               <div className="prod-desc">{p.desc}</div>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:p.accent, opacity:.8, marginBottom:4 }}>{p.note}</div>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'var(--mycelium-d)', marginBottom:6 }}>◉ {p.season}</div>
+
               <div className="prod-price">
                 <span className="prod-price-eur">€{p.pEur}</span>
-                <span className="prod-price-h">{p.pH} $H</span>
+                <span className="prod-price-h" style={{ color:p.accent }}>{p.pH} $H</span>
               </div>
               <button
                 className={`prod-add ${owned ? 'bought' : ''}`}
+                style={owned ? { background:p.accent, borderColor:p.accent, color:'var(--soil)' } : { borderColor:p.accent + '66', color:p.accent }}
                 disabled={owned}
                 onClick={() => {
-                  if (economy.state.balance >= p.pH) {
+                  if (canPay) {
                     economy.buy(p.id, p.name, p.pH);
-                    onToast(`Purchased ${p.name} · saved vs €`, 'success');
+                    onToast(`✦ ${p.name} claimed · ${p.pH} $H spent`, 'success');
                   } else {
-                    onToast(`Added ${p.name} to € basket`);
+                    onToast(`${p.name} added — pay €${p.pEur} at pickup`);
                   }
                 }}
               >
-                {owned ? '✓ In basket' : (economy.state.balance >= p.pH ? '+ Pay in $H' : `Pay €${p.pEur}`)}
+                {owned ? '✓ Claimed' : (canPay ? `✦ Claim for ${p.pH} $H` : `Reserve · €${p.pEur}`)}
               </button>
             </div>
           );
         })}
+      </div>
+
+      <div style={{ margin:'20px 16px 0', padding:'12px 14px', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:8, textAlign:'center' }}>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:4 }}>Want something else?</div>
+        <div style={{ fontSize:12, color:'var(--mycelium)' }}>All public products at <a href="/shop" style={{ color:'var(--spore-l)', textDecoration:'none' }}>fungai.art/shop</a> — member discount applies.</div>
       </div>
     </div>
   );
@@ -747,15 +825,128 @@ function ExperiencesPage({ economy, onToast }) {
 
 /* ── Members page ─────────────────────────────────────────── */
 
-function MembersPage({ currentMember }) {
-  const focusKey = (id) => `spore_focus_${id}`;
-  const [myFocus, setMyFocus] = useState(() => {
-    try { return localStorage.getItem(focusKey(currentMember.id)) || ''; } catch { return ''; }
-  });
+function MembersPage({ currentMember, economy }) {
+  const focusKey  = (id) => `spore_focus_${id}`;
+  const contribKey= (id) => `spore_contrib_level_${id}`;
+  const salesKey  = (id) => `spore_sales_${id}`;
+
+  const [myFocus,   setMyFocus]   = useState(() => { try { return localStorage.getItem(focusKey(currentMember.id)) || ''; } catch { return ''; } });
+  const [myContrib, setMyContrib] = useState(() => { try { return Number(localStorage.getItem(contribKey(currentMember.id)) || 3); } catch { return 3; } });
+  const [viewProfile, setViewProfile] = useState(null); // admin: member being viewed
 
   function pickFocus(id) {
     try { localStorage.setItem(focusKey(currentMember.id), id); } catch {}
     setMyFocus(id);
+  }
+
+  function saveContrib(val) {
+    setMyContrib(val);
+    try { localStorage.setItem(contribKey(currentMember.id), val); } catch {}
+  }
+
+  function getMemberState(id) {
+    try { const r = localStorage.getItem(`spore_state_${id}`); return r ? JSON.parse(r) : null; } catch { return null; }
+  }
+
+  function getMemberSales(id) {
+    try { const r = localStorage.getItem(salesKey(id)); return r ? JSON.parse(r) : []; } catch { return []; }
+  }
+
+  function getContribLevel(id) {
+    try { return Number(localStorage.getItem(contribKey(id)) || 0); } catch { return 0; }
+  }
+
+  const CONTRIB_LABELS = ['Not active','Minimal','Part-time','Regular','Full dedication','Leading the node'];
+
+  const isAdmin = currentMember.admin;
+
+  // Admin profile modal
+  if (viewProfile && isAdmin) {
+    const m     = viewProfile;
+    const st    = getMemberState(m.id);
+    const bal   = st ? st.balance   : m.balance;
+    const rep   = st ? st.reputation: m.rep;
+    const contribs = st ? st.contributions : 0;
+    const tier  = SporeData.reputationTier(rep);
+    const node  = SporeData.NETWORK_NODES.find(n => n.id === m.node);
+    const sales = getMemberSales(m.id);
+    const focus = localStorage.getItem(focusKey(m.id)) || '';
+    const level = getContribLevel(m.id);
+    const ct    = SporeData.CONTRIBUTION_TYPES ? SporeData.CONTRIBUTION_TYPES.find(c => c.id === focus) : null;
+    const history = st ? (st.history || []) : [];
+    const totalSales = sales.reduce((a,s) => a + (s.amount || 0), 0);
+
+    return (
+      <div className="page-enter">
+        <button onClick={() => setViewProfile(null)} style={{ display:'flex', alignItems:'center', gap:6, background:'none', border:'none', color:'var(--mycelium-d)', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', cursor:'pointer', margin:'14px 16px 0', padding:'6px 0' }}>
+          ← Back to members
+        </button>
+        <div style={{ margin:'12px 16px 0', background:'var(--soil-2)', border:'0.5px solid var(--rule-strong)', borderRadius:16, padding:'20px 18px' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:14, marginBottom:18 }}>
+            <div style={{ width:52, height:52, borderRadius:'50%', background:tier.color, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-display)', fontSize:24, fontStyle:'italic', color:'rgba(255,255,255,.9)', flexShrink:0 }}>{m.name[0]}</div>
+            <div>
+              <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:24, color:'var(--mycelium-l)', letterSpacing:'-.02em', lineHeight:1 }}>{m.name}</div>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'.12em', textTransform:'uppercase', color:'var(--mycelium-d)', marginTop:4 }}>{m.role}</div>
+              {node && <div style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'var(--mycelium-d)', marginTop:2 }}>◉ {node.name}</div>}
+            </div>
+          </div>
+
+          {/* Stats row */}
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:8, marginBottom:16 }}>
+            {[
+              {l:'Balance', v:`${bal} $H`, c:'var(--spore-l)'},
+              {l:'Rep', v:`${rep} pts`, c:tier.color},
+              {l:'Contributions', v:contribs, c:'var(--mycelium-l)'},
+              {l:'Sales', v:`€${totalSales}`, c:'var(--nutrient-l)'},
+            ].map(s => (
+              <div key={s.l} style={{ background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:8, padding:'9px 10px', textAlign:'center' }}>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:12, color:s.c }}>{s.v}</div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'.14em', textTransform:'uppercase', color:'var(--mycelium-d)', marginTop:2 }}>{s.l}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Contribution level */}
+          <div style={{ marginBottom:14, padding:'10px 12px', background:'var(--soil-3)', borderRadius:8, border:'0.5px solid var(--rule)' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'.14em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:4 }}>Contribution level</div>
+            <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:17, color:'var(--mycelium-l)' }}>{CONTRIB_LABELS[level] || '—'}</div>
+            <div style={{ display:'flex', gap:3, marginTop:6 }}>
+              {[1,2,3,4,5].map(i => <div key={i} style={{ height:3, flex:1, borderRadius:2, background: i <= level ? 'var(--spore)' : 'var(--soil-4)' }} />)}
+            </div>
+            {ct && <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, color:'var(--spore-l)', marginTop:5 }}>{ct.icon} {ct.label}</div>}
+          </div>
+
+          {/* Activity log */}
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'.16em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:8 }}>Recent activity</div>
+          <div style={{ background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:8, overflow:'hidden', marginBottom:12 }}>
+            {history.length === 0 ? (
+              <div style={{ padding:'14px', textAlign:'center', color:'var(--mycelium-d)', fontSize:11, fontStyle:'italic' }}>No activity recorded</div>
+            ) : history.slice(0,6).map((h, i) => (
+              <div key={i} style={{ display:'flex', alignItems:'center', gap:8, padding:'9px 12px', borderBottom: i < Math.min(5, history.length-1) ? '0.5px solid var(--rule)' : 'none' }}>
+                <div style={{ width:6, height:6, borderRadius:'50%', background: h.type==='earn' ? 'var(--spore)' : h.type==='unlock' ? 'var(--fungal)' : 'var(--nutrient)', flexShrink:0 }} />
+                <div style={{ flex:1, fontSize:11, color:'var(--mycelium)' }}>{h.label}</div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:10, color: h.delta > 0 ? 'var(--spore-l)' : 'var(--mycelium-d)' }}>{h.delta > 0 ? '+':''}{h.delta} $H</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Sales */}
+          {sales.length > 0 && (
+            <>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'.16em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:8 }}>Sales logged</div>
+              <div style={{ background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:8, overflow:'hidden' }}>
+                {sales.slice(0,5).map((s, i) => (
+                  <div key={i} style={{ display:'flex', alignItems:'center', gap:8, padding:'9px 12px', borderBottom: i < Math.min(4, sales.length-1) ? '0.5px solid var(--rule)' : 'none' }}>
+                    <div style={{ flex:1, fontSize:11, color:'var(--mycelium)' }}>{s.note || s.label || 'Sale'}</div>
+                    <div style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'var(--nutrient-l)' }}>€{s.amount}</div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -783,6 +974,22 @@ function MembersPage({ currentMember }) {
             );
           })}
         </div>
+
+        {/* My contribution level slider — private */}
+        <div className="contrib-slider-wrap" style={{ marginTop:10 }}>
+          <div className="cs-label">
+            <span>My weekly contribution level</span>
+            <span className="cs-val">{CONTRIB_LABELS[myContrib]}</span>
+          </div>
+          <input
+            type="range"
+            className="cs-range"
+            min={0} max={5}
+            value={myContrib}
+            onChange={e => saveContrib(Number(e.target.value))}
+          />
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'var(--mycelium-d)', marginTop:4, letterSpacing:'0.1em' }}>Visible only to you and Robin.</div>
+        </div>
       </div>
 
       <div className="members-grid">
@@ -792,18 +999,36 @@ function MembersPage({ currentMember }) {
           const focus  = m.id === currentMember.id ? myFocus : ((() => { try { return localStorage.getItem(focusKey(m.id)) || ''; } catch { return ''; } })());
           const ct     = focus ? SporeData.CONTRIBUTION_TYPES.find(c => c.id === focus) : null;
           const isMe   = m.id === currentMember.id;
+          const level  = m.id === currentMember.id ? myContrib : (isAdmin ? getContribLevel(m.id) : null);
           return (
-            <div key={m.id} className={`member-card ${isMe ? 'member-card-me' : ''}`}>
+            <div
+              key={m.id}
+              className={`member-card ${isMe ? 'member-card-me' : ''}`}
+              style={{ cursor: isAdmin && !isMe ? 'pointer' : 'default' }}
+              onClick={() => { if (isAdmin && !isMe) setViewProfile(m); }}
+            >
               <div className="member-avatar" style={{ background: tier.color }}>{m.name[0]}</div>
               <div className="member-body">
                 <div style={{ display:'flex', alignItems:'center', gap:6 }}>
                   <div className="member-name">{m.name}</div>
                   {m.admin && <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.14em', background:'rgba(201,184,148,0.12)', border:'0.5px solid var(--rule-strong)', borderRadius:3, padding:'1px 5px', color:'var(--mycelium-d)' }}>ADMIN</span>}
+                  {isAdmin && !isMe && <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'var(--mycelium-d)', marginLeft:'auto' }}>tap ↗</span>}
                 </div>
                 <div className="member-role">{m.role}</div>
                 {node && <div className="member-node">{node.name}</div>}
                 {ct && <div style={{ display:'inline-flex', alignItems:'center', gap:4, padding:'2px 7px', borderRadius:4, background:'rgba(107,214,111,0.07)', border:'0.5px solid var(--spore-d)', marginBottom:5, fontSize:10, color:'var(--spore-l)', fontFamily:'var(--font-mono)', letterSpacing:'0.1em' }}>{ct.icon} {ct.label}</div>}
                 <div className="member-focus">{m.focus}</div>
+                {/* Contribution level bar — shown to self always, to admin for all */}
+                {level !== null && level > 0 && (
+                  <div style={{ marginTop:6, marginBottom:4 }}>
+                    <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.12em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:3 }}>
+                      {isMe ? 'My level · ' : ''}{CONTRIB_LABELS[level]}
+                    </div>
+                    <div style={{ display:'flex', gap:2 }}>
+                      {[1,2,3,4,5].map(i => <div key={i} style={{ height:2.5, flex:1, borderRadius:1.5, background: i <= level ? 'var(--spore)' : 'var(--soil-4)', boxShadow: i <= level ? '0 0 4px rgba(107,214,111,0.4)' : 'none' }} />)}
+                    </div>
+                  </div>
+                )}
                 <div className="member-stats">
                   <div className="member-stat">
                     <span className="member-stat-val" style={{ color: tier.color }}>{tier.label}</span>
@@ -1186,6 +1411,38 @@ function SporeTweaks({ tweaks, setTweak }) {
   );
 }
 
+/* ── Quick nav sidebar ────────────────────────────────────── */
+
+function QuickNav({ tab, onTab }) {
+  const items = [
+    { icon:'⚗', label:'Alchemy', href:'/community/academy/', ext:true },
+    { icon:'🌿', label:'Herbals', href:'/mixology', ext:true },
+    { icon:'◎', label:'Shop', href:'/shop', ext:true },
+    { icon:'◉', label:'Network', id:'network' },
+    { icon:'◈', label:'Members', id:'members' },
+  ];
+  return (
+    <div className="quick-nav">
+      {items.map((it, i) => (
+        <React.Fragment key={it.label}>
+          {i === 3 && <div className="qn-divider" />}
+          {it.ext ? (
+            <a href={it.href} target="_blank" className="qn-item">
+              <span className="qn-icon">{it.icon}</span>
+              <span className="qn-label">{it.label}</span>
+            </a>
+          ) : (
+            <button className={`qn-item ${tab === it.id ? 'active' : ''}`} onClick={() => onTab(it.id)}>
+              <span className="qn-icon">{it.icon}</span>
+              <span className="qn-label">{it.label}</span>
+            </button>
+          )}
+        </React.Fragment>
+      ))}
+    </div>
+  );
+}
+
 /* ── App root ─────────────────────────────────────────────── */
 
 function App() {
@@ -1239,19 +1496,18 @@ function App() {
       {tab === 'network'  && <NetworkPage economy={economy} onToast={onToast} flowRate={tweaks.flowRate} />}
       {tab === 'shop'     && <ApothecaryPage economy={economy} onToast={onToast} />}
       {tab === 'exp'      && <ExperiencesPage economy={economy} onToast={onToast} />}
-      {tab === 'members'  && <MembersPage currentMember={currentMember} />}
-      {tab === 'journal'  && <JournalPage economy={economy} currentMember={currentMember} />}
-      {tab === 'admin'    && currentMember && currentMember.admin && <AdminPage onToast={onToast} />}
+      {tab === 'members'  && <MembersPage currentMember={currentMember} economy={economy} />}
+      {tab === 'admin'    && currentMember && currentMember.admin && <AdminPage onToast={onToast} currentMember={currentMember} />}
 
       <div className="app-footer">
         <ProceduralMark size={32} />
         <div className="app-footer-fine">tend · flow · unlock</div>
       </div>
 
+      <QuickNav tab={tab} onTab={setTab} />
       <EarnSheet open={earnOpen} onClose={() => setEarnOpen(false)} economy={economy} onToast={onToast} />
       <Toast message={toast.msg} kind={toast.kind} onClose={() => setToast({ msg:'', kind:'' })} />
       <SporeTweaks tweaks={tweaks} setTweak={setTweak} />
-
     </div>
   );
 }
