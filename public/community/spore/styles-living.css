@@ -2446,6 +2446,329 @@ input[type='range'].cs-range::-webkit-slider-thumb {
   margin: 0 auto;
 }
 
+/* ── MYCO AI Agent ──────────────────────────────────────────── */
+.myco-wrap {
+  position: fixed;
+  bottom: 24px;
+  left: 20px;
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+/* Toggle button */
+.myco-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(196,136,56,0.5);
+  background: rgba(10,9,8,0.9);
+  color: #C48838;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 0 0 rgba(196,136,56,0);
+  transition: all 0.2s;
+}
+.myco-btn:hover,
+.myco-btn.open {
+  background: rgba(196,136,56,0.12);
+  border-color: #C48838;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 0 20px rgba(196,136,56,0.2);
+}
+.myco-btn-label { line-height: 1; }
+
+/* Panel */
+.myco-panel {
+  width: 360px;
+  max-height: 520px;
+  background: rgba(13,11,9,0.97);
+  border: 0.5px solid rgba(196,136,56,0.3);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 40px rgba(196,136,56,0.08);
+  animation: myco-rise 0.25s cubic-bezier(0.2,0.9,0.3,1);
+}
+@keyframes myco-rise {
+  from { opacity:0; transform:translateY(12px) scale(0.97); }
+  to   { opacity:1; transform:none; }
+}
+
+/* Panel header */
+.myco-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 0.5px solid rgba(196,136,56,0.15);
+  background: rgba(196,136,56,0.04);
+  flex-shrink: 0;
+}
+.myco-avatar {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: rgba(196,136,56,0.12);
+  border: 0.5px solid rgba(196,136,56,0.3);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.myco-head-name {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #C48838;
+}
+.myco-head-sub {
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 1px;
+}
+.myco-clear {
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  background: none;
+  border: 0.5px solid var(--rule);
+  border-radius: 4px;
+  padding: 3px 7px;
+  cursor: pointer;
+}
+.myco-clear:hover { color: var(--mycelium-l); border-color: var(--rule-strong); }
+.myco-close {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.04);
+  color: var(--mycelium-d);
+  font-size: 11px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+.myco-close:hover { background: rgba(255,255,255,0.08); color: var(--mycelium-l); }
+
+/* Messages */
+.myco-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scroll-behavior: smooth;
+}
+.myco-messages::-webkit-scrollbar { width: 3px; }
+.myco-messages::-webkit-scrollbar-track { background: transparent; }
+.myco-messages::-webkit-scrollbar-thumb { background: rgba(196,136,56,0.2); border-radius: 2px; }
+
+/* Empty state */
+.myco-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 10px;
+  text-align: center;
+}
+.myco-empty-glyph {
+  font-size: 14px;
+  color: rgba(196,136,56,0.4);
+  letter-spacing: 0.3em;
+}
+.myco-empty-text {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--mycelium);
+  line-height: 1.4;
+}
+
+/* Chips (empty state) */
+.myco-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+  margin-top: 4px;
+}
+.myco-chip {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 0.5px solid rgba(196,136,56,0.2);
+  background: rgba(196,136,56,0.05);
+  color: #C48838;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+}
+.myco-chip:hover {
+  background: rgba(196,136,56,0.12);
+  border-color: rgba(196,136,56,0.45);
+}
+
+/* Chips row (after messages) */
+.myco-chips-row {
+  display: flex;
+  gap: 5px;
+  padding: 6px 12px 0;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+.myco-chip-sm {
+  padding: 4px 9px;
+  border-radius: 999px;
+  border: 0.5px solid rgba(196,136,56,0.2);
+  background: rgba(196,136,56,0.05);
+  color: rgba(196,136,56,0.75);
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.myco-chip-sm:hover { background: rgba(196,136,56,0.12); color: #C48838; }
+
+/* Message bubbles */
+.myco-msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.myco-msg.user {
+  flex-direction: row-reverse;
+}
+.myco-msg-avatar {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: rgba(196,136,56,0.15);
+  border: 0.5px solid rgba(196,136,56,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: #C48838;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.myco-bubble {
+  max-width: 80%;
+  padding: 9px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 1.55;
+  word-break: break-word;
+}
+.myco-msg.ai .myco-bubble {
+  background: var(--soil-3);
+  border: 0.5px solid var(--rule);
+  color: var(--mycelium);
+  border-radius: 3px 12px 12px 12px;
+}
+.myco-msg.user .myco-bubble {
+  background: rgba(196,136,56,0.12);
+  border: 0.5px solid rgba(196,136,56,0.25);
+  color: var(--mycelium-l);
+  border-radius: 12px 3px 12px 12px;
+  text-align: right;
+}
+
+/* Typing indicator */
+.myco-typing {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 14px;
+  min-width: 48px;
+}
+.myco-typing span {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #C48838;
+  opacity: 0.6;
+  animation: myco-pulse 1.2s ease-in-out infinite;
+}
+.myco-typing span:nth-child(2) { animation-delay: 0.2s; }
+.myco-typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes myco-pulse {
+  0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+.myco-error {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: #f87171;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: rgba(248,113,113,0.08);
+  border: 0.5px solid rgba(248,113,113,0.2);
+}
+
+/* Input area */
+.myco-input-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  padding: 10px 12px 12px;
+  border-top: 0.5px solid rgba(196,136,56,0.12);
+  flex-shrink: 0;
+}
+.myco-input {
+  flex: 1;
+  background: var(--soil-3);
+  border: 0.5px solid var(--rule);
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: var(--mycelium-l);
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  line-height: 1.45;
+  resize: none;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.myco-input::placeholder { color: var(--mycelium-d); }
+.myco-input:focus { border-color: rgba(196,136,56,0.4); }
+.myco-send {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  border: 0.5px solid rgba(196,136,56,0.4);
+  background: rgba(196,136,56,0.12);
+  color: #C48838;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.myco-send:hover:not(:disabled) {
+  background: rgba(196,136,56,0.22);
+  border-color: #C48838;
+}
+.myco-send:disabled { opacity: 0.3; cursor: not-allowed; }
+
 /* EarnSheet event grouping */
 .earn-event {
   margin-bottom: 8px;

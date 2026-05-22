@@ -1614,6 +1614,184 @@ function QuickNav({ tab, onTab }) {
   );
 }
 
+/* ── MYCO AI Agent ───────────────────────────────────────── */
+
+const MYCO_CHIPS = [
+  { label:'✦ Clean lab note', prefix:'Please clean and structure this lab note into proper sections:\n\n' },
+  { label:'⚗ Herb guidance', prefix:'Recommend herbs and extraction method for: ' },
+  { label:'◉ Network insights', msg:'Analyse the current Spore network: which members might need engagement, what $HYPHA flows look like, and where I should focus next.' },
+  { label:'△ Suggest improvements', msg:'What concrete improvements would you suggest for the Spore Living Network — token economy, community features, upcoming events?' },
+];
+
+function MycoAgent({ currentMember }) {
+  const [open,    setOpen]    = useState(false);
+  const [input,   setInput]   = useState('');
+  const [msgs,    setMsgs]    = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error,   setError]   = useState('');
+  const endRef  = useRef(null);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (open && endRef.current) endRef.current.scrollIntoView({ behavior:'smooth' });
+  }, [msgs, open]);
+
+  useEffect(() => {
+    if (open && inputRef.current) inputRef.current.focus();
+  }, [open]);
+
+  async function send(text) {
+    const msg = (text || input).trim();
+    if (!msg || loading) return;
+    setInput('');
+    setError('');
+
+    const history = msgs.map(m => ({ role: m.role, content: m.content }));
+    setMsgs(prev => [...prev, { role:'user', content:msg }]);
+    setLoading(true);
+
+    try {
+      const res = await fetch('/api/myco-agent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msg, history }),
+      });
+      const data = await res.json();
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setMsgs(prev => [...prev, { role:'assistant', content: data.reply }]);
+      }
+    } catch (e) {
+      setError('Network error — check connection.');
+    }
+    setLoading(false);
+  }
+
+  function useChip(chip) {
+    if (chip.msg) {
+      send(chip.msg);
+    } else {
+      setInput(chip.prefix);
+      if (inputRef.current) inputRef.current.focus();
+    }
+  }
+
+  function fmtContent(text) {
+    return text.split('\n').map((line, i) => (
+      <React.Fragment key={i}>{line}<br/></React.Fragment>
+    ));
+  }
+
+  return (
+    <div className="myco-wrap">
+      {open && (
+        <div className="myco-panel">
+          {/* Header */}
+          <div className="myco-head">
+            <div style={{ display:'flex', alignItems:'center', gap:9 }}>
+              <div className="myco-avatar">
+                <svg viewBox="0 0 24 24" width={16} height={16}>
+                  <polygon points="12,2 22,20 2,20" fill="none" stroke="#C48838" strokeWidth="1.5" />
+                  <circle cx="12" cy="13" r="2.5" fill="#C48838" />
+                </svg>
+              </div>
+              <div>
+                <div className="myco-head-name">MYCO</div>
+                <div className="myco-head-sub">Fungai Art Intelligence</div>
+              </div>
+            </div>
+            <div style={{ display:'flex', gap:6, alignItems:'center' }}>
+              {msgs.length > 0 && (
+                <button className="myco-clear" onClick={() => { setMsgs([]); setError(''); }}>clear</button>
+              )}
+              <button className="myco-close" onClick={() => setOpen(false)}>✕</button>
+            </div>
+          </div>
+
+          {/* Messages */}
+          <div className="myco-messages">
+            {msgs.length === 0 && !loading && (
+              <div className="myco-empty">
+                <div className="myco-empty-glyph">◇ △ ◇</div>
+                <div className="myco-empty-text">
+                  What shall we cultivate today, {currentMember ? currentMember.name : 'Hyphae'}?
+                </div>
+                {/* Quick chips */}
+                <div className="myco-chips">
+                  {MYCO_CHIPS.map(c => (
+                    <button key={c.label} className="myco-chip" onClick={() => useChip(c)}>{c.label}</button>
+                  ))}
+                </div>
+              </div>
+            )}
+            {msgs.map((m, i) => (
+              <div key={i} className={`myco-msg ${m.role === 'user' ? 'user' : 'ai'}`}>
+                {m.role === 'assistant' && (
+                  <div className="myco-msg-avatar">M</div>
+                )}
+                <div className="myco-bubble">{fmtContent(m.content)}</div>
+              </div>
+            ))}
+            {loading && (
+              <div className="myco-msg ai">
+                <div className="myco-msg-avatar">M</div>
+                <div className="myco-bubble myco-typing">
+                  <span /><span /><span />
+                </div>
+              </div>
+            )}
+            {error && (
+              <div className="myco-error">{error}</div>
+            )}
+            <div ref={endRef} />
+          </div>
+
+          {/* After first message show chips again */}
+          {msgs.length > 0 && (
+            <div className="myco-chips-row">
+              {MYCO_CHIPS.map(c => (
+                <button key={c.label} className="myco-chip-sm" onClick={() => useChip(c)}>{c.label}</button>
+              ))}
+            </div>
+          )}
+
+          {/* Input */}
+          <div className="myco-input-row">
+            <textarea
+              ref={inputRef}
+              className="myco-input"
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              placeholder="Ask MYCO anything…"
+              rows={2}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+              }}
+            />
+            <button
+              className="myco-send"
+              onClick={() => send()}
+              disabled={!input.trim() || loading}
+            >
+              {loading ? '…' : '→'}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Toggle button */}
+      <button className={`myco-btn ${open ? 'open' : ''}`} onClick={() => setOpen(o => !o)}>
+        <svg viewBox="0 0 24 24" width={18} height={18}>
+          <polygon points="12,2 22,20 2,20" fill="none" stroke="currentColor" strokeWidth="1.8" />
+          <circle cx="12" cy="13" r="2.5" fill="currentColor" />
+        </svg>
+        <span className="myco-btn-label">MYCO</span>
+      </button>
+    </div>
+  );
+}
+
 /* ── App root ─────────────────────────────────────────────── */
 
 function App() {
@@ -1679,6 +1857,7 @@ function App() {
       <QuickNav tab={tab} onTab={setTab} />
       <EarnSheet open={earnOpen} onClose={() => setEarnOpen(false)} economy={economy} onToast={onToast} />
       <Toast message={toast.msg} kind={toast.kind} onClose={() => setToast({ msg:'', kind:'' })} />
+      <MycoAgent currentMember={currentMember} />
       <SporeTweaks tweaks={tweaks} setTweak={setTweak} />
     </div>
   );
