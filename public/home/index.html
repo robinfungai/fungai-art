@@ -964,13 +964,16 @@ p { line-height: 1.75; color: var(--mist); }
 <nav class="nav" id="mainNav">
   <div class="wrap nav-inner">
     <a href="/" class="nav-brand">
-      <span class="main">Fungai Art</span>
-      <span class="sub">Entheobotanicals</span>
+      <img src="/logo.png" alt="Fungai Art" style="height:32px;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:.88;" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <span style="display:none">
+        <span class="main">Fungai Art</span>
+        <span class="sub">Entheobotanicals</span>
+      </span>
     </a>
     <div class="nav-links">
       <a href="#shop" class="nav-link">Shop</a>
       <a href="#trance" class="nav-link">Mycelium Trance</a>
-      <a href="#forage" class="nav-link">Foraging</a>
+      <a href="/extraction" class="nav-link">Extraction</a>
       <a href="#about" class="nav-link">About</a>
       <a href="/community" class="nav-link" target="_blank">Community</a>
     </div>
@@ -998,10 +1001,10 @@ p { line-height: 1.75; color: var(--mist); }
         <a href="#trance" class="btn-ghost">Mycelium Trance</a>
       </div>
       <div class="hero-quick-nav reveal reveal-d4" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;">
-        <a href="/herbal-engine-2/index.html" style="padding:8px 18px;border:0.5px solid rgba(136,186,200,0.35);color:var(--mist);font-size:12px;letter-spacing:1.5px;text-decoration:none;text-transform:uppercase;border-radius:2px;transition:all 0.2s;" onmouseover="this.style.background='rgba(136,186,200,0.12)'" onmouseout="this.style.background='transparent'">Herbal Engine</a>
+        <a href="/shop" style="padding:8px 18px;border:0.5px solid rgba(136,186,200,0.35);color:var(--mist);font-size:12px;letter-spacing:1.5px;text-decoration:none;text-transform:uppercase;border-radius:2px;transition:all 0.2s;" onmouseover="this.style.background='rgba(136,186,200,0.12)'" onmouseout="this.style.background='transparent'">Elixirs</a>
+        <a href="/mixology" style="padding:8px 18px;border:0.5px solid rgba(136,186,200,0.35);color:var(--mist);font-size:12px;letter-spacing:1.5px;text-decoration:none;text-transform:uppercase;border-radius:2px;transition:all 0.2s;" onmouseover="this.style.background='rgba(136,186,200,0.12)'" onmouseout="this.style.background='transparent'">Herbal Engine</a>
+        <a href="/extraction" style="padding:8px 18px;border:0.5px solid rgba(196,134,46,0.45);color:var(--amber-lt);font-size:12px;letter-spacing:1.5px;text-decoration:none;text-transform:uppercase;border-radius:2px;transition:all 0.2s;" onmouseover="this.style.background='rgba(196,134,46,0.12)'" onmouseout="this.style.background='transparent'">⚗ Extraction</a>
         <a href="/community" style="padding:8px 18px;border:0.5px solid rgba(136,186,200,0.35);color:var(--mist);font-size:12px;letter-spacing:1.5px;text-decoration:none;text-transform:uppercase;border-radius:2px;transition:all 0.2s;" onmouseover="this.style.background='rgba(136,186,200,0.12)'" onmouseout="this.style.background='transparent'">Community</a>
-        <a href="/shop" style="padding:8px 18px;border:0.5px solid rgba(136,186,200,0.35);color:var(--mist);font-size:12px;letter-spacing:1.5px;text-decoration:none;text-transform:uppercase;border-radius:2px;transition:all 0.2s;" onmouseover="this.style.background='rgba(136,186,200,0.12)'" onmouseout="this.style.background='transparent'">Shop</a>
-        <a href="/mixology" style="padding:8px 18px;border:0.5px solid rgba(136,186,200,0.35);color:var(--mist);font-size:12px;letter-spacing:1.5px;text-decoration:none;text-transform:uppercase;border-radius:2px;transition:all 0.2s;" onmouseover="this.style.background='rgba(136,186,200,0.12)'" onmouseout="this.style.background='transparent'">Mixology</a>
       </div>
       <div class="hero-scroll-hint reveal reveal-d4">Scroll to explore</div>
     </div>
@@ -1134,22 +1137,12 @@ p { line-height: 1.75; color: var(--mist); }
         <text x="310" y="778" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="11" fill="#517A40" letter-spacing="3" opacity="0.7">where the forest thinks</text>
       </svg>
     </div>
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <span class="v">3,000+</span>
-        <span class="l">Units sold</span>
-      </div>
-      <div class="hero-stat">
-        <span class="v">€20K+</span>
-        <span class="l">One summer</span>
-      </div>
-      <div class="hero-stat">
-        <span class="v">4</span>
-        <span class="l">Countries</span>
-      </div>
-      <div class="hero-stat">
-        <span class="v">5+</span>
-        <span class="l">Festivals</span>
+    <div class="hero-stats" style="flex-direction:column;align-items:flex-start;gap:6px;padding:20px 28px;">
+      <div style="font-family:var(--script);font-size:20px;color:var(--parchment);line-height:1.3;">living mycelial art.</div>
+      <div style="font-family:var(--serif);font-style:italic;font-size:13px;color:var(--lichen);letter-spacing:0.04em;line-height:1.5;">fusion of biology, alchemy, frequency.</div>
+      <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+        <a href="/extraction" style="font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:var(--amber);padding:6px 12px;border:0.5px solid rgba(136,186,200,0.3);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(136,186,200,0.1)'" onmouseout="this.style.background='transparent'">⚗ Extraction Protocols</a>
+        <a href="/mixology" style="font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:var(--mist);padding:6px 12px;border:0.5px solid rgba(136,186,200,0.2);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(136,186,200,0.08)'" onmouseout="this.style.background='transparent'">Herbal Engine</a>
       </div>
     </div>
   </div>
@@ -1158,20 +1151,20 @@ p { line-height: 1.75; color: var(--mist); }
 <!-- ══ MARQUEE ══ -->
 <div class="marquee-strip">
   <div class="marquee-track">
-    <span>Wild-Foraged</span><span class="dot">·</span>
+    <span>Wild-Foraged Elixirs</span><span class="dot">·</span>
     <span>Entheobotanicals</span><span class="dot">·</span>
     <span>Mycelium Trance</span><span class="dot">·</span>
-    <span>Gaia's Apo'takecare'y</span><span class="dot">·</span>
+    <span>Spagyric Elixirs</span><span class="dot">·</span>
     <span>Pharma-Grade Ethanol</span><span class="dot">·</span>
-    <span>Berlin · Sweden · France · Lebanon</span><span class="dot">·</span>
+    <span>Biology · Alchemy · Frequency</span><span class="dot">·</span>
     <span>Living Mycelial Art</span><span class="dot">·</span>
-    <span>Sacred Plant Allies</span><span class="dot">·</span>
-    <span>Moder Jord Collection</span><span class="dot">·</span>
+    <span>Botanical Elixirs</span><span class="dot">·</span>
+    <span>Double Extraction · Spagyric · Oleoresin</span><span class="dot">·</span>
     <span>Inner Architecture</span><span class="dot">·</span>
-    <span>Wild-Foraged</span><span class="dot">·</span>
+    <span>Wild-Foraged Elixirs</span><span class="dot">·</span>
     <span>Entheobotanicals</span><span class="dot">·</span>
     <span>Mycelium Trance</span><span class="dot">·</span>
-    <span>Gaia's Apo'takecare'y</span><span class="dot">·</span>
+    <span>Spagyric Elixirs</span><span class="dot">·</span>
     <span>Pharma-Grade Ethanol</span><span class="dot">·</span>
     <span>Berlin · Sweden · France · Lebanon</span><span class="dot">·</span>
     <span>Living Mycelial Art</span><span class="dot">·</span>

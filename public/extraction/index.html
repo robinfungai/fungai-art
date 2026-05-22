@@ -64,10 +64,17 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
 <div class="wrap">
 <nav class="nav">
   <div class="nav-brand">
-    <div class="nav-mark">⚗</div>
-    <div class="nav-name">Extraction Protocols</div>
+    <img src="/logo.png" alt="Fungai Art" style="height:28px;width:auto;filter:brightness(0) invert(1);opacity:.85;" onerror="this.style.display='none'">
+    <div style="display:flex;flex-direction:column;gap:1px;">
+      <div class="nav-name">Extraction Protocols</div>
+      <div style="font-family:var(--fm);font-size:7px;letter-spacing:.22em;text-transform:uppercase;color:var(--ad)">Elixirs · Alchemy Lab</div>
+    </div>
   </div>
-  <a href="/mixology" class="nav-back">← Herbal Engine</a>
+  <div style="display:flex;gap:8px;">
+    <a href="/mixology" class="nav-back">Herbal Engine</a>
+    <a href="/community/academy/" class="nav-back">Academy</a>
+    <a href="/" class="nav-back">← Home</a>
+  </div>
 </nav>
 
 <div class="hero">
@@ -82,6 +89,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
   <a href="#decoct" class="mb">Decoction</a>
   <a href="#spagyric" class="mb">Spagyric</a>
   <a href="#oleo" class="mb">Oleoresin</a>
+  <a href="#percolator" class="mb">Percolator</a>
   <a href="#guide" class="mb">Choosing a method</a>
 </div>
 
@@ -238,6 +246,38 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
   </div>
 </div>
 
+<!-- PERCOLATOR -->
+<div class="method" id="percolator">
+  <div class="m-eyebrow" style="color:#6BD66F">Cold percolation · high efficiency · continuous flow</div>
+  <div class="m-title">Percolator</div>
+  <p class="m-blurb">Continuous-flow cold extraction through a packed herb column. Solvent drips slowly through the plant material, extracting as it passes, and fresh solvent constantly contacts the herb — creating a concentration gradient that pulls constituents out far more efficiently than static maceration. No shaking required. Produces a stronger, cleaner extract in less time.</p>
+  <div class="m-meta">
+    <div class="mm"><div class="mm-lbl">Ratio</div><div class="mm-val">1:5 plant to solvent (typical)</div></div>
+    <div class="mm"><div class="mm-lbl">Time</div><div class="mm-val">12–48 hours continuous</div></div>
+    <div class="mm"><div class="mm-lbl">Alcohol %</div><div class="mm-val">40–70% (matched to constituents)</div></div>
+    <div class="mm"><div class="mm-lbl">Advantage vs tincture</div><div class="mm-val">3–5× stronger extraction; no pressing; cleaner separation</div></div>
+  </div>
+  <div class="m-steps-title">Equipment</div>
+  <div class="step"><div class="step-num" style="color:#6BD66F">◎</div><div class="step-txt">Glass percolation cone or cylinder with stopcock at bottom. Cotton or filter paper at the base to retain plant material. Reservoir funnel or dropper bottle at top for solvent. Receiving vessel below.</div></div>
+  <div class="m-steps-title" style="margin-top:14px">Process</div>
+  <div class="step"><div class="step-num" style="color:#6BD66F">1</div><div class="step-txt">Dampen herb with a small amount of the extraction solvent. Let swell 30 minutes — this prevents air pockets that disrupt flow.</div></div>
+  <div class="step"><div class="step-num" style="color:#6BD66F">2</div><div class="step-txt">Pack the dampened herb into the percolator column firmly but not too tight. Too loose = channelling. Too tight = no flow. Use a tamper.</div></div>
+  <div class="step"><div class="step-num" style="color:#6BD66F">3</div><div class="step-txt">Close the stopcock. Add solvent to the top — enough to fully cover herb plus 2–3cm above. Let soak (macerate) for 24 hours. This pre-extraction maximises yield.</div></div>
+  <div class="step"><div class="step-num" style="color:#6BD66F">4</div><div class="step-txt">Open the stopcock to a slow drip (1–2 drops per second). Simultaneously add fresh solvent from the top at the same rate to maintain constant level. Collect the extract below.</div></div>
+  <div class="step"><div class="step-num" style="color:#6BD66F">5</div><div class="step-txt">Continue until 5× the herb weight in solvent has passed through. The extract darkens initially then lightens as exhaustion approaches. Stop when nearly colourless.</div></div>
+  <div class="step"><div class="step-num" style="color:#6BD66F">6</div><div class="step-txt">Optionally: reduce under low heat (below 40°C) or vacuum to concentrate. Bottle in amber glass. Label with ratio, solvent %, herb, date, and batch weight.</div></div>
+  <div class="m-steps-title" style="margin-top:18px">Advanced: bi-solvent percolation</div>
+  <div class="step"><div class="step-num" style="color:#6BD66F">↑</div><div class="step-txt">Run water-based solvent first to extract polysaccharides, then alcohol-based to extract alkaloids and resins. Combine extracts at the end. Equivalent to double extraction but with percolation efficiency — particularly powerful for reishi, astragalus, and dense roots.</div></div>
+  <div class="m-herbs-title">Ideal for dense-constituent herbs</div>
+  <div class="herb-tags">
+    <span class="htag" style="border-color:#6BD66F55;color:#B6F0AE">All dense roots (Ashwagandha, Ginseng, Burdock)</span>
+    <span class="htag" style="border-color:#6BD66F55;color:#B6F0AE">Bark (Pau d'Arco, Bayberry)</span>
+    <span class="htag" style="border-color:#6BD66F55;color:#B6F0AE">Medicinal fungi</span>
+    <span class="htag" style="border-color:#6BD66F55;color:#B6F0AE">High-value herbs (Saffron, Blue Lotus)</span>
+    <span class="htag" style="border-color:#6BD66F55;color:#B6F0AE">Any herb where maximum yield matters</span>
+  </div>
+</div>
+
 <!-- CHOOSING A METHOD -->
 <div class="guide" id="guide">
   <div class="guide-title">Choosing your method.</div>
@@ -267,7 +307,11 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
   </div>
   <div class="guide-row">
     <div class="gr-type">Complete plant intelligence</div>
-    <div class="gr-rec"><strong>Spagyric</strong>. Labour-intensive but the most complete extraction — includes plant salts not captured by standard solvents. 6–12 weeks. Used in the Fungai Art spagyric line.</div>
+    <div class="gr-rec"><strong>Spagyric</strong>. Labour-intensive but the most complete extraction — includes plant salts not captured by standard solvents. 6–12 weeks. Used in the Fungai Art spagyric elixir line.</div>
+  </div>
+  <div class="guide-row">
+    <div class="gr-type">Maximum yield · efficiency</div>
+    <div class="gr-rec"><strong>Percolator</strong>. When you need the strongest possible extract from expensive or dense material, or want to process larger batches efficiently. 3–5× more efficient than static maceration. Also excellent for standardising extracts across batches.</div>
   </div>
 </div>
 

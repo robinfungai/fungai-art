@@ -1585,7 +1585,8 @@ function SporeTweaks({ tweaks, setTweak }) {
 
 function QuickNav({ tab, onTab }) {
   const items = [
-    { icon:'⚗', label:'Alchemy', href:'/community/academy/', ext:true },
+    { icon:'⚗', label:'Academy', href:'/community/academy/', ext:true },
+    { icon:'⬡', label:'Extract', href:'/extraction', ext:true },
     { icon:'🌿', label:'Herbals', href:'/mixology', ext:true },
     { icon:'◎', label:'Shop', href:'/shop', ext:true },
     { icon:'◉', label:'Network', id:'network' },
@@ -1596,7 +1597,7 @@ function QuickNav({ tab, onTab }) {
     <div className="quick-nav">
       {items.map((it, i) => (
         <React.Fragment key={it.label}>
-          {i === 3 && <div className="qn-divider" />}
+          {i === 4 && <div className="qn-divider" />}
           {it.ext ? (
             <a href={it.href} target="_blank" className="qn-item">
               <span className="qn-icon">{it.icon}</span>

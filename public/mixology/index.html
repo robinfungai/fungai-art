@@ -16,9 +16,20 @@ button{font-family:inherit;cursor:pointer;}
 .nav-brand{display:flex;align-items:center;gap:10px;}
 .nav-title{font-family:var(--fd);font-style:italic;font-size:20px;color:var(--ml);letter-spacing:-.02em;}
 .nav-sub{font-family:var(--fm);font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--md);margin-top:2px;}
-.nav-links{display:flex;gap:8px;}
+.nav-links{display:flex;gap:8px;align-items:center;}
 .nav-back{font-family:var(--fm);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--md);padding:7px 12px;border:0.5px solid var(--r);border-radius:5px;text-decoration:none;transition:all .15s;}
 .nav-back:hover{color:var(--ml);border-color:var(--rl);}
+/* Analyze button + result */
+.fp-analyze{font-family:var(--fm);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;background:rgba(232,177,75,.1);border:0.5px solid rgba(232,177,75,.4);border-radius:5px;padding:8px 16px;color:#F5D689;transition:all .15s;cursor:pointer;}
+.fp-analyze:hover{background:rgba(232,177,75,.2);}
+.fp-analyze:disabled{opacity:.4;cursor:not-allowed;}
+.fp-analysis{margin-top:14px;padding:14px 16px;background:var(--s2);border:0.5px solid rgba(232,177,75,.2);border-radius:10px;font-size:12.5px;color:var(--m);line-height:1.65;white-space:pre-wrap;animation:pi .3s ease-out;}
+.fp-analysis-head{font-family:var(--fm);font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(232,177,75,.7);margin-bottom:10px;}
+.fp-typing{display:flex;align-items:center;gap:4px;padding:6px 0;}
+.fp-typing span{width:5px;height:5px;border-radius:50%;background:#F5D689;opacity:.5;animation:myco-pulse 1.2s ease-in-out infinite;}
+.fp-typing span:nth-child(2){animation-delay:.2s;}
+.fp-typing span:nth-child(3){animation-delay:.4s;}
+@keyframes myco-pulse{0%,80%,100%{transform:scale(.7);opacity:.3;}40%{transform:scale(1);opacity:1;}}
 .hero{margin-bottom:22px;}
 .hero-ey{font-family:var(--fm);font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--a);margin-bottom:7px;}
 .hero-title{font-family:var(--fd);font-style:italic;font-size:clamp(32px,5.5vw,50px);color:var(--ml);letter-spacing:-.025em;line-height:.96;margin-bottom:8px;}
@@ -62,7 +73,7 @@ button{font-family:inherit;cursor:pointer;}
 .hcat{font-family:var(--fm);font-size:7px;letter-spacing:.1em;text-transform:uppercase;padding:2px 5px;border-radius:3px;background:rgba(201,184,148,.07);color:var(--md);}
 .hcat.fu{background:rgba(232,177,75,.1);color:var(--al);}
 .hprim{font-size:11px;color:var(--m);line-height:1.45;opacity:.82;}
-.hadd{position:absolute;bottom:9px;right:9px;width:21px;height:21px;border-radius:50%;border:0.5px solid var(--r);background:var(--s3);color:var(--md);font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.hadd{position:absolute;bottom:8px;right:8px;width:28px;height:28px;border-radius:50%;border:0.5px solid var(--r);background:var(--s3);color:var(--md);font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
 .hc:hover .hadd{border-color:var(--gd);color:var(--gl);}
 .hc.sel .hadd{background:var(--gd);border-color:var(--gd);color:var(--s);font-size:11px;}
 .hc.fungi:hover .hadd{border-color:var(--ad);color:var(--al);}
@@ -138,13 +149,17 @@ button{font-family:inherit;cursor:pointer;}
 <div class="wrap pe">
 <nav class="nav">
   <div class="nav-brand">
-    <div>
-      <div class="nav-title">Herbal Engine</div>
-      <div class="nav-sub">Fungai Art · 127 Botanicals</div>
-    </div>
+    <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+      <img src="/logo.png" alt="Fungai Art" style="height:26px;width:auto;filter:brightness(0) invert(1);opacity:.82;" onerror="this.style.display='none'">
+      <div>
+        <div class="nav-title">Herbal Engine</div>
+        <div class="nav-sub">Fungai Art Elixirs · 127 Botanicals</div>
+      </div>
+    </a>
   </div>
   <div class="nav-links">
-    <a href="/extraction" class="nav-back">⚗ Extraction guide</a>
+    <a href="/extraction" class="nav-back">⚗ Extraction</a>
+    <a href="/community/academy/" class="nav-back">Academy</a>
     <a href="/" class="nav-back">← Home</a>
   </div>
 </nav>
@@ -169,9 +184,11 @@ button{font-family:inherit;cursor:pointer;}
     <div class="fp-head"><div class="fp-title">Your formula</div><button class="fp-x" onclick="togglePanel()">×</button></div>
     <div class="fp-chips" id="chips"></div>
     <div id="fp-summary-wrap"></div>
+    <div id="fp-analysis-wrap"></div>
     <div class="fp-foot">
       <button class="fp-clr" onclick="clearF()">Clear all</button>
-      <button class="fp-sv" onclick="saveF()">Save formula</button>
+      <button class="fp-sv" onclick="saveF()">Save</button>
+      <button class="fp-analyze" id="analyzeBtn" onclick="analyzeFormula()" disabled>✦ Analyze formula</button>
       <span class="fp-cnt" id="fcnt"></span>
     </div>
   </div>
@@ -421,6 +438,7 @@ function updatePanel(){
   chips.innerHTML=F.length===0?'<span class="fp-empty">Add herbs from the grid to build your formula.</span>':F.map(id=>{const h=H.find(x=>x.id===id);if(!h)return'';return`<span class="chip ${h.f?'fu':''}">${h.n}<button class="chip-x" onclick="tog('${id}')">×</button></span>`;}).join('');
   cnt.textContent=F.length>0?`${F.length}/8`:'';
   fab.textContent=F.length>0?`⚗ Formula (${F.length})`:'⚗ Formula';
+  const ab=document.getElementById('analyzeBtn');if(ab)ab.disabled=F.length<1;
   // Summary
   if(F.length>=2){
     const s=buildSummary();
@@ -454,7 +472,28 @@ function updatePanel(){
 }
 
 function togglePanel(){open=!open;document.getElementById('fpanel').classList.toggle('open',open);}
-function clearF(){F=[];updatePanel();render();}
+function clearF(){F=[];document.getElementById('fp-analysis-wrap').innerHTML='';updatePanel();render();}
+
+async function analyzeFormula(){
+  if(F.length<1)return;
+  const herbs=F.map(id=>H.find(h=>h.id===id)).filter(Boolean);
+  const btn=document.getElementById('analyzeBtn');
+  const wrap=document.getElementById('fp-analysis-wrap');
+  btn.disabled=true;btn.textContent='Analyzing…';
+  wrap.innerHTML=`<div class="fp-analysis"><div class="fp-analysis-head">MYCO · Formula Intelligence</div><div class="fp-typing"><span></span><span></span><span></span></div></div>`;
+  const herbList=herbs.map(h=>`${h.n} (${h.c.map(c=>c).join(', ')}, caution:${h.x}, element:${EL_NAME[h.el]})`).join('\n');
+  const prompt=`Analyze this herbal formula for Fungai Art elixirs:\n\n${herbList}\n\nProvide:\n1. Formula name suggestion (poetic, brand-appropriate)\n2. Primary actions and target system\n3. Synergies between these specific herbs\n4. Extraction recommendation (method and ratio)\n5. Contraindications and who should avoid\n6. Suggested dose and timing\n7. One sentence that captures the essence of this blend as an elixir\n\nBe precise and practical. This is for the Fungai Art lab.`;
+  try{
+    const res=await fetch('/api/myco-agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:prompt,history:[]})});
+    const data=await res.json();
+    if(data.error){wrap.innerHTML=`<div class="fp-analysis" style="color:#fca5a5">${data.error}</div>`;}
+    else{wrap.innerHTML=`<div class="fp-analysis"><div class="fp-analysis-head">✦ MYCO · Formula Intelligence</div>${data.reply.replace(/\n/g,'<br>')}</div>`;}
+  }catch(e){
+    wrap.innerHTML=`<div class="fp-analysis" style="color:#fca5a5">Connection error. Is the API key configured?</div>`;
+  }
+  btn.disabled=false;btn.textContent='✦ Analyze formula';
+}
+
 function saveF(){
   if(!F.length)return;
   const names=F.map(id=>H.find(h=>h.id===id)?.n||id).join(', ');
