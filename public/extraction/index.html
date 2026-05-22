@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Extraction Protocols — Fungai Art</title>
+<link rel="preconnect" href="https://api.fontshare.com"/>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500&f[]=satoshi@400,500,600&f[]=geist-mono@400&display=swap"/>
+<style>
+:root{--s:#060809;--s2:#0F1014;--s3:#171A1F;--s4:#1F2228;--m:#C9B894;--md:#8B7E62;--ml:#E6D9B5;--g:#6BD66F;--gd:#2E7A35;--gl:#B6F0AE;--a:#E8B14B;--ad:#8B6320;--al:#F5D689;--r:rgba(201,184,148,.11);--rl:rgba(201,184,148,.2);--fd:'Zodiak','Cormorant Garamond',Georgia,serif;--fs:'Satoshi',system-ui,sans-serif;--fm:'Geist Mono',monospace;}
+*{box-sizing:border-box;margin:0;padding:0;}html,body{background:var(--s);color:var(--m);font-family:var(--fs);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.28;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .79 0 0 0 0 .72 0 0 0 0 .58 0 0 0 .06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 80px;position:relative;z-index:1;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0 0;margin-bottom:48px;}
+.nav-brand{display:flex;align-items:center;gap:10px;}
+.nav-mark{width:28px;height:28px;background:radial-gradient(circle,var(--al) 0%,var(--ad) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;}
+.nav-name{font-family:var(--fd);font-style:italic;font-size:18px;color:var(--ml);letter-spacing:-.02em;}
+.nav-back{font-family:var(--fm);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--md);padding:7px 12px;border:0.5px solid var(--r);border-radius:5px;text-decoration:none;transition:all .15s;}
+.nav-back:hover{color:var(--ml);border-color:var(--rl);}
+.hero{margin-bottom:40px;}
+.hero-ey{font-family:var(--fm);font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--a);margin-bottom:8px;}
+.hero-title{font-family:var(--fd);font-style:italic;font-size:clamp(34px,5vw,52px);color:var(--ml);letter-spacing:-.025em;line-height:.96;margin-bottom:10px;}
+.hero-title em{color:var(--a);}
+.hero-blurb{font-size:13px;color:var(--m);line-height:1.65;max-width:54ch;opacity:.85;}
+/* Quick-select bar */
+.method-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:36px;}
+.mb{font-family:var(--fm);font-size:7.5px;letter-spacing:.13em;text-transform:uppercase;padding:6px 11px;border-radius:5px;border:0.5px solid var(--r);background:none;color:var(--md);text-decoration:none;transition:all .15s;}
+.mb:hover{color:var(--ml);border-color:var(--rl);}
+/* Method cards */
+.method{margin-bottom:48px;border-top:0.5px solid var(--r);padding-top:32px;}
+.m-eyebrow{font-family:var(--fm);font-size:8px;letter-spacing:.24em;text-transform:uppercase;margin-bottom:7px;}
+.m-title{font-family:var(--fd);font-style:italic;font-size:clamp(28px,4vw,40px);color:var(--ml);letter-spacing:-.02em;line-height:1;margin-bottom:14px;}
+.m-blurb{font-size:13px;color:var(--m);line-height:1.65;opacity:.88;margin-bottom:22px;max-width:58ch;}
+.m-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px;}
+@media(min-width:540px){.m-meta{grid-template-columns:repeat(3,1fr);}}
+.mm{background:var(--s2);border:0.5px solid var(--r);border-radius:8px;padding:12px 14px;}
+.mm-lbl{font-family:var(--fm);font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--md);margin-bottom:4px;}
+.mm-val{font-size:12.5px;color:var(--ml);}
+.m-steps-title{font-family:var(--fm);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--md);margin-bottom:12px;}
+.step{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start;}
+.step-num{width:22px;height:22px;border-radius:50%;background:var(--s3);border:0.5px solid var(--r);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:9px;margin-top:1px;}
+.step-txt{font-size:13px;color:var(--m);line-height:1.55;}
+.m-herbs-title{font-family:var(--fm);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--md);margin-top:20px;margin-bottom:10px;}
+.herb-tags{display:flex;flex-wrap:wrap;gap:5px;}
+.htag{font-family:var(--fm);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:4px;border:0.5px solid var(--r);color:var(--md);}
+/* Choose guide */
+.guide{background:var(--s2);border:0.5px solid var(--rl);border-radius:14px;padding:24px;margin-bottom:48px;}
+.guide-title{font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml);margin-bottom:16px;}
+.guide-row{display:flex;gap:12px;padding:12px 0;border-bottom:0.5px solid var(--r);align-items:flex-start;}
+.guide-row:last-child{border:none;}
+.gr-type{font-family:var(--fm);font-size:8px;letter-spacing:.14em;text-transform:uppercase;width:120px;flex-shrink:0;color:var(--a);}
+.gr-rec{font-size:12.5px;color:var(--m);line-height:1.5;}
+/* Caution box */
+.caution{background:rgba(248,113,113,.06);border:0.5px solid rgba(248,113,113,.25);border-radius:10px;padding:16px 18px;margin-bottom:40px;}
+.caution-title{font-family:var(--fm);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#fca5a5;margin-bottom:8px;}
+.caution-body{font-size:12.5px;color:var(--m);line-height:1.65;}
+/* Footer */
+.foot{border-top:0.5px solid var(--r);padding-top:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.foot-links{display:flex;gap:16px;}
+.foot-link{font-family:var(--fm);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--md);text-decoration:none;transition:color .15s;}
+.foot-link:hover{color:var(--ml);}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="nav">
+  <div class="nav-brand">
+    <div class="nav-mark">⚗</div>
+    <div class="nav-name">Extraction Protocols</div>
+  </div>
+  <a href="/mixology" class="nav-back">← Herbal Engine</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-ey">Alchemy · Fungai Art Lab</div>
+  <h1 class="hero-title">Extract the <em>intelligence.</em></h1>
+  <p class="hero-blurb">Five methods. Each one draws out a different truth from the plant. Choose your solvent, respect the ratio, honour the time.</p>
+</div>
+
+<div class="method-bar">
+  <a href="#double" class="mb">Double Extraction</a>
+  <a href="#tincture" class="mb">Cold Tincture</a>
+  <a href="#decoct" class="mb">Decoction</a>
+  <a href="#spagyric" class="mb">Spagyric</a>
+  <a href="#oleo" class="mb">Oleoresin</a>
+  <a href="#guide" class="mb">Choosing a method</a>
+</div>
+
+<!-- DOUBLE EXTRACTION -->
+<div class="method" id="double">
+  <div class="m-eyebrow" style="color:#4FA8E0">For fungi · polysaccharides + triterpenes</div>
+  <div class="m-title">Double Extraction</div>
+  <p class="m-blurb">Hot water pulls the beta-glucans (immune polysaccharides); alcohol captures the triterpenes (adaptogenic, anti-inflammatory). No single solvent gets both. Essential for Reishi, Chaga, Turkey Tail, Maitake — skip one step and you lose half the medicine.</p>
+  <div class="m-meta">
+    <div class="mm"><div class="mm-lbl">Ratio</div><div class="mm-val">1:1 decoction to tincture</div></div>
+    <div class="mm"><div class="mm-lbl">Final alcohol</div><div class="mm-val">25–30%</div></div>
+    <div class="mm"><div class="mm-lbl">Total time</div><div class="mm-val">4–8 weeks</div></div>
+  </div>
+  <div class="m-steps-title">Process</div>
+  <div class="step"><div class="step-num" style="color:#4FA8E0">1</div><div class="step-txt">Grind or break mushroom into small pieces. Decoct in 20× water weight for 2–4 hours on low simmer. Do not boil hard — denatures some beta-glucans.</div></div>
+  <div class="step"><div class="step-num" style="color:#4FA8E0">2</div><div class="step-txt">Cool completely. Strain the decoction through muslin. Press marc firmly — all liquid is medicine.</div></div>
+  <div class="step"><div class="step-num" style="color:#4FA8E0">3</div><div class="step-txt">Separately, macerate a fresh portion of mushroom in 95% ethanol for 4–6 weeks. Shake daily. Strain and press.</div></div>
+  <div class="step"><div class="step-num" style="color:#4FA8E0">4</div><div class="step-txt">Combine decoction and tincture 1:1 by volume. Final product is ~25–30% alcohol. Label with mushroom species, date, method, and batch weight.</div></div>
+  <div class="m-steps-title" style="margin-top:18px">Advanced: concentrated version</div>
+  <div class="step"><div class="step-num" style="color:#4FA8E0">↑</div><div class="step-txt">Reduce the decoction to 5× concentration before combining. Result is a 4:1 or 8:1 equivalent extract. Preserve in amber glass. Dilute 1:4 before use or dose in drops.</div></div>
+  <div class="m-herbs-title">Best for these fungi</div>
+  <div class="herb-tags">
+    <span class="htag" style="border-color:#4FA8E055;color:#A6D5F2">Reishi</span>
+    <span class="htag" style="border-color:#4FA8E055;color:#A6D5F2">Chaga</span>
+    <span class="htag" style="border-color:#4FA8E055;color:#A6D5F2">Turkey Tail</span>
+    <span class="htag" style="border-color:#4FA8E055;color:#A6D5F2">Maitake</span>
+    <span class="htag" style="border-color:#4FA8E055;color:#A6D5F2">Shiitake</span>
+    <span class="htag" style="border-color:#4FA8E055;color:#A6D5F2">Agaricus Blazei</span>
+    <span class="htag" style="border-color:#4FA8E055;color:#A6D5F2">Trametes versicolor</span>
+    <span class="htag" style="border-color:#4FA8E055;color:#A6D5F2">Cordyceps</span>
+  </div>
+</div>
+
+<!-- COLD TINCTURE -->
+<div class="method" id="tincture">
+  <div class="m-eyebrow" style="color:#6BD66F">Leaves · flowers · bark · roots</div>
+  <div class="m-title">Cold Tincture</div>
+  <p class="m-blurb">The foundational extraction. Ethanol draws out both water- and alcohol-soluble constituents in one pass: alkaloids, glycosides, resins, tannins, volatile oils. Simple, broad-spectrum, reliable. The starting point for almost every formula.</p>
+  <div class="m-meta">
+    <div class="mm"><div class="mm-lbl">Ratio (fresh)</div><div class="mm-val">1:3 plant to solvent</div></div>
+    <div class="mm"><div class="mm-lbl">Ratio (dry)</div><div class="mm-val">1:5 plant to solvent</div></div>
+    <div class="mm"><div class="mm-lbl">Time</div><div class="mm-val">2–6 weeks</div></div>
+    <div class="mm"><div class="mm-lbl">Alcohol %</div><div class="mm-val">40–60% (low-volatile)<br/>70–95% (resins, alkaloids)</div></div>
+    <div class="mm"><div class="mm-lbl">Dose</div><div class="mm-val">1–3 ml in water, 2–3×/day</div></div>
+  </div>
+  <div class="m-steps-title">Process</div>
+  <div class="step"><div class="step-num" style="color:#6BD66F">1</div><div class="step-txt">Chop or coarsely grind dried herb (or use fresh herb — reduce solvent slightly). Fill jar to ⅓–½ full.</div></div>
+  <div class="step"><div class="step-num" style="color:#6BD66F">2</div><div class="step-txt">Cover completely with appropriate alcohol percentage. Leave 2cm above herb level. Cap tightly. Label date and herb.</div></div>
+  <div class="step"><div class="step-num" style="color:#6BD66F">3</div><div class="step-txt">Macerate 2–6 weeks in a cool, dark place. Shake or invert daily to prevent settlement and maximize extraction surface.</div></div>
+  <div class="step"><div class="step-num" style="color:#6BD66F">4</div><div class="step-txt">Strain through muslin. Press marc firmly using a wine press or straining cloth. Bottle in amber glass. Label species, ratio, alcohol %, harvest date.</div></div>
+  <div class="m-herbs-title">Works well for</div>
+  <div class="herb-tags">
+    <span class="htag" style="border-color:#6BD66F55;color:#B6F0AE">Ashwagandha root</span>
+    <span class="htag" style="border-color:#6BD66F55;color:#B6F0AE">Valerian root</span>
+    <span class="htag" style="border-color:#6BD66F55;color:#B6F0AE">Passionflower</span>
+    <span class="htag" style="border-color:#6BD66F55;color:#B6F0AE">Skullcap</span>
+    <span class="htag" style="border-color:#6BD66F55;color:#B6F0AE">Blue Lotus</span>
+    <span class="htag" style="border-color:#6BD66F55;color:#B6F0AE">Damiana</span>
+    <span class="htag" style="border-color:#6BD66F55;color:#B6F0AE">Mugwort</span>
+    <span class="htag" style="border-color:#6BD66F55;color:#B6F0AE">Schizandra</span>
+    <span class="htag" style="border-color:#6BD66F55;color:#B6F0AE">Ginseng root</span>
+    <span class="htag" style="border-color:#6BD66F55;color:#B6F0AE">Milk Thistle seeds</span>
+    <span class="htag" style="border-color:#6BD66F55;color:#B6F0AE">St. John's Wort flowers</span>
+  </div>
+</div>
+
+<!-- DECOCTION -->
+<div class="method" id="decoct">
+  <div class="m-eyebrow" style="color:#C48838">Roots · bark · woody mushrooms · seeds</div>
+  <div class="m-title">Decoction</div>
+  <p class="m-blurb">Long simmering to break open tough cellular structure — lignified roots, dense bark, hard mushroom fruiting bodies. Water extracts polysaccharides and water-soluble constituents that alcohol cannot reach in a cold maceration.</p>
+  <div class="m-meta">
+    <div class="mm"><div class="mm-lbl">Ratio</div><div class="mm-val">1:20 plant to water</div></div>
+    <div class="mm"><div class="mm-lbl">Reduce to</div><div class="mm-val">1/3 of original volume</div></div>
+    <div class="mm"><div class="mm-lbl">Time</div><div class="mm-val">45–120 min active</div></div>
+  </div>
+  <div class="m-steps-title">Process</div>
+  <div class="step"><div class="step-num" style="color:#C48838">1</div><div class="step-txt">Cold soak herb in water 20–30 min. This swells the plant material and pre-extracts some constituents.</div></div>
+  <div class="step"><div class="step-num" style="color:#C48838">2</div><div class="step-txt">Bring to a very gentle simmer (not rolling boil). Cover with lid to retain volatile constituents.</div></div>
+  <div class="step"><div class="step-num" style="color:#C48838">3</div><div class="step-txt">Simmer 45–120 min, reducing volume by ⅓. Add water periodically to maintain level if needed.</div></div>
+  <div class="step"><div class="step-num" style="color:#C48838">4</div><div class="step-txt">Strain immediately while hot — polysaccharides gel on cooling, making straining difficult. Press marc firmly.</div></div>
+  <div class="step"><div class="step-num" style="color:#C48838">5</div><div class="step-txt">Drink fresh (1–2 days). Or reduce further to a thick syrup/paste and preserve with honey. Add 20% alcohol to extend shelf life to 6+ months.</div></div>
+  <div class="m-herbs-title">Ideal for</div>
+  <div class="herb-tags">
+    <span class="htag" style="border-color:#C4883855;color:#F5D689">Reishi (step 1 of double extract)</span>
+    <span class="htag" style="border-color:#C4883855;color:#F5D689">Astragalus root</span>
+    <span class="htag" style="border-color:#C4883855;color:#F5D689">Pau d'Arco bark</span>
+    <span class="htag" style="border-color:#C4883855;color:#F5D689">Burdock root</span>
+    <span class="htag" style="border-color:#C4883855;color:#F5D689">Turmeric root</span>
+    <span class="htag" style="border-color:#C4883855;color:#F5D689">Ginger root</span>
+    <span class="htag" style="border-color:#C4883855;color:#F5D689">Hawthorn berry</span>
+    <span class="htag" style="border-color:#C4883855;color:#F5D689">Licorice root</span>
+    <span class="htag" style="border-color:#C4883855;color:#F5D689">Red Dates</span>
+    <span class="htag" style="border-color:#C4883855;color:#F5D689">Yellow Dock</span>
+  </div>
+</div>
+
+<!-- SPAGYRIC -->
+<div class="method" id="spagyric">
+  <div class="m-eyebrow" style="color:#A88FE0">Paracelsus · 16th century · three principles</div>
+  <div class="m-title">Spagyric</div>
+  <p class="m-blurb">Separate, purify, recombine. The plant is split into its three philosophical principles — Sulfur (essence, ethanol extract), Mercury (spirit, distilled alcohol), Salt (body, calcined ash) — then reunited into a potentised whole. The resulting tincture contains the full plant intelligence including mineral salts not present in standard tinctures.</p>
+  <div class="m-meta">
+    <div class="mm"><div class="mm-lbl">Ratio</div><div class="mm-val">1:5 plant to solvent</div></div>
+    <div class="mm"><div class="mm-lbl">Time</div><div class="mm-val">6–12 weeks total</div></div>
+    <div class="mm"><div class="mm-lbl">Complexity</div><div class="mm-val">Advanced</div></div>
+  </div>
+  <div class="m-steps-title">Process (planetary method)</div>
+  <div class="step"><div class="step-num" style="color:#A88FE0">1</div><div class="step-txt">Macerate plant in 40–50% ethanol for 4–6 weeks. This is the Sulfur extraction. Shake daily.</div></div>
+  <div class="step"><div class="step-num" style="color:#A88FE0">2</div><div class="step-txt">Strain and press. Set the liquid aside. This is your base tincture.</div></div>
+  <div class="step"><div class="step-num" style="color:#A88FE0">3</div><div class="step-txt">Calcine the pressed marc (plant body). Burn in a ceramic dish until grey ash. Repeat burn until white. This is the Salt — mineral matrix of the plant.</div></div>
+  <div class="step"><div class="step-num" style="color:#A88FE0">4</div><div class="step-txt">Dissolve the white ash (Salt) back into the tincture (Sulfur). Cap and let integrate 2 weeks, shaking daily.</div></div>
+  <div class="step"><div class="step-num" style="color:#A88FE0">5</div><div class="step-txt">Filter through fine paper. The Mercury (distilled spirit) can optionally be re-added. Bottle in amber glass. Dose in drops (3–7 drops under tongue).</div></div>
+  <div class="m-herbs-title">Classical choices</div>
+  <div class="herb-tags">
+    <span class="htag" style="border-color:#A88FE055;color:#C5B5F5">Melissa (Lemon Balm)</span>
+    <span class="htag" style="border-color:#A88FE055;color:#C5B5F5">Chamomile</span>
+    <span class="htag" style="border-color:#A88FE055;color:#C5B5F5">Calendula</span>
+    <span class="htag" style="border-color:#A88FE055;color:#C5B5F5">Rose</span>
+    <span class="htag" style="border-color:#A88FE055;color:#C5B5F5">Holy Basil</span>
+    <span class="htag" style="border-color:#A88FE055;color:#C5B5F5">Rosemary</span>
+    <span class="htag" style="border-color:#A88FE055;color:#C5B5F5">Nettle</span>
+    <span class="htag" style="border-color:#A88FE055;color:#C5B5F5">Yarrow</span>
+    <span class="htag" style="border-color:#A88FE055;color:#C5B5F5">Sage</span>
+  </div>
+</div>
+
+<!-- OLEORESIN -->
+<div class="method" id="oleo">
+  <div class="m-eyebrow" style="color:#E8714B">Fat-soluble · aromatic · lipid carrier</div>
+  <div class="m-title">Oleoresin / Oil Infusion</div>
+  <p class="m-blurb">Essential oils, resins, fat-soluble vitamins, and lipophilic compounds require a lipid carrier. Ethanol and water cannot pull these out effectively. Slow oil infusion at low heat captures volatile aromatics and fat-soluble medicine. Used for topical preparations, culinary extracts, and a carrier for fat-soluble adaptogens.</p>
+  <div class="m-meta">
+    <div class="mm"><div class="mm-lbl">Ratio</div><div class="mm-val">1:8 plant to oil</div></div>
+    <div class="mm"><div class="mm-lbl">Temperature</div><div class="mm-val">55–65°C (low)</div></div>
+    <div class="mm"><div class="mm-lbl">Time</div><div class="mm-val">4–8 hours active, or cold 4–6 weeks</div></div>
+  </div>
+  <div class="m-steps-title">Process (warm method)</div>
+  <div class="step"><div class="step-num" style="color:#E8714B">1</div><div class="step-txt">Dry plant material thoroughly before use. Any moisture causes mould in oil. Use completely dried herb — or dehydrate at 40°C for 12h first.</div></div>
+  <div class="step"><div class="step-num" style="color:#E8714B">2</div><div class="step-txt">Pack herb into a heat-safe vessel. Cover with olive oil, MCT, or sunflower oil (choose by intended use). Leave 2cm oil above herb.</div></div>
+  <div class="step"><div class="step-num" style="color:#E8714B">3</div><div class="step-txt">Hold at 55–65°C in a water bath or slow cooker on lowest setting. 4–8 hours. Do not exceed 70°C — volatiles evaporate and oil oxidises.</div></div>
+  <div class="step"><div class="step-num" style="color:#E8714B">4</div><div class="step-txt">Strain through fine muslin while warm. Press marc. Store in amber glass in a cool, dark place. Add vitamin E (1% by volume) as natural preservative.</div></div>
+  <div class="m-herbs-title">Well-suited herbs</div>
+  <div class="herb-tags">
+    <span class="htag" style="border-color:#E8714B55;color:#F5A080">Calendula flowers (topical)</span>
+    <span class="htag" style="border-color:#E8714B55;color:#F5A080">Lavender</span>
+    <span class="htag" style="border-color:#E8714B55;color:#F5A080">Rosemary</span>
+    <span class="htag" style="border-color:#E8714B55;color:#F5A080">St. John's Wort</span>
+    <span class="htag" style="border-color:#E8714B55;color:#F5A080">Cayenne (topical)</span>
+    <span class="htag" style="border-color:#E8714B55;color:#F5A080">Pine Pollen</span>
+    <span class="htag" style="border-color:#E8714B55;color:#F5A080">Turmeric + black pepper</span>
+    <span class="htag" style="border-color:#E8714B55;color:#F5A080">Shilajit (warm dissolve)</span>
+    <span class="htag" style="border-color:#E8714B55;color:#F5A080">Vanilla bean</span>
+  </div>
+</div>
+
+<!-- CHOOSING A METHOD -->
+<div class="guide" id="guide">
+  <div class="guide-title">Choosing your method.</div>
+  <div class="guide-row">
+    <div class="gr-type">Medicinal Fungi</div>
+    <div class="gr-rec">Always <strong>Double Extraction</strong>. Hot water extracts beta-glucans; alcohol extracts triterpenes. You need both. Lion's Mane is an exception — cold tincture works well for the erinacines that support NGF.</div>
+  </div>
+  <div class="guide-row">
+    <div class="gr-type">Hard roots & bark</div>
+    <div class="gr-rec"><strong>Decoction</strong> for primary water-soluble constituents. <strong>Tincture</strong> for alkaloids, glycosides, and fat-soluble compounds. Often best to do both and combine.</div>
+  </div>
+  <div class="guide-row">
+    <div class="gr-type">Flowers & leaves</div>
+    <div class="gr-rec"><strong>Cold tincture</strong> at 40–60% alcohol. Gentle maceration preserves delicate aromatic and volatile constituents. Or cold-water infusion (tea) for purely water-soluble actives.</div>
+  </div>
+  <div class="guide-row">
+    <div class="gr-type">Resins & lipophilic herbs</div>
+    <div class="gr-rec"><strong>Oleoresin / oil infusion</strong>. Or dissolve resin in high-proof alcohol (95%) then dilute with water to 40%. Shilajit, propolis, and most resins work this way.</div>
+  </div>
+  <div class="guide-row">
+    <div class="gr-type">Consciousness herbs</div>
+    <div class="gr-rec"><strong>Cold tincture</strong> (50–70% ethanol for most alkaloids). Spagyric if you want the full mineral matrix. Respect dosage — most consciousness herbs are drop-dose, not ml-dose.</div>
+  </div>
+  <div class="guide-row">
+    <div class="gr-type">Aromatic culinary</div>
+    <div class="gr-rec"><strong>Oleoresin or strong tincture</strong> (70%+ alcohol) for preserved aromatics. Glycerite (vegetable glycerin) as an alcohol-free alternative for food use.</div>
+  </div>
+  <div class="guide-row">
+    <div class="gr-type">Complete plant intelligence</div>
+    <div class="gr-rec"><strong>Spagyric</strong>. Labour-intensive but the most complete extraction — includes plant salts not captured by standard solvents. 6–12 weeks. Used in the Fungai Art spagyric line.</div>
+  </div>
+</div>
+
+<div class="caution">
+  <div class="caution-title">▲ High-caution plants — professional guidance required</div>
+  <div class="caution-body">Kratom, Kava Kava, Amanita muscaria, Calamus, Lobelia, Ephedra, Wormwood, Rhubarb Root, Senna, Mugwort, Black Walnut, Coca Leaf, Calea Zacatechichi. Never extract or combine high-caution plants without direct clinical or traditional knowledge. These require specific dosing windows, preparation methods, and contraindication screening. Not for casual home use.</div>
+</div>
+
+<div class="foot">
+  <div style="font-family:var(--fm);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--md)">Fungai Art · Alchemy Lab</div>
+  <div class="foot-links">
+    <a href="/mixology" class="foot-link">Herbal Engine</a>
+    <a href="/community/academy/" class="foot-link">Alchemy Academy</a>
+    <a href="/community" class="foot-link">Community</a>
+    <a href="/" class="foot-link">Home</a>
+  </div>
+</div>
+</div>
+</body>
+</html>

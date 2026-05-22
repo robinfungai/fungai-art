@@ -6,82 +6,112 @@
 <link rel="preconnect" href="https://api.fontshare.com"/>
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500&f[]=satoshi@400,500,600&f[]=geist-mono@400&display=swap"/>
 <style>
-:root{--s:#060809;--s2:#0F1014;--s3:#171A1F;--s4:#1F2228;--m:#C9B894;--md:#8B7E62;--ml:#E6D9B5;--g:#6BD66F;--gd:#2E7A35;--gl:#B6F0AE;--a:#E8B14B;--ad:#8B6320;--al:#F5D689;--r:rgba(201,184,148,.11);--rl:rgba(201,184,148,.2);--fd:'Zodiak','Cormorant Garamond',Georgia,serif;--fs:'Satoshi',system-ui,sans-serif;--fm:'Geist Mono',monospace;}
+:root{--s:#060809;--s2:#0F1014;--s3:#171A1F;--s4:#1F2228;--m:#C9B894;--md:#8B7E62;--ml:#E6D9B5;--g:#6BD66F;--gd:#2E7A35;--gl:#B6F0AE;--a:#E8B14B;--ad:#8B6320;--al:#F5D689;--r:rgba(201,184,148,.11);--rl:rgba(201,184,148,.2);--fd:'Zodiak','Cormorant Garamond',Georgia,serif;--fs:'Satoshi',system-ui,sans-serif;--fm:'Geist Mono',monospace;
+--eF:#E8714B;--eE:#6BD66F;--eW:#4FA8E0;--eA:#A88FE0;--eS:#E8B14B;}
 *{box-sizing:border-box;margin:0;padding:0;}html,body{background:var(--s);color:var(--m);font-family:var(--fs);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.28;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .79 0 0 0 0 .72 0 0 0 0 .58 0 0 0 .06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");}
 button{font-family:inherit;cursor:pointer;}
-.wrap{max-width:920px;margin:0 auto;padding:0 18px 100px;position:relative;z-index:1;}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0 0;margin-bottom:32px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 18px 100px;position:relative;z-index:1;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0 0;margin-bottom:28px;}
 .nav-brand{display:flex;align-items:center;gap:10px;}
 .nav-title{font-family:var(--fd);font-style:italic;font-size:20px;color:var(--ml);letter-spacing:-.02em;}
 .nav-sub{font-family:var(--fm);font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--md);margin-top:2px;}
+.nav-links{display:flex;gap:8px;}
 .nav-back{font-family:var(--fm);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--md);padding:7px 12px;border:0.5px solid var(--r);border-radius:5px;text-decoration:none;transition:all .15s;}
 .nav-back:hover{color:var(--ml);border-color:var(--rl);}
-.hero{margin-bottom:28px;}
+.hero{margin-bottom:22px;}
 .hero-ey{font-family:var(--fm);font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--a);margin-bottom:7px;}
 .hero-title{font-family:var(--fd);font-style:italic;font-size:clamp(32px,5.5vw,50px);color:var(--ml);letter-spacing:-.025em;line-height:.96;margin-bottom:8px;}
 .hero-title em{color:var(--g);}
 .hero-blurb{font-size:13px;color:var(--m);line-height:1.6;max-width:52ch;opacity:.85;}
-.controls{display:flex;flex-direction:column;gap:9px;margin-bottom:18px;}
+.controls{display:flex;flex-direction:column;gap:7px;margin-bottom:14px;}
 .srch{position:relative;}
 .srch-i{width:100%;padding:11px 14px 11px 38px;background:var(--s2);border:0.5px solid var(--r);border-radius:8px;color:var(--ml);font-family:var(--fs);font-size:13px;outline:none;transition:border-color .2s;}
 .srch-i:focus{border-color:var(--rl);}
 .srch-i::placeholder{color:var(--md);}
 .srch-ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--md);pointer-events:none;}
+/* Category pills */
 .cats{display:flex;gap:5px;flex-wrap:wrap;}
 .cb{font-family:var(--fm);font-size:7.5px;letter-spacing:.13em;text-transform:uppercase;padding:5px 10px;border-radius:5px;border:0.5px solid var(--r);background:none;color:var(--md);transition:all .15s;white-space:nowrap;}
 .cb:hover{color:var(--ml);border-color:var(--rl);}
 .cb.on{background:rgba(107,214,111,.1);border-color:var(--gd);color:var(--gl);}
 .cb.fon{background:rgba(232,177,75,.1);border-color:var(--ad);color:var(--al);}
+/* Element pills */
+.elem-bar{display:flex;gap:5px;flex-wrap:wrap;}
+.eb{font-family:var(--fm);font-size:7.5px;letter-spacing:.13em;text-transform:uppercase;padding:5px 10px;border-radius:5px;border:0.5px solid var(--r);background:none;color:var(--md);transition:all .15s;white-space:nowrap;cursor:pointer;}
+.eb:hover{color:var(--ml);border-color:var(--rl);}
+.eb.on[data-e="F"]{background:rgba(232,113,75,.1);border-color:rgba(232,113,75,.5);color:#F5A080;}
+.eb.on[data-e="E"]{background:rgba(107,214,111,.1);border-color:var(--gd);color:var(--gl);}
+.eb.on[data-e="W"]{background:rgba(79,168,224,.1);border-color:#1F5B85;color:#A6D5F2;}
+.eb.on[data-e="A"]{background:rgba(168,143,224,.1);border-color:#6B5BAA;color:#C5B5F5;}
+.eb.on[data-e="S"]{background:rgba(232,177,75,.1);border-color:var(--ad);color:var(--al);}
+/* Results bar */
 .rbar{font-family:var(--fm);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--md);margin-bottom:11px;}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:8px;}
-.hc{background:var(--s2);border:0.5px solid var(--r);border-radius:9px;padding:13px 14px;cursor:pointer;transition:all .18s;position:relative;overflow:hidden;}
-.hc:hover{border-color:var(--rl);transform:translateY(-2px);box-shadow:0 10px 24px -12px rgba(107,214,111,.15);}
-.hc.fungi{border-color:rgba(232,177,75,.18);}
-.hc.fungi:hover{border-color:var(--ad);box-shadow:0 10px 24px -12px rgba(232,177,75,.2);}
+/* Herb grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;}
+.hc{background:var(--s2);border:0.5px solid var(--r);border-radius:9px;padding:12px 13px;cursor:pointer;transition:all .18s;position:relative;overflow:hidden;}
+.hc:hover{border-color:var(--rl);transform:translateY(-1px);box-shadow:0 8px 22px -10px rgba(107,214,111,.15);}
+.hc.fungi{border-color:rgba(232,177,75,.15);}
+.hc.fungi:hover{border-color:var(--ad);}
 .hc.sel{border-color:var(--gd);background:rgba(107,214,111,.05);}
 .hc.sel.fungi{border-color:var(--ad);background:rgba(232,177,75,.05);}
-.hname{font-family:var(--fd);font-style:italic;font-size:16.5px;color:var(--ml);letter-spacing:-.015em;line-height:1;margin-bottom:4px;}
-.hcats{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px;}
+.hc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:6px;margin-bottom:4px;}
+.hname{font-family:var(--fd);font-style:italic;font-size:16px;color:var(--ml);letter-spacing:-.015em;line-height:1.1;}
+.el-pip{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.hcats{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:5px;}
 .hcat{font-family:var(--fm);font-size:7px;letter-spacing:.1em;text-transform:uppercase;padding:2px 5px;border-radius:3px;background:rgba(201,184,148,.07);color:var(--md);}
 .hcat.fu{background:rgba(232,177,75,.1);color:var(--al);}
-.hprim{font-size:11px;color:var(--m);line-height:1.5;opacity:.83;}
-.hadd{position:absolute;top:9px;right:9px;width:22px;height:22px;border-radius:50%;border:0.5px solid var(--r);background:var(--s3);color:var(--md);font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.hprim{font-size:11px;color:var(--m);line-height:1.45;opacity:.82;}
+.hadd{position:absolute;bottom:9px;right:9px;width:21px;height:21px;border-radius:50%;border:0.5px solid var(--r);background:var(--s3);color:var(--md);font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
 .hc:hover .hadd{border-color:var(--gd);color:var(--gl);}
-.hc.sel .hadd{background:var(--gd);border-color:var(--gd);color:var(--s);font-size:12px;}
+.hc.sel .hadd{background:var(--gd);border-color:var(--gd);color:var(--s);font-size:11px;}
 .hc.fungi:hover .hadd{border-color:var(--ad);color:var(--al);}
 .hc.sel.fungi .hadd{background:var(--ad);border-color:var(--ad);}
 /* Formula FAB */
 .fab{position:fixed;bottom:20px;right:20px;z-index:51;background:var(--gd);border:none;border-radius:999px;padding:10px 18px;color:var(--s);font-family:var(--fm);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:7px;box-shadow:0 4px 20px rgba(107,214,111,.4);transition:all .2s;}
 .fab:hover{background:var(--g);box-shadow:0 6px 28px rgba(107,214,111,.5);}
 /* Formula panel */
-.fpanel{position:fixed;bottom:0;left:0;right:0;z-index:50;background:rgba(6,8,9,.97);backdrop-filter:blur(18px);border-top:0.5px solid var(--rl);padding:14px 18px 26px;transform:translateY(100%);transition:transform .35s cubic-bezier(.2,.9,.3,1);}
+.fpanel{position:fixed;bottom:0;left:0;right:0;z-index:50;background:rgba(6,8,9,.97);backdrop-filter:blur(18px);border-top:0.5px solid var(--rl);padding:14px 18px 26px;transform:translateY(100%);transition:transform .35s cubic-bezier(.2,.9,.3,1);max-height:82vh;overflow-y:auto;}
 .fpanel.open{transform:translateY(0);}
-.fp-inner{max-width:920px;margin:0 auto;}
-.fp-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.fp-inner{max-width:960px;margin:0 auto;}
+.fp-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
 .fp-title{font-family:var(--fd);font-style:italic;font-size:19px;color:var(--ml);}
 .fp-x{background:none;border:none;color:var(--md);font-size:19px;cursor:pointer;}
-.fp-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;min-height:26px;}
+.fp-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;min-height:24px;}
 .chip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;border:0.5px solid var(--gd);background:rgba(107,214,111,.07);font-size:11px;color:var(--gl);}
 .chip.fu{border-color:var(--ad);background:rgba(232,177,75,.07);color:var(--al);}
 .chip-x{background:none;border:none;color:inherit;font-size:12px;opacity:.6;cursor:pointer;}
 .chip-x:hover{opacity:1;}
 .fp-empty{font-size:12px;color:var(--md);font-style:italic;}
-.fp-foot{display:flex;gap:8px;align-items:center;}
+.fp-foot{display:flex;gap:8px;align-items:center;margin-top:10px;}
 .fp-clr{font-family:var(--fm);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;background:none;border:0.5px solid var(--r);border-radius:5px;padding:8px 12px;color:var(--md);transition:all .15s;}
 .fp-clr:hover{color:var(--ml);border-color:var(--rl);}
 .fp-sv{font-family:var(--fm);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;background:rgba(107,214,111,.1);border:0.5px solid var(--gd);border-radius:5px;padding:8px 16px;color:var(--gl);transition:all .15s;}
 .fp-sv:hover{background:rgba(107,214,111,.2);}
 .fp-cnt{font-family:var(--fm);font-size:9px;color:var(--md);margin-left:auto;}
+/* Summary section */
+.fp-summary{margin-top:14px;padding-top:14px;border-top:0.5px solid var(--r);display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+@media(max-width:680px){.fp-summary{grid-template-columns:1fr;}}
+.fps-block{background:var(--s2);border:0.5px solid var(--r);border-radius:9px;padding:12px 14px;}
+.fps-label{font-family:var(--fm);font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--md);margin-bottom:7px;}
+.fps-theme{font-family:var(--fd);font-style:italic;font-size:15px;color:var(--ml);line-height:1.3;}
+.fps-contra-item{display:flex;align-items:center;gap:7px;padding:5px 0;border-bottom:0.5px solid var(--r);font-size:11.5px;color:var(--m);}
+.fps-contra-item:last-child{border:none;}
+.fps-contra-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.fps-ally{display:flex;align-items:center;gap:5px;padding:5px 0;font-size:11.5px;color:var(--m);}
+.fps-ally-sep{color:var(--g);opacity:.7;}
+.fps-none{font-size:11px;color:var(--md);font-style:italic;}
 /* Modal */
 .mbg{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.72);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px;}
 .mbg.on{display:flex;}
 .modal{background:var(--s2);border:0.5px solid var(--rl);border-radius:16px;width:100%;max-width:500px;max-height:88vh;overflow-y:auto;padding:24px;animation:mi .22s ease-out;}
 @keyframes mi{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
-.m-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:14px;}
+.m-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px;}
+.m-name-row{display:flex;align-items:center;gap:9px;}
 .m-name{font-family:var(--fd);font-style:italic;font-size:26px;color:var(--ml);line-height:1;}
+.m-el-badge{font-family:var(--fm);font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:0.5px solid;margin-top:4px;}
 .m-x{background:none;border:none;color:var(--md);font-size:20px;cursor:pointer;flex-shrink:0;}
-.m-cats{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px;}
+.m-cats{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
 .mc{font-family:var(--fm);font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:4px;border:0.5px solid var(--r);color:var(--md);}
 .mc.pri{border-color:var(--gd);color:var(--gl);background:rgba(107,214,111,.07);}
 .mc.fu{border-color:var(--ad);color:var(--al);background:rgba(232,177,75,.07);}
@@ -91,6 +121,9 @@ button{font-family:inherit;cursor:pointer;}
 .cL{background:rgba(107,214,111,.08);border:0.5px solid var(--gd);color:var(--gl);}
 .cM{background:rgba(232,177,75,.08);border:0.5px solid var(--ad);color:var(--al);}
 .cH{background:rgba(248,113,113,.08);border:0.5px solid rgba(248,113,113,.4);color:#fca5a5;}
+/* Extract link */
+.m-extract{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-family:var(--fm);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--a);text-decoration:none;padding:7px 12px;border:0.5px solid rgba(232,177,75,.3);border-radius:6px;background:rgba(232,177,75,.06);transition:all .15s;}
+.m-extract:hover{background:rgba(232,177,75,.14);border-color:var(--a);}
 .m-add{width:100%;margin-top:16px;padding:11px;border-radius:8px;border:0.5px solid var(--gd);background:rgba(107,214,111,.08);color:var(--gl);font-family:var(--fm);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;transition:all .18s;}
 .m-add:hover{background:rgba(107,214,111,.18);}
 .m-add.in{background:var(--gd);color:var(--s);}
@@ -107,18 +140,22 @@ button{font-family:inherit;cursor:pointer;}
   <div class="nav-brand">
     <div>
       <div class="nav-title">Herbal Engine</div>
-      <div class="nav-sub">Fungai Art · 200+ Botanicals</div>
+      <div class="nav-sub">Fungai Art · 127 Botanicals</div>
     </div>
   </div>
-  <a href="/" class="nav-back">← Home</a>
+  <div class="nav-links">
+    <a href="/extraction" class="nav-back">⚗ Extraction guide</a>
+    <a href="/" class="nav-back">← Home</a>
+  </div>
 </nav>
 <div class="hero">
-  <div class="hero-ey">20 categories · herbs + fungi</div>
+  <div class="hero-ey">127 plants · 20 categories · 5 elements</div>
   <h1 class="hero-title">Know your <em>plants.</em></h1>
-  <p class="hero-blurb">The complete Fungai Art botanical reference. Search, filter, build your formula — tap any herb for full detail.</p>
+  <p class="hero-blurb">The complete Fungai Art botanical reference. Filter by element or category, build your formula — tap any herb for full profile and extraction method.</p>
 </div>
 <div class="controls">
   <div class="srch"><span class="srch-ico">◎</span><input class="srch-i" id="si" type="text" placeholder="Search by name or function…" oninput="render()"/></div>
+  <div class="elem-bar" id="elemBar"></div>
   <div class="cats" id="catBar"></div>
 </div>
 <div class="rbar" id="rbar"></div>
@@ -131,6 +168,7 @@ button{font-family:inherit;cursor:pointer;}
   <div class="fp-inner">
     <div class="fp-head"><div class="fp-title">Your formula</div><button class="fp-x" onclick="togglePanel()">×</button></div>
     <div class="fp-chips" id="chips"></div>
+    <div id="fp-summary-wrap"></div>
     <div class="fp-foot">
       <button class="fp-clr" onclick="clearF()">Clear all</button>
       <button class="fp-sv" onclick="saveF()">Save formula</button>
@@ -144,156 +182,175 @@ button{font-family:inherit;cursor:pointer;}
 <script>
 const CATS=[{id:'all',l:'All'},{id:'immune',l:'Immune'},{id:'sexual',l:'Sexual Vitality'},{id:'pain',l:'Pain & Anti-inflam'},{id:'digest',l:'Digestive'},{id:'sleep',l:'Sleep & Anxiety'},{id:'cognitive',l:'Cognitive'},{id:'resp',l:'Respiratory'},{id:'womens',l:"Women's Health"},{id:'antioxid',l:'Antioxidant'},{id:'liver',l:'Liver / Detox'},{id:'nutritive',l:'Nutritive'},{id:'conscious',l:'Consciousness'},{id:'energy',l:'Energy'},{id:'urinary',l:'Urinary'},{id:'adaptogen',l:'Adaptogen'},{id:'mens',l:"Men's Health"},{id:'nervine',l:'Nervine'},{id:'heart',l:'Heart Health'},{id:'menstrual',l:'Menstrual'},{id:'culinary',l:'Culinary'},{id:'fungi',l:'🍄 Fungi Only'}];
 
+const ELEMS=[{id:'all',l:'All elements'},{id:'F',l:'🔥 Fire',c:'#E8714B'},{id:'E',l:'🌱 Earth',c:'#6BD66F'},{id:'W',l:'💧 Water',c:'#4FA8E0'},{id:'A',l:'🌬 Air',c:'#A88FE0'},{id:'S',l:'✦ Spirit',c:'#E8B14B'}];
+
+const EL_COL={F:'#E8714B',E:'#6BD66F',W:'#4FA8E0',A:'#A88FE0',S:'#E8B14B'};
+const EL_NAME={F:'Fire',E:'Earth',W:'Water',A:'Air',S:'Spirit'};
+const EXT_NAME={D:'Double Extraction',T:'Cold Tincture',DC:'Decoction',O:'Oleoresin',SP:'Spagyric'};
+const EXT_ANCHOR={D:'double',T:'tincture',DC:'decoct',O:'oleo',SP:'spagyric'};
+
 const H=[
   // FUNGI
-  {id:'chaga',n:'Chaga',f:1,c:['immune','antioxid','resp','liver'],p:'Immune activation (beta-glucans); highest antioxidant (melanin, SOD); anti-cancer adjuvant; longevity.',x:'low'},
-  {id:'turkeyTail',n:'Turkey Tail',f:1,c:['immune','digest','nutritive'],p:'Immune modulation; PSP/PSK cancer adjuvant (FDA-approved Japan); gut microbiome prebiotic.',x:'low'},
-  {id:'reishi',n:'Reishi',f:1,c:['immune','sleep','adaptogen','liver','heart','conscious','antioxid','womens','menstrual','resp','cognitive'],p:'Immune modulation (not stimulation); HPA balance; hepatoprotective; sleep quality; spiritual calm. The longevity mushroom.',x:'low'},
-  {id:'maitake',n:'Maitake',f:1,c:['immune','urinary','nutritive','culinary'],p:'Immune balance (MD-Fraction beta-glucan); metabolic and blood sugar support; culinary mushroom.',x:'low'},
-  {id:'shiitake',n:'Shiitake',f:1,c:['immune','heart','nutritive','culinary'],p:'Immune (lentinan); cardiovascular; cholesterol management; umami culinary staple.',x:'low'},
-  {id:'cordyceps',n:'Cordyceps',f:1,c:['immune','sexual','energy','adaptogen','antioxid','mens'],p:'Energy and ATP production (primary); immune support; sexual vitality (traditional Tibetan); endurance.',x:'low'},
-  {id:'tremella',n:'Tremella',f:1,c:['immune','womens','antioxid','nutritive'],p:'Immune modulation; skin hydration (hyaluronic-like); yin-nourishing beauty mushroom; leukopenia support.',x:'low'},
-  {id:'agaricus',n:'Agaricus Blazei',f:1,c:['immune','antioxid'],p:'Strong immune activation (beta-glucans, proteoglycans); cancer adjuvant; pro-inflammatory shift — monitor in autoimmune.',x:'medium'},
-  {id:'lionsMane',n:"Lion's Mane",f:1,c:['cognitive'],p:'Cognitive support (primary); NGF/BDNF stimulation; neurogenesis; memory; focus; neuroprotection.',x:'low'},
-  {id:'amanita',n:'Amanita muscaria',f:1,c:['sleep','conscious'],p:'GABA-A agonist; dream-like dissociative state; deep consciousness ally. Medium-high risk — strict set/setting and psychiatric screening required.',x:'high'},
-  // HERBS — Immune
-  {id:'astragalus',n:'Astragalus',c:['immune','adaptogen','nutritive','energy'],p:'Immune tonification; constitutional strength; energy; longevity; qi tonic. Improves resistance to stress and infection.',x:'low'},
-  {id:'blackCumin',n:'Black Cumin',c:['immune','pain','antioxid','culinary'],p:'Immune activation (thymoquinone, Grade B+); antioxidant; anti-inflammatory; respiratory support.',x:'low'},
-  {id:'catsClaw',n:"Cat's Claw",c:['immune','pain'],p:'Immune support; anti-inflammatory; joint support. Sustainability concern.',x:'medium'},
-  {id:'echinacea',n:'Echinacea',c:['immune'],p:'Immune support; infection resistance; cold/flu support; traditional.',x:'low'},
-  {id:'elderflower',n:'Elderflower',c:['immune','resp'],p:'Immune + respiratory combined; cold/flu; gentle; safe for all ages.',x:'low'},
-  {id:'garlic',n:'Garlic',c:['immune','liver','heart','culinary'],p:'Antimicrobial; immune support; cardiovascular; detoxification; culinary staple.',x:'low'},
-  {id:'goji',n:'Goji',c:['immune','antioxid','nutritive','energy'],p:'Antioxidant (primary); vision; constitutional tonification; longevity superfood.',x:'low'},
-  {id:'nettle',n:'Nettle',c:['immune','nutritive'],p:'Nutritive tonification (primary); mineral-rich; immune support; foundational herb.',x:'low'},
-  {id:'oregano',n:'Oregano',c:['immune','pain','antioxid','resp','culinary'],p:'Antimicrobial; antioxidant (carvacrol, thymol); immune and respiratory support; culinary.',x:'low'},
-  {id:'spirulina',n:'Spirulina',c:['immune','antioxid','nutritive'],p:'Nutritive tonification; protein-rich; immune; antioxidant superfood.',x:'low'},
-  {id:'thyme',n:'Thyme',c:['immune','resp','culinary'],p:'Respiratory + immune (primary); antimicrobial; cough relief; culinary.',x:'low'},
-  {id:'yarrow',n:'Yarrow',c:['immune','pain','resp','womens','antioxid','heart','menstrual','cognitive'],p:'Immune support; fever; anti-inflammatory; peripheral circulation; women\'s health.',x:'medium'},
-  {id:'schizandra',n:'Schizandra',c:['immune','adaptogen','energy','antioxid','cognitive'],p:'Adaptogenic; immune; energy; antioxidant; cognitive focus; traditional balanced herb.',x:'low'},
-  {id:'aroniaBerry',n:'Aronia Berry',c:['immune','antioxid'],p:'High ORAC antioxidant; vascular and metabolic protection; anti-aging; immune modulation.',x:'low'},
-  {id:'bilberry',n:'Bilberry',c:['immune','antioxid'],p:'Antioxidant; capillary protection; eye health; immune resilience.',x:'low'},
-  {id:'bladderwrack',n:'Bladderwrack',c:['immune','nutritive','antioxid','liver'],p:'Mineral-rich seaweed; thyroid/immune modulation; iodine + trace minerals.',x:'medium'},
-  {id:'moringa',n:'Moringa',c:['immune','nutritive','antioxid'],p:'Nutrient-dense leaf; immune support; antioxidant; anti-inflammatory.',x:'low'},
-  {id:'calendula',n:'Calendula',c:['immune'],p:'Lymphatic and skin-immune support; wound healing; gentle antimicrobial.',x:'low'},
-  {id:'pauDArco',n:"Pau d'Arco",c:['immune','liver'],p:'Antimicrobial and antifungal; immune support; traditional South American bark.',x:'medium'},
+  {id:'chaga',n:'Chaga',f:1,el:'E',ext:'D',c:['immune','antioxid','resp','liver'],p:'Immune activation (beta-glucans); highest antioxidant (melanin, SOD); anti-cancer adjuvant; longevity.',x:'low'},
+  {id:'turkeyTail',n:'Turkey Tail',f:1,el:'E',ext:'D',c:['immune','digest','nutritive'],p:'Immune modulation; PSP/PSK cancer adjuvant (FDA-approved Japan); gut microbiome prebiotic.',x:'low'},
+  {id:'reishi',n:'Reishi',f:1,el:'S',ext:'D',c:['immune','sleep','adaptogen','liver','heart','conscious','antioxid','womens','menstrual','resp','cognitive'],p:'Immune modulation (not stimulation); HPA balance; hepatoprotective; sleep quality; spiritual calm. The longevity mushroom.',x:'low'},
+  {id:'maitake',n:'Maitake',f:1,el:'E',ext:'D',c:['immune','urinary','nutritive','culinary'],p:'Immune balance (MD-Fraction beta-glucan); metabolic and blood sugar support; culinary mushroom.',x:'low'},
+  {id:'shiitake',n:'Shiitake',f:1,el:'E',ext:'D',c:['immune','heart','nutritive','culinary'],p:'Immune (lentinan); cardiovascular; cholesterol management; umami culinary staple.',x:'low'},
+  {id:'cordyceps',n:'Cordyceps',f:1,el:'F',ext:'D',c:['immune','sexual','energy','adaptogen','antioxid','mens'],p:'Energy and ATP production (primary); immune support; sexual vitality (traditional Tibetan); endurance.',x:'low'},
+  {id:'tremella',n:'Tremella',f:1,el:'W',ext:'D',c:['immune','womens','antioxid','nutritive'],p:'Immune modulation; skin hydration (hyaluronic-like); yin-nourishing beauty mushroom; leukopenia support.',x:'low'},
+  {id:'agaricus',n:'Agaricus Blazei',f:1,el:'E',ext:'D',c:['immune','antioxid'],p:'Strong immune activation (beta-glucans, proteoglycans); cancer adjuvant; pro-inflammatory shift — monitor in autoimmune.',x:'medium'},
+  {id:'lionsMane',n:"Lion's Mane",f:1,el:'A',ext:'T',c:['cognitive'],p:'Cognitive support (primary); NGF/BDNF stimulation; neurogenesis; memory; focus; neuroprotection.',x:'low'},
+  {id:'amanita',n:'Amanita muscaria',f:1,el:'S',ext:'T',c:['sleep','conscious'],p:'GABA-A agonist; dream-like dissociative state; deep consciousness ally. Medium-high risk — strict set/setting and psychiatric screening required.',x:'high'},
+  // Immune
+  {id:'astragalus',n:'Astragalus',el:'E',ext:'DC',c:['immune','adaptogen','nutritive','energy'],p:'Immune tonification; constitutional strength; energy; longevity; qi tonic.',x:'low'},
+  {id:'blackCumin',n:'Black Cumin',el:'F',ext:'O',c:['immune','pain','antioxid','culinary'],p:'Immune activation (thymoquinone); antioxidant; anti-inflammatory; respiratory support.',x:'low'},
+  {id:'catsClaw',n:"Cat's Claw",el:'E',ext:'DC',c:['immune','pain'],p:'Immune support; anti-inflammatory; joint support. Sustainability concern.',x:'medium'},
+  {id:'echinacea',n:'Echinacea',el:'E',ext:'T',c:['immune'],p:'Immune support; infection resistance; cold/flu support; traditional.',x:'low'},
+  {id:'elderflower',n:'Elderflower',el:'W',ext:'T',c:['immune','resp'],p:'Immune + respiratory combined; cold/flu; gentle; safe for all ages.',x:'low'},
+  {id:'garlic',n:'Garlic',el:'F',ext:'O',c:['immune','liver','heart','culinary'],p:'Antimicrobial; immune support; cardiovascular; detoxification; culinary staple.',x:'low'},
+  {id:'goji',n:'Goji',el:'E',ext:'T',c:['immune','antioxid','nutritive','energy'],p:'Antioxidant (primary); vision; constitutional tonification; longevity superfood.',x:'low'},
+  {id:'nettle',n:'Nettle',el:'E',ext:'T',c:['immune','nutritive'],p:'Nutritive tonification (primary); mineral-rich; immune support; foundational herb.',x:'low'},
+  {id:'oregano',n:'Oregano',el:'F',ext:'T',c:['immune','pain','antioxid','resp','culinary'],p:'Antimicrobial; antioxidant (carvacrol, thymol); immune and respiratory support.',x:'low'},
+  {id:'spirulina',n:'Spirulina',el:'W',ext:'T',c:['immune','antioxid','nutritive'],p:'Nutritive tonification; protein-rich; immune; antioxidant superfood.',x:'low'},
+  {id:'thyme',n:'Thyme',el:'F',ext:'T',c:['immune','resp','culinary'],p:'Respiratory + immune (primary); antimicrobial; cough relief; culinary.',x:'low'},
+  {id:'yarrow',n:'Yarrow',el:'W',ext:'T',c:['immune','pain','resp','womens','antioxid','heart','menstrual','cognitive'],p:'Immune support; fever; anti-inflammatory; peripheral circulation; women\'s health.',x:'medium'},
+  {id:'schizandra',n:'Schizandra',el:'F',ext:'T',c:['immune','adaptogen','energy','antioxid','cognitive'],p:'Adaptogenic; immune; energy; antioxidant; cognitive focus; balanced traditional herb.',x:'low'},
+  {id:'aroniaBerry',n:'Aronia Berry',el:'E',ext:'T',c:['immune','antioxid'],p:'High ORAC antioxidant; vascular and metabolic protection; anti-aging.',x:'low'},
+  {id:'bilberry',n:'Bilberry',el:'W',ext:'T',c:['immune','antioxid'],p:'Antioxidant; capillary protection; eye health; immune resilience.',x:'low'},
+  {id:'bladderwrack',n:'Bladderwrack',el:'W',ext:'T',c:['immune','nutritive','antioxid','liver'],p:'Mineral-rich seaweed; thyroid/immune modulation; iodine + trace minerals.',x:'medium'},
+  {id:'moringa',n:'Moringa',el:'E',ext:'T',c:['immune','nutritive','antioxid'],p:'Nutrient-dense leaf; immune support; antioxidant; anti-inflammatory.',x:'low'},
+  {id:'calendula',n:'Calendula',el:'W',ext:'SP',c:['immune'],p:'Lymphatic and skin-immune support; wound healing; gentle antimicrobial.',x:'low'},
+  {id:'pauDArco',n:"Pau d'Arco",el:'E',ext:'DC',c:['immune','liver'],p:'Antimicrobial and antifungal; immune support; traditional South American bark.',x:'medium'},
   // Sexual
-  {id:'ashwagandha',n:'Ashwagandha',c:['sexual','adaptogen','sleep','energy'],p:'Adaptogenic; stress reduction; sexual vitality; energy; hormonal balance.',x:'low'},
-  {id:'damiana',n:'Damiana',c:['sexual'],p:'Sexual vitality; mood elevation; desire support; warming; all-gender.',x:'low'},
-  {id:'fadogia',n:'Fadogia Agrestis',c:['sexual','mens'],p:'Sexual vitality; testosterone support; endurance; emerging research.',x:'medium'},
-  {id:'ginseng',n:'Ginseng (Panax)',c:['sexual','adaptogen','energy','cognitive'],p:'Classic adaptogen; stress resilience; energy; sexual vitality; cognitive focus.',x:'low'},
-  {id:'maca',n:'Maca',c:['sexual'],p:'Sexual vitality; all-gender; energy; hormone-balancing; nutritive food-like.',x:'low'},
-  {id:'macaNegra',n:'Maca Negra',c:['sexual','mens'],p:'Male-specific sexual vitality (primary); Yang-strengthening; virility-enhancing.',x:'low'},
-  {id:'muiraPuama',n:'Muira Puama',c:['sexual'],p:'Sexual vitality; desire support; mood elevation; traditional Brazilian.',x:'low'},
-  {id:'pinePollen',n:'Pine Pollen',c:['sexual','mens','energy'],p:'Sexual vitality; Yang tonification; energy; hormone-like; male-focused.',x:'low'},
-  {id:'tongkatAli',n:'Tongkat Ali',c:['sexual','mens'],p:'Sexual vitality; testosterone support; endurance; stamina; athletic.',x:'low'},
-  {id:'shilajit',n:'Shilajit',c:['sexual','adaptogen','mens','energy'],p:'Mineral-rich; energy; sexual vitality; ancient resin; adaptogenic.',x:'low'},
-  {id:'hornyGoat',n:'Horny Goat Weed',c:['sexual'],p:'Sexual vitality; erectile support; Yang tonic; joint flexibility.',x:'medium'},
-  {id:'catuaba',n:'Catuaba',c:['sexual'],p:'Sexual vitality; mild CNS stimulation; traditional Brazilian aphrodisiac.',x:'low'},
-  {id:'cayenne',n:'Cayenne',c:['sexual','culinary'],p:'Circulatory stimulant; peripheral vasodilation; intensifies warmth and sensuality (aphrodisiac secondary).',x:'medium'},
+  {id:'ashwagandha',n:'Ashwagandha',el:'E',ext:'T',c:['sexual','adaptogen','sleep','energy'],p:'Adaptogenic; stress reduction; sexual vitality; energy; hormonal balance.',x:'low'},
+  {id:'damiana',n:'Damiana',el:'F',ext:'T',c:['sexual'],p:'Sexual vitality; mood elevation; desire support; warming; all-gender.',x:'low'},
+  {id:'fadogia',n:'Fadogia Agrestis',el:'F',ext:'T',c:['sexual','mens'],p:'Sexual vitality; testosterone support; endurance; emerging research.',x:'medium'},
+  {id:'ginseng',n:'Ginseng (Panax)',el:'E',ext:'T',c:['sexual','adaptogen','energy','cognitive'],p:'Classic adaptogen; stress resilience; energy; sexual vitality; cognitive focus.',x:'low'},
+  {id:'maca',n:'Maca',el:'E',ext:'DC',c:['sexual'],p:'Sexual vitality; all-gender; energy; hormone-balancing; nutritive food-like.',x:'low'},
+  {id:'macaNegra',n:'Maca Negra',el:'F',ext:'DC',c:['sexual','mens'],p:'Male-specific sexual vitality (primary); Yang-strengthening; virility-enhancing.',x:'low'},
+  {id:'muiraPuama',n:'Muira Puama',el:'F',ext:'T',c:['sexual'],p:'Sexual vitality; desire support; mood elevation; traditional Brazilian.',x:'low'},
+  {id:'pinePollen',n:'Pine Pollen',el:'F',ext:'T',c:['sexual','mens','energy'],p:'Sexual vitality; Yang tonification; energy; hormone-like; male-focused.',x:'low'},
+  {id:'tongkatAli',n:'Tongkat Ali',el:'F',ext:'T',c:['sexual','mens'],p:'Sexual vitality; testosterone support; endurance; stamina; athletic.',x:'low'},
+  {id:'shilajit',n:'Shilajit',el:'E',ext:'O',c:['sexual','adaptogen','mens','energy'],p:'Mineral-rich; energy; sexual vitality; ancient resin; adaptogenic.',x:'low'},
+  {id:'hornyGoat',n:'Horny Goat Weed',el:'F',ext:'T',c:['sexual'],p:'Sexual vitality; erectile support; Yang tonic; joint flexibility.',x:'medium'},
+  {id:'catuaba',n:'Catuaba',el:'F',ext:'T',c:['sexual'],p:'Sexual vitality; mild CNS stimulation; traditional Brazilian aphrodisiac.',x:'low'},
+  {id:'cayenne',n:'Cayenne',el:'F',ext:'O',c:['sexual','culinary'],p:'Circulatory stimulant; peripheral vasodilation; intensifies warmth and sensuality.',x:'medium'},
   // Pain
-  {id:'devilsClaw',n:"Devil's Claw",c:['pain'],p:'Pain relief (primary); anti-inflammatory; joint support; arthritis (Grade B evidence).',x:'medium'},
-  {id:'ginger',n:'Ginger',c:['pain','digest','menstrual','culinary'],p:'Digestive warming; potent anti-inflammatory; nausea relief; evidence-backed menstrual analgesic.',x:'low'},
-  {id:'meadowsweet',n:'Meadowsweet',c:['pain'],p:'Pain relief; anti-inflammatory; joint support; digestive; gentle.',x:'low'},
-  {id:'rosemary',n:'Rosemary',c:['pain','cognitive','antioxid','heart','culinary'],p:'Cognitive support; memory; circulation; antioxidant; anti-inflammatory; culinary.',x:'low'},
-  {id:'turmeric',n:'Turmeric',c:['pain','antioxid','liver','heart','culinary'],p:'Anti-inflammatory (primary); antioxidant; pain relief; golden milk; culinary.',x:'low'},
-  {id:'willowBark',n:'Willow Bark',c:['pain'],p:'Pain relief; anti-inflammatory; natural aspirin-like salicylates.',x:'medium'},
-  {id:'barberry',n:'Barberry',c:['pain','digest','liver'],p:'Strong bitter; liver/gallbladder; antimicrobial GI; anti-inflammatory digestive pain.',x:'medium'},
-  {id:'saffron',n:'Saffron',c:['pain','cognitive','antioxid','womens'],p:'Mood elevation; CNS anti-inflammatory; adjunct pain and migraine support; PMDD.',x:'medium'},
-  {id:'kratom',n:'Kratom',c:['pain'],p:'Strong analgesic; opioid-receptor activity; high dependence/side-effect risk. Not recommended routine use.',x:'high'},
+  {id:'devilsClaw',n:"Devil's Claw",el:'E',ext:'T',c:['pain'],p:'Pain relief (primary); anti-inflammatory; joint support; arthritis (Grade B evidence).',x:'medium'},
+  {id:'ginger',n:'Ginger',el:'F',ext:'DC',c:['pain','digest','menstrual','culinary'],p:'Digestive warming; potent anti-inflammatory; nausea relief; evidence-backed menstrual analgesic.',x:'low'},
+  {id:'meadowsweet',n:'Meadowsweet',el:'W',ext:'T',c:['pain'],p:'Pain relief; anti-inflammatory; joint support; digestive; gentle.',x:'low'},
+  {id:'rosemary',n:'Rosemary',el:'F',ext:'T',c:['pain','cognitive','antioxid','heart','culinary'],p:'Cognitive support; memory; circulation; antioxidant; anti-inflammatory; culinary.',x:'low'},
+  {id:'turmeric',n:'Turmeric',el:'E',ext:'O',c:['pain','antioxid','liver','heart','culinary'],p:'Anti-inflammatory (primary); antioxidant; pain relief; golden milk; culinary.',x:'low'},
+  {id:'willowBark',n:'Willow Bark',el:'W',ext:'T',c:['pain'],p:'Pain relief; anti-inflammatory; natural aspirin-like salicylates.',x:'medium'},
+  {id:'barberry',n:'Barberry',el:'E',ext:'T',c:['pain','digest','liver'],p:'Strong bitter; liver/gallbladder; antimicrobial GI; anti-inflammatory digestive pain.',x:'medium'},
+  {id:'saffron',n:'Saffron',el:'W',ext:'T',c:['pain','cognitive','antioxid','womens'],p:'Mood elevation; CNS anti-inflammatory; adjunct pain and migraine support; PMDD.',x:'medium'},
+  {id:'kratom',n:'Kratom',el:'E',ext:'T',c:['pain'],p:'Strong analgesic; opioid-receptor activity; high dependence/side-effect risk. Not recommended routine use.',x:'high'},
   // Digestive
-  {id:'angelica',n:'Angelica (Dong Quai)',c:['digest','womens','menstrual'],p:"Women's health; menstrual support; pelvic circulation; blood tonification; digestive warming.",x:'medium'},
-  {id:'burdock',n:'Burdock',c:['digest','liver'],p:'Detoxification; skin health; digestive support; nutritive tonification.',x:'low'},
-  {id:'cardamom',n:'Cardamom',c:['digest','resp','culinary'],p:'Digestive warming (primary); carminative; respiratory support; sweet aromatic.',x:'low'},
-  {id:'cinnamon',n:'Cinnamon',c:['digest','culinary','menstrual'],p:'Digestive warming; blood sugar support; uterine warming; carminative; culinary.',x:'low'},
-  {id:'cloves',n:'Cloves',c:['digest','culinary'],p:'Culinary antimicrobial; dental pain; warming digestion; antiparasitic.',x:'medium'},
-  {id:'dandelion',n:'Dandelion',c:['digest','liver'],p:'Digestive bitters; liver tonification (primary); detoxification; nutritive.',x:'low'},
-  {id:'fennel',n:'Fennel',c:['digest','resp','menstrual','culinary'],p:'Digestive warming; carminative; antispasmodic; lactation support; menstrual aid.',x:'low'},
-  {id:'fenugreek',n:'Fenugreek',c:['digest','womens','culinary'],p:'Lactation support; blood sugar; hormonal balance; culinary.',x:'medium'},
-  {id:'juniper',n:'Juniper',c:['digest','urinary','liver'],p:'Urinary support; detoxification; digestive warming; traditional.',x:'medium'},
-  {id:'licorice',n:'Licorice',c:['digest','resp','adaptogen','nutritive','culinary'],p:'Digestive support; adrenal tonification; cortisol-modulating; sweet; immune.',x:'medium'},
-  {id:'lemonBalm',n:'Lemon Balm',c:['sleep','digest','nervine'],p:'Anxiety relief (primary); sleep support; mood; digestive support; calming.',x:'low'},
-  {id:'peppermint',n:'Peppermint',c:['digest','culinary'],p:'Digestive support (primary); cooling; antispasmodic; refreshing.',x:'low'},
-  {id:'starAnise',n:'Star Anise',c:['digest','culinary'],p:'Digestive warming; carminative; antispasmodic; lactation; liquorice-sweet.',x:'low'},
-  {id:'wormwood',n:'Wormwood',c:['digest','liver'],p:'Antiparasitic; digestive bitters; antimicrobial; strong. Professional use.',x:'high'},
-  {id:'chamomile',n:'Chamomile',c:['digest','sleep','nervine','culinary','menstrual'],p:'Gentle bitter-aromatic; antispasmodic; mild anxiolytic; sleep onset; child-safe.',x:'low'},
-  {id:'slipperyElm',n:'Slippery Elm Bark',c:['digest'],p:'Demulcent; soothes esophagus and gut; reflux and ulcer ally.',x:'low'},
-  {id:'carawaySeeds',n:'Caraway Seeds',c:['digest','culinary'],p:'Carminative; gas relief; flatulent dyspepsia; mild spasmolytic; bread spice.',x:'low'},
-  {id:'rhubarb',n:'Rhubarb Root',c:['digest','liver'],p:'Strong laxative/bitter; bowel clearance; reset use only. Cathartic.',x:'high'},
-  {id:'senna',n:'Senna',c:['digest'],p:'Strong stimulant laxative; short-course bowel clearance only.',x:'high'},
+  {id:'angelica',n:'Angelica (Dong Quai)',el:'F',ext:'T',c:['digest','womens','menstrual'],p:"Women's health; menstrual support; pelvic circulation; blood tonification; digestive warming.",x:'medium'},
+  {id:'burdock',n:'Burdock',el:'E',ext:'DC',c:['digest','liver'],p:'Detoxification; skin health; digestive support; nutritive tonification.',x:'low'},
+  {id:'cardamom',n:'Cardamom',el:'F',ext:'O',c:['digest','resp','culinary'],p:'Digestive warming (primary); carminative; respiratory support; sweet aromatic.',x:'low'},
+  {id:'cinnamon',n:'Cinnamon',el:'F',ext:'T',c:['digest','culinary','menstrual'],p:'Digestive warming; blood sugar support; uterine warming; carminative; culinary.',x:'low'},
+  {id:'cloves',n:'Cloves',el:'F',ext:'O',c:['digest','culinary'],p:'Culinary antimicrobial; dental pain; warming digestion; antiparasitic.',x:'medium'},
+  {id:'dandelion',n:'Dandelion',el:'E',ext:'T',c:['digest','liver'],p:'Digestive bitters; liver tonification (primary); detoxification; nutritive.',x:'low'},
+  {id:'fennel',n:'Fennel',el:'A',ext:'T',c:['digest','resp','menstrual','culinary'],p:'Digestive warming; carminative; antispasmodic; lactation support; menstrual aid.',x:'low'},
+  {id:'fenugreek',n:'Fenugreek',el:'E',ext:'T',c:['digest','womens','culinary'],p:'Lactation support; blood sugar; hormonal balance; culinary.',x:'medium'},
+  {id:'juniper',n:'Juniper',el:'F',ext:'T',c:['digest','urinary','liver'],p:'Urinary support; detoxification; digestive warming; traditional.',x:'medium'},
+  {id:'licorice',n:'Licorice',el:'E',ext:'DC',c:['digest','resp','adaptogen','nutritive','culinary'],p:'Digestive support; adrenal tonification; cortisol-modulating; sweet; immune.',x:'medium'},
+  {id:'lemonBalm',n:'Lemon Balm',el:'W',ext:'SP',c:['sleep','digest','nervine'],p:'Anxiety relief (primary); sleep support; mood; digestive support; calming.',x:'low'},
+  {id:'peppermint',n:'Peppermint',el:'A',ext:'T',c:['digest','culinary'],p:'Digestive support (primary); cooling; antispasmodic; refreshing.',x:'low'},
+  {id:'starAnise',n:'Star Anise',el:'F',ext:'T',c:['digest','culinary'],p:'Digestive warming; carminative; antispasmodic; lactation; liquorice-sweet.',x:'low'},
+  {id:'wormwood',n:'Wormwood',el:'F',ext:'T',c:['digest','liver'],p:'Antiparasitic; digestive bitters; antimicrobial; strong. Professional use.',x:'high'},
+  {id:'chamomile',n:'Chamomile',el:'W',ext:'T',c:['digest','sleep','nervine','culinary','menstrual'],p:'Gentle bitter-aromatic; antispasmodic; mild anxiolytic; sleep onset; child-safe.',x:'low'},
+  {id:'slipperyElm',n:'Slippery Elm Bark',el:'E',ext:'DC',c:['digest'],p:'Demulcent; soothes esophagus and gut; reflux and ulcer ally.',x:'low'},
+  {id:'carawaySeeds',n:'Caraway Seeds',el:'A',ext:'T',c:['digest','culinary'],p:'Carminative; gas relief; flatulent dyspepsia; mild spasmolytic; bread spice.',x:'low'},
+  {id:'rhubarb',n:'Rhubarb Root',el:'E',ext:'DC',c:['digest','liver'],p:'Strong laxative/bitter; bowel clearance; reset use only. Cathartic.',x:'high'},
+  {id:'senna',n:'Senna',el:'E',ext:'T',c:['digest'],p:'Strong stimulant laxative; short-course bowel clearance only.',x:'high'},
   // Sleep
-  {id:'holyBasil',n:'Holy Basil (Tulsi)',c:['sleep','adaptogen','cognitive','antioxid'],p:'Adaptogenic; stress reduction; consciousness clarity; spiritual; calming.',x:'low'},
-  {id:'kavaKava',n:'Kava Kava',c:['sleep','nervine'],p:'Relaxation (primary); anxiety relief; social use. Hepatotoxicity caution — do not combine with alcohol.',x:'high'},
-  {id:'linden',n:'Linden',c:['sleep','heart','nervine'],p:'Relaxation; mild anxiety relief; cardiovascular; gentle nervine.',x:'low'},
-  {id:'motherwort',n:'Motherwort',c:['sleep','womens','heart','nervine','menstrual'],p:"Women's health; heart tonification; palpitations with anxiety; emotional support.",x:'medium'},
-  {id:'oatstraw',n:'Oatstraw',c:['sleep','nervine','nutritive'],p:'Nervous system tonification; mineral-rich; stress support; gentle long-term.',x:'low'},
-  {id:'passionflower',n:'Passionflower',c:['sleep','nervine','conscious'],p:'Anxiety relief (primary); sleep support; nervine; mild consciousness.',x:'low'},
-  {id:'rhodiola',n:'Rhodiola',c:['sleep','adaptogen','energy','cognitive'],p:'Adaptogenic; stress reduction; energy; endurance; uplifting adaptogen.',x:'low'},
-  {id:'skullcap',n:'Skullcap',c:['sleep','nervine'],p:'Anxiety relief (primary); nervine; sleep support; gentle calming.',x:'low'},
-  {id:'stJohnsWort',n:"St. John's Wort",c:['sleep'],p:'Mood elevation; antidepressant; seasonal affective support. Check drug interactions.',x:'medium'},
-  {id:'valerian',n:'Valerian',c:['sleep','nervine'],p:'Sleep support (primary); anxiety relief; grounding nervine; pungent.',x:'low'},
-  {id:'lavender',n:'Lavender',c:['sleep','culinary'],p:'Anxiolytic; mood elevation; headache tension; aromatic floral culinary herb.',x:'low'},
-  {id:'jasmine',n:'Jasmine',c:['sleep'],p:'Soft mood-lifting relaxant; sensual/heart calming.',x:'low'},
+  {id:'holyBasil',n:'Holy Basil (Tulsi)',el:'S',ext:'SP',c:['sleep','adaptogen','cognitive','antioxid'],p:'Adaptogenic; stress reduction; consciousness clarity; spiritual; calming.',x:'low'},
+  {id:'kavaKava',n:'Kava Kava',el:'E',ext:'T',c:['sleep','nervine'],p:'Relaxation (primary); anxiety relief; social use. Hepatotoxicity caution — do not combine with alcohol.',x:'high'},
+  {id:'linden',n:'Linden',el:'W',ext:'T',c:['sleep','heart','nervine'],p:'Relaxation; mild anxiety relief; cardiovascular; gentle nervine.',x:'low'},
+  {id:'motherwort',n:'Motherwort',el:'W',ext:'T',c:['sleep','womens','heart','nervine','menstrual'],p:"Women's health; heart tonification; palpitations with anxiety; emotional support.",x:'medium'},
+  {id:'oatstraw',n:'Oatstraw',el:'E',ext:'T',c:['sleep','nervine','nutritive'],p:'Nervous system tonification; mineral-rich; stress support; gentle long-term.',x:'low'},
+  {id:'passionflower',n:'Passionflower',el:'W',ext:'T',c:['sleep','nervine','conscious'],p:'Anxiety relief (primary); sleep support; nervine; mild consciousness.',x:'low'},
+  {id:'rhodiola',n:'Rhodiola',el:'F',ext:'T',c:['sleep','adaptogen','energy','cognitive'],p:'Adaptogenic; stress reduction; energy; endurance; uplifting adaptogen.',x:'low'},
+  {id:'skullcap',n:'Skullcap',el:'W',ext:'T',c:['sleep','nervine'],p:'Anxiety relief (primary); nervine; sleep support; gentle calming.',x:'low'},
+  {id:'stJohnsWort',n:"St. John's Wort",el:'F',ext:'O',c:['sleep'],p:'Mood elevation; antidepressant; seasonal affective support. Check drug interactions.',x:'medium'},
+  {id:'valerian',n:'Valerian',el:'E',ext:'T',c:['sleep','nervine'],p:'Sleep support (primary); anxiety relief; grounding nervine; pungent.',x:'low'},
+  {id:'lavender',n:'Lavender',el:'A',ext:'O',c:['sleep','culinary'],p:'Anxiolytic; mood elevation; headache tension; aromatic floral culinary herb.',x:'low'},
+  {id:'jasmine',n:'Jasmine',el:'W',ext:'T',c:['sleep'],p:'Soft mood-lifting relaxant; sensual/heart calming.',x:'low'},
   // Cognitive
-  {id:'bacopa',n:'Bacopa',c:['cognitive','antioxid','adaptogen'],p:'Cognitive support (primary); memory; mental clarity; neuroprotection; anti-stress.',x:'low'},
-  {id:'blueberry',n:'Blueberry',c:['cognitive','antioxid'],p:'Antioxidant (primary); cognitive support; vision; anti-aging superfood.',x:'low'},
-  {id:'ginkgo',n:'Ginkgo',c:['cognitive','heart'],p:'Cognitive support; memory; circulation; endothelial protection. Check blood-thinner interactions.',x:'medium'},
-  {id:'gotuKola',n:'Gotu Kola',c:['cognitive','antioxid','adaptogen'],p:'Cognitive support (primary); circulation; spiritual grounding; anti-stress.',x:'low'},
-  {id:'rosePetals',n:'Rose Petals',c:['cognitive','heart','conscious','culinary'],p:'Heart-mind connection; mood and microcirculation; blood tonification; spiritual.',x:'low'},
+  {id:'bacopa',n:'Bacopa',el:'W',ext:'T',c:['cognitive','antioxid','adaptogen'],p:'Cognitive support (primary); memory; mental clarity; neuroprotection; anti-stress.',x:'low'},
+  {id:'blueberry',n:'Blueberry',el:'W',ext:'T',c:['cognitive','antioxid'],p:'Antioxidant (primary); cognitive support; vision; anti-aging superfood.',x:'low'},
+  {id:'ginkgo',n:'Ginkgo',el:'A',ext:'T',c:['cognitive','heart'],p:'Cognitive support; memory; circulation; endothelial protection. Check blood-thinner interactions.',x:'medium'},
+  {id:'gotuKola',n:'Gotu Kola',el:'A',ext:'T',c:['cognitive','antioxid','adaptogen'],p:'Cognitive support (primary); circulation; spiritual grounding; anti-stress.',x:'low'},
+  {id:'rosePetals',n:'Rose Petals',el:'W',ext:'T',c:['cognitive','heart','conscious','culinary'],p:'Heart-mind connection; mood and microcirculation; blood tonification; spiritual.',x:'low'},
   // Respiratory
-  {id:'broadleafPlantain',n:'Broadleaf Plantain',c:['resp'],p:'Respiratory support; cough relief; lung health; expectorant.',x:'low'},
-  {id:'eucalyptus',n:'Eucalyptus',c:['resp'],p:'Respiratory opening (fastest); antimicrobial. Do not ingest oil internally.',x:'medium'},
-  {id:'icelandMoss',n:'Iceland Moss',c:['resp'],p:'Respiratory support; cough relief; soothing demulcent; traditional.',x:'low'},
-  {id:'mullein',n:'Mullein',c:['resp'],p:'Respiratory support (primary); cough relief; lung tonification; expectorant.',x:'low'},
-  {id:'pineNeedle',n:'Pine Needle',c:['resp','immune','antioxid'],p:'Respiratory support; vitamin C; immune; antioxidant; traditional.',x:'low'},
-  {id:'sage',n:'Sage',c:['resp','cognitive','culinary'],p:'Throat support (primary); antimicrobial; memory; culinary.',x:'medium'},
-  {id:'eyebright',n:'Eyebright',c:['resp'],p:'Upper respiratory/eye catarrh; sinus-eye bridge.',x:'low'},
-  {id:'groundIvy',n:'Ground Ivy',c:['resp'],p:'Sinus/ear congestion; lingering catarrh.',x:'low'},
-  {id:'lobelia',n:'Lobelia',c:['resp'],p:'Strong bronchodilator/antispasmodic; low-dose professional use only.',x:'high'},
-  {id:'ephedra',n:'Ephedra',c:['resp','energy'],p:'Strong bronchodilator; stimulant. Restricted/contraindicated many regions. Professional only.',x:'high'},
-  {id:'bayberry',n:'Bayberry Root Bark',c:['resp'],p:'Astringent for boggy mucosa; chronic sinus and throat catarrh; stimulating tonic.',x:'medium'},
+  {id:'broadleafPlantain',n:'Broadleaf Plantain',el:'E',ext:'T',c:['resp'],p:'Respiratory support; cough relief; lung health; expectorant.',x:'low'},
+  {id:'eucalyptus',n:'Eucalyptus',el:'A',ext:'O',c:['resp'],p:'Respiratory opening (fastest); antimicrobial. Do not ingest oil internally.',x:'medium'},
+  {id:'icelandMoss',n:'Iceland Moss',el:'W',ext:'DC',c:['resp'],p:'Respiratory support; cough relief; soothing demulcent; traditional.',x:'low'},
+  {id:'mullein',n:'Mullein',el:'A',ext:'T',c:['resp'],p:'Respiratory support (primary); cough relief; lung tonification; expectorant.',x:'low'},
+  {id:'pineNeedle',n:'Pine Needle',el:'A',ext:'T',c:['resp','immune','antioxid'],p:'Respiratory support; vitamin C; immune; antioxidant; traditional.',x:'low'},
+  {id:'sage',n:'Sage',el:'A',ext:'T',c:['resp','cognitive','culinary'],p:'Throat support (primary); antimicrobial; memory; culinary.',x:'medium'},
+  {id:'eyebright',n:'Eyebright',el:'A',ext:'T',c:['resp'],p:'Upper respiratory/eye catarrh; sinus-eye bridge.',x:'low'},
+  {id:'groundIvy',n:'Ground Ivy',el:'A',ext:'T',c:['resp'],p:'Sinus/ear congestion; lingering catarrh.',x:'low'},
+  {id:'lobelia',n:'Lobelia',el:'A',ext:'T',c:['resp'],p:'Strong bronchodilator/antispasmodic; low-dose professional use only.',x:'high'},
+  {id:'ephedra',n:'Ephedra',el:'F',ext:'DC',c:['resp','energy'],p:'Strong bronchodilator; stimulant. Restricted/contraindicated many regions.',x:'high'},
+  {id:'bayberry',n:'Bayberry Root Bark',el:'E',ext:'T',c:['resp'],p:'Astringent for boggy mucosa; chronic sinus and throat catarrh; stimulating tonic.',x:'medium'},
   // Women's
-  {id:'ladysMantle',n:"Lady's Mantle",c:['womens','menstrual'],p:"Women's health; uterine tonification; astringent support for heavy, crampy periods.",x:'low'},
-  {id:'redDates',n:'Red Dates (Jujube)',c:['womens','sleep','nutritive'],p:"Blood tonification; energy; sleep support; culinary; sweet; women's support.",x:'low'},
-  {id:'vitex',n:'Vitex (Chasteberry)',c:['womens','menstrual'],p:"Women's health (primary); hormonal balance; menstrual cycle regulation; progesterone support.",x:'medium'},
-  {id:'mugwort',n:'Mugwort',c:['womens','conscious','menstrual'],p:'Menstrual regulation; pelvic circulation; emmenagogue. Caution in pregnancy.',x:'high'},
-  {id:'shatavari',n:'Shatavari',c:['womens'],p:'Female reproductive tonic; hormonal balance; menstrual and perimenopausal support; uterine relaxant.',x:'low'},
+  {id:'ladysMantle',n:"Lady's Mantle",el:'E',ext:'T',c:['womens','menstrual'],p:"Women's health; uterine tonification; astringent support for heavy, crampy periods.",x:'low'},
+  {id:'redDates',n:'Red Dates (Jujube)',el:'E',ext:'DC',c:['womens','sleep','nutritive'],p:"Blood tonification; energy; sleep support; culinary; sweet; women's support.",x:'low'},
+  {id:'vitex',n:'Vitex (Chasteberry)',el:'W',ext:'T',c:['womens','menstrual'],p:"Women's health (primary); hormonal balance; menstrual cycle regulation; progesterone support.",x:'medium'},
+  {id:'mugwort',n:'Mugwort',el:'S',ext:'T',c:['womens','conscious','menstrual'],p:'Menstrual regulation; pelvic circulation; emmenagogue. Caution in pregnancy.',x:'high'},
+  {id:'shatavari',n:'Shatavari',el:'W',ext:'T',c:['womens'],p:'Female reproductive tonic; hormonal balance; menstrual and perimenopausal support; uterine relaxant.',x:'low'},
   // Antioxidant
-  {id:'lingonberry',n:'Lingonberry',c:['antioxid','urinary','nutritive'],p:'Vitamin C-rich tonic berry; antioxidant; metabolic and urinary support.',x:'low'},
-  {id:'chickweed',n:'Chickweed',c:['antioxid'],p:'Cooling anti-itch herb; lymph and skin soothing; gentle antioxidant.',x:'low'},
+  {id:'lingonberry',n:'Lingonberry',el:'W',ext:'T',c:['antioxid','urinary','nutritive'],p:'Vitamin C-rich tonic berry; antioxidant; metabolic and urinary support.',x:'low'},
+  {id:'chickweed',n:'Chickweed',el:'W',ext:'T',c:['antioxid'],p:'Cooling anti-itch herb; lymph and skin soothing; gentle antioxidant.',x:'low'},
   // Liver
-  {id:'blackWalnut',n:'Black Walnut',c:['liver'],p:'Antiparasitic specialist; antimicrobial; antifungal. Professional protocol only.',x:'high'},
-  {id:'milkThistle',n:'Milk Thistle',c:['liver'],p:'Liver tonification (primary); detoxification; hepatoprotection (silymarin).',x:'low'},
-  {id:'yellowDock',n:'Yellow Dock',c:['liver','nutritive'],p:'Nutritive tonification; iron-rich; blood support; liver bitter.',x:'medium'},
+  {id:'blackWalnut',n:'Black Walnut',el:'E',ext:'T',c:['liver'],p:'Antiparasitic specialist; antimicrobial; antifungal. Professional protocol only.',x:'high'},
+  {id:'milkThistle',n:'Milk Thistle',el:'E',ext:'T',c:['liver'],p:'Liver tonification (primary); detoxification; hepatoprotection (silymarin).',x:'low'},
+  {id:'yellowDock',n:'Yellow Dock',el:'E',ext:'DC',c:['liver','nutritive'],p:'Nutritive tonification; iron-rich; blood support; liver bitter.',x:'medium'},
   // Nutritive
-  {id:'barley',n:'Barley',c:['nutritive'],p:'Nutritive grain; soluble fiber; gentle metabolic support.',x:'low'},
-  {id:'lucerne',n:'Lucerne (Alfalfa)',c:['nutritive'],p:'Protein and mineral-rich tonic; vitamin K; gentle remineralizing green.',x:'low'},
+  {id:'barley',n:'Barley',el:'E',ext:'DC',c:['nutritive'],p:'Nutritive grain; soluble fiber; gentle metabolic support.',x:'low'},
+  {id:'lucerne',n:'Lucerne (Alfalfa)',el:'E',ext:'T',c:['nutritive'],p:'Protein and mineral-rich tonic; vitamin K; gentle remineralizing green.',x:'low'},
   // Consciousness
-  {id:'blueLotus',n:'Blue Lotus',c:['conscious','sleep'],p:'Mild consciousness expansion; relaxation; dream support; spiritual; ancient Egyptian.',x:'low'},
-  {id:'bobinsana',n:'Bobinsana',c:['conscious'],p:'Consciousness exploration; emotional opening; plant medicine support; ceremonial.',x:'medium'},
-  {id:'calamus',n:'Calamus',c:['conscious'],p:'Consciousness expansion (traditional). RESTRICTED — neurotoxicity concern. Professional only.',x:'high'},
-  {id:'kanna',n:'Kanna',c:['conscious'],p:'Mood elevation; SSRI-like; social connection; pleasure; consciousness clarity.',x:'medium'},
-  {id:'wildDagga',n:'Wild Dagga',c:['conscious'],p:'Mild psychoactive; relaxation; consciousness exploration; mild euphoria. Legal status varies.',x:'medium'},
-  {id:'caleaZ',n:'Calea Zacatechichi',c:['conscious'],p:'Lucid-dream oneirogen; bitter; ceremonial only.',x:'medium'},
-  {id:'cocaLeaf',n:'Coca Leaf',c:['conscious','energy','digest'],p:'Stimulant/altitude adaptation; traditional; contextual legal/ceremonial use.',x:'high'},
+  {id:'blueLotus',n:'Blue Lotus',el:'S',ext:'T',c:['conscious','sleep'],p:'Mild consciousness expansion; relaxation; dream support; spiritual; ancient Egyptian.',x:'low'},
+  {id:'bobinsana',n:'Bobinsana',el:'S',ext:'T',c:['conscious'],p:'Consciousness exploration; emotional opening; plant medicine support; ceremonial.',x:'medium'},
+  {id:'calamus',n:'Calamus',el:'S',ext:'T',c:['conscious'],p:'Consciousness expansion (traditional). RESTRICTED — neurotoxicity concern. Professional only.',x:'high'},
+  {id:'kanna',n:'Kanna',el:'S',ext:'T',c:['conscious'],p:'Mood elevation; SSRI-like; social connection; pleasure; consciousness clarity.',x:'medium'},
+  {id:'wildDagga',n:'Wild Dagga',el:'S',ext:'T',c:['conscious'],p:'Mild psychoactive; relaxation; consciousness exploration; mild euphoria. Legal status varies.',x:'medium'},
+  {id:'caleaZ',n:'Calea Zacatechichi',el:'S',ext:'T',c:['conscious'],p:'Lucid-dream oneirogen; bitter; ceremonial only.',x:'medium'},
+  {id:'cocaLeaf',n:'Coca Leaf',el:'S',ext:'T',c:['conscious','energy','digest'],p:'Stimulant/altitude adaptation; traditional; contextual legal/ceremonial use.',x:'high'},
   // Energy
-  {id:'guarana',n:'Guarana',c:['energy'],p:'Energy (primary); high caffeine; endurance; stimulating; potent.',x:'medium'},
-  {id:'guayusa',n:'Guayusa',c:['energy'],p:'Highest caffeine plant; energy; alertness; Amazonian traditional.',x:'medium'},
-  {id:'yerbaMate',n:'Yerba Mate',c:['energy'],p:'Energy (primary); high caffeine; balanced; mood; social traditional.',x:'medium'},
+  {id:'guarana',n:'Guarana',el:'F',ext:'T',c:['energy'],p:'Energy (primary); high caffeine; endurance; stimulating; potent.',x:'medium'},
+  {id:'guayusa',n:'Guayusa',el:'F',ext:'T',c:['energy'],p:'Highest caffeine plant; energy; alertness; Amazonian traditional.',x:'medium'},
+  {id:'yerbaMate',n:'Yerba Mate',el:'F',ext:'T',c:['energy'],p:'Energy (primary); high caffeine; balanced; mood; social traditional.',x:'medium'},
   // Urinary
-  {id:'cranberry',n:'Cranberry',c:['urinary','antioxid'],p:'Urinary tract health; antioxidant; proanthocyanidin-rich; acidifying.',x:'low'},
-  {id:'sawPalmetto',n:'Saw Palmetto',c:['urinary','mens'],p:'Urinary/prostate support; hormonal balance; male health.',x:'low'},
-  // Heart / Nervine misc
-  {id:'hawthorn',n:'Hawthorn',c:['heart'],p:'Cardiovascular support (primary); heart tonification; circulation; gentle long-term tonic.',x:'low'},
-  {id:'butchersBroom',n:"Butcher's Broom",c:['heart'],p:'Venous support; varicose veins and hemorrhoids; capillary integrity.',x:'medium'},
-  {id:'verbena',n:'Verbena',c:['nervine'],p:'Gentle nervine and mild bitter; stress and digestive-linked tension.',x:'low'},
+  {id:'cranberry',n:'Cranberry',el:'W',ext:'T',c:['urinary','antioxid'],p:'Urinary tract health; antioxidant; proanthocyanidin-rich; acidifying.',x:'low'},
+  {id:'sawPalmetto',n:'Saw Palmetto',el:'E',ext:'T',c:['urinary','mens'],p:'Urinary/prostate support; hormonal balance; male health.',x:'low'},
+  // Heart / Nervine
+  {id:'hawthorn',n:'Hawthorn',el:'E',ext:'DC',c:['heart'],p:'Cardiovascular support (primary); heart tonification; circulation; gentle long-term tonic.',x:'low'},
+  {id:'butchersBroom',n:"Butcher's Broom",el:'E',ext:'T',c:['heart'],p:'Venous support; varicose veins and hemorrhoids; capillary integrity.',x:'medium'},
+  {id:'verbena',n:'Verbena',el:'A',ext:'T',c:['nervine'],p:'Gentle nervine and mild bitter; stress and digestive-linked tension.',x:'low'},
   // Culinary
-  {id:'marjoram',n:'Marjoram',c:['culinary','resp'],p:'Culinary; respiratory support; antimicrobial; antioxidant; aromatic herb.',x:'low'},
-  {id:'vanilla',n:'Vanilla',c:['culinary'],p:'Aromatic flavoring; mild mood-uplifting; dessert and tonic.',x:'low'},
+  {id:'marjoram',n:'Marjoram',el:'A',ext:'T',c:['culinary','resp'],p:'Culinary; respiratory support; antimicrobial; antioxidant; aromatic herb.',x:'low'},
+  {id:'vanilla',n:'Vanilla',el:'W',ext:'O',c:['culinary'],p:'Aromatic flavoring; mild mood-uplifting; dessert and tonic.',x:'low'},
 ];
 
-let cat='all',F=[],open=false;
+const CAT_THEMES={immune:'Immune resilience',sexual:'Sexual vitality',pain:'Pain & anti-inflammation',digest:'Digestive support',sleep:'Sleep & calm',cognitive:'Cognitive enhancement',resp:'Respiratory health',womens:"Women's harmony",antioxid:'Antioxidant protection',liver:'Liver detox',nutritive:'Deep nourishment',conscious:'Consciousness work',energy:'Energy & endurance',urinary:'Urinary support',adaptogen:'Stress adaptation',mens:"Men's vitality",nervine:'Nervous system',heart:'Heart health',menstrual:'Menstrual balance',culinary:'Aromatic culinary',fungi:'Mycelial intelligence'};
 
-// Build cat bar
+let cat='all',elFilter='all',F=[],open=false;
+
+// Build element bar
+const eb=document.getElementById('elemBar');
+ELEMS.forEach(e=>{
+  const b=document.createElement('button');
+  b.className='eb'+(e.id==='all'?' on':'');
+  b.textContent=e.l;b.dataset.e=e.id;
+  b.onclick=()=>{elFilter=e.id;document.querySelectorAll('.eb').forEach(x=>x.classList.remove('on'));b.classList.add('on');render();};
+  eb.appendChild(b);
+});
+
+// Build category bar
 const cb=document.getElementById('catBar');
 CATS.forEach(c=>{
   const b=document.createElement('button');
@@ -311,6 +368,7 @@ function render(){
   let list=H.filter(h=>{
     if(cat==='fungi')return h.f;
     if(cat!=='all'&&!h.c.includes(cat))return false;
+    if(elFilter!=='all'&&h.el!==elFilter)return false;
     if(!q)return true;
     return h.n.toLowerCase().includes(q)||h.p.toLowerCase().includes(q)||h.c.some(c=>cLabel(c).toLowerCase().includes(q));
   });
@@ -318,9 +376,10 @@ function render(){
   g.innerHTML='';
   list.forEach(h=>{
     const sel=F.includes(h.id);
+    const ec=EL_COL[h.el]||'#8B7E62';
     const d=document.createElement('div');
     d.className='hc'+(h.f?' fungi':'')+(sel?' sel':'');
-    d.innerHTML=`<div class="hname">${h.n}</div><div class="hcats">${h.f?'<span class="hcat fu">🍄 Fungi</span>':''}${h.c.slice(0,3).map(c=>`<span class="hcat">${cLabel(c)}</span>`).join('')}</div><div class="hprim">${h.p.length>95?h.p.slice(0,95)+'…':h.p}</div><button class="hadd">${sel?'✓':'+'}</button>`;
+    d.innerHTML=`<div class="hc-top"><div class="hname">${h.n}</div><div class="el-pip" title="${EL_NAME[h.el]||''}" style="background:${ec}"></div></div><div class="hcats">${h.f?'<span class="hcat fu">🍄 Fungi</span>':''}${h.c.slice(0,3).map(c=>`<span class="hcat">${cLabel(c)}</span>`).join('')}</div><div class="hprim">${h.p.length>90?h.p.slice(0,90)+'…':h.p}</div><button class="hadd">${sel?'✓':'+'}</button>`;
     d.querySelector('.hadd').onclick=e=>{e.stopPropagation();tog(h.id);};
     d.onclick=()=>openM(h);
     g.appendChild(d);
@@ -334,11 +393,64 @@ function tog(id){
   updatePanel();render();
 }
 
+function buildSummary(){
+  if(!F.length)return null;
+  const herbs=F.map(id=>H.find(h=>h.id===id)).filter(Boolean);
+  // Top categories
+  const cc={};herbs.forEach(h=>h.c.forEach(c=>cc[c]=(cc[c]||0)+1));
+  const topCats=Object.entries(cc).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([id])=>id);
+  const theme=topCats.map(c=>CAT_THEMES[c]||c).join(' · ');
+  // Contraindications
+  const contra=herbs.filter(h=>h.x==='medium'||h.x==='high');
+  // Herbal allies — pairs sharing 2+ categories
+  const allies=[];
+  for(let i=0;i<herbs.length-1;i++){
+    for(let j=i+1;j<herbs.length;j++){
+      const shared=herbs[i].c.filter(c=>herbs[j].c.includes(c));
+      if(shared.length>=2)allies.push({a:herbs[i].n,b:herbs[j].n,cats:shared.slice(0,2)});
+    }
+  }
+  return{theme,contra,allies};
+}
+
 function updatePanel(){
-  const chips=document.getElementById('chips'),cnt=document.getElementById('fcnt'),fab=document.getElementById('fabTxt');
+  const chips=document.getElementById('chips');
+  const cnt=document.getElementById('fcnt');
+  const fab=document.getElementById('fabTxt');
+  const sw=document.getElementById('fp-summary-wrap');
   chips.innerHTML=F.length===0?'<span class="fp-empty">Add herbs from the grid to build your formula.</span>':F.map(id=>{const h=H.find(x=>x.id===id);if(!h)return'';return`<span class="chip ${h.f?'fu':''}">${h.n}<button class="chip-x" onclick="tog('${id}')">×</button></span>`;}).join('');
   cnt.textContent=F.length>0?`${F.length}/8`:'';
   fab.textContent=F.length>0?`⚗ Formula (${F.length})`:'⚗ Formula';
+  // Summary
+  if(F.length>=2){
+    const s=buildSummary();
+    if(s){
+      const contHtml=s.contra.length?s.contra.map(h=>{
+        const dc=h.x==='high'?'#fca5a5':'#F5D689';
+        return`<div class="fps-contra-item"><div class="fps-contra-dot" style="background:${dc}"></div>${h.n}<span style="font-family:var(--fm);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;color:${dc};margin-left:4px">${h.x}</span></div>`;
+      }).join(''):'<div class="fps-none">None flagged</div>';
+      const allyHtml=s.allies.length?s.allies.map(a=>`<div class="fps-ally">
+        <span>${a.a}</span><span class="fps-ally-sep">⟷</span><span>${a.b}</span>
+        <span style="font-family:var(--fm);font-size:7px;letter-spacing:.09em;text-transform:uppercase;color:var(--md);margin-left:4px">${a.cats.map(c=>cLabel(c)).join(', ')}</span>
+      </div>`).join(''):'<div class="fps-none">No strong synergies detected yet</div>';
+      sw.innerHTML=`<div class="fp-summary">
+        <div class="fps-block">
+          <div class="fps-label">Blend theme</div>
+          <div class="fps-theme">${s.theme}</div>
+        </div>
+        <div class="fps-block">
+          <div class="fps-label">Contraindications</div>
+          ${contHtml}
+        </div>
+        <div class="fps-block">
+          <div class="fps-label">Herbal allies</div>
+          ${allyHtml}
+        </div>
+      </div>`;
+    }
+  } else {
+    sw.innerHTML='';
+  }
 }
 
 function togglePanel(){open=!open;document.getElementById('fpanel').classList.toggle('open',open);}
@@ -355,12 +467,25 @@ function saveF(){
 function openM(h){
   const sel=F.includes(h.id);
   const cats=CATS.filter(c=>h.c.includes(c.id));
+  const ec=EL_COL[h.el]||'#8B7E62';
+  const en=EL_NAME[h.el]||'';
+  const extLabel=EXT_NAME[h.ext||'T']||'Cold Tincture';
+  const extAnchor=EXT_ANCHOR[h.ext||'T']||'tincture';
   document.getElementById('modal').innerHTML=`
-    <div class="m-head"><div class="m-name">${h.n}</div><button class="m-x" onclick="closeM()">×</button></div>
+    <div class="m-head">
+      <div class="m-name-row">
+        <div class="m-name">${h.n}</div>
+        <div class="m-el-badge" style="color:${ec};border-color:${ec}55;background:${ec}11">${en}</div>
+      </div>
+      <button class="m-x" onclick="closeM()">×</button>
+    </div>
     <div class="m-cats">${h.f?'<span class="mc fu">🍄 Fungi</span>':''}${cats.map((c,i)=>`<span class="mc ${i===0?'pri':''}">${c.l}</span>`).join('')}</div>
     <div class="m-prim">${h.p}</div>
     <div class="m-sec">Caution level</div>
     <span class="m-caut ${{'low':'cL','medium':'cM','high':'cH'}[h.x]}">${{'low':'● Low risk','medium':'◆ Medium — check context','high':'▲ High — professional / caution'}[h.x]}</span>
+    <div style="margin-top:12px">
+      <a class="m-extract" href="/extraction#${extAnchor}" target="_blank">⚗ How to extract — ${extLabel} →</a>
+    </div>
     <button id="madd" class="m-add ${h.f?'fub':''} ${sel?'in':''}" onclick="tog('${h.id}');document.getElementById('madd').textContent=F.includes('${h.id}')?'✓ In formula':'+ Add to formula';document.getElementById('madd').classList.toggle('in',F.includes('${h.id}'));">${sel?'✓ In formula':'+ Add to formula'}</button>
   `;
   document.getElementById('mbg').classList.add('on');
