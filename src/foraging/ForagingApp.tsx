@@ -7,6 +7,22 @@ import { HARVEST_BY_MONTH, HARVEST_PLANTS, MONTH_SV } from '../data/harvestCalen
 import { EcoNode, Season, HabitatType } from '../types/EcoNode';
 import NodePanel from './NodePanel';
 
+// Moon phase calculation (pure JS, no API)
+function getMoonPhase() {
+  const knownNew = new Date('2000-01-06T18:14:00Z').getTime();
+  const cycle = 29.53058867;
+  const elapsed = (Date.now() - knownNew) / 86400000; // days
+  const d = ((elapsed % cycle) + cycle) % cycle;
+  if (d < 1.85)  return { emoji: '🌑', name: 'New Moon', day: Math.round(d) };
+  if (d < 7.38)  return { emoji: '🌒', name: 'Waxing Crescent', day: Math.round(d) };
+  if (d < 9.22)  return { emoji: '🌓', name: 'First Quarter', day: Math.round(d) };
+  if (d < 14.77) return { emoji: '🌔', name: 'Waxing Gibbous', day: Math.round(d) };
+  if (d < 16.61) return { emoji: '🌕', name: 'Full Moon', day: Math.round(d) };
+  if (d < 22.15) return { emoji: '🌖', name: 'Waning Gibbous', day: Math.round(d) };
+  if (d < 23.99) return { emoji: '🌗', name: 'Last Quarter', day: Math.round(d) };
+  return { emoji: '🌘', name: 'Waning Crescent', day: Math.round(d) };
+}
+
 // GBIF observation type
 interface GBIFObs { id: number; lat: number; lng: number; species: string; date: string | null; region: string | null; }
 
@@ -112,6 +128,30 @@ function NodeMarker({ node, isSelected, isHovered, seasons, onClick, onHover, on
   );
 }
 
+function InstallButton() {
+  const [prompt, setPrompt] = useState<any>(null);
+  useEffect(() => {
+    const handler = () => setPrompt((window as any).__foragePWAPrompt ?? null);
+    window.addEventListener('forage-installable', handler);
+    // check if already waiting
+    if ((window as any).__foragePWAPrompt) handler();
+    return () => window.removeEventListener('forage-installable', handler);
+  }, []);
+  if (!prompt) return null;
+  return (
+    <button
+      onClick={() => { prompt.prompt(); prompt.userChoice.then(() => setPrompt(null)); }}
+      style={{
+        fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', textTransform: 'uppercase',
+        background: 'rgba(107,214,111,0.1)', border: '0.5px solid rgba(107,214,111,0.4)',
+        color: '#6BD66F', borderRadius: 4, padding: '4px 10px', cursor: 'pointer', flexShrink: 0,
+      }}
+    >
+      ↓ Install app
+    </button>
+  );
+}
+
 export default function ForagingApp() {
   const [selectedNode, setSelectedNode] = useState<EcoNode | null>(null);
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
@@ -124,7 +164,6 @@ export default function ForagingApp() {
   const [hoveredObs, setHoveredObs] = useState<GBIFObs | null>(null);
   const [conditions, setConditions] = useState<ForageConditions | null>(null);
   const [conditionsLoading, setConditionsLoading] = useState(false);
-  const [showConditions, setShowConditions] = useState(false);
   const [showSkogsObs, setShowSkogsObs] = useState(true);
   const [hoveredSkogsHerb, setHoveredSkogsHerb] = useState<string | null>(null);
   const [showHarvest, setShowHarvest] = useState(false);
@@ -295,6 +334,21 @@ export default function ForagingApp() {
         >
           {showSkogsObs ? '◉' : '○'} Skogsskafferiet
         </button>
+
+        {/* Moon phase */}
+        {(() => { const m = getMoonPhase(); return (
+          <div title={`${m.name} · day ${m.day} of lunar cycle`} style={{
+            fontFamily: 'monospace', fontSize: 8, color: '#8B7E62', flexShrink: 0,
+            display: 'flex', alignItems: 'center', gap: 5, cursor: 'default',
+            padding: '4px 8px', border: '0.5px solid rgba(255,255,255,0.08)', borderRadius: 4,
+          }}>
+            <span style={{ fontSize: 14 }}>{m.emoji}</span>
+            <span style={{ letterSpacing: '0.1em', textTransform: 'uppercase' }}>{m.name}</span>
+          </div>
+        ); })()}
+
+        {/* PWA install button — only shown when browser fires beforeinstallprompt */}
+        <InstallButton />
 
         {/* Node count */}
         <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#4d5a52', flexShrink: 0 }}>
@@ -571,11 +625,6 @@ export default function ForagingApp() {
                 ))}
               </div>
               <div style={{ fontFamily: 'monospace', fontSize: 6.5, color: '#2d3a32', marginTop: 5, letterSpacing: '0.06em' }}>Open-Meteo · CC BY 4.0</div>
-              <button
-                onClick={() => setShowConditions(c => !c)}
-                style={{ display: 'none' }} // reserved for expanded detail view
-                aria-hidden
-              />
             </>
           )}
         </div>

@@ -1,0 +1,40 @@
+{
+  "name": "Fungai Art — Foraging Map",
+  "short_name": "Forage",
+  "description": "Ecological predictive foraging intelligence. 39 nodes across Sweden, Germany, France, Denmark and beyond. Live conditions, GBIF sightings, harvest calendar.",
+  "start_url": "/foraging",
+  "scope": "/foraging",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#07110d",
+  "theme_color": "#6BD66F",
+  "lang": "en",
+  "categories": ["lifestyle", "food", "navigation"],
+  "icons": [
+    {
+      "src": "/fungai-art-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/fungai-art-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Herbal Engine",
+      "url": "/mixology",
+      "description": "Build your botanical formula"
+    },
+    {
+      "name": "Extraction Protocols",
+      "url": "/extraction",
+      "description": "Tincture and extract methods"
+    }
+  ]
+}
