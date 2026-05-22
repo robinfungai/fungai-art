@@ -5,6 +5,7 @@
 <title>Herbal Engine — Fungai Art</title>
 <link rel="preconnect" href="https://api.fontshare.com"/>
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500&f[]=satoshi@400,500,600&f[]=geist-mono@400&display=swap"/>
+<script src="/herbs-data.js"></script>
 <style>
 :root{--s:#060809;--s2:#0F1014;--s3:#171A1F;--s4:#1F2228;--m:#C9B894;--md:#8B7E62;--ml:#E6D9B5;--g:#6BD66F;--gd:#2E7A35;--gl:#B6F0AE;--a:#E8B14B;--ad:#8B6320;--al:#F5D689;--r:rgba(201,184,148,.11);--rl:rgba(201,184,148,.2);--fd:'Zodiak','Cormorant Garamond',Georgia,serif;--fs:'Satoshi',system-ui,sans-serif;--fm:'Geist Mono',monospace;
 --eF:#E8714B;--eE:#6BD66F;--eW:#4FA8E0;--eA:#A88FE0;--eS:#E8B14B;}
@@ -70,6 +71,20 @@ button{font-family:inherit;cursor:pointer;}
 .eb.on[data-e="W"]{background:rgba(79,168,224,.1);border-color:#1F5B85;color:#A6D5F2;}
 .eb.on[data-e="A"]{background:rgba(168,143,224,.1);border-color:#6B5BAA;color:#C5B5F5;}
 .eb.on[data-e="S"]{background:rgba(232,177,75,.1);border-color:var(--ad);color:var(--al);}
+/* TCM meridian pills */
+.tcb{font-family:var(--fm);font-size:9px;letter-spacing:.13em;text-transform:uppercase;padding:6px 13px;border-radius:6px;border:0.5px solid rgba(232,177,75,.25);background:none;color:var(--md);transition:all .15s;white-space:nowrap;cursor:pointer;}
+.tcb:hover{color:var(--al);border-color:rgba(232,177,75,.5);}
+.tcb.on{background:rgba(232,177,75,.1);border-color:var(--a);color:var(--al);}
+/* Rich modal: TCM section */
+.m-tcm-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.m-tcm-pill{font-family:var(--fm);font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:rgba(232,177,75,.08);border:0.5px solid rgba(232,177,75,.3);color:var(--al);}
+.m-tcm-el{font-family:var(--fm);font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:rgba(168,143,224,.08);border:0.5px solid rgba(168,143,224,.35);color:#C5B5F5;}
+.m-synergy{margin-top:10px;padding:10px 13px;background:rgba(107,214,111,.04);border:0.5px solid rgba(107,214,111,.18);border-radius:7px;}
+.m-synergy-title{font-family:var(--fm);font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gd);margin-bottom:6px;}
+.m-syn-item{font-size:12px;color:var(--m);padding:3px 0;line-height:1.5;}
+.m-caution-item{font-size:12px;color:var(--al);padding:3px 0;line-height:1.5;opacity:.85;}
+.m-drug-item{font-size:12px;color:#fca5a5;padding:3px 0;line-height:1.5;opacity:.9;}
+.m-spiritual{margin-top:10px;padding:12px 14px;background:rgba(168,143,224,.04);border:0.5px solid rgba(168,143,224,.2);border-radius:7px;font-family:var(--fd);font-style:italic;font-size:13.5px;color:var(--m);line-height:1.65;opacity:.88;}
 /* Results bar */
 .rbar{font-family:var(--fm);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--md);margin-bottom:13px;}
 /* Herb grid */
@@ -186,6 +201,7 @@ button{font-family:inherit;cursor:pointer;}
   <div class="srch"><span class="srch-ico">◎</span><input class="srch-i" id="si" type="text" placeholder="Search by name or function…" oninput="render()"/></div>
   <div class="elem-bar" id="elemBar"></div>
   <div class="cats" id="catBar"></div>
+  <div class="cats" id="tcmBar" style="margin-top:2px"></div>
 </div>
 <div class="rbar" id="rbar"></div>
 <div class="grid" id="grid"></div>
@@ -369,7 +385,35 @@ const H=[
 
 const CAT_THEMES={immune:'Immune resilience',sexual:'Sexual vitality',pain:'Pain & anti-inflammation',digest:'Digestive support',sleep:'Sleep & calm',cognitive:'Cognitive enhancement',resp:'Respiratory health',womens:"Women's harmony",antioxid:'Antioxidant protection',liver:'Liver detox',nutritive:'Deep nourishment',conscious:'Consciousness work',energy:'Energy & endurance',urinary:'Urinary support',adaptogen:'Stress adaptation',mens:"Men's vitality",nervine:'Nervous system',heart:'Heart health',menstrual:'Menstrual balance',culinary:'Aromatic culinary',fungi:'Mycelial intelligence'};
 
-let cat='all',elFilter='all',F=[],open=false;
+let cat='all',elFilter='all',tcmFilter='all',F=[],open=false;
+
+// Merge rich data from herbs.ts into the H[] array
+const TCM_MERIDIANS = ['All meridians','Lung','Large Intestine','Stomach','Spleen','Heart','Small Intestine','Bladder','Kidney','Pericardium','Triple Burner','Gallbladder','Liver'];
+
+function getDB(herbName){
+  if(typeof window.HERB_DB === 'undefined') return null;
+  return window.HERB_DB.find(d => {
+    const dn = d.name.toLowerCase().replace(/[^a-z]/g,'');
+    const hn = herbName.toLowerCase().replace(/[^a-z]/g,'');
+    return dn === hn || dn.includes(hn) || hn.includes(dn);
+  }) || null;
+}
+
+// Build TCM meridian bar
+const tcmBar = document.getElementById('tcmBar');
+TCM_MERIDIANS.forEach(m => {
+  const b = document.createElement('button');
+  b.className = 'tcb' + (m === 'All meridians' ? ' on' : '');
+  b.textContent = m === 'All meridians' ? '◈ All meridians' : m;
+  b.dataset.m = m;
+  b.onclick = () => {
+    tcmFilter = m === 'All meridians' ? 'all' : m;
+    document.querySelectorAll('.tcb').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    render();
+  };
+  tcmBar.appendChild(b);
+});
 
 // Build element bar
 const eb=document.getElementById('elemBar');
@@ -400,6 +444,10 @@ function render(){
     if(cat==='fungi')return h.f;
     if(cat!=='all'&&!h.c.includes(cat))return false;
     if(elFilter!=='all'&&h.el!==elFilter)return false;
+    if(tcmFilter!=='all'){
+      const db=getDB(h.n);
+      if(!db||!db.tcm_meridians||!db.tcm_meridians.includes(tcmFilter))return false;
+    }
     if(!q)return true;
     return h.n.toLowerCase().includes(q)||h.p.toLowerCase().includes(q)||h.c.some(c=>cLabel(c).toLowerCase().includes(q));
   });
@@ -603,12 +651,15 @@ function analyzeFormula(){
     extRec='Cold Tincture. 40–60% ethanol, 1:5 ratio, 4–6 weeks. Shake daily. Strain and press marc firmly. Bottle in amber glass. Shelf life: 2+ years.';
   }
 
-  // Synergies — pairs with 2+ shared categories
+  // Synergies — check herbs.ts herb_to_herb_synergy first, then fall back to shared categories
   const allies=[];
   for(let i=0;i<herbs.length-1;i++){
     for(let j=i+1;j<herbs.length;j++){
+      const dbi=getDB(herbs[i].n);
+      const synText=dbi&&dbi.herb_to_herb_synergy?dbi.herb_to_herb_synergy.find(s=>s.toLowerCase().includes(herbs[j].n.toLowerCase().split(' ')[0])):null;
       const sh=herbs[i].c.filter(c=>herbs[j].c.includes(c));
-      if(sh.length>=2)allies.push({a:herbs[i].n,b:herbs[j].n,shared:sh.slice(0,2)});
+      if(synText)allies.push({a:herbs[i].n,b:herbs[j].n,shared:sh.slice(0,2),note:synText});
+      else if(sh.length>=2)allies.push({a:herbs[i].n,b:herbs[j].n,shared:sh.slice(0,2)});
     }
   }
 
@@ -676,21 +727,74 @@ function openM(h){
   const en=EL_NAME[h.el]||'';
   const extLabel=EXT_NAME[h.ext||'T']||'Cold Tincture';
   const extAnchor=EXT_ANCHOR[h.ext||'T']||'tincture';
+  const db=getDB(h.n); // rich data from herbs.ts
+
+  // TCM / energetics section
+  const tcmHtml=db&&db.tcm_meridians?`
+    <div class="m-tcm-row">
+      ${db.tcm_meridians.map(m=>`<span class="m-tcm-pill">${m}</span>`).join('')}
+      ${db.tcm_element?`<span class="m-tcm-el">${db.tcm_element}</span>`:''}
+    </div>
+    ${db.energetics?`<div style="font-family:var(--fm);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--md);margin-bottom:4px">Energetics</div>
+    <div style="font-size:12px;color:var(--m);margin-bottom:10px">${db.energetics.join(' · ')}</div>`:''}
+  `:'';
+
+  // Pharmacology
+  const pharmaHtml=db&&db.pharmacology?`
+    <div class="m-sec">Pharmacology</div>
+    <div style="font-size:12.5px;color:var(--m);line-height:1.65;margin-bottom:10px">${db.pharmacology}</div>
+  `:'';
+
+  // Synergies
+  const synergyHtml=db&&(db.herb_to_herb_synergy||db.herb_to_herb_caution||db.herb_to_drug_interactions)?`
+    <div class="m-synergy">
+      <div class="m-synergy-title">Synergies & interactions</div>
+      ${(db.herb_to_herb_synergy||[]).map(s=>`<div class="m-syn-item">✦ ${s}</div>`).join('')}
+      ${(db.herb_to_herb_caution||[]).map(s=>`<div class="m-caution-item">◆ ${s}</div>`).join('')}
+      ${(db.herb_to_drug_interactions||[]).map(s=>`<div class="m-drug-item">▲ ${s}</div>`).join('')}
+    </div>
+  `:'';
+
+  // Pregnancy
+  const pregHtml=db&&db.safe_pregnancy!==undefined&&db.safe_pregnancy!==null?`
+    <div style="margin-top:8px;display:inline-flex;align-items:center;gap:6px;font-family:var(--fm);font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:4px;${db.safe_pregnancy?'background:rgba(107,214,111,.07);border:0.5px solid rgba(107,214,111,.3);color:var(--gl)':'background:rgba(248,113,113,.07);border:0.5px solid rgba(248,113,113,.3);color:#fca5a5'}">
+      ${db.safe_pregnancy?'✓ Pregnancy: consult provider':'✗ Avoid in pregnancy'}
+    </div>
+  `:'';
+
+  // Spiritual
+  const spiritHtml=db&&db.spiritual_layer?`<div class="m-spiritual">${db.spiritual_layer}</div>`:'';
+
+  // Best preparation
+  const prepHtml=db&&db.best_preparation?`
+    <div class="m-sec">Best preparation</div>
+    <div style="font-size:12.5px;color:var(--m);line-height:1.65;margin-bottom:6px">${db.best_preparation}</div>
+  `:'';
+
   document.getElementById('modal').innerHTML=`
     <div class="m-head">
       <div class="m-name-row">
-        <div class="m-name">${h.n}</div>
+        <div>
+          <div class="m-name">${h.n}</div>
+          ${db&&db.botanical?`<div style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;color:var(--md);margin-top:2px;font-style:italic">${db.botanical}</div>`:''}
+        </div>
         <div class="m-el-badge" style="color:${ec};border-color:${ec}55;background:${ec}11">${en}</div>
       </div>
       <button class="m-x" onclick="closeM()">×</button>
     </div>
+    ${tcmHtml}
     <div class="m-cats">${h.f?'<span class="mc fu">🍄 Fungi</span>':''}${cats.map((c,i)=>`<span class="mc ${i===0?'pri':''}">${c.l}</span>`).join('')}</div>
     <div class="m-prim">${h.p}</div>
+    ${pharmaHtml}
     <div class="m-sec">Caution level</div>
     <span class="m-caut ${{'low':'cL','medium':'cM','high':'cH'}[h.x]}">${{'low':'● Low risk','medium':'◆ Medium — check context','high':'▲ High — professional / caution'}[h.x]}</span>
-    <div style="margin-top:12px">
+    ${pregHtml}
+    ${synergyHtml}
+    ${prepHtml}
+    <div style="margin-top:10px">
       <a class="m-extract" href="/extraction#${extAnchor}" target="_blank">⚗ How to extract — ${extLabel} →</a>
     </div>
+    ${spiritHtml}
     <button id="madd" class="m-add ${h.f?'fub':''} ${sel?'in':''}" onclick="tog('${h.id}');document.getElementById('madd').textContent=F.includes('${h.id}')?'✓ In formula':'+ Add to formula';document.getElementById('madd').classList.toggle('in',F.includes('${h.id}'));">${sel?'✓ In formula':'+ Add to formula'}</button>
   `;
   document.getElementById('mbg').classList.add('on');
