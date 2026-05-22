@@ -10,6 +10,14 @@ import NodePanel from './NodePanel';
 // GBIF observation type
 interface GBIFObs { id: number; lat: number; lng: number; species: string; date: string | null; region: string | null; }
 
+// Foraging conditions type
+interface ForageConditions {
+  score: number; label: string; color: string; detail: string;
+  tAvg: number; tMax: number; tMin: number;
+  totalRain10d: number; totalRain3to7: number; todayRain: number;
+  forecast: { date: string; rain: number; tMax: number; tMin: number }[];
+}
+
 // Organic earthy map style — CARTO Voyager (warm/natural tones, no account needed).
 const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json';
 
@@ -114,6 +122,9 @@ export default function ForagingApp() {
   const [gbifLoading, setGbifLoading] = useState(false);
   const [gbifSpecies, setGbifSpecies] = useState<string>('');
   const [hoveredObs, setHoveredObs] = useState<GBIFObs | null>(null);
+  const [conditions, setConditions] = useState<ForageConditions | null>(null);
+  const [conditionsLoading, setConditionsLoading] = useState(false);
+  const [showConditions, setShowConditions] = useState(false);
   const [showSkogsObs, setShowSkogsObs] = useState(true);
   const [hoveredSkogsHerb, setHoveredSkogsHerb] = useState<string | null>(null);
   const [showHarvest, setShowHarvest] = useState(false);
@@ -126,21 +137,36 @@ export default function ForagingApp() {
     habitatFilter === 'all' || n.nodeType === habitatFilter
   );
 
-  // Fetch GBIF observations when a node is selected
+  // Fetch GBIF observations + foraging conditions when a node is selected
   useEffect(() => {
-    if (!selectedNode) { setGbifObs([]); setGbifSpecies(''); return; }
-    // Pick the first species in the node that has a known GBIF name
+    if (!selectedNode) {
+      setGbifObs([]); setGbifSpecies('');
+      setConditions(null);
+      return;
+    }
     const primarySpecies = selectedNode.species[0]?.name || '';
-    if (!primarySpecies) return;
     const [lng, lat] = selectedNode.coordinates;
-    setGbifLoading(true);
-    setGbifObs([]);
-    setGbifSpecies(primarySpecies);
-    fetch(`/api/gbif-observations?taxon=${encodeURIComponent(primarySpecies)}&lat=${lat}&lng=${lng}&radius=200&limit=80`)
+
+    // GBIF
+    if (primarySpecies) {
+      setGbifLoading(true);
+      setGbifObs([]);
+      setGbifSpecies(primarySpecies);
+      fetch(`/api/gbif-observations?taxon=${encodeURIComponent(primarySpecies)}&lat=${lat}&lng=${lng}&radius=200&limit=80`)
+        .then(r => r.json())
+        .then(data => { if (data.observations) setGbifObs(data.observations); })
+        .catch(() => {})
+        .finally(() => setGbifLoading(false));
+    }
+
+    // Weather / foraging conditions
+    setConditionsLoading(true);
+    setConditions(null);
+    fetch(`/api/forage-conditions?lat=${lat}&lng=${lng}`)
       .then(r => r.json())
-      .then(data => { if (data.observations) setGbifObs(data.observations); })
+      .then(data => { if (data.score) setConditions(data); })
       .catch(() => {})
-      .finally(() => setGbifLoading(false));
+      .finally(() => setConditionsLoading(false));
   }, [selectedNode?.id]);
 
   const handleNodeClick = useCallback((node: EcoNode) => {
@@ -500,6 +526,60 @@ export default function ForagingApp() {
           🌿 Harvest {MONTH_SV[currentMonth]}
         </button>
       </div>
+
+      {/* Conditions widget — bottom-left when node selected */}
+      {selectedNode && (
+        <div style={{
+          position: 'absolute', bottom: 60, left: 20, zIndex: 15,
+          background: 'rgba(7,17,13,0.96)', backdropFilter: 'blur(14px)',
+          border: `0.5px solid ${conditions ? conditions.color + '55' : 'rgba(255,255,255,0.1)'}`,
+          borderRadius: 10, padding: '10px 14px', minWidth: 200,
+          transition: 'border-color 0.4s',
+        }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 7, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#4d5a52', marginBottom: 5 }}>Foraging conditions</div>
+          {conditionsLoading && <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#4d5a52' }}>Fetching weather…</div>}
+          {conditions && !conditionsLoading && (
+            <>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 5 }}>
+                {/* Score dial */}
+                <div style={{
+                  width: 36, height: 36, borderRadius: '50%',
+                  background: `conic-gradient(${conditions.color} ${conditions.score * 36}deg, rgba(255,255,255,0.06) 0deg)`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  flexShrink: 0,
+                }}>
+                  <div style={{
+                    width: 28, height: 28, borderRadius: '50%', background: '#07110d',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontFamily: 'monospace', fontSize: 11, color: conditions.color, fontWeight: 'bold',
+                  }}>{conditions.score}</div>
+                </div>
+                <div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 11, color: conditions.color, letterSpacing: '0.08em' }}>{conditions.label}</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 7.5, color: '#8B7E62', marginTop: 1 }}>{conditions.tAvg}°C · {conditions.totalRain10d}mm / 10d</div>
+                </div>
+              </div>
+              <div style={{ fontFamily: 'monospace', fontSize: 8, color: '#8B7E62', lineHeight: 1.5, marginBottom: 5 }}>{conditions.detail}</div>
+              {/* 3-day forecast mini-bar */}
+              <div style={{ display: 'flex', gap: 5 }}>
+                {conditions.forecast.map(f => (
+                  <div key={f.date} style={{ flex: 1, textAlign: 'center', padding: '4px 2px', background: 'rgba(255,255,255,0.03)', borderRadius: 4, border: '0.5px solid rgba(255,255,255,0.07)' }}>
+                    <div style={{ fontFamily: 'monospace', fontSize: 7, color: '#4d5a52', letterSpacing: '0.06em' }}>{new Date(f.date).toLocaleDateString('en', { weekday: 'short' })}</div>
+                    <div style={{ fontFamily: 'monospace', fontSize: 8.5, color: f.rain > 5 ? '#A6D5F2' : '#8B7E62', marginTop: 2 }}>{f.rain > 0 ? `${Math.round(f.rain)}mm` : '—'}</div>
+                    <div style={{ fontFamily: 'monospace', fontSize: 7.5, color: '#E6D9B5', marginTop: 1 }}>{Math.round(f.tMax)}°</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ fontFamily: 'monospace', fontSize: 6.5, color: '#2d3a32', marginTop: 5, letterSpacing: '0.06em' }}>Open-Meteo · CC BY 4.0</div>
+              <button
+                onClick={() => setShowConditions(c => !c)}
+                style={{ display: 'none' }} // reserved for expanded detail view
+                aria-hidden
+              />
+            </>
+          )}
+        </div>
+      )}
 
       {/* Node panel — slides in from right */}
       {selectedNode && (
