@@ -8,6 +8,20 @@ import NodePanel from './NodePanel';
 // Free tile style — CARTO Dark Matter via MapLibre. No account or token needed.
 const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
 
+// Free satellite imagery — ESRI World Imagery (no account or token needed).
+const SATELLITE_STYLE = {
+  version: 8 as const,
+  sources: {
+    satellite: {
+      type: 'raster' as const,
+      tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
+      tileSize: 256 as const,
+      attribution: '© Esri, Earthstar Geographics',
+    },
+  },
+  layers: [{ id: 'satellite-layer', type: 'raster' as const, source: 'satellite' }],
+};
+
 const SEASONS: Season[] = ['spring', 'summer', 'autumn', 'winter'];
 const SEASON_ICONS: Record<Season, string> = {
   spring: '🌱', summer: '☀', autumn: '🍂', winter: '❄',
@@ -23,12 +37,12 @@ function getCurrentSeason(): Season {
 
 const ALL_HABITATS = [...new Set(ECO_NODES.map(n => n.nodeType))];
 
-function NodeMarker({ node, isSelected, isHovered, season, onClick, onHover, onLeave }: {
-  node: EcoNode; isSelected: boolean; isHovered: boolean; season: Season;
+function NodeMarker({ node, isSelected, isHovered, seasons, onClick, onHover, onLeave }: {
+  node: EcoNode; isSelected: boolean; isHovered: boolean; seasons: Season[];
   onClick: () => void; onHover: () => void; onLeave: () => void;
 }) {
   const color = HABITAT_COLORS[node.nodeType] || '#6BD66F';
-  const inSeason = node.best_season.includes(season);
+  const inSeason = node.best_season.some(s => seasons.includes(s));
   const topSpecies = node.species[0];
   const adjProb = topSpecies ? (inSeason ? Math.min(1, topSpecies.probability * 1.25) : topSpecies.probability * 0.4) : 0;
   const size = isSelected ? 22 : isHovered ? 18 : 14;
@@ -90,7 +104,8 @@ function NodeMarker({ node, isSelected, isHovered, season, onClick, onHover, onL
 export default function ForagingApp() {
   const [selectedNode, setSelectedNode] = useState<EcoNode | null>(null);
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
-  const [season, setSeason] = useState<Season>(getCurrentSeason);
+  const [seasons, setSeasons] = useState<Season[]>([getCurrentSeason()]);
+  const [mapMode, setMapMode] = useState<'dark' | 'satellite'>('dark');
   const [habitatFilter, setHabitatFilter] = useState<HabitatType | 'all'>('all');
   const [popupNode, setPopupNode] = useState<EcoNode | null>(null);
 
@@ -142,21 +157,46 @@ export default function ForagingApp() {
 
         <div style={{ width: '0.5px', height: 32, background: 'rgba(255,255,255,0.1)', flexShrink: 0 }} />
 
-        {/* Season filter */}
+        {/* Season filter (multi-select) */}
         <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 7.5, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#4d5a52', marginRight: 2 }}>Season</div>
-          {SEASONS.map(s => (
-            <button key={s} onClick={() => setSeason(s)} style={{
-              fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.12em', textTransform: 'uppercase',
-              padding: '4px 10px', borderRadius: 5, cursor: 'pointer', transition: 'all 0.15s',
-              background: season === s ? 'rgba(107,214,111,0.12)' : 'none',
-              border: season === s ? '0.5px solid rgba(107,214,111,0.4)' : '0.5px solid rgba(255,255,255,0.1)',
-              color: season === s ? '#B6F0AE' : '#8B7E62',
-            }}>
-              {SEASON_ICONS[s]} {s}
-            </button>
-          ))}
+          {SEASONS.map(s => {
+            const active = seasons.includes(s);
+            return (
+              <button key={s} onClick={() => {
+                setSeasons(prev => {
+                  if (prev.includes(s)) {
+                    // Don't allow removing the last active season
+                    if (prev.length === 1) return prev;
+                    return prev.filter(x => x !== s);
+                  }
+                  return [...prev, s];
+                });
+              }} style={{
+                fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.12em', textTransform: 'uppercase',
+                padding: '4px 10px', borderRadius: 5, cursor: 'pointer', transition: 'all 0.15s',
+                background: active ? 'rgba(107,214,111,0.12)' : 'none',
+                border: active ? '0.5px solid rgba(107,214,111,0.4)' : '0.5px solid rgba(255,255,255,0.1)',
+                color: active ? '#B6F0AE' : '#8B7E62',
+              }}>
+                {SEASON_ICONS[s]} {s}
+              </button>
+            );
+          })}
         </div>
+
+        <div style={{ width: '0.5px', height: 32, background: 'rgba(255,255,255,0.1)', flexShrink: 0 }} />
+
+        {/* Map mode toggle */}
+        <button onClick={() => setMapMode(m => m === 'dark' ? 'satellite' : 'dark')} style={{
+          fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.12em', textTransform: 'uppercase',
+          padding: '4px 10px', borderRadius: 5, cursor: 'pointer', transition: 'all 0.15s', flexShrink: 0,
+          background: mapMode === 'satellite' ? 'rgba(79,168,224,0.14)' : 'none',
+          border: mapMode === 'satellite' ? '0.5px solid rgba(79,168,224,0.45)' : '0.5px solid rgba(255,255,255,0.1)',
+          color: mapMode === 'satellite' ? '#7EC8E8' : '#8B7E62',
+        }}>
+          {mapMode === 'satellite' ? '🛰 Satellite' : '🌑 Dark'}
+        </button>
 
         <div style={{ width: '0.5px', height: 32, background: 'rgba(255,255,255,0.1)', flexShrink: 0 }} />
 
@@ -189,7 +229,7 @@ export default function ForagingApp() {
 
         {/* Node count */}
         <div style={{ marginLeft: 'auto', fontFamily: 'monospace', fontSize: 9, color: '#4d5a52', flexShrink: 0 }}>
-          {filteredNodes.length} nodes · {filteredNodes.filter(n => n.best_season.includes(season)).length} active now
+          {filteredNodes.length} nodes · {filteredNodes.filter(n => n.best_season.some(s => seasons.includes(s))).length} active now
         </div>
       </div>
 
@@ -198,7 +238,7 @@ export default function ForagingApp() {
         ref={mapRef}
         initialViewState={{ longitude: 25, latitude: 38, zoom: 2.5 }}
         style={{ width: '100%', height: '100%' }}
-        mapStyle={MAP_STYLE}
+        mapStyle={mapMode === 'satellite' ? SATELLITE_STYLE : MAP_STYLE}
       >
         <NavigationControl position="bottom-right" style={{ marginBottom: 80 }} />
 
@@ -213,7 +253,7 @@ export default function ForagingApp() {
               node={node}
               isSelected={selectedNode?.id === node.id}
               isHovered={hoveredNode === node.id}
-              season={season}
+              seasons={seasons}
               onClick={() => handleNodeClick(node)}
               onHover={() => setHoveredNode(node.id)}
               onLeave={() => setHoveredNode(null)}
@@ -274,7 +314,7 @@ export default function ForagingApp() {
       {selectedNode && (
         <NodePanel
           node={selectedNode}
-          currentSeason={season}
+          activeSeason={seasons}
           onClose={() => setSelectedNode(null)}
         />
       )}
@@ -290,7 +330,7 @@ export default function ForagingApp() {
           fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase',
           color: '#6BD66F', zIndex: 10, pointerEvents: 'none',
         }}>
-          {filteredNodes.filter(n => n.best_season.includes(season)).length} nodes active · tap any to explore
+          {filteredNodes.filter(n => n.best_season.some(s => seasons.includes(s))).length} nodes active · tap any to explore
         </div>
       )}
     </div>

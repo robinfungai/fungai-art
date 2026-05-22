@@ -4,7 +4,7 @@ import { HABITAT_COLORS, HABITAT_LABELS } from '../data/ecoNodes';
 
 interface NodePanelProps {
   node: EcoNode | null;
-  currentSeason: Season;
+  activeSeason: Season[];
   onClose: () => void;
 }
 
@@ -40,12 +40,12 @@ function ProbBar({ value, season_match }: { value: number; season_match: boolean
   );
 }
 
-export default function NodePanel({ node, currentSeason, onClose }: NodePanelProps) {
+export default function NodePanel({ node, activeSeason, onClose }: NodePanelProps) {
   if (!node) return null;
 
   const color = HABITAT_COLORS[node.nodeType] || '#6BD66F';
   const habitatLabel = HABITAT_LABELS[node.nodeType] || node.nodeType;
-  const isGoodSeason = node.best_season.includes(currentSeason);
+  const isGoodSeason = node.best_season.some(s => activeSeason.includes(s));
 
   const sortedSpecies = [...node.species].sort((a, b) => b.probability - a.probability);
 
@@ -115,9 +115,9 @@ export default function NodePanel({ node, currentSeason, onClose }: NodePanelPro
             <span key={s} style={{
               fontFamily: 'monospace', fontSize: 7.5, letterSpacing: '0.14em', textTransform: 'uppercase',
               padding: '2px 8px', borderRadius: 3,
-              background: s === currentSeason ? `${color}20` : 'transparent',
-              border: s === currentSeason ? `0.5px solid ${color}55` : '0.5px solid rgba(255,255,255,0.1)',
-              color: s === currentSeason ? color : '#8B7E62',
+              background: activeSeason.includes(s) ? `${color}20` : 'transparent',
+              border: activeSeason.includes(s) ? `0.5px solid ${color}55` : '0.5px solid rgba(255,255,255,0.1)',
+              color: activeSeason.includes(s) ? color : '#8B7E62',
             }}>
               {SEASON_LABEL[s]}
             </span>
@@ -133,7 +133,7 @@ export default function NodePanel({ node, currentSeason, onClose }: NodePanelPro
             Species Intelligence · {sortedSpecies.length} plants
           </div>
           {sortedSpecies.map(sp => {
-            const inSeason = sp.peak_season.includes(currentSeason);
+            const inSeason = sp.peak_season.some(s => activeSeason.includes(s));
             const adjProb = inSeason ? Math.min(1, sp.probability * 1.25) : sp.probability * 0.45;
             return (
               <div key={sp.name} style={{ marginBottom: 12, paddingBottom: 12, borderBottom: '0.5px solid rgba(255,255,255,0.06)' }}>
