@@ -49,7 +49,8 @@
       "Bash(node -e \"require\\('./node_modules/react-map-gl/package.json'\\).version && console.log\\('react-map-gl ok'\\)\")",
       "Bash(xargs grep -rL \"rel=\\\\\"icon\\\\\"\\\\|rel='icon'\")",
       "WebFetch(domain:www.skogsskafferiet.se)",
-      "WebFetch(domain:api.gbif.org)"
+      "WebFetch(domain:api.gbif.org)",
+      "Bash(grep -c \"^  {$\" src/data/ecoNodes.ts)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Robin\\Desktop\\fungai art\\websiet\\tailored tincture ai tool\\html codes",
