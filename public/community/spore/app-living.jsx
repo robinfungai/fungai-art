@@ -1061,11 +1061,13 @@ function App() {
   function handleLogin(member) {
     setCurrentMember(member);
     setTab('network');
+    try { localStorage.setItem('spore_active_member', member.id); } catch {}
   }
 
   function handleLogout() {
     setCurrentMember(null);
     setTab('network');
+    try { localStorage.removeItem('spore_active_member'); } catch {}
   }
 
   useEffect(() => {
