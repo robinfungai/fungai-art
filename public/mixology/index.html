@@ -6,6 +6,7 @@
 <link rel="preconnect" href="https://api.fontshare.com"/>
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500&f[]=satoshi@400,500,600&f[]=geist-mono@400&display=swap"/>
 <script src="/herbs-data.js"></script>
+<script src="/herb-meta.js"></script>
 <style>
 :root{--s:#060809;--s2:#0F1014;--s3:#171A1F;--s4:#1F2228;--m:#C9B894;--md:#8B7E62;--ml:#E6D9B5;--g:#6BD66F;--gd:#2E7A35;--gl:#B6F0AE;--a:#E8B14B;--ad:#8B6320;--al:#F5D689;--r:rgba(201,184,148,.11);--rl:rgba(201,184,148,.2);--fd:'Zodiak','Cormorant Garamond',Georgia,serif;--fs:'Satoshi',system-ui,sans-serif;--fm:'Geist Mono',monospace;
 --eF:#E8714B;--eE:#6BD66F;--eW:#4FA8E0;--eA:#A88FE0;--eS:#E8B14B;}
@@ -172,6 +173,19 @@ button{font-family:inherit;cursor:pointer;}
 .m-add.fub.in{background:var(--ad);color:var(--s);}
 @keyframes pi{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 .pe{animation:pi .3s ease-out;}
+/* Research grade badges */
+.grade-A{background:rgba(107,214,111,.12);border:0.5px solid rgba(107,214,111,.5);color:#B6F0AE;}
+.grade-B{background:rgba(79,168,224,.12);border:0.5px solid rgba(79,168,224,.4);color:#A6D5F2;}
+.grade-C{background:rgba(232,177,75,.10);border:0.5px solid rgba(232,177,75,.4);color:#F5D689;}
+.grade-D{background:rgba(139,126,98,.12);border:0.5px solid rgba(139,126,98,.4);color:#8B7E62;}
+.grade-badge{font-family:var(--fm);font-size:7px;letter-spacing:.14em;text-transform:uppercase;padding:2px 7px;border-radius:3px;display:inline-block;}
+.m-compounds{margin-top:10px;padding:10px 13px;background:rgba(79,168,224,.04);border:0.5px solid rgba(79,168,224,.15);border-radius:7px;}
+.m-compounds-lbl{font-family:var(--fm);font-size:7px;letter-spacing:.18em;text-transform:uppercase;color:rgba(79,168,224,.7);margin-bottom:4px;}
+.m-compounds-txt{font-size:11.5px;color:var(--m);line-height:1.5;}
+.m-eth-row{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap;}
+.m-eth-chip{font-family:var(--fm);font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:4px;background:rgba(232,177,75,.07);border:0.5px solid rgba(232,177,75,.25);color:var(--al);}
+.m-mhz-chip{font-family:var(--fm);font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:4px;background:rgba(168,143,224,.07);border:0.5px solid rgba(168,143,224,.3);color:#C5B5F5;}
+.hc-grade{position:absolute;top:10px;right:38px;font-family:var(--fm);font-size:6px;letter-spacing:.12em;text-transform:uppercase;padding:2px 5px;border-radius:2px;}
 </style>
 </head>
 <body>
@@ -182,18 +196,19 @@ button{font-family:inherit;cursor:pointer;}
       <img src="/logo.png" alt="Fungai Art" style="height:26px;width:auto;filter:brightness(0) invert(1);opacity:.82;" onerror="this.style.display='none'">
       <div>
         <div class="nav-title">Herbal Engine</div>
-        <div class="nav-sub">Fungai Art Elixirs · 127 Botanicals</div>
+        <div class="nav-sub">Fungai Art Elixirs · 142 Botanicals</div>
       </div>
     </a>
   </div>
   <div class="nav-links">
     <a href="/extraction" class="nav-back">⚗ Extraction</a>
+    <a href="/health" class="nav-back">Health</a>
     <a href="/community/academy/" class="nav-back">Academy</a>
     <a href="/" class="nav-back">← Home</a>
   </div>
 </nav>
 <div class="hero">
-  <div class="hero-ey">127 plants · 20 categories · 5 elements</div>
+  <div class="hero-ey">142 plants · 20 categories · 5 elements · evidence graded A–D</div>
   <h1 class="hero-title">Know your <em>plants.</em></h1>
   <p class="hero-blurb">The complete Fungai Art botanical reference. Filter by element or category, build your formula — tap any herb for full profile and extraction method.</p>
 </div>
@@ -453,6 +468,9 @@ CATS.forEach(c=>{
 
 function cLabel(id){const c=CATS.find(x=>x.id===id);return c?c.l.replace('🍄 ',''):id;}
 
+const GRADE_COL={A:'#B6F0AE',B:'#A6D5F2',C:'#F5D689',D:'#8B7E62'};
+function getMeta(id){return(typeof window.HERB_META!=='undefined'&&window.HERB_META[id])||null;}
+
 function render(){
   const q=document.getElementById('si').value.toLowerCase().trim();
   const g=document.getElementById('grid'),r=document.getElementById('rbar');
@@ -472,9 +490,11 @@ function render(){
   list.forEach(h=>{
     const sel=F.includes(h.id);
     const ec=EL_COL[h.el]||'#8B7E62';
+    const meta=getMeta(h.id);
+    const gradeHtml=meta?`<span class="hc-grade grade-${meta.grade}" style="background:${GRADE_COL[meta.grade]}14;border:0.5px solid ${GRADE_COL[meta.grade]}55;color:${GRADE_COL[meta.grade]}">Grade ${meta.grade}</span>`:'';
     const d=document.createElement('div');
     d.className='hc'+(h.f?' fungi':'')+(sel?' sel':'');
-    d.innerHTML=`<div class="hc-top"><div class="hname">${h.n}</div><div class="el-pip" title="${EL_NAME[h.el]||''}" style="background:${ec}"></div></div><div class="hcats">${h.f?'<span class="hcat fu">🍄 Fungi</span>':''}${h.c.slice(0,3).map(c=>`<span class="hcat">${cLabel(c)}</span>`).join('')}</div><div class="hprim">${h.p.length>90?h.p.slice(0,90)+'…':h.p}</div><button class="hadd">${sel?'✓':'+'}</button>`;
+    d.innerHTML=`<div class="hc-top"><div class="hname">${h.n}</div><div class="el-pip" title="${EL_NAME[h.el]||''}" style="background:${ec}"></div></div>${gradeHtml}<div class="hcats">${h.f?'<span class="hcat fu">🍄 Fungi</span>':''}${h.c.slice(0,3).map(c=>`<span class="hcat">${cLabel(c)}</span>`).join('')}</div><div class="hprim">${h.p.length>90?h.p.slice(0,90)+'…':h.p}</div><button class="hadd">${sel?'✓':'+'}</button>`;
     d.querySelector('.hadd').onclick=e=>{e.stopPropagation();tog(h.id);};
     d.onclick=()=>openM(h);
     g.appendChild(d);
@@ -787,6 +807,15 @@ function openM(h){
     <div style="font-size:12.5px;color:var(--m);line-height:1.65;margin-bottom:6px">${db.best_preparation}</div>
   `:'';
 
+  const meta=getMeta(h.id);
+  const gradeModalHtml=meta?`<div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:10px">
+    <span class="grade-badge grade-${meta.grade}">Grade ${meta.grade} Evidence</span>
+    ${meta.mhz?`<span class="m-mhz-chip">⟡ ${meta.mhz} MHz</span>`:''}
+    ${meta.eth?`<span class="m-eth-chip">⚗ ${meta.eth}</span>`:''}
+    <span style="font-family:var(--fm);font-size:7px;letter-spacing:.1em;color:var(--md);opacity:.75">${meta.gradeNote||''}</span>
+  </div>`:'';
+  const compoundsHtml=meta&&meta.compounds?`<div class="m-compounds"><div class="m-compounds-lbl">Key active compounds</div><div class="m-compounds-txt">${meta.compounds}</div></div>`:'';
+
   document.getElementById('modal').innerHTML=`
     <div class="m-head">
       <div class="m-name-row">
@@ -800,7 +829,9 @@ function openM(h){
     </div>
     ${tcmHtml}
     <div class="m-cats">${h.f?'<span class="mc fu">🍄 Fungi</span>':''}${cats.map((c,i)=>`<span class="mc ${i===0?'pri':''}">${c.l}</span>`).join('')}</div>
+    ${gradeModalHtml}
     <div class="m-prim">${h.p}</div>
+    ${compoundsHtml}
     ${pharmaHtml}
     <div class="m-sec">Caution level</div>
     <span class="m-caut ${{'low':'cL','medium':'cM','high':'cH'}[h.x]}">${{'low':'● Low risk','medium':'◆ Medium — check context','high':'▲ High — professional / caution'}[h.x]}</span>

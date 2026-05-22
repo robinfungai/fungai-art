@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Health Intelligence — Fungai Art</title>
+<link rel="preconnect" href="https://api.fontshare.com"/>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500&f[]=satoshi@400,500,600&f[]=geist-mono@400&display=swap"/>
+<style>
+:root{--s:#060809;--s2:#0F1014;--s3:#171A1F;--s4:#1F2228;--m:#C9B894;--md:#8B7E62;--ml:#E6D9B5;--g:#6BD66F;--gd:#2E7A35;--gl:#B6F0AE;--a:#E8B14B;--ad:#8B6320;--al:#F5D689;--r:rgba(201,184,148,.11);--rl:rgba(201,184,148,.2);--fd:'Zodiak','Cormorant Garamond',Georgia,serif;--fs:'Satoshi',system-ui,sans-serif;--fm:'Geist Mono',monospace;}
+*{box-sizing:border-box;margin:0;padding:0;}html,body{background:var(--s);color:var(--m);font-family:var(--fs);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.25;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .79 0 0 0 0 .72 0 0 0 0 .58 0 0 0 .06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px 100px;position:relative;z-index:1;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0 0;margin-bottom:44px;flex-wrap:wrap;gap:12px;}
+.nav-brand{display:flex;align-items:center;gap:12px;}
+.nav-name{font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml);letter-spacing:-.02em;}
+.nav-sub{font-family:var(--fm);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--g);margin-top:2px;}
+.nav-links{display:flex;gap:7px;flex-wrap:wrap;}
+.nav-back{font-family:var(--fm);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--md);padding:7px 13px;border:0.5px solid var(--r);border-radius:5px;text-decoration:none;transition:all .15s;}
+.nav-back:hover{color:var(--ml);border-color:var(--rl);}
+/* Hero */
+.hero{margin-bottom:36px;}
+.hero-ey{font-family:var(--fm);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--a);margin-bottom:8px;}
+.hero-title{font-family:var(--fd);font-style:italic;font-size:clamp(38px,5.5vw,60px);color:var(--ml);letter-spacing:-.025em;line-height:.96;margin-bottom:14px;}
+.hero-title em{color:var(--g);}
+.hero-blurb{font-size:14.5px;color:var(--m);line-height:1.7;max-width:56ch;opacity:.88;}
+/* Evidence grades */
+.grades-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px;padding:16px 18px;background:var(--s2);border:0.5px solid var(--r);border-radius:10px;}
+.grade-chip{font-family:var(--fm);font-size:8px;letter-spacing:.14em;text-transform:uppercase;padding:5px 12px;border-radius:5px;}
+.gA{background:rgba(107,214,111,.12);border:0.5px solid rgba(107,214,111,.45);color:#B6F0AE;}
+.gB{background:rgba(79,168,224,.12);border:0.5px solid rgba(79,168,224,.4);color:#A6D5F2;}
+.gC{background:rgba(232,177,75,.10);border:0.5px solid rgba(232,177,75,.4);color:#F5D689;}
+.gD{background:rgba(139,126,98,.12);border:0.5px solid rgba(139,126,98,.4);color:#8B7E62;}
+.grade-label{font-size:12px;color:var(--md);align-self:center;}
+/* Timeline */
+.timeline{position:relative;padding-left:28px;margin-bottom:52px;}
+.timeline::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:0.5px;background:linear-gradient(to bottom,var(--g),rgba(107,214,111,.1));}
+.phase{margin-bottom:36px;position:relative;}
+.phase-dot{position:absolute;left:-25px;top:6px;width:10px;height:10px;border-radius:50%;border:0.5px solid var(--g);background:var(--s);}
+.phase-dot.active{background:var(--g);}
+.phase-ey{font-family:var(--fm);font-size:8px;letter-spacing:.24em;text-transform:uppercase;margin-bottom:5px;}
+.phase-title{font-family:var(--fd);font-style:italic;font-size:clamp(22px,3.5vw,30px);color:var(--ml);letter-spacing:-.015em;margin-bottom:12px;line-height:1.05;}
+.phase-items{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+@media(max-width:560px){.phase-items{grid-template-columns:1fr;}}
+.pi{background:var(--s2);border:0.5px solid var(--r);border-radius:8px;padding:11px 14px;display:flex;gap:9px;align-items:flex-start;}
+.pi-dot{width:5px;height:5px;border-radius:50%;margin-top:5px;flex-shrink:0;}
+.pi-text{font-size:13px;color:var(--m);line-height:1.5;}
+/* Research sources */
+.sources{margin-bottom:44px;}
+.sources-title{font-family:var(--fm);font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:var(--md);margin-bottom:14px;}
+.source-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px;}
+.source-card{background:var(--s2);border:0.5px solid var(--r);border-radius:9px;padding:14px 16px;text-decoration:none;transition:all .15s;display:block;}
+.source-card:hover{border-color:var(--rl);transform:translateY(-1px);}
+.source-name{font-family:var(--fd);font-style:italic;font-size:17px;color:var(--ml);margin-bottom:4px;}
+.source-url{font-family:var(--fm);font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--a);margin-bottom:7px;}
+.source-desc{font-size:12px;color:var(--md);line-height:1.5;}
+.source-grade{font-family:var(--fm);font-size:7px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px;display:inline-block;margin-top:7px;}
+/* Frequency section */
+.freq-section{margin-bottom:44px;padding:22px 22px;background:rgba(168,143,224,.04);border:0.5px solid rgba(168,143,224,.2);border-radius:12px;}
+.freq-title{font-family:var(--fm);font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:#A88FE0;margin-bottom:8px;}
+.freq-blurb{font-size:13px;color:var(--m);line-height:1.65;opacity:.85;margin-bottom:16px;max-width:58ch;}
+.freq-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px;}
+.freq-card{background:var(--s2);border:0.5px solid rgba(168,143,224,.2);border-radius:7px;padding:9px 12px;display:flex;justify-content:space-between;align-items:center;}
+.freq-herb{font-family:var(--fd);font-style:italic;font-size:14px;color:var(--ml);}
+.freq-val{font-family:var(--fm);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:#C5B5F5;}
+/* Case study template */
+.case-section{margin-bottom:44px;}
+.case-title{font-family:var(--fm);font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:var(--md);margin-bottom:14px;}
+.case-template{background:var(--s2);border:0.5px solid var(--rl);border-radius:12px;padding:22px;}
+.case-template-title{font-family:var(--fd);font-style:italic;font-size:20px;color:var(--ml);margin-bottom:14px;}
+.case-field{display:flex;gap:10px;padding:9px 0;border-bottom:0.5px solid var(--r);align-items:flex-start;}
+.case-field:last-child{border:none;}
+.case-key{font-family:var(--fm);font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--a);width:120px;flex-shrink:0;padding-top:2px;}
+.case-val{font-size:12.5px;color:var(--m);line-height:1.55;}
+/* Footer */
+.foot{border-top:0.5px solid var(--r);padding-top:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.foot-links{display:flex;gap:16px;flex-wrap:wrap;}
+.foot-link{font-family:var(--fm);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--md);text-decoration:none;transition:color .15s;}
+.foot-link:hover{color:var(--ml);}
+@keyframes pi-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.pe{animation:pi-in .35s ease-out;}
+</style>
+</head>
+<body>
+<div class="wrap pe">
+
+<nav class="nav">
+  <div class="nav-brand">
+    <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+      <img src="/logo.png" alt="Fungai Art" style="height:26px;width:auto;filter:brightness(0) invert(1);opacity:.82;" onerror="this.style.display='none'">
+      <div>
+        <div class="nav-name">Health Intelligence</div>
+        <div class="nav-sub">Fungai Art · Practitioner Framework</div>
+      </div>
+    </a>
+  </div>
+  <div class="nav-links">
+    <a href="/mixology" class="nav-back">Herbal Engine</a>
+    <a href="/extraction" class="nav-back">⚗ Extraction</a>
+    <a href="/foraging" class="nav-back">Foraging Map</a>
+    <a href="/" class="nav-back">← Home</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-ey">Evidence-based herbalism · Practitioner curriculum</div>
+  <h1 class="hero-title">Build your<br><em>practice.</em></h1>
+  <p class="hero-blurb">A structured framework for integrating the Fungai Art materia medica into clinical practice. From learning the protocols to training other practitioners — a 2-year roadmap grounded in evidence-based herbalism.</p>
+</div>
+
+<!-- Evidence grade legend -->
+<div class="grades-row">
+  <span class="grade-label">Evidence grades:</span>
+  <span class="grade-chip gA">Grade A — Cochrane / multiple RCTs / meta-analyses</span>
+  <span class="grade-chip gB">Grade B — Consistent RCTs or strong mechanism + human trials</span>
+  <span class="grade-chip gC">Grade C — Animal / in vitro / traditional / small pilots</span>
+  <span class="grade-chip gD">Grade D — Theoretical / anecdotal / not studied</span>
+</div>
+
+<!-- Research sources -->
+<div class="sources">
+  <div class="sources-title">Primary research databases</div>
+  <div class="source-grid">
+    <div class="source-card" style="border-color:rgba(107,214,111,.2)">
+      <div class="source-name">PubMed</div>
+      <div class="source-url">pubmed.ncbi.nlm.nih.gov</div>
+      <div class="source-desc">Free access to 35M+ medical citations. Search: herb name + condition + "RCT" or "systematic review". Primary source for Grade A evidence.</div>
+      <span class="source-grade gA">Grade A source</span>
+    </div>
+    <div class="source-card" style="border-color:rgba(107,214,111,.2)">
+      <div class="source-name">Cochrane Library</div>
+      <div class="source-url">cochrane.org</div>
+      <div class="source-desc">Gold standard for systematic reviews and meta-analyses. Each Cochrane review synthesises all available RCTs for a given intervention.</div>
+      <span class="source-grade gA">Grade A source</span>
+    </div>
+    <div class="source-card" style="border-color:rgba(79,168,224,.2)">
+      <div class="source-name">Google Scholar</div>
+      <div class="source-url">scholar.google.com</div>
+      <div class="source-desc">Broader coverage than PubMed; excellent for citation tracking, conference papers, and access to full PDFs via Sci-Hub links.</div>
+      <span class="source-grade gB">Grade A–B source</span>
+    </div>
+    <div class="source-card" style="border-color:rgba(232,177,75,.2)">
+      <div class="source-name">HerbMeister</div>
+      <div class="source-url">herbmeister.com</div>
+      <div class="source-desc">Proprietary herbal research database, well-organised for practitioners. Searches across multiple phytotherapy journals.</div>
+      <span class="source-grade gB">Grade B–C source</span>
+    </div>
+    <div class="source-card" style="border-color:rgba(232,177,75,.2)">
+      <div class="source-name">Phytotherapy Research</div>
+      <div class="source-url">Journal · Wiley</div>
+      <div class="source-desc">Leading peer-reviewed journal for clinical phytotherapy. Grade B–A level evidence. Priority reading for practitioner-grade clinical decision-making.</div>
+      <span class="source-grade gB">Grade B source</span>
+    </div>
+    <div class="source-card" style="border-color:rgba(232,177,75,.2)">
+      <div class="source-name">eCAM</div>
+      <div class="source-url">Evidence-Based Complementary & Alternative Medicine</div>
+      <div class="source-desc">Open-access journal covering botanical, traditional, and integrative medicine research. Good for TCM and Ayurvedic clinical trials.</div>
+      <span class="source-grade gC">Grade B–C source</span>
+    </div>
+  </div>
+</div>
+
+<!-- Practitioner timeline -->
+<div class="timeline">
+
+  <div class="phase">
+    <div class="phase-dot active"></div>
+    <div class="phase-ey" style="color:var(--g)">Months 1–3 · Foundation</div>
+    <h2 class="phase-title">Learn the intelligence.</h2>
+    <div class="phase-items">
+      <div class="pi"><div class="pi-dot" style="background:var(--g)"></div><div class="pi-text">Study the 142-herb materia medica. Learn active compounds, mechanisms, and evidence grades for each botanical in your core protocols.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:var(--g)"></div><div class="pi-text">Master the 5 extraction methods. Understand which solvent extracts which compound class — and why Dual extraction is non-negotiable for fungi.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:var(--g)"></div><div class="pi-text">Apply in practice with real clients. Track outcomes. Document formula, dose, duration, and subjective response for each case.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:var(--g)"></div><div class="pi-text">Refine protocols from client feedback. What works in the literature doesn't always match what works in your population — adjust accordingly.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:var(--g)"></div><div class="pi-text">Build 5–7 successful case studies with documented outcomes. These become your proof-of-concept and teaching material.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:var(--g)"></div><div class="pi-text">Begin content creation — document protocols in short-form video, blog, or social media. Teaching accelerates mastery.</div></div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-dot"></div>
+    <div class="phase-ey" style="color:var(--a)">Months 3–5 · Community</div>
+    <h2 class="phase-title">Share and refine.</h2>
+    <div class="phase-items">
+      <div class="pi"><div class="pi-dot" style="background:var(--a)"></div><div class="pi-text">Share your protocols openly with the herbalism community. Transparency builds authority faster than secrecy. Document what you do.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:var(--a)"></div><div class="pi-text">Build your email list. A newsletter is your most durable asset — algorithms change, email lists don't. Start with weekly or bi-weekly.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:var(--a)"></div><div class="pi-text">Gather feedback from other practitioners. Peer review strengthens protocols and identifies blind spots you cannot see alone.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:var(--a)"></div><div class="pi-text">Build or join a herbal community — practitioners, wildcrafters, farmers. Relational knowledge is not in the literature.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:var(--a)"></div><div class="pi-text">Document synergies you discover in practice. Cross-reference with the Herbal Engine. Submit notable findings to eCAM if compelling.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:var(--a)"></div><div class="pi-text">Begin to establish your niche. Cognitive herbs? Fungal intelligence? Women's health? Depth in one area builds faster than breadth in many.</div></div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-dot"></div>
+    <div class="phase-ey" style="color:#A88FE0">Months 6–12 · Authority</div>
+    <h2 class="phase-title">Launch and teach.</h2>
+    <div class="phase-items">
+      <div class="pi"><div class="pi-dot" style="background:#A88FE0"></div><div class="pi-text">Launch your online course or certification using the Fungai Art protocols as curriculum. The case studies from months 1–3 are your teaching material.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:#A88FE0"></div><div class="pi-text">Publish your case studies. eCAM accepts case reports. This positions you as a credible clinical researcher, not just a practitioner.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:#A88FE0"></div><div class="pi-text">Expand the product line if applicable — formulas validated through 6+ months of client use are ready for small-batch production.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:#A88FE0"></div><div class="pi-text">Build authority in your niche. This means consistent, high-quality output — not volume. One rigorous protocol beats twenty superficial ones.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:#A88FE0"></div><div class="pi-text">Monetise the community. Subscription protocols, formula consultations, group programs. Value exchange is part of sustainable practice.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:#A88FE0"></div><div class="pi-text">Seek mentorship or advanced training. The strongest practitioners have both traditional lineage and modern pharmacological literacy.</div></div>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-dot"></div>
+    <div class="phase-ey" style="color:var(--ml)">Year 2+ · Legacy</div>
+    <h2 class="phase-title">Train, research, lead.</h2>
+    <div class="phase-items">
+      <div class="pi"><div class="pi-dot" style="background:var(--ml)"></div><div class="pi-text">Train other practitioners in your protocols. Teaching multiplies your impact and sharpens your own understanding simultaneously.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:var(--ml)"></div><div class="pi-text">Conduct original protocol research. Track outcomes systematically across your client base. Even N=30 case series contributes to the literature.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:var(--ml)"></div><div class="pi-text">Become a recognised expert in your niche. Present at conferences, contribute to journals, collaborate with academic researchers.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:var(--ml)"></div><div class="pi-text">Build institutional knowledge. Document everything — the successes, the failures, the unexpected synergies. Leave a body of work.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:var(--ml)"></div><div class="pi-text">Connect traditional lineage knowledge with modern phytotherapy research. The gap between these two worlds is where the most important work happens.</div></div>
+      <div class="pi"><div class="pi-dot" style="background:var(--ml)"></div><div class="pi-text">Consider an original research collaboration with a university phytotherapy department. Evidence for Grade-C herbs can be upgraded through well-designed pilots.</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Case study template -->
+<div class="case-section">
+  <div class="case-title">Case study template</div>
+  <div class="case-template">
+    <div class="case-template-title">Documenting outcomes.</div>
+    <div class="case-field"><span class="case-key">Client profile</span><span class="case-val">Age, sex, chief complaint, relevant history. Anonymised. Duration of symptoms.</span></div>
+    <div class="case-field"><span class="case-key">Formula</span><span class="case-val">Herbs, extraction method, ratio, alcohol %, dose, and frequency. E.g.: Reishi (D, 1:5), Ashwagandha (T, 55%, 1:5), Bacopa (T, 50%, 1:5) — 2ml each in 200ml water, 2× daily.</span></div>
+    <div class="case-field"><span class="case-key">Evidence basis</span><span class="case-val">Grade each herb in the formula (A/B/C/D). Cite specific RCTs or mechanisms. This is your informed consent documentation.</span></div>
+    <div class="case-field"><span class="case-key">Week 2 check-in</span><span class="case-val">Subjective response, any adverse effects, compliance. Adjust dose if needed. Most adaptogenic herbs require 4–12 weeks for full effect.</span></div>
+    <div class="case-field"><span class="case-key">Week 6 outcome</span><span class="case-val">Standardised outcome measure if possible (PHQ-9 for mood, VAS for pain, etc.). Document any changes to formula.</span></div>
+    <div class="case-field"><span class="case-key">Week 12 outcome</span><span class="case-val">Full protocol completion assessment. What worked, what didn't, what would you change. This is your learning and publication content.</span></div>
+    <div class="case-field"><span class="case-key">Unexpected findings</span><span class="case-val">Document any non-anticipated effects — positive or negative. These are often the most valuable clinical data.</span></div>
+    <div class="case-field"><span class="case-key">Grade upgrade?</span><span class="case-val">If you observe consistent outcomes across 5+ similar cases, you have the basis for a case series submission to eCAM or Phytotherapy Research.</span></div>
+  </div>
+</div>
+
+<!-- Biofrequency section -->
+<div class="freq-section">
+  <div class="freq-title">⟡ Biofrequency of aromatic plants</div>
+  <p class="freq-blurb">Measured vibrational frequencies of essential-oil-bearing plants. These measurements represent the electromagnetic field frequency associated with each plant's volatile chemistry. Higher frequency generally correlates with greater aromatic complexity and broader bioactivity spectrum. Rose at 320 MHz — the highest known — correlates with its extraordinary diversity of bioactive compounds.</p>
+  <div class="freq-grid">
+    <div class="freq-card"><span class="freq-herb">Rose</span><span class="freq-val">320 MHz</span></div>
+    <div class="freq-card"><span class="freq-herb">Frankincense</span><span class="freq-val">147 MHz</span></div>
+    <div class="freq-card"><span class="freq-herb">Lavender</span><span class="freq-val">118 MHz</span></div>
+    <div class="freq-card"><span class="freq-herb">Chamomile</span><span class="freq-val">105 MHz</span></div>
+    <div class="freq-card"><span class="freq-herb">Myrrh</span><span class="freq-val">105 MHz</span></div>
+    <div class="freq-card"><span class="freq-herb">Rosemary</span><span class="freq-val">102 MHz</span></div>
+    <div class="freq-card"><span class="freq-herb">Juniper</span><span class="freq-val">98 MHz</span></div>
+    <div class="freq-card"><span class="freq-herb">Sandalwood</span><span class="freq-val">96 MHz</span></div>
+    <div class="freq-card"><span class="freq-herb">Tea Tree</span><span class="freq-val">92 MHz</span></div>
+    <div class="freq-card"><span class="freq-herb">Jasmine</span><span class="freq-val">80 MHz</span></div>
+    <div class="freq-card"><span class="freq-herb">Oregano</span><span class="freq-val">78 MHz</span></div>
+    <div class="freq-card"><span class="freq-herb">Peppermint</span><span class="freq-val">78 MHz</span></div>
+    <div class="freq-card"><span class="freq-herb">Lemon</span><span class="freq-val">52 MHz</span></div>
+    <div class="freq-card"><span class="freq-herb">Eucalyptus</span><span class="freq-val">52 MHz</span></div>
+    <div class="freq-card"><span class="freq-herb">Holy Basil</span><span class="freq-val">52 MHz</span></div>
+  </div>
+</div>
+
+<!-- Water target list -->
+<div style="margin-bottom:44px;padding:20px 22px;background:rgba(79,168,224,.04);border:0.5px solid rgba(79,168,224,.2);border-radius:12px;">
+  <div style="font-family:var(--fm);font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:#88BAC8;margin-bottom:8px;">💧 Water extraction targets</div>
+  <p style="font-size:13px;color:var(--m);line-height:1.65;opacity:.85;margin-bottom:14px;max-width:58ch;">These plants have primary constituents (polysaccharides, minerals, mucilage) that extract best in hot water or long decoction. Fungi always require water as the primary solvent — alcohol alone misses the beta-glucan immune intelligence.</p>
+  <div style="display:flex;gap:7px;flex-wrap:wrap;">
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Astragalus</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Barley</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Birch Polypore</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Bladderwrack</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Burdock Root</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Chaga</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Cordyceps</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Dandelion Root</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Enoki</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Fu Ling</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Goji Berry</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Iceland Moss</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Lion's Mane</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Maitake</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Mullein</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Nettle (mineral)</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Oatstraw</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Oyster Mushroom</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Red Dates</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Reishi</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Shiitake</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Slippery Elm (cold)</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Tremella</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Turkey Tail</span>
+    <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Zhu Ling</span>
+  </div>
+</div>
+
+<div class="foot">
+  <div style="font-family:var(--fm);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--md)">Fungai Art · Health Intelligence</div>
+  <div class="foot-links">
+    <a href="/mixology" class="foot-link">Herbal Engine</a>
+    <a href="/extraction" class="foot-link">⚗ Extraction</a>
+    <a href="/foraging" class="foot-link">Foraging Map</a>
+    <a href="/community/academy/" class="foot-link">Academy</a>
+    <a href="/" class="foot-link">Home</a>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

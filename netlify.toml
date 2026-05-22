@@ -29,7 +29,7 @@
   to     = "/foraging/index.html"
   status = 200
 
-# static pages served directly: /shop /mixology /mycelium-trance /community
+# static pages served directly: /shop /mixology /mycelium-trance /community /health /extraction
 
 # Everything else (including /) → index.html (premium home design)
 [[redirects]]

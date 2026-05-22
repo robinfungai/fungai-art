@@ -77,7 +77,29 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
 .foot-links{display:flex;gap:16px;}
 .foot-link{font-family:var(--fm);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--md);text-decoration:none;transition:color .15s;}
 .foot-link:hover{color:var(--ml);}
+/* Ethanol targets table */
+.eth-table-wrap{margin-bottom:40px;}
+.eth-table-title{font-family:var(--fm);font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:var(--a);margin-bottom:10px;}
+.eth-table-sub{font-size:13px;color:var(--m);line-height:1.6;opacity:.82;margin-bottom:16px;max-width:56ch;}
+.eth-search{width:100%;padding:12px 16px;background:var(--s2);border:0.5px solid var(--r);border-radius:8px;color:var(--ml);font-family:var(--fs);font-size:14px;outline:none;transition:border-color .2s;margin-bottom:12px;}
+.eth-search:focus{border-color:rgba(232,177,75,.5);}
+.eth-search::placeholder{color:var(--md);}
+.eth-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;}
+.eth-card{background:var(--s2);border:0.5px solid var(--r);border-radius:7px;padding:9px 12px;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+.eth-card-name{font-family:var(--fd);font-style:italic;font-size:14px;color:var(--ml);}
+.eth-card-val{font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--a);white-space:nowrap;}
+.eth-card-dual{color:#A6D5F2;}
+.eth-card-water{color:#88BAC8;}
+/* Frequency table */
+.freq-section{margin-bottom:36px;padding:18px 20px;background:rgba(168,143,224,.04);border:0.5px solid rgba(168,143,224,.2);border-radius:12px;}
+.freq-title{font-family:var(--fm);font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:#A88FE0;margin-bottom:8px;}
+.freq-sub{font-size:12.5px;color:var(--m);line-height:1.6;opacity:.82;margin-bottom:14px;}
+.freq-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:6px;}
+.freq-card{background:var(--s2);border:0.5px solid rgba(168,143,224,.2);border-radius:6px;padding:8px 11px;display:flex;justify-content:space-between;align-items:center;}
+.freq-herb{font-family:var(--fd);font-style:italic;font-size:13.5px;color:var(--ml);}
+.freq-val{font-family:var(--fm);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:#C5B5F5;}
 </style>
+<script src="/herb-meta.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -91,6 +113,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
   </div>
   <div style="display:flex;gap:8px;flex-wrap:wrap;">
     <a href="/mixology" class="nav-back">Herbal Engine</a>
+    <a href="/health" class="nav-back">Health</a>
     <a href="/community/academy/" class="nav-back">Academy</a>
     <a href="/" class="nav-back">← Home</a>
   </div>
@@ -107,6 +130,21 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
   <span class="herb-srch-ico">⚗</span>
   <input class="herb-srch-i" id="herbSrch" type="text" placeholder="Search any herb — Cleavers, Reishi, Kava, Nettle…" oninput="searchHerb(this.value)"/>
   <div class="herb-results" id="herbResults"></div>
+</div>
+
+<!-- Frequency reference -->
+<div class="freq-section">
+  <div class="freq-title">⟡ Biofrequency of herbs (MHz)</div>
+  <p class="freq-sub">Measured vibrational frequencies of essential oil-bearing plants. Higher frequency correlates with greater energetic complexity. Data from clinical biofrequency research.</p>
+  <div class="freq-grid" id="freqGrid"></div>
+</div>
+
+<!-- Ethanol targets reference -->
+<div class="eth-table-wrap">
+  <div class="eth-table-title">⚗ Optimal ethanol targets · all 142 botanicals</div>
+  <p class="eth-table-sub">Each botanical has an ideal solvent window. "Dual" = double extraction required (water + alcohol separately). Filter by name below.</p>
+  <input class="eth-search" id="ethSearch" type="text" placeholder="Filter by herb name…" oninput="renderEthTable(this.value)"/>
+  <div class="eth-grid" id="ethGrid"></div>
 </div>
 
 <div class="method-bar">
@@ -357,6 +395,95 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
 </div>
 </div>
 <script>
+// Ethanol targets — comprehensive list from practitioner data
+const ETH_TARGETS = [
+  {n:'Amanita muscaria',eth:'60–70%'},{n:'Amanita pantherina',eth:'60–70%'},{n:'Angelica (Dong Quai)',eth:'45%'},
+  {n:'Aronia Berry',eth:'40%'},{n:'Ashwagandha',eth:'55%'},{n:'Astragalus',eth:'30% or Dual'},
+  {n:'Bacopa',eth:'50%'},{n:'Barberry',eth:'65%'},{n:'Barley',eth:'25% or water'},
+  {n:'Bilberry',eth:'40%'},{n:'Birch Polypore',eth:'Dual (30% + 70%)'},{n:'Black Cumin',eth:'70%'},
+  {n:'Black Walnut',eth:'65%'},{n:'Bladderwrack',eth:'30%'},{n:'Blue Lotus',eth:'65%'},
+  {n:'Blueberry',eth:'40%'},{n:'Bobinsana',eth:'50%'},{n:'Boswellia / Frankincense',eth:'75%'},
+  {n:'Broadleaf Plantain',eth:'30%'},{n:'Burdock Root',eth:'30% or Dual'},{n:"Butcher's Broom",eth:'50%'},
+  {n:'Butterbur',eth:'40% (PA-free only)'},{n:'Calamus',eth:'70%'},{n:'Calea Zacatechichi',eth:'60%'},
+  {n:'Calendula',eth:'50%'},{n:'Caraway',eth:'60%'},{n:'Cardamom',eth:'70%'},
+  {n:"Cat's Claw",eth:'60%'},{n:'Catuaba',eth:'65%'},{n:'Cayenne',eth:'70%'},
+  {n:'Chaga',eth:'Dual'},{n:'Chamomile',eth:'45%'},{n:'Chickweed',eth:'30%'},
+  {n:'Chilcuague',eth:'65%'},{n:'Cinnamon',eth:'75%'},{n:'Cloves',eth:'80%'},
+  {n:'Coca Leaf',eth:'60%'},{n:'Cordyceps',eth:'Dual'},{n:'Cranberry',eth:'40%'},
+  {n:'Damiana',eth:'50%'},{n:'Dandelion Root',eth:'30% or Dual'},{n:"Devil's Claw",eth:'50%'},
+  {n:'Echinacea',eth:'50%'},{n:'Elderberry',eth:'35%'},{n:'Elderflower',eth:'30%'},
+  {n:'Enoki',eth:'Dual'},{n:'Ephedra',eth:'70%'},{n:'Eucalyptus',eth:'75%'},
+  {n:'Eyebright',eth:'40%'},{n:'Fadogia Agrestis',eth:'60%'},{n:'Fennel',eth:'60%'},
+  {n:'Fenugreek',eth:'50%'},{n:'Fu Ling (Poria)',eth:'Dual'},{n:'Garlic (fresh)',eth:'40%'},
+  {n:'Ginger (dry)',eth:'70%'},{n:'Ginkgo',eth:'50%'},{n:'Ginseng (Panax)',eth:'60% or Dual'},
+  {n:'Goji Berry',eth:'30%'},{n:'Goldenrod',eth:'45%'},{n:'Gotu Kola',eth:'45%'},
+  {n:'Ground Ivy',eth:'40%'},{n:'Guarana',eth:'60%'},{n:'Guayusa',eth:'40%'},
+  {n:'Hawthorn',eth:'45%'},{n:'Holy Basil (Tulsi)',eth:'50%'},{n:'Hops',eth:'70%'},
+  {n:'Horny Goat Weed',eth:'60%'},{n:'Horsetail',eth:'30%'},{n:'Iceland Moss',eth:'25%'},
+  {n:'Jasmine',eth:'60%'},{n:"Juniper",eth:'65%'},{n:'Kanna',eth:'65%'},
+  {n:'Kava Kava',eth:'45% or water/coconut milk'},{n:'Kratom',eth:'60%'},{n:"Lady's Mantle",eth:'40%'},
+  {n:'Lavender',eth:'60%'},{n:'Lemon Balm',eth:'45%'},{n:'Licorice Root',eth:'40%'},
+  {n:'Linden',eth:'30%'},{n:'Lingonberry',eth:'40%'},{n:"Lion's Mane",eth:'Dual'},
+  {n:'Lobelia',eth:'70%'},{n:'Lucerne (Alfalfa)',eth:'30%'},{n:'Maca',eth:'60%'},
+  {n:'Maca Negra',eth:'60%'},{n:'Maitake',eth:'Dual'},{n:'Marjoram',eth:'60%'},
+  {n:'Meadowsweet',eth:'40%'},{n:'Mesima',eth:'Dual'},{n:'Milk Thistle',eth:'60%'},
+  {n:'Morels',eth:'Dual'},{n:'Moringa',eth:'40%'},{n:'Motherwort',eth:'50%'},
+  {n:'Mugwort',eth:'65%'},{n:'Muira Puama',eth:'65%'},{n:'Mullein',eth:'30%'},
+  {n:'Nettle',eth:'45% or water'},{n:'Oatstraw',eth:'30%'},{n:'Oregano',eth:'75%'},
+  {n:'Oyster Mushroom',eth:'Dual'},{n:'Passionflower',eth:'45%'},{n:"Pau d'Arco",eth:'65%'},
+  {n:'Peppermint',eth:'50%'},{n:'Pine Needles',eth:'60%'},{n:'Pine Pollen',eth:'70% (cracked-cell)'},
+  {n:'Psilocybe cubensis',eth:'70%'},{n:'Raspberry Leaf',eth:'40%'},{n:'Red Dates (Jujube)',eth:'30%'},
+  {n:'Red-Belted Polypore',eth:'Dual'},{n:'Reishi',eth:'Dual'},{n:'Rhodiola',eth:'60%'},
+  {n:'Rhubarb Root',eth:'50%'},{n:'Rose Petals',eth:'45%'},{n:'Rosehip',eth:'40%'},
+  {n:'Rosemary',eth:'70%'},{n:'Royal Sun Mushroom',eth:'Dual'},{n:'Saffron',eth:'80%'},
+  {n:'Sage',eth:'65%'},{n:'Saw Palmetto',eth:'80% or CO₂'},{n:'Schisandra',eth:'50%'},
+  {n:'Senna',eth:'40%'},{n:'Shaggy Mane',eth:'Dual'},{n:'Shiitake',eth:'Dual'},
+  {n:'Shilajit',eth:'30% or warm water'},{n:'Skullcap',eth:'50%'},{n:'Slippery Elm',eth:'25% or cold water'},
+  {n:'Spirulina',eth:'25% or water'},{n:"St. John's Wort",eth:'70% or oil infusion'},
+  {n:'Star Anise',eth:'70%'},{n:'Thyme',eth:'75%'},{n:'Tinder Fungus',eth:'Dual'},
+  {n:'Tongkat Ali',eth:'70%'},{n:'Tremella',eth:'Dual'},{n:'Turkey Tail',eth:'Dual'},
+  {n:'Turmeric',eth:'80% or fat + alcohol'},{n:'Valerian',eth:'60%'},{n:'Vanilla',eth:'85%'},
+  {n:'Verbena',eth:'45%'},{n:'Vitex (Chasteberry)',eth:'60%'},{n:'Wild Dagga',eth:'60%'},
+  {n:'Willow Bark',eth:'50%'},{n:'Wormwood',eth:'75%'},{n:'Yarrow',eth:'50%'},
+  {n:'Yellow Dock Root',eth:'50%'},{n:'Yerba Mate',eth:'45%'},{n:'Zhu Ling',eth:'Dual'},
+  {n:'Birch Polypore',eth:'Dual'},{n:'Butterbur',eth:'40% PA-free'},{n:'Chilcuague',eth:'65%'},
+  {n:'Enoki',eth:'Dual'},{n:'Fu Ling',eth:'Dual'},{n:'Goldenrod',eth:'45%'},
+  {n:'Hops',eth:'70%'},{n:'Horsetail',eth:'30%'},{n:'Oyster Mushroom',eth:'Dual'},
+  {n:'Raspberry Leaf',eth:'40%'},{n:'Rosehip',eth:'40%'},{n:'Zhu Ling',eth:'Dual'},
+  {n:'Elderberry',eth:'35%'},{n:'Amanita pantherina',eth:'65%'},
+  {n:'Shatavari',eth:'45%'},{n:'Catuaba',eth:'65%'},{n:'Shilajit',eth:'30% or warm water'},
+  {n:'Barberry',eth:'65%'},{n:'Burdock Root',eth:'30% or Dual'},
+].filter((v,i,a)=>a.findIndex(x=>x.n===v.n)===i).sort((a,b)=>a.n.localeCompare(b.n));
+
+// Frequency data
+const FREQ_DATA=[
+  {n:'Rose',mhz:320},{n:'Frankincense',mhz:147},{n:'Lavender',mhz:118},
+  {n:'Chamomile',mhz:105},{n:'Myrrh',mhz:105},{n:'Rosemary',mhz:102},
+  {n:'Juniper',mhz:98},{n:'Sandalwood',mhz:96},{n:'Tea Tree',mhz:92},
+  {n:'Jasmine',mhz:80},{n:'Oregano',mhz:78},{n:'Peppermint',mhz:78},
+  {n:'Lemon',mhz:52},{n:'Eucalyptus',mhz:52},{n:'Holy Basil',mhz:52},
+];
+
+function renderEthTable(filter){
+  const grid=document.getElementById('ethGrid');
+  const f=(filter||'').toLowerCase();
+  const list=ETH_TARGETS.filter(e=>!f||e.n.toLowerCase().includes(f));
+  grid.innerHTML=list.map(e=>{
+    const isDual=e.eth.includes('Dual');
+    const isWater=e.eth.toLowerCase().includes('water');
+    const cls=isDual?'eth-card-dual':isWater?'eth-card-water':'';
+    return`<div class="eth-card"><span class="eth-card-name">${e.n}</span><span class="eth-card-val ${cls}">${e.eth}</span></div>`;
+  }).join('');
+}
+
+function renderFreqGrid(){
+  const grid=document.getElementById('freqGrid');
+  grid.innerHTML=FREQ_DATA.map(f=>`<div class="freq-card"><span class="freq-herb">${f.n}</span><span class="freq-val">${f.mhz} MHz</span></div>`).join('');
+}
+
+document.addEventListener('DOMContentLoaded',()=>{renderEthTable('');renderFreqGrid();});
+</script>
+<script>
 const METHOD_META = {
   D:  { label:'Double Extraction', color:'#4FA8E0', bg:'rgba(79,168,224,.12)', border:'rgba(79,168,224,.35)' },
   T:  { label:'Cold Tincture',     color:'#6BD66F', bg:'rgba(107,214,111,.1)', border:'rgba(107,214,111,.35)' },
@@ -487,9 +614,15 @@ function searchHerb(q){
   if(!matches.length){ out.innerHTML='<div style="font-size:13px;color:var(--md);font-style:italic;padding:12px 0">No herb found — try a partial name or Latin name.</div>'; return; }
   out.innerHTML = matches.map(h => {
     const m = METHOD_META[h.method] || METHOD_META.T;
+    // Try to find ethanol target from ETH_TARGETS
+    const ethEntry = ETH_TARGETS.find(e=>e.n.toLowerCase().includes(h.n.toLowerCase())||h.n.toLowerCase().includes(e.n.toLowerCase()));
+    const ethChip = ethEntry ? `<span class="hc-flag timing">⚗ ${ethEntry.eth}</span>` : '';
+    // Research grade from HERB_META
+    const metaKeys=typeof window.HERB_META!=='undefined'?Object.values(window.HERB_META).filter(x=>x):[]; // unused here, just check presence
     const flags = [
       h.fresh ? '<span class="hc-flag fresh">🌿 Fresh only</span>' : '',
       h.timing ? `<span class="hc-flag timing">⏱ ${h.timing}</span>` : '',
+      ethChip,
       h.caution ? '<span class="hc-flag caution">▲ Caution</span>' : '',
     ].filter(Boolean).join('');
     return `<div class="herb-card">
