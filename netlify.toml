@@ -23,6 +23,12 @@
   to     = "/shop"
   status = 301
 
+# Foraging map SPA — serve foraging/index.html for /foraging
+[[redirects]]
+  from   = "/foraging"
+  to     = "/foraging/index.html"
+  status = 200
+
 # static pages served directly: /shop /mixology /mycelium-trance /community
 
 # Everything else (including /) → index.html (premium home design)

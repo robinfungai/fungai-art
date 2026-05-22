@@ -34,10 +34,23 @@
       "Bash(cp \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\src\\\\assets\\\\mycelium-trance\\\\steph-tuning.png\" \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\mycelium-trance\\\\\" && cp \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\src\\\\assets\\\\mycelium-trance\\\\tuning-forks.png\" \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\mycelium-trance\\\\\")",
       "Bash(cp \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\src\\\\assets\\\\mycelium-trance\\\\robin-amanita.jpeg\" \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\mycelium-trance\\\\\" && cp \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\src\\\\assets\\\\mycelium-trance\\\\steph-amanita.png\" \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\mycelium-trance\\\\\")",
       "Bash(cp \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\src\\\\assets\\\\mycelium-trance\\\\mushroom-background.jpg\" \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\mycelium-trance\\\\\" && cp \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\src\\\\assets\\\\mycelium-trance\\\\mushroom-gills.jpg\" \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\mycelium-trance\\\\\")",
-      "Bash(cp \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\src\\\\assets\\\\mycelium-trance\\\\blue-lotus.jpg\" \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\mycelium-trance\\\\\" && cp \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\src\\\\assets\\\\mycelium-trance\\\\robin-mic.png\" \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\mycelium-trance\\\\\")"
+      "Bash(cp \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\src\\\\assets\\\\mycelium-trance\\\\blue-lotus.jpg\" \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\mycelium-trance\\\\\" && cp \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\src\\\\assets\\\\mycelium-trance\\\\robin-mic.png\" \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\mycelium-trance\\\\\")",
+      "Bash(mkdir public\\\\shop)",
+      "Bash(copy public\\\\products\\\\index.html public\\\\shop\\\\index.html)",
+      "Bash(git checkout *)",
+      "Bash(git stash *)",
+      "Bash(cp /tmp/dispensary-engine.html \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\mixology\\\\index.html\" && head -7 \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\mixology\\\\index.html\")",
+      "Bash(dir \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\src\\\\assets\" /b /s)",
+      "Bash(dir \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\src\\\\assets\\\\wetransfer_black-white-square-interior-designer-logo-1-png_2026-05-20_1654\" /b)",
+      "Bash(dir \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\src\\\\assets\\\\wetransfer_img_3718-jpeg_2026-05-20_1620\" /b)",
+      "Bash(copy \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\src\\\\assets\\\\fungai-art-logo.png\" \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\logo.png\")",
+      "Bash(node scripts/export-herbs.cjs)",
+      "Bash(node -e \"require\\('./node_modules/mapbox-gl/package.json'\\).version && console.log\\('mapbox-gl ok'\\)\")",
+      "Bash(node -e \"require\\('./node_modules/react-map-gl/package.json'\\).version && console.log\\('react-map-gl ok'\\)\")"
     ],
     "additionalDirectories": [
-      "C:\\Users\\Robin\\Desktop\\fungai art\\websiet\\tailored tincture ai tool\\html codes"
+      "C:\\Users\\Robin\\Desktop\\fungai art\\websiet\\tailored tincture ai tool\\html codes",
+      "\\tmp"
     ]
   }
 }
