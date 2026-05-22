@@ -193,42 +193,159 @@ function PinModal({ member, onSuccess, onCancel }) {
   );
 }
 
-/* ── Login screen ─────────────────────────────────────────── */
+/* ── Welcome portal ───────────────────────────────────────── */
 
 function LoginScreen({ onLogin }) {
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected]     = useState(null);
+  const [dropOpen, setDropOpen]     = useState(false);
+  const dropRef                      = useRef(null);
+
+  useEffect(() => {
+    function outside(e) {
+      if (dropRef.current && !dropRef.current.contains(e.target)) setDropOpen(false);
+    }
+    document.addEventListener('mousedown', outside);
+    return () => document.removeEventListener('mousedown', outside);
+  }, []);
+
+  const PHILOSOPHY = [
+    { icon:'◉', title:'$HYPHA — Currency', color:'var(--spore-l)', desc:'Earned by contributing to any node. Spent on experiences, products, and access. Emission-based — designed to grow with the organism.' },
+    { icon:'⬡', title:'Access Keys — NFTs', color:'var(--fungal-l)', desc:'Non-transferable keys minted on unlock. Each key grants access to a specific experience, lab, or residency — limited by real-world seats.' },
+    { icon:'◈', title:'Reputation — Trust', color:'var(--nutrient-l)', desc:'Tracks depth of participation. Cannot be bought, only earned. Required for the deepest access. Resists speculation culture.' },
+  ];
+
+  const liveNodes = SporeData.NETWORK_NODES.filter(n => n.activity !== 'proposed');
 
   return (
-    <div className="login-screen">
-      <div className="login-brand">
-        <ProceduralMark size={48} />
-        <div className="login-brand-name">Spore</div>
-        <div className="login-brand-sub">Living network · $HYPHA</div>
+    <div className="welcome-wrap">
+
+      {/* ── Nav ── */}
+      <div className="welcome-nav">
+        <div className="welcome-nav-brand">
+          <ProceduralMark size={26} />
+          <div>
+            <div className="welcome-brand-name">Spore</div>
+            <div className="welcome-brand-sub">Living Network · $HYPHA</div>
+          </div>
+        </div>
+        <div style={{ position:'relative' }} ref={dropRef}>
+          <button
+            className="welcome-login-btn"
+            onClick={() => setDropOpen(d => !d)}
+          >
+            <span>Log in Hyphae</span>
+            <span style={{ fontSize:10, opacity:0.7, transition:'transform .2s', display:'inline-block', transform: dropOpen ? 'rotate(180deg)' : 'none' }}>▾</span>
+          </button>
+          {dropOpen && (
+            <div className="member-dropdown">
+              <div className="md-label">Who are you in the mycelium?</div>
+              {SporeData.MEMBERS.map(m => {
+                const tier = SporeData.reputationTier(m.rep);
+                const node = SporeData.NETWORK_NODES.find(n => n.id === m.node);
+                return (
+                  <button
+                    key={m.id}
+                    className="md-item"
+                    onClick={() => { setDropOpen(false); setSelected(m); }}
+                  >
+                    <div className="md-avatar" style={{ background: tier.color }}>{m.name[0]}</div>
+                    <div className="md-info">
+                      <div className="md-name">{m.name}</div>
+                      <div className="md-role">{m.role}{node ? ` · ${node.name}` : ''}</div>
+                    </div>
+                    <div className="md-tier" style={{ color: tier.color }}>{tier.label}</div>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
 
-      <div className="login-prompt">Who are you in the mycelium?</div>
+      {/* ── Hero ── */}
+      <div className="welcome-hero">
+        <div className="welcome-hero-inner">
+          <div className="welcome-eyebrow">A mycelial economy</div>
+          <h1 className="welcome-title">Tend a node.<br/><em>Nutrients flow.</em></h1>
+          <p className="welcome-blurb">Spore is the living network beneath Fungai Art. Contribute to a node, earn $HYPHA, unlock experiences. The organism grows when you do.</p>
+        </div>
+      </div>
 
-      <div className="login-member-grid">
-        {SporeData.MEMBERS.map(m => {
-          const tier = SporeData.reputationTier(m.rep);
-          const node = SporeData.NETWORK_NODES.find(n => n.id === m.node);
-          return (
-            <button
-              key={m.id}
-              className="login-member-btn"
-              onClick={() => setSelected(m)}
-            >
-              <div className="login-member-avatar" style={{ background: tier.color }}>
-                {m.name[0]}
+      {/* ── Nodes ── */}
+      <div className="welcome-section">
+        <div className="welcome-section-eyebrow">Active nodes · {liveNodes.length} live</div>
+        <div className="welcome-section-title">The <em>network.</em></div>
+        <div className="welcome-nodes">
+          {SporeData.NETWORK_NODES.map(node => {
+            const isProposed = node.activity === 'proposed';
+            const avgFlow = node.contributions.length
+              ? Math.round(node.contributions.reduce((a,c) => a + c.earn, 0) / Math.max(1, node.contributions.length))
+              : 0;
+            return (
+              <div key={node.id} className={`welcome-node ${isProposed ? 'proposed' : ''}`}>
+                <div className="wn-top">
+                  <div className="wn-dot" style={{ background: node.color }} />
+                  <div className="wn-status">{isProposed ? 'proposed' : node.activity}</div>
+                </div>
+                <div className="wn-name">{node.name}</div>
+                <div className="wn-sub">{node.sub}</div>
+                {!isProposed && (
+                  <div className="wn-flow">
+                    <span className="wn-flow-val">{avgFlow} $H</span>
+                    <span className="wn-flow-lbl">/avg contribution</span>
+                  </div>
+                )}
+                {isProposed && node.requirement && (
+                  <div className="wn-req">{node.requirement}</div>
+                )}
               </div>
-              <div className="login-member-info">
-                <div className="login-member-name">{m.name}</div>
-                <div className="login-member-role">{m.role}</div>
-                {node && <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'var(--mycelium-d)', marginTop:2 }}>{node.name}</div>}
-              </div>
-            </button>
-          );
-        })}
+            );
+          })}
+        </div>
+      </div>
+
+      {/* ── Token philosophy ── */}
+      <div className="welcome-section">
+        <div className="welcome-section-eyebrow">Token architecture</div>
+        <div className="welcome-section-title">How nutrients <em>flow.</em></div>
+        <div className="welcome-philosophy">
+          {PHILOSOPHY.map(p => (
+            <div key={p.title} className="wp-card">
+              <div className="wp-icon" style={{ color: p.color }}>{p.icon}</div>
+              <div className="wp-title" style={{ color: p.color }}>{p.title}</div>
+              <div className="wp-desc">{p.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Flow steps ── */}
+      <div className="welcome-section">
+        <div className="welcome-section-eyebrow">How to participate</div>
+        <div className="welcome-flow">
+          {['Arrive', 'Contribute', 'Earn $HYPHA', 'Unlock access', 'Go deeper'].map((s, i) => (
+            <div key={s} className="wf-step">
+              <div className="wf-num">{i + 1}</div>
+              <div className="wf-label">{s}</div>
+              {i < 4 && <div className="wf-arrow">→</div>}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── CTA ── */}
+      <div className="welcome-cta">
+        <div style={{ position:'relative' }} ref={null}>
+          <button className="welcome-cta-btn" onClick={() => setDropOpen(d => !d)}>
+            Log in Hyphae ↗
+          </button>
+          <p className="welcome-cta-sub">Join the mycelium. Select your name, set a 4-digit code.</p>
+        </div>
+      </div>
+
+      <div className="welcome-footer">
+        <ProceduralMark size={24} />
+        <div className="welcome-footer-fine">Fungai Art · tend · flow · unlock</div>
       </div>
 
       {selected && (

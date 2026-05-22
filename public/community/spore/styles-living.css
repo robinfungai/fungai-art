@@ -1635,3 +1635,430 @@ button { font-family: inherit; cursor: pointer; }
   border-color: rgba(248,113,113,0.6);
   color: #fca5a5;
 }
+
+/* ── Welcome portal ─────────────────────────────────────── */
+
+.welcome-wrap {
+  min-height: 100dvh;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(107,214,111,0.07), transparent 55%),
+    radial-gradient(ellipse at 85% 80%, rgba(232,177,75,0.05), transparent 50%),
+    var(--soil);
+  position: relative;
+  z-index: 1;
+}
+
+/* Nav */
+.welcome-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: linear-gradient(to bottom, rgba(6,8,9,0.96), rgba(6,8,9,0.7));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 0.5px solid var(--rule);
+}
+.welcome-nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.welcome-brand-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--mycelium-l);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.welcome-brand-sub {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 3px;
+}
+
+/* Login button */
+.welcome-login-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--spore-d);
+  background: rgba(107,214,111,0.1);
+  color: var(--spore-l);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s;
+  letter-spacing: -0.01em;
+}
+.welcome-login-btn:hover {
+  background: rgba(107,214,111,0.2);
+  border-color: var(--spore);
+  box-shadow: 0 0 20px rgba(107,214,111,0.2);
+}
+
+/* Dropdown */
+.member-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--soil-2);
+  border: 0.5px solid var(--rule-strong);
+  border-radius: 14px;
+  padding: 8px 6px;
+  min-width: 260px;
+  box-shadow: 0 20px 48px rgba(0,0,0,0.6), 0 0 0 0.5px rgba(107,214,111,0.1);
+  z-index: 100;
+  animation: drop-in 0.22s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+@keyframes drop-in {
+  from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+.md-label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  padding: 4px 10px 10px;
+  border-bottom: 0.5px solid var(--rule);
+  margin-bottom: 4px;
+}
+.md-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: background 0.12s;
+  text-align: left;
+}
+.md-item:hover { background: rgba(255,255,255,0.04); }
+.md-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 16px; font-style: italic;
+  color: rgba(255,255,255,0.9);
+  flex-shrink: 0;
+}
+.md-info { flex: 1; min-width: 0; }
+.md-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--mycelium-l);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.md-role {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 2px;
+}
+.md-tier {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.1em;
+  flex-shrink: 0;
+}
+
+/* Hero */
+.welcome-hero {
+  padding: 64px 20px 48px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.welcome-hero-inner {}
+.welcome-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-bottom: 14px;
+}
+.welcome-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(40px, 10vw, 72px);
+  color: var(--mycelium-l);
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+  margin-bottom: 20px;
+}
+.welcome-title em { color: var(--spore); font-style: italic; }
+.welcome-blurb {
+  font-size: 14.5px;
+  color: var(--mycelium);
+  line-height: 1.7;
+  max-width: 44ch;
+  opacity: 0.88;
+}
+
+/* Sections */
+.welcome-section {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 48px 20px 0;
+}
+.welcome-section-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-bottom: 10px;
+}
+.welcome-section-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 30px;
+  color: var(--mycelium-l);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 22px;
+}
+.welcome-section-title em { color: var(--spore); }
+
+/* Nodes */
+.welcome-nodes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+.welcome-node {
+  background: var(--soil-2);
+  border: 0.5px solid var(--rule);
+  border-radius: 12px;
+  padding: 16px 16px;
+  transition: border-color 0.18s;
+}
+.welcome-node:hover { border-color: var(--rule-strong); }
+.welcome-node.proposed {
+  opacity: 0.55;
+  border-style: dashed;
+}
+.wn-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.wn-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  position: relative;
+}
+.wn-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 0.25;
+  filter: blur(3px);
+}
+.wn-status {
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+}
+.wn-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--mycelium-l);
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  margin-bottom: 3px;
+}
+.wn-sub {
+  font-size: 11px;
+  color: var(--mycelium);
+  opacity: 0.7;
+  margin-bottom: 10px;
+}
+.wn-flow {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  padding-top: 8px;
+  border-top: 0.5px solid var(--rule);
+}
+.wn-flow-val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--spore-l);
+}
+.wn-flow-lbl {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: var(--mycelium-d);
+}
+.wn-req {
+  font-size: 10.5px;
+  color: var(--mycelium-d);
+  line-height: 1.5;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+/* Token philosophy */
+.welcome-philosophy {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.wp-card {
+  background: var(--soil-2);
+  border: 0.5px solid var(--rule);
+  border-radius: 12px;
+  padding: 18px 18px;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  grid-template-rows: auto auto;
+  gap: 4px 12px;
+  align-items: start;
+}
+.wp-icon {
+  font-size: 18px;
+  line-height: 1.2;
+  grid-row: 1 / 3;
+  grid-column: 1;
+  align-self: start;
+  padding-top: 2px;
+}
+.wp-title {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  grid-column: 2;
+  grid-row: 1;
+}
+.wp-desc {
+  font-size: 12.5px;
+  color: var(--mycelium);
+  line-height: 1.6;
+  opacity: 0.88;
+  grid-column: 2;
+  grid-row: 2;
+}
+
+/* Flow steps */
+.welcome-flow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 14px 16px;
+  background: var(--soil-2);
+  border: 0.5px solid var(--rule);
+  border-radius: 12px;
+}
+.wf-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.wf-num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--soil-3);
+  border: 0.5px solid var(--rule);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--spore);
+  flex-shrink: 0;
+}
+.wf-label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--mycelium-l);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+.wf-arrow {
+  color: var(--mycelium-d);
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* CTA */
+.welcome-cta {
+  max-width: 680px;
+  margin: 48px auto 0;
+  padding: 0 20px;
+  text-align: center;
+}
+.welcome-cta-btn {
+  padding: 14px 32px;
+  border-radius: 999px;
+  border: 1px solid var(--spore-d);
+  background: rgba(107,214,111,0.12);
+  color: var(--spore-l);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: -0.01em;
+  box-shadow: 0 0 0 0 rgba(107,214,111,0);
+}
+.welcome-cta-btn:hover {
+  background: rgba(107,214,111,0.22);
+  border-color: var(--spore);
+  box-shadow: 0 0 32px rgba(107,214,111,0.25);
+}
+.welcome-cta-sub {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 12px;
+}
+
+/* Footer */
+.welcome-footer {
+  max-width: 680px;
+  margin: 48px auto 0;
+  padding: 24px 20px 48px;
+  border-top: 0.5px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.welcome-footer-fine {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+}
