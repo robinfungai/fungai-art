@@ -3,6 +3,7 @@ import Map, { Marker, NavigationControl } from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { ECO_NODES, HABITAT_COLORS, HABITAT_LABELS } from '../data/ecoNodes';
 import { SKOGSSKAFFERIET_OBS } from '../data/skogsskafferietObs';
+import { HARVEST_BY_MONTH, HARVEST_PLANTS, MONTH_SV } from '../data/harvestCalendar';
 import { EcoNode, Season, HabitatType } from '../types/EcoNode';
 import NodePanel from './NodePanel';
 
@@ -115,6 +116,9 @@ export default function ForagingApp() {
   const [hoveredObs, setHoveredObs] = useState<GBIFObs | null>(null);
   const [showSkogsObs, setShowSkogsObs] = useState(true);
   const [hoveredSkogsHerb, setHoveredSkogsHerb] = useState<string | null>(null);
+  const [showHarvest, setShowHarvest] = useState(false);
+  const currentMonth = new Date().getMonth() + 1;
+  const harvestNow = (HARVEST_BY_MONTH[currentMonth] || []).map(sv => HARVEST_PLANTS[sv]).filter(Boolean);
 
   const mapRef = useRef<any>(null);
 
@@ -430,10 +434,48 @@ export default function ForagingApp() {
         </div>
       </div>
 
+      {/* Harvest Now panel */}
+      {showHarvest && (
+        <div style={{
+          position: 'absolute', bottom: 60, right: 20, zIndex: 15,
+          width: 260, maxHeight: '55vh', overflowY: 'auto',
+          background: 'rgba(7,17,13,0.97)', backdropFilter: 'blur(16px)',
+          border: '0.5px solid rgba(107,214,111,0.2)', borderRadius: 10, padding: '14px 16px',
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+            <div>
+              <div style={{ fontFamily: 'monospace', fontSize: 7, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#4d5a52' }}>skogsskafferiet.se</div>
+              <div style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#6BD66F', marginTop: 2 }}>
+                Harvest — {MONTH_SV[currentMonth]}
+              </div>
+            </div>
+            <button onClick={() => setShowHarvest(false)} style={{ background: 'none', border: 'none', color: '#4d5a52', fontSize: 16, cursor: 'pointer', lineHeight: 1 }}>×</button>
+          </div>
+          <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
+            {harvestNow.map(p => (
+              <div key={p.sv} title={`${p.latin || ''} · ${p.parts || ''}`} style={{
+                padding: '3px 8px', borderRadius: 4, cursor: 'default',
+                background: p.type === 'fungi' ? 'rgba(79,168,224,0.1)' : p.type === 'berry' ? 'rgba(232,177,75,0.1)' : p.type === 'tree' ? 'rgba(107,214,111,0.07)' : 'rgba(255,255,255,0.04)',
+                border: `0.5px solid ${p.type === 'fungi' ? 'rgba(79,168,224,0.35)' : p.type === 'berry' ? 'rgba(232,177,75,0.35)' : p.type === 'tree' ? 'rgba(107,214,111,0.25)' : 'rgba(255,255,255,0.1)'}`,
+              }}>
+                <div style={{ fontFamily: 'monospace', fontSize: 8.5, color: p.type === 'fungi' ? '#A6D5F2' : p.type === 'berry' ? '#F5D689' : p.type === 'tree' ? '#B6F0AE' : '#C9B894', letterSpacing: '0.06em' }}>{p.en}</div>
+                {p.parts && <div style={{ fontFamily: 'monospace', fontSize: 6.5, color: '#4d5a52', letterSpacing: '0.06em', marginTop: 1 }}>{p.parts.split(',')[0]}</div>}
+              </div>
+            ))}
+          </div>
+          <div style={{ marginTop: 10, paddingTop: 8, borderTop: '0.5px solid rgba(255,255,255,0.06)', display: 'flex', gap: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}><div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(107,214,111,0.5)' }} /><span style={{ fontFamily: 'monospace', fontSize: 7, color: '#4d5a52', letterSpacing: '0.08em' }}>Tree</span></div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}><div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(79,168,224,0.5)' }} /><span style={{ fontFamily: 'monospace', fontSize: 7, color: '#4d5a52', letterSpacing: '0.08em' }}>Fungi</span></div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}><div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(232,177,75,0.5)' }} /><span style={{ fontFamily: 'monospace', fontSize: 7, color: '#4d5a52', letterSpacing: '0.08em' }}>Berry</span></div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}><div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(255,255,255,0.2)' }} /><span style={{ fontFamily: 'monospace', fontSize: 7, color: '#4d5a52', letterSpacing: '0.08em' }}>Plant</span></div>
+          </div>
+        </div>
+      )}
+
       {/* Bottom nav links */}
       <div style={{
         position: 'absolute', bottom: 20, left: 20, zIndex: 10,
-        display: 'flex', gap: 8,
+        display: 'flex', gap: 8, flexWrap: 'wrap',
       }}>
         {[
           { href: '/', label: '← Home' },
@@ -448,6 +490,15 @@ export default function ForagingApp() {
             transition: 'all 0.15s',
           }}>{label}</a>
         ))}
+        <button onClick={() => setShowHarvest(h => !h)} style={{
+          fontSize: 9, fontFamily: 'monospace', letterSpacing: '0.14em', textTransform: 'uppercase',
+          padding: '5px 12px', borderRadius: 4, cursor: 'pointer',
+          background: showHarvest ? 'rgba(107,214,111,0.12)' : 'rgba(7,17,13,0.88)',
+          border: showHarvest ? '0.5px solid rgba(107,214,111,0.4)' : '0.5px solid rgba(255,255,255,0.1)',
+          color: showHarvest ? '#6BD66F' : '#8B7E62',
+        }}>
+          🌿 Harvest {MONTH_SV[currentMonth]}
+        </button>
       </div>
 
       {/* Node panel — slides in from right */}

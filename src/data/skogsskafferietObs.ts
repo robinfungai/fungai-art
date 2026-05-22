@@ -199,6 +199,46 @@ export const SKOGSSKAFFERIET_OBS: SkogsObs[] = [
     ],
   },
 
+  // ── TALL (Pinus sylvestris — Scots Pine) — FULL SWEDEN COVERAGE ──────────
+  // Source: skogsskafferiet.se/tall/ — grows on dry soil throughout all Sweden
+  // Year-round harvest: needles (vit C), pollen (May), shoots (May–Jun), bark (spring), resin
+  {
+    herb: 'Tall', latin: 'Pinus sylvestris', count: 680, county: 'All of Sweden',
+    points: [
+      // Norrland (Norrbotten/Västerbotten) — dense boreal pine
+      [21.50, 65.80], [20.20, 65.50], [18.80, 65.20], [17.50, 65.00], [19.80, 66.20],
+      [22.10, 65.40], [23.50, 65.10], [17.20, 64.80], [15.80, 64.50],
+      // Jämtland/Ångermanland
+      [14.38, 63.38], [15.10, 63.15], [16.20, 63.00], [17.60, 63.30], [18.40, 63.50],
+      [13.70, 63.00], [16.80, 62.80], [15.40, 62.50], [17.20, 62.30],
+      // Medelpad/Hälsingland
+      [17.30, 62.10], [16.50, 61.80], [15.80, 61.60], [17.90, 61.50], [16.10, 62.30],
+      // Dalarna — Robin's region
+      [14.28, 61.10], [14.65, 60.95], [14.90, 60.78], [15.22, 60.65], [15.45, 60.55],
+      [15.62, 60.62], [15.85, 60.48], [14.45, 60.88], [13.88, 60.72],
+      // Bergslagen — Robin's home ground
+      [15.20, 60.18], [15.55, 60.08], [15.82, 59.92], [15.45, 59.75], [16.05, 59.82],
+      [15.28, 59.55], [15.70, 59.45], [16.20, 59.62],
+      // Värmland
+      [13.22, 59.88], [13.48, 59.62], [12.98, 59.45], [13.75, 59.30], [13.10, 60.10],
+      // Uppland/Västmanland
+      [17.62, 59.98], [17.35, 59.78], [16.98, 59.62], [17.80, 59.55], [16.75, 60.12],
+      // Södermanland/Östergötland
+      [16.85, 58.88], [17.12, 58.62], [15.62, 58.48], [16.28, 58.35], [15.98, 58.72],
+      // Småland (extensive pine heath)
+      [15.22, 57.82], [14.88, 57.58], [15.55, 57.42], [14.42, 57.22], [15.85, 57.68],
+      [14.12, 57.88], [16.18, 57.55], [13.85, 57.48],
+      // Halland/Blekinge coast
+      [12.88, 56.88], [12.65, 56.72], [13.12, 56.55], [15.52, 56.22], [14.82, 56.45],
+      // Skåne (southernmost — less common but present)
+      [13.55, 55.88], [13.28, 55.72], [13.85, 55.62],
+      // Gotland
+      [18.30, 57.52], [18.15, 57.68], [18.55, 57.35],
+      // Öland
+      [16.68, 56.75], [16.82, 56.55],
+    ],
+  },
+
   // ── FLÄDERBÄR (Sambucus nigra berries) ───────────────────────────────────
   {
     herb: 'Fläderbär', latin: 'Sambucus nigra', count: 145, county: 'Southern Sweden',
