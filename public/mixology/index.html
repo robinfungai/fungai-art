@@ -8,7 +8,7 @@
 <style>
 :root{--s:#060809;--s2:#0F1014;--s3:#171A1F;--s4:#1F2228;--m:#C9B894;--md:#8B7E62;--ml:#E6D9B5;--g:#6BD66F;--gd:#2E7A35;--gl:#B6F0AE;--a:#E8B14B;--ad:#8B6320;--al:#F5D689;--r:rgba(201,184,148,.11);--rl:rgba(201,184,148,.2);--fd:'Zodiak','Cormorant Garamond',Georgia,serif;--fs:'Satoshi',system-ui,sans-serif;--fm:'Geist Mono',monospace;
 --eF:#E8714B;--eE:#6BD66F;--eW:#4FA8E0;--eA:#A88FE0;--eS:#E8B14B;}
-*{box-sizing:border-box;margin:0;padding:0;}html,body{background:var(--s);color:var(--m);font-family:var(--fs);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;}
+*{box-sizing:border-box;margin:0;padding:0;}html,body{background:var(--s);color:var(--m);font-family:var(--fs);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh;}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.28;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .79 0 0 0 0 .72 0 0 0 0 .58 0 0 0 .06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");}
 button{font-family:inherit;cursor:pointer;}
 .wrap{max-width:960px;margin:0 auto;padding:0 18px 100px;position:relative;z-index:1;}
@@ -23,33 +23,47 @@ button{font-family:inherit;cursor:pointer;}
 .fp-analyze{font-family:var(--fm);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;background:rgba(232,177,75,.1);border:0.5px solid rgba(232,177,75,.4);border-radius:5px;padding:8px 16px;color:#F5D689;transition:all .15s;cursor:pointer;}
 .fp-analyze:hover{background:rgba(232,177,75,.2);}
 .fp-analyze:disabled{opacity:.4;cursor:not-allowed;}
-.fp-analysis{margin-top:14px;padding:14px 16px;background:var(--s2);border:0.5px solid rgba(232,177,75,.2);border-radius:10px;font-size:12.5px;color:var(--m);line-height:1.65;white-space:pre-wrap;animation:pi .3s ease-out;}
-.fp-analysis-head{font-family:var(--fm);font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(232,177,75,.7);margin-bottom:10px;}
+.fp-analysis{margin-top:12px;padding:16px 18px;background:var(--s2);border:0.5px solid rgba(232,177,75,.18);border-radius:12px;color:var(--m);line-height:1.6;animation:pi .3s ease-out;}
+.fp-analysis-head{font-family:var(--fm);font-size:7.5px;letter-spacing:.22em;text-transform:uppercase;color:rgba(232,177,75,.55);margin-bottom:14px;}
+.fpa-name{font-family:var(--fd);font-style:italic;font-size:26px;color:var(--ml);letter-spacing:-.02em;line-height:1;margin-bottom:7px;}
+.fpa-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px;}
+.fpa-tag{font-family:var(--fm);font-size:7px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:3px;}
+.fpa-rule{height:0.5px;background:var(--r);margin:12px 0;}
+.fpa-label{font-family:var(--fm);font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--md);margin-bottom:6px;}
+.fpa-text{font-size:12.5px;color:var(--m);line-height:1.6;}
+.fpa-2col{display:grid;grid-template-columns:1.2fr 1fr;gap:16px;}
+.fpa-3col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+@media(max-width:600px){.fpa-2col,.fpa-3col{grid-template-columns:1fr;}}
+.fpa-item{display:flex;align-items:center;gap:7px;padding:4px 0;font-size:11.5px;border-bottom:0.5px solid var(--r);}
+.fpa-item:last-child{border:none;}
+.fpa-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+.fpa-essence{margin-top:2px;padding:12px 14px;background:rgba(232,177,75,.04);border:0.5px solid rgba(232,177,75,.15);border-radius:7px;font-family:var(--fd);font-style:italic;font-size:15px;color:var(--ml);line-height:1.55;}
+.fpa-myco-btn{margin-top:10px;text-align:right;}
 .fp-typing{display:flex;align-items:center;gap:4px;padding:6px 0;}
 .fp-typing span{width:5px;height:5px;border-radius:50%;background:#F5D689;opacity:.5;animation:fp-pulse 1.2s ease-in-out infinite;}
 .fp-typing span:nth-child(2){animation-delay:.2s;}
 .fp-typing span:nth-child(3){animation-delay:.4s;}
 @keyframes fp-pulse{0%,80%,100%{transform:scale(.7);opacity:.3;}40%{transform:scale(1);opacity:1;}}
 .hero{margin-bottom:22px;}
-.hero-ey{font-family:var(--fm);font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--a);margin-bottom:7px;}
-.hero-title{font-family:var(--fd);font-style:italic;font-size:clamp(32px,5.5vw,50px);color:var(--ml);letter-spacing:-.025em;line-height:.96;margin-bottom:8px;}
+.hero-ey{font-family:var(--fm);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--a);margin-bottom:7px;}
+.hero-title{font-family:var(--fd);font-style:italic;font-size:clamp(36px,5.5vw,56px);color:var(--ml);letter-spacing:-.025em;line-height:.96;margin-bottom:10px;}
 .hero-title em{color:var(--g);}
-.hero-blurb{font-size:13px;color:var(--m);line-height:1.6;max-width:52ch;opacity:.85;}
-.controls{display:flex;flex-direction:column;gap:7px;margin-bottom:14px;}
+.hero-blurb{font-size:14.5px;color:var(--m);line-height:1.65;max-width:52ch;opacity:.85;}
+.controls{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
 .srch{position:relative;}
-.srch-i{width:100%;padding:11px 14px 11px 38px;background:var(--s2);border:0.5px solid var(--r);border-radius:8px;color:var(--ml);font-family:var(--fs);font-size:13px;outline:none;transition:border-color .2s;}
+.srch-i{width:100%;padding:13px 16px 13px 40px;background:var(--s2);border:0.5px solid var(--r);border-radius:9px;color:var(--ml);font-family:var(--fs);font-size:15px;outline:none;transition:border-color .2s;}
 .srch-i:focus{border-color:var(--rl);}
 .srch-i::placeholder{color:var(--md);}
-.srch-ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--md);pointer-events:none;}
+.srch-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--md);pointer-events:none;}
 /* Category pills */
-.cats{display:flex;gap:5px;flex-wrap:wrap;}
-.cb{font-family:var(--fm);font-size:7.5px;letter-spacing:.13em;text-transform:uppercase;padding:5px 10px;border-radius:5px;border:0.5px solid var(--r);background:none;color:var(--md);transition:all .15s;white-space:nowrap;}
+.cats{display:flex;gap:6px;flex-wrap:wrap;}
+.cb{font-family:var(--fm);font-size:9px;letter-spacing:.13em;text-transform:uppercase;padding:6px 13px;border-radius:6px;border:0.5px solid var(--r);background:none;color:var(--md);transition:all .15s;white-space:nowrap;}
 .cb:hover{color:var(--ml);border-color:var(--rl);}
 .cb.on{background:rgba(107,214,111,.1);border-color:var(--gd);color:var(--gl);}
 .cb.fon{background:rgba(232,177,75,.1);border-color:var(--ad);color:var(--al);}
 /* Element pills */
-.elem-bar{display:flex;gap:5px;flex-wrap:wrap;}
-.eb{font-family:var(--fm);font-size:7.5px;letter-spacing:.13em;text-transform:uppercase;padding:5px 10px;border-radius:5px;border:0.5px solid var(--r);background:none;color:var(--md);transition:all .15s;white-space:nowrap;cursor:pointer;}
+.elem-bar{display:flex;gap:6px;flex-wrap:wrap;}
+.eb{font-family:var(--fm);font-size:9px;letter-spacing:.13em;text-transform:uppercase;padding:6px 13px;border-radius:6px;border:0.5px solid var(--r);background:none;color:var(--md);transition:all .15s;white-space:nowrap;cursor:pointer;}
 .eb:hover{color:var(--ml);border-color:var(--rl);}
 .eb.on[data-e="F"]{background:rgba(232,113,75,.1);border-color:rgba(232,113,75,.5);color:#F5A080;}
 .eb.on[data-e="E"]{background:rgba(107,214,111,.1);border-color:var(--gd);color:var(--gl);}
@@ -57,22 +71,22 @@ button{font-family:inherit;cursor:pointer;}
 .eb.on[data-e="A"]{background:rgba(168,143,224,.1);border-color:#6B5BAA;color:#C5B5F5;}
 .eb.on[data-e="S"]{background:rgba(232,177,75,.1);border-color:var(--ad);color:var(--al);}
 /* Results bar */
-.rbar{font-family:var(--fm);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--md);margin-bottom:11px;}
+.rbar{font-family:var(--fm);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--md);margin-bottom:13px;}
 /* Herb grid */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;}
-.hc{background:var(--s2);border:0.5px solid var(--r);border-radius:9px;padding:12px 13px;cursor:pointer;transition:all .18s;position:relative;overflow:hidden;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;}
+.hc{background:var(--s2);border:0.5px solid var(--r);border-radius:10px;padding:15px 15px 38px;cursor:pointer;transition:all .18s;position:relative;overflow:hidden;}
 .hc:hover{border-color:var(--rl);transform:translateY(-1px);box-shadow:0 8px 22px -10px rgba(107,214,111,.15);}
 .hc.fungi{border-color:rgba(232,177,75,.15);}
 .hc.fungi:hover{border-color:var(--ad);}
 .hc.sel{border-color:var(--gd);background:rgba(107,214,111,.05);}
 .hc.sel.fungi{border-color:var(--ad);background:rgba(232,177,75,.05);}
-.hc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:6px;margin-bottom:4px;}
-.hname{font-family:var(--fd);font-style:italic;font-size:16px;color:var(--ml);letter-spacing:-.015em;line-height:1.1;}
-.el-pip{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px;}
-.hcats{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:5px;}
-.hcat{font-family:var(--fm);font-size:7px;letter-spacing:.1em;text-transform:uppercase;padding:2px 5px;border-radius:3px;background:rgba(201,184,148,.07);color:var(--md);}
+.hc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:6px;margin-bottom:5px;}
+.hname{font-family:var(--fd);font-style:italic;font-size:19px;color:var(--ml);letter-spacing:-.015em;line-height:1.1;}
+.el-pip{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+.hcats{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px;}
+.hcat{font-family:var(--fm);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 6px;border-radius:3px;background:rgba(201,184,148,.07);color:var(--md);}
 .hcat.fu{background:rgba(232,177,75,.1);color:var(--al);}
-.hprim{font-size:11px;color:var(--m);line-height:1.45;opacity:.82;}
+.hprim{font-size:12.5px;color:var(--m);line-height:1.5;opacity:.82;}
 .hadd{position:absolute;bottom:8px;right:8px;width:28px;height:28px;border-radius:50%;border:0.5px solid var(--r);background:var(--s3);color:var(--md);font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
 .hc:hover .hadd{border-color:var(--gd);color:var(--gl);}
 .hc.sel .hadd{background:var(--gd);border-color:var(--gd);color:var(--s);font-size:11px;}
@@ -119,14 +133,14 @@ button{font-family:inherit;cursor:pointer;}
 @keyframes mi{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
 .m-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px;}
 .m-name-row{display:flex;align-items:center;gap:9px;}
-.m-name{font-family:var(--fd);font-style:italic;font-size:26px;color:var(--ml);line-height:1;}
-.m-el-badge{font-family:var(--fm);font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:0.5px solid;margin-top:4px;}
+.m-name{font-family:var(--fd);font-style:italic;font-size:30px;color:var(--ml);line-height:1;}
+.m-el-badge{font-family:var(--fm);font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:999px;border:0.5px solid;margin-top:6px;}
 .m-x{background:none;border:none;color:var(--md);font-size:20px;cursor:pointer;flex-shrink:0;}
 .m-cats{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
 .mc{font-family:var(--fm);font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:4px;border:0.5px solid var(--r);color:var(--md);}
 .mc.pri{border-color:var(--gd);color:var(--gl);background:rgba(107,214,111,.07);}
 .mc.fu{border-color:var(--ad);color:var(--al);background:rgba(232,177,75,.07);}
-.m-prim{font-size:13px;color:var(--ml);line-height:1.65;margin-bottom:12px;}
+.m-prim{font-size:14.5px;color:var(--ml);line-height:1.65;margin-bottom:12px;}
 .m-sec{font-family:var(--fm);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--md);margin-bottom:5px;margin-top:12px;}
 .m-caut{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:5px;font-family:var(--fm);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;}
 .cL{background:rgba(107,214,111,.08);border:0.5px solid var(--gd);color:var(--gl);}
@@ -609,72 +623,20 @@ function analyzeFormula(){
   const essenceKey=Object.keys(ESSENCE_LINES).find(k=>{const[a,b]=k.split(',');return topCats.includes(a)&&topCats.includes(b);});
   const essence=ESSENCE_LINES[essenceKey]||`A ${EL_NAME[domEl]}-element formula addressing ${topCats.slice(0,2).map(c=>CAT_THEMES[c]||c).join(' and ')}.`;
 
-  // Render
+  // Render — clean editorial layout
   const riskCol={'low':'#B6F0AE','medium':'#F5D689','high':'#fca5a5'}[maxRisk];
-  const contHtml=contra.length?contra.map(h=>{
-    const dc=h.x==='high'?'#fca5a5':'#F5D689';
-    return`<div style="display:flex;align-items:center;gap:7px;padding:5px 0;font-size:11.5px;border-bottom:0.5px solid var(--r);">
-      <div style="width:6px;height:6px;border-radius:50%;background:${dc};flex-shrink:0"></div>
-      <span style="flex:1;color:var(--m)">${h.n}</span>
-      <span style="font-family:var(--fm);font-size:7px;letter-spacing:.12em;text-transform:uppercase;color:${dc}">${h.x}</span>
-    </div>`;
-  }).join(''):'<div style="font-size:11px;color:var(--md);font-style:italic;padding:4px 0">No high-risk herbs</div>';
-  const allyHtml=allies.length?allies.map(a=>`<div style="display:flex;align-items:center;gap:5px;padding:4px 0;font-size:11.5px;border-bottom:0.5px solid var(--r);">
-    <span style="color:var(--ml)">${a.a}</span>
-    <span style="color:var(--g);opacity:.7">⟷</span>
-    <span style="color:var(--ml)">${a.b}</span>
-    <span style="font-family:var(--fm);font-size:7px;color:var(--md);margin-left:auto">${a.shared.map(c=>cLabel(c)).join(' · ')}</span>
-  </div>`).join(''):'<div style="font-size:11px;color:var(--md);font-style:italic;padding:4px 0">Add more herbs to reveal allies</div>';
+  const elTagsHtml=sortedEl.map(([el,n])=>`<span class="fpa-tag" style="background:${EL_COL[el]}14;border:0.5px solid ${EL_COL[el]}44;color:${EL_COL[el]}">${EL_NAME[el]}${n>1?` ×${n}`:''}</span>`).join('');
+  const catTagsHtml=topCats.map(c=>`<span class="fpa-tag" style="background:var(--s3);border:0.5px solid var(--r);color:var(--md)">${cLabel(c)}</span>`).join('');
 
-  wrap.innerHTML=`<div class="fp-analysis">
-    <div class="fp-analysis-head">Formula Intelligence · embedded engine</div>
+  const contHtml=contra.length
+    ?contra.map(h=>{const dc=h.x==='high'?'#fca5a5':'#F5D689';return`<div class="fpa-item"><div class="fpa-dot" style="background:${dc}"></div><span style="flex:1">${h.n}</span><span style="font-family:var(--fm);font-size:7px;letter-spacing:.12em;text-transform:uppercase;color:${dc}">${h.x}</span></div>`;}).join('')
+    :'<div style="font-size:11.5px;color:var(--md);font-style:italic">None flagged</div>';
 
-    <div style="margin-bottom:16px;padding-bottom:14px;border-bottom:0.5px solid var(--r)">
-      <div style="font-family:var(--fm);font-size:7.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--a);margin-bottom:4px">Suggested elixir name</div>
-      <div style="font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml);letter-spacing:-.01em">${blendName}</div>
-    </div>
+  const allyHtml=allies.length
+    ?allies.map(a=>`<div class="fpa-item"><span style="color:var(--ml)">${a.a}</span><span style="color:var(--g);opacity:.6;padding:0 4px">⟷</span><span style="color:var(--ml)">${a.b}</span></div>`).join('')
+    :'<div style="font-size:11.5px;color:var(--md);font-style:italic">Add more herbs</div>';
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-      <div style="background:var(--s3);border:0.5px solid var(--r);border-radius:8px;padding:11px 13px;">
-        <div style="font-family:var(--fm);font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--md);margin-bottom:7px">Primary actions</div>
-        ${actionTexts.map(t=>`<div style="font-size:11px;color:var(--m);line-height:1.55;margin-bottom:6px;padding-bottom:6px;border-bottom:0.5px solid var(--r)">${t}</div>`).join('')}
-      </div>
-      <div style="background:var(--s3);border:0.5px solid var(--r);border-radius:8px;padding:11px 13px;">
-        <div style="font-family:var(--fm);font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--md);margin-bottom:7px">Element reading</div>
-        <div style="font-size:11px;color:var(--m);line-height:1.6">${elReading}</div>
-        <div style="margin-top:8px;display:flex;gap:4px;flex-wrap:wrap">${sortedEl.map(([el,n])=>`<span style="font-family:var(--fm);font-size:7px;letter-spacing:.1em;padding:2px 6px;border-radius:3px;background:${EL_COL[el]}18;border:0.5px solid ${EL_COL[el]}44;color:${EL_COL[el]}">${EL_NAME[el]} ×${n}</span>`).join('')}</div>
-      </div>
-    </div>
-
-    <div style="background:var(--s3);border:0.5px solid rgba(232,177,75,.2);border-radius:8px;padding:11px 13px;margin-bottom:10px">
-      <div style="font-family:var(--fm);font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--a);margin-bottom:6px">⚗ Extraction protocol</div>
-      <div style="font-size:11.5px;color:var(--m);line-height:1.6">${extRec}</div>
-      <a href="/extraction" target="_blank" style="display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-family:var(--fm);font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--a);text-decoration:none;opacity:.7">Full protocols → /extraction</a>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
-      <div style="background:var(--s3);border:0.5px solid var(--r);border-radius:8px;padding:11px 13px">
-        <div style="font-family:var(--fm);font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--md);margin-bottom:7px">Herbal allies</div>
-        ${allyHtml}
-      </div>
-      <div style="background:var(--s3);border:0.5px solid var(--r);border-radius:8px;padding:11px 13px">
-        <div style="font-family:var(--fm);font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--md);margin-bottom:7px">Contraindications</div>
-        ${contHtml}
-        <div style="margin-top:8px;font-family:var(--fm);font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:${riskCol}">Overall risk: ${maxRisk}</div>
-      </div>
-    </div>
-
-    <div style="background:var(--s3);border:0.5px solid var(--r);border-radius:8px;padding:11px 13px;margin-bottom:10px">
-      <div style="font-family:var(--fm);font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--md);margin-bottom:6px">Dosage guidance</div>
-      <div style="font-size:11.5px;color:var(--m)">${DOSE_GUIDE[maxRisk]}</div>
-    </div>
-
-    <div style="padding:12px 14px;background:rgba(232,177,75,.05);border:0.5px solid rgba(232,177,75,.18);border-radius:8px;font-family:var(--fd);font-style:italic;font-size:14px;color:var(--ml);line-height:1.55">"${essence}"</div>
-
-    <div style="margin-top:10px;text-align:right">
-      <button onclick="analyzeWithMYCO()" style="font-family:var(--fm);font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;background:none;border:0.5px solid rgba(232,177,75,.3);border-radius:4px;padding:5px 10px;color:rgba(232,177,75,.6);cursor:pointer" onmouseover="this.style.color='var(--a)'" onmouseout="this.style.color='rgba(232,177,75,.6)'">✦ Deeper with MYCO →</button>
-    </div>
-  </div>`;
+  wrap.innerHTML=`<div class="fp-analysis"><div class="fp-analysis-head">Formula Intelligence · embedded engine</div><div class="fpa-name">${blendName}</div><div class="fpa-tags">${elTagsHtml}${catTagsHtml}</div><div class="fpa-rule"></div><div class="fpa-2col" style="margin-bottom:12px"><div><div class="fpa-label">Primary actions</div>${actionTexts.map((t,i)=>`<div class="fpa-text" style="margin-bottom:${i<actionTexts.length-1?'8':'0'}px">${t}</div>`).join('')}</div><div><div class="fpa-label">Element reading</div><div class="fpa-text">${elReading}</div></div></div><div class="fpa-rule"></div><div class="fpa-label" style="color:rgba(232,177,75,.75)">⚗ Extraction protocol</div><div class="fpa-text" style="margin-bottom:6px">${extRec}</div><a href="/extraction" target="_blank" style="font-family:var(--fm);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--a);text-decoration:none;opacity:.6">Full protocols → /extraction</a><div class="fpa-rule"></div><div class="fpa-3col" style="margin-bottom:12px"><div><div class="fpa-label">Herbal allies</div>${allyHtml}</div><div><div class="fpa-label">Cautions</div>${contHtml}<div style="margin-top:6px;font-family:var(--fm);font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:${riskCol}">Risk: ${maxRisk}</div></div><div><div class="fpa-label">Dosage</div><div class="fpa-text">${DOSE_GUIDE[maxRisk]}</div></div></div><div class="fpa-essence">"${essence}"</div><div class="fpa-myco-btn"><button onclick="analyzeWithMYCO()" style="font-family:var(--fm);font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;background:none;border:0.5px solid rgba(232,177,75,.25);border-radius:4px;padding:5px 10px;color:rgba(232,177,75,.5);cursor:pointer" onmouseover="this.style.color='var(--a)'" onmouseout="this.style.color='rgba(232,177,75,.5)'">✦ Deeper with MYCO →</button></div></div>`;
 }
 
 async function analyzeWithMYCO(){

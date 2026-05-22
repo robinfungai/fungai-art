@@ -7,23 +7,42 @@
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500&f[]=satoshi@400,500,600&f[]=geist-mono@400&display=swap"/>
 <style>
 :root{--s:#060809;--s2:#0F1014;--s3:#171A1F;--s4:#1F2228;--m:#C9B894;--md:#8B7E62;--ml:#E6D9B5;--g:#6BD66F;--gd:#2E7A35;--gl:#B6F0AE;--a:#E8B14B;--ad:#8B6320;--al:#F5D689;--r:rgba(201,184,148,.11);--rl:rgba(201,184,148,.2);--fd:'Zodiak','Cormorant Garamond',Georgia,serif;--fs:'Satoshi',system-ui,sans-serif;--fm:'Geist Mono',monospace;}
-*{box-sizing:border-box;margin:0;padding:0;}html,body{background:var(--s);color:var(--m);font-family:var(--fs);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;}
+*{box-sizing:border-box;margin:0;padding:0;}html,body{background:var(--s);color:var(--m);font-family:var(--fs);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.28;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .79 0 0 0 0 .72 0 0 0 0 .58 0 0 0 .06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");}
-.wrap{max-width:760px;margin:0 auto;padding:0 20px 80px;position:relative;z-index:1;}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0 0;margin-bottom:48px;}
-.nav-brand{display:flex;align-items:center;gap:10px;}
-.nav-mark{width:28px;height:28px;background:radial-gradient(circle,var(--al) 0%,var(--ad) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;}
-.nav-name{font-family:var(--fd);font-style:italic;font-size:18px;color:var(--ml);letter-spacing:-.02em;}
-.nav-back{font-family:var(--fm);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--md);padding:7px 12px;border:0.5px solid var(--r);border-radius:5px;text-decoration:none;transition:all .15s;}
+.wrap{max-width:800px;margin:0 auto;padding:0 24px 80px;position:relative;z-index:1;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0 0;margin-bottom:40px;}
+.nav-brand{display:flex;align-items:center;gap:14px;}
+.nav-name{font-family:var(--fd);font-style:italic;font-size:24px;color:var(--ml);letter-spacing:-.02em;}
+.nav-sub{font-family:var(--fm);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ad);margin-top:2px;}
+.nav-back{font-family:var(--fm);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--md);padding:8px 14px;border:0.5px solid var(--r);border-radius:5px;text-decoration:none;transition:all .15s;}
 .nav-back:hover{color:var(--ml);border-color:var(--rl);}
-.hero{margin-bottom:40px;}
-.hero-ey{font-family:var(--fm);font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--a);margin-bottom:8px;}
-.hero-title{font-family:var(--fd);font-style:italic;font-size:clamp(34px,5vw,52px);color:var(--ml);letter-spacing:-.025em;line-height:.96;margin-bottom:10px;}
+.hero{margin-bottom:28px;}
+.hero-ey{font-family:var(--fm);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--a);margin-bottom:10px;}
+.hero-title{font-family:var(--fd);font-style:italic;font-size:clamp(38px,5.5vw,58px);color:var(--ml);letter-spacing:-.025em;line-height:.96;margin-bottom:12px;}
 .hero-title em{color:var(--a);}
-.hero-blurb{font-size:13px;color:var(--m);line-height:1.65;max-width:54ch;opacity:.85;}
+.hero-blurb{font-size:14px;color:var(--m);line-height:1.7;max-width:54ch;opacity:.88;}
+/* Herb search */
+.herb-srch-wrap{margin-bottom:32px;position:relative;}
+.herb-srch-i{width:100%;padding:14px 18px 14px 44px;background:var(--s2);border:0.5px solid var(--r);border-radius:10px;color:var(--ml);font-family:var(--fs);font-size:15px;outline:none;transition:border-color .2s;}
+.herb-srch-i:focus{border-color:rgba(232,177,75,.5);}
+.herb-srch-i::placeholder{color:var(--md);}
+.herb-srch-ico{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--ad);pointer-events:none;}
+.herb-results{margin-top:10px;display:flex;flex-direction:column;gap:8px;}
+.herb-card{background:var(--s2);border:0.5px solid var(--r);border-radius:10px;padding:16px 18px;animation:hc-in .18s ease-out;}
+@keyframes hc-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.hc-head{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.hc-name{font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml);letter-spacing:-.01em;}
+.hc-aka{font-family:var(--fm);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--md);margin-left:auto;white-space:nowrap;}
+.hc-method-badge{font-family:var(--fm);font-size:8px;letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;border-radius:4px;border:0.5px solid;white-space:nowrap;flex-shrink:0;}
+.hc-flags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.hc-flag{font-family:var(--fm);font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:3px;}
+.hc-flag.fresh{background:rgba(107,214,111,.1);border:0.5px solid var(--gd);color:var(--gl);}
+.hc-flag.timing{background:rgba(232,177,75,.08);border:0.5px solid var(--ad);color:var(--al);}
+.hc-flag.caution{background:rgba(248,113,113,.08);border:0.5px solid rgba(248,113,113,.3);color:#fca5a5;}
+.hc-lore{font-size:13.5px;color:var(--m);line-height:1.65;}
 /* Quick-select bar */
 .method-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:36px;}
-.mb{font-family:var(--fm);font-size:7.5px;letter-spacing:.13em;text-transform:uppercase;padding:6px 11px;border-radius:5px;border:0.5px solid var(--r);background:none;color:var(--md);text-decoration:none;transition:all .15s;}
+.mb{font-family:var(--fm);font-size:9px;letter-spacing:.13em;text-transform:uppercase;padding:7px 14px;border-radius:5px;border:0.5px solid var(--r);background:none;color:var(--md);text-decoration:none;transition:all .15s;}
 .mb:hover{color:var(--ml);border-color:var(--rl);}
 /* Method cards */
 .method{margin-bottom:48px;border-top:0.5px solid var(--r);padding-top:32px;}
@@ -64,13 +83,13 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
 <div class="wrap">
 <nav class="nav">
   <div class="nav-brand">
-    <img src="/logo.png" alt="Fungai Art" style="height:28px;width:auto;filter:brightness(0) invert(1);opacity:.85;" onerror="this.style.display='none'">
-    <div style="display:flex;flex-direction:column;gap:1px;">
+    <img src="/abc12345.png" alt="Fungai Art" style="height:52px;width:auto;object-fit:contain;" onerror="this.style.display='none'">
+    <div>
       <div class="nav-name">Extraction Protocols</div>
-      <div style="font-family:var(--fm);font-size:7px;letter-spacing:.22em;text-transform:uppercase;color:var(--ad)">Elixirs · Alchemy Lab</div>
+      <div class="nav-sub">Elixirs · Alchemy Lab</div>
     </div>
   </div>
-  <div style="display:flex;gap:8px;">
+  <div style="display:flex;gap:8px;flex-wrap:wrap;">
     <a href="/mixology" class="nav-back">Herbal Engine</a>
     <a href="/community/academy/" class="nav-back">Academy</a>
     <a href="/" class="nav-back">← Home</a>
@@ -81,6 +100,13 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
   <div class="hero-ey">Alchemy · Fungai Art Lab</div>
   <h1 class="hero-title">Extract the <em>intelligence.</em></h1>
   <p class="hero-blurb">Five methods. Each one draws out a different truth from the plant. Choose your solvent, respect the ratio, honour the time.</p>
+</div>
+
+<!-- Herb search -->
+<div class="herb-srch-wrap">
+  <span class="herb-srch-ico">⚗</span>
+  <input class="herb-srch-i" id="herbSrch" type="text" placeholder="Search any herb — Cleavers, Reishi, Kava, Nettle…" oninput="searchHerb(this.value)"/>
+  <div class="herb-results" id="herbResults"></div>
 </div>
 
 <div class="method-bar">
@@ -330,5 +356,153 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
   </div>
 </div>
 </div>
+<script>
+const METHOD_META = {
+  D:  { label:'Double Extraction', color:'#4FA8E0', bg:'rgba(79,168,224,.12)', border:'rgba(79,168,224,.35)' },
+  T:  { label:'Cold Tincture',     color:'#6BD66F', bg:'rgba(107,214,111,.1)', border:'rgba(107,214,111,.35)' },
+  DC: { label:'Decoction',         color:'#C48838', bg:'rgba(196,136,56,.1)',  border:'rgba(196,136,56,.35)' },
+  O:  { label:'Oleoresin / Oil',   color:'#E8714B', bg:'rgba(232,113,75,.1)', border:'rgba(232,113,75,.35)' },
+  SP: { label:'Spagyric',          color:'#A88FE0', bg:'rgba(168,143,224,.1)','border':'rgba(168,143,224,.35)' },
+  PC: { label:'Percolator',        color:'#6BD66F', bg:'rgba(107,214,111,.1)', border:'rgba(107,214,111,.35)' },
+  W:  { label:'Water / Infusion',  color:'#88BAC8', bg:'rgba(136,186,200,.1)', border:'rgba(136,186,200,.35)' },
+  J:  { label:'Fresh Juice / Cold Press', color:'#B6F0AE', bg:'rgba(182,240,174,.08)', border:'rgba(182,240,174,.3)' },
+};
+
+const HERB_LORE = [
+  { n:'Cleavers', aka:'Galium aparine', method:'J', fresh:true,
+    timing:'Spring shoots, 15–20 cm',
+    lore:'Must be extracted fresh — and only fresh. Galium aparine loses its lymphatic intelligence within days of drying. Cold-press the live plant into juice immediately after harvest, or cold-infuse in water for 4–8 hours the same day. Dried cleavers has minimal medicinal value. Spring is the only window. Harvest young shoots before the plant flowers.' },
+  { n:'Nettle', aka:'Urtica dioica', method:'W', fresh:false,
+    lore:'Prefers simple water — hot infusion or overnight cold infusion. The mineral wealth (iron, silica, calcium, magnesium) and chlorophyll extract fully and gently in water. High-proof alcohol disrupts the delicate leaf cell structure and significantly reduces nutritive potency. If you must make a tincture, use 25–30% alcohol maximum. For daily use: cold-water overnight maceration extracts minerals without damaging heat.' },
+  { n:'St. John\'s Wort', aka:'Hypericum perforatum', method:'O',
+    timing:'Summer solstice, flowers just-opened',
+    lore:'Hypericin — the red pigment responsible for the antidepressant action — is lipophilic (fat-loving). Oil infusion is the traditional and most effective method: warm the fresh or recently dried flowers in olive oil at 55°C for 6–8 hours, or cold-infuse in sunlight for 4–6 weeks. The oil turns deep blood-red when made correctly. For alcohol extraction, use 70%+ ethanol. Harvest at summer solstice when the flowers are just opening — hypericin content peaks at this moment.' },
+  { n:'Calendula', aka:'Calendula officinalis', method:'O',
+    timing:'Morning, fully open flowers',
+    lore:'Calendula\'s wound-healing resins and carotenoids are fat-soluble. Warm oil infusion (olive or sunflower, 55°C, 6h) is the classic preparation for topical use — and the oil turns golden-orange when concentrated correctly. For internal lymphatic action, 40% ethanol tincture works well. Harvest flowers fully open in the morning, pinch the entire head. The stickier the flower, the more resin — pick sticky ones.' },
+  { n:'Reishi', aka:'Ganoderma lucidum', method:'D',
+    lore:'Double extraction is non-negotiable. The beta-glucans (immune polysaccharides) are water-soluble and require 4+ hours of hot-water decoction to break through the tough chitin cell walls. The triterpenes (adaptogenic, hepatoprotective, anti-inflammatory) require ethanol. No single solvent gives you both. Combine decoction and tincture 1:1. Wild-harvested or certified-organic only — adulterated reishi products are rampant.' },
+  { n:'Chaga', aka:'Inonotus obliquus', method:'D',
+    lore:'Wild-harvested from live birch trees only. Cultivated chaga has minimal beta-glucan content — the immune intelligence comes from the relationship between the fungus and the birch, producing the characteristic melanin-rich sclerotium. Never buy chaga without birch-tree certification. Double extraction essential: long hot-water decoction (4–8h) for polysaccharides and melanin, then combine with alcohol tincture for terpenoids. Winter harvest preferred.' },
+  { n:'Lion\'s Mane', aka:'Hericium erinaceus', method:'T',
+    lore:'Unlike most medicinal fungi, Lion\'s Mane should NOT be double-extracted using heat. The erinacines — the diterpenoids responsible for NGF stimulation — are sensitive to sustained heat. A cold tincture in 50–60% ethanol preserves these better than hot-water decoction. If you do decoct, keep it short (under 1 hour) and at low temperature. Fresh Lion\'s Mane is excellent in butter or fat — the fat carries the fat-soluble erinacines efficiently.' },
+  { n:'Turkey Tail', aka:'Trametes versicolor', method:'D',
+    lore:'Double extraction is essential for PSP/PSK — the polysaccharopeptides responsible for immune modulation and cancer-adjuvant activity. These are large water-soluble molecules that require extended hot-water extraction (4h minimum). The alcohol step then captures any fat-soluble terpenoids. Do not skip the decoction stage — a tincture alone misses the primary medicine.' },
+  { n:'Maitake', aka:'Grifola frondosa', method:'D',
+    lore:'Double extraction for beta-glucan content (particularly the MD-Fraction). Extended hot-water decoction breaks through the dense polypore structure. Combine 1:1 with alcohol tincture. Maitake has a more delicate flavour profile than reishi or chaga — a shorter decoction time (2–3h) is acceptable and avoids bitterness.' },
+  { n:'Amanita muscaria', aka:'Fly Agaric', method:'T',
+    caution:true,
+    lore:'Complex chemistry that requires specific preparation. Ibotenic acid (raw) converts slowly to muscimol (active, less toxic) through decarboxylation — which happens over time in a cold-water preparation, or through parboiling (which also removes much of the ibotenic acid if the water is discarded). For tincture: cold-water maceration in 25–30% alcohol at 60°C for 24h has been used. Dosage is highly individual. Professional guidance essential. Do not combine with other CNS depressants.' },
+  { n:'Kava', aka:'Piper methysticum', method:'W',
+    lore:'NEVER use alcohol for kava extraction. The active kavalactones require a water+fat medium — traditionally water and coconut milk/cream, kneaded manually into the root. Alcohol extraction does extract kavalactones but changes the profile significantly and increases hepatotoxicity risk (likely a contamination issue with noble vs non-noble kava). Traditional water extraction: pound or blend root, mix with water and coconut cream, strain through cloth. Use noble (waka or lewena) kava only.' },
+  { n:'Valerian', aka:'Valeriana officinalis', method:'T',
+    lore:'Fresh root has a different chemistry from dried root — and they have genuinely different applications. Fresh root tincture contains more valepotriates, which are labile and convert to baldrinals — anxiolytic compounds. Dried root has more isovaleric acid and valerenic acid — more sedating. For anxiety: fresh root tincture (40–50% ethanol). For sleep: dried root decoction or tincture. The smell is famously pungent — this is correct and indicates quality. Autumn harvest for highest yield.' },
+  { n:'Ashwagandha', aka:'Withania somnifera', method:'PC',
+    lore:'A dense root that benefits enormously from percolator extraction for maximum withanolide yield. Traditional Ayurvedic preparation is milk decoction (warm milk extracts the fat-soluble withanolides plus some water-soluble glycowithanolides). For a Western format: 50% ethanol tincture via percolator, or combine milk decoction with alcohol tincture 1:1. 7-year old wild roots are a completely different medicine from commercial greenhouse-grown.' },
+  { n:'Ginseng', aka:'Panax ginseng', method:'PC',
+    lore:'Dense root requiring extended extraction. Percolator is ideal — 3–5× more efficient than static maceration for extracting ginsenosides from the lignified root structure. 50–60% ethanol. Wild-simulated 7+ year old roots are the only roots worth making into medicine — commercial 4-year roots have dramatically lower ginsenoside content. Korean red ginseng (steam-processed) has different ginsenoside ratios and is best made into a water decoction then preserved with alcohol.' },
+  { n:'Pine Pollen', aka:'Pinus sylvestris', method:'T',
+    lore:'Cracked-cell extraction is essential. Intact pine pollen passes through the body unabsorbed — the cell wall must be physically broken (ball-milled or cracked-cell process) before the phytoandrogens become bioavailable. For sublingual tincture (the most effective format for androgenic activity): cracked-cell pine pollen in 95% ethanol, 1:5, 4 weeks. Sublingual dosing bypasses first-pass liver metabolism for better testosterone-like activity.' },
+  { n:'Shilajit', method:'W',
+    lore:'Already a concentrated mineral resin — not a fresh herb requiring extraction. Dissolve raw shilajit in warm water (not hot — fulvic acid is heat-sensitive above 60°C) or in 20–30% alcohol. Avoid high-proof alcohol as the primary solvent. Authentic shilajit should dissolve completely in warm water within a few minutes, turning it deep amber. Rocky or non-dissolving material indicates fillers. Purified mountain shilajit only.' },
+  { n:'Chamomile', aka:'Matricaria chamomilla', method:'SP',
+    timing:'Morning, flowers fully open',
+    lore:'Chamomile is one of Paracelsus\' canonical spagyric plants. The full mineral salts of chamomile — calcined to white ash and returned to the tincture — create a more complete preparation than simple tincture. For everyday use: cold infusion in just-off-boiling water preserves the volatile azulene (blue-green) oil; high heat destroys it. Harvest in the morning when flowers are fully open and the temperature differential is highest.' },
+  { n:'Lemon Balm', aka:'Melissa officinalis', method:'SP',
+    lore:'Another Paracelsian spagyric plant. Melissa is best extracted fresh — the volatile lemon-scented aldehydes (citral, citronellal) fade rapidly on drying. Cold infusion in water for tea, or fresh plant tincture in 40% ethanol. The spagyric process, returning the mineral salts of calcined melissa back into the tincture, creates a preparation with more complexity and depth than simple tincture.' },
+  { n:'Slippery Elm', aka:'Ulmus rubra', method:'W',
+    lore:'Cold water only. The mucilage — the primary healing constituent for gut and esophageal inflammation — is destroyed by heat and insoluble in alcohol. Add dried bark to cold water and stir — it will thicken into a soothing gel. This gel coats the esophagus, stomach, and intestinal lining. Sustainability note: slippery elm is overharvested. Marshmallow root (Althaea officinalis) is an excellent cold-water substitute with similar mucilage properties.' },
+  { n:'Marshmallow Root', aka:'Althaea officinalis', method:'W',
+    lore:'Cold-water infusion only. Heat and alcohol both destroy the mucilage polysaccharides that make this plant medicinal. Stir root powder or pieces into cold water overnight — the resulting gel is the medicine. Do not heat above 40°C. Can be used as a substitute for Slippery Elm with similar efficacy and better sustainability profile.' },
+  { n:'Mugwort', aka:'Artemisia vulgaris', method:'T',
+    timing:'Midsummer, just before flowering',
+    caution:true,
+    lore:'Harvest midsummer, just before the plant flowers — this is when the essential oil content and thujone levels are highest. Cold tincture in 40–50% ethanol. Also used as a pillow stuffing for dream induction (inhalation route). Avoid in pregnancy — mugwort is an emmenagogue with documented uterine stimulant activity. The wormwood relatives (Artemisia family) all require caution with dosage and duration.' },
+  { n:'Elder Flower', aka:'Sambucus nigra', method:'W',
+    timing:'When first opening, before pollen drops',
+    lore:'Harvest when first opening — before the pollen has dropped from the flowers. The volatile aromatics responsible for the diaphoretic (fever-breaking) and antiviral action are lost in heat and high-proof alcohol. Cold infusion in just-cooled water (70°C maximum) for 15 minutes. Or cold-infuse in water at room temperature for 2–4 hours. The resulting preparation should smell strongly of fresh elderflower — if it smells flat, the harvest was too late or heat was too high.' },
+  { n:'Lavender', aka:'Lavandula angustifolia', method:'O',
+    lore:'The primary aromatic compounds (linalool, linalyl acetate) are volatile and fat-soluble. Oil infusion at low temperature (45–50°C max) in a carrier oil. Or steam distillation for essential oil. Avoid high heat — the most delicate aromatics evaporate above 60°C. 40% alcohol tincture works for internal nervine use, but oil is superior for topical and aromatic applications. Harvest just before full flower opening for peak linalool.' },
+  { n:'Peppermint', aka:'Mentha × piperita', method:'W',
+    lore:'Menthol is volatile — it evaporates rapidly with heat and partly with high-proof alcohol. The optimal preparation for digestive use is a cold infusion: steep in just-cooled water (70°C) covered for 10 minutes. Cover the vessel to trap the steam/volatile oils. For tincture (preservation): 25–35% ethanol, short maceration time (2 weeks maximum). Do not decoct peppermint — the medicine will be in the steam, not the liquid.' },
+  { n:'Ginger', aka:'Zingiber officinale', method:'DC',
+    lore:'Fresh and dried ginger have genuinely different chemistry and different applications. Fresh ginger contains gingerols (anti-inflammatory, warming, anti-nausea). Dried ginger converts gingerols to shogaols through dehydration — shogaols are more potent warming agents and better for chronic cold patterns. For acute nausea: fresh ginger juice or cold infusion. For chronic digestive cold/menstrual pain: dried root decoction or tincture. Combine both for maximum breadth.' },
+  { n:'Turmeric', aka:'Curcuma longa', method:'O',
+    lore:'Curcumin is famously poorly bioavailable — it is fat-soluble and needs lipids to absorb. Fat + black pepper (piperine, 20mg, which inhibits curcumin metabolism) dramatically increases absorption. Traditional preparation: golden milk (milk fat + black pepper). Laboratory preparation: warm oil infusion with black pepper. High-proof alcohol extraction does work, but must be combined with fat for internal use. Avoid water alone — you will extract the polysaccharides but not the curcuminoids.' },
+  { n:'Saffron', aka:'Crocus sativus', method:'W',
+    lore:'Cold water infusion or warm (not hot) water. The active compounds (safranal, crocin, picrocrocin) are water-soluble — alcohol is not required and does not improve extraction. In fact, high-proof alcohol can damage the delicate stigmas. Traditional method: soak a few stigmas in a tablespoon of warm water for 15–30 minutes before adding to preparations. Maximum dose 200mg/day — saffron is a uterine stimulant at higher doses. Do not exceed.' },
+  { n:'Passionflower', aka:'Passiflora incarnata', method:'T',
+    lore:'40–50% ethanol tincture for the anxiolytic flavonoids (chrysin, vitexin). Fresh plant tincture is noticeably more potent than dried — use 1:2 fresh plant or 1:5 dried. The vine, leaves, and flowers are all medicinal. Short maceration (2–3 weeks) is sufficient — extended maceration doesn\'t improve yield. Excellent combined with valerian and skullcap for a complete sleep formula.' },
+  { n:'Holy Basil', aka:'Ocimum tenuiflorum / Tulsi', method:'SP',
+    lore:'Tulsi is considered a sattvic (consciousness-clarifying) plant in Ayurveda. The spagyric process aligns philosophically with its traditional use — returning the mineral body to the spiritual extract. For everyday use: fresh plant infusion in just-cooled water is the traditional daily preparation. The full aromatic experience is therapeutic in itself. 40% ethanol tincture for preservation. Harvest before flowering for highest eugenol content.' },
+  { n:'Rhodiola', aka:'Rhodiola rosea', method:'T',
+    timing:'5+ year old roots only',
+    lore:'70% ethanol is required for rosavins — the primary adaptogenic compounds. They are poorly water-soluble. Siberian/Tibetan wild roots are dramatically different from commercial greenhouse roots — traditional sources say the plant must face north for the rosavins to develop fully. 5+ year old roots only. The characteristic rose-scent when cut indicates authentic rhodiola (adulteration with Rhodiola crenulata, which lacks rosavins, is common).' },
+  { n:'Astragalus', aka:'Astragalus membranaceus', method:'PC',
+    lore:'Percolator is ideal for this dense root — the astragalosides (adaptogenic saponins) and polysaccharides both need extended contact with the solvent to release from the hard root tissue. Dual-solvent: decoct sliced root in water for 2–3 hours (polysaccharides), then percolate with 50% ethanol (saponins). The traditional preparation is long-cooked in soups — 30+ minutes of simmering with bones releases the full polysaccharide content.' },
+  { n:'Echinacea', aka:'Echinacea purpurea / angustifolia', method:'T',
+    timing:'Root: autumn; Flower/leaf: midsummer',
+    lore:'Echinacea purpurea aerial parts work fine fresh or dried in 60% ethanol. Echinacea angustifolia root is the stronger preparation — requires 70% ethanol for the echinacosides and alkylamides. Fresh plant tincture (1:2 ratio, same-day pressing) is noticeably more active for purpurea. Avoid long-term continuous use — use cyclically (10 days on, 4 days off) for immune support. Autoimmune caution.' },
+  { n:'Pau d\'Arco', aka:'Tabebuia impetiginosa', method:'DC',
+    lore:'Inner bark only — the active lapachol and beta-lapachone are concentrated in the inner cambium layer. Simmer in water for 30–45 minutes (do not boil hard — lapachol is somewhat heat-sensitive). 1:20 ratio. The tea turns a characteristic reddish-brown. Sustainability critical — true Tabebuia from South America is overharvested; source certified sustainably. Combine decoction with a small amount of preserved alcohol tincture for shelf stability.' },
+  { n:'Black Walnut', aka:'Juglans nigra', method:'T',
+    caution:true,
+    timing:'Green hull stage only',
+    lore:'The antiparasitic activity (juglone) is highest in the GREEN hull — before it blackens. Harvest when the outer hull is still green and firm. Tincture immediately in 40–50% ethanol — hull blackens within hours of harvest. The blackened hull has reduced activity. Handle with gloves — juglone stains permanently and can irritate skin. Professional antiparasitic protocols only; not for long-term use.' },
+  { n:'Milk Thistle', aka:'Silybum marianum', method:'T',
+    lore:'The silymarin complex (flavonolignans including silybin) is poorly water-soluble — cold tincture in 60–70% ethanol is the correct extraction. Water decoction extracts very little silymarin. Seeds should be freshly ground before extraction to expose the oil-rich inner seed to the solvent. Commercial standardised extracts (70–80% silymarin) are valid and well-researched if tincture-making isn\'t possible.' },
+  { n:'Dandelion', aka:'Taraxacum officinale', method:'T',
+    timing:'Root: autumn; Leaf: spring',
+    lore:'Spring leaves: rich in minerals and bitter compounds — cold tincture in 40% ethanol or simple water infusion. Autumn root: highest inulin content (prebiotic), concentrated bitter sesquiterpene lactones — decoction for inulin, tincture for bitters. Fresh leaf and root tincture are both superior to dried. The whole plant is medicine — roasted root as coffee substitute gives a gentle liver-bitters preparation without needing alcohol.' },
+  { n:'Licorice', aka:'Glycyrrhiza glabra', method:'DC',
+    lore:'Glycyrrhizin (the primary saponin) is water-soluble and extracts beautifully in a long decoction. 20-minute simmer releases the full sweet-bitter profile. Alcohol tincture also works but is often less needed. Licorice is an excellent synergist — add to decoctions to harmonise and synergise other herbs (classical Chinese formula: licorice appears in ~70% of traditional preparations). Limit to 100ml/day of strong decoction for extended use — glycyrrhizin causes potassium loss and aldosterone-like effects.' },
+  { n:'Blue Lotus', aka:'Nymphaea caerulea', method:'T',
+    lore:'40% ethanol cold tincture for the apomorphine and nuciferine alkaloids. Or gentle warm-water infusion for tea — the alkaloids are somewhat water-soluble. Ancient Egyptian method: infuse in wine (fermented grape contains natural alcohol, perfect medium). The flowers should be deep blue when dried — pale/beige material has been bleached or is past its potency. Dose-sensitively: 1–2g dried flower equivalent is a gentle dose; 5g+ is ceremonial territory.' },
+  { n:'Schizandra', aka:'Schisandra chinensis', method:'T',
+    lore:'50% ethanol for the balance of all five flavours (sour, sweet, salty, bitter, pungent) — each representing a different phytochemical class. The schisandrins (dibenzocyclooctadiene lignans) require alcohol for extraction. Traditional preparation is also a long decoction in water. Best used as a combined approach: water decoction combined with alcohol tincture 1:1. The tart, complex flavour of the berries is part of the medicine — do not over-mask it.' },
+  { n:'Wormwood', aka:'Artemisia absinthium', method:'T',
+    caution:true,
+    lore:'40–50% ethanol tincture. Do NOT decoct — heat concentrates the thujone and produces excessive bitterness. Short maceration only (2–3 weeks maximum). The bitter glycosides (absinthin, artabsin) are the primary digestive and antiparasitic medicines. These are adequately extracted in alcohol. Very small doses only (5–10 drops): wormwood is potent and the therapeutic window is narrow. Not for use beyond 4 weeks.' },
+  { n:'Bacopa', aka:'Bacopa monnieri', method:'T',
+    lore:'Traditional Ayurvedic preparation is simmered in ghee (clarified butter) — the bacosides (fat-soluble) extract into fat as well as alcohol. For Western tincture: 40–50% ethanol, 1:5 ratio, 4–6 weeks. Full cognitive benefits take 6–12 weeks of consistent daily use — bacopa is a trophorestorative that works gradually. Standardised to 20–45% bacosides for research-comparable dosing.' },
+  { n:'Tongkat Ali', aka:'Eurycoma longifolia', method:'PC',
+    lore:'Dense tropical root requiring significant extraction effort. Percolator strongly recommended for efficiency — traditional water decoction requires multiple 4-hour cycles. 50% ethanol via percolator. Active quassinoids (eurycomanone) require extended contact time with the solvent. Quality control is critical — adulteration and contamination are widespread in commercial tongkat ali. 3rd-party tested only.' },
+  { n:'Vitex', aka:'Vitex agnus-castus', method:'T',
+    timing:'Fully ripe berries, late autumn',
+    lore:'60% ethanol for the iridoid glycosides and flavonoids responsible for dopaminergic action on the pituitary. The berries should be fully ripe (dark purple-black) — unripe green berries have significantly lower potency. Harvest in late autumn after first frost. Full hormonal effects take 3–6 menstrual cycles to establish — this is a long-game herb, not acute. Do not use during pregnancy or alongside hormonal contraceptives without guidance.' },
+  { n:'Shatavari', aka:'Asparagus racemosus', method:'T',
+    lore:'Traditional Ayurvedic preparation is milk decoction — the steroidal saponins (shatavarin I–V) are fat-soluble and extract into fat-containing liquids. For alcohol tincture: 40–50% ethanol works adequately. Best combined: simmer root powder in milk, cool, preserve with 20% ethanol to stabilise. Sweet, mucilaginous, building — a true female reproductive trophorestorative. Best used over several menstrual cycles.' },
+];
+
+const METHOD_SORT = {D:0,T:1,DC:2,PC:3,SP:4,O:5,W:6,J:7};
+
+function searchHerb(q){
+  const out = document.getElementById('herbResults');
+  if(!q || q.length < 2){ out.innerHTML=''; return; }
+  const matches = HERB_LORE.filter(h =>
+    h.n.toLowerCase().includes(q.toLowerCase()) ||
+    (h.aka && h.aka.toLowerCase().includes(q.toLowerCase())) ||
+    h.lore.toLowerCase().includes(q.toLowerCase())
+  ).slice(0,5);
+  if(!matches.length){ out.innerHTML='<div style="font-size:13px;color:var(--md);font-style:italic;padding:12px 0">No herb found — try a partial name or Latin name.</div>'; return; }
+  out.innerHTML = matches.map(h => {
+    const m = METHOD_META[h.method] || METHOD_META.T;
+    const flags = [
+      h.fresh ? '<span class="hc-flag fresh">🌿 Fresh only</span>' : '',
+      h.timing ? `<span class="hc-flag timing">⏱ ${h.timing}</span>` : '',
+      h.caution ? '<span class="hc-flag caution">▲ Caution</span>' : '',
+    ].filter(Boolean).join('');
+    return `<div class="herb-card">
+      <div class="hc-head">
+        <div class="hc-name">${h.n}</div>
+        <div class="hc-method-badge" style="color:${m.color};background:${m.bg};border-color:${m.border}">${m.label}</div>
+        ${h.aka ? `<div class="hc-aka">${h.aka}</div>` : ''}
+      </div>
+      ${flags ? `<div class="hc-flags">${flags}</div>` : ''}
+      <div class="hc-lore">${h.lore}</div>
+    </div>`;
+  }).join('');
+}
+</script>
 </body>
 </html>
