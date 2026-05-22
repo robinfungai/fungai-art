@@ -46,7 +46,8 @@
       "Bash(copy \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\src\\\\assets\\\\fungai-art-logo.png\" \"c:\\\\Users\\\\Robin\\\\Desktop\\\\fungai art\\\\websiet\\\\1\\\\fungai-art-main\\\\public\\\\logo.png\")",
       "Bash(node scripts/export-herbs.cjs)",
       "Bash(node -e \"require\\('./node_modules/mapbox-gl/package.json'\\).version && console.log\\('mapbox-gl ok'\\)\")",
-      "Bash(node -e \"require\\('./node_modules/react-map-gl/package.json'\\).version && console.log\\('react-map-gl ok'\\)\")"
+      "Bash(node -e \"require\\('./node_modules/react-map-gl/package.json'\\).version && console.log\\('react-map-gl ok'\\)\")",
+      "Bash(xargs grep -rL \"rel=\\\\\"icon\\\\\"\\\\|rel='icon'\")"
     ],
     "additionalDirectories": [
       "C:\\Users\\Robin\\Desktop\\fungai art\\websiet\\tailored tincture ai tool\\html codes",

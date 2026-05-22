@@ -1,12 +1,12 @@
-import React, { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import Map, { Marker, NavigationControl } from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import { ECO_NODES, HABITAT_COLORS, HABITAT_LABELS, SEASON_PROBABILITY } from '../data/ecoNodes';
+import { ECO_NODES, HABITAT_COLORS, HABITAT_LABELS } from '../data/ecoNodes';
 import { EcoNode, Season, HabitatType } from '../types/EcoNode';
 import NodePanel from './NodePanel';
 
-// Free tile style — CARTO Dark Matter via MapLibre. No account or token needed.
-const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
+// Organic earthy map style — CARTO Voyager (warm/natural tones, no account needed).
+const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json';
 
 // Free satellite imagery — ESRI World Imagery (no account or token needed).
 const SATELLITE_STYLE = {
@@ -43,8 +43,6 @@ function NodeMarker({ node, isSelected, isHovered, seasons, onClick, onHover, on
 }) {
   const color = HABITAT_COLORS[node.nodeType] || '#6BD66F';
   const inSeason = node.best_season.some(s => seasons.includes(s));
-  const topSpecies = node.species[0];
-  const adjProb = topSpecies ? (inSeason ? Math.min(1, topSpecies.probability * 1.25) : topSpecies.probability * 0.4) : 0;
   const size = isSelected ? 22 : isHovered ? 18 : 14;
   const opacity = inSeason ? 1 : 0.5;
 
@@ -107,7 +105,7 @@ export default function ForagingApp() {
   const [seasons, setSeasons] = useState<Season[]>([getCurrentSeason()]);
   const [mapMode, setMapMode] = useState<'dark' | 'satellite'>('dark');
   const [habitatFilter, setHabitatFilter] = useState<HabitatType | 'all'>('all');
-  const [popupNode, setPopupNode] = useState<EcoNode | null>(null);
+  // popupNode reserved for future tooltip enhancement
 
   const mapRef = useRef<any>(null);
 
@@ -117,7 +115,6 @@ export default function ForagingApp() {
 
   const handleNodeClick = useCallback((node: EcoNode) => {
     setSelectedNode(prev => prev?.id === node.id ? null : node);
-    setPopupNode(null);
     // Fly to node
     if (mapRef.current) {
       mapRef.current.flyTo({
@@ -236,7 +233,7 @@ export default function ForagingApp() {
       {/* Map */}
       <Map
         ref={mapRef}
-        initialViewState={{ longitude: 25, latitude: 38, zoom: 2.5 }}
+        initialViewState={{ longitude: 14, latitude: 58, zoom: 4.2 }}
         style={{ width: '100%', height: '100%' }}
         mapStyle={mapMode === 'satellite' ? SATELLITE_STYLE : MAP_STYLE}
       >

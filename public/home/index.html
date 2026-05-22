@@ -12,6 +12,30 @@
 
 <style>
 /* ═══════════════════════════════════════════════════
+   CUSTOM FONTS
+═══════════════════════════════════════════════════ */
+@font-face {
+  font-family: 'TAN-PARADISO';
+  src: url('/fonts/TAN-PARADISO.ttf') format('truetype');
+  font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Kiona';
+  src: url('/fonts/Kiona-Regular.ttf') format('truetype');
+  font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Kiona';
+  src: url('/fonts/Kiona-Italic.ttf') format('truetype');
+  font-weight: normal; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Bayer';
+  src: url('/fonts/Bayer-TypeArchiType.otf') format('opentype');
+  font-weight: normal; font-style: normal; font-display: swap;
+}
+
+/* ═══════════════════════════════════════════════════
    TOKENS
 ═══════════════════════════════════════════════════ */
 :root {
@@ -230,12 +254,44 @@ p { line-height: 1.75; color: var(--mist); }
 .nav-brand { display: flex; flex-direction: column; gap: 2px; }
 .nav-brand .main { font-family: var(--script); font-size: 26px; color: var(--parchment); line-height: 1; }
 .nav-brand .sub { font-family: var(--sans); font-size: 6.5px; letter-spacing: 0.55em; text-transform: uppercase; color: var(--amber); font-weight: 400; }
-.nav-links { display: flex; gap: 36px; align-items: center; }
+.nav-links { display: flex; gap: 30px; align-items: center; }
 .nav-link {
   font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
   color: var(--lichen); font-weight: 400; transition: color 0.15s;
 }
 .nav-link:hover, .nav-link.on { color: var(--parchment); }
+/* Alchemy dropdown */
+.nav-dropdown { position: relative; }
+.nav-dropdown-trigger {
+  font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--lichen); font-weight: 400; transition: color 0.15s;
+  display: flex; align-items: center; gap: 5px; cursor: none;
+  border: none; background: none; font-family: inherit;
+}
+.nav-dropdown-trigger:hover { color: var(--parchment); }
+.nav-dropdown-trigger .arr { font-size: 7px; opacity: 0.6; transition: transform 0.2s; }
+.nav-dropdown:hover .arr { transform: rotate(180deg); }
+.nav-dropdown-menu {
+  position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%);
+  background: rgba(6,11,6,0.96); backdrop-filter: blur(20px);
+  border: 0.5px solid rgba(158,212,56,0.15);
+  min-width: 180px; padding: 8px 0;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.18s, transform 0.18s;
+  transform: translateX(-50%) translateY(-4px);
+}
+.nav-dropdown:hover .nav-dropdown-menu {
+  opacity: 1; pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+.nav-dropdown-menu a {
+  display: block; padding: 10px 20px;
+  font-size: 8.5px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--lichen); text-decoration: none;
+  transition: color 0.15s, background 0.15s;
+  border-left: 1.5px solid transparent;
+}
+.nav-dropdown-menu a:hover { color: var(--parchment); background: rgba(158,212,56,0.04); border-left-color: rgba(196,134,46,0.5); }
 .nav-cart {
   display: flex; align-items: center; gap: 10px;
   font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
@@ -975,8 +1031,14 @@ p { line-height: 1.75; color: var(--mist); }
       <a href="#about" class="nav-link">About</a>
       <a href="/shop" class="nav-link">Shop</a>
       <a href="#trance" class="nav-link">Mycelium Trance</a>
-      <a href="/extraction" class="nav-link">Extraction</a>
-      <a href="/mixology" class="nav-link">Mixology</a>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-trigger">Alchemy <span class="arr">▾</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="/extraction">⚗ Extraction Protocols</a>
+          <a href="/mixology">Herbal Engine</a>
+          <a href="/health">Health Intelligence</a>
+        </div>
+      </div>
       <a href="/foraging" class="nav-link">Foraging</a>
       <a href="/community" class="nav-link" target="_blank">Community</a>
     </div>
@@ -1136,12 +1198,13 @@ p { line-height: 1.75; color: var(--mist); }
         <text x="310" y="778" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="11" fill="#517A40" letter-spacing="3" opacity="0.7">where the forest thinks</text>
       </svg>
     </div>
-    <div class="hero-stats" style="flex-direction:column;align-items:flex-start;gap:6px;padding:20px 28px;">
-      <div style="font-family:var(--script);font-size:20px;color:var(--parchment);line-height:1.3;">living mycelial art.</div>
-      <div style="font-family:var(--serif);font-style:italic;font-size:13px;color:var(--lichen);letter-spacing:0.04em;line-height:1.5;">fusion of biology, alchemy, frequency.</div>
-      <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
-        <a href="/extraction" style="font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:var(--amber);padding:6px 12px;border:0.5px solid rgba(136,186,200,0.3);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(136,186,200,0.1)'" onmouseout="this.style.background='transparent'">⚗ Extraction Protocols</a>
-        <a href="/mixology" style="font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:var(--mist);padding:6px 12px;border:0.5px solid rgba(136,186,200,0.2);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(136,186,200,0.08)'" onmouseout="this.style.background='transparent'">Herbal Engine</a>
+    <div class="hero-stats" style="flex-direction:column;align-items:flex-start;gap:10px;padding:28px 36px;">
+      <div style="font-family:'TAN-PARADISO',var(--script),cursive;font-size:clamp(22px,2.5vw,34px);color:var(--parchment);line-height:1.15;letter-spacing:0.02em;">living mycelial art.</div>
+      <div style="font-family:'Kiona',var(--serif),Georgia;font-size:clamp(13px,1.3vw,17px);color:var(--mist);letter-spacing:0.08em;line-height:1.55;">fusion of biology, alchemy, frequency.</div>
+      <div style="width:48px;height:0.5px;background:rgba(196,134,46,0.4);margin:4px 0;"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">
+        <a href="/extraction" style="font-family:'Bayer','DM Sans',sans-serif;font-size:8.5px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-lt);padding:8px 15px;border:0.5px solid rgba(196,134,46,0.35);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(196,134,46,0.1)'" onmouseout="this.style.background='transparent'">⚗ Extraction</a>
+        <a href="/mixology" style="font-family:'Bayer','DM Sans',sans-serif;font-size:8.5px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mist);padding:8px 15px;border:0.5px solid rgba(136,186,200,0.25);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(136,186,200,0.08)'" onmouseout="this.style.background='transparent'">Herbal Engine</a>
       </div>
     </div>
   </div>
@@ -1771,8 +1834,10 @@ p { line-height: 1.75; color: var(--mist); }
   <div class="wrap reveal">
     <span class="sec-label" style="text-align:center;margin-bottom:12px;">The Field Notes</span>
     <h2>Join the<br/><span class="script-line">mycelium network.</span></h2>
-    <form class="newsletter-form" onsubmit="handleSubscribe(event)">
-      <input type="email" class="newsletter-input" placeholder="your@email.com" required>
+    <form class="newsletter-form" name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleSubscribe(event)">
+      <input type="hidden" name="form-name" value="newsletter"/>
+      <input type="hidden" name="bot-field"/>
+      <input type="email" name="email" class="newsletter-input" placeholder="your@email.com" required>
       <button type="submit" class="newsletter-submit">Subscribe</button>
     </form>
     <p class="newsletter-note">One email per month. The forest's archive. Unsubscribe anytime.</p>
@@ -2127,10 +2192,18 @@ function filterProducts(cat, btn) {
 }
 
 /* ── NEWSLETTER ── */
-function handleSubscribe(e) {
+async function handleSubscribe(e) {
   e.preventDefault();
-  showToast('Welcome to the mycelium network ✦');
-  e.target.reset();
+  const form = e.target;
+  const email = form.email.value;
+  try {
+    const body = new URLSearchParams({ 'form-name': 'newsletter', email });
+    await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
+    showToast('Welcome to the mycelium network ✦');
+    form.reset();
+  } catch {
+    showToast('Something went wrong — try again.');
+  }
 }
 
 /* ══════════════════════════════════════════════
