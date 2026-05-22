@@ -171,33 +171,57 @@ button { font-family: inherit; cursor: pointer; }
 
 .tabs {
   display: flex;
-  padding: 0 6px;
+  padding: 0 4px;
   border-top: 0.5px solid var(--rule);
+  gap: 2px;
 }
 
 .tab {
   flex: 1;
   background: none;
   border: none;
-  padding: 10px 4px 12px;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  padding: 11px 3px 13px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   color: var(--mycelium-d);
   position: relative;
+  transition: color 0.15s;
+  white-space: nowrap;
 }
-.tab:hover { color: var(--mycelium); }
-.tab.on { color: var(--spore-l); }
+.tab:hover { color: var(--mycelium-l); }
+.tab.on { color: var(--spore-l); font-weight: 600; }
 .tab.on::after {
   content: '';
   position: absolute;
   left: 50%;
   bottom: -0.5px;
   transform: translateX(-50%);
-  width: 18px; height: 1.5px;
+  width: 24px; height: 2px;
   background: var(--spore);
-  box-shadow: 0 0 8px var(--spore);
+  box-shadow: 0 0 10px var(--spore);
+  border-radius: 1px;
+}
+
+/* Alchemy Academy — accent tab */
+.tab.tab-accent {
+  color: var(--nutrient-d);
+  font-weight: 600;
+}
+.tab.tab-accent:hover { color: var(--nutrient-l); }
+.tab.tab-accent.on {
+  color: var(--nutrient-l);
+}
+.tab.tab-accent.on::after {
+  background: var(--nutrient);
+  box-shadow: 0 0 10px var(--nutrient);
+}
+.tab.tab-accent::before {
+  content: '⚗';
+  font-size: 9px;
+  margin-right: 3px;
+  opacity: 0.7;
 }
 
 /* — System stats bar — */

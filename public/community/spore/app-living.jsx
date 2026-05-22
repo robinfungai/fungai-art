@@ -246,11 +246,11 @@ function LoginScreen({ onLogin }) {
 
 function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) {
   const tabs = [
-    { id:'network', label:'Network' },
-    { id:'shop',    label:'Apothecary' },
-    { id:'exp',     label:'Experiences' },
-    { id:'econ',    label:'Economy' },
-    { id:'members', label:'Members' },
+    { id:'network',  label:'Network' },
+    { id:'shop',     label:'Apothecary' },
+    { id:'exp',      label:'Experiences' },
+    { id:'academy',  label:'Alchemy Academy', accent: true },
+    { id:'members',  label:'Members' },
   ];
   return (
     <div className="topbar">
@@ -283,7 +283,11 @@ function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) 
       </div>
       <div className="tabs">
         {tabs.map(t => (
-          <button key={t.id} className={`tab ${tab === t.id ? 'on' : ''}`} onClick={() => onTab(t.id)}>
+          <button
+            key={t.id}
+            className={`tab ${tab === t.id ? 'on' : ''} ${t.accent ? 'tab-accent' : ''}`}
+            onClick={() => onTab(t.id)}
+          >
             {t.label}
           </button>
         ))}
@@ -638,71 +642,144 @@ function MembersPage() {
   );
 }
 
-/* ── Economy page ─────────────────────────────────────────── */
+/* ── Alchemy Academy page ─────────────────────────────────── */
 
-function EconomyPage({ economy, phase, onPhaseChange }) {
-  const flowSteps = [
-    { name:'Arrive',        sub:'enter the substrate' },
-    { name:'Contribute',    sub:'work · create · share' },
-    { name:'Earn $HYPHA',   sub:'nutrients flow inward' },
-    { name:'Unlock access', sub:'experiences · products' },
-    { name:'Go deeper',     sub:'residency · governance' },
-  ];
-  const activeIdx = Math.min(4, Math.floor(economy.state.contributions / 2));
+const METHODS = [
+  {
+    id: 'spagyric',
+    name: 'Spagyric',
+    tag: 'PARACELSUS · 16TH C.',
+    color: '#C48838',
+    desc: 'Separate, purify, recombine. The plant is split into its three philosophical principles — sulfur (essence), mercury (spirit), salt (body) — then reunited into a potentised whole.',
+    steps: ['Macerate in alcohol 4–6 wks', 'Distil the alcohol (spirit)', 'Calcine the marc to white ash', 'Dissolve ash back into the tincture'],
+    ratio: '1:5 plant to solvent',
+    time: '6–10 weeks',
+  },
+  {
+    id: 'tincture',
+    name: 'Cold Tincture',
+    tag: 'FOLK HERBALISM',
+    color: '#3B6D11',
+    desc: 'The foundational extraction. Fresh or dried plant material macerated in ethanol, drawing out both water and alcohol soluble constituents. Simple, reliable, broad-spectrum.',
+    steps: ['Chop or grind plant material', 'Cover with 40–60% ethanol', 'Macerate 2–6 weeks, shaking daily', 'Press and filter'],
+    ratio: '1:3 fresh · 1:5 dry',
+    time: '2–6 weeks',
+  },
+  {
+    id: 'decoction',
+    name: 'Decoction',
+    tag: 'ROOT · BARK · RESIN',
+    color: '#7A4F2E',
+    desc: 'Long simmering to break down tough cellular material. Roots, bark, and woody mushrooms yield their medicine slowly to water under sustained heat.',
+    steps: ['Cold-water soak 30 min', 'Bring to gentle simmer', 'Reduce by 1/3 over 45–90 min', 'Strain while hot, press marc'],
+    ratio: '1:20 plant to water',
+    time: '1.5–2 hours active',
+  },
+  {
+    id: 'doubleextract',
+    name: 'Double Extraction',
+    tag: 'FUNGI · POLYSACCHARIDES',
+    color: '#0F6E56',
+    desc: 'Hot water pulls the beta-glucans; alcohol captures the triterpenes. Essential for reishi, chaga, turkey tail — no single solvent gets everything.',
+    steps: ['Decoct in water 2–4 hrs', 'Cool completely', 'Combine 1:1 with 95% ethanol tincture', 'Final 25–30% alcohol content'],
+    ratio: '1:1 decoction to tincture',
+    time: '4–8 weeks total',
+  },
+  {
+    id: 'oleo',
+    name: 'Oleoresin',
+    tag: 'HEAT · FAT-SOLUBLE',
+    color: '#534AB7',
+    desc: 'Fat-soluble constituents — essential oils, resins, fat-soluble vitamins — require a lipid carrier. Slow infusion in a stable oil preserves volatile aromatics.',
+    steps: ['Dry plant material thoroughly', 'Infuse in olive or MCT oil 60°C', 'Hold temperature 4–8 hours', 'Strain and store dark'],
+    ratio: '1:8 plant to oil',
+    time: '4–8 hours',
+  },
+];
+
+function AcademyPage({ economy }) {
+  const [openMethod, setOpenMethod] = useState(null);
+  const tier = SporeData.reputationTier(economy.state.reputation);
 
   return (
     <div className="page-enter">
       <div className="section">
-        <div className="section-eyebrow">Token architecture</div>
-        <h2 className="section-title">How nutrients <em>flow.</em></h2>
-        <p className="section-blurb">$HYPHA is the medium. Reputation is the depth. Access keys are the gates.</p>
+        <div className="section-eyebrow">Member access only · {tier.label}</div>
+        <h2 className="section-title">Alchemy <em>Academy.</em></h2>
+        <p className="section-blurb">Extraction science meets plant intelligence. Five methods, their philosophy, their practice. Your $H balance grows as you go deeper.</p>
       </div>
 
-      <div className="flow-rail">
-        {flowSteps.map((s, i) => (
-          <div key={i} className={`flow-step ${i <= activeIdx ? 'active' : ''}`}>
-            <div className="flow-bullet">{i + 1}</div>
-            <div>
-              <div className="flow-name">{s.name}</div>
-              <div className="flow-sub">{s.sub}</div>
-            </div>
-          </div>
-        ))}
+      {/* Link to Herbal Engine */}
+      <div style={{ margin:'0 16px 4px', background:'linear-gradient(135deg, rgba(232,177,75,0.08), rgba(107,214,111,0.05))', border:'0.5px solid var(--nutrient-d)', borderRadius:12, padding:'16px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', gap:12 }}>
+        <div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--nutrient-l)', marginBottom:5 }}>Interactive tool</div>
+          <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:20, color:'var(--mycelium-l)', letterSpacing:'-0.02em' }}>Herbal Blending Engine</div>
+          <div style={{ fontSize:11.5, color:'var(--mycelium)', marginTop:4, opacity:0.8 }}>Build formulas, explore synergies, save your blends.</div>
+        </div>
+        <a href="/mixology" style={{ flexShrink:0, display:'inline-flex', alignItems:'center', gap:6, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', padding:'10px 14px', border:'0.5px solid var(--nutrient-d)', borderRadius:6, background:'rgba(232,177,75,0.1)', color:'var(--nutrient-l)', textDecoration:'none', transition:'all 0.18s' }}
+          onMouseEnter={e => { e.currentTarget.style.background='rgba(232,177,75,0.2)'; e.currentTarget.style.borderColor='var(--nutrient)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background='rgba(232,177,75,0.1)'; e.currentTarget.style.borderColor='var(--nutrient-d)'; }}
+        >
+          Open →
+        </a>
       </div>
 
+      {/* Extraction methods */}
       <div className="section" style={{ paddingBottom:0 }}>
-        <div className="section-eyebrow">Three layers · one organism</div>
-      </div>
-      <div className="token-layers">
-        <div className="token-layer spore">
-          <div className="token-layer-title">$HYPHA — Currency</div>
-          <div className="token-layer-name">Liquid · Base L2</div>
-          <div className="token-layer-desc">Earned by contributing. Spent on experiences and products. ~1B max supply, emission-based — designed to grow.</div>
-        </div>
-        <div className="token-layer fungal">
-          <div className="token-layer-title">Access Keys — NFTs</div>
-          <div className="token-layer-name">Soulbound</div>
-          <div className="token-layer-desc">Non-transferable keys to specific events, labs, residencies. Limited by real-world seats; minted on unlock.</div>
-        </div>
-        <div className="token-layer amber">
-          <div className="token-layer-title">Reputation — Trust</div>
-          <div className="token-layer-name">Earned, never bought</div>
-          <div className="token-layer-desc">Tracks depth of participation. Required for the deepest access. Resists speculation culture.</div>
-        </div>
+        <div className="section-eyebrow">Five extraction methods</div>
+        <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:22, color:'var(--mycelium-l)', letterSpacing:'-0.02em', marginTop:4 }}>Know your solvents.</div>
       </div>
 
-      <div className="section"><div className="section-eyebrow">Rollout phases</div></div>
-      <div className="phase-grid">
-        {SporeData.PHASES.map(p => (
-          <button key={p.id} onClick={() => onPhaseChange(p.id)} className={`phase-cell ${phase === p.id ? 'on' : ''}`}>
-            <div className="label-tiny">Phase {p.num}</div>
-            <div className="pn">{p.name}</div>
-            <div className="pi">{p.items}</div>
-          </button>
-        ))}
+      <div style={{ margin:'12px 16px 0', display:'flex', flexDirection:'column', gap:1, background:'var(--rule)', borderRadius:10, overflow:'hidden', border:'0.5px solid var(--rule)' }}>
+        {METHODS.map(m => {
+          const isOpen = openMethod === m.id;
+          return (
+            <div key={m.id} style={{ background:'var(--soil-2)', transition:'background 0.15s' }}>
+              <div
+                style={{ display:'flex', alignItems:'center', gap:12, padding:'14px 16px', cursor:'pointer' }}
+                onClick={() => setOpenMethod(isOpen ? null : m.id)}
+              >
+                <div style={{ width:8, height:8, borderRadius:'50%', background:m.color, flexShrink:0, boxShadow:`0 0 8px ${m.color}88` }} />
+                <div style={{ flex:1 }}>
+                  <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:18, color:'var(--mycelium-l)', letterSpacing:'-0.01em', lineHeight:1 }}>{m.name}</div>
+                  <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'var(--mycelium-d)', marginTop:3 }}>{m.tag}</div>
+                </div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', color:isOpen ? m.color : 'var(--mycelium-d)', transition:'color 0.2s' }}>{isOpen ? '↑' : '↓'}</div>
+              </div>
+
+              {isOpen && (
+                <div style={{ padding:'0 16px 18px', animation:'page-in 0.2s ease-out' }}>
+                  <p style={{ fontSize:12.5, color:'var(--mycelium)', lineHeight:1.6, marginBottom:14, opacity:0.9 }}>{m.desc}</p>
+
+                  <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8, marginBottom:14 }}>
+                    <div style={{ background:'var(--soil-3)', borderRadius:6, padding:'9px 11px', border:'0.5px solid var(--rule)' }}>
+                      <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:3 }}>Ratio</div>
+                      <div style={{ fontSize:11.5, color:'var(--mycelium-l)' }}>{m.ratio}</div>
+                    </div>
+                    <div style={{ background:'var(--soil-3)', borderRadius:6, padding:'9px 11px', border:'0.5px solid var(--rule)' }}>
+                      <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:3 }}>Time</div>
+                      <div style={{ fontSize:11.5, color:'var(--mycelium-l)' }}>{m.time}</div>
+                    </div>
+                  </div>
+
+                  <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:8 }}>Process</div>
+                  {m.steps.map((s, i) => (
+                    <div key={i} style={{ display:'flex', gap:10, alignItems:'flex-start', marginBottom:6 }}>
+                      <div style={{ width:18, height:18, borderRadius:'50%', background:'var(--soil-4)', border:'0.5px solid var(--rule)', flexShrink:0, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-mono)', fontSize:8, color:m.color, marginTop:1 }}>{i+1}</div>
+                      <div style={{ fontSize:12, color:'var(--mycelium)', lineHeight:1.5 }}>{s}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
 
-      <button className="reset-link" onClick={economy.reset}>↺ Reset my data</button>
+      <div style={{ margin:'20px 16px 8px', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>Your balance</div>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:13, color:'var(--spore-l)', fontVariantNumeric:'tabular-nums' }}>{economy.state.balance} $H</div>
+      </div>
     </div>
   );
 }
@@ -826,11 +903,11 @@ function App() {
       />
       <SystemStats state={economy.state} tier={tier} flowRate={tweaks.flowRate} />
 
-      {tab === 'network' && <NetworkPage  economy={economy} onToast={onToast} flowRate={tweaks.flowRate} />}
-      {tab === 'shop'    && <ApothecaryPage economy={economy} onToast={onToast} />}
-      {tab === 'exp'     && <ExperiencesPage economy={economy} onToast={onToast} />}
-      {tab === 'econ'    && <EconomyPage economy={economy} phase={tweaks.phase} onPhaseChange={p => setTweak('phase', p)} />}
-      {tab === 'members' && <MembersPage />}
+      {tab === 'network'  && <NetworkPage economy={economy} onToast={onToast} flowRate={tweaks.flowRate} />}
+      {tab === 'shop'     && <ApothecaryPage economy={economy} onToast={onToast} />}
+      {tab === 'exp'      && <ExperiencesPage economy={economy} onToast={onToast} />}
+      {tab === 'academy'  && <AcademyPage economy={economy} />}
+      {tab === 'members'  && <MembersPage />}
 
       <div className="app-footer">
         <ProceduralMark size={32} />
@@ -840,6 +917,7 @@ function App() {
       <EarnSheet open={earnOpen} onClose={() => setEarnOpen(false)} economy={economy} onToast={onToast} />
       <Toast message={toast.msg} kind={toast.kind} onClose={() => setToast({ msg:'', kind:'' })} />
       <SporeTweaks tweaks={tweaks} setTweak={setTweak} />
+
     </div>
   );
 }
