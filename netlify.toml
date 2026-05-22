@@ -31,11 +31,6 @@
   status = 200
 
 [[redirects]]
-  from   = "/products*"
-  to     = "/app.html"
-  status = 200
-
-[[redirects]]
   from   = "/community*"
   to     = "/app.html"
   status = 200

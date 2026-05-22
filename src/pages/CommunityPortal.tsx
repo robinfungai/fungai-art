@@ -16,6 +16,9 @@ type Member = typeof MEMBERS[number];
 const BRANCHES = ["Fungai Art", "New Tyme Tonics", "Skogens Nektar"] as const;
 type Branch = typeof BRANCHES[number];
 
+const NODES = ["Berlin", "Sweden", "Lisbon", "Genoa", "Toulouse"] as const;
+type Node = typeof NODES[number] | "";
+
 const CONTRIB_TYPES = [
   { id: "kitchen",   label: "Kitchen",   icon: "🍽",  desc: "Food prep & meals"          },
   { id: "foraging",  label: "Foraging",  icon: "🌿",  desc: "Wild harvest & species ID"  },
@@ -48,6 +51,8 @@ const K = {
   notes:    (n: string) => `fa_com_notes_${n}`,
   goal:     (b: string) => `fa_com_goal_${b.replace(/ /g, "_")}`,
   announce: "fa_com_announcement",
+  title:    (n: string) => `fa_com_title_${n}`,
+  node:     (n: string) => `fa_com_node_${n}`,
 };
 
 function lsGet<T>(key: string, fallback: T): T {
@@ -350,6 +355,12 @@ function Dashboard({ member, onLogout }: DashboardProps) {
   const [branch, setBranch] = useState<Branch>(
     () => lsGet<Branch>(K.branch(member.name), "Fungai Art")
   );
+  // Profile
+  const [memberTitle, setMemberTitle] = useState(() => lsGet<string>(K.title(member.name), ""));
+  const [memberNode, setMemberNode] = useState<Node>(() => lsGet<Node>(K.node(member.name), ""));
+  const [editingTitle, setEditingTitle] = useState(false);
+  const [titleInput, setTitleInput] = useState(() => lsGet<string>(K.title(member.name), ""));
+  const [showProfile, setShowProfile] = useState(false);
   // Sale modal
   const [showSale, setShowSale] = useState(false);
   const [saleBranch, setSaleBranch] = useState<Branch>(branch);
@@ -476,6 +487,44 @@ function Dashboard({ member, onLogout }: DashboardProps) {
           </div>
         )}
 
+        {/* ── Profile modal ── */}
+        {showProfile && (
+          <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(4,5,8,.9)", backdropFilter: "blur(12px)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}
+            onClick={() => setShowProfile(false)}>
+            <div style={{ background: "#0e1015", border: `1px solid ${member.accent}33`, borderRadius: 24, padding: "28px 24px", width: "100%", maxWidth: 360, boxShadow: `0 0 60px ${member.glow}` }}
+              onClick={e => e.stopPropagation()}>
+              <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 26, color: "#f0ede5", marginBottom: 20 }}>Edit Profile</h3>
+              <p style={{ color: "rgba(255,255,255,0.3)", fontSize: 11, letterSpacing: "0.1em", marginBottom: 8 }}>YOUR TITLE</p>
+              {editingTitle ? (
+                <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
+                  <input
+                    value={titleInput}
+                    onChange={e => setTitleInput(e.target.value)}
+                    onKeyDown={e => { if (e.key === "Enter") { const t = titleInput.trim(); setMemberTitle(t); lsSet(K.title(member.name), t); setEditingTitle(false); } if (e.key === "Escape") setEditingTitle(false); }}
+                    maxLength={40}
+                    placeholder="e.g. Herb Alchemist, Forager, Mycelium Keeper…"
+                    autoFocus
+                    style={{ flex: 1, padding: "10px 14px", borderRadius: 10, background: "rgba(255,255,255,0.05)", border: `1px solid ${member.accent}55`, color: "#f0ede5", fontSize: 14, outline: "none", fontFamily: "'Space Grotesk', system-ui, sans-serif" }}
+                  />
+                  <button onClick={() => { const t = titleInput.trim(); setMemberTitle(t); lsSet(K.title(member.name), t); setEditingTitle(false); }} style={{ padding: "10px 16px", borderRadius: 10, background: member.glow, border: `1.5px solid ${member.accent}66`, color: member.accent, fontSize: 13, cursor: "pointer", fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>Save</button>
+                </div>
+              ) : (
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", borderRadius: 12, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", marginBottom: 20 }}>
+                  <span style={{ color: memberTitle ? member.accent : "rgba(255,255,255,0.25)", fontSize: 14, fontStyle: memberTitle ? "normal" : "italic" }}>{memberTitle || "No title set"}</span>
+                  <button onClick={() => { setTitleInput(memberTitle); setEditingTitle(true); }} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.35)", cursor: "pointer", fontSize: 12, fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>Edit</button>
+                </div>
+              )}
+              <p style={{ color: "rgba(255,255,255,0.3)", fontSize: 11, letterSpacing: "0.1em", marginBottom: 10 }}>YOUR NODE</p>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24 }}>
+                {NODES.map(n => (
+                  <button key={n} onClick={() => { setMemberNode(n); lsSet(K.node(member.name), n); }} style={{ padding: "7px 16px", borderRadius: 999, fontSize: 13, border: memberNode === n ? `1.5px solid ${member.accent}` : "1px solid rgba(255,255,255,0.1)", background: memberNode === n ? member.glow : "rgba(255,255,255,0.03)", color: memberNode === n ? member.accent : "rgba(255,255,255,0.45)", cursor: "pointer", fontFamily: "'Space Grotesk', system-ui, sans-serif", fontWeight: memberNode === n ? 600 : 400 }}>{n}</button>
+                ))}
+              </div>
+              <button onClick={() => setShowProfile(false)} style={{ width: "100%", padding: "11px", borderRadius: 12, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.4)", fontSize: 13, cursor: "pointer", fontFamily: "'Space Grotesk', system-ui, sans-serif" }}>Done</button>
+            </div>
+          </div>
+        )}
+
         {/* ── Personal greeting ── */}
         <div style={{ marginBottom: 28 }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 4 }}>
@@ -487,7 +536,17 @@ function Dashboard({ member, onLogout }: DashboardProps) {
               </div>
             )}
           </div>
-          <p style={{ color: "rgba(255,255,255,0.28)", fontSize: 13 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+            {memberTitle && <span style={{ color: member.accent, fontSize: 13, opacity: 0.75 }}>{memberTitle}</span>}
+            {memberTitle && memberNode && <span style={{ color: "rgba(255,255,255,0.2)", fontSize: 12 }}>·</span>}
+            {memberNode && (
+              <span style={{ color: "rgba(255,255,255,0.4)", fontSize: 12 }}>◉ {memberNode}</span>
+            )}
+            <button onClick={() => setShowProfile(true)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.2)", cursor: "pointer", fontSize: 11, fontFamily: "'Space Grotesk', system-ui, sans-serif", padding: 0 }}>
+              {(memberTitle || memberNode) ? "edit profile" : "set title & node →"}
+            </button>
+          </div>
+          <p style={{ color: "rgba(255,255,255,0.28)", fontSize: 13, marginTop: 6 }}>
             {isRunning
               ? `${CONTRIB_TYPES.find(c => c.id === activeCt)?.label ?? "Working"} · ${branch}`
               : "Select a contribution to start timing"}
@@ -847,29 +906,36 @@ function AdminPanel() {
             {/* Per-member table */}
             <p style={{ color: "rgba(255,255,255,0.25)", fontSize: 11, letterSpacing: "0.1em", marginBottom: 12 }}>INDIVIDUAL CONTRIBUTIONS</p>
             <div style={{ background: card, borderRadius: 20, border: `1px solid ${border}`, overflowX: "auto" }}>
-            <div style={{ minWidth: 520 }}>
+            <div style={{ minWidth: 600 }}>
               {/* Header row */}
-              <div style={{ display: "grid", gridTemplateColumns: "130px 1fr 1fr 1fr 90px", gap: 0, padding: "10px 20px", borderBottom: `1px solid ${border}`, color: "rgba(255,255,255,0.3)", fontSize: 11, letterSpacing: "0.08em" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "160px 1fr 1fr 1fr 80px 90px", gap: 0, padding: "10px 20px", borderBottom: `1px solid ${border}`, color: "rgba(255,255,255,0.3)", fontSize: 11, letterSpacing: "0.08em" }}>
                 <span>HYPHAE</span>
                 <span>FUNGAI ART</span>
                 <span>NEW TYME</span>
                 <span>SKOGENS</span>
+                <span>NODE</span>
                 <span>TOTAL</span>
               </div>
               {MEMBERS.map((m, i) => {
                 const d = getMemberData(m);
                 const isLive = d.active !== null;
+                const mTitle = lsGet<string>(K.title(m.name), "");
+                const mNode = lsGet<string>(K.node(m.name), "");
                 return (
-                  <div key={m.name} style={{ display: "grid", gridTemplateColumns: "130px 1fr 1fr 1fr 90px", gap: 0, padding: "14px 20px", borderBottom: i < MEMBERS.length - 1 ? `1px solid ${border}` : "none", alignItems: "center" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                      {isLive && <div style={{ width: 6, height: 6, borderRadius: "50%", background: m.accent, flexShrink: 0, animation: "cp-pulse 1.5s ease-in-out infinite" }} />}
-                      <span style={{ color: m.accent, fontWeight: 600, fontSize: 14 }}>{m.name}</span>
+                  <div key={m.name} style={{ display: "grid", gridTemplateColumns: "160px 1fr 1fr 1fr 80px 90px", gap: 0, padding: "14px 20px", borderBottom: i < MEMBERS.length - 1 ? `1px solid ${border}` : "none", alignItems: "center" }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                        {isLive && <div style={{ width: 6, height: 6, borderRadius: "50%", background: m.accent, flexShrink: 0, animation: "cp-pulse 1.5s ease-in-out infinite" }} />}
+                        <span style={{ color: m.accent, fontWeight: 600, fontSize: 14 }}>{m.name}</span>
+                      </div>
+                      {mTitle && <span style={{ color: "rgba(255,255,255,0.35)", fontSize: 10 }}>{mTitle}</span>}
                     </div>
                     {BRANCHES.map(b => (
                       <span key={b} style={{ fontFamily: "monospace", fontSize: 13, color: d.totals[b] > 0 ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.2)" }}>
                         {fmt(d.totals[b])}
                       </span>
                     ))}
+                    <span style={{ color: mNode ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.15)", fontSize: 11 }}>{mNode || "—"}</span>
                     <span style={{ fontFamily: "monospace", fontSize: 13, color: d.grand > 0 ? "#f0ede5" : "rgba(255,255,255,0.2)", fontWeight: 600 }}>
                       {fmt(d.grand)}
                     </span>
@@ -878,6 +944,30 @@ function AdminPanel() {
               })}
             </div>{/* end minWidth wrapper */}
             </div>{/* end scroll wrapper */}
+
+            {/* Node map */}
+            <div style={{ marginTop: 24, marginBottom: 12 }}>
+              <p style={{ color: "rgba(255,255,255,0.25)", fontSize: 11, letterSpacing: "0.1em", marginBottom: 12 }}>NODES</p>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: 10 }}>
+                {NODES.map(n => {
+                  const members = MEMBERS.filter(m => lsGet<string>(K.node(m.name), "") === n);
+                  return (
+                    <div key={n} style={{ background: card, borderRadius: 14, border: `1px solid ${border}`, padding: "12px 14px" }}>
+                      <div style={{ color: "rgba(255,255,255,0.5)", fontSize: 11, letterSpacing: "0.08em", marginBottom: 8 }}>◉ {n}</div>
+                      {members.length === 0
+                        ? <div style={{ color: "rgba(255,255,255,0.18)", fontSize: 11 }}>—</div>
+                        : members.map(m => (
+                          <div key={m.name} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                            <div style={{ width: 6, height: 6, borderRadius: "50%", background: m.accent, flexShrink: 0 }} />
+                            <span style={{ color: m.accent, fontSize: 12, fontWeight: 600 }}>{m.name}</span>
+                          </div>
+                        ))
+                      }
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
 
             {/* Who's live right now */}
             <div style={{ marginTop: 24 }}>
@@ -1077,14 +1167,16 @@ function MemberGrid({ onSelect }: GridProps) {
         <p style={{ color: "rgba(255,255,255,0.35)", fontSize: 14, marginBottom: 48, lineHeight: 1.6 }}>
           The mycelial network of Fungai Art. Select your name and draw your pattern to enter your portal.
         </p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: 14 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(148px, 1fr))", gap: 14 }}>
           {MEMBERS.map(m => {
             const isLive = lsGet<{ branch: Branch; start: number } | null>(K.active(m.name), null) !== null;
+            const mTitle = lsGet<string>(K.title(m.name), "");
+            const mNode = lsGet<string>(K.node(m.name), "");
             return (
             <button
               key={m.name}
               onClick={() => onSelect(m)}
-              style={{ background: m.glow, border: `1.5px solid ${m.accent}33`, borderRadius: 20, padding: "28px 16px", cursor: "pointer", transition: "all 0.22s ease", display: "flex", flexDirection: "column", alignItems: "center", gap: 10, fontFamily: "'Space Grotesk', system-ui, sans-serif", position: "relative" }}
+              style={{ background: m.glow, border: `1.5px solid ${m.accent}33`, borderRadius: 20, padding: "24px 16px 20px", cursor: "pointer", transition: "all 0.22s ease", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, fontFamily: "'Space Grotesk', system-ui, sans-serif", position: "relative" }}
               onMouseEnter={e => { const el = e.currentTarget; el.style.border = `1.5px solid ${m.accent}88`; el.style.transform = "translateY(-3px)"; el.style.boxShadow = `0 12px 32px ${m.glow}`; }}
               onMouseLeave={e => { const el = e.currentTarget; el.style.border = `1.5px solid ${m.accent}33`; el.style.transform = "translateY(0)"; el.style.boxShadow = "none"; }}
             >
@@ -1093,7 +1185,11 @@ function MemberGrid({ onSelect }: GridProps) {
                 {m.name[0]}
               </div>
               <span style={{ color: "#f0ede5", fontSize: 17, fontWeight: 600 }}>{m.name}</span>
-              <span style={{ color: m.accent, fontSize: 10, letterSpacing: "0.08em", opacity: 0.6 }}>{isLive ? "● IN SESSION" : "HYPHAE"}</span>
+              {mTitle && <span style={{ color: m.accent, fontSize: 10, opacity: 0.75, textAlign: "center", lineHeight: 1.3, letterSpacing: "0.02em" }}>{mTitle}</span>}
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3, marginTop: 2 }}>
+                {mNode && <span style={{ color: "rgba(255,255,255,0.38)", fontSize: 10, letterSpacing: "0.06em" }}>◉ {mNode}</span>}
+                <span style={{ color: m.accent, fontSize: 9, letterSpacing: "0.1em", opacity: 0.5 }}>{isLive ? "● IN SESSION" : "HYPHAE"}</span>
+              </div>
             </button>
             );
           })}
