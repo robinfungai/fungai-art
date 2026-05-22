@@ -271,10 +271,34 @@ function LoginScreen({ onLogin }) {
         </div>
       </div>
 
-      {/* ── Nodes ── */}
+      {/* ── Network map + nodes ── */}
       <div className="welcome-section">
-        <div className="welcome-section-eyebrow">Active nodes · {liveNodes.length} live</div>
+        <div className="welcome-section-eyebrow">Active nodes · {liveNodes.length} live · 1 proposed</div>
         <div className="welcome-section-title">The <em>network.</em></div>
+
+        {/* Living animated map */}
+        <div style={{ background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:12, overflow:'hidden', marginBottom:16, position:'relative' }}>
+          <LivingNetworkMap
+            nodes={SporeData.NETWORK_NODES}
+            selected={null}
+            onSelect={() => {}}
+            flowIntensity={1.2}
+          />
+          <div style={{ position:'absolute', bottom:10, left:10, right:10, display:'flex', justifyContent:'space-between', alignItems:'flex-end', pointerEvents:'none' }}>
+            <div style={{ background:'rgba(6,8,9,.7)', backdropFilter:'blur(8px)', border:'0.5px solid var(--rule)', borderRadius:6, padding:'6px 10px' }}>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>Nodes</div>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:12, color:'var(--mycelium-l)', marginTop:2 }}>{liveNodes.length} live · 1 proposed</div>
+            </div>
+            <div style={{ background:'rgba(6,8,9,.7)', backdropFilter:'blur(8px)', border:'0.5px solid var(--rule)', borderRadius:6, padding:'6px 10px' }}>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>Flow capacity</div>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:12, color:'var(--nutrient-l)', marginTop:2 }}>
+                {SporeData.NETWORK_NODES.reduce((a,n) => a + n.contributions.reduce((b,c) => b + c.earn, 0), 0)} $H/cycle
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Node cards */}
         <div className="welcome-nodes">
           {SporeData.NETWORK_NODES.map(node => {
             const isProposed = node.activity === 'proposed';
@@ -292,7 +316,7 @@ function LoginScreen({ onLogin }) {
                 {!isProposed && (
                   <div className="wn-flow">
                     <span className="wn-flow-val">{avgFlow} $H</span>
-                    <span className="wn-flow-lbl">/avg contribution</span>
+                    <span className="wn-flow-lbl">/avg</span>
                   </div>
                 )}
                 {isProposed && node.requirement && (

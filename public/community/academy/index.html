@@ -367,7 +367,81 @@
     .lab-entry-del:hover { opacity:1; color:#e74c3c; }
   </style>
 </head>
-<body>
+<style>
+/* ── Login gate overlay ── */
+.gate {
+  display: none;
+  position: fixed; inset: 0; z-index: 999;
+  background: rgba(4,5,6,0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  align-items: center; justify-content: center;
+  padding: 24px;
+  animation: fade-in 0.3s ease;
+}
+.gate.on { display: flex; }
+@keyframes fade-in { from { opacity:0 } to { opacity:1 } }
+.gate-card {
+  background: var(--soil-2);
+  border: 0.5px solid var(--rule-strong);
+  border-radius: 20px;
+  padding: 36px 32px;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 0.5px rgba(232,177,75,0.15);
+}
+.gate-mark {
+  font-size: 36px;
+  margin-bottom: 18px;
+  display: block;
+}
+.gate-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 28px;
+  color: var(--mycelium-l);
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+.gate-blurb {
+  font-size: 13px;
+  color: var(--mycelium);
+  line-height: 1.6;
+  margin-bottom: 26px;
+  opacity: 0.85;
+}
+.gate-btn {
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 999px;
+  border: 1px solid var(--spore-d);
+  background: rgba(107,214,111,0.12);
+  color: var(--spore-l);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.18s;
+}
+.gate-btn:hover {
+  background: rgba(107,214,111,0.22);
+  border-color: var(--spore);
+  box-shadow: 0 0 24px rgba(107,214,111,0.25);
+}
+</style>
+
+<!-- Login gate — shown if not logged in -->
+<div class="gate on" id="gate">
+  <div class="gate-card">
+    <span class="gate-mark">⚗</span>
+    <div class="gate-title">Members only.</div>
+    <p class="gate-blurb">Alchemy Academy is exclusive to Spore members. Log in to the community portal to access the extraction library, lab notebook, and herbal engine.</p>
+    <a href="/community/" class="gate-btn">Log in Hyphae →</a>
+  </div>
+</div>
+
 <div class="wrap">
 
   <nav class="nav">
@@ -687,6 +761,17 @@ function buildLabNotebook() {
     }, 0);
   });
 }
+
+// ── Login gate check ──────────────────────────────────────
+(function checkGate() {
+  const member = localStorage.getItem('spore_active_member');
+  if (member) {
+    // Logged in — hide gate and allow access
+    document.getElementById('gate').classList.remove('on');
+    document.getElementById('gate').style.display = 'none';
+  }
+  // If not logged in, gate stays visible (blocking the page)
+})();
 
 // Run on page load
 buildLabNotebook();
