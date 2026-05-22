@@ -251,7 +251,6 @@ function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) 
     { id:'shop',     label:'Apothecary',       icon:'🌿' },
     { id:'exp',      label:'Experiences',      icon:'✦' },
     { id:'members',  label:'Members',          icon:'◈' },
-    { id:'journal',  label:'Journal',          icon:'○' },
     { id:'academy',  label:'Alchemy Academy',  icon:'⚗', accent:true, external:'/community/academy/' },
     { id:'store',    label:'Shop',             icon:'◎', external:'/shop' },
     ...(isAdmin ? [{ id:'admin', label:'Admin', icon:'⬡', adminTab:true }] : []),
