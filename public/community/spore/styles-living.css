@@ -2179,3 +2179,307 @@ input[type='range'].cs-range::-webkit-slider-thumb {
   text-transform: uppercase;
   color: var(--mycelium-d);
 }
+
+/* ── Mycelium Calendar ──────────────────────────────────────── */
+.cal-sacred-header {
+  margin: 0 16px 0;
+  padding: 28px 20px 20px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(232,177,75,0.12), transparent 60%),
+    var(--soil-2);
+  border: 0.5px solid rgba(232,177,75,0.2);
+  border-radius: 16px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cal-sacred-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(45deg, transparent 45%, rgba(232,177,75,0.04) 50%, transparent 55%),
+    linear-gradient(-45deg, transparent 45%, rgba(232,177,75,0.04) 50%, transparent 55%);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+.cal-pyramid-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.cal-philosophy {
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--mycelium);
+  opacity: 0.82;
+  max-width: 480px;
+  margin: 0 auto;
+  font-style: italic;
+}
+
+/* Hourglass frequency legend */
+.cal-freq-legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 12px 16px 0;
+  padding: 10px 14px;
+  background: var(--soil-2);
+  border: 0.5px solid var(--rule);
+  border-radius: 8px;
+}
+.cal-freq-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+}
+.cal-freq-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+}
+
+/* Event cards */
+.cal-events {
+  margin: 14px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.cal-card {
+  background: var(--soil-2);
+  border: 0.5px solid var(--rule);
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.cal-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+.cal-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px 10px;
+  border-bottom: 0.5px solid var(--rule);
+  position: relative;
+}
+.cal-geom {
+  flex-shrink: 0;
+  line-height: 0;
+  opacity: 0.85;
+}
+.cal-freq-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.cal-freq-val {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+.cal-freq-lbl {
+  font-family: var(--font-mono);
+  font-size: 7px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+}
+.cal-countdown-wrap {
+  text-align: right;
+}
+.cal-countdown-val {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--mycelium-l);
+  letter-spacing: -0.01em;
+  display: block;
+}
+.cal-countdown-lbl {
+  font-family: var(--font-mono);
+  font-size: 7px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+}
+
+/* Card body */
+.cal-card-body {
+  padding: 14px 16px 16px;
+}
+.cal-date-row {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-bottom: 5px;
+}
+.cal-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 24px;
+  color: var(--mycelium-l);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 3px;
+}
+.cal-subtitle {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-bottom: 10px;
+}
+.cal-desc {
+  font-size: 12px;
+  color: var(--mycelium);
+  line-height: 1.6;
+  opacity: 0.85;
+  margin-bottom: 12px;
+}
+.cal-capacity-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.cal-capacity-lbl {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  flex-shrink: 0;
+}
+.cal-cap-bar {
+  flex: 1;
+  height: 3px;
+  background: var(--soil-4);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.cal-cap-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s ease-out;
+}
+
+/* Contributions within a cal-card */
+.cal-contribs-lbl {
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-bottom: 6px;
+}
+.cal-contrib-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 7px;
+  border: 0.5px solid var(--rule);
+  background: var(--soil-3);
+  cursor: pointer;
+  transition: background 0.15s, padding 0.15s;
+  margin-bottom: 5px;
+}
+.cal-contrib-row:last-child { margin-bottom: 0; }
+.cal-contrib-row:hover {
+  background: var(--soil-4);
+  padding-left: 16px;
+}
+.cal-contrib-name {
+  font-size: 13px;
+  color: var(--mycelium-l);
+  letter-spacing: -0.01em;
+}
+.cal-contrib-type {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 2px;
+}
+.cal-contrib-earn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* Sacred footer glyph */
+.cal-footer {
+  margin: 28px 16px 0;
+  padding: 20px;
+  text-align: center;
+  border-top: 0.5px solid rgba(232,177,75,0.15);
+}
+.cal-footer-glyph {
+  font-size: 20px;
+  color: rgba(232,177,75,0.4);
+  margin-bottom: 8px;
+  letter-spacing: 0.3em;
+}
+.cal-footer-text {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--mycelium-d);
+  line-height: 1.55;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+/* EarnSheet event grouping */
+.earn-event {
+  margin-bottom: 8px;
+  border-radius: 10px;
+  border: 0.5px solid var(--rule);
+  overflow: hidden;
+}
+.earn-event-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--soil-3);
+  border-bottom: 0.5px solid var(--rule);
+}
+.earn-event-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--mycelium-l);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.earn-event-sub {
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  margin-top: 2px;
+}
+.earn-event .earn-opt {
+  padding: 11px 14px;
+  border-bottom: 0.5px solid var(--rule);
+  border-radius: 0;
+}
+.earn-event .earn-opt:last-child { border-bottom: none; }

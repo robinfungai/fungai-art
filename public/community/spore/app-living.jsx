@@ -389,11 +389,12 @@ function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) 
   const isAdmin = currentMember && currentMember.admin;
   const tabs = [
     { id:'network',  label:'Network',         icon:'◉' },
-    { id:'shop',     label:'Apothecary',       icon:'🌿' },
-    { id:'exp',      label:'Experiences',      icon:'✦' },
-    { id:'members',  label:'Members',          icon:'◈' },
-    { id:'academy',  label:'Alchemy Academy',  icon:'⚗', accent:true, external:'/community/academy/' },
-    { id:'store',    label:'Shop',             icon:'◎', external:'/shop' },
+    { id:'calendar', label:'Calendar',        icon:'△' },
+    { id:'shop',     label:'Apothecary',      icon:'🌿' },
+    { id:'exp',      label:'Experiences',     icon:'✦' },
+    { id:'members',  label:'Members',         icon:'◈' },
+    { id:'academy',  label:'Alchemy Academy', icon:'⚗', accent:true, external:'/community/academy/' },
+    { id:'store',    label:'Shop',            icon:'◎', external:'/shop' },
     ...(isAdmin ? [{ id:'admin', label:'Admin', icon:'⬡', adminTab:true }] : []),
   ];
   return (
@@ -1340,17 +1341,168 @@ function AcademyPage({ economy }) {
   );
 }
 
+/* ── Mycelium Calendar ────────────────────────────────────── */
+
+const FREQ_COLORS = {
+  '111 Hz': '#C48838',
+  '432 Hz': '#534AB7',
+  '528 Hz': '#0F6E56',
+};
+
+function PyramidMark({ color, size = 48 }) {
+  return (
+    <svg viewBox="0 0 60 60" width={size} height={size} style={{ display:'block' }}>
+      <polygon points="30,4 56,52 4,52"   fill="none" stroke={color} strokeWidth="1" opacity="0.7" />
+      <polygon points="30,56 4,8 56,8"    fill="none" stroke={color} strokeWidth="0.6" opacity="0.35" />
+      <line x1="30" y1="4" x2="30" y2="56" stroke={color} strokeWidth="0.4" opacity="0.2" />
+      <line x1="4"  y1="30" x2="56" y2="30" stroke={color} strokeWidth="0.4" opacity="0.2" />
+      <circle cx="30" cy="30" r="3.5" fill={color} opacity="0.9" />
+      <circle cx="30" cy="30" r="7"   fill="none" stroke={color} strokeWidth="0.5" opacity="0.4" />
+    </svg>
+  );
+}
+
+function CalendarPage({ economy, onToast }) {
+  const now = new Date();
+
+  function countdown(dateStr) {
+    const d = new Date(dateStr);
+    const diff = d - now;
+    if (diff <= 0) return 'Now';
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    if (days >= 60) return `${Math.floor(days / 30)} mo`;
+    if (days === 1) return '1 day';
+    return `${days} days`;
+  }
+
+  function fmtDate(dateStr, timeStr) {
+    const d = new Date(dateStr);
+    const day = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' });
+    return `${day} ${d.getFullYear()} · ${timeStr}`;
+  }
+
+  const upcoming = SporeData.EVENTS
+    .slice()
+    .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  return (
+    <div className="page-enter">
+      <div className="section">
+        <div className="section-eyebrow">Sacred time · $HYPHA calendar</div>
+        <h2 className="section-title">Mycelium <em>Calendar.</em></h2>
+        <p className="section-blurb">Time moves through the organism like nutrients through hyphae. Each event is a node in the living calendar. Arrive — contribute — let frequency do the rest.</p>
+      </div>
+
+      {/* Sacred header panel */}
+      <div className="cal-sacred-header">
+        <div className="cal-pyramid-wrap">
+          <PyramidMark color="#C48838" size={56} />
+        </div>
+        <p className="cal-philosophy">
+          "The mycelium does not measure time in hours. It measures in cycles —
+          the fruiting of seasons, the resonance of 111 Hz at the threshold
+          between worlds, the geometry of the hourglass where past and future
+          hold the same weight."
+        </p>
+      </div>
+
+      {/* Frequency legend */}
+      <div className="cal-freq-legend">
+        {Object.entries(FREQ_COLORS).map(([freq, color]) => (
+          <div key={freq} className="cal-freq-item">
+            <div className="cal-freq-dot" style={{ background: color }} />
+            {freq}
+          </div>
+        ))}
+      </div>
+
+      {/* Event cards */}
+      <div className="cal-events">
+        {upcoming.map((ev, idx) => {
+          const freqColor = FREQ_COLORS[ev.freq] || '#C48838';
+          const cd = countdown(ev.date);
+          const isPast = new Date(ev.date) < now;
+
+          return (
+            <div key={ev.id} className="cal-card" style={{ borderColor: freqColor + '44' }}>
+              {/* Top row: geom + freq + countdown */}
+              <div className="cal-card-top" style={{ background:`linear-gradient(135deg, ${freqColor}0D, transparent 70%)` }}>
+                <PyramidMark color={freqColor} size={36} />
+                <div className="cal-freq-badge">
+                  <span className="cal-freq-val" style={{ color: freqColor }}>{ev.freq}</span>
+                  <span className="cal-freq-lbl">resonance</span>
+                </div>
+                <div className="cal-countdown-wrap">
+                  <span className="cal-countdown-val" style={{ color: isPast ? 'var(--mycelium-d)' : 'var(--mycelium-l)' }}>{cd}</span>
+                  <span className="cal-countdown-lbl">{isPast ? 'passed' : 'away'}</span>
+                </div>
+              </div>
+
+              {/* Body */}
+              <div className="cal-card-body">
+                <div className="cal-date-row">{fmtDate(ev.date, ev.time)}</div>
+                <div className="cal-title" style={{ color: isPast ? 'var(--mycelium-d)' : 'var(--mycelium-l)' }}>{ev.title}</div>
+                <div className="cal-subtitle">{ev.subtitle}</div>
+                <div className="cal-desc">{ev.desc}</div>
+
+                {/* Capacity */}
+                <div className="cal-capacity-row">
+                  <div className="cal-capacity-lbl">Capacity · {ev.capacity}</div>
+                  <div className="cal-cap-bar">
+                    <div className="cal-cap-fill" style={{ width:'28%', background: freqColor, opacity:0.7 }} />
+                  </div>
+                </div>
+
+                {/* Volunteer contributions */}
+                {!isPast && (
+                  <>
+                    <div className="cal-contribs-lbl">Volunteer & earn</div>
+                    {ev.contributions.map((c, i) => (
+                      <div key={i} className="cal-contrib-row" onClick={() => {
+                        economy.earn(c.earn, `${c.label} — ${ev.title}`, c.rep || 0);
+                        onToast(`+${c.earn} $H · ${c.label}`, 'success');
+                      }}>
+                        <div>
+                          <div className="cal-contrib-name">{c.label}</div>
+                          <div className="cal-contrib-type">{c.type}{c.rep ? ` · +${c.rep} rep` : ''}</div>
+                        </div>
+                        <div className="cal-contrib-earn" style={{ color: freqColor }}>+{c.earn} $H →</div>
+                      </div>
+                    ))}
+                  </>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Sacred footer */}
+      <div className="cal-footer">
+        <div className="cal-footer-glyph">◇ △ ◇</div>
+        <div className="cal-footer-text">
+          The organism moves in spiral time. 111 Hz marks the threshold between cycles.
+          Be present when the calendar breathes.
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ── Earn sheet ───────────────────────────────────────────── */
 
 function EarnSheet({ open, onClose, economy, onToast }) {
   if (!open) return null;
-  const opts = [
-    { earn:40, label:'Kitchen help',          desc:'1 day · Berlin hub',    rep:1 },
-    { earn:20, label:'Content creation',      desc:'Photo · video · words', rep:0 },
-    { earn:60, label:'Foraging guide',        desc:'Lead a circle',         rep:1 },
-    { earn:80, label:'Event facilitation',    desc:'Help run experience',   rep:2 },
-    { earn:15, label:'Species identification',desc:'Document a find',       rep:0 },
-  ];
+  const now = new Date();
+
+  const upcoming = SporeData.EVENTS
+    .filter(ev => new Date(ev.date) > now)
+    .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  function daysUntil(dateStr) {
+    return Math.round((new Date(dateStr) - now) / (1000 * 60 * 60 * 24));
+  }
+
   return (
     <div className="sheet-backdrop" onClick={onClose}>
       <div className="sheet" onClick={e => e.stopPropagation()}>
@@ -1360,19 +1512,37 @@ function EarnSheet({ open, onClose, economy, onToast }) {
           <div className="sheet-title">Earn $HYPHA</div>
         </div>
         <div className="sheet-body">
-          {opts.map(o => (
-            <div key={o.label} className="earn-opt" onClick={() => {
-              economy.earn(o.earn, o.label, o.rep);
-              onToast(`+${o.earn} $H · ${o.label}`, 'success');
-              onClose();
-            }}>
-              <div>
-                <div className="earn-name">{o.label}</div>
-                <div className="earn-desc">{o.desc}{o.rep ? ` · +${o.rep} rep` : ''}</div>
+          {upcoming.map(ev => {
+            const freqColor = FREQ_COLORS[ev.freq] || '#C48838';
+            const days = daysUntil(ev.date);
+            return (
+              <div key={ev.id} className="earn-event">
+                <div className="earn-event-header">
+                  <div style={{ flex:1 }}>
+                    <div className="earn-event-title">{ev.title}</div>
+                    <div className="earn-event-sub">{ev.subtitle}</div>
+                  </div>
+                  <div style={{ textAlign:'right', flexShrink:0 }}>
+                    <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color: freqColor, letterSpacing:'0.1em' }}>{ev.freq}</div>
+                    <div style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'var(--mycelium-d)', marginTop:2 }}>{days}d away</div>
+                  </div>
+                </div>
+                {ev.contributions.map((c, i) => (
+                  <div key={i} className="earn-opt" onClick={() => {
+                    economy.earn(c.earn, `${c.label} — ${ev.title}`, c.rep || 0);
+                    onToast(`+${c.earn} $H · ${c.label}`, 'success');
+                    onClose();
+                  }}>
+                    <div>
+                      <div className="earn-name">{c.label}</div>
+                      <div className="earn-desc">{c.type}{c.rep ? ` · +${c.rep} rep` : ''}</div>
+                    </div>
+                    <div className="earn-amount" style={{ color: freqColor }}>+{c.earn} $H</div>
+                  </div>
+                ))}
               </div>
-              <div className="earn-amount">+{o.earn} $H</div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
@@ -1419,6 +1589,7 @@ function QuickNav({ tab, onTab }) {
     { icon:'🌿', label:'Herbals', href:'/mixology', ext:true },
     { icon:'◎', label:'Shop', href:'/shop', ext:true },
     { icon:'◉', label:'Network', id:'network' },
+    { icon:'△', label:'Calendar', id:'calendar' },
     { icon:'◈', label:'Members', id:'members' },
   ];
   return (
@@ -1494,6 +1665,7 @@ function App() {
       <SystemStats state={economy.state} tier={tier} flowRate={tweaks.flowRate} />
 
       {tab === 'network'  && <NetworkPage economy={economy} onToast={onToast} flowRate={tweaks.flowRate} />}
+      {tab === 'calendar' && <CalendarPage economy={economy} onToast={onToast} />}
       {tab === 'shop'     && <ApothecaryPage economy={economy} onToast={onToast} />}
       {tab === 'exp'      && <ExperiencesPage economy={economy} onToast={onToast} />}
       {tab === 'members'  && <MembersPage currentMember={currentMember} economy={economy} />}
