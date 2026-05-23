@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Patronage — Fungai Art</title>
+<link rel="icon" type="image/png" href="/fungai-art-logo.png"/>
+<link rel="preconnect" href="https://api.fontshare.com"/>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500&f[]=satoshi@400,500,600&f[]=geist-mono@400&display=swap"/>
+<style>
+:root{--s:#060809;--s2:#0F1014;--s3:#171A1F;--m:#C9B894;--md:#8B7E62;--ml:#E6D9B5;--g:#6BD66F;--gl:#B6F0AE;--a:#E8B14B;--al:#F5D689;--v:#A88FE0;--vl:#C5B5F5;--r:rgba(201,184,148,.11);--rl:rgba(201,184,148,.2);--fd:'Zodiak','Cormorant Garamond',Georgia,serif;--fs:'Satoshi',system-ui,sans-serif;--fm:'Geist Mono',monospace;}
+*{box-sizing:border-box;margin:0;padding:0;}html,body{background:var(--s);color:var(--m);font-family:var(--fs);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.22;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .79 0 0 0 0 .72 0 0 0 0 .58 0 0 0 .06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");}
+.wrap{max-width:840px;margin:0 auto;padding:0 22px 100px;position:relative;z-index:1;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0 0;margin-bottom:48px;flex-wrap:wrap;gap:12px;}
+.nav-brand{display:flex;align-items:center;gap:12px;}
+.nav-name{font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml);}
+.nav-sub{font-family:var(--fm);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--vl);margin-top:2px;}
+.nav-back{font-family:var(--fm);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--md);padding:7px 13px;border:0.5px solid var(--r);border-radius:5px;text-decoration:none;transition:all .15s;}
+.nav-back:hover{color:var(--ml);border-color:var(--rl);}
+.hero-ey{font-family:var(--fm);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--vl);margin-bottom:10px;}
+.hero-title{font-family:var(--fd);font-style:italic;font-size:clamp(42px,6.5vw,72px);color:var(--ml);letter-spacing:-.025em;line-height:.92;margin-bottom:18px;}
+.hero-title em{color:var(--v);}
+.hero-blurb{font-size:15px;color:var(--m);line-height:1.78;max-width:62ch;opacity:.9;margin-bottom:40px;}
+
+/* Tier cards */
+.tiers{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--r);border:0.5px solid var(--r);border-radius:14px;overflow:hidden;margin-bottom:52px;}
+.tier{background:var(--s2);padding:26px 24px;display:flex;flex-direction:column;}
+.tier-name{font-family:var(--fd);font-style:italic;font-size:26px;color:var(--ml);margin-bottom:6px;}
+.tier-tag{font-family:var(--fm);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--vl);margin-bottom:14px;}
+.tier-price{font-family:var(--fm);font-size:11px;letter-spacing:.06em;color:var(--md);margin-bottom:16px;}
+.tier-price strong{color:var(--ml);font-size:22px;font-family:var(--fd);font-style:italic;letter-spacing:-.01em;}
+.tier-list{flex:1;margin-bottom:20px;}
+.tier-list li{font-size:13px;color:var(--m);line-height:1.7;padding-left:18px;position:relative;margin-bottom:8px;list-style:none;}
+.tier-list li::before{content:'⟡';position:absolute;left:0;color:var(--vl);}
+.tier-cta{font-family:var(--fm);font-size:9px;letter-spacing:.22em;text-transform:uppercase;padding:11px 18px;border-radius:6px;text-decoration:none;text-align:center;background:rgba(168,143,224,.1);border:0.5px solid rgba(168,143,224,.4);color:var(--vl);transition:all .15s;}
+.tier-cta:hover{background:rgba(168,143,224,.18);}
+
+/* Sections */
+section{margin-bottom:52px;}
+.sec-ey{font-family:var(--fm);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--vl);margin-bottom:10px;}
+.sec-title{font-family:var(--fd);font-style:italic;font-size:32px;color:var(--ml);letter-spacing:-.015em;margin-bottom:14px;line-height:1.1;}
+.sec-title em{color:var(--v);}
+.sec-blurb{font-size:14px;color:var(--m);line-height:1.75;max-width:62ch;opacity:.88;margin-bottom:24px;}
+
+/* Important box */
+.important{background:rgba(168,143,224,.04);border:0.5px solid rgba(168,143,224,.18);border-radius:12px;padding:24px 26px;}
+.important-label{font-family:var(--fm);font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--vl);margin-bottom:10px;}
+.important-title{font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml);margin-bottom:14px;}
+.important p{font-size:13.5px;color:var(--m);line-height:1.75;margin-bottom:10px;}
+.important strong{color:var(--ml);}
+
+/* How it works steps */
+.steps{background:var(--s2);border:0.5px solid var(--r);border-radius:12px;padding:8px 0;}
+.step{display:flex;gap:16px;padding:18px 24px;border-bottom:0.5px solid var(--r);align-items:flex-start;}
+.step:last-child{border:none;}
+.step-num{width:28px;height:28px;border-radius:50%;background:rgba(168,143,224,.12);border:0.5px solid rgba(168,143,224,.4);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:10px;color:var(--vl);}
+.step-text{flex:1;font-size:14px;color:var(--m);line-height:1.7;}
+.step-text strong{color:var(--ml);}
+
+/* Legal clarity box */
+.legal-box{background:var(--s3);border:0.5px solid var(--r);border-radius:10px;padding:20px 22px;}
+.legal-label{font-family:var(--fm);font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--md);margin-bottom:10px;}
+.legal-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:10px 0;border-bottom:0.5px solid var(--r);}
+.legal-row:last-child{border:none;}
+.legal-q{font-family:var(--fm);font-size:11.5px;color:var(--md);}
+.legal-a{font-size:12.5px;color:var(--ml);}
+.legal-a.no{color:#fca5a5;}
+.legal-a.yes{color:var(--gl);}
+
+.foot{border-top:0.5px solid var(--r);padding-top:28px;margin-top:60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.foot-link{font-family:var(--fm);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--md);text-decoration:none;transition:color .15s;}
+.foot-link:hover{color:var(--ml);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="nav">
+  <a href="/" class="nav-brand" style="text-decoration:none;">
+    <img src="/fungai-art-logo.png" alt="Fungai Art" style="height:32px;width:auto;opacity:.92;">
+    <div>
+      <div class="nav-name">Patronage</div>
+      <div class="nav-sub">Becoming a thread</div>
+    </div>
+  </a>
+  <div style="display:flex;gap:7px;flex-wrap:wrap;">
+    <a href="/members" class="nav-back">Members</a>
+    <a href="/basket" class="nav-back">Basket</a>
+    <a href="/" class="nav-back">← Home</a>
+  </div>
+</nav>
+
+<div class="hero-ey">Three pathways into the network</div>
+<h1 class="hero-title">Patrons of the<br><em>mycelium.</em></h1>
+<p class="hero-blurb">A patron is someone who supplies <strong style="color:var(--ml);">resources</strong> to The Mycelium — material, financial, or relational — in exchange for <strong style="color:var(--ml);">extracts, ceremonies, and a long-term place in the network</strong>. Patronage is not investment. There is no expectation of profit. Patrons receive real goods of real value over a real timeline.</p>
+
+<!-- Legal clarity -->
+<div class="important">
+  <div class="important-label">⚖ Plain language</div>
+  <div class="important-title">What patronage <em>is</em> and <em>is not</em>.</div>
+  <p><strong>What it is:</strong> A pre-paid subscription to Fungai Art extracts and experiences over 24 months. You receive Hyphae ($MYCEL utility tokens) that you draw down for goods. After 24 months you may request a refund of any unused balance, denominated in EUR at the rate at the time of refund.</p>
+  <p><strong>What it is not:</strong> An investment. There is no expected return on the contribution beyond the goods and experiences delivered. Hyphae are not securities. The Mycelium does not promise capital appreciation, dividends, or any financial return. Refunds restore unused balance only — not interest, not appreciation.</p>
+  <div class="legal-box" style="margin-top:14px;">
+    <div class="legal-label">For absolute clarity</div>
+    <div class="legal-row"><div class="legal-q">Will my contribution grow in value?</div><div class="legal-a no">No.</div></div>
+    <div class="legal-row"><div class="legal-q">Will I earn interest or dividends?</div><div class="legal-a no">No.</div></div>
+    <div class="legal-row"><div class="legal-q">Can I withdraw my contribution at any time?</div><div class="legal-a yes">Yes — refund of unused balance after 24 months.</div></div>
+    <div class="legal-row"><div class="legal-q">Are Hyphae sold on public exchanges?</div><div class="legal-a no">No — never listed.</div></div>
+    <div class="legal-row"><div class="legal-q">Do I receive real goods of real value?</div><div class="legal-a yes">Yes — extracts, ceremonies, retreats, academy.</div></div>
+    <div class="legal-row"><div class="legal-q">Is this a security?</div><div class="legal-a no">No — utility token for in-network goods.</div></div>
+  </div>
+</div>
+
+<!-- Patron tiers -->
+<section style="margin-top:52px;">
+  <div class="sec-ey">Three patron tiers</div>
+  <h2 class="sec-title">Choose your <em>relation.</em></h2>
+  <p class="sec-blurb">Each tier is a 24-month relationship. Hyphae are issued at the start; you draw them down for goods over the period. After 24 months: continue, exit with a refund of unused balance, or renew.</p>
+  <div class="tiers">
+    <div class="tier">
+      <div class="tier-tag">⟡ Spore patron</div>
+      <div class="tier-name">Spore</div>
+      <div class="tier-price"><strong>€500</strong> · 24 months</div>
+      <ul class="tier-list">
+        <li>500 Hyphae issued at start</li>
+        <li>Draw 1 tincture per quarter (8 total)</li>
+        <li>Members-only access (academy + drawing menu)</li>
+        <li>Newsletter from the field</li>
+        <li>1 foraging circle seat</li>
+      </ul>
+      <a href="mailto:robin@fungai.art?subject=Spore Patronage" class="tier-cta">Become a Spore →</a>
+    </div>
+    <div class="tier">
+      <div class="tier-tag">⟡⟡ Hypha patron</div>
+      <div class="tier-name">Hypha</div>
+      <div class="tier-price"><strong>€1,500</strong> · 24 months</div>
+      <ul class="tier-list">
+        <li>1,500 Hyphae issued at start</li>
+        <li>Quarterly tincture or special extract</li>
+        <li>2 ceremony seats over 24 months</li>
+        <li>Full academy access</li>
+        <li>Priority booking on retreats</li>
+        <li>Direct line to Robin/Steph</li>
+      </ul>
+      <a href="mailto:robin@fungai.art?subject=Hypha Patronage" class="tier-cta">Become a Hypha →</a>
+    </div>
+    <div class="tier">
+      <div class="tier-tag">⟡⟡⟡ Mycelium patron</div>
+      <div class="tier-name">Mycelium</div>
+      <div class="tier-price"><strong>€5,000+</strong> · 24 months</div>
+      <ul class="tier-list">
+        <li>5,000+ Hyphae issued at start</li>
+        <li>Monthly extract delivery</li>
+        <li>Reserved retreat seat (Astral Plans, Lebanon)</li>
+        <li>1-on-1 sessions with Robin or Steph</li>
+        <li>Founding circle voice (mycoTrust)</li>
+        <li>Acknowledgement in project documentation</li>
+        <li>Custom commission possible</li>
+      </ul>
+      <a href="mailto:robin@fungai.art?subject=Mycelium Patronage" class="tier-cta">Become a Mycelium →</a>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section>
+  <div class="sec-ey">The flow</div>
+  <h2 class="sec-title">How <em>patronage</em> works.</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text"><strong>Initial conversation.</strong> Email robin@fungai.art with your name, what tier interests you, and a short note about why you'd like to be part of the network. We talk first — fit matters more than money.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text"><strong>Pre-paid subscription agreement.</strong> Sign a short consumer-style contract: amount, term (24 months), what you receive, refund terms. Standard EU consumer protection applies. Contract is between you and Fungai Art OÜ (Estonia).</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text"><strong>Payment.</strong> Bank transfer to Fungai Art OÜ. Stripe also available. Crypto (USDC, EURC on Polygon) accepted. We invoice properly.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text"><strong>Hyphae issued.</strong> Your tier's Hyphae allocation appears in your wallet immediately. You can draw goods from <a href="/draw" style="color:var(--vl);border-bottom:0.5px solid rgba(197,181,245,.4);text-decoration:none;">the drawing menu</a> any time.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-text"><strong>24 months of flow.</strong> Draw extracts, attend ceremonies, learn at the academy, come on retreats. You're part of the network. Hyphae you don't spend roll over — they don't expire mid-contract.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-text"><strong>End of term — three doors.</strong> At month 24: (a) renew for another period and keep your accumulated mycoTrust; (b) continue at-will, drawing remaining Hyphae as goods; (c) request refund of unused balance in EUR — calculated at the basket reference rate at refund date.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Why patronage exists -->
+<section>
+  <div class="sec-ey">Why this exists</div>
+  <h2 class="sec-title">Why <em>patronage,</em> not investment.</h2>
+  <p class="sec-blurb">Fungai Art is an art and herbal practice, not a startup. We don't want venture capital, equity dilution, or pressure to scale to where it kills the quality. Patronage is the ancient way artists and apothecaries were funded — a circle of supporters who trust the work and want it to continue. You receive real goods, real teaching, real time. The contribution is fair on both sides.</p>
+</section>
+
+<div class="foot">
+  <div style="font-family:var(--fm);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--md);">Fungai Art OÜ · Estonia · Sweden</div>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;">
+    <a href="/members" class="foot-link">Members</a>
+    <a href="/draw" class="foot-link">Draw</a>
+    <a href="/basket" class="foot-link">Basket</a>
+    <a href="/terms" class="foot-link">Terms</a>
+    <a href="/privacy" class="foot-link">Privacy</a>
+    <a href="/" class="foot-link">Home</a>
+  </div>
+</div>
+
+</div>
+<script src="/cookie-banner.js" defer></script>
+</body>
+</html>

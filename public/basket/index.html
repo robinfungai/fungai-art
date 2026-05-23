@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>The Basket — Fungai Art</title>
+<link rel="icon" type="image/png" href="/fungai-art-logo.png"/>
+<link rel="preconnect" href="https://api.fontshare.com"/>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500&f[]=satoshi@400,500,600&f[]=geist-mono@400&display=swap"/>
+<style>
+:root{--s:#060809;--s2:#0F1014;--s3:#171A1F;--m:#C9B894;--md:#8B7E62;--ml:#E6D9B5;--g:#6BD66F;--gl:#B6F0AE;--a:#E8B14B;--al:#F5D689;--r:rgba(201,184,148,.11);--rl:rgba(201,184,148,.2);--fd:'Zodiak','Cormorant Garamond',Georgia,serif;--fs:'Satoshi',system-ui,sans-serif;--fm:'Geist Mono',monospace;}
+*{box-sizing:border-box;margin:0;padding:0;}html,body{background:var(--s);color:var(--m);font-family:var(--fs);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.22;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .79 0 0 0 0 .72 0 0 0 0 .58 0 0 0 .06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");}
+.wrap{max-width:880px;margin:0 auto;padding:0 22px 100px;position:relative;z-index:1;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0 0;margin-bottom:48px;flex-wrap:wrap;gap:12px;}
+.nav-brand{display:flex;align-items:center;gap:12px;}
+.nav-name{font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml);}
+.nav-sub{font-family:var(--fm);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--a);margin-top:2px;}
+.nav-back{font-family:var(--fm);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--md);padding:7px 13px;border:0.5px solid var(--r);border-radius:5px;text-decoration:none;transition:all .15s;}
+.nav-back:hover{color:var(--ml);border-color:var(--rl);}
+.hero-ey{font-family:var(--fm);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--a);margin-bottom:10px;}
+.hero-title{font-family:var(--fd);font-style:italic;font-size:clamp(42px,6.5vw,72px);color:var(--ml);letter-spacing:-.025em;line-height:.92;margin-bottom:18px;}
+.hero-title em{color:var(--a);}
+.hero-blurb{font-size:15px;color:var(--m);line-height:1.78;max-width:64ch;opacity:.9;margin-bottom:40px;}
+
+/* Current rate hero */
+.rate-card{background:linear-gradient(160deg,var(--s2),var(--s3));border:0.5px solid var(--rl);border-radius:18px;padding:36px 32px;margin-bottom:52px;position:relative;overflow:hidden;}
+.rate-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 20% 10%,rgba(232,177,75,.08),transparent 70%);pointer-events:none;}
+.rate-eyebrow{font-family:var(--fm);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--a);margin-bottom:10px;position:relative;z-index:1;}
+.rate-row{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:24px;position:relative;z-index:1;}
+.rate-headline{display:flex;align-items:baseline;gap:14px;}
+.rate-eq{font-family:var(--fd);font-style:italic;font-size:30px;color:var(--ml);}
+.rate-val{font-family:var(--fd);font-style:italic;font-size:64px;color:var(--al);line-height:1;letter-spacing:-.025em;}
+.rate-unit{font-family:var(--fm);font-size:11px;color:var(--md);letter-spacing:.16em;text-transform:uppercase;margin-top:8px;}
+.rate-aside{text-align:right;}
+.rate-date{font-family:var(--fm);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--md);margin-bottom:6px;}
+.rate-disclaimer{font-size:11.5px;color:var(--md);line-height:1.6;max-width:30ch;}
+
+/* Composition */
+.comp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--r);border:0.5px solid var(--r);border-radius:14px;overflow:hidden;}
+@media(max-width:640px){.comp-grid{grid-template-columns:1fr;}}
+.comp-cell{background:var(--s2);padding:26px 24px;position:relative;}
+.comp-icon{font-size:36px;margin-bottom:14px;display:block;}
+.comp-name{font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml);margin-bottom:4px;}
+.comp-latin{font-family:var(--fm);font-size:9px;letter-spacing:.1em;color:var(--md);font-style:italic;margin-bottom:14px;}
+.comp-weight{display:flex;align-items:baseline;gap:6px;margin-bottom:14px;}
+.comp-pct{font-family:var(--fd);font-style:italic;font-size:28px;color:var(--al);line-height:1;}
+.comp-pct-lbl{font-family:var(--fm);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--md);}
+.comp-bar{height:3px;background:var(--s3);border-radius:2px;overflow:hidden;margin-bottom:14px;}
+.comp-bar-fill{height:100%;background:linear-gradient(90deg,var(--a),var(--al));border-radius:2px;}
+.comp-desc{font-size:12.5px;color:var(--m);line-height:1.65;}
+.comp-price-now{font-family:var(--fm);font-size:9.5px;letter-spacing:.06em;color:var(--md);margin-top:12px;padding-top:12px;border-top:0.5px solid var(--r);}
+.comp-price-now strong{color:var(--ml);}
+
+section{margin-bottom:52px;}
+.sec-ey{font-family:var(--fm);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--a);margin-bottom:10px;}
+.sec-title{font-family:var(--fd);font-style:italic;font-size:32px;color:var(--ml);letter-spacing:-.015em;margin-bottom:14px;line-height:1.1;}
+.sec-title em{color:var(--a);}
+.sec-blurb{font-size:14px;color:var(--m);line-height:1.75;max-width:62ch;opacity:.88;margin-bottom:24px;}
+
+/* History table */
+.history{background:var(--s2);border:0.5px solid var(--r);border-radius:12px;overflow:hidden;}
+.hist-head{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;padding:14px 22px;background:var(--s3);border-bottom:0.5px solid var(--r);font-family:var(--fm);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--md);}
+.hist-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;padding:14px 22px;border-bottom:0.5px solid var(--r);font-size:12.5px;}
+.hist-row:last-child{border:none;}
+.hist-row .month{font-family:var(--fm);color:var(--md);letter-spacing:.06em;}
+.hist-row .rate{font-family:var(--fd);font-style:italic;font-size:15px;color:var(--al);}
+.hist-row .change{font-family:var(--fm);font-size:11px;letter-spacing:.04em;}
+.change.up{color:var(--gl);}
+.change.down{color:#fca5a5;}
+.change.flat{color:var(--md);}
+.hist-row .note{font-size:11.5px;color:var(--md);}
+
+/* Philosophy box */
+.philosophy{background:rgba(232,177,75,.04);border:0.5px solid rgba(232,177,75,.18);border-radius:14px;padding:26px 28px;}
+.philosophy h3{font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml);margin-bottom:14px;}
+.philosophy p{font-size:13.5px;color:var(--m);line-height:1.75;margin-bottom:10px;}
+.philosophy strong{color:var(--ml);}
+
+/* Disclaimer */
+.disclaimer{background:var(--s2);border:0.5px solid var(--r);border-radius:10px;padding:18px 22px;}
+.disclaimer-label{font-family:var(--fm);font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--md);margin-bottom:8px;}
+.disclaimer p{font-size:12.5px;color:var(--md);line-height:1.7;margin-bottom:8px;}
+.disclaimer p:last-child{margin-bottom:0;}
+.disclaimer strong{color:var(--ml);}
+
+.foot{border-top:0.5px solid var(--r);padding-top:28px;margin-top:60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.foot-link{font-family:var(--fm);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--md);text-decoration:none;transition:color .15s;}
+.foot-link:hover{color:var(--ml);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="nav">
+  <a href="/" class="nav-brand" style="text-decoration:none;">
+    <img src="/fungai-art-logo.png" alt="Fungai Art" style="height:32px;width:auto;opacity:.92;">
+    <div>
+      <div class="nav-name">The Basket</div>
+      <div class="nav-sub">$MYCEL reference rate</div>
+    </div>
+  </a>
+  <div style="display:flex;gap:7px;flex-wrap:wrap;">
+    <a href="/members" class="nav-back">Members</a>
+    <a href="/patron" class="nav-back">Patronage</a>
+    <a href="/" class="nav-back">← Home</a>
+  </div>
+</nav>
+
+<div class="hero-ey">A reference rate, not a peg</div>
+<h1 class="hero-title">The <em>basket.</em></h1>
+<p class="hero-blurb">$MYCEL is a utility token for in-network goods. To give it a sense of grounded worth, we reference its value to a basket of three earthbound commodities: <strong style="color:var(--ml);">cacao</strong>, <strong style="color:var(--ml);">olive oil</strong>, and <strong style="color:var(--ml);">gold</strong>. The basket is descriptive — it gives members a way to feel the token's weight in real-world terms. It is not enforced on-chain, and Hyphae cannot be redeemed for the underlying commodities. <a href="#how-it-works" style="color:var(--al);text-decoration:none;border-bottom:0.5px solid rgba(232,177,75,.4);">Read how it works ↓</a></p>
+
+<!-- Current reference rate -->
+<div class="rate-card">
+  <div class="rate-eyebrow">⟡ Current reference rate · published monthly</div>
+  <div class="rate-row">
+    <div class="rate-headline">
+      <span class="rate-eq">1 MYCEL ≈</span>
+      <div>
+        <div class="rate-val">€1.42</div>
+        <div class="rate-unit">basket value · indicative only</div>
+      </div>
+    </div>
+    <div class="rate-aside">
+      <div class="rate-date">June 2026</div>
+      <div class="rate-disclaimer">Updated 1st of each month. The rate is communicative — Hyphae trade only for in-network goods.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Composition -->
+<section>
+  <div class="sec-ey">What's in the basket</div>
+  <h2 class="sec-title">Three <em>commodities,</em> three weights.</h2>
+  <p class="sec-blurb">Each commodity tracks a different rhythm — cacao moves with weather and harvest, olive oil with the Mediterranean season, gold with the long human story of value. Together they smooth each other out.</p>
+  <div class="comp-grid">
+    <div class="comp-cell">
+      <span class="comp-icon">⚱</span>
+      <div class="comp-name">Gold</div>
+      <div class="comp-latin">Au · 79</div>
+      <div class="comp-weight">
+        <span class="comp-pct">40%</span>
+        <span class="comp-pct-lbl">basket weight</span>
+      </div>
+      <div class="comp-bar"><div class="comp-bar-fill" style="width:40%"></div></div>
+      <div class="comp-desc">The ancient anchor. Gold gives the basket long-cycle stability — its price moves slowly, with millennia of human attention woven through it.</div>
+      <div class="comp-price-now"><strong>~€68/gram</strong> · LBMA spot · June 2026</div>
+    </div>
+    <div class="comp-cell">
+      <span class="comp-icon">🌳</span>
+      <div class="comp-name">Olive Oil</div>
+      <div class="comp-latin">Olea europaea · cold pressed</div>
+      <div class="comp-weight">
+        <span class="comp-pct">30%</span>
+        <span class="comp-pct-lbl">basket weight</span>
+      </div>
+      <div class="comp-bar"><div class="comp-bar-fill" style="width:30%"></div></div>
+      <div class="comp-desc">The Mediterranean food-medicine. Tracks climate, harvest, and the seasonal flow of olive groves from Tunisia to Greece to Spain.</div>
+      <div class="comp-price-now"><strong>~€9.20/litre</strong> · EU spot extra-virgin · June 2026</div>
+    </div>
+    <div class="comp-cell">
+      <span class="comp-icon">🌱</span>
+      <div class="comp-name">Cacao</div>
+      <div class="comp-latin">Theobroma cacao · organic</div>
+      <div class="comp-weight">
+        <span class="comp-pct">30%</span>
+        <span class="comp-pct-lbl">basket weight</span>
+      </div>
+      <div class="comp-bar"><div class="comp-bar-fill" style="width:30%"></div></div>
+      <div class="comp-desc">The plant medicine of the heart. Sensitive to climate, deeply tied to indigenous communities and ceremonial use. Its price tells a story of the tropics.</div>
+      <div class="comp-price-now"><strong>~€7.80/kg</strong> · ICCO daily price · June 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- Recent history -->
+<section>
+  <div class="sec-ey">Recent rates</div>
+  <h2 class="sec-title">The <em>last six months.</em></h2>
+  <p class="sec-blurb">The basket moves with the world. Some months it rises with cacao volatility; some months it settles with gold. Members can see the rate any time on this page.</p>
+  <div class="history">
+    <div class="hist-head">
+      <div>Month</div>
+      <div>1 MYCEL =</div>
+      <div>Change</div>
+      <div>Driver</div>
+    </div>
+    <div class="hist-row">
+      <span class="month">Jun 2026</span>
+      <span class="rate">€1.42</span>
+      <span class="change up">+2.1%</span>
+      <span class="note">Cacao supply tightening</span>
+    </div>
+    <div class="hist-row">
+      <span class="month">May 2026</span>
+      <span class="rate">€1.39</span>
+      <span class="change up">+0.7%</span>
+      <span class="note">Gold quiet, oil stable</span>
+    </div>
+    <div class="hist-row">
+      <span class="month">Apr 2026</span>
+      <span class="rate">€1.38</span>
+      <span class="change down">−1.4%</span>
+      <span class="note">Olive oil from new harvest</span>
+    </div>
+    <div class="hist-row">
+      <span class="month">Mar 2026</span>
+      <span class="rate">€1.40</span>
+      <span class="change up">+3.2%</span>
+      <span class="note">Gold rally, cacao seasonal</span>
+    </div>
+    <div class="hist-row">
+      <span class="month">Feb 2026</span>
+      <span class="rate">€1.36</span>
+      <span class="change flat">±0.0%</span>
+      <span class="note">All three flat</span>
+    </div>
+    <div class="hist-row">
+      <span class="month">Jan 2026</span>
+      <span class="rate">€1.36</span>
+      <span class="change up">+1.1%</span>
+      <span class="note">Cacao volatility</span>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section id="how-it-works">
+  <div class="sec-ey">The formula</div>
+  <h2 class="sec-title">How the <em>rate is calculated.</em></h2>
+  <div class="philosophy">
+    <h3>The basket formula</h3>
+    <p>The reference rate is calculated on the 1st of each month from public spot prices:</p>
+    <p style="font-family:'Geist Mono',monospace;font-size:12px;background:var(--s3);padding:14px 18px;border-radius:6px;color:var(--ml);line-height:1.6;letter-spacing:.02em;border:0.5px solid var(--r);">
+      <strong>1 MYCEL</strong> ≈ 0.4 × (€/gram gold ÷ 50) + 0.3 × (€/litre olive oil ÷ 7) + 0.3 × (€/kg cacao ÷ 6)
+    </p>
+    <p>The divisors are set so that all three commodities contribute roughly equally at June 2026 baseline. Each month, the new rate is published here with the source prices.</p>
+    <p><strong>Why these three?</strong></p>
+    <p>• <strong>Gold</strong> for ancient memory and slow value.<br/>• <strong>Olive oil</strong> for Mediterranean nourishment and the rhythm of the harvest.<br/>• <strong>Cacao</strong> for plant medicine, ceremony, and the heart.</p>
+    <p>Three earth commodities, three different rhythms, three cultures of value. Their weighted average gives Hyphae a feeling of being grounded in something — without pretending to be something it isn't.</p>
+  </div>
+</section>
+
+<!-- Disclaimer -->
+<section>
+  <div class="disclaimer">
+    <div class="disclaimer-label">⚖ Important — please read</div>
+    <p><strong>The basket is descriptive, not a peg.</strong> $MYCEL is not redeemable for gold, olive oil, or cacao. Fungai Art OÜ does not hold reserves of these commodities. The basket gives members a way to communicate the token's notional value in everyday terms — that is its only function.</p>
+    <p><strong>No appreciation guarantee.</strong> If the basket rises, your in-network purchasing power stays the same (because in-network prices stay in Hyphae, not EUR). If the basket falls, the same applies. The basket changes how you describe Hyphae to outsiders — not what Hyphae buys inside the network.</p>
+    <p><strong>Not financial advice.</strong> The basket rate is a communication tool. Do not treat it as investment information.</p>
+  </div>
+</section>
+
+<div class="foot">
+  <div style="font-family:var(--fm);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--md);">Fungai Art OÜ · The Mycelium</div>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;">
+    <a href="/members" class="foot-link">Members</a>
+    <a href="/patron" class="foot-link">Patronage</a>
+    <a href="/draw" class="foot-link">Draw</a>
+    <a href="/terms" class="foot-link">Terms</a>
+    <a href="/" class="foot-link">Home</a>
+  </div>
+</div>
+
+</div>
+<script src="/cookie-banner.js" defer></script>
+</body>
+</html>

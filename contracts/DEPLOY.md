@@ -2,12 +2,29 @@
 
 This guide walks you through deploying both Fungai Art contracts to Polygon mainnet:
 
-- **`MycelToken.sol`** — the $MYCEL token (members call them "Hyphae")
-- **`MycoTrust.sol`** — soulbound reputation for Mycorrhizal Governance
+- **`MycelToken.sol`** — the $MYCEL token (members call them "Hyphae"). Max supply 88,888,888.
+- **`MycoTrust.sol`** — soulbound reputation for Mycorrhizal Governance.
 
 Total time: ~25 minutes. Total cost: ~$0.10 in gas (paid in MATIC).
 
 Everything happens in your browser via [Remix IDE](https://remix.ethereum.org). No CLI, no Hardhat, no local setup.
+
+---
+
+## ⚠ Before you deploy — issuer entity
+
+**Strongly recommended: register Fungai Art OÜ in Estonia first.** Then deploy from a wallet owned by the OÜ, not your personal wallet.
+
+Why this matters:
+- **Limited liability** — the company is the legal issuer, not you personally
+- **Crypto-friendly jurisdiction** — Estonia has explicit crypto regulation since 2017
+- **0% retained-earnings corporate tax** — pay tax only when profits leave the company
+- **MiCA compliance simpler** — utility tokens issued by Estonian OÜs have established precedent
+- **e-Residency** — you can run the whole company remotely from Sweden
+
+Registering an OÜ in Estonia via e-Residency: ~€265, 1-2 weeks. Annual cost: ~€500-1500 depending on accountant.
+
+Until the OÜ exists, you can still deploy and test — but **do not onboard real patrons (cash contributions) until the OÜ is the legal entity receiving funds.** This is the most important advisory in this whole document.
 
 ---
 
@@ -173,13 +190,15 @@ In Remix's deploy tab, expand the deployed `MycelToken` → look for any `view` 
 ```js
 // Run in any browser console with ethers loaded, or use ethers.utils.id()
 // These are the canonical action types — feel free to add more
-"foraging_session"     // ~10-15 MYCEL
+"foraging_session"     // ~20-30 MYCEL
 "event_help"           // ~50-75 MYCEL
 "alchemy_day"          // ~100 MYCEL
 "teaching"             // varies
 "creative_contribution" // varies
 "ceremony_support"     // ~75 MYCEL
 "founding_member"      // 144 MYCEL one-time
+"patron_grant"         // varies (pre-paid extract subscription)
+"collaborator_credit"  // varies (vendor/artist/supplier services)
 ```
 
 Bytes32 hashes for these are pre-computed in `public/mycel-wallet.js` (`ACTION_TYPES` object) so you can copy them from there.

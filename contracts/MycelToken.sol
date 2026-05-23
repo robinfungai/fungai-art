@@ -9,31 +9,50 @@ import "@openzeppelin/contracts/access/Ownable.sol";
  * │  $MYCEL — Fungai Art Mycelium                                        │
  * │  Members call these "Hyphae" (the connecting threads of the network) │
  * │                                                                      │
- * │  Polygon mainnet · chainId 137                                       │
+ * │  Issued by:  Fungai Art OÜ (Estonia, e-Residency entity)             │
+ * │  Network:    Polygon mainnet · chainId 137                           │
+ * │  Max supply: 88,888,888 MYCEL (8 = infinity ∞)                       │
+ * │  Annual mint ceiling: 4,444,444 MYCEL (5% of max) — owner-bounded   │
  * │                                                                      │
- * │  A CIRCULATION TOKEN — not a membership badge.                       │
+ * │  A UTILITY CIRCULATION TOKEN — not a membership badge, not a         │
+ * │  security, not an investment. Internal medium of exchange for        │
+ * │  goods and experiences within the Fungai Art network.                │
+ * │                                                                      │
  * │  Hyphae are SPORED (earned) for contributions:                       │
  * │    foraging sessions · event support · alchemy days · teaching       │
  * │  Hyphae are DRAWN (spent) on:                                        │
  * │    tinctures · ceremony access · retreats · special extracts         │
+ * │  Hyphae are GIFTED member-to-member with notes.                      │
+ * │  Hyphae are COMPOSTED (burned) to return scarcity.                   │
  * │                                                                      │
- * │  Drawn tokens flow to The Mycelium (treasury) where they are         │
- * │  recycled or burned. The more active the network, the more flow.    │
+ * │  Reference rate (published, NOT enforced on-chain):                  │
+ * │    1 MYCEL ≈ basket value of cacao + olive oil + gold                │
+ * │    Updated monthly at fungai.art/basket                              │
  * │                                                                      │
  * │  GOVERNANCE LIVES SEPARATELY — see MycoTrust.sol (soulbound).        │
- * │  Hyphae holdings DO NOT confer voting power. Voice grows through     │
- * │  ongoing relational depth (mycoTrust), not accumulation.             │
+ * │  Hyphae holdings DO NOT confer voting power.                         │
  * │                                                                      │
- * │  $MYCEL is not a security. No equity, no revenue rights, no          │
- * │  governance via balance. Never listed on DEX/CEX.                    │
+ * │  Never listed on DEX/CEX. Transfers between members are permitted    │
+ * │  for gifting only. Speculative trading is contrary to spirit.        │
  * ╰─────────────────────────────────────────────────────────────────────╯
  */
 contract MycelToken is ERC20, Ownable {
+    /// @notice Maximum supply: 88,888,888 MYCEL. 8 = infinity (Chinese cosmology, sideways ∞).
+    /// At full network activity (~1.3M minted/year), this is decades of runway.
+    uint256 public constant MAX_SUPPLY = 88_888_888 * 10**18;
+
     /// @notice Treasury that receives drawn Hyphae. Settable by owner.
     address public mycelium;
 
     /// @notice Optional trust contract notified on activity (set after deployment)
     address public trustContract;
+
+    /// @notice Annual mint ceiling — owner self-restrains to prevent unilateral inflation.
+    /// Default 5% of MAX_SUPPLY per calendar year. Settable but with a hard upper bound.
+    uint256 public annualMintCeiling = 4_444_444 * 10**18; // 5% of 88,888,888
+
+    /// @notice Tracks tokens minted per calendar year (year = block.timestamp / 365.25 days)
+    mapping(uint256 => uint256) public mintedInYear;
 
     /// @notice Emitted when a member is rewarded Hyphae for a contribution
     /// @param actionType keccak256 of action category: "foraging_session", "event_help", "alchemy_day", "teaching", etc.
@@ -46,9 +65,20 @@ contract MycelToken is ERC20, Ownable {
     /// @notice Emitted when one member gifts Hyphae to another (intra-network reciprocity)
     event Gifted(address indexed from, address indexed to, uint256 amount, string note);
 
+    /// @notice Emitted when annual mint ceiling is changed
+    event AnnualCeilingUpdated(uint256 newCeiling);
+
     constructor(address _mycelium) ERC20("Fungai Art Mycelium", "MYCEL") Ownable(msg.sender) {
         require(_mycelium != address(0), "Mycelium treasury required");
         mycelium = _mycelium;
+    }
+
+    /// @dev Enforces both MAX_SUPPLY and annual ceiling
+    function _enforceMintLimits(uint256 raw) internal {
+        require(totalSupply() + raw <= MAX_SUPPLY, "Would exceed MAX_SUPPLY");
+        uint256 year = block.timestamp / 365 days;
+        require(mintedInYear[year] + raw <= annualMintCeiling, "Would exceed annual ceiling");
+        mintedInYear[year] += raw;
     }
 
     // ── Sporing (earning) ─────────────────────────────────────────────
@@ -60,6 +90,7 @@ contract MycelToken is ERC20, Ownable {
     /// @param note Free-form context: "Königshyttan circle 15 June", "Saffron lecture"
     function spore(address to, uint256 amount, bytes32 actionType, string calldata note) external onlyOwner {
         uint256 raw = amount * 10**18;
+        _enforceMintLimits(raw);
         _mint(to, raw);
         emit Sporing(to, amount, actionType, note);
         _pingTrust(to);
@@ -73,6 +104,7 @@ contract MycelToken is ERC20, Ownable {
         string calldata note
     ) external onlyOwner {
         uint256 raw = amountEach * 10**18;
+        _enforceMintLimits(raw * recipients.length);
         for (uint256 i = 0; i < recipients.length; i++) {
             _mint(recipients[i], raw);
             emit Sporing(recipients[i], amountEach, actionType, note);
@@ -88,6 +120,9 @@ contract MycelToken is ERC20, Ownable {
         string calldata note
     ) external onlyOwner {
         require(recipients.length == amounts.length, "Length mismatch");
+        uint256 total;
+        for (uint256 i = 0; i < amounts.length; i++) total += amounts[i] * 10**18;
+        _enforceMintLimits(total);
         for (uint256 i = 0; i < recipients.length; i++) {
             _mint(recipients[i], amounts[i] * 10**18);
             emit Sporing(recipients[i], amounts[i], actionType, note);
@@ -139,6 +174,13 @@ contract MycelToken is ERC20, Ownable {
 
     function setTrustContract(address _trust) external onlyOwner {
         trustContract = _trust;
+    }
+
+    /// @notice Owner can adjust annual mint ceiling, but never above 10% of MAX_SUPPLY
+    function setAnnualMintCeiling(uint256 newCeiling) external onlyOwner {
+        require(newCeiling <= MAX_SUPPLY / 10, "Ceiling cannot exceed 10% of max supply");
+        annualMintCeiling = newCeiling;
+        emit AnnualCeilingUpdated(newCeiling);
     }
 
     // ── Helpers ───────────────────────────────────────────────────────
