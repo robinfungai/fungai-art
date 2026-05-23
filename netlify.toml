@@ -39,6 +39,16 @@
   to     = "/foraging/index.html"
   status = 200
 
+# Herbal Engine — serve herbal-engine-2/index.html for /herbal-engine-2
+[[redirects]]
+  from   = "/herbal-engine-2"
+  to     = "/herbal-engine-2/index.html"
+  status = 200
+[[redirects]]
+  from   = "/herbal-engine"
+  to     = "/herbal-engine-2/"
+  status = 301
+
 # static pages served directly: /shop /mixology /mycelium-trance /community /health /extraction /privacy /terms /members /sporing /draw /patron /basket
 
 # Everything else (including /) → index.html (premium home design)
