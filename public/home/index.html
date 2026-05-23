@@ -153,9 +153,10 @@ p { line-height: 1.75; color: var(--mist); }
 .btn-primary {
   display: inline-flex; align-items: center; gap: 8px;
   background: var(--lime); color: var(--void);
-  font-family: var(--sans); font-size: 9px; font-weight: 500;
-  letter-spacing: 0.38em; text-transform: uppercase;
-  padding: 13px 28px;
+  font-family: 'Bayer', var(--sans); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  padding: 14px 30px;
+  border-radius: 999px;
   transition: background 0.18s, transform 0.15s;
 }
 .btn-primary:hover { background: var(--amber-lt); transform: translateY(-1px); }
@@ -164,9 +165,10 @@ p { line-height: 1.75; color: var(--mist); }
   display: inline-flex; align-items: center;
   border: 1px solid rgba(158,212,56,0.22);
   color: var(--mist);
-  font-family: var(--sans); font-size: 9px; font-weight: 400;
-  letter-spacing: 0.38em; text-transform: uppercase;
-  padding: 13px 28px;
+  font-family: 'Bayer', var(--sans); font-size: 10px; font-weight: 400;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  padding: 14px 30px;
+  border-radius: 999px;
   transition: border-color 0.18s, color 0.18s;
 }
 .btn-ghost:hover { border-color: var(--lime); color: var(--lime); }
@@ -238,11 +240,17 @@ p { line-height: 1.75; color: var(--mist); }
 .checkout-btn:hover { background: var(--amber-lt); }
 .cart-note { font-size: 10px; color: var(--lichen); text-align: center; letter-spacing: 0.08em; }
 
+/* ─── CUSTOM FONTS ───────────────────────────── */
+@font-face { font-family: 'TAN-PARADISO'; src: url('/fonts/TAN-PARADISO.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Kiona'; src: url('/fonts/Kiona-Regular.ttf') format('truetype'); font-weight: normal; font-display: swap; }
+@font-face { font-family: 'Kiona'; src: url('/fonts/Kiona-Italic.ttf') format('truetype'); font-style: italic; font-display: swap; }
+@font-face { font-family: 'Bayer'; src: url('/fonts/Bayer-TypeArchiType.otf') format('opentype'); font-display: swap; }
+
 /* ─── NAV ────────────────────────────────────── */
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-  height: 64px;
-  background: rgba(6,11,6,0.88);
+  height: 78px;
+  background: rgba(6,11,6,0.92);
   backdrop-filter: blur(28px) saturate(180%);
   border-bottom: 1px solid rgba(158,212,56,0.06);
   transition: border-color 0.3s;
@@ -251,51 +259,66 @@ p { line-height: 1.75; color: var(--mist); }
 .nav-inner {
   display: flex; align-items: center; justify-content: space-between; height: 100%;
 }
-.nav-brand { display: flex; flex-direction: column; gap: 2px; }
-.nav-brand .main { font-family: var(--script); font-size: 26px; color: var(--parchment); line-height: 1; }
-.nav-brand .sub { font-family: var(--sans); font-size: 6.5px; letter-spacing: 0.55em; text-transform: uppercase; color: var(--amber); font-weight: 400; }
+.nav-brand { display: flex; align-items: center; gap: 12px; }
+.nav-brand img { height: 58px; width: auto; object-fit: contain; opacity: 1; }
+.nav-brand .brand-text { display: flex; flex-direction: column; gap: 3px; }
+.nav-brand .main { font-family: 'TAN-PARADISO', 'Kiona', 'Cormorant Garamond', serif; font-size: 24px; color: var(--parchment); line-height: 1; letter-spacing: 0.02em; }
+.nav-brand .sub { font-family: 'Bayer', var(--sans); font-size: 8px; letter-spacing: 0.42em; text-transform: uppercase; color: var(--amber-lt); font-weight: 400; }
 .nav-links { display: flex; gap: 30px; align-items: center; }
 .nav-link {
-  font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
-  color: var(--lichen); font-weight: 400; transition: color 0.15s;
+  font-family: 'Bayer', var(--sans);
+  font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--cream); font-weight: 400; transition: color 0.15s;
 }
 .nav-link:hover, .nav-link.on { color: var(--parchment); }
-/* Alchemy dropdown */
-.nav-dropdown { position: relative; }
+/* Alchemy dropdown — extended hover area */
+.nav-dropdown { position: relative; padding: 4px 0; }
 .nav-dropdown-trigger {
-  font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
-  color: var(--lichen); font-weight: 400; transition: color 0.15s;
-  display: flex; align-items: center; gap: 5px; cursor: none;
-  border: none; background: none; font-family: inherit;
+  font-family: 'Bayer', var(--sans);
+  font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--cream); font-weight: 400; transition: color 0.15s;
+  display: flex; align-items: center; gap: 6px; cursor: pointer;
+  border: none; background: none;
 }
 .nav-dropdown-trigger:hover { color: var(--parchment); }
-.nav-dropdown-trigger .arr { font-size: 7px; opacity: 0.6; transition: transform 0.2s; }
+.nav-dropdown-trigger .arr { font-size: 8px; opacity: 0.7; transition: transform 0.2s; }
 .nav-dropdown:hover .arr { transform: rotate(180deg); }
 .nav-dropdown-menu {
-  position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%);
-  background: rgba(6,11,6,0.96); backdrop-filter: blur(20px);
-  border: 0.5px solid rgba(158,212,56,0.15);
-  min-width: 180px; padding: 8px 0;
+  position: absolute; top: 100%; left: 50%;
+  background: rgba(6,11,6,0.97); backdrop-filter: blur(24px);
+  border: 0.5px solid rgba(158,212,56,0.18);
+  min-width: 220px; padding: 10px 0;
   opacity: 0; pointer-events: none;
-  transition: opacity 0.18s, transform 0.18s;
+  transition: opacity 0.2s, transform 0.2s;
   transform: translateX(-50%) translateY(-4px);
+  border-radius: 8px;
+  margin-top: 8px;
 }
-.nav-dropdown:hover .nav-dropdown-menu {
+/* Invisible hover bridge so cursor can travel from trigger to menu */
+.nav-dropdown-menu::before {
+  content: ''; position: absolute; top: -16px; left: 0; right: 0; height: 16px;
+}
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu {
   opacity: 1; pointer-events: all;
   transform: translateX(-50%) translateY(0);
 }
 .nav-dropdown-menu a {
-  display: block; padding: 10px 20px;
-  font-size: 8.5px; letter-spacing: 0.24em; text-transform: uppercase;
-  color: var(--lichen); text-decoration: none;
-  transition: color 0.15s, background 0.15s;
-  border-left: 1.5px solid transparent;
+  display: block; padding: 11px 22px;
+  font-family: 'Bayer', var(--sans);
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--cream); text-decoration: none;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+  border-left: 2px solid transparent;
 }
-.nav-dropdown-menu a:hover { color: var(--parchment); background: rgba(158,212,56,0.04); border-left-color: rgba(196,134,46,0.5); }
+.nav-dropdown-menu a:hover { color: var(--parchment); background: rgba(158,212,56,0.06); border-left-color: var(--amber); }
 .nav-cart {
   display: flex; align-items: center; gap: 10px;
-  font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
-  color: var(--lichen); font-weight: 400; transition: color 0.15s;
+  font-family: 'Bayer', var(--sans);
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--cream); font-weight: 400; transition: color 0.15s;
+  padding: 8px 16px; border-radius: 999px;
+  border: 0.5px solid rgba(158,212,56,0.15);
 }
 .nav-cart:hover { color: var(--lime); }
 .cart-count {
@@ -371,10 +394,10 @@ p { line-height: 1.75; color: var(--mist); }
   padding: 14px 0; overflow: hidden; background: var(--forest);
 }
 .marquee-track {
-  display: flex; gap: 52px; white-space: nowrap;
-  animation: slide 38s linear infinite;
+  display: flex; gap: 64px; white-space: nowrap;
+  animation: slide 48s linear infinite;
 }
-.marquee-track span { font-size: 8px; letter-spacing: 0.48em; text-transform: uppercase; color: var(--sage); flex-shrink: 0; }
+.marquee-track span { font-family: 'Bayer', var(--sans); font-size: 12.5px; letter-spacing: 0.36em; text-transform: uppercase; color: var(--cream); flex-shrink: 0; }
 .marquee-track .dot { color: var(--amber); }
 @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
@@ -389,10 +412,10 @@ p { line-height: 1.75; color: var(--mist); }
 }
 .phil-item { padding: 0 52px; }
 .phil-item:not(:last-child) { border-right: 1px solid rgba(158,212,56,0.07); }
-.phil-num { font-size: 8px; letter-spacing: 0.38em; color: var(--sage); display: block; margin-bottom: 14px; }
-.phil-item h3 { margin-bottom: 14px; color: var(--parchment); }
-.phil-item h3 em { color: var(--lime); }
-.phil-item p { font-size: 13.5px; line-height: 1.75; color: var(--mist); }
+.phil-num { font-family: 'Bayer', var(--sans); font-size: 10px; letter-spacing: 0.3em; color: var(--amber); display: block; margin-bottom: 14px; }
+.phil-item h3 { font-family: 'TAN-PARADISO', var(--serif); font-size: clamp(26px, 3vw, 34px); margin-bottom: 14px; color: var(--parchment); line-height: 1.05; }
+.phil-item h3 em { color: var(--amber-lt); font-style: italic; }
+.phil-item p { font-size: 14px; line-height: 1.8; color: var(--cream); }
 
 /* ─── EDITORIAL GRID ─────────────────────────── */
 .editorial { overflow: hidden; }
@@ -722,27 +745,31 @@ p { line-height: 1.75; color: var(--mist); }
   border-bottom: 1px solid rgba(158,212,56,0.07);
   padding: 90px 0; text-align: center;
 }
-.newsletter h2 { margin-bottom: 10px; }
-.newsletter .script-line { font-family: var(--script); font-size: 1.15em; color: var(--amber-lt); display: block; }
+.newsletter h2 { margin-bottom: 14px; font-family: 'TAN-PARADISO', var(--serif); font-size: clamp(34px, 4.5vw, 54px); letter-spacing: 0.005em; color: var(--parchment); line-height: 1.05; }
+.newsletter .script-line { font-family: 'TAN-PARADISO', 'Kiona', var(--serif); font-style: italic; font-size: 1em; color: var(--amber-lt); display: block; letter-spacing: 0.01em; }
 .newsletter-form {
-  display: flex; gap: 1px; max-width: 440px; margin: 32px auto 0;
+  display: flex; gap: 6px; max-width: 480px; margin: 32px auto 0;
+  padding: 6px;
+  background: rgba(17,29,34,0.6); border-radius: 999px;
+  border: 0.5px solid rgba(158,212,56,0.12);
 }
 .newsletter-input {
-  flex: 1; background: var(--forest-card); border: 1px solid rgba(158,212,56,0.1);
-  color: var(--parchment); padding: 14px 18px;
-  font-size: 13px; font-family: var(--sans);
-  outline: none; transition: border-color 0.18s;
+  flex: 1; background: transparent; border: none;
+  color: var(--parchment); padding: 12px 20px;
+  font-size: 14px; font-family: 'Kiona', var(--sans);
+  outline: none;
+  border-radius: 999px;
 }
 .newsletter-input::placeholder { color: var(--sage); }
-.newsletter-input:focus { border-color: rgba(158,212,56,0.3); }
 .newsletter-submit {
   background: var(--lime); color: var(--void);
-  font-family: var(--sans); font-size: 9px; font-weight: 500;
-  letter-spacing: 0.32em; text-transform: uppercase;
-  padding: 14px 24px; transition: background 0.18s;
+  font-family: 'Bayer', var(--sans); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  padding: 12px 24px; transition: background 0.18s;
+  border-radius: 999px;
 }
 .newsletter-submit:hover { background: var(--amber-lt); }
-.newsletter-note { font-size: 10.5px; color: var(--sage); margin-top: 16px; letter-spacing: 0.06em; }
+.newsletter-note { font-family: 'Kiona', var(--sans); font-size: 11.5px; color: var(--sage); margin-top: 18px; letter-spacing: 0.04em; }
 
 /* ─── FOOTER ─────────────────────────────────── */
 .footer { background: var(--void); padding: 80px 0 48px; }
@@ -979,9 +1006,13 @@ p { line-height: 1.75; color: var(--mist); }
   .hero-left { padding: 80px 0 60px; border-right: none; }
   .hero-right { min-height: 340px; }
 }
-@media (max-width: 1100px) {
-  .nav-links { gap: 20px; }
-  .nav-links .nav-link { font-size: 8px; letter-spacing: 0.2em; }
+@media (max-width: 1200px) {
+  .nav-links { gap: 22px; }
+  .nav-links .nav-link, .nav-dropdown-trigger { font-size: 10px; letter-spacing: 0.18em; }
+}
+@media (max-width: 980px) {
+  .nav-brand .brand-text { display: none; }
+  .nav-brand img { height: 46px; }
 }
 @media (max-width: 768px) {
   .wrap { padding: 0 24px; }
@@ -1025,7 +1056,11 @@ p { line-height: 1.75; color: var(--mist); }
 <nav class="nav" id="mainNav">
   <div class="wrap nav-inner">
     <a href="/" class="nav-brand">
-      <img src="/assets/fungai-art-logo.png" alt="Fungai Art" style="height:52px;width:auto;object-fit:contain;opacity:.95;" onerror="this.src='/logo.png';this.style.filter='brightness(0) invert(1)';this.style.opacity='.9';this.style.height='38px'">
+      <img src="/assets/fungai-art-logo.png" alt="Fungai Art" onerror="this.src='/logo.png';this.style.filter='brightness(0) invert(1) sepia(0.2)';this.style.height='46px'">
+      <div class="brand-text">
+        <span class="main">Fungai Art</span>
+        <span class="sub">Gaia's Apo'takecare'y</span>
+      </div>
     </a>
     <div class="nav-links">
       <a href="#about" class="nav-link">About</a>
@@ -1034,14 +1069,22 @@ p { line-height: 1.75; color: var(--mist); }
       <div class="nav-dropdown">
         <button class="nav-dropdown-trigger">Alchemy <span class="arr">▾</span></button>
         <div class="nav-dropdown-menu">
+          <a href="/mixology">Mixology</a>
           <a href="/extraction">⚗ Extraction Protocols</a>
-          <a href="/mixology">Herbal Engine</a>
+          <a href="/mixology#engine">Herbal Engine</a>
           <a href="/health">Health Intelligence</a>
         </div>
       </div>
       <a href="/foraging" class="nav-link">Foraging</a>
-      <a href="/community" class="nav-link" target="_blank">Community</a>
-      <a href="/members" class="nav-link" style="color:var(--amber);">$MYCEL</a>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-trigger">Community <span class="arr">▾</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="/community" target="_blank">Spore Portal</a>
+          <a href="/community/academy/">Alchemy Academy</a>
+          <a href="/members">$MYCEL Membership</a>
+          <a href="/patron">Patronage</a>
+        </div>
+      </div>
     </div>
     <button class="nav-cart" onclick="openCart()">
       Basket
@@ -1214,44 +1257,44 @@ p { line-height: 1.75; color: var(--mist); }
 <!-- ══ MARQUEE ══ -->
 <div class="marquee-strip">
   <div class="marquee-track">
-    <span>Wild-Foraged Elixirs</span><span class="dot">·</span>
-    <span>Entheobotanicals</span><span class="dot">·</span>
-    <span>Mycelium Trance</span><span class="dot">·</span>
-    <span>Spagyric Elixirs</span><span class="dot">·</span>
-    <span>Pharma-Grade Ethanol</span><span class="dot">·</span>
-    <span>Biology · Alchemy · Frequency</span><span class="dot">·</span>
-    <span>Living Mycelial Art</span><span class="dot">·</span>
-    <span>Botanical Elixirs</span><span class="dot">·</span>
-    <span>Double Extraction · Spagyric · Oleoresin</span><span class="dot">·</span>
-    <span>Inner Architecture</span><span class="dot">·</span>
-    <span>Wild-Foraged Elixirs</span><span class="dot">·</span>
-    <span>Entheobotanicals</span><span class="dot">·</span>
-    <span>Mycelium Trance</span><span class="dot">·</span>
-    <span>Spagyric Elixirs</span><span class="dot">·</span>
-    <span>Pharma-Grade Ethanol</span><span class="dot">·</span>
-    <span>Berlin · Sweden · France · Lebanon</span><span class="dot">·</span>
-    <span>Living Mycelial Art</span><span class="dot">·</span>
-    <span>Sacred Plant Allies</span><span class="dot">·</span>
+    <span>Wild-Foraged Elixirs</span><span class="dot">✦</span>
+    <span>Spagyric Essences</span><span class="dot">✦</span>
+    <span>Living Mycelium</span><span class="dot">✦</span>
+    <span>Entheobotanicals</span><span class="dot">✦</span>
+    <span>Mycelium Trance</span><span class="dot">✦</span>
+    <span>Sacred Plant Allies</span><span class="dot">✦</span>
+    <span>Biology · Alchemy · Frequency</span><span class="dot">✦</span>
+    <span>Inner Architecture</span><span class="dot">✦</span>
+    <span>111 Hz Resonance</span><span class="dot">✦</span>
+    <span>Old Traditional Methods</span><span class="dot">✦</span>
+    <span>Wild-Foraged Elixirs</span><span class="dot">✦</span>
+    <span>Spagyric Essences</span><span class="dot">✦</span>
+    <span>Living Mycelium</span><span class="dot">✦</span>
+    <span>Entheobotanicals</span><span class="dot">✦</span>
+    <span>Mycelium Trance</span><span class="dot">✦</span>
+    <span>Sacred Plant Allies</span><span class="dot">✦</span>
+    <span>Berlin · Sweden · Lisbon · Beirut · Genoa</span><span class="dot">✦</span>
+    <span>Living Mycelial Art</span><span class="dot">✦</span>
   </div>
 </div>
 
 <!-- ══ PHILOSOPHY ══ -->
-<div class="philosophy">
+<div class="philosophy" style="padding:56px 0;">
   <div class="wrap philosophy-inner">
     <div class="phil-item reveal">
       <span class="phil-num">01 ·</span>
       <h3>Wild &amp;<br/><em>Ethical</em></h3>
-      <p>Self-sourcing directly from the forests of Sweden and Germany with strict seasonal awareness. Never harvesting from vulnerable ecosystems.</p>
+      <p>Self-sourced from Swedish and Mediterranean forests, with strict seasonal awareness. Never from vulnerable ecosystems.</p>
     </div>
     <div class="phil-item reveal reveal-d1">
       <span class="phil-num">02 ·</span>
-      <h3>Alchemising &amp;<br/><em>Bottling</em></h3>
-      <p>Creating pure tinctures with strictly zero synthetic additives, made with pharma-grade ethanol for over two years shelf life. Each formula carefully studied and composed.</p>
+      <h3>Spagyric<br/><em>Alchemy</em></h3>
+      <p>Living elixirs and essences in the old tradition — Paracelsian spagyrics, full-plant intelligence, hand-composed in small batches.</p>
     </div>
     <div class="phil-item reveal reveal-d2">
       <span class="phil-num">03 ·</span>
       <h3>Rooted in<br/><em>Reciprocity</em></h3>
-      <p>We understand Gaia not as a resource, but as a conscious, regenerative system. Rooted in reusing and zero-waste practices, minimising ecological footprint.</p>
+      <p>Gaia is a conscious, regenerative system. We reuse, compost, and leave a smaller footprint than we found.</p>
     </div>
   </div>
 </div>
@@ -1365,11 +1408,10 @@ p { line-height: 1.75; color: var(--mist); }
   <div class="wrap">
     <div class="sec-head reveal" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:20px;margin-bottom:48px;">
       <div>
-        <span class="sec-label">Moder Jord Collection · Pharma-grade ethanol · Full spectrum</span>
-        <h2 class="sec-title">The <em>Apothecary</em></h2>
-        <p class="sec-sub" style="margin-bottom:0">Sacred plant preparations, wild-foraged where marked. Each formula composed by hand.</p>
+        <span class="sec-label" style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;color:var(--amber);">Specialized formulas &amp; single extracts</span>
+        <h2 class="sec-title" style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;">The <em>Apothecary</em></h2>
       </div>
-      <a href="/shop" style="display:inline-flex;align-items:center;gap:8px;border:0.5px solid rgba(136,186,200,0.3);color:var(--mist);font-size:9px;letter-spacing:2.5px;text-transform:uppercase;padding:10px 22px;text-decoration:none;white-space:nowrap;transition:all .2s;" onmouseover="this.style.borderColor='rgba(136,186,200,0.6)';this.style.color='var(--parchment)'" onmouseout="this.style.borderColor='rgba(136,186,200,0.3)';this.style.color='var(--mist)'">Enter full apothecary →</a>
+      <a href="/shop" style="display:inline-flex;align-items:center;gap:8px;border:0.5px solid rgba(136,186,200,0.4);color:var(--cream);font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;padding:12px 24px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:all .2s;" onmouseover="this.style.borderColor='rgba(136,186,200,0.8)';this.style.color='var(--parchment)'" onmouseout="this.style.borderColor='rgba(136,186,200,0.4)';this.style.color='var(--cream)'">Enter full apothecary →</a>
     </div>
     <div class="products-grid" style="grid-template-columns:repeat(4,1fr)">
 
@@ -1426,8 +1468,8 @@ p { line-height: 1.75; color: var(--mist); }
             <span class="note-tag">Lions Mane</span><span class="note-tag">Rhodiola</span><span class="note-tag">Nootropic</span>
           </div>
           <div class="product-footer">
-            <div class="product-price"><span class="size">30ml</span><span>€48</span></div>
-            <button class="add-btn" onclick="addToCart('ADHD Support', 48)">+ Add</button>
+            <div class="product-price"><span class="size">30ml</span><span>€38</span></div>
+            <button class="add-btn" onclick="addToCart('ADHD Support', 38)">+ Add</button>
           </div>
         </div>
       </div>
@@ -1455,22 +1497,22 @@ p { line-height: 1.75; color: var(--mist); }
     </div><!-- /products-grid -->
 
     <!-- Formula CTA + enter apothecary -->
-    <div style="margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:1px;" class="reveal">
-      <div style="padding:28px 32px;background:var(--forest-card);border:1px solid rgba(136,186,200,0.07);">
-        <div style="font-size:8px;letter-spacing:3.5px;text-transform:uppercase;color:var(--lichen);margin-bottom:10px;">Tailored Formula Service</div>
-        <p style="font-family:var(--serif);font-style:italic;font-size:18px;color:var(--parchment);line-height:1.45;margin-bottom:14px;">We blend full-spectrum extracts to your needs — mixed à la minute, shipped within 48h.</p>
-        <p style="font-size:12.5px;color:var(--dust);line-height:1.7;margin-bottom:20px;">Use the Herbal Engine to build your formula, then send it to us. We extract and combine each herb fresh, at the right ethanol concentration, for your exact protocol.</p>
-        <a href="/mixology" style="display:inline-flex;align-items:center;gap:6px;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--mist);border:0.5px solid rgba(136,186,200,0.3);padding:10px 20px;text-decoration:none;transition:all .2s;" onmouseover="this.style.borderColor='rgba(136,186,200,0.6)'" onmouseout="this.style.borderColor='rgba(136,186,200,0.3)'">Open the Herbal Engine →</a>
+    <div style="margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:1px;border-radius:16px;overflow:hidden;" class="reveal">
+      <div style="padding:32px 34px;background:var(--forest-card);border:1px solid rgba(136,186,200,0.08);">
+        <div style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber);margin-bottom:12px;">Tailored Formula Service</div>
+        <p style="font-family:'TAN-PARADISO','Kiona',var(--serif);font-size:22px;color:var(--parchment);line-height:1.35;margin-bottom:14px;letter-spacing:0.005em;">We blend full-spectrum extracts to your needs — mixed à la minute, shipped within 48h.</p>
+        <p style="font-family:'Kiona',var(--sans);font-size:13.5px;color:var(--cream);line-height:1.75;margin-bottom:22px;">Use the Herbal Engine to build your formula, then send it to us. We extract and combine each herb fresh, at the right ethanol concentration, for your exact protocol.</p>
+        <a href="/mixology" style="display:inline-flex;align-items:center;gap:6px;font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:var(--cream);border:0.5px solid rgba(136,186,200,0.4);padding:12px 22px;border-radius:999px;text-decoration:none;transition:all .2s;" onmouseover="this.style.borderColor='rgba(136,186,200,0.7)';this.style.color='var(--parchment)'" onmouseout="this.style.borderColor='rgba(136,186,200,0.4)';this.style.color='var(--cream)'">Open the Herbal Engine →</a>
       </div>
-      <div style="padding:28px 32px;background:rgba(136,186,200,0.04);border:1px solid rgba(136,186,200,0.12);display:flex;flex-direction:column;justify-content:space-between;">
+      <div style="padding:32px 34px;background:rgba(136,186,200,0.05);border:1px solid rgba(136,186,200,0.15);display:flex;flex-direction:column;justify-content:space-between;">
         <div>
-          <div style="font-size:8px;letter-spacing:3.5px;text-transform:uppercase;color:var(--lichen);margin-bottom:10px;">Full Collection</div>
-          <p style="font-family:var(--serif);font-style:italic;font-size:18px;color:var(--parchment);line-height:1.45;margin-bottom:14px;">30+ preparations. Fungi, flowers, compositions, specials, oils, and seasonal wildcrafts.</p>
-          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;">
-            <span style="font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage);border:0.5px solid rgba(81,122,64,0.3);padding:3px 9px;">Fungi Tinctures</span>
-            <span style="font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage);border:0.5px solid rgba(81,122,64,0.3);padding:3px 9px;">Compositions</span>
-            <span style="font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage);border:0.5px solid rgba(81,122,64,0.3);padding:3px 9px;">Sacred Flowers</span>
-            <span style="font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage);border:0.5px solid rgba(81,122,64,0.3);padding:3px 9px;">Specials</span>
+          <div style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber);margin-bottom:12px;">Full Collection</div>
+          <p style="font-family:'TAN-PARADISO','Kiona',var(--serif);font-size:22px;color:var(--parchment);line-height:1.35;margin-bottom:14px;letter-spacing:0.005em;">30+ preparations. Fungal extracts, flowers, compositions, specials, oils, and seasonal wildcrafts.</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px;">
+            <span style="font-family:'Bayer',var(--sans);font-size:9.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber-lt);border:0.5px solid rgba(196,134,46,0.35);padding:4px 11px;border-radius:999px;">Fungal Extracts</span>
+            <span style="font-family:'Bayer',var(--sans);font-size:9.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber-lt);border:0.5px solid rgba(196,134,46,0.35);padding:4px 11px;border-radius:999px;">Compositions</span>
+            <span style="font-family:'Bayer',var(--sans);font-size:9.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber-lt);border:0.5px solid rgba(196,134,46,0.35);padding:4px 11px;border-radius:999px;">Sacred Flowers</span>
+            <span style="font-family:'Bayer',var(--sans);font-size:9.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber-lt);border:0.5px solid rgba(196,134,46,0.35);padding:4px 11px;border-radius:999px;">Specials</span>
           </div>
         </div>
         <a href="/shop" class="btn-primary" style="text-decoration:none;text-align:center;">Enter the full apothecary →</a>
@@ -1480,10 +1522,14 @@ p { line-height: 1.75; color: var(--mist); }
 </section>
 
 <!-- ══ FEATURE PRODUCT ══ -->
-<div class="feature">
+<div class="feature" style="padding:72px 0;">
   <div class="wrap feature-inner">
-    <div class="feature-img-wrap reveal" style="position:relative;">
-      <img src="/home/pomelli-3.png" alt="Sleepy Sleepy" style="width:260px;height:380px;object-fit:cover;border-radius:4px;opacity:0.92;">
+    <div class="feature-img-wrap reveal" style="position:relative;min-height:auto;">
+      <div style="position:relative;width:280px;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.4);">
+        <img src="/home/pomelli-3.png" alt="Sleepy Sleepy" style="display:block;width:100%;height:400px;object-fit:cover;border-radius:18px;">
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 0%,transparent 55%,rgba(13,22,25,0.5) 80%,rgba(13,22,25,0.85) 100%);border-radius:18px;pointer-events:none;"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(196,134,46,0.08),transparent 70%);border-radius:18px;pointer-events:none;"></div>
+      </div>
       <div class="annotation ann-1"><strong>CNS ease</strong>Soothes overactive thoughts, relaxes the body</div>
       <div class="annotation ann-2"><strong>GABAergic</strong>Supports restful sleep pathways naturally</div>
       <div class="annotation ann-3"><strong>Zero synthetic</strong>additives. Pharma-grade ethanol only</div>
@@ -1534,7 +1580,7 @@ p { line-height: 1.75; color: var(--mist); }
         <div class="ing-row"><span class="ing-num">05</span><span class="ing-name">Lavandula angustifolia</span><span class="ing-effect">Nervous system</span></div>
         <div class="ing-row"><span class="ing-num">06</span><span class="ing-name">Artemisia vulgaris</span><span class="ing-effect">Dream enhancement</span></div>
       </div>
-      <button class="btn-primary" style="margin-top:32px;" onclick="addToCart('Sleepy Sleepy', 48)">Add to basket — €48</button>
+      <button class="btn-primary" style="margin-top:32px;" onclick="addToCart('Sleepy Sleepy', 33)">Add to basket — €33</button>
     </div>
   </div>
 </div>
@@ -1554,10 +1600,10 @@ p { line-height: 1.75; color: var(--mist); }
       <p style="font-size:13.5px;margin-top:20px;max-width:520px;">A 111-minute fully embodied sensory awakening. A deliberate attunement to the relational, ecological, and mysterious architecture of life. Gong · tuning forks · sacred plant allies · somatic attunement.</p>
       <p style="font-size:13.5px;margin-top:14px;max-width:520px;font-family:var(--serif);font-style:italic;color:var(--parchment);">"Trance arises not through force, but through recognition."</p>
       <div class="trance-meta">
-        <div class="trance-stat"><span class="v">111</span><span class="l">Minutes</span></div>
-        <div class="trance-stat"><span class="v">70+</span><span class="l">Max capacity</span></div>
-        <div class="trance-stat"><span class="v">5</span><span class="l">Sacred allies</span></div>
-        <div class="trance-stat"><span class="v">Europe</span><span class="l">Festivals &amp; private</span></div>
+        <div class="trance-stat"><span class="v">99</span><span class="l">Minutes immersion</span></div>
+        <div class="trance-stat"><span class="v">7+</span><span class="l">Sacred plant allies</span></div>
+        <div class="trance-stat"><span class="v">111 Hz</span><span class="l">Resonant frequency</span></div>
+        <div class="trance-stat"><span class="v">Worldwide</span><span class="l">Festivals &amp; private</span></div>
       </div>
       <div class="trance-actions">
         <a href="/mycelium-trance" class="btn-primary">Discover Mycelium Trance</a>
@@ -1659,54 +1705,61 @@ p { line-height: 1.75; color: var(--mist); }
         <!-- Mock map visual -->
         <div style="background:var(--forest-card);border:0.5px solid rgba(107,214,111,0.12);padding:28px;border-radius:4px;position:relative;overflow:hidden;">
           <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--sage);margin-bottom:16px;">25 ecological nodes · live season filter</div>
-          <!-- SVG mini-map abstraction -->
-          <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:2px;opacity:0.9;">
-            <rect width="360" height="220" fill="#080F13"/>
-            <g opacity="0.12" stroke="#6BD66F" stroke-width="0.5" fill="none">
-              <line x1="0" y1="55" x2="360" y2="55"/><line x1="0" y1="110" x2="360" y2="110"/>
-              <line x1="0" y1="165" x2="360" y2="165"/>
-              <line x1="90" y1="0" x2="90" y2="220"/><line x1="180" y1="0" x2="180" y2="220"/>
-              <line x1="270" y1="0" x2="270" y2="220"/>
+          <!-- SVG mini-map abstraction — Europe + mycelial connections -->
+          <svg viewBox="0 0 380 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:10px;opacity:0.96;background:#070d0b;">
+            <defs>
+              <radialGradient id="forageGlow" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#6BD66F" stop-opacity="0.18"/><stop offset="100%" stop-color="#6BD66F" stop-opacity="0"/></radialGradient>
+              <filter id="dotBlur"><feGaussianBlur stdDeviation="0.8"/></filter>
+            </defs>
+            <rect width="380" height="280" fill="url(#forageGlow)"/>
+            <!-- subtle grid -->
+            <g opacity="0.08" stroke="#6BD66F" stroke-width="0.4" fill="none">
+              <line x1="0" y1="70" x2="380" y2="70"/><line x1="0" y1="140" x2="380" y2="140"/><line x1="0" y1="210" x2="380" y2="210"/>
+              <line x1="95" y1="0" x2="95" y2="280"/><line x1="190" y1="0" x2="190" y2="280"/><line x1="285" y1="0" x2="285" y2="280"/>
             </g>
-            <!-- Sweden nodes -->
-            <circle cx="195" cy="42" r="5" fill="#6BD66F" opacity="0.85"><animate attributeName="r" values="5;7;5" dur="3s" repeatCount="indefinite"/></circle>
-            <circle cx="188" cy="55" r="4" fill="#6BD66F" opacity="0.7"/>
-            <circle cx="204" cy="35" r="3.5" fill="#C48838" opacity="0.8"/>
-            <!-- Berlin -->
-            <circle cx="210" cy="88" r="4.5" fill="#88BAC8" opacity="0.8"><animate attributeName="r" values="4.5;6.5;4.5" dur="4s" repeatCount="indefinite"/></circle>
-            <!-- France -->
-            <circle cx="160" cy="128" r="4" fill="#C48838" opacity="0.75"/>
-            <circle cx="178" cy="140" r="3.5" fill="#A88FE0" opacity="0.7"/>
-            <circle cx="148" cy="118" r="3" fill="#6BD66F" opacity="0.6"/>
-            <!-- Germany -->
-            <circle cx="205" cy="105" r="3.5" fill="#6BD66F" opacity="0.65"/>
-            <circle cx="222" cy="96" r="3" fill="#88BAC8" opacity="0.6"/>
+            <!-- mycelial connection lines -->
+            <g stroke="#6BD66F" stroke-width="0.4" fill="none" opacity="0.25">
+              <path d="M205,50 Q220,90 220,108"/>
+              <path d="M220,108 Q200,140 175,160"/>
+              <path d="M175,160 Q210,180 240,210"/>
+              <path d="M220,108 Q260,130 280,155"/>
+              <path d="M205,50 Q170,80 165,108"/>
+              <path d="M175,160 Q140,170 120,195"/>
+            </g>
+            <!-- Sweden cluster -->
+            <g><circle cx="210" cy="38" r="6" fill="#6BD66F" opacity="0.95"><animate attributeName="r" values="6;9;6" dur="3.4s" repeatCount="indefinite"/></circle><circle cx="210" cy="38" r="14" fill="none" stroke="#6BD66F" stroke-width="0.5" opacity="0.3"><animate attributeName="r" values="14;22;14" dur="3.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.3;0;0.3" dur="3.4s" repeatCount="indefinite"/></circle></g>
+            <circle cx="198" cy="54" r="4" fill="#6BD66F" opacity="0.78"/>
+            <circle cx="222" cy="48" r="3.5" fill="#B6F0AE" opacity="0.7"/>
+            <circle cx="215" cy="65" r="3" fill="#6BD66F" opacity="0.6"/>
             <!-- Denmark -->
-            <circle cx="196" cy="70" r="3.5" fill="#4FA8E0" opacity="0.75"/>
-            <circle cx="207" cy="62" r="3" fill="#88BAC8" opacity="0.6"/>
+            <circle cx="205" cy="82" r="4" fill="#4FA8E0" opacity="0.85"/>
+            <circle cx="218" cy="76" r="3" fill="#88BAC8" opacity="0.7"/>
+            <!-- Berlin -->
+            <g><circle cx="220" cy="108" r="6" fill="#88BAC8" opacity="0.95"><animate attributeName="r" values="6;9;6" dur="4s" repeatCount="indefinite"/></circle><circle cx="220" cy="108" r="14" fill="none" stroke="#88BAC8" stroke-width="0.5" opacity="0.3"><animate attributeName="r" values="14;22;14" dur="4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.3;0;0.3" dur="4s" repeatCount="indefinite"/></circle></g>
+            <!-- Germany scatter -->
+            <circle cx="208" cy="124" r="3.5" fill="#88BAC8" opacity="0.7"/>
+            <circle cx="232" cy="120" r="3" fill="#6BD66F" opacity="0.6"/>
+            <!-- France -->
+            <circle cx="175" cy="160" r="5" fill="#C48838" opacity="0.9"><animate attributeName="r" values="5;7;5" dur="3.8s" repeatCount="indefinite"/></circle>
+            <circle cx="155" cy="148" r="3.5" fill="#C48838" opacity="0.7"/>
+            <circle cx="190" cy="178" r="3" fill="#A88FE0" opacity="0.65"/>
+            <!-- Genoa (Italy) -->
+            <circle cx="240" cy="210" r="5" fill="#E8714B" opacity="0.85"><animate attributeName="r" values="5;7;5" dur="4.2s" repeatCount="indefinite"/></circle>
+            <!-- Lisbon -->
+            <circle cx="120" cy="195" r="5" fill="#E8B14B" opacity="0.9"><animate attributeName="r" values="5;7;5" dur="3.6s" repeatCount="indefinite"/></circle>
+            <!-- Beirut -->
+            <circle cx="320" cy="222" r="5" fill="#A88FE0" opacity="0.85"><animate attributeName="r" values="5;7;5" dur="4.4s" repeatCount="indefinite"/></circle>
             <!-- Labels -->
-            <text x="200" y="30" font-family="monospace" font-size="6" fill="#6BD66F" opacity="0.7">Sweden</text>
-            <text x="215" y="84" font-family="monospace" font-size="6" fill="#88BAC8" opacity="0.7">Berlin</text>
-            <text x="130" y="135" font-family="monospace" font-size="6" fill="#C48838" opacity="0.7">France</text>
+            <text x="218" y="32" font-family="'Bayer',sans-serif" font-size="8" fill="#B6F0AE" opacity="0.9" letter-spacing="1">SWEDEN</text>
+            <text x="228" y="106" font-family="'Bayer',sans-serif" font-size="8" fill="#A6D5F2" opacity="0.9" letter-spacing="1">BERLIN</text>
+            <text x="148" y="155" font-family="'Bayer',sans-serif" font-size="8" fill="#F5D689" opacity="0.85" letter-spacing="1">FRANCE</text>
+            <text x="248" y="208" font-family="'Bayer',sans-serif" font-size="8" fill="#F5A080" opacity="0.85" letter-spacing="1">GENOA</text>
+            <text x="92" y="212" font-family="'Bayer',sans-serif" font-size="8" fill="#F5D689" opacity="0.9" letter-spacing="1">LISBON</text>
+            <text x="290" y="240" font-family="'Bayer',sans-serif" font-size="8" fill="#C5B5F5" opacity="0.85" letter-spacing="1">BEIRUT</text>
           </svg>
         </div>
-        <!-- Stats row -->
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;">
-          <div style="padding:16px;background:var(--forest-card);border:0.5px solid rgba(107,214,111,0.08);text-align:center;">
-            <div style="font-family:var(--serif);font-style:italic;font-size:24px;color:var(--amber-lt);line-height:1;">25</div>
-            <div style="font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:var(--sage);margin-top:4px;">Eco nodes</div>
-          </div>
-          <div style="padding:16px;background:var(--forest-card);border:0.5px solid rgba(107,214,111,0.08);text-align:center;">
-            <div style="font-family:var(--serif);font-style:italic;font-size:24px;color:var(--amber-lt);line-height:1;">6</div>
-            <div style="font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:var(--sage);margin-top:4px;">Countries</div>
-          </div>
-          <div style="padding:16px;background:var(--forest-card);border:0.5px solid rgba(107,214,111,0.08);text-align:center;">
-            <div style="font-family:var(--serif);font-style:italic;font-size:24px;color:var(--amber-lt);line-height:1;">4</div>
-            <div style="font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:var(--sage);margin-top:4px;">Seasons</div>
-          </div>
-        </div>
-        <div style="padding:20px;background:rgba(107,214,111,0.04);border:0.5px solid rgba(107,214,111,0.12);">
-          <p style="font-family:var(--serif);font-style:italic;font-size:16px;color:var(--parchment);line-height:1.5;">"Forage with us. Learn the names, properties, and stories of wild plants you walk past every day."</p>
+        <div style="padding:24px 26px;background:rgba(107,214,111,0.04);border:0.5px solid rgba(107,214,111,0.15);border-radius:14px;">
+          <p style="font-family:'TAN-PARADISO','Kiona',var(--serif);font-style:italic;font-size:19px;color:var(--parchment);line-height:1.45;">"Forage with us. Learn the names, properties, and stories of wild plants you walk past every day."</p>
         </div>
       </div>
     </div>
@@ -1714,24 +1767,42 @@ p { line-height: 1.75; color: var(--mist); }
 </section>
 
 <!-- ══ JOURNAL ══ -->
-<section id="journal" class="journal">
+<section id="journal" class="journal" style="padding:64px 0;">
   <div class="wrap">
-    <div class="reveal" style="text-align:center;">
-      <span class="sec-label">The Field Notes</span>
-      <h2 class="sec-title">Spore <em>Stories</em></h2>
+    <div class="reveal" style="text-align:center;margin-bottom:36px;">
+      <span class="sec-label" style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;color:var(--amber);">@fungai.art · field notes</span>
+      <h2 class="sec-title" style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;margin-top:6px;">Spore <em>Stories</em></h2>
     </div>
-    <div style="display:flex;justify-content:center;margin-top:40px;" class="reveal reveal-d1">
-      <blockquote class="instagram-media" data-instgrm-captioned
-        data-instgrm-permalink="https://www.instagram.com/p/DTx5LGZjM0j/?utm_source=ig_embed"
-        data-instgrm-version="14"
-        style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:1px;max-width:540px;min-width:326px;padding:0;width:99.375%;">
-      </blockquote>
-      <script async src="//www.instagram.com/embed.js"></script>
+    <div class="spore-grid reveal reveal-d1">
+      <!-- Left: most-liked photo card 1 -->
+      <a href="https://www.instagram.com/fungai.art" target="_blank" class="spore-photo spore-photo-1" style="background-image:url('/home/abc.png');"></a>
+      <!-- Middle: featured Instagram embed (the architecture) -->
+      <div class="spore-embed">
+        <blockquote class="instagram-media" data-instgrm-captioned
+          data-instgrm-permalink="https://www.instagram.com/p/DTx5LGZjM0j/?utm_source=ig_embed"
+          data-instgrm-version="14"
+          style="background:#fff;border:0;border-radius:14px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;min-width:280px;padding:0;width:100%;">
+        </blockquote>
+        <script async src="//www.instagram.com/embed.js"></script>
+      </div>
+      <!-- Right: most-liked photo card 2 -->
+      <a href="https://www.instagram.com/fungai.art" target="_blank" class="spore-photo spore-photo-2" style="background-image:url('/home/abcabc.png');"></a>
     </div>
-    <div style="text-align:center;margin-top:32px;" class="reveal reveal-d2">
+    <div style="text-align:center;margin-top:36px;" class="reveal reveal-d2">
       <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-ghost">Follow @fungai.art</a>
     </div>
   </div>
+  <style>
+    .spore-grid { display:grid; grid-template-columns: 1fr 540px 1fr; gap:18px; align-items:center; max-width:1180px; margin:0 auto; }
+    .spore-photo { display:block; aspect-ratio: 4/5; background-size:cover; background-position:center; border-radius:18px; overflow:hidden; transition:transform 0.35s, box-shadow 0.35s; box-shadow:0 8px 32px rgba(0,0,0,0.35); }
+    .spore-photo::after { content:''; display:block; width:100%; height:100%; background:linear-gradient(180deg,transparent 50%,rgba(6,11,6,0.5) 100%); border-radius:18px; }
+    .spore-photo:hover { transform: translateY(-3px) scale(1.01); box-shadow:0 14px 48px rgba(0,0,0,0.45); }
+    .spore-embed { width:100%; max-width:540px; justify-self:center; }
+    @media (max-width: 900px) {
+      .spore-grid { grid-template-columns: 1fr; gap:24px; }
+      .spore-photo { display:none; }
+    }
+  </style>
 </section>
 
 <!-- ══ ABOUT ══ -->
@@ -1739,91 +1810,81 @@ p { line-height: 1.75; color: var(--mist); }
   <div class="wrap">
 
     <!-- Opening statement -->
-    <div class="reveal" style="text-align:center;margin-bottom:72px;">
-      <span class="sec-label" style="text-align:center;margin-bottom:14px;">About Fungai Art</span>
-      <h2 style="font-family:var(--serif);font-weight:300;font-size:clamp(34px,5vw,62px);letter-spacing:-0.025em;color:var(--parchment);line-height:1.05;max-width:700px;margin:0 auto 20px;">Art &amp; medicine return<br/>to their <em style="color:var(--mist);">original unity.</em></h2>
-      <p style="font-size:14px;color:var(--mist);max-width:560px;margin:0 auto;line-height:1.8;">"We are sacred rebels, artists and healers activated by her pulse." Living mycelial art — rooted in the forest, carried by frequency.</p>
+    <div class="reveal" style="text-align:center;margin-bottom:64px;">
+      <span class="sec-label" style="text-align:center;margin-bottom:14px;font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;color:var(--amber);">About Fungai Art</span>
+      <h2 style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;font-weight:300;font-size:clamp(38px,5.5vw,68px);letter-spacing:0.005em;color:var(--parchment);line-height:1.02;max-width:760px;margin:0 auto 22px;">Art &amp; medicine return<br/>to their <em style="color:var(--amber-lt);font-style:italic;">original unity.</em></h2>
+      <p style="font-family:'Kiona',var(--sans);font-size:15px;color:var(--cream);max-width:580px;margin:0 auto;line-height:1.85;">"We are sacred rebels, artists and healers activated by her pulse." Living mycelial art — rooted in the forest, carried by frequency.</p>
     </div>
 
     <!-- Two portraits -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px;" class="reveal reveal-d1">
-      <div style="position:relative;overflow:hidden;min-height:460px;background:var(--forest-card);">
-        <img src="/assets/robin-portrait.png" alt="Robin Fungi" style="width:100%;height:100%;object-fit:cover;object-position:center top;position:absolute;inset:0;opacity:0.88;" onerror="this.style.display='none'">
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(5,9,12,0.9) 0%,transparent 50%);pointer-events:none;"></div>
-        <div style="position:absolute;bottom:0;left:0;right:0;padding:32px 36px;">
-          <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--lime);margin-bottom:8px;">Founder</div>
-          <div style="font-family:var(--serif);font-style:italic;font-size:28px;color:var(--parchment);margin-bottom:10px;">Robin Fungi</div>
-          <p style="font-size:13px;color:var(--mist);line-height:1.65;">Visionary seed carrier and community weaver. Chef, elixir master and forager. Raised in the forest, guided by a close, intuitive bond with the land.</p>
-          <a href="mailto:robin@fungai.art" style="display:inline-block;margin-top:14px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--lichen);border-bottom:0.5px solid rgba(77,134,155,0.3);padding-bottom:2px;text-decoration:none;">robin@fungai.art</a>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px;border-radius:20px;overflow:hidden;" class="reveal reveal-d1">
+      <div style="position:relative;overflow:hidden;min-height:480px;background:var(--forest-card);">
+        <img src="/assets/robin-portrait.png" alt="Robin Floræsta" style="width:100%;height:100%;object-fit:cover;object-position:center top;position:absolute;inset:0;opacity:0.9;" onerror="this.style.display='none'">
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(5,9,12,0.95) 0%,rgba(5,9,12,0.2) 45%,transparent 70%);pointer-events:none;"></div>
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:36px 38px;">
+          <div style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--lime);margin-bottom:4px;">Founder</div>
+          <div style="font-family:'Bayer',var(--sans);font-size:9px;letter-spacing:0.24em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;opacity:0.85;">Alchemy &amp; Foraging</div>
+          <div style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;font-style:italic;font-size:34px;color:var(--parchment);margin-bottom:12px;letter-spacing:0.01em;">Robin Floræsta</div>
+          <p style="font-family:'Kiona',var(--sans);font-size:13.5px;color:var(--cream);line-height:1.72;">Visionary seed carrier and community weaver. Chef, elixir master and forager. Raised in the forest, guided by a close, intuitive bond with the land.</p>
+          <a href="mailto:robin@fungai.art" style="display:inline-block;margin-top:16px;font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mist);border-bottom:0.5px solid rgba(77,134,155,0.35);padding-bottom:2px;text-decoration:none;">robin@fungai.art</a>
         </div>
       </div>
-      <div style="position:relative;overflow:hidden;min-height:460px;background:var(--forest-card);">
-        <img src="/assets/stephanie-portrait.png" alt="Steph Teÿæ" style="width:100%;height:100%;object-fit:cover;object-position:center top;position:absolute;inset:0;opacity:0.88;" onerror="this.style.display='none'">
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(5,9,12,0.9) 0%,transparent 50%);pointer-events:none;"></div>
-        <div style="position:absolute;bottom:0;left:0;right:0;padding:32px 36px;">
-          <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--amber-lt);margin-bottom:8px;">Co-initiator</div>
-          <div style="font-family:var(--serif);font-style:italic;font-size:28px;color:var(--parchment);margin-bottom:10px;">Steph Teÿæ</div>
-          <p style="font-size:13px;color:var(--mist);line-height:1.65;">Steward, creative force, and botanical crafter. Systemic psycho-mystic coach. Gong and tuning fork practitioner. Transylvanian lineage — the witch reclaimed.</p>
-          <a href="mailto:teyae@fungai.art" style="display:inline-block;margin-top:14px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--lichen);border-bottom:0.5px solid rgba(77,134,155,0.3);padding-bottom:2px;text-decoration:none;">teyae@fungai.art</a>
+      <div style="position:relative;overflow:hidden;min-height:480px;background:var(--forest-card);">
+        <img src="/assets/stephanie-portrait.png" alt="Steph Teÿæ" style="width:100%;height:100%;object-fit:cover;object-position:center top;position:absolute;inset:0;opacity:0.9;" onerror="this.style.display='none'">
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(5,9,12,0.95) 0%,rgba(5,9,12,0.2) 45%,transparent 70%);pointer-events:none;"></div>
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:36px 38px;">
+          <div style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-lt);margin-bottom:4px;">Co-initiator</div>
+          <div style="font-family:'Bayer',var(--sans);font-size:9px;letter-spacing:0.24em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;opacity:0.85;">Ceremony &amp; Elixirs</div>
+          <div style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;font-style:italic;font-size:34px;color:var(--parchment);margin-bottom:12px;letter-spacing:0.01em;">Steph Teÿæ</div>
+          <p style="font-family:'Kiona',var(--sans);font-size:13.5px;color:var(--cream);line-height:1.72;">Steward, creative force, and botanical crafter. Systemic psycho-mystic coach. Gong and tuning fork practitioner. Transylvanian lineage — the witch reclaimed.</p>
+          <a href="mailto:teyae@fungai.art" style="display:inline-block;margin-top:16px;font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mist);border-bottom:0.5px solid rgba(77,134,155,0.35);padding-bottom:2px;text-decoration:none;">teyae@fungai.art</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cities / Nodes — replaces the numbers panel -->
+    <div class="reveal reveal-d2" style="margin-top:64px;">
+      <div style="text-align:center;margin-bottom:32px;">
+        <span style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber);">Wherever the plants grow</span>
+        <h3 style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;font-size:clamp(28px,4vw,42px);color:var(--parchment);margin-top:8px;line-height:1.05;letter-spacing:0.005em;">Our <em style="color:var(--amber-lt);font-style:italic;">nodes.</em></h3>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--r,rgba(158,212,56,0.07));border-radius:16px;overflow:hidden;">
+        <div style="padding:26px 24px;background:var(--forest-card);border-left:3px solid #6BD66F;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;"><div style="width:8px;height:8px;border-radius:50%;background:#6BD66F;box-shadow:0 0 8px rgba(107,214,111,0.6);"></div><div style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;font-style:italic;font-size:26px;color:var(--parchment);letter-spacing:0.005em;">Sweden</div></div>
+          <div style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:var(--amber-lt);margin-top:6px;">Foraging Node</div>
+          <p style="font-family:'Kiona',var(--sans);font-size:12.5px;color:var(--cream);line-height:1.7;margin-top:10px;opacity:0.88;">Origin point. Königshyttan and Bergslagen forests. Wild chaga, pine pollen, amanita.</p>
+        </div>
+        <div style="padding:26px 24px;background:var(--forest-card);border-left:3px solid #88BAC8;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;"><div style="width:8px;height:8px;border-radius:50%;background:#88BAC8;box-shadow:0 0 8px rgba(136,186,200,0.6);"></div><div style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;font-style:italic;font-size:26px;color:var(--parchment);letter-spacing:0.005em;">Berlin</div></div>
+          <div style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:var(--amber-lt);margin-top:6px;">Alchemy Lab &amp; Ceremony</div>
+          <p style="font-family:'Kiona',var(--sans);font-size:12.5px;color:var(--cream);line-height:1.7;margin-top:10px;opacity:0.88;">Production lab and Mycelium Trance home. Where the extracts are composed.</p>
+        </div>
+        <div style="padding:26px 24px;background:var(--forest-card);border-left:3px solid #E8B14B;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;"><div style="width:8px;height:8px;border-radius:50%;background:#E8B14B;box-shadow:0 0 8px rgba(232,177,75,0.6);"></div><div style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;font-style:italic;font-size:26px;color:var(--parchment);letter-spacing:0.005em;">Lisbon</div></div>
+          <div style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:var(--amber-lt);margin-top:6px;">Market &amp; Science</div>
+          <p style="font-family:'Kiona',var(--sans);font-size:12.5px;color:var(--cream);line-height:1.7;margin-top:10px;opacity:0.88;">Atlantic distribution and the Mediterranean research kitchen. Sintra hills as botanical pharmacy.</p>
+        </div>
+        <div style="padding:26px 24px;background:var(--forest-card);border-left:3px solid #A88FE0;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;"><div style="width:8px;height:8px;border-radius:50%;background:#A88FE0;box-shadow:0 0 8px rgba(168,143,224,0.6);"></div><div style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;font-style:italic;font-size:26px;color:var(--parchment);letter-spacing:0.005em;">Beirut</div></div>
+          <div style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:var(--amber-lt);margin-top:6px;">Laboratory &amp; Research</div>
+          <p style="font-family:'Kiona',var(--sans);font-size:12.5px;color:var(--cream);line-height:1.7;margin-top:10px;opacity:0.88;">Mediterranean cedar mountains and the chemistry side. Where the work becomes precise.</p>
+        </div>
+        <div style="padding:26px 24px;background:var(--forest-card);border-left:3px solid #E8714B;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;"><div style="width:8px;height:8px;border-radius:50%;background:#E8714B;opacity:0.7;"></div><div style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;font-style:italic;font-size:26px;color:var(--parchment);letter-spacing:0.005em;">Genoa</div></div>
+          <div style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:var(--amber-lt);margin-top:6px;opacity:0.7;">Under Development</div>
+          <p style="font-family:'Kiona',var(--sans);font-size:12.5px;color:var(--cream);line-height:1.7;margin-top:10px;opacity:0.75;">The Ligurian coast — emerging as a southern European node. Coming 2026–27.</p>
         </div>
       </div>
     </div>
 
-    <!-- Four pillars -->
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:2px;" class="reveal reveal-d2">
-      <div style="padding:28px 24px;background:var(--forest-card);border:0.5px solid rgba(158,212,56,0.07);">
-        <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--sage);margin-bottom:10px;">01</div>
-        <div style="font-family:var(--serif);font-style:italic;font-size:19px;color:var(--parchment);margin-bottom:8px;">Nature</div>
-        <p style="font-size:12px;color:var(--lichen);line-height:1.65;">Wild-foraged, seasonally aware, ecologically responsible. Every preparation begins in the forest.</p>
-      </div>
-      <div style="padding:28px 24px;background:var(--forest-card);border:0.5px solid rgba(158,212,56,0.07);">
-        <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--sage);margin-bottom:10px;">02</div>
-        <div style="font-family:var(--serif);font-style:italic;font-size:19px;color:var(--parchment);margin-bottom:8px;">Art</div>
-        <p style="font-size:12px;color:var(--lichen);line-height:1.65;">Medicine is aesthetic. Each elixir is composed, not manufactured — attention to frequency, form, and intention.</p>
-      </div>
-      <div style="padding:28px 24px;background:var(--forest-card);border:0.5px solid rgba(158,212,56,0.07);">
-        <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--sage);margin-bottom:10px;">03</div>
-        <div style="font-family:var(--serif);font-style:italic;font-size:19px;color:var(--parchment);margin-bottom:8px;">Community</div>
-        <p style="font-size:12px;color:var(--lichen);line-height:1.65;">Foraging circles, ceremonies, and education. The forest has always been a place of gathering.</p>
-      </div>
-      <div style="padding:28px 24px;background:var(--forest-card);border:0.5px solid rgba(158,212,56,0.07);">
-        <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--sage);margin-bottom:10px;">04</div>
-        <div style="font-family:var(--serif);font-style:italic;font-size:19px;color:var(--parchment);margin-bottom:8px;">Science</div>
-        <p style="font-size:12px;color:var(--lichen);line-height:1.65;">Evidence-graded protocols. 142 botanicals documented with research grades and active compounds.</p>
-      </div>
-    </div>
-
-    <!-- Vision + numbers + connect -->
-    <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:2px;" class="reveal reveal-d3">
-      <div style="padding:36px;background:var(--forest-mid);border:0.5px solid rgba(158,212,56,0.08);">
-        <span class="sec-label" style="margin-bottom:14px;">The vision</span>
-        <p style="font-family:var(--serif);font-style:italic;font-size:19px;color:var(--parchment);line-height:1.5;margin-bottom:16px;border-left:2px solid rgba(196,134,46,0.5);padding-left:18px;">"A future where art and medicine return to their original unity. Where the forest is curriculum and the body is the laboratory."</p>
-        <p style="font-size:13px;color:var(--mist);line-height:1.75;margin-bottom:28px;">Fungai Art is a living art and community ecosystem weaving together healing arts, ecological awareness, alchemy, and sacred experience. Born in the Swedish forest, alive across Europe.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;">
-          <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-ghost" style="text-decoration:none;">@fungai.art</a>
-          <a href="mailto:robin@fungai.art" class="btn-ghost" style="text-decoration:none;">Email Robin</a>
-        </div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;">
-        <div style="padding:28px 20px;background:var(--forest-card);border:0.5px solid rgba(158,212,56,0.07);text-align:center;">
-          <div style="font-family:var(--serif);font-style:italic;font-size:36px;color:var(--amber-lt);line-height:1;">142</div>
-          <div style="font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:var(--sage);margin-top:6px;">Botanicals</div>
-        </div>
-        <div style="padding:28px 20px;background:var(--forest-card);border:0.5px solid rgba(158,212,56,0.07);text-align:center;">
-          <div style="font-family:var(--serif);font-style:italic;font-size:36px;color:var(--amber-lt);line-height:1;">25</div>
-          <div style="font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:var(--sage);margin-top:6px;">Forage nodes</div>
-        </div>
-        <div style="padding:28px 20px;background:var(--forest-card);border:0.5px solid rgba(158,212,56,0.07);text-align:center;">
-          <div style="font-family:var(--serif);font-style:italic;font-size:36px;color:var(--amber-lt);line-height:1;">5</div>
-          <div style="font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:var(--sage);margin-top:6px;">Extraction methods</div>
-        </div>
-        <div style="padding:28px 20px;background:var(--forest-card);border:0.5px solid rgba(158,212,56,0.07);text-align:center;">
-          <div style="font-family:var(--serif);font-style:italic;font-size:36px;color:var(--amber-lt);line-height:1;">111</div>
-          <div style="font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:var(--sage);margin-top:6px;">Trance minutes</div>
-        </div>
-        <div style="grid-column:span 2;padding:20px;background:rgba(136,186,200,0.04);border:0.5px solid rgba(136,186,200,0.1);">
-          <p style="font-size:11.5px;color:var(--mist);line-height:1.65;font-family:var(--serif);font-style:italic;">Berlin · Sweden · France · Denmark · Germany · Lebanon — wherever the plants grow, we go.</p>
-        </div>
+    <!-- Vision -->
+    <div class="reveal reveal-d3" style="margin-top:48px;padding:42px 44px;background:radial-gradient(ellipse 70% 60% at 20% 30%,rgba(196,134,46,0.06),transparent 60%),var(--forest-mid);border:0.5px solid rgba(158,212,56,0.1);border-radius:18px;">
+      <span style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber);">The vision</span>
+      <p style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;font-style:italic;font-size:clamp(20px,2.5vw,26px);color:var(--parchment);line-height:1.5;margin:14px 0 18px;border-left:2px solid rgba(196,134,46,0.55);padding-left:22px;letter-spacing:0.005em;">"A future where art and medicine return to their original unity. Where the forest is curriculum and the body is the laboratory."</p>
+      <p style="font-family:'Kiona',var(--sans);font-size:14px;color:var(--cream);line-height:1.85;margin-bottom:28px;max-width:64ch;">Fungai Art is a living art and community ecosystem weaving healing arts, ecological awareness, alchemy, and sacred experience. Born in the Swedish forest, alive across Europe.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-ghost" style="text-decoration:none;">@fungai.art</a>
+        <a href="mailto:robin@fungai.art" class="btn-ghost" style="text-decoration:none;">Email Robin</a>
       </div>
     </div>
 
@@ -1857,7 +1918,7 @@ p { line-height: 1.75; color: var(--mist); }
       <div class="footer-col">
         <h4>Shop</h4>
         <ul>
-          <li><a href="#shop">Fungi Tinctures</a></li>
+          <li><a href="#shop">Fungal Extracts</a></li>
           <li><a href="#shop">Compositions</a></li>
           <li><a href="#shop">Sacred Flowers</a></li>
           <li><a href="#shop">Herbal Mixes</a></li>
