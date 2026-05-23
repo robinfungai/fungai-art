@@ -6,6 +6,16 @@
   directory      = "netlify/functions"
   node_bundler   = "esbuild"
 
+# Force browsers to revalidate the favicon — avoids cached Lovable icon persisting
+[[headers]]
+  for = "/favicon.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+[[headers]]
+  for = "/fungai-art-logo.png"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
 [build.environment]
   NODE_VERSION = "20"
   VITE_SUPABASE_URL      = "https://cyhpvsyvxzfadtyvcuwp.supabase.co"
