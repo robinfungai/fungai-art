@@ -443,15 +443,16 @@
   </div>
 </div>
 
-<!-- $HYPHA membership gate overlay -->
-<div id="hyphaGate" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(10,9,8,0.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);align-items:center;justify-content:center;padding:24px;">
+<!-- Mycorrhizal access gate overlay -->
+<div id="mycelGate" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(10,9,8,0.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);align-items:center;justify-content:center;padding:24px;">
   <div style="max-width:520px;width:100%;background:linear-gradient(160deg,#11100D,#181612);border:0.5px solid rgba(232,177,75,0.25);border-radius:14px;padding:36px 32px;text-align:center;">
-    <div style="font-family:'Geist Mono',monospace;font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:#E8B14B;margin-bottom:12px;">$HYPHA members only</div>
+    <div style="font-family:'Geist Mono',monospace;font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:#E8B14B;margin-bottom:12px;">Mycorrhizal access · $MYCEL</div>
     <h2 style="font-family:'Zodiak','Cormorant Garamond',Georgia,serif;font-style:italic;font-size:36px;color:#E6D9B5;line-height:1.1;margin-bottom:14px;">The Alchemy <em style="color:#E8B14B;">Academy</em></h2>
-    <p style="font-size:14px;color:#C9B894;line-height:1.7;margin-bottom:24px;">Full access to the curriculum — extraction masterclasses, materia medica deep-dives, live study circles — is reserved for $HYPHA holders. Connect your wallet to verify membership.</p>
+    <p style="font-size:14px;color:#C9B894;line-height:1.7;margin-bottom:14px;">The full curriculum — extraction masterclasses, materia medica deep-dives, live study circles — flows to members of The Mycelium. Hyphae or mycoTrust unlock the gate.</p>
+    <p style="font-size:12.5px;color:#8B7E62;line-height:1.65;margin-bottom:24px;">You can also <strong style="color:#B6F0AE;">draw 25 Hyphae for a single session</strong> from <a href="/draw" style="color:#B6F0AE;border-bottom:0.5px solid rgba(182,240,174,0.4);text-decoration:none;">the drawing menu</a>.</p>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
       <button id="gateConnect" style="font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;padding:12px 22px;border-radius:6px;cursor:pointer;background:rgba(232,177,75,0.12);border:0.5px solid rgba(232,177,75,0.45);color:#F5D689;transition:all .18s;">Connect wallet</button>
-      <a href="/members" style="font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;padding:12px 22px;border-radius:6px;background:none;border:0.5px solid rgba(201,184,148,0.2);color:#8B7E62;text-decoration:none;transition:all .18s;">How to join</a>
+      <a href="/members" style="font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;padding:12px 22px;border-radius:6px;background:none;border:0.5px solid rgba(201,184,148,0.2);color:#8B7E62;text-decoration:none;transition:all .18s;">Become a thread</a>
       <a href="/" style="font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;padding:12px 22px;border-radius:6px;background:none;border:0.5px solid rgba(201,184,148,0.2);color:#8B7E62;text-decoration:none;transition:all .18s;">← Home</a>
     </div>
     <div id="gateStatus" style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:0.16em;color:#8B7E62;margin-top:18px;min-height:14px;"></div>
@@ -466,7 +467,7 @@
       <div class="nav-name">Alchemy Academy</div>
     </div>
     <div style="display:flex;gap:8px;">
-      <a href="/members" class="nav-back">$HYPHA</a>
+      <a href="/members" class="nav-back">$MYCEL</a>
       <a href="/extraction" class="nav-back">⚗ Extraction</a>
       <a href="/community/" class="nav-back">← Portal</a>
     </div>
@@ -797,29 +798,29 @@ function buildLabNotebook() {
 buildLabNotebook();
 </script>
 
-<!-- $HYPHA membership gate -->
-<script src="/hypha-wallet.js" defer></script>
+<!-- $MYCEL membership gate -->
+<script src="/mycel-wallet.js" defer></script>
 <script>
 (function () {
-  const gate = document.getElementById('hyphaGate');
+  const gate = document.getElementById('mycelGate');
   const status = document.getElementById('gateStatus');
   const connectBtn = document.getElementById('gateConnect');
 
   function whenReady(fn) {
-    if (window.HYPHA) fn();
+    if (window.MYCEL) fn();
     else setTimeout(() => whenReady(fn), 50);
   }
 
   whenReady(() => {
     connectBtn.addEventListener('click', async () => {
       status.textContent = 'Opening wallet…';
-      await window.HYPHA.connect();
+      await window.MYCEL.connect();
     });
 
     function applyGate() {
-      const s = window.HYPHA.state;
+      const s = window.MYCEL.state;
 
-      if (!window.HYPHA.contractDeployed) {
+      if (!window.MYCEL.contractsDeployed) {
         // Pre-launch: let everyone through but show a banner
         gate.style.display = 'none';
         document.body.style.overflow = '';
@@ -827,7 +828,10 @@ buildLabNotebook();
         return;
       }
 
-      if (s.isMember) {
+      // Member if they have any Hyphae OR any active mycoTrust
+      const isMember = s.hyphae > 0n || s.trust > 0n;
+
+      if (isMember) {
         gate.style.display = 'none';
         document.body.style.overflow = '';
       } else {
@@ -835,8 +839,8 @@ buildLabNotebook();
         document.body.style.overflow = 'hidden';
         if (!s.address) {
           status.textContent = '';
-        } else if (s.address && !s.isMember) {
-          status.textContent = 'Connected wallet has no $HYPHA. See /members for how to join.';
+        } else {
+          status.textContent = 'Connected wallet has no Hyphae and no mycoTrust. See /members.';
         }
       }
     }
@@ -846,11 +850,11 @@ buildLabNotebook();
       const b = document.createElement('div');
       b.id = 'preLaunchBanner';
       b.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(232,177,75,0.08);border-bottom:0.5px solid rgba(232,177,75,0.25);backdrop-filter:blur(12px);padding:8px 16px;text-align:center;font-family:\'Geist Mono\',monospace;font-size:9.5px;letter-spacing:0.16em;text-transform:uppercase;color:#F5D689;';
-      b.innerHTML = '✦ Public preview — Academy will require $HYPHA when contract deploys · <a href="/members" style="color:#F5D689;border-bottom:0.5px solid rgba(245,214,137,0.4);text-decoration:none;">Learn more</a>';
+      b.innerHTML = '✦ Public preview — Academy will require Hyphae or mycoTrust once $MYCEL launches · <a href="/members" style="color:#F5D689;border-bottom:0.5px solid rgba(245,214,137,0.4);text-decoration:none;">Become a thread</a>';
       document.body.appendChild(b);
     }
 
-    window.addEventListener('hypha:change', applyGate);
+    window.addEventListener('mycel:change', applyGate);
     applyGate();
   });
 })();

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Drawing Menu — Fungai Art</title>
+<link rel="icon" type="image/png" href="/fungai-art-logo.png"/>
+<link rel="preconnect" href="https://api.fontshare.com"/>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500&f[]=satoshi@400,500,600&f[]=geist-mono@400&display=swap"/>
+<style>
+:root{--s:#060809;--s2:#0F1014;--s3:#171A1F;--m:#C9B894;--md:#8B7E62;--ml:#E6D9B5;--a:#E8B14B;--al:#F5D689;--g:#6BD66F;--gl:#B6F0AE;--v:#A88FE0;--vl:#C5B5F5;--r:rgba(201,184,148,.11);--rl:rgba(201,184,148,.2);--fd:'Zodiak','Cormorant Garamond',Georgia,serif;--fs:'Satoshi',system-ui,sans-serif;--fm:'Geist Mono',monospace;}
+*{box-sizing:border-box;margin:0;padding:0;}html,body{background:var(--s);color:var(--m);font-family:var(--fs);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.22;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .79 0 0 0 0 .72 0 0 0 0 .58 0 0 0 .06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");}
+.wrap{max-width:920px;margin:0 auto;padding:0 22px 100px;position:relative;z-index:1;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0 0;margin-bottom:48px;flex-wrap:wrap;gap:12px;}
+.nav-brand{display:flex;align-items:center;gap:12px;}
+.nav-name{font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml);}
+.nav-sub{font-family:var(--fm);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--g);margin-top:2px;}
+.nav-back{font-family:var(--fm);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--md);padding:7px 13px;border:0.5px solid var(--r);border-radius:5px;text-decoration:none;transition:all .15s;}
+.nav-back:hover{color:var(--ml);border-color:var(--rl);}
+.hero-ey{font-family:var(--fm);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--g);margin-bottom:10px;}
+.hero-title{font-family:var(--fd);font-style:italic;font-size:clamp(38px,5.5vw,62px);color:var(--ml);letter-spacing:-.025em;line-height:.96;margin-bottom:14px;}
+.hero-title em{color:var(--g);}
+.hero-blurb{font-size:14.5px;color:var(--m);line-height:1.75;max-width:62ch;opacity:.88;margin-bottom:32px;}
+
+/* Balance bar */
+.bal-bar{background:var(--s2);border:0.5px solid var(--rl);border-radius:12px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:40px;}
+.bal-info{display:flex;align-items:center;gap:18px;}
+.bal-circle{width:48px;height:48px;border-radius:50%;background:radial-gradient(circle,var(--a) 0%,transparent 70%);border:0.5px solid rgba(232,177,75,.4);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.bal-circle span{font-family:var(--fd);font-style:italic;font-size:20px;color:var(--al);}
+.bal-text{}
+.bal-label{font-family:var(--fm);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--md);margin-bottom:3px;}
+.bal-value{font-family:var(--fd);font-style:italic;font-size:24px;color:var(--ml);}
+.bal-cta{font-family:var(--fm);font-size:9px;letter-spacing:.22em;text-transform:uppercase;padding:10px 18px;border-radius:6px;cursor:pointer;background:rgba(232,177,75,.1);border:0.5px solid rgba(232,177,75,.4);color:var(--al);transition:all .18s;text-decoration:none;}
+.bal-cta:hover{background:rgba(232,177,75,.18);}
+
+/* Category nav */
+.cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:30px;}
+.cat-btn{font-family:var(--fm);font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:8px 14px;background:none;border:0.5px solid var(--r);color:var(--md);border-radius:5px;cursor:pointer;transition:all .15s;}
+.cat-btn:hover{color:var(--ml);border-color:var(--rl);}
+.cat-btn.active{background:rgba(107,214,111,.08);border-color:rgba(107,214,111,.4);color:var(--gl);}
+
+/* Product grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--r);border:0.5px solid var(--r);border-radius:14px;overflow:hidden;}
+.card{background:var(--s2);padding:22px 22px 20px;display:flex;flex-direction:column;}
+.card-cat{font-family:var(--fm);font-size:7.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--md);margin-bottom:10px;}
+.card-name{font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml);margin-bottom:10px;line-height:1.2;}
+.card-desc{font-size:12.5px;color:var(--m);line-height:1.65;margin-bottom:14px;flex:1;}
+.card-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px;}
+.card-tag{font-family:var(--fm);font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:0.5px solid var(--r);color:var(--md);}
+.card-tag.member-only{background:rgba(168,143,224,.08);border-color:rgba(168,143,224,.35);color:var(--vl);}
+.card-tag.foraged{background:rgba(107,214,111,.06);border-color:rgba(107,214,111,.3);color:var(--gl);}
+.card-foot{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:0.5px solid var(--r);}
+.card-price{display:flex;flex-direction:column;}
+.card-price-num{font-family:var(--fd);font-style:italic;font-size:22px;color:var(--al);line-height:1;}
+.card-price-unit{font-family:var(--fm);font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--md);margin-top:3px;}
+.card-draw{font-family:var(--fm);font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:8px 14px;border-radius:5px;cursor:pointer;background:rgba(107,214,111,.1);border:0.5px solid rgba(107,214,111,.4);color:var(--gl);transition:all .15s;}
+.card-draw:hover:not(:disabled){background:rgba(107,214,111,.2);}
+.card-draw:disabled{opacity:.4;cursor:not-allowed;background:none;border-color:var(--r);color:var(--md);}
+
+/* Banner */
+.banner{background:rgba(245,214,137,.06);border:0.5px solid rgba(245,214,137,.18);border-radius:10px;padding:18px 22px;margin-bottom:32px;}
+.banner-label{font-family:var(--fm);font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--al);margin-bottom:6px;}
+.banner-text{font-size:13px;color:var(--m);line-height:1.7;}
+.banner-text a{color:var(--al);text-decoration:none;border-bottom:0.5px solid rgba(232,177,75,.4);}
+
+/* Modal */
+.modal-bg{display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:24px;}
+.modal-bg.on{display:flex;}
+.modal{background:var(--s2);border:0.5px solid var(--rl);border-radius:14px;padding:32px;width:100%;max-width:480px;}
+.modal h3{font-family:var(--fd);font-style:italic;font-size:24px;color:var(--ml);margin-bottom:10px;}
+.modal p{font-size:13px;color:var(--m);line-height:1.7;margin-bottom:14px;}
+.modal-actions{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap;}
+.modal-btn{font-family:var(--fm);font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:11px 18px;border-radius:6px;cursor:pointer;border:0.5px solid var(--r);background:none;color:var(--md);transition:all .15s;}
+.modal-btn:hover{color:var(--ml);}
+.modal-btn.primary{background:rgba(107,214,111,.1);border-color:rgba(107,214,111,.4);color:var(--gl);}
+
+.foot{border-top:0.5px solid var(--r);padding-top:28px;margin-top:60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.foot-link{font-family:var(--fm);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--md);text-decoration:none;transition:color .15s;}
+.foot-link:hover{color:var(--ml);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="nav">
+  <a href="/" class="nav-brand" style="text-decoration:none;">
+    <img src="/fungai-art-logo.png" alt="Fungai Art" style="height:32px;width:auto;opacity:.92;">
+    <div>
+      <div class="nav-name">Drawing Menu</div>
+      <div class="nav-sub">Spend Hyphae</div>
+    </div>
+  </a>
+  <div style="display:flex;gap:7px;flex-wrap:wrap;">
+    <a href="/members" class="nav-back">Members</a>
+    <a href="/sporing" class="nav-back">Sporing</a>
+    <a href="/" class="nav-back">← Home</a>
+  </div>
+</nav>
+
+<div class="hero-ey">What Hyphae can become</div>
+<h1 class="hero-title">The <em>drawing.</em></h1>
+<p class="hero-blurb">Each item below can be drawn with Hyphae. Drawn tokens flow back to The Mycelium (the treasury), where they are recycled or composted at the end of each cycle. The pattern: <strong style="color:var(--ml);">contribute → spore → draw → contribute again.</strong></p>
+
+<!-- Banner -->
+<div class="banner" id="banner">
+  <div class="banner-label">✦ Pre-launch view</div>
+  <div class="banner-text">Catalogue visible to everyone. Drawing transactions activate when the $MYCEL contract goes live on Polygon. <a href="/members">How to join →</a></div>
+</div>
+
+<!-- Balance bar -->
+<div class="bal-bar">
+  <div class="bal-info">
+    <div class="bal-circle"><span>⟡</span></div>
+    <div class="bal-text">
+      <div class="bal-label">Your Hyphae</div>
+      <div class="bal-value" id="balValue">Not connected</div>
+    </div>
+  </div>
+  <button class="bal-cta" id="connectBtn">Connect wallet</button>
+</div>
+
+<!-- Categories -->
+<div class="cats">
+  <button class="cat-btn active" data-cat="all">All</button>
+  <button class="cat-btn" data-cat="tincture">Tinctures</button>
+  <button class="cat-btn" data-cat="special">Special extracts</button>
+  <button class="cat-btn" data-cat="ceremony">Ceremonies</button>
+  <button class="cat-btn" data-cat="academy">Academy</button>
+  <button class="cat-btn" data-cat="retreat">Retreats</button>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="foot">
+  <div style="font-family:var(--fm);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--md);">The Mycelium · catalogue</div>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;">
+    <a href="/members" class="foot-link">Members</a>
+    <a href="/sporing" class="foot-link">Sporing</a>
+    <a href="/privacy" class="foot-link">Privacy</a>
+    <a href="/terms" class="foot-link">Terms</a>
+    <a href="/" class="foot-link">Home</a>
+  </div>
+</div>
+
+</div>
+
+<!-- Draw confirmation modal -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h3 id="modalTitle">Draw this item?</h3>
+    <p id="modalDesc"></p>
+    <p style="color:var(--md);font-size:12px;">This will sign a transaction on Polygon. Your Hyphae will flow to The Mycelium treasury. Robin will reach out to deliver the item within 7 days.</p>
+    <div class="modal-actions">
+      <button class="modal-btn primary" id="modalConfirm">Confirm draw</button>
+      <button class="modal-btn" onclick="document.getElementById('modalBg').classList.remove('on')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="/mycel-wallet.js" defer></script>
+<script>
+const CATALOGUE = [
+  // Tinctures
+  { id:'chaga-30', cat:'tincture', name:'Chaga 30ml', desc:'Wild-foraged Inonotus obliquus, double extraction. Standard from the public shop.', price:45, tags:['Foraged'] },
+  { id:'reishi-30', cat:'tincture', name:'Reishi 30ml', desc:'Ganoderma lucidum, full spectrum. Adaptogenic, sleep, longevity.', price:40, tags:[] },
+  { id:'cordyceps-30', cat:'tincture', name:'Cordyceps 30ml', desc:'Cordyceps militaris, vitality and endurance. Standard catalogue.', price:45, tags:[] },
+  { id:'temple-30', cat:'tincture', name:'Temple Nectar 30ml', desc:'Saffron, damiana, catuaba, blue lotus, maca negra, vanilla, muira puama.', price:55, tags:['Signature'] },
+
+  // Special extracts (member-only)
+  { id:'amanita-solstice', cat:'special', name:'Solstice Amanita 15ml', desc:'Wild Amanita muscaria, decarboxylated to muscimol. Drop-dose only. Member-exclusive batch.', price:120, tags:['Member only','Foraged'] },
+  { id:'kvanne-konigshyttan', cat:'special', name:'Königshyttan Kvanne', desc:'Wild Angelica archangelica from the Bergslagen region. Limited 2026 harvest.', price:90, tags:['Member only','Foraged'] },
+  { id:'mycelium-mother', cat:'special', name:'Mycelium Mother Tincture 50ml', desc:'Living mycelium grown in pharma-grade ethanol — the source of every Fungai Art elixir.', price:150, tags:['Member only'] },
+  { id:'threshold-13', cat:'special', name:'Threshold No.13', desc:'Rose petals, blue lotus, kanna, damiana, cordyceps. Experimental member batch.', price:130, tags:['Member only','Experimental'] },
+
+  // Ceremonies
+  { id:'mycelium-trance-private', cat:'ceremony', name:'Mycelium Trance · private', desc:'One seat at the next private session. 111-minute sound + plant ally journey.', price:200, tags:['Member only'] },
+  { id:'foraging-circle', cat:'ceremony', name:'Foraging circle seat', desc:'One seat at the next Königshyttan or Bergslagen foraging circle. Includes plant identification.', price:80, tags:['Member only'] },
+  { id:'solstice-ceremony', cat:'ceremony', name:'Solstice ceremony', desc:'Summer or winter solstice ceremony with Steph. Sound bath, plant medicine, intention.', price:250, tags:['Member only'] },
+
+  // Academy
+  { id:'academy-session', cat:'academy', name:'Single Academy session', desc:'One live Alchemy Academy class with recording access for 30 days.', price:25, tags:[] },
+  { id:'academy-monthly', cat:'academy', name:'Monthly Academy pass', desc:'All Academy sessions in one calendar month + library access.', price:60, tags:[] },
+  { id:'academy-deep-dive', cat:'academy', name:'1-on-1 deep dive', desc:'Two hours with Robin or Steph on a specific topic (extraction, foraging, ceremony).', price:180, tags:['Member only'] },
+
+  // Retreats
+  { id:'astral-plans', cat:'retreat', name:'Astral Plans early access', desc:'First booking window for the Astral Plans residency in Provence. 5 nights.', price:500, tags:['Member only'] },
+  { id:'lebanon-retreat', cat:'retreat', name:'Lebanon retreat early access', desc:'Cedar Mountain Mediterranean retreat. Early-bird member booking.', price:500, tags:['Member only'] },
+];
+
+const TAG_CLASS = {
+  'Member only': 'member-only',
+  'Foraged': 'foraged',
+  'Signature': '',
+  'Experimental': '',
+};
+
+let currentCat = 'all';
+
+function render() {
+  const grid = document.getElementById('grid');
+  const items = currentCat === 'all' ? CATALOGUE : CATALOGUE.filter(c => c.cat === currentCat);
+  const userBalance = (window.MYCEL && window.MYCEL.state.address && window.MYCEL.contractsDeployed) ? window.MYCEL.state.hyphaeWhole : null;
+
+  grid.innerHTML = items.map(item => {
+    const canAfford = userBalance !== null && userBalance >= item.price;
+    const disabled = userBalance === null || !canAfford;
+    return `
+      <div class="card">
+        <div class="card-cat">${item.cat}</div>
+        <div class="card-name">${item.name}</div>
+        <div class="card-desc">${item.desc}</div>
+        <div class="card-tags">${item.tags.map(t => `<span class="card-tag ${TAG_CLASS[t]||''}">${t}</span>`).join('')}</div>
+        <div class="card-foot">
+          <div class="card-price">
+            <span class="card-price-num">${item.price}</span>
+            <span class="card-price-unit">Hyphae</span>
+          </div>
+          <button class="card-draw" data-id="${item.id}" ${disabled?'disabled':''}>${userBalance === null ? 'Connect to draw' : canAfford ? '⬡ Draw' : 'Insufficient'}</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Wire draw buttons
+  grid.querySelectorAll('.card-draw').forEach(btn => {
+    if (btn.disabled) return;
+    btn.addEventListener('click', () => openDrawModal(btn.dataset.id));
+  });
+}
+
+function openDrawModal(id) {
+  const item = CATALOGUE.find(c => c.id === id);
+  if (!item) return;
+  document.getElementById('modalTitle').textContent = `Draw ${item.name}?`;
+  document.getElementById('modalDesc').textContent = `${item.price} Hyphae will flow from your wallet to The Mycelium. ${item.desc}`;
+  document.getElementById('modalBg').classList.add('on');
+  document.getElementById('modalConfirm').onclick = async () => {
+    try {
+      const productType = window.MYCEL.PRODUCT_TYPES[item.cat === 'tincture' ? 'tincture_30ml' : item.cat === 'ceremony' ? 'ceremony_access' : item.cat === 'retreat' ? 'retreat_early_access' : item.cat === 'academy' ? 'academy_session' : 'special_extract'];
+      const tx = await window.MYCEL.draw(item.price, productType, item.name);
+      alert(`Drawn. Transaction: ${tx}`);
+      document.getElementById('modalBg').classList.remove('on');
+      await window.MYCEL.refresh();
+    } catch (e) {
+      alert(`Draw failed: ${e.message}`);
+    }
+  };
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentCat = btn.dataset.cat;
+      render();
+    });
+  });
+
+  document.getElementById('modalBg').addEventListener('click', e => {
+    if (e.target === document.getElementById('modalBg')) {
+      document.getElementById('modalBg').classList.remove('on');
+    }
+  });
+
+  function waitMycel(fn) { if (window.MYCEL) fn(); else setTimeout(()=>waitMycel(fn), 50); }
+  waitMycel(() => {
+    document.getElementById('connectBtn').addEventListener('click', () => window.MYCEL.connect());
+    function rerender() {
+      const s = window.MYCEL.state;
+      const bal = document.getElementById('balValue');
+      const cta = document.getElementById('connectBtn');
+      if (!s.address) {
+        bal.textContent = 'Not connected';
+        cta.textContent = 'Connect wallet';
+        cta.style.display = '';
+      } else if (!window.MYCEL.contractsDeployed) {
+        bal.textContent = 'Contracts pending';
+        cta.textContent = 'Connected';
+        cta.disabled = true;
+      } else {
+        bal.textContent = `${s.hyphaeWhole} Hyphae`;
+        cta.textContent = window.MYCEL.shortAddr(s.address);
+        cta.disabled = true;
+      }
+      render();
+    }
+    window.addEventListener('mycel:change', rerender);
+    rerender();
+    if (window.MYCEL.contractsDeployed) {
+      document.getElementById('banner').style.display = 'none';
+    }
+  });
+});
+</script>
+<script src="/cookie-banner.js" defer></script>
+</body>
+</html>
