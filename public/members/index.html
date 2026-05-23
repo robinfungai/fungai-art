@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>$HYPHA Members — Fungai Art</title>
+<link rel="icon" type="image/png" href="/fungai-art-logo.png"/>
+<link rel="preconnect" href="https://api.fontshare.com"/>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500&f[]=satoshi@400,500,600&f[]=geist-mono@400&display=swap"/>
+<style>
+:root{--s:#060809;--s2:#0F1014;--s3:#171A1F;--m:#C9B894;--md:#8B7E62;--ml:#E6D9B5;--a:#E8B14B;--al:#F5D689;--g:#6BD66F;--gd:#2E7A35;--gl:#B6F0AE;--v:#A88FE0;--vl:#C5B5F5;--r:rgba(201,184,148,.11);--rl:rgba(201,184,148,.2);--fd:'Zodiak','Cormorant Garamond',Georgia,serif;--fs:'Satoshi',system-ui,sans-serif;--fm:'Geist Mono',monospace;}
+*{box-sizing:border-box;margin:0;padding:0;}html,body{background:var(--s);color:var(--m);font-family:var(--fs);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.22;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .79 0 0 0 0 .72 0 0 0 0 .58 0 0 0 .06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");}
+.wrap{max-width:880px;margin:0 auto;padding:0 22px 100px;position:relative;z-index:1;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0 0;margin-bottom:48px;flex-wrap:wrap;gap:12px;}
+.nav-brand{display:flex;align-items:center;gap:12px;}
+.nav-name{font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml);}
+.nav-sub{font-family:var(--fm);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--a);margin-top:2px;}
+.nav-back{font-family:var(--fm);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--md);padding:7px 13px;border:0.5px solid var(--r);border-radius:5px;text-decoration:none;transition:all .15s;}
+.nav-back:hover{color:var(--ml);border-color:var(--rl);}
+.hero-ey{font-family:var(--fm);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--a);margin-bottom:10px;}
+.hero-title{font-family:var(--fd);font-style:italic;font-size:clamp(40px,6vw,68px);color:var(--ml);letter-spacing:-.025em;line-height:.96;margin-bottom:14px;}
+.hero-title em{color:var(--a);background:linear-gradient(90deg,var(--a),var(--vl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-blurb{font-size:15px;color:var(--m);line-height:1.75;max-width:60ch;opacity:.88;margin-bottom:40px;}
+
+/* Wallet panel */
+.wallet-panel{background:var(--s2);border:0.5px solid var(--rl);border-radius:12px;padding:24px;margin-bottom:44px;position:relative;overflow:hidden;}
+.wallet-panel::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 0%,rgba(232,177,75,.08),transparent 60%);pointer-events:none;}
+.wallet-status{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;position:relative;z-index:1;}
+.wallet-info{flex:1;min-width:200px;}
+.wallet-label{font-family:var(--fm);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--md);margin-bottom:6px;}
+.wallet-state{font-family:var(--fd);font-style:italic;font-size:24px;color:var(--ml);margin-bottom:6px;line-height:1.2;}
+.wallet-addr{font-family:var(--fm);font-size:11px;letter-spacing:.05em;color:var(--md);}
+.wallet-bal{font-family:var(--fd);font-style:italic;font-size:42px;color:var(--al);line-height:1;letter-spacing:-.02em;}
+.wallet-bal-sub{font-family:var(--fm);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--md);margin-top:6px;}
+.wallet-btn{font-family:var(--fm);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;padding:12px 22px;border-radius:6px;cursor:pointer;transition:all .18s;background:rgba(232,177,75,.1);border:0.5px solid rgba(232,177,75,.4);color:var(--al);}
+.wallet-btn:hover{background:rgba(232,177,75,.18);border-color:rgba(232,177,75,.65);}
+.wallet-btn.disconnect{background:none;border:0.5px solid var(--r);color:var(--md);}
+.wallet-btn.disconnect:hover{color:var(--ml);border-color:var(--rl);}
+.wallet-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.member-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:4px;background:rgba(107,214,111,.1);border:0.5px solid rgba(107,214,111,.4);font-family:var(--fm);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--gl);margin-bottom:8px;}
+.non-member-note{font-size:13px;color:var(--md);line-height:1.7;margin-top:10px;max-width:50ch;}
+
+/* Section title */
+section{margin-bottom:48px;}
+.sec-ey{font-family:var(--fm);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--a);margin-bottom:10px;}
+.sec-title{font-family:var(--fd);font-style:italic;font-size:32px;color:var(--ml);letter-spacing:-.015em;margin-bottom:18px;}
+.sec-title em{color:var(--a);}
+
+/* Benefits grid */
+.benefits{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px;background:var(--r);border:0.5px solid var(--r);border-radius:10px;overflow:hidden;}
+.benefit{background:var(--s2);padding:22px 20px;}
+.benefit-icon{font-size:24px;margin-bottom:10px;display:block;}
+.benefit-title{font-family:var(--fd);font-style:italic;font-size:18px;color:var(--ml);margin-bottom:8px;}
+.benefit-text{font-size:12.5px;color:var(--m);line-height:1.65;}
+
+/* Gated content (used by hypha-wallet.js gate()) */
+.gated-content{background:var(--s2);border:0.5px solid var(--r);border-radius:10px;padding:24px;min-height:120px;position:relative;}
+.gated-content h3{font-family:var(--fd);font-style:italic;font-size:20px;color:var(--ml);margin-bottom:10px;}
+.gated-content p{font-size:13px;color:var(--m);line-height:1.7;margin-bottom:10px;}
+.gated-content a{color:var(--al);text-decoration:none;border-bottom:0.5px solid rgba(232,177,75,.4);}
+
+/* Special extracts */
+.extract-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1px;}
+.extract-card{background:var(--s2);border:0.5px solid var(--r);padding:18px 20px;border-radius:8px;}
+.extract-cat{font-family:var(--fm);font-size:7.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--a);margin-bottom:8px;}
+.extract-name{font-family:var(--fd);font-style:italic;font-size:18px;color:var(--ml);margin-bottom:8px;}
+.extract-desc{font-size:11.5px;color:var(--md);line-height:1.6;}
+
+/* How to become a member */
+.how-card{background:rgba(168,143,224,.04);border:0.5px solid rgba(168,143,224,.2);border-radius:12px;padding:24px;}
+.how-step{display:flex;gap:14px;margin-bottom:14px;align-items:flex-start;}
+.how-num{width:24px;height:24px;border-radius:50%;background:rgba(168,143,224,.15);border:0.5px solid rgba(168,143,224,.4);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:10px;color:var(--vl);margin-top:1px;}
+.how-text{font-size:13px;color:var(--m);line-height:1.7;}
+.how-text strong{color:var(--ml);font-weight:500;}
+
+.foot{border-top:0.5px solid var(--r);padding-top:28px;margin-top:60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.foot-link{font-family:var(--fm);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--md);text-decoration:none;transition:color .15s;}
+.foot-link:hover{color:var(--ml);}
+
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 rgba(107,214,111,.4);}50%{box-shadow:0 0 0 6px rgba(107,214,111,0);}}
+.member-dot{width:7px;height:7px;border-radius:50%;background:var(--g);animation:pulse-glow 2s ease-in-out infinite;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="nav">
+  <a href="/" class="nav-brand" style="text-decoration:none;">
+    <img src="/fungai-art-logo.png" alt="Fungai Art" style="height:32px;width:auto;opacity:.92;">
+    <div>
+      <div class="nav-name">Fungai Art</div>
+      <div class="nav-sub">$HYPHA Membership</div>
+    </div>
+  </a>
+  <div style="display:flex;gap:7px;flex-wrap:wrap;">
+    <a href="/community/academy/" class="nav-back">Academy</a>
+    <a href="/" class="nav-back">← Home</a>
+  </div>
+</nav>
+
+<div class="hero-ey">Membership · Polygon</div>
+<h1 class="hero-title">$HYPHA<br><em>belonging.</em></h1>
+<p class="hero-blurb">Membership is a thread of mycelium between people. Connect your wallet to verify, or read on to learn what membership opens. <strong style="color:var(--ml);">$HYPHA is not a security</strong> — it confers no equity, no revenue rights, no governance power. It only confirms you belong to the circle.</p>
+
+<!-- Wallet panel -->
+<div class="wallet-panel">
+  <div class="wallet-status">
+    <div class="wallet-info">
+      <div id="badge" style="display:none;"><div class="member-badge"><div class="member-dot"></div> Verified member</div></div>
+      <div class="wallet-label">Wallet status</div>
+      <div class="wallet-state" id="walletState">Not connected</div>
+      <div class="wallet-addr" id="walletAddr"></div>
+      <p class="non-member-note" id="nonMemberNote" style="display:none;">Your wallet is connected but doesn't currently hold any $HYPHA. See below for how to become a member.</p>
+      <p class="non-member-note" id="notDeployedNote" style="display:none;">The $HYPHA contract has not yet been deployed. The Connect button is available for testing the flow; gated content will activate once the contract is live on Polygon.</p>
+    </div>
+    <div style="text-align:right;">
+      <div class="wallet-bal" id="walletBal" style="display:none;">0</div>
+      <div class="wallet-bal-sub" id="walletBalSub" style="display:none;">$HYPHA tokens</div>
+      <div class="wallet-actions" style="margin-top:14px;">
+        <button class="wallet-btn" id="connectBtn">Connect wallet</button>
+        <button class="wallet-btn disconnect" id="disconnectBtn" style="display:none;">Disconnect</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Benefits -->
+<section>
+  <div class="sec-ey">What membership opens</div>
+  <h2 class="sec-title">Three <em>gates.</em></h2>
+  <div class="benefits">
+    <div class="benefit">
+      <span class="benefit-icon">✦</span>
+      <div class="benefit-title">Alchemy Academy</div>
+      <div class="benefit-text">Full access to the Fungai Art curriculum — Herbalism modules, extraction masterclasses, and live study circles on PubMed-graded plant medicine.</div>
+    </div>
+    <div class="benefit">
+      <span class="benefit-icon">⚗</span>
+      <div class="benefit-title">Special extracts</div>
+      <div class="benefit-text">Member-exclusive elixirs in The Apothecary — wild-harvested chaga, foraged amanita, ceremonial blends not listed in the public shop.</div>
+    </div>
+    <div class="benefit">
+      <span class="benefit-icon">🍄</span>
+      <div class="benefit-title">Events &amp; circles</div>
+      <div class="benefit-text">Priority booking for Mycelium Trance, foraging walks across Sweden/Germany/France, and member-only ceremonies. Often free for holders.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Gated: Special extracts preview -->
+<section>
+  <div class="sec-ey">Member-exclusive</div>
+  <h2 class="sec-title">Special <em>extracts.</em></h2>
+  <div id="extractsGate" class="extract-grid">
+    <div class="extract-card">
+      <div class="extract-cat">Foraged · Sweden</div>
+      <div class="extract-name">Königshyttan Chaga · 2026 batch</div>
+      <div class="extract-desc">Single-tree chaga, 7-year growth, north-facing birch. Double extraction. 30ml.</div>
+    </div>
+    <div class="extract-card">
+      <div class="extract-cat">Ceremonial · Spagyric</div>
+      <div class="extract-name">Solstice Amanita</div>
+      <div class="extract-desc">Wild Amanita muscaria, fly-agaric. Decarboxylated to muscimol. Drop-dose only. 15ml.</div>
+    </div>
+    <div class="extract-card">
+      <div class="extract-cat">Composition · Heart</div>
+      <div class="extract-name">Threshold No.13</div>
+      <div class="extract-desc">Rose petals, blue lotus, kanna, damiana, cordyceps. Members-only experimental batch.</div>
+    </div>
+    <div class="extract-card">
+      <div class="extract-cat">Special · Lab</div>
+      <div class="extract-name">Mycelium Mother Tincture</div>
+      <div class="extract-desc">Living mycelium grown in 95% pharma-grade ethanol — the source of every Fungai Art elixir. 50ml.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Gated: Events -->
+<section>
+  <div class="sec-ey">Member calendar</div>
+  <h2 class="sec-title">Events &amp; <em>circles.</em></h2>
+  <div id="eventsGate" class="gated-content">
+    <h3>Summer 2026 schedule</h3>
+    <p>• <strong>Königshyttan Foraging Circle</strong> — June 15–17, 2026. Wild chanterelle and lingonberry harvest. Limited to 8 members. Free for $HYPHA holders.</p>
+    <p>• <strong>Mycelium Trance · Berlin</strong> — July 4, 2026. Private session. 111-minute sound + plant ally journey. Members priority booking opens June 1.</p>
+    <p>• <strong>Provence Lavender Solstice</strong> — June 21, 2026. St. John's Wort harvest at summer solstice. Astral Plans residency. Members-only.</p>
+    <p>• <strong>Alchemy Academy live session: Saffron deep-dive</strong> — May 30, 2026. Zoom. Member access.</p>
+    <p>Booking details sent monthly to verified member wallets via Spore portal.</p>
+  </div>
+</section>
+
+<!-- How to become a member -->
+<section>
+  <div class="sec-ey">How to join</div>
+  <h2 class="sec-title">Becoming a <em>member.</em></h2>
+  <div class="how-card">
+    <div class="how-step">
+      <div class="how-num">1</div>
+      <div class="how-text"><strong>Install MetaMask</strong> (or any EIP-1193 wallet — Rainbow, Coinbase Wallet, Trust). It's a browser extension. Free. Five minutes. <a href="https://metamask.io/download/" target="_blank" style="color:var(--vl);border-bottom:0.5px solid rgba(197,181,245,.4);text-decoration:none;">metamask.io</a></div>
+    </div>
+    <div class="how-step">
+      <div class="how-num">2</div>
+      <div class="how-text"><strong>Add Polygon network</strong> to your wallet. $HYPHA lives on Polygon mainnet (chain ID 137) — gas fees are fractions of a cent.</div>
+    </div>
+    <div class="how-step">
+      <div class="how-num">3</div>
+      <div class="how-text"><strong>Reach out to Robin</strong> — email <a href="mailto:robin@fungai.art" style="color:var(--vl);border-bottom:0.5px solid rgba(197,181,245,.4);text-decoration:none;">robin@fungai.art</a> with your wallet address and a short note about why you'd like to be part of the circle. Membership is invitation-based for the founding cohort.</div>
+    </div>
+    <div class="how-step">
+      <div class="how-num">4</div>
+      <div class="how-text"><strong>Receive your $HYPHA</strong>. Robin mints directly to your wallet. Connect on this page to verify — gated content becomes visible immediately.</div>
+    </div>
+    <div class="how-step">
+      <div class="how-num">5</div>
+      <div class="how-text"><strong>Belong.</strong> Members can transfer or gift their tokens to others, but $HYPHA is not listed on any DEX or CEX. It's a soulbound-by-spirit, free-by-spirit token of belonging.</div>
+    </div>
+  </div>
+</section>
+
+<div class="foot">
+  <div style="font-family:var(--fm);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--md);">Fungai Art · $HYPHA on Polygon</div>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;">
+    <a href="/privacy" class="foot-link">Privacy</a>
+    <a href="/terms" class="foot-link">Terms</a>
+    <a href="/community/academy/" class="foot-link">Academy</a>
+    <a href="/" class="foot-link">Home</a>
+  </div>
+</div>
+
+</div>
+
+<script src="/hypha-wallet.js" defer></script>
+<script>
+window.addEventListener('DOMContentLoaded', function () {
+  const $ = (id) => document.getElementById(id);
+
+  // Wait for HYPHA to be initialised
+  function whenReady(fn) {
+    if (window.HYPHA) fn();
+    else setTimeout(() => whenReady(fn), 50);
+  }
+
+  whenReady(() => {
+    const connectBtn = $('connectBtn');
+    const disconnectBtn = $('disconnectBtn');
+
+    connectBtn.addEventListener('click', () => window.HYPHA.connect());
+    disconnectBtn.addEventListener('click', () => window.HYPHA.disconnect());
+
+    // Gate the extract grid and events panel
+    window.HYPHA.gate('#extractsGate', { teaser: '⚗ Members-only · Connect wallet to reveal' });
+    window.HYPHA.gate('#eventsGate', { teaser: '🍄 Events visible to $HYPHA members · Connect wallet' });
+
+    function render() {
+      const s = window.HYPHA.state;
+      const stateEl = $('walletState');
+      const addrEl = $('walletAddr');
+      const balEl = $('walletBal');
+      const balSub = $('walletBalSub');
+      const badge = $('badge');
+      const nonMember = $('nonMemberNote');
+      const notDeployed = $('notDeployedNote');
+
+      if (!s.address) {
+        stateEl.textContent = 'Not connected';
+        stateEl.style.color = '#E6D9B5';
+        addrEl.textContent = '';
+        balEl.style.display = 'none';
+        balSub.style.display = 'none';
+        badge.style.display = 'none';
+        nonMember.style.display = 'none';
+        notDeployed.style.display = 'none';
+        connectBtn.style.display = '';
+        disconnectBtn.style.display = 'none';
+        return;
+      }
+
+      // Connected
+      addrEl.textContent = s.address;
+      connectBtn.style.display = 'none';
+      disconnectBtn.style.display = '';
+
+      if (!window.HYPHA.contractDeployed) {
+        stateEl.textContent = 'Wallet connected · contract pending';
+        stateEl.style.color = '#F5D689';
+        balEl.style.display = 'none';
+        balSub.style.display = 'none';
+        notDeployed.style.display = '';
+        nonMember.style.display = 'none';
+        badge.style.display = 'none';
+      } else if (s.isMember) {
+        stateEl.textContent = 'Welcome, member';
+        stateEl.style.color = '#B6F0AE';
+        balEl.style.display = '';
+        balEl.textContent = s.balanceWhole;
+        balSub.style.display = '';
+        badge.style.display = '';
+        nonMember.style.display = 'none';
+        notDeployed.style.display = 'none';
+      } else {
+        stateEl.textContent = 'Wallet connected · 0 balance';
+        stateEl.style.color = '#F5D689';
+        balEl.style.display = '';
+        balEl.textContent = '0';
+        balSub.style.display = '';
+        nonMember.style.display = '';
+        notDeployed.style.display = 'none';
+        badge.style.display = 'none';
+      }
+    }
+
+    window.addEventListener('hypha:change', render);
+    render(); // initial
+  });
+});
+</script>
+<script src="/cookie-banner.js" defer></script>
+</body>
+</html>
