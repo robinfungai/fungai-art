@@ -834,5 +834,6 @@ function selectCoin(sym){selectedCoin=sym;document.querySelectorAll('.crypto-coi
 function copyAddress(){navigator.clipboard.writeText(WALLETS[selectedCoin].addr).then(()=>{const b=document.getElementById('copyAddrBtn');b.textContent='Copied!';b.classList.add('copied');setTimeout(()=>{b.textContent='Copy';b.classList.remove('copied')},2000)})}
 function confirmCryptoOrder(){document.getElementById('confirmRef').textContent='CRYPTO-'+Date.now().toString(36).toUpperCase();document.getElementById('confirmTotal').textContent='Crypto';document.getElementById('confirmMsg').textContent='Send the exact crypto amount to complete your order. We will ship within 24h of confirmation.';cart=[];renderCart();goToStepDirect(3)}
 </script>
+<script src="/cookie-banner.js" defer></script>
 </body>
 </html>
