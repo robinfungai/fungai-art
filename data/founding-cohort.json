@@ -1,0 +1,22 @@
+{
+  "_meta": {
+    "description": "Pre-launch registry of Fungai Art members. Source of truth for sporing once $MYCEL contract deploys on Polygon. Update each member's status as they progress: invited → awaiting_wallet → wallet_captured → sporeed.",
+    "cohort_started": "2026-05-23",
+    "contract_deployed": false,
+    "contract_address": null,
+    "owner": "Fungai Art OÜ (Estonia, pending registration)"
+  },
+  "members": [
+    {
+      "id": 1,
+      "name": "Robert",
+      "pathway": "collaborator",
+      "role": "TBD — to be defined with Robin",
+      "status": "awaiting_wallet",
+      "wallet": null,
+      "joined": "2026-05-24",
+      "hyphae_pending": 0,
+      "notes": "First collaborator entry. Needs MetaMask + Polygon onboarding. Send him fungai.art/onboard."
+    }
+  ]
+}
