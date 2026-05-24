@@ -1204,8 +1204,9 @@ function MembersPage({ currentMember, economy }) {
             >
               <div className="member-avatar" style={{ background: tier.color }}>{m.name[0]}</div>
               <div className="member-body">
-                <div style={{ display:'flex', alignItems:'center', gap:6 }}>
+                <div style={{ display:'flex', alignItems:'center', gap:6, flexWrap:'wrap' }}>
                   <div className="member-name">{m.name}</div>
+                  {m.founding && <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.16em', background:'linear-gradient(135deg, rgba(232,177,75,0.18), rgba(232,177,75,0.08))', border:'0.5px solid rgba(232,177,75,0.45)', borderRadius:3, padding:'2px 6px', color:'#F5D689' }}>FOUNDING</span>}
                   {m.admin && <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.14em', background:'rgba(201,184,148,0.12)', border:'0.5px solid var(--rule-strong)', borderRadius:3, padding:'1px 5px', color:'var(--mycelium-d)' }}>ADMIN</span>}
                   {isAdmin && !isMe && <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'var(--mycelium-d)', marginLeft:'auto' }}>tap ↗</span>}
                 </div>

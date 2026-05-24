@@ -6,7 +6,7 @@
   directory      = "netlify/functions"
   node_bundler   = "esbuild"
 
-# Force browsers to revalidate the favicon — avoids cached Lovable icon persisting
+# Force browsers to revalidate the favicon — avoids stale cached icons persisting across deploys
 [[headers]]
   for = "/favicon.svg"
   [headers.values]
