@@ -449,7 +449,52 @@ const MEMBERS = [
     balance: 105,
     focus: 'Photography · field notes · archive',
   },
+  {
+    id: 'robert',
+    name: 'Robert',
+    role: 'Collaborator',
+    node: 'berlin',
+    rep: 1,
+    balance: 100,
+    focus: 'New thread · onboarding through /onboard',
+  },
 ];
+
+// ── Auto-merge the visitor's own profile (created at /onboard, stored in localStorage)
+// Any profile saved by the current visitor appears in the member list automatically,
+// marked as "you", until we wire up Supabase for the global registry.
+(function mergeLocalProfile(){
+  try {
+    const raw = localStorage.getItem('fungai_profile');
+    if (!raw) return;
+    const p = JSON.parse(raw);
+    if (!p || !p.character_name) return;
+    const id = 'me_' + p.character_name.toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 24);
+    // Don't duplicate if their name already matches a canonical member
+    if (MEMBERS.some(m => m.name.toLowerCase() === p.character_name.toLowerCase())) return;
+    // Map role → display label
+    const ROLE_LABEL = {
+      forager: 'Forager', herbalist: 'Herbalist', alchemist: 'Alchemist',
+      ceremony: 'Ceremony Facilitator', sound: 'Sound Healer', artist: 'Artist',
+      patron: 'Patron', collaborator: 'Collaborator', student: 'Student',
+      seeker: 'Seeker', other: 'Spore-bearer',
+    };
+    // Map location → existing node id (closest match)
+    const NODE_MAP = {
+      sweden: 'sweden', berlin: 'berlin', lisbon: 'lisbon', beirut: 'beirut',
+      genoa: 'berlin', france: 'berlin', germany: 'berlin', denmark: 'sweden',
+      other_europe: 'berlin', other_world: 'festival',
+    };
+    MEMBERS.unshift({
+      id, isMe: true, avatar: p.avatar || null,
+      name: p.character_name,
+      role: ROLE_LABEL[p.role] || 'Spore-bearer',
+      node: NODE_MAP[p.location] || 'berlin',
+      rep: 1, balance: 0,
+      focus: p.bio || (p.specialties && p.specialties.length ? p.specialties.join(' · ') : 'A new thread in the network'),
+    });
+  } catch (e) { /* localStorage blocked — skip */ }
+})();
 
 const CONTRIBUTION_TYPES = [
   { id: 'foraging',    label: 'Foraging',    icon: '🌿', desc: 'Wild harvest, species ID, field medicine' },
