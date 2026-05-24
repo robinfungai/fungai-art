@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Welcome to The Mycelium — Fungai Art</title>
+<title>Create your character — Fungai Art</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
 <link rel="alternate icon" type="image/png" href="/fungai-art-logo.png"/>
 <link rel="apple-touch-icon" href="/fungai-art-logo.png"/>
@@ -13,71 +13,83 @@
 @font-face { font-family: 'Kiona'; src: url('/fonts/Kiona-Regular.ttf') format('truetype'); font-display: swap; }
 @font-face { font-family: 'Bayer'; src: url('/fonts/Bayer-TypeArchiType.otf') format('opentype'); font-display: swap; }
 :root{--s:#060809;--s2:#0F1014;--s3:#171A1F;--m:#C9B894;--md:#8B7E62;--ml:#E6D9B5;--g:#6BD66F;--gl:#B6F0AE;--a:#E8B14B;--al:#F5D689;--v:#A88FE0;--vl:#C5B5F5;--r:rgba(201,184,148,.11);--rl:rgba(201,184,148,.2);--fd:'TAN-PARADISO','Zodiak','Cormorant Garamond',Georgia,serif;--fs:'Kiona','Satoshi',system-ui,sans-serif;--fm:'Bayer','Geist Mono',monospace;}
-*{box-sizing:border-box;margin:0;padding:0;}html,body{background:var(--s);color:var(--m);font-family:var(--fs);font-size:15.5px;line-height:1.72;-webkit-font-smoothing:antialiased;min-height:100vh;}
-body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.22;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .79 0 0 0 0 .72 0 0 0 0 .58 0 0 0 .06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");}
-.wrap{max-width:760px;margin:0 auto;padding:0 22px 100px;position:relative;z-index:1;}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0 0;margin-bottom:48px;}
-.nav-brand{display:flex;align-items:center;gap:12px;}
+*{box-sizing:border-box;margin:0;padding:0;}html,body{background:var(--s);color:var(--m);font-family:var(--fs);font-size:15px;line-height:1.68;-webkit-font-smoothing:antialiased;min-height:100vh;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.2;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .79 0 0 0 0 .72 0 0 0 0 .58 0 0 0 .06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");}
+.wrap{max-width:680px;margin:0 auto;padding:0 22px 100px;position:relative;z-index:1;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0 0;margin-bottom:44px;}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
 .nav-name{font-family:var(--fd);font-size:22px;color:var(--ml);letter-spacing:0.005em;}
 .nav-sub{font-family:var(--fm);font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:var(--g);margin-top:3px;}
 .nav-back{font-family:var(--fm);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--md);padding:9px 16px;border:0.5px solid var(--r);border-radius:999px;text-decoration:none;transition:all .15s;}
 .nav-back:hover{color:var(--ml);border-color:var(--rl);}
 
 .hero-ey{font-family:var(--fm);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--g);margin-bottom:14px;}
-.hero-title{font-family:var(--fd);font-size:clamp(44px,7vw,76px);color:var(--ml);letter-spacing:0.005em;line-height:.96;margin-bottom:20px;}
+.hero-title{font-family:var(--fd);font-size:clamp(42px,7vw,68px);color:var(--ml);letter-spacing:0.005em;line-height:.96;margin-bottom:18px;}
 .hero-title em{color:var(--g);font-style:italic;}
-.hero-blurb{font-size:16px;color:var(--m);line-height:1.85;max-width:60ch;margin-bottom:36px;}
+.hero-blurb{font-size:15.5px;color:var(--m);line-height:1.82;max-width:54ch;margin-bottom:44px;opacity:.92;}
 
-/* Welcome card */
-.welcome{background:linear-gradient(160deg,rgba(107,214,111,.06),rgba(107,214,111,.02));border:0.5px solid rgba(107,214,111,.25);border-radius:18px;padding:28px 30px;margin-bottom:56px;position:relative;overflow:hidden;}
-.welcome::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 90% 10%,rgba(107,214,111,.06),transparent 60%);pointer-events:none;}
-.welcome-text{font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml);line-height:1.45;letter-spacing:0.005em;position:relative;z-index:1;}
+/* Form */
+.form-section{margin-bottom:32px;}
+.form-label{font-family:var(--fm);font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:var(--a);margin-bottom:10px;display:block;}
+.form-hint{font-size:12px;color:var(--md);margin-top:6px;line-height:1.55;}
+.form-input,.form-textarea,.form-select{
+  width:100%;background:var(--s2);border:0.5px solid var(--r);border-radius:10px;
+  color:var(--ml);padding:14px 18px;font-family:var(--fs);font-size:15px;outline:none;
+  transition:border-color .18s,background .18s;
+}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:rgba(232,177,75,.5);background:rgba(15,16,20,.9);}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--md);font-style:italic;}
+.form-input-name{font-family:var(--fd);font-size:28px;padding:18px 22px;letter-spacing:0.005em;}
+.form-textarea{resize:vertical;min-height:110px;line-height:1.7;}
+.form-select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%238B7E62' stroke-width='1.5' fill='none' stroke-linecap='round'/></svg>");background-repeat:no-repeat;background-position:right 18px center;padding-right:42px;cursor:pointer;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:560px){.form-row{grid-template-columns:1fr;}}
 
-section{margin-bottom:52px;}
-.sec-ey{font-family:var(--fm);font-size:10px;letter-spacing:0.28em;text-transform:uppercase;color:var(--a);margin-bottom:10px;}
-.sec-title{font-family:var(--fd);font-size:32px;color:var(--ml);letter-spacing:0.005em;margin-bottom:18px;line-height:1.1;}
-.sec-title em{color:var(--a);font-style:italic;}
+/* Avatar uploader */
+.avatar-area{display:flex;align-items:center;gap:20px;}
+.avatar-preview{
+  width:96px;height:96px;border-radius:50%;flex-shrink:0;
+  background:var(--s2);border:0.5px dashed var(--rl);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;cursor:pointer;
+  transition:border-color .18s;
+}
+.avatar-preview:hover{border-color:rgba(232,177,75,.5);}
+.avatar-preview img{width:100%;height:100%;object-fit:cover;}
+.avatar-preview .placeholder{font-size:32px;color:var(--md);font-family:var(--fd);font-style:italic;}
+.avatar-info{flex:1;}
+.avatar-btn{font-family:var(--fm);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;padding:9px 18px;border-radius:999px;background:rgba(232,177,75,.08);border:0.5px solid rgba(232,177,75,.35);color:var(--al);cursor:pointer;text-decoration:none;display:inline-block;transition:all .15s;}
+.avatar-btn:hover{background:rgba(232,177,75,.15);}
+.avatar-input{display:none;}
 
-/* Steps */
-.steps{display:flex;flex-direction:column;gap:1px;background:var(--r);border:0.5px solid var(--r);border-radius:14px;overflow:hidden;}
-.step{background:var(--s2);padding:24px 26px;display:grid;grid-template-columns:36px 1fr;gap:18px;align-items:flex-start;}
-.step-num{width:36px;height:36px;border-radius:50%;background:radial-gradient(circle,rgba(232,177,75,.18),rgba(232,177,75,.04));border:0.5px solid rgba(232,177,75,.4);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:13px;color:var(--al);flex-shrink:0;}
-.step-body{}
-.step-title{font-family:var(--fd);font-size:22px;color:var(--ml);margin-bottom:6px;letter-spacing:0.005em;}
-.step-title em{color:var(--al);font-style:italic;}
-.step-meta{font-family:var(--fm);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--md);margin-bottom:10px;}
-.step-text{font-size:14px;color:var(--m);line-height:1.78;margin-bottom:14px;}
-.step-text a{color:var(--al);text-decoration:none;border-bottom:0.5px solid rgba(232,177,75,.4);}
-.step-text strong{color:var(--ml);font-weight:500;}
-.step-action{display:inline-flex;align-items:center;gap:8px;font-family:var(--fm);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;padding:11px 22px;border-radius:999px;text-decoration:none;background:rgba(232,177,75,.1);border:0.5px solid rgba(232,177,75,.4);color:var(--al);transition:all .18s;}
-.step-action:hover{background:rgba(232,177,75,.2);border-color:rgba(232,177,75,.65);}
+/* Specialty tags */
+.tags{display:flex;flex-wrap:wrap;gap:6px;}
+.tag-chip{
+  font-family:var(--fm);font-size:9.5px;letter-spacing:0.16em;text-transform:uppercase;
+  padding:8px 14px;border-radius:999px;
+  background:var(--s2);border:0.5px solid var(--r);color:var(--md);
+  cursor:pointer;transition:all .15s;user-select:none;
+}
+.tag-chip:hover{color:var(--ml);border-color:var(--rl);}
+.tag-chip.on{background:rgba(168,143,224,.12);border-color:rgba(168,143,224,.5);color:var(--vl);}
 
-/* Polygon detail box */
-.detail{background:var(--s3);border:0.5px solid var(--r);border-radius:10px;padding:16px 18px;margin-top:12px;}
-.detail-label{font-family:var(--fm);font-size:8px;letter-spacing:0.24em;text-transform:uppercase;color:var(--md);margin-bottom:6px;}
-.detail-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:0.5px solid var(--r);font-size:12.5px;}
-.detail-row:last-child{border:none;}
-.detail-row .k{color:var(--md);font-family:var(--fm);font-size:11px;letter-spacing:0.06em;}
-.detail-row .v{color:var(--ml);font-family:var(--fm);font-size:12px;letter-spacing:0.02em;}
+/* Submit */
+.submit-bar{display:flex;justify-content:flex-end;gap:10px;margin-top:42px;padding-top:30px;border-top:0.5px solid var(--r);}
+.submit-btn{
+  font-family:var(--fm);font-size:11px;letter-spacing:0.26em;text-transform:uppercase;
+  padding:14px 32px;border-radius:999px;cursor:pointer;border:none;
+  background:linear-gradient(135deg,var(--g),var(--gd));color:var(--s);
+  transition:transform .15s,box-shadow .15s;font-weight:500;
+}
+.submit-btn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(107,214,111,.3);}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none;}
 
-/* Email card */
-.email-card{background:rgba(168,143,224,.06);border:0.5px solid rgba(168,143,224,.25);border-radius:14px;padding:24px 26px;}
-.email-card h3{font-family:var(--fd);font-size:24px;color:var(--ml);margin-bottom:10px;letter-spacing:0.005em;}
-.email-card h3 em{color:var(--vl);font-style:italic;}
-.email-card p{font-size:14px;color:var(--m);line-height:1.78;margin-bottom:14px;}
-.email-template{background:var(--s2);border:0.5px solid var(--r);border-radius:8px;padding:18px 20px;font-family:var(--fm);font-size:12.5px;color:var(--ml);line-height:1.85;white-space:pre-wrap;letter-spacing:0.02em;}
-.email-cta{display:inline-flex;align-items:center;gap:8px;margin-top:14px;font-family:var(--fm);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;padding:11px 22px;border-radius:999px;text-decoration:none;background:rgba(168,143,224,.1);border:0.5px solid rgba(168,143,224,.4);color:var(--vl);transition:all .18s;}
-.email-cta:hover{background:rgba(168,143,224,.2);}
+/* Welcome moment */
+.welcome{background:linear-gradient(160deg,rgba(107,214,111,.06),rgba(107,214,111,.02));border:0.5px solid rgba(107,214,111,.25);border-radius:18px;padding:28px 30px;margin-bottom:48px;position:relative;overflow:hidden;}
+.welcome::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 85% 15%,rgba(107,214,111,.08),transparent 60%);pointer-events:none;}
+.welcome-text{font-family:var(--fd);font-style:italic;font-size:20px;color:var(--ml);line-height:1.5;letter-spacing:0.005em;position:relative;z-index:1;}
 
-/* What happens next */
-.next{background:var(--s2);border:0.5px solid var(--r);border-radius:12px;padding:24px 26px;}
-.next-row{display:flex;gap:14px;padding:12px 0;border-bottom:0.5px solid var(--r);align-items:flex-start;}
-.next-row:last-child{border:none;}
-.next-icon{font-size:18px;flex-shrink:0;width:30px;text-align:center;}
-.next-text{font-size:13.5px;color:var(--m);line-height:1.72;}
-.next-text strong{color:var(--ml);}
-
-.foot{border-top:0.5px solid var(--r);padding-top:28px;margin-top:60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.foot{border-top:0.5px solid var(--r);padding-top:24px;margin-top:60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
 .foot-link{font-family:var(--fm);font-size:8.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--md);text-decoration:none;transition:color .15s;}
 .foot-link:hover{color:var(--ml);}
 </style>
@@ -86,7 +98,7 @@ section{margin-bottom:52px;}
 <div class="wrap">
 
 <nav class="nav">
-  <a href="/" class="nav-brand" style="text-decoration:none;">
+  <a href="/" class="nav-brand">
     <img src="/fungai-art-logo.png" alt="Fungai Art" style="height:38px;width:auto;opacity:.95;">
     <div>
       <div class="nav-name">Fungai Art</div>
@@ -96,136 +108,209 @@ section{margin-bottom:52px;}
   <a href="/members" class="nav-back">Members ↗</a>
 </nav>
 
-<div class="hero-ey">Onboarding · 10 minutes</div>
-<h1 class="hero-title">Welcome to<br><em>The Mycelium.</em></h1>
-<p class="hero-blurb">You've been invited into the Fungai Art network. This page walks you through the four simple steps to join — installing a wallet, switching to the right network, sharing your address, and waiting for your Hyphae to spore in. If you get stuck on any step, write to <a href="mailto:robin@fungai.art" style="color:var(--al);border-bottom:0.5px solid rgba(232,177,75,.4);text-decoration:none;">robin@fungai.art</a>.</p>
+<div class="hero-ey">Create your character · ~3 minutes</div>
+<h1 class="hero-title">Become a<br><em>thread.</em></h1>
+<p class="hero-blurb">Welcome to The Mycelium. To join the network you don't need a wallet, an account, or anything technical. Just tell us who you are, what you bring, and where you grow. Your profile lives in your browser — you stay in control of it.</p>
 
 <!-- Welcome quote -->
 <div class="welcome">
-  <p class="welcome-text">"You're not buying access. You're agreeing to share threads with us — to give what you have, to receive what flows. Hyphae are the language of that exchange."</p>
+  <p class="welcome-text">"You're not buying access. You're agreeing to share threads with us — to give what you have, to receive what flows. Your character is the shape you take in the network."</p>
 </div>
 
-<!-- The four steps -->
-<section>
-  <div class="sec-ey">The four steps</div>
-  <h2 class="sec-title">From here to your <em>first Hyphae.</em></h2>
-  <div class="steps">
+<form id="profileForm">
 
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <div class="step-title">Install <em>MetaMask</em></div>
-        <div class="step-meta">~5 minutes · free · browser extension</div>
-        <p class="step-text">MetaMask is the wallet that will hold your Hyphae. It's a free browser extension (Chrome, Firefox, Brave, Edge). When you install it, it will give you a 12-word seed phrase — <strong>write that down on paper and keep it safe.</strong> Never type it into any website. The seed phrase is the only thing that proves the wallet is yours.</p>
-        <a href="https://metamask.io/download/" target="_blank" class="step-action">Install MetaMask →</a>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <div class="step-title">Switch to <em>Polygon</em></div>
-        <div class="step-meta">~2 minutes · one-time setup</div>
-        <p class="step-text">Hyphae live on Polygon (a fast, low-cost network). MetaMask opens on the Ethereum mainnet by default — you need to switch. Click the network dropdown at the top of MetaMask → <strong>Add network → Add manually</strong> → enter:</p>
-        <div class="detail">
-          <div class="detail-label">Polygon network settings</div>
-          <div class="detail-row"><span class="k">Network name</span><span class="v">Polygon Mainnet</span></div>
-          <div class="detail-row"><span class="k">RPC URL</span><span class="v">https://polygon-rpc.com</span></div>
-          <div class="detail-row"><span class="k">Chain ID</span><span class="v">137</span></div>
-          <div class="detail-row"><span class="k">Currency symbol</span><span class="v">MATIC</span></div>
-          <div class="detail-row"><span class="k">Block explorer</span><span class="v">https://polygonscan.com</span></div>
-        </div>
-        <p class="step-text" style="margin-top:14px;">Then switch your active network to Polygon Mainnet. You don't need to buy any MATIC — Robin pays the gas fees when sporing Hyphae to you.</p>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <div class="step-title">Send your <em>wallet address</em></div>
-        <div class="step-meta">~1 minute · one email</div>
-        <p class="step-text">Click your account name at the top of MetaMask — it will say something like <strong style="font-family:var(--fm);font-size:13px;">0x7a3...c0d</strong> — and copy the full address (starts with 0x, 42 characters total). Then email it to Robin:</p>
-        <a href="mailto:robin@fungai.art?subject=My%20wallet%20address%20for%20Fungai%20Art&body=Hi%20Robin%2C%0A%0AHere%27s%20my%20wallet%20address%20for%20receiving%20Hyphae%3A%0A%0A0x...your-address-here...%0A%0AThanks%21" class="step-action">Email Robin your address →</a>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-body">
-        <div class="step-title">Wait for your <em>first sporing</em></div>
-        <div class="step-meta">~1 day · automatic</div>
-        <p class="step-text">Robin will spore Hyphae into your wallet within 24 hours of receiving your address. You'll see them in MetaMask under the Polygon network. The contract is currently being prepared — until it goes live, your wallet is queued and the first sporing happens at deployment.</p>
-        <p class="step-text">Once you have Hyphae, you can connect your wallet on <a href="/members">/members</a> to see your balance, browse <a href="/draw">/draw</a> to redeem extracts and ceremonies, and read more about how the network breathes at <a href="/sporing">/sporing</a>.</p>
-      </div>
-    </div>
-
+  <div class="form-section">
+    <label class="form-label" for="character_name">Your name in the network</label>
+    <input class="form-input form-input-name" type="text" id="character_name" name="character_name" placeholder="Robert · or Floræsta · or whatever you go by" required maxlength="50">
+    <div class="form-hint">A real name, a chosen name, a nature name — whatever feels true.</div>
   </div>
-</section>
 
-<!-- What happens next -->
-<section>
-  <div class="sec-ey">After your first Hyphae</div>
-  <h2 class="sec-title">What it <em>opens.</em></h2>
-  <div class="next">
-    <div class="next-row">
-      <div class="next-icon">🍄</div>
-      <div class="next-text"><strong>Draw extracts and ceremonies</strong> — visit /draw, browse the catalogue, spend Hyphae for tinctures, ceremony seats, retreat early access, Academy sessions.</div>
-    </div>
-    <div class="next-row">
-      <div class="next-icon">✦</div>
-      <div class="next-text"><strong>Be part of the contribution flow</strong> — every collaboration (services, art, foraging, teaching) earns more Hyphae. The more the network breathes, the more flow there is.</div>
-    </div>
-    <div class="next-row">
-      <div class="next-icon">⟡</div>
-      <div class="next-text"><strong>Build mycoTrust over time</strong> — a separate, non-transferable reputation. Grows with participation. Decays without. Influences voice in Mycorrhizal Governance.</div>
-    </div>
-    <div class="next-row">
-      <div class="next-icon">🎁</div>
-      <div class="next-text"><strong>Gift Hyphae to other members</strong> — with a note. Recorded on chain. The network's gift economy made visible.</div>
+  <div class="form-section">
+    <label class="form-label">Your portrait</label>
+    <div class="avatar-area">
+      <label class="avatar-preview" for="avatar_input" id="avatarPreview">
+        <span class="placeholder" id="avatarPlaceholder">+</span>
+        <input class="avatar-input" type="file" id="avatar_input" accept="image/*">
+      </label>
+      <div class="avatar-info">
+        <label class="avatar-btn" for="avatar_input">Upload a photo</label>
+        <div class="form-hint" style="margin-top:8px;">A small image of you, a plant you love, a mushroom you found, a symbol. Anything that feels like you.</div>
+      </div>
     </div>
   </div>
-</section>
 
-<!-- Email template for Robin to send -->
-<section>
-  <div class="sec-ey">For Robin · template</div>
-  <h2 class="sec-title">Send this <em>to a new member.</em></h2>
-  <div class="email-card">
-    <h3>Copy-paste <em>email template</em></h3>
-    <p>Use this when reaching out to a new collaborator, patron, or founding member. Personalise the opening.</p>
-    <div class="email-template">Subject: Welcome to The Mycelium · Fungai Art
-
-Hi [Name],
-
-It's good to be in conversation with you. As we talked about, I'd like to bring you into the Fungai Art network as a [collaborator / patron / founding member]. Your contribution is [brief description].
-
-To receive Hyphae (our community token, $MYCEL on Polygon), you'll need to set up a small thing — about 10 minutes total. I've written it up here:
-
-→ fungai.art/onboard
-
-Walk through the four steps, then email me your wallet address (starts with 0x). I'll spore your first Hyphae within a day.
-
-If anything is unclear, write back — I'll walk you through it.
-
-With care,
-Robin</div>
-    <a href="mailto:?subject=Welcome%20to%20The%20Mycelium%20·%20Fungai%20Art" class="email-cta">Open in mail app →</a>
+  <div class="form-section">
+    <label class="form-label" for="bio">A few words about you</label>
+    <textarea class="form-textarea" id="bio" name="bio" placeholder="What you bring, how you came to the forest, what excites you about plants and fungi…" maxlength="400"></textarea>
+    <div class="form-hint">Max 400 characters. Will appear on your profile and to other members.</div>
   </div>
-</section>
+
+  <div class="form-row">
+    <div class="form-section">
+      <label class="form-label" for="role">Your relation</label>
+      <select class="form-select" id="role" name="role" required>
+        <option value="" disabled selected>Choose your relation…</option>
+        <option value="forager">Forager — wild plant gathering</option>
+        <option value="herbalist">Herbalist — traditional medicine</option>
+        <option value="alchemist">Alchemist — extraction &amp; elixirs</option>
+        <option value="ceremony">Ceremony facilitator</option>
+        <option value="sound">Sound &amp; frequency healer</option>
+        <option value="artist">Artist · creative collaborator</option>
+        <option value="patron">Patron — supporting the work</option>
+        <option value="collaborator">Collaborator — vendor / supplier</option>
+        <option value="student">Student — learning the craft</option>
+        <option value="seeker">Seeker — just beginning</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <div class="form-section">
+      <label class="form-label" for="location">Your node</label>
+      <select class="form-select" id="location" name="location" required>
+        <option value="" disabled selected>Where you grow…</option>
+        <option value="sweden">Sweden</option>
+        <option value="berlin">Berlin</option>
+        <option value="lisbon">Lisbon</option>
+        <option value="beirut">Beirut</option>
+        <option value="genoa">Genoa</option>
+        <option value="france">France</option>
+        <option value="germany">Germany (other)</option>
+        <option value="denmark">Denmark</option>
+        <option value="other_europe">Elsewhere in Europe</option>
+        <option value="other_world">Elsewhere in the world</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <label class="form-label">What you bring · choose any</label>
+    <div class="tags" id="specialtyTags">
+      <span class="tag-chip" data-tag="foraging">Foraging</span>
+      <span class="tag-chip" data-tag="fungi">Fungi knowledge</span>
+      <span class="tag-chip" data-tag="extraction">Extraction</span>
+      <span class="tag-chip" data-tag="formulation">Formulation</span>
+      <span class="tag-chip" data-tag="ceremony">Ceremony</span>
+      <span class="tag-chip" data-tag="sound">Sound</span>
+      <span class="tag-chip" data-tag="photography">Photography</span>
+      <span class="tag-chip" data-tag="writing">Writing</span>
+      <span class="tag-chip" data-tag="design">Design</span>
+      <span class="tag-chip" data-tag="cooking">Cooking</span>
+      <span class="tag-chip" data-tag="land">Land &amp; stewardship</span>
+      <span class="tag-chip" data-tag="teaching">Teaching</span>
+      <span class="tag-chip" data-tag="research">Research</span>
+      <span class="tag-chip" data-tag="translation">Translation</span>
+      <span class="tag-chip" data-tag="organising">Event organising</span>
+      <span class="tag-chip" data-tag="hospitality">Hospitality</span>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-section">
+      <label class="form-label" for="pronouns">Pronouns (optional)</label>
+      <input class="form-input" type="text" id="pronouns" name="pronouns" placeholder="she/her · he/him · they/them …" maxlength="30">
+    </div>
+    <div class="form-section">
+      <label class="form-label" for="contact">Best way to reach you (optional)</label>
+      <input class="form-input" type="text" id="contact" name="contact" placeholder="email · @instagram · signal…" maxlength="80">
+      <div class="form-hint">Only visible to Robin and Steph.</div>
+    </div>
+  </div>
+
+  <div class="submit-bar">
+    <button class="submit-btn" type="submit" id="submitBtn">✦ Become a thread</button>
+  </div>
+
+</form>
 
 <div class="foot">
   <div style="font-family:var(--fm);font-size:8.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--md);">Fungai Art · The Mycelium</div>
   <div style="display:flex;gap:16px;flex-wrap:wrap;">
     <a href="/members" class="foot-link">Members</a>
-    <a href="/draw" class="foot-link">Draw</a>
-    <a href="/patron" class="foot-link">Patronage</a>
-    <a href="/basket" class="foot-link">Basket</a>
-    <a href="/terms" class="foot-link">Terms</a>
     <a href="/" class="foot-link">Home</a>
+    <a href="/privacy" class="foot-link">Privacy</a>
   </div>
 </div>
 
 </div>
+
+<script>
+// ── Profile creation — saved to localStorage ──────────────────────────
+const $ = id => document.getElementById(id);
+const STORAGE_KEY = 'fungai_profile';
+
+// Pre-fill if profile exists (editing flow)
+function loadExisting() {
+  try {
+    const p = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+    if (!p) return;
+    $('character_name').value = p.character_name || '';
+    $('bio').value = p.bio || '';
+    $('role').value = p.role || '';
+    $('location').value = p.location || '';
+    $('pronouns').value = p.pronouns || '';
+    $('contact').value = p.contact || '';
+    if (p.avatar) {
+      $('avatarPlaceholder').style.display = 'none';
+      const img = document.createElement('img');
+      img.src = p.avatar;
+      $('avatarPreview').appendChild(img);
+    }
+    (p.specialties || []).forEach(s => {
+      const chip = document.querySelector(`.tag-chip[data-tag="${s}"]`);
+      if (chip) chip.classList.add('on');
+    });
+    $('submitBtn').textContent = '✦ Update your character';
+  } catch (e) {}
+}
+
+// Avatar upload
+$('avatar_input').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (file.size > 2_000_000) { alert('Image too large — please use one under 2MB.'); return; }
+  const reader = new FileReader();
+  reader.onload = ev => {
+    $('avatarPlaceholder').style.display = 'none';
+    const existing = $('avatarPreview').querySelector('img');
+    if (existing) existing.remove();
+    const img = document.createElement('img');
+    img.src = ev.target.result;
+    $('avatarPreview').appendChild(img);
+  };
+  reader.readAsDataURL(file);
+});
+
+// Specialty tags toggle
+document.querySelectorAll('.tag-chip').forEach(chip => {
+  chip.addEventListener('click', () => chip.classList.toggle('on'));
+});
+
+// Submit
+$('profileForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const specialties = Array.from(document.querySelectorAll('.tag-chip.on')).map(c => c.dataset.tag);
+  const avatarImg = $('avatarPreview').querySelector('img');
+  const profile = {
+    character_name: $('character_name').value.trim(),
+    bio: $('bio').value.trim(),
+    role: $('role').value,
+    location: $('location').value,
+    pronouns: $('pronouns').value.trim(),
+    contact: $('contact').value.trim(),
+    specialties,
+    avatar: avatarImg ? avatarImg.src : null,
+    joined: (JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null')?.joined) || new Date().toISOString(),
+    updated: new Date().toISOString(),
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
+  // Brief celebration, then redirect
+  $('submitBtn').textContent = '✦ Welcome';
+  $('submitBtn').style.background = 'linear-gradient(135deg,#E8B14B,#C48838)';
+  setTimeout(() => { window.location.href = '/members?welcome=1'; }, 700);
+});
+
+loadExisting();
+</script>
 <script src="/cookie-banner.js" defer></script>
 </body>
 </html>
