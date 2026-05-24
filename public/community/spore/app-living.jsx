@@ -824,6 +824,173 @@ function ExperiencesPage({ economy, onToast }) {
   );
 }
 
+/* ── Profile Editor modal — inline character creation ────────── */
+
+function ProfileEditor({ existing, onClose }) {
+  const [name, setName]         = useState(existing?.character_name || '');
+  const [bio, setBio]           = useState(existing?.bio || '');
+  const [role, setRole]         = useState(existing?.role || '');
+  const [location, setLocation] = useState(existing?.location || '');
+  const [pronouns, setPronouns] = useState(existing?.pronouns || '');
+  const [contact, setContact]   = useState(existing?.contact || '');
+  const [avatar, setAvatar]     = useState(existing?.avatar || null);
+  const [tags, setTags]         = useState(existing?.specialties || []);
+  const [saving, setSaving]     = useState(false);
+
+  const ROLES = [
+    ['forager', 'Forager — wild plant gathering'],
+    ['herbalist', 'Herbalist — traditional medicine'],
+    ['alchemist', 'Alchemist — extraction & elixirs'],
+    ['ceremony', 'Ceremony facilitator'],
+    ['sound', 'Sound & frequency healer'],
+    ['artist', 'Artist · creative collaborator'],
+    ['patron', 'Patron — supporting the work'],
+    ['collaborator', 'Collaborator — vendor / supplier'],
+    ['student', 'Student — learning the craft'],
+    ['seeker', 'Seeker — just beginning'],
+    ['other', 'Other'],
+  ];
+  const LOCATIONS = [
+    ['sweden','Sweden'],['berlin','Berlin'],['lisbon','Lisbon'],
+    ['beirut','Beirut'],['genoa','Genoa'],['france','France'],
+    ['germany','Germany (other)'],['denmark','Denmark'],
+    ['other_europe','Elsewhere in Europe'],['other_world','Elsewhere in the world'],
+  ];
+  const ALL_TAGS = ['foraging','fungi','extraction','formulation','ceremony','sound','photography','writing','design','cooking','land','teaching','research','translation','organising','hospitality'];
+
+  function toggleTag(t) { setTags(tags.includes(t) ? tags.filter(x => x !== t) : [...tags, t]); }
+
+  function onAvatarChange(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 2_000_000) { alert('Image too large — please use one under 2MB.'); return; }
+    const reader = new FileReader();
+    reader.onload = ev => setAvatar(ev.target.result);
+    reader.readAsDataURL(file);
+  }
+
+  function save() {
+    if (!name.trim() || !role || !location) {
+      alert('Please fill in your name, relation, and node before saving.');
+      return;
+    }
+    setSaving(true);
+    const profile = {
+      character_name: name.trim(),
+      bio: bio.trim(),
+      role, location,
+      pronouns: pronouns.trim(),
+      contact: contact.trim(),
+      specialties: tags,
+      avatar,
+      joined: existing?.joined || new Date().toISOString(),
+      updated: new Date().toISOString(),
+    };
+    try { localStorage.setItem('fungai_profile', JSON.stringify(profile)); } catch (e) {}
+    setTimeout(() => { window.location.reload(); }, 500);
+  }
+
+  const labelStyle = { fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--nutrient)', marginBottom:8, display:'block' };
+  const inputStyle = { width:'100%', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:8, color:'var(--mycelium-l)', padding:'12px 14px', fontFamily:'var(--font-sans)', fontSize:14, outline:'none' };
+
+  return (
+    <div style={{ position:'fixed', inset:0, zIndex:9000, background:'rgba(10,9,8,0.86)', backdropFilter:'blur(12px)', display:'flex', alignItems:'flex-start', justifyContent:'center', padding:'40px 16px', overflowY:'auto' }} onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div style={{ width:'100%', maxWidth:540, background:'var(--soil-2)', border:'0.5px solid var(--rule-strong)', borderRadius:18, padding:'28px 26px', position:'relative', marginBottom:40 }}>
+
+        <button onClick={onClose} style={{ position:'absolute', top:14, right:16, background:'none', border:'none', color:'var(--mycelium-d)', fontSize:22, cursor:'pointer', lineHeight:1, padding:6 }}>×</button>
+
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.28em', textTransform:'uppercase', color:'var(--spore-l)', marginBottom:8 }}>
+          {existing ? '✦ Edit your thread' : '✦ Become a thread'}
+        </div>
+        <h2 style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:30, color:'var(--mycelium-l)', letterSpacing:'-0.01em', marginBottom:6, lineHeight:1.1 }}>
+          {existing ? 'Update' : 'Create'} your <em style={{ color:'var(--nutrient)' }}>character</em>
+        </h2>
+        <p style={{ fontSize:13, color:'var(--mycelium)', lineHeight:1.7, marginBottom:24 }}>
+          No wallet, no email, no installation. Your profile lives in your browser — fully under your control. Lasts as long as you don't clear site data.
+        </p>
+
+        {/* Avatar */}
+        <div style={{ display:'flex', alignItems:'center', gap:16, marginBottom:22 }}>
+          <label htmlFor="pe-avatar" style={{ width:80, height:80, borderRadius:'50%', background:'var(--soil-3)', border:'0.5px dashed var(--rule-strong)', display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden', cursor:'pointer', flexShrink:0 }}>
+            {avatar
+              ? <img src={avatar} alt="" style={{ width:'100%', height:'100%', objectFit:'cover' }} />
+              : <span style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:28, color:'var(--mycelium-d)' }}>+</span>}
+            <input id="pe-avatar" type="file" accept="image/*" onChange={onAvatarChange} style={{ display:'none' }} />
+          </label>
+          <div>
+            <label htmlFor="pe-avatar" style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', padding:'8px 14px', borderRadius:999, background:'rgba(232,177,75,0.08)', border:'0.5px solid rgba(232,177,75,0.35)', color:'var(--nutrient-l)', cursor:'pointer' }}>Upload portrait</label>
+            <div style={{ fontSize:11, color:'var(--mycelium-d)', marginTop:6, lineHeight:1.55 }}>Max 2MB. A photo, plant, mushroom, or symbol.</div>
+          </div>
+        </div>
+
+        {/* Name */}
+        <div style={{ marginBottom:18 }}>
+          <label style={labelStyle}>Your name in the network</label>
+          <input style={{ ...inputStyle, fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:22, padding:'14px 18px' }} value={name} onChange={e => setName(e.target.value)} placeholder="Robert" maxLength={50} />
+        </div>
+
+        {/* Bio */}
+        <div style={{ marginBottom:18 }}>
+          <label style={labelStyle}>A few words about you</label>
+          <textarea style={{ ...inputStyle, minHeight:90, resize:'vertical', lineHeight:1.6 }} value={bio} onChange={e => setBio(e.target.value)} placeholder="What you bring, how you came to the forest, what excites you about plants and fungi…" maxLength={400} />
+        </div>
+
+        {/* Role + Location */}
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, marginBottom:18 }}>
+          <div>
+            <label style={labelStyle}>Your relation</label>
+            <select style={{ ...inputStyle, cursor:'pointer' }} value={role} onChange={e => setRole(e.target.value)}>
+              <option value="" disabled>Choose…</option>
+              {ROLES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+            </select>
+          </div>
+          <div>
+            <label style={labelStyle}>Your node</label>
+            <select style={{ ...inputStyle, cursor:'pointer' }} value={location} onChange={e => setLocation(e.target.value)}>
+              <option value="" disabled>Where you grow…</option>
+              {LOCATIONS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+            </select>
+          </div>
+        </div>
+
+        {/* Tags */}
+        <div style={{ marginBottom:18 }}>
+          <label style={labelStyle}>What you bring · tap any</label>
+          <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+            {ALL_TAGS.map(t => {
+              const on = tags.includes(t);
+              return (
+                <button key={t} type="button" onClick={() => toggleTag(t)} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', padding:'7px 12px', borderRadius:999, background: on ? 'rgba(168,143,224,0.14)' : 'var(--soil-3)', border: on ? '0.5px solid rgba(168,143,224,0.5)' : '0.5px solid var(--rule)', color: on ? '#C5B5F5' : 'var(--mycelium-d)', cursor:'pointer' }}>{t}</button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Pronouns + Contact */}
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, marginBottom:24 }}>
+          <div>
+            <label style={labelStyle}>Pronouns (optional)</label>
+            <input style={inputStyle} value={pronouns} onChange={e => setPronouns(e.target.value)} placeholder="she/her · they/them" maxLength={30} />
+          </div>
+          <div>
+            <label style={labelStyle}>Contact (optional)</label>
+            <input style={inputStyle} value={contact} onChange={e => setContact(e.target.value)} placeholder="email · @insta · signal" maxLength={80} />
+          </div>
+        </div>
+
+        {/* Actions */}
+        <div style={{ display:'flex', justifyContent:'flex-end', gap:10, paddingTop:18, borderTop:'0.5px solid var(--rule)' }}>
+          <button type="button" onClick={onClose} style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.2em', textTransform:'uppercase', padding:'12px 22px', borderRadius:999, background:'none', border:'0.5px solid var(--rule)', color:'var(--mycelium-d)', cursor:'pointer' }}>Cancel</button>
+          <button type="button" onClick={save} disabled={saving} style={{ fontFamily:'var(--font-mono)', fontSize:10.5, letterSpacing:'0.24em', textTransform:'uppercase', padding:'12px 28px', borderRadius:999, border:'none', cursor: saving ? 'wait' : 'pointer', background:'linear-gradient(135deg, var(--spore), var(--spore-d))', color:'var(--soil)', fontWeight:500, opacity: saving ? 0.6 : 1 }}>
+            {saving ? '✦ Saving…' : (existing ? '✦ Update thread' : '✦ Become a thread')}
+          </button>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
 /* ── Members page ─────────────────────────────────────────── */
 
 function MembersPage({ currentMember, economy }) {
@@ -834,6 +1001,7 @@ function MembersPage({ currentMember, economy }) {
   const [myFocus,   setMyFocus]   = useState(() => { try { return localStorage.getItem(focusKey(currentMember.id)) || ''; } catch { return ''; } });
   const [myContrib, setMyContrib] = useState(() => { try { return Number(localStorage.getItem(contribKey(currentMember.id)) || 3); } catch { return 3; } });
   const [viewProfile, setViewProfile] = useState(null); // admin: member being viewed
+  const [showProfileEditor, setShowProfileEditor] = useState(false);
 
   function pickFocus(id) {
     try { localStorage.setItem(focusKey(currentMember.id), id); } catch {}
@@ -950,12 +1118,38 @@ function MembersPage({ currentMember, economy }) {
     );
   }
 
+  // Read the visitor's own profile (saved at /onboard or here inline)
+  const myProfile = (() => { try { return JSON.parse(localStorage.getItem('fungai_profile') || 'null'); } catch { return null; } })();
+
   return (
     <div className="page-enter">
+      {showProfileEditor && <ProfileEditor existing={myProfile} onClose={() => setShowProfileEditor(false)} />}
+
       <div className="section">
         <div className="section-eyebrow">The organism</div>
         <h2 className="section-title">Who's <em>tending.</em></h2>
         <p className="section-blurb">Each hyphae brings a different thread to the mycelium.</p>
+      </div>
+
+      {/* Self-onboard / edit profile card */}
+      <div style={{ margin:'0 16px 12px', background: myProfile ? 'linear-gradient(160deg, rgba(107,214,111,0.06), rgba(107,214,111,0.02))' : 'linear-gradient(160deg, rgba(232,177,75,0.06), rgba(232,177,75,0.02))', border: myProfile ? '0.5px solid rgba(107,214,111,0.25)' : '0.5px solid rgba(232,177,75,0.3)', borderRadius:12, padding:'16px 18px', display:'flex', alignItems:'center', gap:14, flexWrap:'wrap' }}>
+        <div style={{ flex:'1 1 200px', minWidth:0 }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase', color: myProfile ? 'var(--spore-l)' : 'var(--nutrient-l)', marginBottom:4 }}>
+            {myProfile ? '✦ Your thread' : '✦ Add yourself'}
+          </div>
+          <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:18, color:'var(--mycelium-l)', lineHeight:1.3 }}>
+            {myProfile ? myProfile.character_name : 'Become a thread in the mycelium'}
+          </div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:9.5, color:'var(--mycelium-d)', marginTop:3, letterSpacing:'0.04em' }}>
+            {myProfile ? `${myProfile.role || ''}${myProfile.location ? ' · ' + myProfile.location : ''}` : 'Set up your character — no wallet, no installation. ~3 minutes.'}
+          </div>
+        </div>
+        <button
+          onClick={() => setShowProfileEditor(true)}
+          style={{ fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.24em', textTransform:'uppercase', padding:'11px 22px', borderRadius:999, border:'none', cursor:'pointer', background: myProfile ? 'rgba(107,214,111,0.12)' : 'linear-gradient(135deg, var(--nutrient), var(--nutrient-d))', color: myProfile ? 'var(--spore-l)' : 'var(--soil)', whiteSpace:'nowrap', fontWeight:500 }}
+        >
+          {myProfile ? 'Edit profile' : '+ Create profile'}
+        </button>
       </div>
 
       {/* My contribution type */}
