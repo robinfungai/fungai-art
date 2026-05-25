@@ -195,10 +195,26 @@ function PinModal({ member, onSuccess, onCancel }) {
 
 /* ── Welcome portal ───────────────────────────────────────── */
 
-function LoginScreen({ onLogin }) {
+function LoginScreen({ onLogin, sbUser }) {
   const [selected, setSelected]     = useState(null);
   const [dropOpen, setDropOpen]     = useState(false);
   const dropRef                      = useRef(null);
+
+  // Supabase magic-link sign-in (primary path for everyone)
+  const [signInEmail, setSignInEmail] = useState('');
+  const [signInBusy, setSignInBusy] = useState(false);
+  const [signInSent, setSignInSent] = useState(false);
+
+  async function handleSignIn(e) {
+    e.preventDefault();
+    if (!signInEmail.includes('@')) { alert('Enter a valid email'); return; }
+    if (!window.SBauth) { alert('Sign-in service still loading — try again in a second.'); return; }
+    setSignInBusy(true);
+    const { error } = await window.SBauth.signIn(signInEmail);
+    setSignInBusy(false);
+    if (error) { alert('Sign-in failed: ' + error.message); return; }
+    setSignInSent(true);
+  }
 
   useEffect(() => {
     function outside(e) {
@@ -233,7 +249,7 @@ function LoginScreen({ onLogin }) {
             className="welcome-login-btn"
             onClick={() => setDropOpen(d => !d)}
           >
-            <span>Log in Hyphae</span>
+            <span>PIN access</span>
             <span style={{ fontSize:10, opacity:0.7, transition:'transform .2s', display:'inline-block', transform: dropOpen ? 'rotate(180deg)' : 'none' }}>▾</span>
           </button>
           {dropOpen && (
@@ -268,6 +284,34 @@ function LoginScreen({ onLogin }) {
           <div className="welcome-eyebrow">A mycelial economy</div>
           <h1 className="welcome-title">Tend a node.<br/><em>Nutrients flow.</em></h1>
           <p className="welcome-blurb">Spore is the living network beneath Fungai Art. Contribute to a node, earn $HYPHA, unlock experiences. The organism grows when you do.</p>
+
+          {/* Email magic-link sign-in — primary entry */}
+          <div style={{ marginTop:28, padding:'18px 20px', background:'rgba(15,16,20,0.7)', border:'0.5px solid var(--rule-strong)', borderRadius:14, maxWidth:480 }}>
+            {sbUser ? (
+              <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+                <span style={{ width:8, height:8, borderRadius:'50%', background:'var(--spore)', boxShadow:'0 0 6px rgba(107,214,111,0.6)' }}></span>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'var(--mycelium-l)', flex:1 }}>Signed in as <strong>{sbUser.email}</strong></span>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>opening your profile…</span>
+              </div>
+            ) : signInSent ? (
+              <div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.24em', textTransform:'uppercase', color:'var(--spore-l)', marginBottom:8 }}>✦ Magic link sent</div>
+                <div style={{ fontSize:14, color:'var(--mycelium-l)', lineHeight:1.65, marginBottom:8 }}>Check your inbox at <strong>{signInEmail}</strong>. Click the link — it brings you straight back here, signed in.</div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', lineHeight:1.6 }}>Didn't arrive in 2 minutes? Check spam, or <button onClick={() => { setSignInSent(false); setSignInEmail(''); }} style={{ background:'none', border:'none', color:'var(--nutrient-l)', cursor:'pointer', textDecoration:'underline', font:'inherit', padding:0 }}>try a different email</button>.</div>
+              </div>
+            ) : (
+              <form onSubmit={handleSignIn}>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.24em', textTransform:'uppercase', color:'var(--nutrient-l)', marginBottom:6 }}>✦ Sign in or join</div>
+                <div style={{ fontSize:13, color:'var(--mycelium)', lineHeight:1.65, marginBottom:14 }}>Enter your email. We send a magic link — no password, no installation. Founding members &amp; new threads alike.</div>
+                <div style={{ display:'flex', gap:8, flexWrap:'wrap' }}>
+                  <input type="email" required value={signInEmail} onChange={e => setSignInEmail(e.target.value)} placeholder="your@email.com" style={{ flex:'1 1 220px', background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:999, color:'var(--mycelium-l)', padding:'12px 18px', fontFamily:'var(--font-sans)', fontSize:14, outline:'none' }} autoComplete="email" />
+                  <button type="submit" disabled={signInBusy} style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.24em', textTransform:'uppercase', padding:'12px 24px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', cursor: signInBusy ? 'wait' : 'pointer', fontWeight:500, opacity: signInBusy ? 0.7 : 1 }}>
+                    {signInBusy ? 'Sending…' : 'Send magic link'}
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
         </div>
       </div>
 
