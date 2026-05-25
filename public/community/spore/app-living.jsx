@@ -833,9 +833,10 @@ function ProfileEditor({ existing, onClose }) {
   const [location, setLocation] = useState(existing?.location || '');
   const [pronouns, setPronouns] = useState(existing?.pronouns || '');
   const [contact, setContact]   = useState(existing?.contact || '');
-  const [avatar, setAvatar]     = useState(existing?.avatar || null);
+  const [avatar, setAvatar]     = useState(existing?.avatar || existing?.avatar_url || null);
   const [tags, setTags]         = useState(existing?.specialties || []);
   const [saving, setSaving]     = useState(false);
+  const fileRef                 = useRef(null);
 
   const ROLES = [
     ['forager', 'Forager — wild plant gathering'],
@@ -869,12 +870,65 @@ function ProfileEditor({ existing, onClose }) {
     reader.readAsDataURL(file);
   }
 
-  function save() {
+  async function save() {
     if (!name.trim() || !role || !location) {
       alert('Please fill in your name, relation, and node before saving.');
       return;
     }
     setSaving(true);
+
+    // If signed in to Supabase, save to the cloud (shared everywhere)
+    if (window.SBclient && window.SBauth) {
+      try {
+        const user = await window.SBauth.getUser();
+        if (!user) {
+          // Not signed in — prompt sign-in flow
+          const email = prompt('To save your profile so it appears everywhere, enter your email. We\'ll send you a magic link to confirm:');
+          if (!email || !email.includes('@')) { setSaving(false); return; }
+          const { error } = await window.SBauth.signIn(email);
+          if (error) { alert('Sign-in failed: ' + error.message); setSaving(false); return; }
+          alert('Check your inbox for a magic link from Supabase, then come back to this page and click "+ Create profile" again. Your form values will reset, sorry — sign-in only happens once.');
+          setSaving(false);
+          return;
+        }
+
+        // Upload avatar if it's a data URL (new image) rather than already a public URL
+        let avatarUrl = avatar;
+        if (avatar && avatar.startsWith('data:') && fileRef.current?.files?.[0]) {
+          try {
+            avatarUrl = await window.SBprofiles.uploadAvatar(fileRef.current.files[0]);
+          } catch (e) {
+            console.warn('Avatar upload failed, falling back to no avatar:', e);
+            avatarUrl = null;
+          }
+        }
+
+        const profile = {
+          character_name: name.trim(),
+          bio: bio.trim(),
+          role, location,
+          pronouns: pronouns.trim(),
+          contact: contact.trim(),
+          specialties: tags,
+          avatar_url: avatarUrl,
+          node: { sweden:'sweden', berlin:'berlin', lisbon:'lisbon', beirut:'beirut', genoa:'berlin', france:'berlin', germany:'berlin', denmark:'sweden', other_europe:'berlin', other_world:'festival' }[location] || 'berlin',
+          focus: bio.trim() || (tags.length ? tags.join(' · ') : 'A new thread in the network'),
+        };
+        await window.SBprofiles.upsert(profile);
+
+        // Also cache locally for instant first-paint next time
+        try { localStorage.setItem('fungai_profile', JSON.stringify({ ...profile, avatar: avatarUrl })); } catch (e) {}
+
+        setTimeout(() => { window.location.reload(); }, 600);
+        return;
+      } catch (err) {
+        alert('Save failed: ' + (err.message || err));
+        setSaving(false);
+        return;
+      }
+    }
+
+    // Fallback: localStorage only (Supabase not loaded for some reason)
     const profile = {
       character_name: name.trim(),
       bio: bio.trim(),
@@ -915,7 +969,7 @@ function ProfileEditor({ existing, onClose }) {
             {avatar
               ? <img src={avatar} alt="" style={{ width:'100%', height:'100%', objectFit:'cover' }} />
               : <span style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:28, color:'var(--mycelium-d)' }}>+</span>}
-            <input id="pe-avatar" type="file" accept="image/*" onChange={onAvatarChange} style={{ display:'none' }} />
+            <input ref={fileRef} id="pe-avatar" type="file" accept="image/*" onChange={onAvatarChange} style={{ display:'none' }} />
           </label>
           <div>
             <label htmlFor="pe-avatar" style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', padding:'8px 14px', borderRadius:999, background:'rgba(232,177,75,0.08)', border:'0.5px solid rgba(232,177,75,0.35)', color:'var(--nutrient-l)', cursor:'pointer' }}>Upload portrait</label>
@@ -1118,8 +1172,38 @@ function MembersPage({ currentMember, economy }) {
     );
   }
 
-  // Read the visitor's own profile (saved at /onboard or here inline)
+  // Read the visitor's own profile (saved locally as cache; real source is Supabase)
   const myProfile = (() => { try { return JSON.parse(localStorage.getItem('fungai_profile') || 'null'); } catch { return null; } })();
+
+  // Supabase auth state
+  const [sbUser, setSbUser] = useState(null);
+  const [signInEmail, setSignInEmail] = useState('');
+  const [signInBusy, setSignInBusy] = useState(false);
+  useEffect(() => {
+    if (!window.SBauth) return;
+    let unsub;
+    (async () => {
+      const u = await window.SBauth.getUser();
+      setSbUser(u);
+      const sub = window.SBauth.onAuthChange(({ user }) => setSbUser(user));
+      unsub = sub?.data?.subscription?.unsubscribe?.bind(sub.data.subscription);
+    })();
+    return () => { if (unsub) try { unsub(); } catch {} };
+  }, []);
+  async function handleSignIn(e) {
+    e.preventDefault();
+    if (!signInEmail.includes('@')) { alert('Enter a valid email'); return; }
+    setSignInBusy(true);
+    const { error } = await window.SBauth.signIn(signInEmail);
+    setSignInBusy(false);
+    if (error) { alert('Sign-in failed: ' + error.message); return; }
+    alert('Magic link sent to ' + signInEmail + '. Open your inbox on this device, click the link, you\'ll come back here signed in.');
+    setSignInEmail('');
+  }
+  async function handleSignOut() {
+    await window.SBauth.signOut();
+    setSbUser(null);
+  }
 
   return (
     <div className="page-enter">
@@ -1150,6 +1234,32 @@ function MembersPage({ currentMember, economy }) {
         >
           {myProfile ? 'Edit profile' : '+ Create profile'}
         </button>
+      </div>
+
+      {/* Supabase sign-in / sign-out — required for the profile to be live everywhere */}
+      <div style={{ margin:'0 16px 12px', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, padding:'12px 16px', display:'flex', alignItems:'center', gap:12, flexWrap:'wrap' }}>
+        {sbUser ? (
+          <>
+            <div style={{ flex:'1 1 200px', minWidth:0 }}>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--spore-d)', marginBottom:3 }}>● Signed in · profile syncs everywhere</div>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'var(--mycelium-l)' }}>{sbUser.email}</div>
+            </div>
+            <button onClick={handleSignOut} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', padding:'8px 16px', borderRadius:999, background:'none', border:'0.5px solid var(--rule-strong)', color:'var(--mycelium-d)', cursor:'pointer' }}>Sign out</button>
+          </>
+        ) : (
+          <>
+            <div style={{ flex:'1 1 100%', marginBottom:8 }}>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:3 }}>○ Not signed in · profile is local only</div>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:10.5, color:'var(--mycelium-d)', lineHeight:1.5 }}>Sign in with your email to make your profile visible everywhere &amp; access it from any device. We send you a magic link — no password.</div>
+            </div>
+            <form onSubmit={handleSignIn} style={{ display:'flex', gap:6, flex:'1 1 100%', flexWrap:'wrap' }}>
+              <input type="email" value={signInEmail} onChange={e => setSignInEmail(e.target.value)} placeholder="your@email.com" required style={{ flex:'1 1 200px', background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:999, color:'var(--mycelium-l)', padding:'9px 16px', fontFamily:'var(--font-sans)', fontSize:13, outline:'none' }} />
+              <button type="submit" disabled={signInBusy} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', padding:'9px 18px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', cursor: signInBusy ? 'wait' : 'pointer', opacity: signInBusy ? 0.7 : 1 }}>
+                {signInBusy ? 'Sending…' : '✦ Send magic link'}
+              </button>
+            </form>
+          </>
+        )}
       </div>
 
       {/* My contribution type */}
@@ -1996,6 +2106,8 @@ function App() {
   const [earnOpen,  setEarnOpen] = useState(false);
   const [toast,     setToast]    = useState({ msg:'', kind:'' });
   const [tweaks,    setTweak]    = useTweaks(TWEAK_DEFAULTS);
+  const [cloudVer,  setCloudVer] = useState(0);    // bumps when Supabase profiles load → forces re-render
+  const [sbUser,    setSbUser]   = useState(null); // currently signed-in Supabase user (or null)
 
   const economy = useEconomy(currentMember ? currentMember.id : '__guest__');
   const tier    = SporeData.reputationTier(economy.state.reputation);
@@ -2019,6 +2131,30 @@ function App() {
     s.id = 'spore-living-anim';
     s.textContent = `@keyframes grow-line { to { stroke-dashoffset: 0; } }`;
     document.head.appendChild(s);
+  }, []);
+
+  // ── Load profiles from Supabase on mount, watch auth state ──
+  useEffect(() => {
+    let unsub;
+    (async () => {
+      if (!SporeData.loadProfilesFromCloud) return;
+      try {
+        const merged = await SporeData.loadProfilesFromCloud();
+        // Mutate the global array so all existing SporeData.MEMBERS.map() calls pick up cloud data
+        SporeData.MEMBERS.length = 0;
+        merged.forEach(m => SporeData.MEMBERS.push(m));
+        setCloudVer(v => v + 1);
+      } catch (e) { console.warn('[Spore] cloud load failed:', e); }
+
+      // Auth state subscription
+      if (window.SBauth) {
+        const user = await window.SBauth.getUser();
+        setSbUser(user);
+        const sub = window.SBauth.onAuthChange(({ user }) => setSbUser(user));
+        unsub = sub?.data?.subscription?.unsubscribe?.bind(sub.data.subscription);
+      }
+    })();
+    return () => { if (unsub) try { unsub(); } catch {} };
   }, []);
 
   if (!currentMember) {

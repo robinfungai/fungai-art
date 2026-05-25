@@ -511,6 +511,70 @@ const CONTRIBUTION_TYPES = [
   { id: 'sales',       label: 'Sales',       icon: '◎',  desc: 'Customer, market, outreach' },
 ];
 
+/* ── Async profile loader — pulls from Supabase if available, falls back to hardcoded list ──
+   When Supabase profiles exist for a member (matched by character_name case-insensitive),
+   the cloud version replaces the hardcoded shell, bringing in live bio/avatar/etc. */
+async function loadProfilesFromCloud() {
+  if (!window.SBready) return MEMBERS;
+  try {
+    await window.SBready;
+    const rows = await window.SBprofiles.fetchAll();
+    if (!rows || !rows.length) return MEMBERS;
+
+    // Build a map of cloud profiles by lowercase name
+    const cloudByName = new Map();
+    rows.forEach(r => cloudByName.set((r.character_name || '').toLowerCase(), r));
+
+    // Merge: hardcoded shells get cloud overrides; cloud-only profiles get appended
+    const usedCloudIds = new Set();
+    const merged = MEMBERS.map(m => {
+      const cloud = cloudByName.get(m.name.toLowerCase());
+      if (!cloud) return m;
+      usedCloudIds.add(cloud.id);
+      return {
+        ...m,
+        // overlay cloud values where present
+        rep:      cloud.rep      ?? m.rep,
+        balance:  cloud.balance  ?? m.balance,
+        focus:    cloud.focus    || m.focus,
+        node:     cloud.node     || m.node,
+        founding: cloud.founding ?? m.founding,
+        bio:      cloud.bio      || '',
+        avatar:   cloud.avatar_url || null,
+        specialties: cloud.specialties || [],
+        pronouns: cloud.pronouns || '',
+        contact:  cloud.contact || '',
+        cloudId:  cloud.id,
+        authUserId: cloud.auth_user_id || null,
+      };
+    });
+    // Append cloud-only profiles (new members who don't match any hardcoded shell)
+    rows.forEach(r => {
+      if (!usedCloudIds.has(r.id)) {
+        merged.push({
+          id: 'cloud_' + r.id,
+          name: r.character_name,
+          role: r.role || 'Member',
+          node: r.node || 'berlin',
+          rep: r.rep ?? 1,
+          balance: r.balance ?? 80,
+          focus: r.focus || (r.specialties?.join(' · ') || 'A new thread in the network'),
+          founding: r.founding,
+          bio: r.bio,
+          avatar: r.avatar_url,
+          specialties: r.specialties || [],
+          cloudId: r.id,
+          authUserId: r.auth_user_id || null,
+        });
+      }
+    });
+    return merged;
+  } catch (e) {
+    console.warn('[Spore] cloud profile load failed, using hardcoded:', e);
+    return MEMBERS;
+  }
+}
+
 window.SporeData = {
-  NETWORK_NODES, PRODUCTS, EXPERIENCES, REPUTATION_TIERS, PHASES, MEMBERS, CONTRIBUTION_TYPES, EVENTS, reputationTier
+  NETWORK_NODES, PRODUCTS, EXPERIENCES, REPUTATION_TIERS, PHASES, MEMBERS, CONTRIBUTION_TYPES, EVENTS, reputationTier, loadProfilesFromCloud
 };

@@ -20,6 +20,9 @@
 <body>
   <div id="root"></div>
 
+  <!-- Supabase client (loads before JSX so SBclient is ready when components mount) -->
+  <script src="/supabase-client.js"></script>
+
   <script type="text/babel" src="spore/data.jsx"></script>
   <script type="text/babel" src="spore/tweaks-panel.jsx"></script>
   <script type="text/babel" src="spore/network-living.jsx"></script>
