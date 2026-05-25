@@ -122,15 +122,24 @@
         // Claim an existing seeded profile (founding members + palawan) — links it to this auth user
         async claimSeededProfile(profileId) {
           const user = await window.SBauth.getUser();
-          if (!user) throw new Error('Must be signed in to claim a profile');
+          if (!user) throw new Error('You need to be signed in first.');
           const { data, error } = await window.SBclient
             .from('profiles')
             .update({ auth_user_id: user.id, email: user.email })
             .eq('id', profileId)
-            .is('auth_user_id', null) // only claim if unclaimed
+            .is('auth_user_id', null)
             .select()
-            .single();
-          if (error) throw error;
+            .maybeSingle();
+          if (error) {
+            // Translate the most common PostgREST RLS error into something humans understand
+            if (error.message?.includes('coerce') || error.code === 'PGRST116') {
+              throw new Error('That profile is already claimed — or our database doesn\'t allow this claim yet (RLS policy missing). Robin, check Supabase policies.');
+            }
+            throw error;
+          }
+          if (!data) {
+            throw new Error('That profile was already claimed by someone else (or just now). Reload the page and try a different name.');
+          }
           return data;
         },
         // Profiles that haven't been claimed yet — used for the 'which member are you?' picker
