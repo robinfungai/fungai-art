@@ -145,7 +145,7 @@ function HUD({ state, tier }) {
       <div className="hud-cell">
         <div className="hud-label">Balance</div>
         <div className="hud-val green">{state.balance}</div>
-        <div className="hud-sub">$HYPHAE</div>
+        <div className="hud-sub">$MYCELE</div>
       </div>
       <div className="hud-cell">
         <div className="hud-label">Reputation</div>
@@ -188,7 +188,7 @@ function NetworkPage({ economy, mapStyle, onToast }) {
       <div className="section">
         <div className="section-eyebrow">Contribution = currency</div>
         <h2 className="section-title">The <em>network.</em></h2>
-        <p className="section-blurb">Tend a node — earn $HYPHAE and grow your reputation.
+        <p className="section-blurb">Tend a node — earn $MYCELE and grow your reputation.
           The network expands mycelially; new nodes propagate from contributors.</p>
       </div>
 
@@ -297,9 +297,9 @@ function ApothecaryPage({ economy, onToast }) {
   return (
     <div className="page-enter">
       <div className="section">
-        <div className="section-eyebrow">Dual pricing · € or $HYPHAE</div>
+        <div className="section-eyebrow">Dual pricing · € or $MYCELE</div>
         <h2 className="section-title">The <em>apothecary.</em></h2>
-        <p className="section-blurb">Tinctures, fungi, and compositions. Pay in euros or burn $HYPHAE — contributors save vs retail.</p>
+        <p className="section-blurb">Tinctures, fungi, and compositions. Pay in euros or burn $MYCELE — contributors save vs retail.</p>
       </div>
 
       <figure className="specimen-hero">
@@ -451,7 +451,7 @@ function EconomyPage({ economy, phase, onPhaseChange }) {
   const flowSteps = [
     { name:'Arrive',         sub:'explore the network' },
     { name:'Contribute',     sub:'work · create · share' },
-    { name:'Earn $HYPHAE',   sub:'mock balance' },
+    { name:'Earn $MYCELE',   sub:'mock balance' },
     { name:'Unlock access',  sub:'experiences · products' },
     { name:'Go deeper',      sub:'residency · governance' },
   ];
@@ -462,7 +462,7 @@ function EconomyPage({ economy, phase, onPhaseChange }) {
       <div className="section">
         <div className="section-eyebrow">Token architecture</div>
         <h2 className="section-title">How it <em>flows.</em></h2>
-        <p className="section-blurb">$HYPHAE is the medium; reputation the depth; access keys the gates. Three layers, one organism.</p>
+        <p className="section-blurb">$MYCELE is the medium; reputation the depth; access keys the gates. Three layers, one organism.</p>
       </div>
 
       <div className="flow-rail">
@@ -482,7 +482,7 @@ function EconomyPage({ economy, phase, onPhaseChange }) {
       </div>
       <div className="token-layers">
         <div className="token-layer sage">
-          <div className="token-layer-title">$HYPHAE — Currency</div>
+          <div className="token-layer-title">$MYCELE — Currency</div>
           <div className="token-layer-name sage">Liquid · earned · spent</div>
           <div className="token-layer-desc">Earned by contributing. Spent on experiences and products. Transferable in phase 3.</div>
         </div>
@@ -543,7 +543,7 @@ function EarnSheet({ open, onClose, economy, onToast }) {
       <div className="sheet" onClick={e => e.stopPropagation()}>
         <div className="sheet-handle" />
         <div className="sheet-head">
-          <div className="label-tiny">Earn $HYPHAE</div>
+          <div className="label-tiny">Earn $MYCELE</div>
           <div className="sheet-title">Quick contributions</div>
         </div>
         <div className="sheet-body">

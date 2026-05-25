@@ -225,7 +225,7 @@ function LoginScreen({ onLogin, sbUser }) {
   }, []);
 
   const PHILOSOPHY = [
-    { icon:'◉', title:'$HYPHA — Currency', color:'var(--spore-l)', desc:'Earned by contributing to any node. Spent on experiences, products, and access. Emission-based — designed to grow with the organism.' },
+    { icon:'◉', title:'$MYCEL — Currency', color:'var(--spore-l)', desc:'Earned by contributing to any node. Spent on experiences, products, and access. Emission-based — designed to grow with the organism.' },
     { icon:'⬡', title:'Access Keys — NFTs', color:'var(--fungal-l)', desc:'Non-transferable keys minted on unlock. Each key grants access to a specific experience, lab, or residency — limited by real-world seats.' },
     { icon:'◈', title:'Reputation — Trust', color:'var(--nutrient-l)', desc:'Tracks depth of participation. Cannot be bought, only earned. Required for the deepest access. Resists speculation culture.' },
   ];
@@ -241,7 +241,7 @@ function LoginScreen({ onLogin, sbUser }) {
           <ProceduralMark size={26} />
           <div>
             <div className="welcome-brand-name">Spore</div>
-            <div className="welcome-brand-sub">Living Network · $HYPHA</div>
+            <div className="welcome-brand-sub">Living Network · $MYCEL</div>
           </div>
         </div>
         <div style={{ position:'relative' }} ref={dropRef}>
@@ -283,7 +283,7 @@ function LoginScreen({ onLogin, sbUser }) {
         <div className="welcome-hero-inner">
           <div className="welcome-eyebrow">A mycelial economy</div>
           <h1 className="welcome-title">Tend a node.<br/><em>Nutrients flow.</em></h1>
-          <p className="welcome-blurb">Spore is the living network beneath Fungai Art. Contribute to a node, earn $HYPHA, unlock experiences. The organism grows when you do.</p>
+          <p className="welcome-blurb">Spore is the living network beneath Fungai Art. Contribute to a node, earn $MYCEL, unlock experiences. The organism grows when you do.</p>
 
           {/* Email magic-link sign-in — primary entry */}
           <div style={{ marginTop:28, padding:'18px 20px', background:'rgba(15,16,20,0.7)', border:'0.5px solid var(--rule-strong)', borderRadius:14, maxWidth:480 }}>
@@ -391,7 +391,7 @@ function LoginScreen({ onLogin, sbUser }) {
       <div className="welcome-section">
         <div className="welcome-section-eyebrow">How to participate</div>
         <div className="welcome-flow">
-          {['Arrive', 'Contribute', 'Earn $HYPHA', 'Unlock access', 'Go deeper'].map((s, i) => (
+          {['Arrive', 'Contribute', 'Earn $MYCEL', 'Unlock access', 'Go deeper'].map((s, i) => (
             <div key={s} className="wf-step">
               <div className="wf-num">{i + 1}</div>
               <div className="wf-label">{s}</div>
@@ -448,7 +448,7 @@ function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) 
           <ProceduralMark />
           <div className="brand-text">
             <div className="brand-name">Spore</div>
-            <div className="brand-sub">Living network · $HYPHA</div>
+            <div className="brand-sub">Living network · $MYCEL</div>
           </div>
         </div>
         <div style={{ display:'flex', alignItems:'center', gap:10 }}>
@@ -1737,7 +1737,7 @@ function CalendarPage({ economy, onToast }) {
   return (
     <div className="page-enter">
       <div className="section">
-        <div className="section-eyebrow">Sacred time · $HYPHA calendar</div>
+        <div className="section-eyebrow">Sacred time · $MYCEL calendar</div>
         <h2 className="section-title">Mycelium <em>Calendar.</em></h2>
         <p className="section-blurb">Time moves through the organism like nutrients through hyphae. Each event is a node in the living calendar. Arrive — contribute — let frequency do the rest.</p>
       </div>
@@ -1858,7 +1858,7 @@ function EarnSheet({ open, onClose, economy, onToast }) {
         <div className="sheet-handle" />
         <div className="sheet-head">
           <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.32em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>Push nutrients in</div>
-          <div className="sheet-title">Earn $HYPHA</div>
+          <div className="sheet-title">Earn $MYCEL</div>
         </div>
         <div className="sheet-body">
           {upcoming.map(ev => {
@@ -1969,7 +1969,7 @@ function QuickNav({ tab, onTab }) {
 const MYCO_CHIPS = [
   { label:'✦ Clean lab note', prefix:'Please clean and structure this lab note into proper sections:\n\n' },
   { label:'⚗ Herb guidance', prefix:'Recommend herbs and extraction method for: ' },
-  { label:'◉ Network insights', msg:'Analyse the current Spore network: which members might need engagement, what $HYPHA flows look like, and where I should focus next.' },
+  { label:'◉ Network insights', msg:'Analyse the current Spore network: which members might need engagement, what $MYCEL flows look like, and where I should focus next.' },
   { label:'△ Suggest improvements', msg:'What concrete improvements would you suggest for the Spore Living Network — token economy, community features, upcoming events?' },
 ];
 

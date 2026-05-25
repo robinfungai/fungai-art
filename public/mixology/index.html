@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Herbal Engine — Fungai Art</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
-    <link rel="alternate icon" type="image/png" href="/fungai-art-logo.png"/>
+    <link rel="alternate icon" type="image/png" href="/favicon.png"/>
     <link rel="apple-touch-icon" href="/fungai-art-logo.png"/>
 <link rel="preconnect" href="https://api.fontshare.com"/>
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500&f[]=satoshi@400,500,600&f[]=geist-mono@400&display=swap"/>
@@ -261,7 +261,8 @@ const H=[
   {id:'reishi',n:'Reishi',f:1,el:'S',ext:'D',c:['immune','sleep','adaptogen','liver','heart','conscious','antioxid','womens','menstrual','resp','cognitive'],p:'Immune modulation (not stimulation); HPA balance; hepatoprotective; sleep quality; spiritual calm. The longevity mushroom.',x:'low'},
   {id:'maitake',n:'Maitake',f:1,el:'E',ext:'D',c:['immune','urinary','nutritive','culinary'],p:'Immune balance (MD-Fraction beta-glucan); metabolic and blood sugar support; culinary mushroom.',x:'low'},
   {id:'shiitake',n:'Shiitake',f:1,el:'E',ext:'D',c:['immune','heart','nutritive','culinary'],p:'Immune (lentinan); cardiovascular; cholesterol management; umami culinary staple.',x:'low'},
-  {id:'cordyceps',n:'Cordyceps',f:1,el:'F',ext:'D',c:['immune','sexual','energy','adaptogen','antioxid','mens'],p:'Energy and ATP production (primary); immune support; sexual vitality (traditional Tibetan); endurance.',x:'low'},
+  {id:'cordycepsMilitaris',n:'Cordyceps militaris',f:1,el:'F',ext:'D',c:['immune','sexual','energy','adaptogen','antioxid','mens'],p:'Cultivated · high cordycepin · ATP/AMPK · endurance · sustainable choice.',x:'low'},
+  {id:'cordycepsSinensis',n:'Cordyceps sinensis',f:1,el:'F',ext:'D',c:['immune','sexual','energy','adaptogen'],p:'Wild Tibetan caterpillar fungus (Ophiocordyceps). IUCN Red-Listed — ethical sourcing critical.',x:'medium'},
   {id:'tremella',n:'Tremella',f:1,el:'W',ext:'D',c:['immune','womens','antioxid','nutritive'],p:'Immune modulation; skin hydration (hyaluronic-like); yin-nourishing beauty mushroom; leukopenia support.',x:'low'},
   {id:'agaricus',n:'Agaricus Blazei',f:1,el:'E',ext:'D',c:['immune','antioxid'],p:'Strong immune activation (beta-glucans, proteoglycans); cancer adjuvant; pro-inflammatory shift — monitor in autoimmune.',x:'medium'},
   {id:'lionsMane',n:"Lion's Mane",f:1,el:'A',ext:'T',c:['cognitive'],p:'Cognitive support (primary); NGF/BDNF stimulation; neurogenesis; memory; focus; neuroprotection.',x:'low'},
@@ -274,7 +275,10 @@ const H=[
   {id:'elderflower',n:'Elderflower',el:'W',ext:'T',c:['immune','resp'],p:'Immune + respiratory combined; cold/flu; gentle; safe for all ages.',x:'low'},
   {id:'garlic',n:'Garlic',el:'F',ext:'O',c:['immune','liver','heart','culinary'],p:'Antimicrobial; immune support; cardiovascular; detoxification; culinary staple.',x:'low'},
   {id:'goji',n:'Goji',el:'E',ext:'T',c:['immune','antioxid','nutritive','energy'],p:'Antioxidant (primary); vision; constitutional tonification; longevity superfood.',x:'low'},
-  {id:'nettle',n:'Nettle',el:'E',ext:'T',c:['immune','nutritive'],p:'Nutritive tonification (primary); mineral-rich; immune support; foundational herb.',x:'low'},
+  {id:'nettleLeaf',n:'Nettle Leaf',el:'E',ext:'T',c:['immune','nutritive'],p:'Mineral-rich (Fe, Si, Ca, Mg); antihistamine (quercetin); foundational nutritive tonic. Best as long water infusion.',x:'low'},
+  {id:'nettleRoot',n:'Nettle Root',el:'E',ext:'T',c:['mens','urinary','immune'],p:'Specific for prostate / BPH support (beta-sitosterol). Hormonal-modulating · different chemistry from leaf.',x:'low'},
+  {id:'nettleSeed',n:'Nettle Seed',el:'F',ext:'T',c:['energy','adaptogen','immune'],p:'Adrenal tonification · kidney-restorative · trophorestorative for chronic fatigue. Use sparingly (drop dose).',x:'medium'},
+  {id:'nettle',n:'Nettle (whole)',el:'E',ext:'T',c:['immune','nutritive'],p:'Catch-all nettle preparation — see Leaf / Root / Seed for part-specific use.',x:'low'},
   {id:'oregano',n:'Oregano',el:'F',ext:'T',c:['immune','pain','antioxid','resp','culinary'],p:'Antimicrobial; antioxidant (carvacrol, thymol); immune and respiratory support.',x:'low'},
   {id:'spirulina',n:'Spirulina',el:'W',ext:'T',c:['immune','antioxid','nutritive'],p:'Nutritive tonification; protein-rich; immune; antioxidant superfood.',x:'low'},
   {id:'thyme',n:'Thyme',el:'F',ext:'T',c:['immune','resp','culinary'],p:'Respiratory + immune (primary); antimicrobial; cough relief; culinary.',x:'low'},
@@ -378,6 +382,8 @@ const H=[
   {id:'barley',n:'Barley',el:'E',ext:'DC',c:['nutritive'],p:'Nutritive grain; soluble fiber; gentle metabolic support.',x:'low'},
   {id:'lucerne',n:'Lucerne (Alfalfa)',el:'E',ext:'T',c:['nutritive'],p:'Protein and mineral-rich tonic; vitamin K; gentle remineralizing green.',x:'low'},
   // Consciousness
+  {id:'banisteriopsisCaapi',n:'B. Caapi',el:'S',ext:'DC',c:['conscious','adaptogen','nervine'],p:'Ayahuasca vine. Harmala alkaloids — reversible MAOI-A. Used traditionally as antidepressant + ceremonial. CRITICAL: do NOT combine with SSRIs, tyramine foods, or other MAOIs. Plant medicine context only.',x:'high'},
+  {id:'syrianRue',n:'Syrian Rue',el:'S',ext:'T',c:['conscious','adaptogen','nervine'],p:'Peganum harmala seeds. Harmala alkaloids — reversible MAOI. Traditional Persian/Middle Eastern ceremonial herb. Same SSRI / tyramine cautions as B. caapi. Drop-dose only.',x:'high'},
   {id:'blueLotus',n:'Blue Lotus',el:'S',ext:'T',c:['conscious','sleep'],p:'Mild consciousness expansion; relaxation; dream support; spiritual; ancient Egyptian.',x:'low'},
   {id:'bobinsana',n:'Bobinsana',el:'S',ext:'T',c:['conscious'],p:'Consciousness exploration; emotional opening; plant medicine support; ceremonial.',x:'medium'},
   {id:'calamus',n:'Calamus',el:'S',ext:'T',c:['conscious'],p:'Consciousness expansion (traditional). RESTRICTED — neurotoxicity concern. Professional only.',x:'high'},

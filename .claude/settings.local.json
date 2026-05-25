@@ -50,7 +50,14 @@
       "Bash(xargs grep -rL \"rel=\\\\\"icon\\\\\"\\\\|rel='icon'\")",
       "WebFetch(domain:www.skogsskafferiet.se)",
       "WebFetch(domain:api.gbif.org)",
-      "Bash(grep -c \"^  {$\" src/data/ecoNodes.ts)"
+      "Bash(grep -c \"^  {$\" src/data/ecoNodes.ts)",
+      "Bash(cp \"src/assets/Copy of logo.png\" \"public/fungai-art-logo.png\")",
+      "Bash(cp \"src/assets/favicon.png\" \"public/favicon.png\")",
+      "Bash(cp \"src/assets/favicon.png\" \"public/assets/fungai-art-logo.png\")",
+      "Bash(grep -rln '$HYPHA\\\\|HYPHA — Currency\\\\|HYPHA economy' public/community/ public/home/)",
+      "Bash(grep -n '$HYPHA\\\\|HYPHA — Currency\\\\|HYPHA economy\\\\|HYPHA · Currency' public/community/spore/app-living.jsx)",
+      "Bash(sed -i 's/\\\\$HYPHA/\\\\$MYCEL/g' public/community/spore/app-living.jsx public/community/spore/app.jsx public/community/spore/data.jsx)",
+      "Bash(grep -c '$MYCEL' public/community/spore/app-living.jsx)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Robin\\Desktop\\fungai art\\websiet\\tailored tincture ai tool\\html codes",

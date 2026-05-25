@@ -344,7 +344,7 @@ function reputationTier(repPoints) {
 const PHASES = [
   { id:'MOCK',    name:'Mock Economy',  num:'01', items:'UI · fake balances · unlock states' },
   { id:'TESTNET', name:'Web2 Bridge',   num:'02', items:'Stripe · off-chain points · email accounts' },
-  { id:'CHAIN',   name:'Token Live',    num:'03', items:'$HYPHAE on-chain · wallets · NFT keys' },
+  { id:'CHAIN',   name:'Token Live',    num:'03', items:'$MYCELE on-chain · wallets · NFT keys' },
   { id:'LIVING',  name:'Living Network',num:'04', items:'Governance · staking · DAO' },
 ];
 

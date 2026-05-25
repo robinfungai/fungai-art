@@ -487,13 +487,32 @@ export default function ForagingApp() {
         border: '0.5px solid rgba(255,255,255,0.1)',
         borderRadius: 8, padding: '10px 14px',
       }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 7, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#4d5a52', marginBottom: 7 }}>Habitats</div>
-        {Object.entries(HABITAT_LABELS).filter(([h]) => ALL_HABITATS.includes(h as HabitatType)).map(([h, label]) => (
-          <div key={h} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
-            <div style={{ width: 7, height: 7, borderRadius: '50%', background: HABITAT_COLORS[h], boxShadow: `0 0 5px ${HABITAT_COLORS[h]}77`, flexShrink: 0 }} />
-            <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8B7E62' }}>{label}</span>
-          </div>
-        ))}
+        <div style={{ fontFamily: 'monospace', fontSize: 7, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#4d5a52', marginBottom: 7, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
+          <span>Habitats · tap to filter</span>
+          {habitatFilter !== 'all' && (
+            <button onClick={() => setHabitatFilter('all')} style={{ background: 'none', border: 'none', color: '#6BD66F', fontSize: 7, fontFamily: 'monospace', letterSpacing: '0.14em', cursor: 'pointer', padding: 0 }}>clear ×</button>
+          )}
+        </div>
+        {Object.entries(HABITAT_LABELS).filter(([h]) => ALL_HABITATS.includes(h as HabitatType)).map(([h, label]) => {
+          const active = habitatFilter === h;
+          return (
+            <button
+              key={h}
+              onClick={() => setHabitatFilter(active ? 'all' : (h as HabitatType))}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3,
+                background: active ? `${HABITAT_COLORS[h]}1f` : 'none',
+                border: active ? `0.5px solid ${HABITAT_COLORS[h]}88` : '0.5px solid transparent',
+                borderRadius: 4, padding: '3px 6px', cursor: 'pointer',
+                width: '100%', textAlign: 'left',
+                transition: 'background 0.15s, border-color 0.15s',
+              }}
+            >
+              <div style={{ width: 7, height: 7, borderRadius: '50%', background: HABITAT_COLORS[h], boxShadow: `0 0 5px ${HABITAT_COLORS[h]}77`, flexShrink: 0 }} />
+              <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.1em', textTransform: 'uppercase', color: active ? '#E6D9B5' : '#8B7E62' }}>{label}</span>
+            </button>
+          );
+        })}
         <div style={{ marginTop: 8, paddingTop: 8, borderTop: '0.5px solid rgba(255,255,255,0.06)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
             <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(107,214,111,0.6)', boxShadow: '0 0 6px rgba(107,214,111,0.5)' }} />
@@ -559,9 +578,6 @@ export default function ForagingApp() {
       }}>
         {[
           { href: '/', label: '← Home' },
-          { href: '/extraction', label: '⚗ Extraction' },
-          { href: '/mixology', label: 'Herbal Engine' },
-          { href: '/community', label: 'Community ✦' },
         ].map(({ href, label }) => (
           <a key={href} href={href} style={{
             fontSize: 9, fontFamily: 'monospace', letterSpacing: '0.14em', textTransform: 'uppercase',
