@@ -27,11 +27,12 @@
   to     = "/.netlify/functions/:splat"
   status = 200
 
-# Root → new home design (kills the old Lovable React entry on fungai.art/)
+# Root → new home design (force overrides the Vite-built /index.html that would otherwise win)
 [[redirects]]
   from   = "/"
   to     = "/home/index.html"
   status = 200
+  force  = true
 
 # /products → /shop permanent redirect
 [[redirects]]
