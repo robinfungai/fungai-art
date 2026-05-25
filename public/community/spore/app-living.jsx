@@ -2098,6 +2098,68 @@ function MycoAgent({ currentMember }) {
   );
 }
 
+/* ── Claim Profile Picker — first-time sign-in flow for founding members ── */
+
+function ClaimProfilePicker({ onClaim, onCreateNew, onClose }) {
+  const [unclaimed, setUnclaimed] = useState([]);
+  const [busy, setBusy] = useState(false);
+  useEffect(() => {
+    (async () => {
+      if (!window.SBprofiles) return;
+      const rows = await window.SBprofiles.fetchUnclaimed();
+      setUnclaimed(rows);
+    })();
+  }, []);
+
+  async function pick(p) {
+    if (busy) return;
+    setBusy(true);
+    try {
+      await window.SBprofiles.claimSeededProfile(p.id);
+      onClaim(p);
+    } catch (e) {
+      alert('Could not claim that profile: ' + (e.message || e));
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div style={{ position:'fixed', inset:0, zIndex:9000, background:'rgba(10,9,8,0.92)', backdropFilter:'blur(14px)', display:'flex', alignItems:'flex-start', justifyContent:'center', padding:'40px 16px', overflowY:'auto' }}>
+      <div style={{ width:'100%', maxWidth:520, background:'var(--soil-2)', border:'0.5px solid var(--rule-strong)', borderRadius:18, padding:'28px 26px', marginBottom:40 }}>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.3em', textTransform:'uppercase', color:'var(--spore-l)', marginBottom:10 }}>✦ Welcome back</div>
+        <h2 style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:30, color:'var(--mycelium-l)', letterSpacing:'-0.01em', marginBottom:8, lineHeight:1.1 }}>
+          Which <em style={{ color:'var(--nutrient)' }}>thread</em> are you?
+        </h2>
+        <p style={{ fontSize:13.5, color:'var(--mycelium)', lineHeight:1.7, marginBottom:24 }}>
+          If you're a founding member or one of the existing threads, tap your name below to claim your profile. Your contributions, hours, and Hyphae carry over.
+        </p>
+
+        <div style={{ display:'flex', flexDirection:'column', gap:6, marginBottom:18 }}>
+          {unclaimed.length === 0 && <div style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'var(--mycelium-d)', padding:'12px 0' }}>All threads already claimed. Create a new profile below.</div>}
+          {unclaimed.map(p => (
+            <button key={p.id} onClick={() => pick(p)} disabled={busy} style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 14px', borderRadius:10, background:'var(--soil-3)', border:'0.5px solid var(--rule)', cursor:'pointer', textAlign:'left', transition:'all 0.15s' }}>
+              <div style={{ width:34, height:34, borderRadius:'50%', background: p.founding ? 'linear-gradient(135deg, #E8B14B, #8B6320)' : 'var(--spore-d)', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:16, color:'rgba(255,255,255,0.9)' }}>{p.character_name[0]}</div>
+              <div style={{ flex:1 }}>
+                <div style={{ display:'flex', alignItems:'center', gap:6 }}>
+                  <span style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:17, color:'var(--mycelium-l)' }}>{p.character_name}</span>
+                  {p.founding && <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.16em', background:'linear-gradient(135deg, rgba(232,177,75,0.18), rgba(232,177,75,0.08))', border:'0.5px solid rgba(232,177,75,0.45)', borderRadius:3, padding:'2px 6px', color:'#F5D689' }}>FOUNDING</span>}
+                </div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:9.5, color:'var(--mycelium-d)', marginTop:2 }}>{p.role}{p.node ? ' · ' + p.node : ''}</div>
+              </div>
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--mycelium-d)' }}>claim ↗</span>
+            </button>
+          ))}
+        </div>
+
+        <div style={{ paddingTop:18, borderTop:'0.5px solid var(--rule)', display:'flex', justifyContent:'space-between', gap:10, flexWrap:'wrap' }}>
+          <button onClick={onCreateNew} disabled={busy} style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.2em', textTransform:'uppercase', padding:'11px 22px', borderRadius:999, background:'rgba(168,143,224,0.1)', border:'0.5px solid rgba(168,143,224,0.4)', color:'#C5B5F5', cursor:'pointer' }}>+ I'm new — create profile</button>
+          <button onClick={onClose} disabled={busy} style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.2em', textTransform:'uppercase', padding:'11px 22px', borderRadius:999, background:'none', border:'0.5px solid var(--rule)', color:'var(--mycelium-d)', cursor:'pointer' }}>Decide later</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ── App root ─────────────────────────────────────────────── */
 
 function App() {
@@ -2133,36 +2195,96 @@ function App() {
     document.head.appendChild(s);
   }, []);
 
-  // ── Load profiles from Supabase on mount, watch auth state ──
+  const [showClaimPicker, setShowClaimPicker] = useState(false);
+
+  // ── Load profiles from Supabase + auto-bypass PIN login if signed in ──
   useEffect(() => {
     let unsub;
     (async () => {
       if (!SporeData.loadProfilesFromCloud) return;
       try {
         const merged = await SporeData.loadProfilesFromCloud();
-        // Mutate the global array so all existing SporeData.MEMBERS.map() calls pick up cloud data
         SporeData.MEMBERS.length = 0;
         merged.forEach(m => SporeData.MEMBERS.push(m));
         setCloudVer(v => v + 1);
       } catch (e) { console.warn('[Spore] cloud load failed:', e); }
 
       // Auth state subscription
-      if (window.SBauth) {
-        const user = await window.SBauth.getUser();
+      if (!window.SBauth) return;
+      const user = await window.SBauth.getUser();
+      setSbUser(user);
+      await tryAutoLogin(user);
+
+      const sub = window.SBauth.onAuthChange(async ({ user }) => {
         setSbUser(user);
-        const sub = window.SBauth.onAuthChange(({ user }) => setSbUser(user));
-        unsub = sub?.data?.subscription?.unsubscribe?.bind(sub.data.subscription);
-      }
+        await tryAutoLogin(user);
+      });
+      unsub = sub?.data?.subscription?.unsubscribe?.bind(sub.data.subscription);
     })();
     return () => { if (unsub) try { unsub(); } catch {} };
   }, []);
 
+  // If a Supabase user is signed in, find their profile and skip the PIN screen.
+  // If no profile matches their auth_user_id yet, show the 'claim founder identity' picker.
+  async function tryAutoLogin(user) {
+    if (!user) return;
+    try {
+      const mine = await window.SBprofiles.fetchMine();
+      if (mine) {
+        // Find or create the matching MEMBERS entry, set as current
+        const match = SporeData.MEMBERS.find(m => m.cloudId === mine.id)
+                   || SporeData.MEMBERS.find(m => m.name.toLowerCase() === (mine.character_name || '').toLowerCase());
+        if (match) {
+          setCurrentMember(match);
+          setTab('members');
+          try { localStorage.setItem('spore_active_member', match.id); } catch {}
+        }
+      } else {
+        // No claimed profile yet — show picker
+        setShowClaimPicker(true);
+      }
+    } catch (e) { console.warn('[Spore] auto-login failed:', e); }
+  }
+
+  // After ?signedin=1 URL flag (from magic link), drop the flag and pop a welcome toast
+  useEffect(() => {
+    if (window.location.search.includes('signedin=1')) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('signedin');
+      window.history.replaceState({}, '', url.pathname + url.search + url.hash);
+      setTimeout(() => setToast({ msg: '✦ Signed in to the network', kind: 'good' }), 600);
+    }
+  }, []);
+
+  // Render the claim picker when signed in but no profile linked yet
+  const claimUI = showClaimPicker ? (
+    <ClaimProfilePicker
+      onClaim={async (p) => {
+        setShowClaimPicker(false);
+        // Re-load profiles, then auto-login
+        try {
+          const merged = await SporeData.loadProfilesFromCloud();
+          SporeData.MEMBERS.length = 0;
+          merged.forEach(m => SporeData.MEMBERS.push(m));
+          setCloudVer(v => v + 1);
+          await tryAutoLogin(sbUser);
+        } catch {}
+      }}
+      onCreateNew={() => { setShowClaimPicker(false); /* user will use '+ Create profile' button below */ }}
+      onClose={() => setShowClaimPicker(false)}
+    />
+  ) : null;
+
   if (!currentMember) {
-    return <LoginScreen onLogin={handleLogin} />;
+    return <>
+      {claimUI}
+      <LoginScreen onLogin={handleLogin} sbUser={sbUser} />
+    </>;
   }
 
   return (
     <div className="app">
+      {claimUI}
       <TopBar
         state={economy.state}
         tier={tier}

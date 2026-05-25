@@ -39,12 +39,12 @@
 
       // ── Auth helpers exposed for convenience ───────────────────────
       window.SBauth = {
-        // Sign in with email magic link
+        // Sign in with email magic link — clean redirect URL (no fragments)
         async signIn(email) {
           const { data, error } = await window.SBclient.auth.signInWithOtp({
             email: email.trim().toLowerCase(),
             options: {
-              emailRedirectTo: window.location.origin + window.location.pathname + '#members',
+              emailRedirectTo: window.location.origin + '/community/?signedin=1',
               shouldCreateUser: true,
             },
           });
@@ -118,6 +118,31 @@
             if (error) throw error;
             return data;
           }
+        },
+        // Claim an existing seeded profile (founding members + palawan) — links it to this auth user
+        async claimSeededProfile(profileId) {
+          const user = await window.SBauth.getUser();
+          if (!user) throw new Error('Must be signed in to claim a profile');
+          const { data, error } = await window.SBclient
+            .from('profiles')
+            .update({ auth_user_id: user.id, email: user.email })
+            .eq('id', profileId)
+            .is('auth_user_id', null) // only claim if unclaimed
+            .select()
+            .single();
+          if (error) throw error;
+          return data;
+        },
+        // Profiles that haven't been claimed yet — used for the 'which member are you?' picker
+        async fetchUnclaimed() {
+          const { data, error } = await window.SBclient
+            .from('profiles')
+            .select('id, character_name, role, node, founding')
+            .is('auth_user_id', null)
+            .order('founding', { ascending: false })
+            .order('rep', { ascending: false });
+          if (error) { console.warn('[Supabase] fetchUnclaimed error:', error.message); return []; }
+          return data || [];
         },
         async uploadAvatar(file) {
           const user = await window.SBauth.getUser();
