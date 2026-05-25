@@ -889,12 +889,16 @@ function ProfileEditor({ existing, onClose }) {
   const fileRef                 = useRef(null);
 
   const ROLES = [
+    ['founder', 'Founder'],
     ['forager', 'Forager — wild plant gathering'],
     ['herbalist', 'Herbalist — traditional medicine'],
     ['alchemist', 'Alchemist — extraction & elixirs'],
     ['ceremony', 'Ceremony facilitator'],
     ['sound', 'Sound & frequency healer'],
     ['artist', 'Artist · creative collaborator'],
+    ['cultivator', 'Cultivator — mycelium · spawn · substrate'],
+    ['documenter', 'Documenter — photography · field notes · archive'],
+    ['weaver', 'Community weaver — facilitation · governance'],
     ['patron', 'Patron — supporting the work'],
     ['collaborator', 'Collaborator — vendor / supplier'],
     ['student', 'Student — learning the craft'],
@@ -1014,10 +1018,12 @@ function ProfileEditor({ existing, onClose }) {
           {existing ? '✦ Edit your thread' : '✦ Become a thread'}
         </div>
         <h2 style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:30, color:'var(--mycelium-l)', letterSpacing:'-0.01em', marginBottom:6, lineHeight:1.1 }}>
-          {existing ? 'Update' : 'Create'} your <em style={{ color:'var(--nutrient)' }}>character</em>
+          {existing ? 'Edit' : 'Create'} your <em style={{ color:'var(--nutrient)' }}>character</em>
         </h2>
         <p style={{ fontSize:13, color:'var(--mycelium)', lineHeight:1.7, marginBottom:24 }}>
-          No wallet, no email, no installation. Your profile lives in your browser — fully under your control. Lasts as long as you don't clear site data.
+          {existing
+            ? 'Update your details. If you\'re signed in via magic-link, changes sync everywhere. Otherwise they save as a draft you can publish after signing in.'
+            : 'No wallet needed. Your profile syncs once you sign in with email — until then it lives in your browser.'}
         </p>
 
         {/* Avatar */}
@@ -1236,6 +1242,28 @@ function MembersPage({ currentMember, economy }) {
   // (currentMember comes from the parent — set by tryAutoLogin when fetchMine succeeds)
   const isLinked = !!(currentMember && (currentMember.cloudId || currentMember.authUserId));
 
+  // Build the editor-prefill object. Priority: cloud-merged currentMember > localStorage cache > nothing
+  // Map MEMBERS-style fields (name/node/role-as-title) to the ProfileEditor schema (character_name/location/role-as-key)
+  const ROLE_TITLE_TO_KEY = {
+    'Founder':'founder','Co-Founder':'founder','Sound Healer':'sound','Documenter':'documenter',
+    'Forager':'forager','Artist':'artist','Artist & Contributor':'artist','Cultivator':'cultivator',
+    'Community Weaver':'weaver','Herbalist':'herbalist','Alchemist':'alchemist','Collaborator':'collaborator',
+    'Patron':'patron','Student':'student','Seeker':'seeker','Ceremony Facilitator':'ceremony',
+  };
+  const editorExisting = (currentMember && (currentMember.cloudId || isLinked || currentMember.bio || currentMember.name))
+    ? {
+        character_name: currentMember.name || currentMember.character_name || '',
+        bio:            currentMember.bio  || '',
+        // try the lowercase id first (cloud), then map the capitalised title (hardcoded shells)
+        role:           currentMember.role && (ROLE_TITLE_TO_KEY[currentMember.role] || (currentMember.role.toLowerCase ? currentMember.role.toLowerCase() : '') || ''),
+        location:       currentMember.location || currentMember.node || '',
+        pronouns:       currentMember.pronouns || '',
+        contact:        currentMember.contact  || '',
+        avatar:         currentMember.avatar   || currentMember.avatar_url || null,
+        specialties:    currentMember.specialties || [],
+      }
+    : myProfile;
+
   // Supabase auth state
   const [sbUser, setSbUser] = useState(null);
   const [signInEmail, setSignInEmail] = useState('');
@@ -1273,7 +1301,7 @@ function MembersPage({ currentMember, economy }) {
 
   return (
     <div className="page-enter">
-      {showProfileEditor && <ProfileEditor existing={myProfile} onClose={() => setShowProfileEditor(false)} />}
+      {showProfileEditor && <ProfileEditor existing={editorExisting} onClose={() => setShowProfileEditor(false)} />}
 
       <div className="section">
         <div className="section-eyebrow">The organism</div>
@@ -1526,6 +1554,7 @@ function AdminPage({ onToast }) {
     try { return localStorage.getItem('spore_announcement') || ''; } catch { return ''; }
   });
   const [saved, setSaved] = useState(false);
+  const [showCreate, setShowCreate] = useState(false);
 
   function saveAnnouncement() {
     try { localStorage.setItem('spore_announcement', announcement); } catch {}
@@ -1543,9 +1572,26 @@ function AdminPage({ onToast }) {
 
   return (
     <div className="page-enter">
+      {showCreate && <ProfileEditor existing={null} onClose={() => setShowCreate(false)} />}
+
       <div className="section">
         <div className="section-eyebrow">Founder access</div>
         <h2 className="section-title">Admin <em>panel.</em></h2>
+      </div>
+
+      {/* Quick actions (admin-only profile creation) */}
+      <div style={{ margin:'8px 16px 0', background:'linear-gradient(160deg, rgba(232,177,75,0.06), rgba(232,177,75,0.02))', border:'0.5px solid rgba(232,177,75,0.3)', borderRadius:10, padding:'14px 16px', display:'flex', alignItems:'center', gap:14, flexWrap:'wrap' }}>
+        <div style={{ flex:'1 1 200px', minWidth:0 }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--nutrient-l)', marginBottom:4 }}>✦ Admin tools</div>
+          <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:17, color:'var(--mycelium-l)', lineHeight:1.3 }}>Add a new thread to the network</div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--mycelium-d)', marginTop:3 }}>Creates a new profile in Supabase. New member can claim it via magic-link with their email.</div>
+        </div>
+        <button
+          onClick={() => setShowCreate(true)}
+          style={{ fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.24em', textTransform:'uppercase', padding:'11px 22px', borderRadius:999, border:'none', cursor:'pointer', background:'linear-gradient(135deg, var(--nutrient), var(--nutrient-d))', color:'var(--soil)', whiteSpace:'nowrap', fontWeight:500 }}
+        >
+          + Create profile
+        </button>
       </div>
 
       {/* Announcement */}
