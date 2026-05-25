@@ -339,7 +339,9 @@ const H=[
   {id:'kavaKava',n:'Kava Kava',el:'E',ext:'T',c:['sleep','nervine'],p:'Relaxation (primary); anxiety relief; social use. Hepatotoxicity caution — do not combine with alcohol.',x:'high'},
   {id:'linden',n:'Linden',el:'W',ext:'T',c:['sleep','heart','nervine'],p:'Relaxation; mild anxiety relief; cardiovascular; gentle nervine.',x:'low'},
   {id:'motherwort',n:'Motherwort',el:'W',ext:'T',c:['sleep','womens','heart','nervine','menstrual'],p:"Women's health; heart tonification; palpitations with anxiety; emotional support.",x:'medium'},
-  {id:'oatstraw',n:'Oatstraw',el:'E',ext:'T',c:['sleep','nervine','nutritive'],p:'Nervous system tonification; mineral-rich; stress support; gentle long-term.',x:'low'},
+  {id:'oatstraw',n:'Oatstraw (dried)',el:'E',ext:'T',c:['sleep','nervine','nutritive'],p:'Dried straw · nervous system tonification · mineral-rich · gentle long-term restorative.',x:'low'},
+  {id:'avenaMilkySeed',n:'Avena Milky Seed',el:'W',ext:'T',c:['nervine','sleep','adaptogen'],p:'Fresh-pressed milky-stage Avena sativa seed. Profound trophorestorative for chronic exhaustion. 50–60% EtOH fresh plant tincture.',x:'low'},
+  {id:'cannabisSativa',n:'Cannabis sativa',el:'A',ext:'T',c:['pain','sleep','nervine','conscious'],p:'Whole-plant preparation · CBD/CBG-dominant or balanced THC by chemotype · pain · sleep · ceremonial. Legal status varies.',x:'high'},
   {id:'passionflower',n:'Passionflower',el:'W',ext:'T',c:['sleep','nervine','conscious'],p:'Anxiety relief (primary); sleep support; nervine; mild consciousness.',x:'low'},
   {id:'rhodiola',n:'Rhodiola',el:'F',ext:'T',c:['sleep','adaptogen','energy','cognitive'],p:'Adaptogenic; stress reduction; energy; endurance; uplifting adaptogen.',x:'low'},
   {id:'skullcap',n:'Skullcap',el:'W',ext:'T',c:['sleep','nervine'],p:'Anxiety relief (primary); nervine; sleep support; gentle calming.',x:'low'},
@@ -735,7 +737,7 @@ function analyzeFormula(){
   wrap.innerHTML=`<div class="fp-analysis"><div class="fp-analysis-head">Formula Intelligence · embedded engine</div><div class="fpa-name">${blendName}</div><div class="fpa-tags">${elTagsHtml}${catTagsHtml}</div><div class="fpa-rule"></div><div class="fpa-2col" style="margin-bottom:12px"><div><div class="fpa-label">Primary actions</div>${actionTexts.map((t,i)=>`<div class="fpa-text" style="margin-bottom:${i<actionTexts.length-1?'8':'0'}px">${t}</div>`).join('')}</div><div><div class="fpa-label">Element reading</div><div class="fpa-text">${elReading}</div></div></div><div class="fpa-rule"></div><div class="fpa-label" style="color:rgba(232,177,75,.75)">⚗ Extraction protocol</div><div class="fpa-text" style="margin-bottom:6px">${extRec}</div><a href="/extraction" target="_blank" style="font-family:var(--fm);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--a);text-decoration:none;opacity:.6">Full protocols → /extraction</a><div class="fpa-rule"></div><div class="fpa-3col" style="margin-bottom:12px"><div><div class="fpa-label">Herbal allies</div>${allyHtml}</div><div><div class="fpa-label">Cautions</div>${contHtml}<div style="margin-top:6px;font-family:var(--fm);font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:${riskCol}">Risk: ${maxRisk}</div></div><div><div class="fpa-label">Dosage</div><div class="fpa-text">${DOSE_GUIDE[maxRisk]}</div></div></div><div class="fpa-essence">"${essence}"</div><div class="fpa-myco-btn"><span style="font-family:var(--fm);font-size:7px;letter-spacing:.16em;text-transform:uppercase;padding:4px 10px;border-radius:4px;border:0.5px solid rgba(232,177,75,.15);color:rgba(232,177,75,.32);">✦ MYCO · $MYCEL members</span></div></div>`;
 }
 
-// MYCO AI is reserved for $HYPHA token holders — activated in a future release.
+// MYCO AI is reserved for $MYCEL token holders — activated in a future release.
 function analyzeWithMYCO(){ return; }
 
 function saveF(){

@@ -1,3 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /community/spore/spec/
+Disallow: /community/admin
+Disallow: /onboard
+Disallow: /api/
+Disallow: /.netlify/
+
+# Crawl-friendly
 User-agent: Googlebot
 Allow: /
 
@@ -10,5 +19,4 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
-Allow: /
+Sitemap: https://www.fungai.art/sitemap.xml

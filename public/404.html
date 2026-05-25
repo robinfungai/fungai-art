@@ -1,15 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Lost in the mycelium — Fungai Art</title>
+<meta name="robots" content="noindex"/>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
-<link rel="alternate icon" type="image/png" href="/fungai-art-logo.png"/>
+<link rel="alternate icon" type="image/png" href="/favicon.png"/>
 <link rel="apple-touch-icon" href="/fungai-art-logo.png"/>
-
-  <meta charset="utf-8">
-  <script>
-    // GitHub Pages SPA redirect — preserve the full path for React Router
-    var l = window.location;
-    l.replace(l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + l.pathname.split('/').slice(0, 1).join('/') + '/?p=' + encodeURIComponent(l.pathname + l.search) + (l.hash || ''));
-  </script>
+<link rel="preconnect" href="https://api.fontshare.com"/>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500&display=swap"/>
+<style>
+@font-face { font-family: 'TAN-PARADISO'; src: url('/fonts/TAN-PARADISO.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Kiona'; src: url('/fonts/Kiona-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Bayer'; src: url('/fonts/Bayer-TypeArchiType.otf') format('opentype'); font-display: swap; }
+:root{--void:#060809;--parchment:#E6D9B5;--cream:#C9B894;--mist:#8B7E62;--lichen:#6BD66F;--amber:#C48838;--amber-lt:#E8B14B;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:var(--void);color:var(--cream);font-family:'Kiona',system-ui,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.16;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .79 0 0 0 0 .72 0 0 0 0 .58 0 0 0 .06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");}
+.center{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;position:relative;z-index:1;}
+.card{max-width:560px;text-align:center;}
+.mark{width:88px;height:88px;margin:0 auto 28px;border-radius:50%;background:radial-gradient(circle,rgba(196,136,56,.22),rgba(196,136,56,.04));border:0.5px solid rgba(196,136,56,.35);display:flex;align-items:center;justify-content:center;animation:drift 5.2s ease-in-out infinite;}
+.mark img{width:48px;height:48px;opacity:0.92;}
+@keyframes drift { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.code{font-family:'Bayer',sans-serif;font-size:10px;letter-spacing:0.34em;text-transform:uppercase;color:var(--amber-lt);margin-bottom:18px;}
+.title{font-family:'Cormorant Garamond','TAN-PARADISO',Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(42px,7vw,72px);color:var(--parchment);line-height:0.98;letter-spacing:-0.005em;margin-bottom:18px;}
+.title em{font-family:'TAN-PARADISO',serif;color:var(--lichen);font-style:italic;}
+.blurb{font-family:'Kiona',sans-serif;font-size:15px;color:var(--cream);line-height:1.85;max-width:46ch;margin:0 auto 36px;opacity:.92;}
+.links{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:26px;}
+.btn{font-family:'Bayer',sans-serif;font-size:10.5px;letter-spacing:0.24em;text-transform:uppercase;padding:13px 26px;border-radius:999px;text-decoration:none;transition:transform .15s,box-shadow .15s,background .15s;}
+.btn-primary{background:linear-gradient(135deg,var(--lichen),#2E7A35);color:var(--void);font-weight:500;}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(107,214,111,.3);}
+.btn-ghost{background:transparent;border:0.5px solid rgba(201,184,148,.3);color:var(--cream);}
+.btn-ghost:hover{border-color:var(--parchment);color:var(--parchment);}
+.threads{margin-top:28px;font-family:'Bayer',sans-serif;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mist);}
+.threads a{color:var(--mist);text-decoration:none;border-bottom:0.5px solid rgba(139,126,98,.35);margin:0 6px;}
+.threads a:hover{color:var(--parchment);}
+.path{margin-top:14px;font-family:'Geist Mono','Courier New',monospace;font-size:11px;color:var(--mist);opacity:0.75;word-break:break-all;}
+</style>
 </head>
+<body>
+<div class="center">
+  <div class="card">
+    <div class="mark"><img src="/favicon.svg" alt=""/></div>
+    <div class="code">404 · Spore not found</div>
+    <h1 class="title">This thread<br/>doesn't <em>connect.</em></h1>
+    <p class="blurb">The mycelium hasn't grown here yet. The page you reached doesn't exist — or it has moved as the network reshapes itself.</p>
+    <div class="links">
+      <a href="/home/" class="btn btn-primary">← Back to the forest</a>
+      <a href="/mixology/" class="btn btn-ghost">Mixology</a>
+      <a href="/foraging" class="btn btn-ghost">Foraging map</a>
+    </div>
+    <div class="threads">
+      <a href="/shop/">Shop</a>·<a href="/community/">Community</a>·<a href="/herbal-engine-2/">Herbal Engine</a>·<a href="/patron/">Patron</a>·<a href="/members/">$MYCEL</a>
+    </div>
+    <div class="path" id="lost-path"></div>
+  </div>
+</div>
+<script>
+  // Show the path that 404'd so the user knows where they were trying to go
+  try { document.getElementById('lost-path').textContent = 'tried: ' + window.location.pathname; } catch(e){}
+</script>
+<script src="/cookie-banner.js" defer></script>
+</body>
 </html>

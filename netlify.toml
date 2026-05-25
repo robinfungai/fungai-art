@@ -27,6 +27,12 @@
   to     = "/.netlify/functions/:splat"
   status = 200
 
+# Root → new home design (kills the old Lovable React entry on fungai.art/)
+[[redirects]]
+  from   = "/"
+  to     = "/home/index.html"
+  status = 200
+
 # /products → /shop permanent redirect
 [[redirects]]
   from   = "/products*"
@@ -51,8 +57,8 @@
 
 # static pages served directly: /shop /mixology /mycelium-trance /community /health /extraction /privacy /terms /members /sporing /draw /patron /basket /onboard
 
-# Everything else (including /) → index.html (premium home design)
+# Unknown paths → branded 404
 [[redirects]]
   from   = "/*"
-  to     = "/index.html"
-  status = 200
+  to     = "/404.html"
+  status = 404

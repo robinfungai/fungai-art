@@ -813,20 +813,46 @@ function initStripe(){
 }
 async function payWithCard(){
   const btn=document.getElementById('payCardBtn');
+  const errEl=document.getElementById('stripe-error');
   btn.textContent='Processing…';btn.disabled=true;
+  errEl.textContent='';
+  const showErr=(msg,detail)=>{
+    errEl.innerHTML=`<div style="font-weight:500;margin-bottom:4px">${msg}</div>${detail?`<div style="font-size:10px;opacity:0.75">${detail}</div>`:''}`;
+    showToast(msg.length>50?msg.slice(0,50)+'…':msg);
+    console.error('[checkout]',msg,detail||'');
+  };
   try{
-    const res=await fetch('/api/create-payment-intent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:cartTotal()>=60?cartTotal():cartTotal()+4.9,metadata:{name:document.getElementById('coFirstName').value+' '+document.getElementById('coLastName').value,email:document.getElementById('coEmail').value,address:document.getElementById('coAddr1').value+', '+document.getElementById('coCity').value,items:cart.map(i=>`${i.name} x${i.qty}`).join(', ')}})});
-    const{clientSecret,error:ie}=await res.json();
-    if(ie)throw new Error(ie);
-    const{error,paymentIntent}=await stripe.confirmCardPayment(clientSecret,{payment_method:{card:cardElement,billing_details:{name:document.getElementById('coFirstName').value+' '+document.getElementById('coLastName').value,email:document.getElementById('coEmail').value}}});
+    const total=cartTotal()>=60?cartTotal():cartTotal()+4.9;
+    if(!total||total<=0){throw new Error('Cart total is zero. Add an item before paying.');}
+    // 1. Request a Payment Intent from our Netlify function
+    let res;
+    try{
+      res=await fetch('/api/create-payment-intent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:total,metadata:{name:document.getElementById('coFirstName').value+' '+document.getElementById('coLastName').value,email:document.getElementById('coEmail').value,address:document.getElementById('coAddr1').value+', '+document.getElementById('coCity').value,items:cart.map(i=>`${i.name} x${i.qty}`).join(', ')}})});
+    }catch(networkErr){throw new Error('Could not reach the payment server. Check your connection and try again.');}
+    // Parse body defensively — server may return HTML on misconfig
+    let body;const raw=await res.text();
+    try{body=JSON.parse(raw);}catch{body={error:raw.slice(0,300)};}
+    if(!res.ok){
+      const detail=body.error||`HTTP ${res.status}`;
+      if(res.status===500&&/stripe_secret_key|api key|stripe key|no such api key/i.test(detail)){
+        throw new Error('Payment is temporarily offline. We have been notified. (server key missing)');
+      }
+      if(res.status===404){throw new Error('Payment endpoint not found. Our team has been notified.');}
+      throw new Error(detail);
+    }
+    if(!body.clientSecret){throw new Error(body.error||'Server did not return a payment session.');}
+    // 2. Confirm card with Stripe
+    const{error,paymentIntent}=await stripe.confirmCardPayment(body.clientSecret,{payment_method:{card:cardElement,billing_details:{name:document.getElementById('coFirstName').value+' '+document.getElementById('coLastName').value,email:document.getElementById('coEmail').value}}});
     if(error)throw new Error(error.message);
     if(paymentIntent?.status==='succeeded'){
       document.getElementById('confirmRef').textContent=paymentIntent.id.slice(-8).toUpperCase();
-      document.getElementById('confirmTotal').textContent='€'+(cartTotal()>=60?cartTotal():cartTotal()+4.9).toFixed(2).replace('.00','');
+      document.getElementById('confirmTotal').textContent='€'+total.toFixed(2).replace('.00','');
       document.getElementById('confirmMsg').textContent='Thank you, '+document.getElementById('coFirstName').value+'. A receipt will be sent to '+document.getElementById('coEmail').value+'.';
       cart=[];renderCart();goToStepDirect(3);
+    }else{
+      throw new Error('Payment did not complete. Status: '+(paymentIntent?.status||'unknown'));
     }
-  }catch(err){document.getElementById('stripe-error').textContent=err.message;showToast('Payment failed — '+err.message.slice(0,40))}
+  }catch(err){showErr(err.message||'Payment failed','If this keeps happening, email robin@fungai.art with order details.');}
   finally{btn.textContent='Pay with card';btn.disabled=false}
 }
 // Crypto
