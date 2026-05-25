@@ -512,8 +512,21 @@ const CONTRIBUTION_TYPES = [
 ];
 
 /* ── Async profile loader — pulls from Supabase if available, falls back to hardcoded list ──
-   When Supabase profiles exist for a member (matched by character_name case-insensitive),
-   the cloud version replaces the hardcoded shell, bringing in live bio/avatar/etc. */
+   Hardened against duplicates:
+   1. Skip empty/anonymous cloud rows
+   2. Collapse case + accent + whitespace variants ("Wissam ", "wissam", "Wíssam" → one)
+   3. When multiple cloud rows share a normalised name, prefer the one with auth_user_id
+   4. Match hardcoded shells to cloud rows by id (cloudId), then by normalised name
+*/
+function normaliseName(s) {
+  return (s || '')
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')   // strip diacritics
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase();
+}
+
 async function loadProfilesFromCloud() {
   if (!window.SBready) return MEMBERS;
   try {
@@ -521,19 +534,32 @@ async function loadProfilesFromCloud() {
     const rows = await window.SBprofiles.fetchAll();
     if (!rows || !rows.length) return MEMBERS;
 
-    // Build a map of cloud profiles by lowercase name
+    // 1. Filter empty rows, then collapse cloud duplicates by normalised name.
+    //    Keep the row with auth_user_id set; if multiple have it, keep newest.
     const cloudByName = new Map();
-    rows.forEach(r => cloudByName.set((r.character_name || '').toLowerCase(), r));
+    rows
+      .filter(r => r && r.character_name && r.character_name.trim())
+      .forEach(r => {
+        const key = normaliseName(r.character_name);
+        const existing = cloudByName.get(key);
+        if (!existing) { cloudByName.set(key, r); return; }
+        // prefer claimed row
+        if (r.auth_user_id && !existing.auth_user_id) { cloudByName.set(key, r); return; }
+        if (!r.auth_user_id && existing.auth_user_id) return;
+        // both claimed or both unclaimed — keep the newer
+        const aT = Date.parse(r.updated_at || r.created_at || 0) || 0;
+        const bT = Date.parse(existing.updated_at || existing.created_at || 0) || 0;
+        if (aT > bT) cloudByName.set(key, r);
+      });
 
-    // Merge: hardcoded shells get cloud overrides; cloud-only profiles get appended
+    // 2. Overlay cloud values onto hardcoded shells (matched by normalised name)
     const usedCloudIds = new Set();
     const merged = MEMBERS.map(m => {
-      const cloud = cloudByName.get(m.name.toLowerCase());
+      const cloud = cloudByName.get(normaliseName(m.name));
       if (!cloud) return m;
       usedCloudIds.add(cloud.id);
       return {
         ...m,
-        // overlay cloud values where present
         rep:      cloud.rep      ?? m.rep,
         balance:  cloud.balance  ?? m.balance,
         focus:    cloud.focus    || m.focus,
@@ -548,25 +574,28 @@ async function loadProfilesFromCloud() {
         authUserId: cloud.auth_user_id || null,
       };
     });
-    // Append cloud-only profiles (new members who don't match any hardcoded shell)
-    rows.forEach(r => {
-      if (!usedCloudIds.has(r.id)) {
-        merged.push({
-          id: 'cloud_' + r.id,
-          name: r.character_name,
-          role: r.role || 'Member',
-          node: r.node || 'berlin',
-          rep: r.rep ?? 1,
-          balance: r.balance ?? 80,
-          focus: r.focus || (r.specialties?.join(' · ') || 'A new thread in the network'),
-          founding: r.founding,
-          bio: r.bio,
-          avatar: r.avatar_url,
-          specialties: r.specialties || [],
-          cloudId: r.id,
-          authUserId: r.auth_user_id || null,
-        });
-      }
+
+    // 3. Append cloud-only profiles (truly new members, not duplicates)
+    cloudByName.forEach(r => {
+      if (usedCloudIds.has(r.id)) return;
+      // Skip if this cloud row's normalised name already matches a hardcoded member
+      // (defensive — shouldn't happen after step 2, but guards against future edits)
+      if (MEMBERS.some(m => normaliseName(m.name) === normaliseName(r.character_name))) return;
+      merged.push({
+        id: 'cloud_' + r.id,
+        name: r.character_name,
+        role: r.role || 'Member',
+        node: r.node || 'berlin',
+        rep: r.rep ?? 1,
+        balance: r.balance ?? 80,
+        focus: r.focus || (r.specialties?.join(' · ') || 'A new thread in the network'),
+        founding: r.founding,
+        bio: r.bio,
+        avatar: r.avatar_url,
+        specialties: r.specialties || [],
+        cloudId: r.id,
+        authUserId: r.auth_user_id || null,
+      });
     });
     return merged;
   } catch (e) {

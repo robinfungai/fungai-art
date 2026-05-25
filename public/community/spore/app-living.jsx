@@ -871,14 +871,20 @@ function ExperiencesPage({ economy, onToast }) {
 /* ── Profile Editor modal — inline character creation ────────── */
 
 function ProfileEditor({ existing, onClose }) {
-  const [name, setName]         = useState(existing?.character_name || '');
-  const [bio, setBio]           = useState(existing?.bio || '');
-  const [role, setRole]         = useState(existing?.role || '');
-  const [location, setLocation] = useState(existing?.location || '');
-  const [pronouns, setPronouns] = useState(existing?.pronouns || '');
-  const [contact, setContact]   = useState(existing?.contact || '');
-  const [avatar, setAvatar]     = useState(existing?.avatar || existing?.avatar_url || null);
-  const [tags, setTags]         = useState(existing?.specialties || []);
+  // Hydrate from an unsaved draft if one exists (recovered after sign-in)
+  const draft = (() => {
+    try { const d = JSON.parse(localStorage.getItem('fungai_profile_draft') || 'null'); return d || {}; }
+    catch { return {}; }
+  })();
+  const seed = existing || draft;
+  const [name, setName]         = useState(seed?.character_name || '');
+  const [bio, setBio]           = useState(seed?.bio || '');
+  const [role, setRole]         = useState(seed?.role || '');
+  const [location, setLocation] = useState(seed?.location || '');
+  const [pronouns, setPronouns] = useState(seed?.pronouns || '');
+  const [contact, setContact]   = useState(seed?.contact || '');
+  const [avatar, setAvatar]     = useState(seed?.avatar || seed?.avatar_url || null);
+  const [tags, setTags]         = useState(seed?.specialties || []);
   const [saving, setSaving]     = useState(false);
   const fileRef                 = useRef(null);
 
@@ -921,18 +927,24 @@ function ProfileEditor({ existing, onClose }) {
     }
     setSaving(true);
 
-    // If signed in to Supabase, save to the cloud (shared everywhere)
+    // If signed in to Supabase, save to the cloud (shared everywhere).
+    // If NOT signed in, save locally only — do NOT trigger another magic-link from here
+    // (that path caused rate-limit popups and "profile vanished" reports).
     if (window.SBclient && window.SBauth) {
       try {
         const user = await window.SBauth.getUser();
         if (!user) {
-          // Not signed in — prompt sign-in flow
-          const email = prompt('To save your profile so it appears everywhere, enter your email. We\'ll send you a magic link to confirm:');
-          if (!email || !email.includes('@')) { setSaving(false); return; }
-          const { error } = await window.SBauth.signIn(email);
-          if (error) { alert('Sign-in failed: ' + error.message); setSaving(false); return; }
-          alert('Check your inbox for a magic link from Supabase, then come back to this page and click "+ Create profile" again. Your form values will reset, sorry — sign-in only happens once.');
+          // Cache locally so the form values are preserved, then ask user to sign in via the dedicated card
+          try {
+            localStorage.setItem('fungai_profile_draft', JSON.stringify({
+              character_name: name.trim(), bio: bio.trim(), role, location,
+              pronouns: pronouns.trim(), contact: contact.trim(), specialties: tags,
+              avatar: avatar && avatar.startsWith('data:') ? null : avatar,
+            }));
+          } catch {}
+          alert('Sign in first using the email card below — then come back and your draft will be here. (We did not send a magic link from this dialog to avoid duplicate emails.)');
           setSaving(false);
+          onClose && onClose();
           return;
         }
 
@@ -960,8 +972,9 @@ function ProfileEditor({ existing, onClose }) {
         };
         await window.SBprofiles.upsert(profile);
 
-        // Also cache locally for instant first-paint next time
+        // Also cache locally for instant first-paint next time, and clear any unsaved draft
         try { localStorage.setItem('fungai_profile', JSON.stringify({ ...profile, avatar: avatarUrl })); } catch (e) {}
+        try { localStorage.removeItem('fungai_profile_draft'); } catch (e) {}
 
         setTimeout(() => { window.location.reload(); }, 600);
         return;
@@ -1219,6 +1232,10 @@ function MembersPage({ currentMember, economy }) {
   // Read the visitor's own profile (saved locally as cache; real source is Supabase)
   const myProfile = (() => { try { return JSON.parse(localStorage.getItem('fungai_profile') || 'null'); } catch { return null; } })();
 
+  // Is the signed-in user already linked to a cloud profile?
+  // (currentMember comes from the parent — set by tryAutoLogin when fetchMine succeeds)
+  const isLinked = !!(currentMember && (currentMember.cloudId || currentMember.authUserId));
+
   // Supabase auth state
   const [sbUser, setSbUser] = useState(null);
   const [signInEmail, setSignInEmail] = useState('');
@@ -1229,6 +1246,11 @@ function MembersPage({ currentMember, economy }) {
     (async () => {
       const u = await window.SBauth.getUser();
       setSbUser(u);
+      // Auto-open editor for fresh signed-in users who have no linked profile yet
+      // (this is the post-magic-link landing flow)
+      if (u && !isLinked && !myProfile && window.location.search.includes('signedin')) {
+        setTimeout(() => setShowProfileEditor(true), 800);
+      }
       const sub = window.SBauth.onAuthChange(({ user }) => setSbUser(user));
       unsub = sub?.data?.subscription?.unsubscribe?.bind(sub.data.subscription);
     })();
@@ -1259,26 +1281,55 @@ function MembersPage({ currentMember, economy }) {
         <p className="section-blurb">Each hyphae brings a different thread to the mycelium.</p>
       </div>
 
-      {/* Self-onboard / edit profile card */}
-      <div style={{ margin:'0 16px 12px', background: myProfile ? 'linear-gradient(160deg, rgba(107,214,111,0.06), rgba(107,214,111,0.02))' : 'linear-gradient(160deg, rgba(232,177,75,0.06), rgba(232,177,75,0.02))', border: myProfile ? '0.5px solid rgba(107,214,111,0.25)' : '0.5px solid rgba(232,177,75,0.3)', borderRadius:12, padding:'16px 18px', display:'flex', alignItems:'center', gap:14, flexWrap:'wrap' }}>
-        <div style={{ flex:'1 1 200px', minWidth:0 }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase', color: myProfile ? 'var(--spore-l)' : 'var(--nutrient-l)', marginBottom:4 }}>
-            {myProfile ? '✦ Your thread' : '✦ Add yourself'}
+      {/* Self-onboard / edit profile card.
+          Logic:
+          - Linked to cloud profile (currentMember has cloudId/authUserId): only EDIT — never offer "create new"
+          - Local-cache profile but no cloud link: offer edit (will save to cloud if signed in)
+          - Nothing yet: invite to set up — but require sign-in first to avoid orphan profiles
+      */}
+      {(() => {
+        const linked = isLinked;
+        const displayName = linked ? currentMember.name : (myProfile && myProfile.character_name);
+        const displayMeta = linked
+          ? `${currentMember.role || ''}${currentMember.node ? ' · ' + currentMember.node : ''}`
+          : (myProfile ? `${myProfile.role || ''}${myProfile.location ? ' · ' + myProfile.location : ''}` : 'Set up your character — no wallet, no installation. ~3 minutes.');
+        const has = !!displayName;
+        const canCreate = sbUser && !linked; // only signed-in unlinked users can create new
+        return (
+          <div style={{ margin:'0 16px 12px', background: has ? 'linear-gradient(160deg, rgba(107,214,111,0.06), rgba(107,214,111,0.02))' : 'linear-gradient(160deg, rgba(232,177,75,0.06), rgba(232,177,75,0.02))', border: has ? '0.5px solid rgba(107,214,111,0.25)' : '0.5px solid rgba(232,177,75,0.3)', borderRadius:12, padding:'16px 18px', display:'flex', alignItems:'center', gap:14, flexWrap:'wrap' }}>
+            <div style={{ flex:'1 1 200px', minWidth:0 }}>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase', color: has ? 'var(--spore-l)' : 'var(--nutrient-l)', marginBottom:4 }}>
+                {linked ? '✦ Your thread · linked' : (has ? '✦ Your thread · local only' : '✦ Add yourself')}
+              </div>
+              <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:18, color:'var(--mycelium-l)', lineHeight:1.3 }}>
+                {has ? displayName : 'Become a thread in the mycelium'}
+              </div>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:9.5, color:'var(--mycelium-d)', marginTop:3, letterSpacing:'0.04em' }}>
+                {displayMeta}
+              </div>
+            </div>
+            {has ? (
+              <button
+                onClick={() => setShowProfileEditor(true)}
+                style={{ fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.24em', textTransform:'uppercase', padding:'11px 22px', borderRadius:999, border:'none', cursor:'pointer', background:'rgba(107,214,111,0.12)', color:'var(--spore-l)', whiteSpace:'nowrap', fontWeight:500 }}
+              >
+                Edit profile
+              </button>
+            ) : canCreate ? (
+              <button
+                onClick={() => setShowProfileEditor(true)}
+                style={{ fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.24em', textTransform:'uppercase', padding:'11px 22px', borderRadius:999, border:'none', cursor:'pointer', background:'linear-gradient(135deg, var(--nutrient), var(--nutrient-d))', color:'var(--soil)', whiteSpace:'nowrap', fontWeight:500 }}
+              >
+                + Create profile
+              </button>
+            ) : (
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.16em', textTransform:'uppercase', color:'var(--mycelium-d)', padding:'10px 14px', border:'0.5px dashed var(--rule)', borderRadius:999 }}>
+                Sign in below ↓ first
+              </div>
+            )}
           </div>
-          <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:18, color:'var(--mycelium-l)', lineHeight:1.3 }}>
-            {myProfile ? myProfile.character_name : 'Become a thread in the mycelium'}
-          </div>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:9.5, color:'var(--mycelium-d)', marginTop:3, letterSpacing:'0.04em' }}>
-            {myProfile ? `${myProfile.role || ''}${myProfile.location ? ' · ' + myProfile.location : ''}` : 'Set up your character — no wallet, no installation. ~3 minutes.'}
-          </div>
-        </div>
-        <button
-          onClick={() => setShowProfileEditor(true)}
-          style={{ fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.24em', textTransform:'uppercase', padding:'11px 22px', borderRadius:999, border:'none', cursor:'pointer', background: myProfile ? 'rgba(107,214,111,0.12)' : 'linear-gradient(135deg, var(--nutrient), var(--nutrient-d))', color: myProfile ? 'var(--spore-l)' : 'var(--soil)', whiteSpace:'nowrap', fontWeight:500 }}
-        >
-          {myProfile ? 'Edit profile' : '+ Create profile'}
-        </button>
-      </div>
+        );
+      })()}
 
       {/* Supabase sign-in / sign-out — required for the profile to be live everywhere */}
       <div style={{ margin:'0 16px 12px', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, padding:'12px 16px', display:'flex', alignItems:'center', gap:12, flexWrap:'wrap' }}>
