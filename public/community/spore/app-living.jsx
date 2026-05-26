@@ -308,25 +308,37 @@ function LoginScreen({ onLogin, sbUser }) {
           <h1 className="welcome-title">Tend a node.<br/><em>Nutrients flow.</em></h1>
           <p className="welcome-blurb">Spore is the living network beneath Fungai Art. Contribute to a node, earn $MYCEL, unlock experiences. The organism grows when you do.</p>
 
-          {/* Two-path entry: sign in OR create new (invite-only). Both end up on the magic-link form. */}
+          {/* Three-path entry. Returning members can use PIN (preferred for repeat use);
+              everyone can use magic-link; new threads use invite code → magic-link. */}
           {!sbUser && !signInSent && (
-            <div style={{ marginTop:28, display:'flex', gap:10, flexWrap:'wrap', maxWidth:480 }}>
-              <button
-                onClick={() => {
-                  setCreateMode(false);
-                  setTimeout(() => document.getElementById('spore-magic-link-form')?.scrollIntoView({ behavior:'smooth', block:'center' }), 60);
-                }}
-                style={{ flex:'1 1 200px', fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase', padding:'14px 22px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', fontWeight:500, cursor:'pointer' }}
-              >
-                ✦ Sign in with link
-              </button>
-              <button
-                onClick={() => { setShowInviteGate(true); setInviteError(''); }}
-                style={{ flex:'1 1 200px', fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase', padding:'14px 22px', borderRadius:999, background:'rgba(232,177,75,0.08)', border:'0.5px solid rgba(232,177,75,0.45)', color:'var(--nutrient-l)', fontWeight:500, cursor:'pointer' }}
-              >
-                + Create profile
-              </button>
-            </div>
+            <>
+              <div style={{ marginTop:28, display:'flex', gap:10, flexWrap:'wrap', maxWidth:560 }}>
+                <button
+                  onClick={() => setDropOpen(true)}
+                  style={{ flex:'1 1 180px', fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase', padding:'14px 22px', borderRadius:999, background:'linear-gradient(135deg, var(--mycelium-l), #8B7E62)', border:'none', color:'var(--soil)', fontWeight:500, cursor:'pointer' }}
+                >
+                  ✦ PIN sign-in
+                </button>
+                <button
+                  onClick={() => {
+                    setCreateMode(false);
+                    setTimeout(() => document.getElementById('spore-magic-link-form')?.scrollIntoView({ behavior:'smooth', block:'center' }), 60);
+                  }}
+                  style={{ flex:'1 1 180px', fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase', padding:'14px 22px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', fontWeight:500, cursor:'pointer' }}
+                >
+                  ✉ Sign in with link
+                </button>
+                <button
+                  onClick={() => { setShowInviteGate(true); setInviteError(''); }}
+                  style={{ flex:'1 1 180px', fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase', padding:'14px 22px', borderRadius:999, background:'rgba(232,177,75,0.08)', border:'0.5px solid rgba(232,177,75,0.45)', color:'var(--nutrient-l)', fontWeight:500, cursor:'pointer' }}
+                >
+                  + Create profile
+                </button>
+              </div>
+              <div style={{ marginTop:10, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)', maxWidth:560 }}>
+                Returning member? PIN is fastest. New here? Use Create profile.
+              </div>
+            </>
           )}
 
           {/* Email magic-link sign-in — primary entry */}
@@ -1499,6 +1511,15 @@ function MembersPage({ currentMember, economy }) {
   async function handleSignOut() {
     await window.SBauth.signOut();
     setSbUser(null);
+    // Clear cached profile + draft so the next visitor in this browser
+    // doesn't inherit the previous user's identity.
+    try {
+      localStorage.removeItem('fungai_profile');
+      localStorage.removeItem('fungai_profile_draft');
+      localStorage.removeItem('spore_active_member');
+    } catch {}
+    // Reload to fully reset in-memory currentMember and force re-render
+    setTimeout(() => { window.location.reload(); }, 200);
   }
 
   return (
@@ -1768,8 +1789,8 @@ function AdminPage({ onToast }) {
   const [restrictionEdits, setRestrictionEdits] = useState({}); // {cloudId: ['foraging','mixology']}
   const [savingRestrictions, setSavingRestrictions] = useState({});
 
+  // Foraging is deliberately omitted — it's open to everyone, no restrictions.
   const RESTRICTABLE_FEATURES = [
-    { id:'foraging',   label:'Foraging map' },
     { id:'extraction', label:'Extraction'   },
     { id:'mixology',   label:'Mixology'     },
     { id:'community',  label:'Community'    },
@@ -2616,10 +2637,19 @@ function App() {
     try { localStorage.setItem('spore_active_member', member.id); } catch {}
   }
 
-  function handleLogout() {
+  async function handleLogout() {
     setCurrentMember(null);
     setTab('network');
-    try { localStorage.removeItem('spore_active_member'); } catch {}
+    try {
+      localStorage.removeItem('spore_active_member');
+      localStorage.removeItem('fungai_profile');
+      localStorage.removeItem('fungai_profile_draft');
+    } catch {}
+    // If signed in via Supabase too, sign out there so the next visitor
+    // on this browser truly starts fresh.
+    if (window.SBauth) {
+      try { await window.SBauth.signOut(); } catch {}
+    }
   }
 
   useEffect(() => {
