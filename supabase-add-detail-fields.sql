@@ -20,8 +20,40 @@ ALTER TABLE profiles
 ALTER TABLE profiles
   ADD COLUMN IF NOT EXISTS restrictions text[] NOT NULL DEFAULT '{}';
 
--- Verify
+-- 4. Admin flag column — needed so RLS can allow Robin / Stephanie to
+--    update other members' rows (specifically to set restrictions).
+ALTER TABLE profiles
+  ADD COLUMN IF NOT EXISTS is_admin boolean NOT NULL DEFAULT false;
+
+-- Promote Robin and Stephanie to admin
+UPDATE profiles
+SET is_admin = true
+WHERE LOWER(TRIM(character_name)) IN ('robin', 'stephanie');
+
+-- 5. RLS policy: admins (anyone with is_admin = true) can UPDATE any profile.
+--    Lets the Admin → Restrict features UI actually save.
+--    Safe because is_admin defaults to false and is only flippable
+--    by an existing admin running SQL directly.
+CREATE POLICY "Admins can update any profile"
+  ON profiles FOR UPDATE
+  USING (
+    EXISTS (
+      SELECT 1 FROM profiles p
+      WHERE p.auth_user_id = auth.uid() AND p.is_admin = true
+    )
+  )
+  WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM profiles p
+      WHERE p.auth_user_id = auth.uid() AND p.is_admin = true
+    )
+  );
+
+-- Verify columns
 SELECT column_name, data_type, column_default
 FROM information_schema.columns
 WHERE table_name = 'profiles' AND table_schema = 'public'
 ORDER BY ordinal_position;
+
+-- Verify policies
+SELECT policyname, cmd FROM pg_policies WHERE tablename = 'profiles' ORDER BY policyname;
