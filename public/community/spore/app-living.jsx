@@ -345,13 +345,13 @@ function LoginScreen({ onLogin, sbUser }) {
               </div>
             ) : (
               <form onSubmit={handleSignIn}>
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.24em', textTransform:'uppercase', color: createMode ? 'var(--nutrient-l)' : 'var(--spore-l)', marginBottom:6 }}>
-                  {createMode ? '✦ Invite accepted — last step' : '✦ Sign in or join'}
-                </div>
+                {createMode && (
+                  <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.24em', textTransform:'uppercase', color:'var(--nutrient-l)', marginBottom:6 }}>✦ Invite accepted — last step</div>
+                )}
                 <div style={{ fontSize:13, color:'var(--mycelium)', lineHeight:1.65, marginBottom:14 }}>
                   {createMode
                     ? 'Enter your email. We send you a link — click it and your profile editor opens automatically.'
-                    : 'Enter your email. We send a magic link — no password, no installation. Founding members & new threads alike.'}
+                    : 'No password, no installation. We email you a magic link — works for founding members & new threads alike.'}
                 </div>
                 <div style={{ display:'flex', gap:8, flexWrap:'wrap' }}>
                   <input type="email" required value={signInEmail} onChange={e => setSignInEmail(e.target.value)} placeholder="your@email.com" style={{ flex:'1 1 220px', background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:999, color:'var(--mycelium-l)', padding:'12px 18px', fontFamily:'var(--font-sans)', fontSize:14, outline:'none' }} autoComplete="email" />
@@ -478,15 +478,8 @@ function LoginScreen({ onLogin, sbUser }) {
         </div>
       </div>
 
-      {/* ── CTA ── */}
-      <div className="welcome-cta">
-        <div style={{ position:'relative' }} ref={null}>
-          <button className="welcome-cta-btn" onClick={() => setDropOpen(d => !d)}>
-            Log in Hyphae ↗
-          </button>
-          <p className="welcome-cta-sub">Join the mycelium. Select your name, set a 4-digit code.</p>
-        </div>
-      </div>
+      {/* CTA section removed — the hero already has the primary buttons.
+          Old "Log in Hyphae ↗" was redundant and confused the entry path. */}
 
       <div className="welcome-footer">
         <ProceduralMark size={24} />
@@ -960,6 +953,7 @@ function ProfileEditor({ existing, onClose }) {
   const [location, setLocation] = useState(seed?.location || '');
   const [pronouns, setPronouns] = useState(seed?.pronouns || '');
   const [contact, setContact]   = useState(seed?.contact || '');
+  const [favoritePlant, setFavoritePlant] = useState(seed?.favoritePlant || seed?.favorite_plant || '');
   const [avatar, setAvatar]     = useState(seed?.avatar || seed?.avatar_url || null);
   const [tags, setTags]         = useState(seed?.specialties || []);
   const [saving, setSaving]     = useState(false);
@@ -1056,6 +1050,7 @@ function ProfileEditor({ existing, onClose }) {
           role, location,
           pronouns: pronouns.trim(),
           contact: contact.trim(),
+          favorite_plant: favoritePlant.trim(),
           specialties: tags,
           avatar_url: avatarUrl,
           node: { sweden:'sweden', berlin:'berlin', lisbon:'lisbon', beirut:'beirut', genoa:'berlin', france:'berlin', germany:'berlin', denmark:'sweden', other_europe:'berlin', other_world:'festival' }[location] || 'berlin',
@@ -1178,7 +1173,7 @@ function ProfileEditor({ existing, onClose }) {
         </div>
 
         {/* Pronouns + Contact */}
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, marginBottom:24 }}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, marginBottom:18 }}>
           <div>
             <label style={labelStyle}>Pronouns (optional)</label>
             <input style={inputStyle} value={pronouns} onChange={e => setPronouns(e.target.value)} placeholder="she/her · they/them" maxLength={30} />
@@ -1187,6 +1182,12 @@ function ProfileEditor({ existing, onClose }) {
             <label style={labelStyle}>Contact (optional)</label>
             <input style={inputStyle} value={contact} onChange={e => setContact(e.target.value)} placeholder="email · @insta · signal" maxLength={80} />
           </div>
+        </div>
+
+        {/* Favourite plant or mushroom — shown on public profile detail */}
+        <div style={{ marginBottom:24 }}>
+          <label style={labelStyle}>Favourite plant or mushroom</label>
+          <input style={inputStyle} value={favoritePlant} onChange={e => setFavoritePlant(e.target.value)} placeholder="Chaga · Hawthorn · Amanita muscaria…" maxLength={60} />
         </div>
 
         {/* Actions */}
@@ -1202,6 +1203,112 @@ function ProfileEditor({ existing, onClose }) {
   );
 }
 
+/* ── Public profile detail modal — anyone can open by tapping a member card ── */
+
+function PublicProfileModal({ member, onClose }) {
+  if (!member) return null;
+  const tier = SporeData.reputationTier(member.rep);
+  const node = SporeData.NETWORK_NODES.find(n => n.id === member.node);
+  const joined = (() => {
+    if (!member.createdAt) return null;
+    try {
+      const d = new Date(member.createdAt);
+      return d.toLocaleDateString('en-GB', { month:'long', year:'numeric' });
+    } catch { return null; }
+  })();
+  // Make a contact look like a link only when it's a recognisable handle / email
+  const contact = member.contact || '';
+  const contactHref = contact.includes('@') && contact.includes('.')
+    ? 'mailto:' + contact
+    : contact.startsWith('@')
+      ? 'https://instagram.com/' + contact.slice(1)
+      : null;
+  return (
+    <div style={{ position:'fixed', inset:0, zIndex:9100, background:'rgba(6,8,9,0.86)', backdropFilter:'blur(10px)', display:'flex', alignItems:'flex-start', justifyContent:'center', padding:'40px 16px', overflowY:'auto' }} onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
+      <div style={{ width:'100%', maxWidth:480, background:'var(--soil-2)', border:'0.5px solid var(--rule-strong)', borderRadius:18, padding:'28px 26px', position:'relative', marginBottom:40 }}>
+        <button onClick={onClose} style={{ position:'absolute', top:14, right:16, background:'none', border:'none', color:'var(--mycelium-d)', fontSize:22, cursor:'pointer', lineHeight:1 }}>×</button>
+
+        {/* Header — avatar + name + badges */}
+        <div style={{ display:'flex', alignItems:'center', gap:16, marginBottom:18 }}>
+          <div style={{ width:64, height:64, borderRadius:'50%', background: member.avatar ? `url(${member.avatar}) center/cover` : tier.color, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:28, color:'rgba(255,255,255,.9)', flexShrink:0, border:'0.5px solid var(--rule-strong)' }}>
+            {!member.avatar && member.name[0]}
+          </div>
+          <div style={{ minWidth:0, flex:1 }}>
+            <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:26, color:'var(--mycelium-l)', lineHeight:1.05, letterSpacing:'-.005em' }}>{member.name}</div>
+            <div style={{ display:'flex', alignItems:'center', gap:6, flexWrap:'wrap', marginTop:6 }}>
+              {member.founding && <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.16em', background:'linear-gradient(135deg, rgba(232,177,75,0.18), rgba(232,177,75,0.08))', border:'0.5px solid rgba(232,177,75,0.45)', borderRadius:3, padding:'2px 6px', color:'#F5D689' }}>FOUNDING</span>}
+              {member.admin && <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.14em', background:'rgba(201,184,148,0.12)', border:'0.5px solid var(--rule-strong)', borderRadius:3, padding:'2px 6px', color:'var(--mycelium-d)' }}>ADMIN</span>}
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.16em', color: tier.color }}>● {tier.label}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Role + node */}
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8, marginBottom:14 }}>
+          <div style={{ background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:8, padding:'10px 12px' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>Relation</div>
+            <div style={{ fontSize:13, color:'var(--mycelium-l)', marginTop:3 }}>{member.role}</div>
+          </div>
+          <div style={{ background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:8, padding:'10px 12px' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>Node</div>
+            <div style={{ fontSize:13, color:'var(--mycelium-l)', marginTop:3 }}>{node ? node.name : (member.node || '—')}</div>
+          </div>
+        </div>
+
+        {/* Member since */}
+        {joined && (
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:14 }}>
+            ✦ Member since {joined}
+          </div>
+        )}
+
+        {/* Focus / bio */}
+        {(member.bio || member.focus) && (
+          <div style={{ marginBottom:14 }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--nutrient-l)', marginBottom:6 }}>In their own words</div>
+            <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:16, color:'var(--mycelium-l)', lineHeight:1.55, letterSpacing:'-.005em' }}>"{member.bio || member.focus}"</div>
+          </div>
+        )}
+
+        {/* Favourite plant */}
+        {member.favoritePlant && (
+          <div style={{ display:'flex', alignItems:'center', gap:10, padding:'12px 14px', background:'rgba(107,214,111,0.06)', border:'0.5px solid rgba(107,214,111,0.25)', borderRadius:8, marginBottom:14 }}>
+            <div style={{ fontSize:20 }}>✿</div>
+            <div>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--spore-d)' }}>Favourite plant or mushroom</div>
+              <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:18, color:'var(--spore-l)', marginTop:2 }}>{member.favoritePlant}</div>
+            </div>
+          </div>
+        )}
+
+        {/* Specialties */}
+        {member.specialties && member.specialties.length > 0 && (
+          <div style={{ marginBottom:14 }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:6 }}>Brings</div>
+            <div style={{ display:'flex', flexWrap:'wrap', gap:5 }}>
+              {member.specialties.map(t => (
+                <span key={t} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', padding:'5px 10px', borderRadius:999, background:'rgba(168,143,224,0.1)', border:'0.5px solid rgba(168,143,224,0.4)', color:'#C5B5F5' }}>{t}</span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Contact */}
+        {contact && (
+          <div style={{ paddingTop:14, borderTop:'0.5px solid var(--rule)' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:5 }}>Reach out</div>
+            {contactHref ? (
+              <a href={contactHref} target="_blank" rel="noopener" style={{ fontFamily:'var(--font-mono)', fontSize:12, color:'var(--nutrient-l)', textDecoration:'none', borderBottom:'0.5px solid rgba(232,177,75,0.35)' }}>{contact}</a>
+            ) : (
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:12, color:'var(--mycelium)' }}>{contact}</div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 /* ── Members page ─────────────────────────────────────────── */
 
 function MembersPage({ currentMember, economy }) {
@@ -1211,7 +1318,8 @@ function MembersPage({ currentMember, economy }) {
 
   const [myFocus,   setMyFocus]   = useState(() => { try { return localStorage.getItem(focusKey(currentMember.id)) || ''; } catch { return ''; } });
   const [myContrib, setMyContrib] = useState(() => { try { return Number(localStorage.getItem(contribKey(currentMember.id)) || 3); } catch { return 3; } });
-  const [viewProfile, setViewProfile] = useState(null); // admin: member being viewed
+  const [viewProfile, setViewProfile] = useState(null); // admin: member being viewed (admin sheet)
+  const [publicView, setPublicView] = useState(null);   // anyone: public detail modal
   const [showProfileEditor, setShowProfileEditor] = useState(false);
 
   function pickFocus(id) {
@@ -1396,6 +1504,7 @@ function MembersPage({ currentMember, economy }) {
   return (
     <div className="page-enter">
       {showProfileEditor && <ProfileEditor existing={editorExisting} onClose={() => setShowProfileEditor(false)} />}
+      {publicView && <PublicProfileModal member={publicView} onClose={() => setPublicView(null)} />}
 
       <div className="section">
         <div className="section-eyebrow">The organism</div>
@@ -1526,8 +1635,15 @@ function MembersPage({ currentMember, economy }) {
             <div
               key={m.id}
               className={`member-card ${isMe ? 'member-card-me' : ''}`}
-              style={{ cursor: isAdmin && !isMe ? 'pointer' : 'default' }}
-              onClick={() => { if (isAdmin && !isMe) setViewProfile(m); }}
+              style={{ cursor: isMe ? 'default' : 'pointer' }}
+              onClick={() => {
+                if (isMe) return;
+                // Admin: open the admin sheet (rep/balance/activity).
+                // Anyone: open the public-facing detail modal.
+                if (isAdmin) setViewProfile(m);
+                else setPublicView(m);
+              }}
+              title={isMe ? '' : 'Tap to view profile'}
             >
               <div className="member-avatar" style={{ background: tier.color }}>{m.name[0]}</div>
               <div className="member-body">
@@ -1535,7 +1651,7 @@ function MembersPage({ currentMember, economy }) {
                   <div className="member-name">{m.name}</div>
                   {m.founding && <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.16em', background:'linear-gradient(135deg, rgba(232,177,75,0.18), rgba(232,177,75,0.08))', border:'0.5px solid rgba(232,177,75,0.45)', borderRadius:3, padding:'2px 6px', color:'#F5D689' }}>FOUNDING</span>}
                   {m.admin && <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.14em', background:'rgba(201,184,148,0.12)', border:'0.5px solid var(--rule-strong)', borderRadius:3, padding:'1px 5px', color:'var(--mycelium-d)' }}>ADMIN</span>}
-                  {isAdmin && !isMe && <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'var(--mycelium-d)', marginLeft:'auto' }}>tap ↗</span>}
+                  {!isMe && <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'var(--mycelium-d)', marginLeft:'auto' }}>tap ↗</span>}
                 </div>
                 <div className="member-role">{m.role}</div>
                 {node && <div className="member-node">{node.name}</div>}
@@ -1649,6 +1765,15 @@ function AdminPage({ onToast }) {
   });
   const [saved, setSaved] = useState(false);
   const [showCreate, setShowCreate] = useState(false);
+  const [restrictionEdits, setRestrictionEdits] = useState({}); // {cloudId: ['foraging','mixology']}
+  const [savingRestrictions, setSavingRestrictions] = useState({});
+
+  const RESTRICTABLE_FEATURES = [
+    { id:'foraging',   label:'Foraging map' },
+    { id:'extraction', label:'Extraction'   },
+    { id:'mixology',   label:'Mixology'     },
+    { id:'community',  label:'Community'    },
+  ];
 
   function saveAnnouncement() {
     try { localStorage.setItem('spore_announcement', announcement); } catch {}
@@ -1662,6 +1787,40 @@ function AdminPage({ onToast }) {
       const raw = localStorage.getItem(`spore_state_${id}`);
       return raw ? JSON.parse(raw) : null;
     } catch { return null; }
+  }
+
+  // Resolve current restrictions for a member: in-memory edit > cloud value > []
+  function currentRestrictions(m) {
+    if (!m.cloudId) return [];
+    if (restrictionEdits[m.cloudId]) return restrictionEdits[m.cloudId];
+    return m.restrictions || [];
+  }
+
+  function toggleRestriction(m, feature) {
+    if (!m.cloudId) { onToast('Member has no cloud profile yet — claim it first.', 'warn'); return; }
+    const cur = currentRestrictions(m);
+    const next = cur.includes(feature) ? cur.filter(x => x !== feature) : [...cur, feature];
+    setRestrictionEdits(e => ({ ...e, [m.cloudId]: next }));
+  }
+
+  async function saveRestrictions(m) {
+    if (!window.SBclient || !m.cloudId) return;
+    setSavingRestrictions(s => ({ ...s, [m.cloudId]: true }));
+    try {
+      const { error } = await window.SBclient
+        .from('profiles')
+        .update({ restrictions: currentRestrictions(m) })
+        .eq('id', m.cloudId);
+      if (error) throw error;
+      onToast(`Saved restrictions for ${m.name}`, 'success');
+      // clear edit (cloud is now source of truth)
+      setRestrictionEdits(e => { const n = {...e}; delete n[m.cloudId]; return n; });
+      m.restrictions = currentRestrictions(m); // optimistic local update
+    } catch (err) {
+      onToast('Save failed — RLS may block this. ' + (err.message || ''), 'warn');
+    } finally {
+      setSavingRestrictions(s => ({ ...s, [m.cloudId]: false }));
+    }
   }
 
   return (
@@ -1706,6 +1865,47 @@ function AdminPage({ onToast }) {
         >
           {saved ? '✓ Published' : 'Publish to network'}
         </button>
+      </div>
+
+      {/* Per-member feature restrictions */}
+      <div className="section" style={{ paddingBottom:0 }}>
+        <div className="section-eyebrow">Access control</div>
+        <h3 style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:20, color:'var(--mycelium-l)', marginTop:4, marginBottom:6 }}>Restrict <em>features.</em></h3>
+        <p style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', lineHeight:1.6, marginBottom:0 }}>Toggle a feature to block that member from it. Saves to their cloud profile. (Enforcement on the actual feature page is a separate step — for now this is the source of truth.)</p>
+      </div>
+      <div style={{ margin:'8px 16px 16px', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, overflow:'hidden' }}>
+        {SporeData.MEMBERS.filter(m => !!m.cloudId).map((m, i, arr) => {
+          const r = currentRestrictions(m);
+          const dirty = !!restrictionEdits[m.cloudId];
+          const busy = !!savingRestrictions[m.cloudId];
+          return (
+            <div key={m.id} style={{ padding:'12px 14px', borderBottom: i < arr.length - 1 ? '0.5px solid var(--rule)' : 'none' }}>
+              <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8 }}>
+                <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:15, color:'var(--mycelium-l)' }}>{m.name}</div>
+                {m.admin && <span style={{ fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.14em', color:'var(--mycelium-d)' }}>ADMIN</span>}
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'var(--mycelium-d)', marginLeft:'auto' }}>{m.role}</span>
+              </div>
+              <div style={{ display:'flex', flexWrap:'wrap', gap:5, alignItems:'center' }}>
+                {RESTRICTABLE_FEATURES.map(f => {
+                  const blocked = r.includes(f.id);
+                  return (
+                    <button key={f.id} type="button" onClick={() => toggleRestriction(m, f.id)} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', padding:'6px 11px', borderRadius:999, cursor:'pointer', background: blocked ? 'rgba(225,107,107,0.12)' : 'var(--soil-3)', border: blocked ? '0.5px solid rgba(225,107,107,0.5)' : '0.5px solid var(--rule)', color: blocked ? '#E16B6B' : 'var(--mycelium-d)' }}>
+                      {blocked ? '✕' : '○'} {f.label}
+                    </button>
+                  );
+                })}
+                {dirty && (
+                  <button type="button" onClick={() => saveRestrictions(m)} disabled={busy} style={{ marginLeft:'auto', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', padding:'6px 14px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', cursor: busy ? 'wait' : 'pointer', opacity: busy ? 0.6 : 1 }}>
+                    {busy ? 'Saving…' : '✦ Save'}
+                  </button>
+                )}
+              </div>
+            </div>
+          );
+        })}
+        {SporeData.MEMBERS.filter(m => !!m.cloudId).length === 0 && (
+          <div style={{ padding:'20px', textAlign:'center', fontStyle:'italic', color:'var(--mycelium-d)', fontSize:12 }}>No cloud-linked members yet.</div>
+        )}
       </div>
 
       {/* Member overview */}

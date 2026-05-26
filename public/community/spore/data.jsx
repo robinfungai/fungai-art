@@ -369,6 +369,7 @@ const MEMBERS = [
     rep: 12,
     balance: 320,
     focus: 'Mycelium Trance · gong · tuning forks · plant ceremony',
+    admin: true,
     founding: true,
   },
   {
@@ -570,6 +571,9 @@ async function loadProfilesFromCloud() {
         specialties: cloud.specialties || [],
         pronouns: cloud.pronouns || '',
         contact:  cloud.contact || '',
+        favoritePlant: cloud.favorite_plant || '',
+        restrictions:  cloud.restrictions   || [],
+        createdAt:     cloud.created_at     || null,
         cloudId:  cloud.id,
         authUserId: cloud.auth_user_id || null,
       };
@@ -593,6 +597,11 @@ async function loadProfilesFromCloud() {
         bio: r.bio,
         avatar: r.avatar_url,
         specialties: r.specialties || [],
+        pronouns: r.pronouns || '',
+        contact:  r.contact || '',
+        favoritePlant: r.favorite_plant || '',
+        restrictions:  r.restrictions   || [],
+        createdAt:     r.created_at     || null,
         cloudId: r.id,
         authUserId: r.auth_user_id || null,
       });
