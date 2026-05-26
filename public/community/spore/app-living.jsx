@@ -205,6 +205,29 @@ function LoginScreen({ onLogin, sbUser }) {
   const [signInBusy, setSignInBusy] = useState(false);
   const [signInSent, setSignInSent] = useState(false);
 
+  // "Create new profile" gate — soft password protects against random sign-ups
+  const INVITE_CODE = '5858';
+  const [showInviteGate, setShowInviteGate] = useState(false);
+  const [inviteCode, setInviteCode] = useState('');
+  const [inviteError, setInviteError] = useState('');
+  const [createMode, setCreateMode] = useState(false); // unlocked → show create-flavoured copy
+
+  function submitInvite(e) {
+    e.preventDefault();
+    if (inviteCode.trim() === INVITE_CODE) {
+      setCreateMode(true);
+      setShowInviteGate(false);
+      setInviteCode('');
+      setInviteError('');
+      // Scroll the magic-link form into view so user can complete the flow
+      setTimeout(() => {
+        document.getElementById('spore-magic-link-form')?.scrollIntoView({ behavior:'smooth', block:'center' });
+      }, 80);
+    } else {
+      setInviteError('That invite code doesn\'t match. Ask Robin or Steph for the current one.');
+    }
+  }
+
   async function handleSignIn(e) {
     e.preventDefault();
     if (!signInEmail.includes('@')) { alert('Enter a valid email'); return; }
@@ -285,8 +308,29 @@ function LoginScreen({ onLogin, sbUser }) {
           <h1 className="welcome-title">Tend a node.<br/><em>Nutrients flow.</em></h1>
           <p className="welcome-blurb">Spore is the living network beneath Fungai Art. Contribute to a node, earn $MYCEL, unlock experiences. The organism grows when you do.</p>
 
+          {/* Two-path entry: sign in OR create new (invite-only). Both end up on the magic-link form. */}
+          {!sbUser && !signInSent && (
+            <div style={{ marginTop:28, display:'flex', gap:10, flexWrap:'wrap', maxWidth:480 }}>
+              <button
+                onClick={() => {
+                  setCreateMode(false);
+                  setTimeout(() => document.getElementById('spore-magic-link-form')?.scrollIntoView({ behavior:'smooth', block:'center' }), 60);
+                }}
+                style={{ flex:'1 1 200px', fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase', padding:'14px 22px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', fontWeight:500, cursor:'pointer' }}
+              >
+                ✦ Sign in with link
+              </button>
+              <button
+                onClick={() => { setShowInviteGate(true); setInviteError(''); }}
+                style={{ flex:'1 1 200px', fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase', padding:'14px 22px', borderRadius:999, background:'rgba(232,177,75,0.08)', border:'0.5px solid rgba(232,177,75,0.45)', color:'var(--nutrient-l)', fontWeight:500, cursor:'pointer' }}
+              >
+                + Create profile
+              </button>
+            </div>
+          )}
+
           {/* Email magic-link sign-in — primary entry */}
-          <div style={{ marginTop:28, padding:'18px 20px', background:'rgba(15,16,20,0.7)', border:'0.5px solid var(--rule-strong)', borderRadius:14, maxWidth:480 }}>
+          <div id="spore-magic-link-form" style={{ marginTop:18, padding:'18px 20px', background:'rgba(15,16,20,0.7)', border: createMode ? '0.5px solid rgba(232,177,75,0.5)' : '0.5px solid var(--rule-strong)', borderRadius:14, maxWidth:480 }}>
             {sbUser ? (
               <div style={{ display:'flex', alignItems:'center', gap:10 }}>
                 <span style={{ width:8, height:8, borderRadius:'50%', background:'var(--spore)', boxShadow:'0 0 6px rgba(107,214,111,0.6)' }}></span>
@@ -296,22 +340,55 @@ function LoginScreen({ onLogin, sbUser }) {
             ) : signInSent ? (
               <div>
                 <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.24em', textTransform:'uppercase', color:'var(--spore-l)', marginBottom:8 }}>✦ Magic link sent</div>
-                <div style={{ fontSize:14, color:'var(--mycelium-l)', lineHeight:1.65, marginBottom:8 }}>Check your inbox at <strong>{signInEmail}</strong>. Click the link — it brings you straight back here, signed in.</div>
+                <div style={{ fontSize:14, color:'var(--mycelium-l)', lineHeight:1.65, marginBottom:8 }}>Check your inbox at <strong>{signInEmail}</strong>. Click the link — it brings you straight back here, {createMode ? 'and the profile editor will open automatically.' : 'signed in.'}</div>
                 <div style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', lineHeight:1.6 }}>Didn't arrive in 2 minutes? Check spam, or <button onClick={() => { setSignInSent(false); setSignInEmail(''); }} style={{ background:'none', border:'none', color:'var(--nutrient-l)', cursor:'pointer', textDecoration:'underline', font:'inherit', padding:0 }}>try a different email</button>.</div>
               </div>
             ) : (
               <form onSubmit={handleSignIn}>
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.24em', textTransform:'uppercase', color:'var(--nutrient-l)', marginBottom:6 }}>✦ Sign in or join</div>
-                <div style={{ fontSize:13, color:'var(--mycelium)', lineHeight:1.65, marginBottom:14 }}>Enter your email. We send a magic link — no password, no installation. Founding members &amp; new threads alike.</div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.24em', textTransform:'uppercase', color: createMode ? 'var(--nutrient-l)' : 'var(--spore-l)', marginBottom:6 }}>
+                  {createMode ? '✦ Invite accepted — last step' : '✦ Sign in or join'}
+                </div>
+                <div style={{ fontSize:13, color:'var(--mycelium)', lineHeight:1.65, marginBottom:14 }}>
+                  {createMode
+                    ? 'Enter your email. We send you a link — click it and your profile editor opens automatically.'
+                    : 'Enter your email. We send a magic link — no password, no installation. Founding members & new threads alike.'}
+                </div>
                 <div style={{ display:'flex', gap:8, flexWrap:'wrap' }}>
                   <input type="email" required value={signInEmail} onChange={e => setSignInEmail(e.target.value)} placeholder="your@email.com" style={{ flex:'1 1 220px', background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:999, color:'var(--mycelium-l)', padding:'12px 18px', fontFamily:'var(--font-sans)', fontSize:14, outline:'none' }} autoComplete="email" />
-                  <button type="submit" disabled={signInBusy} style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.24em', textTransform:'uppercase', padding:'12px 24px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', cursor: signInBusy ? 'wait' : 'pointer', fontWeight:500, opacity: signInBusy ? 0.7 : 1 }}>
-                    {signInBusy ? 'Sending…' : 'Send magic link'}
+                  <button type="submit" disabled={signInBusy} style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.24em', textTransform:'uppercase', padding:'12px 24px', borderRadius:999, background: createMode ? 'linear-gradient(135deg, var(--nutrient), var(--nutrient-d))' : 'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', cursor: signInBusy ? 'wait' : 'pointer', fontWeight:500, opacity: signInBusy ? 0.7 : 1 }}>
+                    {signInBusy ? 'Sending…' : (createMode ? 'Send my link' : 'Send magic link')}
                   </button>
                 </div>
               </form>
             )}
           </div>
+
+          {/* Invite-code gate modal */}
+          {showInviteGate && (
+            <div style={{ position:'fixed', inset:0, zIndex:9500, background:'rgba(6,8,9,0.86)', backdropFilter:'blur(10px)', display:'flex', alignItems:'center', justifyContent:'center', padding:24 }} onClick={(e) => { if (e.target === e.currentTarget) setShowInviteGate(false); }}>
+              <form onSubmit={submitInvite} style={{ width:'100%', maxWidth:380, background:'var(--soil-2)', border:'0.5px solid rgba(232,177,75,0.4)', borderRadius:16, padding:'30px 28px', position:'relative' }}>
+                <button type="button" onClick={() => setShowInviteGate(false)} style={{ position:'absolute', top:14, right:16, background:'none', border:'none', color:'var(--mycelium-d)', fontSize:22, cursor:'pointer', lineHeight:1 }}>×</button>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.28em', textTransform:'uppercase', color:'var(--nutrient-l)', marginBottom:8 }}>✦ Invite required</div>
+                <h2 style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:26, color:'var(--mycelium-l)', letterSpacing:'-0.01em', marginBottom:8, lineHeight:1.1 }}>What's the <em style={{ color:'var(--nutrient)' }}>code?</em></h2>
+                <p style={{ fontSize:13, color:'var(--mycelium)', lineHeight:1.65, marginBottom:18 }}>
+                  Robin or Steph shared a short code with you. Enter it below — then you'll get a magic link to your email to finish setting up your profile.
+                </p>
+                <input
+                  autoFocus
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  maxLength={8}
+                  value={inviteCode}
+                  onChange={e => { setInviteCode(e.target.value); setInviteError(''); }}
+                  placeholder="••••"
+                  style={{ width:'100%', background:'var(--soil-3)', border: inviteError ? '0.5px solid var(--coral)' : '0.5px solid var(--rule-strong)', borderRadius:10, color:'var(--mycelium-l)', padding:'14px 18px', fontFamily:'var(--font-mono)', fontSize:22, letterSpacing:'0.5em', textAlign:'center', outline:'none', marginBottom: inviteError ? 8 : 16 }}
+                />
+                {inviteError && <div style={{ fontFamily:'var(--font-mono)', fontSize:10.5, color:'var(--coral)', marginBottom:12, lineHeight:1.55 }}>{inviteError}</div>}
+                <button type="submit" style={{ width:'100%', fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.24em', textTransform:'uppercase', padding:'13px 22px', borderRadius:999, background:'linear-gradient(135deg, var(--nutrient), var(--nutrient-d))', border:'none', color:'var(--soil)', cursor:'pointer', fontWeight:500 }}>Unlock →</button>
+              </form>
+            </div>
+          )}
         </div>
       </div>
 
