@@ -1008,14 +1008,19 @@ function ProfileEditor({ existing, onClose }) {
     }
     setSaving(true);
 
-    // If signed in to Supabase, save to the cloud (shared everywhere).
-    // If NOT signed in, save locally only — do NOT trigger another magic-link from here
-    // (that path caused rate-limit popups and "profile vanished" reports).
+    // Three paths:
+    //  A) Signed in via Supabase → normal upsert (insert claimed OR update existing)
+    //  B) Not signed in, creating new → insert as unclaimed seed (auth_user_id = null)
+    //     Used by admin/PIN-only Robin and by invite-code (5858) users.
+    //  C) Not signed in, editing an already-claimed profile → can't update via RLS;
+    //     save as draft + ask user to sign in.
     if (window.SBclient && window.SBauth) {
       try {
         const user = await window.SBauth.getUser();
-        if (!user) {
-          // Cache locally so the form values are preserved, then ask user to sign in via the dedicated card
+        const isEditingClaimed = !!(existing && (existing.cloudId || existing.character_name));
+
+        // Path C: editing existing profile but not signed in — RLS blocks UPDATE
+        if (!user && isEditingClaimed) {
           try {
             localStorage.setItem('fungai_profile_draft', JSON.stringify({
               character_name: name.trim(), bio: bio.trim(), role, location,
@@ -1023,19 +1028,24 @@ function ProfileEditor({ existing, onClose }) {
               avatar: avatar && avatar.startsWith('data:') ? null : avatar,
             }));
           } catch {}
-          alert('Sign in first using the email card below — then come back and your draft will be here. (We did not send a magic link from this dialog to avoid duplicate emails.)');
+          alert('To edit an existing profile you need to sign in with the same email it was claimed with. Your changes are saved as a draft — sign in via the email card below and come back.');
           setSaving(false);
           onClose && onClose();
           return;
         }
 
-        // Upload avatar if it's a data URL (new image) rather than already a public URL
+        // Avatar upload requires auth — skip for path B
         let avatarUrl = avatar;
         if (avatar && avatar.startsWith('data:') && fileRef.current?.files?.[0]) {
-          try {
-            avatarUrl = await window.SBprofiles.uploadAvatar(fileRef.current.files[0]);
-          } catch (e) {
-            console.warn('Avatar upload failed, falling back to no avatar:', e);
+          if (user) {
+            try {
+              avatarUrl = await window.SBprofiles.uploadAvatar(fileRef.current.files[0]);
+            } catch (e) {
+              console.warn('Avatar upload failed, falling back to no avatar:', e);
+              avatarUrl = null;
+            }
+          } else {
+            // Not signed in → cannot upload. Drop the data URL so the row inserts cleanly.
             avatarUrl = null;
           }
         }
@@ -1051,9 +1061,16 @@ function ProfileEditor({ existing, onClose }) {
           node: { sweden:'sweden', berlin:'berlin', lisbon:'lisbon', beirut:'beirut', genoa:'berlin', france:'berlin', germany:'berlin', denmark:'sweden', other_europe:'berlin', other_world:'festival' }[location] || 'berlin',
           focus: bio.trim() || (tags.length ? tags.join(' · ') : 'A new thread in the network'),
         };
-        await window.SBprofiles.upsert(profile);
 
-        // Also cache locally for instant first-paint next time, and clear any unsaved draft
+        if (user) {
+          // Path A
+          await window.SBprofiles.upsert(profile);
+        } else {
+          // Path B — unclaimed insert (requires the new RLS policy)
+          await window.SBprofiles.createUnclaimed(profile);
+        }
+
+        // Cache locally for instant first-paint next time, and clear any unsaved draft
         try { localStorage.setItem('fungai_profile', JSON.stringify({ ...profile, avatar: avatarUrl })); } catch (e) {}
         try { localStorage.removeItem('fungai_profile_draft'); } catch (e) {}
 

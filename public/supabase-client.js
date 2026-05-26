@@ -119,6 +119,37 @@
             return data;
           }
         },
+        // Insert a profile as unclaimed (auth_user_id = null).
+        // Used by admin to seed new members and by invite-code (5858) users
+        // creating their own profile before signing in. Requires the RLS
+        // policy "Allow anonymous insert of unclaimed profiles" to be in place
+        // (see supabase-allow-unclaimed-inserts.sql).
+        async createUnclaimed(profile) {
+          const payload = { ...profile, auth_user_id: null };
+          // Don't try to insert these — they're either auth-derived or computed elsewhere
+          delete payload.email;
+          delete payload.id;
+          delete payload.cloudId;
+          delete payload.authUserId;
+          const { data, error } = await window.SBclient
+            .from('profiles')
+            .insert(payload)
+            .select()
+            .maybeSingle();
+          if (error) {
+            // Translate the most likely failure: RLS policy missing
+            if (/row-level security|policy|new row/i.test(error.message || '')) {
+              throw new Error('Database is refusing the insert — RLS policy probably missing. Run supabase-allow-unclaimed-inserts.sql in the Supabase SQL editor.');
+            }
+            // Unique constraint on character_name (from dedupe lockdown)
+            if (/duplicate|unique/i.test(error.message || '')) {
+              throw new Error('A profile with that name already exists. Pick a different name, or use the claim picker to take over the existing one.');
+            }
+            throw error;
+          }
+          if (!data) throw new Error('Insert returned no row. Reload and try again.');
+          return data;
+        },
         // Claim an existing seeded profile (founding members + palawan) — links it to this auth user
         async claimSeededProfile(profileId) {
           const user = await window.SBauth.getUser();
