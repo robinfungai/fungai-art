@@ -195,7 +195,7 @@ function PinModal({ member, onSuccess, onCancel }) {
 
 /* ── Welcome portal ───────────────────────────────────────── */
 
-function LoginScreen({ onLogin, sbUser }) {
+function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
   const [selected, setSelected]     = useState(null);
   const [dropOpen, setDropOpen]     = useState(false);
   const dropRef                      = useRef(null);
@@ -205,26 +205,65 @@ function LoginScreen({ onLogin, sbUser }) {
   const [signInBusy, setSignInBusy] = useState(false);
   const [signInSent, setSignInSent] = useState(false);
 
-  // "Create new profile" gate — soft password protects against random sign-ups
-  const INVITE_CODE = '5858';
+  // "Create new profile" gate — codes live in Supabase (invite_codes table)
+  // and are validated by the validate_invite_code() RPC, which atomically
+  // checks expiry/max_uses/disabled and consumes one use on success.
+  // Rotate / disable / add codes from the admin panel without a code deploy.
   const [showInviteGate, setShowInviteGate] = useState(false);
   const [inviteCode, setInviteCode] = useState('');
   const [inviteError, setInviteError] = useState('');
-  const [createMode, setCreateMode] = useState(false); // unlocked → show create-flavoured copy
+  const [inviteBusy, setInviteBusy]   = useState(false);
+  const [createMode, setCreateMode]   = useState(false); // unlocked → show create-flavoured copy
+  const [showMagicForm, setShowMagicForm] = useState(false); // email form hidden until user picks a path
 
-  function submitInvite(e) {
+  const INVITE_REASON_COPY = {
+    not_found: "That invite code doesn't match. Ask Robin or Steph for the current one.",
+    expired:   "That code has expired. Ask Robin or Steph for a fresh one.",
+    exhausted: "That code has been fully used. Ask Robin or Steph for a fresh one.",
+    disabled:  "That code is no longer active. Ask Robin or Steph for a fresh one.",
+  };
+
+  async function submitInvite(e) {
     e.preventDefault();
-    if (inviteCode.trim() === INVITE_CODE) {
-      setCreateMode(true);
-      setShowInviteGate(false);
-      setInviteCode('');
-      setInviteError('');
-      // Scroll the magic-link form into view so user can complete the flow
-      setTimeout(() => {
-        document.getElementById('spore-magic-link-form')?.scrollIntoView({ behavior:'smooth', block:'center' });
-      }, 80);
-    } else {
-      setInviteError('That invite code doesn\'t match. Ask Robin or Steph for the current one.');
+    const code = inviteCode.trim();
+    if (!code) return;
+    if (!window.SBclient) {
+      setInviteError("Sign-in service still loading — try again in a second.");
+      return;
+    }
+
+    setInviteBusy(true);
+    setInviteError('');
+    try {
+      const { data, error } = await window.SBclient.rpc('validate_invite_code', { p_code: code });
+      setInviteBusy(false);
+      if (error) {
+        setInviteError("Couldn't reach the server. Check your connection and try again.");
+        console.warn('[invite-code] RPC error:', error);
+        return;
+      }
+      // RPC returns a TABLE → SDK gives us an array; take first row
+      const result = Array.isArray(data) ? data[0] : data;
+      if (result?.valid) {
+        setCreateMode(true);
+        setShowMagicForm(true);
+        setShowInviteGate(false);
+        setInviteCode('');
+        setInviteError('');
+        // Scroll the magic-link form into view so user can complete the flow
+        setTimeout(() => {
+          document.getElementById('spore-magic-link-form')?.scrollIntoView({ behavior:'smooth', block:'center' });
+        }, 80);
+        return;
+      }
+      setInviteError(
+        INVITE_REASON_COPY[result?.reason]
+        || "That invite code didn't work. Ask Robin or Steph for help."
+      );
+    } catch (err) {
+      setInviteBusy(false);
+      setInviteError("Something went wrong. Try again in a moment.");
+      console.warn('[invite-code] threw:', err);
     }
   }
 
@@ -267,81 +306,72 @@ function LoginScreen({ onLogin, sbUser }) {
             <div className="welcome-brand-sub">Living Network · $MYCEL</div>
           </div>
         </div>
-        <div style={{ position:'relative' }} ref={dropRef}>
-          <button
-            className="welcome-login-btn"
-            onClick={() => setDropOpen(d => !d)}
-          >
-            <span>PIN access</span>
-            <span style={{ fontSize:10, opacity:0.7, transition:'transform .2s', display:'inline-block', transform: dropOpen ? 'rotate(180deg)' : 'none' }}>▾</span>
-          </button>
-          {dropOpen && (
-            <div className="member-dropdown">
-              <div className="md-label">Who are you in the mycelium?</div>
-              {SporeData.MEMBERS.map(m => {
-                const tier = SporeData.reputationTier(m.rep);
-                const node = SporeData.NETWORK_NODES.find(n => n.id === m.node);
-                return (
-                  <button
-                    key={m.id}
-                    className="md-item"
-                    onClick={() => { setDropOpen(false); setSelected(m); }}
-                  >
-                    <div className="md-avatar" style={{ background: tier.color }}>{m.name[0]}</div>
-                    <div className="md-info">
-                      <div className="md-name">{m.name}</div>
-                      <div className="md-role">{m.role}{node ? ` · ${node.name}` : ''}</div>
-                    </div>
-                    <div className="md-tier" style={{ color: tier.color }}>{tier.label}</div>
-                  </button>
-                );
-              })}
-            </div>
-          )}
-        </div>
+        {/* PIN-picker dropdown removed — exposed the full member roster to any
+            visitor and let them pick anyone. Sign-in is now unified via the
+            "+ Create profile" path (uses invite code + magic-link, existing
+            members just skip the editor). */}
       </div>
 
       {/* ── Hero ── */}
       <div className="welcome-hero">
         <div className="welcome-hero-inner">
-          <div className="welcome-eyebrow">A mycelial economy</div>
-          <h1 className="welcome-title">Tend a node.<br/><em>Nutrients flow.</em></h1>
-          <p className="welcome-blurb">Spore is the living network beneath Fungai Art. Contribute to a node, earn $MYCEL, unlock experiences. The organism grows when you do.</p>
+          <div className="welcome-eyebrow">A decentralized mycelium · no centre · no CEO</div>
+          <h1 className="welcome-title">There is no <em>centre.</em><br/>Only the threads<br/>that <em>hold.</em></h1>
+          <p className="welcome-blurb">
+            Fungai Art isn't a brand with a headquarters. It's a <strong style={{ color:'var(--mycelium-l)' }}>living mycelium</strong> spread across Berlin labs, Nordic forests, Lisbon studios, Beirut kitchens — and growing. Each member is a <em>hypha</em>: a thread tending soil. Each gathering, a fruiting body.
+          </p>
+          <p className="welcome-blurb" style={{ marginTop:14 }}>
+            We forage, ferment, ceremony, teach. The network grows when you do. <strong style={{ color:'var(--spore-l)' }}>Reputation cannot be bought — only earned.</strong> Tiers run: <span style={{ fontFamily:'var(--font-mono)', fontSize:12, color:'var(--mycelium)' }}>Spore → Palawan → Mycelium → Forager → Root Node</span>.
+          </p>
 
-          {/* Three-path entry. Returning members can use PIN (preferred for repeat use);
-              everyone can use magic-link; new threads use invite code → magic-link. */}
+          {/* Single CTA. Three states:
+              (a) Not signed in → Create profile button (opens invite gate)
+              (b) Signed in but no profile yet (dead state) → Continue your thread button + sign out link
+              (c) Signed in with profile → nothing here (App routes to MembersPage) */}
           {!sbUser && !signInSent && (
             <>
-              <div style={{ marginTop:28, display:'flex', gap:10, flexWrap:'wrap', maxWidth:560 }}>
-                <button
-                  onClick={() => setDropOpen(true)}
-                  style={{ flex:'1 1 180px', fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase', padding:'14px 22px', borderRadius:999, background:'linear-gradient(135deg, var(--mycelium-l), #8B7E62)', border:'none', color:'var(--soil)', fontWeight:500, cursor:'pointer' }}
-                >
-                  ✦ PIN sign-in
-                </button>
-                <button
-                  onClick={() => {
-                    setCreateMode(false);
-                    setTimeout(() => document.getElementById('spore-magic-link-form')?.scrollIntoView({ behavior:'smooth', block:'center' }), 60);
-                  }}
-                  style={{ flex:'1 1 180px', fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase', padding:'14px 22px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', fontWeight:500, cursor:'pointer' }}
-                >
-                  ✉ Sign in with link
-                </button>
+              <div style={{ marginTop:32, display:'flex', justifyContent:'flex-end', width:'100%' }}>
                 <button
                   onClick={() => { setShowInviteGate(true); setInviteError(''); }}
-                  style={{ flex:'1 1 180px', fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase', padding:'14px 22px', borderRadius:999, background:'rgba(232,177,75,0.08)', border:'0.5px solid rgba(232,177,75,0.45)', color:'var(--nutrient-l)', fontWeight:500, cursor:'pointer' }}
+                  style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.24em', textTransform:'uppercase', padding:'16px 36px', borderRadius:999, background:'linear-gradient(135deg, rgba(232,177,75,0.18), rgba(232,177,75,0.06))', border:'0.5px solid rgba(232,177,75,0.55)', color:'var(--nutrient-l)', fontWeight:500, cursor:'pointer', boxShadow:'0 0 24px rgba(232,177,75,0.15)' }}
                 >
-                  + Create profile
+                  ✦ Cross the threshold
                 </button>
               </div>
-              <div style={{ marginTop:10, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)', maxWidth:560 }}>
-                Returning member? PIN is fastest. New here? Use Create profile.
+              <div style={{ marginTop:10, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)', width:'100%', textAlign:'right' }}>
+                Returning thread? Use your existing email after the invite code — we'll recognise you.
               </div>
             </>
           )}
 
-          {/* Email magic-link sign-in — primary entry */}
+          {/* Signed in but no profile → recoverable dead state */}
+          {sbUser && !signInSent && (
+            <div style={{ marginTop:32, width:'100%', textAlign:'right' }}>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:10 }}>
+                Signed in as <strong style={{ color:'var(--mycelium-l)' }}>{sbUser.email}</strong>
+              </div>
+              <button
+                onClick={() => onContinueCreating && onContinueCreating()}
+                style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase', padding:'14px 28px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', fontWeight:500, cursor:'pointer' }}
+              >
+                ✦ Continue your thread
+              </button>
+              <div style={{ marginTop:10 }}>
+                <button
+                  onClick={() => onSignOut && onSignOut()}
+                  style={{ background:'none', border:'none', color:'var(--mycelium-d)', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', cursor:'pointer', padding:0, textDecoration:'underline' }}
+                >
+                  Sign out & start over
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Email magic-link form — hidden until user picks a path
+              (clicks "Sign in with link" or accepts an invite code).
+              Also stays mounted after signInSent / sbUser so feedback
+              messages keep rendering. */}
+          {(showMagicForm || signInSent || sbUser) && (
           <div id="spore-magic-link-form" style={{ marginTop:18, padding:'18px 20px', background:'rgba(15,16,20,0.7)', border: createMode ? '0.5px solid rgba(232,177,75,0.5)' : '0.5px solid var(--rule-strong)', borderRadius:14, maxWidth:480 }}>
             {sbUser ? (
               <div style={{ display:'flex', alignItems:'center', gap:10 }}>
@@ -374,6 +404,7 @@ function LoginScreen({ onLogin, sbUser }) {
               </form>
             )}
           </div>
+          )}
 
           {/* Invite-code gate modal */}
           {showInviteGate && (
@@ -397,25 +428,77 @@ function LoginScreen({ onLogin, sbUser }) {
                   style={{ width:'100%', background:'var(--soil-3)', border: inviteError ? '0.5px solid var(--coral)' : '0.5px solid var(--rule-strong)', borderRadius:10, color:'var(--mycelium-l)', padding:'14px 18px', fontFamily:'var(--font-mono)', fontSize:22, letterSpacing:'0.5em', textAlign:'center', outline:'none', marginBottom: inviteError ? 8 : 16 }}
                 />
                 {inviteError && <div style={{ fontFamily:'var(--font-mono)', fontSize:10.5, color:'var(--coral)', marginBottom:12, lineHeight:1.55 }}>{inviteError}</div>}
-                <button type="submit" style={{ width:'100%', fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.24em', textTransform:'uppercase', padding:'13px 22px', borderRadius:999, background:'linear-gradient(135deg, var(--nutrient), var(--nutrient-d))', border:'none', color:'var(--soil)', cursor:'pointer', fontWeight:500 }}>Unlock →</button>
+                <button type="submit" disabled={inviteBusy} style={{ width:'100%', fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.24em', textTransform:'uppercase', padding:'13px 22px', borderRadius:999, background:'linear-gradient(135deg, var(--nutrient), var(--nutrient-d))', border:'none', color:'var(--soil)', cursor: inviteBusy ? 'wait' : 'pointer', fontWeight:500, opacity: inviteBusy ? 0.7 : 1 }}>{inviteBusy ? 'Checking…' : 'Unlock →'}</button>
               </form>
             </div>
           )}
         </div>
       </div>
 
+      {/* WHO'S IN MOVED — see below, after the network section */}
+      {false && (
+      <div className="welcome-section" id="welcome-mycelium">
+        <div className="welcome-section-eyebrow">The mycelium · {SporeData.MEMBERS.length} threads</div>
+        <div className="welcome-section-title">Who's <em>in.</em></div>
+        <p style={{ fontSize:14, color:'var(--mycelium)', lineHeight:1.7, maxWidth:640, marginBottom:24 }}>
+          Founding members and palawan threads — each tending a node, each contributing nutrients to the network. Tiers grow with depth of participation: Spore → Palawan → Mycelium → Forager → Root Node.
+        </p>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(220px, 1fr))', gap:14 }}>
+          {SporeData.MEMBERS.map(m => {
+            const tier = SporeData.reputationTier(m.rep);
+            const node = SporeData.NETWORK_NODES.find(n => n.id === m.node);
+            return (
+              <div key={m.id} style={{
+                background:'var(--soil-2)',
+                border:'0.5px solid var(--rule)',
+                borderRadius:14,
+                padding:'18px 16px',
+                display:'flex', flexDirection:'column', gap:8,
+              }}>
+                <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+                  <div style={{
+                    width:38, height:38, borderRadius:'50%',
+                    background: tier.color, color:'var(--soil)',
+                    display:'flex', alignItems:'center', justifyContent:'center',
+                    fontFamily:'var(--font-display)', fontSize:18, fontWeight:600,
+                    flexShrink:0,
+                  }}>{m.name[0]}</div>
+                  <div style={{ minWidth:0 }}>
+                    <div style={{ color:'var(--mycelium-l)', fontSize:15, fontWeight:600, lineHeight:1.2 }}>{m.name}</div>
+                    <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', color: tier.color, marginTop:2 }}>{tier.label}{m.founding ? ' · founding' : ''}</div>
+                  </div>
+                </div>
+                <div style={{ color:'var(--mycelium)', fontSize:12, lineHeight:1.5 }}>{m.role}{node ? ` · ${node.name}` : ''}</div>
+                {m.focus && <div style={{ color:'var(--mycelium-d)', fontSize:11, lineHeight:1.6 }}>{m.focus}</div>}
+                {m.favoritePlant && (
+                  <div style={{ marginTop:6, paddingTop:6, borderTop:'0.5px solid var(--rule)', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>
+                    Ally · <span style={{ color:'var(--spore-l)', fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:12, textTransform:'none', letterSpacing:0 }}>{m.favoritePlant}</span>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      )}
+
       {/* ── Network map + nodes ── */}
       <div className="welcome-section">
         <div className="welcome-section-eyebrow">Active nodes · {liveNodes.length} live · 1 proposed</div>
         <div className="welcome-section-title">The <em>network.</em></div>
 
-        {/* Living animated map */}
+        {/* Living animated map — only the active European nodes + Beirut are
+            shown prominently on the map. Other live nodes (Atitlán, Zanzibar,
+            Bangkok, Bali, Hokkaido) still exist in NETWORK_NODES and appear
+            in the cards below, but aren't drawn here yet. */}
         <div style={{ background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:12, overflow:'hidden', marginBottom:16, position:'relative' }}>
           <LivingNetworkMap
-            nodes={SporeData.NETWORK_NODES}
+            nodes={SporeData.NETWORK_NODES.filter(n =>
+              ['berlin','sweden','lisbon','festival','beirut','genoa'].includes(n.id)
+            )}
             selected={null}
             onSelect={() => {}}
-            flowIntensity={1.2}
+            flowIntensity={1.6}
           />
           <div style={{ position:'absolute', bottom:10, left:10, right:10, display:'flex', justifyContent:'space-between', alignItems:'flex-end', pointerEvents:'none' }}>
             <div style={{ background:'rgba(6,8,9,.7)', backdropFilter:'blur(8px)', border:'0.5px solid var(--rule)', borderRadius:6, padding:'6px 10px' }}>
@@ -461,30 +544,134 @@ function LoginScreen({ onLogin, sbUser }) {
         </div>
       </div>
 
-      {/* ── Token philosophy ── */}
+      {/* ── The Mycelium — moved here, below the network ── */}
+      <div className="welcome-section" id="welcome-mycelium">
+        <div className="welcome-section-eyebrow">The mycelium · {SporeData.MEMBERS.length} threads · {SporeData.MEMBERS.filter(m => m.founding).length} founding</div>
+        <div className="welcome-section-title">Who's <em>in.</em></div>
+        <p style={{ fontSize:14, color:'var(--mycelium)', lineHeight:1.7, maxWidth:640, marginBottom:24 }}>
+          Founders and palawan threads — each tending a node, each contributing nutrients. None bought their way in. Every tier was earned.
+        </p>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(220px, 1fr))', gap:14 }}>
+          {SporeData.MEMBERS.map(m => {
+            const tier = SporeData.reputationTier(m.rep);
+            const node = SporeData.NETWORK_NODES.find(n => n.id === m.node);
+            return (
+              <div key={m.id} style={{
+                background:'var(--soil-2)',
+                border:'0.5px solid var(--rule)',
+                borderRadius:14,
+                padding:'18px 16px',
+                display:'flex', flexDirection:'column', gap:8,
+              }}>
+                <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+                  <div style={{
+                    width:38, height:38, borderRadius:'50%',
+                    background: tier.color, color:'var(--soil)',
+                    display:'flex', alignItems:'center', justifyContent:'center',
+                    fontFamily:'var(--font-display)', fontSize:18, fontWeight:600,
+                    flexShrink:0,
+                  }}>{m.name[0]}</div>
+                  <div style={{ minWidth:0 }}>
+                    <div style={{ color:'var(--mycelium-l)', fontSize:15, fontWeight:600, lineHeight:1.2 }}>{m.name}</div>
+                    <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', color: tier.color, marginTop:2 }}>{tier.label}{m.founding ? ' · founding' : ''}</div>
+                  </div>
+                </div>
+                <div style={{ color:'var(--mycelium)', fontSize:12, lineHeight:1.5 }}>{m.role}{node ? ` · ${node.name}` : ''}</div>
+                {m.focus && <div style={{ color:'var(--mycelium-d)', fontSize:11, lineHeight:1.6 }}>{m.focus}</div>}
+                {m.favoritePlant && (
+                  <div style={{ marginTop:6, paddingTop:6, borderTop:'0.5px solid var(--rule)', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>
+                    Ally · <span style={{ color:'var(--spore-l)', fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:12, textTransform:'none', letterSpacing:0 }}>{m.favoritePlant}</span>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* ── The principles (was: Token philosophy) — much richer now ── */}
       <div className="welcome-section">
-        <div className="welcome-section-eyebrow">Token architecture</div>
+        <div className="welcome-section-eyebrow">Three principles · the bones of it</div>
         <div className="welcome-section-title">How nutrients <em>flow.</em></div>
-        <div className="welcome-philosophy">
-          {PHILOSOPHY.map(p => (
-            <div key={p.title} className="wp-card">
-              <div className="wp-icon" style={{ color: p.color }}>{p.icon}</div>
-              <div className="wp-title" style={{ color: p.color }}>{p.title}</div>
-              <div className="wp-desc">{p.desc}</div>
+        <p style={{ fontSize:14, color:'var(--mycelium)', lineHeight:1.7, maxWidth:680, marginBottom:28 }}>
+          Three forces hold the mycelium together. None of them are tokens to speculate on. All of them are tools to <em>build a community that can hold weight.</em>
+        </p>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))', gap:18 }}>
+          {[
+            {
+              icon:'◉', color:'var(--spore-l)',
+              title:'$MYCEL', subtitle:'The currency of contribution',
+              desc:'Earned by doing — cooking a meal, leading a foraging walk, hosting a ceremony, documenting a harvest. Spent on experiences, products, and access. Emission-based, designed to grow with the organism rather than concentrate.',
+              example:'Wissam leads a foraging circle in Sweden → earns 100 $H + 3 rep.',
+            },
+            {
+              icon:'⬡', color:'var(--fungal-l)',
+              title:'Access Keys', subtitle:'Non-transferable NFTs',
+              desc:'Each key unlocks a specific experience, lab residency, or retreat. Limited by real-world seats, not artificial scarcity. They cannot be sold or transferred — they live in the wallet of the person who earned them.',
+              example:'Burn 80 $H → mint a key for the Berlin Lab Night. The key is yours forever.',
+            },
+            {
+              icon:'◈', color:'var(--nutrient-l)',
+              title:'Reputation', subtitle:'The trust ledger',
+              desc:'Tracks depth of participation across time. Cannot be bought, transferred, or gifted — only earned through showing up. Required for the deepest access. Resists the speculation culture that ruins most token economies.',
+              example:'Reach Forager (6 rep) → propose new nodes, lead expeditions, teach in the academy.',
+            },
+          ].map(p => (
+            <div key={p.title} style={{
+              background:'var(--soil-2)',
+              border:`0.5px solid var(--rule-strong)`,
+              borderRadius:14,
+              padding:'24px 22px',
+              display:'flex', flexDirection:'column', gap:12,
+              position:'relative', overflow:'hidden',
+            }}>
+              <div style={{ position:'absolute', top:-30, right:-30, width:120, height:120, borderRadius:'50%', background:`${p.color}08`, filter:'blur(20px)' }} />
+              <div style={{ display:'flex', alignItems:'flex-start', gap:14, position:'relative' }}>
+                <div style={{ fontSize:32, color: p.color, lineHeight:1, flexShrink:0, marginTop:-2 }}>{p.icon}</div>
+                <div style={{ flex:1, minWidth:0 }}>
+                  <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:24, color: p.color, lineHeight:1.1, letterSpacing:'-0.01em' }}>{p.title}</div>
+                  <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)', marginTop:4 }}>{p.subtitle}</div>
+                </div>
+              </div>
+              <div style={{ fontSize:13.5, color:'var(--mycelium)', lineHeight:1.7, position:'relative' }}>{p.desc}</div>
+              <div style={{ marginTop:'auto', paddingTop:12, borderTop:'0.5px solid var(--rule)', position:'relative' }}>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:4 }}>In practice</div>
+                <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:13, color:'var(--mycelium-l)', lineHeight:1.55, letterSpacing:'-.005em' }}>"{p.example}"</div>
+              </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* ── Flow steps ── */}
+      {/* ── How to participate — narrative steps, not just labels ── */}
       <div className="welcome-section">
-        <div className="welcome-section-eyebrow">How to participate</div>
-        <div className="welcome-flow">
-          {['Arrive', 'Contribute', 'Earn $MYCEL', 'Unlock access', 'Go deeper'].map((s, i) => (
-            <div key={s} className="wf-step">
-              <div className="wf-num">{i + 1}</div>
-              <div className="wf-label">{s}</div>
-              {i < 4 && <div className="wf-arrow">→</div>}
+        <div className="welcome-section-eyebrow">The path · 5 thresholds</div>
+        <div className="welcome-section-title">How to <em>weave in.</em></div>
+        <p style={{ fontSize:14, color:'var(--mycelium)', lineHeight:1.7, maxWidth:680, marginBottom:28 }}>
+          You don't apply. You don't pay. You start at the edge and grow inward, one contribution at a time.
+        </p>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(200px, 1fr))', gap:14 }}>
+          {[
+            { num:'01', tier:'Spore',     title:'Arrive',           desc:'Cross the threshold. Create your thread. Watch what others tend.', color:'#854F0B' },
+            { num:'02', tier:'Palawan',   title:'Contribute',       desc:'First act — a forage, a meal, a photo, a translation. The network notices.', color:'#3B6D11' },
+            { num:'03', tier:'Mycelium',  title:'Earn $MYCEL',      desc:'Each contribution flows back as currency. Stack it, save it, or spend it on an experience.', color:'#0F6E56' },
+            { num:'04', tier:'Forager',   title:'Unlock access',    desc:'Burn $MYCEL for keys. Walk into the Berlin Lab, the Lisbon Studio, a Mycelium Trance ceremony.', color:'#534AB7' },
+            { num:'05', tier:'Root Node', title:'Hold the vision',  desc:'At the deepest tier you steward. Propose new nodes. Teach. Carry weight others can lean on.', color:'#3C3489' },
+          ].map((s, i, arr) => (
+            <div key={s.num} style={{
+              background:'var(--soil-2)',
+              border:`0.5px solid ${s.color}40`,
+              borderRadius:12,
+              padding:'18px 16px',
+              display:'flex', flexDirection:'column', gap:8,
+              position:'relative',
+            }}>
+              <div style={{ display:'flex', alignItems:'baseline', justifyContent:'space-between' }}>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.2em', color: s.color }}>{s.num}</span>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em', textTransform:'uppercase', color: s.color, opacity:0.7 }}>● {s.tier}</span>
+              </div>
+              <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:22, color:'var(--mycelium-l)', lineHeight:1.1, letterSpacing:'-0.005em' }}>{s.title}</div>
+              <div style={{ fontSize:12.5, color:'var(--mycelium)', lineHeight:1.6 }}>{s.desc}</div>
             </div>
           ))}
         </div>
@@ -972,7 +1159,9 @@ function ProfileEditor({ existing, onClose }) {
   const fileRef                 = useRef(null);
 
   const ROLES = [
-    ['founder', 'Founder'],
+    // 'founder' role removed from the dropdown — Robin & Stephanie are the
+    // only founders and their profiles are pre-seeded with that role.
+    // New members can't claim Founder for themselves.
     ['forager', 'Forager — wild plant gathering'],
     ['herbalist', 'Herbalist — traditional medicine'],
     ['alchemist', 'Alchemist — extraction & elixirs'],
@@ -1123,8 +1312,8 @@ function ProfileEditor({ existing, onClose }) {
         </h2>
         <p style={{ fontSize:13, color:'var(--mycelium)', lineHeight:1.7, marginBottom:24 }}>
           {existing
-            ? 'Update your details. If you\'re signed in via magic-link, changes sync everywhere. Otherwise they save as a draft you can publish after signing in.'
-            : 'No wallet needed. Your profile syncs once you sign in with email — until then it lives in your browser.'}
+            ? 'Update your details. Changes sync across all your devices.'
+            : 'Your profile is the thread you weave into the network. Visible to other members.'}
         </p>
 
         {/* Avatar */}
@@ -1144,7 +1333,7 @@ function ProfileEditor({ existing, onClose }) {
         {/* Name */}
         <div style={{ marginBottom:18 }}>
           <label style={labelStyle}>Your name in the network</label>
-          <input style={{ ...inputStyle, fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:22, padding:'14px 18px' }} value={name} onChange={e => setName(e.target.value)} placeholder="Robert" maxLength={50} />
+          <input style={{ ...inputStyle, fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:22, padding:'14px 18px' }} value={name} onChange={e => setName(e.target.value)} placeholder="Your name or how you wish to be called" maxLength={50} />
         </div>
 
         {/* Bio */}
@@ -1191,8 +1380,8 @@ function ProfileEditor({ existing, onClose }) {
             <input style={inputStyle} value={pronouns} onChange={e => setPronouns(e.target.value)} placeholder="she/her · they/them" maxLength={30} />
           </div>
           <div>
-            <label style={labelStyle}>Contact (optional)</label>
-            <input style={inputStyle} value={contact} onChange={e => setContact(e.target.value)} placeholder="email · @insta · signal" maxLength={80} />
+            <label style={labelStyle}>Public contact (optional)</label>
+            <input style={inputStyle} value={contact} onChange={e => setContact(e.target.value)} placeholder="@insta · signal · telegram" maxLength={80} />
           </div>
         </div>
 
@@ -1235,6 +1424,18 @@ function PublicProfileModal({ member, onClose }) {
     : contact.startsWith('@')
       ? 'https://instagram.com/' + contact.slice(1)
       : null;
+  // Tier descriptions — what reaching each level actually means
+  const TIER_DESCRIPTIONS = {
+    'Spore':     'Just arrived. Watching, learning, planting first threads.',
+    'Palawan':   'First contributions made. Earning a place in the network.',
+    'Mycelium':  'Active contributor. Trusted across multiple nodes and ceremonies.',
+    'Forager':   'Deep practitioner. Hosts events, leads expeditions, teaches.',
+    'Root Node': 'Pillar of the network. Holds vision and stewardship.',
+  };
+  // Other members tending the same node
+  const sameNode = (SporeData.MEMBERS || [])
+    .filter(m => m.node === member.node && m.id !== member.id)
+    .slice(0, 6);
   return (
     <div style={{ position:'fixed', inset:0, zIndex:9100, background:'rgba(6,8,9,0.86)', backdropFilter:'blur(10px)', display:'flex', alignItems:'flex-start', justifyContent:'center', padding:'40px 16px', overflowY:'auto' }} onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
       <div style={{ width:'100%', maxWidth:480, background:'var(--soil-2)', border:'0.5px solid var(--rule-strong)', borderRadius:18, padding:'28px 26px', position:'relative', marginBottom:40 }}>
@@ -1256,7 +1457,7 @@ function PublicProfileModal({ member, onClose }) {
         </div>
 
         {/* Role + node */}
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8, marginBottom:14 }}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8, marginBottom:10 }}>
           <div style={{ background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:8, padding:'10px 12px' }}>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>Relation</div>
             <div style={{ fontSize:13, color:'var(--mycelium-l)', marginTop:3 }}>{member.role}</div>
@@ -1266,6 +1467,32 @@ function PublicProfileModal({ member, onClose }) {
             <div style={{ fontSize:13, color:'var(--mycelium-l)', marginTop:3 }}>{node ? node.name : (member.node || '—')}</div>
           </div>
         </div>
+
+        {/* Stats — Rep · Balance · Pronouns (in one tight row) */}
+        <div style={{ display:'grid', gridTemplateColumns: member.pronouns ? 'repeat(3, 1fr)' : 'repeat(2, 1fr)', gap:8, marginBottom:14 }}>
+          <div style={{ background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:8, padding:'10px 12px' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>Reputation</div>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:14, color: tier.color, marginTop:3 }}>{member.rep ?? 0} pts</div>
+          </div>
+          <div style={{ background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:8, padding:'10px 12px' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>Balance</div>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:14, color:'var(--spore-l)', marginTop:3 }}>{member.balance ?? 0} $H</div>
+          </div>
+          {member.pronouns && (
+            <div style={{ background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:8, padding:'10px 12px' }}>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>Pronouns</div>
+              <div style={{ fontSize:13, color:'var(--mycelium-l)', marginTop:3 }}>{member.pronouns}</div>
+            </div>
+          )}
+        </div>
+
+        {/* Tier description — what reaching this level means */}
+        {TIER_DESCRIPTIONS[tier.label] && (
+          <div style={{ marginBottom:14, padding:'12px 14px', background:`${tier.color}10`, border:`0.5px solid ${tier.color}40`, borderRadius:8 }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', textTransform:'uppercase', color: tier.color, marginBottom:5 }}>● {tier.label}</div>
+            <div style={{ fontSize:12.5, color:'var(--mycelium)', lineHeight:1.55 }}>{TIER_DESCRIPTIONS[tier.label]}</div>
+          </div>
+        )}
 
         {/* Member since */}
         {joined && (
@@ -1301,6 +1528,26 @@ function PublicProfileModal({ member, onClose }) {
               {member.specialties.map(t => (
                 <span key={t} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', padding:'5px 10px', borderRadius:999, background:'rgba(168,143,224,0.1)', border:'0.5px solid rgba(168,143,224,0.4)', color:'#C5B5F5' }}>{t}</span>
               ))}
+            </div>
+          </div>
+        )}
+
+        {/* Also tending this node */}
+        {node && sameNode.length > 0 && (
+          <div style={{ marginBottom:14, paddingTop:14, borderTop:'0.5px solid var(--rule)' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:8 }}>
+              Also tending {node.name}
+            </div>
+            <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+              {sameNode.map(m => {
+                const t = SporeData.reputationTier(m.rep);
+                return (
+                  <div key={m.id} style={{ display:'flex', alignItems:'center', gap:6, padding:'4px 10px 4px 4px', background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:999 }}>
+                    <div style={{ width:20, height:20, borderRadius:'50%', background: t.color, color:'rgba(255,255,255,.9)', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:11 }}>{m.name[0]}</div>
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium)' }}>{m.name}</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
@@ -1489,8 +1736,13 @@ function MembersPage({ currentMember, economy }) {
       const u = await window.SBauth.getUser();
       setSbUser(u);
       // Auto-open editor for fresh signed-in users who have no linked profile yet
-      // (this is the post-magic-link landing flow)
-      if (u && !isLinked && !myProfile && window.location.search.includes('signedin')) {
+      // (this is the post-magic-link landing flow). Detect either:
+      //   ?signedin=1 → legacy implicit-flow marker we append to emailRedirectTo
+      //   ?code=...   → PKCE flow auth code (auto-stripped by supabase-js after exchange,
+      //                 but present on initial mount so we can use it as a trigger)
+      const qs = window.location.search;
+      const cameFromMagicLink = qs.includes('signedin') || qs.includes('code=');
+      if (u && !isLinked && !myProfile && cameFromMagicLink) {
         setTimeout(() => setShowProfileEditor(true), 800);
       }
       const sub = window.SBauth.onAuthChange(({ user }) => setSbUser(user));
@@ -2661,6 +2913,11 @@ function App() {
   }, []);
 
   const [showClaimPicker, setShowClaimPicker] = useState(false);
+  // App-level ProfileEditor — opened for signed-in users who have no profile
+  // yet (the case that used to trigger the claim picker). Lives here (not in
+  // MembersPage) because MembersPage doesn't mount until currentMember exists,
+  // which a brand-new user doesn't have.
+  const [showRootEditor, setShowRootEditor] = useState(false);
 
   // ── Load profiles from Supabase + auto-bypass PIN login if signed in ──
   useEffect(() => {
@@ -2705,8 +2962,15 @@ function App() {
           try { localStorage.setItem('spore_active_member', match.id); } catch {}
         }
       } else {
-        // No claimed profile yet — show picker
-        setShowClaimPicker(true);
+        // No claimed profile yet. Only auto-open the editor when the user
+        // JUST arrived from a magic-link click (URL still carries the PKCE
+        // ?code= or our ?signedin marker). Otherwise we'd pop the modal
+        // on every page refresh / revisit, which is annoying.
+        const qs = window.location.search;
+        const cameFromMagicLink = qs.includes('signedin') || qs.includes('code=');
+        if (cameFromMagicLink) {
+          setShowRootEditor(true);
+        }
       }
     } catch (e) { console.warn('[Spore] auto-login failed:', e); }
   }
@@ -2743,7 +3007,30 @@ function App() {
   if (!currentMember) {
     return <>
       {claimUI}
-      <LoginScreen onLogin={handleLogin} sbUser={sbUser} />
+      {showRootEditor && (
+        <ProfileEditor
+          existing={null}
+          onClose={async () => {
+            setShowRootEditor(false);
+            // After save, refresh profiles + retry auto-login so the
+            // newly-created profile becomes currentMember and MembersPage
+            // takes over.
+            try {
+              const merged = await SporeData.loadProfilesFromCloud();
+              SporeData.MEMBERS.length = 0;
+              merged.forEach(m => SporeData.MEMBERS.push(m));
+              setCloudVer(v => v + 1);
+              await tryAutoLogin(sbUser);
+            } catch {}
+          }}
+        />
+      )}
+      <LoginScreen
+        onLogin={handleLogin}
+        sbUser={sbUser}
+        onContinueCreating={() => setShowRootEditor(true)}
+        onSignOut={handleLogout}
+      />
     </>;
   }
 

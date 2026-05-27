@@ -34,6 +34,13 @@
           persistSession: true,
           autoRefreshToken: true,
           detectSessionInUrl: true,  // catches magic-link callback in URL
+          // PKCE flow: a code_verifier is stored in localStorage when the
+          // user requests the link, and required at exchange. Pre-fetchers
+          // (antivirus, email scanners, browser extensions) that follow
+          // the link don't have the verifier, so their click doesn't
+          // consume the OTP. User must complete the flow on the same
+          // device/browser that requested it.
+          flowType: 'pkce',
         },
       });
 
@@ -44,7 +51,11 @@
           const { data, error } = await window.SBclient.auth.signInWithOtp({
             email: email.trim().toLowerCase(),
             options: {
-              emailRedirectTo: window.location.origin + '/community/?signedin=1',
+              // Point at the static spore file explicitly. Works in both dev
+              // (Vite serves public/community/index.html directly, no SPA
+              // fallback catching it) and prod (Netlify serves the same
+              // static file — the /index.html in the URL is harmless).
+              emailRedirectTo: window.location.origin + '/community/index.html?signedin=1',
               shouldCreateUser: true,
             },
           });
@@ -98,7 +109,7 @@
             auth_user_id: user.id,
             email: profile.email || user.email,
           };
-          // Try update first; if no row exists for this user, insert
+          // 1. If this user already has a profile (matched by auth_user_id), UPDATE.
           const existing = await window.SBprofiles.fetchMine();
           if (existing) {
             const { data, error } = await window.SBclient
@@ -109,7 +120,33 @@
               .single();
             if (error) throw error;
             return data;
-          } else {
+          }
+          // 2. No personal profile yet. Try to CLAIM an unclaimed seed whose
+          //    character_name matches (case-insensitive). This is how Robert,
+          //    Luna, Leni, Remi, etc. attach to their pre-seeded thread on
+          //    first sign-in instead of creating a duplicate row.
+          const wanted = (profile.character_name || '').trim();
+          if (wanted) {
+            const { data: seed } = await window.SBclient
+              .from('profiles')
+              .select('id')
+              .ilike('character_name', wanted)
+              .is('auth_user_id', null)
+              .maybeSingle();
+            if (seed) {
+              const { data, error } = await window.SBclient
+                .from('profiles')
+                .update(payload)
+                .eq('id', seed.id)
+                .is('auth_user_id', null) // race-safe: only claim if still unclaimed
+                .select()
+                .maybeSingle();
+              if (error) throw error;
+              if (data) return data; // successfully claimed
+              // else: someone else claimed it between our SELECT and UPDATE → fall through to INSERT
+            }
+          }
+          {
             const { data, error } = await window.SBclient
               .from('profiles')
               .insert(payload)

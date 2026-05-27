@@ -7,13 +7,20 @@
 -- until the final DELETE block.
 -- ════════════════════════════════════════════════════════════════
 
+-- ── 0. (One-time) Inspect what columns the profiles table actually has ──
+-- Run this first so you know whether `created_at` / `updated_at` exist.
+SELECT column_name, data_type
+FROM information_schema.columns
+WHERE table_name = 'profiles' AND table_schema = 'public'
+ORDER BY ordinal_position;
+
 -- ── 1. See the duplicates ──────────────────────────────────────
 -- Lists every name with more than one profile row.
 SELECT
   LOWER(TRIM(character_name)) AS name_key,
   COUNT(*) AS copies,
-  ARRAY_AGG(id ORDER BY created_at) AS profile_ids,
-  ARRAY_AGG(auth_user_id ORDER BY created_at) AS linked_users
+  ARRAY_AGG(id) AS profile_ids,
+  ARRAY_AGG(auth_user_id) AS linked_users
 FROM profiles
 WHERE character_name IS NOT NULL AND TRIM(character_name) <> ''
 GROUP BY LOWER(TRIM(character_name))
@@ -22,10 +29,10 @@ ORDER BY copies DESC;
 
 -- ── 2. Inspect a specific name (e.g. Wissam) ───────────────────
 -- Replace 'wissam' with whichever name you want to inspect.
-SELECT id, character_name, auth_user_id, email, role, node, created_at, updated_at
+-- Add `, created_at, updated_at` if those columns exist in your schema.
+SELECT id, character_name, auth_user_id, email, role, node
 FROM profiles
-WHERE LOWER(TRIM(character_name)) = 'wissam'
-ORDER BY created_at;
+WHERE LOWER(TRIM(character_name)) = 'wissam';
 
 -- ── 3. Preview what will be kept vs deleted ────────────────────
 -- For each duplicated name, this picks ONE winner: prefer rows
