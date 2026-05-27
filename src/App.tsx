@@ -6,6 +6,12 @@ import { twMerge } from "tailwind-merge";
 import FungaiArtLogo from "./assets/fungai-art-logo.png";
 import { supabase } from "./lib/supabaseClient";
 import { type ExtractionMethod, EXTRACTION as EXTRACTION_HERBS } from "./data/extraction";
+import {
+  CONSTRAINT_FLAGS,
+  type ConstraintFlagId,
+  filterHerbsByConstraints,
+  checkHerbAgainstConstraints,
+} from "./data/herbConstraints";
 
 function getDeviceId(): string {
   let id = localStorage.getItem("fungai_device_id");
@@ -212,6 +218,37 @@ export default function App() {
   const [activeSymptom, setActiveSymptom] = useState<string | null>(null);
   const [symptomOpen, setSymptomOpen] = useState(false);
 
+  // ── User constraints (Phase 3 — Mixology integration of herbConstraints.ts).
+  //    Persisted in localStorage so the same user's flags survive reloads.
+  //    Phase 5 will sync this to their Supabase profile for cross-device.
+  const [userConstraints, setUserConstraints] = useState<ConstraintFlagId[]>(() => {
+    try {
+      const raw = localStorage.getItem("fungai_user_constraints");
+      return raw ? (JSON.parse(raw) as ConstraintFlagId[]) : [];
+    } catch { return []; }
+  });
+  const [constraintsOpen, setConstraintsOpen] = useState(false);
+  // When true (default), herbs that conflict with userConstraints are removed
+  // from results. When false, they're shown but flagged with a ⚠ badge so the
+  // user can still see them with context. Persists across reloads.
+  const [hideUnsafe, setHideUnsafe] = useState<boolean>(() => {
+    try {
+      const raw = localStorage.getItem("fungai_hide_unsafe");
+      return raw === null ? true : JSON.parse(raw);
+    } catch { return true; }
+  });
+  useEffect(() => {
+    try { localStorage.setItem("fungai_hide_unsafe", JSON.stringify(hideUnsafe)); } catch {}
+  }, [hideUnsafe]);
+  useEffect(() => {
+    try { localStorage.setItem("fungai_user_constraints", JSON.stringify(userConstraints)); } catch {}
+  }, [userConstraints]);
+  function toggleConstraint(id: ConstraintFlagId) {
+    setUserConstraints(prev =>
+      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
+    );
+  }
+
   // Debounce search — prevents lag on large herb list
   useEffect(() => {
     const t = setTimeout(() => setDebouncedQuery(searchQuery), 200);
@@ -255,6 +292,20 @@ export default function App() {
     }
     return result;
   }, [debouncedQuery, activeCategories, activeElements, showForageable, showTryp, activeSymptom]);
+
+  // Apply user-constraint filter as a separate, controllable stage so the
+  // banner can show "N hidden by your constraints" even when hideUnsafe is on.
+  const { visibleHerbs, constraintHiddenCount } = useMemo(() => {
+    if (userConstraints.length === 0) {
+      return { visibleHerbs: filteredHerbs, constraintHiddenCount: 0 };
+    }
+    const safe = filterHerbsByConstraints(filteredHerbs, userConstraints);
+    const hidden = filteredHerbs.length - safe.length;
+    return {
+      visibleHerbs: hideUnsafe ? safe : filteredHerbs,
+      constraintHiddenCount: hidden,
+    };
+  }, [filteredHerbs, userConstraints, hideUnsafe]);
 
   // per-herb synergy pairs within the current selection
   const synergyMap = useMemo(() => {
@@ -853,6 +904,86 @@ export default function App() {
       className="flex flex-col lg:flex-row h-[100dvh] overflow-hidden"
       style={{ background: "#050607", color: "#f6f3ea", fontFamily: "'Space Grotesk', system-ui, sans-serif" }}
     >
+      {/* ── Constraints Modal ─────────────────────────────────────────────
+          User picks the health conditions / medications they need to avoid
+          conflicts with. Selected flags filter the herb pool (in filteredHerbs)
+          and trigger warning badges on individual herb cards. */}
+      {constraintsOpen && (
+        <div
+          onClick={() => setConstraintsOpen(false)}
+          style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(4,5,8,0.86)", backdropFilter: "blur(10px)", display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "40px 16px", overflowY: "auto" }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{ width: "100%", maxWidth: 560, background: "#0d1410", border: "0.5px solid rgba(255,255,255,0.1)", borderRadius: 18, padding: "26px 24px", marginBottom: 40, position: "relative" }}
+          >
+            <button
+              onClick={() => setConstraintsOpen(false)}
+              style={{ position: "absolute", top: 14, right: 16, background: "none", border: "none", color: "#7a766c", fontSize: 22, cursor: "pointer", lineHeight: 1 }}
+            >
+              ×
+            </button>
+
+            <div style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif", fontSize: 9.5, letterSpacing: "0.28em", textTransform: "uppercase", color: "#ff8b8b", marginBottom: 6 }}>
+              ⚠ Your safety constraints
+            </div>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 26, color: "#f6f3ea", marginBottom: 6, letterSpacing: "0.01em" }}>
+              What should we filter <em style={{ color: "#7bd4a1" }}>out?</em>
+            </h2>
+            <p style={{ fontSize: 12.5, color: "#9a9590", lineHeight: 1.6, marginBottom: 18 }}>
+              Tap anything that applies. Herbs that conflict with your selection are removed from the materia medica and your formula pool. Saved locally — only you see this.
+            </p>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 18 }}>
+              {CONSTRAINT_FLAGS.map(cf => {
+                const on = userConstraints.includes(cf.id);
+                return (
+                  <button
+                    key={cf.id}
+                    onClick={() => toggleConstraint(cf.id)}
+                    style={{
+                      display: "flex", alignItems: "flex-start", gap: 12, textAlign: "left",
+                      padding: "12px 14px", borderRadius: 12,
+                      background: on ? "rgba(255,139,139,0.08)" : "rgba(255,255,255,0.025)",
+                      border: on ? "0.5px solid rgba(255,139,139,0.45)" : "0.5px solid rgba(255,255,255,0.07)",
+                      color: "#f6f3ea", cursor: "pointer", fontFamily: "'Space Grotesk', system-ui, sans-serif",
+                    }}
+                  >
+                    <span style={{ fontSize: 18, flexShrink: 0, marginTop: 1 }}>{cf.icon}</span>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 13, color: on ? "#ff8b8b" : "#f6f3ea", fontWeight: on ? 500 : 400 }}>
+                        {cf.label}
+                      </div>
+                      <div style={{ fontSize: 10.5, color: "#7a766c", lineHeight: 1.5, marginTop: 2 }}>
+                        {cf.sub}
+                      </div>
+                    </div>
+                    <div style={{ flexShrink: 0, width: 18, height: 18, borderRadius: 4, border: on ? "1px solid #ff8b8b" : "1px solid rgba(255,255,255,0.2)", background: on ? "#ff8b8b" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", color: "#0d1410", fontSize: 13, fontWeight: 700, marginTop: 1 }}>
+                        {on ? "✓" : ""}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 14, borderTop: "0.5px solid rgba(255,255,255,0.06)" }}>
+              <button
+                onClick={() => setUserConstraints([])}
+                style={{ background: "none", border: "none", color: "#7a766c", fontSize: 11, cursor: "pointer", textDecoration: "underline", padding: 0 }}
+              >
+                Clear all
+              </button>
+              <button
+                onClick={() => setConstraintsOpen(false)}
+                style={{ padding: "10px 22px", borderRadius: 999, background: "rgba(123,212,161,0.12)", border: "1px solid rgba(123,212,161,0.45)", color: "#7bd4a1", fontSize: 12, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", fontFamily: "'Space Grotesk', system-ui, sans-serif" }}
+              >
+                Done · {userConstraints.length} set
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ── MAIN CONTENT ── */}
       <main className="flex-1 flex flex-col overflow-hidden p-4 sm:p-5 lg:p-6">
 
@@ -917,6 +1048,14 @@ export default function App() {
                 Community ✦
               </a>
               <button
+                onClick={() => setConstraintsOpen(true)}
+                className="hidden sm:flex items-center gap-1.5 text-[10px] uppercase tracking-[0.2em] whitespace-nowrap transition-opacity hover:opacity-80"
+                style={{ color: userConstraints.length > 0 ? "#ff8b8b" : "#7a766c" }}
+                title="Set your health constraints — herbs that conflict with your conditions or meds will be filtered"
+              >
+                ⚠ Constraints{userConstraints.length > 0 ? ` · ${userConstraints.length}` : ""}
+              </button>
+              <button
                 onClick={() => setIsSidebarOpen(true)}
                 className="lg:hidden flex items-center justify-center rounded-xl transition-colors"
                 style={{
@@ -959,13 +1098,33 @@ export default function App() {
           {/* Result count */}
           {(debouncedQuery || activeCategories.length > 0 || activeElements.length > 0 || showForageable || showTryp || activeSymptom) && (
             <p className="text-[10px] mt-1.5" style={{ color: "#7a766c" }}>
-              {filteredHerbs.length} herb{filteredHerbs.length !== 1 ? "s" : ""}
+              {visibleHerbs.length} herb{visibleHerbs.length !== 1 ? "s" : ""}
               {showTryp && " · Tryp"}
               {activeSymptom && ` · ${activeSymptom}`}
               {activeCategories.length > 0 && ` · ${activeCategories.join(", ")}`}
               {activeElements.length > 0 && ` · ${activeElements.join(", ")}`}
               {showForageable && " · Forageable EU"}
             </p>
+          )}
+
+          {/* Constraint banner — shows when some herbs are hidden by user
+              constraints. Toggle reveals them with red ⚠ badges. */}
+          {userConstraints.length > 0 && constraintHiddenCount > 0 && (
+            <div
+              className="text-[10px] mt-1.5 flex items-center gap-2 px-2.5 py-1.5 rounded-lg"
+              style={{ background: "rgba(255,139,139,0.06)", border: "0.5px solid rgba(255,139,139,0.25)", color: "#ff8b8b" }}
+            >
+              <span>⚠</span>
+              <span style={{ color: "#c8c2b6" }}>
+                {constraintHiddenCount} herb{constraintHiddenCount !== 1 ? "s" : ""} {hideUnsafe ? "hidden" : "flagged"} by your constraints
+              </span>
+              <button
+                onClick={() => setHideUnsafe(h => !h)}
+                style={{ marginLeft: "auto", background: "none", border: "none", color: "#ff8b8b", fontSize: 10, cursor: "pointer", textDecoration: "underline", padding: 0 }}
+              >
+                {hideUnsafe ? "show with warnings" : "hide again"}
+              </button>
+            </div>
           )}
 
           {/* ── Filter bar ── */}
@@ -1103,8 +1262,15 @@ export default function App() {
         {/* HERB GRID — scrolls independently */}
         <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "thin", scrollbarColor: "#1e2b24 transparent" }}>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
-            {filteredHerbs.map((h) => {
+            {visibleHerbs.map((h) => {
               const selected = selectedHerbs.some((sh) => sh.id === h.id);
+              // Check this herb against the user's saved constraints (only meaningful
+              // if any are set). When the result is unsafe we show a red border tint
+              // and a ⚠ chip listing the conflicting flags.
+              const constraintCheck = userConstraints.length > 0
+                ? checkHerbAgainstConstraints(h, userConstraints)
+                : { safe: true, conflictingFlags: [], conflictingLabels: [] };
+              const unsafeForUser = !constraintCheck.safe;
               return (
                 <div
                   key={h.id}
@@ -1113,22 +1279,54 @@ export default function App() {
                   style={{
                     background: selected
                       ? "radial-gradient(circle at top left, #16382a, #0a0f0c)"
-                      : "#0d1410",
+                      : unsafeForUser
+                        ? "radial-gradient(circle at top right, rgba(255,139,139,0.08), #0d1410)"
+                        : "#0d1410",
                     border: selected
                       ? "0.5px solid rgba(123,212,161,0.45)"
-                      : "0.5px solid rgba(255,255,255,0.07)",
+                      : unsafeForUser
+                        ? "0.5px solid rgba(255,139,139,0.35)"
+                        : "0.5px solid rgba(255,255,255,0.07)",
                     padding: "12px 14px 10px",
                   }}
                   onMouseEnter={(e) => {
-                    if (!selected) e.currentTarget.style.borderColor = "rgba(123,212,161,0.2)";
+                    if (selected) return;
+                    e.currentTarget.style.borderColor = unsafeForUser
+                      ? "rgba(255,139,139,0.55)"
+                      : "rgba(123,212,161,0.2)";
                   }}
                   onMouseLeave={(e) => {
-                    if (!selected) e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)";
+                    if (selected) return;
+                    e.currentTarget.style.borderColor = unsafeForUser
+                      ? "rgba(255,139,139,0.35)"
+                      : "rgba(255,255,255,0.07)";
                   }}
                 >
                   {/* Selected indicator */}
                   {selected && (
                     <div className="absolute top-2.5 right-2.5 w-1.5 h-1.5 rounded-full" style={{ background: "#7bd4a1" }} />
+                  )}
+
+                  {/* Constraint warning chip — shows when herb conflicts with
+                      the user's saved constraints. Wraps to multiple lines if
+                      many conflicts. Click is swallowed so it doesn't deselect. */}
+                  {unsafeForUser && (
+                    <div
+                      onClick={(e) => e.stopPropagation()}
+                      className="mb-1.5 flex flex-wrap items-center gap-1 px-2 py-1 rounded-md"
+                      style={{ background: "rgba(255,139,139,0.1)", border: "0.5px solid rgba(255,139,139,0.3)" }}
+                      title={"Conflicts with: " + constraintCheck.conflictingLabels.join(", ")}
+                    >
+                      <span className="text-[9px] font-semibold" style={{ color: "#ff8b8b" }}>⚠ Unsafe for:</span>
+                      {constraintCheck.conflictingLabels.slice(0, 3).map(label => (
+                        <span key={label} className="text-[8.5px] px-1.5 py-0.5 rounded-full" style={{ background: "rgba(255,139,139,0.18)", color: "#ffb3b3" }}>
+                          {label.split(" / ")[0].split(" (")[0]}
+                        </span>
+                      ))}
+                      {constraintCheck.conflictingLabels.length > 3 && (
+                        <span className="text-[8.5px]" style={{ color: "#ff8b8b" }}>+{constraintCheck.conflictingLabels.length - 3}</span>
+                      )}
+                    </div>
                   )}
 
                   {/* Name */}

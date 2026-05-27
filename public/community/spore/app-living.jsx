@@ -216,6 +216,30 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
   const [createMode, setCreateMode]   = useState(false); // unlocked → show create-flavoured copy
   const [showMagicForm, setShowMagicForm] = useState(false); // email form hidden until user picks a path
 
+  // Sign-in by name + PIN (no email needed for existing members).
+  // The typed name is matched against SporeData.MEMBERS — case-insensitive.
+  const [showSignInBox, setShowSignInBox] = useState(false);
+  const [signInName, setSignInName]       = useState('');
+  const [signInNameError, setSignInNameError] = useState('');
+
+  function handleNameSignIn(e) {
+    e.preventDefault();
+    const wanted = signInName.trim().toLowerCase();
+    if (!wanted) return;
+    const member = (SporeData.MEMBERS || []).find(m =>
+      (m.name || '').trim().toLowerCase() === wanted
+    );
+    if (!member) {
+      setSignInNameError("We don't recognise that name. If you're new, use Create profile instead.");
+      return;
+    }
+    // Trigger PinModal (already wired below — when `selected` is set, it opens)
+    setSelected(member);
+    setShowSignInBox(false);
+    setSignInName('');
+    setSignInNameError('');
+  }
+
   const INVITE_REASON_COPY = {
     not_found: "That invite code doesn't match. Ask Robin or Steph for the current one.",
     expired:   "That code has expired. Ask Robin or Steph for a fresh one.",
@@ -300,7 +324,7 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
       {/* ── Nav ── */}
       <div className="welcome-nav">
         <div className="welcome-nav-brand">
-          <ProceduralMark size={26} />
+          <img src="/fungai-art-logo.png" alt="Fungai Art" style={{ width:34, height:34, borderRadius:'50%', objectFit:'cover', border:'0.5px solid rgba(232,177,75,0.35)', boxShadow:'0 0 12px rgba(232,177,75,0.15)' }} />
           <div>
             <div className="welcome-brand-name">Spore</div>
             <div className="welcome-brand-sub">Living Network · $MYCEL</div>
@@ -339,7 +363,48 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
                 </button>
               </div>
               <div style={{ marginTop:10, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)', width:'100%', textAlign:'right' }}>
-                Returning thread? Use your existing email after the invite code — we'll recognise you.
+                New here? Cross the threshold above.
+              </div>
+
+              {/* Returning-member sign-in by NAME + PIN.
+                  No email. They type their character name (robert, emil, remi…)
+                  → PinModal opens for that member → they enter their 4-digit
+                  code (or set one if first time on this device). */}
+              <div style={{ marginTop:18, width:'100%', display:'flex', flexDirection:'column', alignItems:'flex-end', gap:10 }}>
+                {!showSignInBox && (
+                  <button
+                    onClick={() => { setShowSignInBox(true); setSignInNameError(''); }}
+                    style={{ background:'none', border:'none', color:'var(--spore-l)', fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.18em', textTransform:'uppercase', cursor:'pointer', padding:'8px 0', textDecoration:'underline', textUnderlineOffset:4 }}
+                  >
+                    ✦ Already a thread? Sign in
+                  </button>
+                )}
+                {showSignInBox && (
+                  <form onSubmit={handleNameSignIn} style={{ width:'100%', maxWidth:360, display:'flex', flexDirection:'column', gap:6 }}>
+                    <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--spore-l)', textAlign:'right' }}>
+                      ✦ Sign in · your name
+                    </div>
+                    <div style={{ display:'flex', gap:8 }}>
+                      <input
+                        autoFocus
+                        type="text"
+                        value={signInName}
+                        onChange={e => { setSignInName(e.target.value); setSignInNameError(''); }}
+                        placeholder="robert, emil, remi…"
+                        style={{ flex:1, background:'var(--soil-3)', border: signInNameError ? '0.5px solid var(--coral)' : '0.5px solid var(--rule-strong)', borderRadius:999, color:'var(--mycelium-l)', padding:'12px 18px', fontFamily:'var(--font-sans)', fontSize:14, outline:'none' }}
+                      />
+                      <button type="submit" style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase', padding:'12px 22px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', fontWeight:500, cursor:'pointer' }}>
+                        →
+                      </button>
+                    </div>
+                    {signInNameError && (
+                      <div style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--coral)', textAlign:'right', lineHeight:1.5 }}>{signInNameError}</div>
+                    )}
+                    <button type="button" onClick={() => { setShowSignInBox(false); setSignInName(''); setSignInNameError(''); }} style={{ background:'none', border:'none', color:'var(--mycelium-d)', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', cursor:'pointer', alignSelf:'flex-end', padding:0 }}>
+                      cancel
+                    </button>
+                  </form>
+                )}
               </div>
             </>
           )}
@@ -435,9 +500,9 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
         </div>
       </div>
 
-      {/* WHO'S IN MOVED — see below, after the network section */}
+      {/* Old WHO'S IN block removed — the active version is below, after Path */}
       {false && (
-      <div className="welcome-section" id="welcome-mycelium">
+      <div className="welcome-section" id="welcome-mycelium-old">
         <div className="welcome-section-eyebrow">The mycelium · {SporeData.MEMBERS.length} threads</div>
         <div className="welcome-section-title">Who's <em>in.</em></div>
         <p style={{ fontSize:14, color:'var(--mycelium)', lineHeight:1.7, maxWidth:640, marginBottom:24 }}>
@@ -514,15 +579,23 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
           </div>
         </div>
 
-        {/* Node cards */}
-        <div className="welcome-nodes">
-          {SporeData.NETWORK_NODES.map(node => {
+        {/* Node cards — split into two visual tiers:
+              PRIMARY (Fungai Art operational nodes): Berlin, Sweden, Festival,
+              Lisbon, Beirut. Rendered first, full size, full color.
+              COMMUNITY (sister/satellite nodes not run directly by Fungai Art):
+              Atitlán, Zanzibar, Bangkok, Bali, Hokkaido, Genoa. Dimmer,
+              compact, in a sub-section. */}
+        {(() => {
+          const PRIMARY_NODE_IDS = ['berlin','sweden','festival','lisbon','beirut'];
+          const primary = SporeData.NETWORK_NODES.filter(n => PRIMARY_NODE_IDS.includes(n.id));
+          const community = SporeData.NETWORK_NODES.filter(n => !PRIMARY_NODE_IDS.includes(n.id));
+          const renderCard = (node, dimmed = false) => {
             const isProposed = node.activity === 'proposed';
             const avgFlow = node.contributions.length
               ? Math.round(node.contributions.reduce((a,c) => a + c.earn, 0) / Math.max(1, node.contributions.length))
               : 0;
             return (
-              <div key={node.id} className={`welcome-node ${isProposed ? 'proposed' : ''}`}>
+              <div key={node.id} className={`welcome-node ${isProposed ? 'proposed' : ''}`} style={dimmed ? { opacity:0.55, transform:'scale(0.94)' } : {}}>
                 <div className="wn-top">
                   <div className="wn-dot" style={{ background: node.color }} />
                   <div className="wn-status">{isProposed ? 'proposed' : node.activity}</div>
@@ -540,12 +613,32 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
                 )}
               </div>
             );
-          })}
-        </div>
+          };
+          return (
+            <>
+              {/* Primary — Fungai Art operational */}
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:10 }}>
+                Fungai Art operations
+              </div>
+              <div className="welcome-nodes">
+                {primary.map(node => renderCard(node, false))}
+              </div>
+
+              {/* Community — satellite / proposed */}
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--mycelium-d)', marginTop:28, marginBottom:10 }}>
+                Community nodes · sister gardens
+              </div>
+              <div className="welcome-nodes" style={{ opacity:0.85 }}>
+                {community.map(node => renderCard(node, true))}
+              </div>
+            </>
+          );
+        })()}
       </div>
 
-      {/* ── The Mycelium — moved here, below the network ── */}
-      <div className="welcome-section" id="welcome-mycelium">
+      {/* Old Who's In here — moved BELOW Path per the latest portal layout pass */}
+      {false && (
+      <div className="welcome-section" id="welcome-mycelium-old2">
         <div className="welcome-section-eyebrow">The mycelium · {SporeData.MEMBERS.length} threads · {SporeData.MEMBERS.filter(m => m.founding).length} founding</div>
         <div className="welcome-section-title">Who's <em>in.</em></div>
         <p style={{ fontSize:14, color:'var(--mycelium)', lineHeight:1.7, maxWidth:640, marginBottom:24 }}>
@@ -588,6 +681,7 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
           })}
         </div>
       </div>
+      )}
 
       {/* ── The principles (was: Token philosophy) — much richer now ── */}
       <div className="welcome-section">
@@ -596,7 +690,7 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
         <p style={{ fontSize:14, color:'var(--mycelium)', lineHeight:1.7, maxWidth:680, marginBottom:28 }}>
           Three forces hold the mycelium together. None of them are tokens to speculate on. All of them are tools to <em>build a community that can hold weight.</em>
         </p>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))', gap:18 }}>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px, 1fr))', gap:12 }}>
           {[
             {
               icon:'◉', color:'var(--spore-l)',
@@ -620,23 +714,23 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
             <div key={p.title} style={{
               background:'var(--soil-2)',
               border:`0.5px solid var(--rule-strong)`,
-              borderRadius:14,
-              padding:'24px 22px',
-              display:'flex', flexDirection:'column', gap:12,
+              borderRadius:12,
+              padding:'16px 16px',
+              display:'flex', flexDirection:'column', gap:10,
               position:'relative', overflow:'hidden',
             }}>
-              <div style={{ position:'absolute', top:-30, right:-30, width:120, height:120, borderRadius:'50%', background:`${p.color}08`, filter:'blur(20px)' }} />
-              <div style={{ display:'flex', alignItems:'flex-start', gap:14, position:'relative' }}>
-                <div style={{ fontSize:32, color: p.color, lineHeight:1, flexShrink:0, marginTop:-2 }}>{p.icon}</div>
+              <div style={{ position:'absolute', top:-30, right:-30, width:100, height:100, borderRadius:'50%', background:`${p.color}08`, filter:'blur(20px)' }} />
+              <div style={{ display:'flex', alignItems:'flex-start', gap:10, position:'relative' }}>
+                <div style={{ fontSize:24, color: p.color, lineHeight:1, flexShrink:0 }}>{p.icon}</div>
                 <div style={{ flex:1, minWidth:0 }}>
-                  <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:24, color: p.color, lineHeight:1.1, letterSpacing:'-0.01em' }}>{p.title}</div>
-                  <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)', marginTop:4 }}>{p.subtitle}</div>
+                  <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:18, color: p.color, lineHeight:1.1, letterSpacing:'-0.01em' }}>{p.title}</div>
+                  <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)', marginTop:3 }}>{p.subtitle}</div>
                 </div>
               </div>
-              <div style={{ fontSize:13.5, color:'var(--mycelium)', lineHeight:1.7, position:'relative' }}>{p.desc}</div>
-              <div style={{ marginTop:'auto', paddingTop:12, borderTop:'0.5px solid var(--rule)', position:'relative' }}>
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:4 }}>In practice</div>
-                <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:13, color:'var(--mycelium-l)', lineHeight:1.55, letterSpacing:'-.005em' }}>"{p.example}"</div>
+              <div style={{ fontSize:11.5, color:'var(--mycelium)', lineHeight:1.6, position:'relative' }}>{p.desc}</div>
+              <div style={{ marginTop:'auto', paddingTop:10, borderTop:'0.5px solid var(--rule)', position:'relative' }}>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.2em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:3 }}>In practice</div>
+                <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:11.5, color:'var(--mycelium-l)', lineHeight:1.5, letterSpacing:'-.005em' }}>"{p.example}"</div>
               </div>
             </div>
           ))}
@@ -650,7 +744,7 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
         <p style={{ fontSize:14, color:'var(--mycelium)', lineHeight:1.7, maxWidth:680, marginBottom:28 }}>
           You don't apply. You don't pay. You start at the edge and grow inward, one contribution at a time.
         </p>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(200px, 1fr))', gap:14 }}>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(150px, 1fr))', gap:10 }}>
           {[
             { num:'01', tier:'Spore',     title:'Arrive',           desc:'Cross the threshold. Create your thread. Watch what others tend.', color:'#854F0B' },
             { num:'02', tier:'Palawan',   title:'Contribute',       desc:'First act — a forage, a meal, a photo, a translation. The network notices.', color:'#3B6D11' },
@@ -661,19 +755,65 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
             <div key={s.num} style={{
               background:'var(--soil-2)',
               border:`0.5px solid ${s.color}40`,
-              borderRadius:12,
-              padding:'18px 16px',
-              display:'flex', flexDirection:'column', gap:8,
+              borderRadius:10,
+              padding:'14px 12px',
+              display:'flex', flexDirection:'column', gap:6,
               position:'relative',
             }}>
               <div style={{ display:'flex', alignItems:'baseline', justifyContent:'space-between' }}>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.2em', color: s.color }}>{s.num}</span>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em', textTransform:'uppercase', color: s.color, opacity:0.7 }}>● {s.tier}</span>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', color: s.color }}>{s.num}</span>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.16em', textTransform:'uppercase', color: s.color, opacity:0.7 }}>● {s.tier}</span>
               </div>
-              <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:22, color:'var(--mycelium-l)', lineHeight:1.1, letterSpacing:'-0.005em' }}>{s.title}</div>
-              <div style={{ fontSize:12.5, color:'var(--mycelium)', lineHeight:1.6 }}>{s.desc}</div>
+              <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:17, color:'var(--mycelium-l)', lineHeight:1.1, letterSpacing:'-0.005em' }}>{s.title}</div>
+              <div style={{ fontSize:11, color:'var(--mycelium)', lineHeight:1.55 }}>{s.desc}</div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* ── The Mycelium — moved to be AFTER Path per latest layout pass.
+            Member cards are NARROWER (180px min) to fit more per row. ── */}
+      <div className="welcome-section" id="welcome-mycelium">
+        <div className="welcome-section-eyebrow">The mycelium · {SporeData.MEMBERS.length} threads · {SporeData.MEMBERS.filter(m => m.founding).length} founding</div>
+        <div className="welcome-section-title">Who's <em>in.</em></div>
+        <p style={{ fontSize:13, color:'var(--mycelium)', lineHeight:1.65, maxWidth:600, marginBottom:20 }}>
+          Founders and palawan threads — each tending a node, each contributing nutrients. None bought their way in. Every tier was earned.
+        </p>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(180px, 1fr))', gap:10 }}>
+          {SporeData.MEMBERS.map(m => {
+            const tier = SporeData.reputationTier(m.rep);
+            const node = SporeData.NETWORK_NODES.find(n => n.id === m.node);
+            return (
+              <div key={m.id} style={{
+                background:'var(--soil-2)',
+                border:'0.5px solid var(--rule)',
+                borderRadius:10,
+                padding:'12px 12px',
+                display:'flex', flexDirection:'column', gap:6,
+              }}>
+                <div style={{ display:'flex', alignItems:'center', gap:8 }}>
+                  <div style={{
+                    width:30, height:30, borderRadius:'50%',
+                    background: tier.color, color:'var(--soil)',
+                    display:'flex', alignItems:'center', justifyContent:'center',
+                    fontFamily:'var(--font-display)', fontSize:14, fontWeight:600,
+                    flexShrink:0,
+                  }}>{m.name[0]}</div>
+                  <div style={{ minWidth:0 }}>
+                    <div style={{ color:'var(--mycelium-l)', fontSize:13.5, fontWeight:600, lineHeight:1.15 }}>{m.name}</div>
+                    <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.14em', textTransform:'uppercase', color: tier.color, marginTop:2 }}>{tier.label}{m.founding ? ' · founding' : ''}</div>
+                  </div>
+                </div>
+                <div style={{ color:'var(--mycelium)', fontSize:11, lineHeight:1.45 }}>{m.role}{node ? ` · ${node.name}` : ''}</div>
+                {m.focus && <div style={{ color:'var(--mycelium-d)', fontSize:10, lineHeight:1.5 }}>{m.focus}</div>}
+                {m.favoritePlant && (
+                  <div style={{ marginTop:4, paddingTop:5, borderTop:'0.5px solid var(--rule)', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>
+                    Ally · <span style={{ color:'var(--spore-l)', fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:11, textTransform:'none', letterSpacing:0 }}>{m.favoritePlant}</span>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
 
