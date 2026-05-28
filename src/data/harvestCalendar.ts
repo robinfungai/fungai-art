@@ -130,8 +130,12 @@ export const HARVEST_BY_MONTH: Record<number, string[]> = {
   12: ['Björk','Hundkäx','Kråkbär','Lind','Ros','Slån','Tall','Tranbär'],
 };
 
-// Swedish month names
+// Month labels — switched from Swedish to English for the foraging UI.
+// (Previously MONTH_SV held Swedish names — Maj/Juni/etc — left here under
+// the same export name to avoid touching every call site; values are now
+// English. The new MONTH_EN alias makes intent obvious for new code.)
 export const MONTH_SV: Record<number, string> = {
-  1:'Januari', 2:'Februari', 3:'Mars', 4:'April', 5:'Maj', 6:'Juni',
-  7:'Juli', 8:'Augusti', 9:'September', 10:'Oktober', 11:'November', 12:'December',
+  1:'January', 2:'February', 3:'March',     4:'April',   5:'May',      6:'June',
+  7:'July',    8:'August',   9:'September', 10:'October', 11:'November', 12:'December',
 };
+export const MONTH_EN = MONTH_SV;

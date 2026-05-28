@@ -666,17 +666,18 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
       <div id="coPane1">
         <div class="co-summary" id="coSummary1"></div>
         <div class="co-grid">
-          <div class="co-field"><label>First name</label><input type="text" id="coFirstName" placeholder="Robin"></div>
-          <div class="co-field"><label>Last name</label><input type="text" id="coLastName" placeholder="Fungi"></div>
+          <div class="co-field"><label>First name</label><input type="text" id="coFirstName" placeholder="Your first name"></div>
+          <div class="co-field"><label>Last name</label><input type="text" id="coLastName" placeholder="Your last name"></div>
         </div>
-        <div class="co-field"><label>Email</label><input type="email" id="coEmail" placeholder="you@forest.earth"></div>
-        <div class="co-field"><label>Shipping address</label><input type="text" id="coAddr1" placeholder="Street & number"></div>
-        <div class="co-grid">
-          <div class="co-field"><label>City</label><input type="text" id="coCity" placeholder="Berlin"></div>
-          <div class="co-field"><label>Postal code</label><input type="text" id="coPostal" placeholder="10115"></div>
-        </div>
+        <div class="co-field"><label>Email</label><input type="email" id="coEmail" placeholder="you@email.com"></div>
+        <div class="co-field"><label>Business <span style="opacity:.55;font-size:10px">(optional)</span></label><input type="text" id="coBusiness" placeholder="Company / studio name"></div>
+        <div class="co-field"><label>Shipping address</label><input type="text" id="coAddr1" placeholder="Street &amp; number"></div>
+        <!-- Country FIRST so we can validate the postal-code format
+             against the chosen country. Putting city/postal before
+             country was poor UX — users don't know what they should
+             enter until they've picked the country anyway. -->
         <div class="co-field"><label>Country</label>
-          <select id="coCountry">
+          <select id="coCountry" onchange="updatePostalPattern()">
             <option value="">Select country</option>
             <option value="DE">Germany</option><option value="FR">France</option><option value="SE">Sweden</option>
             <option value="NL">Netherlands</option><option value="BE">Belgium</option><option value="AT">Austria</option>
@@ -684,6 +685,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
             <option value="PL">Poland</option><option value="LB">Lebanon</option><option value="GB">United Kingdom</option>
             <option value="US">United States</option><option value="other">Other</option>
           </select>
+        </div>
+        <div class="co-grid">
+          <div class="co-field"><label>City</label><input type="text" id="coCity" placeholder="City / town"></div>
+          <div class="co-field"><label>Postal code</label><input type="text" id="coPostal" inputmode="numeric" placeholder="Zip code"></div>
         </div>
         <div id="coStep1Err" style="font-size:11.5px;color:var(--coral);margin-top:8px;min-height:16px;"></div>
         <div class="co-btn-row">
@@ -821,6 +826,36 @@ function closeCheckout(){
 }
 document.getElementById('coOverlay').addEventListener('click',function(e){if(e.target===this)closeCheckout()});
 function goToStep1(){goToStepDirect(1)}
+// Postal-code shapes per country. Permissive on purpose — catches
+// obvious typos (letters where digits expected, wrong length) without
+// rejecting valid edge cases. "other" skips the check.
+const POSTAL_PATTERNS = {
+  DE: { rx: /^\d{5}$/,                hint: '5 digits — e.g. 10115' },
+  FR: { rx: /^\d{5}$/,                hint: '5 digits — e.g. 75001' },
+  SE: { rx: /^\d{3}\s?\d{2}$/,        hint: '5 digits — e.g. 114 24' },
+  NL: { rx: /^\d{4}\s?[A-Za-z]{2}$/,  hint: '1234 AB format' },
+  BE: { rx: /^\d{4}$/,                hint: '4 digits — e.g. 1000' },
+  AT: { rx: /^\d{4}$/,                hint: '4 digits — e.g. 1010' },
+  CH: { rx: /^\d{4}$/,                hint: '4 digits — e.g. 8001' },
+  ES: { rx: /^\d{5}$/,                hint: '5 digits — e.g. 28013' },
+  IT: { rx: /^\d{5}$/,                hint: '5 digits — e.g. 00100' },
+  PL: { rx: /^\d{2}-?\d{3}$/,         hint: 'NN-NNN — e.g. 00-001' },
+  LB: { rx: /^\d{4,8}$/,              hint: '4–8 digits' },
+  GB: { rx: /^[A-Za-z]{1,2}\d[A-Za-z\d]?\s?\d[A-Za-z]{2}$/, hint: 'e.g. SW1A 1AA' },
+  US: { rx: /^\d{5}(-\d{4})?$/,       hint: '5 digits or 5+4 — e.g. 10001' },
+};
+function updatePostalPattern(){
+  const c = document.getElementById('coCountry').value;
+  const p = document.getElementById('coPostal');
+  const pat = POSTAL_PATTERNS[c];
+  if (pat) {
+    p.placeholder = pat.hint;
+    p.setAttribute('inputmode', c === 'NL' || c === 'GB' || c === 'PL' ? 'text' : 'numeric');
+  } else {
+    p.placeholder = 'Zip code';
+  }
+}
+
 function goToStep2(){
   const req=['coFirstName','coLastName','coEmail','coAddr1','coCity','coPostal','coCountry'];
   const err=document.getElementById('coStep1Err');
@@ -828,13 +863,20 @@ function goToStep2(){
     const el=document.getElementById(id);
     if(!el.value.trim()){
       err.textContent='Please fill in all required fields.';
-      // Scroll the empty field into view so the user can see why the button
-      // "did nothing" — without this, on mobile, the error message and the
-      // empty field were often above the address bar and invisible.
       try{ el.scrollIntoView({behavior:'smooth',block:'center'}); }catch(e){}
       setTimeout(()=>{ try{ el.focus(); }catch(e){} },300);
       return;
     }
+  }
+  // Postal-code shape check against the chosen country.
+  const country = document.getElementById('coCountry').value;
+  const postal  = document.getElementById('coPostal');
+  const pat     = POSTAL_PATTERNS[country];
+  if (pat && !pat.rx.test(postal.value.trim())) {
+    err.textContent = 'That postal code doesn\'t look right for ' + country + ' — expected ' + pat.hint;
+    try{ postal.scrollIntoView({behavior:'smooth',block:'center'}); }catch(e){}
+    setTimeout(()=>{ try{ postal.focus(); postal.select(); }catch(e){} },300);
+    return;
   }
   err.textContent='';renderSummary('coSummary2');goToStepDirect(2);
 }

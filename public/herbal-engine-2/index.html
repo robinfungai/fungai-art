@@ -1664,6 +1664,17 @@ function saveToLog(){
   };
   formulaLog.unshift(entry);
   try{localStorage.setItem('fungai_log',JSON.stringify(formulaLog));}catch(e){}
+  // Mirror to the shared 'Alchemy Academy' store — same browser, same key
+  // scheme as other site-wide history. Cap to 50 most recent so we don't
+  // outgrow localStorage. The /community/academy/ page reads from this.
+  try{
+    var academyRaw = localStorage.getItem('fungai_alchemy_academy');
+    var academy = academyRaw ? JSON.parse(academyRaw) : [];
+    if (!Array.isArray(academy)) academy = [];
+    academy.unshift({ source:'herbal-engine-2', ...entry });
+    academy = academy.slice(0, 50);
+    localStorage.setItem('fungai_alchemy_academy', JSON.stringify(academy));
+  }catch(e){ console.warn('[alchemy-academy] save failed:', e); }
 }
 function loadLog(){
   try{var raw=localStorage.getItem('fungai_log');if(raw)formulaLog=JSON.parse(raw);}catch(e){formulaLog=[];}

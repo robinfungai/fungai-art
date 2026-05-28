@@ -675,7 +675,7 @@ export default function ForagingApp() {
             borderRadius: 6, padding: '5px 12px', pointerEvents: 'none', whiteSpace: 'nowrap',
           }}>
             <span style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(180,230,150,0.85)', letterSpacing: '0.1em', fontStyle: 'italic' }}>{hoveredSkogsHerb}</span>
-            <span style={{ fontFamily: 'monospace', fontSize: 7.5, color: '#4d5a52', marginLeft: 8, letterSpacing: '0.1em' }}>skogsskafferiet.se</span>
+            <span style={{ fontFamily: 'monospace', fontSize: 7.5, color: '#4d5a52', marginLeft: 8, letterSpacing: '0.1em' }}>citizen observation</span>
           </div>
         )}
 
@@ -825,7 +825,7 @@ export default function ForagingApp() {
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
             <div>
-              <div style={{ fontFamily: 'monospace', fontSize: 7, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#4d5a52' }}>skogsskafferiet.se</div>
+              <div style={{ fontFamily: 'monospace', fontSize: 7, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#4d5a52' }}>Multi-source · live</div>
               <div style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#6BD66F', marginTop: 2 }}>
                 Harvest — {MONTH_SV[currentMonth]}
               </div>
@@ -853,21 +853,12 @@ export default function ForagingApp() {
         </div>
       )}
 
-      {/* Bottom nav links */}
+      {/* Bottom nav links — "← Home" button removed per design call. The
+          nav at the top of the page already covers going back. */}
       <div style={{
         position: 'absolute', bottom: 20, left: 20, zIndex: 10,
         display: 'flex', gap: 8, flexWrap: 'wrap',
       }}>
-        {[
-          { href: '/', label: '← Home' },
-        ].map(({ href, label }) => (
-          <a key={href} href={href} style={{
-            fontSize: 9, fontFamily: 'monospace', letterSpacing: '0.14em', textTransform: 'uppercase',
-            padding: '5px 12px', borderRadius: 4, textDecoration: 'none',
-            background: 'rgba(7,17,13,0.88)', border: '0.5px solid rgba(255,255,255,0.1)', color: '#8B7E62',
-            transition: 'all 0.15s',
-          }}>{label}</a>
-        ))}
         <button onClick={() => setShowHarvest(h => !h)} style={{
           fontSize: 9, fontFamily: 'monospace', letterSpacing: '0.14em', textTransform: 'uppercase',
           padding: '5px 12px', borderRadius: 4, cursor: 'pointer',
