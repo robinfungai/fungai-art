@@ -170,7 +170,137 @@ export default function ForagingApp() {
   const currentMonth = new Date().getMonth() + 1;
   const harvestNow = (HARVEST_BY_MONTH[currentMonth] || []).map(sv => HARVEST_PLANTS[sv]).filter(Boolean);
 
+  // ── ECOLOGICAL INTELLIGENCE LANDING FLOW ──────────────────────────
+  //   "The forest is alive around you" hook.
+  //   On mount: ask for geolocation → fly map to user → fetch weather
+  //   for that point → derive nearest EcoNodes → compose a "Growing
+  //   Around You" species list + a Current Ecological Zone label.
+  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [geoStatus, setGeoStatus] = useState<'idle' | 'requesting' | 'granted' | 'denied' | 'unavailable'>('idle');
+  const [userConditions, setUserConditions] = useState<ForageConditions | null>(null);
+  const [growingPanelOpen, setGrowingPanelOpen] = useState(true);
+
   const mapRef = useRef<any>(null);
+
+  // 1. Ask for geolocation on first mount
+  useEffect(() => {
+    if (!('geolocation' in navigator)) { setGeoStatus('unavailable'); return; }
+    setGeoStatus('requesting');
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+        setGeoStatus('granted');
+      },
+      () => { setGeoStatus('denied'); },
+      { enableHighAccuracy: false, timeout: 8000, maximumAge: 5 * 60 * 1000 }
+    );
+  }, []);
+
+  // 2. When we have user location, fly the map there + fetch weather for
+  //    that point. Independent of selectedNode so the two panels can coexist.
+  useEffect(() => {
+    if (!userLocation) return;
+    if (mapRef.current) {
+      mapRef.current.flyTo({ center: [userLocation.lng, userLocation.lat], zoom: 8, duration: 1800, essential: true });
+    }
+    fetch(`/api/forage-conditions?lat=${userLocation.lat}&lng=${userLocation.lng}`)
+      .then(r => r.json())
+      .then(data => { if (data.score) setUserConditions(data); })
+      .catch(() => {});
+  }, [userLocation]);
+
+  // 3. Derive: nearest EcoNodes (up to 3 within ~250km), the dominant
+  //    habitat, a poetic zone label, and an aggregated species list
+  //    weighted by base probability × season match × weather context.
+  const userInsight = (() => {
+    if (!userLocation) return null;
+    // Haversine distance (km) — quick & dirty
+    const dist = (a: [number, number], b: [number, number]) => {
+      const toRad = (d: number) => d * Math.PI / 180;
+      const R = 6371;
+      const dLat = toRad(b[1] - a[1]); const dLng = toRad(b[0] - a[0]);
+      const h = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(a[1])) * Math.cos(toRad(b[1])) * Math.sin(dLng / 2) ** 2;
+      return 2 * R * Math.asin(Math.sqrt(h));
+    };
+    const userPt: [number, number] = [userLocation.lng, userLocation.lat];
+    const ranked = ECO_NODES
+      .map(n => ({ node: n, km: dist(userPt, n.coordinates) }))
+      .sort((a, b) => a.km - b.km)
+      .slice(0, 3);
+    if (!ranked.length) return null;
+    // Dominant habitat = nearest. Poetic zone names per habitat type.
+    const ZONE_NAMES: Record<HabitatType, string> = {
+      birch_edge: 'Birch-Pine Medicinal Corridor',
+      pine_heath: 'Pine Heath Resin Belt',
+      wetland: 'Wetland Aromatic Zone',
+      deadwood_zone: 'Deadwood Fungal Corridor',
+      boreal_forest: 'Boreal Mycelial Field',
+      meadow: 'Nitrogen Spring Tonic Meadow',
+      coastal: 'Saline Edge Botanical Strip',
+      tropical_forest: 'Equatorial Plant Cathedral',
+      mountain_forest: 'Alpine Conifer Cradle',
+      mediterranean: 'Aromatic Sun-Cured Garrigue',
+      ancient_forest: 'Old-Growth Lichen Sanctum',
+      jungle_edge: 'Jungle Margin Bioactive Belt',
+    };
+    const zoneName = ZONE_NAMES[ranked[0].node.nodeType] || 'Living Ecological Zone';
+
+    // Aggregate species across the 3 nearest nodes, deduped + scored
+    const seasonNow = getCurrentSeason();
+    const rain10d = userConditions?.totalRain10d ?? 0;
+    const rainBoost = rain10d > 25 ? 0.25 : rain10d > 10 ? 0.1 : 0;
+
+    type Scored = {
+      name: string; probability: number; distKm: number; node: EcoNode;
+      inSeason: boolean; medicinal?: boolean; edible?: boolean;
+      isFungal: boolean;
+    };
+    const FUNGAL_HINTS = ['mycelium', 'mushroom', 'fung', 'chag', 'reishi', 'porc', 'morch', 'plurot', 'oyst', 'cantharel', 'chant', 'maitak', 'wood ear', 'birch poly'];
+    const isFungal = (name: string) => FUNGAL_HINTS.some(h => name.toLowerCase().includes(h));
+
+    const scored: Scored[] = [];
+    for (const { node, km } of ranked) {
+      for (const sp of node.species) {
+        const inSeason = sp.peak_season.includes(seasonNow);
+        const fungal = isFungal(sp.name);
+        const base = sp.probability;
+        const seasonMult = inSeason ? 1.2 : 0.55;
+        const distPenalty = Math.max(0.5, 1 - km / 250);
+        const weatherBonus = fungal ? rainBoost : 0;
+        const probability = Math.min(1, base * seasonMult * distPenalty + weatherBonus);
+        scored.push({
+          name: sp.name, probability, distKm: km, node,
+          inSeason, medicinal: sp.medicinal, edible: sp.edible,
+          isFungal: fungal,
+        });
+      }
+    }
+    // Dedupe by species name, keep highest-probability entry
+    const bestByName = new Map<string, Scored>();
+    for (const s of scored) {
+      const prev = bestByName.get(s.name);
+      if (!prev || s.probability > prev.probability) bestByName.set(s.name, s);
+    }
+    const all = [...bestByName.values()].sort((a, b) => b.probability - a.probability);
+
+    return {
+      zoneName,
+      dominantHabitat: ranked[0].node.nodeType,
+      nearestKm: ranked[0].km,
+      highProbability: all.filter(s => s.probability >= 0.6 && s.inSeason && !s.isFungal).slice(0, 6),
+      emergingAfterRain: rainBoost > 0 ? all.filter(s => s.isFungal).slice(0, 5) : [],
+      peakMedicinal: all.filter(s => s.medicinal && s.inSeason).slice(0, 4),
+      allSeasonal: all.filter(s => s.inSeason).slice(0, 12),
+    };
+  })();
+
+  // Conditions string for the "Growing Around You" panel header
+  const conditionsString = userConditions
+    ? `${userConditions.totalRain10d > 25 ? 'Excellent moisture' : userConditions.totalRain10d > 10 ? 'Good moisture' : 'Dry conditions'} · ${Math.round(userConditions.totalRain10d)}mm rain (10d) · ${Math.round(userConditions.tAvg)}°C avg`
+    : geoStatus === 'requesting' ? 'Reading your ecological surroundings…'
+    : geoStatus === 'denied' ? 'Location declined — pick a node manually'
+    : geoStatus === 'unavailable' ? 'Geolocation not available'
+    : '';
 
   const filteredNodes = ECO_NODES.filter(n =>
     habitatFilter === 'all' || n.nodeType === habitatFilter
@@ -356,6 +486,130 @@ export default function ForagingApp() {
         </div>
       </div>
 
+      {/* "Growing Around You" — ecological intelligence overlay.
+          Renders only when user has shared location AND the panel is open.
+          Floats over the map, top-right on desktop / collapsible on mobile. */}
+      {userLocation && growingPanelOpen && userInsight && (
+        <div style={{
+          position: 'absolute', top: 76, right: 16, zIndex: 9,
+          width: 'min(360px, calc(100vw - 32px))',
+          maxHeight: 'calc(100vh - 110px)',
+          overflowY: 'auto',
+          background: 'rgba(7,17,13,0.92)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          border: '0.5px solid rgba(107,214,111,0.25)',
+          borderRadius: 14,
+          padding: '16px 16px 14px',
+          boxShadow: '0 12px 48px rgba(0,0,0,0.55)',
+          color: '#E6D9B5',
+          fontFamily: "'Cormorant Garamond', serif",
+        }}>
+          {/* Close handle */}
+          <button
+            onClick={() => setGrowingPanelOpen(false)}
+            style={{ position: 'absolute', top: 10, right: 12, background: 'none', border: 'none', color: '#8B7E62', fontSize: 18, cursor: 'pointer', lineHeight: 1 }}
+            title="Hide panel"
+          >×</button>
+
+          <div style={{ fontFamily: 'monospace', fontSize: 8.5, letterSpacing: '0.28em', textTransform: 'uppercase', color: '#6BD66F', marginBottom: 6 }}>
+            ✦ Growing around you · right now
+          </div>
+          <div style={{ fontStyle: 'italic', fontSize: 19, lineHeight: 1.15, color: '#E6D9B5' }}>
+            {userInsight.zoneName}
+          </div>
+          <div style={{ fontFamily: 'monospace', fontSize: 9.5, letterSpacing: '0.06em', color: '#8B7E62', marginTop: 6, lineHeight: 1.55 }}>
+            {conditionsString}
+          </div>
+
+          {/* High probability — leafy plants in season */}
+          {userInsight.highProbability.length > 0 && (
+            <div style={{ marginTop: 16 }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#6BD66F', marginBottom: 6 }}>
+                High probability
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                {userInsight.highProbability.map(s => (
+                  <div key={s.name} style={{ display: 'flex', alignItems: 'baseline', gap: 8, padding: '6px 10px', background: 'rgba(107,214,111,0.05)', border: '0.5px solid rgba(107,214,111,0.18)', borderRadius: 6 }}>
+                    <span style={{ fontSize: 13, color: '#E6D9B5', flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.name}</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6BD66F', flexShrink: 0 }}>{Math.round(s.probability * 100)}%</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 8.5, color: '#4d5a52', flexShrink: 0 }}>{s.distKm < 10 ? '<10' : Math.round(s.distKm)}km</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Emerging after rain — fungal flush */}
+          {userInsight.emergingAfterRain.length > 0 && (
+            <div style={{ marginTop: 16 }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#C48838', marginBottom: 6 }}>
+                Emerging after rain
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                {userInsight.emergingAfterRain.map(s => (
+                  <div key={s.name} style={{ display: 'flex', alignItems: 'baseline', gap: 8, padding: '6px 10px', background: 'rgba(196,136,56,0.06)', border: '0.5px solid rgba(196,136,56,0.22)', borderRadius: 6 }}>
+                    <span style={{ fontSize: 13, color: '#E6D9B5', flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.name}</span>
+                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#E8B14B', flexShrink: 0 }}>{Math.round(s.probability * 100)}%</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Peak medicinal window */}
+          {userInsight.peakMedicinal.length > 0 && (
+            <div style={{ marginTop: 16 }}>
+              <div style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#A88FE0', marginBottom: 6 }}>
+                Peak medicinal window
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+                {userInsight.peakMedicinal.map(s => (
+                  <span key={s.name} style={{ fontSize: 11, padding: '4px 9px', borderRadius: 99, background: 'rgba(168,143,224,0.08)', border: '0.5px solid rgba(168,143,224,0.3)', color: '#C5B5F5', fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic' }}>
+                    {s.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Distance hint */}
+          <div style={{ marginTop: 16, paddingTop: 10, borderTop: '0.5px solid rgba(255,255,255,0.06)', fontFamily: 'monospace', fontSize: 8.5, color: '#4d5a52', lineHeight: 1.6 }}>
+            Nearest ecological node {Math.round(userInsight.nearestKm)}km away.
+            Tap any pin on the map for full habitat detail.
+          </div>
+        </div>
+      )}
+
+      {/* Reopen-panel handle when closed */}
+      {userLocation && !growingPanelOpen && userInsight && (
+        <button
+          onClick={() => setGrowingPanelOpen(true)}
+          style={{
+            position: 'absolute', top: 76, right: 16, zIndex: 9,
+            background: 'rgba(7,17,13,0.92)', backdropFilter: 'blur(14px)',
+            border: '0.5px solid rgba(107,214,111,0.35)', borderRadius: 99,
+            padding: '8px 16px', color: '#6BD66F', cursor: 'pointer',
+            fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.22em', textTransform: 'uppercase',
+          }}
+        >
+          ✦ Growing around you
+        </button>
+      )}
+
+      {/* Geolocation status pill — small unobtrusive feedback while requesting */}
+      {geoStatus === 'requesting' && (
+        <div style={{
+          position: 'absolute', top: 76, right: 16, zIndex: 9,
+          background: 'rgba(7,17,13,0.92)', backdropFilter: 'blur(14px)',
+          border: '0.5px solid rgba(107,214,111,0.25)', borderRadius: 99,
+          padding: '8px 16px', color: '#8B7E62',
+          fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.22em', textTransform: 'uppercase',
+        }}>
+          ✦ Reading ecological surroundings…
+        </div>
+      )}
+
       {/* Map */}
       <Map
         ref={mapRef}
@@ -364,6 +618,34 @@ export default function ForagingApp() {
         mapStyle={mapMode === 'satellite' ? SATELLITE_STYLE : MAP_STYLE}
       >
         <NavigationControl position="bottom-right" style={{ marginBottom: 80 }} />
+
+        {/* "You are here" marker — soft amber pulse so the user always
+            knows where they're standing in the ecological field. */}
+        {userLocation && (
+          <Marker longitude={userLocation.lng} latitude={userLocation.lat} anchor="center">
+            <div style={{ position: 'relative', width: 14, height: 14 }} title="You are here">
+              <div style={{
+                position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+                width: 36, height: 36, borderRadius: '50%',
+                border: '1px solid #E8B14B', opacity: 0.5,
+                animation: 'youHerePulse 2.6s ease-out infinite',
+                pointerEvents: 'none',
+              }} />
+              <div style={{
+                width: 14, height: 14, borderRadius: '50%',
+                background: 'radial-gradient(circle at 35% 35%, #FFD680, #E8B14B 70%)',
+                boxShadow: '0 0 14px rgba(232,177,75,0.65)',
+                border: '1px solid rgba(255,255,255,0.4)',
+              }} />
+              <style>{`
+                @keyframes youHerePulse {
+                  0%   { transform: translate(-50%,-50%) scale(1);   opacity: 0.55; }
+                  100% { transform: translate(-50%,-50%) scale(2.4); opacity: 0;    }
+                }
+              `}</style>
+            </div>
+          </Marker>
+        )}
 
         {/* Skogsskafferiet community observation dots — always visible layer */}
         {showSkogsObs && SKOGSSKAFFERIET_OBS.map(entry =>

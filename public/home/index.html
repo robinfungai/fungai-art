@@ -262,7 +262,16 @@ p { line-height: 1.75; color: var(--mist); }
   display: flex; align-items: center; justify-content: space-between; height: 100%;
 }
 .nav-brand { display: flex; align-items: center; gap: 12px; }
-.nav-brand img { height: 58px; width: auto; object-fit: contain; opacity: 1; }
+.nav-brand img {
+  height: 58px; width: auto; object-fit: contain; opacity: 1;
+  /* Give the mushroom logo presence on the dark nav. Without this it
+     reads as a flat silhouette ("hollow"). Soft amber glow + slight
+     contrast boost make it feel like a lit lantern instead. */
+  filter:
+    drop-shadow(0 0 14px rgba(212,175,55,0.45))
+    drop-shadow(0 0 4px rgba(255,255,255,0.18))
+    contrast(1.05);
+}
 .nav-brand .brand-text { display: flex; flex-direction: column; gap: 3px; }
 .nav-brand .main { font-family: 'TAN-PARADISO', 'Kiona', 'Cormorant Garamond', serif; font-size: 24px; color: var(--parchment); line-height: 1; letter-spacing: 0.02em; }
 .nav-brand .sub { font-family: 'Bayer', var(--sans); font-size: 8px; letter-spacing: 0.42em; text-transform: uppercase; color: var(--amber-lt); font-weight: 400; }

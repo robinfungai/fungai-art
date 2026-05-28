@@ -167,21 +167,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 .bphm{position:relative;width:100%;aspect-ratio:1;margin-bottom:1rem}
 .bphm-z{
   position:absolute;width:59%;aspect-ratio:1;border-radius:50%;cursor:pointer;overflow:hidden;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:11%;
   box-shadow:0 16px 56px rgba(0,0,0,.55);
   transition:filter .22s,transform .22s cubic-bezier(.22,.9,.36,1);user-select:none
 }
-.bphm-z:hover{filter:brightness(1.12);transform:scale(1.04)}
+.bphm-z:hover{filter:brightness(1.12);transform:scale(1.04);z-index:5}
 .bphm-z:active{transform:scale(.93)}
-.bphm-z.sel{box-shadow:0 0 0 3px rgba(255,255,255,.55),0 16px 56px rgba(0,0,0,.55)}
+.bphm-z.sel{box-shadow:0 0 0 3px rgba(255,255,255,.55),0 16px 56px rgba(0,0,0,.55);z-index:6}
 .bphm-z[data-id="hot"]     {top:2%;left:2%}
 .bphm-z[data-id="mixed"]   {top:2%;right:2%}
 .bphm-z[data-id="cold"]    {bottom:2%;left:2%}
 .bphm-z[data-id="depleted"]{bottom:2%;right:2%}
-.bphm-words{display:flex;flex-wrap:wrap;gap:3px;justify-content:center;margin-bottom:5px}
-.bphm-w{font-size:9px;padding:2px 7px;border-radius:100px;background:rgba(255,255,255,.13);color:rgba(255,255,255,.7);white-space:nowrap}
-.bphm-name{font-size:12px;font-weight:700;color:rgba(255,255,255,.94);text-align:center;line-height:1.2}
-.bphm-sub{font-size:9px;color:rgba(255,255,255,.45);text-align:center;margin-top:2px;line-height:1.3}
+/* Constrain inner content to the centred visible zone of each circle
+   (where it isn't covered by neighbours) so no words clip mid-letter. */
+.bphm-words{display:flex;flex-wrap:wrap;gap:3px;justify-content:center;margin-bottom:5px;max-width:74%;margin-left:auto;margin-right:auto}
+.bphm-w{font-size:8.5px;padding:2px 6px;border-radius:100px;background:rgba(255,255,255,.13);color:rgba(255,255,255,.7);white-space:nowrap}
+.bphm-name{font-size:12px;font-weight:700;color:rgba(255,255,255,.94);text-align:center;line-height:1.2;max-width:80%}
+.bphm-sub{font-size:9px;color:rgba(255,255,255,.45);text-align:center;margin-top:2px;line-height:1.3;max-width:80%}
 /* legacy — kept for sub-circle reveal */
 .body-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:.9rem}
 .bpcard{border-radius:50%;aspect-ratio:1;cursor:pointer;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.1rem;border:none!important;box-shadow:0 14px 52px rgba(0,0,0,.5);transition:transform .28s cubic-bezier(.22,.9,.36,1),filter .2s;user-select:none}
@@ -509,13 +511,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 
 <!-- S0: INTENTION (sub-tray is inline — no navigation to s0b) -->
 <div id="s0" class="step vis">
-  <div style="max-width:62ch;margin:0 auto 1.8rem;text-align:center;padding:0 1rem;">
-    <p style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:clamp(15px,2.2vw,18px);color:#C9B894;line-height:1.7;letter-spacing:0.005em;">
-      The Herbal Engine is your conversation with our 142-plant materia medica.
-      Tell it what you need — physically, emotionally, ceremonially — and it
-      composes a tailored formula from wild-foraged extracts, mushroom intelligence,
-      and spagyric essences. Built from the same database as the Mixology page,
-      cross-checked for synergies and contraindications.
+  <div style="max-width:44ch;margin:0 auto 1.1rem;text-align:center;padding:0 1rem;">
+    <p style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:clamp(13px,1.8vw,15px);color:#C9B894;line-height:1.55;letter-spacing:0.005em;margin:0;">
+      A conversation with our 154-plant materia medica. Tell it what you need —
+      physical, emotional, ceremonial — and it composes a tailored formula
+      from wild-foraged extracts, mushroom intelligence, and spagyric essences.
+    </p>
+    <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:#6a6356;margin:.7rem 0 0;line-height:1.55;">
+      Same source as Mixology · cross-checked for synergies and contraindications
     </p>
   </div>
   <div class="sn" id="sn0">What do you need right now?</div>
@@ -970,6 +973,19 @@ function toggleStock(){
   document.getElementById('stockPanel').classList.toggle('open',stockOpen);
   document.getElementById('stockToggle').classList.toggle('on',stockOpen);
   if(stockOpen)renderStock('');
+}
+// Mobile ⚙ gear: opens/closes the #mobileControls panel that holds
+// Standard / Advanced / Practitioner / Stock + pool buttons. This
+// function was being called from the gear's onclick but had never
+// been defined — so tapping the gear silently errored and the panel
+// stayed hidden, making the mode controls unreachable on phones.
+function toggleMobileControls(){
+  var el = document.getElementById('mobileControls');
+  if (!el) return;
+  var open = el.style.display === 'flex';
+  el.style.display = open ? 'none' : 'flex';
+  var btn = document.getElementById('mobileToggle');
+  if (btn) btn.style.color = open ? 'var(--text2)' : 'var(--accent, #6ed089)';
 }
 function saveCustomStock(){try{localStorage.setItem('fungai_trypexpo',JSON.stringify([...customStock]));}catch(e){}}
 function stockAll(){customStock=new Set(HB.map(h=>h.id));saveCustomStock();renderStock(document.getElementById('spSearch').value||'');updateCounts();}
@@ -1551,7 +1567,21 @@ function renderFormula(){
     serveBlock='<div class="serve-block"><div style="font-size:12px;font-weight:500;margin-bottom:8px">◌ Elixir protocol</div><div class="ss"><div class="ss-n">1</div><div class="ss-t">30–40 drops directly or in a small glass of water</div></div><div class="ss"><div class="ss-n">2</div><div class="ss-t">Hold briefly in the mouth before swallowing</div></div><div class="ss"><div class="ss-n">3</div><div class="ss-t">'+tim+'</div></div></div>';
   }
 
-  var tradToggle='<div style="margin-bottom:.8rem"><div style="font-size:9px;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">Filter by tradition</div><div class="trad-row"><div class="tt on" id="tt_all" onclick="setPhiFilter(\'all\')">All</div><div class="tt" id="tt_european" onclick="setPhiFilter(\'european\')">European folk</div><div class="tt" id="tt_tcm" onclick="setPhiFilter(\'tcm\')">Chinese medicine</div><div class="tt" id="tt_ayurvedic" onclick="setPhiFilter(\'ayurvedic\')">Ayurvedic</div></div></div>';
+  // Tradition toggle — active state derives from activePhiFilter so it
+  // doesn't get wiped on re-render. Rendered ABOVE the formula now (used
+  // to be mid-page) so it's reachable without scrolling — important on mobile.
+  var pf = activePhiFilter || 'all';
+  var ttCls = function(id){ return 'tt' + (pf === id ? ' on' : ''); };
+  var tradToggle =
+    '<div class="trad-toggle-wrap" style="margin:0 auto 14px;max-width:760px;padding:0 4px">' +
+      '<div style="font-size:8.5px;color:var(--text3);letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px;text-align:center">Filter by tradition</div>' +
+      '<div class="trad-row" style="justify-content:center">' +
+        '<div class="' + ttCls('all')       + '" id="tt_all"       onclick="setPhiFilter(\'all\')">All</div>' +
+        '<div class="' + ttCls('european')  + '" id="tt_european"  onclick="setPhiFilter(\'european\')">European folk</div>' +
+        '<div class="' + ttCls('tcm')       + '" id="tt_tcm"       onclick="setPhiFilter(\'tcm\')">Chinese medicine</div>' +
+        '<div class="' + ttCls('ayurvedic') + '" id="tt_ayurvedic" onclick="setPhiFilter(\'ayurvedic\')">Ayurvedic</div>' +
+      '</div>' +
+    '</div>';
 
   var formulaColHtml=
     '<div class="fhdr"><div class="ft">'+io.name+' formula</div><div class="fs">'+name+' · '+S.formula.length+' '+(hasMush?'herbs & mushrooms':'herbs')+' · '+poolLabel+'</div></div>'+
@@ -1568,7 +1598,10 @@ function renderFormula(){
 
   // Formula art card — atmospheric canvas + bottle for all delivery types
   var bottleColHtml='<div class="result-bottle-col">'+genFormulaArt(name,S.formula,S.int,S.delivery)+'</div>';
-  out.innerHTML='<div class="result-grid">'+bottleColHtml+'<div class="result-formula-col">'+formulaColHtml+'</div></div>'+serveBlock+tradToggle+'<div class="mcards"><div class="mc"><div class="ml">Herbs</div><div class="mv">'+S.formula.length+'</div></div><div class="mc"><div class="ml">Pool</div><div class="mv">'+poolLabel+' · '+getPool().length+'</div></div><div class="mc"><div class="ml">Safety</div><div class="mv">'+flags.length+' filters</div></div></div>';
+  // Tradition toggle now rendered FIRST (above the result grid) so it's
+  // visible immediately when the formula appears — especially on mobile,
+  // where the formula card is tall and pushes everything below the fold.
+  out.innerHTML=tradToggle+'<div class="result-grid">'+bottleColHtml+'<div class="result-formula-col">'+formulaColHtml+'</div></div>'+serveBlock+'<div class="mcards"><div class="mc"><div class="ml">Herbs</div><div class="mv">'+S.formula.length+'</div></div><div class="mc"><div class="ml">Pool</div><div class="mv">'+poolLabel+' · '+getPool().length+'</div></div><div class="mc"><div class="ml">Safety</div><div class="mv">'+flags.length+' filters</div></div></div>';
 
   // Wire up copy button
   document.getElementById('explainBtn').onclick=doExplain;
@@ -1768,19 +1801,63 @@ function init(){
 init();
 
 /* ─── SYMPTOM SEARCH ──────────────────────────────────────── */
+// Each category has a much broader vocabulary now — includes word stems
+// (e.g. 'motivat' catches motivation/motivated/unmotivated/demotivated),
+// colloquial phrases ("can't get going"), and adjacent concepts (workout,
+// gym, exercise → libido cluster). Matcher (symScore) does substring
+// search, so stems work without regex.
 const SYM_MAP=[
-  {cat:'Low Energy',     int:'energy',   keys:['fatigue','tired','exhausted','no energy','low energy','lethargy','sluggish','depleted','weak','drained','burnout','run down','chronic fatigue','adrenal','worn out','wired but tired']},
-  {cat:'Mood',           int:'mood',     keys:['mood','depression','depressed','sad','flat','melancholy','mood swing','irritable','emotional','low mood','blues','hopeless','tearful','grief','unmotivated']},
-  {cat:'Focus & Memory', int:'cognitive',keys:['focus','concentration','memory','brain fog','attention','clarity','distracted','forgetful','cognitive','concentrate','mental','recall','learning','think','fuzzy']},
-  {cat:'Stress',         int:'stress',   keys:['stress','overwhelmed','pressure','tense','wound up','overloaded','burnout','tension','on edge','reactive']},
-  {cat:'Anxiety',        int:'anxiety',  keys:['anxiety','anxious','worried','nervous','restless','panic','racing','fearful','dread','agitation','jittery','social anxiety','overthink']},
-  {cat:'Sleep',          int:'sleep',    keys:['sleep','insomnia','sleepless','wake up','cant sleep','poor sleep','night','night waking','rest','nighttime','dream','no sleep','tired in morning']},
-  {cat:'Hormonal',       int:'hormones', keys:['hormone','hormonal','cycle','period','pms','menopause','estrogen','testosterone','libido','menstrual','irregular','hot flash','peri']},
-  {cat:'Digestion',      int:'digestion',keys:['digest','gut','stomach','bloat','ibs','constipation','bowel','nausea','cramp','gas','acid','reflux','microbiome','intestinal','gut health']},
-  {cat:'Immunity',       int:'immunity', keys:['immune','immunity','sick','illness','infection','cold','flu','virus','recurring','inflammation','inflamed','catches every']},
-  {cat:'Pain',           int:'pain',     keys:['pain','headache','migraine','ache','arthritis','stiff','sore','chronic pain','joint','muscle','nerve','tension headache','back pain']},
-  {cat:'Skin',           int:'beauty',   keys:['skin','acne','eczema','dry skin','glow','beauty','complexion','hair','rash','breakout','aging','dull skin']},
-  {cat:'Detox',          int:'detox',    keys:['detox','liver','toxin','cleanse','heavy metal','hangover','sluggish liver','gallbladder','bile','clear out']},
+  {cat:'Low Energy',     int:'energy',   keys:[
+    'fatigue','tired','exhausted','no energy','low energy','lethargy','sluggish','depleted','weak','drained','burnout','run down','chronic fatigue','adrenal','worn out','wired but tired',
+    'no drive','low drive','no stamina','low stamina','can\'t get going','cant get going','slow start','heavy limbs','no juice','no spark','flat energy','no get up','sleepy in day','daytime tired','low vitality','no vigor','no vigour',
+    'workout','exercise','gym','training','can\'t train','cant train','no motivation to exercise','can\'t work out','no recovery','post workout','recovery'
+  ]},
+  {cat:'Mood',           int:'mood',     keys:[
+    'mood','depression','depressed','sad','flat','melancholy','mood swing','irritable','emotional','low mood','blues','hopeless','tearful','grief','unmotivated',
+    'motivat','demotivat','no joy','anhedonia','numb','empty','dark','heavy heart','no spark joy','lost interest','indifferent','low spirits','can\'t enjoy','cant enjoy','apathy','apathetic','listless','withdrawn','isolated','meaningless','pointless','crying'
+  ]},
+  {cat:'Focus & Memory', int:'cognitive',keys:[
+    'focus','concentration','memory','brain fog','attention','clarity','distracted','forgetful','cognitive','concentrate','mental','recall','learning','think','fuzzy',
+    'foggy','spacey','spaced out','blank','mental fatigue','can\'t think','cant think','slow thinking','sluggish mind','adhd','add\b','dyslexia','word finding','can\'t remember','cant remember','scatter','scattered','dazed','dissociat','overwhelm cognitive'
+  ]},
+  {cat:'Stress',         int:'stress',   keys:[
+    'stress','overwhelmed','pressure','tense','wound up','overloaded','burnout','tension','on edge','reactive',
+    'high cortisol','cortisol','tight shoulders','jaw clench','grinding teeth','bruxism','can\'t relax','cant relax','always on','keyed up','wired','frazzled','snapping','short fuse','irritated','strung out'
+  ]},
+  {cat:'Anxiety',        int:'anxiety',  keys:[
+    'anxiety','anxious','worried','nervous','restless','panic','racing','fearful','dread','agitation','jittery','social anxiety','overthink',
+    'racing thoughts','racing mind','can\'t stop thinking','cant stop thinking','catastrophis','catastrophiz','existential','heart racing','chest tight','tightness chest','butterflies','knot stomach','knotted stomach','clamm','sweating palm','rumination','ruminat','health anxiety','phobia','fear','scared','spiraling','spiralling'
+  ]},
+  {cat:'Sleep',          int:'sleep',    keys:[
+    'sleep','insomnia','sleepless','wake up','cant sleep','can\'t sleep','poor sleep','night','night waking','rest','nighttime','dream','no sleep','tired in morning',
+    'restless sleep','tossing','toss and turn','3am','4am wake','wake at night','vivid dreams','nightmares','sleep onset','cant fall asleep','can\'t fall asleep','can\'t stay asleep','cant stay asleep','jet lag','jetlag','shift work','wake unrefreshed','un-refreshing','un refreshing','snore','snoring','sleep apnea','wake exhausted'
+  ]},
+  {cat:'Hormonal',       int:'hormones', keys:[
+    'hormone','hormonal','cycle','period','pms','menopause','estrogen','testosterone','libido','menstrual','irregular','hot flash','peri',
+    // The user's complaint: "low sexual drive" wasn't matching. Fix here.
+    'sex drive','sexual drive','low sex','sex','sexual','arousal','desire','no desire','libido low','low libido','erectile','ed\b','impoten','orgasm','vaginal','dryness','testosterone low','low t','horny','horniness','sensuality','intimacy','intimate','attraction','sexless',
+    'cramps','heavy period','spotting','missed period','amenorrhea','endometrios','pcos','polycystic','fertility','infertil','conceiv','ovulation','luteal','follicular','prolactin','dhea','thyroid hormone','hot flush','night sweat','mood swings cycle','breast tender','bloat cycle'
+  ]},
+  {cat:'Digestion',      int:'digestion',keys:[
+    'digest','gut','stomach','bloat','ibs','constipation','bowel','nausea','cramp','gas','acid','reflux','microbiome','intestinal','gut health',
+    'sibo','leaky gut','candida','dysbios','diarrh','loose stool','heartburn','gerd','gastritis','ulcer','h pylori','flatulen','burp','belch','undigested','food sensitiv','food intoleran','histamine','low stomach acid','heavy after meals','sluggish bowel','no appetite','overeat','sugar craving','crav','gut feeling'
+  ]},
+  {cat:'Immunity',       int:'immunity', keys:[
+    'immune','immunity','sick','illness','infection','cold','flu','virus','recurring','inflammation','inflamed','catches every',
+    'always sick','always ill','frequent','recurrent','autoimmune','allerg','histamin','hayfever','hay fever','sinus','sinusitis','chronic sinus','lyme','eb','epstein barr','mold','mould','mast cell','mcas','long covid','post-viral','post viral','low wbc','wbc'
+  ]},
+  {cat:'Pain',           int:'pain',     keys:[
+    'pain','headache','migraine','ache','arthritis','stiff','sore','chronic pain','joint','muscle','nerve','tension headache','back pain',
+    'fibromyalg','endometrios','cramp pain','sciatic','tennis elbow','plantar','tmj','jaw pain','neuropath','rheumat','gout','tendon','tendinit','bursit','pelvic','sore back','aching','aches everywhere','body aches','flu-like pain'
+  ]},
+  {cat:'Skin',           int:'beauty',   keys:[
+    'skin','acne','eczema','dry skin','glow','beauty','complexion','hair','rash','breakout','aging','dull skin',
+    'wrinkle','collagen','elastin','psoriasis','dermatit','rosacea','keratosis','hair loss','hair thinning','alopec','brittle hail','brittle hair','nails','brittle nail','dark circle','puffy eye','sagging','sallow','tone uneven','hyperpigment'
+  ]},
+  {cat:'Detox',          int:'detox',    keys:[
+    'detox','liver','toxin','cleanse','heavy metal','hangover','sluggish liver','gallbladder','bile','clear out',
+    'glutathion','mercury','lead','aluminum','aluminium','mould detox','mold detox','alcohol recover','phase 1','phase 2','sulphat','sulfat','methylation','mthfr','liver stagnation','liver qi','sluggish lymph','lymph','dry brush'
+  ]},
 ];
 function symOpen(){
   document.getElementById('symOverlay').classList.add('open');

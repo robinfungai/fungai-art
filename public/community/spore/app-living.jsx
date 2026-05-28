@@ -1747,6 +1747,35 @@ function MembersPage({ currentMember, economy }) {
 
   const isAdmin = currentMember.admin;
 
+  // ── Supabase auth state — MUST be declared BEFORE the admin-sheet early
+  //    return below, otherwise the second render (when an admin taps a
+  //    member card) skips these hooks and React throws
+  //    "Rendered fewer hooks than expected". Classic Rules-of-Hooks bug.
+  const [sbUser, setSbUser] = useState(null);
+  const [signInEmail, setSignInEmail] = useState('');
+  const [signInBusy, setSignInBusy] = useState(false);
+  useEffect(() => {
+    if (!window.SBauth) return;
+    let unsub;
+    (async () => {
+      const u = await window.SBauth.getUser();
+      setSbUser(u);
+      // Auto-open editor for fresh signed-in users who have no linked profile yet
+      // (this is the post-magic-link landing flow). Detect either:
+      //   ?signedin=1 → legacy implicit-flow marker we append to emailRedirectTo
+      //   ?code=...   → PKCE flow auth code (auto-stripped by supabase-js after exchange,
+      //                 but present on initial mount so we can use it as a trigger)
+      const qs = window.location.search;
+      const cameFromMagicLink = qs.includes('signedin') || qs.includes('code=');
+      if (u && !isLinked && !myProfile && cameFromMagicLink) {
+        setTimeout(() => setShowProfileEditor(true), 800);
+      }
+      const sub = window.SBauth.onAuthChange(({ user }) => setSbUser(user));
+      unsub = sub?.data?.subscription?.unsubscribe?.bind(sub.data.subscription);
+    })();
+    return () => { if (unsub) try { unsub(); } catch {} };
+  }, []);
+
   // Admin profile modal
   if (viewProfile && isAdmin) {
     const m     = viewProfile;
@@ -1865,31 +1894,8 @@ function MembersPage({ currentMember, economy }) {
       }
     : myProfile;
 
-  // Supabase auth state
-  const [sbUser, setSbUser] = useState(null);
-  const [signInEmail, setSignInEmail] = useState('');
-  const [signInBusy, setSignInBusy] = useState(false);
-  useEffect(() => {
-    if (!window.SBauth) return;
-    let unsub;
-    (async () => {
-      const u = await window.SBauth.getUser();
-      setSbUser(u);
-      // Auto-open editor for fresh signed-in users who have no linked profile yet
-      // (this is the post-magic-link landing flow). Detect either:
-      //   ?signedin=1 → legacy implicit-flow marker we append to emailRedirectTo
-      //   ?code=...   → PKCE flow auth code (auto-stripped by supabase-js after exchange,
-      //                 but present on initial mount so we can use it as a trigger)
-      const qs = window.location.search;
-      const cameFromMagicLink = qs.includes('signedin') || qs.includes('code=');
-      if (u && !isLinked && !myProfile && cameFromMagicLink) {
-        setTimeout(() => setShowProfileEditor(true), 800);
-      }
-      const sub = window.SBauth.onAuthChange(({ user }) => setSbUser(user));
-      unsub = sub?.data?.subscription?.unsubscribe?.bind(sub.data.subscription);
-    })();
-    return () => { if (unsub) try { unsub(); } catch {} };
-  }, []);
+  // sbUser / signInEmail / signInBusy / their useEffect were hoisted above
+  // the admin-sheet early return — see the block right after `isAdmin =`.
   async function handleSignIn(e) {
     e.preventDefault();
     if (!signInEmail.includes('@')) { alert('Enter a valid email'); return; }
