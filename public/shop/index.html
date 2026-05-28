@@ -793,8 +793,32 @@ function goToStepDirect(n){
   document.getElementById('coTitle')=['Your details','Payment','Order confirmed'][n-1];
   document.getElementById('coModal').scrollTop=0;
 }
-function openCheckout(){if(!cart.length){showToast('Basket is empty');return}closeCart();renderSummary('coSummary1');renderSummary('coSummary2');goToStepDirect(1);document.getElementById('coOverlay').classList.add('open');setTimeout(initStripe,200);fetchCryptoRates();clearInterval(window._ri);window._ri=setInterval(fetchCryptoRates,60000)}
-function closeCheckout(){document.getElementById('coOverlay').classList.remove('open');clearInterval(window._ri)}
+function openCheckout(){
+  if(!cart.length){showToast('Basket is empty');return}
+  // OPEN THE OVERLAY FIRST so the modal is always visible, even if
+  // a sub-step (rendering, Stripe init, crypto rates) silently fails.
+  // Previously a thrown error before classList.add('open') left the user
+  // staring at a closed cart with nothing happening.
+  closeCart();
+  var overlay = document.getElementById('coOverlay');
+  if (overlay) overlay.classList.add('open');
+  // Lock body scroll so the page underneath doesn't fight the modal on mobile.
+  document.body.style.overflow = 'hidden';
+  try { renderSummary('coSummary1'); } catch(e) { console.error('[checkout] renderSummary 1 failed:', e); }
+  try { renderSummary('coSummary2'); } catch(e) { console.error('[checkout] renderSummary 2 failed:', e); }
+  try { goToStepDirect(1); } catch(e) { console.error('[checkout] goToStepDirect failed:', e); }
+  setTimeout(function(){ try { initStripe(); } catch(e) { console.error('[checkout] initStripe failed:', e); } }, 200);
+  try { fetchCryptoRates(); } catch(e) { console.error('[checkout] fetchCryptoRates failed:', e); }
+  clearInterval(window._ri);
+  window._ri = setInterval(fetchCryptoRates, 60000);
+}
+function closeCheckout(){
+  var overlay=document.getElementById('coOverlay');
+  if(overlay) overlay.classList.remove('open');
+  // Restore page scroll when the modal closes.
+  document.body.style.overflow='';
+  clearInterval(window._ri);
+}
 document.getElementById('coOverlay').addEventListener('click',function(e){if(e.target===this)closeCheckout()});
 function goToStep1(){goToStepDirect(1)}
 function goToStep2(){

@@ -283,13 +283,17 @@ p { line-height: 1.75; color: var(--mist); }
   z-index: 0;
 }
 .nav-brand img {
-  height: 62px; width: auto; object-fit: contain; opacity: 1;
-  position: relative; z-index: 1;
-  filter:
-    drop-shadow(0 0 8px rgba(232,177,75,0.55))
-    drop-shadow(0 0 2px rgba(255,255,255,0.4))
-    contrast(1.1)
-    brightness(1.08);
+  height: 56px;
+  width: 56px;
+  object-fit: cover;
+  border-radius: 50%;
+  position: relative;
+  z-index: 1;
+  /* logo-march.jpg has a white background — make it a round framed token
+     instead of a flat rectangle. Subtle amber ring + glow ties it to the
+     brand palette. */
+  border: 1px solid rgba(232,177,75,0.5);
+  box-shadow: 0 0 12px rgba(232,177,75,0.35), 0 2px 8px rgba(0,0,0,0.4);
 }
 .nav-brand .brand-text { display: flex; flex-direction: column; gap: 3px; }
 .nav-brand .main { font-family: 'TAN-PARADISO', 'Kiona', 'Cormorant Garamond', serif; font-size: 24px; color: var(--parchment); line-height: 1; letter-spacing: 0.02em; }
@@ -1103,7 +1107,7 @@ p { line-height: 1.75; color: var(--mist); }
 <nav class="nav" id="mainNav">
   <div class="wrap nav-inner">
     <a href="/" class="nav-brand">
-      <img src="/assets/fungai-art-logo.png" alt="Fungai Art" onerror="this.src='/logo.png';this.style.filter='brightness(0) invert(1) sepia(0.2)';this.style.height='46px'">
+      <img src="/logo-march.jpg" alt="Fungai Art" onerror="this.src='/fungai-art-logo.png'">
       <div class="brand-text">
         <span class="main">Fungai Art</span>
         <span class="sub">Gaia's Apo'takecare'y</span>
@@ -1790,18 +1794,18 @@ p { line-height: 1.75; color: var(--mist); }
           style="background:#fff;border:0;border-radius:14px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;min-width:280px;padding:0;width:100%;">
         </blockquote>
       </div>
-      <!-- Pinned post 2 -->
+      <!-- Pinned post 2 — Robin & Steph post DO6ApsxDDdd -->
       <div class="spore-embed">
         <blockquote class="instagram-media" data-instgrm-captioned
-          data-instgrm-permalink="https://www.instagram.com/fungai.art/"
+          data-instgrm-permalink="https://www.instagram.com/p/DO6ApsxDDdd/?utm_source=ig_embed"
           data-instgrm-version="14"
           style="background:#fff;border:0;border-radius:14px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;min-width:280px;padding:0;width:100%;">
         </blockquote>
       </div>
-      <!-- Pinned post 3 -->
+      <!-- Pinned post 3 — reel DXe14z9jG2H -->
       <div class="spore-embed">
         <blockquote class="instagram-media" data-instgrm-captioned
-          data-instgrm-permalink="https://www.instagram.com/fungai.art/"
+          data-instgrm-permalink="https://www.instagram.com/reel/DXe14z9jG2H/?utm_source=ig_embed"
           data-instgrm-version="14"
           style="background:#fff;border:0;border-radius:14px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;min-width:280px;padding:0;width:100%;">
         </blockquote>
