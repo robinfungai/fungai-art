@@ -33,56 +33,56 @@ function ProceduralMark({ size = 28, seed }) {
   );
 }
 
-/* — Simplified continent polygons [lon, lat] — */
+/* — Simplified continent polygons [lon, lat] —
+   Per recent design pass: Australia + New Zealand + far-east Indonesia
+   shapes (Borneo, New Guinea, Philippines, Sumatra, Bali) removed since
+   we have no active nodes there and they cluttered the negative space.
+   Polygons subdivided with more intermediate points for smoother edges
+   when rendered as connected lineTo segments. */
 const LAND = [
-  // Europe
-  [[-10,35],[10,36],[20,38],[28,37],[37,38],[40,38],[36,44],[28,44],[26,48],[24,54],[10,55],[8,58],[15,70],[30,70],[28,65],[22,58],[14,55],[8,55],[5,58],[0,51],[-5,48],[-9,37],[-10,35]],
-  // UK
-  [[-5,50],[2,51],[2,57],[-2,58],[-5,57],[-5,50]],
-  // Scandinavia
-  [[5,57],[8,62],[15,70],[28,71],[32,65],[26,58],[15,55],[8,55],[5,57]],
+  // Europe — denser outline along the Atlantic / Med / Baltic
+  [[-10,35],[-7,36.5],[-3,36],[2,36],[6,37],[10,36],[14,37.5],[18,38],[22,38.5],[26,37.5],[30,37],[33,36.5],[37,38],[40,38],[38,40],[36,42],[34,43],[31,44],[28,44],[26,46],[26,48],[25,50],[24,52],[22,54],[18,55],[14,55],[10,55],[6,56],[3,58],[6,60],[10,62],[14,64],[18,66],[22,68],[26,69],[30,70],[28,67],[26,64],[22,60],[18,58],[14,56],[10,55],[6,54],[2,52],[-1,51],[-4,49],[-6,46],[-8,42],[-9,38],[-10,35]],
+  // UK + Ireland
+  [[-5,50],[-2,50.5],[0,51],[2,52],[2,55],[1,57],[-2,58],[-5,57],[-6,54],[-5,50]],
   // Africa
-  [[-18,37],[-5,36],[10,37],[20,37],[30,37],[38,37],[42,12],[50,12],[42,-2],[40,-11],[35,-35],[25,-35],[15,-36],[0,-15],[-15,0],[-18,12],[-18,25],[-18,37]],
-  // Asia (mainland)
-  [[25,42],[40,38],[55,22],[65,22],[75,8],[80,10],[92,5],[100,2],[110,0],[120,22],[125,30],[130,32],[135,40],[140,45],[148,50],[140,58],[105,75],[85,75],[60,70],[45,70],[38,68],[30,65],[25,55],[25,42]],
+  [[-18,37],[-15,36],[-10,35.5],[-5,36],[0,36],[5,37],[10,37],[15,37],[20,37],[25,37],[30,37],[34,37],[38,37],[42,16],[46,12],[50,12],[51,8],[48,2],[44,-2],[42,-8],[38,-15],[34,-22],[30,-30],[24,-34],[18,-35],[12,-36],[6,-35],[0,-22],[-6,-12],[-12,-2],[-15,5],[-17,12],[-18,18],[-18,25],[-18,30],[-18,37]],
+  // Asia mainland
+  [[25,42],[28,44],[32,42],[36,40],[40,38],[46,36],[52,28],[58,24],[64,22],[68,18],[72,12],[76,8],[80,10],[84,12],[88,10],[92,6],[96,4],[100,2],[104,4],[108,8],[112,14],[116,20],[120,24],[124,28],[128,32],[132,38],[136,42],[140,45],[145,48],[148,52],[145,56],[138,60],[120,68],[100,72],[80,74],[60,72],[45,71],[36,68],[30,65],[26,58],[24,52],[25,46],[25,42]],
   // Indian subcontinent
-  [[68,22],[78,8],[80,10],[80,14],[80,20],[76,28],[72,22],[68,22]],
-  // North America
-  [[-168,70],[-140,60],[-130,52],[-124,47],[-120,37],[-115,30],[-100,22],[-85,12],[-78,10],[-75,12],[-65,12],[-62,16],[-55,47],[-53,55],[-60,65],[-80,75],[-110,75],[-140,75],[-168,70]],
+  [[68,22],[72,18],[76,12],[78,8],[80,10],[82,14],[80,20],[76,26],[72,24],[68,22]],
   // South America
-  [[-80,10],[-75,8],[-52,5],[-35,-5],[-36,-20],[-50,-53],[-65,-55],[-70,-38],[-65,-25],[-55,-15],[-50,-5],[-65,0],[-80,8]],
-  // Australia
-  [[114,-22],[120,-20],[130,-15],[138,-12],[148,-20],[155,-30],[152,-38],[140,-38],[128,-35],[115,-28],[114,-22]],
-  // Greenland
-  [[-55,76],[-22,76],[-18,78],[-20,82],[-44,84],[-55,82],[-55,76]],
+  [[-80,10],[-76,8],[-70,6],[-62,4],[-54,2],[-46,0],[-38,-4],[-34,-10],[-36,-20],[-42,-30],[-50,-42],[-58,-52],[-66,-55],[-70,-50],[-72,-42],[-72,-32],[-68,-22],[-64,-12],[-60,-4],[-66,2],[-74,6],[-80,10]],
+  // Central America narrow bridge — keeps Nosara / Atitlán nodes anchored
+  [[-92,16],[-86,15],[-83,12],[-80,8],[-78,8],[-84,12],[-89,15],[-92,16]],
+  // Greenland tip (only the southern coast pokes into wider zoom)
+  [[-55,60],[-44,60],[-42,64],[-50,64],[-55,60]],
   // Iceland
   [[-24,63],[-14,63],[-13,66],[-24,66],[-24,63]],
   // Japan Honshu
-  [[130,30],[136,34],[141,40],[145,44],[140,45],[133,42],[130,34],[130,30]],
+  [[130,30],[133,32],[136,34],[140,38],[141,40],[143,42],[145,44],[140,45],[136,42],[132,38],[130,34],[130,30]],
   // Hokkaido
-  [[140,41],[145,44],[141,45],[140,43],[140,41]],
-  // Malay Peninsula
-  [[100,5],[104,1],[103,-1],[105,-5],[104,-4],[100,4],[100,5]],
-  // Borneo
-  [[108,2],[118,4],[117,8],[115,6],[108,4],[108,2]],
-  // Sumatra
-  [[96,5],[105,0],[108,-4],[104,-5],[96,4],[96,5]],
-  // Philippines
-  [[118,8],[122,10],[126,8],[124,6],[118,7],[118,8]],
-  // New Guinea
-  [[132,-2],[142,-4],[148,-8],[142,-9],[132,-5],[132,-2]],
+  [[140,41],[143,42],[145,44],[141,45],[140,43],[140,41]],
   // Madagascar
-  [[44,-12],[50,-15],[50,-25],[44,-25],[44,-12]],
-  // Bali/Java hint
-  [[106,-6],[111,-7],[115,-9],[119,-8],[115,-7],[106,-5],[106,-6]],
+  [[44,-12],[48,-14],[50,-18],[50,-25],[44,-25],[43,-20],[44,-12]],
   // Sri Lanka
   [[80,7],[82,7],[81,10],[80,10],[80,7]],
-  // New Zealand N
-  [[174,-37],[178,-38],[176,-41],[172,-41],[172,-37],[174,-37]],
 ];
 
-/* — Global canvas network map — */
-function LivingNetworkMap({ nodes, selected, onSelect, flowIntensity = 1 }) {
+/* — Global canvas network map —
+   New optional props (defaulted so existing callers keep working):
+     viewBox   — lon/lat bounds of the visible window; defaults to full world.
+                 e.g. { lonMin:-95, lonMax:145, latMin:-38, latMax:70 } crops
+                 out North America's bulk and Australia entirely.
+     speed     — particle speed multiplier (default 1, 0.5 = half-speed).
+*/
+function LivingNetworkMap({
+  nodes,
+  selected,
+  onSelect,
+  flowIntensity = 1,
+  viewBox = { lonMin: -180, lonMax: 180, latMin: -90, latMax: 90 },
+  speed = 1,
+}) {
   const canvasRef = useRef(null);
   const stateRef  = useRef({ particles: [], connections: [] });
   const animRef   = useRef(null);
@@ -101,20 +101,33 @@ function LivingNetworkMap({ nodes, selected, onSelect, flowIntensity = 1 }) {
     connections.forEach((conn, ci) => {
       const count = Math.max(1, Math.round(flowIntensity * 1.5));
       for (let k = 0; k < count; k++) {
-        particles.push({ ci, t: k / count, speed: 0.0018 + Math.random() * 0.0012, color: conn.a.color, r: 1.2 + Math.random() * 1 });
+        particles.push({
+          ci,
+          t: k / count,
+          // Per-particle base speed × speed prop. Lower base than before
+          // (0.0010 vs 0.0018) so the network feels slower / more meditative.
+          speed: (0.0008 + Math.random() * 0.0008) * speed,
+          color: conn.a.color,
+          r: 1.2 + Math.random() * 1,
+        });
       }
     });
     stateRef.current = { connections, particles };
-  }, [nodes, flowIntensity]);
+  }, [nodes, flowIntensity, speed]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     let start = performance.now();
 
+    // Projection respects viewBox so the same map can be cropped/zoomed.
     function xy(lat, lon) {
       const W = canvas.width, H = canvas.height;
-      return { x: (lon + 180) / 360 * W, y: (90 - lat) / 180 * H };
+      const { lonMin, lonMax, latMin, latMax } = viewBox;
+      return {
+        x: (lon - lonMin) / (lonMax - lonMin) * W,
+        y: (latMax - lat) / (latMax - latMin) * H,
+      };
     }
 
     function qPoint(pa, pb, t) {
@@ -173,7 +186,9 @@ function LivingNetworkMap({ nodes, selected, onSelect, flowIntensity = 1 }) {
         ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
       }
 
-      // ── Land masses ──
+      // ── Land masses — antialiased, round-joined for smoother edges ──
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
       LAND.forEach(poly => {
         if (!poly.length) return;
         ctx.beginPath();
@@ -184,8 +199,8 @@ function LivingNetworkMap({ nodes, selected, onSelect, flowIntensity = 1 }) {
         ctx.closePath();
         ctx.fillStyle = '#0C1F14';
         ctx.fill();
-        ctx.strokeStyle = 'rgba(40,80,50,0.7)';
-        ctx.lineWidth = 0.6;
+        ctx.strokeStyle = 'rgba(40,80,50,0.55)';
+        ctx.lineWidth = 0.8;
         ctx.stroke();
       });
 
@@ -303,11 +318,13 @@ function LivingNetworkMap({ nodes, selected, onSelect, flowIntensity = 1 }) {
     const cx = (e.clientX - rect.left) * scaleX;
     const cy = (e.clientY - rect.top)  * scaleY;
     const W  = canvas.width, H = canvas.height;
+    const { lonMin, lonMax, latMin, latMax } = viewBox;
     let closest = null, closestD = Infinity;
     nodes.forEach(node => {
       if (!node.latlon) return;
-      const nx = (node.latlon[1] + 180) / 360 * W;
-      const ny = (90 - node.latlon[0]) / 180 * H;
+      // Use same projection as draw() so clicks line up with zoomed map.
+      const nx = (node.latlon[1] - lonMin) / (lonMax - lonMin) * W;
+      const ny = (latMax - node.latlon[0]) / (latMax - latMin) * H;
       const d  = Math.hypot(cx - nx, cy - ny);
       if (d < closestD) { closest = node; closestD = d; }
     });

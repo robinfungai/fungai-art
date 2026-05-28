@@ -552,18 +552,20 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
         <div className="welcome-section-eyebrow">Active nodes · {liveNodes.length} live · 1 proposed</div>
         <div className="welcome-section-title">The <em>network.</em></div>
 
-        {/* Living animated map — only the active European nodes + Beirut are
-            shown prominently on the map. Other live nodes (Atitlán, Zanzibar,
-            Bangkok, Bali, Hokkaido) still exist in NETWORK_NODES and appear
-            in the cards below, but aren't drawn here yet. */}
+        {/* Living animated map — focuses on the Fungai Art operational arc
+            (Europe + Med + Beirut + a Central American jump to Atitlán /
+            Nosara). Zoomed in via viewBox so we don't see N. America or
+            Australia; speed slowed to feel meditative rather than busy. */}
         <div style={{ background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:12, overflow:'hidden', marginBottom:16, position:'relative' }}>
           <LivingNetworkMap
             nodes={SporeData.NETWORK_NODES.filter(n =>
-              ['berlin','sweden','lisbon','festival','beirut','genoa'].includes(n.id)
+              ['berlin','sweden','lisbon','festival','beirut','genoa','atitlan','nosara'].includes(n.id)
             )}
             selected={null}
             onSelect={() => {}}
-            flowIntensity={1.6}
+            flowIntensity={1.2}
+            viewBox={{ lonMin: -95, lonMax: 55, latMin: 0, latMax: 70 }}
+            speed={0.45}
           />
           <div style={{ position:'absolute', bottom:10, left:10, right:10, display:'flex', justifyContent:'space-between', alignItems:'flex-end', pointerEvents:'none' }}>
             <div style={{ background:'rgba(6,8,9,.7)', backdropFilter:'blur(8px)', border:'0.5px solid var(--rule)', borderRadius:6, padding:'6px 10px' }}>

@@ -156,6 +156,20 @@ const NETWORK_NODES = [
     contributions: [],
     requirement: 'Requires 300 $H + Forager reputation to propose a node.',
   },
+  {
+    id: 'nosara',
+    name: 'Nosara',
+    sub: 'Costa Rica · Pacific coast',
+    region: 'CR',
+    color: '#1FA08C',
+    latlon: [9.97, -85.65],
+    activity: 'live',
+    contributions: [
+      { id: 'farm',      label: 'Permaculture farm',  sub: 'tropical medicinals', earn: 60, rep: 1 },
+      { id: 'ceremony',  label: 'Plant ceremony',     sub: 'jungle ritual',       earn: 80, rep: 2 },
+      { id: 'workshop',  label: 'Workshop teaching',  sub: 'extraction & ritual', earn: 70, rep: 1 },
+    ],
+  },
 ];
 
 /* ── Events ─────────────────────────────────────────────────── */
