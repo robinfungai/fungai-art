@@ -3937,5 +3937,56 @@
       "Kidney"
     ],
     "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 407,
+    "name": "Pomegranate Skin",
+    "primary_functions": [
+      "Powerful astringent for the gut — punicalagins and ellagitannins tighten the intestinal mucosa in chronic loose stools and dysbiosis",
+      "Antimicrobial — broad-spectrum activity against gut pathogens, oral bacteria and parasites (traditional Ayurvedic / Unani anthelmintic)",
+      "Polyphenol antioxidant powerhouse — pomegranate peel carries 10× the polyphenol content of the juice",
+      "Oral and throat astringent — gargle for gingivitis, sore throat, mouth ulcers",
+      "Anti-inflammatory in chronic gut and skin conditions via NF-kB modulation"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Sour",
+      "Astringent",
+      "Binding",
+      "Yang-Containing"
+    ],
+    "tcm_meridians": [
+      "Large Intestine",
+      "Stomach",
+      "Kidney"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 408,
+    "name": "Pomegranate Seeds",
+    "primary_functions": [
+      "Cardiovascular protection — punicalagins and anthocyanins reduce atherogenesis, modulate blood pressure, support endothelial NO",
+      "Yin nourishment and gentle fluid restoration — sweet-cool replenishment for dry, heated, depleted constitutions",
+      "Hormonal balancing — phytoestrogen and steroidal seed-oil influence on perimenopausal symptoms",
+      "Antioxidant / polyphenol-rich daily food medicine — uric acid lowering, oxidative load reduction",
+      "Mild gut motility and prebiotic support — fibrous arils feed beneficial microbes that produce urolithin A"
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Sweet",
+      "Sour",
+      "Slightly Astringent",
+      "Yin-Building"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Kidney",
+      "Large Intestine"
+    ],
+    "caution_level": "LOW"
   }
 ]

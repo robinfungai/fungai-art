@@ -465,7 +465,7 @@
 
   <nav class="nav">
     <div class="nav-brand">
-      <img src="/logo.png" alt="Fungai Art" style="height:26px;width:auto;filter:brightness(0) invert(1);opacity:.82;" onerror="this.style.display='none'">
+      <img src="/fungi.png" alt="Fungai Art" style="height:32px;width:32px;border-radius:50%;object-fit:cover;border:1px solid rgba(232,177,75,0.55);box-shadow:0 0 10px rgba(232,177,75,0.4);background:radial-gradient(circle at 35% 35%,rgba(232,177,75,0.18),rgba(7,17,13,0.6) 75%)" onerror="this.style.display='none'">
       <div class="nav-name">Alchemy Academy</div>
     </div>
     <div style="display:flex;gap:8px;">
@@ -488,6 +488,20 @@
   </div>
 
   <div class="methods" id="methods"></div>
+
+  <!-- ══ FORMULA BOOK ══════════════════════════════════════════════════════
+       Every formula a visitor builds in the Herbal Engine (or Mixology)
+       is mirrored into localStorage under fungai_alchemy_academy. This
+       section reads that store so visitors can see their own work, and
+       admins can see all formulas on this device with their city-level
+       origin (when not VPN-shielded).
+       ──────────────────────────────────────────────────────────────────── -->
+  <div class="sec-head" style="margin-top:64px;">
+    <div class="sec-eyebrow">Personal alchemy archive</div>
+    <div class="sec-title">Formula <em>book.</em></div>
+    <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:14.5px;color:#8B7E62;line-height:1.7;margin-top:8px;max-width:62ch;">Every formula you build in the Herbal Engine or Mixology is saved to this book. City-level origin is recorded when you&rsquo;re not on a VPN &mdash; we never log anything finer than your city, and never if you&rsquo;re shielded.</p>
+  </div>
+  <div id="formulaBook" style="margin-top:32px;"></div>
 
   <!-- Admin lab notebook — only shown when Robin is the active member -->
   <div class="lab-section" id="labSection" style="display:none">
@@ -851,14 +865,88 @@ buildLabNotebook();
       if (document.getElementById('preLaunchBanner')) return;
       const b = document.createElement('div');
       b.id = 'preLaunchBanner';
-      b.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(232,177,75,0.08);border-bottom:0.5px solid rgba(232,177,75,0.25);backdrop-filter:blur(12px);padding:8px 16px;text-align:center;font-family:\'Geist Mono\',monospace;font-size:9.5px;letter-spacing:0.16em;text-transform:uppercase;color:#F5D689;';
-      b.innerHTML = '✦ Public preview — Academy will require Hyphae or mycoTrust once $MYCEL launches · <a href="/members" style="color:#F5D689;border-bottom:0.5px solid rgba(245,214,137,0.4);text-decoration:none;">Become a thread</a>';
+      // Banner can wrap to two lines on phones, so we measure its real height
+      // after insertion and push the body down by that much. Without this it
+      // overlaps the nav row and hides the logo + section links.
+      b.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(20,15,8,0.92);border-bottom:0.5px solid rgba(232,177,75,0.32);backdrop-filter:blur(12px);padding:8px 16px;text-align:center;font-family:\'Geist Mono\',monospace;font-size:9.5px;letter-spacing:0.16em;text-transform:uppercase;color:#F5D689;line-height:1.5;';
+      b.innerHTML = '<span style="display:inline-block;max-width:980px;">✦ Public preview — Academy will require Hyphae or mycoTrust once $MYCEL launches · <a href="/members" style="color:#F5D689;border-bottom:0.5px solid rgba(245,214,137,0.4);text-decoration:none;">Become a thread</a></span>';
       document.body.appendChild(b);
+      // Measure + apply spacer (use requestAnimationFrame so layout settles).
+      requestAnimationFrame(() => {
+        const h = b.offsetHeight || 36;
+        document.body.style.paddingTop = h + 'px';
+      });
+      // Re-measure on resize (mobile orientation change, etc).
+      window.addEventListener('resize', () => {
+        const h = b.offsetHeight || 36;
+        document.body.style.paddingTop = h + 'px';
+      });
     }
 
     window.addEventListener('mycel:change', applyGate);
     applyGate();
   });
+})();
+
+// ── Formula book ────────────────────────────────────────────────────────
+// Renders entries from the fungai_alchemy_academy localStorage store. Cards
+// show name, herbs, source page, date, and (when available) city / country.
+(function renderFormulaBook(){
+  function esc(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function fmtDate(ts){
+    if (!ts) return '';
+    var d = new Date(ts);
+    if (isNaN(d.getTime())) return '';
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  }
+  function renderBook(){
+    var host = document.getElementById('formulaBook');
+    if (!host) return;
+    var list = [];
+    try { list = JSON.parse(localStorage.getItem('fungai_alchemy_academy') || '[]'); } catch(e) {}
+    if (!Array.isArray(list)) list = [];
+    if (!list.length) {
+      host.innerHTML = '<div style="padding:36px 28px;border:0.5px dashed rgba(232,177,75,0.3);border-radius:12px;background:rgba(10,12,9,0.4);text-align:center;">' +
+        '<div style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:#8B7E62;margin-bottom:8px;">Empty</div>' +
+        '<div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-style:italic;font-size:18px;color:#C9B894;line-height:1.5;">No formulas saved on this device yet.</div>' +
+        '<div style="font-size:12.5px;color:#8B7E62;line-height:1.65;margin-top:10px;max-width:46ch;margin-left:auto;margin-right:auto;">Build one in the <a href="/herbal-engine-2/" style="color:#F5D689;border-bottom:0.5px solid rgba(245,214,137,0.4);text-decoration:none;">Herbal Engine</a> or <a href="/mixology" style="color:#F5D689;border-bottom:0.5px solid rgba(245,214,137,0.4);text-decoration:none;">Mixology</a> &mdash; it&rsquo;ll appear here.</div>' +
+        '</div>';
+      return;
+    }
+    var rows = list.map(function(e){
+      var name = e.name || e.intention || 'Untitled formula';
+      var herbs = Array.isArray(e.herbs) ? e.herbs.map(function(h){ return h.n || h.name || ''; }).filter(Boolean) : [];
+      var source = e.source === 'herbal-engine-2' ? 'Herbal Engine' : e.source === 'mixology' ? 'Mixology' : (e.source || '');
+      var date = fmtDate(e.ts || e.t || e.timestamp || e.date);
+      var origin = e.origin && (e.origin.city || e.origin.country)
+        ? '<span style="font-family:\'Geist Mono\',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:#6BD66F;">' +
+            '◉ ' + esc([e.origin.city, e.origin.country].filter(Boolean).join(', ')) +
+          '</span>'
+        : '<span title="No origin recorded (likely VPN or first-load)" style="font-family:\'Geist Mono\',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:#4d5a52;">◌ Origin shielded</span>';
+      return '<div style="padding:18px 20px;border:0.5px solid rgba(232,177,75,0.18);border-radius:10px;background:linear-gradient(135deg,rgba(15,12,8,0.55),rgba(8,10,8,0.45));">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:10px;">' +
+          '<div style="font-family:\'Zodiak\',\'Cormorant Garamond\',Georgia,serif;font-style:italic;font-size:22px;color:#E6D9B5;line-height:1.2;">' + esc(name) + '</div>' +
+          '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">' +
+            (source ? '<span style="font-family:\'Geist Mono\',monospace;font-size:8.5px;letter-spacing:0.22em;text-transform:uppercase;color:#F5D689;">' + esc(source) + '</span>' : '') +
+            (date ? '<span style="font-family:\'Geist Mono\',monospace;font-size:8px;letter-spacing:0.16em;color:#8B7E62;">' + date + '</span>' : '') +
+          '</div>' +
+        '</div>' +
+        (herbs.length ? '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;">' +
+          herbs.map(function(h){ return '<span style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.08em;color:#C9B894;background:rgba(232,177,75,0.07);border:0.5px solid rgba(232,177,75,0.18);border-radius:3px;padding:2px 7px;">' + esc(h) + '</span>'; }).join('') +
+        '</div>' : '') +
+        '<div>' + origin + '</div>' +
+      '</div>';
+    }).join('');
+    host.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;">' + rows + '</div>';
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderBook);
+  } else {
+    renderBook();
+  }
+  // Re-render if another tab updates the store.
+  window.addEventListener('storage', function(e){ if (e.key === 'fungai_alchemy_academy') renderBook(); });
 })();
 </script>
 <script src="/cookie-banner.js" defer></script>

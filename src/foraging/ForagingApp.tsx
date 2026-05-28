@@ -405,15 +405,16 @@ export default function ForagingApp() {
         padding: '12px 20px',
         display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap',
       }}>
-        {/* Brand */}
-        <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', flexShrink: 0 }}>
-          <img src="/abc12345.png" alt="Fungai Art" style={{ height: 32, width: 'auto', objectFit: 'contain' }} onError={e => (e.currentTarget.style.display = 'none')} />
+        {/* Brand — title now reads as the page header rather than a small chip,
+            so the map page announces itself with the same weight as the home hero. */}
+        <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none', flexShrink: 0 }}>
+          <img src="/fungi.png" alt="Fungai Art" style={{ height: 38, width: 38, objectFit: 'cover', borderRadius: '50%', border: '1px solid rgba(232,177,75,0.55)', boxShadow: '0 0 10px rgba(232,177,75,0.4)' }} onError={e => (e.currentTarget.style.display = 'none')} />
           <div>
-            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 17, color: '#E6D9B5', lineHeight: 1 }}>
-              Foraging Map
+            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 26, color: '#E6D9B5', lineHeight: 1, letterSpacing: '0.005em' }}>
+              The Foraging Map
             </div>
-            <div style={{ fontFamily: 'monospace', fontSize: 7.5, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#8B7E62', marginTop: 2 }}>
-              Fungai Art · ecological intelligence
+            <div style={{ fontFamily: 'monospace', fontSize: 8.5, letterSpacing: '0.26em', textTransform: 'uppercase', color: '#B6F0AE', marginTop: 4 }}>
+              Fungai Art &middot; Ecological Intelligence
             </div>
           </div>
         </a>

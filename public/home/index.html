@@ -289,11 +289,11 @@ p { line-height: 1.75; color: var(--mist); }
   border-radius: 50%;
   position: relative;
   z-index: 1;
-  /* logo-march.jpg has a white background — make it a round framed token
-     instead of a flat rectangle. Subtle amber ring + glow ties it to the
-     brand palette. */
-  border: 1px solid rgba(232,177,75,0.5);
-  box-shadow: 0 0 12px rgba(232,177,75,0.35), 0 2px 8px rgba(0,0,0,0.4);
+  /* fungi.png — the painted mushroom token. Amber ring + glow ties it to
+     the brand palette and softens the transparent background. */
+  border: 1px solid rgba(232,177,75,0.55);
+  box-shadow: 0 0 14px rgba(232,177,75,0.45), 0 2px 8px rgba(0,0,0,0.4);
+  background: radial-gradient(circle at 35% 35%, rgba(232,177,75,0.18), rgba(7,17,13,0.6) 75%);
 }
 .nav-brand .brand-text { display: flex; flex-direction: column; gap: 3px; }
 .nav-brand .main { font-family: 'TAN-PARADISO', 'Kiona', 'Cormorant Garamond', serif; font-size: 24px; color: var(--parchment); line-height: 1; letter-spacing: 0.02em; }
@@ -1180,7 +1180,7 @@ p { line-height: 1.75; color: var(--mist); }
 <nav class="nav" id="mainNav">
   <div class="wrap nav-inner">
     <a href="/" class="nav-brand">
-      <img src="/logo-march.jpg" alt="Fungai Art" onerror="this.src='/fungai-art-logo.png'">
+      <img src="/fungi.png" alt="Fungai Art" onerror="this.src='/fungai-art-logo.png'">
       <div class="brand-text">
         <span class="main">Fungai Art</span>
         <span class="sub">Gaia's Apo'takecare'y</span>
@@ -1409,13 +1409,15 @@ function toggleMobileMenu() {
         <text x="310" y="778" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="11" fill="#517A40" letter-spacing="3" opacity="0.7">where the forest thinks</text>
       </svg>
     </div>
-    <div class="hero-stats" style="flex-direction:column;align-items:flex-start;gap:10px;padding:28px 36px;">
-      <div style="font-family:'TAN-PARADISO',var(--script),cursive;font-size:clamp(26px,3vw,38px);color:var(--parchment);line-height:1.1;letter-spacing:0.02em;text-shadow:0 2px 24px rgba(0,0,0,0.6);">living mycelial art.</div>
-      <div style="font-family:'Kiona',var(--serif),Georgia;font-size:clamp(13px,1.3vw,17px);color:var(--mist);letter-spacing:0.08em;line-height:1.55;">fusion of biology, alchemy, frequency.</div>
-      <div style="width:48px;height:0.5px;background:rgba(196,134,46,0.4);margin:4px 0;"></div>
+    <!-- Hero stats overlay — gets a backing scrim so the text stays readable
+         against the busy mushroom art behind it, especially on phones. -->
+    <div class="hero-stats" style="flex-direction:column;align-items:flex-start;gap:10px;padding:24px 28px;background:linear-gradient(135deg,rgba(3,6,8,0.78) 0%,rgba(3,6,8,0.55) 100%);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:0.5px solid rgba(232,177,75,0.15);border-radius:6px;">
+      <div style="font-family:'TAN-PARADISO',var(--script),cursive;font-size:clamp(28px,3.2vw,40px);color:var(--parchment);line-height:1.1;letter-spacing:0.02em;text-shadow:0 2px 18px rgba(0,0,0,0.85);">living mycelial art.</div>
+      <div style="font-family:'Kiona',var(--serif),Georgia;font-size:clamp(13px,1.3vw,17px);color:var(--mist);letter-spacing:0.08em;line-height:1.55;text-shadow:0 1px 8px rgba(0,0,0,0.7);">fusion of biology, alchemy, frequency.</div>
+      <div style="width:48px;height:0.5px;background:rgba(196,134,46,0.55);margin:4px 0;"></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">
-        <a href="/extraction" style="font-family:'Bayer','DM Sans',sans-serif;font-size:8.5px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-lt);padding:8px 15px;border:0.5px solid rgba(196,134,46,0.35);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(196,134,46,0.1)'" onmouseout="this.style.background='transparent'">⚗ Extraction</a>
-        <a href="/herbal-engine-2/" style="font-family:'Bayer','DM Sans',sans-serif;font-size:8.5px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mist);padding:8px 15px;border:0.5px solid rgba(136,186,200,0.25);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='rgba(136,186,200,0.08)'" onmouseout="this.style.background='transparent'">Herbal Engine</a>
+        <a href="/extraction" style="font-family:'Bayer','DM Sans',sans-serif;font-size:8.5px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-lt);padding:8px 15px;border:0.5px solid rgba(196,134,46,0.45);text-decoration:none;transition:all 0.2s;background:rgba(7,17,13,0.4);" onmouseover="this.style.background='rgba(196,134,46,0.18)'" onmouseout="this.style.background='rgba(7,17,13,0.4)'">⚗ Extraction</a>
+        <a href="/herbal-engine-2/" style="font-family:'Bayer','DM Sans',sans-serif;font-size:8.5px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mist);padding:8px 15px;border:0.5px solid rgba(136,186,200,0.35);text-decoration:none;transition:all 0.2s;background:rgba(7,17,13,0.4);" onmouseover="this.style.background='rgba(136,186,200,0.15)'" onmouseout="this.style.background='rgba(7,17,13,0.4)'">Herbal Engine</a>
       </div>
     </div>
   </div>
@@ -1758,7 +1760,7 @@ function toggleMobileMenu() {
   <div style="position:absolute;inset:0;background-image:url('/home/abcabc.png');background-size:cover;background-position:center;opacity:0.18;pointer-events:none;"></div>
   <div class="wrap trance-inner" style="position:relative;z-index:1;">
     <div class="reveal">
-      <span class="sec-label">Facilitated by Steph Teÿæ &amp; Robin Floræsta</span>
+      <span class="sec-label">Facilitated by Stephanie Teÿæ &amp; Robin Floræsta</span>
       <h2>
         <span class="script">Mycelium</span>
         Trance
@@ -1818,7 +1820,16 @@ function toggleMobileMenu() {
 <section id="forage" style="background:var(--forest-mid);border-bottom:1px solid rgba(158,212,56,0.06);padding:100px 0;overflow:hidden;position:relative;">
   <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 30% 60%,rgba(107,214,111,0.03) 0%,transparent 70%);pointer-events:none;"></div>
   <div class="wrap">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;" class="reveal">
+    <div class="forage-grid reveal">
+    <style>
+      .forage-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+      /* Phones: stack columns. Without this the 1fr 1fr grid kept the SVG map
+         column at half the (already narrow) viewport, so the preview map
+         vanished into noise and the floating badges overlapped the quote. */
+      @media (max-width:820px){
+        .forage-grid{grid-template-columns:1fr;gap:36px;}
+      }
+    </style>
       <div>
         <span class="sec-label">Ecological Intelligence · fungai.art/foraging</span>
         <h2 class="sec-title">The Foraging <em>Map</em></h2>
@@ -2090,31 +2101,55 @@ function toggleMobileMenu() {
       <p style="font-family:'DM Sans','Kiona',var(--sans);font-size:15.5px;color:var(--cream);max-width:600px;margin:0 auto;line-height:1.85;font-weight:300;">Born in the Swedish forest, alive across Europe. We are a small circle of artists, foragers, alchemists and ceremony-keepers — making medicine the way it used to be made, before it was a product.</p>
     </div>
 
-    <!-- Two portraits -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px;border-radius:20px;overflow:hidden;" class="reveal reveal-d1">
-      <div style="position:relative;overflow:hidden;min-height:480px;background:var(--forest-card);">
-        <img src="/home/team/robin-portrait.jpg" alt="Robin Floræsta" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center top;position:absolute;inset:0;opacity:0.9;" onerror="this.style.display='none'">
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(5,9,12,0.95) 0%,rgba(5,9,12,0.2) 45%,transparent 70%);pointer-events:none;"></div>
-        <div style="position:absolute;bottom:0;left:0;right:0;padding:36px 38px;">
+    <!-- Two portraits. On phones (≤720px) they stack vertically so each portrait
+         has enough width that the bio text doesn't have to grow tall and cover
+         the face. The bottom gradient is intensified so the text-on-photo
+         legibility holds up against any image. -->
+    <div class="team-portraits reveal reveal-d1">
+      <div class="team-card">
+        <img src="/home/team/robin-portrait.jpg" alt="Robin Floræsta" loading="lazy" class="team-photo" onerror="this.style.display='none'">
+        <div class="team-scrim"></div>
+        <div class="team-body">
           <div style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--lime);margin-bottom:4px;">Founder</div>
           <div style="font-family:'Bayer',var(--sans);font-size:9px;letter-spacing:0.24em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;opacity:0.85;">Alchemy &amp; Foraging</div>
-          <div style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;font-style:italic;font-size:34px;color:var(--parchment);margin-bottom:12px;letter-spacing:0.01em;">Robin Floræsta</div>
+          <div class="team-name" style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;font-style:italic;color:var(--parchment);margin-bottom:12px;letter-spacing:0.01em;">Robin Floræsta</div>
           <p style="font-family:'Kiona',var(--sans);font-size:13.5px;color:var(--cream);line-height:1.72;">Visionary seed carrier and community weaver. Chef, elixir master and forager. Raised in the forest, guided by a close, intuitive bond with the land.</p>
           <a href="mailto:robin@fungai.art" style="display:inline-block;margin-top:16px;font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mist);border-bottom:0.5px solid rgba(77,134,155,0.35);padding-bottom:2px;text-decoration:none;">robin@fungai.art</a>
         </div>
       </div>
-      <div style="position:relative;overflow:hidden;min-height:480px;background:var(--forest-card);">
-        <img src="/home/team/stephanie-portrait.png" alt="Steph Teÿæ" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center top;position:absolute;inset:0;opacity:0.9;" onerror="this.style.display='none'">
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(5,9,12,0.95) 0%,rgba(5,9,12,0.2) 45%,transparent 70%);pointer-events:none;"></div>
-        <div style="position:absolute;bottom:0;left:0;right:0;padding:36px 38px;">
+      <div class="team-card">
+        <img src="/home/team/stephanie-portrait.png" alt="Stephanie Teÿæ" loading="lazy" class="team-photo" onerror="this.style.display='none'">
+        <div class="team-scrim"></div>
+        <div class="team-body">
           <div style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-lt);margin-bottom:4px;">Co-initiator</div>
           <div style="font-family:'Bayer',var(--sans);font-size:9px;letter-spacing:0.24em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;opacity:0.85;">Ceremony &amp; Elixirs</div>
-          <div style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-style:italic;font-size:38px;color:var(--parchment);margin-bottom:12px;letter-spacing:-0.005em;">Steph Teÿæ</div>
-          <p style="font-family:'Kiona',var(--sans);font-size:13.5px;color:var(--cream);line-height:1.72;">Steward, creative force, and botanical crafter. Systemic psycho-mystic coach. Gong and tuning fork practitioner. Transylvanian lineage — the witch reclaimed.</p>
+          <div class="team-name" style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-style:italic;color:var(--parchment);margin-bottom:12px;letter-spacing:-0.005em;">Stephanie Teÿæ</div>
+          <p style="font-family:'Kiona',var(--sans);font-size:13.5px;color:var(--cream);line-height:1.72;">Steward, creative force, and botanical crafter. Systemic psycho-mystic coach. Gong and tuning fork practitioner. Transylvanian lineage &mdash; the witch reclaimed.</p>
           <a href="mailto:teyae@fungai.art" style="display:inline-block;margin-top:16px;font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mist);border-bottom:0.5px solid rgba(77,134,155,0.35);padding-bottom:2px;text-decoration:none;">teyae@fungai.art</a>
         </div>
       </div>
     </div>
+    <style>
+      .team-portraits{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px;border-radius:20px;overflow:hidden;}
+      .team-card{position:relative;overflow:hidden;min-height:520px;background:var(--forest-card);}
+      .team-photo{width:100%;height:100%;object-fit:cover;object-position:center top;position:absolute;inset:0;opacity:0.95;}
+      /* Stronger bottom scrim so the bio text never disappears into the photo,
+         and a subtle top scrim so the cards have visual structure. */
+      .team-scrim{position:absolute;inset:0;background:
+        linear-gradient(to top,rgba(3,6,8,0.96) 0%,rgba(3,6,8,0.78) 30%,rgba(3,6,8,0.25) 60%,rgba(3,6,8,0.05) 80%,transparent 100%),
+        linear-gradient(to bottom,rgba(3,6,8,0.4) 0%,transparent 30%);
+        pointer-events:none;}
+      .team-body{position:absolute;bottom:0;left:0;right:0;padding:36px 38px;}
+      .team-name{font-size:34px;}
+      /* Phone: stack vertically so each card has full width — bio text is
+         shorter and the face stays visible. */
+      @media (max-width:720px){
+        .team-portraits{grid-template-columns:1fr;}
+        .team-card{min-height:440px;}
+        .team-body{padding:24px 22px;}
+        .team-name{font-size:30px;}
+      }
+    </style>
 
     <!-- Cities / Nodes — replaces the numbers panel -->
     <div class="reveal reveal-d2" style="margin-top:64px;">
@@ -2263,7 +2298,7 @@ function toggleMobileMenu() {
           <li><a href="#about">About</a></li>
           <li><a href="https://www.instagram.com/fungai.art" target="_blank">Instagram</a></li>
           <li><a href="mailto:robin@fungai.art">Contact Robin</a></li>
-          <li><a href="mailto:teyae@fungai.art">Contact Steph</a></li>
+          <li><a href="mailto:teyae@fungai.art">Contact Stephanie</a></li>
         </ul>
       </div>
     </div>

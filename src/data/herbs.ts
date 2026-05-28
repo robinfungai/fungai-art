@@ -9891,4 +9891,123 @@ export const HERBS: Herb[] = [
   status:
     'Traditional northern European protective berry with best use in properly prepared food-medicine forms. Valuable for astringent digestive support, antioxidant resilience and winter formulas. Avoid raw under-ripe use; cooked or dried preparations preferred.',
 },
+{
+  id: 407,
+  name: 'Pomegranate Skin',
+  botanical: 'Punica granatum (dried pericarp / peel)',
+  tcm_meridians: ['Large Intestine', 'Stomach', 'Kidney'],
+  tcm_element: 'Earth + Metal',
+  energetics: ['Warm', 'Dry', 'Sour', 'Astringent', 'Binding', 'Yang-Containing'],
+  primary_functions: [
+    'Powerful astringent for the gut — punicalagins and ellagitannins tighten the intestinal mucosa in chronic loose stools and dysbiosis',
+    'Antimicrobial — broad-spectrum activity against gut pathogens, oral bacteria and parasites (traditional Ayurvedic / Unani anthelmintic)',
+    'Polyphenol antioxidant powerhouse — pomegranate peel carries 10× the polyphenol content of the juice',
+    'Oral and throat astringent — gargle for gingivitis, sore throat, mouth ulcers',
+    'Anti-inflammatory in chronic gut and skin conditions via NF-kB modulation',
+  ],
+  secondary_benefits: [
+    'Traditional adjunct in IBS-D and post-antibiotic gut restoration',
+    'Topical use in skin infections and slow-healing wounds',
+    'Cardiometabolic support through ellagitannin / urolithin pathway',
+  ],
+  pharmacology:
+    'Exceptionally rich in punicalagins (the dominant ellagitannins), gallic acid, ellagic acid, anthocyanins and flavonoids. The dried peel is the highest polyphenol food matrix known. Gut microbes convert ellagitannins to urolithin A — a mitophagy activator linked to muscle and metabolic resilience. Strong antimicrobial action documented against E. coli, Salmonella, Helicobacter pylori, Candida and several oral pathogens. Astringent action via tannin-protein binding tightens mucosal surfaces.',
+  flavor_profile: 'Intensely sour, bitter, astringent — dries the mouth on contact, lingering tannin pull',
+  contraindications: [
+    'Constipation, dry hard stool or very dry Vata constitutions — astringent action will aggravate',
+    'Iron deficiency anemia — high tannin content may reduce non-heme iron absorption; separate from iron-rich meals by 2 hours',
+    'Pregnancy — avoid concentrated peel preparations; food-amount pomegranate is safe',
+    'On ACE inhibitors / statins / warfarin — monitor; pomegranate strongly inhibits CYP3A4 and CYP2C9',
+    'Children under 6 — use only low-dose decoction with practitioner guidance',
+  ],
+  herb_to_herb_synergy: [
+    'Slippery Elm and Marshmallow Root for layered gut-mucosa restoration (demulcent + astringent)',
+    'Black Walnut Hull and Wormwood in classical anthelmintic formulas',
+    'Sage and Myrrh for oral antimicrobial mouth rinses',
+    'Hawthorn berry and Bilberry for ellagitannin-anthocyanin cardiovascular protocols',
+  ],
+  herb_to_herb_caution: [
+    'Other strongly astringent herbs (Oak bark, Rhatany, high-dose Witch Hazel) in dry constitutions — risk of excessive drying',
+    'Iron-rich tonics (Yellow Dock, Nettle) when given together — tannin chelation reduces uptake',
+  ],
+  herb_to_drug_interactions: [
+    'Strong CYP3A4 / CYP2C9 inhibition — caution with statins, calcium channel blockers, warfarin, tacrolimus, cyclosporine',
+    'ACE inhibitors — modest additive blood-pressure-lowering possible',
+    'Iron supplements — separate dosing by 2 hours',
+  ],
+  herb_interactions: [
+    'Synergy: Slippery Elm, Marshmallow, Black Walnut Hull, Wormwood, Sage, Myrrh, Hawthorn, Bilberry',
+    'Caution: stacking with other astringents in dry constitutions; iron supplements (separate)',
+    'Drug interactions: CYP3A4/2C9 substrates — monitor closely',
+  ],
+  dosage_range:
+    'Dried peel decoction: 1–3 g per 250 ml, simmer 15–20 minutes, 1–2× daily for 5–10 days. Tincture (1:5, 45% EtOH): 15–30 drops, 2–3× daily. Mouth rinse: stronger decoction, swish 1 min. Short cycles only — do not use the concentrated peel continuously.',
+  spiritual_layer:
+    'The pomegranate peel is the boundary the fruit keeps. She is the medicine of containment — the architecture that holds the jewelled seeds safe. In the Persephone myth, she is the threshold between worlds. Her medicine is to gather what is scattered, to bind what has been leaking, to bring the wandering mucosa back to its centre. She whispers: I hold the line. I gather the scattered. Boundary is also a form of love.',
+  best_preparation:
+    'Dried, well-stored peel from organic pomegranate. Decoction is traditional. Tincture preserves the polyphenols but the decoction extracts more of the punicalagins. Short cycles (5–10 days) work better than continuous use. Pair with a demulcent if used for more than a week. Excellent in oral rinses and topical wound washes.',
+  caution_level: 'MEDIUM',
+  safe_pregnancy: false,
+  status:
+    'Underused traditional astringent of exceptional polyphenol density. Best deployed in short cycles for acute or chronic gut dysbiosis, oral inflammation and post-pathogen restoration. Drug-interaction profile means it deserves a careful practitioner eye.',
+},
+{
+  id: 408,
+  name: 'Pomegranate Seeds',
+  botanical: 'Punica granatum (whole arils / seeds, fresh or dried)',
+  tcm_meridians: ['Heart', 'Liver', 'Kidney', 'Large Intestine'],
+  tcm_element: 'Fire + Wood',
+  energetics: ['Cool', 'Moist', 'Sweet', 'Sour', 'Slightly Astringent', 'Yin-Building'],
+  primary_functions: [
+    'Cardiovascular protection — punicalagins and anthocyanins reduce atherogenesis, modulate blood pressure, support endothelial NO',
+    'Yin nourishment and gentle fluid restoration — sweet-cool replenishment for dry, heated, depleted constitutions',
+    'Hormonal balancing — phytoestrogen and steroidal seed-oil influence on perimenopausal symptoms',
+    'Antioxidant / polyphenol-rich daily food medicine — uric acid lowering, oxidative load reduction',
+    'Mild gut motility and prebiotic support — fibrous arils feed beneficial microbes that produce urolithin A',
+  ],
+  secondary_benefits: [
+    'Skin radiance and anti-aging through urolithin / collagen support',
+    'Mild blood-sugar smoothing through polyphenol modulation',
+    'Convalescence food in heat-depleted and post-fever states',
+    'Adjunct support in prostate-cancer protocols (research grade B)',
+  ],
+  pharmacology:
+    'Arils contain anthocyanins, ellagitannins (punicalagins), phenolic acids, vitamin C, and pomegranate seed oil rich in punicic acid (an omega-5 conjugated linolenic acid) and small amounts of steroidal compounds. Documented cardioprotective effects (modest BP reduction, LDL oxidation reduction, carotid intima-media thickness improvement in long studies). Urolithin A — produced by gut conversion of ellagitannins — supports mitochondrial autophagy and muscle resilience.',
+  flavor_profile: 'Bright, sweet-sour, jewel-juicy, with a tiny astringent edge from the seed coat',
+  contraindications: [
+    'Strong CYP3A4 / CYP2C9 inhibition — caution with statins, calcium channel blockers, warfarin, tacrolimus, cyclosporine',
+    'Severe diabetic glycemic instability — moderate the portion size; whole arils are gentler than juice',
+    'Cold-damp constitutions with weak digestion — cooling sweet fruit may dampen agni; moderate amounts',
+    'Hormone-sensitive cancers without practitioner oversight — phytoestrogen-like seed-oil component',
+  ],
+  herb_to_herb_synergy: [
+    'Hawthorn berry and Bilberry for layered cardiovascular polyphenol protocols',
+    'Rose petal and Schisandra for Yin-Heart formulas in burnout and dryness',
+    'Shatavari and Rose for women\'s reproductive cooling tonics',
+    'Hibiscus and Aronia for high-polyphenol blood-pressure formulas',
+  ],
+  herb_to_herb_caution: [
+    'Strong warming herbs (high-dose Cinnamon, Cayenne) when seeking cooling Yin restoration — antagonistic action',
+  ],
+  herb_to_drug_interactions: [
+    'CYP3A4 / CYP2C9 — same profile as the peel but at much lower intensity at food doses',
+    'Antihypertensives — modest additive lowering at therapeutic juice intake (250 ml daily long-term)',
+    'Statins — caution with concurrent grapefruit-class drug timing',
+  ],
+  herb_interactions: [
+    'Synergy: Hawthorn, Bilberry, Rose, Schisandra, Shatavari, Hibiscus, Aronia',
+    'Caution: strongly warming herbs that oppose Yin restoration',
+    'Drug interactions: same CYP profile as peel — far gentler at culinary doses',
+  ],
+  dosage_range:
+    'Fresh arils: ½–1 whole fruit daily as food. Juice: 100–250 ml daily (watch sugar load). Dried arils: 5–10 g daily in tea or trail blends. Tincture (1:3, 35% EtOH): 30–60 drops, 2× daily. Seed oil capsules per product label.',
+  spiritual_layer:
+    'Pomegranate seeds are the jewelled inheritance of the underworld — Persephone\'s six seeds, the contract between light and shadow. Their medicine is fertility, return, and the courage to taste both worlds. They teach that abundance lives inside structure, that sweet medicine can still carry seed-stone weight, and that wholeness includes the descent. She whispers: I carry the seeds of return. Taste the underworld; it ripens you.',
+  best_preparation:
+    'Whole fresh arils are the highest-fidelity preparation — eat as food medicine. Tincture and dried preparations preserve polyphenols. Pomegranate seed oil for skin and inflammation. In traditional Persian and Ayurvedic medicine the seeds are sometimes paired with the peel for combined astringent-nourishing action.',
+  caution_level: 'LOW',
+  safe_pregnancy: true,
+  status:
+    'Premier cardiovascular and Yin-restorative food medicine. Daily use as food is ideal; concentrated preparations work for targeted protocols but carry the CYP-interaction profile of the wider Punica granatum plant.',
+},
 ];
