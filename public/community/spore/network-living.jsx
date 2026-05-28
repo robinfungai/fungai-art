@@ -331,12 +331,14 @@ function LivingNetworkMap({
     if (closest && closestD < 45) onSelect(closest.id);
   }
 
+  // Canvas is sized to roughly match the viewBox aspect at high resolution so it
+  // renders crisply when the frame stretches to the desktop's wider container.
   return (
     <canvas
       ref={canvasRef}
-      width={900}
-      height={400}
-      style={{ width:'100%', height:'auto', display:'block', cursor:'pointer' }}
+      width={1280}
+      height={540}
+      style={{ width:'100%', height:'100%', display:'block', cursor:'pointer' }}
       onClick={handleClick}
     />
   );

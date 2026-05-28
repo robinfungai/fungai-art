@@ -3,6 +3,7 @@ import Map, { Marker, NavigationControl } from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { ECO_NODES, HABITAT_COLORS, HABITAT_LABELS } from '../data/ecoNodes';
 import { SKOGSSKAFFERIET_OBS } from '../data/skogsskafferietObs';
+import { VILDMAD_OBS } from '../data/vildMadObs';
 import { HARVEST_BY_MONTH, HARVEST_PLANTS, MONTH_SV } from '../data/harvestCalendar';
 import { EcoNode, Season, HabitatType } from '../types/EcoNode';
 import NodePanel from './NodePanel';
@@ -66,24 +67,40 @@ function getCurrentSeason(): Season {
 
 const ALL_HABITATS = [...new Set(ECO_NODES.map(n => n.nodeType))];
 
-function NodeMarker({ node, isSelected, isHovered, seasons, onClick, onHover, onLeave }: {
-  node: EcoNode; isSelected: boolean; isHovered: boolean; seasons: Season[];
+function NodeMarker({ node, isSelected, isHovered, isHighlighted, isDimmed, seasons, onClick, onHover, onLeave }: {
+  node: EcoNode; isSelected: boolean; isHovered: boolean;
+  isHighlighted?: boolean; isDimmed?: boolean;
+  seasons: Season[];
   onClick: () => void; onHover: () => void; onLeave: () => void;
 }) {
   const color = HABITAT_COLORS[node.nodeType] || '#6BD66F';
   const inSeason = node.best_season.some(s => seasons.includes(s));
-  const size = isSelected ? 22 : isHovered ? 18 : 14;
-  const opacity = inSeason ? 1 : 0.5;
+  const size = isSelected ? 22 : isHighlighted ? 20 : isHovered ? 18 : 14;
+  const baseOpacity = inSeason ? 1 : 0.5;
+  const opacity = isDimmed ? 0.16 : baseOpacity;
 
   return (
     <div
       onClick={onClick}
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
-      style={{ cursor: 'pointer', position: 'relative', opacity }}
+      style={{ cursor: 'pointer', position: 'relative', opacity, transition: 'opacity 0.25s ease' }}
     >
+      {/* Habitat-filter spotlight — large halo around matching nodes when a habitat is selected */}
+      {isHighlighted && !isSelected && (
+        <div style={{
+          position: 'absolute',
+          top: '50%', left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: size + 56, height: size + 56,
+          borderRadius: '50%',
+          background: `radial-gradient(circle, ${color}33 0%, ${color}11 55%, transparent 75%)`,
+          pointerEvents: 'none',
+          animation: 'habitatHalo 2.8s ease-in-out infinite',
+        }} />
+      )}
       {/* Outer pulse ring — active season only */}
-      {inSeason && (
+      {inSeason && !isDimmed && (
         <div style={{
           position: 'absolute',
           top: '50%', left: '50%',
@@ -93,6 +110,19 @@ function NodeMarker({ node, isSelected, isHovered, seasons, onClick, onHover, on
           border: `1px solid ${color}`,
           opacity: 0.3,
           animation: 'nodeRipple 2.4s ease-out infinite',
+          pointerEvents: 'none',
+        }} />
+      )}
+      {/* Highlight ring — when habitat filter matches */}
+      {isHighlighted && (
+        <div style={{
+          position: 'absolute',
+          top: '50%', left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: size + 24, height: size + 24,
+          borderRadius: '50%',
+          border: `1px solid ${color}`,
+          opacity: 0.7,
           pointerEvents: 'none',
         }} />
       )}
@@ -114,7 +144,7 @@ function NodeMarker({ node, isSelected, isHovered, seasons, onClick, onHover, on
         width: size, height: size,
         borderRadius: '50%',
         background: `radial-gradient(circle at 35% 35%, ${color}, ${color}88)`,
-        boxShadow: `0 0 ${isSelected ? 20 : isHovered ? 14 : 8}px ${color}${isSelected ? 'BB' : isHovered ? '88' : '55'}`,
+        boxShadow: `0 0 ${isSelected ? 20 : isHighlighted ? 18 : isHovered ? 14 : 8}px ${color}${isSelected ? 'BB' : isHighlighted ? 'AA' : isHovered ? '88' : '55'}`,
         transition: 'all 0.2s',
         border: `1px solid ${color}`,
       }} />
@@ -122,6 +152,10 @@ function NodeMarker({ node, isSelected, isHovered, seasons, onClick, onHover, on
         @keyframes nodeRipple {
           0%   { transform: translate(-50%,-50%) scale(1); opacity: 0.4; }
           100% { transform: translate(-50%,-50%) scale(1.8); opacity: 0; }
+        }
+        @keyframes habitatHalo {
+          0%, 100% { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
+          50%      { opacity: 1;   transform: translate(-50%,-50%) scale(1.12); }
         }
       `}</style>
     </div>
@@ -158,6 +192,8 @@ export default function ForagingApp() {
   const [seasons, setSeasons] = useState<Season[]>([getCurrentSeason()]);
   const [mapMode, setMapMode] = useState<'dark' | 'satellite'>('dark');
   const [habitatFilter, setHabitatFilter] = useState<HabitatType | 'all'>('all');
+  // Mobile legend collapse state — desktop ignores this (CSS shows the body always).
+  const [legendOpen, setLegendOpen] = useState(false);
   const [gbifObs, setGbifObs] = useState<GBIFObs[]>([]);
   const [gbifLoading, setGbifLoading] = useState(false);
   const [gbifSpecies, setGbifSpecies] = useState<string>('');
@@ -165,7 +201,9 @@ export default function ForagingApp() {
   const [conditions, setConditions] = useState<ForageConditions | null>(null);
   const [conditionsLoading, setConditionsLoading] = useState(false);
   const [showSkogsObs, setShowSkogsObs] = useState(true);
+  const [showVildMad, setShowVildMad] = useState(true);
   const [hoveredSkogsHerb, setHoveredSkogsHerb] = useState<string | null>(null);
+  const [hoveredVildMadHerb, setHoveredVildMadHerb] = useState<string | null>(null);
   const [showHarvest, setShowHarvest] = useState(false);
   const currentMonth = new Date().getMonth() + 1;
   const harvestNow = (HARVEST_BY_MONTH[currentMonth] || []).map(sv => HARVEST_PLANTS[sv]).filter(Boolean);
@@ -302,6 +340,9 @@ export default function ForagingApp() {
     : geoStatus === 'unavailable' ? 'Geolocation not available'
     : '';
 
+  // When a habitat filter is active we render ALL nodes (so the user can see what
+  // they're filtering against) but visually dim the non-matching ones and add a
+  // highlight halo to matching ones. The numeric counts still use the matching set.
   const filteredNodes = ECO_NODES.filter(n =>
     habitatFilter === 'all' || n.nodeType === habitatFilter
   );
@@ -449,9 +490,12 @@ export default function ForagingApp() {
           })}
         </div>
 
-        {/* Skogsskafferiet toggle */}
+        {/* Database toggles — each open foraging database is a separately toggleable
+            layer. Lets you compare what each citizen-science source claims about
+            the same region. */}
         <button
           onClick={() => setShowSkogsObs(s => !s)}
+          title="skogsskafferiet.se — Swedish foraging community"
           style={{
             marginLeft: 'auto',
             fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', textTransform: 'uppercase',
@@ -464,6 +508,36 @@ export default function ForagingApp() {
         >
           {showSkogsObs ? '◉' : '○'} Skogsskafferiet
         </button>
+        <button
+          onClick={() => setShowVildMad(v => !v)}
+          title="vildmad.dk — Danish open foraging atlas"
+          style={{
+            fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', textTransform: 'uppercase',
+            background: showVildMad ? 'rgba(220,150,90,0.12)' : 'transparent',
+            border: `0.5px solid ${showVildMad ? 'rgba(220,150,90,0.5)' : 'rgba(255,255,255,0.12)'}`,
+            color: showVildMad ? 'rgba(232,180,120,0.9)' : '#4d5a52',
+            borderRadius: 4, padding: '4px 10px', cursor: 'pointer', flexShrink: 0,
+            transition: 'all 0.18s',
+          }}
+        >
+          {showVildMad ? '◉' : '○'} Vild Mad
+        </button>
+        <a
+          href="https://www.gbif.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Global Biodiversity Information Facility — the official open biodiversity database that powers the per-node sightings"
+          style={{
+            fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', textTransform: 'uppercase',
+            background: 'rgba(245,215,105,0.06)',
+            border: '0.5px solid rgba(245,215,105,0.25)',
+            color: 'rgba(245,215,105,0.7)',
+            borderRadius: 4, padding: '4px 10px', textDecoration: 'none', flexShrink: 0,
+            transition: 'all 0.18s',
+          }}
+        >
+          ◎ GBIF
+        </a>
 
         {/* Moon phase */}
         {(() => { const m = getMoonPhase(); return (
@@ -675,7 +749,39 @@ export default function ForagingApp() {
             borderRadius: 6, padding: '5px 12px', pointerEvents: 'none', whiteSpace: 'nowrap',
           }}>
             <span style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(180,230,150,0.85)', letterSpacing: '0.1em', fontStyle: 'italic' }}>{hoveredSkogsHerb}</span>
-            <span style={{ fontFamily: 'monospace', fontSize: 7.5, color: '#4d5a52', marginLeft: 8, letterSpacing: '0.1em' }}>citizen observation</span>
+            <span style={{ fontFamily: 'monospace', fontSize: 7.5, color: '#4d5a52', marginLeft: 8, letterSpacing: '0.1em' }}>citizen observation · skogsskafferiet.se</span>
+          </div>
+        )}
+
+        {/* Vild Mad — Danish foraging atlas observation dots (vildmad.dk) */}
+        {showVildMad && VILDMAD_OBS.map(entry =>
+          entry.points.map((pt, i) => (
+            <Marker key={`vildmad-${entry.latin}-${i}`} longitude={pt[0]} latitude={pt[1]} anchor="center">
+              <div
+                onMouseEnter={() => setHoveredVildMadHerb(`${entry.herb} (${entry.latin}) · ${entry.region}`)}
+                onMouseLeave={() => setHoveredVildMadHerb(null)}
+                title={`${entry.herb} — ${entry.latin} · vildmad.dk`}
+                style={{
+                  width: 5, height: 5, borderRadius: '50%',
+                  background: 'rgba(220,150,90,0.6)',
+                  border: '0.5px solid rgba(220,150,90,0.95)',
+                  cursor: 'default',
+                  boxShadow: '0 0 3px rgba(220,150,90,0.3)',
+                }}
+              />
+            </Marker>
+          ))
+        )}
+
+        {/* Vild Mad hover tooltip */}
+        {hoveredVildMadHerb && (
+          <div style={{
+            position: 'absolute', top: 72, left: '50%', transform: 'translateX(-50%)', zIndex: 15,
+            background: 'rgba(7,17,13,0.95)', border: '0.5px solid rgba(220,150,90,0.35)',
+            borderRadius: 6, padding: '5px 12px', pointerEvents: 'none', whiteSpace: 'nowrap',
+          }}>
+            <span style={{ fontFamily: 'monospace', fontSize: 9, color: 'rgba(232,180,120,0.9)', letterSpacing: '0.1em', fontStyle: 'italic' }}>{hoveredVildMadHerb}</span>
+            <span style={{ fontFamily: 'monospace', fontSize: 7.5, color: '#4d5a52', marginLeft: 8, letterSpacing: '0.1em' }}>vild mad · vildmad.dk</span>
           </div>
         )}
 
@@ -712,25 +818,34 @@ export default function ForagingApp() {
           </Marker>
         )}
 
-        {/* Curated eco-nodes */}
-        {filteredNodes.map(node => (
-          <Marker
-            key={node.id}
-            longitude={node.coordinates[0]}
-            latitude={node.coordinates[1]}
-            anchor="center"
-          >
-            <NodeMarker
-              node={node}
-              isSelected={selectedNode?.id === node.id}
-              isHovered={hoveredNode === node.id}
-              seasons={seasons}
-              onClick={() => handleNodeClick(node)}
-              onHover={() => setHoveredNode(node.id)}
-              onLeave={() => setHoveredNode(null)}
-            />
-          </Marker>
-        ))}
+        {/* Curated eco-nodes — render ALL so the habitat filter visually fades
+            non-matching pins rather than removing them. A matching pin gets a
+            big colored halo so the area really stands out. */}
+        {ECO_NODES.map(node => {
+          const matches = habitatFilter === 'all' || node.nodeType === habitatFilter;
+          const dimmed  = habitatFilter !== 'all' && !matches;
+          const highlight = habitatFilter !== 'all' && matches;
+          return (
+            <Marker
+              key={node.id}
+              longitude={node.coordinates[0]}
+              latitude={node.coordinates[1]}
+              anchor="center"
+            >
+              <NodeMarker
+                node={node}
+                isSelected={selectedNode?.id === node.id}
+                isHovered={hoveredNode === node.id}
+                isHighlighted={highlight}
+                isDimmed={dimmed}
+                seasons={seasons}
+                onClick={() => handleNodeClick(node)}
+                onHover={() => setHoveredNode(node.id)}
+                onLeave={() => setHoveredNode(null)}
+              />
+            </Marker>
+          );
+        })}
       </Map>
 
       {/* GBIF loading pill */}
@@ -760,8 +875,11 @@ export default function ForagingApp() {
         </div>
       )}
 
-      {/* Legend */}
-      <div style={{
+      {/* Legend — full habitat checklist on desktop. On mobile (≤640px) this
+          collapses to a single "Habitats ▾" pill that expands inline so it
+          stops eating half the map. The collapsible state lives on a CSS
+          class triggered by the .legend-mobile-toggle button. */}
+      <div className="forage-legend" style={{
         position: 'absolute', bottom: 80, left: 20, zIndex: 10,
         background: 'rgba(7,17,13,0.9)',
         backdropFilter: 'blur(12px)',
@@ -769,50 +887,85 @@ export default function ForagingApp() {
         border: '0.5px solid rgba(255,255,255,0.1)',
         borderRadius: 8, padding: '10px 14px',
       }}>
-        <div style={{ fontFamily: 'monospace', fontSize: 7, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#4d5a52', marginBottom: 7, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
-          <span>Habitats · tap to filter</span>
-          {habitatFilter !== 'all' && (
-            <button onClick={() => setHabitatFilter('all')} style={{ background: 'none', border: 'none', color: '#6BD66F', fontSize: 7, fontFamily: 'monospace', letterSpacing: '0.14em', cursor: 'pointer', padding: 0 }}>clear ×</button>
-          )}
+        <button
+          className="forage-legend-toggle"
+          onClick={() => setLegendOpen(o => !o)}
+          aria-expanded={legendOpen}
+          style={{
+            display: 'none',
+            background: 'none', border: 'none', padding: 0, cursor: 'pointer',
+            color: '#8B7E62', fontFamily: 'monospace', fontSize: 8,
+            letterSpacing: '0.18em', textTransform: 'uppercase',
+            width: '100%', textAlign: 'left',
+          }}
+        >
+          <span>Habitats {habitatFilter !== 'all' ? `· ${HABITAT_LABELS[habitatFilter as HabitatType]}` : '· tap to filter'}</span>
+          <span style={{ float: 'right', color: '#6BD66F' }}>{legendOpen ? '▴' : '▾'}</span>
+        </button>
+        <div className={`forage-legend-body${legendOpen ? ' open' : ''}`}>
+          <div style={{ fontFamily: 'monospace', fontSize: 7, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#4d5a52', marginBottom: 7, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
+            <span>Habitats · tap to filter</span>
+            {habitatFilter !== 'all' && (
+              <button onClick={() => setHabitatFilter('all')} style={{ background: 'none', border: 'none', color: '#6BD66F', fontSize: 7, fontFamily: 'monospace', letterSpacing: '0.14em', cursor: 'pointer', padding: 0 }}>clear ×</button>
+            )}
+          </div>
+          {Object.entries(HABITAT_LABELS).filter(([h]) => ALL_HABITATS.includes(h as HabitatType)).map(([h, label]) => {
+            const active = habitatFilter === h;
+            return (
+              <button
+                key={h}
+                onClick={() => setHabitatFilter(active ? 'all' : (h as HabitatType))}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3,
+                  background: active ? `${HABITAT_COLORS[h]}1f` : 'none',
+                  border: active ? `0.5px solid ${HABITAT_COLORS[h]}88` : '0.5px solid transparent',
+                  borderRadius: 4, padding: '3px 6px', cursor: 'pointer',
+                  width: '100%', textAlign: 'left',
+                  transition: 'background 0.15s, border-color 0.15s',
+                }}
+              >
+                <div style={{ width: 7, height: 7, borderRadius: '50%', background: HABITAT_COLORS[h], boxShadow: `0 0 5px ${HABITAT_COLORS[h]}77`, flexShrink: 0 }} />
+                <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.1em', textTransform: 'uppercase', color: active ? '#E6D9B5' : '#8B7E62' }}>{label}</span>
+              </button>
+            );
+          })}
+          <div style={{ marginTop: 8, paddingTop: 8, borderTop: '0.5px solid rgba(255,255,255,0.06)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
+              <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(107,214,111,0.6)', boxShadow: '0 0 6px rgba(107,214,111,0.5)' }} />
+              <span style={{ fontFamily: 'monospace', fontSize: 8, color: '#6BD66F', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Active this season</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
+              <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(255,255,255,0.2)' }} />
+              <span style={{ fontFamily: 'monospace', fontSize: 8, color: '#4d5a52', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Off-season</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
+              <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(245,215,105,0.55)', border: '0.5px solid rgba(245,215,105,0.8)' }} />
+              <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(245,215,105,0.6)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>GBIF sighting</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
+              <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(180,230,150,0.6)', border: '0.5px solid rgba(180,230,150,0.9)' }} />
+              <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(180,230,150,0.65)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Skogsskafferiet · SE</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(220,150,90,0.6)', border: '0.5px solid rgba(220,150,90,0.95)' }} />
+              <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(232,180,120,0.7)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Vild Mad · DK</span>
+            </div>
+          </div>
         </div>
-        {Object.entries(HABITAT_LABELS).filter(([h]) => ALL_HABITATS.includes(h as HabitatType)).map(([h, label]) => {
-          const active = habitatFilter === h;
-          return (
-            <button
-              key={h}
-              onClick={() => setHabitatFilter(active ? 'all' : (h as HabitatType))}
-              style={{
-                display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3,
-                background: active ? `${HABITAT_COLORS[h]}1f` : 'none',
-                border: active ? `0.5px solid ${HABITAT_COLORS[h]}88` : '0.5px solid transparent',
-                borderRadius: 4, padding: '3px 6px', cursor: 'pointer',
-                width: '100%', textAlign: 'left',
-                transition: 'background 0.15s, border-color 0.15s',
-              }}
-            >
-              <div style={{ width: 7, height: 7, borderRadius: '50%', background: HABITAT_COLORS[h], boxShadow: `0 0 5px ${HABITAT_COLORS[h]}77`, flexShrink: 0 }} />
-              <span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.1em', textTransform: 'uppercase', color: active ? '#E6D9B5' : '#8B7E62' }}>{label}</span>
-            </button>
-          );
-        })}
-        <div style={{ marginTop: 8, paddingTop: 8, borderTop: '0.5px solid rgba(255,255,255,0.06)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
-            <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(107,214,111,0.6)', boxShadow: '0 0 6px rgba(107,214,111,0.5)' }} />
-            <span style={{ fontFamily: 'monospace', fontSize: 8, color: '#6BD66F', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Active this season</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
-            <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(255,255,255,0.2)' }} />
-            <span style={{ fontFamily: 'monospace', fontSize: 8, color: '#4d5a52', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Off-season</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
-            <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(245,215,105,0.55)', border: '0.5px solid rgba(245,215,105,0.8)' }} />
-            <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(245,215,105,0.6)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>GBIF sighting</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(180,230,150,0.6)', border: '0.5px solid rgba(180,230,150,0.9)' }} />
-            <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(180,230,150,0.65)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Skogsskafferiet</span>
-          </div>
-        </div>
+        <style>{`
+          @media (max-width: 640px) {
+            .forage-legend {
+              left: 12px !important;
+              right: 12px !important;
+              bottom: 70px !important;
+              padding: 8px 12px !important;
+              max-width: 220px;
+            }
+            .forage-legend-toggle { display: block !important; }
+            .forage-legend-body { display: none; margin-top: 8px; }
+            .forage-legend-body.open { display: block; }
+          }
+        `}</style>
       </div>
 
       {/* Harvest Now panel */}

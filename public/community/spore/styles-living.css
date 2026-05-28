@@ -295,6 +295,104 @@ input[type='range'].cs-range::-webkit-slider-thumb {
 }
 .tabs::-webkit-scrollbar { display: none; }
 
+/* Mobile tab dropdown — hidden on desktop, shown below 680px. Replaces the
+   horizontally-scrolling tab strip on phones where it ate too much vertical
+   space and was awkward to discover. */
+.tabs-mobile { display: none; }
+@media (max-width: 680px) {
+  .tabs-desktop { display: none; }
+  .tabs-mobile {
+    display: flex;
+    align-items: stretch;
+    border-top: 0.5px solid var(--rule);
+    position: relative;
+  }
+  .tabs-mobile-active {
+    flex: 1 1 auto;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    color: var(--spore-l);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .tabs-mobile-active .tab-icon { font-size: 14px; opacity: 1; }
+  .tabs-mobile-active .tab-label { font-size: 10px; letter-spacing: 0.18em; }
+  .tabs-mobile-active.tab-accent { color: var(--nutrient-l); }
+  .tabs-mobile-active.tab-admin  { color: var(--nutrient-l); }
+  .tabs-mobile-caret {
+    margin-left: auto;
+    color: var(--mycelium-d);
+    font-size: 10px;
+  }
+  .tabs-mobile-hamburger {
+    flex: 0 0 auto;
+    background: none;
+    border: none;
+    border-left: 0.5px solid var(--rule);
+    width: 42px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 0;
+  }
+  .tabs-mobile-hamburger span {
+    display: block;
+    width: 16px;
+    height: 1px;
+    background: var(--mycelium-d);
+    transition: background 0.15s;
+  }
+  .tabs-mobile-hamburger:hover span { background: var(--mycelium-l); }
+  .tabs-mobile-sheet {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(6,8,9,0.97);
+    backdrop-filter: blur(12px);
+    border: 0.5px solid var(--rule);
+    border-top: none;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    padding: 6px 0;
+    box-shadow: 0 16px 32px rgba(0,0,0,0.5);
+  }
+  .tabs-mobile-item {
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    color: var(--mycelium-d);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s;
+  }
+  .tabs-mobile-item:hover { background: rgba(201,184,148,0.05); color: var(--mycelium-l); }
+  .tabs-mobile-item.on { color: var(--spore-l); background: rgba(107,214,111,0.04); }
+  .tabs-mobile-item.tab-accent { color: var(--nutrient-d); }
+  .tabs-mobile-item.tab-accent.on,
+  .tabs-mobile-item.tab-accent:hover { color: var(--nutrient-l); }
+  .tabs-mobile-item .tab-icon { font-size: 14px; opacity: 0.85; }
+  .tabs-mobile-ext { margin-left: auto; opacity: 0.55; font-size: 11px; letter-spacing: 0; }
+}
+
 .tab {
   flex: 0 0 auto;
   background: none;
@@ -1932,11 +2030,28 @@ input[type='range'].cs-range::-webkit-slider-thumb {
   opacity: 0.88;
 }
 
-/* Sections */
+/* Sections — content max-width 760, but the network-map section can go wider */
 .welcome-section {
-  max-width: 680px;
+  max-width: 760px;
   margin: 0 auto;
   padding: 48px 20px 0;
+}
+.welcome-section-wide {
+  max-width: 1180px;
+  padding: 48px 24px 0;
+}
+.welcome-map-frame {
+  background: var(--soil-2);
+  border: 0.5px solid var(--rule);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  position: relative;
+  /* Map needs height to feel like the centrepiece of the page on desktop */
+  aspect-ratio: 16 / 7;
+}
+@media (max-width: 680px) {
+  .welcome-map-frame { aspect-ratio: 16 / 11; }
 }
 .welcome-section-eyebrow {
   font-family: var(--font-mono);

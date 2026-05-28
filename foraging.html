@@ -24,13 +24,34 @@
     <script type="module" src="src/foraging/main.tsx"></script>
     <script src="/cookie-banner.js" defer></script>
     <script>
-      // Register service worker for offline map use
+      // Register service worker for offline map use.
+      // Important: updateViaCache:'none' so the browser ALWAYS re-fetches /sw-forage.js
+      // (this is what lets v3 supersede a stuck v2 on returning users). When a new
+      // worker is waiting we ask it to skipWaiting and reload exactly once.
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw-forage.js', { scope: '/foraging' })
+          navigator.serviceWorker.register('/sw-forage.js', { scope: '/foraging', updateViaCache: 'none' })
             .then(reg => {
               console.log('[Fungai Forage] SW registered, scope:', reg.scope);
-              // Store install prompt for the React app to use
+              // If a new worker is already waiting at registration, activate it.
+              if (reg.waiting) reg.waiting.postMessage('SKIP_WAITING');
+              // When a new worker is found, prep it for immediate activation.
+              reg.addEventListener('updatefound', () => {
+                const nw = reg.installing;
+                if (!nw) return;
+                nw.addEventListener('statechange', () => {
+                  if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+                    nw.postMessage('SKIP_WAITING');
+                  }
+                });
+              });
+              // Reload once when control changes — picks up the fresh shell.
+              let reloaded = false;
+              navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (reloaded) return;
+                reloaded = true;
+                window.location.reload();
+              });
               window.addEventListener('beforeinstallprompt', e => {
                 e.preventDefault();
                 window.__foragePWAPrompt = e;

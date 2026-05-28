@@ -1580,14 +1580,15 @@ function renderFormula(){
   }
 
   // Tradition toggle — active state derives from activePhiFilter so it
-  // doesn't get wiped on re-render. Rendered ABOVE the formula now (used
-  // to be mid-page) so it's reachable without scrolling — important on mobile.
+  // doesn't get wiped on re-render. Rendered UNDER the bottle elixir art
+  // (used to live above the result grid) so it lives with its visual
+  // anchor instead of floating at the top.
   var pf = activePhiFilter || 'all';
   var ttCls = function(id){ return 'tt' + (pf === id ? ' on' : ''); };
   var tradToggle =
-    '<div class="trad-toggle-wrap" style="margin:0 auto 14px;max-width:760px;padding:0 4px">' +
+    '<div class="trad-toggle-wrap" style="margin:12px auto 0;padding:0 4px;width:100%">' +
       '<div style="font-size:8.5px;color:var(--text3);letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px;text-align:center">Filter by tradition</div>' +
-      '<div class="trad-row" style="justify-content:center">' +
+      '<div class="trad-row" style="justify-content:center;flex-wrap:wrap">' +
         '<div class="' + ttCls('all')       + '" id="tt_all"       onclick="setPhiFilter(\'all\')">All</div>' +
         '<div class="' + ttCls('european')  + '" id="tt_european"  onclick="setPhiFilter(\'european\')">European folk</div>' +
         '<div class="' + ttCls('tcm')       + '" id="tt_tcm"       onclick="setPhiFilter(\'tcm\')">Chinese medicine</div>' +
@@ -1608,12 +1609,10 @@ function renderFormula(){
     (boostNames.length?'<div class="ir"><span class="il">Boosts</span>'+boostNames.join(', ')+'</div>':'')+
     '</div><div class="caut"><div class="ct">Important</div>'+cauts.map(c=>'<div class="ci">· '+c+'</div>').join('')+'</div></div>';
 
-  // Formula art card — atmospheric canvas + bottle for all delivery types
-  var bottleColHtml='<div class="result-bottle-col">'+genFormulaArt(name,S.formula,S.int,S.delivery)+'</div>';
-  // Tradition toggle now rendered FIRST (above the result grid) so it's
-  // visible immediately when the formula appears — especially on mobile,
-  // where the formula card is tall and pushes everything below the fold.
-  out.innerHTML=tradToggle+'<div class="result-grid">'+bottleColHtml+'<div class="result-formula-col">'+formulaColHtml+'</div></div>'+serveBlock+'<div class="mcards"><div class="mc"><div class="ml">Herbs</div><div class="mv">'+S.formula.length+'</div></div><div class="mc"><div class="ml">Pool</div><div class="mv">'+poolLabel+' · '+getPool().length+'</div></div><div class="mc"><div class="ml">Safety</div><div class="mv">'+flags.length+' filters</div></div></div>';
+  // Formula art card — bottle art with the tradition toggle stacked
+  // beneath it so they read as one composition.
+  var bottleColHtml='<div class="result-bottle-col">'+genFormulaArt(name,S.formula,S.int,S.delivery)+tradToggle+'</div>';
+  out.innerHTML='<div class="result-grid">'+bottleColHtml+'<div class="result-formula-col">'+formulaColHtml+'</div></div>'+serveBlock+'<div class="mcards"><div class="mc"><div class="ml">Herbs</div><div class="mv">'+S.formula.length+'</div></div><div class="mc"><div class="ml">Pool</div><div class="mv">'+poolLabel+' · '+getPool().length+'</div></div><div class="mc"><div class="ml">Safety</div><div class="mv">'+flags.length+' filters</div></div></div>';
 
   // Wire up copy button
   document.getElementById('explainBtn').onclick=doExplain;

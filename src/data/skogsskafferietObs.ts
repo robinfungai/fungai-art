@@ -158,8 +158,8 @@ export const SKOGSSKAFFERIET_OBS: SkogsObs[] = [
   {
     herb: 'Rölleka', latin: 'Achillea millefolium', count: 250, county: 'All regions',
     points: [
-      // Öland (dominant)
-      [16.68, 56.72], [16.72, 56.85], [16.55, 57.02],
+      // Öland (dominant) — keep all points clearly on the island interior to avoid Kalmarsund water artefacts
+      [16.68, 56.72], [16.72, 56.85], [16.55, 56.95],
       // Dalarna meadows
       [14.88, 60.75], [15.18, 60.55], [14.55, 60.92],
       // Skåne
@@ -194,8 +194,8 @@ export const SKOGSSKAFFERIET_OBS: SkogsObs[] = [
       [12.85, 56.92], [12.72, 56.78], [12.95, 56.68],
       // Skåne
       [13.55, 55.72], [13.28, 55.85], [13.82, 55.62], [13.15, 56.05],
-      // Gotland
-      [18.32, 57.48], [18.15, 57.62],
+      // Gotland — keep points clearly inland to avoid west-coast water artefacts
+      [18.32, 57.48], [18.40, 57.62],
     ],
   },
 
@@ -232,9 +232,9 @@ export const SKOGSSKAFFERIET_OBS: SkogsObs[] = [
       [12.88, 56.88], [12.65, 56.72], [13.12, 56.55], [15.52, 56.22], [14.82, 56.45],
       // Skåne (southernmost — less common but present)
       [13.55, 55.88], [13.28, 55.72], [13.85, 55.62],
-      // Gotland
-      [18.30, 57.52], [18.15, 57.68], [18.55, 57.35],
-      // Öland
+      // Gotland — inland points only (west-coast points nudged east to stay on the limestone, not in the Baltic)
+      [18.30, 57.52], [18.40, 57.68], [18.55, 57.35],
+      // Öland — central spine, not the west-coast Kalmarsund waterline
       [16.68, 56.75], [16.82, 56.55],
     ],
   },

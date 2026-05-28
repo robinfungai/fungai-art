@@ -547,16 +547,16 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
       </div>
       )}
 
-      {/* ── Network map + nodes ── */}
-      <div className="welcome-section">
+      {/* ── Network map + nodes ──
+          The map section uses a wider section variant so it can breathe on
+          desktop. Map frame has aspect-ratio so the canvas always renders at
+          a generous height; viewBox tightened to Europe + Mediterranean +
+          Atitlán arc so the coastlines actually read as geography. */}
+      <div className="welcome-section welcome-section-wide">
         <div className="welcome-section-eyebrow">Active nodes · {liveNodes.length} live · 1 proposed</div>
         <div className="welcome-section-title">The <em>network.</em></div>
 
-        {/* Living animated map — focuses on the Fungai Art operational arc
-            (Europe + Med + Beirut + a Central American jump to Atitlán /
-            Nosara). Zoomed in via viewBox so we don't see N. America or
-            Australia; speed slowed to feel meditative rather than busy. */}
-        <div style={{ background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:12, overflow:'hidden', marginBottom:16, position:'relative' }}>
+        <div className="welcome-map-frame">
           <LivingNetworkMap
             nodes={SporeData.NETWORK_NODES.filter(n =>
               ['berlin','sweden','lisbon','festival','beirut','genoa','atitlan','nosara'].includes(n.id)
@@ -564,8 +564,8 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
             selected={null}
             onSelect={() => {}}
             flowIntensity={1.2}
-            viewBox={{ lonMin: -95, lonMax: 55, latMin: 0, latMax: 70 }}
-            speed={0.45}
+            viewBox={{ lonMin: -94, lonMax: 44, latMin: 8, latMax: 66 }}
+            speed={0.4}
           />
           <div style={{ position:'absolute', bottom:10, left:10, right:10, display:'flex', justifyContent:'space-between', alignItems:'flex-end', pointerEvents:'none' }}>
             <div style={{ background:'rgba(6,8,9,.7)', backdropFilter:'blur(8px)', border:'0.5px solid var(--rule)', borderRadius:6, padding:'6px 10px' }}>
@@ -842,6 +842,7 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
 
 function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) {
   const isAdmin = currentMember && currentMember.admin;
+  const [mobileOpen, setMobileOpen] = useState(false);
   const tabs = [
     { id:'network',  label:'Network',         icon:'◉' },
     { id:'calendar', label:'Calendar',        icon:'△' },
@@ -852,6 +853,12 @@ function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) 
     { id:'store',    label:'Shop',            icon:'◎', external:'/shop' },
     ...(isAdmin ? [{ id:'admin', label:'Admin', icon:'⬡', adminTab:true }] : []),
   ];
+  const activeTab = tabs.find(t => t.id === tab) || tabs[0];
+  const handleTabClick = (t) => {
+    if (t.external) { window.open(t.external, '_blank'); setMobileOpen(false); return; }
+    onTab(t.id);
+    setMobileOpen(false);
+  };
   return (
     <div className="topbar">
       <div className="topbar-row">
@@ -881,20 +888,46 @@ function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) 
           </button>
         </div>
       </div>
-      <div className="tabs">
+      {/* Desktop tab strip — hidden on phones via CSS */}
+      <div className="tabs tabs-desktop">
         {tabs.map(t => (
           <button
             key={t.id}
             className={`tab ${tab === t.id ? 'on' : ''} ${t.accent ? 'tab-accent' : ''} ${t.adminTab ? 'tab-admin' : ''}`}
-            onClick={() => {
-              if (t.external) { window.open(t.external, '_blank'); return; }
-              onTab(t.id);
-            }}
+            onClick={() => handleTabClick(t)}
           >
             <span className="tab-icon">{t.icon}</span>
             <span className="tab-label">{t.label}</span>
           </button>
         ))}
+      </div>
+      {/* Mobile compact bar — single active pill + hamburger that opens the
+          full list as a dropdown. Far less vertical real-estate than the
+          horizontally-scrolling row used to take. */}
+      <div className="tabs-mobile">
+        <button className={`tabs-mobile-active ${activeTab.accent ? 'tab-accent' : ''} ${activeTab.adminTab ? 'tab-admin' : ''}`} onClick={() => setMobileOpen(o => !o)} aria-expanded={mobileOpen}>
+          <span className="tab-icon">{activeTab.icon}</span>
+          <span className="tab-label">{activeTab.label}</span>
+          <span className="tabs-mobile-caret">{mobileOpen ? '▴' : '▾'}</span>
+        </button>
+        <button className="tabs-mobile-hamburger" onClick={() => setMobileOpen(o => !o)} aria-label="All sections">
+          <span></span><span></span><span></span>
+        </button>
+        {mobileOpen && (
+          <div className="tabs-mobile-sheet">
+            {tabs.map(t => (
+              <button
+                key={t.id}
+                className={`tabs-mobile-item ${tab === t.id ? 'on' : ''} ${t.accent ? 'tab-accent' : ''} ${t.adminTab ? 'tab-admin' : ''}`}
+                onClick={() => handleTabClick(t)}
+              >
+                <span className="tab-icon">{t.icon}</span>
+                <span className="tab-label">{t.label}</span>
+                {t.external && <span className="tabs-mobile-ext">↗</span>}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
