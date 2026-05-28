@@ -1539,10 +1539,22 @@ function renderFormula(){
   var name=curExtractName;
 
   var displayHerbs=activePhiFilter==='all'?S.formula:S.formula.filter(h=>h.p&&h.p.includes(activePhiFilter));
-  if(!displayHerbs.length)displayHerbs=S.formula;
+  // Don't silently fall back to S.formula when the filter yields zero —
+  // that made the toggle feel broken because clicking changed nothing.
+  // Instead show an explicit empty message so the user understands their
+  // current formula has no herbs from that tradition.
+  var emptyTraditionMsg = '';
+  if (activePhiFilter !== 'all' && !displayHerbs.length) {
+    var tradName = activePhiFilter === 'european' ? 'European folk' : activePhiFilter === 'tcm' ? 'Chinese' : 'Ayurvedic';
+    emptyTraditionMsg = '<div style="padding:18px 16px;text-align:center;color:var(--text3);font-family:Georgia,serif;font-style:italic;font-size:13px;line-height:1.6">None of the herbs in this formula sit in the <strong style="color:var(--text2)">'+tradName+'</strong> tradition.<br/><span style="font-size:11px;color:var(--text3);opacity:.75">Tap All to see the full formula again.</span></div>';
+  }
 
-  var rows=displayHerbs.map((h,i)=>{var pct=Math.round(h.r/tot*100);return'<div class="hr"><span class="hn">'+String(i+1).padStart(2,'0')+'</span><div class="hi"><div class="hname">'+h.n+(h.m?' <span style="font-size:9px;color:var(--text3)">(mushroom)</span>':'')+'</div><div class="hbot">'+h.b+'</div><div class="hact">'+h.a+'</div></div><span class="hpct">'+pct+'%</span></div>';}).join('');
-  var bars=displayHerbs.map(h=>{var pct=Math.round(h.r/tot*100);return'<div class="brow"><span class="bn">'+h.n+'</span><div class="bt"><div class="bf" style="width:'+pct+'%"></div></div><span class="bp">'+pct+'%</span></div>';}).join('');
+  var rows = displayHerbs.length
+    ? displayHerbs.map((h,i)=>{var pct=Math.round(h.r/tot*100);return'<div class="hr"><span class="hn">'+String(i+1).padStart(2,'0')+'</span><div class="hi"><div class="hname">'+h.n+(h.m?' <span style="font-size:9px;color:var(--text3)">(mushroom)</span>':'')+'</div><div class="hbot">'+h.b+'</div><div class="hact">'+h.a+'</div></div><span class="hpct">'+pct+'%</span></div>';}).join('')
+    : emptyTraditionMsg;
+  var bars = displayHerbs.length
+    ? displayHerbs.map(h=>{var pct=Math.round(h.r/tot*100);return'<div class="brow"><span class="bn">'+h.n+'</span><div class="bt"><div class="bf" style="width:'+pct+'%"></div></div><span class="bp">'+pct+'%</span></div>';}).join('')
+    : '';
   var meridians=[...new Set(S.formula.flatMap(h=>h.t||[]))].slice(0,6);
   var phils=[...new Set(S.formula.flatMap(h=>h.p||[]))];
   var tgs='<div class="tags">';
