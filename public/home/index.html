@@ -261,16 +261,35 @@ p { line-height: 1.75; color: var(--mist); }
 .nav-inner {
   display: flex; align-items: center; justify-content: space-between; height: 100%;
 }
-.nav-brand { display: flex; align-items: center; gap: 12px; }
+/* Logo wrapper — gives the mushroom silhouette visible body on the dark
+   nav. Without a backdrop the PNG (mostly transparent with a thin white
+   shape) reads as "hollow". An amber radial gradient sits behind it
+   like a lantern glow. */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+.nav-brand::before {
+  content: '';
+  position: absolute;
+  left: -10px; top: 50%;
+  transform: translateY(-50%);
+  width: 78px; height: 78px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,177,75,0.32) 0%, rgba(232,177,75,0.10) 40%, transparent 72%);
+  pointer-events: none;
+  z-index: 0;
+}
 .nav-brand img {
-  height: 58px; width: auto; object-fit: contain; opacity: 1;
-  /* Give the mushroom logo presence on the dark nav. Without this it
-     reads as a flat silhouette ("hollow"). Soft amber glow + slight
-     contrast boost make it feel like a lit lantern instead. */
+  height: 62px; width: auto; object-fit: contain; opacity: 1;
+  position: relative; z-index: 1;
   filter:
-    drop-shadow(0 0 14px rgba(212,175,55,0.45))
-    drop-shadow(0 0 4px rgba(255,255,255,0.18))
-    contrast(1.05);
+    drop-shadow(0 0 8px rgba(232,177,75,0.55))
+    drop-shadow(0 0 2px rgba(255,255,255,0.4))
+    contrast(1.1)
+    brightness(1.08);
 }
 .nav-brand .brand-text { display: flex; flex-direction: column; gap: 3px; }
 .nav-brand .main { font-family: 'TAN-PARADISO', 'Kiona', 'Cormorant Garamond', serif; font-size: 24px; color: var(--parchment); line-height: 1; letter-spacing: 0.02em; }
@@ -1735,7 +1754,17 @@ p { line-height: 1.75; color: var(--mist); }
           <div style="position:absolute;top:14px;right:16px;z-index:3;display:flex;align-items:center;gap:6px;font-family:'Bayer',var(--sans);font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:#B6F0AE;background:rgba(6,11,6,0.72);backdrop-filter:blur(6px);padding:6px 10px;border-radius:99px;border:0.5px solid rgba(107,214,111,0.3);pointer-events:none;">
             <span style="width:6px;height:6px;border-radius:50%;background:#6BD66F;box-shadow:0 0 8px rgba(107,214,111,0.8);"></span> Real coordinates
           </div>
-          <iframe src="/foraging" loading="lazy" title="Fungai Art foraging map" style="width:100%;height:440px;border:0;display:block;background:#070d0b;"></iframe>
+          <!-- allow="geolocation" so the embedded foraging app can use the
+               auto-geolocation flow added in Phase 1. Without this attribute
+               browsers block getCurrentPosition() inside iframes and the
+               React app shows a blank "denied" state. referrerpolicy keeps
+               our own origin so the inner app can still call /api routes. -->
+          <iframe src="/foraging"
+                  loading="lazy"
+                  title="Fungai Art foraging map"
+                  allow="geolocation"
+                  referrerpolicy="same-origin"
+                  style="width:100%;height:560px;border:0;display:block;background:#070d0b;"></iframe>
         </div>
         <div style="padding:22px 26px;background:rgba(107,214,111,0.04);border:0.5px solid rgba(107,214,111,0.15);border-radius:14px;">
           <p style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:400;font-size:20px;color:var(--parchment);line-height:1.5;">"Forage with us. Learn the names, properties, and stories of wild plants you walk past every day."</p>

@@ -188,7 +188,17 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
 .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s,transform 0.6s}
 .reveal.in{opacity:1;transform:none}
 
-@media(max-width:768px){.nav-links{display:none}.hero-banner,.filters,.products-section,.comp-banner,.footer{padding-left:20px;padding-right:20px}.cat-header{padding:40px 20px 20px}.cart-drawer{width:100%}.products-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.nav-links{display:none}.hero-banner,.filters,.products-section,.comp-banner,.footer{padding-left:20px;padding-right:20px}.cat-header{padding:40px 20px 20px}.cart-drawer{width:100%}.products-grid{grid-template-columns:1fr 1fr}
+  /* Checkout overlay full-screen on phones — the 90vh modal was pushing
+     "Continue to payment →" below the address bar where it couldn't be
+     reached. Sticky button row keeps the CTA visible while the form scrolls. */
+  .co-overlay{padding:0;align-items:stretch;justify-content:stretch}
+  .co-modal{max-width:100%;max-height:100dvh;height:100dvh;border-radius:0;display:flex;flex-direction:column}
+  .co-modal > *{flex-shrink:0}
+  .co-modal > [id^="coPane"]{flex:1 1 auto;overflow-y:auto;padding-bottom:120px;-webkit-overflow-scrolling:touch}
+  .co-btn-row{position:sticky;bottom:0;background:var(--card,#0d1014);padding:14px 20px;margin:0 -20px -20px;border-top:0.5px solid rgba(136,186,200,0.1);z-index:5}
+  .co-field input,.co-field select{font-size:16px} /* prevents iOS zoom on focus */
+}
 </style>
 </head>
 <body>
@@ -790,7 +800,18 @@ function goToStep1(){goToStepDirect(1)}
 function goToStep2(){
   const req=['coFirstName','coLastName','coEmail','coAddr1','coCity','coPostal','coCountry'];
   const err=document.getElementById('coStep1Err');
-  for(const id of req){if(!document.getElementById(id).value.trim()){err.textContent='Please fill in all required fields.';document.getElementById(id).focus();return}}
+  for(const id of req){
+    const el=document.getElementById(id);
+    if(!el.value.trim()){
+      err.textContent='Please fill in all required fields.';
+      // Scroll the empty field into view so the user can see why the button
+      // "did nothing" — without this, on mobile, the error message and the
+      // empty field were often above the address bar and invisible.
+      try{ el.scrollIntoView({behavior:'smooth',block:'center'}); }catch(e){}
+      setTimeout(()=>{ try{ el.focus(); }catch(e){} },300);
+      return;
+    }
+  }
   err.textContent='';renderSummary('coSummary2');goToStepDirect(2);
 }
 function selectPayTab(tab){
