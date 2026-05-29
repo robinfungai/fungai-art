@@ -2390,6 +2390,29 @@ function SelfIdentityBlock({ currentMember, onToast }) {
     } finally { setBusy(false); }
   }
 
+  // Hard-removes the current account's cloud profile row. Useful when the
+  // user accidentally created e.g. "robin1" and wants to start clean before
+  // re-claiming the founder identity. Auth user stays — only the profiles
+  // row is deleted (RLS allows users to delete their own row).
+  async function deleteMyCloudProfile() {
+    if (!isAuthed || !cloudId) { onToast('Nothing to delete — no cloud profile.', 'warn'); return; }
+    if (!confirm('Permanently delete your current cloud profile row (' + (myCharName || cloudId) + ')? Your auth account stays; only the profile entry is removed. You can re-create immediately.')) return;
+    setBusy(true);
+    try {
+      const { error } = await window.SBclient
+        .from('profiles').delete().eq('id', cloudId);
+      if (error) throw error;
+      onToast('Cloud profile deleted. Reloading…', 'success');
+      try { localStorage.removeItem('fungai_profile'); } catch {}
+      try { localStorage.removeItem('spore_active_member'); } catch {}
+      try { localStorage.removeItem('spore_active_member_full'); } catch {}
+      setTimeout(() => window.location.reload(), 700);
+    } catch (err) {
+      onToast('Delete failed (RLS may block it): ' + (err.message || err), 'warn');
+      setBusy(false);
+    }
+  }
+
   if (!authChecked) return null;
 
   return (
@@ -2462,6 +2485,23 @@ function SelfIdentityBlock({ currentMember, onToast }) {
           <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, color:'var(--mycelium-d)', marginTop:6, lineHeight:1.55 }}>
             Supabase will email BOTH addresses with a confirmation link. The change isn&rsquo;t live until you click the link in the new inbox.
           </div>
+        </details>
+      )}
+
+      {/* Wipe-my-cloud-profile — escape hatch when you ended up as 'robin1' and
+          want to start clean. Only deletes the profiles row; auth user stays. */}
+      {isAuthed && cloudId && (
+        <details style={{ marginTop:6 }}>
+          <summary style={{ cursor:'pointer', listStyle:'none', display:'flex', alignItems:'center', justifyContent:'space-between', gap:8, fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'#E16B6B', padding:'4px 0' }}>
+            <span>✕ Delete my current cloud profile</span>
+            <span>▾</span>
+          </summary>
+          <p style={{ fontSize:12, color:'var(--mycelium-d)', lineHeight:1.55, margin:'8px 0' }}>
+            Deletes the profile row currently linked to <strong>{authEmail}</strong> (character_name <em>{myCharName}</em>). Useful if you ended up on the wrong name like &ldquo;robin1&rdquo; and want to re-claim the right founder identity. Your auth login stays; only the profile entry goes.
+          </p>
+          <button onClick={deleteMyCloudProfile} disabled={busy} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', padding:'9px 16px', borderRadius:999, background:'rgba(225,107,107,0.08)', border:'0.5px solid rgba(225,107,107,0.5)', color:'#E16B6B', cursor: busy ? 'wait' : 'pointer' }}>
+            ✕ Delete profile row
+          </button>
         </details>
       )}
     </div>

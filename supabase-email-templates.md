@@ -1,21 +1,35 @@
 # Supabase Email Templates — Fungai Art
 
-Supabase sends a **different template depending on the user's state**:
+Supabase picks a different template depending on the user's state:
 
-| User exists? | Template used                |
-| ------------ | ---------------------------- |
-| **New email**          | **Confirm signup** ← biggest one |
-| Existing, confirmed   | Magic Link                    |
-| Existing, password reset | Reset Password             |
-| Email being changed   | Change Email Address          |
+| User state                | Template used                |
+| ------------------------- | ---------------------------- |
+| New email                 | **Confirm signup**           |
+| Existing, confirmed       | **Magic Link**               |
+| Password reset            | Reset Password               |
+| Email change in progress  | **Change Email Address**     |
 
-The unbranded "Confirm Your Signup" email you've been getting is the **Confirm signup** template. You need to paste this HTML into:
+All four templates use the same base HTML — only the `<h1>` and intro `<p>` change.
 
-**Supabase dashboard → Authentication → Email Templates → "Confirm signup"**
+**Critical fixes vs. the version you saw in your inbox:**
+1. The button "✦ ENTER THE NETWORK" was rendering invisible (dark text on transparent background in some clients). The new template uses **amber gradient background with dark text** — high contrast everywhere.
+2. The little mushroom icon is replaced with the real **fungi.png logo** hosted at `https://www.fungai.art/fungi.png`, framed in an amber ring.
 
-Subject line: `Welcome to The Mycelium — confirm your thread`
+---
 
-Body (paste into the HTML editor, not the plain text one):
+## How to apply
+
+1. Open https://supabase.com/dashboard/project/cyhpvsyvxzfadtyvcuwp/auth/templates
+2. For each tab (Confirm signup · Magic Link · Reset Password · Change Email Address):
+   - Paste the subject line
+   - Paste the body HTML (use the **HTML** editor, not Plain Text)
+   - Click **Save changes**
+
+---
+
+## Magic Link
+
+**Subject:** `Your sign-in link — Fungai Art`
 
 ```html
 <!DOCTYPE html>
@@ -25,28 +39,35 @@ Body (paste into the HTML editor, not the plain text one):
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <style>
   body { margin:0; padding:0; background:#060809; color:#C9B894; font-family:Georgia,'Times New Roman',serif; -webkit-font-smoothing:antialiased; }
-  .wrap { max-width:560px; margin:0 auto; padding:48px 24px; }
-  .card { background:#0F1014; border:0.5px solid rgba(196,136,56,.18); border-radius:14px; padding:40px 36px; }
+  .wrap { max-width:560px; margin:0 auto; padding:40px 20px; }
+  .card { background:#0F1014; border:0.5px solid rgba(196,136,56,.22); border-radius:14px; padding:36px 32px; text-align:center; }
+  .logo { display:inline-block; width:72px; height:72px; border-radius:50%; background:#0A0F0C url('https://www.fungai.art/fungi.png') center/cover no-repeat; border:1px solid rgba(232,177,75,0.55); box-shadow:0 0 18px rgba(232,177,75,0.35); margin-bottom:22px; }
   .ey { font-family:'Courier New',monospace; font-size:10px; letter-spacing:0.34em; text-transform:uppercase; color:#E8B14B; margin-bottom:16px; }
-  h1 { font-family:Georgia,serif; font-style:italic; font-weight:400; font-size:32px; color:#E6D9B5; line-height:1.1; margin:0 0 18px; letter-spacing:-0.005em; }
-  h1 em { color:#6BD66F; font-style:italic; }
+  h1 { font-family:Georgia,serif; font-style:italic; font-weight:400; font-size:32px; color:#E6D9B5; line-height:1.15; margin:0 0 18px; letter-spacing:-0.005em; }
+  h1 em { color:#E8B14B; font-style:italic; }
   p { font-size:15px; line-height:1.75; color:#C9B894; margin:0 0 18px; }
-  .btn { display:inline-block; font-family:'Courier New',monospace; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; padding:14px 30px; border-radius:999px; background:linear-gradient(135deg,#6BD66F,#2E7A35); color:#060809 !important; text-decoration:none; font-weight:500; margin:18px 0; }
+  .btn-row { margin:26px 0 18px; }
+  /* IMPORTANT — explicit !important on the colour, because some clients
+     (Gmail mobile, Outlook web) override link colour with their own theme.
+     Amber gradient + dark text is the only combo that holds across them. */
+  a.btn { display:inline-block !important; font-family:'Courier New',monospace; font-size:11px; letter-spacing:0.26em; text-transform:uppercase; padding:15px 32px; border-radius:999px; background:#E8B14B !important; background-image:linear-gradient(135deg,#F5D769,#C4862E) !important; color:#1a1208 !important; text-decoration:none !important; font-weight:700; box-shadow:0 4px 16px rgba(232,177,75,0.28); }
   .small { font-size:11px; color:#8B7E62; line-height:1.7; }
   .small a { color:#C9B894; }
-  .sig { margin-top:32px; padding-top:20px; border-top:0.5px solid rgba(196,136,56,.15); font-family:Georgia,serif; font-style:italic; color:#8B7E62; font-size:13px; }
+  .sig { margin-top:30px; padding-top:20px; border-top:0.5px solid rgba(196,136,56,.15); font-family:Georgia,serif; font-style:italic; color:#8B7E62; font-size:13px; }
 </style>
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <div class="ey">✦ FUNGAI ART · The Mycelium</div>
-      <h1>One thread to <em>confirm.</em></h1>
-      <p>Welcome. You've just sent a signal into the network. Tap the button below to confirm it's really you — then your thread weaves into the rest of us.</p>
-      <p style="text-align:center;"><a class="btn" href="{{ .ConfirmationURL }}">✦ Confirm &amp; enter →</a></p>
-      <p class="small">Or paste this into your browser:<br/><a href="{{ .ConfirmationURL }}">{{ .ConfirmationURL }}</a></p>
-      <p class="small">If you didn't request this, you can safely ignore the email — nothing happens.</p>
-      <div class="sig">— Robin &amp; Steph, fungai.art</div>
+      <div class="logo"></div>
+      <div class="ey">✦ A thread arrives</div>
+      <h1>Welcome to<br/><em>The Mycelium.</em></h1>
+      <p>You're a click away from your place in the Fungai Art network. The link below signs you in — no password, no installation.</p>
+      <div class="btn-row">
+        <a class="btn" href="{{ .ConfirmationURL }}">✦ Enter the network →</a>
+      </div>
+      <p class="small">This link works once and expires in 1 hour.<br/>If you didn't request this, just ignore the email — nothing happens until you click.</p>
+      <div class="sig">— Robin &amp; Steph<br/>fungai.art</div>
     </div>
   </div>
 </body>
@@ -55,41 +76,53 @@ Body (paste into the HTML editor, not the plain text one):
 
 ---
 
-## Also update the other 3 templates (so every email matches the brand):
+## Confirm signup
 
-### Magic Link template
-Subject: `Your sign-in link — Fungai Art`
+**Subject:** `Welcome to The Mycelium — confirm your thread`
 
-Use the same HTML but change the `<h1>` and `<p>` to:
-
-```html
-<h1>Your link to <em>walk back in.</em></h1>
-<p>Click the button below and you'll be signed in to The Mycelium. No password needed — the link expires in 1 hour.</p>
-```
-
-### Reset Password
-Subject: `Reset your password — Fungai Art`
+Same HTML as above, but replace the `<h1>` and `<p>` block with:
 
 ```html
-<h1>Reset your <em>password.</em></h1>
-<p>Click below to choose a new one. If you didn't ask for this, ignore the email — your account stays put.</p>
+<h1>One thread to<br/><em>confirm.</em></h1>
+<p>You just sent a signal into the network. Confirm it's really you — your thread weaves into the rest of us as soon as you click.</p>
 ```
 
-### Change Email Address
-Subject: `Confirm your new email — Fungai Art`
-
-```html
-<h1>New email, <em>same thread.</em></h1>
-<p>Confirm this address belongs to you. Once you click, all future emails go here.</p>
-```
+And change the button text to `✦ Confirm & enter →`.
 
 ---
 
-## How to apply
+## Reset Password
 
-1. Open https://supabase.com/dashboard/project/cyhpvsyvxzfadtyvcuwp/auth/templates
-2. Pick the template tab (start with **Confirm signup** — that's the one currently sending the ugly default)
-3. Paste subject + paste body
-4. Click **Save changes**
-5. Repeat for the other 3
-6. Test by signing in with a fresh email (not your `tymetonics@gmail.com` — that already exists, so it sends the Magic Link template, not Confirm Signup)
+**Subject:** `Reset your password — Fungai Art`
+
+```html
+<h1>Reset your<br/><em>password.</em></h1>
+<p>Click below to choose a new one. If you didn't ask for this, ignore the email — your account stays put.</p>
+```
+
+Button text: `✦ Choose new password →`
+
+---
+
+## Change Email Address
+
+**Subject:** `Confirm your new email — Fungai Art`
+
+```html
+<h1>New email,<br/><em>same thread.</em></h1>
+<p>Confirm this address belongs to you. Once you click, all future emails go here.</p>
+```
+
+Button text: `✦ Confirm new address →`
+
+---
+
+## Quick QA
+
+After saving each template, test by:
+1. **Magic Link** — sign in via /community with an email already in `auth.users`.
+2. **Confirm signup** — sign in with an email NOT yet in `auth.users` (Supabase falls back to this template).
+3. **Reset Password** — call `supabase.auth.resetPasswordForEmail(email)` from the browser console.
+4. **Change Email Address** — use the Admin → Your identity → Change my account email form.
+
+The button must be **amber on dark** in every client. If you ever see dark-on-dark again, it's the client overriding `color:#1a1208` — re-add `!important` and re-save.
