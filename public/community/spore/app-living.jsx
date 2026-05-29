@@ -2047,6 +2047,12 @@ function MembersPage({ currentMember, economy }) {
         <p className="section-blurb">Each hyphae brings a different thread to the mycelium.</p>
       </div>
 
+      {/* Identity & sign-in controls — moved here from Admin so any signed-in
+          user can fix their founder link even if they're stuck on a non-admin
+          profile like 'Robin1'. Renders nothing when there's nothing useful
+          to do (signed in, linked, matched). */}
+      <SelfIdentityBlock currentMember={currentMember} onToast={(m,k) => { try { window.dispatchEvent(new CustomEvent('spore:toast', { detail:{ msg:m, kind:k } })); } catch{} alert(m); }} />
+
       {/* Self-onboard / edit profile card.
           Logic:
           - Linked to cloud profile (currentMember has cloudId/authUserId): only EDIT — never offer "create new"
@@ -2329,8 +2335,11 @@ function SelfIdentityBlock({ currentMember, onToast }) {
   const founders = (SporeData.MEMBERS || []).filter(m => m.founding || m.admin);
   const isAuthed = !!authEmail;
   const linkedLabel = currentMember ? currentMember.name : '— not linked —';
-  // "matched" only meaningful once we have a cloud profile to compare to.
-  const matched = !!(currentMember && (currentMember.name || '').toLowerCase() === (myCharName || '').toLowerCase());
+  // "matched" = linked to a real hardcoded founder thread. Not enough that
+  // currentMember.name === cloud.character_name — if a runtime-loaded cloud
+  // profile (like 'Robin1') ended up in MEMBERS, the user is still NOT on
+  // a founder identity, so we need to surface the relink picker.
+  const matched = !!(currentMember && currentMember.founding);
 
   async function sendMagicLink() {
     if (!window.SBauth) { onToast('Auth client not loaded.', 'warn'); return; }
