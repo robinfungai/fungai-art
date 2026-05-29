@@ -2303,42 +2303,69 @@ function JournalPage({ economy, currentMember }) {
 // the account email without leaving the portal.
 function SelfIdentityBlock({ currentMember, onToast }) {
   const [authEmail, setAuthEmail] = useState('');
+  const [authChecked, setAuthChecked] = useState(false);
   const [myCharName, setMyCharName] = useState('');
   const [cloudId, setCloudId] = useState(null);
   const [newEmail, setNewEmail] = useState('');
+  const [signInEmail, setSignInEmail] = useState('');
   const [busy, setBusy] = useState(false);
-  const [picker, setPicker] = useState(false);
+  const [linkSent, setLinkSent] = useState(false);
 
-  // Load auth state once
-  useEffect(() => {
-    (async () => {
-      try {
-        if (!window.SBauth) return;
-        const u = await window.SBauth.getUser();
-        if (u) setAuthEmail(u.email || '');
-        if (window.SBprofiles) {
-          const mine = await window.SBprofiles.fetchMine();
-          if (mine) { setMyCharName(mine.character_name || ''); setCloudId(mine.id); }
-        }
-      } catch (e) { /* not fatal */ }
-    })();
-  }, []);
+  async function refreshAuth() {
+    try {
+      if (!window.SBauth) { setAuthChecked(true); return; }
+      const u = await window.SBauth.getUser();
+      setAuthEmail(u?.email || '');
+      if (window.SBprofiles) {
+        const mine = await window.SBprofiles.fetchMine();
+        if (mine) { setMyCharName(mine.character_name || ''); setCloudId(mine.id); }
+      }
+    } catch (e) { /* not fatal */ }
+    finally { setAuthChecked(true); }
+  }
+
+  useEffect(() => { refreshAuth(); }, []);
 
   const founders = (SporeData.MEMBERS || []).filter(m => m.founding || m.admin);
-  const matched = !!(currentMember && (currentMember.name || '').toLowerCase() === (myCharName || '').toLowerCase());
+  const isAuthed = !!authEmail;
   const linkedLabel = currentMember ? currentMember.name : '— not linked —';
+  // "matched" only meaningful once we have a cloud profile to compare to.
+  const matched = !!(currentMember && (currentMember.name || '').toLowerCase() === (myCharName || '').toLowerCase());
+
+  async function sendMagicLink() {
+    if (!window.SBauth) { onToast('Auth client not loaded.', 'warn'); return; }
+    const trimmed = signInEmail.trim().toLowerCase();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(trimmed)) { onToast('Enter a valid email.', 'warn'); return; }
+    setBusy(true);
+    try {
+      const { error } = await window.SBauth.signIn(trimmed);
+      if (error) throw error;
+      setLinkSent(true);
+      onToast('Magic link sent. Click it on this device / browser.', 'success');
+    } catch (err) {
+      onToast('Sign-in failed: ' + (err.message || err), 'warn');
+    } finally { setBusy(false); }
+  }
 
   async function relinkAs(founderName) {
-    if (!window.SBclient || !cloudId) {
-      onToast('Sign in via magic link first, then come back.', 'warn');
+    if (!isAuthed) { onToast('Sign in below first, then click again.', 'warn'); return; }
+    if (!cloudId) {
+      // Auth user exists but no profile row yet — create one with the founder name.
+      setBusy(true);
+      try {
+        await window.SBprofiles.upsert({ character_name: founderName, role:'founder', node:'berlin' });
+        onToast(`Created profile as ${founderName}. Reloading…`, 'success');
+        setTimeout(() => window.location.reload(), 700);
+      } catch (err) {
+        onToast('Could not create profile: ' + (err.message || err), 'warn');
+        setBusy(false);
+      }
       return;
     }
     setBusy(true);
     try {
       const { error } = await window.SBclient
-        .from('profiles')
-        .update({ character_name: founderName })
-        .eq('id', cloudId);
+        .from('profiles').update({ character_name: founderName }).eq('id', cloudId);
       if (error) throw error;
       onToast(`Linked your account to ${founderName}. Reloading…`, 'success');
       setTimeout(() => window.location.reload(), 700);
@@ -2349,41 +2376,65 @@ function SelfIdentityBlock({ currentMember, onToast }) {
   }
 
   async function changeEmail() {
-    if (!window.SBclient) return;
+    if (!isAuthed) { onToast('Sign in below first, then change your email.', 'warn'); return; }
     const trimmed = newEmail.trim().toLowerCase();
-    if (!trimmed || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(trimmed)) {
-      onToast('Enter a valid email address.', 'warn');
-      return;
-    }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(trimmed)) { onToast('Enter a valid email address.', 'warn'); return; }
     setBusy(true);
     try {
       const { error } = await window.SBclient.auth.updateUser({ email: trimmed });
       if (error) throw error;
-      onToast('Confirmation links sent to both old and new addresses. Click the link in your new inbox to finish.', 'success');
+      onToast('Confirmation links sent to both old and new addresses.', 'success');
       setNewEmail('');
     } catch (err) {
       onToast('Email change failed: ' + (err.message || err), 'warn');
-    } finally {
-      setBusy(false);
-    }
+    } finally { setBusy(false); }
   }
+
+  if (!authChecked) return null;
 
   return (
     <div style={{ margin:'8px 16px 0', background:'linear-gradient(160deg, rgba(168,143,224,0.05), rgba(168,143,224,0.01))', border:'0.5px solid rgba(168,143,224,0.28)', borderRadius:10, padding:'14px 16px' }}>
       <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'#C5B5F5', marginBottom:6 }}>✦ Your identity on this device</div>
+
+      {/* Status line */}
       <div style={{ display:'flex', alignItems:'center', gap:8, flexWrap:'wrap', marginBottom:10 }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)' }}>Signed in as</span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'var(--mycelium-l)' }}>{authEmail || '—'}</span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', marginLeft:8 }}>· linked to</span>
-        <span style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:14, color: matched ? 'var(--spore-l)' : '#E16B6B' }}>{linkedLabel}</span>
-        {myCharName && <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--mycelium-d)' }}>(cloud name: {myCharName})</span>}
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)' }}>Cloud session</span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:11, color: isAuthed ? 'var(--spore-l)' : '#E16B6B' }}>{isAuthed ? authEmail : 'not signed in'}</span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', marginLeft:8 }}>·</span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)' }}>local thread</span>
+        <span style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:14, color: 'var(--mycelium-l)' }}>{linkedLabel}</span>
+        {myCharName && <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--mycelium-d)' }}>· cloud name {myCharName}</span>}
       </div>
 
-      {!matched && (
+      {/* Not signed in → inline magic-link form. This is the source of the
+          confusing "Auth session missing!" error: the local thread can read
+          "Robin" while the actual Supabase session is empty. Surface it
+          clearly and offer to sign in right here. */}
+      {!isAuthed && (
         <div style={{ marginBottom:12, padding:'10px 12px', background:'rgba(225,107,107,0.06)', border:'0.5px solid rgba(225,107,107,0.28)', borderRadius:6 }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'#E16B6B', marginBottom:6 }}>Not linked to a founder thread</div>
-          <p style={{ fontSize:12, color:'var(--mycelium)', lineHeight:1.5, margin:'0 0 8px' }}>
-            Pick which founder this account is. We rename your cloud profile to match — the network then merges your contributions into that thread on next reload.
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'#E16B6B', marginBottom:6 }}>Local-only mode</div>
+          <p style={{ fontSize:12, color:'var(--mycelium)', lineHeight:1.55, margin:'0 0 8px' }}>
+            You&rsquo;re seeing the network through the locally-cached Robin profile, but there&rsquo;s no live Supabase session — so cloud features (email change, restrictions sync, founder relink) can&rsquo;t fire. Sign in here to enable them.
+          </p>
+          {linkSent ? (
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--spore-l)' }}>✓ Magic link sent. Open the email <strong>on this browser</strong> — PKCE flow needs the same tab.</div>
+          ) : (
+            <div style={{ display:'flex', gap:6, flexWrap:'wrap' }}>
+              <input type="email" placeholder="robin@fungai.art" value={signInEmail} onChange={e => setSignInEmail(e.target.value)} style={{ flex:'1 1 220px', minWidth:0, padding:'9px 11px', borderRadius:6, background:'var(--soil-3)', border:'0.5px solid var(--rule)', color:'var(--mycelium-l)', fontFamily:'var(--font-sans)', fontSize:13, outline:'none' }} />
+              <button onClick={sendMagicLink} disabled={busy} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', padding:'9px 16px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', cursor: busy ? 'wait' : 'pointer' }}>
+                Send magic link
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Signed in but local thread name doesn't match cloud character_name */}
+      {isAuthed && !matched && (
+        <div style={{ marginBottom:12, padding:'10px 12px', background:'rgba(232,177,75,0.06)', border:'0.5px solid rgba(232,177,75,0.28)', borderRadius:6 }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--nutrient-l)', marginBottom:6 }}>Cloud profile not linked to a founder</div>
+          <p style={{ fontSize:12, color:'var(--mycelium)', lineHeight:1.55, margin:'0 0 8px' }}>
+            Pick which founder this Supabase account corresponds to. We rename your cloud profile&rsquo;s <code>character_name</code> to match — auto-merge happens on next reload.
           </p>
           <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
             {founders.map(f => (
@@ -2395,22 +2446,24 @@ function SelfIdentityBlock({ currentMember, onToast }) {
         </div>
       )}
 
-      {/* Email change */}
-      <details>
-        <summary style={{ cursor:'pointer', listStyle:'none', display:'flex', alignItems:'center', justifyContent:'space-between', gap:8, fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)', padding:'4px 0' }}>
-          <span>✉ Change my account email</span>
-          <span>▾</span>
-        </summary>
-        <div style={{ display:'flex', gap:6, marginTop:8, flexWrap:'wrap' }}>
-          <input type="email" placeholder="new@email.com" value={newEmail} onChange={e => setNewEmail(e.target.value)} style={{ flex:'1 1 220px', minWidth:0, padding:'9px 11px', borderRadius:6, background:'var(--soil-3)', border:'0.5px solid var(--rule)', color:'var(--mycelium-l)', fontFamily:'var(--font-sans)', fontSize:13, outline:'none' }} />
-          <button onClick={changeEmail} disabled={busy} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', padding:'9px 16px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', cursor: busy ? 'wait' : 'pointer' }}>
-            Send change link
-          </button>
-        </div>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, color:'var(--mycelium-d)', marginTop:6, lineHeight:1.55 }}>
-          Supabase will email BOTH addresses with a confirmation link. The change isn&rsquo;t live until you click the link in the new inbox.
-        </div>
-      </details>
+      {/* Email change — only relevant when there's an actual Supabase session */}
+      {isAuthed && (
+        <details>
+          <summary style={{ cursor:'pointer', listStyle:'none', display:'flex', alignItems:'center', justifyContent:'space-between', gap:8, fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)', padding:'4px 0' }}>
+            <span>✉ Change my account email</span>
+            <span>▾</span>
+          </summary>
+          <div style={{ display:'flex', gap:6, marginTop:8, flexWrap:'wrap' }}>
+            <input type="email" placeholder="new@email.com" value={newEmail} onChange={e => setNewEmail(e.target.value)} style={{ flex:'1 1 220px', minWidth:0, padding:'9px 11px', borderRadius:6, background:'var(--soil-3)', border:'0.5px solid var(--rule)', color:'var(--mycelium-l)', fontFamily:'var(--font-sans)', fontSize:13, outline:'none' }} />
+            <button onClick={changeEmail} disabled={busy} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', padding:'9px 16px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', cursor: busy ? 'wait' : 'pointer' }}>
+              Send change link
+            </button>
+          </div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, color:'var(--mycelium-d)', marginTop:6, lineHeight:1.55 }}>
+            Supabase will email BOTH addresses with a confirmation link. The change isn&rsquo;t live until you click the link in the new inbox.
+          </div>
+        </details>
+      )}
     </div>
   );
 }
