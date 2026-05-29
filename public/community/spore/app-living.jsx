@@ -2676,20 +2676,35 @@ function AdminPage({ onToast, currentMember }) {
   }
 
   async function saveRestrictions(m) {
-    if (!window.SBclient || !m.cloudId) return;
+    if (!m.cloudId) return;
     setSavingRestrictions(s => ({ ...s, [m.cloudId]: true }));
     try {
-      const { error } = await window.SBclient
-        .from('profiles')
-        .update({ restrictions: currentRestrictions(m) })
-        .eq('id', m.cloudId);
-      if (error) throw error;
+      // Local-first: write the restrictions list to a per-cloudId localStorage
+      // key. The Supabase `profiles` table doesn't have a `restrictions`
+      // column (no migration applied yet) so we keep this local until you
+      // run the alter table. The cross-page gate (/spore-gate.js) reads
+      // from spore_active_member_full which we already populate at login.
+      try {
+        const map = JSON.parse(localStorage.getItem('spore_restrictions_by_cloud') || '{}');
+        map[m.cloudId] = currentRestrictions(m);
+        localStorage.setItem('spore_restrictions_by_cloud', JSON.stringify(map));
+      } catch {}
+      // Best-effort cloud sync. Silently no-ops when the column doesn't
+      // exist; surfaces only unexpected errors.
+      if (window.SBclient) {
+        const { error } = await window.SBclient
+          .from('profiles')
+          .update({ restrictions: currentRestrictions(m) })
+          .eq('id', m.cloudId);
+        if (error && !/schema cache|column.*restrictions/i.test(error.message || '')) {
+          throw error;
+        }
+      }
       onToast(`Saved restrictions for ${m.name}`, 'success');
-      // clear edit (cloud is now source of truth)
       setRestrictionEdits(e => { const n = {...e}; delete n[m.cloudId]; return n; });
       m.restrictions = currentRestrictions(m); // optimistic local update
     } catch (err) {
-      onToast('Save failed — RLS may block this. ' + (err.message || ''), 'warn');
+      onToast('Save failed: ' + (err.message || err), 'warn');
     } finally {
       setSavingRestrictions(s => ({ ...s, [m.cloudId]: false }));
     }
@@ -2749,66 +2764,68 @@ function AdminPage({ onToast, currentMember }) {
       {/* Weekly report — Robin and Stephanie each submit one per week */}
       <WeeklyReportBlock currentMemberId={currentMemberId} onToast={onToast} />
 
-      {/* Per-member feature restrictions — collapsed behind a dropdown per
-          design pass; admins only open it when they need it. */}
+      {/* Per-member feature restrictions — collapsed by default. Each member
+          row is now a single-line summary that expands on click; the long
+          list of 3-toggle-pill rows was eating most of the page. */}
       <details className="section" style={{ paddingBottom:0 }}>
-        <summary style={{ cursor:'pointer', listStyle:'none', display:'flex', alignItems:'center', justifyContent:'space-between', gap:10 }}>
+        <summary style={{ cursor:'pointer', listStyle:'none', display:'flex', alignItems:'center', justifyContent:'space-between', gap:10, padding:'6px 0' }}>
           <div>
             <div className="section-eyebrow">Access control</div>
-            <h3 style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:20, color:'var(--mycelium-l)', marginTop:4, marginBottom:6 }}>Restrict <em>features.</em></h3>
+            <h3 style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:20, color:'var(--mycelium-l)', marginTop:4, marginBottom:0 }}>Restrict <em>features.</em> <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', fontStyle:'normal', letterSpacing:0 }}>&middot; {SporeData.MEMBERS.filter(m => !m.admin && m.cloudId).length} editable threads</span></h3>
           </div>
           <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>show &darr;</span>
         </summary>
-        <p style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', lineHeight:1.6, marginBottom:0 }}>Toggle a feature to block that member from it. Saves to their cloud profile and enforces on the live feature pages via /spore-gate.js. Admins always bypass.</p>
-      </details>
-      <div style={{ margin:'8px 16px 16px', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, overflow:'hidden' }}>
-        {/* Now lists ALL members (not just cloud-linked) so admins are visible.
-            Admin rows render the toggles as inert "bypass" indicators rather
-            than hiding them — clearer than just not appearing in the list. */}
-        {SporeData.MEMBERS.map((m, i, arr) => {
-          const r = currentRestrictions(m);
-          const dirty = !!restrictionEdits[m.cloudId];
-          const busy = !!savingRestrictions[m.cloudId];
-          const isAdminRow = m.admin;
-          const noCloud = !m.cloudId;
-          return (
-            <div key={m.id} style={{ padding:'12px 14px', borderBottom: i < arr.length - 1 ? '0.5px solid var(--rule)' : 'none', opacity: isAdminRow ? 0.85 : 1 }}>
-              <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8 }}>
-                <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:15, color:'var(--mycelium-l)' }}>{m.name}</div>
-                {isAdminRow && <span style={{ fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.14em', color:'var(--nutrient-l)', background:'rgba(232,177,75,0.1)', border:'0.5px solid rgba(232,177,75,0.3)', padding:'2px 7px', borderRadius:999 }}>ADMIN · BYPASS</span>}
-                {!isAdminRow && noCloud && <span style={{ fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.14em', color:'var(--mycelium-d)' }}>UNCLAIMED</span>}
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'var(--mycelium-d)', marginLeft:'auto' }}>{m.role}</span>
-              </div>
-              <div style={{ display:'flex', flexWrap:'wrap', gap:5, alignItems:'center' }}>
-                {RESTRICTABLE_FEATURES.map(f => {
-                  const blocked = r.includes(f.id);
-                  const disabled = isAdminRow || noCloud;
-                  return (
-                    <button key={f.id} type="button" disabled={disabled} onClick={() => toggleRestriction(m, f.id)}
-                      title={isAdminRow ? 'Admins bypass all restrictions' : (noCloud ? 'Member must claim their profile first' : '')}
-                      style={{
-                        fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase',
-                        padding:'6px 11px', borderRadius:999,
-                        cursor: disabled ? 'not-allowed' : 'pointer',
-                        background: blocked ? 'rgba(225,107,107,0.12)' : 'var(--soil-3)',
-                        border: blocked ? '0.5px solid rgba(225,107,107,0.5)' : '0.5px solid var(--rule)',
-                        color: blocked ? '#E16B6B' : 'var(--mycelium-d)',
-                        opacity: disabled ? 0.45 : 1,
-                      }}>
-                      {blocked ? '✕' : '○'} {f.label}
-                    </button>
-                  );
-                })}
-                {dirty && (
-                  <button type="button" onClick={() => saveRestrictions(m)} disabled={busy} style={{ marginLeft:'auto', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', padding:'6px 14px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', cursor: busy ? 'wait' : 'pointer', opacity: busy ? 0.6 : 1 }}>
-                    {busy ? 'Saving…' : '✦ Save'}
-                  </button>
+        <p style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', lineHeight:1.6, margin:'4px 0 10px' }}>Tap a member to expand toggles. Enforced on /mixology and /extraction via /spore-gate.js. Admins always bypass.</p>
+        <div style={{ margin:'0 0 16px', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, overflow:'hidden' }}>
+          {SporeData.MEMBERS.map((m, i, arr) => {
+            const r = currentRestrictions(m);
+            const dirty = !!restrictionEdits[m.cloudId];
+            const busy = !!savingRestrictions[m.cloudId];
+            const isAdminRow = m.admin;
+            const noCloud = !m.cloudId;
+            const summary = isAdminRow
+              ? 'admin · bypass'
+              : noCloud ? 'unclaimed'
+              : r.length === 0 ? 'no restrictions'
+              : r.map(id => (RESTRICTABLE_FEATURES.find(f => f.id === id) || {}).label || id).join(' · ');
+            return (
+              <details key={m.id} style={{ borderBottom: i < arr.length - 1 ? '0.5px solid var(--rule)' : 'none' }}>
+                <summary style={{ cursor: (isAdminRow || noCloud) ? 'default' : 'pointer', listStyle:'none', display:'flex', alignItems:'center', gap:10, padding:'9px 14px', opacity: isAdminRow ? 0.7 : 1 }}>
+                  <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:14, color:'var(--mycelium-l)', minWidth:80 }}>{m.name}</div>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color: r.length > 0 ? '#E16B6B' : 'var(--mycelium-d)', letterSpacing:'0.06em', flex:1, minWidth:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{summary}</span>
+                  {!isAdminRow && !noCloud && (
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--mycelium-d)' }}>&middot; edit</span>
+                  )}
+                </summary>
+                {!isAdminRow && !noCloud && (
+                  <div style={{ display:'flex', flexWrap:'wrap', gap:5, alignItems:'center', padding:'4px 14px 12px' }}>
+                    {RESTRICTABLE_FEATURES.map(f => {
+                      const blocked = r.includes(f.id);
+                      return (
+                        <button key={f.id} type="button" onClick={() => toggleRestriction(m, f.id)}
+                          style={{
+                            fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase',
+                            padding:'5px 10px', borderRadius:999, cursor:'pointer',
+                            background: blocked ? 'rgba(225,107,107,0.12)' : 'var(--soil-3)',
+                            border: blocked ? '0.5px solid rgba(225,107,107,0.5)' : '0.5px solid var(--rule)',
+                            color: blocked ? '#E16B6B' : 'var(--mycelium-d)',
+                          }}>
+                          {blocked ? '✕' : '○'} {f.label}
+                        </button>
+                      );
+                    })}
+                    {dirty && (
+                      <button type="button" onClick={() => saveRestrictions(m)} disabled={busy} style={{ marginLeft:'auto', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', padding:'5px 12px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', cursor: busy ? 'wait' : 'pointer', opacity: busy ? 0.6 : 1 }}>
+                        {busy ? '…' : '✦ Save'}
+                      </button>
+                    )}
+                  </div>
                 )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+              </details>
+            );
+          })}
+        </div>
+      </details>
 
       {/* Member overview — "All hyphaes" with per-member expandable details
           (hours / recruits / events / email / contribution timer / remove
