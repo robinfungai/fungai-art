@@ -1464,6 +1464,10 @@ function ProfileEditor({ existing, onClose }) {
           }
         }
 
+        // Profile object — keep `recruited_by` LOCAL only. The Supabase
+        // `profiles` table doesn't have that column (would require a manual
+        // migration / RLS update) so we strip it before sending. Recruiter
+        // bonuses are tracked entirely in localStorage `spore_recruits`.
         const profile = {
           character_name: name.trim(),
           bio: bio.trim(),
@@ -1477,13 +1481,14 @@ function ProfileEditor({ existing, onClose }) {
           node: { sweden:'sweden', berlin:'berlin', lisbon:'lisbon', beirut:'beirut', genoa:'berlin', france:'berlin', germany:'berlin', denmark:'sweden', other_europe:'berlin', other_world:'festival' }[location] || 'berlin',
           focus: bio.trim() || (tags.length ? tags.join(' · ') : 'A new thread in the network'),
         };
+        const { recruited_by: _stripRecruitedBy, ...cloudProfile } = profile;
 
         if (user) {
           // Path A
-          await window.SBprofiles.upsert(profile);
+          await window.SBprofiles.upsert(cloudProfile);
         } else {
           // Path B — unclaimed insert (requires the new RLS policy)
-          await window.SBprofiles.createUnclaimed(profile);
+          await window.SBprofiles.createUnclaimed(cloudProfile);
         }
 
         // Recruiter bonus — local-first ledger. If recruiter is named the
@@ -2291,6 +2296,125 @@ function JournalPage({ economy, currentMember }) {
 
 // ── Admin sub-blocks ──────────────────────────────────────────────────────
 
+// Lets the signed-in user attach themselves to the right hardcoded MEMBERS
+// entry by renaming their cloud profile to that member's name. The auto-
+// match in tryAutoLogin (case-insensitive character_name → MEMBERS.name)
+// then picks them up. Also exposes Supabase auth.updateUser for changing
+// the account email without leaving the portal.
+function SelfIdentityBlock({ currentMember, onToast }) {
+  const [authEmail, setAuthEmail] = useState('');
+  const [myCharName, setMyCharName] = useState('');
+  const [cloudId, setCloudId] = useState(null);
+  const [newEmail, setNewEmail] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [picker, setPicker] = useState(false);
+
+  // Load auth state once
+  useEffect(() => {
+    (async () => {
+      try {
+        if (!window.SBauth) return;
+        const u = await window.SBauth.getUser();
+        if (u) setAuthEmail(u.email || '');
+        if (window.SBprofiles) {
+          const mine = await window.SBprofiles.fetchMine();
+          if (mine) { setMyCharName(mine.character_name || ''); setCloudId(mine.id); }
+        }
+      } catch (e) { /* not fatal */ }
+    })();
+  }, []);
+
+  const founders = (SporeData.MEMBERS || []).filter(m => m.founding || m.admin);
+  const matched = !!(currentMember && (currentMember.name || '').toLowerCase() === (myCharName || '').toLowerCase());
+  const linkedLabel = currentMember ? currentMember.name : '— not linked —';
+
+  async function relinkAs(founderName) {
+    if (!window.SBclient || !cloudId) {
+      onToast('Sign in via magic link first, then come back.', 'warn');
+      return;
+    }
+    setBusy(true);
+    try {
+      const { error } = await window.SBclient
+        .from('profiles')
+        .update({ character_name: founderName })
+        .eq('id', cloudId);
+      if (error) throw error;
+      onToast(`Linked your account to ${founderName}. Reloading…`, 'success');
+      setTimeout(() => window.location.reload(), 700);
+    } catch (err) {
+      onToast('Relink failed: ' + (err.message || err), 'warn');
+      setBusy(false);
+    }
+  }
+
+  async function changeEmail() {
+    if (!window.SBclient) return;
+    const trimmed = newEmail.trim().toLowerCase();
+    if (!trimmed || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(trimmed)) {
+      onToast('Enter a valid email address.', 'warn');
+      return;
+    }
+    setBusy(true);
+    try {
+      const { error } = await window.SBclient.auth.updateUser({ email: trimmed });
+      if (error) throw error;
+      onToast('Confirmation links sent to both old and new addresses. Click the link in your new inbox to finish.', 'success');
+      setNewEmail('');
+    } catch (err) {
+      onToast('Email change failed: ' + (err.message || err), 'warn');
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div style={{ margin:'8px 16px 0', background:'linear-gradient(160deg, rgba(168,143,224,0.05), rgba(168,143,224,0.01))', border:'0.5px solid rgba(168,143,224,0.28)', borderRadius:10, padding:'14px 16px' }}>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'#C5B5F5', marginBottom:6 }}>✦ Your identity on this device</div>
+      <div style={{ display:'flex', alignItems:'center', gap:8, flexWrap:'wrap', marginBottom:10 }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)' }}>Signed in as</span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'var(--mycelium-l)' }}>{authEmail || '—'}</span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', marginLeft:8 }}>· linked to</span>
+        <span style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:14, color: matched ? 'var(--spore-l)' : '#E16B6B' }}>{linkedLabel}</span>
+        {myCharName && <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--mycelium-d)' }}>(cloud name: {myCharName})</span>}
+      </div>
+
+      {!matched && (
+        <div style={{ marginBottom:12, padding:'10px 12px', background:'rgba(225,107,107,0.06)', border:'0.5px solid rgba(225,107,107,0.28)', borderRadius:6 }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'#E16B6B', marginBottom:6 }}>Not linked to a founder thread</div>
+          <p style={{ fontSize:12, color:'var(--mycelium)', lineHeight:1.5, margin:'0 0 8px' }}>
+            Pick which founder this account is. We rename your cloud profile to match — the network then merges your contributions into that thread on next reload.
+          </p>
+          <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+            {founders.map(f => (
+              <button key={f.id} disabled={busy} onClick={() => relinkAs(f.name)} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.16em', textTransform:'uppercase', padding:'7px 12px', borderRadius:999, background:'rgba(168,143,224,0.1)', border:'0.5px solid rgba(168,143,224,0.45)', color:'#C5B5F5', cursor: busy ? 'wait' : 'pointer' }}>
+                I am {f.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Email change */}
+      <details>
+        <summary style={{ cursor:'pointer', listStyle:'none', display:'flex', alignItems:'center', justifyContent:'space-between', gap:8, fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)', padding:'4px 0' }}>
+          <span>✉ Change my account email</span>
+          <span>▾</span>
+        </summary>
+        <div style={{ display:'flex', gap:6, marginTop:8, flexWrap:'wrap' }}>
+          <input type="email" placeholder="new@email.com" value={newEmail} onChange={e => setNewEmail(e.target.value)} style={{ flex:'1 1 220px', minWidth:0, padding:'9px 11px', borderRadius:6, background:'var(--soil-3)', border:'0.5px solid var(--rule)', color:'var(--mycelium-l)', fontFamily:'var(--font-sans)', fontSize:13, outline:'none' }} />
+          <button onClick={changeEmail} disabled={busy} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', padding:'9px 16px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', cursor: busy ? 'wait' : 'pointer' }}>
+            Send change link
+          </button>
+        </div>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, color:'var(--mycelium-d)', marginTop:6, lineHeight:1.55 }}>
+          Supabase will email BOTH addresses with a confirmation link. The change isn&rsquo;t live until you click the link in the new inbox.
+        </div>
+      </details>
+    </div>
+  );
+}
+
 function PendingContributionsBlock({ onToast }) {
   const [, bump] = useState(0);
   useEffect(() => {
@@ -2474,6 +2598,10 @@ function AdminPage({ onToast, currentMember }) {
         <div className="section-eyebrow">Founder access</div>
         <h2 className="section-title">Admin <em>panel.</em></h2>
       </div>
+
+      {/* Self-identity tools — make it easy to link this signed-in account to
+          the right hardcoded MEMBERS entry without back-and-forth. */}
+      <SelfIdentityBlock currentMember={currentMember} onToast={onToast} />
 
       {/* Quick actions (admin-only profile creation) */}
       <div style={{ margin:'8px 16px 0', background:'linear-gradient(160deg, rgba(232,177,75,0.06), rgba(232,177,75,0.02))', border:'0.5px solid rgba(232,177,75,0.3)', borderRadius:10, padding:'14px 16px', display:'flex', alignItems:'center', gap:14, flexWrap:'wrap' }}>
