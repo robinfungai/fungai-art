@@ -2886,7 +2886,7 @@ function AdminHyphaeRow({ m, last, isRobin, currentMemberId, onToast }) {
   }
   async function removeProfile() {
     if (!isRobin) return;
-    if (!confirm(`Remove ${m.name} permanently? This deletes their cloud profile row AND clears their local balance / contrib / messages on this device. Auth user (Supabase login) stays.`)) return;
+    if (!confirm(`Remove ${m.name} permanently? This deletes their cloud profile row AND clears their local data. Auth user (Supabase login) stays.`)) return;
     // Local wipe first (always safe)
     try {
       ['spore_bal_','spore_contrib_','spore_events_','spore_msgs_','spore_state_'].forEach(p => localStorage.removeItem(p + m.id));
@@ -2895,20 +2895,30 @@ function AdminHyphaeRow({ m, last, isRobin, currentMemberId, onToast }) {
       Object.keys(list).forEach(k => { list[k] = (list[k] || []).filter(x => x !== m.id); });
       localStorage.setItem('spore_recruits', JSON.stringify(list));
     } catch {}
-    // Cloud delete — succeeds only if the RLS policy "only robin can delete profiles"
-    // is in place. Surfaces an explicit error otherwise so we know why.
+    // Splice the member out of SporeData.MEMBERS in-memory so the UI updates
+    // immediately without waiting for a reload. The cloud-loaded entries were
+    // pushed to this array at boot; mutating it is fine because we re-fetch
+    // on reload anyway.
+    try {
+      const idx = (window.SporeData.MEMBERS || []).findIndex(x => x.id === m.id);
+      if (idx >= 0) window.SporeData.MEMBERS.splice(idx, 1);
+    } catch {}
+    // Cloud delete
+    let cloudOk = false;
     if (m.cloudId && window.SBclient) {
       try {
         const { error } = await window.SBclient.from('profiles').delete().eq('id', m.cloudId);
         if (error) throw error;
-        onToast(`Removed ${m.name} (cloud + local)`, 'success');
+        cloudOk = true;
       } catch (err) {
-        onToast(`Removed ${m.name} locally, but cloud delete failed: ${err.message || err}`, 'warn');
+        onToast(`${m.name} removed locally — cloud delete failed: ${err.message || err}`, 'warn');
       }
-    } else {
-      onToast(`Removed ${m.name} (local data only — no cloud profile)`, 'success');
     }
-    bump(b => b + 1);
+    onToast(`Removed ${m.name}${cloudOk ? ' (cloud + local) — reloading…' : ' (local only) — reloading…'}`, 'success');
+    // Hard reload so loadProfilesFromCloud runs fresh and we see the actual
+    // current state of the Supabase profiles table. Bumping local state
+    // alone is brittle — too many caches.
+    setTimeout(() => window.location.reload(), 800);
   }
 
   return (
