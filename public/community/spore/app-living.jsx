@@ -2489,11 +2489,14 @@ function SelfIdentityBlock({ currentMember, onToast }) {
       )}
 
       {/* Wipe-my-cloud-profile — escape hatch when you ended up as 'robin1' and
-          want to start clean. Only deletes the profiles row; auth user stays. */}
-      {isAuthed && cloudId && (
+          want to start clean. Robin-only: the RLS policy on the profiles table
+          only permits deletes from auth.email() = 'robin@fungai.art', so we
+          hide the button for everyone else (no point surfacing a button that
+          will always 403). */}
+      {isAuthed && cloudId && authEmail === 'robin@fungai.art' && (
         <details style={{ marginTop:6 }}>
           <summary style={{ cursor:'pointer', listStyle:'none', display:'flex', alignItems:'center', justifyContent:'space-between', gap:8, fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'#E16B6B', padding:'4px 0' }}>
-            <span>✕ Delete my current cloud profile</span>
+            <span>✕ Delete my current cloud profile (Robin only)</span>
             <span>▾</span>
           </summary>
           <p style={{ fontSize:12, color:'var(--mycelium-d)', lineHeight:1.55, margin:'8px 0' }}>
@@ -2855,9 +2858,10 @@ function AdminHyphaeRow({ m, last, isRobin, currentMemberId, onToast }) {
     setMsgOpen(false);
     onToast(`Message sent to ${m.name}`, 'success');
   }
-  function removeProfile() {
+  async function removeProfile() {
     if (!isRobin) return;
-    if (!confirm(`Remove ${m.name} permanently? This clears local balance / contrib / messages on this device. Cloud row stays unless RLS lets you delete it.`)) return;
+    if (!confirm(`Remove ${m.name} permanently? This deletes their cloud profile row AND clears their local balance / contrib / messages on this device. Auth user (Supabase login) stays.`)) return;
+    // Local wipe first (always safe)
     try {
       ['spore_bal_','spore_contrib_','spore_events_','spore_msgs_','spore_state_'].forEach(p => localStorage.removeItem(p + m.id));
       const list = JSON.parse(localStorage.getItem('spore_recruits') || '{}');
@@ -2865,7 +2869,19 @@ function AdminHyphaeRow({ m, last, isRobin, currentMemberId, onToast }) {
       Object.keys(list).forEach(k => { list[k] = (list[k] || []).filter(x => x !== m.id); });
       localStorage.setItem('spore_recruits', JSON.stringify(list));
     } catch {}
-    onToast(`Removed ${m.name} (local data)`, 'success');
+    // Cloud delete — succeeds only if the RLS policy "only robin can delete profiles"
+    // is in place. Surfaces an explicit error otherwise so we know why.
+    if (m.cloudId && window.SBclient) {
+      try {
+        const { error } = await window.SBclient.from('profiles').delete().eq('id', m.cloudId);
+        if (error) throw error;
+        onToast(`Removed ${m.name} (cloud + local)`, 'success');
+      } catch (err) {
+        onToast(`Removed ${m.name} locally, but cloud delete failed: ${err.message || err}`, 'warn');
+      }
+    } else {
+      onToast(`Removed ${m.name} (local data only — no cloud profile)`, 'success');
+    }
     bump(b => b + 1);
   }
 
