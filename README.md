@@ -1,73 +1,69 @@
-# Welcome to your Lovable project
+# Fungai Art
 
-## Project info
+> Living mycelial art &mdash; fusion of plants, alchemy, and frequency.
+> Wild-foraged botanical preparations, adaptogenic blends, and embodied
+> experiences rooted in ecological care and ancient intelligence.
 
-**URL**: https://lovable.dev/projects/1882df5a-829c-4608-9c3b-dee6e2795e2b
+**Live site:** [fungai.art](https://www.fungai.art)
+**Network portal:** [fungai.art/community](https://www.fungai.art/community)
+**Foraging map:** [fungai.art/foraging](https://www.fungai.art/foraging)
+**Sub-line:** [fungai.art/tymetonics](https://www.fungai.art/tymetonics) &mdash; New Tyme Tonics
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## What this repo is
 
-**Use Lovable**
+A multi-surface site that doubles as an apothecary, a foraging knowledge
+engine, a member network, and a content layer:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/1882df5a-829c-4608-9c3b-dee6e2795e2b) and start prompting.
+| Surface | What it does |
+| --- | --- |
+| `/home` | Static home page &mdash; brand, hero, foraging arc preview, tailored formula CTA, about, journal |
+| `/shop` | Static apothecary shop with Stripe-backed checkout |
+| `/mixology` | Materia medica browse &mdash; 168 botanicals, filter by element / category / tradition |
+| `/herbal-engine-2/` | Tailored formula composer &mdash; takes intent, constitution, delivery, returns a recipe |
+| `/extraction` | Five-method extraction protocols &mdash; spagyric, cold tincture, decoction, dual, oil infusion |
+| `/health` | Health-intelligence symptom matcher with safety filters |
+| `/foraging` | Predictive foraging map (React + MapLibre) over Sweden / Berlin / France / Med / Levant |
+| `/community` | Spore portal &mdash; living member network, $MH economy, calendar, admin |
+| `/community/academy/` | Alchemy Academy &mdash; extraction school + formula book + admin lab notebook |
+| `/tymetonics` | New Tyme Tonics &mdash; kegged living-drinks sub-line |
 
-Changes made via Lovable will be committed automatically to this repo.
+## Stack
 
-**Use your preferred IDE**
+- **Vite + React + TypeScript** for the foraging app and the Vite home shell.
+- **Static HTML** for everything else (home, shop, mixology, extraction, health, etc.) &mdash; keeps the cognitive surface lean and works without a build step for editing.
+- **Babel-standalone JSX** for the community/spore portal (loaded in-browser; soon to be ported to the build).
+- **Supabase** for auth (magic-link / PKCE), profiles, and member-state persistence.
+- **Netlify Functions** for the GBIF observation proxy, forage-conditions, formula-origin lookup, and newsletter subscribe.
+- **Stripe** for shop checkout.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Local development
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```bash
+npm install
+npm run dev          # vite dev server (foraging + home shell)
+npm run build        # production build
 ```
 
-**Edit a file directly in GitHub**
+The static pages under `public/` are served directly by Netlify; edit them in place. Changes to `src/data/herbs.ts` need a rebuild of the derived files:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run build:herb-pool    # writes public/herb-engine-pool.json
+node scripts/export-herbs.cjs   # writes public/herbs-data.js
+node scripts/sync-engine2.cjs   # injects the herb list into the engine-2 HTML
+```
 
-**Use GitHub Codespaces**
+`npm run build` runs all three before the Vite build.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Brand assets
 
-## What technologies are used for this project?
+- **Logo:** `/fungi.png` (amber-ring round token used everywhere)
+- **Favicon:** `/favicon.svg` (matches the fungi.png aesthetic at small sizes)
+- **Apple touch icon:** `/fungai-art-logo.png`
 
-This project is built with:
+If you're editing emails or sharing previews, use `/fungi.png` &mdash; that's the canonical mark.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/1882df5a-829c-4608-9c3b-dee6e2795e2b) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+&copy; Fungai Art. Berlin &middot; Sweden &middot; France &middot; Lebanon.
