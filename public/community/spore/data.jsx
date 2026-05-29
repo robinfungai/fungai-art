@@ -1,5 +1,20 @@
 /* Spore — data layer */
 
+// ── Economy constants ────────────────────────────────────────────────────
+// $MH = Mycel Hypha. Single tradable unit of network contribution.
+// 1 $MH ≈ $1.42 USD at launch.
+// Live time-rate for operational-node contribution-toggle: 30 $MH / 3 hours.
+// Recruiter bonus: 5 $MH each time someone names you on "what recruited you".
+// Hard supply cap: 8,888,888 $MH. The live-supply pill in the topbar shows
+// (TOKEN_SUPPLY_CAP − sum of all member balances).
+const TOKEN = {
+  TOTAL_SUPPLY: 8888888,
+  USD_RATE: 1.42,
+  CONTRIB_RATE_PER_HOUR: 10, // 30 $MH / 3h
+  RECRUIT_BONUS: 5,
+  ACTIVE_NODE_IDS: ['berlin','sweden','festival','lisbon','beirut'],
+};
+
 const NETWORK_NODES = [
   {
     id: 'berlin',
@@ -370,7 +385,7 @@ const MEMBERS = [
     role: 'Founder',
     node: 'berlin',
     rep: 15,
-    balance: 500,
+    balance: 100,
     focus: 'Network architecture · product development · alchemy',
     admin: true,
     founding: true,
@@ -381,7 +396,7 @@ const MEMBERS = [
     role: 'Sound Healer',
     node: 'berlin',
     rep: 12,
-    balance: 320,
+    balance: 100,
     focus: 'Mycelium Trance · gong · tuning forks · plant ceremony',
     admin: true,
     founding: true,
@@ -392,7 +407,7 @@ const MEMBERS = [
     role: 'Documenter',
     node: 'lisbon',
     rep: 11,
-    balance: 280,
+    balance: 0,
     focus: 'Photography · field notes · archive',
     founding: true,
   },
@@ -402,7 +417,7 @@ const MEMBERS = [
     role: 'Forager',
     node: 'sweden',
     rep: 11,
-    balance: 290,
+    balance: 0,
     focus: 'Wild harvest · species ID · Nordic forests',
     founding: true,
   },
@@ -412,7 +427,7 @@ const MEMBERS = [
     role: 'Artist & Contributor',
     node: 'festival',
     rep: 10,
-    balance: 240,
+    balance: 0,
     focus: 'Visual art · event facilitation · content',
     founding: true,
   },
@@ -422,7 +437,7 @@ const MEMBERS = [
     role: 'Cultivator',
     node: 'sweden',
     rep: 10,
-    balance: 230,
+    balance: 0,
     focus: 'Mycelium cultivation · spawn · substrate work',
     founding: true,
   },
@@ -433,7 +448,7 @@ const MEMBERS = [
     role: 'Community Weaver',
     node: 'berlin',
     rep: 1,
-    balance: 120,
+    balance: 0,
     focus: 'Facilitation · governance · network tending',
   },
   {
@@ -442,7 +457,7 @@ const MEMBERS = [
     role: 'Herbalist',
     node: 'berlin',
     rep: 1,
-    balance: 100,
+    balance: 0,
     focus: 'Plant medicine · formulation · materia medica',
   },
   {
@@ -451,7 +466,7 @@ const MEMBERS = [
     role: 'Alchemist',
     node: 'lisbon',
     rep: 1,
-    balance: 95,
+    balance: 0,
     focus: 'Spagyric extraction · plant alchemy · lunar timing',
   },
   {
@@ -460,7 +475,7 @@ const MEMBERS = [
     role: 'Forager',
     node: 'sweden',
     rep: 1,
-    balance: 90,
+    balance: 0,
     focus: 'Nordic wild plants · mushroom ID · forest medicine',
   },
   {
@@ -469,7 +484,7 @@ const MEMBERS = [
     role: 'Artist',
     node: 'festival',
     rep: 1,
-    balance: 85,
+    balance: 0,
     focus: 'Visual art · illustration · botanical design',
   },
   {
@@ -478,7 +493,7 @@ const MEMBERS = [
     role: 'Collaborator',
     node: 'berlin',
     rep: 1,
-    balance: 80,
+    balance: 0,
     focus: 'New thread · vendor & supplier collaboration',
   },
 ];
@@ -627,6 +642,208 @@ async function loadProfilesFromCloud() {
   }
 }
 
+// ── Economy helpers ──────────────────────────────────────────────────────
+// All persisted to localStorage so the entire flow works offline / pre-cloud.
+// Each helper is namespaced under SporeEconomy.* so app-living can call them
+// without worrying about storage keys.
+
+const SporeEconomy = (function () {
+  function readJSON(key, fallback) {
+    try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; }
+    catch { return fallback; }
+  }
+  function writeJSON(key, val) {
+    try { localStorage.setItem(key, JSON.stringify(val)); } catch {}
+  }
+  function notify() {
+    try { window.dispatchEvent(new CustomEvent('spore:economy')); } catch {}
+  }
+
+  // ── Balance overrides (persisted per member). The static MEMBERS array
+  //    gives the initial balance; localStorage carries any deltas from
+  //    accepted contributions / recruit bonuses / admin grants.
+  function getBalance(memberId) {
+    const seed = (MEMBERS.find(m => m.id === memberId) || {}).balance || 0;
+    const delta = readJSON('spore_bal_' + memberId, 0);
+    return seed + (Number(delta) || 0);
+  }
+  function addBalance(memberId, amount, reason) {
+    const cur = Number(readJSON('spore_bal_' + memberId, 0)) || 0;
+    writeJSON('spore_bal_' + memberId, cur + Number(amount || 0));
+    const log = readJSON('spore_bal_log', []);
+    log.unshift({ memberId, amount, reason, ts: Date.now() });
+    writeJSON('spore_bal_log', log.slice(0, 200));
+    notify();
+  }
+  function setBalanceAbsolute(memberId, value) {
+    const seed = (MEMBERS.find(m => m.id === memberId) || {}).balance || 0;
+    writeJSON('spore_bal_' + memberId, Number(value || 0) - seed);
+    notify();
+  }
+  function totalCirculating() {
+    return MEMBERS.reduce((sum, m) => sum + getBalance(m.id), 0);
+  }
+  function availableSupply() {
+    return Math.max(0, TOKEN.TOTAL_SUPPLY - totalCirculating());
+  }
+
+  // ── Contribution timer. Key shape:
+  //    spore_contrib_<memberId> = { startedAt: ts | null, sessions: [{ start, end, minutes, accepted, acceptedTs }] }
+  function getContrib(memberId) {
+    return readJSON('spore_contrib_' + memberId, { startedAt: null, sessions: [] });
+  }
+  function startContrib(memberId) {
+    const c = getContrib(memberId);
+    if (c.startedAt) return c;
+    c.startedAt = Date.now();
+    writeJSON('spore_contrib_' + memberId, c);
+    notify();
+    return c;
+  }
+  function stopContrib(memberId) {
+    const c = getContrib(memberId);
+    if (!c.startedAt) return c;
+    const end = Date.now();
+    const minutes = Math.max(0, Math.round((end - c.startedAt) / 60000));
+    c.sessions.unshift({ start: c.startedAt, end, minutes, accepted: false, acceptedTs: null });
+    c.startedAt = null;
+    writeJSON('spore_contrib_' + memberId, c);
+    notify();
+    return c;
+  }
+  function acceptContribSession(memberId, sessionIndex) {
+    const c = getContrib(memberId);
+    const s = c.sessions[sessionIndex];
+    if (!s || s.accepted) return;
+    s.accepted = true;
+    s.acceptedTs = Date.now();
+    writeJSON('spore_contrib_' + memberId, c);
+    const payout = (s.minutes / 60) * TOKEN.CONTRIB_RATE_PER_HOUR;
+    addBalance(memberId, Math.round(payout * 100) / 100, 'contribution session');
+  }
+  function totalHoursContributed(memberId) {
+    const c = getContrib(memberId);
+    const total = c.sessions.reduce((s, x) => s + (x.minutes || 0), 0);
+    return Math.round((total / 60) * 10) / 10;
+  }
+  function pendingSessions() {
+    const out = [];
+    MEMBERS.forEach(m => {
+      const c = getContrib(m.id);
+      c.sessions.forEach((s, idx) => {
+        if (!s.accepted) out.push({ memberId: m.id, memberName: m.name, sessionIndex: idx, ...s });
+      });
+    });
+    return out.sort((a, b) => b.end - a.end);
+  }
+
+  // ── Recruits. recruitedBy on each profile points to the recruiter's id.
+  //    recruitsCount derives by scanning all profiles.
+  function recruitsOf(memberId) {
+    const list = readJSON('spore_recruits', {});
+    return list[memberId] || []; // array of recruited ids
+  }
+  function recordRecruit(recruiterId, recruitedId) {
+    if (!recruiterId || !recruitedId) return;
+    const list = readJSON('spore_recruits', {});
+    list[recruiterId] = list[recruiterId] || [];
+    if (list[recruiterId].indexOf(recruitedId) < 0) {
+      list[recruiterId].push(recruitedId);
+      writeJSON('spore_recruits', list);
+      addBalance(recruiterId, TOKEN.RECRUIT_BONUS, 'recruit bonus · ' + recruitedId);
+    }
+  }
+  function recruitsCount(memberId) {
+    return recruitsOf(memberId).length;
+  }
+
+  // ── Events participated. Each calendar signup writes to a set.
+  function eventsParticipatedCount(memberId) {
+    return readJSON('spore_events_' + memberId, []).length;
+  }
+  function signupEvent(memberId, eventId) {
+    const cur = readJSON('spore_events_' + memberId, []);
+    if (cur.indexOf(eventId) < 0) {
+      cur.push(eventId);
+      writeJSON('spore_events_' + memberId, cur);
+      notify();
+    }
+  }
+
+  // ── Direct messages (member inbox)
+  //    spore_msgs_<recipientId> = [{ id, from, fromName, body, ts, read }]
+  function inbox(memberId) {
+    return readJSON('spore_msgs_' + memberId, []);
+  }
+  function sendMessage(fromId, fromName, toId, body) {
+    const list = inbox(toId);
+    list.unshift({ id: Date.now() + '-' + Math.random().toString(36).slice(2, 6), from: fromId, fromName: fromName || fromId, body, ts: Date.now(), read: false });
+    writeJSON('spore_msgs_' + toId, list.slice(0, 200));
+    notify();
+  }
+  function markRead(memberId, messageId) {
+    const list = inbox(memberId);
+    const m = list.find(x => x.id === messageId);
+    if (m) { m.read = true; writeJSON('spore_msgs_' + memberId, list); notify(); }
+  }
+  function unreadCount(memberId) {
+    return inbox(memberId).filter(m => !m.read).length;
+  }
+
+  // ── Weekly admin reports. Robin & Stephanie each submit one per week.
+  //    spore_weekly_reports = [{ memberId, weekStart, body, ts }]
+  function weekStartIso(d) {
+    const dt = new Date(d || Date.now());
+    const day = (dt.getDay() + 6) % 7; // Mon=0
+    dt.setHours(0, 0, 0, 0);
+    dt.setDate(dt.getDate() - day);
+    return dt.toISOString().slice(0, 10);
+  }
+  function submitWeeklyReport(memberId, body) {
+    const reports = readJSON('spore_weekly_reports', []);
+    const wk = weekStartIso();
+    const idx = reports.findIndex(r => r.memberId === memberId && r.weekStart === wk);
+    const rec = { memberId, weekStart: wk, body, ts: Date.now() };
+    if (idx >= 0) reports[idx] = rec; else reports.unshift(rec);
+    writeJSON('spore_weekly_reports', reports.slice(0, 200));
+    notify();
+  }
+  function thisWeekReport(memberId) {
+    const wk = weekStartIso();
+    return readJSON('spore_weekly_reports', []).find(r => r.memberId === memberId && r.weekStart === wk) || null;
+  }
+  function recentReports(memberId, limit) {
+    return readJSON('spore_weekly_reports', []).filter(r => !memberId || r.memberId === memberId).slice(0, limit || 8);
+  }
+
+  // ── Sunday Myco nudge. On any spore-app boot we check: if today is Sunday
+  //    AND the admin has not received the weekly Myco message this week, push
+  //    one into their inbox. Idempotent.
+  function maybeSendSundayMyco(adminMemberId) {
+    const wk = weekStartIso();
+    const key = 'spore_myco_sun_' + adminMemberId + '_' + wk;
+    if (readJSON(key, false)) return;
+    const now = new Date();
+    if (now.getDay() !== 0) return; // Sunday only
+    const body = '∽ Sunday check-in. The mycelium notices the week beneath your hands. Between noon and midnight, drop your weekly report so the network can remember what you tended. (Admin tab → Weekly report.)';
+    sendMessage('myco', 'myco · network nervous system', adminMemberId, body);
+    writeJSON(key, true);
+  }
+
+  return {
+    getBalance, addBalance, setBalanceAbsolute, totalCirculating, availableSupply,
+    getContrib, startContrib, stopContrib, acceptContribSession,
+    totalHoursContributed, pendingSessions,
+    recruitsOf, recordRecruit, recruitsCount,
+    eventsParticipatedCount, signupEvent,
+    inbox, sendMessage, markRead, unreadCount,
+    submitWeeklyReport, thisWeekReport, recentReports, weekStartIso,
+    maybeSendSundayMyco,
+  };
+})();
+
 window.SporeData = {
-  NETWORK_NODES, PRODUCTS, EXPERIENCES, REPUTATION_TIERS, PHASES, MEMBERS, CONTRIBUTION_TYPES, EVENTS, reputationTier, loadProfilesFromCloud
+  NETWORK_NODES, PRODUCTS, EXPERIENCES, REPUTATION_TIERS, PHASES, MEMBERS, CONTRIBUTION_TYPES, EVENTS, reputationTier, loadProfilesFromCloud,
+  TOKEN,
 };
+window.SporeEconomy = SporeEconomy;

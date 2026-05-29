@@ -432,7 +432,7 @@ input[type='range'].cs-range::-webkit-slider-thumb {
 
 .tab-label {
   font-family: var(--font-mono);
-  font-size: 7.5px;
+  font-size: 9px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   white-space: nowrap;

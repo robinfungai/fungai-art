@@ -199,7 +199,7 @@ button{font-family:inherit;cursor:pointer;}
       <img src="/assets/fungai-art-logo.png" alt="Fungai Art" style="height:46px;width:auto;opacity:.94;" onerror="this.src='/logo.png';this.style.filter='brightness(0) invert(1)';this.style.height='30px'">
       <div>
         <div class="nav-title">Herbal Engine</div>
-        <div class="nav-sub">Fungai Art Elixirs · 156 Botanicals</div>
+        <div class="nav-sub">Fungai Art Elixirs · 168 Botanicals</div>
       </div>
     </a>
   </div>
@@ -211,9 +211,16 @@ button{font-family:inherit;cursor:pointer;}
   </div>
 </nav>
 <div class="hero">
-  <div class="hero-ey">156 plants · 20 categories · 5 elements · evidence graded A–D</div>
+  <div class="hero-ey">168 plants · 20 categories · 5 elements · evidence graded A–D</div>
   <h1 class="hero-title">Know your <em>plants.</em></h1>
   <p class="hero-blurb">The complete Fungai Art botanical reference. Filter by element or category, build your formula — tap any herb for full profile and extraction method.</p>
+  <!-- New Tyme Tonics cross-link — sister project, kegged living drinks built
+       on top of the same materia medica. -->
+  <a href="/tymetonics" style="display:inline-flex;align-items:center;gap:10px;margin-top:18px;padding:11px 20px;border:0.5px solid rgba(232,177,75,0.55);background:linear-gradient(135deg,rgba(196,134,46,0.18),rgba(196,134,46,0.06));border-radius:4px;font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:0.28em;text-transform:uppercase;color:#F5D689;text-decoration:none;transition:all .2s;box-shadow:0 4px 18px rgba(196,134,46,0.12);" onmouseover="this.style.background='rgba(196,134,46,0.28)'" onmouseout="this.style.background='linear-gradient(135deg,rgba(196,134,46,0.18),rgba(196,134,46,0.06))'">
+    <span style="width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#F5D769 0%,#C4862E 70%);box-shadow:0 0 8px rgba(245,215,105,0.6);"></span>
+    New Tyme Tonics &nearr;
+    <span style="font-size:8px;letter-spacing:0.2em;color:rgba(245,214,137,0.55);">Robin's living drinks</span>
+  </a>
 </div>
 <div class="controls">
   <div class="srch"><span class="srch-ico">◎</span><input class="srch-i" id="si" type="text" placeholder="Search by name or function…" oninput="render()"/></div>
@@ -844,6 +851,10 @@ function closeMbg(e){if(e.target===document.getElementById('mbg'))closeM();}
 
 render();updatePanel();
 </script>
+<!-- Spore restriction gate — synchronous so the overlay paints before Mixology if the
+     active spore member is restricted from this feature. Anonymous visitors bypass. -->
+<script src="/spore-gate.js"></script>
+<script>if (window.SporeGate) SporeGate.requireAccess('mixology');</script>
 <script src="/cookie-banner.js" defer></script>
 </body>
 </html>

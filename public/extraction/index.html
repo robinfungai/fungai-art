@@ -144,7 +144,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
 
 <!-- Ethanol targets reference -->
 <div class="eth-table-wrap">
-  <div class="eth-table-title">⚗ Optimal ethanol targets · all 156 botanicals</div>
+  <div class="eth-table-title">⚗ Optimal ethanol targets · all 168 botanicals</div>
   <p class="eth-table-sub">Each botanical has an ideal solvent window. "Dual" = double extraction required (water + alcohol separately). Filter by name below.</p>
   <input class="eth-search" id="ethSearch" type="text" placeholder="Filter by herb name…" oninput="renderEthTable(this.value)"/>
   <div class="eth-grid" id="ethGrid"></div>
@@ -640,6 +640,10 @@ function searchHerb(q){
   }).join('');
 }
 </script>
+<!-- Spore restriction gate — anonymous visitors bypass; signed-in network members
+     are blocked here if an admin has restricted 'extraction' on their profile. -->
+<script src="/spore-gate.js"></script>
+<script>if (window.SporeGate) SporeGate.requireAccess('extraction');</script>
 <script src="/cookie-banner.js" defer></script>
 </body>
 </html>

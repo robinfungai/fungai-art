@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>New Tyme Tonics — Fungai Art</title>
+  <meta name="description" content="New Tyme Tonics — Robin Floræsta's living, fermenting, vibrationally-tuned drinks. A subline of Fungai Art focused on tonic vinegars, switchels, hydromels, and seasonal kegged elixirs." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="alternate icon" type="image/png" href="/favicon.png"/>
+  <link rel="apple-touch-icon" href="/fungi.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#06090b; --bg-2:#0a0e0c; --bg-3:#0e1310;
+      --ink:#E6D9B5; --ink-soft:#C9B894; --ink-mute:#8B7E62; --ink-faint:#4d5a52;
+      --kombu:#3A6B6B;     /* fermenting teal */
+      --copper:#C4862E;    /* the keg-copper hue from the IG */
+      --copper-l:#E8B14B;
+      --living:#6BD66F;
+      --rule:rgba(232,177,75,0.18);
+    }
+    html,body{margin:0;background:var(--bg);color:var(--ink-soft);font-family:'Geist Mono',ui-monospace,monospace;-webkit-font-smoothing:antialiased;}
+    a{color:inherit}
+    .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+    /* ── Nav ── */
+    .nav{position:sticky;top:0;z-index:20;background:rgba(6,9,11,0.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:0.5px solid rgba(232,177,75,0.12);}
+    .nav-row{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1120px;margin:0 auto;}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+    .brand img{width:34px;height:34px;border-radius:50%;object-fit:cover;border:1px solid rgba(232,177,75,0.55);box-shadow:0 0 10px rgba(232,177,75,0.4);background:radial-gradient(circle at 35% 35%,rgba(232,177,75,0.18),rgba(7,17,13,0.6) 75%);}
+    .brand-name{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:18px;color:var(--ink);letter-spacing:0.01em;line-height:1;}
+    .brand-sub{font-size:8.5px;letter-spacing:0.28em;text-transform:uppercase;color:var(--copper-l);margin-top:3px;}
+    .nav-links{display:flex;gap:18px;}
+    .nav-links a{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-mute);text-decoration:none;transition:color .15s}
+    .nav-links a:hover{color:var(--ink)}
+    @media (max-width:560px){ .nav-links{display:none} }
+
+    /* ── Hero ── */
+    .hero{position:relative;padding:88px 0 56px;overflow:hidden;}
+    .hero::before{content:'';position:absolute;inset:0;background:
+      radial-gradient(ellipse 70% 50% at 50% 0%,rgba(58,107,107,0.18) 0%,transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 100%,rgba(196,134,46,0.12) 0%,transparent 65%);
+      pointer-events:none;}
+    .hero-inner{position:relative;}
+    .hero-eyebrow{font-size:9px;letter-spacing:0.32em;text-transform:uppercase;color:var(--copper-l);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+    .hero-eyebrow::before{content:'';width:24px;height:0.5px;background:var(--copper);}
+    .hero-title{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(44px,7vw,84px);line-height:1.02;color:var(--ink);letter-spacing:-0.01em;margin:0 0 26px;}
+    .hero-title em{color:var(--copper-l);font-style:italic;}
+    .hero-blurb{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:clamp(16px,1.8vw,21px);line-height:1.55;color:var(--ink-soft);max-width:54ch;margin:0 0 28px;}
+    .hero-meta{display:flex;gap:18px;flex-wrap:wrap;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:36px}
+    .hero-meta span{display:inline-flex;align-items:center;gap:7px}
+    .hero-meta span::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--living);box-shadow:0 0 6px rgba(107,214,111,0.6);}
+
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap;}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:4px;font-size:10px;letter-spacing:0.26em;text-transform:uppercase;text-decoration:none;transition:all .2s;cursor:pointer;}
+    .btn-primary{background:linear-gradient(135deg,rgba(196,134,46,0.18),rgba(196,134,46,0.06));border:0.5px solid rgba(232,177,75,0.55);color:var(--copper-l);}
+    .btn-primary:hover{background:rgba(196,134,46,0.28);}
+    .btn-ghost{background:transparent;border:0.5px solid rgba(232,177,75,0.25);color:var(--ink-soft);}
+    .btn-ghost:hover{border-color:rgba(232,177,75,0.55);color:var(--ink);}
+
+    /* ── Section frame ── */
+    section{padding:72px 0;border-top:0.5px solid rgba(232,177,75,0.08);}
+    .sec-eyebrow{font-size:9px;letter-spacing:0.32em;text-transform:uppercase;color:var(--copper);margin-bottom:10px;}
+    .sec-title{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:clamp(28px,4vw,44px);color:var(--ink);line-height:1.1;letter-spacing:-0.01em;margin:0 0 14px;}
+    .sec-title em{color:var(--copper-l);}
+    .sec-blurb{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:17px;line-height:1.62;color:var(--ink-soft);max-width:60ch;margin:0 0 32px;}
+
+    /* ── What it is — tonic cards ── */
+    .tonic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
+    .tonic-card{padding:24px 22px;border:0.5px solid rgba(232,177,75,0.18);border-radius:10px;background:linear-gradient(160deg,rgba(15,12,8,0.6),rgba(8,10,8,0.5));transition:border-color .2s,transform .2s;}
+    .tonic-card:hover{border-color:rgba(232,177,75,0.45);transform:translateY(-2px);}
+    .tonic-tag{font-size:8px;letter-spacing:0.26em;text-transform:uppercase;color:var(--copper-l);margin-bottom:10px;}
+    .tonic-name{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:24px;color:var(--ink);line-height:1.15;margin-bottom:8px;}
+    .tonic-desc{font-size:12.5px;line-height:1.65;color:var(--ink-soft);margin-bottom:10px;}
+    .tonic-meta{display:flex;gap:10px;flex-wrap:wrap;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-mute);}
+
+    /* ── Process strip ── */
+    .process{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;}
+    .step{padding:18px 16px;border-left:1px solid rgba(232,177,75,0.25);}
+    .step-n{font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:var(--copper-l);margin-bottom:6px;}
+    .step-t{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:18px;color:var(--ink);line-height:1.25;margin-bottom:6px;}
+    .step-d{font-size:11.5px;line-height:1.62;color:var(--ink-mute);}
+
+    /* ── Footer ── */
+    footer{padding:48px 0 80px;border-top:0.5px solid rgba(232,177,75,0.08);text-align:center;}
+    footer p{font-size:11.5px;line-height:1.8;color:var(--ink-mute);max-width:48ch;margin:0 auto 14px;}
+    footer a{color:var(--copper-l);text-decoration:none;border-bottom:0.5px solid rgba(232,177,75,0.35);}
+
+    /* ── Placeholder note ── */
+    .scaffold-note{margin:0 0 36px;padding:14px 18px;border:0.5px dashed rgba(232,177,75,0.35);background:rgba(196,134,46,0.04);border-radius:6px;font-size:11.5px;line-height:1.65;color:var(--ink-soft);}
+    .scaffold-note strong{color:var(--copper-l);font-weight:500;letter-spacing:0.08em;}
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-row">
+    <a href="/" class="brand">
+      <img src="/fungi.png" alt="Fungai Art" onerror="this.style.display='none'">
+      <div>
+        <div class="brand-name">New Tyme Tonics</div>
+        <div class="brand-sub">A Fungai Art sub-line</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="/mixology">⚗ Mixology</a>
+      <a href="/foraging">Foraging</a>
+      <a href="/shop">Apothecary</a>
+      <a href="/">Home ↑</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<header class="hero">
+  <div class="wrap hero-inner">
+    <div class="hero-eyebrow">New Tyme Tonics · Living drinks · Berlin / Sweden</div>
+    <h1 class="hero-title">Drinks that<br/>are <em>alive.</em></h1>
+    <p class="hero-blurb">A sub-line of Fungai Art. Fermenting tonic vinegars, switchels, hydromels and kegged seasonal elixirs &mdash; tuned with herbal extracts, wild-foraged plants and 111 Hz resonance before they leave the dispensary.</p>
+    <div class="hero-meta">
+      <span>Kegged · Tapped · Living</span>
+      <span>Wild-Foraged</span>
+      <span>111 Hz Tuned</span>
+      <span>Small Batch</span>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://www.instagram.com/tymetonics" target="_blank" rel="noopener">Follow @tymetonics &nearr;</a>
+      <a class="btn btn-ghost" href="mailto:robin@fungai.art?subject=New%20Tyme%20Tonics">Ask about a custom batch</a>
+    </div>
+  </div>
+</header>
+
+<!-- ══ WHAT IT IS ══ -->
+<section id="what">
+  <div class="wrap">
+    <div class="sec-eyebrow">The format</div>
+    <h2 class="sec-title">Living drinks, <em>kegged.</em></h2>
+    <p class="sec-blurb">Each batch begins as a fermenting mother &mdash; vinegar, switchel, kombucha-base or hydromel &mdash; and is then layered with the same wild-foraged extracts and spagyric essences that go into the Fungai Art apothecary. The drink keeps fermenting in the keg. The medicine doesn&rsquo;t go to sleep.</p>
+
+    <div class="scaffold-note"><strong>Scaffold page:</strong> Robin will fill in real photos, batch names and dispensary locations next. The structure below is a placeholder so the URL works and the Mixology button has somewhere to send people.</div>
+
+    <div class="tonic-grid">
+      <div class="tonic-card">
+        <div class="tonic-tag">Tonic Vinegar</div>
+        <div class="tonic-name">Forest Switchel</div>
+        <div class="tonic-desc">Wild raspberry leaf, pine tip, raw birch sap and apple-cider mother. Bright, tannic, mineral. Spring-summer pour.</div>
+        <div class="tonic-meta"><span>Switchel base</span><span>Spring–summer</span></div>
+      </div>
+      <div class="tonic-card">
+        <div class="tonic-tag">Hydromel</div>
+        <div class="tonic-name">Linden Honey Spritz</div>
+        <div class="tonic-desc">Linden flower, raw forest honey, lemon balm and a slow champagne secondary. Heart-Nervine summer drink.</div>
+        <div class="tonic-meta"><span>Hydromel base</span><span>Heart-nervine</span></div>
+      </div>
+      <div class="tonic-card">
+        <div class="tonic-tag">Kombu-Class</div>
+        <div class="tonic-name">Chaga &amp; Cedar</div>
+        <div class="tonic-desc">Birch-edge chaga decoction fermented on green-tea kombucha mother with a touch of cedar and pine pollen. Autumn-winter pour.</div>
+        <div class="tonic-meta"><span>Kombucha base</span><span>Immune</span></div>
+      </div>
+      <div class="tonic-card">
+        <div class="tonic-tag">Tonic Vinegar</div>
+        <div class="tonic-name">Bitter Field Oxymel</div>
+        <div class="tonic-desc">Dandelion root, burdock, gentian, raw honey, raw apple-cider vinegar. Pre-meal digestive bitters in tonic form.</div>
+        <div class="tonic-meta"><span>Oxymel</span><span>Digestive</span></div>
+      </div>
+      <div class="tonic-card">
+        <div class="tonic-tag">Adaptogen Tonic</div>
+        <div class="tonic-name">Reishi &amp; Schisandra Switchel</div>
+        <div class="tonic-desc">Double-extracted reishi, schisandra, ginger and raw forest honey on a champagne switchel. Nervine adaptogen for slow days.</div>
+        <div class="tonic-meta"><span>Switchel</span><span>Adaptogen</span></div>
+      </div>
+      <div class="tonic-card">
+        <div class="tonic-tag">Seasonal special</div>
+        <div class="tonic-name">Solstice Brew</div>
+        <div class="tonic-desc">Ceremonial small-batch drink released at solstices &mdash; herbs chosen by the season&rsquo;s body need. Name and recipe change each year.</div>
+        <div class="tonic-meta"><span>Ritual release</span><span>2× per year</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ THE PROCESS ══ -->
+<section id="process">
+  <div class="wrap">
+    <div class="sec-eyebrow">How it&rsquo;s made</div>
+    <h2 class="sec-title">From forest <em>to keg.</em></h2>
+    <div class="process">
+      <div class="step">
+        <div class="step-n">01 · Source</div>
+        <div class="step-t">Wild-foraged</div>
+        <div class="step-d">Plants from the same network as the apothecary: Sweden, Berlin, Riviera, Cappadocia, Beirut. Real coordinates, real seasons.</div>
+      </div>
+      <div class="step">
+        <div class="step-n">02 · Extract</div>
+        <div class="step-t">Spagyric &amp; cold</div>
+        <div class="step-d">Mother tinctures + cold-pressed concentrates prepared in the Berlin lab using the same five-method extraction frame.</div>
+      </div>
+      <div class="step">
+        <div class="step-n">03 · Ferment</div>
+        <div class="step-t">Living mother</div>
+        <div class="step-d">A switchel, hydromel or kombucha mother holds the extract during a 2-6 week secondary ferment. The medicine ages with the drink.</div>
+      </div>
+      <div class="step">
+        <div class="step-n">04 · Tune</div>
+        <div class="step-t">111 Hz pass</div>
+        <div class="step-d">Each keg is given a final 111 Hz resonance pass &mdash; the same frequency the apothecary&rsquo;s elixirs receive before they leave.</div>
+      </div>
+      <div class="step">
+        <div class="step-n">05 · Tap</div>
+        <div class="step-t">Pour on location</div>
+        <div class="step-d">Kegs travel to ceremonies, residencies and partner dispensaries. The drink is served on tap so the fermentation stays alive to the last pour.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHERE TO FIND ══ -->
+<section id="where">
+  <div class="wrap">
+    <div class="sec-eyebrow">Find a keg</div>
+    <h2 class="sec-title">On tap, <em>this season.</em></h2>
+    <p class="sec-blurb">Tyme Tonic kegs travel with the Fungai Art network. Locations are seasonal and rotating &mdash; ask in person, follow <a href="https://www.instagram.com/tymetonics" target="_blank" rel="noopener" style="color:var(--copper-l);border-bottom:0.5px solid rgba(232,177,75,0.4);text-decoration:none;">@tymetonics</a>, or email <a href="mailto:robin@fungai.art" style="color:var(--copper-l);border-bottom:0.5px solid rgba(232,177,75,0.4);text-decoration:none;">robin@fungai.art</a> for the current tap list.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://www.instagram.com/tymetonics" target="_blank" rel="noopener">Current tap list on IG &nearr;</a>
+      <a class="btn btn-ghost" href="/mixology">Back to Mixology ↩</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><strong style="color:var(--copper-l);font-weight:500;letter-spacing:0.08em;">New Tyme Tonics</strong> is a sub-line of Fungai Art &mdash; living drinks by Robin Floræsta.</p>
+    <p>Berlin · Sweden · France · Lebanon · &copy; 2026 <a href="/">Fungai Art</a></p>
+  </div>
+</footer>
+
+<script src="/cookie-banner.js" defer></script>
+</body>
+</html>

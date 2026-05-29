@@ -73,7 +73,10 @@
       "Bash(curl -sI \"https://www.fungai.art/assets/fungai-art-logo.png\")",
       "Bash(cp src/assets/fungi.png public/home/fungi.png && ls -la public/home/fungi.png)",
       "Bash(npx --no-install tsc --noEmit -p .)",
-      "Bash(sort -t: -k2 -n)"
+      "Bash(sort -t: -k2 -n)",
+      "Bash(git restore *)",
+      "Bash(node -e \"const fs = require\\('fs'\\); const s = fs.readFileSync\\('public/community/spore/data.jsx', 'utf8'\\); console.log\\('lines:', s.split\\('\\\\n'\\).length\\); console.log\\('first balance check:', s.includes\\('balance: 100'\\), s.includes\\('TOKEN.TOTAL_SUPPLY'\\)\\);\")",
+      "Bash(grep -nE '\\\\$H' public/community/spore/app-living.jsx)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Robin\\Desktop\\fungai art\\websiet\\tailored tincture ai tool\\html codes",

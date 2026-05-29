@@ -3988,5 +3988,303 @@
       "Large Intestine"
     ],
     "caution_level": "LOW"
+  },
+  {
+    "id": 409,
+    "name": "Long Pepper",
+    "primary_functions": [
+      "Bioavailability enhancer — piperine increases absorption of turmeric, ashwagandha, green tea and many alkaloids by 100–2000%",
+      "Digestive fire ignition — classical Ayurvedic Agni-stoker for cold, sluggish digestion and ama (metabolic toxin) clearance",
+      "Respiratory warming expectorant — opens cold, damp lung patterns; traditional in chronic bronchitis and asthma protocols",
+      "Anti-parasitic — broad antimicrobial action used in traditional anthelmintic formulas",
+      "Metabolic activator — increases thermogenesis and gentle weight-management support"
+    ],
+    "energetics": [
+      "Hot",
+      "Dry",
+      "Pungent",
+      "Aromatic",
+      "Penetrating",
+      "Yang-Igniting"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Lung",
+      "Large Intestine"
+    ],
+    "caution_level": "MEDIUM-HIGH"
+  },
+  {
+    "id": 410,
+    "name": "Galangal",
+    "primary_functions": [
+      "Cold-stomach digestive — disperses Yang-deficient cold patterns: poor appetite, nausea, bloating, watery stools",
+      "Aromatic carminative — moves food stagnation, eases post-meal heaviness and gas",
+      "Mild anti-inflammatory — galangin (a flavonol) modulates COX-2 and NF-kB",
+      "Antimicrobial — traditional gut antimicrobial used across SE Asian and Arabic-Persian medicine",
+      "Circulatory warmer — opens cold extremities, supports peripheral perfusion"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Pungent",
+      "Aromatic",
+      "Camphorous",
+      "Yang-Moving"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Lung"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 411,
+    "name": "Black Cardamom",
+    "primary_functions": [
+      "Smoky-warming digestive — Himalayan medicine for cold-damp digestion with mucus and bloating",
+      "Respiratory warming aromatic — opens cold, congested lung patterns; traditional in chronic bronchitis",
+      "Anti-inflammatory and antimicrobial through cineole and terpene profile",
+      "Cardiovascular support — modest BP-lowering, mild antioxidant",
+      "Oral-microbiome aromatic — traditional after-meal breath freshener and mouth disinfectant"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Pungent",
+      "Smoky",
+      "Aromatic",
+      "Yang-Containing"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Kidney"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 412,
+    "name": "Szechuan Pepper",
+    "primary_functions": [
+      "Cold-pattern abdominal pain — classical TCM Hua Jiao for cold-induced cramping, vomiting, and worm-pattern abdominal pain",
+      "Numbing analgesic — hydroxy-alpha-sanshool activates touch receptors creating the unique ",
+      " (tingling-numb) sensation, useful for localized pain",
+      "Digestive warming — disperses cold, kills intestinal parasites in traditional anthelmintic formulas",
+      "Topical analgesic — for cold-pattern joint pain, neuralgia, oral pain",
+      "Antimicrobial — broad activity against food pathogens; traditional preservative"
+    ],
+    "energetics": [
+      "Hot",
+      "Dry",
+      "Pungent",
+      "Aromatic",
+      "Numbing",
+      "Yang-Penetrating"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Kidney"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 413,
+    "name": "Longan",
+    "primary_functions": [
+      "Heart-Spleen blood nourishment — classical TCM Long Yan Rou tonifies Qi and Blood in deficient patterns",
+      "Sleep restoration — for insomnia from blood deficiency: palpitations, anxiety, dream-disturbed sleep",
+      "Cognitive support — TCM ",
+      "; memory and focus in depleted constitutions",
+      "Gentle Yin and Blood builder — convalescence, post-illness recovery, postpartum",
+      "Mild aphrodisiac — Spleen-Heart warming with subtle endocrine action"
+    ],
+    "energetics": [
+      "Warm",
+      "Moist",
+      "Sweet",
+      "Nourishing",
+      "Yin-and-Blood-Tonifying"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Spleen"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 414,
+    "name": "Haritaki",
+    "primary_functions": [
+      "Tridoshic rasayana — the Ayurvedic ",
+      "; balances all three doshas through its 5 of 6 tastes",
+      "Gentle digestive regulator — works as mild laxative in constipation AND astringent in diarrhea (paradoxical adaptogenic GI action)",
+      "Detoxification carrier — supports liver and gut clearance of ama (metabolic toxins)",
+      "Cognitive rejuvenation — traditional medhya rasayana for memory, clarity, longevity",
+      "Antioxidant powerhouse — chebulagic and chebulinic acids drive radical scavenging"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Sour",
+      "Bitter",
+      "Astringent",
+      "Pungent",
+      "Sweet",
+      "Rejuvenating"
+    ],
+    "tcm_meridians": [
+      "Large Intestine",
+      "Lung",
+      "Liver"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 415,
+    "name": "Red Astragalus (Wild)",
+    "primary_functions": [
+      "Premier Qi tonic — classical TCM Huang Qi; restores depleted Spleen-Lung Qi and protective Wei Qi",
+      "Immune modulator — telomere-supportive in some research; classical adaptogen for chronic immune depletion",
+      "Wei-Qi defender — strengthens the energetic surface barrier against repeated infection",
+      "Cardiovascular tonic — modest BP regulation, heart-Qi strengthening",
+      "Wound healing and tissue regeneration — traditional surgical recovery herb"
+    ],
+    "energetics": [
+      "Slightly Warm",
+      "Slightly Sweet",
+      "Qi-Tonifying",
+      "Wei-Qi-Strengthening",
+      "Yang-Raising"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Lung"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 416,
+    "name": "Tian Men Dong",
+    "primary_functions": [
+      "Premier Lung Yin tonic — classical TCM herb for dry cough with thick scant phlegm, vocal hoarseness, lung consumption patterns",
+      "Kidney Yin nourishment — for nighttime feverishness, dry mouth at night, low-grade chronic depletion",
+      "Cooling moistening medicine — for dry-heat patterns: dry skin, constipation, dry throat",
+      "Traditional Taoist longevity herb — reputed to ",
+      " and aid meditation",
+      "Mucosa-restorative — softens and rebuilds dry, depleted membrane tissue"
+    ],
+    "energetics": [
+      "Very Cold",
+      "Sweet",
+      "Bitter",
+      "Moistening",
+      "Yin-Nourishing"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Kidney"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 417,
+    "name": "Mistletoe",
+    "primary_functions": [
+      "Traditional cardiovascular tonic — mild hypotensive action; classical European folk remedy for hypertension and arrhythmia",
+      "Nervine sedative — calms hyperactive nervous system; traditional in anxiety, headache and tension states",
+      "Cancer adjuvant — anthroposophic medicine has used Viscum album injectable extracts as adjuvant cancer therapy since 1917 (Steiner)",
+      "Immune modulator — lectins and viscotoxins documented immunomodulatory activity",
+      "Sacred ritual plant — central to Druidic, Celtic, Norse and Roman ceremonial traditions"
+    ],
+    "energetics": [
+      "Cool",
+      "Slightly Bitter",
+      "Sweet",
+      "Calming",
+      "Vasodilatory",
+      "Yin-Containing"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Kidney",
+      "Heart"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 418,
+    "name": "Phyllodium pulchellum",
+    "primary_functions": [
+      "Liver protection — Asian traditional liver tonic; modulates ALT/AST in chronic liver patterns",
+      "Antimalarial — used historically in folk antimalarial protocols across SE Asia",
+      "Mild expectorant — for chronic damp-heat lung patterns",
+      "Anti-inflammatory — flavonoids and alkaloids documented activity",
+      "Wound healing — topical traditional poultice for slow-healing wounds"
+    ],
+    "energetics": [
+      "Cool",
+      "Slightly Bitter",
+      "Sweet",
+      "Detoxifying",
+      "Liver-Soothing"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Spleen",
+      "Lung"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 419,
+    "name": "African Dream Root",
+    "primary_functions": [
+      "Oneirogenic — induces vivid, lucid, prophetic dreams; central tool of Xhosa diviner (amaXhosa amagqirha) initiation",
+      "Sacred ceremonial plant — used for ancestor communication, dream divination and spiritual diagnostic work",
+      "Nervine restorative — calming to the Shen / heart-mind without sedation",
+      "Mild anxiolytic — traditional use in restlessness and dream-disturbed sleep paradoxically (it shifts dreams from chaotic to navigable)",
+      "Traditional Xhosa training plant for shamanic dreamwork"
+    ],
+    "energetics": [
+      "Cool",
+      "Slightly Bitter",
+      "Sweet",
+      "Dream-Inducing",
+      "Yin-and-Shen-Calming"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "MEDIUM-HIGH"
+  },
+  {
+    "id": 420,
+    "name": "Grape Seed",
+    "primary_functions": [
+      "Vascular protection — OPC (oligomeric proanthocyanidin) concentrate strengthens capillaries and venous tone; classical for varicose veins, easy bruising, chronic venous insufficiency",
+      "Antioxidant powerhouse — OPCs scavenge free radicals 20× more potently than vitamin C in vitro and cross the blood-brain barrier",
+      "Cardiovascular support — modest blood pressure reduction, LDL oxidation protection, improved endothelial NO",
+      "Skin and connective tissue — collagen and elastin protection through enzyme (collagenase / elastase) inhibition",
+      "Anti-inflammatory through NF-kB modulation and cytokine balance"
+    ],
+    "energetics": [
+      "Cool",
+      "Slightly Astringent",
+      "Sweet-Bitter",
+      "Vasoprotective",
+      "Yin-Containing"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "LOW-MEDIUM"
   }
 ]

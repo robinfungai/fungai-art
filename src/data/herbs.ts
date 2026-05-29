@@ -10010,4 +10010,706 @@ export const HERBS: Herb[] = [
   status:
     'Premier cardiovascular and Yin-restorative food medicine. Daily use as food is ideal; concentrated preparations work for targeted protocols but carry the CYP-interaction profile of the wider Punica granatum plant.',
 },
+{
+  id: 409,
+  name: 'Long Pepper',
+  botanical: 'Piper longum (dried unripe fruit catkin — Pippali)',
+  tcm_meridians: ['Spleen', 'Stomach', 'Lung', 'Large Intestine'],
+  tcm_element: 'Fire + Earth',
+  energetics: ['Hot', 'Dry', 'Pungent', 'Aromatic', 'Penetrating', 'Yang-Igniting'],
+  primary_functions: [
+    'Bioavailability enhancer — piperine increases absorption of turmeric, ashwagandha, green tea and many alkaloids by 100–2000%',
+    'Digestive fire ignition — classical Ayurvedic Agni-stoker for cold, sluggish digestion and ama (metabolic toxin) clearance',
+    'Respiratory warming expectorant — opens cold, damp lung patterns; traditional in chronic bronchitis and asthma protocols',
+    'Anti-parasitic — broad antimicrobial action used in traditional anthelmintic formulas',
+    'Metabolic activator — increases thermogenesis and gentle weight-management support',
+  ],
+  secondary_benefits: [
+    'Pro-cognitive via increased absorption of fat-soluble brain herbs',
+    'Mild liver detox support through CYP induction',
+    'Traditional rasayana (rejuvenation) carrier in Ayurvedic kayakalpa protocols',
+  ],
+  pharmacology:
+    'Primary alkaloid piperine inhibits hepatic glucuronidation and intestinal P-gp efflux, dramatically increasing bioavailability of co-administered compounds (curcumin, resveratrol, CoQ10, beta-carotene, selenium). Volatile oils and sesquiterpenes drive the warming, dispersing action. Documented thermogenic, antimicrobial, anti-inflammatory and gastroprotective effects.',
+  flavor_profile: 'Sharply pungent, biting, smoky-sweet with a long lingering heat — hotter than black pepper',
+  contraindications: [
+    'Hot, inflamed or pitta-aggravated constitutions — Long Pepper will increase heat',
+    'Active GERD, gastritis, hiatal hernia or ulcers — strongly aggravating',
+    'Pregnancy — avoid medicinal doses; food-pinch in cooking acceptable',
+    'On CYP3A4/P-gp substrate drugs (statins, calcium-channel blockers, immunosuppressants, many chemo agents) — piperine alters drug levels significantly',
+    'Children under 6 — culinary trace only',
+  ],
+  herb_to_herb_synergy: [
+    'Turmeric — classical Trikatu base, dramatically boosts curcumin absorption',
+    'Ashwagandha and Brahmi — Ayurvedic rasayana stacks where piperine amplifies adaptogen uptake',
+    'Black Pepper and Ginger — the Trikatu (three pungents) Agni-stoking triad',
+    'Ginseng, Astragalus and Reishi — warming carrier for cold-deficient immune protocols',
+  ],
+  herb_to_herb_caution: [
+    'Other strongly heating herbs (Cayenne, Cinnamon high-dose, Cloves) in already-hot constitutions',
+    'Cooling Yin tonics (Glycyrrhiza, Rehmannia, Lily Bulb) — piperine opposes their action; use only briefly as a carrier',
+  ],
+  herb_to_drug_interactions: [
+    'Major: piperine inhibits CYP3A4, CYP1A2, CYP2C9 — radically alters levels of many prescription drugs',
+    'P-glycoprotein inhibition increases absorption of digoxin, cyclosporine, tacrolimus',
+    'Phenytoin, propranolol, theophylline — piperine increases plasma levels',
+    'Anticoagulants — additive bleeding risk through warming circulatory action',
+  ],
+  herb_interactions: [
+    'Synergy: Turmeric, Ashwagandha, Brahmi, Black Pepper, Ginger, Ginseng, Astragalus, Reishi',
+    'Caution: stacking with strongly heating herbs in hot constitutions',
+    'Drug interactions: extensive CYP / P-gp profile — monitor levels carefully',
+  ],
+  dosage_range:
+    'Tincture (1:5, 50% EtOH): 5–15 drops, 2× daily. Powder: 250–500 mg, 1–2× daily with food. Trikatu blend (with Ginger and Black Pepper, 1:1:1): 500 mg before meals. Always dose downward in heat patterns.',
+  spiritual_layer:
+    'Pippali is the spark in the kindling — the medicine of ignition. She teaches that nothing transforms without fire and that the right small heat at the right moment is the difference between digestion and decay. She whispers: I am the spark that wakes the engine. I open what is closed. I make the medicine arrive.',
+  best_preparation:
+    'Decoction with milk (traditional pippali ksheera) for respiratory and rejuvenation. Tincture for bioavailability protocols. Trikatu powder (pippali + ginger + black pepper) before meals for cold digestion. Always pair with a fat-soluble carrier herb so the piperine has something to amplify.',
+  caution_level: 'MEDIUM-HIGH',
+  safe_pregnancy: false,
+  status:
+    'The bioavailability master and Agni-igniter. Indispensable as a carrier for turmeric, ashwagandha and rasayana formulas, but its drug-interaction profile demands a careful practitioner eye in anyone on prescription medication.',
+},
+{
+  id: 410,
+  name: 'Galangal',
+  botanical: 'Alpinia galanga / Alpinia officinarum (rhizome)',
+  tcm_meridians: ['Spleen', 'Stomach', 'Lung'],
+  tcm_element: 'Fire + Earth',
+  energetics: ['Warm', 'Dry', 'Pungent', 'Aromatic', 'Camphorous', 'Yang-Moving'],
+  primary_functions: [
+    'Cold-stomach digestive — disperses Yang-deficient cold patterns: poor appetite, nausea, bloating, watery stools',
+    'Aromatic carminative — moves food stagnation, eases post-meal heaviness and gas',
+    'Mild anti-inflammatory — galangin (a flavonol) modulates COX-2 and NF-kB',
+    'Antimicrobial — traditional gut antimicrobial used across SE Asian and Arabic-Persian medicine',
+    'Circulatory warmer — opens cold extremities, supports peripheral perfusion',
+  ],
+  secondary_benefits: [
+    'Cognitive support through circulatory and anti-inflammatory action',
+    'Mild expectorant for cold-pattern lung congestion',
+    'Traditional aphrodisiac in Greater Galangal (A. galanga) lineages',
+  ],
+  pharmacology:
+    'Rich in 1,8-cineole, methyl eugenol, galangin, kaempferol and acetoxychavicol acetate. Anti-inflammatory, antimicrobial, gastroprotective effects documented. Greater Galangal (A. galanga) and Lesser Galangal (A. officinarum) share most therapeutic actions; A. officinarum is more strongly warming.',
+  flavor_profile: 'Sharp, piney, citrus-camphor, with ginger-family pungency and a clean lift',
+  contraindications: [
+    'Hot constitutions with internal heat signs (red tongue, fast pulse, irritability)',
+    'Active gastritis, ulcers or reflux disease',
+    'Pregnancy — moderate culinary doses safe; avoid medicinal-dose preparations',
+    'Bleeding disorders — mild antiplatelet activity at higher doses',
+  ],
+  herb_to_herb_synergy: [
+    'Ginger, Cardamom and Fennel — warming digestive carminative blends',
+    'Tulsi and Holy Basil for respiratory cold-damp formulas',
+    'Cinnamon and Black Pepper for circulatory warming',
+    'Lemongrass, Kaffir Lime and Coriander in classical Tom Kha culinary medicine',
+  ],
+  herb_to_herb_caution: [
+    'Other strongly warming herbs in hot constitutions (Cayenne, Cinnamon high-dose, Cloves)',
+  ],
+  herb_to_drug_interactions: [
+    'Mild antiplatelet activity — caution with anticoagulants and NSAIDs',
+    'May potentiate hypoglycemic medications mildly',
+  ],
+  herb_interactions: [
+    'Synergy: Ginger, Cardamom, Fennel, Tulsi, Cinnamon, Black Pepper, Lemongrass, Kaffir Lime',
+    'Caution: heat-stacking in pitta constitutions',
+    'Drug interactions: anticoagulants (mild additive), hypoglycemics (mild additive)',
+  ],
+  dosage_range:
+    'Tincture (1:5, 50% EtOH): 20–40 drops, 2–3× daily. Fresh rhizome decoction: 3–5 g per 250 ml, simmered 10 min. Powder: 500 mg–1 g, 1–2× daily. Culinary use freely.',
+  spiritual_layer:
+    'Galangal is the aromatic compass of the SE Asian kitchen — the rhizome that points the digestive fire toward warmth and discernment. She teaches that food is the first medicine and that what we taste shapes what we become. She whispers: Wake the fire. Taste the world. Move what has been still.',
+  best_preparation:
+    'Fresh rhizome decoction or coconut-milk infusion (traditional Tom Kha gai) for digestive warmth. Tincture for portable carry. Culinary medicine in curries and broths.',
+  caution_level: 'LOW',
+  safe_pregnancy: null,
+  status:
+    'A reliable warming digestive of exceptional culinary continuity — medicine you can put in a soup and still call medicine. Greater Galangal (A. galanga) is the everyday food version; Lesser (A. officinarum) the stronger clinical form.',
+},
+{
+  id: 411,
+  name: 'Black Cardamom',
+  botanical: 'Amomum subulatum (smoke-dried pod)',
+  tcm_meridians: ['Spleen', 'Stomach', 'Kidney'],
+  tcm_element: 'Fire + Earth',
+  energetics: ['Warm', 'Dry', 'Pungent', 'Smoky', 'Aromatic', 'Yang-Containing'],
+  primary_functions: [
+    'Smoky-warming digestive — Himalayan medicine for cold-damp digestion with mucus and bloating',
+    'Respiratory warming aromatic — opens cold, congested lung patterns; traditional in chronic bronchitis',
+    'Anti-inflammatory and antimicrobial through cineole and terpene profile',
+    'Cardiovascular support — modest BP-lowering, mild antioxidant',
+    'Oral-microbiome aromatic — traditional after-meal breath freshener and mouth disinfectant',
+  ],
+  secondary_benefits: [
+    'Mild diuretic — kidney-meridian Yang support',
+    'Smoky character makes it a unique sensory-mood elevator',
+    'Traditional adjunct in Tibetan and Nepali winter elixir formulas',
+  ],
+  pharmacology:
+    'Volatile oil dominated by 1,8-cineole (eucalyptol), α-terpineol, sabinene. Antimicrobial and bronchodilator action documented. Differs from green cardamom in the smoke-curing process which adds phenolic compounds and intensifies warming character.',
+  flavor_profile: 'Smoky, resinous, pine-camphor with a dark menthol lift — far more brooding than green cardamom',
+  contraindications: [
+    'Hot constitutions with internal heat signs',
+    'Active reflux disease — large doses may aggravate',
+    'Pregnancy — avoid medicinal doses; culinary use is fine',
+    'Sensitive asthma — eucalyptol can occasionally irritate; introduce slowly',
+  ],
+  herb_to_herb_synergy: [
+    'Ginger, Cinnamon and Clove in chai-class warming digestive blends',
+    'Tulsi and Lakshmi Vilas in classical respiratory formulas',
+    'Cordyceps and Reishi for warming-adaptogenic lung restoration',
+    'Cacao and Ceylon Cinnamon in mood-elevating Yang ceremonial elixirs',
+  ],
+  herb_to_herb_caution: [
+    'Other strongly warming + drying aromatics (Cayenne, Asafoetida, high-dose Clove) in dry constitutions',
+  ],
+  herb_to_drug_interactions: [
+    'Mild antihypertensive action — monitor in stacked BP-lowering protocols',
+    'Anticoagulant mild additive at high doses',
+  ],
+  herb_interactions: [
+    'Synergy: Ginger, Cinnamon, Clove, Tulsi, Cordyceps, Cacao',
+    'Caution: stacking with drying aromatics in dry constitutions',
+    'Drug interactions: antihypertensives (mild additive), anticoagulants (mild additive)',
+  ],
+  dosage_range:
+    'Tincture (1:5, 50% EtOH): 15–30 drops, 2–3× daily. Decoction: 1–2 crushed pods per 250 ml, simmer 15 min. Powder: 250–500 mg as digestive after meals. Culinary use freely.',
+  spiritual_layer:
+    'Black Cardamom is the smoke-cured Himalayan keeper — the medicine of long winters and cooking fires that never go out. She teaches that smoke can be medicine, that what is dried in heat carries the memory of the fire, and that warming the lungs warms the whole inner geography. She whispers: I am the kept fire. I open the breath. I carry the mountain.',
+  best_preparation:
+    'Crushed pod decoction with ginger and milk (Himalayan chai tradition). Tincture for portable lung-warming carry. Powdered in spice blends for chronic cold-pattern digestion.',
+  caution_level: 'LOW-MEDIUM',
+  safe_pregnancy: null,
+  status:
+    'The brooding, smoky cousin to green cardamom — distinct medicine, not a substitute. Best in cold-damp lung and digestive patterns and as a sensory-mood deepener in ceremonial elixirs.',
+},
+{
+  id: 412,
+  name: 'Szechuan Pepper',
+  botanical: 'Zanthoxylum bungeanum / Zanthoxylum piperitum (dried husk)',
+  tcm_meridians: ['Spleen', 'Stomach', 'Kidney'],
+  tcm_element: 'Fire + Metal',
+  energetics: ['Hot', 'Dry', 'Pungent', 'Aromatic', 'Numbing', 'Yang-Penetrating'],
+  primary_functions: [
+    'Cold-pattern abdominal pain — classical TCM Hua Jiao for cold-induced cramping, vomiting, and worm-pattern abdominal pain',
+    'Numbing analgesic — hydroxy-alpha-sanshool activates touch receptors creating the unique "ma" (tingling-numb) sensation, useful for localized pain',
+    'Digestive warming — disperses cold, kills intestinal parasites in traditional anthelmintic formulas',
+    'Topical analgesic — for cold-pattern joint pain, neuralgia, oral pain',
+    'Antimicrobial — broad activity against food pathogens; traditional preservative',
+  ],
+  secondary_benefits: [
+    'Mild local anesthetic in dental and skin preparations',
+    'Circulation enhancement — opens peripheral capillaries',
+    'Aromatic sensory awakener in ceremonial cuisine',
+  ],
+  pharmacology:
+    'Active alkylamides — hydroxy-α-sanshool, hydroxy-β-sanshool — activate KCNK and TRPA1 receptors producing tingling-paresthesia distinct from pain. Volatile oils (limonene, linalool, geraniol) contribute aromatic warming. Documented antimicrobial, anti-inflammatory and local anesthetic effects.',
+  flavor_profile: 'Citrus-piney burst followed by the unmistakable tingling-numbing "ma" sensation — unlike any other spice',
+  contraindications: [
+    'Hot, dry, pitta-aggravated constitutions',
+    'Active gastritis, ulcers, reflux',
+    'Pregnancy — avoid medicinal doses; culinary trace acceptable',
+    'Children under 8 — culinary trace only',
+    'On anticonvulsants — alkylamide effect on nerve channels theoretically interactive',
+  ],
+  herb_to_herb_synergy: [
+    'Star Anise, Cinnamon and Clove in classical Five-Spice warming digestive blends',
+    'Ginger and Long Pepper for cold-pattern digestive ignition',
+    'Used in classical TCM Wu Mei Wan (ulcer/parasite formula) with Wu Mei and Astragalus',
+  ],
+  herb_to_herb_caution: [
+    'Other strongly warming + numbing herbs (Kava topical, Spilanthes) — overlapping receptor effects',
+  ],
+  herb_to_drug_interactions: [
+    'Anticonvulsants — theoretical KCNK channel interaction',
+    'Local anesthetics — additive numbing effect topically',
+  ],
+  herb_interactions: [
+    'Synergy: Star Anise, Cinnamon, Clove, Ginger, Long Pepper',
+    'Caution: heat-stacking in hot constitutions',
+    'Drug interactions: anticonvulsants (theoretical), local anesthetics (additive)',
+  ],
+  dosage_range:
+    'Tincture (1:5, 65% EtOH): 8–20 drops, 2× daily. Powder: 250–500 mg, 1–2× daily with food. Topical oil infusion 5–10% for localized analgesia. Culinary use as sensory medicine.',
+  spiritual_layer:
+    'Szechuan Pepper is the sensory shock that wakes the tongue out of its sleep. Her tingling teaches that medicine can be a doorway through sensation — that to feel more is to be more present. She whispers: I open the doors of perception in your mouth. I numb so you can sense what is beneath the noise.',
+  best_preparation:
+    'Toasted then crushed for maximum aroma. Tincture preserves alkylamides. Oil infusion for topical analgesia. Culinary inclusion in cold-pattern winter dishes.',
+  caution_level: 'MEDIUM',
+  safe_pregnancy: false,
+  status:
+    'A unique sensory-pharmacological tool that doesn\'t map cleanly to any Western category. Indispensable in cold-pattern abdominal protocols and as a topical analgesic. The "ma la" sensation is not pain — it is a different language of touch.',
+},
+{
+  id: 413,
+  name: 'Longan',
+  botanical: 'Dimocarpus longan / Euphoria longana (dried aril — Long Yan Rou)',
+  tcm_meridians: ['Heart', 'Spleen'],
+  tcm_element: 'Fire + Earth',
+  energetics: ['Warm', 'Moist', 'Sweet', 'Nourishing', 'Yin-and-Blood-Tonifying'],
+  primary_functions: [
+    'Heart-Spleen blood nourishment — classical TCM Long Yan Rou tonifies Qi and Blood in deficient patterns',
+    'Sleep restoration — for insomnia from blood deficiency: palpitations, anxiety, dream-disturbed sleep',
+    'Cognitive support — TCM "calms the Shen"; memory and focus in depleted constitutions',
+    'Gentle Yin and Blood builder — convalescence, post-illness recovery, postpartum',
+    'Mild aphrodisiac — Spleen-Heart warming with subtle endocrine action',
+  ],
+  secondary_benefits: [
+    'Mineral and polyphenol restoration food medicine',
+    'Beautiful in combination with Goji and Jujube for daily Yin tonic',
+    'Sweet carrier in formula construction — improves palatability of bitter formulas',
+  ],
+  pharmacology:
+    'Contains polysaccharides, polyphenols, saponins and B-vitamins. Documented mild sedative, anxiolytic and immune-modulating effects. The fresh fruit is a food medicine; the dried aril (Long Yan Rou) is the classical TCM herb.',
+  flavor_profile: 'Honey-sweet, slightly smoky, raisin-like dried; juicy floral fresh',
+  contraindications: [
+    'Damp-Heat patterns — would aggravate (signs: thick tongue coating, yellow phlegm, heavy body)',
+    'Active candida or blood sugar dysregulation — sweet/sticky property feeds dampness',
+    'Pregnancy — moderate culinary doses safe; very high doses theoretically warming',
+  ],
+  herb_to_herb_synergy: [
+    'Jujube (Da Zao) and Goji (Gou Qi Zi) — classical Heart-Spleen blood-building triad',
+    'Astragalus and Codonopsis — warming Qi and Blood tonic',
+    'White Peony (Bai Shao) and Dang Gui — Blood-nourishing formulas for women',
+    'Bai Zi Ren and Suan Zao Ren for insomnia from Heart-Blood deficiency',
+  ],
+  herb_to_herb_caution: [
+    'Other sweet-cloying tonics (high-dose Licorice, Astragalus, Codonopsis) in damp constitutions',
+  ],
+  herb_to_drug_interactions: [
+    'Hypoglycemic medications — natural sugars; monitor diabetic glucose load',
+    'Sedatives — mild additive at high doses',
+  ],
+  herb_interactions: [
+    'Synergy: Jujube, Goji, Astragalus, Codonopsis, White Peony, Dang Gui, Bai Zi Ren, Suan Zao Ren',
+    'Caution: stacking sweet tonics in damp constitutions',
+    'Drug interactions: monitor diabetic glycemic load; mild additive sedation at high doses',
+  ],
+  dosage_range:
+    'Decoction: 6–15 g dried aril per 250 ml, simmered 15–20 min. Tincture (1:4, 35% EtOH): 30–60 drops, 2–3× daily. Long-cycle Yin tonic protocols 4–12 weeks.',
+  spiritual_layer:
+    'Longan is the dragon\'s eye — the dried sweetness that watches over the Heart and the Spleen. She teaches that softness is restoration, that the worn-out organism needs sweet food before it needs more striving, and that to sleep well is to be safely held. She whispers: Rest. Be sweet to yourself. The Heart remembers its own quiet.',
+  best_preparation:
+    'Decoction with Jujube and Goji as a daily blood-building tea. Tincture for portable use. Cooked into rice porridges in TCM convalescence cooking. Sweet carrier in bitter herb formulas.',
+  caution_level: 'LOW',
+  safe_pregnancy: null,
+  status:
+    'Premier Heart-Spleen restorative for insomnia, post-illness depletion, and Blood deficiency. Easy to add to daily diet as food. The Damp-Heat caution is real but rarely a problem in cold-Northern climates.',
+},
+{
+  id: 414,
+  name: 'Haritaki',
+  botanical: 'Terminalia chebula (dried mature fruit)',
+  tcm_meridians: ['Large Intestine', 'Lung', 'Liver'],
+  tcm_element: 'Earth + Metal + Wood',
+  energetics: ['Warm', 'Dry', 'Sour', 'Bitter', 'Astringent', 'Pungent', 'Sweet', 'Rejuvenating'],
+  primary_functions: [
+    'Tridoshic rasayana — the Ayurvedic "King of Medicines"; balances all three doshas through its 5 of 6 tastes',
+    'Gentle digestive regulator — works as mild laxative in constipation AND astringent in diarrhea (paradoxical adaptogenic GI action)',
+    'Detoxification carrier — supports liver and gut clearance of ama (metabolic toxins)',
+    'Cognitive rejuvenation — traditional medhya rasayana for memory, clarity, longevity',
+    'Antioxidant powerhouse — chebulagic and chebulinic acids drive radical scavenging',
+  ],
+  secondary_benefits: [
+    'Eye support in Triphala formula (with Amalaki and Bibhitaki)',
+    'Antimicrobial and antiviral — used in respiratory and oral infection protocols',
+    'Skin clarity through internal detoxification',
+    'Spiritual / meditation aid in Tibetan and yogic traditions',
+  ],
+  pharmacology:
+    'Rich in tannins (chebulagic, chebulinic, corilagin), gallic acid, ellagic acid, and a unique polyphenol profile. Adaptogenic GI action stems from dual tannin (astringent) + anthraquinone glycoside (mild laxative) presence. Documented hepatoprotective, antioxidant, antimicrobial and cardioprotective effects.',
+  flavor_profile: 'Astringent-sour-bitter cascade with a sweet aftertaste — described in Ayurveda as carrying 5 of the 6 tastes',
+  contraindications: [
+    'Pregnancy — avoid; uterine-stimulating potential at medicinal doses',
+    'Severe dehydration or wasting (Vata derangement) — astringent action will aggravate',
+    'Iron deficiency — high tannin content reduces non-heme iron absorption (separate dosing by 2h)',
+    'On lithium, digoxin, warfarin — herb-drug monitoring required',
+  ],
+  herb_to_herb_synergy: [
+    'Amalaki and Bibhitaki — the classical Triphala triad; daily Ayurvedic foundational tonic',
+    'Trikatu (Long Pepper + Ginger + Black Pepper) for warming-detox stacks',
+    'Ashwagandha and Brahmi for rasayana rejuvenation',
+    'Turmeric and Neem for skin and liver protocols',
+  ],
+  herb_to_herb_caution: [
+    'Other strong astringents in dry Vata constitutions — over-drying',
+    'Iron-rich tonics (Yellow Dock, Nettle) given simultaneously — tannin chelation',
+  ],
+  herb_to_drug_interactions: [
+    'Lithium — possible additive renal effect',
+    'Digoxin and warfarin — tannin binding alters absorption',
+    'Diabetes medications — mild glucose-lowering, monitor',
+  ],
+  herb_interactions: [
+    'Synergy: Amalaki, Bibhitaki (Triphala triad), Trikatu, Ashwagandha, Brahmi, Turmeric, Neem',
+    'Caution: drying in Vata constitutions; iron separation needed',
+    'Drug interactions: lithium, digoxin, warfarin, diabetes meds — monitor',
+  ],
+  dosage_range:
+    'Powder: 500 mg – 2 g, 1–2× daily, often before sleep. Triphala: 1–3 g at bedtime in warm water. Decoction: 3–6 g per 250 ml. Tincture (1:5, 50% EtOH): 20–40 drops, 2× daily. Long-cycle rasayana use possible.',
+  spiritual_layer:
+    'Haritaki is called the Mother of Plants and the Fruit of Immortality. The Medicine Buddha holds her in his hand. She teaches that healing is regulation, not just stimulation — that wisdom medicine knows when to release and when to hold. She whispers: I balance every direction. I cleanse and I retain. I am the regulator of the inner river.',
+  best_preparation:
+    'As part of Triphala for daily use. Powder in warm water before sleep for gentle laxative-detox. Decoction for stronger constipation. Tincture for portable carry. Traditional Tibetan use: dried fruit kept under the tongue as a meditation aid.',
+  caution_level: 'MEDIUM',
+  safe_pregnancy: false,
+  status:
+    'The "King of Medicines" in Ayurveda and one of the most revered plants in Asian traditional medicine. Adaptogenic GI action makes her remarkably versatile. Drug-interaction profile requires practitioner oversight.',
+},
+{
+  id: 415,
+  name: 'Red Astragalus (Wild)',
+  botanical: 'Astragalus mongholicus / Astragalus membranaceus (wild root — Huang Qi)',
+  tcm_meridians: ['Spleen', 'Lung'],
+  tcm_element: 'Earth + Metal',
+  energetics: ['Slightly Warm', 'Slightly Sweet', 'Qi-Tonifying', 'Wei-Qi-Strengthening', 'Yang-Raising'],
+  primary_functions: [
+    'Premier Qi tonic — classical TCM Huang Qi; restores depleted Spleen-Lung Qi and protective Wei Qi',
+    'Immune modulator — telomere-supportive in some research; classical adaptogen for chronic immune depletion',
+    'Wei-Qi defender — strengthens the energetic surface barrier against repeated infection',
+    'Cardiovascular tonic — modest BP regulation, heart-Qi strengthening',
+    'Wound healing and tissue regeneration — traditional surgical recovery herb',
+  ],
+  secondary_benefits: [
+    'Adjuvant in chronic fatigue and post-viral recovery',
+    'Renal protective effects documented',
+    'Modest blood-sugar regulation',
+    'Wild-foraged variety carries notably stronger Yang-raising character than cultivated',
+  ],
+  pharmacology:
+    'Polysaccharides (astragalans), saponins (astragalosides — esp. astragaloside IV), flavonoids. Documented immune modulation (NK cell, macrophage), cardioprotection, renal protection, mild telomerase activation. Wild-foraged roots accumulate higher saponin content over their longer growth period (often 5–7 years vs cultivated 2–3 years).',
+  flavor_profile: 'Sweet, mild, slightly grassy with a clean Qi-warming aftertaste; the wild variety carries deeper mineral notes',
+  contraindications: [
+    'Acute infection or high fever — traditional rule: stop Astragalus during acute exterior pathogenic invasion',
+    'Excessive heat patterns (red tongue, fast pulse) — would aggravate',
+    'Autoimmune conditions — immune-modulating; consult practitioner for stacked immunology',
+    'On immunosuppressants (post-transplant) — potential interference',
+  ],
+  herb_to_herb_synergy: [
+    'Codonopsis and Atractylodes — the classical Bu Zhong Yi Qi Tang Spleen-tonic core',
+    'Reishi, Cordyceps and Shiitake — broad immune-adaptogen stack',
+    'Schisandra and Goji for Yin-Yang balance',
+    'Dang Gui (Angelica sinensis) for Qi-Blood building',
+  ],
+  herb_to_herb_caution: [
+    'Cooling Yin tonics may oppose its Yang-raising direction at high doses',
+  ],
+  herb_to_drug_interactions: [
+    'Immunosuppressants — possible interference, especially post-transplant',
+    'Anticoagulants — mild additive at high doses',
+    'Diuretics — mild diuretic action; monitor electrolytes',
+  ],
+  herb_interactions: [
+    'Synergy: Codonopsis, Atractylodes, Reishi, Cordyceps, Shiitake, Schisandra, Goji, Dang Gui',
+    'Caution: acute exterior infection; autoimmune complexity',
+    'Drug interactions: immunosuppressants (avoid), anticoagulants (mild)',
+  ],
+  dosage_range:
+    'Decoction: 9–30 g (often 15 g) dried sliced root per 500 ml, simmered 30–60 min. Tincture (1:5, 50% EtOH): 30–60 drops, 2–3× daily. Long-cycle Qi-building protocols 8–24 weeks. Wild-foraged dosed slightly lower (more concentrated).',
+  spiritual_layer:
+    'Wild Huang Qi is the yellow root that holds the earth and lifts the Qi. She teaches that protection is something you build slowly — that the strongest immunity is not reactive but already standing. She whispers: I am the field that holds you. I lift what is collapsed. I make you ready before the wind comes.',
+  best_preparation:
+    'Long decoction is traditional — slice and simmer 30–60 min for full polysaccharide and saponin extraction. Often added to bone broths or rice congee. Wild root is precious — use in shorter, more concentrated cycles. Tincture preserves saponins for daily portable use.',
+  caution_level: 'LOW-MEDIUM',
+  safe_pregnancy: true,
+  status:
+    'The Qi-foundation of TCM. Wild-foraged variety is increasingly rare and deserves respectful sourcing. Avoid during acute infection but unbeatable for chronic depletion, recovery and Wei-Qi rebuilding.',
+},
+{
+  id: 416,
+  name: 'Tian Men Dong',
+  botanical: 'Asparagus cochinchinensis (root tuber)',
+  tcm_meridians: ['Lung', 'Kidney'],
+  tcm_element: 'Water + Metal',
+  energetics: ['Very Cold', 'Sweet', 'Bitter', 'Moistening', 'Yin-Nourishing'],
+  primary_functions: [
+    'Premier Lung Yin tonic — classical TCM herb for dry cough with thick scant phlegm, vocal hoarseness, lung consumption patterns',
+    'Kidney Yin nourishment — for nighttime feverishness, dry mouth at night, low-grade chronic depletion',
+    'Cooling moistening medicine — for dry-heat patterns: dry skin, constipation, dry throat',
+    'Traditional Taoist longevity herb — reputed to "open the heart channel" and aid meditation',
+    'Mucosa-restorative — softens and rebuilds dry, depleted membrane tissue',
+  ],
+  secondary_benefits: [
+    'Spiritual/mind clarity in classical Daoist alchemy texts',
+    'Modest antioxidant and immune-modulating polysaccharide content',
+    'Reputed mild aphrodisiac in cooling Yin-deficiency presentations',
+  ],
+  pharmacology:
+    'Contains steroidal saponins (asparagosides), polysaccharides, amino acids, oligosaccharides. Documented antitussive, expectorant, anti-inflammatory, immune-modulating and mild antimicrobial effects. The roots take 3+ years to mature; quality assessed by translucent sweetness.',
+  flavor_profile: 'Sweet-bitter, juicy when fresh, with a cooling slick finish — like cool well-water with a herbal undertone',
+  contraindications: [
+    'Damp-Cold patterns or Spleen-Yang deficiency — would aggravate (watery stools, cold limbs, mucus)',
+    'Acute exterior cold patterns',
+    'Pregnancy — moderate doses likely safe; avoid extremely high doses',
+    'Diarrhea — its moistening nature is contraindicated',
+  ],
+  herb_to_herb_synergy: [
+    'Mai Men Dong (Ophiopogon) — the classical paired Lung-Yin tonic duo',
+    'Sheng Di Huang (Rehmannia raw) for Kidney-Yin nourishment',
+    'Schisandra (Wu Wei Zi) for Lung-Kidney convergence formulas',
+    'Lily Bulb (Bai He) for emotional dryness and insomnia from Yin deficiency',
+  ],
+  herb_to_herb_caution: [
+    'Strongly warming Yang-tonics (Aconite, Cinnamon Bark, Ginger high-dose) — antagonistic action',
+  ],
+  herb_to_drug_interactions: [
+    'Diuretics — mild additive fluid-shifting at high doses',
+    'No major drug interactions documented at clinical doses',
+  ],
+  herb_interactions: [
+    'Synergy: Mai Men Dong, Sheng Di Huang, Schisandra, Lily Bulb',
+    'Caution: damp-cold patterns; Yang-tonic antagonism',
+    'Drug interactions: mild diuretic additive',
+  ],
+  dosage_range:
+    'Decoction: 6–15 g per 500 ml, simmered 20–30 min. Tincture (1:4, 35% EtOH): 30–60 drops, 2–3× daily. Long-cycle Yin-building protocols.',
+  spiritual_layer:
+    'Tian Men Dong is the celestial gate — the root that opens the upper passages where the Heart-Mind meets the breath. In Daoist alchemy she is the moisture of the upper heavens, the cool dew that softens what has been burned hard. She whispers: I open the gate. I cool what has been too long on fire. I return the dew to the dry world.',
+  best_preparation:
+    'Long decoction is traditional. Often paired with Mai Men Dong in a 1:1 Lung-Yin tonic. Sweetened with honey or Longan for palatability. Daoist preparation: extended slow simmer with Goji and Lily Bulb.',
+  caution_level: 'LOW-MEDIUM',
+  safe_pregnancy: null,
+  status:
+    'Foundational TCM Yin-tonic for chronic dry-cough, vocal depletion and Kidney-Yin patterns. Daoist longevity tradition holds her especially dear. Sourcing quality matters — look for translucent, sweet, intact roots.',
+},
+{
+  id: 417,
+  name: 'Mistletoe',
+  botanical: 'Viscum album (whole herb — European mistletoe)',
+  tcm_meridians: ['Liver', 'Kidney', 'Heart'],
+  tcm_element: 'Wood + Water',
+  energetics: ['Cool', 'Slightly Bitter', 'Sweet', 'Calming', 'Vasodilatory', 'Yin-Containing'],
+  primary_functions: [
+    'Traditional cardiovascular tonic — mild hypotensive action; classical European folk remedy for hypertension and arrhythmia',
+    'Nervine sedative — calms hyperactive nervous system; traditional in anxiety, headache and tension states',
+    'Cancer adjuvant — anthroposophic medicine has used Viscum album injectable extracts as adjuvant cancer therapy since 1917 (Steiner)',
+    'Immune modulator — lectins and viscotoxins documented immunomodulatory activity',
+    'Sacred ritual plant — central to Druidic, Celtic, Norse and Roman ceremonial traditions',
+  ],
+  secondary_benefits: [
+    'Mild diuretic',
+    'Traditional menopausal support for hot flashes and palpitations',
+    'Symbolic plant of transformation and threshold',
+  ],
+  pharmacology:
+    'Contains viscotoxins (small polypeptides), mistletoe lectins (ML-I, II, III), flavonoids, polyphenols and biogenic amines. Lectins are immune-active. Different host trees (oak, apple, pine, fir) yield slightly different active profiles. RAW unripe berries and leaves carry the highest toxicity; only properly prepared traditional or pharmaceutical extracts are used internally.',
+  flavor_profile: 'Mildly bitter, slightly sweet, with a green-mineral undertone',
+  contraindications: [
+    'Pregnancy and lactation — avoid all internal use',
+    'Raw berries — TOXIC, never consume',
+    'Active cardiac arrhythmia without practitioner oversight',
+    'On cardiac glycosides (digoxin), antihypertensives or MAOIs — major interaction risk',
+    'Lectin sensitivity / autoimmune complexity',
+  ],
+  herb_to_herb_synergy: [
+    'Hawthorn (Crataegus) — the classical European cardiac-Yin tonic pairing',
+    'Motherwort (Leonurus) for cardiac-nervine support in menopause',
+    'Linden flower for anxiety with hypertension',
+    'Lemon Balm for nervous-tension with palpitations',
+  ],
+  herb_to_herb_caution: [
+    'Other cardiac glycoside herbs (Foxglove — never used internally anyway, Lily of the Valley) — overlapping cardiac receptor activity',
+    'Strongly sedative herbs — additive CNS depression',
+  ],
+  herb_to_drug_interactions: [
+    'Cardiac glycosides (digoxin) — DO NOT combine',
+    'Antihypertensives — additive lowering; monitor BP',
+    'MAOIs — biogenic amine content; theoretical interaction',
+    'Anticoagulants — mild additive at high doses',
+    'Immunosuppressants — lectins interfere with immune function',
+  ],
+  herb_interactions: [
+    'Synergy: Hawthorn, Motherwort, Linden, Lemon Balm',
+    'Caution: cardiac glycoside herb stacking; sedative stacking',
+    'Drug interactions: extensive — cardiac glycosides, antihypertensives, MAOIs, immunosuppressants',
+  ],
+  dosage_range:
+    'Cold infusion (traditional, lowers toxin extraction): 1 tsp dried herb in 250 ml COLD water overnight, strain, drink 1× daily. Tincture (1:10, 25% EtOH from dried herb only): 10–20 drops, 1–2× daily. Anthroposophic injectable extracts (e.g., Iscador, Helixor) — clinical use only.',
+  spiritual_layer:
+    'Mistletoe is the plant between worlds — neither rooted in earth nor sky but suspended in the branches of another tree. She is the Druidic golden bough, the kiss of solstice, the Norse killer of Baldr. Her medicine is liminal: between waking and sleep, between health and illness, between life and what comes next. She teaches that the most powerful medicines live at the threshold and require ceremony to approach. She whispers: I am between. I hold the door open. Cross with care.',
+  best_preparation:
+    'Cold infusion (overnight, never boiled — heat increases toxin extraction). Dried herb tincture only. Internal use requires practitioner oversight. Topical and ritual use is the safest layperson approach. For cancer adjuvant work, only properly prepared pharmaceutical extracts under medical supervision.',
+  caution_level: 'HIGH',
+  safe_pregnancy: false,
+  status:
+    'A profound plant medicine that lives at the edge of safe self-administration. Internal use deserves a practitioner. Ceremonial and symbolic use is unrestricted. The anthroposophic injectable lineage (Steiner) sits in a different clinical category and is established adjuvant oncology in parts of Europe.',
+},
+{
+  id: 418,
+  name: 'Phyllodium pulchellum',
+  botanical: 'Phyllodium pulchellum / Desmodium pulchellum (whole plant — Pai Qian Cao)',
+  tcm_meridians: ['Liver', 'Spleen', 'Lung'],
+  tcm_element: 'Wood + Earth',
+  energetics: ['Cool', 'Slightly Bitter', 'Sweet', 'Detoxifying', 'Liver-Soothing'],
+  primary_functions: [
+    'Liver protection — Asian traditional liver tonic; modulates ALT/AST in chronic liver patterns',
+    'Antimalarial — used historically in folk antimalarial protocols across SE Asia',
+    'Mild expectorant — for chronic damp-heat lung patterns',
+    'Anti-inflammatory — flavonoids and alkaloids documented activity',
+    'Wound healing — topical traditional poultice for slow-healing wounds',
+  ],
+  secondary_benefits: [
+    'Mild blood-sugar regulating activity',
+    'Antimicrobial against gut and skin pathogens',
+    'Traditional postpartum recovery herb in Vietnamese and Laotian medicine',
+  ],
+  pharmacology:
+    'Contains tryptamine alkaloids (DMT and 5-MeO-DMT in trace amounts in some chemotypes — researched as part of the broader Phyllodium / Desmodium family), flavonoids, isoflavonoids, saponins. Documented hepatoprotective, anti-inflammatory and antimicrobial effects. The pharmacology is still being mapped — most ethnobotanical data is regional.',
+  flavor_profile: 'Mild, slightly bitter, grassy with a green-mineral finish',
+  contraindications: [
+    'Pregnancy — insufficient data, avoid',
+    'On MAOIs or serotonergic medication — theoretical interaction via tryptamine alkaloid content',
+    'Sensitive constitution — start with small doses; this is a regional herb with less Western clinical data',
+    'Severe liver disease without practitioner oversight',
+  ],
+  herb_to_herb_synergy: [
+    'Milk Thistle and Schisandra for layered hepatoprotective stacks',
+    'Bupleurum and Licorice in TCM Liver-Qi formulas',
+    'Andrographis for chronic damp-heat liver patterns',
+  ],
+  herb_to_herb_caution: [
+    'Other herbs with tryptamine content (Mimosa hostilis, certain Acacia species) — overlapping pharmacology',
+  ],
+  herb_to_drug_interactions: [
+    'MAOIs and SSRIs — theoretical serotonergic interaction',
+    'Hepatically metabolized drugs — caution due to liver-modulating action',
+  ],
+  herb_interactions: [
+    'Synergy: Milk Thistle, Schisandra, Bupleurum, Licorice, Andrographis',
+    'Caution: tryptamine-containing herb stacking',
+    'Drug interactions: MAOIs/SSRIs (theoretical), hepatic drugs (caution)',
+  ],
+  dosage_range:
+    'Decoction: 6–15 g dried whole plant per 500 ml, simmered 20 min. Tincture (1:5, 45% EtOH): 20–40 drops, 2–3× daily. Topical poultice for wounds.',
+  spiritual_layer:
+    'Phyllodium is the SE Asian forest understorey medicine — the quiet leaf at the foot of larger trees that knows how to clear the liver and steady the breath. She teaches that not all powerful medicines announce themselves loudly. Many of the strongest ones live close to the ground, waiting to be recognized. She whispers: I am the quiet leaf. I clear what is held in the liver. I help the spirit breathe.',
+  best_preparation:
+    'Decoction is traditional. Tincture preserves the alkaloid fraction. Topical poultice for wounds. Best sourced from ethical, traceable SE Asian suppliers; wild-harvest pressure is a real issue.',
+  caution_level: 'MEDIUM',
+  safe_pregnancy: false,
+  status:
+    'A regionally important hepatoprotective and traditional medicine still being mapped by Western herbalism. Sourcing ethics matter. Best used with practitioner oversight given the still-emerging pharmacology profile.',
+},
+{
+  id: 419,
+  name: 'African Dream Root',
+  botanical: 'Silene undulata / Silene capensis (root — Undlela Zimhlophe)',
+  tcm_meridians: ['Heart', 'Liver', 'Kidney'],
+  tcm_element: 'Water + Wood',
+  energetics: ['Cool', 'Slightly Bitter', 'Sweet', 'Dream-Inducing', 'Yin-and-Shen-Calming'],
+  primary_functions: [
+    'Oneirogenic — induces vivid, lucid, prophetic dreams; central tool of Xhosa diviner (amaXhosa amagqirha) initiation',
+    'Sacred ceremonial plant — used for ancestor communication, dream divination and spiritual diagnostic work',
+    'Nervine restorative — calming to the Shen / heart-mind without sedation',
+    'Mild anxiolytic — traditional use in restlessness and dream-disturbed sleep paradoxically (it shifts dreams from chaotic to navigable)',
+    'Traditional Xhosa training plant for shamanic dreamwork',
+  ],
+  secondary_benefits: [
+    'Memory enhancement of dreams (anamnesis)',
+    'Subtle introspective deepener',
+    'Sacred plant of the Eastern Cape lineage',
+  ],
+  pharmacology:
+    'Contains triterpene saponins (silenoides A, B, C). Pharmacology is mostly emerging — no isolated psychoactive alkaloid yet identified, suggesting the oneirogenic action may be saponin-mediated or via downstream receptor effects. Documented anxiolytic-like activity in early animal studies.',
+  flavor_profile: 'Mildly bitter, soapy-foamy when chewed (saponin signature), earthy aftertaste',
+  contraindications: [
+    'Pregnancy and lactation — avoid',
+    'Active psychosis or unstable bipolar — avoid; vivid dreams can be destabilizing',
+    'Sensitive trauma processing — dreams can surface difficult material',
+    'On strongly sedating medications — additive caution',
+    'Approach only with respectful ceremonial intent; this is not a recreational tool',
+  ],
+  herb_to_herb_synergy: [
+    'Calea zacatechichi (Mexican Dream Herb) for dream amplification — use one or the other, not both at once until experienced',
+    'Mugwort (Artemisia vulgaris) for European dreamwork tradition crossover',
+    'Lemon Balm and Passionflower for gentle nervine support',
+    'Reishi for spiritual-dream depth in long-cycle work',
+  ],
+  herb_to_herb_caution: [
+    'Other oneirogens stacked simultaneously — overwhelming for first-time work',
+    'CNS depressants in high doses — caution',
+  ],
+  herb_to_drug_interactions: [
+    'Sedatives and benzodiazepines — additive CNS effect possible',
+    'SSRIs — theoretical Shen-altering interaction; consult practitioner',
+  ],
+  herb_interactions: [
+    'Synergy: Calea, Mugwort, Lemon Balm, Passionflower, Reishi',
+    'Caution: stacking other oneirogens; CNS depressant interactions',
+    'Drug interactions: sedatives, SSRIs — practitioner oversight',
+  ],
+  dosage_range:
+    'Traditional: 250 mg – 1 g dried powdered root chewed or whisked with water into foam at sunrise on an empty stomach, then slept on for incubation. Tincture (1:5, 30% EtOH): 10–20 drops at bedtime. Use cyclically (3 nights on, 4 nights off) rather than continuously.',
+  spiritual_layer:
+    'Undlela Zimhlophe — "the white paths" — is the dream-teacher of the Xhosa diviner lineage. She opens the road between waking and ancestor, between confusion and answer. To take her is to enter ceremony. She teaches that the dream world has its own intelligence and that listening there is a discipline. She whispers: I open the white path. Walk it with respect. The ancestors are watching what you do with the medicine.',
+  best_preparation:
+    'Traditionally: dried root powder whisked vigorously with water at sunrise on empty stomach, the foam (the active fraction) is drunk, then sleep is taken for dream incubation. Tincture works for portable use. Approach as ceremony, not supplementation. Sourcing ethics are critical — wild-harvest pressure is severe; cultivated or ceremonial-supply chain only.',
+  caution_level: 'MEDIUM-HIGH',
+  safe_pregnancy: false,
+  status:
+    'A sacred ceremonial plant of the Eastern Cape Xhosa lineage. Use as ritual, not recreation. Ethical sourcing is non-negotiable: wild populations are under severe pressure. Profound dream-work tool when held with respect.',
+},
+{
+  id: 420,
+  name: 'Grape Seed',
+  botanical: 'Vitis vinifera (seed — standardised extract or cold-pressed oil)',
+  tcm_meridians: ['Heart', 'Liver', 'Kidney'],
+  tcm_element: 'Wood + Water',
+  energetics: ['Cool', 'Slightly Astringent', 'Sweet-Bitter', 'Vasoprotective', 'Yin-Containing'],
+  primary_functions: [
+    'Vascular protection — OPC (oligomeric proanthocyanidin) concentrate strengthens capillaries and venous tone; classical for varicose veins, easy bruising, chronic venous insufficiency',
+    'Antioxidant powerhouse — OPCs scavenge free radicals 20× more potently than vitamin C in vitro and cross the blood-brain barrier',
+    'Cardiovascular support — modest blood pressure reduction, LDL oxidation protection, improved endothelial NO',
+    'Skin and connective tissue — collagen and elastin protection through enzyme (collagenase / elastase) inhibition',
+    'Anti-inflammatory through NF-kB modulation and cytokine balance',
+  ],
+  secondary_benefits: [
+    'Eye health — retinal microvascular protection',
+    'Cognitive support through cerebral blood flow and antioxidant action',
+    'Adjunct in lymphedema and post-surgical swelling protocols',
+    'Synergistic with vitamin C (recycles oxidised ascorbate)',
+  ],
+  pharmacology:
+    'Standardised extracts deliver 85–95% OPCs (proanthocyanidin B2, B3, B4 dimers and trimers, plus monomeric catechins and epicatechin). Documented vasoprotective, antioxidant, anti-inflammatory and platelet-modulating actions. Grape seed oil is rich in linoleic acid and vitamin E, valued more as a culinary and skin oil than a medicinal extract.',
+  flavor_profile: 'Astringent-tannic with a green-bitter undertone; the oil is mild, grassy, nutty',
+  contraindications: [
+    'Anticoagulants and antiplatelets — additive bleeding risk at therapeutic OPC doses',
+    'Bleeding disorders — caution at high doses',
+    'Surgery — discontinue 2 weeks prior to elective surgery due to platelet effect',
+    'Pregnancy — limited data at concentrated OPC doses; food-grade grape consumption fine',
+    'Rare grape allergy',
+  ],
+  herb_to_herb_synergy: [
+    'Bilberry, Aronia and Pomegranate seeds for layered cardiovascular polyphenol stacks',
+    'Hawthorn for heart-tonic vascular protection',
+    'Vitamin C — direct biochemical synergy through OPC-ascorbate recycling',
+    'Pine Bark / Pycnogenol — overlapping OPC profile, often substituted',
+  ],
+  herb_to_herb_caution: [
+    'Other antiplatelet herbs (Ginkgo, Garlic, high-dose Turmeric, Ginger) — additive bleeding risk',
+  ],
+  herb_to_drug_interactions: [
+    'Warfarin and other anticoagulants — additive antiplatelet effect; monitor INR',
+    'Aspirin and NSAIDs — additive antiplatelet effect',
+    'Antihypertensives — mild additive blood-pressure-lowering',
+    'CYP3A4 substrates — mild inhibition documented at high doses',
+  ],
+  herb_interactions: [
+    'Synergy: Bilberry, Aronia, Pomegranate seeds, Hawthorn, Vitamin C, Pine Bark',
+    'Caution: stacking with antiplatelet herbs',
+    'Drug interactions: anticoagulants (monitor), antihypertensives (mild additive), CYP3A4 substrates (caution at high doses)',
+  ],
+  dosage_range:
+    'OPC extract (95% standardised): 100–300 mg daily, divided. Tincture (1:5, 65% EtOH from defatted seed): 30–60 drops, 2× daily. Grape seed oil for culinary / topical use freely. Cycle 12 weeks on, 2–4 weeks off for high-dose protocols.',
+  spiritual_layer:
+    'The grape seed is the tightly-held jewel inside the wine. She teaches that the most concentrated medicine lives in the smallest, hardest place — that the seed survives the crushing and carries the next generation. She whispers: I am what remains after the wine. I protect the vessel from within. I make the small blood vessels strong enough for joy.',
+  best_preparation:
+    'Standardised 85–95% OPC extract for clinical vascular work. Tincture from defatted, ground seed for traditional preparations. Cold-pressed grape seed oil for culinary and skincare use (high smoke point, light flavour). Pair with vitamin C for amplified vascular protection.',
+  caution_level: 'LOW-MEDIUM',
+  safe_pregnancy: null,
+  status:
+    'A workhorse vascular polyphenol with strong evidence in venous insufficiency, capillary fragility and antioxidant protocols. Drug-interaction profile is modest but real for high OPC doses; food-grade grape consumption stays safe.',
+},
 ];

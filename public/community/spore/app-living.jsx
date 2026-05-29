@@ -626,13 +626,26 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
                 {primary.map(node => renderCard(node, false))}
               </div>
 
-              {/* Community — satellite / proposed */}
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--mycelium-d)', marginTop:28, marginBottom:10 }}>
-                Community nodes · sister gardens
-              </div>
-              <div className="welcome-nodes" style={{ opacity:0.85 }}>
-                {community.map(node => renderCard(node, true))}
-              </div>
+              {/* Community — satellite / proposed. Hidden behind a <details>
+                  drop-down per user direction: these are inactive earning-
+                  wise, so keeping them collapsed sharpens the focus on the
+                  operational arc above. */}
+              <details style={{ marginTop:28 }}>
+                <summary style={{ cursor:'pointer', listStyle:'none', display:'flex', alignItems:'center', justifyContent:'space-between', gap:10, padding:'12px 14px', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:8 }}>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>
+                    Community nodes &middot; sister gardens &middot; {community.length}
+                  </span>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--mycelium-d)' }}>show &darr;</span>
+                </summary>
+                <div style={{ marginTop:10 }}>
+                  <p style={{ fontFamily:'var(--font-mono)', fontSize:9.5, color:'var(--mycelium-d)', letterSpacing:'0.06em', lineHeight:1.65, marginBottom:14, padding:'10px 12px', background:'rgba(232,177,75,0.05)', border:'0.5px dashed rgba(232,177,75,0.2)', borderRadius:6 }}>
+                    Sister-garden nodes are documentation only &mdash; no $MH is awarded for contributions here. The operational nodes above carry the active 30 $MH / 3h rate.
+                  </p>
+                  <div className="welcome-nodes" style={{ opacity:0.78 }}>
+                    {community.map(node => renderCard(node, true))}
+                  </div>
+                </div>
+              </details>
             </>
           );
         })()}
@@ -840,6 +853,30 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
 
 /* ── TopBar ──────────────────────────────────────────────── */
 
+// Live supply pill — shows ($MH available) of (TOTAL). Tied to a custom
+// 'spore:economy' event so any balance mutation in SporeEconomy re-renders it.
+function TokenSupplyPill() {
+  const [avail, setAvail] = useState(() => SporeEconomy.availableSupply());
+  const fmt = n => Number(n || 0).toLocaleString('en-US');
+  useEffect(() => {
+    const onChange = () => setAvail(SporeEconomy.availableSupply());
+    window.addEventListener('spore:economy', onChange);
+    const t = setInterval(onChange, 30000);
+    return () => { window.removeEventListener('spore:economy', onChange); clearInterval(t); };
+  }, []);
+  return (
+    <div title={`Token supply · ${fmt(avail)} of ${fmt(SporeData.TOKEN.TOTAL_SUPPLY)} $MH remaining`} style={{
+      display:'flex', alignItems:'center', gap:6,
+      padding:'5px 10px', borderRadius:999,
+      background:'rgba(232,177,75,0.08)', border:'0.5px solid rgba(232,177,75,0.25)',
+      fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.12em', color:'var(--nutrient-l)',
+    }}>
+      <span style={{ width:6, height:6, borderRadius:'50%', background:'var(--nutrient)', boxShadow:'0 0 5px rgba(232,177,75,0.7)' }} />
+      <span>{fmt(avail)} <span style={{ opacity:0.55 }}>$MH</span></span>
+    </div>
+  );
+}
+
 function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) {
   const isAdmin = currentMember && currentMember.admin;
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -879,6 +916,7 @@ function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) 
               <button className="topbar-logout" onClick={onLogout}>Sign out</button>
             </div>
           )}
+          <TokenSupplyPill />
           <button className="wallet-pill" onClick={onWallet}>
             <span className="wallet-rep-dot" style={{ background: tier.color }} />
             <div className="wallet-stack">
@@ -1330,6 +1368,7 @@ function ProfileEditor({ existing, onClose }) {
   const [favoritePlant, setFavoritePlant] = useState(seed?.favoritePlant || seed?.favorite_plant || '');
   const [avatar, setAvatar]     = useState(seed?.avatar || seed?.avatar_url || null);
   const [tags, setTags]         = useState(seed?.specialties || []);
+  const [recruitedBy, setRecruitedBy] = useState(seed?.recruitedBy || seed?.recruited_by || '');
   const [saving, setSaving]     = useState(false);
   const fileRef                 = useRef(null);
 
@@ -1404,7 +1443,9 @@ function ProfileEditor({ existing, onClose }) {
           return;
         }
 
-        // Avatar upload requires auth — skip for path B
+        // Avatar handling. Authed users upload to storage; unclaimed users stash
+        // the data URL locally so the pic shows on this device AND auto-uploads
+        // the next time they sign in (handled by syncPendingAvatar at boot).
         let avatarUrl = avatar;
         if (avatar && avatar.startsWith('data:') && fileRef.current?.files?.[0]) {
           if (user) {
@@ -1415,7 +1456,10 @@ function ProfileEditor({ existing, onClose }) {
               avatarUrl = null;
             }
           } else {
-            // Not signed in → cannot upload. Drop the data URL so the row inserts cleanly.
+            // Not signed in → stash the data URL locally so the user still SEES
+            // their pic on this device. When they later sign in via magic link,
+            // the boot-time syncPendingAvatar pass uploads it to Supabase.
+            try { localStorage.setItem('fungai_pending_avatar', avatar); } catch (e) {}
             avatarUrl = null;
           }
         }
@@ -1429,6 +1473,7 @@ function ProfileEditor({ existing, onClose }) {
           favorite_plant: favoritePlant.trim(),
           specialties: tags,
           avatar_url: avatarUrl,
+          recruited_by: recruitedBy || null,
           node: { sweden:'sweden', berlin:'berlin', lisbon:'lisbon', beirut:'beirut', genoa:'berlin', france:'berlin', germany:'berlin', denmark:'sweden', other_europe:'berlin', other_world:'festival' }[location] || 'berlin',
           focus: bio.trim() || (tags.length ? tags.join(' · ') : 'A new thread in the network'),
         };
@@ -1441,8 +1486,25 @@ function ProfileEditor({ existing, onClose }) {
           await window.SBprofiles.createUnclaimed(profile);
         }
 
-        // Cache locally for instant first-paint next time, and clear any unsaved draft
-        try { localStorage.setItem('fungai_profile', JSON.stringify({ ...profile, avatar: avatarUrl })); } catch (e) {}
+        // Recruiter bonus — local-first ledger. If recruiter is named the
+        // ledger awards 5 $MH to that recruiter (idempotent per recruiter+recruitee).
+        // Self-recruitment is silently dropped.
+        if (recruitedBy && (!existing || (existing.recruited_by || existing.recruitedBy) !== recruitedBy)) {
+          const selfId = (window.SporeData?.MEMBERS || []).find(m => (m.character_name || m.name || '').toLowerCase() === name.trim().toLowerCase());
+          const recruiteeId = selfId ? selfId.id : ('new-' + name.trim().toLowerCase().replace(/\s+/g, '-'));
+          if (recruitedBy !== recruiteeId) {
+            try { window.SporeEconomy.recordRecruit(recruitedBy, recruiteeId); } catch (e) {}
+          }
+        }
+
+        // Cache locally for instant first-paint next time, and clear any unsaved draft.
+        // If we have a pending data-URL avatar (unclaimed user upload), include it in the
+        // local cache so the user keeps seeing their pic until claim+upload completes.
+        let localAvatar = avatarUrl;
+        if (!localAvatar) {
+          try { localAvatar = localStorage.getItem('fungai_pending_avatar') || null; } catch (e) {}
+        }
+        try { localStorage.setItem('fungai_profile', JSON.stringify({ ...profile, avatar: localAvatar })); } catch (e) {}
         try { localStorage.removeItem('fungai_profile_draft'); } catch (e) {}
 
         setTimeout(() => { window.location.reload(); }, 600);
@@ -1561,9 +1623,23 @@ function ProfileEditor({ existing, onClose }) {
         </div>
 
         {/* Favourite plant or mushroom — shown on public profile detail */}
-        <div style={{ marginBottom:24 }}>
+        <div style={{ marginBottom:18 }}>
           <label style={labelStyle}>Favourite plant or mushroom</label>
           <input style={inputStyle} value={favoritePlant} onChange={e => setFavoritePlant(e.target.value)} placeholder="Chaga · Hawthorn · Amanita muscaria…" maxLength={60} />
+        </div>
+
+        {/* What recruited you — drops 5 $MH to the recruiter when saved */}
+        <div style={{ marginBottom:24 }}>
+          <label style={labelStyle}>What recruited you? &nbsp;<span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--mycelium-d)', textTransform:'none', letterSpacing:'0.04em' }}>(+5 $MH to the recruiter)</span></label>
+          <select style={inputStyle} value={recruitedBy} onChange={e => setRecruitedBy(e.target.value)}>
+            <option value="">— pick a thread —</option>
+            {(window.SporeData?.MEMBERS || []).map(m => (
+              <option key={m.id} value={m.id}>{m.name}{m.admin ? ' (admin)' : ''}{m.role ? ' · ' + m.role : ''}</option>
+            ))}
+            <option value="found-online">Found Fungai Art online</option>
+            <option value="event">Met at an event / dinner</option>
+            <option value="other">Other / can&rsquo;t say</option>
+          </select>
         </div>
 
         {/* Actions */}
@@ -2213,7 +2289,116 @@ function JournalPage({ economy, currentMember }) {
 
 /* ── Admin page ───────────────────────────────────────────── */
 
-function AdminPage({ onToast }) {
+// ── Admin sub-blocks ──────────────────────────────────────────────────────
+
+function PendingContributionsBlock({ onToast }) {
+  const [, bump] = useState(0);
+  useEffect(() => {
+    const refresh = () => bump(b => b + 1);
+    window.addEventListener('spore:economy', refresh);
+    const t = setInterval(refresh, 30000);
+    return () => { window.removeEventListener('spore:economy', refresh); clearInterval(t); };
+  }, []);
+  const pending = SporeEconomy.pendingSessions();
+  function accept(p) {
+    SporeEconomy.acceptContribSession(p.memberId, p.sessionIndex);
+    onToast(`Accepted ${(p.minutes / 60).toFixed(2)}h for ${p.memberName}`, 'success');
+  }
+  const fmtMins = m => m < 60 ? `${m}m` : `${Math.floor(m / 60)}h ${m % 60}m`;
+  return (
+    <>
+      <div className="section" style={{ paddingBottom:0 }}>
+        <div className="section-eyebrow">Pending review</div>
+        <h3 style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:20, color:'var(--mycelium-l)', marginTop:4, marginBottom:6 }}>Contribution <em>queue.</em> <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', fontStyle:'normal' }}>· {pending.length} waiting</span></h3>
+        <p style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', lineHeight:1.6 }}>Each stopped contribution timer lands here. Accept to issue $MH at the rate of {SporeData.TOKEN.CONTRIB_RATE_PER_HOUR} $MH per hour.</p>
+      </div>
+      <div style={{ margin:'8px 16px 16px', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, overflow:'hidden' }}>
+        {pending.length === 0 && (
+          <div style={{ padding:'20px', textAlign:'center', fontStyle:'italic', color:'var(--mycelium-d)', fontSize:12 }}>No pending sessions.</div>
+        )}
+        {pending.map((p, i) => (
+          <div key={p.memberId + '-' + p.sessionIndex} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:10, padding:'12px 14px', borderBottom: i < pending.length - 1 ? '0.5px solid var(--rule)' : 'none', flexWrap:'wrap' }}>
+            <div style={{ minWidth:0 }}>
+              <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:15, color:'var(--mycelium-l)' }}>{p.memberName}</div>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--mycelium-d)', marginTop:2 }}>
+                {fmtMins(p.minutes)} &middot; ends {new Date(p.end).toLocaleString()} &middot; payout {((p.minutes / 60) * SporeData.TOKEN.CONTRIB_RATE_PER_HOUR).toFixed(2)} $MH
+              </div>
+            </div>
+            <button onClick={() => accept(p)} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', padding:'7px 16px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', cursor:'pointer' }}>
+              ✦ Accept
+            </button>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function WeeklyReportBlock({ currentMemberId, onToast }) {
+  const isAdmin = currentMemberId === 'robin' || currentMemberId === 'stephanie';
+  if (!isAdmin) return null;
+  const existing = SporeEconomy.thisWeekReport(currentMemberId);
+  const [body, setBody] = useState(existing ? existing.body : '');
+  const [savedAt, setSavedAt] = useState(existing ? existing.ts : null);
+  const wk = SporeEconomy.weekStartIso();
+  const now = new Date();
+  const hour = now.getHours();
+  const inWindow = hour >= 12 && hour < 24;
+  function submit() {
+    if (!body.trim()) return;
+    SporeEconomy.submitWeeklyReport(currentMemberId, body.trim());
+    setSavedAt(Date.now());
+    onToast('Weekly report submitted', 'success');
+  }
+  const recent = SporeEconomy.recentReports(null, 6);
+  return (
+    <>
+      <div className="section" style={{ paddingBottom:0 }}>
+        <div className="section-eyebrow">Founder check-in</div>
+        <h3 style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:20, color:'var(--mycelium-l)', marginTop:4, marginBottom:6 }}>Weekly <em>report.</em> <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', fontStyle:'normal' }}>· week of {wk}</span></h3>
+        <p style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', lineHeight:1.6 }}>
+          Submit between <strong>12:00 and 24:00</strong>. Sunday at any hour Myco drops a reminder into your inbox.
+          {!inWindow && <span style={{ color:'#E16B6B', marginLeft:6 }}>Outside the window — you can still draft.</span>}
+        </p>
+      </div>
+      <div style={{ margin:'8px 16px 0', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, padding:'16px' }}>
+        <textarea
+          value={body}
+          onChange={e => setBody(e.target.value)}
+          rows={5}
+          placeholder="What did you tend this week? What needs attention?"
+          style={{ width:'100%', background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:6, padding:'10px 12px', color:'var(--mycelium-l)', fontSize:13, lineHeight:1.5, resize:'vertical', outline:'none', fontFamily:'var(--font-sans)', boxSizing:'border-box', marginBottom:10 }}
+        />
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:10 }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--mycelium-d)' }}>
+            {savedAt ? `Saved · ${new Date(savedAt).toLocaleString()}` : 'Not yet submitted this week'}
+          </div>
+          <button onClick={submit} className="btn btn-primary" style={{ padding:'10px 22px' }}>
+            {savedAt ? 'Update report' : '✦ Submit report'}
+          </button>
+        </div>
+      </div>
+      {recent.length > 0 && (
+        <div style={{ margin:'12px 16px 16px', background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:8, padding:'10px 12px' }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.2em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:6 }}>Recent reports</div>
+          {recent.map((r, i) => {
+            const m = SporeData.MEMBERS.find(x => x.id === r.memberId);
+            return (
+              <div key={i} style={{ padding:'6px 0', borderTop: i ? '0.5px solid var(--rule)' : 'none' }}>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--mycelium-d)' }}>{m ? m.name : r.memberId} · {r.weekStart}</div>
+                <div style={{ fontSize:12, color:'var(--mycelium-l)', lineHeight:1.5, marginTop:2, whiteSpace:'pre-wrap' }}>{r.body.length > 220 ? r.body.slice(0, 220) + '…' : r.body}</div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </>
+  );
+}
+
+function AdminPage({ onToast, currentMember }) {
+  const currentMemberId = currentMember && currentMember.id;
+  const isRobin = currentMemberId === 'robin';
   const [announcement, setAnnouncement] = useState(() => {
     try { return localStorage.getItem('spore_announcement') || ''; } catch { return ''; }
   });
@@ -2243,14 +2428,18 @@ function AdminPage({ onToast }) {
     } catch { return null; }
   }
 
-  // Resolve current restrictions for a member: in-memory edit > cloud value > []
+  // Resolve current restrictions for a member: in-memory edit > cloud value > [].
+  // Admins always return [] — they bypass restrictions by design, so the toggles
+  // appear greyed in the UI but never actually apply.
   function currentRestrictions(m) {
+    if (m.admin) return [];
     if (!m.cloudId) return [];
     if (restrictionEdits[m.cloudId]) return restrictionEdits[m.cloudId];
     return m.restrictions || [];
   }
 
   function toggleRestriction(m, feature) {
+    if (m.admin) { onToast(`${m.name} is an admin — admins always bypass restrictions.`, 'warn'); return; }
     if (!m.cloudId) { onToast('Member has no cloud profile yet — claim it first.', 'warn'); return; }
     const cur = currentRestrictions(m);
     const next = cur.includes(feature) ? cur.filter(x => x !== feature) : [...cur, feature];
@@ -2321,29 +2510,58 @@ function AdminPage({ onToast }) {
         </button>
       </div>
 
-      {/* Per-member feature restrictions */}
-      <div className="section" style={{ paddingBottom:0 }}>
-        <div className="section-eyebrow">Access control</div>
-        <h3 style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:20, color:'var(--mycelium-l)', marginTop:4, marginBottom:6 }}>Restrict <em>features.</em></h3>
-        <p style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', lineHeight:1.6, marginBottom:0 }}>Toggle a feature to block that member from it. Saves to their cloud profile. (Enforcement on the actual feature page is a separate step — for now this is the source of truth.)</p>
-      </div>
+      {/* Pending contributions queue — every stopped timer lands here for admin acceptance */}
+      <PendingContributionsBlock onToast={onToast} />
+
+      {/* Weekly report — Robin and Stephanie each submit one per week */}
+      <WeeklyReportBlock currentMemberId={currentMemberId} onToast={onToast} />
+
+      {/* Per-member feature restrictions — collapsed behind a dropdown per
+          design pass; admins only open it when they need it. */}
+      <details className="section" style={{ paddingBottom:0 }}>
+        <summary style={{ cursor:'pointer', listStyle:'none', display:'flex', alignItems:'center', justifyContent:'space-between', gap:10 }}>
+          <div>
+            <div className="section-eyebrow">Access control</div>
+            <h3 style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:20, color:'var(--mycelium-l)', marginTop:4, marginBottom:6 }}>Restrict <em>features.</em></h3>
+          </div>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>show &darr;</span>
+        </summary>
+        <p style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', lineHeight:1.6, marginBottom:0 }}>Toggle a feature to block that member from it. Saves to their cloud profile and enforces on the live feature pages via /spore-gate.js. Admins always bypass.</p>
+      </details>
       <div style={{ margin:'8px 16px 16px', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, overflow:'hidden' }}>
-        {SporeData.MEMBERS.filter(m => !!m.cloudId).map((m, i, arr) => {
+        {/* Now lists ALL members (not just cloud-linked) so admins are visible.
+            Admin rows render the toggles as inert "bypass" indicators rather
+            than hiding them — clearer than just not appearing in the list. */}
+        {SporeData.MEMBERS.map((m, i, arr) => {
           const r = currentRestrictions(m);
           const dirty = !!restrictionEdits[m.cloudId];
           const busy = !!savingRestrictions[m.cloudId];
+          const isAdminRow = m.admin;
+          const noCloud = !m.cloudId;
           return (
-            <div key={m.id} style={{ padding:'12px 14px', borderBottom: i < arr.length - 1 ? '0.5px solid var(--rule)' : 'none' }}>
+            <div key={m.id} style={{ padding:'12px 14px', borderBottom: i < arr.length - 1 ? '0.5px solid var(--rule)' : 'none', opacity: isAdminRow ? 0.85 : 1 }}>
               <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:8 }}>
                 <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:15, color:'var(--mycelium-l)' }}>{m.name}</div>
-                {m.admin && <span style={{ fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.14em', color:'var(--mycelium-d)' }}>ADMIN</span>}
+                {isAdminRow && <span style={{ fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.14em', color:'var(--nutrient-l)', background:'rgba(232,177,75,0.1)', border:'0.5px solid rgba(232,177,75,0.3)', padding:'2px 7px', borderRadius:999 }}>ADMIN · BYPASS</span>}
+                {!isAdminRow && noCloud && <span style={{ fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.14em', color:'var(--mycelium-d)' }}>UNCLAIMED</span>}
                 <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'var(--mycelium-d)', marginLeft:'auto' }}>{m.role}</span>
               </div>
               <div style={{ display:'flex', flexWrap:'wrap', gap:5, alignItems:'center' }}>
                 {RESTRICTABLE_FEATURES.map(f => {
                   const blocked = r.includes(f.id);
+                  const disabled = isAdminRow || noCloud;
                   return (
-                    <button key={f.id} type="button" onClick={() => toggleRestriction(m, f.id)} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', padding:'6px 11px', borderRadius:999, cursor:'pointer', background: blocked ? 'rgba(225,107,107,0.12)' : 'var(--soil-3)', border: blocked ? '0.5px solid rgba(225,107,107,0.5)' : '0.5px solid var(--rule)', color: blocked ? '#E16B6B' : 'var(--mycelium-d)' }}>
+                    <button key={f.id} type="button" disabled={disabled} onClick={() => toggleRestriction(m, f.id)}
+                      title={isAdminRow ? 'Admins bypass all restrictions' : (noCloud ? 'Member must claim their profile first' : '')}
+                      style={{
+                        fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase',
+                        padding:'6px 11px', borderRadius:999,
+                        cursor: disabled ? 'not-allowed' : 'pointer',
+                        background: blocked ? 'rgba(225,107,107,0.12)' : 'var(--soil-3)',
+                        border: blocked ? '0.5px solid rgba(225,107,107,0.5)' : '0.5px solid var(--rule)',
+                        color: blocked ? '#E16B6B' : 'var(--mycelium-d)',
+                        opacity: disabled ? 0.45 : 1,
+                      }}>
                       {blocked ? '✕' : '○'} {f.label}
                     </button>
                   );
@@ -2357,38 +2575,141 @@ function AdminPage({ onToast }) {
             </div>
           );
         })}
-        {SporeData.MEMBERS.filter(m => !!m.cloudId).length === 0 && (
-          <div style={{ padding:'20px', textAlign:'center', fontStyle:'italic', color:'var(--mycelium-d)', fontSize:12 }}>No cloud-linked members yet.</div>
-        )}
       </div>
 
-      {/* Member overview */}
+      {/* Member overview — "All hyphaes" with per-member expandable details
+          (hours / recruits / events / email / contribution timer / remove
+          for Robin only). */}
       <div className="section" style={{ paddingBottom:0 }}>
-        <div className="section-eyebrow">All hyphae</div>
+        <div className="section-eyebrow">All hyphaes &middot; {SporeData.MEMBERS.length} threads</div>
       </div>
       <div style={{ margin:'8px 16px 0', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, overflow:'hidden' }}>
-        {SporeData.MEMBERS.map((m, i) => {
-          const st   = getMemberState(m.id);
-          const bal  = st ? st.balance  : m.balance;
-          const rep  = st ? st.reputation : m.rep;
-          const tier = SporeData.reputationTier(rep);
-          return (
-            <div key={m.id} style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 14px', borderBottom: i < SporeData.MEMBERS.length-1 ? '0.5px solid var(--rule)' : 'none' }}>
-              <div style={{ width:32, height:32, borderRadius:'50%', background:tier.color, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:16, color:'rgba(255,255,255,0.9)', flexShrink:0 }}>{m.name[0]}</div>
-              <div style={{ flex:1, minWidth:0 }}>
-                <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:16, color:'var(--mycelium-l)', lineHeight:1 }}>
-                  {m.name} {m.admin && <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', color:tier.color, verticalAlign:'middle' }}>ADMIN</span>}
-                </div>
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.12em', textTransform:'uppercase', color:'var(--mycelium-d)', marginTop:2 }}>{m.role}</div>
-              </div>
-              <div style={{ textAlign:'right', flexShrink:0 }}>
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:12, color:'var(--spore-l)' }}>{bal} $H</div>
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color: tier.color, marginTop:1 }}>{tier.label}</div>
+        {SporeData.MEMBERS.map((m, i) => (
+          <AdminHyphaeRow key={m.id} m={m} last={i === SporeData.MEMBERS.length - 1} isRobin={isRobin} currentMemberId={currentMemberId} onToast={onToast} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function AdminHyphaeRow({ m, last, isRobin, currentMemberId, onToast }) {
+  const [, bump] = useState(0);
+  const [open, setOpen] = useState(false);
+  const [tick, setTick] = useState(0);
+  const [msgOpen, setMsgOpen] = useState(false);
+  const [msgBody, setMsgBody] = useState('');
+  useEffect(() => {
+    const refresh = () => bump(b => b + 1);
+    window.addEventListener('spore:economy', refresh);
+    // 1s tick while panel is open so the running timer reads live
+    const id = setInterval(() => setTick(t => t + 1), 1000);
+    return () => { window.removeEventListener('spore:economy', refresh); clearInterval(id); };
+  }, []);
+
+  const bal   = SporeEconomy.getBalance(m.id);
+  const rep   = m.rep;
+  const tier  = SporeData.reputationTier(rep);
+  const hours = SporeEconomy.totalHoursContributed(m.id);
+  const recruits = SporeEconomy.recruitsCount(m.id);
+  const events = SporeEconomy.eventsParticipatedCount(m.id);
+  const contrib = SporeEconomy.getContrib(m.id);
+  const running = !!contrib.startedAt;
+  const runningMin = running ? Math.max(0, Math.round((Date.now() - contrib.startedAt) / 60000)) : 0;
+  const isMe = currentMemberId === m.id;
+  const memberEmail = m.cloudEmail || m.email || (m.cloudId ? '— (linked, email RLS-gated)' : '— (unclaimed)');
+
+  function toggleTimer() {
+    if (running) {
+      SporeEconomy.stopContrib(m.id);
+      onToast(`Stopped timer for ${m.name} — ${runningMin}m queued for review`, 'success');
+    } else {
+      SporeEconomy.startContrib(m.id);
+      onToast(`Started timer for ${m.name}`, 'success');
+    }
+  }
+  function sendMsg() {
+    if (!msgBody.trim()) return;
+    SporeEconomy.sendMessage(currentMemberId || 'admin', (SporeData.MEMBERS.find(x => x.id === currentMemberId) || {}).name || 'Admin', m.id, msgBody.trim());
+    setMsgBody('');
+    setMsgOpen(false);
+    onToast(`Message sent to ${m.name}`, 'success');
+  }
+  function removeProfile() {
+    if (!isRobin) return;
+    if (!confirm(`Remove ${m.name} permanently? This clears local balance / contrib / messages on this device. Cloud row stays unless RLS lets you delete it.`)) return;
+    try {
+      ['spore_bal_','spore_contrib_','spore_events_','spore_msgs_','spore_state_'].forEach(p => localStorage.removeItem(p + m.id));
+      const list = JSON.parse(localStorage.getItem('spore_recruits') || '{}');
+      delete list[m.id];
+      Object.keys(list).forEach(k => { list[k] = (list[k] || []).filter(x => x !== m.id); });
+      localStorage.setItem('spore_recruits', JSON.stringify(list));
+    } catch {}
+    onToast(`Removed ${m.name} (local data)`, 'success');
+    bump(b => b + 1);
+  }
+
+  return (
+    <div style={{ borderBottom: last ? 'none' : '0.5px solid var(--rule)' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 14px', cursor:'pointer' }} onClick={() => setOpen(o => !o)}>
+        <div style={{ width:32, height:32, borderRadius:'50%', background:tier.color, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:16, color:'rgba(255,255,255,0.9)', flexShrink:0 }}>{m.name[0]}</div>
+        <div style={{ flex:1, minWidth:0 }}>
+          <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:16, color:'var(--mycelium-l)', lineHeight:1 }}>
+            {m.name} {m.admin && <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', color:tier.color, verticalAlign:'middle' }}>ADMIN</span>}
+            {running && <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', color:'#6BD66F', marginLeft:8 }}>● TIMER · {runningMin}m</span>}
+          </div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.12em', textTransform:'uppercase', color:'var(--mycelium-d)', marginTop:2 }}>{m.role}</div>
+        </div>
+        <div style={{ textAlign:'right', flexShrink:0 }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:12, color:'var(--spore-l)' }}>{bal} $MH</div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color: tier.color, marginTop:1 }}>{tier.label}</div>
+        </div>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', marginLeft:6 }}>{open ? '▴' : '▾'}</div>
+      </div>
+      {open && (
+        <div style={{ padding:'10px 14px 14px', borderTop:'0.5px solid var(--rule)', background:'rgba(0,0,0,0.18)' }}>
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(110px, 1fr))', gap:6, marginBottom:10 }}>
+            <Stat label="Hours" value={`${hours}h`} />
+            <Stat label="Recruits" value={recruits} />
+            <Stat label="Events" value={events} />
+            <Stat label="Balance" value={`${bal} $MH`} />
+          </div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--mycelium-d)', marginBottom:8 }}>
+            ✉ {memberEmail}
+          </div>
+          <div style={{ display:'flex', gap:6, flexWrap:'wrap' }}>
+            {!isMe && (
+              <button onClick={toggleTimer} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.16em', textTransform:'uppercase', padding:'6px 12px', borderRadius:999, background: running ? 'rgba(225,107,107,0.12)' : 'rgba(107,214,111,0.12)', border: running ? '0.5px solid rgba(225,107,107,0.5)' : '0.5px solid rgba(107,214,111,0.5)', color: running ? '#E16B6B' : '#6BD66F', cursor:'pointer' }}>
+                {running ? `⏸ Stop · ${runningMin}m` : '▶ Start contribution'}
+              </button>
+            )}
+            <button onClick={() => setMsgOpen(o => !o)} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.16em', textTransform:'uppercase', padding:'6px 12px', borderRadius:999, background:'var(--soil-3)', border:'0.5px solid var(--rule)', color:'var(--mycelium-d)', cursor:'pointer' }}>
+              ✉ Message
+            </button>
+            {isRobin && !m.admin && (
+              <button onClick={removeProfile} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.16em', textTransform:'uppercase', padding:'6px 12px', borderRadius:999, background:'rgba(225,107,107,0.08)', border:'0.5px solid rgba(225,107,107,0.4)', color:'#E16B6B', cursor:'pointer', marginLeft:'auto' }}>
+                ✕ Remove
+              </button>
+            )}
+          </div>
+          {msgOpen && (
+            <div style={{ marginTop:10, padding:10, background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:6 }}>
+              <textarea value={msgBody} onChange={e => setMsgBody(e.target.value)} rows={2} placeholder={`Message to ${m.name}…`} style={{ width:'100%', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:4, padding:'8px 10px', color:'var(--mycelium-l)', fontSize:12, lineHeight:1.4, resize:'vertical', outline:'none', fontFamily:'var(--font-sans)', boxSizing:'border-box', marginBottom:8 }} />
+              <div style={{ display:'flex', justifyContent:'flex-end', gap:6 }}>
+                <button onClick={() => { setMsgOpen(false); setMsgBody(''); }} style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', padding:'6px 12px', borderRadius:999, background:'transparent', border:'0.5px solid var(--rule)', color:'var(--mycelium-d)', cursor:'pointer' }}>Cancel</button>
+                <button onClick={sendMsg} style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', padding:'6px 12px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', cursor:'pointer' }}>Send</button>
               </div>
             </div>
-          );
-        })}
-      </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+function Stat({ label, value }) {
+  return (
+    <div style={{ padding:'6px 8px', background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:6, textAlign:'center' }}>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.16em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>{label}</div>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:12, color:'var(--mycelium-l)', marginTop:2 }}>{value}</div>
     </div>
   );
 }
@@ -3134,13 +3455,47 @@ function App() {
     try {
       const mine = await window.SBprofiles.fetchMine();
       if (mine) {
-        // Find or create the matching MEMBERS entry, set as current
+        // Find or create the matching MEMBERS entry, set as current. Email-link
+        // merge: match by cloudId first (claimed before), then by exact
+        // character_name (case-insensitive). If neither matches we fall through
+        // to the new-profile branch — meaning Robin signing in with a totally
+        // new email & character_name="robin1" will NOT merge into the hardcoded
+        // "robin" admin. To merge, Robin must claim with character_name="Robin"
+        // OR an admin has to manually set cloudId on the MEMBERS entry once.
         const match = SporeData.MEMBERS.find(m => m.cloudId === mine.id)
                    || SporeData.MEMBERS.find(m => m.name.toLowerCase() === (mine.character_name || '').toLowerCase());
         if (match) {
+          // Carry the cloud profile's restrictions onto the in-memory member so
+          // gating works on this device immediately.
+          match.cloudId = mine.id;
+          if (Array.isArray(mine.restrictions)) match.restrictions = mine.restrictions;
+          if (mine.avatar_url) match.avatar = mine.avatar_url;
           setCurrentMember(match);
           setTab('members');
+          // Cross-page gate uses these keys (see /spore-gate.js).
           try { localStorage.setItem('spore_active_member', match.id); } catch {}
+          try { localStorage.setItem('spore_active_member_full', JSON.stringify({
+            id: match.id, name: match.name, admin: !!match.admin,
+            restrictions: match.restrictions || [],
+            avatar: match.avatar || null,
+            cloudId: mine.id,
+          })); } catch {}
+          // Sunday Myco nudge — drops the founder's reminder into the inbox
+          // exactly once per Sunday. Safe to call any day; no-ops on M–Sat.
+          try {
+            if (match.admin) window.SporeEconomy?.maybeSendSundayMyco(match.id);
+          } catch {}
+          // Upload any locally-stashed avatar from the unclaimed-create flow.
+          try {
+            const pending = localStorage.getItem('fungai_pending_avatar');
+            if (pending && pending.startsWith('data:') && window.SBprofiles?.uploadAvatar) {
+              const blob = await (await fetch(pending)).blob();
+              const file = new File([blob], 'avatar.png', { type: blob.type || 'image/png' });
+              const url = await window.SBprofiles.uploadAvatar(file);
+              if (url) await window.SBprofiles.upsert({ avatar_url: url });
+              localStorage.removeItem('fungai_pending_avatar');
+            }
+          } catch (e) { console.warn('[Spore] pending avatar sync failed:', e); }
         }
       } else {
         // No claimed profile yet. Only auto-open the editor when the user
