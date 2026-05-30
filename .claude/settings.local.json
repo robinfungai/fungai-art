@@ -83,7 +83,8 @@
       "Bash(awk '/^const H=\\\\[/{flag=1; next} flag && /^\\\\];/{print \"entries:\", count; exit} flag && /^\\\\{id:/{count++}' public/mixology/index.html)",
       "Bash(grep -cE \"^\\\\{id:[0-9]+,\" public/mixology/index.html)",
       "Bash(awk '/^const H=\\\\[/,/^\\\\];/' public/mixology/index.html)",
-      "Bash(grep -n \"LAB_CATEGORIES_unused\\\\|__removedDuplicateLabNotes\\\\|^</script>$\" public/community/academy/index.html)"
+      "Bash(grep -n \"LAB_CATEGORIES_unused\\\\|__removedDuplicateLabNotes\\\\|^</script>$\" public/community/academy/index.html)",
+      "Bash(grep -oE \"\\\\{n:'[^']*[Mm]ushroom[^']*',eth:'[^']*'\\\\}|\\\\{n:'Reishi[^']*',eth:'[^']*'\\\\}|\\\\{n:'Chaga[^']*',eth:'[^']*'\\\\}|\\\\{n:'Lion[^']*',eth:'[^']*'\\\\}|\\\\{n:'Cordyceps[^']*',eth:'[^']*'\\\\}\" public/extraction/index.html)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Robin\\Desktop\\fungai art\\websiet\\tailored tincture ai tool\\html codes",

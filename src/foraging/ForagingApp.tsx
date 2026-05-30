@@ -491,54 +491,58 @@ export default function ForagingApp() {
           })}
         </div>
 
-        {/* Database toggles — each open foraging database is a separately toggleable
-            layer. Lets you compare what each citizen-science source claims about
-            the same region. */}
-        <button
-          onClick={() => setShowSkogsObs(s => !s)}
-          title="skogsskafferiet.se — Swedish foraging community"
-          style={{
-            marginLeft: 'auto',
-            fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', textTransform: 'uppercase',
-            background: showSkogsObs ? 'rgba(180,230,150,0.12)' : 'transparent',
-            border: `0.5px solid ${showSkogsObs ? 'rgba(180,230,150,0.45)' : 'rgba(255,255,255,0.12)'}`,
-            color: showSkogsObs ? 'rgba(180,230,150,0.85)' : '#4d5a52',
-            borderRadius: 4, padding: '4px 10px', cursor: 'pointer', flexShrink: 0,
-            transition: 'all 0.18s',
-          }}
-        >
-          {showSkogsObs ? '◉' : '○'} Skogsskafferiet
-        </button>
-        <button
-          onClick={() => setShowVildMad(v => !v)}
-          title="vildmad.dk — Danish open foraging atlas"
-          style={{
-            fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', textTransform: 'uppercase',
-            background: showVildMad ? 'rgba(220,150,90,0.12)' : 'transparent',
-            border: `0.5px solid ${showVildMad ? 'rgba(220,150,90,0.5)' : 'rgba(255,255,255,0.12)'}`,
-            color: showVildMad ? 'rgba(232,180,120,0.9)' : '#4d5a52',
-            borderRadius: 4, padding: '4px 10px', cursor: 'pointer', flexShrink: 0,
-            transition: 'all 0.18s',
-          }}
-        >
-          {showVildMad ? '◉' : '○'} Vild Mad
-        </button>
-        <a
-          href="https://www.gbif.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          title="Global Biodiversity Information Facility — the official open biodiversity database that powers the per-node sightings"
-          style={{
-            fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', textTransform: 'uppercase',
-            background: 'rgba(245,215,105,0.06)',
-            border: '0.5px solid rgba(245,215,105,0.25)',
-            color: 'rgba(245,215,105,0.7)',
-            borderRadius: 4, padding: '4px 10px', textDecoration: 'none', flexShrink: 0,
-            transition: 'all 0.18s',
-          }}
-        >
-          ◎ GBIF
-        </a>
+        {/* Database toggles — Skogsskafferiet / Vild Mad / GBIF. These are
+            advanced controls that ate too much of the mobile topbar, so the
+            wrapper has class "forage-sources" which is hidden by CSS at
+            ≤768px. The toggles can still be reached via the legend at the
+            bottom of the page. */}
+        <div className="forage-sources" style={{ marginLeft: 'auto', display: 'flex', gap: 6, alignItems: 'center' }}>
+          <button
+            onClick={() => setShowSkogsObs(s => !s)}
+            title="skogsskafferiet.se — Swedish foraging community"
+            style={{
+              fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', textTransform: 'uppercase',
+              background: showSkogsObs ? 'rgba(180,230,150,0.12)' : 'transparent',
+              border: `0.5px solid ${showSkogsObs ? 'rgba(180,230,150,0.45)' : 'rgba(255,255,255,0.12)'}`,
+              color: showSkogsObs ? 'rgba(180,230,150,0.85)' : '#4d5a52',
+              borderRadius: 4, padding: '4px 10px', cursor: 'pointer', flexShrink: 0,
+              transition: 'all 0.18s',
+            }}
+          >
+            {showSkogsObs ? '◉' : '○'} Skogsskafferiet
+          </button>
+          <button
+            onClick={() => setShowVildMad(v => !v)}
+            title="vildmad.dk — Danish open foraging atlas"
+            style={{
+              fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', textTransform: 'uppercase',
+              background: showVildMad ? 'rgba(220,150,90,0.12)' : 'transparent',
+              border: `0.5px solid ${showVildMad ? 'rgba(220,150,90,0.5)' : 'rgba(255,255,255,0.12)'}`,
+              color: showVildMad ? 'rgba(232,180,120,0.9)' : '#4d5a52',
+              borderRadius: 4, padding: '4px 10px', cursor: 'pointer', flexShrink: 0,
+              transition: 'all 0.18s',
+            }}
+          >
+            {showVildMad ? '◉' : '○'} Vild Mad
+          </button>
+          <a
+            href="https://www.gbif.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Global Biodiversity Information Facility — the official open biodiversity database that powers the per-node sightings"
+            style={{
+              fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', textTransform: 'uppercase',
+              background: 'rgba(245,215,105,0.06)',
+              border: '0.5px solid rgba(245,215,105,0.25)',
+              color: 'rgba(245,215,105,0.7)',
+              borderRadius: 4, padding: '4px 10px', textDecoration: 'none', flexShrink: 0,
+              transition: 'all 0.18s',
+            }}
+          >
+            ◎ GBIF
+          </a>
+        </div>
+        <style>{`@media (max-width: 768px){ .forage-sources { display: none !important; } }`}</style>
 
         {/* Moon phase */}
         {(() => { const m = getMoonPhase(); return (
@@ -688,7 +692,7 @@ export default function ForagingApp() {
       {/* Map */}
       <Map
         ref={mapRef}
-        initialViewState={{ longitude: 14, latitude: 58, zoom: 4.2 }}
+        initialViewState={{ longitude: 18, latitude: 50, zoom: 3.6 }}
         style={{ width: '100%', height: '100%' }}
         mapStyle={mapMode === 'satellite' ? SATELLITE_STYLE : MAP_STYLE}
       >

@@ -742,10 +742,12 @@ function labIsAdmin() {
   return legacy === 'robin' || legacy === 'stephanie';
 }
 function labSummary(text) {
-  // Long entries (>300 words) get a 60-word leader + "read more" expansion.
+  // All entries collapse to a 40-word teaser by default — the user wanted
+  // every entry minimised, not just the long ones. Click "read more" to
+  // expand. Entries under ~40 words just show inline (nothing to hide).
   const words = (text || '').trim().split(/\s+/);
-  if (words.length <= 300) return null;
-  return words.slice(0, 60).join(' ') + '…';
+  if (words.length <= 40) return null;
+  return words.slice(0, 40).join(' ') + '…';
 }
 function labChapterOptions(currentId) {
   return LAB_CHAPTERS
@@ -761,7 +763,8 @@ function renderEntries(chapterId) {
     list.innerHTML = '';
     return;
   }
-  const isAdmin = labIsAdmin();
+  // Move picker is available to ANY signed-in network member, not just
+  // admins — the user explicitly asked to change chapter for each entry.
   list.innerHTML = `<div class="lab-entries-head">Saved entries — ${entries.length}</div>`
     + entries.map((e, i) => {
         const safe = (e.text || '').replace(/</g,'&lt;');
@@ -769,9 +772,7 @@ function renderEntries(chapterId) {
         const body = sum
           ? `<div data-summary>${sum.replace(/</g,'&lt;')} <a href="javascript:labExpand('${chapterId}',${i})" style="color:#F5D689;font-style:italic;text-decoration:none;border-bottom:0.5px solid rgba(245,214,137,0.4);">read more</a></div><div data-full style="display:none;white-space:pre-wrap;">${safe}</div>`
           : `<div style="white-space:pre-wrap;">${safe}</div>`;
-        const move = isAdmin
-          ? `<select class="lab-entry-move" onchange="labMoveEntry('${chapterId}',${i},this.value)" title="Move to chapter"><option value="">Move…</option>${labChapterOptions(chapterId)}</select>`
-          : '';
+        const move = `<select class="lab-entry-move" onchange="labMoveEntry('${chapterId}',${i},this.value)" title="Move to chapter"><option value="">Move…</option>${labChapterOptions(chapterId)}</select>`;
         return `
           <div class="lab-entry" id="entry-${chapterId}-${i}">
             <div class="lab-entry-text">${body}</div>
@@ -794,7 +795,8 @@ function labExpand(chapterId, i){
 }
 function labMoveEntry(fromId, idx, toId){
   if (!toId) return;
-  if (!labIsAdmin()) { alert('Only Robin or Stephanie can move entries between chapters.'); return; }
+  // Any signed-in member can move entries between chapters now (used to be
+  // admin-only). Lab notebook itself is sign-in-gated upstream.
   const from = loadEntries(fromId);
   const [moved] = from.splice(idx, 1);
   if (!moved) return;
