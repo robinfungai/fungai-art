@@ -76,7 +76,8 @@
       "Bash(sort -t: -k2 -n)",
       "Bash(git restore *)",
       "Bash(node -e \"const fs = require\\('fs'\\); const s = fs.readFileSync\\('public/community/spore/data.jsx', 'utf8'\\); console.log\\('lines:', s.split\\('\\\\n'\\).length\\); console.log\\('first balance check:', s.includes\\('balance: 100'\\), s.includes\\('TOKEN.TOTAL_SUPPLY'\\)\\);\")",
-      "Bash(grep -nE '\\\\$H' public/community/spore/app-living.jsx)"
+      "Bash(grep -nE '\\\\$H' public/community/spore/app-living.jsx)",
+      "Bash(grep -nE \"TODO|FIXME|XXX|HACK|lorem|placeholder.*image|undefined.*\\\\$|console\\\\.error\" public/home/index.html)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Robin\\Desktop\\fungai art\\websiet\\tailored tincture ai tool\\html codes",

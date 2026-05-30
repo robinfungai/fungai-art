@@ -127,18 +127,47 @@ body::after {
 }
 
 /* ─── CURSOR ─────────────────────────────────── */
+/* Custom cursor — a small amber arrowhead that rotates toward movement
+   direction (so it actually reads as "where I'm going") plus a soft
+   trailing ring that lags slightly for the premium-cursor feel.
+   The arrowhead is a stylised leaf / forager's-blade shape so it ties
+   to the brand without being literal mushroom kitsch. */
 .cursor {
-  width: 6px; height: 6px;
-  background: var(--lime);
-  border-radius: 50%;
-  position: fixed; z-index: 10000;
+  position: fixed; top: 0; left: 0;
+  width: 22px; height: 22px;
   pointer-events: none;
+  z-index: 10001;
   transform: translate(-50%,-50%);
-  transition: width 0.2s, height 0.2s, background 0.2s, border 0.2s;
-  mix-blend-mode: difference;
+  transition: opacity 0.15s;
+  filter: drop-shadow(0 0 4px rgba(232,177,75,0.45));
+  will-change: transform, left, top;
 }
-.cursor.hover { width: 28px; height: 28px; background: transparent; border: 1px solid var(--lime); }
-.cursor.click { width: 14px; height: 14px; background: var(--amber); }
+.cursor svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.cursor .tip {
+  transform-origin: 12px 12px;
+  transition: transform 0.06s linear, opacity 0.18s;
+}
+.cursor.hover .tip { opacity: 0.35; }     /* fade tip when hovering interactive — ring takes over */
+.cursor.click .tip { transform: scale(0.78); }
+.cursor-ring {
+  position: fixed; top: 0; left: 0;
+  width: 32px; height: 32px;
+  border: 0.5px solid rgba(232,177,75,0.55);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%,-50%);
+  opacity: 0.6;
+  transition: width 0.18s ease, height 0.18s ease, opacity 0.18s, border-color 0.18s, background 0.18s;
+  will-change: transform, left, top;
+}
+.cursor-ring.hover { width: 60px; height: 60px; opacity: 0.95; border-color: var(--lime); background: radial-gradient(circle, rgba(158,212,56,0.08), transparent 70%); }
+.cursor-ring.click { width: 24px; height: 24px; opacity: 1; border-color: var(--amber); border-width: 1px; }
+/* Hide custom cursor on touch devices — they have no hover and pointer:fine doesn't apply */
+@media (hover: none), (pointer: coarse) {
+  .cursor, .cursor-ring { display: none; }
+  html, body, button, a { cursor: auto !important; }
+}
 
 /* ─── UTILITIES ──────────────────────────────── */
 .wrap { max-width: var(--max); margin: 0 auto; padding: 0 48px; }
@@ -1167,8 +1196,24 @@ p { line-height: 1.75; color: var(--mist); }
 </head>
 <body>
 
-<!-- CURSOR -->
-<div class="cursor" id="cursor"></div>
+<!-- CURSOR — arrowhead tip + lagging glow ring. Hidden on touch devices via CSS. -->
+<div class="cursor" id="cursor">
+  <svg viewBox="0 0 24 24">
+    <defs>
+      <linearGradient id="curTipG" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#F5D769"/>
+        <stop offset="100%" stop-color="#C4862E"/>
+      </linearGradient>
+    </defs>
+    <g class="tip">
+      <!-- Forager's-blade silhouette: a slender amber wedge with a small
+           inner highlight. Reads as "direction" without being a literal arrow. -->
+      <path d="M 12 1.5 L 17 17 L 12 14 L 7 17 Z" fill="url(#curTipG)" stroke="#1a1208" stroke-width="0.5" stroke-linejoin="round"/>
+      <path d="M 12 4 L 14.5 13.5 L 12 12.5 Z" fill="rgba(255,255,255,0.35)"/>
+    </g>
+  </svg>
+</div>
+<div class="cursor-ring" id="cursorRing"></div>
 
 <!-- CART OVERLAY + DRAWER -->
 <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
@@ -1682,28 +1727,43 @@ function toggleMobileMenu() {
 
     </div><!-- /products-grid -->
 
-    <!-- Formula CTA + enter apothecary -->
-    <div style="margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:1px;border-radius:16px;overflow:hidden;" class="reveal">
-      <div style="padding:32px 34px;background:var(--forest-card);border:1px solid rgba(136,186,200,0.08);">
-        <div style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber);margin-bottom:12px;">Tailored Formula Service</div>
-        <p class="feature-blurb-mobile" style="font-family:'Kiona','Cormorant Garamond',var(--serif);font-weight:700;font-size:clamp(18px,1.8vw,22px);color:var(--parchment);line-height:1.3;margin-bottom:14px;letter-spacing:0.025em;text-transform:uppercase;">We blend full-spectrum extracts to your needs — mixed à la minute, shipped within 48h.</p>
-        <p style="font-family:'Kiona',var(--sans);font-size:13.5px;color:var(--cream);line-height:1.75;margin-bottom:22px;">Use the Herbal Engine to build your formula, then send it to us. We extract and combine each herb fresh, at the right ethanol concentration, for your exact protocol.</p>
-        <a href="/herbal-engine-2/" style="display:inline-flex;align-items:center;gap:6px;font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:var(--cream);border:0.5px solid rgba(136,186,200,0.4);padding:12px 22px;border-radius:999px;text-decoration:none;transition:all .2s;" onmouseover="this.style.borderColor='rgba(136,186,200,0.7)';this.style.color='var(--parchment)'" onmouseout="this.style.borderColor='rgba(136,186,200,0.4)';this.style.color='var(--cream)'">Open the Herbal Engine →</a>
-      </div>
-      <div style="padding:32px 34px;background:rgba(136,186,200,0.05);border:1px solid rgba(136,186,200,0.15);display:flex;flex-direction:column;justify-content:space-between;">
-        <div>
-          <div style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber);margin-bottom:12px;">Full Collection</div>
-          <p class="feature-blurb-mobile" style="font-family:'Kiona','Cormorant Garamond',var(--serif);font-weight:700;font-size:clamp(18px,1.8vw,22px);color:var(--parchment);line-height:1.3;margin-bottom:14px;letter-spacing:0.025em;text-transform:uppercase;">30+ preparations. Fungal extracts, flowers, compositions, specials, oils, and seasonal wildcrafts.</p>
-          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px;">
-            <span style="font-family:'Bayer',var(--sans);font-size:9.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber-lt);border:0.5px solid rgba(196,134,46,0.35);padding:4px 11px;border-radius:999px;">Fungal Extracts</span>
-            <span style="font-family:'Bayer',var(--sans);font-size:9.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber-lt);border:0.5px solid rgba(196,134,46,0.35);padding:4px 11px;border-radius:999px;">Compositions</span>
-            <span style="font-family:'Bayer',var(--sans);font-size:9.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber-lt);border:0.5px solid rgba(196,134,46,0.35);padding:4px 11px;border-radius:999px;">Sacred Flowers</span>
-            <span style="font-family:'Bayer',var(--sans);font-size:9.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber-lt);border:0.5px solid rgba(196,134,46,0.35);padding:4px 11px;border-radius:999px;">Specials</span>
-          </div>
+    <!-- Tailored formula + apothecary — slimmer twin cards. Was a heavy
+         32px-padded block with two large uppercase headlines that ate the
+         eye. Now each card is a single-line headline + a chip row + a
+         single CTA. "Shipped within 48h" line removed per request. -->
+    <div class="reveal twin-ctas" style="margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <a href="/herbal-engine-2/" class="twin-cta twin-cta--tailored">
+        <div class="twin-cta-eyebrow">℞ &middot; Tailored Formula</div>
+        <div class="twin-cta-title">Built to your <em>protocol.</em></div>
+        <div class="twin-cta-sub">Full-spectrum extracts, mixed &agrave; la minute at the right ethanol concentration for your intent.</div>
+        <span class="twin-cta-arrow">Open the Herbal Engine &rarr;</span>
+      </a>
+      <a href="/shop" class="twin-cta twin-cta--shop">
+        <div class="twin-cta-eyebrow">&loz; &middot; Full Collection</div>
+        <div class="twin-cta-title">30+ <em>preparations.</em></div>
+        <div class="twin-cta-chips">
+          <span>Fungal Extracts</span><span>Compositions</span><span>Sacred Flowers</span><span>Specials</span>
         </div>
-        <a href="/shop" class="btn-primary" style="text-decoration:none;text-align:center;">Enter the full apothecary →</a>
-      </div>
+        <span class="twin-cta-arrow">Enter the apothecary &rarr;</span>
+      </a>
     </div>
+    <style>
+      .twin-cta{display:flex;flex-direction:column;gap:8px;padding:20px 22px;border-radius:12px;text-decoration:none;border:0.5px solid rgba(136,186,200,0.18);background:linear-gradient(160deg,rgba(15,18,20,0.65),rgba(8,11,13,0.45));transition:border-color .2s,transform .2s,box-shadow .2s;}
+      .twin-cta:hover{transform:translateY(-2px);border-color:rgba(232,177,75,0.5);box-shadow:0 8px 28px rgba(196,134,46,0.12);}
+      .twin-cta--tailored{border-color:rgba(232,177,75,0.4);background:linear-gradient(160deg,rgba(196,134,46,0.1),rgba(196,134,46,0.02));}
+      .twin-cta-eyebrow{font-family:'Bayer',var(--sans);font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:var(--amber-lt);}
+      .twin-cta-title{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:clamp(20px,2vw,26px);color:var(--parchment);line-height:1.15;letter-spacing:-0.005em;}
+      .twin-cta-title em{color:var(--amber-lt);}
+      .twin-cta-sub{font-family:'Kiona',var(--sans);font-size:12.5px;color:var(--mist);line-height:1.55;margin-bottom:2px;opacity:0.9;}
+      .twin-cta-chips{display:flex;gap:5px;flex-wrap:wrap;margin:2px 0 4px;}
+      .twin-cta-chips span{font-family:'Bayer',var(--sans);font-size:8.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--amber-lt);border:0.5px solid rgba(196,134,46,0.28);padding:3px 8px;border-radius:999px;}
+      .twin-cta-arrow{font-family:'Bayer',var(--sans);font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--cream);margin-top:6px;}
+      .twin-cta:hover .twin-cta-arrow{color:var(--parchment);}
+      @media (max-width:720px){
+        .twin-ctas{grid-template-columns:1fr;}
+        .twin-cta{padding:18px 18px;}
+      }
+    </style>
   </div>
 </section>
 
@@ -1794,10 +1854,13 @@ function toggleMobileMenu() {
         <a href="/mycelium-trance" class="btn-primary">Discover Mycelium Trance</a>
       </div>
     </div>
-    <div class="reveal reveal-d2" style="display:flex;flex-direction:column;gap:24px;">
-      <img src="/home/abc.png" alt="Mycelium Trance" style="width:100%;max-width:420px;border-radius:4px;opacity:0.92;object-fit:cover;">
-      <div style="border:1px solid rgba(136,186,200,0.1);padding:36px;">
-        <span class="sec-label" style="margin-bottom:20px;">Events &amp; circles</span>
+    <!-- Narrower right column per design pass — was full-width, eating the
+         page even though it's a sidebar list. Capped at 360px and padding
+         reduced. -->
+    <div class="reveal reveal-d2" style="display:flex;flex-direction:column;gap:18px;max-width:360px;justify-self:end;width:100%;">
+      <img src="/home/abc.png" alt="Mycelium Trance" style="width:100%;border-radius:4px;opacity:0.92;object-fit:cover;">
+      <div style="border:1px solid rgba(136,186,200,0.1);padding:22px 24px;">
+        <span class="sec-label" style="margin-bottom:16px;">Events &amp; circles</span>
         <div class="event-list">
           <div class="event-item">
             <div>
@@ -1809,7 +1872,7 @@ function toggleMobileMenu() {
           <div class="event-item">
             <div>
               <div class="event-name">TrypExpo, Berlin</div>
-              <div class="event-meta">Mycelium Trance · Stand · 7,613 views</div>
+              <div class="event-meta">Mycelium Trance &middot; Stand</div>
             </div>
             <span class="event-status done">Done</span>
           </div>
@@ -1969,12 +2032,42 @@ function toggleMobileMenu() {
                   var y=((LAT_MAX-c[1])/(LAT_MAX-LAT_MIN))*H;
                   return x.toFixed(1)+','+y.toFixed(1);
                 }
-                function pathClosed(coords){
-                  return 'M'+proj(coords[0])+coords.slice(1).map(function(c){return 'L'+proj(c);}).join('')+'Z';
+                // Catmull-Rom → cubic Bézier smoothing. Same input points,
+                // but the path between them is now a continuous curve rather
+                // than straight segments — coastlines read as organic shore
+                // lines instead of polygon edges.
+                function projXY(c){
+                  return [
+                    ((c[0]-LON_MIN)/(LON_MAX-LON_MIN))*W,
+                    ((LAT_MAX-c[1])/(LAT_MAX-LAT_MIN))*H,
+                  ];
                 }
-                function pathOpen(coords){
-                  return 'M'+proj(coords[0])+coords.slice(1).map(function(c){return 'L'+proj(c);}).join('');
+                function smoothPath(coords, closed){
+                  if (!coords.length) return '';
+                  var pts = coords.map(projXY);
+                  var n = pts.length;
+                  var d = 'M'+pts[0][0].toFixed(1)+','+pts[0][1].toFixed(1);
+                  // Tension — lower = looser/curlier, higher = closer to straight.
+                  var t = 0.5;
+                  for (var i = 0; i < (closed ? n : n-1); i++){
+                    var p0 = pts[(i-1+n) % n];
+                    var p1 = pts[i % n];
+                    var p2 = pts[(i+1) % n];
+                    var p3 = pts[(i+2) % n];
+                    if (!closed) {
+                      if (i === 0)   p0 = p1;
+                      if (i === n-2) p3 = p2;
+                    }
+                    var c1x = p1[0] + (p2[0]-p0[0])/6 * t;
+                    var c1y = p1[1] + (p2[1]-p0[1])/6 * t;
+                    var c2x = p2[0] - (p3[0]-p1[0])/6 * t;
+                    var c2y = p2[1] - (p3[1]-p1[1])/6 * t;
+                    d += 'C'+c1x.toFixed(1)+','+c1y.toFixed(1)+' '+c2x.toFixed(1)+','+c2y.toFixed(1)+' '+p2[0].toFixed(1)+','+p2[1].toFixed(1);
+                  }
+                  return d + (closed ? 'Z' : '');
                 }
+                function pathClosed(coords){ return smoothPath(coords, true); }
+                function pathOpen(coords){ return smoothPath(coords, false); }
                 // [lon, lat] coast samples — picked to read as real Europe at this resolution.
                 // More vertices per coast vs. the previous version for smoother curves; new
                 // polygons for Ukraine + Crimea (Black Sea coast) and the Alpine / Carpathian
@@ -2139,7 +2232,7 @@ function toggleMobileMenu() {
     <div class="spore-grid reveal reveal-d1">
       <!-- Pinned post 1 -->
       <div class="spore-embed">
-        <blockquote class="instagram-media" data-instgrm-captioned
+        <blockquote class="instagram-media"
           data-instgrm-permalink="https://www.instagram.com/p/DTx5LGZjM0j/?utm_source=ig_embed"
           data-instgrm-version="14"
           style="background:#fff;border:0;border-radius:14px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;min-width:280px;padding:0;width:100%;">
@@ -2147,7 +2240,7 @@ function toggleMobileMenu() {
       </div>
       <!-- Pinned post 2 — Robin & Steph post DO6ApsxDDdd -->
       <div class="spore-embed">
-        <blockquote class="instagram-media" data-instgrm-captioned
+        <blockquote class="instagram-media"
           data-instgrm-permalink="https://www.instagram.com/p/DO6ApsxDDdd/?utm_source=ig_embed"
           data-instgrm-version="14"
           style="background:#fff;border:0;border-radius:14px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;min-width:280px;padding:0;width:100%;">
@@ -2155,7 +2248,7 @@ function toggleMobileMenu() {
       </div>
       <!-- Pinned post 3 — reel DXe14z9jG2H -->
       <div class="spore-embed">
-        <blockquote class="instagram-media" data-instgrm-captioned
+        <blockquote class="instagram-media"
           data-instgrm-permalink="https://www.instagram.com/reel/DXe14z9jG2H/?utm_source=ig_embed"
           data-instgrm-version="14"
           style="background:#fff;border:0;border-radius:14px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;min-width:280px;padding:0;width:100%;">
@@ -2632,17 +2725,79 @@ function toggleMobileMenu() {
 /* ══════════════════════════════════════════════
    CURSOR
 ══════════════════════════════════════════════ */
-const cursor = document.getElementById('cursor');
-document.addEventListener('mousemove', e => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
-});
-document.addEventListener('mousedown', () => cursor.classList.add('click'));
-document.addEventListener('mouseup', () => cursor.classList.remove('click'));
-document.querySelectorAll('a,button,.product-card,.journal-card,.event-item,.location-item,.crypto-coin,.co-pay-tab').forEach(el => {
-  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-});
+// Custom cursor — tip rotates toward movement, ring lags ~120ms behind for
+// the premium-cursor feel. Direction is smoothed (low-pass) so tiny jitters
+// don't whip the tip around at high frequencies.
+(function(){
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursorRing');
+  const tip    = cursor && cursor.querySelector('.tip');
+  if (!cursor || !ring) return;
+  // Skip entirely on touch devices.
+  if (window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches) {
+    cursor.style.display = ring.style.display = 'none';
+    document.documentElement.style.cursor = 'auto';
+    return;
+  }
+
+  let mx = innerWidth/2, my = innerHeight/2;   // mouse target
+  let rx = mx, ry = my;                         // ring eased
+  let ang = 0, angSmoothed = 0;                 // direction angle (deg)
+  let prevX = mx, prevY = my;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top  = my + 'px';
+    const dx = mx - prevX, dy = my - prevY;
+    const dist = Math.hypot(dx, dy);
+    if (dist > 1.5) { // only update angle when actually moving
+      // SVG tip points UP (north), so 0deg = up. atan2 with x,y gives angle
+      // from +x axis; add 90 to align "up" with no rotation.
+      ang = Math.atan2(dy, dx) * 180 / Math.PI + 90;
+    }
+    prevX = mx; prevY = my;
+  });
+
+  document.addEventListener('mousedown', () => { cursor.classList.add('click'); ring.classList.add('click'); });
+  document.addEventListener('mouseup',   () => { cursor.classList.remove('click'); ring.classList.remove('click'); });
+
+  // Hover state — set on any visibly-interactive element. Use event delegation
+  // so dynamically-added elements still trigger it (we no longer hand-pick
+  // each selector at boot time, which used to miss new buttons).
+  document.addEventListener('mouseover', e => {
+    const t = e.target;
+    if (!t || !t.closest) return;
+    if (t.closest('a, button, [role="button"], .product-card, .journal-card, .event-item, .location-item, .crypto-coin, .co-pay-tab, [data-cursor="hover"]')) {
+      cursor.classList.add('hover'); ring.classList.add('hover');
+    }
+  });
+  document.addEventListener('mouseout', e => {
+    const t = e.target;
+    if (!t || !t.closest) return;
+    if (t.closest('a, button, [role="button"], .product-card, .journal-card, .event-item, .location-item, .crypto-coin, .co-pay-tab, [data-cursor="hover"]')) {
+      cursor.classList.remove('hover'); ring.classList.remove('hover');
+    }
+  });
+
+  function frame(){
+    // Ease the ring toward the mouse; lower factor = more lag.
+    rx += (mx - rx) * 0.18;
+    ry += (my - ry) * 0.18;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    // Smooth angle (avoid 360° wrap-around snap).
+    const diff = ((ang - angSmoothed + 540) % 360) - 180;
+    angSmoothed += diff * 0.25;
+    if (tip) tip.style.transform = 'rotate(' + angSmoothed.toFixed(1) + 'deg)';
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  // Hide cursor when it leaves the window, restore on enter.
+  document.addEventListener('mouseleave', () => { cursor.style.opacity = ring.style.opacity = '0'; });
+  document.addEventListener('mouseenter', () => { cursor.style.opacity = ''; ring.style.opacity = ''; });
+})();
 
 /* ── NAV SCROLL ── */
 window.addEventListener('scroll', () => {
