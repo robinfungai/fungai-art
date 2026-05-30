@@ -503,23 +503,11 @@
   </div>
   <div id="formulaBook" style="margin-top:32px;"></div>
 
-  <!-- ══ COLLABORATIVE LAB NOTEBOOK ════════════════════════════════════
-       Categories of working notes the whole network contributes to. Each
-       category is collapsible. Each note has a title + body + author +
-       timestamp; long bodies (>300 words) show a summary by default with
-       a "read more" expansion. Members create blank notes inside any
-       category. Admins (Robin / Stephanie) can move notes between
-       categories. Login-aware: reads spore_active_member_full from
-       localStorage to know who's logged in.
-       ──────────────────────────────────────────────────────────────── -->
-  <div class="sec-head" style="margin-top:80px;">
-    <div class="sec-eyebrow">Working notebook · network-shared</div>
-    <div class="sec-title">Lab <em>notes.</em></div>
-    <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:14.5px;color:#8B7E62;line-height:1.7;margin-top:8px;max-width:62ch;">A shared notebook for the network. Any signed-in member can add a note to any category. Robin and Stephanie can move notes between categories. Long notes get an auto-summary you can click to expand. Saved locally for now; cloud sync arrives when the schema does.</p>
-  </div>
-  <div id="labNotes" style="margin-top:32px;"></div>
-
-  <!-- Admin lab notebook — only shown when Robin is the active member -->
+  <!-- The lab notebook section below was previously gated to Robin only and
+       held single-textarea-per-chapter notes. It now opens to any signed-in
+       network member, supports per-entry summaries / moves, and includes
+       the three extra chapters Robin asked about. Existing entries stored
+       under lab_entries_<chapterId> are preserved. -->
   <div class="lab-section" id="labSection" style="display:none">
     <div class="lab-header">
       <div>
@@ -697,10 +685,33 @@ const LAB_CHAPTERS = [
   },
   {
     id:   'tonics',
-    icon: '<3',
+    icon: '♡',
     name: 'Tyme Tonics',
     sub:  'Infusions · blends · syrups notes',
     placeholder: 'Blends and formulas, how-to history, batch codes, client feedback, production notes for Temple Nectar, Ruby No.7, Lucid…',
+  },
+  // ── New chapters added per Robin's full-site audit. Existing entries
+  //    under lab_entries_<id> are preserved.
+  {
+    id:   'foraging',
+    icon: '✿',
+    name: 'Foraging Field Notes',
+    sub:  'Locations · seasons · ID · ethics',
+    placeholder: 'Field notes from Königshyttan, Berlin, Cappadocia, Beirut — coordinates, peak windows, sustainability rules, species ID confirmations…',
+  },
+  {
+    id:   'mycology',
+    icon: '∂',
+    name: 'Mycology & Cultivation',
+    sub:  'Spawn · substrate · fruiting · agar',
+    placeholder: 'Spawn runs, substrate experiments, fruiting yields, agar isolation notes, contamination logs…',
+  },
+  {
+    id:   'ceremony',
+    icon: '✦',
+    name: 'Ritual & Ceremony',
+    sub:  'Set & setting · liturgy · integration',
+    placeholder: 'Ceremonial frameworks, plant-ally pairings for specific intentions, integration practices, songs and invocations…',
   },
 ];
 
@@ -722,6 +733,26 @@ function fmtDate(ts) {
     + ' · ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
 }
 
+function labIsAdmin() {
+  try {
+    const m = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null');
+    if (m && m.admin) return true;
+  } catch {}
+  const legacy = localStorage.getItem('spore_active_member');
+  return legacy === 'robin' || legacy === 'stephanie';
+}
+function labSummary(text) {
+  // Long entries (>300 words) get a 60-word leader + "read more" expansion.
+  const words = (text || '').trim().split(/\s+/);
+  if (words.length <= 300) return null;
+  return words.slice(0, 60).join(' ') + '…';
+}
+function labChapterOptions(currentId) {
+  return LAB_CHAPTERS
+    .filter(c => c.id !== currentId)
+    .map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`)
+    .join('');
+}
 function renderEntries(chapterId) {
   const list = document.getElementById(`entries-${chapterId}`);
   if (!list) return;
@@ -730,14 +761,49 @@ function renderEntries(chapterId) {
     list.innerHTML = '';
     return;
   }
+  const isAdmin = labIsAdmin();
   list.innerHTML = `<div class="lab-entries-head">Saved entries — ${entries.length}</div>`
-    + entries.map((e, i) => `
-      <div class="lab-entry" id="entry-${chapterId}-${i}">
-        <div class="lab-entry-text">${e.text.replace(/</g,'&lt;')}</div>
-        <div class="lab-entry-meta">${fmtDate(e.ts)}</div>
-        <button class="lab-entry-del" onclick="deleteEntry('${chapterId}', ${i})" title="Delete">✕</button>
-      </div>
-    `).join('');
+    + entries.map((e, i) => {
+        const safe = (e.text || '').replace(/</g,'&lt;');
+        const sum = labSummary(e.text);
+        const body = sum
+          ? `<div data-summary>${sum.replace(/</g,'&lt;')} <a href="javascript:labExpand('${chapterId}',${i})" style="color:#F5D689;font-style:italic;text-decoration:none;border-bottom:0.5px solid rgba(245,214,137,0.4);">read more</a></div><div data-full style="display:none;white-space:pre-wrap;">${safe}</div>`
+          : `<div style="white-space:pre-wrap;">${safe}</div>`;
+        const move = isAdmin
+          ? `<select class="lab-entry-move" onchange="labMoveEntry('${chapterId}',${i},this.value)" title="Move to chapter"><option value="">Move…</option>${labChapterOptions(chapterId)}</select>`
+          : '';
+        return `
+          <div class="lab-entry" id="entry-${chapterId}-${i}">
+            <div class="lab-entry-text">${body}</div>
+            <div class="lab-entry-meta">${fmtDate(e.ts)}</div>
+            <div class="lab-entry-actions">
+              ${move}
+              <button class="lab-entry-del" onclick="deleteEntry('${chapterId}', ${i})" title="Delete">✕</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+}
+function labExpand(chapterId, i){
+  const el = document.getElementById(`entry-${chapterId}-${i}`);
+  if (!el) return;
+  const s = el.querySelector('[data-summary]');
+  const f = el.querySelector('[data-full]');
+  if (s) s.style.display = 'none';
+  if (f) f.style.display = 'block';
+}
+function labMoveEntry(fromId, idx, toId){
+  if (!toId) return;
+  if (!labIsAdmin()) { alert('Only Robin or Stephanie can move entries between chapters.'); return; }
+  const from = loadEntries(fromId);
+  const [moved] = from.splice(idx, 1);
+  if (!moved) return;
+  saveEntries(fromId, from);
+  const to = loadEntries(toId);
+  to.unshift(moved);
+  saveEntries(toId, to);
+  renderEntries(fromId);
+  renderEntries(toId);
 }
 
 function saveEntry(chapterId) {
@@ -775,10 +841,20 @@ function toggleLab(id) {
 }
 
 function buildLabNotebook() {
+  // Was gated to 'robin' only. Now opens to any signed-in member so the
+  // network can contribute notes (admins can still move entries between
+  // chapters via the per-entry picker; non-admins can add/delete their own).
   const activeMember = localStorage.getItem('spore_active_member');
-  if (activeMember !== 'robin') return;
+  if (!activeMember) return;
 
+  // Update the section header copy to match the new collaborative role.
   document.getElementById('labSection').style.display = 'block';
+  try {
+    const badge = document.querySelector('#labSection .lab-badge');
+    const title = document.querySelector('#labSection .lab-title');
+    if (badge) badge.textContent = labIsAdmin() ? 'Admin · Robin & Stephanie' : 'Network · members';
+    if (title) title.innerHTML = 'Lab <em>notebook.</em>';
+  } catch {}
   const container = document.getElementById('labChapters');
 
   LAB_CHAPTERS.forEach(ch => {
@@ -835,16 +911,21 @@ function buildLabNotebook() {
 
 // Run on page load
 buildLabNotebook();
-buildLabNotes();
 </script>
 
-<!-- ══ LAB NOTES (collaborative) ══════════════════════════════════════
-     Categories the user requested, plus 3 I added that felt like obvious
-     gaps (Foraging field notes, Mycology cultivation, Ritual & ceremony).
-     Don't move notes around in code — only Robin/Steph can re-categorise
-     via the UI, per the brief. -->
+<!-- Removed: a duplicate lab-notes block was here. The existing
+     LAB_CHAPTERS notebook above already covers this — and that's where the
+     user's previously-written entries live (localStorage `lab_entries_*`).
+     The duplicate was reading from a different key so existing notes
+     looked missing. -->
 <script>
-const LAB_CATEGORIES = [
+// Deliberately blank — replaces the dead duplicate. If you ever need to
+// re-introduce a parallel notes system, give it a different storage key
+// from the canonical lab_entries_<chapterId> used above.
+const __removedDuplicateLabNotes = true;
+</script>
+<script type="text/plain" data-disabled-duplicate="lab-notes">
+const LAB_CATEGORIES_unused = [
   { id: 'microbes',     icon: '🦠', name: 'Microbes & Bacteria',  sub: 'Fermentation · lacto · wild culture · probiotic' },
   { id: 'spagyric',     icon: '⚗',  name: 'Spagyric & Calcination', sub: 'Triple separation · mineral salts · plant alchemy' },
   { id: 'formulas',     icon: '◈',  name: 'Our Formulas',          sub: 'Active blends · ratios · development notes' },

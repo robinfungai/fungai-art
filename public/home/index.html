@@ -1114,8 +1114,16 @@ p { line-height: 1.75; color: var(--mist); }
 @media (max-width: 768px) {
   .wrap { padding: 0 24px; }
   .products-grid { grid-template-columns: repeat(2,1fr) !important; }
-  .philosophy-inner, .notes-grid, .feature-inner, .trance-inner, .journal-grid { grid-template-columns: 1fr; }
-  .phil-item:not(:last-child) { border-right: none; border-bottom: 1px solid rgba(158,212,56,0.07); padding: 36px 0; }
+  .notes-grid, .feature-inner, .trance-inner, .journal-grid { grid-template-columns: 1fr; }
+  /* Philosophy — Wild & Ethical / Rooted / Reciprocity. Keep 3 columns on
+     phone (was 1 column = three full-width blocks scrolling forever).
+     Reduce padding so all three cards fit side-by-side on a 360px screen. */
+  .philosophy-inner { grid-template-columns: repeat(3, 1fr) !important; gap: 4px; }
+  .phil-item { padding: 18px 10px !important; }
+  .phil-item:not(:last-child) { border-right: 0.5px solid rgba(158,212,56,0.08) !important; border-bottom: none !important; }
+  .phil-item h3 { font-size: 15px !important; line-height: 1.15 !important; }
+  .phil-item .phil-num { font-size: 8.5px !important; margin-bottom: 8px !important; }
+  .phil-item p { font-size: 11.5px !important; line-height: 1.5 !important; }
   .nav-links { display: none; }
   .nav-hamburger { display: flex !important; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
@@ -1128,6 +1136,56 @@ p { line-height: 1.75; color: var(--mist); }
     line-height: 1.4 !important;
     letter-spacing: 0.015em !important;
   }
+
+  /* ─── MOBILE HERO REWORK ────────────────────────────────────────
+     The mushroom photo (abc123.png) must hit the eye IMMEDIATELY when
+     a phone visitor lands, not below 80px of padding + headline + CTAs.
+     Flex order swaps so hero-right (photo) renders first; hero-left
+     (text + CTAs + tailored formula) sits beneath it. The headline
+     "Art & medicine return to their original unity." floats on top of
+     the photo via the dark gradient scrim built into hero-right. */
+  .hero { display: flex !important; flex-direction: column !important; min-height: auto; }
+  .hero-right { order: 1; min-height: 56vh !important; width: 100%; position: relative; }
+  .hero-left  { order: 2; padding: 28px 0 40px !important; }
+  /* "Living Mycelial Art · Gaia's…" little eyebrow — was sitting awkwardly
+     in the body. Move it onto the photo as a top-left chip. */
+  .hero-left .label.reveal {
+    position: absolute; top: 18px; left: 24px; right: 24px;
+    z-index: 3;
+    padding: 6px 12px;
+    background: rgba(7,17,13,0.6);
+    border: 0.5px solid rgba(232,177,75,0.3);
+    border-radius: 999px;
+    display: inline-block;
+    width: auto;
+    backdrop-filter: blur(8px);
+  }
+  /* Tailored Formula CTA — was a wide horizontal bar that read as
+     advertising on mobile. Restyle as a stacked compact card. */
+  .tailored-cta {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    padding: 16px 18px !important;
+    max-width: none !important;
+  }
+  .tailored-cta .tailored-cta-arrow { align-self: flex-end; }
+}
+
+/* Featured product "Sleepy Sleepy" — fill the phone viewport so it lands
+   as one full screen, not a long scroll. */
+@media (max-width: 768px) {
+  .feature .feature-inner { min-height: 92dvh; justify-content: center; }
+  .feature .feature-img-wrap { min-height: auto !important; }
+  .feature .feature-text p {
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+  }
+  .feature .ingredients .ing-row {
+    font-size: 12px !important;
+    padding: 8px 0 !important;
+  }
+}
 
   /* About-section portraits — text was bleeding over the faces on
      phones. Stack the bio block UNDER the portrait so reading order
@@ -2029,8 +2087,10 @@ function toggleMobileMenu() {
                   var pts = coords.map(projXY);
                   var n = pts.length;
                   var d = 'M'+pts[0][0].toFixed(1)+','+pts[0][1].toFixed(1);
-                  // Tension — lower = looser/curlier, higher = closer to straight.
-                  var t = 0.5;
+                  // Tension — higher value pulls the curve further out from the
+                  // straight line. 0.75 gives organic, well-rounded coastlines
+                  // without overshoot artifacts. Was 0.5 (more polygonal).
+                  var t = 0.75;
                   for (var i = 0; i < (closed ? n : n-1); i++){
                     var p0 = pts[(i-1+n) % n];
                     var p1 = pts[i % n];
