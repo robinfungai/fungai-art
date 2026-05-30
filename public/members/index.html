@@ -183,8 +183,10 @@ section{margin-bottom:56px;}
   </div>
 </section>
 
-<!-- Vocabulary -->
-<section id="earning">
+<!-- Vocabulary — was incorrectly anchored as #earning, which made the
+     "See the earning ladder ↓" link jump here instead of the actual
+     sporing ladder. Anchor now lives on the right section below. -->
+<section id="vocabulary">
   <div class="sec-ey">A shared language</div>
   <h2 class="sec-title">The <em>vocabulary.</em></h2>
   <p class="sec-blurb">The Mycelium has its own words. They come from the way fungi actually behave — and they help the community speak the same thing.</p>
@@ -232,8 +234,8 @@ section{margin-bottom:56px;}
   </div>
 </section>
 
-<!-- Sporing ladder -->
-<section>
+<!-- Sporing ladder — this is what "See the earning ladder ↓" should jump to -->
+<section id="earning">
   <div class="sec-ey">How Hyphae are sporeed</div>
   <h2 class="sec-title">The <em>earning</em> ladder.</h2>
   <p class="sec-blurb">Indicative amounts. Final rates set quarterly by the council. All sporing is verified and logged on-chain — see <a href="/sporing" style="color:var(--al);text-decoration:none;border-bottom:0.5px solid rgba(232,177,75,.4);">/sporing</a>.</p>
@@ -291,8 +293,8 @@ section{margin-bottom:56px;}
   <div class="ladder">
     <div class="ladder-row">
       <div class="ladder-action">
-        <div class="ladder-name">Tincture 30ml (standard)</div>
-        <div class="ladder-desc">Any single botanical tincture from the public shop</div>
+        <div class="ladder-name">Full-spectrum extract (30ml)</div>
+        <div class="ladder-desc">Any single-botanical full-spectrum extract from the public shop</div>
       </div>
       <div class="ladder-amount draw">40–55<span class="unit">Hyphae</span></div>
     </div>
@@ -371,10 +373,88 @@ section{margin-bottom:56px;}
   </div>
 </section>
 
+<!-- Passcode-gated email signup — the "Become a thread" link from /community
+     and the academy banner now points here (#become). Visitors enter the
+     network passcode (5858 — shared by Robin / Steph), then the form drops
+     the gate and lets them request a Supabase magic link. The link lands
+     them in /community/index.html?signedin=1 where tryAutoLogin opens the
+     profile editor. -->
+<section id="become">
+  <div class="sec-ey">By invitation</div>
+  <h2 class="sec-title">Become a <em>thread.</em></h2>
+  <p style="font-size:14.5px;color:var(--m);line-height:1.7;max-width:54ch;margin:0 0 22px;">Founding cohort is invitation-based. If Robin or Stephanie has shared the network passcode with you, enter it below to unlock the signup. Your magic link arrives by email — no password, no installation.</p>
+  <div id="becomeGate" style="max-width:480px;background:linear-gradient(160deg,rgba(232,177,75,0.06),rgba(232,177,75,0.02));border:0.5px solid rgba(232,177,75,0.3);border-radius:12px;padding:24px 22px;">
+    <label for="becomeCode" style="display:block;font-family:var(--fm);font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:var(--al);margin-bottom:8px;">Network passcode</label>
+    <input id="becomeCode" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="8" placeholder="••••" autocomplete="off" style="width:100%;padding:13px 14px;background:rgba(8,11,13,0.7);border:0.5px solid rgba(232,177,75,0.25);border-radius:8px;color:var(--ml);font-family:var(--fm);font-size:17px;letter-spacing:0.4em;outline:none;text-align:center;">
+    <button id="becomeUnlock" type="button" style="width:100%;margin-top:10px;padding:12px;background:linear-gradient(135deg,#F5D769,#C4862E);border:none;border-radius:8px;color:#1a1208;font-family:var(--fm);font-size:10px;letter-spacing:0.26em;text-transform:uppercase;font-weight:700;cursor:pointer;">Unlock signup</button>
+    <div id="becomeError" style="font-family:var(--fm);font-size:9px;letter-spacing:0.16em;color:#E16B6B;margin-top:10px;min-height:14px;text-align:center;"></div>
+  </div>
+  <div id="becomeForm" style="display:none;max-width:480px;background:linear-gradient(160deg,rgba(107,214,111,0.06),rgba(107,214,111,0.02));border:0.5px solid rgba(107,214,111,0.3);border-radius:12px;padding:24px 22px;">
+    <div style="font-family:var(--fm);font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:#B6F0AE;margin-bottom:8px;">Passcode accepted &middot; send my magic link</div>
+    <label for="becomeEmail" style="display:block;font-family:var(--fm);font-size:9px;letter-spacing:0.18em;color:var(--md);margin:8px 0 6px;">Email address</label>
+    <input id="becomeEmail" type="email" placeholder="you@example.com" autocomplete="email" style="width:100%;padding:13px 14px;background:rgba(8,11,13,0.7);border:0.5px solid rgba(107,214,111,0.25);border-radius:8px;color:var(--ml);font-family:var(--fs);font-size:14px;outline:none;">
+    <button id="becomeSend" type="button" style="width:100%;margin-top:10px;padding:12px;background:linear-gradient(135deg,#6BD66F,#2E7A35);border:none;border-radius:8px;color:#060809;font-family:var(--fm);font-size:10px;letter-spacing:0.26em;text-transform:uppercase;font-weight:700;cursor:pointer;">Send magic link</button>
+    <div id="becomeStatus" style="font-family:var(--fm);font-size:10px;color:var(--md);margin-top:12px;line-height:1.6;text-align:center;min-height:14px;"></div>
+    <p style="font-family:var(--fm);font-size:8.5px;letter-spacing:0.14em;color:var(--md);margin-top:14px;line-height:1.6;">The link opens the spore portal at /community signed in. Open it on the same device & browser &mdash; the auth flow uses PKCE.</p>
+  </div>
+</section>
+<script src="/supabase-client.js"></script>
+<script>
+(function(){
+  const PASSCODE = '5858';
+  const gate = document.getElementById('becomeGate');
+  const form = document.getElementById('becomeForm');
+  const code = document.getElementById('becomeCode');
+  const err  = document.getElementById('becomeError');
+  const unlock = document.getElementById('becomeUnlock');
+  const email = document.getElementById('becomeEmail');
+  const send  = document.getElementById('becomeSend');
+  const status = document.getElementById('becomeStatus');
+  if (!gate || !form) return;
+  function unlockNow(){
+    if (code.value.trim() === PASSCODE){
+      err.textContent = '';
+      gate.style.display = 'none';
+      form.style.display = 'block';
+      setTimeout(() => email.focus(), 80);
+    } else {
+      err.textContent = 'Wrong passcode. Ask Robin or Stephanie.';
+      code.value = '';
+      code.focus();
+    }
+  }
+  unlock.addEventListener('click', unlockNow);
+  code.addEventListener('keydown', e => { if (e.key === 'Enter') unlockNow(); });
+  send.addEventListener('click', async () => {
+    const v = (email.value || '').trim().toLowerCase();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){
+      status.style.color = '#E16B6B';
+      status.textContent = 'Enter a valid email address.';
+      return;
+    }
+    send.disabled = true;
+    status.style.color = 'var(--md)';
+    status.textContent = 'Sending…';
+    try {
+      await window.SBready;
+      const { error } = await window.SBauth.signIn(v);
+      if (error) throw error;
+      status.style.color = '#B6F0AE';
+      status.textContent = '✦ Link sent. Check ' + v + ' and click on this browser to finish.';
+    } catch(e){
+      status.style.color = '#E16B6B';
+      status.textContent = 'Failed: ' + (e.message || e);
+      send.disabled = false;
+    }
+  });
+  email.addEventListener('keydown', e => { if (e.key === 'Enter') send.click(); });
+})();
+</script>
+
 <!-- How to join -->
 <section>
   <div class="sec-ey">Entering the network</div>
-  <h2 class="sec-title">Becoming a <em>thread.</em></h2>
+  <h2 class="sec-title">Or via the <em>$MYCEL wallet path.</em></h2>
   <div class="join-card">
     <div class="join-step">
       <div class="join-num">1</div>

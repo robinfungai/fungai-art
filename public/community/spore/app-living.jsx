@@ -883,11 +883,13 @@ function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) 
   const tabs = [
     { id:'network',  label:'Network',         icon:'◉' },
     { id:'calendar', label:'Calendar',        icon:'△' },
-    { id:'shop',     label:'Apothecary',      icon:'🌿' },
+    { id:'shop',     label:'Members Shop',    icon:'🌿' },
     { id:'exp',      label:'Experiences',     icon:'✦' },
     { id:'members',  label:'Members',         icon:'◈' },
     { id:'academy',  label:'Alchemy Academy', icon:'⚗', accent:true, external:'/community/academy/' },
-    { id:'store',    label:'Shop',            icon:'◎', external:'/shop' },
+    // External /shop tab removed per design pass — Members Shop above already
+    // covers the apothecary inside the portal, and the main-site nav has the
+    // public shop. Two "Shop" tabs were redundant.
     ...(isAdmin ? [{ id:'admin', label:'Admin', icon:'⬡', adminTab:true }] : []),
   ];
   const activeTab = tabs.find(t => t.id === tab) || tabs[0];
@@ -2635,6 +2637,13 @@ function AdminPage({ onToast, currentMember }) {
   const [showCreate, setShowCreate] = useState(false);
   const [restrictionEdits, setRestrictionEdits] = useState({}); // {cloudId: ['foraging','mixology']}
   const [savingRestrictions, setSavingRestrictions] = useState({});
+  const [, forceBump] = useState(0); // bumped by spore:members-changed so the rendered MEMBERS list refreshes after a remove
+
+  useEffect(() => {
+    const onChanged = () => forceBump(b => b + 1);
+    window.addEventListener('spore:members-changed', onChanged);
+    return () => window.removeEventListener('spore:members-changed', onChanged);
+  }, []);
 
   // Foraging is deliberately omitted — it's open to everyone, no restrictions.
   const RESTRICTABLE_FEATURES = [
@@ -2914,11 +2923,13 @@ function AdminHyphaeRow({ m, last, isRobin, currentMemberId, onToast }) {
         onToast(`${m.name} removed locally — cloud delete failed: ${err.message || err}`, 'warn');
       }
     }
-    onToast(`Removed ${m.name}${cloudOk ? ' (cloud + local) — reloading…' : ' (local only) — reloading…'}`, 'success');
-    // Hard reload so loadProfilesFromCloud runs fresh and we see the actual
-    // current state of the Supabase profiles table. Bumping local state
-    // alone is brittle — too many caches.
-    setTimeout(() => window.location.reload(), 800);
+    onToast(`Removed ${m.name}${cloudOk ? ' (cloud + local)' : ' (local only)'}`, 'success');
+    // DO NOT reload — the page reload during the Supabase auth-refresh
+    // window was knocking the admin out of their session. Instead, fire a
+    // custom event the parent AdminPage listens to and re-renders. The
+    // member array was already spliced in-place above, so the re-render
+    // shows the new list immediately.
+    try { window.dispatchEvent(new CustomEvent('spore:members-changed', { detail: { removedId: m.id } })); } catch {}
   }
 
   return (
@@ -3606,6 +3617,21 @@ function ClaimProfilePicker({ onClaim, onCreateNew, onClose }) {
     }
   }
 
+  // Keyboard 1–9 picks the corresponding row. Saves a click for the
+  // founders who know which slot they are.
+  useEffect(() => {
+    function onKey(e){
+      if (busy) return;
+      const k = parseInt(e.key, 10);
+      if (k >= 1 && k <= 9 && unclaimed[k-1]) {
+        e.preventDefault();
+        pick(unclaimed[k-1]);
+      }
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [unclaimed, busy]);
+
   return (
     <div style={{ position:'fixed', inset:0, zIndex:9000, background:'rgba(10,9,8,0.92)', backdropFilter:'blur(14px)', display:'flex', alignItems:'flex-start', justifyContent:'center', padding:'40px 16px', overflowY:'auto' }}>
       <div style={{ width:'100%', maxWidth:520, background:'var(--soil-2)', border:'0.5px solid var(--rule-strong)', borderRadius:18, padding:'28px 26px', marginBottom:40 }}>
@@ -3617,10 +3643,11 @@ function ClaimProfilePicker({ onClaim, onCreateNew, onClose }) {
           If you're a founding member or one of the existing threads, tap your name below to claim your profile. Your contributions, hours, and Hyphae carry over.
         </p>
 
-        <div style={{ display:'flex', flexDirection:'column', gap:6, marginBottom:18 }}>
+        <div style={{ display:'flex', flexDirection:'column', gap:6, marginBottom:6 }}>
           {unclaimed.length === 0 && <div style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'var(--mycelium-d)', padding:'12px 0' }}>All threads already claimed. Create a new profile below.</div>}
-          {unclaimed.map(p => (
+          {unclaimed.map((p, i) => (
             <button key={p.id} onClick={() => pick(p)} disabled={busy} style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 14px', borderRadius:10, background:'var(--soil-3)', border:'0.5px solid var(--rule)', cursor:'pointer', textAlign:'left', transition:'all 0.15s' }}>
+              {i < 9 && <span style={{ width:22, height:22, borderRadius:6, background:'rgba(232,177,75,0.1)', border:'0.5px solid rgba(232,177,75,0.35)', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-mono)', fontSize:11, color:'#F5D689', flexShrink:0 }}>{i+1}</span>}
               <div style={{ width:34, height:34, borderRadius:'50%', background: p.founding ? 'linear-gradient(135deg, #E8B14B, #8B6320)' : 'var(--spore-d)', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:16, color:'rgba(255,255,255,0.9)' }}>{p.character_name[0]}</div>
               <div style={{ flex:1 }}>
                 <div style={{ display:'flex', alignItems:'center', gap:6 }}>
@@ -3633,6 +3660,7 @@ function ClaimProfilePicker({ onClaim, onCreateNew, onClose }) {
             </button>
           ))}
         </div>
+        {unclaimed.length > 0 && <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--mycelium-d)', marginBottom:12, letterSpacing:'0.06em' }}>Tip: press <strong style={{ color:'#F5D689' }}>1&ndash;9</strong> on the keyboard to pick a thread.</div>}
 
         <div style={{ paddingTop:18, borderTop:'0.5px solid var(--rule)', display:'flex', justifyContent:'space-between', gap:10, flexWrap:'wrap' }}>
           <button onClick={onCreateNew} disabled={busy} style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.2em', textTransform:'uppercase', padding:'11px 22px', borderRadius:999, background:'rgba(168,143,224,0.1)', border:'0.5px solid rgba(168,143,224,0.4)', color:'#C5B5F5', cursor:'pointer' }}>+ I'm new — create profile</button>

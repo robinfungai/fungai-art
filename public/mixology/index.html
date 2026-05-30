@@ -208,7 +208,7 @@ button{font-family:inherit;cursor:pointer;}
       <img src="/assets/fungai-art-logo.png" alt="Fungai Art" style="height:46px;width:auto;opacity:.94;" onerror="this.src='/logo.png';this.style.filter='brightness(0) invert(1)';this.style.height='30px'">
       <div>
         <div class="nav-title">Herbal Engine</div>
-        <div class="nav-sub">Fungai Art Elixirs · 168 Botanicals</div>
+        <div class="nav-sub">Fungai Art Elixirs &middot; 164 Botanicals</div>
       </div>
     </a>
   </div>
@@ -220,7 +220,7 @@ button{font-family:inherit;cursor:pointer;}
   </div>
 </nav>
 <div class="hero">
-  <div class="hero-ey">168 plants · 20 categories · 5 elements · evidence graded A–D</div>
+  <div class="hero-ey">164 plants &middot; 20 categories &middot; 5 elements &middot; evidence graded A&ndash;D</div>
   <h1 class="hero-title">Know your <em>plants.</em></h1>
   <p class="hero-blurb">The complete Fungai Art botanical reference. Filter by element or category, build your formula — tap any herb for full profile and extraction method.</p>
   <!-- New Tyme Tonics cross-link — sister project, kegged living drinks built
@@ -439,6 +439,24 @@ const H=[
   {id:'rosehip',n:'Rosehip',el:'W',ext:'T',c:['immune','antioxid','nutritive','pain'],p:'Highest natural vitamin C; anti-inflammatory (GOPO); joint pain; immune tonic berry.',x:'low'},
   {id:'zhuLing',n:'Zhu Ling',f:1,el:'E',ext:'DC',c:['immune','urinary','liver'],p:'Polyporus umbellatus sclerotium; urinary tract immune modulation; anti-tumour polysaccharides.',x:'low'},
   {id:'elderberry',n:'Elderberry',el:'W',ext:'T',c:['immune','antioxid','resp'],p:'Antiviral (neuraminidase inhibition); immune activation; cold/flu. Berries only — raw toxic.',x:'low'},
+  // ── Sync with src/data/herbs.ts — 13 entries previously only in
+  //    extraction/engine were missing here. Pomegranate (skin + seeds) and
+  //    grape seed especially asked-for; the spice / Yin-tonic / oneirogen
+  //    block rounds out to 163. Counts now match across the suite.
+  {id:'pomegranateSkin',n:'Pomegranate Skin',el:'E',ext:'DC',c:['digest','antioxid','immune'],p:'Punicalagin-rich peel; powerful gut astringent; broad antimicrobial; 10× polyphenols vs juice.',x:'medium'},
+  {id:'pomegranateSeeds',n:'Pomegranate Seeds',el:'W',ext:'T',c:['heart','antioxid','nutritive','womens'],p:'Cardiovascular polyphenols; Yin nourishment; urolithin A precursor; daily food medicine.',x:'low'},
+  {id:'grapeSeed',n:'Grape Seed',el:'W',ext:'T',c:['heart','antioxid','nervine'],p:'OPC vascular protection; capillary strengthening; cerebral blood flow; recycles vitamin C.',x:'low'},
+  {id:'longPepper',n:'Long Pepper',el:'F',ext:'T',c:['digest','resp','energy'],p:'Pippali; piperine massively boosts curcumin/ashwagandha bioavailability; Agni-igniter.',x:'medium'},
+  {id:'galangal',n:'Galangal',el:'F',ext:'T',c:['digest','resp','culinary'],p:'Cold-stomach warming carminative; SE Asian rhizome; galangin anti-inflammatory.',x:'low'},
+  {id:'blackCardamom',n:'Black Cardamom',el:'F',ext:'T',c:['digest','resp','culinary'],p:'Smoke-dried Himalayan pod; 1,8-cineole respiratory warming; mood-deepener.',x:'low'},
+  {id:'szechuanPepper',n:'Szechuan Pepper',el:'F',ext:'T',c:['digest','pain','culinary'],p:'Hua Jiao; alkylamides create tingling-numbing "ma" sensation; topical analgesic.',x:'medium'},
+  {id:'longan',n:'Longan',el:'E',ext:'T',c:['heart','sleep','nutritive','womens'],p:'Long Yan Rou; classical Heart-Spleen Blood tonic; insomnia from deficiency; sweet carrier.',x:'low'},
+  {id:'haritaki',n:'Haritaki',el:'E',ext:'DC',c:['digest','antioxid','liver','cognitive'],p:'Ayurvedic King of Medicines; tridoshic rasayana; adaptogenic GI; longevity tonic.',x:'medium'},
+  {id:'redAstragalus',n:'Red Astragalus (Wild)',el:'E',ext:'DC',c:['immune','adaptogen','heart'],p:'Huang Qi; premier Qi tonic; Wei-Qi defender; immune modulation; wild root extra potency.',x:'low'},
+  {id:'tianMenDong',n:'Tian Men Dong',el:'M',ext:'DC',c:['resp','nutritive','conscious'],p:'Asparagus cochinchinensis; Lung-Kidney Yin tonic; dry cough; Daoist longevity / meditation.',x:'low'},
+  {id:'mistletoe',n:'Mistletoe',el:'A',ext:'CT',c:['heart','nervine','immune'],p:'Viscum album; cardiac-nervine tonic; anthroposophic cancer adjuvant; liminal ritual plant.',x:'high'},
+  {id:'phyllodium',n:'Phyllodium pulchellum',el:'W',ext:'DC',c:['liver','immune','antioxid'],p:'SE Asian hepatoprotective; postpartum recovery; trace tryptamines under research.',x:'medium'},
+  {id:'africanDreamRoot',n:'African Dream Root',el:'M',ext:'T',c:['conscious','sleep','nervine'],p:'Silene undulata; Xhosa diviner oneirogen; lucid prophetic dreams; saponin pharmacology.',x:'medium'},
 ];
 
 const CAT_THEMES={immune:'Immune resilience',sexual:'Sexual vitality',pain:'Pain & anti-inflammation',digest:'Digestive support',sleep:'Sleep & calm',cognitive:'Cognitive enhancement',resp:'Respiratory health',womens:"Women's harmony",antioxid:'Antioxidant protection',liver:'Liver detox',nutritive:'Deep nourishment',conscious:'Consciousness work',energy:'Energy & endurance',urinary:'Urinary support',adaptogen:'Stress adaptation',mens:"Men's vitality",nervine:'Nervous system',heart:'Heart health',menstrual:'Menstrual balance',culinary:'Aromatic culinary',fungi:'Mycelial intelligence'};

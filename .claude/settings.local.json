@@ -77,7 +77,12 @@
       "Bash(git restore *)",
       "Bash(node -e \"const fs = require\\('fs'\\); const s = fs.readFileSync\\('public/community/spore/data.jsx', 'utf8'\\); console.log\\('lines:', s.split\\('\\\\n'\\).length\\); console.log\\('first balance check:', s.includes\\('balance: 100'\\), s.includes\\('TOKEN.TOTAL_SUPPLY'\\)\\);\")",
       "Bash(grep -nE '\\\\$H' public/community/spore/app-living.jsx)",
-      "Bash(grep -nE \"TODO|FIXME|XXX|HACK|lorem|placeholder.*image|undefined.*\\\\$|console\\\\.error\" public/home/index.html)"
+      "Bash(grep -nE \"TODO|FIXME|XXX|HACK|lorem|placeholder.*image|undefined.*\\\\$|console\\\\.error\" public/home/index.html)",
+      "Bash(python -c \"import json; print\\(len\\(json.load\\(open\\('public/herb-engine-pool.json'\\)\\)\\)\\)\")",
+      "Bash(awk '/^const H=\\\\[/{flag=1; next} flag && /^\\\\];/{print NR; exit} flag{count++} END{print \"lines:\", count}' public/mixology/index.html)",
+      "Bash(awk '/^const H=\\\\[/{flag=1; next} flag && /^\\\\];/{print \"entries:\", count; exit} flag && /^\\\\{id:/{count++}' public/mixology/index.html)",
+      "Bash(grep -cE \"^\\\\{id:[0-9]+,\" public/mixology/index.html)",
+      "Bash(awk '/^const H=\\\\[/,/^\\\\];/' public/mixology/index.html)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Robin\\Desktop\\fungai art\\websiet\\tailored tincture ai tool\\html codes",

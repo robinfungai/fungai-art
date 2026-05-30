@@ -248,9 +248,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
   <button class="filter-btn active" onclick="filterProducts('all',this)">All</button>
   <button class="filter-btn" onclick="filterProducts('fungi',this)">Fungi</button>
   <button class="filter-btn" onclick="filterProducts('compositions',this)">Compositions</button>
-  <button class="filter-btn" onclick="filterProducts('flowers',this)">Flowers & Herbs</button>
+  <button class="filter-btn" onclick="filterProducts('flowers',this)">Flowers &amp; Herbs</button>
   <button class="filter-btn" onclick="filterProducts('specials',this)">Specials</button>
-  <button class="filter-btn" onclick="filterProducts('smoke',this)">Herbal Smoke</button>
 </div>
 
 <!-- ══ FUNGI ══ -->
@@ -436,16 +435,17 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
 
     <div class="product-card reveal reveal-d1" data-category="compositions">
       <div class="product-img-wrap">
-        <div class="product-placeholder"><span>ADHD</span></div>
+        <img src="https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=600&q=70&auto=format" alt="ADHD Support tincture" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="product-placeholder" style="display:none"><span>ADHD</span></div>
         <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('ADHD Support',38)">Add to basket</button></div>
       </div>
       <div class="product-info">
-        <span class="product-category">Compositions · Cognitive</span>
+        <span class="product-category">Compositions &middot; Cognitive</span>
         <div class="product-name">ADHD Support</div>
-        <p class="product-desc">Focus · clarity · resilience. Lion's mane, reishi, rhodiola, cordyceps, gotu kola, rosemary, ashwagandha. Smoother dopamine signaling.</p>
-        <div class="product-tags"><span class="tag">Lion's Mane</span><span class="tag">Rhodiola</span><span class="tag">Nootropic</span></div>
+        <p class="product-desc">Focus &middot; clarity &middot; resilience. Lion&rsquo;s mane, reishi, rhodiola, cordyceps, gotu kola, rosemary, ashwagandha. Smoother dopamine signaling.</p>
+        <div class="product-tags"><span class="tag">Lion&rsquo;s Mane</span><span class="tag">Rhodiola</span><span class="tag">Nootropic</span></div>
         <div class="product-footer">
-          <div class="product-price"><span class="size">30ml</span><span class="amount">€38</span></div>
+          <div class="product-price"><span class="size">30ml</span><span class="amount">&euro;38</span></div>
           <button class="add-btn" onclick="addToCart('ADHD Support',38)">+ Add</button>
         </div>
       </div>
@@ -488,115 +488,164 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
   </div>
 </div>
 
-<!-- ══ FLOWERS & HERBS ══ -->
+<!-- ══ FLOWERS & HERBS ══ rebuilt per the new lineup. Herbal Smoke section
+     folded in here (Kumbaya at the end). Saffron has a size picker. -->
 <div class="cat-header reveal">
   <h2>Flowers &amp; <em>Herbs</em></h2>
   <div class="cat-line"></div>
-  <span class="cat-count">05 offerings</span>
+  <span class="cat-count">06 offerings</span>
 </div>
 <div class="products-section">
   <div class="products-grid">
 
+    <!-- Blue Lotus 100g dried flower -->
     <div class="product-card reveal" data-category="flowers">
       <div class="product-img-wrap">
-        <div class="product-placeholder"><span>Blue Lotus</span></div>
-        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Blue Lotus Tincture',44)">Add to basket</button></div>
+        <img src="https://images.unsplash.com/photo-1444858345283-031b7a3ee2c8?w=600&q=70&auto=format" alt="Blue Lotus" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="product-placeholder" style="display:none"><span>Blue Lotus</span></div>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Blue Lotus (dried 100g)',44)">Add to basket</button></div>
       </div>
       <div class="product-info">
-        <span class="product-category">Flowers · Sacred</span>
+        <span class="product-category">Flowers &middot; Sacred</span>
         <div class="product-name">Blue Lotus</div>
-        <p class="product-desc">Euphoric calm · vision · dreamwork. Nymphaea caerulea — sacred to ancient Egypt. Aporphine and nuciferine calming dopamine and serotonin pathways.</p>
-        <div class="product-tags"><span class="tag">Aporphine</span><span class="tag">Nuciferine</span><span class="tag">Meditative</span></div>
+        <p class="product-desc">Euphoric calm &middot; vision &middot; dreamwork. Nymphaea caerulea &mdash; sacred to ancient Egypt. Aporphine and nuciferine modulate dopamine and serotonin. Dried whole flowers, brewable as tea or used in ceremony.</p>
+        <div class="product-tags"><span class="tag">Aporphine</span><span class="tag">Nuciferine</span><span class="tag">Ceremonial</span></div>
         <div class="product-footer">
-          <div class="product-price"><span class="size">30ml</span><span class="amount">€44</span></div>
-          <button class="add-btn" onclick="addToCart('Blue Lotus Tincture',44)">+ Add</button>
+          <div class="product-price"><span class="size">100g</span><span class="amount">&euro;44</span></div>
+          <button class="add-btn" onclick="addToCart('Blue Lotus (dried 100g)',44)">+ Add</button>
         </div>
       </div>
     </div>
 
+    <!-- Horny Goat Weed 100g -->
     <div class="product-card reveal reveal-d1" data-category="flowers">
       <div class="product-img-wrap">
-        <div class="product-placeholder"><span>Sencha</span></div>
-        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Sencha Green Tea',33)">Add to basket</button></div>
+        <img src="https://images.unsplash.com/photo-1599751451556-69fc6e62a3bd?w=600&q=70&auto=format" alt="Horny Goat Weed" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="product-placeholder" style="display:none"><span>Horny Goat Weed</span></div>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Horny Goat Weed (dried 100g)',28)">Add to basket</button></div>
       </div>
       <div class="product-info">
-        <span class="product-category">Tea · Ritual</span>
-        <div class="product-name">Sencha Green Tea</div>
-        <p class="product-desc">Clarity · focus · antioxidant. Premium Japanese sencha. L-theanine and EGCG for calm alertness without the crash. A daily ritual of presence.</p>
-        <div class="product-tags"><span class="tag">L-theanine</span><span class="tag">EGCG</span><span class="tag">Japanese</span></div>
+        <span class="product-category">Herbs &middot; Vitality</span>
+        <div class="product-name">Horny Goat Weed</div>
+        <p class="product-desc">Epimedium &middot; PDE5 modulation &middot; vasodilation &middot; libido. Traditional TCM Yin-Yang tonic; icariin is the active flavonoid. Dried whole leaf.</p>
+        <div class="product-tags"><span class="tag">Icariin</span><span class="tag">PDE5</span><span class="tag">TCM</span></div>
         <div class="product-footer">
-          <div class="product-price"><span class="size">50g</span><span class="amount">€33</span></div>
-          <button class="add-btn" onclick="addToCart('Sencha Green Tea',33)">+ Add</button>
+          <div class="product-price"><span class="size">100g</span><span class="amount">&euro;28</span></div>
+          <button class="add-btn" onclick="addToCart('Horny Goat Weed (dried 100g)',28)">+ Add</button>
         </div>
       </div>
     </div>
 
+    <!-- Butterfly Pea 100g -->
     <div class="product-card reveal reveal-d2" data-category="flowers">
       <div class="product-img-wrap">
-        <div class="product-placeholder"><span>Nettle</span></div>
-        <span class="product-badge">Foraged</span>
-        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Nettle Seeds Tincture',33)">Add to basket</button></div>
+        <img src="https://images.unsplash.com/photo-1597481499750-3e6b22637e12?w=600&q=70&auto=format" alt="Butterfly Pea Flower" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="product-placeholder" style="display:none"><span>Butterfly Pea</span></div>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Butterfly Pea (dried 100g)',28)">Add to basket</button></div>
       </div>
       <div class="product-info">
-        <span class="product-category">Herbs · Vitality</span>
-        <div class="product-name">Nettle Seeds</div>
-        <p class="product-desc">Adrenal tonic · stamina · metabolic support. One of nature's most underrated powerhouses. Nettle seeds are a true adaptogen — energising without stimulating.</p>
-        <div class="product-tags"><span class="tag">Adrenal</span><span class="tag">Stamina</span><span class="tag">Wild-foraged</span></div>
+        <span class="product-category">Flowers &middot; Adaptogen</span>
+        <div class="product-name">Butterfly Pea</div>
+        <p class="product-desc">Clitoria ternatea &middot; anthocyanin-rich &middot; brain blood flow &middot; eye support. The cobalt-blue flower that shifts to violet with citrus. Tea-grade dried flowers.</p>
+        <div class="product-tags"><span class="tag">Anthocyanins</span><span class="tag">Nootropic</span><span class="tag">Ceremonial</span></div>
         <div class="product-footer">
-          <div class="product-price"><span class="size">30ml</span><span class="amount">€33</span></div>
-          <button class="add-btn" onclick="addToCart('Nettle Seeds Tincture',33)">+ Add</button>
+          <div class="product-price"><span class="size">100g</span><span class="amount">&euro;28</span></div>
+          <button class="add-btn" onclick="addToCart('Butterfly Pea (dried 100g)',28)">+ Add</button>
         </div>
       </div>
     </div>
 
+    <!-- Sacred Lavendula (self-foraged Cappadocia) 50g -->
     <div class="product-card reveal" data-category="flowers">
       <div class="product-img-wrap">
-        <div class="product-placeholder"><span>Pine Pollen</span></div>
-        <span class="product-badge">Foraged · Sweden</span>
-        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Pine Pollen Tincture',33)">Add to basket</button></div>
+        <img src="https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=600&q=70&auto=format" alt="Wild Lavender" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="product-placeholder" style="display:none"><span>Lavendula</span></div>
+        <span class="product-badge">Foraged &middot; Cappadocia</span>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Sacred Lavendula (foraged 50g)',22)">Add to basket</button></div>
       </div>
       <div class="product-info">
-        <span class="product-category">Herbs · Vitality</span>
-        <div class="product-name">Pine Pollen</div>
-        <p class="product-desc">The golden dust of renewal. Over 200 bioactive compounds including phytoandrogens. Masculine essence, cellular vitality, trees remembering their youth.</p>
-        <div class="product-tags"><span class="tag">Phytoandrogens</span><span class="tag">Amino acids</span><span class="tag">Foraged</span></div>
+        <span class="product-category">Flowers &middot; Foraged</span>
+        <div class="product-name">Sacred Lavendula</div>
+        <p class="product-desc">Wild Anatolian lavender, self-foraged in Cappadocia. Linalool-rich &middot; nervine &middot; sleep &middot; ritual cleansing. The mountain-altitude oil profile is sharper and more medicinal than cultivated French.</p>
+        <div class="product-tags"><span class="tag">Linalool</span><span class="tag">Nervine</span><span class="tag">Self-foraged</span></div>
         <div class="product-footer">
-          <div class="product-price"><span class="size">30ml</span><span class="amount">€33</span></div>
-          <button class="add-btn" onclick="addToCart('Pine Pollen Tincture',33)">+ Add</button>
+          <div class="product-price"><span class="size">50g</span><span class="amount">&euro;22</span></div>
+          <button class="add-btn" onclick="addToCart('Sacred Lavendula (foraged 50g)',22)">+ Add</button>
         </div>
       </div>
     </div>
 
-  </div>
-</div>
-
-<!-- ══ HERBAL SMOKE ══ -->
-<div class="cat-header reveal">
-  <h2>Herbal <em>Smoke</em></h2>
-  <div class="cat-line"></div>
-  <span class="cat-count">01 blend</span>
-</div>
-<div class="products-section">
-  <div class="products-grid">
-    <div class="product-card reveal" data-category="smoke" style="max-width:320px">
+    <!-- Afghan Saffron — multi-size picker -->
+    <div class="product-card reveal reveal-d1" data-category="flowers" id="saffron-card">
       <div class="product-img-wrap">
-        <div class="product-placeholder"><span>Kumbaya</span></div>
+        <img src="https://images.unsplash.com/photo-1599909533420-2b8c5d2ed1d0?w=600&q=70&auto=format" alt="Afghan Saffron" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="product-placeholder" style="display:none"><span>Saffron</span></div>
+        <span class="product-badge" style="background:rgba(196,134,46,0.85)">Afghanistan</span>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addSaffronToCart()">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Spice &middot; Royal Medicine</span>
+        <div class="product-name">Afghan Saffron</div>
+        <p class="product-desc">Crocus sativus &middot; safranal + crocin &middot; mood, vision, cardiovascular. Hand-harvested grade-1 stamens from the Herat highlands. Three threads steep into gold.</p>
+        <div class="product-tags"><span class="tag">Safranal</span><span class="tag">Crocin</span><span class="tag">Grade I</span></div>
+        <div style="display:flex;gap:6px;margin:10px 0 8px;" id="saffronSizes">
+          <button type="button" class="saffron-size on" data-g="3" data-p="44" onclick="pickSaffronSize(this)">3g &middot; &euro;44</button>
+          <button type="button" class="saffron-size" data-g="5" data-p="66" onclick="pickSaffronSize(this)">5g &middot; &euro;66</button>
+          <button type="button" class="saffron-size" data-g="10" data-p="100" onclick="pickSaffronSize(this)">10g &middot; &euro;100</button>
+        </div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size" id="saffronSizeLabel">3g</span><span class="amount" id="saffronPriceLabel">&euro;44</span></div>
+          <button class="add-btn" onclick="addSaffronToCart()">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kumbaya — was its own section; now folded into Flowers & Herbs -->
+    <div class="product-card reveal reveal-d2" data-category="flowers">
+      <div class="product-img-wrap">
+        <img src="https://images.unsplash.com/photo-1591019479261-1a103585c559?w=600&q=70&auto=format" alt="Kumbaya Herbal Smoke" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="product-placeholder" style="display:none"><span>Kumbaya</span></div>
         <span class="product-badge" style="background:rgba(66,44,71,0.85)">Ritual blend</span>
         <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Kumbaya Herbal Smoke Blend',7)">Add to basket</button></div>
       </div>
       <div class="product-info">
-        <span class="product-category">Herbal Smoke · Ritual</span>
+        <span class="product-category">Herbal Smoke &middot; Ritual</span>
         <div class="product-name">Kumbaya</div>
-        <p class="product-desc">A sacred herbal smoke blend for ceremony, meditation, and intentional ritual. Tobacco-free. Mullein, damiana, mugwort, blue lotus petals, rose.</p>
+        <p class="product-desc">A sacred herbal smoke blend for ceremony, meditation, and intentional ritual. Tobacco-free. Mullein, raspberry leaves, passionflower, damiana, mugwort, blue lotus petals, dagga flowers, rose.</p>
         <div class="product-tags"><span class="tag">Tobacco-free</span><span class="tag">Ceremonial</span><span class="tag">Ritual</span></div>
         <div class="product-footer">
-          <div class="product-price"><span class="size">10g</span><span class="amount">€7</span></div>
+          <div class="product-price"><span class="size">10g</span><span class="amount">&euro;7</span></div>
           <button class="add-btn" onclick="addToCart('Kumbaya Herbal Smoke Blend',7)">+ Add</button>
         </div>
       </div>
     </div>
+
   </div>
 </div>
+<style>
+  /* Saffron size picker — small inline variant chooser */
+  .saffron-size{
+    font-family:'Bayer','DM Sans',sans-serif;font-size:8.5px;letter-spacing:0.18em;text-transform:uppercase;
+    padding:6px 10px;border-radius:999px;cursor:pointer;
+    background:rgba(7,17,13,0.4);border:0.5px solid rgba(196,134,46,0.3);color:var(--dust);transition:all .15s;
+  }
+  .saffron-size:hover{border-color:rgba(196,134,46,0.6);color:var(--parchment);}
+  .saffron-size.on{background:rgba(196,134,46,0.18);border-color:#E8B14B;color:#F5D689;}
+</style>
+<script>
+  var saffronChoice = { g: 3, p: 44 };
+  function pickSaffronSize(btn){
+    saffronChoice.g = parseInt(btn.dataset.g, 10);
+    saffronChoice.p = parseInt(btn.dataset.p, 10);
+    document.querySelectorAll('#saffronSizes .saffron-size').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    document.getElementById('saffronSizeLabel').textContent = saffronChoice.g + 'g';
+    document.getElementById('saffronPriceLabel').innerHTML = '&euro;' + saffronChoice.p;
+  }
+  function addSaffronToCart(){
+    addToCart('Afghan Saffron (' + saffronChoice.g + 'g)', saffronChoice.p);
+  }
+</script>
 
 <!-- ══ SPECIALS ══ -->
 <div class="cat-header reveal">
@@ -609,17 +658,18 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
 
     <div class="product-card reveal" data-category="specials">
       <div class="product-img-wrap">
-        <div class="product-placeholder"><span>Pine</span></div>
-        <span class="product-badge">Foraged · Sweden</span>
-        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Pine Cones',33)">Add to basket</button></div>
+        <img src="https://images.unsplash.com/photo-1606923829579-0cb981a83e2c?w=600&q=70&auto=format" alt="Pine Cones" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="product-placeholder" style="display:none"><span>Pine</span></div>
+        <span class="product-badge">Foraged &middot; Sweden</span>
+        <div class="product-hover-cta"><button class="quick-add" onclick="openProductPopup('pineCones')">Why &euro;33?</button></div>
       </div>
       <div class="product-info">
-        <span class="product-category">Specials · Sacred Geometry</span>
-        <div class="product-name">Pine Cones</div>
-        <p class="product-desc">The forest's sacred geometry made tangible. Each scale unfolds like a hymn to the Fibonacci. Ground, brew, or use in ceremony. Self-foraged from Swedish forests.</p>
+        <span class="product-category">Specials &middot; Sacred Geometry</span>
+        <a href="javascript:openProductPopup('pineCones')" class="product-name" style="text-decoration:none;color:inherit;cursor:pointer;">Pine Cones</a>
+        <p class="product-desc">The forest&rsquo;s sacred geometry made tangible. Each scale unfolds like a hymn to the Fibonacci. Ground, brew, or use in ceremony. <a href="javascript:openProductPopup('pineCones')" style="color:var(--amber-lt,#F5D689);text-decoration:none;border-bottom:0.5px solid rgba(245,214,137,0.4);">Read the ritual &rarr;</a></p>
         <div class="product-tags"><span class="tag">Aromatic</span><span class="tag">Ceremony</span><span class="tag">Self-foraged</span></div>
         <div class="product-footer">
-          <div class="product-price"><span class="size">100g</span><span class="amount">€33</span></div>
+          <div class="product-price"><span class="size">100g</span><span class="amount">&euro;33</span></div>
           <button class="add-btn" onclick="addToCart('Pine Cones',33)">+ Add</button>
         </div>
       </div>
@@ -627,17 +677,18 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
 
     <div class="product-card reveal reveal-d1" data-category="specials">
       <div class="product-img-wrap">
-        <div class="product-placeholder"><span>Shilajit</span></div>
+        <img src="https://images.unsplash.com/photo-1610705287354-9d445b4ac3ba?w=600&q=70&auto=format" alt="Shilajit" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="product-placeholder" style="display:none"><span>Shilajit</span></div>
         <span class="product-badge">Himalayan</span>
-        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Shilajit + Gold',33)">Add to basket</button></div>
+        <div class="product-hover-cta"><button class="quick-add" onclick="openProductPopup('shilajit')">Why &euro;33?</button></div>
       </div>
       <div class="product-info">
-        <span class="product-category">Specials · Minerals</span>
-        <div class="product-name">Shilajit + Gold</div>
-        <p class="product-desc">Pressed pills with compressed gold. Ancient mineral compound supporting vitality, grounding, and deep cellular restoration. Fulvic acid and over 84 trace minerals.</p>
+        <span class="product-category">Specials &middot; Minerals</span>
+        <a href="javascript:openProductPopup('shilajit')" class="product-name" style="text-decoration:none;color:inherit;cursor:pointer;">Shilajit + Gold</a>
+        <p class="product-desc">Pressed pills with compressed gold. Ancient mineral compound &mdash; fulvic acid + 84 trace minerals + nanoparticulate Au. <a href="javascript:openProductPopup('shilajit')" style="color:var(--amber-lt,#F5D689);text-decoration:none;border-bottom:0.5px solid rgba(245,214,137,0.4);">Read the story &rarr;</a></p>
         <div class="product-tags"><span class="tag">Fulvic acid</span><span class="tag">Gold</span><span class="tag">Himalayan</span></div>
         <div class="product-footer">
-          <div class="product-price"><span class="size">4 pills</span><span class="amount">€33</span></div>
+          <div class="product-price"><span class="size">4 pills</span><span class="amount">&euro;33</span></div>
           <button class="add-btn" onclick="addToCart('Shilajit + Gold',33)">+ Add</button>
         </div>
       </div>
@@ -645,6 +696,75 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
 
   </div>
 </div>
+
+<!-- Product-story popup. Dims the page; shows ritual / pharmacology / value
+     story for high-context specials. No subpage = no extra navigation. -->
+<div id="prodPopup" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(5,9,12,0.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:36px 16px;overflow-y:auto;" onclick="if(event.target===this)closeProductPopup()"></div>
+<style>
+  #prodPopup .pp-card{max-width:620px;margin:0 auto;background:linear-gradient(160deg,#11100D,#181612);border:0.5px solid rgba(232,177,75,0.28);border-radius:14px;padding:36px 32px;color:#C9B894;font-family:'Cormorant Garamond',Georgia,serif;box-shadow:0 24px 64px rgba(0,0,0,0.6);}
+  #prodPopup .pp-eyebrow{font-family:'Bayer','DM Sans',sans-serif;font-size:9px;letter-spacing:0.32em;text-transform:uppercase;color:#F5D689;margin-bottom:10px;}
+  #prodPopup h2{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:34px;color:#E6D9B5;margin:0 0 8px;line-height:1.05;}
+  #prodPopup .pp-sub{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:15px;color:#8B7E62;margin-bottom:20px;}
+  #prodPopup p{font-size:15px;line-height:1.75;margin:0 0 14px;color:#C9B894;}
+  #prodPopup .pp-block{margin-top:18px;padding:14px 16px;background:rgba(232,177,75,0.05);border-left:2px solid rgba(232,177,75,0.45);border-radius:0 6px 6px 0;}
+  #prodPopup .pp-block-label{font-family:'Bayer','DM Sans',sans-serif;font-size:8.5px;letter-spacing:0.22em;text-transform:uppercase;color:#F5D689;margin-bottom:6px;}
+  #prodPopup .pp-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px;padding-top:18px;border-top:0.5px solid rgba(201,184,148,0.15);}
+  #prodPopup .pp-actions .add{flex:1 1 220px;padding:13px 20px;background:linear-gradient(135deg,#F5D769,#C4862E);border:none;border-radius:8px;color:#1a1208;font-family:'Bayer','DM Sans',sans-serif;font-size:10px;letter-spacing:0.26em;text-transform:uppercase;font-weight:700;cursor:pointer;}
+  #prodPopup .pp-actions .close{padding:13px 20px;background:none;border:0.5px solid rgba(201,184,148,0.25);border-radius:8px;color:#C9B894;font-family:'Bayer','DM Sans',sans-serif;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;cursor:pointer;}
+</style>
+<script>
+  const PRODUCT_STORIES = {
+    pineCones: {
+      eyebrow: 'Foraged · Sweden · Self-harvested',
+      title: 'Pine Cones &mdash; <em>sacred geometry, drinkable.</em>',
+      sub: 'Pinus sylvestris &middot; 100g &middot; &euro;33',
+      body: '<p>Each cone is a living Fibonacci. The scales unfold in a logarithmic spiral that has been used in Mesoamerican, Egyptian, Norse and Tibetan ceremonies as a symbol of pineal awakening and the relationship between matter and pattern.</p><p>What you actually receive: whole, hand-foraged unripe and ripe cones from old pine stands in the Swedish boreal forest. Resin-rich, aromatic, and far higher in pinene, limonene and proanthocyanidins than supermarket dried cones (which are usually old, weather-degraded, and effectively decorative).</p>',
+      blocks: [
+        { label: 'How to use', html: '<strong>1. Pine-cone elixir.</strong> Soak 3-4 cones in honey or pine-pollen-infused honey for 4-6 weeks. A traditional Scandinavian respiratory tonic.<br/><br/><strong>2. Tincture.</strong> 1:5 in 50% ethanol, 4 weeks. Anti-inflammatory and antimicrobial.<br/><br/><strong>3. Ceremonial.</strong> One cone on the altar; held in meditation as a focal point for the pineal-spiral relationship.' },
+        { label: 'Why this price', html: 'Self-foraged means no middleman, no bulk supplier, no plastic. It also means I spent a full afternoon in the woods to gather these. The price covers the time, the careful drying (which most commercial cones skip), and the freshness premium &mdash; resin-rich unripe cones cost roughly 5-8&times; weather-degraded ones at scale.' },
+      ],
+      cta: { label: 'Add to basket &middot; &euro;33', name: 'Pine Cones', price: 33 },
+    },
+    shilajit: {
+      eyebrow: 'Himalayan · Pressed with gold · 4 pills',
+      title: 'Shilajit + Gold &mdash; <em>the mineral compound.</em>',
+      sub: 'Pressed with elemental Au &middot; 4 pills &middot; &euro;33',
+      body: '<p>Shilajit is a sticky resin that exudes from cracks in high-altitude Himalayan rock during summer thaw. It&rsquo;s been used continuously in Ayurvedic medicine for at least 3000 years under the name <em>shilajatu</em> &mdash; "destroyer of weakness, conqueror of mountains".</p><p>This preparation is pressed into pills with a trace inclusion of pharmaceutical-grade colloidal gold. In Ayurveda, gold (<em>swarna bhasma</em>) is a rasayana &mdash; it amplifies the absorption and bioavailability of other minerals while contributing its own subtle cardiac, cognitive, and immune-modulating effects.</p>',
+      blocks: [
+        { label: 'Pharmacology', html: 'Active fraction: <strong>fulvic acid</strong> (15-20% by weight) which chelates and shuttles minerals across cell membranes, plus <strong>dibenzo-&alpha;-pyrones (DBPs)</strong>, humic substances, and over <strong>84 trace minerals</strong> including selenium, manganese, magnesium, iron, copper, zinc. Documented ATP-restoration, testosterone modulation, mitochondrial protection, and chronic-fatigue support in clinical trials.' },
+        { label: 'How to use', html: '1 pill daily on an empty stomach with warm water. The mineral hit can be intense the first 2-3 days &mdash; if you feel jittery, halve the dose for a week. Best with light food otherwise. Avoid pairing with iron supplements (fulvic acid will over-shuttle).' },
+        { label: 'Why this price', html: 'Authentic high-altitude shilajit costs roughly &euro;200-400/100g raw. The gold inclusion adds &euro;8-12/pill at fair sourcing. 4 high-quality pressed pills at &euro;33 is roughly half what comparable Ayurvedic dispensaries charge in London or Berlin.' },
+      ],
+      cta: { label: 'Add to basket &middot; &euro;33', name: 'Shilajit + Gold', price: 33 },
+    },
+  };
+  function openProductPopup(id){
+    const s = PRODUCT_STORIES[id];
+    const el = document.getElementById('prodPopup');
+    if (!s || !el) return;
+    const blocks = (s.blocks || []).map(b => '<div class="pp-block"><div class="pp-block-label">' + b.label + '</div><div>' + b.html + '</div></div>').join('');
+    el.innerHTML = '<div class="pp-card">'
+      + '<div class="pp-eyebrow">' + s.eyebrow + '</div>'
+      + '<h2>' + s.title + '</h2>'
+      + '<div class="pp-sub">' + s.sub + '</div>'
+      + s.body
+      + blocks
+      + '<div class="pp-actions">'
+        + '<button class="add" onclick="addToCart(\'' + s.cta.name + '\',' + s.cta.price + ');closeProductPopup()">' + s.cta.label + '</button>'
+        + '<button class="close" onclick="closeProductPopup()">Close</button>'
+      + '</div></div>';
+    el.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', escClosePop);
+  }
+  function escClosePop(e){ if (e.key === 'Escape') closeProductPopup(); }
+  function closeProductPopup(){
+    const el = document.getElementById('prodPopup');
+    if (el) { el.style.display = 'none'; el.innerHTML = ''; }
+    document.body.style.overflow = '';
+    document.removeEventListener('keydown', escClosePop);
+  }
+</script>
 
 <!-- CART DRAWER -->
 <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>

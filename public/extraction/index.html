@@ -3,9 +3,19 @@
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Extraction Protocols — Fungai Art</title>
+<meta name="description" content="Five extraction methods + the 168-herb materia medica. The alchemy side of Fungai Art."/>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
     <link rel="alternate icon" type="image/png" href="/favicon.png"/>
-    <link rel="apple-touch-icon" href="/fungai-art-logo.png"/>
+    <link rel="apple-touch-icon" href="/fungi.png"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Fungai Art"/>
+<meta property="og:title" content="Extraction Protocols — Fungai Art"/>
+<meta property="og:description" content="Five extraction methods + the 168-herb materia medica."/>
+<meta property="og:image" content="https://www.fungai.art/fungi.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.fungai.art/fungi.png"/>
+<!-- Canonical 168-herb materia medica — populates HERB_DB for the click-a-herb popup -->
+<script src="/herbs-data.js" defer></script>
 <link rel="preconnect" href="https://api.fontshare.com"/>
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500&f[]=satoshi@400,500,600&f[]=geist-mono@400&display=swap"/>
 <style>
@@ -123,9 +133,16 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
 </nav>
 
 <div class="hero">
-  <div class="hero-ey">Alchemy · Fungai Art Lab</div>
-  <h1 class="hero-title">Extract the <em>intelligence.</em></h1>
-  <p class="hero-blurb">Five methods. Each one draws out a different truth from the plant. Choose your solvent, respect the ratio, honour the time.</p>
+  <div class="hero-ey">Alchemy &middot; Fungai Art Lab</div>
+  <!-- Smaller headline, deeper introduction. Adds the alchemy/synergistics
+       differentiation so visitors know how this page relates to /mixology. -->
+  <h1 class="hero-title" style="font-size:clamp(28px,4.2vw,46px);line-height:1.05;margin-bottom:14px;">Extract the <em>intelligence.</em></h1>
+  <p class="hero-blurb" style="max-width:60ch;">Six methods of taking a plant apart and putting it back together. Each one draws out a different chemistry &mdash; water-soluble polysaccharides, alcohol-soluble alkaloids, fat-soluble resins, mineral salts after calcination, hydrosols from steam. This page is the <strong style="color:var(--mycelium-l,#E6D9B5);">alchemy side</strong> of the work: solvents, ratios, time, vessels.</p>
+  <p class="hero-blurb" style="max-width:60ch;margin-top:8px;font-size:13px;color:var(--mycelium-d,#8B7E62);">The <strong style="color:var(--mycelium-l,#E6D9B5);">synergistics</strong> side &mdash; how the finished extracts combine into a formula &mdash; lives at <a href="/mixology" style="color:var(--nutrient-l,#F5D689);border-bottom:0.5px solid rgba(245,214,137,0.4);text-decoration:none;">/mixology</a>. Build a formula there, then come back here to know how each constituent is actually made.</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;">
+    <a href="/mixology" style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border:0.5px solid rgba(232,177,75,0.4);border-radius:6px;background:rgba(232,177,75,0.06);color:var(--nutrient-l,#F5D689);font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;">Synergistics &middot; Mixology &rarr;</a>
+    <a href="/herbal-engine-2/" style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border:0.5px solid rgba(107,214,111,0.4);border-radius:6px;background:rgba(107,214,111,0.06);color:#B6F0AE;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;">&loz; Tailored formula</a>
+  </div>
 </div>
 
 <!-- Herb search -->
@@ -327,9 +344,9 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
   <div class="m-steps-title">Equipment</div>
   <div class="step"><div class="step-num" style="color:#6BD66F">◎</div><div class="step-txt">Glass percolation cone or cylinder with stopcock at bottom. Cotton or filter paper at the base to retain plant material. Reservoir funnel or dropper bottle at top for solvent. Receiving vessel below.</div></div>
   <div class="m-steps-title" style="margin-top:14px">Process</div>
-  <div class="step"><div class="step-num" style="color:#6BD66F">1</div><div class="step-txt">Dampen herb with a small amount of the extraction solvent. Let swell 30 minutes — this prevents air pockets that disrupt flow.</div></div>
+  <div class="step"><div class="step-num" style="color:#6BD66F">1</div><div class="step-txt"><strong>Dampen the herb for 12&ndash;24 hours</strong> with a small amount of the extraction solvent &mdash; long enough for the plant material to fully swell and the cell walls to soften. Skip this step and you get air pockets, channelling, and a weaker extract. The dampened material should be uniformly moist but not dripping.</div></div>
   <div class="step"><div class="step-num" style="color:#6BD66F">2</div><div class="step-txt">Pack the dampened herb into the percolator column firmly but not too tight. Too loose = channelling. Too tight = no flow. Use a tamper.</div></div>
-  <div class="step"><div class="step-num" style="color:#6BD66F">3</div><div class="step-txt">Close the stopcock. Add solvent to the top — enough to fully cover herb plus 2–3cm above. Let soak (macerate) for 24 hours. This pre-extraction maximises yield.</div></div>
+  <div class="step"><div class="step-num" style="color:#6BD66F">3</div><div class="step-txt">Close the stopcock. Add solvent to the top &mdash; enough to fully cover herb plus 2&ndash;3cm above. Let soak (macerate) further for at least 24 hours after dampening &mdash; this pre-extraction maximises yield.</div></div>
   <div class="step"><div class="step-num" style="color:#6BD66F">4</div><div class="step-txt">Open the stopcock to a slow drip (1–2 drops per second). Simultaneously add fresh solvent from the top at the same rate to maintain constant level. Collect the extract below.</div></div>
   <div class="step"><div class="step-num" style="color:#6BD66F">5</div><div class="step-txt">Continue until 5× the herb weight in solvent has passed through. The extract darkens initially then lightens as exhaustion approaches. Stop when nearly colourless.</div></div>
   <div class="step"><div class="step-num" style="color:#6BD66F">6</div><div class="step-txt">Optionally: reduce under low heat (below 40°C) or vacuum to concentrate. Bottle in amber glass. Label with ratio, solvent %, herb, date, and batch weight.</div></div>
@@ -475,9 +492,78 @@ function renderEthTable(filter){
     const isDual=e.eth.includes('Dual');
     const isWater=e.eth.toLowerCase().includes('water');
     const cls=isDual?'eth-card-dual':isWater?'eth-card-water':'';
-    return`<div class="eth-card"><span class="eth-card-name">${e.n}</span><span class="eth-card-val ${cls}">${e.eth}</span></div>`;
+    const safeN = e.n.replace(/"/g,'&quot;');
+    return`<div class="eth-card" role="button" tabindex="0" data-herb="${safeN}" onclick="openHerbPopup('${safeN.replace(/'/g,"\\'")}')" style="cursor:pointer"><span class="eth-card-name">${e.n}</span><span class="eth-card-val ${cls}">${e.eth}</span></div>`;
   }).join('');
 }
+
+// ── Herb popup — reads from window.HERB_DB (loaded via herbs-data.js, the
+//    canonical 168-entry source) and renders a dimmed-page overlay with the
+//    herb's full profile. Falls back to a stub when the herb name isn't in
+//    HERB_DB (mostly aliases / non-canonical entries on the ethanol table).
+function openHerbPopup(name){
+  // Try exact match first, then fuzzy substring on botanical / name.
+  const db = window.HERB_DB || [];
+  const norm = s => (s||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+  const key = norm(name);
+  let h = db.find(x => norm(x.name) === key)
+       || db.find(x => norm(x.name).indexOf(key) >= 0 || key.indexOf(norm(x.name)) >= 0)
+       || db.find(x => norm(x.botanical || '').indexOf(key) >= 0);
+
+  const overlay = document.createElement('div');
+  overlay.id = 'herbPopupOverlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(7,10,12,0.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:9999;display:flex;align-items:flex-start;justify-content:center;padding:48px 16px;overflow-y:auto;font-family:var(--fs,"Cormorant Garamond",Georgia,serif);';
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeHerbPopup(); });
+
+  const card = document.createElement('div');
+  card.style.cssText = 'max-width:640px;width:100%;background:linear-gradient(160deg,#11100D,#181612);border:0.5px solid rgba(232,177,75,0.25);border-radius:14px;padding:32px 30px;color:#C9B894;box-shadow:0 24px 64px rgba(0,0,0,0.6);';
+
+  if (!h) {
+    card.innerHTML = '<div style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:#E16B6B;margin-bottom:10px;">Not in materia medica</div>'
+      + '<h2 style="font-family:\'Zodiak\',\'Cormorant Garamond\',Georgia,serif;font-style:italic;font-size:28px;color:#E6D9B5;margin:0 0 12px;">' + esc(name) + '</h2>'
+      + '<p style="font-size:14px;line-height:1.65;color:#8B7E62;">This herb appears on the ethanol table but isn&rsquo;t yet in the canonical materia medica. The extraction parameters above are correct &mdash; the full profile (pharmacology, contraindications, spiritual layer) is being written.</p>'
+      + '<button onclick="closeHerbPopup()" style="margin-top:16px;font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;padding:10px 20px;border:0.5px solid rgba(201,184,148,0.25);border-radius:999px;background:none;color:#C9B894;cursor:pointer;">Close</button>';
+  } else {
+    const list = arr => Array.isArray(arr) ? arr.map(x => '<li style="margin-bottom:4px">' + esc(x) + '</li>').join('') : '';
+    const fmtCaution = c => ({ 'LOW':'#6BD66F','LOW-MEDIUM':'#B6F0AE','MEDIUM':'#F5D689','MEDIUM-HIGH':'#E8B14B','HIGH':'#E16B6B','VERY HIGH':'#E16B6B' })[c] || '#C9B894';
+    card.innerHTML =
+      '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px;">'
+        + '<div style="flex:1;min-width:0">'
+        + '<div style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:#F5D689;margin-bottom:6px;">Materia medica &middot; canonical</div>'
+        + '<h2 style="font-family:\'Zodiak\',\'Cormorant Garamond\',Georgia,serif;font-style:italic;font-size:32px;color:#E6D9B5;line-height:1.05;margin:0 0 6px;">' + esc(h.name) + '</h2>'
+        + '<div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-style:italic;font-size:14px;color:#8B7E62;">' + esc(h.botanical || '') + '</div>'
+        + '</div>'
+        + '<button onclick="closeHerbPopup()" aria-label="Close" style="font-family:\'Geist Mono\',monospace;font-size:14px;color:#8B7E62;background:none;border:0.5px solid rgba(201,184,148,0.18);border-radius:6px;width:30px;height:30px;cursor:pointer;flex-shrink:0;">×</button>'
+      + '</div>'
+      + (h.caution_level ? '<div style="display:inline-block;font-family:\'Geist Mono\',monospace;font-size:8.5px;letter-spacing:0.22em;text-transform:uppercase;color:' + fmtCaution(h.caution_level) + ';border:0.5px solid ' + fmtCaution(h.caution_level) + '55;background:' + fmtCaution(h.caution_level) + '14;border-radius:999px;padding:4px 10px;margin-bottom:14px;">Caution &middot; ' + h.caution_level + '</div>' : '')
+      + (h.energetics ? '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;">' + h.energetics.map(e => '<span style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.1em;color:#E6D9B5;background:rgba(232,177,75,0.06);border:0.5px solid rgba(232,177,75,0.2);border-radius:3px;padding:3px 9px;">' + esc(e) + '</span>').join('') + '</div>' : '')
+      + (h.tcm_meridians ? '<div style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.16em;color:#8B7E62;margin-bottom:14px;">TCM meridians &middot; ' + h.tcm_meridians.join(' &middot; ') + '</div>' : '')
+      + (h.flavor_profile ? '<div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-style:italic;font-size:15px;color:#C9B894;line-height:1.6;margin-bottom:18px;">' + esc(h.flavor_profile) + '</div>' : '')
+      + (h.primary_functions && h.primary_functions.length ? '<div style="font-family:\'Geist Mono\',monospace;font-size:8.5px;letter-spacing:0.22em;text-transform:uppercase;color:#F5D689;margin:18px 0 6px;">Primary functions</div><ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.65;color:#C9B894;">' + list(h.primary_functions) + '</ul>' : '')
+      + (h.dosage_range ? '<div style="font-family:\'Geist Mono\',monospace;font-size:8.5px;letter-spacing:0.22em;text-transform:uppercase;color:#F5D689;margin:18px 0 6px;">Dosage</div><div style="font-size:13px;line-height:1.65;">' + esc(h.dosage_range) + '</div>' : '')
+      + (h.best_preparation ? '<div style="font-family:\'Geist Mono\',monospace;font-size:8.5px;letter-spacing:0.22em;text-transform:uppercase;color:#F5D689;margin:18px 0 6px;">Best preparation</div><div style="font-size:13px;line-height:1.65;">' + esc(h.best_preparation) + '</div>' : '')
+      + (h.contraindications && h.contraindications.length ? '<div style="font-family:\'Geist Mono\',monospace;font-size:8.5px;letter-spacing:0.22em;text-transform:uppercase;color:#E16B6B;margin:18px 0 6px;">Contraindications</div><ul style="margin:0;padding-left:18px;font-size:12.5px;line-height:1.65;color:#C9B894;">' + list(h.contraindications) + '</ul>' : '')
+      + (h.spiritual_layer ? '<div style="margin-top:20px;padding:14px 16px;background:rgba(168,143,224,0.06);border:0.5px solid rgba(168,143,224,0.22);border-radius:6px;font-family:\'Cormorant Garamond\',Georgia,serif;font-style:italic;font-size:14px;line-height:1.7;color:#D6CDB0;">' + esc(h.spiritual_layer) + '</div>' : '')
+      + '<div style="margin-top:22px;display:flex;gap:8px;flex-wrap:wrap;">'
+        + '<a href="/mixology" style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;padding:9px 16px;border:0.5px solid rgba(232,177,75,0.45);border-radius:6px;background:rgba(232,177,75,0.06);color:#F5D689;text-decoration:none;">Open in Synergistics &rarr;</a>'
+        + '<button onclick="closeHerbPopup()" style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;padding:9px 16px;border:0.5px solid rgba(201,184,148,0.18);border-radius:6px;background:none;color:#C9B894;cursor:pointer;">Close</button>'
+      + '</div>';
+  }
+  overlay.appendChild(card);
+  document.body.appendChild(overlay);
+  document.body.style.overflow = 'hidden';
+
+  // Esc key closes
+  document.addEventListener('keydown', escClosePopup);
+}
+function escClosePopup(e){ if (e.key === 'Escape') closeHerbPopup(); }
+function closeHerbPopup(){
+  const o = document.getElementById('herbPopupOverlay');
+  if (o) o.remove();
+  document.body.style.overflow = '';
+  document.removeEventListener('keydown', escClosePopup);
+}
+function esc(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
 function renderFreqGrid(){
   const grid=document.getElementById('freqGrid');
