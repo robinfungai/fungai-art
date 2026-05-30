@@ -1257,10 +1257,10 @@ p { line-height: 1.75; color: var(--mist); }
         <button class="nav-dropdown-trigger">Intelligence <span class="arr">▾</span></button>
         <div class="nav-dropdown-menu nav-intelligence">
           <a href="/foraging"><span class="ni-label">Foraging Map</span> <span class="ni-tag">ecology</span></a>
-          <a href="/herbal-engine-2/"><span class="ni-label">Herbal Engine</span> <span class="ni-tag">tailored</span></a>
-          <a href="/mixology"><span class="ni-label">Synergistics</span> <span class="ni-tag">mixology</span></a>
+          <a href="/herbal-engine-2/"><span class="ni-label">Tailored Elixir</span> <span class="ni-tag">herbal engine</span></a>
+          <a href="/mixology"><span class="ni-label">Mixology</span> <span class="ni-tag">synergistic</span></a>
           <a href="/extraction"><span class="ni-label">Extraction</span> <span class="ni-tag">alchemy</span></a>
-          <a href="/health"><span class="ni-label">Symptomatic</span> <span class="ni-tag">health</span></a>
+          <a href="/health"><span class="ni-label">Health</span> <span class="ni-tag">symptomatic</span></a>
         </div>
       </div>
       <!-- Community: single clickable link rather than a hover-dropdown — the
@@ -1293,10 +1293,10 @@ p { line-height: 1.75; color: var(--mist); }
   <a href="#trance" onclick="toggleMobileMenu()">Mycelium Trance</a>
   <div class="mm-section-title">Intelligence</div>
   <a href="/foraging" onclick="toggleMobileMenu()">Foraging Map <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; ecology</span></a>
-  <a href="/herbal-engine-2/" onclick="toggleMobileMenu()">Herbal Engine <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; tailored</span></a>
-  <a href="/mixology" onclick="toggleMobileMenu()">Synergistics <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; mixology</span></a>
+  <a href="/herbal-engine-2/" onclick="toggleMobileMenu()">Tailored Elixir <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; herbal engine</span></a>
+  <a href="/mixology" onclick="toggleMobileMenu()">Mixology <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; synergistic</span></a>
   <a href="/extraction" onclick="toggleMobileMenu()">Extraction <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; alchemy</span></a>
-  <a href="/health" onclick="toggleMobileMenu()">Symptomatic <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; health</span></a>
+  <a href="/health" onclick="toggleMobileMenu()">Health <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; symptomatic</span></a>
   <div class="mm-section-title">Community</div>
   <a href="/community" onclick="toggleMobileMenu()">Spore Portal</a>
   <a href="/community/academy/" onclick="toggleMobileMenu()">Alchemy Academy</a>
@@ -2093,6 +2093,21 @@ function toggleMobileMenu() {
                   /* North Africa coast band — caps the view at the bottom */
                   [[-12,35.0],[-5,35.8],[0,36.5],[9,37.0],[11,33.0],[20,32.5],[33,31.5],[35,31.0],[50,30.5],[50,30.0],[-12,30.0]],
                 ];
+                // Additional islands + visible smaller regions: Finland separate
+                // from Scandinavia, Baltic states (Estonia/Latvia/Lithuania),
+                // Malta, Cyprus. Lebanon coast slightly enlarged below.
+                REGIONS.push(
+                  /* Finland — east of Sweden, separated by the Gulf of Bothnia */
+                  [[21.5,60.5],[23.5,60.0],[25.5,60.5],[27.5,60.5],[29.5,61.0],[31.0,62.5],[30.5,64.0],[29.5,65.5],[28.0,67.0],[27.0,68.5],[25.0,69.5],[23.0,68.0],[22.0,66.0],[22.5,64.0],[22.0,62.0]],
+                  /* Baltic states — Estonia + Latvia + Lithuania between Poland and Finland */
+                  [[20.5,55.0],[22.5,54.5],[24.5,54.5],[26.5,55.0],[28.0,55.5],[28.0,57.0],[27.5,58.5],[25.5,59.5],[23.5,59.5],[21.5,58.5],[20.5,57.0]],
+                  /* Malta — small island south of Sicily */
+                  [[14.3,35.95],[14.6,35.85],[14.55,35.78],[14.25,35.85]],
+                  /* Cyprus — Med island east of Anatolia */
+                  [[32.3,34.6],[33.5,34.55],[34.6,34.95],[34.0,35.3],[32.5,35.1]],
+                  /* Lebanon highlighted — slightly enlarged so the Beirut node sits visibly inside */
+                  [[35.1,34.7],[35.7,34.6],[36.4,34.5],[36.6,33.8],[36.0,33.1],[35.3,33.05],[35.1,33.8]]
+                );
                 // Country borders — drawn as thin dashed lines on top of the land
                 // fill. Open paths (no Z) so they read as borders, not closed polygons.
                 // Only the most recognisable lines so the map stays uncluttered.
@@ -2141,52 +2156,70 @@ function toggleMobileMenu() {
 
               <!-- 5 herb-nodes. Coordinates projected from real lon/lat with
                    the same equirectangular function as the land paths above,
-                   so the nodes sit on the actual map. -->
+                   so the nodes sit on the actual map. Each label sits on a
+                   dark rounded pill so the herb name reads cleanly against
+                   land, coastline, or sea — was previously plain text that
+                   disappeared into busy areas of the map. -->
+              <defs>
+                <filter id="forageLabelShadow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="1" stdDeviation="1.2" flood-color="#000" flood-opacity="0.6"/>
+                </filter>
+              </defs>
               <g>
                 <!-- 1. Sweden / Dalarna — pine cones & chaga -->
                 <g transform="translate(262,66)">
                   <circle r="22" fill="url(#forageGlow)">
                     <animate attributeName="r" values="18;26;18" dur="6s" repeatCount="indefinite"/>
                   </circle>
-                  <circle r="4" fill="#E8B14B" stroke="#fff" stroke-width="0.5"/>
-                  <text x="0" y="-30" text-anchor="middle" fill="#E8B14B" font-size="9" letter-spacing="2" font-family="'Courier New',monospace">DALARNA</text>
-                  <text x="0" y="38" text-anchor="middle" fill="#E6D9B5" font-style="italic" font-size="13">Pine cones &amp; Chaga</text>
+                  <circle r="5" fill="#E8B14B" stroke="#fff" stroke-width="0.5"/>
+                  <rect x="-32" y="-44" width="64" height="14" rx="7" fill="rgba(7,13,11,0.85)" stroke="rgba(232,177,75,0.3)" stroke-width="0.5"/>
+                  <text x="0" y="-34" text-anchor="middle" fill="#F5D689" font-size="9" letter-spacing="2" font-weight="600" font-family="'Courier New',monospace">DALARNA</text>
+                  <rect x="-52" y="30" width="104" height="20" rx="10" fill="rgba(7,13,11,0.92)" stroke="rgba(232,177,75,0.35)" stroke-width="0.5"/>
+                  <text x="0" y="44" text-anchor="middle" fill="#E6D9B5" font-style="italic" font-size="13" font-family="'Cormorant Garamond',Georgia,serif" filter="url(#forageLabelShadow)">Pine cones &amp; Chaga</text>
                 </g>
                 <!-- 2. Berlin — elderflower -->
                 <g transform="translate(246,147)">
                   <circle r="22" fill="url(#forageGlow)">
                     <animate attributeName="r" values="18;26;18" dur="6.5s" begin="0.8s" repeatCount="indefinite"/>
                   </circle>
-                  <circle r="4" fill="#E8B14B" stroke="#fff" stroke-width="0.5"/>
-                  <text x="0" y="-30" text-anchor="middle" fill="#E8B14B" font-size="9" letter-spacing="2" font-family="'Courier New',monospace">BERLIN</text>
-                  <text x="0" y="38" text-anchor="middle" fill="#E6D9B5" font-style="italic" font-size="13">Elderflower</text>
+                  <circle r="5" fill="#E8B14B" stroke="#fff" stroke-width="0.5"/>
+                  <rect x="-28" y="-44" width="56" height="14" rx="7" fill="rgba(7,13,11,0.85)" stroke="rgba(232,177,75,0.3)" stroke-width="0.5"/>
+                  <text x="0" y="-34" text-anchor="middle" fill="#F5D689" font-size="9" letter-spacing="2" font-weight="600" font-family="'Courier New',monospace">BERLIN</text>
+                  <rect x="-40" y="30" width="80" height="20" rx="10" fill="rgba(7,13,11,0.92)" stroke="rgba(232,177,75,0.35)" stroke-width="0.5"/>
+                  <text x="0" y="44" text-anchor="middle" fill="#E6D9B5" font-style="italic" font-size="13" font-family="'Cormorant Garamond',Georgia,serif" filter="url(#forageLabelShadow)">Elderflower</text>
                 </g>
                 <!-- 3. French Riviera (Nice) — rosemary -->
                 <g transform="translate(187,230)">
                   <circle r="22" fill="url(#forageGlow)">
                     <animate attributeName="r" values="18;26;18" dur="7s" begin="1.6s" repeatCount="indefinite"/>
                   </circle>
-                  <circle r="4" fill="#E8B14B" stroke="#fff" stroke-width="0.5"/>
-                  <text x="0" y="-30" text-anchor="middle" fill="#E8B14B" font-size="9" letter-spacing="2" font-family="'Courier New',monospace">RIVIERA</text>
-                  <text x="0" y="38" text-anchor="middle" fill="#E6D9B5" font-style="italic" font-size="13">Rosemary</text>
+                  <circle r="5" fill="#E8B14B" stroke="#fff" stroke-width="0.5"/>
+                  <rect x="-30" y="-44" width="60" height="14" rx="7" fill="rgba(7,13,11,0.85)" stroke="rgba(232,177,75,0.3)" stroke-width="0.5"/>
+                  <text x="0" y="-34" text-anchor="middle" fill="#F5D689" font-size="9" letter-spacing="2" font-weight="600" font-family="'Courier New',monospace">RIVIERA</text>
+                  <rect x="-38" y="30" width="76" height="20" rx="10" fill="rgba(7,13,11,0.92)" stroke="rgba(232,177,75,0.35)" stroke-width="0.5"/>
+                  <text x="0" y="44" text-anchor="middle" fill="#E6D9B5" font-style="italic" font-size="13" font-family="'Cormorant Garamond',Georgia,serif" filter="url(#forageLabelShadow)">Wild Rosemary</text>
                 </g>
                 <!-- 4. Cappadocia — lavender -->
                 <g transform="translate(453,278)">
                   <circle r="22" fill="url(#forageGlow)">
                     <animate attributeName="r" values="18;26;18" dur="6.8s" begin="2.4s" repeatCount="indefinite"/>
                   </circle>
-                  <circle r="4" fill="#E8B14B" stroke="#fff" stroke-width="0.5"/>
-                  <text x="0" y="-30" text-anchor="middle" fill="#E8B14B" font-size="9" letter-spacing="2" font-family="'Courier New',monospace">CAPPADOCIA</text>
-                  <text x="0" y="38" text-anchor="middle" fill="#E6D9B5" font-style="italic" font-size="13">Lavender</text>
+                  <circle r="5" fill="#E8B14B" stroke="#fff" stroke-width="0.5"/>
+                  <rect x="-42" y="-44" width="84" height="14" rx="7" fill="rgba(7,13,11,0.85)" stroke="rgba(232,177,75,0.3)" stroke-width="0.5"/>
+                  <text x="0" y="-34" text-anchor="middle" fill="#F5D689" font-size="9" letter-spacing="2" font-weight="600" font-family="'Courier New',monospace">CAPPADOCIA</text>
+                  <rect x="-44" y="30" width="88" height="20" rx="10" fill="rgba(7,13,11,0.92)" stroke="rgba(232,177,75,0.35)" stroke-width="0.5"/>
+                  <text x="0" y="44" text-anchor="middle" fill="#E6D9B5" font-style="italic" font-size="13" font-family="'Cormorant Garamond',Georgia,serif" filter="url(#forageLabelShadow)">Wild Lavender</text>
                 </g>
                 <!-- 5. Beirut — custard apple -->
                 <g transform="translate(460,323)">
                   <circle r="22" fill="url(#forageGlow)">
                     <animate attributeName="r" values="18;26;18" dur="6.2s" begin="3.2s" repeatCount="indefinite"/>
                   </circle>
-                  <circle r="4" fill="#E8B14B" stroke="#fff" stroke-width="0.5"/>
-                  <text x="0" y="-30" text-anchor="middle" fill="#E8B14B" font-size="9" letter-spacing="2" font-family="'Courier New',monospace">BEIRUT</text>
-                  <text x="0" y="38" text-anchor="middle" fill="#E6D9B5" font-style="italic" font-size="13">Custard Apple</text>
+                  <circle r="5" fill="#E8B14B" stroke="#fff" stroke-width="0.5"/>
+                  <rect x="-28" y="-44" width="56" height="14" rx="7" fill="rgba(7,13,11,0.85)" stroke="rgba(232,177,75,0.3)" stroke-width="0.5"/>
+                  <text x="0" y="-34" text-anchor="middle" fill="#F5D689" font-size="9" letter-spacing="2" font-weight="600" font-family="'Courier New',monospace">BEIRUT</text>
+                  <rect x="-46" y="30" width="92" height="20" rx="10" fill="rgba(7,13,11,0.92)" stroke="rgba(232,177,75,0.35)" stroke-width="0.5"/>
+                  <text x="0" y="44" text-anchor="middle" fill="#E6D9B5" font-style="italic" font-size="13" font-family="'Cormorant Garamond',Georgia,serif" filter="url(#forageLabelShadow)">Custard Apple</text>
                 </g>
               </g>
 
