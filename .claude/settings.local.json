@@ -85,7 +85,11 @@
       "Bash(awk '/^const H=\\\\[/,/^\\\\];/' public/mixology/index.html)",
       "Bash(grep -n \"LAB_CATEGORIES_unused\\\\|__removedDuplicateLabNotes\\\\|^</script>$\" public/community/academy/index.html)",
       "Bash(grep -oE \"\\\\{n:'[^']*[Mm]ushroom[^']*',eth:'[^']*'\\\\}|\\\\{n:'Reishi[^']*',eth:'[^']*'\\\\}|\\\\{n:'Chaga[^']*',eth:'[^']*'\\\\}|\\\\{n:'Lion[^']*',eth:'[^']*'\\\\}|\\\\{n:'Cordyceps[^']*',eth:'[^']*'\\\\}\" public/extraction/index.html)",
-      "Bash(grep -vE \"^[0-9]+: *//|height:|width:|font-size:|id:.*168|id:.*164|background|color|opacity:|stroke|fill|line\")"
+      "Bash(grep -vE \"^[0-9]+: *//|height:|width:|font-size:|id:.*168|id:.*164|background|color|opacity:|stroke|fill|line\")",
+      "Bash(xargs -I{} ls -lh {})",
+      "Bash(sort -k5 -hr)",
+      "Bash(perl -i -pe 's{\\(<img\\\\s+src=\"/home/products/[^\"]*\"[^>]*?\\)\\(?<!loading=\"lazy\"\\)\\(\\\\s+class=\"product-photo\"\\)}{$1 loading=\"lazy\" decoding=\"async\"$2}g' public/home/index.html public/shop/index.html)",
+      "Bash(perl -i -pe 's{<img src=\"/home/pomelli-3\\\\.png\"\\([^>]*?\\)>}{<img src=\"/home/pomelli-3.png\" loading=\"lazy\" decoding=\"async\"$1>}g; s{<img src=\"/home/abc\\\\.png\"\\([^>]*?\\)>}{<img src=\"/home/abc.png\" loading=\"lazy\" decoding=\"async\"$1>}g' public/home/index.html)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Robin\\Desktop\\fungai art\\websiet\\tailored tincture ai tool\\html codes",

@@ -83,6 +83,14 @@ function useEconomy(memberId) {
 
 /* ── Toast ───────────────────────────────────────────────── */
 
+// Fire a toast from anywhere — App listens for `spore:toast` and pipes it to
+// its toast state. Tree-independent so we can replace native alert() calls
+// in deeply nested components without threading onToast props down.
+function toast(msg, kind) {
+  try { window.dispatchEvent(new CustomEvent('spore:toast', { detail: { msg, kind: kind || '' } })); }
+  catch { try { alert(msg); } catch {} }
+}
+
 function Toast({ message, kind, onClose }) {
   useEffect(() => {
     if (!message) return;
@@ -441,12 +449,12 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
 
   async function handleSignIn(e) {
     e.preventDefault();
-    if (!signInEmail.includes('@')) { alert('Enter a valid email'); return; }
-    if (!window.SBauth) { alert('Sign-in service still loading — try again in a second.'); return; }
+    if (!signInEmail.includes('@')) { toast('Enter a valid email', 'bad'); return; }
+    if (!window.SBauth) { toast('Sign-in service still loading — try again in a second.', 'bad'); return; }
     setSignInBusy(true);
     const { error } = await window.SBauth.signIn(signInEmail);
     setSignInBusy(false);
-    if (error) { alert('Sign-in failed: ' + error.message); return; }
+    if (error) { toast('Sign-in failed: ' + error.message, 'bad'); return; }
     setSignInSent(true);
   }
 
@@ -1538,7 +1546,7 @@ function ProfileEditor({ existing, onClose }) {
   function onAvatarChange(e) {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 5_000_000) { alert('Image too large — please use one under 5MB.'); return; }
+    if (file.size > 5_000_000) { toast('Image too large — please use one under 5MB.', 'bad'); return; }
     // Downscale to ≤320px square so the data URL fits comfortably in a
     // Supabase profile row. The original is kept on fileRef for the
     // (signed-in) storage upload path which uses the full-resolution file.
@@ -1569,7 +1577,7 @@ function ProfileEditor({ existing, onClose }) {
 
   async function save() {
     if (!name.trim() || !role || !location) {
-      alert('Please fill in your name, relation, and node before saving.');
+      toast('Please fill in your name, relation, and node before saving.', 'bad');
       return;
     }
     setSaving(true);
@@ -1594,7 +1602,7 @@ function ProfileEditor({ existing, onClose }) {
               avatar: avatar && avatar.startsWith('data:') ? null : avatar,
             }));
           } catch {}
-          alert('To edit an existing profile you need to sign in with the same email it was claimed with. Your changes are saved as a draft — sign in via the email card below and come back.');
+          toast('Saved as draft. Sign in with the email this profile was claimed with to apply changes.', 'warn');
           setSaving(false);
           onClose && onClose();
           return;
@@ -1609,8 +1617,13 @@ function ProfileEditor({ existing, onClose }) {
             try {
               avatarUrl = await window.SBprofiles.uploadAvatar(fileRef.current.files[0]);
             } catch (e) {
-              console.warn('Avatar upload failed, falling back to no avatar:', e);
-              avatarUrl = null;
+              // Storage upload failed (RLS, quota, network) — keep the
+              // downscaled data URL on the profile row so the photo still
+              // appears for everyone. Stash locally for a retry-as-file the
+              // next time syncPendingAvatar runs.
+              console.warn('Avatar upload failed, falling back to data URL on row:', e);
+              try { localStorage.setItem('fungai_pending_avatar', avatar); } catch (_) {}
+              avatarUrl = avatar;
             }
           } else {
             // Not signed in → keep the (downscaled) data URL directly on the
@@ -1674,7 +1687,7 @@ function ProfileEditor({ existing, onClose }) {
         setTimeout(() => { window.location.reload(); }, 600);
         return;
       } catch (err) {
-        alert('Save failed: ' + (err.message || err));
+        toast('Save failed: ' + (err.message || err), 'bad');
         setSaving(false);
         return;
       }
@@ -2173,12 +2186,12 @@ function MembersPage({ currentMember, economy }) {
   // the admin-sheet early return — see the block right after `isAdmin =`.
   async function handleSignIn(e) {
     e.preventDefault();
-    if (!signInEmail.includes('@')) { alert('Enter a valid email'); return; }
+    if (!signInEmail.includes('@')) { toast('Enter a valid email', 'bad'); return; }
     setSignInBusy(true);
     const { error } = await window.SBauth.signIn(signInEmail);
     setSignInBusy(false);
-    if (error) { alert('Sign-in failed: ' + error.message); return; }
-    alert('Magic link sent to ' + signInEmail + '. Open your inbox on this device, click the link, you\'ll come back here signed in.');
+    if (error) { toast('Sign-in failed: ' + error.message, 'bad'); return; }
+    toast('Magic link sent to ' + signInEmail + ' — open it on this browser.', 'success');
     setSignInEmail('');
   }
   async function handleSignOut() {
@@ -2210,7 +2223,7 @@ function MembersPage({ currentMember, economy }) {
           user can fix their founder link even if they're stuck on a non-admin
           profile like 'Robin1'. Renders nothing when there's nothing useful
           to do (signed in, linked, matched). */}
-      <SelfIdentityBlock currentMember={currentMember} onToast={(m,k) => { try { window.dispatchEvent(new CustomEvent('spore:toast', { detail:{ msg:m, kind:k } })); } catch{} alert(m); }} />
+      <SelfIdentityBlock currentMember={currentMember} onToast={toast} />
 
       {/* Self-onboard / edit profile card.
           Logic:
@@ -3555,7 +3568,7 @@ function QuickNav({ tab, onTab }) {
         <React.Fragment key={it.label}>
           {i === 4 && <div className="qn-divider" />}
           {it.ext ? (
-            <a href={it.href} target="_blank" className="qn-item">
+            <a href={it.href} target="_blank" className="qn-item" rel="noopener noreferrer">
               <span className="qn-icon">{it.icon}</span>
               <span className="qn-label">{it.label}</span>
             </a>
@@ -3769,7 +3782,7 @@ function ClaimProfilePicker({ onClaim, onCreateNew, onClose }) {
       await window.SBprofiles.claimSeededProfile(p.id);
       onClaim(p);
     } catch (e) {
-      alert('Could not claim that profile: ' + (e.message || e));
+      toast('Could not claim that profile: ' + (e.message || e), 'bad');
       setBusy(false);
     }
   }
@@ -3842,6 +3855,19 @@ function App() {
   const economy = useEconomy(currentMember ? currentMember.id : '__guest__');
   const tier    = SporeData.reputationTier(economy.state.reputation);
   const onToast = (msg, kind) => setToast({ msg, kind });
+
+  // Global toast bridge — anywhere in the tree (including the welcome/login
+  // screen rendered above App's main return) can dispatch a `spore:toast`
+  // CustomEvent and we'll pipe it into setToast. Used to replace native
+  // alert()s in non-trivial flows so the UI stays in-app.
+  useEffect(() => {
+    function onBridge(e) {
+      if (!e || !e.detail) return;
+      setToast({ msg: e.detail.msg || '', kind: e.detail.kind || '' });
+    }
+    window.addEventListener('spore:toast', onBridge);
+    return () => window.removeEventListener('spore:toast', onBridge);
+  }, []);
 
   function handleLogin(member) {
     setCurrentMember(member);

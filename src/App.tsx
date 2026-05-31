@@ -1020,7 +1020,7 @@ export default function App() {
             {/* Nav + menu */}
             <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
               <a
-                href="/herbal-engine.html" target="_blank" rel="noreferrer"
+                href="/herbal-engine-2/" target="_blank" rel="noreferrer"
                 className="hidden sm:block text-[10px] uppercase tracking-[0.2em] whitespace-nowrap transition-opacity hover:opacity-100"
                 style={{ color: "rgba(123,212,161,0.55)" }}
               >
@@ -1425,7 +1425,7 @@ export default function App() {
         {/* Engine + Extraction links — mobile only */}
         <div className="lg:hidden flex flex-col gap-2 mb-4 flex-shrink-0">
           <div className="flex gap-2">
-            <a href="/herbal-engine.html" target="_blank" rel="noreferrer"
+            <a href="/herbal-engine-2/" target="_blank" rel="noreferrer"
               className="flex-1 text-center text-[10px] uppercase tracking-[0.18em] py-2 rounded-lg transition-opacity hover:opacity-70"
               style={{ background: "#101412", border: "0.5px solid rgba(123,212,161,0.2)", color: "rgba(123,212,161,0.6)" }}>
               Engine 1.0 →
