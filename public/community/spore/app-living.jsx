@@ -2518,13 +2518,38 @@ function SelfIdentityBlock({ currentMember, onToast }) {
   const [myCharName, setMyCharName] = useState('');
   const [cloudId, setCloudId] = useState(null);
   const [newEmail, setNewEmail] = useState('');
-  const [signInEmail, setSignInEmail] = useState('');
+  // Pre-fill the sign-in email from the cached profile so when the cloud
+  // session expires the user doesn't have to retype it — one click sends
+  // the magic link. Falls back to the founder's known address for Robin /
+  // Stephanie even if no cache exists yet.
+  const knownFounderEmail = (() => {
+    const name = (currentMember && (currentMember.name || '')).toLowerCase();
+    if (name.startsWith('robin')) return 'robin@fungai.art';
+    if (name.includes('steph')) return 'teyae@fungai.art';
+    return '';
+  })();
+  const cachedEmail = (() => {
+    try { return JSON.parse(localStorage.getItem('spore_active_member_full') || 'null')?.email || ''; }
+    catch { return ''; }
+  })();
+  const [signInEmail, setSignInEmail] = useState(cachedEmail || knownFounderEmail);
   const [busy, setBusy] = useState(false);
   const [linkSent, setLinkSent] = useState(false);
 
   async function refreshAuth() {
     try {
       if (!window.SBauth) { setAuthChecked(true); return; }
+      // Belt-and-braces: explicitly try a session refresh first. The
+      // supabase-js client has autoRefreshToken:true so this is usually
+      // a no-op, but on cold tabs the refresh sometimes hasn't fired by
+      // the time SelfIdentityBlock mounts. Calling it here makes sure
+      // we don't false-flag the user as "not signed in" when their
+      // refresh token is still perfectly valid.
+      try {
+        if (window.SBclient?.auth?.refreshSession) {
+          await window.SBclient.auth.refreshSession();
+        }
+      } catch (_) { /* expired refresh token — fall through to getUser */ }
       const u = await window.SBauth.getUser();
       setAuthEmail(u?.email || '');
       if (window.SBprofiles) {
@@ -2643,23 +2668,23 @@ function SelfIdentityBlock({ currentMember, onToast }) {
         {myCharName && <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--mycelium-d)' }}>· cloud name {myCharName}</span>}
       </div>
 
-      {/* Not signed in → inline magic-link form. This is the source of the
-          confusing "Auth session missing!" error: the local thread can read
-          "Robin" while the actual Supabase session is empty. Surface it
-          clearly and offer to sign in right here. */}
+      {/* Not signed in → inline magic-link form. Softer copy: the user
+          DID set up the account, the cloud session just timed out.
+          Frame it as "renew", not "set up". Pre-fills email so it's
+          a one-click action. */}
       {!isAuthed && (
-        <div style={{ marginBottom:12, padding:'10px 12px', background:'rgba(225,107,107,0.06)', border:'0.5px solid rgba(225,107,107,0.28)', borderRadius:6 }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'#E16B6B', marginBottom:6 }}>Local-only mode</div>
+        <div style={{ marginBottom:12, padding:'10px 12px', background:'rgba(232,177,75,0.05)', border:'0.5px solid rgba(232,177,75,0.25)', borderRadius:6 }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--nutrient-l)', marginBottom:6 }}>Session expired</div>
           <p style={{ fontSize:12, color:'var(--mycelium)', lineHeight:1.55, margin:'0 0 8px' }}>
-            You&rsquo;re seeing the network through the locally-cached Robin profile, but there&rsquo;s no live Supabase session — so cloud features (email change, restrictions sync, founder relink) can&rsquo;t fire. Sign in here to enable them.
+            Your account is fine &mdash; the cloud sign-in just timed out (Supabase tokens last about a week). One click below renews it for another week. You stay logged in locally either way.
           </p>
           {linkSent ? (
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--spore-l)' }}>✓ Magic link sent. Open the email <strong>on this browser</strong> — PKCE flow needs the same tab.</div>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--spore-l)' }}>✓ Magic link sent. Open the email <strong>on this browser</strong> &mdash; the same tab you sent it from.</div>
           ) : (
             <div style={{ display:'flex', gap:6, flexWrap:'wrap' }}>
-              <input type="email" placeholder="robin@fungai.art" value={signInEmail} onChange={e => setSignInEmail(e.target.value)} style={{ flex:'1 1 220px', minWidth:0, padding:'9px 11px', borderRadius:6, background:'var(--soil-3)', border:'0.5px solid var(--rule)', color:'var(--mycelium-l)', fontFamily:'var(--font-sans)', fontSize:13, outline:'none' }} />
-              <button onClick={sendMagicLink} disabled={busy} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', padding:'9px 16px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', cursor: busy ? 'wait' : 'pointer' }}>
-                Send magic link
+              <input type="email" placeholder="your@email.com" value={signInEmail} onChange={e => setSignInEmail(e.target.value)} style={{ flex:'1 1 220px', minWidth:0, padding:'9px 11px', borderRadius:6, background:'var(--soil-3)', border:'0.5px solid var(--rule)', color:'var(--mycelium-l)', fontFamily:'var(--font-sans)', fontSize:13, outline:'none' }} />
+              <button onClick={sendMagicLink} disabled={busy} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', padding:'9px 16px', borderRadius:999, background:'linear-gradient(135deg, var(--nutrient), var(--nutrient-d))', border:'none', color:'var(--soil)', cursor: busy ? 'wait' : 'pointer', fontWeight:500 }}>
+                Renew session
               </button>
             </div>
           )}
@@ -4010,6 +4035,9 @@ function App() {
             restrictions: match.restrictions || [],
             avatar: match.avatar || null,
             cloudId: mine.id,
+            // Stashing email lets SelfIdentityBlock pre-fill the renew-
+            // session field next time the cloud token expires.
+            email: user?.email || mine?.email || null,
           })); } catch {}
           // Sunday Myco nudge — drops the founder's reminder into the inbox
           // exactly once per Sunday. Safe to call any day; no-ops on M–Sat.
