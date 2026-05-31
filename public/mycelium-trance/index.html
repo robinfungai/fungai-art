@@ -12,6 +12,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:wght@200;300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
+@font-face { font-family:'TAN-PEARL'; src:url('/fonts/fonnts.com-tan-pearl.otf') format('opentype'); font-display:swap; }
+@font-face { font-family:'TAN-PARADISO'; src:url('/fonts/TAN-PARADISO.ttf') format('truetype'); font-display:swap; }
+@font-face { font-family:'Bayer'; src:url('/fonts/Bayer-TypeArchiType.otf') format('opentype'); font-display:swap; }
 :root {
   --void:      #05090C;
   --forest:    #080F13;
@@ -56,7 +59,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
 .hero-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--lichen);margin-bottom:24px;display:block}
 .hero-title{font-family:var(--serif);font-size:clamp(60px,10vw,120px);font-weight:300;line-height:0.95;margin-bottom:8px;color:var(--parchment)}
 .hero-title em{font-style:italic;color:var(--mist)}
-.hero-sub{font-family:var(--script);font-size:clamp(40px,6vw,80px);color:var(--mist);display:block;margin-bottom:32px}
+/* Hero subtitle — was Pinyon Script which clashed with the trance theme.
+   TAN-PEARL gives the line a print-label / apothecary feel and pairs
+   with the rest of the type system instead of fighting it. */
+.hero-sub{font-family:'TAN-PEARL','TAN-PARADISO',var(--serif);font-size:clamp(28px,4.6vw,58px);color:var(--mist);display:block;margin-bottom:32px;letter-spacing:0.01em;text-transform:lowercase;line-height:1.05;}
 .hero-meta{display:flex;gap:40px;margin-bottom:48px}
 .hero-meta-item{font-size:11px;letter-spacing:1px;color:var(--dust)}
 .hero-meta-item strong{display:block;font-size:28px;font-family:var(--serif);font-weight:300;color:var(--parchment);letter-spacing:0}
@@ -436,7 +442,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
           <span class="event-badge done">Done</span>
         </div>
         <div class="event-row">
-          <div><div class="event-venue">TrypExpo, Berlin</div><div class="event-act">Mycelium Trance · Stand · 7,613 views</div></div>
+          <div><div class="event-venue">TrypExpo, Berlin</div><div class="event-act">Mycelium Trance</div></div>
           <span class="event-badge done">Done</span>
         </div>
         <div class="event-row">
@@ -456,8 +462,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
           <span class="event-badge upcoming">Upcoming</span>
         </div>
       </div>
-      <div class="events-img reveal reveal-d2">
-        <img src="/mycelium-trance/robin-amanita.jpeg" alt="Robin Fungi" style="width:100%;height:500px;object-fit:cover;object-position:top">
+      <!-- Original file was 90° off — apply a CSS rotation rather than
+           re-encoding the JPEG so the source stays a single truth. The
+           outer box stays portrait-shaped; the img is rotated 90° CW and
+           the swapped dimensions (height becomes width, width becomes
+           height) are set explicitly so it refills cleanly. -->
+      <div class="events-img reveal reveal-d2" style="overflow:hidden;height:500px;position:relative;background:#000;">
+        <img src="/mycelium-trance/robin-amanita.jpeg" alt="Robin Fungi"
+             style="position:absolute;top:50%;left:50%;height:100%;width:auto;max-width:none;transform:translate(-50%,-50%) rotate(90deg);transform-origin:center center;">
       </div>
     </div>
   </div>
