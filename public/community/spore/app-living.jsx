@@ -374,7 +374,15 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
 
   // Sign-in by name + PIN (no email needed for existing members).
   // The typed name is matched against SporeData.MEMBERS — case-insensitive.
-  const [showSignInBox, setShowSignInBox] = useState(false);
+  // Open the sign-in box immediately if the URL says so (e.g. arriving from
+  // /community/#signin or ?signin=1). This is what the academy gate's
+  // "Sign in" button uses so the user doesn't have to find + click the
+  // small "Already a thread?" link after navigating here.
+  const wantsSignIn = (typeof window !== 'undefined') && (
+    window.location.hash === '#signin' ||
+    window.location.search.includes('signin=1')
+  );
+  const [showSignInBox, setShowSignInBox] = useState(wantsSignIn);
   const [signInName, setSignInName]       = useState('');
   const [signInNameError, setSignInNameError] = useState('');
 
@@ -487,9 +495,9 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
           </div>
         </div>
         {/* Internal community menu — replaces the dropdown that used to live
-            in the main-site header. Lets visitors jump to the related
-            pages (Academy, Mixology, Foraging, Spore home) without having
-            to bounce back through the main nav. */}
+            in the main-site header. Anchor IDs match section IDs further
+            down. Patronage / Onboard / Sporing point at the dedicated
+            standalone pages (own URLs, own designs). */}
         <div className="welcome-nav-menu">
           <a href="#manifesto">Manifesto</a>
           <a href="#network">Nodes</a>
@@ -497,11 +505,21 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
           <a href="/mixology">Herbals</a>
           <a href="/foraging">Foraging</a>
           <a href="/extraction">Extraction</a>
+          <a href="/patron/">Patronage</a>
+          <a href="/onboard/">Onboard</a>
+          <a href="/sporing/">Sporing</a>
+          {/* $MYCEL pill — always visible. For members, surfaces the wallet
+              via the sporing ledger; for visitors, an entry point to learn
+              what $MYCEL is. Treated as a status chip rather than a button
+              so it doesn't compete with the primary CTAs. */}
+          <a href="/sporing/" className="welcome-nav-mycel" title="$MYCEL — the network currency">
+            <span className="dot" />✦ $MYCEL
+          </a>
         </div>
       </div>
 
-      {/* ── Hero ── */}
-      <div className="welcome-hero">
+      {/* ── Hero (#manifesto anchor target) ── */}
+      <div className="welcome-hero" id="manifesto">
         <div className="welcome-hero-inner">
           <div className="welcome-eyebrow">A decentralized mycelium · no centre · no CEO</div>
           <h1 className="welcome-title">There is no <em>centre.</em><br/>Only the threads<br/>that <em>hold.</em></h1>
@@ -716,7 +734,7 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
           desktop. Map frame has aspect-ratio so the canvas always renders at
           a generous height; viewBox tightened to Europe + Mediterranean +
           Atitlán arc so the coastlines actually read as geography. */}
-      <div className="welcome-section welcome-section-wide">
+      <div className="welcome-section welcome-section-wide" id="network">
         <div className="welcome-section-eyebrow">Active nodes · {liveNodes.length} live · 1 proposed</div>
         <div className="welcome-section-title">The <em>network.</em></div>
 
@@ -2332,7 +2350,17 @@ function MembersPage({ currentMember, economy }) {
             value={myContrib}
             onChange={e => saveContrib(Number(e.target.value))}
           />
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'var(--mycelium-d)', marginTop:4, letterSpacing:'0.1em' }}>Visible only to you and Robin.</div>
+          {/* Stewards — whoever is logged in sees the OTHER founder as the
+              co-viewer. Robin sees "you and Stephanie"; Stephanie sees
+              "you and Robin"; everyone else sees both. */}
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'var(--mycelium-d)', marginTop:4, letterSpacing:'0.1em' }}>
+            Visible only to you and {(() => {
+              const myName = (currentMember && (currentMember.name || '')).toLowerCase();
+              if (myName.startsWith('robin')) return 'Stephanie';
+              if (myName.includes('steph')) return 'Robin';
+              return 'Robin & Stephanie';
+            })()}.
+          </div>
         </div>
       </div>
 
@@ -3844,7 +3872,21 @@ function ClaimProfilePicker({ onClaim, onCreateNew, onClose }) {
 /* ── App root ─────────────────────────────────────────────── */
 
 function App() {
-  const [currentMember, setCurrentMember] = useState(null);
+  // Initial currentMember is synchronously restored from spore_active_member_full
+  // so the LoginScreen doesn't flash on every reload / back-navigation. The
+  // async tryAutoLogin still runs to refresh state from Supabase, but the UI
+  // shows the portal immediately while that completes.
+  const [currentMember, setCurrentMember] = useState(() => {
+    try {
+      const cached = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null');
+      if (!cached || !cached.id) return null;
+      const live = (SporeData.MEMBERS || []).find(m => m.id === cached.id);
+      // Fall back to the cached snapshot if MEMBERS hasn't loaded yet — it's
+      // enough to render TopBar + most pages; tryAutoLogin will replace this
+      // with the live member once Supabase profiles arrive.
+      return live || { id: cached.id, name: cached.name, admin: !!cached.admin, restrictions: cached.restrictions || [], avatar: cached.avatar || null, rep: 0, node: 'berlin' };
+    } catch { return null; }
+  });
   const [tab,       setTab]      = useState('network');
   const [earnOpen,  setEarnOpen] = useState(false);
   const [toast,     setToast]    = useState({ msg:'', kind:'' });

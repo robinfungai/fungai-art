@@ -53,6 +53,13 @@
   src: url('/fonts/Bayer-TypeArchiType.otf') format('opentype');
   font-weight: normal; font-style: normal; font-display: swap;
 }
+/* TAN PEARL — Robin's label typeface. Used for the "fungai art" wordmark
+   in lowercase; pairs the print label aesthetic with the on-screen brand. */
+@font-face {
+  font-family: 'TAN-PEARL';
+  src: url('/fonts/fonnts.com-tan-pearl.otf') format('opentype');
+  font-weight: normal; font-style: normal; font-display: swap;
+}
 
 /* ═══════════════════════════════════════════════════
    TOKENS
@@ -259,7 +266,7 @@ p { line-height: 1.75; color: var(--mist); }
 .cart-close:hover { color: var(--parchment); }
 .cart-items { flex: 1; overflow-y: auto; padding: 24px 32px; }
 .cart-empty { text-align: center; padding: 60px 0; }
-.cart-empty .icon { font-family: var(--script); font-size: 36px; color: var(--sage); display: block; margin-bottom: 16px; }
+.cart-empty .icon { font-family: 'TAN-PEARL', var(--script); font-size: 32px; color: var(--sage); display: block; margin-bottom: 16px; text-transform: lowercase; letter-spacing: 0.02em; }
 .cart-empty p { font-size: 13px; color: var(--lichen); line-height: 1.7; }
 .cart-item {
   display: flex; justify-content: space-between; align-items: center;
@@ -342,7 +349,9 @@ p { line-height: 1.75; color: var(--mist); }
   background: radial-gradient(circle at 35% 35%, rgba(232,177,75,0.18), rgba(7,17,13,0.6) 75%);
 }
 .nav-brand .brand-text { display: flex; flex-direction: column; gap: 3px; }
-.nav-brand .main { font-family: 'TAN-PARADISO', 'Kiona', 'Cormorant Garamond', serif; font-size: 24px; color: var(--parchment); line-height: 1; letter-spacing: 0.02em; }
+/* The brand wordmark uses Robin's print-label typeface (TAN PEARL) in
+   lowercase so the on-screen mark matches the physical bottles. */
+.nav-brand .main { font-family: 'TAN-PEARL', 'TAN-PARADISO', 'Kiona', 'Cormorant Garamond', serif; font-size: 26px; color: var(--parchment); line-height: 1; letter-spacing: 0.02em; text-transform: lowercase; }
 .nav-brand .sub { font-family: 'Bayer', var(--sans); font-size: 8px; letter-spacing: 0.42em; text-transform: uppercase; color: var(--amber-lt); font-weight: 400; }
 .nav-links { display: flex; gap: 30px; align-items: center; }
 .nav-link {
@@ -871,7 +880,7 @@ p { line-height: 1.75; color: var(--mist); }
 /* ─── FOOTER ─────────────────────────────────── */
 .footer { background: var(--void); padding: 80px 0 48px; }
 .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 52px; margin-bottom: 64px; }
-.footer-brand .name { font-family: var(--script); font-size: 32px; color: var(--parchment); display: block; margin-bottom: 4px; }
+.footer-brand .name { font-family: 'TAN-PEARL', var(--script); font-size: 30px; color: var(--parchment); display: block; margin-bottom: 4px; text-transform: lowercase; letter-spacing: 0.015em; }
 .footer-brand .entheo { font-size: 7px; letter-spacing: 0.52em; text-transform: uppercase; color: var(--amber); display: block; margin-bottom: 18px; }
 .footer-brand p { font-size: 12.5px; color: var(--lichen); line-height: 1.7; max-width: 280px; }
 .footer-col h4 { font-size: 8px; letter-spacing: 0.5em; text-transform: uppercase; color: var(--parchment); font-weight: 500; margin-bottom: 22px; }
@@ -2352,13 +2361,22 @@ function toggleMobileMenu() {
   </div>
   <style>
     /* Desktop — 3-in-grid (side by side) so the section reads as one row,
-       not three full-height stacks. Each tile capped to a sensible width. */
-    .spore-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:22px; align-items:start; max-width:1100px; margin:0 auto; }
-    .spore-embed { width:100%; min-width:0; max-width:380px; }
-    .spore-embed .instagram-media { max-width:100% !important; min-width:0 !important; }
+       not three full-height stacks. The blockquote and the iframe that
+       Instagram's embed.js swaps in BOTH carry inline min-width:280px+
+       which fights the grid. We override aggressively with !important on
+       both pre- and post-hydration elements so 3-up actually renders. */
+    .spore-grid { display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap:18px; align-items:start; max-width:1280px; margin:0 auto; }
+    .spore-embed { width:100%; min-width:0; }
+    .spore-embed .instagram-media,
+    .spore-embed blockquote.instagram-media {
+      max-width:100% !important;
+      min-width:0 !important;
+      width:100% !important;
+    }
+    .spore-embed iframe { width:100% !important; max-width:100% !important; min-width:0 !important; }
     /* Tablet — fold to 2 columns so each post stays readable */
     @media (max-width: 900px) and (min-width: 561px) {
-      .spore-grid { grid-template-columns: repeat(2, 1fr); gap:18px; max-width:780px; }
+      .spore-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap:18px; max-width:780px; }
     }
     /* Phone — single featured post only (the other two add far too much
        vertical scroll for not much extra signal; the Follow @fungai.art
@@ -2368,6 +2386,21 @@ function toggleMobileMenu() {
       .spore-embed:nth-child(n+2) { display: none; }
     }
   </style>
+  <script>
+    // Re-run Instagram's embed processor after a tick — embed.js races with
+    // the grid layout on first paint and sometimes sizes the iframes for the
+    // pre-grid width. Calling .process() again forces it to re-measure.
+    (function reprocessIG(){
+      function go(){
+        if (window.instgrm && window.instgrm.Embeds) {
+          try { window.instgrm.Embeds.process(); } catch (e) {}
+        } else {
+          setTimeout(go, 250);
+        }
+      }
+      window.addEventListener('load', () => setTimeout(go, 400));
+    })();
+  </script>
 </section>
 
 <!-- ══ ABOUT ══ -->

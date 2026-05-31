@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>The Mycelium — fungai art</title>
+<!--
+  Permalink-only page. Intentionally not linked from the site nav, the home
+  page, sitemap.xml, or the social/og scrapers. The robots meta below tells
+  every well-behaved crawler to walk past. This door is for people who were
+  given the path.
+-->
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="description" content="A quiet door."/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
+<link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
+<style>
+@font-face { font-family:'TAN-PEARL'; src:url('/fonts/fonnts.com-tan-pearl.otf') format('opentype'); font-display:swap; }
+@font-face { font-family:'TAN-PARADISO'; src:url('/fonts/TAN-PARADISO.ttf') format('truetype'); font-display:swap; }
+@font-face { font-family:'Bayer'; src:url('/fonts/Bayer-TypeArchiType.otf') format('opentype'); font-display:swap; }
+@font-face { font-family:'Kiona'; src:url('/fonts/Kiona-Regular.ttf') format('truetype'); font-display:swap; }
+@font-face { font-family:'Kiona'; src:url('/fonts/Kiona-Italic.ttf') format('truetype'); font-style:italic; font-display:swap; }
+
+:root {
+  --soil:        #050807;
+  --soil-2:      #0a100d;
+  --parchment:   #EDE5D8;
+  --cream:       #C9B894;
+  --amber:       #C48838;
+  --amber-lt:    #E8B14B;
+  --sage:        #5A7A66;
+  --rule:        rgba(201,184,148,0.10);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  min-height:100vh;
+  background:var(--soil);
+  color:var(--cream);
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-weight:300;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* ── The amanita haunts the whole page. Fixed so it doesn't scroll,
+      low opacity so it's a memory rather than an image. ── */
+.bg-amanita{
+  position:fixed; inset:0;
+  background-image:url('/amanita123.png');
+  background-size:cover;
+  background-position:center 30%;
+  opacity:0.13;
+  filter:grayscale(40%) contrast(1.05);
+  pointer-events:none;
+  z-index:0;
+}
+.bg-amanita::after{
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 40%, rgba(5,8,7,0) 30%, rgba(5,8,7,0.85) 90%);
+}
+
+/* ── Film grain — keeps the page from feeling like flat HTML. ── */
+.grain{
+  position:fixed; inset:0; pointer-events:none; z-index:1; opacity:0.04;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
+}
+
+main{ position:relative; z-index:2; max-width:660px; margin:0 auto; padding:80px 28px 60px; }
+
+/* ── Top brand strip — small, quiet, lower-case TAN PEARL ── */
+.brand{
+  display:flex; align-items:center; gap:10px;
+  font-family:'TAN-PEARL','TAN-PARADISO',serif;
+  font-size:22px; color:var(--parchment);
+  text-transform:lowercase; letter-spacing:0.015em;
+  margin-bottom:14px;
+  text-decoration:none;
+}
+.brand .dot{
+  width:6px; height:6px; border-radius:50%;
+  background:var(--amber-lt);
+  box-shadow:0 0 14px rgba(232,177,75,0.65);
+  animation:breathe 4.2s ease-in-out infinite;
+}
+@keyframes breathe { 0%,100%{ opacity:0.55; transform:scale(1);} 50%{ opacity:1; transform:scale(1.18);} }
+
+.eyebrow{
+  font-family:'Bayer','Kiona',sans-serif;
+  font-size:9.5px; letter-spacing:0.32em; text-transform:uppercase;
+  color:var(--amber); margin-bottom:36px; display:block;
+}
+
+/* ── Hero title ── */
+h1{
+  font-family:'TAN-PARADISO','Cormorant Garamond',serif;
+  font-size:clamp(56px, 11vw, 110px);
+  font-weight:normal;
+  line-height:0.95; letter-spacing:-0.018em;
+  color:var(--parchment);
+  margin-bottom:14px;
+}
+h1 em{ font-style:italic; color:var(--amber-lt); }
+
+.opening{
+  font-size:18px; line-height:1.7;
+  color:var(--cream);
+  border-left:1px solid var(--rule);
+  padding-left:22px;
+  margin:34px 0 56px;
+  max-width:52ch;
+}
+.opening strong{ color:var(--parchment); font-weight:400; }
+
+/* ── Three contemplative blocks ── */
+.threshold{
+  display:grid; grid-template-columns:48px 1fr; column-gap:24px;
+  padding:28px 0; border-top:0.5px solid var(--rule);
+}
+.threshold:last-of-type{ border-bottom:0.5px solid var(--rule); }
+.threshold .marker{
+  font-family:'Bayer',sans-serif;
+  font-size:11px; letter-spacing:0.3em; color:var(--amber);
+  padding-top:6px;
+}
+.threshold h2{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-style:italic; font-weight:400;
+  font-size:32px; letter-spacing:-0.005em;
+  color:var(--parchment);
+  line-height:1.1; margin-bottom:10px;
+}
+.threshold p{ font-size:15.5px; line-height:1.75; color:var(--cream); max-width:50ch; }
+
+/* ── Quote ── */
+.quote{
+  margin:64px 0 64px; padding:48px 32px;
+  background:linear-gradient(180deg, rgba(196,134,46,0.04), rgba(0,0,0,0));
+  border-top:0.5px solid rgba(232,177,75,0.18);
+  border-bottom:0.5px solid rgba(232,177,75,0.18);
+  text-align:center;
+}
+.quote p{
+  font-family:'TAN-PARADISO','Cormorant Garamond',serif;
+  font-style:italic; font-size:clamp(22px, 4vw, 32px);
+  line-height:1.35; color:var(--parchment);
+  max-width:24ch; margin:0 auto;
+  letter-spacing:-0.005em;
+}
+.quote .attr{
+  font-family:'Bayer',sans-serif;
+  font-size:9px; letter-spacing:0.32em; text-transform:uppercase;
+  color:var(--amber); margin-top:22px; display:block;
+}
+
+/* ── Label print band — uses Robin's actual print label as a
+      decorative texture strip. Heavy desaturation + low opacity
+      keeps it from competing with the typography. ── */
+.label-band{
+  margin:48px -28px 32px; padding:0;
+  height:120px; overflow:hidden; position:relative;
+  border-top:0.5px solid var(--rule);
+  border-bottom:0.5px solid var(--rule);
+}
+.label-band::before{
+  content:''; position:absolute; inset:0;
+  background-image:url('/mycelium-trance/LABEL-PRINT-FINAL-21.png');
+  background-size:auto 220%;
+  background-position:center;
+  background-repeat:repeat-x;
+  filter:grayscale(90%) contrast(0.85) brightness(0.9);
+  opacity:0.22;
+}
+.label-band::after{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(90deg, var(--soil) 0%, rgba(5,8,7,0) 20%, rgba(5,8,7,0) 80%, var(--soil) 100%);
+}
+
+/* ── Closing line + tiny back door ── */
+.close{
+  text-align:center; margin-top:48px;
+  font-family:'Cormorant Garamond',Georgia,serif; font-style:italic;
+  font-size:18px; color:var(--cream);
+}
+.close em{ color:var(--amber-lt); }
+.back{
+  display:inline-block; margin-top:32px;
+  font-family:'Bayer',sans-serif; font-size:9.5px;
+  letter-spacing:0.32em; text-transform:uppercase;
+  color:var(--cream); text-decoration:none; opacity:0.55;
+  border-bottom:0.5px solid rgba(201,184,148,0.18);
+  padding-bottom:4px; transition:opacity 0.3s, color 0.3s;
+}
+.back:hover{ opacity:1; color:var(--amber-lt); }
+.back::before{ content:'⟵ '; opacity:0.7; }
+
+footer.mini{
+  margin-top:80px; text-align:center;
+  font-family:'Bayer',sans-serif;
+  font-size:8.5px; letter-spacing:0.32em; text-transform:uppercase;
+  color:var(--sage); opacity:0.55;
+}
+footer.mini .frequency{ color:var(--amber); }
+
+@media (max-width: 560px) {
+  main{ padding:60px 22px 50px; }
+  .threshold{ grid-template-columns:36px 1fr; column-gap:16px; }
+  .threshold h2{ font-size:26px; }
+  .quote{ padding:36px 18px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-amanita"></div>
+<div class="grain"></div>
+
+<main>
+
+  <a href="/home/" class="brand" title="fungai art">
+    <span class="dot"></span>
+    fungai art
+  </a>
+  <span class="eyebrow">The hidden room · for those who know</span>
+
+  <h1>The <em>mycelium.</em></h1>
+
+  <p class="opening">
+    What you see above the soil is the smaller part. The mushroom is the
+    <strong>fruit</strong>. The work is underground — a network of fine white
+    threads, larger than any tree, older than any boundary, sending sugar to
+    the weak, carbon to the dying, news to the curious. <strong>Hyphae</strong>
+    listening to hyphae. A consensus that doesn't vote.
+  </p>
+
+  <section class="threshold">
+    <div class="marker">01</div>
+    <div>
+      <h2>Below.</h2>
+      <p>
+        Everything visible is a temporary expression of something invisible.
+        The bottle, the label, the ceremony — these are the fruit. The body
+        of the work lives under the floor.
+      </p>
+    </div>
+  </section>
+
+  <section class="threshold">
+    <div class="marker">02</div>
+    <div>
+      <h2>Between.</h2>
+      <p>
+        Mycelium is the original protocol. It connects roots that would never
+        otherwise meet. The pine sends sugar to the seedling birch through a
+        fungal middleman. The forest pays its weak in <em>currencies older
+        than money.</em>
+      </p>
+    </div>
+  </section>
+
+  <section class="threshold">
+    <div class="marker">03</div>
+    <div>
+      <h2>Beyond.</h2>
+      <p>
+        The network grows by being useful, and rests when it isn't. If a node
+        stops feeding, the threads retract. Reputation, in the forest, is the
+        memory of past nutrients shared. Nothing here was ever taken — it
+        was passed along.
+      </p>
+    </div>
+  </section>
+
+  <div class="quote">
+    <p>&ldquo;Find the threads.<br/>Feed them. Trust them.<br/>They know the way.&rdquo;</p>
+    <span class="attr">— A note in the lab, undated</span>
+  </div>
+
+  <div class="label-band" aria-hidden="true"></div>
+
+  <p class="close">
+    If you found this page, someone <em>handed you the path.</em><br/>
+    Carry it the same way.
+  </p>
+
+  <div style="text-align:center;">
+    <a href="/home/" class="back">return to the apothecary</a>
+  </div>
+
+  <footer class="mini">
+    fungai art · <span class="frequency">111 Hz</span> · permalink only
+  </footer>
+
+</main>
+
+</body>
+</html>

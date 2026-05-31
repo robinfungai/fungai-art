@@ -436,13 +436,15 @@
 }
 </style>
 
-<!-- Login gate — shown if not logged in -->
-<div class="gate on" id="gate">
+<!-- Login gate — kept in DOM (hidden) so existing JS that targets #gate
+     still works. The academy is now open-access; only the lab notebook
+     section gates on sign-in (handled separately). -->
+<div class="gate" id="gate" style="display:none;">
   <div class="gate-card">
     <span class="gate-mark">⚗</span>
-    <div class="gate-title">Members only.</div>
-    <p class="gate-blurb">Alchemy Academy is exclusive to Spore members. Log in to the community portal to access the extraction library, lab notebook, and herbal engine.</p>
-    <a href="/community/" class="gate-btn">Log in Hyphae →</a>
+    <div class="gate-title">Sign in to weave deeper.</div>
+    <p class="gate-blurb">The library is open to all. The lab notebook is a member-only thread — sign in to add and categorise your own notes.</p>
+    <a href="/community/#signin" class="gate-btn">Sign in →</a>
   </div>
 </div>
 
@@ -483,28 +485,7 @@
     <a href="/mixology" class="hero-link">⚗ Open Herbal Blending Engine →</a>
   </div>
 
-  <!-- Traditions & Philosophies filter — applies to every herb section
-       below (Strictly Ayurvedic, Cross-over, Mediterranean, Amazonian,
-       European Folk). Each section is tagged with data-tradition; the
-       dropdown toggles their visibility. -->
-  <div class="sec-head" style="margin-top:48px;">
-    <div class="sec-eyebrow">Materia medica filter</div>
-    <div class="sec-title">Traditions &amp; <em>Philosophies.</em></div>
-    <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:14.5px;color:#8B7E62;line-height:1.7;margin-top:8px;max-width:62ch;">Pick a lineage to focus the library. The five methods stay visible &mdash; everything else filters to plants that trace back to the chosen tradition.</p>
-    <div style="margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-      <label for="tradFilter" style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:#8B7E62;">Tradition</label>
-      <select id="tradFilter" style="background:rgba(10,12,9,0.6);border:0.5px solid rgba(232,177,75,0.3);border-radius:6px;color:#E6D9B5;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:15px;padding:8px 14px;outline:none;cursor:pointer;">
-        <option value="all">◈ All traditions</option>
-        <option value="european">European Folk</option>
-        <option value="ayurveda">Ayurvedic</option>
-        <option value="tcm">TCM</option>
-        <option value="amazonian">Amazonian &amp; Andean</option>
-        <option value="mesopotamian">Mesopotamian</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="sec-head" style="margin-top:48px;">
+  <div class="sec-head">
     <div class="sec-eyebrow">Extraction science</div>
     <div class="sec-title">The five methods.</div>
   </div>
@@ -525,13 +506,30 @@
   </div>
   <div id="formulaBook" style="margin-top:32px;"></div>
 
-  <!-- ══ STRICTLY AYURVEDIC HERBS ══════════════════════════════════════════
-       Reference table per Robin's request. Plants and minerals unique to
-       the Indian subcontinent and Ayurvedic philosophy, grouped by
-       traditional action. These are also added to the herbal-engine-2 pool
-       so they're selectable when building tailored formulas. -->
-  <div class="trad-section" data-tradition="ayurveda">
+  <!-- Traditions & Philosophies filter — sits BETWEEN the universal
+       sections (Five methods + Formula book, which always show) and the
+       tradition-specific herb sections below. Picking a tradition filters
+       the .trad-section blocks; the upper sections never hide. -->
   <div class="sec-head" style="margin-top:80px;">
+    <div class="sec-eyebrow">Materia medica filter</div>
+    <div class="sec-title">Traditions &amp; <em>Philosophies.</em></div>
+    <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:14.5px;color:#8B7E62;line-height:1.7;margin-top:8px;max-width:62ch;">Pick a lineage to focus the library. Five methods + Formula book stay visible &mdash; everything below filters to plants that trace back to the chosen tradition.</p>
+    <div style="margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <label for="tradFilter" style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:#8B7E62;">Tradition</label>
+      <select id="tradFilter" style="background:rgba(10,12,9,0.6);border:0.5px solid rgba(232,177,75,0.3);border-radius:6px;color:#E6D9B5;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:15px;padding:8px 14px;outline:none;cursor:pointer;">
+        <option value="all">◈ All traditions</option>
+        <option value="european">European Folk</option>
+        <option value="ayurveda">Ayurvedic</option>
+        <option value="tcm">TCM</option>
+        <option value="amazonian">Amazonian &amp; Andean</option>
+        <option value="mesopotamian">Mesopotamian</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ══ STRICTLY AYURVEDIC HERBS ══════════════════════════════════════════ -->
+  <div class="trad-section" data-tradition="ayurveda">
+  <div class="sec-head" style="margin-top:48px;">
     <div class="sec-eyebrow">Materia medica · Indian subcontinent</div>
     <div class="sec-title">Strictly Ayurvedic <em>herbs.</em></div>
     <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:14.5px;color:#8B7E62;line-height:1.7;margin-top:8px;max-width:62ch;">Plants and minerals unique to the Indian subcontinent and Ayurvedic philosophy. Categorised by their primary traditional action.</p>
@@ -612,6 +610,122 @@
       </tbody>
     </table>
   </div>
+  </div>
+
+  <!-- ══ AMAZONIAN & ANDEAN HERBS ══════════════════════════════════════════
+       Sacred and tonic plants from the rainforest basin + Andean highlands.
+       Curated to surface what the philosophy filter showed empty before. -->
+  <div class="trad-section" data-tradition="amazonian">
+    <div class="sec-head" style="margin-top:80px;">
+      <div class="sec-eyebrow">Materia medica &middot; Amazon basin &middot; Andes</div>
+      <div class="sec-title">Amazonian &amp; <em>Andean.</em></div>
+      <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:14.5px;color:#8B7E62;line-height:1.7;margin-top:8px;max-width:62ch;">Plants from the rainforest basin and the high Andes &mdash; tonics, stimulants, ceremonial allies, and adaptogens with a tradition that long predates colonisation. Several are restricted or context-sensitive (noted inline).</p>
+    </div>
+    <div class="ayur-cat">
+      <div class="ayur-cat-title">Adaptogenic &amp; Vital &middot; <em>highland tonics</em></div>
+      <div class="ayur-list">
+        <div class="ayur-herb"><div class="ayur-h-name">Maca <span class="ayur-h-lat">Lepidium meyenii</span></div><div class="ayur-h-desc">Andean root (Peru, 4000m+). Hormonal &amp; HPG-axis support, fertility, stamina. Eaten cooked in the highlands; raw maca is heating. Three colour-strains (yellow / red / black) with overlapping but distinct profiles.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Suma <span class="ayur-h-lat">Pfaffia paniculata</span></div><div class="ayur-h-desc">"Brazilian ginseng." Pfaffic acids, ecdysteroids. Energy, immune resilience, endurance. Used by Amazonian peoples as a general wellness tonic for centuries.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Cat's Claw <span class="ayur-h-lat">Uncaria tomentosa</span></div><div class="ayur-h-desc">Inner bark of the rainforest liana. Ashaninka medicine. Immunomodulator, anti-inflammatory; oxindole alkaloids. Long traditional history for inflammation and recovery.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Chuchuhuasi <span class="ayur-h-lat">Maytenus krukovii</span></div><div class="ayur-h-desc">Bark macerated in cane spirit. Amazonian energetic warmer &mdash; pain, arthritis, sexual vitality, blood circulation. Bitter, drying, deeply grounding.</div></div>
+      </div>
+    </div>
+    <div class="ayur-cat">
+      <div class="ayur-cat-title">Sacred Stimulants &middot; <em>caffeine &amp; clarity</em></div>
+      <div class="ayur-list">
+        <div class="ayur-herb"><div class="ayur-h-name">Guayusa <span class="ayur-h-lat">Ilex guayusa</span></div><div class="ayur-h-desc">Kichwa &amp; Shuar dawn tea. Highest caffeine plant; smooth, jitter-free, paired with L-theobromine. Drunk before vision-fasts to sharpen perception.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Yerba Maté <span class="ayur-h-lat">Ilex paraguariensis</span></div><div class="ayur-h-desc">Guaraní origin. Caffeine + theobromine + mateine. Social, ceremonial, shared from the gourd. Antioxidant-rich. Traditional energiser.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Coca Leaf <span class="ayur-h-lat">Erythroxylum coca</span></div><div class="ayur-h-desc">Sacred Andean leaf (Inca, Quechua, Aymara). Altitude adaptation, hunger / fatigue suppression, mild stimulation. Whole-leaf chewing has nothing in common with the isolated alkaloid. Legal status varies &mdash; ceremonial / cultural context only.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Cacao <span class="ayur-h-lat">Theobroma cacao</span></div><div class="ayur-h-desc">"Food of the gods." Mesoamerican (Olmec / Maya / Aztec) origin. Theobromine + PEA + magnesium. Ceremonial doses (30&ndash;50g raw) open the heart; everyday doses sharpen focus.</div></div>
+      </div>
+    </div>
+    <div class="ayur-cat">
+      <div class="ayur-cat-title">Sexual Vitality &amp; Nervine &middot; <em>fire allies</em></div>
+      <div class="ayur-list">
+        <div class="ayur-herb"><div class="ayur-h-name">Muira Puama <span class="ayur-h-lat">Ptychopetalum olacoides</span></div><div class="ayur-h-desc">"Potency wood." Amazonian aphrodisiac &amp; nerve tonic. Free-radical scavenger; supports erectile function and libido in both sexes. Traditionally tinctured in cachaça.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Catuaba <span class="ayur-h-lat">Trichilia catigua</span></div><div class="ayur-h-desc">Tupi peoples' bark tonic. Mild CNS stimulation, dopaminergic effects, mood lift, aphrodisiac. Often paired with Muira Puama as the "lovers' formula."</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Damiana <span class="ayur-h-lat">Turnera diffusa</span></div><div class="ayur-h-desc">Aztec / Maya aphrodisiac &amp; mild euphoric. Acts on the nervous system; relaxes anxiety, gently opens. Traditional women's tonic; pairs with rose &amp; cacao.</div></div>
+      </div>
+    </div>
+    <div class="ayur-cat">
+      <div class="ayur-cat-title">Ceremonial &amp; Restricted &middot; <em>plant teachers</em></div>
+      <div class="ayur-list">
+        <div class="ayur-herb"><div class="ayur-h-name">Banisteriopsis caapi <span class="ayur-h-lat">Ayahuasca vine</span></div><div class="ayur-h-desc">"The vine of souls." Harmala alkaloids &mdash; reversible MAOI-A. Used ceremonially across the Amazon for thousands of years. <strong style="color:#E8714B;">RESTRICTED:</strong> never combine with SSRIs, tyramine foods, or other MAOIs. Plant medicine context only.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Chacruna <span class="ayur-h-lat">Psychotria viridis</span></div><div class="ayur-h-desc">DMT-bearing leaf, traditional ayahuasca admixture with B. caapi. <strong style="color:#E8714B;">RESTRICTED.</strong> Listed for completeness of the materia medica only.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">San Pedro <span class="ayur-h-lat">Echinopsis pachanoi</span></div><div class="ayur-h-desc">Andean cactus (Peru / Ecuador). Mescaline-bearing. 3000+ years of ceremonial use in Chavín &amp; Moche cultures. <strong style="color:#E8714B;">RESTRICTED.</strong> Curanderismo context.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Chilcuague <span class="ayur-h-lat">Heliopsis longipes</span></div><div class="ayur-h-desc">Mexican "golden root." Spilanthol numbs &amp; tingles. Antimicrobial, salivary, opens vocal expression. Used in Mycelium Trance ceremonies to wake sensory pathways.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ EUROPEAN FOLK HERBS ═════════════════════════════════════════════
+       Wild plants of the Nordic/Atlantic/Mediterranean folk tradition.
+       Same dropdown surfaces these when "European Folk" is selected. -->
+  <div class="trad-section" data-tradition="european">
+    <div class="sec-head" style="margin-top:80px;">
+      <div class="sec-eyebrow">Materia medica &middot; the woods &middot; the meadow</div>
+      <div class="sec-title">European <em>Folk.</em></div>
+      <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:14.5px;color:#8B7E62;line-height:1.7;margin-top:8px;max-width:62ch;">The unbroken cunning-craft of the forest, hedge and field &mdash; Nordic foraging, Anglo-Saxon leechcraft, Mediterranean simples. Plants that grow where Robin walks.</p>
+    </div>
+    <div class="ayur-cat">
+      <div class="ayur-cat-title">Nordic Forest &middot; <em>boreal allies</em></div>
+      <div class="ayur-list">
+        <div class="ayur-herb"><div class="ayur-h-name">Chaga <span class="ayur-h-lat">Inonotus obliquus</span></div><div class="ayur-h-desc">Sterile conk of wounded birch. Betulin, betulinic acid, polysaccharides. The silent alchemist of Nordic medicine &mdash; immunomodulator, deep antioxidant, slow transformer. Dual-extracted (water + ethanol) to draw both lineages of compound.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Pine Pollen <span class="ayur-h-lat">Pinus sylvestris</span></div><div class="ayur-h-desc">Golden dust of late spring. Free testosterone (trace), full amino-acid profile, brassinosteroids. The forest's breath made visible. Best collected dawn from male cones, dried fast.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Pine Cones (young, green) <span class="ayur-h-lat">Pinus sylvestris</span></div><div class="ayur-h-desc">June harvest. Resin-rich, terpene-dense. Anti-inflammatory, expectorant. Traditional Russian / Nordic syrup for lung resilience. Sacred geometry made tangible.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Amanita Muscaria <span class="ayur-h-lat">Fly Agaric</span></div><div class="ayur-h-desc">Siberian, Sami, Baltic ceremonial mushroom. Ibotenic acid → muscimol via slow drying / ethanol. Body anchor, dream lengthener, microdose nervine. <strong style="color:#E8714B;">RESTRICTED:</strong> dose-sensitive, preparation matters.</div></div>
+      </div>
+    </div>
+    <div class="ayur-cat">
+      <div class="ayur-cat-title">Hedge &amp; Meadow &middot; <em>simples of the field</em></div>
+      <div class="ayur-list">
+        <div class="ayur-herb"><div class="ayur-h-name">Yarrow <span class="ayur-h-lat">Achillea millefolium</span></div><div class="ayur-h-desc">Achilles' wound herb. Bitter, diaphoretic, haemostatic. Opens pores in fever; closes wounds. The pioneer of the meadow medicine cabinet.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Elderflower &amp; Berry <span class="ayur-h-lat">Sambucus nigra</span></div><div class="ayur-h-desc">Tree of the Cailleach. Flowers diaphoretic for cold/flu; berries immunomodulating &amp; antiviral. Cordial-tradition across all of Northern Europe. Cook the berries &mdash; raw they're sickening.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Mugwort <span class="ayur-h-lat">Artemisia vulgaris</span></div><div class="ayur-h-desc">St John's Eve herb. Dream-bringer, women's tonic, digestive bitter. Burnt as smudge across Europe (and as moxa across China). Thujone-containing &mdash; use temperately in pregnancy.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Nettle <span class="ayur-h-lat">Urtica dioica</span></div><div class="ayur-h-desc">The mineral powerhouse. Iron, magnesium, silica, chlorophyll. Spring tonic, blood builder, kidney support. Cooked / dried removes the sting. Robin's first foraging spring crop.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Dandelion <span class="ayur-h-lat">Taraxacum officinale</span></div><div class="ayur-h-desc">Root (decoction) &mdash; liver, gallbladder, digestion. Leaf (cold infusion) &mdash; kidney, oedema, potassium-sparing diuretic. The whole plant a teaching: bitter root, sweet flower, milk-sap healer.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Valerian <span class="ayur-h-lat">Valeriana officinalis</span></div><div class="ayur-h-desc">Cat's-favourite root. GABAergic nervine, sleep anchor. Smells like old socks; works like a quiet hand on the chest. Backbone of Robin's Sleepy Sleepy blend.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MESOPOTAMIAN & LEVANTINE HERBS ═══════════════════════════════════
+       The oldest written medicine in the world &mdash; Sumerian, Akkadian,
+       Babylonian, Persian, Phoenician. Many entered Greek then Galenic
+       medicine; others moved into Ayurveda along the silk routes. -->
+  <div class="trad-section" data-tradition="mesopotamian">
+    <div class="sec-head" style="margin-top:80px;">
+      <div class="sec-eyebrow">Materia medica &middot; the fertile crescent &middot; the Levant</div>
+      <div class="sec-title">Mesopotamian &amp; <em>Levantine.</em></div>
+      <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:14.5px;color:#8B7E62;line-height:1.7;margin-top:8px;max-width:62ch;">The oldest written materia medica in the world. Sumerian clay tablets list these by name 4000 years before Galen. Many travelled the Silk Road into Ayurveda; others stayed local and define the kitchens of Beirut, Aleppo, Isfahan to this day.</p>
+    </div>
+    <div class="ayur-cat">
+      <div class="ayur-cat-title">Sacred Resins &middot; <em>temple incenses</em></div>
+      <div class="ayur-list">
+        <div class="ayur-herb"><div class="ayur-h-name">Frankincense <span class="ayur-h-lat">Boswellia sacra / serrata</span></div><div class="ayur-h-desc">Tree-tear from Oman, Yemen, Somalia. Boswellic acids &mdash; potent 5-LOX inhibitor, anti-inflammatory for joints, gut, lungs. Burned in Sumerian temples; central to Galenic medicine.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Myrrh <span class="ayur-h-lat">Commiphora myrrha</span></div><div class="ayur-h-desc">Bitter resin of the Horn of Africa &amp; Arabian peninsula. Antimicrobial, astringent, blood-mover. Used since Egypt for embalming, gum disease, wound care. TCM uses the same resin (Mo Yao).</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Galbanum <span class="ayur-h-lat">Ferula gummosa</span></div><div class="ayur-h-desc">Persian umbellifer resin. Listed in Exodus as a temple incense ingredient. Expectorant, nervine, antispasmodic. Sharp, green, fox-like aroma.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Mastic <span class="ayur-h-lat">Pistacia lentiscus</span></div><div class="ayur-h-desc">Chios island resin. Antimicrobial against H. pylori, anti-inflammatory for the gut. Chewed in the Levant for breath and digestion since antiquity.</div></div>
+      </div>
+    </div>
+    <div class="ayur-cat">
+      <div class="ayur-cat-title">Kitchen Pharmacy &middot; <em>spices of the crescent</em></div>
+      <div class="ayur-list">
+        <div class="ayur-herb"><div class="ayur-h-name">Saffron <span class="ayur-h-lat">Crocus sativus</span></div><div class="ayur-h-desc">Stigmas of the autumn crocus. Persian origin. Mood-elevating (comparable to SSRIs at 30mg), vision-supportive, womb-tonic. Treasured since the Minoans &mdash; weight-for-weight the most valuable spice.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Cumin <span class="ayur-h-lat">Cuminum cyminum</span></div><div class="ayur-h-desc">Nile-valley origin. Warming carminative, digestive accelerator, mild iron source. The seed in every spice mix from Marrakech to Mumbai.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Black Seed <span class="ayur-h-lat">Nigella sativa</span></div><div class="ayur-h-desc">"The seed of blessing." Thymoquinone &mdash; antimicrobial, immunomodulating, antiallergic. Bronchial, digestive, metabolic. Hadith calls it a cure for everything except death.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Fenugreek <span class="ayur-h-lat">Trigonella foenum-graecum</span></div><div class="ayur-h-desc">Mesopotamian crop &middot; Galen's "horned hay." Galactagogue, blood-sugar moderator, oestrogenic. Bitter sprouted seeds in Levantine cuisine; powdered seeds for milk supply postpartum.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Sumac <span class="ayur-h-lat">Rhus coriaria</span></div><div class="ayur-h-desc">Red berry of the Levantine highlands. Tannic, sour, blood-tonic; high in antioxidants. Pre-lemon souring agent in Roman cooking; modernly studied for glucose control.</div></div>
+      </div>
+    </div>
+    <div class="ayur-cat">
+      <div class="ayur-cat-title">Sacred Flowers &amp; Aromatics &middot; <em>opening allies</em></div>
+      <div class="ayur-list">
+        <div class="ayur-herb"><div class="ayur-h-name">Damask Rose <span class="ayur-h-lat">Rosa damascena</span></div><div class="ayur-h-desc">Persian rose &mdash; the heart's plant. Mild sedative, antidepressant, cardioprotective. Rose-water (gulab) traded across the Islamic world. Sufi symbol of divine love.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Hyssop <span class="ayur-h-lat">Hyssopus officinalis</span></div><div class="ayur-h-desc">Biblical purification herb. Expectorant, antiviral, mildly sedative. In Levantine za'atar; in Solomon's temple cleansing rites.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Anise <span class="ayur-h-lat">Pimpinella anisum</span></div><div class="ayur-h-desc">Carminative, galactagogue, mild expectorant. Backbone of arak, ouzo, raki. Pliny credits it with fresh breath and easier childbirth.</div></div>
+      </div>
+    </div>
   </div>
 
   <style>
@@ -982,11 +1096,44 @@ function saveEntry(chapterId) {
   const entries = loadEntries(chapterId);
   entries.unshift({ text, ts: Date.now() });
   saveEntries(chapterId, entries);
+  // Mirror the new entry into the MYCO knowledge index. Stored locally only;
+  // no API call is made here. When MYCO is activated the indexer will pick
+  // these up. See indexEntryForMyco() below.
+  try { indexEntryForMyco({ text, chapterId, ts: Date.now() }); } catch (e) { console.warn('[myco-index] skip:', e); }
   textarea.value = '';
   btn.textContent = '✓ Saved';
   btn.classList.add('saved');
   setTimeout(() => { btn.textContent = 'Save entry'; btn.classList.remove('saved'); }, 2000);
   renderEntries(chapterId);
+}
+
+// MYCO knowledge index — lab notes get mirrored here when saved so MYCO
+// (the network's AI agent) can read them once activated. NO API call is made;
+// this only writes to localStorage. Robin asked to "set it up" without
+// spending credits — when MYCO goes live, the agent reads `fungai_myco_index`
+// and embeds each entry on demand.
+function indexEntryForMyco({ text, chapterId, ts }) {
+  const idxKey = 'fungai_myco_index';
+  let idx = [];
+  try { idx = JSON.parse(localStorage.getItem(idxKey) || '[]'); } catch { idx = []; }
+  if (!Array.isArray(idx)) idx = [];
+  const author = (() => {
+    try { return JSON.parse(localStorage.getItem('spore_active_member_full') || 'null')?.name || null; }
+    catch { return null; }
+  })();
+  idx.unshift({
+    source:   'academy.lab',
+    chapterId,
+    text,
+    ts:       ts || Date.now(),
+    author,
+    embedded: false,        // becomes true once MYCO indexes it
+    embedding: null,        // vector slot, filled when embeddings are computed
+  });
+  // Keep the index bounded so it doesn't grow unbounded in localStorage.
+  // The 400-most-recent entries is plenty for embedding context.
+  if (idx.length > 400) idx.length = 400;
+  try { localStorage.setItem(idxKey, JSON.stringify(idx)); } catch (e) {}
 }
 
 function deleteEntry(chapterId, index) {
@@ -1067,14 +1214,11 @@ function buildLabNotebook() {
 }
 
 // ── Login gate check ──────────────────────────────────────
+// Academy is open-access now. Gate is permanently hidden; the lab
+// notebook below handles its own member-only state.
 (function checkGate() {
-  const member = localStorage.getItem('spore_active_member');
-  if (member) {
-    // Logged in — hide gate and allow access
-    document.getElementById('gate').classList.remove('on');
-    document.getElementById('gate').style.display = 'none';
-  }
-  // If not logged in, gate stays visible (blocking the page)
+  const g = document.getElementById('gate');
+  if (g) { g.classList.remove('on'); g.style.display = 'none'; }
 })();
 
 // Run on page load

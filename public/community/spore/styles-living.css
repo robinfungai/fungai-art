@@ -1906,6 +1906,22 @@ input[type='range'].cs-range::-webkit-slider-thumb {
   background: rgba(232,177,75,0.06);
   border-color: rgba(232,177,75,0.25);
 }
+.welcome-nav-mycel {
+  margin-left: 4px;
+  background: linear-gradient(135deg, rgba(232,177,75,0.18), rgba(232,177,75,0.06)) !important;
+  border-color: rgba(232,177,75,0.45) !important;
+  color: var(--nutrient-l) !important;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+}
+.welcome-nav-mycel .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--nutrient);
+  box-shadow: 0 0 8px rgba(232,177,75,0.65);
+  animation: mycel-pulse 2.4s ease-in-out infinite;
+}
+@keyframes mycel-pulse { 0%,100%{ opacity:0.55; } 50%{ opacity:1; } }
 @media (max-width: 720px) {
   .welcome-nav-menu { gap: 3px; }
   .welcome-nav-menu a { font-size: 8.5px; padding: 5px 8px; letter-spacing: 0.14em; }
