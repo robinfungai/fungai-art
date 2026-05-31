@@ -44,8 +44,14 @@ const LAND = [
   [[-10,35],[-7,36.5],[-3,36],[2,36],[6,37],[10,36],[14,37.5],[18,38],[22,38.5],[26,37.5],[30,37],[33,36.5],[37,38],[40,38],[38,40],[36,42],[34,43],[31,44],[28,44],[26,46],[26,48],[25,50],[24,52],[22,54],[18,55],[14,55],[10,55],[6,56],[3,58],[6,60],[10,62],[14,64],[18,66],[22,68],[26,69],[30,70],[28,67],[26,64],[22,60],[18,58],[14,56],[10,55],[6,54],[2,52],[-1,51],[-4,49],[-6,46],[-8,42],[-9,38],[-10,35]],
   // UK + Ireland
   [[-5,50],[-2,50.5],[0,51],[2,52],[2,55],[1,57],[-2,58],[-5,57],[-6,54],[-5,50]],
-  // Africa
-  [[-18,37],[-15,36],[-10,35.5],[-5,36],[0,36],[5,37],[10,37],[15,37],[20,37],[25,37],[30,37],[34,37],[38,37],[42,16],[46,12],[50,12],[51,8],[48,2],[44,-2],[42,-8],[38,-15],[34,-22],[30,-30],[24,-34],[18,-35],[12,-36],[6,-35],[0,-22],[-6,-12],[-12,-2],[-15,5],[-17,12],[-18,18],[-18,25],[-18,30],[-18,37]],
+  // Africa — denser coastline so the continent actually reads as Africa:
+  // proper Med north coast (Tangier → Algiers → Tunis → Libya bulge dipping
+  // south at Sirte → Alex → Sinai), then Red Sea down to Horn (Bab-el-Mandeb
+  // at 43,12), east coast bulging out at Somalia + curving into Kenya/Tanzania/
+  // Mozambique, sharp Cape (18,-34.8), then up the Atlantic with the West-
+  // African bulge at Senegal (-17.5,14) / Guinea Gulf indent (Niger delta
+  // around 6,4) / Cameroon corner / and back up to the Strait.
+  [[-5.6,35.9],[-2.2,35.1],[1.2,36.5],[3.1,36.8],[8.7,37.0],[10.2,36.8],[11.1,37.1],[10.8,33.9],[15.5,32.6],[19.5,30.4],[20.2,32.1],[23.9,32.5],[27.9,31.2],[32.3,31.3],[34.3,29.6],[34.9,28.0],[38.0,21.0],[40.0,18.0],[43.1,12.7],[44.0,11.5],[51.3,11.8],[51.4,10.5],[44.0,4.0],[41.7,-1.9],[40.5,-6.5],[40.9,-15.0],[35.5,-23.9],[32.4,-28.5],[26.0,-33.7],[19.6,-34.6],[18.4,-32.0],[16.4,-28.5],[14.5,-22.0],[13.0,-12.5],[8.7,-0.6],[9.4,2.0],[6.4,4.5],[3.6,6.4],[-2.7,5.0],[-7.6,4.6],[-13.3,9.0],[-16.0,12.5],[-17.5,14.7],[-16.3,17.0],[-15.5,20.0],[-13.0,23.4],[-9.9,29.7],[-9.3,32.5],[-7.0,33.7],[-5.6,35.9]],
   // Asia mainland
   [[25,42],[28,44],[32,42],[36,40],[40,38],[46,36],[52,28],[58,24],[64,22],[68,18],[72,12],[76,8],[80,10],[84,12],[88,10],[92,6],[96,4],[100,2],[104,4],[108,8],[112,14],[116,20],[120,24],[124,28],[128,32],[132,38],[136,42],[140,45],[145,48],[148,52],[145,56],[138,60],[120,68],[100,72],[80,74],[60,72],[45,71],[36,68],[30,65],[26,58],[24,52],[25,46],[25,42]],
   // Indian subcontinent
@@ -186,16 +192,26 @@ function LivingNetworkMap({
         ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
       }
 
-      // ── Land masses — antialiased, round-joined for smoother edges ──
+      // ── Land masses — quadratic-midpoint smoothing so the coastlines
+      // read as curves instead of polygon edges. Each segment from p[i] to
+      // p[i+1] is replaced by a quadratic curve through midpoint(p[i],p[i+1])
+      // with p[i+1] as the control. Visually identical area + cheap.
       ctx.lineJoin = 'round';
       ctx.lineCap = 'round';
       LAND.forEach(poly => {
-        if (!poly.length) return;
+        if (poly.length < 3) return;
+        const pts = poly.map(([lon, lat]) => xy(lat, lon));
+        const n = pts.length;
         ctx.beginPath();
-        poly.forEach(([lon, lat], i) => {
-          const { x, y } = xy(lat, lon);
-          if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-        });
+        // Start at midpoint between last and first so the loop closes cleanly.
+        const start = { x: (pts[n-1].x + pts[0].x) / 2, y: (pts[n-1].y + pts[0].y) / 2 };
+        ctx.moveTo(start.x, start.y);
+        for (let i = 0; i < n; i++) {
+          const cur = pts[i];
+          const nxt = pts[(i + 1) % n];
+          const mid = { x: (cur.x + nxt.x) / 2, y: (cur.y + nxt.y) / 2 };
+          ctx.quadraticCurveTo(cur.x, cur.y, mid.x, mid.y);
+        }
         ctx.closePath();
         ctx.fillStyle = '#0C1F14';
         ctx.fill();

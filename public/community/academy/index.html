@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Alchemy Academy — Fungai Art</title>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
-    <link rel="alternate icon" type="image/png" href="/favicon.png"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
+    <link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
     <link rel="apple-touch-icon" href="/fungai-art-logo.png"/>
   <link rel="preconnect" href="https://api.fontshare.com" />
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=zodiak@400,500&f[]=geist-mono@400,500&display=swap" />
@@ -465,7 +465,7 @@
 
   <nav class="nav">
     <div class="nav-brand">
-      <img src="/fungi.png" alt="Fungai Art" style="height:32px;width:32px;border-radius:50%;object-fit:cover;border:1px solid rgba(232,177,75,0.55);box-shadow:0 0 10px rgba(232,177,75,0.4);background:radial-gradient(circle at 35% 35%,rgba(232,177,75,0.18),rgba(7,17,13,0.6) 75%)" onerror="this.style.display='none'">
+      <img src="/fungi.png?v=3" alt="Fungai Art" style="height:32px;width:32px;border-radius:50%;object-fit:cover;border:1px solid rgba(232,177,75,0.55);box-shadow:0 0 10px rgba(232,177,75,0.4);background:radial-gradient(circle at 35% 35%,rgba(232,177,75,0.18),rgba(7,17,13,0.6) 75%)" onerror="this.style.display='none'">
       <div class="nav-name">Alchemy Academy</div>
     </div>
     <div style="display:flex;gap:8px;">
@@ -482,7 +482,28 @@
     <a href="/mixology" class="hero-link">⚗ Open Herbal Blending Engine →</a>
   </div>
 
-  <div class="sec-head">
+  <!-- Traditions & Philosophies filter — applies to every herb section
+       below (Strictly Ayurvedic, Cross-over, Mediterranean, Amazonian,
+       European Folk). Each section is tagged with data-tradition; the
+       dropdown toggles their visibility. -->
+  <div class="sec-head" style="margin-top:48px;">
+    <div class="sec-eyebrow">Materia medica filter</div>
+    <div class="sec-title">Traditions &amp; <em>Philosophies.</em></div>
+    <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:14.5px;color:#8B7E62;line-height:1.7;margin-top:8px;max-width:62ch;">Pick a lineage to focus the library. The five methods stay visible &mdash; everything else filters to plants that trace back to the chosen tradition.</p>
+    <div style="margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <label for="tradFilter" style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:#8B7E62;">Tradition</label>
+      <select id="tradFilter" style="background:rgba(10,12,9,0.6);border:0.5px solid rgba(232,177,75,0.3);border-radius:6px;color:#E6D9B5;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:15px;padding:8px 14px;outline:none;cursor:pointer;">
+        <option value="all">◈ All traditions</option>
+        <option value="european">European Folk</option>
+        <option value="ayurveda">Ayurvedic</option>
+        <option value="tcm">TCM</option>
+        <option value="amazonian">Amazonian &amp; Andean</option>
+        <option value="mesopotamian">Mesopotamian</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="sec-head" style="margin-top:48px;">
     <div class="sec-eyebrow">Extraction science</div>
     <div class="sec-title">The five methods.</div>
   </div>
@@ -508,6 +529,7 @@
        the Indian subcontinent and Ayurvedic philosophy, grouped by
        traditional action. These are also added to the herbal-engine-2 pool
        so they're selectable when building tailored formulas. -->
+  <div class="trad-section" data-tradition="ayurveda">
   <div class="sec-head" style="margin-top:80px;">
     <div class="sec-eyebrow">Materia medica · Indian subcontinent</div>
     <div class="sec-title">Strictly Ayurvedic <em>herbs.</em></div>
@@ -547,8 +569,10 @@
       <div class="ayur-herb"><div class="ayur-h-name">Rudraksha <span class="ayur-h-lat">Elaeocarpus ganitrus</span></div><div class="ayur-h-desc">Seed pods used. Highly revered for calming the central nervous system, stabilising blood pressure, and settling the mind for meditation.</div></div>
     </div>
   </div>
+  </div>
 
   <!-- ══ CROSS-OVER HERBS (Ayurveda + TCM) ═════════════════════════════════ -->
+  <div class="trad-section" data-tradition="ayurveda,tcm">
   <div class="sec-head" style="margin-top:80px;">
     <div class="sec-eyebrow">Two traditions, one plant</div>
     <div class="sec-title">Cross-over <em>herbs.</em></div>
@@ -586,6 +610,7 @@
         <tr><td><em>Cassia fistula</em></td><td>Amaltas fruit pulp</td><td>Bo Luo Hui <span class="zh-sub">(analog)</span></td><td><strong>Clears Heat &amp; Relieves Stagnation</strong> &mdash; cooling, moistening laxative for heat-induced constipation.</td></tr>
       </tbody>
     </table>
+  </div>
   </div>
 
   <style>
@@ -1334,9 +1359,31 @@ function lnMoveNote(fromCat, id, toCat){
   function renderBook(){
     var host = document.getElementById('formulaBook');
     if (!host) return;
-    var list = [];
-    try { list = JSON.parse(localStorage.getItem('fungai_alchemy_academy') || '[]'); } catch(e) {}
-    if (!Array.isArray(list)) list = [];
+    // Merge both stores — the Herbal Engine writes to fungai_alchemy_academy,
+    // Mixology writes to fungai_formulas. We dedupe by ts+name so the same
+    // formula saved twice doesn't appear twice.
+    var listA = [];
+    var listB = [];
+    try { listA = JSON.parse(localStorage.getItem('fungai_alchemy_academy') || '[]'); } catch(e) {}
+    try { listB = JSON.parse(localStorage.getItem('fungai_formulas') || '[]'); } catch(e) {}
+    if (!Array.isArray(listA)) listA = [];
+    if (!Array.isArray(listB)) listB = [];
+    // Normalise mixology entries to the academy shape (split herbs string into
+    // {n: ...} objects, tag source = 'mixology', preserve maker/note for display).
+    var listBNorm = listB.map(function(e){
+      var herbs = typeof e.herbs === 'string'
+        ? e.herbs.split(',').map(function(s){ return { n: s.trim() }; }).filter(function(h){ return h.n; })
+        : (Array.isArray(e.herbs) ? e.herbs : []);
+      return {
+        name: e.name || 'Untitled blend',
+        herbs: herbs,
+        source: 'mixology',
+        ts: e.ts,
+        maker: e.maker || null,
+        note: e.note || null,
+      };
+    });
+    var list = listA.concat(listBNorm).sort(function(a,b){ return (b.ts||0) - (a.ts||0); });
     if (!list.length) {
       host.innerHTML = '<div style="padding:36px 28px;border:0.5px dashed rgba(232,177,75,0.3);border-radius:12px;background:rgba(10,12,9,0.4);text-align:center;">' +
         '<div style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:#8B7E62;margin-bottom:8px;">Empty</div>' +
@@ -1366,6 +1413,8 @@ function lnMoveNote(fromCat, id, toCat){
         (herbs.length ? '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;">' +
           herbs.map(function(h){ return '<span style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.08em;color:#C9B894;background:rgba(232,177,75,0.07);border:0.5px solid rgba(232,177,75,0.18);border-radius:3px;padding:2px 7px;">' + esc(h) + '</span>'; }).join('') +
         '</div>' : '') +
+        (e.maker ? '<div style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:#9ED438;margin-bottom:6px;">by ' + esc(e.maker) + '</div>' : '') +
+        (e.note ? '<blockquote style="font-family:\'Cormorant Garamond\',Georgia,serif;font-style:italic;font-size:13.5px;color:#C9B894;line-height:1.55;margin:0 0 10px;padding-left:10px;border-left:2px solid rgba(232,177,75,0.35);">' + esc(e.note) + '</blockquote>' : '') +
         '<div>' + origin + '</div>' +
       '</div>';
     }).join('');
@@ -1377,7 +1426,29 @@ function lnMoveNote(fromCat, id, toCat){
     renderBook();
   }
   // Re-render if another tab updates the store.
-  window.addEventListener('storage', function(e){ if (e.key === 'fungai_alchemy_academy') renderBook(); });
+  window.addEventListener('storage', function(e){ if (e.key === 'fungai_alchemy_academy' || e.key === 'fungai_formulas') renderBook(); });
+})();
+
+// ── Traditions & Philosophies filter ────────────────────────────────────
+// Toggles visibility of .trad-section blocks based on the dropdown's value.
+// data-tradition can be a single id ("ayurveda") or a comma-list
+// ("ayurveda,tcm"); the section is shown if the picked tradition is in the
+// list, or if the user picks "all".
+(function tradFilter(){
+  function apply(value){
+    document.querySelectorAll('.trad-section').forEach(function(sec){
+      var tags = (sec.getAttribute('data-tradition') || '').split(',').map(function(s){ return s.trim(); });
+      sec.style.display = (value === 'all' || tags.indexOf(value) !== -1) ? '' : 'none';
+    });
+  }
+  function init(){
+    var sel = document.getElementById('tradFilter');
+    if (!sel) return;
+    sel.addEventListener('change', function(){ apply(sel.value); });
+    apply(sel.value);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 })();
 </script>
 <script src="/cookie-banner.js" defer></script>

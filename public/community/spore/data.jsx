@@ -172,6 +172,20 @@ const NETWORK_NODES = [
     requirement: 'Requires 300 $H + Forager reputation to propose a node.',
   },
   {
+    id: 'riga',
+    name: 'Riga Castle',
+    sub: 'Baltic forest · event grounds',
+    region: 'LV',
+    color: '#9ED438',
+    latlon: [56.95, 24.10],
+    activity: 'live',
+    contributions: [
+      { id: 'gather',  label: 'Forest gathering',  sub: 'Baltic woodland residency', earn: 70, rep: 2 },
+      { id: 'event',   label: 'Event hosting',     sub: 'castle event-space',        earn: 80, rep: 2 },
+      { id: 'ceremony',label: 'Slow ceremony',     sub: 'woodland rite',             earn: 60, rep: 1 },
+    ],
+  },
+  {
     id: 'nosara',
     name: 'Nosara',
     sub: 'Costa Rica · Pacific coast',
@@ -354,12 +368,17 @@ const EXPERIENCES = [
   },
 ];
 
+// Tier colors are also used as the foreground for `tier · founding` chips
+// rendered directly on the dark-forest page background. The previous Root
+// Node and Forager values (#3C3489 / #534AB7) were dark blues that disappeared
+// against the forest gradient — brightened here so the chips stay legible on
+// every page. Order/min values unchanged.
 const REPUTATION_TIERS = [
-  { min: 0,   label: 'Spore',     color: '#854F0B' },
-  { min: 1,   label: 'Palawan',   color: '#3B6D11' },
-  { min: 3,   label: 'Mycelium',  color: '#0F6E56' },
-  { min: 6,   label: 'Forager',   color: '#534AB7' },
-  { min: 10,  label: 'Root Node', color: '#3C3489' },
+  { min: 0,   label: 'Spore',     color: '#D49B3E' },
+  { min: 1,   label: 'Palawan',   color: '#8FCB44' },
+  { min: 3,   label: 'Mycelium',  color: '#3DC9A5' },
+  { min: 6,   label: 'Forager',   color: '#9D90F0' },
+  { min: 10,  label: 'Root Node', color: '#B7AEFF' },
 ];
 
 function reputationTier(repPoints) {
@@ -393,7 +412,7 @@ const MEMBERS = [
   {
     id: 'stephanie',
     name: 'Stephanie',
-    role: 'Sound Healer',
+    role: 'Facilitator',
     node: 'berlin',
     rep: 12,
     balance: 100,
@@ -401,7 +420,9 @@ const MEMBERS = [
     admin: true,
     founding: true,
   },
+  // Vi removed from founding cohort per design pass.
   {
+    // Vi — kept in the network but no longer flagged as founding (per design pass)
     id: 'vi',
     name: 'Vi',
     role: 'Documenter',
@@ -409,16 +430,15 @@ const MEMBERS = [
     rep: 11,
     balance: 0,
     focus: 'Photography · field notes · archive',
-    founding: true,
   },
   {
     id: 'angela',
     name: 'Angela',
-    role: 'Forager',
+    role: 'PR & Ceremony',
     node: 'sweden',
     rep: 11,
     balance: 0,
-    focus: 'Wild harvest · species ID · Nordic forests',
+    focus: 'Outreach · ceremony · plant communication',
     founding: true,
   },
   {
@@ -463,11 +483,11 @@ const MEMBERS = [
   {
     id: 'luna',
     name: 'Luna',
-    role: 'Alchemist',
+    role: 'Mixologist',
     node: 'lisbon',
     rep: 1,
     balance: 0,
-    focus: 'Spagyric extraction · plant alchemy · lunar timing',
+    focus: 'Mixology · spagyric extraction · plant alchemy · lunar timing',
   },
   {
     id: 'leni',

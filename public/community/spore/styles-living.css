@@ -1882,6 +1882,34 @@ input[type='range'].cs-range::-webkit-slider-thumb {
   align-items: center;
   gap: 10px;
 }
+.welcome-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.welcome-nav-menu a {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mycelium-d);
+  text-decoration: none;
+  padding: 7px 11px;
+  border: 0.5px solid transparent;
+  border-radius: 999px;
+  transition: color 0.18s, background 0.18s, border-color 0.18s;
+}
+.welcome-nav-menu a:hover {
+  color: var(--nutrient-l);
+  background: rgba(232,177,75,0.06);
+  border-color: rgba(232,177,75,0.25);
+}
+@media (max-width: 720px) {
+  .welcome-nav-menu { gap: 3px; }
+  .welcome-nav-menu a { font-size: 8.5px; padding: 5px 8px; letter-spacing: 0.14em; }
+}
 .welcome-brand-name {
   font-family: var(--font-display);
   font-style: italic;
@@ -2039,6 +2067,12 @@ input[type='range'].cs-range::-webkit-slider-thumb {
 .welcome-section-wide {
   max-width: 1180px;
   padding: 48px 24px 0;
+}
+
+/* Weave-path graph — Obsidian-style network view of the 5 tiers. Stack
+   the graph + side description on narrower screens so neither gets squeezed. */
+@media (max-width: 820px) {
+  .weave-path-graph { grid-template-columns: 1fr !important; }
 }
 .welcome-map-frame {
   background: var(--soil-2);

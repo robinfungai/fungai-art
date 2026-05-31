@@ -4,17 +4,17 @@
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Herbal Engine — Fungai Art</title>
 <meta name="description" content="168 botanicals, 5 elements, 4 traditions. The Fungai Art materia medica."/>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
-    <link rel="alternate icon" type="image/png" href="/favicon.png"/>
-    <link rel="apple-touch-icon" href="/fungi.png"/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
+    <link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
+    <link rel="apple-touch-icon" href="/fungi.png?v=3"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Fungai Art"/>
 <meta property="og:title" content="Herbal Engine — Fungai Art"/>
 <meta property="og:description" content="168 botanicals, 5 elements, 4 traditions. The Fungai Art materia medica."/>
-<meta property="og:image" content="https://www.fungai.art/fungi.png"/>
+<meta property="og:image" content="https://www.fungai.art/fungi.png?v=3"/>
 <meta property="og:url" content="https://www.fungai.art/mixology"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://www.fungai.art/fungi.png"/>
+<meta name="twitter:image" content="https://www.fungai.art/fungi.png?v=3"/>
 <link rel="preconnect" href="https://api.fontshare.com"/>
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500&f[]=satoshi@400,500,600&f[]=geist-mono@400&display=swap"/>
 <script src="/herbs-data.js"></script>
@@ -234,6 +234,7 @@ button{font-family:inherit;cursor:pointer;}
 <div class="controls">
   <div class="srch"><span class="srch-ico">◎</span><input class="srch-i" id="si" type="text" placeholder="Search by name or function…" oninput="render()"/></div>
   <div class="elem-bar" id="elemBar"></div>
+  <div class="cats" id="philBar" style="margin-bottom:2px"></div>
   <div class="cats" id="catBar"></div>
   <div class="cats" id="tcmBar" style="margin-top:2px"></div>
 </div>
@@ -269,6 +270,50 @@ const EL_COL={F:'#E8714B',E:'#6BD66F',W:'#4FA8E0',A:'#A88FE0',S:'#E8B14B'};
 const EL_NAME={F:'Fire',E:'Earth',W:'Water',A:'Air',S:'Spirit'};
 const EXT_NAME={D:'Double Extraction',T:'Cold Tincture',DC:'Decoction',O:'Oleoresin',SP:'Spagyric'};
 const EXT_ANCHOR={D:'double',T:'tincture',DC:'decoct',O:'oleo',SP:'spagyric'};
+
+// Traditions & Philosophies — Robin wants to filter the materia medica by
+// the lineage each herb traces back to. Tags are hand-curated below by
+// herb id; anything not in this map defaults to 'european' (the broad
+// catch-all for western herbalism + Nordic foraging). A single herb can
+// belong to multiple traditions (e.g. ginger = TCM + Ayurveda).
+const PHILOS = [
+  { id:'all',         l:'All traditions' },
+  { id:'european',    l:'European Folk' },
+  { id:'tcm',         l:'TCM' },
+  { id:'ayurveda',    l:'Ayurvedic' },
+  { id:'amazonian',   l:'Amazonian & Andean' },
+  { id:'mesopotamian',l:'Mesopotamian' },
+];
+const PHIL_MAP = {
+  // TCM
+  schizandra:['tcm'], astragalus:['tcm'], gojiBerry:['tcm'], dongQuai:['tcm'],
+  reishi:['tcm'], cordyceps:['tcm'], ginseng:['tcm','ayurveda'],
+  hawthorn:['tcm','european'], jujube:['tcm'], rehmannia:['tcm'],
+  cinnamon:['tcm','ayurveda','mesopotamian'], ginger:['tcm','ayurveda','european'],
+  licorice:['tcm','ayurveda','european','mesopotamian'],
+  // Ayurveda
+  ashwagandha:['ayurveda'], bacopa:['ayurveda'], brahmi:['ayurveda'],
+  gotuKola:['ayurveda'], guggul:['ayurveda'], holyBasil:['ayurveda'],
+  tulsi:['ayurveda'], turmeric:['ayurveda','tcm'], shatavari:['ayurveda'],
+  triphala:['ayurveda'], neem:['ayurveda'], amla:['ayurveda'],
+  bakuchi:['ayurveda','tcm'], boswellia:['ayurveda','mesopotamian'],
+  fenugreek:['ayurveda','mesopotamian'],
+  // Amazonian & Andean
+  maca:['amazonian'], pauDArco:['amazonian'], muiraPuama:['amazonian'],
+  catuaba:['amazonian'], banisteriopsisCaapi:['amazonian'],
+  cocaLeaf:['amazonian'], guayusa:['amazonian'], yerbaMate:['amazonian'],
+  cacao:['amazonian'], chuchuhuasi:['amazonian'], sangreDeGrado:['amazonian'],
+  ungurahui:['amazonian'], suma:['amazonian'],
+  // Mesopotamian / Levantine
+  frankincense:['mesopotamian'], myrrh:['mesopotamian'],
+  saffron:['mesopotamian','ayurveda'], anise:['mesopotamian','european'],
+  cumin:['mesopotamian'], sumac:['mesopotamian'], rose:['mesopotamian','ayurveda'],
+  hyssop:['mesopotamian','european'], damascena:['mesopotamian'],
+};
+function philosFor(h){
+  const tags = PHIL_MAP[h.id] || PHIL_MAP[h.n] || ['european'];
+  return tags;
+}
 
 const H=[
   // FUNGI
@@ -496,7 +541,7 @@ const H=[
 
 const CAT_THEMES={immune:'Immune resilience',sexual:'Sexual vitality',pain:'Pain & anti-inflammation',digest:'Digestive support',sleep:'Sleep & calm',cognitive:'Cognitive enhancement',resp:'Respiratory health',womens:"Women's harmony",antioxid:'Antioxidant protection',liver:'Liver detox',nutritive:'Deep nourishment',conscious:'Consciousness work',energy:'Energy & endurance',urinary:'Urinary support',adaptogen:'Stress adaptation',mens:"Men's vitality",nervine:'Nervous system',heart:'Heart health',menstrual:'Menstrual balance',culinary:'Aromatic culinary',fungi:'Mycelial intelligence'};
 
-let cat='all',elFilter='all',tcmFilter='all',F=[],open=false;
+let cat='all',elFilter='all',tcmFilter='all',philFilter='all',F=[],open=false;
 
 // Merge rich data from herbs.ts into the H[] array
 const TCM_MERIDIANS = ['All meridians','Lung','Large Intestine','Stomach','Spleen','Heart','Small Intestine','Bladder','Kidney','Pericardium','Triple Burner','Gallbladder','Liver'];
@@ -509,6 +554,22 @@ function getDB(herbName){
     return dn === hn || dn.includes(hn) || hn.includes(dn);
   }) || null;
 }
+
+// Build Traditions & Philosophies bar
+const philBar = document.getElementById('philBar');
+PHILOS.forEach(p => {
+  const b = document.createElement('button');
+  b.className = 'cb' + (p.id === 'all' ? ' on' : '');
+  b.textContent = (p.id === 'all' ? '◈ ' : '') + p.l;
+  b.dataset.p = p.id;
+  b.onclick = () => {
+    philFilter = p.id;
+    document.querySelectorAll('#philBar .cb').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    render();
+  };
+  philBar.appendChild(b);
+});
 
 // Build TCM meridian bar
 const tcmBar = document.getElementById('tcmBar');
@@ -558,6 +619,10 @@ function render(){
     if(cat==='fungi')return h.f;
     if(cat!=='all'&&!h.c.includes(cat))return false;
     if(elFilter!=='all'&&h.el!==elFilter)return false;
+    if(philFilter!=='all'){
+      const ps = philosFor(h);
+      if(!ps.includes(philFilter)) return false;
+    }
     if(tcmFilter!=='all'){
       const db=getDB(h.n);
       if(!db||!db.tcm_meridians||!db.tcm_meridians.includes(tcmFilter))return false;
@@ -812,10 +877,60 @@ function analyzeWithMYCO(){ return; }
 function saveF(){
   if(!F.length)return;
   const names=F.map(id=>H.find(h=>h.id===id)?.n||id).join(', ');
-  const saved=JSON.parse(localStorage.getItem('fungai_formulas')||'[]');
-  saved.unshift({herbs:names,ts:Date.now()});
-  localStorage.setItem('fungai_formulas',JSON.stringify(saved.slice(0,20)));
-  alert('Saved: '+names);
+  // Lightweight modal — captures blend name (defaults to herb list) + the
+  // maker + a comment. Renders inside #fungai-save-modal at body level.
+  const existing=document.getElementById('fungai-save-modal');
+  if(existing)existing.remove();
+  const overlay=document.createElement('div');
+  overlay.id='fungai-save-modal';
+  overlay.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(7,11,9,0.88);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:24px;';
+  overlay.innerHTML=`
+    <div style="width:100%;max-width:460px;background:var(--c2,#0f1b14);border:0.5px solid rgba(232,177,75,0.32);border-radius:14px;padding:26px 24px;position:relative;font-family:var(--fs,sans-serif);">
+      <button id="fsm-close" style="position:absolute;top:10px;right:14px;background:none;border:none;color:var(--md,#8a978a);font-size:22px;cursor:pointer;line-height:1;">&times;</button>
+      <div style="font-family:var(--fm,monospace);font-size:9.5px;letter-spacing:0.26em;text-transform:uppercase;color:var(--a,#E8B14B);margin-bottom:8px;">Saving formula</div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;color:var(--ml,#E6D9B5);margin:0 0 14px;letter-spacing:-0.005em;">Name your blend</h3>
+      <label style="display:block;font-family:var(--fm,monospace);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--md,#8a978a);margin-bottom:6px;">Blend name</label>
+      <input id="fsm-name" maxlength="80" style="width:100%;background:#0a140e;border:0.5px solid rgba(232,177,75,0.22);border-radius:8px;padding:11px 14px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--ml,#E6D9B5);outline:none;margin-bottom:14px;" placeholder="${names.split(',').slice(0,2).join(',')}…"/>
+      <label style="display:block;font-family:var(--fm,monospace);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--md,#8a978a);margin-bottom:6px;">Maker</label>
+      <input id="fsm-maker" maxlength="50" style="width:100%;background:#0a140e;border:0.5px solid rgba(232,177,75,0.22);border-radius:8px;padding:10px 14px;font-family:var(--fs,sans-serif);font-size:13.5px;color:var(--ml,#E6D9B5);outline:none;margin-bottom:14px;" placeholder="Who composed this?"/>
+      <label style="display:block;font-family:var(--fm,monospace);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--md,#8a978a);margin-bottom:6px;">Notes</label>
+      <textarea id="fsm-note" maxlength="600" rows="4" style="width:100%;background:#0a140e;border:0.5px solid rgba(232,177,75,0.22);border-radius:8px;padding:11px 14px;font-family:var(--fs,sans-serif);font-size:13px;color:var(--ml,#E6D9B5);outline:none;line-height:1.55;resize:vertical;margin-bottom:8px;" placeholder="What's this blend for, what season, what frequency, who's it for…"></textarea>
+      <div style="font-family:var(--fm,monospace);font-size:9px;letter-spacing:0.12em;color:var(--md,#8a978a);opacity:0.7;margin-bottom:18px;line-height:1.6;">Herbs: ${names}</div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;">
+        <button id="fsm-cancel" style="font-family:var(--fm,monospace);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;padding:11px 20px;border-radius:999px;background:none;border:0.5px solid rgba(255,255,255,0.18);color:var(--md,#8a978a);cursor:pointer;">Cancel</button>
+        <button id="fsm-save" style="font-family:var(--fm,monospace);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;padding:11px 22px;border-radius:999px;background:linear-gradient(135deg,var(--a,#E8B14B),#C48838);border:none;color:#0d1610;cursor:pointer;font-weight:600;">Save formula</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  const nameInput=overlay.querySelector('#fsm-name');
+  nameInput.focus();
+  function close(){ overlay.remove(); }
+  overlay.querySelector('#fsm-close').onclick=close;
+  overlay.querySelector('#fsm-cancel').onclick=close;
+  overlay.addEventListener('click',e=>{ if(e.target===overlay) close(); });
+  overlay.querySelector('#fsm-save').onclick=()=>{
+    const blendName=(overlay.querySelector('#fsm-name').value||names.split(',').slice(0,2).join(', ')).trim();
+    const maker=(overlay.querySelector('#fsm-maker').value||'').trim();
+    const note=(overlay.querySelector('#fsm-note').value||'').trim();
+    const saved=JSON.parse(localStorage.getItem('fungai_formulas')||'[]');
+    saved.unshift({
+      name:blendName,
+      herbs:names,
+      herbIds:[...F],
+      maker:maker||null,
+      note:note||null,
+      ts:Date.now(),
+    });
+    localStorage.setItem('fungai_formulas',JSON.stringify(saved.slice(0,40)));
+    close();
+    // Confirmation toast — small, non-blocking, links to academy formula book.
+    const t=document.createElement('div');
+    t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--c2,#0f1b14);border:0.5px solid rgba(232,177,75,0.45);color:var(--ml,#E6D9B5);font-family:var(--fm,monospace);font-size:11px;letter-spacing:0.12em;padding:13px 22px;border-radius:999px;z-index:10000;box-shadow:0 8px 28px rgba(0,0,0,0.5);';
+    t.innerHTML=`Saved &middot; <a href="/community/academy/#formulas" style="color:var(--a,#E8B14B);text-decoration:underline;">view in academy &rarr;</a>`;
+    document.body.appendChild(t);
+    setTimeout(()=>t.remove(),3800);
+  };
 }
 
 function openM(h){

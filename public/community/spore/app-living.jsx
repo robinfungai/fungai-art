@@ -126,6 +126,19 @@ function PinModal({ member, onSuccess, onCancel }) {
 
   function del() { setPin(p => p.slice(0, -1)); }
 
+  // Hardware keyboard support — Robin reported the on-screen pad worked but
+  // typing 1-9 / 0 / Backspace did nothing. Mirror the on-screen pad here so
+  // both input paths converge on press(...) / del().
+  useEffect(() => {
+    function onKey(e) {
+      if (e.key === 'Escape') { onCancel && onCancel(); return; }
+      if (e.key === 'Backspace' || e.key === 'Delete') { e.preventDefault(); del(); return; }
+      if (/^[0-9]$/.test(e.key)) { e.preventDefault(); press(e.key); }
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [pin, step, first]);
+
   function handleFull(code) {
     if (step === 'set1') {
       setFirst(code);
@@ -188,6 +201,141 @@ function PinModal({ member, onSuccess, onCancel }) {
 
         <div className={`pin-status ${isError ? 'error' : ''}`}>{status}</div>
         <button className="pin-cancel" onClick={onCancel}>cancel</button>
+      </div>
+    </div>
+  );
+}
+
+/* ── WeavePathGraph — Obsidian-style graph view of the 5 weave-in stages ──
+   Each tier is a node, the path between them is the journey. Nodes pulse,
+   the connecting line traces a flow from Spore → Root Node, and hovering
+   a node reveals its description in a sidebar. Pure SVG, no canvas — sits
+   inside the welcome section without needing a fixed-size container. */
+function WeavePathGraph() {
+  const [hovered, setHovered] = useState(0);
+  const [tick, setTick] = useState(0);
+  // Lightweight breath loop for node pulse / flowing edge dash offset.
+  useEffect(() => {
+    let raf;
+    let t0 = performance.now();
+    function loop(now) {
+      setTick((now - t0) / 1000);
+      raf = requestAnimationFrame(loop);
+    }
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+  const steps = [
+    { num:'01', tier:'Spore',     title:'Arrive',        desc:'Cross the threshold. Create your thread. Watch what others tend.',                         color:'#D49B3E' },
+    { num:'02', tier:'Palawan',   title:'Contribute',    desc:'First act — a forage, a meal, a photo, a translation. The network notices.',              color:'#8FCB44' },
+    { num:'03', tier:'Mycelium',  title:'Earn $MYCEL',   desc:'Each contribution flows back as currency. Stack it, save it, or spend it.',               color:'#3DC9A5' },
+    { num:'04', tier:'Forager',   title:'Unlock access', desc:'Burn $MYCEL for keys. Walk into the Berlin Lab, the Lisbon Studio, a Trance ceremony.',   color:'#9D90F0' },
+    { num:'05', tier:'Root Node', title:'Hold vision',   desc:'You steward. Propose new nodes. Teach. Carry weight others can lean on.',                 color:'#B7AEFF' },
+  ];
+  // Positions on a 900×320 canvas. Slight vertical sine offset gives the
+  // graph an organic, breath-y look without it feeling random.
+  const positions = [
+    { x: 90,  y: 200 },
+    { x: 260, y: 110 },
+    { x: 450, y: 230 },
+    { x: 640, y: 110 },
+    { x: 820, y: 180 },
+  ];
+  const W = 900, H = 320;
+  const flowOffset = -((tick * 60) % 40);
+  return (
+    <div className="weave-path-graph" style={{ display:'grid', gridTemplateColumns:'minmax(0,1.4fr) minmax(0,1fr)', gap:24, alignItems:'center' }}>
+      <div style={{ position:'relative', background:'radial-gradient(ellipse 80% 70% at 50% 50%, rgba(107,214,111,0.06), rgba(6,8,9,0) 70%), var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:14, padding:12, overflow:'hidden' }}>
+        <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" style={{ width:'100%', height:'auto', display:'block', fontFamily:'var(--font-mono)' }}>
+          <defs>
+            <radialGradient id="weaveNodeGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="currentColor" stopOpacity="0.55" />
+              <stop offset="60%" stopColor="currentColor" stopOpacity="0.16" />
+              <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
+            </radialGradient>
+            <linearGradient id="weaveEdge" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"  stopColor="#D49B3E" />
+              <stop offset="25%" stopColor="#8FCB44" />
+              <stop offset="50%" stopColor="#3DC9A5" />
+              <stop offset="75%" stopColor="#9D90F0" />
+              <stop offset="100%" stopColor="#B7AEFF" />
+            </linearGradient>
+          </defs>
+          {/* Soft graticule — gives the canvas a notebook feel without
+              hard grid lines distracting from the path. */}
+          {[0.25, 0.5, 0.75].map(f => (
+            <line key={f} x1="0" x2={W} y1={H*f} y2={H*f} stroke="rgba(155,170,150,0.05)" strokeWidth="0.5" strokeDasharray="2 6" />
+          ))}
+          {/* Connecting path — smooth cubic through all 5 nodes. The
+              dashed overlay scrolls right → left to suggest flow. */}
+          {(() => {
+            let d = `M ${positions[0].x} ${positions[0].y}`;
+            for (let i = 1; i < positions.length; i++) {
+              const p0 = positions[i-1], p1 = positions[i];
+              const c1x = p0.x + (p1.x - p0.x) * 0.5;
+              const c2x = p1.x - (p1.x - p0.x) * 0.5;
+              d += ` C ${c1x} ${p0.y} ${c2x} ${p1.y} ${p1.x} ${p1.y}`;
+            }
+            return (
+              <>
+                <path d={d} fill="none" stroke="url(#weaveEdge)" strokeWidth="2" strokeOpacity="0.4" strokeLinecap="round" />
+                <path d={d} fill="none" stroke="url(#weaveEdge)" strokeWidth="1.2" strokeDasharray="6 14" strokeDashoffset={flowOffset} strokeLinecap="round" strokeOpacity="0.85" />
+              </>
+            );
+          })()}
+          {/* Nodes — each a halo + ring + dot + label pill */}
+          {steps.map((s, i) => {
+            const p = positions[i];
+            const isHover = hovered === i;
+            const breath = 1 + Math.sin(tick * 1.4 + i * 0.9) * 0.08;
+            const haloR = (isHover ? 46 : 36) * breath;
+            return (
+              <g key={s.num} style={{ color: s.color, cursor:'pointer' }} onMouseEnter={() => setHovered(i)} onFocus={() => setHovered(i)} tabIndex={0}>
+                <circle cx={p.x} cy={p.y} r={haloR} fill="url(#weaveNodeGlow)" />
+                <circle cx={p.x} cy={p.y} r={isHover ? 17 : 14} fill="rgba(6,8,9,0.85)" stroke={s.color} strokeWidth={isHover ? 2 : 1.2} />
+                <circle cx={p.x} cy={p.y} r="4" fill={s.color} />
+                {/* Tier pill above */}
+                <g transform={`translate(${p.x}, ${p.y - (isHover ? 36 : 32)})`}>
+                  <rect x="-44" y="-10" width="88" height="18" rx="9" fill="rgba(6,8,9,0.85)" stroke={`${s.color}55`} strokeWidth="0.5" />
+                  <text x="0" y="3" textAnchor="middle" fill={s.color} fontSize="9" letterSpacing="0.18em" style={{ textTransform:'uppercase', fontWeight:600 }}>{s.num} · {s.tier}</text>
+                </g>
+                {/* Title below the node */}
+                <text x={p.x} y={p.y + 36} textAnchor="middle" fill="var(--mycelium-l)" fontStyle="italic" fontSize="14" fontFamily="'Cormorant Garamond', Georgia, serif">{s.title}</text>
+              </g>
+            );
+          })}
+        </svg>
+      </div>
+      {/* Side panel — describes the hovered step. Updates live as the
+          user moves between nodes; falls back to step 1 on first paint. */}
+      <div style={{ padding:'18px 18px', background:'var(--soil-2)', border:`0.5px solid ${steps[hovered].color}55`, borderRadius:14, minHeight:160 }}>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color: steps[hovered].color, marginBottom:6 }}>
+          {steps[hovered].num} &middot; {steps[hovered].tier}
+        </div>
+        <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:26, color:'var(--mycelium-l)', lineHeight:1.05, letterSpacing:'-0.005em', marginBottom:10 }}>
+          {steps[hovered].title}
+        </div>
+        <div style={{ fontSize:13, color:'var(--mycelium)', lineHeight:1.65 }}>
+          {steps[hovered].desc}
+        </div>
+        <div style={{ marginTop:14, display:'flex', gap:6, flexWrap:'wrap' }}>
+          {steps.map((s, i) => (
+            <button
+              key={s.num}
+              onClick={() => setHovered(i)}
+              style={{
+                fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', textTransform:'uppercase',
+                padding:'5px 9px', borderRadius:999,
+                background: i === hovered ? `${s.color}22` : 'transparent',
+                border: `0.5px solid ${i === hovered ? s.color : 'var(--rule)'}`,
+                color: i === hovered ? s.color : 'var(--mycelium-d)',
+                cursor:'pointer',
+              }}
+            >
+              {s.num}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -330,10 +478,18 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
             <div className="welcome-brand-sub">Living Network · $MYCEL</div>
           </div>
         </div>
-        {/* PIN-picker dropdown removed — exposed the full member roster to any
-            visitor and let them pick anyone. Sign-in is now unified via the
-            "+ Create profile" path (uses invite code + magic-link, existing
-            members just skip the editor). */}
+        {/* Internal community menu — replaces the dropdown that used to live
+            in the main-site header. Lets visitors jump to the related
+            pages (Academy, Mixology, Foraging, Spore home) without having
+            to bounce back through the main nav. */}
+        <div className="welcome-nav-menu">
+          <a href="#manifesto">Manifesto</a>
+          <a href="#network">Nodes</a>
+          <a href="/community/academy/">Academy</a>
+          <a href="/mixology">Herbals</a>
+          <a href="/foraging">Foraging</a>
+          <a href="/extraction">Extraction</a>
+        </div>
       </div>
 
       {/* ── Hero ── */}
@@ -752,38 +908,14 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
         </div>
       </div>
 
-      {/* ── How to participate — narrative steps, not just labels ── */}
+      {/* ── How to weave in — graph view (Obsidian-style) ── */}
       <div className="welcome-section">
         <div className="welcome-section-eyebrow">The path · 5 thresholds</div>
         <div className="welcome-section-title">How to <em>weave in.</em></div>
-        <p style={{ fontSize:14, color:'var(--mycelium)', lineHeight:1.7, maxWidth:680, marginBottom:28 }}>
-          You don't apply. You don't pay. You start at the edge and grow inward, one contribution at a time.
+        <p style={{ fontSize:14, color:'var(--mycelium)', lineHeight:1.7, maxWidth:680, marginBottom:18 }}>
+          You don't apply. You don't pay. You start at the edge and grow inward, one contribution at a time. Hover a node to read it. The graph is the path.
         </p>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(150px, 1fr))', gap:10 }}>
-          {[
-            { num:'01', tier:'Spore',     title:'Arrive',           desc:'Cross the threshold. Create your thread. Watch what others tend.', color:'#854F0B' },
-            { num:'02', tier:'Palawan',   title:'Contribute',       desc:'First act — a forage, a meal, a photo, a translation. The network notices.', color:'#3B6D11' },
-            { num:'03', tier:'Mycelium',  title:'Earn $MYCEL',      desc:'Each contribution flows back as currency. Stack it, save it, or spend it on an experience.', color:'#0F6E56' },
-            { num:'04', tier:'Forager',   title:'Unlock access',    desc:'Burn $MYCEL for keys. Walk into the Berlin Lab, the Lisbon Studio, a Mycelium Trance ceremony.', color:'#534AB7' },
-            { num:'05', tier:'Root Node', title:'Hold the vision',  desc:'At the deepest tier you steward. Propose new nodes. Teach. Carry weight others can lean on.', color:'#3C3489' },
-          ].map((s, i, arr) => (
-            <div key={s.num} style={{
-              background:'var(--soil-2)',
-              border:`0.5px solid ${s.color}40`,
-              borderRadius:10,
-              padding:'14px 12px',
-              display:'flex', flexDirection:'column', gap:6,
-              position:'relative',
-            }}>
-              <div style={{ display:'flex', alignItems:'baseline', justifyContent:'space-between' }}>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', color: s.color }}>{s.num}</span>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.16em', textTransform:'uppercase', color: s.color, opacity:0.7 }}>● {s.tier}</span>
-              </div>
-              <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:17, color:'var(--mycelium-l)', lineHeight:1.1, letterSpacing:'-0.005em' }}>{s.title}</div>
-              <div style={{ fontSize:11, color:'var(--mycelium)', lineHeight:1.55 }}>{s.desc}</div>
-            </div>
-          ))}
-        </div>
+        <WeavePathGraph />
       </div>
 
       {/* ── The Mycelium — moved to be AFTER Path per latest layout pass.
@@ -1406,9 +1538,32 @@ function ProfileEditor({ existing, onClose }) {
   function onAvatarChange(e) {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 2_000_000) { alert('Image too large — please use one under 2MB.'); return; }
+    if (file.size > 5_000_000) { alert('Image too large — please use one under 5MB.'); return; }
+    // Downscale to ≤320px square so the data URL fits comfortably in a
+    // Supabase profile row. The original is kept on fileRef for the
+    // (signed-in) storage upload path which uses the full-resolution file.
     const reader = new FileReader();
-    reader.onload = ev => setAvatar(ev.target.result);
+    reader.onload = ev => {
+      const img = new Image();
+      img.onload = () => {
+        try {
+          const MAX = 320;
+          const scale = Math.min(1, MAX / Math.max(img.width, img.height));
+          const w = Math.round(img.width * scale);
+          const h = Math.round(img.height * scale);
+          const canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          setAvatar(canvas.toDataURL('image/jpeg', 0.82));
+        } catch (err) {
+          // Fallback to the raw data URL if canvas fails (very old browsers).
+          setAvatar(ev.target.result);
+        }
+      };
+      img.onerror = () => setAvatar(ev.target.result);
+      img.src = ev.target.result;
+    };
     reader.readAsDataURL(file);
   }
 
@@ -1458,11 +1613,13 @@ function ProfileEditor({ existing, onClose }) {
               avatarUrl = null;
             }
           } else {
-            // Not signed in → stash the data URL locally so the user still SEES
-            // their pic on this device. When they later sign in via magic link,
-            // the boot-time syncPendingAvatar pass uploads it to Supabase.
+            // Not signed in → keep the (downscaled) data URL directly on the
+            // profile row so the photo shows for every other member, not just
+            // on this device. Also stash locally so syncPendingAvatar can
+            // promote it to a proper storage upload once the user claims the
+            // profile via magic link.
             try { localStorage.setItem('fungai_pending_avatar', avatar); } catch (e) {}
-            avatarUrl = null;
+            avatarUrl = avatar;
           }
         }
 
