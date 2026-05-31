@@ -1205,11 +1205,16 @@ function NetworkPage({ economy, onToast, flowRate }) {
       </div>
 
       <div className="net-canvas">
+        {/* Tight crop: left edge at Lake Atitlán / Nosara (~-95° lon),
+            right edge at Hokkaido (~145° lon). Lat -15 → 70 covers Bali
+            in the south up through the Nordic foraging node. Same crop
+            the welcome map uses, just wider in lon to include Asia. */}
         <LivingNetworkMap
           nodes={SporeData.NETWORK_NODES}
           selected={selected}
           onSelect={setSelected}
           flowIntensity={Math.max(0.5, flowRate)}
+          viewBox={{ lonMin: -95, lonMax: 148, latMin: -15, latMax: 70 }}
         />
         <div className="net-overlay">
           <div className="net-overlay-stat">
