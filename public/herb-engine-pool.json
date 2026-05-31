@@ -4286,5 +4286,659 @@
       "Kidney"
     ],
     "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 500,
+    "name": "Shilajit",
+    "primary_functions": [
+      "Premier Ayurvedic rasayana — mineral-density adaptogen",
+      "Amplifier for other herbs (yogavahi action)",
+      "ATP / mitochondrial support via fulvic acid + DBPs",
+      "Anti-fatigue, libido, cognitive stamina"
+    ],
+    "energetics": [
+      "Warm",
+      "Bitter",
+      "Pungent",
+      "Mineral-rich",
+      "Yang-Rebuilding"
+    ],
+    "tcm_meridians": [],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 501,
+    "name": "Guduchi",
+    "primary_functions": [
+      "One of three Amrit (immortal) herbs — premier immunomodulator",
+      "Clears deep chronic heat and recurrent fevers",
+      "Liver / kidney protective bitter",
+      "Autoimmune-regulating in Ayurvedic context"
+    ],
+    "energetics": [
+      "Cool",
+      "Bitter",
+      "Sweet post-digestive",
+      "Tridoshic"
+    ],
+    "tcm_meridians": [],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 502,
+    "name": "Punarnava",
+    "primary_functions": [
+      "Tissue-renewing systemic rejuvenative — name = ",
+      "",
+      "Potent diuretic for fluid retention and oedema",
+      "Hepatic and renal protection",
+      "Anti-inflammatory in chronic conditions"
+    ],
+    "energetics": [
+      "Cool",
+      "Bitter",
+      "Sweet",
+      "Diuretic",
+      "Tissue-Renewing"
+    ],
+    "tcm_meridians": [],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 503,
+    "name": "Shankhpushpi",
+    "primary_functions": [
+      "Foundational Medhya Rasayana — premier brain tonic",
+      "Enhances memory, intellect, cognitive resilience",
+      "Calms anxiety and stress overload",
+      "Supports nervous system without sedation"
+    ],
+    "energetics": [
+      "Cool",
+      "Bitter",
+      "Pungent",
+      "Medhya (brain-tonifying)"
+    ],
+    "tcm_meridians": [],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 504,
+    "name": "Arjuna",
+    "primary_functions": [
+      "Premier Ayurvedic cardiotonic — strengthens heart muscle",
+      "Coronary blood-flow support",
+      "Addresses emotional grief stored in the heart",
+      "Blood pressure modulation"
+    ],
+    "energetics": [
+      "Cool",
+      "Astringent",
+      "Bitter",
+      "Cardiotonic"
+    ],
+    "tcm_meridians": [
+      "Heart"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 505,
+    "name": "Hadjod",
+    "primary_functions": [
+      "",
+      " — accelerates fracture and joint recovery",
+      "Plant sterols mimic mild anabolic effects on bone",
+      "Tendon and ligament repair",
+      "Anti-inflammatory in musculoskeletal injuries"
+    ],
+    "energetics": [
+      "Cool",
+      "Sweet",
+      "Astringent",
+      "Bone-binding"
+    ],
+    "tcm_meridians": [],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 506,
+    "name": "Shallaki",
+    "primary_functions": [
+      "Boswellic acids — potent 5-LOX inhibitors for joint inflammation",
+      "Mobility and synovial fluid balance",
+      "Asthma and respiratory inflammatory support",
+      "IBD adjunct in clinical Ayurveda"
+    ],
+    "energetics": [
+      "Warm",
+      "Bitter",
+      "Pungent",
+      "Astringent",
+      "Drying"
+    ],
+    "tcm_meridians": [],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 507,
+    "name": "Rasna",
+    "primary_functions": [
+      "Dominant Ayurvedic anti-inflammatory for Vata-pattern joint pain",
+      "Clears systemic nervous-system imbalances",
+      "Sciatica and neuralgic pain",
+      "Component of classical Rasna-saptak kwath"
+    ],
+    "energetics": [
+      "Warm",
+      "Bitter",
+      "Pungent",
+      "Vata-pacifying"
+    ],
+    "tcm_meridians": [],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 508,
+    "name": "Dashmool",
+    "primary_functions": [
+      "Classical compound — ten roots ground severe Vata derangement",
+      "Nervous exhaustion, postpartum recovery, post-illness depletion",
+      "Mild anti-inflammatory across multiple systems",
+      "Brimhana (building) action"
+    ],
+    "energetics": [
+      "Warm",
+      "Bitter",
+      "Astringent",
+      "Vata-pacifying",
+      "Grounding"
+    ],
+    "tcm_meridians": [],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 509,
+    "name": "Gandira",
+    "primary_functions": [
+      "Forskolin activates adenylate cyclase → cAMP — heart and lung support",
+      "Bronchodilation in asthma protocols",
+      "Vasodilation and mild blood pressure lowering",
+      "Modern weight-management research"
+    ],
+    "energetics": [
+      "Warm",
+      "Pungent",
+      "Bitter",
+      "Cardio-Respiratory"
+    ],
+    "tcm_meridians": [],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 510,
+    "name": "Vijaysar",
+    "primary_functions": [
+      "Classical Ayurvedic herb for blood sugar metabolism",
+      "Beta-cell regenerative effects in research",
+      "Astringent tissue-toning",
+      "Anti-obesity adjunct"
+    ],
+    "energetics": [
+      "Cool",
+      "Bitter",
+      "Astringent",
+      "Blood-sugar-regulating"
+    ],
+    "tcm_meridians": [],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 511,
+    "name": "Nirgundi",
+    "primary_functions": [
+      "Topical and internal anti-inflammatory for joint swelling",
+      "Neuralgic and sciatic pain support",
+      "Anti-spasmodic action",
+      "Mild anti-microbial in wound care"
+    ],
+    "energetics": [
+      "Warm",
+      "Pungent",
+      "Bitter",
+      "Vata-pacifying"
+    ],
+    "tcm_meridians": [],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 512,
+    "name": "Ashoka",
+    "primary_functions": [
+      "Primary Ayurvedic uterine tonic — regulates female reproductive tract",
+      "Heavy or irregular menstruation",
+      "Endometriosis adjunct in classical practice",
+      "Cooling Pitta-pacifying gynaecological herb"
+    ],
+    "energetics": [
+      "Cool",
+      "Astringent",
+      "Bitter",
+      "Uterine-toning"
+    ],
+    "tcm_meridians": [],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 513,
+    "name": "Lodhra",
+    "primary_functions": [
+      "Intense astringent — cools excessive Pitta in blood and reproductive organs",
+      "Uterine bleeding, leucorrhoea, heavy menses",
+      "Skin pigmentation balance in classical use",
+      "Local astringent for wound care"
+    ],
+    "energetics": [
+      "Cool",
+      "Astringent",
+      "Bitter",
+      "Pitta-pacifying"
+    ],
+    "tcm_meridians": [],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 514,
+    "name": "Nagkesar",
+    "primary_functions": [
+      "Heat-clearing and blood-stanching",
+      "Haemostatic in heavy menstruation",
+      "Anti-inflammatory in joint conditions",
+      "Anti-microbial in skin care"
+    ],
+    "energetics": [
+      "Hot",
+      "Pungent",
+      "Bitter",
+      "Drying",
+      "Astringent",
+      "Blood-stanching"
+    ],
+    "tcm_meridians": [],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 515,
+    "name": "Rudraksha",
+    "primary_functions": [
+      "Calms central nervous system — traditional meditation aid",
+      "Stabilises blood pressure",
+      "Settles overactive mind for spiritual practice",
+      "Mild cardioprotective in folk use"
+    ],
+    "energetics": [
+      "Cool",
+      "Astringent",
+      "Calming",
+      "Mind-stabilising"
+    ],
+    "tcm_meridians": [
+      "Heart"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 520,
+    "name": "Bakuchi",
+    "primary_functions": [
+      "TCM Bu Gu Zhi — tonifies Kidney Yang, stabilises essence",
+      "Warms Spleen to stop diarrhoea",
+      "Vitiligo / leucoderma treatment in both traditions",
+      "Topical psoralen for pigmentation"
+    ],
+    "energetics": [
+      "Warm",
+      "Pungent",
+      "Bitter",
+      "Kidney-Yang-Tonifying"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Spleen"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 521,
+    "name": "Senna",
+    "primary_functions": [
+      "TCM Fan Xie Ye — drains heat from intestines, clears stagnant food",
+      "Acute constipation (short-term)",
+      "Pre-procedure bowel preparation",
+      "Sennosides stimulate colon motility"
+    ],
+    "energetics": [
+      "Cool",
+      "Bitter",
+      "Sweet",
+      "Purgative"
+    ],
+    "tcm_meridians": [
+      "Large Intestine"
+    ],
+    "caution_level": "MEDIUM-HIGH"
+  },
+  {
+    "id": 522,
+    "name": "Gokshura",
+    "primary_functions": [
+      "TCM Bai Ji Li — calms Liver Yang, extinguishes internal wind",
+      "Urinary tract support — Ayurvedic diuretic for kidney/bladder",
+      "Male reproductive tonic in both traditions",
+      "Eyes (TCM): brightens vision"
+    ],
+    "energetics": [
+      "Warm",
+      "Sweet",
+      "Pungent",
+      "Yang-Tonifying"
+    ],
+    "tcm_meridians": [
+      "Liver"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 523,
+    "name": "Amla",
+    "primary_functions": [
+      "TCM Yu Gan Zi — clears Lung heat, generates fluids",
+      "Ayurvedic rasayana — one of the three Triphala fruits",
+      "Highest natural vitamin C density",
+      "Liver protective polyphenol load"
+    ],
+    "energetics": [
+      "Cool",
+      "Sour",
+      "Sweet",
+      "Astringent",
+      "Fluid-Generating"
+    ],
+    "tcm_meridians": [
+      "Lung"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 524,
+    "name": "Bibhitaki",
+    "primary_functions": [
+      "One of Triphala\\",
+      ", ",
+      ", ",
+      ", "
+    ],
+    "energetics": [
+      "Warm",
+      "Astringent",
+      "Bitter",
+      "Pungent"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Large Intestine"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 525,
+    "name": "Guggulu",
+    "primary_functions": [
+      "TCM cousin: Mo Yao (myrrh) — invigorates Blood, breaks stasis",
+      "Ayurvedic premier yogavahi for joint and lipid formulas",
+      "Cholesterol / lipid balance",
+      "Anti-inflammatory in chronic joint conditions"
+    ],
+    "energetics": [
+      "Warm",
+      "Pungent",
+      "Bitter",
+      "Astringent",
+      "Blood-Moving"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Spleen",
+      "Liver"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 526,
+    "name": "Kalmegh",
+    "primary_functions": [
+      "TCM Chuan Xin Lian — clears toxic heat from Lungs, throat, intestines",
+      "Ayurvedic ",
+      " — liver protection, fever clearance",
+      "Immune-modulating in acute respiratory infections",
+      "Andrographolide is well-researched antiviral"
+    ],
+    "energetics": [
+      "Very Cold",
+      "Bitter",
+      "Heat-Clearing"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Large Intestine"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 527,
+    "name": "Manjistha",
+    "primary_functions": [
+      "TCM Qian Cao — cools and invigorates blood, stops heat-bleeding",
+      "Ayurvedic premier blood purifier and lymphatic mover",
+      "Skin clarity in chronic Pitta/heat conditions",
+      "Breaks up stubborn blood clots in both traditions"
+    ],
+    "energetics": [
+      "Cool",
+      "Bitter",
+      "Sweet",
+      "Astringent",
+      "Blood-Cooling"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 528,
+    "name": "Khadira",
+    "primary_functions": [
+      "TCM Er Cha — clears heat and dries damp internally and topically",
+      "Ayurvedic skin and oral medicine",
+      "Bleeding gums and ulcers — astringent",
+      "Diabetic-skin condition adjunct"
+    ],
+    "energetics": [
+      "Cool",
+      "Bitter",
+      "Astringent",
+      "Drying",
+      "Damp-clearing"
+    ],
+    "tcm_meridians": [
+      "Lung"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 529,
+    "name": "Nishoth",
+    "primary_functions": [
+      "Drastic hydragogue purgative — clears severe lower-body damp-heat",
+      "Ascites, oedema, deep constipation (specialist use only)",
+      "TCM cousin: Fang Ji family of aggressive water-purgers",
+      "Classical Ayurvedic shodhana (cleansing) herb"
+    ],
+    "energetics": [
+      "Hot",
+      "Pungent",
+      "Bitter",
+      "Drastic Purgative"
+    ],
+    "tcm_meridians": [
+      "Large Intestine"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 530,
+    "name": "Ajwan",
+    "primary_functions": [
+      "TCM Qin Cai Zi — clears heat, lowers Liver Yang, promotes urination",
+      "Ayurvedic digestive carminative",
+      "Uric acid clearance — gout support",
+      "Mild diuretic and BP regulator"
+    ],
+    "energetics": [
+      "Cool",
+      "Pungent",
+      "Slightly Bitter",
+      "Aromatic"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Spleen"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 531,
+    "name": "Neem",
+    "primary_functions": [
+      "TCM cousin: Ku Lian Pi (Melia azedarach) — kills parasites, dries damp-heat",
+      "Ayurvedic premier skin and blood purifier",
+      "Antimicrobial and anti-parasitic across both traditions",
+      "Bitter that resets the gut microbiome"
+    ],
+    "energetics": [
+      "Cool",
+      "Bitter",
+      "Astringent",
+      "Damp-Heat-Clearing"
+    ],
+    "tcm_meridians": [
+      "Large Intestine",
+      "Stomach"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 532,
+    "name": "Anantmul",
+    "primary_functions": [
+      "Indian Sarsaparilla — cools blood, clears damp-heat from skin",
+      "TCM cousin: Tu Fu Ling — relieves toxicity, soothes painful joints",
+      "Chronic skin conditions with heat signature",
+      "Cooling Pitta-pacifier in long protocols"
+    ],
+    "energetics": [
+      "Cool",
+      "Sweet",
+      "Bitter",
+      "Demulcent",
+      "Blood-Cooling"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 533,
+    "name": "Karanja",
+    "primary_functions": [
+      "Resolves toxic skin swellings and damp sores",
+      "Southern Chinese medicine analog: Shui Huang Pi",
+      "Ayurvedic topical for chronic skin conditions",
+      "Anti-microbial in wound care"
+    ],
+    "energetics": [
+      "Warm",
+      "Bitter",
+      "Pungent",
+      "Detoxifying"
+    ],
+    "tcm_meridians": [
+      "Lung"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 534,
+    "name": "Bael",
+    "primary_functions": [
+      "Astringent for chronic diarrhoea and IBS",
+      "TCM analog: Mu Gua — harmonises the Middle",
+      "Cooling Pitta-pacifying digestive",
+      "Sacred to Shiva — temple offering"
+    ],
+    "energetics": [
+      "Cool",
+      "Astringent",
+      "Bitter",
+      "Sweet"
+    ],
+    "tcm_meridians": [
+      "Large Intestine",
+      "Spleen"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 535,
+    "name": "Chandrashoor",
+    "primary_functions": [
+      "TCM cousin: Ting Li Zi — drains lungs, moves water",
+      "Anti-asthmatic and expectorant in Ayurveda",
+      "Iron-rich tonic for anaemia (traditional use)",
+      "Post-partum recovery — galactagogue"
+    ],
+    "energetics": [
+      "Hot",
+      "Pungent",
+      "Drying"
+    ],
+    "tcm_meridians": [
+      "Lung"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 536,
+    "name": "Amaltas",
+    "primary_functions": [
+      "Cooling moistening laxative for heat-induced constipation",
+      "TCM analog: Bo Luo Hui — clears heat, relieves stagnation",
+      "Gentle on children and elderly (vs. Senna)",
+      "Anti-pyretic in fever protocols"
+    ],
+    "energetics": [
+      "Cool",
+      "Sweet",
+      "Bitter",
+      "Mild Laxative"
+    ],
+    "tcm_meridians": [
+      "Large Intestine"
+    ],
+    "caution_level": "LOW"
   }
 ]

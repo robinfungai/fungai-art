@@ -208,7 +208,7 @@ button{font-family:inherit;cursor:pointer;}
       <img src="/assets/fungai-art-logo.png" alt="Fungai Art" style="height:46px;width:auto;opacity:.94;" onerror="this.src='/logo.png';this.style.filter='brightness(0) invert(1)';this.style.height='30px'">
       <div>
         <div class="nav-title">Herbal Engine</div>
-        <div class="nav-sub">Fungai Art Elixirs &middot; 164 Botanicals</div>
+        <div class="nav-sub">Fungai Art Elixirs &middot; 201 Botanicals</div>
       </div>
     </a>
   </div>
@@ -220,7 +220,7 @@ button{font-family:inherit;cursor:pointer;}
   </div>
 </nav>
 <div class="hero">
-  <div class="hero-ey">164 plants &middot; 20 categories &middot; 5 elements &middot; evidence graded A&ndash;D</div>
+  <div class="hero-ey">201 plants &middot; 20 categories &middot; 5 elements &middot; evidence graded A&ndash;D</div>
   <h1 class="hero-title">Know your <em>plants.</em></h1>
   <p class="hero-blurb">The complete Fungai Art botanical reference. Filter by element or category, build your formula — tap any herb for full profile and extraction method.</p>
   <!-- New Tyme Tonics cross-link — sister project, kegged living drinks built
@@ -457,6 +457,41 @@ const H=[
   {id:'mistletoe',n:'Mistletoe',el:'A',ext:'CT',c:['heart','nervine','immune'],p:'Viscum album; cardiac-nervine tonic; anthroposophic cancer adjuvant; liminal ritual plant.',x:'high'},
   {id:'phyllodium',n:'Phyllodium pulchellum',el:'W',ext:'DC',c:['liver','immune','antioxid'],p:'SE Asian hepatoprotective; postpartum recovery; trace tryptamines under research.',x:'medium'},
   {id:'africanDreamRoot',n:'African Dream Root',el:'M',ext:'T',c:['conscious','sleep','nervine'],p:'Silene undulata; Xhosa diviner oneirogen; lucid prophetic dreams; saponin pharmacology.',x:'medium'},
+  // ── Strictly Ayurvedic herbs (matched to herbs.ts ids 500–515) ──
+  {id:'shilajit',n:'Shilajit',el:'E',ext:'O',c:['adaptogen','energy','nutritive','mens'],p:'Himalayan mineral exudate; premier rasayana; amplifies other herbs; ATP / mitochondrial support.',x:'medium'},
+  {id:'guduchi',n:'Guduchi',el:'W',ext:'DC',c:['immune','liver','antioxid'],p:'Tinospora cordifolia; one of three Amrit (immortal) herbs; clears chronic heat and fevers.',x:'low'},
+  {id:'punarnava',n:'Punarnava',el:'W',ext:'DC',c:['urinary','liver','heart'],p:'Boerhavia diffusa; tissue-renewing diuretic; oedema and chronic fluid retention.',x:'low'},
+  {id:'shankhpushpi',n:'Shankhpushpi',el:'M',ext:'T',c:['cognitive','nervine','sleep'],p:'Convolvulus pluricaulis; foundational Medhya Rasayana; memory, intellect, anxiety.',x:'low'},
+  {id:'arjuna',n:'Arjuna',el:'F',ext:'DC',c:['heart','nervine','antioxid'],p:'Terminalia arjuna bark; premier Ayurvedic cardiotonic; strengthens heart muscle, addresses grief.',x:'low'},
+  {id:'hadjod',n:'Hadjod',el:'E',ext:'T',c:['pain','energy','nutritive'],p:'Cissus quadrangularis; "bone setter"; plant sterols accelerate bone and joint recovery.',x:'low'},
+  {id:'shallaki',n:'Shallaki',el:'A',ext:'O',c:['pain','resp','digest'],p:'Boswellia serrata gum resin; boswellic acids inhibit 5-LOX; joint inflammation, IBD adjunct.',x:'low'},
+  {id:'rasna',n:'Rasna',el:'A',ext:'DC',c:['pain','nervine','resp'],p:'Pluchea lanceolata; dominant Vata anti-inflammatory; sciatica, neuralgic pain.',x:'low'},
+  {id:'dashmool',n:'Dashmool',el:'E',ext:'DC',c:['nervine','adaptogen','sleep','pain'],p:'Classical ten-root compound; pacifies acute Vata; nervous exhaustion, postpartum recovery.',x:'low'},
+  {id:'gandira',n:'Gandira',el:'F',ext:'T',c:['heart','resp','energy'],p:'Coleus forskohlii; forskolin activates adenylate cyclase; bronchodilator, vasodilator, BP support.',x:'medium'},
+  {id:'vijaysar',n:'Vijaysar',el:'E',ext:'DC',c:['digest','antioxid','liver'],p:'Pterocarpus marsupium heartwood; classical for blood-sugar metabolism; beta-cell regenerative research.',x:'low'},
+  {id:'nirgundi',n:'Nirgundi',el:'A',ext:'O',c:['pain','nervine','womens'],p:'Vitex negundo; topical and internal for joint swelling, neuralgic pain, spasmodic conditions.',x:'low'},
+  {id:'ashoka',n:'Ashoka',el:'W',ext:'DC',c:['womens','menstrual','nervine'],p:'Saraca asoca bark; primary Ayurvedic uterine tonic; heavy bleeding, irregular menses.',x:'low'},
+  {id:'lodhra',n:'Lodhra',el:'W',ext:'T',c:['womens','antioxid','digest'],p:'Symplocos racemosa bark; intense astringent; cools blood and reproductive organs.',x:'low'},
+  {id:'nagkesar',n:'Nagkesar',el:'F',ext:'T',c:['womens','pain','antioxid'],p:'Mesua ferrea; heat-clearing, drying, blood-stanching; haemostatic for heavy menses.',x:'low'},
+  {id:'rudraksha',n:'Rudraksha',el:'W',ext:'W',c:['nervine','sleep','conscious','heart'],p:'Elaeocarpus ganitrus seed pods; calms CNS, stabilises BP; meditation aid worn or as infusion.',x:'low'},
+  // ── Cross-over (Ayurveda + TCM) — ids 520+ ──
+  {id:'bakuchi',n:'Bakuchi',el:'F',ext:'O',c:['mens','sexual','antioxid'],p:'Psoralea corylifolia; TCM Bu Gu Zhi; tonifies Kidney Yang; vitiligo / pigmentation in both traditions.',x:'medium'},
+  {id:'senna',n:'Senna',el:'W',ext:'W',c:['digest'],p:'Cassia angustifolia; TCM Fan Xie Ye; downward purgative for acute constipation. Short cycles only.',x:'medium'},
+  {id:'gokshura',n:'Gokshura',el:'W',ext:'DC',c:['urinary','mens','sexual','heart'],p:'Tribulus terrestris; TCM Bai Ji Li; calms Liver Yang; urinary and male reproductive tonic.',x:'low'},
+  {id:'amla',n:'Amla',el:'W',ext:'T',c:['immune','antioxid','liver','nutritive'],p:'Emblica officinalis; TCM Yu Gan Zi; clears Lung heat, generates fluids; Triphala foundation; vitamin C reference plant.',x:'low'},
+  {id:'bibhitaki',n:'Bibhitaki',el:'A',ext:'T',c:['digest','resp','antioxid'],p:'Terminalia bellerica; secondary TCM use; Triphala\'s third fruit; respiratory mucosa and bowel toning.',x:'low'},
+  {id:'guggulu',n:'Guggulu',el:'F',ext:'O',c:['heart','pain','energy'],p:'Commiphora mukul resin; sister to TCM Mo Yao (myrrh); cholesterol balance, joint inflammation.',x:'medium'},
+  {id:'kalmegh',n:'Kalmegh',el:'W',ext:'T',c:['immune','liver','resp'],p:'Andrographis paniculata; TCM Chuan Xin Lian; "King of Bitters"; clears toxic heat from lungs and gut.',x:'medium'},
+  {id:'manjistha',n:'Manjistha',el:'W',ext:'DC',c:['liver','antioxid','womens','urinary'],p:'Rubia cordifolia; TCM Qian Cao; cools and invigorates blood; premier Ayurvedic blood purifier.',x:'low'},
+  {id:'khadira',n:'Khadira',el:'A',ext:'T',c:['digest','antioxid','immune'],p:'Acacia catechu; TCM Er Cha; clears damp-heat; bleeding gums, weeping skin, oral ulcers.',x:'low'},
+  {id:'nishoth',n:'Nishoth',el:'W',ext:'W',c:['digest'],p:'Operculina turpethum; drastic hydragogue purgative for severe damp-heat. Panchakarma-only — practitioner supervision.',x:'high'},
+  {id:'celerySeed',n:'Ajwan / Celery Seed',el:'W',ext:'T',c:['urinary','pain','digest'],p:'Apium graveolens; TCM Qin Cai Zi; clears heat, lowers Liver Yang; gout / uric acid clearance.',x:'low'},
+  {id:'neem',n:'Neem',el:'W',ext:'T',c:['antioxid','immune','digest'],p:'Azadirachta indica; TCM cousin Ku Lian Pi; kills parasites, dries damp-heat; skin and blood purifier.',x:'medium'},
+  {id:'anantmul',n:'Anantmul',el:'W',ext:'DC',c:['antioxid','urinary','womens'],p:'Hemidesmus indicus; Indian sarsaparilla; cools blood, clears damp-heat from skin; sweet-cooling Pitta-pacifier.',x:'low'},
+  {id:'karanja',n:'Karanja',el:'A',ext:'O',c:['antioxid','immune'],p:'Pongamia pinnata; resolves toxic skin swellings; antimicrobial; topical oil primary use.',x:'medium'},
+  {id:'bael',n:'Bael',el:'E',ext:'DC',c:['digest','immune'],p:'Aegle marmelos; TCM analog Mu Gua; astringent for chronic diarrhoea and IBS; sacred to Shiva.',x:'low'},
+  {id:'chandrashoor',n:'Chandrashoor',el:'F',ext:'T',c:['resp','womens','nutritive'],p:'Lepidium sativum garden cress seeds; TCM cousin Ting Li Zi; drains lungs, post-partum galactagogue.',x:'low'},
+  {id:'amaltas',n:'Amaltas',el:'W',ext:'W',c:['digest'],p:'Cassia fistula fruit pulp; TCM analog Bo Luo Hui; gentle cooling laxative for heat-induced constipation.',x:'low'},
 ];
 
 const CAT_THEMES={immune:'Immune resilience',sexual:'Sexual vitality',pain:'Pain & anti-inflammation',digest:'Digestive support',sleep:'Sleep & calm',cognitive:'Cognitive enhancement',resp:'Respiratory health',womens:"Women's harmony",antioxid:'Antioxidant protection',liver:'Liver detox',nutritive:'Deep nourishment',conscious:'Consciousness work',energy:'Energy & endurance',urinary:'Urinary support',adaptogen:'Stress adaptation',mens:"Men's vitality",nervine:'Nervous system',heart:'Heart health',menstrual:'Menstrual balance',culinary:'Aromatic culinary',fungi:'Mycelial intelligence'};
