@@ -1507,136 +1507,178 @@ function toggleMobileMenu() {
   </div>
 </div>
 
-<!-- ══ TAILORED FORMULA — integrated card, centered below the hero ══ -->
+<!-- ══ TAILORED FORMULA — v2: centered vertical stack ══
+     Killed the 3-column grid (seal | body | Begin) that looked
+     disconnected. The whole card is now a single centred column:
+     seal medallion → eyebrow → italic headline → fine print → pill
+     button. Reads as one cohesive prescription, not a row of parts. -->
 <section class="tailored-section">
   <div class="wrap">
-    <a href="/herbal-engine-2/" class="reveal tailored-cta">
+    <a href="/herbal-engine-2/" class="tailored-cta">
       <div class="tcta-corner tcta-corner--tl"></div>
       <div class="tcta-corner tcta-corner--tr"></div>
       <div class="tcta-corner tcta-corner--bl"></div>
       <div class="tcta-corner tcta-corner--br"></div>
+
       <div class="tcta-seal">
         <span class="tcta-rx">&#8478;</span>
       </div>
-      <div class="tcta-body">
-        <div class="tcta-eyebrow">Tailored Formula Service</div>
-        <div class="tcta-script">Full-spectrum extracts, <em>blended fresh.</em></div>
-        <div class="tcta-rule"></div>
-        <div class="tcta-fine">&Agrave; la minute &mdash; built to your constitution, season, and intent.</div>
-      </div>
-      <div class="tcta-go">
-        <span class="tcta-go-label">Begin</span>
-        <span class="tcta-go-arrow">&rarr;</span>
-      </div>
+
+      <div class="tcta-eyebrow">Tailored Formula Service</div>
+
+      <h3 class="tcta-headline">
+        Full-spectrum extracts,<br/>
+        <em>blended fresh.</em>
+      </h3>
+
+      <div class="tcta-rule"></div>
+
+      <p class="tcta-fine">&Agrave; la minute &mdash; built to your constitution, season, and intent.</p>
+
+      <span class="tcta-cta">Begin your formula <span class="tcta-arrow">&rarr;</span></span>
     </a>
   </div>
   <style>
     .tailored-section {
-      padding: 64px 0 56px;
+      padding: 80px 0 72px;
       background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.25) 100%);
     }
-    .tailored-section .wrap { max-width: 820px; }
-    /* Card itself — now standard flow inside .tailored-section, full-width
-       (centered with auto margins, no max-width fight with the wrap). */
-    .tailored-cta{
-      position:relative;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:28px;
-      padding:32px 40px;max-width:820px;margin:0 auto;text-decoration:none;
+    .tailored-section .wrap { max-width: 720px; padding: 0 24px; }
+
+    .tailored-cta {
+      position: relative;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center;
+      padding: 48px 40px 44px;
+      max-width: 640px; margin: 0 auto;
+      text-decoration: none;
       background:
-        radial-gradient(ellipse 60% 80% at 0% 50%, rgba(245,215,105,0.10), transparent 60%),
-        radial-gradient(ellipse 60% 80% at 100% 50%, rgba(196,134,46,0.08), transparent 60%),
-        linear-gradient(160deg, rgba(20,14,8,0.85) 0%, rgba(10,8,5,0.65) 100%);
-      border:0.5px solid rgba(232,177,75,0.35);
-      border-radius:2px;
-      box-shadow:0 8px 32px rgba(0,0,0,0.45), inset 0 0 0 0.5px rgba(232,177,75,0.12);
-      transition:transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-      isolation:isolate;
+        radial-gradient(ellipse 70% 50% at 50% 0%, rgba(245,215,105,0.10), transparent 70%),
+        linear-gradient(160deg, rgba(20,14,8,0.85) 0%, rgba(10,8,5,0.55) 100%);
+      border: 0.5px solid rgba(232,177,75,0.32);
+      border-radius: 2px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.45), inset 0 0 0 0.5px rgba(232,177,75,0.10);
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+      isolation: isolate;
     }
-        /* Brass corner ornaments — small filigree marks anchoring each
-           corner like an old apothecary card. */
-        .tcta-corner{
-          position:absolute;width:14px;height:14px;
-          border:0.5px solid rgba(232,177,75,0.7);pointer-events:none;
-        }
-        .tcta-corner--tl{ top:6px;left:6px;border-right:none;border-bottom:none; }
-        .tcta-corner--tr{ top:6px;right:6px;border-left:none;border-bottom:none; }
-        .tcta-corner--bl{ bottom:6px;left:6px;border-right:none;border-top:none; }
-        .tcta-corner--br{ bottom:6px;right:6px;border-left:none;border-top:none; }
-        /* Wax-seal-style ℞ medallion */
-        .tcta-seal{
-          flex-shrink:0;width:54px;height:54px;border-radius:50%;
-          background:
-            radial-gradient(circle at 32% 28%, #FFE89A 0%, #F5D769 22%, #C4862E 70%, #8B4F12 100%);
-          box-shadow:
-            0 0 22px rgba(245,215,105,0.45),
-            inset 0 0 8px rgba(255,235,180,0.4),
-            inset 0 -3px 6px rgba(80,40,8,0.4);
-          display:flex;align-items:center;justify-content:center;
-          position:relative;
-        }
-        .tcta-seal::before{
-          content:'';position:absolute;inset:-4px;border-radius:50%;
-          border:0.5px solid rgba(232,177,75,0.45);
-        }
-        .tcta-seal::after{
-          content:'';position:absolute;inset:-8px;border-radius:50%;
-          border:0.5px dashed rgba(232,177,75,0.25);
-        }
-        .tcta-rx{
-          font-family:var(--serif);font-style:italic;font-weight:500;
-          font-size:24px;color:#1a1208;
-          text-shadow:0 1px 0 rgba(255,235,180,0.4);
-        }
-        .tcta-body{ display:flex;flex-direction:column;gap:6px;min-width:0; }
-        .tcta-eyebrow{
-          font-family:'Bayer',var(--sans);font-size:9px;letter-spacing:0.32em;
-          text-transform:uppercase;color:#E8B14B;
-        }
-        .tcta-script{
-          font-family:var(--serif);font-size:19px;color:var(--parchment);
-          line-height:1.25;letter-spacing:-0.005em;
-        }
-        .tcta-script em{
-          font-family:'Pinyon Script','TAN-PARADISO',cursive;
-          font-style:italic;font-weight:400;color:#F5D769;
-          font-size:26px;letter-spacing:0.005em;
-        }
-        .tcta-rule{
-          width:48px;height:0.5px;
-          background:linear-gradient(90deg, rgba(232,177,75,0.7), transparent);
-          margin:2px 0;
-        }
-        .tcta-fine{
-          font-family:var(--serif);font-style:italic;font-size:12.5px;
-          color:var(--mist);line-height:1.55;opacity:0.85;
-        }
-        .tcta-go{
-          flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:6px;
-          padding-left:6px;
-        }
-        .tcta-go-label{
-          font-family:'Bayer',var(--sans);font-size:8.5px;letter-spacing:0.28em;
-          text-transform:uppercase;color:rgba(232,177,75,0.7);
-        }
-        .tcta-go-arrow{
-          font-family:var(--serif);font-size:26px;color:#E8B14B;line-height:1;
-          transition:transform 0.3s ease;
-        }
-        .tailored-cta:hover{
-          transform:translateY(-2px);
-          border-color:rgba(245,215,105,0.7);
-          box-shadow:0 14px 40px rgba(196,134,46,0.3), inset 0 0 0 0.5px rgba(245,215,105,0.3);
-        }
-        .tailored-cta:hover .tcta-go-arrow{ transform:translateX(6px); }
-        .tailored-cta:hover .tcta-corner{ border-color:rgba(245,215,105,1); }
-        @media (max-width: 520px) {
-          .tailored-cta{ padding:18px 18px; gap:14px; }
-          .tcta-seal{ width:44px;height:44px; }
-          .tcta-rx{ font-size:20px; }
-          .tcta-script{ font-size:16px; }
-          .tcta-script em{ font-size:21px; }
-          .tcta-go-label{ display:none; }
-        }
-      </style>
+
+    /* Filigree corners — slightly larger so they read at this card size */
+    .tcta-corner {
+      position: absolute; width: 18px; height: 18px;
+      border: 0.5px solid rgba(232,177,75,0.55); pointer-events: none;
+      transition: border-color 0.35s ease;
+    }
+    .tcta-corner--tl { top: 8px; left: 8px;  border-right: none; border-bottom: none; }
+    .tcta-corner--tr { top: 8px; right: 8px; border-left:  none; border-bottom: none; }
+    .tcta-corner--bl { bottom: 8px; left: 8px;  border-right: none; border-top: none; }
+    .tcta-corner--br { bottom: 8px; right: 8px; border-left:  none; border-top: none; }
+
+    /* ℞ wax seal — top centred medallion, larger than before so it
+       reads as the focal point of the prescription */
+    .tcta-seal {
+      width: 66px; height: 66px; border-radius: 50%;
+      background:
+        radial-gradient(circle at 32% 28%, #FFE89A 0%, #F5D769 24%, #C4862E 70%, #8B4F12 100%);
+      box-shadow:
+        0 0 28px rgba(245,215,105,0.45),
+        inset 0 0 10px rgba(255,235,180,0.45),
+        inset 0 -4px 8px rgba(80,40,8,0.5);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      margin-bottom: 24px;
+    }
+    .tcta-seal::before {
+      content: ''; position: absolute; inset: -5px; border-radius: 50%;
+      border: 0.5px solid rgba(232,177,75,0.45);
+    }
+    .tcta-seal::after {
+      content: ''; position: absolute; inset: -10px; border-radius: 50%;
+      border: 0.5px dashed rgba(232,177,75,0.22);
+    }
+    .tcta-rx {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic; font-weight: 500;
+      font-size: 30px; color: #1a1208;
+      text-shadow: 0 1px 0 rgba(255,235,180,0.4);
+    }
+
+    .tcta-eyebrow {
+      font-family: 'Bayer', var(--sans);
+      font-size: 10px; letter-spacing: 0.4em;
+      text-transform: uppercase; color: #E8B14B;
+      margin-bottom: 18px;
+    }
+
+    .tcta-headline {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 400; font-size: clamp(26px, 3.4vw, 36px);
+      color: var(--parchment);
+      line-height: 1.15; letter-spacing: -0.005em;
+      margin: 0 0 18px;
+    }
+    .tcta-headline em {
+      font-family: 'Pinyon Script', 'TAN-PARADISO', cursive;
+      font-style: italic; font-weight: 400;
+      color: #F5D769;
+      font-size: clamp(36px, 4.8vw, 52px);
+      letter-spacing: 0.005em;
+      line-height: 1;
+    }
+
+    .tcta-rule {
+      width: 56px; height: 0.5px;
+      background: linear-gradient(90deg, transparent, rgba(232,177,75,0.7), transparent);
+      margin: 6px 0 18px;
+    }
+
+    .tcta-fine {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic; font-size: 14px;
+      color: var(--cream); line-height: 1.55;
+      max-width: 42ch; margin: 0 0 32px;
+      opacity: 0.88;
+    }
+
+    /* The CTA at the bottom — a real pill button, no longer a tiny
+       "Begin →" floating off to one side */
+    .tcta-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'Bayer', var(--sans);
+      font-size: 11px; letter-spacing: 0.28em;
+      text-transform: uppercase; color: #F5D769;
+      padding: 14px 30px;
+      border: 0.5px solid rgba(245,215,105,0.55);
+      border-radius: 999px;
+      background: rgba(245,215,105,0.04);
+      transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+    }
+    .tcta-arrow {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 18px; line-height: 1;
+      transition: transform 0.35s ease;
+      letter-spacing: 0;
+    }
+
+    .tailored-cta:hover {
+      transform: translateY(-3px);
+      border-color: rgba(245,215,105,0.6);
+      box-shadow: 0 24px 60px rgba(196,134,46,0.32), inset 0 0 0 0.5px rgba(245,215,105,0.22);
+    }
+    .tailored-cta:hover .tcta-corner { border-color: rgba(245,215,105,0.95); }
+    .tailored-cta:hover .tcta-cta {
+      background: rgba(245,215,105,0.14);
+      color: #FFF1B8;
+      border-color: rgba(245,215,105,0.85);
+    }
+    .tailored-cta:hover .tcta-arrow { transform: translateX(6px); }
+
+    @media (max-width: 560px) {
+      .tailored-cta { padding: 36px 24px 32px; }
+      .tcta-seal { width: 56px; height: 56px; }
+      .tcta-rx { font-size: 24px; }
+      .tcta-cta { padding: 13px 22px; font-size: 10px; letter-spacing: 0.22em; }
+    }
+  </style>
 </section>
 <!-- (orphan hero-right block removed — the artwork now lives inside .hero
      above. Old SVG mycelium art + hero-stats overlay deleted to keep the
