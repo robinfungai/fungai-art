@@ -89,7 +89,12 @@
       "Bash(xargs -I{} ls -lh {})",
       "Bash(sort -k5 -hr)",
       "Bash(perl -i -pe 's{\\(<img\\\\s+src=\"/home/products/[^\"]*\"[^>]*?\\)\\(?<!loading=\"lazy\"\\)\\(\\\\s+class=\"product-photo\"\\)}{$1 loading=\"lazy\" decoding=\"async\"$2}g' public/home/index.html public/shop/index.html)",
-      "Bash(perl -i -pe 's{<img src=\"/home/pomelli-3\\\\.png\"\\([^>]*?\\)>}{<img src=\"/home/pomelli-3.png\" loading=\"lazy\" decoding=\"async\"$1>}g; s{<img src=\"/home/abc\\\\.png\"\\([^>]*?\\)>}{<img src=\"/home/abc.png\" loading=\"lazy\" decoding=\"async\"$1>}g' public/home/index.html)"
+      "Bash(perl -i -pe 's{<img src=\"/home/pomelli-3\\\\.png\"\\([^>]*?\\)>}{<img src=\"/home/pomelli-3.png\" loading=\"lazy\" decoding=\"async\"$1>}g; s{<img src=\"/home/abc\\\\.png\"\\([^>]*?\\)>}{<img src=\"/home/abc.png\" loading=\"lazy\" decoding=\"async\"$1>}g' public/home/index.html)",
+      "Bash(grep -c '<nav\\\\|nav-brand\\\\|nav-links' public/__TRACKED_VAR__/index.html)",
+      "Bash(perl -i -pe 's{>Mycelium Trance<}{><span class=\"mt-name\">Mycelium Trance</span><}g' public/home/index.html)",
+      "Bash(perl -i -pe 's{Discover Mycelium Trance}{Discover <span class=\"mt-name\">Mycelium Trance</span>}g; s{>Mycelium Trance Dinner<}{><span class=\"mt-name\">Mycelium Trance</span> Dinner<}g; s{Mycelium Trance home}{<span class=\"mt-name\">Mycelium Trance</span> home}g' public/home/index.html)",
+      "Bash(perl -i -pe 's{>Mycelium Trance<}{><span class=\"mt-name\">Mycelium Trance</span><}g' public/mycelium-trance/index.html)",
+      "Bash(perl -i -pe 's{Fungai Art \\\\xC2\\\\xB7 Mycelium Trance \\\\xC2\\\\xB7 2026}{Fungai Art \\\\xC2\\\\xB7 <span class=\"mt-name\">Mycelium Trance</span> \\\\xC2\\\\xB7 2026}g' public/mycelium-trance/index.html)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Robin\\Desktop\\fungai art\\websiet\\tailored tincture ai tool\\html codes",

@@ -57,8 +57,18 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
 .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom, rgba(5,9,12,0.3) 0%, rgba(5,9,12,0.6) 60%, rgba(5,9,12,0.95) 100%)}
 .hero-content{position:relative;z-index:10;padding:80px 60px;max-width:900px}
 .hero-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--lichen);margin-bottom:24px;display:block}
-.hero-title{font-family:var(--serif);font-size:clamp(60px,10vw,120px);font-weight:300;line-height:0.95;margin-bottom:8px;color:var(--parchment)}
+/* Robin asked for the "Mycelium Trance" wordmark to be set in TAN-PARADISO
+   wherever it appears. The hero title is the headline rendering of the
+   wordmark, so its font family is TAN-PARADISO. */
+.hero-title{font-family:'TAN-PARADISO',var(--serif);font-size:clamp(60px,10vw,120px);font-weight:300;line-height:0.95;margin-bottom:8px;color:var(--parchment);letter-spacing:0.005em;}
 .hero-title em{font-style:italic;color:var(--mist)}
+.mt-name {
+  font-family: 'TAN-PARADISO', var(--serif) !important;
+  font-style: italic !important;
+  text-transform: none !important;
+  letter-spacing: 0.005em !important;
+  font-weight: 400 !important;
+}
 /* Hero subtitle — was Pinyon Script which clashed with the trance theme.
    TAN-PEARL gives the line a print-label / apothecary feel and pairs
    with the rest of the type system instead of fighting it. */
@@ -132,6 +142,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
 .allies-header{margin-bottom:80px}
 .allies-list{display:flex;flex-direction:column;gap:1px}
 .ally{display:grid;grid-template-columns:200px 1fr 280px;gap:40px;padding:40px 0;border-bottom:0.5px solid rgba(136,186,200,0.08);align-items:start}
+/* Amanita as the featured/main ally — subtle amber tint, slightly larger
+   name, and a top accent rule so it reads as the lead before the supporting cast. */
+.ally.ally-main{position:relative;padding-top:48px;background:linear-gradient(180deg, rgba(196,134,46,0.06), transparent 60%);}
+.ally.ally-main::before{content:'Main fungi ally';position:absolute;top:18px;left:0;font-family:var(--sans);font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mist);}
+.ally.ally-main .ally-name{font-size:34px;color:var(--parchment);}
+.ally.ally-main .ally-role{color:var(--amber-lt,#E8B14B);}
 .ally-name{font-family:var(--serif);font-size:28px;font-weight:300;color:var(--mist)}
 .ally-latin{font-size:11px;letter-spacing:1px;color:var(--lichen);display:block;margin-top:4px}
 .ally-role{font-size:11px;letter-spacing:2px;color:var(--lichen);text-transform:uppercase;display:block;margin-bottom:12px}
@@ -212,7 +228,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
     <a href="/mixology">Herbal Engine</a>
     <a href="/#forage">Foraging</a>
   </div>
-  <a href="mailto:robin@fungai.art" class="nav-cta">Book</a>
+  <a href="mailto:teyae@fungai.art" class="nav-cta">Book</a>
 </nav>
 
 <!-- HERO -->
@@ -227,11 +243,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
     <div class="hero-meta">
       <div class="hero-meta-item"><strong>111</strong>Minutes</div>
       <div class="hero-meta-item"><strong>70+</strong>Max capacity</div>
-      <div class="hero-meta-item"><strong>5</strong>Sacred plant allies</div>
+      <div class="hero-meta-item"><strong>6</strong>Sacred plant allies</div>
       <div class="hero-meta-item"><strong>Europe</strong>Festivals & private</div>
     </div>
     <div class="hero-actions">
-      <a href="mailto:robin@fungai.art" class="btn-primary">Enquire to book</a>
+      <a href="mailto:teyae@fungai.art" class="btn-primary">Enquire to book</a>
       <a href="#concept" class="btn-ghost">Discover</a>
     </div>
   </div>
@@ -249,7 +265,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
         <blockquote class="concept-quote">"Trance arises not through force, but through recognition."</blockquote>
         <p class="sec-body">Through diverse sound modules, imagery, metaphor and somatic attunement, vibrations flow into bones, fascia, and energetic fields. Participants are invited to become hyphae — weaving mycorrhizal threads with each other and the morphing organism, experiencing reciprocity, vitality, and intelligence of the life-web.</p>
         <div class="divider"></div>
-        <p class="sec-body" style="color:var(--mist);font-family:var(--serif);font-style:italic;font-size:16px;">Sacred Plant Allies — Chaga · Cordyceps · Pine pollen · Pine cones · Chilcuague — tether participants to the intelligence of the forest, opening sensory channels and transmuting archetypal wisdom.</p>
+        <p class="sec-body" style="color:var(--mist);font-family:var(--serif);font-style:italic;font-size:16px;">Sacred Plant Allies — <strong style="color:var(--parchment);font-weight:500;">Amanita muscaria</strong> as the main fungi ally, woven with Chaga · Cordyceps · Pine pollen · Pine cones · Chilcuague — tethering participants to the intelligence of the forest, opening sensory channels and transmuting archetypal wisdom.</p>
       </div>
       <div class="reveal reveal-d2">
         <div class="concept-img">
@@ -348,7 +364,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
         <div class="sensory-module">
           <span class="module-hz">Sacred Plant Allies</span>
           <div class="module-name">Botanical Elements</div>
-          <p class="module-detail">Pine pollen · Pine cones · Chaga · Chilcuague — opening sensory and consciousness pathways, tethering participants to the intelligence of the forest. Each element introduced with full clarity of effects and purpose.</p>
+          <p class="module-detail"><strong style="color:var(--parchment);font-weight:500;">Amanita muscaria</strong> as the main fungi ally · Pine pollen · Pine cones · Chaga · Chilcuague — opening sensory and consciousness pathways, tethering participants to the intelligence of the forest. Each element introduced with full clarity of effects and purpose.</p>
         </div>
         <div class="sensory-module">
           <span class="module-hz">Somatic Attunement</span>
@@ -376,7 +392,21 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
       <h2 class="sec-title">The <em>forest speaks</em></h2>
     </div>
     <div class="allies-list">
-      <div class="ally reveal">
+      <!-- Amanita muscaria — the main fungi ally of the Mycelium Trance.
+           Placed first and given the "featured" treatment so the rest of
+           the allies read as the supporting cast around it. -->
+      <div class="ally ally-main reveal">
+        <div>
+          <div class="ally-name">Amanita Muscaria</div>
+          <span class="ally-latin">Fly Agaric · Soma</span>
+        </div>
+        <div>
+          <span class="ally-role">The Mother Fungus</span>
+          <p class="ally-body">The crimson cap with white veil — fly agaric — older than every religion that borrowed its imagery. Siberian, Sámi, Baltic, Vedic ceremonial use across millennia. Slow-dried, the ibotenic acid decarboxylates to muscimol — a GABAergic dream-doorway, body anchor, and nervine. Held at micro-amounts in our work: enough to soften the edges, never to override.</p>
+        </div>
+        <p class="ally-arrow">→ Dream-state, body-rooted trance, the felt sense of the forest mind. Used only at micro-dose, only in container.</p>
+      </div>
+      <div class="ally reveal reveal-d1">
         <div>
           <div class="ally-name">Chaga</div>
           <span class="ally-latin">Inonotus obliquus</span>
@@ -442,7 +472,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
           <span class="event-badge done">Done</span>
         </div>
         <div class="event-row">
-          <div><div class="event-venue">TrypExpo, Berlin</div><div class="event-act">Mycelium Trance</div></div>
+          <div><div class="event-venue">TrypExpo, Berlin</div><div class="event-act"><span class="mt-name">Mycelium Trance</span></div></div>
           <span class="event-badge done">Done</span>
         </div>
         <div class="event-row">
@@ -462,14 +492,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
           <span class="event-badge upcoming">Upcoming</span>
         </div>
       </div>
-      <!-- Original file was 90° off — apply a CSS rotation rather than
-           re-encoding the JPEG so the source stays a single truth. The
-           outer box stays portrait-shaped; the img is rotated 90° CW and
-           the swapped dimensions (height becomes width, width becomes
-           height) are set explicitly so it refills cleanly. -->
+      <!-- CSS rotation kept (no JPEG re-encode). Rotated 90° CCW per
+           Robin's latest pass — if this is still off, the only other
+           orientation that makes sense is 180°. -->
       <div class="events-img reveal reveal-d2" style="overflow:hidden;height:500px;position:relative;background:#000;">
         <img src="/mycelium-trance/robin-amanita.jpeg" alt="Robin Fungi"
-             style="position:absolute;top:50%;left:50%;height:100%;width:auto;max-width:none;transform:translate(-50%,-50%) rotate(90deg);transform-origin:center center;">
+             style="position:absolute;top:50%;left:50%;height:100%;width:auto;max-width:none;transform:translate(-50%,-50%) rotate(-90deg);transform-origin:center center;">
       </div>
     </div>
   </div>
@@ -547,11 +575,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
         </div>
       </div>
 
+      <!-- Booking goes through Stephanie now; Robin's address removed per
+           his ask. Stephanie is the lead facilitator on the trance work. -->
       <div class="booking-contacts">
-        <div class="contact-item">
-          <div class="contact-name">Robin Flor&aelig;sta</div>
-          <a href="mailto:robin@fungai.art?subject=Mycelium%20Trance%20booking%20%E2%80%94%20[event%20name]&amp;body=Hi%20Robin%2C%0A%0AEvent%3A%0ADate%3A%0ALocation%3A%0AExpected%20attendance%3A%0AWhat%20we%27re%20looking%20for%3A%0A%0AThanks%2C" class="contact-email">robin@fungai.art</a>
-        </div>
         <div class="contact-item">
           <div class="contact-name">Stephanie Te&yuml;&aelig;</div>
           <a href="mailto:teyae@fungai.art?subject=Mycelium%20Trance%20booking%20%E2%80%94%20[event%20name]&amp;body=Hi%20Stephanie%2C%0A%0AEvent%3A%0ADate%3A%0ALocation%3A%0AExpected%20attendance%3A%0AWhat%20we%27re%20looking%20for%3A%0A%0AThanks%2C" class="contact-email">teyae@fungai.art</a>
@@ -567,7 +593,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
 
 <!-- FOOTER -->
 <footer class="footer">
-  <div class="footer-brand">Fungai Art · Mycelium Trance · 2026</div>
+  <div class="footer-brand">Fungai Art · <span class="mt-name">Mycelium Trance</span> · 2026</div>
   <div class="footer-links">
     <a href="/">Home</a>
     <a href="/#shop">Shop</a>
