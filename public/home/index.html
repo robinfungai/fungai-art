@@ -1544,70 +1544,76 @@ function toggleMobileMenu() {
        formula box and the Medicine section that follows. -->
   <div class="rx-descent" aria-hidden="true"></div>
   <style>
+    /* Section: dark forest backdrop (#04100a) per brief — slightly
+       greener than pure black, gives the card breathing room. */
     .rx-section {
       padding: 64px 0 0;
-      background: var(--void);
+      background: #04100a;
     }
-    /* Parent container padded 0 44px per the brief. The card sits as a
-       normal block element inside, full-width within that pad. */
-    .rx-frame { padding: 0 44px; }
+    /* ~50px horizontal margin from viewport edges. The card itself
+       ends up ~75-80% of viewport width, centred. */
+    .rx-frame { padding: 0 50px; }
 
     .rx-card {
       position: relative;
       display: grid;
-      grid-template-columns: 56px 1fr auto;
+      grid-template-columns: 60px 1fr auto;
       align-items: center;
-      gap: 24px;
-      padding: 28px 32px;
-      background: #05120c;
+      gap: 28px;
+      padding: 28px 36px;
+      background: #071812;             /* dark green undertone, not pure black */
       border: 0.5px solid #1e3828;
       border-radius: 2px;
       text-decoration: none;
       transition: border-color 0.35s ease, background 0.35s ease;
     }
 
-    /* Left accent bar — vertical gradient transparent → #2a5838 → transparent */
+    /* Left accent stripe — subtle, no glow, just a green breath */
     .rx-accent {
       position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
       background: linear-gradient(to bottom, transparent 0%, #2a5838 50%, transparent 100%);
       pointer-events: none;
     }
 
-    /* Corner brackets — 12x12, two sides each, 8px inset */
+    /* Corner brackets — 12×12, 1px stroke, 7px inset, slightly lighter
+       than the card border so they read as a separate apothecary mark */
     .rx-bracket {
       position: absolute; width: 12px; height: 12px;
-      border-color: #1e3828; border-style: solid; pointer-events: none;
+      border-color: #243e2e; border-style: solid; pointer-events: none;
       transition: border-color 0.35s ease;
     }
-    .rx-bracket--tl { top: 8px;    left: 8px;    border-width: 1px 0 0 1px; }
-    .rx-bracket--tr { top: 8px;    right: 8px;   border-width: 1px 1px 0 0; }
-    .rx-bracket--bl { bottom: 8px; left: 8px;    border-width: 0 0 1px 1px; }
-    .rx-bracket--br { bottom: 8px; right: 8px;   border-width: 0 1px 1px 0; }
+    .rx-bracket--tl { top: 7px;    left: 7px;    border-width: 1px 0 0 1px; }
+    .rx-bracket--tr { top: 7px;    right: 7px;   border-width: 1px 1px 0 0; }
+    .rx-bracket--bl { bottom: 7px; left: 7px;    border-width: 0 0 1px 1px; }
+    .rx-bracket--br { bottom: 7px; right: 7px;   border-width: 0 1px 1px 0; }
 
-    /* ── Column 1: the seal ── */
+    /* ── Column 1: ℞ seal ── */
     .rx-seal {
       position: relative;
       width: 56px; height: 56px;
-      background: #071810;
-      border: 0.5px solid #1e3828;
+      background: #071810;             /* slightly darker than card bg */
+      border: 0.5px solid #243e2e;     /* thin green ring */
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
     }
+    /* Concentric inner ring — thinner & darker than the outer for the
+       double-ring apothecary-stamp feel */
     .rx-seal-inner {
-      position: absolute; inset: 4px;
+      position: absolute; inset: 5px;
       border-radius: 50%;
-      border: 0.5px solid #122018;
+      border: 0.5px solid #162e20;
       pointer-events: none;
     }
     .rx-glyph {
       font-family: 'IM Fell English', 'Cormorant Garamond', Georgia, serif;
       font-style: italic;
+      font-weight: 400;                /* NOT bold — faded stamp feel */
       font-size: 22px;
-      color: #3a6848;
+      color: #3a7050;
       line-height: 1;
     }
 
-    /* ── Column 2: text ── */
+    /* ── Column 2: text stack ── */
     .rx-body { min-width: 0; }
     .rx-overtitle {
       font-family: 'Josefin Sans', var(--sans);
@@ -1620,13 +1626,15 @@ function toggleMobileMenu() {
     }
     .rx-title {
       font-family: 'IM Fell English', 'Cormorant Garamond', Georgia, serif;
-      font-size: 24px;
-      color: #9ab8a0;
+      font-size: 26px;
+      font-weight: 400;
+      color: #8ab8a0;                  /* roman, NOT italic */
       line-height: 1.2;
     }
     .rx-title em {
-      font-style: italic;
-      color: #6abf88;
+      font-style: italic;              /* same family, same size, italic */
+      font-weight: 400;
+      color: #6abf88;                  /* lighter + greener than the roman */
     }
     .rx-tagline {
       font-family: 'Spectral', 'Cormorant Garamond', Georgia, serif;
@@ -1638,9 +1646,9 @@ function toggleMobileMenu() {
       line-height: 1.5;
     }
 
-    /* ── Column 3: action ── */
+    /* ── Column 3: BEGIN + arrow ring ── */
     .rx-action {
-      display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
     }
     .rx-action-label {
       font-family: 'Josefin Sans', var(--sans);
@@ -1654,16 +1662,16 @@ function toggleMobileMenu() {
       width: 32px; height: 32px;
       border-radius: 50%;
       border: 0.5px solid #1e3828;
+      background: transparent;
       display: flex; align-items: center; justify-content: center;
       color: #3a6848;
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1;
       transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease;
     }
 
-    /* Hover — soften everything one notch brighter without breaking the
-       dark forest palette. */
-    .rx-card:hover { border-color: #2a5838; background: #06170f; }
+    /* Hover — every element brightens one notch, palette intact */
+    .rx-card:hover { border-color: #2a5838; background: #081a14; }
     .rx-card:hover .rx-bracket { border-color: #2a5838; }
     .rx-card:hover .rx-action-arrow {
       transform: translateX(3px);
@@ -1676,11 +1684,11 @@ function toggleMobileMenu() {
       .rx-card {
         grid-template-columns: 48px 1fr;
         gap: 16px;
-        padding: 22px 22px 22px 26px;
+        padding: 22px 24px 22px 28px;
       }
       .rx-seal { width: 48px; height: 48px; }
       .rx-glyph { font-size: 20px; }
-      .rx-title { font-size: 19px; }
+      .rx-title { font-size: 20px; }
       .rx-tagline { font-size: 12px; }
       .rx-action {
         grid-column: 1 / -1;
@@ -1691,7 +1699,7 @@ function toggleMobileMenu() {
       }
     }
 
-    /* ── Vertical descent divider between the two sections ── */
+    /* ── Vertical descent divider between sections ── */
     .rx-descent {
       width: 1px; height: 40px; margin: 0 auto;
       background: linear-gradient(to bottom, transparent, #1e3828);
