@@ -110,7 +110,6 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  cursor: none;
 }
 
 /* Film grain overlay */
@@ -139,55 +138,11 @@ body::after {
    ring that trails. No rotation, no fancy direction logic, just a
    meditative point of light. Hover state expands the ring; click
    collapses it inward. */
-.cursor {
-  position: fixed; top: 0; left: 0;
-  width: 8px; height: 8px;
-  pointer-events: none;
-  z-index: 10001;
-  transform: translate(-50%,-50%);
-  transition: opacity 0.2s, transform 0.15s, background 0.15s;
-  border-radius: 50%;
-  background: var(--amber-lt);
-  box-shadow:
-    0 0 6px rgba(232,177,75,0.85),
-    0 0 14px rgba(232,177,75,0.45);
-  will-change: left, top;
-}
-.cursor.hover { transform: translate(-50%,-50%) scale(0.6); background: var(--mist); box-shadow: 0 0 8px rgba(136,186,200,0.8); }
-.cursor.click { transform: translate(-50%,-50%) scale(1.6); }
-.cursor-ring {
-  position: fixed; top: 0; left: 0;
-  width: 26px; height: 26px;
-  border: 0.5px solid rgba(232,177,75,0.4);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 10000;
-  transform: translate(-50%,-50%);
-  opacity: 0.7;
-  animation: cursor-breathe 3.2s ease-in-out infinite;
-  transition: width 0.22s ease, height 0.22s ease, opacity 0.22s, border-color 0.22s, background 0.22s;
-  will-change: left, top;
-}
-@keyframes cursor-breathe {
-  0%, 100% { opacity: 0.5; transform: translate(-50%,-50%) scale(1); }
-  50%      { opacity: 0.85; transform: translate(-50%,-50%) scale(1.18); }
-}
-.cursor-ring.hover {
-  width: 48px; height: 48px; opacity: 1;
-  border-color: rgba(136,186,200,0.7);
-  background: radial-gradient(circle, rgba(136,186,200,0.06), transparent 70%);
-  animation: none;
-}
-.cursor-ring.click {
-  width: 18px; height: 18px; opacity: 1;
-  border-color: var(--amber-lt); border-width: 1px;
-  animation: none;
-}
-/* Hide custom cursor on touch devices — they have no hover and pointer:fine doesn't apply */
-@media (hover: none), (pointer: coarse) {
-  .cursor, .cursor-ring { display: none; }
-  html, body, button, a { cursor: auto !important; }
-}
+/* Custom cursor removed — the trailing ring's easing math made it
+   feel sluggish, and there's no functional benefit over the native
+   cursor. Stays here as a no-op rule so any leftover .cursor /
+   .cursor-ring DOM (cached old pages) doesn't render. */
+.cursor, .cursor-ring { display: none !important; }
 
 /* Mycelium Trance wordmark — Robin asked for the name to be set in
    TAN-PARADISO (italic) anywhere it appears. Applies on top of the host
@@ -204,7 +159,7 @@ body::after {
 /* ─── UTILITIES ──────────────────────────────── */
 .wrap { max-width: var(--max); margin: 0 auto; padding: 0 48px; }
 a { color: inherit; text-decoration: none; }
-button { font-family: inherit; cursor: none; border: none; background: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
 input { font-family: inherit; }
 ul { list-style: none; }
 
@@ -1095,7 +1050,7 @@ p { line-height: 1.75; color: var(--mist); }
   flex: 1; padding: 14px 10px; text-align: center;
   background: rgba(6,11,6,0.5); border: 1px solid rgba(158,212,56,0.1);
   font-size: 8.5px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--lichen);
-  transition: all 0.18s; cursor: none;
+  transition: all 0.18s; cursor: pointer;
 }
 .co-pay-tab.active { background: rgba(158,212,56,0.1); border-color: rgba(158,212,56,0.4); color: var(--lime); }
 .co-pay-tab:hover:not(.active) { border-color: rgba(158,212,56,0.22); color: var(--mist); }
@@ -1370,10 +1325,8 @@ p { line-height: 1.75; color: var(--mist); }
 </head>
 <body>
 
-<!-- CURSOR — minimal spore: gold dot + breathing trailing ring. Hidden
-     on touch devices via CSS. -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+<!-- Custom cursor removed — native cursor only. -->
+
 
 <!-- CART OVERLAY + DRAWER -->
 <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
@@ -3236,60 +3189,7 @@ function toggleMobileMenu() {
 </div>
 
 <script>
-/* ══════════════════════════════════════════════
-   CURSOR — minimal spore + breathing trailing ring
-══════════════════════════════════════════════ */
-(function(){
-  const cursor = document.getElementById('cursor');
-  const ring   = document.getElementById('cursorRing');
-  if (!cursor || !ring) return;
-  if (window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches) {
-    cursor.style.display = ring.style.display = 'none';
-    document.documentElement.style.cursor = 'auto';
-    return;
-  }
-
-  let mx = innerWidth/2, my = innerHeight/2;   // mouse target
-  let rx = mx, ry = my;                         // ring eased
-
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top  = my + 'px';
-  });
-
-  document.addEventListener('mousedown', () => { cursor.classList.add('click'); ring.classList.add('click'); });
-  document.addEventListener('mouseup',   () => { cursor.classList.remove('click'); ring.classList.remove('click'); });
-
-  document.addEventListener('mouseover', e => {
-    const t = e.target;
-    if (!t || !t.closest) return;
-    if (t.closest('a, button, [role="button"], .product-card, .journal-card, .event-item, .location-item, .crypto-coin, .co-pay-tab, [data-cursor="hover"]')) {
-      cursor.classList.add('hover'); ring.classList.add('hover');
-    }
-  });
-  document.addEventListener('mouseout', e => {
-    const t = e.target;
-    if (!t || !t.closest) return;
-    if (t.closest('a, button, [role="button"], .product-card, .journal-card, .event-item, .location-item, .crypto-coin, .co-pay-tab, [data-cursor="hover"]')) {
-      cursor.classList.remove('hover'); ring.classList.remove('hover');
-    }
-  });
-
-  function frame(){
-    // Easing factor — 0.16 lags noticeably so the ring trails like a
-    // hyphal afterglow rather than tracking 1:1 with the dot.
-    rx += (mx - rx) * 0.16;
-    ry += (my - ry) * 0.16;
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-
-  document.addEventListener('mouseleave', () => { cursor.style.opacity = ring.style.opacity = '0'; });
-  document.addEventListener('mouseenter', () => { cursor.style.opacity = ''; ring.style.opacity = ''; });
-})();
+/* Custom cursor removed — native cursor only. */
 
 /* ── NAV SCROLL ── */
 window.addEventListener('scroll', () => {
