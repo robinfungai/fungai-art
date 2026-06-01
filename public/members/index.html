@@ -3,199 +3,788 @@
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>The Mycelium · $MYCEL Members — Fungai Art</title>
-<meta name="description" content="The Mycelium — Fungai Art's living member network. Reputation tiers, $MYCEL contributions, ceremony unlocks, and the threads holding the apothecary together."/>
+<meta name="description" content="The Mycelium — Fungai Art's living member network. The substance of the Hyphae token: how Hyphae are earned, spent, and how voice grows. A scroll-journey into how the network actually works."/>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
-    <link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
-    <link rel="apple-touch-icon" href="/fungai-art-logo.png"/>
+<link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
+<link rel="apple-touch-icon" href="/fungai-art-logo.png"/>
 <link rel="preconnect" href="https://api.fontshare.com"/>
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500&f[]=satoshi@400,500,600&f[]=geist-mono@400&display=swap"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Spectral:ital,wght@0,200;0,300;1,200;1,300&family=Josefin+Sans:wght@100;200;300&display=swap" rel="stylesheet">
 <style>
-:root{--s:#060809;--s2:#0F1014;--s3:#171A1F;--m:#C9B894;--md:#8B7E62;--ml:#E6D9B5;--a:#E8B14B;--al:#F5D689;--g:#6BD66F;--gd:#2E7A35;--gl:#B6F0AE;--v:#A88FE0;--vl:#C5B5F5;--r:rgba(201,184,148,.11);--rl:rgba(201,184,148,.2);--fd:'Zodiak','Cormorant Garamond',Georgia,serif;--fs:'Satoshi',system-ui,sans-serif;--fm:'Geist Mono',monospace;}
-*{box-sizing:border-box;margin:0;padding:0;}html,body{background:var(--s);color:var(--m);font-family:var(--fs);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh;}
-body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.22;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .79 0 0 0 0 .72 0 0 0 0 .58 0 0 0 .06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");}
-.wrap{max-width:920px;margin:0 auto;padding:0 22px 100px;position:relative;z-index:1;}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0 0;margin-bottom:48px;flex-wrap:wrap;gap:12px;}
-.nav-brand{display:flex;align-items:center;gap:12px;}
-.nav-name{font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml);}
-.nav-sub{font-family:var(--fm);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--a);margin-top:2px;}
-.nav-back{font-family:var(--fm);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--md);padding:7px 13px;border:0.5px solid var(--r);border-radius:5px;text-decoration:none;transition:all .15s;}
-.nav-back:hover{color:var(--ml);border-color:var(--rl);}
-.hero-ey{font-family:var(--fm);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--a);margin-bottom:10px;}
-.hero-title{font-family:var(--fd);font-style:italic;font-size:clamp(42px,6.5vw,76px);color:var(--ml);letter-spacing:-.025em;line-height:.92;margin-bottom:18px;}
-.hero-title em{background:linear-gradient(90deg,var(--a),var(--vl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hero-blurb{font-size:15px;color:var(--m);line-height:1.78;max-width:62ch;opacity:.9;margin-bottom:40px;}
+:root{
+  --s:#040a07;       /* deep forest, almost black */
+  --s2:#08130d;      /* one notch up */
+  --s3:#0e1e15;
+  --m:#9DB8A4;       /* primary text — muted sage */
+  --md:#5a7062;      /* secondary */
+  --ml:#D4DDC8;      /* light cream */
+  --a:#E8B14B;       /* amber */
+  --al:#F5D689;
+  --g:#6abf88;       /* live green */
+  --gd:#2E7A35;
+  --gl:#B6F0AE;
+  --v:#A88FE0;
+  --vl:#C5B5F5;
+  --r:rgba(155,180,160,.10);
+  --rl:rgba(155,180,160,.22);
+  --fd:'IM Fell English','Zodiak','Cormorant Garamond',Georgia,serif;
+  --fdoom:'Spectral',Georgia,serif;
+  --fs:'Satoshi',system-ui,sans-serif;
+  --fm:'Geist Mono','Josefin Sans',monospace;
+  --fjm:'Josefin Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+html,body{
+  background:var(--s);
+  color:var(--m);
+  font-family:var(--fs);
+  font-size:15px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  overflow-x:hidden;
+}
 
-/* Wallet panel */
-.wallet-panel{background:var(--s2);border:0.5px solid var(--rl);border-radius:14px;padding:26px 28px;margin-bottom:52px;position:relative;overflow:hidden;}
-.wallet-panel::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 10% 0%,rgba(232,177,75,.07),transparent 60%),radial-gradient(ellipse 60% 50% at 100% 100%,rgba(168,143,224,.05),transparent 60%);pointer-events:none;}
-.wallet-row{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;position:relative;z-index:1;margin-bottom:18px;}
-.wallet-info{flex:1;min-width:220px;}
-.wallet-label{font-family:var(--fm);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--md);margin-bottom:6px;}
-.wallet-state{font-family:var(--fd);font-style:italic;font-size:24px;color:var(--ml);margin-bottom:6px;line-height:1.2;}
-.wallet-addr{font-family:var(--fm);font-size:11px;letter-spacing:.05em;color:var(--md);word-break:break-all;}
-.balances{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--r);border:0.5px solid var(--r);border-radius:10px;overflow:hidden;margin-top:18px;position:relative;z-index:1;}
-.bal-cell{background:var(--s3);padding:18px 20px;text-align:center;}
-.bal-num{font-family:var(--fd);font-style:italic;font-size:36px;line-height:1;letter-spacing:-.02em;}
+/* ── Mycelium background — fixed, dim, animated.
+   Two layers:
+   1. A radial spotlight that follows the user's gaze area (mid-viewport)
+   2. The actual mycelium SVG with paths growing in slow motion
+   Both at low opacity so the substance stays readable. ── */
+.organism{
+  position:fixed;inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 30%, rgba(106,191,136,0.05), transparent 60%),
+    radial-gradient(ellipse 80% 50% at 20% 80%, rgba(232,177,75,0.025), transparent 60%),
+    radial-gradient(ellipse 80% 50% at 80% 70%, rgba(168,143,224,0.025), transparent 60%);
+}
+.organism svg{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  opacity:0.18;
+  filter:blur(0.4px);
+}
+.organism svg path{
+  fill:none;
+  stroke:#6abf88;
+  stroke-width:0.4;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.organism svg .pulse{
+  animation:pulse 8s ease-in-out infinite;
+}
+.organism svg .node{
+  fill:#6abf88;
+  animation:node-pulse 4s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{stroke-opacity:0.35;}
+  50%{stroke-opacity:0.75;}
+}
+@keyframes node-pulse{
+  0%,100%{opacity:0.4;transform:scale(1);}
+  50%{opacity:1;transform:scale(1.4);}
+}
+.organism::after{
+  /* film grain */
+  content:'';position:absolute;inset:0;
+  opacity:0.06;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+}
+
+/* ── Vertical thread that grows as the user scrolls
+   Sits at left edge on wide screens, vanishes on mobile. ── */
+.thread{
+  position:fixed;
+  top:0;
+  left:48px;
+  width:1px;
+  height:100vh;
+  z-index:1;
+  pointer-events:none;
+  background:linear-gradient(to bottom,
+    transparent 0%,
+    rgba(106,191,136,0.35) 8%,
+    rgba(232,177,75,0.45) 50%,
+    rgba(168,143,224,0.35) 92%,
+    transparent 100%
+  );
+}
+.thread::before{
+  content:'';
+  position:absolute;left:-2.5px;width:6px;height:6px;border-radius:50%;
+  background:var(--g);
+  box-shadow:0 0 10px var(--g);
+  top:50vh;
+  animation:thread-drift 18s ease-in-out infinite;
+}
+@keyframes thread-drift{
+  0%,100%{top:30vh;background:#6abf88;}
+  50%{top:70vh;background:#E8B14B;box-shadow:0 0 10px #E8B14B;}
+}
+@media(max-width:980px){.thread{display:none;}}
+
+/* ── Layout containers ── */
+.wrap{
+  max-width:1080px;
+  margin:0 auto;
+  padding:0 32px;
+  position:relative;
+  z-index:2;
+}
+@media(max-width:600px){.wrap{padding:0 20px;}}
+
+/* ── Nav ── */
+.nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:24px 32px 0;
+  flex-wrap:wrap;gap:14px;
+  position:relative;z-index:3;
+  max-width:1200px;margin:0 auto;
+}
+.nav-brand{display:flex;align-items:center;gap:14px;text-decoration:none;}
+.nav-brand img{height:36px;width:auto;opacity:.92;}
+.nav-name{font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml);letter-spacing:-0.01em;}
+.nav-sub{font-family:var(--fm);font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:var(--g);margin-top:3px;}
+.nav-links{display:flex;gap:6px;flex-wrap:wrap;}
+.nav-back{
+  font-family:var(--fjm);font-size:9px;letter-spacing:0.22em;
+  text-transform:uppercase;color:var(--md);
+  padding:8px 14px;
+  border:0.5px solid var(--r);border-radius:999px;
+  text-decoration:none;transition:all 0.2s;
+}
+.nav-back:hover{color:var(--ml);border-color:var(--rl);background:rgba(155,180,160,0.03);}
+
+/* ── Act / Chamber wrapper ── */
+.act{
+  padding:96px 0 64px;
+  position:relative;
+  border-top:0.5px solid transparent;
+}
+.act:first-of-type{padding-top:80px;}
+.act-mark{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:28px;
+}
+.act-roman{
+  font-family:var(--fd);
+  font-style:italic;
+  font-size:42px;
+  color:var(--g);
+  line-height:1;
+  opacity:0.85;
+  letter-spacing:0;
+}
+.act-rule{flex:1;height:0.5px;background:linear-gradient(90deg,rgba(106,191,136,0.4),transparent);}
+.act-eyebrow{
+  font-family:var(--fjm);
+  font-weight:200;
+  font-size:9px;letter-spacing:0.4em;text-transform:uppercase;
+  color:var(--g);
+  white-space:nowrap;
+}
+
+.act-title{
+  font-family:var(--fd);font-style:italic;
+  font-size:clamp(38px,5vw,64px);
+  color:var(--ml);
+  letter-spacing:-0.02em;
+  line-height:1.02;
+  margin-bottom:22px;
+  max-width:18ch;
+}
+.act-title em{
+  font-style:italic;
+  background:linear-gradient(90deg,var(--a),var(--g));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.act-blurb{
+  font-family:var(--fdoom);
+  font-weight:300;
+  font-style:italic;
+  font-size:17px;line-height:1.75;
+  color:var(--m);
+  max-width:62ch;
+  margin-bottom:36px;
+  opacity:0.92;
+}
+.act-blurb strong{color:var(--ml);font-weight:400;font-style:normal;}
+
+/* ── Hero (Act I) ── */
+.hero-h1{
+  font-family:var(--fd);font-style:italic;
+  font-size:clamp(52px,8vw,108px);
+  color:var(--ml);
+  letter-spacing:-0.03em;
+  line-height:0.92;
+  margin-bottom:22px;
+}
+.hero-h1 em{
+  font-style:italic;
+  background:linear-gradient(90deg,var(--g) 0%,var(--a) 60%,var(--vl) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-blurb{
+  font-family:var(--fdoom);font-style:italic;font-weight:300;
+  font-size:18px;line-height:1.78;
+  color:var(--m);
+  max-width:60ch;
+  margin-bottom:46px;
+  opacity:0.95;
+}
+.hero-blurb strong{color:var(--ml);font-weight:400;font-style:normal;}
+.hero-meta{
+  display:flex;gap:8px;flex-wrap:wrap;
+  font-family:var(--fjm);font-weight:200;
+  font-size:9px;letter-spacing:0.3em;text-transform:uppercase;
+  color:var(--md);
+}
+.hero-meta span{
+  padding:6px 12px;
+  border:0.5px solid var(--r);border-radius:999px;
+  background:rgba(8,19,13,0.5);
+}
+.scroll-prompt{
+  margin-top:80px;
+  font-family:var(--fjm);font-weight:200;
+  font-size:9px;letter-spacing:0.32em;text-transform:uppercase;
+  color:var(--md);
+  display:flex;align-items:center;gap:12px;
+  opacity:0.7;
+}
+.scroll-prompt::before{
+  content:'';width:32px;height:0.5px;background:var(--md);display:block;
+}
+
+/* ── Wallet panel (Act II) ── */
+.wallet-panel{
+  background:linear-gradient(160deg,rgba(8,19,13,0.85) 0%,rgba(4,10,7,0.75) 100%);
+  border:0.5px solid var(--rl);
+  border-radius:16px;
+  padding:32px 32px;
+  position:relative;overflow:hidden;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.wallet-panel::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 50% at 10% 0%,rgba(232,177,75,0.08),transparent 60%),
+    radial-gradient(ellipse 60% 50% at 100% 100%,rgba(168,143,224,0.06),transparent 60%);
+}
+.wallet-row{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:24px;flex-wrap:wrap;
+  position:relative;z-index:1;
+  margin-bottom:22px;
+}
+.wallet-info{flex:1;min-width:240px;}
+.wallet-label{font-family:var(--fm);font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:var(--md);margin-bottom:8px;}
+.wallet-state{font-family:var(--fd);font-style:italic;font-size:26px;color:var(--ml);margin-bottom:8px;line-height:1.2;letter-spacing:-0.01em;}
+.wallet-addr{font-family:var(--fm);font-size:10.5px;letter-spacing:0.04em;color:var(--md);word-break:break-all;opacity:0.85;}
+.balances{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--r);border:0.5px solid var(--r);border-radius:12px;overflow:hidden;
+  margin-top:22px;position:relative;z-index:1;
+}
+.bal-cell{background:rgba(14,30,21,0.6);padding:22px 22px;text-align:center;}
+.bal-num{font-family:var(--fd);font-style:italic;font-size:44px;line-height:1;letter-spacing:-0.025em;}
 .bal-num.hyphae{color:var(--al);}
 .bal-num.trust{color:var(--vl);}
-.bal-lbl{font-family:var(--fm);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--md);margin-top:8px;}
-.bal-note{font-size:11px;color:var(--md);line-height:1.5;margin-top:6px;}
+.bal-lbl{font-family:var(--fm);font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:var(--md);margin-top:10px;}
+.bal-note{font-size:11px;color:var(--md);line-height:1.55;margin-top:8px;}
 .wallet-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:14px;position:relative;z-index:1;}
-.btn{font-family:var(--fm);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;padding:11px 20px;border-radius:6px;cursor:pointer;transition:all .18s;text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
-.btn-primary{background:rgba(232,177,75,.1);border:0.5px solid rgba(232,177,75,.4);color:var(--al);}
-.btn-primary:hover{background:rgba(232,177,75,.18);border-color:rgba(232,177,75,.65);}
-.btn-secondary{background:none;border:0.5px solid var(--r);color:var(--md);}
+.btn{
+  font-family:var(--fm);font-size:9.5px;letter-spacing:0.24em;text-transform:uppercase;
+  padding:12px 22px;border-radius:999px;cursor:pointer;
+  transition:all 0.2s;text-decoration:none;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.btn-primary{background:rgba(232,177,75,0.1);border:0.5px solid rgba(232,177,75,0.5);color:var(--al);}
+.btn-primary:hover{background:rgba(232,177,75,0.18);border-color:rgba(232,177,75,0.75);}
+.btn-secondary{background:transparent;border:0.5px solid var(--r);color:var(--md);}
 .btn-secondary:hover{color:var(--ml);border-color:var(--rl);}
-.btn-violet{background:rgba(168,143,224,.1);border:0.5px solid rgba(168,143,224,.4);color:var(--vl);}
-.btn-violet:hover{background:rgba(168,143,224,.18);}
-.member-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:4px;background:rgba(107,214,111,.1);border:0.5px solid rgba(107,214,111,.4);font-family:var(--fm);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--gl);margin-bottom:8px;}
+.member-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 11px;border-radius:999px;
+  background:rgba(106,191,136,0.1);border:0.5px solid rgba(106,191,136,0.5);
+  font-family:var(--fm);font-size:8px;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--gl);margin-bottom:10px;
+}
 .member-dot{width:7px;height:7px;border-radius:50%;background:var(--g);animation:pulse-glow 2s ease-in-out infinite;}
-@keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 rgba(107,214,111,.4);}50%{box-shadow:0 0 0 6px rgba(107,214,111,0);}}
-.non-member-note{font-size:13px;color:var(--md);line-height:1.7;margin-top:14px;max-width:50ch;}
-.pre-launch{background:rgba(245,214,137,.06);border:0.5px solid rgba(245,214,137,.18);border-radius:8px;padding:14px 16px;margin-top:14px;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:var(--al);line-height:1.6;}
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 rgba(106,191,136,0.5);}50%{box-shadow:0 0 0 6px rgba(106,191,136,0);}}
+.non-member-note{font-size:13px;color:var(--md);line-height:1.7;margin-top:14px;max-width:50ch;font-family:var(--fdoom);font-style:italic;}
+.pre-launch{
+  background:rgba(245,214,137,0.06);border:0.5px solid rgba(245,214,137,0.2);
+  border-radius:10px;padding:14px 16px;margin-top:14px;
+  font-family:var(--fm);font-size:10px;letter-spacing:0.1em;color:var(--al);line-height:1.65;
+}
 
-/* Section title */
-section{margin-bottom:56px;}
-.sec-ey{font-family:var(--fm);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--a);margin-bottom:10px;}
-.sec-title{font-family:var(--fd);font-style:italic;font-size:32px;color:var(--ml);letter-spacing:-.015em;margin-bottom:14px;line-height:1.1;}
-.sec-title em{color:var(--a);}
-.sec-blurb{font-size:14px;color:var(--m);line-height:1.75;max-width:60ch;opacity:.88;margin-bottom:24px;}
+/* ── Doors (Act III) ── */
+.doors{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:18px;
+  margin-top:10px;
+}
+.door{
+  position:relative;
+  background:linear-gradient(180deg,rgba(8,19,13,0.7) 0%,rgba(4,10,7,0.5) 100%);
+  border:0.5px solid var(--r);border-radius:14px;
+  padding:32px 28px 28px;
+  text-decoration:none;
+  transition:transform 0.4s ease,border-color 0.4s ease,background 0.4s ease;
+  overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.door::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,transparent,var(--door-accent,var(--g)),transparent);
+  opacity:0.5;transition:opacity 0.4s ease;
+}
+.door:hover{transform:translateY(-4px);border-color:var(--door-accent,var(--g));background:linear-gradient(180deg,rgba(14,30,21,0.85),rgba(8,19,13,0.65));}
+.door:hover::before{opacity:1;}
+.door-num{
+  font-family:var(--fjm);font-weight:200;
+  font-size:9px;letter-spacing:0.3em;text-transform:uppercase;
+  color:var(--door-accent,var(--g));
+  margin-bottom:14px;
+}
+.door-name{
+  font-family:var(--fd);font-style:italic;
+  font-size:30px;color:var(--ml);
+  letter-spacing:-0.01em;
+  margin-bottom:14px;line-height:1.05;
+}
+.door-body{
+  font-family:var(--fdoom);font-style:italic;font-weight:300;
+  font-size:14px;color:var(--m);line-height:1.7;
+  margin-bottom:22px;flex:1;
+  opacity:0.92;
+}
+.door-cta{
+  font-family:var(--fm);font-size:9px;letter-spacing:0.26em;
+  text-transform:uppercase;color:var(--door-accent,var(--g));
+  padding-top:14px;border-top:0.5px solid var(--r);
+  display:flex;align-items:center;gap:8px;
+}
+.door-cta::after{content:'→';transition:transform 0.3s ease;}
+.door:hover .door-cta::after{transform:translateX(4px);}
 
-/* Vocabulary */
-.vocab{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1px;background:var(--r);border:0.5px solid var(--r);border-radius:10px;overflow:hidden;}
-.vocab-cell{background:var(--s2);padding:20px 22px;}
-.vocab-term{font-family:var(--fd);font-style:italic;font-size:20px;color:var(--ml);margin-bottom:6px;}
+.door--sporing{--door-accent:#6abf88;}
+.door--collab  {--door-accent:#F5D689;}
+.door--patron  {--door-accent:#C5B5F5;}
+
+/* ── Vocabulary (Act IV) ── */
+.vocab{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:1px;
+  background:var(--r);
+  border:0.5px solid var(--r);
+  border-radius:12px;
+  overflow:hidden;
+}
+.vocab-cell{background:rgba(8,19,13,0.6);padding:24px 24px;transition:background 0.3s ease;}
+.vocab-cell:hover{background:rgba(14,30,21,0.85);}
+.vocab-term{font-family:var(--fd);font-style:italic;font-size:24px;color:var(--ml);margin-bottom:8px;letter-spacing:-0.005em;line-height:1.1;}
 .vocab-term .accent{color:var(--a);}
-.vocab-def{font-size:12.5px;color:var(--m);line-height:1.65;margin-bottom:4px;}
-.vocab-example{font-family:var(--fm);font-size:9.5px;letter-spacing:.06em;color:var(--md);font-style:italic;margin-top:8px;}
+.vocab-def{font-family:var(--fdoom);font-style:italic;font-weight:300;font-size:13.5px;color:var(--m);line-height:1.7;margin-bottom:6px;opacity:0.95;}
+.vocab-def em{font-style:italic;color:var(--ml);}
+.vocab-example{font-family:var(--fm);font-size:9px;letter-spacing:0.06em;color:var(--md);font-style:italic;margin-top:10px;padding-top:10px;border-top:0.5px solid var(--r);}
 
-/* Earning / spending ladder */
-.ladder{background:var(--s2);border:0.5px solid var(--r);border-radius:12px;overflow:hidden;}
-.ladder-row{display:flex;align-items:center;padding:14px 22px;border-bottom:0.5px solid var(--r);gap:18px;}
+/* ── Ladder (Act V earning + drawing) ── */
+.ladder{
+  background:linear-gradient(180deg,rgba(8,19,13,0.7),rgba(4,10,7,0.5));
+  border:0.5px solid var(--r);
+  border-radius:14px;
+  overflow:hidden;
+}
+.ladder-row{
+  display:flex;align-items:center;
+  padding:18px 24px;
+  border-bottom:0.5px solid var(--r);
+  gap:18px;
+  transition:background 0.25s ease;
+}
 .ladder-row:last-child{border:none;}
+.ladder-row:hover{background:rgba(14,30,21,0.6);}
 .ladder-action{flex:1;min-width:0;}
-.ladder-name{font-family:var(--fd);font-style:italic;font-size:16px;color:var(--ml);}
-.ladder-desc{font-size:12px;color:var(--md);line-height:1.5;margin-top:3px;}
-.ladder-amount{font-family:var(--fm);font-size:13.5px;color:var(--al);letter-spacing:.04em;font-weight:500;text-align:right;white-space:nowrap;flex-shrink:0;}
+.ladder-name{font-family:var(--fd);font-style:italic;font-size:18px;color:var(--ml);letter-spacing:-0.005em;line-height:1.2;}
+.ladder-desc{font-family:var(--fdoom);font-style:italic;font-weight:300;font-size:12.5px;color:var(--md);line-height:1.55;margin-top:4px;}
+.ladder-amount{
+  font-family:var(--fm);font-size:14px;color:var(--al);
+  letter-spacing:0.04em;font-weight:500;
+  text-align:right;white-space:nowrap;flex-shrink:0;
+}
 .ladder-amount.draw{color:var(--g);}
-.ladder-amount .unit{font-size:9px;color:var(--md);letter-spacing:.16em;text-transform:uppercase;margin-left:4px;}
+.ladder-amount .unit{font-family:var(--fjm);font-size:9px;color:var(--md);letter-spacing:0.18em;text-transform:uppercase;margin-left:5px;}
 
-/* Mycorrhizal governance */
-.governance{background:rgba(168,143,224,.04);border:0.5px solid rgba(168,143,224,.18);border-radius:14px;padding:28px 30px;}
-.gov-principle{display:flex;gap:16px;margin-bottom:18px;align-items:flex-start;}
+/* ── Two-panel split (earning | drawing) ── */
+.ladder-split{
+  display:grid;grid-template-columns:1fr 1fr;gap:20px;
+  margin-top:14px;
+}
+.ladder-split > div{display:flex;flex-direction:column;}
+.ladder-split-label{
+  font-family:var(--fjm);font-weight:200;
+  font-size:9.5px;letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--md);
+  margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.ladder-split-label::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--label-dot,var(--a));
+}
+.ladder-split > div:first-child{--label-dot:var(--a);}
+.ladder-split > div:last-child{--label-dot:var(--g);}
+@media(max-width:760px){.ladder-split{grid-template-columns:1fr;}}
+
+/* ── Governance (Act VI) ── */
+.governance{
+  background:linear-gradient(180deg,rgba(168,143,224,0.04),rgba(8,19,13,0.55));
+  border:0.5px solid rgba(168,143,224,0.22);
+  border-radius:16px;
+  padding:36px 36px;
+  position:relative;
+}
+.governance::before{
+  content:'';position:absolute;left:0;top:24px;bottom:24px;width:2px;
+  background:linear-gradient(180deg,transparent,rgba(168,143,224,0.45),transparent);
+}
+.gov-principle{
+  display:flex;gap:20px;
+  margin-bottom:26px;
+  align-items:flex-start;
+  padding-left:8px;
+}
 .gov-principle:last-child{margin-bottom:0;}
-.gov-num{width:28px;height:28px;border-radius:50%;background:rgba(168,143,224,.12);border:0.5px solid rgba(168,143,224,.4);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:10px;color:var(--vl);}
+.gov-num{
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(168,143,224,0.12);
+  border:0.5px solid rgba(168,143,224,0.45);
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fd);font-style:italic;font-size:14px;color:var(--vl);
+}
 .gov-text{flex:1;}
-.gov-title{font-family:var(--fd);font-style:italic;font-size:17px;color:var(--ml);margin-bottom:4px;}
-.gov-body{font-size:13px;color:var(--m);line-height:1.7;}
+.gov-title{font-family:var(--fd);font-style:italic;font-size:20px;color:var(--ml);margin-bottom:6px;letter-spacing:-0.005em;line-height:1.2;}
+.gov-body{font-family:var(--fdoom);font-style:italic;font-weight:300;font-size:13.5px;color:var(--m);line-height:1.75;opacity:0.95;}
 
-/* How to join */
-.join-card{background:rgba(107,214,111,.04);border:0.5px solid rgba(107,214,111,.18);border-radius:14px;padding:28px 30px;}
-.join-step{display:flex;gap:14px;margin-bottom:16px;align-items:flex-start;}
+/* ── Threshold (Act VII passcode) ── */
+.threshold-gate,.threshold-form{
+  max-width:520px;
+  border-radius:14px;
+  padding:28px 28px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.threshold-gate{
+  background:linear-gradient(160deg,rgba(232,177,75,0.07),rgba(8,19,13,0.5));
+  border:0.5px solid rgba(232,177,75,0.35);
+}
+.threshold-form{
+  display:none;
+  background:linear-gradient(160deg,rgba(106,191,136,0.08),rgba(8,19,13,0.5));
+  border:0.5px solid rgba(106,191,136,0.4);
+}
+.threshold-label{
+  display:block;font-family:var(--fm);font-size:9px;letter-spacing:0.28em;
+  text-transform:uppercase;color:var(--al);margin-bottom:10px;
+}
+.threshold-input{
+  width:100%;padding:14px 16px;
+  background:rgba(4,10,7,0.7);
+  border:0.5px solid rgba(232,177,75,0.3);
+  border-radius:10px;
+  color:var(--ml);
+  font-family:var(--fm);font-size:18px;letter-spacing:0.4em;
+  outline:none;text-align:center;
+}
+.threshold-form .threshold-input{
+  font-family:var(--fs);font-size:14px;letter-spacing:0.02em;text-align:left;
+  border-color:rgba(106,191,136,0.3);
+}
+.threshold-btn{
+  width:100%;margin-top:12px;padding:14px;
+  border:none;border-radius:10px;
+  font-family:var(--fm);font-size:10px;letter-spacing:0.28em;text-transform:uppercase;
+  font-weight:700;cursor:pointer;
+}
+.threshold-btn--amber{background:linear-gradient(135deg,#F5D769,#C4862E);color:#1a1208;}
+.threshold-btn--green{background:linear-gradient(135deg,#6BD66F,#2E7A35);color:#040a07;}
+.threshold-msg{
+  font-family:var(--fm);font-size:9.5px;letter-spacing:0.16em;
+  color:#E16B6B;margin-top:12px;min-height:16px;text-align:center;
+}
+.threshold-status{
+  font-family:var(--fm);font-size:10px;color:var(--md);margin-top:14px;
+  line-height:1.65;text-align:center;min-height:16px;
+}
+.threshold-fine{
+  font-family:var(--fm);font-size:8.5px;letter-spacing:0.14em;
+  color:var(--md);margin-top:14px;line-height:1.7;
+}
+
+/* ── Wallet path steps (Act VIII) ── */
+.join-card{
+  background:linear-gradient(180deg,rgba(106,191,136,0.05),rgba(8,19,13,0.5));
+  border:0.5px solid rgba(106,191,136,0.22);
+  border-radius:16px;
+  padding:32px 32px;
+}
+.join-step{display:flex;gap:18px;margin-bottom:22px;align-items:flex-start;}
 .join-step:last-child{margin-bottom:0;}
-.join-num{width:24px;height:24px;border-radius:50%;background:rgba(107,214,111,.15);border:0.5px solid rgba(107,214,111,.4);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:10px;color:var(--gl);margin-top:1px;}
-.join-text{flex:1;font-size:13px;color:var(--m);line-height:1.7;}
-.join-text strong{color:var(--ml);font-weight:500;}
-.join-text a{color:var(--gl);text-decoration:none;border-bottom:0.5px solid rgba(182,240,174,.4);}
+.join-num{
+  width:30px;height:30px;border-radius:50%;
+  background:rgba(106,191,136,0.12);
+  border:0.5px solid rgba(106,191,136,0.5);
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fd);font-style:italic;font-size:13px;color:var(--gl);
+  margin-top:2px;
+}
+.join-text{flex:1;font-family:var(--fdoom);font-style:italic;font-weight:300;font-size:14px;color:var(--m);line-height:1.75;opacity:0.95;}
+.join-text strong{color:var(--ml);font-weight:400;font-style:normal;}
+.join-text a{color:var(--gl);text-decoration:none;border-bottom:0.5px solid rgba(182,240,174,0.45);}
 
-.foot{border-top:0.5px solid var(--r);padding-top:28px;margin-top:60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-.foot-link{font-family:var(--fm);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--md);text-decoration:none;transition:color .15s;}
-.foot-link:hover{color:var(--ml);}
+/* ── Closing / footer ── */
+.coda{
+  margin-top:120px;
+  padding:80px 32px;
+  border-top:0.5px solid var(--r);
+  text-align:center;
+  position:relative;
+}
+.coda-mark{
+  font-family:var(--fd);font-style:italic;
+  font-size:34px;color:var(--g);
+  margin-bottom:14px;
+}
+.coda-title{
+  font-family:var(--fd);font-style:italic;
+  font-size:30px;color:var(--ml);
+  letter-spacing:-0.01em;line-height:1.2;
+  margin-bottom:14px;
+}
+.coda-body{
+  font-family:var(--fdoom);font-style:italic;font-weight:300;
+  font-size:15px;color:var(--m);line-height:1.7;
+  max-width:54ch;margin:0 auto 28px;opacity:0.92;
+}
+.coda-links{
+  display:flex;gap:20px;justify-content:center;flex-wrap:wrap;
+  font-family:var(--fm);font-size:9px;letter-spacing:0.18em;
+  text-transform:uppercase;
+}
+.coda-links a{color:var(--md);text-decoration:none;transition:color 0.2s;}
+.coda-links a:hover{color:var(--ml);}
+
+/* ── Reveal on scroll ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.9s cubic-bezier(0.22,1,0.36,1),transform 0.9s cubic-bezier(0.22,1,0.36,1);}
+.reveal.in{opacity:1;transform:translateY(0);}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none;}
+  .thread::before,.organism svg .pulse,.organism svg .node,.member-dot{animation:none;}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
 
+<!-- ── Living mycelium organism backdrop ─────────────────────── -->
+<div class="organism" aria-hidden="true">
+  <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+    <!-- Main hyphal tree — branches radiating from a central source -->
+    <path class="pulse" d="M 800 500 Q 600 380 420 290 Q 280 240 140 200" style="animation-delay:0s"/>
+    <path class="pulse" d="M 800 500 Q 980 380 1160 290 Q 1320 230 1460 180" style="animation-delay:0.6s"/>
+    <path class="pulse" d="M 800 500 Q 660 620 500 740 Q 380 820 240 880" style="animation-delay:1.2s"/>
+    <path class="pulse" d="M 800 500 Q 940 620 1100 740 Q 1240 830 1380 880" style="animation-delay:1.8s"/>
+    <path class="pulse" d="M 800 500 Q 720 360 660 220 Q 620 120 580 40" style="animation-delay:2.4s"/>
+    <path class="pulse" d="M 800 500 Q 880 360 940 220 Q 980 120 1020 40" style="animation-delay:3s"/>
+    <path class="pulse" d="M 800 500 Q 880 660 940 800 Q 980 900 1020 960" style="animation-delay:3.6s"/>
+    <path class="pulse" d="M 800 500 Q 720 660 660 800 Q 620 900 580 960" style="animation-delay:4.2s"/>
+
+    <!-- Secondary branches at midpoints -->
+    <path style="stroke-opacity:0.4" d="M 600 380 Q 540 320 460 270 Q 380 230 300 200"/>
+    <path style="stroke-opacity:0.4" d="M 980 380 Q 1040 320 1120 270 Q 1200 230 1280 200"/>
+    <path style="stroke-opacity:0.4" d="M 660 620 Q 600 700 560 780 Q 540 850 520 920"/>
+    <path style="stroke-opacity:0.4" d="M 940 620 Q 1000 700 1040 780 Q 1060 850 1080 920"/>
+    <path style="stroke-opacity:0.35" d="M 420 290 Q 380 360 360 440 Q 350 510 360 580"/>
+    <path style="stroke-opacity:0.35" d="M 1160 290 Q 1220 360 1240 440 Q 1250 510 1240 580"/>
+    <path style="stroke-opacity:0.32" d="M 500 740 Q 460 800 420 860"/>
+    <path style="stroke-opacity:0.32" d="M 1100 740 Q 1140 800 1180 860"/>
+
+    <!-- Tertiary fine threads -->
+    <path style="stroke-opacity:0.25" d="M 420 290 L 480 240 L 540 220"/>
+    <path style="stroke-opacity:0.25" d="M 1160 290 L 1100 240 L 1040 220"/>
+    <path style="stroke-opacity:0.25" d="M 500 740 L 480 800 L 510 870"/>
+    <path style="stroke-opacity:0.25" d="M 1100 740 L 1120 800 L 1090 870"/>
+
+    <!-- Spore nodes pulsing -->
+    <circle class="node" cx="800" cy="500" r="4" style="animation-delay:0s"/>
+    <circle class="node" cx="420" cy="290" r="2.5" style="animation-delay:1.5s"/>
+    <circle class="node" cx="1160" cy="290" r="2.5" style="animation-delay:0.9s"/>
+    <circle class="node" cx="500" cy="740" r="2.5" style="animation-delay:2.1s"/>
+    <circle class="node" cx="1100" cy="740" r="2.5" style="animation-delay:1.2s"/>
+    <circle class="node" cx="660" cy="220" r="1.8" style="animation-delay:3s"/>
+    <circle class="node" cx="940" cy="220" r="1.8" style="animation-delay:0.4s"/>
+    <circle class="node" cx="660" cy="800" r="1.8" style="animation-delay:2.7s"/>
+    <circle class="node" cx="940" cy="800" r="1.8" style="animation-delay:1.8s"/>
+    <circle class="node" cx="140" cy="200" r="1.4" style="animation-delay:3.6s"/>
+    <circle class="node" cx="1460" cy="180" r="1.4" style="animation-delay:0.6s"/>
+    <circle class="node" cx="240" cy="880" r="1.4" style="animation-delay:2.4s"/>
+    <circle class="node" cx="1380" cy="880" r="1.4" style="animation-delay:1.5s"/>
+  </svg>
+</div>
+
+<!-- Vertical thread — grows + drifts down the left edge as the user scrolls -->
+<div class="thread" aria-hidden="true"></div>
+
+<!-- ── Nav ──────────────────────────────────────────────────── -->
 <nav class="nav">
-  <a href="/" class="nav-brand" style="text-decoration:none;">
-    <img src="/fungai-art-logo.png" alt="Fungai Art" style="height:32px;width:auto;opacity:.92;">
+  <a href="/" class="nav-brand">
+    <img src="/fungai-art-logo.png" alt="Fungai Art">
     <div>
       <div class="nav-name">Fungai Art</div>
       <div class="nav-sub">The Mycelium · $MYCEL</div>
     </div>
   </a>
-  <div style="display:flex;gap:7px;flex-wrap:wrap;">
+  <div class="nav-links">
     <a href="/sporing" class="nav-back">Sporing</a>
     <a href="/draw" class="nav-back">Draw</a>
     <a href="/patron" class="nav-back">Patronage</a>
-    <a href="/basket" class="nav-back">Basket</a>
+    <a href="/community" class="nav-back">Portal</a>
     <a href="/" class="nav-back">← Home</a>
   </div>
 </nav>
 
-<div class="hero-ey">$MYCEL · Polygon · Mycorrhizal Governance</div>
-<h1 class="hero-title">The threads<br>we call <em>Hyphae.</em></h1>
-<p class="hero-blurb">$MYCEL is the Fungai Art token. Members call them <strong style="color:var(--ml);">Hyphae</strong> — the connecting threads that carry nutrients through the network. They are <strong style="color:var(--ml);">earned through contribution</strong> (sporing) and <strong style="color:var(--ml);">spent on goods and ceremonies</strong> (drawing). Voice and voting power live in a separate, soulbound reputation called <strong style="color:var(--ml);">mycoTrust</strong> — so holding Hyphae never becomes about accumulation.</p>
+<div class="wrap">
 
-<!-- Wallet panel -->
-<div class="wallet-panel">
-  <div class="wallet-row">
-    <div class="wallet-info">
-      <div id="badge" style="display:none;"><div class="member-badge"><div class="member-dot"></div> Verified in the network</div></div>
-      <div class="wallet-label">Wallet</div>
-      <div class="wallet-state" id="walletState">Not connected</div>
-      <div class="wallet-addr" id="walletAddr"></div>
-      <p class="non-member-note" id="nonMemberNote" style="display:none;">Your wallet is connected but holds no Hyphae and no mycoTrust yet. Sporing happens through participation — see below.</p>
-      <div class="pre-launch" id="notDeployedNote" style="display:none;">✦ Pre-launch — contracts not yet deployed. Connect to test the flow; balances activate when contracts go live on Polygon.</div>
-    </div>
-    <div class="wallet-actions">
-      <button class="btn btn-primary" id="connectBtn">Connect wallet</button>
-      <button class="btn btn-secondary" id="disconnectBtn" style="display:none;">Disconnect</button>
-    </div>
+<!-- ════════════════════════════════════════════════════════════
+     ACT I — THE SUBSTANCE
+     ════════════════════════════════════════════════════════════ -->
+<section class="act" id="act-substance">
+  <div class="act-mark reveal">
+    <span class="act-roman">I</span>
+    <span class="act-rule"></span>
+    <span class="act-eyebrow">The Substance</span>
   </div>
-  <div class="balances">
-    <div class="bal-cell">
-      <div class="bal-num hyphae" id="hyphaeVal">—</div>
-      <div class="bal-lbl">Hyphae · $MYCEL</div>
-      <div class="bal-note">Indicative basket value at <a href="/basket" style="color:var(--al);text-decoration:none;border-bottom:0.5px solid rgba(232,177,75,.4);">€1.42 / MYCEL</a></div>
-    </div>
-    <div class="bal-cell">
-      <div class="bal-num trust" id="trustVal">—</div>
-      <div class="bal-lbl">mycoTrust</div>
-      <div class="bal-note">Soulbound voice — grows and fades</div>
-    </div>
+  <h1 class="hero-h1 reveal">The threads<br/>we call <em>Hyphae</em>.</h1>
+  <p class="hero-blurb reveal">
+    $MYCEL is the Fungai Art token. Members call them <strong>Hyphae</strong> &mdash; the connecting threads that carry nutrients through the network. They are <strong>earned through contribution</strong> (sporing) and <strong>spent on goods and ceremonies</strong> (drawing). Voice and voting power live in a separate, soulbound reputation called <strong>mycoTrust</strong> &mdash; so holding Hyphae never becomes about accumulation.
+  </p>
+  <div class="hero-meta reveal">
+    <span>Polygon · chain 137</span>
+    <span>Soulbound mycoTrust</span>
+    <span>Mycorrhizal governance</span>
   </div>
-</div>
+  <div class="scroll-prompt reveal">Enter the chamber</div>
+</section>
 
-<!-- Three pathways -->
-<section>
-  <div class="sec-ey">Three doors into the network</div>
-  <h2 class="sec-title">How Hyphae <em>reach you.</em></h2>
-  <p class="sec-blurb">No purchase necessary, no public market. Hyphae come into your wallet through one of three relationships with Fungai Art OÜ.</p>
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--r);border:0.5px solid var(--r);border-radius:14px;overflow:hidden;">
-    <div style="background:var(--s2);padding:24px 22px;">
-      <div style="font-family:var(--fm);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--g);margin-bottom:8px;">⟡ Door 1</div>
-      <div style="font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml);margin-bottom:10px;">Sporing</div>
-      <p style="font-size:13px;color:var(--m);line-height:1.7;margin-bottom:14px;">Earn Hyphae by contributing your time, skill, or presence: foraging circles, alchemy days, event support, teaching, creative work.</p>
-      <a href="#earning" style="font-family:var(--fm);font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gl);text-decoration:none;border-bottom:0.5px solid rgba(182,240,174,.4);">See the earning ladder ↓</a>
+<!-- ════════════════════════════════════════════════════════════
+     ACT II — YOUR RELATIONSHIP (wallet, live state)
+     ════════════════════════════════════════════════════════════ -->
+<section class="act" id="act-wallet">
+  <div class="act-mark reveal">
+    <span class="act-roman">II</span>
+    <span class="act-rule"></span>
+    <span class="act-eyebrow">Your relationship</span>
+  </div>
+  <h2 class="act-title reveal">The wallet is <em>the witness</em>.</h2>
+  <p class="act-blurb reveal">
+    Connect to see your Hyphae and mycoTrust. The wallet doesn&rsquo;t gate access to the apothecary &mdash; it simply <strong>reflects</strong> your active relationship with the network. Disconnect anytime; the threads you&rsquo;ve already woven remain.
+  </p>
+
+  <div class="wallet-panel reveal">
+    <div class="wallet-row">
+      <div class="wallet-info">
+        <div id="badge" style="display:none;"><div class="member-badge"><div class="member-dot"></div> Verified in the network</div></div>
+        <div class="wallet-label">Wallet</div>
+        <div class="wallet-state" id="walletState">Not connected</div>
+        <div class="wallet-addr" id="walletAddr"></div>
+        <p class="non-member-note" id="nonMemberNote" style="display:none;">Your wallet is connected but holds no Hyphae and no mycoTrust yet. Sporing happens through participation &mdash; see Act III below.</p>
+        <div class="pre-launch" id="notDeployedNote" style="display:none;">✦ Pre-launch &mdash; contracts not yet deployed. Connect to test the flow; balances activate when contracts go live on Polygon.</div>
+      </div>
+      <div class="wallet-actions">
+        <button class="btn btn-primary" id="connectBtn">Connect wallet</button>
+        <button class="btn btn-secondary" id="disconnectBtn" style="display:none;">Disconnect</button>
+      </div>
     </div>
-    <div style="background:var(--s2);padding:24px 22px;">
-      <div style="font-family:var(--fm);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--a);margin-bottom:8px;">⟡⟡ Door 2</div>
-      <div style="font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml);margin-bottom:10px;">Collaboration</div>
-      <p style="font-size:13px;color:var(--m);line-height:1.7;margin-bottom:14px;">Vendors, artists, farmers, suppliers, translators — anyone whose work supports The Mycelium receives Hyphae for services rendered. Settle in EUR, MYCEL, or a mix.</p>
-      <a href="mailto:robin@fungai.art?subject=Collaboration" style="font-family:var(--fm);font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--al);text-decoration:none;border-bottom:0.5px solid rgba(245,214,137,.4);">Collaborate with us →</a>
-    </div>
-    <div style="background:var(--s2);padding:24px 22px;">
-      <div style="font-family:var(--fm);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--vl);margin-bottom:8px;">⟡⟡⟡ Door 3</div>
-      <div style="font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml);margin-bottom:10px;">Patronage</div>
-      <p style="font-size:13px;color:var(--m);line-height:1.7;margin-bottom:14px;">A 24-month pre-paid subscription: contribute resources to The Mycelium, receive Hyphae at start, draw extracts and ceremonies over the period. Not investment — patronage.</p>
-      <a href="/patron" style="font-family:var(--fm);font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:#C5B5F5;text-decoration:none;border-bottom:0.5px solid rgba(197,181,245,.4);">Read patron tiers →</a>
+    <div class="balances">
+      <div class="bal-cell">
+        <div class="bal-num hyphae" id="hyphaeVal">&mdash;</div>
+        <div class="bal-lbl">Hyphae &middot; $MYCEL</div>
+        <div class="bal-note">Indicative basket value at <a href="/basket" style="color:var(--al);text-decoration:none;border-bottom:0.5px solid rgba(232,177,75,.4);">&euro;1.42 / MYCEL</a></div>
+      </div>
+      <div class="bal-cell">
+        <div class="bal-num trust" id="trustVal">&mdash;</div>
+        <div class="bal-lbl">mycoTrust</div>
+        <div class="bal-note">Soulbound voice &mdash; grows and fades</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Vocabulary — was incorrectly anchored as #earning, which made the
-     "See the earning ladder ↓" link jump here instead of the actual
-     sporing ladder. Anchor now lives on the right section below. -->
-<section id="vocabulary">
-  <div class="sec-ey">A shared language</div>
-  <h2 class="sec-title">The <em>vocabulary.</em></h2>
-  <p class="sec-blurb">The Mycelium has its own words. They come from the way fungi actually behave — and they help the community speak the same thing.</p>
-  <div class="vocab">
+<!-- ════════════════════════════════════════════════════════════
+     ACT III — THREE DOORS (how Hyphae reach you)
+     ════════════════════════════════════════════════════════════ -->
+<section class="act" id="act-doors">
+  <div class="act-mark reveal">
+    <span class="act-roman">III</span>
+    <span class="act-rule"></span>
+    <span class="act-eyebrow">Three doors into the network</span>
+  </div>
+  <h2 class="act-title reveal">How Hyphae <em>reach you</em>.</h2>
+  <p class="act-blurb reveal">
+    No purchase necessary, no public market. Hyphae come into your wallet through one of three relationships with Fungai Art O&Uuml;. Each door is its own lineage of belonging.
+  </p>
+
+  <div class="doors">
+    <a href="#act-ladder" class="door door--sporing reveal">
+      <div class="door-num">⟡ Door I</div>
+      <div class="door-name">Sporing</div>
+      <div class="door-body">Earn Hyphae by contributing your time, skill, or presence: foraging circles, alchemy days, event support, teaching, creative work. The hands-on path.</div>
+      <div class="door-cta">See the earning ladder</div>
+    </a>
+    <a href="mailto:robin@fungai.art?subject=Collaboration" class="door door--collab reveal">
+      <div class="door-num">⟡⟡ Door II</div>
+      <div class="door-name">Collaboration</div>
+      <div class="door-body">Vendors, artists, farmers, suppliers, translators &mdash; anyone whose work supports The Mycelium receives Hyphae for services rendered. Settle in EUR, MYCEL, or a mix.</div>
+      <div class="door-cta">Write to us</div>
+    </a>
+    <a href="/patron" class="door door--patron reveal">
+      <div class="door-num">⟡⟡⟡ Door III</div>
+      <div class="door-name">Patronage</div>
+      <div class="door-body">A 24-month pre-paid subscription: contribute resources to The Mycelium, receive Hyphae at start, draw extracts and ceremonies over the period. Not investment &mdash; patronage.</div>
+      <div class="door-cta">Read patron tiers</div>
+    </a>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     ACT IV — VOCABULARY (the shared language)
+     ════════════════════════════════════════════════════════════ -->
+<section class="act" id="act-vocab">
+  <div class="act-mark reveal">
+    <span class="act-roman">IV</span>
+    <span class="act-rule"></span>
+    <span class="act-eyebrow">A shared language</span>
+  </div>
+  <h2 class="act-title reveal">The <em>vocabulary</em>.</h2>
+  <p class="act-blurb reveal">
+    The Mycelium has its own words. They come from the way fungi actually behave &mdash; and they help the community speak the same thing.
+  </p>
+
+  <div class="vocab reveal">
     <div class="vocab-cell">
       <div class="vocab-term">$<span class="accent">MYCEL</span></div>
       <div class="vocab-def">The token symbol on Polygon. The technical name.</div>
-      <div class="vocab-example">"$MYCEL contract: 0x..."</div>
+      <div class="vocab-example">"$MYCEL contract: 0x&hellip;"</div>
     </div>
     <div class="vocab-cell">
       <div class="vocab-term">Hyphae</div>
@@ -205,7 +794,7 @@ section{margin-bottom:56px;}
     <div class="vocab-cell">
       <div class="vocab-term"><span class="accent">Sporing</span></div>
       <div class="vocab-def">The act of earning Hyphae through contribution. Always a verb.</div>
-      <div class="vocab-example">"She sporeed at Königshyttan last weekend"</div>
+      <div class="vocab-example">"She sporeed at K&ouml;nigshyttan last weekend"</div>
     </div>
     <div class="vocab-cell">
       <div class="vocab-term">Drawing</div>
@@ -235,170 +824,254 @@ section{margin-bottom:56px;}
   </div>
 </section>
 
-<!-- Sporing ladder — this is what "See the earning ladder ↓" should jump to -->
-<section id="earning">
-  <div class="sec-ey">How Hyphae are sporeed</div>
-  <h2 class="sec-title">The <em>earning</em> ladder.</h2>
-  <p class="sec-blurb">Indicative amounts. Final rates set quarterly by the council. All sporing is verified and logged on-chain — see <a href="/sporing" style="color:var(--al);text-decoration:none;border-bottom:0.5px solid rgba(232,177,75,.4);">/sporing</a>.</p>
-  <div class="ladder">
-    <div class="ladder-row">
-      <div class="ladder-action">
-        <div class="ladder-name">Founding member</div>
-        <div class="ladder-desc">One-time grant for the founding 144 cohort</div>
+<!-- ════════════════════════════════════════════════════════════
+     ACT V — THE LADDER (earning + drawing side by side)
+     ════════════════════════════════════════════════════════════ -->
+<section class="act" id="act-ladder">
+  <div class="act-mark reveal">
+    <span class="act-roman">V</span>
+    <span class="act-rule"></span>
+    <span class="act-eyebrow">Spore in, draw out</span>
+  </div>
+  <h2 class="act-title reveal">The <em>circulation</em>.</h2>
+  <p class="act-blurb reveal">
+    Hyphae move in a circle. They&rsquo;re sporeed through contribution and drawn through use &mdash; the loop is the network. Indicative rates below; final amounts set quarterly by the council and logged on-chain at <a href="/sporing" style="color:var(--al);text-decoration:none;border-bottom:0.5px solid rgba(232,177,75,.45);">/sporing</a>.
+  </p>
+
+  <div class="ladder-split reveal">
+    <div>
+      <div class="ladder-split-label">Sporing &middot; earning ladder</div>
+      <div class="ladder">
+        <div class="ladder-row">
+          <div class="ladder-action">
+            <div class="ladder-name">Founding member</div>
+            <div class="ladder-desc">One-time grant for the founding 144 cohort</div>
+          </div>
+          <div class="ladder-amount">144<span class="unit">Hyphae</span></div>
+        </div>
+        <div class="ladder-row">
+          <div class="ladder-action">
+            <div class="ladder-name">Foraging session</div>
+            <div class="ladder-desc">Participating in a guided foraging circle</div>
+          </div>
+          <div class="ladder-amount">10&ndash;15<span class="unit">Hyphae</span></div>
+        </div>
+        <div class="ladder-row">
+          <div class="ladder-action">
+            <div class="ladder-name">Event support</div>
+            <div class="ladder-desc">Helping organise or run a Mycelium Trance, ceremony, or gathering</div>
+          </div>
+          <div class="ladder-amount">50&ndash;75<span class="unit">Hyphae</span></div>
+        </div>
+        <div class="ladder-row">
+          <div class="ladder-action">
+            <div class="ladder-name">Full alchemy day</div>
+            <div class="ladder-desc">An entire day in the lab &mdash; extraction, formulation, batch work</div>
+          </div>
+          <div class="ladder-amount">100<span class="unit">Hyphae</span></div>
+        </div>
+        <div class="ladder-row">
+          <div class="ladder-action">
+            <div class="ladder-name">Teaching</div>
+            <div class="ladder-desc">Leading an Academy session, workshop, or open study circle</div>
+          </div>
+          <div class="ladder-amount">50&ndash;120<span class="unit">Hyphae</span></div>
+        </div>
+        <div class="ladder-row">
+          <div class="ladder-action">
+            <div class="ladder-name">Creative contribution</div>
+            <div class="ladder-desc">Photography, writing, illustration, music for the project</div>
+          </div>
+          <div class="ladder-amount">varies<span class="unit">Hyphae</span></div>
+        </div>
       </div>
-      <div class="ladder-amount">144<span class="unit">Hyphae</span></div>
     </div>
-    <div class="ladder-row">
-      <div class="ladder-action">
-        <div class="ladder-name">Foraging session</div>
-        <div class="ladder-desc">Participating in a guided foraging circle</div>
+
+    <div>
+      <div class="ladder-split-label">Drawing &middot; what Hyphae unlock</div>
+      <div class="ladder">
+        <div class="ladder-row">
+          <div class="ladder-action">
+            <div class="ladder-name">Full-spectrum extract (30ml)</div>
+            <div class="ladder-desc">Any single-botanical full-spectrum extract from the public shop</div>
+          </div>
+          <div class="ladder-amount draw">40&ndash;55<span class="unit">Hyphae</span></div>
+        </div>
+        <div class="ladder-row">
+          <div class="ladder-action">
+            <div class="ladder-name">Special extract (member-only)</div>
+            <div class="ladder-desc">Wild-foraged amanita, ceremonial blends, lab-grown mycelium mother</div>
+          </div>
+          <div class="ladder-amount draw">80&ndash;150<span class="unit">Hyphae</span></div>
+        </div>
+        <div class="ladder-row">
+          <div class="ladder-action">
+            <div class="ladder-name">Academy session</div>
+            <div class="ladder-desc">One live Alchemy Academy class or recording library access</div>
+          </div>
+          <div class="ladder-amount draw">25<span class="unit">Hyphae</span></div>
+        </div>
+        <div class="ladder-row">
+          <div class="ladder-action">
+            <div class="ladder-name">Ceremony / Mycelium Trance</div>
+            <div class="ladder-desc">One seat at a member ceremony or private trance session</div>
+          </div>
+          <div class="ladder-amount draw">200<span class="unit">Hyphae</span></div>
+        </div>
+        <div class="ladder-row">
+          <div class="ladder-action">
+            <div class="ladder-name">Retreat early access</div>
+            <div class="ladder-desc">First booking window for residencies and retreats (Astral Plans etc.)</div>
+          </div>
+          <div class="ladder-amount draw">500<span class="unit">Hyphae</span></div>
+        </div>
       </div>
-      <div class="ladder-amount">10–15<span class="unit">Hyphae</span></div>
-    </div>
-    <div class="ladder-row">
-      <div class="ladder-action">
-        <div class="ladder-name">Event support</div>
-        <div class="ladder-desc">Helping organise or run a Mycelium Trance, ceremony, or gathering</div>
-      </div>
-      <div class="ladder-amount">50–75<span class="unit">Hyphae</span></div>
-    </div>
-    <div class="ladder-row">
-      <div class="ladder-action">
-        <div class="ladder-name">Full alchemy day</div>
-        <div class="ladder-desc">An entire day in the lab — extraction, formulation, batch work</div>
-      </div>
-      <div class="ladder-amount">100<span class="unit">Hyphae</span></div>
-    </div>
-    <div class="ladder-row">
-      <div class="ladder-action">
-        <div class="ladder-name">Teaching</div>
-        <div class="ladder-desc">Leading an Academy session, workshop, or open study circle</div>
-      </div>
-      <div class="ladder-amount">50–120<span class="unit">Hyphae</span></div>
-    </div>
-    <div class="ladder-row">
-      <div class="ladder-action">
-        <div class="ladder-name">Creative contribution</div>
-        <div class="ladder-desc">Photography, writing, illustration, music for the project</div>
-      </div>
-      <div class="ladder-amount">varies<span class="unit">Hyphae</span></div>
     </div>
   </div>
 </section>
 
-<!-- Drawing menu -->
-<section>
-  <div class="sec-ey">What Hyphae can draw</div>
-  <h2 class="sec-title">The <em>drawing</em> menu.</h2>
-  <p class="sec-blurb">When you have Hyphae, you can draw them for goods and experiences. The catalogue is in <a href="/draw" style="color:var(--gl);text-decoration:none;border-bottom:0.5px solid rgba(182,240,174,.4);">/draw</a> — these are indicative rates.</p>
-  <div class="ladder">
-    <div class="ladder-row">
-      <div class="ladder-action">
-        <div class="ladder-name">Full-spectrum extract (30ml)</div>
-        <div class="ladder-desc">Any single-botanical full-spectrum extract from the public shop</div>
-      </div>
-      <div class="ladder-amount draw">40–55<span class="unit">Hyphae</span></div>
-    </div>
-    <div class="ladder-row">
-      <div class="ladder-action">
-        <div class="ladder-name">Special extract (member-only)</div>
-        <div class="ladder-desc">Wild-foraged amanita, ceremonial blends, lab-grown mycelium mother</div>
-      </div>
-      <div class="ladder-amount draw">80–150<span class="unit">Hyphae</span></div>
-    </div>
-    <div class="ladder-row">
-      <div class="ladder-action">
-        <div class="ladder-name">Academy session</div>
-        <div class="ladder-desc">One live Alchemy Academy class or recording library access</div>
-      </div>
-      <div class="ladder-amount draw">25<span class="unit">Hyphae</span></div>
-    </div>
-    <div class="ladder-row">
-      <div class="ladder-action">
-        <div class="ladder-name">Ceremony / Mycelium Trance</div>
-        <div class="ladder-desc">One seat at a member ceremony or private trance session</div>
-      </div>
-      <div class="ladder-amount draw">200<span class="unit">Hyphae</span></div>
-    </div>
-    <div class="ladder-row">
-      <div class="ladder-action">
-        <div class="ladder-name">Retreat early access</div>
-        <div class="ladder-desc">First booking window for residencies and retreats (Astral Plans etc.)</div>
-      </div>
-      <div class="ladder-amount draw">500<span class="unit">Hyphae</span></div>
-    </div>
+<!-- ════════════════════════════════════════════════════════════
+     ACT VI — MYCORRHIZAL GOVERNANCE (the voice that breathes)
+     ════════════════════════════════════════════════════════════ -->
+<section class="act" id="act-governance">
+  <div class="act-mark reveal">
+    <span class="act-roman">VI</span>
+    <span class="act-rule"></span>
+    <span class="act-eyebrow">How decisions are made</span>
   </div>
-</section>
+  <h2 class="act-title reveal">Mycorrhizal <em>governance</em>.</h2>
+  <p class="act-blurb reveal">
+    Holding Hyphae does not give you voting power. <strong>mycoTrust</strong> does &mdash; and it cannot be bought, only earned through ongoing relational depth. It decays without participation, just as mycelial connections wither without flow.
+  </p>
 
-<!-- Mycorrhizal Governance -->
-<section>
-  <div class="sec-ey">How decisions are made</div>
-  <h2 class="sec-title">Mycorrhizal <em>Governance.</em></h2>
-  <p class="sec-blurb">Holding Hyphae does not give you voting power. <strong style="color:var(--ml);">mycoTrust</strong> does — and it cannot be bought, only earned through ongoing relational depth. It decays without participation, just as mycelial connections wither without flow.</p>
-  <div class="governance">
+  <div class="governance reveal">
     <div class="gov-principle">
-      <div class="gov-num">1</div>
+      <div class="gov-num">i</div>
       <div class="gov-text">
         <div class="gov-title">Voice grows through depth, not accumulation</div>
         <div class="gov-body">mycoTrust is soulbound (non-transferable). It accrues from owner-awarded contributions, peer endorsements from other trusted members, and active participation.</div>
       </div>
     </div>
     <div class="gov-principle">
-      <div class="gov-num">2</div>
+      <div class="gov-num">ii</div>
       <div class="gov-text">
         <div class="gov-title">Connections fade without flow</div>
-        <div class="gov-body">mycoTrust decays at 1% per month of inactivity. A member who hasn't sporeed, drawn, gifted, or endorsed in 100 months returns to zero — the network breathes.</div>
+        <div class="gov-body">mycoTrust decays at 1% per month of inactivity. A member who hasn&rsquo;t sporeed, drawn, gifted, or endorsed in 100 months returns to zero &mdash; the network breathes.</div>
       </div>
     </div>
     <div class="gov-principle">
-      <div class="gov-num">3</div>
+      <div class="gov-num">iii</div>
       <div class="gov-text">
         <div class="gov-title">Peers feed each other</div>
         <div class="gov-body">Each member with active trust receives a monthly endorsement budget to recognise contributions from others. This makes governance horizontal, not top-down.</div>
       </div>
     </div>
     <div class="gov-principle">
-      <div class="gov-num">4</div>
+      <div class="gov-num">iv</div>
       <div class="gov-text">
-        <div class="gov-title">Decisions fruit, they don't win</div>
-        <div class="gov-body">Proposals go through composting (open discussion), sporulation (consent voting — 75% approve, zero strong objections), then fruiting (implementation). Inspired by sociocracy and Ostrom's commons principles.</div>
+        <div class="gov-title">Decisions fruit, they don&rsquo;t win</div>
+        <div class="gov-body">Proposals go through composting (open discussion), sporulation (consent voting &mdash; 75% approve, zero strong objections), then fruiting (implementation). Inspired by sociocracy and Ostrom&rsquo;s commons principles.</div>
       </div>
     </div>
     <div class="gov-principle">
-      <div class="gov-num">5</div>
+      <div class="gov-num">v</div>
       <div class="gov-text">
         <div class="gov-title">Voice influences, never gates</div>
-        <div class="gov-body">mycoTrust matters for governance — but never to access products, ceremonies, or events. Hyphae open those doors. The two systems are intentionally distinct.</div>
+        <div class="gov-body">mycoTrust matters for governance &mdash; but never to access products, ceremonies, or events. Hyphae open those doors. The two systems are intentionally distinct.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Passcode-gated email signup — the "Become a thread" link from /community
-     and the academy banner now points here (#become). Visitors enter the
-     network passcode (5858 — shared by Robin / Steph), then the form drops
-     the gate and lets them request a Supabase magic link. The link lands
-     them in /community/index.html?signedin=1 where tryAutoLogin opens the
-     profile editor. -->
-<section id="become">
-  <div class="sec-ey">By invitation</div>
-  <h2 class="sec-title">Become a <em>thread.</em></h2>
-  <p style="font-size:14.5px;color:var(--m);line-height:1.7;max-width:54ch;margin:0 0 22px;">Founding cohort is invitation-based. If Robin or Stephanie has shared the network passcode with you, enter it below to unlock the signup. Your magic link arrives by email — no password, no installation.</p>
-  <div id="becomeGate" style="max-width:480px;background:linear-gradient(160deg,rgba(232,177,75,0.06),rgba(232,177,75,0.02));border:0.5px solid rgba(232,177,75,0.3);border-radius:12px;padding:24px 22px;">
-    <label for="becomeCode" style="display:block;font-family:var(--fm);font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:var(--al);margin-bottom:8px;">Network passcode</label>
-    <input id="becomeCode" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="8" placeholder="••••" autocomplete="off" style="width:100%;padding:13px 14px;background:rgba(8,11,13,0.7);border:0.5px solid rgba(232,177,75,0.25);border-radius:8px;color:var(--ml);font-family:var(--fm);font-size:17px;letter-spacing:0.4em;outline:none;text-align:center;">
-    <button id="becomeUnlock" type="button" style="width:100%;margin-top:10px;padding:12px;background:linear-gradient(135deg,#F5D769,#C4862E);border:none;border-radius:8px;color:#1a1208;font-family:var(--fm);font-size:10px;letter-spacing:0.26em;text-transform:uppercase;font-weight:700;cursor:pointer;">Unlock signup</button>
-    <div id="becomeError" style="font-family:var(--fm);font-size:9px;letter-spacing:0.16em;color:#E16B6B;margin-top:10px;min-height:14px;text-align:center;"></div>
+<!-- ════════════════════════════════════════════════════════════
+     ACT VII — THE THRESHOLD (passcode → magic link)
+     ════════════════════════════════════════════════════════════ -->
+<section class="act" id="become">
+  <div class="act-mark reveal">
+    <span class="act-roman">VII</span>
+    <span class="act-rule"></span>
+    <span class="act-eyebrow">By invitation</span>
   </div>
-  <div id="becomeForm" style="display:none;max-width:480px;background:linear-gradient(160deg,rgba(107,214,111,0.06),rgba(107,214,111,0.02));border:0.5px solid rgba(107,214,111,0.3);border-radius:12px;padding:24px 22px;">
-    <div style="font-family:var(--fm);font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:#B6F0AE;margin-bottom:8px;">Passcode accepted &middot; send my magic link</div>
-    <label for="becomeEmail" style="display:block;font-family:var(--fm);font-size:9px;letter-spacing:0.18em;color:var(--md);margin:8px 0 6px;">Email address</label>
-    <input id="becomeEmail" type="email" placeholder="you@example.com" autocomplete="email" style="width:100%;padding:13px 14px;background:rgba(8,11,13,0.7);border:0.5px solid rgba(107,214,111,0.25);border-radius:8px;color:var(--ml);font-family:var(--fs);font-size:14px;outline:none;">
-    <button id="becomeSend" type="button" style="width:100%;margin-top:10px;padding:12px;background:linear-gradient(135deg,#6BD66F,#2E7A35);border:none;border-radius:8px;color:#060809;font-family:var(--fm);font-size:10px;letter-spacing:0.26em;text-transform:uppercase;font-weight:700;cursor:pointer;">Send magic link</button>
-    <div id="becomeStatus" style="font-family:var(--fm);font-size:10px;color:var(--md);margin-top:12px;line-height:1.6;text-align:center;min-height:14px;"></div>
-    <p style="font-family:var(--fm);font-size:8.5px;letter-spacing:0.14em;color:var(--md);margin-top:14px;line-height:1.6;">The link opens the spore portal at /community signed in. Open it on the same device & browser &mdash; the auth flow uses PKCE.</p>
+  <h2 class="act-title reveal">Become a <em>thread</em>.</h2>
+  <p class="act-blurb reveal">
+    Founding cohort is invitation-based. If Robin or Stephanie has shared the network passcode with you, enter it below to unlock the signup. Your magic link arrives by email &mdash; no password, no installation.
+  </p>
+
+  <div id="becomeGate" class="threshold-gate reveal">
+    <label for="becomeCode" class="threshold-label">Network passcode</label>
+    <input id="becomeCode" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="8" placeholder="••••" autocomplete="off" class="threshold-input">
+    <button id="becomeUnlock" type="button" class="threshold-btn threshold-btn--amber">Unlock signup</button>
+    <div id="becomeError" class="threshold-msg"></div>
+  </div>
+  <div id="becomeForm" class="threshold-form">
+    <div style="font-family:var(--fm);font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:#B6F0AE;margin-bottom:10px;">Passcode accepted &middot; send my magic link</div>
+    <label for="becomeEmail" class="threshold-label" style="color:var(--gl);">Email address</label>
+    <input id="becomeEmail" type="email" placeholder="you@example.com" autocomplete="email" class="threshold-input">
+    <button id="becomeSend" type="button" class="threshold-btn threshold-btn--green">Send magic link</button>
+    <div id="becomeStatus" class="threshold-status"></div>
+    <p class="threshold-fine">The link opens the spore portal at /community signed in. Open it on the same device &amp; browser &mdash; the auth flow uses PKCE.</p>
   </div>
 </section>
+
+<!-- ════════════════════════════════════════════════════════════
+     ACT VIII — THE WALLET PATH (Polygon setup)
+     ════════════════════════════════════════════════════════════ -->
+<section class="act" id="act-path">
+  <div class="act-mark reveal">
+    <span class="act-roman">VIII</span>
+    <span class="act-rule"></span>
+    <span class="act-eyebrow">Or via the $MYCEL wallet path</span>
+  </div>
+  <h2 class="act-title reveal">Five steps onto <em>the chain</em>.</h2>
+  <p class="act-blurb reveal">
+    If you&rsquo;d rather hold your Hyphae in an actual wallet on Polygon, here&rsquo;s how. Total time: ~10 minutes, ~&euro;0 in gas. You&rsquo;ll still need an invitation &mdash; the wallet is the receptacle, not the door.
+  </p>
+
+  <div class="join-card reveal">
+    <div class="join-step">
+      <div class="join-num">i</div>
+      <div class="join-text"><strong>Install MetaMask</strong> (or any EIP-1193 wallet &mdash; Rainbow, Coinbase, Trust). Free browser extension. ~5 minutes. <a href="https://metamask.io/download/" target="_blank" rel="noopener noreferrer">metamask.io</a></div>
+    </div>
+    <div class="join-step">
+      <div class="join-num">ii</div>
+      <div class="join-text"><strong>Add Polygon network</strong> &mdash; chain ID 137. Gas fees are fractions of a cent. The wallet does this automatically the first time you connect to fungai.art.</div>
+    </div>
+    <div class="join-step">
+      <div class="join-num">iii</div>
+      <div class="join-text"><strong>Reach out</strong> &mdash; email <a href="mailto:robin@fungai.art">robin@fungai.art</a> with your wallet address and a few sentences about why you&rsquo;d like to join the network. Founding cohort is invitation-based.</div>
+    </div>
+    <div class="join-step">
+      <div class="join-num">iv</div>
+      <div class="join-text"><strong>Receive your first sporing</strong> &mdash; Robin sporeed you 144 Hyphae as a founding member. You&rsquo;re now part of the network. Connect on Act II above to see your balance.</div>
+    </div>
+    <div class="join-step">
+      <div class="join-num">v</div>
+      <div class="join-text"><strong>Contribute, draw, return</strong> &mdash; the network is alive only when threads carry flow. Show up to a foraging circle. Help at an event. Spend your Hyphae on a tincture. Gift some to a fellow member. The pattern is the practice.</div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /.wrap -->
+
+<!-- ────── Closing chord ────── -->
+<div class="coda">
+  <div class="coda-mark">✦</div>
+  <div class="coda-title">The network breathes when you breathe with it.</div>
+  <div class="coda-body">
+    Nothing here was ever taken &mdash; it was passed along. Spore in. Draw out. Compost what no longer feeds. The pattern is the practice.
+  </div>
+  <div class="coda-links">
+    <a href="/sporing">Sporing ledger</a>
+    <a href="/draw">Drawing menu</a>
+    <a href="/patron">Patronage</a>
+    <a href="/community">Spore portal</a>
+    <a href="/privacy">Privacy</a>
+    <a href="/terms">Terms</a>
+    <a href="/">Home</a>
+  </div>
+</div>
+
+<!-- ── Passcode + magic link wiring (preserved from previous build) ── -->
 <script src="/supabase-client.js"></script>
 <script>
 (function(){
@@ -452,47 +1125,7 @@ section{margin-bottom:56px;}
 })();
 </script>
 
-<!-- How to join -->
-<section>
-  <div class="sec-ey">Entering the network</div>
-  <h2 class="sec-title">Or via the <em>$MYCEL wallet path.</em></h2>
-  <div class="join-card">
-    <div class="join-step">
-      <div class="join-num">1</div>
-      <div class="join-text"><strong>Install MetaMask</strong> (or any EIP-1193 wallet — Rainbow, Coinbase, Trust). Free browser extension. ~5 minutes. <a href="https://metamask.io/download/" target="_blank" rel="noopener noreferrer">metamask.io</a></div>
-    </div>
-    <div class="join-step">
-      <div class="join-num">2</div>
-      <div class="join-text"><strong>Add Polygon network</strong> — chain ID 137. Gas fees are fractions of a cent. The wallet does this automatically the first time you connect to fungai.art.</div>
-    </div>
-    <div class="join-step">
-      <div class="join-num">3</div>
-      <div class="join-text"><strong>Reach out</strong> — email <a href="mailto:robin@fungai.art">robin@fungai.art</a> with your wallet address and a few sentences about why you'd like to join the network. Founding cohort is invitation-based.</div>
-    </div>
-    <div class="join-step">
-      <div class="join-num">4</div>
-      <div class="join-text"><strong>Receive your first sporing</strong> — Robin sporeed you 144 Hyphae as a founding member. You're now part of the network. Connect on this page to see your balance.</div>
-    </div>
-    <div class="join-step">
-      <div class="join-num">5</div>
-      <div class="join-text"><strong>Contribute, draw, return</strong> — the network is alive only when threads carry flow. Show up to a foraging circle. Help at an event. Spend your Hyphae on a tincture. Gift some to a fellow member. The pattern is the practice.</div>
-    </div>
-  </div>
-</section>
-
-<div class="foot">
-  <div style="font-family:var(--fm);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--md);">Fungai Art · $MYCEL on Polygon</div>
-  <div style="display:flex;gap:16px;flex-wrap:wrap;">
-    <a href="/sporing" class="foot-link">Sporing ledger</a>
-    <a href="/draw" class="foot-link">Drawing menu</a>
-    <a href="/privacy" class="foot-link">Privacy</a>
-    <a href="/terms" class="foot-link">Terms</a>
-    <a href="/" class="foot-link">Home</a>
-  </div>
-</div>
-
-</div>
-
+<!-- ── Wallet wiring (preserved) ── -->
 <script src="/mycel-wallet.js" defer></script>
 <script>
 window.addEventListener('DOMContentLoaded', function () {
@@ -521,7 +1154,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
       if (!s.address) {
         stateEl.textContent = 'Not connected';
-        stateEl.style.color = '#E6D9B5';
+        stateEl.style.color = 'var(--ml)';
         addrEl.textContent = '';
         hyphaeEl.textContent = '—';
         trustEl.textContent = '—';
@@ -571,6 +1204,22 @@ window.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
+
+<!-- ── Scroll-reveal observer ── -->
+<script>
+(function(){
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+})();
+</script>
+
 <script src="/cookie-banner.js" defer></script>
 </body>
 </html>

@@ -1163,25 +1163,69 @@ function toggleLab(id) {
 }
 
 function buildLabNotebook() {
-  // Was gated to 'robin' only. Now opens to any signed-in member so the
-  // network can contribute notes (admins can still move entries between
-  // chapters via the per-entry picker; non-admins can add/delete their own).
+  // ALWAYS render the lab notebook + every chapter. Sign-in state only
+  // gates the create / save / delete actions — the chapters and entries
+  // themselves are visible to anyone so they can see what's possible.
+  //
+  // Previously the whole section was gated on spore_active_member which
+  // meant Robin (and everyone else) saw a blank academy when their
+  // localStorage cleared / they opened a new browser. The "lab notes
+  // disappeared" complaint was that gate firing.
   const activeMember = localStorage.getItem('spore_active_member');
-  if (!activeMember) return;
+  const isSignedIn = !!activeMember;
+  const isAdmin    = isSignedIn && labIsAdmin();
 
-  // Update the section header copy to match the new collaborative role.
   document.getElementById('labSection').style.display = 'block';
   try {
     const badge = document.querySelector('#labSection .lab-badge');
     const title = document.querySelector('#labSection .lab-title');
-    if (badge) badge.textContent = labIsAdmin() ? 'Admin · Robin & Stephanie' : 'Network · members';
+    if (badge) {
+      badge.textContent = isAdmin
+        ? 'Admin · Robin & Stephanie'
+        : isSignedIn ? 'Network · members'
+        : 'Read-only · sign in to contribute';
+    }
     if (title) title.innerHTML = 'Lab <em>notebook.</em>';
   } catch {}
+
   const container = document.getElementById('labChapters');
+  if (!container) return;
+  container.innerHTML = '';   // safe re-render if buildLabNotebook is called again
+
+  // Friendly sign-in prompt for visitors. Doesn't block the chapters,
+  // just sits at the top of the section with a clear path back to /community.
+  if (!isSignedIn) {
+    const prompt = document.createElement('div');
+    prompt.style.cssText = 'margin-bottom:18px;padding:14px 18px;border:0.5px solid rgba(232,177,75,0.28);border-radius:10px;background:rgba(232,177,75,0.04);display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;';
+    prompt.innerHTML = `
+      <div style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:14px;color:#C9B894;line-height:1.55;flex:1;min-width:200px;">
+        Sign in to add notes and categorise them across chapters. Existing entries on this device stay visible regardless.
+      </div>
+      <a href="/community/#signin" style="font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;color:#F5D689;text-decoration:none;padding:9px 16px;border:0.5px solid rgba(232,177,75,0.45);border-radius:999px;background:rgba(232,177,75,0.06);">Sign in &rarr;</a>
+    `;
+    container.appendChild(prompt);
+  }
 
   LAB_CHAPTERS.forEach(ch => {
     const div = document.createElement('div');
     div.className = 'lab-chapter';
+    // Save / textarea only when signed in. Visitors see a placeholder note
+    // that points them at the sign-in CTA above.
+    const saveBlock = isSignedIn ? `
+        <textarea
+          class="lab-note-area"
+          id="textarea-${ch.id}"
+          placeholder="${ch.placeholder}"
+        ></textarea>
+        <div class="lab-ch-toolbar">
+          <div class="lab-ch-count" id="count-${ch.id}"></div>
+          <button class="lab-save-btn" id="savebtn-${ch.id}" onclick="saveEntry('${ch.id}')">Save entry</button>
+        </div>
+    ` : `
+        <div style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:13px;color:#8B7E62;line-height:1.6;padding:12px 14px;border:0.5px dashed rgba(155,180,160,0.2);border-radius:6px;margin-bottom:14px;">
+          ${ch.placeholder} <span style="color:#F5D689;">Sign in above to write here.</span>
+        </div>
+    `;
     div.innerHTML = `
       <div class="lab-ch-header" onclick="toggleLab('${ch.id}')">
         <div class="lab-ch-icon">${ch.icon}</div>
@@ -1192,31 +1236,25 @@ function buildLabNotebook() {
         <div class="lab-ch-toggle" id="lab-toggle-${ch.id}">▾</div>
       </div>
       <div class="lab-ch-body" id="lab-body-${ch.id}" style="display:none">
-        <textarea
-          class="lab-note-area"
-          id="textarea-${ch.id}"
-          placeholder="${ch.placeholder}"
-        ></textarea>
-        <div class="lab-ch-toolbar">
-          <div class="lab-ch-count" id="count-${ch.id}"></div>
-          <button class="lab-save-btn" id="savebtn-${ch.id}" onclick="saveEntry('${ch.id}')">Save entry</button>
-        </div>
+        ${saveBlock}
         <div class="lab-entries" id="entries-${ch.id}"></div>
       </div>
     `;
     container.appendChild(div);
 
-    // Live character count
-    setTimeout(() => {
-      const ta    = document.getElementById(`textarea-${ch.id}`);
-      const count = document.getElementById(`count-${ch.id}`);
-      if (ta && count) {
-        ta.addEventListener('input', () => {
-          const n = ta.value.length;
-          count.textContent = n > 0 ? `${n} chars` : '';
-        });
-      }
-    }, 0);
+    // Live character count — only when the textarea exists
+    if (isSignedIn) {
+      setTimeout(() => {
+        const ta    = document.getElementById(`textarea-${ch.id}`);
+        const count = document.getElementById(`count-${ch.id}`);
+        if (ta && count) {
+          ta.addEventListener('input', () => {
+            const n = ta.value.length;
+            count.textContent = n > 0 ? `${n} chars` : '';
+          });
+        }
+      }, 0);
+    }
   });
 }
 
