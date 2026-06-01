@@ -2225,58 +2225,248 @@ function toggleMobileMenu() {
         <a href="/mycelium-trance" class="btn-primary">Discover <span class="mt-name">Mycelium Trance</span></a>
       </div>
     </div>
-    <!-- Narrower right column per design pass — was full-width, eating the
-         page even though it's a sidebar list. Capped at 360px and padding
-         reduced. -->
-    <div class="reveal reveal-d2" style="display:flex;flex-direction:column;gap:18px;max-width:360px;justify-self:end;width:100%;">
+    <!-- Right column — image only. Calendar lifted out to the full-width
+         horizontal row below so it doesn't crowd the sidebar. -->
+    <div class="reveal reveal-d2" style="display:flex;flex-direction:column;gap:18px;max-width:420px;justify-self:end;width:100%;">
       <img src="/home/abc123.png" loading="lazy" decoding="async" alt="Mycelium Trance" style="width:100%;border-radius:4px;opacity:0.92;object-fit:cover;">
-      <!-- Calendar — reordered so UPCOMING shows first (was reading as a
-           done-archive). Past gatherings stay below as proof but smaller. -->
-      <div style="border:1px solid rgba(136,186,200,0.1);padding:22px 24px;">
-        <span class="sec-label" style="margin-bottom:16px;">Living calendar</span>
-        <div class="event-list">
-          <!-- UPCOMING — drives action; sits at the top -->
-          <div class="event-item" style="border-color:rgba(196,134,46,0.35);background:rgba(196,134,46,0.05);">
-            <div>
-              <div class="event-name"><span class="mt-name">Mycelium Trance</span> Dinner</div>
-              <div class="event-meta">Garbicz Festival, Poland &middot; 31 July 2026</div>
-            </div>
-            <span class="event-status upcoming">Upcoming</span>
+    </div>
+  </div>
+
+  <!-- ══ LIVING CALENDAR — horizontal rig, full-width ══
+       Two horizontal rows: Upcoming on top (high contrast, amber accent
+       on the left edge of each card) and Recent gatherings below (dim,
+       muted). Cards equal-height in a CSS Grid, gentle hover lift, the
+       eyebrow status badge migrates to the top-right corner. -->
+  <div class="wrap" style="position:relative;z-index:1;margin-top:64px;">
+    <div class="cal-rig reveal reveal-d3">
+      <div class="cal-rig-head">
+        <span class="cal-rig-eyebrow">Living Calendar</span>
+        <span class="cal-rig-rule"></span>
+        <a href="/mycelium-trance#calendar" class="cal-rig-link">See all gatherings <span aria-hidden="true">&rarr;</span></a>
+      </div>
+
+      <!-- Upcoming row — 2 cards, amber accent -->
+      <div class="cal-rig-sub">Upcoming</div>
+      <div class="cal-grid cal-grid--up">
+        <a href="/mycelium-trance#calendar" class="cal-card cal-card--up">
+          <span class="cal-card-status">Upcoming</span>
+          <div class="cal-card-when">
+            <span class="cal-card-day">31</span>
+            <span class="cal-card-mo">Jul</span>
+            <span class="cal-card-yr">2026</span>
           </div>
-          <div class="event-item" style="border-color:rgba(196,134,46,0.2);">
-            <div>
-              <div class="event-name">Berlin Foraging Circles</div>
-              <div class="event-meta">May&ndash;June 2026 &middot; Community walks</div>
-            </div>
-            <span class="event-status upcoming">Upcoming</span>
+          <div class="cal-card-name"><span class="mt-name">Mycelium Trance</span> Dinner</div>
+          <div class="cal-card-place">Garbicz Festival &middot; Poland</div>
+          <span class="cal-card-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+        <a href="/foraging" class="cal-card cal-card--up">
+          <span class="cal-card-status">Upcoming</span>
+          <div class="cal-card-when">
+            <span class="cal-card-day">May</span>
+            <span class="cal-card-mo">&ndash; Jun</span>
+            <span class="cal-card-yr">2026</span>
           </div>
-          <!-- Sub-header so past events don't read as the headline -->
-          <div style="font-family:'Bayer',var(--sans);font-size:8.5px;letter-spacing:0.28em;text-transform:uppercase;color:var(--mycelium-d,#8B7E62);margin:14px 0 6px;opacity:0.7;">Recent gatherings</div>
-          <div class="event-item">
-            <div>
-              <div class="event-name">Astral Plans, France</div>
-              <div class="event-meta">Entheogenic Dinner &middot; 70 pax</div>
-            </div>
-            <span class="event-status done">Done</span>
-          </div>
-          <div class="event-item">
-            <div>
-              <div class="event-name">TrypExpo, Berlin</div>
-              <div class="event-meta">Mycelium Trance &middot; Stand</div>
-            </div>
-            <span class="event-status done">Done</span>
-          </div>
-          <div class="event-item">
-            <div>
-              <div class="event-name">Hive Festival, Germany</div>
-              <div class="event-meta">Blue Lotus Ceremony &middot; 50 pax</div>
-            </div>
-            <span class="event-status done">Done</span>
-          </div>
+          <div class="cal-card-name">Berlin Foraging Circles</div>
+          <div class="cal-card-place">Brandenburg forests &middot; Community walks</div>
+          <span class="cal-card-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+
+      <!-- Recent gatherings row — 3 cards, dimmed -->
+      <div class="cal-rig-sub cal-rig-sub--past">Recent gatherings</div>
+      <div class="cal-grid cal-grid--done">
+        <div class="cal-card cal-card--done">
+          <span class="cal-card-status">Done</span>
+          <div class="cal-card-name">Astral Plans, France</div>
+          <div class="cal-card-place">Entheogenic Dinner &middot; 70 pax</div>
+        </div>
+        <div class="cal-card cal-card--done">
+          <span class="cal-card-status">Done</span>
+          <div class="cal-card-name">TrypExpo, Berlin</div>
+          <div class="cal-card-place"><span class="mt-name">Mycelium Trance</span> &middot; Stand</div>
+        </div>
+        <div class="cal-card cal-card--done">
+          <span class="cal-card-status">Done</span>
+          <div class="cal-card-name">Hive Festival, Germany</div>
+          <div class="cal-card-place">Blue Lotus Ceremony &middot; 50 pax</div>
         </div>
       </div>
     </div>
   </div>
+
+  <style>
+    .cal-rig-head {
+      display: flex; align-items: center; gap: 18px;
+      margin-bottom: 24px;
+    }
+    .cal-rig-eyebrow {
+      font-family: 'Bayer', var(--sans);
+      font-size: 10px; letter-spacing: 0.36em;
+      text-transform: uppercase; color: var(--amber-lt, #E8B14B);
+      white-space: nowrap;
+    }
+    .cal-rig-rule {
+      flex: 1; height: 0.5px;
+      background: linear-gradient(90deg, rgba(232,177,75,0.35), rgba(232,177,75,0));
+    }
+    .cal-rig-link {
+      font-family: 'Bayer', var(--sans);
+      font-size: 9.5px; letter-spacing: 0.24em;
+      text-transform: uppercase; color: var(--mist, #88BAC8);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      white-space: nowrap;
+    }
+    .cal-rig-link:hover { color: var(--amber-lt, #E8B14B); }
+
+    .cal-rig-sub {
+      font-family: 'Bayer', var(--sans);
+      font-size: 9px; letter-spacing: 0.32em;
+      text-transform: uppercase; color: var(--cream, #C9B894);
+      margin: 0 0 14px;
+      opacity: 0.85;
+    }
+    .cal-rig-sub--past { margin-top: 32px; color: var(--mycelium-d, #8B7E62); opacity: 0.65; }
+
+    .cal-grid {
+      display: grid; gap: 14px;
+    }
+    .cal-grid--up   { grid-template-columns: repeat(2, 1fr); }
+    .cal-grid--done { grid-template-columns: repeat(3, 1fr); }
+
+    /* Base card — horizontal rig: when=left, name=middle, arrow=right.
+       Upcoming variants light up amber; done variants stay muted. */
+    .cal-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center; gap: 22px;
+      padding: 22px 26px;
+      background: rgba(7,17,13,0.6);
+      border: 0.5px solid rgba(136,186,200,0.10);
+      border-radius: 4px;
+      text-decoration: none;
+      transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+      overflow: hidden;
+    }
+    /* Left accent bar */
+    .cal-card::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      background: linear-gradient(180deg, transparent, var(--accent, #8B7E62), transparent);
+      opacity: 0.55;
+      transition: opacity 0.3s ease;
+    }
+    .cal-card:hover { transform: translateY(-3px); border-color: rgba(232,177,75,0.32); background: rgba(7,17,13,0.85); }
+    .cal-card:hover::before { opacity: 1; }
+
+    .cal-card-status {
+      position: absolute; top: 14px; right: 16px;
+      font-family: 'Bayer', var(--sans);
+      font-size: 7.5px; letter-spacing: 0.26em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 999px;
+    }
+
+    /* ── Upcoming variant ── */
+    .cal-card--up { --accent: #E8B14B; }
+    .cal-card--up { border-color: rgba(232,177,75,0.28); background: linear-gradient(135deg, rgba(196,134,46,0.10), rgba(7,17,13,0.55)); }
+    .cal-card--up .cal-card-status {
+      color: #F5D689;
+      background: rgba(232,177,75,0.12);
+      border: 0.5px solid rgba(232,177,75,0.45);
+    }
+    .cal-card--up .cal-card-when {
+      display: flex; flex-direction: column; align-items: center; line-height: 1;
+      padding: 8px 14px;
+      border: 0.5px solid rgba(232,177,75,0.30);
+      border-radius: 3px;
+      background: rgba(7,17,13,0.4);
+      min-width: 64px;
+    }
+    .cal-card-day {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 28px; color: var(--parchment);
+      line-height: 1; letter-spacing: -0.02em;
+    }
+    .cal-card-mo {
+      font-family: 'Bayer', var(--sans);
+      font-size: 8.5px; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--amber-lt, #E8B14B);
+      margin-top: 5px;
+    }
+    .cal-card-yr {
+      font-family: 'Bayer', var(--sans);
+      font-size: 7.5px; letter-spacing: 0.18em;
+      color: var(--mycelium-d, #8B7E62);
+      margin-top: 2px;
+    }
+    .cal-card--up .cal-card-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic; font-weight: 400;
+      font-size: 20px; color: var(--parchment);
+      line-height: 1.2;
+    }
+    .cal-card--up .cal-card-place {
+      font-family: 'Kiona', 'DM Sans', sans-serif;
+      font-size: 11px; letter-spacing: 0.04em;
+      color: var(--mist, #88BAC8);
+      margin-top: 5px;
+      opacity: 0.85;
+    }
+    .cal-card-arrow {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 22px; color: var(--amber-lt, #E8B14B);
+      line-height: 1;
+      transition: transform 0.3s ease;
+    }
+    .cal-card--up:hover .cal-card-arrow { transform: translateX(5px); }
+
+    /* ── Done / Recent variant ── */
+    .cal-card--done { --accent: #4d5a52; padding-top: 34px; cursor: default; }
+    .cal-card--done .cal-card-status {
+      color: var(--mycelium-d, #8B7E62);
+      background: rgba(136,186,200,0.06);
+      border: 0.5px solid rgba(136,186,200,0.18);
+    }
+    .cal-card--done .cal-card-name {
+      grid-column: 1 / -1;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic; font-weight: 400;
+      font-size: 17px; color: var(--cream, #C9B894);
+      line-height: 1.25;
+    }
+    .cal-card--done .cal-card-place {
+      grid-column: 1 / -1;
+      font-family: 'Kiona', 'DM Sans', sans-serif;
+      font-size: 10.5px; letter-spacing: 0.04em;
+      color: var(--mycelium-d, #8B7E62);
+      margin-top: 4px;
+      opacity: 0.9;
+    }
+    .cal-card--done:hover { transform: none; border-color: rgba(136,186,200,0.18); }
+
+    /* Phone — both rows fold to a single column with horizontal scroll
+       so the "rig" still reads as horizontal even on narrow screens. */
+    @media (max-width: 768px) {
+      .cal-grid--up, .cal-grid--done {
+        display: flex; gap: 12px;
+        overflow-x: auto; overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 12px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(232,177,75,0.3) transparent;
+      }
+      .cal-card {
+        flex: 0 0 86%; max-width: 86%;
+        scroll-snap-align: start;
+      }
+      .cal-card--up .cal-card-name { font-size: 18px; }
+      .cal-card--up { grid-template-columns: auto 1fr; }
+      .cal-card--up .cal-card-arrow { display: none; }
+    }
+  </style>
 </section>
 
 <!-- ══ FORAGING MAP PREVIEW ══ -->
