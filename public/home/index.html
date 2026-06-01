@@ -26,7 +26,7 @@
 <meta name="twitter:image" content="https://www.fungai.art/fungi.png?v=3"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:wght@200;300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:wght@200;300;400;500&family=Pinyon+Script&family=IM+Fell+English:ital@0;1&family=Josefin+Sans:wght@100;200;300&family=Spectral:ital,wght@0,200;0,300;1,200;1,300&display=swap" rel="stylesheet">
 <script src="https://js.stripe.com/v3/"></script>
 
 <style>
@@ -1507,176 +1507,194 @@ function toggleMobileMenu() {
   </div>
 </div>
 
-<!-- ══ TAILORED FORMULA — v2: centered vertical stack ══
-     Killed the 3-column grid (seal | body | Begin) that looked
-     disconnected. The whole card is now a single centred column:
-     seal medallion → eyebrow → italic headline → fine print → pill
-     button. Reads as one cohesive prescription, not a row of parts. -->
-<section class="tailored-section">
-  <div class="wrap">
-    <a href="/herbal-engine-2/" class="tailored-cta">
-      <div class="tcta-corner tcta-corner--tl"></div>
-      <div class="tcta-corner tcta-corner--tr"></div>
-      <div class="tcta-corner tcta-corner--bl"></div>
-      <div class="tcta-corner tcta-corner--br"></div>
+<!-- ══ TAILORED FORMULA — v3: horizontal-grid prescription card
+     Implements the brief verbatim: 56px seal + 1fr text + auto action.
+     Full-width inside a parent padded 0 44px, NOT floating, brackets at
+     each corner, dark forest palette (#05120c on #1e3828). ══ -->
+<section class="rx-section">
+  <div class="rx-frame">
+    <a href="/herbal-engine-2/" class="rx-card">
+      <span class="rx-accent" aria-hidden="true"></span>
+      <span class="rx-bracket rx-bracket--tl" aria-hidden="true"></span>
+      <span class="rx-bracket rx-bracket--tr" aria-hidden="true"></span>
+      <span class="rx-bracket rx-bracket--bl" aria-hidden="true"></span>
+      <span class="rx-bracket rx-bracket--br" aria-hidden="true"></span>
 
-      <div class="tcta-seal">
-        <span class="tcta-rx">&#8478;</span>
+      <div class="rx-seal">
+        <span class="rx-seal-inner" aria-hidden="true"></span>
+        <span class="rx-glyph">&#8478;</span>
       </div>
 
-      <div class="tcta-eyebrow">Tailored Formula Service</div>
+      <div class="rx-body">
+        <div class="rx-overtitle">Tailored Formula Service</div>
+        <div class="rx-title">
+          Full-spectrum extracts, <em>blended&nbsp;fresh.</em>
+        </div>
+        <div class="rx-tagline">&Agrave; la minute &mdash; built to your constitution, season, and intent.</div>
+      </div>
 
-      <h3 class="tcta-headline">
-        Full-spectrum extracts,<br/>
-        <em>blended fresh.</em>
-      </h3>
-
-      <div class="tcta-rule"></div>
-
-      <p class="tcta-fine">&Agrave; la minute &mdash; built to your constitution, season, and intent.</p>
-
-      <span class="tcta-cta">Begin your formula <span class="tcta-arrow">&rarr;</span></span>
+      <div class="rx-action">
+        <span class="rx-action-label">Begin</span>
+        <span class="rx-action-arrow" aria-hidden="true">&rarr;</span>
+      </div>
     </a>
   </div>
+
+  <!-- Vertical divider — visual breath / ritual descent between the
+       formula box and the Medicine section that follows. -->
+  <div class="rx-descent" aria-hidden="true"></div>
   <style>
-    .tailored-section {
-      padding: 80px 0 72px;
-      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.25) 100%);
+    .rx-section {
+      padding: 64px 0 0;
+      background: var(--void);
     }
-    .tailored-section .wrap { max-width: 720px; padding: 0 24px; }
+    /* Parent container padded 0 44px per the brief. The card sits as a
+       normal block element inside, full-width within that pad. */
+    .rx-frame { padding: 0 44px; }
 
-    .tailored-cta {
+    .rx-card {
       position: relative;
-      display: flex; flex-direction: column; align-items: center;
-      text-align: center;
-      padding: 48px 40px 44px;
-      max-width: 640px; margin: 0 auto;
-      text-decoration: none;
-      background:
-        radial-gradient(ellipse 70% 50% at 50% 0%, rgba(245,215,105,0.10), transparent 70%),
-        linear-gradient(160deg, rgba(20,14,8,0.85) 0%, rgba(10,8,5,0.55) 100%);
-      border: 0.5px solid rgba(232,177,75,0.32);
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      align-items: center;
+      gap: 24px;
+      padding: 28px 32px;
+      background: #05120c;
+      border: 0.5px solid #1e3828;
       border-radius: 2px;
-      box-shadow: 0 18px 50px rgba(0,0,0,0.45), inset 0 0 0 0.5px rgba(232,177,75,0.10);
-      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
-      isolation: isolate;
+      text-decoration: none;
+      transition: border-color 0.35s ease, background 0.35s ease;
     }
 
-    /* Filigree corners — slightly larger so they read at this card size */
-    .tcta-corner {
-      position: absolute; width: 18px; height: 18px;
-      border: 0.5px solid rgba(232,177,75,0.55); pointer-events: none;
+    /* Left accent bar — vertical gradient transparent → #2a5838 → transparent */
+    .rx-accent {
+      position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      background: linear-gradient(to bottom, transparent 0%, #2a5838 50%, transparent 100%);
+      pointer-events: none;
+    }
+
+    /* Corner brackets — 12x12, two sides each, 8px inset */
+    .rx-bracket {
+      position: absolute; width: 12px; height: 12px;
+      border-color: #1e3828; border-style: solid; pointer-events: none;
       transition: border-color 0.35s ease;
     }
-    .tcta-corner--tl { top: 8px; left: 8px;  border-right: none; border-bottom: none; }
-    .tcta-corner--tr { top: 8px; right: 8px; border-left:  none; border-bottom: none; }
-    .tcta-corner--bl { bottom: 8px; left: 8px;  border-right: none; border-top: none; }
-    .tcta-corner--br { bottom: 8px; right: 8px; border-left:  none; border-top: none; }
+    .rx-bracket--tl { top: 8px;    left: 8px;    border-width: 1px 0 0 1px; }
+    .rx-bracket--tr { top: 8px;    right: 8px;   border-width: 1px 1px 0 0; }
+    .rx-bracket--bl { bottom: 8px; left: 8px;    border-width: 0 0 1px 1px; }
+    .rx-bracket--br { bottom: 8px; right: 8px;   border-width: 0 1px 1px 0; }
 
-    /* ℞ wax seal — top centred medallion, larger than before so it
-       reads as the focal point of the prescription */
-    .tcta-seal {
-      width: 66px; height: 66px; border-radius: 50%;
-      background:
-        radial-gradient(circle at 32% 28%, #FFE89A 0%, #F5D769 24%, #C4862E 70%, #8B4F12 100%);
-      box-shadow:
-        0 0 28px rgba(245,215,105,0.45),
-        inset 0 0 10px rgba(255,235,180,0.45),
-        inset 0 -4px 8px rgba(80,40,8,0.5);
-      display: flex; align-items: center; justify-content: center;
+    /* ── Column 1: the seal ── */
+    .rx-seal {
       position: relative;
-      margin-bottom: 24px;
+      width: 56px; height: 56px;
+      background: #071810;
+      border: 0.5px solid #1e3828;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
     }
-    .tcta-seal::before {
-      content: ''; position: absolute; inset: -5px; border-radius: 50%;
-      border: 0.5px solid rgba(232,177,75,0.45);
+    .rx-seal-inner {
+      position: absolute; inset: 4px;
+      border-radius: 50%;
+      border: 0.5px solid #122018;
+      pointer-events: none;
     }
-    .tcta-seal::after {
-      content: ''; position: absolute; inset: -10px; border-radius: 50%;
-      border: 0.5px dashed rgba(232,177,75,0.22);
-    }
-    .tcta-rx {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-style: italic; font-weight: 500;
-      font-size: 30px; color: #1a1208;
-      text-shadow: 0 1px 0 rgba(255,235,180,0.4);
-    }
-
-    .tcta-eyebrow {
-      font-family: 'Bayer', var(--sans);
-      font-size: 10px; letter-spacing: 0.4em;
-      text-transform: uppercase; color: #E8B14B;
-      margin-bottom: 18px;
-    }
-
-    .tcta-headline {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-weight: 400; font-size: clamp(26px, 3.4vw, 36px);
-      color: var(--parchment);
-      line-height: 1.15; letter-spacing: -0.005em;
-      margin: 0 0 18px;
-    }
-    .tcta-headline em {
-      font-family: 'Pinyon Script', 'TAN-PARADISO', cursive;
-      font-style: italic; font-weight: 400;
-      color: #F5D769;
-      font-size: clamp(36px, 4.8vw, 52px);
-      letter-spacing: 0.005em;
+    .rx-glyph {
+      font-family: 'IM Fell English', 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: 22px;
+      color: #3a6848;
       line-height: 1;
     }
 
-    .tcta-rule {
-      width: 56px; height: 0.5px;
-      background: linear-gradient(90deg, transparent, rgba(232,177,75,0.7), transparent);
-      margin: 6px 0 18px;
+    /* ── Column 2: text ── */
+    .rx-body { min-width: 0; }
+    .rx-overtitle {
+      font-family: 'Josefin Sans', var(--sans);
+      font-weight: 100;
+      font-size: 8px;
+      letter-spacing: 0.36em;
+      color: #2a4e36;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .rx-title {
+      font-family: 'IM Fell English', 'Cormorant Garamond', Georgia, serif;
+      font-size: 24px;
+      color: #9ab8a0;
+      line-height: 1.2;
+    }
+    .rx-title em {
+      font-style: italic;
+      color: #6abf88;
+    }
+    .rx-tagline {
+      font-family: 'Spectral', 'Cormorant Garamond', Georgia, serif;
+      font-weight: 200;
+      font-style: italic;
+      font-size: 13px;
+      color: #2a4e36;
+      margin-top: 6px;
+      line-height: 1.5;
     }
 
-    .tcta-fine {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-style: italic; font-size: 14px;
-      color: var(--cream); line-height: 1.55;
-      max-width: 42ch; margin: 0 0 32px;
-      opacity: 0.88;
+    /* ── Column 3: action ── */
+    .rx-action {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+    }
+    .rx-action-label {
+      font-family: 'Josefin Sans', var(--sans);
+      font-weight: 200;
+      font-size: 8px;
+      letter-spacing: 0.3em;
+      color: #2a5038;
+      text-transform: uppercase;
+    }
+    .rx-action-arrow {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 0.5px solid #1e3828;
+      display: flex; align-items: center; justify-content: center;
+      color: #3a6848;
+      font-size: 14px;
+      line-height: 1;
+      transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease;
     }
 
-    /* The CTA at the bottom — a real pill button, no longer a tiny
-       "Begin →" floating off to one side */
-    .tcta-cta {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-family: 'Bayer', var(--sans);
-      font-size: 11px; letter-spacing: 0.28em;
-      text-transform: uppercase; color: #F5D769;
-      padding: 14px 30px;
-      border: 0.5px solid rgba(245,215,105,0.55);
-      border-radius: 999px;
-      background: rgba(245,215,105,0.04);
-      transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease;
-    }
-    .tcta-arrow {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 18px; line-height: 1;
-      transition: transform 0.35s ease;
-      letter-spacing: 0;
+    /* Hover — soften everything one notch brighter without breaking the
+       dark forest palette. */
+    .rx-card:hover { border-color: #2a5838; background: #06170f; }
+    .rx-card:hover .rx-bracket { border-color: #2a5838; }
+    .rx-card:hover .rx-action-arrow {
+      transform: translateX(3px);
+      border-color: #2a5838;
+      background: rgba(106,191,136,0.05);
     }
 
-    .tailored-cta:hover {
-      transform: translateY(-3px);
-      border-color: rgba(245,215,105,0.6);
-      box-shadow: 0 24px 60px rgba(196,134,46,0.32), inset 0 0 0 0.5px rgba(245,215,105,0.22);
+    @media (max-width: 640px) {
+      .rx-frame { padding: 0 20px; }
+      .rx-card {
+        grid-template-columns: 48px 1fr;
+        gap: 16px;
+        padding: 22px 22px 22px 26px;
+      }
+      .rx-seal { width: 48px; height: 48px; }
+      .rx-glyph { font-size: 20px; }
+      .rx-title { font-size: 19px; }
+      .rx-tagline { font-size: 12px; }
+      .rx-action {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        align-items: center; justify-content: flex-end;
+        gap: 12px;
+        margin-top: 4px;
+      }
     }
-    .tailored-cta:hover .tcta-corner { border-color: rgba(245,215,105,0.95); }
-    .tailored-cta:hover .tcta-cta {
-      background: rgba(245,215,105,0.14);
-      color: #FFF1B8;
-      border-color: rgba(245,215,105,0.85);
-    }
-    .tailored-cta:hover .tcta-arrow { transform: translateX(6px); }
 
-    @media (max-width: 560px) {
-      .tailored-cta { padding: 36px 24px 32px; }
-      .tcta-seal { width: 56px; height: 56px; }
-      .tcta-rx { font-size: 24px; }
-      .tcta-cta { padding: 13px 22px; font-size: 10px; letter-spacing: 0.22em; }
+    /* ── Vertical descent divider between the two sections ── */
+    .rx-descent {
+      width: 1px; height: 40px; margin: 0 auto;
+      background: linear-gradient(to bottom, transparent, #1e3828);
     }
   </style>
 </section>
@@ -1810,20 +1828,100 @@ function toggleMobileMenu() {
   </div>
 </div><!-- /orphan-hidden -->
 
-<!-- ══ MANIFESTO ══ Right after hero — answers "what is Fungai Art?" before
-     the visitor has to scroll. Replaces the old "Born in the Swedish forest…"
-     About-opener which now reads as more compelling first-impression copy. -->
-<section id="manifesto" style="padding:80px 0 60px;border-bottom:1px solid rgba(158,212,56,0.06);background:linear-gradient(180deg,var(--void) 0%,rgba(8,16,12,1) 100%);">
-  <div class="wrap reveal" style="max-width:980px;margin:0 auto;text-align:center;">
-    <span class="sec-label" style="text-align:center;margin-bottom:14px;font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;color:var(--amber);">A living apothecary</span>
-    <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-size:clamp(34px,5vw,58px);letter-spacing:-0.01em;color:var(--parchment);line-height:1.05;margin:0 auto 24px;max-width:20ch;">Medicine the way it<br/><em style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;color:var(--amber-lt);font-style:italic;">used to be made.</em></h2>
-    <p style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:clamp(17px,1.9vw,21px);color:var(--cream);max-width:62ch;margin:0 auto 18px;line-height:1.55;">Wild-foraged. Slow-extracted. Full-spectrum. Tuned to <strong style="color:var(--amber-lt);font-style:normal;font-weight:500;">111 Hz</strong> before it leaves the lab.</p>
-    <p style="font-family:'Kiona',var(--sans);font-size:14.5px;color:var(--mist);max-width:78ch;margin:0 auto 32px;line-height:1.8;letter-spacing:0.01em;">We publish the materia medica as we go &mdash; <strong style="color:var(--parchment);font-weight:500;">201 plants</strong>, <strong style="color:var(--parchment);font-weight:500;">five extraction methods</strong>, real foraging coordinates, traditions of Europe, India, China, and the Americas in one open library. Alchemy as practice, not aesthetic.</p>
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-      <a href="#shop" class="btn-primary">Enter the apothecary &rarr;</a>
-      <a href="#about" class="btn-ghost">Meet the makers</a>
-    </div>
+<!-- ══ MEDICINE HEADER — rewritten to the brief.
+     Centred. 80px top padding above the 0.5px #0c1e12 top rule.
+     IM Fell English for the stacked H1/H2. Spectral italic body. ══ -->
+<section id="manifesto" class="medicine-section">
+  <div class="medicine-eyebrow">
+    <span class="medicine-pip" aria-hidden="true"></span>
+    <span>A Living Apothecary</span>
+    <span class="medicine-pip" aria-hidden="true"></span>
   </div>
+  <h1 class="medicine-h1">Medicine the way it</h1>
+  <h2 class="medicine-h2">used to be made.</h2>
+  <p class="medicine-body">
+    Wild-foraged. Slow-extracted. Full-spectrum. Tuned to 111 Hz before it leaves the lab.
+  </p>
+  <p class="medicine-fine">
+    We publish the materia medica as we go &mdash; 201 plants, five extraction methods, real foraging coordinates, traditions of Europe, India, China, and the Americas in one open library. Alchemy as practice, not aesthetic.
+  </p>
+  <div class="medicine-actions">
+    <a href="#shop" class="btn-primary">Enter the apothecary &rarr;</a>
+    <a href="#about" class="btn-ghost">Meet the makers</a>
+  </div>
+  <style>
+    .medicine-section {
+      text-align: center;
+      padding: 80px 24px 60px;
+      border-top: 0.5px solid #0c1e12;
+      background: var(--void);
+    }
+    .medicine-eyebrow {
+      display: flex;
+      justify-content: center; align-items: center;
+      gap: 12px;
+      font-family: 'Josefin Sans', var(--sans);
+      font-weight: 100;
+      font-size: 8px;
+      letter-spacing: 0.4em;
+      color: #1e3828;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+    .medicine-pip {
+      width: 4px; height: 4px;
+      border: 0.5px solid #1e3828;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .medicine-h1 {
+      font-family: 'IM Fell English', 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(38px, 5vw, 52px);
+      font-weight: 400;
+      color: #b8b0a0;
+      line-height: 1.05;
+      margin: 0;
+      letter-spacing: 0;
+    }
+    .medicine-h2 {
+      font-family: 'IM Fell English', 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(46px, 6vw, 62px);
+      font-weight: 400;
+      font-style: italic;
+      color: #7ab890;
+      line-height: 0.95;
+      margin: 0;
+      letter-spacing: 0;
+    }
+    .medicine-body {
+      font-family: 'Spectral', 'Cormorant Garamond', Georgia, serif;
+      font-weight: 200;
+      font-style: italic;
+      font-size: 16px;
+      line-height: 1.8;
+      color: #2a4e38;
+      max-width: 480px;
+      margin: 22px auto 0;
+    }
+    .medicine-fine {
+      font-family: 'Spectral', 'Cormorant Garamond', Georgia, serif;
+      font-weight: 200;
+      font-style: italic;
+      font-size: 14px;
+      line-height: 1.75;
+      color: #2a4e38;
+      max-width: 620px;
+      margin: 18px auto 0;
+      opacity: 0.78;
+    }
+    .medicine-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+  </style>
 </section>
 
 <!-- ══ MARQUEE ══ -->
