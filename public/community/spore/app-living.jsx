@@ -2867,6 +2867,33 @@ function AdminPage({ onToast, currentMember }) {
   const [savingRestrictions, setSavingRestrictions] = useState({});
   const [, forceBump] = useState(0); // bumped by spore:members-changed so the rendered MEMBERS list refreshes after a remove
 
+  // Pull the admin-only auth email index once on mount. The RPC checks
+  // admin=true on the caller's profile, so non-admins (somehow on this
+  // page) get an empty map and the UI gracefully falls back to whatever
+  // contact field each member already has. On success we stamp emails
+  // onto the in-memory MEMBERS so every email-aware component sees them.
+  const [emailFetched, setEmailFetched] = useState(false);
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      if (!window.SporeAdminEmails) { setEmailFetched(true); return; }
+      const idx = await window.SporeAdminEmails.load();
+      if (cancelled) return;
+      if (idx.size > 0) {
+        let stamped = 0;
+        (SporeData.MEMBERS || []).forEach(m => {
+          if (m.cloudId && idx.has(m.cloudId)) {
+            m.cloudEmail = idx.get(m.cloudId);
+            stamped++;
+          }
+        });
+        if (stamped > 0) forceBump(b => b + 1);
+      }
+      setEmailFetched(true);
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
   useEffect(() => {
     const onChanged = () => forceBump(b => b + 1);
     window.addEventListener('spore:members-changed', onChanged);

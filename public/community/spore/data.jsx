@@ -667,6 +667,37 @@ async function loadProfilesFromCloud() {
   }
 }
 
+// Admin-only: pulls the auth.users.email for every claimed profile via
+// the get_member_emails() RPC (see supabase-get-member-emails.sql). The
+// RPC's body gates on profiles.admin = true for the caller, so a non-
+// admin who tries this gets a permission error and we silently no-op.
+//
+// Returns: a Map<cloudId, email>. Empty map if the RPC isn't installed
+// yet, the caller isn't an admin, or there's no auth session at all.
+async function loadAdminEmailIndex() {
+  if (!window.SBclient) return new Map();
+  try {
+    const { data, error } = await window.SBclient.rpc('get_member_emails');
+    if (error) {
+      // 42501 = insufficient_privilege (caller isn't admin); PGRST202 =
+      // function not found yet. Both are expected; don't spam the console.
+      const code = error.code || '';
+      if (code !== '42501' && code !== 'PGRST202') {
+        console.warn('[Spore] get_member_emails RPC failed:', error.message);
+      }
+      return new Map();
+    }
+    const out = new Map();
+    (data || []).forEach(row => {
+      if (row && row.profile_id && row.email) out.set(row.profile_id, row.email);
+    });
+    return out;
+  } catch (e) {
+    return new Map();
+  }
+}
+window.SporeAdminEmails = { load: loadAdminEmailIndex };
+
 // ── Economy helpers ──────────────────────────────────────────────────────
 // All persisted to localStorage so the entire flow works offline / pre-cloud.
 // Each helper is namespaced under SporeEconomy.* so app-living can call them
