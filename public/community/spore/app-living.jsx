@@ -3103,7 +3103,16 @@ function AdminHyphaeRow({ m, last, isRobin, currentMemberId, onToast }) {
   const running = !!contrib.startedAt;
   const runningMin = running ? Math.max(0, Math.round((Date.now() - contrib.startedAt) / 60000)) : 0;
   const isMe = currentMemberId === m.id;
-  const memberEmail = m.cloudEmail || m.email || (m.cloudId ? '— (linked, email RLS-gated)' : '— (unclaimed)');
+  // Resolution order for the displayed email:
+  //   1. m.cloudEmail  — set by an explicit admin RPC fetch (future)
+  //   2. m.email       — set when the row is the current member's own auth user
+  //   3. m.contact     — what the member typed into their profile.contact field
+  //                       (also where data.jsx mirrors known founder addresses)
+  //   4. fallback string explaining why we can't see it
+  const memberEmail = m.cloudEmail
+    || m.email
+    || m.contact
+    || (m.cloudId ? '— (linked, no contact on file)' : '— (unclaimed)');
 
   function toggleTimer() {
     if (running) {
@@ -3170,6 +3179,13 @@ function AdminHyphaeRow({ m, last, isRobin, currentMemberId, onToast }) {
             {running && <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', color:'#6BD66F', marginLeft:8 }}>● TIMER · {runningMin}m</span>}
           </div>
           <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.12em', textTransform:'uppercase', color:'var(--mycelium-d)', marginTop:2 }}>{m.role}</div>
+          {/* Inline email — only shown when we actually know it, so the row
+              stays clean for unclaimed / contact-less members. */}
+          {(m.cloudEmail || m.email || m.contact) && (
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--mycelium-d)', marginTop:3, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
+              ✉ {m.cloudEmail || m.email || m.contact}
+            </div>
+          )}
         </div>
         <div style={{ textAlign:'right', flexShrink:0 }}>
           <div style={{ fontFamily:'var(--font-mono)', fontSize:12, color:'var(--spore-l)' }}>{bal} $MH</div>
@@ -4026,6 +4042,17 @@ function App() {
           match.cloudId = mine.id;
           if (Array.isArray(mine.restrictions)) match.restrictions = mine.restrictions;
           if (mine.avatar_url) match.avatar = mine.avatar_url;
+          // Make the signed-in user's auth email visible to admins. We write
+          // it to profile.contact only if the user hasn't set their own
+          // contact field — never overwrite a custom value they typed.
+          // Result: as members sign in over time, the admin panel's email
+          // column populates itself.
+          if (user?.email && !mine.contact && window.SBprofiles?.upsert) {
+            try { await window.SBprofiles.upsert({ contact: user.email }); } catch {}
+            match.contact = user.email;
+          } else if (mine.contact) {
+            match.contact = mine.contact;
+          }
           setCurrentMember(match);
           setTab('members');
           // Cross-page gate uses these keys (see /spore-gate.js).

@@ -406,6 +406,10 @@ const MEMBERS = [
     rep: 15,
     balance: 100,
     focus: 'Network architecture · product development · alchemy',
+    // Contact = email shown in the admin panel. Supabase's auth.users.email
+    // is RLS-gated for anonymous reads, so we mirror known emails here
+    // until each member fills in their own profile.contact field.
+    contact: 'robin@fungai.art',
     admin: true,
     founding: true,
   },
@@ -417,6 +421,7 @@ const MEMBERS = [
     rep: 12,
     balance: 100,
     focus: 'Mycelium Trance · gong · tuning forks · plant ceremony',
+    contact: 'teyae@fungai.art',
     admin: true,
     founding: true,
   },
