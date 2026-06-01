@@ -1165,14 +1165,21 @@ function toggleLab(id) {
 function buildLabNotebook() {
   // ALWAYS render the lab notebook + every chapter. Sign-in state only
   // gates the create / save / delete actions — the chapters and entries
-  // themselves are visible to anyone so they can see what's possible.
+  // themselves are visible to anyone.
   //
-  // Previously the whole section was gated on spore_active_member which
-  // meant Robin (and everyone else) saw a blank academy when their
-  // localStorage cleared / they opened a new browser. The "lab notes
-  // disappeared" complaint was that gate firing.
+  // We treat the user as "signed in" if ANY of these are true:
+  //   1. legacy `spore_active_member` flag in localStorage
+  //   2. full member snapshot `spore_active_member_full` exists
+  //   3. async Supabase auth check finds a live session (handled below)
+  //
+  // Why all three: the page used to gate on (1) only, which broke for
+  // users who signed in via Supabase magic link but never opened
+  // /community/ (e.g. they clicked Sign in from the academy directly).
+  // Their session was perfectly valid but the localStorage flag was
+  // never written, so the academy thought they were a visitor.
   const activeMember = localStorage.getItem('spore_active_member');
-  const isSignedIn = !!activeMember;
+  const activeFull   = (() => { try { return JSON.parse(localStorage.getItem('spore_active_member_full') || 'null'); } catch { return null; } })();
+  const isSignedIn = !!(activeMember || (activeFull && activeFull.id));
   const isAdmin    = isSignedIn && labIsAdmin();
 
   document.getElementById('labSection').style.display = 'block';
@@ -1268,7 +1275,52 @@ function buildLabNotebook() {
 
 // Run on page load
 buildLabNotebook();
+
+// ── Cross-page session check ─────────────────────────────
+// If the user is signed in via Supabase but the localStorage flag
+// wasn't written on this device (e.g. they signed in elsewhere and
+// landed on /community/academy/ directly), reconcile: write the flag,
+// then re-build the lab notebook so the textareas appear.
+(async function reconcileAuth() {
+  // Already flagged signed-in? Nothing to do.
+  if (localStorage.getItem('spore_active_member')) return;
+
+  // Wait for the Supabase client to load (script is appended below).
+  // SBready resolves once createClient is done.
+  try { await window.SBready; } catch { return; }
+  if (!window.SBauth) return;
+
+  try {
+    const user = await window.SBauth.getUser();
+    if (!user) return;
+
+    // Fetch the matching profile so we can write a sensible local snapshot.
+    let mine = null;
+    if (window.SBprofiles?.fetchMine) {
+      try { mine = await window.SBprofiles.fetchMine(); } catch {}
+    }
+
+    // Derive a member id. Prefer the cloud profile's character_name
+    // (lowercased) which matches the hardcoded MEMBERS list ids. Fall
+    // back to the auth user id so the gate at least unlocks.
+    const memberId = (mine && (mine.character_name || '').toLowerCase()) || ('cloud_' + user.id);
+
+    try { localStorage.setItem('spore_active_member', memberId); } catch {}
+    try { localStorage.setItem('spore_active_member_full', JSON.stringify({
+      id: memberId,
+      name: mine?.character_name || user.email || 'Member',
+      admin: false,                              // conservative — admin is reconfirmed on /community/
+      cloudId: mine?.id || null,
+      email: user.email || null,
+    })); } catch {}
+
+    // Re-render the notebook so the textareas / save buttons replace
+    // the "Sign in" prompt without forcing a page reload.
+    try { buildLabNotebook(); } catch {}
+  } catch {}
+})();
 </script>
+<script src="/supabase-client.js"></script>
 
 <!-- Removed: a duplicate lab-notes block was here. The existing
      LAB_CHAPTERS notebook above already covers this — and that's where the
