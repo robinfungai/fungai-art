@@ -508,11 +508,10 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
           <a href="/patron/">Patronage</a>
           <a href="/onboard/">Onboard</a>
           <a href="/sporing/">Sporing</a>
-          {/* $MYCEL pill — always visible. For members, surfaces the wallet
-              via the sporing ledger; for visitors, an entry point to learn
-              what $MYCEL is. Treated as a status chip rather than a button
-              so it doesn't compete with the primary CTAs. */}
-          <a href="/sporing/" className="welcome-nav-mycel" title="$MYCEL — the network currency">
+          {/* $MYCEL pill — now points at /members/ which has the actual
+              "what are Hyphae" substance: token role, mycoTrust, earn /
+              spend mechanics. Was /sporing/ (the ledger), wrong target. */}
+          <a href="/members/" className="welcome-nav-mycel" title="$MYCEL · Hyphae — the network currency">
             <span className="dot" />✦ $MYCEL
           </a>
         </div>
