@@ -94,7 +94,11 @@
       "Bash(perl -i -pe 's{>Mycelium Trance<}{><span class=\"mt-name\">Mycelium Trance</span><}g' public/home/index.html)",
       "Bash(perl -i -pe 's{Discover Mycelium Trance}{Discover <span class=\"mt-name\">Mycelium Trance</span>}g; s{>Mycelium Trance Dinner<}{><span class=\"mt-name\">Mycelium Trance</span> Dinner<}g; s{Mycelium Trance home}{<span class=\"mt-name\">Mycelium Trance</span> home}g' public/home/index.html)",
       "Bash(perl -i -pe 's{>Mycelium Trance<}{><span class=\"mt-name\">Mycelium Trance</span><}g' public/mycelium-trance/index.html)",
-      "Bash(perl -i -pe 's{Fungai Art \\\\xC2\\\\xB7 Mycelium Trance \\\\xC2\\\\xB7 2026}{Fungai Art \\\\xC2\\\\xB7 <span class=\"mt-name\">Mycelium Trance</span> \\\\xC2\\\\xB7 2026}g' public/mycelium-trance/index.html)"
+      "Bash(perl -i -pe 's{Fungai Art \\\\xC2\\\\xB7 Mycelium Trance \\\\xC2\\\\xB7 2026}{Fungai Art \\\\xC2\\\\xB7 <span class=\"mt-name\">Mycelium Trance</span> \\\\xC2\\\\xB7 2026}g' public/mycelium-trance/index.html)",
+      "Bash(perl -i -pe 's{max-width:960px;margin:0 auto;padding:0 18px 100px}{max-width:1152px;margin:0 auto;padding:0 22px 100px}g' public/mixology/index.html)",
+      "Bash(perl -i -pe 's{max-width:800px;margin:0 auto;padding:0 24px 80px}{max-width:960px;margin:0 auto;padding:0 28px 80px}g' public/extraction/index.html)",
+      "Bash(perl -i -pe 's{max-width:860px;margin:0 auto;padding:0 22px 100px}{max-width:1032px;margin:0 auto;padding:0 26px 100px}g' public/health/index.html)",
+      "Bash(perl -i -pe 's{max-width:680px; margin:0 auto; padding:0 20px 80px}{max-width:816px; margin:0 auto; padding:0 24px 80px}g' public/community/academy/index.html)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Robin\\Desktop\\fungai art\\websiet\\tailored tincture ai tool\\html codes",

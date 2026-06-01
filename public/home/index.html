@@ -94,8 +94,10 @@
   --serif:      'Cormorant Garamond', Georgia, serif;
   --sans:       'DM Sans', system-ui, sans-serif;
   --script:     'Pinyon Script', cursive;
-  /* Layout */
-  --max:        1280px;
+  /* Layout — bumped ~20% (1280 → 1536) per Robin's pass. Site-wide
+     containers respect this via .wrap. */
+  --max:        1536px;
+  --gutter:     56px;        /* used by .wrap padding */
   --gap:        1px;
 }
 
@@ -157,7 +159,7 @@ body::after {
 }
 
 /* ─── UTILITIES ──────────────────────────────── */
-.wrap { max-width: var(--max); margin: 0 auto; padding: 0 48px; }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter, 56px); }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
 input { font-family: inherit; }
@@ -1465,7 +1467,7 @@ function toggleMobileMenu() {
      Full-width inside a parent padded 0 44px, NOT floating, brackets at
      each corner, dark forest palette (#05120c on #1e3828). ══ -->
 <section class="rx-section">
-  <div class="rx-frame">
+  <div class="wrap rx-frame">
     <a href="/herbal-engine-2/" class="rx-card">
       <span class="rx-accent" aria-hidden="true"></span>
       <span class="rx-bracket rx-bracket--tl" aria-hidden="true"></span>
@@ -1503,9 +1505,10 @@ function toggleMobileMenu() {
       padding: 64px 0 0;
       background: #04100a;
     }
-    /* ~50px horizontal margin from viewport edges. The card itself
-       ends up ~75-80% of viewport width, centred. */
-    .rx-frame { padding: 0 50px; }
+    /* Uses the standard .wrap container so the card aligns to the
+       same gutters as the hero / manifesto / nav and respects the
+       site-wide --max width. No special padding. */
+    .rx-frame { padding: 0 var(--gutter, 48px); }
 
     .rx-card {
       position: relative;
