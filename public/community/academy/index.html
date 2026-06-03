@@ -1006,12 +1006,126 @@ function labKey(chapterId) {
   return `lab_entries_${chapterId}`;
 }
 
+// In-memory cache of cloud entries by chapter id — populated by
+// loadLabNotesFromCloud() on page boot. Merged with local entries
+// in loadEntries() so readers see EVERYONE's notes, not just their
+// own device.
+window.LAB_CLOUD = window.LAB_CLOUD || {};
+
 function loadEntries(id) {
-  try { return JSON.parse(localStorage.getItem(labKey(id)) || '[]'); } catch { return []; }
+  // Cloud entries first (everyone's notes), then local entries that
+  // haven't been mirrored yet (offline writes from this device).
+  // Dedupe by cloud id vs. local timestamp.
+  const cloud = (window.LAB_CLOUD && window.LAB_CLOUD[id]) || [];
+  let local = [];
+  try { local = JSON.parse(localStorage.getItem(labKey(id)) || '[]'); } catch {}
+
+  // Local entries that haven't been synced are flagged with _pendingCloud:
+  // true OR they have no cloud counterpart. Merge them in front (newest first).
+  const cloudTimes = new Set(cloud.map(e => e.ts));
+  const localOnly = local.filter(e => !cloudTimes.has(e.ts));
+
+  return [...localOnly, ...cloud].sort((a, b) => (b.ts || 0) - (a.ts || 0));
 }
 
 function saveEntries(id, entries) {
   try { localStorage.setItem(labKey(id), JSON.stringify(entries)); } catch {}
+}
+
+// Pull ALL lab notes from Supabase. Public-readable (RLS allows anon),
+// so this works even when the visitor isn't signed in.
+async function loadLabNotesFromCloud() {
+  if (!window.SBclient) {
+    try { await window.SBready; } catch { return; }
+  }
+  if (!window.SBclient) return;
+  try {
+    const { data, error } = await window.SBclient
+      .from('lab_notes')
+      .select('id, chapter_id, text, author_name, created_at')
+      .order('created_at', { ascending: false })
+      .limit(800);
+    if (error) {
+      // PGRST205 / 42P01 = table doesn't exist yet (SQL not run). Quietly
+      // fall back to localStorage-only mode. The Sign-in prompt still
+      // tells admins what's happening if they care to look.
+      const code = error.code || '';
+      if (code !== 'PGRST205' && code !== '42P01' && !/relation.*does not exist/i.test(error.message || '')) {
+        console.warn('[lab-notes] cloud fetch failed:', error.message);
+      }
+      return;
+    }
+    // Bucket by chapter_id, mapping to the same shape as localStorage
+    // entries: { text, ts, _cloudId, _author }.
+    const buckets = {};
+    (data || []).forEach(r => {
+      const ts = Date.parse(r.created_at) || Date.now();
+      const chId = r.chapter_id;
+      if (!buckets[chId]) buckets[chId] = [];
+      buckets[chId].push({
+        text: r.text,
+        ts,
+        _cloudId: r.id,
+        _author: r.author_name || null,
+      });
+    });
+    window.LAB_CLOUD = buckets;
+    // Re-render the notebook so the cloud entries appear without a reload.
+    try { buildLabNotebook(); } catch {}
+  } catch (e) {
+    console.warn('[lab-notes] cloud fetch threw:', e);
+  }
+}
+
+// Push a single entry to the cloud. Best-effort — failure leaves the
+// local entry in place, and the next page load will retry implicitly
+// via loadLabNotesFromCloud (the local entry sits alongside cloud
+// entries until it's mirrored).
+async function pushLabNoteToCloud({ text, chapterId, ts }) {
+  if (!window.SBclient || !window.SBauth) return null;
+  try {
+    const user = await window.SBauth.getUser();
+    if (!user) return null;
+
+    // Look up the author's profile + character_name. The profiles.id
+    // is needed for author_id (FK + RLS); character_name is the display
+    // tag on the entry.
+    let profileId = null;
+    let authorName = null;
+    try {
+      const cached = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null');
+      if (cached) { profileId = cached.cloudId || null; authorName = cached.name || null; }
+    } catch {}
+    if (!profileId && window.SBprofiles?.fetchMine) {
+      try {
+        const mine = await window.SBprofiles.fetchMine();
+        if (mine) { profileId = mine.id; authorName = mine.character_name; }
+      } catch {}
+    }
+
+    const { data, error } = await window.SBclient
+      .from('lab_notes')
+      .insert({
+        chapter_id: chapterId,
+        text,
+        author_id: profileId,
+        author_name: authorName,
+        created_at: new Date(ts).toISOString(),
+      })
+      .select('id')
+      .single();
+    if (error) {
+      const code = error.code || '';
+      if (code !== 'PGRST205' && code !== '42P01' && !/relation.*does not exist/i.test(error.message || '')) {
+        console.warn('[lab-notes] cloud push failed:', error.message);
+      }
+      return null;
+    }
+    return data?.id || null;
+  } catch (e) {
+    console.warn('[lab-notes] cloud push threw:', e);
+    return null;
+  }
 }
 
 function fmtDate(ts) {
@@ -1100,18 +1214,38 @@ function saveEntry(chapterId) {
   const btn      = document.getElementById(`savebtn-${chapterId}`);
   const text     = textarea.value.trim();
   if (!text) return;
-  const entries = loadEntries(chapterId);
-  entries.unshift({ text, ts: Date.now() });
-  saveEntries(chapterId, entries);
-  // Mirror the new entry into the MYCO knowledge index. Stored locally only;
-  // no API call is made here. When MYCO is activated the indexer will pick
-  // these up. See indexEntryForMyco() below.
-  try { indexEntryForMyco({ text, chapterId, ts: Date.now() }); } catch (e) { console.warn('[myco-index] skip:', e); }
+  const ts = Date.now();
+
+  // Write locally FIRST so the entry is visible immediately, even if
+  // the cloud push fails or the user is offline.
+  const local = (() => { try { return JSON.parse(localStorage.getItem(labKey(chapterId)) || '[]'); } catch { return []; } })();
+  local.unshift({ text, ts });
+  saveEntries(chapterId, local);
+
+  // Mirror into MYCO knowledge index (no API call — just localStorage).
+  try { indexEntryForMyco({ text, chapterId, ts }); } catch (e) { console.warn('[myco-index] skip:', e); }
+
   textarea.value = '';
   btn.textContent = '✓ Saved';
   btn.classList.add('saved');
   setTimeout(() => { btn.textContent = 'Save entry'; btn.classList.remove('saved'); }, 2000);
   renderEntries(chapterId);
+
+  // Best-effort push to Supabase so the note becomes visible to every
+  // other member (and the public). Silent on failure — the local copy
+  // is the source of truth until the SQL migration runs.
+  pushLabNoteToCloud({ text, chapterId, ts }).then(cloudId => {
+    if (!cloudId) return;
+    // Stamp the local entry with its cloud id + push it into the cloud
+    // bucket so it merges cleanly with the next loadEntries() call.
+    try {
+      const cur = JSON.parse(localStorage.getItem(labKey(chapterId)) || '[]');
+      const idx = cur.findIndex(e => e.ts === ts);
+      if (idx >= 0) { cur[idx]._cloudId = cloudId; saveEntries(chapterId, cur); }
+    } catch {}
+    if (!window.LAB_CLOUD[chapterId]) window.LAB_CLOUD[chapterId] = [];
+    window.LAB_CLOUD[chapterId].unshift({ text, ts, _cloudId: cloudId });
+  });
 }
 
 // MYCO knowledge index — lab notes get mirrored here when saved so MYCO
@@ -1216,6 +1350,17 @@ function buildLabNotebook() {
   LAB_CHAPTERS.forEach(ch => {
     const div = document.createElement('div');
     div.className = 'lab-chapter';
+
+    // Pre-load entries for this chapter so we know whether to auto-expand
+    // and how to show the count badge. Robin's complaint: "i do not see my
+    // lab notes" — was caused by chapters being collapsed by default with
+    // entries only painted into the DOM after toggleLab() fired.
+    const entriesForChapter = loadEntries(ch.id);
+    const hasEntries = entriesForChapter.length > 0;
+    const countBadge = hasEntries
+      ? `<span class="lab-ch-count-badge" style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:0.16em;color:#F5D689;background:rgba(232,177,75,0.1);border:0.5px solid rgba(232,177,75,0.3);padding:2px 8px;border-radius:999px;margin-left:8px;">${entriesForChapter.length}</span>`
+      : '';
+
     // Save / textarea only when signed in. Visitors see a placeholder note
     // that points them at the sign-in CTA above.
     const saveBlock = isSignedIn ? `
@@ -1233,21 +1378,30 @@ function buildLabNotebook() {
           ${ch.placeholder} <span style="color:#F5D689;">Sign in above to write here.</span>
         </div>
     `;
+
+    // Auto-expand any chapter that already has entries — that way notes
+    // are visible the moment the page loads. Chapters with no entries stay
+    // collapsed so the section doesn't feel overwhelming.
+    const bodyOpen = hasEntries;
     div.innerHTML = `
       <div class="lab-ch-header" onclick="toggleLab('${ch.id}')">
         <div class="lab-ch-icon">${ch.icon}</div>
         <div class="lab-ch-titles">
-          <div class="lab-ch-name">${ch.name}</div>
+          <div class="lab-ch-name">${ch.name}${countBadge}</div>
           <div class="lab-ch-sub">${ch.sub}</div>
         </div>
-        <div class="lab-ch-toggle" id="lab-toggle-${ch.id}">▾</div>
+        <div class="lab-ch-toggle" id="lab-toggle-${ch.id}">${bodyOpen ? '▴' : '▾'}</div>
       </div>
-      <div class="lab-ch-body" id="lab-body-${ch.id}" style="display:none">
+      <div class="lab-ch-body" id="lab-body-${ch.id}" style="display:${bodyOpen ? 'block' : 'none'}">
         ${saveBlock}
         <div class="lab-entries" id="entries-${ch.id}"></div>
       </div>
     `;
+    if (bodyOpen) div.classList.add('open');
     container.appendChild(div);
+
+    // Render the entries into the now-visible body
+    if (hasEntries) renderEntries(ch.id);
 
     // Live character count — only when the textarea exists
     if (isSignedIn) {
@@ -1275,6 +1429,15 @@ function buildLabNotebook() {
 
 // Run on page load
 buildLabNotebook();
+
+// Fetch shared lab notes from Supabase. Public-readable (RLS allows
+// anon), so this works for visitors too. Triggers a re-render when
+// the data lands. Best-effort — silently no-ops if the table isn't
+// installed yet.
+(async function pullCloudLabNotes() {
+  try { await window.SBready; } catch { return; }
+  loadLabNotesFromCloud();
+})();
 
 // ── Cross-page session check ─────────────────────────────
 // If the user is signed in via Supabase but the localStorage flag
