@@ -3952,11 +3952,23 @@ function App() {
     try {
       const cached = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null');
       if (!cached || !cached.id) return null;
+      // Force admin: true synchronously for known admin emails. This is
+      // belt-and-braces in case the cached snapshot from a previous sign-in
+      // got the admin flag wrong (e.g. cloud-only fallback created without
+      // the admin bit). tryAutoLogin will also re-stamp it on its async
+      // pass, but doing it here means the Admin tab appears on first paint.
+      const KNOWN_ADMIN_EMAILS = ['robin@fungai.art', 'teyae@fungai.art'];
+      const forceAdmin = cached.email && KNOWN_ADMIN_EMAILS.includes((cached.email || '').toLowerCase());
+
       const live = (SporeData.MEMBERS || []).find(m => m.id === cached.id);
+      if (live) {
+        if (forceAdmin) live.admin = true;
+        return live;
+      }
       // Fall back to the cached snapshot if MEMBERS hasn't loaded yet — it's
       // enough to render TopBar + most pages; tryAutoLogin will replace this
       // with the live member once Supabase profiles arrive.
-      return live || { id: cached.id, name: cached.name, admin: !!cached.admin, restrictions: cached.restrictions || [], avatar: cached.avatar || null, rep: 0, node: 'berlin' };
+      return { id: cached.id, name: cached.name, admin: !!cached.admin || forceAdmin, restrictions: cached.restrictions || [], avatar: cached.avatar || null, rep: 0, node: 'berlin' };
     } catch { return null; }
   });
   const [tab,       setTab]      = useState('network');
@@ -4055,17 +4067,28 @@ function App() {
       if (mine) {
         // Find or create the matching MEMBERS entry, set as current. Email-link
         // merge: match by cloudId first (claimed before), then by exact
-        // character_name (case-insensitive). If neither matches we fall through
-        // to the new-profile branch — meaning Robin signing in with a totally
-        // new email & character_name="robin1" will NOT merge into the hardcoded
-        // "robin" admin. To merge, Robin must claim with character_name="Robin"
-        // OR an admin has to manually set cloudId on the MEMBERS entry once.
+        // character_name (case-insensitive), then by KNOWN admin email
+        // (so Robin / Stephanie sign-ins always resolve to their hardcoded
+        // entry no matter what their cloud profile.character_name became —
+        // "Stephanie Teÿæ" vs "Stephanie" used to fail this match).
+        const ADMIN_EMAIL_MAP = {
+          'robin@fungai.art': 'robin',
+          'teyae@fungai.art': 'stephanie',
+        };
+        const authEmail = (user?.email || '').toLowerCase();
+        const adminIdFromEmail = ADMIN_EMAIL_MAP[authEmail];
+
         const match = SporeData.MEMBERS.find(m => m.cloudId === mine.id)
-                   || SporeData.MEMBERS.find(m => m.name.toLowerCase() === (mine.character_name || '').toLowerCase());
+                   || SporeData.MEMBERS.find(m => m.name.toLowerCase() === (mine.character_name || '').toLowerCase())
+                   || (adminIdFromEmail && SporeData.MEMBERS.find(m => m.id === adminIdFromEmail));
         if (match) {
           // Carry the cloud profile's restrictions onto the in-memory member so
           // gating works on this device immediately.
           match.cloudId = mine.id;
+          // Belt + braces: if this auth email is a known admin, force the
+          // admin flag on. Guards against future cloud merges silently
+          // wiping the admin bit from the hardcoded MEMBERS entry.
+          if (adminIdFromEmail) match.admin = true;
           if (Array.isArray(mine.restrictions)) match.restrictions = mine.restrictions;
           if (mine.avatar_url) match.avatar = mine.avatar_url;
           // Make the signed-in user's auth email visible to admins. We write
