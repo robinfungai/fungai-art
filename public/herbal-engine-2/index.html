@@ -483,27 +483,108 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
       <button class="mbtn" onclick="togglePract();toggleMobileControls()">Practitioner</button>
       <button class="mbtn" onclick="toggleStock();toggleMobileControls()">Stock</button>
     </div>
-    <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
-      <span class="pl">Pool:</span>
-      <button class="prbtn on" id="preset_all_m" onclick="applyPreset('all');toggleMobileControls()">All herbs</button>
-      <button class="prbtn" id="preset_trypexpo_m" onclick="applyPreset('trypexpo');toggleMobileControls()">TrypExpo</button>
+    <div style="display:flex;gap:4px;flex-wrap:wrap">
+      <button class="prbtn poolpick on" id="preset_in_stock_m" onclick="applyPreset('in_stock');toggleMobileControls()">In stock <span id="pc_in_stock_m" style="font-size:9px;opacity:.7"></span></button>
+      <button class="prbtn poolpick" id="preset_tcm_ayur_m" onclick="applyPreset('tcm_ayur');toggleMobileControls()">TCM + Ayurveda <span id="pc_tcm_ayur_m" style="font-size:9px;opacity:.7"></span></button>
+      <button class="prbtn poolpick" id="preset_all_m" onclick="applyPreset('all');toggleMobileControls()">All herbs <span id="pc_all_m" style="font-size:9px;opacity:.7"></span></button>
     </div>
   </div>
-  <div class="preset-row">
-    <span class="pl">Pool:</span>
-    <button class="prbtn on" id="preset_all" onclick="applyPreset('all')">All herbs <span id="pc_all" style="font-size:9px;opacity:.6"></span></button>
-    <button class="prbtn" id="preset_trypexpo" onclick="applyPreset('trypexpo')">TrypExpo <span id="pc_trypexpo" style="font-size:9px;opacity:.6"></span></button>
+
+  <!-- POOL SELECTOR — sits before the formula-building buttons so it's
+       the first question the user answers. Three clear options:
+       (1) In stock — European Folk herbs + damiana + schizandra (the ones
+           we actually have in the apothecary right now)
+       (2) TCM + Ayurveda — the classical Chinese + Ayurvedic materia medica
+       (3) All herbs — every botanical in the 201-plant database. -->
+  <div class="pool-picker">
+    <div class="pool-picker-q">What pool are you making this formula with?</div>
+    <div class="pool-picker-row">
+      <button class="poolcard on" id="preset_in_stock" onclick="applyPreset('in_stock')">
+        <span class="poolcard-name">In stock</span>
+        <span class="poolcard-count" id="pc_in_stock">&mdash;</span>
+        <span class="poolcard-sub">European folk + damiana + schizandra</span>
+      </button>
+      <button class="poolcard" id="preset_tcm_ayur" onclick="applyPreset('tcm_ayur')">
+        <span class="poolcard-name">TCM + Ayurveda</span>
+        <span class="poolcard-count" id="pc_tcm_ayur">&mdash;</span>
+        <span class="poolcard-sub">Chinese + Indian materia medica</span>
+      </button>
+      <button class="poolcard" id="preset_all" onclick="applyPreset('all')">
+        <span class="poolcard-name">All herbs</span>
+        <span class="poolcard-count" id="pc_all">&mdash;</span>
+        <span class="poolcard-sub">Every botanical in the database</span>
+      </button>
+    </div>
   </div>
+  <style>
+    .pool-picker { padding: 14px 18px 16px; border-top: 0.5px solid var(--bd); margin-top: 8px; }
+    .pool-picker-q {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: 16px;
+      color: var(--text2, #C9B894);
+      margin-bottom: 12px;
+      letter-spacing: -0.005em;
+    }
+    .pool-picker-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 700px) {
+      .pool-picker-row { grid-template-columns: 1fr; }
+      .pool-picker { padding: 12px 14px 14px; }
+    }
+    .poolcard {
+      display: flex; flex-direction: column;
+      align-items: flex-start; gap: 4px;
+      padding: 14px 16px;
+      background: rgba(8,11,13,0.45);
+      border: 0.5px solid var(--bd2, rgba(201,184,148,0.18));
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+      text-align: left;
+      color: inherit;
+    }
+    .poolcard:hover { border-color: rgba(232,177,75,0.4); background: rgba(232,177,75,0.04); transform: translateY(-1px); }
+    .poolcard.on {
+      border-color: rgba(232,177,75,0.7);
+      background: linear-gradient(135deg, rgba(232,177,75,0.12), rgba(232,177,75,0.04));
+      box-shadow: 0 0 0 0.5px rgba(232,177,75,0.35);
+    }
+    .poolcard-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: 18px;
+      color: var(--text, #E6D9B5);
+      letter-spacing: -0.005em;
+    }
+    .poolcard-count {
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      color: #F5D689;
+      letter-spacing: 0.1em;
+    }
+    .poolcard-sub {
+      font-family: 'Geist Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #8B7E62;
+      margin-top: 2px;
+    }
+  </style>
 </div>
 
 <!-- STOCK PANEL -->
 <div class="stock-panel" id="stockPanel">
   <div class="sp-hdr">
-    <div><div class="sp-title">TrypExpo pool</div><div class="sp-count" id="spCount">0 herbs</div></div>
+    <div><div class="sp-title" id="spTitle">Current pool</div><div class="sp-count" id="spCount">0 herbs</div></div>
     <div class="sp-acts">
       <span class="spa" onclick="stockAll()">Select all</span>
       <span class="spa" onclick="stockClear()">Clear</span>
-      <span class="spa" onclick="stockLoadTryp()">Reset TrypExpo</span>
+      <span class="spa" onclick="stockResetActive()">Reset to pool default</span>
     </div>
   </div>
   <input class="sp-search" id="spSearch" placeholder="Search herbs and mushrooms..." oninput="renderStock(this.value)">
@@ -919,7 +1000,7 @@ const TRYP_IDS=new Set([
 ]);
 
 /* ─── STATE ────────────────────────────────────────────── */
-var mode='standard',practitionerMode=false,activePreset='all',stockOpen=false;
+var mode='standard',practitionerMode=false,activePreset='in_stock',stockOpen=false;
 var customStock=new Set();
 var S={int:null,subInt:null,sec:[],con:null,conSub:null,saf:[],approach:'gentle',duration:'months',cnt:5,delivery:'tonic',carrier:'wild_soda',boosts:[],formula:[],step:0};
 var formulaLog=[];
@@ -947,29 +1028,69 @@ const BP_WORDS={
 };
 var curExtractName='';
 
-/* ─── PRESET / STOCK ────────────────────────────────────── */
-// All herbs always eligible — Standard and Practitioner modes are equal
+/* ─── PRESET / STOCK ──────────────────────────────────────
+   Three pool presets, computed off the live HB array so the counts
+   are always correct (no stale hand-maintained lists):
+     - in_stock : European Folk herbs + damiana + schizandra (the
+                  apothecary's actual stocked range right now)
+     - tcm_ayur : herbs tagged tcm OR ayurvedic
+     - all      : every botanical in the database
+   The legacy 'trypexpo' preset has been retired; the three above
+   replace it. customStock is repopulated whenever applyPreset fires. */
+const IN_STOCK_EXTRA_IDS = ['damiana', 'schizandra_five_flavour_fruit'];
+function poolIdsFor(p){
+  if (p === 'all') return HB.map(h => h.id);
+  if (p === 'tcm_ayur') {
+    return HB.filter(h => h.p && (h.p.includes('tcm') || h.p.includes('ayurvedic'))).map(h => h.id);
+  }
+  // in_stock (default)
+  return HB.filter(h =>
+    (h.p && h.p.includes('european'))
+    || IN_STOCK_EXTRA_IDS.includes(h.id)
+  ).map(h => h.id);
+}
+
 function getActiveStock(){
   if(activePreset==='all') return new Set(HB.map(h=>h.id));
-  // trypexpo = user-editable custom pool
   return new Set([...customStock].filter(id=>HB.find(h=>h.id===id)));
 }
 function applyPreset(p){
-  if(p==='trypexpo' && customStock.size===0){
-    // Pre-seed TrypExpo with TRYP_IDS on first use
-    customStock=new Set([...TRYP_IDS].filter(id=>HB.find(h=>h.id===id)));
-  }
-  activePreset=p;
-  document.querySelectorAll('.prbtn').forEach(b=>b.classList.remove('on'));
-  document.getElementById('preset_'+p).classList.add('on');
+  // Map legacy 'trypexpo' onto 'in_stock' so saved state from older
+  // sessions doesn't strand the user with no active pool.
+  if (p === 'trypexpo') p = 'in_stock';
+  if (!['in_stock','tcm_ayur','all'].includes(p)) p = 'in_stock';
+
+  activePreset = p;
+  customStock = new Set(poolIdsFor(p));
+  saveCustomStock();
+  try { localStorage.setItem('fungai_active_preset', p); } catch {}
+
+  // Toggle visual active state across both the mobile + desktop button rows
+  document.querySelectorAll('.prbtn, .poolcard').forEach(b => b.classList.remove('on'));
+  ['preset_'+p, 'preset_'+p+'_m'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.classList.add('on');
+  });
+
   updateCounts();
-  if(stockOpen)renderStock(document.getElementById('spSearch').value||'');
+  if(stockOpen) renderStock(document.getElementById('spSearch').value || '');
 }
 function updateCounts(){
-  var all=HB.length;
-  var expo=customStock.size;
-  document.getElementById('pc_all').textContent='('+all+')';
-  document.getElementById('pc_trypexpo').textContent='('+(expo||TRYP_IDS.size)+')';
+  var counts = {
+    in_stock: poolIdsFor('in_stock').length,
+    tcm_ayur: poolIdsFor('tcm_ayur').length,
+    all:      HB.length,
+  };
+  ['in_stock','tcm_ayur','all'].forEach(k => {
+    ['pc_'+k, 'pc_'+k+'_m'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = counts[k] + ' herbs';
+    });
+  });
+  // Keep the stock-panel title in sync with the active pool so the user
+  // knows what they're editing when they expand the panel.
+  var POOL_LABEL = { in_stock: 'In stock pool', tcm_ayur: 'TCM + Ayurveda pool', all: 'All herbs pool' };
+  var t = document.getElementById('spTitle');
+  if (t) t.textContent = POOL_LABEL[activePreset] || 'Current pool';
 }
 function toggleStock(){
   stockOpen=!stockOpen;
@@ -993,9 +1114,16 @@ function toggleMobileControls(){
 function saveCustomStock(){try{localStorage.setItem('fungai_trypexpo',JSON.stringify([...customStock]));}catch(e){}}
 function stockAll(){customStock=new Set(HB.map(h=>h.id));saveCustomStock();renderStock(document.getElementById('spSearch').value||'');updateCounts();}
 function stockClear(){customStock=new Set();saveCustomStock();renderStock(document.getElementById('spSearch').value||'');updateCounts();}
-function stockLoadTryp(){
-  customStock=new Set([...TRYP_IDS].filter(id=>HB.find(h=>h.id===id)));
-  saveCustomStock();renderStock(document.getElementById('spSearch').value||'');updateCounts();
+// Legacy name kept for any external link; routes to the new resetter.
+function stockLoadTryp(){ stockResetActive(); }
+function stockResetActive(){
+  // Reset customStock to the canonical id list for the currently-active
+  // preset (in_stock / tcm_ayur / all). Used by the "Reset to pool default"
+  // affordance in the stock panel header.
+  customStock = new Set(poolIdsFor(activePreset));
+  saveCustomStock();
+  renderStock(document.getElementById('spSearch').value || '');
+  updateCounts();
 }
 function renderStock(q){
   q=(q||'').toLowerCase();
@@ -1760,15 +1888,14 @@ function exportLog(fmt){
 
 /* ─── INIT ───────────────────────────────────────────────── */
 function init(){
-  // Load saved TrypExpo from localStorage; default to TRYP_IDS if never saved
-  try{
-    var saved=localStorage.getItem('fungai_trypexpo');
-    customStock=saved
-      ? new Set(JSON.parse(saved).filter(id=>HB.find(h=>h.id===id)))
-      : new Set([...TRYP_IDS].filter(id=>HB.find(h=>h.id===id)));
-  }catch(e){
-    customStock=new Set([...TRYP_IDS].filter(id=>HB.find(h=>h.id===id)));
-  }
+  // Restore the user's last pool choice (in_stock / tcm_ayur / all).
+  // Default for first-time visitors: in_stock (the apothecary's actual
+  // stocked range). Falls back to in_stock if anything went sideways.
+  var savedPreset = null;
+  try { savedPreset = localStorage.getItem('fungai_active_preset'); } catch (e) {}
+  if (!['in_stock','tcm_ayur','all'].includes(savedPreset)) savedPreset = 'in_stock';
+  activePreset = savedPreset;
+  customStock = new Set(poolIdsFor(activePreset));
   loadLog();
 
   // Intention grid — idx MUST be in the map callback so onclick receives column position
@@ -1837,7 +1964,11 @@ function init(){
   // Wire explain button (will be re-wired after render)
   var eb=document.getElementById('explainBtn');if(eb)eb.onclick=doExplain;
 
-  updateCounts();updProg();
+  // Apply the restored preset — sets button active state + populates
+  // customStock from the canonical id list + updates counts. Without
+  // this the visual "on" might not match the saved preset.
+  applyPreset(activePreset);
+  updProg();
 }
 
 init();
