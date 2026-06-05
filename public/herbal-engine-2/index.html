@@ -444,6 +444,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 .log-name{font-size:11px;font-weight:500;margin-bottom:2px;transition:color .15s}
 .log-meta{font-size:10px;color:var(--text3);line-height:1.4}
 </style>
+<!-- Supabase client for reading the live inventory table written by
+     /community admin. Loaded async; the "In stock" pool falls back to
+     the hardcoded list if Supabase isn't reachable or the table isn't
+     installed yet. -->
+<script src="/supabase-client.js" defer></script>
 </head>
 <body>
 <div class="app">
@@ -1037,17 +1042,61 @@ var curExtractName='';
      - all      : every botanical in the database
    The legacy 'trypexpo' preset has been retired; the three above
    replace it. customStock is repopulated whenever applyPreset fires. */
+// Fallback "In stock" list used when the cloud inventory isn't yet
+// reachable (table not installed, Supabase down, first paint before
+// fetch completes). Same range that was previously hardcoded.
 const IN_STOCK_EXTRA_IDS = ['damiana', 'schizandra_five_flavour_fruit'];
+
+// The live "In stock" id-set is populated from Supabase by
+// loadLiveInventory(). null = not loaded yet; an empty Set is a valid
+// state meaning "nothing currently stocked".
+var LIVE_INVENTORY = null;
+
 function poolIdsFor(p){
   if (p === 'all') return HB.map(h => h.id);
   if (p === 'tcm_ayur') {
     return HB.filter(h => h.p && (h.p.includes('tcm') || h.p.includes('ayurvedic'))).map(h => h.id);
   }
-  // in_stock (default)
+  // in_stock — prefer the cloud-managed list when present, otherwise
+  // fall back to the previous hardcoded European-folk + extras range.
+  if (LIVE_INVENTORY) {
+    return HB.map(h => h.id).filter(id => LIVE_INVENTORY.has(id));
+  }
   return HB.filter(h =>
     (h.p && h.p.includes('european'))
     || IN_STOCK_EXTRA_IDS.includes(h.id)
   ).map(h => h.id);
+}
+
+// Fetch the live inventory once on page boot. Best-effort: silent
+// no-op if Supabase isn't reachable or the table isn't installed yet.
+async function loadLiveInventory(){
+  try { await window.SBready; } catch { return; }
+  if (!window.SBclient) return;
+  try {
+    const { data, error } = await window.SBclient
+      .from('inventory')
+      .select('herb_id, in_stock');
+    if (error) {
+      // PGRST205 / 42P01 = table doesn't exist yet (SQL not run). Stay
+      // on the hardcoded fallback.
+      const code = error.code || '';
+      if (code !== 'PGRST205' && code !== '42P01' && !/relation.*does not exist/i.test(error.message || '')) {
+        console.warn('[inventory] fetch failed:', error.message);
+      }
+      return;
+    }
+    LIVE_INVENTORY = new Set((data || []).filter(r => r.in_stock).map(r => r.herb_id));
+    // Refresh the picker counts + reapply the active preset so the
+    // "In stock" count updates without a reload. Only re-pop customStock
+    // if the user IS currently on the in_stock preset.
+    if (typeof updateCounts === 'function') updateCounts();
+    if (activePreset === 'in_stock' && typeof applyPreset === 'function') {
+      applyPreset('in_stock');
+    }
+  } catch (e) {
+    console.warn('[inventory] fetch threw:', e);
+  }
 }
 
 function getActiveStock(){
@@ -1972,6 +2021,10 @@ function init(){
 }
 
 init();
+
+// Best-effort cloud sync — re-renders the "In stock" pool when the
+// live inventory lands. Doesn't block the page on first paint.
+loadLiveInventory();
 
 /* ─── SYMPTOM SEARCH ──────────────────────────────────────── */
 // Each category has a much broader vocabulary now — includes word stems

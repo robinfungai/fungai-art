@@ -3090,6 +3090,12 @@ function AdminPage({ onToast, currentMember }) {
         </div>
       </details>
 
+      {/* Live inventory — the "In stock" pool used by /herbal-engine-2.
+          Toggleable per-herb checklist grouped by category. Writes go to
+          the Supabase inventory table; herbal-engine reads on load.
+          Only renders for admins (Robin / Stephanie). */}
+      <LiveInventoryPanel currentMember={currentMember} onToast={onToast} />
+
       {/* Member overview — "All hyphaes" with per-member expandable details
           (hours / recruits / events / email / contribution timer / remove
           for Robin only). */}
@@ -3102,6 +3108,181 @@ function AdminPage({ onToast, currentMember }) {
         ))}
       </div>
     </div>
+  );
+}
+
+/* ─── Live inventory panel ───────────────────────────────────
+   Robin + Stephanie toggle which herbs are currently in stock. Writes
+   to Supabase.inventory (one row per herb, in_stock boolean). The
+   herbal-engine "In stock" pool reads this on load — so the picker
+   stays in sync with the actual apothecary. */
+function LiveInventoryPanel({ currentMember, onToast }) {
+  const [herbs,      setHerbs]      = useState([]);    // [{id, n, cat, p}]
+  const [stockedSet, setStockedSet] = useState(() => new Set());
+  const [pending,    setPending]    = useState(() => new Set()); // herb_ids being toggled
+  const [searchQ,    setSearchQ]    = useState('');
+  const [loading,    setLoading]    = useState(true);
+  const [error,      setError]      = useState('');
+
+  // Bootstrap: fetch the 201-herb catalogue + the current inventory.
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const [catalogueResp, _ready] = await Promise.all([
+          fetch('/herb-engine-ids.json').then(r => r.json()).catch(() => []),
+          window.SBready,
+        ]);
+        if (cancelled) return;
+        setHerbs(Array.isArray(catalogueResp) ? catalogueResp : []);
+
+        if (window.SBclient) {
+          const { data, error: e } = await window.SBclient
+            .from('inventory')
+            .select('herb_id, in_stock');
+          if (e) {
+            if (e.code !== 'PGRST205' && e.code !== '42P01' && !/relation.*does not exist/i.test(e.message || '')) {
+              setError('Inventory table not reachable: ' + e.message);
+            } else {
+              setError('Inventory table not installed yet — run supabase-inventory.sql once to enable saves.');
+            }
+          } else {
+            const ids = new Set((data || []).filter(r => r.in_stock).map(r => r.herb_id));
+            if (!cancelled) setStockedSet(ids);
+          }
+        }
+      } catch (err) {
+        if (!cancelled) setError('Load failed: ' + (err.message || err));
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
+  async function toggleHerb(herb_id) {
+    const wasStocked = stockedSet.has(herb_id);
+    const nextStocked = !wasStocked;
+
+    // Optimistic UI — flip first, revert on failure.
+    setStockedSet(s => {
+      const next = new Set(s);
+      if (nextStocked) next.add(herb_id); else next.delete(herb_id);
+      return next;
+    });
+    setPending(p => { const n = new Set(p); n.add(herb_id); return n; });
+
+    try {
+      if (!window.SBclient) throw new Error('Supabase client not loaded');
+
+      // Look up the admin's profile id so updated_by gets populated.
+      let updated_by = null;
+      try {
+        const cached = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null');
+        updated_by = (cached && cached.cloudId) || null;
+      } catch {}
+
+      const { error: e } = await window.SBclient
+        .from('inventory')
+        .upsert({ herb_id, in_stock: nextStocked, updated_by }, { onConflict: 'herb_id' });
+      if (e) throw e;
+    } catch (err) {
+      // Revert UI
+      setStockedSet(s => {
+        const next = new Set(s);
+        if (wasStocked) next.add(herb_id); else next.delete(herb_id);
+        return next;
+      });
+      onToast && onToast('Save failed: ' + (err.message || err), 'bad');
+    } finally {
+      setPending(p => { const n = new Set(p); n.delete(herb_id); return n; });
+    }
+  }
+
+  const stockedCount = stockedSet.size;
+  const totalCount   = herbs.length;
+  const filtered = searchQ.trim()
+    ? herbs.filter(h => (h.n || '').toLowerCase().includes(searchQ.trim().toLowerCase()))
+    : herbs;
+  const byCat = filtered.reduce((acc, h) => {
+    const k = h.cat || 'Other';
+    (acc[k] = acc[k] || []).push(h);
+    return acc;
+  }, {});
+  const cats = Object.keys(byCat).sort();
+
+  return (
+    <>
+      <div className="section" style={{ paddingBottom:0 }}>
+        <div className="section-eyebrow">
+          Live inventory &middot; {loading ? '…' : `${stockedCount} of ${totalCount} stocked`}
+        </div>
+        <h3 className="section-title" style={{ fontSize:22, marginTop:2 }}>The apothecary <em>shelf.</em></h3>
+        <p className="section-blurb" style={{ marginTop:6 }}>
+          Toggle any herb to mark it in stock. The Herbal Engine's "In stock" pool reads from this list &mdash; visitors immediately see what you can actually compose with.
+        </p>
+      </div>
+
+      <div style={{ margin:'12px 16px 28px', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, overflow:'hidden' }}>
+        {error && (
+          <div style={{ padding:'10px 14px', background:'rgba(232,177,75,0.06)', borderBottom:'0.5px solid var(--rule)', fontFamily:'var(--font-mono)', fontSize:10, color:'var(--nutrient-l)', letterSpacing:'0.12em' }}>
+            ⚠ {error}
+          </div>
+        )}
+        <div style={{ padding:'12px 14px', borderBottom:'0.5px solid var(--rule)', display:'flex', gap:10, flexWrap:'wrap', alignItems:'center' }}>
+          <input
+            type="text"
+            value={searchQ}
+            onChange={e => setSearchQ(e.target.value)}
+            placeholder="Filter by herb name…"
+            style={{ flex:'1 1 220px', background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:999, color:'var(--mycelium-l)', padding:'9px 16px', fontFamily:'var(--font-sans)', fontSize:13, outline:'none' }}
+          />
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>
+            tap to toggle
+          </span>
+        </div>
+
+        {loading && (
+          <div style={{ padding:'20px 14px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.16em', color:'var(--mycelium-d)' }}>
+            Loading 201-herb catalogue…
+          </div>
+        )}
+
+        {!loading && cats.map(cat => (
+          <div key={cat} style={{ borderTop:'0.5px solid var(--rule)' }}>
+            <div style={{ padding:'10px 14px 6px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>
+              {cat}
+            </div>
+            <div style={{ padding:'0 12px 12px', display:'flex', flexWrap:'wrap', gap:6 }}>
+              {byCat[cat].map(h => {
+                const isStocked = stockedSet.has(h.id);
+                const isPending = pending.has(h.id);
+                return (
+                  <button
+                    key={h.id}
+                    onClick={() => toggleHerb(h.id)}
+                    disabled={isPending}
+                    title={h.b || h.n}
+                    style={{
+                      fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.08em',
+                      padding:'6px 12px', borderRadius:999,
+                      background: isStocked ? 'rgba(107,214,111,0.14)' : 'var(--soil-3)',
+                      border: isStocked ? '0.5px solid rgba(107,214,111,0.5)' : '0.5px solid var(--rule)',
+                      color: isStocked ? '#B6F0AE' : 'var(--mycelium-d)',
+                      cursor: isPending ? 'wait' : 'pointer',
+                      opacity: isPending ? 0.6 : 1,
+                      transition: 'all 0.15s',
+                    }}
+                  >
+                    {isStocked ? '●' : '○'} {h.n}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 
