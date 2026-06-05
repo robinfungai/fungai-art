@@ -99,7 +99,9 @@
       "Bash(perl -i -pe 's{max-width:800px;margin:0 auto;padding:0 24px 80px}{max-width:960px;margin:0 auto;padding:0 28px 80px}g' public/extraction/index.html)",
       "Bash(perl -i -pe 's{max-width:860px;margin:0 auto;padding:0 22px 100px}{max-width:1032px;margin:0 auto;padding:0 26px 100px}g' public/health/index.html)",
       "Bash(perl -i -pe 's{max-width:680px; margin:0 auto; padding:0 20px 80px}{max-width:816px; margin:0 auto; padding:0 24px 80px}g' public/community/academy/index.html)",
-      "Bash(perl -i -pe \"s{Robin's living drinks}{Living drinks \\\\xC2\\\\xB7 kegged at 111 Hz}g\" public/mixology/index.html)"
+      "Bash(perl -i -pe \"s{Robin's living drinks}{Living drinks \\\\xC2\\\\xB7 kegged at 111 Hz}g\" public/mixology/index.html)",
+      "Bash(xargs grep -nE \"ALTER TABLE.*admin|ADD COLUMN.*admin\")",
+      "Bash(perl -i -pe \"s/AND admin = true/AND is_admin = true/g; s/profiles WHERE auth_user_id = auth\\\\\\\\.uid\\\\\\\\\\(\\\\\\\\\\) AND admin/profiles WHERE auth_user_id = auth.uid\\(\\) AND is_admin/g\" supabase-inventory.sql supabase-get-member-emails.sql)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Robin\\Desktop\\fungai art\\websiet\\tailored tincture ai tool\\html codes",

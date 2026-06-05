@@ -54,7 +54,7 @@ CREATE POLICY "inventory_insert_admin"
   ON public.inventory FOR INSERT
   TO authenticated
   WITH CHECK (
-    EXISTS (SELECT 1 FROM public.profiles WHERE auth_user_id = auth.uid() AND admin = true)
+    EXISTS (SELECT 1 FROM public.profiles WHERE auth_user_id = auth.uid() AND is_admin = true)
   );
 
 DROP POLICY IF EXISTS "inventory_update_admin" ON public.inventory;
@@ -62,7 +62,7 @@ CREATE POLICY "inventory_update_admin"
   ON public.inventory FOR UPDATE
   TO authenticated
   USING (
-    EXISTS (SELECT 1 FROM public.profiles WHERE auth_user_id = auth.uid() AND admin = true)
+    EXISTS (SELECT 1 FROM public.profiles WHERE auth_user_id = auth.uid() AND is_admin = true)
   );
 
 DROP POLICY IF EXISTS "inventory_delete_admin" ON public.inventory;
@@ -70,7 +70,7 @@ CREATE POLICY "inventory_delete_admin"
   ON public.inventory FOR DELETE
   TO authenticated
   USING (
-    EXISTS (SELECT 1 FROM public.profiles WHERE auth_user_id = auth.uid() AND admin = true)
+    EXISTS (SELECT 1 FROM public.profiles WHERE auth_user_id = auth.uid() AND is_admin = true)
   );
 
 GRANT SELECT ON public.inventory TO anon, authenticated;

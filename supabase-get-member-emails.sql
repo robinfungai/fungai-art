@@ -35,7 +35,7 @@ BEGIN
     SELECT 1
     FROM public.profiles
     WHERE auth_user_id = auth.uid()
-      AND admin = true
+      AND is_admin = true
   ) THEN
     RAISE EXCEPTION 'Only admins can read member emails'
       USING ERRCODE = '42501';  -- insufficient_privilege
