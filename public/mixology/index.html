@@ -205,7 +205,7 @@ button{font-family:inherit;cursor:pointer;}
 <nav class="nav">
   <div class="nav-brand">
     <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-      <img src="/assets/fungai-art-logo.png" alt="Fungai Art" style="height:46px;width:auto;opacity:.94;" onerror="this.src='/logo.png';this.style.filter='brightness(0) invert(1)';this.style.height='30px'">
+      <img src="/fungai-art-logo.png" alt="Fungai Art" style="height:46px;width:auto;opacity:.94;" onerror="this.src='/logo.png';this.style.filter='brightness(0) invert(1)';this.style.height='30px'">
       <div>
         <div class="nav-title">Herbal Engine</div>
         <div class="nav-sub">Fungai Art Elixirs &middot; 201 Botanicals</div>
@@ -283,35 +283,158 @@ const PHILOS = [
   { id:'ayurveda',    l:'Ayurvedic' },
   { id:'amazonian',   l:'Amazonian & Andean' },
   { id:'mesopotamian',l:'Mesopotamian' },
+  { id:'african',     l:'African' },
+  { id:'seAsian',     l:'Southeast Asian' },
 ];
+// Comprehensive tradition tagging across the 200+ entry materia medica.
+// Earlier the map only carried ~50 entries and everything untagged fell
+// through to 'european' — that's why TCM read 10 herbs and European
+// pulled in guarana, caleaZ, vanilla, enoki, galangal etc. Each herb
+// now carries every tradition that uses it (turmeric is both ayurveda
+// AND tcm; senna is ayurveda + mesopotamian + african; etc.). Default
+// fallback is now empty (untagged → shows only in 'All').
 const PHIL_MAP = {
-  // TCM
-  schizandra:['tcm'], astragalus:['tcm'], gojiBerry:['tcm'], dongQuai:['tcm'],
-  reishi:['tcm'], cordyceps:['tcm'], ginseng:['tcm','ayurveda'],
-  hawthorn:['tcm','european'], jujube:['tcm'], rehmannia:['tcm'],
-  cinnamon:['tcm','ayurveda','mesopotamian'], ginger:['tcm','ayurveda','european'],
+  // ── FUNGI ─────────────────────────────────────────────────────
+  chaga:['european','tcm'], turkeyTail:['tcm'], reishi:['tcm'],
+  maitake:['tcm'], shiitake:['tcm'],
+  cordycepsMilitaris:['tcm'], cordycepsSinensis:['tcm'],
+  tremella:['tcm'], agaricus:['amazonian'],
+  lionsMane:['tcm','european'], enoki:['tcm'],
+  oysterMushroom:['european','tcm'], birchPolypore:['european'],
+  amanita:['european'], amanitaPantherina:['european'],
+  psilocybe:['amazonian'], fuLing:['tcm'], zhuLing:['tcm'],
+
+  // ── TCM ───────────────────────────────────────────────────────
+  schizandra:['tcm'], astragalus:['tcm'], redAstragalus:['tcm'],
+  goji:['tcm'], gojiBerry:['tcm'], dongQuai:['tcm'],
+  ginseng:['tcm','ayurveda'], hawthorn:['tcm','european'],
+  jujube:['tcm'], redDates:['tcm'], rehmannia:['tcm'],
+  cinnamon:['tcm','ayurveda','mesopotamian'],
+  ginger:['tcm','ayurveda','european'],
   licorice:['tcm','ayurveda','european','mesopotamian'],
-  // Ayurveda
+  ginkgo:['tcm'], hornyGoat:['tcm'], tianMenDong:['tcm'],
+  szechuanPepper:['tcm'], rhubarb:['tcm'],
+  starAnise:['tcm','seAsian'],
+
+  // ── AYURVEDA ──────────────────────────────────────────────────
   ashwagandha:['ayurveda'], bacopa:['ayurveda'], brahmi:['ayurveda'],
-  gotuKola:['ayurveda'], guggul:['ayurveda'], holyBasil:['ayurveda'],
-  tulsi:['ayurveda'], turmeric:['ayurveda','tcm'], shatavari:['ayurveda'],
+  gotuKola:['ayurveda'], guggul:['ayurveda'], guggulu:['ayurveda'],
+  holyBasil:['ayurveda'], tulsi:['ayurveda'],
+  turmeric:['ayurveda','tcm'], shatavari:['ayurveda'],
   triphala:['ayurveda'], neem:['ayurveda'], amla:['ayurveda'],
-  bakuchi:['ayurveda','tcm'], boswellia:['ayurveda','mesopotamian'],
+  bakuchi:['ayurveda','tcm'],
+  boswellia:['ayurveda','mesopotamian'], shallaki:['ayurveda'],
   fenugreek:['ayurveda','mesopotamian'],
-  // Amazonian & Andean
-  maca:['amazonian'], pauDArco:['amazonian'], muiraPuama:['amazonian'],
+  amaltas:['ayurveda'], anantmul:['ayurveda'], arjuna:['ayurveda'],
+  ashoka:['ayurveda'], bael:['ayurveda'], bibhitaki:['ayurveda'],
+  chandrashoor:['ayurveda'], dashmool:['ayurveda'],
+  gandira:['ayurveda'], gokshura:['ayurveda'], guduchi:['ayurveda'],
+  hadjod:['ayurveda'], haritaki:['ayurveda'], kalmegh:['ayurveda'],
+  karanja:['ayurveda'], khadira:['ayurveda'], lodhra:['ayurveda'],
+  longPepper:['ayurveda','tcm'], manjistha:['ayurveda'],
+  nagkesar:['ayurveda'], nirgundi:['ayurveda'], nishoth:['ayurveda'],
+  punarnava:['ayurveda'], rasna:['ayurveda'],
+  rudraksha:['ayurveda'], shankhpushpi:['ayurveda'],
+  shilajit:['ayurveda'], vijaysar:['ayurveda'],
+  blackCardamom:['tcm','ayurveda'],
+  cardamom:['ayurveda','mesopotamian'],
+  vitex:['european','ayurveda'],
+  syrianRue:['mesopotamian','ayurveda'],
+  blueLotus:['mesopotamian','ayurveda'],
+
+  // ── AMAZONIAN & ANDEAN ────────────────────────────────────────
+  maca:['amazonian'], macaNegra:['amazonian'],
+  pauDArco:['amazonian'], muiraPuama:['amazonian'],
   catuaba:['amazonian'], banisteriopsisCaapi:['amazonian'],
-  cocaLeaf:['amazonian'], guayusa:['amazonian'], yerbaMate:['amazonian'],
-  cacao:['amazonian'], chuchuhuasi:['amazonian'], sangreDeGrado:['amazonian'],
+  cocaLeaf:['amazonian'], guayusa:['amazonian'],
+  yerbaMate:['amazonian'], cacao:['amazonian'],
+  chuchuhuasi:['amazonian'], sangreDeGrado:['amazonian'],
   ungurahui:['amazonian'], suma:['amazonian'],
-  // Mesopotamian / Levantine
+  bobinsana:['amazonian'], caleaZ:['amazonian'],
+  chilcuague:['amazonian'], catsClaw:['amazonian'],
+  guarana:['amazonian'], damiana:['amazonian'],
+  passionflower:['amazonian'], vanilla:['amazonian'],
+  cayenne:['amazonian','european'],
+
+  // ── MESOPOTAMIAN / LEVANTINE ──────────────────────────────────
   frankincense:['mesopotamian'], myrrh:['mesopotamian'],
-  saffron:['mesopotamian','ayurveda'], anise:['mesopotamian','european'],
-  cumin:['mesopotamian'], sumac:['mesopotamian'], rose:['mesopotamian','ayurveda'],
+  saffron:['mesopotamian','ayurveda','european'],
+  anise:['mesopotamian','european'], cumin:['mesopotamian'],
+  sumac:['mesopotamian'],
+  rose:['mesopotamian','ayurveda'], rosePetals:['mesopotamian','european','ayurveda'],
   hyssop:['mesopotamian','european'], damascena:['mesopotamian'],
+  blackCumin:['mesopotamian','ayurveda'],
+  pomegranateSeeds:['mesopotamian','ayurveda'],
+  pomegranateSkin:['mesopotamian','ayurveda'],
+
+  // ── AFRICAN ──────────────────────────────────────────────────
+  africanDreamRoot:['african'], kanna:['african'],
+  wildDagga:['african'], devilsClaw:['african'],
+  fadogia:['african'],
+
+  // ── SOUTHEAST ASIAN / PACIFIC ────────────────────────────────
+  kratom:['seAsian'], kavaKava:['seAsian'],
+  tongkatAli:['seAsian','ayurveda'],
+  galangal:['seAsian','ayurveda','tcm'],
+  cloves:['seAsian','ayurveda','tcm'],
+  longan:['tcm','seAsian'],
+  phyllodium:['ayurveda','tcm','seAsian'],
+  moringa:['ayurveda','african','seAsian'],
+
+  // ── EUROPEAN FOLK ────────────────────────────────────────────
+  angelica:['european','tcm'], aroniaBerry:['european'],
+  avenaMilkySeed:['european'], barberry:['european','ayurveda'],
+  barley:['european','mesopotamian'], bayberry:['european'],
+  bilberry:['european'], blackWalnut:['european'],
+  bladderwrack:['european'], blueberry:['european'],
+  broadleafPlantain:['european'], burdock:['european','tcm'],
+  butchersBroom:['european'], butterbur:['european'],
+  calamus:['european','ayurveda','tcm'],
+  calendula:['european','mesopotamian'],
+  cannabisSativa:['european','ayurveda'],
+  carawaySeeds:['european','mesopotamian'],
+  celerySeed:['european','ayurveda'],
+  chamomile:['european'], chickweed:['european'],
+  cranberry:['european'], dandelion:['european','tcm'],
+  echinacea:['european'], elderberry:['european'],
+  elderflower:['european'], ephedra:['tcm','ayurveda'],
+  eucalyptus:['european','seAsian'], eyebright:['european'],
+  fennel:['european','mesopotamian','ayurveda'],
+  garlic:['european','mesopotamian','ayurveda'],
+  goldenrod:['european'], grapeSeed:['european','mesopotamian'],
+  groundIvy:['european'], hops:['european'], horsetail:['european'],
+  icelandMoss:['european'], jasmine:['ayurveda','tcm','mesopotamian'],
+  juniper:['european'], ladysMantle:['european'],
+  lavender:['european','mesopotamian'],
+  lemonBalm:['european','mesopotamian'], linden:['european'],
+  lingonberry:['european'], lobelia:['european'],
+  lucerne:['european','mesopotamian'],
+  marjoram:['european','mesopotamian'], meadowsweet:['european'],
+  milkThistle:['european','mesopotamian'], mistletoe:['european'],
+  motherwort:['european','tcm'], mugwort:['european','tcm'],
+  mullein:['european'], nettle:['european'], nettleLeaf:['european'],
+  nettleRoot:['european'], nettleSeed:['european'],
+  oatstraw:['european'], oregano:['european','mesopotamian'],
+  peppermint:['european','mesopotamian'],
+  pineNeedle:['european','tcm'], pinePollen:['tcm','european'],
+  raspberryLeaf:['european'], rhodiola:['european','tcm'],
+  rosehip:['european'], rosemary:['european','mesopotamian'],
+  sage:['european','mesopotamian'], sawPalmetto:['european'],
+  senna:['ayurveda','mesopotamian','african'],
+  skullcap:['european','tcm'], slipperyElm:['european'],
+  spirulina:['mesopotamian','amazonian'],
+  stJohnsWort:['european'], thyme:['european','mesopotamian'],
+  verbena:['european','mesopotamian'],
+  willowBark:['european','mesopotamian','tcm'],
+  wormwood:['european','mesopotamian'], yarrow:['european'],
+  yellowDock:['european'],
 };
 function philosFor(h){
-  const tags = PHIL_MAP[h.id] || PHIL_MAP[h.n] || ['european'];
+  // Empty fallback (was 'european'). Untagged herbs now appear only in
+  // "All traditions" instead of polluting the European filter. If a new
+  // herb is added without a PHIL_MAP entry, it's better to be invisible
+  // in tradition filters than to lie about its origin.
+  const tags = PHIL_MAP[h.id] || PHIL_MAP[h.n] || [];
   return tags;
 }
 

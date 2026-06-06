@@ -1,0 +1,145 @@
+<!--
+  ════════════════════════════════════════════════════════════════
+  Supabase magic-link email — "A thread arrives" template
+  ────────────────────────────────────────────────────────────────
+  HOW TO INSTALL:
+    1. Supabase Dashboard → Authentication → Email Templates
+    2. Pick "Magic Link"
+    3. Paste the <body>…</body> contents below into the template box
+       (or paste the whole document — Supabase strips <html>/<head>).
+    4. Make sure the subject line is something inviting, e.g.:
+         "✦ A thread arrives — your Fungai Art sign-in"
+    5. Save.
+
+  Variables Supabase substitutes:
+    {{ .ConfirmationURL }}  — the magic-link target
+    {{ .Email }}            — recipient address
+    {{ .Token }}            — 6-digit code (we don't display it)
+
+  Notes:
+    • All styles inline. Email clients strip <style> blocks.
+    • Logo URL must be publicly reachable (we use https://www.fungai.art/...).
+    • Button is forced-contrast: light text on dark amber so Gmail / Outlook
+      can't dark-mode it into invisibility.
+    • Active nodes list is static. Bump it manually when a new node opens.
+  ════════════════════════════════════════════════════════════════
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="supported-color-schemes" content="light dark" />
+  <title>A thread arrives — Fungai Art</title>
+</head>
+<body style="margin:0; padding:0; background:#0F0D0A; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; color:#D9CDB3;">
+  <!-- Preheader: shows in inbox preview, hidden in body -->
+  <div style="display:none; max-height:0; overflow:hidden; opacity:0; font-size:1px; line-height:1px; color:#0F0D0A;">
+    Your one-time link to The Mycelium — opens once, expires in an hour.
+  </div>
+
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#0F0D0A;">
+    <tr>
+      <td align="center" style="padding:48px 16px;">
+
+        <!-- ── Frame ───────────────────────────────────────── -->
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" style="max-width:560px; width:100%; background:#1A1611; border:0.5px solid #3A2F22; border-radius:14px;">
+          <tr>
+            <td style="padding:40px 40px 28px 40px; text-align:center;">
+
+              <!-- Logo -->
+              <img src="https://www.fungai.art/fungai-art-logo.png" alt="Fungai Art" width="140" style="display:inline-block; max-width:140px; height:auto; opacity:0.95;" />
+
+              <!-- Eyebrow -->
+              <div style="font-family: 'Geist Mono', 'Courier New', monospace; font-size:10px; letter-spacing:0.32em; text-transform:uppercase; color:#8B7A5C; margin:28px 0 10px;">
+                ✦ A thread arrives
+              </div>
+
+              <!-- Headline -->
+              <h1 style="font-family: 'Zodiak', Georgia, 'Times New Roman', serif; font-style:italic; font-size:34px; line-height:1.18; color:#E7D9B2; margin:0 0 6px; font-weight:500;">
+                Welcome to
+              </h1>
+              <h1 style="font-family: 'Zodiak', Georgia, 'Times New Roman', serif; font-style:italic; font-size:34px; line-height:1.18; color:#E7D9B2; margin:0 0 20px; font-weight:500;">
+                The Mycelium.
+              </h1>
+
+              <!-- Body -->
+              <p style="font-size:14.5px; line-height:1.7; color:#C9B894; margin:0 22px 28px; max-width:420px;">
+                You're a click away from your place in the Fungai Art network. The link below signs you in — <em style="color:#D9CDB3;">no password, no installation.</em>
+              </p>
+
+              <!-- ── Button ──
+                   Hard-coded contrast: cream text on warm amber. Inline
+                   colors prevent Gmail's auto dark-mode from flipping the
+                   button into a low-contrast tile. -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0 auto 12px;">
+                <tr>
+                  <td align="center" bgcolor="#C48838" style="border-radius:999px; background:#C48838;">
+                    <a href="{{ .ConfirmationURL }}"
+                       style="display:inline-block; padding:14px 32px; font-family: 'Geist Mono', 'Courier New', monospace; font-size:11px; letter-spacing:0.28em; text-transform:uppercase; color:#1A1208 !important; text-decoration:none; font-weight:700; background:#C48838; border-radius:999px;">
+                      ✦ Enter the network
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Plain-text fallback for clients that hide the button -->
+              <div style="font-family: 'Geist Mono', 'Courier New', monospace; font-size:10px; color:#8B7A5C; margin-top:14px;">
+                Or paste this into your browser:
+              </div>
+              <div style="font-family: 'Geist Mono', 'Courier New', monospace; font-size:10px; color:#A99771; word-break:break-all; margin:6px 12px 0;">
+                <a href="{{ .ConfirmationURL }}" style="color:#A99771; text-decoration:underline;">{{ .ConfirmationURL }}</a>
+              </div>
+
+              <!-- TTL note -->
+              <p style="font-size:11.5px; line-height:1.55; color:#7B6B4F; margin:32px 22px 6px;">
+                This link works once and expires in <strong style="color:#8B7A5C;">1 hour</strong>.<br/>
+                If you didn't request this, ignore the email — nothing happens until you click.
+              </p>
+
+            </td>
+          </tr>
+        </table>
+
+        <!-- ── Active nodes strip ───────────────────────────── -->
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" style="max-width:560px; width:100%; margin-top:24px;">
+          <tr>
+            <td style="padding:18px 30px 4px;">
+              <div style="font-family: 'Geist Mono', 'Courier New', monospace; font-size:9px; letter-spacing:0.32em; text-transform:uppercase; color:#5D5037; margin-bottom:14px; text-align:center;">
+                ● Nodes currently live
+              </div>
+              <div style="text-align:center; line-height:2.2;">
+                <span style="display:inline-block; font-family: 'Geist Mono', 'Courier New', monospace; font-size:10.5px; letter-spacing:0.14em; color:#A99771; padding:3px 10px; margin:2px 3px; border:0.5px solid #3A2F22; border-radius:999px;">🍄 Berlin · Studio / LAB</span>
+                <span style="display:inline-block; font-family: 'Geist Mono', 'Courier New', monospace; font-size:10.5px; letter-spacing:0.14em; color:#A99771; padding:3px 10px; margin:2px 3px; border:0.5px solid #3A2F22; border-radius:999px;">🌿 Lisbon · Atlantic studio</span>
+                <span style="display:inline-block; font-family: 'Geist Mono', 'Courier New', monospace; font-size:10.5px; letter-spacing:0.14em; color:#A99771; padding:3px 10px; margin:2px 3px; border:0.5px solid #3A2F22; border-radius:999px;">🌊 Beirut · Mediterranean</span>
+                <span style="display:inline-block; font-family: 'Geist Mono', 'Courier New', monospace; font-size:10.5px; letter-spacing:0.14em; color:#A99771; padding:3px 10px; margin:2px 3px; border:0.5px solid #3A2F22; border-radius:999px;">🔥 Lake Atitlán · Guatemala</span>
+                <span style="display:inline-block; font-family: 'Geist Mono', 'Courier New', monospace; font-size:10.5px; letter-spacing:0.14em; color:#A99771; padding:3px 10px; margin:2px 3px; border:0.5px solid #3A2F22; border-radius:999px;">🌴 Zanzibar · Tanzania</span>
+                <span style="display:inline-block; font-family: 'Geist Mono', 'Courier New', monospace; font-size:10.5px; letter-spacing:0.14em; color:#A99771; padding:3px 10px; margin:2px 3px; border:0.5px solid #3A2F22; border-radius:999px;">🌶 Bangkok · Thailand</span>
+                <span style="display:inline-block; font-family: 'Geist Mono', 'Courier New', monospace; font-size:10.5px; letter-spacing:0.14em; color:#A99771; padding:3px 10px; margin:2px 3px; border:0.5px solid #3A2F22; border-radius:999px;">🌺 Bali · Indonesia</span>
+                <span style="display:inline-block; font-family: 'Geist Mono', 'Courier New', monospace; font-size:10.5px; letter-spacing:0.14em; color:#A99771; padding:3px 10px; margin:2px 3px; border:0.5px solid #3A2F22; border-radius:999px;">🌲 Sweden · Foraging</span>
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        <!-- ── Footer ───────────────────────────────────────── -->
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="560" style="max-width:560px; width:100%; margin-top:36px;">
+          <tr>
+            <td align="center" style="padding:10px 30px 6px;">
+              <img src="https://www.fungai.art/fungi.png" alt="" width="22" style="display:inline-block; opacity:0.55;" />
+              <div style="font-family: 'Geist Mono', 'Courier New', monospace; font-size:9.5px; letter-spacing:0.24em; text-transform:uppercase; color:#5D5037; margin-top:10px;">
+                — Robin &amp; Stephanie · Fungai Art
+              </div>
+              <div style="font-family: 'Geist Mono', 'Courier New', monospace; font-size:9px; letter-spacing:0.18em; color:#3F3624; margin-top:6px;">
+                fungai.art · Berlin
+              </div>
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

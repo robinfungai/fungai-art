@@ -1080,6 +1080,86 @@ function selectCoin(sym){selectedCoin=sym;document.querySelectorAll('.crypto-coi
 function copyAddress(){navigator.clipboard.writeText(WALLETS[selectedCoin].addr).then(()=>{const b=document.getElementById('copyAddrBtn');b.textContent='Copied!';b.classList.add('copied');setTimeout(()=>{b.textContent='Copy';b.classList.remove('copied')},2000)})}
 function confirmCryptoOrder(){document.getElementById('confirmRef').textContent='CRYPTO-'+Date.now().toString(36).toUpperCase();document.getElementById('confirmTotal').textContent='Crypto';document.getElementById('confirmMsg').textContent='Send the exact crypto amount to complete your order. We will ship within 24h of confirmation.';cart=[];renderCart();goToStepDirect(3)}
 </script>
+
+<!-- ════════════════════════════════════════════════════════════════
+     Live stock badges — read product_inventory from Supabase and
+     overlay a "Sold out" / "N left" indicator onto each product card.
+     Cards at zero get their basket buttons disabled. Cards above zero
+     show a small chip in the bottom-right corner of the image area.
+     Falls back silently if Supabase isn't reachable or table missing.
+     ════════════════════════════════════════════════════════════════ -->
+<script src="/supabase-client.js" defer></script>
+<script defer>
+(async function attachLiveStockBadges() {
+  // Wait for the supabase-client.js init (SBready promise published once
+  // the singleton is constructed). If it never publishes — table missing,
+  // offline — the products render as before.
+  try {
+    if (!window.SBready) {
+      await new Promise(res => setTimeout(res, 400));
+      if (!window.SBready) return;
+    }
+    await window.SBready;
+    if (!window.SBclient) return;
+    const { data, error } = await window.SBclient
+      .from('product_inventory')
+      .select('product_id, stock_count');
+    if (error) {
+      console.warn('[Shop] inventory fetch failed:', error.message);
+      return;
+    }
+    const counts = new Map();
+    (data || []).forEach(r => counts.set(r.product_id, r.stock_count));
+
+    // Each product card has 1–2 buttons calling addToCart('Name', price).
+    // Match by the FIRST argument to addToCart — that string is the
+    // product_id we used in supabase-product-inventory.sql.
+    document.querySelectorAll('.product-card').forEach(card => {
+      const btn = card.querySelector("[onclick^=\"addToCart\"]");
+      if (!btn) return;
+      const m = (btn.getAttribute('onclick') || '').match(/addToCart\(['\"]([^'\"]+)['\"]/);
+      if (!m) return;
+      const pid = m[1];
+      if (!counts.has(pid)) return; // not in inventory table — leave as-is
+      const n = counts.get(pid);
+
+      // Add a badge overlay. Position absolute, anchored bottom-right of
+      // the image wrap.
+      const imgWrap = card.querySelector('.product-img-wrap');
+      if (imgWrap) {
+        const badge = document.createElement('span');
+        badge.className = 'stock-badge';
+        if (n === 0) {
+          badge.textContent = 'Sold out';
+          badge.style.cssText = 'position:absolute;top:12px;right:12px;font-family:monospace;font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;background:rgba(225,107,107,0.85);color:#fff;border-radius:2px;z-index:5;';
+        } else if (n <= 3) {
+          badge.textContent = n + ' left';
+          badge.style.cssText = 'position:absolute;top:12px;right:12px;font-family:monospace;font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;background:rgba(232,177,75,0.85);color:#1A1208;border-radius:2px;z-index:5;';
+        } else {
+          badge.textContent = 'In stock';
+          badge.style.cssText = 'position:absolute;top:12px;right:12px;font-family:monospace;font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;background:rgba(77,134,155,0.65);color:#fff;border-radius:2px;z-index:5;';
+        }
+        imgWrap.appendChild(badge);
+      }
+
+      // At zero stock disable both add buttons (hover quick-add + footer add).
+      if (n === 0) {
+        card.querySelectorAll("[onclick^=\"addToCart\"]").forEach(b => {
+          b.disabled = true;
+          b.style.opacity = '0.35';
+          b.style.cursor = 'not-allowed';
+          b.textContent = 'Sold out';
+          // Remove the onclick so the dead button can't fire addToCart.
+          b.setAttribute('onclick', '');
+        });
+        card.style.opacity = '0.55';
+      }
+    });
+  } catch (e) {
+    console.warn('[Shop] live stock badges failed:', e);
+  }
+})();
+</script>
 <script src="/cookie-banner.js" defer></script>
 </body>
 </html>

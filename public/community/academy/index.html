@@ -55,7 +55,7 @@
       position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.35;
       background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.79 0 0 0 0 0.72 0 0 0 0 0.58 0 0 0 0.06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
     }
-    .wrap { max-width:816px; margin:0 auto; padding:0 24px 80px; position:relative; z-index:1; }
+    .wrap { max-width:1180px; margin:0 auto; padding:0 32px 80px; position:relative; z-index:1; }
 
     /* Nav */
     .nav {
@@ -369,6 +369,31 @@
       transition:opacity 0.15s;
     }
     .lab-entry-del:hover { opacity:1; color:#e74c3c; }
+    /* Move-to-chapter dropdown — themed to match dark surface, no native
+       white box. Rounded pill, mono caps, subtle hover lift. */
+    .lab-entry-move, .ln-move-select {
+      appearance:none; -webkit-appearance:none; -moz-appearance:none;
+      font-family:var(--font-mono); font-size:8.5px;
+      letter-spacing:0.16em; text-transform:uppercase;
+      background-color:rgba(201,184,148,0.07);
+      border:0.5px solid var(--rule-strong);
+      color:var(--mycelium); border-radius:999px;
+      padding:5px 22px 5px 11px; cursor:pointer;
+      background-image:linear-gradient(45deg, transparent 50%, var(--mycelium-d) 50%), linear-gradient(135deg, var(--mycelium-d) 50%, transparent 50%);
+      background-position:calc(100% - 11px) 50%, calc(100% - 7px) 50%;
+      background-size:4px 4px, 4px 4px;
+      background-repeat:no-repeat;
+      transition:background-color 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .lab-entry-move:hover, .ln-move-select:hover {
+      background-color:rgba(201,184,148,0.14);
+      border-color:var(--mycelium-d);
+      color:var(--mycelium-l);
+    }
+    .lab-entry-move option, .ln-move-select option {
+      background:var(--soil-2); color:var(--mycelium-l);
+      font-family:var(--font-mono); font-size:11px;
+    }
   </style>
 </head>
 <style>
@@ -508,23 +533,121 @@
 
   <!-- Traditions & Philosophies filter — sits BETWEEN the universal
        sections (Five methods + Formula book, which always show) and the
-       tradition-specific herb sections below. Picking a tradition filters
-       the .trad-section blocks; the upper sections never hide. -->
+       tradition-specific herb sections below. Default is NOTHING shown
+       below — five bubbles act as Obsidian-style entry points; tap one
+       to reveal that tradition's library. The original dropdown stays
+       in place as an accessible fallback.
+
+       The bubble cluster is a CSS-only layout; no JS deps beyond the
+       existing tradFilter() init, which we extend to also listen to
+       clicks on .trad-bubble elements.
+
+       Why default to nothing shown: the page used to render every
+       tradition stacked top-to-bottom on first paint — overwhelming
+       and made the small-text problem worse. Bubbles invite a choice
+       instead of demanding one. -->
   <div class="sec-head" style="margin-top:80px;">
-    <div class="sec-eyebrow">Materia medica filter</div>
+    <div class="sec-eyebrow">Materia medica · entry points</div>
     <div class="sec-title">Traditions &amp; <em>Philosophies.</em></div>
-    <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:14.5px;color:#8B7E62;line-height:1.7;margin-top:8px;max-width:62ch;">Pick a lineage to focus the library. Five methods + Formula book stay visible &mdash; everything below filters to plants that trace back to the chosen tradition.</p>
-    <div style="margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-      <label for="tradFilter" style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:#8B7E62;">Tradition</label>
-      <select id="tradFilter" style="background:rgba(10,12,9,0.6);border:0.5px solid rgba(232,177,75,0.3);border-radius:6px;color:#E6D9B5;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:15px;padding:8px 14px;outline:none;cursor:pointer;">
-        <option value="all">◈ All traditions</option>
-        <option value="european">European Folk</option>
-        <option value="ayurveda">Ayurvedic</option>
-        <option value="tcm">TCM</option>
-        <option value="amazonian">Amazonian &amp; Andean</option>
-        <option value="mesopotamian">Mesopotamian</option>
-      </select>
+    <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:14.5px;color:#8B7E62;line-height:1.7;margin-top:8px;max-width:62ch;">Each bubble opens one lineage. Tap a bubble to reveal that tradition&rsquo;s plants &mdash; the others stay collapsed so you can read in focus. Tap again, or pick a different bubble, to switch.</p>
+  </div>
+
+  <style>
+    /* ── Tradition bubble cluster ── */
+    .trad-bubbles {
+      margin:36px 0 28px;
+      display:flex; flex-wrap:wrap; justify-content:center;
+      gap:22px 18px;
+    }
+    .trad-bubble {
+      width:148px; height:148px; border-radius:50%;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      cursor:pointer; user-select:none;
+      background:radial-gradient(circle at 30% 28%, rgba(255,255,255,0.06), rgba(0,0,0,0) 60%), var(--bubble-bg, #2A2118);
+      border:0.5px solid var(--bubble-border, rgba(232,177,75,0.28));
+      box-shadow:0 4px 22px rgba(0,0,0,0.4), inset 0 0 16px rgba(0,0,0,0.35);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      position:relative; flex-shrink:0;
+    }
+    .trad-bubble:hover {
+      transform: translateY(-3px) scale(1.04);
+      border-color: var(--bubble-active, rgba(232,177,75,0.6));
+      box-shadow:0 8px 26px rgba(0,0,0,0.55), inset 0 0 14px rgba(0,0,0,0.3);
+    }
+    .trad-bubble.on {
+      transform: scale(1.06);
+      border-color: var(--bubble-active, #E8B14B);
+      box-shadow:0 10px 28px rgba(0,0,0,0.5), 0 0 0 1px var(--bubble-active, #E8B14B), inset 0 0 18px rgba(232,177,75,0.18);
+    }
+    .trad-bubble .b-icon {
+      font-size:38px; line-height:1; margin-bottom:8px;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+    }
+    .trad-bubble .b-label {
+      font-family:'Cormorant Garamond', Georgia, serif;
+      font-style:italic; font-size:16.5px;
+      color: var(--bubble-label, #E7D9B2);
+      line-height:1.15; text-align:center; padding:0 12px;
+    }
+    .trad-bubble .b-sub {
+      font-family:'Geist Mono', monospace; font-size:7.5px;
+      letter-spacing:0.18em; text-transform:uppercase;
+      color: var(--bubble-sub, #8B7A5C); margin-top:6px;
+    }
+    /* Per-tradition colour variables — soft, distinct, dark-friendly */
+    .trad-bubble[data-go="ayurveda"]    { --bubble-bg:#2A1F18; --bubble-border:rgba(232,150,75,0.32);  --bubble-active:#E8964B; }
+    .trad-bubble[data-go="tcm"]         { --bubble-bg:#1E2418; --bubble-border:rgba(176,210,76,0.30);  --bubble-active:#B0D24C; }
+    .trad-bubble[data-go="amazonian"]   { --bubble-bg:#1E2418; --bubble-border:rgba(106,160,80,0.34);  --bubble-active:#7AC050; }
+    .trad-bubble[data-go="mesopotamian"]{ --bubble-bg:#251E18; --bubble-border:rgba(196,108,56,0.32);  --bubble-active:#D17742; }
+    .trad-bubble[data-go="european"]    { --bubble-bg:#1F221C; --bubble-border:rgba(151,180,124,0.28); --bubble-active:#9CC275; }
+    .trad-bubble[data-go="all"]         { --bubble-bg:#1F1E22; --bubble-border:rgba(170,160,200,0.28); --bubble-active:#B7AEFF; }
+    .trad-controls {
+      margin-top:6px; display:flex; align-items:center; justify-content:center;
+      gap:12px; flex-wrap:wrap;
+    }
+    .trad-controls label {
+      font-family:'Geist Mono',monospace; font-size:9px; letter-spacing:0.22em;
+      text-transform:uppercase; color:#5D5037;
+    }
+    @media (max-width: 600px) {
+      .trad-bubble { width:118px; height:118px; }
+      .trad-bubble .b-icon { font-size:30px; margin-bottom:5px; }
+      .trad-bubble .b-label { font-size:14.5px; padding:0 8px; }
+    }
+  </style>
+
+  <div class="trad-bubbles" id="tradBubbles">
+    <div class="trad-bubble" data-go="ayurveda" role="button" tabindex="0" aria-label="Open Ayurvedic tradition">
+      <div class="b-icon">🪷</div><div class="b-label">Ayurvedic</div><div class="b-sub">India</div>
     </div>
+    <div class="trad-bubble" data-go="tcm" role="button" tabindex="0" aria-label="Open TCM tradition">
+      <div class="b-icon">☯</div><div class="b-label">TCM</div><div class="b-sub">China</div>
+    </div>
+    <div class="trad-bubble" data-go="amazonian" role="button" tabindex="0" aria-label="Open Amazonian and Andean tradition">
+      <div class="b-icon">🌿</div><div class="b-label">Amazonian<br/>&amp; Andean</div><div class="b-sub">South America</div>
+    </div>
+    <div class="trad-bubble" data-go="mesopotamian" role="button" tabindex="0" aria-label="Open Mesopotamian tradition">
+      <div class="b-icon">𒀭</div><div class="b-label">Mesopotamian</div><div class="b-sub">Levant · Persia</div>
+    </div>
+    <div class="trad-bubble" data-go="european" role="button" tabindex="0" aria-label="Open European Folk tradition">
+      <div class="b-icon">🍄</div><div class="b-label">European<br/>Folk</div><div class="b-sub">Forest · field</div>
+    </div>
+    <div class="trad-bubble" data-go="all" role="button" tabindex="0" aria-label="Show all traditions">
+      <div class="b-icon">◈</div><div class="b-label">All traditions</div><div class="b-sub">Open everything</div>
+    </div>
+  </div>
+
+  <div class="trad-controls">
+    <label for="tradFilter">Or use the lineage selector</label>
+    <select id="tradFilter" style="background:rgba(10,12,9,0.6);border:0.5px solid rgba(232,177,75,0.3);border-radius:6px;color:#E6D9B5;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:15px;padding:8px 14px;outline:none;cursor:pointer;">
+      <option value="none">— Hidden (pick a bubble) —</option>
+      <option value="all">◈ All traditions</option>
+      <option value="european">European Folk</option>
+      <option value="ayurveda">Ayurvedic</option>
+      <option value="tcm">TCM</option>
+      <option value="amazonian">Amazonian &amp; Andean</option>
+      <option value="mesopotamian">Mesopotamian</option>
+    </select>
   </div>
 
   <!-- ══ STRICTLY AYURVEDIC HERBS ══════════════════════════════════════════ -->
@@ -761,7 +884,7 @@
       color:var(--mycelium-d,#8B7E62);font-style:normal;display:block;margin-top:2px;
     }
     .ayur-h-desc{
-      font-size:12.5px;line-height:1.6;color:var(--mycelium,#C9B894);margin-top:6px;
+      font-size:14px;line-height:1.7;color:var(--mycelium,#C9B894);margin-top:7px;
     }
     .crossover-table-wrap{
       margin-top:24px;overflow-x:auto;
@@ -1573,7 +1696,7 @@ function lnRenderNote(catId, n, isAdmin, member){
   const summary = lnSummary(n.body);
   const isMine = member && n.authorId && member.id === n.authorId;
   const moveBtn = isAdmin
-    ? `<select onchange="lnMoveNote('${catId}','${n.id}',this.value)" style="font-family:var(--font-mono);font-size:9px;background:var(--soil-3);border:0.5px solid var(--rule);color:var(--mycelium);border-radius:4px;padding:4px 6px;cursor:pointer;"><option>Move to…</option>${LAB_CATEGORIES.filter(c=>c.id!==catId).map(c=>`<option value="${c.id}">${lnEscape(c.name)}</option>`).join('')}</select>`
+    ? `<select class="ln-move-select" onchange="lnMoveNote('${catId}','${n.id}',this.value)"><option value="">Move to…</option>${LAB_CATEGORIES.filter(c=>c.id!==catId).map(c=>`<option value="${c.id}">${lnEscape(c.name)}</option>`).join('')}</select>`
     : '';
   const editDeleteBtn = (isAdmin || isMine)
     ? `<button type="button" onclick="lnEditNote('${catId}','${n.id}')" style="font-family:var(--font-mono);font-size:9px;color:var(--mycelium-d);background:none;border:0.5px solid var(--rule);border-radius:4px;padding:4px 8px;cursor:pointer;">edit</button>
@@ -1835,22 +1958,50 @@ function lnMoveNote(fromCat, id, toCat){
 })();
 
 // ── Traditions & Philosophies filter ────────────────────────────────────
-// Toggles visibility of .trad-section blocks based on the dropdown's value.
+// Three input surfaces drive a single apply():
+//   1. .trad-bubble clicks (Obsidian-style cluster — primary entry)
+//   2. #tradFilter <select> change (accessibility fallback)
+//   3. "none" (default) → every .trad-section hidden, page leads with
+//      the bubbles only, no scroll-fatigue on first visit.
 // data-tradition can be a single id ("ayurveda") or a comma-list
 // ("ayurveda,tcm"); the section is shown if the picked tradition is in the
 // list, or if the user picks "all".
 (function tradFilter(){
   function apply(value){
     document.querySelectorAll('.trad-section').forEach(function(sec){
+      if (value === 'none') { sec.style.display = 'none'; return; }
       var tags = (sec.getAttribute('data-tradition') || '').split(',').map(function(s){ return s.trim(); });
       sec.style.display = (value === 'all' || tags.indexOf(value) !== -1) ? '' : 'none';
     });
+    // Highlight the active bubble
+    document.querySelectorAll('.trad-bubble').forEach(function(b){
+      b.classList.toggle('on', b.getAttribute('data-go') === value);
+    });
+    // Keep the <select> in sync without re-firing change.
+    var sel = document.getElementById('tradFilter');
+    if (sel && sel.value !== value) sel.value = value;
+  }
+  function scrollToFirstSection(){
+    var first = document.querySelector('.trad-section:not([style*="display: none"])');
+    if (first) first.scrollIntoView({ behavior:'smooth', block:'start' });
   }
   function init(){
     var sel = document.getElementById('tradFilter');
-    if (!sel) return;
-    sel.addEventListener('change', function(){ apply(sel.value); });
-    apply(sel.value);
+    if (sel) sel.addEventListener('change', function(){ apply(sel.value); if (sel.value !== 'none') scrollToFirstSection(); });
+
+    document.querySelectorAll('.trad-bubble').forEach(function(b){
+      function go(){
+        var current = b.classList.contains('on');
+        apply(current ? 'none' : b.getAttribute('data-go'));
+        if (!current) setTimeout(scrollToFirstSection, 80);
+      }
+      b.addEventListener('click', go);
+      b.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+    });
+
+    // Default: nothing shown. The bubble cluster is the "what's behind"
+    // entry — Robin's Obsidian-graph-style ask.
+    apply('none');
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();

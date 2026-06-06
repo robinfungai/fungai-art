@@ -1634,25 +1634,34 @@ function ProfileEditor({ existing, onClose }) {
         // the data URL locally so the pic shows on this device AND auto-uploads
         // the next time they sign in (handled by syncPendingAvatar at boot).
         let avatarUrl = avatar;
-        if (avatar && avatar.startsWith('data:') && fileRef.current?.files?.[0]) {
-          if (user) {
+        // Edge case: user picked a file, state has the downscaled data URL,
+        // but fileRef.current.files is empty (some browsers clear FileList
+        // between mounts). In that case we still want the data URL written
+        // to the profile row so the avatar shows up — even without a
+        // proper storage upload. We mark it for re-upload via pending key.
+        const hasFileObj = !!fileRef.current?.files?.[0];
+        if (avatar && avatar.startsWith('data:')) {
+          if (user && hasFileObj) {
             try {
               avatarUrl = await window.SBprofiles.uploadAvatar(fileRef.current.files[0]);
             } catch (e) {
-              // Storage upload failed (RLS, quota, network) — keep the
-              // downscaled data URL on the profile row so the photo still
-              // appears for everyone. Stash locally for a retry-as-file the
-              // next time syncPendingAvatar runs.
+              // Storage upload failed (RLS, quota, network, bucket missing).
+              // Surface the failure to the user — silent fallback used to
+              // hide setup problems (e.g. missing 'avatars' bucket policy).
               console.warn('Avatar upload failed, falling back to data URL on row:', e);
+              const reason = /bucket|not found|404/i.test(e?.message || '') ? 'storage bucket missing — run supabase-avatars-bucket.sql' :
+                             /policy|row-level|403/i.test(e?.message || '') ? 'storage RLS denied — run supabase-avatars-bucket.sql' :
+                             (e?.message || 'unknown');
+              toast(`Photo stored on profile row only — ${reason}`, 'warn');
               try { localStorage.setItem('fungai_pending_avatar', avatar); } catch (_) {}
               avatarUrl = avatar;
             }
           } else {
-            // Not signed in → keep the (downscaled) data URL directly on the
-            // profile row so the photo shows for every other member, not just
-            // on this device. Also stash locally so syncPendingAvatar can
-            // promote it to a proper storage upload once the user claims the
-            // profile via magic link.
+            // Either not signed in, or fileRef lost the file. Keep the
+            // (downscaled) data URL directly on the profile row so the
+            // photo shows for every other member, not just on this device.
+            // Stash locally so syncPendingAvatar promotes it to storage
+            // on next sign-in (or next save with a fresh file picker).
             try { localStorage.setItem('fungai_pending_avatar', avatar); } catch (e) {}
             avatarUrl = avatar;
           }
@@ -3096,11 +3105,17 @@ function AdminPage({ onToast, currentMember }) {
           Only renders for admins (Robin / Stephanie). */}
       <LiveInventoryPanel currentMember={currentMember} onToast={onToast} />
 
+      {/* Product inventory — 0–20 stock count per /shop product.
+          /shop reads product_inventory and shows "Sold out" or the
+          remaining count badge. Same admin-only RLS as herbs. */}
+      <ProductInventoryPanel currentMember={currentMember} onToast={onToast} />
+
       {/* Member overview — "All hyphaes" with per-member expandable details
           (hours / recruits / events / email / contribution timer / remove
           for Robin only). */}
-      <div className="section" style={{ paddingBottom:0 }}>
-        <div className="section-eyebrow">All hyphaes &middot; {SporeData.MEMBERS.length} threads</div>
+      <div className="section" style={{ paddingBottom:0, display:'flex', alignItems:'center', justifyContent:'space-between', gap:12 }}>
+        <div className="section-eyebrow">All hyphaes &middot; {SporeData.MEMBERS.length} threads &middot; {SporeData.MEMBERS.filter(m => m.cloudEmail).length} emails loaded</div>
+        <EmailRefreshButton onToast={onToast} forceBump={forceBump} />
       </div>
       <div style={{ margin:'8px 16px 0', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, overflow:'hidden' }}>
         {SporeData.MEMBERS.map((m, i) => (
@@ -3283,6 +3298,218 @@ function LiveInventoryPanel({ currentMember, onToast }) {
         ))}
       </div>
     </>
+  );
+}
+
+/* ── Product inventory panel ──────────────────────────────────
+   Sister to LiveInventoryPanel (herb shelf) but for /shop products.
+   Each product has a 0–20 stock count; /shop reads these to display
+   "N in stock", "Sold out", or hide the card entirely at zero.
+   Admins (Robin / Stephanie) are the only writers — gated by the
+   same is_admin RLS as the herb inventory.
+─────────────────────────────────────────────────────────────── */
+const PRODUCT_INVENTORY_LIST = [
+  'ADHD Support', 'Afghan Saffron (', 'Amanita Muscaria',
+  'Blue Lotus (dried 100g)', 'Butterfly Pea (dried 100g)',
+  'Chaga Syrup', 'Chaga Tincture', 'Healthy Aging',
+  'Horny Goat Weed (dried 100g)', 'Kumbaya Herbal Smoke Blend',
+  'Lucid', 'Mineral Tonic', 'Moon Support', 'Pine Cones',
+  'Reishi Tincture', 'Ruby No.7', 'Sacred Lavendula (foraged 50g)',
+  'Shilajit + Gold', 'Temple Nectar', 'Wild Cordyceps',
+];
+
+function ProductInventoryPanel({ currentMember, onToast }) {
+  const [counts,   setCounts]   = useState({});       // { product_id: stock_count }
+  const [pending,  setPending]  = useState(new Set());
+  const [loading,  setLoading]  = useState(true);
+  const [error,    setError]    = useState('');
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        await window.SBready;
+        if (cancelled) return;
+        if (!window.SBclient) { setLoading(false); return; }
+        const { data, error: e } = await window.SBclient
+          .from('product_inventory')
+          .select('product_id, stock_count');
+        if (e) {
+          if (e.code === 'PGRST205' || e.code === '42P01' || /relation.*does not exist/i.test(e.message || '')) {
+            setError('Product inventory table not installed yet — run supabase-product-inventory.sql in Supabase SQL Editor.');
+          } else {
+            setError('Product inventory load failed: ' + e.message);
+          }
+        } else {
+          const m = {};
+          (data || []).forEach(r => { m[r.product_id] = r.stock_count; });
+          if (!cancelled) setCounts(m);
+        }
+      } catch (err) {
+        if (!cancelled) setError('Load failed: ' + (err.message || err));
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
+  async function setCount(product_id, next) {
+    const prev = counts[product_id] ?? 0;
+    // Optimistic UI
+    setCounts(c => ({ ...c, [product_id]: next }));
+    setPending(p => { const n = new Set(p); n.add(product_id); return n; });
+    try {
+      if (!window.SBclient) throw new Error('Supabase client not loaded');
+      let updated_by = null;
+      try {
+        const cached = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null');
+        updated_by = (cached && cached.cloudId) || null;
+      } catch {}
+      const { error: e } = await window.SBclient
+        .from('product_inventory')
+        .upsert({ product_id, stock_count: next, updated_by }, { onConflict: 'product_id' });
+      if (e) throw e;
+    } catch (err) {
+      // revert
+      setCounts(c => ({ ...c, [product_id]: prev }));
+      onToast && onToast('Save failed: ' + (err.message || err), 'bad');
+    } finally {
+      setPending(p => { const n = new Set(p); n.delete(product_id); return n; });
+    }
+  }
+
+  const totalStock = Object.values(counts).reduce((a, n) => a + (n || 0), 0);
+  const inStockCount = Object.values(counts).filter(n => n > 0).length;
+
+  return (
+    <>
+      <div className="section" style={{ paddingBottom:0 }}>
+        <div className="section-eyebrow">
+          Product inventory &middot; {loading ? '…' : `${inStockCount} of ${PRODUCT_INVENTORY_LIST.length} live · ${totalStock} units total`}
+        </div>
+        <h3 className="section-title" style={{ fontSize:22, marginTop:2 }}>The shop <em>shelf.</em></h3>
+        <p className="section-blurb" style={{ marginTop:6 }}>
+          Set how many of each product are in stock (0&ndash;20). /shop reads this live &mdash; products at 0 show "Sold out" and disable the basket button.
+        </p>
+      </div>
+      <div style={{ margin:'12px 16px 28px', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, overflow:'hidden' }}>
+        {error && (
+          <div style={{ padding:'10px 14px', background:'rgba(232,177,75,0.06)', borderBottom:'0.5px solid var(--rule)', fontFamily:'var(--font-mono)', fontSize:10, color:'var(--nutrient-l)', letterSpacing:'0.12em' }}>
+            ⚠ {error}
+          </div>
+        )}
+        {loading && (
+          <div style={{ padding:'20px 14px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.16em', color:'var(--mycelium-d)' }}>
+            Loading product inventory…
+          </div>
+        )}
+        {!loading && PRODUCT_INVENTORY_LIST.map((pid, i) => {
+          const n = counts[pid] ?? 0;
+          const isPending = pending.has(pid);
+          const soldOut = n === 0;
+          // Pretty display name — drop the trailing " (" left over from
+          // shop's "Afghan Saffron (1g · …" splitting.
+          const niceName = pid.endsWith(' (') ? pid.slice(0, -2) : pid;
+          return (
+            <div key={pid} style={{
+              display:'flex', alignItems:'center', gap:12,
+              padding:'11px 14px',
+              borderTop: i === 0 ? 'none' : '0.5px solid var(--rule)',
+              opacity: isPending ? 0.6 : 1,
+            }}>
+              <div style={{ flex:1, minWidth:0 }}>
+                <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:15, color: soldOut ? 'var(--mycelium-d)' : 'var(--mycelium-l)', lineHeight:1.2 }}>
+                  {niceName}
+                </div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', color: soldOut ? '#E16B6B' : 'var(--mycelium-d)', marginTop:3 }}>
+                  {soldOut ? '○ Sold out' : `● ${n} in stock`}
+                </div>
+              </div>
+              <select
+                value={n}
+                onChange={e => setCount(pid, Number(e.target.value))}
+                disabled={isPending}
+                style={{
+                  appearance:'none', WebkitAppearance:'none',
+                  fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.1em',
+                  padding:'7px 28px 7px 14px', borderRadius:999,
+                  background: soldOut ? 'rgba(225,107,107,0.10)' : 'rgba(107,214,111,0.10)',
+                  border: soldOut ? '0.5px solid rgba(225,107,107,0.45)' : '0.5px solid rgba(107,214,111,0.4)',
+                  color: soldOut ? '#E16B6B' : '#B6F0AE',
+                  cursor: isPending ? 'wait' : 'pointer',
+                  backgroundImage:'linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%)',
+                  backgroundPosition:'calc(100% - 13px) 50%, calc(100% - 9px) 50%',
+                  backgroundSize:'4px 4px, 4px 4px', backgroundRepeat:'no-repeat',
+                  minWidth:74,
+                }}>
+                {Array.from({length:21}, (_, k) => (
+                  <option key={k} value={k} style={{ background:'var(--soil-2)', color:'var(--mycelium-l)' }}>{k}</option>
+                ))}
+              </select>
+            </div>
+          );
+        })}
+      </div>
+    </>
+  );
+}
+
+/* ── Manual email refresh ──────────────────────────────────────
+   The `get_member_emails` RPC stamps cloudEmail onto MEMBERS on AdminPage
+   mount. This button re-runs it on demand AND surfaces error states the
+   silent mount-time call hides — most usefully, "function does not exist"
+   (PGRST202) which means /supabase-get-member-emails.sql was never run.
+─────────────────────────────────────────────────────────────── */
+function EmailRefreshButton({ onToast, forceBump }) {
+  const [busy, setBusy] = useState(false);
+  async function refresh() {
+    if (busy) return;
+    setBusy(true);
+    try {
+      if (!window.SBclient) {
+        onToast('Supabase client not loaded yet — try again in a moment', 'warn');
+        return;
+      }
+      const { data, error } = await window.SBclient.rpc('get_member_emails');
+      if (error) {
+        const code = error.code || '';
+        if (code === 'PGRST202') {
+          onToast('RPC missing — paste supabase-get-member-emails.sql into Supabase SQL Editor and run it once', 'warn');
+        } else if (code === '42501') {
+          onToast('Permission denied — your profile is not marked admin. Run UPDATE profiles SET is_admin=true …', 'warn');
+        } else {
+          onToast(`Email fetch failed: ${error.message || code || 'unknown'}`, 'warn');
+        }
+        return;
+      }
+      const idx = new Map();
+      (data || []).forEach(r => { if (r?.profile_id && r?.email) idx.set(r.profile_id, r.email); });
+      let stamped = 0;
+      (SporeData.MEMBERS || []).forEach(m => {
+        if (m.cloudId && idx.has(m.cloudId)) { m.cloudEmail = idx.get(m.cloudId); stamped++; }
+      });
+      if (forceBump) forceBump(b => b + 1);
+      onToast(`Loaded ${idx.size} emails · stamped ${stamped} members`, 'success');
+    } catch (e) {
+      onToast(`Email fetch crashed: ${e?.message || e}`, 'warn');
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <button
+      onClick={refresh}
+      disabled={busy}
+      style={{
+        fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.16em', textTransform:'uppercase',
+        padding:'6px 12px', borderRadius:999,
+        background: busy ? 'rgba(201,184,148,0.06)' : 'rgba(201,184,148,0.12)',
+        border:'0.5px solid var(--rule-strong)', color:'var(--mycelium-l)',
+        cursor: busy ? 'wait' : 'pointer', whiteSpace:'nowrap', flexShrink:0,
+      }}>
+      {busy ? '… loading' : '↻ Refresh emails'}
+    </button>
   );
 }
 
@@ -4284,7 +4511,12 @@ function App() {
             match.contact = mine.contact;
           }
           setCurrentMember(match);
-          setTab('members');
+          // Only land on Members for a FRESH sign-in (tab still on the
+          // unauthenticated default). Supabase fires onAuthChange on every
+          // token refresh too — without this guard, navigating to Admin
+          // (or any other tab) gets reset back to Members the moment the
+          // session JWT refreshes in the background.
+          setTab(prev => prev === 'network' ? 'members' : prev);
           // Cross-page gate uses these keys (see /spore-gate.js).
           try { localStorage.setItem('spore_active_member', match.id); } catch {}
           try { localStorage.setItem('spore_active_member_full', JSON.stringify({

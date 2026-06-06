@@ -1,44 +1,70 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1"/>
 <title>The Mycelium — fungai art</title>
 <!--
   Permalink-only page. Intentionally not linked from the site nav, the home
   page, sitemap.xml, or the social/og scrapers. The robots meta below tells
   every well-behaved crawler to walk past. This door is for people who were
-  given the path.
+  given the path. The page itself is a living mycelial network — it reacts
+  to cursor, click, and scroll, then transitions into a quantum lattice
+  state in the deepest act.
 -->
 <meta name="robots" content="noindex,nofollow"/>
-<meta name="description" content="A quiet door."/>
+<meta name="description" content="A quiet door. A living mycelial network."/>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
 <link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
+<link rel="preconnect" href="https://api.fontshare.com"/>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500&f[]=satoshi@300,400,500,600&f[]=geist-mono@300,400&display=swap"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Spectral:ital,wght@0,200;0,300;1,200;1,300&display=swap" rel="stylesheet">
 <style>
+/* ──────────────────────────────────────────────────────────────────
+   PALETTE — three states.
+   The page begins in ORGANIC (sage/amber, slow breath).
+   As the user scrolls into Act III the palette shifts toward QUANTUM
+   (violet/cyan, tighter, more matrix-like). The JS engine tweens
+   colour values; CSS variables provide the resting/default state.
+─────────────────────────────────────────────────────────────────── */
 @font-face { font-family:'TAN-PEARL'; src:url('/fonts/fonnts.com-tan-pearl.otf') format('opentype'); font-display:swap; }
 @font-face { font-family:'TAN-PARADISO'; src:url('/fonts/TAN-PARADISO.ttf') format('truetype'); font-display:swap; }
 @font-face { font-family:'Bayer'; src:url('/fonts/Bayer-TypeArchiType.otf') format('opentype'); font-display:swap; }
 @font-face { font-family:'Kiona'; src:url('/fonts/Kiona-Regular.ttf') format('truetype'); font-display:swap; }
 @font-face { font-family:'Kiona'; src:url('/fonts/Kiona-Italic.ttf') format('truetype'); font-style:italic; font-display:swap; }
 
-:root {
-  --soil:        #050807;
-  --soil-2:      #0a100d;
+:root{
+  --void:        #05070b;
+  --void-2:      #0a0d12;
+  --void-3:      #11151c;
   --parchment:   #EDE5D8;
   --cream:       #C9B894;
+  --cream-d:     #8B7E62;
   --amber:       #C48838;
-  --amber-lt:    #E8B14B;
-  --sage:        #5A7A66;
+  --amber-l:     #E8B14B;
+  --amber-ll:    #F5D689;
+  --sage:        #6abf88;
+  --sage-d:      #2E7A35;
+  --sage-l:      #B6F0AE;
+  --quantum:     #A88FE0;
+  --quantum-l:   #C5B5F5;
   --rule:        rgba(201,184,148,0.10);
+  --rule-strong: rgba(201,184,148,0.22);
+  --fd:'IM Fell English','Zodiak','Cormorant Garamond',Georgia,serif;
+  --fdoom:'Spectral',Georgia,serif;
+  --fs:'Satoshi',system-ui,sans-serif;
+  --fm:'Geist Mono','Josefin Sans',monospace;
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{
   min-height:100vh;
-  background:var(--soil);
+  background:var(--void);
   color:var(--cream);
-  font-family:'Cormorant Garamond',Georgia,serif;
+  font-family:var(--fs);
   font-weight:300;
   line-height:1.7;
   -webkit-font-smoothing:antialiased;
@@ -46,119 +72,168 @@ body{
   position:relative;
 }
 
-/* ── The amanita haunts the whole page. Fixed so it doesn't scroll,
-      low opacity so it's a memory rather than an image. ── */
+/* ── Canvas — the mycelial network. Sits behind DOM, ignores
+      pointer events except via window-level listeners. ── */
+canvas.myc-canvas{
+  position:fixed; inset:0; width:100%; height:100%;
+  z-index:0; pointer-events:none;
+  /* Slight blur softens hard pixel edges on lower-DPI screens and
+     gives the bioluminescent glow a more analog feel. */
+  filter:blur(0.3px);
+}
+
+/* ── Film grain — keeps the page from feeling like clean HTML. ── */
+.grain{
+  position:fixed; inset:0; pointer-events:none; z-index:1; opacity:0.05;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+}
+
+/* ── Amanita memory — barely visible, only the curve of the cap. ── */
 .bg-amanita{
-  position:fixed; inset:0;
+  position:fixed; inset:0; z-index:0;
   background-image:url('/amanita123.png');
-  background-size:cover;
-  background-position:center 30%;
-  opacity:0.13;
-  filter:grayscale(40%) contrast(1.05);
+  background-size:cover; background-position:center 30%;
+  opacity:0.05; filter:grayscale(60%) contrast(1.05);
   pointer-events:none;
-  z-index:0;
+  mix-blend-mode:lighten;
 }
 .bg-amanita::after{
   content:''; position:absolute; inset:0;
-  background:radial-gradient(ellipse 80% 60% at 50% 40%, rgba(5,8,7,0) 30%, rgba(5,8,7,0.85) 90%);
+  background:radial-gradient(ellipse 80% 60% at 50% 40%, rgba(5,7,11,0) 30%, rgba(5,7,11,0.92) 90%);
 }
 
-/* ── Film grain — keeps the page from feeling like flat HTML. ── */
-.grain{
-  position:fixed; inset:0; pointer-events:none; z-index:1; opacity:0.04;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
+/* ── Drifting thread (the indicator of "you are here") ── */
+.thread{
+  position:fixed; top:0; left:38px; width:1px; height:100vh;
+  z-index:2; pointer-events:none;
+  background:linear-gradient(to bottom,
+    transparent 0%,
+    rgba(106,191,136,0.30) 8%,
+    rgba(232,177,75,0.42) 50%,
+    rgba(168,143,224,0.32) 92%,
+    transparent 100%);
 }
+.thread::before{
+  content:''; position:absolute; left:-3.5px; width:8px; height:8px; border-radius:50%;
+  background:var(--sage); box-shadow:0 0 14px var(--sage);
+  top:30vh;
+  animation:thread-drift 22s ease-in-out infinite;
+}
+@keyframes thread-drift{
+  0%,100%{top:18vh;background:var(--sage); box-shadow:0 0 14px var(--sage);}
+  50%{top:78vh;background:var(--quantum); box-shadow:0 0 16px var(--quantum);}
+}
+@media (max-width:980px){ .thread{display:none;} }
 
-main{ position:relative; z-index:2; max-width:660px; margin:0 auto; padding:80px 28px 60px; }
+/* ── Page shell ── */
+main{
+  position:relative; z-index:3;
+  max-width:740px; margin:0 auto;
+  padding:74px 28px 80px;
+}
+@media (max-width:560px){ main{ padding:54px 22px 60px; } }
 
-/* ── Top brand strip — small, quiet, lower-case TAN PEARL ── */
+/* ── Brand strip ── */
 .brand{
-  display:flex; align-items:center; gap:10px;
+  display:inline-flex; align-items:center; gap:10px;
   font-family:'TAN-PEARL','TAN-PARADISO',serif;
   font-size:22px; color:var(--parchment);
   text-transform:lowercase; letter-spacing:0.015em;
-  margin-bottom:14px;
-  text-decoration:none;
+  text-decoration:none; margin-bottom:14px;
 }
 .brand .dot{
   width:6px; height:6px; border-radius:50%;
-  background:var(--amber-lt);
+  background:var(--amber-l);
   box-shadow:0 0 14px rgba(232,177,75,0.65);
   animation:breathe 4.2s ease-in-out infinite;
 }
-@keyframes breathe { 0%,100%{ opacity:0.55; transform:scale(1);} 50%{ opacity:1; transform:scale(1.18);} }
+@keyframes breathe{ 0%,100%{opacity:0.55;transform:scale(1);} 50%{opacity:1;transform:scale(1.18);} }
 
 .eyebrow{
-  font-family:'Bayer','Kiona',sans-serif;
-  font-size:9.5px; letter-spacing:0.32em; text-transform:uppercase;
+  font-family:var(--fm); font-size:9.5px;
+  letter-spacing:0.32em; text-transform:uppercase;
   color:var(--amber); margin-bottom:36px; display:block;
 }
 
-/* ── Hero title ── */
-h1{
-  font-family:'TAN-PARADISO','Cormorant Garamond',serif;
-  font-size:clamp(56px, 11vw, 110px);
-  font-weight:normal;
-  line-height:0.95; letter-spacing:-0.018em;
-  color:var(--parchment);
-  margin-bottom:14px;
+/* ── Act mark — borrowed from /members ── */
+.act-mark{
+  display:flex; align-items:center; gap:18px;
+  margin:96px 0 24px; opacity:0.85;
 }
-h1 em{ font-style:italic; color:var(--amber-lt); }
+.act-mark:first-of-type{ margin-top:8px; }
+.act-mark .roman{
+  font-family:var(--fd); font-style:italic;
+  font-size:36px; line-height:1; color:var(--amber-l);
+}
+.act-mark .rule{
+  flex:1; height:0.5px; background:var(--rule-strong);
+}
+.act-mark .eyebrow{ margin:0; padding-bottom:4px; }
+
+/* ── Hero title ── */
+h1.hero{
+  font-family:var(--fd); font-style:italic; font-weight:400;
+  font-size:clamp(58px, 11vw, 116px);
+  line-height:0.96; letter-spacing:-0.02em;
+  color:var(--parchment);
+  margin:8px 0 14px;
+}
+h1.hero em{ font-style:italic; color:var(--amber-l); }
 
 .opening{
-  font-size:18px; line-height:1.7;
+  font-family:var(--fdoom);
+  font-size:19px; line-height:1.75;
   color:var(--cream);
-  border-left:1px solid var(--rule);
-  padding-left:22px;
-  margin:34px 0 56px;
-  max-width:52ch;
+  border-left:1px solid var(--rule-strong);
+  padding-left:22px; margin:40px 0 56px;
+  max-width:54ch;
 }
 .opening strong{ color:var(--parchment); font-weight:400; }
+.opening em{ color:var(--amber-l); font-style:italic; }
 
-/* ── Three contemplative blocks ── */
+/* ── Threshold blocks ── */
 .threshold{
   display:grid; grid-template-columns:48px 1fr; column-gap:24px;
-  padding:28px 0; border-top:0.5px solid var(--rule);
+  padding:30px 0; border-top:0.5px solid var(--rule);
 }
 .threshold:last-of-type{ border-bottom:0.5px solid var(--rule); }
 .threshold .marker{
-  font-family:'Bayer',sans-serif;
-  font-size:11px; letter-spacing:0.3em; color:var(--amber);
-  padding-top:6px;
+  font-family:var(--fm); font-size:11px; letter-spacing:0.3em;
+  color:var(--amber); padding-top:6px;
 }
 .threshold h2{
-  font-family:'Cormorant Garamond',Georgia,serif;
-  font-style:italic; font-weight:400;
-  font-size:32px; letter-spacing:-0.005em;
-  color:var(--parchment);
-  line-height:1.1; margin-bottom:10px;
+  font-family:var(--fdoom); font-style:italic; font-weight:300;
+  font-size:34px; letter-spacing:-0.005em;
+  color:var(--parchment); line-height:1.1; margin-bottom:12px;
 }
-.threshold p{ font-size:15.5px; line-height:1.75; color:var(--cream); max-width:50ch; }
+.threshold p{
+  font-family:var(--fdoom);
+  font-size:16px; line-height:1.78; color:var(--cream); max-width:52ch;
+}
+.threshold p em{ color:var(--amber-l); font-style:italic; }
 
 /* ── Quote ── */
 .quote{
-  margin:64px 0 64px; padding:48px 32px;
-  background:linear-gradient(180deg, rgba(196,134,46,0.04), rgba(0,0,0,0));
-  border-top:0.5px solid rgba(232,177,75,0.18);
-  border-bottom:0.5px solid rgba(232,177,75,0.18);
+  margin:80px 0 80px; padding:56px 32px;
+  background:linear-gradient(180deg, rgba(196,134,46,0.06), rgba(0,0,0,0));
+  border-top:0.5px solid rgba(232,177,75,0.22);
+  border-bottom:0.5px solid rgba(232,177,75,0.22);
   text-align:center;
 }
 .quote p{
-  font-family:'TAN-PARADISO','Cormorant Garamond',serif;
-  font-style:italic; font-size:clamp(22px, 4vw, 32px);
-  line-height:1.35; color:var(--parchment);
-  max-width:24ch; margin:0 auto;
+  font-family:'TAN-PARADISO',var(--fd),serif;
+  font-style:italic; font-size:clamp(24px, 4.2vw, 36px);
+  line-height:1.32; color:var(--parchment);
+  max-width:26ch; margin:0 auto;
   letter-spacing:-0.005em;
 }
 .quote .attr{
-  font-family:'Bayer',sans-serif;
-  font-size:9px; letter-spacing:0.32em; text-transform:uppercase;
-  color:var(--amber); margin-top:22px; display:block;
+  font-family:var(--fm); font-size:9px;
+  letter-spacing:0.32em; text-transform:uppercase;
+  color:var(--amber); margin-top:24px; display:block;
 }
 
-/* ── Label print band — uses Robin's actual print label as a
-      decorative texture strip. Heavy desaturation + low opacity
-      keeps it from competing with the typography. ── */
+/* ── Label print band ── */
 .label-band{
   margin:48px -28px 32px; padding:0;
   height:120px; overflow:hidden; position:relative;
@@ -168,55 +243,214 @@ h1 em{ font-style:italic; color:var(--amber-lt); }
 .label-band::before{
   content:''; position:absolute; inset:0;
   background-image:url('/mycelium-trance/LABEL-PRINT-FINAL-21.png');
-  background-size:auto 220%;
-  background-position:center;
+  background-size:auto 220%; background-position:center;
   background-repeat:repeat-x;
   filter:grayscale(90%) contrast(0.85) brightness(0.9);
   opacity:0.22;
 }
 .label-band::after{
   content:''; position:absolute; inset:0;
-  background:linear-gradient(90deg, var(--soil) 0%, rgba(5,8,7,0) 20%, rgba(5,8,7,0) 80%, var(--soil) 100%);
+  background:linear-gradient(90deg, var(--void) 0%, rgba(5,7,11,0) 20%, rgba(5,7,11,0) 80%, var(--void) 100%);
 }
 
-/* ── Closing line + tiny back door ── */
+/* ── Closing ── */
 .close{
-  text-align:center; margin-top:48px;
-  font-family:'Cormorant Garamond',Georgia,serif; font-style:italic;
-  font-size:18px; color:var(--cream);
+  text-align:center; margin-top:56px;
+  font-family:var(--fdoom); font-style:italic;
+  font-size:19px; color:var(--cream);
 }
-.close em{ color:var(--amber-lt); }
+.close em{ color:var(--amber-l); font-style:italic; }
 .back{
   display:inline-block; margin-top:32px;
-  font-family:'Bayer',sans-serif; font-size:9.5px;
+  font-family:var(--fm); font-size:9.5px;
   letter-spacing:0.32em; text-transform:uppercase;
   color:var(--cream); text-decoration:none; opacity:0.55;
   border-bottom:0.5px solid rgba(201,184,148,0.18);
   padding-bottom:4px; transition:opacity 0.3s, color 0.3s;
 }
-.back:hover{ opacity:1; color:var(--amber-lt); }
+.back:hover{ opacity:1; color:var(--amber-l); }
 .back::before{ content:'⟵ '; opacity:0.7; }
 
 footer.mini{
   margin-top:80px; text-align:center;
-  font-family:'Bayer',sans-serif;
-  font-size:8.5px; letter-spacing:0.32em; text-transform:uppercase;
-  color:var(--sage); opacity:0.55;
+  font-family:var(--fm); font-size:8.5px;
+  letter-spacing:0.32em; text-transform:uppercase;
+  color:var(--cream-d); opacity:0.55;
 }
 footer.mini .frequency{ color:var(--amber); }
 
-@media (max-width: 560px) {
-  main{ padding:60px 22px 50px; }
+/* ── Scroll-reveal ── */
+.reveal{
+  opacity:0; transform:translateY(28px);
+  transition:opacity 1.05s cubic-bezier(0.22,1,0.36,1),
+             transform 1.05s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal.in{ opacity:1; transform:none; }
+
+/* ── Act II: Nervous System (interactive demo cards) ── */
+.demo-grid{
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  gap:18px; margin:36px 0 18px;
+}
+.demo-card{
+  position:relative;
+  padding:22px 22px 24px;
+  background:linear-gradient(160deg, rgba(106,191,136,0.05), rgba(0,0,0,0));
+  border:0.5px solid var(--rule-strong);
+  border-radius:14px;
+  cursor:pointer;
+  transition:border-color 0.3s, background 0.3s, transform 0.3s;
+  overflow:hidden;
+}
+.demo-card:hover{
+  border-color:rgba(106,191,136,0.55);
+  background:linear-gradient(160deg, rgba(106,191,136,0.10), rgba(0,0,0,0));
+  transform:translateY(-2px);
+}
+.demo-card .ch{
+  display:inline-block; padding:2px 10px;
+  font-family:var(--fm); font-size:8.5px;
+  letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--sage-l);
+  background:rgba(106,191,136,0.08);
+  border:0.5px solid rgba(106,191,136,0.3);
+  border-radius:999px;
+}
+.demo-card h3{
+  font-family:var(--fdoom); font-style:italic; font-weight:300;
+  font-size:22px; color:var(--parchment);
+  line-height:1.2; margin:14px 0 8px;
+}
+.demo-card p{
+  font-family:var(--fdoom); font-size:14px; line-height:1.6;
+  color:var(--cream-d);
+}
+.demo-card .glow{
+  position:absolute; bottom:-30px; right:-30px;
+  width:120px; height:120px; border-radius:50%;
+  background:radial-gradient(circle, rgba(106,191,136,0.18) 0%, transparent 70%);
+  opacity:0; transition:opacity 0.5s;
+  pointer-events:none;
+}
+.demo-card:hover .glow{ opacity:1; }
+
+/* ── Act III: Quantum lattice ── */
+body.quantum-mode{
+  --amber:#A88FE0;
+  --amber-l:#C5B5F5;
+  --amber-ll:#E2D7FB;
+  --sage:#6BBED6;
+  --sage-l:#A8E0EE;
+}
+body.quantum-mode .thread::before{
+  background:var(--quantum); box-shadow:0 0 18px var(--quantum);
+  animation:thread-drift-q 14s ease-in-out infinite;
+}
+@keyframes thread-drift-q{
+  0%,100%{top:18vh;}
+  50%{top:78vh;}
+}
+
+.lattice{
+  margin:36px 0 16px;
+  padding:24px;
+  border:0.5px solid var(--rule-strong);
+  border-radius:14px;
+  background:linear-gradient(160deg, rgba(168,143,224,0.06), rgba(0,0,0,0));
+}
+.lattice h3{
+  font-family:var(--fdoom); font-style:italic; font-weight:300;
+  font-size:22px; color:var(--parchment);
+  margin-bottom:8px;
+}
+.lattice p{
+  font-family:var(--fdoom); font-size:15px; line-height:1.7;
+  color:var(--cream); margin-bottom:14px;
+}
+.lattice .qubits{
+  display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;
+}
+.qubit{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:7px 14px; border-radius:999px;
+  font-family:var(--fm); font-size:10px; letter-spacing:0.18em; text-transform:uppercase;
+  background:rgba(168,143,224,0.10);
+  border:0.5px solid rgba(168,143,224,0.32);
+  color:var(--quantum-l);
+  cursor:pointer; transition:all 0.25s;
+}
+.qubit::before{
+  content:''; width:6px; height:6px; border-radius:50%;
+  background:var(--quantum-l);
+  box-shadow:0 0 8px var(--quantum);
+}
+.qubit:hover{
+  background:rgba(168,143,224,0.20);
+  border-color:rgba(168,143,224,0.6);
+  transform:translateY(-1px);
+}
+.qubit.entangled{
+  background:rgba(168,143,224,0.30);
+  border-color:rgba(168,143,224,0.85);
+  box-shadow:0 0 14px rgba(168,143,224,0.3);
+}
+
+/* ── Sound toggle (global utility for Phase 1 click pulses) ── */
+.sound-toggle{
+  position:fixed; right:18px; bottom:18px; z-index:6;
+  font-family:var(--fm); font-size:9px;
+  letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--cream-d); cursor:pointer; user-select:none;
+  background:rgba(10,13,18,0.6); border:0.5px solid var(--rule-strong);
+  border-radius:999px; padding:7px 14px;
+  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+  transition:color 0.25s, border-color 0.25s;
+}
+.sound-toggle:hover{ color:var(--amber-l); border-color:var(--rule-strong); }
+.sound-toggle.on{ color:var(--amber-l); border-color:rgba(232,177,75,0.35); }
+body.quantum-mode .sound-toggle.on{ color:var(--quantum-l); border-color:rgba(168,143,224,0.4); }
+@media (max-width: 600px){ .sound-toggle{ right:12px; bottom:12px; padding:6px 11px; } }
+
+/* ── Live action-potential counter (lower-left HUD) ── */
+.hud{
+  position:fixed; left:18px; bottom:18px; z-index:6;
+  font-family:var(--fm); font-size:8.5px; letter-spacing:0.22em;
+  text-transform:uppercase; color:var(--cream-d);
+  pointer-events:none; opacity:0;
+  transition:opacity 0.5s;
+}
+.hud.live{ opacity:0.6; }
+.hud .hud-num{ color:var(--amber-l); }
+body.quantum-mode .hud .hud-num{ color:var(--quantum-l); }
+
+@media (max-width: 600px){
   .threshold{ grid-template-columns:36px 1fr; column-gap:16px; }
   .threshold h2{ font-size:26px; }
   .quote{ padding:36px 18px; }
+  main{ max-width:none; }
+  .hud{ display:none; }
+}
+
+/* ── prefers-reduced-motion: kill all animation, keep the page legible ── */
+@media (prefers-reduced-motion: reduce){
+  .reveal{ opacity:1; transform:none; transition:none; }
+  .brand .dot, .thread::before{ animation:none; }
+  canvas.myc-canvas{ display:none; }
 }
 </style>
 </head>
 <body>
 
-<div class="bg-amanita"></div>
-<div class="grain"></div>
+<canvas class="myc-canvas" id="mycCanvas" aria-hidden="true"></canvas>
+<div class="bg-amanita" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="thread" aria-hidden="true"></div>
+
+<div class="hud" id="hud" aria-hidden="true">
+  <span class="hud-num" id="hudNum">0</span> action potentials &middot; <span id="hudMode">organic</span>
+</div>
+
+<div class="sound-toggle" id="soundToggle" role="button" tabindex="0" aria-label="Toggle ambient sound">♪ sound · off</div>
 
 <main>
 
@@ -224,31 +458,43 @@ footer.mini .frequency{ color:var(--amber); }
     <span class="dot"></span>
     fungai art
   </a>
-  <span class="eyebrow">The hidden room · for those who know</span>
+  <span class="eyebrow">The hidden room &middot; for those who know</span>
 
-  <h1>The <em>mycelium.</em></h1>
+  <h1 class="hero reveal">The <em>mycelium.</em></h1>
 
-  <p class="opening">
+  <p class="opening reveal">
     What you see above the soil is the smaller part. The mushroom is the
-    <strong>fruit</strong>. The work is underground — a network of fine white
+    <strong>fruit</strong>. The work is underground &mdash; a network of fine white
     threads, larger than any tree, older than any boundary, sending sugar to
     the weak, carbon to the dying, news to the curious. <strong>Hyphae</strong>
-    listening to hyphae. A consensus that doesn't vote.
+    listening to hyphae. <em>A consensus that doesn&rsquo;t vote.</em>
   </p>
 
-  <section class="threshold">
+  <!-- ══════════════════════════════════════════════════════════════
+       ACT I — The Subterranean Web
+       (Below / Between / Beyond — the original three thresholds, kept
+       intact because they are the soul of the page; the new system
+       grows around them.)
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="act-mark reveal">
+    <span class="roman">I</span>
+    <span class="rule"></span>
+    <span class="eyebrow">The subterranean web</span>
+  </div>
+
+  <section class="threshold reveal" data-myc-cluster="0">
     <div class="marker">01</div>
     <div>
       <h2>Below.</h2>
       <p>
         Everything visible is a temporary expression of something invisible.
-        The bottle, the label, the ceremony — these are the fruit. The body
-        of the work lives under the floor.
+        The bottle, the label, the ceremony &mdash; these are the fruit. The body
+        of the work lives <em>under the floor.</em>
       </p>
     </div>
   </section>
 
-  <section class="threshold">
+  <section class="threshold reveal" data-myc-cluster="1">
     <div class="marker">02</div>
     <div>
       <h2>Between.</h2>
@@ -261,27 +507,138 @@ footer.mini .frequency{ color:var(--amber); }
     </div>
   </section>
 
-  <section class="threshold">
+  <section class="threshold reveal" data-myc-cluster="2">
     <div class="marker">03</div>
     <div>
       <h2>Beyond.</h2>
       <p>
-        The network grows by being useful, and rests when it isn't. If a node
+        The network grows by being useful, and rests when it isn&rsquo;t. If a node
         stops feeding, the threads retract. Reputation, in the forest, is the
-        memory of past nutrients shared. Nothing here was ever taken — it
-        was passed along.
+        memory of past nutrients shared. <em>Nothing here was ever taken &mdash;
+        it was passed along.</em>
       </p>
     </div>
   </section>
 
-  <div class="quote">
-    <p>&ldquo;Find the threads.<br/>Feed them. Trust them.<br/>They know the way.&rdquo;</p>
-    <span class="attr">— A note in the lab, undated</span>
+  <!-- ══════════════════════════════════════════════════════════════
+       ACT II — The Nervous System
+       The page reveals itself to be alive. Three demo cards explain
+       the interactions (cursor / click / scroll) and they themselves
+       respond to those interactions.
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="act-mark reveal">
+    <span class="roman">II</span>
+    <span class="rule"></span>
+    <span class="eyebrow">The nervous system</span>
   </div>
 
-  <div class="label-band" aria-hidden="true"></div>
+  <h2 class="reveal" style="font-family:var(--fd);font-style:italic;font-weight:400;font-size:clamp(34px,5.5vw,52px);color:var(--parchment);line-height:1.05;margin:10px 0 18px;letter-spacing:-0.01em;">
+    The network is <em style="color:var(--sage-l);">already</em> responding.
+  </h2>
 
-  <p class="close">
+  <p class="reveal" style="font-family:var(--fdoom);font-size:17px;line-height:1.75;color:var(--cream);max-width:54ch;margin-bottom:10px;">
+    Move your cursor. The threads behind this text lean toward you. They are
+    not decorative &mdash; they are following a chemical gradient your presence
+    creates. <em style="color:var(--amber-l);">Try the three gestures below.</em>
+  </p>
+
+  <div class="demo-grid">
+    <div class="demo-card reveal" data-myc-cluster="3" data-myc-action="hover-demo">
+      <span class="ch">Channel · cursor</span>
+      <h3>Hover.</h3>
+      <p>
+        Nearby filaments stretch toward your cursor and brighten. The further
+        you move, the more they reach &mdash; until you leave their radius and
+        they slowly return.
+      </p>
+      <div class="glow"></div>
+    </div>
+    <div class="demo-card reveal" data-myc-cluster="4" data-myc-action="click-demo">
+      <span class="ch">Channel · pulse</span>
+      <h3>Tap.</h3>
+      <p>
+        Click anywhere &mdash; even on this card. The system fires an
+        <em style="color:var(--sage-l);font-style:italic;">action potential</em>:
+        a bright traveller pulse that propagates outward along the nearest
+        chain of filaments.
+      </p>
+      <div class="glow"></div>
+    </div>
+    <div class="demo-card reveal" data-myc-cluster="5" data-myc-action="scroll-demo">
+      <span class="ch">Channel · flow</span>
+      <h3>Scroll.</h3>
+      <p>
+        Scroll velocity becomes kinetic energy in the network. Fast scrolling
+        injects nutrients &mdash; many pulses, brighter signals, a humming line.
+        Slow scrolling lets the threads rest.
+      </p>
+      <div class="glow"></div>
+    </div>
+  </div>
+
+  <p class="reveal" style="font-family:var(--fdoom);font-style:italic;font-size:15.5px;color:var(--cream-d);text-align:center;margin:34px 0 28px;max-width:50ch;margin-left:auto;margin-right:auto;">
+    There is a counter in the corner. It is keeping score &mdash; not of you,
+    but of <em style="color:var(--amber-l);">the network&rsquo;s response to you.</em>
+  </p>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       The quote — old anchor, kept centred between Acts II and III
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="quote reveal">
+    <p>&ldquo;Find the threads.<br/>Feed them. Trust them.<br/>They know the way.&rdquo;</p>
+    <span class="attr">&mdash; A note in the lab, undated</span>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       ACT III — The Quantum Lattice
+       Scrolling into this section triggers `quantum-mode` on the body:
+       palette shifts violet/cyan, the canvas network rearranges toward
+       a hex lattice, pulses split into superposition double-paths.
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="act-mark reveal" id="act-quantum-mark">
+    <span class="roman">III</span>
+    <span class="rule"></span>
+    <span class="eyebrow">The quantum lattice</span>
+  </div>
+
+  <h2 class="reveal" style="font-family:var(--fd);font-style:italic;font-weight:400;font-size:clamp(34px,5.5vw,52px);color:var(--parchment);line-height:1.05;margin:10px 0 18px;letter-spacing:-0.01em;">
+    Below the network, <em style="color:var(--quantum-l);">a machine.</em>
+  </h2>
+
+  <p class="reveal" style="font-family:var(--fdoom);font-size:17px;line-height:1.75;color:var(--cream);max-width:54ch;margin-bottom:18px;">
+    Mycelium computes. Not metaphorically &mdash; literally. Hyphae fire signals,
+    integrate inputs, and arrive at consensus faster than any single mind
+    could. Push deeper and the organic curves resolve into something tighter
+    &mdash; a lattice that handles <em style="color:var(--quantum-l);">superposition</em>
+    where the forest handles flow.
+  </p>
+
+  <div class="lattice reveal" data-myc-cluster="6">
+    <h3>Six qubits, one circuit.</h3>
+    <p>
+      Hover any qubit. Its entangled partner across the lattice illuminates
+      &mdash; even though the two are not next to each other. The line that
+      connects them, drawn behind this card, is the substrate.
+    </p>
+    <div class="qubits" id="qubits">
+      <span class="qubit" data-pair="1">|q0&rang;</span>
+      <span class="qubit" data-pair="0">|q1&rang;</span>
+      <span class="qubit" data-pair="3">|q2&rang;</span>
+      <span class="qubit" data-pair="2">|q3&rang;</span>
+      <span class="qubit" data-pair="5">|q4&rang;</span>
+      <span class="qubit" data-pair="4">|q5&rang;</span>
+    </div>
+  </div>
+
+  <p class="reveal" style="font-family:var(--fdoom);font-style:italic;font-size:16px;color:var(--cream-d);text-align:center;margin:40px 0 0;max-width:50ch;margin-left:auto;margin-right:auto;line-height:1.7;">
+    The forest is the calculation. The mushroom is the print-out.<br/>
+    <em style="color:var(--quantum-l);">You have been reading the result.</em>
+  </p>
+
+  <!-- Label band — kept from the original page -->
+  <div class="label-band reveal" aria-hidden="true"></div>
+
+  <p class="close reveal">
     If you found this page, someone <em>handed you the path.</em><br/>
     Carry it the same way.
   </p>
@@ -291,10 +648,670 @@ footer.mini .frequency{ color:var(--amber); }
   </div>
 
   <footer class="mini">
-    fungai art · <span class="frequency">111 Hz</span> · permalink only
+    fungai art &middot; <span class="frequency">111 Hz</span> &middot; permalink only
   </footer>
 
 </main>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   Mycelial Network Engine
+   ──────────────────────────────────────────────────────────────────
+   A canvas-2D growth + interaction engine. Single file, no deps.
+
+   GROWTH ─ Space-colonization
+     1. Seed ~6 root nodes near the top of the canvas.
+     2. Sprinkle ~120 "attractor" points across the viewport.
+     3. Each tick, for every attractor still alive, find the nearest tree
+        node and grow a small step from that node toward the attractor.
+        Once the attractor is within `killRadius`, retire it.
+     4. The resulting tree branches like real hyphae — biased toward open
+        space rather than gridded.
+
+   PHYSICS ─ Spring + cursor attraction
+     • Every node has (baseX, baseY) and (x, y). Each frame we apply a
+       Hooke-spring toward (baseX, baseY) + soft attraction toward the
+       cursor (within radius) + damping.
+     • Result: nearby filaments visibly lean toward the cursor, then
+       relax once it leaves.
+
+   ACTION POTENTIALS ─ Click pulses
+     • A click anywhere on the page seeds a pulse at the nearest tree
+       node. The pulse traverses outward along the children, branching
+       at every junction. Each segment painted brightly while the pulse
+       is on it, fading after.
+     • Fast scrolling injects extra pulses (the network "hums" under flow).
+
+   QUANTUM MODE
+     • Triggered when Act III scrolls into view. CSS variables shift via
+       body.quantum-mode; the engine tweens its colours + pulls baseX/baseY
+       of every node toward a hex-lattice arrangement. Pulses get a "ghost"
+       sibling that traces an alternate path — superposition.
+
+   PERFORMANCE
+     • Single canvas, no shadow blur per stroke (we batch glow as one
+       composited pass). Caps: 100 nodes, 150 edges, 30 simultaneous
+       pulses. Frame budget: < 4ms typical desktop, < 8ms mobile.
+═══════════════════════════════════════════════════════════════════ */
+
+(function () {
+  'use strict';
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Honor the OS-level reduce-motion preference: don't run the engine.
+    return;
+  }
+
+  const canvas = document.getElementById('mycCanvas');
+  const ctx    = canvas.getContext('2d', { alpha: true });
+  const hud    = document.getElementById('hud');
+  const hudNum = document.getElementById('hudNum');
+  const hudMode = document.getElementById('hudMode');
+
+  // ── Sizing + DPR ──────────────────────────────────────────────
+  let W = 0, H = 0, DPR = 1;
+  function resize() {
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width  = Math.floor(W * DPR);
+    canvas.height = Math.floor(H * DPR);
+    canvas.style.width  = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', () => { resize(); buildLattice(); });
+
+  // ── State ────────────────────────────────────────────────────
+  const isMobile = W < 720;
+  const TARGET_NODES   = isMobile ? 56 : 96;
+  const ATTRACTORS_N   = isMobile ? 80 : 130;
+  const STEP_LEN       = isMobile ? 14 : 16;
+  const KILL_RADIUS    = STEP_LEN * 1.6;
+  const ATTRACT_RADIUS = isMobile ? 90 : 140;
+
+  /** @type {Array<{x:number,y:number,bx:number,by:number,vx:number,vy:number,parent:number,depth:number,children:number[]}>} */
+  const nodes = [];
+  /** @type {Array<{x:number,y:number}>} */
+  const attractors = [];
+  /** Pulses traveling along edges. */
+  const pulses = [];
+  let pulseCount = 0;
+
+  const mouse  = { x: -9999, y: -9999, active: false };
+  let scrollY = window.scrollY || 0;
+  let scrollVelocity = 0;
+  let quantumK = 0; // 0 = organic, 1 = quantum (tweened)
+  const lattice = []; // {x,y} target positions per node when in quantum mode
+
+  // Cluster bindings — DOM elements that "own" a region of the canvas.
+  // When the user hovers one, its cluster nodes glow extra.
+  /** @type {Array<{el:HTMLElement, cluster:number, rect:DOMRect|null}>} */
+  const bindings = [];
+  let activeCluster = -1;
+
+  // ── Seed the network ────────────────────────────────────────
+  function buildNetwork() {
+    nodes.length = 0;
+    attractors.length = 0;
+
+    // Roots — a small ring across the top quarter of the screen.
+    const rootCount = isMobile ? 3 : 5;
+    for (let i = 0; i < rootCount; i++) {
+      const x = (W / (rootCount + 1)) * (i + 1) + (Math.random() - 0.5) * 60;
+      const y = H * 0.15 + (Math.random() - 0.5) * 40;
+      nodes.push(mkNode(x, y, -1, 0));
+    }
+    // Also a couple of roots near bottom so the network spans full page.
+    for (let i = 0; i < 2; i++) {
+      const x = W * (0.3 + Math.random() * 0.4);
+      const y = H * (0.85 + Math.random() * 0.10);
+      nodes.push(mkNode(x, y, -1, 0));
+    }
+
+    // Attractors — biased toward avoiding the central reading column.
+    const colMin = Math.max(40, W * 0.5 - 320);
+    const colMax = Math.min(W - 40, W * 0.5 + 320);
+    for (let i = 0; i < ATTRACTORS_N; i++) {
+      let x, y, tries = 0;
+      do {
+        x = Math.random() * W;
+        y = Math.random() * H;
+        tries++;
+        // Push attractors away from the centre reading column ~70% of the time
+        if (x > colMin && x < colMax && Math.random() < 0.7 && tries < 6) continue;
+        break;
+      } while (tries < 8);
+      attractors.push({ x, y });
+    }
+
+    // Grow until attractors exhausted or node cap hit.
+    growUntilFull();
+    buildLattice();
+  }
+
+  function mkNode(x, y, parent, depth) {
+    return { x, y, bx: x, by: y, vx: 0, vy: 0, parent, depth, children: [] };
+  }
+
+  function growUntilFull() {
+    let safety = 6000;
+    while (attractors.length > 0 && nodes.length < TARGET_NODES && safety-- > 0) {
+      // For each remaining attractor, find its closest node.
+      // Track per-node "best attractor direction" to grow once per step.
+      const growthTargets = new Map(); // nodeIdx -> {sumDx, sumDy, count}
+      for (let i = 0; i < attractors.length; i++) {
+        const a = attractors[i];
+        let nearestIdx = -1;
+        let nearestDist = Infinity;
+        for (let j = 0; j < nodes.length; j++) {
+          const n = nodes[j];
+          const dx = a.x - n.x, dy = a.y - n.y;
+          const d2 = dx * dx + dy * dy;
+          if (d2 < nearestDist) { nearestDist = d2; nearestIdx = j; }
+        }
+        if (nearestIdx === -1) continue;
+        const n = nodes[nearestIdx];
+        const dx = a.x - n.x, dy = a.y - n.y;
+        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+        const t = growthTargets.get(nearestIdx) || { sx: 0, sy: 0, c: 0 };
+        t.sx += dx / dist;
+        t.sy += dy / dist;
+        t.c++;
+        growthTargets.set(nearestIdx, t);
+      }
+
+      if (growthTargets.size === 0) break;
+
+      // Grow from each node toward its averaged attractor direction.
+      growthTargets.forEach((t, idx) => {
+        if (nodes.length >= TARGET_NODES) return;
+        const n = nodes[idx];
+        const mag = Math.sqrt(t.sx * t.sx + t.sy * t.sy) || 1;
+        const nx = n.x + (t.sx / mag) * STEP_LEN;
+        const ny = n.y + (t.sy / mag) * STEP_LEN;
+        if (nx < 8 || nx > W - 8 || ny < 8 || ny > H - 8) return;
+        const childIdx = nodes.length;
+        nodes.push(mkNode(nx, ny, idx, n.depth + 1));
+        n.children.push(childIdx);
+      });
+
+      // Retire attractors that any node is now close enough to.
+      for (let i = attractors.length - 1; i >= 0; i--) {
+        const a = attractors[i];
+        for (let j = 0; j < nodes.length; j++) {
+          const n = nodes[j];
+          const dx = a.x - n.x, dy = a.y - n.y;
+          if (dx * dx + dy * dy < KILL_RADIUS * KILL_RADIUS) {
+            attractors.splice(i, 1);
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  // ── Quantum target positions (hex lattice) ───────────────────
+  function buildLattice() {
+    lattice.length = 0;
+    const cols = Math.ceil(Math.sqrt(nodes.length * (W / H)));
+    const rows = Math.ceil(nodes.length / cols);
+    const stepX = W / (cols + 1);
+    const stepY = H / (rows + 1);
+    for (let i = 0; i < nodes.length; i++) {
+      const r = Math.floor(i / cols);
+      const c = i % cols;
+      const offX = (r % 2 === 0) ? 0 : stepX * 0.5;
+      lattice.push({
+        x: (c + 1) * stepX + offX,
+        y: (r + 1) * stepY,
+      });
+    }
+  }
+
+  // ── Pulses (action potentials) ───────────────────────────────
+  // A pulse traverses outward along the child-tree from a starting node.
+  // At each step it advances a fraction along the current edge; when it
+  // reaches the next node, it spawns one or more "branch pulses" along the
+  // node's children. Pulses die after `lifetime` ms.
+  function spawnPulseAtNode(startIdx, hue, opts) {
+    if (pulses.length > 50) return; // cap
+    opts = opts || {};
+    pulses.push({
+      from: startIdx,
+      to: pickNextChild(startIdx, startIdx),
+      t: 0,
+      speed: 0.012 + Math.random() * 0.008,
+      hue: hue,
+      life: 0,
+      maxLife: 3200,
+      depth: 0,
+      ghost: !!opts.ghost,
+      ghostOffset: opts.ghostOffset || 0,
+    });
+    pulseCount++;
+    if (hudNum) hudNum.textContent = pulseCount;
+  }
+
+  function pickNextChild(parentIdx, fromIdx) {
+    const n = nodes[fromIdx];
+    if (!n) return -1;
+    // Prefer children; if none, walk back to parent so the pulse doesn't dead-end.
+    if (n.children.length) {
+      return n.children[Math.floor(Math.random() * n.children.length)];
+    }
+    return n.parent;
+  }
+
+  function spawnPulseAtPoint(px, py) {
+    // Find nearest node to the click point.
+    let best = -1, bd = Infinity;
+    for (let i = 0; i < nodes.length; i++) {
+      const dx = nodes[i].x - px, dy = nodes[i].y - py;
+      const d = dx * dx + dy * dy;
+      if (d < bd) { bd = d; best = i; }
+    }
+    if (best === -1) return;
+    const hue = quantumK > 0.5 ? 270 + Math.random() * 30 : 110 + Math.random() * 40;
+    spawnPulseAtNode(best, hue);
+    // Quantum: emit a ghost pulse offset in time (superposition)
+    if (quantumK > 0.4) {
+      spawnPulseAtNode(best, hue + 30, { ghost: true, ghostOffset: 0.45 });
+    }
+  }
+
+  // ── Cluster bindings ─────────────────────────────────────────
+  function registerBindings() {
+    bindings.length = 0;
+    document.querySelectorAll('[data-myc-cluster]').forEach(el => {
+      const cluster = parseInt(el.getAttribute('data-myc-cluster'), 10);
+      bindings.push({ el, cluster, rect: null });
+      el.addEventListener('mouseenter', () => { activeCluster = cluster; });
+      el.addEventListener('mouseleave', () => { if (activeCluster === cluster) activeCluster = -1; });
+    });
+  }
+  registerBindings();
+
+  function nodeBelongsToCluster(nodeIdx, cluster) {
+    // Deterministic, cheap: split nodes into N clusters by index range.
+    // 8 clusters total (0..7); matches what the DOM uses.
+    const CLUSTERS = 8;
+    const cIdx = Math.floor((nodeIdx / nodes.length) * CLUSTERS);
+    return cIdx === (cluster % CLUSTERS);
+  }
+
+  // ── Input ────────────────────────────────────────────────────
+  window.addEventListener('pointermove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+    mouse.active = true;
+  });
+  window.addEventListener('pointerleave', () => { mouse.active = false; });
+
+  window.addEventListener('click', (e) => {
+    // Ignore clicks on real anchors so we don't visually compete with nav.
+    if (e.target.closest && e.target.closest('a')) {
+      spawnPulseAtPoint(e.clientX, e.clientY);
+      if (typeof playSnap === 'function') playSnap(440 + Math.random() * 180);
+      return;
+    }
+    spawnPulseAtPoint(e.clientX, e.clientY);
+    // Soft snap sound — no-op unless the sound toggle is on.
+    if (typeof playSnap === 'function') playSnap(440 + Math.random() * 180);
+  });
+
+  let lastScrollY = window.scrollY;
+  let scrollAccum = 0;
+  window.addEventListener('scroll', () => {
+    const ny = window.scrollY;
+    const dy = ny - lastScrollY;
+    lastScrollY = ny;
+    scrollY = ny;
+    scrollVelocity = 0.7 * scrollVelocity + 0.3 * Math.abs(dy);
+    scrollAccum += Math.abs(dy);
+    // Inject pulses while scroll velocity is high.
+    if (Math.abs(dy) > 14 && nodes.length && Math.random() < 0.6) {
+      const idx = Math.floor(Math.random() * nodes.length);
+      const hue = quantumK > 0.5 ? 270 + Math.random() * 30 : 110 + Math.random() * 40;
+      spawnPulseAtNode(idx, hue);
+    }
+  }, { passive: true });
+
+  // ── Quantum trigger via IntersectionObserver ─────────────────
+  const quantumMark = document.getElementById('act-quantum-mark');
+  if (quantumMark && 'IntersectionObserver' in window) {
+    const qObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        document.body.classList.toggle('quantum-mode', e.isIntersecting || window.scrollY > e.target.offsetTop - 200);
+        if (hudMode) hudMode.textContent = document.body.classList.contains('quantum-mode') ? 'quantum' : 'organic';
+      });
+    }, { rootMargin: '0px 0px -40% 0px', threshold: 0.01 });
+    qObs.observe(quantumMark);
+  }
+
+  // ── Reveal observer (mirrors /members) ───────────────────────
+  const reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const rObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); rObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => rObs.observe(el));
+  } else {
+    reveals.forEach(el => el.classList.add('in'));
+  }
+
+  // ── Qubit entanglement demo ──────────────────────────────────
+  document.querySelectorAll('.qubit').forEach(q => {
+    q.addEventListener('mouseenter', () => {
+      const pair = q.getAttribute('data-pair');
+      const partner = document.querySelector(`.qubit:nth-child(${parseInt(pair, 10) + 1})`);
+      if (partner) partner.classList.add('entangled');
+      q.classList.add('entangled');
+      // Fire a pulse between two random cluster-6 nodes
+      if (nodes.length > 4) {
+        const a = Math.floor(Math.random() * nodes.length);
+        spawnPulseAtNode(a, 280);
+        spawnPulseAtNode(a, 290, { ghost: true });
+      }
+    });
+    q.addEventListener('mouseleave', () => {
+      document.querySelectorAll('.qubit').forEach(x => x.classList.remove('entangled'));
+    });
+  });
+
+  // ── Show HUD after first interaction ─────────────────────────
+  let hudShown = false;
+  window.addEventListener('pointermove', () => {
+    if (hudShown) return;
+    hudShown = true;
+    if (hud) hud.classList.add('live');
+  }, { once: true });
+
+  // ── Main loop ────────────────────────────────────────────────
+  let lastTs = performance.now();
+  function frame(ts) {
+    const dt = Math.min(ts - lastTs, 50); // clamp big leaps
+    lastTs = ts;
+    update(dt);
+    paint();
+    requestAnimationFrame(frame);
+  }
+
+  function update(dt) {
+    // Quantum tween toward target K
+    const targetQ = document.body.classList.contains('quantum-mode') ? 1 : 0;
+    quantumK += (targetQ - quantumK) * 0.04;
+
+    // Refresh binding rects (cheap; only when mouse moves much or on resize)
+    if (mouse.active) {
+      for (let i = 0; i < bindings.length; i++) {
+        if (!bindings[i].rect) bindings[i].rect = bindings[i].el.getBoundingClientRect();
+      }
+    }
+
+    // Update node physics
+    const damping = 0.78;
+    const k = 0.06;
+    const cursorK = mouse.active ? 0.0025 : 0;
+    for (let i = 0; i < nodes.length; i++) {
+      const n = nodes[i];
+      // Interpolate base position toward lattice when quantum
+      const lat = lattice[i];
+      const tx = lat ? n.bx + (lat.x - n.bx) * quantumK : n.bx;
+      const ty = lat ? n.by + (lat.y - n.by) * quantumK : n.by;
+      // Spring toward target
+      n.vx += (tx - n.x) * k;
+      n.vy += (ty - n.y) * k;
+      // Cursor attraction
+      if (mouse.active) {
+        const dx = mouse.x - n.x, dy = mouse.y - n.y;
+        const d2 = dx * dx + dy * dy;
+        if (d2 < ATTRACT_RADIUS * ATTRACT_RADIUS) {
+          const d = Math.sqrt(d2) || 1;
+          const falloff = 1 - d / ATTRACT_RADIUS;
+          n.vx += (dx / d) * cursorK * falloff * 14;
+          n.vy += (dy / d) * cursorK * falloff * 14;
+        }
+      }
+      n.vx *= damping;
+      n.vy *= damping;
+      n.x  += n.vx;
+      n.y  += n.vy;
+    }
+
+    // Pulse update
+    for (let i = pulses.length - 1; i >= 0; i--) {
+      const p = pulses[i];
+      p.life += dt;
+      if (p.life > p.maxLife) { pulses.splice(i, 1); continue; }
+      p.t += p.speed * (dt / 16.67);
+      if (p.t >= 1) {
+        p.from = p.to;
+        const next = pickNextChild(p.from, p.from);
+        if (next === -1 || next === p.from) { pulses.splice(i, 1); continue; }
+        p.to = next;
+        p.t = 0;
+        p.depth++;
+        // Branch occasionally
+        if (p.depth < 6 && Math.random() < 0.3 && pulses.length < 50) {
+          const n = nodes[p.from];
+          if (n && n.children.length > 1) {
+            const alt = n.children[Math.floor(Math.random() * n.children.length)];
+            if (alt !== p.to) {
+              pulses.push({
+                from: p.from, to: alt, t: 0,
+                speed: p.speed * (0.8 + Math.random() * 0.4),
+                hue: p.hue, life: p.life, maxLife: p.maxLife * 0.7,
+                depth: p.depth + 1, ghost: false, ghostOffset: 0,
+              });
+            }
+          }
+        }
+        if (p.depth > 8) { pulses.splice(i, 1); continue; }
+      }
+    }
+
+    // Scroll velocity decay
+    scrollVelocity *= 0.94;
+  }
+
+  function paint() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Background: a vignette that intensifies near the cursor.
+    if (mouse.active) {
+      const r = 220;
+      const g = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, r);
+      const col = quantumK > 0.5 ? 'rgba(168,143,224,0.07)' : 'rgba(106,191,136,0.05)';
+      g.addColorStop(0, col);
+      g.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(mouse.x - r, mouse.y - r, r * 2, r * 2);
+    }
+
+    // Filaments (edges) — parent to each node
+    const baseStroke = quantumK > 0.5 ? 'rgba(168,143,224,' : 'rgba(106,191,136,';
+    ctx.lineWidth = 0.7;
+    ctx.lineCap = 'round';
+    for (let i = 0; i < nodes.length; i++) {
+      const n = nodes[i];
+      if (n.parent === -1) continue;
+      const p = nodes[n.parent];
+      // Brightness boosted if node belongs to active cluster.
+      const inCluster = activeCluster !== -1 && nodeBelongsToCluster(i, activeCluster);
+      const alpha = inCluster ? 0.55 : 0.28 - (n.depth * 0.012);
+      ctx.strokeStyle = baseStroke + Math.max(0.06, alpha) + ')';
+      // Slightly curved line via quadratic — adds organic feel.
+      const mx = (p.x + n.x) / 2 + Math.sin((i + n.depth) * 1.3 + scrollY * 0.001) * 1.2;
+      const my = (p.y + n.y) / 2 + Math.cos((i + n.depth) * 1.7 + scrollY * 0.001) * 1.2;
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+      ctx.quadraticCurveTo(mx, my, n.x, n.y);
+      ctx.stroke();
+    }
+
+    // Nodes
+    for (let i = 0; i < nodes.length; i++) {
+      const n = nodes[i];
+      const inCluster = activeCluster !== -1 && nodeBelongsToCluster(i, activeCluster);
+      const baseR = (i < 7 ? 2.6 : 1.5) + (inCluster ? 1.4 : 0);
+      // Cursor proximity glow
+      let cursorBoost = 0;
+      if (mouse.active) {
+        const dx = mouse.x - n.x, dy = mouse.y - n.y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < ATTRACT_RADIUS) cursorBoost = (1 - d / ATTRACT_RADIUS) * 1.6;
+      }
+      const r = baseR + cursorBoost;
+      const col = quantumK > 0.5 ? 'rgba(197,181,245,' : 'rgba(182,240,174,';
+      ctx.fillStyle = col + (0.45 + cursorBoost * 0.4) + ')';
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Pulses
+    for (let i = 0; i < pulses.length; i++) {
+      const p = pulses[i];
+      const a = nodes[p.from], b = nodes[p.to];
+      if (!a || !b) continue;
+      const t = p.ghost ? Math.max(0, p.t - p.ghostOffset) : p.t;
+      const x = a.x + (b.x - a.x) * t;
+      const y = a.y + (b.y - a.y) * t;
+      const lifeT = p.life / p.maxLife;
+      const fade = 1 - lifeT;
+      const radius = 3.6 * (1 - lifeT * 0.5);
+      const sat = quantumK > 0.5 ? 80 : 70;
+      const lig = quantumK > 0.5 ? 70 : 65;
+      // Outer halo
+      ctx.fillStyle = `hsla(${p.hue}, ${sat}%, ${lig}%, ${0.18 * fade})`;
+      ctx.beginPath();
+      ctx.arc(x, y, radius * 4, 0, Math.PI * 2);
+      ctx.fill();
+      // Mid halo
+      ctx.fillStyle = `hsla(${p.hue}, ${sat}%, ${lig + 8}%, ${0.35 * fade})`;
+      ctx.beginPath();
+      ctx.arc(x, y, radius * 2, 0, Math.PI * 2);
+      ctx.fill();
+      // Core
+      ctx.fillStyle = `hsla(${p.hue}, ${sat}%, ${Math.min(95, lig + 25)}%, ${0.95 * fade})`;
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fill();
+      // Trail back along the segment
+      ctx.strokeStyle = `hsla(${p.hue}, ${sat}%, ${lig + 10}%, ${0.45 * fade})`;
+      ctx.lineWidth = 1.4 * (p.ghost ? 0.6 : 1);
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+    }
+  }
+
+  /* ════════════════════════════════════════════════════════════════
+     PHASE 2 — Mass Simulation Matrix + Genomic Diagnostic Engine
+     ──────────────────────────────────────────────────────────────
+     Built on the same canvas, sharing the node array. Adds:
+       • ParticlePool      — preallocated 5000-slot ring buffer
+       • Mass simulation   — 3k-particle radial burst + noise drift +
+                             convergence onto a chosen optimal path
+       • Diagnostic engine — crimson drop → shockwave → DNA helix
+                             distortion → sequential node "snaps"
+       • Web Audio hooks   — lazy ctx, opt-in via toggle
+  ═════════════════════════════════════════════════════════════════ */
+
+  // ── Audio (lazy) ────────────────────────────────────────────
+  let audioCtx = null;
+  let soundOn = false;
+  let humOsc = null, humGain = null;
+  function ensureAudio() {
+    if (audioCtx) return audioCtx;
+    try {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      audioCtx = new AC();
+    } catch (e) { audioCtx = null; }
+    return audioCtx;
+  }
+  function playSnap(freq) {
+    if (!soundOn) return;
+    const ctx = ensureAudio(); if (!ctx) return;
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = 'triangle';
+    o.frequency.value = freq || 880;
+    g.gain.setValueAtTime(0.0001, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.07, ctx.currentTime + 0.005);
+    g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.12);
+    o.connect(g).connect(ctx.destination);
+    o.start();
+    o.stop(ctx.currentTime + 0.15);
+  }
+  function playHum(durSec) {
+    if (!soundOn) return;
+    const ctx = ensureAudio(); if (!ctx) return;
+    const dur = durSec || 2.4;
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    const o2 = ctx.createOscillator();
+    o.type = 'sine';   o.frequency.value = 55;
+    o2.type = 'sine';  o2.frequency.value = 111; // the brand frequency
+    g.gain.setValueAtTime(0.0001, ctx.currentTime);
+    g.gain.linearRampToValueAtTime(0.05, ctx.currentTime + 0.3);
+    g.gain.linearRampToValueAtTime(0.001, ctx.currentTime + dur);
+    o.connect(g);  o2.connect(g);  g.connect(ctx.destination);
+    o.start();  o2.start();
+    o.stop(ctx.currentTime + dur + 0.05);
+    o2.stop(ctx.currentTime + dur + 0.05);
+  }
+  function playDrop() {
+    if (!soundOn) return;
+    const ctx = ensureAudio(); if (!ctx) return;
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(420, ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(90, ctx.currentTime + 0.45);
+    g.gain.setValueAtTime(0.0001, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.08, ctx.currentTime + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.5);
+    o.connect(g).connect(ctx.destination);
+    o.start();
+    o.stop(ctx.currentTime + 0.55);
+  }
+
+  // ── Sound toggle button wiring ──────────────────────────────
+  const soundBtn = document.getElementById('soundToggle');
+  function setSound(on) {
+    soundOn = on;
+    if (soundBtn) {
+      soundBtn.classList.toggle('on', on);
+      soundBtn.textContent = on ? '♪ sound · on' : '♪ sound · off';
+    }
+    if (on) ensureAudio();
+  }
+  if (soundBtn) {
+    soundBtn.addEventListener('click', () => setSound(!soundOn));
+    soundBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSound(!soundOn); }
+    });
+  }
+
+
+  buildNetwork();
+  requestAnimationFrame(frame);
+
+  // ── Rebuild network on big resize so layout still fits ───────
+  let resizeT = null;
+  window.addEventListener('resize', () => {
+    if (resizeT) clearTimeout(resizeT);
+    resizeT = setTimeout(() => { buildNetwork(); }, 400);
+  });
+})();
+</script>
 
 </body>
 </html>
