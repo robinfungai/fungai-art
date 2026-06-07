@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -395,6 +395,7 @@
       font-family:var(--font-mono); font-size:11px;
     }
   </style>
+<script src="/global-nav.js" defer></script>
 </head>
 <style>
 /* ── Login gate overlay ── */
@@ -1470,7 +1471,21 @@ function buildLabNotebook() {
     container.appendChild(prompt);
   }
 
-  LAB_CHAPTERS.forEach(ch => {
+  // Admin-only "Add chapter" trigger. Stays subtle — sits as a thin
+  // dashed row above the chapter list. Clicking it prompts for slug +
+  // name + icon and inserts into public.lab_chapters; the page reloads
+  // chapters in place. Uses window.__faAddLabChapter so the inline
+  // onclick reaches the closure.
+  if (isAdmin) {
+    const addBtn = document.createElement('div');
+    addBtn.style.cssText = 'margin-bottom:14px;padding:11px 16px;border:0.5px dashed rgba(232,177,75,0.4);border-radius:10px;background:transparent;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-family:\'Geist Mono\',monospace;font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:#F5D689;';
+    addBtn.innerHTML = '✦ Add a new chapter';
+    addBtn.onclick = () => window.__faAddLabChapter && window.__faAddLabChapter();
+    container.appendChild(addBtn);
+  }
+
+  const allChapters = LAB_CHAPTERS.concat(window.__faCustomLabChapters || []);
+  allChapters.forEach(ch => {
     const div = document.createElement('div');
     div.className = 'lab-chapter';
 
@@ -1550,8 +1565,68 @@ function buildLabNotebook() {
   if (g) { g.classList.remove('on'); g.style.display = 'none'; }
 })();
 
+// ── Custom Lab Notebook chapters (admin-created) ───────────
+// Stored in public.lab_chapters via supabase-lab-chapters.sql.
+// Loaded into a module-level cache and re-rendered into the existing
+// buildLabNotebook flow. The "Add chapter" affordance only renders
+// when labIsAdmin() returns true (Robin / Stephanie).
+window.__faCustomLabChapters = [];
+
+async function pullCustomLabChapters(){
+  try { await window.SBready; } catch { return; }
+  if (!window.SBclient) return;
+  try {
+    const { data, error } = await window.SBclient
+      .from('lab_chapters')
+      .select('id, icon, name, sub, placeholder, sort_order')
+      .order('sort_order', { ascending: true });
+    if (error) {
+      if (error.code !== '42P01' && error.code !== 'PGRST205') {
+        console.warn('[lab_chapters] fetch:', error.message);
+      }
+      return;
+    }
+    window.__faCustomLabChapters = data || [];
+    if (typeof buildLabNotebook === 'function') buildLabNotebook();
+  } catch (e) { console.warn('[lab_chapters] fetch threw:', e); }
+}
+
+window.__faAddLabChapter = async function(){
+  if (!window.SBclient) { alert('Supabase not loaded.'); return; }
+  const name = prompt('Chapter name (e.g. "Hopi field notes"):');
+  if (!name || !name.trim()) return;
+  const icon = (prompt('Icon — single emoji or glyph (e.g. 🌿):') || '✦').trim().slice(0, 4);
+  const sub  = prompt('Subtitle (optional):') || '';
+  const slug = name.toLowerCase().trim()
+    .replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '')
+    .slice(0, 40) || ('chapter_' + Date.now());
+  try {
+    let createdBy = null;
+    try {
+      const cached = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null');
+      createdBy = cached?.cloudId || null;
+    } catch {}
+    const { error } = await window.SBclient.from('lab_chapters').insert({
+      id: slug, icon: icon, name: name.trim(),
+      sub: sub.trim() || null,
+      placeholder: 'Notes for the ' + name.trim() + ' chapter…',
+      sort_order: 100 + (window.__faCustomLabChapters?.length || 0),
+      created_by: createdBy,
+    });
+    if (error) {
+      if (error.code === '23505') alert('A chapter with that slug already exists. Try a different name.');
+      else if (error.code === '42501') alert('Only admins can create chapters.');
+      else if (error.code === '42P01' || error.code === 'PGRST205') alert('Chapter table not installed — run supabase-lab-chapters.sql in Supabase SQL Editor.');
+      else alert('Could not create: ' + (error.message || error.code));
+      return;
+    }
+    await pullCustomLabChapters();
+  } catch (e) { alert('Could not create: ' + (e?.message || e)); }
+};
+
 // Run on page load
 buildLabNotebook();
+pullCustomLabChapters();
 
 // Fetch shared lab notes from Supabase. Public-readable (RLS allows
 // anon), so this works for visitors too. Triggers a re-render when
@@ -1884,18 +1959,97 @@ function lnMoveNote(fromCat, id, toCat){
     var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
   }
+  // Cloud cache — populated by the async fetch below. Re-rendered into.
+  var cloudFormulas = [];
+  var cloudComments = {};   // { formula_id: [comment, …] }
+
+  async function fetchCloudFormulas(){
+    if (!window.SBready) return;
+    try { await window.SBready; } catch { return; }
+    if (!window.SBclient) return;
+    try {
+      const { data: fRows, error: fErr } = await window.SBclient
+        .from('formulas')
+        .select('id, name, herb_ids, herb_names, maker_label, notes, author_id, created_at')
+        .order('created_at', { ascending: false })
+        .limit(100);
+      if (fErr) {
+        // 42P01 = table doesn't exist yet (run supabase-formulas.sql).
+        if (fErr.code !== '42P01' && fErr.code !== 'PGRST205') {
+          console.warn('[formulas] cloud fetch:', fErr.message);
+        }
+        return;
+      }
+      cloudFormulas = fRows || [];
+      // Pull comments for the displayed set
+      const ids = cloudFormulas.map(f => f.id);
+      if (ids.length) {
+        const { data: cRows } = await window.SBclient
+          .from('formula_comments')
+          .select('id, formula_id, body, author_label, created_at')
+          .in('formula_id', ids)
+          .order('created_at', { ascending: true });
+        cloudComments = {};
+        (cRows || []).forEach(c => {
+          (cloudComments[c.formula_id] = cloudComments[c.formula_id] || []).push(c);
+        });
+      }
+      renderBook();
+    } catch (e) {
+      console.warn('[formulas] cloud fetch threw:', e?.message || e);
+    }
+  }
+
+  async function postComment(formulaId){
+    if (!window.SBclient) { alert('Sign in to comment.'); return; }
+    const body = prompt('Add a comment to this formula:');
+    if (!body || !body.trim()) return;
+    let authorId = null, authorLabel = null;
+    try {
+      const cached = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null');
+      authorId = cached?.cloudId || null;
+      authorLabel = cached?.name || null;
+    } catch {}
+    try {
+      const { error } = await window.SBclient.from('formula_comments').insert({
+        formula_id: formulaId, body: body.trim(),
+        author_id: authorId, author_label: authorLabel,
+      });
+      if (error) { alert('Could not post comment: ' + (error.message || error.code || 'unknown')); return; }
+      fetchCloudFormulas();
+    } catch (e) { alert('Could not post comment: ' + (e?.message || e)); }
+  }
+  // Make handler reachable from inline onclick
+  window.__faPostComment = postComment;
+
   function renderBook(){
     var host = document.getElementById('formulaBook');
     if (!host) return;
-    // Merge both stores — the Herbal Engine writes to fungai_alchemy_academy,
-    // Mixology writes to fungai_formulas. We dedupe by ts+name so the same
-    // formula saved twice doesn't appear twice.
+    // Three sources, in order of authority:
+    //   1. cloud  — shared, visible to all members
+    //   2. local mixology  — old localStorage entries this device made
+    //   3. local herbal-engine  — same, older path
+    // Dedupe by name+date so duplicates don't render twice.
     var listA = [];
     var listB = [];
     try { listA = JSON.parse(localStorage.getItem('fungai_alchemy_academy') || '[]'); } catch(e) {}
     try { listB = JSON.parse(localStorage.getItem('fungai_formulas') || '[]'); } catch(e) {}
     if (!Array.isArray(listA)) listA = [];
     if (!Array.isArray(listB)) listB = [];
+
+    var listCloud = cloudFormulas.map(function(e){
+      var hn = e.herb_names || '';
+      var herbs = hn ? hn.split(',').map(function(s){ return { n: s.trim() }; }).filter(function(h){ return h.n; }) : [];
+      return {
+        cloudId: e.id,
+        name: e.name || 'Untitled blend',
+        herbs: herbs,
+        source: 'cloud',
+        ts: Date.parse(e.created_at) || Date.now(),
+        maker: e.maker_label || null,
+        note: e.notes || null,
+      };
+    });
     // Normalise mixology entries to the academy shape (split herbs string into
     // {n: ...} objects, tag source = 'mixology', preserve maker/note for display).
     var listBNorm = listB.map(function(e){
@@ -1911,7 +2065,7 @@ function lnMoveNote(fromCat, id, toCat){
         note: e.note || null,
       };
     });
-    var list = listA.concat(listBNorm).sort(function(a,b){ return (b.ts||0) - (a.ts||0); });
+    var list = listCloud.concat(listA).concat(listBNorm).sort(function(a,b){ return (b.ts||0) - (a.ts||0); });
     if (!list.length) {
       host.innerHTML = '<div style="padding:36px 28px;border:0.5px dashed rgba(232,177,75,0.3);border-radius:12px;background:rgba(10,12,9,0.4);text-align:center;">' +
         '<div style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:#8B7E62;margin-bottom:8px;">Empty</div>' +
@@ -1923,7 +2077,10 @@ function lnMoveNote(fromCat, id, toCat){
     var rows = list.map(function(e){
       var name = e.name || e.intention || 'Untitled formula';
       var herbs = Array.isArray(e.herbs) ? e.herbs.map(function(h){ return h.n || h.name || ''; }).filter(Boolean) : [];
-      var source = e.source === 'herbal-engine-2' ? 'Herbal Engine' : e.source === 'mixology' ? 'Mixology' : (e.source || '');
+      var source = e.source === 'herbal-engine-2' ? 'Herbal Engine'
+                 : e.source === 'mixology'        ? 'Mixology'
+                 : e.source === 'cloud'           ? 'Shared'
+                 : (e.source || '');
       var date = fmtDate(e.ts || e.t || e.timestamp || e.date);
       var origin = e.origin && (e.origin.city || e.origin.country)
         ? '<span style="font-family:\'Geist Mono\',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:#6BD66F;">' +
@@ -1944,14 +2101,31 @@ function lnMoveNote(fromCat, id, toCat){
         (e.maker ? '<div style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:#9ED438;margin-bottom:6px;">by ' + esc(e.maker) + '</div>' : '') +
         (e.note ? '<blockquote style="font-family:\'Cormorant Garamond\',Georgia,serif;font-style:italic;font-size:13.5px;color:#C9B894;line-height:1.55;margin:0 0 10px;padding-left:10px;border-left:2px solid rgba(232,177,75,0.35);">' + esc(e.note) + '</blockquote>' : '') +
         '<div>' + origin + '</div>' +
+        // Comments — only for cloud entries with author attribution. Inline
+        // list + "Add comment" trigger. Encourages community annotation
+        // without bloating the card for empty threads.
+        (e.cloudId ? (function(){
+          var cs = (cloudComments[e.cloudId] || []);
+          var commentHtml = cs.map(function(c){
+            return '<div style="border-top:0.5px solid rgba(201,184,148,0.10);padding:8px 0 0;margin-top:8px;">' +
+              '<div style="font-family:\'Geist Mono\',monospace;font-size:8.5px;letter-spacing:0.16em;color:#8B7E62;text-transform:uppercase;margin-bottom:3px;">' +
+                esc(c.author_label || 'Member') + ' &middot; ' + fmtDate(Date.parse(c.created_at)) +
+              '</div>' +
+              '<div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-style:italic;font-size:13px;color:#C9B894;line-height:1.55;">' + esc(c.body) + '</div>' +
+            '</div>';
+          }).join('');
+          return commentHtml +
+            '<button onclick="window.__faPostComment(\'' + e.cloudId + '\')" style="margin-top:10px;font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;background:none;border:0.5px solid rgba(232,177,75,0.35);color:#F5D689;padding:6px 11px;border-radius:999px;cursor:pointer;">+ Comment</button>';
+        })() : '') +
       '</div>';
     }).join('');
     host.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;">' + rows + '</div>';
   }
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', renderBook);
+    document.addEventListener('DOMContentLoaded', function(){ renderBook(); fetchCloudFormulas(); });
   } else {
     renderBook();
+    fetchCloudFormulas();
   }
   // Re-render if another tab updates the store.
   window.addEventListener('storage', function(e){ if (e.key === 'fungai_alchemy_academy' || e.key === 'fungai_formulas') renderBook(); });

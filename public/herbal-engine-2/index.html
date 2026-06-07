@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Dispensary — Fungai Art Elixirs</title>
+<title>Herbal Engine — Fungai Art</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
     <link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
     <link rel="apple-touch-icon" href="/fungai-art-logo.png"/>
@@ -449,6 +449,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
      the hardcoded list if Supabase isn't reachable or the table isn't
      installed yet. -->
 <script src="/supabase-client.js" defer></script>
+<script src="/global-nav.js" defer></script>
 </head>
 <body>
 <div class="app">
@@ -468,7 +469,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
         <a href="https://www.fungai.art" style="text-decoration:none;display:block" title="Return to Materia Medica">
           <div class="brand-name" style="cursor:pointer">Herbal Engine &amp; Database</div>
         </a>
-        <div class="brand-sub">Personalised elixir formula &middot; 201 plants</div>
+        <div class="brand-sub">Personalised elixir formula &middot; 203 plants</div>
       </div>
     </div>
     <div class="hdr-btns">
@@ -1098,6 +1099,37 @@ async function loadLiveInventory(){
     console.warn('[inventory] fetch threw:', e);
   }
 }
+
+// ── Live inventory sync ───────────────────────────────────────
+// Admin edits to /community Admin → apothecary shelf weren't visible
+// in the herbal engine until a hard reload, because loadLiveInventory()
+// only ran once at boot. Three triggers refetch on the fly:
+//   1. Supabase realtime CHANGE on the inventory table — instant
+//      cross-tab sync when an admin toggles a herb chip.
+//   2. window 'focus' — refetch when the user tabs back in, in case
+//      they were editing inventory in another tab and realtime missed.
+//   3. document 'visibilitychange' to 'visible' — same intent for
+//      mobile browsers that fire visibility rather than focus.
+function subscribeInventoryRealtime(){
+  try {
+    if (!window.SBclient || !window.SBclient.channel) return;
+    const ch = window.SBclient.channel('inventory-live')
+      .on('postgres_changes',
+          { event: '*', schema: 'public', table: 'inventory' },
+          () => { loadLiveInventory(); })
+      .subscribe();
+    // Tear down if the page is about to unload.
+    window.addEventListener('beforeunload', () => {
+      try { window.SBclient.removeChannel(ch); } catch {}
+    }, { once: true });
+  } catch (e) { console.warn('[inventory] realtime subscribe failed:', e); }
+}
+window.addEventListener('focus', () => loadLiveInventory());
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') loadLiveInventory();
+});
+// Realtime sub kicks in once Supabase is ready.
+(async () => { try { await window.SBready; subscribeInventoryRealtime(); } catch {} })();
 
 function getActiveStock(){
   if(activePreset==='all') return new Set(HB.map(h=>h.id));

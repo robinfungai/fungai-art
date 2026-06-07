@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -196,9 +196,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
 .footer-links a{color:var(--dust);text-decoration:none;font-size:11px;letter-spacing:1px;transition:color 0.2s}
 .footer-links a:hover{color:var(--mist)}
 
-/* REVEAL */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s,transform 0.7s}
-.reveal.in{opacity:1;transform:none}
+/* REVEAL — visible by default, animation gated on html.reveal-anim */
+.reveal{opacity:1;transform:none}
+html.reveal-anim .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s,transform 0.7s}
+html.reveal-anim .reveal.in{opacity:1;transform:none}
 .reveal-d1{transition-delay:0.1s}
 .reveal-d2{transition-delay:0.2s}
 .reveal-d3{transition-delay:0.3s}
@@ -213,6 +214,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
   .footer{flex-direction:column;gap:24px;text-align:center}
 }
 </style>
+<script>
+  (function(){
+    if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('reveal-anim');
+    }
+  })();
+</script>
+<script src="/global-nav.js" defer></script>
 </head>
 <body>
 

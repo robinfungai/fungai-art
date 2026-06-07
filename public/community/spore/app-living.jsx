@@ -2377,6 +2377,12 @@ function MembersPage({ currentMember, economy }) {
         </div>
       </div>
 
+      {/* My herbs — personal "herbs I'm working with now" panel.
+          Member-curated, cloud-shared (public-readable), stored in
+          public.member_herbs (see supabase-member-herbs.sql).
+          Only renders when the member is linked to a cloud profile. */}
+      <MyHerbsPanel currentMember={currentMember} onToast={toast} />
+
       <div className="members-grid">
         {SporeData.MEMBERS.map(m => {
           const tier   = SporeData.reputationTier(m.rep);
@@ -2860,6 +2866,169 @@ function WeeklyReportBlock({ currentMemberId, onToast }) {
         </div>
       )}
     </>
+  );
+}
+
+/* ── MyHerbsPanel ──────────────────────────────────────────────
+   Personal "herbs I work with now" — each signed-in member curates
+   their own list. Stored cloud-side in public.member_herbs (see
+   supabase-member-herbs.sql). Visible to everyone — encourages
+   cross-pollination ("oh you're also on cramp bark right now?").
+
+   Type-ahead search uses the same 203-entry catalogue as the herbal
+   engine (loaded from /herb-engine-ids.json), so the herb_id stays
+   compatible with admin inventory + the engine's "In stock" pool.
+─────────────────────────────────────────────────────────────── */
+function MyHerbsPanel({ currentMember, onToast }) {
+  const [catalogue, setCatalogue] = useState([]);   // [{id, n, cat, p}]
+  const [myList,    setMyList]    = useState([]);   // [{herb_id, herb_name, note, added_at}]
+  const [searchQ,   setSearchQ]   = useState('');
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [loading,   setLoading]   = useState(true);
+  const [saving,    setSaving]    = useState(false);
+
+  const profileId = currentMember && currentMember.cloudId;
+  const cloudConnected = !!profileId;
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const [cat] = await Promise.all([
+          fetch('/herb-engine-ids.json').then(r => r.json()).catch(() => []),
+        ]);
+        if (cancelled) return;
+        setCatalogue(Array.isArray(cat) ? cat : []);
+        if (window.SBready) await window.SBready;
+        if (!cancelled && window.SBclient && profileId) {
+          const { data, error } = await window.SBclient
+            .from('member_herbs')
+            .select('herb_id, herb_name, note, added_at')
+            .eq('profile_id', profileId)
+            .order('added_at', { ascending: false });
+          if (cancelled) return;
+          if (error) {
+            if (error.code !== '42P01' && error.code !== 'PGRST205') {
+              onToast && onToast('Could not load your herbs: ' + (error.message || error.code), 'warn');
+            }
+          } else {
+            setMyList(data || []);
+          }
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [profileId]);
+
+  async function addHerb(h) {
+    if (!cloudConnected) { onToast && onToast('Sign in to save herbs to your list.', 'warn'); return; }
+    if (myList.some(m => m.herb_id === h.id)) { onToast && onToast(`${h.n} is already on your list.`, 'warn'); return; }
+    setSaving(true);
+    const optimistic = { herb_id: h.id, herb_name: h.n, note: null, added_at: new Date().toISOString() };
+    setMyList(list => [optimistic, ...list]);
+    try {
+      const { error } = await window.SBclient.from('member_herbs').insert({
+        profile_id: profileId, herb_id: h.id, herb_name: h.n,
+      });
+      if (error) {
+        if (error.code === '42P01' || error.code === 'PGRST205') {
+          onToast && onToast('Personal herbs table not installed — run supabase-member-herbs.sql', 'warn');
+        } else {
+          onToast && onToast('Could not save: ' + (error.message || error.code), 'warn');
+        }
+        setMyList(list => list.filter(x => x.herb_id !== h.id));
+      } else {
+        setSearchQ('');
+        setPickerOpen(false);
+      }
+    } finally { setSaving(false); }
+  }
+
+  async function removeHerb(herbId) {
+    if (!cloudConnected) return;
+    const prev = myList;
+    setMyList(list => list.filter(m => m.herb_id !== herbId));
+    try {
+      const { error } = await window.SBclient.from('member_herbs')
+        .delete().eq('profile_id', profileId).eq('herb_id', herbId);
+      if (error) { setMyList(prev); onToast && onToast('Could not remove: ' + (error.message || error.code), 'warn'); }
+    } catch (e) { setMyList(prev); }
+  }
+
+  const q = searchQ.trim().toLowerCase();
+  const suggestions = q
+    ? catalogue
+        .filter(h => (h.n || '').toLowerCase().includes(q))
+        .filter(h => !myList.some(m => m.herb_id === h.id))
+        .slice(0, 12)
+    : [];
+
+  return (
+    <div style={{ margin:'0 16px 16px', padding:'16px 18px', background:'linear-gradient(160deg, rgba(168,143,224,0.05), rgba(0,0,0,0))', border:'0.5px solid var(--rule-strong)', borderRadius:12 }}>
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:12, marginBottom:10, flexWrap:'wrap' }}>
+        <div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>
+            ✦ Herbs I work with now
+          </div>
+          <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:18, color:'var(--mycelium-l)', marginTop:2 }}>
+            {loading ? 'Loading…' : myList.length === 0 ? 'Add the plants currently on your bench.' : `${myList.length} plant${myList.length !== 1 ? 's' : ''} in your study`}
+          </div>
+        </div>
+        {!cloudConnected && (
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'var(--nutrient-l)', letterSpacing:'0.16em' }}>
+            Sign in to start
+          </div>
+        )}
+      </div>
+
+      {cloudConnected && (
+        <div style={{ position:'relative', marginBottom:10 }}>
+          <input
+            type="text"
+            value={searchQ}
+            onChange={e => { setSearchQ(e.target.value); setPickerOpen(true); }}
+            onFocus={() => setPickerOpen(true)}
+            placeholder="Search a herb to add…"
+            disabled={saving}
+            style={{ width:'100%', background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:8, color:'var(--mycelium-l)', padding:'9px 14px', fontFamily:'var(--font-sans)', fontSize:13, outline:'none' }}
+          />
+          {pickerOpen && suggestions.length > 0 && (
+            <div style={{ position:'absolute', top:'calc(100% + 4px)', left:0, right:0, background:'var(--soil-2)', border:'0.5px solid var(--rule-strong)', borderRadius:8, maxHeight:260, overflowY:'auto', zIndex:10 }}>
+              {suggestions.map(h => (
+                <div key={h.id}
+                  onClick={() => addHerb(h)}
+                  style={{ padding:'9px 13px', cursor:'pointer', display:'flex', justifyContent:'space-between', alignItems:'center', borderBottom:'0.5px solid var(--rule)', fontFamily:'var(--font-sans)', fontSize:13, color:'var(--mycelium-l)' }}
+                  onMouseEnter={e => e.currentTarget.style.background = 'rgba(232,177,75,0.07)'}
+                  onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
+                  <span>{h.n}</span>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', color:'var(--mycelium-d)' }}>{h.cat || ''}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+        {myList.length === 0 && cloudConnected && (
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', letterSpacing:'0.12em' }}>
+            Empty &middot; type a herb name above to begin.
+          </div>
+        )}
+        {myList.map(m => (
+          <span key={m.herb_id}
+            title="Click to remove"
+            onClick={() => removeHerb(m.herb_id)}
+            style={{ display:'inline-flex', alignItems:'center', gap:6, fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.08em', padding:'6px 11px', borderRadius:999, background:'rgba(168,143,224,0.10)', border:'0.5px solid rgba(168,143,224,0.32)', color:'#C5B5F5', cursor:'pointer', transition:'all 0.18s' }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(225,107,107,0.14)'; e.currentTarget.style.borderColor = 'rgba(225,107,107,0.45)'; e.currentTarget.style.color = '#F0857A'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(168,143,224,0.10)'; e.currentTarget.style.borderColor = 'rgba(168,143,224,0.32)'; e.currentTarget.style.color = '#C5B5F5'; }}>
+            ● {m.herb_name || m.herb_id} <span style={{ opacity:0.5 }}>×</span>
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }
 

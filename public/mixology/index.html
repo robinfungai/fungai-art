@@ -1,16 +1,16 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Herbal Engine — Fungai Art</title>
-<meta name="description" content="201 botanicals, 5 elements, 4 traditions. The Fungai Art materia medica."/>
+<title>Mixology · Materia Medica — Fungai Art</title>
+<meta name="description" content="203 botanicals, 5 elements, 4 traditions. The Fungai Art materia medica."/>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
     <link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
     <link rel="apple-touch-icon" href="/fungi.png?v=3"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Fungai Art"/>
 <meta property="og:title" content="Herbal Engine — Fungai Art"/>
-<meta property="og:description" content="201 botanicals, 5 elements, 4 traditions. The Fungai Art materia medica."/>
+<meta property="og:description" content="203 botanicals, 5 elements, 4 traditions. The Fungai Art materia medica."/>
 <meta property="og:image" content="https://www.fungai.art/fungi.png?v=3"/>
 <meta property="og:url" content="https://www.fungai.art/mixology"/>
 <meta name="twitter:card" content="summary_large_image"/>
@@ -199,6 +199,8 @@ button{font-family:inherit;cursor:pointer;}
 .m-mhz-chip{font-family:var(--fm);font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:4px;background:rgba(168,143,224,.07);border:0.5px solid rgba(168,143,224,.3);color:#C5B5F5;}
 .hc-grade{position:absolute;top:10px;right:38px;font-family:var(--fm);font-size:6px;letter-spacing:.12em;text-transform:uppercase;padding:2px 5px;border-radius:2px;}
 </style>
+<script src="/supabase-client.js" defer></script>
+<script src="/global-nav.js" defer></script>
 </head>
 <body>
 <div class="wrap pe">
@@ -207,8 +209,8 @@ button{font-family:inherit;cursor:pointer;}
     <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
       <img src="/fungai-art-logo.png" alt="Fungai Art" style="height:46px;width:auto;opacity:.94;" onerror="this.src='/logo.png';this.style.filter='brightness(0) invert(1)';this.style.height='30px'">
       <div>
-        <div class="nav-title">Herbal Engine</div>
-        <div class="nav-sub">Fungai Art Elixirs &middot; 201 Botanicals</div>
+        <div class="nav-title">Mixology &middot; Materia Medica</div>
+        <div class="nav-sub">Fungai Art &middot; 203 Botanicals</div>
       </div>
     </a>
   </div>
@@ -220,7 +222,7 @@ button{font-family:inherit;cursor:pointer;}
   </div>
 </nav>
 <div class="hero">
-  <div class="hero-ey">201 plants &middot; 20 categories &middot; 5 elements &middot; evidence graded A&ndash;D</div>
+  <div class="hero-ey">203 plants &middot; 20 categories &middot; 5 elements &middot; evidence graded A&ndash;D</div>
   <h1 class="hero-title">Know your <em>plants.</em></h1>
   <p class="hero-blurb">The complete Fungai Art botanical reference. Filter by element or category, build your formula — tap any herb for full profile and extraction method.</p>
   <!-- New Tyme Tonics cross-link — sister project, kegged living drinks built
@@ -428,6 +430,14 @@ const PHIL_MAP = {
   willowBark:['european','mesopotamian','tcm'],
   wormwood:['european','mesopotamian'], yarrow:['european'],
   yellowDock:['european'],
+
+  // ── Bundle added 2026-06-07 ──
+  crampBark:['european'],
+  blackHaw:['european'],
+  wildYam:['european','amazonian'],
+  jamaicanDogwood:['amazonian'],
+  corydalisYanhusuo:['tcm'],
+  acmellaOleracea:['amazonian'],
 };
 function philosFor(h){
   // Empty fallback (was 'european'). Untagged herbs now appear only in
@@ -660,6 +670,13 @@ const H=[
   {id:'bael',n:'Bael',el:'E',ext:'DC',c:['digest','immune'],p:'Aegle marmelos; TCM analog Mu Gua; astringent for chronic diarrhoea and IBS; sacred to Shiva.',x:'low'},
   {id:'chandrashoor',n:'Chandrashoor',el:'F',ext:'T',c:['resp','womens','nutritive'],p:'Lepidium sativum garden cress seeds; TCM cousin Ting Li Zi; drains lungs, post-partum galactagogue.',x:'low'},
   {id:'amaltas',n:'Amaltas',el:'W',ext:'W',c:['digest'],p:'Cassia fistula fruit pulp; TCM analog Bo Luo Hui; gentle cooling laxative for heat-induced constipation.',x:'low'},
+  // ── Pain · antispasmodic · uterine tonic — bundle added 2026-06-07 ──
+  {id:'crampBark',n:'Cramp Bark',el:'W',ext:'T',c:['pain','womens','menstrual','nervine'],p:'Viburnum opulus bark; classic European folk antispasmodic for menstrual cramps, leg cramps, threatened miscarriage support; muscle-relaxant nervine.',x:'low'},
+  {id:'blackHaw',n:'Black Haw',el:'W',ext:'T',c:['womens','menstrual','pain'],p:'Viburnum prunifolium bark; uterine tonic and antispasmodic; classical pregnancy-support remedy; cousin to Cramp Bark with stronger uterine tropism.',x:'low'},
+  {id:'wildYam',n:'Wild Yam',el:'E',ext:'DC',c:['womens','pain','digest','menstrual'],p:'Dioscorea villosa root; antispasmodic, anti-inflammatory; hormonal/menstrual support; Eclectic standby for biliary colic.',x:'low'},
+  {id:'jamaicanDogwood',n:'Jamaican Dogwood',el:'W',ext:'T',c:['pain','sleep','nervine'],p:'Piscidia piscipula (syn. P. erythrina) bark; powerful sedative analgesic for nerve pain, insomnia from pain, migraine; respect dose — professional context.',x:'high'},
+  {id:'corydalisYanhusuo',n:'Corydalis Yanhusuo',el:'F',ext:'DC',c:['pain','heart','nervine'],p:'Yan Hu Suo; classical TCM analgesic for pain from Blood stasis; moves Qi, dispels stagnation; menstrual, abdominal, traumatic injury pain.',x:'medium'},
+  {id:'acmellaOleracea',n:'Acmella oleracea',el:'F',ext:'T',c:['pain','culinary','immune'],p:'Spilanthes / toothache plant / paracress; Amazonian buzz-button flowers — spilanthol numbs oral pain; antimicrobial, sialagogue, immune-stimulant tonic.',x:'low'},
 ];
 
 const CAT_THEMES={immune:'Immune resilience',sexual:'Sexual vitality',pain:'Pain & anti-inflammation',digest:'Digestive support',sleep:'Sleep & calm',cognitive:'Cognitive enhancement',resp:'Respiratory health',womens:"Women's harmony",antioxid:'Antioxidant protection',liver:'Liver detox',nutritive:'Deep nourishment',conscious:'Consciousness work',energy:'Energy & endurance',urinary:'Urinary support',adaptogen:'Stress adaptation',mens:"Men's vitality",nervine:'Nervous system',heart:'Heart health',menstrual:'Menstrual balance',culinary:'Aromatic culinary',fungi:'Mycelial intelligence'};
@@ -1032,7 +1049,7 @@ function saveF(){
   overlay.querySelector('#fsm-close').onclick=close;
   overlay.querySelector('#fsm-cancel').onclick=close;
   overlay.addEventListener('click',e=>{ if(e.target===overlay) close(); });
-  overlay.querySelector('#fsm-save').onclick=()=>{
+  overlay.querySelector('#fsm-save').onclick=async ()=>{
     const blendName=(overlay.querySelector('#fsm-name').value||names.split(',').slice(0,2).join(', ')).trim();
     const maker=(overlay.querySelector('#fsm-maker').value||'').trim();
     const note=(overlay.querySelector('#fsm-note').value||'').trim();
@@ -1046,13 +1063,58 @@ function saveF(){
       ts:Date.now(),
     });
     localStorage.setItem('fungai_formulas',JSON.stringify(saved.slice(0,40)));
+    // Cloud-share to the academy Formula Log if Supabase is available.
+    // Local save always succeeds; the cloud write is best-effort so an
+    // offline visitor isn't blocked from saving.
+    try {
+      if (window.SBready) await window.SBready;
+      if (window.SBclient) {
+        // Resolve the signed-in member's profile id so the row carries
+        // an author. Fall back to a label-only entry for unauthenticated
+        // saves (RLS will reject those, which is by design).
+        let authorId = null;
+        try {
+          const cached = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null');
+          authorId = (cached && cached.cloudId) || null;
+        } catch {}
+        await window.SBclient.from('formulas').insert({
+          name: blendName,
+          herb_ids: [...F],
+          herb_names: names,
+          maker_label: maker || null,
+          notes: note || null,
+          author_id: authorId,
+        });
+      }
+    } catch (e) {
+      // Silent — local save still holds and the user sees the success card.
+      console.warn('[formulas] cloud sync failed:', e?.message || e);
+    }
     close();
-    // Confirmation toast — small, non-blocking, links to academy formula book.
+    // Post-save confirmation card — sits centred, persists until the user
+    // either makes a new formula (clears + closes the formula panel) or
+    // dismisses it. Replaces the old auto-dismiss toast so the path forward
+    // is explicit.
     const t=document.createElement('div');
-    t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--c2,#0f1b14);border:0.5px solid rgba(232,177,75,0.45);color:var(--ml,#E6D9B5);font-family:var(--fm,monospace);font-size:11px;letter-spacing:0.12em;padding:13px 22px;border-radius:999px;z-index:10000;box-shadow:0 8px 28px rgba(0,0,0,0.5);';
-    t.innerHTML=`Saved &middot; <a href="/community/academy/#formulas" style="color:var(--a,#E8B14B);text-decoration:underline;">view in academy &rarr;</a>`;
+    t.id='fungai-saved-card';
+    t.style.cssText='position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--c2,#0f1b14);border:0.5px solid rgba(232,177,75,0.45);color:var(--ml,#E6D9B5);font-family:var(--fm,monospace);font-size:11px;letter-spacing:0.12em;padding:18px 22px 16px;border-radius:14px;z-index:10000;box-shadow:0 12px 36px rgba(0,0,0,0.55);max-width:380px;text-align:center;';
+    t.innerHTML=`
+      <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--a,#E8B14B);margin-bottom:4px;">&ldquo;${blendName.replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]))}&rdquo;</div>
+      <div style="font-size:10px;color:var(--md,#8a978a);letter-spacing:0.18em;margin-bottom:14px;">saved to the formula book</div>
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;">
+        <button id="fsc-new" style="font-family:var(--fm,monospace);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;padding:10px 18px;border-radius:999px;background:linear-gradient(135deg,var(--a,#E8B14B),#C48838);border:none;color:#0d1610;cursor:pointer;font-weight:600;">✦ Make a new formula</button>
+        <a href="/community/academy/#formulas" style="font-family:var(--fm,monospace);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;padding:10px 18px;border-radius:999px;border:0.5px solid rgba(232,177,75,0.45);color:var(--a,#E8B14B);text-decoration:none;">View in academy &rarr;</a>
+        <button id="fsc-dismiss" style="font-family:var(--fm,monospace);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;padding:10px 16px;border-radius:999px;background:none;border:0.5px solid rgba(255,255,255,0.18);color:var(--md,#8a978a);cursor:pointer;">Close</button>
+      </div>
+    `;
     document.body.appendChild(t);
-    setTimeout(()=>t.remove(),3800);
+    t.querySelector('#fsc-new').onclick=()=>{
+      clearF();
+      // Close the floating Formula panel so the user is back at the herb grid.
+      try { const fp=document.getElementById('fpanel'); if (fp && fp.classList.contains('open')) togglePanel(); } catch {}
+      t.remove();
+    };
+    t.querySelector('#fsc-dismiss').onclick=()=>t.remove();
   };
 }
 

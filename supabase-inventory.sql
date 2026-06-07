@@ -105,5 +105,9 @@ INSERT INTO public.inventory (herb_id, in_stock) VALUES
   ('skullcap', true), ('spirulina', true), ('star_anise', true),
   ('thyme', true), ('valerian', true), ('vanilla', true),
   ('vervain', true), ('vitex_chaste_tree', true), ('willow_bark', true),
-  ('wormwood', true), ('yarrow', true), ('yellow_dock_root', true)
+  ('wormwood', true), ('yarrow', true), ('yellow_dock_root', true),
+  -- 2026-06-07 additions: cramp/uterine/pain/antispasmodic bundle
+  ('cramp_bark', false), ('black_haw', false), ('wild_yam', false),
+  ('jamaican_dogwood', false), ('corydalis_yanhusuo', false),
+  ('acmella_oleracea', false)
 ON CONFLICT (herb_id) DO NOTHING;

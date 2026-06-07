@@ -1,20 +1,20 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Extraction Protocols — Fungai Art</title>
-<meta name="description" content="Five extraction methods + the 201-herb materia medica. The alchemy side of Fungai Art."/>
+<meta name="description" content="Five extraction methods + the 203-herb materia medica. The alchemy side of Fungai Art."/>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
     <link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
     <link rel="apple-touch-icon" href="/fungi.png?v=3"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Fungai Art"/>
 <meta property="og:title" content="Extraction Protocols — Fungai Art"/>
-<meta property="og:description" content="Five extraction methods + the 201-herb materia medica."/>
+<meta property="og:description" content="Five extraction methods + the 203-herb materia medica."/>
 <meta property="og:image" content="https://www.fungai.art/fungi.png?v=3"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://www.fungai.art/fungi.png?v=3"/>
-<!-- Canonical 201-herb materia medica — populates HERB_DB for the click-a-herb popup -->
+<!-- Canonical 203-herb materia medica — populates HERB_DB for the click-a-herb popup -->
 <script src="/herbs-data.js" defer></script>
 <link rel="preconnect" href="https://api.fontshare.com"/>
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500&f[]=satoshi@400,500,600&f[]=geist-mono@400&display=swap"/>
@@ -113,6 +113,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
 .freq-val{font-family:var(--fm);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:#C5B5F5;}
 </style>
 <script src="/herb-meta.js"></script>
+<script src="/global-nav.js" defer></script>
 </head>
 <body>
 <div class="wrap">
@@ -137,7 +138,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
   <!-- Smaller headline, deeper introduction. Adds the alchemy/synergistics
        differentiation so visitors know how this page relates to /mixology. -->
   <h1 class="hero-title" style="font-size:clamp(28px,4.2vw,46px);line-height:1.05;margin-bottom:14px;">Extract the <em>intelligence.</em></h1>
-  <p class="hero-blurb" style="max-width:60ch;">Six methods of taking a plant apart and putting it back together. Each one draws out a different chemistry &mdash; water-soluble polysaccharides, alcohol-soluble alkaloids, fat-soluble resins, mineral salts after calcination, hydrosols from steam. This page is the <strong style="color:var(--mycelium-l,#E6D9B5);">alchemy side</strong> of the work: solvents, ratios, time, vessels.</p>
+  <p class="hero-blurb" style="max-width:60ch;">Five methods of taking a plant apart and putting it back together. Each one draws out a different chemistry &mdash; water-soluble polysaccharides, alcohol-soluble alkaloids, fat-soluble resins, mineral salts after calcination, hydrosols from steam. This page is the <strong style="color:var(--mycelium-l,#E6D9B5);">alchemy side</strong> of the work: solvents, ratios, time, vessels.</p>
   <p class="hero-blurb" style="max-width:60ch;margin-top:8px;font-size:13px;color:var(--mycelium-d,#8B7E62);">The <strong style="color:var(--mycelium-l,#E6D9B5);">synergistics</strong> side &mdash; how the finished extracts combine into a formula &mdash; lives at <a href="/mixology" style="color:var(--nutrient-l,#F5D689);border-bottom:0.5px solid rgba(245,214,137,0.4);text-decoration:none;">/mixology</a>. Build a formula there, then come back here to know how each constituent is actually made.</p>
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;">
     <a href="/mixology" style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border:0.5px solid rgba(232,177,75,0.4);border-radius:6px;background:rgba(232,177,75,0.06);color:var(--nutrient-l,#F5D689);font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;">Synergistics &middot; Mixology &rarr;</a>
@@ -161,7 +162,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
 
 <!-- Ethanol targets reference -->
 <div class="eth-table-wrap">
-  <div class="eth-table-title">⚗ Optimal ethanol targets · all 201 botanicals</div>
+  <div class="eth-table-title">⚗ Optimal ethanol targets · all 203 botanicals</div>
   <p class="eth-table-sub">Each botanical has an ideal solvent window. "Dual" = double extraction required (water + alcohol separately). Filter by name below.</p>
   <input class="eth-search" id="ethSearch" type="text" placeholder="Filter by herb name…" oninput="renderEthTable(this.value)"/>
   <div class="eth-grid" id="ethGrid"></div>

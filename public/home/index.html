@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -210,13 +210,17 @@ p { line-height: 1.75; color: var(--mist); }
 }
 .btn-ghost:hover { border-color: var(--lime); color: var(--lime); }
 
-/* ─── SCROLL REVEAL ──────────────────────────── */
-.reveal {
+/* ─── SCROLL REVEAL ────────────────────────────
+   Default visible. Animation only kicks in if html.reveal-anim is set
+   by the head script (JS available + motion not reduced). Prevents the
+   blank-hero-on-load bug for no-JS / reduced-motion / slow-IObs cases. */
+.reveal { opacity: 1; transform: none; }
+html.reveal-anim .reveal {
   opacity: 0;
   transform: translateY(32px);
   transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1);
 }
-.reveal.in { opacity: 1; transform: translateY(0); }
+html.reveal-anim .reveal.in { opacity: 1; transform: translateY(0); }
 .reveal-d1 { transition-delay: 0.08s; }
 .reveal-d2 { transition-delay: 0.18s; }
 .reveal-d3 { transition-delay: 0.28s; }
@@ -1324,6 +1328,17 @@ p { line-height: 1.75; color: var(--mist); }
   border-bottom: none;
 }
 </style>
+<script>
+  /* Gate scroll-reveal animation to JS+motion-OK users only.
+     Without this, the hero painted opacity:0 above-the-fold for
+     no-JS / reduced-motion users until IObs eventually fired. */
+  (function(){
+    if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('reveal-anim');
+    }
+  })();
+</script>
+<script src="/global-nav.js" defer></script>
 </head>
 <body>
 
@@ -1374,7 +1389,6 @@ p { line-height: 1.75; color: var(--mist); }
           <a href="/herbal-engine-2/"><span class="ni-label">Tailored Elixir</span> <span class="ni-tag">herbal engine</span></a>
           <a href="/mixology"><span class="ni-label">Mixology</span> <span class="ni-tag">synergistic</span></a>
           <a href="/extraction"><span class="ni-label">Extraction</span> <span class="ni-tag">alchemy</span></a>
-          <a href="/health"><span class="ni-label">Health</span> <span class="ni-tag">symptomatic</span></a>
         </div>
       </div>
       <!-- Community: single clickable link rather than a hover-dropdown — the
@@ -1410,7 +1424,6 @@ p { line-height: 1.75; color: var(--mist); }
   <a href="/herbal-engine-2/" onclick="toggleMobileMenu()">Tailored Elixir <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; herbal engine</span></a>
   <a href="/mixology" onclick="toggleMobileMenu()">Mixology <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; synergistic</span></a>
   <a href="/extraction" onclick="toggleMobileMenu()">Extraction <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; alchemy</span></a>
-  <a href="/health" onclick="toggleMobileMenu()">Health <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; symptomatic</span></a>
   <div class="mm-section-title">Community</div>
   <a href="/community" onclick="toggleMobileMenu()">Spore Portal</a>
   <a href="/community/academy/" onclick="toggleMobileMenu()">Alchemy Academy</a>
@@ -1807,7 +1820,7 @@ function toggleMobileMenu() {
     Wild-foraged. Slow-extracted. Full-spectrum. Tuned to 111 Hz before it leaves the lab.
   </p>
   <p class="medicine-fine">
-    We publish the materia medica as we go &mdash; 201 plants, five extraction methods, real foraging coordinates, traditions of Europe, India, China, and the Americas in one open library. Alchemy as practice, not aesthetic.
+    We publish the materia medica as we go &mdash; 203 plants, five extraction methods, real foraging coordinates, traditions of Europe, India, China, and the Americas in one open library. Alchemy as practice, not aesthetic.
   </p>
   <div class="medicine-actions">
     <a href="#shop" class="btn-primary">Enter the apothecary &rarr;</a>
