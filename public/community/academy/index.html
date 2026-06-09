@@ -1375,9 +1375,13 @@ function labSummary(text) {
   return words.slice(0, 40).join(' ') + '…';
 }
 function labChapterOptions(currentId) {
-  return LAB_CHAPTERS
+  // Both hardcoded chapters AND admin-created cloud chapters. Without
+  // the second concat, custom chapters were invisible in the Move
+  // dropdown — entries could not be relocated into them.
+  const custom = window.__faCustomLabChapters || [];
+  return LAB_CHAPTERS.concat(custom)
     .filter(c => c.id !== currentId)
-    .map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`)
+    .map(c => `<option value="${c.id}">${c.icon || '✦'} ${c.name}</option>`)
     .join('');
 }
 function renderEntries(chapterId) {
@@ -1634,10 +1638,13 @@ function buildLabNotebook() {
     container.appendChild(addBtn);
   }
 
-  const allChapters = LAB_CHAPTERS.concat(window.__faCustomLabChapters || []);
+  const customChapters = window.__faCustomLabChapters || [];
+  const customIdSet = new Set(customChapters.map(c => c.id));
+  const allChapters = LAB_CHAPTERS.concat(customChapters);
   allChapters.forEach(ch => {
     const div = document.createElement('div');
     div.className = 'lab-chapter';
+    const isCustom = customIdSet.has(ch.id);
 
     // Pre-load entries for this chapter so we know whether to auto-expand
     // and how to show the count badge. Robin's complaint: "i do not see my
@@ -1671,13 +1678,31 @@ function buildLabNotebook() {
     // are visible the moment the page loads. Chapters with no entries stay
     // collapsed so the section doesn't feel overwhelming.
     const bodyOpen = hasEntries;
+    // Admin can rename / delete custom chapters they (or any admin)
+    // created. Hardcoded chapters can't be renamed from the UI — they
+    // live in the HTML source. The stopPropagation calls prevent the
+    // outer toggleLab() from firing when the admin clicks the buttons.
+    const adminChapterCtrls = (isAdmin && isCustom) ? `
+      <span class="lab-ch-admin" style="display:flex;gap:6px;align-items:center;margin-right:8px;">
+        <button onclick="event.stopPropagation();window.__faRenameLabChapter('${ch.id}')"
+          style="font-family:'Geist Mono',monospace;font-size:8.5px;letter-spacing:0.16em;text-transform:uppercase;background:rgba(201,184,148,0.07);border:0.5px solid rgba(232,177,75,0.32);color:#F5D689;border-radius:999px;padding:4px 10px;cursor:pointer;">
+          ✎ Rename
+        </button>
+        <button onclick="event.stopPropagation();window.__faDeleteLabChapter('${ch.id}','${(ch.name || '').replace(/'/g,"\\'")}')"
+          style="font-family:'Geist Mono',monospace;font-size:8.5px;letter-spacing:0.16em;text-transform:uppercase;background:rgba(225,107,107,0.06);border:0.5px solid rgba(225,107,107,0.35);color:#E1A7A0;border-radius:999px;padding:4px 10px;cursor:pointer;">
+          ✕
+        </button>
+      </span>
+    ` : '';
+
     div.innerHTML = `
       <div class="lab-ch-header" onclick="toggleLab('${ch.id}')">
         <div class="lab-ch-icon">${ch.icon}</div>
         <div class="lab-ch-titles">
           <div class="lab-ch-name">${ch.name}${countBadge}</div>
-          <div class="lab-ch-sub">${ch.sub}</div>
+          <div class="lab-ch-sub">${ch.sub || ''}</div>
         </div>
+        ${adminChapterCtrls}
         <div class="lab-ch-toggle" id="lab-toggle-${ch.id}">${bodyOpen ? '▴' : '▾'}</div>
       </div>
       <div class="lab-ch-body" id="lab-body-${ch.id}" style="display:${bodyOpen ? 'block' : 'none'}">
@@ -1772,6 +1797,44 @@ window.__faAddLabChapter = async function(){
     }
     await pullCustomLabChapters();
   } catch (e) { alert('Could not create: ' + (e?.message || e)); }
+};
+
+window.__faRenameLabChapter = async function(chapterId){
+  if (!window.SBclient) { alert('Supabase not loaded.'); return; }
+  const current = (window.__faCustomLabChapters || []).find(c => c.id === chapterId);
+  if (!current) { alert('That chapter is not a cloud-created one — its name is in the page source.'); return; }
+  const newName = prompt('New name for "' + current.name + '":', current.name);
+  if (newName === null) return;
+  if (!newName.trim()) { alert('Name cannot be empty.'); return; }
+  const newIcon = prompt('Icon (single emoji or glyph):', current.icon || '✦');
+  const newSub  = prompt('Subtitle (optional):', current.sub || '') || '';
+  try {
+    const { error } = await window.SBclient.from('lab_chapters').update({
+      name: newName.trim(),
+      icon: (newIcon || current.icon || '✦').trim().slice(0, 4),
+      sub:  newSub.trim() || null,
+    }).eq('id', chapterId);
+    if (error) {
+      if (error.code === '42501') alert('Only admins can rename chapters.');
+      else alert('Could not rename: ' + (error.message || error.code));
+      return;
+    }
+    await pullCustomLabChapters();
+  } catch (e) { alert('Could not rename: ' + (e?.message || e)); }
+};
+
+window.__faDeleteLabChapter = async function(chapterId, label){
+  if (!window.SBclient) { alert('Supabase not loaded.'); return; }
+  if (!confirm('Delete chapter "' + label + '"? Existing entries stay on this device but the chapter disappears for everyone else.')) return;
+  try {
+    const { error } = await window.SBclient.from('lab_chapters').delete().eq('id', chapterId);
+    if (error) {
+      if (error.code === '42501') alert('Only admins can delete chapters.');
+      else alert('Could not delete: ' + (error.message || error.code));
+      return;
+    }
+    await pullCustomLabChapters();
+  } catch (e) { alert('Could not delete: ' + (e?.message || e)); }
 };
 
 // Run on page load

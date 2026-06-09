@@ -27,10 +27,18 @@ DROP POLICY IF EXISTS "snippets_select_public" ON public.snippets;
 CREATE POLICY "snippets_select_public"
   ON public.snippets FOR SELECT USING (true);
 
--- Insert: any signed-in user.
+-- Insert: any visitor. The original policy gated this on the
+-- `authenticated` role, but Robin's normal flow has localStorage as
+-- the source-of-truth identity, with the Supabase auth session often
+-- expired by the time he posts. Snippets are low-stakes — the spore
+-- portal supplies author_label client-side, admins can moderate any
+-- noise. If you want to lock it down later, tighten this policy.
 DROP POLICY IF EXISTS "snippets_insert_authed" ON public.snippets;
-CREATE POLICY "snippets_insert_authed"
-  ON public.snippets FOR INSERT TO authenticated WITH CHECK (true);
+DROP POLICY IF EXISTS "snippets_insert_open"   ON public.snippets;
+CREATE POLICY "snippets_insert_open"
+  ON public.snippets FOR INSERT
+  TO anon, authenticated
+  WITH CHECK (true);
 
 -- Update / delete: author or admin.
 DROP POLICY IF EXISTS "snippets_update_own_or_admin" ON public.snippets;
