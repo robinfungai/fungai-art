@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Mixology · Materia Medica — Fungai Art</title>
-<meta name="description" content="203 botanicals, 5 elements, 4 traditions. The Fungai Art materia medica."/>
+<meta name="description" content="212 botanicals, 5 elements, 4 traditions. The Fungai Art materia medica."/>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
     <link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
     <link rel="apple-touch-icon" href="/fungi.png?v=3"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Fungai Art"/>
 <meta property="og:title" content="Herbal Engine — Fungai Art"/>
-<meta property="og:description" content="203 botanicals, 5 elements, 4 traditions. The Fungai Art materia medica."/>
+<meta property="og:description" content="212 botanicals, 5 elements, 4 traditions. The Fungai Art materia medica."/>
 <meta property="og:image" content="https://www.fungai.art/fungi.png?v=3"/>
 <meta property="og:url" content="https://www.fungai.art/mixology"/>
 <meta name="twitter:card" content="summary_large_image"/>
@@ -222,7 +222,7 @@ button{font-family:inherit;cursor:pointer;}
   </div>
 </nav>
 <div class="hero">
-  <div class="hero-ey">203 plants &middot; 20 categories &middot; 5 elements &middot; evidence graded A&ndash;D</div>
+  <div class="hero-ey">212 plants &middot; 20 categories &middot; 5 elements &middot; evidence graded A&ndash;D</div>
   <h1 class="hero-title">Know your <em>plants.</em></h1>
   <p class="hero-blurb">The complete Fungai Art botanical reference. Filter by element or category, build your formula — tap any herb for full profile and extraction method.</p>
   <!-- New Tyme Tonics cross-link — sister project, kegged living drinks built
@@ -438,6 +438,17 @@ const PHIL_MAP = {
   jamaicanDogwood:['amazonian'],
   corydalisYanhusuo:['tcm'],
   acmellaOleracea:['amazonian'],
+
+  // ── Entheogen tier — 2026-06-07 (gated by practitioner mode) ──
+  sassafras:['european'],          // North American — Atlantic-leaning European
+  sananga:['amazonian'],
+  yopo:['amazonian'],
+  salviaDivinorum:['amazonian'],   // Mazatec — Mesoamerican
+  iboga:['african'],
+  peyote:['amazonian'],            // Sonoran/Chihuahuan — Mesoamerican
+  sanPedro:['amazonian'],          // Andean
+  mimosaHostilis:['amazonian'],
+  chacruna:['amazonian'],
 };
 function philosFor(h){
   // Empty fallback (was 'european'). Untagged herbs now appear only in
@@ -677,6 +688,20 @@ const H=[
   {id:'jamaicanDogwood',n:'Jamaican Dogwood',el:'W',ext:'T',c:['pain','sleep','nervine'],p:'Piscidia piscipula (syn. P. erythrina) bark; powerful sedative analgesic for nerve pain, insomnia from pain, migraine; respect dose — professional context.',x:'high'},
   {id:'corydalisYanhusuo',n:'Corydalis Yanhusuo',el:'F',ext:'DC',c:['pain','heart','nervine'],p:'Yan Hu Suo; classical TCM analgesic for pain from Blood stasis; moves Qi, dispels stagnation; menstrual, abdominal, traumatic injury pain.',x:'medium'},
   {id:'acmellaOleracea',n:'Acmella oleracea',el:'F',ext:'T',c:['pain','culinary','immune'],p:'Spilanthes / toothache plant / paracress; Amazonian buzz-button flowers — spilanthol numbs oral pain; antimicrobial, sialagogue, immune-stimulant tonic.',x:'low'},
+  // ── Entheogen tier — full disclosure, gated behind practitioner mode.
+  // Restricted/controlled botanicals. Robin asked for these listed openly
+  // alongside the rest of the materia medica so the corpus is honest
+  // about what tradition uses, even when commerce / legality complicate it.
+  // Risk levels marked `high` across the board — these aren't kitchen herbs.
+  {id:'sassafras',n:'Sassafras',el:'F',ext:'DC',c:['conscious','culinary','immune'],p:'Sassafras albidum bark/root; safrole-bearing; classical North-American root beer aromatic; energising blood-mover; MAOI-adjacent; safrole flagged carcinogen by FDA — safrole-free preps allowed.',x:'high'},
+  {id:'sananga',n:'Sananga',el:'A',ext:'T',c:['conscious','sexual'],p:'Tabernaemontana undulata; Amazonian eye-drop ceremonial preparation; ibogaine-related alkaloids; "lifts the cobwebs"; visions, depth perception, anti-microbial; ceremonial-use only.',x:'high'},
+  {id:'yopo',n:'Yopo seeds',el:'A',ext:'D',c:['conscious'],p:'Anadenanthera peregrina seeds; contains bufotenin, 5-MeO-DMT; traditional Yanomami/Piaroa ceremonial snuff; rapid-onset short-acting visionary; ritual use only — not recreational.',x:'high'},
+  {id:'salviaDivinorum',n:'Salvia divinorum',el:'W',ext:'T',c:['conscious'],p:'Mazatec ska María Pastora; salvinorin A — most potent natural psychedelic; kappa-opioid agonist; sub-30-min dissociative; ceremonial leaf in Oaxaca; legal status varies by region.',x:'high'},
+  {id:'iboga',n:'Iboga',el:'E',ext:'T',c:['conscious','nervine'],p:'Tabernanthe iboga root bark; Gabon Bwiti sacrament; ibogaine — long-acting visionary + addiction-interruption tool; cardiotoxic risk; only in medically supervised retreats.',x:'high'},
+  {id:'peyote',n:'Peyote',el:'F',ext:'T',c:['conscious'],p:'Lophophora williamsii; Sonoran/Chihuahuan cactus; mescaline; Wixárika/Native American Church sacrament; slow-growing, endangered — ethical sourcing critical; restricted in most jurisdictions.',x:'high'},
+  {id:'sanPedro',n:'San Pedro',el:'F',ext:'DC',c:['conscious'],p:'Echinopsis pachanoi (formerly Trichocereus); Andean Huachuma; mescaline; ancient Chavín cult plant; faster-growing alternative to peyote; legal cactus, possession of extract restricted.',x:'high'},
+  {id:'mimosaHostilis',n:'Mimosa hostilis',el:'F',ext:'D',c:['conscious'],p:'Mimosa tenuiflora root bark; Brazilian Jurema; ~1% DMT in dried bark; Jurema cult sacrament; potent oral with MAOI; topical wound healer; root bark sale legal, extract restricted.',x:'high'},
+  {id:'chacruna',n:'Chacruna',el:'E',ext:'D',c:['conscious'],p:'Psychotria viridis leaves; DMT-bearing classical Banisteriopsis admixture in Brazilian/Peruvian ayahuasca; sacrament of Santo Daime + UDV churches.',x:'high'},
 ];
 
 const CAT_THEMES={immune:'Immune resilience',sexual:'Sexual vitality',pain:'Pain & anti-inflammation',digest:'Digestive support',sleep:'Sleep & calm',cognitive:'Cognitive enhancement',resp:'Respiratory health',womens:"Women's harmony",antioxid:'Antioxidant protection',liver:'Liver detox',nutritive:'Deep nourishment',conscious:'Consciousness work',energy:'Energy & endurance',urinary:'Urinary support',adaptogen:'Stress adaptation',mens:"Men's vitality",nervine:'Nervous system',heart:'Heart health',menstrual:'Menstrual balance',culinary:'Aromatic culinary',fungi:'Mycelial intelligence'};

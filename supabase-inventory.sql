@@ -109,5 +109,9 @@ INSERT INTO public.inventory (herb_id, in_stock) VALUES
   -- 2026-06-07 additions: cramp/uterine/pain/antispasmodic bundle
   ('cramp_bark', false), ('black_haw', false), ('wild_yam', false),
   ('jamaican_dogwood', false), ('corydalis_yanhusuo', false),
-  ('acmella_oleracea', false)
+  ('acmella_oleracea', false),
+  -- 2026-06-07 entheogen tier (gated by practitioner mode in the engine UI)
+  ('sassafras', false), ('sananga', false), ('yopo', false),
+  ('salvia_divinorum', false), ('iboga', false), ('peyote', false),
+  ('san_pedro', false), ('mimosa_hostilis', false), ('chacruna', false)
 ON CONFLICT (herb_id) DO NOTHING;

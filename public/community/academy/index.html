@@ -112,6 +112,42 @@
       text-decoration:none; transition:all 0.18s;
     }
     .hero-link:hover { background:rgba(232,177,75,0.2); border-color:var(--nutrient); box-shadow:0 0 20px rgba(232,177,75,0.2); }
+    /* Hero quick-link chips — one per section. Tap to scroll. */
+    .hero-chips{
+      display:flex; flex-wrap:wrap; gap:8px;
+      margin:8px 0 22px;
+    }
+    .hero-chip{
+      font-family:var(--font-mono); font-size:9.5px;
+      letter-spacing:0.22em; text-transform:uppercase;
+      color:var(--mycelium);
+      padding:7px 14px; border-radius:999px;
+      background:rgba(232,177,75,0.04);
+      border:0.5px solid var(--rule);
+      text-decoration:none;
+      transition:background 0.18s, color 0.18s, border-color 0.18s;
+    }
+    .hero-chip:hover{
+      color:var(--nutrient-l);
+      background:rgba(232,177,75,0.10);
+      border-color:rgba(232,177,75,0.4);
+    }
+    /* Ambient noise — keeps the page from reading like flat HTML. */
+    body::before{
+      content:''; position:fixed; inset:0;
+      pointer-events:none; z-index:0; opacity:0.04;
+      background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+    }
+    .wrap{ position:relative; z-index:1; }
+    /* Soft golden glow following the hero — gives the section a subtle warmth. */
+    .hero::before{
+      content:''; position:absolute;
+      width:480px; height:480px;
+      background:radial-gradient(circle, rgba(232,177,75,0.06) 0%, transparent 60%);
+      top:-180px; left:-120px;
+      pointer-events:none; z-index:-1;
+    }
+    .hero{ position:relative; }
 
     /* Section heading */
     .sec-head {
@@ -369,6 +405,23 @@
       transition:opacity 0.15s;
     }
     .lab-entry-del:hover { opacity:1; color:#e74c3c; }
+    /* Inline edit button — pill chip, sits to the left of the Move
+       dropdown in the actions row. */
+    .lab-entry-edit{
+      font-family:'Geist Mono',monospace; font-size:8.5px;
+      letter-spacing:0.16em; text-transform:uppercase;
+      background:rgba(201,184,148,0.06);
+      border:0.5px solid var(--rule-strong);
+      color:var(--mycelium); border-radius:999px;
+      padding:5px 11px; cursor:pointer;
+      transition:background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .lab-entry-edit:hover{
+      background:rgba(232,177,75,0.10);
+      border-color:rgba(232,177,75,0.45);
+      color:var(--nutrient-l);
+    }
+    .lab-entry.editing .lab-entry-actions{ display:none; }
     /* Move-to-chapter dropdown — themed to match dark surface, no native
        white box. Rounded pill, mono caps, subtle hover lift. */
     .lab-entry-move, .ln-move-select {
@@ -505,13 +558,24 @@
   </nav>
 
   <div class="hero">
-    <div class="hero-eyebrow">Member access · Fungai Art</div>
-    <h1 class="hero-title">Five methods.<br/><em>One organism.</em></h1>
-    <p class="hero-blurb">Extraction science meets plant intelligence. Five ancient and modern methods — their philosophy, chemistry, and practice. Know your solvents, know your plant.</p>
-    <a href="/mixology" class="hero-link">⚗ Open Herbal Blending Engine →</a>
+    <div class="hero-eyebrow">The Alchemy Academy &middot; Fungai Art</div>
+    <h1 class="hero-title">The library of <em>practice.</em></h1>
+    <p class="hero-blurb">
+      Five extraction methods, four living traditions, a 212-plant materia
+      medica, and a notebook the network writes together. <em>Open to anyone &mdash;
+      members can contribute notes, formulas, and snippets.</em>
+    </p>
+    <div class="hero-chips">
+      <a href="#methods" class="hero-chip">⚗ Methods</a>
+      <a href="#traditions" class="hero-chip">◈ Traditions</a>
+      <a href="#formulas" class="hero-chip">✦ Formulas</a>
+      <a href="#labSection" class="hero-chip">⌬ Lab</a>
+      <a href="#snippets" class="hero-chip">▸ Snippets</a>
+    </div>
+    <a href="/mixology" class="hero-link">⚗ Open the Herbal Engine →</a>
   </div>
 
-  <div class="sec-head">
+  <div class="sec-head" id="methods-head">
     <div class="sec-eyebrow">Extraction science</div>
     <div class="sec-title">The five methods.</div>
   </div>
@@ -525,7 +589,7 @@
        admins can see all formulas on this device with their city-level
        origin (when not VPN-shielded).
        ──────────────────────────────────────────────────────────────────── -->
-  <div class="sec-head" style="margin-top:64px;">
+  <div class="sec-head" id="formulas" style="margin-top:64px;">
     <div class="sec-eyebrow">Personal alchemy archive</div>
     <div class="sec-title">Formula <em>book.</em></div>
     <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:14.5px;color:#8B7E62;line-height:1.7;margin-top:8px;max-width:62ch;">Every formula you build in the Herbal Engine or Mixology is saved to this book. City-level origin is recorded when you&rsquo;re not on a VPN &mdash; we never log anything finer than your city, and never if you&rsquo;re shielded.</p>
@@ -547,7 +611,7 @@
        tradition stacked top-to-bottom on first paint — overwhelming
        and made the small-text problem worse. Bubbles invite a choice
        instead of demanding one. -->
-  <div class="sec-head" style="margin-top:80px;">
+  <div class="sec-head" id="traditions" style="margin-top:80px;">
     <div class="sec-eyebrow">Materia medica · entry points</div>
     <div class="sec-title">Traditions &amp; <em>Philosophies.</em></div>
     <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:14.5px;color:#8B7E62;line-height:1.7;margin-top:8px;max-width:62ch;">Each bubble opens one lineage. Tap a bubble to reveal that tradition&rsquo;s plants &mdash; the others stay collapsed so you can read in focus. Tap again, or pick a different bubble, to switch.</p>
@@ -929,6 +993,42 @@
     <div class="lab-chapters" id="labChapters"></div>
   </div>
 
+  <!-- ── Snippets — small member-shared notes, tips, incentives.
+       Any signed-in member can create one. Cloud-shared via the
+       public.snippets table (supabase-snippets.sql). ── -->
+  <section id="snippets" style="margin-top:64px;padding-top:18px;border-top:0.5px solid var(--rule);">
+    <div class="sec-eyebrow">Members &middot; small notes</div>
+    <div class="sec-title">Snippets &middot; <em>tips, gifts, sparks.</em></div>
+    <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:14.5px;color:#8B7E62;line-height:1.7;margin-top:8px;max-width:62ch;">
+      Anything small that doesn't fit elsewhere &mdash; a tip, an incentive
+      you want to offer the network, a field observation, a question. One
+      paragraph or three. Sign in once; post as often as you like.
+    </p>
+
+    <div id="snippetCompose" style="margin-top:18px;display:none;padding:16px 18px;background:rgba(232,177,75,0.04);border:0.5px solid rgba(232,177,75,0.22);border-radius:12px;">
+      <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;align-items:center;">
+        <select id="snippetKind" style="font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#F5D689;background:rgba(232,177,75,0.06);border:0.5px solid rgba(232,177,75,0.35);border-radius:999px;padding:6px 12px;cursor:pointer;outline:none;">
+          <option value="tip">Tip</option>
+          <option value="insight">Insight</option>
+          <option value="incentive">Incentive</option>
+          <option value="field-note">Field note</option>
+          <option value="question">Question</option>
+          <option value="recipe">Recipe</option>
+        </select>
+        <input id="snippetTitle" type="text" placeholder="Optional title…" maxlength="80" style="flex:1;min-width:200px;background:#0a140e;border:0.5px solid rgba(232,177,75,0.22);border-radius:8px;padding:8px 12px;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:15px;color:#E6D9B5;outline:none;"/>
+      </div>
+      <textarea id="snippetBody" rows="3" maxlength="800" placeholder="Share something small. A herb that worked, a question, a small offer to the network…" style="width:100%;background:#0a140e;border:0.5px solid rgba(232,177,75,0.22);border-radius:8px;padding:10px 13px;font-family:'Cormorant Garamond',Georgia,serif;font-size:14px;color:#E6D9B5;outline:none;line-height:1.55;resize:vertical;"></textarea>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:10px;">
+        <button id="snippetCancel" style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;padding:8px 14px;border-radius:999px;background:none;border:0.5px solid rgba(255,255,255,0.18);color:#8B7E62;cursor:pointer;">Cancel</button>
+        <button id="snippetPost" style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;padding:8px 18px;border-radius:999px;background:linear-gradient(135deg,#E8B14B,#C48838);border:none;color:#0d1610;cursor:pointer;font-weight:600;">Post snippet</button>
+      </div>
+    </div>
+
+    <button id="snippetOpenCompose" style="margin-top:14px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:0.24em;text-transform:uppercase;padding:11px 20px;border-radius:999px;background:rgba(232,177,75,0.06);border:0.5px solid rgba(232,177,75,0.45);color:#F5D689;cursor:pointer;">+ Create a snippet</button>
+
+    <div id="snippetList" style="margin-top:22px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;"></div>
+  </section>
+
   <div class="footer">
     <div class="footer-fine">Fungai Art · Alchemy Academy · Member only</div>
   </div>
@@ -1298,11 +1398,16 @@ function renderEntries(chapterId) {
           ? `<div data-summary>${sum.replace(/</g,'&lt;')} <a href="javascript:labExpand('${chapterId}',${i})" style="color:#F5D689;font-style:italic;text-decoration:none;border-bottom:0.5px solid rgba(245,214,137,0.4);">read more</a></div><div data-full style="display:none;white-space:pre-wrap;">${safe}</div>`
           : `<div style="white-space:pre-wrap;">${safe}</div>`;
         const move = `<select class="lab-entry-move" onchange="labMoveEntry('${chapterId}',${i},this.value)" title="Move to chapter"><option value="">Move…</option>${labChapterOptions(chapterId)}</select>`;
+        const editBtn = `<button class="lab-entry-edit" onclick="editEntry('${chapterId}', ${i})" title="Edit">edit</button>`;
+        const editedTag = e.editedTs
+          ? `<span style="font-family:var(--font-mono);font-size:8px;letter-spacing:0.16em;color:var(--mycelium-d);opacity:0.7;margin-left:6px;">edited</span>`
+          : '';
         return `
           <div class="lab-entry" id="entry-${chapterId}-${i}">
             <div class="lab-entry-text">${body}</div>
-            <div class="lab-entry-meta">${fmtDate(e.ts)}</div>
+            <div class="lab-entry-meta">${fmtDate(e.ts)}${editedTag}</div>
             <div class="lab-entry-actions">
+              ${editBtn}
               ${move}
               <button class="lab-entry-del" onclick="deleteEntry('${chapterId}', ${i})" title="Delete">✕</button>
             </div>
@@ -1405,6 +1510,51 @@ function deleteEntry(chapterId, index) {
   if (!confirm('Delete this entry?')) return;
   const entries = loadEntries(chapterId);
   entries.splice(index, 1);
+  saveEntries(chapterId, entries);
+  renderEntries(chapterId);
+}
+
+// Inline edit: replace the entry's rendered text + meta with a textarea +
+// save/cancel pair. Any signed-in member can edit any entry on this
+// device (the lab notebook is shared across the device, not strictly
+// per-author). Saves bump editedTs so the "edited" tag appears.
+function editEntry(chapterId, index){
+  const el = document.getElementById(`entry-${chapterId}-${index}`);
+  if (!el) return;
+  const entries = loadEntries(chapterId);
+  const entry = entries[index];
+  if (!entry) return;
+  // If already editing, do nothing.
+  if (el.classList.contains('editing')) return;
+  el.classList.add('editing');
+  el.innerHTML = `
+    <textarea id="edit-area-${chapterId}-${index}"
+      style="width:100%;min-height:120px;background:#0a140e;border:0.5px solid rgba(232,177,75,0.32);border-radius:8px;color:#E6D9B5;font-family:'Cormorant Garamond',Georgia,serif;font-size:15px;line-height:1.6;padding:12px 14px;resize:vertical;outline:none;">${(entry.text||'').replace(/</g,'&lt;')}</textarea>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:9px;">
+      <button onclick="cancelEdit('${chapterId}',${index})"
+        style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;padding:7px 14px;border-radius:999px;background:none;border:0.5px solid rgba(255,255,255,0.18);color:#8B7E62;cursor:pointer;">Cancel</button>
+      <button onclick="commitEdit('${chapterId}',${index})"
+        style="font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;padding:7px 16px;border-radius:999px;background:linear-gradient(135deg,#E8B14B,#C48838);border:none;color:#0d1610;cursor:pointer;font-weight:600;">Save</button>
+    </div>
+  `;
+  setTimeout(() => {
+    const ta = document.getElementById(`edit-area-${chapterId}-${index}`);
+    if (ta) { ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length); }
+  }, 0);
+}
+function cancelEdit(chapterId, index){
+  renderEntries(chapterId);
+}
+function commitEdit(chapterId, index){
+  const ta = document.getElementById(`edit-area-${chapterId}-${index}`);
+  if (!ta) return;
+  const next = ta.value.trim();
+  if (!next) { alert('An entry needs some text.'); return; }
+  const entries = loadEntries(chapterId);
+  const entry = entries[index];
+  if (!entry) return;
+  entry.text = next;
+  entry.editedTs = Date.now();
   saveEntries(chapterId, entries);
   renderEntries(chapterId);
 }
@@ -1635,6 +1785,153 @@ pullCustomLabChapters();
 (async function pullCloudLabNotes() {
   try { await window.SBready; } catch { return; }
   loadLabNotesFromCloud();
+})();
+
+// ── Snippets ────────────────────────────────────────────────
+// Any signed-in member can create a small note/tip/incentive. Stored
+// in public.snippets (see supabase-snippets.sql). Read-only for
+// signed-out visitors — the "+ Create" button reveals a polite
+// "sign in to post" inline message instead of the form.
+(function snippetsModule(){
+  const composeBtn = document.getElementById('snippetOpenCompose');
+  const compose    = document.getElementById('snippetCompose');
+  const cancelBtn  = document.getElementById('snippetCancel');
+  const postBtn    = document.getElementById('snippetPost');
+  const list       = document.getElementById('snippetList');
+  if (!list || !composeBtn) return;
+
+  function isSignedIn(){
+    try {
+      const a = localStorage.getItem('spore_active_member');
+      const b = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null');
+      return !!(a || (b && b.id));
+    } catch { return false; }
+  }
+  function currentMember(){
+    try { return JSON.parse(localStorage.getItem('spore_active_member_full') || 'null'); }
+    catch { return null; }
+  }
+  function escapeHtml(s){
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[c]));
+  }
+  const KIND_COLOR = {
+    tip:        { bg:'rgba(232,177,75,0.10)',  fg:'#F5D689', label:'Tip' },
+    insight:    { bg:'rgba(168,143,224,0.10)', fg:'#C5B5F5', label:'Insight' },
+    incentive:  { bg:'rgba(107,214,111,0.10)', fg:'#B6F0AE', label:'Incentive' },
+    'field-note':{ bg:'rgba(106,191,136,0.10)', fg:'#9ED438', label:'Field note' },
+    question:   { bg:'rgba(79,168,224,0.10)',  fg:'#A6D5F2', label:'Question' },
+    recipe:     { bg:'rgba(225,107,107,0.10)', fg:'#F0857A', label:'Recipe' },
+  };
+  function kindChip(k){
+    const c = KIND_COLOR[k] || KIND_COLOR.tip;
+    return '<span style="font-family:\'Geist Mono\',monospace;font-size:8px;letter-spacing:0.22em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:' + c.bg + ';border:0.5px solid ' + c.fg + '40;color:' + c.fg + ';">' + c.label + '</span>';
+  }
+  function timeAgo(ts){
+    const t = Date.parse(ts); if (isNaN(t)) return '';
+    const s = (Date.now() - t) / 1000;
+    if (s < 60) return 'just now';
+    if (s < 3600) return Math.floor(s/60) + 'm ago';
+    if (s < 86400) return Math.floor(s/3600) + 'h ago';
+    if (s < 2592000) return Math.floor(s/86400) + 'd ago';
+    const d = new Date(t);
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return months[d.getMonth()] + ' ' + d.getDate();
+  }
+
+  composeBtn.onclick = () => {
+    if (!isSignedIn()) {
+      // Inline nudge instead of a hard alert.
+      composeBtn.textContent = 'Sign in at /community to post';
+      composeBtn.style.color = '#E1A7A0';
+      composeBtn.style.borderColor = 'rgba(225,107,107,0.45)';
+      setTimeout(() => {
+        composeBtn.textContent = '+ Create a snippet';
+        composeBtn.style.color = '#F5D689';
+        composeBtn.style.borderColor = 'rgba(232,177,75,0.45)';
+      }, 2400);
+      return;
+    }
+    compose.style.display = 'block';
+    composeBtn.style.display = 'none';
+    document.getElementById('snippetTitle').focus();
+  };
+  cancelBtn.onclick = () => {
+    compose.style.display = 'none';
+    composeBtn.style.display = 'inline-block';
+  };
+  postBtn.onclick = async () => {
+    const body = document.getElementById('snippetBody').value.trim();
+    if (!body) { alert('Write something first.'); return; }
+    const title = document.getElementById('snippetTitle').value.trim();
+    const kind  = document.getElementById('snippetKind').value;
+    const m = currentMember();
+    const authorId    = (m && m.cloudId) || null;
+    const authorLabel = (m && m.name) || null;
+    postBtn.disabled = true; postBtn.textContent = 'Posting…';
+    try {
+      if (!window.SBclient) throw new Error('Supabase not loaded');
+      const { error } = await window.SBclient.from('snippets').insert({
+        title: title || null, body, kind,
+        author_id: authorId, author_label: authorLabel,
+      });
+      if (error) {
+        if (error.code === '42P01' || error.code === 'PGRST205') {
+          alert('Snippets table not installed — run supabase-snippets.sql in Supabase SQL Editor.');
+        } else {
+          alert('Could not post: ' + (error.message || error.code));
+        }
+        postBtn.disabled = false; postBtn.textContent = 'Post snippet';
+        return;
+      }
+      document.getElementById('snippetTitle').value = '';
+      document.getElementById('snippetBody').value = '';
+      compose.style.display = 'none';
+      composeBtn.style.display = 'inline-block';
+      await pullSnippets();
+    } catch (e) {
+      alert('Could not post: ' + (e?.message || e));
+    } finally {
+      postBtn.disabled = false; postBtn.textContent = 'Post snippet';
+    }
+  };
+
+  async function pullSnippets(){
+    try { if (window.SBready) await window.SBready; } catch { return; }
+    if (!window.SBclient) return;
+    try {
+      const { data, error } = await window.SBclient
+        .from('snippets')
+        .select('id, title, body, kind, author_label, created_at')
+        .order('created_at', { ascending: false })
+        .limit(80);
+      if (error) {
+        if (error.code !== '42P01' && error.code !== 'PGRST205') {
+          console.warn('[snippets] fetch:', error.message);
+        }
+        list.innerHTML = '<div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-style:italic;color:#8B7E62;padding:14px 0;">No snippets yet. Be the first.</div>';
+        return;
+      }
+      const rows = data || [];
+      if (!rows.length) {
+        list.innerHTML = '<div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-style:italic;color:#8B7E62;padding:14px 0;">No snippets yet. Be the first.</div>';
+        return;
+      }
+      list.innerHTML = rows.map(s => {
+        return '<article style="padding:14px 16px;border:0.5px solid rgba(232,177,75,0.18);border-radius:10px;background:linear-gradient(160deg,rgba(15,12,8,0.5),rgba(8,10,8,0.4));">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;">' +
+            kindChip(s.kind) +
+            '<span style="font-family:\'Geist Mono\',monospace;font-size:8.5px;letter-spacing:0.18em;color:#8B7E62;">' + escapeHtml(timeAgo(s.created_at)) + '</span>' +
+          '</div>' +
+          (s.title ? '<div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-style:italic;font-size:17px;color:#E6D9B5;line-height:1.3;margin-bottom:6px;">' + escapeHtml(s.title) + '</div>' : '') +
+          '<div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:14px;color:#C9B894;line-height:1.6;white-space:pre-wrap;">' + escapeHtml(s.body) + '</div>' +
+          (s.author_label ? '<div style="font-family:\'Geist Mono\',monospace;font-size:8.5px;letter-spacing:0.18em;color:#9ED438;margin-top:10px;">by ' + escapeHtml(s.author_label) + '</div>' : '') +
+        '</article>';
+      }).join('');
+    } catch (e) { console.warn('[snippets] threw:', e); }
+  }
+  pullSnippets();
 })();
 
 // ── Cross-page session check ─────────────────────────────
