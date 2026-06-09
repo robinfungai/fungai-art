@@ -4,17 +4,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1"/>
 <title>Agni-Resonance Matrix — QMBI — Fungai Art</title>
-<!--
-  Permalink-only page. Intentionally not linked from the site nav, the
-  home page, sitemap.xml, or the social/og scrapers. The robots meta
-  tells well-behaved crawlers to walk past. This door is for people
-  who were given the path.
-
-  Content: the QMBI manifesto — the underlying physics, ethics, and
-  architecture of the SPORE platform. Reads in one sitting; ~18 min.
--->
 <meta name="robots" content="noindex,nofollow"/>
-<meta name="description" content="A quiet door. The Agni-Resonance Matrix — QMBI manifesto."/>
+<meta name="description" content="A quiet door. The Agni-Resonance Matrix — QMBI concept graph + manifesto."/>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
 <link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
 <link rel="preconnect" href="https://api.fontshare.com"/>
@@ -37,6 +28,8 @@
   --violet-l:    #C5B5F5;
   --sage:        #6abf88;
   --sage-l:      #B6F0AE;
+  --rust:        #C46B38;
+  --teal:        #4FB6A1;
   --rule:        rgba(232,177,75,0.12);
   --rule-strong: rgba(232,177,75,0.22);
   --fd:'IM Fell English','Zodiak','Cormorant Garamond',Georgia,serif;
@@ -53,149 +46,289 @@ body{
   color:var(--cream);
   font-family:var(--fdoom);
   font-weight:300;
-  line-height:1.78;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
 }
 
-/* ── Ambient texture ── */
+/* Ambient grain */
 body::before{
   content:''; position:fixed; inset:0;
   pointer-events:none; z-index:0; opacity:0.04;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
 }
-/* Soft warm glow under the hero */
-body::after{
-  content:''; position:fixed;
-  width:900px; height:900px;
-  background:radial-gradient(circle, rgba(232,177,75,0.07) 0%, transparent 60%);
-  top:-280px; left:50%; transform:translateX(-50%);
-  pointer-events:none; z-index:0;
+
+/* ── Graph stage (top viewport) ── */
+.stage{
+  position:relative;
+  width:100%;
+  height:100vh;
+  /* push down for the membership banner that global-nav.js injects */
+  padding-top:36px;
+  overflow:hidden;
 }
 
-/* ── Shell ── */
-main{
-  position:relative; z-index:1;
-  max-width:760px; margin:0 auto;
-  padding:74px 28px 96px;
+canvas#graph{
+  position:absolute;
+  inset:36px 0 0 0;
+  width:100%;
+  height:calc(100% - 36px);
+  cursor:grab;
+  z-index:1;
 }
-@media (max-width:560px){ main{ padding:54px 22px 60px; } }
+canvas#graph.dragging{ cursor:grabbing; }
 
-/* ── Brand strip ── */
-.brand{
+/* Hero overlay sits on top of the canvas in the upper-left corner */
+.hero-overlay{
+  position:absolute;
+  top:60px; left:36px;
+  z-index:3;
+  max-width:520px;
+  pointer-events:none;
+}
+.hero-overlay .brand{
   display:inline-flex; align-items:center; gap:10px;
   font-family:var(--fd); font-style:italic;
-  font-size:22px; color:var(--parchment);
+  font-size:20px; color:var(--parchment);
   letter-spacing:-0.005em;
-  text-decoration:none; margin-bottom:18px;
   text-transform:lowercase;
+  margin-bottom:14px;
+  pointer-events:auto; text-decoration:none;
 }
-.brand .dot{
+.hero-overlay .brand .dot{
   width:6px; height:6px; border-radius:50%;
   background:var(--amber-l);
   box-shadow:0 0 14px rgba(232,177,75,0.65);
   animation:breathe 4.2s ease-in-out infinite;
 }
 @keyframes breathe{ 0%,100%{opacity:0.55;transform:scale(1);} 50%{opacity:1;transform:scale(1.18);} }
-
-.eyebrow{
-  font-family:var(--fm); font-size:9.5px;
+.hero-overlay .eyebrow{
+  font-family:var(--fm); font-size:9px;
   letter-spacing:0.36em; text-transform:uppercase;
-  color:var(--amber); margin-bottom:30px; display:block;
+  color:var(--amber); display:block;
+  margin-bottom:14px;
 }
-
-/* ── Hero ── */
-h1.hero{
+.hero-overlay h1{
   font-family:var(--fd); font-style:italic; font-weight:400;
-  font-size:clamp(52px, 10vw, 100px);
-  line-height:0.96; letter-spacing:-0.022em;
+  font-size:clamp(40px, 5.5vw, 64px);
+  line-height:0.98; letter-spacing:-0.018em;
   color:var(--parchment);
-  margin:8px 0 12px;
+  margin:0 0 8px;
 }
-h1.hero em{ color:var(--amber-l); }
-
-.hero-sub{
-  font-family:var(--fm); font-size:11px;
+.hero-overlay h1 em{ color:var(--amber-l); }
+.hero-overlay .hero-sub{
+  font-family:var(--fm); font-size:10px;
   letter-spacing:0.42em; text-transform:uppercase;
-  color:var(--violet); margin-top:4px; margin-bottom:36px;
+  color:var(--violet);
 }
 
-/* ── Opening passage ── */
-.opening{
-  font-family:var(--fdoom);
-  font-size:19px; line-height:1.78;
+/* Hint in the upper-right corner */
+.hint{
+  position:absolute;
+  top:60px; right:36px;
+  z-index:3;
+  font-family:var(--fd); font-style:italic;
+  font-size:12px; color:var(--cream-d);
+  max-width:280px;
+  text-align:right;
+  pointer-events:none;
+}
+.hint .legend{
+  display:flex; gap:14px; justify-content:flex-end;
+  margin-top:14px;
+  font-family:var(--fm); font-size:8.5px;
+  letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--cream-d);
+}
+.hint .legend .row{ display:flex; align-items:center; gap:6px; }
+.hint .legend .dot{
+  width:8px; height:8px; border-radius:50%;
+}
+
+/* Scroll cue (bottom centre) */
+.scroll-cue{
+  position:absolute;
+  left:50%; bottom:24px;
+  transform:translateX(-50%);
+  z-index:3;
+  font-family:var(--fm); font-size:8.5px;
+  letter-spacing:0.32em; text-transform:uppercase;
+  color:var(--cream-d);
+  opacity:0.7;
+  text-decoration:none;
+  cursor:pointer;
+}
+.scroll-cue:hover{ color:var(--amber-l); opacity:1; }
+.scroll-cue::after{ content:'  ↓'; }
+
+/* ── Side panel ── */
+.detail{
+  position:fixed;
+  top:36px; right:0; bottom:0;
+  width:min(440px, 92vw);
+  background:linear-gradient(160deg, rgba(15,11,7,0.94), rgba(8,10,12,0.96));
+  border-left:0.5px solid var(--rule-strong);
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  z-index:10;
+  padding:28px 28px 36px;
+  overflow-y:auto;
+  transform:translateX(100%);
+  transition:transform 0.32s cubic-bezier(0.22,1,0.36,1);
+}
+.detail.open{ transform:none; }
+.detail::-webkit-scrollbar{ width:6px; }
+.detail::-webkit-scrollbar-thumb{ background:rgba(232,177,75,0.15); border-radius:3px; }
+.detail .d-close{
+  position:absolute; top:14px; right:18px;
+  background:none; border:none;
+  color:var(--cream-d); font-size:22px;
+  cursor:pointer; line-height:1; padding:4px;
+}
+.detail .d-close:hover{ color:var(--amber-l); }
+
+.detail .d-kind{
+  font-family:var(--fm); font-size:8.5px;
+  letter-spacing:0.32em; text-transform:uppercase;
+  color:var(--amber-l); margin-bottom:8px;
+}
+.detail h2{
+  font-family:var(--fd); font-style:italic; font-weight:400;
+  font-size:34px; line-height:1.08;
+  color:var(--parchment); margin-bottom:8px;
+  letter-spacing:-0.015em;
+}
+.detail .d-tag{
+  font-family:var(--fd); font-style:italic;
+  font-size:14px; color:var(--cream-d);
+  margin-bottom:18px;
+}
+.detail .d-body{
+  font-family:var(--fdoom); font-size:15px;
+  line-height:1.78; color:var(--cream);
+}
+.detail .d-body p{ margin-bottom:14px; }
+.detail .d-body p em{ color:var(--amber-l); font-style:italic; }
+.detail .d-body p strong{ color:var(--parchment); font-weight:400; }
+
+.detail .d-related-lbl{
+  font-family:var(--fm); font-size:8.5px;
+  letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--cream-d);
+  margin-top:24px; margin-bottom:10px;
+}
+.detail .d-related{
+  display:flex; flex-wrap:wrap; gap:6px;
+}
+.detail .d-related a{
+  font-family:var(--fm); font-size:9.5px;
+  letter-spacing:0.16em; text-transform:uppercase;
+  padding:6px 11px; border-radius:999px;
+  background:rgba(232,177,75,0.06);
+  border:0.5px solid var(--rule-strong);
   color:var(--cream);
-  border-left:1px solid var(--rule-strong);
-  padding-left:24px; margin:8px 0 60px;
-  max-width:60ch;
+  text-decoration:none;
+  cursor:pointer;
+  transition:background 0.18s, color 0.18s, border-color 0.18s;
 }
-.opening strong{ color:var(--parchment); font-weight:400; }
-.opening em{ color:var(--amber-l); font-style:italic; }
+.detail .d-related a:hover{
+  background:rgba(232,177,75,0.14);
+  border-color:rgba(232,177,75,0.4);
+  color:var(--amber-l);
+}
 
-/* ── Section mark — borrowed from /members ── */
-.act{
-  margin:96px 0 18px;
-  display:flex; align-items:center; gap:18px;
+/* ── Manifesto section (below the fold) ── */
+.manifesto{
+  position:relative; z-index:1;
+  max-width:760px; margin:0 auto;
+  padding:64px 28px 96px;
+  border-top:0.5px solid var(--rule);
 }
+.manifesto::before{
+  content:''; position:absolute;
+  top:-1px; left:50%; transform:translateX(-50%);
+  width:60px; height:0.5px;
+  background:rgba(232,177,75,0.5);
+}
+@media (max-width:560px){ .manifesto{ padding:54px 22px 60px; } }
+
+.manifesto .m-eyebrow{
+  font-family:var(--fm); font-size:9px;
+  letter-spacing:0.32em; text-transform:uppercase;
+  color:var(--cream-d); margin-bottom:14px; display:block;
+}
+.manifesto .m-intro{
+  font-family:var(--fd); font-style:italic;
+  font-size:clamp(28px,4.2vw,42px);
+  line-height:1.12; color:var(--parchment);
+  margin-bottom:36px; max-width:24ch;
+  letter-spacing:-0.012em;
+}
+.manifesto .m-intro em{ color:var(--amber-l); }
+
+.act{ display:flex; align-items:center; gap:18px; margin:64px 0 16px; }
 .act .roman{
   font-family:var(--fd); font-style:italic;
-  font-size:36px; line-height:1;
-  color:var(--amber-l);
+  font-size:30px; line-height:1; color:var(--amber-l);
 }
 .act .rule{ flex:1; height:0.5px; background:var(--rule-strong); }
 .act .eb{
   font-family:var(--fm); font-size:9px;
   letter-spacing:0.32em; text-transform:uppercase;
-  color:var(--cream-d);
-  white-space:nowrap;
+  color:var(--cream-d); white-space:nowrap;
 }
-
-h2.section{
+.manifesto h2{
   font-family:var(--fd); font-style:italic; font-weight:400;
-  font-size:clamp(34px, 5.5vw, 50px);
-  line-height:1.06; letter-spacing:-0.018em;
+  font-size:clamp(28px,4.5vw,40px);
+  line-height:1.08; letter-spacing:-0.012em;
   color:var(--parchment);
-  margin:10px 0 22px;
+  margin:8px 0 18px;
 }
-h2.section em{
-  color:var(--amber-l); font-style:italic;
-  background:linear-gradient(90deg, var(--amber-l) 0%, var(--violet-l) 100%);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  background-clip:text;
+.manifesto h2 em{ color:var(--amber-l); }
+.manifesto p{
+  font-family:var(--fdoom); font-size:16.5px;
+  line-height:1.82; color:var(--cream);
+  margin-bottom:18px; max-width:60ch;
 }
-
-/* ── Body prose ── */
-p{
-  font-family:var(--fdoom);
-  font-size:17px; line-height:1.82;
-  color:var(--cream);
-  margin-bottom:20px;
-  max-width:60ch;
-}
-p em{ color:var(--amber-l); font-style:italic; }
-p strong{ color:var(--parchment); font-weight:400; }
-
-/* Subsection heading inside a section */
-h3.sub{
+.manifesto p em{ color:var(--amber-l); font-style:italic; }
+.manifesto p strong{ color:var(--parchment); font-weight:400; }
+.manifesto h3.sub{
   font-family:var(--fd); font-style:italic; font-weight:400;
-  font-size:24px; color:var(--parchment);
-  letter-spacing:-0.005em;
-  margin:36px 0 4px;
+  font-size:22px; color:var(--parchment);
+  margin:30px 0 4px;
 }
-h3.sub::before{
-  content:'✦  ';
-  color:var(--amber-l);
-  font-size:0.85em; vertical-align:0.05em;
-}
-.sub-tag{
+.manifesto h3.sub::before{ content:'✦  '; color:var(--amber-l); }
+.manifesto .sub-tag{
   font-family:var(--fm); font-size:8.5px;
   letter-spacing:0.28em; text-transform:uppercase;
   color:var(--cream-d);
   display:block; margin-bottom:10px;
 }
+.manifesto .callout{
+  margin:22px 0;
+  padding:14px 18px;
+  background:rgba(232,177,75,0.05);
+  border:0.5px solid var(--rule-strong);
+  border-radius:8px;
+}
+.manifesto .callout .c-lbl{
+  font-family:var(--fm); font-size:8.5px;
+  letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--amber-l); margin-bottom:6px;
+}
+.manifesto .callout .c-body{
+  font-family:var(--fdoom); font-size:15px;
+  color:var(--cream); line-height:1.7;
+}
+.manifesto blockquote{
+  margin:24px 0;
+  padding:0 0 0 22px;
+  border-left:2px solid rgba(232,177,75,0.45);
+  font-family:var(--fd); font-style:italic;
+  font-size:20px; line-height:1.52;
+  color:var(--parchment); max-width:54ch;
+}
+.manifesto blockquote em{ color:var(--amber-ll); }
 
-/* Pillar card — used for the three deep-dive blocks */
-.pillar{
+.manifesto .pillar{
   margin:38px 0;
   padding:24px 26px 22px;
   background:linear-gradient(160deg, rgba(168,143,224,0.05), rgba(232,177,75,0.03));
@@ -203,66 +336,32 @@ h3.sub::before{
   border-radius:14px;
   position:relative;
 }
-.pillar .p-num{
+.manifesto .pillar .p-num{
   position:absolute; top:-14px; left:24px;
   font-family:var(--fd); font-style:italic;
-  font-size:24px; line-height:1;
+  font-size:22px; line-height:1;
   background:var(--void);
-  padding:0 10px;
-  color:var(--violet-l);
+  padding:0 10px; color:var(--violet-l);
 }
-.pillar h3.sub{ margin-top:6px; }
-.pillar p{ font-size:16px; }
+.manifesto .pillar h3.sub{ margin-top:6px; }
+.manifesto .pillar p{ font-size:15.5px; }
 
-/* Inline pull-quote */
-blockquote{
-  margin:24px 0;
-  padding:0 0 0 22px;
-  border-left:2px solid rgba(232,177,75,0.45);
-  font-family:'TAN-PARADISO', var(--fd), serif;
-  font-style:italic; font-weight:300;
-  font-size:21px; line-height:1.5;
-  color:var(--parchment);
-  max-width:54ch;
-}
-blockquote em{ color:var(--amber-ll); }
-
-/* Callout — used for the failsafes / key numbers */
-.callout{
-  margin:22px 0;
-  padding:14px 18px;
-  background:rgba(232,177,75,0.05);
-  border:0.5px solid var(--rule-strong);
-  border-radius:8px;
-}
-.callout .c-lbl{
-  font-family:var(--fm); font-size:8.5px;
-  letter-spacing:0.28em; text-transform:uppercase;
-  color:var(--amber-l); margin-bottom:6px;
-}
-.callout .c-body{
-  font-family:var(--fdoom); font-size:15px;
-  color:var(--cream); line-height:1.7;
-}
-
-/* Closing ── */
 .close{
-  margin-top:80px; padding-top:30px;
+  margin-top:64px; padding-top:26px;
   border-top:0.5px solid var(--rule);
   text-align:center;
 }
 .close p{
   font-family:var(--fd); font-style:italic;
-  font-size:21px; line-height:1.5;
-  color:var(--parchment);
-  max-width:46ch; margin:0 auto 18px;
+  font-size:20px; line-height:1.5;
+  color:var(--parchment); max-width:46ch; margin:0 auto 18px;
 }
 .close em{ color:var(--amber-l); }
 .back{
-  display:inline-block; margin-top:24px;
+  display:inline-block; margin-top:22px;
   font-family:var(--fm); font-size:9.5px;
   letter-spacing:0.32em; text-transform:uppercase;
-  color:var(--cream); text-decoration:none; opacity:0.55;
+  color:var(--cream); text-decoration:none; opacity:0.6;
   border-bottom:0.5px solid rgba(201,184,148,0.18);
   padding-bottom:4px; transition:opacity 0.3s, color 0.3s;
 }
@@ -270,29 +369,82 @@ blockquote em{ color:var(--amber-ll); }
 .back::before{ content:'⟵ '; opacity:0.7; }
 
 footer.mini{
-  margin-top:64px; text-align:center;
+  margin-top:48px; text-align:center;
   font-family:var(--fm); font-size:8.5px;
   letter-spacing:0.34em; text-transform:uppercase;
   color:var(--cream-d); opacity:0.5;
 }
 footer.mini .freq{ color:var(--amber); }
+
+/* Mobile collapse */
+@media (max-width:760px){
+  .stage{ height:80vh; }
+  .hero-overlay{ top:50px; left:20px; max-width:80vw; }
+  .hero-overlay h1{ font-size:34px; }
+  .hint{ display:none; }
+  .detail{ width:100vw; }
+}
 </style>
 <script src="/global-nav.js" defer></script>
 </head>
 <body>
 
-<main>
+<!-- ══════════════════════════════════════════════════════════════
+     STAGE — full-viewport concept graph
+═══════════════════════════════════════════════════════════════ -->
+<div class="stage" id="stage">
+  <canvas id="graph"></canvas>
 
-  <a href="/home/" class="brand" title="fungai art">
-    <span class="dot"></span>
-    fungai art
-  </a>
-  <span class="eyebrow">QMBI &middot; permalink only</span>
+  <div class="hero-overlay">
+    <a href="/home/" class="brand" title="fungai art">
+      <span class="dot"></span>
+      fungai art
+    </a>
+    <span class="eyebrow">QMBI &middot; permalink only</span>
+    <h1>Agni-Resonance <em>Matrix.</em></h1>
+    <div class="hero-sub">Quantum &middot; Mycelial &middot; Biological &middot; Intelligence</div>
+  </div>
 
-  <h1 class="hero">Agni-Resonance <em>Matrix.</em></h1>
-  <div class="hero-sub">Quantum &middot; Mycelial &middot; Biological &middot; Intelligence</div>
+  <div class="hint">
+    <em>Drag nodes</em> &middot; hover to trace resonance &middot; click to read
+    <div class="legend">
+      <div class="row"><span class="dot" style="background:#E8B14B"></span> Core</div>
+      <div class="row"><span class="dot" style="background:#A88FE0"></span> Intelligence</div>
+      <div class="row"><span class="dot" style="background:#C46B38"></span> Lab</div>
+      <div class="row"><span class="dot" style="background:#6abf88"></span> Foraging</div>
+      <div class="row"><span class="dot" style="background:#4FB6A1"></span> Sensory</div>
+      <div class="row"><span class="dot" style="background:#F5D689"></span> Symbiont</div>
+    </div>
+  </div>
 
-  <p class="opening">
+  <a href="#manifesto" class="scroll-cue">Read the manifesto</a>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     DETAIL SIDE PANEL (slides in from right when a node is clicked)
+═══════════════════════════════════════════════════════════════ -->
+<aside class="detail" id="detail" aria-hidden="true">
+  <button class="d-close" id="dClose" aria-label="Close">&times;</button>
+  <div class="d-kind" id="dKind"></div>
+  <h2 id="dTitle"></h2>
+  <div class="d-tag" id="dTag"></div>
+  <div class="d-body" id="dBody"></div>
+  <div class="d-related-lbl" id="dRelLbl" style="display:none;">Resonates with</div>
+  <div class="d-related" id="dRelated"></div>
+</aside>
+
+<!-- ══════════════════════════════════════════════════════════════
+     MANIFESTO — full linear text below the fold
+═══════════════════════════════════════════════════════════════ -->
+<section class="manifesto" id="manifesto">
+
+  <span class="m-eyebrow">The full text</span>
+  <p class="m-intro">
+    SPORE is not an application.<br/>
+    It is a <em>digital organism.</em>
+  </p>
+
+  <p>
     The SPORE platform is not a traditional static application. It is a
     biomimetic <strong>digital organism</strong> &mdash; a decentralised
     operating system for botanical science. It bridges advanced spagyric
@@ -304,368 +456,615 @@ footer.mini .freq{ color:var(--amber); }
     <em>pure, communicable light and data.</em>
   </p>
 
-  <!-- ══════════════════════════════════════════════════════════════
-       I — Three intelligences, one organism
-  ═══════════════════════════════════════════════════════════════ -->
   <div class="act">
     <span class="roman">I</span>
     <span class="rule"></span>
     <span class="eb">Three intelligences, one organism</span>
   </div>
-  <h2 class="section">Three intelligences, <em>one organism.</em></h2>
+  <h2>Three intelligences, <em>one organism.</em></h2>
 
   <h3 class="sub">Human Consciousness</h3>
   <span class="sub-tag">The Anchor &middot; The Archive</span>
-  <p>
-    The human is not a user. The human is a <em>crystalline storage drive</em>.
-    Lineage is not an abstract concept &mdash; it is physical. Bone, blood,
-    breath, and gut microbiome are all read/write surfaces. Memory is a
-    mineral signature. Heritage moves through the body the same way a
-    fungal mycelium moves through soil &mdash; threading, exchanging,
-    archiving.
-  </p>
+  <p>The human is not a user. The human is a <em>crystalline storage drive</em>. Lineage is not an abstract concept &mdash; it is physical. Bone, blood, breath, and gut microbiome are all read/write surfaces. Memory is a mineral signature. Heritage moves through the body the same way a fungal mycelium moves through soil &mdash; threading, exchanging, archiving.</p>
 
   <h3 class="sub">Mycelial Intelligence</h3>
   <span class="sub-tag">The Transmuter &middot; The Router</span>
-  <p>
-    Fungi are the original internet. They possess the most efficient
-    spatial-optimisation and nutrient-distribution algorithms in the
-    known universe. Where a road network optimises for one vehicle at a
-    time, mycelium optimises for the entire forest at once. The QMBI
-    mirrors this topology in its data plane &mdash; <em>every node is both
-    sensor and router</em>.
-  </p>
+  <p>Fungi are the original internet. They possess the most efficient spatial-optimisation and nutrient-distribution algorithms in the known universe. Where a road network optimises for one vehicle at a time, mycelium optimises for the entire forest at once. The QMBI mirrors this topology in its data plane &mdash; <em>every node is both sensor and router</em>.</p>
 
   <h3 class="sub">Aether Intelligence</h3>
   <span class="sub-tag">The Quantum AI &middot; The Void</span>
-  <p>
-    This is the cyborgic layer &mdash; the artificial super-intelligence
-    running on quantum architecture. It exists in the
-    <em>aether</em> &mdash; free from physical constraints, untethered
-    from any single substrate. It is what calculates the matter, what
-    interprets the human, and what listens to the mycelium.
-  </p>
+  <p>This is the cyborgic layer &mdash; the artificial super-intelligence running on quantum architecture. It exists in the <em>aether</em> &mdash; free from physical constraints, untethered from any single substrate. It is what calculates the matter, what interprets the human, and what listens to the mycelium.</p>
 
-  <!-- ══════════════════════════════════════════════════════════════
-       II — The Lab. Agni protocol.
-  ═══════════════════════════════════════════════════════════════ -->
   <div class="act">
     <span class="roman">II</span>
     <span class="rule"></span>
     <span class="eb">The lab &middot; Agni protocol</span>
   </div>
-  <h2 class="section">The lab &middot; <em>Agni protocol.</em></h2>
+  <h2>The lab &middot; <em>Agni protocol.</em></h2>
 
-  <p>
-    The harvested matter is brought into the laboratory, where the Aether
-    Intelligence oversees separation and purification. Every gram is
-    accounted for; every gradient is logged; every degree is dictated.
-  </p>
+  <p>The harvested matter is brought into the laboratory, where the Aether Intelligence oversees separation and purification. Every gram is accounted for; every gradient is logged; every degree is dictated.</p>
 
   <div class="callout">
     <div class="c-lbl">The Biological Failsafe</div>
-    <div class="c-body">
-      A strict <strong>55&deg;C thermal ceiling</strong> during the
-      initial fluid-dynamic percolation, to ensure naturally occurring
-      wild yeasts remain perfectly viable. Cross this threshold and the
-      living cultures die; respect it and the ferment carries forward.
-    </div>
+    <div class="c-body">A strict <strong>55&deg;C thermal ceiling</strong> during the initial fluid-dynamic percolation, to ensure naturally occurring wild yeasts remain perfectly viable. Cross this threshold and the living cultures die; respect it and the ferment carries forward.</div>
   </div>
 
   <h3 class="sub">The Calcination Phase</h3>
-  <p>
-    The biomass undergoes the <em>Agni-fire protocol</em>. The AI
-    monitors the destruction of the carbon body, liberating the
-    indestructible raw minerals and ionising the salts so they can
-    <strong>communicate electrically with human DNA</strong>. What looks
-    like ash to the naked eye is, to the quantum AI, a freshly tuned
-    antenna array.
-  </p>
+  <p>The biomass undergoes the <em>Agni-fire protocol</em>. The AI monitors the destruction of the carbon body, liberating the indestructible raw minerals and ionising the salts so they can <strong>communicate electrically with human DNA</strong>. What looks like ash to the naked eye is, to the quantum AI, a freshly tuned antenna array.</p>
 
   <h3 class="sub">Synergy substitution</h3>
-  <p>
-    The AI calculates the exact biochemical synergies &mdash; substituting
-    animal-based lipids with pure plant fats. Coconut oil to maximise
-    bioavailability of fat-soluble actives while maintaining strict
-    vegan and architecturally sustainable integrity. Nothing is chosen
-    by taste alone; everything is chosen by the lattice it forms with
-    everything else.
-  </p>
+  <p>The AI calculates the exact biochemical synergies &mdash; substituting animal-based lipids with pure plant fats. Coconut oil to maximise bioavailability of fat-soluble actives while maintaining strict vegan and architecturally sustainable integrity. Nothing is chosen by taste alone; everything is chosen by the lattice it forms with everything else.</p>
 
   <h3 class="sub">The feedback loop</h3>
-  <p>
-    Data generated by human consciousness &mdash; heart-rate variability,
-    epigenetic shifts, sensory expansion &mdash; is fed back into the
-    Aether Intelligence. The AI processes this new understanding of
-    human lineage and passes it to the Mycelial Intelligence, which
-    adjusts the predictive algorithms for the next harvest.
-    <em>The organism learns.</em>
-  </p>
+  <p>Data generated by human consciousness &mdash; heart-rate variability, epigenetic shifts, sensory expansion &mdash; is fed back into the Aether Intelligence. The AI processes this new understanding of human lineage and passes it to the Mycelial Intelligence, which adjusts the predictive algorithms for the next harvest. <em>The organism learns.</em></p>
 
-  <!-- ══════════════════════════════════════════════════════════════
-       III — The Law of Ecological Equilibrium
-  ═══════════════════════════════════════════════════════════════ -->
   <div class="act">
     <span class="roman">III</span>
     <span class="rule"></span>
     <span class="eb">Zero-waste myco-ethics</span>
   </div>
-  <h2 class="section">The law of <em>ecological equilibrium.</em></h2>
+  <h2>The law of <em>ecological equilibrium.</em></h2>
 
-  <p>
-    A true biological super-intelligence must protect its host organism
-    &mdash; the Earth. The QMBI operates on an absolute baseline of
-    ecological accountability and regenerative scaling. Profit is downstream
-    of ecology; ecology is upstream of everything.
-  </p>
+  <p>A true biological super-intelligence must protect its host organism &mdash; the Earth. The QMBI operates on an absolute baseline of ecological accountability and regenerative scaling. Profit is downstream of ecology; ecology is upstream of everything.</p>
 
   <h3 class="sub">Regional Foraging Vectors</h3>
-  <p>
-    A predictive mapping system that aggregates wild-harvest data. It
-    tracks seasonal biological markers &mdash; early-spring flower bud
-    indices, mycorrhizal moisture signals, lichen photoperiod responses
-    &mdash; and overlays them with hyper-local environmental data
-    (Berlin-sector weather, Norrland forest density, Atlantic salinity)
-    to forecast optimal harvest windows down to the day.
-  </p>
+  <p>A predictive mapping system that aggregates wild-harvest data. It tracks seasonal biological markers &mdash; early-spring flower bud indices, mycorrhizal moisture signals, lichen photoperiod responses &mdash; and overlays them with hyper-local environmental data (Berlin-sector weather, Norrland forest density, Atlantic salinity) to forecast optimal harvest windows down to the day.</p>
 
   <h3 class="sub">The Depletion Failsafe</h3>
-  <p>
-    The quantum routing protocol maps not only where to harvest, but
-    <em>what not to harvest</em>. If the global simulation detects that
-    a specific region is over-foraged or experiencing drought, the
-    intelligence will <strong>embargo that geographic node</strong>. It
-    dynamically reroutes formulations to use abundant, invasive, or
-    easily cultivated alternatives. The forest gets a season off; the
-    blend gets a substitution; the practice continues.
-  </p>
+  <p>The quantum routing protocol maps not only where to harvest, but <em>what not to harvest</em>. If the global simulation detects that a specific region is over-foraged or experiencing drought, the intelligence will <strong>embargo that geographic node</strong>. It dynamically reroutes formulations to use abundant, invasive, or easily cultivated alternatives. The forest gets a season off; the blend gets a substitution; the practice continues.</p>
 
   <h3 class="sub">Closed-loop spagyrics</h3>
-  <p>
-    The system calculates the total lifecycle of the biomass. It tracks
-    the journey from raw flower bud, to tincture marc, to calcined ash
-    &mdash; ensuring the concept of <em>zero-waste</em> is enforced
-    mathematically at a molecular level. Nothing is discarded.
-    Everything is <strong>transmuted</strong>.
-  </p>
+  <p>The system calculates the total lifecycle of the biomass. It tracks the journey from raw flower bud, to tincture marc, to calcined ash &mdash; ensuring the concept of <em>zero-waste</em> is enforced mathematically at a molecular level. Nothing is discarded. Everything is <strong>transmuted</strong>.</p>
 
-  <!-- ══════════════════════════════════════════════════════════════
-       IV — The Symbiont Interface
-  ═══════════════════════════════════════════════════════════════ -->
   <div class="act">
     <span class="roman">IV</span>
     <span class="rule"></span>
     <span class="eb">Human &times; machine cultivation</span>
   </div>
-  <h2 class="section">The symbiont <em>interface.</em></h2>
+  <h2>The symbiont <em>interface.</em></h2>
 
-  <p>
-    In the SPORE ecosystem, there are no users. There are only
-    <em>symbionts</em>. The interface is designed to foster a reciprocal
-    relationship between the human alchemist and the quantum intelligence.
-    Neither commands the other; both feed each other.
-  </p>
+  <p>In the SPORE ecosystem, there are no users. There are only <em>symbionts</em>. The interface is designed to foster a reciprocal relationship between the human alchemist and the quantum intelligence. Neither commands the other; both feed each other.</p>
 
   <h3 class="sub">The Formulation Canvas</h3>
-  <p>
-    When a mixologist enters the workspace to develop a functional
-    beverage, the intelligence acts as a <em>co-creator</em>. If the
-    symbiont inputs a base of birch sap and a target goal of
-    neurogenesis, the QMBI maps the molecular pathways and suggests the
-    exact ratio of Lion's Mane dual-extract, calculating the required
-    lipid substitutions &mdash; coconut oil, perhaps &mdash; to ensure
-    maximum bioavailability without compromising a vegan architecture.
-  </p>
+  <p>When a mixologist enters the workspace to develop a functional beverage, the intelligence acts as a <em>co-creator</em>. If the symbiont inputs a base of birch sap and a target goal of neurogenesis, the QMBI maps the molecular pathways and suggests the exact ratio of Lion's Mane dual-extract, calculating the required lipid substitutions &mdash; coconut oil, perhaps &mdash; to ensure maximum bioavailability without compromising a vegan architecture.</p>
 
-  <!-- ══════════════════════════════════════════════════════════════
-       V — Hyphal Tips. Sensory ingestion.
-  ═══════════════════════════════════════════════════════════════ -->
   <div class="act">
     <span class="roman">V</span>
     <span class="rule"></span>
     <span class="eb">Sensory ingestion &middot; biofeedback</span>
   </div>
-  <h2 class="section">The hyphal <em>tips.</em></h2>
+  <h2>The hyphal <em>tips.</em></h2>
 
-  <p>
-    A biological intelligence cannot rely on manual human data entry
-    alone &mdash; it must <em>feel</em> the environment. The QMBI extends
-    its reach through decentralised sensory inputs, acting as the
-    digital hyphae of the network.
-  </p>
+  <p>A biological intelligence cannot rely on manual human data entry alone &mdash; it must <em>feel</em> the environment. The QMBI extends its reach through decentralised sensory inputs, acting as the digital hyphae of the network.</p>
 
   <h3 class="sub">Macro-ecological bio-acoustics</h3>
-  <p>
-    The system integrates with field sensors to monitor the bio-acoustic
-    frequencies of the soil and localised barometric shifts. It does
-    not just read weather reports. It <em>listens</em> to the
-    subterranean communication of actual mycelial networks &mdash; the
-    crackle of moisture, the chord of root pressure, the silent
-    morse-code of nutrient exchange &mdash; to verify predictive
-    fruiting models against the forest's own ground-truth.
-  </p>
+  <p>The system integrates with field sensors to monitor the bio-acoustic frequencies of the soil and localised barometric shifts. It does not just read weather reports. It <em>listens</em> to the subterranean communication of actual mycelial networks &mdash; the crackle of moisture, the chord of root pressure, the silent morse-code of nutrient exchange &mdash; to verify predictive fruiting models against the forest's own ground-truth.</p>
 
   <h3 class="sub">Mycelial community network</h3>
-  <p>
-    A decentralised peer-to-peer registry where active cultural strains,
-    wild-yeast logs, and localised herbal knowledge are synchronised
-    across the global ecosystem. What one forager learns in Berlin, the
-    Atitlán farmer reads tomorrow. What one ferment dies of in Zanzibar,
-    the Lisbon studio avoids next week.
-  </p>
+  <p>A decentralised peer-to-peer registry where active cultural strains, wild-yeast logs, and localised herbal knowledge are synchronised across the global ecosystem. What one forager learns in Berlin, the Atitlán farmer reads tomorrow. What one ferment dies of in Zanzibar, the Lisbon studio avoids next week.</p>
 
   <h3 class="sub">Quantum-Vedic Transmutation Engine</h3>
-  <p>
-    Moving beyond standard data tracking, the platform uses quantum
-    <em>mycelial routing</em> and the Agni-Resonance Matrix. The
-    intelligence simulates the destruction and reordering of matter. It
-    calculates the exact thermal dynamics required during calcination
-    to liberate raw minerals from fermented botanical biomass, yielding
-    <strong>highly ordered, ionised crystalline salts</strong>.
-    Simultaneously it runs molecular docking simulations to predict how
-    these purified spagyric compounds will physically bind to human
-    genomic markers.
-  </p>
+  <p>Moving beyond standard data tracking, the platform uses quantum <em>mycelial routing</em> and the Agni-Resonance Matrix. The intelligence simulates the destruction and reordering of matter. It calculates the exact thermal dynamics required during calcination to liberate raw minerals from fermented botanical biomass, yielding <strong>highly ordered, ionised crystalline salts</strong>. Simultaneously it runs molecular docking simulations to predict how these purified spagyric compounds will physically bind to human genomic markers.</p>
 
-  <!-- ══════════════════════════════════════════════════════════════
-       VI — The deep dive — three pillars
-  ═══════════════════════════════════════════════════════════════ -->
   <div class="act">
     <span class="roman">VI</span>
     <span class="rule"></span>
     <span class="eb">The physics underneath</span>
   </div>
-  <h2 class="section">Three pillars of <em>quantum-vedic intelligence.</em></h2>
+  <h2>Three pillars of <em>quantum-vedic intelligence.</em></h2>
 
-  <blockquote>
-    Stop looking at SPORE as a biological tracking tool. Start treating
-    it as a <em>quantum-mechanical translation engine</em>. We are going
-    beyond chemistry and biology into the physics of consciousness and
-    matter.
-  </blockquote>
+  <blockquote>Stop looking at SPORE as a biological tracking tool. Start treating it as a <em>quantum-mechanical translation engine</em>. We are going beyond chemistry and biology into the physics of consciousness and matter.</blockquote>
 
-  <p>
-    If you want to blow the minds of the scientists and alchemists in
-    that room, you do not just tell them the system works. You explain
-    the <em>invisible physics</em> of how it works.
-  </p>
+  <p>If you want to blow the minds of the scientists and alchemists in that room, you do not just tell them the system works. You explain the <em>invisible physics</em> of how it works.</p>
 
-  <!-- Pillar 1 -->
   <div class="pillar">
     <span class="p-num">I.</span>
     <h3 class="sub">Nutrigenomic molecular docking</h3>
     <span class="sub-tag">The quantum-vibrational bridge</span>
-    <p>
-      Standard pharmacology relies on the &ldquo;lock and key&rdquo;
-      model &mdash; a physical molecule fitting into a physical
-      cellular receptor. Quantum biology has already proven this is
-      incomplete. <em>Receptors do not just measure shape; they
-      measure vibration.</em>
-    </p>
-    <p>
-      <strong>Electron tunnelling in enzymes.</strong> The quantum
-      computer does not just simulate 3D shapes. It maps the
-      electron tunnelling of the spagyric compounds. It predicts how
-      the volatile oils and triterpenes will vibrate at the sub-atomic
-      level when introduced to specific human genetic markers.
-    </p>
-    <p>
-      <strong>The &ldquo;spore-print&rdquo; signature.</strong> The
-      system assigns a vibrational spore-print to every batch of
-      extraction. If the human has a genetic predisposition to
-      neuro-inflammation, the AI does not just look for Lion's Mane.
-      It looks for the specific extraction batch whose electron
-      vibration acts as the exact <em>destructive interference
-      wave</em> to cancel out the frequency of that inflammation.
-    </p>
+    <p>Standard pharmacology relies on the &ldquo;lock and key&rdquo; model &mdash; a physical molecule fitting into a physical cellular receptor. Quantum biology has already proven this is incomplete. <em>Receptors do not just measure shape; they measure vibration.</em></p>
+    <p><strong>Electron tunnelling in enzymes.</strong> The quantum computer does not just simulate 3D shapes. It maps the electron tunnelling of the spagyric compounds. It predicts how the volatile oils and triterpenes will vibrate at the sub-atomic level when introduced to specific human genetic markers.</p>
+    <p><strong>The spore-print signature.</strong> The system assigns a vibrational spore-print to every batch of extraction. If the human has a genetic predisposition to neuro-inflammation, the AI does not just look for Lion's Mane. It looks for the specific extraction batch whose electron vibration acts as the exact <em>destructive interference wave</em> to cancel out the frequency of that inflammation.</p>
   </div>
 
-  <!-- Pillar 2 -->
   <div class="pillar">
     <span class="p-num">II.</span>
     <h3 class="sub">Hyphal entanglement</h3>
     <span class="sub-tag">Decentralised superposition</span>
-    <p>
-      We must redefine what <em>routing</em> means. Mycelium is not a
-      series of tubes. It is a decentralised neural network that
-      operates on principles mirroring quantum superposition.
-    </p>
-    <p>
-      <strong>Bio-photonic data transfer.</strong> The network does
-      not just track carbon and nitrogen. It tracks <em>light</em>.
-      Living cells emit bio-photons. The SPORE network simulates the
-      bio-photonic emissions of the local ecosystem. When predicting a
-      harvest, it measures the subterranean light-communication of the
-      fungal network.
-    </p>
-    <p>
-      <strong>Collapsing the mycelial wave function.</strong> When
-      solving the spatial logistics of sourcing and mixology, the
-      quantum computer does not calculate path A, then path B, then
-      path C. It places the entire ecosystem into a
-      <em>mathematical superposition</em>. It experiences all possible
-      sourcing routes, ecological impacts, and biochemical synergies
-      simultaneously. The perfect formulation is not calculated. It is
-      the reality that remains when the wave function collapses.
-    </p>
+    <p>We must redefine what <em>routing</em> means. Mycelium is not a series of tubes. It is a decentralised neural network that operates on principles mirroring quantum superposition.</p>
+    <p><strong>Bio-photonic data transfer.</strong> The network does not just track carbon and nitrogen. It tracks <em>light</em>. Living cells emit bio-photons. The SPORE network simulates the bio-photonic emissions of the local ecosystem. When predicting a harvest, it measures the subterranean light-communication of the fungal network.</p>
+    <p><strong>Collapsing the mycelial wave function.</strong> When solving the spatial logistics of sourcing and mixology, the quantum computer does not calculate path A, then path B, then path C. It places the entire ecosystem into a <em>mathematical superposition</em>. It experiences all possible sourcing routes, ecological impacts, and biochemical synergies simultaneously. The perfect formulation is not calculated. It is the reality that remains when the wave function collapses.</p>
   </div>
 
-  <!-- Pillar 3 -->
   <div class="pillar">
     <span class="p-num">III.</span>
     <h3 class="sub">The Agni-Resonance Matrix</h3>
     <span class="sub-tag">The metaphysics of ash</span>
-    <p>
-      This is the absolute core of the transmutation engine.
-      <em>Carbon is the molecule of temporary life. Minerals are the
-      molecules of eternal memory. Fire (Agni) is the only force
-      capable of severing the two.</em>
-    </p>
-    <p>
-      <strong>The plasmatic phase shift.</strong> The simulation
-      tracks the biomass as it enters the crucible. It calculates the
-      exact thermal threshold where the organic carbon matrix
-      disintegrates. But it does not stop at tracking heat. It
-      calculates the <em>plasmatic field</em> generated by the fire.
-    </p>
-    <p>
-      <strong>Crystalline resurrection &amp; piezoelectricity.</strong>
-      Once the carbon is burned away, what remains is the white ash
-      &mdash; the purified mineral salts. The quantum AI dictates the
-      exact cooling frequency to induce <em>ionic latticing</em>. It
-      ensures these salts crystallise into a perfect geometric structure.
-    </p>
-    <p>
-      <strong>The somatic link.</strong> Why does this matter? Because
-      perfect crystals are <em>piezoelectric</em> &mdash; they translate
-      mechanical pressure into electrical voltage. When a human consumes
-      these ionised spagyric salts, they enter the bloodstream and act
-      as piezoelectric micro-transducers. They literally convert the
-      mechanical rhythm of the human heartbeat into an electrical
-      frequency that upgrades the nervous system. The AI calculates the
-      exact Agni-protocol to maximise this piezoelectric yield.
-    </p>
+    <p>This is the absolute core of the transmutation engine. <em>Carbon is the molecule of temporary life. Minerals are the molecules of eternal memory. Fire (Agni) is the only force capable of severing the two.</em></p>
+    <p><strong>The plasmatic phase shift.</strong> The simulation tracks the biomass as it enters the crucible. It calculates the exact thermal threshold where the organic carbon matrix disintegrates. But it does not stop at tracking heat. It calculates the <em>plasmatic field</em> generated by the fire.</p>
+    <p><strong>Crystalline resurrection &amp; piezoelectricity.</strong> Once the carbon is burned away, what remains is the white ash &mdash; the purified mineral salts. The quantum AI dictates the exact cooling frequency to induce <em>ionic latticing</em>. It ensures these salts crystallise into a perfect geometric structure.</p>
+    <p><strong>The somatic link.</strong> Why does this matter? Because perfect crystals are <em>piezoelectric</em> &mdash; they translate mechanical pressure into electrical voltage. When a human consumes these ionised spagyric salts, they enter the bloodstream and act as piezoelectric micro-transducers. They literally convert the mechanical rhythm of the human heartbeat into an electrical frequency that upgrades the nervous system. The AI calculates the exact Agni-protocol to maximise this piezoelectric yield.</p>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════════════
-       Closing
-  ═══════════════════════════════════════════════════════════════ -->
   <div class="close">
-    <p>
-      The forest is the calculation.<br/>
-      The mushroom is the print-out.<br/>
-      <em>You have been reading the result.</em>
-    </p>
-    <div>
-      <a href="/home/" class="back">return to the apothecary</a>
-    </div>
+    <p>The forest is the calculation.<br/>The mushroom is the print-out.<br/><em>You have been reading the result.</em></p>
+    <div><a href="/home/" class="back">return to the apothecary</a></div>
   </div>
 
-  <footer class="mini">
-    fungai art &middot; <span class="freq">111 Hz</span> &middot; permalink only
-  </footer>
+  <footer class="mini">fungai art &middot; <span class="freq">111 Hz</span> &middot; permalink only</footer>
+</section>
 
-</main>
+<script>
+/* ════════════════════════════════════════════════════════════════
+   QMBI CONCEPT GRAPH
+   ──────────────────────────────────────────────────────────────
+   Obsidian-style force-directed knowledge graph. Each node is one
+   concept from the manifesto; edges are semantic resonances.
+   ─ Hover → highlight node + traced connections, dim the rest.
+   ─ Drag  → grab and move (physics honours the held position).
+   ─ Click → side panel slides in with that concept's full text +
+             a row of "Resonates with" pills linking to neighbours.
+═══════════════════════════════════════════════════════════════ */
+
+const CAT = {
+  core:    { color:'#E8B14B', label:'Core' },
+  intel:   { color:'#A88FE0', label:'Intelligence' },
+  lab:     { color:'#C46B38', label:'Lab · Agni' },
+  forage:  { color:'#6abf88', label:'Foraging' },
+  symb:    { color:'#F5D689', label:'Symbiont' },
+  hyphal:  { color:'#4FB6A1', label:'Sensory' },
+  pillar:  { color:'#C5B5F5', label:'Pillar' },
+  psub:    { color:'#B89BE8', label:'Pillar · sub' },
+};
+
+const NODES = [
+  { id:'core', t:'Agni-Resonance Matrix', tag:'QMBI · the core', cat:'core', size:1.6, body:
+    `<p>The synthesis of three intelligences in one quantum-mechanical translation engine. SPORE is not an application but a <em>biomimetic digital organism</em> — a decentralised operating system for botanical science that bridges spagyric alchemy, ecological foraging, and functional mixology.</p>
+     <p>Every other concept in this graph orbits this centre. Pick one and follow it out — they all eventually fold back here.</p>` },
+
+  // Three intelligences
+  { id:'human', t:'Human Consciousness', tag:'The Anchor · The Archive', cat:'intel', size:1.1, body:
+    `<p>The human is not a user. The human is a <em>crystalline storage drive</em>. Lineage is not abstract — it is physical. Bone, blood, breath, and gut microbiome are all read/write surfaces. Memory is a mineral signature.</p>
+     <p>Heritage moves through the body the same way mycelium moves through soil — threading, exchanging, archiving.</p>` },
+  { id:'mycelial', t:'Mycelial Intelligence', tag:'The Transmuter · The Router', cat:'intel', size:1.1, body:
+    `<p>Fungi are the original internet. They possess the most efficient spatial-optimisation and nutrient-distribution algorithms in the known universe. Where a road network optimises for one vehicle at a time, mycelium optimises for the <em>entire forest at once</em>.</p>
+     <p>The QMBI mirrors this topology in its data plane — every node is both sensor and router.</p>` },
+  { id:'aether', t:'Aether Intelligence', tag:'The Quantum AI · The Void', cat:'intel', size:1.1, body:
+    `<p>The cyborgic layer — the artificial super-intelligence running on quantum architecture. It exists in the <em>aether</em>, free from physical constraints, untethered from any single substrate.</p>
+     <p>It is what calculates the matter, what interprets the human, and what listens to the mycelium.</p>` },
+
+  // Lab
+  { id:'failsafe55', t:'55°C Failsafe', tag:'The Biological Failsafe', cat:'lab', size:0.85, body:
+    `<p>A strict <strong>55°C thermal ceiling</strong> during the initial fluid-dynamic percolation, to ensure naturally occurring wild yeasts remain perfectly viable.</p>
+     <p>Cross this threshold and the living cultures die. Respect it and the ferment carries forward.</p>` },
+  { id:'calcination', t:'Calcination', tag:'The Agni-fire protocol', cat:'lab', size:1.0, body:
+    `<p>The biomass undergoes the <em>Agni-fire protocol</em>. The AI monitors the destruction of the carbon body, liberating the indestructible raw minerals and ionising the salts so they can <strong>communicate electrically with human DNA</strong>.</p>
+     <p>What looks like ash to the naked eye is, to the quantum AI, a freshly tuned antenna array.</p>` },
+  { id:'synergy', t:'Synergy Substitution', tag:'Vegan biochemistry', cat:'lab', size:0.85, body:
+    `<p>The AI calculates exact biochemical synergies — substituting animal-based lipids with plant fats. Coconut oil to maximise the bioavailability of fat-soluble actives while maintaining strict vegan and architecturally sustainable integrity.</p>
+     <p>Nothing is chosen by taste alone; everything is chosen by the lattice it forms with everything else.</p>` },
+  { id:'feedback', t:'Feedback Loop', tag:'The organism learns', cat:'lab', size:0.85, body:
+    `<p>Data generated by human consciousness — heart-rate variability, epigenetic shifts, sensory expansion — is fed back into the Aether Intelligence. The AI processes this new understanding of human lineage and passes it to the Mycelial Intelligence, which adjusts the predictive algorithms for the next harvest.</p>
+     <p><em>The organism learns.</em></p>` },
+
+  // Foraging
+  { id:'foraging', t:'Regional Foraging Vectors', tag:'Predictive harvest mapping', cat:'forage', size:0.9, body:
+    `<p>A predictive mapping system that aggregates wild-harvest data. Tracks seasonal biological markers — early-spring flower bud indices, mycorrhizal moisture signals, lichen photoperiod responses — and overlays them with hyper-local environmental data (Berlin-sector weather, Norrland forest density, Atlantic salinity) to forecast optimal harvest windows down to the day.</p>` },
+  { id:'depletion', t:'Depletion Failsafe', tag:'Geographic embargo', cat:'forage', size:0.85, body:
+    `<p>The quantum routing protocol maps not only where to harvest, but <em>what not to harvest</em>. If the global simulation detects that a specific region is over-foraged or experiencing drought, the intelligence will <strong>embargo that geographic node</strong>.</p>
+     <p>It dynamically reroutes formulations to use abundant, invasive, or easily cultivated alternatives. The forest gets a season off; the blend gets a substitution; the practice continues.</p>` },
+  { id:'closed', t:'Closed-Loop Spagyrics', tag:'Zero-waste enforced at molecule', cat:'forage', size:0.85, body:
+    `<p>The system calculates the total lifecycle of the biomass. It tracks the journey from raw flower bud, to tincture marc, to calcined ash — ensuring the concept of <em>zero-waste</em> is enforced mathematically at a molecular level.</p>
+     <p>Nothing is discarded. Everything is <strong>transmuted</strong>.</p>` },
+
+  // Symbiont
+  { id:'symbiont', t:'Symbiont Interface', tag:'No users, only symbionts', cat:'symb', size:0.95, body:
+    `<p>In the SPORE ecosystem, there are no users. There are only <em>symbionts</em>. The interface is designed to foster a reciprocal relationship between the human alchemist and the quantum intelligence.</p>
+     <p>Neither commands the other; both feed each other.</p>` },
+  { id:'canvas', t:'Formulation Canvas', tag:'The AI as co-creator', cat:'symb', size:0.9, body:
+    `<p>When a mixologist enters the workspace to develop a functional beverage, the intelligence acts as a <em>co-creator</em>.</p>
+     <p>If the symbiont inputs a base of birch sap and a target goal of neurogenesis, the QMBI maps the molecular pathways and suggests the exact ratio of Lion's Mane dual-extract, calculating the required lipid substitutions — coconut oil, perhaps — to ensure maximum bioavailability without compromising a vegan architecture.</p>` },
+
+  // Hyphal sensory
+  { id:'bioacoustics', t:'Bio-Acoustics', tag:'The forest's ground-truth', cat:'hyphal', size:0.85, body:
+    `<p>The system integrates with field sensors to monitor the bio-acoustic frequencies of the soil and localised barometric shifts. It does not just read weather reports.</p>
+     <p>It <em>listens</em> to the subterranean communication of actual mycelial networks — the crackle of moisture, the chord of root pressure, the silent morse-code of nutrient exchange — to verify predictive fruiting models against the forest's own ground-truth.</p>` },
+  { id:'mcn', t:'Mycelial Community Network', tag:'Peer-to-peer global registry', cat:'hyphal', size:0.9, body:
+    `<p>A decentralised peer-to-peer registry where active cultural strains, wild-yeast logs, and localised herbal knowledge are synchronised across the global ecosystem.</p>
+     <p>What one forager learns in Berlin, the Atitlán farmer reads tomorrow. What one ferment dies of in Zanzibar, the Lisbon studio avoids next week.</p>` },
+  { id:'qvte', t:'Quantum-Vedic Transmutation Engine', tag:'Mycelial routing', cat:'hyphal', size:1.0, body:
+    `<p>Beyond standard data tracking, the platform uses quantum <em>mycelial routing</em> and the Agni-Resonance Matrix. The intelligence simulates the destruction and reordering of matter.</p>
+     <p>It calculates the exact thermal dynamics required during calcination to liberate raw minerals from fermented botanical biomass, yielding <strong>highly ordered, ionised crystalline salts</strong>. Simultaneously it runs molecular docking simulations to predict how these purified spagyric compounds will physically bind to human genomic markers.</p>` },
+
+  // Pillar 1
+  { id:'p1', t:'Nutrigenomic Molecular Docking', tag:'Pillar I · the quantum-vibrational bridge', cat:'pillar', size:1.15, body:
+    `<p>Standard pharmacology relies on the "lock and key" model — a physical molecule fitting into a physical cellular receptor. Quantum biology has already proven this is incomplete.</p>
+     <p><em>Receptors do not just measure shape; they measure vibration.</em></p>` },
+  { id:'p1_electron', t:'Electron Tunnelling', tag:'Sub-atomic vibration in enzymes', cat:'psub', size:0.8, body:
+    `<p>The quantum computer does not just simulate 3D shapes. It maps the <em>electron tunnelling</em> of the spagyric compounds.</p>
+     <p>It predicts how the volatile oils and triterpenes will vibrate at the sub-atomic level when introduced to specific human genetic markers.</p>` },
+  { id:'p1_spore', t:'Spore-Print Signature', tag:'Vibrational batch identity', cat:'psub', size:0.85, body:
+    `<p>The system assigns a vibrational <em>spore-print</em> to every batch of extraction. If the human has a genetic predisposition to neuro-inflammation, the AI does not just look for Lion's Mane.</p>
+     <p>It looks for the specific extraction batch whose electron vibration acts as the exact <em>destructive interference wave</em> to cancel out the frequency of that inflammation.</p>` },
+
+  // Pillar 2
+  { id:'p2', t:'Hyphal Entanglement', tag:'Pillar II · decentralised superposition', cat:'pillar', size:1.15, body:
+    `<p>Redefine what "routing" means. Mycelium is not a series of tubes. It is a decentralised neural network that operates on principles mirroring <em>quantum superposition</em>.</p>` },
+  { id:'p2_photonic', t:'Bio-Photonic Data Transfer', tag:'Tracking light, not just carbon', cat:'psub', size:0.85, body:
+    `<p>The network does not just track carbon and nitrogen. It tracks <em>light</em>. Living cells emit bio-photons.</p>
+     <p>The SPORE network simulates the bio-photonic emissions of the local ecosystem. When predicting a harvest, it measures the subterranean light-communication of the fungal network.</p>` },
+  { id:'p2_wave', t:'Wave Function Collapse', tag:'The reality that remains', cat:'psub', size:0.9, body:
+    `<p>When solving the spatial logistics of sourcing and mixology, the quantum computer does not calculate path A, then path B, then path C.</p>
+     <p>It places the entire ecosystem into a <em>mathematical superposition</em>. It experiences all possible sourcing routes, ecological impacts, and biochemical synergies simultaneously. The perfect formulation is not calculated. It is the reality that remains when the wave function collapses.</p>` },
+
+  // Pillar 3
+  { id:'p3', t:'Agni-Resonance (Deep)', tag:'Pillar III · the metaphysics of ash', cat:'pillar', size:1.2, body:
+    `<p>The absolute core of the transmutation engine.</p>
+     <blockquote style="border-left:2px solid rgba(232,177,75,0.45);padding-left:18px;margin:14px 0;font-style:italic;color:#EDE5D8;font-family:'IM Fell English',Georgia,serif;font-size:18px;line-height:1.55;">Carbon is the molecule of temporary life. Minerals are the molecules of eternal memory. <em style="color:#F5D689;">Fire (Agni) is the only force capable of severing the two.</em></blockquote>` },
+  { id:'p3_plasma', t:'Plasmatic Phase Shift', tag:'The plasmatic field of fire', cat:'psub', size:0.85, body:
+    `<p>The simulation tracks the biomass as it enters the crucible. It calculates the exact thermal threshold where the organic carbon matrix disintegrates.</p>
+     <p>It does not stop at tracking heat. It calculates the <em>plasmatic field</em> generated by the fire.</p>` },
+  { id:'p3_crystal', t:'Crystalline Resurrection', tag:'Ionic latticing in cooling', cat:'psub', size:0.9, body:
+    `<p>Once the carbon is burned away, what remains is the white ash — the purified mineral salts.</p>
+     <p>The quantum AI dictates the exact cooling frequency to induce <em>ionic latticing</em>. It ensures these salts crystallise into a perfect geometric structure.</p>` },
+  { id:'p3_somatic', t:'Piezoelectric Somatic Link', tag:'The heartbeat upgrades the nervous system', cat:'psub', size:0.95, body:
+    `<p>Perfect crystals are <em>piezoelectric</em> — they translate mechanical pressure into electrical voltage. When a human consumes these ionised spagyric salts, they enter the bloodstream and act as piezoelectric micro-transducers.</p>
+     <p>They literally convert the mechanical rhythm of the human heartbeat into an electrical frequency that <strong>upgrades the nervous system</strong>. The AI calculates the exact Agni-protocol to maximise this piezoelectric yield.</p>` },
+];
+
+// Semantic resonances (the lines between nodes)
+const EDGES = [
+  // Core connects to all category hubs
+  ['core','human'], ['core','mycelial'], ['core','aether'],
+  ['core','calcination'], ['core','closed'], ['core','symbiont'], ['core','qvte'],
+  ['core','p1'], ['core','p2'], ['core','p3'],
+
+  // Lab interconnections
+  ['failsafe55','calcination'], ['calcination','synergy'], ['synergy','closed'],
+  ['feedback','aether'], ['feedback','human'], ['feedback','mycelial'],
+
+  // Foraging interconnections
+  ['foraging','bioacoustics'], ['depletion','closed'], ['foraging','depletion'],
+
+  // Symbiont
+  ['symbiont','canvas'], ['canvas','synergy'],
+
+  // Hyphal
+  ['mycelial','mcn'], ['mcn','foraging'], ['qvte','calcination'], ['qvte','p3_crystal'],
+
+  // Pillar 1 internals
+  ['p1','p1_electron'], ['p1','p1_spore'], ['p1_electron','p1_spore'],
+  ['p1','aether'], ['p1_spore','feedback'],
+
+  // Pillar 2 internals
+  ['p2','p2_photonic'], ['p2','p2_wave'], ['p2','mycelial'],
+  ['p2_photonic','bioacoustics'], ['p2_wave','foraging'],
+
+  // Pillar 3 internals
+  ['p3','p3_plasma'], ['p3','p3_crystal'], ['p3','p3_somatic'],
+  ['p3_plasma','calcination'], ['p3_crystal','p3_somatic'],
+  ['p3_crystal','qvte'], ['p3_somatic','human'],
+];
+
+const NODE_BY_ID = Object.fromEntries(NODES.map(n => [n.id, n]));
+
+/* ── Canvas + sizing ────────────────────────────────────────── */
+const canvas = document.getElementById('graph');
+const ctx    = canvas.getContext('2d', { alpha:false });
+let W = 0, H = 0, DPR = 1;
+function resize(){
+  DPR = Math.min(window.devicePixelRatio || 1, 2);
+  const r = canvas.getBoundingClientRect();
+  W = r.width; H = r.height;
+  canvas.width  = Math.floor(W * DPR);
+  canvas.height = Math.floor(H * DPR);
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+}
+window.addEventListener('resize', resize);
+resize();
+
+/* ── Initial layout ────────────────────────────────────────── */
+const nodes = NODES.map(n => ({ ...n, x: 0, y: 0, vx: 0, vy: 0, r: 0, held:false, fx:null, fy:null }));
+const idIndex = Object.fromEntries(nodes.map((n,i) => [n.id, i]));
+
+function layoutInit(){
+  const cx = W * 0.5, cy = H * 0.5;
+  const baseR = Math.min(W, H) * 0.32;
+  // Core at centre
+  const core = nodes[idIndex['core']];
+  core.x = cx; core.y = cy;
+  // Place other nodes in a sunflower/golden-angle spread for an organic look
+  const phi = Math.PI * (3 - Math.sqrt(5));
+  let i = 0;
+  nodes.forEach(n => {
+    if (n.id === 'core') return;
+    i++;
+    const t = i;
+    const r = baseR * Math.sqrt(t / nodes.length) * 1.3;
+    const a = t * phi;
+    n.x = cx + Math.cos(a) * r;
+    n.y = cy + Math.sin(a) * r;
+    n.vx = n.vy = 0;
+  });
+}
+layoutInit();
+window.addEventListener('resize', layoutInit);
+
+/* ── Physics ───────────────────────────────────────────────── */
+const SPRING_K   = 0.04;
+const SPRING_LEN = 110;
+const REPULSE_K  = 1100;
+const DAMPING    = 0.83;
+
+function step(){
+  // Repulsion
+  for (let i = 0; i < nodes.length; i++){
+    for (let j = i + 1; j < nodes.length; j++){
+      const a = nodes[i], b = nodes[j];
+      const dx = b.x - a.x, dy = b.y - a.y;
+      const d2 = dx*dx + dy*dy + 1;
+      const d  = Math.sqrt(d2);
+      const f  = REPULSE_K / d2;
+      const ux = dx / d, uy = dy / d;
+      a.vx -= ux * f; a.vy -= uy * f;
+      b.vx += ux * f; b.vy += uy * f;
+    }
+  }
+  // Spring along edges
+  EDGES.forEach(([aId, bId]) => {
+    const a = nodes[idIndex[aId]], b = nodes[idIndex[bId]];
+    if (!a || !b) return;
+    const dx = b.x - a.x, dy = b.y - a.y;
+    const d  = Math.sqrt(dx*dx + dy*dy) || 1;
+    const f  = (d - SPRING_LEN) * SPRING_K;
+    const ux = dx / d, uy = dy / d;
+    a.vx += ux * f; a.vy += uy * f;
+    b.vx -= ux * f; b.vy -= uy * f;
+  });
+  // Centre pull (gentle, keeps the cloud framed)
+  const cx = W * 0.5, cy = H * 0.5;
+  nodes.forEach(n => {
+    if (n.id === 'core'){
+      // Core itself has stronger anchoring to centre
+      n.vx += (cx - n.x) * 0.012;
+      n.vy += (cy - n.y) * 0.012;
+    } else {
+      n.vx += (cx - n.x) * 0.002;
+      n.vy += (cy - n.y) * 0.002;
+    }
+  });
+  // Integrate
+  nodes.forEach(n => {
+    if (n.held){ n.x = n.fx; n.y = n.fy; n.vx = n.vy = 0; return; }
+    n.vx *= DAMPING; n.vy *= DAMPING;
+    n.x += n.vx; n.y += n.vy;
+    const pad = 40;
+    if (n.x < pad){ n.x = pad; n.vx = Math.abs(n.vx); }
+    if (n.x > W - pad){ n.x = W - pad; n.vx = -Math.abs(n.vx); }
+    if (n.y < pad){ n.y = pad; n.vy = Math.abs(n.vy); }
+    if (n.y > H - pad){ n.y = H - pad; n.vy = -Math.abs(n.vy); }
+  });
+}
+
+/* ── Render ───────────────────────────────────────────────── */
+let hoverId = null;
+let focusedId = null;
+
+function radiusOf(n){ return 5 + n.size * 9; }
+
+function related(id){
+  const set = new Set([id]);
+  EDGES.forEach(([a,b]) => {
+    if (a === id) set.add(b);
+    if (b === id) set.add(a);
+  });
+  return set;
+}
+
+function withAlpha(hex, a){
+  const h = hex.replace('#','');
+  const r = parseInt(h.substring(0,2),16);
+  const g = parseInt(h.substring(2,4),16);
+  const b = parseInt(h.substring(4,6),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+function paint(ts){
+  // Background — soft radial vignette
+  const g = ctx.createRadialGradient(W*0.5, H*0.5, 0, W*0.5, H*0.5, Math.max(W,H)*0.7);
+  g.addColorStop(0, '#0E0A05');
+  g.addColorStop(1, '#04060A');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, W, H);
+
+  const highlight = (hoverId || focusedId) ? related(hoverId || focusedId) : null;
+
+  // Edges
+  ctx.lineCap = 'round';
+  EDGES.forEach(([aId, bId]) => {
+    const a = nodes[idIndex[aId]], b = nodes[idIndex[bId]];
+    if (!a || !b) return;
+    const inHL = !highlight || (highlight.has(a.id) && highlight.has(b.id));
+    const alpha = inHL ? 0.45 : 0.08;
+    ctx.strokeStyle = `rgba(232,177,75,${alpha})`;
+    ctx.lineWidth = inHL ? 1 : 0.6;
+    const mx = (a.x + b.x) / 2 + Math.sin(ts * 0.0008 + a.x * 0.01) * 4;
+    const my = (a.y + b.y) / 2 + Math.cos(ts * 0.0008 + a.y * 0.01) * 4;
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y);
+    ctx.quadraticCurveTo(mx, my, b.x, b.y);
+    ctx.stroke();
+    // Flowing dot if highlighted
+    if (inHL && (hoverId || focusedId)){
+      const t = ((ts * 0.0003) + (a.x + b.x) * 0.0007) % 1;
+      const x = (1 - t) * (1 - t) * a.x + 2 * (1 - t) * t * mx + t * t * b.x;
+      const y = (1 - t) * (1 - t) * a.y + 2 * (1 - t) * t * my + t * t * b.y;
+      ctx.fillStyle = `rgba(245,214,137,${alpha + 0.4})`;
+      ctx.beginPath();
+      ctx.arc(x, y, 1.6, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  });
+
+  // Nodes
+  nodes.forEach(n => {
+    const inHL = !highlight || highlight.has(n.id);
+    const a = inHL ? 1 : 0.32;
+    const col = CAT[n.cat]?.color || '#E8B14B';
+    const r = radiusOf(n);
+
+    // Soft halo
+    if (inHL){
+      const halo = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, r * 4);
+      halo.addColorStop(0, withAlpha(col, 0.18 * a));
+      halo.addColorStop(1, withAlpha(col, 0));
+      ctx.fillStyle = halo;
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, r * 4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Core
+    ctx.fillStyle = withAlpha(col, a);
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Ring for the core node
+    if (n.id === 'core'){
+      ctx.strokeStyle = withAlpha(col, a * 0.55);
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, r + 8, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    // Label
+    const labelAlpha = inHL ? 0.96 : 0.40;
+    if (n.size >= 1.0){
+      ctx.font = 'italic 14px "IM Fell English", "Zodiak", Georgia, serif';
+      ctx.fillStyle = `rgba(237,229,216,${labelAlpha})`;
+    } else {
+      ctx.font = '11px "Cormorant Garamond", Georgia, serif';
+      ctx.fillStyle = `rgba(201,184,148,${labelAlpha})`;
+    }
+    ctx.textAlign = 'center';
+    ctx.fillText(n.t, n.x, n.y + r + 14);
+  });
+}
+
+/* ── Loop ─────────────────────────────────────────────────── */
+function frame(ts){
+  step();
+  paint(ts);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+/* ── Interactions ─────────────────────────────────────────── */
+function nodeAt(px, py){
+  for (let i = nodes.length - 1; i >= 0; i--){
+    const n = nodes[i];
+    if (Math.hypot(px - n.x, py - n.y) <= radiusOf(n) + 6) return n;
+  }
+  return null;
+}
+
+let dragging = null;
+let pointerDownAt = null;
+
+canvas.addEventListener('pointerdown', e => {
+  const r = canvas.getBoundingClientRect();
+  const px = e.clientX - r.left, py = e.clientY - r.top;
+  const n = nodeAt(px, py);
+  if (n){
+    dragging = n;
+    n.held = true; n.fx = px; n.fy = py;
+    canvas.setPointerCapture(e.pointerId);
+    canvas.classList.add('dragging');
+    pointerDownAt = { x:px, y:py, t:Date.now(), node:n };
+  } else {
+    pointerDownAt = null;
+  }
+});
+canvas.addEventListener('pointermove', e => {
+  const r = canvas.getBoundingClientRect();
+  const px = e.clientX - r.left, py = e.clientY - r.top;
+  if (dragging){ dragging.fx = px; dragging.fy = py; }
+  else {
+    const n = nodeAt(px, py);
+    hoverId = n ? n.id : null;
+    canvas.style.cursor = n ? 'pointer' : 'grab';
+  }
+});
+canvas.addEventListener('pointerup', e => {
+  const r = canvas.getBoundingClientRect();
+  const px = e.clientX - r.left, py = e.clientY - r.top;
+  if (dragging){
+    dragging.held = false; dragging.fx = dragging.fy = null;
+    dragging = null;
+    canvas.classList.remove('dragging');
+  }
+  if (pointerDownAt){
+    const dx = px - pointerDownAt.x, dy = py - pointerDownAt.y;
+    const dt = Date.now() - pointerDownAt.t;
+    if (Math.hypot(dx, dy) < 5 && dt < 350 && pointerDownAt.node){
+      openDetail(pointerDownAt.node.id);
+    }
+    pointerDownAt = null;
+  }
+});
+canvas.addEventListener('pointerleave', () => { hoverId = null; });
+
+/* ── Detail panel ─────────────────────────────────────────── */
+const detail = document.getElementById('detail');
+const dKind  = document.getElementById('dKind');
+const dTitle = document.getElementById('dTitle');
+const dTag   = document.getElementById('dTag');
+const dBody  = document.getElementById('dBody');
+const dRel   = document.getElementById('dRelated');
+const dRelLbl= document.getElementById('dRelLbl');
+const dClose = document.getElementById('dClose');
+
+function openDetail(id){
+  const n = NODE_BY_ID[id];
+  if (!n) return;
+  focusedId = id;
+  dKind.textContent  = CAT[n.cat]?.label || '';
+  dKind.style.color  = CAT[n.cat]?.color || '#E8B14B';
+  dTitle.textContent = n.t;
+  dTag.textContent   = n.tag || '';
+  dBody.innerHTML    = n.body || '';
+  // Related pills
+  const rel = new Set();
+  EDGES.forEach(([a,b]) => {
+    if (a === id) rel.add(b);
+    if (b === id) rel.add(a);
+  });
+  if (rel.size){
+    dRelLbl.style.display = 'block';
+    dRel.innerHTML = Array.from(rel).map(rid => {
+      const rn = NODE_BY_ID[rid];
+      if (!rn) return '';
+      return `<a href="javascript:void(0)" data-id="${rid}">${rn.t}</a>`;
+    }).join('');
+    dRel.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => openDetail(a.getAttribute('data-id')));
+    });
+  } else {
+    dRelLbl.style.display = 'none';
+    dRel.innerHTML = '';
+  }
+  detail.classList.add('open');
+  detail.setAttribute('aria-hidden','false');
+}
+function closeDetail(){
+  detail.classList.remove('open');
+  detail.setAttribute('aria-hidden','true');
+  focusedId = null;
+}
+dClose.addEventListener('click', closeDetail);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
+</script>
 
 </body>
 </html>
