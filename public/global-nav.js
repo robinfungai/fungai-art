@@ -1,246 +1,266 @@
 /* ════════════════════════════════════════════════════════════════
-   Global navigation — one consistent nav, every page.
+   Membership banner — follows the signed-in member across every page.
    ────────────────────────────────────────────────────────────────
-   Why: the site used to have two disjoint nav clusters (storefront
-   pages linked to Shop / Mixology / Trance; network pages linked to
-   Sporing / Draw / Patronage / Portal). A visitor on /members
-   couldn't reach the shop without going Home first. Each page also
-   hand-rolled its own nav with different labels for the same URL
-   (mixology was called "Mixology", "Herbal Engine", "Herbals",
-   "Herbal Blending Engine" depending on which page linked to it).
+   Robin's revision after the first global-nav pass:
+     • The first pass tried to be a generic site nav (Home · Shop ·
+       Mixology …) and ended up duplicating every page's hand-crafted
+       header. He didn't like that.
+     • The replacement: a thin, sticky band that ONLY surfaces the
+       member's identity + a tight list of member-relevant destinations.
+       It rides above the per-page nav and never tries to replace it.
 
-   This file injects ONE thin top bar at the very top of every page
-   that includes it, with canonical labels and groupings:
+   What it shows:
+     • Signed-in: ✦ Name · Node · → Portal · Academy · Mycelium ·
+                  Membership · Sporing · Patronage
+     • Signed-out: thin "Become a thread" CTA that links to /community
+       so the page itself doesn't have to.
 
-     Primary, always visible:
-       Home · Shop · Herbal Engine · Mixology · Community
-     "More" dropdown:
-       Academy · Foraging · Extraction · Health · Trance
-       Sporing · Draw · Patronage · Membership
-
-   The bar uses backdrop-blur + dark glass so it sits cleanly on top
-   of every page background. The page's existing per-page nav is
-   left untouched — the global bar is additional, hovering above.
-
-   Include with:  <script src="/global-nav.js" defer></script>
+   Identity source:
+     localStorage.spore_active_member_full (written by app-living.jsx
+     after a successful sign-in). Listens for `storage` events so a
+     sign-in in another tab refreshes this banner without a reload.
 ═══════════════════════════════════════════════════════════════ */
 
 (function () {
   'use strict';
 
-  // Don't double-inject if a page already calls this twice.
-  if (document.getElementById('fa-global-nav')) return;
+  if (document.getElementById('fa-member-banner')) return;
 
-  // Mapping: every nav entry → canonical href + label. Order matters
-  // for the primary row; secondary entries appear in the dropdown.
-  const PRIMARY = [
-    { href: '/',                       label: 'Home',          slug: 'home' },
-    { href: '/shop',                   label: 'Shop',          slug: 'shop' },
-    { href: '/herbal-engine-2/',       label: 'Herbal Engine', slug: 'engine' },
-    { href: '/mixology',               label: 'Mixology',      slug: 'mixology' },
-    { href: '/community',              label: 'Community',     slug: 'community' },
-  ];
-  const SECONDARY = [
-    { href: '/community/academy/',     label: 'Academy',      slug: 'academy' },
-    { href: '/foraging',               label: 'Foraging',     slug: 'foraging' },
-    { href: '/extraction',             label: 'Extraction',   slug: 'extraction' },
-    { href: '/health',                 label: 'Practice',     slug: 'health' },
-    { href: '/mycelium-trance',        label: 'Trance',       slug: 'trance' },
-    { href: '/sporing',                label: 'Sporing',      slug: 'sporing' },
-    { href: '/draw',                   label: 'Draw',         slug: 'draw' },
-    { href: '/patron',                 label: 'Patronage',    slug: 'patron' },
-    { href: '/members',                label: 'Membership',   slug: 'members' },
+  // Hide / replace the old generic global nav if it exists from a
+  // cached version of this script.
+  const stale = document.getElementById('fa-global-nav');
+  if (stale) stale.remove();
+
+  // Destinations a member would actually want to reach from anywhere
+  // on the site. Order matters: highest-value member action first.
+  const MEMBER_LINKS = [
+    { href: '/community',           label: 'Portal',     match: /^\/community(\/?$|\/(?!academy))/ },
+    { href: '/community/academy/',  label: 'Academy',    match: /^\/community\/academy\// },
+    { href: '/mycelium',            label: 'Mycelium',   match: /^\/mycelium\/?$/ },
+    { href: '/members',             label: 'Membership', match: /^\/members\/?$/ },
+    { href: '/sporing',             label: 'Sporing',    match: /^\/sporing\/?$/ },
+    { href: '/patron',              label: 'Patronage',  match: /^\/patron\/?$/ },
   ];
 
-  // Which entry should appear active? Match against the current path,
-  // with longest-prefix winning so /community/academy → "Academy" not
-  // "Community".
-  function activeSlugFor(path) {
-    const all = PRIMARY.concat(SECONDARY);
-    const norm = path.replace(/\/$/, '') || '/';
-    let best = null, bestLen = -1;
-    for (const e of all) {
-      const eh = e.href.replace(/\/$/, '') || '/';
-      if (norm === eh || (eh !== '/' && norm.startsWith(eh))) {
-        if (eh.length > bestLen) { best = e.slug; bestLen = eh.length; }
-      }
-    }
-    if (!best) best = norm === '/' || /\/home\/?$/.test(norm) ? 'home' : null;
-    return best;
+  function readMember(){
+    try {
+      const cached = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null');
+      if (!cached || !cached.id) return null;
+      return {
+        id: cached.id,
+        name: cached.name || cached.character_name || '',
+        admin: !!(cached.admin || cached.is_admin),
+        node: cached.node || '',
+        email: cached.email || '',
+      };
+    } catch { return null; }
   }
-  const active = activeSlugFor(window.location.pathname);
 
-  // ── Styles — scoped to the bar so they don't clash with the page.
+  // The hardcoded node labels live in spore data. We don't import that
+  // file from arbitrary pages so use a small local map; falls back to
+  // the raw id if no friendly label is known.
+  const NODE_LABELS = {
+    berlin:   'Berlin · Lab',
+    sweden:   'Sweden · Forage',
+    festival: 'Festival circuit',
+    lisbon:   'Lisbon · Studio',
+    beirut:   'Beirut',
+    atitlan:  'Lake Atitlán',
+    zanzibar: 'Zanzibar',
+    bangkok:  'Bangkok',
+    bali:     'Bali',
+  };
+  function nodeLabel(id){ return NODE_LABELS[id] || (id ? id : 'Unattached'); }
+
   const css = `
-  #fa-global-nav, #fa-global-nav *, #fa-global-nav *::before, #fa-global-nav *::after {
+  #fa-member-banner, #fa-member-banner *, #fa-member-banner *::before, #fa-member-banner *::after {
     box-sizing: border-box;
   }
-  #fa-global-nav {
+  #fa-member-banner {
     position: fixed; top: 0; left: 0; right: 0;
     z-index: 9000;
     display: flex; align-items: center; justify-content: space-between;
-    gap: 8px;
-    padding: 9px 16px;
-    background: rgba(7, 11, 8, 0.78);
-    backdrop-filter: blur(14px) saturate(120%);
-    -webkit-backdrop-filter: blur(14px) saturate(120%);
-    border-bottom: 0.5px solid rgba(232,177,75,0.16);
+    gap: 14px;
+    padding: 7px 16px;
+    background: linear-gradient(180deg, rgba(7, 11, 8, 0.86), rgba(7, 11, 8, 0.74));
+    backdrop-filter: blur(14px) saturate(130%);
+    -webkit-backdrop-filter: blur(14px) saturate(130%);
+    border-bottom: 0.5px solid rgba(232,177,75,0.18);
     font-family: 'Geist Mono', 'Courier New', monospace;
-    font-size: 10.5px;
+    font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: #C9B894;
+    transition: transform 0.25s ease, opacity 0.25s ease;
   }
-  body.fa-has-global-nav { padding-top: 42px; }
-  #fa-global-nav .fa-gn-brand {
-    display: inline-flex; align-items: center; gap: 8px;
-    text-decoration: none; color: #EDE5D8;
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-style: italic; font-size: 16px;
-    letter-spacing: -0.005em;
-    text-transform: none;
-    flex-shrink: 0;
+  /* Auto-hide on scroll-down, re-show on scroll-up. Mirrors Apple-style
+     headers so it never blocks reading flow. */
+  #fa-member-banner.fa-mb-hidden { transform: translateY(-110%); opacity: 0; }
+  body.fa-has-member-banner { padding-top: 36px; }
+
+  #fa-member-banner .fa-mb-id {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: #EDE5D8; text-decoration: none;
+    flex-shrink: 0; min-width: 0;
   }
-  #fa-global-nav .fa-gn-brand .fa-gn-dot {
+  #fa-member-banner .fa-mb-dot {
     width: 6px; height: 6px; border-radius: 50%;
     background: #E8B14B; box-shadow: 0 0 10px rgba(232,177,75,0.65);
+    flex-shrink: 0;
   }
-  #fa-global-nav .fa-gn-primary {
-    display: flex; gap: 4px; flex: 1; justify-content: center;
-    flex-wrap: nowrap; overflow: hidden;
+  #fa-member-banner.fa-mb-admin .fa-mb-dot {
+    background: #6BD66F; box-shadow: 0 0 10px rgba(107,214,111,0.7);
   }
-  #fa-global-nav .fa-gn-primary a, #fa-global-nav .fa-gn-more {
-    color: #C9B894;
-    text-decoration: none;
-    padding: 6px 11px;
-    border-radius: 999px;
-    transition: background 0.18s, color 0.18s, border-color 0.18s;
-    border: 0.5px solid transparent;
-    cursor: pointer;
+  #fa-member-banner .fa-mb-name {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic; font-size: 15px;
+    letter-spacing: -0.005em; text-transform: none;
+    color: #EDE5D8;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    max-width: 28ch;
+  }
+  #fa-member-banner .fa-mb-node {
+    font-size: 9px; letter-spacing: 0.22em; color: #8B7E62;
     white-space: nowrap;
-    background: none;
-    font: inherit;
   }
-  #fa-global-nav .fa-gn-primary a:hover, #fa-global-nav .fa-gn-more:hover {
-    color: #F5D689;
-    background: rgba(232,177,75,0.06);
-  }
-  #fa-global-nav .fa-gn-primary a.on {
-    color: #F5D689;
-    border-color: rgba(232,177,75,0.32);
-    background: rgba(232,177,75,0.08);
-  }
-  #fa-global-nav .fa-gn-more-wrap { position: relative; flex-shrink: 0; }
-  #fa-global-nav .fa-gn-more::after { content: ' ▾'; opacity: 0.55; }
-  #fa-global-nav .fa-gn-menu {
-    position: absolute; top: 100%; right: 0; margin-top: 8px;
-    min-width: 200px;
-    background: rgba(10, 14, 11, 0.96);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 0.5px solid rgba(232,177,75,0.22);
-    border-radius: 10px;
-    padding: 8px;
-    display: none;
-    box-shadow: 0 12px 36px rgba(0,0,0,0.55);
-  }
-  #fa-global-nav .fa-gn-more-wrap.open .fa-gn-menu { display: block; }
-  #fa-global-nav .fa-gn-menu a {
-    display: block;
-    padding: 9px 13px;
-    color: #C9B894;
-    text-decoration: none;
-    border-radius: 6px;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-  }
-  #fa-global-nav .fa-gn-menu a:hover {
-    background: rgba(232,177,75,0.07);
-    color: #F5D689;
-  }
-  #fa-global-nav .fa-gn-menu a.on {
-    color: #F5D689;
-    background: rgba(232,177,75,0.08);
+  #fa-member-banner .fa-mb-node::before { content: '· '; opacity: 0.5; }
+  #fa-member-banner .fa-mb-admin-chip {
+    font-size: 7.5px; letter-spacing: 0.28em;
+    padding: 2px 6px; border-radius: 3px;
+    background: rgba(107,214,111,0.14);
+    border: 0.5px solid rgba(107,214,111,0.4);
+    color: #B6F0AE;
   }
 
-  /* Mobile — collapse primary into the menu, keep brand + More. */
+  #fa-member-banner .fa-mb-links {
+    display: flex; gap: 2px; flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  #fa-member-banner .fa-mb-links::-webkit-scrollbar { display: none; }
+  #fa-member-banner .fa-mb-links a {
+    color: #C9B894;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 999px;
+    transition: background 0.18s, color 0.18s;
+    white-space: nowrap;
+  }
+  #fa-member-banner .fa-mb-links a:hover { color: #F5D689; background: rgba(232,177,75,0.06); }
+  #fa-member-banner .fa-mb-links a.on {
+    color: #F5D689; background: rgba(232,177,75,0.08);
+  }
+
+  /* Signed-out variant: very minimal — just the CTA */
+  #fa-member-banner.fa-mb-guest .fa-mb-id { color: #8B7E62; }
+  #fa-member-banner.fa-mb-guest .fa-mb-id .fa-mb-name {
+    color: #C9B894; font-size: 13px;
+  }
+  #fa-member-banner.fa-mb-guest .fa-mb-links a.fa-mb-cta {
+    color: #1A1208; background: #E8B14B;
+    border: 0.5px solid rgba(232,177,75,0.6);
+    font-weight: 600;
+  }
+  #fa-member-banner.fa-mb-guest .fa-mb-links a.fa-mb-cta:hover {
+    background: #F5D689;
+  }
+
   @media (max-width: 760px) {
-    #fa-global-nav { padding: 8px 12px; font-size: 9.5px; }
-    #fa-global-nav .fa-gn-brand { font-size: 14px; }
-    #fa-global-nav .fa-gn-primary { display: none; }
-    body.fa-has-global-nav { padding-top: 38px; }
+    #fa-member-banner { padding: 6px 12px; gap: 8px; }
+    #fa-member-banner .fa-mb-name { font-size: 13px; max-width: 16ch; }
+    #fa-member-banner .fa-mb-node { display: none; }
+    #fa-member-banner .fa-mb-links a { padding: 4px 8px; font-size: 9.5px; }
+    body.fa-has-member-banner { padding-top: 34px; }
   }
   `;
 
-  // Inject the stylesheet once.
   const style = document.createElement('style');
-  style.id = 'fa-global-nav-style';
+  style.id = 'fa-member-banner-style';
   style.textContent = css;
   document.head.appendChild(style);
 
-  // Build secondary menu — on mobile we inject the primary entries too
-  // so the dropdown becomes a complete nav.
-  function buildMenuHtml() {
-    const allForMenu = window.innerWidth <= 760
-      ? PRIMARY.concat(SECONDARY)
-      : SECONDARY;
-    return allForMenu.map(e =>
-      `<a href="${e.href}" class="${e.slug === active ? 'on' : ''}">${e.label}</a>`
-    ).join('');
+  function renderBanner(){
+    const m = readMember();
+    let bar = document.getElementById('fa-member-banner');
+    if (!bar) {
+      bar = document.createElement('nav');
+      bar.id = 'fa-member-banner';
+      bar.setAttribute('aria-label', 'Membership banner');
+      document.body.insertBefore(bar, document.body.firstChild);
+      document.body.classList.add('fa-has-member-banner');
+    }
+    bar.classList.toggle('fa-mb-admin', !!(m && m.admin));
+    bar.classList.toggle('fa-mb-guest', !m);
+
+    const path = window.location.pathname;
+    const isOn = (re) => re.test(path) ? 'on' : '';
+
+    if (m) {
+      bar.innerHTML = `
+        <a class="fa-mb-id" href="/community/" title="${m.email || m.name}">
+          <span class="fa-mb-dot"></span>
+          <span class="fa-mb-name">${escapeHtml(m.name) || 'Member'}</span>
+          <span class="fa-mb-node">${escapeHtml(nodeLabel(m.node))}</span>
+          ${m.admin ? '<span class="fa-mb-admin-chip">Keeper</span>' : ''}
+        </a>
+        <div class="fa-mb-links" aria-label="Member destinations">
+          ${MEMBER_LINKS.map(l => `<a href="${l.href}" class="${isOn(l.match)}">${l.label}</a>`).join('')}
+        </div>
+      `;
+    } else {
+      bar.innerHTML = `
+        <a class="fa-mb-id" href="/community/" title="The Mycelium">
+          <span class="fa-mb-dot"></span>
+          <span class="fa-mb-name">The Mycelium</span>
+        </a>
+        <div class="fa-mb-links">
+          <a href="/community/" class="fa-mb-cta">Become a thread &rarr;</a>
+          <a href="/members" class="${isOn(/^\/members\/?$/)}">Membership</a>
+        </div>
+      `;
+    }
   }
 
-  // Build primary row HTML.
-  const primaryHtml = PRIMARY.map(e =>
-    `<a href="${e.href}" class="${e.slug === active ? 'on' : ''}">${e.label}</a>`
-  ).join('');
-
-  const nav = document.createElement('nav');
-  nav.id = 'fa-global-nav';
-  nav.setAttribute('aria-label', 'Global navigation');
-  nav.innerHTML = `
-    <a href="/" class="fa-gn-brand" title="Fungai Art">
-      <span class="fa-gn-dot"></span>
-      fungai art
-    </a>
-    <div class="fa-gn-primary">${primaryHtml}</div>
-    <div class="fa-gn-more-wrap" id="fa-gn-more-wrap">
-      <button type="button" class="fa-gn-more" id="fa-gn-more-btn" aria-haspopup="true" aria-expanded="false">More</button>
-      <div class="fa-gn-menu" id="fa-gn-menu" role="menu">${buildMenuHtml()}</div>
-    </div>
-  `;
-
-  // Insert as first child of body. This is the earliest place that
-  // preserves user keyboard nav order (skip-link, then global header).
-  function inject() {
-    if (document.getElementById('fa-global-nav')) return;
-    document.body.insertBefore(nav, document.body.firstChild);
-    document.body.classList.add('fa-has-global-nav');
-
-    const wrap = document.getElementById('fa-gn-more-wrap');
-    const btn  = document.getElementById('fa-gn-more-btn');
-    const menu = document.getElementById('fa-gn-menu');
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const open = wrap.classList.toggle('open');
-      btn.setAttribute('aria-expanded', String(open));
-    });
-    document.addEventListener('click', (e) => {
-      if (!wrap.contains(e.target)) {
-        wrap.classList.remove('open');
-        btn.setAttribute('aria-expanded', 'false');
-      }
-    });
-    // Rebuild menu contents on resize so mobile/desktop swap correctly.
-    let rT = null;
-    window.addEventListener('resize', () => {
-      if (rT) clearTimeout(rT);
-      rT = setTimeout(() => { menu.innerHTML = buildMenuHtml(); }, 150);
-    });
+  function escapeHtml(s){
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[c]));
   }
+
+  // Auto-hide on scroll-down to keep above-the-fold breathing room.
+  let lastY = window.scrollY || 0;
+  let hideT = null;
+  function onScroll(){
+    const y = window.scrollY || 0;
+    const bar = document.getElementById('fa-member-banner');
+    if (!bar) return;
+    if (y < 24) { bar.classList.remove('fa-mb-hidden'); lastY = y; return; }
+    const dy = y - lastY;
+    if (dy > 6)      bar.classList.add('fa-mb-hidden');
+    else if (dy < -4) bar.classList.remove('fa-mb-hidden');
+    lastY = y;
+  }
+  window.addEventListener('scroll', () => {
+    if (hideT) cancelAnimationFrame(hideT);
+    hideT = requestAnimationFrame(onScroll);
+  }, { passive: true });
+
+  // Cross-tab sync: re-render when the spore portal writes a new
+  // member, or on a sign-out.
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'spore_active_member_full' || e.key === 'spore_active_member') renderBanner();
+  });
+
+  // Same-tab events (the portal fires its own custom signals on
+  // login / member-update).
+  ['spore:member-changed', 'spore:login', 'spore:logout'].forEach(evt => {
+    window.addEventListener(evt, renderBanner);
+  });
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', inject);
+    document.addEventListener('DOMContentLoaded', renderBanner);
   } else {
-    inject();
+    renderBanner();
   }
 })();

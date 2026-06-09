@@ -467,7 +467,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
       <div>
         <div class="brand-label">Fungai Art &middot; Materia Medica</div>
         <a href="https://www.fungai.art" style="text-decoration:none;display:block" title="Return to Materia Medica">
-          <div class="brand-name" style="cursor:pointer">Herbal Engine &amp; Database</div>
+          <div class="brand-name" style="cursor:pointer">Tailored Elixir &middot; Herbal Engine</div>
         </a>
         <div class="brand-sub">Personalised elixir formula &middot; 203 plants</div>
       </div>
@@ -518,7 +518,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
       <button class="poolcard" id="preset_all" onclick="applyPreset('all')">
         <span class="poolcard-name">All herbs</span>
         <span class="poolcard-count" id="pc_all">&mdash;</span>
-        <span class="poolcard-sub">Every botanical in the database</span>
+        <span class="poolcard-sub">Every botanical in the materia medica</span>
       </button>
     </div>
   </div>
@@ -583,14 +583,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
   </style>
 </div>
 
-<!-- STOCK PANEL -->
+<!-- STOCK PANEL — read-only by default for the public. The "Select all /
+     Clear / Reset" edit affordances are hidden via the sp-edit class
+     unless the page boots and finds an admin in localStorage (Robin
+     or Stephanie). Non-admin clicks on a herb chip are intercepted
+     by togStock() and do nothing visible. -->
 <div class="stock-panel" id="stockPanel">
   <div class="sp-hdr">
     <div><div class="sp-title" id="spTitle">Current pool</div><div class="sp-count" id="spCount">0 herbs</div></div>
-    <div class="sp-acts">
+    <div class="sp-acts sp-edit" style="display:none;">
       <span class="spa" onclick="stockAll()">Select all</span>
       <span class="spa" onclick="stockClear()">Clear</span>
       <span class="spa" onclick="stockResetActive()">Reset to pool default</span>
+    </div>
+    <div class="sp-acts sp-view" style="font-family:'Geist Mono',monospace;font-size:8.5px;letter-spacing:0.22em;text-transform:uppercase;color:#8B7E62;align-self:center;">
+      Live view &middot; only the apothecary keepers edit this
     </div>
   </div>
   <input class="sp-search" id="spSearch" placeholder="Search herbs and mushrooms..." oninput="renderStock(this.value)">
@@ -601,14 +608,34 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 
 <!-- S0: INTENTION (sub-tray is inline — no navigation to s0b) -->
 <div id="s0" class="step vis">
-  <div style="max-width:44ch;margin:0 auto 1.1rem;text-align:center;padding:0 1rem;">
-    <p style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:clamp(13px,1.8vw,15px);color:#C9B894;line-height:1.55;letter-spacing:0.005em;margin:0;">
-      A conversation with our 201-plant materia medica. Tell it what you need —
-      physical, emotional, ceremonial — and it composes a tailored formula
-      from wild-foraged extracts, mushroom intelligence, and spagyric essences.
+  <div style="max-width:880px;margin:0 auto 1.4rem;padding:0 1.2rem;">
+    <p style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:clamp(15px,2.0vw,19px);color:#D9CDB3;line-height:1.7;letter-spacing:0.003em;margin:0 0 0.85rem;text-align:center;">
+      A conversation with a living materia medica. Tell it what you need &mdash;
+      <em style="color:#F5D689;">physical, emotional, ceremonial</em> &mdash; and it composes
+      a tailored elixir from wild-foraged extracts, mushroom intelligence, and
+      spagyric essences.
     </p>
-    <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:#6a6356;margin:.7rem 0 0;line-height:1.55;">
-      Same source as Mixology · cross-checked for synergies and contraindications
+    <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(13.5px,1.7vw,16px);color:#C9B894;line-height:1.78;letter-spacing:0.002em;margin:0 0 0.7rem;">
+      The corpus underneath is 203 botanicals deep, built from peer-reviewed
+      pharmacology (Mills &amp; Bone, Hoffmann, Tilgner), TCM materia medica
+      (Bensky &amp; Gamble), Ayurvedic sources (Frawley &amp; Lad), and twelve
+      years of practitioner field notes. Every plant carries a chemistry
+      profile, evidence grade A&ndash;D, traditional energetic signature, and
+      explicit interaction maps. The engine cross-checks every composition
+      against contraindications, herb&ndash;herb synergies, and known
+      drug interactions before it suggests a formula.
+    </p>
+    <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(13.5px,1.7vw,16px);color:#C9B894;line-height:1.78;letter-spacing:0.002em;margin:0;">
+      The AI reads pharmacology &mdash; not keywords. It knows that
+      <em>schizandra adaptogenic</em> means HPA-axis modulation via lignans,
+      that <em>passionflower</em> binds GABA-A through chrysin, that mixing
+      cordyceps with citalopram requires caution. Each run sharpens the
+      next: anonymised formula outcomes, marker-by-marker feedback, and
+      practitioner annotations feed back into the weight of every herb in
+      the next composition. <em style="color:#F5D689;">It is meant to keep getting smarter.</em>
+    </p>
+    <p style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:#7a7163;margin:1.0rem 0 0;line-height:1.6;text-align:center;">
+      Same source as Mixology &middot; cross-checked for synergies and contraindications &middot; evidence-graded A&ndash;D
     </p>
   </div>
   <div class="sn" id="sn0">What do you need right now?</div>
@@ -1210,25 +1237,98 @@ function renderStock(q){
   q=(q||'').toLowerCase();
   var cats=[...new Set(HB.map(h=>h.cat))].sort();
   var html='';
+  // For non-admins: show ONLY the live in-stock herbs. The pop-down is
+  // a read-only window onto what the apothecary currently has, not an
+  // edit surface. For admins: show the full catalogue with toggle chips.
+  var admin = isStockAdmin();
+  var liveStocked = (typeof LIVE_INVENTORY !== 'undefined' && LIVE_INVENTORY) ? LIVE_INVENTORY : null;
   cats.forEach(function(cat){
-    var herbs=HB.filter(h=>h.cat===cat&&(!h.restricted||practitionerMode)&&(h.n.toLowerCase().includes(q)||cat.toLowerCase().includes(q)));
-    if(!herbs.length)return;
-    html+='<div class="sp-cat">'+cat+'</div><div class="sp-herbs">';
-    herbs.forEach(function(h){
-      var isIn=customStock.has(h.id);
-      var cls='sph'+(h.m?' mush':'')+(isIn?' in':'')+(h.restricted?' rx':'');
-      html+='<div class="'+cls+'" onclick="togStock(\''+h.id+'\')" title="'+(h.restrictedNote||'')+'">'+h.n+'</div>';
+    var herbs = HB.filter(function(h){
+      if (h.restricted && !practitionerMode) return false;
+      if (h.cat !== cat) return false;
+      if (q && !(h.n.toLowerCase().includes(q) || cat.toLowerCase().includes(q))) return false;
+      if (!admin) {
+        // Non-admins only see what's live-stocked. If the cloud table
+        // isn't loaded yet we fall back to the customStock set (which
+        // mirrors the active preset).
+        if (liveStocked) return liveStocked.has(h.id);
+        return customStock.has(h.id);
+      }
+      return true;
     });
-    html+='</div>';
+    if (!herbs.length) return;
+    html += '<div class="sp-cat">' + cat + '</div><div class="sp-herbs">';
+    herbs.forEach(function(h){
+      var isIn = customStock.has(h.id) || (liveStocked && liveStocked.has(h.id));
+      // For admins: clickable chip with toggle state. For non-admins:
+      // every visible chip is already "in" — render as a static pill.
+      var cls = 'sph' + (h.m ? ' mush' : '') + (isIn ? ' in' : '') + (h.restricted ? ' rx' : '');
+      var click = admin ? ' onclick="togStock(\'' + h.id + '\')"' : '';
+      var cursor = admin ? '' : ' style="cursor:default"';
+      html += '<div class="' + cls + '"' + click + cursor + ' title="' + (h.restrictedNote || '') + '">' + h.n + '</div>';
+    });
+    html += '</div>';
   });
-  document.getElementById('spSections').innerHTML=html;
-  document.getElementById('spCount').textContent=customStock.size+' herbs selected';
+  document.getElementById('spSections').innerHTML = html;
+  // Count label: admins see "N selected" (their editable state); public
+  // sees "N in stock right now" which matches the read-only intent.
+  var countLabel = admin
+    ? (customStock.size + ' herbs selected')
+    : ((liveStocked ? liveStocked.size : customStock.size) + ' herbs in stock right now');
+  document.getElementById('spCount').textContent = countLabel;
 }
 function togStock(id){
+  // Non-admins can browse the stock panel but cannot edit it. The
+  // panel is "Live view" — the source of truth is admin-edited in
+  // /community Admin (apothecary shelf). togStock is a no-op for
+  // anyone who isn't Robin or Stephanie, to avoid the historical
+  // localStorage-edits drifting from the cloud inventory.
+  if (!isStockAdmin()) {
+    flashStockReadonlyHint();
+    return;
+  }
   if(customStock.has(id))customStock.delete(id);else customStock.add(id);
   saveCustomStock();updateCounts();
   renderStock(document.getElementById('spSearch').value||'');
 }
+// Detect the keepers (Robin or Stephanie). Uses the same localStorage
+// snapshot the /community portal writes after sign-in.
+function isStockAdmin(){
+  try {
+    const cached = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null');
+    if (!cached) return false;
+    if (cached.admin === true || cached.is_admin === true) return true;
+    const email = (cached.email || '').toLowerCase();
+    return email === 'robin@fungai.art' || email === 'teyae@fungai.art';
+  } catch { return false; }
+}
+// One-shot non-modal hint for non-admins poking the chips.
+let __stockHintT = null;
+function flashStockReadonlyHint(){
+  let el = document.getElementById('stockReadonlyHint');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'stockReadonlyHint';
+    el.style.cssText = 'position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:rgba(10,14,11,0.92);border:0.5px solid rgba(232,177,75,0.45);color:#F5D689;font-family:"Geist Mono",monospace;font-size:10.5px;letter-spacing:0.18em;padding:11px 18px;border-radius:999px;z-index:10000;backdrop-filter:blur(10px);opacity:0;transition:opacity 0.25s;';
+    el.textContent = 'Live view — only the keepers can edit this';
+    document.body.appendChild(el);
+  }
+  requestAnimationFrame(() => { el.style.opacity = '1'; });
+  if (__stockHintT) clearTimeout(__stockHintT);
+  __stockHintT = setTimeout(() => { el.style.opacity = '0'; }, 1800);
+}
+// Toggle edit/view affordances when the page boots. Listens for any
+// post-boot login change (the spore portal fires this) so a brand-new
+// admin sign-in lights up the controls without a reload.
+function applyStockEditMode(){
+  const isAdmin = isStockAdmin();
+  document.querySelectorAll('.sp-edit').forEach(el => { el.style.display = isAdmin ? '' : 'none'; });
+  document.querySelectorAll('.sp-view').forEach(el => { el.style.display = isAdmin ? 'none' : ''; });
+}
+applyStockEditMode();
+window.addEventListener('storage', e => {
+  if (e.key === 'spore_active_member_full' || e.key === 'spore_active_member') applyStockEditMode();
+});
 function setMode(m){
   mode=m;
   document.getElementById('modeStd').classList.toggle('on',m==='standard');
