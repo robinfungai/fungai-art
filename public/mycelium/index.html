@@ -593,45 +593,7 @@ footer.mini .freq{ color:var(--amber); }
   <footer class="mini">fungai art &middot; <span class="freq">111 Hz</span> &middot; permalink only</footer>
 </section>
 
-<!-- ── Static HTML diagnostic — visible BEFORE any JS runs.
-     If JS executes, the inline script below removes this element.
-     If JS does NOT execute, this giant hot-pink banner stays visible
-     and tells us exactly what's blocking. ── -->
-<div id="__static_diag" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:99999;background:#ff00aa;color:#fff;font-family:monospace;font-size:22px;padding:24px 32px;border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,0.7);font-weight:bold;text-align:center;line-height:1.5;max-width:80vw;">
-  JS DID NOT RUN<br/>
-  <span style="font-size:14px;font-weight:normal;">if you see this, the inline script never executed</span>
-</div>
-
 <script>
-/* If JS works at all, this single line removes the hot-pink banner
-   so we know the script reached at least its first executable line. */
-try { var __sd = document.getElementById('__static_diag'); if (__sd) __sd.remove(); } catch(e){}
-
-/* ── EARLY DIAG — second confirmation: replaces with a green OK. */
-(function earlyDiag(){
-  try {
-    const d = document.createElement('div');
-    d.id = '__early_diag';
-    d.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:99999;background:#00cc66;color:#fff;font-family:monospace;font-size:18px;padding:14px 22px;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.6);font-weight:bold;';
-    d.textContent = 'JS:1 OK';
-    document.body.appendChild(d);
-  } catch (e) {
-    // If even THIS fails, the document.body isn't ready yet.
-  }
-})();
-window.addEventListener('error', function(ev){
-  try {
-    const d = document.getElementById('__early_diag');
-    if (d) d.textContent = 'JS:ERR ' + (ev.message || '').slice(0,80);
-    else {
-      const x = document.createElement('div');
-      x.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:99999;background:#ff0000;color:#fff;font-family:monospace;font-size:14px;padding:12px 18px;border-radius:6px;max-width:90vw;white-space:pre-wrap;text-align:center;';
-      x.textContent = 'JS ERROR: ' + (ev.message || 'unknown') + '\nfile: ' + (ev.filename || '') + '\nline: ' + (ev.lineno || '');
-      document.body.appendChild(x);
-    }
-  } catch(e){}
-});
-
 /* ════════════════════════════════════════════════════════════════
    QMBI CONCEPT GRAPH
    ──────────────────────────────────────────────────────────────
@@ -703,7 +665,7 @@ const NODES = [
      <p>If the symbiont inputs a base of birch sap and a target goal of neurogenesis, the QMBI maps the molecular pathways and suggests the exact ratio of Lion's Mane dual-extract, calculating the required lipid substitutions — coconut oil, perhaps — to ensure maximum bioavailability without compromising a vegan architecture.</p>` },
 
   // Hyphal sensory
-  { id:'bioacoustics', t:'Bio-Acoustics', tag:'The forest's ground-truth', cat:'hyphal', size:0.85, body:
+  { id:'bioacoustics', t:'Bio-Acoustics', tag:"The forest's ground-truth", cat:'hyphal', size:0.85, body:
     `<p>The system integrates with field sensors to monitor the bio-acoustic frequencies of the soil and localised barometric shifts. It does not just read weather reports.</p>
      <p>It <em>listens</em> to the subterranean communication of actual mycelial networks — the crackle of moisture, the chord of root pressure, the silent morse-code of nutrient exchange — to verify predictive fruiting models against the forest's own ground-truth.</p>` },
   { id:'mcn', t:'Mycelial Community Network', tag:'Peer-to-peer global registry', cat:'hyphal', size:0.9, body:
@@ -1123,47 +1085,16 @@ function paint(ts){
   });
 }
 
-/* ── Diagnostic overlay ─────────────────────────────────────
-   Tiny pill at the top-right of the stage that always paints
-   the live W × H + frame count + first error message. If the
-   canvas itself is hidden / 0×0 / failing, we still see a DOM
-   readout that tells us WHY. Removable once the issue is found. */
-const diag = document.createElement('div');
-diag.id = 'fa-myc-diag';
-diag.style.cssText = 'position:fixed;top:48px;right:16px;z-index:99;font-family:monospace;font-size:10.5px;letter-spacing:0.05em;color:#F5D689;background:rgba(15,11,7,0.85);border:0.5px solid rgba(232,177,75,0.45);border-radius:6px;padding:7px 10px;backdrop-filter:blur(8px);white-space:pre;line-height:1.55;';
-document.body.appendChild(diag);
-
-let __frameCount = 0;
-let __lastErr = '';
-function updateDiag(){
-  diag.textContent =
-    'canvas ' + (W|0) + ' × ' + (H|0) +
-    '\nbuffer ' + canvas.width + ' × ' + canvas.height +
-    '\ndpr ' + DPR.toFixed(2) +
-    '\nframes ' + __frameCount +
-    (__lastErr ? '\nerr ' + __lastErr.slice(0,60) : '');
-}
-updateDiag();
-
 /* ── Loop ─────────────────────────────────────────────────── */
 function frame(ts){
-  __frameCount++;
-  try {
-    step(ts);
-    paint(ts);
-  } catch (e) {
-    __lastErr = (e && e.message) ? e.message : String(e);
-    if (__frameCount === 1 || __frameCount % 60 === 0) console.error('[mycelium] frame', __frameCount, 'error:', e);
-  }
-  // Update diagnostic at 4fps
-  if (__frameCount % 15 === 0) updateDiag();
+  step(ts);
+  paint(ts);
   requestAnimationFrame(frame);
 }
 // Defer the first frame so all CSS has settled.
 requestAnimationFrame(() => {
   resize();
   if (typeof layoutInit === 'function') layoutInit();
-  updateDiag();
   requestAnimationFrame(frame);
 });
 
