@@ -1085,31 +1085,47 @@ function paint(ts){
   });
 }
 
+/* ── Diagnostic overlay ─────────────────────────────────────
+   Tiny pill at the top-right of the stage that always paints
+   the live W × H + frame count + first error message. If the
+   canvas itself is hidden / 0×0 / failing, we still see a DOM
+   readout that tells us WHY. Removable once the issue is found. */
+const diag = document.createElement('div');
+diag.id = 'fa-myc-diag';
+diag.style.cssText = 'position:fixed;top:48px;right:16px;z-index:99;font-family:monospace;font-size:10.5px;letter-spacing:0.05em;color:#F5D689;background:rgba(15,11,7,0.85);border:0.5px solid rgba(232,177,75,0.45);border-radius:6px;padding:7px 10px;backdrop-filter:blur(8px);white-space:pre;line-height:1.55;';
+document.body.appendChild(diag);
+
+let __frameCount = 0;
+let __lastErr = '';
+function updateDiag(){
+  diag.textContent =
+    'canvas ' + (W|0) + ' × ' + (H|0) +
+    '\nbuffer ' + canvas.width + ' × ' + canvas.height +
+    '\ndpr ' + DPR.toFixed(2) +
+    '\nframes ' + __frameCount +
+    (__lastErr ? '\nerr ' + __lastErr.slice(0,60) : '');
+}
+updateDiag();
+
 /* ── Loop ─────────────────────────────────────────────────── */
-// Wrapped in try/catch so a silent error in step/paint surfaces as
-// a real console.error instead of just freezing the canvas black.
-// Also defers the first frame by 1 RAF so all CSS has settled and
-// canvas.getBoundingClientRect() returns real numbers (we saw the
-// canvas paint black on at least one browser where layout hadn't
-// computed by the time the inline script ran).
-let __mycErrLogged = false;
 function frame(ts){
+  __frameCount++;
   try {
     step(ts);
     paint(ts);
   } catch (e) {
-    if (!__mycErrLogged){
-      console.error('[mycelium] frame loop error:', e);
-      __mycErrLogged = true;
-    }
+    __lastErr = (e && e.message) ? e.message : String(e);
+    if (__frameCount === 1 || __frameCount % 60 === 0) console.error('[mycelium] frame', __frameCount, 'error:', e);
   }
+  // Update diagnostic at 4fps
+  if (__frameCount % 15 === 0) updateDiag();
   requestAnimationFrame(frame);
 }
-// Re-run resize + layoutInit after layout has settled, in case the
-// first resize() above got a 0×0 bounding rect.
+// Defer the first frame so all CSS has settled.
 requestAnimationFrame(() => {
   resize();
   if (typeof layoutInit === 'function') layoutInit();
+  updateDiag();
   requestAnimationFrame(frame);
 });
 
