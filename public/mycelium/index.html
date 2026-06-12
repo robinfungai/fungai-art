@@ -1086,12 +1086,32 @@ function paint(ts){
 }
 
 /* ── Loop ─────────────────────────────────────────────────── */
+// Wrapped in try/catch so a silent error in step/paint surfaces as
+// a real console.error instead of just freezing the canvas black.
+// Also defers the first frame by 1 RAF so all CSS has settled and
+// canvas.getBoundingClientRect() returns real numbers (we saw the
+// canvas paint black on at least one browser where layout hadn't
+// computed by the time the inline script ran).
+let __mycErrLogged = false;
 function frame(ts){
-  step(ts);
-  paint(ts);
+  try {
+    step(ts);
+    paint(ts);
+  } catch (e) {
+    if (!__mycErrLogged){
+      console.error('[mycelium] frame loop error:', e);
+      __mycErrLogged = true;
+    }
+  }
   requestAnimationFrame(frame);
 }
-requestAnimationFrame(frame);
+// Re-run resize + layoutInit after layout has settled, in case the
+// first resize() above got a 0×0 bounding rect.
+requestAnimationFrame(() => {
+  resize();
+  if (typeof layoutInit === 'function') layoutInit();
+  requestAnimationFrame(frame);
+});
 
 /* ── Interactions ─────────────────────────────────────────── */
 function nodeAt(px, py){
