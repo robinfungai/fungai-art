@@ -593,16 +593,26 @@ footer.mini .freq{ color:var(--amber); }
   <footer class="mini">fungai art &middot; <span class="freq">111 Hz</span> &middot; permalink only</footer>
 </section>
 
+<!-- ── Static HTML diagnostic — visible BEFORE any JS runs.
+     If JS executes, the inline script below removes this element.
+     If JS does NOT execute, this giant hot-pink banner stays visible
+     and tells us exactly what's blocking. ── -->
+<div id="__static_diag" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:99999;background:#ff00aa;color:#fff;font-family:monospace;font-size:22px;padding:24px 32px;border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,0.7);font-weight:bold;text-align:center;line-height:1.5;max-width:80vw;">
+  JS DID NOT RUN<br/>
+  <span style="font-size:14px;font-weight:normal;">if you see this, the inline script never executed</span>
+</div>
+
 <script>
-/* ── EARLY DIAG — first thing the script does. If you don't see the
-     pink "JS:1" pill in the centre of the page, the inline script
-     never started parsing or the body had no children to append to.
-─────────────────────────────────────────────────────────────── */
+/* If JS works at all, this single line removes the hot-pink banner
+   so we know the script reached at least its first executable line. */
+try { var __sd = document.getElementById('__static_diag'); if (__sd) __sd.remove(); } catch(e){}
+
+/* ── EARLY DIAG — second confirmation: replaces with a green OK. */
 (function earlyDiag(){
   try {
     const d = document.createElement('div');
     d.id = '__early_diag';
-    d.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:99999;background:#ff00aa;color:#fff;font-family:monospace;font-size:18px;padding:14px 22px;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.6);font-weight:bold;';
+    d.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:99999;background:#00cc66;color:#fff;font-family:monospace;font-size:18px;padding:14px 22px;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.6);font-weight:bold;';
     d.textContent = 'JS:1 OK';
     document.body.appendChild(d);
   } catch (e) {
