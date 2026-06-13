@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1"/>
+<title>The Covenant — 64 axes of flourishing — Fungai Art</title>
+<!--
+  The Covenant Constraints — the framework that turns Fungai Art's
+  medicine pipeline from "does it work?" into "does it work, safely,
+  sovereignly, truthfully, compassionately, traceably, measurably, and
+  in service of human flourishing?"
+
+  Sister to /mycelium (QMBI) which explains the engine. This page
+  explains the ETHIC. Together they define what we are building.
+
+  Permalink-only — linked from /mycelium and /community/academy. Not
+  in the global nav. Not for first-time visitors.
+-->
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="description" content="The Covenant — 64 axes of analysis spanning Biological, Human, Environmental, Behavioral, Ethical, and Covenant layers. From recommendation engine to human flourishing engine."/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
+<link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
+<link rel="preconnect" href="https://api.fontshare.com"/>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500&f[]=satoshi@300,400,500,600&f[]=geist-mono@300,400&display=swap"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Spectral:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:        #050709;
+  --void-2:      #0A0D11;
+  --void-3:      #12161B;
+  --parchment:   #EDE5D8;
+  --cream:       #C9B894;
+  --cream-d:     #8B7E62;
+  --amber:       #C48838;
+  --amber-l:     #E8B14B;
+  --amber-ll:    #F5D689;
+  --violet:      #A88FE0;
+  --violet-l:    #C5B5F5;
+  --sage:        #6abf88;
+  --sage-l:      #B6F0AE;
+  --rust:        #C46B38;
+  --teal:        #4FB6A1;
+  --rule:        rgba(232,177,75,0.12);
+  --rule-strong: rgba(232,177,75,0.22);
+  --fd:"IM Fell English","Zodiak","Cormorant Garamond",Georgia,serif;
+  --fdoom:"Spectral",Georgia,serif;
+  --fs:"Satoshi",system-ui,sans-serif;
+  --fm:"Geist Mono","Josefin Sans",monospace;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  min-height:100vh;
+  background:var(--void);
+  color:var(--cream);
+  font-family:var(--fdoom);
+  font-weight:300;
+  line-height:1.78;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* Ambient grain */
+body::before{
+  content:""; position:fixed; inset:0;
+  pointer-events:none; z-index:0; opacity:0.04;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+}
+body::after{
+  content:""; position:fixed;
+  width:900px; height:900px;
+  background:radial-gradient(circle, rgba(168,143,224,0.06) 0%, transparent 60%);
+  top:-280px; left:50%; transform:translateX(-50%);
+  pointer-events:none; z-index:0;
+}
+
+main{
+  position:relative; z-index:1;
+  max-width:760px; margin:0 auto;
+  padding:74px 28px 96px;
+}
+@media (max-width:560px){ main{ padding:54px 22px 60px; } }
+
+.brand{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--fd); font-style:italic;
+  font-size:22px; color:var(--parchment);
+  letter-spacing:-0.005em;
+  text-decoration:none; margin-bottom:18px;
+  text-transform:lowercase;
+}
+.brand .dot{
+  width:6px; height:6px; border-radius:50%;
+  background:var(--amber-l);
+  box-shadow:0 0 14px rgba(232,177,75,0.65);
+  animation:breathe 4.2s ease-in-out infinite;
+}
+@keyframes breathe{ 0%,100%{opacity:0.55;transform:scale(1);} 50%{opacity:1;transform:scale(1.18);} }
+
+.eyebrow{
+  font-family:var(--fm); font-size:9.5px;
+  letter-spacing:0.36em; text-transform:uppercase;
+  color:var(--amber); margin-bottom:30px; display:block;
+}
+
+h1.hero{
+  font-family:var(--fd); font-style:italic; font-weight:400;
+  font-size:clamp(52px, 10vw, 100px);
+  line-height:0.96; letter-spacing:-0.022em;
+  color:var(--parchment);
+  margin:8px 0 12px;
+}
+h1.hero em{ color:var(--amber-l); }
+
+.hero-sub{
+  font-family:var(--fm); font-size:11px;
+  letter-spacing:0.42em; text-transform:uppercase;
+  color:var(--violet); margin-top:4px; margin-bottom:36px;
+}
+
+.opening{
+  font-family:var(--fdoom);
+  font-size:19px; line-height:1.78;
+  color:var(--cream);
+  border-left:1px solid var(--rule-strong);
+  padding-left:24px; margin:8px 0 60px;
+  max-width:60ch;
+}
+.opening strong{ color:var(--parchment); font-weight:400; }
+.opening em{ color:var(--amber-l); font-style:italic; }
+
+.act{
+  margin:96px 0 18px;
+  display:flex; align-items:center; gap:18px;
+}
+.act .roman{
+  font-family:var(--fd); font-style:italic;
+  font-size:36px; line-height:1;
+  color:var(--amber-l);
+}
+.act .rule{ flex:1; height:0.5px; background:var(--rule-strong); }
+.act .eb{
+  font-family:var(--fm); font-size:9px;
+  letter-spacing:0.32em; text-transform:uppercase;
+  color:var(--cream-d);
+  white-space:nowrap;
+}
+
+h2.section{
+  font-family:var(--fd); font-style:italic; font-weight:400;
+  font-size:clamp(34px, 5.5vw, 50px);
+  line-height:1.06; letter-spacing:-0.018em;
+  color:var(--parchment);
+  margin:10px 0 22px;
+}
+h2.section em{ color:var(--amber-l); }
+
+p{
+  font-family:var(--fdoom);
+  font-size:17px; line-height:1.82;
+  color:var(--cream);
+  margin-bottom:20px;
+  max-width:60ch;
+}
+p em{ color:var(--amber-l); font-style:italic; }
+p strong{ color:var(--parchment); font-weight:400; }
+
+/* Before/After comparison */
+.shift{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px; margin:30px 0;
+}
+@media (max-width:600px){ .shift{ grid-template-columns:1fr; } }
+.shift-box{
+  padding:20px 22px;
+  border-radius:12px;
+  border:0.5px solid var(--rule);
+  background:rgba(15,11,7,0.4);
+}
+.shift-box.after{
+  border-color:rgba(232,177,75,0.35);
+  background:linear-gradient(160deg, rgba(232,177,75,0.05), rgba(168,143,224,0.04));
+}
+.shift-box .s-lbl{
+  font-family:var(--fm); font-size:8.5px;
+  letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--cream-d); margin-bottom:10px;
+}
+.shift-box.after .s-lbl{ color:var(--amber-l); }
+.shift-box .s-quote{
+  font-family:var(--fd); font-style:italic;
+  font-size:18px; color:var(--parchment);
+  line-height:1.45;
+}
+
+/* Layer card grid */
+.layers{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+  gap:14px; margin:30px 0;
+}
+.layer{
+  padding:18px 20px 16px;
+  border-radius:12px;
+  border:0.5px solid var(--rule-strong);
+  background:linear-gradient(160deg, rgba(20,16,10,0.55), rgba(8,10,12,0.4));
+  position:relative;
+}
+.layer .l-roman{
+  font-family:var(--fd); font-style:italic;
+  font-size:22px; color:var(--amber-l);
+  display:block; line-height:1;
+}
+.layer .l-name{
+  font-family:var(--fd); font-style:italic;
+  font-size:21px; color:var(--parchment);
+  margin-top:6px; line-height:1.1;
+}
+.layer .l-count{
+  font-family:var(--fm); font-size:8.5px;
+  letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--cream-d); margin-top:6px;
+}
+.layer .l-axes{
+  font-family:var(--fdoom); font-size:13.5px;
+  color:var(--cream); line-height:1.65;
+  margin-top:10px;
+}
+
+/* The 64 listings — accordion per layer */
+.list-layer{
+  margin:36px 0;
+}
+.list-layer summary{
+  list-style:none; cursor:pointer;
+  display:flex; align-items:center; gap:14px;
+  padding:12px 16px;
+  border-radius:10px;
+  border:0.5px solid var(--rule-strong);
+  background:rgba(15,11,7,0.6);
+  transition:border-color 0.18s, background 0.18s;
+}
+.list-layer summary::-webkit-details-marker{ display:none; }
+.list-layer[open] summary{ border-color:rgba(232,177,75,0.45); background:rgba(232,177,75,0.05); }
+.list-layer summary:hover{ border-color:rgba(232,177,75,0.4); }
+.list-layer .s-num{
+  font-family:var(--fd); font-style:italic;
+  font-size:22px; color:var(--amber-l);
+  line-height:1; flex-shrink:0;
+}
+.list-layer .s-name{
+  font-family:var(--fd); font-style:italic;
+  font-size:20px; color:var(--parchment);
+  letter-spacing:-0.005em; flex:1; line-height:1.1;
+}
+.list-layer .s-range{
+  font-family:var(--fm); font-size:9px;
+  letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--cream-d); flex-shrink:0;
+}
+.list-layer .s-toggle{
+  font-family:var(--fm); font-size:10px;
+  color:var(--cream-d); flex-shrink:0;
+}
+.list-layer[open] .s-toggle{ color:var(--amber-l); }
+.list-layer ol{
+  list-style:none;
+  padding:14px 8px 4px 24px;
+  margin-top:8px;
+  border-left:0.5px solid var(--rule);
+}
+.list-layer li{
+  display:flex; gap:14px;
+  padding:8px 0;
+  font-family:var(--fdoom); font-size:15px;
+  line-height:1.6; color:var(--cream);
+  border-bottom:0.5px solid var(--rule);
+}
+.list-layer li:last-child{ border-bottom:none; }
+.list-layer li .n{
+  font-family:var(--fm); font-size:11px;
+  letter-spacing:0.06em;
+  color:var(--amber); flex-shrink:0;
+  min-width:28px; padding-top:2px;
+}
+.list-layer li .n-body{ flex:1; }
+.list-layer li .n-title{
+  font-family:var(--fd); font-style:italic;
+  font-size:16.5px; color:var(--parchment);
+  letter-spacing:-0.005em; line-height:1.25;
+  display:inline;
+}
+.list-layer li .n-desc{
+  font-family:var(--fdoom); font-size:14.5px;
+  color:var(--cream); line-height:1.55;
+  margin-top:4px;
+}
+
+/* Pillar / Stage cards (5 pipeline stages, 5 simulation levels) */
+.stage{
+  margin:24px 0;
+  padding:20px 24px 18px;
+  background:linear-gradient(160deg, rgba(168,143,224,0.05), rgba(232,177,75,0.03));
+  border:0.5px solid rgba(168,143,224,0.22);
+  border-radius:14px;
+  position:relative;
+}
+.stage .p-num{
+  position:absolute; top:-14px; left:24px;
+  font-family:var(--fd); font-style:italic;
+  font-size:22px; line-height:1;
+  background:var(--void);
+  padding:0 10px; color:var(--violet-l);
+}
+.stage h3.sub{
+  font-family:var(--fd); font-style:italic; font-weight:400;
+  font-size:22px; color:var(--parchment);
+  margin:6px 0 4px;
+}
+.stage .sub-tag{
+  font-family:var(--fm); font-size:8.5px;
+  letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--cream-d);
+  display:block; margin-bottom:10px;
+}
+.stage p{ font-size:15.5px; margin-bottom:8px; }
+
+/* Callout for specific named axes */
+.callout{
+  margin:22px 0;
+  padding:16px 20px;
+  background:rgba(232,177,75,0.05);
+  border-left:2px solid var(--amber-l);
+  border-radius:0 8px 8px 0;
+}
+.callout .c-lbl{
+  font-family:var(--fm); font-size:8.5px;
+  letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--amber-l); margin-bottom:6px;
+}
+.callout .c-body{
+  font-family:var(--fdoom); font-size:15px;
+  color:var(--cream); line-height:1.7;
+}
+.callout .c-body em{ color:var(--amber-l); }
+
+blockquote{
+  margin:24px 0;
+  padding:0 0 0 22px;
+  border-left:2px solid rgba(232,177,75,0.45);
+  font-family:var(--fd); font-style:italic;
+  font-size:20px; line-height:1.52;
+  color:var(--parchment); max-width:54ch;
+}
+blockquote em{ color:var(--amber-ll); }
+
+h3.sub{
+  font-family:var(--fd); font-style:italic; font-weight:400;
+  font-size:24px; color:var(--parchment);
+  letter-spacing:-0.005em;
+  margin:36px 0 4px;
+}
+h3.sub::before{ content:"✦  "; color:var(--amber-l); font-size:0.85em; }
+.sub-tag{
+  font-family:var(--fm); font-size:8.5px;
+  letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--cream-d);
+  display:block; margin-bottom:10px;
+}
+
+.close{
+  margin-top:80px; padding-top:30px;
+  border-top:0.5px solid var(--rule);
+  text-align:center;
+}
+.close p{
+  font-family:var(--fd); font-style:italic;
+  font-size:21px; line-height:1.5;
+  color:var(--parchment); max-width:46ch; margin:0 auto 18px;
+}
+.close em{ color:var(--amber-l); }
+.back{
+  display:inline-block; margin-top:24px;
+  font-family:var(--fm); font-size:9.5px;
+  letter-spacing:0.32em; text-transform:uppercase;
+  color:var(--cream); text-decoration:none; opacity:0.6;
+  border-bottom:0.5px solid rgba(201,184,148,0.18);
+  padding-bottom:4px; transition:opacity 0.3s, color 0.3s;
+  margin:0 8px;
+}
+.back:hover{ opacity:1; color:var(--amber-l); }
+.back::before{ content:"⟵ "; opacity:0.7; }
+.fwd::before{ content:""; }
+.fwd::after{ content:" ⟶"; opacity:0.7; }
+
+footer.mini{
+  margin-top:64px; text-align:center;
+  font-family:var(--fm); font-size:8.5px;
+  letter-spacing:0.34em; text-transform:uppercase;
+  color:var(--cream-d); opacity:0.5;
+}
+footer.mini .freq{ color:var(--amber); }
+</style>
+<script src="/global-nav.js" defer></script>
+</head>
+<body>
+
+<main>
+
+  <a href="/home/" class="brand" title="fungai art">
+    <span class="dot"></span>
+    fungai art
+  </a>
+  <span class="eyebrow">The Covenant &middot; 64 axes</span>
+
+  <h1 class="hero">The <em>Covenant.</em></h1>
+  <div class="hero-sub">Sixty-four axes of human flourishing</div>
+
+  <p class="opening">
+    Most medicine asks one question: <strong>does it work?</strong> The Covenant
+    asks a longer one. Does it work, <em>safely, sovereignly, truthfully,
+    compassionately, traceably, measurably,</em> and in service of human
+    flourishing? Sixty-four axes, organised into six layers, evaluated at
+    every stage from harvest to ingestion. A quality bar with teeth.
+  </p>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       I — The Shift
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="act">
+    <span class="roman">I</span>
+    <span class="rule"></span>
+    <span class="eb">The shift in the question</span>
+  </div>
+  <h2 class="section">From <em>"does it work?"</em> to a longer question.</h2>
+
+  <p>
+    Standard pharmacology stops at first-order effects. <em>What compounds
+    are present? What receptors do they affect? What dose appears to work?
+    What side effects emerge?</em> Useful. But narrow. It collapses every
+    human into a single mean, every formula into a single answer, every
+    intervention into a single moment.
+  </p>
+
+  <div class="shift">
+    <div class="shift-box">
+      <div class="s-lbl">Before</div>
+      <div class="s-quote">"Is it effective?"</div>
+    </div>
+    <div class="shift-box after">
+      <div class="s-lbl">After</div>
+      <div class="s-quote">"Is it effective, safe, sovereign, truthful, compassionate, traceable, measurable, and life-enhancing?"</div>
+    </div>
+  </div>
+
+  <p>
+    Most failures in medicine happen because someone asked the shorter
+    question. The patient is on three other drugs. The herb was grown on
+    contaminated soil. The protocol creates dependency. The compound works
+    fine in mice and fine in the lab and fine for three weeks &mdash; and
+    then the third-order effect that no one predicted shows up at month
+    eighteen. <em>The shorter question loses everything beyond the first
+    order.</em>
+  </p>
+
+  <p>
+    The Covenant exists to make the longer question <strong>standard
+    operating practice</strong> at Fungai Art and New Tyme Tonics. Every
+    herb. Every formula. Every batch. Every recommendation. Every
+    practitioner conversation. Sixty-four axes, six layers, five stages.
+  </p>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       II — The Six Layers
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="act">
+    <span class="roman">II</span>
+    <span class="rule"></span>
+    <span class="eb">The six layers of analysis</span>
+  </div>
+  <h2 class="section">Six layers, <em>one organism.</em></h2>
+
+  <p>
+    Every herb is evaluated across six lenses. The layers compose: a
+    formula that passes the biological layer can still fail the
+    environmental one (heavy-metal contamination); one that passes both
+    can still fail the covenant layer (creates dependency). All six must
+    hold for a formula to be considered <em>covenant-grade</em>.
+  </p>
+
+  <div class="layers">
+    <div class="layer">
+      <span class="l-roman">I</span>
+      <div class="l-name">Biological</div>
+      <div class="l-count">12 axes &middot; 1&ndash;12</div>
+      <div class="l-axes">Active compounds, pharmacology, metabolism, dose-response, half-life, receptor binding, long-term effects, toxicity thresholds.</div>
+    </div>
+    <div class="layer">
+      <span class="l-roman">II</span>
+      <div class="l-name">Human</div>
+      <div class="l-count">12 axes &middot; 13&ndash;24</div>
+      <div class="l-axes">Age, sex, weight, genetic polymorphisms, existing conditions, current medications, allergies, baseline state, microbiome.</div>
+    </div>
+    <div class="layer">
+      <span class="l-roman">III</span>
+      <div class="l-name">Environmental</div>
+      <div class="l-count">12 axes &middot; 25&ndash;36</div>
+      <div class="l-axes">Source organism identity, growing region, soil quality, harvest method, contaminants, processing, sustainability, traceability.</div>
+    </div>
+    <div class="layer">
+      <span class="l-roman">IV</span>
+      <div class="l-name">Behavioural</div>
+      <div class="l-count">12 axes &middot; 37&ndash;48</div>
+      <div class="l-axes">Sleep, diet, stress, hydration, activity, sun exposure, social rhythm, substance use, screen time, breath, recovery.</div>
+    </div>
+    <div class="layer">
+      <span class="l-roman">V</span>
+      <div class="l-name">Ethical</div>
+      <div class="l-count">10 axes &middot; 49&ndash;58</div>
+      <div class="l-axes">Informed consent, realistic expectations, dependency risk, transparency, disclosure, stop conditions, monitoring access, exit dignity.</div>
+    </div>
+    <div class="layer">
+      <span class="l-roman">VI</span>
+      <div class="l-name">Covenant</div>
+      <div class="l-count">6 axes &middot; 59&ndash;64</div>
+      <div class="l-axes">Autonomy, flourishing contribution, dignity preserved, relationship to nature, lineage respect, generational impact.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       III — The 64 axes
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="act">
+    <span class="roman">III</span>
+    <span class="rule"></span>
+    <span class="eb">The sixty-four axes</span>
+  </div>
+  <h2 class="section">The <em>sixty-four.</em></h2>
+
+  <p>
+    Every axis is a real evaluation surface &mdash; not a slogan. Each one
+    becomes a column in the herb database, a filter in the Engine, a check
+    in the practitioner conversation. The numbering below is the canonical
+    source: when we say "Axis 17," we mean the same thing on the website,
+    in the data, and in the studio. Expand each layer to read its list.
+  </p>
+
+  <details class="list-layer" open>
+    <summary>
+      <span class="s-num">I.</span>
+      <span class="s-name">Biological</span>
+      <span class="s-range">1 &mdash; 12</span>
+      <span class="s-toggle">&dArr;</span>
+    </summary>
+    <ol>
+      <li><span class="n">01</span><div class="n-body"><span class="n-title">Active compound identity</span><div class="n-desc">Which molecules are actually doing the work. Named, characterised, isolated where possible.</div></div></li>
+      <li><span class="n">02</span><div class="n-body"><span class="n-title">Pharmacological mechanism</span><div class="n-desc">Receptor binding, enzyme modulation, ion-channel activity. How the molecule talks to the cell.</div></div></li>
+      <li><span class="n">03</span><div class="n-body"><span class="n-title">Metabolic pathway</span><div class="n-desc">Which enzymes process it (CYP450 family etc.). Which metabolites it becomes downstream.</div></div></li>
+      <li><span class="n">04</span><div class="n-body"><span class="n-title">Bioavailability</span><div class="n-desc">How much of the ingested dose actually reaches the target tissue. Extraction matters here.</div></div></li>
+      <li><span class="n">05</span><div class="n-body"><span class="n-title">Half-life</span><div class="n-desc">How long until the compound is at half its peak. Determines dosing rhythm.</div></div></li>
+      <li><span class="n">06</span><div class="n-body"><span class="n-title">Dose-response curve</span><div class="n-desc">Linear? Hormetic? Inverted-U? Where is the threshold below which it does nothing and above which it harms?</div></div></li>
+      <li><span class="n">07</span><div class="n-body"><span class="n-title">Receptor affinity</span><div class="n-desc">How tightly the compound binds, how selectively, how reversibly.</div></div></li>
+      <li><span class="n">08</span><div class="n-body"><span class="n-title">Long-term effects</span><div class="n-desc">What happens at month three, year one, decade two. Effects that only show up on long horizons.</div></div></li>
+      <li><span class="n">09</span><div class="n-body"><span class="n-title">Tolerance development</span><div class="n-desc">Does the body adapt? Does the same dose work next month? Down-regulation, up-regulation.</div></div></li>
+      <li><span class="n">10</span><div class="n-body"><span class="n-title">Withdrawal profile</span><div class="n-desc">What happens when use stops. Rebound effects. Discontinuation timeline.</div></div></li>
+      <li><span class="n">11</span><div class="n-body"><span class="n-title">Synergistic cascades</span><div class="n-desc">How combinations within the same biomass interact &mdash; the whole-organism effect that isolated compounds miss.</div></div></li>
+      <li><span class="n">12</span><div class="n-body"><span class="n-title">Toxicity threshold</span><div class="n-desc">The dose at which damage begins. Acute and cumulative. Liver, kidney, neurological, cardiac.</div></div></li>
+    </ol>
+  </details>
+
+  <details class="list-layer">
+    <summary>
+      <span class="s-num">II.</span>
+      <span class="s-name">Human</span>
+      <span class="s-range">13 &mdash; 24</span>
+      <span class="s-toggle">&dArr;</span>
+    </summary>
+    <ol>
+      <li><span class="n">13</span><div class="n-body"><span class="n-title">Age</span><div class="n-desc">Developmental, adult, geriatric. Liver clearance and receptor density vary across the lifespan.</div></div></li>
+      <li><span class="n">14</span><div class="n-body"><span class="n-title">Sex and hormonal state</span><div class="n-desc">Endogenous hormones change every pharmacokinetic curve. Menstrual cycle, pregnancy, andropause, menopause.</div></div></li>
+      <li><span class="n">15</span><div class="n-body"><span class="n-title">Body composition</span><div class="n-desc">Weight, lean mass, fat distribution. Lipophilic compounds partition differently.</div></div></li>
+      <li><span class="n">16</span><div class="n-body"><span class="n-title">Genetic polymorphisms</span><div class="n-desc">CYP2D6, CYP3A4, COMT, MTHFR. Some individuals metabolise tenfold faster or slower than the population mean.</div></div></li>
+      <li><span class="n">17</span><div class="n-body"><span class="n-title">Existing conditions</span><div class="n-desc">Comorbidities reshape every risk-benefit calculation. Autoimmune, hepatic, renal, cardiovascular, psychiatric.</div></div></li>
+      <li><span class="n">18</span><div class="n-body"><span class="n-title">Current medications</span><div class="n-desc">The single largest source of catastrophic interactions. Cross-checked against every constituent of every formula.</div></div></li>
+      <li><span class="n">19</span><div class="n-body"><span class="n-title">Allergy and sensitivity history</span><div class="n-desc">Asteraceae, salicylates, sulphites. Cross-reactivities map across plant families.</div></div></li>
+      <li><span class="n">20</span><div class="n-body"><span class="n-title">Microbiome state</span><div class="n-desc">Gut bacteria transform many compounds. Some metabolites only exist if the right bacteria are present.</div></div></li>
+      <li><span class="n">21</span><div class="n-body"><span class="n-title">Mental health history</span><div class="n-desc">Personal and family. Mood-acting herbs require different consent thresholds where there is bipolar or psychosis lineage.</div></div></li>
+      <li><span class="n">22</span><div class="n-body"><span class="n-title">Reproductive context</span><div class="n-desc">Trying to conceive, pregnant, breastfeeding. Uterine stimulants, abortifacients, transfer-risk compounds.</div></div></li>
+      <li><span class="n">23</span><div class="n-body"><span class="n-title">Baseline biomarkers</span><div class="n-desc">Resting heart rate, blood pressure, sleep architecture, HRV, fasting glucose. The starting state determines the trajectory.</div></div></li>
+      <li><span class="n">24</span><div class="n-body"><span class="n-title">Subjective state</span><div class="n-desc">What the human is trying to change. Self-reported pain, mood, energy, clarity. The reason they are here.</div></div></li>
+    </ol>
+  </details>
+
+  <details class="list-layer">
+    <summary>
+      <span class="s-num">III.</span>
+      <span class="s-name">Environmental</span>
+      <span class="s-range">25 &mdash; 36</span>
+      <span class="s-toggle">&dArr;</span>
+    </summary>
+    <ol>
+      <li><span class="n">25</span><div class="n-body"><span class="n-title">Source organism identity</span><div class="n-desc">Species, strain, sub-variety. Verified by morphology and ideally by DNA sequencing.</div></div></li>
+      <li><span class="n">26</span><div class="n-body"><span class="n-title">Growing region</span><div class="n-desc">Wild vs cultivated, latitude, altitude, ecological community. Chemistry varies with terroir.</div></div></li>
+      <li><span class="n">27</span><div class="n-body"><span class="n-title">Soil and substrate</span><div class="n-desc">Mineral profile, microbial community, organic content. The plant is a soil expression.</div></div></li>
+      <li><span class="n">28</span><div class="n-body"><span class="n-title">Growing conditions</span><div class="n-desc">Sun exposure, rainfall, season, stress events. Stressed plants make different compounds.</div></div></li>
+      <li><span class="n">29</span><div class="n-body"><span class="n-title">Harvest method and timing</span><div class="n-desc">Lunar timing, time of day, plant lifecycle stage. Lignification, flowering, fruiting all change composition.</div></div></li>
+      <li><span class="n">30</span><div class="n-body"><span class="n-title">Contaminants</span><div class="n-desc">Heavy metals, pesticides, microbial load, aflatoxins, radionuclides. Tested per batch.</div></div></li>
+      <li><span class="n">31</span><div class="n-body"><span class="n-title">Processing method</span><div class="n-desc">Drying, milling, extraction solvent and temperature, calcination protocol. Each step alters the chemistry.</div></div></li>
+      <li><span class="n">32</span><div class="n-body"><span class="n-title">Storage stability</span><div class="n-desc">Light, oxygen, moisture, temperature. Oxidation timelines per compound class.</div></div></li>
+      <li><span class="n">33</span><div class="n-body"><span class="n-title">Batch traceability</span><div class="n-desc">From specific patch of forest to specific bottle, with chain of custody. No anonymous biomass.</div></div></li>
+      <li><span class="n">34</span><div class="n-body"><span class="n-title">Sustainability of source</span><div class="n-desc">Population health of the species in the region. Embargo overharvested zones; reroute to abundant alternatives.</div></div></li>
+      <li><span class="n">35</span><div class="n-body"><span class="n-title">Ethical sourcing</span><div class="n-desc">Indigenous land rights, fair compensation, traditional protocol respect. No cultural appropriation by extraction.</div></div></li>
+      <li><span class="n">36</span><div class="n-body"><span class="n-title">Lifecycle accounting</span><div class="n-desc">From bud to ash &mdash; closed-loop spagyrics. Nothing is discarded; everything is transmuted.</div></div></li>
+    </ol>
+  </details>
+
+  <details class="list-layer">
+    <summary>
+      <span class="s-num">IV.</span>
+      <span class="s-name">Behavioural</span>
+      <span class="s-range">37 &mdash; 48</span>
+      <span class="s-toggle">&dArr;</span>
+    </summary>
+    <ol>
+      <li><span class="n">37</span><div class="n-body"><span class="n-title">Sleep architecture</span><div class="n-desc">Duration, latency, REM, deep, fragmentation. The base on which every recovery system depends.</div></div></li>
+      <li><span class="n">38</span><div class="n-body"><span class="n-title">Diet pattern</span><div class="n-desc">Macros, micros, meal timing, fasting windows. What is the gut actually receiving.</div></div></li>
+      <li><span class="n">39</span><div class="n-body"><span class="n-title">Stress load</span><div class="n-desc">Acute and chronic. HPA axis state. Cortisol curve shape.</div></div></li>
+      <li><span class="n">40</span><div class="n-body"><span class="n-title">Hydration</span><div class="n-desc">Volume and mineral content of water. Affects clearance and concentration of every compound.</div></div></li>
+      <li><span class="n">41</span><div class="n-body"><span class="n-title">Physical activity</span><div class="n-desc">Type, intensity, frequency. Movement changes liver and kidney clearance and mitochondrial demand.</div></div></li>
+      <li><span class="n">42</span><div class="n-body"><span class="n-title">Sun and light exposure</span><div class="n-desc">Circadian anchor. Vitamin D status. UVB exposure to skin.</div></div></li>
+      <li><span class="n">43</span><div class="n-body"><span class="n-title">Social rhythm</span><div class="n-desc">Isolation, community, intimacy. Vagal tone reads social safety.</div></div></li>
+      <li><span class="n">44</span><div class="n-body"><span class="n-title">Substance use</span><div class="n-desc">Alcohol, caffeine, nicotine, cannabis, recreational. Every one of these has an interaction map.</div></div></li>
+      <li><span class="n">45</span><div class="n-body"><span class="n-title">Screen and information load</span><div class="n-desc">Blue light, attention fragmentation, news cortisol. Modern environmental factors with measurable biology.</div></div></li>
+      <li><span class="n">46</span><div class="n-body"><span class="n-title">Breath patterns</span><div class="n-desc">Nasal vs mouth, depth, pace. CO2 tolerance. Autonomic state reads through respiration.</div></div></li>
+      <li><span class="n">47</span><div class="n-body"><span class="n-title">Recovery practice</span><div class="n-desc">Sauna, cold, breath work, meditation, time in nature. The active counterweight to stress load.</div></div></li>
+      <li><span class="n">48</span><div class="n-body"><span class="n-title">Work and purpose</span><div class="n-desc">Sense of meaning. Daily-effort coherence. The single largest factor in long-horizon health that mainstream medicine never asks about.</div></div></li>
+    </ol>
+  </details>
+
+  <details class="list-layer">
+    <summary>
+      <span class="s-num">V.</span>
+      <span class="s-name">Ethical</span>
+      <span class="s-range">49 &mdash; 58</span>
+      <span class="s-toggle">&dArr;</span>
+    </summary>
+    <ol>
+      <li><span class="n">49</span><div class="n-body"><span class="n-title">Informed consent</span><div class="n-desc">The human knows what is in the bottle, what it is likely to do, what it may do, and what the unknowns are.</div></div></li>
+      <li><span class="n">50</span><div class="n-body"><span class="n-title">Realistic expectations</span><div class="n-desc">No miracle claims. No hidden conditionals. The expected outcome is stated with its uncertainty range.</div></div></li>
+      <li><span class="n">51</span><div class="n-body"><span class="n-title">Dependency risk disclosure</span><div class="n-desc">Whether the formula creates or breaks dependency. Stated openly.</div></div></li>
+      <li><span class="n">52</span><div class="n-body"><span class="n-title">Transparency of process</span><div class="n-desc">How it was made, by whom, with what. No black boxes.</div></div></li>
+      <li><span class="n">53</span><div class="n-body"><span class="n-title">Stop conditions</span><div class="n-desc">The signals that say "discontinue and consult." Pre-stated, not improvised.</div></div></li>
+      <li><span class="n">54</span><div class="n-body"><span class="n-title">Monitoring access</span><div class="n-desc">A way to track the effect over time. Journaling, biomarkers, follow-up.</div></div></li>
+      <li><span class="n">55</span><div class="n-body"><span class="n-title">Side-effect education</span><div class="n-desc">Common, uncommon, and severe. What to recognise, what to do.</div></div></li>
+      <li><span class="n">56</span><div class="n-body"><span class="n-title">Off-label clarity</span><div class="n-desc">Where traditional use exceeds modern evidence, the gap is stated.</div></div></li>
+      <li><span class="n">57</span><div class="n-body"><span class="n-title">Exit dignity</span><div class="n-desc">No long-term lock-ins. No emotional coercion to continue. The relationship can end at any time.</div></div></li>
+      <li><span class="n">58</span><div class="n-body"><span class="n-title">Pricing honesty</span><div class="n-desc">Price reflects cost and care. No exploitation of vulnerability or desperation.</div></div></li>
+    </ol>
+  </details>
+
+  <details class="list-layer">
+    <summary>
+      <span class="s-num">VI.</span>
+      <span class="s-name">Covenant</span>
+      <span class="s-range">59 &mdash; 64</span>
+      <span class="s-toggle">&dArr;</span>
+    </summary>
+    <ol>
+      <li><span class="n">59</span><div class="n-body"><span class="n-title">Autonomy</span><div class="n-desc">The intervention increases the human's capacity to act for themselves, not their reliance on the supplier.</div></div></li>
+      <li><span class="n">60</span><div class="n-body"><span class="n-title">Flourishing contribution</span><div class="n-desc">Beyond symptom reduction &mdash; does this make the life more whole? Cognitive clarity, emotional range, vitality.</div></div></li>
+      <li><span class="n">61</span><div class="n-body"><span class="n-title">Dignity preserved</span><div class="n-desc">The framing treats the human as the protagonist of their own healing, not the object of an intervention.</div></div></li>
+      <li><span class="n">62</span><div class="n-body"><span class="n-title">Lineage and cultural respect</span><div class="n-desc">The traditions the medicine comes from are credited, supported, and not appropriated.</div></div></li>
+      <li><span class="n">63</span><div class="n-body"><span class="n-title">Relationship to nature</span><div class="n-desc">Does using this reconnect the human to the ecosystem &mdash; or sever the link further? Rebuild, maintain, sever.</div></div></li>
+      <li><span class="n">64</span><div class="n-body"><span class="n-title">Generational impact</span><div class="n-desc">Effect on children, grandchildren, downstream ecology. The hundred-year question.</div></div></li>
+    </ol>
+  </details>
+
+  <div class="callout">
+    <div class="c-lbl">Named anchors</div>
+    <div class="c-body">
+      Throughout the studio we will refer to <em>Axis 12</em> (toxicity threshold),
+      <em>Axis 18</em> (current medications), <em>Axis 37</em> (sleep architecture),
+      and <em>Axis 63</em> (relationship to nature) as the four most-asked-after
+      axes &mdash; the ones that come up in nearly every practitioner conversation
+      and every formula development cycle. They are not more important than the
+      others. They are simply the ones the world tries to ignore most often.
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       IV — The Five Stages
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="act">
+    <span class="roman">IV</span>
+    <span class="rule"></span>
+    <span class="eb">The five-stage development pipeline</span>
+  </div>
+  <h2 class="section">The pipeline, <em>stage by stage.</em></h2>
+
+  <p>
+    The 64 axes do not all get evaluated at once. They are partitioned
+    across five development stages so that the right axes are checked at
+    the right moment. A herb cannot pass Stage 3 until it has cleared
+    Stages 1 and 2. A formula cannot ship until it has cleared all five.
+  </p>
+
+  <div class="stage">
+    <span class="p-num">1.</span>
+    <h3 class="sub">Identification</h3>
+    <span class="sub-tag">Species &middot; strain &middot; source &middot; harvest</span>
+    <p>
+      Before anything else: <em>what exactly is this organism?</em>
+      Species verified, strain noted, source documented, harvest method
+      and timing recorded. If the identity is uncertain, nothing else
+      matters. This stage clears Axes 25, 26, 29 and 33.
+    </p>
+  </div>
+
+  <div class="stage">
+    <span class="p-num">2.</span>
+    <h3 class="sub">Chemistry</h3>
+    <span class="sub-tag">Compounds &middot; stability &middot; extraction</span>
+    <p>
+      Active compounds named, characterised, quantified. Stability under
+      planned processing established. Extraction method selected to draw
+      the targeted chemistry without destroying co-factors. Clears Axes 1,
+      4, 31 and 32.
+    </p>
+  </div>
+
+  <div class="stage">
+    <span class="p-num">3.</span>
+    <h3 class="sub">Biology</h3>
+    <span class="sub-tag">Mechanism &middot; target tissues &middot; metabolism</span>
+    <p>
+      What the compounds do once inside. Receptor binding, enzyme
+      interactions, metabolic fate, half-life. Long-term effects modelled.
+      Clears Axes 2, 3, 5, 6, 7, 8, 9, 10 and 12.
+    </p>
+  </div>
+
+  <div class="stage">
+    <span class="p-num">4.</span>
+    <h3 class="sub">Human impact</h3>
+    <span class="sub-tag">Benefits &middot; risks &middot; contraindications</span>
+    <p>
+      The formula meets the specific human. Existing conditions,
+      medications, allergies, microbiome, mental-health context, baseline
+      biomarkers. Every Axis 13&ndash;24 evaluated. This is where most
+      mainstream medicine stops &mdash; we go one more.
+    </p>
+  </div>
+
+  <div class="stage">
+    <span class="p-num">5.</span>
+    <h3 class="sub">Covenant evaluation</h3>
+    <span class="sub-tag">Autonomy &middot; flourishing &middot; relationship</span>
+    <p>
+      Does this increase sovereignty? Reduce suffering without creating
+      dependency? Maintain dignity? Honour lineage? Rebuild the
+      relationship to nature? Clears Axes 49&ndash;64. <em>No formula
+      ships without passing this stage.</em>
+    </p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       V — Worked example
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="act">
+    <span class="roman">V</span>
+    <span class="rule"></span>
+    <span class="eb">A worked example</span>
+  </div>
+  <h2 class="section">A <em>mushroom blend</em> for anxiety.</h2>
+
+  <p>
+    Robin is developing a blend that reduces anxiety. Two ways to answer
+    the question <em>"will it work?"</em>:
+  </p>
+
+  <div class="shift">
+    <div class="shift-box">
+      <div class="s-lbl">Without the Covenant</div>
+      <div class="s-quote">"Research suggests compounds X and Y may reduce anxiety. A daily dose of Z mg appears effective."</div>
+    </div>
+    <div class="shift-box after">
+      <div class="s-lbl">With the Covenant</div>
+      <div class="s-quote">"The formulation may reduce anxiety in healthy adults. Users on SSRIs, benzodiazepines, antipsychotics, or immune-modulating drugs must be separately evaluated. The product is tested per batch for heavy metals, species identity, contaminants, and consistency. Effect is measured against sleep architecture, cognitive performance, emotional regulation, dependency patterns, and long-term well-being. The user understands expected benefits, known uncertainties, and explicit stop conditions."</div>
+    </div>
+  </div>
+
+  <p>
+    The second answer is longer because the system is honest. It does
+    not promise more than it can deliver, and it surfaces the
+    constraints that determine whether the formula <em>will actually
+    work for this specific person.</em> The first answer flatters the
+    seller. The second answer protects the human.
+  </p>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       VI — The Simulation Roadmap
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="act">
+    <span class="roman">VI</span>
+    <span class="rule"></span>
+    <span class="eb">The simulation roadmap</span>
+  </div>
+  <h2 class="section">From <em>observed</em> to <em>predicted.</em></h2>
+
+  <p>
+    Today most herbal medicine is observational. We see what happens to
+    previous patients and infer what will happen to the next one. With
+    sufficient simulation, the question changes: <em>"what is likely to
+    happen inside this specific patient before we administer
+    anything?"</em> Five levels, each building on the previous.
+  </p>
+
+  <div class="stage">
+    <span class="p-num">L1</span>
+    <h3 class="sub">Molecular simulation</h3>
+    <span class="sub-tag">Compounds &middot; receptors &middot; enzymes</span>
+    <p>
+      Simulate binding, enzyme interactions, metabolism, degradation
+      pathways. Today, we do pieces. The ambition is to do all of it
+      simultaneously, for an entire formula at once.
+    </p>
+  </div>
+
+  <div class="stage">
+    <span class="p-num">L2</span>
+    <h3 class="sub">Cellular simulation</h3>
+    <span class="sub-tag">Neurons &middot; immune &middot; liver &middot; microbiome</span>
+    <p>
+      Each compound modelled against a population of cell types. A
+      mushroom compound that looks inert in isolation may be transformed
+      by gut bacteria into an active metabolite that targets
+      inflammation &mdash; a chain that takes years to discover
+      empirically and seconds to simulate.
+    </p>
+  </div>
+
+  <div class="stage">
+    <span class="p-num">L3</span>
+    <h3 class="sub">Organ simulation</h3>
+    <span class="sub-tag">Brain &middot; liver &middot; kidneys &middot; immune &middot; endocrine</span>
+    <p>
+      Cascading effects become visible. <em>A compound reduces
+      inflammation. Inflammation drop improves sleep. Better sleep
+      improves hormone regulation. Improved hormones improve recovery.
+      Recovery shifts the immune set-point.</em> The full chain in one
+      simulation pass.
+    </p>
+  </div>
+
+  <div class="stage">
+    <span class="p-num">L4</span>
+    <h3 class="sub">Digital twin</h3>
+    <span class="sub-tag">Per-person predictive model</span>
+    <p>
+      Not a generic human. <em>This human.</em> Genetics, age, weight,
+      medical history, diet, current medications, lifestyle. A
+      personalised biological model that can be perturbed with candidate
+      formulas to see the projected five-year outcome before the first
+      dose is taken.
+    </p>
+  </div>
+
+  <div class="stage">
+    <span class="p-num">L5</span>
+    <h3 class="sub">Covenant-of-consciousness simulation</h3>
+    <span class="sub-tag">Sovereignty &middot; dependency risk &middot; long-term flourishing</span>
+    <p>
+      Where the framework becomes unique. Pharmaceutical simulations
+      optimise for effectiveness, profitability, and marketability. This
+      simulation optimises additionally for sovereignty, dependency
+      risk, long-term flourishing, quality of life, cognitive clarity,
+      and emotional stability. The objective function changes from
+      <em>"maximise symptom reduction"</em> to <em>"maximise human
+      flourishing while minimising harm and preserving autonomy."</em>
+    </p>
+  </div>
+
+  <blockquote>
+    With sufficient simulation, development changes from
+    <em>create &rarr; test &rarr; observe &rarr; learn slowly</em> to
+    <em>create &rarr; simulate millions of scenarios &rarr; identify
+    risks &rarr; optimise &rarr; test only the best candidates.</em>
+    Development becomes dramatically faster, dramatically safer, and
+    dramatically less wasteful of human bodies.
+  </blockquote>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       Closing
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="act">
+    <span class="roman">VII</span>
+    <span class="rule"></span>
+    <span class="eb">The fundamental shift</span>
+  </div>
+  <h2 class="section">From recommendation engine to <em>flourishing engine.</em></h2>
+
+  <p>
+    The biggest change the Covenant produces is in the question the
+    system asks itself before it answers anything. The old question is
+    <em>"what herb matches the symptom?"</em>
+    The new question is
+    <em>"what intervention creates the best long-term outcome for this
+    specific human being?"</em>
+  </p>
+
+  <p>
+    That shift is the entire point. It moves Fungai Art and New Tyme
+    Tonics from a recommendation engine into a <strong>human
+    flourishing engine</strong> &mdash; one that integrates biology,
+    mushrooms, natural medicine, safety, ethics, personal sovereignty,
+    and predictive simulation into a single decision framework. Each
+    of the 64 axes is one fibre of that framework. The Covenant is
+    the weave.
+  </p>
+
+  <div class="close">
+    <p>
+      Sixty-four axes. Six layers. Five stages. Five simulation levels.<br/>
+      One question: <em>does this make the human more whole?</em>
+    </p>
+    <div>
+      <a href="/mycelium" class="back fwd">the QMBI manifesto</a>
+      <a href="/community/academy/" class="back">academy</a>
+    </div>
+  </div>
+
+  <footer class="mini">
+    fungai art &middot; <span class="freq">111 Hz</span> &middot; covenant &middot; permalink only
+  </footer>
+
+</main>
+
+</body>
+</html>

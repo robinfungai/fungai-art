@@ -14,7 +14,7 @@ const STATIC_PAGES = [
   '/health',   '/herbal-engine-2', '/community',       '/community/academy',
   '/tymetonics','/members',       '/mycelium-trance',  '/mycelium',  '/draw',
   '/patron',   '/onboard',       '/sporing',           '/basket',
-  '/privacy',  '/terms',
+  '/privacy',  '/terms',         '/covenant',
 ];
 const serveStaticPages = () => ({
   name: 'serve-static-pages',

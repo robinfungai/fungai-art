@@ -1,5 +1,14 @@
 // Herb Interface
 // 1. THE INTERFACES (The Blueprint)
+//
+// The `covenant` field is an optional per-herb evaluation across the
+// 64-axis framework defined in covenant.ts. Herbs without it stay valid
+// (the rest of the schema is unchanged); herbs with it are scored across
+// the six layers — Biological / Human / Environmental / Behavioural /
+// Ethical / Covenant — and can be aggregated into formula-level grades
+// by rollUpFormulaGrades(). See /covenant for the human-readable framework.
+import type { HerbCovenantProfile } from './covenant';
+
 export interface Herb {
   id: number;
   name: string;
@@ -22,6 +31,8 @@ export interface Herb {
   caution_level: 'LOW' | 'LOW-MEDIUM' | 'MEDIUM' | 'MEDIUM-HIGH' | 'HIGH' | 'VERY HIGH';
   safe_pregnancy: boolean | null;
   status?: string;
+  /** Optional Covenant profile — see covenant.ts. Fill in as herbs are reviewed. */
+  covenant?: HerbCovenantProfile;
 }
 
 export interface Protocol {
