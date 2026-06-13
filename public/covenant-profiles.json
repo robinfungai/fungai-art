@@ -1,0 +1,4 @@
+{
+  "_comment": "Per-herb Covenant evaluation. Keys are herb_ids matching herbal-engine-2's HB array (snake_case). Each value is { evaluations: [{axis, grade, note?}], layerGrades?: {biological, human, environmental, behavioural, ethical, covenant}, rationale?, reviewedAt?, reviewedBy? }. Empty for now; populated herb-by-herb during practitioner review.",
+  "profiles": {}
+}

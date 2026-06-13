@@ -350,6 +350,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 .inst{background:var(--bg3);padding:10px 12px;border-top:0.5px solid var(--bd)}
 .ir{display:flex;gap:6px;font-size:10px;color:var(--text2);margin-bottom:3px;line-height:1.5}
 .il{color:var(--text);font-weight:500;flex-shrink:0;min-width:72px}
+/* Covenant row — sits alongside TCM pattern / Delivery / Timing as a
+   sibling, not as an announcement. Six small dots, one per layer,
+   coloured by the worst grade across this formula's herbs on that
+   layer. Hover any dot to see which layer + grade + how many herbs
+   contributed. "framework ↗" link is muted — there if you want the
+   manifesto, ignorable if you don't. */
+.cov-row{align-items:center;gap:8px}
+.cov-dots{display:inline-flex;gap:4px;align-items:center}
+.cov-dot{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;font-family:'Geist Mono',monospace;font-size:8.5px;font-weight:600;color:#15110b;cursor:help;letter-spacing:0;line-height:1}
+.cov-dot[style*="#3a342a"]{color:#7a7163}
+.cov-key{margin-left:auto;font-size:9px;color:var(--text3);text-decoration:none;letter-spacing:.08em;opacity:.7;transition:opacity .15s,color .15s}
+.cov-key:hover{opacity:1;color:#F5D689}
 .serve-block{background:var(--bg2);border:0.5px solid var(--bd2);border-radius:var(--radl);padding:11px 13px;margin-bottom:.9rem}
 .ss{display:flex;gap:8px;margin-bottom:5px;align-items:flex-start}
 .ss-n{width:16px;height:16px;border-radius:50%;background:var(--text);color:var(--bg);font-size:8px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
@@ -1158,6 +1170,77 @@ document.addEventListener('visibilitychange', () => {
 // Realtime sub kicks in once Supabase is ready.
 (async () => { try { await window.SBready; subscribeInventoryRealtime(); } catch {} })();
 
+// ── Covenant framework ──────────────────────────────────────
+// Loads the 64-axis framework + per-herb profiles at startup. The
+// engine reads from these when scoring a generated formula. Until
+// a herb is reviewed it has no profile; the formula readout then
+// shows a quiet "pending" mark for that layer rather than a grade.
+// Source of truth: src/data/covenant.ts and public/covenant-axes.json.
+var COVENANT = { layers: [], axes: [], profiles: {} };
+(async function loadCovenant(){
+  try {
+    const [axesResp, profResp] = await Promise.all([
+      fetch('/covenant-axes.json').then(r => r.json()).catch(() => null),
+      fetch('/covenant-profiles.json').then(r => r.json()).catch(() => null),
+    ]);
+    if (axesResp && Array.isArray(axesResp.layers)) {
+      COVENANT.layers = axesResp.layers;
+      COVENANT.axes   = axesResp.axes || [];
+    }
+    if (profResp && profResp.profiles) {
+      COVENANT.profiles = profResp.profiles;
+    }
+  } catch (e) {
+    // Silent — without the file the engine falls back to legacy
+    // synergy/contraindication output. No user-facing error.
+  }
+})();
+
+// Roll up a single herb's per-axis evaluations into the 6 layer grades.
+// Returns {biological:'A', human:'B', ...} or partial if data is sparse.
+function rollupHerbCovenant(profile){
+  if (!profile || !profile.evaluations || !profile.evaluations.length) return {};
+  if (profile.layerGrades && Object.keys(profile.layerGrades).length) return profile.layerGrades;
+  var G = { A:4, B:3, C:2, D:1, F:0 };
+  var toG = function(s){ return s>=3.5?'A':s>=2.5?'B':s>=1.5?'C':s>=0.5?'D':'F'; };
+  var buckets = {};
+  profile.evaluations.forEach(function(e){
+    var layer = (COVENANT.axes.find(function(a){return a.n===e.axis;}) || {}).layer;
+    if (!layer) return;
+    var score = e.score != null ? e.score/25 : (e.grade ? G[e.grade] : null);
+    if (score == null) return;
+    (buckets[layer] = buckets[layer] || []).push(score);
+  });
+  var out = {};
+  Object.keys(buckets).forEach(function(l){
+    var xs = buckets[l];
+    out[l] = toG(xs.reduce(function(a,b){return a+b;},0) / xs.length);
+  });
+  return out;
+}
+
+// Roll up a multi-herb formula by taking the WORST grade per layer
+// across all selected herbs. A formula is no stronger than its
+// weakest constituent on any axis. Herbs lacking a profile do not
+// drag the grade down — they show as "pending" instead.
+function computeFormulaCovenant(formulaHerbs){
+  var rank = ['A','B','C','D','F'];
+  var grades = {};         // layer -> worst grade letter
+  var reviewed = {};       // layer -> count of herbs with data
+  if (!formulaHerbs || !formulaHerbs.length) return { grades: grades, reviewed: reviewed, total: 0 };
+  formulaHerbs.forEach(function(h){
+    var profile = COVENANT.profiles[h.id];
+    if (!profile) return;
+    var layerGrades = rollupHerbCovenant(profile);
+    Object.keys(layerGrades).forEach(function(layer){
+      var g = layerGrades[layer];
+      if (!grades[layer] || rank.indexOf(g) > rank.indexOf(grades[layer])) grades[layer] = g;
+      reviewed[layer] = (reviewed[layer] || 0) + 1;
+    });
+  });
+  return { grades: grades, reviewed: reviewed, total: formulaHerbs.length };
+}
+
 function getActiveStock(){
   if(activePreset==='all') return new Set(HB.map(h=>h.id));
   return new Set([...customStock].filter(id=>HB.find(h=>h.id===id)));
@@ -1908,6 +1991,35 @@ function renderFormula(){
       '</div>' +
     '</div>';
 
+  // Covenant per-layer rollup — a single row in the inst block, no
+  // banner, no badge. Six dots: I Biological · II Human · III
+  // Environmental · IV Behavioural · V Ethical · VI Covenant. Each
+  // dot is coloured by the worst grade across the herbs in this
+  // formula on that layer; "pending" dots are dim grey for layers
+  // where no constituent has been reviewed yet.
+  var covRes = computeFormulaCovenant(S.formula);
+  var covRowHtml = '';
+  if (COVENANT.layers.length){
+    var dotFor = function(g){
+      if (!g) return { c:'#3a342a', t:'·', label:'pending' };
+      return g==='A' ? { c:'#6BD66F', t:'A', label:'A' } :
+             g==='B' ? { c:'#A8D86B', t:'B', label:'B' } :
+             g==='C' ? { c:'#E8B14B', t:'C', label:'C' } :
+             g==='D' ? { c:'#D88838', t:'D', label:'D' } :
+                       { c:'#E16B6B', t:'F', label:'F' };
+    };
+    var dots = COVENANT.layers.map(function(L){
+      var d = dotFor(covRes.grades[L.id]);
+      var title = L.roman + '. ' + L.name + ' — ' + d.label +
+                  (covRes.reviewed[L.id] ? ' (' + covRes.reviewed[L.id] + '/' + covRes.total + ' herbs reviewed)' : ' (no herb in this formula reviewed yet)');
+      return '<span class="cov-dot" title="' + title.replace(/"/g,'&quot;') + '" style="background:'+d.c+';">'+d.t+'</span>';
+    }).join('');
+    covRowHtml = '<div class="ir cov-row"><span class="il">Covenant</span>' +
+      '<span class="cov-dots">' + dots + '</span>' +
+      '<a href="/covenant" class="cov-key">framework ↗</a>' +
+      '</div>';
+  }
+
   var formulaColHtml=
     '<div class="fhdr"><div class="ft">'+io.name+' formula</div><div class="fs">'+name+' · '+S.formula.length+' '+(hasMush?'herbs & mushrooms':'herbs')+' · '+poolLabel+'</div></div>'+
     '<div class="fbody">'+rows+'<div style="padding:9px 12px;border-top:0.5px solid var(--bd)">'+bars+'</div>'+tgs+
@@ -1919,6 +2031,7 @@ function renderFormula(){
     '<div class="ir"><span class="il">Approach</span>'+S.approach+'</div>'+
     '<div class="ir"><span class="il">Duration</span>'+S.duration+'</div>'+
     (boostNames.length?'<div class="ir"><span class="il">Boosts</span>'+boostNames.join(', ')+'</div>':'')+
+    covRowHtml+
     '</div><div class="caut"><div class="ct">Important</div>'+cauts.map(c=>'<div class="ci">· '+c+'</div>').join('')+'</div></div>';
 
   // Formula art card — bottle art with the tradition toggle stacked
