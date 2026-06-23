@@ -1,10 +1,14 @@
 /* Fungai Art — minimal cookie / privacy notice
    Self-contained, no dependencies. Injects a sleek bottom banner on first visit.
-   Dismissed state persists in localStorage. */
+   Choice persists in localStorage: 'accept' or 'reject'.
+   GDPR: reject must be equally prominent as accept (EDPB 05/2020 §32). */
 (function () {
   if (typeof window === 'undefined') return;
   try {
-    if (localStorage.getItem('fungai_cookie_ack') === '1') return;
+    var saved = localStorage.getItem('fungai_cookie_ack');
+    // Accept legacy '1' value as 'accept' so existing visitors don't see the
+    // banner again after this rollout.
+    if (saved === '1' || saved === 'accept' || saved === 'reject') return;
   } catch (e) { return; } // localStorage blocked → don't show banner
 
   // Don't show on privacy/terms pages themselves
@@ -37,11 +41,14 @@
       '#fungai-cookie-banner .fc-actions{display:flex;gap:8px;align-items:center;flex-shrink:0;}',
       '#fungai-cookie-banner button{',
       '  font-family:inherit;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;',
-      '  background:rgba(107,214,111,0.1);border:0.5px solid rgba(107,214,111,0.4);',
-      '  color:#6BD66F;padding:8px 16px;border-radius:5px;cursor:pointer;',
-      '  transition:background 0.15s,border-color 0.15s;',
+      '  padding:8px 16px;border-radius:5px;cursor:pointer;',
+      '  transition:background 0.15s,border-color 0.15s,color 0.15s;',
       '}',
-      '#fungai-cookie-banner button:hover{background:rgba(107,214,111,0.18);border-color:rgba(107,214,111,0.6);}',
+      // Both buttons share the same visual weight so reject is not "harder" to find than accept.
+      '#fungai-cookie-banner button.fc-accept{background:rgba(107,214,111,0.1);border:0.5px solid rgba(107,214,111,0.4);color:#6BD66F;}',
+      '#fungai-cookie-banner button.fc-accept:hover{background:rgba(107,214,111,0.18);border-color:rgba(107,214,111,0.6);}',
+      '#fungai-cookie-banner button.fc-reject{background:transparent;border:0.5px solid rgba(201,184,148,0.35);color:#C9B894;}',
+      '#fungai-cookie-banner button.fc-reject:hover{background:rgba(201,184,148,0.08);border-color:rgba(201,184,148,0.55);color:#E6D9B5;}',
       '@media (max-width:520px){#fungai-cookie-banner{font-size:10.5px;padding:12px 14px;gap:10px;}#fungai-cookie-banner button{padding:7px 12px;font-size:8.5px;}}',
     ].join('');
     document.head.appendChild(style);
@@ -56,16 +63,24 @@
       '<a href="/privacy">Privacy</a> · <a href="/terms">Terms</a>',
       '</div>',
       '<div class="fc-actions">',
-      '<button type="button" id="fungai-cookie-ok">Understood</button>',
+      // Reject sits first so it isn't the "afterthought" button.
+      '<button type="button" id="fungai-cookie-reject" class="fc-reject">Reject</button>',
+      '<button type="button" id="fungai-cookie-ok" class="fc-accept">Accept</button>',
       '</div>',
     ].join('');
     document.body.appendChild(bar);
 
-    document.getElementById('fungai-cookie-ok').addEventListener('click', function () {
-      try { localStorage.setItem('fungai_cookie_ack', '1'); } catch (e) {}
+    function dismiss(choice) {
+      try { localStorage.setItem('fungai_cookie_ack', choice); } catch (e) {}
+      // Reject also clears any optional storage we'd set. Right now there
+      // is none beyond cart + formulas (which are functional, not optional),
+      // so this is a no-op today. Keep the hook for future analytics opt-ins.
+      try { window.dispatchEvent(new CustomEvent('fungai:cookie-choice', { detail: { choice: choice } })); } catch (e) {}
       bar.style.animation = 'fungai-cookie-in 0.3s reverse forwards';
       setTimeout(function () { bar.remove(); }, 320);
-    });
+    }
+    document.getElementById('fungai-cookie-ok').addEventListener('click', function () { dismiss('accept'); });
+    document.getElementById('fungai-cookie-reject').addEventListener('click', function () { dismiss('reject'); });
   }
 
   if (document.readyState === 'loading') {

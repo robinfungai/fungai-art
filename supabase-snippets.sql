@@ -56,4 +56,11 @@ CREATE POLICY "snippets_delete_own_or_admin"
   );
 
 GRANT SELECT ON public.snippets TO anon, authenticated;
-GRANT INSERT, UPDATE, DELETE ON public.snippets TO authenticated;
+-- INSERT was scoped to `authenticated` only — but the RLS policy
+-- snippets_insert_open allows anon too. The mismatch made anon posts
+-- fail at the table-permission layer BEFORE RLS was even consulted,
+-- which is why Robin saw an error page when posting without a live
+-- Supabase auth session. The anon GRANT below lines up with the
+-- policy and unblocks localStorage-identified members.
+GRANT INSERT ON public.snippets TO anon, authenticated;
+GRANT UPDATE, DELETE ON public.snippets TO authenticated;

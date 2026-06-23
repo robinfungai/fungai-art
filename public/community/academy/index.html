@@ -1307,10 +1307,17 @@ async function loadLabNotesFromCloud() {
 // via loadLabNotesFromCloud (the local entry sits alongside cloud
 // entries until it's mirrored).
 async function pushLabNoteToCloud({ text, chapterId, ts }) {
-  if (!window.SBclient || !window.SBauth) return null;
+  if (!window.SBclient) return null;
   try {
-    const user = await window.SBauth.getUser();
-    if (!user) return null;
+    // Previously this early-returned when SBauth.getUser() was null,
+    // which silently dropped notes whenever a member's Supabase auth
+    // session had expired (very common — the spore portal carries
+    // identity in localStorage long after the Supabase JWT is gone).
+    // That's how Douglas's spagyric entries ended up local-only.
+    // The new lab_notes RLS allows anon inserts; we still try to
+    // attach a profileId when one is available, but no auth check
+    // here. author_name carries attribution either way.
+    const user = window.SBauth ? await window.SBauth.getUser().catch(() => null) : null;
 
     // Look up the author's profile + character_name. The profiles.id
     // is needed for author_id (FK + RLS); character_name is the display
@@ -1321,7 +1328,7 @@ async function pushLabNoteToCloud({ text, chapterId, ts }) {
       const cached = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null');
       if (cached) { profileId = cached.cloudId || null; authorName = cached.name || null; }
     } catch {}
-    if (!profileId && window.SBprofiles?.fetchMine) {
+    if (!profileId && user && window.SBprofiles?.fetchMine) {
       try {
         const mine = await window.SBprofiles.fetchMine();
         if (mine) { profileId = mine.id; authorName = mine.character_name; }
@@ -1849,7 +1856,50 @@ pullCustomLabChapters();
 (async function pullCloudLabNotes() {
   try { await window.SBready; } catch { return; }
   loadLabNotesFromCloud();
+  // Retry pending local writes — entries written while the auth
+  // session was expired or while RLS rejected anon inserts. Douglas
+  // and any other member with stuck local-only notes get them pushed
+  // to the cloud automatically on next page load after the fix.
+  retryPendingLabNotes();
 })();
+
+// Scan every chapter's localStorage for entries lacking _cloudId,
+// push them to Supabase, stamp _cloudId back on success. Idempotent
+// because chapter_id + text + created_at uniquely identifies a row;
+// duplicates would only occur if a member writes the same note text
+// at the same millisecond, which is fine for now.
+async function retryPendingLabNotes(){
+  if (!window.SBclient) return;
+  let totalPushed = 0;
+  try {
+    // The set of chapter ids = LAB_CHAPTERS plus any custom cloud ones.
+    const ids = (typeof LAB_CHAPTERS !== 'undefined' ? LAB_CHAPTERS.map(c => c.id) : []);
+    if (window.__faCustomLabChapters) {
+      window.__faCustomLabChapters.forEach(c => { if (!ids.includes(c.id)) ids.push(c.id); });
+    }
+    for (const chapterId of ids) {
+      let local = [];
+      try { local = JSON.parse(localStorage.getItem(labKey(chapterId)) || '[]'); } catch {}
+      const pending = local.filter(e => !e._cloudId);
+      if (!pending.length) continue;
+      for (const entry of pending) {
+        const cloudId = await pushLabNoteToCloud({
+          text: entry.text, chapterId, ts: entry.ts,
+        });
+        if (cloudId) {
+          entry._cloudId = cloudId;
+          totalPushed++;
+        }
+      }
+      saveEntries(chapterId, local);
+    }
+    if (totalPushed > 0) {
+      // Re-pull cloud entries + re-render so the newly-synced notes appear
+      // for every other reader on this page right now.
+      loadLabNotesFromCloud();
+    }
+  } catch (e) { console.warn('[lab-notes] retry threw:', e); }
+}
 
 // ── Snippets ────────────────────────────────────────────────
 // Any signed-in member can create a small note/tip/incentive. Stored

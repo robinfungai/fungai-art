@@ -738,7 +738,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
   <div class="sn" id="sn3">4 of 6 · Safety</div>
   <div class="st">Any of these apply to you?</div>
   <p class="sh">Tick everything relevant. Herbs that conflict will be silently removed from your formula.</p>
-  <div class="warn"><span>◈</span><span>Not a medical consultation — a clinical safety filter only.</span></div>
+  <div class="warn"><span>◈</span><span>Educational reference only — does not replace a qualified practitioner. Always confirm with a herbalist or physician before use, especially if pregnant, nursing, on medication, or managing a condition.</span></div>
   <div class="safety-grid" id="sfg"></div>
   <div class="nav"><button class="btn" onclick="go(2)">← Back</button><button class="btn p" onclick="go(4)">Continue →</button></div>
 </div>
@@ -1961,7 +1961,35 @@ function renderFormula(){
   tgs+='</div>';
 
   var cauts=['Review individual herb cautions with your herbalist.'];
-  if(flags.length)cauts.unshift('Formula filtered for your safety profile.');
+  if(flags.length){
+    // Map active flags back to the human-readable condition groups so
+    // the user knows exactly what was filtered out — not just a vague
+    // "filtered for your safety". Pregnancy in particular needs to be
+    // visible at the formula level, not buried in a tag.
+    var activeConds = (typeof CONDS !== 'undefined' ? CONDS : []).filter(function(c){
+      return c.flags && c.flags.length && c.flags.every(function(f){ return flags.indexOf(f) !== -1; });
+    });
+    var hasPregnancy = flags.indexOf('pregnancy') !== -1 || flags.indexOf('breastfeeding') !== -1;
+    var nameList = activeConds.map(function(c){ return c.label.split(/[,—]/)[0].trim().toLowerCase(); });
+    var filteredOut = getPool().filter(function(h){
+      for (var i = 0; i < flags.length; i++) if (h.x && h.x.indexOf(flags[i]) !== -1) return true;
+      return false;
+    }).length;
+    if (hasPregnancy) {
+      cauts.unshift('Pregnancy / breastfeeding filter active — uterine stimulants, emmenagogues, and herbs with infant-transfer risk were removed. Confirm every remaining herb with a qualified herbalist or your midwife before use.');
+    }
+    if (nameList.length) {
+      cauts.unshift('Safety filters applied for: ' + nameList.join('; ') + '. ' + filteredOut + ' herb' + (filteredOut === 1 ? '' : 's') + ' excluded from the pool.');
+    } else {
+      cauts.unshift('Safety filters applied. ' + filteredOut + ' herb' + (filteredOut === 1 ? '' : 's') + ' excluded from the pool.');
+    }
+  }
+  if (S.formula && S.formula.length < S.cnt) {
+    cauts.push('Pool reduced by safety filters — formula is ' + S.formula.length + ' of ' + S.cnt + ' requested herbs.');
+  }
+  if (typeof COVENANT !== 'undefined' && (!COVENANT.axes || !COVENANT.axes.length)) {
+    cauts.push('Covenant constraints offline — output uses legacy synergy + contraindication checks only.');
+  }
 
   var serveBlock='';
   if(S.delivery==='tonic'&&carrier){

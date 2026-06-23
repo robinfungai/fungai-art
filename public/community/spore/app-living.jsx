@@ -4715,14 +4715,92 @@ function App() {
           } catch (e) { console.warn('[Spore] pending avatar sync failed:', e); }
         }
       } else {
-        // No claimed profile yet. Only auto-open the editor when the user
-        // JUST arrived from a magic-link click (URL still carries the PKCE
-        // ?code= or our ?signedin marker). Otherwise we'd pop the modal
-        // on every page refresh / revisit, which is annoying.
-        const qs = window.location.search;
-        const cameFromMagicLink = qs.includes('signedin') || qs.includes('code=');
-        if (cameFromMagicLink) {
-          setShowRootEditor(true);
+        // fetchMine returned null — Robin's auth.uid isn't linked to any
+        // profile row on this device's session. Three follow-up paths
+        // before we give up and pop the editor:
+        //
+        //  1. Known admin email (robin@fungai.art / teyae@fungai.art) →
+        //     hydrate the hardcoded MEMBERS entry immediately so identity
+        //     follows across devices even if the profiles row was never
+        //     manually claimed on this device. They get full admin UI
+        //     without re-running the claim picker. Profile auto-links
+        //     on next save via SBprofiles.upsert.
+        //  2. Unclaimed profile whose contact email matches the auth
+        //     email → claim it. This is the "Robin already created a
+        //     profile but it's not auth-linked yet" path.
+        //  3. Magic-link arrival → pop the editor.
+        //
+        // Before this fallback, Robin signing in on a fresh device with
+        // a magic link to robin@fungai.art saw an empty Members tab —
+        // his profile data didn't follow him because fetchMine returned
+        // null and we exited the function silently.
+        const ADMIN_EMAIL_MAP = {
+          'robin@fungai.art': 'robin',
+          'teyae@fungai.art': 'stephanie',
+        };
+        const authEmail = (user?.email || '').toLowerCase();
+        const adminIdFromEmail = ADMIN_EMAIL_MAP[authEmail];
+        let recovered = false;
+
+        // Path 1: known admin → hydrate MEMBERS entry
+        if (adminIdFromEmail) {
+          const match = SporeData.MEMBERS.find(m => m.id === adminIdFromEmail);
+          if (match) {
+            match.admin = true;
+            match.contact = user.email;
+            setCurrentMember(match);
+            setTab(prev => prev === 'network' ? 'members' : prev);
+            try { localStorage.setItem('spore_active_member', match.id); } catch {}
+            try { localStorage.setItem('spore_active_member_full', JSON.stringify({
+              id: match.id, name: match.name, admin: true,
+              restrictions: match.restrictions || [],
+              avatar: match.avatar || null,
+              cloudId: null,
+              email: user.email,
+            })); } catch {}
+            // Best-effort: link the profile to this auth.uid in the
+            // background so future loads via fetchMine succeed.
+            (async () => {
+              try {
+                if (window.SBprofiles?.upsert) {
+                  await window.SBprofiles.upsert({
+                    character_name: match.name,
+                    role: match.role,
+                    node: match.node,
+                    contact: user.email,
+                  });
+                }
+              } catch (e) { console.warn('[Spore] background profile link failed:', e); }
+            })();
+            recovered = true;
+          }
+        }
+
+        // Path 2: existing unclaimed profile by email (contact field)
+        if (!recovered && window.SBclient) {
+          try {
+            const { data: byEmail } = await window.SBclient
+              .from('profiles')
+              .select('*')
+              .ilike('contact', authEmail)
+              .is('auth_user_id', null)
+              .maybeSingle();
+            if (byEmail && window.SBprofiles?.claimSeededProfile) {
+              await window.SBprofiles.claimSeededProfile(byEmail.id);
+              // Recurse once now that the profile is claimed
+              await tryAutoLogin(user);
+              recovered = true;
+            }
+          } catch (e) { /* silent — fall through to editor */ }
+        }
+
+        // Path 3: still nothing → pop the editor on magic-link arrival
+        if (!recovered) {
+          const qs = window.location.search;
+          const cameFromMagicLink = qs.includes('signedin') || qs.includes('code=');
+          if (cameFromMagicLink) {
+            setShowRootEditor(true);
+          }
         }
       }
     } catch (e) { console.warn('[Spore] auto-login failed:', e); }

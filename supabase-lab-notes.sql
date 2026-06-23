@@ -60,24 +60,31 @@ CREATE POLICY "lab_notes_select_public"
   ON public.lab_notes FOR SELECT
   USING (true);
 
--- Authenticated members can insert their own authored rows.
--- We don't enforce author_id matches auth.uid() at INSERT — the client
--- writes it explicitly and we trust authenticated users. Misattribution
--- would be detectable from the audit trail (created_at + author_id).
+-- Insert: anon + authenticated. The previous policy required a live
+-- Supabase auth session, but the spore portal carries identity in
+-- localStorage and the auth session frequently expires. Members like
+-- Douglas were writing notes that landed locally but never reached
+-- the cloud because pushLabNoteToCloud() silently returned when
+-- getUser() came back null. Allowing anon writes lines the policy
+-- up with the actual identity flow; author_name on the row preserves
+-- attribution even without an FK link to profiles.
 DROP POLICY IF EXISTS "lab_notes_insert_authed" ON public.lab_notes;
-CREATE POLICY "lab_notes_insert_authed"
+DROP POLICY IF EXISTS "lab_notes_insert_open"   ON public.lab_notes;
+CREATE POLICY "lab_notes_insert_open"
   ON public.lab_notes FOR INSERT
-  TO authenticated
+  TO anon, authenticated
   WITH CHECK (true);
 
 -- Authors can update their own notes. Admins can update any.
+-- Fixed column reference: profiles.is_admin (not .admin) — the wrong
+-- name made every admin update/delete fail silently with code 42703.
 DROP POLICY IF EXISTS "lab_notes_update_own" ON public.lab_notes;
 CREATE POLICY "lab_notes_update_own"
   ON public.lab_notes FOR UPDATE
   TO authenticated
   USING (
     author_id IN (SELECT id FROM public.profiles WHERE auth_user_id = auth.uid())
-    OR EXISTS (SELECT 1 FROM public.profiles WHERE auth_user_id = auth.uid() AND admin = true)
+    OR EXISTS (SELECT 1 FROM public.profiles WHERE auth_user_id = auth.uid() AND is_admin = true)
   );
 
 -- Authors can delete their own notes. Admins can delete any.
@@ -87,8 +94,9 @@ CREATE POLICY "lab_notes_delete_own"
   TO authenticated
   USING (
     author_id IN (SELECT id FROM public.profiles WHERE auth_user_id = auth.uid())
-    OR EXISTS (SELECT 1 FROM public.profiles WHERE auth_user_id = auth.uid() AND admin = true)
+    OR EXISTS (SELECT 1 FROM public.profiles WHERE auth_user_id = auth.uid() AND is_admin = true)
   );
 
 GRANT SELECT ON public.lab_notes TO anon, authenticated;
-GRANT INSERT, UPDATE, DELETE ON public.lab_notes TO authenticated;
+GRANT INSERT ON public.lab_notes TO anon, authenticated;
+GRANT UPDATE, DELETE ON public.lab_notes TO authenticated;

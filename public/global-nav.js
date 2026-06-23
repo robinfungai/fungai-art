@@ -31,6 +31,14 @@
   const stale = document.getElementById('fa-global-nav');
   if (stale) stale.remove();
 
+  // Home page (/, /home, /home/) ships its own full-width nav with
+  // logo + cart + hamburger. Stacking the membership banner on top of
+  // it crowds out the logo and basket on phones (both are position:
+  // fixed at top:0). Skip the banner on home — the home nav already
+  // links to /community.
+  const _path = window.location.pathname.replace(/\/+$/, '') || '/';
+  if (_path === '' || _path === '/' || _path === '/home') return;
+
   // Destinations a member would actually want to reach from anywhere
   // on the site. Order matters: highest-value member action first.
   const MEMBER_LINKS = [
@@ -258,9 +266,74 @@
     window.addEventListener(evt, renderBanner);
   });
 
+  // When localStorage has no member but Supabase has a live auth
+  // session (e.g. Robin signed in via magic link on a fresh device and
+  // landed directly on /community/academy/ instead of going through
+  // /community/ first), fetch the profile, hydrate localStorage, then
+  // re-render. Without this the banner stays in guest mode even though
+  // the user is authenticated.
+  const ADMIN_EMAIL_MAP = {
+    'robin@fungai.art':   { id: 'robin',     name: 'Robin',     node: 'unattached', admin: true  },
+    'teyae@fungai.art':   { id: 'stephanie', name: 'Stephanie', node: 'unattached', admin: true  },
+  };
+  let _hydrating = false;
+  async function hydrateFromSupabase(){
+    if (_hydrating) return;
+    if (!window.SBclient || !window.SBauth) return;
+    if (readMember()) return;
+    _hydrating = true;
+    try {
+      const user = await window.SBauth.getUser().catch(() => null);
+      if (!user || !user.id) return;
+
+      // Look up profile by auth_user_id first.
+      let prof = null;
+      try {
+        const { data } = await window.SBclient
+          .from('profiles')
+          .select('*')
+          .eq('auth_user_id', user.id)
+          .maybeSingle();
+        prof = data;
+      } catch {}
+
+      // Fallback: known admin email → seed from the hardcoded map.
+      // The full member identity lives in MEMBERS inside the spore
+      // portal; here we only need enough to render the banner.
+      if (!prof) {
+        const seed = ADMIN_EMAIL_MAP[(user.email || '').toLowerCase()];
+        if (seed) prof = { id: seed.id, character_name: seed.name, node: seed.node, is_admin: seed.admin, contact: user.email };
+      }
+      if (!prof) return;
+
+      const member = {
+        id: prof.id,
+        name: prof.character_name || prof.name || '',
+        character_name: prof.character_name || prof.name || '',
+        node: prof.node || 'unattached',
+        admin: !!prof.is_admin,
+        email: prof.contact || user.email || '',
+      };
+      // iOS Safari private mode throws on setItem. Render still works
+      // off the in-memory `member` we just built, so swallow the throw.
+      try {
+        localStorage.setItem('spore_active_member', member.id);
+        localStorage.setItem('spore_active_member_full', JSON.stringify(member));
+      } catch {}
+      renderBanner();
+    } finally {
+      _hydrating = false;
+    }
+  }
+
+  // If Supabase client is still bootstrapping when this script runs,
+  // retry hydration once it's ready.
+  window.addEventListener('supabase:ready', () => hydrateFromSupabase());
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', renderBanner);
+    document.addEventListener('DOMContentLoaded', () => { renderBanner(); hydrateFromSupabase(); });
   } else {
     renderBanner();
+    hydrateFromSupabase();
   }
 })();
