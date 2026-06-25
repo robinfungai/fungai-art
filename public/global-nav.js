@@ -330,10 +330,83 @@
   // retry hydration once it's ready.
   window.addEventListener('supabase:ready', () => hydrateFromSupabase());
 
+  // ── Lab-notes global sync ──────────────────────────────────────
+  // The academy page has its own retry on load, but that only fires when
+  // the member visits /community/academy/. If they wrote notes weeks ago
+  // (before the lab_notes SQL existed) and haven't reopened the academy
+  // since, those notes are stranded in localStorage — and on a fresh
+  // device they appear to be missing because the cloud was never told.
+  //
+  // This hook runs on EVERY page that loads global-nav.js (i.e. every
+  // page except /home), so the moment Robin opens shop / mycelium /
+  // community on his desktop, his stuck local entries get pushed and the
+  // iPad sees them on its next academy load.
+  //
+  // Chapter-agnostic on purpose: scans every localStorage key matching
+  // `lab_entries_*`, finds entries without `_cloudId`, pushes each.
+  // Idempotent — entries that already have `_cloudId` are skipped.
+  let _labSyncing = false;
+  async function syncStuckLabNotes() {
+    if (_labSyncing) return;
+    if (!window.SBclient) return;
+    _labSyncing = true;
+    try {
+      // Resolve author identity once for the whole batch — saves N profile
+      // lookups when there are many pending entries.
+      let profileId = null;
+      let authorName = null;
+      try {
+        const cached = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null');
+        if (cached) { profileId = cached.cloudId || null; authorName = cached.name || null; }
+      } catch {}
+
+      // Walk localStorage for chapter buckets.
+      const chapterKeys = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith('lab_entries_')) chapterKeys.push(k);
+      }
+      if (!chapterKeys.length) return;
+
+      for (const key of chapterKeys) {
+        const chapterId = key.slice('lab_entries_'.length);
+        let local = [];
+        try { local = JSON.parse(localStorage.getItem(key) || '[]'); } catch {}
+        const pending = local.filter(e => e && !e._cloudId && typeof e.text === 'string' && e.text.trim());
+        if (!pending.length) continue;
+
+        for (const entry of pending) {
+          try {
+            const { data, error } = await window.SBclient
+              .from('lab_notes')
+              .insert({
+                chapter_id:  chapterId,
+                text:        entry.text,
+                author_id:   profileId,
+                author_name: authorName,
+                created_at:  new Date(entry.ts || Date.now()).toISOString(),
+              })
+              .select('id')
+              .single();
+            if (!error && data?.id) {
+              entry._cloudId = data.id;
+              if (authorName && !entry._author) entry._author = authorName;
+            }
+          } catch {}
+        }
+        try { localStorage.setItem(key, JSON.stringify(local)); } catch {}
+      }
+    } finally {
+      _labSyncing = false;
+    }
+  }
+  window.addEventListener('supabase:ready', () => { syncStuckLabNotes(); });
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { renderBanner(); hydrateFromSupabase(); });
+    document.addEventListener('DOMContentLoaded', () => { renderBanner(); hydrateFromSupabase(); syncStuckLabNotes(); });
   } else {
     renderBanner();
     hydrateFromSupabase();
+    syncStuckLabNotes();
   }
 })();
