@@ -851,7 +851,6 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
         <div id="cryptoPanel" style="display:none" class="crypto-panel">
           <div class="crypto-coins">
             <div class="crypto-coin selected" id="coinETH" onclick="selectCoin('ETH')"><span>⟠</span><span>ETH</span></div>
-            <div class="crypto-coin" id="coinBTC" onclick="selectCoin('BTC')"><span>₿</span><span>BTC</span></div>
             <div class="crypto-coin" id="coinSOL" onclick="selectCoin('SOL')"><span>◎</span><span>SOL</span></div>
           </div>
           <div class="crypto-address-box">
@@ -891,8 +890,11 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
 
 <script>
 const STRIPE_PK='pk_live_51TW2zWLcLRRKPfkaDJvYaQuRQqFxXCAVLhij5EO8u5zISlrkzYAnXOC6uyFjSXuiCVNCK9LyXshYmy75eHmDhksa00Y2GkUqyk';
-const WALLETS={ETH:{label:'Ethereum (ETH)',addr:'0x341fe52ba6e6ab62c577cfc3459d1426022b4c31'},BTC:{label:'Bitcoin (BTC)',addr:'— add wallet —'},SOL:{label:'Solana (SOL)',addr:'4HvN1VB3JRZDWVhYALShpa16aN9WehYBTpyUymTeqQcK'}};
-const GECKO_IDS={ETH:'ethereum',BTC:'bitcoin',SOL:'solana'};
+// BTC removed — placeholder wallet (`— add wallet —`) was being shown to
+// customers as a send-to address. Re-add only after a funded BTC wallet
+// is configured AND on-chain confirmation is wired into order processing.
+const WALLETS={ETH:{label:'Ethereum (ETH)',addr:'0x341fe52ba6e6ab62c577cfc3459d1426022b4c31'},SOL:{label:'Solana (SOL)',addr:'4HvN1VB3JRZDWVhYALShpa16aN9WehYBTpyUymTeqQcK'}};
+const GECKO_IDS={ETH:'ethereum',SOL:'solana'};
 // Cart persists in localStorage so a refresh, network glitch, or
 // accidental tab-close doesn't wipe a basket the user spent minutes
 // assembling. Versioned key (`fa_cart_v1`) so we can change shape later
@@ -1057,12 +1059,28 @@ async function payWithCard(){
     console.error('[checkout]',msg,detail||'');
   };
   try{
-    const total=cartTotal()>=60?cartTotal():cartTotal()+4.9;
-    if(!total||total<=0){throw new Error('Cart total is zero. Add an item before paying.');}
-    // 1. Request a Payment Intent from our Netlify function
+    const expectedTotal=cartTotal()>=60?cartTotal():cartTotal()+4.9;
+    if(!expectedTotal||expectedTotal<=0){throw new Error('Cart total is zero. Add an item before paying.');}
+    // One idempotency key per checkout attempt — if the user double-taps
+    // "Pay" or the request retries on a flaky connection, Stripe collapses
+    // them to a single PaymentIntent instead of charging twice.
+    const idempotencyKey = (window.__faCheckoutKey || (window.__faCheckoutKey =
+      (crypto.randomUUID ? crypto.randomUUID() : 'fa-'+Date.now()+'-'+Math.random().toString(36).slice(2))));
+    // 1. Request a Payment Intent from our Netlify function.
+    // The server now prices the order from its own catalog — we send line
+    // items, NOT a total. The displayed total is just a UX value; if the
+    // server's total disagrees we abort instead of letting a bad checkout through.
     let res;
     try{
-      res=await fetch('/api/create-payment-intent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:total,metadata:{name:document.getElementById('coFirstName').value+' '+document.getElementById('coLastName').value,email:document.getElementById('coEmail').value,address:document.getElementById('coAddr1').value+', '+document.getElementById('coCity').value,items:cart.map(i=>`${i.name} x${i.qty}`).join(', ')}})});
+      res=await fetch('/api/create-payment-intent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+        items: cart.map(i => ({ name: i.name, qty: i.qty })),
+        customer: {
+          name:    document.getElementById('coFirstName').value + ' ' + document.getElementById('coLastName').value,
+          email:   document.getElementById('coEmail').value,
+          address: document.getElementById('coAddr1').value + ', ' + document.getElementById('coCity').value,
+        },
+        idempotencyKey,
+      })});
     }catch(networkErr){throw new Error('Could not reach the payment server. Check your connection and try again.');}
     // Parse body defensively — server may return HTML on misconfig
     let body;const raw=await res.text();
@@ -1076,14 +1094,22 @@ async function payWithCard(){
       throw new Error(detail);
     }
     if(!body.clientSecret){throw new Error(body.error||'Server did not return a payment session.');}
+    // Sanity-check: refuse to confirm if the server's authoritative total
+    // disagrees with what we showed the customer. Rounding tolerance 1 cent.
+    if (typeof body.total === 'number' && Math.abs(body.total - expectedTotal) > 0.01) {
+      throw new Error('Order total mismatch — server says €'+body.total.toFixed(2)+', we showed €'+expectedTotal.toFixed(2)+'. Reload and try again.');
+    }
+    const serverTotal = (typeof body.total === 'number') ? body.total : expectedTotal;
     // 2. Confirm card with Stripe
     const{error,paymentIntent}=await stripe.confirmCardPayment(body.clientSecret,{payment_method:{card:cardElement,billing_details:{name:document.getElementById('coFirstName').value+' '+document.getElementById('coLastName').value,email:document.getElementById('coEmail').value}}});
     if(error)throw new Error(error.message);
     if(paymentIntent?.status==='succeeded'){
       document.getElementById('confirmRef').textContent=paymentIntent.id.slice(-8).toUpperCase();
-      document.getElementById('confirmTotal').textContent='€'+total.toFixed(2).replace('.00','');
+      document.getElementById('confirmTotal').textContent='€'+serverTotal.toFixed(2).replace('.00','');
       document.getElementById('confirmMsg').textContent='Thank you, '+document.getElementById('coFirstName').value+'. A receipt will be sent to '+document.getElementById('coEmail').value+'.';
       cart=[];persistCart();renderCart();goToStepDirect(3);
+      // Burn the idempotency key so the next checkout gets a fresh one.
+      window.__faCheckoutKey = null;
     }else{
       throw new Error('Payment did not complete. Status: '+(paymentIntent?.status||'unknown'));
     }
@@ -1095,7 +1121,17 @@ async function fetchCryptoRates(){try{const ids=Object.values(GECKO_IDS).join(',
 function updateCryptoDisplay(){const w=WALLETS[selectedCoin];document.getElementById('cryptoCoinLabel').textContent=w.label;document.getElementById('cryptoAddrText').textContent=w.addr;const rate=cryptoRates[selectedCoin];const total=cartTotal()>=60?cartTotal():cartTotal()+4.9;if(rate&&total){const amt=(total/rate).toFixed(selectedCoin==='BTC'?6:4);document.getElementById('cryptoAmount').textContent=`${amt} ${selectedCoin}`;document.getElementById('cryptoRateNote').textContent=`1 ${selectedCoin} ≈ €${rate.toLocaleString('de-DE',{maximumFractionDigits:2})} · refreshes every 60s`}else{document.getElementById('cryptoAmount').textContent='—'}}
 function selectCoin(sym){selectedCoin=sym;document.querySelectorAll('.crypto-coin').forEach(c=>c.classList.remove('selected'));document.getElementById('coin'+sym).classList.add('selected');updateCryptoDisplay()}
 function copyAddress(){navigator.clipboard.writeText(WALLETS[selectedCoin].addr).then(()=>{const b=document.getElementById('copyAddrBtn');b.textContent='Copied!';b.classList.add('copied');setTimeout(()=>{b.textContent='Copy';b.classList.remove('copied')},2000)})}
-function confirmCryptoOrder(){document.getElementById('confirmRef').textContent='CRYPTO-'+Date.now().toString(36).toUpperCase();document.getElementById('confirmTotal').textContent='Crypto';document.getElementById('confirmMsg').textContent='Send the exact crypto amount to complete your order. We will ship within 24h of confirmation.';cart=[];persistCart();renderCart();goToStepDirect(3)}
+// Crypto orders are NOT auto-confirmed. We don't watch the chain (yet),
+// so this is a manual flow: customer sends funds, then emails us a tx
+// hash; we verify on-chain ourselves before marking paid and shipping.
+// Clear messaging avoids the "auto-confirmed" failure mode the audit flagged.
+function confirmCryptoOrder(){
+  const ref='CRYPTO-'+Date.now().toString(36).toUpperCase();
+  document.getElementById('confirmRef').textContent=ref;
+  document.getElementById('confirmTotal').textContent='Crypto · pending';
+  document.getElementById('confirmMsg').textContent='Your order is held pending on-chain confirmation. Send the exact amount above, then email '+ref+' and the transaction hash to robin@fungai.art. We verify each transaction by hand and ship once the funds clear — usually within 24 hours.';
+  cart=[];persistCart();renderCart();goToStepDirect(3);
+}
 
 // Reflect the restored cart in the UI on page load (count badge, etc).
 if (document.readyState === 'loading') {
