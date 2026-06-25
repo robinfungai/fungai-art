@@ -12,6 +12,10 @@
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 [[headers]]
+  for = "/favicon.png"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+[[headers]]
   for = "/fungai-art-logo.png"
   [headers.values]
     Cache-Control = "public, max-age=86400"
@@ -25,6 +29,15 @@
 [[redirects]]
   from   = "/api/*"
   to     = "/.netlify/functions/:splat"
+  status = 200
+
+# Edge especially requests /favicon.ico unconditionally even when the
+# page links a different icon. Without an .ico response the browser
+# falls back to whatever it had cached before — for sites originally
+# built on Lovable, that's the Lovable default. Alias .ico → .svg.
+[[redirects]]
+  from   = "/favicon.ico"
+  to     = "/favicon.svg"
   status = 200
 
 # Root → new home design (force overrides the Vite-built /index.html that would otherwise win)
