@@ -110,6 +110,7 @@ Access Keys — NFTs minted on unlock (non-transferable).
 Reputation — cannot be bought, only earned. Required for deep access.
 
 ## UPCOMING EVENTS (2026)
+Jul 3  · SENSORIUM — Community Botanical Tasting Journey, Humboldthain, Berlin · 17:30–20:00 · €22–33 sliding contribution · hosted by Steph · landing page /sensorium
 Jul 31 · Mycelium Dinner, Garbicz Music Festival · 111 Hz · 24 seats
 Aug 15 · Extraction Lab Night, Berlin · 432 Hz · 8 seats
 Aug 20 · Nordic Foraging Circle, Sweden · 528 Hz · 12 seats
