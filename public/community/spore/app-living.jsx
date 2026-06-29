@@ -4091,6 +4091,29 @@ function CalendarPage({ economy, onToast }) {
                 <div className="cal-subtitle">{ev.subtitle}</div>
                 <div className="cal-desc">{ev.desc}</div>
 
+                {/* Optional landing-page link — only for events that
+                    have a dedicated page (e.g. SENSORIUM → /sensorium).
+                    Older events without a `url` field simply skip it. */}
+                {!isPast && ev.url && (
+                  <a
+                    href={ev.url}
+                    style={{
+                      display:'inline-block',
+                      marginTop:10,
+                      fontFamily:'var(--font-mono)',
+                      fontSize:10,
+                      letterSpacing:'0.18em',
+                      textTransform:'uppercase',
+                      color: freqColor,
+                      borderBottom: `1px solid ${freqColor}80`,
+                      textDecoration:'none',
+                      paddingBottom:1,
+                    }}
+                  >
+                    View event page →
+                  </a>
+                )}
+
                 {/* Capacity */}
                 <div className="cal-capacity-row">
                   <div className="cal-capacity-lbl">Capacity · {ev.capacity}</div>

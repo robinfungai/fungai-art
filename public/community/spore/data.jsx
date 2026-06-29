@@ -204,6 +204,25 @@ const NETWORK_NODES = [
 /* ── Events ─────────────────────────────────────────────────── */
 const EVENTS = [
   {
+    id: 'sensorium-berlin-0703',
+    title: 'SENSORIUM',
+    subtitle: 'Humboldthain · Berlin',
+    date: '2026-07-03',
+    time: '17:30',
+    node: 'berlin',
+    freq: '528 Hz',
+    color: '#C4A050',
+    capacity: 20,
+    desc: 'A Community Botanical Tasting Journey hosted by Steph at Humboldthain park. Open-air sensorial walk through wild and cultivated allies — leaf, flower, root, smoke. Bring water and an open palate. €22–33 sliding contribution. Exact meeting spot sent on RSVP.',
+    url: '/sensorium/',
+    contributions: [
+      { type: 'events',   earn: 60, rep: 2, label: 'Co-host & facilitation' },
+      { type: 'foraging', earn: 50, rep: 1, label: 'Botanical sourcing & prep' },
+      { type: 'kitchen',  earn: 40, rep: 1, label: 'Tasting boards & service' },
+    ],
+    open: true,
+  },
+  {
     id: 'garbicz-dinner-0731',
     title: 'Mycelium Dinner',
     subtitle: 'Garbicz Music Festival · Poland',
