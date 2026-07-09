@@ -29,10 +29,139 @@
 // SECURITY: every event Stripe sends carries a stripe-signature header.
 // We verify it against STRIPE_WEBHOOK_SECRET so an attacker can't POST
 // a forged "order succeeded" event to mark unpaid orders as paid.
+//
+// ─── Admin notification email ──────────────────────────────────
+// After the order row is flipped to `paid`, we send Robin an email
+// via Resend containing customer + shipping address + items + total
+// + Stripe references. Requires RESEND_API_KEY (already set for the
+// newsletter function). Optional ADMIN_EMAIL env var overrides the
+// default recipient (robin@fungai.art). If Resend fails the webhook
+// still returns 200 — the order is already saved.
 // ════════════════════════════════════════════════════════════════
 
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
+
+// ─── HTML escaper ───────────────────────────────────────────────
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+
+// ─── Admin order notification via Resend ────────────────────────
+async function sendAdminOrderEmail(order) {
+  const resendKey = process.env.RESEND_API_KEY;
+  if (!resendKey) {
+    console.warn('[stripe-webhook] RESEND_API_KEY not set — admin notification skipped for order', order.id);
+    return;
+  }
+  const adminEmail = process.env.ADMIN_EMAIL || 'robin@fungai.art';
+  const from = process.env.NEWSLETTER_FROM || 'Fungai Art <noreply@fungai.art>';
+
+  const total    = Number(order.total_eur || 0).toFixed(2);
+  const subtotal = Number(order.subtotal_eur || 0).toFixed(2);
+  const shipping = Number(order.shipping_eur || 0);
+  const items    = Array.isArray(order.items) ? order.items : [];
+  const itemCount = order.item_count || items.reduce((a, i) => a + Number(i.qty || 0), 0);
+
+  const itemsHtml = items.length
+    ? items.map(i =>
+        `<tr><td style="padding:6px 0;">${esc(i.qty)}× ${esc(i.name)}</td>` +
+        `<td style="text-align:right;padding:6px 0;">€${(Number(i.unit_eur || 0) * Number(i.qty || 0)).toFixed(2)}</td></tr>`
+      ).join('')
+    : `<tr><td colspan="2" style="padding:6px 0;opacity:0.6;font-style:italic;">Item list unavailable (order recovered from Stripe metadata). Summary: ${esc(order.admin_notes || '(none)')}</td></tr>`;
+
+  const subject = `[Fungai order] €${total} · ${order.customer_name || '(no name)'} · ${itemCount} item${itemCount === 1 ? '' : 's'}`;
+
+  const html = `<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#060809;color:#C9B894;font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased;">
+  <div style="max-width:600px;margin:0 auto;padding:40px 24px;">
+    <div style="background:#0F1014;border:0.5px solid rgba(196,136,56,.18);border-radius:14px;padding:36px 30px;">
+      <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.28em;text-transform:uppercase;color:#E8B14B;margin-bottom:14px;">✦ New Order</div>
+      <h1 style="font-family:Georgia,serif;font-style:italic;font-weight:400;font-size:34px;color:#E6D9B5;line-height:1.1;margin:0 0 6px;">€${esc(total)}</h1>
+      <div style="font-family:'Courier New',monospace;font-size:11px;color:#8B7E62;letter-spacing:0.08em;">${itemCount} item${itemCount === 1 ? '' : 's'}</div>
+
+      <div style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:#8B7E62;margin:26px 0 8px;">Customer</div>
+      <p style="font-size:14px;line-height:1.6;color:#C9B894;margin:0 0 16px;">
+        <strong style="color:#E6D9B5;">${esc(order.customer_name || '(name missing)')}</strong><br>
+        <a href="mailto:${esc(order.customer_email || '')}" style="color:#E8B14B;text-decoration:none;">${esc(order.customer_email || '')}</a>${order.customer_phone ? `<br><a href="tel:${esc(order.customer_phone)}" style="color:#C9B894;text-decoration:none;">${esc(order.customer_phone)}</a>` : ''}
+      </p>
+
+      <div style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:#8B7E62;margin:20px 0 8px;">Ship to</div>
+      <p style="font-size:14px;line-height:1.6;color:#C9B894;white-space:pre-wrap;margin:0 0 22px;">${esc(order.shipping_address || '(no address)')}</p>
+
+      <div style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:#8B7E62;margin:22px 0 8px;">Items</div>
+      <table style="width:100%;font-size:13px;color:#C9B894;border-collapse:collapse;margin-bottom:6px;">
+        ${itemsHtml}
+        <tr style="border-top:0.5px solid rgba(196,136,56,.18);"><td style="padding:10px 0 6px;">Subtotal</td><td style="text-align:right;padding:10px 0 6px;">€${esc(subtotal)}</td></tr>
+        <tr><td style="padding:2px 0;">Shipping</td><td style="text-align:right;padding:2px 0;">${shipping > 0 ? '€' + shipping.toFixed(2) : 'Free'}</td></tr>
+        <tr style="border-top:0.5px solid rgba(196,136,56,.18);"><td style="color:#E6D9B5;font-weight:600;padding:10px 0;">Total</td><td style="text-align:right;color:#E6D9B5;font-weight:600;padding:10px 0;">€${esc(total)}</td></tr>
+      </table>
+
+      <div style="border-top:0.5px solid rgba(196,136,56,.15);margin-top:24px;padding-top:20px;font-family:'Courier New',monospace;font-size:10px;color:#8B7E62;line-height:1.85;">
+        Order ID · <span style="color:#C9B894;">${esc(order.id)}</span><br>
+        Stripe PI · <span style="color:#C9B894;">${esc(order.payment_intent_id || '(unknown)')}</span>
+        ${order.receipt_url ? `<br><br><a href="${esc(order.receipt_url)}" style="color:#E8B14B;text-decoration:none;border-bottom:0.5px solid rgba(232,177,75,0.4);">View Stripe receipt →</a>` : ''}
+      </div>
+
+      <div style="margin-top:26px;padding-top:16px;border-top:0.5px solid rgba(196,136,56,.10);font-family:Georgia,serif;font-style:italic;color:#8B7E62;font-size:12px;">
+        Mark this order shipped from Supabase → Table Editor → orders — set status, tracking_carrier, tracking_number.
+      </div>
+    </div>
+  </div>
+</body></html>`;
+
+  const text = [
+    `NEW ORDER · €${total}`,
+    `${itemCount} item${itemCount === 1 ? '' : 's'}`,
+    ``,
+    `Customer: ${order.customer_name || '(no name)'}`,
+    `Email:    ${order.customer_email || ''}`,
+    order.customer_phone ? `Phone:    ${order.customer_phone}` : '',
+    ``,
+    `Ship to:`,
+    order.shipping_address || '(no address)',
+    ``,
+    `Items:`,
+    ...(items.length
+      ? items.map(i => `  ${i.qty}× ${i.name} — €${(Number(i.unit_eur || 0) * Number(i.qty || 0)).toFixed(2)}`)
+      : [`  (item list unavailable — recovered from Stripe metadata)`]),
+    ``,
+    `Subtotal: €${subtotal}`,
+    `Shipping: ${shipping > 0 ? '€' + shipping.toFixed(2) : 'Free'}`,
+    `Total:    €${total}`,
+    ``,
+    `Order ID:      ${order.id}`,
+    `Stripe intent: ${order.payment_intent_id || '(unknown)'}`,
+    order.receipt_url ? `Receipt:       ${order.receipt_url}` : '',
+  ].filter(Boolean).join('\n');
+
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${resendKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from,
+        to: [adminEmail],
+        reply_to: order.customer_email || undefined,
+        subject,
+        html,
+        text,
+      }),
+    });
+    if (!res.ok) {
+      const detail = await res.json().catch(() => ({}));
+      console.error('[stripe-webhook] Admin email send failed:', res.status, detail);
+    }
+  } catch (e) {
+    console.error('[stripe-webhook] Admin email threw:', e.message);
+  }
+}
 
 export const handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -152,6 +281,10 @@ export const handler = async (event) => {
       console.error('[stripe-webhook] Recovery insert failed:', insertErr.message);
       return { statusCode: 500, body: 'Recovery insert failed' };
     }
+    // Re-read the row we just inserted so the email helper gets the full,
+    // typed shape from Postgres (numerics decoded, defaults populated).
+    const { data: recovered } = await supabase.from('orders').select('*').eq('id', orderId).maybeSingle();
+    if (recovered) await sendAdminOrderEmail(recovered);
     return { statusCode: 200, body: JSON.stringify({ received: true, recovered: true }) };
   }
 
@@ -176,6 +309,12 @@ export const handler = async (event) => {
     console.error('[stripe-webhook] Order update failed:', updateErr.message);
     return { statusCode: 500, body: 'DB update failed' };
   }
+
+  // Fetch the full row so the email includes items + address (existing
+  // only had id + status). Any email failure is logged but does NOT
+  // fail the webhook — the order is already saved.
+  const { data: full } = await supabase.from('orders').select('*').eq('id', orderId).maybeSingle();
+  if (full) await sendAdminOrderEmail(full);
 
   return { statusCode: 200, body: JSON.stringify({ received: true, orderId, status: 'paid' }) };
 };
