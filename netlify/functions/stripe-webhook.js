@@ -56,7 +56,16 @@ async function sendAdminOrderEmail(order) {
     console.warn('[stripe-webhook] RESEND_API_KEY not set — admin notification skipped for order', order.id);
     return;
   }
-  const adminEmail = process.env.ADMIN_EMAIL || 'robin@fungai.art';
+  // ADMIN_EMAIL supports one address ("robin@fungai.art") OR a
+  // comma-separated list ("robin@fungai.art,teyae@fungai.art") so both
+  // Robin and Steph can be notified without any code change. Empty
+  // entries and whitespace are stripped defensively.
+  const rawAdmin = process.env.ADMIN_EMAIL || 'robin@fungai.art';
+  const adminRecipients = rawAdmin.split(',').map(s => s.trim()).filter(Boolean);
+  if (adminRecipients.length === 0) {
+    console.warn('[stripe-webhook] ADMIN_EMAIL parsed to empty list — skipping notification');
+    return;
+  }
   const from = process.env.NEWSLETTER_FROM || 'Fungai Art <noreply@fungai.art>';
 
   const total    = Number(order.total_eur || 0).toFixed(2);
@@ -147,7 +156,7 @@ async function sendAdminOrderEmail(order) {
       },
       body: JSON.stringify({
         from,
-        to: [adminEmail],
+        to: adminRecipients,
         reply_to: order.customer_email || undefined,
         subject,
         html,
