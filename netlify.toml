@@ -69,7 +69,18 @@
   to     = "/herbal-engine-2/"
   status = 301
 
-# static pages served directly: /shop /mixology /mycelium-trance /community /health /extraction /privacy /terms /members /sporing /draw /patron /basket /onboard
+# Dinner Experience — renamed from /mycelium-trance in 2026.
+# Preserves old bookmarks, backlinks, sitemap crawls.
+[[redirects]]
+  from   = "/mycelium-trance/*"
+  to     = "/dinner-experience/"
+  status = 301
+[[redirects]]
+  from   = "/mycelium-trance"
+  to     = "/dinner-experience/"
+  status = 301
+
+# static pages served directly: /shop /mixology /dinner-experience /community /health /extraction /privacy /terms /members /sporing /draw /patron /basket /onboard
 
 # Unknown paths → branded 404
 [[redirects]]

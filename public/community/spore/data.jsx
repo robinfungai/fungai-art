@@ -366,9 +366,9 @@ const EXPERIENCES = [
     bg:'#A03028', tag:'limited', tagLabel:'2 seats left', pEur:65, pH:50, minH:50,
   },
   {
-    id:'e2', title:'Mycelium Trance',
-    desc:'111-minute embodied sensory awakening. Gong, tuning forks, plant allies.',
-    bg:'#5C7338', tag:'open', tagLabel:'Open', pEur:40, pH:30, minH:30, featured:true,
+    id:'e2', title:'Dinner Experience',
+    desc:'Seven-course fungal feast. Foraged mushrooms, adaptogens, sacred botanicals. Hosted by Robin.',
+    bg:'#5C7338', tag:'open', tagLabel:'Open', pEur:140, pH:105, minH:105, featured:true,
   },
   {
     id:'e3', title:'Foraging Circle',
@@ -439,7 +439,7 @@ const MEMBERS = [
     node: 'berlin',
     rep: 12,
     balance: 100,
-    focus: 'Mycelium Trance · gong · tuning forks · plant ceremony',
+    focus: 'Gong · tuning forks · somatic ceremony · plant medicine',
     contact: 'teyae@fungai.art',
     admin: true,
     founding: true,

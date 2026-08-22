@@ -132,7 +132,7 @@ const WELCOME_HTML = `<!DOCTYPE html>
       <ul>
         <li>Seasonal harvest reports from Sweden, Berlin, Lisbon, Beirut</li>
         <li>New apothecary preparations as they're made — including private editions</li>
-        <li>Mycelium Trance dates before they're public</li>
+        <li>Dinner Experience dates before they're public</li>
         <li>Foraging knowledge — names, properties, stories</li>
       </ul>
       <p>If you ever want to step out of the network, every email carries an unsubscribe at the bottom. No bots, no automated sequences.</p>
@@ -151,7 +151,7 @@ You've joined a slow newsletter — one email a month, written by hand. Field no
 What you'll receive:
 • Seasonal harvest reports from Sweden, Berlin, Lisbon, Beirut
 • New apothecary preparations as they're made — including private editions
-• Mycelium Trance dates before they're public
+• Dinner Experience dates before they're public
 • Foraging knowledge — names, properties, stories
 
 If you ever want to step out, every email carries an unsubscribe.

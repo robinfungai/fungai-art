@@ -12,7 +12,7 @@ import fs from 'fs'
 const STATIC_PAGES = [
   '/home',     '/shop',          '/mixology',          '/extraction',
   '/health',   '/herbal-engine-2', '/community',       '/community/academy',
-  '/tymetonics','/members',       '/mycelium-trance',  '/mycelium',  '/draw',
+  '/tymetonics','/members',       '/dinner-experience',  '/mycelium',  '/draw',
   '/patron',   '/onboard',       '/sporing',           '/basket',
   '/privacy',  '/terms',         '/covenant',
 ];
