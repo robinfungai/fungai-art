@@ -30,6 +30,135 @@
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 
+// ─── HTML escaper (mirrors stripe-webhook.js) ───────────────────
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+
+// ─── Draft-order notification ("double security") ──────────────
+// Fires as soon as the customer submits their checkout form and we
+// create the draft order + PaymentIntent — BEFORE Stripe confirms
+// payment. This is the first of two admin emails per order (the
+// second is the "paid" email from stripe-webhook.js). Purpose:
+// Robin sees who's about to pay + their shipping address in
+// real time, so fraudulent or wrong addresses can be caught before
+// the card actually charges. Fails silently if Resend is down —
+// checkout must not depend on email delivery.
+async function sendDraftOrderEmail({ orderId, paymentIntentId, customer, priced, subtotal, shipping, total }) {
+  const resendKey = process.env.RESEND_API_KEY;
+  if (!resendKey) {
+    console.warn('[create-payment-intent] RESEND_API_KEY not set — draft notification skipped');
+    return;
+  }
+  const rawAdmin = process.env.ADMIN_EMAIL || 'robin@fungai.art';
+  const adminRecipients = rawAdmin.split(',').map(s => s.trim()).filter(Boolean);
+  if (adminRecipients.length === 0) return;
+  const from = process.env.NEWSLETTER_FROM || 'Fungai Art <noreply@fungai.art>';
+
+  const itemCount = priced.reduce((a, p) => a + p.qty, 0);
+  const totalStr    = Number(total).toFixed(2);
+  const subtotalStr = Number(subtotal).toFixed(2);
+  const shippingStr = Number(shipping) > 0 ? '€' + Number(shipping).toFixed(2) : 'Free';
+
+  const itemsHtml = priced.map(p =>
+    `<tr><td style="padding:6px 0;">${esc(p.qty)}× ${esc(p.name)}</td>` +
+    `<td style="text-align:right;padding:6px 0;">€${(p.unit_eur * p.qty).toFixed(2)}</td></tr>`
+  ).join('');
+
+  // Subject prefix "[Fungai · CHECKOUT]" so it sorts / filters separately
+  // from the "[Fungai order]" paid emails in Robin's inbox.
+  const subject = `[Fungai · CHECKOUT] €${totalStr} · ${customer.name || '(no name)'} · ${itemCount} item${itemCount === 1 ? '' : 's'}`;
+
+  const html = `<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#060809;color:#C9B894;font-family:Georgia,'Times New Roman',serif;-webkit-font-smoothing:antialiased;">
+  <div style="max-width:600px;margin:0 auto;padding:40px 24px;">
+    <div style="background:#0F1014;border:0.5px solid rgba(232,177,75,.35);border-radius:14px;padding:36px 30px;">
+      <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.28em;text-transform:uppercase;color:#E8B14B;margin-bottom:14px;">⚠ Checkout Started · payment not yet confirmed</div>
+      <h1 style="font-family:Georgia,serif;font-style:italic;font-weight:400;font-size:34px;color:#E6D9B5;line-height:1.1;margin:0 0 6px;">€${esc(totalStr)}</h1>
+      <div style="font-family:'Courier New',monospace;font-size:11px;color:#8B7E62;letter-spacing:0.08em;">${itemCount} item${itemCount === 1 ? '' : 's'} · draft order</div>
+
+      <div style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:#8B7E62;margin:26px 0 8px;">Customer</div>
+      <p style="font-size:14px;line-height:1.6;color:#C9B894;margin:0 0 16px;">
+        <strong style="color:#E6D9B5;">${esc(customer.name || '(name missing)')}</strong><br>
+        <a href="mailto:${esc(customer.email || '')}" style="color:#E8B14B;text-decoration:none;">${esc(customer.email || '')}</a>${customer.phone ? `<br><a href="tel:${esc(customer.phone)}" style="color:#C9B894;text-decoration:none;">${esc(customer.phone)}</a>` : ''}
+      </p>
+
+      <div style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:#8B7E62;margin:20px 0 8px;">Ship to</div>
+      <p style="font-size:14px;line-height:1.6;color:#C9B894;white-space:pre-wrap;margin:0 0 22px;">${esc(customer.address || '(no address)')}</p>
+
+      <div style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:#8B7E62;margin:22px 0 8px;">Items</div>
+      <table style="width:100%;font-size:13px;color:#C9B894;border-collapse:collapse;margin-bottom:6px;">
+        ${itemsHtml}
+        <tr style="border-top:0.5px solid rgba(232,177,75,.22);"><td style="padding:10px 0 6px;">Subtotal</td><td style="text-align:right;padding:10px 0 6px;">€${esc(subtotalStr)}</td></tr>
+        <tr><td style="padding:2px 0;">Shipping</td><td style="text-align:right;padding:2px 0;">${shippingStr}</td></tr>
+        <tr style="border-top:0.5px solid rgba(232,177,75,.22);"><td style="color:#E6D9B5;font-weight:600;padding:10px 0;">Total</td><td style="text-align:right;color:#E6D9B5;font-weight:600;padding:10px 0;">€${esc(totalStr)}</td></tr>
+      </table>
+
+      <div style="border-top:0.5px solid rgba(232,177,75,.20);margin-top:24px;padding-top:20px;font-family:'Courier New',monospace;font-size:10px;color:#8B7E62;line-height:1.85;">
+        Order ID · <span style="color:#C9B894;">${esc(orderId || '(pending)')}</span><br>
+        Stripe PI · <span style="color:#C9B894;">${esc(paymentIntentId || '(pending)')}</span>
+      </div>
+
+      <div style="margin-top:22px;padding:14px 16px;background:rgba(232,177,75,0.08);border-radius:8px;font-family:Georgia,serif;font-style:italic;color:#E8B14B;font-size:13px;line-height:1.55;">
+        Do not ship yet. This email fires when the customer submits their address. You'll receive a second email marked <strong>New Order · paid</strong> when Stripe confirms payment. Ship only after that arrives.
+      </div>
+    </div>
+  </div>
+</body></html>`;
+
+  const text = [
+    `CHECKOUT STARTED · payment not yet confirmed`,
+    `€${totalStr} · ${itemCount} item${itemCount === 1 ? '' : 's'}`,
+    ``,
+    `Customer: ${customer.name || '(no name)'}`,
+    `Email:    ${customer.email || ''}`,
+    customer.phone ? `Phone:    ${customer.phone}` : '',
+    ``,
+    `Ship to:`,
+    customer.address || '(no address)',
+    ``,
+    `Items:`,
+    ...priced.map(p => `  ${p.qty}× ${p.name} — €${(p.unit_eur * p.qty).toFixed(2)}`),
+    ``,
+    `Subtotal: €${subtotalStr}`,
+    `Shipping: ${shippingStr}`,
+    `Total:    €${totalStr}`,
+    ``,
+    `Order ID:      ${orderId || '(pending)'}`,
+    `Stripe intent: ${paymentIntentId || '(pending)'}`,
+    ``,
+    `⚠ Do NOT ship yet. This is the first of two notifications per order.`,
+    `  Wait for the "New Order · paid" email before shipping.`,
+  ].filter(Boolean).join('\n');
+
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${resendKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from,
+        to: adminRecipients,
+        reply_to: customer.email || undefined,
+        subject,
+        html,
+        text,
+      }),
+    });
+    if (!res.ok) {
+      const detail = await res.json().catch(() => ({}));
+      console.error('[create-payment-intent] Draft email send failed:', res.status, detail);
+    }
+  } catch (e) {
+    console.error('[create-payment-intent] Draft email threw:', e.message);
+  }
+}
+
 // ── Server-side price catalog ─────────────────────────────────────
 // Keys match exactly what the shop sends in `item.name` (the same
 // string used in addToCart calls). Adding a new product requires a
@@ -215,6 +344,22 @@ export const handler = async (event) => {
         console.warn('[create-payment-intent] Could not attach pi_id to order:', e.message);
       }
     }
+
+    // "Double security" — fire the draft-order admin email so Robin sees
+    // who's checking out (name + shipping address) BEFORE Stripe confirms
+    // payment. The second email arrives from stripe-webhook.js once the
+    // card actually charges. Awaited so we don't lose the send if the
+    // Lambda freezes, but any error is swallowed inside — checkout must
+    // not fail because email failed.
+    await sendDraftOrderEmail({
+      orderId,
+      paymentIntentId: paymentIntent.id,
+      customer,
+      priced,
+      subtotal,
+      shipping,
+      total,
+    });
 
     return json(200, {
       clientSecret: paymentIntent.client_secret,
