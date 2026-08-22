@@ -35,10 +35,11 @@ import { createClient } from '@supabase/supabase-js';
 // string used in addToCart calls). Adding a new product requires a
 // matching entry here OR the order fails — by design.
 const CATALOG = {
-  // All liquid extracts (fungi tinctures + compositions) flattened to
-  // €44. Chaga Syrup stays €11 — different form, different price point.
-  // Reishi Tincture removed from the shop entirely.
-  'Amanita Muscaria':                  44,
+  // Liquid extracts (fungi tinctures + compositions) mostly at €44.
+  // Amanita is the exception — spagyric preparation, foraged, €48.
+  // Nettle Tincture is a single-herb tonic at €33.
+  // Chaga Syrup stays €11 — different form, different price point.
+  'Amanita Muscaria':                  48,
   'Chaga Tincture':                    44,
   'Chaga Syrup':                       11,
   'Wild Cordyceps':                    44,
@@ -49,6 +50,9 @@ const CATALOG = {
   'ADHD Support':                      44,
   'Mineral Tonic':                     44,
   'Healthy Aging':                     44,
+  'Nervous System Tonic':              44,
+  'Sleepy Sleepy':                     44,
+  'Nettle Tincture':                   33,
   'Blue Lotus (dried 100g)':           44,
   'Horny Goat Weed (dried 100g)':      28,
   'Butterfly Pea (dried 100g)':        28,
