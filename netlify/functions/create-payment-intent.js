@@ -35,17 +35,19 @@ import { createClient } from '@supabase/supabase-js';
 // string used in addToCart calls). Adding a new product requires a
 // matching entry here OR the order fails — by design.
 const CATALOG = {
-  'Amanita Muscaria':                  50,
-  'Chaga Tincture':                    38,
+  // All liquid extracts (fungi tinctures + compositions) flattened to
+  // €44. Chaga Syrup stays €11 — different form, different price point.
+  // Reishi Tincture removed from the shop entirely.
+  'Amanita Muscaria':                  44,
+  'Chaga Tincture':                    44,
   'Chaga Syrup':                       11,
-  'Wild Cordyceps':                    33,
-  'Reishi Tincture':                   33,
-  'Temple Nectar':                     38,
-  'Ruby No.7':                         33,
+  'Wild Cordyceps':                    44,
+  'Temple Nectar':                     44,
+  'Ruby No.7':                         44,
   'Lucid':                             44,
-  'Moon Support':                      33,
-  'ADHD Support':                      38,
-  'Mineral Tonic':                     38,
+  'Moon Support':                      44,
+  'ADHD Support':                      44,
+  'Mineral Tonic':                     44,
   'Healthy Aging':                     44,
   'Blue Lotus (dried 100g)':           44,
   'Horny Goat Weed (dried 100g)':      28,
