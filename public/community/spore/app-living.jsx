@@ -4817,13 +4817,25 @@ function App() {
           } catch (e) { /* silent — fall through to editor */ }
         }
 
-        // Path 3: still nothing → pop the editor on magic-link arrival
+        // Path 3: still nothing → this user has a live Supabase session
+        // but no matching profile. Pop the editor unconditionally so they
+        // can actually make one.
+        //
+        // We used to gate this on the URL containing ?signedin=1 or
+        // ?code= as a "did they just arrive from a magic link?" heuristic
+        // — but by the time tryAutoLogin runs, Supabase-js has already
+        // consumed the PKCE `code=` param and my useEffect below has
+        // stripped `signedin=1`. Net result: the gate almost never fired,
+        // new threads landed on the LoginScreen instead of the editor,
+        // and the "Continue your thread" button in the header read as
+        // "wait, this is the sign-in page again — did my link not work?"
+        //
+        // No URL sniffing needed — we already know from the function
+        // arguments that a user is authenticated (tryAutoLogin was
+        // called with a live Supabase user). Paths 1 and 2 have already
+        // failed. The only rational next step is to make a profile.
         if (!recovered) {
-          const qs = window.location.search;
-          const cameFromMagicLink = qs.includes('signedin') || qs.includes('code=');
-          if (cameFromMagicLink) {
-            setShowRootEditor(true);
-          }
+          setShowRootEditor(true);
         }
       }
     } catch (e) { console.warn('[Spore] auto-login failed:', e); }
