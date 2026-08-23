@@ -823,7 +823,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
 </div>
 <div class="products-section">
   <p style="max-width:640px;font-size:13px;color:var(--dust);line-height:1.75;padding:0 0 32px;font-family:var(--serif);font-style:italic;">
-    A Swedish sub-line for the body and the field &mdash; forest-crafted topicals from wild-foraged Nordic plants. Full range and its own home at <a href="/moder-jord" style="color:var(--mist);text-decoration:none;border-bottom:0.5px solid rgba(136,186,200,0.35);">fungai.art/moder-jord</a> soon. Three previews below.
+    A Swedish sub-line for the body and the field &mdash; forest-crafted topicals from wild-foraged Nordic plants. Full range and its own home at <span style="color:var(--mist);border-bottom:0.5px dashed rgba(136,186,200,0.35);">fungai.art/moder-jord</span> in the works. Three previews below.
   </p>
   <div class="products-grid">
 
@@ -1338,10 +1338,22 @@ function confirmCryptoOrder(){
 }
 
 // Reflect the restored cart in the UI on page load (count badge, etc).
+// Also honour ?open=basket or #basket in the URL so links from other
+// pages (product detail toasts, member portal) can deep-link into the
+// open drawer instead of leaving the user to hunt for the button.
+function maybeAutoOpenCart(){
+  const wantsOpen = window.location.hash === '#basket'
+    || /\bopen=basket\b/.test(window.location.search);
+  if (wantsOpen) openCart();
+}
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => { if (cart.length) renderCart(); });
+  document.addEventListener('DOMContentLoaded', () => {
+    if (cart.length) renderCart();
+    maybeAutoOpenCart();
+  });
 } else {
   if (cart.length) renderCart();
+  maybeAutoOpenCart();
 }
 </script>
 
