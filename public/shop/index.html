@@ -40,6 +40,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
 .nav-cart{background:none;border:0.5px solid rgba(136,186,200,0.3);color:var(--mist);padding:8px 18px;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:var(--sans);display:flex;align-items:center;gap:8px;transition:all 0.2s}
 .nav-cart:hover{background:rgba(136,186,200,0.08)}
 .cart-count{background:var(--lichen);color:var(--parchment);border-radius:50%;width:18px;height:18px;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:500}
+/* Empty-basket state: hide the "0" chip so it doesn't read as broken. */
+.cart-count.is-empty{display:none}
 
 /* HERO BANNER */
 .hero-banner{padding:140px 60px 80px;background:linear-gradient(to bottom,var(--forest),var(--void));border-bottom:0.5px solid rgba(136,186,200,0.06);text-align:center}
@@ -59,17 +61,20 @@ body.fa-has-member-banner .filters{top:104px}
 .filter-btn:hover{border-color:rgba(136,186,200,0.4);color:var(--mist)}
 .filter-btn.active{background:rgba(136,186,200,0.12);border-color:rgba(136,186,200,0.5);color:var(--mist)}
 
-/* SECTION HEADERS */
-.cat-header{padding:60px 60px 32px;display:flex;align-items:center;gap:24px}
+/* SECTION HEADERS — reduced top padding from 60→40 so scanning across
+   four sections doesn't feel like scrolling through empty air. */
+.cat-header{padding:40px 60px 24px;display:flex;align-items:center;gap:24px}
 .cat-header h2{font-family:var(--serif);font-size:32px;font-weight:300;color:var(--parchment)}
 .cat-header h2 em{font-style:italic;color:var(--mist)}
 .cat-line{flex:1;height:0.5px;background:rgba(136,186,200,0.12)}
 .cat-count{font-size:10px;letter-spacing:2px;color:var(--lichen);text-transform:uppercase}
 
 /* PRODUCTS GRID */
-.products-section{padding:0 60px 80px}
+.products-section{padding:0 60px 60px}
 .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px}
-.product-card{background:var(--card);transition:all 0.3s;cursor:pointer;display:flex;flex-direction:column}
+/* cursor:pointer was dropped — the card isn't a link (yet). It only
+   promised interaction the click didn't deliver. Detail pages coming. */
+.product-card{background:var(--card);transition:all 0.3s;display:flex;flex-direction:column}
 .product-card.hidden{display:none!important}
 .product-img-wrap{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--moss)}
 .product-photo{width:100%;height:100%;object-fit:cover;transition:transform 0.5s;filter:saturate(0.9)contrast(1.05)}
@@ -78,8 +83,12 @@ body.fa-has-member-banner .filters{top:104px}
 .product-placeholder span{font-size:48px;opacity:0.3;font-family:var(--serif);font-style:italic;color:var(--mist)}
 .product-badge{position:absolute;top:12px;left:12px;font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;background:rgba(77,134,155,0.85);color:var(--parchment);border-radius:2px}
 .product-badge.spagyric{background:rgba(136,186,200,0.15);color:var(--mist);border:0.5px solid rgba(136,186,200,0.3)}
-.product-hover-cta{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(to top,rgba(5,9,12,0.9),transparent);transform:translateY(100%);transition:transform 0.3s}
-.product-card:hover .product-hover-cta{transform:none}
+/* Hover CTA — a tighter bottom strip so it doesn't swallow the lower
+   third of the photo. Touch devices never see this (no hover event),
+   so the always-visible "+ Add" button below the info block is the
+   real interaction target on mobile. */
+.product-hover-cta{position:absolute;bottom:0;left:0;right:0;padding:10px 12px;background:linear-gradient(to top,rgba(5,9,12,0.92),rgba(5,9,12,0.4) 70%,transparent);transform:translateY(100%);transition:transform 0.25s;opacity:0}
+.product-card:hover .product-hover-cta{transform:none;opacity:1}
 .quick-add{width:100%;padding:10px;background:var(--lichen);border:none;color:var(--parchment);font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:background 0.2s}
 .quick-add:hover{background:var(--mist);color:var(--void)}
 .product-info{padding:24px;flex:1;display:flex;flex-direction:column}
@@ -94,12 +103,6 @@ body.fa-has-member-banner .filters{top:104px}
 .product-price .amount{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--mist)}
 .add-btn{padding:8px 18px;background:none;border:0.5px solid rgba(136,186,200,0.3);color:var(--mist);font-size:10.5px;letter-spacing:1px;cursor:pointer;font-family:var(--sans);transition:all 0.2s}
 .add-btn:hover{background:rgba(136,186,200,0.1);border-color:rgba(136,186,200,0.5)}
-
-/* COMPOSITIONS BANNER */
-.comp-banner{margin:0 60px 60px;padding:48px;background:var(--forest);border:0.5px solid rgba(136,186,200,0.1);display:flex;align-items:center;justify-content:space-between;gap:40px}
-.comp-banner h3{font-family:var(--serif);font-size:36px;font-weight:300;color:var(--parchment)}
-.comp-banner h3 em{color:var(--mist);font-style:italic}
-.comp-banner p{font-size:13px;color:var(--dust);max-width:400px;line-height:1.7}
 
 /* CART DRAWER */
 .cart-overlay{position:fixed;inset:0;background:rgba(5,9,12,0.6);z-index:800;opacity:0;pointer-events:none;transition:opacity 0.3s}
@@ -202,7 +205,18 @@ body.fa-has-member-banner .filters{top:104px}
 html.reveal-anim .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s,transform 0.6s}
 html.reveal-anim .reveal.in{opacity:1;transform:none}
 
-@media(max-width:768px){.nav-links{display:none}.hero-banner,.filters,.products-section,.comp-banner,.footer{padding-left:20px;padding-right:20px}.cat-header{padding:40px 20px 20px}.cart-drawer{width:100%}.products-grid{grid-template-columns:1fr 1fr}
+@media(max-width:768px){.nav-links{display:none}.hero-banner,.filters,.products-section,.footer{padding-left:20px;padding-right:20px}.cat-header{padding:32px 20px 16px}.cart-drawer{width:100%}.products-grid{grid-template-columns:1fr 1fr}
+  /* Hero — 140px top padding pushed the first product below the fold on
+     phones. Tightened so products land as soon as the visitor scrolls
+     past the nav. */
+  .hero-banner{padding-top:80px !important;padding-bottom:40px !important}
+  .hero-title{font-size:clamp(38px,10vw,54px) !important}
+  /* Filter bar — was wrapping to two rows when "Flowers & Herbs" broke
+     across. Switch to a horizontal scroll strip on mobile so all
+     categories stay in one line. */
+  .filters{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding:16px 20px}
+  .filters::-webkit-scrollbar{display:none}
+  .filter-btn{flex-shrink:0;padding:7px 14px;font-size:10px;letter-spacing:1.2px}
   /* Checkout overlay full-screen on phones — the 90vh modal was pushing
      "Continue to payment →" below the address bar where it couldn't be
      reached. Sticky button row keeps the CTA visible while the form scrolls. */
@@ -244,14 +258,14 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   </div>
   <div class="nav-right">
     <button class="nav-cart" onclick="openCart()">
-      Basket <span class="cart-count" id="cartCount">0</span>
+      Basket <span class="cart-count is-empty" id="cartCount">0</span>
     </button>
   </div>
 </nav>
 
 <!-- HERO -->
 <div class="hero-banner">
-  <span class="hero-label">Moder Jord Collection</span>
+  <span class="hero-label">Wild-foraged · Composed in Berlin</span>
   <h1 class="hero-title">The <em>Apothecary</em></h1>
   <span class="hero-script">full spectrum · wild-foraged · zero synthetic</span>
   <p class="hero-sub">Carefully composed by earth keepers. All tinctures made with pharma-grade ethanol. Full spectrum, self-foraged where marked. Ships from Berlin · 3–7 business days EU.</p>
@@ -264,6 +278,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   <button class="filter-btn" onclick="filterProducts('compositions',this)">Compositions</button>
   <button class="filter-btn" onclick="filterProducts('flowers',this)">Flowers &amp; Herbs</button>
   <button class="filter-btn" onclick="filterProducts('specials',this)">Specials</button>
+  <button class="filter-btn" onclick="filterProducts('moder-jord',this)">Moder Jord</button>
 </div>
 
 <!-- ══ FUNGI ══ -->
@@ -746,6 +761,80 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   </div>
 </div>
 
+<!-- ══ MODER JORD ══ Swedish forest-craft topicals. Own landing coming
+     at /moder-jord — for now, three preview cards, all out of stock. -->
+<div class="cat-header reveal">
+  <h2>Moder <em>Jord</em></h2>
+  <div class="cat-line"></div>
+  <span class="cat-count">Coming soon</span>
+</div>
+<div class="products-section">
+  <p style="max-width:640px;font-size:13px;color:var(--dust);line-height:1.75;padding:0 0 32px;font-family:var(--serif);font-style:italic;">
+    A Swedish sub-line for the body and the field &mdash; forest-crafted topicals from wild-foraged Nordic plants. Full range and its own home at <a href="/moder-jord" style="color:var(--mist);text-decoration:none;border-bottom:0.5px solid rgba(136,186,200,0.35);">fungai.art/moder-jord</a> soon. Three previews below.
+  </p>
+  <div class="products-grid">
+
+    <div class="product-card is-oos reveal" data-category="moder-jord">
+      <div class="product-img-wrap">
+        <div class="product-placeholder" style="background:linear-gradient(160deg,#1a2418,#0a120c)"><span>Mosquito</span></div>
+        <span class="product-badge oos-badge">Out of stock</span>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Moder Jord &middot; Topical</span>
+        <div class="product-name">Mosquito Repellant</div>
+        <p class="product-desc">Wild-foraged Swedish botanicals composed into a slow-release skin balm. Citronella-free &mdash; the forest's own repellant tuned for northern midges and mosquitoes.</p>
+        <div class="product-tags"><span class="tag">Topical</span><span class="tag">Foraged</span><span class="tag">Skin-safe</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">50ml</span><span class="amount" style="opacity:0.5">&mdash;</span></div>
+          <button class="add-btn is-oos-btn" disabled>Notify me</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card is-oos reveal reveal-d1" data-category="moder-jord">
+      <div class="product-img-wrap">
+        <div class="product-placeholder" style="background:linear-gradient(160deg,#3a2a12,#1a1208)"><span>Calendula</span></div>
+        <span class="product-badge oos-badge">Out of stock</span>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Moder Jord &middot; Face</span>
+        <div class="product-name">Calendula Face Cream</div>
+        <p class="product-desc">Slow-infused calendula (Calendula officinalis) in cold-pressed carrier oils, whipped into a light face cream. Anti-inflammatory, wound-mending, radiance-restoring. Sensitive skin, sun-exposed skin, healing skin.</p>
+        <div class="product-tags"><span class="tag">Calendula</span><span class="tag">Anti-inflam</span><span class="tag">Face</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">30ml</span><span class="amount" style="opacity:0.5">&mdash;</span></div>
+          <button class="add-btn is-oos-btn" disabled>Notify me</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card is-oos reveal reveal-d2" data-category="moder-jord">
+      <div class="product-img-wrap">
+        <div class="product-placeholder" style="background:linear-gradient(160deg,#2a1c14,#100a06)"><span>Comfrey</span></div>
+        <span class="product-badge oos-badge">Out of stock</span>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Moder Jord &middot; Body</span>
+        <div class="product-name">Comfrey Root Cream</div>
+        <p class="product-desc">Deep root-infused comfrey (Symphytum officinale) in a rich body cream. Allantoin-driven cell regeneration for bruises, sprains, joint soreness. External use only. Traditional bone-and-tissue mend.</p>
+        <div class="product-tags"><span class="tag">Comfrey</span><span class="tag">Allantoin</span><span class="tag">Recovery</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">60ml</span><span class="amount" style="opacity:0.5">&mdash;</span></div>
+          <button class="add-btn is-oos-btn" disabled>Notify me</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<style>
+  /* Out-of-stock treatment for Moder Jord preview cards */
+  .product-card.is-oos{opacity:0.72;filter:saturate(0.75)}
+  .product-card.is-oos .product-photo,.product-card.is-oos .product-placeholder{filter:grayscale(30%)}
+  .product-badge.oos-badge{background:rgba(206,108,82,0.85);color:var(--parchment);letter-spacing:1.5px}
+  .add-btn.is-oos-btn{opacity:0.5;cursor:not-allowed;pointer-events:none;border-style:dashed}
+</style>
+
 <!-- Product-story popup. Dims the page; shows ritual / pharmacology / value
      story for high-context specials. No subpage = no extra navigation. -->
 <div id="prodPopup" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(5,9,12,0.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:36px 16px;overflow-y:auto;" onclick="if(event.target===this)closeProductPopup()"></div>
@@ -965,6 +1054,8 @@ function renderCart(){
   const items=document.getElementById('cartItems'),footer=document.getElementById('cartFooter'),count=document.getElementById('cartCount'),total=document.getElementById('cartTotal');
   const totalItems=cart.reduce((s,i)=>s+i.qty,0);
   count.textContent=totalItems;
+  // Hide the "0" chip when the basket is empty — reads as broken otherwise.
+  count.classList.toggle('is-empty', totalItems === 0);
   if(!cart.length){items.innerHTML='<div class="cart-empty"><p>Your basket is empty.<br>The forest awaits.</p></div>';footer.style.display='none';return}
   footer.style.display='block';
   items.innerHTML=cart.map((item,idx)=>`<div class="cart-item"><div><div class="cart-item-name">${item.name}</div><div class="cart-item-meta">${item.qty>1?item.qty+'× ':''} €${item.price} each</div></div><div class="cart-item-right"><span class="cart-item-price">€${item.price*item.qty}</span><button class="cart-item-remove" onclick="removeFromCart(${idx})">✕</button></div></div>`).join('');

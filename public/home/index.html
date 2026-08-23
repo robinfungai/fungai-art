@@ -2060,15 +2060,15 @@ function toggleMobileMenu() {
       </div>
       <a href="/shop" style="display:inline-flex;align-items:center;gap:8px;border:0.5px solid rgba(136,186,200,0.4);color:var(--cream);font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;padding:12px 24px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:all .2s;" onmouseover="this.style.borderColor='rgba(136,186,200,0.8)';this.style.color='var(--parchment)'" onmouseout="this.style.borderColor='rgba(136,186,200,0.4)';this.style.color='var(--cream)'">Enter full apothecary →</a>
     </div>
-    <div class="products-grid" style="grid-template-columns:repeat(4,1fr)">
+    <div class="products-grid" style="grid-template-columns:repeat(5,1fr)">
 
       <!-- AMANITA MUSCARIA -->
       <div class="product-card reveal" data-category="fungi">
         <div class="product-img-wrap">
-          <img src="/home/products/amanita.jpeg" alt="Amanita muscaria spagyric essence" loading="lazy" decoding="async" class="product-photo">
+          <img src="/home/products/amanita.webp" alt="Amanita muscaria spagyric essence" loading="lazy" decoding="async" class="product-photo">
           <span class="product-badge badge-foraged">Foraged · Sweden</span>
           <span class="product-badge" style="top:auto;bottom:8px;background:rgba(136,186,200,0.15);color:var(--mist);font-size:9px;letter-spacing:1px;">SPAGYRIC</span>
-          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Amanita Muscaria Tincture', 50)">Add to basket</button></div>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Amanita Muscaria', 48)">Add to basket</button></div>
         </div>
         <div class="product-info">
           <span class="product-category">Fungi · Sacred</span>
@@ -2078,18 +2078,59 @@ function toggleMobileMenu() {
             <span class="note-tag">Muscimol</span><span class="note-tag">Dream-like</span><span class="note-tag">Self-foraged</span>
           </div>
           <div class="product-footer">
-            <div class="product-price"><span class="size">30ml</span><span>€50</span></div>
-            <button class="add-btn" onclick="addToCart('Amanita Muscaria Tincture', 50)">+ Add</button>
+            <div class="product-price"><span class="size">30ml</span><span>€48</span></div>
+            <button class="add-btn" onclick="addToCart('Amanita Muscaria', 48)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADHD SUPPORT -->
+      <div class="product-card reveal reveal-d1" data-category="compositions">
+        <div class="product-img-wrap">
+          <img src="/home/products/adhd.webp" alt="ADHD Support blend" loading="lazy" decoding="async" class="product-photo">
+          <span class="product-badge" style="top:auto;bottom:8px;background:rgba(136,186,200,0.15);color:var(--mist);font-size:9px;letter-spacing:1px;">SPAGYRIC</span>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('ADHD Support', 44)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Compositions · Cognitive</span>
+          <div class="product-name">ADHD Support</div>
+          <p class="product-desc">Focus · clarity · resilience. Lion's mane, reishi, rhodiola, cordyceps, gotu kola, rosemary, ashwagandha. Smoother dopamine signaling.</p>
+          <div class="product-notes">
+            <span class="note-tag">Lion's Mane</span><span class="note-tag">Rhodiola</span><span class="note-tag">Nootropic</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span>€44</span></div>
+            <button class="add-btn" onclick="addToCart('ADHD Support', 44)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLEEPY SLEEPY -->
+      <div class="product-card reveal reveal-d2" data-category="compositions">
+        <div class="product-img-wrap">
+          <img src="/home/products/sleepy.webp" alt="Sleepy Sleepy sleep blend" loading="lazy" decoding="async" class="product-photo">
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Sleepy Sleepy', 44)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Compositions · Sleep</span>
+          <div class="product-name">Sleepy Sleepy</div>
+          <p class="product-desc">Deep sleep · dream ease · full surrender. Valerian, passionflower, magnolia, lemon balm, hops, chamomile. A slow drift into nocturnal rest.</p>
+          <div class="product-notes">
+            <span class="note-tag">Sleep</span><span class="note-tag">GABA</span><span class="note-tag">Restorative</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span>€44</span></div>
+            <button class="add-btn" onclick="addToCart('Sleepy Sleepy', 44)">+ Add</button>
           </div>
         </div>
       </div>
 
       <!-- TEMPLE NECTAR -->
-      <div class="product-card reveal reveal-d1" data-category="compositions">
+      <div class="product-card reveal reveal-d3" data-category="compositions">
         <div class="product-img-wrap">
           <img src="/home/products/temple-nectar.jpeg" alt="Temple Nectar blend" loading="lazy" decoding="async" class="product-photo">
           <span class="product-badge badge-new">Signature</span>
-          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Temple Nectar', 48)">Add to basket</button></div>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Temple Nectar', 44)">Add to basket</button></div>
         </div>
         <div class="product-info">
           <span class="product-category">Compositions · Sensual</span>
@@ -2099,49 +2140,39 @@ function toggleMobileMenu() {
             <span class="note-tag">Aphrodisiac</span><span class="note-tag">Heart-opening</span><span class="note-tag">Libido</span>
           </div>
           <div class="product-footer">
-            <div class="product-price"><span class="size">30ml</span><span>€38</span></div>
-            <button class="add-btn" onclick="addToCart('Temple Nectar', 38)">+ Add</button>
+            <div class="product-price"><span class="size">30ml</span><span>€44</span></div>
+            <button class="add-btn" onclick="addToCart('Temple Nectar', 44)">+ Add</button>
           </div>
         </div>
       </div>
 
-      <!-- ADHD SUPPORT -->
-      <div class="product-card no-photo reveal reveal-d2" data-category="compositions">
-        <div class="product-info">
-          <span class="product-category">Compositions · Cognitive</span>
-          <div class="product-name">ADHD Support</div>
-          <p class="product-desc">Focus · clarity · resilience. Lions mane, reishi, rhodiola, cordyceps, gotu kola, rosemary, ashwagandha. Smoother dopamine signaling.</p>
-          <div class="product-notes">
-            <span class="note-tag">Lions Mane</span><span class="note-tag">Rhodiola</span><span class="note-tag">Nootropic</span>
-          </div>
-          <div class="product-footer">
-            <div class="product-price"><span class="size">30ml</span><span>€38</span></div>
-            <button class="add-btn" onclick="addToCart('ADHD Support', 38)">+ Add</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- BLUE LOTUS -->
-      <div class="product-card reveal reveal-d3" data-category="flowers">
+      <!-- LUCID -->
+      <div class="product-card reveal reveal-d3" data-category="compositions">
         <div class="product-img-wrap">
-          <div class="product-img-placeholder clean" style="background:linear-gradient(160deg,#0D1A2E,#090F1A);"></div>
-          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Blue Lotus Tincture', 44)">Add to basket</button></div>
+          <img src="/home/products/lucid.webp" alt="Lucid dream extract" loading="lazy" decoding="async" class="product-photo">
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Lucid', 44)">Add to basket</button></div>
         </div>
         <div class="product-info">
-          <span class="product-category">Flowers · Sacred</span>
-          <div class="product-name">Blue Lotus</div>
-          <p class="product-desc">Euphoric calm · vision · dreamwork. Nymphaea caerulea, sacred to ancient Egypt. Calming dopamine and serotonin pathways.</p>
+          <span class="product-category">Compositions · Dreamwork</span>
+          <div class="product-name">Lucid</div>
+          <p class="product-desc">Dreamwork · luminous · visionary. Mugwort, calea zacatachichi, blue lotus, passionflower, bobinsana. Enhanced dream recall and visionary depth.</p>
           <div class="product-notes">
-            <span class="note-tag">Aporphine</span><span class="note-tag">Nuciferine</span><span class="note-tag">Meditative</span>
+            <span class="note-tag">Dream recall</span><span class="note-tag">Visionary</span><span class="note-tag">Restful</span>
           </div>
           <div class="product-footer">
             <div class="product-price"><span class="size">30ml</span><span>€44</span></div>
-            <button class="add-btn" onclick="addToCart('Blue Lotus Tincture', 44)">+ Add</button>
+            <button class="add-btn" onclick="addToCart('Lucid', 44)">+ Add</button>
           </div>
         </div>
       </div>
 
     </div><!-- /products-grid -->
+    <style>
+      /* 5-across on wide desktop, gracefully degrading. Row wraps to
+         3-then-2 on tighter screens so no product ever gets orphaned. */
+      @media (max-width: 1200px) { .shop .products-grid { grid-template-columns: repeat(3, 1fr) !important; } }
+      @media (max-width: 780px)  { .shop .products-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+    </style>
 
     <!-- Tailored formula + apothecary — slimmer twin cards. Was a heavy
          32px-padded block with two large uppercase headlines that ate the
@@ -2189,7 +2220,7 @@ function toggleMobileMenu() {
   <div class="wrap feature-inner">
     <div class="feature-img-wrap reveal" style="position:relative;min-height:auto;">
       <div style="position:relative;width:280px;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.4);">
-        <img src="/home/pomelli-3.png" loading="lazy" decoding="async" alt="Sleepy Sleepy" style="display:block;width:100%;height:400px;object-fit:cover;border-radius:18px;">
+        <img src="/home/pomelli-3.webp" loading="lazy" decoding="async" alt="Sleepy Sleepy" style="display:block;width:100%;height:400px;object-fit:cover;border-radius:18px;">
         <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 0%,transparent 55%,rgba(13,22,25,0.5) 80%,rgba(13,22,25,0.85) 100%);border-radius:18px;pointer-events:none;"></div>
         <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(196,134,46,0.08),transparent 70%);border-radius:18px;pointer-events:none;"></div>
       </div>
@@ -2218,7 +2249,7 @@ function toggleMobileMenu() {
 
 <!-- ══ DINNER EXPERIENCE ══ -->
 <section id="trance" class="trance" style="position:relative;overflow:hidden;">
-  <div style="position:absolute;inset:0;background-image:url('/home/abcabc.png');background-size:cover;background-position:center;opacity:0.18;pointer-events:none;"></div>
+  <div style="position:absolute;inset:0;background-image:url('/home/abcabc.webp');background-size:cover;background-position:center;opacity:0.18;pointer-events:none;"></div>
   <div class="wrap trance-inner" style="position:relative;z-index:1;">
     <div class="reveal">
       <span class="sec-label">Hosted by Robin Floræsta</span>
@@ -2241,7 +2272,7 @@ function toggleMobileMenu() {
     <!-- Right column — image only. Calendar lifted out to the full-width
          horizontal row below so it doesn't crowd the sidebar. -->
     <div class="reveal reveal-d2" style="display:flex;flex-direction:column;gap:18px;max-width:420px;justify-self:end;width:100%;">
-      <img src="/home/abc123.png" loading="lazy" decoding="async" alt="Fungai Art Dinner Experience" style="width:100%;border-radius:4px;opacity:0.92;object-fit:cover;">
+      <img src="/home/abc123.webp" loading="lazy" decoding="async" alt="Fungai Art Dinner Experience" style="width:100%;border-radius:4px;opacity:0.92;object-fit:cover;">
     </div>
   </div>
 
@@ -2262,14 +2293,14 @@ function toggleMobileMenu() {
       <div class="cal-rig-sub">Upcoming</div>
       <div class="cal-grid cal-grid--up">
         <a href="/dinner-experience#calendar" class="cal-card cal-card--up">
-          <span class="cal-card-status">Upcoming</span>
+          <span class="cal-card-status">Next</span>
           <div class="cal-card-when">
-            <span class="cal-card-day">31</span>
-            <span class="cal-card-mo">Jul</span>
+            <span class="cal-card-day">11</span>
+            <span class="cal-card-mo">Oct</span>
             <span class="cal-card-yr">2026</span>
           </div>
           <div class="cal-card-name"><span class="mt-name">Dinner Experience</span></div>
-          <div class="cal-card-place">Garbicz Festival &middot; Poland</div>
+          <div class="cal-card-place">Holzmarkt, Berlin &middot; Fungi Fever Fest</div>
           <span class="cal-card-arrow" aria-hidden="true">&rarr;</span>
         </a>
         <a href="/foraging" class="cal-card cal-card--up">
