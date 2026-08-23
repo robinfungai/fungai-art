@@ -49,8 +49,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
 .hero-script{font-family:var(--script);font-size:clamp(32px,5vw,56px);color:var(--dust);display:block;margin-top:8px}
 .hero-sub{font-size:14px;color:var(--dust);max-width:560px;margin:24px auto 0;line-height:1.8}
 
-/* FILTERS */
-.filters{padding:40px 60px;display:flex;gap:8px;flex-wrap:wrap;border-bottom:0.5px solid rgba(136,186,200,0.06);position:sticky;top:57px;z-index:100;background:rgba(5,9,12,0.95);backdrop-filter:blur(12px)}
+/* FILTERS — sticky under the nav. Was top:57px which sat BEHIND the
+   nav; corrected to the actual nav height. body.fa-has-member-banner
+   variant handles the extra 36px pushed down by the banner. */
+.filters{padding:32px 60px;display:flex;gap:8px;flex-wrap:wrap;border-bottom:0.5px solid rgba(136,186,200,0.06);position:sticky;top:68px;z-index:100;background:rgba(5,9,12,0.95);backdrop-filter:blur(12px)}
+body.fa-has-member-banner .filters{top:104px}
+@media(max-width:760px){body.fa-has-member-banner .filters{top:100px}}
 .filter-btn{padding:8px 20px;border:0.5px solid rgba(136,186,200,0.2);background:none;color:var(--dust);font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:all 0.2s;border-radius:2px}
 .filter-btn:hover{border-color:rgba(136,186,200,0.4);color:var(--mist)}
 .filter-btn.active{background:rgba(136,186,200,0.12);border-color:rgba(136,186,200,0.5);color:var(--mist)}
@@ -236,7 +240,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
     <a href="/mixology">Mixology</a>
     <a href="/community">Community</a>
     <a href="/dinner-experience">Dinner</a>
-    <a href="/products" class="active">Shop</a>
+    <a href="/shop" class="active">Shop</a>
   </div>
   <div class="nav-right">
     <button class="nav-cart" onclick="openCart()">

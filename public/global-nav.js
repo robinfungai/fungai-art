@@ -181,6 +181,24 @@
     #fa-member-banner .fa-mb-links a { padding: 4px 8px; font-size: 9.5px; }
     body.fa-has-member-banner { padding-top: 34px; }
   }
+
+  /* ─── FIX: push the main site nav below the member banner ────────
+     Every page renders .nav (or #mainNav) as position:fixed;top:0.
+     The member banner (z-index:9000) sits at top:0 too, so on ALL
+     pages the top ~34-36px of the nav — where the LOGO lives — was
+     hidden behind the banner. Especially visible on mobile where
+     the logo is the only branding shown.
+     This selector kicks in only when the banner is actually present. */
+  body.fa-has-member-banner .nav,
+  body.fa-has-member-banner #mainNav {
+    top: 36px;
+  }
+  @media (max-width: 760px) {
+    body.fa-has-member-banner .nav,
+    body.fa-has-member-banner #mainNav {
+      top: 34px;
+    }
+  }
   `;
 
   const style = document.createElement('style');
