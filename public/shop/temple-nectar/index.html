@@ -11,7 +11,7 @@
 <meta property="og:type" content="product"/>
 <meta property="og:title" content="Temple Nectar · Signature Aphrodisiac"/>
 <meta property="og:description" content="Vitality, sensuality, sacred heart-opening. Saffron, damiana, catuaba, blue lotus, maca, vanilla, muira puama. €44."/>
-<meta property="og:image" content="https://www.fungai.art/home/products/temple-nectar.jpeg"/>
+<meta property="og:image" content="https://www.fungai.art/home/products/temple-nectar.webp"/>
 <meta property="og:url" content="https://www.fungai.art/shop/temple-nectar/"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,7 +42,7 @@
 
 <section class="pd-hero">
   <div class="pd-hero-img">
-    <img src="/home/products/temple-nectar.jpeg" alt="Temple Nectar signature composition" loading="eager" fetchpriority="high">
+    <img src="/home/products/temple-nectar.webp" alt="Temple Nectar signature composition" loading="eager" fetchpriority="high">
     <span class="pd-badge pd-badge-foraged" style="background:rgba(196,134,46,0.9);color:var(--void);">Signature</span>
     <span class="pd-badge pd-badge-spagyric">Spagyric</span>
   </div>
@@ -192,7 +192,7 @@ function addToCartAndToast(name, price){
   const ex = cart.find(i => i.name === name);
   if (ex) ex.qty++; else cart.push({ name, price, qty: 1 });
   saveCart(cart); refreshCartChip();
-  showToast('Added &mdash; ' + name, true);
+  showToast('Added — ' + name, true);
 }
 function refreshCartChip(){
   const chip = document.getElementById('cartCount'); if (!chip) return;

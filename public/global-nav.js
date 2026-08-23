@@ -207,6 +207,109 @@
       top: 34px;
     }
   }
+
+  /* ─── SUBPAGE MOBILE NAV — hamburger + slide-in drawer ─────────
+     The shop, dinner-experience and product-detail pages each hide
+     their .nav-links on mobile but never grew a hamburger to replace
+     them — leaving mobile visitors with LITERALLY no nav access
+     besides tapping the logo. This injection gives every non-home
+     page a mobile hamburger + drawer so the customer can always
+     reach Shop, Dinner, Foraging, Mixology, Community. Desktop is
+     untouched (media-query gated).                                */
+  #fa-sub-nav-btn {
+    display: none;
+    position: fixed;
+    top: 20px; right: 18px;
+    z-index: 8500;
+    width: 42px; height: 42px;
+    background: rgba(15,18,20,0.85);
+    border: 0.5px solid rgba(232,177,75,0.45);
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+    -webkit-tap-highlight-color: transparent;
+  }
+  #fa-sub-nav-btn span {
+    display: block;
+    width: 20px; height: 1.5px;
+    background: #E8B14B;
+    transition: transform 0.25s, opacity 0.2s;
+  }
+  #fa-sub-nav-btn.fa-open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+  #fa-sub-nav-btn.fa-open span:nth-child(2) { opacity: 0; }
+  #fa-sub-nav-btn.fa-open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+  #fa-sub-nav-drawer {
+    display: none;
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: min(320px, 84vw);
+    z-index: 8400;
+    background: rgba(5,9,12,0.98);
+    backdrop-filter: blur(20px) saturate(140%);
+    border-left: 0.5px solid rgba(232,177,75,0.28);
+    padding: 84px 28px 28px;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.28s ease;
+  }
+  #fa-sub-nav-drawer.fa-open { transform: translateX(0); }
+  #fa-sub-nav-drawer .fa-sub-nav-section {
+    font-family: 'Bayer', 'DM Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #4D869B;
+    margin: 22px 0 10px;
+  }
+  #fa-sub-nav-drawer .fa-sub-nav-section:first-child { margin-top: 0; }
+  #fa-sub-nav-drawer a {
+    display: block;
+    padding: 12px 4px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 18px;
+    color: #EDE5D8;
+    text-decoration: none;
+    border-bottom: 0.5px solid rgba(136,186,200,0.08);
+    transition: color 0.15s;
+  }
+  #fa-sub-nav-drawer a:hover,
+  #fa-sub-nav-drawer a:active { color: #E8B14B; }
+  #fa-sub-nav-drawer a .fa-tag {
+    font-family: 'Courier New', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: lowercase;
+    color: #4D869B;
+    margin-left: 8px;
+    font-weight: 300;
+  }
+
+  #fa-sub-nav-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    z-index: 8300;
+    background: rgba(5,9,12,0.55);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  #fa-sub-nav-overlay.fa-open { opacity: 1; }
+
+  @media (max-width: 768px) {
+    body.fa-subpage #fa-sub-nav-btn { display: flex; }
+    body.fa-subpage #fa-sub-nav-drawer.fa-visible,
+    body.fa-subpage #fa-sub-nav-overlay.fa-visible { display: block; }
+  }
+  /* When the banner is present, drop the button down so it doesn't
+     collide with the banner's own space. */
+  body.fa-subpage.fa-has-member-banner #fa-sub-nav-btn { top: 46px; }
   `;
 
   const style = document.createElement('style');
@@ -428,11 +531,94 @@
   }
   window.addEventListener('supabase:ready', () => { syncStuckLabNotes(); });
 
+  // ─── Subpage mobile menu ─────────────────────────────────────────
+  // Every non-home page hides its .nav-links on mobile but doesn't ship
+  // a hamburger — so mobile customers on /shop, /dinner-experience,
+  // product detail pages had zero nav access. Inject a hamburger button
+  // + slide-in drawer with the canonical destinations. Home skips this
+  // (it has its own full mobile menu already).
+  function renderSubpageMobileMenu(){
+    document.body.classList.add('fa-subpage');
+
+    if (document.getElementById('fa-sub-nav-btn')) return;
+
+    const btn = document.createElement('button');
+    btn.id = 'fa-sub-nav-btn';
+    btn.setAttribute('aria-label', 'Open menu');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = '<span></span><span></span><span></span>';
+
+    const overlay = document.createElement('div');
+    overlay.id = 'fa-sub-nav-overlay';
+
+    const drawer = document.createElement('nav');
+    drawer.id = 'fa-sub-nav-drawer';
+    drawer.setAttribute('aria-label', 'Site navigation');
+    drawer.innerHTML = `
+      <div class="fa-sub-nav-section">Explore</div>
+      <a href="/">Home</a>
+      <a href="/shop">Shop <span class="fa-tag">· apothecary</span></a>
+      <a href="/dinner-experience">Dinner Experience <span class="fa-tag">· ceremony</span></a>
+      <div class="fa-sub-nav-section">Intelligence</div>
+      <a href="/foraging">Foraging Map <span class="fa-tag">· ecology</span></a>
+      <a href="/herbal-engine-2/">Herbal Engine <span class="fa-tag">· tailored elixir</span></a>
+      <a href="/mixology">Mixology <span class="fa-tag">· 212 herbs</span></a>
+      <a href="/extraction">Extraction <span class="fa-tag">· alchemy</span></a>
+      <div class="fa-sub-nav-section">Community</div>
+      <a href="/community">Portal</a>
+      <a href="/community/academy/">Alchemy Academy</a>
+      <a href="/members">Membership</a>
+      <a href="/patron">Patronage</a>
+      <div class="fa-sub-nav-section">Contact</div>
+      <a href="mailto:robin@fungai.art">robin@fungai.art</a>
+    `;
+
+    document.body.appendChild(overlay);
+    document.body.appendChild(drawer);
+    document.body.appendChild(btn);
+
+    function open(){
+      drawer.classList.add('fa-visible');
+      overlay.classList.add('fa-visible');
+      // rAF to trigger CSS transition after display switches from none
+      requestAnimationFrame(() => {
+        drawer.classList.add('fa-open');
+        overlay.classList.add('fa-open');
+        btn.classList.add('fa-open');
+        btn.setAttribute('aria-expanded', 'true');
+        btn.setAttribute('aria-label', 'Close menu');
+      });
+    }
+    function close(){
+      drawer.classList.remove('fa-open');
+      overlay.classList.remove('fa-open');
+      btn.classList.remove('fa-open');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-label', 'Open menu');
+      // Wait for transition, then unmount
+      setTimeout(() => {
+        drawer.classList.remove('fa-visible');
+        overlay.classList.remove('fa-visible');
+      }, 280);
+    }
+    btn.addEventListener('click', () => {
+      if (drawer.classList.contains('fa-open')) close(); else open();
+    });
+    overlay.addEventListener('click', close);
+    // ESC to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer.classList.contains('fa-open')) close();
+    });
+    // Close when a link is clicked (SPA-like nicety, even though it's MPA)
+    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { renderBanner(); hydrateFromSupabase(); syncStuckLabNotes(); });
+    document.addEventListener('DOMContentLoaded', () => { renderBanner(); hydrateFromSupabase(); syncStuckLabNotes(); renderSubpageMobileMenu(); });
   } else {
     renderBanner();
     hydrateFromSupabase();
     syncStuckLabNotes();
+    renderSubpageMobileMenu();
   }
 })();

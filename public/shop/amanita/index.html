@@ -209,7 +209,7 @@ function addToCartAndToast(name, price){
   else cart.push({ name, price, qty: 1 });
   saveCart(cart);
   refreshCartChip();
-  showToast('Added &mdash; ' + name, true);
+  showToast('Added — ' + name, true);
 }
 
 function refreshCartChip(){

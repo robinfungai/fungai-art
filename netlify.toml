@@ -80,6 +80,18 @@
   to     = "/dinner-experience/"
   status = 301
 
+# $MYCEL reference basket — renamed from /basket to /mycel-basket
+# so the word "basket" is no longer overloaded (it was clashing with
+# the shopping cart in customer language).
+[[redirects]]
+  from   = "/basket/*"
+  to     = "/mycel-basket/"
+  status = 301
+[[redirects]]
+  from   = "/basket"
+  to     = "/mycel-basket/"
+  status = 301
+
 # static pages served directly: /shop /mixology /dinner-experience /community /health /extraction /privacy /terms /members /sporing /draw /patron /basket /onboard
 
 # Unknown paths → branded 404

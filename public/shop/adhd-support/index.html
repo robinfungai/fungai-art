@@ -159,7 +159,7 @@
         </div>
       </a>
       <a href="/shop/temple-nectar/" class="pd-related-card">
-        <img src="/home/products/temple-nectar.jpeg" alt="Temple Nectar" loading="lazy">
+        <img src="/home/products/temple-nectar.webp" alt="Temple Nectar" loading="lazy">
         <div class="pd-related-info">
           <span class="pd-related-cat">Compositions &middot; Sensual</span>
           <span class="pd-related-name">Temple Nectar</span>
@@ -192,7 +192,7 @@ function addToCartAndToast(name, price){
   const ex = cart.find(i => i.name === name);
   if (ex) ex.qty++; else cart.push({ name, price, qty: 1 });
   saveCart(cart); refreshCartChip();
-  showToast('Added &mdash; ' + name, true);
+  showToast('Added — ' + name, true);
 }
 function refreshCartChip(){
   const chip = document.getElementById('cartCount'); if (!chip) return;
