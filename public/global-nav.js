@@ -81,6 +81,14 @@
   function nodeLabel(id){ return NODE_LABELS[id] || (id ? id : 'Unattached'); }
 
   const css = `
+  /* ─── Global brand fonts ─────────────────────────────────────────
+     Declared once here so every page gets them without needing its
+     own @font-face block. Uses font-display:swap so we never block
+     paint on the fallback. */
+  @font-face { font-family:'TAN-PARADISO'; src:url('/fonts/TAN-PARADISO.ttf') format('truetype'); font-display:swap; }
+  @font-face { font-family:'TAN-PEARL';    src:url('/fonts/fonnts.com-tan-pearl.otf') format('opentype'); font-display:swap; }
+  @font-face { font-family:'Bayer';        src:url('/fonts/Bayer-TypeArchiType.otf') format('opentype'); font-display:swap; }
+
   #fa-member-banner, #fa-member-banner *, #fa-member-banner *::before, #fa-member-banner *::after {
     box-sizing: border-box;
   }

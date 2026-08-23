@@ -54,9 +54,15 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
 /* FILTERS — sticky under the nav. Was top:57px which sat BEHIND the
    nav; corrected to the actual nav height. body.fa-has-member-banner
    variant handles the extra 36px pushed down by the banner. */
-.filters{padding:32px 60px;display:flex;gap:8px;flex-wrap:wrap;border-bottom:0.5px solid rgba(136,186,200,0.06);position:sticky;top:68px;z-index:100;background:rgba(5,9,12,0.95);backdrop-filter:blur(12px)}
+.filters{padding:32px 60px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;border-bottom:0.5px solid rgba(136,186,200,0.06);position:sticky;top:68px;z-index:100;background:rgba(5,9,12,0.95);backdrop-filter:blur(12px)}
 body.fa-has-member-banner .filters{top:104px}
 @media(max-width:760px){body.fa-has-member-banner .filters{top:100px}}
+.filter-search-wrap{margin-left:auto;position:relative;flex:0 0 auto}
+.filter-search{padding:8px 14px 8px 34px;background:rgba(136,186,200,0.06);border:0.5px solid rgba(136,186,200,0.18);color:var(--parchment);font-family:var(--sans);font-size:11.5px;letter-spacing:0.02em;width:200px;transition:all 0.2s;border-radius:2px}
+.filter-search:focus{outline:none;border-color:rgba(136,186,200,0.5);background:rgba(136,186,200,0.10);width:260px}
+.filter-search::placeholder{color:var(--dust);opacity:0.55}
+.filter-search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--lichen);opacity:0.7;pointer-events:none}
+.no-results-note{grid-column:1/-1;padding:60px 20px;text-align:center;color:var(--dust);font-family:var(--serif);font-style:italic;font-size:16px}
 .filter-btn{padding:8px 20px;border:0.5px solid rgba(136,186,200,0.2);background:none;color:var(--dust);font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:all 0.2s;border-radius:2px}
 .filter-btn:hover{border-color:rgba(136,186,200,0.4);color:var(--mist)}
 .filter-btn.active{background:rgba(136,186,200,0.12);border-color:rgba(136,186,200,0.5);color:var(--mist)}
@@ -68,6 +74,15 @@ body.fa-has-member-banner .filters{top:104px}
 .cat-header h2 em{font-style:italic;color:var(--mist)}
 .cat-line{flex:1;height:0.5px;background:rgba(136,186,200,0.12)}
 .cat-count{font-size:10px;letter-spacing:2px;color:var(--lichen);text-transform:uppercase}
+/* Sub-header — separates Everyday vs Ceremonial inside Compositions.
+   Smaller than cat-header, sits inline with the grid, keeps the eye
+   oriented without stealing focus. */
+.cat-subhead{display:flex;align-items:baseline;gap:16px;padding:8px 0 22px;color:var(--dust)}
+.cat-subhead-num{font-family:'Bayer','Courier New',monospace;font-size:11px;letter-spacing:0.28em;color:var(--lichen);opacity:0.7}
+.cat-subhead-label{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--parchment);letter-spacing:-0.005em}
+.cat-subhead-label em{font-style:italic;color:var(--mist)}
+.cat-subhead-note{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--dust);opacity:0.75}
+.cat-subhead-ritual{padding-top:56px;border-top:0.5px solid rgba(136,186,200,0.08);margin-top:24px}
 
 /* PRODUCTS GRID */
 .products-section{padding:0 60px 60px}
@@ -86,14 +101,19 @@ body.fa-has-member-banner .filters{top:104px}
 /* Hover CTA — a tighter bottom strip so it doesn't swallow the lower
    third of the photo. Touch devices never see this (no hover event),
    so the always-visible "+ Add" button below the info block is the
-   real interaction target on mobile. */
-.product-hover-cta{position:absolute;bottom:0;left:0;right:0;padding:10px 12px;background:linear-gradient(to top,rgba(5,9,12,0.92),rgba(5,9,12,0.4) 70%,transparent);transform:translateY(100%);transition:transform 0.25s;opacity:0}
+   real interaction target on mobile. z-index:3 keeps the button
+   clickable when the whole-image detail-page link (z:2) is present. */
+.product-hover-cta{position:absolute;bottom:0;left:0;right:0;padding:10px 12px;background:linear-gradient(to top,rgba(5,9,12,0.92),rgba(5,9,12,0.4) 70%,transparent);transform:translateY(100%);transition:transform 0.25s;opacity:0;z-index:3}
 .product-card:hover .product-hover-cta{transform:none;opacity:1}
 .quick-add{width:100%;padding:10px;background:var(--lichen);border:none;color:var(--parchment);font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:background 0.2s}
 .quick-add:hover{background:var(--mist);color:var(--void)}
 .product-info{padding:24px;flex:1;display:flex;flex-direction:column}
 .product-category{font-size:9.5px;letter-spacing:2px;color:var(--lichen);text-transform:uppercase;margin-bottom:8px;display:block}
-.product-name{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--parchment);margin-bottom:10px;line-height:1.2}
+.product-name{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--parchment);margin-bottom:10px;line-height:1.2;text-decoration:none;display:block}
+a.product-name{transition:color 0.2s}
+a.product-name:hover{color:var(--mist)}
+/* Photo-link — no visual disruption; the whole image behaves as one link surface. */
+a.product-img-link{display:block;position:absolute;inset:0;z-index:2}
 .product-desc{font-size:12.5px;color:var(--dust);line-height:1.7;flex:1;margin-bottom:16px}
 .product-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
 .tag{font-size:9.5px;letter-spacing:1px;padding:3px 10px;border:0.5px solid rgba(136,186,200,0.15);color:var(--lichen);border-radius:2px}
@@ -279,6 +299,15 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   <button class="filter-btn" onclick="filterProducts('flowers',this)">Flowers &amp; Herbs</button>
   <button class="filter-btn" onclick="filterProducts('specials',this)">Specials</button>
   <button class="filter-btn" onclick="filterProducts('moder-jord',this)">Moder Jord</button>
+  <div class="filter-search-wrap">
+    <span class="filter-search-icon" aria-hidden="true">⌕</span>
+    <input type="search" class="filter-search" id="productSearch" placeholder="Search apothecary…" oninput="searchProducts(this.value)" autocomplete="off">
+  </div>
+</div>
+
+<!-- No-results state — shown when search or filter matches zero products. -->
+<div id="noResultsNote" class="no-results-note" style="display:none">
+  Nothing matches that yet. Try a shorter word, or browse a category above.
 </div>
 
 <!-- ══ FUNGI ══ -->
@@ -295,11 +324,12 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
         <img src="/home/products/amanita.webp" alt="Amanita muscaria" loading="lazy" decoding="async" class="product-photo">
         <span class="product-badge">Foraged · Sweden</span>
         <span class="product-badge spagyric" style="top:auto;bottom:0;left:0;right:0;text-align:center;border-radius:0;">Spagyric</span>
+        <a href="/shop/amanita/" class="product-img-link" aria-label="Read about Amanita muscaria"></a>
         <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Amanita Muscaria',48)">Add to basket</button></div>
       </div>
       <div class="product-info">
         <span class="product-category">Fungi · Sacred</span>
-        <div class="product-name">Amanita muscaria</div>
+        <a href="/shop/amanita/" class="product-name">Amanita muscaria</a>
         <p class="product-desc">Threshold guardian · neuroalchemy · dream states. GABA-A agonist, loosening perceptual control and awakening symbolic awareness. Self-foraged from Swedish forests.</p>
         <div class="product-tags"><span class="tag">Muscimol</span><span class="tag">Dream-like</span><span class="tag">Self-foraged</span></div>
         <div class="product-footer">
@@ -366,99 +396,56 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   </div>
 </div>
 
-<!-- ══ COMPOSITIONS ══ -->
+<!-- ══ COMPOSITIONS ══ split into Everyday tonics + Ceremonial so the
+     wall of blends becomes scannable. Same section, same anchor, two
+     sub-groups with a divider between them. -->
 <div class="cat-header reveal" id="compositions">
   <h2>Sacred <em>Compositions</em></h2>
   <div class="cat-line"></div>
   <span class="cat-count">09 formulas</span>
 </div>
+
 <div class="products-section">
+  <!-- Subhead: Everyday tonics — daily-use nourishment -->
+  <div class="cat-subhead reveal">
+    <span class="cat-subhead-num">01</span>
+    <span class="cat-subhead-label">Everyday <em>tonics</em></span>
+    <span class="cat-subhead-note">daily-use foundational nourishment</span>
+  </div>
   <div class="products-grid">
 
     <div class="product-card reveal" data-category="compositions">
       <div class="product-img-wrap">
-        <img src="/home/products/temple-nectar.jpeg" alt="Temple Nectar" loading="lazy" decoding="async" class="product-photo">
-        <span class="product-badge">Signature</span>
-        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Temple Nectar',44)">Add to basket</button></div>
-      </div>
-      <div class="product-info">
-        <span class="product-category">Compositions · Sensual</span>
-        <div class="product-name">Temple Nectar</div>
-        <p class="product-desc">Vitality · sensual · sacred energy. Saffron, damiana, catuaba, blue lotus, maca negra, vanilla, muira puama.</p>
-        <div class="product-tags"><span class="tag">Aphrodisiac</span><span class="tag">Heart-opening</span><span class="tag">Libido</span></div>
-        <div class="product-footer">
-          <div class="product-price"><span class="size">30ml</span><span class="amount">€44</span></div>
-          <button class="add-btn" onclick="addToCart('Temple Nectar',44)">+ Add</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="product-card reveal reveal-d1" data-category="compositions">
-      <div class="product-img-wrap">
-        <img src="/home/products/ruby-no7.jpeg" alt="Ruby No.7" loading="lazy" decoding="async" class="product-photo">
-        <span class="product-badge">New</span>
-        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Ruby No.7',44)">Add to basket</button></div>
-      </div>
-      <div class="product-info">
-        <span class="product-category">Compositions · Heart</span>
-        <div class="product-name">Ruby No.7</div>
-        <p class="product-desc">Cardioprotective · antioxidant · neuro-resilient. A deep-red composition for heart vitality, cellular defence, and long-range resilience.</p>
-        <div class="product-tags"><span class="tag">Cardioprotective</span><span class="tag">Antioxidant</span><span class="tag">Neuro</span></div>
-        <div class="product-footer">
-          <div class="product-price"><span class="size">30ml</span><span class="amount">€44</span></div>
-          <button class="add-btn" onclick="addToCart('Ruby No.7',44)">+ Add</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="product-card reveal reveal-d2" data-category="compositions">
-      <div class="product-img-wrap">
-        <img src="/home/products/lucid.webp" alt="Lucid" loading="lazy" decoding="async" class="product-photo">
-        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Lucid',44)">Add to basket</button></div>
-      </div>
-      <div class="product-info">
-        <span class="product-category">Compositions · Dreamwork</span>
-        <div class="product-name">Lucid</div>
-        <p class="product-desc">Dreamwork · luminous · visionary. Mugwort, calea zacatachichi, blue lotus, passionflower, bobinsana. Enhanced dream recall and visionary depth.</p>
-        <div class="product-tags"><span class="tag">Dream recall</span><span class="tag">Visionary</span><span class="tag">Restful</span></div>
-        <div class="product-footer">
-          <div class="product-price"><span class="size">30ml</span><span class="amount">€44</span></div>
-          <button class="add-btn" onclick="addToCart('Lucid',44)">+ Add</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-category="compositions">
-      <div class="product-img-wrap">
-        <img src="/home/products/moon-support.webp" alt="Moon Support" loading="lazy" decoding="async" class="product-photo">
-        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Moon Support',44)">Add to basket</button></div>
-      </div>
-      <div class="product-info">
-        <span class="product-category">Compositions · Cycle Care</span>
-        <div class="product-name">Moon Support</div>
-        <p class="product-desc">Cycle support · womb care · emotional soothe. Motherwort, shatavari, lady's mantle, passionflower, yarrow, raspberry leaves.</p>
-        <div class="product-tags"><span class="tag">Hormone balance</span><span class="tag">Cramp relief</span><span class="tag">Emotional</span></div>
-        <div class="product-footer">
-          <div class="product-price"><span class="size">30ml</span><span class="amount">€44</span></div>
-          <button class="add-btn" onclick="addToCart('Moon Support',44)">+ Add</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="product-card reveal reveal-d1" data-category="compositions">
-      <div class="product-img-wrap">
         <img src="/home/products/adhd.webp" alt="ADHD Support" loading="lazy" decoding="async" class="product-photo">
         <span class="product-badge spagyric" style="top:auto;bottom:0;left:0;right:0;text-align:center;border-radius:0;">Spagyric</span>
+        <a href="/shop/adhd-support/" class="product-img-link" aria-label="Read about ADHD Support"></a>
         <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('ADHD Support',44)">Add to basket</button></div>
       </div>
       <div class="product-info">
         <span class="product-category">Compositions &middot; Cognitive</span>
-        <div class="product-name">ADHD Support</div>
+        <a href="/shop/adhd-support/" class="product-name">ADHD Support</a>
         <p class="product-desc">Focus &middot; clarity &middot; resilience. Lion&rsquo;s mane, reishi, rhodiola, cordyceps, gotu kola, rosemary, ashwagandha. Smoother dopamine signaling.</p>
         <div class="product-tags"><span class="tag">Lion&rsquo;s Mane</span><span class="tag">Rhodiola</span><span class="tag">Nootropic</span></div>
         <div class="product-footer">
           <div class="product-price"><span class="size">30ml</span><span class="amount">&euro;44</span></div>
           <button class="add-btn" onclick="addToCart('ADHD Support',44)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-d1" data-category="compositions">
+      <div class="product-img-wrap">
+        <img src="/home/products/nervoussystem.webp" alt="Nervous System Tonic" loading="lazy" decoding="async" class="product-photo">
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Nervous System Tonic',44)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Compositions &middot; Nervine</span>
+        <div class="product-name">Nervous System Tonic</div>
+        <p class="product-desc">Frayed-nerve repair &middot; adaptogenic ground &middot; deep calm. Oatstraw, skullcap, ashwagandha, gotu kola, hawthorn, hops, tulsi. Rebuilds the mineral and GABAergic terrain beneath chronic stress &mdash; softens the amygdala without dulling clarity.</p>
+        <div class="product-tags"><span class="tag">Nervine</span><span class="tag">Adaptogen</span><span class="tag">GABA</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">30ml</span><span class="amount">&euro;44</span></div>
+          <button class="add-btn" onclick="addToCart('Nervous System Tonic',44)">+ Add</button>
         </div>
       </div>
     </div>
@@ -497,31 +484,97 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
       </div>
     </div>
 
-    <div class="product-card reveal reveal-d1" data-category="compositions">
+  </div>
+
+  <!-- Subhead: Ceremonial — situational, ritual, moon-timed -->
+  <div class="cat-subhead cat-subhead-ritual reveal">
+    <span class="cat-subhead-num">02</span>
+    <span class="cat-subhead-label">Ceremonial <em>&amp; ritual</em></span>
+    <span class="cat-subhead-note">for cycles, rites, particular evenings</span>
+  </div>
+  <div class="products-grid">
+
+    <div class="product-card reveal" data-category="compositions">
       <div class="product-img-wrap">
-        <img src="/home/products/nervoussystem.webp" alt="Nervous System Tonic" loading="lazy" decoding="async" class="product-photo">
-        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Nervous System Tonic',44)">Add to basket</button></div>
+        <img src="/home/products/temple-nectar.jpeg" alt="Temple Nectar" loading="lazy" decoding="async" class="product-photo">
+        <span class="product-badge">Signature</span>
+        <a href="/shop/temple-nectar/" class="product-img-link" aria-label="Read about Temple Nectar"></a>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Temple Nectar',44)">Add to basket</button></div>
       </div>
       <div class="product-info">
-        <span class="product-category">Compositions &middot; Nervine</span>
-        <div class="product-name">Nervous System Tonic</div>
-        <p class="product-desc">Frayed-nerve repair &middot; adaptogenic ground &middot; deep calm. Oatstraw, skullcap, ashwagandha, gotu kola, hawthorn, hops, tulsi. Rebuilds the mineral and GABAergic terrain beneath chronic stress &mdash; softens the amygdala without dulling clarity.</p>
-        <div class="product-tags"><span class="tag">Nervine</span><span class="tag">Adaptogen</span><span class="tag">GABA</span></div>
+        <span class="product-category">Compositions · Sensual</span>
+        <a href="/shop/temple-nectar/" class="product-name">Temple Nectar</a>
+        <p class="product-desc">Vitality · sensual · sacred energy. Saffron, damiana, catuaba, blue lotus, maca negra, vanilla, muira puama.</p>
+        <div class="product-tags"><span class="tag">Aphrodisiac</span><span class="tag">Heart-opening</span><span class="tag">Libido</span></div>
         <div class="product-footer">
-          <div class="product-price"><span class="size">30ml</span><span class="amount">&euro;44</span></div>
-          <button class="add-btn" onclick="addToCart('Nervous System Tonic',44)">+ Add</button>
+          <div class="product-price"><span class="size">30ml</span><span class="amount">€44</span></div>
+          <button class="add-btn" onclick="addToCart('Temple Nectar',44)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-d1" data-category="compositions">
+      <div class="product-img-wrap">
+        <img src="/home/products/ruby-no7.jpeg" alt="Ruby No.7" loading="lazy" decoding="async" class="product-photo">
+        <span class="product-badge">New</span>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Ruby No.7',44)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Compositions · Heart</span>
+        <div class="product-name">Ruby No.7</div>
+        <p class="product-desc">Cardioprotective · antioxidant · neuro-resilient. A deep-red composition for heart vitality, cellular defence, and long-range resilience.</p>
+        <div class="product-tags"><span class="tag">Cardioprotective</span><span class="tag">Antioxidant</span><span class="tag">Neuro</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">30ml</span><span class="amount">€44</span></div>
+          <button class="add-btn" onclick="addToCart('Ruby No.7',44)">+ Add</button>
         </div>
       </div>
     </div>
 
     <div class="product-card reveal reveal-d2" data-category="compositions">
       <div class="product-img-wrap">
+        <img src="/home/products/moon-support.webp" alt="Moon Support" loading="lazy" decoding="async" class="product-photo">
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Moon Support',44)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Compositions · Cycle Care</span>
+        <div class="product-name">Moon Support</div>
+        <p class="product-desc">Cycle support · womb care · emotional soothe. Motherwort, shatavari, lady's mantle, passionflower, yarrow, raspberry leaves.</p>
+        <div class="product-tags"><span class="tag">Hormone balance</span><span class="tag">Cramp relief</span><span class="tag">Emotional</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">30ml</span><span class="amount">€44</span></div>
+          <button class="add-btn" onclick="addToCart('Moon Support',44)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-category="compositions">
+      <div class="product-img-wrap">
+        <img src="/home/products/lucid.webp" alt="Lucid" loading="lazy" decoding="async" class="product-photo">
+        <a href="/shop/lucid/" class="product-img-link" aria-label="Read about Lucid"></a>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Lucid',44)">Add to basket</button></div>
+      </div>
+      <div class="product-info">
+        <span class="product-category">Compositions · Dreamwork</span>
+        <a href="/shop/lucid/" class="product-name">Lucid</a>
+        <p class="product-desc">Dreamwork · luminous · visionary. Mugwort, calea zacatachichi, blue lotus, passionflower, bobinsana. Enhanced dream recall and visionary depth.</p>
+        <div class="product-tags"><span class="tag">Dream recall</span><span class="tag">Visionary</span><span class="tag">Restful</span></div>
+        <div class="product-footer">
+          <div class="product-price"><span class="size">30ml</span><span class="amount">€44</span></div>
+          <button class="add-btn" onclick="addToCart('Lucid',44)">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-d1" data-category="compositions">
+      <div class="product-img-wrap">
         <img src="/home/products/sleepy.webp" alt="Sleepy Sleepy" loading="lazy" decoding="async" class="product-photo">
+        <a href="/shop/sleepy-sleepy/" class="product-img-link" aria-label="Read about Sleepy Sleepy"></a>
         <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Sleepy Sleepy',44)">Add to basket</button></div>
       </div>
       <div class="product-info">
         <span class="product-category">Compositions &middot; Sleep</span>
-        <div class="product-name">Sleepy Sleepy</div>
+        <a href="/shop/sleepy-sleepy/" class="product-name">Sleepy Sleepy</a>
         <p class="product-desc">Deep sleep &middot; dream ease &middot; full surrender. Valerian, passionflower, magnolia bark, lemon balm, hops, chamomile. A slow drift into full nocturnal rest &mdash; the racing mind quiets, the body softens, the dreams come clean.</p>
         <div class="product-tags"><span class="tag">Sleep</span><span class="tag">GABA</span><span class="tag">Restorative</span></div>
         <div class="product-footer">
@@ -1037,11 +1090,34 @@ window.addEventListener('scroll',()=>document.getElementById('mainNav').classLis
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}}),{threshold:0.06,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-// FILTER
-function filterProducts(cat,btn){
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.product-card').forEach(c=>c.classList.toggle('hidden',cat!=='all'&&c.dataset.category!==cat));
+// FILTER — category buttons AND search input both live on the same
+// visibility axis. Clicking a category clears any active search;
+// typing in search cross-cuts category. Whichever the user did last
+// wins. The active-filter state is stored so a redraw stays honest.
+let activeCategory = 'all';
+let activeSearch = '';
+function applyFilters(){
+  const s = activeSearch.trim().toLowerCase();
+  let shown = 0;
+  document.querySelectorAll('.product-card').forEach(c => {
+    const catOk = activeCategory === 'all' || c.dataset.category === activeCategory;
+    const searchOk = !s || (c.textContent || '').toLowerCase().indexOf(s) !== -1;
+    const visible = catOk && searchOk;
+    c.classList.toggle('hidden', !visible);
+    if (visible) shown++;
+  });
+  const note = document.getElementById('noResultsNote');
+  if (note) note.style.display = shown === 0 ? 'block' : 'none';
+}
+function filterProducts(cat, btn){
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  activeCategory = cat;
+  applyFilters();
+}
+function searchProducts(q){
+  activeSearch = q || '';
+  applyFilters();
 }
 
 // CART

@@ -15,6 +15,9 @@ const STATIC_PAGES = [
   '/tymetonics','/members',       '/dinner-experience',  '/mycelium',  '/draw',
   '/patron',   '/onboard',       '/sporing',           '/basket',
   '/privacy',  '/terms',         '/covenant',
+  // Product detail pages — one static HTML per hero product under /shop/[slug]/
+  '/shop/amanita',      '/shop/adhd-support', '/shop/sleepy-sleepy',
+  '/shop/temple-nectar','/shop/lucid',
 ];
 const serveStaticPages = () => ({
   name: 'serve-static-pages',
