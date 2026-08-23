@@ -569,7 +569,11 @@
       <a href="/community/academy/">Alchemy Academy</a>
       <a href="/members">Membership</a>
       <a href="/patron">Patronage</a>
-      <div class="fa-sub-nav-section">Contact</div>
+      <div class="fa-sub-nav-section">Sub-lines</div>
+      <a href="/moder-jord">Moder Jord <span class="fa-tag">· nordic body-craft</span></a>
+      <a href="/tymetonics">Tyme Tonics <span class="fa-tag">· living drinks</span></a>
+      <div class="fa-sub-nav-section">Stay in touch</div>
+      <a href="/#newsletter">Newsletter <span class="fa-tag">· monthly field notes</span></a>
       <a href="mailto:robin@fungai.art">robin@fungai.art</a>
     `;
 

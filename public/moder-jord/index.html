@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moder Jord · Nordic Forest-Craft for Skin &amp; Body · Fungai Art</title>
+<meta name="description" content="A Swedish sub-line of Fungai Art. Forest-crafted topicals rooted in ancient Nordic traditions of health, beauty, and everyday tending. Wild-foraged from Nordic soil."/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
+<link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
+<link rel="apple-touch-icon" href="/fungi.png?v=3"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Moder Jord · Nordic Forest-Craft"/>
+<meta property="og:description" content="A Swedish sub-line of Fungai Art. Forest-crafted topicals rooted in ancient Nordic traditions of health &amp; beauty."/>
+<meta property="og:url" content="https://www.fungai.art/moder-jord/"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Josefin+Sans:wght@100;200;300;400;500&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<script src="/global-nav.js" defer></script>
+<style>
+  /* ─── Moder Jord palette ─────────────────────────────────────────
+     Different from the apothecary's dark forest. Moder Jord runs a
+     soft dawn-in-birchwood palette: pale linen, mist, moss, dried-
+     rose-petal accent. Feminine, tactile, quiet. */
+  :root {
+    --mj-linen:    #F1EBDD;
+    --mj-cream:    #E8DFCB;
+    --mj-birch:    #DCD3BC;
+    --mj-mist:     #A7A28A;
+    --mj-moss:     #6B7857;
+    --mj-earth:    #3E362A;
+    --mj-void:     #1A1712;
+    --mj-rose:     #B58A7A;
+    --mj-rose-pl:  #D8B8AB;
+    --mj-lichen:   #8D9A7E;
+    --mj-serif:    'Cormorant Garamond', Georgia, serif;
+    --mj-text:     'Spectral', Georgia, serif;
+    --mj-sans:     'Josefin Sans', system-ui, sans-serif;
+  }
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--mj-linen);
+    color: var(--mj-earth);
+    font-family: var(--mj-text);
+    font-weight: 300;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Subtle linen texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9000;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.62 0 0 0 0 0.55 0 0 0 0 0.42 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 220px;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ─── NAV ─── */
+  .mj-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+    padding: 18px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(241,235,221,0.86);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(107,120,87,0.10);
+  }
+  .mj-brand {
+    display: flex; flex-direction: column;
+    gap: 2px;
+    font-family: var(--mj-sans);
+    text-transform: uppercase;
+  }
+  .mj-brand-main {
+    font-size: 14px;
+    letter-spacing: 0.32em;
+    font-weight: 300;
+    color: var(--mj-earth);
+  }
+  .mj-brand-sub {
+    font-size: 8.5px;
+    letter-spacing: 0.4em;
+    color: var(--mj-mist);
+    font-weight: 300;
+  }
+  .mj-nav-back {
+    font-family: var(--mj-sans);
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--mj-mist);
+    padding: 8px 16px;
+    border: 0.5px solid rgba(107,120,87,0.25);
+    border-radius: 999px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .mj-nav-back:hover { color: var(--mj-earth); border-color: rgba(107,120,87,0.5); }
+
+  /* ─── HERO ─── */
+  .mj-hero {
+    position: relative;
+    min-height: 88vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 24px 80px;
+    background: linear-gradient(180deg, var(--mj-cream) 0%, var(--mj-linen) 100%);
+    text-align: center;
+    overflow: hidden;
+  }
+  .mj-hero::before {
+    /* Faint botanical illustration in the corner - CSS-drawn birch bough */
+    content: '';
+    position: absolute;
+    top: 8%; right: -8%;
+    width: 380px; height: 380px;
+    background: radial-gradient(circle at 30% 30%, rgba(181,138,122,0.10), transparent 55%),
+                radial-gradient(circle at 70% 60%, rgba(141,154,126,0.10), transparent 55%);
+    filter: blur(6px);
+    pointer-events: none;
+  }
+  .mj-hero-content { position: relative; z-index: 1; max-width: 760px; }
+  .mj-eyebrow {
+    font-family: var(--mj-sans);
+    font-weight: 300;
+    letter-spacing: 0.42em;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    color: var(--mj-rose);
+    margin-bottom: 32px;
+    display: block;
+  }
+  .mj-hero-title {
+    font-family: var(--mj-serif);
+    font-weight: 300;
+    font-size: clamp(60px, 10vw, 128px);
+    line-height: 0.94;
+    color: var(--mj-earth);
+    letter-spacing: -0.015em;
+    margin-bottom: 24px;
+  }
+  .mj-hero-title em {
+    font-style: italic;
+    color: var(--mj-rose);
+  }
+  .mj-hero-lede {
+    font-family: var(--mj-text);
+    font-style: italic;
+    font-size: clamp(18px, 2vw, 22px);
+    color: var(--mj-moss);
+    line-height: 1.7;
+    max-width: 560px;
+    margin: 0 auto 48px;
+    font-weight: 300;
+  }
+  .mj-cta-primary {
+    display: inline-block;
+    font-family: var(--mj-sans);
+    font-weight: 300;
+    letter-spacing: 0.28em;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--mj-linen);
+    background: var(--mj-earth);
+    padding: 16px 42px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.25s;
+  }
+  .mj-cta-primary:hover { background: var(--mj-rose); }
+
+  /* Scroll hint */
+  .mj-scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--mj-mist);
+    font-family: var(--mj-sans);
+    font-weight: 300;
+    letter-spacing: 0.32em;
+    font-size: 9px;
+    text-transform: uppercase;
+  }
+  .mj-scroll-hint::after {
+    content: '';
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, var(--mj-mist), transparent);
+  }
+
+  /* ─── SECTIONS ─── */
+  .mj-section {
+    padding: clamp(80px, 12vh, 140px) clamp(24px, 6vw, 60px);
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .mj-section-narrow { max-width: 720px; }
+  .mj-section-tight { padding-top: 60px; padding-bottom: 60px; }
+
+  .mj-sec-eyebrow {
+    font-family: var(--mj-sans);
+    font-weight: 300;
+    letter-spacing: 0.36em;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--mj-rose);
+    margin-bottom: 24px;
+  }
+  .mj-sec-title {
+    font-family: var(--mj-serif);
+    font-weight: 300;
+    font-size: clamp(36px, 5vw, 60px);
+    line-height: 1.05;
+    color: var(--mj-earth);
+    letter-spacing: -0.01em;
+    margin-bottom: 32px;
+  }
+  .mj-sec-title em { font-style: italic; color: var(--mj-rose); }
+
+  .mj-body {
+    font-family: var(--mj-text);
+    font-size: 17px;
+    color: var(--mj-earth);
+    line-height: 1.85;
+    margin-bottom: 22px;
+    font-weight: 300;
+  }
+  .mj-body:last-child { margin-bottom: 0; }
+  .mj-body strong { color: var(--mj-moss); font-weight: 400; }
+
+  .mj-quote {
+    font-family: var(--mj-serif);
+    font-style: italic;
+    font-size: clamp(22px, 2.6vw, 32px);
+    line-height: 1.5;
+    color: var(--mj-earth);
+    text-align: center;
+    padding: clamp(28px, 5vh, 48px) clamp(20px, 5vw, 60px);
+    max-width: 640px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .mj-quote::before, .mj-quote::after {
+    content: '❋';
+    color: var(--mj-rose);
+    font-size: 16px;
+    display: block;
+    margin: 16px auto;
+    opacity: 0.65;
+  }
+  .mj-quote::before { margin-bottom: 24px; }
+  .mj-quote::after { margin-top: 24px; }
+
+  /* Section rule */
+  .mj-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .mj-rule > div {
+    flex: 1;
+    height: 1px;
+    background: rgba(107,120,87,0.15);
+  }
+  .mj-rule > span {
+    color: var(--mj-rose);
+    font-size: 12px;
+    margin: 0 24px;
+    opacity: 0.65;
+  }
+
+  /* ─── PRINCIPLES GRID ─── */
+  .mj-principles {
+    background: var(--mj-cream);
+    padding: clamp(80px, 12vh, 120px) clamp(24px, 6vw, 60px);
+  }
+  .mj-principles-wrap { max-width: 1080px; margin: 0 auto; text-align: center; }
+  .mj-principles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+    margin-top: 64px;
+    text-align: left;
+  }
+  .mj-principle {
+    padding: 24px 0;
+    border-top: 0.5px solid var(--mj-rose-pl);
+  }
+  .mj-principle-num {
+    font-family: var(--mj-sans);
+    font-weight: 300;
+    letter-spacing: 0.4em;
+    font-size: 9px;
+    color: var(--mj-rose);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .mj-principle-name {
+    font-family: var(--mj-serif);
+    font-size: 24px;
+    color: var(--mj-earth);
+    margin-bottom: 12px;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+  }
+  .mj-principle-name em { font-style: italic; color: var(--mj-rose); }
+  .mj-principle-body {
+    font-size: 14.5px;
+    color: var(--mj-moss);
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  /* ─── PRODUCTS ─── */
+  .mj-products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 56px;
+  }
+  .mj-product {
+    background: var(--mj-linen);
+    border: 1px solid rgba(107,120,87,0.14);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .mj-product:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(62,54,42,0.08);
+  }
+  .mj-product-img {
+    aspect-ratio: 4/5;
+    background: linear-gradient(160deg, var(--mj-birch), var(--mj-cream));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .mj-product-img .mj-icon {
+    font-family: var(--mj-serif);
+    font-style: italic;
+    font-size: 34px;
+    color: var(--mj-rose);
+    opacity: 0.55;
+  }
+  .mj-product-oos {
+    position: absolute;
+    top: 16px; right: 16px;
+    font-family: var(--mj-sans);
+    font-weight: 300;
+    letter-spacing: 0.28em;
+    font-size: 9px;
+    text-transform: uppercase;
+    color: var(--mj-linen);
+    background: var(--mj-rose);
+    padding: 5px 12px;
+    border-radius: 999px;
+  }
+  .mj-product-info { padding: 26px 24px 28px; }
+  .mj-product-cat {
+    font-family: var(--mj-sans);
+    font-weight: 300;
+    letter-spacing: 0.28em;
+    font-size: 9px;
+    text-transform: uppercase;
+    color: var(--mj-mist);
+    margin-bottom: 8px;
+  }
+  .mj-product-name {
+    font-family: var(--mj-serif);
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--mj-earth);
+    margin-bottom: 12px;
+    letter-spacing: -0.005em;
+  }
+  .mj-product-desc {
+    font-family: var(--mj-text);
+    font-size: 14px;
+    color: var(--mj-moss);
+    line-height: 1.75;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+  .mj-product-notify {
+    font-family: var(--mj-sans);
+    font-weight: 300;
+    letter-spacing: 0.26em;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--mj-rose);
+    display: inline-block;
+    padding: 10px 20px;
+    border: 0.5px solid var(--mj-rose-pl);
+    border-radius: 999px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .mj-product-notify:hover {
+    background: var(--mj-rose);
+    color: var(--mj-linen);
+  }
+
+  /* ─── NOTIFY FORM ─── */
+  .mj-notify {
+    background: var(--mj-earth);
+    color: var(--mj-linen);
+    padding: clamp(80px, 14vh, 140px) clamp(24px, 6vw, 60px);
+    text-align: center;
+  }
+  .mj-notify-wrap { max-width: 620px; margin: 0 auto; }
+  .mj-notify .mj-sec-eyebrow { color: var(--mj-rose-pl); }
+  .mj-notify .mj-sec-title { color: var(--mj-linen); }
+  .mj-notify .mj-sec-title em { color: var(--mj-rose-pl); }
+  .mj-notify-body {
+    font-family: var(--mj-text);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--mj-cream);
+    line-height: 1.75;
+    margin-bottom: 40px;
+    opacity: 0.85;
+    font-weight: 300;
+  }
+  .mj-form {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .mj-form input[type=email] {
+    flex: 1;
+    min-width: 240px;
+    padding: 15px 20px;
+    background: transparent;
+    border: 1px solid rgba(216,184,171,0.28);
+    color: var(--mj-linen);
+    font-family: var(--mj-text);
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.25s;
+    border-radius: 0;
+    -webkit-appearance: none;
+  }
+  .mj-form input[type=email]:focus { border-color: var(--mj-rose-pl); }
+  .mj-form input[type=email]::placeholder { color: rgba(232,223,203,0.45); font-style: italic; }
+  .mj-form button {
+    padding: 15px 32px;
+    background: var(--mj-rose-pl);
+    border: none;
+    color: var(--mj-earth);
+    font-family: var(--mj-sans);
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    font-size: 11px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .mj-form button:hover { background: var(--mj-linen); }
+  .mj-notify-note {
+    margin-top: 20px;
+    font-family: var(--mj-text);
+    font-style: italic;
+    font-size: 12.5px;
+    color: rgba(232,223,203,0.65);
+    font-weight: 300;
+  }
+  #mj-notify-status {
+    margin-top: 20px;
+    font-family: var(--mj-serif);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--mj-rose-pl);
+    min-height: 24px;
+  }
+
+  /* ─── FOOTER ─── */
+  .mj-footer {
+    padding: 40px 40px 60px;
+    text-align: center;
+    background: var(--mj-cream);
+    border-top: 1px solid rgba(107,120,87,0.10);
+  }
+  .mj-footer-brand {
+    font-family: var(--mj-serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--mj-moss);
+    margin-bottom: 12px;
+  }
+  .mj-footer-links {
+    display: flex;
+    gap: 28px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .mj-footer-links a {
+    font-family: var(--mj-sans);
+    font-weight: 300;
+    letter-spacing: 0.28em;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    color: var(--mj-mist);
+    transition: color 0.2s;
+  }
+  .mj-footer-links a:hover { color: var(--mj-earth); }
+
+  /* ─── REVEAL ─── */
+  .mj-reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.9s, transform 0.9s; }
+  .mj-reveal.in { opacity: 1; transform: none; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .mj-principles-grid { grid-template-columns: 1fr; gap: 24px; }
+    .mj-products-grid { grid-template-columns: 1fr; gap: 24px; max-width: 460px; margin-left: auto; margin-right: auto; }
+    .mj-hero { min-height: 78vh; padding-top: 100px; }
+    .mj-nav { padding: 14px 20px; }
+    .mj-brand-main { font-size: 12px; }
+    .mj-brand-sub { font-size: 7.5px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="mj-nav">
+  <a href="/moder-jord" class="mj-brand">
+    <span class="mj-brand-main">Moder Jord</span>
+    <span class="mj-brand-sub">A Fungai Art sub-line</span>
+  </a>
+  <a href="/" class="mj-nav-back">← Fungai Art</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="mj-hero">
+  <div class="mj-hero-content">
+    <span class="mj-eyebrow">Nordic Forest-Craft · Slow Cosmetics · A Sub-line of Fungai Art</span>
+    <h1 class="mj-hero-title">Moder <em>Jord</em></h1>
+    <p class="mj-hero-lede">
+      Mother Earth &mdash; in the old Swedish tongue. A sub-line of Fungai Art for the body and the skin. Rooted in the ancient Nordic traditions of health, beauty and everyday tending. Wild-foraged from Nordic soil, composed slowly, made in small batches.
+    </p>
+    <a href="#notify" class="mj-cta-primary">Join the founding list</a>
+  </div>
+  <div class="mj-scroll-hint">Descend</div>
+</section>
+
+<!-- ═══ I — WHAT ═══ -->
+<section class="mj-section mj-section-narrow mj-reveal">
+  <p class="mj-sec-eyebrow">I — What Moder Jord is</p>
+  <h2 class="mj-sec-title">A slow return to the <em>old ways</em> of tending the body.</h2>
+  <p class="mj-body">
+    Before beauty was an industry it was a practice. The old women of the Nordic countryside knew which spring shoots softened the skin, which resins healed a wound faster than any modern balm, which oils to whisk into cream during full-moon nights when the plants held the most water. That knowledge did not disappear. It went quiet.
+  </p>
+  <p class="mj-body">
+    Moder Jord is the slow return. Not a wellness brand. A working apothecary for the skin and body, drawing on centuries of Sámi, Karelian, and Norse folk-medicine practice. <strong>Calendula</strong> for the tender skin. <strong>Comfrey</strong> for the tissue that needs to remember how to rebuild. <strong>Yarrow, spruce, birch, cloudberry, lingonberry, spruce resin, sea buckthorn, meadowsweet</strong> &mdash; the plants that grew where our grandmothers grew, in the soil that made them.
+  </p>
+  <p class="mj-body">
+    Every preparation is made by hand in small batches by Robin at the Berlin lab, from herbs foraged in Sweden across the growing season. Nothing synthetic. Nothing tested on animals. Nothing that Freyja would not recognise as medicine.
+  </p>
+</section>
+
+<div class="mj-rule"><div></div><span>❋</span><div></div></div>
+
+<!-- ═══ II — QUOTE ═══ -->
+<section class="mj-section mj-section-tight mj-reveal">
+  <blockquote class="mj-quote">
+    The old women in the north knew: the plants that heal you<br>
+    are the plants that grew where you did.
+  </blockquote>
+</section>
+
+<div class="mj-rule"><div></div><span>❋</span><div></div></div>
+
+<!-- ═══ III — PRINCIPLES ═══ -->
+<section class="mj-principles">
+  <div class="mj-principles-wrap">
+    <p class="mj-sec-eyebrow">III — Guiding principles</p>
+    <h2 class="mj-sec-title">The <em>foundation.</em></h2>
+    <div class="mj-principles-grid mj-reveal">
+      <div class="mj-principle">
+        <span class="mj-principle-num">01</span>
+        <div class="mj-principle-name"><em>Native</em> plants</div>
+        <p class="mj-principle-body">Every plant in Moder Jord is native to or naturalised in the Nordic soil. What grows around us knows the climate our skin lives in. Nothing shipped from continents away.</p>
+      </div>
+      <div class="mj-principle">
+        <span class="mj-principle-num">02</span>
+        <div class="mj-principle-name">Slow <em>preparation</em></div>
+        <p class="mj-principle-body">Cold-pressed carriers. Long infusions. Waxing-moon whipping. Nothing shortcut with synthetic emulsifiers or preservatives. The medicine takes as long as it takes.</p>
+      </div>
+      <div class="mj-principle">
+        <span class="mj-principle-num">03</span>
+        <div class="mj-principle-name">Traditional <em>lineage</em></div>
+        <p class="mj-principle-body">Each formulation traces back to a documented Sámi, Karelian or Norse folk-medicine practice. Old knowledge given new form, not fabricated wellness copy.</p>
+      </div>
+      <div class="mj-principle">
+        <span class="mj-principle-num">04</span>
+        <div class="mj-principle-name">Small <em>batches</em></div>
+        <p class="mj-principle-body">Made by hand in Berlin from herbs foraged in Sweden across the growing season. When the batch is gone, we wait for the next harvest. No industrial continuity.</p>
+      </div>
+      <div class="mj-principle">
+        <span class="mj-principle-num">05</span>
+        <div class="mj-principle-name">For <em>every body</em></div>
+        <p class="mj-principle-body">Skin is not gendered and neither is care. But this line is rooted in the feminine lineage of plant knowledge &mdash; the women who kept the receipts, the recipes, and the reverence.</p>
+      </div>
+      <div class="mj-principle">
+        <span class="mj-principle-num">06</span>
+        <div class="mj-principle-name">Ecological <em>respect</em></div>
+        <p class="mj-principle-body">Foraging is done at sustainable ratios only. Never from vulnerable populations. What we take, we take carefully &mdash; and we plant back where the practice permits.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ IV — PRODUCTS PREVIEW ═══ -->
+<section class="mj-section mj-reveal">
+  <p class="mj-sec-eyebrow">IV — The founding three</p>
+  <h2 class="mj-sec-title">First to arrive.</h2>
+  <p class="mj-body" style="max-width:640px;">
+    The founding trio of Moder Jord. Each in final formulation with a small first batch preparing for release. Sign up below to be notified when they ship &mdash; founding-list members are offered first access before public sale.
+  </p>
+
+  <div class="mj-products-grid">
+    <div class="mj-product">
+      <div class="mj-product-img">
+        <span class="mj-icon">Skydd</span>
+        <span class="mj-product-oos">Coming Soon</span>
+      </div>
+      <div class="mj-product-info">
+        <div class="mj-product-cat">Topical · Skydd</div>
+        <div class="mj-product-name">Mosquito Repellant</div>
+        <p class="mj-product-desc">Wild-foraged Swedish botanicals composed into a slow-release skin balm. Citronella-free &mdash; the forest's own repellant tuned for northern midges and mosquitoes. Traditional Sámi guarding practice.</p>
+        <a href="#notify" class="mj-product-notify">Notify me</a>
+      </div>
+    </div>
+
+    <div class="mj-product">
+      <div class="mj-product-img">
+        <span class="mj-icon">Ansikte</span>
+        <span class="mj-product-oos">Coming Soon</span>
+      </div>
+      <div class="mj-product-info">
+        <div class="mj-product-cat">Face · Ansikte</div>
+        <div class="mj-product-name">Calendula Face Cream</div>
+        <p class="mj-product-desc">Slow-infused calendula (Calendula officinalis) in cold-pressed carrier oils, whipped into a light face cream. Anti-inflammatory, wound-mending, radiance-restoring. For sensitive skin, sun-exposed skin, healing skin.</p>
+        <a href="#notify" class="mj-product-notify">Notify me</a>
+      </div>
+    </div>
+
+    <div class="mj-product">
+      <div class="mj-product-img">
+        <span class="mj-icon">Kropp</span>
+        <span class="mj-product-oos">Coming Soon</span>
+      </div>
+      <div class="mj-product-info">
+        <div class="mj-product-cat">Body · Kropp</div>
+        <div class="mj-product-name">Comfrey Root Cream</div>
+        <p class="mj-product-desc">Deep root-infused comfrey (Symphytum officinale) in a rich body cream. Allantoin-driven cell regeneration for bruises, sprains, joint soreness. External use only. Traditional bone-and-tissue mend.</p>
+        <a href="#notify" class="mj-product-notify">Notify me</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ V — NOTIFY / FOUNDING LIST ═══ -->
+<section id="notify" class="mj-notify">
+  <div class="mj-notify-wrap mj-reveal">
+    <p class="mj-sec-eyebrow">V — The founding list</p>
+    <h2 class="mj-sec-title">Join <em>the return.</em></h2>
+    <p class="mj-notify-body">
+      Enter your email to be told when the first Moder Jord batches ship. Founding-list members receive first access and a small letter from the forest each season.
+    </p>
+    <form class="mj-form" onsubmit="return submitModerJordNotify(event)">
+      <input type="email" name="email" required placeholder="your email">
+      <button type="submit">Join</button>
+    </form>
+    <p class="mj-notify-note">One email per season. Never sold. Unsubscribe any time.</p>
+    <div id="mj-notify-status" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="mj-footer">
+  <div class="mj-footer-brand">Moder Jord &middot; a sub-line of Fungai Art</div>
+  <div class="mj-footer-links">
+    <a href="/">Fungai Art</a>
+    <a href="/shop">Apothecary</a>
+    <a href="/dinner-experience">Dinner</a>
+    <a href="/community">Community</a>
+    <a href="mailto:robin@fungai.art">Contact</a>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  (function(){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.mj-reveal').forEach(function(el){ io.observe(el); });
+  })();
+
+  // Notify form — POSTs to /api/subscribe-newsletter with a Moder Jord source tag
+  window.submitModerJordNotify = function(e){
+    e.preventDefault();
+    var form = e.target;
+    var status = document.getElementById('mj-notify-status');
+    var email = form.querySelector('input[name="email"]').value.trim();
+    if (!email) return false;
+    status.textContent = 'Sending…';
+    fetch('/api/subscribe-newsletter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, source: 'moder-jord-founding' })
+    })
+    .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return { ok: r.ok, j: j }; }); })
+    .then(function(res){
+      if (res.ok) {
+        status.textContent = 'You are on the list. The forest will write.';
+        form.reset();
+      } else {
+        status.textContent = res.j && res.j.error ? res.j.error : 'Something went wrong. Please try again or email robin@fungai.art.';
+      }
+    })
+    .catch(function(){
+      status.textContent = 'Network hiccup. Please try again or email robin@fungai.art.';
+    });
+    return false;
+  };
+</script>
+</body>
+</html>

@@ -18,6 +18,9 @@ const STATIC_PAGES = [
   // Product detail pages — one static HTML per hero product under /shop/[slug]/
   '/shop/amanita',      '/shop/adhd-support', '/shop/sleepy-sleepy',
   '/shop/temple-nectar','/shop/lucid',
+  '/shop/chaga',        '/shop/wild-cordyceps', '/shop/nervous-system-tonic',
+  '/shop/healthy-aging','/shop/shilajit',
+  '/moder-jord',
 ];
 const serveStaticPages = () => ({
   name: 'serve-static-pages',
