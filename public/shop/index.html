@@ -310,6 +310,223 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   Nothing matches that yet. Try a shorter word, or browse a category above.
 </div>
 
+<!-- ══ FEATURED ══ Signature products with dedicated detail pages.
+     Sits at the top so first-time visitors land on the strongest
+     10 SKUs rather than the alphabetical fungi grid. Hidden when
+     a category filter is active or a search is running (see
+     applyFilters), so it doesn't duplicate the categorised grid
+     below. Cards here carry data-category="featured" and are
+     effectively duplicates of the ones in the category sections —
+     when the customer clicks a specific category, they see the
+     properly-organised category grid with the same products in
+     their real home. -->
+<section id="featuredSection">
+  <div class="cat-header reveal">
+    <h2>The <em>Signatures</em></h2>
+    <div class="cat-line"></div>
+    <span class="cat-count">10 offerings · with full pages</span>
+  </div>
+  <div class="products-section">
+    <div class="products-grid">
+
+      <div class="product-card reveal" data-category="featured">
+        <div class="product-img-wrap">
+          <img src="/home/products/amanita.webp" alt="Amanita muscaria" loading="lazy" decoding="async" class="product-photo">
+          <span class="product-badge">Foraged · Sweden</span>
+          <span class="product-badge spagyric" style="top:auto;bottom:0;left:0;right:0;text-align:center;border-radius:0;">Spagyric</span>
+          <a href="/shop/amanita/" class="product-img-link" aria-label="Read about Amanita muscaria"></a>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Amanita Muscaria',48)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Fungi · Sacred</span>
+          <a href="/shop/amanita/" class="product-name">Amanita muscaria</a>
+          <p class="product-desc">Threshold guardian &middot; neuroalchemy &middot; dream states. GABA-A dream doorway held at ceremonial micro-dose. Self-foraged from Swedish forests.</p>
+          <div class="product-tags"><span class="tag">Muscimol</span><span class="tag">Dream-like</span><span class="tag">Self-foraged</span></div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span class="amount">&euro;48</span></div>
+            <button class="add-btn" onclick="addToCart('Amanita Muscaria',48)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-d1" data-category="featured">
+        <div class="product-img-wrap">
+          <img src="/home/products/adhd.webp" alt="ADHD Support" loading="lazy" decoding="async" class="product-photo">
+          <span class="product-badge spagyric" style="top:auto;bottom:0;left:0;right:0;text-align:center;border-radius:0;">Spagyric</span>
+          <a href="/shop/adhd-support/" class="product-img-link" aria-label="Read about ADHD Support"></a>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('ADHD Support',44)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Compositions &middot; Cognitive</span>
+          <a href="/shop/adhd-support/" class="product-name">ADHD Support</a>
+          <p class="product-desc">Focus &middot; clarity &middot; resilient attention. Neurotrophic + adaptogenic rebuild &mdash; not stimulation.</p>
+          <div class="product-tags"><span class="tag">Lion's Mane</span><span class="tag">Rhodiola</span><span class="tag">Nootropic</span></div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span class="amount">&euro;44</span></div>
+            <button class="add-btn" onclick="addToCart('ADHD Support',44)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-d2" data-category="featured">
+        <div class="product-img-wrap">
+          <img src="/home/products/temple-nectar.webp" alt="Temple Nectar" loading="lazy" decoding="async" class="product-photo">
+          <span class="product-badge">Signature</span>
+          <a href="/shop/temple-nectar/" class="product-img-link" aria-label="Read about Temple Nectar"></a>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Temple Nectar',44)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Compositions &middot; Sensual</span>
+          <a href="/shop/temple-nectar/" class="product-name">Temple Nectar</a>
+          <p class="product-desc">Vitality &middot; sensual &middot; sacred energy. Saffron, damiana, catuaba, blue lotus, maca negra, vanilla, muira puama.</p>
+          <div class="product-tags"><span class="tag">Aphrodisiac</span><span class="tag">Heart-opening</span><span class="tag">Libido</span></div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span class="amount">&euro;44</span></div>
+            <button class="add-btn" onclick="addToCart('Temple Nectar',44)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" data-category="featured">
+        <div class="product-img-wrap">
+          <img src="/home/products/sleepy.webp" alt="Sleepy Sleepy" loading="lazy" decoding="async" class="product-photo">
+          <a href="/shop/sleepy-sleepy/" class="product-img-link" aria-label="Read about Sleepy Sleepy"></a>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Sleepy Sleepy',44)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Compositions &middot; Sleep</span>
+          <a href="/shop/sleepy-sleepy/" class="product-name">Sleepy Sleepy</a>
+          <p class="product-desc">Deep sleep &middot; dream ease &middot; full surrender. Valerian, passionflower, magnolia bark, lemon balm, hops, chamomile.</p>
+          <div class="product-tags"><span class="tag">Sleep</span><span class="tag">GABA</span><span class="tag">Restorative</span></div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span class="amount">&euro;44</span></div>
+            <button class="add-btn" onclick="addToCart('Sleepy Sleepy',44)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-d1" data-category="featured">
+        <div class="product-img-wrap">
+          <img src="/home/products/nervoussystem.webp" alt="Nervous System Tonic" loading="lazy" decoding="async" class="product-photo">
+          <a href="/shop/nervous-system-tonic/" class="product-img-link" aria-label="Read about Nervous System Tonic"></a>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Nervous System Tonic',44)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Compositions &middot; Nervine</span>
+          <a href="/shop/nervous-system-tonic/" class="product-name">Nervous System Tonic</a>
+          <p class="product-desc">Frayed-nerve repair &middot; adaptogenic ground &middot; deep calm. Rebuilds the mineral + GABAergic terrain beneath chronic stress.</p>
+          <div class="product-tags"><span class="tag">Nervine</span><span class="tag">Adaptogen</span><span class="tag">GABA</span></div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span class="amount">&euro;44</span></div>
+            <button class="add-btn" onclick="addToCart('Nervous System Tonic',44)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-d2" data-category="featured">
+        <div class="product-img-wrap">
+          <img src="/home/products/healthy-aging.webp" alt="Healthy Aging" loading="lazy" decoding="async" class="product-photo">
+          <a href="/shop/healthy-aging/" class="product-img-link" aria-label="Read about Healthy Aging"></a>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Healthy Aging',44)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Compositions &middot; Longevity</span>
+          <a href="/shop/healthy-aging/" class="product-name">Healthy Aging</a>
+          <p class="product-desc">Cellular renewal &middot; adaptogenic ground &middot; radiant longevity. Reishi, schisandra, ashwagandha, saffron, pearl.</p>
+          <div class="product-tags"><span class="tag">Adaptogens</span><span class="tag">Longevity</span><span class="tag">Antioxidant</span></div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span class="amount">&euro;44</span></div>
+            <button class="add-btn" onclick="addToCart('Healthy Aging',44)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" data-category="featured">
+        <div class="product-img-wrap">
+          <img src="/home/products/lucid.webp" alt="Lucid" loading="lazy" decoding="async" class="product-photo">
+          <a href="/shop/lucid/" class="product-img-link" aria-label="Read about Lucid"></a>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Lucid',44)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Compositions &middot; Dreamwork</span>
+          <a href="/shop/lucid/" class="product-name">Lucid</a>
+          <p class="product-desc">Dream recall &middot; visionary depth &middot; conscious rest. Mugwort, calea, blue lotus, passionflower, bobinsana.</p>
+          <div class="product-tags"><span class="tag">Dream recall</span><span class="tag">Visionary</span><span class="tag">Restful</span></div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span class="amount">&euro;44</span></div>
+            <button class="add-btn" onclick="addToCart('Lucid',44)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-d1" data-category="featured">
+        <div class="product-img-wrap">
+          <img src="/home/products/chaga.webp" alt="Chaga" loading="lazy" decoding="async" class="product-photo">
+          <span class="product-badge">Foraged · Sweden</span>
+          <a href="/shop/chaga/" class="product-img-link" aria-label="Read about Chaga Tincture"></a>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Chaga Tincture',44)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Fungi &middot; Immunity</span>
+          <a href="/shop/chaga/" class="product-name">Chaga Tincture</a>
+          <p class="product-desc">Silent alchemist &middot; immunity &middot; resilience. Wild-foraged Swedish birch chaga, double-extracted for the whole spectrum.</p>
+          <div class="product-tags"><span class="tag">Beta-glucans</span><span class="tag">Melanin</span><span class="tag">Wild</span></div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span class="amount">&euro;44</span></div>
+            <button class="add-btn" onclick="addToCart('Chaga Tincture',44)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-d2" data-category="featured">
+        <div class="product-img-wrap">
+          <div class="product-placeholder"><span>Cordyceps</span></div>
+          <span class="product-badge">Himalayan A+</span>
+          <a href="/shop/wild-cordyceps/" class="product-img-link" aria-label="Read about Wild Cordyceps"></a>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Wild Cordyceps',44)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Fungi &middot; Vitality</span>
+          <a href="/shop/wild-cordyceps/" class="product-name">Wild Cordyceps</a>
+          <p class="product-desc">Vital strategist &middot; endurance &middot; libido. Cordycepin raises cellular ATP &mdash; sustained vitality, no crash.</p>
+          <div class="product-tags"><span class="tag">Cordycepin</span><span class="tag">Adenosine</span><span class="tag">Himalaya</span></div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span class="amount">&euro;44</span></div>
+            <button class="add-btn" onclick="addToCart('Wild Cordyceps',44)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" data-category="featured">
+        <div class="product-img-wrap">
+          <img src="https://images.unsplash.com/photo-1610705287354-9d445b4ac3ba?w=600&q=70&auto=format" alt="Shilajit" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="product-placeholder" style="display:none"><span>Shilajit</span></div>
+          <span class="product-badge">Himalayan</span>
+          <a href="/shop/shilajit/" class="product-img-link" aria-label="Read about Shilajit + Gold"></a>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Shilajit + Gold',33)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Specials &middot; Minerals</span>
+          <a href="/shop/shilajit/" class="product-name">Shilajit + Gold</a>
+          <p class="product-desc">Ancient Himalayan mineral resin + nanoparticulate gold. Fulvic acid, 84 trace minerals, colloidal Au. Ceremonial pill.</p>
+          <div class="product-tags"><span class="tag">Fulvic acid</span><span class="tag">Gold</span><span class="tag">Himalayan</span></div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">4 pills</span><span class="amount">&euro;33</span></div>
+            <button class="add-btn" onclick="addToCart('Shilajit + Gold',33)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Full category tour begins here — same categories as before,
+     with the featured products still present in their proper homes. -->
+<div data-browse-divider class="cat-header reveal" style="margin-top:24px;padding-top:56px;border-top:0.5px solid rgba(136,186,200,0.10);">
+  <span class="sec-label" style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.32em;text-transform:uppercase;color:var(--lichen);">Browse by category</span>
+</div>
+
 <!-- ══ FUNGI ══ -->
 <div class="cat-header reveal">
   <h2>Sacred <em>Fungi</em></h2>
@@ -1107,9 +1324,22 @@ function applyFilters(){
   document.querySelectorAll('.product-card').forEach(c => {
     const catOk = activeCategory === 'all' || c.dataset.category === activeCategory;
     const searchOk = !s || (c.textContent || '').toLowerCase().indexOf(s) !== -1;
-    const visible = catOk && searchOk;
+    // Featured section cards should only surface on the default view
+    // (filter=all AND no search), otherwise the customer sees them
+    // duplicated: once in Featured and once in their real category.
+    const isFeatured = c.dataset.category === 'featured';
+    const featuredOk = !isFeatured || (activeCategory === 'all' && !s);
+    const visible = catOk && searchOk && featuredOk;
     c.classList.toggle('hidden', !visible);
     if (visible) shown++;
+  });
+  // Hide the whole Featured header + "Browse by category" divider when
+  // a filter or search is active — otherwise empty labels sit there.
+  const featSection = document.getElementById('featuredSection');
+  const showFeatured = activeCategory === 'all' && !s;
+  if (featSection) featSection.style.display = showFeatured ? '' : 'none';
+  document.querySelectorAll('[data-browse-divider]').forEach(el => {
+    el.style.display = showFeatured ? '' : 'none';
   });
   const note = document.getElementById('noResultsNote');
   if (note) note.style.display = shown === 0 ? 'block' : 'none';
