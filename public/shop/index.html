@@ -288,7 +288,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   <span class="hero-label">Wild-foraged · Composed in Berlin</span>
   <h1 class="hero-title">The <em>Apothecary</em></h1>
   <span class="hero-script">full spectrum · wild-foraged · zero synthetic</span>
-  <p class="hero-sub">Carefully composed by earth keepers. All tinctures made with pharma-grade ethanol. Full spectrum, self-foraged where marked. Ships from Berlin · 3–7 business days EU.</p>
+  <p class="hero-sub">Carefully composed by earth keepers. All tinctures made with pharma-grade ethanol. Full spectrum, self-foraged where marked. Ships from Sweden · €6 flat shipping.</p>
 </div>
 
 <!-- FILTERS -->
@@ -1377,9 +1377,13 @@ function renderCart(){
 let toastT;function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2600)}
 
 // CHECKOUT
+// Shipping: €6 flat, always. Ships from Sweden. Mirror the server-side
+// values in netlify/functions/create-payment-intent.js — if these two
+// disagree, the server rejects the charge on total-mismatch.
+const SHIP_FLAT = 6;
 function renderSummary(id){
-  const total=cartTotal(),ship=total>=60?'<span style="color:var(--mist)">Free</span>':'€4.90',grand=total>=60?total:total+4.9;
-  document.getElementById(id).innerHTML=`<span class="co-summary-title">Order summary</span>${cart.map(i=>`<div class="co-sum-row"><span class="name">${i.qty>1?i.qty+'× ':''}${i.name}</span><span>€${i.price*i.qty}</span></div>`).join('')}<div class="co-sum-row" style="font-size:11px;color:var(--lichen);margin-top:8px"><span>Shipping (EU)</span><span>${ship}</span></div><div class="co-sum-total"><span class="t-label">Total</span><span class="t-amount">€${grand.toFixed(2).replace('.00','')}</span></div><p class="co-shipping-note">Ships from Berlin · 3–7 business days EU</p>`;
+  const total=cartTotal(),grand=total+SHIP_FLAT;
+  document.getElementById(id).innerHTML=`<span class="co-summary-title">Order summary</span>${cart.map(i=>`<div class="co-sum-row"><span class="name">${i.qty>1?i.qty+'× ':''}${i.name}</span><span>€${i.price*i.qty}</span></div>`).join('')}<div class="co-sum-row" style="font-size:11px;color:var(--lichen);margin-top:8px"><span>Shipping</span><span>€${SHIP_FLAT.toFixed(2)}</span></div><div class="co-sum-total"><span class="t-label">Total</span><span class="t-amount">€${grand.toFixed(2).replace('.00','')}</span></div><p class="co-shipping-note">Ships from Sweden · 3–7 business days EU · longer for the rest of the world</p>`;
 }
 function goToStepDirect(n){
   currentStep=n;
@@ -1498,7 +1502,7 @@ async function payWithCard(){
     console.error('[checkout]',msg,detail||'');
   };
   try{
-    const expectedTotal=cartTotal()>=60?cartTotal():cartTotal()+4.9;
+    const expectedTotal=cartTotal()+SHIP_FLAT;
     if(!expectedTotal||expectedTotal<=0){throw new Error('Cart total is zero. Add an item before paying.');}
     // One idempotency key per checkout attempt — if the user double-taps
     // "Pay" or the request retries on a flaky connection, Stripe collapses
@@ -1557,7 +1561,7 @@ async function payWithCard(){
 }
 // Crypto
 async function fetchCryptoRates(){try{const ids=Object.values(GECKO_IDS).join(',');const res=await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=eur`);const data=await res.json();Object.entries(GECKO_IDS).forEach(([sym,id])=>{if(data[id])cryptoRates[sym]=data[id].eur});updateCryptoDisplay()}catch{document.getElementById('cryptoRateNote').textContent='Rate unavailable — use current market price'}}
-function updateCryptoDisplay(){const w=WALLETS[selectedCoin];document.getElementById('cryptoCoinLabel').textContent=w.label;document.getElementById('cryptoAddrText').textContent=w.addr;const rate=cryptoRates[selectedCoin];const total=cartTotal()>=60?cartTotal():cartTotal()+4.9;if(rate&&total){const amt=(total/rate).toFixed(selectedCoin==='BTC'?6:4);document.getElementById('cryptoAmount').textContent=`${amt} ${selectedCoin}`;document.getElementById('cryptoRateNote').textContent=`1 ${selectedCoin} ≈ €${rate.toLocaleString('de-DE',{maximumFractionDigits:2})} · refreshes every 60s`}else{document.getElementById('cryptoAmount').textContent='—'}}
+function updateCryptoDisplay(){const w=WALLETS[selectedCoin];document.getElementById('cryptoCoinLabel').textContent=w.label;document.getElementById('cryptoAddrText').textContent=w.addr;const rate=cryptoRates[selectedCoin];const total=cartTotal()+SHIP_FLAT;if(rate&&total){const amt=(total/rate).toFixed(selectedCoin==='BTC'?6:4);document.getElementById('cryptoAmount').textContent=`${amt} ${selectedCoin}`;document.getElementById('cryptoRateNote').textContent=`1 ${selectedCoin} ≈ €${rate.toLocaleString('de-DE',{maximumFractionDigits:2})} · refreshes every 60s`}else{document.getElementById('cryptoAmount').textContent='—'}}
 function selectCoin(sym){selectedCoin=sym;document.querySelectorAll('.crypto-coin').forEach(c=>c.classList.remove('selected'));document.getElementById('coin'+sym).classList.add('selected');updateCryptoDisplay()}
 function copyAddress(){navigator.clipboard.writeText(WALLETS[selectedCoin].addr).then(()=>{const b=document.getElementById('copyAddrBtn');b.textContent='Copied!';b.classList.add('copied');setTimeout(()=>{b.textContent='Copy';b.classList.remove('copied')},2000)})}
 // Crypto orders are NOT auto-confirmed. We don't watch the chain (yet),

@@ -1364,7 +1364,7 @@ html.reveal-anim .reveal.in { opacity: 1; transform: translateY(0); }
       <span class="amount" id="cartTotal">€0</span>
     </div>
     <button class="checkout-btn" onclick="openCheckout()">Proceed to checkout</button>
-    <p class="cart-note">Free EU shipping on orders over €60</p>
+    <p class="cart-note">€6 flat shipping · ships from Sweden</p>
   </div>
 </div>
 
@@ -3651,8 +3651,10 @@ document.getElementById('coOverlay').addEventListener('click', function(e) {
 
 function renderSummary(id) {
   const total = cartTotal();
-  const shipping = total >= 60 ? '<span style="color:var(--lime);">Free</span>' : '€4.90';
-  const grandTotal = total >= 60 ? total : total + 4.9;
+  // €6 flat shipping, always — matches server catalog in
+  // netlify/functions/create-payment-intent.js
+  const shipping = '€6.00';
+  const grandTotal = total + 6;
   document.getElementById(id).innerHTML = `
     <div class="co-summary-title">Order summary</div>
     <div class="co-summary-items">
@@ -3666,7 +3668,7 @@ function renderSummary(id) {
       <span class="t-label">Total</span>
       <span class="t-amount">€${grandTotal.toFixed(2).replace('.00','')}</span>
     </div>
-    <p class="co-shipping-note">Ships from Berlin · 3–7 business days EU</p>`;
+    <p class="co-shipping-note">Ships from Sweden · €6 flat · 3–7 business days EU · longer worldwide</p>`;
 }
 
 function goToStepDirect(n) {
@@ -3725,7 +3727,7 @@ async function payWithCard() {
   document.getElementById('stripe-error').textContent = '';
 
   const total = cartTotal();
-  const shipping = total >= 60 ? 0 : 4.9;
+  const shipping = 6; // €6 flat — mirror server catalog
   const grandTotal = total + shipping;
 
   const name    = document.getElementById('coFirstName').value + ' ' + document.getElementById('coLastName').value;
@@ -3792,7 +3794,7 @@ async function payWithCard() {
 /* ── Confirm crypto order ── */
 function confirmCryptoOrder() {
   const total = cartTotal();
-  const shipping = total >= 60 ? 0 : 4.9;
+  const shipping = 6; // €6 flat — mirror server catalog
   const grandTotal = total + shipping;
   showConfirmation('crypto', grandTotal);
 }

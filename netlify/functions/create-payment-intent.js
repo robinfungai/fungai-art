@@ -194,8 +194,12 @@ const CATALOG = {
   'Afghan Saffron (10g)':             100,
 };
 
-const SHIPPING_FLAT_EUR  = 4.90;
-const SHIPPING_FREE_OVER = 60;
+// Ships from Sweden. Robin's floor: €6 minimum on every order,
+// no free-shipping threshold. If you later want country tiers or
+// a legitimate free-over incentive, edit here + mirror in shop's
+// renderSummary + expectedTotal (grep "shipping" in shop/index.html).
+const SHIPPING_FLAT_EUR  = 6.00;
+const SHIPPING_FREE_OVER = Infinity;
 const MAX_QTY_PER_LINE   = 20;
 const MAX_LINES_PER_ORDER= 40;
 
