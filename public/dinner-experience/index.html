@@ -53,7 +53,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
 /* HERO */
 .hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;overflow:hidden}
 .hero-bg{position:absolute;inset:0}
-.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 35%}
+@media (max-width:640px){.hero-bg img{object-position:center 30%}}
 .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom, rgba(5,9,12,0.3) 0%, rgba(5,9,12,0.6) 60%, rgba(5,9,12,0.95) 100%)}
 .hero-content{position:relative;z-index:10;padding:80px 60px;max-width:900px}
 .hero-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--lichen);margin-bottom:24px;display:block}
@@ -112,13 +113,35 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
 .principle-name{font-family:var(--serif);font-size:28px;font-weight:300;margin-bottom:12px;color:var(--parchment)}
 .principle-name em{color:var(--mist);font-style:italic}
 
+/* House ethos — manifesto layout replacing old principles grid */
+.ethos{padding:120px 0;background:var(--forest)}
+.ethos-head{text-align:center;margin:0 auto 72px;max-width:640px;padding:0 24px}
+.ethos-lede{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--dust);margin-top:14px;opacity:0.9;line-height:1.7}
+.ethos-list{display:grid;grid-template-columns:repeat(2,1fr);gap:56px 72px;max-width:1120px;margin:0 auto;padding:0 40px}
+.ethos-item{display:grid;grid-template-columns:56px 1fr;gap:22px;align-items:baseline}
+.ethos-num{font-family:'TAN-PARADISO','Cormorant Garamond',serif;font-style:italic;font-size:46px;color:var(--amber-lt,#E8B14B);line-height:1;letter-spacing:0.005em;opacity:0.85}
+.ethos-name{font-family:var(--serif);font-size:26px;color:var(--parchment);font-weight:400;letter-spacing:-0.005em;line-height:1.2;margin-bottom:12px}
+.ethos-name em{font-style:italic;color:var(--mist)}
+.ethos-body p{font-size:14px;color:var(--dust);line-height:1.85;max-width:44ch}
+@media (max-width:720px){
+  .ethos{padding:80px 0}
+  .ethos-list{grid-template-columns:1fr;gap:44px;padding:0 20px}
+  .ethos-item{grid-template-columns:48px 1fr;gap:18px}
+  .ethos-num{font-size:36px}
+  .ethos-name{font-size:22px}
+}
+
 /* FACILITATOR — single card, centered */
 .artists{padding:140px 0}
 .artists-header{text-align:center;margin-bottom:80px}
 .artists-header .hero-sub{font-size:60px;display:block;text-align:center}
 .artists-grid{display:grid;grid-template-columns:1fr;gap:2px;max-width:640px;margin:0 auto}
 .artist-card{position:relative;overflow:hidden;background:var(--card)}
-.artist-img{width:100%;height:560px;object-fit:cover;object-position:top;filter:grayscale(15%) contrast(1.05);transition:transform 0.6s}
+/* object-position 50% 18% biases toward the upper portion of the
+   frame so a face at the top of the photo isn't clipped by the
+   info-overlay gradient. Reduced height by ~15% so the whole
+   figure is more visible on the card. */
+.artist-img{width:100%;height:480px;object-fit:cover;object-position:50% 18%;filter:grayscale(15%) contrast(1.05);transition:transform 0.6s}
 .artist-card:hover .artist-img{transform:scale(1.03)}
 .artist-info{padding:40px;background:linear-gradient(to top, rgba(5,9,12,0.95) 0%, rgba(5,9,12,0.6) 60%, transparent 100%);position:absolute;bottom:0;left:0;right:0}
 .artist-name{font-family:var(--serif);font-size:32px;font-weight:300;color:var(--parchment);margin-bottom:8px}
@@ -298,43 +321,61 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   </div>
 </section>
 
-<!-- GUIDING PRINCIPLES -->
-<section class="principles">
+<!-- HOUSE ETHOS — editorial manifesto layout. The old "foundation"
+     grid felt ceremony-coded (carried over from the Mycelium Trance
+     original). Rebuilt as a numbered manifesto: bigger italic
+     numbers, principle titles + copy on the right, generous white
+     space. Reads playful + confident, matches the mushroom-devotion
+     copy. -->
+<section class="ethos">
   <div class="wrap">
-    <div class="reveal">
-      <span class="sec-label">Guiding Principles</span>
-      <h2 class="sec-title">The <em>foundation</em></h2>
+    <div class="reveal ethos-head">
+      <span class="sec-label">The House Ethos</span>
+      <h2 class="sec-title">How we <em>do this</em>.</h2>
+      <p class="ethos-lede">Six things that shape every dinner. Not rules &mdash; a temperament.</p>
     </div>
-    <div class="principles-grid">
-      <div class="principle reveal reveal-d1">
-        <span class="principle-num">01</span>
-        <div class="principle-name">Fungal <em>devotion</em></div>
-        <p style="font-size:13px;color:var(--dust);line-height:1.7;">The kitchen belongs to the mushrooms tonight. Every course carries a fungal note &mdash; the ones you already love, the ones you've never heard of, the ones no restaurant has served you before.</p>
+    <div class="ethos-list">
+      <div class="ethos-item reveal">
+        <div class="ethos-num">i</div>
+        <div class="ethos-body">
+          <div class="ethos-name">Fungal <em>devotion</em>.</div>
+          <p>The kitchen belongs to the mushrooms tonight. Every course carries a fungal note &mdash; the ones you already love, the ones you've never heard of, and the ones no restaurant has served you before.</p>
+        </div>
       </div>
-      <div class="principle reveal reveal-d2">
-        <span class="principle-num">02</span>
-        <div class="principle-name">A <em>journey</em>,<br>not a meal</div>
-        <p style="font-size:13px;color:var(--dust);line-height:1.7;">Seven courses is really seven doorways into the mycelium realm. Each opens a new chamber. You leave the table having tasted a place, not just eaten dinner.</p>
+      <div class="ethos-item reveal reveal-d1">
+        <div class="ethos-num">ii</div>
+        <div class="ethos-body">
+          <div class="ethos-name">A <em>journey</em>, not a meal.</div>
+          <p>Seven courses is really seven doorways into the mycelium realm. Each opens a new chamber. You leave the table having tasted a place, not just eaten dinner.</p>
+        </div>
       </div>
-      <div class="principle reveal reveal-d3">
-        <span class="principle-num">03</span>
-        <div class="principle-name">Beyond the<br><em>usual suspects</em></div>
-        <p style="font-size:13px;color:var(--dust);line-height:1.7;">Chanterelle and porcini are welcome &mdash; but so are lion's mane, chaga, reishi, morel, cordyceps, black trumpet, and whatever the Swedish autumn offered this week. If you've only met mushrooms saut&eacute;ed in butter, this is their fuller vocabulary.</p>
+      <div class="ethos-item reveal">
+        <div class="ethos-num">iii</div>
+        <div class="ethos-body">
+          <div class="ethos-name">Beyond the <em>usual suspects</em>.</div>
+          <p>Chanterelle and porcini are welcome &mdash; but so are lion's mane, chaga, reishi, morel, cordyceps, black trumpet, and whatever the Swedish autumn offered this week. If you've only met mushrooms saut&eacute;ed in butter, this is their fuller vocabulary.</p>
+        </div>
       </div>
-      <div class="principle reveal reveal-d1">
-        <span class="principle-num">04</span>
-        <div class="principle-name">Playful <em>reverence</em></div>
-        <p style="font-size:13px;color:var(--dust);line-height:1.7;">Serious about the fungi, not about ourselves. There are jokes at this table. The Latin names come out. The plates are beautiful. The evening is meant to delight, not solemnise.</p>
+      <div class="ethos-item reveal reveal-d1">
+        <div class="ethos-num">iv</div>
+        <div class="ethos-body">
+          <div class="ethos-name">Playful <em>reverence</em>.</div>
+          <p>Serious about the fungi, not about ourselves. There are jokes at this table. The Latin names come out. The plates are beautiful. The evening is meant to delight, not solemnise.</p>
+        </div>
       </div>
-      <div class="principle reveal reveal-d2">
-        <span class="principle-num">05</span>
-        <div class="principle-name">The <em>forest</em><br>at the table</div>
-        <p style="font-size:13px;color:var(--dust);line-height:1.7;">Sweden's autumn foraging arrives on your plate. What can't travel, we compose in the Berlin lab. The room smells of spruce, birch smoke, koji. You're not eating a meal &mdash; you're eating a place.</p>
+      <div class="ethos-item reveal">
+        <div class="ethos-num">v</div>
+        <div class="ethos-body">
+          <div class="ethos-name">The <em>forest</em> at the table.</div>
+          <p>Sweden's autumn foraging arrives on your plate. What can't travel, we compose in the Berlin lab. The room smells of spruce, birch smoke, koji. You're not eating a meal &mdash; you're eating a place.</p>
+        </div>
       </div>
-      <div class="principle reveal reveal-d3">
-        <span class="principle-num">06</span>
-        <div class="principle-name">Mycelial <em>connection</em></div>
-        <p style="font-size:13px;color:var(--dust);line-height:1.7;">Fungi taught us everything is connected underground. Around this table, the same happens above &mdash; strangers become a temporary mycelium for a night, threading conversation, sharing the same breath before the first bite.</p>
+      <div class="ethos-item reveal reveal-d1">
+        <div class="ethos-num">vi</div>
+        <div class="ethos-body">
+          <div class="ethos-name">Mycelial <em>connection</em>.</div>
+          <p>Fungi taught us everything is connected underground. Around this table, the same happens above &mdash; strangers become a temporary mycelium for a night, threading conversation, sharing the same breath before the first bite.</p>
+        </div>
       </div>
     </div>
   </div>
