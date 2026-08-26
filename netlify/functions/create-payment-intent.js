@@ -245,11 +245,12 @@ export const handler = async (event) => {
   }
 
   // ── Ban check ──────────────────────────────────────────────────
-  // If the customer's email or client IP matches a row in
-  // banned_users, refuse the order before touching Stripe. Returns
-  // a generic "unavailable" message so the banned user doesn't get
-  // to confirm the ban and switch tactics. Non-fatal on error —
-  // we don't want the checkout to hard-fail if Supabase is down.
+  // Uses the is_user_banned RPC on the DB side — that function does
+  // Gmail-normalization (dots, +alias, googlemail.com) so a Gmail
+  // user can't slip past by editing their address. Also checks the
+  // client IP against banned_users.ip_address as a separate query.
+  // Non-fatal on Supabase error — checkout must not die if the DB
+  // is down.
   if (hasSupabase) {
     try {
       const supabase = createClient(supabaseUrl, supabaseSrvKey, {
@@ -261,19 +262,31 @@ export const handler = async (event) => {
         || (event.headers['x-forwarded-for'] || '').split(',')[0].trim()
         || ''
       ).trim();
-      const orClauses = [];
-      if (custEmail) orClauses.push(`email.eq.${custEmail}`);
-      if (clientIp)  orClauses.push(`ip_address.ilike.%${clientIp}%`);
-      if (orClauses.length) {
+
+      // Email check via the normalizing RPC.
+      let emailBanned = false;
+      if (custEmail) {
+        const { data } = await supabase.rpc('is_user_banned', {
+          check_uid: null,
+          check_email: custEmail,
+        });
+        emailBanned = data === true;
+      }
+
+      // IP check — direct table lookup (no normalization needed).
+      let ipBanned = false;
+      if (!emailBanned && clientIp) {
         const { data: hits } = await supabase
           .from('banned_users')
           .select('id')
-          .or(orClauses.join(','))
+          .ilike('ip_address', `%${clientIp}%`)
           .limit(1);
-        if (Array.isArray(hits) && hits.length > 0) {
-          console.warn('[create-payment-intent] Refused order — banned identifier', { email: custEmail, ip: clientIp });
-          return json(403, { error: 'This checkout is not available. Please contact robin@fungai.art.' });
-        }
+        ipBanned = Array.isArray(hits) && hits.length > 0;
+      }
+
+      if (emailBanned || ipBanned) {
+        console.warn('[create-payment-intent] Refused order — banned identifier', { email: custEmail, ip: clientIp, via: emailBanned ? 'email' : 'ip' });
+        return json(403, { error: 'This checkout is not available. Please contact robin@fungai.art.' });
       }
     } catch (e) {
       console.error('[create-payment-intent] Ban-check threw (allowing order):', e.message);
