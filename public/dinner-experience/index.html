@@ -3,11 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dinner Experience · Fungai Art</title>
-<meta name="description" content="Fungai Art Dinner Experience — Robin Floræsta's fungal feast. Multi-course tasting arc built on foraged mushrooms, adaptogens, and sacred botanicals. Small private dinners across Europe."/>
+<title>Dinner Experience · Berlin · 11 Oct 2026 · Fungai Art</title>
+<meta name="description" content="Fungai Art Dinner Experience — a seven-course fungal feast by forager-chef Robin Floræsta. Next dinner: Saturday 11 October 2026 at Holzmarkt Berlin as part of Fungi Fever Fest. Foraged Nordic mushrooms, adaptogens, sacred botanicals."/>
+<meta name="keywords" content="mushroom dinner Berlin, fungal feast, Fungi Fever Fest, Robin Floræsta, foraged mushrooms, chaga garum, morel, spagyric dinner, tasting menu Berlin, Nordic mycology, Holzmarkt event, adaptogen dinner"/>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
     <link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
     <link rel="apple-touch-icon" href="/fungai-art-logo.png"/>
+<link rel="canonical" href="https://www.fungai.art/dinner-experience/"/>
+<meta property="og:type" content="event"/>
+<meta property="og:site_name" content="Fungai Art"/>
+<meta property="og:title" content="Fungai Art Dinner Experience · 11 Oct 2026 · Holzmarkt Berlin"/>
+<meta property="og:description" content="A seven-course fungal feast by Robin Floræsta. Foraged mushrooms, chaga garum, morel, adaptogens dosed at the table. Reserve your seat."/>
+<meta property="og:image" content="https://www.fungai.art/dinner-experience/featured.webp"/>
+<meta property="og:image:alt" content="Morels, labneh, spruce shoots, ramson oil, wild herbs, wasabi sesame"/>
+<meta property="og:url" content="https://www.fungai.art/dinner-experience/"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Fungai Art Dinner Experience · 11 Oct 2026 · Holzmarkt Berlin"/>
+<meta name="twitter:description" content="A seven-course fungal feast by Robin Floræsta. Reserve your seat."/>
+<meta name="twitter:image" content="https://www.fungai.art/dinner-experience/featured.webp"/>
+
+<!-- JSON-LD Event schema — helps Google surface as an event card
+     with date + location + prices in search results. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FoodEvent",
+  "name": "Fungai Art Dinner Experience · Fungi Fever Fest",
+  "startDate": "2026-10-11T19:00:00+02:00",
+  "endDate":   "2026-10-11T23:00:00+02:00",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "Holzmarkt Berlin",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Holzmarktstraße 25",
+      "addressLocality": "Berlin",
+      "postalCode": "10243",
+      "addressCountry": "DE"
+    }
+  },
+  "description": "A seven-course fungal feast by forager-chef Robin Floræsta of Fungai Art. Foraged Nordic mushrooms, adaptogens, sacred botanicals dosed at the table. Part of Fungi Fever Fest.",
+  "image": ["https://www.fungai.art/dinner-experience/featured.webp"],
+  "organizer": { "@type": "Organization", "name": "Fungai Art", "url": "https://www.fungai.art" },
+  "performer": { "@type": "Person", "name": "Robin Floræsta" },
+  "offers": [
+    { "@type": "Offer", "name": "Supported rate", "price": "66", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "url": "https://www.fungai.art/dinner-experience/#reserve" },
+    { "@type": "Offer", "name": "Full rate",      "price": "88", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "url": "https://www.fungai.art/dinner-experience/#reserve" }
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:wght@200;300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
@@ -285,6 +332,24 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   <div class="scroll-hint">Scroll</div>
 </div>
 
+<!-- TOP CTA — sleek strip right under the hero. First thing after
+     the scroll — announces the next dinner + a direct reserve link. -->
+<section class="top-cta">
+  <div class="top-cta-inner">
+    <span class="top-cta-eyebrow">Next dinner</span>
+    <span class="top-cta-when">Sat 11 Oct 2026 &middot; Holzmarkt Berlin</span>
+    <a href="#reserve" class="top-cta-link">Reserve a seat &rarr;</a>
+  </div>
+</section>
+<style>
+  .top-cta { background: linear-gradient(90deg, rgba(232,177,75,0.06), rgba(232,177,75,0.12), rgba(232,177,75,0.06)); border-bottom: 0.5px solid rgba(232,177,75,0.25); padding: 22px 24px; }
+  .top-cta-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: baseline; justify-content: center; gap: 24px; flex-wrap: wrap; text-align: center; }
+  .top-cta-eyebrow { font-family: 'Bayer',var(--sans); font-size: 9.5px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--amber-lt,#E8B14B); }
+  .top-cta-when { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--parchment); letter-spacing: 0.005em; }
+  .top-cta-link { font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--amber-lt,#E8B14B); text-decoration: none; padding: 8px 20px; border: 0.5px solid rgba(232,177,75,0.4); border-radius: 999px; transition: background 0.2s, color 0.2s; }
+  .top-cta-link:hover { background: var(--amber-lt); color: var(--void); }
+</style>
+
 <!-- CONCEPT -->
 <section id="concept" class="concept">
   <div class="wrap">
@@ -395,9 +460,9 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
         <div class="artist-info">
           <div class="artist-name">Robin Flor&aelig;sta</div>
           <span class="artist-role">Chef &middot; Forager &middot; Elixir master</span>
-          <p class="artist-bio" style="margin-bottom:14px;">Founder of Fungai Art. Chef, wild forager, elixir composer.</p>
-          <p class="artist-bio" style="margin-bottom:14px;">The cooking came first &mdash; European kitchens across <strong style="color:var(--parchment);font-weight:500;">[ROBIN: cities / years / signature restaurants]</strong>, learning how heat and time and salt cooperate, how a plate can carry an intention across a table without needing to be spoken about. The mycology came later &mdash; a decade of Swedish autumn foraging that slowly took over the whole practice. What began as ingredient sourcing became a full alchemical vocabulary: spagyric extraction, plant-ally curation, ceremonial preparation. The <a href="/shop" style="color:var(--mist);text-decoration:none;border-bottom:0.5px solid rgba(136,186,200,0.4);">apothecary</a> at fungai.art/shop is the daytime version of the same work.</p>
-          <p class="artist-bio">The Dinner Experience is where both lives sit down at the same table &mdash; a meal built with the same intention as a tincture, every course a movement in a longer piece.</p>
+          <p class="artist-bio" style="margin-bottom:14px;">Forager. Former private chef. Now devoted to translating the intelligence of plants and mushrooms into alchemy.</p>
+          <p class="artist-bio" style="margin-bottom:14px;">The kitchen came first &mdash; years as a private chef feeding conscious, sensual gatherings across Europe, where the food was the soul of the meeting, not the accessory to it. That kind of cooking taught me what a plate can carry when the eater is paying attention: taste that opens something else, not just satisfies.</p>
+          <p class="artist-bio">The forest came next &mdash; deep Swedish autumn foraging, then Berlin lab work. The <a href="/shop" style="color:var(--mist);text-decoration:none;border-bottom:0.5px solid rgba(136,186,200,0.4);">apothecary</a> at fungai.art/shop is the daytime version. The Dinner Experience is where both lives sit down at the same table.</p>
         </div>
       </div>
     </div>
@@ -514,17 +579,19 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
       </div>
     </div>
 
-    <p class="menu-foot">Vegetarian by default. Vegan / gluten-free / low-histamine adaptations on request. All plant allies dosed at ceremonial micro-amounts and refusable at the table.</p>
   </div>
 </section>
 
-<!-- FULL-BLEED PHOTO BREAK — collage2 sits between menu + allies -->
-<section class="menu-break" aria-hidden="true">
+<!-- COLLAGE PAIR — collage1 + collage2 side-by-side. Photo break
+     between the menu and the flavour signatures. -->
+<section class="collage-pair" aria-hidden="true">
+  <img src="/dinner-experience/collage1.webp" alt="" loading="lazy">
   <img src="/dinner-experience/collage2.webp" alt="" loading="lazy">
 </section>
 <style>
-  .menu-break { display: block; width: 100%; overflow: hidden; line-height: 0; }
-  .menu-break img { width: 100%; height: clamp(320px, 55vh, 620px); object-fit: cover; display: block; filter: contrast(1.02) saturate(0.98); }
+  .collage-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; width: 100%; overflow: hidden; line-height: 0; background: var(--void); }
+  .collage-pair img { width: 100%; height: clamp(260px, 48vh, 540px); object-fit: cover; display: block; filter: contrast(1.02) saturate(0.98); }
+  @media (max-width: 640px) { .collage-pair { grid-template-columns: 1fr; gap: 2px; } .collage-pair img { height: clamp(220px, 40vh, 360px); } }
 </style>
 
 <style>
@@ -613,99 +680,87 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   }
 </style>
 
-<!-- PLANT ALLIES -->
-<section class="allies">
+<!-- SIGNATURE FLAVOURS — replaces the old "plant allies" list.
+     Robin's personal pantry: the specific ferments, garums, oils
+     and foraged notes that recur across the seasons. Answers the
+     customer question "what will this taste like?" -->
+<section class="flavours">
   <div class="wrap">
-    <div class="allies-header reveal">
-      <span class="sec-label">Plant Allies as Initiatory Intelligence</span>
-      <h2 class="sec-title">The <em>forest speaks</em></h2>
+    <div class="reveal flavours-head">
+      <span class="sec-label">What to expect &middot; flavour-wise</span>
+      <h2 class="sec-title">The house <em>pantry</em>.</h2>
+      <p class="flavours-lede">Some things recur across every dinner &mdash; the notes that make a Fungai Art plate recognisable across the seasons. A short list of house signatures.</p>
     </div>
-    <div class="allies-list">
-      <div class="ally ally-main reveal">
-        <div>
-          <div class="ally-name">Amanita Muscaria</div>
-          <span class="ally-latin">Fly Agaric &middot; Soma</span>
-        </div>
-        <div>
-          <span class="ally-role">The Mother Fungus</span>
-          <p class="ally-body">The crimson cap with white veil &mdash; fly agaric &mdash; older than every religion that borrowed its imagery. Siberian, S&aacute;mi, Baltic, Vedic ceremonial use across millennia. Slow-dried, the ibotenic acid decarboxylates to muscimol &mdash; a GABAergic dream-doorway, body anchor, and nervine.</p>
-        </div>
-        <p class="ally-arrow">&rarr; Dosed in the amuse-bouche at ceremonial micro-amount. Body-anchoring dream doorway, never overriding the meal.</p>
+    <div class="flavours-grid">
+      <div class="flavour reveal">
+        <div class="flavour-name">Morel mushroom</div>
+        <p class="flavour-desc">Spring-foraged, honeycomb-capped, cooked in cultured cream. The umami crown of the season.</p>
       </div>
-      <div class="ally reveal reveal-d1">
-        <div>
-          <div class="ally-name">Chaga</div>
-          <span class="ally-latin">Inonotus obliquus</span>
-        </div>
-        <div>
-          <span class="ally-role">Silent Alchemist</span>
-          <p class="ally-body">Drawing life from the wounded birch, chaga transmutes pain into nourishment &mdash; a living metaphor for regeneration. Active compounds: betulin, betulinic acid, polysaccharides, antioxidants.</p>
-        </div>
-        <p class="ally-arrow">&rarr; Slow-brewed into the forest broth. Umami depth, immune ground, the meal's dark spine.</p>
+      <div class="flavour reveal reveal-d1">
+        <div class="flavour-name">Sweetened pine cone</div>
+        <p class="flavour-desc">Young green cones cured in birch-sap syrup &mdash; a Scandinavian tradition. Resin-sweet, chewy, unlike anything you've had.</p>
       </div>
-      <div class="ally reveal reveal-d1">
-        <div>
-          <div class="ally-name">Cordyceps</div>
-          <span class="ally-latin">Cordyceps sinensis</span>
-        </div>
-        <div>
-          <span class="ally-role">Vital Strategist</span>
-          <p class="ally-body">Moves along the thin line between life forces, teaching efficiency, endurance, and precise use of energy. Adaptogenic vitality carried into cellular metabolism.</p>
-        </div>
-        <p class="ally-arrow">&rarr; Powdered through the savoury broth. Vitality and endurance carried through the main movements.</p>
+      <div class="flavour reveal reveal-d2">
+        <div class="flavour-name">Chaga garum XO sauce</div>
+        <p class="flavour-desc">Chaga fermented into garum, then built into an XO with black garlic and juniper. The house condiment. Deep, savoury, unrepeatable.</p>
       </div>
-      <div class="ally reveal reveal-d2">
-        <div>
-          <div class="ally-name">Pine Pollen</div>
-          <span class="ally-latin">Pinus sylvestris</span>
-        </div>
-        <div>
-          <span class="ally-role">Sovereign Axis</span>
-          <p class="ally-body">The golden dust of renewal &mdash; the breath of the forest made visible. Cellular vitality, hormonal support, the trees remembering their youth.</p>
-        </div>
-        <p class="ally-arrow">&rarr; Dusted across the palate cleanser. Golden nervine, mineral gold, regenerative note.</p>
+      <div class="flavour reveal">
+        <div class="flavour-name">Ramson oil</div>
+        <p class="flavour-desc">Wild garlic leaves cold-pressed into neutral oil the week they're at peak. Green fire.</p>
       </div>
-      <div class="ally reveal">
-        <div>
-          <div class="ally-name">Chilcuague</div>
-          <span class="ally-latin">Golden root</span>
-        </div>
-        <div>
-          <span class="ally-role">Firekeeper of Voice</span>
-          <p class="ally-body">The moment it touches the tongue, a warm tingling vibration spreads through the mouth and into the breath. Spilanthol stimulates peripheral sensory nerves, increasing tactile awareness and bodily feedback.</p>
-        </div>
-        <p class="ally-arrow">&rarr; The tingling opener &mdash; clears the palate for what comes, wakes the senses at the top of the arc.</p>
+      <div class="flavour reveal reveal-d1">
+        <div class="flavour-name">Spruce tip vinegar</div>
+        <p class="flavour-desc">Young spring shoots steeped into cider vinegar &mdash; brightness, resin, forest floor. Cuts fat like nothing else.</p>
+      </div>
+      <div class="flavour reveal reveal-d2">
+        <div class="flavour-name">Labneh with wild herbs</div>
+        <p class="flavour-desc">Slow-strained yoghurt with foraged sorrel, wood-sorrel, plantain. Cool counter to the darker courses.</p>
+      </div>
+      <div class="flavour reveal">
+        <div class="flavour-name">Wasabi sesame</div>
+        <p class="flavour-desc">Stone-ground sesame with fresh horseradish and hand-grated wasabi. Nose-heat, earthy, aromatic.</p>
+      </div>
+      <div class="flavour reveal reveal-d1">
+        <div class="flavour-name">Reindeer moss salt</div>
+        <p class="flavour-desc">Smoked cladonia lichen ground with sea salt. The finishing touch on the anchor course.</p>
+      </div>
+      <div class="flavour reveal reveal-d2">
+        <div class="flavour-name">Cacao-reishi close</div>
+        <p class="flavour-desc">Bitter cocoa cream with reishi's herbal note and salted pine crystals. The evening's soft landing.</p>
       </div>
     </div>
+    <p class="flavours-foot">&mdash; and whatever the Swedish autumn (or the season we're in) offered that week.</p>
   </div>
 </section>
+<style>
+  .flavours { padding: 120px 0; background: var(--void); }
+  .flavours-head { text-align: center; max-width: 640px; margin: 0 auto 64px; padding: 0 24px; }
+  .flavours-lede { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--dust); margin-top: 14px; line-height: 1.7; opacity: 0.9; }
+  .flavours-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 48px; max-width: 1120px; margin: 0 auto; padding: 0 40px; }
+  .flavour { padding-top: 24px; border-top: 0.5px solid rgba(232,177,75,0.22); }
+  .flavour-name { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--parchment); line-height: 1.25; letter-spacing: -0.005em; margin-bottom: 12px; }
+  .flavour-desc { font-size: 13.5px; color: var(--dust); line-height: 1.75; }
+  .flavours-foot { text-align: center; margin: 56px auto 0; max-width: 640px; font-family: var(--serif); font-style: italic; font-size: 14.5px; color: var(--mist); opacity: 0.85; }
+  @media (max-width: 900px) { .flavours-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; padding: 0 24px; } }
+  @media (max-width: 560px) { .flavours-grid { grid-template-columns: 1fr; } .flavours { padding: 80px 0; } }
+</style>
 
-<!-- UPCOMING / CALENDAR -->
-<section class="events" id="calendar" style="padding-bottom:0;">
-  <div class="wrap">
-    <div class="reveal">
-      <span class="sec-label">Calendar</span>
-      <h2 class="sec-title">Coming <em>up</em></h2>
-    </div>
-    <div class="events-grid">
-      <div class="event-table reveal reveal-d1">
-        <a href="#reserve" class="event-row" style="background:linear-gradient(180deg,rgba(196,134,46,0.10),var(--card));border-left:2px solid rgba(232,177,75,0.6);text-decoration:none;color:inherit;display:grid;grid-template-columns:1fr 1fr auto;gap:24px;padding:20px 24px;align-items:center;">
-          <div>
-            <div class="event-venue">Holzmarkt, Berlin</div>
-            <div class="event-act"><span class="mt-name">Dinner Experience</span> &middot; Fungi Fever Fest &middot; Sat 11 Oct 2026</div>
-          </div>
-          <div style="font-family:var(--serif);font-style:italic;color:var(--mist);font-size:13px;">Reserve seat &rarr;</div>
-          <span class="event-badge upcoming">Next</span>
-        </a>
-        <div class="event-row">
-          <div><div class="event-venue">Berlin Foraging Circles</div><div class="event-act">Autumn 2026 &middot; Community walks</div></div>
-          <span class="event-badge upcoming">Upcoming</span>
-        </div>
-      </div>
-      <div></div>
-    </div>
+<!-- MIDDLE CTA — sleek inquiries line between flavours + reservation -->
+<section class="mid-cta reveal">
+  <div class="mid-cta-inner">
+    <span class="mid-cta-label">Inquiring about the dinner?</span>
+    <a href="mailto:robin@fungai.art?subject=Dinner%20Experience%20inquiry" class="mid-cta-link">robin@fungai.art &rarr;</a>
+    <span class="mid-cta-note">Robin writes back within 48 hours.</span>
   </div>
 </section>
+<style>
+  .mid-cta { padding: 48px 24px; background: var(--void); border-top: 0.5px solid rgba(232,177,75,0.15); border-bottom: 0.5px solid rgba(232,177,75,0.15); }
+  .mid-cta-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: baseline; justify-content: center; gap: 20px; flex-wrap: wrap; text-align: center; }
+  .mid-cta-label { font-family: 'Bayer',var(--sans); font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--lichen); }
+  .mid-cta-link { font-family: 'TAN-PARADISO',var(--serif); font-style: italic; font-size: 28px; color: var(--amber-lt,#E8B14B); text-decoration: none; letter-spacing: 0.005em; transition: color 0.2s; }
+  .mid-cta-link:hover { color: var(--parchment); }
+  .mid-cta-note { font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--dust); opacity: 0.75; }
+</style>
 
 <!-- ══════════════ FUNGI FEVER FEST · RESERVATION ══════════════
      Sliding-scale reservation flow modelled on /sensorium. mailto
@@ -738,8 +793,41 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
     </div>
   </div>
 
+  <!-- What we know so far — structured detail block. Robin fills
+       in specifics (doors, dress, meeting point, wine pairing) as
+       the event firms up. -->
+  <div class="wrap" style="max-width:900px;margin:0 auto;padding:64px 24px 0;">
+    <div class="ff-details reveal">
+      <div class="ff-details-head">
+        <span class="ff-details-label">What we know so far</span>
+        <span class="ff-details-note">More info in the weeks before &mdash; details land in your inbox once you've reserved.</span>
+      </div>
+      <div class="ff-details-grid">
+        <div><span class="ff-d-key">Date</span><span class="ff-d-val">Saturday 11 October 2026</span></div>
+        <div><span class="ff-d-key">Doors</span><span class="ff-d-val">More info soon</span></div>
+        <div><span class="ff-d-key">Venue</span><span class="ff-d-val">Holzmarkt, Berlin</span></div>
+        <div><span class="ff-d-key">Format</span><span class="ff-d-val">7 courses &middot; 12&ndash;14 seats</span></div>
+        <div><span class="ff-d-key">Duration</span><span class="ff-d-val">~3.5 hours</span></div>
+        <div><span class="ff-d-key">Pairing</span><span class="ff-d-val">Non-alcoholic base &middot; wine on request</span></div>
+        <div><span class="ff-d-key">Dress</span><span class="ff-d-val">Yourself, at ease</span></div>
+        <div><span class="ff-d-key">Part of</span><span class="ff-d-val">Fungi Fever Fest weekend</span></div>
+      </div>
+    </div>
+  </div>
+  <style>
+    .ff-details { padding: 0; }
+    .ff-details-head { text-align: center; margin-bottom: 32px; display: flex; flex-direction: column; gap: 8px; }
+    .ff-details-label { font-family: 'Bayer',var(--sans); font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--amber-lt,#E8B14B); }
+    .ff-details-note { font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--dust); opacity: 0.8; max-width: 480px; margin: 0 auto; line-height: 1.6; }
+    .ff-details-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px 24px; padding: 32px 0 0; border-top: 0.5px solid rgba(232,177,75,0.2); }
+    .ff-details-grid > div { display: flex; flex-direction: column; gap: 6px; }
+    .ff-d-key { font-family: 'Bayer',var(--sans); font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--lichen); }
+    .ff-d-val { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--parchment); line-height: 1.4; }
+    @media (max-width: 720px) { .ff-details-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+
   <!-- Ticket + form -->
-  <div class="wrap" style="max-width:780px;margin:0 auto;padding:80px 24px 100px;">
+  <div class="wrap" style="max-width:780px;margin:0 auto;padding:60px 24px 100px;">
 
     <!-- Ticket cards -->
     <div class="ff-tickets reveal" style="display:flex;gap:16px;margin-bottom:44px;" role="group" aria-label="Choose your contribution">
@@ -882,23 +970,19 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
     <div class="events-grid">
       <div class="event-table reveal reveal-d1">
         <div class="event-row">
-          <div><div class="event-venue">Astral Plans, France</div><div class="event-act">Entheogenic Dinner &middot; 70 pax</div></div>
+          <div><div class="event-venue">Garbicz Lichtung, Poland</div><div class="event-act">Fungai Art Dinner Experience &middot; 90 pax</div></div>
           <span class="event-badge done">Done</span>
         </div>
         <div class="event-row">
-          <div><div class="event-venue">Private Villa, Bali</div><div class="event-act">Private Dinner Experience &middot; 14 pax</div></div>
+          <div><div class="event-venue">Astral Plans, Paris</div><div class="event-act">Entheogenic Dinner</div></div>
           <span class="event-badge done">Done</span>
         </div>
         <div class="event-row">
-          <div><div class="event-venue">TrypExpo, Berlin</div><div class="event-act">Fungai Art Tasting Table</div></div>
+          <div><div class="event-venue">Per Anhalter, Berlin</div><div class="event-act">Spring Dinner &middot; 70 pax</div></div>
           <span class="event-badge done">Done</span>
         </div>
         <div class="event-row">
-          <div><div class="event-venue">Hive Festival, Germany</div><div class="event-act">Blue Lotus Tasting &middot; 50 pax</div></div>
-          <span class="event-badge done">Done</span>
-        </div>
-        <div class="event-row">
-          <div><div class="event-venue">Per Anhalter, Germany</div><div class="event-act">Pine Cone Tasting &middot; 70 pax</div></div>
+          <div><div class="event-venue">Private venues</div><div class="event-act">Bali &middot; Stockholm &middot; Ibiza</div></div>
           <span class="event-badge done">Done</span>
         </div>
       </div>
@@ -950,48 +1034,48 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   </div>
 </section>
 
-<!-- BOOKING -->
-<section class="booking">
-  <div class="booking-bg">
-    <img src="/dinner-experience/outro.webp" alt="">
+<!-- BOTTOM CTA BANNER — sleek closing invitation. Replaces the old
+     private-event booking block (booking flow will live on an
+     affiliate link Robin sets up separately). -->
+<section class="bottom-cta">
+  <div class="bottom-cta-bg">
+    <img src="/dinner-experience/outro.webp" alt="" loading="lazy">
   </div>
-  <div class="booking-content wrap">
-    <div class="reveal">
-      <span class="sec-label" style="text-align:center;justify-content:center;display:flex;">Book a table</span>
-      <div class="booking-title">Bring the Dinner<br>Experience to your <em>event</em></div>
-      <p style="font-size:15px;color:var(--dust);max-width:560px;margin:0 auto 24px;line-height:1.8;">Private dinners, festival kitchens, retreats, chef residencies. Berlin base; we travel across Europe and beyond.</p>
-
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;max-width:680px;margin:0 auto 32px;text-align:left;">
-        <div style="padding:18px 16px;background:rgba(15,18,20,0.55);border:0.5px solid rgba(136,186,200,0.18);border-radius:10px;">
-          <div style="font-family:'Bayer','DM Sans',sans-serif;font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:var(--mist);margin-bottom:6px;">Response time</div>
-          <div style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:18px;color:var(--parchment);line-height:1.25;">Within <em style="color:var(--mist);">48 hours</em></div>
-          <div style="font-size:11.5px;color:var(--dust);line-height:1.55;margin-top:4px;opacity:0.85;">Robin writes back personally.</div>
-        </div>
-        <div style="padding:18px 16px;background:rgba(15,18,20,0.55);border:0.5px solid rgba(136,186,200,0.18);border-radius:10px;">
-          <div style="font-family:'Bayer','DM Sans',sans-serif;font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:var(--mist);margin-bottom:6px;">Indicative range</div>
-          <div style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:18px;color:var(--parchment);line-height:1.25;">&euro;120 &ndash; &euro;220 <em style="color:var(--mist);">per seat</em></div>
-          <div style="font-size:11.5px;color:var(--dust);line-height:1.55;margin-top:4px;opacity:0.85;">Scales with format, travel, courses. Festivals &amp; residencies negotiable.</div>
-        </div>
-        <div style="padding:18px 16px;background:rgba(15,18,20,0.55);border:0.5px solid rgba(136,186,200,0.18);border-radius:10px;">
-          <div style="font-family:'Bayer','DM Sans',sans-serif;font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:var(--mist);margin-bottom:6px;">Lead time</div>
-          <div style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:18px;color:var(--parchment);line-height:1.25;">4&ndash;8 weeks <em style="color:var(--mist);">ideal</em></div>
-          <div style="font-size:11.5px;color:var(--dust);line-height:1.55;margin-top:4px;opacity:0.85;">Sourcing and menu-building take time. Faster turnaround possible for Berlin.</div>
-        </div>
-      </div>
-
-      <div class="booking-contacts">
-        <div class="contact-item">
-          <div class="contact-name">Robin Flor&aelig;sta</div>
-          <a href="mailto:robin@fungai.art?subject=Dinner%20Experience%20booking%20--%20%5Bevent%20name%5D&amp;body=Hi%20Robin%2C%0A%0AEvent%3A%0ADate%3A%0ALocation%3A%0AExpected%20number%20of%20guests%3A%0AKitchen%20%26%20dietary%20context%3A%0AWhat%20you%27re%20looking%20for%3A%0A%0AThanks%2C" class="contact-email">robin@fungai.art</a>
-        </div>
-      </div>
-      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-        <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-primary" rel="noopener noreferrer">@fungai.art on Instagram</a>
-        <a href="/" class="btn-ghost">Back to Apothecary</a>
-      </div>
+  <div class="bottom-cta-content">
+    <p class="bottom-cta-eyebrow">One table &middot; twelve seats &middot; one evening</p>
+    <h2 class="bottom-cta-title">Sat 11 October, <em>Berlin</em>.</h2>
+    <p class="bottom-cta-lede">If the mushroom kingdom has been calling and dinner is where you'd like to hear it, take a seat.</p>
+    <div class="bottom-cta-actions">
+      <a href="#reserve" class="bottom-cta-primary">Reserve a seat</a>
+      <a href="mailto:robin@fungai.art?subject=Dinner%20Experience%20inquiry" class="bottom-cta-secondary">Or just write &rarr;</a>
+    </div>
+    <div class="bottom-cta-social">
+      <a href="https://www.instagram.com/fungai.art" target="_blank" rel="noopener noreferrer">@fungai.art on Instagram</a>
+      <span aria-hidden="true">&middot;</span>
+      <a href="/">fungai.art</a>
     </div>
   </div>
 </section>
+<style>
+  .bottom-cta { position: relative; min-height: 70vh; display: flex; align-items: center; justify-content: center; padding: 100px 24px; overflow: hidden; text-align: center; }
+  .bottom-cta-bg { position: absolute; inset: 0; }
+  .bottom-cta-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
+  .bottom-cta-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,9,12,0.75) 0%, rgba(5,9,12,0.55) 40%, rgba(5,9,12,0.9) 100%); }
+  .bottom-cta-content { position: relative; z-index: 1; max-width: 640px; }
+  .bottom-cta-eyebrow { font-family: 'Bayer',var(--sans); font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--amber-lt,#E8B14B); margin-bottom: 26px; }
+  .bottom-cta-title { font-family: 'TAN-PARADISO','Cormorant Garamond',serif; font-weight: 300; font-size: clamp(48px,7vw,88px); line-height: 0.98; color: var(--parchment); letter-spacing: 0.005em; margin-bottom: 20px; }
+  .bottom-cta-title em { font-style: italic; color: var(--mist); }
+  .bottom-cta-lede { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--dust); line-height: 1.7; margin-bottom: 40px; }
+  .bottom-cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 36px; }
+  .bottom-cta-primary { display: inline-block; padding: 15px 36px; background: var(--amber-lt,#E8B14B); color: var(--void); font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; }
+  .bottom-cta-primary:hover { opacity: 0.85; }
+  .bottom-cta-secondary { display: inline-flex; align-items: center; padding: 15px 28px; border: 0.5px solid rgba(232,177,75,0.4); color: var(--parchment); font-family: var(--sans); font-weight: 400; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+  .bottom-cta-secondary:hover { border-color: var(--amber-lt); color: var(--amber-lt); }
+  .bottom-cta-social { font-family: var(--sans); font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--dust); opacity: 0.75; }
+  .bottom-cta-social a { color: inherit; text-decoration: none; transition: color 0.2s; }
+  .bottom-cta-social a:hover { color: var(--amber-lt); }
+  .bottom-cta-social span { margin: 0 12px; }
+</style>
 
 <!-- FOOTER -->
 <footer class="footer">
