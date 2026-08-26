@@ -633,12 +633,17 @@
       const { data: auth } = await window.SBauth.getUser().catch(() => ({ data: null }));
       const user = auth && auth.user;
       if (!user || !user.id) return;
-      const { data } = await window.SBclient
+      // Match by auth_user_id OR email — catches fresh Supabase
+      // accounts created with a banned email under a new UUID.
+      const emailLc = String(user.email || '').toLowerCase();
+      const orClauses = [`auth_user_id.eq.${user.id}`];
+      if (emailLc) orClauses.push(`email.eq.${emailLc}`);
+      const { data: hits } = await window.SBclient
         .from('banned_users')
         .select('id')
-        .eq('auth_user_id', user.id)
-        .maybeSingle();
-      if (data && data.id) {
+        .or(orClauses.join(','))
+        .limit(1);
+      if (Array.isArray(hits) && hits.length > 0) {
         try { await window.SBauth.signOut(); } catch {}
         try {
           localStorage.removeItem('spore_active_member_full');
