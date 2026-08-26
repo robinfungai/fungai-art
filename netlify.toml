@@ -6,6 +6,11 @@
   directory      = "netlify/functions"
   node_bundler   = "esbuild"
 
+# Edge functions — run at the CDN before the request hits the origin.
+[[edge_functions]]
+  function = "ip-block"
+  path     = "/*"
+
 # Force browsers to revalidate the favicon — avoids stale cached icons persisting across deploys
 [[headers]]
   for = "/favicon.svg"

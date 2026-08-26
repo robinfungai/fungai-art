@@ -244,6 +244,42 @@ export const handler = async (event) => {
     return json(400, { error: 'Too many distinct items in one order.' });
   }
 
+  // ── Ban check ──────────────────────────────────────────────────
+  // If the customer's email or client IP matches a row in
+  // banned_users, refuse the order before touching Stripe. Returns
+  // a generic "unavailable" message so the banned user doesn't get
+  // to confirm the ban and switch tactics. Non-fatal on error —
+  // we don't want the checkout to hard-fail if Supabase is down.
+  if (hasSupabase) {
+    try {
+      const supabase = createClient(supabaseUrl, supabaseSrvKey, {
+        auth: { autoRefreshToken: false, persistSession: false },
+      });
+      const custEmail = String(customer.email || '').trim().toLowerCase();
+      const clientIp = String(
+        event.headers['x-nf-client-connection-ip']
+        || (event.headers['x-forwarded-for'] || '').split(',')[0].trim()
+        || ''
+      ).trim();
+      const orClauses = [];
+      if (custEmail) orClauses.push(`email.eq.${custEmail}`);
+      if (clientIp)  orClauses.push(`ip_address.ilike.%${clientIp}%`);
+      if (orClauses.length) {
+        const { data: hits } = await supabase
+          .from('banned_users')
+          .select('id')
+          .or(orClauses.join(','))
+          .limit(1);
+        if (Array.isArray(hits) && hits.length > 0) {
+          console.warn('[create-payment-intent] Refused order — banned identifier', { email: custEmail, ip: clientIp });
+          return json(403, { error: 'This checkout is not available. Please contact robin@fungai.art.' });
+        }
+      }
+    } catch (e) {
+      console.error('[create-payment-intent] Ban-check threw (allowing order):', e.message);
+    }
+  }
+
   // ── Price the order from the catalog ────────────────────────────
   let subtotal = 0;
   const priced = [];

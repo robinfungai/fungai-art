@@ -617,12 +617,59 @@
     drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
   }
 
+  // ─── Ban check ────────────────────────────────────────────────
+  // Runs after Supabase auth hydrates. Looks up the current auth
+  // user in the banned_users table (users can only see their own
+  // row via RLS, so no ban list leak). If a row is found: sign the
+  // user out, blank localStorage, and show a full-screen block. The
+  // ban is enforced server-side too (stripe intent + admin RPCs),
+  // this is the visible layer.
+  let _banChecked = false;
+  async function enforceBan(){
+    if (_banChecked) return;
+    if (!window.SBclient || !window.SBauth) return;
+    _banChecked = true;
+    try {
+      const { data: auth } = await window.SBauth.getUser().catch(() => ({ data: null }));
+      const user = auth && auth.user;
+      if (!user || !user.id) return;
+      const { data } = await window.SBclient
+        .from('banned_users')
+        .select('id')
+        .eq('auth_user_id', user.id)
+        .maybeSingle();
+      if (data && data.id) {
+        try { await window.SBauth.signOut(); } catch {}
+        try {
+          localStorage.removeItem('spore_active_member_full');
+          localStorage.removeItem('spore_active_member');
+        } catch {}
+        showBannedScreen();
+      }
+    } catch {}
+  }
+  function showBannedScreen(){
+    if (document.getElementById('fa-banned-screen')) return;
+    const el = document.createElement('div');
+    el.id = 'fa-banned-screen';
+    el.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(5,9,12,0.98);color:#EDE5D8;font-family:Georgia,\'Times New Roman\',serif;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px;backdrop-filter:blur(8px);';
+    el.innerHTML = ''
+      + '<div style="max-width:520px;">'
+      + '<div style="font-family:\'Courier New\',monospace;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:#8B7E62;margin-bottom:24px;">Access notice</div>'
+      + '<p style="font-family:Georgia,serif;font-style:italic;font-size:32px;line-height:1.35;color:#EDE5D8;margin-bottom:20px;">Your access to Fungai Art has been revoked.</p>'
+      + '<p style="font-size:14px;line-height:1.7;color:#C0B49A;opacity:0.75;">If you believe this is an error, write to <a href="mailto:robin@fungai.art" style="color:#E8B14B;text-decoration:none;border-bottom:0.5px solid rgba(232,177,75,0.4);">robin@fungai.art</a>.</p>'
+      + '</div>';
+    document.body.appendChild(el);
+  }
+  window.addEventListener('supabase:ready', () => { enforceBan(); });
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { renderBanner(); hydrateFromSupabase(); syncStuckLabNotes(); renderSubpageMobileMenu(); });
+    document.addEventListener('DOMContentLoaded', () => { renderBanner(); hydrateFromSupabase(); syncStuckLabNotes(); renderSubpageMobileMenu(); enforceBan(); });
   } else {
     renderBanner();
     hydrateFromSupabase();
     syncStuckLabNotes();
     renderSubpageMobileMenu();
+    enforceBan();
   }
 })();
