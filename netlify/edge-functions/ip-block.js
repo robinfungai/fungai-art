@@ -33,6 +33,7 @@
 //   country:     ISO country code (e.g., 'US')
 const GEO_BLOCKS = [
   { city: 'Asheville', subdivision: 'NC', country: 'US' },
+  { city: 'Candler',   subdivision: 'NC', country: 'US' },
 ];
 
 function isGeoBlocked(geo) {
