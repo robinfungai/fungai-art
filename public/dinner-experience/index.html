@@ -57,6 +57,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
 .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom, rgba(5,9,12,0.3) 0%, rgba(5,9,12,0.6) 60%, rgba(5,9,12,0.95) 100%)}
 .hero-content{position:relative;z-index:10;padding:80px 60px;max-width:900px}
 .hero-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--lichen);margin-bottom:24px;display:block}
+.hero-mark{display:block;height:64px;width:auto;margin:0 0 20px;opacity:0.9;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.35))}
+@media (max-width:640px){.hero-mark{height:52px;margin-bottom:16px}}
 /* The "Dinner Experience" wordmark uses TAN-PARADISO in italics wherever
    it appears across the site. Kept the historical .mt-name class name so
    the existing CSS on other pages continues to apply without needing a
@@ -242,6 +244,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
     <img src="/dinner-experience/header.webp" alt="Fungai Art Dinner Experience">
   </div>
   <div class="hero-content">
+    <img src="/dinner-experience/logo-transparent.png" alt="Fungai Art" class="hero-mark" width="80" height="80">
     <span class="hero-label">Fungai Art · 2026 · Hosted by Robin Floræsta</span>
     <h1 class="hero-title">Dinner<br><em>Experience</em></h1>
     <span class="hero-sub">a fungal feast for all the senses</span>
@@ -274,9 +277,23 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
       </div>
       <div class="reveal reveal-d2">
         <div class="concept-img">
-          <img src="/dinner-experience/featured.webp" alt="Fungai Art dinner featured shot">
+          <img src="/dinner-experience/featured.webp" alt="Morels, labneh, spruce shoots, ramson oil, wild herbs, wasabi sesame">
         </div>
+        <p class="concept-caption">Morels &middot; labneh &middot; spruce shoots &middot; ramson oil &middot; wild herbs &middot; wasabi sesame</p>
       </div>
+      <style>
+        .concept-caption {
+          margin-top: 14px;
+          font-family: var(--serif);
+          font-style: italic;
+          font-size: 13.5px;
+          line-height: 1.6;
+          color: var(--dust);
+          letter-spacing: 0.01em;
+          text-align: right;
+          opacity: 0.85;
+        }
+      </style>
     </div>
   </div>
 </section>
@@ -291,33 +308,33 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
     <div class="principles-grid">
       <div class="principle reveal reveal-d1">
         <span class="principle-num">01</span>
-        <div class="principle-name"><em>Reciprocity</em></div>
-        <p style="font-size:13px;color:var(--dust);line-height:1.7;">Each plate is a two-way conversation between the eater and the forest that grew it. What we take, we honour. What we serve, we understand.</p>
+        <div class="principle-name">Fungal <em>devotion</em></div>
+        <p style="font-size:13px;color:var(--dust);line-height:1.7;">The kitchen belongs to the mushrooms tonight. Every course carries a fungal note &mdash; the ones you already love, the ones you've never heard of, the ones no restaurant has served you before.</p>
       </div>
       <div class="principle reveal reveal-d2">
         <span class="principle-num">02</span>
-        <div class="principle-name"><em>Embodiment</em></div>
-        <p style="font-size:13px;color:var(--dust);line-height:1.7;">Digestion is attunement. Chewing slowly, breathing between bites, tasting before naming &mdash; the body is invited to receive the meal, not just consume it.</p>
+        <div class="principle-name">A <em>journey</em>,<br>not a meal</div>
+        <p style="font-size:13px;color:var(--dust);line-height:1.7;">Seven courses is really seven doorways into the mycelium realm. Each opens a new chamber. You leave the table having tasted a place, not just eaten dinner.</p>
       </div>
       <div class="principle reveal reveal-d3">
         <span class="principle-num">03</span>
-        <div class="principle-name">Ecological<br><em>Consciousness</em></div>
-        <p style="font-size:13px;color:var(--dust);line-height:1.7;">Every ingredient is traceable to soil, season and source. Foraged from Sweden, France, Cappadocia; composed in the Berlin lab. Nothing anonymous on the plate.</p>
+        <div class="principle-name">Beyond the<br><em>usual suspects</em></div>
+        <p style="font-size:13px;color:var(--dust);line-height:1.7;">Chanterelle and porcini are welcome &mdash; but so are lion's mane, chaga, reishi, morel, cordyceps, black trumpet, and whatever the Swedish autumn offered this week. If you've only met mushrooms saut&eacute;ed in butter, this is their fuller vocabulary.</p>
       </div>
       <div class="principle reveal reveal-d1">
         <span class="principle-num">04</span>
-        <div class="principle-name">Integrity with<br><em>Plant Allies</em></div>
-        <p style="font-size:13px;color:var(--dust);line-height:1.7;">Adaptogens and sacred plants are dosed in food at ceremonial micro-amounts. Every ally is named, its purpose explained. Abstention from any course is always respected.</p>
+        <div class="principle-name">Playful <em>reverence</em></div>
+        <p style="font-size:13px;color:var(--dust);line-height:1.7;">Serious about the fungi, not about ourselves. There are jokes at this table. The Latin names come out. The plates are beautiful. The evening is meant to delight, not solemnise.</p>
       </div>
       <div class="principle reveal reveal-d2">
         <span class="principle-num">05</span>
-        <div class="principle-name">Ritual<br><em>Devotion</em></div>
-        <p style="font-size:13px;color:var(--dust);line-height:1.7;">Intentional plating, warm light, low sound, one long round table. The dinner opens with a shared breath and closes with tea. The container matters as much as the food.</p>
+        <div class="principle-name">The <em>forest</em><br>at the table</div>
+        <p style="font-size:13px;color:var(--dust);line-height:1.7;">Sweden's autumn foraging arrives on your plate. What can't travel, we compose in the Berlin lab. The room smells of spruce, birch smoke, koji. You're not eating a meal &mdash; you're eating a place.</p>
       </div>
       <div class="principle reveal reveal-d3">
         <span class="principle-num">06</span>
-        <div class="principle-name">Sensory<br><em>Intelligence</em></div>
-        <p style="font-size:13px;color:var(--dust);line-height:1.7;">The seven-course arc is composed like a piece of music &mdash; bitter to umami, hot to cold, savoury to sober close. The tongue is treated as an organ of perception, not just pleasure.</p>
+        <div class="principle-name">Mycelial <em>connection</em></div>
+        <p style="font-size:13px;color:var(--dust);line-height:1.7;">Fungi taught us everything is connected underground. Around this table, the same happens above &mdash; strangers become a temporary mycelium for a night, threading conversation, sharing the same breath before the first bite.</p>
       </div>
     </div>
   </div>
