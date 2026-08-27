@@ -21,6 +21,8 @@ const STATIC_PAGES = [
   '/shop/chaga',        '/shop/wild-cordyceps', '/shop/nervous-system-tonic',
   '/shop/healthy-aging','/shop/shilajit',
   '/moder-jord',
+  // Dinner Experience sub-pages
+  '/the-house-ethos', '/the-tasting-arc', '/dinner-experience-sample-menu',
 ];
 const serveStaticPages = () => ({
   name: 'serve-static-pages',
