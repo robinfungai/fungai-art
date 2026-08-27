@@ -219,31 +219,56 @@
   #fa-sub-nav-btn {
     display: none;
     position: fixed;
-    top: 20px; right: 18px;
+    top: 16px; right: 16px;
     z-index: 8500;
-    width: 42px; height: 42px;
-    background: rgba(15,18,20,0.85);
-    border: 0.5px solid rgba(232,177,75,0.45);
-    border-radius: 4px;
+    width: 52px; height: 52px;
+    background: rgba(15,18,20,0.92);
+    border: 1px solid rgba(232,177,75,0.55);
+    border-radius: 50%;
     cursor: pointer;
     padding: 0;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    gap: 4px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.5), 0 0 20px rgba(232,177,75,0.15);
     -webkit-tap-highlight-color: transparent;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.25s;
   }
-  #fa-sub-nav-btn span {
+  #fa-sub-nav-btn:hover, #fa-sub-nav-btn:active {
+    transform: scale(1.05);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.55), 0 0 28px rgba(232,177,75,0.30);
+  }
+  /* The mushroom logo lives inside; on open we rotate it out and
+     replace it with a big amber X so the customer sees the close
+     affordance clearly. */
+  #fa-sub-nav-btn .fa-sub-nav-logo {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: opacity 0.2s, transform 0.3s;
     display: block;
-    width: 20px; height: 1.5px;
-    background: #E8B14B;
-    transition: transform 0.25s, opacity 0.2s;
   }
-  #fa-sub-nav-btn.fa-open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
-  #fa-sub-nav-btn.fa-open span:nth-child(2) { opacity: 0; }
-  #fa-sub-nav-btn.fa-open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+  #fa-sub-nav-btn .fa-sub-nav-x {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #E8B14B;
+    font-family: 'Bayer', 'DM Sans', system-ui, sans-serif;
+    font-weight: 300;
+    font-size: 26px;
+    line-height: 1;
+    opacity: 0;
+    transform: rotate(-90deg);
+    transition: opacity 0.2s, transform 0.3s;
+    background: rgba(15,18,20,0.85);
+    border-radius: 50%;
+  }
+  #fa-sub-nav-btn.fa-open .fa-sub-nav-logo { opacity: 0; transform: scale(0.6); }
+  #fa-sub-nav-btn.fa-open .fa-sub-nav-x    { opacity: 1; transform: rotate(0deg); }
 
   #fa-sub-nav-drawer {
     display: none;
@@ -260,6 +285,27 @@
     transition: transform 0.28s ease;
   }
   #fa-sub-nav-drawer.fa-open { transform: translateX(0); }
+  /* In-drawer close button — always visible when drawer is open so
+     the user doesn't have to remember to tap the logo again. */
+  #fa-sub-nav-drawer-close {
+    position: absolute;
+    top: 18px; right: 20px;
+    width: 40px; height: 40px;
+    background: transparent;
+    border: 1px solid rgba(232,177,75,0.5);
+    border-radius: 50%;
+    color: #E8B14B;
+    font-size: 20px;
+    font-family: 'Bayer', 'DM Sans', system-ui, sans-serif;
+    font-weight: 300;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  #fa-sub-nav-drawer-close:hover { background: rgba(232,177,75,0.15); border-color: #E8B14B; }
   #fa-sub-nav-drawer .fa-sub-nav-section {
     font-family: 'Bayer', 'DM Sans', sans-serif;
     font-size: 9px;
@@ -546,7 +592,10 @@
     btn.id = 'fa-sub-nav-btn';
     btn.setAttribute('aria-label', 'Open menu');
     btn.setAttribute('aria-expanded', 'false');
-    btn.innerHTML = '<span></span><span></span><span></span>';
+    // Logo + X overlay. Logo shows by default; on open, X fades in
+    // over it and the logo scales down + fades out.
+    btn.innerHTML = '<img class="fa-sub-nav-logo" src="/fungai-art-logo.png" alt="" aria-hidden="true">'
+                  + '<span class="fa-sub-nav-x" aria-hidden="true">✕</span>';
 
     const overlay = document.createElement('div');
     overlay.id = 'fa-sub-nav-overlay';
@@ -555,6 +604,7 @@
     drawer.id = 'fa-sub-nav-drawer';
     drawer.setAttribute('aria-label', 'Site navigation');
     drawer.innerHTML = `
+      <button id="fa-sub-nav-drawer-close" aria-label="Close menu">✕</button>
       <div class="fa-sub-nav-section">Explore</div>
       <a href="/">Home</a>
       <a href="/shop">Shop <span class="fa-tag">· apothecary</span></a>
@@ -609,6 +659,9 @@
       if (drawer.classList.contains('fa-open')) close(); else open();
     });
     overlay.addEventListener('click', close);
+    // In-drawer close button
+    const closeBtn = drawer.querySelector('#fa-sub-nav-drawer-close');
+    if (closeBtn) closeBtn.addEventListener('click', close);
     // ESC to close
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && drawer.classList.contains('fa-open')) close();

@@ -2060,7 +2060,7 @@ function toggleMobileMenu() {
       </div>
       <a href="/shop" style="display:inline-flex;align-items:center;gap:8px;border:0.5px solid rgba(136,186,200,0.4);color:var(--cream);font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;padding:12px 24px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:all .2s;" onmouseover="this.style.borderColor='rgba(136,186,200,0.8)';this.style.color='var(--parchment)'" onmouseout="this.style.borderColor='rgba(136,186,200,0.4)';this.style.color='var(--cream)'">Enter full apothecary →</a>
     </div>
-    <div class="products-grid" style="grid-template-columns:repeat(5,1fr)">
+    <div class="products-grid" style="grid-template-columns:repeat(6,1fr)">
 
       <!-- AMANITA MUSCARIA -->
       <div class="product-card reveal" data-category="fungi">
@@ -2109,7 +2109,7 @@ function toggleMobileMenu() {
       <div class="product-card reveal reveal-d2" data-category="compositions">
         <div class="product-img-wrap">
           <img src="/home/products/sleepy.webp" alt="Sleepy Sleepy sleep blend" loading="lazy" decoding="async" class="product-photo">
-          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Sleepy Sleepy', 44)">Add to basket</button></div>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Sleepy Sleepy',38)">Add to basket</button></div>
         </div>
         <div class="product-info">
           <span class="product-category">Compositions · Sleep</span>
@@ -2119,8 +2119,8 @@ function toggleMobileMenu() {
             <span class="note-tag">Sleep</span><span class="note-tag">GABA</span><span class="note-tag">Restorative</span>
           </div>
           <div class="product-footer">
-            <div class="product-price"><span class="size">30ml</span><span>€44</span></div>
-            <button class="add-btn" onclick="addToCart('Sleepy Sleepy', 44)">+ Add</button>
+            <div class="product-price"><span class="size">30ml</span><span>€38</span></div>
+            <button class="add-btn" onclick="addToCart('Sleepy Sleepy',38)">+ Add</button>
           </div>
         </div>
       </div>
@@ -2130,7 +2130,7 @@ function toggleMobileMenu() {
         <div class="product-img-wrap">
           <img src="/home/products/temple-nectar.webp" alt="Temple Nectar blend" loading="lazy" decoding="async" class="product-photo">
           <span class="product-badge badge-new">Signature</span>
-          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Temple Nectar', 44)">Add to basket</button></div>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Temple Nectar',38)">Add to basket</button></div>
         </div>
         <div class="product-info">
           <span class="product-category">Compositions · Sensual</span>
@@ -2140,8 +2140,8 @@ function toggleMobileMenu() {
             <span class="note-tag">Aphrodisiac</span><span class="note-tag">Heart-opening</span><span class="note-tag">Libido</span>
           </div>
           <div class="product-footer">
-            <div class="product-price"><span class="size">30ml</span><span>€44</span></div>
-            <button class="add-btn" onclick="addToCart('Temple Nectar', 44)">+ Add</button>
+            <div class="product-price"><span class="size">30ml</span><span>€38</span></div>
+            <button class="add-btn" onclick="addToCart('Temple Nectar',38)">+ Add</button>
           </div>
         </div>
       </div>
@@ -2162,6 +2162,27 @@ function toggleMobileMenu() {
           <div class="product-footer">
             <div class="product-price"><span class="size">30ml</span><span>€44</span></div>
             <button class="add-btn" onclick="addToCart('Lucid', 44)">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAGA TINCTURE -->
+      <div class="product-card reveal reveal-d3" data-category="fungi">
+        <div class="product-img-wrap">
+          <img src="/home/products/chaga.webp" alt="Chaga Tincture" loading="lazy" decoding="async" class="product-photo">
+          <span class="product-badge badge-foraged">Foraged · Sweden</span>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Chaga Tincture', 44)">Add to basket</button></div>
+        </div>
+        <div class="product-info">
+          <span class="product-category">Fungi · Immunity</span>
+          <a href="/shop/chaga/" class="product-name" style="text-decoration:none;color:inherit;transition:color 0.2s" onmouseover="this.style.color='var(--mist)'" onmouseout="this.style.color=''">Chaga Tincture</a>
+          <p class="product-desc">Silent alchemist · immunity · resilience. Wild-foraged Swedish birch chaga, double-extracted so both triterpenes and beta-glucans come through.</p>
+          <div class="product-notes">
+            <span class="note-tag">Beta-glucans</span><span class="note-tag">Melanin</span><span class="note-tag">Wild</span>
+          </div>
+          <div class="product-footer">
+            <div class="product-price"><span class="size">30ml</span><span>€44</span></div>
+            <button class="add-btn" onclick="addToCart('Chaga Tincture', 44)">+ Add</button>
           </div>
         </div>
       </div>
@@ -2220,29 +2241,27 @@ function toggleMobileMenu() {
   <div class="wrap feature-inner">
     <div class="feature-img-wrap reveal" style="position:relative;min-height:auto;">
       <div style="position:relative;width:280px;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.4);">
-        <img src="/home/pomelli-3.webp" loading="lazy" decoding="async" alt="Sleepy Sleepy" style="display:block;width:100%;height:400px;object-fit:cover;border-radius:18px;">
+        <img src="/home/products/amanita.webp" loading="lazy" decoding="async" alt="Amanita muscaria spagyric tincture" style="display:block;width:100%;height:400px;object-fit:cover;border-radius:18px;">
         <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 0%,transparent 55%,rgba(13,22,25,0.5) 80%,rgba(13,22,25,0.85) 100%);border-radius:18px;pointer-events:none;"></div>
-        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(196,134,46,0.08),transparent 70%);border-radius:18px;pointer-events:none;"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(196,134,46,0.12),transparent 70%);border-radius:18px;pointer-events:none;"></div>
       </div>
-      <div class="annotation ann-1"><strong>CNS ease</strong>Soothes overactive thoughts, relaxes the body</div>
-      <div class="annotation ann-2"><strong>GABAergic</strong>Supports restful sleep pathways naturally</div>
-      <div class="annotation ann-3"><strong>Zero synthetic</strong>additives. Pharma-grade ethanol only</div>
-      <div class="annotation ann-4"><strong>Full spectrum</strong>2 years shelf life. 30ml per bottle</div>
+      <div class="annotation ann-1"><strong>GABA-A</strong>Muscimol agonist. Dream-doorway, body anchor.</div>
+      <div class="annotation ann-2"><strong>Slow-dried</strong>Ibotenic acid → muscimol. The intentional prep.</div>
+      <div class="annotation ann-3"><strong>Spagyric</strong>Ethanol, ash return, recombined. Alchemical.</div>
+      <div class="annotation ann-4"><strong>Micro-dose</strong>1–3 drops · ceremonial container only</div>
     </div>
     <div class="feature-text reveal reveal-d2">
       <span class="sec-label">Featured Formula</span>
-      <h2 class="sec-title">Sleepy <em>Sleepy</em></h2>
-      <blockquote>&ldquo;A soothing night companion, to gently ease tension and guide the body from wakefulness into uninterrupted, restorative sleep.&rdquo;</blockquote>
-      <p>Rich in flavonoids, volatile oils, and mild sedative compounds. These botanicals support GABAergic pathways, promote calm, and help the body transition into restful sleep.</p>
+      <h2 class="sec-title">Amanita <em>muscaria</em></h2>
+      <blockquote>&ldquo;The threshold guardian — older than every religion that borrowed her imagery. Body anchor, dream doorway, ceremonial ally.&rdquo;</blockquote>
+      <p>Self-foraged from Swedish forests. Slow-dried to convert most of the ibotenic acid into muscimol, then spagyrically extracted. A GABA-A dream doorway held only at ceremonial micro-dose.</p>
       <div class="ingredients">
-        <div class="ing-row"><span class="ing-num">01</span><span class="ing-name">Valeriana officinalis</span><span class="ing-effect">Sleep anchor</span></div>
-        <div class="ing-row"><span class="ing-num">02</span><span class="ing-name">Humulus lupulus</span><span class="ing-effect">Sedative</span></div>
-        <div class="ing-row"><span class="ing-num">03</span><span class="ing-name">Chamomile</span><span class="ing-effect">Anti-anxiety</span></div>
-        <div class="ing-row"><span class="ing-num">04</span><span class="ing-name">Passiflora incarnata</span><span class="ing-effect">GABA support</span></div>
-        <div class="ing-row"><span class="ing-num">05</span><span class="ing-name">Lavandula angustifolia</span><span class="ing-effect">Nervous system</span></div>
-        <div class="ing-row"><span class="ing-num">06</span><span class="ing-name">Artemisia vulgaris</span><span class="ing-effect">Dream enhancement</span></div>
+        <div class="ing-row"><span class="ing-num">01</span><span class="ing-name">Muscimol</span><span class="ing-effect">GABA-A agonist</span></div>
+        <div class="ing-row"><span class="ing-num">02</span><span class="ing-name">Ibotenic acid (residual)</span><span class="ing-effect">Glutamate analog</span></div>
+        <div class="ing-row"><span class="ing-num">03</span><span class="ing-name">Muscazone · Muscarine</span><span class="ing-effect">Trace notes</span></div>
+        <div class="ing-row"><span class="ing-num">04</span><span class="ing-name">Amanita muscaria</span><span class="ing-effect">Fly agaric · Soma</span></div>
       </div>
-      <button class="btn-primary" style="margin-top:32px;" onclick="addToCart('Sleepy Sleepy', 33)">Add to basket &mdash; &euro;33</button>
+      <button class="btn-primary" style="margin-top:32px;" onclick="addToCart('Amanita Muscaria', 48)">Add to basket &mdash; &euro;48</button>
     </div>
   </div>
 </div>
@@ -2593,52 +2612,124 @@ function toggleMobileMenu() {
         <h2 class="sec-title">The Foraging <em>Map</em></h2>
         <p style="font-size:14px;color:var(--mist);line-height:1.8;margin-bottom:32px;">An ecological predictive foraging platform. Real coordinates, real plants, real seasons. A living arc from the Swedish boreal down through Berlin and the French Riviera into the Anatolian highlands and Levantine coast — and expanding.</p>
 
-        <!-- Map node previews — mirrors the 5 herb-nodes shown on the right-side SVG arc -->
-        <div style="display:flex;flex-direction:column;gap:1px;margin-bottom:32px;">
-          <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:rgba(107,214,111,0.05);border:0.5px solid rgba(107,214,111,0.15);">
-            <div style="width:8px;height:8px;border-radius:50%;background:#6BD66F;flex-shrink:0;"></div>
-            <div style="flex:1">
-              <div style="font-family:var(--serif);font-style:italic;font-size:16px;color:var(--parchment);">Dalarna, Sweden</div>
-              <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage);margin-top:2px;">Pine cones · Wild Chaga — Boreal source</div>
+        <!-- Location-aware forageables preview. Uses browser geolocation
+             (with consent) to show the nearest few species currently in
+             season. Falls back to a compact "unlock" prompt if the user
+             hasn't granted permission yet. Rendered client-side; the
+             actual data lives on /foraging. -->
+        <div id="foragePreview" class="forage-preview" style="margin-bottom:32px;">
+          <div class="forage-preview-head">
+            <div>
+              <span class="forage-preview-eyebrow">In season · near you</span>
+              <div class="forage-preview-loc" id="foragePreviewLoc">Location not shared yet</div>
             </div>
-            <span style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#6BD66F;border:0.5px solid rgba(107,214,111,0.35);padding:3px 10px;">Active</span>
+            <button class="forage-preview-share" id="foragePreviewShare" onclick="requestForagePreview()">
+              Share location →
+            </button>
           </div>
-          <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:rgba(107,214,111,0.03);border:0.5px solid rgba(107,214,111,0.1);">
-            <div style="width:8px;height:8px;border-radius:50%;background:#88BAC8;flex-shrink:0;"></div>
-            <div style="flex:1">
-              <div style="font-family:var(--serif);font-style:italic;font-size:16px;color:var(--parchment);">Berlin, Germany</div>
-              <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage);margin-top:2px;">Elderflower — Late spring bloom</div>
+          <div class="forage-preview-list" id="foragePreviewList">
+            <div class="forage-preview-empty">
+              Share your rough location and we'll surface the two or three species foraging-active in your region right now — chanterelle window, pine-pollen peak, elder-flower drop.
+              <br><em>Region-level only. Nothing stored.</em>
             </div>
-            <span style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#88BAC8;border:0.5px solid rgba(136,186,200,0.35);padding:3px 10px;">Active</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:rgba(107,214,111,0.03);border:0.5px solid rgba(107,214,111,0.1);">
-            <div style="width:8px;height:8px;border-radius:50%;background:#C48838;flex-shrink:0;"></div>
-            <div style="flex:1">
-              <div style="font-family:var(--serif);font-style:italic;font-size:16px;color:var(--parchment);">French Riviera</div>
-              <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage);margin-top:2px;">Wild Rosemary — Mediterranean ridge</div>
-            </div>
-            <span style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#C48838;border:0.5px solid rgba(196,136,56,0.35);padding:3px 10px;">Active</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:rgba(107,214,111,0.03);border:0.5px solid rgba(107,214,111,0.1);">
-            <div style="width:8px;height:8px;border-radius:50%;background:#B58CC8;flex-shrink:0;"></div>
-            <div style="flex:1">
-              <div style="font-family:var(--serif);font-style:italic;font-size:16px;color:var(--parchment);">Cappadocia, Türkiye</div>
-              <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage);margin-top:2px;">Wild Lavender — Anatolian highland</div>
-            </div>
-            <span style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#B58CC8;border:0.5px solid rgba(181,140,200,0.35);padding:3px 10px;">Active</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:16px;padding:14px 16px;background:rgba(107,214,111,0.03);border:0.5px solid rgba(107,214,111,0.1);">
-            <div style="width:8px;height:8px;border-radius:50%;background:#E8B14B;flex-shrink:0;"></div>
-            <div style="flex:1">
-              <div style="font-family:var(--serif);font-style:italic;font-size:16px;color:var(--parchment);">Beirut, Lebanon</div>
-              <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage);margin-top:2px;">Custard Apple — Coastal grove</div>
-            </div>
-            <span style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#E8B14B;border:0.5px solid rgba(232,177,75,0.35);padding:3px 10px;">Active</span>
           </div>
         </div>
+        <style>
+          .forage-preview { background: rgba(6,11,6,0.5); border: 0.5px solid rgba(107,214,111,0.18); border-radius: 12px; padding: 20px 22px; }
+          .forage-preview-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+          .forage-preview-eyebrow { font-family: 'Bayer', var(--sans); font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: #6BD66F; display: block; margin-bottom: 4px; }
+          .forage-preview-loc { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--parchment); }
+          .forage-preview-share { font-family: 'Bayer', var(--sans); font-size: 9.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--void); background: #B6F0AE; border: none; padding: 9px 16px; border-radius: 999px; cursor: pointer; transition: background 0.2s; }
+          .forage-preview-share:hover { background: #6BD66F; }
+          .forage-preview-share.is-hidden { display: none; }
+          .forage-preview-empty { font-size: 13px; color: var(--mist); line-height: 1.7; opacity: 0.85; }
+          .forage-preview-empty em { font-style: italic; color: var(--sage); font-size: 12px; }
+          .forage-item { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 0.5px solid rgba(107,214,111,0.08); }
+          .forage-item:last-child { border-bottom: none; }
+          .forage-item-dot { width: 8px; height: 8px; border-radius: 50%; background: #6BD66F; box-shadow: 0 0 8px rgba(107,214,111,0.6); flex-shrink: 0; }
+          .forage-item-name { flex: 1; font-family: var(--serif); font-style: italic; font-size: 15.5px; color: var(--parchment); }
+          .forage-item-window { font-family: 'Bayer', var(--sans); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--sage); white-space: nowrap; }
+        </style>
+        <script>
+          // Very light forageable set. Region key is inferred from the
+          // returned lat/lon and the current month. Not the real /foraging
+          // dataset — this is a teaser that hooks the visitor to click
+          // through. The full engine is on /foraging.
+          const FORAGE_DATA = [
+            { region: 'nordic',       lat: [55,71],   lon: [4,32],   items: {
+              8: ['Chanterelle · window opens','Blueberry · peak','Cloudberry · late'],
+              9: ['Chanterelle · peak','Porcini · fruiting','Chaga · scouting'],
+              10:['Amanita · dry-window','Late porcini','Rosehip · ripe'],
+            }},
+            { region: 'central-eu',   lat: [46,55],   lon: [4,20],   items: {
+              8: ['Elderberry · ripening','Wild plum','Nettle seed'],
+              9: ['Chanterelle · woodland','Rosehip','Sloe · softening'],
+              10:['Chestnut · dropping','Rosehip · frost-sweet','Hawthorn'],
+            }},
+            { region: 'mediterranean',lat: [35,46],   lon: [-10,30], items: {
+              8: ['Wild fennel','Purslane','Fig · late'],
+              9: ['Wild rosemary','Prickly pear','Carob'],
+              10:['Olive · early harvest','Pomegranate','Bay laurel'],
+            }},
+            { region: 'levant',       lat: [30,37],   lon: [30,45],  items: {
+              8: ['Za’atar wild','Fig','Wild caper'],
+              9: ['Pomegranate','Persimmon','Wild carob'],
+              10:['Olive · press-time','Wild sumac','Loquat'],
+            }},
+          ];
+          function pickForageRegion(lat, lon) {
+            for (const r of FORAGE_DATA) {
+              if (lat >= r.lat[0] && lat <= r.lat[1] && lon >= r.lon[0] && lon <= r.lon[1]) return r;
+            }
+            return null;
+          }
+          function renderForageItems(items, regionLabel) {
+            const list = document.getElementById('foragePreviewList');
+            const loc  = document.getElementById('foragePreviewLoc');
+            if (loc) loc.textContent = regionLabel;
+            if (!list) return;
+            if (!items || !items.length) {
+              list.innerHTML = '<div class="forage-preview-empty">No live items surfaced for your region yet — the full map at <a href="/foraging" style="color:#B6F0AE;text-decoration:none;border-bottom:0.5px solid rgba(182,240,174,0.5);">fungai.art/foraging</a> has more.</div>';
+              return;
+            }
+            list.innerHTML = items.map(function(item) {
+              const parts = item.split(' · ');
+              const name = parts[0]; const win = parts[1] || 'In season';
+              return '<div class="forage-item"><span class="forage-item-dot"></span><span class="forage-item-name">' + name + '</span><span class="forage-item-window">' + win + '</span></div>';
+            }).join('');
+          }
+          function requestForagePreview() {
+            const btn = document.getElementById('foragePreviewShare');
+            if (!('geolocation' in navigator)) {
+              renderForageItems([], 'Location not available in this browser');
+              if (btn) btn.classList.add('is-hidden');
+              return;
+            }
+            if (btn) { btn.textContent = 'Locating…'; }
+            navigator.geolocation.getCurrentPosition(function(pos) {
+              const lat = pos.coords.latitude, lon = pos.coords.longitude;
+              const region = pickForageRegion(lat, lon);
+              if (btn) btn.classList.add('is-hidden');
+              if (!region) {
+                renderForageItems([], 'Outside current regional data — the full map at /foraging covers more.');
+                return;
+              }
+              const month = new Date().getMonth() + 1;
+              // find closest month key in the region's items
+              const monthKeys = Object.keys(region.items).map(Number).sort(function(a,b){return Math.abs(a-month)-Math.abs(b-month);});
+              const best = region.items[monthKeys[0]] || [];
+              const nice = { 'nordic':'Nordic boreal','central-eu':'Central Europe','mediterranean':'Mediterranean','levant':'Levant coast' }[region.region] || 'Your region';
+              renderForageItems(best, nice + ' · ' + new Date().toLocaleString('en', { month: 'long' }));
+            }, function() {
+              renderForageItems([], 'Location declined. Open the full map at /foraging.');
+              if (btn) { btn.textContent = 'Location declined'; btn.disabled = true; }
+            }, { enableHighAccuracy: false, timeout: 8000, maximumAge: 300000 });
+          }
+          window.requestForagePreview = requestForagePreview;
+        </script>
 
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
-          <a href="/foraging" class="btn-primary" style="text-decoration:none;">Open the foraging map</a>
+          <a href="/foraging" class="btn-primary" style="text-decoration:none;">Open the full foraging map</a>
           <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-ghost" rel="noopener noreferrer">Comment HERB on Instagram</a>
         </div>
       </div>
@@ -3028,74 +3119,53 @@ function toggleMobileMenu() {
     <!-- Opening statement -->
     <div class="reveal" style="text-align:center;margin-bottom:64px;">
       <span class="sec-label" style="text-align:center;margin-bottom:14px;font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;color:var(--amber);">About Fungai Art</span>
-      <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-size:clamp(38px,5.5vw,68px);letter-spacing:-0.01em;color:var(--parchment);line-height:1.02;max-width:760px;margin:0 auto 22px;">Two threads.<br/>One <em style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;color:var(--amber-lt);font-style:italic;">mycelium.</em></h2>
-      <p style="font-family:'DM Sans','Kiona',var(--sans);font-size:15.5px;color:var(--cream);max-width:620px;margin:0 auto;line-height:1.85;font-weight:300;">Born in the Swedish forest, woven across Europe and the Levant. We are a small circle of artists, foragers, alchemists and ceremony-keepers &mdash; building an open materia medica out of wild plants, slow extractions, and the older traditions that knew what they were doing.</p>
+      <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-size:clamp(38px,5.5vw,68px);letter-spacing:-0.01em;color:var(--parchment);line-height:1.02;max-width:760px;margin:0 auto 22px;">One forest.<br/>One <em style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;color:var(--amber-lt);font-style:italic;">practice.</em></h2>
+      <p style="font-family:'DM Sans','Kiona',var(--sans);font-size:15.5px;color:var(--cream);max-width:620px;margin:0 auto;line-height:1.85;font-weight:300;">Born in the Swedish forest, woven across Europe and the Levant. Fungai Art is an open materia medica &mdash; wild plants, slow extractions, and the older traditions that knew what they were doing.</p>
     </div>
 
-    <!-- Two portraits. On phones (≤720px) they stack vertically so each portrait
-         has enough width that the bio text doesn't have to grow tall and cover
-         the face. The bottom gradient is intensified so the text-on-photo
-         legibility holds up against any image. -->
+    <!-- Founder card — single portrait, wide format. Robin as sole
+         face of the practice after the Stephanie split. -->
     <div class="team-portraits reveal reveal-d1">
-      <!-- Robin — text anchored TO THE TOP of the card (against the trees in
-           the upper portion of the portrait), top-darkening scrim. -->
-      <div class="team-card team-card--top">
-        <img src="/home/team/robin-portrait.jpg" alt="Robin Floræsta" loading="lazy" class="team-photo" style="object-position:center 30%;" onerror="this.style.display='none'">
-        <div class="team-scrim team-scrim--top"></div>
-        <div class="team-body team-body--top">
-          <div style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--lime);margin-bottom:4px;">Founder</div>
-          <div style="font-family:'Bayer',var(--sans);font-size:9px;letter-spacing:0.24em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;opacity:0.85;">Alchemy &amp; Foraging</div>
+      <div class="team-card team-card--wide">
+        <img src="/home/team/robin-portrait.jpg" alt="Robin Floræsta" loading="lazy" class="team-photo" style="object-position:center 25%;" onerror="this.style.display='none'">
+        <div class="team-scrim"></div>
+        <div class="team-body">
+          <div style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-lt);margin-bottom:6px;">Founder &middot; Chef &middot; Forager</div>
           <div class="team-name">Robin Floræsta</div>
-          <p style="font-family:'Kiona',var(--sans);font-size:13.5px;color:var(--cream);line-height:1.72;">Visionary seed carrier and community weaver. Chef, elixir master and forager. Raised in the forest, guided by a close, intuitive bond with the land.</p>
-          <a href="mailto:robin@fungai.art" style="display:inline-block;margin-top:16px;font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mist);border-bottom:0.5px solid rgba(77,134,155,0.35);padding-bottom:2px;text-decoration:none;">robin@fungai.art</a>
-        </div>
-      </div>
-      <!-- Stephanie — text anchored TO THE BOTTOM (her face sits in the upper
-           portion of the photo, text reads naturally below it). -->
-      <div class="team-card team-card--bottom">
-        <img src="/home/team/stephanie-portrait.png" alt="Stephanie Teÿæ" loading="lazy" class="team-photo" onerror="this.style.display='none'">
-        <div class="team-scrim team-scrim--bottom"></div>
-        <div class="team-body team-body--bottom">
-          <div style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-lt);margin-bottom:4px;">Co-initiator</div>
-          <div style="font-family:'Bayer',var(--sans);font-size:9px;letter-spacing:0.24em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;opacity:0.85;">Ceremony &amp; Elixirs</div>
-          <div class="team-name">Stephanie Teÿæ</div>
-          <p style="font-family:'Kiona',var(--sans);font-size:13.5px;color:var(--cream);line-height:1.72;">Steward, creative force, and botanical crafter. Systemic psycho-mystic coach. Gong and tuning fork practitioner. Transylvanian lineage &mdash; the witch reclaimed.</p>
-          <a href="mailto:teyae@fungai.art" style="display:inline-block;margin-top:16px;font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mist);border-bottom:0.5px solid rgba(77,134,155,0.35);padding-bottom:2px;text-decoration:none;">teyae@fungai.art</a>
+          <p class="team-bio">Forager and former private chef, now dedicated to translating the intelligence of plants and mushrooms into alchemy. Fifteen years of European kitchens meeting a decade of Swedish autumn foraging. The apothecary is the daytime version; the <a href="/dinner-experience" style="color:var(--amber-lt);text-decoration:none;border-bottom:0.5px solid rgba(232,177,75,0.5);">Dinner Experience</a> is where the two lives sit down at the same table.</p>
+          <a href="mailto:robin@fungai.art" class="team-contact">robin@fungai.art</a>
         </div>
       </div>
     </div>
     <style>
-      .team-portraits{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px;border-radius:20px;overflow:hidden;}
-      .team-card{position:relative;overflow:hidden;min-height:560px;background:var(--forest-card);}
-      .team-photo{width:100%;height:100%;object-fit:cover;object-position:center top;position:absolute;inset:0;opacity:0.95;}
-      /* Both names use the SAME font + size now — they read as one design
-         unit rather than two different visual weights. */
+      .team-portraits{display:grid;grid-template-columns:1fr;gap:2px;margin-bottom:2px;border-radius:20px;overflow:hidden;max-width:1080px;margin-left:auto;margin-right:auto;}
+      .team-card{position:relative;overflow:hidden;background:var(--forest-card);}
+      .team-card--wide{min-height:520px;display:grid;grid-template-columns:1fr 1fr;}
+      .team-card--wide .team-photo{position:relative;width:100%;height:100%;object-fit:cover;object-position:center 25%;opacity:0.95;}
+      .team-card--wide .team-scrim{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 0%,transparent 40%,rgba(3,6,8,0.5) 55%,rgba(3,6,8,0.85) 100%);}
+      .team-card--wide .team-body{position:relative;padding:52px 48px;display:flex;flex-direction:column;justify-content:center;z-index:2;background:rgba(3,6,8,0.75);}
       .team-name{
         font-family:'Cormorant Garamond',Georgia,serif;
         font-style:italic; font-weight:400;
         color:var(--parchment);
-        font-size:38px; line-height:1.05;
+        font-size:44px; line-height:1.05;
         letter-spacing:-0.01em;
-        margin-bottom:12px;
+        margin-bottom:18px;
       }
-      /* Scrim variants — gradient goes TOWARD where the body sits, so the
-         text always lands on the darkened end of the card. */
-      .team-scrim{position:absolute;inset:0;pointer-events:none;}
-      .team-scrim--bottom{background:
-        linear-gradient(to top,rgba(3,6,8,0.96) 0%,rgba(3,6,8,0.78) 30%,rgba(3,6,8,0.25) 60%,rgba(3,6,8,0.05) 80%,transparent 100%),
-        linear-gradient(to bottom,rgba(3,6,8,0.4) 0%,transparent 30%);}
-      .team-scrim--top{background:
-        linear-gradient(to bottom,rgba(3,6,8,0.96) 0%,rgba(3,6,8,0.78) 30%,rgba(3,6,8,0.25) 60%,rgba(3,6,8,0.05) 80%,transparent 100%),
-        linear-gradient(to top,rgba(3,6,8,0.4) 0%,transparent 30%);}
-      .team-body{position:absolute;left:0;right:0;padding:36px 38px;}
-      .team-body--bottom{bottom:0;}
-      .team-body--top{top:0;}
-      /* Phone: stack vertically; each card has full width. */
-      @media (max-width:720px){
-        .team-portraits{grid-template-columns:1fr;}
-        .team-card{min-height:480px;}
-        .team-body{padding:24px 22px;}
-        .team-name{font-size:32px;}
+      .team-bio{font-family:'Kiona','DM Sans',var(--sans);font-size:14.5px;color:var(--cream);line-height:1.78;font-weight:300;}
+      .team-contact{display:inline-block;margin-top:22px;font-family:'Bayer',var(--sans);font-size:10.5px;letter-spacing:0.24em;text-transform:uppercase;color:var(--amber-lt);border-bottom:0.5px solid rgba(232,177,75,0.5);padding-bottom:2px;text-decoration:none;width:fit-content;transition:color 0.2s;}
+      .team-contact:hover{color:var(--parchment);}
+      /* Phone: stack photo on top, body below */
+      @media (max-width:820px){
+        .team-card--wide{grid-template-columns:1fr;min-height:auto;}
+        .team-card--wide .team-photo{position:absolute;height:100%;}
+        .team-card--wide .team-scrim{background:linear-gradient(180deg,transparent 0%,rgba(3,6,8,0.4) 40%,rgba(3,6,8,0.9) 80%);}
+        .team-card--wide .team-body{background:transparent;padding:400px 28px 40px;min-height:640px;}
+      }
+      @media (max-width:520px){
+        .team-name{font-size:34px;}
+        .team-bio{font-size:14px;}
+        .team-card--wide .team-body{padding:340px 22px 32px;min-height:560px;}
       }
     </style>
 
@@ -3269,7 +3339,6 @@ function toggleMobileMenu() {
           <li><a href="#about">About</a></li>
           <li><a href="https://www.instagram.com/fungai.art" target="_blank" rel="noopener noreferrer">Instagram</a></li>
           <li><a href="mailto:robin@fungai.art">Contact Robin</a></li>
-          <li><a href="mailto:teyae@fungai.art">Contact Stephanie</a></li>
         </ul>
       </div>
     </div>
