@@ -446,62 +446,6 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   </div>
 </section>
 
-<!-- HOUSE ETHOS — editorial manifesto layout. The old "foundation"
-     grid felt ceremony-coded (carried over from the Mycelium Trance
-     original). Rebuilt as a numbered manifesto: bigger italic
-     numbers, principle titles + copy on the right, generous white
-     space. Reads playful + confident, matches the mushroom-devotion
-     copy. -->
-<section class="ethos">
-  <div class="wrap">
-    <div class="reveal ethos-head">
-      <span class="sec-label">The House Ethos</span>
-      <h2 class="sec-title">How we <em>do this</em>.</h2>
-      <p class="ethos-lede">Five threads that shape every dinner. Not rules &mdash; a temperament.</p>
-    </div>
-    <div class="ethos-list">
-      <div class="ethos-item reveal">
-        <div class="ethos-num">i</div>
-        <div class="ethos-body">
-          <div class="ethos-name">Fungal <em>devotion</em>.</div>
-          <p>The kitchen belongs to the mushrooms tonight. Every course carries a fungal note &mdash; the ones you already love, the ones you've never heard of, and the ones no restaurant has served you before.</p>
-        </div>
-      </div>
-      <div class="ethos-item reveal reveal-d1">
-        <div class="ethos-num">ii</div>
-        <div class="ethos-body">
-          <div class="ethos-name">A <em>journey</em>, not a meal.</div>
-          <p>A dinner is really a series of doorways into the mycelium realm. Each opens a new chamber. You leave the table having tasted a place, not just eaten dinner.</p>
-        </div>
-      </div>
-      <div class="ethos-item reveal">
-        <div class="ethos-num">iii</div>
-        <div class="ethos-body">
-          <div class="ethos-name">Beyond the <em>usual</em>.</div>
-          <p>Chanterelle and porcini are welcome &mdash; but so are lion's mane, chaga, reishi, morel, cordyceps, black trumpet, and whatever the season offered this week. If you've only met mushrooms saut&eacute;ed in butter, this is their fuller vocabulary.</p>
-        </div>
-      </div>
-      <div class="ethos-item reveal reveal-d1">
-        <div class="ethos-num">iv</div>
-        <div class="ethos-body">
-          <div class="ethos-name">Ecological <em>respect</em>.</div>
-          <p>Every ingredient sustainably sourced or self-foraged. Plants, fungi and forests are honoured as partners &mdash; never commodities. Strict seasonal sourcing; never harvesting from vulnerable ecosystems.</p>
-        </div>
-      </div>
-      <div class="ethos-item reveal">
-        <div class="ethos-num">v</div>
-        <div class="ethos-body">
-          <div class="ethos-name">Mycelial <em>connection</em>.</div>
-          <p>Fungi taught us everything is connected underground. Around this table, the same happens above &mdash; strangers become a temporary mycelium for a night, threading conversation, sharing the same breath before the first bite.</p>
-        </div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:56px;">
-      <a href="/the-house-ethos" style="display:inline-block;font-family:'Bayer',var(--sans);font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--amber-lt,#E8B14B);text-decoration:none;padding:12px 4px;border-bottom:0.5px solid rgba(232,177,75,0.4);transition:color 0.2s;">Read the full house ethos &rarr;</a>
-    </div>
-  </div>
-</section>
-
 <!-- FACILITATOR -->
 <section class="artists">
   <div class="wrap">
@@ -525,9 +469,144 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   </div>
 </section>
 
-<!-- Deep-dive links live at /the-tasting-arc and
-     /dinner-experience-sample-menu. Landing keeps the flavours
-     preview + FFF reservation focused. -->
+<!-- THE GATHERING — one synchronized reveal that condenses the three
+     old sections (Ethos, Pantry, Container) into a single triptych.
+     All three lanes appear together when the section enters view. -->
+<section class="gathering" id="gathering">
+  <div class="gathering-bg" aria-hidden="true">
+    <span class="gathering-glyph g-1">&#10022;</span>
+    <span class="gathering-glyph g-2">&#9711;</span>
+    <span class="gathering-glyph g-3">&#9671;</span>
+  </div>
+  <div class="gathering-inner">
+    <div class="gathering-head">
+      <span class="sec-label" style="color:var(--amber-lt,#E8B14B);">The dinner, distilled</span>
+      <h2 class="sec-title">How, what, &amp; <em>the field</em>.</h2>
+      <p class="gathering-lede">One breath, three answers &mdash; the temperament, the taste, the container.</p>
+    </div>
+
+    <div class="gathering-grid">
+      <!-- Lane 1 · Ethos -->
+      <article class="lane lane-ethos">
+        <header class="lane-head">
+          <span class="lane-kicker">i &middot; How</span>
+          <h3 class="lane-title">The <em>ethos</em>.</h3>
+        </header>
+        <ul class="lane-list">
+          <li><strong>Fungal devotion.</strong> Every course carries a fungal note.</li>
+          <li><strong>A journey, not a meal.</strong> Doorways into the mycelium realm.</li>
+          <li><strong>Beyond the usual.</strong> Lion's mane, chaga, reishi, morel &mdash; the fuller vocabulary.</li>
+          <li><strong>Mycelial connection.</strong> Strangers as one temporary mycelium for a night.</li>
+        </ul>
+        <a class="lane-link" href="/the-house-ethos">Read the full house ethos &rarr;</a>
+      </article>
+
+      <!-- Lane 2 · Pantry -->
+      <article class="lane lane-pantry">
+        <header class="lane-head">
+          <span class="lane-kicker">ii &middot; What</span>
+          <h3 class="lane-title">The <em>pantry</em>.</h3>
+        </header>
+        <ul class="lane-list lane-list-flavours">
+          <li><em>Morel</em> &mdash; spring, cultured cream, umami crown.</li>
+          <li><em>Chaga garum XO</em> &mdash; the house condiment.</li>
+          <li><em>Sweetened pine cone</em> &mdash; birch-sap cured, resin-sweet.</li>
+          <li><em>Ramson oil</em> &mdash; peak wild-garlic, cold-pressed. Green fire.</li>
+        </ul>
+        <p class="lane-note">Paired with the <a href="/tymetonics">New Tyme Tonics</a> elixir sequence.</p>
+        <a class="lane-link" href="/dinner-experience-sample-menu">See a sample menu &rarr;</a>
+      </article>
+
+      <!-- Lane 3 · Container -->
+      <article class="lane lane-container">
+        <header class="lane-head">
+          <span class="lane-kicker">iii &middot; The field</span>
+          <h3 class="lane-title">The <em>container</em>.</h3>
+        </header>
+        <ul class="lane-list">
+          <li><strong>Ceremonial micro-amounts.</strong> Each ally named, dose declared, refusable.</li>
+          <li><strong>Sovereign guests, closed field.</strong> A dinner, not therapy.</li>
+          <li><strong>Forests as partners.</strong> Sustainably sourced, seasonally bound.</li>
+        </ul>
+        <a class="lane-link" href="/the-house-ethos#safety">Full ethos &amp; safety &rarr;</a>
+      </article>
+    </div>
+  </div>
+</section>
+<style>
+  .gathering { position: relative; padding: 130px 24px; background: linear-gradient(180deg, var(--void) 0%, #0A1310 55%, var(--void) 100%); overflow: hidden; }
+  .gathering-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+  .gathering-glyph { position: absolute; color: var(--amber-lt,#E8B14B); opacity: 0.10; user-select: none; }
+  .gathering-glyph.g-1 { top: 10%;  left: 6%;  font-size: 38px; animation: gather-drift 22s ease-in-out infinite; }
+  .gathering-glyph.g-2 { top: 55%;  right: 8%; font-size: 30px; opacity: 0.08; animation: gather-drift 26s ease-in-out infinite 4s; }
+  .gathering-glyph.g-3 { bottom: 12%; left: 45%; font-size: 26px; opacity: 0.09; animation: gather-drift 30s ease-in-out infinite 8s; }
+  @keyframes gather-drift {
+    0%,100% { transform: translate(0,0) rotate(0deg); }
+    50%     { transform: translate(18px,-24px) rotate(12deg); }
+  }
+  .gathering-inner { position: relative; z-index: 1; max-width: 1220px; margin: 0 auto; }
+  .gathering-head { text-align: center; max-width: 640px; margin: 0 auto 72px; }
+  .gathering-head .sec-label { display: block; margin-bottom: 14px; }
+  .gathering-head .sec-title { font-family: 'TAN-PARADISO','Cormorant Garamond',serif; font-weight: 300; font-size: clamp(38px, 5vw, 62px); line-height: 1; color: var(--parchment); letter-spacing: 0.005em; margin-bottom: 18px; }
+  .gathering-head .sec-title em { font-style: italic; color: var(--amber-lt,#E8B14B); }
+  .gathering-lede { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--dust); line-height: 1.7; opacity: 0.9; }
+
+  .gathering-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; align-items: stretch; }
+  .lane { position: relative; padding: 40px 32px 36px; background: rgba(232,177,75,0.03); border: 0.5px solid rgba(232,177,75,0.16); display: flex; flex-direction: column; transition: border-color 0.35s ease, background 0.35s ease, transform 0.35s ease; }
+  .lane:hover { border-color: rgba(232,177,75,0.42); background: rgba(232,177,75,0.05); transform: translateY(-3px); }
+  .lane-head { border-bottom: 0.5px solid rgba(232,177,75,0.16); padding-bottom: 22px; margin-bottom: 24px; }
+  .lane-kicker { display: block; font-family: 'Bayer', var(--sans); font-size: 9.5px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--amber-lt,#E8B14B); margin-bottom: 12px; }
+  .lane-title { font-family: 'TAN-PARADISO','Cormorant Garamond', serif; font-weight: 300; font-size: 32px; line-height: 1; color: var(--parchment); letter-spacing: 0.005em; }
+  .lane-title em { font-style: italic; color: var(--amber-lt,#E8B14B); }
+  .lane-list { list-style: none; display: flex; flex-direction: column; gap: 14px; margin: 0; padding: 0; }
+  .lane-list li { font-family: var(--serif); font-size: 15px; line-height: 1.65; color: var(--dust); padding-left: 14px; position: relative; }
+  .lane-list li::before { content: '·'; position: absolute; left: 0; top: -2px; color: var(--amber-lt,#E8B14B); font-size: 20px; line-height: 1; }
+  .lane-list li strong { color: var(--parchment); font-weight: 500; font-style: italic; }
+  .lane-list-flavours li em { font-style: italic; color: var(--parchment); }
+  .lane-note { font-family: var(--serif); font-style: italic; font-size: 13.5px; color: var(--mist); line-height: 1.65; margin-top: 18px; opacity: 0.9; }
+  .lane-note a { color: var(--amber-lt,#E8B14B); text-decoration: none; border-bottom: 0.5px solid rgba(232,177,75,0.4); }
+  .lane-link { margin-top: auto; padding-top: 28px; display: inline-block; font-family: 'Bayer', var(--sans); font-size: 10.5px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--amber-lt,#E8B14B); text-decoration: none; transition: color 0.2s; }
+  .lane-link:hover { color: var(--parchment); }
+
+  /* SYNCHRONISED REVEAL — the whole triptych rises together, then a
+     micro-stagger (60ms per lane) so the eye still tracks left→right. */
+  .lane { opacity: 0; transform: translateY(24px); transition: opacity 0.9s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.35s ease, background 0.35s ease; }
+  .gathering-head .sec-label,
+  .gathering-head .sec-title,
+  .gathering-lede { opacity: 0; transform: translateY(14px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .gathering.gathered .gathering-head .sec-label,
+  .gathering.gathered .gathering-head .sec-title,
+  .gathering.gathered .gathering-lede { opacity: 1; transform: translateY(0); }
+  .gathering.gathered .gathering-head .sec-title { transition-delay: 80ms; }
+  .gathering.gathered .gathering-lede { transition-delay: 160ms; }
+  .gathering.gathered .lane { opacity: 1; transform: translateY(0); }
+  .gathering.gathered .lane.lane-ethos    { transition-delay: 260ms, 260ms, 0s, 0s; }
+  .gathering.gathered .lane.lane-pantry   { transition-delay: 320ms, 320ms, 0s, 0s; }
+  .gathering.gathered .lane.lane-container{ transition-delay: 380ms, 380ms, 0s, 0s; }
+
+  @media (max-width: 960px) {
+    .gathering-grid { grid-template-columns: 1fr; gap: 20px; }
+    .gathering { padding: 90px 20px; }
+    .lane { padding: 32px 24px; }
+    .lane-title { font-size: 26px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .gathering-glyph { animation: none; }
+    .lane, .gathering-head .sec-label, .gathering-head .sec-title, .gathering-lede { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+<script>
+  (function(){
+    var el = document.getElementById('gathering');
+    if (!el) return;
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { el.classList.add('gathered'); obs.disconnect(); }
+      });
+    }, { threshold: 0.18, rootMargin: '0px 0px -60px 0px' });
+    obs.observe(el);
+  })();
+</script>
 
 <!-- COLLAGE PAIR — collage1 + collage2 side-by-side. Photo break
      between the menu and the flavour signatures. -->
@@ -625,58 +704,6 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
     .menu-dish { font-size: 20px; }
     .menu-preview { padding: 90px 0; }
   }
-</style>
-
-<!-- SIGNATURE FLAVOURS — replaces the old "plant allies" list.
-     Robin's personal pantry: the specific ferments, garums, oils
-     and foraged notes that recur across the seasons. Answers the
-     customer question "what will this taste like?" -->
-<section class="flavours">
-  <div class="wrap">
-    <div class="reveal flavours-head">
-      <span class="sec-label">What to expect &middot; flavour-wise</span>
-      <h2 class="sec-title">The house <em>pantry</em>.</h2>
-      <p class="flavours-lede">Some things recur across every dinner &mdash; the notes that make a Fungai Art plate recognisable across the seasons. A short list of house signatures.</p>
-    </div>
-    <div class="flavours-grid">
-      <div class="flavour reveal">
-        <div class="flavour-name">Morel mushroom</div>
-        <p class="flavour-desc">Spring-foraged, honeycomb-capped, cooked in cultured cream. The umami crown of the season.</p>
-      </div>
-      <div class="flavour reveal reveal-d1">
-        <div class="flavour-name">Sweetened pine cone</div>
-        <p class="flavour-desc">Young green cones cured in birch-sap syrup &mdash; a Scandinavian tradition. Resin-sweet, chewy, unlike anything you've had.</p>
-      </div>
-      <div class="flavour reveal reveal-d2">
-        <div class="flavour-name">Chaga garum XO sauce</div>
-        <p class="flavour-desc">Chaga fermented into garum, then built into an XO with black garlic and juniper. The house condiment. Deep, savoury, unrepeatable.</p>
-      </div>
-      <div class="flavour reveal">
-        <div class="flavour-name">Ramson oil</div>
-        <p class="flavour-desc">Wild garlic leaves cold-pressed into neutral oil the week they're at peak. Green fire.</p>
-      </div>
-      <div class="flavour reveal reveal-d1">
-        <div class="flavour-name">Pickled spruce tip</div>
-        <p class="flavour-desc">Young spring shoots quick-pickled in cider vinegar and honey &mdash; brightness, resin, forest floor. Cuts fat like nothing else.</p>
-      </div>
-    </div>
-    <p class="flavours-foot">&mdash; and whatever the season we're in offered that week. Every dinner is paired with the elixir sequence from <a href="/tymetonics" style="color:var(--amber-lt,#E8B14B);text-decoration:none;border-bottom:0.5px solid rgba(232,177,75,0.5);">New Tyme Tonics</a> &mdash; the tonic-vinegar and hydromel line Robin makes as sister to the dinner.</p>
-    <div style="text-align:center;margin-top:40px;">
-      <a href="/dinner-experience-sample-menu" style="display:inline-block;font-family:'Bayer',var(--sans);font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--amber-lt,#E8B14B);text-decoration:none;padding:12px 4px;border-bottom:0.5px solid rgba(232,177,75,0.4);transition:color 0.2s;">See a sample menu &rarr;</a>
-    </div>
-  </div>
-</section>
-<style>
-  .flavours { padding: 120px 0; background: var(--void); }
-  .flavours-head { text-align: center; max-width: 640px; margin: 0 auto 64px; padding: 0 24px; }
-  .flavours-lede { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--dust); margin-top: 14px; line-height: 1.7; opacity: 0.9; }
-  .flavours-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 48px; max-width: 1120px; margin: 0 auto; padding: 0 40px; }
-  .flavour { padding-top: 24px; border-top: 0.5px solid rgba(232,177,75,0.22); }
-  .flavour-name { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--parchment); line-height: 1.25; letter-spacing: -0.005em; margin-bottom: 12px; }
-  .flavour-desc { font-size: 13.5px; color: var(--dust); line-height: 1.75; }
-  .flavours-foot { text-align: center; margin: 56px auto 0; max-width: 640px; font-family: var(--serif); font-style: italic; font-size: 14.5px; color: var(--mist); opacity: 0.85; }
-  @media (max-width: 900px) { .flavours-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; padding: 0 24px; } }
-  @media (max-width: 560px) { .flavours-grid { grid-template-columns: 1fr; } .flavours { padding: 80px 0; } }
 </style>
 
 <!-- MIDDLE CTA — sleek inquiries line between flavours + reservation -->
@@ -967,80 +994,6 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
     .events-alive-pax { font-size: 52px; }
     .events-alive-total-num { font-size: 42px; }
     .events-alive-total-label { font-size: 9.5px; letter-spacing: 0.22em; }
-  }
-</style>
-
-<!-- THE CONTAINER — embodied, moving. Big centered manifesto with
-     three principles floating in orbit. Draws on the /members/
-     rig (fade-in-on-scroll, slow floating glyphs) but restyled in
-     the dinner-experience amber palette. Not a list — a room. -->
-<section class="container-sec">
-  <div class="container-bg" aria-hidden="true">
-    <span class="container-glyph glyph-1">✦</span>
-    <span class="container-glyph glyph-2">◯</span>
-    <span class="container-glyph glyph-3">✦</span>
-    <span class="container-glyph glyph-4">◇</span>
-    <span class="container-glyph glyph-5">✦</span>
-  </div>
-  <div class="wrap container-inner">
-    <div class="container-head reveal">
-      <span class="sec-label" style="color:var(--amber-lt,#E8B14B);">Safety &middot; Ethics &middot; Field Care</span>
-      <h2 class="sec-title">The <em>container</em>.</h2>
-      <p class="container-lede">Every dinner sits inside a held field. What that means, in plain speech:</p>
-    </div>
-    <div class="container-manifesto">
-      <div class="container-line reveal">
-        <span class="container-num">01</span>
-        <p><strong>Sacred allies at ceremonial micro-amount only.</strong> Each ingredient is named at the table &mdash; effects, purpose, refusability. Full allergen disclosure before you sit down.</p>
-      </div>
-      <div class="container-line reveal reveal-d1">
-        <span class="container-num">02</span>
-        <p><strong>Sovereign guests, closed field.</strong> Shared agreements at the start, breath together at the close. Pace held for tasting, listening, integration between courses. Not therapy, not medical treatment &mdash; a dinner, honoured.</p>
-      </div>
-      <div class="container-line reveal reveal-d2">
-        <span class="container-num">03</span>
-        <p><strong>Forests as partners, not commodities.</strong> Every ingredient sustainably sourced or self-foraged. Strict seasonal boundaries. Never from vulnerable ecosystems. What we take, we take with permission.</p>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:56px;" class="reveal reveal-d3">
-      <a href="/the-house-ethos" style="display:inline-block;font-family:'Bayer',var(--sans);font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--amber-lt,#E8B14B);text-decoration:none;padding:12px 4px;border-bottom:0.5px solid rgba(232,177,75,0.4);transition:color 0.2s;">Read the full ethos &amp; safety &rarr;</a>
-    </div>
-  </div>
-</section>
-<style>
-  .container-sec { position: relative; padding: 140px 24px; background: linear-gradient(180deg, var(--void) 0%, #0A1310 60%, var(--void) 100%); overflow: hidden; text-align: center; }
-  .container-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
-  .container-glyph { position: absolute; font-size: 24px; color: var(--amber-lt,#E8B14B); opacity: 0.14; user-select: none; }
-  .glyph-1 { top: 12%; left: 8%;  animation: glyph-drift 18s ease-in-out infinite; }
-  .glyph-2 { top: 22%; right: 12%; font-size: 42px; opacity: 0.08; animation: glyph-drift 22s ease-in-out infinite 3s; }
-  .glyph-3 { bottom: 30%; left: 15%; font-size: 18px; animation: glyph-drift 26s ease-in-out infinite 6s; }
-  .glyph-4 { bottom: 18%; right: 8%; font-size: 30px; opacity: 0.10; animation: glyph-drift 20s ease-in-out infinite 2s; }
-  .glyph-5 { top: 50%; left: 50%; font-size: 20px; opacity: 0.09; animation: glyph-drift 30s ease-in-out infinite 8s; }
-  @keyframes glyph-drift {
-    0%,100% { transform: translate(0,0) rotate(0deg); }
-    33%     { transform: translate(20px,-30px) rotate(15deg); }
-    66%     { transform: translate(-25px,20px) rotate(-10deg); }
-  }
-  .container-inner { position: relative; z-index: 1; max-width: 820px; margin: 0 auto; }
-  .container-head { margin-bottom: 72px; }
-  .container-lede { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--dust); line-height: 1.7; max-width: 520px; margin: 20px auto 0; opacity: 0.9; }
-  .container-manifesto { display: flex; flex-direction: column; gap: 40px; text-align: left; max-width: 720px; margin: 0 auto; }
-  .container-line { display: grid; grid-template-columns: 60px 1fr; gap: 24px; align-items: baseline; padding: 24px 0; border-bottom: 0.5px solid rgba(232,177,75,0.14); position: relative; }
-  .container-line::before { content: ''; position: absolute; left: 0; bottom: -0.5px; height: 0.5px; width: 32px; background: var(--amber-lt,#E8B14B); }
-  .container-line:last-child { border-bottom: none; }
-  .container-line:last-child::before { display: none; }
-  .container-num { font-family: 'TAN-PARADISO','Cormorant Garamond',serif; font-style: italic; font-size: 40px; color: var(--amber-lt,#E8B14B); line-height: 1; opacity: 0.85; }
-  .container-line p { font-family: var(--serif); font-size: 16px; color: var(--parchment); line-height: 1.75; }
-  .container-line p strong { color: var(--amber-lt,#E8B14B); font-weight: 500; font-style: italic; display: block; margin-bottom: 6px; }
-  @media (max-width: 640px) {
-    .container-sec { padding: 90px 20px; }
-    .container-line { grid-template-columns: 44px 1fr; gap: 18px; padding: 20px 0; }
-    .container-num { font-size: 30px; }
-    .container-line p { font-size: 15px; }
-    .container-glyph { display: none; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .container-glyph { animation: none; }
   }
 </style>
 
