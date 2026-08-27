@@ -399,3 +399,32 @@ a { color: inherit; text-decoration: none; }
   .nav-links { display: none; }
   .footer { padding: 32px 20px; flex-direction: column; gap: 18px; text-align: center; }
 }
+
+/* ─── NARROW PHONES (<640px) ─────────────────────────────────────
+   The 4:5 hero image aspect ratio was too tall on phones — the
+   customer had to scroll past a whole screen of product photo to
+   reach the price + Add button. Also tightens type + section
+   padding so the page reads at a comfortable rhythm on 375px. */
+@media (max-width: 640px) {
+  .pd-hero { padding: 24px 18px 44px; gap: 24px; }
+  .pd-hero-img { aspect-ratio: 4 / 3.4; }
+  .pd-crumb { padding: 88px 18px 4px; font-size: 9.5px; letter-spacing: 0.12em; }
+  .pd-title { font-size: clamp(38px, 11vw, 60px); }
+  .pd-latin { font-size: 14px; margin-bottom: 22px; }
+  .pd-lede { font-size: 14.5px; margin-bottom: 28px; }
+  .pd-amount { font-size: 30px; }
+  .pd-section, .pd-related { padding: 44px 18px; }
+  .pd-body { font-size: 14.5px; line-height: 1.78; }
+  .pd-quote { font-size: 18px; padding: 4px 0 4px 18px; margin: 24px 0; }
+  .pd-mol-name { font-size: 20px; }
+  .pd-mol-desc { font-size: 13.5px; }
+  .pd-safety-list li { font-size: 13.5px; padding-left: 20px; }
+  .pd-quick-facts { grid-template-columns: 1fr 1fr; gap: 14px 20px; }
+  .qf-val { font-size: 14px; }
+  /* Nav on very narrow — brand-text hidden behind logo, drop
+     letter-spacing on sub so brand fits under 32px logo without
+     stacking oddly */
+  .nav-brand-text .main { font-size: 15px; }
+  .nav-brand-text .sub { font-size: 8px; letter-spacing: 2px; }
+  .nav-cart { padding: 7px 14px; font-size: 10px; letter-spacing: 1.2px; }
+}

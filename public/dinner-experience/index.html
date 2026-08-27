@@ -280,6 +280,52 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   .ally{grid-template-columns:1fr}
   .booking-contacts{flex-direction:column;gap:32px}
   .footer{flex-direction:column;gap:24px;text-align:center}
+  /* Hero — tighter meta strip, smaller gaps */
+  .hero-meta{gap:20px 28px;margin-bottom:36px}
+  .hero-meta-item strong{font-size:24px}
+  .hero-actions{gap:12px}
+  .btn-primary,.btn-ghost{padding:12px 22px;font-size:10.5px;letter-spacing:1.5px}
+  /* Section padding trims — many sections used 140px vertical which
+     ate the mobile viewport. Halved so more content fits per scroll. */
+  .concept{padding:80px 0}
+  .principles{padding:80px 0}
+  .artists{padding:80px 0}
+  .sensory{padding:80px 0}
+  .allies{padding:80px 0}
+  .events{padding:64px 0}
+  .safety{padding:80px 0}
+  /* Facilitator card — full-width, shorter photo */
+  .artists-header{margin-bottom:48px}
+  .artists-header .hero-sub{font-size:44px}
+  .artist-img{height:380px}
+  .artist-info{padding:28px 22px}
+  .artist-name{font-size:26px}
+  /* Concept caption centered on mobile so it doesn't orphan-right */
+  .concept-caption{text-align:center !important}
+  /* Sensory (Tasting Arc) image shorter */
+  .sensory-img img{height:380px !important}
+  .sensory-module{padding:24px 22px}
+  /* Safety blocks tighter */
+  .safety-block{padding:32px 22px}
+  /* Nav — inside the page's own nav shrinks (mobile hamburger from
+     global-nav.js takes over the actual navigation) */
+  .nav{padding:14px 20px}
+  .nav-brand .main{font-size:16px}
+  /* Scroll hint hidden on mobile — takes space away from CTA */
+  .scroll-hint{display:none}
+}
+
+/* Narrow phones — tighten further so nothing crushes below ~380px */
+@media(max-width:480px){
+  .hero-meta{gap:14px 20px}
+  .hero-meta-item{font-size:10px}
+  .hero-meta-item strong{font-size:20px}
+  .hero-actions{flex-direction:column;align-items:stretch;width:100%;max-width:280px}
+  .hero-actions .btn-primary,.hero-actions .btn-ghost{text-align:center;padding:14px 24px}
+  .artist-img{height:320px}
+  .sensory-img img{height:300px !important}
+  .concept{padding:60px 0}
+  .events{padding:48px 0}
 }
 </style>
 <script>
@@ -348,6 +394,13 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   .top-cta-when { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--parchment); letter-spacing: 0.005em; }
   .top-cta-link { font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--amber-lt,#E8B14B); text-decoration: none; padding: 8px 20px; border: 0.5px solid rgba(232,177,75,0.4); border-radius: 999px; transition: background 0.2s, color 0.2s; }
   .top-cta-link:hover { background: var(--amber-lt); color: var(--void); }
+  @media (max-width: 640px) {
+    .top-cta { padding: 16px 18px; }
+    .top-cta-inner { gap: 10px 14px; }
+    .top-cta-when { font-size: 15px; }
+    .top-cta-eyebrow { font-size: 8.5px; letter-spacing: 0.24em; }
+    .top-cta-link { font-size: 10px; padding: 8px 16px; letter-spacing: 0.2em; }
+  }
 </style>
 
 <!-- CONCEPT -->
@@ -760,6 +813,13 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   .mid-cta-link { font-family: 'TAN-PARADISO',var(--serif); font-style: italic; font-size: 28px; color: var(--amber-lt,#E8B14B); text-decoration: none; letter-spacing: 0.005em; transition: color 0.2s; }
   .mid-cta-link:hover { color: var(--parchment); }
   .mid-cta-note { font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--dust); opacity: 0.75; }
+  @media (max-width: 640px) {
+    .mid-cta { padding: 32px 20px; }
+    .mid-cta-inner { gap: 10px 14px; flex-direction: column; }
+    .mid-cta-label { font-size: 9px; letter-spacing: 0.24em; }
+    .mid-cta-link { font-size: 22px; }
+    .mid-cta-note { font-size: 12.5px; }
+  }
 </style>
 
 <!-- ══════════════ FUNGI FEVER FEST · RESERVATION ══════════════
@@ -824,6 +884,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
     .ff-d-key { font-family: 'Bayer',var(--sans); font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--lichen); }
     .ff-d-val { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--parchment); line-height: 1.4; }
     @media (max-width: 720px) { .ff-details-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 400px) { .ff-details-grid { grid-template-columns: 1fr; gap: 16px; } .ff-d-val { font-size: 15px; } .ff-details-label { font-size: 9px; letter-spacing: 0.28em; } }
   </style>
 
   <!-- Ticket + form -->
@@ -1075,6 +1136,16 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   .bottom-cta-social a { color: inherit; text-decoration: none; transition: color 0.2s; }
   .bottom-cta-social a:hover { color: var(--amber-lt); }
   .bottom-cta-social span { margin: 0 12px; }
+  @media (max-width: 640px) {
+    .bottom-cta { min-height: 60vh; padding: 72px 20px; }
+    .bottom-cta-title { font-size: clamp(36px, 10vw, 60px); margin-bottom: 16px; }
+    .bottom-cta-eyebrow { font-size: 9px; letter-spacing: 0.24em; margin-bottom: 18px; }
+    .bottom-cta-lede { font-size: 15px; margin-bottom: 32px; }
+    .bottom-cta-actions { flex-direction: column; align-items: stretch; gap: 10px; margin-bottom: 28px; max-width: 300px; margin-left: auto; margin-right: auto; }
+    .bottom-cta-primary, .bottom-cta-secondary { padding: 16px 24px; text-align: center; font-size: 10.5px; }
+    .bottom-cta-social { font-size: 9.5px; letter-spacing: 0.18em; }
+    .bottom-cta-social span { margin: 0 8px; }
+  }
 </style>
 
 <!-- FOOTER -->
