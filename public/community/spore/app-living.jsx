@@ -1633,35 +1633,35 @@ function ProfileEditor({ existing, onClose }) {
         // Avatar handling. Authed users upload to storage; unclaimed users stash
         // the data URL locally so the pic shows on this device AND auto-uploads
         // the next time they sign in (handled by syncPendingAvatar at boot).
+        //
+        // The improved SBprofiles.uploadAvatar accepts a File OR a data URL,
+        // so we no longer need fileRef.current.files[0] to be present. This
+        // fixes the "photo doesn't follow along" bug: browsers sometimes
+        // clear the FileList between the picker firing and Save clicked,
+        // and the old code silently skipped the upload in that case.
         let avatarUrl = avatar;
-        // Edge case: user picked a file, state has the downscaled data URL,
-        // but fileRef.current.files is empty (some browsers clear FileList
-        // between mounts). In that case we still want the data URL written
-        // to the profile row so the avatar shows up — even without a
-        // proper storage upload. We mark it for re-upload via pending key.
-        const hasFileObj = !!fileRef.current?.files?.[0];
         if (avatar && avatar.startsWith('data:')) {
-          if (user && hasFileObj) {
+          if (user) {
             try {
-              avatarUrl = await window.SBprofiles.uploadAvatar(fileRef.current.files[0]);
+              // Prefer the original File (bigger, better quality). Fall back
+              // to the downscaled data URL if the FileList was cleared.
+              const source = fileRef.current?.files?.[0] || avatar;
+              avatarUrl = await window.SBprofiles.uploadAvatar(source);
+              try { localStorage.removeItem('fungai_pending_avatar'); } catch (_) {}
             } catch (e) {
               // Storage upload failed (RLS, quota, network, bucket missing).
-              // Surface the failure to the user — silent fallback used to
-              // hide setup problems (e.g. missing 'avatars' bucket policy).
-              console.warn('Avatar upload failed, falling back to data URL on row:', e);
-              const reason = /bucket|not found|404/i.test(e?.message || '') ? 'storage bucket missing — run supabase-avatars-bucket.sql' :
-                             /policy|row-level|403/i.test(e?.message || '') ? 'storage RLS denied — run supabase-avatars-bucket.sql' :
-                             (e?.message || 'unknown');
-              toast(`Photo stored on profile row only — ${reason}`, 'warn');
+              // Fall back to storing the data URL directly on the profile
+              // row so the photo still shows for everyone — but SURFACE the
+              // reason so Robin knows to run the bucket SQL.
+              console.warn('Avatar upload failed, storing data URL on row:', e);
+              toast(`Photo saved on profile row — ${e?.message || 'storage upload failed'}`, 'warn');
               try { localStorage.setItem('fungai_pending_avatar', avatar); } catch (_) {}
               avatarUrl = avatar;
             }
           } else {
-            // Either not signed in, or fileRef lost the file. Keep the
-            // (downscaled) data URL directly on the profile row so the
-            // photo shows for every other member, not just on this device.
-            // Stash locally so syncPendingAvatar promotes it to storage
-            // on next sign-in (or next save with a fresh file picker).
+            // Not signed in — unclaimed insert path. Keep the downscaled
+            // data URL on the profile row AND stash it locally so the
+            // next sign-in can promote it to storage.
             try { localStorage.setItem('fungai_pending_avatar', avatar); } catch (e) {}
             avatarUrl = avatar;
           }
@@ -2074,13 +2074,19 @@ function MembersPage({ currentMember, economy }) {
   const [signInEmail, setSignInEmail] = useState('');
   const [signInBusy, setSignInBusy] = useState(false);
   useEffect(() => {
-    if (!window.SBauth) return;
     let unsub;
     (async () => {
-      const u = await window.SBauth.getUser();
+      try { await (window.SBready || Promise.resolve()); } catch (_) {}
+      if (!window.SBauth) return;
+      // ensureSession waits for the PKCE code exchange if we just arrived
+      // from a magic link, so getUser() below actually returns the user
+      // instead of null on first mount.
+      const u = window.SBauth.ensureSession
+        ? await window.SBauth.ensureSession()
+        : await window.SBauth.getUser();
       setSbUser(u);
       // Auto-open editor for fresh signed-in users who have no linked profile yet
-      // (this is the post-magic-link landing flow). Detect either:
+      // (post-magic-link landing flow). Detect either:
       //   ?signedin=1 → legacy implicit-flow marker we append to emailRedirectTo
       //   ?code=...   → PKCE flow auth code (auto-stripped by supabase-js after exchange,
       //                 but present on initial mount so we can use it as a trigger)
@@ -2552,6 +2558,7 @@ function SelfIdentityBlock({ currentMember, onToast }) {
 
   async function refreshAuth() {
     try {
+      try { await (window.SBready || Promise.resolve()); } catch (_) {}
       if (!window.SBauth) { setAuthChecked(true); return; }
       // Belt-and-braces: explicitly try a session refresh first. The
       // supabase-js client has autoRefreshToken:true so this is usually
@@ -4631,23 +4638,42 @@ function App() {
   // which a brand-new user doesn't have.
   const [showRootEditor, setShowRootEditor] = useState(false);
 
+  // If the URL carries a magic-link ?code=, we hold the render until the
+  // exchange lands so the LoginScreen doesn't flash a "not signed in" state
+  // in the ~1 s the SDK needs to consume the code. Users used to see that
+  // flash, assume the link was broken, and click it a SECOND time — which
+  // read as needing two clicks to reach the profile editor.
+  const [authReady, setAuthReady] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    return !/[?&]code=/.test(window.location.search || '');
+  });
+
   // ── Load profiles from Supabase + auto-bypass PIN login if signed in ──
   useEffect(() => {
     let unsub;
     (async () => {
-      if (!SporeData.loadProfilesFromCloud) return;
-      try {
-        const merged = await SporeData.loadProfilesFromCloud();
-        SporeData.MEMBERS.length = 0;
-        merged.forEach(m => SporeData.MEMBERS.push(m));
-        setCloudVer(v => v + 1);
-      } catch (e) { console.warn('[Spore] cloud load failed:', e); }
+      if (SporeData.loadProfilesFromCloud) {
+        try {
+          const merged = await SporeData.loadProfilesFromCloud();
+          SporeData.MEMBERS.length = 0;
+          merged.forEach(m => SporeData.MEMBERS.push(m));
+          setCloudVer(v => v + 1);
+        } catch (e) { console.warn('[Spore] cloud load failed:', e); }
+      }
 
-      // Auth state subscription
-      if (!window.SBauth) return;
-      const user = await window.SBauth.getUser();
+      // Wait for the SDK — supabase-client.js loads its CDN asynchronously,
+      // so on a slow first paint SBauth may not exist yet. The old code
+      // silently returned in that case and left the app stuck.
+      try { await (window.SBready || Promise.resolve()); } catch (_) {}
+      if (!window.SBauth) { setAuthReady(true); return; }
+
+      // ensureSession() awaits any in-flight PKCE code exchange (up to 6 s)
+      // before returning. If there's no ?code= in the URL, it's a fast
+      // getSession() call.
+      const user = await window.SBauth.ensureSession();
       setSbUser(user);
       await tryAutoLogin(user);
+      setAuthReady(true);
 
       const sub = window.SBauth.onAuthChange(async ({ user }) => {
         setSbUser(user);
@@ -4871,6 +4897,18 @@ function App() {
   ) : null;
 
   if (!currentMember) {
+    // Landing from a magic-link click? Hold the render until ensureSession
+    // has consumed the ?code=. Otherwise the user sees the pre-signin
+    // LoginScreen for a beat and re-clicks the email link.
+    if (!authReady) {
+      return (
+        <div style={{ minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:14, background:'var(--soil)', color:'var(--mycelium-l)' }}>
+          <div style={{ width:36, height:36, borderRadius:'50%', border:'2px solid rgba(232,177,75,0.18)', borderTopColor:'var(--nutrient-l, #E8B14B)', animation:'spore-spin 0.9s linear infinite' }} />
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.28em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>Opening the network&hellip;</div>
+          <style>{`@keyframes spore-spin { to { transform: rotate(360deg); } }`}</style>
+        </div>
+      );
+    }
     return <>
       {claimUI}
       {showRootEditor && (

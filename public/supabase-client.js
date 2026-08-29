@@ -77,6 +77,62 @@
             callback({ event, session, user: session?.user || null });
           });
         },
+        // Called on app boot. Awaits the SDK, then makes sure we're not
+        // rendering the "not signed in" screen while a PKCE ?code= from a
+        // magic link is still being exchanged in the background.
+        //
+        // Flow:
+        //   1. If a session is already persisted → return its user (fast path).
+        //   2. If URL contains ?code=, wait up to 6 s for SIGNED_IN — the
+        //      SDK's detectSessionInUrl handler does the exchange async;
+        //      without waiting we render LoginScreen before it lands, and
+        //      the user thinks the magic link didn't work and clicks it
+        //      again.  As a belt+braces fallback we also fire the exchange
+        //      ourselves in case the SDK's URL handler was cleared.
+        //   3. Otherwise → no user.
+        async ensureSession() {
+          try { await window.SBready; } catch { return null; }
+          if (!window.SBclient) return null;
+          // Fast path: session already restored from storage (returning visitor)
+          // or already exchanged (SDK finished first). Return it.
+          try {
+            const { data } = await window.SBclient.auth.getSession();
+            if (data?.session?.user) return data.session.user;
+          } catch (_) {}
+          const qs = window.location.search || '';
+          const hasCode = /[?&]code=/.test(qs);
+          if (!hasCode) return null;
+          // Fire an explicit exchange in the background — no-op if the SDK
+          // already consumed the code. Some browsers / extensions clear the
+          // URL before detectSessionInUrl fires; this is our safety net.
+          try {
+            const params = new URLSearchParams(qs);
+            const code = params.get('code');
+            if (code) {
+              // Don't await — let onAuthChange be the source of truth.
+              window.SBclient.auth.exchangeCodeForSession(code).catch(() => {});
+            }
+          } catch (_) {}
+          // Wait for the SIGNED_IN event (or timeout after 6 s).
+          return await new Promise((resolve) => {
+            let done = false;
+            const finish = (u) => { if (done) return; done = true; resolve(u); };
+            const t = setTimeout(async () => {
+              // Last-ditch: session may have landed silently — check once more.
+              try {
+                const { data } = await window.SBclient.auth.getSession();
+                finish(data?.session?.user || null);
+              } catch { finish(null); }
+            }, 6000);
+            const { data: sub } = window.SBclient.auth.onAuthStateChange((event, session) => {
+              if (event === 'SIGNED_IN' && session?.user) {
+                clearTimeout(t);
+                try { sub?.subscription?.unsubscribe?.(); } catch (_) {}
+                finish(session.user);
+              }
+            });
+          });
+        },
       };
 
       // ── Profile helpers ─────────────────────────────────────────
@@ -221,15 +277,55 @@
           if (error) { console.warn('[Supabase] fetchUnclaimed error:', error.message); return []; }
           return data || [];
         },
-        async uploadAvatar(file) {
+        // Upload a portrait to the `avatars` bucket. Accepts a File OR a
+        // Blob OR a data-URL string — the ProfileEditor loses its File
+        // reference on some browsers between the picker firing and Save
+        // being clicked, so we normalise here instead of at every call site.
+        // Returns the public URL, or throws with a human-readable reason.
+        async uploadAvatar(fileOrDataUrl) {
           const user = await window.SBauth.getUser();
           if (!user) throw new Error('Must be signed in to upload avatar');
-          const ext = file.name.split('.').pop().toLowerCase();
+          let blob = fileOrDataUrl;
+          let ext  = 'jpg';
+          let mime = 'image/jpeg';
+          if (typeof fileOrDataUrl === 'string' && fileOrDataUrl.startsWith('data:')) {
+            const m = fileOrDataUrl.match(/^data:([^;]+);/);
+            if (m) { mime = m[1]; ext = (mime.split('/')[1] || 'jpg').replace('jpeg','jpg'); }
+            const res = await fetch(fileOrDataUrl);
+            blob = await res.blob();
+          } else if (fileOrDataUrl && typeof fileOrDataUrl === 'object') {
+            if (fileOrDataUrl.type) mime = fileOrDataUrl.type;
+            if (fileOrDataUrl.name) {
+              const guess = fileOrDataUrl.name.split('.').pop();
+              if (guess) ext = guess.toLowerCase().replace('jpeg','jpg');
+            } else if (mime.includes('/')) {
+              ext = mime.split('/')[1].replace('jpeg','jpg');
+            }
+          } else {
+            throw new Error('No image provided.');
+          }
+          // Stable folder per user so RLS matches; timestamp so browsers
+          // re-fetch after a change instead of showing a cached older photo.
           const path = `${user.id}/avatar-${Date.now()}.${ext}`;
           const { error: upErr } = await window.SBclient.storage
             .from('avatars')
-            .upload(path, file, { upsert: true });
-          if (upErr) throw upErr;
+            .upload(path, blob, {
+              upsert: true,
+              contentType: mime,
+              cacheControl: '3600',
+            });
+          if (upErr) {
+            // Rewrite the most common opaque errors so the ProfileEditor
+            // toast is actually actionable.
+            const raw = (upErr.message || upErr.error || '') + '';
+            if (/bucket|not.?found|no.*such/i.test(raw)) {
+              throw new Error("Avatars bucket missing in Supabase — run supabase-avatars-bucket.sql once.");
+            }
+            if (/policy|row.?level|403|denied/i.test(raw)) {
+              throw new Error("Avatars bucket exists but RLS is blocking the upload — re-run supabase-avatars-bucket.sql.");
+            }
+            throw upErr;
+          }
           const { data: { publicUrl } } = window.SBclient.storage
             .from('avatars')
             .getPublicUrl(path);

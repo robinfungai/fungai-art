@@ -1005,48 +1005,40 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
     <img src="/dinner-experience/outro.webp" alt="" loading="lazy">
   </div>
   <div class="bottom-cta-content">
-    <p class="bottom-cta-eyebrow">One table &middot; twelve seats &middot; one evening</p>
-    <h2 class="bottom-cta-title">Sat 11 October, <em>Berlin</em>.</h2>
-    <p class="bottom-cta-lede">If the mushroom kingdom has been calling and dinner is where you'd like to hear it, take a seat.</p>
-    <div class="bottom-cta-actions">
-      <a href="#reserve" class="bottom-cta-primary">Reserve a seat</a>
-      <a href="mailto:robin@fungai.art?subject=Dinner%20Experience%20inquiry" class="bottom-cta-secondary">Or just write &rarr;</a>
-    </div>
+    <h2 class="bottom-cta-title"><a href="#reserve" class="bottom-cta-reserve">Reserve a seat <span class="arrow">&rarr;</span></a></h2>
+    <p class="bottom-cta-meta">Sat 11 Oct 2026 &middot; Holzmarkt Berlin &middot; &euro;77 early bird</p>
     <div class="bottom-cta-social">
-      <a href="https://www.instagram.com/fungai.art" target="_blank" rel="noopener noreferrer">@fungai.art on Instagram</a>
+      <a href="mailto:robin@fungai.art?subject=Dinner%20Experience%20inquiry">robin@fungai.art</a>
+      <span aria-hidden="true">&middot;</span>
+      <a href="https://www.instagram.com/fungai.art" target="_blank" rel="noopener noreferrer">@fungai.art</a>
       <span aria-hidden="true">&middot;</span>
       <a href="/">fungai.art</a>
     </div>
   </div>
 </section>
 <style>
-  .bottom-cta { position: relative; min-height: 70vh; display: flex; align-items: center; justify-content: center; padding: 100px 24px; overflow: hidden; text-align: center; }
+  .bottom-cta { position: relative; min-height: 320px; display: flex; align-items: center; justify-content: center; padding: 64px 24px; overflow: hidden; text-align: center; }
   .bottom-cta-bg { position: absolute; inset: 0; }
   .bottom-cta-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
-  .bottom-cta-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,9,12,0.75) 0%, rgba(5,9,12,0.55) 40%, rgba(5,9,12,0.9) 100%); }
-  .bottom-cta-content { position: relative; z-index: 1; max-width: 640px; }
-  .bottom-cta-eyebrow { font-family: 'Bayer',var(--sans); font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--amber-lt,#E8B14B); margin-bottom: 26px; }
-  .bottom-cta-title { font-family: 'TAN-PARADISO','Cormorant Garamond',serif; font-weight: 300; font-size: clamp(48px,7vw,88px); line-height: 0.98; color: var(--parchment); letter-spacing: 0.005em; margin-bottom: 20px; }
-  .bottom-cta-title em { font-style: italic; color: var(--mist); }
-  .bottom-cta-lede { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--dust); line-height: 1.7; margin-bottom: 40px; }
-  .bottom-cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 36px; }
-  .bottom-cta-primary { display: inline-block; padding: 15px 36px; background: var(--amber-lt,#E8B14B); color: var(--void); font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; }
-  .bottom-cta-primary:hover { opacity: 0.85; }
-  .bottom-cta-secondary { display: inline-flex; align-items: center; padding: 15px 28px; border: 0.5px solid rgba(232,177,75,0.4); color: var(--parchment); font-family: var(--sans); font-weight: 400; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
-  .bottom-cta-secondary:hover { border-color: var(--amber-lt); color: var(--amber-lt); }
-  .bottom-cta-social { font-family: var(--sans); font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--dust); opacity: 0.75; }
+  .bottom-cta-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,9,12,0.78) 0%, rgba(5,9,12,0.62) 45%, rgba(5,9,12,0.90) 100%); }
+  .bottom-cta-content { position: relative; z-index: 1; max-width: 720px; }
+  .bottom-cta-title { font-family: 'TAN-PARADISO','Cormorant Garamond',serif; font-weight: 300; font-size: clamp(38px, 6vw, 68px); line-height: 1.05; letter-spacing: 0.005em; margin: 0 0 14px; }
+  .bottom-cta-reserve { color: var(--parchment); text-decoration: none; display: inline-flex; align-items: baseline; gap: 18px; padding-bottom: 6px; border-bottom: 0.5px solid rgba(232,177,75,0.5); transition: color 0.2s, border-color 0.2s; }
+  .bottom-cta-reserve .arrow { font-size: 0.7em; color: var(--amber-lt,#E8B14B); transition: transform 0.25s; display: inline-block; }
+  .bottom-cta-reserve:hover { color: var(--amber-lt,#E8B14B); border-color: var(--amber-lt,#E8B14B); }
+  .bottom-cta-reserve:hover .arrow { transform: translateX(6px); }
+  .bottom-cta-meta { font-family: 'Bayer',var(--sans); font-size: 10.5px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--amber-lt,#E8B14B); margin: 0 0 22px; }
+  .bottom-cta-social { font-family: var(--sans); font-size: 10.5px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--dust); opacity: 0.75; }
   .bottom-cta-social a { color: inherit; text-decoration: none; transition: color 0.2s; }
   .bottom-cta-social a:hover { color: var(--amber-lt); }
-  .bottom-cta-social span { margin: 0 12px; }
+  .bottom-cta-social span { margin: 0 10px; }
   @media (max-width: 640px) {
-    .bottom-cta { min-height: 60vh; padding: 72px 20px; }
-    .bottom-cta-title { font-size: clamp(36px, 10vw, 60px); margin-bottom: 16px; }
-    .bottom-cta-eyebrow { font-size: 9px; letter-spacing: 0.24em; margin-bottom: 18px; }
-    .bottom-cta-lede { font-size: 15px; margin-bottom: 32px; }
-    .bottom-cta-actions { flex-direction: column; align-items: stretch; gap: 10px; margin-bottom: 28px; max-width: 300px; margin-left: auto; margin-right: auto; }
-    .bottom-cta-primary, .bottom-cta-secondary { padding: 16px 24px; text-align: center; font-size: 10.5px; }
-    .bottom-cta-social { font-size: 9.5px; letter-spacing: 0.18em; }
-    .bottom-cta-social span { margin: 0 8px; }
+    .bottom-cta { min-height: 260px; padding: 48px 20px; }
+    .bottom-cta-title { font-size: clamp(28px, 8vw, 46px); }
+    .bottom-cta-reserve { gap: 12px; }
+    .bottom-cta-meta { font-size: 9px; letter-spacing: 0.20em; margin-bottom: 18px; }
+    .bottom-cta-social { font-size: 9.5px; letter-spacing: 0.18em; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 0; }
+    .bottom-cta-social span { margin: 0 6px; }
   }
 </style>
 
