@@ -1350,78 +1350,242 @@ const EXCLUSIVE = [
 
 function ApothecaryPage({ economy, onToast }) {
   return (
-    <div className="page-enter">
-      <div className="section">
-        <div className="section-eyebrow">Member-only · exclusive editions</div>
-        <h2 className="section-title">The <em>rarities.</em></h2>
-        <p className="section-blurb">Not found in any shop. Small-batch gummies, chocolates, and ceremonial confections made in the Fungai Art labs. Available only to Hyphae members — pay in $H or €.</p>
+    <div className="page-enter apo-page">
+      {/* Ambient starfield backdrop — cheap radial gradients + a few
+          slow-drifting glyphs. No external assets, still reads as
+          "not a shop — a chamber". */}
+      <div className="apo-void" aria-hidden="true">
+        <span className="apo-orb apo-orb-1" />
+        <span className="apo-orb apo-orb-2" />
+        <span className="apo-orb apo-orb-3" />
+        <span className="apo-glyph apo-glyph-1">✦</span>
+        <span className="apo-glyph apo-glyph-2">◯</span>
+        <span className="apo-glyph apo-glyph-3">◇</span>
+        <span className="apo-glyph apo-glyph-4">✦</span>
       </div>
 
-      {/* Exclusivity notice */}
-      <div style={{ margin:'0 16px 4px', padding:'12px 16px', background:'rgba(232,177,75,.06)', border:'0.5px solid rgba(232,177,75,.25)', borderRadius:10, display:'flex', alignItems:'center', gap:10 }}>
-        <span style={{ fontSize:18 }}>✦</span>
-        <div>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--nutrient-l)', marginBottom:3 }}>Member discount active</div>
-          <div style={{ fontSize:11.5, color:'var(--mycelium)', opacity:.85 }}>Your {economy.state.balance} $H balance can be applied at checkout. Contributors pay in tokens and save vs the public price.</div>
+      <div className="apo-header">
+        <div className="apo-eyebrow">◈ Members-only chamber · rare editions</div>
+        <h2 className="apo-title">The <em>Apothecary</em>.</h2>
+        <p className="apo-sub">Small-batch confections, elixirs, and neurochemical rituals — poured in the Berlin lab, never sold in any shop. Priced in <span className="apo-token">$H</span> or &euro;.</p>
+        <div className="apo-balance">
+          <div className="apo-balance-ring">
+            <span className="apo-balance-val">{economy.state.balance}</span>
+            <span className="apo-balance-lbl">$H</span>
+          </div>
+          <div className="apo-balance-note">Your holdings. Spend directly at claim &mdash; no gateway, no wait.</div>
         </div>
       </div>
 
-      <div className="prod-grid" style={{ marginTop:14 }}>
-        {EXCLUSIVE.map(p => {
-          const owned   = economy.state.inventory.includes(p.id);
-          const canPay  = economy.state.balance >= p.pH;
+      <div className="apo-grid">
+        {EXCLUSIVE.map((p, idx) => {
+          const owned  = economy.state.inventory.includes(p.id);
+          const canPay = economy.state.balance >= p.pH;
           return (
-            <div key={p.id} className="prod-card" style={{ borderColor: owned ? p.accent + '55' : undefined }}>
-              {/* Art panel */}
-              <div className="prod-art" style={{ background: p.bg, border:`0.5px solid ${p.accent}22` }}>
-                <div className="prod-art-stripe" />
-                <div className="prod-art-glow" style={{ background:`radial-gradient(circle at 30% 30%, ${p.accent}33, transparent 60%)` }} />
-                {/* Badge */}
-                <div style={{ position:'absolute', top:8, left:8, fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.16em', textTransform:'uppercase', padding:'2px 7px', borderRadius:3, background:`${p.accent}22`, border:`0.5px solid ${p.accent}55`, color:p.accent }}>
-                  {p.badge}
-                </div>
-                <div className="prod-art-label">
-                  <div className="pl-name" style={{ color:p.accent }}>{p.name}</div>
-                  <div className="pl-vol">{p.vol}</div>
-                </div>
+            <article
+              key={p.id}
+              className={`apo-card ${owned ? 'apo-card-owned' : ''}`}
+              style={{ '--acc': p.accent, '--bg': p.bg, animationDelay: `${idx * 60}ms` }}
+            >
+              {/* Holographic top face */}
+              <div className="apo-face">
+                <div className="apo-face-halo" />
+                <div className="apo-face-orb" />
+                <div className="apo-face-grid" />
+                <div className="apo-face-badge">{p.badge}</div>
+                <div className="apo-face-vol">{p.vol}</div>
+                <div className="apo-face-name">{p.name}</div>
               </div>
 
-              <div>
-                <div className="prod-name">{p.name}</div>
-                <div className="prod-cat">{p.sub}</div>
-              </div>
-              <div className="prod-desc">{p.desc}</div>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:p.accent, opacity:.8, marginBottom:4 }}>{p.note}</div>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'var(--mycelium-d)', marginBottom:6 }}>◉ {p.season}</div>
+              {/* Body */}
+              <div className="apo-body">
+                <div className="apo-sub-line">{p.sub}</div>
+                <p className="apo-desc">{p.desc}</p>
+                <div className="apo-effect">▸ {p.note}</div>
+                <div className="apo-origin">◉ {p.season}</div>
 
-              <div className="prod-price">
-                <span className="prod-price-eur">€{p.pEur}</span>
-                <span className="prod-price-h" style={{ color:p.accent }}>{p.pH} $H</span>
+                <div className="apo-price-row">
+                  <div className="apo-price-eur">&euro;{p.pEur}</div>
+                  <div className="apo-price-h">{p.pH} <span>$H</span></div>
+                </div>
+
+                <button
+                  className={`apo-btn ${owned ? 'apo-btn-owned' : (canPay ? 'apo-btn-pay' : 'apo-btn-reserve')}`}
+                  disabled={owned}
+                  onClick={() => {
+                    if (canPay) {
+                      economy.buy(p.id, p.name, p.pH);
+                      onToast(`✦ ${p.name} claimed · ${p.pH} $H spent`, 'success');
+                    } else {
+                      onToast(`${p.name} reserved — pay €${p.pEur} at pickup`);
+                    }
+                  }}
+                >
+                  {owned
+                    ? <><span className="apo-btn-glyph">✓</span> Claimed</>
+                    : canPay
+                      ? <><span className="apo-btn-glyph">✦</span> Claim &middot; {p.pH} $H</>
+                      : <>Reserve &middot; &euro;{p.pEur}</>}
+                </button>
               </div>
-              <button
-                className={`prod-add ${owned ? 'bought' : ''}`}
-                style={owned ? { background:p.accent, borderColor:p.accent, color:'var(--soil)' } : { borderColor:p.accent + '66', color:p.accent }}
-                disabled={owned}
-                onClick={() => {
-                  if (canPay) {
-                    economy.buy(p.id, p.name, p.pH);
-                    onToast(`✦ ${p.name} claimed · ${p.pH} $H spent`, 'success');
-                  } else {
-                    onToast(`${p.name} added — pay €${p.pEur} at pickup`);
-                  }
-                }}
-              >
-                {owned ? '✓ Claimed' : (canPay ? `✦ Claim for ${p.pH} $H` : `Reserve · €${p.pEur}`)}
-              </button>
-            </div>
+            </article>
           );
         })}
       </div>
 
-      <div style={{ margin:'20px 16px 0', padding:'12px 14px', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:8, textAlign:'center' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:4 }}>Want something else?</div>
-        <div style={{ fontSize:12, color:'var(--mycelium)' }}>All public products at <a href="/shop" style={{ color:'var(--spore-l)', textDecoration:'none' }}>fungai.art/shop</a> — member discount applies.</div>
+      <div className="apo-footer">
+        <div className="apo-footer-glyphs">◇ △ ◇</div>
+        <div className="apo-footer-text">
+          Chamber refreshes with the season. Not seeing something? &nbsp;
+          <a href="/shop">fungai.art/shop</a> holds the full public catalogue &mdash; member discount applies there too.
+        </div>
       </div>
+
+      <style>{`
+        /* ── Apothecary · futuristic entheogenic chamber ────────── */
+        .apo-page { position: relative; padding: 8px 0 40px; }
+        .apo-void {
+          position: absolute; inset: 0; pointer-events: none; z-index: 0;
+          background:
+            radial-gradient(1200px 700px at 20% -10%, rgba(107,214,111,0.06), transparent 60%),
+            radial-gradient(900px 600px at 90% 20%, rgba(200,140,255,0.06), transparent 65%),
+            radial-gradient(900px 900px at 30% 90%, rgba(232,177,75,0.05), transparent 70%);
+          overflow: hidden;
+        }
+        .apo-orb { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.35; }
+        .apo-orb-1 { width: 380px; height: 380px; top: -80px; left: -60px;
+          background: radial-gradient(circle, rgba(107,214,111,0.5), transparent 60%);
+          animation: apo-drift 24s ease-in-out infinite; }
+        .apo-orb-2 { width: 420px; height: 420px; top: 40%; right: -100px;
+          background: radial-gradient(circle, rgba(180,120,255,0.4), transparent 60%);
+          animation: apo-drift 30s ease-in-out infinite 4s; }
+        .apo-orb-3 { width: 340px; height: 340px; bottom: -60px; left: 25%;
+          background: radial-gradient(circle, rgba(232,177,75,0.35), transparent 60%);
+          animation: apo-drift 34s ease-in-out infinite 8s; }
+        .apo-glyph { position: absolute; color: rgba(232,177,75,0.14); user-select: none; }
+        .apo-glyph-1 { top: 8%;  left: 8%;  font-size: 22px; animation: apo-glyph-float 18s ease-in-out infinite; }
+        .apo-glyph-2 { top: 32%; right: 10%; font-size: 34px; animation: apo-glyph-float 22s ease-in-out infinite 3s; }
+        .apo-glyph-3 { bottom: 22%; left: 12%; font-size: 26px; animation: apo-glyph-float 26s ease-in-out infinite 6s; }
+        .apo-glyph-4 { bottom: 8%; right: 20%; font-size: 20px; animation: apo-glyph-float 30s ease-in-out infinite 10s; }
+        @keyframes apo-drift {
+          0%,100% { transform: translate(0,0) scale(1); }
+          50%     { transform: translate(30px,-40px) scale(1.08); }
+        }
+        @keyframes apo-glyph-float {
+          0%,100% { transform: translate(0,0) rotate(0deg); opacity: 0.14; }
+          50%     { transform: translate(14px,-20px) rotate(12deg); opacity: 0.22; }
+        }
+
+        .apo-header { position: relative; z-index: 1; padding: 28px 20px 24px; max-width: 720px; margin: 0 auto; text-align: center; }
+        .apo-eyebrow { font-family: 'Geist Mono', var(--font-mono); font-size: 9.5px; letter-spacing: 0.34em; text-transform: uppercase; color: var(--nutrient-l, #E8B14B); margin-bottom: 18px; }
+        .apo-title { font-family: var(--font-display); font-size: clamp(38px, 6vw, 60px); line-height: 0.98; color: var(--mycelium-l); letter-spacing: -0.01em; margin: 0 0 14px; font-weight: 300; }
+        .apo-title em { font-style: italic;
+          background: linear-gradient(120deg, #C88CFF, #7bd4a1 40%, #E8B14B 90%);
+          -webkit-background-clip: text; background-clip: text; color: transparent;
+          filter: drop-shadow(0 0 12px rgba(200,140,255,0.3));
+        }
+        .apo-sub { font-size: 14px; line-height: 1.7; color: var(--mycelium); opacity: 0.9; }
+        .apo-token { font-family: var(--font-mono); font-size: 12px; color: var(--nutrient-l, #E8B14B); letter-spacing: 0.06em; }
+
+        .apo-balance { margin: 22px auto 4px; display: inline-flex; align-items: center; gap: 14px; padding: 10px 20px 10px 12px; border: 0.5px solid rgba(232,177,75,0.35); border-radius: 999px; background: rgba(15,16,20,0.6); backdrop-filter: blur(8px); }
+        .apo-balance-ring { width: 46px; height: 46px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, rgba(232,177,75,0.35), rgba(107,214,111,0.15)); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(232,177,75,0.25), inset 0 0 12px rgba(255,255,255,0.06); }
+        .apo-balance-val { font-family: var(--font-mono); font-size: 15px; color: var(--parchment, #EDE5D8); line-height: 1; }
+        .apo-balance-lbl { font-family: var(--font-mono); font-size: 7.5px; letter-spacing: 0.24em; color: var(--nutrient-l, #E8B14B); margin-top: 1px; }
+        .apo-balance-note { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--mycelium-d); max-width: 260px; text-align: left; line-height: 1.5; }
+
+        .apo-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; padding: 24px 16px 8px; max-width: 1180px; margin: 0 auto; }
+
+        .apo-card {
+          position: relative; display: flex; flex-direction: column;
+          background: linear-gradient(160deg, rgba(15,16,20,0.85) 0%, rgba(20,15,25,0.7) 60%, rgba(10,15,20,0.9) 100%);
+          border: 0.5px solid rgba(255,255,255,0.06);
+          border-radius: 20px; overflow: hidden;
+          backdrop-filter: blur(12px);
+          transition: transform 0.35s cubic-bezier(0.22,0.61,0.36,1), border-color 0.35s, box-shadow 0.35s;
+          opacity: 0; transform: translateY(18px);
+          animation: apo-rise 0.7s cubic-bezier(0.22,0.61,0.36,1) forwards;
+          box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset, 0 20px 40px -30px rgba(0,0,0,0.6);
+        }
+        @keyframes apo-rise { to { opacity: 1; transform: translateY(0); } }
+        .apo-card:hover { transform: translateY(-4px); border-color: var(--acc); box-shadow: 0 30px 50px -30px rgba(0,0,0,0.7), 0 0 30px -8px var(--acc); }
+        .apo-card::before {
+          content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 0.5px;
+          background: linear-gradient(140deg, transparent 40%, var(--acc) 50%, transparent 60%);
+          -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          -webkit-mask-composite: xor; mask-composite: exclude;
+          opacity: 0.28; pointer-events: none;
+        }
+        .apo-card-owned { border-color: var(--acc); box-shadow: 0 0 22px -8px var(--acc); }
+
+        .apo-face {
+          position: relative; aspect-ratio: 1.4 / 1; overflow: hidden;
+          background:
+            radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--acc) 45%, transparent) 0%, transparent 55%),
+            radial-gradient(circle at 75% 75%, rgba(200,140,255,0.22) 0%, transparent 55%),
+            linear-gradient(160deg, var(--bg) 0%, #05070C 100%);
+        }
+        .apo-face-halo { position: absolute; inset: -20%; background: radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--acc) 30%, transparent) 0%, transparent 45%); filter: blur(20px); animation: apo-halo-pulse 6s ease-in-out infinite; }
+        @keyframes apo-halo-pulse { 0%,100% { transform: scale(1); opacity: 0.7; } 50% { transform: scale(1.1); opacity: 1; } }
+        .apo-face-orb {
+          position: absolute; left: 50%; top: 55%; transform: translate(-50%,-50%);
+          width: 96px; height: 96px; border-radius: 50%;
+          background:
+            radial-gradient(circle at 35% 32%, color-mix(in srgb, var(--acc) 90%, white) 0%, var(--acc) 30%, color-mix(in srgb, var(--acc) 30%, black) 65%, black 100%);
+          box-shadow: 0 0 50px color-mix(in srgb, var(--acc) 60%, transparent), inset 0 -10px 20px rgba(0,0,0,0.5), inset 0 4px 8px rgba(255,255,255,0.15);
+          animation: apo-orb-pulse 5s ease-in-out infinite;
+        }
+        @keyframes apo-orb-pulse { 0%,100% { transform: translate(-50%,-50%) scale(1); } 50% { transform: translate(-50%,-52%) scale(1.04); } }
+        .apo-face-grid {
+          position: absolute; inset: 0;
+          background-image:
+            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+          background-size: 32px 32px; mask-image: radial-gradient(circle at 50% 55%, black 40%, transparent 80%);
+        }
+        .apo-face-badge { position: absolute; top: 12px; left: 12px; font-family: 'Geist Mono', var(--font-mono); font-size: 8px; letter-spacing: 0.28em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: rgba(0,0,0,0.55); border: 0.5px solid color-mix(in srgb, var(--acc) 55%, transparent); color: var(--acc); backdrop-filter: blur(6px); }
+        .apo-face-vol { position: absolute; top: 12px; right: 12px; font-family: 'Geist Mono', var(--font-mono); font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(237,229,216,0.7); }
+        .apo-face-name { position: absolute; left: 0; right: 0; bottom: 14px; text-align: center; font-family: var(--font-display); font-style: italic; font-size: 22px; color: rgba(237,229,216,0.95); letter-spacing: -0.005em; text-shadow: 0 2px 20px rgba(0,0,0,0.6); padding: 0 16px; }
+
+        .apo-body { padding: 18px 18px 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+        .apo-sub-line { font-family: 'Geist Mono', var(--font-mono); font-size: 9.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--acc); opacity: 0.85; }
+        .apo-desc { font-family: var(--font-sans); font-size: 12.5px; line-height: 1.65; color: var(--mycelium); opacity: 0.9; margin: 0; }
+        .apo-effect { font-family: var(--font-sans); font-style: italic; font-size: 12px; color: var(--parchment, #EDE5D8); opacity: 0.85; line-height: 1.55; }
+        .apo-origin { font-family: 'Geist Mono', var(--font-mono); font-size: 8.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mycelium-d); }
+        .apo-price-row { display: flex; align-items: baseline; justify-content: space-between; padding-top: 10px; margin-top: 4px; border-top: 0.5px solid rgba(255,255,255,0.06); }
+        .apo-price-eur { font-family: var(--font-display); font-style: italic; font-size: 24px; color: var(--parchment, #EDE5D8); }
+        .apo-price-h { font-family: 'Geist Mono', var(--font-mono); font-size: 15px; color: var(--acc); letter-spacing: 0.02em; }
+        .apo-price-h span { font-size: 9px; letter-spacing: 0.24em; opacity: 0.7; margin-left: 2px; }
+
+        .apo-btn {
+          margin-top: 4px; padding: 13px 16px; border-radius: 999px;
+          font-family: 'Geist Mono', var(--font-mono); font-size: 10.5px; letter-spacing: 0.24em; text-transform: uppercase;
+          cursor: pointer; transition: transform 0.2s, background 0.25s, color 0.25s;
+          display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+          border: 0.5px solid color-mix(in srgb, var(--acc) 55%, transparent);
+          color: var(--acc);
+          background: linear-gradient(140deg, color-mix(in srgb, var(--acc) 12%, transparent), transparent 60%);
+        }
+        .apo-btn:hover:not(:disabled) { transform: translateY(-1px); background: linear-gradient(140deg, color-mix(in srgb, var(--acc) 22%, transparent), color-mix(in srgb, var(--acc) 6%, transparent)); }
+        .apo-btn-pay { color: var(--parchment, #EDE5D8); border-color: var(--acc); box-shadow: 0 0 18px -8px var(--acc); }
+        .apo-btn-owned { background: var(--acc); color: var(--soil, #0F1014); border-color: var(--acc); cursor: default; }
+        .apo-btn-glyph { font-family: var(--font-display); font-style: italic; font-size: 14px; letter-spacing: 0; }
+
+        .apo-footer { position: relative; z-index: 1; margin: 32px auto 0; max-width: 640px; text-align: center; padding: 20px 24px; border: 0.5px solid rgba(255,255,255,0.05); border-radius: 14px; background: rgba(15,16,20,0.4); backdrop-filter: blur(6px); }
+        .apo-footer-glyphs { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.6em; color: var(--nutrient-l, #E8B14B); opacity: 0.5; margin-bottom: 8px; }
+        .apo-footer-text { font-family: var(--font-sans); font-size: 12px; line-height: 1.7; color: var(--mycelium); opacity: 0.85; }
+        .apo-footer-text a { color: var(--spore-l); text-decoration: none; border-bottom: 0.5px solid color-mix(in srgb, var(--spore-l) 40%, transparent); }
+
+        @media (max-width: 640px) {
+          .apo-grid { grid-template-columns: 1fr; padding: 16px 14px 8px; gap: 14px; }
+          .apo-header { padding: 22px 18px 18px; }
+          .apo-title { font-size: clamp(34px, 8vw, 46px); }
+          .apo-balance { flex-direction: column; padding: 12px 16px; gap: 10px; }
+          .apo-balance-note { text-align: center; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .apo-orb, .apo-glyph, .apo-face-halo, .apo-face-orb, .apo-card { animation: none !important; opacity: 1; transform: none; }
+        }
+      `}</style>
     </div>
   );
 }
@@ -1516,7 +1680,7 @@ function ExperiencesPage({ economy, onToast }) {
 
 /* ── Profile Editor modal — inline character creation ────────── */
 
-function ProfileEditor({ existing, onClose }) {
+function ProfileEditor({ existing, onClose, adminEditingId }) {
   // Hydrate from an unsaved draft if one exists (recovered after sign-in)
   const draft = (() => {
     try { const d = JSON.parse(localStorage.getItem('fungai_profile_draft') || 'null'); return d || {}; }
@@ -1646,7 +1810,9 @@ function ProfileEditor({ existing, onClose }) {
               // Prefer the original File (bigger, better quality). Fall back
               // to the downscaled data URL if the FileList was cleared.
               const source = fileRef.current?.files?.[0] || avatar;
-              avatarUrl = await window.SBprofiles.uploadAvatar(source);
+              avatarUrl = adminEditingId
+                ? await window.SBprofiles.adminUploadAvatar(adminEditingId, source)
+                : await window.SBprofiles.uploadAvatar(source);
               try { localStorage.removeItem('fungai_pending_avatar'); } catch (_) {}
             } catch (e) {
               // Storage upload failed (RLS, quota, network, bucket missing).
@@ -1686,8 +1852,12 @@ function ProfileEditor({ existing, onClose }) {
         };
         const { recruited_by: _stripRecruitedBy, ...cloudProfile } = profile;
 
-        if (user) {
-          // Path A
+        if (adminEditingId) {
+          // Admin path — updates ANOTHER user's profile row. Requires the
+          // admin-UPDATE RLS policy on `profiles` (see supabase-client.js).
+          await window.SBprofiles.adminUpdate(adminEditingId, cloudProfile);
+        } else if (user) {
+          // Path A — signed-in user editing their own row
           await window.SBprofiles.upsert(cloudProfile);
         } else {
           // Path B — unclaimed insert (requires the new RLS policy)
@@ -1706,14 +1876,16 @@ function ProfileEditor({ existing, onClose }) {
         }
 
         // Cache locally for instant first-paint next time, and clear any unsaved draft.
-        // If we have a pending data-URL avatar (unclaimed user upload), include it in the
-        // local cache so the user keeps seeing their pic until claim+upload completes.
-        let localAvatar = avatarUrl;
-        if (!localAvatar) {
-          try { localAvatar = localStorage.getItem('fungai_pending_avatar') || null; } catch (e) {}
+        // Skip this in admin-edit mode — otherwise the admin's own local cache
+        // gets overwritten with the target member's data.
+        if (!adminEditingId) {
+          let localAvatar = avatarUrl;
+          if (!localAvatar) {
+            try { localAvatar = localStorage.getItem('fungai_pending_avatar') || null; } catch (e) {}
+          }
+          try { localStorage.setItem('fungai_profile', JSON.stringify({ ...profile, avatar: localAvatar })); } catch (e) {}
+          try { localStorage.removeItem('fungai_profile_draft'); } catch (e) {}
         }
-        try { localStorage.setItem('fungai_profile', JSON.stringify({ ...profile, avatar: localAvatar })); } catch (e) {}
-        try { localStorage.removeItem('fungai_profile_draft'); } catch (e) {}
 
         setTimeout(() => { window.location.reload(); }, 600);
         return;
@@ -2175,7 +2347,7 @@ function MembersPage({ currentMember, economy }) {
           {sales.length > 0 && (
             <>
               <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'.16em', textTransform:'uppercase', color:'var(--mycelium-d)', marginBottom:8 }}>Sales logged</div>
-              <div style={{ background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:8, overflow:'hidden' }}>
+              <div style={{ background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:8, overflow:'hidden', marginBottom:14 }}>
                 {sales.slice(0,5).map((s, i) => (
                   <div key={i} style={{ display:'flex', alignItems:'center', gap:8, padding:'9px 12px', borderBottom: i < Math.min(4, sales.length-1) ? '0.5px solid var(--rule)' : 'none' }}>
                     <div style={{ flex:1, fontSize:11, color:'var(--mycelium)' }}>{s.note || s.label || 'Sale'}</div>
@@ -2185,7 +2357,36 @@ function MembersPage({ currentMember, economy }) {
               </div>
             </>
           )}
+
+          {/* Admin edit — opens ProfileEditor pointed at this member's
+              cloud row. Requires an RLS policy on `profiles` allowing
+              admin UPDATE; helper surfaces a clear toast if missing. */}
+          {m.cloudId && (
+            <button
+              onClick={() => setShowProfileEditor(m)}
+              style={{ width:'100%', marginTop:4, fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase', padding:'12px 18px', borderRadius:999, border:'0.5px solid rgba(232,177,75,0.45)', background:'rgba(232,177,75,0.08)', color:'var(--nutrient-l)', cursor:'pointer' }}
+            >
+              ✎ Edit {m.name.split(' ')[0]}'s profile
+            </button>
+          )}
         </div>
+        {showProfileEditor && (
+          <ProfileEditor
+            existing={{
+              character_name: showProfileEditor.name,
+              bio:            showProfileEditor.bio || '',
+              role:           (showProfileEditor.role || '').toLowerCase(),
+              location:       showProfileEditor.node || '',
+              pronouns:       showProfileEditor.pronouns || '',
+              contact:        showProfileEditor.contact || '',
+              avatar:         showProfileEditor.avatar || showProfileEditor.avatar_url || null,
+              specialties:    showProfileEditor.specialties || [],
+              cloudId:        showProfileEditor.cloudId,
+            }}
+            adminEditingId={showProfileEditor.cloudId}
+            onClose={() => { setShowProfileEditor(null); setTimeout(() => window.location.reload(), 200); }}
+          />
+        )}
       </div>
     );
   }

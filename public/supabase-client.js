@@ -243,6 +243,82 @@
           if (!data) throw new Error('Insert returned no row. Reload and try again.');
           return data;
         },
+        // Admin path — update ANY profile row by id (not just the caller's).
+        // Requires an RLS policy on `profiles` that permits UPDATE where the
+        // caller's auth.jwt() email is in the admin list (robin@fungai.art,
+        // teyae@fungai.art). If the DB has no such policy the request will
+        // fail with a permissions error and the caller must add one.
+        async adminUpdate(profileId, fields) {
+          if (!profileId) throw new Error('adminUpdate: missing profileId');
+          const clean = { ...fields };
+          // Never let admin overwrite these — they're auth-derived / immutable.
+          delete clean.id;
+          delete clean.auth_user_id;
+          delete clean.created_at;
+          const { data, error } = await window.SBclient
+            .from('profiles')
+            .update(clean)
+            .eq('id', profileId)
+            .select()
+            .maybeSingle();
+          if (error) {
+            if (/policy|row-level|403|denied/i.test(error.message || '')) {
+              throw new Error("Admin update blocked by RLS. Add a policy on `profiles` that allows UPDATE when auth.jwt() email is a known admin.");
+            }
+            throw error;
+          }
+          return data;
+        },
+        // Admin path — upload a portrait to ANOTHER user's folder in the
+        // avatars bucket. Requires an RLS policy on storage.objects that
+        // lets admins write outside their own uid folder (see the
+        // supabase-avatars-bucket.sql notes).
+        async adminUploadAvatar(profileId, fileOrDataUrl) {
+          if (!profileId) throw new Error('adminUploadAvatar: missing profileId');
+          if (!window.SBauth?.getUser) throw new Error('Auth not ready');
+          const me = await window.SBauth.getUser();
+          if (!me) throw new Error('Must be signed in');
+          // Look up the target profile's auth_user_id (that's the folder key).
+          const { data: row, error: qErr } = await window.SBclient
+            .from('profiles')
+            .select('id, auth_user_id')
+            .eq('id', profileId)
+            .maybeSingle();
+          if (qErr) throw qErr;
+          // If the target is unclaimed (no auth_user_id yet), we put the
+          // file in an `unclaimed/` folder — the profile row still gets
+          // the public URL, and the user's own uploads will overwrite it
+          // once they claim.
+          const folder = row?.auth_user_id || `unclaimed/${profileId}`;
+          let blob = fileOrDataUrl;
+          let ext = 'jpg';
+          let mime = 'image/jpeg';
+          if (typeof fileOrDataUrl === 'string' && fileOrDataUrl.startsWith('data:')) {
+            const m = fileOrDataUrl.match(/^data:([^;]+);/);
+            if (m) { mime = m[1]; ext = (mime.split('/')[1] || 'jpg').replace('jpeg','jpg'); }
+            const res = await fetch(fileOrDataUrl);
+            blob = await res.blob();
+          } else if (fileOrDataUrl && typeof fileOrDataUrl === 'object') {
+            if (fileOrDataUrl.type) mime = fileOrDataUrl.type;
+            const guess = fileOrDataUrl.name?.split('.').pop();
+            if (guess) ext = guess.toLowerCase().replace('jpeg','jpg');
+            else if (mime.includes('/')) ext = mime.split('/')[1].replace('jpeg','jpg');
+          } else {
+            throw new Error('No image provided.');
+          }
+          const path = `${folder}/avatar-${Date.now()}.${ext}`;
+          const { error: upErr } = await window.SBclient.storage
+            .from('avatars')
+            .upload(path, blob, { upsert: true, contentType: mime, cacheControl: '3600' });
+          if (upErr) {
+            if (/policy|row-level|403|denied/i.test(upErr.message || '')) {
+              throw new Error("Admin storage write blocked by RLS. Add an admin INSERT/UPDATE policy on storage.objects for the avatars bucket.");
+            }
+            throw upErr;
+          }
+          const { data: { publicUrl } } = window.SBclient.storage.from('avatars').getPublicUrl(path);
+          return publicUrl;
+        },
         // Claim an existing seeded profile (founding members + palawan) — links it to this auth user
         async claimSeededProfile(profileId) {
           const user = await window.SBauth.getUser();
