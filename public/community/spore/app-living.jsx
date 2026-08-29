@@ -2358,13 +2358,62 @@ function MembersPage({ currentMember, economy }) {
             </>
           )}
 
+          {/* Gift $H · founder-only cross-device */}
+          <div style={{ marginTop:14, padding:'12px 14px', background:'rgba(107,214,111,0.06)', border:'0.5px solid rgba(107,214,111,0.28)', borderRadius:10 }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--spore-l)', marginBottom:8 }}>◈ Gift $HYPHA</div>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const fd = new FormData(e.currentTarget);
+                const amount = Math.max(0, Math.min(9999, Number(fd.get('amount') || 0)));
+                const note   = String(fd.get('note') || '').slice(0, 120);
+                if (!amount) return;
+                // Local (this device) ledger — bumps the recipient's
+                // spore_state_<id>.balance and appends to their history.
+                try {
+                  const key = 'spore_state_' + m.id;
+                  const raw = localStorage.getItem(key);
+                  const cur = raw ? JSON.parse(raw) : { balance:m.balance||0, reputation:m.rep||0, contributions:0, keys:0, unlocked:[], inventory:[], history:[] };
+                  cur.balance = (cur.balance || 0) + amount;
+                  cur.history = [{ type:'earn', label:`Gift from ${currentMember?.name || 'founder'}${note ? ' — ' + note : ''}`, delta:+amount, ts:Date.now() }, ...(cur.history || [])].slice(0, 30);
+                  localStorage.setItem(key, JSON.stringify(cur));
+                } catch {}
+                // Best-effort cloud ledger via `hypha_gifts` — silently
+                // no-ops if the table doesn't exist yet.
+                (async () => {
+                  try {
+                    if (!window.SBauth || !window.SBclient || !m.cloudId) return;
+                    const u = await window.SBauth.getUser();
+                    if (!u) return;
+                    await window.SBclient.from('hypha_gifts').insert({
+                      from_auth_user_id: u.id,
+                      to_profile_id: m.cloudId,
+                      amount, note,
+                    });
+                  } catch (_) {}
+                })();
+                e.currentTarget.reset();
+                onToast(`✦ Gifted ${amount} $H to ${m.name}`, 'success');
+              }}
+              style={{ display:'grid', gridTemplateColumns:'90px 1fr auto', gap:8 }}
+            >
+              <input name="amount" type="number" min="1" max="9999" step="1" placeholder="20" required
+                style={{ background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:6, color:'var(--mycelium-l)', padding:'8px 10px', fontFamily:'var(--font-mono)', fontSize:12, outline:'none' }} />
+              <input name="note" type="text" maxLength={120} placeholder="Reason (visible in history)"
+                style={{ background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:6, color:'var(--mycelium-l)', padding:'8px 10px', fontFamily:'var(--font-sans)', fontSize:12, outline:'none' }} />
+              <button type="submit"
+                style={{ fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.22em', textTransform:'uppercase', padding:'8px 14px', borderRadius:999, border:'none', cursor:'pointer', background:'linear-gradient(135deg, var(--spore), var(--spore-d))', color:'var(--soil)', fontWeight:500 }}>Gift →</button>
+            </form>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'var(--mycelium-d)', marginTop:6 }}>Local balance updates instantly. Cross-device sync once the <span style={{ color:'var(--spore-l)' }}>hypha_gifts</span> table + trigger exist.</div>
+          </div>
+
           {/* Admin edit — opens ProfileEditor pointed at this member's
               cloud row. Requires an RLS policy on `profiles` allowing
               admin UPDATE; helper surfaces a clear toast if missing. */}
           {m.cloudId && (
             <button
               onClick={() => setShowProfileEditor(m)}
-              style={{ width:'100%', marginTop:4, fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase', padding:'12px 18px', borderRadius:999, border:'0.5px solid rgba(232,177,75,0.45)', background:'rgba(232,177,75,0.08)', color:'var(--nutrient-l)', cursor:'pointer' }}
+              style={{ width:'100%', marginTop:12, fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase', padding:'12px 18px', borderRadius:999, border:'0.5px solid rgba(232,177,75,0.45)', background:'rgba(232,177,75,0.08)', color:'var(--nutrient-l)', cursor:'pointer' }}
             >
               ✎ Edit {m.name.split(' ')[0]}'s profile
             </button>
@@ -4219,6 +4268,41 @@ function PyramidMark({ color, size = 48 }) {
 function CalendarPage({ economy, onToast }) {
   const now = new Date();
 
+  // ── RSVP state ─────────────────────────────────────────────
+  // localStorage first so it works without any DB change; a cloud
+  // sync via the `event_rsvps` table (see supabase-event-rsvps.sql)
+  // can layer on later without touching this UI.
+  const RSVP_KEY = 'spore_rsvps'; // { [eventId]: 'yes' | 'maybe' }
+  const [rsvps, setRsvps] = useState(() => {
+    try { return JSON.parse(localStorage.getItem(RSVP_KEY) || '{}'); } catch { return {}; }
+  });
+  function setRsvp(eventId, value) {
+    const next = { ...rsvps };
+    if (value) next[eventId] = value; else delete next[eventId];
+    setRsvps(next);
+    try { localStorage.setItem(RSVP_KEY, JSON.stringify(next)); } catch {}
+    // Best-effort cloud upsert. Silently no-ops if the table doesn't
+    // exist yet — see supabase-event-rsvps.sql.
+    (async () => {
+      try {
+        if (!window.SBauth || !window.SBclient) return;
+        const u = await window.SBauth.getUser();
+        if (!u) return;
+        if (value) {
+          await window.SBclient.from('event_rsvps').upsert({
+            event_id: eventId, auth_user_id: u.id, status: value, updated_at: new Date().toISOString(),
+          }, { onConflict: 'event_id,auth_user_id' });
+        } else {
+          await window.SBclient.from('event_rsvps')
+            .delete()
+            .eq('event_id', eventId)
+            .eq('auth_user_id', u.id);
+        }
+      } catch (_) { /* table may not exist yet */ }
+    })();
+    onToast(value === 'yes' ? '✦ I\'m coming logged' : value === 'maybe' ? '◇ Maybe logged' : 'RSVP cleared', 'success');
+  }
+
   function countdown(dateStr) {
     const d = new Date(dateStr);
     const diff = d - now;
@@ -4329,6 +4413,29 @@ function CalendarPage({ economy, onToast }) {
                     <div className="cal-cap-fill" style={{ width:'28%', background: freqColor, opacity:0.7 }} />
                   </div>
                 </div>
+
+                {/* RSVP · I'm coming */}
+                {!isPast && (
+                  <div style={{ display:'flex', gap:8, marginTop:12, alignItems:'center', flexWrap:'wrap' }}>
+                    <button
+                      onClick={() => setRsvp(ev.id, rsvps[ev.id] === 'yes' ? null : 'yes')}
+                      style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase', padding:'10px 16px', borderRadius:999, cursor:'pointer', border: rsvps[ev.id] === 'yes' ? `1px solid ${freqColor}` : `0.5px solid ${freqColor}55`, background: rsvps[ev.id] === 'yes' ? `${freqColor}22` : 'transparent', color: rsvps[ev.id] === 'yes' ? freqColor : 'var(--mycelium)' }}
+                    >
+                      {rsvps[ev.id] === 'yes' ? '✓ I\'m coming' : '✦ I\'m coming'}
+                    </button>
+                    <button
+                      onClick={() => setRsvp(ev.id, rsvps[ev.id] === 'maybe' ? null : 'maybe')}
+                      style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase', padding:'10px 16px', borderRadius:999, cursor:'pointer', border: rsvps[ev.id] === 'maybe' ? '1px solid var(--mycelium-d)' : '0.5px solid var(--rule-strong)', background: rsvps[ev.id] === 'maybe' ? 'rgba(255,255,255,0.04)' : 'transparent', color:'var(--mycelium-d)' }}
+                    >
+                      {rsvps[ev.id] === 'maybe' ? '◇ Maybe' : '◇ Maybe'}
+                    </button>
+                    {rsvps[ev.id] && (
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', color:'var(--mycelium-d)', marginLeft:'auto' }}>
+                        RSVP saved · syncs when the table lands
+                      </span>
+                    )}
+                  </div>
+                )}
 
                 {/* Volunteer contributions */}
                 {!isPast && (
@@ -4492,184 +4599,26 @@ function QuickNav({ tab, onTab }) {
   );
 }
 
-/* ── MYCO AI Agent ───────────────────────────────────────── */
+/* ── MYCO AI Agent ───────────────────────────────────────────
+   Moved to /community/myco/ (see myco/README.md). This shim
+   keeps the JSX below working — <MycoAgent .../> resolves to
+   the global set by myco/agent.jsx, which is loaded BEFORE
+   this file in /community/index.html. If the file failed to
+   load we render nothing rather than crash the whole portal. */
 
-const MYCO_CHIPS = [
-  { label:'✦ Clean lab note', prefix:'Please clean and structure this lab note into proper sections:\n\n' },
-  { label:'⚗ Herb guidance', prefix:'Recommend herbs and extraction method for: ' },
-  { label:'◉ Network insights', msg:'Analyse the current Spore network: which members might need engagement, what $MYCEL flows look like, and where I should focus next.' },
-  { label:'△ Suggest improvements', msg:'What concrete improvements would you suggest for the Spore Living Network — token economy, community features, upcoming events?' },
-];
+const MycoAgent = (typeof window !== 'undefined' && window.MycoAgent)
+  ? window.MycoAgent
+  : function MycoAgentMissing() { return null; };
 
-function MycoAgent({ currentMember }) {
-  const [open,    setOpen]    = useState(false);
-  const [input,   setInput]   = useState('');
-  const [msgs,    setMsgs]    = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error,   setError]   = useState('');
-  const endRef  = useRef(null);
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    if (open && endRef.current) endRef.current.scrollIntoView({ behavior:'smooth' });
-  }, [msgs, open]);
-
-  useEffect(() => {
-    if (open && inputRef.current) inputRef.current.focus();
-  }, [open]);
-
-  async function send(text) {
-    const msg = (text || input).trim();
-    if (!msg || loading) return;
-    setInput('');
-    setError('');
-
-    const history = msgs.map(m => ({ role: m.role, content: m.content }));
-    setMsgs(prev => [...prev, { role:'user', content:msg }]);
-    setLoading(true);
-
-    try {
-      const res = await fetch('/api/myco-agent', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: msg, history }),
-      });
-      const data = await res.json();
-      if (data.error) {
-        setError(data.error);
-      } else {
-        setMsgs(prev => [...prev, { role:'assistant', content: data.reply }]);
-      }
-    } catch (e) {
-      setError('Network error — check connection.');
-    }
-    setLoading(false);
-  }
-
-  function useChip(chip) {
-    if (chip.msg) {
-      send(chip.msg);
-    } else {
-      setInput(chip.prefix);
-      if (inputRef.current) inputRef.current.focus();
-    }
-  }
-
-  function fmtContent(text) {
-    return text.split('\n').map((line, i) => (
-      <React.Fragment key={i}>{line}<br/></React.Fragment>
-    ));
-  }
-
-  return (
-    <div className="myco-wrap">
-      {open && (
-        <div className="myco-panel">
-          {/* Header */}
-          <div className="myco-head">
-            <div style={{ display:'flex', alignItems:'center', gap:9 }}>
-              <div className="myco-avatar">
-                <svg viewBox="0 0 24 24" width={16} height={16}>
-                  <polygon points="12,2 22,20 2,20" fill="none" stroke="#C48838" strokeWidth="1.5" />
-                  <circle cx="12" cy="13" r="2.5" fill="#C48838" />
-                </svg>
-              </div>
-              <div>
-                <div className="myco-head-name">MYCO</div>
-                <div className="myco-head-sub">Fungai Art Intelligence</div>
-              </div>
-            </div>
-            <div style={{ display:'flex', gap:6, alignItems:'center' }}>
-              {msgs.length > 0 && (
-                <button className="myco-clear" onClick={() => { setMsgs([]); setError(''); }}>clear</button>
-              )}
-              <button className="myco-close" onClick={() => setOpen(false)}>✕</button>
-            </div>
-          </div>
-
-          {/* Messages */}
-          <div className="myco-messages">
-            {msgs.length === 0 && !loading && (
-              <div className="myco-empty">
-                <div className="myco-empty-glyph">◇ △ ◇</div>
-                <div className="myco-empty-text">
-                  What shall we cultivate today, {currentMember ? currentMember.name : 'Hyphae'}?
-                </div>
-                {/* Quick chips */}
-                <div className="myco-chips">
-                  {MYCO_CHIPS.map(c => (
-                    <button key={c.label} className="myco-chip" onClick={() => useChip(c)}>{c.label}</button>
-                  ))}
-                </div>
-              </div>
-            )}
-            {msgs.map((m, i) => (
-              <div key={i} className={`myco-msg ${m.role === 'user' ? 'user' : 'ai'}`}>
-                {m.role === 'assistant' && (
-                  <div className="myco-msg-avatar">M</div>
-                )}
-                <div className="myco-bubble">{fmtContent(m.content)}</div>
-              </div>
-            ))}
-            {loading && (
-              <div className="myco-msg ai">
-                <div className="myco-msg-avatar">M</div>
-                <div className="myco-bubble myco-typing">
-                  <span /><span /><span />
-                </div>
-              </div>
-            )}
-            {error && (
-              <div className="myco-error">{error}</div>
-            )}
-            <div ref={endRef} />
-          </div>
-
-          {/* After first message show chips again */}
-          {msgs.length > 0 && (
-            <div className="myco-chips-row">
-              {MYCO_CHIPS.map(c => (
-                <button key={c.label} className="myco-chip-sm" onClick={() => useChip(c)}>{c.label}</button>
-              ))}
-            </div>
-          )}
-
-          {/* Input */}
-          <div className="myco-input-row">
-            <textarea
-              ref={inputRef}
-              className="myco-input"
-              value={input}
-              onChange={e => setInput(e.target.value)}
-              placeholder="Ask MYCO anything…"
-              rows={2}
-              onKeyDown={e => {
-                if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
-              }}
-            />
-            <button
-              className="myco-send"
-              onClick={() => send()}
-              disabled={!input.trim() || loading}
-            >
-              {loading ? '…' : '→'}
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Toggle button */}
-      <button className={`myco-btn ${open ? 'open' : ''}`} onClick={() => setOpen(o => !o)}>
-        <svg viewBox="0 0 24 24" width={18} height={18}>
-          <polygon points="12,2 22,20 2,20" fill="none" stroke="currentColor" strokeWidth="1.8" />
-          <circle cx="12" cy="13" r="2.5" fill="currentColor" />
-        </svg>
-        <span className="myco-btn-label">MYCO</span>
-      </button>
-    </div>
-  );
-}
-
+// The old inline MycoAgent (~200 lines) lived here. Its
+// replacement is now:
+//   public/community/myco/prompts.js  · chips + client-refuse
+//   public/community/myco/context.js  · per-request context
+//   public/community/myco/agent.jsx   · the panel itself
+//   public/community/myco/README.md   · roadmap + folder plan
+//
+// This dead-import block is kept as a marker so future edits
+// don't accidentally re-inline the component here.
 /* ── Claim Profile Picker — first-time sign-in flow for founding members ── */
 
 function ClaimProfilePicker({ onClaim, onCreateNew, onClose }) {

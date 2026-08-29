@@ -11,6 +11,85 @@
   function = "ip-block"
   path     = "/*"
 
+# ─── Members-only surfaces · SEO lockdown ─────────────────────────
+# Belt-and-braces to the robots.txt + <meta name="robots">: the CDN
+# adds X-Robots-Tag: noindex on the actual response so crawlers that
+# ignore both other signals still get told to bugger off. Applies to
+# every response under these paths (index.html, sub-assets, functions).
+[[headers]]
+  for = "/community/*"
+  [headers.values]
+    X-Robots-Tag       = "noindex, nofollow, noarchive, nosnippet, noimageindex"
+    Referrer-Policy    = "strict-origin-when-cross-origin"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options    = "SAMEORIGIN"
+[[headers]]
+  for = "/academy/*"
+  [headers.values]
+    X-Robots-Tag       = "noindex, nofollow, noarchive, nosnippet, noimageindex"
+    Referrer-Policy    = "strict-origin-when-cross-origin"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options    = "SAMEORIGIN"
+[[headers]]
+  for = "/extraction/*"
+  [headers.values]
+    X-Robots-Tag       = "noindex, nofollow, noarchive, nosnippet, noimageindex"
+    Referrer-Policy    = "strict-origin-when-cross-origin"
+[[headers]]
+  for = "/alchemy/*"
+  [headers.values]
+    X-Robots-Tag       = "noindex, nofollow, noarchive, nosnippet, noimageindex"
+[[headers]]
+  for = "/alchemy-academy/*"
+  [headers.values]
+    X-Robots-Tag       = "noindex, nofollow, noarchive, nosnippet, noimageindex"
+[[headers]]
+  for = "/members/*"
+  [headers.values]
+    X-Robots-Tag       = "noindex, nofollow, noarchive, nosnippet, noimageindex"
+[[headers]]
+  for = "/mycelium/*"
+  [headers.values]
+    X-Robots-Tag       = "noindex, nofollow, noarchive, nosnippet, noimageindex"
+[[headers]]
+  for = "/mycel-basket/*"
+  [headers.values]
+    X-Robots-Tag       = "noindex, nofollow, noarchive, nosnippet, noimageindex"
+[[headers]]
+  for = "/onboard/*"
+  [headers.values]
+    X-Robots-Tag       = "noindex, nofollow, noarchive, nosnippet, noimageindex"
+[[headers]]
+  for = "/sporing/*"
+  [headers.values]
+    X-Robots-Tag       = "noindex, nofollow, noarchive, nosnippet, noimageindex"
+[[headers]]
+  for = "/patron/*"
+  [headers.values]
+    X-Robots-Tag       = "noindex, nofollow, noarchive, nosnippet, noimageindex"
+[[headers]]
+  for = "/draw/*"
+  [headers.values]
+    X-Robots-Tag       = "noindex, nofollow, noarchive, nosnippet, noimageindex"
+[[headers]]
+  for = "/covenant/*"
+  [headers.values]
+    X-Robots-Tag       = "noindex, nofollow, noarchive, nosnippet, noimageindex"
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    X-Robots-Tag       = "noindex, nofollow, noarchive"
+    Cache-Control      = "no-store"
+
+# Base security headers on every response (public + private).
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    X-Content-Type-Options    = "nosniff"
+    Referrer-Policy           = "strict-origin-when-cross-origin"
+    Permissions-Policy        = "camera=(), microphone=(), geolocation=(self), payment=(self)"
+
 # Force browsers to revalidate the favicon — avoids stale cached icons persisting across deploys
 [[headers]]
   for = "/favicon.svg"

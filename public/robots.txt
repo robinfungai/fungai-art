@@ -1,22 +1,118 @@
+# ────────────────────────────────────────────────────────────────
+# fungai.art robots
+#
+# Public: marketing site, shop, foraging, mixology, extraction TEACHING
+# pages that hold the free apothecary content.
+# Private (all disallowed to every crawler + noindex meta on the pages
+# themselves): every members-only surface — the Spore portal, the
+# academy, the extraction LAB tools, alchemy academy, admin, onboard,
+# API + Netlify function endpoints.
+# ────────────────────────────────────────────────────────────────
+
 User-agent: *
-Allow: /
-Disallow: /community/spore/spec/
-Disallow: /community/admin
+Disallow: /community/
+Disallow: /community
+Disallow: /academy/
+Disallow: /academy
+Disallow: /extraction/
+Disallow: /extraction
+Disallow: /alchemy/
+Disallow: /alchemy
+Disallow: /alchemy-academy/
+Disallow: /alchemy-academy
+Disallow: /members/
+Disallow: /members
+Disallow: /mycelium/
+Disallow: /mycelium
+Disallow: /mycel-basket/
+Disallow: /mycel-basket
+Disallow: /onboard/
 Disallow: /onboard
+Disallow: /sporing/
+Disallow: /sporing
+Disallow: /patron/
+Disallow: /patron
+Disallow: /draw/
+Disallow: /draw
+Disallow: /covenant/
+Disallow: /covenant
 Disallow: /api/
 Disallow: /.netlify/
 
-# Crawl-friendly
-User-agent: Googlebot
-Allow: /
+# GPT / AI crawlers — same lockdown for the private surfaces.
+User-agent: GPTBot
+Disallow: /community/
+Disallow: /academy/
+Disallow: /extraction/
+Disallow: /alchemy/
+Disallow: /alchemy-academy/
+Disallow: /members/
+Disallow: /mycelium/
+Disallow: /onboard/
+Disallow: /sporing/
+Disallow: /patron/
+Disallow: /draw/
+Disallow: /covenant/
+Disallow: /api/
 
-User-agent: Bingbot
-Allow: /
+User-agent: ClaudeBot
+Disallow: /community/
+Disallow: /academy/
+Disallow: /extraction/
+Disallow: /alchemy/
+Disallow: /alchemy-academy/
+Disallow: /members/
+Disallow: /mycelium/
+Disallow: /onboard/
+Disallow: /sporing/
+Disallow: /patron/
+Disallow: /draw/
+Disallow: /covenant/
+Disallow: /api/
 
-User-agent: Twitterbot
-Allow: /
+User-agent: PerplexityBot
+Disallow: /community/
+Disallow: /academy/
+Disallow: /extraction/
+Disallow: /alchemy/
+Disallow: /alchemy-academy/
+Disallow: /members/
+Disallow: /mycelium/
+Disallow: /onboard/
+Disallow: /sporing/
+Disallow: /patron/
+Disallow: /draw/
+Disallow: /covenant/
+Disallow: /api/
 
-User-agent: facebookexternalhit
-Allow: /
+User-agent: CCBot
+Disallow: /community/
+Disallow: /academy/
+Disallow: /extraction/
+Disallow: /alchemy/
+Disallow: /alchemy-academy/
+Disallow: /members/
+Disallow: /mycelium/
+Disallow: /onboard/
+Disallow: /sporing/
+Disallow: /patron/
+Disallow: /draw/
+Disallow: /covenant/
+Disallow: /api/
+
+User-agent: anthropic-ai
+Disallow: /community/
+Disallow: /academy/
+Disallow: /extraction/
+Disallow: /alchemy/
+Disallow: /alchemy-academy/
+Disallow: /members/
+Disallow: /mycelium/
+Disallow: /onboard/
+Disallow: /sporing/
+Disallow: /patron/
+Disallow: /draw/
+Disallow: /covenant/
+Disallow: /api/
 
 Sitemap: https://www.fungai.art/sitemap.xml

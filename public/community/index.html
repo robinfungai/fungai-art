@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   <title>Spore — Living Network</title>
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex"/>
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex"/>
   <meta name="description" content="Spore — the Fungai Art living network. Wallet, contributions, calendar, and the apothecary in one portal."/>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
     <link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
@@ -36,6 +38,14 @@
   <script type="text/babel" src="spore/data.jsx"></script>
   <script type="text/babel" src="spore/tweaks-panel.jsx"></script>
   <script type="text/babel" src="spore/network-living.jsx"></script>
+
+  <!-- MYCO — its own folder now. Loaded BEFORE app-living because
+       app-living references the global window.MycoAgent. See
+       /community/myco/README.md for the folder plan + roadmap. -->
+  <script src="myco/prompts.js"></script>
+  <script src="myco/context.js"></script>
+  <script type="text/babel" src="myco/agent.jsx"></script>
+
   <script type="text/babel" src="spore/app-living.jsx"></script>
 <script src="/cookie-banner.js" defer></script>
 </body>
