@@ -8,7 +8,8 @@
     <link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
     <link rel="apple-touch-icon" href="/fungai-art-logo.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=IM+Fell+English:ital@0;1&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -362,6 +363,51 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 .cov-dot[style*="#3a342a"]{color:#7a7163}
 .cov-key{margin-left:auto;font-size:9px;color:var(--text3);text-decoration:none;letter-spacing:.08em;opacity:.7;transition:opacity .15s,color .15s}
 .cov-key:hover{opacity:1;color:#F5D689}
+
+/* ── Covenant scorecard panel ────────────────────────────────
+   Full-width panel between the result grid and the metric cards.
+   Six layer tiles (I..VI), each a <details> that opens to its
+   axes with per-axis grades. Aesthetic matches /covenant/ —
+   parchment on void, IM Fell serif for the roman numerals,
+   restrained amber accents. */
+.cov-panel{background:linear-gradient(180deg,#0A0D11 0%,#050709 100%);border:0.5px solid rgba(232,177,75,.18);border-radius:var(--radl);padding:16px 16px 14px;margin:14px 0 .9rem;color:#C9B894;position:relative}
+.cov-panel::before{content:'';position:absolute;top:-1px;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(232,177,75,.4),transparent)}
+.cov-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;padding-bottom:12px;border-bottom:0.5px solid rgba(232,177,75,.14)}
+.cov-panel-title{font-family:'IM Fell English','Zodiak',serif;font-style:italic;font-size:17px;color:#EDE5D8;letter-spacing:.005em;line-height:1.2}
+.cov-panel-summary{font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:.06em;color:#8B7E62;margin-top:3px}
+.cov-panel-link{font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#E8B14B;text-decoration:none;padding:6px 12px;border:0.5px solid rgba(232,177,75,.35);border-radius:100px;transition:background .15s,color .15s}
+.cov-panel-link:hover{background:rgba(232,177,75,.08)}
+.cov-panel-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media (max-width:640px){.cov-panel-grid{grid-template-columns:1fr}}
+.cov-layer{background:rgba(18,22,27,.6);border:0.5px solid rgba(232,177,75,.12);border-radius:8px;overflow:hidden;transition:border-color .18s}
+.cov-layer[open]{border-color:rgba(232,177,75,.35);background:rgba(18,22,27,.85)}
+.cov-layer-head{display:grid;grid-template-columns:28px 1fr 22px 60px 34px 12px;align-items:center;gap:8px;padding:9px 12px;cursor:pointer;list-style:none;user-select:none;font-family:'Geist Mono',monospace}
+.cov-layer-head::-webkit-details-marker{display:none}
+.cov-layer-head:hover{background:rgba(232,177,75,.04)}
+.cov-layer-num{font-family:'IM Fell English','Zodiak',serif;font-style:italic;font-size:15px;color:#E8B14B;line-height:1;text-align:center}
+.cov-layer-name{font-family:'Satoshi',system-ui,sans-serif;font-weight:500;font-size:12.5px;color:#EDE5D8;letter-spacing:-.005em}
+.cov-layer-grade{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;font-family:'Geist Mono',monospace;font-size:8.5px;font-weight:600;color:#15110b;letter-spacing:0;line-height:1}
+.cov-layer-grade[style*="#3a342a"]{color:#7a7163}
+.cov-layer-progress{position:relative;width:100%;height:4px;background:rgba(232,177,75,.08);border-radius:2px;overflow:hidden}
+.cov-layer-progress-fill{position:absolute;top:0;left:0;height:100%;transition:width .3s;opacity:.75}
+.cov-layer-progress-lbl{font-size:8.5px;color:#8B7E62;text-align:right;letter-spacing:.04em}
+.cov-layer-chev{font-size:10px;color:#8B7E62;transition:transform .18s;text-align:center}
+.cov-layer[open] .cov-layer-chev{transform:rotate(180deg);color:#E8B14B}
+.cov-layer-body{padding:6px 14px 14px;border-top:0.5px solid rgba(232,177,75,.1)}
+.cov-layer-desc{font-family:'Spectral',Georgia,serif;font-style:italic;font-size:11.5px;color:#8B7E62;line-height:1.65;padding:8px 0 12px;border-bottom:0.5px solid rgba(232,177,75,.08);margin-bottom:8px}
+.cov-axes{display:flex;flex-direction:column;gap:1px}
+.cov-axis{display:grid;grid-template-columns:22px 20px 1fr;gap:8px;align-items:baseline;padding:7px 0;border-bottom:0.5px dashed rgba(232,177,75,.06)}
+.cov-axis:last-child{border-bottom:0}
+.cov-axis-n{font-family:'Geist Mono',monospace;font-size:9px;color:#8B7E62;text-align:right}
+.cov-axis-dot{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;font-family:'Geist Mono',monospace;font-size:7.5px;font-weight:600;color:#15110b;line-height:1;margin-top:1px}
+.cov-axis-dot[style*="#3a342a"]{color:#7a7163}
+.cov-axis-body{display:flex;flex-direction:column;gap:2px;min-width:0}
+.cov-axis-title{font-family:'Satoshi',system-ui,sans-serif;font-weight:500;font-size:11.5px;color:#EDE5D8;line-height:1.35}
+.cov-axis-desc{font-family:'Spectral',Georgia,serif;font-size:10.5px;color:#8B7E62;line-height:1.55;font-style:italic}
+.cov-axis-contribs{color:#A88FE0;font-style:normal;font-family:'Geist Mono',monospace;font-size:9.5px;letter-spacing:.02em}
+.cov-axis-note{color:#C9B894;font-style:italic}
+.cov-layer-link{display:inline-block;margin-top:10px;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#8B7E62;text-decoration:none;border-bottom:0.5px solid rgba(232,177,75,.18);padding-bottom:1px}
+.cov-layer-link:hover{color:#E8B14B;border-color:#E8B14B}
 .serve-block{background:var(--bg2);border:0.5px solid var(--bd2);border-radius:var(--radl);padding:11px 13px;margin-bottom:.9rem}
 .ss{display:flex;gap:8px;margin-bottom:5px;align-items:flex-start}
 .ss-n{width:16px;height:16px;border-radius:50%;background:var(--text);color:var(--bg);font-size:8px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
@@ -1241,6 +1287,107 @@ function computeFormulaCovenant(formulaHerbs){
   return { grades: grades, reviewed: reviewed, total: formulaHerbs.length };
 }
 
+// Per-axis rollup for a formula. Returns { [axisNum]: { grade, contributors:[herbName], notes:[str] } }
+// A formula's axis-grade is the WORST grade across the formula's herbs
+// on that axis. Herbs that don't cover the axis simply don't count.
+// Used by renderCovenantPanel() to fill the axis-level detail rows.
+function computeFormulaCovenantByAxis(formulaHerbs){
+  var rank = ['A','B','C','D','F'];
+  var byAxis = {};
+  (formulaHerbs || []).forEach(function(h){
+    var profile = (COVENANT.profiles || {})[h.id];
+    if (!profile || !profile.evaluations) return;
+    profile.evaluations.forEach(function(e){
+      var g = e.grade;
+      if (!g && e.score != null) {
+        var s = e.score;
+        g = s>=87?'A':s>=75?'B':s>=62?'C':s>=50?'D':'F';
+      }
+      if (!g) return;
+      var cur = byAxis[e.axis];
+      if (!cur) {
+        byAxis[e.axis] = { grade: g, contributors: [h.n], notes: e.note ? [e.note] : [] };
+      } else if (rank.indexOf(g) > rank.indexOf(cur.grade)) {
+        byAxis[e.axis] = { grade: g, contributors: [h.n], notes: e.note ? [e.note] : [] };
+      } else if (cur.grade === g) {
+        cur.contributors.push(h.n);
+        if (e.note) cur.notes.push(e.note);
+      }
+    });
+  });
+  return byAxis;
+}
+
+// The expandable Covenant scorecard. Six layer tiles, each opens
+// to reveal that layer's axes with grade + contributors. Renders in
+// "framework preview" mode (all dots pending) until profiles fill.
+function renderCovenantPanel(covRes, byAxis, formulaLen){
+  if (!COVENANT.layers || !COVENANT.layers.length) return '';
+  var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
+  var totalAxes = (COVENANT.axes || []).length;
+  var evaluatedAxes = Object.keys(byAxis).length;
+  var reviewedHerbCount = Object.values(covRes.reviewed || {}).reduce(function(a,b){return Math.max(a,b);}, 0);
+  var dotFor = function(g){
+    if (!g) return { c:'#3a342a', t:'·' };
+    return g==='A' ? { c:'#6BD66F', t:'A' } :
+           g==='B' ? { c:'#A8D86B', t:'B' } :
+           g==='C' ? { c:'#E8B14B', t:'C' } :
+           g==='D' ? { c:'#D88838', t:'D' } :
+                     { c:'#E16B6B', t:'F' };
+  };
+  var tiles = COVENANT.layers.map(function(L){
+    var overall = covRes.grades && covRes.grades[L.id];
+    var d = dotFor(overall);
+    var layerAxes = (COVENANT.axes || []).filter(function(a){ return a.layer === L.id; });
+    var evalCount = layerAxes.filter(function(a){ return byAxis[a.n]; }).length;
+    var pct = layerAxes.length ? Math.round(100 * evalCount / layerAxes.length) : 0;
+    var axRows = layerAxes.map(function(a){
+      var b = byAxis[a.n];
+      var ad = dotFor(b && b.grade);
+      var contribs = b && b.contributors && b.contributors.length
+        ? ' <span class="cov-axis-contribs">· ' + esc(b.contributors.slice(0,3).join(', ')) + (b.contributors.length > 3 ? ' +' + (b.contributors.length-3) : '') + '</span>'
+        : '';
+      var note = b && b.notes && b.notes.length ? ' <span class="cov-axis-note">"' + esc(b.notes[0]) + '"</span>' : '';
+      return '<div class="cov-axis">' +
+          '<span class="cov-axis-n">' + a.n + '</span>' +
+          '<span class="cov-axis-dot" style="background:' + ad.c + ';">' + ad.t + '</span>' +
+          '<span class="cov-axis-body">' +
+            '<span class="cov-axis-title">' + esc(a.title) + '</span>' +
+            '<span class="cov-axis-desc">' + esc(a.description || '') + contribs + note + '</span>' +
+          '</span>' +
+        '</div>';
+    }).join('');
+    return '<details class="cov-layer">' +
+      '<summary class="cov-layer-head">' +
+        '<span class="cov-layer-num">' + L.roman + '</span>' +
+        '<span class="cov-layer-name">' + esc(L.name) + '</span>' +
+        '<span class="cov-layer-grade" style="background:' + d.c + ';">' + d.t + '</span>' +
+        '<span class="cov-layer-progress"><span class="cov-layer-progress-fill" style="width:' + pct + '%;background:' + d.c + ';"></span></span>' +
+        '<span class="cov-layer-progress-lbl">' + evalCount + '/' + layerAxes.length + '</span>' +
+        '<span class="cov-layer-chev">▾</span>' +
+      '</summary>' +
+      '<div class="cov-layer-body">' +
+        '<div class="cov-layer-desc">' + esc(L.description || '') + '</div>' +
+        '<div class="cov-axes">' + axRows + '</div>' +
+        '<a class="cov-layer-link" href="/covenant#' + L.id + '" target="_blank" rel="noopener">Full ' + esc(L.name) + ' section on /covenant ↗</a>' +
+      '</div>' +
+    '</details>';
+  }).join('');
+  var summary = evaluatedAxes > 0
+    ? evaluatedAxes + ' of ' + totalAxes + ' axes evaluated · ' + reviewedHerbCount + ' of ' + formulaLen + ' herbs with a profile'
+    : 'Framework preview · 0 of ' + totalAxes + ' axes evaluated yet (herb-by-herb profiles being reviewed)';
+  return '<div class="cov-panel">' +
+    '<div class="cov-panel-head">' +
+      '<div>' +
+        '<div class="cov-panel-title">The Covenant · 64 axes of flourishing</div>' +
+        '<div class="cov-panel-summary">' + summary + '</div>' +
+      '</div>' +
+      '<a class="cov-panel-link" href="/covenant" target="_blank" rel="noopener">Read the framework ↗</a>' +
+    '</div>' +
+    '<div class="cov-panel-grid">' + tiles + '</div>' +
+  '</div>';
+}
+
 function getActiveStock(){
   if(activePreset==='all') return new Set(HB.map(h=>h.id));
   return new Set([...customStock].filter(id=>HB.find(h=>h.id===id)));
@@ -2026,7 +2173,9 @@ function renderFormula(){
   // formula on that layer; "pending" dots are dim grey for layers
   // where no constituent has been reviewed yet.
   var covRes = computeFormulaCovenant(S.formula);
+  var covByAxis = computeFormulaCovenantByAxis(S.formula);
   var covRowHtml = '';
+  var covPanelHtml = '';
   if (COVENANT.layers.length){
     var dotFor = function(g){
       if (!g) return { c:'#3a342a', t:'·', label:'pending' };
@@ -2044,8 +2193,21 @@ function renderFormula(){
     }).join('');
     covRowHtml = '<div class="ir cov-row"><span class="il">Covenant</span>' +
       '<span class="cov-dots">' + dots + '</span>' +
-      '<a href="/covenant" class="cov-key">framework ↗</a>' +
+      '<span class="cov-key" style="cursor:pointer" onclick="var p=document.getElementById(\'covPanel\');if(p){p.scrollIntoView({behavior:\'smooth\',block:\'start\'});p.querySelectorAll(\'details\').forEach(function(d){d.open=true;});}">Scorecard ↓</span>' +
       '</div>';
+
+    // Auto-caution injection — a layer graded D or F becomes a red
+    // caution line so it sits next to the pregnancy / allergen flags
+    // rather than hiding inside the scorecard.
+    Object.keys(covRes.grades).forEach(function(layerId){
+      var g = covRes.grades[layerId];
+      if (g === 'D' || g === 'F') {
+        var L = COVENANT.layers.find(function(x){ return x.id === layerId; });
+        if (L) cauts.push('Covenant flag · ' + L.name + ' layer graded ' + g + ' for this formula. Open the scorecard below for the axis that triggered it.');
+      }
+    });
+
+    covPanelHtml = renderCovenantPanel(covRes, covByAxis, S.formula.length);
   }
 
   var formulaColHtml=
@@ -2065,7 +2227,8 @@ function renderFormula(){
   // Formula art card — bottle art with the tradition toggle stacked
   // beneath it so they read as one composition.
   var bottleColHtml='<div class="result-bottle-col">'+genFormulaArt(name,S.formula,S.int,S.delivery)+tradToggle+'</div>';
-  out.innerHTML='<div class="result-grid">'+bottleColHtml+'<div class="result-formula-col">'+formulaColHtml+'</div></div>'+serveBlock+'<div class="mcards"><div class="mc"><div class="ml">Herbs</div><div class="mv">'+S.formula.length+'</div></div><div class="mc"><div class="ml">Pool</div><div class="mv">'+poolLabel+' · '+getPool().length+'</div></div><div class="mc"><div class="ml">Safety</div><div class="mv">'+flags.length+' filters</div></div></div>';
+  var covPanelWrapped = covPanelHtml ? '<div id="covPanel">' + covPanelHtml + '</div>' : '';
+  out.innerHTML='<div class="result-grid">'+bottleColHtml+'<div class="result-formula-col">'+formulaColHtml+'</div></div>'+serveBlock+covPanelWrapped+'<div class="mcards"><div class="mc"><div class="ml">Herbs</div><div class="mv">'+S.formula.length+'</div></div><div class="mc"><div class="ml">Pool</div><div class="mv">'+poolLabel+' · '+getPool().length+'</div></div><div class="mc"><div class="ml">Safety</div><div class="mv">'+flags.length+' filters</div></div></div>';
 
   // Wire up copy button
   document.getElementById('explainBtn').onclick=doExplain;
