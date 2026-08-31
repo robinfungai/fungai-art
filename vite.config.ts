@@ -23,6 +23,8 @@ const STATIC_PAGES = [
   '/moder-jord',
   // Dinner Experience sub-pages
   '/the-house-ethos', '/the-tasting-arc', '/dinner-experience-sample-menu',
+  // Consumer-facing quiz landing (IG traffic → reserve tincture)
+  '/find-your-formula',
 ];
 const serveStaticPages = () => ({
   name: 'serve-static-pages',
