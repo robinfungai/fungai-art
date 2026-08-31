@@ -1348,6 +1348,121 @@ const EXCLUSIVE = [
   },
 ];
 
+// Bespoke product glyphs. One per Apothecary edition — each an
+// SVG built around the product's spirit (mushroom cap for amanita,
+// bracket-fungus arcs for reishi, sacred-geometry hexagon for the
+// ceremony gummy, etc.). Rendered at ~120px inside .apo-face where
+// the generic orb used to live. Accent color drives the gradient
+// via a unique-per-instance defs id (so multiple cards on one page
+// don't collide).
+function ProductGlyph({ id, accent }) {
+  const gid = 'g-' + id;
+  const gradient = (
+    <defs>
+      <radialGradient id={gid} cx="35%" cy="30%" r="75%">
+        <stop offset="0%"   stopColor="#ffffff" stopOpacity="0.85" />
+        <stop offset="40%"  stopColor={accent}  stopOpacity="1"    />
+        <stop offset="100%" stopColor="#0a0a0a" stopOpacity="1"    />
+      </radialGradient>
+      <radialGradient id={gid + '-halo'} cx="50%" cy="50%" r="55%">
+        <stop offset="0%"  stopColor={accent} stopOpacity="0.45" />
+        <stop offset="70%" stopColor={accent} stopOpacity="0"    />
+      </radialGradient>
+    </defs>
+  );
+  const glow = <circle cx="50" cy="55" r="46" fill={`url(#${gid}-halo)`} />;
+  const url  = `url(#${gid})`;
+  switch (id) {
+    // Amanita Chocolate — classic dome cap with dots
+    case 'ex1': return (
+      <svg viewBox="0 0 100 100" className="apo-glyph-svg" aria-hidden="true">
+        {gradient}{glow}
+        <path d="M 18 58 Q 18 22 50 22 Q 82 22 82 58 L 68 58 L 62 92 L 38 92 L 32 58 Z" fill={url} stroke={accent} strokeOpacity="0.35" strokeWidth="0.6" />
+        <circle cx="38" cy="38" r="4"   fill="#fff" opacity="0.85" />
+        <circle cx="55" cy="32" r="5.5" fill="#fff" opacity="0.85" />
+        <circle cx="66" cy="46" r="3.5" fill="#fff" opacity="0.85" />
+        <rect   x="40" y="60"  width="20" height="6" fill="#0006" opacity="0.4" />
+      </svg>
+    );
+    // Reishi Rose Gummies — bracket fungus fanned rings
+    case 'ex2': return (
+      <svg viewBox="0 0 100 100" className="apo-glyph-svg" aria-hidden="true">
+        {gradient}{glow}
+        <path d="M 12 62 Q 50 20 88 62 L 88 68 Q 50 30 12 68 Z" fill={url} />
+        <path d="M 20 66 Q 50 30 80 66"  fill="none" stroke={accent} strokeOpacity="0.55" strokeWidth="1.6" />
+        <path d="M 28 70 Q 50 40 72 70"  fill="none" stroke={accent} strokeOpacity="0.45" strokeWidth="1.4" />
+        <path d="M 36 74 Q 50 50 64 74"  fill="none" stroke={accent} strokeOpacity="0.35" strokeWidth="1.2" />
+        <path d="M 44 78 Q 50 62 56 78"  fill="none" stroke={accent} strokeOpacity="0.28" strokeWidth="1" />
+      </svg>
+    );
+    // Chaga & Pine Pollen Bar — irregular sclerotium + orbiting pollen
+    case 'ex3': return (
+      <svg viewBox="0 0 100 100" className="apo-glyph-svg" aria-hidden="true">
+        {gradient}{glow}
+        <path d="M 28 32 Q 22 46 30 62 Q 42 76 58 68 Q 76 62 72 44 Q 66 26 48 26 Q 32 26 28 32 Z" fill={url} stroke={accent} strokeOpacity="0.35" strokeWidth="0.6" />
+        <path d="M 35 40 L 42 46 M 55 38 L 60 45 M 45 55 L 52 60" stroke="#0007" strokeWidth="0.8" fill="none" />
+        <circle cx="16" cy="18" r="2"   fill={accent} opacity="0.9" />
+        <circle cx="84" cy="26" r="1.6" fill={accent} opacity="0.7" />
+        <circle cx="12" cy="72" r="1.8" fill={accent} opacity="0.7" />
+        <circle cx="88" cy="80" r="2.4" fill={accent} opacity="0.9" />
+        <circle cx="50" cy="14" r="1.4" fill={accent} opacity="0.55" />
+      </svg>
+    );
+    // Blue Lotus Truffle — five-petal lotus, unfolding
+    case 'ex4': return (
+      <svg viewBox="0 0 100 100" className="apo-glyph-svg" aria-hidden="true">
+        {gradient}{glow}
+        <g transform="translate(50 60)">
+          {[0, 72, -72, 144, -144].map((deg, i) => (
+            <path key={i} d="M 0 0 Q -14 -32 0 -46 Q 14 -32 0 0 Z"
+              fill={url} opacity={0.6 + (i % 2) * 0.35}
+              transform={`rotate(${deg})`} stroke={accent} strokeOpacity="0.35" strokeWidth="0.5" />
+          ))}
+          <circle cx="0" cy="0" r="5" fill="#fff" opacity="0.75" />
+        </g>
+      </svg>
+    );
+    // Dinner Ceremony Gummy — sacred hexagon, grounding dot
+    case 'ex5': return (
+      <svg viewBox="0 0 100 100" className="apo-glyph-svg" aria-hidden="true">
+        {gradient}{glow}
+        <polygon points="50,18 80,34 80,66 50,82 20,66 20,34"
+          fill="none" stroke={accent} strokeWidth="2.4" strokeLinejoin="round" opacity="0.85" />
+        <polygon points="50,28 72,40 72,60 50,72 28,60 28,40"
+          fill="none" stroke={accent} strokeWidth="1.2" opacity="0.5" />
+        <circle cx="50" cy="50" r="14" fill={url} />
+        <line x1="50" y1="18" x2="50" y2="82" stroke={accent} strokeOpacity="0.2" strokeWidth="0.6" />
+        <line x1="20" y1="34" x2="80" y2="66" stroke={accent} strokeOpacity="0.2" strokeWidth="0.6" />
+        <line x1="80" y1="34" x2="20" y2="66" stroke={accent} strokeOpacity="0.2" strokeWidth="0.6" />
+      </svg>
+    );
+    // Lion's Mane Bark Bark — flowing strands radiating from center
+    case 'ex6': return (
+      <svg viewBox="0 0 100 100" className="apo-glyph-svg" aria-hidden="true">
+        {gradient}{glow}
+        <g stroke={accent} strokeWidth="2.4" fill="none" strokeLinecap="round" opacity="0.9">
+          <path d="M 50 20 Q 42 32 44 50" />
+          <path d="M 50 20 Q 58 32 56 50" />
+          <path d="M 32 26 Q 26 42 32 58" />
+          <path d="M 68 26 Q 74 42 68 58" />
+          <path d="M 20 42 Q 20 58 32 68" />
+          <path d="M 80 42 Q 80 58 68 68" />
+          <path d="M 28 62 Q 38 74 50 76" />
+          <path d="M 72 62 Q 62 74 50 76" />
+        </g>
+        <circle cx="50" cy="52" r="9" fill={url} />
+      </svg>
+    );
+    // Fallback — original orb
+    default: return (
+      <svg viewBox="0 0 100 100" className="apo-glyph-svg" aria-hidden="true">
+        {gradient}{glow}
+        <circle cx="50" cy="55" r="26" fill={url} />
+      </svg>
+    );
+  }
+}
+
 function ApothecaryPage({ economy, onToast }) {
   return (
     <div className="page-enter apo-page">
@@ -1390,7 +1505,9 @@ function ApothecaryPage({ economy, onToast }) {
               {/* Holographic top face */}
               <div className="apo-face">
                 <div className="apo-face-halo" />
-                <div className="apo-face-orb" />
+                <div className="apo-face-glyph-wrap">
+                  <ProductGlyph id={p.id} accent={p.accent} />
+                </div>
                 <div className="apo-face-grid" />
                 <div className="apo-face-badge">{p.badge}</div>
                 <div className="apo-face-vol">{p.vol}</div>
@@ -1526,14 +1643,13 @@ function ApothecaryPage({ economy, onToast }) {
         }
         .apo-face-halo { position: absolute; inset: -20%; background: radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--acc) 30%, transparent) 0%, transparent 45%); filter: blur(20px); animation: apo-halo-pulse 6s ease-in-out infinite; }
         @keyframes apo-halo-pulse { 0%,100% { transform: scale(1); opacity: 0.7; } 50% { transform: scale(1.1); opacity: 1; } }
-        .apo-face-orb {
+        .apo-face-glyph-wrap {
           position: absolute; left: 50%; top: 55%; transform: translate(-50%,-50%);
-          width: 96px; height: 96px; border-radius: 50%;
-          background:
-            radial-gradient(circle at 35% 32%, color-mix(in srgb, var(--acc) 90%, white) 0%, var(--acc) 30%, color-mix(in srgb, var(--acc) 30%, black) 65%, black 100%);
-          box-shadow: 0 0 50px color-mix(in srgb, var(--acc) 60%, transparent), inset 0 -10px 20px rgba(0,0,0,0.5), inset 0 4px 8px rgba(255,255,255,0.15);
+          width: 130px; height: 130px;
+          filter: drop-shadow(0 0 22px color-mix(in srgb, var(--acc) 45%, transparent));
           animation: apo-orb-pulse 5s ease-in-out infinite;
         }
+        .apo-face-glyph-wrap .apo-glyph-svg { width: 100%; height: 100%; overflow: visible; }
         @keyframes apo-orb-pulse { 0%,100% { transform: translate(-50%,-50%) scale(1); } 50% { transform: translate(-50%,-52%) scale(1.04); } }
         .apo-face-grid {
           position: absolute; inset: 0;
@@ -4567,21 +4683,24 @@ function SporeTweaks({ tweaks, setTweak }) {
 
 /* ── Quick nav sidebar ────────────────────────────────────── */
 
-function QuickNav({ tab, onTab }) {
+function QuickNav({ tab, onTab, currentMember }) {
+  // Kept 1:1 in sync with TopBar tabs so the mobile sidebar and the
+  // dropdown never diverge. If you add/remove/rename a tab in TopBar,
+  // do the same here.
+  const isAdmin = currentMember && currentMember.admin;
   const items = [
-    { icon:'⚗', label:'Academy', href:'/community/academy/', ext:true },
-    { icon:'⬡', label:'Extract', href:'/extraction', ext:true },
-    { icon:'🌿', label:'Herbals', href:'/mixology', ext:true },
-    { icon:'◎', label:'Shop', href:'/shop', ext:true },
-    { icon:'◉', label:'Network', id:'network' },
-    { icon:'△', label:'Calendar', id:'calendar' },
-    { icon:'◈', label:'Members', id:'members' },
+    { icon:'◉', label:'Network',        id:'network'  },
+    { icon:'△', label:'Calendar',       id:'calendar' },
+    { icon:'🌿', label:'Members Shop',   id:'shop'     },
+    { icon:'✦', label:'Experiences',    id:'exp'      },
+    { icon:'◈', label:'Members',        id:'members'  },
+    { icon:'⚗', label:'Alchemy Academy', href:'/community/academy/', ext:true },
+    ...(isAdmin ? [{ icon:'⬡', label:'Admin', id:'admin' }] : []),
   ];
   return (
     <div className="quick-nav">
-      {items.map((it, i) => (
+      {items.map((it) => (
         <React.Fragment key={it.label}>
-          {i === 4 && <div className="qn-divider" />}
           {it.ext ? (
             <a href={it.href} target="_blank" className="qn-item" rel="noopener noreferrer">
               <span className="qn-icon">{it.icon}</span>
@@ -5114,7 +5233,7 @@ function App() {
         <div className="app-footer-fine">tend · flow · unlock</div>
       </div>
 
-      <QuickNav tab={tab} onTab={setTab} />
+      <QuickNav tab={tab} onTab={setTab} currentMember={currentMember} />
       <EarnSheet open={earnOpen} onClose={() => setEarnOpen(false)} economy={economy} onToast={onToast} />
       <Toast message={toast.msg} kind={toast.kind} onClose={() => setToast({ msg:'', kind:'' })} />
       <MycoAgent currentMember={currentMember} />
