@@ -4,8 +4,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <title>Find Your Formula · Fungai Art</title>
-<meta name="description" content="Six questions. One custom tincture, hand-poured in Berlin, shipped home. Sublingual drops, slow-pace plant medicine — built for how you actually feel."/>
-<meta name="keywords" content="custom tincture, personalised herbal formula, adaptogen quiz, plant medicine, Fungai Art, sublingual drops"/>
+<meta name="description" content="Six questions. One custom spagyric extract, hand-poured in Berlin, shipped home. Sublingual drops, slow-pace plant medicine — built for how you actually feel."/>
+<meta name="keywords" content="custom spagyric extract, personalised herbal formula, adaptogen quiz, plant medicine, Fungai Art, sublingual drops"/>
 <link rel="canonical" href="https://www.fungai.art/find-your-formula/"/>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
 <link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
@@ -13,12 +13,12 @@
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Fungai Art"/>
 <meta property="og:title" content="Find Your Formula · Fungai Art"/>
-<meta property="og:description" content="Six questions. A tincture hand-poured for how you actually feel. Shipped home."/>
+<meta property="og:description" content="Six questions. A spagyric extract hand-poured for how you actually feel. Shipped home."/>
 <meta property="og:image" content="https://www.fungai.art/fungai-art-logo.png"/>
 <meta property="og:url" content="https://www.fungai.art/find-your-formula/"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Find Your Formula · Fungai Art"/>
-<meta name="twitter:description" content="Six questions. A tincture hand-poured for you."/>
+<meta name="twitter:description" content="Six questions. A spagyric extract hand-poured for you."/>
 <meta name="theme-color" content="#0A0D11"/>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -128,9 +128,32 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .q-opt.on{border-color:var(--amber-l);background:rgba(232,177,75,0.06);box-shadow:0 0 18px -6px rgba(232,177,75,0.35)}
 .q-opt-glyph{font-family:var(--display);font-style:italic;font-size:24px;color:var(--amber-l);line-height:1;flex-shrink:0;width:28px;text-align:center;margin-top:-2px}
 .q-opt-body{flex:1;min-width:0}
-.q-opt-label{font-family:var(--sans);font-weight:500;font-size:16px;color:var(--parchment);line-height:1.3;margin-bottom:8px}
+.q-opt-label{font-family:var(--sans);font-weight:500;font-size:16px;color:var(--parchment);line-height:1.3;margin-bottom:12px}
 /* Option description: sans, non-italic, bigger, breathing room after label. */
-.q-opt-desc{font-family:var(--sans);font-weight:300;font-size:14px;color:var(--dust);line-height:1.55;letter-spacing:0.005em}
+.q-opt-desc{font-family:var(--sans);font-weight:300;font-size:14px;color:var(--dust);line-height:1.6;letter-spacing:0.005em}
+
+/* ── Q1 floating bubbles — 12 intentions, no-scroll grid ──── */
+.q-bubbles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:6px 0 8px;perspective:800px}
+@media (min-width:520px){.q-bubbles{grid-template-columns:repeat(4,1fr);gap:12px}}
+.bubble{position:relative;aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;padding:6px;font-family:var(--sans);font-weight:500;font-size:11.5px;line-height:1.15;color:var(--parchment);cursor:pointer;transition:transform .28s cubic-bezier(.22,.61,.36,1),box-shadow .28s;user-select:none;border:0.5px solid rgba(255,255,255,0.06);background:radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--hue) 55%, transparent) 0%, color-mix(in srgb, var(--hue) 20%, transparent) 45%, rgba(15,16,20,0.85) 100%);box-shadow:inset 0 -6px 14px rgba(0,0,0,0.35),inset 0 4px 10px rgba(255,255,255,0.05),0 8px 20px -8px color-mix(in srgb, var(--hue) 35%, transparent);animation:bubble-float 7s ease-in-out infinite}
+.bubble:hover{transform:translateY(-3px) scale(1.04);box-shadow:inset 0 -6px 14px rgba(0,0,0,0.35),inset 0 4px 10px rgba(255,255,255,0.08),0 14px 30px -8px color-mix(in srgb, var(--hue) 55%, transparent)}
+.bubble:active{transform:scale(0.97)}
+.bubble.on{transform:scale(1.08);box-shadow:inset 0 -6px 14px rgba(0,0,0,0.35),inset 0 4px 12px rgba(255,255,255,0.15),0 0 30px color-mix(in srgb, var(--hue) 60%, transparent);border-color:var(--hue)}
+.bubble > span{max-width:100%;overflow-wrap:break-word;text-shadow:0 1px 6px rgba(0,0,0,0.7);letter-spacing:0.005em}
+.bubble:nth-child(2n){animation-delay:-1.4s}
+.bubble:nth-child(3n){animation-delay:-2.8s}
+.bubble:nth-child(4n){animation-delay:-4.2s}
+.bubble:nth-child(5n){animation-delay:-5.6s}
+@keyframes bubble-float{
+  0%,100%{transform:translateY(0) rotate(-0.5deg)}
+  50%    {transform:translateY(-4px) rotate(0.5deg)}
+}
+@media (prefers-reduced-motion:reduce){.bubble{animation:none}}
+
+/* ── Q2 sub-question header (back-to-archetype affordance) ── */
+.q-sub-back{background:none;border:none;color:var(--dust-d);cursor:pointer;font-family:var(--mono);font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;padding:6px 0 12px;display:inline-flex;align-items:center;gap:6px}
+.q-sub-back:hover{color:var(--amber-l)}
+.q-sub-context{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--dust);line-height:1.6;margin-bottom:16px;padding:10px 14px;background:var(--card);border-left:2px solid var(--amber-l);border-radius:4px}
 .q-multi-note{font-family:var(--mono);font-size:9px;letter-spacing:0.18em;color:var(--dust-d);margin-top:14px}
 .q-textarea{width:100%;background:var(--card);border:0.5px solid var(--rule);border-radius:12px;padding:14px 16px;color:var(--parchment);font:inherit;font-size:15px;line-height:1.6;resize:vertical;min-height:110px;outline:none;transition:border-color .18s}
 .q-textarea:focus{border-color:var(--amber-l)}
@@ -248,7 +271,7 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
     <span class="hero-eyebrow">◇ 6 questions · 60 seconds</span>
     <h1>Your body,<br><em>your formula</em>.</h1>
     <p class="hero-sub">
-      Six questions. A tincture hand-poured in the Berlin lab from foraged mushrooms &amp; herbal allies, matched to how you actually feel.
+      Six questions. A full-spectrum spagyric extract hand-poured in the Berlin lab from foraged mushrooms &amp; herbal allies, matched to how you actually feel.
     </p>
     <div class="hero-meta">
       <span>Sublingual drops</span>
@@ -363,7 +386,7 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
    → renders a bespoke reveal → captures a reservation.
 
    Slow-pace + sublingual are BAKED IN (not questions) per the
-   product brief. All formulas are 30 ml amber-glass tinctures,
+   product brief. All formulas are 30 ml amber-glass spagyric extracts,
    2-3 pipettes (1.5 ml) twice daily on a 5-on/2-off rhythm, €38.
 
    No React. No build step. Vanilla JS, ~450 lines.
@@ -516,48 +539,79 @@ const QUESTIONS = [
     key:'intention',
     eyebrow:'01 of 06 · The calling',
     title:'What are you <em>calling in</em>?',
-    hint:'Pick the strongest thread. You can hold the others quietly.',
-    type:'single',
+    hint:'Tap one. Every bubble carries a different alchemy.',
+    type:'bubbles',
     options:[
-      { v:'stress',    glyph:'🌊', label:'Stress & resilience',     desc:'Adapt, hold steady, recover from a lot at once.' },
-      { v:'anxiety',   glyph:'◌',  label:'Anxiety & calm',          desc:'Quiet the mind, ease the body, settle the loop.' },
-      { v:'sleep',     glyph:'🌙', label:'Sleep & restoration',     desc:'Fall easier, sleep deeper, wake restored.' },
-      { v:'energy',    glyph:'☀',  label:'Energy & vitality',       desc:'Sustained power. No spike, no crash.' },
-      { v:'mood',      glyph:'🌸', label:'Mood & emotion',          desc:'Lift, open, feel again. Warmth back to the room.' },
-      { v:'cognitive', glyph:'◎',  label:'Cognitive & memory',      desc:'Think sharp, remember more, protect the long game.' },
-      { v:'hormones',  glyph:'☾',  label:'Hormonal balance',        desc:'Cycle, menopause, testosterone, endocrine flow.' },
-      { v:'digestion', glyph:'🌱', label:'Digestion & gut',         desc:'Settle, absorb, cleanse. Bitter tonics for the belly.' },
-      { v:'immunity',  glyph:'🛡',  label:'Immunity & defence',      desc:'Defend now, train for long-term resilience.' },
-      { v:'pain',      glyph:'◈',  label:'Pain & inflammation',     desc:'Cool, ease, move freely. Anti-inflammatory support.' },
-      { v:'detox',     glyph:'🌿', label:'Detox & liver',           desc:'Cleanse, clear, restore. Phase I/II support.' },
-      { v:'beauty',    glyph:'✦',  label:'Skin & beauty',           desc:'Glow from within — collagen, hydration, ageing well.' },
+      { v:'stress',    hue:'#E8B14B', label:'Stress & resilience' },
+      { v:'anxiety',   hue:'#88BAC8', label:'Anxiety & calm'      },
+      { v:'sleep',     hue:'#A88FE0', label:'Sleep & restoration' },
+      { v:'energy',    hue:'#C46B38', label:'Energy & vitality'   },
+      { v:'mood',      hue:'#E58BAE', label:'Mood & emotion'      },
+      { v:'cognitive', hue:'#F5D689', label:'Cognitive & memory'  },
+      { v:'hormones',  hue:'#C5B5F5', label:'Hormonal balance'    },
+      { v:'digestion', hue:'#7bd4a1', label:'Digestion & gut'     },
+      { v:'immunity',  hue:'#4FB6A1', label:'Immunity & defence'  },
+      { v:'pain',      hue:'#E16B6B', label:'Pain & inflammation' },
+      { v:'detox',     hue:'#B6F0AE', label:'Detox & liver'       },
+      { v:'beauty',    hue:'#EDE5D8', label:'Skin & beauty'       },
     ],
   },
   {
+    // Two-stage question: pick an archetype, then a refining sub.
+    // Mirrors /herbal-engine-2's BP → subs flow, giving real heat-map
+    // depth without ever surfacing TCM jargon.
     key:'pattern',
     eyebrow:'02 of 06 · The body',
     title:'How does your body <em>actually feel</em>?',
     hint:'Not what you want it to feel — what it actually feels most days.',
-    type:'single',
+    type:'branch',
     options:[
-      { v:'hot',      glyph:'☀',  label:'A lit match',   desc:'Warm, reactive, inflamed, or intense. Running hot inside.' },
-      { v:'cold',     glyph:'❄',  label:'A slow river',  desc:'Sluggish, heavy, cold hands, low fire. The engine runs cool.' },
-      { v:'mixed',    glyph:'⚖',  label:'Held & stuck',  desc:'Variable, stagnant, sighing. Up and down through the day.' },
-      { v:'depleted', glyph:'◯',  label:'Hollow & spent',desc:'Exhausted, empty, drained. The tank has been low for a while.' },
+      { v:'hot',      glyph:'△',  label:'A lit match',    desc:'Warm, reactive, inflamed, or intense. Running hot inside.',
+        subHint:'And which of these fits closest?',
+        subs:[
+          { v:'anger',     glyph:'△', label:'Short-tempered, irritable',      desc:'Small things set off a bigger reaction than they should.' },
+          { v:'flushed',   glyph:'○', label:'Red face, flushes easily',       desc:'Blood comes up quickly. Heat sits in the cheeks or chest.' },
+          { v:'inflamed',  glyph:'◈', label:'Inflammation, burning sensations',desc:'Skin, gut, joints — burning or hot spots that come and go.' },
+          { v:'hot_night', glyph:'◐', label:'Hot at night, night sweats',     desc:'The heat rises after dark. Waking up damp or overheated.' },
+        ] },
+      { v:'cold',     glyph:'◯',  label:'A cold stone',   desc:'Sluggish, heavy, cold hands, low fire. The engine runs cool.',
+        subHint:'And which of these fits closest?',
+        subs:[
+          { v:'cold_hands',glyph:'○', label:'Cold hands and feet always',     desc:'Extremities stay cold even in warm rooms. Circulation is quiet.' },
+          { v:'heavy',     glyph:'▢', label:'Heavy body, hard to move',       desc:'Getting going takes effort. The body feels weighted down.' },
+          { v:'pale',      glyph:'◌', label:'Pale, low appetite, loose stools',desc:'Colour is off, digestion is meek. The middle burner is low.' },
+          { v:'low_drive', glyph:'◐', label:'No drive, apathetic',            desc:'Motivation is missing. The pilot light needs relighting.' },
+        ] },
+      { v:'mixed',    glyph:'◇',  label:'A flickering flame', desc:'Variable, stagnant, sighing. Up and down through the day.',
+        subHint:'And which of these fits closest?',
+        subs:[
+          { v:'stuck',     glyph:'◇', label:'Stuck, cannot move forward',     desc:'Something\'s constipated — energy or emotion. Not flowing.' },
+          { v:'up_down',   glyph:'◈', label:'Up-and-down moods, unpredictable',desc:'The weather inside changes fast. Others notice.' },
+          { v:'tension',   glyph:'~', label:'Tension that moves around',      desc:'Neck one day, jaw the next, shoulders after that.' },
+          { v:'sighing',   glyph:'◌', label:'Sighing often, chest tight',     desc:'The breath keeps needing a bigger exhale to reset.' },
+        ] },
+      { v:'depleted', glyph:'○',  label:'An empty cup',   desc:'Exhausted, empty, dried out. The tank has been low for a while.',
+        subHint:'And which of these fits closest?',
+        subs:[
+          { v:'purposeless', glyph:'○', label:'Feel purposeless, hollow',     desc:'The direction has thinned out. Nothing quite reaches.' },
+          { v:'dry',         glyph:'◐', label:'Dry everything — skin, eyes, throat', desc:'The wells have gone low. Moisture doesn\'t stay.' },
+          { v:'overworked',  glyph:'◑', label:'Overworked for too long',      desc:'You went past the edge months ago. Reserves are spent.' },
+          { v:'anxious_empty',glyph:'◈',label:'Anxious but exhausted',        desc:'Wired at rest, tired when it matters. The classic burnout signal.' },
+        ] },
     ],
   },
   {
     key:'time',
     eyebrow:'03 of 06 · The rhythm',
     title:'What time of day is <em>hardest</em>?',
-    hint:'Tells us about your rhythm and where the formula needs to land.',
+    hint:'Tells us about your rhythm and where the extract needs to land.',
     type:'single',
     options:[
-      { v:'morning',  glyph:'☀',  label:'Morning',            desc:'Getting started is slow. Ignition takes an hour.' },
-      { v:'midday',   glyph:'△',  label:'Midday',             desc:'The 2pm dip. Focus collapses after lunch.' },
-      { v:'evening',  glyph:'◇',  label:'Evening',            desc:'Winding down is a struggle. Can\'t drop out of the day.' },
-      { v:'night',    glyph:'☾',  label:'Deep night',         desc:'Waking at 3am. Racing mind. Broken sleep.' },
-      { v:'any',      glyph:'◯',  label:'Not time-specific',  desc:'It\'s more of a whole-day thing than a time.' },
+      { v:'morning',  glyph:'◐',  label:'Morning',            desc:'Getting started is slow. Ignition takes an hour or two.' },
+      { v:'midday',   glyph:'●',  label:'Midday',             desc:'The 2pm dip. Focus collapses after lunch.' },
+      { v:'evening',  glyph:'◑',  label:'Evening',            desc:'Winding down is a struggle. Can\'t drop out of the day.' },
+      { v:'night',    glyph:'○',  label:'Deep night',         desc:'Waking at 3am. Racing mind. Broken sleep.' },
+      { v:'any',      glyph:'◈',  label:'Not time-specific',  desc:'It\'s more of a whole-day thing than a time.' },
     ],
   },
   {
@@ -567,11 +621,11 @@ const QUESTIONS = [
     hint:'No wrong answer. This shapes which allies fit you now.',
     type:'single',
     options:[
-      { v:'push',     glyph:'⚡',  label:'I push through',    desc:'Chin down, keep going. Rest happens later.' },
-      { v:'collapse', glyph:'◯',  label:'I collapse',        desc:'Shutdown. Sofa. Screens. Recover-mode until it passes.' },
-      { v:'numb',     glyph:'◌',  label:'I numb it out',     desc:'Distraction, a drink, something to take the edge off.' },
+      { v:'push',     glyph:'▲',  label:'I push through',    desc:'Chin down, keep going. Rest happens later, if at all.' },
+      { v:'collapse', glyph:'▽',  label:'I collapse',        desc:'Shutdown. Sofa. Screens. Recover-mode until it passes.' },
+      { v:'numb',     glyph:'○',  label:'I numb it out',     desc:'Distraction, a drink, something to take the edge off.' },
       { v:'ride',     glyph:'◇',  label:'I ride it well',    desc:'Mostly rolling with it. A little tender at the edges.' },
-      { v:'off',      glyph:'⌂',  label:'Something is off',  desc:'Doesn\'t look like any of the above. Not-quite-right.' },
+      { v:'off',      glyph:'◌',  label:'Something is off',  desc:'Doesn\'t look like any of the above. Not-quite-right.' },
     ],
   },
   {
@@ -660,8 +714,45 @@ function go(step){
 function renderQuestion(q){
   const wrap = document.createElement('section');
   wrap.className = 'q-wrap on';
+
+  // Special-case: Q2 "branch" type has a two-stage view. Stage A
+  // picks the archetype. Stage B refines with 4 sub-answers scoped
+  // to that archetype. `patternSub` set → we're in Stage B.
+  const isBranchStageB = q.type === 'branch' && state.answers[q.key] && !state.answers[q.key + 'Sub'];
+  // Actually the flag: if archetype is picked BUT sub is not yet set, stage B.
+  const branchStageB = q.type === 'branch' && !!state.answers[q.key] && !state.answers[q.key + 'Sub'];
+
   const eyebrow = document.createElement('div'); eyebrow.className = 'q-eyebrow'; eyebrow.textContent = q.eyebrow; wrap.appendChild(eyebrow);
-  const title = document.createElement('h2');    title.className = 'q-title';   title.innerHTML  = q.title;      wrap.appendChild(title);
+
+  // Stage B: switch title/hint to the sub-question's copy
+  if (branchStageB) {
+    const chosen = q.options.find(o => o.v === state.answers[q.key]);
+    if (chosen) {
+      const back = document.createElement('button');
+      back.type = 'button'; back.className = 'q-sub-back'; back.textContent = '← Change body reading';
+      back.addEventListener('click', () => { delete state.answers[q.key]; delete state.answers[q.key + 'Sub']; persist(); go(state.step); });
+      wrap.appendChild(back);
+      const title = document.createElement('h2'); title.className = 'q-title'; title.innerHTML = 'You picked <em>' + chosen.label + '</em>.'; wrap.appendChild(title);
+      const hint  = document.createElement('div'); hint.className  = 'q-hint';  hint.textContent = chosen.subHint || 'Which of these fits closest?'; wrap.appendChild(hint);
+      const ctx   = document.createElement('div'); ctx.className   = 'q-sub-context'; ctx.textContent = chosen.desc || ''; wrap.appendChild(ctx);
+      const subOpts = document.createElement('div'); subOpts.className = 'q-options';
+      (chosen.subs || []).forEach(s => {
+        const b = document.createElement('button'); b.type='button'; b.className='q-opt'; b.dataset.v = s.v;
+        b.innerHTML = '<span class="q-opt-glyph">' + (s.glyph || '◇') + '</span><span class="q-opt-body"><span class="q-opt-label">' + s.label + '</span>' + (s.desc ? '<span class="q-opt-desc">' + s.desc + '</span>' : '') + '</span>';
+        b.addEventListener('click', () => {
+          state.answers[q.key + 'Sub'] = s.v; persist();
+          subOpts.querySelectorAll('.q-opt').forEach(x => x.classList.remove('on'));
+          b.classList.add('on');
+          setTimeout(() => go(state.step + 1), 220);
+        });
+        subOpts.appendChild(b);
+      });
+      wrap.appendChild(subOpts);
+      return wrap;
+    }
+  }
+
+  const title = document.createElement('h2'); title.className = 'q-title'; title.innerHTML = q.title; wrap.appendChild(title);
   if (q.hint) { const h = document.createElement('div'); h.className='q-hint'; h.textContent=q.hint; wrap.appendChild(h); }
 
   if (q.type === 'text') {
@@ -682,20 +773,41 @@ function renderQuestion(q){
     return wrap;
   }
 
+  // Q1 · bubble layout (no-scroll grid of 12 floating orbs)
+  if (q.type === 'bubbles') {
+    const grid = document.createElement('div'); grid.className = 'q-bubbles';
+    const current = state.answers[q.key];
+    q.options.forEach(o => {
+      const b = document.createElement('button'); b.type='button'; b.className='bubble'; b.dataset.v = o.v;
+      b.style.setProperty('--hue', o.hue || '#E8B14B');
+      if (current === o.v) b.classList.add('on');
+      b.innerHTML = '<span>' + o.label + '</span>';
+      b.addEventListener('click', () => {
+        state.answers[q.key] = o.v; persist();
+        grid.querySelectorAll('.bubble').forEach(x => x.classList.remove('on'));
+        b.classList.add('on');
+        setTimeout(() => go(state.step + 1), 260);
+      });
+      grid.appendChild(b);
+    });
+    wrap.appendChild(grid);
+    return wrap;
+  }
+
   const opts = document.createElement('div'); opts.className = 'q-options';
   const current = state.answers[q.key];
   q.options.forEach(o => {
     const b = document.createElement('button'); b.type='button'; b.className='q-opt'; b.dataset.v = o.v;
     if (q.type === 'multi' && Array.isArray(current) && current.includes(o.v)) b.classList.add('on');
-    if (q.type === 'single' && current === o.v) b.classList.add('on');
-    b.innerHTML = '<span class="q-opt-glyph">' + o.glyph + '</span><span class="q-opt-body"><span class="q-opt-label">' + o.label + '</span>' + (o.desc ? '<span class="q-opt-desc">' + o.desc + '</span>' : '') + '</span>';
+    if ((q.type === 'single' || q.type === 'branch') && current === o.v) b.classList.add('on');
+    b.innerHTML = '<span class="q-opt-glyph">' + (o.glyph || '◇') + '</span><span class="q-opt-body"><span class="q-opt-label">' + o.label + '</span>' + (o.desc ? '<span class="q-opt-desc">' + o.desc + '</span>' : '') + '</span>';
     b.addEventListener('click', () => onPick(q, o.v, b, opts));
     opts.appendChild(b);
   });
   wrap.appendChild(opts);
 
   if (q.type === 'multi') {
-    const note = document.createElement('div'); note.className = 'q-multi-note'; note.textContent = '· Tap all that apply. "No, all good" clears the rest.';
+    const note = document.createElement('div'); note.className = 'q-multi-note'; note.textContent = '· Tap all that apply. "None of the above" clears the rest.';
     wrap.appendChild(note);
     const row = document.createElement('div'); row.className = 'q-cta';
     row.style.justifyContent = 'flex-end';
@@ -710,26 +822,28 @@ function renderQuestion(q){
 
 function onPick(q, v, btnEl, optsEl){
   if (q.type === 'single') {
-    state.answers[q.key] = v;
-    persist();
-    // Auto-advance so the flow feels fast
+    state.answers[q.key] = v; persist();
     optsEl.querySelectorAll('.q-opt').forEach(x => x.classList.remove('on'));
     btnEl.classList.add('on');
     setTimeout(() => go(state.step + 1), 220);
+  } else if (q.type === 'branch') {
+    // Stage A → record archetype, re-render same step to show subs.
+    state.answers[q.key] = v;
+    delete state.answers[q.key + 'Sub'];
+    persist();
+    optsEl.querySelectorAll('.q-opt').forEach(x => x.classList.remove('on'));
+    btnEl.classList.add('on');
+    setTimeout(() => go(state.step), 260);
   } else if (q.type === 'multi') {
     let cur = Array.isArray(state.answers[q.key]) ? state.answers[q.key].slice() : [];
-    if (v === 'none') {
-      cur = ['none'];
-    } else {
+    if (v === 'none') { cur = ['none']; }
+    else {
       cur = cur.filter(x => x !== 'none');
       if (cur.includes(v)) cur = cur.filter(x => x !== v);
       else cur.push(v);
     }
-    state.answers[q.key] = cur;
-    persist();
-    optsEl.querySelectorAll('.q-opt').forEach(x => {
-      x.classList.toggle('on', cur.includes(x.dataset.v));
-    });
+    state.answers[q.key] = cur; persist();
+    optsEl.querySelectorAll('.q-opt').forEach(x => x.classList.toggle('on', cur.includes(x.dataset.v)));
   }
 }
 
@@ -838,6 +952,28 @@ function bottleCard(intention, herbs, name){
   );
 }
 
+// ── Sub-pattern refinement copy (from Q2 stage B) ─────────
+// Reads the user's second-stage pick and folds it into the reveal
+// story as a specific body-reading line.
+const SUB_COPY = {
+  anger:'a Liver-heat lift that fires quickly',
+  flushed:'a Heart-fire signature that comes up in the face',
+  inflamed:'toxic-heat holding in the tissues',
+  hot_night:'a Yin-deficient heat rising after dark',
+  cold_hands:'a Yang-deficient chill sitting in the extremities',
+  heavy:'damp accumulation making the body heavy',
+  pale:'Spleen-Qi deficiency in the middle burner',
+  low_drive:'a low Kidney-Yang pilot light',
+  stuck:'Liver-Qi stagnation asking to move',
+  up_down:'Liver-Heart disharmony flickering through',
+  tension:'wind moving through the meridians',
+  sighing:'Lung-Qi constrained by Liver-Qi',
+  purposeless:'a Shen wandering — spirit off its anchor',
+  dry:'Yin-deficient dryness across the tissues',
+  overworked:'Jing depletion — the constitutional bank overdrawn',
+  anxious_empty:'Heart-Blood deficiency with floating anxiety',
+};
+
 // ── Story generator ───────────────────────────────────────
 function storyFor(a, herbs){
   const intMap = {
@@ -877,17 +1013,53 @@ function storyFor(a, herbs){
   const heroNames  = herbs.slice(0, 2).map(h => h.name).join(' and ');
   const spineNames = herbs.slice(2, 4).map(h => h.name).join(', ');
   const closerName = herbs[4] ? herbs[4].name : herbs[herbs.length - 1].name;
+  const subLine = a.patternSub && SUB_COPY[a.patternSub]
+    ? ' Underneath, a specific signal: <em>' + SUB_COPY[a.patternSub] + '</em>.'
+    : '';
   return (
     'You\'re calling in <em>' + (intMap[a.intention] || 'the shift') + '</em>. ' +
     'Your body reads as ' + (patMap[a.pattern] || 'searching') + ', and ' +
     (timeMap[a.time] || 'it moves through the whole day') + '. ' +
-    'Under pressure, ' + (stressMap[a.stress] || 'you\'re finding your way') + '. ' +
+    'Under pressure, ' + (stressMap[a.stress] || 'you\'re finding your way') + '.' +
+    subLine +
     '<br><br>' +
     'This blend leans on <em>' + heroNames + '</em> as the spine — ' +
     'weaves in ' + spineNames + ' to hold you steady — ' +
     'and closes with <em>' + closerName + '</em> for the deeper, slower work. ' +
     'Slow-pace medicine. Give it three weeks.'
   );
+}
+
+// ── MYCO personalisation (only fires when user filled the notes) ──
+// Sends the quiz + note + resolved herbs to /api/myco-agent, asks for
+// a 3-sentence personal reading, and swaps it into the reveal story.
+// Falls back silently if MYCO is unreachable or refuses (medical
+// hard-refuse etc.) — the template story already renders first.
+async function mycoStory(a, herbs){
+  if (!a.notes || !a.notes.trim()) return null;
+  const message =
+    'Write a personal 3-sentence "reading" for someone who took a plant-medicine quiz. ' +
+    'Warm, alchemical, poetic but not woo. Reference their personal note explicitly. ' +
+    'Do not diagnose, prescribe, or mention AI/MYCO. Just the reading, in prose.\n\n' +
+    'Intention: '   + a.intention + '\n' +
+    'Body pattern: '+ a.pattern   + (a.patternSub ? ' / ' + a.patternSub : '') + '\n' +
+    'Hardest time: '+ a.time      + '\n' +
+    'Meets stress by: ' + a.stress + '\n' +
+    'Personal note they wrote: "' + a.notes.trim().slice(0, 500) + '"\n' +
+    'Herbs in their formula: ' + herbs.map(h => h.name).join(', ');
+  try {
+    const res = await fetch('/api/myco-agent', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ message, history: [], context: { source:'find-your-formula' } }),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const text = (data && data.reply) ? String(data.reply).trim() : null;
+    // If MYCO returned the medical-refuse copy, don't paste that over the story
+    if (!text || /can't give medical/i.test(text)) return null;
+    return text;
+  } catch (_) { return null; }
 }
 
 // ── Safety copy ───────────────────────────────────────────
@@ -918,6 +1090,23 @@ function renderResult(){
   document.getElementById('rHerbCount').textContent = herbs.length + ' allies · woven together';
   document.getElementById('rSafety').textContent  = safetyLine(a);
 
+  // If the user filled the optional free-text, ask MYCO for a proper
+  // personalised reading and swap it in when it lands. Template
+  // story stays visible in the meantime.
+  if (a.notes && a.notes.trim()) {
+    mycoStory(a, herbs).then(text => {
+      if (!text) return;
+      const paras = text.split(/\n{2,}|(?<=[.!?])\s+(?=[A-Z])/).map(p => p.trim()).filter(Boolean);
+      document.getElementById('rStory').innerHTML =
+        paras.map(p => '<p style="margin:0 0 12px;">' + p.replace(/[<>]/g, '') + '</p>').join('');
+      const eb = document.querySelector('.r-story .r-story-eyebrow');
+      if (eb) eb.textContent = '✦ The reading · personalised for you';
+    });
+  }
+
+  // Stash the formula name so the reservation email carries it.
+  window.__currentFormulaName = name;
+
   const list = document.getElementById('rHerbList');
   list.innerHTML = '';
   const RN = ['i','ii','iii','iv','v','vi','vii'];
@@ -945,14 +1134,15 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
 
   const fd = new FormData(form);
   const payload = {
-    email:   String(fd.get('email')   || '').trim(),
-    name:    String(fd.get('name')    || '').trim(),
-    city:    String(fd.get('city')    || '').trim(),
-    country: String(fd.get('country') || '').trim(),
-    notes:   String(fd.get('notes')   || '').trim(),
-    quiz:    state.answers,
-    formula: pickFormula(state.answers).map(h => ({ id: h.id, name: h.name })),
-    source:  'find-your-formula',
+    email:       String(fd.get('email')   || '').trim(),
+    name:        String(fd.get('name')    || '').trim(),
+    city:        String(fd.get('city')    || '').trim(),
+    country:     String(fd.get('country') || '').trim(),
+    notes:       String(fd.get('notes')   || '').trim(),
+    formulaName: window.__currentFormulaName || '',
+    quiz:        state.answers,
+    formula:     pickFormula(state.answers).map(h => ({ id: h.id, name: h.name })),
+    source:      'find-your-formula',
   };
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(payload.email)) {
     errEl.hidden = false; errEl.textContent = 'Please enter a valid email.'; return;
@@ -962,31 +1152,26 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
   }
   btn.disabled = true; btn.textContent = 'Reserving…';
   try {
-    // Best-effort: POST to the newsletter endpoint so the reservation
-    // lands in the same inbox Robin already reads. Falls back to a
-    // mailto: hand-off if the endpoint is unreachable.
-    const notesForRobin =
-      'FIND-YOUR-FORMULA reservation\n' +
-      'Ship to: ' + payload.name + ' · ' + payload.city + ', ' + payload.country + '\n' +
-      'Formula: ' + payload.formula.map(f => f.name).join(', ') + '\n' +
-      'Quiz: ' + JSON.stringify(payload.quiz) + '\n' +
-      (payload.notes ? 'Notes: ' + payload.notes + '\n' : '');
+    // Post to the dedicated /api/reserve-formula endpoint which sends
+    // Robin the full reservation via Resend AND emails the user a
+    // proper confirmation with their formula. Falls back to mailto:
+    // if the endpoint is unreachable.
     let ok = false;
     try {
-      const res = await fetch('/api/subscribe-newsletter', {
+      const res = await fetch('/api/reserve-formula', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email:   payload.email,
-          name:    payload.name,
-          source:  'find-your-formula',
-          message: notesForRobin,
-        }),
+        body: JSON.stringify(payload),
       });
       ok = res.ok;
     } catch (_) {}
     if (!ok) {
-      // Fall-back: open the mail client with everything pre-filled.
+      const notesForRobin =
+        'FIND-YOUR-FORMULA reservation\n' +
+        'Ship to: ' + payload.name + ' · ' + payload.city + ', ' + payload.country + '\n' +
+        'Formula: ' + payload.formulaName + ' (' + payload.formula.map(f => f.name).join(', ') + ')\n' +
+        'Quiz: ' + JSON.stringify(payload.quiz) + '\n' +
+        (payload.notes ? 'Notes: ' + payload.notes + '\n' : '');
       const subject = encodeURIComponent('Formula reservation · ' + payload.name);
       const body    = encodeURIComponent(notesForRobin + '\nContact email: ' + payload.email);
       window.location.href = 'mailto:robin@fungai.art?subject=' + subject + '&body=' + body;
@@ -994,7 +1179,6 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     document.getElementById('reservedEmail').textContent = payload.email;
     document.getElementById('reserveThanks').classList.add('on');
     form.style.display = 'none';
-    // Wipe the local session so a shared device doesn't leak the last user's answers
     try { localStorage.removeItem('fyf_state'); } catch (_) {}
   } catch (err) {
     btn.disabled = false; btn.textContent = 'Reserve my bottle →';
