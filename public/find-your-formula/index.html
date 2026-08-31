@@ -116,9 +116,11 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .q-wrap.on{display:flex;animation:qFade .5s cubic-bezier(0.22,0.61,0.36,1)}
 @keyframes qFade{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .q-eyebrow{font-family:var(--mono);font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:var(--amber-l);margin-bottom:14px}
-.q-title{font-family:var(--display);font-weight:300;font-size:clamp(28px,6.5vw,42px);line-height:1.08;color:var(--parchment);letter-spacing:-0.005em;margin-bottom:12px}
+.q-title{font-family:var(--display);font-weight:300;font-size:clamp(28px,6.5vw,42px);line-height:1.08;color:var(--parchment);letter-spacing:-0.005em;margin-bottom:14px}
 .q-title em{font-style:italic;color:var(--amber-l)}
-.q-hint{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--dust);line-height:1.6;margin-bottom:24px}
+/* Question hint: non-italic sans, mid-weight parchment — reads as
+   instruction, not garnish. */
+.q-hint{font-family:var(--sans);font-weight:400;font-size:16px;color:var(--parchment);opacity:0.92;line-height:1.55;margin-bottom:24px;letter-spacing:0.005em}
 .q-options{display:flex;flex-direction:column;gap:9px}
 .q-opt{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;background:var(--card);border:0.5px solid var(--rule);border-radius:14px;color:var(--parchment);cursor:pointer;text-align:left;font-family:var(--sans);font-size:15px;transition:border-color .18s,background .18s,transform .18s;width:100%}
 .q-opt:hover{border-color:var(--rule-strong);background:var(--card-2)}
@@ -126,8 +128,9 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .q-opt.on{border-color:var(--amber-l);background:rgba(232,177,75,0.06);box-shadow:0 0 18px -6px rgba(232,177,75,0.35)}
 .q-opt-glyph{font-family:var(--display);font-style:italic;font-size:24px;color:var(--amber-l);line-height:1;flex-shrink:0;width:28px;text-align:center;margin-top:-2px}
 .q-opt-body{flex:1;min-width:0}
-.q-opt-label{font-weight:400;color:var(--parchment);line-height:1.35;margin-bottom:3px}
-.q-opt-desc{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--dust);line-height:1.5}
+.q-opt-label{font-family:var(--sans);font-weight:500;font-size:16px;color:var(--parchment);line-height:1.3;margin-bottom:8px}
+/* Option description: sans, non-italic, bigger, breathing room after label. */
+.q-opt-desc{font-family:var(--sans);font-weight:300;font-size:14px;color:var(--dust);line-height:1.55;letter-spacing:0.005em}
 .q-multi-note{font-family:var(--mono);font-size:9px;letter-spacing:0.18em;color:var(--dust-d);margin-top:14px}
 .q-textarea{width:100%;background:var(--card);border:0.5px solid var(--rule);border-radius:12px;padding:14px 16px;color:var(--parchment);font:inherit;font-size:15px;line-height:1.6;resize:vertical;min-height:110px;outline:none;transition:border-color .18s}
 .q-textarea:focus{border-color:var(--amber-l)}
@@ -297,7 +300,7 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
     <div class="r-ritual">
       <div class="r-ritual-eyebrow">◈ How to take it</div>
       <div class="r-ritual-text">
-        <strong>30–40 drops under the tongue</strong>, held for 60–90 seconds before swallowing. Twice daily — morning and evening — for at least three weeks. Slow-pace plant medicine unfolds in cycles, not hits.
+        <strong>2–3 full pipettes (about 1.5 ml) under the tongue</strong>, held for 60–90 seconds before swallowing. <strong>Twice daily</strong> — morning and evening — on a <strong>5 days on, 2 days off</strong> rhythm. Slow-pace plant medicine unfolds in cycles, not hits. Give it three weeks before you judge it.
       </div>
     </div>
 
@@ -306,8 +309,8 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
     <!-- ── Reserve form ─────────────────────────────── -->
     <div class="reserve">
       <div class="reserve-head">
-        <div class="reserve-title">Reserve · <span class="price">€77</span></div>
-        <div class="reserve-sub">50 ml amber-glass bottle, hand-poured. First batch ships within 10 days of reservation.</div>
+        <div class="reserve-title">Reserve · <span class="price">€38</span></div>
+        <div class="reserve-sub">30 ml amber-glass bottle, hand-poured in Berlin. First batch ships within 10 days of reservation.</div>
       </div>
       <form class="reserve-form" id="reserveForm" novalidate>
         <input type="email"  name="email" placeholder="Your email"  required autocomplete="email"/>
@@ -321,7 +324,7 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
         <div class="err" id="reserveErr" hidden></div>
       </form>
       <div class="reserve-perks">
-        <span>Free shipping over €99</span>
+        <span>Free shipping over €80</span>
         <span>Hand-poured in Berlin</span>
         <span>Refundable within 14 days</span>
       </div>
@@ -335,8 +338,12 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
     </div>
 
     <div class="r-actions">
+      <!-- Share button copies a URL that pre-fills someone else's
+           quiz OR takes them straight to your reveal — read `?f=` on
+           load. Native share sheet on mobile, clipboard fallback on
+           desktop. Proactive: turns each reveal into a viral surface. -->
+      <button class="r-action" type="button" id="shareBtn">↗ Share your formula</button>
       <button class="r-action" type="button" id="restartBtn">↺ Take the quiz again</button>
-      <a class="r-action" href="/dinner-experience/">◇ The dinner experience</a>
       <a class="r-action" href="/shop/">◈ See the full apothecary</a>
     </div>
   </section>
@@ -356,8 +363,8 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
    → renders a bespoke reveal → captures a reservation.
 
    Slow-pace + sublingual are BAKED IN (not questions) per the
-   product brief. All formulas are 50 ml amber-glass tinctures,
-   30–40 drops twice daily, €77.
+   product brief. All formulas are 30 ml amber-glass tinctures,
+   2-3 pipettes (1.5 ml) twice daily on a 5-on/2-off rhythm, €38.
 
    No React. No build step. Vanilla JS, ~450 lines.
    ──────────────────────────────────────────────────────────── */
@@ -389,10 +396,15 @@ function isRestricted(h){
   return RESTRICTED_NAMES.some(r => s.includes(r));
 }
 
-// Derive the four quiz axes + safety flags from a catalog record.
-// Runs once per herb at boot. Matches keywords in the herb's own
-// primary_functions / secondary_benefits / energetics / spiritual_layer
-// / pharmacology — no hand-tagging needed.
+// Derive quiz axes + safety flags from a catalog record. Matches
+// keywords in the herb's own primary_functions / secondary_benefits /
+// energetics / spiritual_layer / pharmacology / contraindications /
+// herb_to_drug_interactions — no hand-tagging needed.
+//
+// Intention values mirror /herbal-engine-2's `IN` array so consumers
+// pick from the same 12 categories the practitioner does.
+// Pattern values mirror the 4-archetype BP (hot/cold/mixed/depleted).
+// Safety flags mirror SF_GROUPS.
 function inferAxes(h){
   const text = [
     ...(h.primary_functions   || []),
@@ -404,49 +416,70 @@ function inferAxes(h){
     ...(h.tcm_meridians       || []),
   ].join(' | ').toLowerCase();
   const has = re => re.test(text);
+  const con = ((h.contraindications || []).concat(h.herb_to_drug_interactions || [])).join(' | ').toLowerCase();
 
   const intentions = [];
-  if (has(/anxi|nervous|gaba|tension|calm|settle|sedativ|anxiolytic|kava|nervine|cortisol|stress|shen|panic/)) intentions.push('calm');
-  if (has(/focus|cogniti|memory|attention|clarity|neuroplast|ngf|nootropi|acetylcholi|mental|concentrat|circulation.*brain|dopamin/)) intentions.push('focus');
-  if (has(/sleep|somno|insomni|circadian|melaton|hypnotic|dream.*sleep|deep sleep/)) intentions.push('sleep');
-  if (has(/vital|stamina|adren|fatigue|exhaustion|athletic|endurance|yang tonic|qi tonic|energizer|stimulant/) && !has(/no energy|does not energ/)) intentions.push('energy');
-  if (has(/dream|oneiro|vision|entheogen|psychoactive|consciousness|astral|shamanic|lucid|hypnagog/)) intentions.push('dream');
-  if (has(/recover|rebuild|deplet|convalescence|adaptogen|restore|nourish|nutriti|tonic|jing|essence|blood tonic/)) intentions.push('recovery');
-  if (!intentions.length) intentions.push('recovery');
+  if (has(/adaptogen|cortisol|stress|hpa|resilience|burnout|nervine tonic/)) intentions.push('stress');
+  if (has(/anxi|nervous|gaba|tension|calm|settle|sedativ|anxiolytic|kava|panic|shen disturb/)) intentions.push('anxiety');
+  if (has(/sleep|somno|insomni|circadian|melaton|hypnotic|deep sleep|night wake/)) intentions.push('sleep');
+  if (has(/vital|stamina|adren|fatigue|exhaustion|athletic|endurance|yang tonic|qi tonic|energizer|mitochondri/)) intentions.push('energy');
+  if (has(/mood|antidepress|serotonergi|dopamin|heart open|emotional|grief|depression|melanchol|lift|euphoric/)) intentions.push('mood');
+  if (has(/cognit|memory|attention|focus|clarity|neuroplast|ngf|nootropi|acetylcholi|neuroprotect|bdnf|concentrat|neurogen/)) intentions.push('cognitive');
+  if (has(/hormon|endocrine|estrogen|progester|testoster|libido|cycle|menopaus|luteal|pms|amenorr|dysmenor|androgen|thyroid.*support/)) intentions.push('hormones');
+  if (has(/digest|gastroint|gut|stomach|bloating|ibs|carminativ|bitter|liver.*bile|gastric|dyspepsia|nausea|colon|microbiome|prebiotic/)) intentions.push('digestion');
+  if (has(/immun|antiviral|antibacterial|antimicrobial|innate|leukocyt|lymphocyt|resistance|cold.*flu/)) intentions.push('immunity');
+  if (has(/anti.?inflammat|cox|pain|analgesic|arthriti|joint|muscle.*spasm|neuralg|headache|migraine|nsaid/)) intentions.push('pain');
+  if (has(/detox|liver.*cleans|hepatic|phase\s?i{1,2}|glutathion|bile flow|lymphatic drain|chelat|hepatoprotect/)) intentions.push('detox');
+  if (has(/skin|collagen|ceramid|beauty|glow|hydration|photo.?protect|melanin|antioxidant.*skin|hyaluron/)) intentions.push('beauty');
+  if (!intentions.length) intentions.push('stress');
 
+  // 4-archetype body pattern from tcm_element + energetics
   const patterns = [];
-  if (has(/hyper|restless|agitat|wired|heat rising|liver yang rising|shen disturb|racing/)) patterns.push('wired');
-  if (has(/fatigue|weak|exhaust|qi defici|yang defici|tired|weariness|lethargic/)) patterns.push('tired');
-  if (has(/brain fog|foggy|cloud|damp|phlegm/) || intentions.includes('focus')) patterns.push('foggy');
-  if (has(/tension|spasm|muscle|liver qi stagnat|contract|tight|cramp/)) patterns.push('tense');
-  if (has(/deplet|blood defici|essence|jing|marrow|convalescence|malnutri|burnout|adrenal fatigue/)) patterns.push('empty');
-  if (intentions.includes('recovery') || intentions.includes('calm')) patterns.push('steady');
-  if (!patterns.length) patterns.push('steady');
+  const el   = (h.tcm_element || '').toLowerCase();
+  const enr  = (h.energetics || []).join(' ').toLowerCase();
+  if (has(/cool|cold energetic|clear.*heat|liver.*heat|damp.?heat|inflam|hot.*natur/) || /cool|cold/.test(enr)) patterns.push('hot'); // cooling herbs are FOR hot bodies
+  if (has(/warm|warming|hot energetic|yang tonic|dispel.*cold|move blood|circulation/) || /warm|hot/.test(enr))  patterns.push('cold'); // warming herbs are FOR cold bodies
+  if (has(/move.*qi|regulate.*qi|liver qi stagnat|resolve.*damp|resolve.*phlegm|dispel.*stag/)) patterns.push('mixed');
+  if (has(/tonify|nourish|blood tonic|yin tonic|essence|jing|marrow|convalescence|nutriti|restorat|deplet/)) patterns.push('depleted');
+  if (!patterns.length) patterns.push(intentions.includes('stress') || intentions.includes('anxiety') ? 'mixed' : 'depleted');
 
   const times = [];
-  if (intentions.includes('sleep') || intentions.includes('dream')) { times.push('evening','night'); }
-  if (intentions.includes('energy') || intentions.includes('focus')) { times.push('morning','midday'); }
-  if (intentions.includes('calm')) { times.push('evening','any'); }
-  if (intentions.includes('recovery')) { times.push('any','morning'); }
+  if (intentions.includes('sleep')) { times.push('evening','night'); }
+  if (intentions.includes('energy') || intentions.includes('cognitive')) { times.push('morning','midday'); }
+  if (intentions.includes('anxiety') || intentions.includes('stress')) { times.push('evening','any'); }
+  if (intentions.includes('mood')) { times.push('morning','midday','any'); }
   if (!times.length) times.push('any');
 
   const stress = [];
   if (has(/adaptogen/))                       stress.push('push','collapse');
   if (has(/nervine|gaba|anxiolytic/))         stress.push('off','ride');
-  if (has(/stimulant|caffeine|energizer/))    stress.push('numb');
+  if (has(/stimulant|caffeine|energizer/))    stress.push('numb','push');
   if (has(/restorat|deplet|nourish|nutriti/)) stress.push('collapse');
   if (has(/heart open|serotonergi|mood.*lift|antidepress/)) stress.push('numb','off');
   if (!stress.length) stress.push('ride','off');
 
+  // Safety flags mirror SF_GROUPS in /herbal-engine-2. Everything
+  // matched here removes the herb from the pool when the corresponding
+  // filter is active.
   const flags = [];
-  const con = ((h.contraindications || []).concat(h.herb_to_drug_interactions || [])).join(' | ').toLowerCase();
-  if (/pregnan|lactat|breastfeed|uterine.*stim|emmenagog|abortifac|fetal/.test(con)) flags.push('pregnancy');
-  if ((h.herb_to_drug_interactions && h.herb_to_drug_interactions.length) ||
-      /maoi|ssri|anticoagulant|antihypertens|blood.thin|warfarin|serotonin syndrome|drug interact/.test(con)) flags.push('meds');
-  if (/caffeine|jitter/.test(con) || /caffei|coffee|kola nut|guarana|yerba mat|mate\b|tea\b|guayusa/.test(((h.name || '') + ' ' + (h.botanical || '')).toLowerCase())) flags.push('caffeine');
-  if (/potentiat.*alcohol|avoid.*alcohol/.test(con)) flags.push('alcohol');
+  if (/pregnan|lactat|breastfeed|uterine.*stim|emmenagog|abortifac|fetal|infant.*transfer/.test(con)) flags.push('pregnancy');
+  if (/anticoagulant|antiplatelet|blood.?thin|warfarin|heparin|inr|digoxin|cardiac glycoside|heart.*medicat|antihypertens|hypertens/.test(con)) flags.push('cardio_meds');
+  if (/maoi|ssri|snri|serotonin syndrome|antidepress|mood stabili|antipsychot|bipolar|lithium|dopaminergi/.test(con)) flags.push('psych_meds');
+  if (/immunostim|autoimmun|immunosuppress|lupus|MS\b|rheumatoid|multiple sclerosis/i.test(con)) flags.push('autoimmune');
+  if (/hepatotox|liver.*damage|hepatit|nephrotox|kidney.*stone|oxalate|renal fail/.test(con)) flags.push('liver_kidney');
+  if (/thyroid|hyperthyroid|hypothyroid|graves|hashimoto|iodine/.test(con)) flags.push('thyroid');
+  if (/hypertens|blood pressure|vasoconstrict/.test(con)) flags.push('hypertension');
+  if (/cyp3a4|contracepti|estrogen.*bind|birth control|oral contracepti/.test(con)) flags.push('contraceptive');
+  if (/benzodiazepin|cns depress|sedative.*additive|potentiat.*sedat/.test(con)) flags.push('sedatives');
+  if (/asteraceae|ragweed|daisy family|compositae|salicylat|aspirin/.test(con)) flags.push('allergy');
 
-  return { intentions: [...new Set(intentions)], patterns: [...new Set(patterns)], times: [...new Set(times)], stress: [...new Set(stress)], flags: [...new Set(flags)] };
+  return {
+    intentions: [...new Set(intentions)],
+    patterns:   [...new Set(patterns)],
+    times:      [...new Set(times)],
+    stress:     [...new Set(stress)],
+    flags:      [...new Set(flags)],
+  };
 }
 
 // Build the consumer pool once. Excludes RESTRICTED_NAMES entries,
@@ -474,35 +507,43 @@ function shortNote(h){
 // Two axes are baked in and NOT asked:
 //   delivery = 'sublingual'  (always)
 //   pace     = 'slow'        (always)
+// Question set mirrors the practitioner-mode taxonomy in
+// /herbal-engine-2 (IN, BP, SF_GROUPS) but presents it in warm
+// consumer language. Delivery = sublingual and pace = slow are
+// baked in — never asked.
 const QUESTIONS = [
   {
     key:'intention',
     eyebrow:'01 of 06 · The calling',
     title:'What are you <em>calling in</em>?',
-    hint:'One primary thread. You can hold others quietly.',
+    hint:'Pick the strongest thread. You can hold the others quietly.',
     type:'single',
     options:[
-      { v:'calm',     glyph:'◇', label:'Deep calm',             desc:'Quiet the noise. Settle the nervous system.' },
-      { v:'focus',    glyph:'△', label:'Steady focus',          desc:'Clearer mind. Sustained attention.' },
-      { v:'sleep',    glyph:'◯', label:'Better sleep',          desc:'Fall easier. Sleep deeper. Wake restored.' },
-      { v:'energy',   glyph:'✦', label:'More energy',           desc:'Clean vitality. Not stimulation.' },
-      { v:'dream',    glyph:'☾', label:'Dream & vision',        desc:'Deeper dreams. Sensory openness.' },
-      { v:'recovery', glyph:'⬡', label:'Nervous-system recovery', desc:'Rebuild after burnout, illness, depletion.' },
+      { v:'stress',    glyph:'🌊', label:'Stress & resilience',     desc:'Adapt, hold steady, recover from a lot at once.' },
+      { v:'anxiety',   glyph:'◌',  label:'Anxiety & calm',          desc:'Quiet the mind, ease the body, settle the loop.' },
+      { v:'sleep',     glyph:'🌙', label:'Sleep & restoration',     desc:'Fall easier, sleep deeper, wake restored.' },
+      { v:'energy',    glyph:'☀',  label:'Energy & vitality',       desc:'Sustained power. No spike, no crash.' },
+      { v:'mood',      glyph:'🌸', label:'Mood & emotion',          desc:'Lift, open, feel again. Warmth back to the room.' },
+      { v:'cognitive', glyph:'◎',  label:'Cognitive & memory',      desc:'Think sharp, remember more, protect the long game.' },
+      { v:'hormones',  glyph:'☾',  label:'Hormonal balance',        desc:'Cycle, menopause, testosterone, endocrine flow.' },
+      { v:'digestion', glyph:'🌱', label:'Digestion & gut',         desc:'Settle, absorb, cleanse. Bitter tonics for the belly.' },
+      { v:'immunity',  glyph:'🛡',  label:'Immunity & defence',      desc:'Defend now, train for long-term resilience.' },
+      { v:'pain',      glyph:'◈',  label:'Pain & inflammation',     desc:'Cool, ease, move freely. Anti-inflammatory support.' },
+      { v:'detox',     glyph:'🌿', label:'Detox & liver',           desc:'Cleanse, clear, restore. Phase I/II support.' },
+      { v:'beauty',    glyph:'✦',  label:'Skin & beauty',           desc:'Glow from within — collagen, hydration, ageing well.' },
     ],
   },
   {
     key:'pattern',
     eyebrow:'02 of 06 · The body',
-    title:'How does your body <em>feel</em> most days?',
-    hint:'Not what you want it to feel. What it actually feels.',
+    title:'How does your body <em>actually feel</em>?',
+    hint:'Not what you want it to feel — what it actually feels most days.',
     type:'single',
     options:[
-      { v:'wired',   glyph:'⚡', label:'Wired',   desc:'On but jangly. Can\'t settle.' },
-      { v:'tired',   glyph:'☾', label:'Tired',   desc:'Battery low. Foot on the floor is heavy.' },
-      { v:'foggy',   glyph:'◌', label:'Foggy',   desc:'Static in the head. Words slow.' },
-      { v:'tense',   glyph:'⌂', label:'Tense',   desc:'Held. Shoulders, jaw, breath high.' },
-      { v:'empty',   glyph:'◯', label:'Empty',   desc:'Something is not-quite-there. Depleted.' },
-      { v:'steady',  glyph:'◈', label:'Steady',  desc:'Mostly okay. Fine-tuning, not fixing.' },
+      { v:'hot',      glyph:'☀',  label:'A lit match',   desc:'Warm, reactive, inflamed, or intense. Running hot inside.' },
+      { v:'cold',     glyph:'❄',  label:'A slow river',  desc:'Sluggish, heavy, cold hands, low fire. The engine runs cool.' },
+      { v:'mixed',    glyph:'⚖',  label:'Held & stuck',  desc:'Variable, stagnant, sighing. Up and down through the day.' },
+      { v:'depleted', glyph:'◯',  label:'Hollow & spent',desc:'Exhausted, empty, drained. The tank has been low for a while.' },
     ],
   },
   {
@@ -512,39 +553,45 @@ const QUESTIONS = [
     hint:'Tells us about your rhythm and where the formula needs to land.',
     type:'single',
     options:[
-      { v:'morning',  glyph:'☀', label:'Morning',            desc:'Getting started. Ignition is slow.' },
-      { v:'midday',   glyph:'△', label:'Midday',             desc:'The 2pm dip. Focus collapses.' },
-      { v:'evening',  glyph:'◇', label:'Evening',            desc:'Winding down is a struggle.' },
-      { v:'night',    glyph:'☾', label:'Deep night',         desc:'Waking at 3am. Racing mind.' },
-      { v:'any',      glyph:'◯', label:'Not time-specific',  desc:'It\'s more of a whole-day thing.' },
+      { v:'morning',  glyph:'☀',  label:'Morning',            desc:'Getting started is slow. Ignition takes an hour.' },
+      { v:'midday',   glyph:'△',  label:'Midday',             desc:'The 2pm dip. Focus collapses after lunch.' },
+      { v:'evening',  glyph:'◇',  label:'Evening',            desc:'Winding down is a struggle. Can\'t drop out of the day.' },
+      { v:'night',    glyph:'☾',  label:'Deep night',         desc:'Waking at 3am. Racing mind. Broken sleep.' },
+      { v:'any',      glyph:'◯',  label:'Not time-specific',  desc:'It\'s more of a whole-day thing than a time.' },
     ],
   },
   {
     key:'stress',
     eyebrow:'04 of 06 · The pattern',
     title:'How do you <em>meet stress</em> lately?',
-    hint:'No wrong answer. This shapes which allies fit.',
+    hint:'No wrong answer. This shapes which allies fit you now.',
     type:'single',
     options:[
-      { v:'push',     glyph:'⚡', label:'I push through',    desc:'Chin down, keep going. Rest later.' },
-      { v:'collapse', glyph:'◯', label:'I collapse',        desc:'Shutdown. Sofa. Screens. Recover-mode.' },
-      { v:'numb',     glyph:'◌', label:'I numb it out',     desc:'Distraction. A drink. Something else.' },
-      { v:'ride',     glyph:'◇', label:'I ride it well',    desc:'Mostly rolling with it. Bit tender.' },
-      { v:'off',      glyph:'⌂', label:'Something is off',  desc:'Doesn\'t look like any of the above.' },
+      { v:'push',     glyph:'⚡',  label:'I push through',    desc:'Chin down, keep going. Rest happens later.' },
+      { v:'collapse', glyph:'◯',  label:'I collapse',        desc:'Shutdown. Sofa. Screens. Recover-mode until it passes.' },
+      { v:'numb',     glyph:'◌',  label:'I numb it out',     desc:'Distraction, a drink, something to take the edge off.' },
+      { v:'ride',     glyph:'◇',  label:'I ride it well',    desc:'Mostly rolling with it. A little tender at the edges.' },
+      { v:'off',      glyph:'⌂',  label:'Something is off',  desc:'Doesn\'t look like any of the above. Not-quite-right.' },
     ],
   },
   {
     key:'avoid',
     eyebrow:'05 of 06 · The container',
     title:'Anything we should be <em>careful of</em>?',
-    hint:'Tap all that apply. Or "no, all good".',
+    hint:'Tap all that apply. Herbs with known interactions get filtered from your pool.',
     type:'multi',
     options:[
-      { v:'caffeine',   glyph:'✕', label:'Avoiding caffeine',       desc:'No caffeine-adjacent stimulants.' },
-      { v:'alcohol',    glyph:'✕', label:'Avoiding alcohol',        desc:'A note — our tinctures use organic grain alcohol as extraction solvent.' },
-      { v:'pregnancy',  glyph:'✕', label:'Pregnant or nursing',     desc:'Uterine stimulants, emmenagogues excluded.' },
-      { v:'meds',       glyph:'✕', label:'Currently on medication', desc:'Herbs with known drug interactions excluded.' },
-      { v:'none',       glyph:'◯', label:'No, all good',            desc:'Full pool available.' },
+      { v:'pregnancy',    glyph:'🤰', label:'Pregnancy, conception or breastfeeding', desc:'Removes emmenagogues, uterine stimulants, and herbs with infant-transfer risk.' },
+      { v:'cardio_meds',  glyph:'💊', label:'Blood thinners or heart medications',    desc:'Removes antiplatelet, digoxin-interactive, and cardiac-active herbs.' },
+      { v:'psych_meds',   glyph:'🧠', label:'Antidepressants or mood stabilisers',    desc:'Prevents serotonin syndrome, removes MAOIs and dopaminergic conflicts.' },
+      { v:'autoimmune',   glyph:'🛡',  label:'Autoimmune or immunosuppressants',       desc:'Removes immune-stimulating herbs that could trigger a flare.' },
+      { v:'liver_kidney', glyph:'🫁',  label:'Liver or kidney condition',              desc:'Removes hepatotoxic and oxalate-rich herbs.' },
+      { v:'thyroid',      glyph:'🦋', label:'Thyroid condition or medication',        desc:'Removes iodine-affecting and thyroid-active herbs.' },
+      { v:'hypertension', glyph:'❤️',  label:'Uncontrolled high blood pressure',       desc:'Removes stimulating and vasoconstrictive herbs.' },
+      { v:'contraceptive',glyph:'💊', label:'On the contraceptive pill',              desc:'Removes CYP3A4 enzyme inducers that reduce OCP efficacy.' },
+      { v:'sedatives',    glyph:'😴', label:'On benzodiazepines or sedatives',        desc:'Removes additive CNS depressants.' },
+      { v:'allergy',      glyph:'🌸', label:'Ragweed/daisy allergy or salicylate',    desc:'Removes Asteraceae family herbs and willow-bark chemistry.' },
+      { v:'none',         glyph:'✓',  label:'None of the above apply',                desc:'Full pool available — no safety filters applied.' },
     ],
   },
   {
@@ -730,12 +777,18 @@ function pickFormula(a){
 
 // ── Formula naming ────────────────────────────────────────
 const NAME_TEMPLATES = {
-  calm:     ['Slow Rain','Quiet Grove','Held Hollow','Amber Dusk','Long Exhale','Cedar Hush'],
-  focus:    ['Clear Meridian','First Light','Ash Compass','Pine Signal','Bright Root','Ivory Ridge'],
-  sleep:    ['Blue Fold','Night Bell','Moss Down','Star Anchor','Deep Willow','Silver Vein'],
-  energy:   ['Ember Vein','Rising Bark','Copper Dawn','Fire Root','Wild Ignition','Alpine Kindle'],
-  dream:    ['Violet Veil','Lotus Ghost','Moon Passage','Cinder Vision','Indigo Well','Sable Bloom'],
-  recovery: ['Slow Bloom','Deep Weave','Root Return','Green Convalescence','Second Spring','Mineral Rest'],
+  stress:    ['Slow Anchor','Held Hollow','Long Exhale','Cedar Steady','Amber Ground','Deep Yield'],
+  anxiety:   ['Quiet Grove','Slow Rain','Blue Vervain Hush','Still Water','Held Circle','Pearl Field'],
+  sleep:     ['Blue Fold','Night Bell','Moss Down','Star Anchor','Deep Willow','Silver Vein'],
+  energy:    ['Ember Vein','Rising Bark','Copper Dawn','Fire Root','Wild Ignition','Alpine Kindle'],
+  mood:      ['Rose Return','First Warmth','Saffron Lift','Heart Reweave','Violet Sun','Peach Field'],
+  cognitive: ['Clear Meridian','First Light','Ash Compass','Bright Root','Ivory Ridge','Pine Signal'],
+  hormones:  ['Moon Loom','Cycle Weave','Vitex Tide','Red Thread','Iron Bloom','Silver Cycle'],
+  digestion: ['Bitter Root','Green Ferment','Warm Belly','Fennel Field','Yellow Spring','Gentle Ash'],
+  immunity:  ['Chaga Shield','Astragalus Wall','Elder Fortress','Fir Guard','Root Sentinel','Inner Iron'],
+  pain:      ['Cool Ash','Willow Ease','Turmeric Field','Devil\'s Claw','Green Ointment','Slow Release'],
+  detox:     ['Silver Clearance','Milk Thistle','Green Reset','Bile Flow','River Clean','Dandelion Rise'],
+  beauty:    ['Rose Skin','Tremella Dew','Silica Gleam','Collagen Field','Amber Radiance','Peach Glow'],
 };
 
 function pickName(intention){
@@ -753,13 +806,19 @@ function pickName(intention){
 function bottleCard(intention, herbs, name){
   const herbNames = herbs.slice(0, 5).map(h => h.name).join(' · ');
   const props = ({
-    calm:     ['Nervous ease','GABA-adjacent quiet','Held container'],
-    focus:    ['Neuroplasticity','Focus','Memory'],
-    sleep:    ['Sleep onset','Deep restoration','Night repair'],
-    energy:   ['Sustained vitality','Mental clarity','Adrenal tone'],
-    dream:    ['Sensory opening','Dream layer','Traditional oneirogen'],
-    recovery: ['Nervous rebuild','Adaptogenic','Long slow tonic'],
-  })[intention] || ['Nervous ease','Adaptogenic','Long slow tonic'];
+    stress:    ['Cortisol balance','Nervous calm','HPA support'],
+    anxiety:   ['GABA modulation','Nervous ease','Tension release'],
+    sleep:     ['Sleep onset','Deep restoration','Night repair'],
+    energy:    ['Sustained vitality','Mental clarity','Adrenal tone'],
+    mood:      ['Emotional lift','Heart opening','Resilience'],
+    cognitive: ['Neuroplasticity','Focus','Memory'],
+    hormones:  ['Endocrine balance','Cycle support','Tonic'],
+    digestion: ['Gut harmony','Liver support','Microbiome'],
+    immunity:  ['Innate defence','Immune training','Resilience'],
+    pain:      ['Anti-inflammatory','COX inhibition','Pain relief'],
+    detox:     ['Liver clearance','Lymphatic','Detox'],
+    beauty:    ['Skin vitality','Collagen','Radiance'],
+  })[intention] || ['Adaptogenic','Nervous tonic','Long slow build'];
   return (
     '<div class="formula-art-card">' +
       '<div class="formula-art-overlay"></div>' +
@@ -772,7 +831,7 @@ function bottleCard(intention, herbs, name){
           '<div class="fa-div"></div>' +
           '<div class="fa-herbs">' + herbNames + '</div>' +
           '<div class="fa-props">' + props.map(x => '<div class="fa-prop">' + x + '</div>').join('') + '</div>' +
-          '<div class="fa-extract">1:3 full-spectrum spagyric · Sublingual · 50 ml</div>' +
+          '<div class="fa-extract">1:3 full-spectrum spagyric · Sublingual · 30 ml</div>' +
         '</div>' +
       '</div>' +
     '</div>'
@@ -782,36 +841,40 @@ function bottleCard(intention, herbs, name){
 // ── Story generator ───────────────────────────────────────
 function storyFor(a, herbs){
   const intMap = {
-    calm:'the quiet',
-    focus:'clearer thinking',
-    sleep:'deeper sleep',
-    energy:'clean vitality',
-    dream:'the dream layer',
-    recovery:'nervous-system repair',
+    stress:    'the space to steady',
+    anxiety:   'the quiet',
+    sleep:     'deeper sleep',
+    energy:    'clean vitality',
+    mood:      'warmth back',
+    cognitive: 'clearer thinking',
+    hormones:  'endocrine flow',
+    digestion: 'gut settlement',
+    immunity:  'inner defence',
+    pain:      'ease in the body',
+    detox:     'liver clearance',
+    beauty:    'the glow',
   };
   const patMap = {
-    wired:'wired but unable to settle',
-    tired:'tired in the bones',
-    foggy:'fogged in',
-    tense:'held tight in the body',
-    empty:'quietly depleted',
-    steady:'mostly steady',
+    hot:      'running hot — reactive, inflamed',
+    cold:     'running cool — heavy, slow',
+    mixed:    'stuck in the middle — sighing, held',
+    depleted: 'depleted — the tank has been low',
   };
   const timeMap = {
     morning:'mornings land hardest',
-    midday:'the midday dip is where it shows',
+    midday: 'the midday dip is where it shows',
     evening:'evenings are the struggle',
-    night:'the deep night wakes you',
-    any:'it moves through the whole day',
+    night:  'the deep night wakes you',
+    any:    'it moves through the whole day',
   };
   const stressMap = {
-    push:'you push through rather than pause',
+    push:    'you push through rather than pause',
     collapse:'you collapse into recovery-mode',
-    numb:'you reach for something to numb the edge',
-    ride:'you roll with it, mostly',
-    off:'something is off in a way you can\'t name',
+    numb:    'you reach for something to numb the edge',
+    ride:    'you roll with it, mostly',
+    off:     'something is off in a way you can\'t name',
   };
-  const heroNames = herbs.slice(0, 2).map(h => h.name).join(' and ');
+  const heroNames  = herbs.slice(0, 2).map(h => h.name).join(' and ');
   const spineNames = herbs.slice(2, 4).map(h => h.name).join(', ');
   const closerName = herbs[4] ? herbs[4].name : herbs[herbs.length - 1].name;
   return (
@@ -850,7 +913,7 @@ function renderResult(){
   const name  = pickName(a.intention);
 
   document.getElementById('bottle').insertAdjacentHTML('beforeend', bottleCard(a.intention, herbs, name));
-  document.getElementById('rTagline').textContent = herbs.length + ' allies · 50 ml · hand-poured in Berlin';
+  document.getElementById('rTagline').textContent = herbs.length + ' allies · 30 ml · hand-poured in Berlin';
   document.getElementById('rStory').innerHTML     = storyFor(a, herbs);
   document.getElementById('rHerbCount').textContent = herbs.length + ' allies · woven together';
   document.getElementById('rSafety').textContent  = safetyLine(a);
@@ -938,6 +1001,73 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     errEl.hidden = false; errEl.textContent = 'Something didn\'t send. Try once more, or email robin@fungai.art.';
   }
 });
+
+// ── Share your formula ────────────────────────────────────
+// Encodes the answers into a URL-safe base64 blob in ?f=. Opening
+// that URL skips the quiz and lands straight on someone else's
+// reveal — turns every generated formula into a shareable artifact.
+// Uses the native share sheet on mobile, clipboard on desktop.
+function encodeAnswers(a){
+  try {
+    const s = JSON.stringify(a);
+    // btoa handles ASCII only; strip anything outside for safety.
+    return btoa(unescape(encodeURIComponent(s))).replace(/=+$/, '').replace(/\+/g,'-').replace(/\//g,'_');
+  } catch (_) { return ''; }
+}
+function decodeAnswers(str){
+  try {
+    const b = str.replace(/-/g,'+').replace(/_/g,'/');
+    const s = decodeURIComponent(escape(atob(b + '==='.slice(0, (4 - b.length % 4) % 4))));
+    const a = JSON.parse(s);
+    return a && typeof a === 'object' ? a : null;
+  } catch (_) { return null; }
+}
+
+document.getElementById('shareBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('shareBtn');
+  const label = btn.textContent;
+  const encoded = encodeAnswers(state.answers);
+  const url = window.location.origin + '/find-your-formula/?f=' + encoded;
+  const shareData = {
+    title: 'My Fungai Art formula',
+    text:  'The alchemy read me and gave me this blend. Take the quiz — see yours in 60 seconds.',
+    url:   url,
+  };
+  try {
+    if (navigator.share && (!navigator.canShare || navigator.canShare(shareData))) {
+      await navigator.share(shareData);
+    } else if (navigator.clipboard) {
+      await navigator.clipboard.writeText(url);
+      btn.textContent = '✓ Link copied';
+      setTimeout(() => { btn.textContent = label; }, 2200);
+    } else {
+      // Legacy fallback
+      const ta = document.createElement('textarea');
+      ta.value = url; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); btn.textContent = '✓ Link copied'; setTimeout(() => { btn.textContent = label; }, 2200); } catch (_) {}
+      document.body.removeChild(ta);
+    }
+  } catch (_) { /* user cancelled share sheet — no-op */ }
+});
+
+// ── ?f= landing — skip quiz, go straight to reveal ────────
+(function decodeUrlAnswers(){
+  try {
+    const qs = new URLSearchParams(window.location.search);
+    const f = qs.get('f');
+    if (!f) return;
+    const a = decodeAnswers(f);
+    if (!a || !a.intention) return;
+    state.answers = a;
+    state.step = QUESTIONS.length; // jump to reveal
+    persist();
+    // Wait one tick so HERBS is loaded (script tag order guarantees
+    // it's already parsed by the time inline runs, but ensurePool
+    // is defensive so this is just insurance).
+    setTimeout(() => go(QUESTIONS.length), 0);
+  } catch (_) {}
+})();
 
 // ── Restart ───────────────────────────────────────────────
 document.getElementById('restartBtn').addEventListener('click', () => {
