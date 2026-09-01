@@ -171,6 +171,49 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .q-sub-back{background:none;border:none;color:var(--dust-d);cursor:pointer;font-family:var(--mono);font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;padding:6px 0 12px;display:inline-flex;align-items:center;gap:6px}
 .q-sub-back:hover{color:var(--amber-l)}
 .q-sub-context{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--dust);line-height:1.6;margin-bottom:16px;padding:10px 14px;background:var(--card);border-left:2px solid var(--amber-l);border-radius:4px}
+
+/* ── Q2 stage B — chosen archetype persists as a pill at the top,
+      sub-options fade in from below with staggered delay. The picked
+      archetype visually stays with the user through the refinement,
+      instead of the whole screen re-rendering with no continuity. */
+.branch-stage-b{animation:branch-fade-in .55s cubic-bezier(.22,.61,.36,1)}
+.branch-chosen-pill{display:inline-flex;align-items:center;gap:10px;padding:8px 14px 8px 12px;background:linear-gradient(140deg,rgba(232,177,75,0.12),rgba(232,177,75,0.04));border:0.5px solid rgba(232,177,75,0.5);border-radius:999px;margin-bottom:20px;box-shadow:0 0 22px -6px rgba(232,177,75,0.35);animation:branch-pill-in .5s cubic-bezier(.22,.61,.36,1)}
+.branch-chosen-pill .pill-glyph{font-family:var(--display);font-style:italic;font-size:20px;color:var(--amber-l);line-height:1}
+.branch-chosen-pill .pill-label{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--parchment)}
+.branch-chosen-pill .pill-change{background:none;border:none;font-family:var(--mono);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--dust-d);cursor:pointer;padding:4px 8px;margin-left:4px;border-left:0.5px solid var(--rule-strong)}
+.branch-chosen-pill .pill-change:hover{color:var(--amber-l)}
+@keyframes branch-fade-in{from{opacity:0}to{opacity:1}}
+@keyframes branch-pill-in{from{opacity:0;transform:translateY(-8px) scale(0.92)}to{opacity:1;transform:translateY(0) scale(1)}}
+.branch-sub-appear .q-opt{opacity:0;transform:translateY(12px);animation:sub-opt-in .55s cubic-bezier(.22,.61,.36,1) forwards}
+@keyframes sub-opt-in{to{opacity:1;transform:translateY(0)}}
+
+/* ── Compact question rendering (multi-question pages) ────
+   Smaller titles + tighter option buttons so 3 questions can fit on
+   one screen without scrolling on mobile. Same interactions as full-
+   size, just shrunk. */
+.q-block{margin-bottom:6px}
+.q-compact{margin-bottom:22px}
+.q-title-compact{font-size:clamp(20px,4.8vw,26px) !important;line-height:1.15 !important;margin-bottom:6px !important}
+.q-hint-compact{font-size:13px !important;line-height:1.45 !important;margin-bottom:12px !important;opacity:0.85 !important}
+.q-page-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(232,177,75,0.18),transparent);margin:0 0 6px}
+
+.q-options-compact{gap:6px !important}
+.q-opt-compact{padding:11px 14px !important;font-size:14px !important}
+.q-opt-compact .q-opt-glyph{font-size:19px !important;width:22px !important;margin-top:0 !important}
+.q-opt-compact .q-opt-label{font-size:14px !important;margin-bottom:3px !important;font-weight:500 !important}
+.q-opt-compact .q-opt-desc{font-size:12.5px !important;line-height:1.45 !important}
+
+/* ── Safety-filter 2-column grid — emojis + tighter cards */
+.q-options-grid-2{display:grid !important;grid-template-columns:repeat(2,1fr);gap:8px;flex-direction:unset !important}
+@media (max-width:520px){.q-options-grid-2{grid-template-columns:1fr}}
+.q-options-grid-2 .q-opt{padding:12px 14px}
+.q-options-grid-2 .q-opt-label{font-size:13.5px;margin-bottom:6px}
+.q-options-grid-2 .q-opt-desc{font-size:12px;line-height:1.5}
+.q-options-grid-2 .q-opt-glyph{font-size:20px}
+
+/* Bigger, more visible back button */
+.progress-back{font-size:10px !important;letter-spacing:0.24em !important;padding:6px 12px !important;border:0.5px solid rgba(232,177,75,0.28);border-radius:999px;color:var(--dust) !important;transition:color 0.2s,border-color 0.2s,background 0.2s}
+.progress-back:not(:disabled):hover{color:var(--amber-l) !important;border-color:var(--amber-l);background:rgba(232,177,75,0.06)}
 .q-multi-note{font-family:var(--mono);font-size:9px;letter-spacing:0.18em;color:var(--dust-d);margin-top:14px}
 .q-textarea{width:100%;background:var(--card);border:0.5px solid var(--rule);border-radius:12px;padding:14px 16px;color:var(--parchment);font:inherit;font-size:15px;line-height:1.6;resize:vertical;min-height:110px;outline:none;transition:border-color .18s}
 .q-textarea:focus{border-color:var(--amber-l)}
@@ -659,38 +702,49 @@ const QUESTIONS = [
   },
   {
     key:'time',
-    eyebrow:'03 of 06 · The rhythm',
     title:'What time of day is <em>hardest</em>?',
     hint:'Tells us about your rhythm and where the extract needs to land.',
-    type:'single',
+    type:'compact-single',
     options:[
-      { v:'morning',  glyph:'◐',  label:'Morning',            desc:'Getting started is slow. Ignition takes an hour or two.' },
-      { v:'midday',   glyph:'●',  label:'Midday',             desc:'The 2pm dip. Focus collapses after lunch.' },
-      { v:'evening',  glyph:'◑',  label:'Evening',            desc:'Winding down is a struggle. Can\'t drop out of the day.' },
-      { v:'night',    glyph:'○',  label:'Deep night',         desc:'Waking at 3am. Racing mind. Broken sleep.' },
-      { v:'any',      glyph:'◈',  label:'Not time-specific',  desc:'It\'s more of a whole-day thing than a time.' },
+      { v:'morning',  glyph:'◐',  label:'Morning',            desc:'Getting started is slow.' },
+      { v:'midday',   glyph:'●',  label:'Midday',             desc:'The 2pm dip. Focus collapses.' },
+      { v:'evening',  glyph:'◑',  label:'Evening',            desc:'Can\'t drop out of the day.' },
+      { v:'night',    glyph:'○',  label:'Deep night',         desc:'Waking at 3am. Racing mind.' },
+      { v:'any',      glyph:'◈',  label:'Not time-specific',  desc:'Whole-day thing.' },
     ],
   },
   {
     key:'stress',
-    eyebrow:'04 of 06 · The pattern',
     title:'How do you <em>meet stress</em> lately?',
     hint:'No wrong answer. This shapes which allies fit you now.',
-    type:'single',
+    type:'compact-single',
     options:[
-      { v:'push',     glyph:'▲',  label:'I push through',    desc:'Chin down, keep going. Rest happens later, if at all.' },
-      { v:'collapse', glyph:'▽',  label:'I collapse',        desc:'Shutdown. Sofa. Screens. Recover-mode until it passes.' },
-      { v:'numb',     glyph:'○',  label:'I numb it out',     desc:'Distraction, a drink, something to take the edge off.' },
-      { v:'ride',     glyph:'◇',  label:'I ride it well',    desc:'Mostly rolling with it. A little tender at the edges.' },
-      { v:'off',      glyph:'◌',  label:'Something is off',  desc:'Doesn\'t look like any of the above. Not-quite-right.' },
+      { v:'push',     glyph:'▲',  label:'Push through',    desc:'Chin down, keep going.' },
+      { v:'collapse', glyph:'▽',  label:'Collapse',        desc:'Shutdown. Recover-mode.' },
+      { v:'numb',     glyph:'○',  label:'Numb it out',     desc:'Distraction, a drink.' },
+      { v:'ride',     glyph:'◇',  label:'Ride it well',    desc:'Mostly rolling with it.' },
+      { v:'off',      glyph:'◌',  label:'Something\'s off',desc:'Not-quite-right.' },
+    ],
+  },
+  {
+    // NEW · Duration axis — acute vs chronic → different herb families.
+    key:'duration',
+    title:'How long has this been the <em>pattern</em>?',
+    hint:'Acute needs different allies than chronic.',
+    type:'compact-single',
+    options:[
+      { v:'weeks',      glyph:'◌', label:'A few weeks',     desc:'Recent shift, still fresh.' },
+      { v:'months',     glyph:'◐', label:'A few months',    desc:'Longer arc, settling in.' },
+      { v:'year_plus',  glyph:'●', label:'A year or more',  desc:'Chronic, layered.' },
+      { v:'lifelong',   glyph:'◈', label:'As long as I remember', desc:'Constitutional / lifelong.' },
     ],
   },
   {
     key:'avoid',
-    eyebrow:'05 of 06 · The container',
     title:'Anything we should be <em>careful of</em>?',
     hint:'Tap all that apply. Herbs with known interactions get filtered from your pool.',
     type:'multi',
+    grid:'2',
     options:[
       { v:'pregnancy',    glyph:'🤰', label:'Pregnancy, conception or breastfeeding', desc:'Removes emmenagogues, uterine stimulants, and herbs with infant-transfer risk.' },
       { v:'cardio_meds',  glyph:'💊', label:'Blood thinners or heart medications',    desc:'Removes antiplatelet, digoxin-interactive, and cardiac-active herbs.' },
@@ -706,13 +760,51 @@ const QUESTIONS = [
     ],
   },
   {
+    // NEW · Age bracket — dosing, hormone context, adaptogen tolerance.
+    key:'age',
+    title:'I am',
+    type:'compact-single',
+    options:[
+      { v:'under_25', glyph:'○', label:'Under 25' },
+      { v:'25_40',    glyph:'◐', label:'25–40'    },
+      { v:'41_60',    glyph:'●', label:'41–60'    },
+      { v:'60_plus',  glyph:'◈', label:'60+'      },
+    ],
+  },
+  {
+    // NEW · Sleep quality — fundamental axis, always ask.
+    key:'sleep',
+    title:'Your <em>sleep</em>',
+    type:'compact-single',
+    options:[
+      { v:'restorative_6plus',     glyph:'●', label:'6+ hours · restorative' },
+      { v:'not_restorative_6plus', glyph:'◐', label:'6+ hours · not restorative' },
+      { v:'under_6',               glyph:'○', label:'Under 6 hours' },
+      { v:'very_broken',           glyph:'◌', label:'Very broken' },
+    ],
+  },
+  {
     key:'notes',
-    eyebrow:'06 of 06 · Optional',
-    title:'Anything <em>else</em> we should know?',
-    hint:'A sentence about your body, your season, your intention. Skippable.',
+    title:'The <em>one thing</em> that matters most',
+    hint:'Mention the one thing that matters most to you right now, and/or any prior herb experience — the reading tunes tightly to what you say here.',
+    placeholder:'e.g. "want to lucid travel, dreams are heavy lately" · "reishi was calming but ashwagandha made me flat" · "hormones off since March, sleep first"',
     type:'text',
   },
 ];
+
+// ── PAGES — how questions group onto screens ───────────────
+// Each page holds one or more question keys. Multi-question pages get
+// a single page-level eyebrow, tighter compact rendering per question,
+// and a Continue button that only advances when all required questions
+// are answered (auto-advance is disabled on multi-Q pages).
+const PAGES = [
+  { eyebrow: '01 of 05 · The calling',       keys: ['intention'] },
+  { eyebrow: '02 of 05 · The body',          keys: ['pattern']   },
+  { eyebrow: '03 of 05 · The container',     keys: ['avoid']     },
+  { eyebrow: '04 of 05 · Rhythm & pattern',  keys: ['time','stress','duration'] },
+  { eyebrow: '05 of 05 · Context & priority',keys: ['age','sleep','notes'] },
+];
+function getQuestion(key){ return QUESTIONS.find(q => q.key === key); }
 
 // ── State ─────────────────────────────────────────────────
 const state = {
@@ -723,7 +815,7 @@ const state = {
 // Restore any in-progress session so an IG-tab-switcher doesn't lose it.
 try {
   const cached = JSON.parse(localStorage.getItem('fyf_state') || 'null');
-  if (cached && cached.step != null && cached.step >= 0 && cached.step < QUESTIONS.length) {
+  if (cached && cached.step != null && cached.step >= 0 && cached.step < PAGES.length) {
     state.step = cached.step;
     state.answers = cached.answers || {};
   }
@@ -752,85 +844,120 @@ function go(step){
   state.step = step;
   persist();
   entry.style.display = step < 0 ? 'flex' : 'none';
-  progress.classList.toggle('on', step >= 0 && step < QUESTIONS.length);
-  result.classList.toggle('on', step === QUESTIONS.length);
+  progress.classList.toggle('on', step >= 0 && step < PAGES.length);
+  result.classList.toggle('on', step === PAGES.length);
   quiz.innerHTML = '';
-  if (step >= 0 && step < QUESTIONS.length){
-    quiz.appendChild(renderQuestion(QUESTIONS[step]));
-    progressLbl.textContent = (step + 1) + ' of ' + QUESTIONS.length;
-    progressFill.style.width = (100 * (step + 1) / QUESTIONS.length) + '%';
+  if (step >= 0 && step < PAGES.length){
+    quiz.appendChild(renderPage(PAGES[step]));
+    progressLbl.textContent = (step + 1) + ' of ' + PAGES.length;
+    progressFill.style.width = (100 * (step + 1) / PAGES.length) + '%';
     backBtn.disabled = step === 0;
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  } else if (step === QUESTIONS.length){
+  } else if (step === PAGES.length){
     renderResult();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
 
-// ── Render one question ───────────────────────────────────
-function renderQuestion(q){
+// ── Render a whole page (one or more questions) ───────────
+function renderPage(page){
   const wrap = document.createElement('section');
   wrap.className = 'q-wrap on';
 
-  // Special-case: Q2 "branch" type has a two-stage view. Stage A
-  // picks the archetype. Stage B refines with 4 sub-answers scoped
-  // to that archetype. `patternSub` set → we're in Stage B.
-  const isBranchStageB = q.type === 'branch' && state.answers[q.key] && !state.answers[q.key + 'Sub'];
-  // Actually the flag: if archetype is picked BUT sub is not yet set, stage B.
-  const branchStageB = q.type === 'branch' && !!state.answers[q.key] && !state.answers[q.key + 'Sub'];
+  // Page-level eyebrow
+  const eyebrow = document.createElement('div');
+  eyebrow.className = 'q-eyebrow';
+  eyebrow.textContent = page.eyebrow;
+  wrap.appendChild(eyebrow);
 
-  const eyebrow = document.createElement('div'); eyebrow.className = 'q-eyebrow'; eyebrow.textContent = q.eyebrow; wrap.appendChild(eyebrow);
+  const questions = page.keys.map(getQuestion).filter(Boolean);
+  const isMulti = questions.length > 1;
 
-  // Stage B: switch title/hint to the sub-question's copy
-  if (branchStageB) {
-    const chosen = q.options.find(o => o.v === state.answers[q.key]);
-    if (chosen) {
-      const back = document.createElement('button');
-      back.type = 'button'; back.className = 'q-sub-back'; back.textContent = '← Change body reading';
-      back.addEventListener('click', () => { delete state.answers[q.key]; delete state.answers[q.key + 'Sub']; persist(); go(state.step); });
-      wrap.appendChild(back);
-      const title = document.createElement('h2'); title.className = 'q-title'; title.innerHTML = 'You picked <em>' + chosen.label + '</em>.'; wrap.appendChild(title);
-      const hint  = document.createElement('div'); hint.className  = 'q-hint';  hint.textContent = chosen.subHint || 'Which of these fits closest?'; wrap.appendChild(hint);
-      const ctx   = document.createElement('div'); ctx.className   = 'q-sub-context'; ctx.textContent = chosen.desc || ''; wrap.appendChild(ctx);
-      const subOpts = document.createElement('div'); subOpts.className = 'q-options';
-      (chosen.subs || []).forEach(s => {
-        const b = document.createElement('button'); b.type='button'; b.className='q-opt'; b.dataset.v = s.v;
-        b.innerHTML = '<span class="q-opt-glyph">' + (s.glyph || '◇') + '</span><span class="q-opt-body"><span class="q-opt-label">' + s.label + '</span>' + (s.desc ? '<span class="q-opt-desc">' + s.desc + '</span>' : '') + '</span>';
-        b.addEventListener('click', () => {
-          state.answers[q.key + 'Sub'] = s.v; persist();
-          subOpts.querySelectorAll('.q-opt').forEach(x => x.classList.remove('on'));
-          b.classList.add('on');
-          setTimeout(() => go(state.step + 1), 220);
-        });
-        subOpts.appendChild(b);
-      });
-      wrap.appendChild(subOpts);
-      return wrap;
+  questions.forEach((q, i) => {
+    // Q2 branch stage-B special-case (only fires when it's the only Q on page)
+    if (q.type === 'branch' && !isMulti) {
+      const stageB = !!state.answers[q.key] && !state.answers[q.key + 'Sub'];
+      if (stageB) { wrap.appendChild(renderBranchStageB(q)); return; }
     }
+    wrap.appendChild(renderQuestionBody(q, { compact: isMulti, autoAdvance: !isMulti }));
+    if (isMulti && i < questions.length - 1) {
+      const div = document.createElement('div'); div.className = 'q-page-divider';
+      wrap.appendChild(div);
+    }
+  });
+
+  // Multi-question pages: Continue button gated on all-answered.
+  if (isMulti) {
+    const row = document.createElement('div'); row.className = 'q-cta';
+    row.style.justifyContent = 'flex-end';
+    const nxt = document.createElement('button');
+    nxt.type = 'button'; nxt.className = 'q-btn'; nxt.textContent = 'Continue →';
+    nxt.addEventListener('click', () => {
+      const missing = questions.filter(q => {
+        if (q.type === 'text') return false; // free-text always optional
+        const v = state.answers[q.key];
+        if (q.type === 'multi') return !Array.isArray(v) || v.length === 0;
+        return v == null || v === '';
+      });
+      if (missing.length === 0) {
+        go(state.step + 1);
+      } else {
+        nxt.textContent = 'Answer all first';
+        nxt.style.opacity = '0.6';
+        setTimeout(() => { nxt.textContent = 'Continue →'; nxt.style.opacity = ''; }, 1800);
+      }
+    });
+    row.appendChild(nxt);
+    wrap.appendChild(row);
   }
 
-  const title = document.createElement('h2'); title.className = 'q-title'; title.innerHTML = q.title; wrap.appendChild(title);
-  if (q.hint) { const h = document.createElement('div'); h.className='q-hint'; h.textContent=q.hint; wrap.appendChild(h); }
+  return wrap;
+}
 
+// Render just the "body" of a question (title, hint, options / textarea).
+// Called by renderPage for each question on the page.
+function renderQuestionBody(q, opts){
+  opts = opts || {};
+  const compact = !!opts.compact;
+  const autoAdvance = opts.autoAdvance !== false;
+  const container = document.createElement('div');
+  container.className = 'q-block' + (compact ? ' q-compact' : '');
+
+  const title = document.createElement('h2');
+  title.className = 'q-title' + (compact ? ' q-title-compact' : '');
+  title.innerHTML = q.title;
+  container.appendChild(title);
+
+  if (q.hint) {
+    const h = document.createElement('div');
+    h.className = 'q-hint' + (compact ? ' q-hint-compact' : '');
+    h.textContent = q.hint;
+    container.appendChild(h);
+  }
+
+  // Free-text
   if (q.type === 'text') {
     const ta = document.createElement('textarea');
     ta.className = 'q-textarea';
-    ta.placeholder = 'Optional. A sentence or two.';
+    ta.placeholder = q.placeholder || 'Optional. A sentence or two.';
     ta.value = state.answers[q.key] || '';
     ta.addEventListener('input', () => { state.answers[q.key] = ta.value; persist(); });
-    wrap.appendChild(ta);
-    const row = document.createElement('div'); row.className = 'q-cta';
-    const skip = document.createElement('button'); skip.type='button'; skip.className='q-skip'; skip.textContent='Skip';
-    const nxt  = document.createElement('button'); nxt.type='button';  nxt.className='q-btn';   nxt.textContent='See my formula →';
-    skip.addEventListener('click', () => { state.answers[q.key] = ''; go(state.step + 1); });
-    nxt.addEventListener('click',  () => go(state.step + 1));
-    row.appendChild(skip); row.appendChild(nxt);
-    wrap.appendChild(row);
-    setTimeout(() => ta.focus(), 200);
-    return wrap;
+    container.appendChild(ta);
+    // Standalone (not on multi-Q page) → own See-my-formula CTA
+    if (!compact) {
+      const row = document.createElement('div'); row.className = 'q-cta';
+      const skip = document.createElement('button'); skip.type='button'; skip.className='q-skip'; skip.textContent='Skip';
+      const nxt  = document.createElement('button'); nxt.type='button';  nxt.className='q-btn';   nxt.textContent='See my formula →';
+      skip.addEventListener('click', () => { state.answers[q.key] = ''; go(state.step + 1); });
+      nxt.addEventListener('click',  () => go(state.step + 1));
+      row.appendChild(skip); row.appendChild(nxt);
+      container.appendChild(row);
+      setTimeout(() => ta.focus(), 200);
+    }
+    return container;
   }
 
-  // Q1 · bubble layout (no-scroll grid of 12 floating orbs)
+  // Bubbles
   if (q.type === 'bubbles') {
     const grid = document.createElement('div'); grid.className = 'q-bubbles';
     const current = state.answers[q.key];
@@ -843,48 +970,100 @@ function renderQuestion(q){
         state.answers[q.key] = o.v; persist();
         grid.querySelectorAll('.bubble').forEach(x => x.classList.remove('on'));
         b.classList.add('on');
-        setTimeout(() => go(state.step + 1), 260);
+        if (autoAdvance) setTimeout(() => go(state.step + 1), 260);
       });
       grid.appendChild(b);
     });
-    wrap.appendChild(grid);
-    return wrap;
+    container.appendChild(grid);
+    return container;
   }
 
-  const opts = document.createElement('div'); opts.className = 'q-options';
+  // Standard button options (single, multi, branch, compact-single)
+  const isCompactOpt = compact || q.type === 'compact-single';
+  const optsEl = document.createElement('div');
+  optsEl.className = 'q-options' + (isCompactOpt ? ' q-options-compact' : '') + (q.grid === '2' ? ' q-options-grid-2' : '');
   const current = state.answers[q.key];
   q.options.forEach(o => {
-    const b = document.createElement('button'); b.type='button'; b.className='q-opt'; b.dataset.v = o.v;
+    const b = document.createElement('button'); b.type='button';
+    b.className = 'q-opt' + (isCompactOpt ? ' q-opt-compact' : '');
+    b.dataset.v = o.v;
     if (q.type === 'multi' && Array.isArray(current) && current.includes(o.v)) b.classList.add('on');
-    if ((q.type === 'single' || q.type === 'branch') && current === o.v) b.classList.add('on');
+    if ((q.type === 'single' || q.type === 'branch' || q.type === 'compact-single') && current === o.v) b.classList.add('on');
     b.innerHTML = '<span class="q-opt-glyph">' + (o.glyph || '◇') + '</span><span class="q-opt-body"><span class="q-opt-label">' + o.label + '</span>' + (o.desc ? '<span class="q-opt-desc">' + o.desc + '</span>' : '') + '</span>';
-    b.addEventListener('click', () => onPick(q, o.v, b, opts));
-    opts.appendChild(b);
+    b.addEventListener('click', () => onPick(q, o.v, b, optsEl, autoAdvance));
+    optsEl.appendChild(b);
   });
-  wrap.appendChild(opts);
+  container.appendChild(optsEl);
 
   if (q.type === 'multi') {
-    const note = document.createElement('div'); note.className = 'q-multi-note'; note.textContent = '· Tap all that apply. "None of the above" clears the rest.';
-    wrap.appendChild(note);
-    const row = document.createElement('div'); row.className = 'q-cta';
-    row.style.justifyContent = 'flex-end';
-    const nxt  = document.createElement('button'); nxt.type='button';  nxt.className='q-btn';   nxt.textContent='Continue →';
-    nxt.addEventListener('click', () => go(state.step + 1));
-    row.appendChild(nxt);
-    wrap.appendChild(row);
+    const note = document.createElement('div'); note.className = 'q-multi-note';
+    note.textContent = '· Tap all that apply. "None of the above" clears the rest.';
+    container.appendChild(note);
+    // Standalone multi page needs its own Continue button
+    if (!compact) {
+      const row = document.createElement('div'); row.className = 'q-cta';
+      row.style.justifyContent = 'flex-end';
+      const nxt  = document.createElement('button'); nxt.type='button'; nxt.className='q-btn'; nxt.textContent='Continue →';
+      nxt.addEventListener('click', () => go(state.step + 1));
+      row.appendChild(nxt);
+      container.appendChild(row);
+    }
   }
 
+  return container;
+}
+
+// Q2 branch stage-B renderer — extracted for clarity. Shows a
+// "chosen thread" pill at top so the picked archetype visually persists
+// into the refinement view (Robin's emotional-transition ask).
+function renderBranchStageB(q){
+  const wrap = document.createElement('div');
+  wrap.className = 'q-block branch-stage-b';
+  const chosen = q.options.find(o => o.v === state.answers[q.key]);
+  if (!chosen) return wrap;
+
+  // Chosen-thread pill (the archetype pinned as a lasting choice)
+  const pill = document.createElement('div');
+  pill.className = 'branch-chosen-pill';
+  pill.innerHTML = '<span class="pill-glyph">' + (chosen.glyph || '◇') + '</span>' +
+                   '<span class="pill-label">' + chosen.label + '</span>' +
+                   '<button type="button" class="pill-change">change</button>';
+  pill.querySelector('.pill-change').addEventListener('click', () => {
+    delete state.answers[q.key]; delete state.answers[q.key + 'Sub']; persist(); go(state.step);
+  });
+  wrap.appendChild(pill);
+
+  const title = document.createElement('h2'); title.className = 'q-title';
+  title.innerHTML = 'And which fits <em>closest</em>?';
+  wrap.appendChild(title);
+  const hint = document.createElement('div'); hint.className = 'q-hint';
+  hint.textContent = chosen.desc || '';
+  wrap.appendChild(hint);
+
+  const subOpts = document.createElement('div'); subOpts.className = 'q-options branch-sub-appear';
+  (chosen.subs || []).forEach((s, i) => {
+    const b = document.createElement('button'); b.type='button'; b.className='q-opt'; b.dataset.v = s.v;
+    b.style.animationDelay = (i * 60) + 'ms';
+    b.innerHTML = '<span class="q-opt-glyph">' + (s.glyph || '◇') + '</span><span class="q-opt-body"><span class="q-opt-label">' + s.label + '</span>' + (s.desc ? '<span class="q-opt-desc">' + s.desc + '</span>' : '') + '</span>';
+    b.addEventListener('click', () => {
+      state.answers[q.key + 'Sub'] = s.v; persist();
+      subOpts.querySelectorAll('.q-opt').forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+      setTimeout(() => go(state.step + 1), 220);
+    });
+    subOpts.appendChild(b);
+  });
+  wrap.appendChild(subOpts);
   return wrap;
 }
 
-function onPick(q, v, btnEl, optsEl){
-  if (q.type === 'single') {
+function onPick(q, v, btnEl, optsEl, autoAdvance){
+  if (q.type === 'single' || q.type === 'compact-single') {
     state.answers[q.key] = v; persist();
     optsEl.querySelectorAll('.q-opt').forEach(x => x.classList.remove('on'));
     btnEl.classList.add('on');
-    setTimeout(() => go(state.step + 1), 220);
+    if (autoAdvance) setTimeout(() => go(state.step + 1), 220);
   } else if (q.type === 'branch') {
-    // Stage A → record archetype, re-render same step to show subs.
     state.answers[q.key] = v;
     delete state.answers[q.key + 'Sub'];
     persist();
@@ -1296,7 +1475,10 @@ async function mycoStory(a, herbs, percentages, synergies){
     'Body pattern: '+ a.pattern   + (a.patternSub ? ' / ' + a.patternSub : '') + '\n' +
     'Hardest time: '+ a.time      + '\n' +
     'Meets stress by: ' + a.stress + '\n' +
-    'Personal note they wrote: "' + a.notes.trim().slice(0, 500) + '"\n' +
+    (a.duration ? 'Duration of pattern: ' + a.duration + '\n' : '') +
+    (a.age      ? 'Age bracket: '          + a.age      + '\n' : '') +
+    (a.sleep    ? 'Sleep quality: '        + a.sleep    + '\n' : '') +
+    'Personal note (also treat as priority + prior herb experience): "' + a.notes.trim().slice(0, 500) + '"\n' +
     'Formula (with percentages): ' + herbLines + '\n' +
     'Synergy pairs woven in: ' + synergyLines;
   try {

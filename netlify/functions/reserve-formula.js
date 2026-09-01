@@ -176,9 +176,12 @@ function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, 
           <tr><td style="padding:6px 0;color:#8B7E62;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;">Rhythm</td><td style="padding:6px 0;">${esc(q.time || '—')} hardest</td></tr>
           <tr><td style="padding:6px 0;color:#8B7E62;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;">Stress</td><td style="padding:6px 0;">${esc(q.stress || '—')}</td></tr>
           <tr><td style="padding:6px 0;color:#8B7E62;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;">Filters</td><td style="padding:6px 0;">${esc(Array.isArray(q.avoid) ? q.avoid.join(', ') : (q.avoid || '—'))}</td></tr>
+          ${q.duration ? `<tr><td style="padding:6px 0;color:#8B7E62;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;">Duration</td><td style="padding:6px 0;">${esc(q.duration)}</td></tr>` : ''}
+          ${q.age      ? `<tr><td style="padding:6px 0;color:#8B7E62;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;">Age</td><td style="padding:6px 0;">${esc(q.age)}</td></tr>` : ''}
+          ${q.sleep    ? `<tr><td style="padding:6px 0;color:#8B7E62;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;">Sleep</td><td style="padding:6px 0;">${esc(q.sleep)}</td></tr>` : ''}
         </table>
 
-        ${notes ? `<div style="margin-top:20px;padding:14px 16px;background:#1A1E24;border-left:2px solid #E8B14B;border-radius:4px;"><div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#8B7E62;margin-bottom:6px;">Personal note</div><div style="font-family:Georgia,serif;font-style:italic;font-size:14px;color:#EDE5D8;line-height:1.7;">"${esc(notes)}"</div></div>` : ''}
+        ${notes ? `<div style="margin-top:20px;padding:14px 16px;background:#1A1E24;border-left:2px solid #E8B14B;border-radius:4px;"><div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#8B7E62;margin-bottom:6px;">Priority + prior herb experience</div><div style="font-family:Georgia,serif;font-style:italic;font-size:14px;color:#EDE5D8;line-height:1.7;">"${esc(notes)}"</div></div>` : ''}
 
         <p style="margin:24px 0 0;font-size:12px;color:#8B7E62;line-height:1.7;">Reply to this email to reach <strong style="color:#EDE5D8;">${esc(name)}</strong> — the reply-to is set to their address. Confirm the formula together with them first, then send the Stripe link.</p>
       </div>
@@ -210,8 +213,9 @@ ${synergies && synergies.length ? 'SYNERGIES:\n' + synergies.map(s => '  • ' +
   Rhythm:    ${q.time || '—'} hardest
   Stress:    ${q.stress || '—'}
   Filters:   ${Array.isArray(q.avoid) ? q.avoid.join(', ') : (q.avoid || '—')}
+  ${q.duration ? 'Duration:  ' + q.duration + '\n  ' : ''}${q.age ? 'Age:       ' + q.age + '\n  ' : ''}${q.sleep ? 'Sleep:     ' + q.sleep : ''}
 
-${notes ? 'Personal note:\n  "' + notes + '"\n' : ''}
+${notes ? 'Priority + prior herb experience:\n  "' + notes + '"\n' : ''}
 Reply to this email to reach the customer. Confirm the formula together first, then send the Stripe link.
 `;
 }
