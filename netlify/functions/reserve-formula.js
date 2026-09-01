@@ -45,6 +45,9 @@ export default async function handler(req) {
   const formulaName = String(body.formulaName || '').trim().slice(0, 80);
   const quiz    = (body.quiz    && typeof body.quiz    === 'object') ? body.quiz    : {};
   const formula = Array.isArray(body.formula) ? body.formula.slice(0, 10) : [];
+  const percentages = Array.isArray(body.percentages) ? body.percentages.slice(0, 10) : [];
+  const synergies   = Array.isArray(body.synergies) ? body.synergies.slice(0, 10) : [];
+  const bottleMl    = Number(body.bottleMl) || 30;
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json({ error: 'Invalid email address' }, 400);
   if (!name || !city || !country) return json({ error: 'Missing name / city / country' }, 400);
@@ -60,17 +63,25 @@ export default async function handler(req) {
   const from  = process.env.FORMULA_FROM  || 'Fungai Art <noreply@fungai.art>';
   const inbox = process.env.FORMULA_INBOX || 'robin@fungai.art';
 
-  const herbList = formula.map(f => (f.name || f.id || '')).filter(Boolean);
+  // Build a rich herb-line array Robin can pour from directly. Each
+  // entry is { name, pct, ml } so the admin email carries the mixing
+  // spec — no manual math at the bench.
+  const herbLines = formula.map((f, i) => {
+    const pct = Number(percentages[i]) || 0;
+    const ml  = Math.round(bottleMl * pct) / 100; // rounds to 0.01 ml
+    return { name: (f.name || f.id || ''), id: f.id || '', pct, ml };
+  }).filter(h => h.name);
+  const herbList = herbLines.map(h => h.name);
 
   // ── 1. Notify Robin ────────────────────────────────────────────
   const robinSubject = `✦ Formula reservation · ${formulaName || 'unnamed'} · ${name}`;
-  const robinHtml = buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbList });
-  const robinText = buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbList });
+  const robinHtml = buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl });
+  const robinText = buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl });
 
   // ── 2. Confirm to customer ─────────────────────────────────────
   const customerSubject = `Your formula is reserved · ${formulaName || 'Fungai Art'}`;
-  const customerHtml = buildCustomerHtml({ name, formulaName, herbList });
-  const customerText = buildCustomerText({ name, formulaName, herbList });
+  const customerHtml = buildCustomerHtml({ name, formulaName, herbList, herbLines });
+  const customerText = buildCustomerText({ name, formulaName, herbList, herbLines });
 
   const results = await Promise.allSettled([
     sendResend(RESEND_API_KEY, { from, to: [inbox], reply_to: email,  subject: robinSubject,    html: robinHtml,    text: robinText }),
@@ -115,91 +126,146 @@ function json(body, status = 200) {
 
 // ── Email bodies ─────────────────────────────────────────────────
 
-function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbList }){
+function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl }){
   const q = quiz || {};
+  const totalPct = herbLines.reduce((s, h) => s + (h.pct || 0), 0);
+  const totalMl  = herbLines.reduce((s, h) => s + (h.ml  || 0), 0);
   return `<!DOCTYPE html><html><body style="margin:0;padding:0;background:#060809;color:#C9B894;font-family:Georgia,serif;">
-    <div style="max-width:560px;margin:0 auto;padding:40px 24px;">
+    <div style="max-width:600px;margin:0 auto;padding:40px 24px;">
       <div style="background:#0F1014;border:0.5px solid rgba(232,177,75,.22);border-radius:12px;padding:32px 28px;">
         <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:#E8B14B;margin-bottom:14px;">✦ New formula reservation</div>
         <h1 style="font-family:Georgia,serif;font-style:italic;font-weight:400;font-size:26px;color:#E6D9B5;margin:0 0 8px;line-height:1.15;">${esc(formulaName || 'Unnamed formula')}</h1>
-        <p style="font-size:14px;color:#8B7E62;margin:0 0 22px;">for <strong style="color:#EDE5D8;">${esc(name)}</strong> · ${esc(city)}, ${esc(country)}</p>
+        <p style="font-size:14px;color:#8B7E62;margin:0 0 22px;">for <strong style="color:#EDE5D8;">${esc(name)}</strong> · ${esc(city)}, ${esc(country)} · <strong style="color:#F5D689;">${bottleMl} ml</strong> bottle</p>
+
+        <!-- POUR SPEC — table Robin can work from directly at the bench -->
+        <div style="margin:0 0 6px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#E8B14B;">Pour spec · ${bottleMl} ml total</div>
+        <table cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;background:#141821;border:0.5px solid rgba(232,177,75,.14);border-radius:8px;overflow:hidden;margin:0 0 16px;">
+          <thead>
+            <tr style="background:#1A1E24;">
+              <th align="left"  style="padding:8px 12px;font-family:'Courier New',monospace;font-size:9.5px;letter-spacing:.16em;color:#8B7E62;text-transform:uppercase;font-weight:normal;">Herb</th>
+              <th align="right" style="padding:8px 12px;font-family:'Courier New',monospace;font-size:9.5px;letter-spacing:.16em;color:#8B7E62;text-transform:uppercase;font-weight:normal;">%</th>
+              <th align="right" style="padding:8px 12px;font-family:'Courier New',monospace;font-size:9.5px;letter-spacing:.16em;color:#8B7E62;text-transform:uppercase;font-weight:normal;">ml</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${herbLines.map(h => `<tr>
+              <td style="padding:9px 12px;border-top:0.5px solid rgba(232,177,75,.08);font-size:14px;color:#EDE5D8;">${esc(h.name)}</td>
+              <td align="right" style="padding:9px 12px;border-top:0.5px solid rgba(232,177,75,.08);font-family:'Courier New',monospace;font-size:13px;color:#F5D689;">${h.pct}%</td>
+              <td align="right" style="padding:9px 12px;border-top:0.5px solid rgba(232,177,75,.08);font-family:'Courier New',monospace;font-size:13px;color:#F5D689;">${h.ml.toFixed(2)}</td>
+            </tr>`).join('')}
+            <tr>
+              <td style="padding:9px 12px;border-top:0.5px solid rgba(232,177,75,.28);font-family:'Courier New',monospace;font-size:10px;letter-spacing:.14em;color:#8B7E62;text-transform:uppercase;">Total</td>
+              <td align="right" style="padding:9px 12px;border-top:0.5px solid rgba(232,177,75,.28);font-family:'Courier New',monospace;font-size:12px;color:#8B7E62;">${totalPct}%</td>
+              <td align="right" style="padding:9px 12px;border-top:0.5px solid rgba(232,177,75,.28);font-family:'Courier New',monospace;font-size:12px;color:#8B7E62;">${totalMl.toFixed(2)}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        ${synergies && synergies.length ? `
+        <div style="margin:0 0 6px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#A88FE0;">Woven synergies</div>
+        <ul style="font-size:13px;line-height:1.75;color:#C9B894;padding-left:18px;margin:0 0 16px;">
+          ${synergies.map(s => `<li><strong style="color:#EDE5D8;">${esc(s.a)} + ${esc(s.b)}</strong> &mdash; <em>${esc((s.note || '').replace(/^[^—:]*[—:]\\s*/, ''))}</em></li>`).join('')}
+        </ul>` : ''}
+
+        <!-- CUSTOMER READING -->
+        <div style="margin:0 0 6px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#E8B14B;">Their reading</div>
         <table cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:13px;color:#C9B894;">
-          <tr><td style="padding:6px 0;color:#8B7E62;width:110px;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;">Email</td><td style="padding:6px 0;"><a href="mailto:${esc(email)}" style="color:#F5D689;text-decoration:none;">${esc(email)}</a></td></tr>
+          <tr><td style="padding:6px 0;color:#8B7E62;width:120px;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;">Email</td><td style="padding:6px 0;"><a href="mailto:${esc(email)}" style="color:#F5D689;text-decoration:none;">${esc(email)}</a></td></tr>
           <tr><td style="padding:6px 0;color:#8B7E62;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;">Intention</td><td style="padding:6px 0;">${esc(q.intention || '—')}</td></tr>
           <tr><td style="padding:6px 0;color:#8B7E62;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;">Body</td><td style="padding:6px 0;">${esc(q.pattern || '—')}${q.patternSub ? ' &middot; ' + esc(q.patternSub) : ''}</td></tr>
           <tr><td style="padding:6px 0;color:#8B7E62;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;">Rhythm</td><td style="padding:6px 0;">${esc(q.time || '—')} hardest</td></tr>
           <tr><td style="padding:6px 0;color:#8B7E62;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;">Stress</td><td style="padding:6px 0;">${esc(q.stress || '—')}</td></tr>
           <tr><td style="padding:6px 0;color:#8B7E62;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;">Filters</td><td style="padding:6px 0;">${esc(Array.isArray(q.avoid) ? q.avoid.join(', ') : (q.avoid || '—'))}</td></tr>
         </table>
-        <div style="margin:22px 0 6px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#E8B14B;">The formula</div>
-        <ol style="font-size:14px;line-height:1.85;color:#EDE5D8;padding-left:20px;margin:0;">
-          ${herbList.map(h => '<li>' + esc(h) + '</li>').join('')}
-        </ol>
-        ${notes ? `<div style="margin-top:22px;padding:14px 16px;background:#1A1E24;border-left:2px solid #E8B14B;border-radius:4px;"><div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#8B7E62;margin-bottom:6px;">Personal note</div><div style="font-family:Georgia,serif;font-style:italic;font-size:14px;color:#EDE5D8;line-height:1.7;">"${esc(notes)}"</div></div>` : ''}
-        <p style="margin:24px 0 0;font-size:12px;color:#8B7E62;line-height:1.7;">Reply directly to this email to reach <strong style="color:#EDE5D8;">${esc(name)}</strong>. Ship-to address is above; confirm details + send a Stripe link when you're ready to pour.</p>
+
+        ${notes ? `<div style="margin-top:20px;padding:14px 16px;background:#1A1E24;border-left:2px solid #E8B14B;border-radius:4px;"><div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#8B7E62;margin-bottom:6px;">Personal note</div><div style="font-family:Georgia,serif;font-style:italic;font-size:14px;color:#EDE5D8;line-height:1.7;">"${esc(notes)}"</div></div>` : ''}
+
+        <p style="margin:24px 0 0;font-size:12px;color:#8B7E62;line-height:1.7;">Reply to this email to reach <strong style="color:#EDE5D8;">${esc(name)}</strong> — the reply-to is set to their address. Confirm the formula together with them first, then send the Stripe link.</p>
       </div>
     </div>
   </body></html>`;
 }
 
-function buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbList }){
+function buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl }){
   const q = quiz || {};
-  return `NEW FORMULA RESERVATION
+  const totalPct = herbLines.reduce((s, h) => s + (h.pct || 0), 0);
+  const totalMl  = herbLines.reduce((s, h) => s + (h.ml  || 0), 0);
+  const pad = (s, n) => (s + '                    ').slice(0, n);
+  return `NEW FORMULA RESERVATION — ${bottleMl} ML BOTTLE
 
 Formula: ${formulaName || 'Unnamed'}
 For:     ${name} · ${city}, ${country}
 Email:   ${email}
 
-Intention: ${q.intention || '—'}
-Body:      ${q.pattern || '—'}${q.patternSub ? ' · ' + q.patternSub : ''}
-Rhythm:    ${q.time || '—'} hardest
-Stress:    ${q.stress || '—'}
-Filters:   ${Array.isArray(q.avoid) ? q.avoid.join(', ') : (q.avoid || '—')}
+POUR SPEC:
+  ${pad('Herb', 32)}${pad('%', 6)}${pad('ml', 8)}
+  ${'─'.repeat(46)}
+${herbLines.map(h => '  ' + pad(h.name, 32) + pad(h.pct + '%', 6) + pad(h.ml.toFixed(2), 8)).join('\n')}
+  ${'─'.repeat(46)}
+  ${pad('TOTAL', 32)}${pad(totalPct + '%', 6)}${pad(totalMl.toFixed(2), 8)}
 
-The formula:
-${herbList.map((h,i) => (i+1) + '. ' + h).join('\n')}
+${synergies && synergies.length ? 'SYNERGIES:\n' + synergies.map(s => '  • ' + s.a + ' + ' + s.b + ' — ' + (s.note || '').replace(/^[^—:]*[—:]\s*/, '')).join('\n') + '\n\n' : ''}THEIR READING:
+  Intention: ${q.intention || '—'}
+  Body:      ${q.pattern || '—'}${q.patternSub ? ' · ' + q.patternSub : ''}
+  Rhythm:    ${q.time || '—'} hardest
+  Stress:    ${q.stress || '—'}
+  Filters:   ${Array.isArray(q.avoid) ? q.avoid.join(', ') : (q.avoid || '—')}
 
-${notes ? 'Personal note:\n"' + notes + '"\n' : ''}
-Reply to this email to reach the customer. Confirm details and send a Stripe link when you're ready to pour.
+${notes ? 'Personal note:\n  "' + notes + '"\n' : ''}
+Reply to this email to reach the customer. Confirm the formula together first, then send the Stripe link.
 `;
 }
 
-function buildCustomerHtml({ name, formulaName, herbList }){
+function buildCustomerHtml({ name, formulaName, herbList, herbLines }){
+  const lines = (herbLines && herbLines.length) ? herbLines : herbList.map(n => ({ name: n, pct: 0 }));
   return `<!DOCTYPE html><html><body style="margin:0;padding:0;background:#060809;color:#C9B894;font-family:Georgia,serif;">
-    <div style="max-width:560px;margin:0 auto;padding:48px 24px;">
+    <div style="max-width:580px;margin:0 auto;padding:48px 24px;">
       <div style="background:#0F1014;border:0.5px solid rgba(232,177,75,.22);border-radius:14px;padding:40px 32px;">
-        <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:#E8B14B;margin-bottom:16px;">✦ Your bottle is reserved</div>
+        <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:#E8B14B;margin-bottom:16px;">✦ Your formula is reserved</div>
         <h1 style="font-family:Georgia,serif;font-style:italic;font-weight:400;font-size:32px;color:#E6D9B5;margin:0 0 12px;line-height:1.1;letter-spacing:-.005em;">${esc(formulaName || 'Your formula')}</h1>
-        <p style="font-size:15px;line-height:1.75;color:#C9B894;margin:0 0 20px;">${esc(name)}, thank you for taking the reading. Robin has been notified and will personally follow up within 24 hours with the payment link and your bottle's origin note.</p>
-        <div style="margin:24px 0 8px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#E8B14B;">Your allies</div>
-        <ol style="font-size:14.5px;line-height:1.9;color:#EDE5D8;padding-left:20px;margin:0 0 22px;">
-          ${herbList.map(h => '<li>' + esc(h) + '</li>').join('')}
-        </ol>
-        <div style="padding:18px 20px;background:#1A1E24;border:0.5px solid rgba(123,212,161,.22);border-radius:10px;margin:20px 0;">
-          <div style="font-family:'Courier New',monospace;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:#7bd4a1;margin-bottom:8px;">◈ How to take it (when it lands)</div>
-          <p style="font-size:13.5px;color:#EDE5D8;line-height:1.7;margin:0;"><strong>2-3 full pipettes (about 1.5 ml) under the tongue</strong>, held for 60-90 seconds before swallowing. <strong>Twice daily</strong> - morning and evening - on a <strong>5 days on, 2 days off</strong> rhythm. Slow-pace plant medicine unfolds in cycles. Give it three weeks.</p>
+
+        <p style="font-size:15px;line-height:1.75;color:#C9B894;margin:0 0 16px;">
+          ${esc(name)}, thank you for taking the reading. This blend was composed <strong style="color:#EDE5D8;">just for you</strong> from what your answers described — nothing shelf-stocked, nothing pre-mixed.
+        </p>
+
+        <p style="font-size:15px;line-height:1.75;color:#C9B894;margin:0 0 20px;">
+          Robin will follow up personally to <strong style="color:#F5D689;">confirm the formula together with you first</strong> — a short exchange to make sure this blend is genuinely matched to what you're bringing. The payment link comes <em>after</em> that confirmation, once we're both sure the composition is right. Only then does the pour begin.
+        </p>
+
+        <div style="margin:24px 0 8px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#E8B14B;">Your allies (proposed)</div>
+        <ul style="list-style:none;padding:0;margin:0 0 22px;font-size:14.5px;line-height:1.9;color:#EDE5D8;">
+          ${lines.map(h => `<li style="padding:2px 0;">${h.pct ? '<span style="display:inline-block;min-width:44px;font-family:\'Courier New\',monospace;font-size:12px;color:#F5D689;">' + h.pct + '%</span>' : ''} ${esc(h.name)}</li>`).join('')}
+        </ul>
+
+        <div style="padding:18px 20px;background:#1A1E24;border:0.5px solid rgba(232,177,75,.18);border-radius:10px;margin:20px 0;">
+          <div style="font-family:'Courier New',monospace;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:#E8B14B;margin-bottom:10px;">◈ Fully tailored · 30 ml amber-glass</div>
+          <p style="font-size:13.5px;color:#EDE5D8;line-height:1.7;margin:0 0 8px;">Every bottle is <strong>full-spectrum spagyric</strong> — each herb separated into its three principles (sulfur / mercury / salt), purified individually over weeks, then recombined so nothing living gets lost in translation. Not a simple maceration. The plant's complete alchemical signature — alkaloids, essential oils, mineral salts — in balance.</p>
+          <p style="font-size:13.5px;color:#C9B894;line-height:1.7;margin:0;">Hand-poured in the Berlin lab. Small-batch, single-pour, from scratch for you.</p>
         </div>
+
         <p style="font-size:13px;color:#8B7E62;line-height:1.7;margin:22px 0 0;font-style:italic;">Traditional herbal support only. Not a treatment or replacement for medical care.</p>
+
         <div style="margin-top:32px;padding-top:20px;border-top:0.5px solid rgba(232,177,75,.15);font-family:Georgia,serif;font-style:italic;color:#8B7E62;font-size:13px;">— Robin<br/>fungai.art</div>
       </div>
     </div>
   </body></html>`;
 }
 
-function buildCustomerText({ name, formulaName, herbList }){
-  return `YOUR BOTTLE IS RESERVED
+function buildCustomerText({ name, formulaName, herbList, herbLines }){
+  const lines = (herbLines && herbLines.length) ? herbLines : herbList.map(n => ({ name: n, pct: 0 }));
+  return `YOUR FORMULA IS RESERVED
 
-${name}, thank you for taking the reading.
+${name}, thank you for taking the reading. This blend was composed just for you from what your answers described — nothing shelf-stocked, nothing pre-mixed.
 
 Formula: ${formulaName || 'Your formula'}
 
-Your allies:
-${herbList.map((h,i) => (i+1) + '. ' + h).join('\n')}
+Your allies (proposed):
+${lines.map(h => (h.pct ? h.pct + '%   ' : '   ') + h.name).join('\n')}
 
-How to take it (when it lands):
-2-3 full pipettes (about 1.5 ml) under the tongue, held for 60-90 seconds before swallowing. Twice daily - morning and evening - on a 5 days on, 2 days off rhythm. Give it three weeks.
+Robin will follow up personally to confirm the formula together with you first — a short exchange to make sure this blend is genuinely matched to what you're bringing. The payment link comes AFTER that confirmation, once we're both sure the composition is right. Only then does the pour begin.
 
-Robin has been notified and will personally follow up within 24 hours with the payment link and your bottle's origin note.
+Fully tailored · 30 ml amber-glass:
+Every bottle is a full-spectrum spagyric — each herb separated into its three principles (sulfur / mercury / salt), purified individually over weeks, then recombined so nothing living gets lost in translation. Not a simple maceration. The plant's complete alchemical signature — alkaloids, essential oils, mineral salts — in balance. Hand-poured in the Berlin lab. Small-batch, single-pour, from scratch for you.
 
 Traditional herbal support only. Not a treatment or replacement for medical care.
 

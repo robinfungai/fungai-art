@@ -358,11 +358,9 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
       <div id="rSynergyPairs"></div>
     </div>
 
-    <div class="r-ritual">
-      <div class="r-ritual-eyebrow">◈ How to take it</div>
-      <div class="r-ritual-text">
-        <strong>2–3 full pipettes (about 1.5 ml) under the tongue</strong>, held for 60–90 seconds before swallowing. <strong>Twice daily</strong> — morning and evening — on a <strong>5 days on, 2 days off</strong> rhythm. Slow-pace plant medicine unfolds in cycles, not hits. Give it three weeks before you judge it.
-      </div>
+    <div class="r-ritual" id="rWhyCard">
+      <div class="r-ritual-eyebrow">◈ Why this formula</div>
+      <div class="r-ritual-text" id="rWhyText"></div>
     </div>
 
     <div class="r-safety" id="rSafety"></div>
@@ -1203,6 +1201,81 @@ function storyFor(a, herbs){
   );
 }
 
+// ── Why this formula (client-side explainer) ──────────────
+// Renders 3 paragraphs from the herb metadata:
+//   1. Why THESE herbs — links the top-2 by percentage to what the
+//      user's intention + body reading actually needs, using each
+//      herb's own primary_functions text.
+//   2. What each other herb is doing in support.
+//   3. Two-sentence spagyric process explainer so "custom" reads as
+//      "hand-crafted alchemy" not "we picked 5 things off a shelf".
+// Never medical / diagnostic — describes traditional herbal reasoning,
+// not treatment claims.
+const INTENT_PHRASE = {
+  stress:    'the space to steady under load',
+  anxiety:   'the quiet — a settled nervous system',
+  sleep:     'deeper, more restorative sleep',
+  energy:    'clean sustained vitality',
+  mood:      'warmth back into the days',
+  cognitive: 'sharper thinking and better recall',
+  hormones:  'endocrine rhythm and flow',
+  digestion: 'a gut that settles and absorbs',
+  immunity:  'trained inner defence',
+  pain:      'inflammation cooled at its source',
+  detox:     'clean liver and lymphatic flow',
+  beauty:    'skin, hair, nails from the inside',
+};
+const PATTERN_PHRASE = {
+  hot:      'a body that runs hot and reactive',
+  cold:     'a body that runs cool and slow',
+  mixed:    'a body caught between hot and cold — variable, stuck',
+  depleted: 'a body running on empty reserves',
+};
+function stripLead(s){ return String(s || '').split(/[—.–:;]/)[0].trim(); }
+function herbSummary(h){
+  const src = (h.primary_functions && h.primary_functions[0]) || h.spiritual_layer || h.pharmacology || '';
+  const s = stripLead(src);
+  return s.length > 120 ? s.slice(0, 117) + '…' : s;
+}
+function buildWhyText(a, herbs, pct){
+  if (!herbs || !herbs.length) return '';
+  // Pair herbs with their percentages, sort by % descending so the
+  // hero herbs (biggest share) get the top billing.
+  const withPct = herbs.map((h, i) => ({ h, pct: pct[i] || 0 }));
+  withPct.sort((a, b) => b.pct - a.pct);
+  const hero = withPct[0];
+  const second = withPct[1];
+  const rest = withPct.slice(2);
+
+  const intentPhrase  = INTENT_PHRASE[a.intention]  || 'what you\'re calling in';
+  const patternPhrase = PATTERN_PHRASE[a.pattern]   || 'the body reading you gave';
+
+  const heroLine =
+    '<strong style="color:var(--parchment);">' + hero.h.name + '</strong> takes the largest share (' +
+    hero.pct + '%) &mdash; ' + herbSummary(hero.h).toLowerCase() + '. ' +
+    (second ? 'Woven in at ' + second.pct + '%, <strong style="color:var(--parchment);">' + second.h.name +
+    '</strong> holds the second thread &mdash; ' + herbSummary(second.h).toLowerCase() + '.' : '');
+  const restLine = rest.length
+    ? 'The remaining allies (' + rest.map(x => x.pct + '% ' + x.h.name).join(', ') +
+      ') round the blend so the shift is <em>whole-body</em>, not narrow.'
+    : '';
+  const readingLine =
+    'This composition targets <em>' + intentPhrase + '</em>, tuned for <em>' + patternPhrase + '</em>' +
+    (a.patternSub ? ' &mdash; specifically the ' + a.patternSub.replace(/_/g, ' ') + ' signature' : '') + '.';
+  const spagyricLine =
+    '<em>How it&rsquo;s made:</em> full-spectrum spagyric extract &mdash; each herb separated into its three principles ' +
+    '(sulfur, mercury, salt), purified individually over weeks, then recombined. Not a simple maceration. ' +
+    'The plant&rsquo;s complete alchemical signature &mdash; alkaloids, essential oils, mineral salts &mdash; in balance. ' +
+    'Hand-poured in the Berlin lab from scratch for you.';
+
+  return (
+    '<p style="margin:0 0 12px;">' + readingLine + '</p>' +
+    '<p style="margin:0 0 12px;">' + heroLine + '</p>' +
+    (restLine ? '<p style="margin:0 0 12px;">' + restLine + '</p>' : '') +
+    '<p style="margin:0;color:var(--parchment);opacity:0.88;">' + spagyricLine + '</p>'
+  );
+}
+
 // ── MYCO personalisation (only fires when user filled the notes) ──
 // Sends the quiz + note + resolved herbs to /api/myco-agent, asks for
 // a 3-sentence personal reading, and swaps it into the reveal story.
@@ -1340,6 +1413,11 @@ function renderResult(){
 
   // Stash for reservation + optional cloud-save on submit.
   window.__currentFormula = { name, herbs, percentages: pct, synergies: pairs.synergies };
+
+  // "Why this formula" — dynamic prose that links the picked herbs to
+  // the reader's answers + a two-line explainer on the spagyric extract
+  // process. Written from the metadata every herb already carries.
+  document.getElementById('rWhyText').innerHTML = buildWhyText(a, herbs, pct);
 }
 
 // ── Reserve submit ────────────────────────────────────────
@@ -1351,15 +1429,20 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
   errEl.hidden = true;
 
   const fd = new FormData(form);
+  const cur = window.__currentFormula || {};
+  const currentHerbs = cur.herbs || pickFormula(state.answers);
   const payload = {
     email:       String(fd.get('email')   || '').trim(),
     name:        String(fd.get('name')    || '').trim(),
     city:        String(fd.get('city')    || '').trim(),
     country:     String(fd.get('country') || '').trim(),
     notes:       String(fd.get('notes')   || '').trim(),
-    formulaName: window.__currentFormulaName || '',
+    formulaName: cur.name || window.__currentFormulaName || '',
     quiz:        state.answers,
-    formula:     pickFormula(state.answers).map(h => ({ id: h.id, name: h.name })),
+    formula:     currentHerbs.map(h => ({ id: h.id, name: h.name })),
+    percentages: cur.percentages || [],
+    synergies:   cur.synergies   || [],
+    bottleMl:    30,
     source:      'find-your-formula',
   };
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(payload.email)) {
