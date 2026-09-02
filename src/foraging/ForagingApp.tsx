@@ -24,8 +24,27 @@ function getMoonPhase() {
   return { emoji: '🌘', name: 'Waning Crescent', day: Math.round(d) };
 }
 
-// GBIF observation type
+// GBIF observation type (existing per-species-per-node loader)
 interface GBIFObs { id: number; lat: number; lng: number; species: string; date: string | null; region: string | null; }
+
+// Sporecast-style aggregated fungal observation (Kingdom Fungi across
+// GBIF + iNaturalist, fetched for the current map viewport). Denser
+// than the per-species per-node loader because it asks the sources for
+// EVERY mushroom in the bbox, not just the primary species of one node.
+interface FungalObs {
+  id: string;
+  lat: number;
+  lng: number;
+  species: string;
+  commonName?: string | null;
+  date: string | null;
+  region: string | null;
+  source: 'GBIF' | 'iNaturalist';
+  url?: string;
+}
+
+// MYCO chat message
+interface MycoMsg { role: 'user' | 'assistant'; content: string; }
 
 // Foraging conditions type
 interface ForageConditions {
@@ -218,6 +237,23 @@ export default function ForagingApp() {
   const [userConditions, setUserConditions] = useState<ForageConditions | null>(null);
   const [growingPanelOpen, setGrowingPanelOpen] = useState(true);
 
+  // ── Sporecast-style fungal layer (broad Kingdom-Fungi bbox query) ──
+  //   Renders always-on across the current viewport once the map settles.
+  //   Sourced from GBIF Kingdom Fungi + iNaturalist research-grade so the
+  //   map has real dot density even at continental zoom.
+  const [fungalObs, setFungalObs] = useState<FungalObs[]>([]);
+  const [fungalLoading, setFungalLoading] = useState(false);
+  const [showFungalLayer, setShowFungalLayer] = useState(true);
+  const [hoveredFungal, setHoveredFungal] = useState<FungalObs | null>(null);
+  const lastFungalBboxRef = useRef<{ minLat: number; maxLat: number; minLng: number; maxLng: number } | null>(null);
+
+  // ── MYCO Ask panel state ────────────────────────────────────────────
+  const [mycoOpen, setMycoOpen] = useState(false);
+  const [mycoMessages, setMycoMessages] = useState<MycoMsg[]>([]);
+  const [mycoInput, setMycoInput] = useState('');
+  const [mycoLoading, setMycoLoading] = useState(false);
+  const [mycoRegionName, setMycoRegionName] = useState('');
+
   const mapRef = useRef<any>(null);
 
   // 1. Ask for geolocation on first mount
@@ -313,8 +349,10 @@ export default function ForagingApp() {
         });
       }
     }
-    // Dedupe by species name, keep highest-probability entry
-    const bestByName = new Map<string, Scored>();
+    // Dedupe by species name, keep highest-probability entry.
+    // Explicit global reference because MapLibre's <Map> component is
+    // imported into scope at the top of this file and shadows the built-in.
+    const bestByName = new (globalThis as any).Map() as globalThis.Map<string, Scored>;
     for (const s of scored) {
       const prev = bestByName.get(s.name);
       if (!prev || s.probability > prev.probability) bestByName.set(s.name, s);
@@ -378,6 +416,113 @@ export default function ForagingApp() {
       .catch(() => {})
       .finally(() => setConditionsLoading(false));
   }, [selectedNode?.id]);
+
+  // ── Sporecast-style bbox fungal loader ─────────────────────────────
+  //   Debounced. Fires whenever the map settles (moveend/zoomend) and
+  //   the current bbox has drifted meaningfully from the last fetched
+  //   one. Skips very-wide-zoom queries that would timeout.
+  const fetchFungalForBbox = useCallback((bbox: { minLat: number; maxLat: number; minLng: number; maxLng: number }, zoom: number) => {
+    // Skip huge bboxes — pulling >100 deg lat/lng would time out and
+    // wouldn't render anything useful anyway. iNat/GBIF caps at 300pts.
+    const latSpan = bbox.maxLat - bbox.minLat;
+    const lngSpan = bbox.maxLng - bbox.minLng;
+    if (latSpan > 60 || lngSpan > 90) return;
+    // Skip if bbox hasn't drifted more than ~25% of previous span.
+    const prev = lastFungalBboxRef.current;
+    if (prev) {
+      const prevLatSpan = prev.maxLat - prev.minLat;
+      const prevLngSpan = prev.maxLng - prev.minLng;
+      const drift = Math.max(
+        Math.abs(bbox.minLat - prev.minLat) / prevLatSpan,
+        Math.abs(bbox.maxLat - prev.maxLat) / prevLatSpan,
+        Math.abs(bbox.minLng - prev.minLng) / prevLngSpan,
+        Math.abs(bbox.maxLng - prev.maxLng) / prevLngSpan,
+      );
+      if (drift < 0.25 && fungalObs.length > 0) return;
+    }
+    lastFungalBboxRef.current = bbox;
+    setFungalLoading(true);
+    // Denser dots at higher zoom, thinner at wide zoom
+    const limit = zoom >= 8 ? 250 : zoom >= 5 ? 180 : 120;
+    fetch(`/api/mushroom-observations?minLat=${bbox.minLat.toFixed(3)}&maxLat=${bbox.maxLat.toFixed(3)}&minLng=${bbox.minLng.toFixed(3)}&maxLng=${bbox.maxLng.toFixed(3)}&months=12&limit=${limit}`)
+      .then(r => r.json())
+      .then(data => {
+        if (Array.isArray(data.observations)) setFungalObs(data.observations);
+      })
+      .catch(() => {})
+      .finally(() => setFungalLoading(false));
+  }, [fungalObs.length]);
+
+  // Debounced map settle handler
+  const settleTimerRef = useRef<any>(null);
+  const handleMapSettle = useCallback(() => {
+    if (!showFungalLayer) return;
+    if (!mapRef.current) return;
+    const map = mapRef.current.getMap ? mapRef.current.getMap() : mapRef.current;
+    if (!map || !map.getBounds) return;
+    clearTimeout(settleTimerRef.current);
+    settleTimerRef.current = setTimeout(() => {
+      const b = map.getBounds();
+      const zoom = map.getZoom ? map.getZoom() : 5;
+      fetchFungalForBbox({
+        minLat: b.getSouth(), maxLat: b.getNorth(),
+        minLng: b.getWest(),  maxLng: b.getEast(),
+      }, zoom);
+    }, 500);
+  }, [fetchFungalForBbox, showFungalLayer]);
+
+  // Kick a first fetch once map + viewport are ready (200ms after mount)
+  useEffect(() => {
+    if (!showFungalLayer) return;
+    const t = setTimeout(() => handleMapSettle(), 700);
+    return () => clearTimeout(t);
+  }, [handleMapSettle, showFungalLayer]);
+
+  // ── Ask MYCO — send a question with location + region context ──────
+  const askMyco = useCallback(async (question: string) => {
+    const q = question.trim();
+    if (!q || mycoLoading) return;
+    // Prefer user's own location; fall back to selected node; then to
+    // map center. MYCO won't answer without SOME lat/lng.
+    let lat: number | null = userLocation?.lat ?? null;
+    let lng: number | null = userLocation?.lng ?? null;
+    if (lat === null && selectedNode) {
+      [lng, lat] = selectedNode.coordinates;
+    }
+    if ((lat === null || lng === null) && mapRef.current) {
+      const map = mapRef.current.getMap ? mapRef.current.getMap() : mapRef.current;
+      const c = map?.getCenter ? map.getCenter() : null;
+      if (c) { lat = c.lat; lng = c.lng; }
+    }
+    if (lat === null || lng === null) {
+      setMycoMessages(m => [...m, { role: 'user', content: q }, { role: 'assistant', content: 'I need to know where you are to answer that. Enable location, or tap a node on the map first.' }]);
+      setMycoInput('');
+      return;
+    }
+    const nextMessages: MycoMsg[] = [...mycoMessages, { role: 'user', content: q }];
+    setMycoMessages(nextMessages);
+    setMycoInput('');
+    setMycoLoading(true);
+    try {
+      const res = await fetch('/api/myco-forage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          question: q,
+          lat, lng,
+          regionName: mycoRegionName || undefined,
+          history: mycoMessages.slice(-6),
+        }),
+      });
+      const data = await res.json();
+      const reply = data.reply || data.error || 'MYCO is quiet right now — try again shortly.';
+      setMycoMessages(m => [...m, { role: 'assistant', content: reply }]);
+    } catch (_) {
+      setMycoMessages(m => [...m, { role: 'assistant', content: 'Network hiccup — try again.' }]);
+    } finally {
+      setMycoLoading(false);
+    }
+  }, [mycoMessages, mycoLoading, userLocation, selectedNode, mycoRegionName]);
 
   const handleNodeClick = useCallback((node: EcoNode) => {
     setSelectedNode(prev => prev?.id === node.id ? null : node);
@@ -497,6 +642,22 @@ export default function ForagingApp() {
             ≤768px. The toggles can still be reached via the legend at the
             bottom of the page. */}
         <div className="forage-sources" style={{ marginLeft: 'auto', display: 'flex', gap: 6, alignItems: 'center' }}>
+          {/* Sporecast-style fungal layer — the always-on Kingdom Fungi
+              overlay from GBIF + iNaturalist. Distinct amber tone. */}
+          <button
+            onClick={() => setShowFungalLayer(v => !v)}
+            title="Sporecast-style layer: all Kingdom Fungi observations in view (GBIF + iNaturalist research-grade, last 12 months)"
+            style={{
+              fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', textTransform: 'uppercase',
+              background: showFungalLayer ? 'rgba(200,150,90,0.14)' : 'transparent',
+              border: `0.5px solid ${showFungalLayer ? 'rgba(200,150,90,0.55)' : 'rgba(255,255,255,0.12)'}`,
+              color: showFungalLayer ? 'rgba(232,192,120,0.95)' : '#4d5a52',
+              borderRadius: 4, padding: '4px 10px', cursor: 'pointer', flexShrink: 0,
+              transition: 'all 0.18s',
+            }}
+          >
+            {showFungalLayer ? (fungalLoading ? '◐' : '◉') : '○'} Fungi · Live
+          </button>
           <button
             onClick={() => setShowSkogsObs(s => !s)}
             title="skogsskafferiet.se — Swedish foraging community"
@@ -695,8 +856,59 @@ export default function ForagingApp() {
         initialViewState={{ longitude: 18, latitude: 50, zoom: 3.6 }}
         style={{ width: '100%', height: '100%' }}
         mapStyle={mapMode === 'satellite' ? SATELLITE_STYLE : MAP_STYLE}
+        onLoad={handleMapSettle}
+        onMoveEnd={handleMapSettle}
       >
         <NavigationControl position="bottom-right" style={{ marginBottom: 80 }} />
+
+        {/* Sporecast-style fungal observation layer — always-on across
+            the current viewport once the map settles. Amber-brown tone so
+            it's distinct from GBIF-per-node yellow, Skogs green,
+            Vild Mad orange. Sourced from GBIF Kingdom Fungi +
+            iNaturalist research-grade, last 12 months. */}
+        {showFungalLayer && fungalObs.map(obs => (
+          <Marker key={`fungal-${obs.id}`} longitude={obs.lng} latitude={obs.lat} anchor="center">
+            <div
+              onMouseEnter={() => setHoveredFungal(obs)}
+              onMouseLeave={() => setHoveredFungal(null)}
+              title={`${obs.species}${obs.date ? ' · ' + obs.date : ''} · ${obs.source}`}
+              style={{
+                width: 6, height: 6, borderRadius: '50%',
+                background: obs.source === 'iNaturalist' ? 'rgba(155,110,60,0.65)' : 'rgba(120,90,50,0.55)',
+                border: `0.5px solid ${obs.source === 'iNaturalist' ? 'rgba(200,150,90,0.9)' : 'rgba(160,120,80,0.8)'}`,
+                cursor: 'pointer',
+                boxShadow: '0 0 3px rgba(120,90,50,0.35)',
+              }}
+            />
+          </Marker>
+        ))}
+
+        {/* Fungal hover tooltip */}
+        {hoveredFungal && (
+          <Marker longitude={hoveredFungal.lng} latitude={hoveredFungal.lat} anchor="bottom" offset={[0, -6]}>
+            <div style={{
+              background: 'rgba(7,17,13,0.95)', border: '0.5px solid rgba(200,150,90,0.35)',
+              borderRadius: 6, padding: '5px 10px', pointerEvents: 'none', whiteSpace: 'nowrap',
+            }}>
+              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 12, color: '#E8C078' }}>
+                {hoveredFungal.species}
+              </div>
+              {hoveredFungal.commonName && (
+                <div style={{ fontFamily: 'monospace', fontSize: 8, color: '#C9B894', marginTop: 1 }}>
+                  {hoveredFungal.commonName}
+                </div>
+              )}
+              {hoveredFungal.date && (
+                <div style={{ fontFamily: 'monospace', fontSize: 7.5, color: '#8B7E62', marginTop: 2 }}>
+                  {hoveredFungal.date}{hoveredFungal.region ? ` · ${hoveredFungal.region}` : ''}
+                </div>
+              )}
+              <div style={{ fontFamily: 'monospace', fontSize: 7, color: '#4d5a52', marginTop: 2, letterSpacing: '0.1em' }}>
+                {hoveredFungal.source}
+              </div>
+            </div>
+          </Marker>
+        )}
 
         {/* "You are here" marker — soft amber pulse so the user always
             knows where they're standing in the ecological field. */}
@@ -948,6 +1160,10 @@ export default function ForagingApp() {
               <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(245,215,105,0.6)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>GBIF sighting</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
+              <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(155,110,60,0.65)', border: '0.5px solid rgba(200,150,90,0.9)' }} />
+              <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(232,192,120,0.7)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Fungi · Live (bbox)</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
               <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(180,230,150,0.6)', border: '0.5px solid rgba(180,230,150,0.9)' }} />
               <span style={{ fontFamily: 'monospace', fontSize: 8, color: 'rgba(180,230,150,0.65)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Skogsskafferiet · SE</span>
             </div>
@@ -1026,7 +1242,231 @@ export default function ForagingApp() {
         }}>
           🌿 Harvest {MONTH_SV[currentMonth]}
         </button>
+        <button
+          onClick={() => setMycoOpen(o => !o)}
+          title="Ask MYCO — the foraging intelligence. Uses your location + 30 days of weather + fresh fungi sightings."
+          style={{
+            fontSize: 9, fontFamily: 'monospace', letterSpacing: '0.14em', textTransform: 'uppercase',
+            padding: '5px 12px', borderRadius: 4, cursor: 'pointer',
+            background: mycoOpen ? 'rgba(168,143,224,0.16)' : 'rgba(7,17,13,0.88)',
+            border: mycoOpen ? '0.5px solid rgba(168,143,224,0.55)' : '0.5px solid rgba(168,143,224,0.35)',
+            color: mycoOpen ? '#C5B5F5' : '#A88FE0',
+          }}
+        >
+          ✦ Ask MYCO
+        </button>
       </div>
+
+      {/* MYCO Ask panel — floating chat overlay. Opens from the "Ask MYCO"
+          button. Bottom-left on desktop, full-width bottom on mobile. */}
+      {mycoOpen && (
+        <div
+          className="myco-forage-panel"
+          style={{
+            position: 'absolute', bottom: 60, left: 20, zIndex: 20,
+            width: 'min(400px, calc(100vw - 40px))',
+            maxHeight: 'min(560px, calc(100vh - 140px))',
+            display: 'flex', flexDirection: 'column',
+            background: 'rgba(7,17,13,0.96)',
+            backdropFilter: 'blur(18px)',
+            WebkitBackdropFilter: 'blur(18px)',
+            border: '0.5px solid rgba(168,143,224,0.35)',
+            borderRadius: 12,
+            boxShadow: '0 16px 56px rgba(0,0,0,0.6), 0 0 32px rgba(168,143,224,0.08)',
+            overflow: 'hidden',
+          }}
+        >
+          {/* Header */}
+          <div style={{
+            padding: '12px 14px 10px',
+            borderBottom: '0.5px solid rgba(168,143,224,0.15)',
+            display: 'flex', alignItems: 'center', gap: 10,
+          }}>
+            <div style={{
+              width: 26, height: 26, borderRadius: '50%',
+              background: 'radial-gradient(circle at 35% 35%, #C5B5F5, #7B5FBA)',
+              boxShadow: '0 0 10px rgba(168,143,224,0.5)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontFamily: 'monospace', fontSize: 12, color: '#0A0619',
+              flexShrink: 0,
+            }}>✦</div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 15, color: '#E6D9B5', lineHeight: 1 }}>
+                Ask MYCO
+              </div>
+              <div style={{ fontFamily: 'monospace', fontSize: 7.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#8B7E62', marginTop: 3 }}>
+                Foraging intelligence · Live weather + sightings
+              </div>
+            </div>
+            <button
+              onClick={() => setMycoOpen(false)}
+              style={{ background: 'none', border: 'none', color: '#8B7E62', fontSize: 18, cursor: 'pointer', lineHeight: 1, padding: '0 4px' }}
+              title="Close"
+            >×</button>
+          </div>
+
+          {/* Location context row */}
+          <div style={{
+            padding: '8px 14px',
+            borderBottom: '0.5px solid rgba(255,255,255,0.05)',
+            fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.12em', color: '#4d5a52',
+            display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap',
+          }}>
+            <span style={{ color: '#6BD66F' }}>●</span>
+            <span style={{ textTransform: 'uppercase' }}>
+              {userLocation ? 'Your location'
+                : selectedNode ? `Node · ${selectedNode.location}`
+                : 'Map center'}
+            </span>
+            <input
+              type="text"
+              value={mycoRegionName}
+              onChange={e => setMycoRegionName(e.target.value.slice(0, 60))}
+              placeholder="Optional: name the region (e.g. Dalarna, Sweden)"
+              style={{
+                flex: 1, minWidth: 120,
+                background: 'transparent', border: 'none',
+                borderBottom: '0.5px solid rgba(255,255,255,0.1)',
+                color: '#E6D9B5', fontFamily: 'monospace', fontSize: 9,
+                padding: '3px 4px', outline: 'none',
+              }}
+            />
+          </div>
+
+          {/* Message list — scroll */}
+          <div style={{
+            flex: 1, minHeight: 120, overflowY: 'auto',
+            padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 10,
+          }}>
+            {mycoMessages.length === 0 && (
+              <div style={{
+                padding: 12, borderRadius: 8,
+                background: 'rgba(168,143,224,0.06)', border: '0.5px solid rgba(168,143,224,0.18)',
+                fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 13, color: '#C5B5F5', lineHeight: 1.5,
+              }}>
+                Ask about your region and the mycelial field will answer.
+                <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column', gap: 5 }}>
+                  {[
+                    'Has it rained enough in this region for chanterelles?',
+                    'What species are actively being reported near me right now?',
+                    'When is the next good foraging window in the forecast?',
+                  ].map(s => (
+                    <button
+                      key={s}
+                      onClick={() => askMyco(s)}
+                      style={{
+                        textAlign: 'left', background: 'rgba(7,17,13,0.4)',
+                        border: '0.5px solid rgba(168,143,224,0.2)', borderRadius: 5,
+                        padding: '6px 9px', color: '#C5B5F5', cursor: 'pointer',
+                        fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.04em',
+                        transition: 'background 0.15s',
+                      }}
+                      onMouseEnter={e => e.currentTarget.style.background = 'rgba(168,143,224,0.12)'}
+                      onMouseLeave={e => e.currentTarget.style.background = 'rgba(7,17,13,0.4)'}
+                    >
+                      → {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            {mycoMessages.map((m, i) => (
+              <div
+                key={i}
+                style={{
+                  alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start',
+                  maxWidth: '88%',
+                  padding: '9px 12px', borderRadius: 8,
+                  background: m.role === 'user'
+                    ? 'rgba(107,214,111,0.09)'
+                    : 'rgba(168,143,224,0.08)',
+                  border: m.role === 'user'
+                    ? '0.5px solid rgba(107,214,111,0.25)'
+                    : '0.5px solid rgba(168,143,224,0.22)',
+                  color: '#E6D9B5',
+                  fontFamily: m.role === 'user' ? 'monospace' : "'Cormorant Garamond', serif",
+                  fontSize: m.role === 'user' ? 11 : 13.5,
+                  lineHeight: 1.5,
+                  whiteSpace: 'pre-wrap', wordBreak: 'break-word',
+                }}
+              >
+                {m.content}
+              </div>
+            ))}
+            {mycoLoading && (
+              <div style={{
+                alignSelf: 'flex-start',
+                padding: '8px 12px', borderRadius: 8,
+                background: 'rgba(168,143,224,0.08)', border: '0.5px solid rgba(168,143,224,0.22)',
+                fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.14em', color: '#C5B5F5',
+                animation: 'pulse 1.4s ease-in-out infinite',
+              }}>
+                ✦ Reading the field…
+              </div>
+            )}
+          </div>
+
+          {/* Input row */}
+          <div style={{
+            padding: '10px 14px 12px',
+            borderTop: '0.5px solid rgba(168,143,224,0.15)',
+            display: 'flex', gap: 6, alignItems: 'flex-end',
+          }}>
+            <textarea
+              value={mycoInput}
+              onChange={e => setMycoInput(e.target.value.slice(0, 800))}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  askMyco(mycoInput);
+                }
+              }}
+              placeholder="Ask about weather, sightings, timing…"
+              rows={2}
+              style={{
+                flex: 1,
+                background: 'rgba(7,17,13,0.6)',
+                border: '0.5px solid rgba(168,143,224,0.25)',
+                borderRadius: 6, padding: '8px 10px',
+                color: '#E6D9B5', fontFamily: "'Cormorant Garamond', serif", fontSize: 14,
+                resize: 'none', outline: 'none', lineHeight: 1.35,
+              }}
+              disabled={mycoLoading}
+            />
+            <button
+              onClick={() => askMyco(mycoInput)}
+              disabled={mycoLoading || !mycoInput.trim()}
+              style={{
+                padding: '8px 14px',
+                background: mycoLoading || !mycoInput.trim() ? 'rgba(168,143,224,0.1)' : 'rgba(168,143,224,0.25)',
+                border: '0.5px solid rgba(168,143,224,0.55)',
+                borderRadius: 6, color: '#C5B5F5',
+                fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase',
+                cursor: mycoLoading || !mycoInput.trim() ? 'default' : 'pointer',
+                opacity: mycoLoading || !mycoInput.trim() ? 0.5 : 1,
+                transition: 'all 0.15s',
+              }}
+            >
+              Ask
+            </button>
+          </div>
+          <style>{`
+            @media (max-width: 640px) {
+              .myco-forage-panel {
+                left: 12px !important;
+                right: 12px !important;
+                bottom: 12px !important;
+                width: auto !important;
+                max-height: 70vh !important;
+              }
+            }
+            @keyframes pulse {
+              0%, 100% { opacity: 0.55; }
+              50%      { opacity: 1;    }
+            }
+          `}</style>
+        </div>
+      )}
 
       {/* Conditions widget — bottom-left when node selected */}
       {selectedNode && (
