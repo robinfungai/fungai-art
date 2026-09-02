@@ -218,7 +218,89 @@ export const handler = async (event) => {
   const REFUSE_REPLY = "MYCO can't give medical or diagnostic advice. For dosing questions with medications, talk to a herbalist or physician you trust. I can talk about traditions, extraction, ceremony framing.";
 
   try {
-    const { message, history = [], context = null } = JSON.parse(event.body);
+    const { message, history = [], context = null, mode = 'chat', shortlist = null, quiz = null } = JSON.parse(event.body);
+
+    // ── Composer mode ─────────────────────────────────────
+    // Deterministic picker generates the top ~15-20 candidates; MYCO
+    // reads those + the full quiz + free-text and picks the 5-7 that
+    // work best together. Returns structured JSON so the client can
+    // trust the shape. Falls back to picker output if MYCO refuses,
+    // errors, or returns malformed JSON.
+    if (mode === 'compose') {
+      if (!Array.isArray(shortlist) || shortlist.length === 0) {
+        return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'compose mode needs a shortlist array' }) };
+      }
+      const shortlistText = shortlist.slice(0, 20).map((h, i) => {
+        return (i + 1) + '. id=' + (h.id || '') + ' · ' + (h.name || '') +
+               ' (' + (h.botanical || '') + ')' +
+               ' · category:' + (h.category || 'other') +
+               ' · pre-score:' + (h.score || 0) +
+               (h.trace ? ' · TRACE' : '') +
+               '\n     ' + (h.functions || '').slice(0, 220);
+      }).join('\n');
+      const q = quiz || {};
+      const composeSys =
+        'You are MYCO — a plant-medicine formula composer. You will pick 5 to 7 herbs from a shortlist for one specific person, and explain WHY in one paragraph.\n\n' +
+        'HARD RULES:\n' +
+        '- Pick ONLY from the shortlist ids provided. Never invent a herb.\n' +
+        '- Pick between 5 and 7 herbs. Prefer 5 unless the case genuinely calls for more (multi-axis complexity, chronic + acute together, layered request).\n' +
+        '- Percentages must sum to 100 (integers). Any TRACE-marked herb ≤ 5%.\n' +
+        '- Balance categories — no more than 2 herbs of the same category. Mix adaptogens, nervines, tonics, movers, mushrooms.\n' +
+        '- Do NOT diagnose. Do NOT prescribe. This is traditional herbal support, not medical treatment.\n' +
+        '- Reference the free-text explicitly if it names a priority, prior herb experience, or contraindication history.\n\n' +
+        'OUTPUT FORMAT — return ONLY valid JSON, no preamble, no code fences, matching:\n' +
+        '{\n' +
+        '  "picked": [ { "id": "...", "pct": 22, "reason": "one short sentence" }, ... ],\n' +
+        '  "overall": "2-3 sentences of reasoning tying the pick to their answers"\n' +
+        '}';
+      const composeUser =
+        'Quiz answers:\n' +
+        '- Intention: ' + (q.intention || '—') + '\n' +
+        '- Body: ' + (q.pattern || '—') + (q.patternSub ? ' / ' + q.patternSub : '') + '\n' +
+        '- Rhythm: ' + (q.time || '—') + ' hardest\n' +
+        '- Meets stress by: ' + (q.stress || '—') + '\n' +
+        '- Duration: ' + (q.duration || '—') + '\n' +
+        '- Age: ' + (q.age || '—') + '\n' +
+        '- Sleep: ' + (q.sleep || '—') + '\n' +
+        '- Safety filters: ' + (Array.isArray(q.avoid) ? q.avoid.join(', ') : (q.avoid || 'none')) + '\n' +
+        '- Priority + prior herb experience: "' + String(q.notes || '').slice(0, 500) + '"\n\n' +
+        'Shortlist (ranked by the deterministic scorer):\n' + shortlistText + '\n\n' +
+        'Return the JSON now.';
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'x-api-key': process.env.ANTHROPIC_API_KEY,
+          'anthropic-version': '2023-06-01',
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5',
+          max_tokens: 1400,
+          temperature: 0.4,
+          system: composeSys,
+          messages: [{ role: 'user', content: composeUser }],
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) return { statusCode: res.status, headers: cors, body: JSON.stringify({ error: data.error?.message || 'compose error' }) };
+      const raw = data.content?.[0]?.text || '';
+      // Try to extract JSON — the model is instructed to return only JSON
+      // but occasionally wraps it in ```json ... ``` — strip if present.
+      let parsed = null;
+      try {
+        const cleaned = raw.replace(/^\s*```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '').trim();
+        parsed = JSON.parse(cleaned);
+      } catch (_) {
+        // JSON extraction fallback — find the first {...} block
+        const m = raw.match(/\{[\s\S]*\}/);
+        if (m) { try { parsed = JSON.parse(m[0]); } catch (_) {} }
+      }
+      if (!parsed || !Array.isArray(parsed.picked) || parsed.picked.length < 5) {
+        return { statusCode: 200, headers: cors, body: JSON.stringify({ composerFailed: true, raw }) };
+      }
+      return { statusCode: 200, headers: cors, body: JSON.stringify({ picked: parsed.picked, overall: parsed.overall || '' }) };
+    }
+    // ── End composer mode ─────────────────────────────────
 
     // Clamp inputs so a single request can't blow up token usage.
     const userMessage = String(message || '').slice(0, 4000);

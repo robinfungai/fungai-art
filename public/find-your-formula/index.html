@@ -175,20 +175,46 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .q-sub-back:hover{color:var(--amber-l)}
 .q-sub-context{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--dust);line-height:1.6;margin-bottom:16px;padding:10px 14px;background:var(--card);border-left:2px solid var(--amber-l);border-radius:4px}
 
-/* ── Q2 stage B — chosen archetype persists as a pill at the top,
-      sub-options fade in from below with staggered delay. The picked
-      archetype visually stays with the user through the refinement,
-      instead of the whole screen re-rendering with no continuity. */
-.branch-stage-b{animation:branch-fade-in .55s cubic-bezier(.22,.61,.36,1)}
-.branch-chosen-pill{display:inline-flex;align-items:center;gap:10px;padding:8px 14px 8px 12px;background:linear-gradient(140deg,rgba(232,177,75,0.12),rgba(232,177,75,0.04));border:0.5px solid rgba(232,177,75,0.5);border-radius:999px;margin-bottom:20px;box-shadow:0 0 22px -6px rgba(232,177,75,0.35);animation:branch-pill-in .5s cubic-bezier(.22,.61,.36,1)}
-.branch-chosen-pill .pill-glyph{font-family:var(--display);font-style:italic;font-size:20px;color:var(--amber-l);line-height:1}
-.branch-chosen-pill .pill-label{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--parchment)}
-.branch-chosen-pill .pill-change{background:none;border:none;font-family:var(--mono);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--dust-d);cursor:pointer;padding:4px 8px;margin-left:4px;border-left:0.5px solid var(--rule-strong)}
-.branch-chosen-pill .pill-change:hover{color:var(--amber-l)}
-@keyframes branch-fade-in{from{opacity:0}to{opacity:1}}
-@keyframes branch-pill-in{from{opacity:0;transform:translateY(-8px) scale(0.92)}to{opacity:1;transform:translateY(0) scale(1)}}
-.branch-sub-appear .q-opt{opacity:0;transform:translateY(12px);animation:sub-opt-in .55s cubic-bezier(.22,.61,.36,1) forwards}
-@keyframes sub-opt-in{to{opacity:1;transform:translateY(0)}}
+/* ── Q2 balloons · 4-archetype selector as circle balloons ──
+   Same aesthetic family as Q1 bubbles but bigger, one per body-
+   archetype. Tap → the picked balloon stays IN PLACE, others fade
+   out, then sub-answer balloons materialise around/below with a
+   soft entrance. No re-render, no new page. */
+.q-balloons{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:6px 0 8px;max-width:520px;margin:0 auto}
+.q-balloon{position:relative;aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:14px 10px;font-family:var(--sans);color:var(--parchment);cursor:pointer;user-select:none;border:1px solid color-mix(in srgb, var(--hue) 65%, transparent);background-color:color-mix(in srgb, var(--hue) 22%, #0F1014);box-shadow:inset 0 -10px 22px rgba(0,0,0,0.45),inset 0 8px 16px color-mix(in srgb, var(--hue) 40%, transparent),inset 0 3px 4px rgba(255,255,255,0.18),0 18px 32px -12px color-mix(in srgb, var(--hue) 55%, transparent),0 0 32px -8px color-mix(in srgb, var(--hue) 40%, transparent);transition:transform .35s cubic-bezier(.22,.61,.36,1),box-shadow .35s,filter .35s,opacity .35s;animation:balloon-float 6.5s ease-in-out infinite}
+.q-balloon::after{content:'';position:absolute;top:12%;left:22%;width:36%;height:32%;border-radius:50%;background:radial-gradient(ellipse at center, rgba(255,255,255,0.5), rgba(255,255,255,0) 65%);pointer-events:none;filter:blur(1px)}
+.q-balloon-label{position:relative;z-index:1;font-family:var(--display);font-style:italic;font-size:20px;line-height:1.1;text-shadow:0 1px 8px rgba(0,0,0,0.75);letter-spacing:0.005em}
+.q-balloon-desc{position:relative;z-index:1;margin-top:6px;font-size:11px;line-height:1.35;opacity:0.85;text-shadow:0 1px 6px rgba(0,0,0,0.7);padding:0 4px}
+.q-balloon:hover{transform:translateY(-4px) scale(1.02);filter:brightness(1.05)}
+.q-balloon:nth-child(1){animation-delay:0s}
+.q-balloon:nth-child(2){animation-delay:-1.6s}
+.q-balloon:nth-child(3){animation-delay:-3.2s}
+.q-balloon:nth-child(4){animation-delay:-4.8s}
+@keyframes balloon-float{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-8px) rotate(2deg)}}
+/* Chosen state — scales up, glows, others fade + shrink around it. */
+.q-balloons.locked .q-balloon:not(.chosen){opacity:0;transform:scale(0.4);pointer-events:none;filter:blur(4px)}
+.q-balloons.locked .q-balloon.chosen{transform:scale(1.05);box-shadow:inset 0 -10px 22px rgba(0,0,0,0.4),inset 0 8px 16px color-mix(in srgb, var(--hue) 55%, transparent),inset 0 3px 4px rgba(255,255,255,0.25),0 24px 48px -10px color-mix(in srgb, var(--hue) 70%, transparent),0 0 48px -4px var(--hue);border-color:var(--hue);animation:balloon-float 6.5s ease-in-out infinite, chosen-pulse 3.2s ease-in-out infinite}
+@keyframes chosen-pulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.12)}}
+.q-balloons.locked{grid-template-columns:1fr;max-width:220px;transition:max-width .5s ease, grid-template-columns .5s ease}
+
+/* Sub-answer balloons — appear BELOW the chosen main balloon in a
+   flowing arc. Smaller, still bubble-shaped, stagger entrance. */
+.q-balloon-subs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px;opacity:0;animation:balloon-sub-appear .55s ease .1s forwards}
+@keyframes balloon-sub-appear{to{opacity:1}}
+.q-balloon-sub{position:relative;aspect-ratio:1.5/1;min-height:78px;border-radius:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px 14px;font-family:var(--sans);color:var(--parchment);cursor:pointer;user-select:none;border:1px solid color-mix(in srgb, var(--hue) 55%, transparent);background-color:color-mix(in srgb, var(--hue) 18%, #0F1014);box-shadow:inset 0 -6px 14px rgba(0,0,0,0.35),inset 0 4px 10px color-mix(in srgb, var(--hue) 35%, transparent),inset 0 2px 3px rgba(255,255,255,0.15),0 10px 20px -8px color-mix(in srgb, var(--hue) 45%, transparent);transition:transform .25s,filter .25s;opacity:0;transform:translateY(14px) scale(0.92);animation:balloon-sub-in .55s cubic-bezier(.22,.61,.36,1) forwards}
+.q-balloon-sub::after{content:'';position:absolute;top:10%;left:18%;width:30%;height:24%;border-radius:50%;background:radial-gradient(ellipse at center, rgba(255,255,255,0.4), rgba(255,255,255,0) 65%);pointer-events:none}
+.q-balloon-sub-label{position:relative;z-index:1;font-family:var(--sans);font-weight:500;font-size:13px;line-height:1.2;text-shadow:0 1px 6px rgba(0,0,0,0.7)}
+.q-balloon-sub-desc{position:relative;z-index:1;margin-top:4px;font-size:10.5px;opacity:0.82;line-height:1.35}
+.q-balloon-sub:hover{transform:translateY(-2px) scale(1.03);filter:brightness(1.08)}
+.q-balloon-sub.on{box-shadow:inset 0 -6px 14px rgba(0,0,0,0.4),inset 0 4px 12px color-mix(in srgb, var(--hue) 55%, transparent),inset 0 2px 3px rgba(255,255,255,0.25),0 14px 26px -6px color-mix(in srgb, var(--hue) 65%, transparent),0 0 30px -6px var(--hue);border-color:var(--hue);transform:scale(1.05)}
+@keyframes balloon-sub-in{to{opacity:1;transform:translateY(0) scale(1)}}
+.q-balloon-sub:nth-child(1){animation-delay:0.1s}
+.q-balloon-sub:nth-child(2){animation-delay:0.18s}
+.q-balloon-sub:nth-child(3){animation-delay:0.26s}
+.q-balloon-sub:nth-child(4){animation-delay:0.34s}
+.q-balloon-change{display:inline-flex;align-items:center;gap:6px;background:none;border:none;font-family:var(--mono);font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--dust-d);cursor:pointer;padding:12px 4px 4px;margin-top:6px;text-align:center;width:100%;justify-content:center}
+.q-balloon-change:hover{color:var(--amber-l)}
+@media (prefers-reduced-motion:reduce){.q-balloon,.q-balloon-sub{animation:none}}
 
 /* ── Compact question rendering (multi-question pages) ────
    Smaller titles + tighter option buttons so 3 questions can fit on
@@ -287,12 +313,20 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 /* Wider column + smaller % so herb name reads clean, not squashed. */
 .r-herb{display:grid;grid-template-columns:52px 1fr;gap:22px;padding:14px 22px;border-bottom:0.5px dashed rgba(232,177,75,0.08);align-items:baseline}
 .r-herb:last-child{border-bottom:none}
-.r-herb-n{font-family:var(--mono);font-size:13px;color:var(--amber-l);line-height:1.2;text-align:right;letter-spacing:0.06em;font-weight:500;opacity:0.95}
+.r-herb-n{font-family:var(--mono);font-size:13px;color:var(--amber-l);line-height:1.2;text-align:right;letter-spacing:0.06em;font-weight:500;opacity:0.95;transition:color .5s,opacity .5s}
+/* Locked state — percentages read as "??%" until reservation. Keeps
+   the exact recipe between the customer and Robin, preserves reveal
+   dopamine, prevents scrape-and-copy. */
+.pct-locked .r-herb-n{color:var(--dust-d);opacity:0.7;font-weight:400}
+.r-herbs-lock-note{padding:10px 22px 14px;font-family:var(--serif);font-style:italic;font-size:12px;color:var(--dust-d);border-top:0.5px solid rgba(232,177,75,0.08);line-height:1.55}
+.r-herbs:not(.pct-locked) .r-herbs-lock-note{display:none}
 .r-herb-pct{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:0.14em;color:var(--amber-l);background:rgba(232,177,75,0.08);border:0.5px solid rgba(232,177,75,0.35);border-radius:999px;padding:3px 9px;margin-right:8px;vertical-align:baseline;font-weight:500}
 .r-herb-name{font-family:var(--serif);font-size:19px;color:var(--parchment);line-height:1.2;margin-bottom:2px;display:inline}
 .r-herb-latin{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--dust-d);margin:4px 0 4px}
 .r-herb-note{font-family:var(--sans);font-size:13.5px;color:var(--dust);line-height:1.55}
 .r-herb-tag{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--sage);background:rgba(123,212,161,0.08);border:0.5px solid rgba(123,212,161,0.28);border-radius:999px;padding:2px 8px;margin-top:6px;margin-right:6px}
+.r-herb-reason{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--amber-ll);line-height:1.5;margin-top:6px;padding-left:10px;border-left:0.5px solid rgba(232,177,75,0.35);opacity:0.9}
+.pct-locked .r-herb-reason{opacity:0.4;filter:blur(3px);user-select:none}
 .r-herb-tag.trace{color:var(--amber-ll);background:rgba(245,214,137,0.06);border-color:rgba(245,214,137,0.28)}
 
 /* Synergy pairs — shown when herbs in the formula reference each other in
@@ -330,17 +364,32 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .r-why-body p:last-child{margin:0}
 .r-why-body em{font-style:italic;color:var(--amber-l)}
 .r-why-body strong{color:var(--parchment);font-weight:500}
-/* Dimmed state — top 25% fully visible, gradual fade to transparent. */
-.r-why.dimmed .r-why-body{
-  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 22%,rgba(0,0,0,0.3) 55%,transparent 92%);
-          mask-image:linear-gradient(180deg,#000 0%,#000 22%,rgba(0,0,0,0.3) 55%,transparent 92%);
-  max-height:280px;overflow:hidden;pointer-events:none;
-  transition:mask-image .5s ease, max-height .55s ease;
+/* Dimmed state — the ESSENTIAL reasoning (herb names + why they were
+   picked + their share) is what fades. The generic methodology stays
+   fully visible above so the free preview is teaser, not spec-sheet. */
+.r-why-body{position:relative}
+.r-why.dimmed .r-why-reveal{
+  position:relative;
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.28) 35%,rgba(0,0,0,0.14) 65%,transparent 100%);
+          mask-image:linear-gradient(180deg,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.28) 35%,rgba(0,0,0,0.14) 65%,transparent 100%);
+  filter:blur(3px);
+  user-select:none;pointer-events:none;
+  transition:mask-image .5s ease, filter .5s ease;
 }
-.r-why:not(.dimmed) .r-why-body{max-height:none;pointer-events:auto;
-  -webkit-mask-image:none; mask-image:none;
-  animation:why-reveal .7s ease}
-@keyframes why-reveal{from{opacity:0.6}to{opacity:1}}
+.r-why:not(.dimmed) .r-why-reveal{
+  -webkit-mask-image:none;mask-image:none;filter:none;
+  user-select:auto;pointer-events:auto;
+  animation:why-reveal .7s ease;
+}
+@keyframes why-reveal{from{opacity:0.6;filter:blur(2px)}to{opacity:1;filter:blur(0)}}
+/* Ghosted overlay strip on the dimmed reveal so users see there IS
+   substance underneath, they just can't read it yet. */
+.r-why.dimmed .r-why-reveal::after{
+  content:'reserve to reveal';
+  position:absolute;top:40%;left:0;right:0;text-align:center;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:0.38em;text-transform:uppercase;
+  color:var(--amber-l);opacity:0.85;pointer-events:none;text-shadow:0 0 10px rgba(0,0,0,0.6);
+}
 .r-why-lock{margin-top:16px;padding:16px 18px;background:rgba(232,177,75,0.08);border:0.5px solid rgba(232,177,75,0.32);border-radius:12px;text-align:center;animation:why-lock-glow 4s ease-in-out infinite}
 @keyframes why-lock-glow{0%,100%{box-shadow:0 0 20px -6px rgba(232,177,75,0.25)}50%{box-shadow:0 0 28px -4px rgba(232,177,75,0.45)}}
 .r-why-lock-glyph{font-family:var(--mono);font-size:12px;letter-spacing:0.6em;color:var(--amber-l);opacity:0.7;margin-bottom:6px}
@@ -471,9 +520,10 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
       </div>
     </div>
 
-    <div class="r-herbs">
+    <div class="r-herbs pct-locked" id="rHerbs">
       <div class="r-herbs-head" id="rHerbCount">5 allies · woven together</div>
       <div id="rHerbList"></div>
+      <div class="r-herbs-lock-note">Percentages reveal when you reserve &mdash; keeps the exact recipe between you and Robin.</div>
     </div>
 
     <!-- Synergy panel — appears when the picked herbs cross-reference
@@ -743,37 +793,33 @@ const QUESTIONS = [
     hint:'Not what you want it to feel — what it actually feels most days.',
     type:'branch',
     options:[
-      { v:'hot',      glyph:'△',  label:'A lit match',    desc:'Warm, reactive, inflamed, or intense. Running hot inside.',
-        subHint:'And which of these fits closest?',
+      { v:'hot',      hue:'#E16B6B', label:'A lit match',    desc:'Warm, reactive, inflamed.',
         subs:[
-          { v:'anger',     glyph:'△', label:'Short-tempered, irritable',      desc:'Small things set off a bigger reaction than they should.' },
-          { v:'flushed',   glyph:'○', label:'Red face, flushes easily',       desc:'Blood comes up quickly. Heat sits in the cheeks or chest.' },
-          { v:'inflamed',  glyph:'◈', label:'Inflammation, burning sensations',desc:'Skin, gut, joints — burning or hot spots that come and go.' },
-          { v:'hot_night', glyph:'◐', label:'Hot at night, night sweats',     desc:'The heat rises after dark. Waking up damp or overheated.' },
+          { v:'anger',     label:'Short-tempered, irritable',        desc:'Small things fire big reactions.' },
+          { v:'flushed',   label:'Red face, flushes easily',         desc:'Heat rises to cheeks or chest.' },
+          { v:'inflamed',  label:'Inflammation, burning sensations', desc:'Skin, gut, joints — hot spots.' },
+          { v:'hot_night', label:'Hot at night, night sweats',       desc:'Heat rises after dark.' },
         ] },
-      { v:'cold',     glyph:'◯',  label:'A cold stone',   desc:'Sluggish, heavy, cold hands, low fire. The engine runs cool.',
-        subHint:'And which of these fits closest?',
+      { v:'cold',     hue:'#88BAC8', label:'A cold stone',   desc:'Sluggish, heavy, cool.',
         subs:[
-          { v:'cold_hands',glyph:'○', label:'Cold hands and feet always',     desc:'Extremities stay cold even in warm rooms. Circulation is quiet.' },
-          { v:'heavy',     glyph:'▢', label:'Heavy body, hard to move',       desc:'Getting going takes effort. The body feels weighted down.' },
-          { v:'pale',      glyph:'◌', label:'Pale, low appetite, loose stools',desc:'Colour is off, digestion is meek. The middle burner is low.' },
-          { v:'low_drive', glyph:'◐', label:'No drive, apathetic',            desc:'Motivation is missing. The pilot light needs relighting.' },
+          { v:'cold_hands',label:'Cold hands and feet',              desc:'Extremities stay cold even in warm rooms.' },
+          { v:'heavy',     label:'Heavy body, hard to move',         desc:'Getting going takes effort.' },
+          { v:'pale',      label:'Pale, low appetite',               desc:'Colour is off, digestion is meek.' },
+          { v:'low_drive', label:'No drive, apathetic',              desc:'The pilot light needs relighting.' },
         ] },
-      { v:'mixed',    glyph:'◇',  label:'A flickering flame', desc:'Variable, stagnant, sighing. Up and down through the day.',
-        subHint:'And which of these fits closest?',
+      { v:'mixed',    hue:'#C5B5F5', label:'A flickering flame', desc:'Variable, stuck, sighing.',
         subs:[
-          { v:'stuck',     glyph:'◇', label:'Stuck, cannot move forward',     desc:'Something\'s constipated — energy or emotion. Not flowing.' },
-          { v:'up_down',   glyph:'◈', label:'Up-and-down moods, unpredictable',desc:'The weather inside changes fast. Others notice.' },
-          { v:'tension',   glyph:'~', label:'Tension that moves around',      desc:'Neck one day, jaw the next, shoulders after that.' },
-          { v:'sighing',   glyph:'◌', label:'Sighing often, chest tight',     desc:'The breath keeps needing a bigger exhale to reset.' },
+          { v:'stuck',     label:'Stuck, cannot move forward',       desc:'Energy or emotion, not flowing.' },
+          { v:'up_down',   label:'Up-and-down moods',                desc:'Weather inside changes fast.' },
+          { v:'tension',   label:'Tension that moves around',        desc:'Neck, then jaw, then shoulders.' },
+          { v:'sighing',   label:'Sighing often, chest tight',       desc:'Breath keeps needing a bigger exhale.' },
         ] },
-      { v:'depleted', glyph:'○',  label:'An empty cup',   desc:'Exhausted, empty, dried out. The tank has been low for a while.',
-        subHint:'And which of these fits closest?',
+      { v:'depleted', hue:'#F5D689', label:'An empty cup',   desc:'Exhausted, dried out.',
         subs:[
-          { v:'purposeless', glyph:'○', label:'Feel purposeless, hollow',     desc:'The direction has thinned out. Nothing quite reaches.' },
-          { v:'dry',         glyph:'◐', label:'Dry everything — skin, eyes, throat', desc:'The wells have gone low. Moisture doesn\'t stay.' },
-          { v:'overworked',  glyph:'◑', label:'Overworked for too long',      desc:'You went past the edge months ago. Reserves are spent.' },
-          { v:'anxious_empty',glyph:'◈',label:'Anxious but exhausted',        desc:'Wired at rest, tired when it matters. The classic burnout signal.' },
+          { v:'purposeless',  label:'Feel purposeless, hollow',      desc:'Direction has thinned. Nothing quite reaches.' },
+          { v:'dry',          label:'Dry — skin, eyes, throat',      desc:'The wells have gone low.' },
+          { v:'overworked',   label:'Overworked for too long',       desc:'Reserves have been spent for months.' },
+          { v:'anxious_empty',label:'Anxious but exhausted',         desc:'Wired at rest, tired when it counts.' },
         ] },
     ],
   },
@@ -953,10 +999,11 @@ function renderPage(page){
   const isMulti = questions.length > 1;
 
   questions.forEach((q, i) => {
-    // Q2 branch stage-B special-case (only fires when it's the only Q on page)
+    // Q2 branch → dedicated balloon renderer (handles both stages
+    // in-place, no re-render on archetype pick). Always used for branch.
     if (q.type === 'branch' && !isMulti) {
-      const stageB = !!state.answers[q.key] && !state.answers[q.key + 'Sub'];
-      if (stageB) { wrap.appendChild(renderBranchStageB(q)); return; }
+      wrap.appendChild(renderBranchBalloons(q));
+      return;
     }
     wrap.appendChild(renderQuestionBody(q, { compact: isMulti, autoAdvance: !isMulti }));
     if (isMulti && i < questions.length - 1) {
@@ -1092,47 +1139,91 @@ function renderQuestionBody(q, opts){
   return container;
 }
 
-// Q2 branch stage-B renderer — extracted for clarity. Shows a
-// "chosen thread" pill at top so the picked archetype visually persists
-// into the refinement view (Robin's emotional-transition ask).
-function renderBranchStageB(q){
+// Q2 balloon render — 4 archetype balloons in a 2x2 grid. On pick,
+// others fade out in place, chosen balloon glows brighter, and
+// sub-answer balloons materialise below with a staggered entrance.
+// No page transition — same DOM, transformed with CSS classes.
+function renderBranchBalloons(q){
   const wrap = document.createElement('div');
-  wrap.className = 'q-block branch-stage-b';
-  const chosen = q.options.find(o => o.v === state.answers[q.key]);
-  if (!chosen) return wrap;
-
-  // Chosen-thread pill (the archetype pinned as a lasting choice)
-  const pill = document.createElement('div');
-  pill.className = 'branch-chosen-pill';
-  pill.innerHTML = '<span class="pill-glyph">' + (chosen.glyph || '◇') + '</span>' +
-                   '<span class="pill-label">' + chosen.label + '</span>' +
-                   '<button type="button" class="pill-change">change</button>';
-  pill.querySelector('.pill-change').addEventListener('click', () => {
-    delete state.answers[q.key]; delete state.answers[q.key + 'Sub']; persist(); go(state.step);
-  });
-  wrap.appendChild(pill);
+  wrap.className = 'q-block';
 
   const title = document.createElement('h2'); title.className = 'q-title';
-  title.innerHTML = 'And which fits <em>closest</em>?';
+  title.innerHTML = q.title;
   wrap.appendChild(title);
   const hint = document.createElement('div'); hint.className = 'q-hint';
-  hint.textContent = chosen.desc || '';
+  hint.textContent = q.hint || 'Not what you want it to feel — what it actually feels most days.';
   wrap.appendChild(hint);
 
-  const subOpts = document.createElement('div'); subOpts.className = 'q-options branch-sub-appear';
-  (chosen.subs || []).forEach((s, i) => {
-    const b = document.createElement('button'); b.type='button'; b.className='q-opt'; b.dataset.v = s.v;
-    b.style.animationDelay = (i * 60) + 'ms';
-    b.innerHTML = '<span class="q-opt-glyph">' + (s.glyph || '◇') + '</span><span class="q-opt-body"><span class="q-opt-label">' + s.label + '</span>' + (s.desc ? '<span class="q-opt-desc">' + s.desc + '</span>' : '') + '</span>';
+  const grid = document.createElement('div'); grid.className = 'q-balloons';
+  const subsHost = document.createElement('div'); // holds sub-balloons after pick
+  const currentArch = state.answers[q.key];
+
+  q.options.forEach(o => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'q-balloon'; b.dataset.v = o.v;
+    b.style.setProperty('--hue', o.hue || '#E8B14B');
+    b.innerHTML = '<span class="q-balloon-label">' + o.label + '</span>' +
+                  (o.desc ? '<span class="q-balloon-desc">' + o.desc + '</span>' : '');
     b.addEventListener('click', () => {
-      state.answers[q.key + 'Sub'] = s.v; persist();
-      subOpts.querySelectorAll('.q-opt').forEach(x => x.classList.remove('on'));
-      b.classList.add('on');
-      setTimeout(() => go(state.step + 1), 220);
+      state.answers[q.key] = o.v;
+      delete state.answers[q.key + 'Sub'];
+      persist();
+      lockToArchetype(o.v);
     });
-    subOpts.appendChild(b);
+    grid.appendChild(b);
   });
-  wrap.appendChild(subOpts);
+  wrap.appendChild(grid);
+  wrap.appendChild(subsHost);
+
+  // If user is returning to this step with an archetype already picked
+  // (via the back button), restore the locked view immediately.
+  if (currentArch) setTimeout(() => lockToArchetype(currentArch, /*instant*/true), 0);
+
+  function lockToArchetype(archVal, instant){
+    const chosen = q.options.find(o => o.v === archVal);
+    if (!chosen) return;
+    // Mark balloons — chosen stays, others fade out via CSS.
+    grid.querySelectorAll('.q-balloon').forEach(b => {
+      b.classList.toggle('chosen', b.dataset.v === archVal);
+    });
+    grid.classList.add('locked');
+
+    // Render sub-balloons (or replace if already present)
+    subsHost.innerHTML = '';
+    const subsGrid = document.createElement('div'); subsGrid.className = 'q-balloon-subs';
+    subsGrid.style.setProperty('--hue', chosen.hue || '#E8B14B');
+    (chosen.subs || []).forEach(s => {
+      const sb = document.createElement('button'); sb.type='button'; sb.className='q-balloon-sub';
+      sb.style.setProperty('--hue', chosen.hue || '#E8B14B');
+      sb.dataset.v = s.v;
+      if (state.answers[q.key + 'Sub'] === s.v) sb.classList.add('on');
+      sb.innerHTML = '<span class="q-balloon-sub-label">' + s.label + '</span>' +
+                     (s.desc ? '<span class="q-balloon-sub-desc">' + s.desc + '</span>' : '');
+      sb.addEventListener('click', () => {
+        state.answers[q.key + 'Sub'] = s.v; persist();
+        subsGrid.querySelectorAll('.q-balloon-sub').forEach(x => x.classList.remove('on'));
+        sb.classList.add('on');
+        setTimeout(() => go(state.step + 1), 260);
+      });
+      subsGrid.appendChild(sb);
+    });
+    subsHost.appendChild(subsGrid);
+
+    // Small "change body reading" affordance under the sub-balloons
+    const change = document.createElement('button');
+    change.type = 'button'; change.className = 'q-balloon-change';
+    change.textContent = '← change body reading';
+    change.addEventListener('click', () => {
+      delete state.answers[q.key]; delete state.answers[q.key + 'Sub']; persist();
+      grid.classList.remove('locked');
+      grid.querySelectorAll('.q-balloon').forEach(b => b.classList.remove('chosen'));
+      subsHost.innerHTML = '';
+    });
+    subsHost.appendChild(change);
+
+    if (instant) subsGrid.style.animation = 'none';
+  }
+
   return wrap;
 }
 
@@ -1162,10 +1253,98 @@ function onPick(q, v, btnEl, optsEl, autoAdvance){
   }
 }
 
+// ── Sub-pattern affinity (16 TCM signatures → herb ID hints) ──
+// Each of Q2's 16 sub-signatures maps onto a specific set of herbs
+// the practitioner tradition would reach for. Matches (loose — by id
+// substring OR by name) grant +6 to a herb's score, on top of the
+// coarse pattern-archetype +4. This is the depth Robin's engine has
+// on paper — now wired into scoring, not just story flavour.
+const SUBPATTERN_AFFINITY = {
+  // Hot archetypes
+  anger:       ['bupleurum','peony','chrysanthemum','gardenia','skullcap','passionflower','motherwort','mint'],
+  flushed:     ['american_ginseng','ophiopogon','rehmannia','tremella','lily','moutan'],
+  inflamed:    ['turmeric','boswellia','solidago','japanese_knotweed','honeysuckle','forsythia','cats_claw','burdock'],
+  hot_night:   ['rehmannia','ophiopogon','peony','lily','asparagus','american_ginseng','mulberry'],
+  // Cold archetypes
+  cold_hands:  ['cinnamon','ginger','angelica','pine_pollen','maca','shatavari','dong_quai'],
+  heavy:       ['fu_ling','atractylodes','codonopsis','ginger','citrus_peel','magnolia','tangerine'],
+  pale:        ['codonopsis','astragalus','atractylodes','licorice','red_dates','shan_yao','jujube'],
+  low_drive:   ['cistanche','morinda','eucommia','cordyceps','maca','ashwagandha','shilajit','pine_pollen'],
+  // Mixed archetypes
+  stuck:       ['bupleurum','cyperus','citrus_peel','rose','holy_basil','damiana','vervain'],
+  up_down:     ['bupleurum','peony','lily','albizia','shatavari','holy_basil','saffron'],
+  tension:     ['gastrodia','uncaria','black_cohosh','passionflower','skullcap','magnolia','wood_betony'],
+  sighing:     ['bupleurum','magnolia_bark','rose','lily','albizia','lavender','damiana'],
+  // Depleted archetypes
+  purposeless: ['reishi','asparagus','albizia','lily','rose','saffron','shatavari','damiana'],
+  dry:         ['ophiopogon','tremella','glehnia','american_ginseng','shatavari','rehmannia','goji','pear'],
+  overworked:  ['rehmannia','goji','cistanche','eucommia','he_shou_wu','deer','shilajit','pine_pollen','maca'],
+  anxious_empty:['albizia','longan','lily','fu_ling','jujube','red_dates','saffron','ashwagandha','oatstraw'],
+};
+function subPatternBoost(h, subKey){
+  const hints = SUBPATTERN_AFFINITY[subKey];
+  if (!hints || !hints.length) return 0;
+  const id   = String(h.id || '').toLowerCase();
+  const name = String(h.name || '').toLowerCase();
+  for (const hint of hints) {
+    const needle = hint.replace(/_/g, ' ');
+    if (id.includes(hint) || name.includes(needle)) return 6;
+  }
+  return 0;
+}
+
+// ── Duration → herb-family weighting ─────────────────────
+// Acute (weeks) rewards fast-acting nervines / warming movers.
+// Chronic (year+, lifelong) rewards deep tonics / adaptogens /
+// mineral-nutritives. Middle (months) sits between.
+function durationBoost(h, duration){
+  if (!duration) return 0;
+  const text = ((h.primary_functions || []).concat(h.energetics || []).concat([h.pharmacology || ''])).join(' | ').toLowerCase();
+  if (duration === 'weeks') {
+    if (/nervine|acute|fast|rapid|immediate|warming|move.*qi|circulation/.test(text)) return 3;
+    if (/deep.*tonic|constitutional|jing|multi.?month|long.?slow/.test(text)) return -2;
+  } else if (duration === 'year_plus' || duration === 'lifelong') {
+    if (/tonic|adaptogen|nourish|jing|essence|restor|convalescence|constitutional|mineral/.test(text)) return 4;
+    if (/acute|first.line.*acute|short.?term|fast.?acting/.test(text)) return -1;
+  }
+  return 0;
+}
+
+// ── Age bracket adjustment ───────────────────────────────
+// Older adults get a preference for gentle nourishing tonics + a
+// mild penalty on strong stimulants. Under-25 tolerates strong yang
+// tonics but gets a modest de-emphasis on menopausal/cycle formulas.
+function ageBoost(h, age){
+  if (!age) return 0;
+  const text = ((h.primary_functions || []).concat(h.contraindications || [])).join(' | ').toLowerCase();
+  if (age === '60_plus') {
+    if (/gentle|nourish|tonic|restor|adaptogen|kidney.*yin|blood.*tonic/.test(text)) return 2;
+    if (/stimulant|caffeine|strong.*yang|hot.*energetic/.test(text)) return -2;
+  }
+  if (age === 'under_25') {
+    if (/menopaus|perimenopaus|hot flash/.test(text)) return -2;
+  }
+  return 0;
+}
+
+// ── Sleep quality → sleep-specific boost ─────────────────
+function sleepBoost(h, sleep){
+  if (!sleep || sleep === 'restorative_6plus') return 0;
+  const text = ((h.primary_functions || []).concat(h._ax?.intentions || [])).join(' | ').toLowerCase();
+  if (sleep === 'very_broken' || sleep === 'under_6') {
+    if (/sleep|somno|insomni|hypnotic|deep sleep|night wake|circadian/.test(text)) return 4;
+  }
+  if (sleep === 'not_restorative_6plus') {
+    if (/restor|adaptogen|adrenal|hpa|shen|kidney.*yin/.test(text)) return 3;
+  }
+  return 0;
+}
+
 // ── Scoring + pick ────────────────────────────────────────
-// Base score from the 4 quiz axes. `notes` (the free-text Q6 answer)
-// contributes an additional keyword-relevance boost so users writing
-// "want to lucid travel" push Calea, Blue Lotus, Mugwort up the pool.
+// Base score from the 4 quiz axes plus notes / sub-pattern / duration
+// / age / sleep boosts. `notes` (the free-text Q6 answer) contributes
+// an additional keyword-relevance boost so users writing "want to
+// lucid travel" push Calea, Blue Lotus, Mugwort up the pool.
 function scoreHerb(h, a){
   const ax = h._ax;
   let s = 0;
@@ -1174,6 +1353,10 @@ function scoreHerb(h, a){
   if (ax.times.includes(a.time))           s += 2;
   if (ax.stress.includes(a.stress))        s += 3;
   s += notesBoost(h, a.notes);
+  s += subPatternBoost(h, a.patternSub);
+  s += durationBoost(h, a.duration);
+  s += ageBoost(h, a.age);
+  s += sleepBoost(h, a.sleep);
   return s;
 }
 
@@ -1223,6 +1406,41 @@ function safetyFilter(h, avoid){
   return true;
 }
 
+// Rough category of a herb — used by the balance guard. Categories:
+// adaptogen · nervine · tonic · mover · mushroom · bitter · aromatic ·
+// nutritive · other. Pulled from primary_functions text + energetics.
+function categoryOf(h){
+  const t = (
+    (h.primary_functions || []).join(' | ') + ' | ' +
+    (h.energetics || []).join(' | ') + ' | ' +
+    (h.pharmacology || '')
+  ).toLowerCase();
+  const name = (h.name || '').toLowerCase();
+  if (/mushroom|reishi|chaga|lion|cordyceps|maitake|shiitake|tremella|turkey.tail|amanita|polypore/.test(name + ' ' + t)) return 'mushroom';
+  if (/adaptogen|cortisol|hpa|adrenal|stress.resil/.test(t)) return 'adaptogen';
+  if (/nervine|gaba|anxiolytic|sedativ|calm.*nerv/.test(t)) return 'nervine';
+  if (/move.*qi|circulate|regulate.*qi|liver.*qi|disperse|open.*chest/.test(t)) return 'mover';
+  if (/bitter|hepatic|liver.*cleans|digest.*bitter|choleretic/.test(t)) return 'bitter';
+  if (/tonic|nourish|blood.*tonic|yin.*tonic|yang.*tonic|jing|essence|restor/.test(t)) return 'tonic';
+  if (/nutriti|mineral.*rich|silica|iron.*rich|dense.*nutri|deeply nour/.test(t)) return 'nutritive';
+  if (/aromatic|essential.*oil|carminativ/.test(t)) return 'aromatic';
+  return 'other';
+}
+
+// Decide the target herb count for this reveal. Simple heuristic:
+// complex readings (long note, sub-pattern set, high-intensity
+// duration or stress) call for a fuller 6-7 herb formula. Simple
+// readings stay at 5. This is what "MYCO alchemist chose to add a
+// 6th because the case needed it" looks like without MYCO yet.
+function targetHerbCount(a){
+  let n = 5;
+  if (a.notes && a.notes.trim().length > 80)         n += 1;
+  if (a.patternSub)                                   n += 0; // already covered by boost
+  if (a.duration === 'year_plus' || a.duration === 'lifelong') n += 1;
+  if (a.sleep === 'very_broken')                     n += 0;
+  return Math.min(7, Math.max(5, n));
+}
+
 function pickFormula(a){
   const pool = ensurePool();
   if (!pool || !pool.length) return [];
@@ -1240,21 +1458,39 @@ function pickFormula(a){
     return true;
   });
 
-  // Prefer at MOST 1 trace herb (essential-oil-rich) in the top 5 —
-  // otherwise a strong lavender/peppermint match dominates. Take top-5
-  // non-trace + up to 1 trace herb, then re-sort by score.
-  const nonTrace = uniq.filter(x => !isTrace(x.h)).slice(0, 5);
-  const traces   = uniq.filter(x =>  isTrace(x.h)).slice(0, 1);
-  let combined = nonTrace.concat(traces).sort((a, b) => b.s - a.s).slice(0, 5);
+  const target = targetHerbCount(a);
 
-  // Refill if we still don't have 5 (very safety-restricted answer set)
-  if (combined.length < 5) {
-    const rest = uniq.filter(x => !combined.includes(x)).slice(0, 5 - combined.length);
-    combined = combined.concat(rest);
+  // Category balance guard — max 2 herbs per category (adaptogen /
+  // nervine / mushroom / tonic / mover / bitter / aromatic / nutritive).
+  // Iterate uniq in score order, take each if its category isn't
+  // already at 2. Trace herbs count against the "aromatic" cap so
+  // lavender + peppermint can't both make it. Ensures a well-composed
+  // blend, not a monoculture.
+  const catCount = {};
+  const composed = [];
+  let traceUsed = 0;
+  for (const x of uniq) {
+    if (composed.length >= target) break;
+    const cat = categoryOf(x.h);
+    if ((catCount[cat] || 0) >= 2) continue;
+    if (isTrace(x.h)) { if (traceUsed >= 1) continue; traceUsed += 1; }
+    composed.push(x);
+    catCount[cat] = (catCount[cat] || 0) + 1;
   }
 
-  // Attach score to the returned herb so assignPercentages can weight it
-  return combined.map(x => Object.assign({}, x.h, { _score: x.s }));
+  // Fill any remaining slots without the category cap (only fires when
+  // the safety-filtered pool is thin — e.g. many contraindications set).
+  if (composed.length < target) {
+    for (const x of uniq) {
+      if (composed.length >= target) break;
+      if (composed.includes(x)) continue;
+      if (isTrace(x.h) && traceUsed >= 1) continue;
+      composed.push(x);
+      if (isTrace(x.h)) traceUsed += 1;
+    }
+  }
+
+  return composed.map(x => Object.assign({}, x.h, { _score: x.s, _cat: categoryOf(x.h) }));
 }
 
 // ── Formula composition ──────────────────────────────────
@@ -1520,26 +1756,101 @@ function buildWhyText(a, herbs, pct){
   const readingLine =
     'This composition targets <em>' + intentPhrase + '</em>, tuned for <em>' + patternPhrase + '</em>' +
     (a.patternSub ? ' &mdash; specifically the ' + a.patternSub.replace(/_/g, ' ') + ' signature' : '') + '.';
-  // Extra reasoning paragraphs — these are the ones that live BELOW
-  // the fade line in the dimmed view, and become visible once the
-  // user reserves (or taps "See the apothecary").
-  const deeperLine =
-    'Each ally was pulled from a pool of 152 catalogued herbs, filtered against your safety flags, ' +
-    'scored across intention, body signature, rhythm and stress, and cross-checked for herb-to-herb ' +
-    'synergy in the practitioner catalog. The percentages above reflect that composite score &mdash; ' +
-    'not a template.';
-  const traceLine =
-    'Any essential-oil-rich herb (lavender, ginger, cinnamon and their kin) is capped at 5% by design. ' +
-    'Their flavour and pharmacology are strong enough that anything more would dominate the blend. ' +
-    'The remaining share goes to the tonics and nervines that do the slower, foundational work.';
+  // Free (visible) copy — GENERIC methodology. Doesn't leak the hero
+  // herbs or their percentages. Sets up the intrigue for the paywall.
+  const openLine =
+    'Every reservation begins with a pool of 152 catalogued herbs. Yours was <strong>filtered against your safety flags</strong>, then scored across intention, body signature, rhythm and stress. Cross-checked for herb-to-herb synergy in the practitioner catalog.';
+  const methodLine =
+    'Any essential-oil-rich herb (lavender, ginger, cinnamon and their kin) is capped at 5% by design &mdash; their pharmacology is strong enough that anything more would dominate the blend. The remaining share goes to the tonics, nervines and adaptogens that do the slower, foundational work.';
 
+  // Dimmed (unlock to reveal) — the SPECIFIC reasoning. What the
+  // paywall protects: which herbs, why, and at what share. Order
+  // matters — this is the "money" content, not the free preview.
   return (
-    '<p>' + readingLine + '</p>' +
-    '<p>' + heroLine + '</p>' +
-    (restLine ? '<p>' + restLine + '</p>' : '') +
-    '<p>' + deeperLine + '</p>' +
-    '<p>' + traceLine + '</p>'
+    // Free preview (top of card)
+    '<p>' + openLine + '</p>' +
+    '<p>' + methodLine + '</p>' +
+    // Dimmed reasoning (paywalled)
+    '<div class="r-why-reveal">' +
+      '<p>' + readingLine + '</p>' +
+      '<p>' + heroLine + '</p>' +
+      (restLine ? '<p>' + restLine + '</p>' : '') +
+    '</div>'
   );
+}
+
+// ── MYCO as formula composer ──────────────────────────────
+// Deterministic scoring produces the top 15-20 candidates (shortlist).
+// MYCO reads shortlist + full quiz + free-text and picks the 5-7 that
+// work best together, returning structured JSON. If MYCO fails or
+// returns malformed output, the deterministic top-N is used unchanged.
+function buildShortlist(a){
+  const pool = ensurePool();
+  if (!pool || !pool.length) return [];
+  const safe = pool.filter(h => safetyFilter(h, a.avoid || []));
+  const scored = safe.map(h => ({ h, s: scoreHerb(h, a) })).filter(x => x.s > 0);
+  scored.sort((x, y) => y.s - x.s);
+  const seen = new Set();
+  const uniq = scored.filter(x => {
+    const key = (shortNote(x.h) || x.h.name).slice(0, 40);
+    if (seen.has(key)) return false; seen.add(key); return true;
+  });
+  return uniq.slice(0, 20).map(x => ({
+    id: x.h.id, name: x.h.name, botanical: x.h.botanical || '',
+    category: categoryOf(x.h), score: x.s, trace: isTrace(x.h),
+    functions: ((x.h.primary_functions || [])[0] || '').slice(0, 200),
+    _raw: x.h,
+  }));
+}
+async function mycoCompose(a){
+  const shortlist = buildShortlist(a);
+  if (shortlist.length < 5) return null;
+  const quizPayload = {
+    intention: a.intention, pattern: a.pattern, patternSub: a.patternSub,
+    time: a.time, stress: a.stress, duration: a.duration,
+    age: a.age, sleep: a.sleep, avoid: a.avoid, notes: a.notes,
+  };
+  try {
+    const res = await fetch('/api/myco-agent', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        mode: 'compose',
+        shortlist: shortlist.map(({_raw, ...rest}) => rest),
+        quiz: quizPayload,
+      }),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (data.composerFailed || !Array.isArray(data.picked)) return null;
+    // Rehydrate herb objects from the shortlist
+    const shortlistById = {}; shortlist.forEach(s => { shortlistById[s.id] = s._raw; });
+    const picks = data.picked.map(p => {
+      const h = shortlistById[p.id];
+      if (!h) return null;
+      return { herb: Object.assign({}, h, { _score: p.pct || 1, _cat: categoryOf(h) }), pct: Number(p.pct) || 0, reason: p.reason || '' };
+    }).filter(Boolean);
+    if (picks.length < 5) return null;
+    // Normalise percentages (correct rounding drift, cap traces at 5%)
+    const herbs = picks.map(p => p.herb);
+    const rawPct = picks.map(p => p.pct);
+    // Cap trace herbs at 5% + redistribute (mirrors assignPercentages logic)
+    let excess = 0;
+    herbs.forEach((h, i) => { if (isTrace(h) && rawPct[i] > 5) { excess += rawPct[i] - 5; rawPct[i] = 5; } });
+    if (excess > 0.5) {
+      const nonTraceIdx = herbs.map((h, i) => isTrace(h) ? -1 : i).filter(i => i >= 0);
+      const nonTraceTotal = nonTraceIdx.reduce((s, i) => s + rawPct[i], 0);
+      if (nonTraceTotal > 0) nonTraceIdx.forEach(i => { rawPct[i] += excess * (rawPct[i] / nonTraceTotal); });
+    }
+    const pct = rawPct.map(p => Math.round(p));
+    const drift = 100 - pct.reduce((a, b) => a + b, 0);
+    if (drift !== 0) { let iMax = 0; for (let i = 1; i < pct.length; i++) if (pct[i] > pct[iMax]) iMax = i; pct[iMax] += drift; }
+    return {
+      herbs, percentages: pct,
+      reasons: picks.map(p => p.reason),
+      overall: data.overall || '',
+    };
+  } catch (_) { return null; }
 }
 
 // ── MYCO personalisation (only fires when user filled the notes) ──
@@ -1601,7 +1912,10 @@ function renderResult(){
   a.stress    = a.stress    || 'ride';
   a.avoid     = Array.isArray(a.avoid) ? a.avoid : ['none'];
 
-  const herbs = pickFormula(a);
+  // Start with the deterministic pick as the "safe" formula — renders
+  // instantly. In parallel, ask MYCO to compose from the shortlist; if
+  // MYCO returns a valid composition, swap it in with a soft transition.
+  let herbs = pickFormula(a);
   const name  = pickName(a.intention);
 
   document.getElementById('bottle').insertAdjacentHTML('beforeend', bottleCard(a.intention, herbs, name));
@@ -1638,12 +1952,18 @@ function renderResult(){
   const pct = assignPercentages(herbs);
   const list = document.getElementById('rHerbList');
   list.innerHTML = '';
+  // Herbs container starts .pct-locked — percentages render as "??%"
+  // in that state. Reservation (or the apothecary escape) removes the
+  // class and the true numbers fade in via CSS transition.
+  const herbsBox = document.getElementById('rHerbs');
+  if (herbsBox) herbsBox.classList.add('pct-locked');
   herbs.forEach((h, i) => {
     const el = document.createElement('div');
     el.className = 'r-herb';
     const trace = isTrace(h);
+    const realPct = pct[i] > 0 ? pct[i] : 1;
     el.innerHTML =
-      '<span class="r-herb-n">' + (pct[i] > 0 ? pct[i] : 1) + '%</span>' +
+      '<span class="r-herb-n" data-pct="' + realPct + '%">??%</span>' +
       '<div>' +
         '<div class="r-herb-name">' + h.name + '</div>' +
         '<div class="r-herb-latin">' + (h.botanical || '') + '</div>' +
@@ -1652,6 +1972,15 @@ function renderResult(){
       '</div>';
     list.appendChild(el);
   });
+
+  // Helper — reveal real percentages (called on reserve OR apothecary click)
+  window.__revealPercentages = function(){
+    document.querySelectorAll('#rHerbList .r-herb-n').forEach(n => {
+      const real = n.getAttribute('data-pct');
+      if (real) n.textContent = real;
+    });
+    if (herbsBox) herbsBox.classList.remove('pct-locked');
+  };
 
   // ── Synergies (+ cautions) — cross-check the picked herbs against
   // their `herb_to_herb_synergy` / `herb_to_herb_caution` fields. Only
@@ -1682,6 +2011,75 @@ function renderResult(){
 
   // Stash for reservation + optional cloud-save on submit.
   window.__currentFormula = { name, herbs, percentages: pct, synergies: pairs.synergies };
+
+  // Fire MYCO composer in the background. If it returns a valid
+  // composition (5-7 herbs with per-herb reasoning), swap it in.
+  // Fully non-blocking — deterministic pick is already on screen.
+  mycoCompose(a).then(compose => {
+    if (!compose) return;
+    // Update the state to MYCO's composition
+    herbs = compose.herbs;
+    window.__currentFormula = { name, herbs, percentages: compose.percentages, synergies: [], mycoReasons: compose.reasons, mycoOverall: compose.overall };
+    // Re-render the herb list with the new composition
+    const list = document.getElementById('rHerbList');
+    if (!list) return;
+    list.innerHTML = '';
+    herbs.forEach((h, i) => {
+      const el = document.createElement('div');
+      el.className = 'r-herb';
+      const trace = isTrace(h);
+      const realPct = compose.percentages[i] > 0 ? compose.percentages[i] : 1;
+      const reason = compose.reasons[i] ? '<div class="r-herb-reason">&mdash; ' + escapeHtml(compose.reasons[i]) + '</div>' : '';
+      el.innerHTML =
+        '<span class="r-herb-n" data-pct="' + realPct + '%">??%</span>' +
+        '<div>' +
+          '<div class="r-herb-name">' + h.name + '</div>' +
+          '<div class="r-herb-latin">' + (h.botanical || '') + '</div>' +
+          '<div class="r-herb-note">' + shortNote(h) + '</div>' +
+          reason +
+          (trace ? '<span class="r-herb-tag trace">◇ Trace ingredient · potent flavour</span>' : '') +
+        '</div>';
+      list.appendChild(el);
+    });
+    // Update reveal-percentages helper to use MYCO's numbers
+    const herbsBox = document.getElementById('rHerbs');
+    if (herbsBox) herbsBox.classList.add('pct-locked');
+    // Also re-recompute synergies against the new pick + refresh panel
+    const newPairs = checkFormulaPairs(herbs);
+    const synEl  = document.getElementById('rSynergy');
+    const synBody= document.getElementById('rSynergyPairs');
+    if (synEl && synBody) {
+      synBody.innerHTML = '';
+      if (newPairs.synergies.length || newPairs.cautions.length) {
+        synEl.hidden = false;
+        newPairs.synergies.forEach(p => {
+          const row = document.createElement('div');
+          row.className = 'r-synergy-pair';
+          row.innerHTML = '<div class="r-synergy-names">' + p.a + ' <span class="amp">&amp;</span> ' + p.b + '</div>' +
+                          '<div class="r-synergy-note">' + (p.note || 'traditional pairing').replace(/^[^—:]*[—:]\s*/, '') + '</div>';
+          synBody.appendChild(row);
+        });
+        newPairs.cautions.forEach(p => {
+          const row = document.createElement('div');
+          row.className = 'r-caution-pair';
+          row.textContent = '⚠ Caution · ' + p.a + ' + ' + p.b + ' — ' + (p.note || '').replace(/^[^—:]*[—:]\s*/, '');
+          synBody.appendChild(row);
+        });
+      }
+      window.__currentFormula.synergies = newPairs.synergies;
+    }
+    // Update the "Why this formula" body to include MYCO's overall reasoning
+    if (compose.overall) {
+      const dimReveal = document.querySelector('.r-why-reveal');
+      if (dimReveal) {
+        dimReveal.insertAdjacentHTML('beforeend', '<p><em>MYCO\'s reasoning:</em> ' + escapeHtml(compose.overall) + '</p>');
+      }
+    }
+    // Subtle visual signal that MYCO stepped in
+    const composerBadge = document.querySelector('.r-story .r-story-eyebrow');
+    if (composerBadge) composerBadge.textContent = '✦ Composed by MYCO · the alchemist';
+  }).catch(() => {});
+function escapeHtml(s){ return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
   // "Why this formula" — dynamic prose that links the picked herbs to
   // the reader's answers + a two-line explainer on the spagyric extract
@@ -1749,10 +2147,13 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     document.getElementById('reservedEmail').textContent = payload.email;
     document.getElementById('reserveThanks').classList.add('on');
     form.style.display = 'none';
-    // Unlock the "Why this formula" fade — the reservation was the
-    // gate. Full reasoning reveals with a soft animation.
+    // Unlock the "Why this formula" fade + herb percentages —
+    // reservation was the gate for both. Full reasoning reveals with
+    // a soft blur-clear animation; % transitions from grey ??% to
+    // the real values in amber.
     const whyCard = document.getElementById('rWhyCard');
     if (whyCard) whyCard.classList.remove('dimmed');
+    if (window.__revealPercentages) window.__revealPercentages();
     // Archive to /community/academy/ Formula Book (local + cloud).
     try {
       const cur = window.__currentFormula;
@@ -1836,6 +2237,7 @@ document.querySelectorAll('.r-action').forEach(el => {
     el.addEventListener('click', () => {
       const whyCard = document.getElementById('rWhyCard');
       if (whyCard) whyCard.classList.remove('dimmed');
+      if (window.__revealPercentages) window.__revealPercentages();
     });
   }
 });
