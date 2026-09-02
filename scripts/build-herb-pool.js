@@ -3,6 +3,29 @@ const path = require('path');
 
 const herbsPath = path.resolve(__dirname, '../src/data/herbs.ts');
 
+// Legally-restricted / prohibited names — never reach the consumer
+// pool. Applied at BUILD time here so the output JSON is safe to load
+// on any surface without a runtime filter. Amanita muscaria + Calea
+// zacatechichi are intentionally NOT here — Fungai Art offers them
+// legally, with opt-in gating enforced by the quiz UI.
+const RESTRICTED_NAMES = [
+  'psilocybe','psilocybin','psilocin',
+  'ayahuasca','banisteriopsis','chacruna','yage','yagé',
+  'peyote','lophophora','mescaline','san pedro','trichocereus',
+  'salvia divinorum',
+  'iboga','tabernanthe','ibogaine',
+  'kratom','mitragyna',
+  'morning glory seed','ololiuhqui','lsa','hawaiian baby woodrose',
+  'toad venom','5-meo-dmt','bufo alvarius',
+  'dmt','n,n-dmt',
+  'coca leaf','erythroxylum','cocaine',
+  'acorus calamus','calamus root',
+];
+function isRestricted(name, botanical){
+  const s = (String(name || '') + ' ' + String(botanical || '')).toLowerCase();
+  return RESTRICTED_NAMES.some(r => s.includes(r));
+}
+
 function extractHerbsFromFile() {
   const content = fs.readFileSync(herbsPath, 'utf-8');
 
@@ -21,10 +44,24 @@ function extractHerbsFromFile() {
 
     const id = parseInt(idMatch[1], 10);
 
-    // Extract name
-    const nameMatch = section.match(/name:\s*['"]([^'"]+)['"]/);
+    // Extract name — handle BOTH single-quoted (name: 'Bilberry') and
+    // double-quoted (name: "Lion's Mane") entries. Previous regex
+    // used [^'"] which truncates apostrophe names to "St. John",
+    // "Cat", "Butcher". Now single- and double-quoted paths are split
+    // so an apostrophe inside a double-quoted string doesn't terminate.
+    const nameMatch = section.match(/name:\s*(?:'([^']+)'|"([^"]+)")/);
     if (!nameMatch) continue;
-    const name = nameMatch[1];
+    const name = nameMatch[1] || nameMatch[2];
+
+    // Extract botanical for the restricted-name check
+    const botMatch = section.match(/botanical:\s*(?:'([^']+)'|"([^"]+)")/);
+    const botanical = botMatch ? (botMatch[1] || botMatch[2]) : '';
+
+    // Skip restricted herbs at build time — no runtime filter needed.
+    if (isRestricted(name, botanical)) {
+      console.log('  · restricted, skipping: ' + name);
+      continue;
+    }
 
     // Extract primary_functions array
     const primaryFuncsMatch = section.match(/primary_functions:\s*\[([\s\S]*?)\],\s*secondary_benefits/);
@@ -58,13 +95,13 @@ function extractHerbsFromFile() {
 
 function extractArrayStrings(arrayContent) {
   const result = [];
-  // Match quoted strings in the array
-  const stringMatches = arrayContent.match(/['"][^'"]*['"]/g) || [];
-
-  for (let match of stringMatches) {
-    result.push(match.slice(1, -1)); // Remove quotes
-  }
-
+  // Match single- OR double-quoted strings separately so apostrophes
+  // inside double-quoted entries ("Lion's mane synergy") don't split
+  // the match mid-word.
+  const single = arrayContent.match(/'([^']*)'/g) || [];
+  const double = arrayContent.match(/"([^"]*)"/g) || [];
+  for (const m of single) result.push(m.slice(1, -1));
+  for (const m of double) result.push(m.slice(1, -1));
   return result;
 }
 

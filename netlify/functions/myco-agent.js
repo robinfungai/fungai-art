@@ -266,6 +266,15 @@ export const handler = async (event) => {
         '- Priority + prior herb experience: "' + String(q.notes || '').slice(0, 500) + '"\n\n' +
         'Shortlist (ranked by the deterministic scorer):\n' + shortlistText + '\n\n' +
         'Return the JSON now.';
+      // Composer runs on Claude Opus 5 — higher-quality herb-selection
+      // reasoning than Haiku's classifier-tier picks. On Opus 5,
+      // `temperature` and `budget_tokens` are removed (return 400 if
+      // sent), thinking defaults to adaptive, and `output_config.effort`
+      // is the depth lever. Compose is a bounded task so effort:medium
+      // balances quality and cost (~$0.02-0.03 per compose).
+      // Cost note: the chat reveal narrative still runs on Haiku
+      // downstream — this endpoint's compose branch is the only place
+      // Opus 5 fires.
       const res = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: {
@@ -274,16 +283,23 @@ export const handler = async (event) => {
           'content-type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'claude-haiku-4-5',
-          max_tokens: 1400,
-          temperature: 0.4,
+          model: 'claude-opus-5',
+          max_tokens: 4000,
+          thinking: { type: 'adaptive' },
+          output_config: { effort: 'medium' },
           system: composeSys,
           messages: [{ role: 'user', content: composeUser }],
         }),
       });
       const data = await res.json();
       if (!res.ok) return { statusCode: res.status, headers: cors, body: JSON.stringify({ error: data.error?.message || 'compose error' }) };
-      const raw = data.content?.[0]?.text || '';
+      // Opus 5 returns thinking blocks first (content[0] can be
+      // { type: 'thinking', thinking: '...' }); the actual response
+      // is in the first block with type:'text'. Iterate defensively.
+      let raw = '';
+      for (const block of (data.content || [])) {
+        if (block && block.type === 'text' && block.text) { raw = block.text; break; }
+      }
       // Try to extract JSON — the model is instructed to return only JSON
       // but occasionally wraps it in ```json ... ``` — strip if present.
       let parsed = null;

@@ -110,7 +110,20 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .hero-meta{display:flex;justify-content:center;gap:6px 22px;flex-wrap:wrap;font-family:var(--mono);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--dust-d);margin-bottom:36px}
 .hero-meta span{display:inline-flex;align-items:center;gap:6px}
 .hero-meta span::before{content:'◇';color:var(--amber-l);font-size:10px}
-.hero-cta{display:inline-flex;align-items:center;gap:14px;padding:18px 32px;background:linear-gradient(135deg,var(--amber-l),var(--amber));color:var(--void);font-family:var(--mono);font-size:11px;letter-spacing:0.28em;text-transform:uppercase;text-decoration:none;border:none;border-radius:999px;cursor:pointer;transition:transform .2s,box-shadow .2s;font-weight:500;box-shadow:0 12px 40px -12px rgba(232,177,75,0.5)}
+.hero-cta{display:inline-flex;align-items:center;gap:14px;padding:18px 32px;background:linear-gradient(135deg,var(--amber-l),var(--amber));color:var(--void);font-family:var(--mono);font-size:11px;letter-spacing:0.28em;text-transform:uppercase;text-decoration:none;border:none;border-radius:999px;cursor:pointer;transition:transform .2s,box-shadow .2s,opacity .25s;font-weight:500;box-shadow:0 12px 40px -12px rgba(232,177,75,0.5)}
+.hero-cta:disabled{opacity:0.32;cursor:not-allowed;transform:none;box-shadow:none;filter:grayscale(0.4)}
+
+/* Age gate — 18+ confirmation + Amanita opt-in. Reading is disabled
+   until 18+ is ticked. Amanita opt-in is optional (silent default). */
+.hero-gate{margin:0 auto 24px;max-width:400px;display:flex;flex-direction:column;gap:10px;text-align:left}
+.hero-gate-row{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:rgba(232,177,75,0.04);border:0.5px solid var(--rule);border-radius:12px;cursor:pointer;transition:border-color .18s,background .18s;font-family:var(--sans);font-size:13px;line-height:1.5;color:var(--parchment)}
+.hero-gate-row:hover{border-color:var(--rule-strong);background:rgba(232,177,75,0.06)}
+.hero-gate-row input[type="checkbox"]{appearance:none;-webkit-appearance:none;width:18px;height:18px;border:1.5px solid var(--rule-strong);border-radius:4px;margin:0;cursor:pointer;flex-shrink:0;background:transparent;position:relative;transition:border-color .18s,background .18s}
+.hero-gate-row input[type="checkbox"]:checked{background:var(--amber-l);border-color:var(--amber-l)}
+.hero-gate-row input[type="checkbox"]:checked::after{content:'✓';position:absolute;top:-1px;left:2px;color:var(--void);font-weight:700;font-size:14px}
+.hero-gate-row strong{color:var(--amber-l);font-weight:500}
+.hero-gate-row-optional{background:transparent;border-color:rgba(232,177,75,0.14)}
+.hero-gate-row-optional strong{color:var(--violet)}
 .hero-cta:hover{transform:translateY(-2px);box-shadow:0 18px 50px -12px rgba(232,177,75,0.7)}
 .hero-cta .arrow{font-size:16px;line-height:1}
 .hero-note{margin-top:26px;font-family:var(--mono);font-size:9.5px;letter-spacing:0.18em;color:var(--dust-d);opacity:0.75}
@@ -520,6 +533,20 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .r-why:not(.dimmed) .r-why-lock{display:none}
 
 .r-safety{padding:14px 4px;font-family:var(--serif);font-style:italic;font-size:12.5px;line-height:1.6;color:var(--dust-d);text-align:center;margin-bottom:18px}
+/* Filter-transparency panel — turns the safety screen from a legal
+   formality into visible protection. Renders only when at least one
+   herb was removed. Collapsed by default (small line); expands to
+   show the count-per-flag + example names. */
+.r-filter-note{background:rgba(123,212,161,0.05);border:0.5px solid rgba(123,212,161,0.22);border-radius:12px;padding:12px 16px;margin-bottom:14px;font-family:var(--sans)}
+.r-filter-note summary{cursor:pointer;font-size:12.5px;color:var(--sage);letter-spacing:0.02em;list-style:none;display:flex;align-items:center;gap:8px}
+.r-filter-note summary::-webkit-details-marker{display:none}
+.r-filter-note summary::after{content:'↓';margin-left:auto;color:var(--sage);opacity:0.65;transition:transform .18s}
+.r-filter-note[open] summary::after{transform:rotate(180deg)}
+.r-filter-glyph{font-size:12px;color:var(--sage);opacity:0.75}
+.r-filter-body{margin-top:10px;padding-top:10px;border-top:0.5px solid rgba(123,212,161,0.14);font-size:12px;color:var(--dust);line-height:1.6}
+.r-filter-body ul{margin:6px 0 0;padding-left:16px;list-style:none}
+.r-filter-body li{padding:2px 0;position:relative}
+.r-filter-body li::before{content:'·';position:absolute;left:-10px;color:var(--sage)}
 
 /* Reserve / checkout */
 .reserve{background:linear-gradient(180deg,var(--void-2),var(--void));border:0.5px solid var(--rule-strong);border-radius:20px;padding:24px 22px;position:relative;overflow:hidden}
@@ -582,12 +609,26 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
       <span>Slow-pace medicine</span>
       <span>Shipped worldwide</span>
     </div>
+    <!-- 18+ age gate + Amanita opt-in. The reading won't begin until
+         the 18+ box is ticked. Amanita ceremonial allies are gated
+         herbs that need explicit opt-in before the picker considers
+         them. -->
+    <div class="hero-gate">
+      <label class="hero-gate-row">
+        <input type="checkbox" id="gateAdult"/>
+        <span>I confirm I am <strong>18 years or older</strong>.</span>
+      </label>
+      <label class="hero-gate-row hero-gate-row-optional">
+        <input type="checkbox" id="gateAmanita"/>
+        <span>Open me to ceremonial allies like <strong>Amanita muscaria</strong> (optional).</span>
+      </label>
+    </div>
     <div style="display:flex;justify-content:center">
-      <button class="hero-cta" id="startBtn" type="button">
+      <button class="hero-cta" id="startBtn" type="button" disabled>
         Begin the reading <span class="arrow">→</span>
       </button>
     </div>
-    <div class="hero-note">Not medical advice. Traditional herbal support only.</div>
+    <div class="hero-note">Not medical advice. Traditional herbal support only. 18+ only.</div>
   </section>
 
   <!-- ── PROGRESS ──────────────────────────────────────── -->
@@ -653,6 +694,14 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
       <div id="rSynergyPairs"></div>
     </div>
 
+    <!-- Filter transparency — shows the number of herbs excluded by
+         the user's active safety flags (only renders when >0). -->
+    <div class="r-filter-note" id="rFilterNote" hidden>
+      <details>
+        <summary><span class="r-filter-glyph">◉</span> <span id="rFilterCount">0</span> herbs filtered from your pool for your safety</summary>
+        <div class="r-filter-body" id="rFilterBody"></div>
+      </details>
+    </div>
     <div class="r-safety" id="rSafety"></div>
 
     <!-- ── Reserve form ─────────────────────────────── -->
@@ -766,6 +815,18 @@ function isRestricted(h){
   return RESTRICTED_NAMES.some(r => s.includes(r));
 }
 
+// Gated herbs — legal but require explicit user opt-in on the entry
+// gate before entering the candidate pool. Amanita muscaria is the
+// main one; Robin sells it, but a casual quiz-taker who's never met
+// it shouldn't be auto-assigned it.
+const GATED_NAMES = [
+  'amanita muscaria','amanita_muscaria','amanita pantherina',
+];
+function isGated(h){
+  const s = ((h.name || '') + ' ' + (h.botanical || '')).toLowerCase();
+  return GATED_NAMES.some(r => s.includes(r));
+}
+
 // Derive quiz axes + safety flags from a catalog record. Matches
 // keywords in the herb's own primary_functions / secondary_benefits /
 // energetics / spiritual_layer / pharmacology / contraindications /
@@ -843,12 +904,19 @@ function inferAxes(h){
   if (/benzodiazepin|cns depress|sedative.*additive|potentiat.*sedat/.test(con)) flags.push('sedatives');
   if (/asteraceae|ragweed|daisy family|compositae|salicylat|aspirin/.test(con)) flags.push('allergy');
 
+  // Cap intentions at THREE — otherwise polyvalent herbs like
+  // Schisandra ("adaptogen · immune · liver · cognitive · beauty")
+  // score on nearly every path and end up in ~37% of all generated
+  // formulas. Cap sorted by keyword-hit density so the most-relevant
+  // intentions survive the trim.
+  const uniqIntentions = [...new Set(intentions)];
   return {
-    intentions: [...new Set(intentions)],
+    intentions: uniqIntentions.slice(0, 3),
     patterns:   [...new Set(patterns)],
     times:      [...new Set(times)],
     stress:     [...new Set(stress)],
     flags:      [...new Set(flags)],
+    _polyvalent: uniqIntentions.length > 3, // for future normalisation weight
   };
 }
 
@@ -860,7 +928,7 @@ function ensurePool(){
   if (typeof HERBS === 'undefined' || !Array.isArray(HERBS) || !HERBS.length) return null;
   POOL = HERBS
     .filter(h => !isRestricted(h))
-    .map(h => Object.assign({}, h, { _ax: inferAxes(h) }));
+    .map(h => Object.assign({}, h, { _ax: inferAxes(h), gated: isGated(h) }));
   return POOL;
 }
 
@@ -1086,10 +1154,37 @@ const result    = document.getElementById('result');
 const startBtn  = document.getElementById('startBtn');
 
 // ── Boot ──────────────────────────────────────────────────
-startBtn.addEventListener('click', () => go(0));
+// Age gate — Begin button stays disabled until the 18+ checkbox is
+// ticked. The Amanita opt-in is optional and just sets a flag on
+// state.answers._gatedOptIn that the picker reads.
+const gateAdult   = document.getElementById('gateAdult');
+const gateAmanita = document.getElementById('gateAmanita');
+function updateStartBtn(){ startBtn.disabled = !(gateAdult && gateAdult.checked); }
+if (gateAdult)   gateAdult.addEventListener('change', updateStartBtn);
+if (gateAmanita) gateAmanita.addEventListener('change', () => {
+  state.answers._gatedOptIn = !!gateAmanita.checked; persist();
+});
+updateStartBtn();
+
+startBtn.addEventListener('click', () => {
+  if (!gateAdult || !gateAdult.checked) return; // belt+braces
+  state.answers._ageConfirmed = true;
+  state.answers._gatedOptIn = !!(gateAmanita && gateAmanita.checked);
+  persist();
+  go(0);
+});
 backBtn.addEventListener('click', () => { if (state.step > 0) go(state.step - 1); });
 
-if (state.step >= 0) go(state.step);
+// Validate cached step against the current PAGES contract. If the
+// user's cached step is out-of-range (e.g. we shipped a new page
+// count since their last visit), reset to the entry gate instead of
+// crashing into a page that doesn't exist.
+if (state.step >= 0 && state.step < PAGES.length) {
+  // Also require age confirmation before resuming — a returning user
+  // who never ticked the gate shouldn't skip it.
+  if (state.answers._ageConfirmed) go(state.step);
+  else state.step = -1;
+}
 
 // ── Router ────────────────────────────────────────────────
 function go(step){
@@ -1484,7 +1579,14 @@ function sleepBoost(h, sleep){
 function scoreHerb(h, a){
   const ax = h._ax;
   let s = 0;
-  if (ax.intentions.includes(a.intention)) s += 5;
+  // Normalise the intention bonus by how many intentions the herb
+  // already claims. A herb with 1 intention gets full +5; a
+  // polyvalent herb with 3 intentions gets +5/3 per match. Kills
+  // the Schisandra-in-37% bias without dropping polyvalent herbs
+  // from the pool.
+  if (ax.intentions.includes(a.intention)) {
+    s += 5 / Math.max(1, ax.intentions.length);
+  }
   if (ax.patterns.includes(a.pattern))     s += 4;
   if (ax.times.includes(a.time))           s += 2;
   if (ax.stress.includes(a.stress))        s += 3;
@@ -1542,6 +1644,50 @@ function safetyFilter(h, avoid){
   return true;
 }
 
+// Count of herbs REMOVED by the user's active safety filters — used
+// by the reveal to acknowledge that filtering ran (turns the safety
+// screen from decorative into visibly protective).
+function countFilteredOut(a){
+  const pool = ensurePool();
+  if (!pool) return { removed: 0, total: 0, byFlag: {}, examples: [] };
+  const total = pool.length;
+  const filters = (a.avoid || []).filter(x => x !== 'none');
+  if (!filters.length) return { removed: 0, total, byFlag: {}, examples: [] };
+  const removed = [];
+  const byFlag = {};
+  for (const h of pool) {
+    for (const f of filters) {
+      if ((h._ax.flags || []).includes(f)) {
+        removed.push({ name: h.name, flag: f });
+        byFlag[f] = (byFlag[f] || 0) + 1;
+        break;
+      }
+    }
+  }
+  return { removed: removed.length, total, byFlag, examples: removed.slice(0, 8).map(r => r.name) };
+}
+
+// Pharmacological load classes — orthogonal to the taste/tonic
+// categoryOf classification. Used by the load cap so a formula can't
+// end up with 4 strong GABAergics (valerian + hops + passionflower +
+// magnolia) or 4 CNS drivers (ginseng + cordyceps + rhodiola +
+// guarana). Category guard alone missed these because each herb sat
+// in a DIFFERENT categoryOf bucket (mushroom / adaptogen / nervine).
+const GABAERGIC_IDS = ['valerian','passionflower','hops','magnolia','skullcap','kava','california_poppy','blue_lotus','ashwagandha_sedating'];
+const STIMULANT_IDS = ['ginseng','panax_ginseng','cordyceps','rhodiola','guarana','yerba_mate','mate','guayusa','kola_nut','coffee','green_tea','gotu_kola_stim','maca'];
+function isGABAergic(h){
+  const s = String(h.id || '').toLowerCase() + ' ' + String(h.name || '').toLowerCase() + ' ' +
+            ((h.primary_functions || []).join(' ') + ' ' + (h.pharmacology || '')).toLowerCase();
+  if (GABAERGIC_IDS.some(id => s.includes(id))) return true;
+  return /gaba|benzodiazepine.receptor|hypnotic|strong.sedativ|cns.depressant/.test(s);
+}
+function isCNSStimulant(h){
+  const s = String(h.id || '').toLowerCase() + ' ' + String(h.name || '').toLowerCase() + ' ' +
+            ((h.primary_functions || []).join(' ') + ' ' + (h.pharmacology || '')).toLowerCase();
+  if (STIMULANT_IDS.some(id => s.includes(id))) return true;
+  return /cns.stimulant|caffeine.rich|methylxanthine|adrenergic.stim/.test(s);
+}
+
 // Rough category of a herb — used by the balance guard. Categories:
 // adaptogen · nervine · tonic · mover · mushroom · bitter · aromatic ·
 // nutritive · other. Pulled from primary_functions text + energetics.
@@ -1568,13 +1714,25 @@ function categoryOf(h){
 // duration or stress) call for a fuller 6-7 herb formula. Simple
 // readings stay at 5. This is what "MYCO alchemist chose to add a
 // 6th because the case needed it" looks like without MYCO yet.
+// Herb count adapts to case complexity. Range 3-7.
+// The inert `patternSub += 0` and `very_broken += 0` from before are
+// now real +1 increments — a case that ticked those boxes IS more
+// complex than a bare-minimum profile. Simple profiles (steady body,
+// short pattern, no notes, no meds filters) can now compose at 3-4
+// instead of being padded up to 5.
 function targetHerbCount(a){
-  let n = 5;
-  if (a.notes && a.notes.trim().length > 80)         n += 1;
-  if (a.patternSub)                                   n += 0; // already covered by boost
-  if (a.duration === 'year_plus' || a.duration === 'lifelong') n += 1;
-  if (a.sleep === 'very_broken')                     n += 0;
-  return Math.min(7, Math.max(5, n));
+  let n = 4; // baseline
+  if (a.notes && a.notes.trim().length > 80)                    n += 1;
+  if (a.patternSub)                                              n += 1;
+  if (a.duration === 'year_plus' || a.duration === 'lifelong')  n += 1;
+  if (a.sleep === 'very_broken' || a.sleep === 'under_6')       n += 1;
+  const medFlags = (a.avoid || []).filter(k => k !== 'none').length;
+  if (medFlags >= 2) n += 1; // multi-flag cases usually need broader coverage
+  // Simple clean profile — can be even lighter
+  if (!a.notes && !a.patternSub && a.duration === 'weeks' && a.sleep === 'restorative_6plus') {
+    n = 3;
+  }
+  return Math.min(7, Math.max(3, n));
 }
 
 function pickFormula(a){
@@ -1595,34 +1753,48 @@ function pickFormula(a){
   });
 
   const target = targetHerbCount(a);
+  const openToGated = !!a._gatedOptIn; // Amanita opt-in from entry gate
 
-  // Category balance guard — max 2 herbs per category (adaptogen /
-  // nervine / mushroom / tonic / mover / bitter / aromatic / nutritive).
-  // Iterate uniq in score order, take each if its category isn't
-  // already at 2. Trace herbs count against the "aromatic" cap so
-  // lavender + peppermint can't both make it. Ensures a well-composed
-  // blend, not a monoculture.
+  // Category balance guard + pharmacological load caps:
+  //  · max 2 per categoryOf bucket (adaptogen/nervine/mushroom/tonic/…)
+  //  · max 2 strong GABAergics (valerian+hops+passionflower+magnolia bug)
+  //  · max 2 CNS stimulants (ginseng+cordyceps+rhodiola+guarana bug)
+  //  · max 1 trace (essential-oil-rich, capped at 5% anyway)
+  //  · gated herbs (Amanita muscaria) only if user opted in
   const catCount = {};
   const composed = [];
-  let traceUsed = 0;
+  let traceUsed = 0, gabaUsed = 0, stimUsed = 0;
   for (const x of uniq) {
     if (composed.length >= target) break;
+    // Amanita / gated allies — hard-skip unless opt-in
+    if (x.h.gated && !openToGated) continue;
     const cat = categoryOf(x.h);
     if ((catCount[cat] || 0) >= 2) continue;
-    if (isTrace(x.h)) { if (traceUsed >= 1) continue; traceUsed += 1; }
+    if (isTrace(x.h)) { if (traceUsed >= 1) continue; }
+    if (isGABAergic(x.h)) { if (gabaUsed >= 2) continue; }
+    if (isCNSStimulant(x.h)) { if (stimUsed >= 2) continue; }
     composed.push(x);
     catCount[cat] = (catCount[cat] || 0) + 1;
+    if (isTrace(x.h))       traceUsed += 1;
+    if (isGABAergic(x.h))   gabaUsed  += 1;
+    if (isCNSStimulant(x.h))stimUsed  += 1;
   }
 
   // Fill any remaining slots without the category cap (only fires when
   // the safety-filtered pool is thin — e.g. many contraindications set).
+  // Load caps STILL apply so we never sneak a 3rd sedative in on refill.
   if (composed.length < target) {
     for (const x of uniq) {
       if (composed.length >= target) break;
       if (composed.includes(x)) continue;
+      if (x.h.gated && !openToGated) continue;
       if (isTrace(x.h) && traceUsed >= 1) continue;
+      if (isGABAergic(x.h) && gabaUsed >= 2) continue;
+      if (isCNSStimulant(x.h) && stimUsed >= 2) continue;
       composed.push(x);
-      if (isTrace(x.h)) traceUsed += 1;
+      if (isTrace(x.h))       traceUsed += 1;
+      if (isGABAergic(x.h))   gabaUsed  += 1;
+      if (isCNSStimulant(x.h))stimUsed  += 1;
     }
   }
 
@@ -1706,10 +1878,33 @@ const NAME_TEMPLATES = {
   beauty:    ['Rose Skin','Tremella Dew','Silica Gleam','Collagen Field','Amber Radiance','Peach Glow'],
 };
 
+// djb2 hash — cheap, well-distributed, deterministic. Used as the
+// seed for pickName so two people with unrelated answers whose
+// JSON-serialised state happens to be the same character length no
+// longer end up with the same formula name.
+function hashAnswers(a){
+  const stable = JSON.stringify({
+    intention: a.intention || '',
+    pattern:   a.pattern   || '',
+    patternSub:a.patternSub|| '',
+    time:      a.time      || '',
+    stress:    a.stress    || '',
+    avoid:     Array.isArray(a.avoid) ? [...a.avoid].sort() : (a.avoid || ''),
+    duration:  a.duration  || '',
+    age:       a.age       || '',
+    sleep:     a.sleep     || '',
+    notes:     (a.notes    || '').trim().toLowerCase(),
+  });
+  let h = 5381;
+  for (let i = 0; i < stable.length; i++) h = ((h << 5) + h + stable.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}
 function pickName(intention){
-  const bank = NAME_TEMPLATES[intention] || NAME_TEMPLATES.calm;
-  // Deterministic-ish from answers so re-generating yields same name.
-  const seed = JSON.stringify(state.answers).length;
+  // Use a real key that exists in NAME_TEMPLATES — 'calm' is NOT a
+  // key (was a legacy alias; the current bucket is 'anxiety'). Falling
+  // back to 'stress' avoids the undefined-bank crash on skip-path.
+  const bank = NAME_TEMPLATES[intention] || NAME_TEMPLATES.stress;
+  const seed = hashAnswers(state.answers);
   return bank[seed % bank.length];
 }
 
@@ -1811,9 +2006,13 @@ function storyFor(a, herbs){
     ride:    'you roll with it, mostly',
     off:     'something is off in a way you can\'t name',
   };
+  // Guard: an empty herbs array means the pool was exhausted by
+  // safety filters. Return an empty story — the reveal has already
+  // been swapped for the refusal screen upstream.
+  if (!herbs || !herbs.length) return '';
   const heroNames  = herbs.slice(0, 2).map(h => h.name).join(' and ');
   const spineNames = herbs.slice(2, 4).map(h => h.name).join(', ');
-  const closerName = herbs[4] ? herbs[4].name : herbs[herbs.length - 1].name;
+  const closerName = (herbs[4] && herbs[4].name) || (herbs[herbs.length - 1] && herbs[herbs.length - 1].name) || 'the closing note';
   const subLine = a.patternSub && SUB_COPY[a.patternSub]
     ? ' Underneath, a specific signal: <em>' + SUB_COPY[a.patternSub] + '</em>.'
     : '';
@@ -2030,20 +2229,34 @@ async function mycoStory(a, herbs, percentages, synergies){
 }
 
 // ── Safety copy ───────────────────────────────────────────
+// The medication warning was dead code — it tested `a.avoid.includes('meds')`
+// but the quiz emits cardio_meds, psych_meds, contraceptive, sedatives.
+// None ever matched. Now checks the REAL keys.
+//
+// Language reframed to avoid medical claims: "medical care" → "medical
+// advice", "treatment" → "guidance". We're offering traditional herbal
+// support, never diagnosing or treating anything.
+const MED_FLAG_KEYS = ['cardio_meds','psych_meds','contraceptive','sedatives','autoimmune','liver_kidney','thyroid','hypertension'];
+function hasMedicationFlag(a){
+  const avoid = a.avoid || [];
+  return MED_FLAG_KEYS.some(k => avoid.includes(k));
+}
 function safetyLine(a){
   const parts = [];
-  parts.push('Traditional herbal support only — not a treatment or replacement for medical care.');
-  if ((a.avoid || []).includes('pregnancy')) parts.push('Pregnancy filter is active.');
-  if ((a.avoid || []).includes('meds')) parts.push('If you\'re on prescription medication, confirm with your practitioner before starting.');
+  parts.push('Traditional herbal support only — not a substitute for medical advice or diagnosis.');
+  if ((a.avoid || []).includes('pregnancy')) parts.push('Pregnancy / breastfeeding filter is active — uterine stimulants and emmenagogues excluded.');
+  if (hasMedicationFlag(a)) parts.push('You told us you\'re managing a medication or condition — please confirm this blend with your practitioner before starting.');
   return parts.join(' ');
 }
 
 // ── Render the result screen ──────────────────────────────
 function renderResult(){
   const a = state.answers;
-  // Defaults if the user skipped somehow
-  a.intention = a.intention || 'calm';
-  a.pattern   = a.pattern   || 'steady';
+  // Defaults if the user skipped somehow. MUST match real keys —
+  // 'calm' isn't a NAME_TEMPLATES/PATTERN key, 'steady' isn't a real
+  // BP archetype. Previous defaults quietly crashed the name picker.
+  a.intention = a.intention || 'stress';   // stress = fallback ADAPTOGEN category
+  a.pattern   = a.pattern   || 'mixed';    // mixed = fallback BP archetype (real key)
   a.time      = a.time      || 'any';
   a.stress    = a.stress    || 'ride';
   a.avoid     = Array.isArray(a.avoid) ? a.avoid : ['none'];
@@ -2052,6 +2265,13 @@ function renderResult(){
   // instantly. In parallel, ask MYCO to compose from the shortlist; if
   // MYCO returns a valid composition, swap it in with a soft transition.
   let herbs = pickFormula(a);
+
+  // Safety net: empty formula means the catalog didn't load, or the
+  // safety filters emptied the pool. Show a graceful refusal instead
+  // of crashing on herbs[-1].name in the story generator.
+  if (!herbs || herbs.length < 3) {
+    return renderRefusal(a, herbs);
+  }
   const name  = pickName(a.intention);
 
   document.getElementById('bottle').insertAdjacentHTML('beforeend', bottleCard(a.intention, herbs, name));
@@ -2059,6 +2279,34 @@ function renderResult(){
   document.getElementById('rStory').innerHTML     = storyFor(a, herbs);
   document.getElementById('rHerbCount').textContent = herbs.length + ' allies · woven together';
   document.getElementById('rSafety').textContent  = safetyLine(a);
+
+  // Filter transparency — count of herbs removed by active safety
+  // flags. Only renders when at least one was excluded.
+  const filterInfo = countFilteredOut(a);
+  const filterEl   = document.getElementById('rFilterNote');
+  if (filterInfo.removed > 0 && filterEl) {
+    filterEl.hidden = false;
+    document.getElementById('rFilterCount').textContent = filterInfo.removed;
+    const flagLabels = {
+      pregnancy: 'pregnancy / breastfeeding',
+      cardio_meds: 'cardio / blood-thinner conflict',
+      psych_meds: 'antidepressant conflict',
+      autoimmune: 'immune-modulating conflict',
+      liver_kidney: 'hepatotoxic / kidney risk',
+      thyroid: 'thyroid conflict',
+      hypertension: 'blood-pressure risk',
+      contraceptive: 'contraceptive-pill interaction (CYP3A4)',
+      sedatives: 'benzodiazepine / sedative additive',
+      allergy: 'Asteraceae / salicylate allergy',
+    };
+    const rows = Object.entries(filterInfo.byFlag).map(([flag, n]) => (
+      '<li>' + n + ' herbs removed for ' + (flagLabels[flag] || flag) + '</li>'
+    )).join('');
+    const eg = filterInfo.examples.length
+      ? '<div style="margin-top:8px;font-style:italic;color:var(--dust-d);font-size:11.5px">Removed: ' + filterInfo.examples.join(', ') + (filterInfo.removed > filterInfo.examples.length ? ' + ' + (filterInfo.removed - filterInfo.examples.length) + ' more' : '') + '</div>'
+      : '';
+    document.getElementById('rFilterBody').innerHTML = '<ul>' + rows + '</ul>' + eg;
+  }
 
   // If the user filled the optional free-text, ask MYCO for a proper
   // personalised reading and swap it in when it lands. Template
@@ -2148,6 +2396,29 @@ function renderResult(){
   // Stash for reservation + optional cloud-save on submit.
   window.__currentFormula = { name, herbs, percentages: pct, synergies: pairs.synergies };
 
+  // Aggregate analytics — log a formula_generated event so MYCO
+  // learns which herbs the picker reaches for most. Anonymous,
+  // fire-and-forget. Fails silently if myco_memory table isn't
+  // migrated yet (supabase-myco-analytics.sql).
+  try {
+    if (window.SBclient) {
+      window.SBclient.from('myco_memory').insert({
+        auth_user_id: null,
+        event_type:  'formula_generated',
+        topic:       'formula:' + (a.intention || 'unknown'),
+        insight:     name + ' — ' + herbs.map(h => h.name).join(', '),
+        payload: {
+          herb_ids:  herbs.map(h => h.id).slice(0, 10),
+          herb_names:herbs.map(h => h.name).slice(0, 10),
+          pct:       pct,
+          intention: a.intention, pattern: a.pattern, patternSub: a.patternSub,
+          duration:  a.duration, age: a.age, sleep: a.sleep,
+          avoid:     Array.isArray(a.avoid) ? a.avoid : [],
+        },
+      }).then(() => {}).catch(() => {});
+    }
+  } catch (_) {}
+
   // Fire MYCO composer in the background. If it returns a valid
   // composition (5-7 herbs with per-herb reasoning), swap it in.
   // Fully non-blocking — deterministic pick is already on screen.
@@ -2221,6 +2492,43 @@ function escapeHtml(s){ return String(s || '').replace(/[&<>"']/g, c => ({'&':'&
   // the reader's answers + a two-line explainer on the spagyric extract
   // process. Written from the metadata every herb already carries.
   document.getElementById('rWhyText').innerHTML = buildWhyText(a, herbs, pct);
+}
+
+// Graceful refusal — replaces the reveal when the pool empties out
+// (safety filters exhausted it, or /herbs-data.js failed to load).
+// Better than a silent TypeError.
+function renderRefusal(a, herbs){
+  const result = document.getElementById('result');
+  // Hide all normal reveal sections
+  ['bottle','rTagline','rStory','rHerbs','rSynergy','rWhyCard'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+  const howMade = document.querySelector('.r-howmade');
+  if (howMade) howMade.style.display = 'none';
+  const safety  = document.getElementById('rSafety');
+  if (safety)   safety.style.display = 'none';
+  const reserve = document.querySelector('.reserve');
+  if (reserve)  reserve.style.display = 'none';
+
+  // Insert refusal panel above the actions
+  let panel = document.getElementById('rRefusal');
+  if (!panel) {
+    panel = document.createElement('div');
+    panel.id = 'rRefusal';
+    panel.style.cssText = 'padding:32px 24px;text-align:center;background:var(--card);border:0.5px solid var(--rule-strong);border-radius:20px;margin-bottom:22px';
+    result.insertBefore(panel, result.querySelector('.r-actions'));
+  }
+  const reason = (!window.HERBS || !window.HERBS.length)
+    ? 'The catalog didn\'t finish loading. Refresh and try again — should be a hiccup, not a permanent thing.'
+    : ((a.avoid || []).filter(x => x !== 'none').length >= 3
+        ? 'Your safety filters removed too many herbs from the pool for us to build a balanced blend. Consider a lighter combination of filters — Robin can also work with you directly to find allies that respect every constraint.'
+        : 'We couldn\'t find enough herbs matching your answers to compose a balanced blend. Take the quiz again with slightly different answers, or reach out directly.');
+  panel.innerHTML =
+    '<div style="font-family:var(--mono);font-size:10px;letter-spacing:0.32em;text-transform:uppercase;color:var(--amber-l);margin-bottom:14px">✦ Composition paused</div>' +
+    '<h2 style="font-family:var(--display);font-weight:300;font-size:26px;color:var(--parchment);line-height:1.15;margin-bottom:16px">We can\'t compose this one automatically.</h2>' +
+    '<p style="font-size:15px;color:var(--dust);line-height:1.7;margin-bottom:20px">' + reason + '</p>' +
+    '<p style="font-size:13px;color:var(--dust-d);line-height:1.6"><em>Traditional herbal support only.</em> Reach Robin at <a href="mailto:robin@fungai.art" style="color:var(--amber-l);text-decoration:none;border-bottom:0.5px solid rgba(232,177,75,.4)">robin@fungai.art</a> and we\'ll compose together.</p>';
 }
 
 // ── Reserve submit ────────────────────────────────────────
