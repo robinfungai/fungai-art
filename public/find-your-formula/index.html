@@ -104,7 +104,8 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 /* ── Progress bar ────────────────────────────────────── */
 .progress{padding:20px 4px 0;display:none}
 .progress.on{display:block}
-.progress-row{display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:9px;letter-spacing:0.24em;text-transform:uppercase;color:var(--dust-d);margin-bottom:10px}
+.progress-row{display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:var(--dust);margin-bottom:10px;font-weight:500}
+#progressLbl{color:var(--amber-l);letter-spacing:0.28em}
 .progress-back{background:none;border:none;color:var(--dust-d);cursor:pointer;font:inherit;padding:2px 4px}
 .progress-back:hover{color:var(--amber-l)}
 .progress-back:disabled{opacity:0.3;cursor:default}
@@ -115,7 +116,9 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .q-wrap{flex:1;display:none;flex-direction:column;padding:16px 0 30px}
 .q-wrap.on{display:flex;animation:qFade .5s cubic-bezier(0.22,0.61,0.36,1)}
 @keyframes qFade{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.q-eyebrow{font-family:var(--mono);font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:var(--amber-l);margin-bottom:14px}
+/* Page eyebrow — bigger + brighter so the "01 of 05 · The calling"
+   context is legible at a glance on mobile in normal light. */
+.q-eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:0.32em;text-transform:uppercase;color:var(--amber-ll);margin-bottom:14px;font-weight:500;text-shadow:0 0 12px rgba(232,177,75,0.25)}
 .q-title{font-family:var(--display);font-weight:300;font-size:clamp(28px,6.5vw,42px);line-height:1.08;color:var(--parchment);letter-spacing:-0.005em;margin-bottom:14px}
 .q-title em{font-style:italic;color:var(--amber-l)}
 /* Question hint: non-italic sans, mid-weight parchment — reads as
@@ -203,13 +206,32 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .q-opt-compact .q-opt-label{font-size:14px !important;margin-bottom:3px !important;font-weight:500 !important}
 .q-opt-compact .q-opt-desc{font-size:12.5px !important;line-height:1.45 !important}
 
-/* ── Safety-filter 2-column grid — emojis + tighter cards */
-.q-options-grid-2{display:grid !important;grid-template-columns:repeat(2,1fr);gap:8px;flex-direction:unset !important}
-@media (max-width:520px){.q-options-grid-2{grid-template-columns:1fr}}
-.q-options-grid-2 .q-opt{padding:12px 14px}
-.q-options-grid-2 .q-opt-label{font-size:13.5px;margin-bottom:6px}
-.q-options-grid-2 .q-opt-desc{font-size:12px;line-height:1.5}
-.q-options-grid-2 .q-opt-glyph{font-size:20px}
+/* ── Safety-filter 2-column grid — emojis + tighter cards.
+   Stays 2-col on phone too (no mobile collapse) — Robin's request.
+   Cards are compressed enough to remain readable at ~160px wide. */
+.q-options-grid-2{display:grid !important;grid-template-columns:repeat(2,1fr);gap:8px 7px;flex-direction:unset !important}
+.q-options-grid-2 .q-opt{padding:11px 12px;min-height:88px}
+.q-options-grid-2 .q-opt-label{font-size:12.5px;margin-bottom:6px;line-height:1.25}
+.q-options-grid-2 .q-opt-desc{font-size:11px;line-height:1.45}
+.q-options-grid-2 .q-opt-glyph{font-size:18px;width:20px;flex-shrink:0}
+@media (max-width:400px){
+  .q-options-grid-2 .q-opt-label{font-size:11.5px}
+  .q-options-grid-2 .q-opt-desc{font-size:10.5px}
+}
+
+/* ── Compact-single rendering as rounded pills — used on the
+   Rhythm+Stress+Duration multi-Q page. Answers are short ("Morning",
+   "Push through", "A few weeks") so pill shape makes them scannable
+   and lets more fit per screen. */
+.q-opt-compact{border-radius:999px !important;padding:10px 18px !important;display:flex !important;align-items:center !important;gap:10px !important;min-height:0 !important}
+.q-opt-compact .q-opt-glyph{width:auto !important;font-size:17px !important;flex-shrink:0}
+.q-opt-compact .q-opt-body{display:flex !important;flex-direction:row !important;align-items:baseline !important;gap:8px !important;flex-wrap:wrap}
+.q-opt-compact .q-opt-label{margin-bottom:0 !important;font-size:13.5px !important;font-weight:500 !important;line-height:1.3 !important}
+.q-opt-compact .q-opt-desc{font-size:11.5px !important;line-height:1.4 !important;color:var(--dust-d) !important;opacity:0.9}
+.q-options-compact{display:flex !important;flex-wrap:wrap !important;gap:6px !important;flex-direction:unset !important}
+.q-options-compact .q-opt-compact{flex:0 1 auto}
+/* keep the currently-picked pill visually louder */
+.q-options-compact .q-opt-compact.on .q-opt-desc{color:var(--parchment) !important}
 
 /* Bigger, more visible back button */
 .progress-back{font-size:10px !important;letter-spacing:0.24em !important;padding:6px 12px !important;border:0.5px solid rgba(232,177,75,0.28);border-radius:999px;color:var(--dust) !important;transition:color 0.2s,border-color 0.2s,background 0.2s}
@@ -262,9 +284,10 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 /* Herb list */
 .r-herbs{background:var(--card);border:0.5px solid var(--rule);border-radius:18px;overflow:hidden;margin-bottom:16px}
 .r-herbs-head{padding:16px 22px 12px;border-bottom:0.5px solid var(--rule);font-family:var(--mono);font-size:9.5px;letter-spacing:0.28em;text-transform:uppercase;color:var(--amber-l)}
-.r-herb{display:grid;grid-template-columns:38px 1fr;gap:14px;padding:14px 22px;border-bottom:0.5px dashed rgba(232,177,75,0.08);align-items:baseline}
+/* Wider column + smaller % so herb name reads clean, not squashed. */
+.r-herb{display:grid;grid-template-columns:52px 1fr;gap:22px;padding:14px 22px;border-bottom:0.5px dashed rgba(232,177,75,0.08);align-items:baseline}
 .r-herb:last-child{border-bottom:none}
-.r-herb-n{font-family:var(--display);font-style:italic;font-size:22px;color:var(--amber-l);line-height:1;text-align:center;opacity:0.85}
+.r-herb-n{font-family:var(--mono);font-size:13px;color:var(--amber-l);line-height:1.2;text-align:right;letter-spacing:0.06em;font-weight:500;opacity:0.95}
 .r-herb-pct{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:0.14em;color:var(--amber-l);background:rgba(232,177,75,0.08);border:0.5px solid rgba(232,177,75,0.35);border-radius:999px;padding:3px 9px;margin-right:8px;vertical-align:baseline;font-weight:500}
 .r-herb-name{font-family:var(--serif);font-size:19px;color:var(--parchment);line-height:1.2;margin-bottom:2px;display:inline}
 .r-herb-latin{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--dust-d);margin:4px 0 4px}
@@ -288,6 +311,44 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .r-ritual-eyebrow{font-family:var(--mono);font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:var(--sage);margin-bottom:8px}
 .r-ritual-text{font-family:var(--sans);font-size:14px;line-height:1.65;color:var(--parchment)}
 .r-ritual-text strong{color:var(--sage);font-weight:500}
+
+/* ── How it's made (slim, always visible spagyric card) ── */
+.r-howmade{background:rgba(232,177,75,0.04);border:0.5px solid rgba(232,177,75,0.16);border-radius:14px;padding:14px 18px 15px;margin-bottom:16px}
+.r-howmade-eyebrow{font-family:var(--mono);font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:var(--amber-l);margin-bottom:7px}
+.r-howmade-text{font-family:var(--sans);font-size:12.5px;line-height:1.6;color:var(--dust)}
+.r-howmade-text strong{color:var(--amber-l);font-weight:500}
+
+/* ── Why this formula — bright opener, dim tail, unlock on reserve.
+   The soft "paywall" is a marketing hack: 25% of the reasoning reads
+   fully; the rest fades to transparent with a call-out that reserve
+   (or "See the full apothecary") reveals it. No hard block — the
+   text is still in the DOM, it's just visually gated. */
+.r-why{position:relative;background:linear-gradient(160deg,rgba(232,177,75,0.06),rgba(232,177,75,0.02));border:0.5px solid rgba(232,177,75,0.35);border-radius:18px;padding:20px 22px 18px;margin-bottom:16px;overflow:hidden}
+.r-why-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:0.28em;text-transform:uppercase;color:var(--amber-ll);margin-bottom:10px}
+.r-why-body{font-family:var(--sans);font-size:14.5px;line-height:1.75;color:var(--parchment)}
+.r-why-body p{margin:0 0 12px}
+.r-why-body p:last-child{margin:0}
+.r-why-body em{font-style:italic;color:var(--amber-l)}
+.r-why-body strong{color:var(--parchment);font-weight:500}
+/* Dimmed state — top 25% fully visible, gradual fade to transparent. */
+.r-why.dimmed .r-why-body{
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 22%,rgba(0,0,0,0.3) 55%,transparent 92%);
+          mask-image:linear-gradient(180deg,#000 0%,#000 22%,rgba(0,0,0,0.3) 55%,transparent 92%);
+  max-height:280px;overflow:hidden;pointer-events:none;
+  transition:mask-image .5s ease, max-height .55s ease;
+}
+.r-why:not(.dimmed) .r-why-body{max-height:none;pointer-events:auto;
+  -webkit-mask-image:none; mask-image:none;
+  animation:why-reveal .7s ease}
+@keyframes why-reveal{from{opacity:0.6}to{opacity:1}}
+.r-why-lock{margin-top:16px;padding:16px 18px;background:rgba(232,177,75,0.08);border:0.5px solid rgba(232,177,75,0.32);border-radius:12px;text-align:center;animation:why-lock-glow 4s ease-in-out infinite}
+@keyframes why-lock-glow{0%,100%{box-shadow:0 0 20px -6px rgba(232,177,75,0.25)}50%{box-shadow:0 0 28px -4px rgba(232,177,75,0.45)}}
+.r-why-lock-glyph{font-family:var(--mono);font-size:12px;letter-spacing:0.6em;color:var(--amber-l);opacity:0.7;margin-bottom:6px}
+.r-why-lock-text{font-family:var(--sans);font-size:13px;line-height:1.55;color:var(--parchment);margin-bottom:12px}
+.r-why-lock-text .muted{color:var(--dust-d);font-size:12px}
+.r-why-lock-cta{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:0.24em;text-transform:uppercase;color:var(--void);background:linear-gradient(135deg,var(--amber-l),var(--amber));padding:11px 20px;border-radius:999px;text-decoration:none;font-weight:500;box-shadow:0 8px 18px -6px rgba(232,177,75,0.5);transition:transform .18s}
+.r-why-lock-cta:hover{transform:translateY(-1px)}
+.r-why:not(.dimmed) .r-why-lock{display:none}
 
 .r-safety{padding:14px 4px;font-family:var(--serif);font-style:italic;font-size:12.5px;line-height:1.6;color:var(--dust-d);text-align:center;margin-bottom:18px}
 
@@ -384,9 +445,30 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
       <div class="r-tagline" id="rTagline"></div>
     </div>
 
+    <!-- The reading — MYCO or template, kept short + convincing. -->
     <div class="r-story">
       <div class="r-story-eyebrow">The reading</div>
       <div class="r-story-text" id="rStory"></div>
+    </div>
+
+    <!-- How it's made — slim spagyric explainer, always visible. -->
+    <div class="r-howmade">
+      <div class="r-howmade-eyebrow">◈ How it&rsquo;s made</div>
+      <div class="r-howmade-text">
+        Full-spectrum <strong>spagyric extract</strong> &mdash; each plant separated into its three principles (sulfur, mercury, salt), purified individually over weeks, then recombined. Not a simple maceration. The plant&rsquo;s complete alchemical signature &mdash; alkaloids, essential oils, mineral salts &mdash; in balance. Hand-poured in the Berlin lab.
+      </div>
+    </div>
+
+    <!-- Why this formula — bright opening, rest fades and unlocks
+         after reservation OR after tapping "See the full apothecary". -->
+    <div class="r-why dimmed" id="rWhyCard">
+      <div class="r-why-eyebrow">◈ Why this formula</div>
+      <div class="r-why-body" id="rWhyText"></div>
+      <div class="r-why-lock" id="rWhyLock">
+        <div class="r-why-lock-glyph">◇ △ ◇</div>
+        <div class="r-why-lock-text">Reserve the formula to reveal the rest of the reading. <br/><span class="muted">No financial commitment yet &mdash; Robin follows up to confirm together first.</span></div>
+        <a href="#reserve" class="r-why-lock-cta" id="rWhyLockCta">Reserve to unlock &rarr;</a>
+      </div>
     </div>
 
     <div class="r-herbs">
@@ -399,11 +481,6 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
     <div class="r-synergy" id="rSynergy" hidden>
       <div class="r-synergy-eyebrow">◈ Woven synergies</div>
       <div id="rSynergyPairs"></div>
-    </div>
-
-    <div class="r-ritual" id="rWhyCard">
-      <div class="r-ritual-eyebrow">◈ Why this formula</div>
-      <div class="r-ritual-text" id="rWhyText"></div>
     </div>
 
     <div class="r-safety" id="rSafety"></div>
@@ -787,7 +864,7 @@ const QUESTIONS = [
     key:'notes',
     title:'The <em>one thing</em> that matters most',
     hint:'Mention the one thing that matters most to you right now, and/or any prior herb experience — the reading tunes tightly to what you say here.',
-    placeholder:'e.g. "want to lucid travel, dreams are heavy lately" · "reishi was calming but ashwagandha made me flat" · "hormones off since March, sleep first"',
+    placeholder:'e.g. "reishi was calming but ashwagandha made me flat" · "hormones off since March, sleep first" · "energy back before anything else"',
     type:'text',
   },
 ];
@@ -802,7 +879,9 @@ const PAGES = [
   { eyebrow: '02 of 05 · The body',          keys: ['pattern']   },
   { eyebrow: '03 of 05 · The container',     keys: ['avoid']     },
   { eyebrow: '04 of 05 · Rhythm & pattern',  keys: ['time','stress','duration'] },
-  { eyebrow: '05 of 05 · Context & priority',keys: ['age','sleep','notes'] },
+  // Notes first — Robin wanted the free-text bar on top of this page,
+  // then age + sleep tucked underneath as playful compact pills.
+  { eyebrow: '05 of 05 · Context & priority',keys: ['notes','age','sleep'] },
 ];
 function getQuestion(key){ return QUESTIONS.find(q => q.key === key); }
 
@@ -1441,17 +1520,25 @@ function buildWhyText(a, herbs, pct){
   const readingLine =
     'This composition targets <em>' + intentPhrase + '</em>, tuned for <em>' + patternPhrase + '</em>' +
     (a.patternSub ? ' &mdash; specifically the ' + a.patternSub.replace(/_/g, ' ') + ' signature' : '') + '.';
-  const spagyricLine =
-    '<em>How it&rsquo;s made:</em> full-spectrum spagyric extract &mdash; each herb separated into its three principles ' +
-    '(sulfur, mercury, salt), purified individually over weeks, then recombined. Not a simple maceration. ' +
-    'The plant&rsquo;s complete alchemical signature &mdash; alkaloids, essential oils, mineral salts &mdash; in balance. ' +
-    'Hand-poured in the Berlin lab from scratch for you.';
+  // Extra reasoning paragraphs — these are the ones that live BELOW
+  // the fade line in the dimmed view, and become visible once the
+  // user reserves (or taps "See the apothecary").
+  const deeperLine =
+    'Each ally was pulled from a pool of 152 catalogued herbs, filtered against your safety flags, ' +
+    'scored across intention, body signature, rhythm and stress, and cross-checked for herb-to-herb ' +
+    'synergy in the practitioner catalog. The percentages above reflect that composite score &mdash; ' +
+    'not a template.';
+  const traceLine =
+    'Any essential-oil-rich herb (lavender, ginger, cinnamon and their kin) is capped at 5% by design. ' +
+    'Their flavour and pharmacology are strong enough that anything more would dominate the blend. ' +
+    'The remaining share goes to the tonics and nervines that do the slower, foundational work.';
 
   return (
-    '<p style="margin:0 0 12px;">' + readingLine + '</p>' +
-    '<p style="margin:0 0 12px;">' + heroLine + '</p>' +
-    (restLine ? '<p style="margin:0 0 12px;">' + restLine + '</p>' : '') +
-    '<p style="margin:0;color:var(--parchment);opacity:0.88;">' + spagyricLine + '</p>'
+    '<p>' + readingLine + '</p>' +
+    '<p>' + heroLine + '</p>' +
+    (restLine ? '<p>' + restLine + '</p>' : '') +
+    '<p>' + deeperLine + '</p>' +
+    '<p>' + traceLine + '</p>'
   );
 }
 
@@ -1662,6 +1749,10 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     document.getElementById('reservedEmail').textContent = payload.email;
     document.getElementById('reserveThanks').classList.add('on');
     form.style.display = 'none';
+    // Unlock the "Why this formula" fade — the reservation was the
+    // gate. Full reasoning reveals with a soft animation.
+    const whyCard = document.getElementById('rWhyCard');
+    if (whyCard) whyCard.classList.remove('dimmed');
     // Archive to /community/academy/ Formula Book (local + cloud).
     try {
       const cur = window.__currentFormula;
@@ -1722,6 +1813,33 @@ async function archiveFormulaToAcademy({ name, herbs, percentages, notes, contac
   } catch (_) { /* silent — either table missing or RLS blocked anon */ }
 }
 
+// The "Reserve to unlock →" pill inside the dim card is just an
+// anchor to #reserve — but on iOS Safari the smooth-scroll needs a
+// helping hand. Small helper.
+const rWhyLockCta = document.getElementById('rWhyLockCta');
+if (rWhyLockCta) rWhyLockCta.addEventListener('click', (e) => {
+  e.preventDefault();
+  const target = document.querySelector('.reserve') || document.getElementById('reserveForm');
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+// ── Apothecary escape hatch — also unlocks the fade ────────
+// Marketing hack: if the user taps "See the full apothecary" instead
+// of reserving, we open it in a new tab AND drop the fade locally so
+// they can still read the full reasoning when they come back. Softer
+// than a hard paywall — the reserve CTA stays the primary path but
+// the escape doesn't leave them frustrated.
+document.querySelectorAll('.r-action').forEach(el => {
+  if (el.tagName === 'A' && /shop|apothecary/i.test(el.textContent)) {
+    el.setAttribute('target', '_blank');
+    el.setAttribute('rel', 'noopener');
+    el.addEventListener('click', () => {
+      const whyCard = document.getElementById('rWhyCard');
+      if (whyCard) whyCard.classList.remove('dimmed');
+    });
+  }
+});
+
 // ── Restart ───────────────────────────────────────────────
 document.getElementById('restartBtn').addEventListener('click', () => {
   state.answers = {};
@@ -1729,6 +1847,9 @@ document.getElementById('restartBtn').addEventListener('click', () => {
   try { localStorage.removeItem('fyf_state'); } catch (_) {}
   document.getElementById('bottle').innerHTML = '<div class="r-bottle-halo"></div>';
   document.getElementById('rTagline').textContent = '';
+  // Re-arm the why-card dim so a new reveal reads the same nudge again.
+  const whyCard = document.getElementById('rWhyCard');
+  if (whyCard) whyCard.classList.add('dimmed');
   document.getElementById('reserveThanks').classList.remove('on');
   document.getElementById('reserveForm').style.display = '';
   document.getElementById('reserveForm').reset();
