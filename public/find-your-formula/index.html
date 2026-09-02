@@ -2261,6 +2261,7 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     // proper confirmation with their formula. Falls back to mailto:
     // if the endpoint is unreachable.
     let ok = false;
+    let serverGeo = null;
     try {
       const res = await fetch('/api/reserve-formula', {
         method: 'POST',
@@ -2268,6 +2269,9 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
         body: JSON.stringify(payload),
       });
       ok = res.ok;
+      if (ok) {
+        try { const d = await res.json(); serverGeo = d?.geo || null; } catch (_) {}
+      }
     } catch (_) {}
     if (!ok) {
       const notesForRobin =
@@ -2299,6 +2303,8 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
         percentages: cur.percentages,
         notes: payload.notes,
         contactName: payload.name,
+        quiz: state.answers,
+        geo: serverGeo,
       });
     } catch (_) {}
     try { localStorage.removeItem('fyf_state'); } catch (_) {}
@@ -2318,7 +2324,7 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
 //   2. Supabase `formulas` table (see supabase-formulas.sql). Visible
 //      to every signed-in member. Silently no-ops if the table doesn't
 //      exist yet or the caller isn't signed in.
-async function archiveFormulaToAcademy({ name, herbs, percentages, notes, contactName }){
+async function archiveFormulaToAcademy({ name, herbs, percentages, notes, contactName, quiz, geo }){
   const compactHerbs = herbs.map((h, i) => ({ id: h.id, n: h.name, pct: percentages[i] }));
   const record = {
     name: name,
@@ -2327,15 +2333,18 @@ async function archiveFormulaToAcademy({ name, herbs, percentages, notes, contac
     ts: Date.now(),
     maker: contactName || 'Reserved by a hyphae',
     notes: notes || '',
+    geo: geo || null,
   };
-  // Local (works even without cloud / auth)
+  // Local (works even without cloud / auth) — the /community/academy/
+  // Formula Book reads from this key alongside cloud entries.
   try {
     const key = 'fungai_alchemy_academy';
     const existing = JSON.parse(localStorage.getItem(key) || '[]');
     existing.unshift(record);
     localStorage.setItem(key, JSON.stringify(existing.slice(0, 200)));
   } catch (_) {}
-  // Cloud (best-effort — no-ops if table missing or no auth session)
+  // Cloud — anon INSERT allowed after supabase-formulas-geo-and-anon.sql
+  // is applied. Silently no-ops if table policy blocks or client unavailable.
   try {
     if (!window.SBclient) return;
     const herbIds   = herbs.map(h => (h.id || '').toString()).filter(Boolean);
@@ -2344,8 +2353,19 @@ async function archiveFormulaToAcademy({ name, herbs, percentages, notes, contac
       name: name,
       herb_ids: herbIds,
       herb_names: herbNames,
+      percentages: percentages || [],
+      bottle_ml: 30,
       maker_label: contactName || null,
       notes: (notes || '').slice(0, 500),
+      source: 'find-your-formula',
+      quiz_snapshot: quiz || null,
+      origin_city:        geo?.city         || null,
+      origin_country:     geo?.country      || null,
+      origin_subdivision: geo?.subdivision  || null,
+      origin_timezone:    geo?.timezone     || null,
+      origin_ip:          geo?.ip           || null,
+      origin_lat:         geo?.latitude     || null,
+      origin_lng:         geo?.longitude    || null,
     });
   } catch (_) { /* silent — either table missing or RLS blocked anon */ }
 }

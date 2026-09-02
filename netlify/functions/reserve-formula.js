@@ -37,6 +37,29 @@ export default async function handler(req) {
   try { body = await req.json(); }
   catch { return json({ error: 'Bad JSON body' }, 400); }
 
+  // ── Geo capture from Netlify headers ──────────────────────
+  // Netlify Edge injects x-nf-geo (JSON) + x-nf-client-connection-ip
+  // + x-country on every request at no extra cost. Robin gets city /
+  // country / IP on every reservation so he sees where the request
+  // came from (VPN bypasses this — expected, called out to Robin).
+  let geo = { city: null, country: null, subdivision: null, timezone: null, ip: null, latitude: null, longitude: null };
+  try {
+    const rawGeo = req.headers.get('x-nf-geo');
+    if (rawGeo) {
+      const parsed = JSON.parse(rawGeo);
+      geo.city         = parsed.city         || null;
+      geo.country      = parsed.country?.name || parsed.country?.code || null;
+      geo.subdivision  = parsed.subdivision?.name || null;
+      geo.timezone     = parsed.timezone     || null;
+      geo.latitude     = parsed.latitude     || null;
+      geo.longitude    = parsed.longitude    || null;
+    }
+    geo.ip = req.headers.get('x-nf-client-connection-ip')
+          || req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+          || null;
+    if (!geo.country) geo.country = req.headers.get('x-country') || null;
+  } catch (_) { /* headers missing / malformed — leave geo blank */ }
+
   const email   = String(body.email   || '').trim().toLowerCase();
   const name    = String(body.name    || '').trim().slice(0, 100);
   const city    = String(body.city    || '').trim().slice(0, 80);
@@ -74,9 +97,9 @@ export default async function handler(req) {
   const herbList = herbLines.map(h => h.name);
 
   // ── 1. Notify Robin ────────────────────────────────────────────
-  const robinSubject = `✦ Formula reservation · ${formulaName || 'unnamed'} · ${name}`;
-  const robinHtml = buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl });
-  const robinText = buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl });
+  const robinSubject = `✦ Formula reservation · ${formulaName || 'unnamed'} · ${name}${geo.country ? ' · ' + geo.country : ''}`;
+  const robinHtml = buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo });
+  const robinText = buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo });
 
   // ── 2. Confirm to customer ─────────────────────────────────────
   const customerSubject = `Your formula is reserved · ${formulaName || 'Fungai Art'}`;
@@ -101,6 +124,9 @@ export default async function handler(req) {
     sent: robinOk && customerOk,
     partial: !robinOk || !customerOk,
     robinOk, customerOk,
+    // Echo the geo back so the client can include it in the Supabase
+    // insert to /alchemy academy — same source of truth.
+    geo: geo,
   });
 }
 
@@ -126,7 +152,8 @@ function json(body, status = 200) {
 
 // ── Email bodies ─────────────────────────────────────────────────
 
-function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl }){
+function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo }){
+  geo = geo || {};
   const q = quiz || {};
   const totalPct = herbLines.reduce((s, h) => s + (h.pct || 0), 0);
   const totalMl  = herbLines.reduce((s, h) => s + (h.ml  || 0), 0);
@@ -183,13 +210,27 @@ function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, 
 
         ${notes ? `<div style="margin-top:20px;padding:14px 16px;background:#1A1E24;border-left:2px solid #E8B14B;border-radius:4px;"><div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#8B7E62;margin-bottom:6px;">Priority + prior herb experience</div><div style="font-family:Georgia,serif;font-style:italic;font-size:14px;color:#EDE5D8;line-height:1.7;">"${esc(notes)}"</div></div>` : ''}
 
+        ${(geo.city || geo.country || geo.ip) ? `
+        <div style="margin-top:20px;padding:14px 16px;background:#141821;border:0.5px solid rgba(232,177,75,.12);border-radius:6px;">
+          <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#8B7E62;margin-bottom:8px;">◉ Origin (edge-detected)</div>
+          <table cellpadding="0" cellspacing="0" style="width:100%;font-family:'Courier New',monospace;font-size:12px;color:#C9B894;">
+            ${geo.city         ? `<tr><td style="padding:3px 0;width:90px;color:#8B7E62;">City</td><td>${esc(geo.city)}${geo.subdivision ? ', ' + esc(geo.subdivision) : ''}</td></tr>` : ''}
+            ${geo.country      ? `<tr><td style="padding:3px 0;color:#8B7E62;">Country</td><td>${esc(geo.country)}</td></tr>` : ''}
+            ${geo.timezone     ? `<tr><td style="padding:3px 0;color:#8B7E62;">Timezone</td><td>${esc(geo.timezone)}</td></tr>` : ''}
+            ${geo.ip           ? `<tr><td style="padding:3px 0;color:#8B7E62;">IP</td><td><code>${esc(geo.ip)}</code></td></tr>` : ''}
+            ${(geo.latitude && geo.longitude) ? `<tr><td style="padding:3px 0;color:#8B7E62;">Coords</td><td>${geo.latitude}, ${geo.longitude}</td></tr>` : ''}
+          </table>
+          <div style="font-family:Georgia,serif;font-style:italic;font-size:11px;color:#8B7E62;margin-top:8px;">VPN bypasses this &mdash; treat as directional signal, not proof.</div>
+        </div>` : ''}
+
         <p style="margin:24px 0 0;font-size:12px;color:#8B7E62;line-height:1.7;">Reply to this email to reach <strong style="color:#EDE5D8;">${esc(name)}</strong> — the reply-to is set to their address. Confirm the formula together with them first, then send the Stripe link.</p>
       </div>
     </div>
   </body></html>`;
 }
 
-function buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl }){
+function buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo }){
+  geo = geo || {};
   const q = quiz || {};
   const totalPct = herbLines.reduce((s, h) => s + (h.pct || 0), 0);
   const totalMl  = herbLines.reduce((s, h) => s + (h.ml  || 0), 0);
@@ -215,8 +256,7 @@ ${synergies && synergies.length ? 'SYNERGIES:\n' + synergies.map(s => '  • ' +
   Filters:   ${Array.isArray(q.avoid) ? q.avoid.join(', ') : (q.avoid || '—')}
   ${q.duration ? 'Duration:  ' + q.duration + '\n  ' : ''}${q.age ? 'Age:       ' + q.age + '\n  ' : ''}${q.sleep ? 'Sleep:     ' + q.sleep : ''}
 
-${notes ? 'Priority + prior herb experience:\n  "' + notes + '"\n' : ''}
-Reply to this email to reach the customer. Confirm the formula together first, then send the Stripe link.
+${notes ? 'Priority + prior herb experience:\n  "' + notes + '"\n\n' : ''}${(geo.city || geo.country || geo.ip) ? 'ORIGIN (edge-detected — VPN bypasses):\n' + (geo.city ? '  City:     ' + geo.city + (geo.subdivision ? ', ' + geo.subdivision : '') + '\n' : '') + (geo.country ? '  Country:  ' + geo.country + '\n' : '') + (geo.timezone ? '  Timezone: ' + geo.timezone + '\n' : '') + (geo.ip ? '  IP:       ' + geo.ip + '\n' : '') + '\n' : ''}Reply to this email to reach the customer. Confirm the formula together first, then send the Stripe link.
 `;
 }
 
