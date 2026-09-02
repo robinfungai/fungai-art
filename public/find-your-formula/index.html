@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
 <title>Find Your Formula · Fungai Art</title>
 <meta name="description" content="Six questions. One custom spagyric extract, hand-poured in Berlin, shipped home. Sublingual drops, slow-pace plant medicine — built for how you actually feel."/>
 <meta name="keywords" content="custom spagyric extract, personalised herbal formula, adaptogen quiz, plant medicine, Fungai Art, sublingual drops"/>
@@ -52,7 +52,7 @@
   --mono:      'Bayer',ui-monospace,monospace;
 }
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth;font-size:16px}
 body{
   background:var(--void);
@@ -64,8 +64,22 @@ body{
   min-height:100vh;
   min-height:100dvh;
   overflow-x:hidden;
+  -webkit-touch-callout:none;
 }
 a{color:inherit}
+
+/* Native-feel touch layer — kill the blue tap-highlight, kill the
+   accidental text-selection magnifier on aggressive taps, add the
+   haptic-mimicking active scale-down that phones respond well to. */
+button,.bubble,.q-balloon,.q-balloon-sub,.q-opt,.r-action{
+  user-select:none;-webkit-user-select:none;
+  -webkit-touch-callout:none;
+  touch-action:manipulation;
+}
+button:active,.bubble:active,.q-balloon:active,.q-balloon-sub:active,.q-opt:active,.r-action:active,.hero-cta:active,.q-btn:active,.reserve-submit:active,.r-why-lock-cta:active{
+  transform:scale(0.97) !important;
+  transition:transform .08s ease-out !important;
+}
 
 /* ── Ambient backdrop ─────────────────────────────────── */
 .void-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
@@ -137,18 +151,65 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .q-opt-label{display:block;font-family:var(--sans);font-weight:500;font-size:16px;color:var(--parchment);line-height:1.3;margin-bottom:10px}
 .q-opt-desc{display:block;font-family:var(--sans);font-weight:300;font-size:14px;color:var(--dust);line-height:1.6;letter-spacing:0.005em}
 
-/* ── Q1 floating bubbles — 12 intentions, no-scroll grid ──── */
-.q-bubbles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 10px;padding:12px 0 16px;perspective:900px}
-@media (min-width:520px){.q-bubbles{grid-template-columns:repeat(4,1fr);gap:14px}}
-/* Solid hue-tinted fill with an inner light source (no radial-gradient),
-   crisp outer color halo, deeper shadow beneath, and a wider floating
-   motion. Reads as a real glass marble drifting. */
-.bubble{position:relative;aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;font-family:var(--sans);font-weight:500;font-size:12px;line-height:1.2;color:var(--parchment);cursor:pointer;transition:transform .3s cubic-bezier(.22,.61,.36,1),box-shadow .3s,filter .3s;user-select:none;border:1px solid color-mix(in srgb, var(--hue) 65%, transparent);background-color:color-mix(in srgb, var(--hue) 22%, #0F1014);box-shadow:inset 0 -8px 18px rgba(0,0,0,0.45),inset 0 6px 14px color-mix(in srgb, var(--hue) 40%, transparent),inset 0 2px 3px rgba(255,255,255,0.18),0 14px 28px -10px color-mix(in srgb, var(--hue) 55%, transparent),0 0 26px -6px color-mix(in srgb, var(--hue) 40%, transparent);animation:bubble-float 6s ease-in-out infinite;will-change:transform}
-.bubble::after{content:'';position:absolute;top:12%;left:22%;width:36%;height:32%;border-radius:50%;background:radial-gradient(ellipse at center, rgba(255,255,255,0.5), rgba(255,255,255,0) 65%);pointer-events:none;filter:blur(1px)}
-.bubble:hover{transform:translateY(-6px) scale(1.06);filter:brightness(1.1)}
-.bubble:active{transform:scale(0.96)}
-.bubble.on{transform:scale(1.1);border-color:var(--hue);box-shadow:inset 0 -8px 18px rgba(0,0,0,0.4),inset 0 6px 14px color-mix(in srgb, var(--hue) 55%, transparent),inset 0 2px 3px rgba(255,255,255,0.25),0 20px 40px -8px color-mix(in srgb, var(--hue) 70%, transparent),0 0 40px -4px var(--hue)}
-.bubble > span{position:relative;z-index:1;max-width:100%;overflow-wrap:break-word;text-shadow:0 1px 8px rgba(0,0,0,0.85),0 0 2px rgba(0,0,0,0.6);letter-spacing:0.005em}
+/* ── Q1 floating bubbles — glassmorphic 12-orb grid ────────
+   Frosted-glass fill, radial specular highlight top-center for the
+   glossy 3D effect, multi-layer box-shadow: colored neon aura
+   outside + subtle inner shadow for volumetric depth. */
+.q-bubbles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 12px;padding:14px 0 18px;perspective:1000px}
+@media (min-width:520px){.q-bubbles{grid-template-columns:repeat(4,1fr);gap:16px}}
+.bubble{
+  position:relative;aspect-ratio:1;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:8px;
+  font-family:var(--sans);font-weight:500;font-size:12px;line-height:1.22;letter-spacing:0.005em;
+  color:var(--parchment);cursor:pointer;
+  transition:transform .35s cubic-bezier(.22,.61,.36,1),box-shadow .35s,border-color .35s;
+  /* Frosted glass — semi-transparent, hue-tinted, backdrop-blurred */
+  background:linear-gradient(160deg, color-mix(in srgb, var(--hue) 18%, rgba(255,255,255,0.04)) 0%, color-mix(in srgb, var(--hue) 6%, rgba(255,255,255,0.02)) 100%);
+  -webkit-backdrop-filter:blur(18px) saturate(1.5);
+          backdrop-filter:blur(18px) saturate(1.5);
+  border:1px solid color-mix(in srgb, var(--hue) 40%, rgba(255,255,255,0.12));
+  /* Multi-layer shadow: neon aura outside, inner depth, faint inner ring */
+  box-shadow:
+    0 20px 40px -14px color-mix(in srgb, var(--hue) 55%, transparent),
+    0 0 30px -6px color-mix(in srgb, var(--hue) 45%, transparent),
+    inset 0 -10px 20px rgba(0,0,0,0.35),
+    inset 0 2px 3px rgba(255,255,255,0.12),
+    inset 0 0 0 1px rgba(255,255,255,0.04);
+  animation:bubble-float 6s ease-in-out infinite;
+  will-change:transform;
+}
+/* Specular highlight — glossy 3D sphere top-center */
+.bubble::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:radial-gradient(ellipse 60% 45% at 45% 18%, rgba(255,255,255,0.42), rgba(255,255,255,0) 68%);
+  pointer-events:none;
+}
+/* Small secondary highlight — hint of a second light source */
+.bubble::after{
+  content:'';position:absolute;bottom:14%;right:18%;
+  width:22%;height:16%;border-radius:50%;
+  background:radial-gradient(ellipse at center, color-mix(in srgb, var(--hue) 55%, transparent), transparent 70%);
+  filter:blur(4px);pointer-events:none;
+}
+.bubble:hover{transform:translateY(-6px) scale(1.05);
+  box-shadow:
+    0 26px 50px -12px color-mix(in srgb, var(--hue) 70%, transparent),
+    0 0 45px -4px color-mix(in srgb, var(--hue) 60%, transparent),
+    inset 0 -10px 20px rgba(0,0,0,0.3),
+    inset 0 2px 4px rgba(255,255,255,0.18),
+    inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+.bubble.on{transform:scale(1.1);
+  border-color:var(--hue);
+  box-shadow:
+    0 24px 44px -10px color-mix(in srgb, var(--hue) 78%, transparent),
+    0 0 50px -2px var(--hue),
+    inset 0 -10px 20px rgba(0,0,0,0.3),
+    inset 0 2px 4px rgba(255,255,255,0.22),
+    inset 0 0 0 1px color-mix(in srgb, var(--hue) 45%, rgba(255,255,255,0.1));
+}
+.bubble > span{position:relative;z-index:1;max-width:100%;overflow-wrap:break-word;text-shadow:0 1px 6px rgba(0,0,0,0.85),0 0 2px rgba(0,0,0,0.6)}
 /* Stagger + vary the float per bubble so the grid feels alive */
 .bubble:nth-child(1) {animation-delay:-0.0s;animation-duration:5.8s}
 .bubble:nth-child(2) {animation-delay:-0.8s;animation-duration:6.4s}
@@ -180,29 +241,80 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
    archetype. Tap → the picked balloon stays IN PLACE, others fade
    out, then sub-answer balloons materialise around/below with a
    soft entrance. No re-render, no new page. */
-.q-balloons{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:6px 0 8px;max-width:520px;margin:0 auto}
-.q-balloon{position:relative;aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:14px 10px;font-family:var(--sans);color:var(--parchment);cursor:pointer;user-select:none;border:1px solid color-mix(in srgb, var(--hue) 65%, transparent);background-color:color-mix(in srgb, var(--hue) 22%, #0F1014);box-shadow:inset 0 -10px 22px rgba(0,0,0,0.45),inset 0 8px 16px color-mix(in srgb, var(--hue) 40%, transparent),inset 0 3px 4px rgba(255,255,255,0.18),0 18px 32px -12px color-mix(in srgb, var(--hue) 55%, transparent),0 0 32px -8px color-mix(in srgb, var(--hue) 40%, transparent);transition:transform .35s cubic-bezier(.22,.61,.36,1),box-shadow .35s,filter .35s,opacity .35s;animation:balloon-float 6.5s ease-in-out infinite}
-.q-balloon::after{content:'';position:absolute;top:12%;left:22%;width:36%;height:32%;border-radius:50%;background:radial-gradient(ellipse at center, rgba(255,255,255,0.5), rgba(255,255,255,0) 65%);pointer-events:none;filter:blur(1px)}
+.q-balloons{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:8px 0 10px;max-width:520px;margin:0 auto;transition:grid-template-columns .5s ease,max-width .5s ease,padding .5s ease}
+.q-balloon{
+  position:relative;aspect-ratio:1;border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:14px 10px;
+  font-family:var(--sans);color:var(--parchment);cursor:pointer;
+  background:linear-gradient(160deg, color-mix(in srgb, var(--hue) 22%, rgba(255,255,255,0.05)) 0%, color-mix(in srgb, var(--hue) 8%, rgba(255,255,255,0.02)) 100%);
+  -webkit-backdrop-filter:blur(22px) saturate(1.5);
+          backdrop-filter:blur(22px) saturate(1.5);
+  border:1px solid color-mix(in srgb, var(--hue) 42%, rgba(255,255,255,0.12));
+  box-shadow:
+    0 24px 46px -14px color-mix(in srgb, var(--hue) 60%, transparent),
+    0 0 40px -6px color-mix(in srgb, var(--hue) 45%, transparent),
+    inset 0 -14px 26px rgba(0,0,0,0.4),
+    inset 0 3px 4px rgba(255,255,255,0.15),
+    inset 0 0 0 1px rgba(255,255,255,0.04);
+  transition:transform .35s cubic-bezier(.22,.61,.36,1),box-shadow .35s,filter .35s,opacity .35s,aspect-ratio .5s;
+  animation:balloon-float 6.5s ease-in-out infinite;
+}
+.q-balloon::before{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(ellipse 62% 44% at 45% 18%, rgba(255,255,255,0.42), rgba(255,255,255,0) 68%);pointer-events:none}
+.q-balloon::after{content:'';position:absolute;bottom:16%;right:18%;width:24%;height:18%;border-radius:50%;background:radial-gradient(ellipse at center, color-mix(in srgb, var(--hue) 65%, transparent), transparent 70%);filter:blur(5px);pointer-events:none}
 .q-balloon-label{position:relative;z-index:1;font-family:var(--display);font-style:italic;font-size:20px;line-height:1.1;text-shadow:0 1px 8px rgba(0,0,0,0.75);letter-spacing:0.005em}
 .q-balloon-desc{position:relative;z-index:1;margin-top:6px;font-size:11px;line-height:1.35;opacity:0.85;text-shadow:0 1px 6px rgba(0,0,0,0.7);padding:0 4px}
-.q-balloon:hover{transform:translateY(-4px) scale(1.02);filter:brightness(1.05)}
+.q-balloon:hover{transform:translateY(-5px) scale(1.03);filter:brightness(1.06)}
 .q-balloon:nth-child(1){animation-delay:0s}
 .q-balloon:nth-child(2){animation-delay:-1.6s}
 .q-balloon:nth-child(3){animation-delay:-3.2s}
 .q-balloon:nth-child(4){animation-delay:-4.8s}
 @keyframes balloon-float{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-8px) rotate(2deg)}}
-/* Chosen state — scales up, glows, others fade + shrink around it. */
-.q-balloons.locked .q-balloon:not(.chosen){opacity:0;transform:scale(0.4);pointer-events:none;filter:blur(4px)}
-.q-balloons.locked .q-balloon.chosen{transform:scale(1.05);box-shadow:inset 0 -10px 22px rgba(0,0,0,0.4),inset 0 8px 16px color-mix(in srgb, var(--hue) 55%, transparent),inset 0 3px 4px rgba(255,255,255,0.25),0 24px 48px -10px color-mix(in srgb, var(--hue) 70%, transparent),0 0 48px -4px var(--hue);border-color:var(--hue);animation:balloon-float 6.5s ease-in-out infinite, chosen-pulse 3.2s ease-in-out infinite}
+/* Chosen state — during fade-out, non-chosen shrink; after cleanup
+   (see JS), non-chosen are DOM-removed and the grid collapses to a
+   compact single-column pill so no empty rows leak vertical space. */
+.q-balloons.locked .q-balloon:not(.chosen){opacity:0;transform:scale(0);pointer-events:none;filter:blur(4px);margin:0;padding:0}
+.q-balloons.locked .q-balloon.chosen{
+  transform:scale(1.02);border-color:var(--hue);
+  box-shadow:
+    0 26px 50px -10px color-mix(in srgb, var(--hue) 75%, transparent),
+    0 0 55px -4px var(--hue),
+    inset 0 -14px 26px rgba(0,0,0,0.35),
+    inset 0 3px 4px rgba(255,255,255,0.22),
+    inset 0 0 0 1px color-mix(in srgb, var(--hue) 45%, rgba(255,255,255,0.08));
+  animation:balloon-float 6.5s ease-in-out infinite, chosen-pulse 3.2s ease-in-out infinite;
+}
 @keyframes chosen-pulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.12)}}
-.q-balloons.locked{grid-template-columns:1fr;max-width:220px;transition:max-width .5s ease, grid-template-columns .5s ease}
+/* After JS-cleanup, tighten the grid so the chosen sits compact on top */
+.q-balloons.cleaned{grid-template-columns:1fr;max-width:180px;padding:2px 0 4px;gap:0}
+.q-balloons.cleaned .q-balloon.chosen{aspect-ratio:2.4/1;border-radius:999px;padding:12px 20px;transform:scale(1);animation:none}
+.q-balloons.cleaned .q-balloon.chosen .q-balloon-label{font-size:15px}
+.q-balloons.cleaned .q-balloon.chosen .q-balloon-desc{display:none}
 
 /* Sub-answer balloons — appear BELOW the chosen main balloon in a
    flowing arc. Smaller, still bubble-shaped, stagger entrance. */
 .q-balloon-subs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px;opacity:0;animation:balloon-sub-appear .55s ease .1s forwards}
 @keyframes balloon-sub-appear{to{opacity:1}}
-.q-balloon-sub{position:relative;aspect-ratio:1.5/1;min-height:78px;border-radius:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px 14px;font-family:var(--sans);color:var(--parchment);cursor:pointer;user-select:none;border:1px solid color-mix(in srgb, var(--hue) 55%, transparent);background-color:color-mix(in srgb, var(--hue) 18%, #0F1014);box-shadow:inset 0 -6px 14px rgba(0,0,0,0.35),inset 0 4px 10px color-mix(in srgb, var(--hue) 35%, transparent),inset 0 2px 3px rgba(255,255,255,0.15),0 10px 20px -8px color-mix(in srgb, var(--hue) 45%, transparent);transition:transform .25s,filter .25s;opacity:0;transform:translateY(14px) scale(0.92);animation:balloon-sub-in .55s cubic-bezier(.22,.61,.36,1) forwards}
-.q-balloon-sub::after{content:'';position:absolute;top:10%;left:18%;width:30%;height:24%;border-radius:50%;background:radial-gradient(ellipse at center, rgba(255,255,255,0.4), rgba(255,255,255,0) 65%);pointer-events:none}
+.q-balloon-sub{
+  position:relative;aspect-ratio:1.5/1;min-height:78px;border-radius:60px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:10px 14px;
+  font-family:var(--sans);color:var(--parchment);cursor:pointer;
+  background:linear-gradient(160deg, color-mix(in srgb, var(--hue) 18%, rgba(255,255,255,0.04)) 0%, color-mix(in srgb, var(--hue) 6%, rgba(255,255,255,0.02)) 100%);
+  -webkit-backdrop-filter:blur(18px) saturate(1.4);
+          backdrop-filter:blur(18px) saturate(1.4);
+  border:1px solid color-mix(in srgb, var(--hue) 35%, rgba(255,255,255,0.10));
+  box-shadow:
+    0 14px 26px -8px color-mix(in srgb, var(--hue) 50%, transparent),
+    0 0 24px -8px color-mix(in srgb, var(--hue) 35%, transparent),
+    inset 0 -8px 16px rgba(0,0,0,0.35),
+    inset 0 2px 3px rgba(255,255,255,0.14),
+    inset 0 0 0 1px rgba(255,255,255,0.03);
+  transition:transform .25s,filter .25s,box-shadow .25s;
+  opacity:0;transform:translateY(14px) scale(0.92);
+  animation:balloon-sub-in .55s cubic-bezier(.22,.61,.36,1) forwards;
+}
+.q-balloon-sub::before{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(ellipse 55% 40% at 45% 15%, rgba(255,255,255,0.36), rgba(255,255,255,0) 68%);pointer-events:none}
 .q-balloon-sub-label{position:relative;z-index:1;font-family:var(--sans);font-weight:500;font-size:13px;line-height:1.2;text-shadow:0 1px 6px rgba(0,0,0,0.7)}
 .q-balloon-sub-desc{position:relative;z-index:1;margin-top:4px;font-size:10.5px;opacity:0.82;line-height:1.35}
 .q-balloon-sub:hover{transform:translateY(-2px) scale(1.03);filter:brightness(1.08)}
@@ -266,6 +378,11 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .q-textarea{width:100%;background:var(--card);border:0.5px solid var(--rule);border-radius:12px;padding:14px 16px;color:var(--parchment);font:inherit;font-size:15px;line-height:1.6;resize:vertical;min-height:110px;outline:none;transition:border-color .18s}
 .q-textarea:focus{border-color:var(--amber-l)}
 .q-cta{margin-top:22px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+/* Sticky variant — Continue floats above the safe-area at bottom of
+   viewport with a gradient fade behind so scrolled content passes
+   under it cleanly. Anchored in the thumb zone for one-hand use. */
+.q-cta-sticky{position:sticky;bottom:0;left:0;right:0;margin:24px -20px 0;padding:18px 20px calc(18px + env(safe-area-inset-bottom, 0px));background:linear-gradient(180deg, rgba(5,9,12,0) 0%, rgba(5,9,12,0.85) 40%, rgba(5,9,12,0.98) 100%);z-index:15;display:flex;justify-content:flex-end;pointer-events:none}
+.q-cta-sticky > .q-btn{pointer-events:auto;box-shadow:0 12px 28px -10px rgba(232,177,75,0.55),0 0 22px -8px rgba(232,177,75,0.4)}
 .q-btn{padding:14px 28px;background:linear-gradient(135deg,var(--amber-l),var(--amber));color:var(--void);font-family:var(--mono);font-size:11px;letter-spacing:0.28em;text-transform:uppercase;border:none;border-radius:999px;cursor:pointer;font-weight:500;transition:transform .18s,opacity .18s}
 .q-btn:hover{transform:translateY(-1px)}
 .q-btn:disabled{opacity:0.4;cursor:not-allowed}
@@ -279,7 +396,10 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .r-header{text-align:center;padding:6px 0 24px}
 .r-name{font-family:var(--display);font-weight:300;font-style:italic;font-size:clamp(36px,8vw,54px);line-height:1;color:var(--parchment);letter-spacing:-0.005em;margin-bottom:8px}
 .r-name .accent{color:var(--amber-l)}
-.r-tagline{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--dust);line-height:1.6}
+/* Tagline under the bottle photo — reads as an artisan spec-line,
+   not a marketing note. Bayer mono for the label energy, wider
+   letter-spacing to feel bespoke-atelier. */
+.r-tagline{font-family:var(--mono),ui-monospace,monospace;font-style:normal;font-size:10.5px;color:var(--amber-l);line-height:1.6;letter-spacing:0.36em;text-transform:uppercase;font-weight:500}
 
 /* Product photo card — mirrors the practitioner mode's genFormulaArt
    card so what customers see IS what ships. Bottle background image
@@ -884,26 +1004,30 @@ const QUESTIONS = [
   },
   {
     // NEW · Age bracket — dosing, hormone context, adaptogen tolerance.
+    // Life-cycle emoji: sprout → herb → tree → autumn leaf.
     key:'age',
     title:'I am',
     type:'compact-single',
     options:[
-      { v:'under_25', glyph:'○', label:'Under 25' },
-      { v:'25_40',    glyph:'◐', label:'25–40'    },
-      { v:'41_60',    glyph:'●', label:'41–60'    },
-      { v:'60_plus',  glyph:'◈', label:'60+'      },
+      { v:'under_25', glyph:'🌱', label:'Under 25' },
+      { v:'25_40',    glyph:'🌿', label:'25–40'    },
+      { v:'41_60',    glyph:'🌳', label:'41–60'    },
+      { v:'60_plus',  glyph:'🍂', label:'60+'      },
     ],
   },
   {
     // NEW · Sleep quality — fundamental axis, always ask.
+    // Lunar-phase / sleep-state emoji matching the entheobotanical
+    // brand: full moon = deep restorative, waning = partial, new =
+    // depleted, storm = broken.
     key:'sleep',
     title:'Your <em>sleep</em>',
     type:'compact-single',
     options:[
-      { v:'restorative_6plus',     glyph:'●', label:'6+ hours · restorative' },
-      { v:'not_restorative_6plus', glyph:'◐', label:'6+ hours · not restorative' },
-      { v:'under_6',               glyph:'○', label:'Under 6 hours' },
-      { v:'very_broken',           glyph:'◌', label:'Very broken' },
+      { v:'restorative_6plus',     glyph:'🌕', label:'6+ hours · restorative' },
+      { v:'not_restorative_6plus', glyph:'🌗', label:'6+ hours · not restorative' },
+      { v:'under_6',               glyph:'🌘', label:'Under 6 hours' },
+      { v:'very_broken',           glyph:'🌪', label:'Very broken' },
     ],
   },
   {
@@ -920,14 +1044,17 @@ const QUESTIONS = [
 // a single page-level eyebrow, tighter compact rendering per question,
 // and a Continue button that only advances when all required questions
 // are answered (auto-advance is disabled on multi-Q pages).
+// Page eyebrows are LABEL-ONLY (no "01 of 05" prefix) — the progress
+// row above the page already shows the "N of M" counter, so
+// duplicating it inside the eyebrow reads as visual clutter.
 const PAGES = [
-  { eyebrow: '01 of 05 · The calling',       keys: ['intention'] },
-  { eyebrow: '02 of 05 · The body',          keys: ['pattern']   },
-  { eyebrow: '03 of 05 · The container',     keys: ['avoid']     },
-  { eyebrow: '04 of 05 · Rhythm & pattern',  keys: ['time','stress','duration'] },
+  { eyebrow: 'The calling',        keys: ['intention'] },
+  { eyebrow: 'The body',           keys: ['pattern']   },
+  { eyebrow: 'The container',      keys: ['avoid']     },
+  { eyebrow: 'Rhythm & pattern',   keys: ['time','stress','duration'] },
   // Notes first — Robin wanted the free-text bar on top of this page,
   // then age + sleep tucked underneath as playful compact pills.
-  { eyebrow: '05 of 05 · Context & priority',keys: ['notes','age','sleep'] },
+  { eyebrow: 'Context & priority', keys: ['notes','age','sleep'] },
 ];
 function getQuestion(key){ return QUESTIONS.find(q => q.key === key); }
 
@@ -1012,10 +1139,9 @@ function renderPage(page){
     }
   });
 
-  // Multi-question pages: Continue button gated on all-answered.
+  // Multi-question pages: sticky Continue button gated on all-answered.
   if (isMulti) {
-    const row = document.createElement('div'); row.className = 'q-cta';
-    row.style.justifyContent = 'flex-end';
+    const row = document.createElement('div'); row.className = 'q-cta q-cta-sticky';
     const nxt = document.createElement('button');
     nxt.type = 'button'; nxt.className = 'q-btn'; nxt.textContent = 'Continue →';
     nxt.addEventListener('click', () => {
@@ -1182,11 +1308,21 @@ function renderBranchBalloons(q){
   function lockToArchetype(archVal, instant){
     const chosen = q.options.find(o => o.v === archVal);
     if (!chosen) return;
-    // Mark balloons — chosen stays, others fade out via CSS.
+    // Fade non-chosen out, chosen stays in place — then AFTER the
+    // animation completes, DOM-remove the non-chosen balloons and
+    // collapse the grid to a single 96px "chosen" pill. This fixes
+    // the "huge empty space" bug where invisible grid cells left
+    // giant gaps above the sub-balloons.
     grid.querySelectorAll('.q-balloon').forEach(b => {
       b.classList.toggle('chosen', b.dataset.v === archVal);
     });
     grid.classList.add('locked');
+    const doCleanup = () => {
+      grid.querySelectorAll('.q-balloon:not(.chosen)').forEach(b => b.remove());
+      grid.classList.add('cleaned');
+    };
+    if (instant) { doCleanup(); }
+    else         { setTimeout(doCleanup, 380); }
 
     // Render sub-balloons (or replace if already present)
     subsHost.innerHTML = '';
@@ -1919,7 +2055,7 @@ function renderResult(){
   const name  = pickName(a.intention);
 
   document.getElementById('bottle').insertAdjacentHTML('beforeend', bottleCard(a.intention, herbs, name));
-  document.getElementById('rTagline').textContent = herbs.length + ' allies · 30 ml · hand-poured in Berlin';
+  document.getElementById('rTagline').textContent = herbs.length + ' allies · Tailored Elixir · 30 ml';
   document.getElementById('rStory').innerHTML     = storyFor(a, herbs);
   document.getElementById('rHerbCount').textContent = herbs.length + ' allies · woven together';
   document.getElementById('rSafety').textContent  = safetyLine(a);
