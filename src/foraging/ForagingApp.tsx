@@ -55,7 +55,11 @@ interface MycoResolvedLocation {
   lng: number;
   regionNameRequested: string | null;
   resolvedName: string | null;
-  resolvedFrom: 'coords' | 'geocoded';
+  // 'question-coords' — coordinates were parsed from the question text
+  // 'question-name'   — a place name was extracted from the question text
+  // 'region-field'    — the user's region-name input was used
+  // 'coords'          — fallback to whatever coords the client sent
+  resolvedFrom: 'question-coords' | 'question-name' | 'region-field' | 'coords';
 }
 
 // Foraging conditions type
@@ -598,18 +602,32 @@ export default function ForagingApp() {
       const reply = data.reply || data.error || 'MYCO is quiet right now — try again shortly.';
       setMycoMessages(m => [...m, { role: 'assistant', content: reply }]);
 
-      // If the server geocoded a named place, record it and fly the map
-      // over so the user sees where "there" is.
-      const resolved = data?.context?.location;
+      // If the server resolved a location, record it, fly the map,
+      // and — critically — update the region-name field when MYCO
+      // jumped locations because of a mention IN THE QUESTION.
+      // Otherwise the stale region field would keep overriding the
+      // user's next turn.
+      const resolved = data?.context?.location as MycoResolvedLocation | undefined;
       if (resolved && Number.isFinite(resolved.lat) && Number.isFinite(resolved.lng)) {
-        setMycoResolvedLoc(resolved as MycoResolvedLocation);
-        if (resolved.resolvedFrom === 'geocoded' && mapRef.current) {
+        setMycoResolvedLoc(resolved);
+        const jumped =
+          resolved.resolvedFrom === 'question-name' ||
+          resolved.resolvedFrom === 'question-coords' ||
+          resolved.resolvedFrom === 'region-field';
+        if (jumped && mapRef.current) {
           mapRef.current.flyTo({
             center: [resolved.lng, resolved.lat],
             zoom: 8,
             duration: 1500,
             essential: true,
           });
+        }
+        // Sync the region field to the resolved place — makes the
+        // next turn's default location match what MYCO just answered
+        // about, unless the next turn itself names another place.
+        if ((resolved.resolvedFrom === 'question-name' || resolved.resolvedFrom === 'question-coords') && resolved.resolvedName) {
+          const short = resolved.resolvedName.split(',').slice(0, 2).join(',').trim();
+          setMycoRegionName(short);
         }
       }
     } catch (_) {
@@ -1439,7 +1457,11 @@ export default function ForagingApp() {
           }}>
             <span style={{ color: '#6BD66F' }}>●</span>
             <span style={{ textTransform: 'uppercase' }}>
-              {mycoResolvedLoc?.resolvedFrom === 'geocoded' && mycoResolvedLoc.resolvedName
+              {mycoResolvedLoc?.resolvedName && (
+                mycoResolvedLoc.resolvedFrom === 'question-name' ||
+                mycoResolvedLoc.resolvedFrom === 'question-coords' ||
+                mycoResolvedLoc.resolvedFrom === 'region-field'
+              )
                 ? `Reading · ${mycoResolvedLoc.resolvedName.split(',').slice(0, 2).join(',')}`
                 : userLocation
                 ? (userPlace && (userPlace.city || userPlace.region)
@@ -1448,19 +1470,32 @@ export default function ForagingApp() {
                 : selectedNode ? `Node · ${selectedNode.location}`
                 : 'Map center'}
             </span>
-            <input
-              type="text"
-              value={mycoRegionName}
-              onChange={e => setMycoRegionName(e.target.value.slice(0, 120))}
-              placeholder="Name any place: 'Lago di Garda, Italy', 'Dalarna, Sweden', 'Mt. Olympus'…"
-              style={{
-                flex: 1, minWidth: 140,
-                background: 'transparent', border: 'none',
-                borderBottom: '0.5px solid rgba(255,255,255,0.1)',
-                color: '#E6D9B5', fontFamily: 'monospace', fontSize: 9,
-                padding: '3px 4px', outline: 'none',
-              }}
-            />
+            <div style={{ flex: 1, minWidth: 140, position: 'relative', display: 'flex', alignItems: 'center' }}>
+              <input
+                type="text"
+                value={mycoRegionName}
+                onChange={e => setMycoRegionName(e.target.value.slice(0, 120))}
+                placeholder="Name any place, or mention it in your question…"
+                style={{
+                  flex: 1, minWidth: 0,
+                  background: 'transparent', border: 'none',
+                  borderBottom: '0.5px solid rgba(255,255,255,0.1)',
+                  color: '#E6D9B5', fontFamily: 'monospace', fontSize: 9,
+                  padding: '3px 20px 3px 4px', outline: 'none',
+                }}
+              />
+              {mycoRegionName && (
+                <button
+                  onClick={() => { setMycoRegionName(''); setMycoResolvedLoc(null); }}
+                  title="Clear location — MYCO will use your GPS or map center"
+                  style={{
+                    position: 'absolute', right: 2, top: '50%', transform: 'translateY(-50%)',
+                    background: 'none', border: 'none', color: '#8B7E62',
+                    fontSize: 12, lineHeight: 1, cursor: 'pointer', padding: '2px 4px',
+                  }}
+                >×</button>
+              )}
+            </div>
           </div>
 
           {/* Message list — scroll */}

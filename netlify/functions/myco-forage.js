@@ -147,6 +147,72 @@ function summarizeWeather(w, days = 30) {
   };
 }
 
+// ── Location extraction from free-text question ──────────────────────
+//
+// The region-name input is sticky — if the user first asks "what's at
+// Lago di Garda?" and then types "and what about Säter, Sweden?", the
+// input still says Lago di Garda. Server should notice the new mention
+// in the question and jump.
+//
+// Two extraction passes:
+//   1. Coordinates: "61.5°N, 15.6°E" / "45.734, 10.582" — high-
+//      precision regex, unambiguous.
+//   2. Named place: after prepositions (in / at / near / around /
+//      about / for) grab the next capitalised chunk + optional
+//      ", country" tail. Case-insensitive so lowercase "sweden" is
+//      still picked up.
+//
+// The extracted string is then passed to Nominatim; if geocoding
+// succeeds the question's mention wins over the region field. If not,
+// we fall back gracefully.
+function extractLocationFromQuestion(question) {
+  if (!question) return null;
+  const q = question.trim();
+
+  // ── Coordinates ──
+  // With hemispheres: "61.5°N, 15.6°E"
+  const dmsMatch = q.match(/(-?\d{1,3}(?:\.\d+)?)\s*°?\s*([NS])[\s,°]+(-?\d{1,3}(?:\.\d+)?)\s*°?\s*([EW])/i);
+  if (dmsMatch) {
+    let lat = parseFloat(dmsMatch[1]);
+    let lng = parseFloat(dmsMatch[3]);
+    if (dmsMatch[2].toUpperCase() === 'S') lat = -lat;
+    if (dmsMatch[4].toUpperCase() === 'W') lng = -lng;
+    if (Number.isFinite(lat) && Number.isFinite(lng) && Math.abs(lat) <= 90 && Math.abs(lng) <= 180) {
+      return { type: 'coords', lat, lng, source: 'question-coords' };
+    }
+  }
+  // Plain "lat, lng"
+  const plain = q.match(/(-?\d{1,2}\.\d{2,})\s*,\s*(-?\d{1,3}\.\d{2,})/);
+  if (plain) {
+    const lat = parseFloat(plain[1]);
+    const lng = parseFloat(plain[2]);
+    if (Number.isFinite(lat) && Number.isFinite(lng) && Math.abs(lat) <= 90 && Math.abs(lng) <= 180) {
+      return { type: 'coords', lat, lng, source: 'question-coords' };
+    }
+  }
+
+  // ── Named place after preposition ──
+  // Support diacritics (Säter, Örebro, Åre) and simple hyphens
+  // (Stratford-upon-Avon). Case-insensitive on the trigger word so
+  // "in Säter" and "In Säter" both match; the extracted place is
+  // used verbatim so Nominatim keeps case for its own scoring.
+  const prep = q.match(/\b(?:in|at|near|around|about|for)\s+([A-Za-zÀ-ÖØ-öø-ÿ][\w\-''\s]{1,60}?)(?=\s+(?:right now|today|this|now|during|in the|is|are|has|have|been|was|were|be|going|please|thanks|thank you|for the|for a|for me|to be|\?|\.|!)|\s*(?:,\s*)?(?:sweden|norway|denmark|finland|germany|deutschland|italy|italia|france|spain|espana|portugal|greece|austria|switzerland|schweiz|netherlands|belgium|ireland|scotland|england|wales|uk|usa|us|canada|mexico|japan|india|thailand|indonesia|vietnam|china|russia|brazil|argentina|australia|new zealand)\b|$)/i);
+  if (prep) {
+    let name = prep[1].trim().replace(/\s+/g, ' ');
+    // Look for a ", country" tail immediately after the match
+    const rest = q.slice((prep.index || 0) + prep[0].length);
+    const countryTail = rest.match(/^\s*,?\s*([A-Za-zÀ-ÖØ-öø-ÿ][\w\s]{1,30}?)(?:[\?\.!,]|$|\s+(?:right now|today|this|now))/i);
+    if (countryTail && countryTail[1].length < 30 && !/^(right now|today|this|now|for|please)$/i.test(countryTail[1].trim())) {
+      name += ', ' + countryTail[1].trim();
+    }
+    // Reject 1-char / all-lowercase noise
+    if (name.length >= 3 && /[A-Za-zÀ-ÖØ-öø-ÿ]/.test(name)) {
+      return { type: 'name', name, source: 'question-name' };
+    }
+  }
+  return null;
+}
+
 // ── Forward geocoder ─────────────────────────────────────────────────
 //
 // The user's `regionName` field ("Lago di Garda, Italy", "Östersund",
@@ -443,7 +509,15 @@ const SYSTEM = `You are MYCO, the foraging intelligence embedded inside Fungai A
 A field-savvy mycologist AND botanist who reads weather and citizen-science data the way an experienced forager does — mushrooms and wild herbs, medicinal plants and edibles, all equally your beat. You care about substance, not marketing. You cite the numbers you were given, in the units you were given. When the data is thin, you say so.
 
 ## LOCATION AWARENESS
-The context bundle names the exact place you are reasoning about — resolved from the user's typed region name (e.g. "Lago di Garda, Italy" → Lake Garda, Italy · 45.6°N, 10.7°E) or from their GPS. ALWAYS use that resolved place name in your reply. If the resolved place is different from what the user typed (a spelling correction, a canonical form), acknowledge that once so they know you're reading the right spot.
+The context bundle names the exact place you are reasoning about — location.resolvedName is the canonical name. location.resolvedFrom tells you HOW the location was picked for this turn:
+  - 'question-name'   — a place mention in the CURRENT question ("in Säter, Sweden") became the location. The user jumped locations mid-conversation. The data below is fresh for that new place.
+  - 'question-coords' — explicit coordinates in the current question set the location.
+  - 'region-field'    — the user's typed region field above the chat.
+  - 'coords'          — their GPS / map center.
+
+If resolvedFrom is 'question-*' the user has just moved somewhere new. DO NOT complain about a mismatch or ask them to re-submit — the data you are reading is already for the newly named place. Say once, briefly, "Reading for <resolvedName> now" and answer.
+
+ALWAYS use resolvedName in your reply. If the resolved name is a canonical form of what the user typed ("Lake Garda, Italy" vs their "Lago di Garda"), acknowledge that lightly so they know you're on the right spot.
 
 ## WHAT YOU CAN DO — five data layers, use them together
 1. **weather** — 30 days of daily rain + temperature at the resolved coordinates, plus a 7-day forecast. Interpret into fruiting/growing-window language.
@@ -510,17 +584,42 @@ export const handler = async (event) => {
 
     if (!question) return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Empty question.' }) };
 
-    // Geocode the region name FIRST if provided — user intent is
-    // authoritative. "I'm in Berlin but ask me about Lago di Garda"
-    // resolves to Lake Garda's coords, not Berlin's.
+    // Location precedence, high → low:
+    //   1. Coordinates or named place mentioned INSIDE the question
+    //      itself. If the user pivots mid-conversation ("and what
+    //      about Säter, Sweden?") MYCO jumps immediately — the
+    //      region-name field doesn't have to be manually updated.
+    //   2. Region-name field (what the user typed above the chat).
+    //   3. Client coordinates (GPS / node / map center).
+    //
+    // Whichever wins is echoed back on the response so the client
+    // can update the region field for continuity on subsequent turns.
     let geocoded = null;
     let resolvedFrom = 'coords';
-    if (regionName) {
-      geocoded = await forwardGeocode(regionName);
-      if (geocoded) {
-        lat = geocoded.lat;
-        lng = geocoded.lng;
-        resolvedFrom = 'geocoded';
+    const extracted = extractLocationFromQuestion(question);
+
+    if (extracted?.type === 'coords') {
+      lat = extracted.lat;
+      lng = extracted.lng;
+      resolvedFrom = 'question-coords';
+    } else if (extracted?.type === 'name') {
+      const g = await forwardGeocode(extracted.name);
+      if (g) {
+        lat = g.lat;
+        lng = g.lng;
+        geocoded = g;
+        resolvedFrom = 'question-name';
+      }
+    }
+    // Only fall back to the region-name field if the question didn't
+    // yield a usable location — question intent wins.
+    if (resolvedFrom === 'coords' && regionName) {
+      const g = await forwardGeocode(regionName);
+      if (g) {
+        lat = g.lat;
+        lng = g.lng;
+        geocoded = g;
+        resolvedFrom = 'region-field';
       }
     }
 
