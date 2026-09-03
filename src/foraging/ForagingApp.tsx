@@ -57,7 +57,10 @@ interface ForageConditions {
 // Organic earthy map style — CARTO Voyager (warm/natural tones, no account needed).
 const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json';
 
-// Free satellite imagery — ESRI World Imagery (no account or token needed).
+// Free satellite imagery — ESRI World Imagery + CARTO dark_only_labels
+// overlay so country / region / city names still read at every zoom.
+// Bare satellite imagery has no place labels; the labels-only tileset
+// is a transparent PNG so it composites cleanly on top.
 const SATELLITE_STYLE = {
   version: 8 as const,
   sources: {
@@ -67,8 +70,21 @@ const SATELLITE_STYLE = {
       tileSize: 256 as const,
       attribution: '© Esri, Earthstar Geographics',
     },
+    labels: {
+      type: 'raster' as const,
+      tiles: [
+        'https://a.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',
+        'https://b.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',
+        'https://c.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',
+      ],
+      tileSize: 256 as const,
+      attribution: '© OpenStreetMap contributors, © CARTO',
+    },
   },
-  layers: [{ id: 'satellite-layer', type: 'raster' as const, source: 'satellite' }],
+  layers: [
+    { id: 'satellite-layer', type: 'raster' as const, source: 'satellite' },
+    { id: 'labels-layer',    type: 'raster' as const, source: 'labels'    },
+  ],
 };
 
 const SEASONS: Season[] = ['spring', 'summer', 'autumn', 'winter'];
@@ -236,6 +252,13 @@ export default function ForagingApp() {
   const [geoStatus, setGeoStatus] = useState<'idle' | 'requesting' | 'granted' | 'denied' | 'unavailable'>('idle');
   const [userConditions, setUserConditions] = useState<ForageConditions | null>(null);
   const [growingPanelOpen, setGrowingPanelOpen] = useState(true);
+  // Reverse-geocoded place name for the user's location — used both as
+  // a floating chip on the map and to auto-populate the MYCO Ask
+  // region field so users don't have to type "Dalarna, Sweden" every
+  // time.
+  const [userPlace, setUserPlace] = useState<{
+    city: string | null; region: string | null; country: string | null;
+  } | null>(null);
 
   // ── Sporecast-style fungal layer (broad Kingdom-Fungi bbox query) ──
   //   Renders always-on across the current viewport once the map settles.
@@ -281,7 +304,35 @@ export default function ForagingApp() {
       .then(r => r.json())
       .then(data => { if (data.score) setUserConditions(data); })
       .catch(() => {});
+
+    // Reverse geocode → city, region, country. Uses BigDataCloud's
+    // client-side reverse-geocode endpoint (free, no API key, CORS-
+    // enabled, ~5m accuracy). Best-effort — failure is silent, the
+    // rest of the app doesn't depend on it.
+    fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${userLocation.lat}&longitude=${userLocation.lng}&localityLanguage=en`)
+      .then(r => r.json())
+      .then(data => {
+        setUserPlace({
+          city:    data.city || data.locality || data.localityInfo?.administrative?.[3]?.name || null,
+          region:  data.principalSubdivision || null,
+          country: data.countryName || null,
+        });
+      })
+      .catch(() => {});
   }, [userLocation]);
+
+  // Auto-populate the MYCO region name field the first time the
+  // reverse-geocode lands, so a Swedish user in Dalarna doesn't have
+  // to type "Dalarna, Sweden" — it's already there. Only fills in if
+  // the user hasn't typed anything themselves.
+  useEffect(() => {
+    if (!userPlace) return;
+    setMycoRegionName(prev => {
+      if (prev && prev.trim()) return prev;
+      const parts = [userPlace.region, userPlace.country].filter(Boolean);
+      return parts.join(', ');
+    });
+  }, [userPlace]);
 
   // 3. Derive: nearest EcoNodes (up to 3 within ~250km), the dominant
   //    habitat, a poetic zone label, and an aggregated species list
@@ -755,6 +806,14 @@ export default function ForagingApp() {
           <div style={{ fontFamily: 'monospace', fontSize: 8.5, letterSpacing: '0.28em', textTransform: 'uppercase', color: '#6BD66F', marginBottom: 6 }}>
             ✦ Growing around you · right now
           </div>
+          {/* Reverse-geocoded place — makes the "around you" feel literal.
+              Renders before the zone name so the reader sees where they
+              are, then the ecological read of that place. */}
+          {userPlace && (userPlace.city || userPlace.region || userPlace.country) && (
+            <div style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#E8B14B', marginBottom: 4 }}>
+              📍 {[userPlace.city, userPlace.region, userPlace.country].filter(Boolean).join(' · ')}
+            </div>
+          )}
           <div style={{ fontStyle: 'italic', fontSize: 19, lineHeight: 1.15, color: '#E6D9B5' }}>
             {userInsight.zoneName}
           </div>
@@ -911,10 +970,12 @@ export default function ForagingApp() {
         )}
 
         {/* "You are here" marker — soft amber pulse so the user always
-            knows where they're standing in the ecological field. */}
+            knows where they're standing in the ecological field. When
+            the reverse-geocode has resolved, a small city/region label
+            sits below the dot so the map itself names the location. */}
         {userLocation && (
           <Marker longitude={userLocation.lng} latitude={userLocation.lat} anchor="center">
-            <div style={{ position: 'relative', width: 14, height: 14 }} title="You are here">
+            <div style={{ position: 'relative', width: 14, height: 14 }} title={userPlace ? [userPlace.city, userPlace.region, userPlace.country].filter(Boolean).join(', ') : 'You are here'}>
               <div style={{
                 position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
                 width: 36, height: 36, borderRadius: '50%',
@@ -928,6 +989,26 @@ export default function ForagingApp() {
                 boxShadow: '0 0 14px rgba(232,177,75,0.65)',
                 border: '1px solid rgba(255,255,255,0.4)',
               }} />
+              {/* Place-name chip below the dot. Only renders once the
+                  reverse-geocode has returned so the map isn't showing
+                  an empty ghost label during the ~200ms lookup. */}
+              {userPlace && (userPlace.city || userPlace.region) && (
+                <div style={{
+                  position: 'absolute',
+                  top: 22, left: '50%', transform: 'translateX(-50%)',
+                  background: 'rgba(7,17,13,0.9)',
+                  border: '0.5px solid rgba(232,177,75,0.4)',
+                  borderRadius: 4, padding: '3px 8px',
+                  fontFamily: 'monospace', fontSize: 8.5,
+                  letterSpacing: '0.14em', textTransform: 'uppercase',
+                  color: '#E8B14B', whiteSpace: 'nowrap',
+                  pointerEvents: 'none',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                }}>
+                  {userPlace.city || userPlace.region}
+                  {userPlace.city && userPlace.region && ` · ${userPlace.region}`}
+                </div>
+              )}
               <style>{`
                 @keyframes youHerePulse {
                   0%   { transform: translate(-50%,-50%) scale(1);   opacity: 0.55; }
@@ -1314,7 +1395,10 @@ export default function ForagingApp() {
           }}>
             <span style={{ color: '#6BD66F' }}>●</span>
             <span style={{ textTransform: 'uppercase' }}>
-              {userLocation ? 'Your location'
+              {userLocation
+                ? (userPlace && (userPlace.city || userPlace.region)
+                    ? `You · ${userPlace.city || userPlace.region}${userPlace.country ? ', ' + userPlace.country : ''}`
+                    : 'Your location')
                 : selectedNode ? `Node · ${selectedNode.location}`
                 : 'Map center'}
             </span>
