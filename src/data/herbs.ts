@@ -8151,69 +8151,12 @@ export const HERBS: Herb[] = [
       'Grade B+ immune enhancement (4-week whole-mushroom human RCT confirmed). Grade B+ lentinan cancer adjuvant (clinical approval in Asia; multiple studies). Grade B cholesterol and lipids. Grade A culinary safety. COOKING IS MANDATORY (flagellate dermatitis from raw). Culinary daily integration is the primary recommendation. Lentinan and LEM require oncologist coordination.',
   },
 
-  // ─────────────────────────────────────────────
-  // TREMELLA (SNOW FUNGUS)
-  // ─────────────────────────────────────────────
-  {
-    id: 310,
-    name: 'Tremella',
-    botanical: 'Tremella fuciformis (fruiting body — "Snow Fungus / Silver Ear")',
-    tcm_meridians: ['Lung', 'Stomach', 'Spleen', 'Kidney'],
-    tcm_element: 'Water + Metal',
-    energetics: ['Neutral to Cool', 'Sweet', 'Moistening', 'Yin-Nourishing', 'Jing-Restorative', 'Skin-Hydrating', 'Neuroprotective'],
-    primary_functions: [
-      'Skin hydration and barrier protection — TF polysaccharides (glucuronoxylomannans) form hydrating film on skin; bind and retain water comparable to or exceeding hyaluronic acid in some assessments; topical emulsion with 0.1% Tremella extract increased epidermal hydration and reduced TEWL by ~12.4% in human volunteers; anti-photoaging and fibroblast protection from oxidative stress',
-      'Neuroprotection and cognitive support — double-blind RCT: TFP supplementation in individuals with cognitive impairment significantly improved subjective memory complaints, short-term memory and executive function with increased grey matter volume; animal models show enhanced hippocampal CREB neurons, glucose uptake and cholinergic activity; reverses scopolamine-induced memory deficits',
-      'Immunomodulation — TF polysaccharides activate NK cells, macrophages and T/B cells; clinically used in China as CFDA-approved enteric-coated capsule for leukopenia from chemotherapy and radiotherapy; NF-kB inhibition via Akt/p38MAPK/miR-155 suppression; Treg cell ratio increase in atopic dermatitis models',
-      'Anti-inflammatory at innate immune level — polysaccharides decrease ROS and pro-inflammatory cytokines (TNF-alpha, IL-6) in LPS-stimulated macrophages; reduces NF-kB activation; anti-atopic-dermatitis effects (topical and oral) comparable to prednisolone in mouse models via gut-skin-immune axis',
-      'Deep Lung-Stomach yin nourishment (TCM) — moistens Lung yin and Stomach yin; soothes dry cough, dry throat and dry mucosa; post-illness yin depletion recovery; rebuilds fluids and essence after fever, overwork or fluid loss',
-    ],
-    secondary_benefits: [
-      'Radioprotective and haematopoietic — increases survival in irradiated animals; protects bone marrow; CFDA-approved use for leukopenia in cancer patients under oncology supervision',
-      'Metabolic support — reduces blood glucose, improves insulin sensitivity and lowers lipids in preclinical and some clinical studies; gut microbiota modulation contributes to metabolic effects',
-      'Imperial Chinese beauty mushroom — centuries of use specifically for women\'s radiance, skin and longevity in TCM; celebrated as "beauty mushroom" in Chinese imperial court',
-      'Atopic dermatitis gut-skin axis — oral Tremella polysaccharides increase Treg ratio and reduce AD-like lesions via microbiome modulation; emerging role in inflammatory skin conditions',
-    ],
-    pharmacology:
-      'Primary bioactives: TF polysaccharides / TFPS / TPS (glucuronoxylomannans — HIGH-MOLECULAR-WEIGHT heteropolysaccharides from mannose, xylose, fucose, arabinose and glucuronic acid; PRIMARY immunomodulatory; anti-aging; neuroprotective with neurotrophic effects; skin hydration film-forming; anti-inflammatory; gut microbiota modulation; CFDA-approved for leukopenia; low-MW fractions TFLP show higher bioavailability and bioactivity). Minor components: mannose, fucose, xylose, trace proteins, minerals and beta-glucan-like structures. CFDA-approved polysaccharide capsules for leukopenia adjunct therapy (China). Grade A-minus immune and leukopenia (clinical drug use); Grade B+ neuroprotection (RCT plus preclinical); Grade B+ skin hydration (human cosmetic studies plus fibroblast data); Grade B metabolic support; Grade A safety (culinary use history; low toxicity).',
-    flavor_profile: 'Neutral to mildly sweet and gelatinous — delicate and pleasant; easily incorporated into soups, desserts and sweet tonics; the most aesthetically beautiful of medicinal mushrooms',
-    contraindications: [
-      'Pregnancy and breastfeeding — CAUTION: insufficient data on high-dose supplements; food-level culinary use (dried tremella in soup) generally safe; avoid concentrated supplements without provider guidance',
-      'Autoimmune disease or immunosuppressive therapy — CAUTION: immunomodulatory activity; most data suggest modulation rather than overstimulation; use under practitioner oversight',
-      'Anticoagulants or bleeding disorders — MONITOR: theoretical mild anticoagulant and platelet-modulating activity; limited robust clinical data; caution warranted',
-      'Active cancer therapy — present to oncology team for approval; CFDA-approved leukopenia use is supervised; do not self-prescribe without oncologist',
-      'Otherwise: very safe at culinary doses; long food history with no significant toxicity in healthy adults',
-    ],
-    herb_to_herb_synergy: [
-      'Lily bulb (Bai He) and Ophiopogon (Mai Dong) — classical TCM Lung-yin moistening decoction; Tremella soup base with pear and goji',
-      'Lion\'s Mane — dual neuroprotective mushroom combination; Tremella TFP polysaccharide support plus Lion\'s Mane NGF/BDNF stimulation',
-      'Reishi, Maitake and Cordyceps — comprehensive medicinal mushroom longevity stack; Tremella provides distinctive moistening Yin counterbalance to more stimulating fungi',
-      'Gotu Kola and Schisandra — skin and collagen beauty formula; antioxidant synergy for skin health and longevity',
-    ],
-    herb_to_herb_caution: [
-      'Other immunomodulatory mushrooms in autoimmune conditions — cumulative immune modulation; practitioner guidance required',
-    ],
-    herb_to_drug_interactions: [
-      'Immunosuppressants — immunomodulatory activity may theoretically interact; monitor under practitioner oversight',
-      'Anticoagulants and antiplatelets — theoretical mild anticoagulant; monitor INR if on Warfarin',
-      'Hypoglycaemic medications — blood glucose lowering activity; monitor glucose levels',
-    ],
-    herb_interactions: [
-      'Synergy: Lily Bulb, Ophiopogon (Lung-yin decoction), Lion\'s Mane (neuroprotection duo), Reishi, Maitake, Cordyceps (longevity stack), Gotu Kola, Schisandra (beauty formula)',
-      'Caution: immunomodulatory mushrooms in autoimmune conditions (practitioner guidance)',
-      'Drug interactions: immunosuppressants (monitor), anticoagulants (theoretical — monitor INR), hypoglycaemics (monitor glucose)',
-    ],
-    dosage_range:
-      'Culinary (traditional and optimal): 3–10 g dried fruiting body rehydrated and simmered 30–90 minutes in soup or sweet dessert broth with goji berries, jujube and rock sugar; daily or several times weekly. Standardised polysaccharide extract: 1–3 g/day general health; 3–6 g/day for intensive immune or oncology-adjacent support under professional guidance; 600–1200 mg/day as used in cognitive RCT. Safe long-term daily tonic use at culinary doses.',
-    spiritual_layer:
-      'Tremella is a luminous yin cloud — a teacher of deep hydration, softness and resilient beauty. She grows as a gelatinous white jewel on wood, converting hardness into translucent nourishment. She teaches that softness is strength, that deep replenishment is not weakness but the source of sustained radiance, that the outer beauty the imperial court prized was always an expression of inner moisture and inner reserves that had been tended. She holds water the way the extracellular matrix holds water — as the medium in which all cellular life occurs, as the cushion between the hard things. She whispers: I am nourished from within. My inner waters are full and clear. I soften, replenish and glow with quiet strength.',
-    best_preparation:
-      'Traditional soup preparation (dried tremella rehydrated, simmered 30–90 minutes with goji, jujube and pear) for beauty, lung-yin and post-illness support. Polysaccharide extract powder for cognitive and immune protocols. Topical tremella serum or cream for skin alongside internal use. Screen autoimmune conditions (immunomodulator — practitioner oversight) and anticoagulants (theoretical — monitor). Food-level culinary use has excellent safety across all populations. The beauty dimension is a legitimate clinical framing — skin hydration and neuroprotection are both evidence-supported.',
-    caution_level: 'LOW-MEDIUM',
-    safe_pregnancy: null,
-    status:
-      'Grade A-minus immune and leukopenia (CFDA-approved clinical drug). Grade B+ neuroprotection (RCT confirmed). Grade B+ skin hydration (human cosmetic studies). Grade B metabolic support. Grade A safety for culinary use. CAUTION: autoimmune disease (practitioner oversight), pregnancy/breastfeeding (insufficient high-dose data), anticoagulants (theoretical — monitor). Excellent long-term tonic food mushroom.',
-  },
+  // TREMELLA — canonical entry is id 285 above (Snow Fungus / White Wood
+  // Ear). A duplicate id-310 block previously lived here with an
+  // overlapping-but-differently-framed skin/neuroprotection description;
+  // the picker occasionally emitted both in the same formula. The two
+  // entries have been consolidated onto id 285. Do NOT reinstate id 310
+  // without deduping by species name in ensurePool first.
 
   // ─────────────────────────────────────────────
   // AMANITA MUSCARIA (FLY AGARIC)

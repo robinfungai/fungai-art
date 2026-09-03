@@ -122,8 +122,6 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .hero-gate-row input[type="checkbox"]:checked{background:var(--amber-l);border-color:var(--amber-l)}
 .hero-gate-row input[type="checkbox"]:checked::after{content:'✓';position:absolute;top:-1px;left:2px;color:var(--void);font-weight:700;font-size:14px}
 .hero-gate-row strong{color:var(--amber-l);font-weight:500}
-.hero-gate-row-optional{background:transparent;border-color:rgba(232,177,75,0.14)}
-.hero-gate-row-optional strong{color:var(--violet)}
 .hero-cta:hover{transform:translateY(-2px);box-shadow:0 18px 50px -12px rgba(232,177,75,0.7)}
 .hero-cta .arrow{font-size:16px;line-height:1}
 .hero-note{margin-top:26px;font-family:var(--mono);font-size:9.5px;letter-spacing:0.18em;color:var(--dust-d);opacity:0.75}
@@ -600,27 +598,25 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
   <!-- ── ENTRY ─────────────────────────────────────────── -->
   <section id="entry" class="hero">
     <span class="hero-eyebrow">◇ 6 questions · 60 seconds</span>
-    <h1>Your body,<br><em>your formula</em>.</h1>
+    <h1>Your temple,<br><em>your formula</em>.</h1>
     <p class="hero-sub">
-      Six questions. A full-spectrum spagyric extract hand-poured in the Berlin lab from foraged mushrooms &amp; herbal allies, matched to how you actually feel.
+      Six questions, and we have tailor-made your spagyric extract with herbal allies &amp; mushrooms foraged in Sweden. Matched to how you<u>_</u>feel.
     </p>
     <div class="hero-meta">
-      <span>Sublingual drops</span>
-      <span>Slow-pace medicine</span>
-      <span>Shipped worldwide</span>
+      <span>sublingual drops</span>
+      <span>slow-pace medicine</span>
+      <span>by herbalists</span>
     </div>
-    <!-- 18+ age gate + Amanita opt-in. The reading won't begin until
-         the 18+ box is ticked. Amanita ceremonial allies are gated
-         herbs that need explicit opt-in before the picker considers
-         them. -->
+    <!-- 18+ age gate. Ticking this confirms adult status AND opens
+         the full palette, including ceremonial allies like Amanita
+         muscaria (legal in Sweden/Germany/most EU where we operate).
+         The picker reads _gatedOptIn to decide whether to consider
+         gated herbs — with the standalone opt-in removed, adulthood
+         is the single consent gate. -->
     <div class="hero-gate">
       <label class="hero-gate-row">
         <input type="checkbox" id="gateAdult"/>
         <span>I confirm I am <strong>18 years or older</strong>.</span>
-      </label>
-      <label class="hero-gate-row hero-gate-row-optional">
-        <input type="checkbox" id="gateAmanita"/>
-        <span>Open me to ceremonial allies like <strong>Amanita muscaria</strong> (optional).</span>
       </label>
     </div>
     <div style="display:flex;justify-content:center">
@@ -1155,21 +1151,19 @@ const startBtn  = document.getElementById('startBtn');
 
 // ── Boot ──────────────────────────────────────────────────
 // Age gate — Begin button stays disabled until the 18+ checkbox is
-// ticked. The Amanita opt-in is optional and just sets a flag on
-// state.answers._gatedOptIn that the picker reads.
-const gateAdult   = document.getElementById('gateAdult');
-const gateAmanita = document.getElementById('gateAmanita');
+// ticked. Adulthood is the single consent gate: confirming 18+ also
+// opens ceremonial allies like Amanita muscaria (_gatedOptIn=true).
+// Legal in Sweden/Germany/most EU where we ship; the separate opt-in
+// was a UX-audit gesture, not a legal requirement.
+const gateAdult = document.getElementById('gateAdult');
 function updateStartBtn(){ startBtn.disabled = !(gateAdult && gateAdult.checked); }
-if (gateAdult)   gateAdult.addEventListener('change', updateStartBtn);
-if (gateAmanita) gateAmanita.addEventListener('change', () => {
-  state.answers._gatedOptIn = !!gateAmanita.checked; persist();
-});
+if (gateAdult) gateAdult.addEventListener('change', updateStartBtn);
 updateStartBtn();
 
 startBtn.addEventListener('click', () => {
   if (!gateAdult || !gateAdult.checked) return; // belt+braces
   state.answers._ageConfirmed = true;
-  state.answers._gatedOptIn = !!(gateAmanita && gateAmanita.checked);
+  state.answers._gatedOptIn   = true;
   persist();
   go(0);
 });
