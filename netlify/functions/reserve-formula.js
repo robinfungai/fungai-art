@@ -20,22 +20,81 @@
 // this endpoint existed.
 // ════════════════════════════════════════════════════════════════
 
+// ── Origin gate ──────────────────────────────────────────────────
+// Locked to Fungai origins so a random site can't POST here and
+// force Resend-branded emails to arbitrary addresses under our name.
+const ALLOWED_ORIGINS = [
+  'https://www.fungai.art',
+  'https://fungai.art',
+  'https://fungai-art.netlify.app',
+  'http://localhost:5173',
+  'http://localhost:8888',
+  'http://127.0.0.1:5173',
+];
+function corsFor(origin) {
+  const allow = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    'Access-Control-Allow-Origin':  allow,
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Vary': 'Origin',
+  };
+}
+
+// ── Per-IP rate limit ────────────────────────────────────────────
+// 3 reservations per IP per minute. Real humans reserve once, then
+// wait for the confirmation email. Any client hitting this ceiling
+// is either testing or abusing; hard cap regardless.
+const RATE_WINDOW_MS      = 60_000;
+const RATE_MAX_PER_WINDOW = 3;
+const rateState = new Map();
+function rateLimit(ip) {
+  const now  = Date.now();
+  const slot = rateState.get(ip);
+  if (!slot || now - slot.windowStart > RATE_WINDOW_MS) {
+    rateState.set(ip, { count: 1, windowStart: now });
+    return { ok: true };
+  }
+  if (slot.count >= RATE_MAX_PER_WINDOW) {
+    return { ok: false, retryAfter: Math.ceil((RATE_WINDOW_MS - (now - slot.windowStart)) / 1000) };
+  }
+  slot.count++;
+  return { ok: true };
+}
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, slot] of rateState.entries()) {
+    if (now - slot.windowStart > RATE_WINDOW_MS * 2) rateState.delete(ip);
+  }
+}, RATE_WINDOW_MS).unref?.();
+
 export default async function handler(req) {
+  const origin = req.headers.get('origin') || '';
+  const cors   = corsFor(origin);
+
   if (req.method === 'OPTIONS') {
-    return new Response(null, {
-      status: 204,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-      },
+    return new Response(null, { status: 204, headers: cors });
+  }
+  if (req.method !== 'POST') return json({ error: 'POST only' }, 405, cors);
+
+  if (origin && !ALLOWED_ORIGINS.includes(origin)) {
+    return json({ error: 'Origin not allowed.' }, 403, cors);
+  }
+
+  const ip = (req.headers.get('x-nf-client-connection-ip')
+           || (req.headers.get('x-forwarded-for') || '').split(',')[0]?.trim()
+           || 'unknown').slice(0, 64);
+  const rl = rateLimit(ip);
+  if (!rl.ok) {
+    return new Response(JSON.stringify({ error: 'Too many reservations from this address — try again in a minute.' }), {
+      status: 429,
+      headers: { ...cors, 'Content-Type': 'application/json', 'Retry-After': String(rl.retryAfter || 60) },
     });
   }
-  if (req.method !== 'POST') return json({ error: 'POST only' }, 405);
 
   let body;
   try { body = await req.json(); }
-  catch { return json({ error: 'Bad JSON body' }, 400); }
+  catch { return json({ error: 'Bad JSON body' }, 400, cors); }
 
   // ── Geo capture from Netlify headers ──────────────────────
   // Netlify Edge injects x-nf-geo (JSON) + x-nf-client-connection-ip
@@ -72,15 +131,18 @@ export default async function handler(req) {
   const synergies   = Array.isArray(body.synergies) ? body.synergies.slice(0, 10) : [];
   const bottleMl    = Number(body.bottleMl) || 30;
 
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json({ error: 'Invalid email address' }, 400);
-  if (!name || !city || !country) return json({ error: 'Missing name / city / country' }, 400);
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json({ error: 'Invalid email address' }, 400, cors);
+  if (!name || !city || !country) return json({ error: 'Missing name / city / country' }, 400, cors);
 
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
   if (!RESEND_API_KEY) {
-    console.error('[reserve-formula] RESEND_API_KEY not set — payload:', { email, name, city, country, formulaName });
-    // Return success so the customer sees a positive UI. Robin's
-    // console log carries the reservation until Resend is wired.
-    return json({ ok: true, sent: false, note: 'Reservation received. Confirmation email pending — Resend key missing on server.' });
+    // Log intentionally omits PII (was logging email + name + city +
+    // country before). Robin sees the config problem in the function
+    // log without customer data hanging around in a plaintext log
+    // stream — matches PII-hygiene practice for the newsletter fn.
+    console.error('[reserve-formula] RESEND_API_KEY not set — reservation email skipped');
+    // Return success so the customer sees a positive UI.
+    return json({ ok: true, sent: false, note: 'Reservation received. Confirmation email pending — Resend key missing on server.' }, 200, cors);
   }
 
   const from  = process.env.FORMULA_FROM  || 'Fungai Art <noreply@fungai.art>';
@@ -127,7 +189,7 @@ export default async function handler(req) {
     // Echo the geo back so the client can include it in the Supabase
     // insert to /alchemy academy — same source of truth.
     geo: geo,
-  });
+  }, 200, cors);
 }
 
 async function sendResend(key, payload){
@@ -146,8 +208,11 @@ async function sendResend(key, payload){
 }
 
 function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function json(body, status = 200) {
-  return new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' } });
+function json(body, status = 200, cors = {}) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { ...cors, 'Content-Type': 'application/json' },
+  });
 }
 
 // ── Email bodies ─────────────────────────────────────────────────

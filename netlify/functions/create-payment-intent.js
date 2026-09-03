@@ -30,6 +30,58 @@
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 
+// ── Origin gate ──────────────────────────────────────────────────
+// Locked to Fungai origins so a random site can't script this
+// endpoint into flooding Robin's inbox + running up Stripe requests.
+// The Stripe secret is server-only regardless, but every request
+// still spends time + hits Supabase + fires Resend.
+const ALLOWED_ORIGINS = [
+  'https://www.fungai.art',
+  'https://fungai.art',
+  'https://fungai-art.netlify.app',
+  'http://localhost:5173',
+  'http://localhost:8888',
+  'http://127.0.0.1:5173',
+];
+function corsHeadersFor(origin) {
+  const allow = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    'Access-Control-Allow-Origin':  allow,
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Vary': 'Origin',
+    'Content-Type': 'application/json',
+  };
+}
+
+// ── Per-IP rate limit ────────────────────────────────────────────
+// Best-effort in-memory bucket (Netlify functions may run on multiple
+// instances so this is defence in depth, not the ceiling). 6 payment
+// intents per minute per IP is generous for real checkout — a
+// legitimate user might retry a declined card once or twice, they'll
+// never hit 6. Bot traffic sails past it.
+const RATE_WINDOW_MS      = 60_000;
+const RATE_MAX_PER_WINDOW = 6;
+const rateState = new Map();
+function rateLimit(ip) {
+  const now  = Date.now();
+  const slot = rateState.get(ip);
+  if (!slot || now - slot.windowStart > RATE_WINDOW_MS) {
+    rateState.set(ip, { count: 1, windowStart: now });
+    return { ok: true };
+  }
+  if (slot.count >= RATE_MAX_PER_WINDOW) {
+    return { ok: false, retryAfter: Math.ceil((RATE_WINDOW_MS - (now - slot.windowStart)) / 1000) };
+  }
+  slot.count++;
+  return { ok: true };
+}
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, slot] of rateState.entries()) {
+    if (now - slot.windowStart > RATE_WINDOW_MS * 2) rateState.delete(ip);
+  }
+}, RATE_WINDOW_MS).unref?.();
+
 // ─── HTML escaper (mirrors stripe-webhook.js) ───────────────────
 function esc(s) {
   return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({
@@ -203,14 +255,41 @@ const SHIPPING_FREE_OVER = Infinity;
 const MAX_QTY_PER_LINE   = 20;
 const MAX_LINES_PER_ORDER= 40;
 
-const json = (statusCode, body) => ({
+const json = (statusCode, body, cors) => ({
   statusCode,
-  headers: { 'Content-Type': 'application/json' },
+  headers: cors || { 'Content-Type': 'application/json' },
   body: JSON.stringify(body),
 });
 
 export const handler = async (event) => {
-  if (event.httpMethod !== 'POST') return json(405, { error: 'Method Not Allowed' });
+  const origin = event.headers?.origin || event.headers?.Origin || '';
+  const cors   = corsHeadersFor(origin);
+
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers: cors, body: '' };
+  }
+  if (event.httpMethod !== 'POST') return json(405, { error: 'Method Not Allowed' }, cors);
+
+  // Origin gate — determined attacker can spoof the header, but this
+  // stops opportunistic scripts and cross-site abuse cold.
+  if (origin && !ALLOWED_ORIGINS.includes(origin)) {
+    return json(403, { error: 'Origin not allowed.' }, cors);
+  }
+
+  // Per-IP rate limit. Netlify forwards the real client IP in
+  // x-nf-client-connection-ip; fall back to forwarded-for.
+  const ip = (event.headers?.['x-nf-client-connection-ip']
+           || event.headers?.['x-forwarded-for']?.split(',')[0]?.trim()
+           || event.headers?.['client-ip']
+           || 'unknown').slice(0, 64);
+  const rl = rateLimit(ip);
+  if (!rl.ok) {
+    return {
+      statusCode: 429,
+      headers: { ...cors, 'Retry-After': String(rl.retryAfter || 60) },
+      body: JSON.stringify({ error: 'Too many checkout attempts — slow down a moment and try again.' }),
+    };
+  }
 
   const stripeSecret  = process.env.STRIPE_SECRET_KEY;
   const supabaseUrl   = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
@@ -218,7 +297,7 @@ export const handler = async (event) => {
 
   if (!stripeSecret) {
     console.error('[create-payment-intent] STRIPE_SECRET_KEY not set');
-    return json(500, { error: 'Payment server not configured (stripe key missing). Contact site admin.' });
+    return json(500, { error: 'Payment server not configured (stripe key missing). Contact site admin.' }, cors);
   }
   // Supabase keys missing isn't fatal — the order draft is best-effort.
   // Without it we skip the orders insert and still charge the card. We
@@ -232,16 +311,16 @@ export const handler = async (event) => {
   try {
     payload = JSON.parse(event.body || '{}');
   } catch {
-    return json(400, { error: 'Invalid JSON in request body.' });
+    return json(400, { error: 'Invalid JSON in request body.' }, cors);
   }
 
   const { items, customer = {}, idempotencyKey } = payload;
 
   if (!Array.isArray(items) || items.length === 0) {
-    return json(400, { error: 'Order must contain at least one item.' });
+    return json(400, { error: 'Order must contain at least one item.' }, cors);
   }
   if (items.length > MAX_LINES_PER_ORDER) {
-    return json(400, { error: 'Too many distinct items in one order.' });
+    return json(400, { error: 'Too many distinct items in one order.' }, cors);
   }
 
   // ── Ban check ──────────────────────────────────────────────────
@@ -286,7 +365,7 @@ export const handler = async (event) => {
 
       if (emailBanned || ipBanned) {
         console.warn('[create-payment-intent] Refused order — banned identifier', { email: custEmail, ip: clientIp, via: emailBanned ? 'email' : 'ip' });
-        return json(403, { error: 'This checkout is not available. Please contact robin@fungai.art.' });
+        return json(403, { error: 'This checkout is not available. Please contact robin@fungai.art.' }, cors);
       }
     } catch (e) {
       console.error('[create-payment-intent] Ban-check threw (allowing order):', e.message);
@@ -300,11 +379,11 @@ export const handler = async (event) => {
     const name = String(raw?.name || '').trim();
     const qty  = parseInt(raw?.qty, 10);
     if (!name || !Number.isFinite(qty) || qty < 1 || qty > MAX_QTY_PER_LINE) {
-      return json(400, { error: `Invalid item: "${name || '(unnamed)'}" qty ${raw?.qty}` });
+      return json(400, { error: `Invalid item: "${name || '(unnamed)'}" qty ${raw?.qty}` }, cors);
     }
     const unitEur = CATALOG[name];
     if (typeof unitEur !== 'number') {
-      return json(400, { error: `Unknown product: "${name}". Contact site admin if this product should exist.` });
+      return json(400, { error: `Unknown product: "${name}". Contact site admin if this product should exist.` }, cors);
     }
     subtotal += unitEur * qty;
     priced.push({ name, qty, unit_eur: unitEur });
@@ -314,7 +393,7 @@ export const handler = async (event) => {
   const total    = subtotal + shipping;
   const amountCents = Math.round(total * 100);
   if (amountCents <= 0) {
-    return json(400, { error: 'Computed total is zero. Refusing to charge.' });
+    return json(400, { error: 'Computed total is zero. Refusing to charge.' }, cors);
   }
 
   // ── Create the draft order BEFORE asking Stripe for anything ────
@@ -421,9 +500,9 @@ export const handler = async (event) => {
       shipping,
       currency: 'eur',
       orderId,
-    });
+    }, cors);
   } catch (err) {
     console.error('[create-payment-intent] Stripe error:', err.message);
-    return json(500, { error: err.message || 'Stripe request failed.' });
+    return json(500, { error: err.message || 'Stripe request failed.' }, cors);
   }
 };

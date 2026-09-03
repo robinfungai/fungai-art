@@ -15,20 +15,84 @@
 //   NEWSLETTER_REPLY_TO   — default: 'robin@fungai.art'
 // ════════════════════════════════════════════════════════════════
 
+// ── Origin gate ──────────────────────────────────────────────────
+// Locked to Fungai origins so a random site (or a script running from
+// anywhere) can't POST here and force welcome emails to arbitrary
+// addresses under our brand.
+const ALLOWED_ORIGINS = [
+  'https://www.fungai.art',
+  'https://fungai.art',
+  'https://fungai-art.netlify.app',
+  'http://localhost:5173',
+  'http://localhost:8888',
+  'http://127.0.0.1:5173',
+];
+function corsFor(origin) {
+  const allow = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    'Access-Control-Allow-Origin':  allow,
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Vary': 'Origin',
+  };
+}
+
+// ── Per-IP rate limit ────────────────────────────────────────────
+// 3 subscribe attempts per minute per IP. Real humans subscribe
+// once. Anyone hitting this three times a minute is either testing
+// or abusing; hard cap regardless. Best-effort in-memory bucket —
+// Netlify may run this on multiple function instances so this is
+// defence in depth. The real limit is Resend's own account cap and
+// (below) the double-opt-in flow that stops silent abuse.
+const RATE_WINDOW_MS      = 60_000;
+const RATE_MAX_PER_WINDOW = 3;
+const rateState = new Map();
+function rateLimit(ip) {
+  const now  = Date.now();
+  const slot = rateState.get(ip);
+  if (!slot || now - slot.windowStart > RATE_WINDOW_MS) {
+    rateState.set(ip, { count: 1, windowStart: now });
+    return { ok: true };
+  }
+  if (slot.count >= RATE_MAX_PER_WINDOW) {
+    return { ok: false, retryAfter: Math.ceil((RATE_WINDOW_MS - (now - slot.windowStart)) / 1000) };
+  }
+  slot.count++;
+  return { ok: true };
+}
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, slot] of rateState.entries()) {
+    if (now - slot.windowStart > RATE_WINDOW_MS * 2) rateState.delete(ip);
+  }
+}, RATE_WINDOW_MS).unref?.();
+
 export default async function handler(req) {
-  // CORS preflight
+  const origin = req.headers.get('origin') || '';
+  const cors   = corsFor(origin);
+
   if (req.method === 'OPTIONS') {
-    return new Response(null, {
-      status: 204,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-      },
-    });
+    return new Response(null, { status: 204, headers: cors });
   }
   if (req.method !== 'POST') {
-    return json({ error: 'POST only' }, 405);
+    return json({ error: 'POST only' }, 405, cors);
+  }
+
+  // Origin gate.
+  if (origin && !ALLOWED_ORIGINS.includes(origin)) {
+    return json({ error: 'Origin not allowed.' }, 403, cors);
+  }
+
+  // Per-IP rate limit.
+  const ip = (req.headers.get('x-nf-client-connection-ip')
+           || (req.headers.get('x-forwarded-for') || '').split(',')[0]?.trim()
+           || 'unknown').slice(0, 64);
+  const rl = rateLimit(ip);
+  if (!rl.ok) {
+    return new Response(JSON.stringify({ error: 'Too many subscribe attempts — try again in a minute.' }), {
+      status: 429,
+      headers: { ...cors, 'Content-Type': 'application/json', 'Retry-After': String(rl.retryAfter || 60) },
+    });
   }
 
   let email;
@@ -36,22 +100,24 @@ export default async function handler(req) {
     const body = await req.json();
     email = (body.email || '').trim().toLowerCase();
   } catch {
-    return json({ error: 'Bad JSON body' }, 400);
+    return json({ error: 'Bad JSON body' }, 400, cors);
   }
 
   // Basic email shape — Resend will reject malformed addresses too,
   // but this catches the obvious typos early.
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return json({ error: 'Invalid email address' }, 400);
+    return json({ error: 'Invalid email address' }, 400, cors);
   }
 
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
   if (!RESEND_API_KEY) {
     // Don't 500 — log it and return a friendly success. The user shouldn't
     // see scary errors when our key isn't configured yet. Robin sees the
-    // log and knows to add the env var.
-    console.error('[newsletter] RESEND_API_KEY not set — welcome email skipped for', email);
-    return json({ ok: true, sent: false, note: 'subscribed locally, welcome email not sent (Resend key missing on server)' });
+    // log and knows to add the env var. Log intentionally omits the
+    // submitted email (was here previously) — no need to record it if
+    // we're not sending anything.
+    console.error('[newsletter] RESEND_API_KEY not set — welcome email skipped');
+    return json({ ok: true, sent: false, note: 'subscribed locally, welcome email not sent (Resend key missing on server)' }, 200, cors);
   }
 
   const from = process.env.NEWSLETTER_FROM || 'Fungai Art <noreply@fungai.art>';
@@ -80,21 +146,21 @@ export default async function handler(req) {
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
       console.error('[newsletter] Resend error:', res.status, data);
-      return json({ ok: false, error: 'Email send failed', detail: data }, 502);
+      return json({ ok: false, error: 'Email send failed', detail: data }, 502, cors);
     }
-    return json({ ok: true, sent: true, id: data.id });
+    return json({ ok: true, sent: true, id: data.id }, 200, cors);
   } catch (err) {
     console.error('[newsletter] threw:', err);
-    return json({ ok: false, error: 'Network error contacting Resend' }, 502);
+    return json({ ok: false, error: 'Network error contacting Resend' }, 502, cors);
   }
 }
 
-function json(body, status = 200) {
+function json(body, status = 200, cors = {}) {
   return new Response(JSON.stringify(body), {
     status,
     headers: {
+      ...cors,
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
     },
   });
 }

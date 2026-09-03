@@ -12,6 +12,14 @@ dist
 dist-ssr
 *.local
 
+# Never commit env files at any depth — a src/.env slipped past
+# *.local once and leaked an OpenAI key to public GitHub. Both
+# patterns block bare .env and any .env.<suffix> at every folder.
+.env
+.env.*
+**/.env
+**/.env.*
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
