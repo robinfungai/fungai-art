@@ -296,7 +296,15 @@ export const handler = async (event) => {
           max_tokens: 4000,
           thinking: { type: 'adaptive' },
           output_config: { effort: 'medium' },
-          system: composeSys,
+          // Prompt caching on the composer's system prompt. composeSys
+          // is stable across every compose (formula-composer rules,
+          // output-format schema); composeUser is fresh per quiz.
+          // Opus 5 input at $15/M, so caching saves ~$0.015 per
+          // cached compose on the shared instructions when reveals
+          // land within a 5-min window.
+          system: [
+            { type: 'text', text: composeSys, cache_control: { type: 'ephemeral' } },
+          ],
           messages: [{ role: 'user', content: composeUser }],
         }),
       });
@@ -382,7 +390,17 @@ export const handler = async (event) => {
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 1024,
-        system: SYSTEM + contextBlock,
+        // Prompt caching for the community-portal chat.
+        // SYSTEM is ~4000 tokens and stable — mark it ephemeral so
+        // consecutive queries (a member holding a conversation)
+        // only pay full input cost on the first turn. contextBlock
+        // varies per request (member snapshot, upcoming events, current
+        // tab) so it stays uncached in a second segment. Break-even at
+        // ~2 requests per 5-minute window.
+        system: [
+          { type: 'text', text: SYSTEM, cache_control: { type: 'ephemeral' } },
+          ...(contextBlock ? [{ type: 'text', text: contextBlock }] : []),
+        ],
         messages,
       }),
     });

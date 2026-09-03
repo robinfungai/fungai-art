@@ -693,7 +693,19 @@ export const handler = async (event) => {
       body: JSON.stringify({
         model:      'claude-haiku-4-5-20251001',
         max_tokens: 900,
-        system:     SYSTEM,
+        // Prompt caching — the SYSTEM prompt is ~1300 tokens and
+        // stable across every query. Marking it cache_control:
+        // ephemeral lets Anthropic keep it warm for ~5 min per
+        // instance. Cache write costs 1.25x normal input; cache
+        // read costs 0.1x. Break-even is ~2 queries per window.
+        // Bursty traffic (multiple users hitting MYCO within a
+        // few minutes) saves ~90% of input cost; isolated queries
+        // pay a tiny write penalty (~$0.0004 extra one-time).
+        // Per-query total goes from ~$0.005-0.01 to ~$0.001-0.003
+        // in the cached case.
+        system: [
+          { type: 'text', text: SYSTEM, cache_control: { type: 'ephemeral' } },
+        ],
         messages: [...safeHistory, { role: 'user', content: userPrompt }],
       }),
     });
