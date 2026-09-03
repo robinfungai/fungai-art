@@ -204,6 +204,19 @@ export const handler = async (event) => {
     };
   }
 
+  // Workspace-scoped ("identity-linked") API keys require an
+  // anthropic-workspace-id header pointing at the workspace the
+  // request acts in. Legacy user-scoped keys ignore it, so only set
+  // it when the env var is present.
+  const anthropicHeaders = {
+    'x-api-key':         process.env.ANTHROPIC_API_KEY,
+    'anthropic-version': '2023-06-01',
+    'content-type':      'application/json',
+  };
+  if (process.env.ANTHROPIC_WORKSPACE_ID) {
+    anthropicHeaders['anthropic-workspace-id'] = process.env.ANTHROPIC_WORKSPACE_ID;
+  }
+
   // Server-side hard-refuse list. Mirrors the client patterns in
   // /community/myco/prompts.js but authoritative — the client can be
   // bypassed with curl. Keep the copy identical so users see the same
@@ -277,11 +290,7 @@ export const handler = async (event) => {
       // Opus 5 fires.
       const res = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
-        headers: {
-          'x-api-key': process.env.ANTHROPIC_API_KEY,
-          'anthropic-version': '2023-06-01',
-          'content-type': 'application/json',
-        },
+        headers: anthropicHeaders,
         body: JSON.stringify({
           model: 'claude-opus-5',
           max_tokens: 4000,
@@ -369,11 +378,7 @@ export const handler = async (event) => {
 
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: {
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
-        'content-type': 'application/json',
-      },
+      headers: anthropicHeaders,
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 1024,

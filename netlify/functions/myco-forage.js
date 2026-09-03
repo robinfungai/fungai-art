@@ -300,13 +300,22 @@ export const handler = async (event) => {
       content: String(h?.content || '').slice(0, 1500),
     }));
 
+    // Workspace-scoped ("identity-linked") API keys require an
+    // anthropic-workspace-id header pointing at the workspace the
+    // request acts in. Only added when the env var is present so
+    // legacy user-scoped keys keep working unchanged.
+    const anthropicHeaders = {
+      'x-api-key':         process.env.ANTHROPIC_API_KEY,
+      'anthropic-version': '2023-06-01',
+      'content-type':      'application/json',
+    };
+    if (process.env.ANTHROPIC_WORKSPACE_ID) {
+      anthropicHeaders['anthropic-workspace-id'] = process.env.ANTHROPIC_WORKSPACE_ID;
+    }
+
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method:  'POST',
-      headers: {
-        'x-api-key':         process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
-        'content-type':      'application/json',
-      },
+      headers: anthropicHeaders,
       body: JSON.stringify({
         model:      'claude-haiku-4-5-20251001',
         max_tokens: 900,
@@ -316,7 +325,18 @@ export const handler = async (event) => {
     });
     const data = await res.json();
     if (!res.ok) {
-      return { statusCode: res.status, headers: cors, body: JSON.stringify({ error: data.error?.message || 'Anthropic API error' }) };
+      // Log the raw upstream error for the Netlify function log, but
+      // give the user a friendly message instead of an API stack trace.
+      console.error('myco-forage upstream error:', res.status, data.error);
+      const friendly =
+        /workspace/i.test(data.error?.message || '')
+          ? "MYCO isn't authenticated for this deployment — ANTHROPIC_WORKSPACE_ID needs to be set in Netlify env. Ping Robin."
+          : res.status === 429
+            ? "MYCO is rate-limited right now — try again in a minute."
+          : res.status === 401 || res.status === 403
+            ? "MYCO isn't authenticated — the API key may need refreshing."
+          : "MYCO couldn't reach the model — try again shortly.";
+      return { statusCode: res.status, headers: cors, body: JSON.stringify({ error: friendly }) };
     }
     let reply = '';
     for (const block of (data.content || [])) {
