@@ -4,7 +4,7 @@
 -- Audit finding (2026-09-03): the "Allow anonymous insert of
 -- unclaimed profiles" policy from supabase-allow-unclaimed-inserts.sql
 -- only checks `auth_user_id IS NULL`. It does NOT restrict `is_admin`
--- or `restrictions` in the WITH CHECK, so anon can:
+-- in the WITH CHECK, so anon can:
 --
 --     INSERT INTO profiles
 --       (character_name, auth_user_id, is_admin)
@@ -17,9 +17,17 @@
 -- also forcing `is_admin = false`, the anon insert + claim UPDATE
 -- combination is an admin-escalation path.
 --
--- Fix: tighten the INSERT WITH CHECK to force is_admin = false and
--- restrictions = '{}' on any anon-created row. Real admins are
--- promoted via a separate authenticated flow, not via seed rows.
+-- Fix: tighten the INSERT WITH CHECK to force is_admin = false on
+-- any anon-created row. Real admins are promoted via a separate
+-- authenticated flow, not via seed rows.
+--
+-- Note (2026-09-03 revision): an earlier draft of this file also
+-- guarded a `restrictions` column, but the SQL editor confirmed
+-- that column doesn't exist on the live profiles table
+-- (supabase-add-detail-fields.sql defines it but was never applied;
+-- is_admin was added independently by supabase-invite-codes.sql,
+-- which is why it IS live). The restrictions clause has been
+-- dropped. If restrictions is added later, extend this policy.
 --
 -- Also flags for Robin (see comment below) the claim UPDATE policy
 -- Robin needs to confirm has WITH CHECK (is_admin = false OR the
@@ -33,17 +41,14 @@
 DROP POLICY IF EXISTS "Allow anonymous insert of unclaimed profiles"
   ON public.profiles;
 
--- 2) Recreate with hard WITH CHECK on escalation-shaped columns.
+-- 2) Recreate with hard WITH CHECK on the escalation column.
+--    IS DISTINCT FROM true matches false / null equally, so the
+--    check is robust to whatever default the column carries.
 CREATE POLICY "Allow anonymous insert of unclaimed profiles"
   ON public.profiles FOR INSERT
   WITH CHECK (
     auth_user_id IS NULL
-    AND (is_admin IS DISTINCT FROM true)      -- true if column is missing, false, or null
-    AND (
-      restrictions IS NULL
-      OR restrictions = '{}'::jsonb
-      OR restrictions = '[]'::jsonb
-    )
+    AND (is_admin IS DISTINCT FROM true)
   );
 
 -- ── ⚠ ROBIN — VERIFY IN SUPABASE CONSOLE ────────────────────────
