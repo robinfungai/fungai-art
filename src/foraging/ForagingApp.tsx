@@ -46,6 +46,18 @@ interface FungalObs {
 // MYCO chat message
 interface MycoMsg { role: 'user' | 'assistant'; content: string; }
 
+// Location the server actually reasoned about — echoed back on every
+// MYCO response so we can fly the map to a geocoded named place
+// (user types "Lago di Garda, Italy" → server resolves + answers about
+// that spot; client jumps the map there).
+interface MycoResolvedLocation {
+  lat: number;
+  lng: number;
+  regionNameRequested: string | null;
+  resolvedName: string | null;
+  resolvedFrom: 'coords' | 'geocoded';
+}
+
 // Foraging conditions type
 interface ForageConditions {
   score: number; label: string; color: string; detail: string;
@@ -276,6 +288,10 @@ export default function ForagingApp() {
   const [mycoInput, setMycoInput] = useState('');
   const [mycoLoading, setMycoLoading] = useState(false);
   const [mycoRegionName, setMycoRegionName] = useState('');
+  // The last resolved location MYCO reasoned about (from geocoding).
+  // Used to render "Reading from: Lake Garda, Italy" in the panel and
+  // to fly the map when different from where it currently sits.
+  const [mycoResolvedLoc, setMycoResolvedLoc] = useState<MycoResolvedLocation | null>(null);
 
   const mapRef = useRef<any>(null);
 
@@ -530,11 +546,22 @@ export default function ForagingApp() {
   }, [handleMapSettle, showFungalLayer]);
 
   // ── Ask MYCO — send a question with location + region context ──────
+  //
+  // Location precedence:
+  //   1. If the user typed a region name → send it, let the server
+  //      geocode. This is authoritative — the user can ask about
+  //      Lago di Garda while physically sitting in Berlin.
+  //   2. Else user's GPS coords.
+  //   3. Else selected map node.
+  //   4. Else map center.
+  //
+  // When MYCO returns with a geocoded location, fly the map there
+  // so the visual matches what MYCO is talking about.
   const askMyco = useCallback(async (question: string) => {
     const q = question.trim();
     if (!q || mycoLoading) return;
-    // Prefer user's own location; fall back to selected node; then to
-    // map center. MYCO won't answer without SOME lat/lng.
+
+    // Collect a fallback lat/lng in case regionName is empty
     let lat: number | null = userLocation?.lat ?? null;
     let lng: number | null = userLocation?.lng ?? null;
     if (lat === null && selectedNode) {
@@ -545,8 +572,10 @@ export default function ForagingApp() {
       const c = map?.getCenter ? map.getCenter() : null;
       if (c) { lat = c.lat; lng = c.lng; }
     }
-    if (lat === null || lng === null) {
-      setMycoMessages(m => [...m, { role: 'user', content: q }, { role: 'assistant', content: 'I need to know where you are to answer that. Enable location, or tap a node on the map first.' }]);
+    // Only refuse if we have NEITHER a region name NOR coords —
+    // typed region name alone is now a valid submission.
+    if (!mycoRegionName.trim() && (lat === null || lng === null)) {
+      setMycoMessages(m => [...m, { role: 'user', content: q }, { role: 'assistant', content: 'Type a place name (e.g. "Lago di Garda, Italy" or "Dalarna, Sweden") or share your location, then ask again.' }]);
       setMycoInput('');
       return;
     }
@@ -561,13 +590,28 @@ export default function ForagingApp() {
         body: JSON.stringify({
           question: q,
           lat, lng,
-          regionName: mycoRegionName || undefined,
+          regionName: mycoRegionName.trim() || undefined,
           history: mycoMessages.slice(-6),
         }),
       });
       const data = await res.json();
       const reply = data.reply || data.error || 'MYCO is quiet right now — try again shortly.';
       setMycoMessages(m => [...m, { role: 'assistant', content: reply }]);
+
+      // If the server geocoded a named place, record it and fly the map
+      // over so the user sees where "there" is.
+      const resolved = data?.context?.location;
+      if (resolved && Number.isFinite(resolved.lat) && Number.isFinite(resolved.lng)) {
+        setMycoResolvedLoc(resolved as MycoResolvedLocation);
+        if (resolved.resolvedFrom === 'geocoded' && mapRef.current) {
+          mapRef.current.flyTo({
+            center: [resolved.lng, resolved.lat],
+            zoom: 8,
+            duration: 1500,
+            essential: true,
+          });
+        }
+      }
     } catch (_) {
       setMycoMessages(m => [...m, { role: 'assistant', content: 'Network hiccup — try again.' }]);
     } finally {
@@ -1395,7 +1439,9 @@ export default function ForagingApp() {
           }}>
             <span style={{ color: '#6BD66F' }}>●</span>
             <span style={{ textTransform: 'uppercase' }}>
-              {userLocation
+              {mycoResolvedLoc?.resolvedFrom === 'geocoded' && mycoResolvedLoc.resolvedName
+                ? `Reading · ${mycoResolvedLoc.resolvedName.split(',').slice(0, 2).join(',')}`
+                : userLocation
                 ? (userPlace && (userPlace.city || userPlace.region)
                     ? `You · ${userPlace.city || userPlace.region}${userPlace.country ? ', ' + userPlace.country : ''}`
                     : 'Your location')
@@ -1405,10 +1451,10 @@ export default function ForagingApp() {
             <input
               type="text"
               value={mycoRegionName}
-              onChange={e => setMycoRegionName(e.target.value.slice(0, 60))}
-              placeholder="Optional: name the region (e.g. Dalarna, Sweden)"
+              onChange={e => setMycoRegionName(e.target.value.slice(0, 120))}
+              placeholder="Name any place: 'Lago di Garda, Italy', 'Dalarna, Sweden', 'Mt. Olympus'…"
               style={{
-                flex: 1, minWidth: 120,
+                flex: 1, minWidth: 140,
                 background: 'transparent', border: 'none',
                 borderBottom: '0.5px solid rgba(255,255,255,0.1)',
                 color: '#E6D9B5', fontFamily: 'monospace', fontSize: 9,
@@ -1431,8 +1477,9 @@ export default function ForagingApp() {
                 Ask about your region and the mycelial field will answer.
                 <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column', gap: 5 }}>
                   {[
-                    'Has it rained enough in this region for chanterelles?',
-                    'What species are actively being reported near me right now?',
+                    'What is most likely fruiting here right now?',
+                    'Has it rained enough for chanterelles in the last month?',
+                    'What species typically fruit here at this time of year?',
                     'When is the next good foraging window in the forecast?',
                   ].map(s => (
                     <button

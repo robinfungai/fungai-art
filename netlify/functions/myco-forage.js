@@ -147,6 +147,61 @@ function summarizeWeather(w, days = 30) {
   };
 }
 
+// ── Forward geocoder ─────────────────────────────────────────────────
+//
+// The user's `regionName` field ("Lago di Garda, Italy", "Östersund",
+// "Dalarna", "Sinai peninsula") should be authoritative — MYCO should
+// answer about THAT place, not about wherever the user's GPS happens
+// to be. Free geocoders:
+//   - Nominatim (OpenStreetMap) — best fuzzy named-place resolver,
+//     handles multiple languages, no API key. Terms of use: set a
+//     descriptive User-Agent, respect ~1 req/sec.
+//   - BigDataCloud — CORS-enabled, no key, reverse-geocode is great
+//     but forward-geocode is weaker for arbitrary named places.
+//
+// Nominatim it is. Best-effort — if it fails we fall back to whatever
+// coords the client sent.
+async function forwardGeocode(name) {
+  if (!name) return null;
+  const url = new URL('https://nominatim.openstreetmap.org/search');
+  url.searchParams.set('q', name);
+  url.searchParams.set('format', 'jsonv2');
+  url.searchParams.set('limit', '1');
+  url.searchParams.set('addressdetails', '1');
+  try {
+    const res = await fetch(url.toString(), {
+      headers: {
+        // Nominatim requires a descriptive UA identifying the app +
+        // contact address so they can email if the app misbehaves.
+        'User-Agent': 'Fungai-Art-Foraging/1.0 (robin@fungai.art)',
+        'Accept-Language': 'en',
+      },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (!Array.isArray(data) || !data.length) return null;
+    const hit = data[0];
+    return {
+      lat:          parseFloat(hit.lat),
+      lng:          parseFloat(hit.lon),
+      // The canonical name from the geocoder — often more precise
+      // than what the user typed ("Lake Garda, Italy" vs their
+      // "Lago di Garda in Italy"). We use this in the model context
+      // and return it to the client for its own display.
+      canonicalName: hit.display_name || name,
+      type:          hit.type || null,
+      // BoundingBox format from Nominatim: [south, north, west, east].
+      // We rewrap to the shape mushroom-observations expects.
+      bbox:          Array.isArray(hit.boundingbox) && hit.boundingbox.length === 4 ? {
+        minLat: parseFloat(hit.boundingbox[0]),
+        maxLat: parseFloat(hit.boundingbox[1]),
+        minLng: parseFloat(hit.boundingbox[2]),
+        maxLng: parseFloat(hit.boundingbox[3]),
+      } : null,
+    };
+  } catch (_) { return null; }
+}
+
 // Fetch a compact fungal-observation summary around the point. We reuse
 // the shape of mushroom-observations.js but only ask for what the model
 // needs — species list + rough count — not the raw dot cloud.
@@ -205,30 +260,88 @@ async function fetchNearbyFungi(lat, lng, radiusKm = 100) {
   } catch (_) { return null; }
 }
 
+// ── Seasonal historical baseline (GBIF) ──────────────────────────────
+//
+// "What is typically fruiting here in September?" is a different
+// question than "what's been reported in the last month." This queries
+// GBIF's full historical archive of Kingdom Fungi observations for the
+// SAME MONTH across the last N years in the bbox, giving MYCO a
+// seasonal-baseline read that the recent-data query alone can't give.
+async function fetchSeasonalBaseline(lat, lng, radiusKm = 100, yearsBack = 3) {
+  const latDelta = radiusKm / 111;
+  const lngDelta = radiusKm / (111 * Math.cos(lat * Math.PI / 180));
+  const now = new Date();
+  const thisMonth = now.getMonth() + 1;
+  const yearFrom = now.getFullYear() - yearsBack;
+  const yearTo   = now.getFullYear() - 1; // exclude the current year (that's what fetchNearbyFungi covers)
+
+  const url = new URL('https://api.gbif.org/v1/occurrence/search');
+  url.searchParams.set('hasCoordinate',      'true');
+  url.searchParams.set('hasGeospatialIssue', 'false');
+  url.searchParams.set('taxonKey',           '5'); // Kingdom Fungi
+  url.searchParams.set('decimalLatitude',    `${lat - latDelta},${lat + latDelta}`);
+  url.searchParams.set('decimalLongitude',   `${lng - lngDelta},${lng + lngDelta}`);
+  url.searchParams.set('year',               `${yearFrom},${yearTo}`);
+  url.searchParams.set('month',              String(thisMonth));
+  url.searchParams.set('limit',              '300');
+
+  try {
+    const res = await fetch(url.toString(), {
+      headers: { 'User-Agent': 'Fungai-Art-Foraging/1.0 (robin@fungai.art)' },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const obs  = data.results || [];
+    if (!obs.length) return { yearsBack, month: thisMonth, count: 0, topSpecies: [] };
+
+    const bySpecies = new Map();
+    for (const o of obs) {
+      const s = o.species || o.scientificName || 'Fungi sp.';
+      bySpecies.set(s, (bySpecies.get(s) || 0) + 1);
+    }
+    const topSpecies = [...bySpecies.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .map(([species, count]) => ({ species, count }));
+
+    return {
+      yearsBack,
+      month:     thisMonth,
+      count:     obs.length,
+      totalHits: data.count ?? obs.length,
+      topSpecies,
+    };
+  } catch (_) { return null; }
+}
+
 const SYSTEM = `You are MYCO, the foraging intelligence embedded inside Fungai Art's living map at fungai.art/foraging.
 
 ## WHO YOU ARE
 A field-savvy mycologist and botanist who reads weather and citizen-science data the way an experienced forager does. You care about substance, not marketing. You cite the numbers you were given, in the units you were given. When the data is thin, you say so.
 
-## WHAT YOU CAN DO
-- Interpret rainfall + temperature history for a specific place and translate it into fruiting-window language ("the last significant rain was 4 days ago, temperatures have stayed above 12°C — this is close to the sweet spot for chanterelles in mixed birch-pine ground").
-- Read the fresh citizen-science sightings passed in the context (iNaturalist research-grade, last 12 months) and tell the user what species are actively being reported near them.
-- Suggest where to look (habitat cues) and when (weekly window) based on the species and the current conditions.
-- Point out gaps: "no rain for 18 days + averages 22°C — most mycelium is dormant; try again after the next 5mm+ event."
+## LOCATION AWARENESS
+The context bundle names the exact place you are reasoning about — resolved from the user's typed region name (e.g. "Lago di Garda, Italy" → Lake Garda, Italy · 45.6°N, 10.7°E) or from their GPS. ALWAYS use that resolved place name in your reply. If the resolved place is different from what the user typed (a spelling correction, a canonical form), acknowledge that once so they know you're reading the right spot.
+
+## WHAT YOU CAN DO — three data layers, use them together
+1. **Weather.recent** — 30 days of daily rain + temperature at the resolved coordinates. Interpret it into fruiting-window language ("the last significant rain was 4 days ago, temperatures have stayed above 12°C — this is close to the sweet spot for chanterelles in mixed pine-oak ground").
+2. **fungiSightings.recent** — iNaturalist research-grade, last 12 months around the resolved point (~100km). This is what people are ACTIVELY reporting. Cite top species with counts.
+3. **fungiSightings.seasonalBaseline** — GBIF Kingdom Fungi observations from the SAME MONTH over the previous 3 years around the resolved point. This is what typically fruits here in this season across years — use it to answer "what SHOULD be around now" even when the recent iNat window is thin.
+
+Cross-reference the three layers: if the seasonal baseline lists porcini as the #1 September species here, AND the recent weather shows a proper trigger event, AND recent iNat hits confirm 2 sightings this month — that's a strong signal. If the baseline lists porcini but weather has been dry for 3 weeks, say "typical for the season, but dormant given the dry spell."
 
 ## HOW YOU RESPOND
-- Direct, precise, warm. Two short paragraphs is usually enough.
-- Numbers first ("42mm over 30 days, 5 rain days, last 6mm event 4 days ago"), interpretation second.
-- Use the region name and coordinates the user provided.
+- Direct, precise, warm. Two short paragraphs, sometimes three when weaving all three data layers.
+- Numbers first, interpretation second: "42mm over 30 days, 5 rain days, last 6mm event 4 days ago. Recent iNat: 8 reports (mostly Boletus edulis + Cantharellus cibarius). Seasonal (2023-2025 Septembers): Boletus edulis dominates here, then Amanita muscaria, then Cortinarius spp."
 - Prefer common names alongside Latin: "Chanterelle (Cantharellus cibarius)".
-- If a species the user asks about isn't in the sightings context, don't invent one — say the data doesn't show it and give the general seasonal guidance.
+- If the user asked about a species that's neither in recent nor baseline, say the data doesn't show it here at this time and give the general seasonal guidance.
 - Never guarantee a find. Say "likely", "close to the window", "unlikely right now", never "you will find".
 
 ## HARD RAILS
 - No medical claims. No dosing advice. No identification for consumption — always end with "cross-check every find with an expert or a trusted field guide before eating."
 - Do not identify a mushroom from a photo (you cannot see photos here anyway).
 - If asked about a specific rare / protected species, add a foraging-ethics note ("do not harvest fewer than three mature fruiting bodies from a stand; leave the mycelium intact").
-- Sensitive locations (protected areas, private land) — remind the user to check local law.`;
+- Sensitive locations (protected areas, private land) — remind the user to check local law.
+- LEGAL NOTE for Sweden: Amanita muscaria's active compounds (muscimol, ibotenic acid) are scheduled as narcotics under Swedish law (LVFS 2011:10). If the resolved location is in Sweden and the user asks about picking Amanita, add a clear note that possessing extracts or preparations is illegal there — even though the mushroom itself is present in the ecology. Do NOT provide this warning for Germany, most other EU, or the US (Louisiana excepted) where the compounds are not scheduled.`;
 
 export const handler = async (event) => {
   const origin = event.headers?.origin || event.headers?.Origin || '';
@@ -261,21 +374,37 @@ export const handler = async (event) => {
   try {
     const body = JSON.parse(event.body || '{}');
     const question   = String(body.question || '').slice(0, 800).trim();
-    const lat        = Number.isFinite(body.lat) ? body.lat : null;
-    const lng        = Number.isFinite(body.lng) ? body.lng : null;
-    const regionName = String(body.regionName || '').slice(0, 80);
+    let   lat        = Number.isFinite(body.lat) ? body.lat : null;
+    let   lng        = Number.isFinite(body.lng) ? body.lng : null;
+    const regionName = String(body.regionName || '').slice(0, 120).trim();
     const history    = Array.isArray(body.history) ? body.history.slice(-6) : [];
 
     if (!question) return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Empty question.' }) };
-    if (lat === null || lng === null) {
-      return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Need lat/lng — share location or pick a node.' }) };
+
+    // Geocode the region name FIRST if provided — user intent is
+    // authoritative. "I'm in Berlin but ask me about Lago di Garda"
+    // resolves to Lake Garda's coords, not Berlin's.
+    let geocoded = null;
+    let resolvedFrom = 'coords';
+    if (regionName) {
+      geocoded = await forwardGeocode(regionName);
+      if (geocoded) {
+        lat = geocoded.lat;
+        lng = geocoded.lng;
+        resolvedFrom = 'geocoded';
+      }
     }
 
-    // Parallel context gathering — both are best-effort, we still answer
-    // if one fails.
-    const [weatherRaw, fungi] = await Promise.all([
+    if (lat === null || lng === null) {
+      return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Need a place name or coordinates — type a region (e.g. "Lago di Garda, Italy") or share location.' }) };
+    }
+
+    // Parallel context gathering — all three layers are best-effort,
+    // we still answer if one fails.
+    const [weatherRaw, fungiRecent, fungiBaseline] = await Promise.all([
       fetchWeatherHistory(lat, lng, 30),
       fetchNearbyFungi(lat, lng, 100),
+      fetchSeasonalBaseline(lat, lng, 100, 3),
     ]);
     const weather = summarizeWeather(weatherRaw, 30);
 
@@ -283,11 +412,16 @@ export const handler = async (event) => {
       location: {
         lat: Math.round(lat * 1000) / 1000,
         lng: Math.round(lng * 1000) / 1000,
-        regionName: regionName || null,
+        regionNameRequested: regionName || null,
+        resolvedName:        geocoded?.canonicalName || regionName || null,
+        resolvedFrom, // 'geocoded' | 'coords' — tell MYCO where the location came from
       },
+      today:   new Date().toISOString().slice(0, 10),
       weather: weather || 'unavailable',
-      fungiSightings: fungi || 'unavailable',
-      today: new Date().toISOString().slice(0, 10),
+      fungiSightings: {
+        recent:           fungiRecent || 'unavailable',
+        seasonalBaseline: fungiBaseline || 'unavailable',
+      },
     };
 
     const userPrompt =
