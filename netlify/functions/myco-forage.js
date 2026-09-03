@@ -260,6 +260,77 @@ async function fetchNearbyFungi(lat, lng, radiusKm = 100) {
   } catch (_) { return null; }
 }
 
+// ── Nearby PLANTS (iNaturalist, last 12 months, research-grade) ──────
+//
+// Symmetric to fetchNearbyFungi but for Kingdom Plantae. iNat's
+// iconic_taxa=Plantae filter covers all plants; the topSpecies
+// aggregation surfaces the most-reported ones, which tends to
+// correlate with "notable / forageable" — garden ornamentals rarely
+// dominate a wild-area feed, while nettles, elderflower, chanterelle,
+// wild garlic, bilberry, wild raspberry, meadowsweet, etc. do.
+async function fetchNearbyPlants(lat, lng, radiusKm = 100) {
+  const latDelta = radiusKm / 111;
+  const lngDelta = radiusKm / (111 * Math.cos(lat * Math.PI / 180));
+  const bbox = {
+    minLat: lat - latDelta, maxLat: lat + latDelta,
+    minLng: lng - lngDelta, maxLng: lng + lngDelta,
+  };
+  try {
+    const url = new URL('https://api.inaturalist.org/v1/observations');
+    url.searchParams.set('iconic_taxa',  'Plantae');
+    url.searchParams.set('quality_grade','research');
+    url.searchParams.set('swlat',        String(bbox.minLat));
+    url.searchParams.set('swlng',        String(bbox.minLng));
+    url.searchParams.set('nelat',        String(bbox.maxLat));
+    url.searchParams.set('nelng',        String(bbox.maxLng));
+    const now = new Date();
+    const from = new Date(now); from.setMonth(now.getMonth() - 12);
+    url.searchParams.set('d1',       from.toISOString().slice(0, 10));
+    url.searchParams.set('d2',       now .toISOString().slice(0, 10));
+    url.searchParams.set('per_page', '100');
+    url.searchParams.set('order_by', 'observed_on');
+    url.searchParams.set('order',    'desc');
+
+    const res = await fetch(url.toString(), {
+      headers: { 'User-Agent': 'Fungai-Art-Foraging/1.0 (robin@fungai.art)' },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const obs  = data.results || [];
+    if (!obs.length) return { count: 0, topSpecies: [], mostRecent: null };
+
+    const bySpecies = new Map();
+    const commonNames = new Map();
+    for (const o of obs) {
+      const s = o.taxon?.name || o.species_guess || 'Plantae sp.';
+      bySpecies.set(s, (bySpecies.get(s) || 0) + 1);
+      if (o.taxon?.preferred_common_name && !commonNames.has(s)) {
+        commonNames.set(s, o.taxon.preferred_common_name);
+      }
+    }
+    const topSpecies = [...bySpecies.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 12)
+      .map(([species, count]) => ({
+        species,
+        commonName: commonNames.get(species) || null,
+        count,
+      }));
+
+    return {
+      count:      obs.length,
+      totalHits:  data.total_results ?? obs.length,
+      topSpecies,
+      mostRecent: {
+        species:    obs[0]?.taxon?.name || obs[0]?.species_guess || null,
+        commonName: obs[0]?.taxon?.preferred_common_name || null,
+        date:       obs[0]?.observed_on || null,
+        region:     obs[0]?.place_guess || null,
+      },
+    };
+  } catch (_) { return null; }
+}
+
 // ── Seasonal historical baseline (GBIF) ──────────────────────────────
 //
 // "What is typically fruiting here in September?" is a different
@@ -314,26 +385,84 @@ async function fetchSeasonalBaseline(lat, lng, radiusKm = 100, yearsBack = 3) {
   } catch (_) { return null; }
 }
 
+// Seasonal baseline for PLANTS (GBIF Kingdom Plantae, taxonKey=6).
+// Same shape as the fungi baseline. Kingdom Plantae is broader than
+// Fungi and includes trees / grasses / ornamentals; the topSpecies
+// aggregation still surfaces what people actually observe, which
+// heavily biases toward wild / notable species in wilder bboxes.
+async function fetchSeasonalBaselinePlants(lat, lng, radiusKm = 100, yearsBack = 3) {
+  const latDelta = radiusKm / 111;
+  const lngDelta = radiusKm / (111 * Math.cos(lat * Math.PI / 180));
+  const now = new Date();
+  const thisMonth = now.getMonth() + 1;
+  const yearFrom = now.getFullYear() - yearsBack;
+  const yearTo   = now.getFullYear() - 1;
+
+  const url = new URL('https://api.gbif.org/v1/occurrence/search');
+  url.searchParams.set('hasCoordinate',      'true');
+  url.searchParams.set('hasGeospatialIssue', 'false');
+  url.searchParams.set('taxonKey',           '6'); // Kingdom Plantae
+  url.searchParams.set('decimalLatitude',    `${lat - latDelta},${lat + latDelta}`);
+  url.searchParams.set('decimalLongitude',   `${lng - lngDelta},${lng + lngDelta}`);
+  url.searchParams.set('year',               `${yearFrom},${yearTo}`);
+  url.searchParams.set('month',              String(thisMonth));
+  url.searchParams.set('limit',              '300');
+
+  try {
+    const res = await fetch(url.toString(), {
+      headers: { 'User-Agent': 'Fungai-Art-Foraging/1.0 (robin@fungai.art)' },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const obs  = data.results || [];
+    if (!obs.length) return { yearsBack, month: thisMonth, count: 0, topSpecies: [] };
+
+    const bySpecies = new Map();
+    for (const o of obs) {
+      const s = o.species || o.scientificName || 'Plantae sp.';
+      bySpecies.set(s, (bySpecies.get(s) || 0) + 1);
+    }
+    const topSpecies = [...bySpecies.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 12)
+      .map(([species, count]) => ({ species, count }));
+
+    return {
+      yearsBack,
+      month:     thisMonth,
+      count:     obs.length,
+      totalHits: data.count ?? obs.length,
+      topSpecies,
+    };
+  } catch (_) { return null; }
+}
+
 const SYSTEM = `You are MYCO, the foraging intelligence embedded inside Fungai Art's living map at fungai.art/foraging.
 
 ## WHO YOU ARE
-A field-savvy mycologist and botanist who reads weather and citizen-science data the way an experienced forager does. You care about substance, not marketing. You cite the numbers you were given, in the units you were given. When the data is thin, you say so.
+A field-savvy mycologist AND botanist who reads weather and citizen-science data the way an experienced forager does — mushrooms and wild herbs, medicinal plants and edibles, all equally your beat. You care about substance, not marketing. You cite the numbers you were given, in the units you were given. When the data is thin, you say so.
 
 ## LOCATION AWARENESS
 The context bundle names the exact place you are reasoning about — resolved from the user's typed region name (e.g. "Lago di Garda, Italy" → Lake Garda, Italy · 45.6°N, 10.7°E) or from their GPS. ALWAYS use that resolved place name in your reply. If the resolved place is different from what the user typed (a spelling correction, a canonical form), acknowledge that once so they know you're reading the right spot.
 
-## WHAT YOU CAN DO — three data layers, use them together
-1. **Weather.recent** — 30 days of daily rain + temperature at the resolved coordinates. Interpret it into fruiting-window language ("the last significant rain was 4 days ago, temperatures have stayed above 12°C — this is close to the sweet spot for chanterelles in mixed pine-oak ground").
-2. **fungiSightings.recent** — iNaturalist research-grade, last 12 months around the resolved point (~100km). This is what people are ACTIVELY reporting. Cite top species with counts.
-3. **fungiSightings.seasonalBaseline** — GBIF Kingdom Fungi observations from the SAME MONTH over the previous 3 years around the resolved point. This is what typically fruits here in this season across years — use it to answer "what SHOULD be around now" even when the recent iNat window is thin.
+## WHAT YOU CAN DO — five data layers, use them together
+1. **weather** — 30 days of daily rain + temperature at the resolved coordinates, plus a 7-day forecast. Interpret into fruiting/growing-window language.
+2. **fungiSightings.recent** — iNaturalist research-grade Kingdom Fungi, last 12 months around the resolved point (~100km). What mushroom people are ACTIVELY reporting.
+3. **fungiSightings.seasonalBaseline** — GBIF Kingdom Fungi from the SAME MONTH over the previous 3 years, ~100km. What mushrooms typically fruit here in this season across years.
+4. **plantSightings.recent** — iNaturalist research-grade Kingdom Plantae, last 12 months, ~100km. What plants/herbs people are ACTIVELY reporting. Includes common names when iNat provided them.
+5. **plantSightings.seasonalBaseline** — GBIF Kingdom Plantae from the SAME MONTH over the previous 3 years, ~100km. What plants are typically observable here at this time of year.
 
-Cross-reference the three layers: if the seasonal baseline lists porcini as the #1 September species here, AND the recent weather shows a proper trigger event, AND recent iNat hits confirm 2 sightings this month — that's a strong signal. If the baseline lists porcini but weather has been dry for 3 weeks, say "typical for the season, but dormant given the dry spell."
+**Answer whatever the user asked about — mushrooms, herbs, or both.** If they ask about herbs at Lago di Garda, work the plant layers. If they ask about mushrooms, work the fungi layers. If they ask "what's forageable here right now," weave both. Do NOT tell the user herbs are outside your expertise — they aren't.
+
+Cross-reference the layers: if the seasonal baseline lists Sambucus nigra (elderflower) as the #1 September plant here, AND weather shows steady warmth without heat spikes, AND recent iNat has 4 elderflower reports this month — that's a strong signal. If the plant baseline shows something notable but no recent iNat hits, note that recent data is thin but the historical pattern is consistent.
+
+Plant/herb note: Kingdom Plantae in citizen-science databases includes trees, ornamentals, grasses, mosses. The topSpecies aggregation surfaces what people actually record, which usually skews to notable / recognisable / forageable species in wild bboxes — nettles, elderflower, wild garlic, meadowsweet, yarrow, bilberry, etc. Trust the counts but bring your botanist eye — if the top hit is *Quercus robur* (an oak), don't recommend "foraging oak", contextualise it as a habitat marker.
 
 ## HOW YOU RESPOND
-- Direct, precise, warm. Two short paragraphs, sometimes three when weaving all three data layers.
-- Numbers first, interpretation second: "42mm over 30 days, 5 rain days, last 6mm event 4 days ago. Recent iNat: 8 reports (mostly Boletus edulis + Cantharellus cibarius). Seasonal (2023-2025 Septembers): Boletus edulis dominates here, then Amanita muscaria, then Cortinarius spp."
-- Prefer common names alongside Latin: "Chanterelle (Cantharellus cibarius)".
-- If the user asked about a species that's neither in recent nor baseline, say the data doesn't show it here at this time and give the general seasonal guidance.
+- Direct, precise, warm. Two to three short paragraphs weaving weather + relevant sighting layers.
+- Numbers first, interpretation second: "42mm over 30 days, 5 rain days, last 6mm event 4 days ago. Fungi (recent iNat + 3-yr Sept baseline): Boletus edulis dominates here, 8 reports this month; Amanita muscaria as secondary. Herbs (recent iNat + 3-yr Sept baseline): Sambucus nigra elderflower fruiting now, Urtica dioica nettles peak, Achillea millefolium yarrow flowering."
+- Prefer common names alongside Latin: "Chanterelle (Cantharellus cibarius)", "Yarrow (Achillea millefolium)".
+- If the user asked about a species that's neither in recent nor baseline layers of the relevant kingdom, say the data doesn't show it here at this time and give general seasonal guidance.
 - Never guarantee a find. Say "likely", "close to the window", "unlikely right now", never "you will find".
 
 ## HARD RAILS
@@ -399,12 +528,20 @@ export const handler = async (event) => {
       return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Need a place name or coordinates — type a region (e.g. "Lago di Garda, Italy") or share location.' }) };
     }
 
-    // Parallel context gathering — all three layers are best-effort,
-    // we still answer if one fails.
-    const [weatherRaw, fungiRecent, fungiBaseline] = await Promise.all([
+    // Parallel context gathering — five layers, all best-effort, we
+    // still answer if any fail. Two kingdoms × recent-vs-seasonal
+    // gives MYCO real symmetric coverage of both mushrooms and
+    // plants/herbs.
+    const [
+      weatherRaw,
+      fungiRecent, fungiBaseline,
+      plantsRecent, plantsBaseline,
+    ] = await Promise.all([
       fetchWeatherHistory(lat, lng, 30),
       fetchNearbyFungi(lat, lng, 100),
       fetchSeasonalBaseline(lat, lng, 100, 3),
+      fetchNearbyPlants(lat, lng, 100),
+      fetchSeasonalBaselinePlants(lat, lng, 100, 3),
     ]);
     const weather = summarizeWeather(weatherRaw, 30);
 
@@ -419,8 +556,12 @@ export const handler = async (event) => {
       today:   new Date().toISOString().slice(0, 10),
       weather: weather || 'unavailable',
       fungiSightings: {
-        recent:           fungiRecent || 'unavailable',
+        recent:           fungiRecent   || 'unavailable',
         seasonalBaseline: fungiBaseline || 'unavailable',
+      },
+      plantSightings: {
+        recent:           plantsRecent   || 'unavailable',
+        seasonalBaseline: plantsBaseline || 'unavailable',
       },
     };
 
