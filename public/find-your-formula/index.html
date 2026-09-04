@@ -190,206 +190,148 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
    Reduced-motion: kills all animation, keeps hover contrast.
    ════════════════════════════════════════════════════════════════ */
 
-/* The ambient container — a barely-there field the bubbles live IN.
-   Slow radial gradient that shifts hue over ~40s gives the sense
-   of dark medium rather than blank background. */
+/* ════════════════════════════════════════════════════════════════
+   LIVING ALCHEMICAL NODES — v2 (post-user-feedback)
+   ────────────────────────────────────────────────────────────────
+   Simplifications after Robin's mobile pass:
+     - Grid spacing tightened so all 12 fit on one screen again
+     - Subtitle removed from inside the bubble (didn't fit, and
+       hovering doesn't map to touch UX)
+     - Magnetic tilt removed — the same interaction on a touchscreen
+       was jittery and the sibling-dim on hover felt overengineered
+       for a decision that auto-advances anyway
+   What stayed:
+     - Glass materiality (dark, translucent, hue as rim + halo)
+     - Wandering nucleus (the "alive" cue)
+     - Slow breath
+     - Selected state = concentric hue rings
+     - Reduced-motion escape hatch
+   ════════════════════════════════════════════════════════════════ */
+
 .q-bubbles{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:20px 14px;
-  padding:22px 0 26px;perspective:1400px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px 12px;
+  padding:14px 0 18px;
   position:relative;isolation:isolate;
 }
+/* Subtle atmospheric field behind the grid — never competes with
+   the bubbles. Slow drift is fine because it's low-contrast. */
 .q-bubbles::before{
-  content:'';position:absolute;inset:-24px -12px;z-index:-1;
+  content:'';position:absolute;inset:-16px -8px;z-index:-1;
   background:
-    radial-gradient(ellipse 70% 55% at 20% 20%, rgba(232,177,75,0.045), transparent 65%),
-    radial-gradient(ellipse 60% 50% at 80% 60%, rgba(168,143,224,0.045), transparent 65%),
-    radial-gradient(ellipse 55% 45% at 50% 90%, rgba(79,182,161,0.035), transparent 65%);
-  filter:blur(40px);
+    radial-gradient(ellipse 70% 55% at 20% 20%, rgba(232,177,75,0.04), transparent 65%),
+    radial-gradient(ellipse 60% 50% at 80% 60%, rgba(168,143,224,0.04), transparent 65%),
+    radial-gradient(ellipse 55% 45% at 50% 90%, rgba(79,182,161,0.03), transparent 65%);
+  filter:blur(36px);
   animation:field-drift 42s ease-in-out infinite;
   pointer-events:none;
 }
 @keyframes field-drift{
-  0%,100%{transform:translate3d(0,0,0) scale(1)}
-  33%    {transform:translate3d(6px,-8px,0) scale(1.04)}
-  66%    {transform:translate3d(-4px,6px,0) scale(0.98)}
+  0%,100%{transform:translate3d(0,0,0)}
+  50%    {transform:translate3d(4px,-6px,0)}
 }
-
-@media (min-width:520px){.q-bubbles{grid-template-columns:repeat(4,1fr);gap:22px 18px}}
+@media (min-width:520px){.q-bubbles{grid-template-columns:repeat(4,1fr);gap:16px}}
 
 .bubble{
   position:relative;aspect-ratio:1;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  text-align:center;padding:10px 8px;
-  font-family:var(--sans);font-weight:500;
+  text-align:center;padding:8px;
+  font-family:var(--sans);font-weight:500;font-size:12px;line-height:1.22;letter-spacing:0.005em;
   color:var(--parchment);cursor:pointer;
-  /* Deep glass — the sphere is mostly transparent black; hue only
-     tints the very rim + the inner light. Keeps the composition
-     dark and lets the atmosphere do the color work. */
+  /* Deep glass — hue as rim + halo, body stays dark. */
   background:
     radial-gradient(ellipse 60% 45% at 45% 22%, rgba(255,255,255,0.14), rgba(255,255,255,0) 70%),
-    radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--hue) 12%, rgba(15,17,20,0.65)) 0%, rgba(6,8,10,0.75) 78%);
-  -webkit-backdrop-filter:blur(12px) saturate(1.2);
-          backdrop-filter:blur(12px) saturate(1.2);
+    radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--hue) 12%, rgba(15,17,20,0.7)) 0%, rgba(6,8,10,0.78) 78%);
+  -webkit-backdrop-filter:blur(10px) saturate(1.15);
+          backdrop-filter:blur(10px) saturate(1.15);
   border:0.5px solid color-mix(in srgb, var(--hue) 55%, rgba(255,255,255,0.10));
-  /* Depth via layered shadows:
-      1. inner rim highlight (top)
-      2. inner core shadow (bottom) — reads as a heavy black liquid
-      3. atmospheric halo (large, soft) — hue as glow
-      4. outer shadow to lift bubble off the page */
   box-shadow:
     inset 0 1.5px 3px rgba(255,255,255,0.18),
     inset 0 -12px 24px rgba(0,0,0,0.55),
     inset 0 0 0 0.5px color-mix(in srgb, var(--hue) 30%, transparent),
-    0 0 22px -4px color-mix(in srgb, var(--hue) 40%, transparent),
-    0 18px 38px -18px rgba(0,0,0,0.7);
-  /* Magnetic + breath: --mx --my are set by JS on pointermove.
-     Base transform combines the two so both live on the GPU. */
-  --mx:0; --my:0; --lift:0;
-  transform:
-    translate3d(calc(var(--mx) * 6px), calc(var(--my) * 6px - var(--lift) * 8px), 0)
-    rotateX(calc(var(--my) * -6deg))
-    rotateY(calc(var(--mx) * 6deg))
-    scale(calc(1 + var(--lift) * 0.04));
+    0 0 22px -4px color-mix(in srgb, var(--hue) 38%, transparent),
+    0 14px 30px -16px rgba(0,0,0,0.65);
   transition:
-    transform .55s cubic-bezier(.22,.61,.36,1),
-    box-shadow .5s ease,
-    border-color .5s ease,
-    opacity .35s ease,
-    filter .35s ease;
+    transform .35s cubic-bezier(.22,.61,.36,1),
+    box-shadow .4s ease,
+    border-color .4s ease;
   animation:bubble-breath 14s ease-in-out infinite;
   will-change:transform;
-  transform-style:preserve-3d;
 }
-
-/* Specular highlight — glossy top-left. Follows the magnetic axis
-   by a small amount so it feels like a real curved surface. */
+/* Specular highlight — static, no cursor tracking. */
 .bubble::before{
   content:'';position:absolute;inset:0;border-radius:inherit;
-  background:radial-gradient(
-    ellipse 55% 40%
-    at calc(35% + var(--mx) * 12%) calc(18% + var(--my) * 12%),
-    rgba(255,255,255,0.38), rgba(255,255,255,0) 70%);
+  background:radial-gradient(ellipse 55% 40% at 35% 18%, rgba(255,255,255,0.38), rgba(255,255,255,0) 70%);
   pointer-events:none;
-  transition:background .5s ease;
 }
-
-/* Internal wandering nucleus — the "alive" cue. A small luminous
-   orb of the category's hue, drifting slowly inside the sphere,
-   growing on interaction. Because it's on --mx/--my too, the
-   nucleus feels attached to the finger/cursor. */
+/* Internal wandering nucleus — the "alive" cue. Fixed relative to
+   the bubble (no cursor magnet math) so touch works cleanly. */
 .bubble-nucleus{
-  position:absolute;
-  top:50%;left:50%;
-  width:32%;height:32%;
-  border-radius:50%;
+  position:absolute;top:50%;left:50%;
+  width:34%;height:34%;border-radius:50%;
   background:radial-gradient(
     circle at 40% 40%,
     color-mix(in srgb, var(--hue) 90%, white 10%),
     color-mix(in srgb, var(--hue) 55%, transparent) 55%,
     transparent 80%);
-  filter:blur(6px);
-  opacity:0.55;
-  pointer-events:none;
-  transform:
-    translate(-50%, -50%)
-    translate3d(calc(var(--mx) * 10px), calc(var(--my) * 10px), 0);
-  transition:
-    opacity .5s ease,
-    transform .55s cubic-bezier(.22,.61,.36,1),
-    width .5s ease, height .5s ease, filter .5s ease;
+  filter:blur(6px);opacity:0.55;pointer-events:none;
+  transform:translate(-50%,-50%);
   animation:nucleus-wander 22s ease-in-out infinite;
   will-change:transform, opacity;
+  transition:opacity .35s ease, width .35s ease, height .35s ease, filter .35s ease;
 }
-
-/* Text stack — label always visible, subtitle fades in on hover /
-   selected. Kept dead-center so magnetic tilt reads correctly. */
-.bubble-body{
+/* Label — the visual anchor. Always visible, always centered.
+   Subtitle removed per feedback — didn't fit at 3-col mobile width
+   and hover-only reveals don't map to touch. Data field o.sub is
+   kept for a future results-screen use. */
+.bubble > span{
   position:relative;z-index:1;
-  display:flex;flex-direction:column;align-items:center;gap:2px;
-  max-width:88%;pointer-events:none;
-}
-.bubble-label{
-  font-size:12px;line-height:1.22;letter-spacing:0.005em;
-  overflow-wrap:break-word;
+  max-width:100%;overflow-wrap:break-word;
   text-shadow:0 1px 6px rgba(0,0,0,0.85), 0 0 2px rgba(0,0,0,0.6);
-}
-.bubble-sub{
-  font-family:var(--mono);
-  font-size:7.5px;letter-spacing:0.14em;text-transform:uppercase;
-  color:color-mix(in srgb, var(--hue) 40%, var(--parchment) 60%);
-  opacity:0;max-height:0;
-  transform:translateY(-3px);
-  transition:opacity .35s ease .05s, max-height .4s ease, transform .35s ease .05s;
-  text-shadow:0 1px 4px rgba(0,0,0,0.8);
   pointer-events:none;
-  white-space:nowrap;
 }
 
-/* HOVER — reward for attention.
-   Bubble lifts (var(--lift)), nucleus grows + brightens, subtitle
-   reveals, atmospheric halo intensifies. Note the .q-bubbles:has()
-   sibling-dim rule below — every OTHER bubble drops opacity so the
-   focused one dominates the field. */
+/* HOVER (desktop / keyboard focus only) — very restrained.
+   Nucleus brightens, border strengthens, no scale / no lift / no
+   sibling dim. Touch devices skip this entirely. */
 .bubble:hover, .bubble:focus-visible{
-  --lift:1;
   border-color:color-mix(in srgb, var(--hue) 70%, rgba(255,255,255,0.15));
   box-shadow:
-    inset 0 1.5px 3px rgba(255,255,255,0.24),
+    inset 0 1.5px 3px rgba(255,255,255,0.22),
     inset 0 -12px 24px rgba(0,0,0,0.5),
-    inset 0 0 0 0.5px color-mix(in srgb, var(--hue) 55%, transparent),
-    0 0 42px -2px color-mix(in srgb, var(--hue) 55%, transparent),
-    0 24px 46px -18px rgba(0,0,0,0.75);
-  z-index:2;
+    inset 0 0 0 0.5px color-mix(in srgb, var(--hue) 50%, transparent),
+    0 0 32px -2px color-mix(in srgb, var(--hue) 50%, transparent),
+    0 16px 34px -16px rgba(0,0,0,0.7);
 }
 .bubble:hover .bubble-nucleus, .bubble:focus-visible .bubble-nucleus{
-  width:44%;height:44%;
   opacity:0.85;
-  filter:blur(4px);
-}
-.bubble:hover .bubble-sub, .bubble:focus-visible .bubble-sub{
-  opacity:0.85;max-height:22px;transform:translateY(0);
 }
 .bubble:focus-visible{outline:none}
 
-/* Sibling recede — when any bubble is hovered/focused, the others
-   dim to background. Requires :has(); browsers without it just
-   don't get the effect (graceful). */
-.q-bubbles:has(.bubble:hover, .bubble:focus-visible) .bubble:not(:hover):not(:focus-visible){
-  opacity:0.5;filter:saturate(0.6);
-}
-
-/* SELECTED — the bubble becomes a node.
-   Grows, gains concentric aura, nucleus reaches full intensity.
-   Neighbors dim + gently push outward via subtle scale. */
+/* SELECTED — the bubble becomes an active node.
+   Three concentric hue-tinted ring shadows; nucleus at full
+   intensity. This is the ONLY state with a real transform (small
+   scale up), and it's mild enough to feel like confirmation not
+   theatrics. */
 .bubble.on{
-  --lift:2;
+  transform:scale(1.08);
   border-color:color-mix(in srgb, var(--hue) 85%, white 10%);
   box-shadow:
     inset 0 2px 4px rgba(255,255,255,0.28),
     inset 0 -12px 24px rgba(0,0,0,0.42),
     inset 0 0 0 0.5px color-mix(in srgb, var(--hue) 70%, transparent),
-    /* concentric rings — three layered spreads */
-    0 0 0 3px color-mix(in srgb, var(--hue) 25%, transparent),
-    0 0 0 8px color-mix(in srgb, var(--hue) 12%, transparent),
-    0 0 0 16px color-mix(in srgb, var(--hue) 5%, transparent),
-    0 0 52px -2px color-mix(in srgb, var(--hue) 70%, transparent),
-    0 26px 50px -18px rgba(0,0,0,0.75);
-  z-index:3;
+    0 0 0 3px color-mix(in srgb, var(--hue) 22%, transparent),
+    0 0 0 7px color-mix(in srgb, var(--hue) 10%, transparent),
+    0 0 44px -2px color-mix(in srgb, var(--hue) 65%, transparent),
+    0 18px 40px -16px rgba(0,0,0,0.7);
+  z-index:2;
 }
 .bubble.on .bubble-nucleus{
-  width:52%;height:52%;
-  opacity:1;
-  filter:blur(3px);
-}
-.bubble.on .bubble-sub{
-  opacity:1;max-height:22px;transform:translateY(0);
-}
-.q-bubbles:has(.bubble.on) .bubble:not(.on){
-  opacity:0.42;filter:saturate(0.55);
+  width:48%;height:48%;
+  opacity:1;filter:blur(4px);
 }
 
-/* Very slow ambient motion — barely-there breath + nucleus wander.
-   Per-child phase offsets so the grid doesn't pulse in unison. */
+/* Per-child phase offsets so the ambient motion never pulses in
+   unison. Nothing else is per-child — DOM stays flat. */
 .bubble:nth-child(3n+1){animation-delay:-0s;animation-duration:14s}
 .bubble:nth-child(3n+2){animation-delay:-4.6s;animation-duration:16s}
 .bubble:nth-child(3n+3){animation-delay:-9.2s;animation-duration:13s}
@@ -399,40 +341,20 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .bubble:nth-child(4n)   .bubble-nucleus{animation-delay:-18s;  animation-duration:24s}
 
 @keyframes bubble-breath{
-  0%,100%{transform:
-    translate3d(calc(var(--mx) * 6px), calc(var(--my) * 6px - var(--lift) * 8px), 0)
-    rotateX(calc(var(--my) * -6deg)) rotateY(calc(var(--mx) * 6deg))
-    scale(calc(1 + var(--lift) * 0.04))}
-  50%   {transform:
-    translate3d(calc(var(--mx) * 6px), calc(var(--my) * 6px - var(--lift) * 8px - 2px), 0)
-    rotateX(calc(var(--my) * -6deg)) rotateY(calc(var(--mx) * 6deg))
-    scale(calc(1.012 + var(--lift) * 0.04))}
+  0%,100%{transform:scale(1)}
+  50%   {transform:scale(1.012)}
 }
 @keyframes nucleus-wander{
-  0%,100%{transform:translate(-50%,-50%) translate3d(calc(var(--mx) * 10px + 0px),  calc(var(--my) * 10px + 0px),  0)}
-  25%    {transform:translate(-50%,-50%) translate3d(calc(var(--mx) * 10px + 8px),  calc(var(--my) * 10px - 6px),  0)}
-  50%    {transform:translate(-50%,-50%) translate3d(calc(var(--mx) * 10px - 4px),  calc(var(--my) * 10px - 10px), 0)}
-  75%    {transform:translate(-50%,-50%) translate3d(calc(var(--mx) * 10px - 10px), calc(var(--my) * 10px + 5px),  0)}
+  0%,100%{transform:translate(-50%,-50%)}
+  25%    {transform:translate(calc(-50% + 6px), calc(-50% - 5px))}
+  50%    {transform:translate(calc(-50% - 3px), calc(-50% - 8px))}
+  75%    {transform:translate(calc(-50% - 7px), calc(-50% + 4px))}
 }
 
-/* Accessibility — reduce motion. Kill all ambient animation and
-   magnetic tilt; keep the hover/selected contrast so the UI is
-   still learnable, just still. */
+/* Accessibility — respect the OS-level reduced motion pref. */
 @media (prefers-reduced-motion:reduce){
   .q-bubbles::before, .bubble, .bubble-nucleus{animation:none}
-  .bubble{transform:none}
-  .bubble:hover, .bubble.on{transform:scale(1.04)}
   .bubble.on{transform:scale(1.06)}
-}
-
-/* Touch-only devices: kill the magnetic tilt (touchmove doesn't
-   trigger pointermove reliably on iOS Safari and the hover-dim
-   sibling rule can feel jumpy). Keep the selected state expressive. */
-@media (hover:none){
-  .bubble{transform:translate3d(0, calc(var(--lift) * -6px), 0) scale(calc(1 + var(--lift) * 0.04))}
-  .bubble::before{background:radial-gradient(ellipse 55% 40% at 35% 18%, rgba(255,255,255,0.38), rgba(255,255,255,0) 70%)}
-  .bubble-nucleus{transform:translate(-50%,-50%)}
-  .q-bubbles:has(.bubble:hover) .bubble:not(:hover){opacity:1;filter:none}
 }
 
 /* ── Q2 sub-question header (back-to-archetype affordance) ── */
@@ -446,89 +368,70 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
    out, then sub-answer balloons materialise around/below with a
    soft entrance. No re-render, no new page. */
 .q-balloons{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:8px 0 10px;max-width:520px;margin:0 auto;transition:grid-template-columns .5s ease,max-width .5s ease,padding .5s ease}
-/* Q2 archetype cards — same Living Alchemical Nodes language,
-   larger canvas because there are only 4. Nucleus and depth
-   system mirrored from .bubble; only sizes / typography differ. */
+/* Q2 archetype cards — same Living Nodes language, larger canvas. */
 .q-balloons{position:relative;isolation:isolate}
 .q-balloons::before{
-  content:'';position:absolute;inset:-24px -12px;z-index:-1;
+  content:'';position:absolute;inset:-16px -8px;z-index:-1;
   background:
-    radial-gradient(ellipse 60% 50% at 25% 30%, rgba(225,107,107,0.05), transparent 65%),
-    radial-gradient(ellipse 55% 50% at 75% 70%, rgba(136,186,200,0.05), transparent 65%);
-  filter:blur(48px);
+    radial-gradient(ellipse 60% 50% at 25% 30%, rgba(225,107,107,0.045), transparent 65%),
+    radial-gradient(ellipse 55% 50% at 75% 70%, rgba(136,186,200,0.045), transparent 65%);
+  filter:blur(44px);
   animation:field-drift 46s ease-in-out infinite;
   pointer-events:none;
 }
 .q-balloon{
   position:relative;aspect-ratio:1;border-radius:50%;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:16px 12px;
+  text-align:center;padding:14px 10px;
   font-family:var(--sans);color:var(--parchment);cursor:pointer;
   background:
     radial-gradient(ellipse 65% 48% at 45% 22%, rgba(255,255,255,0.14), rgba(255,255,255,0) 70%),
-    radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--hue) 14%, rgba(15,17,20,0.65)) 0%, rgba(6,8,10,0.78) 78%);
-  -webkit-backdrop-filter:blur(14px) saturate(1.25);
-          backdrop-filter:blur(14px) saturate(1.25);
+    radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--hue) 14%, rgba(15,17,20,0.68)) 0%, rgba(6,8,10,0.78) 78%);
+  -webkit-backdrop-filter:blur(12px) saturate(1.2);
+          backdrop-filter:blur(12px) saturate(1.2);
   border:0.5px solid color-mix(in srgb, var(--hue) 55%, rgba(255,255,255,0.10));
   box-shadow:
     inset 0 2px 4px rgba(255,255,255,0.20),
     inset 0 -16px 30px rgba(0,0,0,0.5),
     inset 0 0 0 0.5px color-mix(in srgb, var(--hue) 30%, transparent),
-    0 0 28px -4px color-mix(in srgb, var(--hue) 42%, transparent),
-    0 22px 46px -18px rgba(0,0,0,0.72);
-  --mx:0; --my:0; --lift:0;
-  transform:
-    translate3d(calc(var(--mx) * 5px), calc(var(--my) * 5px - var(--lift) * 6px), 0)
-    rotateX(calc(var(--my) * -5deg))
-    rotateY(calc(var(--mx) * 5deg))
-    scale(calc(1 + var(--lift) * 0.035));
+    0 0 26px -4px color-mix(in srgb, var(--hue) 40%, transparent),
+    0 18px 38px -18px rgba(0,0,0,0.68);
   transition:
-    transform .55s cubic-bezier(.22,.61,.36,1),
-    box-shadow .5s ease, border-color .5s ease,
-    filter .35s ease, opacity .35s ease,
-    aspect-ratio .5s;
+    transform .4s cubic-bezier(.22,.61,.36,1),
+    box-shadow .4s ease, border-color .4s ease,
+    filter .35s ease, opacity .35s ease, aspect-ratio .5s;
   animation:bubble-breath 16s ease-in-out infinite;
-  transform-style:preserve-3d;
-  will-change:transform;
 }
 .q-balloon::before{
   content:'';position:absolute;inset:0;border-radius:inherit;
-  background:radial-gradient(
-    ellipse 60% 45%
-    at calc(38% + var(--mx) * 10%) calc(20% + var(--my) * 10%),
-    rgba(255,255,255,0.40), rgba(255,255,255,0) 70%);
+  background:radial-gradient(ellipse 60% 45% at 38% 20%, rgba(255,255,255,0.40), rgba(255,255,255,0) 70%);
   pointer-events:none;
-  transition:background .5s ease;
 }
 .q-balloon-nucleus{
   position:absolute;top:50%;left:50%;
-  width:38%;height:38%;border-radius:50%;
+  width:40%;height:40%;border-radius:50%;
   background:radial-gradient(circle at 40% 40%,
     color-mix(in srgb, var(--hue) 92%, white 8%),
     color-mix(in srgb, var(--hue) 55%, transparent) 55%,
     transparent 82%);
   filter:blur(8px);opacity:0.55;pointer-events:none;
-  transform:translate(-50%,-50%) translate3d(calc(var(--mx) * 12px), calc(var(--my) * 12px), 0);
-  transition:opacity .5s ease, transform .55s cubic-bezier(.22,.61,.36,1), width .5s ease, height .5s ease, filter .5s ease;
+  transform:translate(-50%,-50%);
   animation:nucleus-wander 26s ease-in-out infinite;
-  will-change:transform, opacity;
+  transition:opacity .35s ease, width .35s ease, height .35s ease, filter .35s ease;
 }
-.q-balloon-label{position:relative;z-index:1;font-family:var(--display);font-style:italic;font-size:22px;line-height:1.1;text-shadow:0 1px 8px rgba(0,0,0,0.8);letter-spacing:0.005em}
-.q-balloon-desc{position:relative;z-index:1;margin-top:8px;font-family:var(--mono);font-size:9px;line-height:1.5;letter-spacing:0.14em;text-transform:uppercase;color:color-mix(in srgb, var(--hue) 40%, var(--parchment) 60%);text-shadow:0 1px 6px rgba(0,0,0,0.75);padding:0 6px}
+.q-balloon-label{position:relative;z-index:1;font-family:var(--display);font-style:italic;font-size:20px;line-height:1.1;text-shadow:0 1px 8px rgba(0,0,0,0.75);letter-spacing:0.005em}
+.q-balloon-desc{position:relative;z-index:1;margin-top:6px;font-size:11px;line-height:1.35;opacity:0.85;text-shadow:0 1px 6px rgba(0,0,0,0.7);padding:0 4px}
 .q-balloon:hover, .q-balloon:focus-visible{
-  --lift:1;
   border-color:color-mix(in srgb, var(--hue) 70%, rgba(255,255,255,0.15));
   box-shadow:
-    inset 0 2px 4px rgba(255,255,255,0.28),
-    inset 0 -16px 30px rgba(0,0,0,0.44),
+    inset 0 2px 4px rgba(255,255,255,0.24),
+    inset 0 -16px 30px rgba(0,0,0,0.46),
     inset 0 0 0 0.5px color-mix(in srgb, var(--hue) 55%, transparent),
-    0 0 48px -2px color-mix(in srgb, var(--hue) 55%, transparent),
-    0 26px 52px -18px rgba(0,0,0,0.75);
-  z-index:2;
+    0 0 38px -2px color-mix(in srgb, var(--hue) 55%, transparent),
+    0 22px 44px -18px rgba(0,0,0,0.72);
 }
-.q-balloon:hover .q-balloon-nucleus, .q-balloon:focus-visible .q-balloon-nucleus{width:50%;height:50%;opacity:0.85;filter:blur(6px)}
+.q-balloon:hover .q-balloon-nucleus, .q-balloon:focus-visible .q-balloon-nucleus{opacity:0.85}
 .q-balloon:focus-visible{outline:none}
-.q-balloons:has(.q-balloon:hover, .q-balloon:focus-visible) .q-balloon:not(:hover):not(:focus-visible){opacity:0.5;filter:saturate(0.6)}
 .q-balloon:nth-child(1){animation-delay:0s}
 .q-balloon:nth-child(2){animation-delay:-4s}
 .q-balloon:nth-child(3){animation-delay:-8s}
@@ -539,14 +442,6 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .q-balloon:nth-child(4) .q-balloon-nucleus{animation-delay:-20s}
 @media (prefers-reduced-motion:reduce){
   .q-balloons::before, .q-balloon, .q-balloon-nucleus{animation:none}
-  .q-balloon{transform:none}
-  .q-balloon:hover{transform:scale(1.03)}
-}
-@media (hover:none){
-  .q-balloon{transform:translate3d(0, calc(var(--lift) * -4px), 0) scale(calc(1 + var(--lift) * 0.035))}
-  .q-balloon::before{background:radial-gradient(ellipse 60% 45% at 38% 20%, rgba(255,255,255,0.40), rgba(255,255,255,0) 70%)}
-  .q-balloon-nucleus{transform:translate(-50%,-50%)}
-  .q-balloons:has(.q-balloon:hover) .q-balloon:not(:hover){opacity:1;filter:none}
 }
 /* Chosen state — during fade-out, non-chosen shrink; after cleanup
    (see JS), non-chosen are DOM-removed and the grid collapses to a
@@ -1570,11 +1465,13 @@ function renderQuestionBody(q, opts){
     return container;
   }
 
-  // ── Living alchemical bubble grid (Q1) ─────────────────────────
-  // Each bubble is a suspended glass droplet with a wandering
-  // nucleus. Magnetic pointer tilt via CSS custom properties
-  // (--mx / --my). Related-category keys are stored on the element
-  // for a future mycelial-network reveal — invisible until then.
+  // ── Living alchemical bubble grid (Q1) — v2 ────────────────────
+  //   Post-mobile-feedback: no in-bubble subtitle (didn't fit at
+  //   3-col mobile width), no magnetic pointermove listener (jittery
+  //   on touch, unnecessary on desktop for an auto-advance question).
+  //   Keep the semantic o.sub + o.related data in the option — reserved
+  //   for a future results-screen caption or hold-to-reveal mycelium
+  //   overlay.
   if (q.type === 'bubbles') {
     const grid = document.createElement('div'); grid.className = 'q-bubbles';
     const current = state.answers[q.key];
@@ -1585,43 +1482,15 @@ function renderQuestionBody(q, opts){
       if (o.related) b.dataset.related = o.related;
       b.style.setProperty('--hue', o.hue || '#E8B14B');
       if (current === o.v) b.classList.add('on');
-
-      // Text stack (label + subtitle). Subtitle uses the semantic
-      // biology-tag copy from the option; falls back gracefully if
-      // an option in the future ships without a `sub` field.
-      const sub = o.sub ? '<span class="bubble-sub">' + o.sub + '</span>' : '';
       b.innerHTML =
         '<span class="bubble-nucleus"></span>' +
-        '<span class="bubble-body">' +
-          '<span class="bubble-label">' + o.label + '</span>' +
-          sub +
-        '</span>';
-
-      // Magnetic tilt — normalised [-1..1] pointer position. Only
-      // wire on devices that actually have pointer:fine (kills the
-      // effect on touchscreens, which have their own :active state).
-      if (window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
-        b.addEventListener('pointermove', (e) => {
-          const r = b.getBoundingClientRect();
-          const mx = ((e.clientX - r.left) / r.width  - 0.5) * 2;
-          const my = ((e.clientY - r.top)  / r.height - 0.5) * 2;
-          b.style.setProperty('--mx', mx.toFixed(3));
-          b.style.setProperty('--my', my.toFixed(3));
-        });
-        b.addEventListener('pointerleave', () => {
-          b.style.setProperty('--mx', '0');
-          b.style.setProperty('--my', '0');
-        });
-      }
-
+        '<span>' + o.label + '</span>';
       b.addEventListener('click', () => {
         state.answers[q.key] = o.v; persist();
         grid.querySelectorAll('.bubble').forEach(x => x.classList.remove('on'));
         b.classList.add('on');
-        // Tiny haptic on supported devices — physical confirmation
-        // of the pick. 8ms is subtle, not buzzy.
         if (navigator.vibrate) { try { navigator.vibrate(8); } catch(_){} }
-        if (autoAdvance) setTimeout(() => go(state.step + 1), 320);
+        if (autoAdvance) setTimeout(() => go(state.step + 1), 300);
       });
       grid.appendChild(b);
     });
@@ -1694,19 +1563,6 @@ function renderBranchBalloons(q){
       '<span class="q-balloon-nucleus"></span>' +
       '<span class="q-balloon-label">' + o.label + '</span>' +
       (o.desc ? '<span class="q-balloon-desc">' + o.desc + '</span>' : '');
-    if (window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
-      b.addEventListener('pointermove', (e) => {
-        const r = b.getBoundingClientRect();
-        const mx = ((e.clientX - r.left) / r.width  - 0.5) * 2;
-        const my = ((e.clientY - r.top)  / r.height - 0.5) * 2;
-        b.style.setProperty('--mx', mx.toFixed(3));
-        b.style.setProperty('--my', my.toFixed(3));
-      });
-      b.addEventListener('pointerleave', () => {
-        b.style.setProperty('--mx', '0');
-        b.style.setProperty('--my', '0');
-      });
-    }
     b.addEventListener('click', () => {
       state.answers[q.key] = o.v;
       delete state.answers[q.key + 'Sub'];
@@ -1763,15 +1619,25 @@ function renderBranchBalloons(q){
     });
     subsHost.appendChild(subsGrid);
 
-    // Small "change body reading" affordance under the sub-balloons
+    // Small "change body reading" affordance under the sub-balloons.
+    //
+    // Previous impl tried to restore state on the current DOM, but
+    // by the time this runs the non-chosen balloons have already been
+    // DOM-removed by doCleanup(). Result: user clicks "change body
+    // reading" and sees only the same one archetype — the other three
+    // are gone. Fix: clear the answer + call go(state.step) to
+    // re-render the whole Q2 page fresh. The auto-lock path in
+    // renderBranchBalloons only fires when state.answers[q.key] is
+    // still set, so a fresh render lands on the full 4-archetype view.
     const change = document.createElement('button');
     change.type = 'button'; change.className = 'q-balloon-change';
     change.textContent = '← change body reading';
     change.addEventListener('click', () => {
-      delete state.answers[q.key]; delete state.answers[q.key + 'Sub']; persist();
-      grid.classList.remove('locked');
-      grid.querySelectorAll('.q-balloon').forEach(b => b.classList.remove('chosen'));
-      subsHost.innerHTML = '';
+      delete state.answers[q.key];
+      delete state.answers[q.key + 'Sub'];
+      persist();
+      // Full re-render of the current step — brings back all 4 archetypes.
+      go(state.step);
     });
     subsHost.appendChild(change);
 
@@ -2237,7 +2103,13 @@ function pickName(intention){
 // bottle photograph from /herbal-engine-2/bottle-bg.png as the
 // background, formula name + herbs overlaid.
 function bottleCard(intention, herbs, name){
-  const herbNames = herbs.slice(0, 5).map(h => h.name).join(' · ');
+  // Show EVERY herb in the formula. Prior version sliced to 5 which
+  // caused a pharmacology-critical mismatch: when MYCO composer
+  // returned 6 herbs, the bottle image showed 5 names while the list
+  // below showed 6 — and after MYCO swapped herbs, the bottle stayed
+  // on the deterministic-pick names, list showed MYCO's names. Same
+  // bottle now always reflects the exact herbs downstream.
+  const herbNames = herbs.map(h => h.name).join(' · ');
   const props = ({
     stress:    ['Cortisol balance','Nervous calm','HPA support'],
     anxiety:   ['GABA modulation','Nervous ease','Tension release'],
@@ -2750,6 +2622,23 @@ function renderResult(){
     // Update the state to MYCO's composition
     herbs = compose.herbs;
     window.__currentFormula = { name, herbs, percentages: compose.percentages, synergies: [], mycoReasons: compose.reasons, mycoOverall: compose.overall };
+
+    // ⚠ Pharmacology-critical — the bottle image displays herb names.
+    // If MYCO swaps in a different composition, the bottle MUST be
+    // re-rendered too, otherwise the customer sees one set of herbs
+    // on the label and a different set in the ingredient list below.
+    // Also update the count strings that describe the composition
+    // ("N allies · woven together" / "N allies · Tailored Elixir").
+    const bottle = document.getElementById('bottle');
+    if (bottle) {
+      bottle.innerHTML = '';
+      bottle.insertAdjacentHTML('beforeend', bottleCard(a.intention, herbs, name));
+    }
+    const tagline = document.getElementById('rTagline');
+    if (tagline) tagline.textContent = herbs.length + ' allies · Tailored Elixir · 30 ml';
+    const herbCount = document.getElementById('rHerbCount');
+    if (herbCount) herbCount.textContent = herbs.length + ' allies · woven together';
+
     // Re-render the herb list with the new composition
     const list = document.getElementById('rHerbList');
     if (!list) return;
