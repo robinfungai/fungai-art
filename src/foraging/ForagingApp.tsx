@@ -1,5 +1,9 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
-import Map, { Marker, NavigationControl } from 'react-map-gl/maplibre';
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
+// Import the MapLibre React component under an alias so it doesn't
+// shadow the built-in Map constructor. Prior to this rename the file
+// had to use `new (globalThis as any).Map()` to reach the real Map —
+// see the userInsight dedupe block.
+import MapGL, { Marker, NavigationControl } from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { ECO_NODES, HABITAT_COLORS, HABITAT_LABELS } from '../data/ecoNodes';
 import { SKOGSSKAFFERIET_OBS } from '../data/skogsskafferietObs';
@@ -286,6 +290,25 @@ export default function ForagingApp() {
   const [hoveredFungal, setHoveredFungal] = useState<FungalObs | null>(null);
   const lastFungalBboxRef = useRef<{ minLat: number; maxLat: number; minLng: number; maxLng: number } | null>(null);
 
+  // ── Network state — field-ready UX ─────────────────────────────────
+  //   Forests + venues + mobile data hand-offs put this app in and out
+  //   of connectivity constantly. Show an OFFLINE chip in the top bar
+  //   so users know why fetches are quiet.
+  const [isOnline, setIsOnline] = useState(
+    typeof navigator !== 'undefined' && typeof navigator.onLine === 'boolean' ? navigator.onLine : true
+  );
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const on  = () => setIsOnline(true);
+    const off = () => setIsOnline(false);
+    window.addEventListener('online',  on);
+    window.addEventListener('offline', off);
+    return () => {
+      window.removeEventListener('online',  on);
+      window.removeEventListener('offline', off);
+    };
+  }, []);
+
   // ── MYCO Ask panel state ────────────────────────────────────────────
   const [mycoOpen, setMycoOpen] = useState(false);
   const [mycoMessages, setMycoMessages] = useState<MycoMsg[]>([]);
@@ -357,7 +380,13 @@ export default function ForagingApp() {
   // 3. Derive: nearest EcoNodes (up to 3 within ~250km), the dominant
   //    habitat, a poetic zone label, and an aggregated species list
   //    weighted by base probability × season match × weather context.
-  const userInsight = (() => {
+  //
+  //    Wrapped in useMemo so every mouse-hover on a marker (which
+  //    triggers hoveredNode setState) doesn't re-run Haversine across
+  //    every EcoNode. Only recomputes on real inputs: userLocation +
+  //    userConditions (rain / temperature affect the fungal boost and
+  //    the dominant-signal filtering below).
+  const userInsight = useMemo(() => {
     if (!userLocation) return null;
     // Haversine distance (km) — quick & dirty
     const dist = (a: [number, number], b: [number, number]) => {
@@ -420,10 +449,11 @@ export default function ForagingApp() {
         });
       }
     }
-    // Dedupe by species name, keep highest-probability entry.
-    // Explicit global reference because MapLibre's <Map> component is
-    // imported into scope at the top of this file and shadows the built-in.
-    const bestByName = new (globalThis as any).Map() as globalThis.Map<string, Scored>;
+    // Dedupe by species name, keep highest-probability entry. The
+    // MapLibre component is imported as MapGL at the top of this file,
+    // so the built-in Map constructor is no longer shadowed and this
+    // reads normally.
+    const bestByName = new Map<string, Scored>();
     for (const s of scored) {
       const prev = bestByName.get(s.name);
       if (!prev || s.probability > prev.probability) bestByName.set(s.name, s);
@@ -439,7 +469,7 @@ export default function ForagingApp() {
       peakMedicinal: all.filter(s => s.medicinal && s.inSeason).slice(0, 4),
       allSeasonal: all.filter(s => s.inSeason).slice(0, 12),
     };
-  })();
+  }, [userLocation, userConditions]);
 
   // Conditions string for the "Growing Around You" panel header
   const conditionsString = userConditions
@@ -452,8 +482,12 @@ export default function ForagingApp() {
   // When a habitat filter is active we render ALL nodes (so the user can see what
   // they're filtering against) but visually dim the non-matching ones and add a
   // highlight halo to matching ones. The numeric counts still use the matching set.
-  const filteredNodes = ECO_NODES.filter(n =>
-    habitatFilter === 'all' || n.nodeType === habitatFilter
+  // Memoized so the array reference is stable across hover / season / geo state
+  // changes — otherwise the filter runs on every render and downstream memos
+  // that (transitively) depend on it would invalidate.
+  const filteredNodes = useMemo(
+    () => ECO_NODES.filter(n => habitatFilter === 'all' || n.nodeType === habitatFilter),
+    [habitatFilter],
   );
 
   // Fetch GBIF observations + foraging conditions when a node is selected
@@ -492,6 +526,12 @@ export default function ForagingApp() {
   //   Debounced. Fires whenever the map settles (moveend/zoomend) and
   //   the current bbox has drifted meaningfully from the last fetched
   //   one. Skips very-wide-zoom queries that would timeout.
+  //
+  //   Cancellation: keeps an AbortController for the in-flight request
+  //   so a rapid pan sequence tears down the previous fetch immediately
+  //   instead of letting three overlapping fetches race for setState.
+  //   Saves bandwidth + battery in the field on mobile.
+  const fungalAbortRef = useRef<AbortController | null>(null);
   const fetchFungalForBbox = useCallback((bbox: { minLat: number; maxLat: number; minLng: number; maxLng: number }, zoom: number) => {
     // Skip huge bboxes — pulling >100 deg lat/lng would time out and
     // wouldn't render anything useful anyway. iNat/GBIF caps at 300pts.
@@ -512,16 +552,34 @@ export default function ForagingApp() {
       if (drift < 0.25 && fungalObs.length > 0) return;
     }
     lastFungalBboxRef.current = bbox;
+
+    // Cancel any in-flight fetch — a rapid pan should not consume the
+    // API quota or the user's battery for a bbox they've already left.
+    if (fungalAbortRef.current) fungalAbortRef.current.abort();
+    const ctrl = new AbortController();
+    fungalAbortRef.current = ctrl;
+
     setFungalLoading(true);
     // Denser dots at higher zoom, thinner at wide zoom
     const limit = zoom >= 8 ? 250 : zoom >= 5 ? 180 : 120;
-    fetch(`/api/mushroom-observations?minLat=${bbox.minLat.toFixed(3)}&maxLat=${bbox.maxLat.toFixed(3)}&minLng=${bbox.minLng.toFixed(3)}&maxLng=${bbox.maxLng.toFixed(3)}&months=12&limit=${limit}`)
+    fetch(
+      `/api/mushroom-observations?minLat=${bbox.minLat.toFixed(3)}&maxLat=${bbox.maxLat.toFixed(3)}&minLng=${bbox.minLng.toFixed(3)}&maxLng=${bbox.maxLng.toFixed(3)}&months=12&limit=${limit}`,
+      { signal: ctrl.signal },
+    )
       .then(r => r.json())
       .then(data => {
+        // Guard against a race where a later fetch already superseded
+        // this one — only apply if we're still the current controller.
+        if (fungalAbortRef.current !== ctrl) return;
         if (Array.isArray(data.observations)) setFungalObs(data.observations);
       })
-      .catch(() => {})
-      .finally(() => setFungalLoading(false));
+      .catch(err => {
+        // AbortError on cancellation is expected — swallow silently.
+        if (err?.name !== 'AbortError') console.warn('[fungal fetch]', err?.message || err);
+      })
+      .finally(() => {
+        if (fungalAbortRef.current === ctrl) setFungalLoading(false);
+      });
   }, [fungalObs.length]);
 
   // Debounced map settle handler
@@ -548,6 +606,21 @@ export default function ForagingApp() {
     const t = setTimeout(() => handleMapSettle(), 700);
     return () => clearTimeout(t);
   }, [handleMapSettle, showFungalLayer]);
+
+  // Unmount cleanup — clear the settle debounce timer AND abort any
+  // in-flight fungal fetch so nothing tries to setState on an
+  // unmounted component. Silently harmless in dev (React 18 warns),
+  // meaningful on nav-away to another route in the SPA.
+  useEffect(() => () => {
+    if (settleTimerRef.current) {
+      clearTimeout(settleTimerRef.current);
+      settleTimerRef.current = null;
+    }
+    if (fungalAbortRef.current) {
+      fungalAbortRef.current.abort();
+      fungalAbortRef.current = null;
+    }
+  }, []);
 
   // ── Ask MYCO — send a question with location + region context ──────
   //
@@ -837,6 +910,25 @@ export default function ForagingApp() {
         <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#4d5a52', flexShrink: 0 }}>
           {filteredNodes.length} nodes · {filteredNodes.filter(n => n.best_season.some(s => seasons.includes(s))).length} active now
         </div>
+
+        {/* OFFLINE chip — only visible when the browser reports no
+            connectivity. Explains at a glance why the fungal layer /
+            weather / MYCO aren't responding. */}
+        {!isOnline && (
+          <div
+            title="No internet connection — cached data still available"
+            style={{
+              fontFamily: 'monospace', fontSize: 8.5, letterSpacing: '0.18em', textTransform: 'uppercase',
+              background: 'rgba(200,90,90,0.14)',
+              border: '0.5px solid rgba(220,120,120,0.55)',
+              color: 'rgba(240,170,170,0.95)',
+              borderRadius: 4, padding: '3px 9px',
+              flexShrink: 0,
+            }}
+          >
+            ● Offline
+          </div>
+        )}
       </div>
 
       {/* "Growing Around You" — ecological intelligence overlay.
@@ -972,7 +1064,7 @@ export default function ForagingApp() {
       )}
 
       {/* Map */}
-      <Map
+      <MapGL
         ref={mapRef}
         initialViewState={{ longitude: 18, latitude: 50, zoom: 3.6 }}
         style={{ width: '100%', height: '100%' }}
@@ -1206,7 +1298,7 @@ export default function ForagingApp() {
             </Marker>
           );
         })}
-      </Map>
+      </MapGL>
 
       {/* GBIF loading pill */}
       {gbifLoading && (
