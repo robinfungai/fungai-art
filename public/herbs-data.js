@@ -12305,6 +12305,275 @@ const HERBS = [
     spiritual_layer: "Amaltas is the golden-shower tree — the yellow-flowered gentle laxative for a body that has forgotten how to let go. She teaches that softness can be the most direct medicine, that not every constipation needs a purgative.",
     best_preparation: "Fruit pulp decoction; often combined with Triphala",
     _hb_id: "amaltas",
-  }
+  },
+
+  // ══════════════════════════════════════════════════════════════
+  // MIXOLOGY-PARITY ADDITIONS (2026-09-06)
+  // ──────────────────────────────────────────────────────────────
+  // Ten legitimate herbs that appear in /mixology but were missing
+  // from the /find-your-formula pool. Compact-but-real entries:
+  // full primary_functions + energetics + contraindications
+  // (safety-critical), lighter on the pharmacology/spiritual
+  // layers which can be enriched later without breaking the picker.
+  //
+  // Skipped from the mixology diff: cannabis, sassafras, sananga,
+  // yopo, salvia divinorum, iboga, peyote, san pedro, mimosa
+  // hostilis, chacruna, banisteriopsis caapi, syrian rue, calea
+  // zacatechichi — legally restricted or ceremonial-specialist only,
+  // correctly excluded from the consumer pool.
+  // ══════════════════════════════════════════════════════════════
+
+  { id: 1101, name: 'Goji', botanical: 'Lycium barbarum (fruit — "Wolfberry")',
+    tcm_meridians: ['Liver','Kidney','Lung'], tcm_element: 'Water + Wood',
+    energetics: ['Neutral','Sweet','Yin-nourishing','Jing-supportive','Blood-tonic'],
+    primary_functions: [
+      'Liver and Kidney yin nourishment — classical TCM Jing tonic; rebuilds essence after prolonged stress or aging',
+      'Eye and vision support — high zeaxanthin + lutein content; traditionally for blurred vision and eye strain; supports macular pigment density',
+      'Blood tonic and immunomodulation — polysaccharides (LBPs) support NK cell activity and are one of the most studied berry extracts',
+    ],
+    secondary_benefits: [
+      'Antioxidant capacity from carotenoids + polyphenols; supports skin and longevity protocols',
+      'Blood sugar modulation in preclinical studies — food-level use is safe alongside standard care',
+    ],
+    pharmacology: 'Primary bioactives: Lycium barbarum polysaccharides (LBP), zeaxanthin, betaine, taurine, carotenoids. Grade A safety at culinary doses; Grade B evidence for eye health and immune modulation.',
+    contraindications: [
+      'Warfarin — case reports of INR increase; monitor if combining',
+      'Autoimmune therapy — immunomodulator; use under practitioner oversight at extract doses',
+      'Culinary handful daily has excellent safety across all populations',
+    ],
+    herb_to_herb_synergy: ['Reishi and Tremella — longevity + yin-nourishing trio', 'Chrysanthemum — classical eye-supporting decoction (goji + juju + chrysanthemum)'],
+    herb_interactions: ['Synergy: Reishi, Tremella, Chrysanthemum, Astragalus', 'Drug interactions: Warfarin (monitor INR)'],
+    dosage_range: 'Culinary: 10-30 g dried berries daily. Standardized LBP: 500 mg-2 g/day.',
+    caution_level: 'LOW', safe_pregnancy: null,
+    status: 'Grade A safety for culinary use. Grade B evidence for eye + immune support. Warfarin interaction is the one meaningful caution.',
+  },
+
+  { id: 1102, name: 'Fenugreek', botanical: 'Trigonella foenum-graecum (seed)',
+    tcm_meridians: ['Kidney','Liver','Spleen'], tcm_element: 'Fire + Earth',
+    energetics: ['Warm','Bitter-sweet','Yang-supportive','Blood-sugar-modulating'],
+    primary_functions: [
+      'Testosterone and libido support — RCTs show measurable increases in free testosterone and libido markers with standardized extracts',
+      'Blood glucose modulation — soluble fiber (galactomannans) slows glucose absorption; clinically meaningful HbA1c reductions at 5-10 g/day',
+      'Lactation galactagogue — traditional use for milk supply, some clinical evidence',
+    ],
+    secondary_benefits: [
+      'Cholesterol reduction (LDL, triglycerides) at 10-15 g seed powder daily',
+      'Digestive bitter — supports gastric secretion',
+    ],
+    pharmacology: 'Primary bioactives: trigonelline, 4-hydroxyisoleucine, diosgenin (steroidal saponin precursor), galactomannan fiber. Grade B+ for glycemic control and androgen support.',
+    contraindications: [
+      'Pregnancy — CAUTION: uterine-stimulating in traditional use; avoid supplements (culinary spice OK)',
+      'Warfarin and anticoagulants — coumarin content may potentiate',
+      'Hypoglycemics — additive effect; monitor blood glucose',
+      'Hormone-sensitive conditions — mild phytoestrogen activity',
+    ],
+    herb_to_herb_synergy: ['Pine Pollen — Yang + androgen support stack', 'Cinnamon — glycemic-modulating pair'],
+    herb_interactions: ['Synergy: Pine Pollen, Cinnamon, Ashwagandha', 'Drug interactions: anticoagulants (potentiate), hypoglycemics (additive)'],
+    dosage_range: 'Culinary spice: 1-3 g. Testosterone extracts (standardized to furostanolic saponins): 300-600 mg/day.',
+    caution_level: 'LOW-MEDIUM', safe_pregnancy: false,
+    status: 'Grade B+ testosterone and libido evidence. Grade B glycemic control. NOT for pregnancy at extract doses.',
+  },
+
+  { id: 1103, name: 'Vitex', botanical: 'Vitex agnus-castus (fruit — "Chasteberry / Monk\'s Pepper")',
+    tcm_meridians: ['Liver','Kidney'], tcm_element: 'Wood',
+    energetics: ['Cool','Bitter','Hormonal-regulating','Prolactin-modulating'],
+    primary_functions: [
+      'PMS and cycle regularity — dopaminergic action on the pituitary reduces prolactin, favors progesterone in the luteal phase; multiple RCTs',
+      'Perimenopausal transition support — moderates cycle irregularity and mood fluctuation',
+      'Cyclical mastalgia (breast tenderness) — well-established evidence',
+    ],
+    secondary_benefits: [
+      'Acne with hormonal component — improves via prolactin modulation',
+      'Some evidence for supporting luteal-phase spotting and infertility of luteal-phase deficiency origin',
+    ],
+    pharmacology: 'Primary bioactives: casticin, agnuside, iridoid glycosides. Dopamine D2 receptor agonism → prolactin reduction. Grade A evidence for PMS.',
+    contraindications: [
+      'Pregnancy — AVOID; dopaminergic action interferes with prolactin needed for lactation',
+      'Hormonal contraceptives — may reduce effectiveness',
+      'IVF cycles — do not combine with dopamine agonists like bromocriptine',
+      'Dopaminergic Parkinson medications — theoretical interaction',
+    ],
+    herb_to_herb_synergy: ['Shatavari — cycle support and moistening pair', 'Motherwort — nervine + cycle regulator'],
+    herb_interactions: ['Synergy: Shatavari, Motherwort, Wild Yam', 'Drug interactions: hormonal contraceptives (reduce effect), dopaminergics (avoid)'],
+    dosage_range: 'Standardized dry extract 4-8 mg/day OR 40-80 mg dried berry equivalent. Effects take 2-3 cycles.',
+    caution_level: 'MEDIUM', safe_pregnancy: false,
+    status: 'Grade A PMS/cyclical mastalgia. Contraindicated pregnancy + hormonal contraception combos. Central female-cycle herb.',
+  },
+
+  { id: 1104, name: 'Vervain', botanical: 'Verbena officinalis (aerial parts)',
+    tcm_meridians: ['Liver','Heart'], tcm_element: 'Wood',
+    energetics: ['Cool','Bitter','Nervine','Diaphoretic'],
+    primary_functions: [
+      'Nervine relaxant for anxiety with physical tension — classic Western nervine, gentle enough for daily use',
+      'Diaphoretic — supports early-stage fever and viral illness',
+      'Post-viral fatigue and convalescence — traditional restorative for the nervous system after prolonged stress',
+    ],
+    secondary_benefits: [
+      'Mild galactagogue in postpartum recovery (short-term, low-dose)',
+      'Traditional use for tension headaches and migraine of stress origin',
+    ],
+    pharmacology: 'Primary bioactives: verbenalin, verbenin, iridoid glycosides, essential oil. Sedative and mild anti-anxiety activity in preclinical models.',
+    contraindications: [
+      'Pregnancy — AVOID; uterine-stimulating in high doses',
+      'Iron absorption — tannin content may reduce; separate by 2 hours',
+    ],
+    herb_to_herb_synergy: ['Skullcap and Passionflower — anxiety-tension stack', 'Lemon Balm — Liver-Qi + nervine pair'],
+    herb_interactions: ['Synergy: Skullcap, Passionflower, Lemon Balm, Motherwort'],
+    dosage_range: 'Infusion 1-2 tsp dried herb per cup, 2-3× daily. Extract: 1-2 ml TID.',
+    caution_level: 'LOW-MEDIUM', safe_pregnancy: false,
+    status: 'Grade B nervine evidence. Not for pregnancy. Excellent daily-use nervine for tense, anxious presentations.',
+  },
+
+  { id: 1105, name: 'Cramp Bark', botanical: 'Viburnum opulus (bark)',
+    tcm_meridians: ['Liver','Uterus'], tcm_element: 'Wood',
+    energetics: ['Cool','Bitter-astringent','Antispasmodic','Blood-moving'],
+    primary_functions: [
+      'Menstrual cramps — one of the strongest herbal antispasmodics for uterine muscle; often replaces NSAIDs for dysmenorrhea',
+      'General smooth-muscle antispasmodic — supports muscle tension, spasmodic pain, restless-leg presentations',
+      'Traditional threat-of-miscarriage support — historic use for uterine hypertonicity (do NOT self-administer in pregnancy without practitioner guidance)',
+    ],
+    secondary_benefits: [
+      'Mild sedative + nervine trophorestorative',
+      'Traditional support for bronchial spasm alongside primary respiratory herbs',
+    ],
+    pharmacology: 'Primary bioactives: viburnin, scopoletin, aesculetin (coumarins), tannins. Antispasmodic via smooth-muscle relaxation.',
+    contraindications: [
+      'Anticoagulants — coumarin content may potentiate; monitor',
+      'Kidney stones history — do not use large doses long-term (oxalate content)',
+      'Pregnancy — only under practitioner guidance',
+    ],
+    herb_to_herb_synergy: ['Black Haw — sister species, often combined for dysmenorrhea', 'Wild Yam — antispasmodic + hormonal support pair'],
+    herb_interactions: ['Synergy: Black Haw, Wild Yam, Motherwort, Ginger', 'Drug interactions: anticoagulants (monitor)'],
+    dosage_range: 'Tincture (1:5, 40%): 2-5 ml TID; acute cramps up to every 30 min. Decoction: 1 tsp bark per cup, simmer 15 min.',
+    caution_level: 'LOW-MEDIUM', safe_pregnancy: null,
+    status: 'Grade B+ dysmenorrhea evidence. Foundational uterine antispasmodic in Western herbalism.',
+  },
+
+  { id: 1106, name: 'Wild Yam', botanical: 'Dioscorea villosa (root)',
+    tcm_meridians: ['Liver','Kidney','Spleen'], tcm_element: 'Earth + Water',
+    energetics: ['Neutral to Cool','Bitter-sweet','Antispasmodic','Yin-supporting'],
+    primary_functions: [
+      'Smooth-muscle antispasmodic — supports intestinal cramps, biliary colic, menstrual cramps',
+      'Hormonal precursor (traditional framing) — diosgenin is a lab precursor for progesterone synthesis, but the body does NOT convert dietary diosgenin into progesterone; the antispasmodic and mild anti-inflammatory effects are the real actions',
+      'Digestive antispasmodic — supports IBS-cramping presentations, especially cyclical-hormonal patterns',
+    ],
+    secondary_benefits: [
+      'Mild anti-inflammatory activity in joints and pelvic tissue',
+      'Traditional support for cyclical mood + digestive complaints in perimenopause',
+    ],
+    pharmacology: 'Primary bioactive: diosgenin (steroidal saponin). Antispasmodic and anti-inflammatory in preclinical models. IMPORTANT: cannot be converted to hormones by human body — marketing claims otherwise are false.',
+    contraindications: [
+      'Pregnancy — AVOID; historical emmenagogue reputation',
+      'Hormone-sensitive conditions — theoretical concern, though the body-conversion claim is myth; caution warranted',
+      'Estrogen-antagonist medications — theoretical interaction',
+    ],
+    herb_to_herb_synergy: ['Cramp Bark — dysmenorrhea antispasmodic pair', 'Chamomile — digestive-antispasmodic gentle stack'],
+    herb_interactions: ['Synergy: Cramp Bark, Chamomile, Ginger, Wild Yam'],
+    dosage_range: 'Tincture 1:5: 2-4 ml TID. Decoction: 1-2 tsp per cup, simmer 20 min.',
+    caution_level: 'LOW-MEDIUM', safe_pregnancy: false,
+    status: 'Grade B antispasmodic evidence. Real activity is smooth-muscle relaxation, NOT hormone precursor. Avoid pregnancy.',
+  },
+
+  { id: 1107, name: 'Corydalis', botanical: 'Corydalis yanhusuo (tuber)',
+    tcm_meridians: ['Liver','Spleen','Lung','Heart'], tcm_element: 'Wood',
+    energetics: ['Warm','Acrid-bitter','Blood-moving','Pain-relieving'],
+    primary_functions: [
+      'Pain relief — mu and delta opioid receptor modulation via DHCB (dehydrocorybulbine); one of the most studied traditional pain herbs; effective for neuropathic and visceral pain in clinical trials',
+      'Blood-moving (TCM) — moves Blood stasis for pain from injury, dysmenorrhea, chest pain, epigastric pain',
+      'Sedative and mild anxiolytic — dopamine D2 antagonism',
+    ],
+    secondary_benefits: [
+      'Insomnia of tension origin — historical use as gentle sleep aid',
+      'Chronic low back pain — Chinese clinical trials show non-inferior response vs standard analgesics for moderate pain',
+    ],
+    pharmacology: 'Primary bioactives: DHCB (opioid receptor modulator), tetrahydropalmatine (THP — dopamine D2 antagonist + sedative), corydaline, corydalmine. Non-addictive analgesia in preclinical models.',
+    contraindications: [
+      'Pregnancy — AVOID; strong Blood-mover',
+      'Sedative medications (benzodiazepines, opioids) — additive CNS effects',
+      'Dopaminergic medications (Parkinson\'s drugs) — theoretical antagonism',
+      'Do not exceed traditional dose — very high doses can cause CNS depression',
+    ],
+    herb_to_herb_synergy: ['Angelica (Dong Quai) — classical pain formula pairing', 'White Peony — smooth-muscle and pain-relieving stack'],
+    herb_interactions: ['Synergy: Angelica sinensis, White Peony, Ginger', 'Drug interactions: sedatives (additive), dopaminergics (avoid)'],
+    dosage_range: 'Decoction: 3-9 g dried tuber. Standardized DHCB extract: manufacturer-specified.',
+    caution_level: 'MEDIUM', safe_pregnancy: false,
+    status: 'Grade B+ for chronic pain and dysmenorrhea. Not for pregnancy. Not combined with pharmaceutical sedatives without practitioner oversight.',
+  },
+
+  { id: 1108, name: 'Agaricus Blazei', botanical: 'Agaricus subrufescens (fruiting body — "Sun Mushroom / Almond Mushroom")',
+    tcm_meridians: ['Lung','Spleen','Heart'], tcm_element: 'Earth + Metal',
+    energetics: ['Neutral','Sweet','Immune-modulating','Beta-glucan-rich'],
+    primary_functions: [
+      'Immune modulation — beta-glucans (particularly (1→6)-branched (1→3)-D-glucans) with especially high molecular weight; supports NK cell activity and macrophage function',
+      'Adjunctive oncology support — used in Japan and Brazil as complementary therapy alongside conventional cancer treatment; multiple trials show quality-of-life improvements',
+      'Metabolic support — some evidence for insulin sensitivity and lipid modulation in preclinical + small clinical studies',
+    ],
+    secondary_benefits: [
+      'Antiviral activity in preclinical models',
+      'Traditional Brazilian use for chronic fatigue and post-illness recovery',
+    ],
+    pharmacology: 'Primary bioactives: high-molecular-weight beta-glucans, ergosterol, agaritine (raw). Grade B+ immune modulation evidence.',
+    contraindications: [
+      'Liver disease history — CAUTION: agaritine in raw mushroom is a hydrazine derivative; cooking + drying reduces it substantially; supplement extracts are typically low-agaritine; case reports of liver reactions have been rare but real',
+      'Autoimmune conditions — practitioner oversight recommended for high-dose extracts',
+      'Do NOT eat raw — always cooked or standardized extract',
+    ],
+    herb_to_herb_synergy: ['Reishi and Maitake — full-spectrum immune-mushroom stack', 'Astragalus — beta-glucan + Qi tonic pair'],
+    herb_interactions: ['Synergy: Reishi, Maitake, Turkey Tail, Astragalus'],
+    dosage_range: 'Hot-water extract 500 mg-3 g/day. Dual-extract preferred over raw powder.',
+    caution_level: 'LOW-MEDIUM', safe_pregnancy: null,
+    status: 'Grade B+ immune modulation. Grade B oncology-adjunctive. Cook or use standardized extract, never raw.',
+  },
+
+  { id: 1109, name: 'Milky Oat Seed', botanical: 'Avena sativa (fresh milky seed)',
+    tcm_meridians: ['Heart','Kidney','Liver'], tcm_element: 'Water + Fire',
+    energetics: ['Warm','Sweet','Nervine trophorestorative','Yin-nourishing'],
+    primary_functions: [
+      'Nervous system trophorestorative — one of the best herbal remedies for depleted nervous system after chronic stress, burnout, or long anxiety; rebuilds nerve reserves over weeks',
+      'Anxiety of exhaustion — where the person is wired-and-tired, cannot rest but also cannot focus',
+      'Withdrawal support — traditional Western + TCM use for supporting nervous system through tapering of nicotine, opioids, benzodiazepines',
+    ],
+    secondary_benefits: [
+      'Mild aphrodisiac (fresh milky seed only — not the straw)',
+      'Traditional use in ADHD-adjacent presentations for grounding + focus',
+    ],
+    pharmacology: 'Primary bioactives: beta-glucan fiber, avenacosides, indole alkaloids (fresh milky seed). Nervine restoration mechanism poorly characterized but clinically well-observed.',
+    contraindications: [
+      'Celiac / gluten sensitivity — CAUTION: oats are often cross-contaminated with wheat; use certified gluten-free product only',
+      'Otherwise very safe — one of the gentlest nervines available',
+    ],
+    herb_to_herb_synergy: ['Ashwagandha — HPA-axis + nervous rebuilding stack', 'Skullcap — deeper anxiolytic pair', 'Rhodiola — daytime energy + evening restoration cycle'],
+    herb_interactions: ['Synergy: Ashwagandha, Skullcap, Rhodiola, Damiana'],
+    dosage_range: 'Fresh milky seed tincture (1:2 fresh, 60% alcohol): 3-5 ml TID. Effects build over 4-6 weeks — this is a long-arc herb, not acute.',
+    caution_level: 'LOW', safe_pregnancy: null,
+    status: 'Grade B nervine restoration evidence. One of the safest daily-use nervines. Effects take weeks — not for acute anxiety.',
+  },
+
+  { id: 1110, name: 'Jamaican Dogwood', botanical: 'Piscidia piscipula (root bark)',
+    tcm_meridians: ['Liver','Heart'], tcm_element: 'Wood + Fire',
+    energetics: ['Cool','Bitter','Sedative','Analgesic','Antispasmodic'],
+    primary_functions: [
+      'Sedative + analgesic — one of the stronger herbal sleep aids for pain-driven insomnia and pain that keeps a person from resting',
+      'Nervous system pain — trigeminal neuralgia, migraine, and neuralgic pain of tension origin',
+      'Menstrual pain when severe — often combined with Cramp Bark',
+    ],
+    secondary_benefits: [
+      'Traditional use for acute anxiety with somatic tension',
+      'Antitussive for spasmodic cough',
+    ],
+    pharmacology: 'Primary bioactives: piscidin (rotenoid — mild toxicity potential), isoflavones, tannins. GABAergic activity in preclinical models.',
+    contraindications: [
+      'Pregnancy — AVOID',
+      'Heart failure or bradycardia — CAUTION: mild cardiac depressant at high doses',
+      'Sedative medications, alcohol — significant additive CNS depression',
+      'Do NOT exceed traditional dose — piscidin toxicity possible',
+      'Not for daily long-term use — reserve for acute pain-sleep episodes',
+    ],
+    herb_to_herb_synergy: ['Cramp Bark and Wild Lettuce — pain-sleep stack', 'Valerian and Passionflower — insomnia of anxious + tense origin'],
+    herb_interactions: ['Synergy: Cramp Bark, Wild Lettuce, Valerian, Passionflower', 'Drug interactions: sedatives + alcohol (avoid), cardiac medications (caution)'],
+    dosage_range: 'Tincture 1:5: 2-4 ml at bedtime for acute pain-sleep. NOT for daily long-term use.',
+    caution_level: 'MEDIUM-HIGH', safe_pregnancy: false,
+    status: 'Grade B for pain-driven insomnia. Higher-caution herb — practitioner-guided or short-acute-use only.',
+  },
 ];
 window.HERB_DB = HERBS;

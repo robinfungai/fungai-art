@@ -130,6 +130,14 @@ export default async function handler(req) {
   const percentages = Array.isArray(body.percentages) ? body.percentages.slice(0, 10) : [];
   const synergies   = Array.isArray(body.synergies) ? body.synergies.slice(0, 10) : [];
   const bottleMl    = Number(body.bottleMl) || 30;
+  // ── Micronutrient allies (Robin-only, never sent to customer) ──
+  // Client computes possibleMicronutrients from the quiz answers and
+  // passes them through. Values are advisory pointers — Robin decides
+  // whether to add any as a companion recommendation with the extract.
+  // Never rendered in the customer email; only in Robin's inbox copy.
+  const possibleMicronutrients = Array.isArray(body.possibleMicronutrients)
+    ? body.possibleMicronutrients.slice(0, 15).filter(x => x && typeof x.nutrient === 'string')
+    : [];
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json({ error: 'Invalid email address' }, 400, cors);
   if (!name || !city || !country) return json({ error: 'Missing name / city / country' }, 400, cors);
@@ -160,8 +168,8 @@ export default async function handler(req) {
 
   // ── 1. Notify Robin ────────────────────────────────────────────
   const robinSubject = `✦ Formula reservation · ${formulaName || 'unnamed'} · ${name}${geo.country ? ' · ' + geo.country : ''}`;
-  const robinHtml = buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo });
-  const robinText = buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo });
+  const robinHtml = buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients });
+  const robinText = buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients });
 
   // ── 2. Confirm to customer ─────────────────────────────────────
   const customerSubject = `Your formula is reserved · ${formulaName || 'Fungai Art'}`;
@@ -217,8 +225,9 @@ function json(body, status = 200, cors = {}) {
 
 // ── Email bodies ─────────────────────────────────────────────────
 
-function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo }){
+function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients }){
   geo = geo || {};
+  possibleMicronutrients = Array.isArray(possibleMicronutrients) ? possibleMicronutrients : [];
   const q = quiz || {};
   const totalPct = herbLines.reduce((s, h) => s + (h.pct || 0), 0);
   const totalMl  = herbLines.reduce((s, h) => s + (h.ml  || 0), 0);
@@ -275,6 +284,24 @@ function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, 
 
         ${notes ? `<div style="margin-top:20px;padding:14px 16px;background:#1A1E24;border-left:2px solid #E8B14B;border-radius:4px;"><div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#8B7E62;margin-bottom:6px;">Priority + prior herb experience</div><div style="font-family:Georgia,serif;font-style:italic;font-size:14px;color:#EDE5D8;line-height:1.7;">"${esc(notes)}"</div></div>` : ''}
 
+        ${possibleMicronutrients.length ? `
+        <!-- MICRONUTRIENT ALLIES — Robin's eyes only (NEVER shown to customer).
+             Client computed these from the quiz answers as advisory pointers
+             for possible mineral / vitamin / amino-acid deficiencies that
+             may sit under the customer's presentation. Robin decides whether
+             to mention any of them as a companion recommendation alongside
+             the extract. -->
+        <div style="margin-top:20px;padding:16px 18px;background:#0f1a1a;border:0.5px solid rgba(107,214,111,.22);border-radius:8px;">
+          <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#6BD66F;margin-bottom:10px;">◈ Possible micronutrient allies · Robin-only</div>
+          <div style="font-family:Georgia,serif;font-style:italic;font-size:11.5px;color:#8B7E62;line-height:1.55;margin-bottom:12px;">Advisory pointers derived from the customer's answers. Not shown to them. Consider mentioning any that resonate with your clinical read as a companion recommendation to the extract.</div>
+          <table cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:13px;color:#C9B894;">
+            ${possibleMicronutrients.map(m => `<tr>
+              <td style="padding:6px 8px 6px 0;vertical-align:top;color:#B6F0AE;font-family:'Courier New',monospace;font-size:12px;letter-spacing:.04em;white-space:nowrap;width:170px;">${esc(m.nutrient)}</td>
+              <td style="padding:6px 0;color:#8B7E62;font-family:Georgia,serif;font-style:italic;font-size:12.5px;line-height:1.5;">${esc(m.reason || '')}</td>
+            </tr>`).join('')}
+          </table>
+        </div>` : ''}
+
         ${(geo.city || geo.country || geo.ip) ? `
         <div style="margin-top:20px;padding:14px 16px;background:#141821;border:0.5px solid rgba(232,177,75,.12);border-radius:6px;">
           <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#8B7E62;margin-bottom:8px;">◉ Origin (edge-detected)</div>
@@ -294,8 +321,9 @@ function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, 
   </body></html>`;
 }
 
-function buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo }){
+function buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients }){
   geo = geo || {};
+  possibleMicronutrients = Array.isArray(possibleMicronutrients) ? possibleMicronutrients : [];
   const q = quiz || {};
   const totalPct = herbLines.reduce((s, h) => s + (h.pct || 0), 0);
   const totalMl  = herbLines.reduce((s, h) => s + (h.ml  || 0), 0);
@@ -321,7 +349,7 @@ ${synergies && synergies.length ? 'SYNERGIES:\n' + synergies.map(s => '  • ' +
   Filters:   ${Array.isArray(q.avoid) ? q.avoid.join(', ') : (q.avoid || '—')}
   ${q.duration ? 'Duration:  ' + q.duration + '\n  ' : ''}${q.age ? 'Age:       ' + q.age + '\n  ' : ''}${q.sleep ? 'Sleep:     ' + q.sleep : ''}
 
-${notes ? 'Priority + prior herb experience:\n  "' + notes + '"\n\n' : ''}${(geo.city || geo.country || geo.ip) ? 'ORIGIN (edge-detected — VPN bypasses):\n' + (geo.city ? '  City:     ' + geo.city + (geo.subdivision ? ', ' + geo.subdivision : '') + '\n' : '') + (geo.country ? '  Country:  ' + geo.country + '\n' : '') + (geo.timezone ? '  Timezone: ' + geo.timezone + '\n' : '') + (geo.ip ? '  IP:       ' + geo.ip + '\n' : '') + '\n' : ''}Reply to this email to reach the customer. Confirm the formula together first, then send the Stripe link.
+${notes ? 'Priority + prior herb experience:\n  "' + notes + '"\n\n' : ''}${possibleMicronutrients.length ? 'POSSIBLE MICRONUTRIENT ALLIES (ROBIN-ONLY — not shown to customer):\n  Advisory pointers derived from the answers. Consider whether any\n  belong in a companion recommendation alongside the extract.\n\n' + possibleMicronutrients.map(m => '  · ' + m.nutrient + ' — ' + (m.reason || '')).join('\n') + '\n\n' : ''}${(geo.city || geo.country || geo.ip) ? 'ORIGIN (edge-detected — VPN bypasses):\n' + (geo.city ? '  City:     ' + geo.city + (geo.subdivision ? ', ' + geo.subdivision : '') + '\n' : '') + (geo.country ? '  Country:  ' + geo.country + '\n' : '') + (geo.timezone ? '  Timezone: ' + geo.timezone + '\n' : '') + (geo.ip ? '  IP:       ' + geo.ip + '\n' : '') + '\n' : ''}Reply to this email to reach the customer. Confirm the formula together first, then send the Stripe link.
 `;
 }
 

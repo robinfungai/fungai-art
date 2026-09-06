@@ -310,14 +310,24 @@ html.reveal-anim .reveal.in { opacity: 1; transform: translateY(0); }
   gap: 12px;
   position: relative;
 }
+/* Amber halo — kept subtle and PROPORTIONAL to the logo. On mobile
+   the logo shrinks to 46px, so a fixed 78px halo used to sit around
+   it like a giant glowing ring twice the logo's size (Robin's "logo
+   renders weirdly" screenshot). Now the halo tracks the logo width
+   via a CSS variable set per-viewport in the media queries below. */
+.nav-brand {
+  --logo-size: 56px;
+  --halo-size: calc(var(--logo-size) * 1.25);
+}
 .nav-brand::before {
   content: '';
   position: absolute;
-  left: -10px; top: 50%;
+  left: calc((var(--halo-size) - var(--logo-size)) * -0.5);
+  top: 50%;
   transform: translateY(-50%);
-  width: 78px; height: 78px;
+  width: var(--halo-size); height: var(--halo-size);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(232,177,75,0.32) 0%, rgba(232,177,75,0.10) 40%, transparent 72%);
+  background: radial-gradient(circle, rgba(232,177,75,0.28) 0%, rgba(232,177,75,0.08) 45%, transparent 72%);
   pointer-events: none;
   z-index: 0;
 }
@@ -1167,7 +1177,10 @@ html.reveal-anim .reveal.in { opacity: 1; transform: translateY(0); }
 }
 @media (max-width: 980px) {
   .nav-brand .brand-text { display: none; }
-  .nav-brand img { height: 46px; }
+  .nav-brand img { height: 46px; width: 46px; }
+  /* Shrink the halo with the logo so the amber glow stays a rim,
+     not a giant separate ring. */
+  .nav-brand { --logo-size: 46px; }
 }
 @media (max-width: 768px) {
   .wrap { padding: 0 24px; }
@@ -1386,7 +1399,7 @@ html.reveal-anim .reveal.in { opacity: 1; transform: translateY(0); }
         <button class="nav-dropdown-trigger">Intelligence <span class="arr">▾</span></button>
         <div class="nav-dropdown-menu nav-intelligence">
           <a href="/foraging"><span class="ni-label">Foraging Map</span> <span class="ni-tag">ecology</span></a>
-          <a href="/herbal-engine-2/"><span class="ni-label">Tailored Elixir</span> <span class="ni-tag">herbal engine</span></a>
+          <a href="/find-your-formula"><span class="ni-label">Tailored Elixir</span> <span class="ni-tag">find your formula</span></a>
           <a href="/mixology"><span class="ni-label">Mixology</span> <span class="ni-tag">synergistic</span></a>
           <a href="/extraction"><span class="ni-label">Extraction</span> <span class="ni-tag">alchemy</span></a>
         </div>
@@ -1421,7 +1434,7 @@ html.reveal-anim .reveal.in { opacity: 1; transform: translateY(0); }
   <a href="#dinner" onclick="toggleMobileMenu()"><span class="mt-name">Dinner Experience</span></a>
   <div class="mm-section-title">Intelligence</div>
   <a href="/foraging" onclick="toggleMobileMenu()">Foraging Map <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; ecology</span></a>
-  <a href="/herbal-engine-2/" onclick="toggleMobileMenu()">Tailored Elixir <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; herbal engine</span></a>
+  <a href="/find-your-formula" onclick="toggleMobileMenu()">Tailored Elixir <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; find your formula</span></a>
   <a href="/mixology" onclick="toggleMobileMenu()">Mixology <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; synergistic</span></a>
   <a href="/extraction" onclick="toggleMobileMenu()">Extraction <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; alchemy</span></a>
   <div class="mm-section-title">Community</div>

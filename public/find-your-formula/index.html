@@ -2151,6 +2151,239 @@ function pickFormula(a){
 // herbs (lavender, ginger etc — potent essential oils / dominant
 // flavours must never exceed 5% of the bottle). Excess % from capped
 // traces redistributes proportionally to the non-trace herbs.
+// ── Micronutrient / vitamin / amino-acid advisory engine ──────────
+// Reads the quiz answers and produces a shortlist of possible
+// mineral / vitamin / amino-acid allies that may sit underneath
+// the presentation. This is ROBIN-ONLY information — the client
+// sends it to /api/reserve-formula, which renders it in Robin's
+// admin email but NEVER in the customer confirmation. The customer
+// experience stays clean; Robin gets the deeper read.
+//
+// The engine is opinionated, not diagnostic: it points at nutrients
+// that plausibly connect to the axes the customer surfaced. Robin
+// then decides — with his own eye — whether to include any as a
+// companion recommendation alongside the bespoke extract.
+//
+// Design:
+//   - Ranked intentions (primary/secondary/tertiary) weight each
+//     mapped nutrient. Primary = 3, secondary = 2, tertiary = 1.
+//   - Pattern archetype + sub-pattern add specific bio-tuned hits.
+//   - Age band + sleep quality contribute their own layers.
+//   - avoid[] flags REMOVE contraindicated nutrients (thyroid → no
+//     iodine, sedatives → no 5-HTP, pregnancy → strict prenatal-only
+//     shortlist, cardio_meds → no high-dose fish oil, etc.).
+//   - Herbs already in the picked formula that duplicate a nutrient
+//     mechanism (Turmeric ↔ Curcumin) are dropped from the shortlist
+//     to avoid redundant recommendation.
+//
+// Returns [{ nutrient, reason, priority }] top ~10.
+function computeMicronutrients(a, pickedHerbs){
+  const bank = new Map(); // key: nutrient name → { reason, priority }
+  const add = (nutrient, reason, priority) => {
+    const prev = bank.get(nutrient);
+    if (!prev) { bank.set(nutrient, { reason, priority }); return; }
+    // Keep the highest priority + merge reasons if new axis contributes
+    if (priority > prev.priority) prev.priority = priority;
+    if (reason && !prev.reason.includes(reason)) {
+      prev.reason = prev.reason + '; ' + reason;
+    }
+  };
+
+  // ── Intention layer (ranked) ─────────────────────────────────────
+  const INT_MAP = {
+    stress: [
+      ['Magnesium glycinate',   'HPA-axis buffer; often depleted by chronic cortisol load'],
+      ['L-Theanine',            'Alpha-wave calm without sedation; pairs with adaptogens'],
+      ['B-complex (activated)', 'Cofactor for neurotransmitter synthesis under chronic stress'],
+      ['Vitamin C (ascorbate)', 'Adrenal cortex uses more than any other tissue during stress'],
+    ],
+    anxiety: [
+      ['Magnesium glycinate',   'GABAergic tone; hypomagnesaemia is a common anxiety substrate'],
+      ['L-Theanine',            'Fast-acting alpha-wave calm, no morning grog'],
+      ['Glycine',               'Inhibitory neurotransmitter + evening thermal drop'],
+      ['5-HTP',                 'Serotonin precursor; NOT combined with SSRIs/MAOIs'],
+      ['Vitamin B6 (P5P)',      'Rate-limiting cofactor for GABA + serotonin synthesis'],
+    ],
+    sleep: [
+      ['Magnesium threonate',   'Crosses blood-brain barrier better than glycinate for sleep architecture'],
+      ['Glycine',               '3 g at bedtime — REM improvement, faster sleep onset'],
+      ['Melatonin (low-dose)',  '0.3–1 mg physiologic dose, not 5-10 mg pharmacologic'],
+      ['L-Theanine',            'Sleep-onset support when the mind will not settle'],
+      ['Apigenin',              'Chamomile flavonoid; GABA-A modulator, gentle sleep'],
+    ],
+    energy: [
+      ['B12 (methylcobalamin)', 'Foundational for energy; commonly low in vegetarian / older presentations'],
+      ['Iron (bisglycinate)',   'Only if ferritin is confirmed low — do not blind-supplement iron'],
+      ['CoQ10 (ubiquinol)',     'Mitochondrial ATP synthesis; especially useful over 40 or with statins'],
+      ['NAD+ / NMN',            'NAD precursor for mitochondrial + sirtuin support'],
+      ['L-Carnitine',           'Fat-to-mitochondria transporter; energetic fatigue'],
+    ],
+    mood: [
+      ['Vitamin D3 (with K2)',  'Every mood presentation deserves a serum 25(OH)D read — deficiency is stubborn'],
+      ['Omega-3 (EPA-forward)', '1-2 g EPA daily has RCT-grade evidence for depression'],
+      ['SAMe',                  'Methyl donor; comparable to SSRIs in some trials; not with bipolar'],
+      ['5-HTP',                 'Serotonin precursor; NOT combined with SSRIs/MAOIs'],
+      ['Saffron (Crocus)',      'Standardized extract has SSRI-comparable RCT results'],
+      ['L-Tyrosine',            'Dopamine precursor for flat-affect / motivation presentations'],
+    ],
+    cognitive: [
+      ['Omega-3 (DHA-forward)', 'Neuronal membrane fluidity; foundational for cognition'],
+      ['Alpha-GPC / Choline',   'Acetylcholine precursor; short-term focus + long-term neuroprotection'],
+      ['Phosphatidylserine',    'Membrane phospholipid; cortisol modulator; memory support'],
+      ['Huperzine-A',           'Acetylcholinesterase inhibitor; cycle 4-weeks-on / 1-off; NOT with cholinergic drugs'],
+      ['NAD+ / NMN',            'Neuronal energy + sirtuin activation'],
+      ['Lion\'s Mane (already in herb pool)', 'NGF/BDNF stimulator'],
+    ],
+    hormones: [
+      ['Vitamin D3 (with K2)',  'Every steroid hormone synthesizes from cholesterol pathway D3 is upstream of'],
+      ['Zinc (picolinate)',     'Cofactor for testosterone + aromatase modulation'],
+      ['Magnesium glycinate',   'Progesterone cofactor; PMS symptom relief'],
+      ['DIM (diindolylmethane)','Estrogen metabolite balance (2-OH vs 16-OH pathway)'],
+      ['Vitamin B6 (P5P)',      'Progesterone cofactor + PMS mood support'],
+      ['Iodine',                'Thyroid substrate — only if thyroid function is confirmed low'],
+    ],
+    digestion: [
+      ['Zinc-carnosine',        'Gastric + intestinal mucosal healing'],
+      ['L-Glutamine',           'Enterocyte primary fuel; gut lining repair'],
+      ['Betaine HCl',           'For hypochlorhydria presentations; NOT with ulcer / NSAID use'],
+      ['Probiotics (strain-specific)', 'Match to symptom pattern — not a generic multi'],
+      ['Digestive enzymes',     'For bloating / undigested-stool presentations'],
+    ],
+    immunity: [
+      ['Vitamin C (ascorbate)', 'Innate immune cell function; short-term high-dose for acute'],
+      ['Vitamin D3 (with K2)',  'Modulates T-cell response; foundational not acute'],
+      ['Zinc (picolinate)',     'Rate-limiting for many immune-cell functions'],
+      ['Selenium',              'Glutathione peroxidase cofactor; deficiency common in NW Europe'],
+      ['Quercetin',             'Zinc ionophore + mast-cell stabilizer'],
+      ['Beta-glucans (already in herb pool)', 'Trained-immunity via fungal β-glucans'],
+    ],
+    pain: [
+      ['Omega-3 (EPA-forward)', 'Resolvins + protectins — endogenous anti-inflammatory pathway'],
+      ['Curcumin (with piperine)', 'NF-κB inhibitor; equal to some NSAIDs in trials'],
+      ['MSM (methylsulfonylmethane)', 'Sulfur donor for connective tissue + anti-inflammatory'],
+      ['Boswellia serrata',     '5-LOX inhibitor; different pathway than NSAIDs'],
+      ['Magnesium (glycinate or malate)', 'NMDA modulator; muscle-tension pain'],
+      ['PEA (palmitoylethanolamide)', 'Endogenous fatty-acid amide; neuropathic + inflammatory pain'],
+    ],
+    detox: [
+      ['NAC (N-acetylcysteine)', 'Glutathione precursor; upstream of Phase II conjugation'],
+      ['Glutathione (liposomal)', 'Master antioxidant; oral bioavailability variable — liposomal preferred'],
+      ['Alpha-Lipoic Acid',     'Both water- and fat-soluble antioxidant; regenerates other antioxidants'],
+      ['Molybdenum',            'Sulfite oxidase + aldehyde oxidase cofactor; often overlooked'],
+      ['B-complex (activated)', 'Phase II methylation + conjugation cofactor'],
+    ],
+    beauty: [
+      ['Collagen peptides',     'Bioavailable proline + glycine + hydroxyproline for connective tissue'],
+      ['Vitamin C (ascorbate)', 'Rate-limiting for collagen cross-linking'],
+      ['Zinc (picolinate)',     'Wound healing + hormonal acne modulation'],
+      ['Biotin',                'Hair + nail keratin; deficiency rare but supplementation is popular'],
+      ['Beta-carotene',         'Vitamin A precursor; skin cell turnover; safer than retinol at supplement doses'],
+      ['MSM',                   'Sulfur for skin, hair, connective tissue'],
+      ['Hyaluronic acid',       'Extracellular matrix moisture; oral shows measurable skin hydration'],
+    ],
+  };
+
+  const ranked = Array.isArray(a.intentions) && a.intentions.length
+    ? a.intentions.slice(0, 3)
+    : (a.intention ? [a.intention] : []);
+  ranked.forEach((intent, idx) => {
+    const weight = idx === 0 ? 3 : idx === 1 ? 2 : 1;
+    const list = INT_MAP[intent] || [];
+    list.forEach(([nutrient, reason]) => add(nutrient, reason + ' (via ' + intent + ')', weight));
+  });
+
+  // ── Pattern + subpattern layer ───────────────────────────────────
+  const PATTERN_MAP = {
+    hot:      [['Magnesium glycinate', 'Cooling nervine mineral; useful in hot / reactive presentations']],
+    cold:     [['Iron (bisglycinate)', 'Ferritin check for cold-extremity presentations'],
+               ['Iodine',              'Thyroid check if cold + low energy']],
+    mixed:    [['L-Theanine',          'Nervous-system equanimity for oscillating states']],
+    depleted: [['NAD+ / NMN',          'Mitochondrial rebuild for chronic depletion'],
+               ['B-complex (activated)', 'Foundational for depleted-nervous-system presentations']],
+  };
+  if (PATTERN_MAP[a.pattern]) PATTERN_MAP[a.pattern].forEach(([n, r]) => add(n, r, 2));
+
+  const SUB_MAP = {
+    hot_night:     [['Magnesium glycinate', 'Vasomotor / night-heat presentations']],
+    inflamed:      [['Omega-3 (EPA-forward)', 'Systemic inflammation of tissue presentation']],
+    cold_hands:    [['Iron (bisglycinate)', 'Ferritin often below optimal in cold-hand presentations']],
+    pale:          [['Iron (bisglycinate)', 'Pale + low-appetite pattern often iron-tied'],
+                    ['B12 (methylcobalamin)', 'Also consider B12 for pallor + low energy']],
+    heavy:         [['B-complex (activated)', 'Damp-heavy presentations often benefit from methylation support']],
+    dry:           [['Omega-3 (DHA-forward)', 'Cell-membrane fluidity for dry-tissue presentations'],
+                    ['Hyaluronic acid',       'Oral HA measurable in skin + joint hydration']],
+    overworked:    [['NAD+ / NMN',           'Chronic overwork depletes NAD faster than repletion']],
+    anxious_empty: [['Magnesium threonate',  'CNS-crossing form for wired-and-tired presentations'],
+                    ['L-Theanine',           'Alpha-wave calm without sedation']],
+    tension:       [['Magnesium glycinate',  'Muscle-relaxant mineral for wandering-tension presentations']],
+    sighing:       [['Magnesium glycinate',  'Diaphragmatic + respiratory muscle relaxation']],
+  };
+  if (SUB_MAP[a.patternSub]) SUB_MAP[a.patternSub].forEach(([n, r]) => add(n, r, 2));
+
+  // ── Age layer ────────────────────────────────────────────────────
+  if (a.age === '45_plus' || a.age === '45+') {
+    add('CoQ10 (ubiquinol)', 'Endogenous production drops sharply after 40', 2);
+    add('NAD+ / NMN', 'NAD levels decline with age', 2);
+    add('Vitamin D3 (with K2)', 'Absorption drops with age; deficiency very common over 45', 2);
+  }
+  if (a.age === '60_plus' || a.age === '60+') {
+    add('Vitamin K2 (MK-7)', 'Directs calcium to bone rather than arteries', 2);
+  }
+
+  // ── Sleep quality layer ──────────────────────────────────────────
+  if (a.sleep === 'very_broken' || a.sleep === 'broken') {
+    add('Magnesium threonate', 'CNS-crossing form is superior for sleep architecture', 3);
+    add('Glycine', '3 g at bedtime for REM improvement', 2);
+  }
+
+  // ── Notes-text keyword layer (light-touch) ───────────────────────
+  const notes = String(a.notes || '').toLowerCase();
+  if (/headache|migraine/.test(notes)) add('Magnesium glycinate', 'Migraine prophylaxis at 400-600 mg/day (per notes)', 2);
+  if (/cramp|spasm/.test(notes))        add('Magnesium glycinate', 'Muscle cramp presentations (per notes)', 2);
+  if (/anxiety|panic/.test(notes))      add('L-Theanine', 'Anxiety mention in free-text (per notes)', 2);
+  if (/tinnitus|ear ring/.test(notes))  add('Zinc (picolinate)', 'Zinc deficiency correlates with tinnitus in some populations', 2);
+
+  // ── Contraindication filter (avoid[] flags) ─────────────────────
+  const avoid = Array.isArray(a.avoid) ? a.avoid : [];
+  const dropIf = (cond, names) => { if (cond) names.forEach(n => bank.delete(n)); };
+  dropIf(avoid.includes('thyroid'),      ['Iodine']);
+  dropIf(avoid.includes('psych_meds'),   ['5-HTP', 'SAMe', 'L-Tyrosine']); // MAOI/SSRI interactions
+  dropIf(avoid.includes('sedatives'),    ['5-HTP', 'Glycine', 'Melatonin (low-dose)', 'L-Theanine']);
+  dropIf(avoid.includes('cardio_meds'),  ['Omega-3 (EPA-forward)', 'Omega-3 (DHA-forward)']); // bleeding + statin interactions
+  dropIf(avoid.includes('autoimmune'),   ['Beta-glucans (already in herb pool)']);
+  dropIf(avoid.includes('liver_kidney'), ['Iron (bisglycinate)', 'NAC (N-acetylcysteine)']);
+  if (avoid.includes('pregnancy')) {
+    // Prenatal-safe shortlist only. Blow away everything else.
+    const safe = new Set(['Vitamin D3 (with K2)', 'Choline', 'Iron (bisglycinate)', 'Magnesium glycinate', 'DHA (algal)', 'Folate (methylfolate)']);
+    for (const key of [...bank.keys()]) if (!safe.has(key)) bank.delete(key);
+    add('Choline', 'Prenatal recommendation for fetal neural development — often overlooked', 3);
+    add('Folate (methylfolate)', 'Prenatal foundational', 3);
+    add('DHA (algal)', 'Prenatal DHA for fetal brain — algal source avoids fish/mercury concerns', 3);
+  }
+
+  // ── Deduplicate against herbs already in the picked formula ─────
+  const herbNames = new Set((Array.isArray(pickedHerbs) ? pickedHerbs : []).map(h => (h.name || '').toLowerCase()));
+  const HERB_REDUNDANT = {
+    'Curcumin (with piperine)':   ['turmeric', 'curcuma'],
+    'Beta-glucans (already in herb pool)': ['reishi', 'chaga', 'lion\'s mane', 'cordyceps', 'maitake', 'turkey tail'],
+    'Lion\'s Mane (already in herb pool)': ['lion\'s mane'],
+    'Saffron (Crocus)':           ['saffron'],
+    'Apigenin':                   ['chamomile'],
+    'Melatonin (low-dose)':       [],
+  };
+  for (const [nutrient, herbs] of Object.entries(HERB_REDUNDANT)) {
+    if (herbs.some(h => [...herbNames].some(hn => hn.includes(h)))) {
+      bank.delete(nutrient);
+    }
+  }
+
+  // Sort by priority DESC, then alphabetically. Top 12.
+  return [...bank.entries()]
+    .sort((a, b) => (b[1].priority - a[1].priority) || a[0].localeCompare(b[0]))
+    .slice(0, 12)
+    .map(([nutrient, { reason, priority }]) => ({ nutrient, reason, priority }));
+}
+
 function assignPercentages(herbs){
   if (!herbs || !herbs.length) return [];
   const scores = herbs.map(h => Math.max(1, h._score || 1));
@@ -2918,6 +3151,14 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
   const fd = new FormData(form);
   const cur = window.__currentFormula || {};
   const currentHerbs = cur.herbs || pickFormula(state.answers);
+  // Micronutrient advisory — computed client-side from the quiz.
+  // Rendered ONLY in Robin's admin email; the customer never sees it.
+  // Best-effort — if compute throws (unlikely) we swallow so the
+  // reservation still completes.
+  let possibleMicronutrients = [];
+  try { possibleMicronutrients = computeMicronutrients(state.answers, currentHerbs) || []; }
+  catch (e) { possibleMicronutrients = []; }
+
   const payload = {
     email:       String(fd.get('email')   || '').trim(),
     name:        String(fd.get('name')    || '').trim(),
@@ -2931,6 +3172,7 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     synergies:   cur.synergies   || [],
     bottleMl:    30,
     source:      'find-your-formula',
+    possibleMicronutrients,
   };
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(payload.email)) {
     errEl.hidden = false; errEl.textContent = 'Please enter a valid email.'; return;
