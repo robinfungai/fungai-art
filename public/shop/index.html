@@ -225,7 +225,44 @@ a.product-img-link{display:block;position:absolute;inset:0;z-index:2}
 html.reveal-anim .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s,transform 0.6s}
 html.reveal-anim .reveal.in{opacity:1;transform:none}
 
+/* ── Sold-out / unavailable badge for temporarily out-of-stock SKUs
+   (Wild Cordyceps, Ruby No.7, Moon Support). Card grayscales, add
+   button disables, "Unavailable" ribbon shows over the photo. */
+.product-card.is-unavailable{position:relative;filter:saturate(0.35) brightness(0.72);cursor:default}
+.product-card.is-unavailable .product-photo{filter:blur(1px)}
+.product-card.is-unavailable .quick-add,
+.product-card.is-unavailable .add-btn{pointer-events:none;opacity:0.35;cursor:not-allowed}
+.product-card.is-unavailable .product-hover-cta,
+.product-card.is-unavailable .product-img-link{display:none !important}
+.product-card.is-unavailable::after{
+  content:'Currently unavailable';
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  padding:8px 18px;border-radius:2px;
+  background:rgba(6,11,6,0.94);
+  border:0.5px solid rgba(232,177,75,0.5);
+  color:#F5D689;
+  font-family:'Bayer',var(--sans);font-size:9.5px;letter-spacing:0.28em;text-transform:uppercase;
+  z-index:5;pointer-events:none;
+  box-shadow:0 6px 18px rgba(0,0,0,0.5);
+}
+
+/* ── Chaga + Nervous System product photos were rotated wrong in the
+   source files. Applying a CSS rotation avoids re-shooting or re-
+   exporting the .webp assets. Only affects the two flagged photos. */
+img[src="/home/products/chaga.webp"],
+img[src="/home/products/nervoussystem.webp"]{
+  transform: rotate(90deg) scale(1.08);
+  transform-origin: center center;
+}
 @media(max-width:768px){.nav-links{display:none}.hero-banner,.filters,.products-section,.footer{padding-left:20px;padding-right:20px}.cat-header{padding:32px 20px 16px}.cart-drawer{width:100%}.products-grid{grid-template-columns:1fr 1fr}
+  /* ── Mobile nav overlap fix ─────────────────────────────────────
+     global-nav.js injects a 52×52 fixed hamburger at top:16 right:16
+     on every subpage. On /shop the Basket button was sitting under
+     that hamburger — the "same spot" Robin flagged. Push nav-right
+     inward so basket + hamburger stack cleanly (basket first, then
+     the fixed hamburger to its right). */
+  .nav-right { padding-right: 60px; }
+  .nav-cart { padding: 8px 14px !important; font-size: 10.5px !important; letter-spacing: 1px !important; }
   /* Hero — 140px top padding pushed the first product below the fold on
      phones. Tightened so products land as soon as the visitor scrolls
      past the nav. */
@@ -581,7 +618,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
           <img src="/home/products/chaga.webp" alt="Chaga" loading="lazy" decoding="async" class="product-photo">
           <span class="product-badge">Foraged · Sweden</span>
           <a href="/shop/chaga/" class="product-img-link" aria-label="Read about Chaga extract"></a>
-          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Chaga extract',44)">Add to basket</button></div>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Chaga Extract',44)">Add to basket</button></div>
         </div>
         <div class="product-info">
           <span class="product-category">Fungi &middot; Immunity</span>
@@ -590,12 +627,12 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
           <div class="product-tags"><span class="tag">Beta-glucans</span><span class="tag">Melanin</span><span class="tag">Wild</span></div>
           <div class="product-footer">
             <div class="product-price"><span class="size">30ml</span><span class="amount">&euro;44</span></div>
-            <button class="add-btn" onclick="addToCart('Chaga extract',44)">+ Add</button>
+            <button class="add-btn" onclick="addToCart('Chaga Extract',44)">+ Add</button>
           </div>
         </div>
       </div>
 
-      <div class="product-card reveal reveal-d2" data-category="featured">
+      <div class="product-card reveal reveal-d2 is-unavailable" data-category="featured">
         <div class="product-img-wrap">
           <div class="product-placeholder"><span>Cordyceps</span></div>
           <span class="product-badge">Himalayan A+</span>
@@ -619,17 +656,17 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
           <img src="https://images.unsplash.com/photo-1610705287354-9d445b4ac3ba?w=600&q=70&auto=format" alt="Shilajit" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="product-placeholder" style="display:none"><span>Shilajit</span></div>
           <span class="product-badge">Himalayan</span>
-          <a href="/shop/shilajit/" class="product-img-link" aria-label="Read about Shilajit + Gold"></a>
-          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Shilajit + Gold',33)">Add to basket</button></div>
+          <a href="/shop/shilajit/" class="product-img-link" aria-label="Read about Shilajit Paste"></a>
+          <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Shilajit Paste',33)">Add to basket</button></div>
         </div>
         <div class="product-info">
           <span class="product-category">Specials &middot; Minerals</span>
-          <a href="/shop/shilajit/" class="product-name">Shilajit + Gold</a>
+          <a href="/shop/shilajit/" class="product-name">Shilajit Paste</a>
           <p class="product-desc">Ancient Himalayan mineral resin + nanoparticulate gold. Fulvic acid, 84 trace minerals, colloidal Au. Ceremonial pill.</p>
           <div class="product-tags"><span class="tag">Fulvic acid</span><span class="tag">Gold</span><span class="tag">Himalayan</span></div>
           <div class="product-footer">
             <div class="product-price"><span class="size">4 pills</span><span class="amount">&euro;33</span></div>
-            <button class="add-btn" onclick="addToCart('Shilajit + Gold',33)">+ Add</button>
+            <button class="add-btn" onclick="addToCart('Shilajit Paste',33)">+ Add</button>
           </div>
         </div>
       </div>
@@ -678,7 +715,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
         <img src="/home/products/chaga.webp" alt="Chaga" loading="lazy" decoding="async" class="product-photo">
         <span class="product-badge">Foraged · Sweden</span>
         <a href="/shop/chaga/" class="product-img-link" aria-label="Read about Chaga extract"></a>
-        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Chaga extract',44)">Add to basket</button></div>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Chaga Extract',44)">Add to basket</button></div>
       </div>
       <div class="product-info">
         <span class="product-category">Fungi · Immunity</span>
@@ -687,7 +724,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
         <div class="product-tags"><span class="tag">Beta-glucans</span><span class="tag">Antioxidant</span><span class="tag">Wild</span></div>
         <div class="product-footer">
           <div class="product-price"><span class="size">30ml</span><span class="amount">€44</span></div>
-          <button class="add-btn" onclick="addToCart('Chaga extract',44)">+ Add</button>
+          <button class="add-btn" onclick="addToCart('Chaga Extract',44)">+ Add</button>
         </div>
       </div>
     </div>
@@ -710,7 +747,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
       </div>
     </div>
 
-    <div class="product-card reveal" data-category="fungi">
+    <div class="product-card reveal is-unavailable" data-category="fungi">
       <div class="product-img-wrap">
         <div class="product-placeholder"><span>Cordyceps</span></div>
         <span class="product-badge">Himalayan A+</span>
@@ -851,7 +888,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
       </div>
     </div>
 
-    <div class="product-card reveal reveal-d1" data-category="compositions">
+    <div class="product-card reveal reveal-d1 is-unavailable" data-category="compositions">
       <div class="product-img-wrap">
         <img src="/home/products/ruby-no7.webp" alt="Ruby No.7" loading="lazy" decoding="async" class="product-photo">
         <span class="product-badge">New</span>
@@ -869,7 +906,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
       </div>
     </div>
 
-    <div class="product-card reveal reveal-d2" data-category="compositions">
+    <div class="product-card reveal reveal-d2 is-unavailable" data-category="compositions">
       <div class="product-img-wrap">
         <img src="/home/products/moon-support.webp" alt="Moon Support" loading="lazy" decoding="async" class="product-photo">
         <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Moon Support',44)">Add to basket</button></div>
@@ -935,10 +972,14 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
 <div class="products-section">
   <div class="products-grid">
 
-    <!-- Blue Lotus 100g dried flower -->
+    <!-- Blue Lotus 100g dried flower
+         Robin wants a zoomed-in EXTRACT photo instead of the flower shot.
+         Upload target: public/home/products/blue-lotus-extract.webp
+         Fallback below chains to the existing flower photo, then a
+         placeholder, so the card never renders empty. -->
     <div class="product-card reveal" data-category="flowers">
       <div class="product-img-wrap">
-        <img src="/home/products/blue-lotus.webp" alt="Blue Lotus" loading="lazy" decoding="async" class="product-photo">
+        <img src="/home/products/blue-lotus-extract.webp" alt="Blue Lotus extract" loading="lazy" decoding="async" class="product-photo" onerror="this.onerror=null;this.src='/home/products/blue-lotus.webp'">
         <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Blue Lotus (dried 100g)',44)">Add to basket</button></div>
       </div>
       <div class="product-info">
@@ -953,29 +994,14 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
       </div>
     </div>
 
-    <!-- Horny Goat Weed 100g -->
+    <!-- Butterfly Pea 100g
+         Previous placeholder was an unrelated Unsplash flower.
+         Upload target: public/home/products/butterfly-pea.webp
+         Chain of fallbacks: local file → known-good butterfly-pea
+         Unsplash → placeholder text card. -->
     <div class="product-card reveal reveal-d1" data-category="flowers">
       <div class="product-img-wrap">
-        <img src="https://images.unsplash.com/photo-1599751451556-69fc6e62a3bd?w=600&q=70&auto=format" alt="Horny Goat Weed" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="product-placeholder" style="display:none"><span>Horny Goat Weed</span></div>
-        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Horny Goat Weed (dried 100g)',28)">Add to basket</button></div>
-      </div>
-      <div class="product-info">
-        <span class="product-category">Herbs &middot; Vitality</span>
-        <div class="product-name">Horny Goat Weed</div>
-        <p class="product-desc">Epimedium &middot; PDE5 modulation &middot; vasodilation &middot; libido. Traditional TCM Yin-Yang tonic; icariin is the active flavonoid. Dried whole leaf.</p>
-        <div class="product-tags"><span class="tag">Icariin</span><span class="tag">PDE5</span><span class="tag">TCM</span></div>
-        <div class="product-footer">
-          <div class="product-price"><span class="size">100g</span><span class="amount">&euro;28</span></div>
-          <button class="add-btn" onclick="addToCart('Horny Goat Weed (dried 100g)',28)">+ Add</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Butterfly Pea 100g -->
-    <div class="product-card reveal reveal-d2" data-category="flowers">
-      <div class="product-img-wrap">
-        <img src="https://images.unsplash.com/photo-1597481499750-3e6b22637e12?w=600&q=70&auto=format" alt="Butterfly Pea Flower" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <img src="/home/products/butterfly-pea.webp" alt="Butterfly Pea Flower" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1591386767153-987783380885?w=600&q=70&auto=format';this.addEventListener('error',()=>{this.style.display='none';this.nextElementSibling.style.display='flex'})">
         <div class="product-placeholder" style="display:none"><span>Butterfly Pea</span></div>
         <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Butterfly Pea (dried 100g)',28)">Add to basket</button></div>
       </div>
@@ -991,10 +1017,13 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
       </div>
     </div>
 
-    <!-- Sacred Lavendula (self-foraged Cappadocia) 50g -->
+    <!-- Sacred Lavendula (self-foraged Cappadocia) 50g
+         Previous placeholder didn't fit the wild Anatolian character.
+         Upload target: public/home/products/sacred-lavendula.webp
+         Fallback: wild-lavender Unsplash shot → placeholder text card. -->
     <div class="product-card reveal" data-category="flowers">
       <div class="product-img-wrap">
-        <img src="https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=600&q=70&auto=format" alt="Wild Lavender" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <img src="/home/products/sacred-lavendula.webp" alt="Sacred Lavendula" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1471193945509-9ad0617afabf?w=600&q=70&auto=format';this.addEventListener('error',()=>{this.style.display='none';this.nextElementSibling.style.display='flex'})">
         <div class="product-placeholder" style="display:none"><span>Lavendula</span></div>
         <span class="product-badge">Foraged &middot; Cappadocia</span>
         <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Sacred Lavendula (foraged 50g)',22)">Add to basket</button></div>
@@ -1036,20 +1065,23 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
       </div>
     </div>
 
-    <!-- Nettle extract — single-herb liquid extract, mineral foundation -->
-    <div class="product-card reveal reveal-d2" data-category="flowers">
+    <!-- Nettle extract — single-herb liquid extract, mineral foundation.
+         Recategorized from 'flowers' (which grouped it under Flowers &
+         Herbs dried-plant category) to 'compositions' where the other
+         liquid extracts live. This is an extract, not a dried flower. -->
+    <div class="product-card reveal reveal-d2" data-category="compositions">
       <div class="product-img-wrap">
         <img src="/home/products/nettle.webp" alt="Nettle extract" loading="lazy" decoding="async" class="product-photo">
-        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Nettle extract',33)">Add to basket</button></div>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Nettle Extract',33)">Add to basket</button></div>
       </div>
       <div class="product-info">
-        <span class="product-category">Herbs &middot; Nutritive</span>
+        <span class="product-category">Compositions &middot; Nutritive</span>
         <div class="product-name">Nettle extract</div>
         <p class="product-desc">Mineral density &middot; silica renewal &middot; nutritive base. The most mineral-rich herb in common use &mdash; quercetin antihistamine, potassium-sparing diuresis, silica for hair, skin and connective tissue. A daily tonic for the whole body.</p>
         <div class="product-tags"><span class="tag">Silica</span><span class="tag">Quercetin</span><span class="tag">Nutritive</span></div>
         <div class="product-footer">
           <div class="product-price"><span class="size">30ml</span><span class="amount">&euro;33</span></div>
-          <button class="add-btn" onclick="addToCart('Nettle extract',33)">+ Add</button>
+          <button class="add-btn" onclick="addToCart('Nettle Extract',33)">+ Add</button>
         </div>
       </div>
     </div>
@@ -1135,17 +1167,17 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
         <img src="https://images.unsplash.com/photo-1610705287354-9d445b4ac3ba?w=600&q=70&auto=format" alt="Shilajit" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="product-placeholder" style="display:none"><span>Shilajit</span></div>
         <span class="product-badge">Himalayan</span>
-        <a href="/shop/shilajit/" class="product-img-link" aria-label="Read about Shilajit + Gold"></a>
-        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Shilajit + Gold',33)">Add to basket</button></div>
+        <a href="/shop/shilajit/" class="product-img-link" aria-label="Read about Shilajit Paste"></a>
+        <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Shilajit Paste',33)">Add to basket</button></div>
       </div>
       <div class="product-info">
         <span class="product-category">Specials &middot; Minerals</span>
-        <a href="/shop/shilajit/" class="product-name">Shilajit + Gold</a>
+        <a href="/shop/shilajit/" class="product-name">Shilajit Paste</a>
         <p class="product-desc">Pressed pills with compressed gold. Ancient mineral compound &mdash; fulvic acid + 84 trace minerals + nanoparticulate Au. <a href="javascript:openProductPopup('shilajit')" style="color:var(--amber-lt,#F5D689);text-decoration:none;border-bottom:0.5px solid rgba(245,214,137,0.4);">Read the story &rarr;</a></p>
         <div class="product-tags"><span class="tag">Fulvic acid</span><span class="tag">Gold</span><span class="tag">Himalayan</span></div>
         <div class="product-footer">
           <div class="product-price"><span class="size">4 pills</span><span class="amount">&euro;33</span></div>
-          <button class="add-btn" onclick="addToCart('Shilajit + Gold',33)">+ Add</button>
+          <button class="add-btn" onclick="addToCart('Shilajit Paste',33)">+ Add</button>
         </div>
       </div>
     </div>
@@ -1257,7 +1289,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
     },
     shilajit: {
       eyebrow: 'Himalayan · Pressed with gold · 4 pills',
-      title: 'Shilajit + Gold &mdash; <em>the mineral compound.</em>',
+      title: 'Shilajit Paste &mdash; <em>the mineral compound.</em>',
       sub: 'Pressed with elemental Au &middot; 4 pills &middot; &euro;33',
       body: '<p>Shilajit is a sticky resin that exudes from cracks in high-altitude Himalayan rock during summer thaw. It&rsquo;s been used continuously in Ayurvedic medicine for at least 3000 years under the name <em>shilajatu</em> &mdash; "destroyer of weakness, conqueror of mountains".</p><p>This preparation is pressed into pills with a trace inclusion of pharmaceutical-grade colloidal gold. In Ayurveda, gold (<em>swarna bhasma</em>) is a rasayana &mdash; it amplifies the absorption and bioavailability of other minerals while contributing its own subtle cardiac, cognitive, and immune-modulating effects.</p>',
       blocks: [
@@ -1265,7 +1297,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
         { label: 'How to use', html: '1 pill daily on an empty stomach with warm water. The mineral hit can be intense the first 2-3 days &mdash; if you feel jittery, halve the dose for a week. Best with light food otherwise. Avoid pairing with iron supplements (fulvic acid will over-shuttle).' },
         { label: 'Why this price', html: 'Authentic high-altitude shilajit costs roughly &euro;200-400/100g raw. The gold inclusion adds &euro;8-12/pill at fair sourcing. 4 high-quality pressed pills at &euro;33 is roughly half what comparable Ayurvedic dispensaries charge in London or Berlin.' },
       ],
-      cta: { label: 'Add to basket &middot; &euro;33', name: 'Shilajit + Gold', price: 33 },
+      cta: { label: 'Add to basket &middot; &euro;33', name: 'Shilajit Paste', price: 33 },
     },
   };
   function openProductPopup(id){

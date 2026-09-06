@@ -235,12 +235,15 @@ const CATALOG = {
   'Sleepy Sleepy':                     38,
   'Nettle Extract':                   33,
   'Blue Lotus (dried 100g)':           44,
-  'Horny Goat Weed (dried 100g)':      28,
+  // Horny Goat Weed removed from the shop on 2026-09-07 per Robin.
+  // No CATALOG entry means any order still referencing it (stale
+  // page in a cached tab) returns "Unknown product" from the
+  // /api/create-payment-intent gate — no charge, no silent success.
   'Butterfly Pea (dried 100g)':        28,
   'Sacred Lavendula (foraged 50g)':    22,
   'Kumbaya Herbal Smoke Blend':         7,
   'Pine Cones':                        33,
-  'Shilajit + Gold':                   33,
+  'Shilajit Paste':                    33,
   'Afghan Saffron (3g)':               44,
   'Afghan Saffron (5g)':               66,
   'Afghan Saffron (10g)':             100,
