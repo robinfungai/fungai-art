@@ -647,7 +647,10 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 
 /* Herb list */
 .r-herbs{background:var(--card);border:0.5px solid var(--rule);border-radius:18px;overflow:hidden;margin-bottom:16px}
-.r-herbs-head{padding:16px 22px 12px;border-bottom:0.5px solid var(--rule);font-family:var(--mono);font-size:9.5px;letter-spacing:0.28em;text-transform:uppercase;color:var(--amber-l)}
+/* "X allies · woven together" header — used to be 9.5px mono w/ 0.28em
+   letter-spacing which read as almost illegible amber text. Bumped to
+   12px, tightened the tracking, kept the mono texture but readable. */
+.r-herbs-head{padding:18px 22px 14px;border-bottom:0.5px solid var(--rule);font-family:var(--mono);font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber-l);font-weight:500}
 /* Wider column + smaller % so herb name reads clean, not squashed. */
 .r-herb{display:grid;grid-template-columns:52px 1fr;gap:22px;padding:14px 22px;border-bottom:0.5px dashed rgba(232,177,75,0.08);align-items:baseline}
 .r-herb:last-child{border-bottom:none}
@@ -2678,8 +2681,15 @@ function buildWhyText(a, herbs, pct){
     (a.patternSub ? ' &mdash; specifically the ' + a.patternSub.replace(/_/g, ' ') + ' signature' : '') + '.';
   // Free (visible) copy — GENERIC methodology. Doesn't leak the hero
   // herbs or their percentages. Sets up the intrigue for the paywall.
-  const openLine =
-    'Every reservation begins with a pool of 152 catalogued herbs. Yours was <strong>filtered against your safety flags</strong>, then scored across intention, body signature, rhythm and stress. Cross-checked for herb-to-herb synergy in the practitioner catalog.';
+  //
+  // Herb-count line dropped ("152 catalogued herbs" was stale — pool
+  // is 200+ now) and the "filtered against your safety flags" line
+  // only shows when the customer actually set safety flags. Empty
+  // flag list = no need to advertise the filter.
+  const hasSafetyFlags = (a.avoid || []).filter(x => x && x !== 'none').length > 0;
+  const openLine = hasSafetyFlags
+    ? 'Your composition was <strong>filtered against the safety flags you set</strong>, then scored across intention, body signature, rhythm and stress. Cross-checked for herb-to-herb synergy in the practitioner catalog.'
+    : 'Your composition was scored across intention, body signature, rhythm and stress. Cross-checked for herb-to-herb synergy in the practitioner catalog.';
   const methodLine =
     'Any essential-oil-rich herb (lavender, ginger, cinnamon and their kin) is capped at 5% by design &mdash; their pharmacology is strong enough that anything more would dominate the blend. The remaining share goes to the tonics, nervines and adaptogens that do the slower, foundational work.';
 
@@ -3159,6 +3169,16 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
   try { possibleMicronutrients = computeMicronutrients(state.answers, currentHerbs) || []; }
   catch (e) { possibleMicronutrients = []; }
 
+  // Rich email content — Robin's ask: "the info is first hidden -
+  // reserve your bottle to reveal more - so they need to reveal
+  // more on email." Compute the story + short herb notes + reading
+  // line here and include them in the payload; the server injects
+  // them into the customer's confirmation email so the reveal happens
+  // twice (in-app + in inbox).
+  let storyText = '';
+  try { storyText = storyFor(state.answers, currentHerbs) || ''; } catch (_) {}
+  const herbNotes = currentHerbs.map(h => { try { return shortNote(h) || ''; } catch (_) { return ''; }});
+
   const payload = {
     email:       String(fd.get('email')   || '').trim(),
     name:        String(fd.get('name')    || '').trim(),
@@ -3167,9 +3187,11 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     notes:       String(fd.get('notes')   || '').trim(),
     formulaName: cur.name || window.__currentFormulaName || '',
     quiz:        state.answers,
-    formula:     currentHerbs.map(h => ({ id: h.id, name: h.name })),
+    formula:     currentHerbs.map(h => ({ id: h.id, name: h.name, botanical: h.botanical || '' })),
     percentages: cur.percentages || [],
     synergies:   cur.synergies   || [],
+    herbNotes,     // parallel array to formula[] — the same one-liners the in-app reveal shows
+    storyText,    // the composed reading (HTML-safe stripped server-side)
     bottleMl:    30,
     source:      'find-your-formula',
     possibleMicronutrients,
@@ -3181,6 +3203,32 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     errEl.hidden = false; errEl.textContent = 'Please fill in name, city and country.'; return;
   }
   btn.disabled = true; btn.textContent = 'Reserving…';
+
+  // Reveal percentages + why-card unlock IMMEDIATELY on submit —
+  // don't wait for the network. Robin's feedback: the user reserves,
+  // the visual reward (real % values in amber, no more ??%) should
+  // happen right away. If the fetch fails and we re-enable the
+  // button, the reveal stays — it was earned by the intent to
+  // reserve, not by the network round-trip.
+  try {
+    const whyCardEarly = document.getElementById('rWhyCard');
+    if (whyCardEarly) whyCardEarly.classList.remove('dimmed');
+    if (window.__revealPercentages) window.__revealPercentages();
+  } catch (_) {}
+
+  // Defensive re-enable: if the fetch hangs, never leave the button
+  // dead. Robin reported the reserve button "gets stuck" — one likely
+  // cause was a fetch with no timeout when Netlify was slow. 20 s
+  // AbortController + a hard safety timer that unlocks the button
+  // if we're still on this state past 22 s.
+  const stuckSafety = setTimeout(() => {
+    if (btn.disabled && btn.textContent === 'Reserving…') {
+      btn.disabled = false;
+      btn.textContent = 'Reserve my bottle →';
+      errEl.hidden = false;
+      errEl.textContent = 'Reservation timed out. Try once more, or email robin@fungai.art directly.';
+    }
+  }, 22000);
   try {
     // Post to the dedicated /api/reserve-formula endpoint which sends
     // Robin the full reservation via Resend AND emails the user a
@@ -3189,16 +3237,21 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     let ok = false;
     let serverGeo = null;
     try {
+      const ctrl = new AbortController();
+      const abortT = setTimeout(() => ctrl.abort(), 20000);
       const res = await fetch('/api/reserve-formula', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
+        signal: ctrl.signal,
       });
+      clearTimeout(abortT);
       ok = res.ok;
       if (ok) {
         try { const d = await res.json(); serverGeo = d?.geo || null; } catch (_) {}
       }
     } catch (_) {}
+    clearTimeout(stuckSafety);
     if (!ok) {
       const notesForRobin =
         'FIND-YOUR-FORMULA reservation\n' +
@@ -3235,6 +3288,7 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     } catch (_) {}
     try { localStorage.removeItem('fyf_state'); } catch (_) {}
   } catch (err) {
+    clearTimeout(stuckSafety);
     btn.disabled = false; btn.textContent = 'Reserve my bottle →';
     errEl.hidden = false; errEl.textContent = 'Something didn\'t send. Try once more, or email robin@fungai.art.';
   }

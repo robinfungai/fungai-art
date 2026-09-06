@@ -139,6 +139,18 @@ export default async function handler(req) {
     ? body.possibleMicronutrients.slice(0, 15).filter(x => x && typeof x.nutrient === 'string')
     : [];
 
+  // Rich customer-email content — the story + per-herb one-liners
+  // the in-app reveal shows. Rendered into the confirmation email so
+  // the reveal continues in the inbox (Robin's ask: "they need to
+  // reveal more on email"). Strip any HTML tags — the client-side
+  // story generator wraps some phrases in <em>/<strong>; keep the
+  // text, drop the markup so email clients render safely.
+  const stripHtml = s => String(s || '').replace(/<[^>]*>/g, '').slice(0, 1200);
+  const storyText = stripHtml(body.storyText);
+  const herbNotes = Array.isArray(body.herbNotes)
+    ? body.herbNotes.slice(0, 10).map(n => stripHtml(n).slice(0, 200))
+    : [];
+
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json({ error: 'Invalid email address' }, 400, cors);
   if (!name || !city || !country) return json({ error: 'Missing name / city / country' }, 400, cors);
 
@@ -173,8 +185,8 @@ export default async function handler(req) {
 
   // ── 2. Confirm to customer ─────────────────────────────────────
   const customerSubject = `Your formula is reserved · ${formulaName || 'Fungai Art'}`;
-  const customerHtml = buildCustomerHtml({ name, formulaName, herbList, herbLines });
-  const customerText = buildCustomerText({ name, formulaName, herbList, herbLines });
+  const customerHtml = buildCustomerHtml({ name, formulaName, herbList, herbLines, storyText, herbNotes, synergies, quiz });
+  const customerText = buildCustomerText({ name, formulaName, herbList, herbLines, storyText, herbNotes, synergies, quiz });
 
   const results = await Promise.allSettled([
     sendResend(RESEND_API_KEY, { from, to: [inbox], reply_to: email,  subject: robinSubject,    html: robinHtml,    text: robinText }),
@@ -353,8 +365,41 @@ ${notes ? 'Priority + prior herb experience:\n  "' + notes + '"\n\n' : ''}${poss
 `;
 }
 
-function buildCustomerHtml({ name, formulaName, herbList, herbLines }){
+function buildCustomerHtml({ name, formulaName, herbList, herbLines, storyText, herbNotes, synergies, quiz }){
   const lines = (herbLines && herbLines.length) ? herbLines : herbList.map(n => ({ name: n, pct: 0 }));
+  herbNotes = Array.isArray(herbNotes) ? herbNotes : [];
+  synergies = Array.isArray(synergies) ? synergies : [];
+  quiz      = quiz && typeof quiz === 'object' ? quiz : {};
+
+  // The in-app reveal calls the pattern archetype in TCM-poetic
+  // language ("A lit match", "A cold stone" etc.) and pairs it with
+  // a sub-pattern in even denser TCM ("Liver-heat lift", "Yin-
+  // deficient dryness"). For an email that a customer may forward
+  // to family or a herbalist, we translate those to plain English
+  // adjacent — same meaning, less coded. This mirrors Robin's
+  // request: "when we speak of TCM medicine and terminology, we
+  // need to right after mentioning a tcm herb or feeling we need
+  // to write adjacent in an easy language."
+  const PATTERN_PLAIN = {
+    hot:      { poetic: 'A lit match',        plain: 'warm, reactive, tends to inflammation' },
+    cold:     { poetic: 'A cold stone',       plain: 'cool extremities, sluggish digestion, slow to warm up' },
+    mixed:    { poetic: 'A flickering flame', plain: 'variable — some days hot, others stuck; often "wired-and-tired"' },
+    depleted: { poetic: 'An empty cup',       plain: 'chronically tired, dry, over-drawn on reserves' },
+  };
+  const SUB_PLAIN = {
+    anger:'irritability driven by inner heat', flushed:'blood-heat coming up to the face',
+    inflamed:'heat pooling in tissues (skin, gut, joints)', hot_night:'heat rising after dark; night sweats',
+    cold_hands:'circulation weak at the extremities', heavy:'body feels dense; hard to get moving',
+    pale:'digestive fire low; complexion pale', low_drive:'internal drive dimmed at its source',
+    stuck:'energy/emotion not flowing forward', up_down:'moods oscillate quickly',
+    tension:'muscular tension that migrates', sighing:'chest holds; breath needs a bigger exhale',
+    purposeless:'the spirit-anchor feels loose', dry:'fluids and lubrication have thinned',
+    overworked:'foundational reserves drawn low', anxious_empty:'wired at rest, exhausted at effort',
+  };
+  const patternKey = quiz.pattern;
+  const subKey     = quiz.patternSub;
+  const patternPlain = PATTERN_PLAIN[patternKey] || null;
+  const subPlain     = SUB_PLAIN[subKey] || null;
   return `<!DOCTYPE html><html><body style="margin:0;padding:0;background:#060809;color:#C9B894;font-family:Georgia,serif;">
     <div style="max-width:580px;margin:0 auto;padding:48px 24px;">
       <div style="background:#0F1014;border:0.5px solid rgba(232,177,75,.22);border-radius:14px;padding:40px 32px;">
@@ -369,10 +414,33 @@ function buildCustomerHtml({ name, formulaName, herbList, herbLines }){
           Robin will follow up personally to <strong style="color:#F5D689;">confirm the formula together with you first</strong> — a short exchange to make sure this blend is genuinely matched to what you're bringing. The payment link comes <em>after</em> that confirmation, once we're both sure the composition is right. Only then does the pour begin.
         </p>
 
+        ${storyText ? `
+        <div style="margin:24px 0 10px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#E8B14B;">✦ The reading</div>
+        <p style="font-family:Georgia,serif;font-style:italic;font-size:15.5px;line-height:1.75;color:#E6D9B5;margin:0 0 20px;">${esc(storyText)}</p>` : ''}
+
+        ${patternPlain || subPlain ? `
+        <div style="margin:22px 0 8px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#E8B14B;">Body reading · plain language</div>
+        <div style="padding:14px 16px;background:#141821;border:0.5px solid rgba(232,177,75,.14);border-radius:8px;margin:0 0 22px;font-size:13.5px;color:#C9B894;line-height:1.7;">
+          ${patternPlain ? `<div style="margin-bottom:${subPlain ? '8px' : '0'}"><span style="font-family:Georgia,serif;font-style:italic;color:#EDE5D8;">${esc(patternPlain.poetic)}</span> &mdash; <span style="color:#C9B894;">${esc(patternPlain.plain)}</span></div>` : ''}
+          ${subPlain ? `<div><span style="font-family:'Courier New',monospace;font-size:11px;color:#8B7E62;">Specifically</span> &mdash; ${esc(subPlain)}</div>` : ''}
+        </div>` : ''}
+
         <div style="margin:24px 0 8px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#E8B14B;">Your allies (proposed)</div>
-        <ul style="list-style:none;padding:0;margin:0 0 22px;font-size:14.5px;line-height:1.9;color:#EDE5D8;">
-          ${lines.map(h => `<li style="padding:2px 0;">${h.pct ? '<span style="display:inline-block;min-width:44px;font-family:\'Courier New\',monospace;font-size:12px;color:#F5D689;">' + h.pct + '%</span>' : ''} ${esc(h.name)}</li>`).join('')}
-        </ul>
+        <table cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;margin:0 0 22px;">
+          ${lines.map((h, i) => `<tr>
+            <td valign="top" style="padding:9px 10px 9px 0;vertical-align:top;font-family:'Courier New',monospace;font-size:12px;color:#F5D689;width:52px;white-space:nowrap;">${h.pct ? h.pct + '%' : ''}</td>
+            <td style="padding:9px 0;border-bottom:0.5px solid rgba(232,177,75,.08);">
+              <div style="font-size:15px;color:#EDE5D8;font-weight:500;">${esc(h.name)}</div>
+              ${herbNotes[i] ? `<div style="font-family:Georgia,serif;font-style:italic;font-size:12.5px;color:#8B7E62;line-height:1.55;margin-top:3px;">${esc(herbNotes[i])}</div>` : ''}
+            </td>
+          </tr>`).join('')}
+        </table>
+
+        ${synergies.length ? `
+        <div style="margin:22px 0 8px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#A88FE0;">Woven synergies</div>
+        <ul style="padding-left:18px;margin:0 0 22px;font-size:13.5px;line-height:1.75;color:#C9B894;">
+          ${synergies.map(s => `<li style="margin-bottom:6px;"><strong style="color:#EDE5D8;">${esc(s.a)} + ${esc(s.b)}</strong> &mdash; <em>${esc((s.note || '').replace(/^[^—:]*[—:]\s*/, ''))}</em></li>`).join('')}
+        </ul>` : ''}
 
         <div style="padding:18px 20px;background:#1A1E24;border:0.5px solid rgba(232,177,75,.18);border-radius:10px;margin:20px 0;">
           <div style="font-family:'Courier New',monospace;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:#E8B14B;margin-bottom:10px;">◈ Fully tailored · 30 ml amber-glass</div>
@@ -388,18 +456,20 @@ function buildCustomerHtml({ name, formulaName, herbList, herbLines }){
   </body></html>`;
 }
 
-function buildCustomerText({ name, formulaName, herbList, herbLines }){
+function buildCustomerText({ name, formulaName, herbList, herbLines, storyText, herbNotes, synergies, quiz }){
   const lines = (herbLines && herbLines.length) ? herbLines : herbList.map(n => ({ name: n, pct: 0 }));
+  herbNotes = Array.isArray(herbNotes) ? herbNotes : [];
+  synergies = Array.isArray(synergies) ? synergies : [];
   return `YOUR FORMULA IS RESERVED
 
 ${name}, thank you for taking the reading. This blend was composed just for you from what your answers described — nothing shelf-stocked, nothing pre-mixed.
 
 Formula: ${formulaName || 'Your formula'}
 
-Your allies (proposed):
-${lines.map(h => (h.pct ? h.pct + '%   ' : '   ') + h.name).join('\n')}
+${storyText ? 'THE READING\n' + storyText + '\n\n' : ''}Your allies (proposed):
+${lines.map((h, i) => (h.pct ? h.pct.toString().padStart(3) + '%  ' : '     ') + h.name + (herbNotes[i] ? '\n         ' + herbNotes[i] : '')).join('\n')}
 
-Robin will follow up personally to confirm the formula together with you first — a short exchange to make sure this blend is genuinely matched to what you're bringing. The payment link comes AFTER that confirmation, once we're both sure the composition is right. Only then does the pour begin.
+${synergies.length ? 'WOVEN SYNERGIES:\n' + synergies.map(s => '  · ' + s.a + ' + ' + s.b + ' — ' + (s.note || '').replace(/^[^—:]*[—:]\s*/, '')).join('\n') + '\n\n' : ''}Robin will follow up personally to confirm the formula together with you first — a short exchange to make sure this blend is genuinely matched to what you're bringing. The payment link comes AFTER that confirmation, once we're both sure the composition is right. Only then does the pour begin.
 
 Fully tailored · 30 ml amber-glass:
 Every bottle is a full-spectrum spagyric — each herb separated into its three principles (sulfur / mercury / salt), purified individually over weeks, then recombined so nothing living gets lost in translation. Not a simple maceration. The plant's complete alchemical signature — alkaloids, essential oils, mineral salts — in balance. Hand-poured in the Berlin lab. Small-batch, single-pour, from scratch for you.

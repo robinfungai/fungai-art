@@ -579,7 +579,15 @@ export const handler = async (event) => {
     const question   = String(body.question || '').slice(0, 800).trim();
     let   lat        = Number.isFinite(body.lat) ? body.lat : null;
     let   lng        = Number.isFinite(body.lng) ? body.lng : null;
-    const regionName = String(body.regionName || '').slice(0, 120).trim();
+    // Sanitize trailing / leading punctuation that would break the
+    // geocoder — Robin's Örebro attempt failed because the input was
+    // "Örebro, Sweden)" with a stray closing paren. Strip bracket
+    // punctuation and terminal periods; keep commas inside the string.
+    const regionName = String(body.regionName || '')
+      .slice(0, 120)
+      .replace(/^[\s()\[\]{}.,!?;:]+/, '')
+      .replace(/[\s()\[\]{}.!?;:]+$/, '')  // note: comma NOT included here — "Örebro, Sweden" is valid
+      .trim();
     const history    = Array.isArray(body.history) ? body.history.slice(-6) : [];
 
     if (!question) return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Empty question.' }) };
@@ -598,11 +606,25 @@ export const handler = async (event) => {
     let resolvedFrom = 'coords';
     const extracted = extractLocationFromQuestion(question);
 
+    // A short list of vague / country-only extractions we should NOT
+    // let override an explicit regionName. Robin's "Örebro, Sweden"
+    // input was being clobbered when the question happened to
+    // mention "in Sweden" — the extractor grabbed "Sweden" and
+    // geocoded to the country centroid instead of Örebro.
+    const VAGUE_EXTRACTIONS = new Set([
+      'sweden', 'norway', 'denmark', 'finland', 'germany', 'italy',
+      'france', 'spain', 'portugal', 'greece', 'austria', 'switzerland',
+      'netherlands', 'belgium', 'ireland', 'scotland', 'england',
+      'wales', 'uk', 'usa', 'us', 'canada', 'mexico', 'here', 'there',
+    ]);
+    const extractedIsVague = extracted?.type === 'name'
+      && VAGUE_EXTRACTIONS.has(extracted.name.trim().toLowerCase());
+
     if (extracted?.type === 'coords') {
       lat = extracted.lat;
       lng = extracted.lng;
       resolvedFrom = 'question-coords';
-    } else if (extracted?.type === 'name') {
+    } else if (extracted?.type === 'name' && !extractedIsVague) {
       const g = await forwardGeocode(extracted.name);
       if (g) {
         lat = g.lat;
@@ -611,8 +633,11 @@ export const handler = async (event) => {
         resolvedFrom = 'question-name';
       }
     }
-    // Only fall back to the region-name field if the question didn't
-    // yield a usable location — question intent wins.
+    // Fall back to the region-name field if the question didn't
+    // yield a usable specific location. Country-only extractions
+    // (VAGUE_EXTRACTIONS above) also fall through so a persistent
+    // "Örebro, Sweden" in the region field wins over a passing
+    // "in Sweden" in the question text.
     if (resolvedFrom === 'coords' && regionName) {
       const g = await forwardGeocode(regionName);
       if (g) {

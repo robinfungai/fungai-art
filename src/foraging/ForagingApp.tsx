@@ -309,6 +309,18 @@ export default function ForagingApp() {
     };
   }, []);
 
+  // ── Long-press context menu (mobile-first) ─────────────────────
+  //   Hold a point on the map for ~700ms → a small floating menu
+  //   appears with "I am here" (sets user location to that lat/lng
+  //   and re-derives everything downstream) and "What is around
+  //   here" (opens MYCO Ask with the reverse-geocoded place name
+  //   pre-filled so you can immediately ask about that spot).
+  const [longPressMenu, setLongPressMenu] = useState<{
+    x: number; y: number; lat: number; lng: number;
+  } | null>(null);
+  const longPressTimerRef = useRef<any>(null);
+  const longPressStartRef = useRef<{ x: number; y: number } | null>(null);
+
   // ── MYCO Ask panel state ────────────────────────────────────────────
   const [mycoOpen, setMycoOpen] = useState(false);
   const [mycoMessages, setMycoMessages] = useState<MycoMsg[]>([]);
@@ -1071,6 +1083,58 @@ export default function ForagingApp() {
         mapStyle={mapMode === 'satellite' ? SATELLITE_STYLE : MAP_STYLE}
         onLoad={handleMapSettle}
         onMoveEnd={handleMapSettle}
+        onMouseDown={(e: any) => {
+          longPressStartRef.current = { x: e.point?.x || 0, y: e.point?.y || 0 };
+          clearTimeout(longPressTimerRef.current);
+          const { lng, lat } = e.lngLat || {};
+          if (typeof lng !== 'number' || typeof lat !== 'number') return;
+          longPressTimerRef.current = setTimeout(() => {
+            const container: HTMLElement | undefined =
+              mapRef.current?.getMap?.()?.getContainer?.();
+            const rect = container?.getBoundingClientRect?.();
+            setLongPressMenu({
+              x: (rect?.left || 0) + (e.point?.x || 0),
+              y: (rect?.top  || 0) + (e.point?.y || 0),
+              lat, lng,
+            });
+          }, 700);
+        }}
+        onMouseUp={() => { clearTimeout(longPressTimerRef.current); longPressStartRef.current = null; }}
+        onMouseMove={(e: any) => {
+          if (!longPressStartRef.current) return;
+          const dx = Math.abs((e.point?.x || 0) - longPressStartRef.current.x);
+          const dy = Math.abs((e.point?.y || 0) - longPressStartRef.current.y);
+          if (dx > 6 || dy > 6) {
+            clearTimeout(longPressTimerRef.current);
+            longPressStartRef.current = null;
+          }
+        }}
+        onTouchStart={(e: any) => {
+          longPressStartRef.current = { x: e.point?.x || 0, y: e.point?.y || 0 };
+          clearTimeout(longPressTimerRef.current);
+          const { lng, lat } = e.lngLat || {};
+          if (typeof lng !== 'number' || typeof lat !== 'number') return;
+          longPressTimerRef.current = setTimeout(() => {
+            const container: HTMLElement | undefined =
+              mapRef.current?.getMap?.()?.getContainer?.();
+            const rect = container?.getBoundingClientRect?.();
+            setLongPressMenu({
+              x: (rect?.left || 0) + (e.point?.x || 0),
+              y: (rect?.top  || 0) + (e.point?.y || 0),
+              lat, lng,
+            });
+          }, 700);
+        }}
+        onTouchEnd={() => { clearTimeout(longPressTimerRef.current); longPressStartRef.current = null; }}
+        onTouchMove={(e: any) => {
+          if (!longPressStartRef.current) return;
+          const dx = Math.abs((e.point?.x || 0) - longPressStartRef.current.x);
+          const dy = Math.abs((e.point?.y || 0) - longPressStartRef.current.y);
+          if (dx > 8 || dy > 8) {
+            clearTimeout(longPressTimerRef.current);
+            longPressStartRef.current = null;
+          }
+        }}
       >
         <NavigationControl position="bottom-right" style={{ marginBottom: 80 }} />
 
@@ -1299,6 +1363,102 @@ export default function ForagingApp() {
           );
         })}
       </MapGL>
+
+      {/* Long-press context menu ─── "I am here" + "What is around here"
+          Anchored at the touch/press position, clamped to viewport.
+          Backdrop closes it on outside click. */}
+      {longPressMenu && (
+        <>
+          <div
+            onClick={() => setLongPressMenu(null)}
+            onTouchStart={() => setLongPressMenu(null)}
+            style={{
+              position: 'fixed', inset: 0, zIndex: 40,
+              background: 'transparent',
+            }}
+          />
+          <div style={{
+            position: 'fixed',
+            left: Math.min(Math.max(12, longPressMenu.x - 90), window.innerWidth - 200),
+            top:  Math.min(Math.max(12, longPressMenu.y - 8),  window.innerHeight - 140),
+            zIndex: 41,
+            background: 'rgba(7,17,13,0.96)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            border: '0.5px solid rgba(232,177,75,0.45)',
+            borderRadius: 10,
+            boxShadow: '0 16px 42px rgba(0,0,0,0.55), 0 0 20px rgba(232,177,75,0.15)',
+            padding: 6,
+            minWidth: 200,
+          }}>
+            <div style={{
+              padding: '10px 12px 8px',
+              fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.22em', textTransform: 'uppercase',
+              color: '#8B7E62',
+              borderBottom: '0.5px solid rgba(255,255,255,0.06)',
+              marginBottom: 4,
+            }}>
+              {longPressMenu.lat.toFixed(3)}°, {longPressMenu.lng.toFixed(3)}°
+            </div>
+            <button
+              onClick={() => {
+                setUserLocation({ lat: longPressMenu.lat, lng: longPressMenu.lng });
+                setGeoStatus('granted');
+                if (mapRef.current) {
+                  mapRef.current.flyTo({
+                    center: [longPressMenu.lng, longPressMenu.lat],
+                    zoom: 8, duration: 1200, essential: true,
+                  });
+                }
+                setLongPressMenu(null);
+              }}
+              style={{
+                display: 'block', width: '100%', textAlign: 'left',
+                padding: '10px 12px', background: 'none', border: 'none', color: '#E8B14B',
+                fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 14,
+                cursor: 'pointer', borderRadius: 6,
+              }}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(232,177,75,0.08)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'none'}
+            >
+              ✦ I am here
+            </button>
+            <button
+              onClick={() => {
+                // Best-effort reverse-geocode → auto-fill MYCO's region
+                // name so the panel opens ready to ask about that spot.
+                setMycoRegionName(''); // clear stale entry
+                fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${longPressMenu.lat}&longitude=${longPressMenu.lng}&localityLanguage=en`)
+                  .then(r => r.json())
+                  .then(d => {
+                    const parts = [d.city || d.locality, d.principalSubdivision, d.countryName].filter(Boolean);
+                    if (parts.length) setMycoRegionName(parts.slice(0, 2).join(', '));
+                  })
+                  .catch(() => {});
+                // Also fly the map there for context
+                if (mapRef.current) {
+                  mapRef.current.flyTo({
+                    center: [longPressMenu.lng, longPressMenu.lat],
+                    zoom: 9, duration: 1200, essential: true,
+                  });
+                }
+                setLongPressMenu(null);
+                setMycoOpen(true);
+              }}
+              style={{
+                display: 'block', width: '100%', textAlign: 'left',
+                padding: '10px 12px', background: 'none', border: 'none', color: '#C5B5F5',
+                fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 14,
+                cursor: 'pointer', borderRadius: 6,
+              }}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(168,143,224,0.10)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'none'}
+            >
+              ✦ What is around here
+            </button>
+          </div>
+        </>
+      )}
 
       {/* GBIF loading pill */}
       {gbifLoading && (
