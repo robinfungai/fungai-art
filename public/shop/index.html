@@ -291,6 +291,123 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   <p class="hero-sub">Carefully composed by earth keepers. All extracts made with pharma-grade ethanol. Full spectrum, self-foraged where marked. Ships from Sweden · €6 flat shipping.</p>
 </div>
 
+<!-- ══════════════════════════════════════════════════════════════
+     APOTHECARY RX PANEL — moved here from /home per request.
+     Home page reads slimmer now; the tailored-formula invitation
+     is where a customer already committed to "the shop" mindset
+     lands, which is the correct funnel.
+     Style: apothecary/parchment (not the greener Rx card the home
+     used to carry). Wax-seal glyph, faded stamp brackets, ivory-
+     over-charcoal palette. Reads like the label of a compounder.
+     ══════════════════════════════════════════════════════════════ -->
+<section class="apoth-rx">
+  <a href="/herbal-engine-2/" class="apoth-rx-card">
+    <span class="apoth-corner apoth-corner--tl" aria-hidden="true"></span>
+    <span class="apoth-corner apoth-corner--tr" aria-hidden="true"></span>
+    <span class="apoth-corner apoth-corner--bl" aria-hidden="true"></span>
+    <span class="apoth-corner apoth-corner--br" aria-hidden="true"></span>
+    <div class="apoth-seal" aria-hidden="true"><span class="apoth-glyph">&#8478;</span></div>
+    <div class="apoth-body">
+      <div class="apoth-overline">Compounder's Bench · Tailored Formula</div>
+      <div class="apoth-title">Full-spectrum extracts, <em>blended fresh.</em></div>
+      <div class="apoth-tag">À la minute — built to your constitution, season, and intent. Six questions, one bespoke bottle.</div>
+    </div>
+    <div class="apoth-cta">
+      <span class="apoth-cta-label">Begin</span>
+      <span class="apoth-cta-arrow" aria-hidden="true">→</span>
+    </div>
+  </a>
+  <style>
+    .apoth-rx{padding:24px var(--gutter, 44px) 0;}
+    .apoth-rx-card{
+      position:relative;display:grid;
+      grid-template-columns:64px 1fr auto;align-items:center;
+      gap:26px;padding:26px 32px;
+      background:linear-gradient(180deg, #1a1917 0%, #14130f 100%);
+      border:0.5px solid rgba(220,196,148,0.22);
+      border-radius:3px;text-decoration:none;
+      transition:border-color .35s ease, background .35s ease;
+    }
+    /* Corner stamp brackets — faded ivory ink, apothecary-label vibe */
+    .apoth-corner{position:absolute;width:14px;height:14px;
+      border-color:rgba(220,196,148,0.35);border-style:solid;
+      pointer-events:none;transition:border-color .35s ease;}
+    .apoth-corner--tl{top:8px;left:8px;border-width:1px 0 0 1px;}
+    .apoth-corner--tr{top:8px;right:8px;border-width:1px 1px 0 0;}
+    .apoth-corner--bl{bottom:8px;left:8px;border-width:0 0 1px 1px;}
+    .apoth-corner--br{bottom:8px;right:8px;border-width:0 1px 1px 0;}
+    /* Wax-seal circle — ivory glyph on darker inset */
+    .apoth-seal{
+      width:60px;height:60px;border-radius:50%;
+      background:radial-gradient(circle at 40% 40%, #2a251c 0%, #1a1611 78%);
+      border:0.5px solid rgba(220,196,148,0.4);
+      box-shadow:inset 0 0 0 3px rgba(220,196,148,0.06);
+      display:flex;align-items:center;justify-content:center;
+      flex-shrink:0;
+    }
+    .apoth-glyph{
+      font-family:'IM Fell English','Cormorant Garamond',Georgia,serif;
+      font-style:italic;font-size:26px;color:#DCC494;line-height:1;
+      text-shadow:0 1px 2px rgba(0,0,0,0.5);
+    }
+    /* Text stack */
+    .apoth-body{min-width:0;}
+    .apoth-overline{
+      font-family:'Bayer',var(--sans);
+      font-size:8.5px;letter-spacing:0.32em;text-transform:uppercase;
+      color:#8a7d5b;margin-bottom:8px;font-weight:500;
+    }
+    .apoth-title{
+      font-family:'IM Fell English','Cormorant Garamond',Georgia,serif;
+      font-size:26px;font-weight:400;color:#e6d9b5;line-height:1.2;
+    }
+    .apoth-title em{
+      font-style:italic;color:#DCC494;font-weight:400;
+    }
+    .apoth-tag{
+      font-family:'Spectral','Cormorant Garamond',Georgia,serif;
+      font-weight:300;font-style:italic;font-size:13px;
+      color:#a09580;margin-top:6px;line-height:1.55;
+    }
+    /* CTA — small, right-aligned */
+    .apoth-cta{
+      display:flex;flex-direction:column;align-items:flex-end;gap:8px;
+      flex-shrink:0;
+    }
+    .apoth-cta-label{
+      font-family:'Bayer',var(--sans);
+      font-size:8.5px;letter-spacing:0.32em;text-transform:uppercase;
+      color:#8a7d5b;
+    }
+    .apoth-cta-arrow{
+      width:34px;height:34px;border-radius:50%;
+      border:0.5px solid rgba(220,196,148,0.35);
+      display:flex;align-items:center;justify-content:center;
+      color:#DCC494;font-size:16px;line-height:1;
+      transition:transform .35s ease, border-color .35s ease, background .35s ease;
+    }
+    .apoth-rx-card:hover{
+      border-color:rgba(220,196,148,0.55);
+      background:linear-gradient(180deg, #1e1c19 0%, #16150f 100%);
+    }
+    .apoth-rx-card:hover .apoth-corner{border-color:rgba(220,196,148,0.6);}
+    .apoth-rx-card:hover .apoth-cta-arrow{
+      transform:translateX(3px);
+      border-color:rgba(220,196,148,0.6);
+      background:rgba(220,196,148,0.06);
+    }
+    @media (max-width:640px){
+      .apoth-rx{padding:20px 16px 0;}
+      .apoth-rx-card{grid-template-columns:52px 1fr;gap:16px;padding:20px 22px;}
+      .apoth-seal{width:52px;height:52px;}
+      .apoth-glyph{font-size:22px;}
+      .apoth-title{font-size:20px;}
+      .apoth-tag{font-size:12px;}
+      .apoth-cta{grid-column:1 / -1;flex-direction:row;justify-content:flex-end;align-items:center;gap:12px;margin-top:2px;}
+    }
+  </style>
+</section>
+
 <!-- FILTERS -->
 <div class="filters" id="filterBar">
   <button class="filter-btn active" onclick="filterProducts('all',this)">All</button>

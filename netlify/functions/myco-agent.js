@@ -269,6 +269,9 @@ export const handler = async (event) => {
       const composeUser =
         'Quiz answers:\n' +
         '- Intention: ' + (q.intention || '—') + '\n' +
+        (Array.isArray(q.intentions) && q.intentions.length > 1
+          ? '- Full ranking (primary → tertiary): ' + q.intentions.slice(0, 3).join(' → ') + '  (weight the pick to primary first, secondary secondary, tertiary lightly)\n'
+          : '') +
         '- Body: ' + (q.pattern || '—') + (q.patternSub ? ' / ' + q.patternSub : '') + '\n' +
         '- Rhythm: ' + (q.time || '—') + ' hardest\n' +
         '- Meets stress by: ' + (q.stress || '—') + '\n' +

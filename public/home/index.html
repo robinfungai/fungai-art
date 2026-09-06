@@ -1475,206 +1475,6 @@ function toggleMobileMenu() {
   </div>
 </div>
 
-<!-- ══ TAILORED FORMULA — v3: horizontal-grid prescription card
-     Implements the brief verbatim: 56px seal + 1fr text + auto action.
-     Full-width inside a parent padded 0 44px, NOT floating, brackets at
-     each corner, dark forest palette (#05120c on #1e3828). ══ -->
-<section class="rx-section">
-  <div class="wrap rx-frame">
-    <a href="/herbal-engine-2/" class="rx-card">
-      <span class="rx-accent" aria-hidden="true"></span>
-      <span class="rx-bracket rx-bracket--tl" aria-hidden="true"></span>
-      <span class="rx-bracket rx-bracket--tr" aria-hidden="true"></span>
-      <span class="rx-bracket rx-bracket--bl" aria-hidden="true"></span>
-      <span class="rx-bracket rx-bracket--br" aria-hidden="true"></span>
-
-      <div class="rx-seal">
-        <span class="rx-seal-inner" aria-hidden="true"></span>
-        <span class="rx-glyph">&#8478;</span>
-      </div>
-
-      <div class="rx-body">
-        <div class="rx-overtitle">Tailored Formula Service</div>
-        <div class="rx-title">
-          Full-spectrum extracts, <em>blended&nbsp;fresh.</em>
-        </div>
-        <div class="rx-tagline">&Agrave; la minute &mdash; built to your constitution, season, and intent.</div>
-      </div>
-
-      <div class="rx-action">
-        <span class="rx-action-label">Begin</span>
-        <span class="rx-action-arrow" aria-hidden="true">&rarr;</span>
-      </div>
-    </a>
-  </div>
-
-  <!-- Vertical divider — visual breath / ritual descent between the
-       formula box and the Medicine section that follows. -->
-  <div class="rx-descent" aria-hidden="true"></div>
-  <style>
-    /* Section: dark forest backdrop (#04100a) per brief — slightly
-       greener than pure black, gives the card breathing room. */
-    .rx-section {
-      padding: 64px 0 0;
-      background: #04100a;
-    }
-    /* Uses the standard .wrap container so the card aligns to the
-       same gutters as the hero / manifesto / nav and respects the
-       site-wide --max width. No special padding. */
-    .rx-frame { padding: 0 var(--gutter, 48px); }
-
-    .rx-card {
-      position: relative;
-      display: grid;
-      grid-template-columns: 60px 1fr auto;
-      align-items: center;
-      gap: 28px;
-      padding: 28px 36px;
-      background: #071812;             /* dark green undertone, not pure black */
-      border: 0.5px solid #1e3828;
-      border-radius: 2px;
-      text-decoration: none;
-      transition: border-color 0.35s ease, background 0.35s ease;
-    }
-
-    /* Left accent stripe — subtle, no glow, just a green breath */
-    .rx-accent {
-      position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-      background: linear-gradient(to bottom, transparent 0%, #2a5838 50%, transparent 100%);
-      pointer-events: none;
-    }
-
-    /* Corner brackets — 12×12, 1px stroke, 7px inset, slightly lighter
-       than the card border so they read as a separate apothecary mark */
-    .rx-bracket {
-      position: absolute; width: 12px; height: 12px;
-      border-color: #243e2e; border-style: solid; pointer-events: none;
-      transition: border-color 0.35s ease;
-    }
-    .rx-bracket--tl { top: 7px;    left: 7px;    border-width: 1px 0 0 1px; }
-    .rx-bracket--tr { top: 7px;    right: 7px;   border-width: 1px 1px 0 0; }
-    .rx-bracket--bl { bottom: 7px; left: 7px;    border-width: 0 0 1px 1px; }
-    .rx-bracket--br { bottom: 7px; right: 7px;   border-width: 0 1px 1px 0; }
-
-    /* ── Column 1: ℞ seal ── */
-    .rx-seal {
-      position: relative;
-      width: 56px; height: 56px;
-      background: #071810;             /* slightly darker than card bg */
-      border: 0.5px solid #243e2e;     /* thin green ring */
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-    }
-    /* Concentric inner ring — thinner & darker than the outer for the
-       double-ring apothecary-stamp feel */
-    .rx-seal-inner {
-      position: absolute; inset: 5px;
-      border-radius: 50%;
-      border: 0.5px solid #162e20;
-      pointer-events: none;
-    }
-    .rx-glyph {
-      font-family: 'IM Fell English', 'Cormorant Garamond', Georgia, serif;
-      font-style: italic;
-      font-weight: 400;                /* NOT bold — faded stamp feel */
-      font-size: 22px;
-      color: #3a7050;
-      line-height: 1;
-    }
-
-    /* ── Column 2: text stack ── */
-    .rx-body { min-width: 0; }
-    .rx-overtitle {
-      font-family: 'Josefin Sans', var(--sans);
-      font-weight: 100;
-      font-size: 8px;
-      letter-spacing: 0.36em;
-      color: #2a4e36;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .rx-title {
-      font-family: 'IM Fell English', 'Cormorant Garamond', Georgia, serif;
-      font-size: 26px;
-      font-weight: 400;
-      color: #8ab8a0;                  /* roman, NOT italic */
-      line-height: 1.2;
-    }
-    .rx-title em {
-      font-style: italic;              /* same family, same size, italic */
-      font-weight: 400;
-      color: #6abf88;                  /* lighter + greener than the roman */
-    }
-    .rx-tagline {
-      font-family: 'Spectral', 'Cormorant Garamond', Georgia, serif;
-      font-weight: 200;
-      font-style: italic;
-      font-size: 13px;
-      color: #2a4e36;
-      margin-top: 6px;
-      line-height: 1.5;
-    }
-
-    /* ── Column 3: BEGIN + arrow ring ── */
-    .rx-action {
-      display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
-    }
-    .rx-action-label {
-      font-family: 'Josefin Sans', var(--sans);
-      font-weight: 200;
-      font-size: 8px;
-      letter-spacing: 0.3em;
-      color: #2a5038;
-      text-transform: uppercase;
-    }
-    .rx-action-arrow {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      border: 0.5px solid #1e3828;
-      background: transparent;
-      display: flex; align-items: center; justify-content: center;
-      color: #3a6848;
-      font-size: 15px;
-      line-height: 1;
-      transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease;
-    }
-
-    /* Hover — every element brightens one notch, palette intact */
-    .rx-card:hover { border-color: #2a5838; background: #081a14; }
-    .rx-card:hover .rx-bracket { border-color: #2a5838; }
-    .rx-card:hover .rx-action-arrow {
-      transform: translateX(3px);
-      border-color: #2a5838;
-      background: rgba(106,191,136,0.05);
-    }
-
-    @media (max-width: 640px) {
-      .rx-frame { padding: 0 20px; }
-      .rx-card {
-        grid-template-columns: 48px 1fr;
-        gap: 16px;
-        padding: 22px 24px 22px 28px;
-      }
-      .rx-seal { width: 48px; height: 48px; }
-      .rx-glyph { font-size: 20px; }
-      .rx-title { font-size: 20px; }
-      .rx-tagline { font-size: 12px; }
-      .rx-action {
-        grid-column: 1 / -1;
-        flex-direction: row;
-        align-items: center; justify-content: flex-end;
-        gap: 12px;
-        margin-top: 4px;
-      }
-    }
-
-    /* ── Vertical descent divider between sections ── */
-    .rx-descent {
-      width: 1px; height: 40px; margin: 0 auto;
-      background: linear-gradient(to bottom, transparent, #1e3828);
-    }
-  </style>
-</section>
 <!-- (orphan hero-right block removed — the artwork now lives inside .hero
      above. Old SVG mycelium art + hero-stats overlay deleted to keep the
      Dramatic Split clean: artwork right, text left, nothing layered.) -->
@@ -2195,38 +1995,15 @@ function toggleMobileMenu() {
       @media (max-width: 780px)  { .shop .products-grid { grid-template-columns: repeat(2, 1fr) !important; } }
     </style>
 
-    <!-- Tailored formula + apothecary — slimmer twin cards. Was a heavy
-         32px-padded block with two large uppercase headlines that ate the
-         eye. Now each card is a single-line headline + a chip row + a
-         single CTA. "Shipped within 48h" line removed per request. -->
-    <div class="reveal twin-ctas" style="margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-      <a href="/herbal-engine-2/" class="twin-cta twin-cta--tailored">
-        <div class="twin-cta-eyebrow">℞ &middot; Tailored Formula</div>
-        <div class="twin-cta-title">Built to your <em>protocol.</em></div>
-        <div class="twin-cta-sub">Full-spectrum extracts, mixed &agrave; la minute at the right ethanol concentration for your intent.</div>
-        <span class="twin-cta-arrow">Open the Herbal Engine &rarr;</span>
-      </a>
-      <a href="/shop" class="twin-cta twin-cta--shop">
-        <div class="twin-cta-eyebrow">&loz; &middot; Full Collection</div>
-        <div class="twin-cta-title">30+ <em>preparations.</em></div>
-        <div class="twin-cta-chips">
-          <span>Fungal Extracts</span><span>Compositions</span><span>Sacred Flowers</span><span>Specials</span>
-        </div>
-        <span class="twin-cta-arrow">Enter the apothecary &rarr;</span>
-      </a>
-    </div>
+    <!-- Twin-CTAs (Tailored Formula + Full Collection) removed per
+         request — the home page was doing too much cross-linking.
+         The Tailored Formula path now lives on /shop as an apothecary
+         panel; the "Enter the apothecary" invitation is already on
+         the hero CTA. Site reads slimmer. -->
     <style>
-      .twin-cta{display:flex;flex-direction:column;gap:8px;padding:20px 22px;border-radius:12px;text-decoration:none;border:0.5px solid rgba(136,186,200,0.18);background:linear-gradient(160deg,rgba(15,18,20,0.65),rgba(8,11,13,0.45));transition:border-color .2s,transform .2s,box-shadow .2s;}
-      .twin-cta:hover{transform:translateY(-2px);border-color:rgba(232,177,75,0.5);box-shadow:0 8px 28px rgba(196,134,46,0.12);}
-      .twin-cta--tailored{border-color:rgba(232,177,75,0.4);background:linear-gradient(160deg,rgba(196,134,46,0.1),rgba(196,134,46,0.02));}
-      .twin-cta-eyebrow{font-family:'Bayer',var(--sans);font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:var(--amber-lt);}
-      .twin-cta-title{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:clamp(20px,2vw,26px);color:var(--parchment);line-height:1.15;letter-spacing:-0.005em;}
-      .twin-cta-title em{color:var(--amber-lt);}
-      .twin-cta-sub{font-family:'Kiona',var(--sans);font-size:12.5px;color:var(--mist);line-height:1.55;margin-bottom:2px;opacity:0.9;}
-      .twin-cta-chips{display:flex;gap:5px;flex-wrap:wrap;margin:2px 0 4px;}
-      .twin-cta-chips span{font-family:'Bayer',var(--sans);font-size:8.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--amber-lt);border:0.5px solid rgba(196,134,46,0.28);padding:3px 8px;border-radius:999px;}
-      .twin-cta-arrow{font-family:'Bayer',var(--sans);font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--cream);margin-top:6px;}
-      .twin-cta:hover .twin-cta-arrow{color:var(--parchment);}
+      /* Old .twin-cta classes intentionally left absent — the DOM they
+         styled is gone. Keeping this comment as a beacon so a future
+         reader doesn't grep for .twin-cta and wonder where it went. */
       @media (max-width:720px){
         .twin-ctas{grid-template-columns:1fr;}
         .twin-cta{padding:18px 18px;}
@@ -2289,19 +2066,10 @@ function toggleMobileMenu() {
       </h2>
 
       <p class="dinner-lede">
-        Seven courses, twelve seats, one long evening. Foraged mushrooms, chaga garum XO, sweetened pine cone, ramson oil, wild herbs, cacao-reishi close. Sliding scale to keep it accessible.
+        Seven courses, twelve seats, one long evening. Foraged mushrooms and wild herbs, sourced by Robin in the weeks before. Sliding scale to keep it accessible.
       </p>
 
       <blockquote class="dinner-quote">"The meal is the medicine. The table is the ritual."</blockquote>
-
-      <div class="dinner-signature">
-        <span>Morel + labneh</span>
-        <span>Chaga garum XO</span>
-        <span>Spruce shoots</span>
-        <span>Wasabi sesame</span>
-        <span>Amanita amuse-bouche</span>
-        <span>Cacao-reishi close</span>
-      </div>
 
       <div class="dinner-cta-row">
         <a href="/dinner-experience#reserve" class="dinner-cta-primary">

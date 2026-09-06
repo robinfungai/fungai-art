@@ -357,6 +357,51 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
   .bubble.on{transform:scale(1.06)}
 }
 
+/* ── Ranked mode (Q1 intention: pick 1-2-3 in order) ────────────────
+   A small numbered badge in the top-right corner marks the pick
+   rank. When the max is reached, unpicked bubbles dim slightly
+   so the field reads as "you're done ranking, tap Continue" without
+   any modal or interruption. */
+.bubble-rank{
+  position:absolute;
+  top:2px;right:2px;
+  min-width:20px;height:20px;padding:0 5px;
+  border-radius:999px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.04em;
+  color:#0a0a0a;
+  background:color-mix(in srgb, var(--hue) 92%, white 8%);
+  border:0.5px solid rgba(255,255,255,0.35);
+  box-shadow:0 0 8px color-mix(in srgb, var(--hue) 55%, transparent);
+  pointer-events:none;
+  z-index:3;
+}
+.q-bubbles.ranked-full .bubble:not(.on){
+  opacity:0.42;filter:saturate(0.55);
+}
+/* Continue affordance when in ranked mode + at least one pick */
+.q-ranked-cta{
+  display:flex;align-items:center;justify-content:center;
+  gap:14px;margin:14px 0 4px;
+  font-family:var(--sans);
+}
+.q-ranked-cta-count{
+  font-family:var(--mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--dust-d);
+}
+.q-ranked-cta-btn{
+  padding:11px 26px;border-radius:999px;
+  background:linear-gradient(180deg, color-mix(in srgb, var(--amber, #E8B14B) 92%, white 8%), color-mix(in srgb, var(--amber, #E8B14B) 65%, transparent));
+  border:0.5px solid color-mix(in srgb, var(--amber, #E8B14B) 55%, rgba(255,255,255,0.15));
+  color:#0a0a0a;
+  font-family:var(--mono);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;font-weight:600;
+  cursor:pointer;
+  box-shadow:0 0 22px -4px color-mix(in srgb, var(--amber, #E8B14B) 40%, transparent);
+  transition:transform .25s, box-shadow .25s, opacity .25s;
+}
+.q-ranked-cta-btn:hover{transform:translateY(-2px);box-shadow:0 4px 26px -2px color-mix(in srgb, var(--amber, #E8B14B) 60%, transparent);}
+.q-ranked-cta-btn:disabled{opacity:0.35;cursor:default;transform:none;box-shadow:none}
+
 /* ── Q2 sub-question header (back-to-archetype affordance) ── */
 .q-sub-back{background:none;border:none;color:var(--dust-d);cursor:pointer;font-family:var(--mono);font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;padding:6px 0 12px;display:inline-flex;align-items:center;gap:6px}
 .q-sub-back:hover{color:var(--amber-l)}
@@ -1112,8 +1157,9 @@ const QUESTIONS = [
     key:'intention',
     eyebrow:'01 of 06 · The calling',
     title:'What are you <em>calling in</em>?',
-    hint:'Tap one. Every bubble carries a different alchemy.',
+    hint:'Tap up to three — in the order they matter to you. 1 = most important. MYCO reads the ranking to compose with the right emphasis.',
     type:'bubbles',
+    ranked:true, maxRanks:3,
     options:[
       // Each intention is an "alchemical species" — the sub line
       // names the biological territory it addresses. Kept dense and
@@ -1465,36 +1511,133 @@ function renderQuestionBody(q, opts){
     return container;
   }
 
-  // ── Living alchemical bubble grid (Q1) — v2 ────────────────────
-  //   Post-mobile-feedback: no in-bubble subtitle (didn't fit at
-  //   3-col mobile width), no magnetic pointermove listener (jittery
-  //   on touch, unnecessary on desktop for an auto-advance question).
-  //   Keep the semantic o.sub + o.related data in the option — reserved
-  //   for a future results-screen caption or hold-to-reveal mycelium
-  //   overlay.
+  // ── Living alchemical bubble grid (Q1) — v3 ────────────────────
+  //   Now supports a RANKED multi-select mode (opt-in via q.ranked).
+  //   Users tap up to q.maxRanks bubbles in the order they matter.
+  //   The picks are stored as an ORDERED array on state.answers[q.key + 's']
+  //   (e.g. answers.intentions = ['sleep', 'stress', 'mood']) so MYCO and
+  //   the deterministic scorer can weight primary vs secondary vs tertiary.
+  //   answers[q.key] stays as the top-ranked value (string) so every
+  //   downstream consumer that expects a single intention still works
+  //   unchanged.
+  //
+  //   Single-select (non-ranked) mode preserved for any other bubbles
+  //   question — same visuals, one pick, auto-advance.
   if (q.type === 'bubbles') {
     const grid = document.createElement('div'); grid.className = 'q-bubbles';
-    const current = state.answers[q.key];
+    const rankedMode = !!q.ranked;
+    const maxRanks   = Math.max(1, Number(q.maxRanks) || 3);
+    const arrKey     = q.key + 's'; // e.g. 'intentions'
+
+    // Local ordered list of picks. Initialised from persisted state
+    // if the user is returning to this step; falls back to the
+    // single-value legacy key if only that was set previously.
+    let ranks;
+    if (rankedMode) {
+      if (Array.isArray(state.answers[arrKey])) {
+        ranks = state.answers[arrKey].slice(0, maxRanks);
+      } else if (state.answers[q.key]) {
+        ranks = [state.answers[q.key]];
+      } else {
+        ranks = [];
+      }
+    } else {
+      ranks = state.answers[q.key] ? [state.answers[q.key]] : [];
+    }
+
+    // Repaint the rank badges + selected state + full-dim class.
+    // Called after every pick / unpick.
+    function repaint() {
+      grid.querySelectorAll('.bubble').forEach(b => {
+        const v = b.dataset.v;
+        const idx = ranks.indexOf(v);
+        b.classList.toggle('on', idx >= 0);
+        // Remove any existing rank badge, then re-add if ranked+selected.
+        const oldBadge = b.querySelector('.bubble-rank');
+        if (oldBadge) oldBadge.remove();
+        if (rankedMode && idx >= 0) {
+          const badge = document.createElement('span');
+          badge.className = 'bubble-rank';
+          badge.textContent = String(idx + 1);
+          b.appendChild(badge);
+        }
+      });
+      if (rankedMode) {
+        grid.classList.toggle('ranked-full', ranks.length >= maxRanks);
+        if (cta) {
+          cta.style.display = ranks.length > 0 ? 'flex' : 'none';
+          ctaCount.textContent = ranks.length + ' of ' + maxRanks + ' chosen';
+          ctaBtn.disabled = ranks.length === 0;
+        }
+      }
+    }
+
     q.options.forEach(o => {
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'bubble';
       b.dataset.v = o.v;
       if (o.related) b.dataset.related = o.related;
       b.style.setProperty('--hue', o.hue || '#E8B14B');
-      if (current === o.v) b.classList.add('on');
       b.innerHTML =
         '<span class="bubble-nucleus"></span>' +
         '<span>' + o.label + '</span>';
+
       b.addEventListener('click', () => {
-        state.answers[q.key] = o.v; persist();
-        grid.querySelectorAll('.bubble').forEach(x => x.classList.remove('on'));
-        b.classList.add('on');
-        if (navigator.vibrate) { try { navigator.vibrate(8); } catch(_){} }
-        if (autoAdvance) setTimeout(() => go(state.step + 1), 300);
+        const v = o.v;
+        const idx = ranks.indexOf(v);
+        if (rankedMode) {
+          if (idx >= 0) {
+            // Deselect — subsequent ranks shift down by one
+            ranks.splice(idx, 1);
+          } else if (ranks.length < maxRanks) {
+            // Assign next rank
+            ranks.push(v);
+          } else {
+            // Max reached; ignore. (Could roll first-out if
+            // Robin wants; keeping strict for now — user sees the
+            // dim state on unpicked bubbles as a hint.)
+            return;
+          }
+          state.answers[arrKey]  = ranks.slice();
+          state.answers[q.key]   = ranks[0] || '';
+          persist();
+          repaint();
+          if (navigator.vibrate) { try { navigator.vibrate(8); } catch(_){} }
+        } else {
+          // Legacy single-select — one pick, auto-advance.
+          ranks = [v];
+          state.answers[q.key] = v; persist();
+          repaint();
+          if (navigator.vibrate) { try { navigator.vibrate(8); } catch(_){} }
+          if (autoAdvance) setTimeout(() => go(state.step + 1), 300);
+        }
       });
       grid.appendChild(b);
     });
     container.appendChild(grid);
+
+    // Ranked mode gets a Continue button below the grid. Appears
+    // after the first pick, becomes prominent when at least one
+    // is chosen. Auto-advance is intentionally skipped for ranked —
+    // the user needs to complete their ordering before they move on.
+    let cta, ctaCount, ctaBtn;
+    if (rankedMode) {
+      cta = document.createElement('div'); cta.className = 'q-ranked-cta';
+      cta.style.display = 'none';
+      ctaCount = document.createElement('span'); ctaCount.className = 'q-ranked-cta-count';
+      ctaBtn   = document.createElement('button'); ctaBtn.type = 'button';
+      ctaBtn.className = 'q-ranked-cta-btn';
+      ctaBtn.textContent = 'Continue →';
+      ctaBtn.addEventListener('click', () => {
+        if (ranks.length === 0) return;
+        go(state.step + 1);
+      });
+      cta.appendChild(ctaCount);
+      cta.appendChild(ctaBtn);
+      container.appendChild(cta);
+    }
+
+    repaint();
     return container;
   }
 
@@ -1775,6 +1918,19 @@ function scoreHerb(h, a){
   // from the pool.
   if (ax.intentions.includes(a.intention)) {
     s += 5 / Math.max(1, ax.intentions.length);
+  }
+  // Secondary + tertiary intention boosts from the ranked Q1 array
+  // (a.intentions is the ordered [primary, secondary, tertiary]).
+  // Weights taper so primary always dominates the pick — a herb that
+  // matches ONLY the tertiary shouldn't outrank one that matches the
+  // primary. Both share the polyvalent-normalisation divisor.
+  if (Array.isArray(a.intentions) && a.intentions.length > 1) {
+    if (a.intentions[1] && ax.intentions.includes(a.intentions[1])) {
+      s += 3 / Math.max(1, ax.intentions.length);
+    }
+    if (a.intentions[2] && ax.intentions.includes(a.intentions[2])) {
+      s += 1.5 / Math.max(1, ax.intentions.length);
+    }
   }
   if (ax.patterns.includes(a.pattern))     s += 4;
   if (ax.times.includes(a.time))           s += 2;
@@ -2073,7 +2229,8 @@ const NAME_TEMPLATES = {
 // longer end up with the same formula name.
 function hashAnswers(a){
   const stable = JSON.stringify({
-    intention: a.intention || '',
+    intention:  a.intention || '',
+    intentions: Array.isArray(a.intentions) ? a.intentions.slice(0, 3) : [],
     pattern:   a.pattern   || '',
     patternSub:a.patternSub|| '',
     time:      a.time      || '',
@@ -2336,7 +2493,14 @@ async function mycoCompose(a){
   const shortlist = buildShortlist(a);
   if (shortlist.length < 5) return null;
   const quizPayload = {
-    intention: a.intention, pattern: a.pattern, patternSub: a.patternSub,
+    intention: a.intention,
+    // Ordered [primary, secondary, tertiary] from Q1 ranked mode.
+    // MYCO reads this to weight the composition — a "sleep, then
+    // anxiety, then mood" user gets a different pick than a
+    // "mood, then anxiety, then sleep" user, even though the same
+    // three categories are involved.
+    intentions: Array.isArray(a.intentions) ? a.intentions.slice(0, 3) : [],
+    pattern: a.pattern, patternSub: a.patternSub,
     time: a.time, stress: a.stress, duration: a.duration,
     age: a.age, sleep: a.sleep, avoid: a.avoid, notes: a.notes,
   };
