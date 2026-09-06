@@ -79,7 +79,7 @@ Effect: Supports healthy circulation, vascular integrity, particularly in those 
 
 **Dosage Range:**
 **Tea (Infusion—PREFERRED):** 1-2 tsp dried flowers per 250 ml water, steeped 5-10 minutes (steep longer for fuller extraction + more soothing mucilage), 2-3× daily. Most efficient extraction of flavonoids + mucilage; pleasant taste (sweet, floral).
-**Tincture (1:5 ratio, alcohol-based):** 30-60 drops (1.5-3 ml), 2-3× daily. Convenient dosing; less efficient for mucilage (water-soluble) but adequate flavonoid extraction.
+**Extract (1:5 ratio, alcohol-based):** 30-60 drops (1.5-3 ml), 2-3× daily. Convenient dosing; less efficient for mucilage (water-soluble) but adequate flavonoid extraction.
 **Infusion (Long Steep—MOST NOURISHING):** 1-2 tsp flowers steeped 10-15 minutes (or longer—up to 1 hour for full mucilage extraction), drunk as nourishing tea. Traditional preparation; most soothing.
 **Fresh Flowers (When Available):** Most potent; use fresh in hot water, or dried immediately after harvest.
 **Duration:** Safe for continuous long-term daily use (food-like herb); effects cumulative + improve over time; no tolerance, no dependence.
@@ -88,7 +88,7 @@ Effect: Supports healthy circulation, vascular integrity, particularly in those 
 **Protocol 1: Daily Anxiety + Stress Support (Foundation)** — 1-2 tsp dried flowers steeped 10 min, 2-3× daily throughout day. Can use year-round for baseline anxiety management + general nervous system support. Daytime use safe (non-sedating).
 **Protocol 2: Sleep Support (Evening Ritual)** — 1-2 tsp dried flowers steeped 10-15 min in warm water (extra time extracts mucilage), consumed 30-60 min before bed. Can add honey (sleep-supporting). Promotes gentle relaxation into sleep.
 **Protocol 3: Heart Opening + Emotional Support (Therapy Integration)** — 1-2 tsp flowers steeped 10 min, 1-2× daily during grief work or emotional processing. Facilitates vulnerability + openness without destabilization. Often 4-8 week protocol during therapy.
-**Protocol 4: Synergistic Sleep Formula (Enhanced Gentle Support)** — Linden flowers 1-2 tsp + Passionflower 10 drops tincture + Chamomile 1-2 tsp, all steeped together 10 min. Triple gentle nervine; excellent for anxiety-related insomnia; non-forcing approach.
+**Protocol 4: Synergistic Sleep Formula (Enhanced Gentle Support)** — Linden flowers 1-2 tsp + Passionflower 10 drops extract + Chamomile 1-2 tsp, all steeped together 10 min. Triple gentle nervine; excellent for anxiety-related insomnia; non-forcing approach.
 **Protocol 5: Heart Opening Trinity (Emotional + Cardiovascular)** — Linden flowers 1-2 tsp + Hawthorn leaf 1-2 tsp (cardiovascular tonification + heart support) + Rose petals 0.5-1 tsp (emotional opening). Steeped together 10 min. Comprehensive heart support (physical + emotional).
 **Protocol 6: Childhood Fever Support (Gentle)** — 1-2 tsp flowers steeped 5-10 min, given warm to child. Promotes sweating (fever-reducing). Pleasant taste; well-tolerated by children. Can repeat 3-4× daily during acute fever.
 **Protocol 7: Slow, Patient Tonification (Minimal Dose, Maximum Consistency)** — 0.5-1 tsp flowers steeped 10 min, 1× daily (evening) over months-years. Gentle baseline nervous system tonification; cumulative deep relaxation effect.
@@ -250,5 +250,5 @@ Effect: Supports healthy circulation, vascular integrity, particularly in those 
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*
 *Date: February 2026*

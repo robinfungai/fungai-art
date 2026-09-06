@@ -4,7 +4,7 @@
 
 **Primary Species:** Rumex crispus L. (Yellow dock, curly dock).[web:244][web:239]  
 **Family:** Polygonaceae.  
-**Part Used:** **Root**, dried and decocted or tinctured.[web:244]
+**Part Used:** **Root**, dried and decocted or extractd.[web:244]
 
 ---
 
@@ -48,7 +48,7 @@
 **Typical Adult Internal:**
 
 - Decoction: 1–2 g root in 250 ml water, gently simmered 10–15 min, 1–3× daily short term.  
-- Tincture 1:5: 1–4 ml, 1–3× daily.
+- Extract 1:5: 1–4 ml, 1–3× daily.
 
 **Use Pattern:**
 

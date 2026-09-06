@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
@@ -132,7 +132,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
 <!-- Categories -->
 <div class="cats">
   <button class="cat-btn active" data-cat="all">All</button>
-  <button class="cat-btn" data-cat="tincture">Tinctures</button>
+  <button class="cat-btn" data-cat="extract">Extracts</button>
   <button class="cat-btn" data-cat="special">Special extracts</button>
   <button class="cat-btn" data-cat="ceremony">Ceremonies</button>
   <button class="cat-btn" data-cat="academy">Academy</button>
@@ -170,16 +170,16 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
 <script src="/mycel-wallet.js" defer></script>
 <script>
 const CATALOGUE = [
-  // Tinctures
-  { id:'chaga-30', cat:'tincture', name:'Chaga 30ml', desc:'Wild-foraged Inonotus obliquus, double extraction. Standard from the public shop.', price:45, tags:['Foraged'] },
-  { id:'reishi-30', cat:'tincture', name:'Reishi 30ml', desc:'Ganoderma lucidum, full spectrum. Adaptogenic, sleep, longevity.', price:40, tags:[] },
-  { id:'cordyceps-30', cat:'tincture', name:'Cordyceps 30ml', desc:'Cordyceps militaris, vitality and endurance. Standard catalogue.', price:45, tags:[] },
-  { id:'temple-30', cat:'tincture', name:'Temple Nectar 30ml', desc:'Saffron, damiana, catuaba, blue lotus, maca negra, vanilla, muira puama.', price:55, tags:['Signature'] },
+  // Extracts
+  { id:'chaga-30', cat:'extract', name:'Chaga 30ml', desc:'Wild-foraged Inonotus obliquus, double extraction. Standard from the public shop.', price:45, tags:['Foraged'] },
+  { id:'reishi-30', cat:'extract', name:'Reishi 30ml', desc:'Ganoderma lucidum, full spectrum. Adaptogenic, sleep, longevity.', price:40, tags:[] },
+  { id:'cordyceps-30', cat:'extract', name:'Cordyceps 30ml', desc:'Cordyceps militaris, vitality and endurance. Standard catalogue.', price:45, tags:[] },
+  { id:'temple-30', cat:'extract', name:'Temple Nectar 30ml', desc:'Saffron, damiana, catuaba, blue lotus, maca negra, vanilla, muira puama.', price:55, tags:['Signature'] },
 
   // Special extracts (member-only)
   { id:'amanita-solstice', cat:'special', name:'Solstice Amanita 15ml', desc:'Wild Amanita muscaria, decarboxylated to muscimol. Drop-dose only. Member-exclusive batch.', price:120, tags:['Member only','Foraged'] },
   { id:'kvanne-konigshyttan', cat:'special', name:'Königshyttan Kvanne', desc:'Wild Angelica archangelica from the Bergslagen region. Limited 2026 harvest.', price:90, tags:['Member only','Foraged'] },
-  { id:'mycelium-mother', cat:'special', name:'Mycelium Mother Tincture 50ml', desc:'Living mycelium grown in pharma-grade ethanol — the source of every Fungai Art elixir.', price:150, tags:['Member only'] },
+  { id:'mycelium-mother', cat:'special', name:'Mycelium Mother Extract 50ml', desc:'Living mycelium grown in pharma-grade ethanol — the source of every Fungai Art elixir.', price:150, tags:['Member only'] },
   { id:'threshold-13', cat:'special', name:'Threshold No.13', desc:'Rose petals, blue lotus, kanna, damiana, cordyceps. Experimental member batch.', price:130, tags:['Member only','Experimental'] },
 
   // Ceremonies
@@ -246,7 +246,7 @@ function openDrawModal(id) {
   document.getElementById('modalBg').classList.add('on');
   document.getElementById('modalConfirm').onclick = async () => {
     try {
-      const productType = window.MYCEL.PRODUCT_TYPES[item.cat === 'tincture' ? 'tincture_30ml' : item.cat === 'ceremony' ? 'ceremony_access' : item.cat === 'retreat' ? 'retreat_early_access' : item.cat === 'academy' ? 'academy_session' : 'special_extract'];
+      const productType = window.MYCEL.PRODUCT_TYPES[item.cat === 'extract' ? 'extract_30ml' : item.cat === 'ceremony' ? 'ceremony_access' : item.cat === 'retreat' ? 'retreat_early_access' : item.cat === 'academy' ? 'academy_session' : 'special_extract'];
       const tx = await window.MYCEL.draw(item.price, productType, item.name);
       alert(`Drawn. Transaction: ${tx}`);
       document.getElementById('modalBg').classList.remove('on');

@@ -93,7 +93,7 @@ Clinical significance: Mood, depression (adjunctive), pleasure, joy, emotional e
 
 **Dried Flower Infusion (CONVENIENT):** 2-4g dried flowers steeped 5-10 min, 1-2× daily. Good extraction; pleasant aroma; accessible.
 
-**Flower Tincture (Fresh Flowers—CONCENTRATED):** 15-30 drops, 1-2× daily. Concentrated aromatic + emotional compounds.
+**Flower Extract (Fresh Flowers—CONCENTRATED):** 15-30 drops, 1-2× daily. Concentrated aromatic + emotional compounds.
 
 **Timing:** Evening optimal (sleep + emotional ease); can be used morning for mood/joy.
 

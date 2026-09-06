@@ -99,7 +99,7 @@ Clinical significance: **ADDICTION PATHWAY—UNACCEPTABLE FOR SELF-CARE HERB.**
 - **Powder (Most Common):** Mix powder in water, juice, or "toss and wash" method (swallow powder with water)
 - **Capsules:** 0.5-1g capsules (convenient but requires multiple capsules)
 - **Tea (Decoction):** Simmer 5-10 min (more palatable; all alkaloids extracted)
-- **Tincture (Concentrated):** 20-40 drops (concentrated form)
+- **Extract (Concentrated):** 20-40 drops (concentrated form)
 
 **Timing:** Morning-afternoon (stimulating low doses); evening (sedating high doses).
 

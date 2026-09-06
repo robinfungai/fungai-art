@@ -15,7 +15,7 @@ Olacaceae.[web:61]
 Root and stem bark (dried); sometimes just “bark” in trade.[web:61][web:56]
 
 **Harvesting & Processing:**  
-Roots/bark collected from mature plants, cleaned, dried, and cut/sliced; used in decoctions, tinctures, and powders.[web:61][web:56]
+Roots/bark collected from mature plants, cleaned, dried, and cut/sliced; used in decoctions, extracts, and powders.[web:61][web:56]
 
 **Quality Indicators:**  
 Brownish bark/root pieces with slightly aromatic, bitter taste; quality and chemistry vary by region/habitat.[web:61]
@@ -85,7 +85,7 @@ Traditional uses include increased energy, endurance, and recovery, making it po
 **Decoction:**  
 - 2–4 g dried root/bark per 250 ml water; simmer 15–20 minutes; 1–2× daily.[web:56]
 
-**Tincture / Fluid Extract:**  
+**Extract / Fluid Extract:**  
 - 1:5 (40–60% alcohol): 2–4 ml 1–2× daily; exact clinical ranges vary due to lack of monograph consensus.
 
 **Powder / Capsules:**  
@@ -97,11 +97,11 @@ Traditional uses include increased energy, endurance, and recovery, making it po
 **Best Preparations & Protocols:**  
 
 **Protocol 1: Low Libido / Mild ED**  
-- 2–4 ml tincture in morning and/or early afternoon; or 2–4 g decoction daily.  
+- 2–4 ml extract in morning and/or early afternoon; or 2–4 g decoction daily.  
 - Combine with adaptogens (Maca, Ashwagandha), circulatory tonics (ginkgo), and stress herbs (oatstraw) for multidimensional support.
 
 **Protocol 2: Nervous Exhaustion + Cognitive Fog**  
-- Lower doses (1–2 ml tincture 1–2× daily) with bacopa, gotu kola, rhodiola, etc.
+- Lower doses (1–2 ml extract 1–2× daily) with bacopa, gotu kola, rhodiola, etc.
 
 ---
 
@@ -183,6 +183,6 @@ Desire is a directional force; when aligned with heart and mind, it becomes **po
 
 ---
 
-*Generated for: Functional Beverage / Tincture Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*  
+*Generated for: Functional Beverage / Extract Formulation AI App*  
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*  
 *Date: February 2026*

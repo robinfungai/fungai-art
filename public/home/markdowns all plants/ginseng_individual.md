@@ -112,7 +112,7 @@ Clinical significance: Sexual dysfunction, erectile challenges, libido enhanceme
 
 **Standardized Extract:** 200-400mg daily (ginsenoside-standardized—most reliable).
 
-**Tincture:** 40-80 drops, 2-3× daily.
+**Extract:** 40-80 drops, 2-3× daily.
 
 **Duration:** 8-12 weeks minimum for full adaptogenic effect; cycling (8-12 weeks on, 2-4 weeks off) recommended. Long-term safe with cycling.
 
@@ -217,5 +217,5 @@ Clinical significance: Sexual dysfunction, erectile challenges, libido enhanceme
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System*
+*Use Case: Tailored Extract Recommendation System*
 *Date: February 2026*

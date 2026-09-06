@@ -22,7 +22,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['immune tonic', 'nervine', 'lymphatic', 'mineral-rich nutritive'],
     folklore: ['Birch is the Goddess tree — first to leaf in spring, symbol of purification and new beginnings in Nordic tradition', 'Chaga was called "Gift of God" in Siberian shamanic traditions', 'Birch sap drunk at spring equinox as a blood purifier'],
-    extraction_notes: 'Chaga: double extraction essential (4h hot water decoction + alcohol tincture). Birch polypore: tincture in 50% ethanol, 4 weeks. Nettle: cold-water infusion for minerals only.',
+    extraction_notes: 'Chaga: double extraction essential (4h hot water decoction + alcohol extract). Birch polypore: extract in 50% ethanol, 4 weeks. Nettle: cold-water infusion for minerals only.',
     lore: 'The birch groves around Müggelsee hold one of the densest Chaga populations in Brandenburg. The old birch stands that have stood since before the Wall are now host to medicine. Walk the eastern shore in early winter when the frost has hardened the soil — the black sclerotia glow against silver bark.',
   },
 
@@ -45,7 +45,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['respiratory support', 'antioxidant', 'urinary tonic', 'immune'],
     folklore: ['Pine resin has been used for wound healing since ancient Germanic tradition', 'Chanterelle called "Pfifferling" — the forest gold of German foraging culture', 'Bilberry juice stained the hands of foragers blue — sign of summer harvest'],
-    extraction_notes: 'Pine tips: simple tincture in 40% ethanol or cold infusion in water. Bilberry: tincture or fresh juice.',
+    extraction_notes: 'Pine tips: simple extract in 40% ethanol or cold infusion in water. Bilberry: extract or fresh juice.',
     lore: 'The Grunewald in late summer smells of resin and rain. The sandy soil of this old Prussian hunting forest is chanterelle country — orange gold in the moss between the pine roots after August rain. The bilberries grow in thick carpets where light breaks through.',
   },
 
@@ -68,7 +68,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['heart tonic', 'nervine', 'pain relief', 'anti-inflammatory', 'immune'],
     folklore: ['Meadowsweet was sacred to the Druids — strewn at weddings, flavoured mead, and placed with the dead', 'Valerian roots were kept by village healers as "all-heal" — soldiers carried it into battle'],
-    extraction_notes: 'Meadowsweet: tincture in 40% ethanol. Valerian: fresh root tincture preferred for anxiety; dried root for sleep. Willow bark: water decoction only — salicylates are water-soluble.',
+    extraction_notes: 'Meadowsweet: extract in 40% ethanol. Valerian: fresh root extract preferred for anxiety; dried root for sleep. Willow bark: water decoction only — salicylates are water-soluble.',
     lore: 'The Spreewald is a land that water has made. The countless channels and meadows hold the last great wetland plant communities of the Brandenburg lowlands. Meadowsweet blooms in white foam in July, filling the air with its aspirin-honey scent.',
   },
 
@@ -92,7 +92,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['antioxidant', 'urinary support', 'immune', 'longevity tonic'],
     folklore: ['Allemansrätten — the right to roam — means every Swedish citizen has ancestral access to forest medicine', 'Bilberry was called "whortleberry" and used to stain cloth, feed bears before hibernation, and treat diarrhea'],
-    extraction_notes: 'Chaga: double extraction. Bilberry: tincture 40% ethanol or fresh juice. Lingonberry: cold-pressed juice preferred.',
+    extraction_notes: 'Chaga: double extraction. Bilberry: extract 40% ethanol or fresh juice. Lingonberry: cold-pressed juice preferred.',
     lore: 'The Swedish boreal forest in August is a cathedral of mushroom intelligence. The reindeer moss underfoot, the silver birch stands, the ancient Scots pines — each holds its own ecology. Chanterelle hunting here is a national ritual. Walk slowly. The forest floor oranges before your eyes.',
   },
 
@@ -114,7 +114,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['adaptogen', 'antioxidant', 'immune', 'Arctic survival medicine'],
     folklore: ['Rhodiola was traded along the Silk Road for its resilience-building properties', 'Sami healers used cloudberry leaves for wound poultice and the berries to fight scurvy through Arctic winters'],
-    extraction_notes: 'Rhodiola: 70% ethanol tincture — rosavins require high-proof alcohol. Only 5+ year old roots. Cloudberry: fresh juice or freeze-preserved.',
+    extraction_notes: 'Rhodiola: 70% ethanol extract — rosavins require high-proof alcohol. Only 5+ year old roots. Cloudberry: fresh juice or freeze-preserved.',
     lore: 'Above the treeline in Jämtland, the heath opens into an immensity of sky and stone. This is where Rhodiola rosea grows — its roots smelling of roses — a plant that has been traded across Eurasia for millennia. The Sami knew this land as a pharmacy.',
   },
 
@@ -155,11 +155,11 @@ export const ECO_NODES: EcoNode[] = [
       { name: 'Maitake',            probability: 0.69, peak_season: ['autumn'],          medicinal: true,  note: 'At base of old oak — "dancing mushroom"' },
       { name: 'Nameko',             probability: 0.77, peak_season: ['autumn'],          edible: true,     note: 'Small golden-brown on beech deadwood' },
       { name: 'Mukitake',           probability: 0.55, peak_season: ['autumn'],          edible: true },
-      { name: 'Lion\'s Mane',       probability: 0.44, peak_season: ['summer','autumn'], medicinal: true,  note: 'Old beech — brain medicine. Cold tincture only, no heat.' },
+      { name: 'Lion\'s Mane',       probability: 0.44, peak_season: ['summer','autumn'], medicinal: true,  note: 'Old beech — brain medicine. Cold extract only, no heat.' },
     ],
     medicinal: ['cognitive intelligence', 'immune complex', 'metabolic support'],
     folklore: ['Matsutake is the most prized foraged fungus in Japan — a gift worth more than gold in September', 'Lion\'s Mane was considered the "brain mushroom" in traditional Chinese medicine — a medicine for wisdom and memory', 'Maitake was once so valuable it was used as currency and kept secret — its location guarded for generations'],
-    extraction_notes: 'Maitake: double extraction. Lion\'s Mane: cold tincture in 50–60% ethanol — erinacines are heat-sensitive. No hot water for Lion\'s Mane.',
+    extraction_notes: 'Maitake: double extraction. Lion\'s Mane: cold extract in 50–60% ethanol — erinacines are heat-sensitive. No hot water for Lion\'s Mane.',
     lore: 'The Akan forests of Hokkaido are among the most biodiverse in East Asia. The ancient red pine stands — some 200 years old — are the only habitat for Matsutake. To find one is to witness a relationship between tree and fungus that began before your great-grandparents were born.',
   },
 
@@ -181,7 +181,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['immune complex', 'longevity', 'anti-viral', 'cognitive'],
     folklore: ['Reishi (Lingzhi) has been called the "Mushroom of Immortality" in Chinese tradition for 2000 years — depicted in silk paintings and carved into imperial robes', 'The Ainu people of Hokkaido used forest fungi as medicine and ceremonial offering'],
-    extraction_notes: 'Reishi: double extraction (4h hot water + alcohol). Shiitake: double extraction. Wild enoki: simple tincture or culinary use.',
+    extraction_notes: 'Reishi: double extraction (4h hot water + alcohol). Shiitake: double extraction. Wild enoki: simple extract or culinary use.',
     lore: 'The Shiretoko Peninsula is a UNESCO World Heritage Site — one of the last pristine temperate ecosystems in East Asia. Here the Ainu people have foraged since before written history. The beech forests in October turn gold and rust, and from every dead trunk the intelligence of fungi emerges.',
   },
 
@@ -229,7 +229,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['antimicrobial', 'digestive fire', 'aromatic medicine', 'blood sugar'],
     folklore: ['Zanzibar was the world\'s greatest spice island — sultans controlled clove trade and with it, the ancient medicine routes of the Indian Ocean', 'Clove oil has been used in dentistry since the 4th century AD — found in archaeological sites along the Silk Road'],
-    extraction_notes: 'Clove: oil infusion (fat-soluble eugenol) or 95% ethanol tincture. Cinnamon: decoction or 40% tincture. Cardamom: oil infusion for aromatics.',
+    extraction_notes: 'Clove: oil infusion (fat-soluble eugenol) or 95% ethanol extract. Cinnamon: decoction or 40% extract. Cardamom: oil infusion for aromatics.',
     lore: 'The spice forests of Kizimbani are living archaeology. The clove trees here are older than the colonial period — they have known Arab dhow traders, Portuguese conquistadors, Omani sultans, and British colonists. And beneath all of that history, the same medicine.',
   },
 
@@ -250,7 +250,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['mineral-rich nutritive', 'thyroid support', 'immune', 'antioxidant'],
     folklore: ['Indian Ocean coastal communities have harvested seaweed for mineral medicine for generations — the Swahili word for health, "afya", is rooted in food-as-medicine'],
-    extraction_notes: 'Bladderwrack: water infusion or tincture in 25% ethanol. Spirulina: fresh consumption or gentle water extraction.',
+    extraction_notes: 'Bladderwrack: water infusion or extract in 25% ethanol. Spirulina: fresh consumption or gentle water extraction.',
     lore: 'At low tide on the eastern coast of Zanzibar, the seaweed beds emerge — green and amber in the clear water. Women wade out at dawn to harvest. This is the oldest pharmacy of the Indian Ocean coast.',
   },
 
@@ -298,7 +298,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['antimicrobial', 'respiratory', 'antioxidant', 'digestive'],
     folklore: ['Za\'atar (thyme) has been described in the Talmud, ancient Egyptian medicine texts, and Arabic folk medicine for thousands of years', 'The cedar forests of Lebanon were sacred to Gilgamesh — the oldest trees in the world still standing at 3000+ years old', 'Sumac was used by Phoenician traders as both food and medicine along the ancient trade routes'],
-    extraction_notes: 'Wild thyme: cold tincture 40% ethanol or simple water infusion. Sage: 40% ethanol tincture or fresh plant tincture. Oregano: oil infusion for maximum carvacrol.',
+    extraction_notes: 'Wild thyme: cold extract 40% ethanol or simple water infusion. Sage: 40% ethanol extract or fresh plant extract. Oregano: oil infusion for maximum carvacrol.',
     lore: 'The terraced hillsides above Beirut, where the limestone plateaux begin, hold the richest aromatic herb ecology of the Eastern Mediterranean. The za\'atar, the sage, the oregano — these are the herbs that built the Levantine kitchen and the Levantine pharmacopoeia. To walk here in June is to understand the origin of Mediterranean medicine.',
   },
 
@@ -321,7 +321,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['immune', 'nervine', 'nutritive'],
     folklore: ['The lakes of western Poland hold folk memory of forest medicine — every village had a "znachorka" (wise woman) who gathered the forest pharmacy'],
-    extraction_notes: 'Simple tinctures and cold infusions. Forest edge = gentler herbs — good for beginners.',
+    extraction_notes: 'Simple extracts and cold infusions. Forest edge = gentler herbs — good for beginners.',
     lore: 'The forest around Garbicz lake is where the Mycelium Dinner happens every summer. The birch edge meets the water, chanterelles emerge after July rain, and by midnight the gong is sounding in the forest.',
   },
 
@@ -345,7 +345,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['immune tonic', 'antioxidant', 'urinary support', 'longevity'],
     folklore: ['Bergslagen iron country — forests grew back over abandoned mine shafts, creating unique mixed habitats. The local word for chanterelle hunting is "svampplockning" — a Swedish ritual.', 'Chaga has been used by local farmers in this area since at least the 18th century as a coffee substitute during wars and famine.'],
-    extraction_notes: 'Chanterelle: culinary — dry-fry then freeze. Chaga: double extraction (4h hot water + alcohol). Birch polypore: decoction or tincture.',
+    extraction_notes: 'Chanterelle: culinary — dry-fry then freeze. Chaga: double extraction (4h hot water + alcohol). Birch polypore: decoction or extract.',
     lore: 'Königshyttan sits in the Bergslagen heartland — old iron-mining country where forests have grown undisturbed for a century. The chanterelle forests here are among the most productive in Örebro county. Walk the old mine paths in August after rain.',
   },
 
@@ -367,7 +367,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['nervine', 'anti-inflammatory', 'mineral-rich nutritive'],
     folklore: ['Swedish wetland meadows (strandängar) were historically the pharmacy of rural communities — every farmstead kept a meadow plant notebook.'],
-    extraction_notes: 'Nettle: cold water only. Meadowsweet: 40% ethanol tincture. Valerian: fresh root tincture (anxiety) or dried root (sleep).',
+    extraction_notes: 'Nettle: cold water only. Meadowsweet: 40% ethanol extract. Valerian: fresh root extract (anxiety) or dried root (sleep).',
     lore: 'The wetland edges around the lakes near Königshyttan hold some of the finest medicinal meadow plants in Bergslagen. In June the meadowsweet fills the air with its aspirin-honey scent.',
   },
 
@@ -413,7 +413,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['antimicrobial', 'immune', 'mood support'],
     folklore: ['The Périgord black truffle (Tuber melanosporum) is called "the black diamond" — truffle hunters here keep their oak groves secret for generations.', 'Wild garlic carpets the Dordogne river valleys in April — eaten raw as spring tonic since Gallic times.'],
-    extraction_notes: "Wild garlic: fresh plant tincture only — allicin volatile. St. John's Wort: warm red oil infusion at summer solstice.",
+    extraction_notes: "Wild garlic: fresh plant extract only — allicin volatile. St. John's Wort: warm red oil infusion at summer solstice.",
     lore: 'The Périgord landscape of limestone plateaux and river valleys holds one of the richest culinary and medicinal forest ecologies in Europe. The old oak forests here have been harvested since Roman times.',
   },
 
@@ -458,7 +458,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['antimicrobial', 'immune', 'antioxidant'],
     folklore: ['The Vosges forests are the oldest mountain forests in France. Alsatian herbal traditions blend Germanic and French herbalism — Kiefer-Sirup (pine tip syrup) is a classic.'],
-    extraction_notes: 'Wild garlic: fresh plant juice or cold tincture. Bilberry: cold tincture 40% ethanol.',
+    extraction_notes: 'Wild garlic: fresh plant juice or cold extract. Bilberry: cold extract 40% ethanol.',
     lore: 'The fir forests of the Vosges hold dense spring carpets of wild garlic — the French call it ail des ours (bear garlic) because bears seek it out in spring after hibernation.',
   },
 
@@ -482,7 +482,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['anti-inflammatory', 'immune', 'antimicrobial'],
     folklore: ["The Black Forest has the richest mushroom-foraging culture in Germany — the famous Schwarzwälder Pfifferling is protected as a regional trademark.", 'Bärlauch (wild garlic) season in the Black Forest is a spring ritual — locals eat it raw in quark, in butter, in pesto.'],
-    extraction_notes: "Arnica: oil infusion for topical use only — do not take internally. Wild garlic: fresh plant tincture. St. John's Wort: warm oil infusion.",
+    extraction_notes: "Arnica: oil infusion for topical use only — do not take internally. Wild garlic: fresh plant extract. St. John's Wort: warm oil infusion.",
     lore: "The Schwarzwald is Germany's forest pharmacy. April brings the bärlauch carpets, June brings the first chanterelles, August brings the porcini season. The forest paths are walked by foragers every weekend from March to November.",
   },
 
@@ -505,7 +505,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['immune complex', 'heart tonic', 'antioxidant', 'antiviral'],
     folklore: ['Wild garlic (Bärlauch) has been used in German folk medicine for blood purification in spring — the custom of gathering it at Easter dates to medieval monastery gardens.'],
-    extraction_notes: 'Wild garlic: fresh plant tincture 40% ethanol or juice. Rosehip: cold water infusion or tincture. Elderberry: tincture or preserved syrup.',
+    extraction_notes: 'Wild garlic: fresh plant extract 40% ethanol or juice. Rosehip: cold water infusion or extract. Elderberry: extract or preserved syrup.',
     lore: 'The beech forests around the Spree in early April smell like garlic from a distance — the forest floor turns white-green with wild garlic flowers. It grows so thick you have to watch where you step.',
   },
 
@@ -529,7 +529,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['immune', 'urinary tonic', 'antioxidant', 'antiviral'],
     folklore: ['The elder tree (hyldemoer — elder mother) is sacred in Danish folklore — it was forbidden to cut elder without first asking permission from the elder mother, or she would haunt the house.'],
-    extraction_notes: 'Elderberry: tincture or preserved syrup — berries mildly toxic raw. Sea buckthorn: cold-pressed berry oil for vitamin C.',
+    extraction_notes: 'Elderberry: extract or preserved syrup — berries mildly toxic raw. Sea buckthorn: cold-pressed berry oil for vitamin C.',
     lore: "Rold Skov is Denmark's largest forest — ancient beech and oak with sandy heath clearings. The locals here are serious foragers. The elder mother tree in Danish mythology is as important as the world tree — a portal between worlds.",
   },
 
@@ -576,7 +576,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['antioxidant', 'immune', 'urinary', 'liver'],
     folklore: ['The Siljan lake was formed by an ancient meteor impact 377 million years ago. The birch forests that ring it are among the oldest foraging grounds in Scandinavia — locals have harvested chanterelles here for centuries'],
-    extraction_notes: 'Chanterelle: Dual extraction (water 2h + 50% EtOH). Bilberry: 40% EtOH tincture or fresh berry freeze. Birch Polypore: Dual (30% water + 70% EtOH). Lingonberry: 40% EtOH.',
+    extraction_notes: 'Chanterelle: Dual extraction (water 2h + 50% EtOH). Bilberry: 40% EtOH extract or fresh berry freeze. Birch Polypore: Dual (30% water + 70% EtOH). Lingonberry: 40% EtOH.',
     lore: 'Around the edge of Siljan, the birch grows so thick in places it feels like entering a green cathedral. In August the forest floor turns golden — not just from chanterelles but from the lingonberry leaves catching the low Nordic light.',
   },
   {
@@ -598,7 +598,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['urinary', 'immune', 'antioxidant', 'adaptogen'],
     folklore: ['The Falun copper mine region shaped the Bergslagen landscape for 700 years. Pine heaths here carry the mineral memory of the ore-rich soil — lingonberries grow exceptionally well in the copper-influenced acidity'],
-    extraction_notes: 'Pine pollen: 70% EtOH tincture of cracked-cell powder — sublingual for androgenic activity. Lingonberry: 40% EtOH or raw freeze. Juniper: 65% EtOH, 1:5.',
+    extraction_notes: 'Pine pollen: 70% EtOH extract of cracked-cell powder — sublingual for androgenic activity. Lingonberry: 40% EtOH or raw freeze. Juniper: 65% EtOH, 1:5.',
     lore: 'The Falun red that colours half of Sweden\'s wooden houses comes from this region\'s copper mines. The pine heaths around the mine are almost otherworldly — pale lichen, dark heather, and the sharp smell of resin.',
   },
   {
@@ -620,7 +620,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['digestive', 'liver', 'nervine', 'respiratory'],
     folklore: ['Öland\'s UNESCO-listed alvar plain is one of Europe\'s most unusual limestone steppes. The plants that survive there are extremely resilient — and often medicinally concentrated due to the stress of thin soil and wind'],
-    extraction_notes: 'Chicory root: water decoction (roast first for coffee substitute) or 30% EtOH tincture. Thyme: 75% EtOH. Yarrow: 50% EtOH. St. John\'s Wort: warm oil infusion (turns blood-red when ready).',
+    extraction_notes: 'Chicory root: water decoction (roast first for coffee substitute) or 30% EtOH extract. Thyme: 75% EtOH. Yarrow: 50% EtOH. St. John\'s Wort: warm oil infusion (turns blood-red when ready).',
     lore: 'At midsummer on the Öland alvar, the flowers bloom so thick the plain turns white and yellow and pink simultaneously. No trees interrupt the light. The chicory flowers close in the afternoon and open again the next morning — reliable as a clock.',
   },
   {
@@ -642,7 +642,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['immune', 'antioxidant', 'digestive', 'urinary'],
     folklore: ['Gotland\'s limestone gives it a climate unlike the Swedish mainland — warmer, sunnier, with Mediterranean-like plants. The Gotlanders have used juniper for everything from tar to gin to sauna bundles for a thousand years'],
-    extraction_notes: 'Juniper berry: 65% EtOH tincture. Sea buckthorn: juice or 40% EtOH. Elderflower: cold water infusion (70°C max) for volatile aromatics. Sloe: 65% EtOH or sloe gin (gin maceration 6 weeks).',
+    extraction_notes: 'Juniper berry: 65% EtOH extract. Sea buckthorn: juice or 40% EtOH. Elderflower: cold water infusion (70°C max) for volatile aromatics. Sloe: 65% EtOH or sloe gin (gin maceration 6 weeks).',
     lore: 'Gotland smells of juniper and sea. The old juniper heaths are legally protected, but you can harvest berries from the stands that remain. Medieval Visby had an entire apothecary culture — remnants survive in the island\'s folk remedies.',
   },
   {
@@ -686,7 +686,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['nutritive', 'immune', 'liver', 'menstrual'],
     folklore: ['Carl Linnaeus classified Swedish plants from Uppsala. The botanical garden he walked is minutes from these forest edges — many of the herbs here were gathered and studied by him in the 1740s'],
-    extraction_notes: 'Nettle: cold water infusion overnight (preserves minerals) or 45% EtOH tincture. Elderflower: cold water infusion at 70°C max. Meadowsweet: 40% EtOH. Yellow Dock root: decoction or 50% EtOH.',
+    extraction_notes: 'Nettle: cold water infusion overnight (preserves minerals) or 45% EtOH extract. Elderflower: cold water infusion at 70°C max. Meadowsweet: 40% EtOH. Yellow Dock root: decoction or 50% EtOH.',
     lore: 'Linnaeus gave these plants their Latin names. The meadowsweet was his favourite — it was his wife\'s flower. The forest edges around Uppsala still carry the same species he catalogued in 1753.',
   },
   {
@@ -796,7 +796,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['immune', 'heart', 'respiratory', 'antioxidant'],
     folklore: ['Blekinge was the last region taken from Denmark by Sweden in 1658. The ancient beech forests here feel Danish — denser, darker, with a rich understorey of spring ephemerals. Wild garlic festivals still happen in spring'],
-    extraction_notes: 'Elderberry: 35% EtOH (berries cooked only). Wild Garlic: fresh plant tincture 1:2 in 40% EtOH within 24h of harvest. Hawthorn: 45% EtOH or decoction of berries.',
+    extraction_notes: 'Elderberry: 35% EtOH (berries cooked only). Wild Garlic: fresh plant extract 1:2 in 40% EtOH within 24h of harvest. Hawthorn: 45% EtOH or decoction of berries.',
     lore: 'In April, the beech forests of Blekinge turn green so fast you can almost watch it happen. Below the still-bare canopy, wild garlic forms a white-flowering carpet that smells of the forest and the kitchen simultaneously.',
   },
   {
@@ -818,7 +818,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['urinary', 'nutritive', 'immune', 'antioxidant'],
     folklore: ['Södermanland is the landscape of Swedish fairy tales — small mixed forests, red painted farmhouses, lakes between granite hills. The clearcuts that harvesting companies leave behind become the best raspberry grounds in Sweden within two years'],
-    extraction_notes: 'Raspberry leaf: 40% EtOH — harvest before fruiting. Black Currant: 40% EtOH or fresh berry juice. Goldenrod: 45% EtOH tincture.',
+    extraction_notes: 'Raspberry leaf: 40% EtOH — harvest before fruiting. Black Currant: 40% EtOH or fresh berry juice. Goldenrod: 45% EtOH extract.',
     lore: 'The Södermanland clearcuts look ugly for two years, then the raspberries and fireweed take over and they become magnificent. Bears know this. So do the best foragers.',
   },
   // ── BERGSLAGEN — ROBIN'S HOME GROUND (ADDITIONAL PINS) ───────────────────
@@ -863,7 +863,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['immune', 'antioxidant', 'adaptogen'],
     folklore: ['The Falun copper mine operated for 1000 years. The red pigment (Falun red) coloured Swedish rural buildings for centuries — and the copper-contaminated tailings created a unique mineral landscape that now supports extraordinary fungal diversity'],
-    extraction_notes: 'Chaga: long decoction 4h then combine with 70% EtOH tincture 1:1. Never boil. Birch Polypore: Dual extraction essential. Lingonberry: 40% EtOH or frozen then pressed.',
+    extraction_notes: 'Chaga: long decoction 4h then combine with 70% EtOH extract 1:1. Never boil. Birch Polypore: Dual extraction essential. Lingonberry: 40% EtOH or frozen then pressed.',
     lore: 'The mine entrance at Falun is a World Heritage site. Directly above it, on the pine and birch slopes, the chaga grows on birch trees whose roots have been mining copper for centuries. You can taste the mineral depth in the tea.',
   },
 
@@ -886,7 +886,7 @@ export const ECO_NODES: EcoNode[] = [
     ],
     medicinal: ['nervine', 'cognitive', 'antioxidant', 'mood support'],
     folklore: ['Sintra was called "Cintra" by Lord Byron — enchanted mountain of palaces and fog. The Moors planted its gardens with medicinal herbs from across the Islamic world'],
-    extraction_notes: 'Lavender: oil infusion (50°C max to preserve linalool). Rosemary: 40% ethanol tincture. St. John\'s Wort: warm oil infusion (red oil = correct preparation).',
+    extraction_notes: 'Lavender: oil infusion (50°C max to preserve linalool). Rosemary: 40% ethanol extract. St. John\'s Wort: warm oil infusion (red oil = correct preparation).',
     lore: 'The Sintra hills catch the Atlantic cloud every afternoon. Below the mist, the rosemary and rock rose grow on limestone terraces that have been farmed since the Romans. The Fungai Art Lisbon studio residency explores this Atlantic pharmacy.',
   },
 ];

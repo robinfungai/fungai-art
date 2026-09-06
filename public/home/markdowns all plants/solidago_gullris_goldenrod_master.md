@@ -118,7 +118,7 @@ Goldenrod provides mild antimicrobial and immune‑modulating support, contribut
 - **Dried herb:** 3–5 g (approx. 1–2 tsp) per 150 ml boiling water; steep 5–10 minutes; strain.[web:101][web:104]  
 - **Dose:** 1 cup, 2–4× daily between meals; usual daily intake 6–12 g dried herb.[web:101][web:104]  
 
-### Tincture
+### Extract
 
 - **Typical strength:** 1:5 in ~45% ethanol (or 40–50%).[web:101][web:104]  
 - **Dose:** 0.5–1 ml, 2–4× daily (adult).[web:101][web:104]  
@@ -142,7 +142,7 @@ Goldenrod provides mild antimicrobial and immune‑modulating support, contribut
 - Goal: Increase urine flow, reduce irritation/spasm, support faster resolution and prevent relapse (always alongside appropriate medical care when indicated).
 
 **Protocol 2: Post‑UTI / Post‑Antibiotic Urinary Recovery**  
-- Goldenrod tincture 1 ml, 3× daily for 2–4 weeks; encourage generous hydration.  
+- Goldenrod extract 1 ml, 3× daily for 2–4 weeks; encourage generous hydration.  
 - Goal: Clear residual inflammatory debris; tone mucosa; reduce recurrence risk.[web:99][web:102]
 
 **Protocol 3: Seasonal Allergies – Itchy, Watery Picture**  
@@ -281,5 +281,5 @@ Fluids — emotional, physical, energetic — must move. When resentment, grief,
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System*  
+*Use Case: Tailored Extract Recommendation System*  
 *Date: February 2026*

@@ -94,7 +94,7 @@ Soothes cough, moistens respiratory mucosa, and thins mucus; frequently used in 
 - 1–2 tsp (~2–4 g) cut root per 250 ml water; simmer 10–20 minutes; 1–3× daily.  
 - Often used as 5–15% of a multi-herb formula.
 
-**Tincture (Whole Root):**  
+**Extract (Whole Root):**  
 - 1:5 (40–60% alcohol): 1–2 ml 2–3× daily (short-term), always factoring total daily glycyrrhizin load.
 
 **Deglycyrrhizinated Licorice (DGL):**  
@@ -215,6 +215,6 @@ Sweetness is medicine in the right dose — beyond that, it overwhelms the syste
 
 ---
 
-*Generated for: Functional Beverage / Tincture Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*  
+*Generated for: Functional Beverage / Extract Formulation AI App*  
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*  
 *Date: February 2026*

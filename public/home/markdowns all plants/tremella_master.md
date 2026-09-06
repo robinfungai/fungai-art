@@ -121,7 +121,7 @@ Clinical significance: Beauty‑from‑within formulas, atopic dermatitis adjunc
 - **Capsules / Tablets:**  
   Doses vary; many products deliver 500–1000 mg extract per capsule, taken 1–3× daily to reach target grams.
 
-- **Tincture:**  
+- **Extract:**  
   Less common, as polysaccharides are water‑soluble; if used, dual extraction or glycerites can be employed. For polysaccharide emphasis, decoction or hot‑water extract powder is preferred.
 
 **Preparation Forms:**
@@ -285,5 +285,5 @@ Tremella is a **gentle, luminous yin cloud**—a teacher of deep hydration, soft
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System*  
+*Use Case: Tailored Extract Recommendation System*  
 *Date: February 2026*

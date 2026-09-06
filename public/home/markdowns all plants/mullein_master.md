@@ -84,7 +84,7 @@ Best for: Chronic cough, chronic bronchitis, asthma support (adjunctive), smokin
 **Dosage Range:**
 **Tea/Infusion (Leaf—BEST FOR DEMULCENT ACTION):** 1-2 tsp dried leaf per 250 ml water, steep 10-15 minutes (longer steep = more mucilage extraction), 3-4× daily (acute respiratory conditions); can use daily long-term. Warm tea preferred (demulcent effect enhanced by warmth).
 **Tea (Flower—GENTLER, MORE PLEASANT):** 1 tsp dried flowers per 250 ml water, steep 5-10 min, similarly dosed. Gentler, more pleasant taste than leaf; still therapeutic (slightly less potent than leaf).
-**Tincture (1:5 alcohol-based, Leaf):** 40-60 drops, 2-3× daily. Convenient dosing; less efficient for mucilage extraction (water-soluble) but adequate potency. Less ideal for demulcent action (tincture doesn't coat like tea); better as adjunctive.
+**Extract (1:5 alcohol-based, Leaf):** 40-60 drops, 2-3× daily. Convenient dosing; less efficient for mucilage extraction (water-soluble) but adequate potency. Less ideal for demulcent action (extract doesn't coat like tea); better as adjunctive.
 **Capsules (Leaf Powder):** 300-500 mg dried powdered leaf, 2-3× daily. Convenient; less effective than tea (loses mucilage coating benefit).
 **Infused Oil (Topical for Earache):** 1-2 drops infused Mullein oil in ear canal (traditional remedy for earache). Warming + anti-inflammatory action; traditional + effective.
 **Decoction (Root/Stem—LESS COMMON):** Used traditionally; less active than leaf/flower; not recommended over leaf/flower.
@@ -135,7 +135,7 @@ Best for: Chronic cough, chronic bronchitis, asthma support (adjunctive), smokin
 
 **Contraindications (Rare):**
 **Rare Allergy (Scrophulariaceae Family):** Very rare; mild sensitivity (itching, rash) possible if allergic to family members (Foxglove, Digitalis, Veronica). Discontinue if allergy occurs.
-**Tincture + Mucilage Absorption Concern (Theoretical):** Mucilage theoretically could slow oral medication absorption (water-soluble coating). If concern: dose oral medications 2+ hours apart from Mullein. Usually not significant concern.
+**Extract + Mucilage Absorption Concern (Theoretical):** Mucilage theoretically could slow oral medication absorption (water-soluble coating). If concern: dose oral medications 2+ hours apart from Mullein. Usually not significant concern.
 
 **Herb-to-Herb Synergy (Safe, Beneficial):**
 **Thyme:** Expectorant + antimicrobial pair (Mullein demulcent + Thyme expectorant = comprehensive respiratory); excellent traditional combination.
@@ -208,7 +208,7 @@ Best for: Chronic cough, chronic bronchitis, asthma support (adjunctive), smokin
 
 **Quality & Sourcing:** Whole dried leaf (first choice—highest potency + mucilage), or dried flower (second choice—gentler, more pleasant). NOT powdered (oxidizes rapidly; loses volatile compounds). First-year plant leaves preferred (higher mucilage) over second-year. Ethical sourcing important (often wildcrafted; ensure sustainable harvest practices).
 **Storage:** Airtight glass, cool dark location; maintain potency 18-24 months; mucilage + saponins relatively stable.
-**Preparation Method Critical:** Tea/infusion superior to tincture for demulcent action (mucilage coating effect). Longer steep (10-15 min) extracts more mucilage. Warm preparation optimal (demulcent + anti-inflammatory effects enhanced).
+**Preparation Method Critical:** Tea/infusion superior to extract for demulcent action (mucilage coating effect). Longer steep (10-15 min) extracts more mucilage. Warm preparation optimal (demulcent + anti-inflammatory effects enhanced).
 **Acute vs. Long-Term Distinction:** Acute respiratory (cough, infection): intensive dosing (3-4× daily) short-term (1-4 weeks). Chronic conditions (bronchitis, asthma adjunct): gentler dosing (1-2× daily) ongoing indefinite.
 **Integration with Respiratory Protocols:** Can pair with ALL respiratory herbs (Thyme, Elecampane, Licorice, Ginger, Plantain, etc.). Often backbone of respiratory formulas (demulcent base upon which others build).
 **Integration with Smoking Cessation:** Particularly valuable as lungs heal post-cessation (soothes irritated tissue, supports healing, reduces withdrawal cough).
@@ -225,7 +225,7 @@ Best for: Chronic cough, chronic bronchitis, asthma support (adjunctive), smokin
 - [ ] NO mandatory drug interaction screening needed (completely safe)
 - [ ] NO psychiatric screening needed (safe with all mental health presentations)
 - [ ] NO duration limits (safe indefinite long-term use)
-- [ ] Preparation method flag: Tea/infusion superior to tincture (demulcent action)
+- [ ] Preparation method flag: Tea/infusion superior to extract (demulcent action)
 **Safety Screening (Minimal):**
 - [ ] Rare allergy screening (Scrophulariaceae family—very uncommon)
 - [ ] Otherwise: Safe for all populations
@@ -241,11 +241,11 @@ Best for: Chronic cough, chronic bronchitis, asthma support (adjunctive), smokin
 - [ ] Recommend as respiratory tonification (long-term baseline improvement)
 - [ ] Recommend for children (safe, effective, pleasant)
 - [ ] Safe to pair with all respiratory herbs + all medications
-- [ ] Emphasize tea preparation (superior to tincture for demulcent action)
+- [ ] Emphasize tea preparation (superior to extract for demulcent action)
 - [ ] Encourage long-term use for chronic conditions (cumulative benefit)
 **Liability Protection (Minimal):**
 - [ ] "Safe for all populations including children, pregnancy, breastfeeding"
-- [ ] "Tea preparation recommended over tincture for optimal demulcent action"
+- [ ] "Tea preparation recommended over extract for optimal demulcent action"
 - [ ] "Safe with all medications and herbs"
 - [ ] "For chronic respiratory: long-term use safe + beneficial; effects cumulative"
 
@@ -253,11 +253,11 @@ Best for: Chronic cough, chronic bronchitis, asthma support (adjunctive), smokin
 
 ## MULLEIN MASTER MONOGRAPH — COMPLETE
 
-**This document synthesizes:** Primary demulcent action (mucilage physical coating—immediate soothing), secondary expectorant action (saponins mucus-thinning), anti-inflammatory iridoid glycoside pharmacology (verbascoside TNF-α/IL-6 reduction), lymphatic + immune support (traditional + modern), respiratory tonification (cumulative long-term), comprehensive safety (all populations including children/pregnancy), precise preparation methodology (tea superior to tincture), acute vs. chronic dosing protocols, "grandmother of herbs" spiritual teaching (standing tall + gentle), integration with smoking cessation + respiratory disease management, and AI-level implementation (minimal screening, preparation method flags, children's designation).
+**This document synthesizes:** Primary demulcent action (mucilage physical coating—immediate soothing), secondary expectorant action (saponins mucus-thinning), anti-inflammatory iridoid glycoside pharmacology (verbascoside TNF-α/IL-6 reduction), lymphatic + immune support (traditional + modern), respiratory tonification (cumulative long-term), comprehensive safety (all populations including children/pregnancy), precise preparation methodology (tea superior to extract), acute vs. chronic dosing protocols, "grandmother of herbs" spiritual teaching (standing tall + gentle), integration with smoking cessation + respiratory disease management, and AI-level implementation (minimal screening, preparation method flags, children's designation).
 **Key Distinctions:**
 - **Demulcent primary:** Soothing layer protection (immediate relief)
 - **Expectorant secondary:** Mucus-thinning mobilization (cumulative over days)
-- **Tea superior to tincture:** Demulcent action requires water extraction
+- **Tea superior to extract:** Demulcent action requires water extraction
 - **Acute vs. chronic:** Different protocols for symptom relief vs. tonification
 - **Safe all ages:** Children to elderly; pregnancy to breastfeeding
 - **Long-term improvement:** Gets better with consistent use over months-years
@@ -267,5 +267,5 @@ Best for: Chronic cough, chronic bronchitis, asthma support (adjunctive), smokin
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*
 *Date: February 2026*

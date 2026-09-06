@@ -1,7 +1,7 @@
 import React from 'react';
 import { Protocol, HERBS } from '../../data/herbs';
 import { AILabelGenerator } from './AILabelGenerator';
-import bottleImage from '@/assets/tincture-bottle.jpg';
+import bottleImage from '@/assets/extract-bottle.jpg';
 
 interface ResultScreenProps {
   protocol: Protocol;
@@ -47,7 +47,7 @@ export const ResultScreen: React.FC<ResultScreenProps> = ({ protocol, userAnswer
           <div className="bottle-wrapper">
             <img 
               src={bottleImage} 
-              alt="Your personalized tincture" 
+              alt="Your personalized extract" 
               className="bottle-image"
             />
             

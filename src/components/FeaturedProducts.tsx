@@ -12,7 +12,7 @@ import pomelliMain from "@/assets/pomelli-image.png";
 
 const FALLBACK_PHOTOS = [
   { src: pomelliMain,  label: "Botanical Extract" },
-  { src: pomelli1,     label: "Sacred Tincture" },
+  { src: pomelli1,     label: "Sacred Extract" },
   { src: pomelli3,     label: "Herbal Compound" },
   { src: pomelli4,     label: "Plant Medicine" },
 ];
@@ -28,7 +28,7 @@ const FeaturedProducts = () => {
         setIsLoading(true);
       const data = await storefrontApiRequest(STOREFRONT_PRODUCTS_QUERY, {
         first: 6,
-        query: "product_type:Tincture"
+        query: "product_type:Extract"
       });
         setProducts(data.data.products.edges);
       } catch (error) {

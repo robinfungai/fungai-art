@@ -188,5 +188,5 @@ Butcher’s broom is a **structural, upright ally**—it helps the body “stand
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System*  
+*Use Case: Tailored Extract Recommendation System*  
 *Date: February 2026*

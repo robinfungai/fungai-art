@@ -122,7 +122,7 @@ Clinical significance: Blood sugar support, prediabetes/diabetes (adjunctive), b
 
 **Dried Leaf Infusion (TEA—TRADITIONAL):** 2-4g dried leaves steeped 10 min, 1-2× daily. Good extraction; pleasant taste.
 
-**Leaf Tincture (Fresh Leaves—CONCENTRATED):** 20-40 drops, 1-2× daily. Concentrated polyphenol + mineral extract.
+**Leaf Extract (Fresh Leaves—CONCENTRATED):** 20-40 drops, 1-2× daily. Concentrated polyphenol + mineral extract.
 
 **Timing:** Morning-afternoon optimal (energy support—use earlier in day). Can be used throughout day.
 

@@ -79,7 +79,7 @@ DOSAGE PREPARATION
 Dosage Range  
 - Powder: 2–6 g daily, often mixed into warm milk, plant milk, or water.  
 - Decoction: 3–6 g dried root gently simmered 10–15 minutes, 1–2 times daily.  
-- Tincture (1:5): 2–5 ml, 2–3 times daily.  
+- Extract (1:5): 2–5 ml, 2–3 times daily.  
 - Standardized extract: follow product-specific standardization where available.
 
 Best Preparations / Protocols  
@@ -90,7 +90,7 @@ Protocol 2 GI Soothing / Hyperacidity
 Powder or decoction daily, often paired with licorice or marshmallow when extra demulcent support is desired.
 
 Protocol 3 Stress Depletion / Burnout  
-Tincture or powder for 6–10 weeks, especially in dry, depleted, overworked constitutions.
+Extract or powder for 6–10 weeks, especially in dry, depleted, overworked constitutions.
 
 Protocol 4 Postpartum Rebuilding  
 Powder 3–6 g daily in nourishing food or milk-based preparations where clinically appropriate.
@@ -163,4 +163,4 @@ Cooling, moistening, reproductive and mucosal tonic for depletion, dryness, heat
 Clinical Notes Practitioner Guidance  
 Best positioned for dry, hot, depleted presentations rather than cold, damp, congested ones. Particularly useful where reproductive, digestive, and nervous-system depletion overlap.
 
---- Generated for Functional Beverage Formulation AI App Use Case Tailored Tincture Recommendation System Date April 2026
+--- Generated for Functional Beverage Formulation AI App Use Case Tailored Extract Recommendation System Date April 2026

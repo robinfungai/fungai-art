@@ -9,9 +9,9 @@
 
 **Botanical Family:** Berberidaceae (barberry family)
 
-**Part Used:** Epimedium grandiflorum herba — **Aerial parts (leaves + stems + flowers)** optimal; dried to concentrate active compounds (especially icariin); fresh plant tincture most potent. Whole flowering plant used.
+**Part Used:** Epimedium grandiflorum herba — **Aerial parts (leaves + stems + flowers)** optimal; dried to concentrate active compounds (especially icariin); fresh plant extract most potent. Whole flowering plant used.
 
-**Harvesting & Processing:** Harvested during flowering (peak icariin concentration—critical for bioactivity); dried at low temperature to preserve icariin + volatile oils; whole aerial parts stored. Fresh plant tincture preserves icariin optimally. **Icariin concentration = potency indicator (1% icariin = high quality).**
+**Harvesting & Processing:** Harvested during flowering (peak icariin concentration—critical for bioactivity); dried at low temperature to preserve icariin + volatile oils; whole aerial parts stored. Fresh plant extract preserves icariin optimally. **Icariin concentration = potency indicator (1% icariin = high quality).**
 
 **Quality Indicators:** Green-brown dried color; distinctive aromatic aroma; slightly bitter taste (icariin indicator). Potency indicated by icariin concentration (tested: 0.5-1%+ icariin = therapeutic quality). Laboratory testing recommended (icariin standardization).
 
@@ -105,9 +105,9 @@ Clinical significance: Low energy, fatigue, stamina, constitutional weakness, vi
 
 **Dosage Range (POTENT VASODILATOR—START LOW—CRITICAL CAUTION—MONITOR BP):**
 
-**Tincture (Fresh Herb—MOST POTENT—ICARIIN CONCENTRATION OPTIMAL):** 10-20 drops, 1-2× daily (best morning-afternoon—stimulating; NOT evening). Fresh herb tincture preserves icariin optimally. **START 10 DROPS—ASSESS TOLERANCE before increasing.**
+**Extract (Fresh Herb—MOST POTENT—ICARIIN CONCENTRATION OPTIMAL):** 10-20 drops, 1-2× daily (best morning-afternoon—stimulating; NOT evening). Fresh herb extract preserves icariin optimally. **START 10 DROPS—ASSESS TOLERANCE before increasing.**
 
-**Infusion/Decoction (Dried—Less Potent—LOWER ICARIIN EXTRACTION):** 1-2g dried aerial parts, 1-2× daily (water extraction = lower icariin bioavailability; tincture preferred for efficacy).
+**Infusion/Decoction (Dried—Less Potent—LOWER ICARIIN EXTRACTION):** 1-2g dried aerial parts, 1-2× daily (water extraction = lower icariin bioavailability; extract preferred for efficacy).
 
 **Standardized Extract (If Available—MOST RELIABLE DOSING):** 500-1000mg extract standardized to 10-20% icariin, 1-2× daily (if concentrated/standardized form available). **Dosing most predictable.**
 
@@ -122,25 +122,25 @@ Clinical significance: Low energy, fatigue, stamina, constitutional weakness, vi
 
 **CRITICAL: Dose Low + Monitor BP**
 
-**Start 10-15 drops tincture; assess tolerance before increasing. Monitor blood pressure baseline + ongoing. STOP if dizziness, flushing, headache develop (signs of excessive vasodilation).**
+**Start 10-15 drops extract; assess tolerance before increasing. Monitor blood pressure baseline + ongoing. STOP if dizziness, flushing, headache develop (signs of excessive vasodilation).**
 
 **BEST PREPARATIONS:**
 
-**Protocol 1: Sexual Erectile Function Support (MALE—2-4 WEEKS)** — Tincture 10-15 drops, 1× daily (morning) for 2-4 weeks. Erectile function improves; sexual arousal enhances; baseline sexual confidence. Effects cumulative; monitor BP. Start low, titrate carefully.
+**Protocol 1: Sexual Erectile Function Support (MALE—2-4 WEEKS)** — Extract 10-15 drops, 1× daily (morning) for 2-4 weeks. Erectile function improves; sexual arousal enhances; baseline sexual confidence. Effects cumulative; monitor BP. Start low, titrate carefully.
 
-**Protocol 2: Pre-Intimacy (ACUTE—MALE—1-2 HOURS BEFORE)** — Tincture 15-20 drops, 1-2 hours before sexual intimacy. Erectile function peaks; sexual arousal enhances; sexual satisfaction improves. **Monitor for excessive flushing/dizziness.**
+**Protocol 2: Pre-Intimacy (ACUTE—MALE—1-2 HOURS BEFORE)** — Extract 15-20 drops, 1-2 hours before sexual intimacy. Erectile function peaks; sexual arousal enhances; sexual satisfaction improves. **Monitor for excessive flushing/dizziness.**
 
-**Protocol 3: Cycling Protocol (PREVENTION—MAINTENANCE—3-4 DAYS WEEKLY)** — Tincture 10-15 drops, 3-4× weekly (cycling prevents tolerance). Erectile function baseline maintained; sexual vitality accessible on-demand; no tolerance development.
+**Protocol 3: Cycling Protocol (PREVENTION—MAINTENANCE—3-4 DAYS WEEKLY)** — Extract 10-15 drops, 3-4× weekly (cycling prevents tolerance). Erectile function baseline maintained; sexual vitality accessible on-demand; no tolerance development.
 
-**Protocol 4: Circulation + Vitality (GENERAL—2-4 WEEKS)** — Tincture 10 drops, 1× daily (morning) for 2-4 weeks. Circulation improves; warmth; vitality increases; energy baseline improves. General circulation + vitality support (non-sexual focused).
+**Protocol 4: Circulation + Vitality (GENERAL—2-4 WEEKS)** — Extract 10 drops, 1× daily (morning) for 2-4 weeks. Circulation improves; warmth; vitality increases; energy baseline improves. General circulation + vitality support (non-sexual focused).
 
 **Protocol 5: Sexual Confidence Trio (COUPLES—MALE-FOCUSED—SYNERGISTIC)** — Horny Goat Weed 15 drops + Catuaba 15 drops (arousal) + Damiana 15 drops (confidence), combined, 1-2 hours before intimacy. Triple sexual vitality + arousal + confidence effect. **Monitor for overstimulation—start lower individual doses if combining.**
 
-**Protocol 6: Bone + Sexual Health (MALE LONGEVITY—8-12 WEEKS)** — Tincture 10-15 drops, 1× daily for 8-12 weeks (+ mineral-rich foods). Sexual function + bone health support; constitutional tonification. Dual benefit (sexual + skeletal).
+**Protocol 6: Bone + Sexual Health (MALE LONGEVITY—8-12 WEEKS)** — Extract 10-15 drops, 1× daily for 8-12 weeks (+ mineral-rich foods). Sexual function + bone health support; constitutional tonification. Dual benefit (sexual + skeletal).
 
-**Protocol 7: Energy + Masculine Presence (DAYTIME—CYCLING)** — Tincture 10 drops, 1× daily 3-4× weekly (cycling). Energy baseline; masculine presence; vitality; sexual confidence foundation. Cycling sustains benefit.
+**Protocol 7: Energy + Masculine Presence (DAYTIME—CYCLING)** — Extract 10 drops, 1× daily 3-4× weekly (cycling). Energy baseline; masculine presence; vitality; sexual confidence foundation. Cycling sustains benefit.
 
-**Protocol 8: Clinical Sexual Vitality (GRADE B EVIDENCE—ERECTILE DYSFUNCTION—ONGOING)** — Tincture 15-20 drops, 1-2× daily (cycling 3-4 days weekly) indefinite. **Clinical-grade erectile function support (Grade B human evidence); baseline improvement cumulative over 2-4 weeks.** Ongoing sexual health foundation. **REQUIRES: cardiac clearance + BP monitoring + medication review.**
+**Protocol 8: Clinical Sexual Vitality (GRADE B EVIDENCE—ERECTILE DYSFUNCTION—ONGOING)** — Extract 15-20 drops, 1-2× daily (cycling 3-4 days weekly) indefinite. **Clinical-grade erectile function support (Grade B human evidence); baseline improvement cumulative over 2-4 weeks.** Ongoing sexual health foundation. **REQUIRES: cardiac clearance + BP monitoring + medication review.**
 
 ---
 
@@ -270,7 +270,7 @@ Clinical significance: Low energy, fatigue, stamina, constitutional weakness, vi
 
 **Blood Pressure Monitoring Mandatory:** Baseline BP + ongoing home monitoring (1-2× weekly). Client-measured BP most practical. Medical-grade caution. Stop herb immediately if BP drops excessively (dizziness, fainting) or rises excessively (headache, pressure).
 
-**Dosing Low + Titration:** Start 10 drops tincture; assess tolerance before increasing to 15-20 drops. Some clients very sensitive to vasodilation effects.
+**Dosing Low + Titration:** Start 10 drops extract; assess tolerance before increasing to 15-20 drops. Some clients very sensitive to vasodilation effects.
 
 **Cycling Recommended:** 3-4 days weekly cycling prevents tolerance (PDE5 receptors adapt to continuous icariin). Cycling maintains long-term efficacy.
 

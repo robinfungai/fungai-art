@@ -107,9 +107,9 @@ Clinical significance: Cardiovascular health (adjunctive), circulatory stagnatio
 
 **Dosage Range (POTENT—Start LOW—CAUTION):**
 
-**Tincture (Fresh Plant—MOST CONTROLLED):** 2-5 drops MAXIMUM in water with food. **EXTREMELY POTENT—start 2 drops; assess tolerance before increasing.** More than 5 drops = risk of excessive stimulation + BP elevation. Most controlled + safest dosing form.
+**Extract (Fresh Plant—MOST CONTROLLED):** 2-5 drops MAXIMUM in water with food. **EXTREMELY POTENT—start 2 drops; assess tolerance before increasing.** More than 5 drops = risk of excessive stimulation + BP elevation. Most controlled + safest dosing form.
 
-**Powder (Dried—LESS CONTROLLED):** 1/8 to 1/4 teaspoon (pinch to small amount) ONLY. **NEVER straight powder (will burn mouth + throat).** Mix into food/soup. Harder to control dosing than tincture.
+**Powder (Dried—LESS CONTROLLED):** 1/8 to 1/4 teaspoon (pinch to small amount) ONLY. **NEVER straight powder (will burn mouth + throat).** Mix into food/soup. Harder to control dosing than extract.
 
 **Fresh Powder in Food (Culinary):** Cook into soup/stew (heat preserves capsaicinoids; integrates with food). More palateable; mild effect from culinary quantities.
 
@@ -132,21 +132,21 @@ Clinical significance: Cardiovascular health (adjunctive), circulatory stagnatio
 
 **BEST PREPARATIONS (EXTREMELY LIMITED—CAUTION):**
 
-**Protocol 1: Circulation Warming (ACUTE—COLD CONSTITUTION)** — Tincture 2-3 drops in warm water with food, 1× daily for 5-7 days (or 3× weekly cycling). Circulation improves; warmth activates; cold extremities warm. **Monitor BP.** Acute use only; cycling prevents tolerance.
+**Protocol 1: Circulation Warming (ACUTE—COLD CONSTITUTION)** — Extract 2-3 drops in warm water with food, 1× daily for 5-7 days (or 3× weekly cycling). Circulation improves; warmth activates; cold extremities warm. **Monitor BP.** Acute use only; cycling prevents tolerance.
 
-**Protocol 2: Pain Relief Protocol (TOPICAL + INTERNAL—CHRONIC PAIN)** — Topical: Capsaicin cream on affected areas 3-4× daily (commercial product—standardized). Internal: Tincture 2 drops with food, 1× daily for 2-4 weeks. Chronic pain decreases; inflammation reduces. **Combination optimal.**
+**Protocol 2: Pain Relief Protocol (TOPICAL + INTERNAL—CHRONIC PAIN)** — Topical: Capsaicin cream on affected areas 3-4× daily (commercial product—standardized). Internal: Extract 2 drops with food, 1× daily for 2-4 weeks. Chronic pain decreases; inflammation reduces. **Combination optimal.**
 
-**Protocol 3: Immune Boost (ACUTE ILLNESS—5-7 DAYS)** — Tincture 2-3 drops, 2× daily with food during illness (+ Ginger, Lemon, Honey traditional "fire elixir"). Immune activation; viral clearance speeds; fever support. **Acute only; cycling prevents habituation.**
+**Protocol 3: Immune Boost (ACUTE ILLNESS—5-7 DAYS)** — Extract 2-3 drops, 2× daily with food during illness (+ Ginger, Lemon, Honey traditional "fire elixir"). Immune activation; viral clearance speeds; fever support. **Acute only; cycling prevents habituation.**
 
-**Protocol 4: Metabolic Fire (METABOLISM ACTIVATION—CYCLING)** — Tincture 2-3 drops, 1× daily (morning) for 5 days, then 2 days off, repeat. Metabolism increases; energy improves; sluggishness eases. Cycling prevents tolerance + overstimulation.
+**Protocol 4: Metabolic Fire (METABOLISM ACTIVATION—CYCLING)** — Extract 2-3 drops, 1× daily (morning) for 5 days, then 2 days off, repeat. Metabolism increases; energy improves; sluggishness eases. Cycling prevents tolerance + overstimulation.
 
-**Protocol 5: Digestive Support (WEAK DIGESTION—CYCLING)** — Tincture 2 drops with meal, 1× daily for 5 days (then 2 days off). Digestive fire stimulates; nutrient absorption improves. **Caution: Can irritate sensitive stomachs.**
+**Protocol 5: Digestive Support (WEAK DIGESTION—CYCLING)** — Extract 2 drops with meal, 1× daily for 5 days (then 2 days off). Digestive fire stimulates; nutrient absorption improves. **Caution: Can irritate sensitive stomachs.**
 
-**Protocol 6: Cardiovascular Mild Support (LOW DOSE—ONGOING)** — Tincture 2 drops daily indefinite (extremely low dose; circulation support without overstimulation). **Monitor BP continuously.** Generally safe at 2-drop dose if well-tolerated.
+**Protocol 6: Cardiovascular Mild Support (LOW DOSE—ONGOING)** — Extract 2 drops daily indefinite (extremely low dose; circulation support without overstimulation). **Monitor BP continuously.** Generally safe at 2-drop dose if well-tolerated.
 
 **Protocol 7: DO NOT COMBINE WITH OTHER STIMULANTS** — Avoid simultaneous use of Horny Goat Weed + Damiana + Cayenne (too much heat/stimulation together; overstimulation + excessive BP elevation risk).
 
-**Protocol 8: EMERGENCY HYPOTHERMIA (ACUTE—MEDICAL CONTEXT)** — Tincture 5 drops in warm liquid (used medicinally for hypothermia warming in survival situations). **Medical emergency use only; extreme caution required.**
+**Protocol 8: EMERGENCY HYPOTHERMIA (ACUTE—MEDICAL CONTEXT)** — Extract 5 drops in warm liquid (used medicinally for hypothermia warming in survival situations). **Medical emergency use only; extreme caution required.**
 
 ---
 
@@ -265,7 +265,7 @@ Clinical significance: Cardiovascular health (adjunctive), circulatory stagnatio
 
 **Screening Non-Negotiable:** This is THE herb requiring most thorough screening. Bleeding disorders, Warfarin, ulcers = absolute blocks. Hypertension = CRITICAL monitoring requirement.
 
-**Low Dosing Essential:** 2-3 drops tincture is MAXIMUM starting dose for most users. Many practitioners overshoot dosing (5+ drops) → excessive stimulation + BP elevation + GI irritation. Tincture form ESSENTIAL (powders too hard to dose accurately).
+**Low Dosing Essential:** 2-3 drops extract is MAXIMUM starting dose for most users. Many practitioners overshoot dosing (5+ drops) → excessive stimulation + BP elevation + GI irritation. Extract form ESSENTIAL (powders too hard to dose accurately).
 
 **BP Monitoring Mandatory:** If recommending to anyone, require regular BP monitoring (home BP cuff). Document BP baseline + ongoing. Medical-grade caution.
 

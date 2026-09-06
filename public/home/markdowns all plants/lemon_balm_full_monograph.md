@@ -11,7 +11,7 @@
 
 **Part Used:** Melissa officinalis folium — **Leaves only** (aerial parts—leaves, stems); fresh optimal for viral support (allicin-like fresh compounds); dried acceptable for nervine use.
 
-**Harvesting & Processing:** Harvested spring-summer, before flowering (peak volatile oil concentration); dried at low temperature (preserves volatile oils); whole leaves > powders. Fresh herb tincture most potent for viral application.
+**Harvesting & Processing:** Harvested spring-summer, before flowering (peak volatile oil concentration); dried at low temperature (preserves volatile oils); whole leaves > powders. Fresh herb extract most potent for viral application.
 
 **Quality Indicators:** Bright green color; characteristic lemon aroma (citral compounds); mild minty-lemony taste. Potency indicated by aroma intensity + lemon scent brightness (fresh = strongest).
 
@@ -73,7 +73,7 @@
 **1. Nervous System Soothing—Without Sedation (Volatile Oils + Rosmarinic Acid + Flavonoids—PRIMARY)**
 GABA modulation (enhanced GABAergic tone) WITHOUT direct receptor agonism. Paradoxical calm + clarity.
 Effect: Anxiety decreases; relaxation without drowsiness; calm focus; mental peace; tension release.
-Timeline: Acute (30-60 min—tincture); cumulative (weeks for foundational anxiety support).
+Timeline: Acute (30-60 min—extract); cumulative (weeks for foundational anxiety support).
 Clinical significance: Anxiety, nervous tension, overwhelm, nervous restlessness, racing mind, panic support.
 For AI app: Position as "nervine specialist; GABA modulation (without sedation); paradoxical calm-clarity; viral support (HSV/EBV); mood-uplifting; heart-opening; safe in pregnancy; synergistic with other nervines."
 
@@ -101,13 +101,13 @@ Clinical significance: Insomnia (anxiety-driven), restlessness, racing mind at n
 
 **Dosage Range:**
 
-**Tincture (Fresh Herb—MOST POTENT VIRAL):** 20-40 drops, 2-3× daily (or 4× daily during acute viral outbreak). Fresh plant tincture highest rosmarinic acid + allicin-like viral compounds.
+**Extract (Fresh Herb—MOST POTENT VIRAL):** 20-40 drops, 2-3× daily (or 4× daily during acute viral outbreak). Fresh plant extract highest rosmarinic acid + allicin-like viral compounds.
 
 **Tea (Infusion—GENTLE, EXCELLENT):** 2-4g dried herb (roughly 1-2 tsp) per 8oz hot water, steep 5-10 min, 2-3× daily. Volatile oils + flavonoids extracted well in water. Gentle nervine effect.
 
 **Fresh Herb (Best Quality—WHEN AVAILABLE):** 1-2 fresh sprigs (8-15g fresh leaf), daily fresh in tea or eaten. Highest potency; volatile oils maximum.
 
-**Topical (Cold Sores—HSV):** Fresh herb juice (crushed leaves) applied topically 3-4× daily + internal tincture 30-40 drops, 3-4× daily during outbreak.
+**Topical (Cold Sores—HSV):** Fresh herb juice (crushed leaves) applied topically 3-4× daily + internal extract 30-40 drops, 3-4× daily during outbreak.
 
 **Duration:**
 - **Anxiety/nervousness:** Daily use safe indefinite (foundational herb).
@@ -116,11 +116,11 @@ Clinical significance: Insomnia (anxiety-driven), restlessness, racing mind at n
 
 **BEST PREPARATIONS:**
 
-**Protocol 1: Acute Anxiety + Nervousness (IMMEDIATE RELIEF)** — Tincture 30-40 drops in water, 2-3× daily (or every 2-3 hours during acute anxiety episode). Anxiety eases within 30-60 min; calm-clarity effect. Safe indefinite if needed daily.
+**Protocol 1: Acute Anxiety + Nervousness (IMMEDIATE RELIEF)** — Extract 30-40 drops in water, 2-3× daily (or every 2-3 hours during acute anxiety episode). Anxiety eases within 30-60 min; calm-clarity effect. Safe indefinite if needed daily.
 
-**Protocol 2: Cold Sore Treatment (HSV ACUTE—TOPICAL + INTERNAL)** — Fresh herb juice topical 3-4× daily (crushed leaves on sore) + tincture 30-40 drops, 3-4× daily internally for 7-10 days. Viral replication decreases; pain/blistering reduced; healing accelerates.
+**Protocol 2: Cold Sore Treatment (HSV ACUTE—TOPICAL + INTERNAL)** — Fresh herb juice topical 3-4× daily (crushed leaves on sore) + extract 30-40 drops, 3-4× daily internally for 7-10 days. Viral replication decreases; pain/blistering reduced; healing accelerates.
 
-**Protocol 3: HSV Prevention (CHRONIC RECURRENCE)** — Tincture 20-30 drops, 2× daily continuous (or cycling 3 months on, 1 month off). Viral recurrence prevention; suppression of latent virus reactivation.
+**Protocol 3: HSV Prevention (CHRONIC RECURRENCE)** — Extract 20-30 drops, 2× daily continuous (or cycling 3 months on, 1 month off). Viral recurrence prevention; suppression of latent virus reactivation.
 
 **Protocol 4: Sleep Support (ANXIETY-DRIVEN INSOMNIA)** — Tea 2-4g, evening 30-60 min before bed (+ Passionflower or Valerian for synergy). Sleep onset easier; anxiety-related restlessness eases; deeper sleep.
 
@@ -128,7 +128,7 @@ Clinical significance: Insomnia (anxiety-driven), restlessness, racing mind at n
 
 **Protocol 6: Digestive Comfort (CARMINATIVE)** — Tea 2-4g after meals, 2-3× daily. Bloating, gas, cramping relief; soothing GI effect.
 
-**Protocol 7: Viral Resilience Trio (COMPREHENSIVE VIRAL SUPPORT)** — Lemon Balm tincture 30 drops + St. John's Wort 30 drops + Licorice root 1 tsp decoction, 2-3× daily for viral support/prevention.
+**Protocol 7: Viral Resilience Trio (COMPREHENSIVE VIRAL SUPPORT)** — Lemon Balm extract 30 drops + St. John's Wort 30 drops + Licorice root 1 tsp decoction, 2-3× daily for viral support/prevention.
 
 **Protocol 8: Daily Wellness Nervine (FOUNDATIONAL—INDEFINITE)** — Tea 2-4g daily (morning + evening), continuous indefinite. Foundational nervous system support; baseline anxiety reduction; emotional resilience; safe indefinite.
 
@@ -214,7 +214,7 @@ Clinical significance: Insomnia (anxiety-driven), restlessness, racing mind at n
 
 ## CLINICAL NOTES & PRACTITIONER GUIDANCE
 
-**Fresh Herb Optimal for Viral:** Fresh Lemon Balm tincture most potent for viral support (highest rosmarinic acid). Emphasize fresh plant use for HSV.
+**Fresh Herb Optimal for Viral:** Fresh Lemon Balm extract most potent for viral support (highest rosmarinic acid). Emphasize fresh plant use for HSV.
 
 **Paradoxical Effect Education:** Explain paradox to clients—calm + uplift simultaneously (not sedation, not stimulation—unique balanced effect). Helps set expectations.
 
@@ -224,7 +224,7 @@ Clinical significance: Insomnia (anxiety-driven), restlessness, racing mind at n
 
 **Pregnancy/Breastfeeding Recommendation:** Safe herb for these populations (gentle, soothing, traditionally used)—good recommendation when other herbs contraindicated.
 
-**Cold Sore Protocol:** Fresh herb topical application (crushed leaves on sore) + internal tincture simultaneously = most effective HSV approach.
+**Cold Sore Protocol:** Fresh herb topical application (crushed leaves on sore) + internal extract simultaneously = most effective HSV approach.
 
 ---
 

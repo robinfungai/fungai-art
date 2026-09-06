@@ -64,7 +64,7 @@ const FlowingAboutSection = () => {
                       Pure & Potent
                     </h3>
                     <p className="text-muted-foreground">
-                      Every extract and tincture is carefully crafted for maximum potency,
+                      Every extract and extract is carefully crafted for maximum potency,
                       using traditional methods and modern precision.
                     </p>
                   </div>

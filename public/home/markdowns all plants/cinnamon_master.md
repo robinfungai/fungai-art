@@ -91,7 +91,7 @@ Cinnamon oil and cinnamaldehyde inhibit multiple pathogens, contributing both to
 
 **Essential Oil (Internal):**
 
-- Only under professional guidelines and typically in very small, diluted doses; not necessary for your tincture/beverage context.
+- Only under professional guidelines and typically in very small, diluted doses; not necessary for your extract/beverage context.
 
 **Duration:**
 

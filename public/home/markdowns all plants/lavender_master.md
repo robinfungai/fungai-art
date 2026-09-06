@@ -85,7 +85,7 @@ Linalool + cineole inhibit bacterial/fungal growth; useful for skin healing, inf
 
 **Dosage Range:**
 **Tea (Infusion):** 1-2 g dried flowers per 250 ml water, steeped 5-10 minutes, 1-3× daily. Gentle extraction of linalool, flavonoids, rosmarinic acid. Pleasant taste; easy daily integration.
-**Tincture (Alcohol-Based, 1:5 ratio):** 20-40 drops (1-2 ml), 2-4× daily or PRN. Faster absorption than tea; more concentrated; portable.
+**Extract (Alcohol-Based, 1:5 ratio):** 20-40 drops (1-2 ml), 2-4× daily or PRN. Faster absorption than tea; more concentrated; portable.
 **Essential Oil (Aromatic/Inhalation—PRIMARY ROUTE):** 2-5 drops on diffuser pad, pillow, or tissue. Fastest effect (seconds-minutes via olfactory pathway). For acute anxiety/panic, most direct limbic access.
 **Essential Oil (Topical—Diluted Only):** 2-3% in carrier oil (coconut, jojoba, sweet almond). Never apply undiluted to skin (irritation risk). Use for tension headaches (massage temples/neck), muscle tension (topical massage), wound healing.
 **Essential Oil (Steam Inhalation):** 2-3 drops in hot water; cover head with towel; breathe steam 5-10 minutes. Enhanced extraction of volatile compounds.
@@ -95,7 +95,7 @@ Linalool + cineole inhibit bacterial/fungal growth; useful for skin healing, inf
 **Protocol 1: Daily Tea Ritual (Foundation)** — 1-2 g dried flowers in hot water, steeped covered 5-10 minutes, 1-3× daily. Continuous daily use safest, gentlest, most sustainable.
 **Protocol 2: Acute Anxiety Aromatherapy (Rapid)** — 2-3 drops essential oil on tissue, held near nose, 3-5 deep inhalations. Immediate effect within seconds-minutes. For panic, acute stress, overwhelm.
 **Protocol 3: Sleep Support Formula (Enhanced)** — 1-2 g lavender + 1 g chamomile + 0.5 g lemon balm, steeped together, 30-60 min before bed; add honey optional. Synergistic nervine trio; gentle + effective.
-**Protocol 4: Tension Headache Relief (Dual Route)** — Tincture (30 drops) internally + 2-3 drops diluted essential oil topical massage to temples/neck. Simultaneous systemic + local action; particularly effective for tension headaches.
+**Protocol 4: Tension Headache Relief (Dual Route)** — Extract (30 drops) internally + 2-3 drops diluted essential oil topical massage to temples/neck. Simultaneous systemic + local action; particularly effective for tension headaches.
 **Protocol 5: Topical Healing (Wounds/Eczema/Rashes)** — Lavender-infused carrier oil (steep dried flowers in jojoba oil 2 weeks, strain) applied topically 2-3× daily. Or: 2-3 drops essential oil in carrier oil. Antimicrobial + anti-inflammatory + wound healing.
 **Protocol 6: Stress Relief at Work (Discreet)** — Keep small bottle of lavender essential oil in desk; inhale 1-2 drops on tissue when stress arises. No ingestion needed; discrete; effective.
 **Protocol 7: Synergistic Sleep + Mood (Evening Comprehensive)** — Lavender tea + Rosemary (mild stimulant for next-day clarity) + Lemon Balm (nervine support) + Rose (heart-opening), taken together evening. Addresses sleep + next-day energy balance.
@@ -130,8 +130,8 @@ Linalool + cineole inhibit bacterial/fungal growth; useful for skin healing, inf
 **Rare Contraindications:**
 **Essential Oil on Sensitive Skin:** Always dilute 2-3% in carrier oil; never apply undiluted (irritation risk). Test patch first if unknown sensitivity.
 **Allergic Reaction (Extremely Rare):** Some individuals report mild rash or respiratory sensitivity to lavender scent (allergic rhinitis). Discontinue if reaction occurs.
-**High-Dose Internal Essential Oil:** May irritate mucous membranes (esophagus, stomach); use tincture or tea instead.
-**Pregnancy (Essential Oil—First Trimester):** Conventional caution (insufficient data); tea + tincture considered safer. Generally regarded as safe after first trimester.
+**High-Dose Internal Essential Oil:** May irritate mucous membranes (esophagus, stomach); use extract or tea instead.
+**Pregnancy (Essential Oil—First Trimester):** Conventional caution (insufficient data); tea + extract considered safer. Generally regarded as safe after first trimester.
 **Infants (<6 months):** Avoid essential oil (immature detoxification); tea mild + safe.
 
 **Herb-to-Herb Synergy (Safe, Synergistic Combinations):**
@@ -218,8 +218,8 @@ Linalool + cineole inhibit bacterial/fungal growth; useful for skin healing, inf
 **Backend Requirements:**
 - [ ] Linalool % (25-50% of essential oil) for potency verification
 - [ ] NO drug interaction flags needed (completely safe with all medications)
-- [ ] Pregnancy/breastfeeding safety flags (tea/tincture safe; high-dose essential oil caution)
-- [ ] Multiple preparation routes (tea, tincture, aromatic, topical) with effect timing for each
+- [ ] Pregnancy/breastfeeding safety flags (tea/extract safe; high-dose essential oil caution)
+- [ ] Multiple preparation routes (tea, extract, aromatic, topical) with effect timing for each
 - [ ] Daytime use appropriate (unlike Valerian/Chamomile)
 **Safety Screening (Minimal):**
 - [ ] Essential oil sensitivity screening (rare but documented)
@@ -250,5 +250,5 @@ Linalool + cineole inhibit bacterial/fungal growth; useful for skin healing, inf
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*
 *Date: February 2026*

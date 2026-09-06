@@ -105,7 +105,7 @@ Clinical significance: Cognitive longevity, dementia prevention, neuroprotection
 
 **Root Powder:** 3-6g daily (less standardized; variable withanolide content; less efficient).
 
-**Tincture:** 40-80 drops, 2-3× daily.
+**Extract:** 40-80 drops, 2-3× daily.
 
 **Duration:** Cycling protocol recommended (not indefinite continuous); 8-12 weeks on, 2-4 weeks off. Reduces tolerance risk; more physiologic.
 
@@ -242,5 +242,5 @@ Clinical significance: Cognitive longevity, dementia prevention, neuroprotection
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System*
+*Use Case: Tailored Extract Recommendation System*
 *Date: February 2026*

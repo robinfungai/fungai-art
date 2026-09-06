@@ -92,7 +92,7 @@ Clinical significance: Luteal-phase insufficiency, fertility support (adjunctive
 
 **Dried Berry (Whole-Fruit—Traditional):** 1-2 tsp (3-4g), 1-2× daily. Traditional form; still effective.
 
-**Tincture (1:5 Alcohol):** 40-60 drops, 2× daily.
+**Extract (1:5 Alcohol):** 40-60 drops, 2× daily.
 
 **Duration:** Minimum 3 months for effects (hormonal changes take cycles to manifest). Safe long-term indefinite with cycling (3 months on, 1 month off optional).
 
@@ -191,5 +191,5 @@ Clinical significance: Luteal-phase insufficiency, fertility support (adjunctive
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System*
+*Use Case: Tailored Extract Recommendation System*
 *Date: February 2026*

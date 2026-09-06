@@ -69,7 +69,7 @@ DOSAGE PREPARATION
 Dosage Range  
 - Tea / infusion: 2–4 g dried leaf per 250 ml, steep 10–15 minutes, 1–3 cups daily.  
 - Strong infusion: 5–10 g per 500 ml for tonic use.  
-- Tincture (1:5): 2–4 ml, 2–3 times daily.
+- Extract (1:5): 2–4 ml, 2–3 times daily.
 
 Best Preparations / Protocols  
 Protocol 1 Daily Reproductive Tonic FOUNDATION  
@@ -85,7 +85,7 @@ Protocol 4 Mild Loose Stool / Gut Irritation
 Short-term tea use 1–3 times daily where gentle astringency is indicated.
 
 Protocol 5 Postpartum Tonic  
-Infusion or tincture in recovery formulas for tissue restoration.
+Infusion or extract in recovery formulas for tissue restoration.
 
 --- TITLE RASPBERRY LEAF Rubus idaeus - DOSAGE PREPARATION
 
@@ -148,4 +148,4 @@ Gentle, mineral-rich, astringent reproductive tonic for uterine tone, tissue res
 Clinical Notes Practitioner Guidance  
 Best framed as a long-game tonic rather than an acute intervention. Excellent in everyday women’s support blends and nutritive tea formulas.
 
---- Generated for Functional Beverage Formulation AI App Use Case Tailored Tincture Recommendation System Date April 2026
+--- Generated for Functional Beverage Formulation AI App Use Case Tailored Extract Recommendation System Date April 2026

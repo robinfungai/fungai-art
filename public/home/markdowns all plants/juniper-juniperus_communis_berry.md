@@ -90,7 +90,7 @@ Essential oil and berry extracts exhibit antimicrobial and antioxidant actions, 
 **Chewed Berries / Culinary:**  
 - 2–10 berries per day in food, marinades, or decoctions; widely used as seasoning.
 
-**Tincture:**  
+**Extract:**  
 - 1:5 in 45–60% alcohol: 1–2 ml 2–3× daily for digestive/carminative use.
 
 **Duration:**  
@@ -103,7 +103,7 @@ Essential oil and berry extracts exhibit antimicrobial and antioxidant actions, 
 - Combine with demulcent herbs (cornsilk, marshmallow) and antimicrobial allies (uva-ursi, goldenrod) where appropriate.
 
 **Protocol 2: Digestive Bloating / Cold-Damp**  
-- Small doses of crushed berries in tea or tincture (1–2 ml) before meals.  
+- Small doses of crushed berries in tea or extract (1–2 ml) before meals.  
 - Pair with carminatives (fennel, ginger) and bitters.
 
 ---
@@ -188,6 +188,6 @@ Purification is powerful but must be time-limited and respectful of the organs t
 
 ---
 
-*Generated for: Functional Beverage / Tincture Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*  
+*Generated for: Functional Beverage / Extract Formulation AI App*  
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*  
 *Date: February 2026*

@@ -102,7 +102,7 @@ Apothecary catalog.
 | `id` | uuid PK | |
 | `slug` | text unique | |
 | `name` | text | |
-| `category` | text | `tincture` / `dried` / `composition` |
+| `category` | text | `extract` / `dried` / `composition` |
 | `description` | text | |
 | `volume` | text | `30ml` |
 | `price_eur_cents` | integer | |

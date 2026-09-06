@@ -33,7 +33,7 @@
 - **Beta-Glucans (Polysaccharides—Immune Support):** Enhance NK cells; foundational immunity.
 
 **Mechanisms:**
-- **Mineral Infusion—Foundational Tonification (PRIMARY):** Long steeping (10-15+ minutes) extracts minerals into water. Minerals naturally move from plant to liquid (not requiring alcohol extraction like tincture). Effect: Bioavailable minerals absorbed; foundational reserves nourished; mineral deficiency corrected; cellular function optimized.
+- **Mineral Infusion—Foundational Tonification (PRIMARY):** Long steeping (10-15+ minutes) extracts minerals into water. Minerals naturally move from plant to liquid (not requiring alcohol extraction like extract). Effect: Bioavailable minerals absorbed; foundational reserves nourished; mineral deficiency corrected; cellular function optimized.
 - **Silica for Connective Tissue Strengthening:** Silica crosslinks collagen fibers (connective tissue structural protein). Effect: Over 8+ weeks, hair grows stronger/thicker, skin clarity improves, nails strengthen, bones densify. Long-term cumulative structural improvement.
 - **Potassium-Sparing Diuretic:** Increases urination (detoxification) but PRESERVES potassium (unlike pharmaceutical diuretics which deplete K). Gentle detoxification without electrolyte depletion.
 - **Quercetin—Antihistamine + Anti-Inflammatory:** Stabilizes mast cells; reduces histamine release. Particularly effective for allergies, eczema, inflammatory conditions. Not acute relief; cumulative healing.
@@ -45,7 +45,7 @@
 
 **1. Mineral Infusion—Foundational Tonification (PRIMARY)**
 Nettle's defining feature: exceptional mineral density (4-6% of dried leaf; one cup infusion = more minerals than most supplements).
-Mechanism: Long steeping (10-15+ min) allows minerals to naturally leach from plant into water. Unlike tincture extraction, no alcohol needed; minerals simply move into liquid.
+Mechanism: Long steeping (10-15+ min) allows minerals to naturally leach from plant into water. Unlike extract extraction, no alcohol needed; minerals simply move into liquid.
 Effect: Bioavailable minerals absorbed; foundational reserves nourished (K, Ca, Mg, Fe, silica, trace minerals); mineral deficiencies corrected; cellular function optimized.
 Timeline: Immediate mineral nutrition (minerals bioavailable within hours); cumulative structural effects (bone, hair, skin, nails improvements) over weeks-months.
 Clinical significance: Bone health, anemia (iron), mineral depletion (post-illness, malnutrition, medications), foundational tonification for all health.
@@ -79,7 +79,7 @@ Timeline: Cumulative over weeks-months.
 **Dosage Range:**
 **Infusion (OPTIMAL EXTRACTION—PREFERRED):** 2-4 cups daily, infused 10-15 minutes minimum (longer steeping extracts more minerals optimally). Can use cold infusion overnight (minerals also leach into cold water; gentler). Traditional preparation; most efficient mineral extraction.
 **Powder (Capsules):** 300-500 mg, 3-6 capsules daily (less efficient than infusion; loses mineral extraction benefit somewhat).
-**Tincture:** 60-90 drops, 2-3× daily (alcohol extraction less efficient for mineral extraction than water infusion).
+**Extract:** 60-90 drops, 2-3× daily (alcohol extraction less efficient for mineral extraction than water infusion).
 **Fresh Juice (If Available):** 3-5 ml, 2× daily (fresh juice maximum nutrient density; limited availability).
 **Duration:** Safe long-term indefinite daily use (food + medicinal herb; mineral source).
 
@@ -140,5 +140,5 @@ Timeline: Cumulative over weeks-months.
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System*
+*Use Case: Tailored Extract Recommendation System*
 *Date: February 2026*

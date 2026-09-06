@@ -84,7 +84,7 @@ Timeline: Long-term cumulative benefit over months-years.
 **Dosage Range:**
 **Standardized Extract (20% Bacosides—MOST RESEARCHED):** 300-600 mg daily, divided doses (most studies use 300-600 mg). Take with meals or fat source (bacosides are fat-soluble; dietary fat improves absorption).
 **Dried Herb Powder:** 1-2 tsp (5-10g), 1-2× daily in warm water or blended into food.
-**Tincture (1:5 Alcohol-Based):** 60-90 drops, 2× daily.
+**Extract (1:5 Alcohol-Based):** 60-90 drops, 2× daily.
 **Fresh Herb Juice (Ayurvedic Tradition):** 3-5 ml, 2× daily (if available).
 **Duration:** Safe long-term indefinite use; effects cumulative (improve over weeks-months of consistent use).
 
@@ -182,5 +182,5 @@ Timeline: Long-term cumulative benefit over months-years.
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System*
+*Use Case: Tailored Extract Recommendation System*
 *Date: February 2026*

@@ -5,7 +5,7 @@
 
 ## BOTANICAL & IDENTIFICATION
 
-**Primary Species:** Ocimum sanctum L. (Holy Basil, Tulsi, Sacred Basil) — South Asian native (India, Southeast Asia); annual/perennial herb. **Above-ground plant** (leaves, stems) harvested year-round; dried at low temperature; used fresh or dried for tea/tincture.
+**Primary Species:** Ocimum sanctum L. (Holy Basil, Tulsi, Sacred Basil) — South Asian native (India, Southeast Asia); annual/perennial herb. **Above-ground plant** (leaves, stems) harvested year-round; dried at low temperature; used fresh or dried for tea/extract.
 
 **Botanical Family:** Lamiaceae (mint family)
 
@@ -106,9 +106,9 @@ Clinical significance: Foundational immune support; illness recovery; balanced i
 
 **Dried Leaf Tea:** 1-2 tsp dried herb per 8oz, steep 5-10 min, 2-3× daily.
 
-**Tincture (1:5 Alcohol):** 30-60 drops, 2-3× daily.
+**Extract (1:5 Alcohol):** 30-60 drops, 2-3× daily.
 
-**Standardized Extract (Eugenol-standardized):** 300-600mg, 2× daily (less common; primarily tea/tincture used).
+**Standardized Extract (Eugenol-standardized):** 300-600mg, 2× daily (less common; primarily tea/extract used).
 
 **Duration:** 8-12 weeks for full adaptogenic effect; cycling (8-12 weeks on, 2-4 weeks off) recommended. Long-term safe with cycling.
 
@@ -231,5 +231,5 @@ Clinical significance: Foundational immune support; illness recovery; balanced i
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System*
+*Use Case: Tailored Extract Recommendation System*
 *Date: February 2026*

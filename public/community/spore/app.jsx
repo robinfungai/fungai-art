@@ -299,7 +299,7 @@ function ApothecaryPage({ economy, onToast }) {
       <div className="section">
         <div className="section-eyebrow">Dual pricing · € or $MYCELE</div>
         <h2 className="section-title">The <em>apothecary.</em></h2>
-        <p className="section-blurb">Tinctures, fungi, and compositions. Pay in euros or burn $MYCELE — contributors save vs retail.</p>
+        <p className="section-blurb">Extracts, fungi, and compositions. Pay in euros or burn $MYCELE — contributors save vs retail.</p>
       </div>
 
       <figure className="specimen-hero">
@@ -312,10 +312,10 @@ function ApothecaryPage({ economy, onToast }) {
           <div className="specimen-meta">
             <div><span className="k">Family</span><span className="v">Schizophyllaceae</span></div>
             <div><span className="k">Habitat</span><span className="v">Decaying hardwood</span></div>
-            <div><span className="k">Used in</span><span className="v">Tinctures · ferments</span></div>
+            <div><span className="k">Used in</span><span className="v">Extracts · ferments</span></div>
             <div><span className="k">Foraged</span><span className="v">Sweden, autumn</span></div>
           </div>
-          <p className="specimen-blurb">A split-gilled fungus — the most widely distributed mushroom on Earth. The base material for our autumn tincture line.</p>
+          <p className="specimen-blurb">A split-gilled fungus — the most widely distributed mushroom on Earth. The base material for our autumn extract line.</p>
         </figcaption>
       </figure>
 

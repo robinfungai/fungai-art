@@ -77,7 +77,7 @@ Clinical significance: Key bitter for “liver‑skin‑gut” axis protocols.
 
 **Crude Bark / Whole Herb:**
 
-- **Tincture:** Often 1:5 in ~40–60% ethanol; **1–3 ml, 2–3× daily**, depending on indication and tolerance (short‑term higher doses in acute infection).[web:77][web:83]  
+- **Extract:** Often 1:5 in ~40–60% ethanol; **1–3 ml, 2–3× daily**, depending on indication and tolerance (short‑term higher doses in acute infection).[web:77][web:83]  
 - **Decoction:** 1–2 g dried bark per 250 ml water, simmer 10–15 minutes, 1–3× daily (strongly bitter).[web:77]
 
 **Standardized Berberine Extract (From Berberis spp.):**
@@ -97,18 +97,18 @@ Clinical significance: Key bitter for “liver‑skin‑gut” axis protocols.
 **Example Protocols**
 
 **Protocol 1: Acute GI Infection / Dysentery‑like (SHORT‑TERM)**  
-- Tincture 1–2 ml, 3–4× daily for 3–7 days, plus hydration and supportive care.  
+- Extract 1–2 ml, 3–4× daily for 3–7 days, plus hydration and supportive care.  
 - Combine with demulcents (marshmallow/slippery elm) to protect mucosa.
 
 **Protocol 2: SIBO / Dysbiosis Program**  
-- Barberry tincture or berberine 500 mg 2–3× daily for 4–8 weeks, with breaks, alongside diet changes and probiotics.  
+- Barberry extract or berberine 500 mg 2–3× daily for 4–8 weeks, with breaks, alongside diet changes and probiotics.  
 - Monitor for GI irritation and liver parameters in high‑risk cases.
 
 **Protocol 3: Metabolic Syndrome / T2DM Adjunct**  
 - Berberine 500 mg 2–3× daily for 8–12 weeks, with blood marker monitoring (glucose, lipids, liver enzymes).[web:80]
 
 **Protocol 4: Liver‑Skin Axis (Eczema / Psoriasis Adjunct)**  
-- Barberry tincture 1–2 ml 2–3× daily for 4–8 weeks, plus liver‑supportive diet and topicals.[web:77][web:83]
+- Barberry extract 1–2 ml 2–3× daily for 4–8 weeks, plus liver‑supportive diet and topicals.[web:77][web:83]
 
 ---
 
@@ -193,5 +193,5 @@ Barberry is a **sharp, yellow, boundary‑setting bitter**, cutting through heat
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System*  
+*Use Case: Tailored Extract Recommendation System*  
 *Date: February 2026*

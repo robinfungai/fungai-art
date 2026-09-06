@@ -75,7 +75,7 @@ Primary actions: Sedative nervine, hypnotic, bitter digestive, mild phytoestroge
 
 ## DOSAGE & PREPARATION
 
-### Tincture
+### Extract
 
 - **Typical strength:** **1:5 in 60–70% ethanol** – aligns with commercial apothecaries using 60% for dried strobiles.[web:85][web:91]  
 - **Dose range:**  

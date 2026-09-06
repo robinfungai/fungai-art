@@ -9,9 +9,9 @@
 
 **Botanical Family:** Rosaceae (rose family)
 
-**Part Used:** Filipendula ulmaria herba — **Aerial parts (leaves + flowers)** optimal; dried to concentrate active compounds; fresh plant tincture highly potent. Whole flowering plant used.
+**Part Used:** Filipendula ulmaria herba — **Aerial parts (leaves + flowers)** optimal; dried to concentrate active compounds; fresh plant extract highly potent. Whole flowering plant used.
 
-**Harvesting & Processing:** Harvested during flowering (peak salicylate + flavonoid concentration); dried at low temperature; whole aerial parts stored. Fresh plant tincture most potent (preserves volatiles). Distinctive vanilla-like aroma.
+**Harvesting & Processing:** Harvested during flowering (peak salicylate + flavonoid concentration); dried at low temperature; whole aerial parts stored. Fresh plant extract most potent (preserves volatiles). Distinctive vanilla-like aroma.
 
 **Quality Indicators:** Yellow-white dried flowers; characteristic sweet, vanilla-like aroma (distinctive); slightly bitter taste (salicylate indicator). Potency indicated by aroma intensity + bitter taste.
 
@@ -99,7 +99,7 @@ Clinical significance: Gastric sensitivity, ulcer support, stomach comfort.
 
 **Dosage Range (Gentle—Safe Ongoing):**
 
-**Tincture (Fresh Herb—MOST POTENT):** 20-40 drops, 2-3× daily (especially after meals for GI support). Fresh herb tincture highest bioactivity.
+**Extract (Fresh Herb—MOST POTENT):** 20-40 drops, 2-3× daily (especially after meals for GI support). Fresh herb extract highest bioactivity.
 
 **Infusion (Dried Aerial Parts—TRADITIONAL):** 2-4g dried herb steeped 10-15 min, 2-3× daily (especially after meals). Preserves salicylates + flavonoids well.
 
@@ -114,21 +114,21 @@ Clinical significance: Gastric sensitivity, ulcer support, stomach comfort.
 
 **BEST PREPARATIONS:**
 
-**Protocol 1: Digestive Acid Support (GERD/HEARTBURN—4-8 WEEKS)** — Tincture 30-40 drops after meals, 3× daily for 4-8 weeks. Acid reflux eases; stomach lining supports; comfort improves. Gentle NSAID + PPI alternative.
+**Protocol 1: Digestive Acid Support (GERD/HEARTBURN—4-8 WEEKS)** — Extract 30-40 drops after meals, 3× daily for 4-8 weeks. Acid reflux eases; stomach lining supports; comfort improves. Gentle NSAID + PPI alternative.
 
-**Protocol 2: Pain Relief (ALL TYPES—AS-NEEDED)** — Tincture 20-30 drops every 3-4 hours as needed for pain (headaches, muscle, joint, period pain). Gentle, stomach-safe pain relief. No gastric irritation.
+**Protocol 2: Pain Relief (ALL TYPES—AS-NEEDED)** — Extract 20-30 drops every 3-4 hours as needed for pain (headaches, muscle, joint, period pain). Gentle, stomach-safe pain relief. No gastric irritation.
 
 **Protocol 3: Arthritis + Joint Support (CHRONIC—8-12 WEEKS)** — Infusion 2-3g, 2× daily for 8-12 weeks. Joint pain decreases; inflammation reduces; flexibility improves. Gentle, stomach-safe arthritis herb.
 
-**Protocol 4: Period Pain Relief (CYCLIC—DURING MENSTRUATION)** — Tincture 20-30 drops, 2-3× daily during cycle (especially days before + during). Period pain + inflammation eases. Can continue indefinitely during menses.
+**Protocol 4: Period Pain Relief (CYCLIC—DURING MENSTRUATION)** — Extract 20-30 drops, 2-3× daily during cycle (especially days before + during). Period pain + inflammation eases. Can continue indefinitely during menses.
 
 **Protocol 5: Fever Reduction (ACUTE ILLNESS—3-7 DAYS)** — Infusion 2-4g, 3-4× daily during acute fever (+ rest, fluids). Fever reduces via diaphoretic sweating. Gentle, non-pharmaceutical fever support.
 
-**Protocol 6: NSAID Replacement (CHRONIC PAIN—LONG-TERM)** — Tincture 20-30 drops, 2-3× daily indefinite (for people on chronic NSAIDs wanting gentler alternative). GI-safe pain relief; long-term sustainable.
+**Protocol 6: NSAID Replacement (CHRONIC PAIN—LONG-TERM)** — Extract 20-30 drops, 2-3× daily indefinite (for people on chronic NSAIDs wanting gentler alternative). GI-safe pain relief; long-term sustainable.
 
 **Protocol 7: Digestive Anti-Inflammatory (GI INFLAMMATION—4-8 WEEKS)** — Infusion 2-3g, 2-3× daily for 4-8 weeks. Systematic GI inflammation reduces; leaky gut support; digestive resilience improves.
 
-**Protocol 8: Comfort + Nourishment (FOUNDATIONAL—ONGOING)** — Tincture 15-20 drops daily indefinite. Baseline digestive support; gentle pain relief; cumulative wellness. Safe, sweet-tasting comfort herb.
+**Protocol 8: Comfort + Nourishment (FOUNDATIONAL—ONGOING)** — Extract 15-20 drops daily indefinite. Baseline digestive support; gentle pain relief; cumulative wellness. Safe, sweet-tasting comfort herb.
 
 ---
 

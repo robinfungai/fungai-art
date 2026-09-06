@@ -99,7 +99,7 @@ Curcumin has inherently low oral bioavailability; co-administration with black p
 **Standardized Curcumin Extract:**  
 - 500–1500 mg curcuminoids/day in divided doses, often combined with piperine or phospholipids (e.g., phytosome formulations) for improved uptake.[web:22]
 
-**Tincture/Fluid Extract:**  
+**Extract/Fluid Extract:**  
 - 2–5 ml (1:2–1:5) 2–3× daily with food.
 
 **Tea/Decoction:**  
@@ -244,5 +244,5 @@ To reduce inflammation is not merely to suppress fire, but to **redirect** it in
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*  
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*  
 *Date: February 2026*

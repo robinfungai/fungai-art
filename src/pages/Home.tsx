@@ -28,7 +28,7 @@ const NAV_CARDS = [
   },
   {
     label: "Shop",
-    description: "Premium tinctures, mushrooms, botanicals and sacred compounds",
+    description: "Premium extracts, mushrooms, botanicals and sacred compounds",
     href: "/products",
     symbol: "◈",
   },

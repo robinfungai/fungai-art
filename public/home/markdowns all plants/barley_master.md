@@ -222,5 +222,5 @@ Barley is a **grounding staple ally**—a grain of stability and slow release, s
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System*  
+*Use Case: Tailored Extract Recommendation System*  
 *Date: February 2026*

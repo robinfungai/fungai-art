@@ -76,7 +76,7 @@ Timeline: Develops over 4-8 weeks.
 **Dosage Range:**
 **Standardized Extract (24% Flavones, 6% Terpene Lactones—MOST RESEARCHED):** 120-240 mg daily, divided into 40-80 mg doses, 2-3× daily. This is standard used in most clinical trials.
 **Dried Leaf Tea:** 1-2 tsp per 250 ml, steeped 10-15 min, 2-3× daily (less standardized; effects less predictable).
-**Tincture:** 60-90 drops, 2-3× daily.
+**Extract:** 60-90 drops, 2-3× daily.
 **Duration:** Minimum 4-8 weeks for effects; 8-12 weeks for full benefit. Safe long-term indefinite use.
 
 **Best Protocols:**
@@ -143,5 +143,5 @@ Timeline: Develops over 4-8 weeks.
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System*
+*Use Case: Tailored Extract Recommendation System*
 *Date: February 2026*

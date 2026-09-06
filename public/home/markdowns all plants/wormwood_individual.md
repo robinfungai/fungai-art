@@ -77,15 +77,15 @@ Reduces TNF-α, IL-6; anti-inflammatory support (secondary benefit).
 
 **Dosage Range:**
 **Tea/Infusion (GENTLEST PREPARATION):** 0.5-1 tsp dried herb per 250 ml hot water, steeped 10-15 minutes, 1-2× daily **BEFORE MEALS** (intense bitter—pre-meal optimal). Very bitter; acquired taste.
-**Tincture (1:5 Alcohol-Based—MOST CONCENTRATED):** 10-20 drops, 2-3× daily (start LOW; very concentrated). More potent than tea; smaller volume; easier tolerance.
-**PARASITE PROTOCOL (INTENSIVE—SHORT-TERM ONLY):** 20-40 drops tincture, 3× daily for 2 weeks, then mandatory 1-2 week break, repeat 2-3 cycles total. **MANDATORY BREAKS between cycles** (thujone accumulation risk; neurotoxicity prevention).
+**Extract (1:5 Alcohol-Based—MOST CONCENTRATED):** 10-20 drops, 2-3× daily (start LOW; very concentrated). More potent than tea; smaller volume; easier tolerance.
+**PARASITE PROTOCOL (INTENSIVE—SHORT-TERM ONLY):** 20-40 drops extract, 3× daily for 2 weeks, then mandatory 1-2 week break, repeat 2-3 cycles total. **MANDATORY BREAKS between cycles** (thujone accumulation risk; neurotoxicity prevention).
 **Duration:** **SHORT-TERM ONLY (2-4 weeks maximum per cycle); MANDATORY BREAKS between cycles (1-2 weeks minimum); maximum 3 cycles per year.**
 
 **Best Preparations:**
-**Protocol 1: Parasite Elimination (ACUTE—SHORT-TERM INTENSIVE)** — 20-40 drops tincture, 3× daily for 2 weeks, then mandatory 1-2 week break, repeat 2-3 cycles (6 weeks total ON + OFF cycles). Most aggressive antiparasitic protocol. ALWAYS combined with other antiparasitics (Black Walnut, Clove—antiparasitic trio) for synergy + to reduce Wormwood dose.
-**Protocol 2: Digestive Bitters (PRE-MEAL—SHORT-TERM)** — 10-20 drops tincture, 2-3× daily BEFORE meals for 2-4 weeks (digestive stimulation). Start low; increase gradually. Intense bitter; acquired taste.
+**Protocol 1: Parasite Elimination (ACUTE—SHORT-TERM INTENSIVE)** — 20-40 drops extract, 3× daily for 2 weeks, then mandatory 1-2 week break, repeat 2-3 cycles (6 weeks total ON + OFF cycles). Most aggressive antiparasitic protocol. ALWAYS combined with other antiparasitics (Black Walnut, Clove—antiparasitic trio) for synergy + to reduce Wormwood dose.
+**Protocol 2: Digestive Bitters (PRE-MEAL—SHORT-TERM)** — 10-20 drops extract, 2-3× daily BEFORE meals for 2-4 weeks (digestive stimulation). Start low; increase gradually. Intense bitter; acquired taste.
 **Protocol 3: Antiparasitic Trio (SYNERGISTIC—OPTIMAL PROTOCOL)** — Wormwood 20 drops + Black Walnut Hull 20 drops + Clove bud 10 drops, combined, 3× daily for 2 weeks, then 1 week break, repeat 2 cycles. Triple antiparasitic action; synergistic effectiveness; reduced single-herb dose (reduces toxicity risk).
-**Protocol 4: Liver + Digestive Support (MILD—SHORT-TERM)** — 10 drops tincture, 2× daily BEFORE meals for 2-3 weeks. Milder dosing; bile stimulation + digestive support; less bitter intensity.
+**Protocol 4: Liver + Digestive Support (MILD—SHORT-TERM)** — 10 drops extract, 2× daily BEFORE meals for 2-3 weeks. Milder dosing; bile stimulation + digestive support; less bitter intensity.
 **Protocol 5: Microbial Dysbiosis (WITH CAUTION—SHORT-TERM)** — 10-20 drops, 2-3× daily for 1-2 weeks (bacterial/fungal dysbiosis adjunct—NEVER sole treatment). Part of comprehensive dysbiosis protocol. Limited use; short-term only.
 
 ---
@@ -157,5 +157,5 @@ Reduces TNF-α, IL-6; anti-inflammatory support (secondary benefit).
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System*
+*Use Case: Tailored Extract Recommendation System*
 *Date: February 2026*

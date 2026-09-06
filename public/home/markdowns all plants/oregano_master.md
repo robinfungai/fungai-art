@@ -86,7 +86,7 @@ Timeline: Rapid (hours); acute immune boost during illness.
 
 **Dosage Range:**
 **Tea/Infusion (MOST ACCESSIBLE):** 1-2 tsp dried herb per 250 ml water, steeped 10-15 minutes (longer steep extracts more carvacrol + rosmarinic acid), 2-3× daily. Warm tea preferred (volatile oils + antimicrobial effects enhanced by warmth).
-**Tincture (1:5 Alcohol-Based):** 30-60 drops, 2-3× daily (acute protocols); more concentrated; convenient. Alcohol extraction efficient for volatile oils + rosmarinic acid.
+**Extract (1:5 Alcohol-Based):** 30-60 drops, 2-3× daily (acute protocols); more concentrated; convenient. Alcohol extraction efficient for volatile oils + rosmarinic acid.
 **Essential Oil (NOT for Internal Use Undiluted):** Used only for aromatherapy/diffusion, topical (diluted in carrier oil). DO NOT ingest undiluted (concentrated volatile oils irritant—GI upset, toxicity risk).
 **Culinary Use (SIMPLEST, THERAPEUTIC):** Use oregano generously in cooking (herbs, sauces, marinades, soups, teas). Therapeutic food medicine; continuous mild antimicrobial + anti-inflammatory benefit. Safe indefinite daily use.
 **Standardized Extract (High Carvacrol %):** 500-1000 mg daily (if available); standardized to 50%+ carvacrol; most potent form.
@@ -94,17 +94,17 @@ Timeline: Rapid (hours); acute immune boost during illness.
 
 **Best Preparations:**
 **Protocol 1: Culinary Therapeutic Daily (SIMPLEST, MOST SUSTAINABLE)** — Use 1-2 tbsp fresh or 1-2 tsp dried oregano daily in cooking (marinades, sauces, soups, teas). Therapeutic food medicine approach; continuous mild antimicrobial + anti-inflammatory benefit. Safe indefinite; effects cumulative over months.
-**Protocol 2: Acute Infection Support (SHORT-TERM INTENSIVE)** — 1-2 tsp dried herb steeped 15 min, 3× daily OR 40-60 drops tincture, 3× daily for 1-2 weeks (acute bacterial/fungal/parasitic infection). Intensive dosing mobilizes antimicrobial action. PAIR with Garlic + Ginger for synergistic effect.
+**Protocol 2: Acute Infection Support (SHORT-TERM INTENSIVE)** — 1-2 tsp dried herb steeped 15 min, 3× daily OR 40-60 drops extract, 3× daily for 1-2 weeks (acute bacterial/fungal/parasitic infection). Intensive dosing mobilizes antimicrobial action. PAIR with Garlic + Ginger for synergistic effect.
 **Protocol 3: Dysbiosis/Candida Support (MODERATE-TERM PROTOCOL)** — 1-2 tsp dried herb steeped 10 min, 2-3× daily for 4-8 weeks (intestinal dysbiosis, candida overgrowth). Antimicrobial + anti-inflammatory. COMBINE with probiotics (in separate timing; antimicrobials may suppress beneficial bacteria initially—allow recovery phase).
 **Protocol 4: Synergistic Antimicrobial Formula (STRONGEST)** — Oregano 1 tsp + Garlic 2-3 cloves (minced) + Ginger 0.5 tsp (grated) + Thyme 0.5 tsp, all steeped together 15 min or combined in food. TRIPLE antimicrobial action (Oregano carvacrol + Garlic allicin + Ginger gingerols); anti-inflammatory synergy; most potent herbal antimicrobial combination.
 **Protocol 5: Respiratory Infection Support (ADJUNCTIVE)** — 1-2 tsp dried herb steeped 10 min, 3× daily during respiratory infection (bronchitis, pneumonia adjunct—NEVER replaces antibiotics if prescribed). Antimicrobial + expectorant (thymol action) support.
-**Protocol 6: Parasite Protocol (INTEGRATED)** — Oregano 1-2 tsp steeped 10 min + Black Walnut Hull tincture 20 drops + Wormwood tincture 15 drops, 2-3× daily for 2 weeks, then 1 week break, repeat 2-3 cycles. Triple antiparasitic action; rotational approach prevents resistance.
+**Protocol 6: Parasite Protocol (INTEGRATED)** — Oregano 1-2 tsp steeped 10 min + Black Walnut Hull extract 20 drops + Wormwood extract 15 drops, 2-3× daily for 2 weeks, then 1 week break, repeat 2-3 cycles. Triple antiparasitic action; rotational approach prevents resistance.
 **Protocol 7: Anti-Inflammatory Tonic (LONG-TERM)** — 1 tsp dried herb steeped 10 min, 1-2× daily indefinite for chronic inflammatory conditions (arthritis, IBD adjunct, autoimmune support). Rosmarinic acid anti-inflammatory action; safe long-term cumulative benefit.
-**Protocol 8: Athletes' Foot/Topical Fungal (TOPICAL + INTERNAL)** — Oregano essential oil (5-10 drops) diluted in carrier oil (coconut, jojoba), applied topically to affected area 2× daily; simultaneously, tea or tincture internally (Protocol 3 dosing) for systemic antifungal action.
+**Protocol 8: Athletes' Foot/Topical Fungal (TOPICAL + INTERNAL)** — Oregano essential oil (5-10 drops) diluted in carrier oil (coconut, jojoba), applied topically to affected area 2× daily; simultaneously, tea or extract internally (Protocol 3 dosing) for systemic antifungal action.
 
 **Timing:**
 **Warm water** (volatile oils + antimicrobial effects enhanced by warmth).
-**With food** (improves tolerance; reduces potential GI irritation from concentrated tincture).
+**With food** (improves tolerance; reduces potential GI irritation from concentrated extract).
 **Frequent dosing (2-3× daily)** for acute infection/dysbiosis (builds antimicrobial effect).
 **Daily indefinite** for culinary + chronic inflammatory support (safe, cumulative).
 
@@ -134,7 +134,7 @@ Timeline: Rapid (hours); acute immune boost during illness.
 **Safety Profile:** GRADE A (culinary herb) to GRADE B (concentrated forms) — Very safe when used as culinary herb; concentrated forms require caution in specific populations.
 
 **Contraindications:**
-**Pregnancy (High-Dose Concentrated Forms Only):** Essential oil + high-dose concentrated forms: emmenagogue (uterine stimulant) potential. Culinary amounts (herb in food) absolutely safe. Concentrated tinctures/extracts: caution; consult provider.
+**Pregnancy (High-Dose Concentrated Forms Only):** Essential oil + high-dose concentrated forms: emmenagogue (uterine stimulant) potential. Culinary amounts (herb in food) absolutely safe. Concentrated extracts/extracts: caution; consult provider.
 **Breastfeeding:** Safe (culinary amounts); high-dose concentrated forms insufficient data.
 **Essential Oil Sensitivity (Rare):** Direct ingestion concentrated essential oil (DO NOT)—irritant; GI upset, toxicity. Whole herb tea/culinary does not have concern (volatile oils naturally diluted in food matrix).
 **Bleeding Disorders (Rare Caution):** Slight antiplatelet activity (theoretical); generally safe but monitor if severe bleeding disorder.
@@ -256,5 +256,5 @@ Timeline: Rapid (hours); acute immune boost during illness.
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*
 *Date: February 2026*

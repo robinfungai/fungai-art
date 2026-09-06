@@ -7,8 +7,8 @@
 
 **Primary Species:** Hypericum perforatum L. — European native; naturalized globally; considered invasive in some regions. Aerial parts (leaves, stems, flowers) harvested at flowering peak (late spring-midsummer, around summer solstice June 20-23—historically significant).
 **Botanical Family:** Hypericaceae (St. John's Wort family; historically classified as Clusiaceae/Guttiferae)
-**Part Used:** Hypericum herba — Aerial parts including flowering tops, leaves, stems; harvested fresh or dried; used as tincture, tea, standardized extract.
-**Harvesting & Processing:** Flowers + upper leaves collected at peak bloom (maximizes hyperforin + hypericin content); dried at low temperature or used fresh for tincture; hyperforin degrades with heat (prefer tinctures over teas for potency preservation); standardized extracts target 0.3% hypericin.
+**Part Used:** Hypericum herba — Aerial parts including flowering tops, leaves, stems; harvested fresh or dried; used as extract, tea, standardized extract.
+**Harvesting & Processing:** Flowers + upper leaves collected at peak bloom (maximizes hyperforin + hypericin content); dried at low temperature or used fresh for extract; hyperforin degrades with heat (prefer extracts over teas for potency preservation); standardized extracts target 0.3% hypericin.
 **Quality Indicators:** Whole aerial parts with visible yellow flowers + red-tinged buds (hypericin signature); strong herbal aroma. Premium grade: 0.3%+ hypericin + 2-4% hyperforin (if testable).
 **Storage:** Airtight glass, cool dark location; maintains potency 12-18 months (hyperforin volatile).
 
@@ -84,17 +84,17 @@ This is PRIMARY reason for CAUTION/contraindication—not toxicity of St. John's
 
 **Dosage Range:**
 **Standardized Extract (0.3% hypericin, 2-4% hyperforin):** 300-600 mg daily, divided into 2-3 doses. Most reliable for consistent antidepressant effect; typical clinical research dosing.
-**Tincture (1:5 ratio, alcohol-based):** 30-60 drops (1.5-3 ml), 2-3× daily. Less standardized potency; flexible dosing; extracts hyperforin efficiently.
-**Fresh-Herb Tincture (Peak Potency):** Higher hyperforin content if made from fresh flowering tops at peak bloom.
+**Extract (1:5 ratio, alcohol-based):** 30-60 drops (1.5-3 ml), 2-3× daily. Less standardized potency; flexible dosing; extracts hyperforin efficiently.
+**Fresh-Herb Extract (Peak Potency):** Higher hyperforin content if made from fresh flowering tops at peak bloom.
 **Dried Herb Tea/Infusion:** 2-4 g aerial parts per 250 ml water, steeped 10 minutes, 1-2× daily. Less reliable extraction of hyperforin (volatile); full-spectrum other compounds.
 **CRITICAL: Consistent daily use essential** — Effect is cumulative, NOT for acute/PRN use. Minimum 4-8 weeks before assessing efficacy.
 
 **Best Preparations:**
 **Protocol 1: Clinical Standardized Extract (Most Reliable)** — 300-600 mg standardized (0.3% hypericin) extract daily in divided doses (100-200 mg morning, 100-200 mg afternoon, 100-200 mg evening). Most consistent dosing; reliable antidepressant efficacy; used in clinical trials.
-**Protocol 2: Fresh Flower Tincture (Seasonal, Maximum Potency)** — 40-60 drops tincture made from fresh flowering tops (June-July harvest), 2-3× daily. Higher hyperforin; ceremonial connection to summer solstice; stronger effect than dried.
-**Protocol 3: Multi-Mechanism Mood Support (Enhanced Efficacy)** — St. John's Wort tincture (30 drops) + Lemon Balm tincture (20 drops) + Saffron extract (15 mg) + Rhodiola tincture (20 drops), 2× daily. Addresses mood via multiple pathways (reuptake inhibition, nervine support, anti-inflammatory, adaptogenic resilience).
+**Protocol 2: Fresh Flower Extract (Seasonal, Maximum Potency)** — 40-60 drops extract made from fresh flowering tops (June-July harvest), 2-3× daily. Higher hyperforin; ceremonial connection to summer solstice; stronger effect than dried.
+**Protocol 3: Multi-Mechanism Mood Support (Enhanced Efficacy)** — St. John's Wort extract (30 drops) + Lemon Balm extract (20 drops) + Saffron extract (15 mg) + Rhodiola extract (20 drops), 2× daily. Addresses mood via multiple pathways (reuptake inhibition, nervine support, anti-inflammatory, adaptogenic resilience).
 **Protocol 4: SAD-Specific (Winter Light Protocol)** — St. John's Wort standardized extract 300 mg daily + morning bright light therapy (10,000 lux light box, 20-30 min upon waking). Synergistic effect superior to either alone.
-**Protocol 5: Neuropathic Pain/Nerve Support (Internal + Topical)** — Tincture 40 drops internally 2× daily + St. John's Wort-infused oil topical massage to affected areas nightly. Addresses nerve pain systemically + locally.
+**Protocol 5: Neuropathic Pain/Nerve Support (Internal + Topical)** — Extract 40 drops internally 2× daily + St. John's Wort-infused oil topical massage to affected areas nightly. Addresses nerve pain systemically + locally.
 
 **Timing:** Morning and/or afternoon preferred (mood-elevating, not sedating); avoid evening (may cause mild sleep disruption in some users due to stimulation). Consistent daily timing optimal.
 
@@ -203,7 +203,7 @@ This is PRIMARY reason for CAUTION/contraindication—not toxicity of St. John's
 
 ## CLINICAL NOTES & PRACTITIONER GUIDANCE
 
-**Quality & Sourcing:** Choose standardized extracts (0.3% hypericin minimum; 2-4% hyperforin if available) for consistent efficacy; fresh-herb tinctures from peak-bloom plants (June-July) for potency; avoid powdered or low-potency commercial products. Ethical sourcing important (invasive plant in some regions; overharvesting concerns).
+**Quality & Sourcing:** Choose standardized extracts (0.3% hypericin minimum; 2-4% hyperforin if available) for consistent efficacy; fresh-herb extracts from peak-bloom plants (June-July) for potency; avoid powdered or low-potency commercial products. Ethical sourcing important (invasive plant in some regions; overharvesting concerns).
 **Storage:** Airtight glass, cool dark location (hyperforin volatile); maintains potency 12-18 months; avoid light exposure (degrades hypericin).
 **Critical Pre-Screening:** MANDATORY comprehensive medication list review; check each medication against CYP3A4/CYP2C9/CYP1A2 interaction risk; screen for contraindications (pregnancy, bipolar, transplant, anticoagulation, contraception).
 **Patient Education:** Explain 4-8 week timeline (not acute remedy); require user acknowledgment of drug interaction risks; emphasize disclosure to ALL healthcare providers; provide written interaction information.
@@ -254,7 +254,7 @@ This is PRIMARY reason for CAUTION/contraindication—not toxicity of St. John's
 
 ## ST. JOHN'S WORT MASTER MONOGRAPH — COMPLETE
 
-**This document synthesizes:** Powerful antidepressant pharmacology (hyperforin SSRI-equivalent mechanism; clinical RCT evidence), extensive drug interaction profile (CYP3A4 induction; 50%+ medication risk), seasonal/light-bringing spiritual dimension (midsummer harvest, hypericin light-absorption), practical protocols (standardized extract to fresh tincture), and comprehensive AI-level safety integration (mandatory screening, drug interaction database, liability protection).
+**This document synthesizes:** Powerful antidepressant pharmacology (hyperforin SSRI-equivalent mechanism; clinical RCT evidence), extensive drug interaction profile (CYP3A4 induction; 50%+ medication risk), seasonal/light-bringing spiritual dimension (midsummer harvest, hypericin light-absorption), practical protocols (standardized extract to fresh extract), and comprehensive AI-level safety integration (mandatory screening, drug interaction database, liability protection).
 **Key Distinction (Antidepressant Spectrum):**
 - **Vanilla + Chamomile + Lavender:** Gentle nervines; mood support through comfort/GABA; safe indefinite use; no drug interactions
 - **St. John's Wort:** Clinical-strength antidepressant; SSRI-equivalent efficacy; extensive drug interactions; 4-8 week timeline; medical screening required
@@ -264,5 +264,5 @@ This is PRIMARY reason for CAUTION/contraindication—not toxicity of St. John's
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*
 *Date: February 2026*

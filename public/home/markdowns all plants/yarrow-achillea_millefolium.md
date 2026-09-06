@@ -96,7 +96,7 @@ Stimulates appetite, digestion of fats, and reduces spasmodic GI discomfort and 
 - For acute fever/diaphoretic use: drink hot, 3–5 cups/day for short periods.  
 - For digestion/circulation: 1–3 cups/day.[web:30]
 
-**Tincture:**  
+**Extract:**  
 - 1:5 in 40–60% alcohol: 2–4 ml 2–3× daily.  
 - For acute fever: 1–2 ml every 1–3 hours (short term).
 
@@ -115,7 +115,7 @@ Stimulates appetite, digestion of fats, and reduces spasmodic GI discomfort and 
 - Goal: induce sweating, shorten duration and intensity.
 
 **Protocol 2: Heavy / Spasmodic Menstruation**  
-- Tincture 2–3 ml TID in days leading up to and during menses; combine with raspberry leaf, shepherd’s purse, or cramp bark depending on pattern.  
+- Extract 2–3 ml TID in days leading up to and during menses; combine with raspberry leaf, shepherd’s purse, or cramp bark depending on pattern.  
 
 **Protocol 3: Wound / Nosebleed**  
 - Fresh crushed leaves or powdered dry yarrow applied directly to bleeding site; hold pressure.
@@ -208,6 +208,6 @@ Boundaries are not only walls but also intelligent gates — knowing when to say
 
 ---
 
-*Generated for: Functional Beverage / Tincture Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*  
+*Generated for: Functional Beverage / Extract Formulation AI App*  
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*  
 *Date: February 2026*

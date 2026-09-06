@@ -7,7 +7,7 @@
 
 **Primary Species:** Leonurus cardiaca L. — European native; naturalized across temperate regions globally. Named "Motherwort" (mother's herb) for traditional postpartum + menstrual support. Aerial parts (especially flowering tops) contain highest alkaloid concentration.
 **Botanical Family:** Lamiaceae (mint family)
-**Part Used:** Leonurus cardiaca herba — Aerial parts, leaves, flowering tops; fresh or dried; used as tincture, tea, powder.
+**Part Used:** Leonurus cardiaca herba — Aerial parts, leaves, flowering tops; fresh or dried; used as extract, tea, powder.
 **Harvesting & Processing:** Flowering tops harvested at peak bloom (summer, June-August); dried at low temperature (<40°C) to preserve leonurine alkaloids; stored in airtight containers away from light.
 **Quality Indicators:** Whole aerial parts with visible flowers; distinctive aromatic smell (minty-herbal); purplish-pink flowers; slightly hairy stems. Taste: Intensely bitter + slightly acrid (leonurine signature).
 **Storage:** Airtight glass, cool dark location; maintains potency 18-24 months (alkaloids relatively stable).
@@ -93,20 +93,20 @@ For AI app: Position for "PMS support, particularly tension/cramping/emotional i
 ## DOSAGE & PREPARATION
 
 **Dosage Range:**
-**Tincture (1:5 ratio, alcohol-based):** 20-40 drops (1-2 ml), 2-3× daily. Most common form; reliable extraction of leonurine + alkaloids; convenient dosing.
+**Extract (1:5 ratio, alcohol-based):** 20-40 drops (1-2 ml), 2-3× daily. Most common form; reliable extraction of leonurine + alkaloids; convenient dosing.
 **Tea/Infusion:** 1-2 g dried herb steeped 10-15 minutes in hot water, 2-3× daily. Full-spectrum extraction; bitter taste (some find it grounding/ceremonial).
 **Capsules:** 300-500 mg powdered herb, 2-3× daily (if palatable form preferred).
-**Fresh-Herb Tincture (Peak Potency):** Made from fresh flowering tops; highest alkaloid concentration if made at peak bloom.
+**Fresh-Herb Extract (Peak Potency):** Made from fresh flowering tops; highest alkaloid concentration if made at peak bloom.
 **Duration:** Ongoing use safe; effects cumulative (2-4 weeks for baseline shifts, 3-6 months for full menstrual tonification).
 
 **Best Preparations:**
-**Protocol 1: Daily Heart + Emotional Support (Foundation)** — 20-30 drops tincture, 2-3× daily, taken consistently. For anxiety, heart palpitations, emotional grounding, general courage activation. Safe long-term (no dependence, no tolerance). Daytime appropriate.
+**Protocol 1: Daily Heart + Emotional Support (Foundation)** — 20-30 drops extract, 2-3× daily, taken consistently. For anxiety, heart palpitations, emotional grounding, general courage activation. Safe long-term (no dependence, no tolerance). Daytime appropriate.
 **Protocol 2: Menstrual Regulation (Cycle-Aware)** — 20-30 drops, 2-3× daily, starting first day after period ends through ovulation (follicular phase). Continue for 3-6 months for uterine tonification effect. Can extend throughout cycle if sensitive to cramping/PMS throughout.
 **Protocol 3: PMS Intensive (Targeted)** — 25-40 drops, 3× daily, starting 5-7 days before expected period and continuing through first 2-3 days of menstruation. Addresses emotional intensity, palpitations, cramping, agitation specific to luteal phase.
 **Protocol 4: Postpartum Recovery (Specialized)** — Begin week 2-3 post-birth (after any bleeding has stabilized), 20-30 drops 2-3× daily for 12 weeks. Supports uterine involution, emotional stabilization, nervous system recovery, courage for mothering journey. Pair with Nettle infusion (mineral replenishment).
 **Protocol 5: Heart-Opening + Boundary Setting (Emotional Work)** — 20-30 drops 2-3× daily during intentional emotional work (therapy, grief processing, boundary negotiation). Consider 1-2 weeks intensive (higher dosing) during challenging emotional periods, then maintenance.
 **Protocol 6: Synergistic Heart Trinity (Enhanced Effect)** — Motherwort 20 drops + Hawthorn 20 drops (cardiovascular + heart tonification) + Rose petal infusion 1-2 oz (emotional opening). Take 2-3× daily. Comprehensive heart-opening + strength protocol.
-**Protocol 7: Anxiety + Palpitations (Rapid Response)** — 30 drops tincture + Lemon Balm 20 drops + Lavender 10 drops in warm water, 2-3× daily (or PRN for acute anxiety with heart racing). Addresses anxiety + palpitations simultaneously.
+**Protocol 7: Anxiety + Palpitations (Rapid Response)** — 30 drops extract + Lemon Balm 20 drops + Lavender 10 drops in warm water, 2-3× daily (or PRN for acute anxiety with heart racing). Addresses anxiety + palpitations simultaneously.
 
 **Timing:**
 **Throughout the day** (morning + afternoon) for general support; daytime appropriate (not sedating, slightly stimulating).
@@ -206,7 +206,7 @@ For AI app: Position for "PMS support, particularly tension/cramping/emotional i
 1. **Timing:** Any day (can correspond with menstrual cycle or emotional cycle)
 2. **Preparation:** Create quiet space; light candle (fire element); place hand on heart
 3. **Intention:** Set intention for heart-opening, courage, emotional flow, or specific boundary/grief work
-4. **Dosing:** Take 30-40 drops tincture in warm water (can add honey, lemon)
+4. **Dosing:** Take 30-40 drops extract in warm water (can add honey, lemon)
 5. **Breathing:** Hold cup at heart; take 5 deep breaths, feeling heart expand with each inhale
 6. **Speaking:** Aloud or silently, speak intention or affirmation related to heart/courage work
 7. **Sitting:** Sit quietly 5-10 min, feeling Motherwort's gentle strength move through heart
@@ -278,5 +278,5 @@ For AI app: Position for "PMS support, particularly tension/cramping/emotional i
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*
 *Date: February 2026*

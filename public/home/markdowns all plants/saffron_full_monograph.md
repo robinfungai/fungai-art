@@ -103,7 +103,7 @@ Clinical significance: Emotional closure, self-love deficit, heart healing, comp
 
 **Whole Stigmas (Traditional):** 3-5 stigmas steeped 10-15 min in hot (not boiling) water, 1-2× daily. **Most traditional + enjoyable form.** Cost: ~$8-15 per serving (3-5 stigmas).
 
-**Tincture (Concentrated—MOST COST-EFFECTIVE):** 2-5 drops, 1-2× daily. Much more concentrated; smaller volume; better for long-term use. Cost: ~$2-4 per serving.
+**Extract (Concentrated—MOST COST-EFFECTIVE):** 2-5 drops, 1-2× daily. Much more concentrated; smaller volume; better for long-term use. Cost: ~$2-4 per serving.
 
 **Standardized Extract (If Available—MOST RELIABLE):** 10-30mg crocin daily (if extracted/concentrated form available; less commonly available). **Most standardized dosing.**
 
@@ -118,27 +118,27 @@ Clinical significance: Emotional closure, self-love deficit, heart healing, comp
 **CRITICAL: Cost Consideration**
 
 Saffron premium ($8-15 per serving for whole stigmas); recommend:
-- **Tincture for long-term use** (most cost-effective).
+- **Extract for long-term use** (most cost-effective).
 - **Whole stigmas for ceremonial/special occasions** (premium, pleasurable experience).
 - **Cycling with other mood herbs** (St. John's Wort, Lemon Balm cheaper alternatives; saffron premium supplement).
 
 **BEST PREPARATIONS:**
 
-**Protocol 1: Mood Elevation (DEPRESSION SUPPORT—4-8 WEEKS)** — Tincture 2-5 drops, 2× daily (morning + evening) for 4-8 weeks. Mood lifts; depression eases; emotional warmth. Timeline: 4-8 weeks for full benefit (like SSRIs). **Most cost-effective form long-term.**
+**Protocol 1: Mood Elevation (DEPRESSION SUPPORT—4-8 WEEKS)** — Extract 2-5 drops, 2× daily (morning + evening) for 4-8 weeks. Mood lifts; depression eases; emotional warmth. Timeline: 4-8 weeks for full benefit (like SSRIs). **Most cost-effective form long-term.**
 
 **Protocol 2: Ceremonial Mood Ritual (SPECIAL OCCASIONS—PREMIUM)** — Whole stigmas 3-5, steeped 10-15 min in hot water, 1-2× weekly. Premium experience; mood-lifting; luxury self-care. Cost: $8-15 per serving but pleasurable ritual value.
 
-**Protocol 3: SAD (Seasonal Affective Disorder—WINTER SUPPORT)** — Tincture 2-5 drops, 2× daily from October-March. Mood support during darker months; emotional warmth; prevents seasonal depression.
+**Protocol 3: SAD (Seasonal Affective Disorder—WINTER SUPPORT)** — Extract 2-5 drops, 2× daily from October-March. Mood support during darker months; emotional warmth; prevents seasonal depression.
 
-**Protocol 4: Circulation + Sexual Function (COUPLES/INTIMACY)** — Tincture 2-5 drops, 1× daily for 2-4 weeks (or whole stigmas ceremonially before intimacy). Circulation improves; sexual function supports; romantic mood; heart opening.
+**Protocol 4: Circulation + Sexual Function (COUPLES/INTIMACY)** — Extract 2-5 drops, 1× daily for 2-4 weeks (or whole stigmas ceremonially before intimacy). Circulation improves; sexual function supports; romantic mood; heart opening.
 
-**Protocol 5: Mood Trio (COMPREHENSIVE MOOD SUPPORT—COST-MANAGED)** — Saffron tincture 2 drops + St. John's Wort 30 drops + Lemon Balm 20 drops, 2× daily for 8 weeks. Triple mood support; saffron premium + cost-managed with other herbs; multi-mechanism approach.
+**Protocol 5: Mood Trio (COMPREHENSIVE MOOD SUPPORT—COST-MANAGED)** — Saffron extract 2 drops + St. John's Wort 30 drops + Lemon Balm 20 drops, 2× daily for 8 weeks. Triple mood support; saffron premium + cost-managed with other herbs; multi-mechanism approach.
 
-**Protocol 6: Anti-Aging + Brain Health (LONGEVITY—LONG-TERM)** — Saffron tincture 2-5 drops, 1× daily indefinite (or cycling). Brain health; cognitive preservation; anti-aging from within; modest cost with tincture form.
+**Protocol 6: Anti-Aging + Brain Health (LONGEVITY—LONG-TERM)** — Saffron extract 2-5 drops, 1× daily indefinite (or cycling). Brain health; cognitive preservation; anti-aging from within; modest cost with extract form.
 
 **Protocol 7: Heart Opening + Vulnerability (EMOTIONAL HEALING—4 WEEKS)** — Whole stigmas 3-5 ceremonially, 2× weekly for 4 weeks. Heart opening; emotional vulnerability; self-love activation; healing ritual (premium experience value).
 
-**Protocol 8: Daily Luxury (MAINTENANCE—INDEFINITE)** — Tincture 2-3 drops daily indefinite (sustainable cost; consistent mood + vitality support; premium self-care ritual).
+**Protocol 8: Daily Luxury (MAINTENANCE—INDEFINITE)** — Extract 2-3 drops daily indefinite (sustainable cost; consistent mood + vitality support; premium self-care ritual).
 
 ---
 
@@ -211,9 +211,9 @@ Saffron premium ($8-15 per serving for whole stigmas); recommend:
 
 **Positioning:** "Mood elevator (clinically proven—crocin = SSRI-like); natural antidepressant; heart-opening; precious luxury self-care; NO sexual side effects (unlike SSRIs); traditional + modern research (200+ studies); **4-8 week timeline for optimal benefit.**"
 
-**Protocols:** 8-protocol approach; mood-elevation emphasis; cost-consciousness (tincture recommended over whole stigmas for long-term); ceremonial/ritual emphasis (luxury experience value); depression + SAD emphasis.
+**Protocols:** 8-protocol approach; mood-elevation emphasis; cost-consciousness (extract recommended over whole stigmas for long-term); ceremonial/ritual emphasis (luxury experience value); depression + SAD emphasis.
 
-**Liability:** "Mood effects require 4-8 weeks (not acute); on anticoagulants (monitor INR); on SSRIs (monitor for additive serotonin effects—generally safe); pregnancy (consult provider—safety data limited); cost premium (tincture recommended for affordability); NO sexual side effects (advantage over SSRIs)."
+**Liability:** "Mood effects require 4-8 weeks (not acute); on anticoagulants (monitor INR); on SSRIs (monitor for additive serotonin effects—generally safe); pregnancy (consult provider—safety data limited); cost premium (extract recommended for affordability); NO sexual side effects (advantage over SSRIs)."
 
 ---
 
@@ -221,7 +221,7 @@ Saffron premium ($8-15 per serving for whole stigmas); recommend:
 
 **SSRI Alternative Potential:** For clients unable/unwilling to take pharmaceutical SSRIs (sexual dysfunction concerns, others), saffron offers natural alternative with similar mechanism + efficacy (Grade B evidence). Longer timeline (4-8 weeks) but no sexual side effects + gentler overall.
 
-**Cost Management:** Whole stigmas expensive ($8-15 per serving); recommend tincture for long-term use (most cost-effective: $2-4 per serving). Reserve whole stigmas for ceremonial/special occasions or weekly ritual (sustainable luxury).
+**Cost Management:** Whole stigmas expensive ($8-15 per serving); recommend extract for long-term use (most cost-effective: $2-4 per serving). Reserve whole stigmas for ceremonial/special occasions or weekly ritual (sustainable luxury).
 
 **Ceremonial Approach Enhances:** Saffron traditionally ceremonial (precious, ritualized); recommend mindful preparation + consumption (ritual value enhances therapeutic effect—psychology matters).
 

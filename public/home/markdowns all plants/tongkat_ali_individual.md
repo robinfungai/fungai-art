@@ -84,7 +84,7 @@ Clinical significance: Stress resilience, mood support, motivation, confidence, 
 **Dosage Range:**
 **Standardized Extract (Eurycomanone-Standardized 10-30%—MOST RELIABLE):** 200-400 mg daily (most human trials use this form; most reliable dosing). Take with meals or fat source (optimal absorption).
 **Root Powder:** 3-9 g daily (less standardized; variable eurycomanone content; less efficient than standardized extract).
-**Tincture (1:5 Alcohol-Based):** 30-60 drops, 2-3× daily.
+**Extract (1:5 Alcohol-Based):** 30-60 drops, 2-3× daily.
 **Duration:** Cycling protocol recommended (not continuous indefinite); 8-12 weeks on, 4-6 weeks off. Reduces potential tolerance; hormonal cycling more physiologic.
 
 **Best Preparations:**
@@ -173,5 +173,5 @@ Clinical significance: Stress resilience, mood support, motivation, confidence, 
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System*
+*Use Case: Tailored Extract Recommendation System*
 *Date: February 2026*

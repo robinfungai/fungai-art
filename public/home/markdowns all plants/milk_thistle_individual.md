@@ -92,7 +92,7 @@ Timeline: Cumulative; benefits develop over weeks-months.
 
 **Tea (Seed Infusion):** 1-2 tsp crushed seeds, steep 10-15 min, 2-3× daily.
 
-**Tincture (1:5 Alcohol):** 60-90 drops, 2-3× daily.
+**Extract (1:5 Alcohol):** 60-90 drops, 2-3× daily.
 
 **Duration:** 
 - **Acute liver damage recovery:** 8-12+ weeks continuous.

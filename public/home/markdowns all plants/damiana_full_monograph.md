@@ -11,7 +11,7 @@
 
 **Part Used:** Turnera diffusa folium — **Leaves only** (aerial parts); dried optimal to concentrate volatile oils + alkaloids; whole leaves > powders.
 
-**Harvesting & Processing:** Harvested spring-summer before flowering (peak volatile oil + alkaloid concentration); dried at low temperature to preserve actives; whole leaves preferred (powders oxidize). Fresh plant tincture most potent.
+**Harvesting & Processing:** Harvested spring-summer before flowering (peak volatile oil + alkaloid concentration); dried at low temperature to preserve actives; whole leaves preferred (powders oxidize). Fresh plant extract most potent.
 
 **Quality Indicators:** Gray-green color; distinctive warm, slightly peppery aroma; somewhat bitter taste. Potency indicated by aroma intensity + peppery taste (fresh = strongest).
 
@@ -103,11 +103,11 @@ Clinical significance: Sexual anxiety, social anxiety, dissociation, pleasure bl
 
 **Dosage Range (Use with Intention—Not Casual):**
 
-**Tincture (Fresh Plant—MOST POTENT):** 15-30 drops, 1-2× daily (best morning-midday; stimulating—NOT evening). **Morning or afternoon optimal; save energy for use (sexual, social, creative).**
+**Extract (Fresh Plant—MOST POTENT):** 15-30 drops, 1-2× daily (best morning-midday; stimulating—NOT evening). **Morning or afternoon optimal; save energy for use (sexual, social, creative).**
 
-**Tea (Infusion—GENTLER):** 2-4g dried leaf per 8oz hot water, steep 10 min, 1-2× daily (less potent than tincture; gentler effect).
+**Tea (Infusion—GENTLER):** 2-4g dried leaf per 8oz hot water, steep 10 min, 1-2× daily (less potent than extract; gentler effect).
 
-**Dried Powder (Capsules):** 500-1000mg, 2× daily (less volatile oil extraction than tincture; less optimal).
+**Dried Powder (Capsules):** 500-1000mg, 2× daily (less volatile oil extraction than extract; less optimal).
 
 **Timing:** Morning or afternoon (stimulating—avoid evening sleep disruption). Best 1-2 hours BEFORE intended use (sexual intimacy, social event, creative work).
 
@@ -115,21 +115,21 @@ Clinical significance: Sexual anxiety, social anxiety, dissociation, pleasure bl
 
 **BEST PREPARATIONS:**
 
-**Protocol 1: Sexual Vitality Enhancement (BOTH GENDERS—2-4 WEEKS)** — Tincture 20-30 drops, 1x daily morning, for 2-4 weeks. Sexual arousal improves; pleasure sensitivity increases; sexual confidence + ease. Effects cumulative; optimal after 2-4 weeks consistent use.
+**Protocol 1: Sexual Vitality Enhancement (BOTH GENDERS—2-4 WEEKS)** — Extract 20-30 drops, 1x daily morning, for 2-4 weeks. Sexual arousal improves; pleasure sensitivity increases; sexual confidence + ease. Effects cumulative; optimal after 2-4 weeks consistent use.
 
-**Protocol 2: Pre-Intimacy (ACUTE—COUPLES)** — Tincture 20-30 drops, 1-2 hours before sexual intimacy (for both partners). Sexual arousal peaks; pleasure sensitivity enhances; anxiety eases; sexual satisfaction improves during session.
+**Protocol 2: Pre-Intimacy (ACUTE—COUPLES)** — Extract 20-30 drops, 1-2 hours before sexual intimacy (for both partners). Sexual arousal peaks; pleasure sensitivity enhances; anxiety eases; sexual satisfaction improves during session.
 
-**Protocol 3: Confidence + Social Ease (DAYTIME—2-4 WEEKS)** — Tincture 15-20 drops, 1x morning for 2-4 weeks. Embodied presence + confidence during social situations; authentic self-expression; charisma; social anxiety decreases.
+**Protocol 3: Confidence + Social Ease (DAYTIME—2-4 WEEKS)** — Extract 15-20 drops, 1x morning for 2-4 weeks. Embodied presence + confidence during social situations; authentic self-expression; charisma; social anxiety decreases.
 
-**Protocol 4: Low Libido + Sexual Anxiety (COMPREHENSIVE—4-8 WEEKS)** — Tincture 20-30 drops, 1x daily morning, for 4-8 weeks. Removes psychological blocks to desire; sexual anxiety eases; arousal improves; pleasure becomes accessible. Foundational shift over weeks.
+**Protocol 4: Low Libido + Sexual Anxiety (COMPREHENSIVE—4-8 WEEKS)** — Extract 20-30 drops, 1x daily morning, for 4-8 weeks. Removes psychological blocks to desire; sexual anxiety eases; arousal improves; pleasure becomes accessible. Foundational shift over weeks.
 
 **Protocol 5: Pleasure Trio—Heart + Sensuality (COUPLES—INTIMATE)** — Damiana 20 drops + Rose 20 drops (heart-opening) + Vanilla infusion 10 drops (pleasure principle), combined, 1-2 hours before intimacy. Triple pleasure + heart + confidence effect; enhanced sexual satisfaction + emotional intimacy.
 
-**Protocol 6: Masculine Vitality Support (MALE—4-8 WEEKS)** — Tincture 20-30 drops, 1x daily morning, for 4-8 weeks (+ Tongkat Ali 1-2g daily for synergistic testosterone support if desired). Sexual function improves; erection strength; physical confidence; masculine presence.
+**Protocol 6: Masculine Vitality Support (MALE—4-8 WEEKS)** — Extract 20-30 drops, 1x daily morning, for 4-8 weeks (+ Tongkat Ali 1-2g daily for synergistic testosterone support if desired). Sexual function improves; erection strength; physical confidence; masculine presence.
 
-**Protocol 7: Creative Confidence (ARTISTS/CREATORS—2-4 WEEKS)** — Tincture 15-20 drops, 1x morning for 2-4 weeks. Sacral chakra activation (creativity center); creative blocks ease; authentic creative expression; sensual creativity.
+**Protocol 7: Creative Confidence (ARTISTS/CREATORS—2-4 WEEKS)** — Extract 15-20 drops, 1x morning for 2-4 weeks. Sacral chakra activation (creativity center); creative blocks ease; authentic creative expression; sensual creativity.
 
-**Protocol 8: Daily Embodied Confidence (MAINTENANCE—INDEFINITE)** — Tincture 15 drops, 1x morning for ongoing foundation. Embodied presence + baseline confidence; sexual vitality; pleasure accessibility; sustainable indefinite.
+**Protocol 8: Daily Embodied Confidence (MAINTENANCE—INDEFINITE)** — Extract 15 drops, 1x morning for ongoing foundation. Embodied presence + baseline confidence; sexual vitality; pleasure accessibility; sustainable indefinite.
 
 ---
 

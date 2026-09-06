@@ -85,7 +85,7 @@ Timeline: Cumulative over weeks; baseline mood improvement noticeable after 4-6 
 **Dosage Range:**
 **Standardized Extract (3%+ Rosavins—PREFERRED FOR RESEARCH-BACKED DOSING):** 200-600 mg daily, divided into 2-3 doses (morning preferred; stimulating so NOT evening). This is most studied, most reliable dosing; each dose standardized to specific rosvain %.
 **Root Powder (Loose Dosing—Less Consistent):** 2-4 g daily (inconsistent potency without standardization).
-**Tincture (1:5 Alcohol-Based):** 30-60 drops, 1-2× daily (morning/midday preferred—stimulating). Less efficient for adaptogens than extracts/powder, but adequate.
+**Extract (1:5 Alcohol-Based):** 30-60 drops, 1-2× daily (morning/midday preferred—stimulating). Less efficient for adaptogens than extracts/powder, but adequate.
 **Duration:** 8-12 weeks for full adaptogenic effect (cumulative—like SSRI antidepressants); then 2-4 week break (recalibrate baseline, avoid habituation). Cycling: 8-12 weeks on, 2-4 weeks off; can repeat indefinitely (not continuous daily use).
 
 **Best Preparations:**
@@ -245,5 +245,5 @@ Timeline: Cumulative over weeks; baseline mood improvement noticeable after 4-6 
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*
 *Date: February 2026*

@@ -91,10 +91,10 @@ Effect: Reduced burning, frequency, and microscopic bleeding when combined with 
 
 - Fresh or dried leaf gently simmered (especially when mixed with rootier herbs) for respiratory formulas.
 
-**Tincture:**
+**Extract:**
 
 - 1:5 (45%): **2–5 ml, up to 3× daily**, alone or in formula.  
-- Fresh 1:2 tincture often used at **10–30 drops, 3× daily** in clinical practice.
+- Fresh 1:2 extract often used at **10–30 drops, 3× daily** in clinical practice.
 
 **Topical:**
 
@@ -196,7 +196,7 @@ Plantain is the **“first‑aid weed”**—the street‑level guardian that ap
 
 **Liability Copy:**  
 
-- “Generally safe as tea or tincture; rare allergic reactions can occur.”[web:175]  
+- “Generally safe as tea or extract; rare allergic reactions can occur.”[web:175]  
 - “Bulk‑laxative use of the seeds requires adequate fluids and should be supervised.”
 
 ---

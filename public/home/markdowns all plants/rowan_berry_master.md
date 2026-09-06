@@ -52,7 +52,7 @@ Its berry polyphenols, vitamin C and pigments make it a useful ally for oxidativ
 ## Dosage
 
 - **Cooked syrup:** 1–2 tsp, 1–3 times daily
-- **Tincture:** 20–40 drops, 2–3 times daily
+- **Extract:** 20–40 drops, 2–3 times daily
 - **Dried berry decoction:** 1–2 tsp per 250 ml, simmer 10–15 minutes
 
 ## Best preparation

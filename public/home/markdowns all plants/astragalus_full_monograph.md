@@ -96,7 +96,7 @@ Clinical significance: Post-serious-illness recovery, cancer recovery (adjunctiv
 
 **Standardized Extract (40-50% Polysaccharides):** 300-400mg, 2-3× daily. Concentrated, reliable dosing.
 
-**Tincture (1:5 Alcohol—Less Optimal):** 60-90 drops, 2-3× daily (less polysaccharide extraction than decoction).
+**Extract (1:5 Alcohol—Less Optimal):** 60-90 drops, 2-3× daily (less polysaccharide extraction than decoction).
 
 **Duration:** Safe indefinite long-term (foundational herb; no cycles needed, though cycling optional). Effects cumulative over months.
 

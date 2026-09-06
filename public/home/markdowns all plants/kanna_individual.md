@@ -91,7 +91,7 @@ Clinical significance: Social anxiety, social connection, social pleasure, group
 
 **Fermented Leaf Infusion (TRADITIONAL—OPTIMAL):** 0.5-1g fermented leaves (more concentrated—use lower dose), steeped 5-10 min, 1-2× daily. Traditional preparation; most potent.
 
-**Tincture (Fresh/Fermented Plant—CONCENTRATED):** 20-30 drops, 1-3× daily. Concentrated alkaloid extract.
+**Extract (Fresh/Fermented Plant—CONCENTRATED):** 20-30 drops, 1-3× daily. Concentrated alkaloid extract.
 
 **Standardized Extract (If Available—MOST RELIABLE):** 200-400mg extract standardized to mesembrine, 1-2× daily. Most reliable dosing.
 
@@ -106,17 +106,17 @@ Clinical significance: Social anxiety, social connection, social pleasure, group
 
 **BEST PREPARATIONS:**
 
-**Protocol 1: Acute Mood (DEPRESSION/STRESS—IMMEDIATE)** — Tincture (25 drops) or infusion (1g fermented), 2-3× daily. Mood lifts within intake; depression symptoms ease; emotional ease; quick response.
+**Protocol 1: Acute Mood (DEPRESSION/STRESS—IMMEDIATE)** — Extract (25 drops) or infusion (1g fermented), 2-3× daily. Mood lifts within intake; depression symptoms ease; emotional ease; quick response.
 
-**Protocol 2: Chronic Mood Support (DAILY—ONGOING)** — Infusion (0.5-1g fermented) or tincture (20 drops), 1-2× daily indefinite. Baseline mood improves; foundational mood support; safe long-term.
+**Protocol 2: Chronic Mood Support (DAILY—ONGOING)** — Infusion (0.5-1g fermented) or extract (20 drops), 1-2× daily indefinite. Baseline mood improves; foundational mood support; safe long-term.
 
 **Protocol 3: Anxiety Relief (ANXIETY—2-4 WEEKS)** — Infusion (1g fermented), 2-3× daily for 2-4 weeks. Anxiety decreases; nervous tension eases; calm accessible; cumulative anxiety improvement.
 
-**Protocol 4: Social Connection (SOCIAL ANXIETY/GROUP SETTINGS—AS NEEDED)** — Tincture (25 drops) before social situations. Social comfort increases; connection pleasure; group ease; social confidence.
+**Protocol 4: Social Connection (SOCIAL ANXIETY/GROUP SETTINGS—AS NEEDED)** — Extract (25 drops) before social situations. Social comfort increases; connection pleasure; group ease; social confidence.
 
 **Protocol 5: Pleasure Enhancement (EMOTIONAL ENGAGEMENT—DAILY)** — Infusion (0.5-1g fermented), 1-2× daily indefinite. Sensory pleasure; emotional pleasure; life satisfaction; joy baseline improves.
 
-**Protocol 6: Mood + Anxiety Trio (COMPREHENSIVE—4-8 WEEKS)** — Kanna tincture (20 drops) + Passionflower tincture (15 drops) + Lemon Balm infusion (1-2g), combined 2× daily for 4-8 weeks. Triple mood + anxiety + calm; comprehensive emotional support.
+**Protocol 6: Mood + Anxiety Trio (COMPREHENSIVE—4-8 WEEKS)** — Kanna extract (20 drops) + Passionflower extract (15 drops) + Lemon Balm infusion (1-2g), combined 2× daily for 4-8 weeks. Triple mood + anxiety + calm; comprehensive emotional support.
 
 **Protocol 7: SSRI Alternative (MOOD MANAGEMENT—LONG-TERM)** — Infusion (1g fermented) or extract (300mg), 1-2× daily indefinite. Natural SSRI-like support; gentler than pharmaceuticals; sustainable mood management; safe long-term.
 

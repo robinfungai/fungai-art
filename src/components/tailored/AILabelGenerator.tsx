@@ -1,4 +1,4 @@
-import bottleImage from '@/assets/tincture-bottle.jpg';
+import bottleImage from '@/assets/extract-bottle.jpg';
 import React, { useEffect } from 'react';
 
 interface AILabelGeneratorProps {

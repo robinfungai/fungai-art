@@ -108,7 +108,7 @@ Cardamom is **likely safe in food amounts**, and **possibly safe in medicinal do
   - 1–2 g lightly crushed seeds per 250 ml just‑boiled water; steep 10–15 minutes, covered; 1–3× daily.  
   - Excellent after meals, or combined with ginger/fennel as a digestive chai.[web:28][web:33]
 
-- **Tincture (1:5 in 40–60% alcohol):**  
+- **Extract (1:5 in 40–60% alcohol):**  
   - Approx. **1–3 ml**, 1–3× daily (20–60 drops), often before or after meals as a carminative.[web:33]
 
 - **Culinary Use:**  
@@ -137,7 +137,7 @@ Cardamom is **likely safe in food amounts**, and **possibly safe in medicinal do
 - Often combined with other metabolic allies (cinnamon, turmeric, hibiscus, etc.).
 
 **Protocol 5: Nervous Digestive / Stress Gut**  
-- 1–2 g tea or 1–2 ml tincture before stressful events or heavy meals; pair with nervines (lemon balm, tulsi, linden) for gut‑brain axis support.[web:28][web:31]
+- 1–2 g tea or 1–2 ml extract before stressful events or heavy meals; pair with nervines (lemon balm, tulsi, linden) for gut‑brain axis support.[web:28][web:31]
 
 **Protocol 6: Dental / Breath Support (AROMATIC MUCOSAL TONIC)**  
 - Chew 1–2 pods or a small pinch of seeds after meals to freshen breath, support oral microbiome, and ease post‑meal heaviness.[web:40][web:37]
@@ -274,5 +274,5 @@ Cardamom is a **heart‑brightening digestive alchemist**. It transforms heavine
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System*  
+*Use Case: Tailored Extract Recommendation System*  
 *Date: February 2026*

@@ -81,15 +81,15 @@ Secondary benefit to dreamwork focus; not primary reason for use.
 ## DOSAGE & PREPARATION
 
 **Dosage Range:**
-**Tincture (1:5 ratio, alcohol-based):** 10-20 drops (0.5-1 ml) in warm water, 30-60 minutes before bed or ceremonial use. Alcohol extraction most efficient for sesquiterpene lactones. Easier than tea (extreme bitterness avoided).
+**Extract (1:5 ratio, alcohol-based):** 10-20 drops (0.5-1 ml) in warm water, 30-60 minutes before bed or ceremonial use. Alcohol extraction most efficient for sesquiterpene lactones. Easier than tea (extreme bitterness avoided).
 **Tea/Infusion:** 0.5-1 g dried herb steeped 10-15 minutes in hot water. Extremely bitter (often intolerable for most). Small sips preferred over large cup. Traditional method; full-spectrum extraction but potency varies.
-**Dried Leaf (Smoking—NOT Recommended):** Traditional Chontal method; very harsh, unpleasant, less efficient extraction than tincture/tea, respiratory irritation risk. Modern approach: tincture/tea preferred.
+**Dried Leaf (Smoking—NOT Recommended):** Traditional Chontal method; very harsh, unpleasant, less efficient extraction than extract/tea, respiratory irritation risk. Modern approach: extract/tea preferred.
 **Frequency:** 2-3× weekly for dreamwork (NOT daily). Daily use risks sensitization (tolerance to effects) + potential psychological dependence (reliance on herb for accessing dreams/consciousness).
 
 **Best Preparations:**
-**Protocol 1: Solo Dreamwork (Focused Dream Enhancement)** — 10-15 drops tincture in warm water, 30-60 min before bed. Set clear intention (question, guidance sought, or general "what my dreams have to teach"). Keep journal at bedside. Write dreams immediately upon waking (crucial—prevents dissociation from dream memory). Duration: 2-3× weekly for 4-6 weeks; then take 2-3 week break.
+**Protocol 1: Solo Dreamwork (Focused Dream Enhancement)** — 10-15 drops extract in warm water, 30-60 min before bed. Set clear intention (question, guidance sought, or general "what my dreams have to teach"). Keep journal at bedside. Write dreams immediately upon waking (crucial—prevents dissociation from dream memory). Duration: 2-3× weekly for 4-6 weeks; then take 2-3 week break.
 **Protocol 2: Synergistic Dream Blend (Gentler Integration)** — Calea 10 drops + Blue Lotus 10 drops + Mugwort 5 drops in warm water, 30-60 min before bed. Enhanced dream lucidity + emotional ease (Blue Lotus) + accessible dream recall (Mugwort) without overwhelming intensity. Better for sensitive individuals or those new to visionary herbalism.
-**Protocol 3: Visionary Ceremonial Preparation (Advanced)** — Calea tincture 15 drops + Lemon Balm 10 drops (grounding) + intention-setting ritual. Take 1 hour before sleep. Light candles, write intention, speak it aloud. Move into sleep consciously (don't collapse into sleep). Upon waking, spend 20 min journaling dreams + reflecting on messages/symbols. Repeat 2-3× weekly.
+**Protocol 3: Visionary Ceremonial Preparation (Advanced)** — Calea extract 15 drops + Lemon Balm 10 drops (grounding) + intention-setting ritual. Take 1 hour before sleep. Light candles, write intention, speak it aloud. Move into sleep consciously (don't collapse into sleep). Upon waking, spend 20 min journaling dreams + reflecting on messages/symbols. Repeat 2-3× weekly.
 **Protocol 4: Grounding/Balance Formula (If Consciousness Shift Feels Intense)** — Calea 10 drops + Rosemary 10 drops (grounding, memory) + Tulsi 10 drops (protection, presence) + Motherwort 5 drops (heart grounding). Balances visionary intensity with embodied grounding. For those experiencing daytime dissociation or feeling "spacey."
 **Protocol 5: Lucid Dreaming Intensive (Advanced, 4-Week Protocol)** — Week 1: Calea 10 drops nightly, journaling only. Week 2: Calea 15 drops nightly + lucid dreaming intention setting + reality checks during day (pinch bridge of nose, do "will I float?"). Week 3: Calea 10 drops + Blue Lotus 10 drops, enhanced integration. Week 4: Reduce to 2-3× weekly (maintain effect without habituation). Then 2-3 week break.
 
@@ -186,7 +186,7 @@ Secondary benefit to dreamwork focus; not primary reason for use.
 
 **Integration Practice: The Dream Vision Quest (7-Day Protocol)**
 1. **Preparation:** Clean sleep space; journal + pen ready; set clear intention (question, guidance, intention for dreamwork)
-2. **Evening Ritual (7 days):** Take Calea tincture 30-60 min before bed; speak intention aloud; move into sleep consciously
+2. **Evening Ritual (7 days):** Take Calea extract 30-60 min before bed; speak intention aloud; move into sleep consciously
 3. **Upon Waking (All 7 days):** Write dreams immediately (crucial); note symbols, feelings, themes, messages
 4. **Daily Integration (Morning):** Spend 10-15 min reflecting on dreams; notice themes emerging across nights
 5. **Mid-Week Check-In (Day 3-4):** Review written dreams; notice patterns; ask follow-up questions for next night's dreams

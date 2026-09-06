@@ -98,7 +98,7 @@ Clinical significance: Vascular insufficiency support, skin health, circulation 
 
 **Salve (TOPICAL—PORTABLE, CONVENIENT):** Infused oil + beeswax blend; apply 2-3× daily to wounds/skin conditions.
 
-**Tincture (1:5 Alcohol—TOPICAL OR INTERNAL):** Apply topically 2-3× daily; internally 30-60 drops, 2-3× daily (internal use limited safety data—primarily topical).
+**Extract (1:5 Alcohol—TOPICAL OR INTERNAL):** Apply topically 2-3× daily; internally 30-60 drops, 2-3× daily (internal use limited safety data—primarily topical).
 
 **Tea (INTERNAL—CAUTIOUS):** 1-2 tsp dried flowers, steep 10 minutes, 2-3× daily (internal use limited modern safety data; topical optimal).
 
@@ -214,5 +214,5 @@ Clinical significance: Vascular insufficiency support, skin health, circulation 
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System*
+*Use Case: Tailored Extract Recommendation System*
 *Date: February 2026*

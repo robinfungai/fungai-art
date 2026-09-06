@@ -96,7 +96,7 @@ Clinical significance: Strep throat (adjunctive—not replacement for antibiotic
 
 **Gargle (Topical—MOST EFFECTIVE FOR THROAT):** Strong tea (2-3 tsp leaf per 8oz, steep 10-15 min), gargle 30-60 seconds, 4-6× daily for acute sore throat. **TOPICAL GARGLING = MOST EFFECTIVE ROUTE for throat conditions.**
 
-**Tincture (1:5 Alcohol):** 40-60 drops, 2-3× daily.
+**Extract (1:5 Alcohol):** 40-60 drops, 2-3× daily.
 
 **Duration:** 
 - **Acute sore throat:** 3-7 days (gargling + tea).
@@ -194,5 +194,5 @@ Clinical significance: Strep throat (adjunctive—not replacement for antibiotic
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System*
+*Use Case: Tailored Extract Recommendation System*
 *Date: February 2026*

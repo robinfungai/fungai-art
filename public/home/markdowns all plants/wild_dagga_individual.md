@@ -87,7 +87,7 @@ Clinical significance: Emotional ease, vulnerability, presence, emotional ground
 
 **Dried Leaf/Flower Infusion (OPTIMAL):** 2-4g dried plant, steeped 5-10 min, 1-2× daily. Fresh = highest bioactivity.
 
-**Tincture (Fresh Plant—CONCENTRATED):** 20-40 drops, 1-2× daily. Concentrated alkaloid + aromatic extract.
+**Extract (Fresh Plant—CONCENTRATED):** 20-40 drops, 1-2× daily. Concentrated alkaloid + aromatic extract.
 
 **Smoking (Traditional—MILD):** Fresh or dried leaves smoked in small amounts (traditional preparation). Fastest onset (inhalation); most potent. **Use cautiously (combustion byproducts).**
 
@@ -102,19 +102,19 @@ Clinical significance: Emotional ease, vulnerability, presence, emotional ground
 
 **Protocol 1: Relaxation (AFTERNOON/EVENING—ONGOING)** — Infusion (2-3g), 1× afternoon/evening. Tension releases; relaxation deepens; calm-alert clarity. Safe ongoing daily use.
 
-**Protocol 2: Mood + Pleasure (SOCIAL/RITUAL—ONGOING)** — Infusion (2-3g) or tincture (30 drops), 1-2× daily. Mood improves; pleasure; mild euphoria; social ease; confidence.
+**Protocol 2: Mood + Pleasure (SOCIAL/RITUAL—ONGOING)** — Infusion (2-3g) or extract (30 drops), 1-2× daily. Mood improves; pleasure; mild euphoria; social ease; confidence.
 
 **Protocol 3: Stress Release (DAILY—2-4 WEEKS)** — Infusion (2-3g), 1× daily for 2-4 weeks. Nervous system baseline calm; stress resilience; cumulative tension release.
 
 **Protocol 4: Spirit Calming (EVENING RITUAL—ONGOING)** — Infusion (2-3g) with intention, evening ritual indefinite. Emotional ease; vulnerability; presence; pleasure ritual; connection deepens.
 
-**Protocol 5: Mild Euphoria (CELEBRATION/GATHERING—SOCIAL)** — Infusion (3-4g) or tincture (40 drops), 1× during social occasions. Mild euphoria; pleasure; social confidence; joy; gathering enhancement (non-intoxicating).
+**Protocol 5: Mild Euphoria (CELEBRATION/GATHERING—SOCIAL)** — Infusion (3-4g) or extract (40 drops), 1× during social occasions. Mild euphoria; pleasure; social confidence; joy; gathering enhancement (non-intoxicating).
 
 **Protocol 6: Smoking Ceremony (TRADITIONAL—CEREMONIAL)** — Fresh/dried leaves smoked traditionally, 1-2× during ceremony. Traditional preparation; fastest onset; most potent; spiritual use. Use cautiously (smoke inhalation).
 
 **Protocol 7: Foundational Relaxation (DAILY MAINTENANCE—ONGOING)** — Infusion (1-2g), 1× daily indefinite. Baseline relaxation; calm presence; pleasure accessible; gentle daily foundation.
 
-**Protocol 8: Nervous System Trio (COMPREHENSIVE CALM—ONGOING)** — Wild Dagga infusion (2-3g) + Hops infusion (2-3g) + Passionflower tincture (20 drops), combined 1× evening. Triple nervous system support; relaxation + sleep + calm clarity.
+**Protocol 8: Nervous System Trio (COMPREHENSIVE CALM—ONGOING)** — Wild Dagga infusion (2-3g) + Hops infusion (2-3g) + Passionflower extract (20 drops), combined 1× evening. Triple nervous system support; relaxation + sleep + calm clarity.
 
 ---
 

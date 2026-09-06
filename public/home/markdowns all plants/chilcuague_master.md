@@ -32,7 +32,7 @@ These alkamides produce strong tingling, salivation, transient numbness, and loc
 ### 2. Digestive & Appetite Stimulant
 
 - Pungent root stimulates salivation and gastric secretions; used for **indigestion, low appetite, and sluggish digestion**.[web:220][web:224]  
-- Traditionally taken before meals or as a tincture/chewed piece.
+- Traditionally taken before meals or as a extract/chewed piece.
 
 ### 3. Antifungal, Antibacterial, Insecticidal
 
@@ -63,9 +63,9 @@ Best for **cold, sluggish, congested** oral and digestive patterns, not for red,
 - Tiny piece of dried or fresh root chewed until tingling and salivation start; then either spit out or swallow.  
 - Used for toothache, gum pain, sore throat.
 
-### Tincture
+### Extract
 
-- Root tinctured 1:3–1:5 in high‑proof alcohol (at least 50–60% to capture alkamides).[web:222][web:224]  
+- Root extractd 1:3–1:5 in high‑proof alcohol (at least 50–60% to capture alkamides).[web:222][web:224]  
 - Dose: **Low‑dose herb** — typically 1–10 drops at a time, up to several times daily, due to potency.
 
 **Topical use:**
@@ -105,7 +105,7 @@ Best for **cold, sluggish, congested** oral and digestive patterns, not for red,
 
 **Symptom‑Formula Ideas:**
 
-- **Oral Pain & Sore Throat Tincture**  
+- **Oral Pain & Sore Throat Extract**  
   Clove + Sage + Calendula + **Chilcuague** (1–3 drops per dose) as a swish/gargle for acute toothache, gum inflammation, and throat infections.
 
 Chilcuague gives you a **unique, high‑impact, low‑dose pungent** in your formulary, especially for oral health and cold/stagnant digestive patterns.

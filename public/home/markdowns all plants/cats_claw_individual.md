@@ -11,7 +11,7 @@
 
 **Part Used:** Uncaria tomentosa cortex (bark) + root bark—**Inner bark preferred** (highest alkaloid concentration); whole dried bark preferred (higher bioactivity). Bark/root bark = most medicinal parts.
 
-**Harvesting & Processing:** Harvested year-round from mature vines (sustainability concern—wild harvesting depletes populations); dried at low temperature to preserve alkaloids; whole bark preferred. Fresh bark tincture most potent.
+**Harvesting & Processing:** Harvested year-round from mature vines (sustainability concern—wild harvesting depletes populations); dried at low temperature to preserve alkaloids; whole bark preferred. Fresh bark extract most potent.
 
 **Quality Indicators:** Brown/rust color (dried); distinctive herbal aroma; bitter taste (alkaloid marker). Potency indicated by bark color intensity + bitterness (inner bark = darker/more bitter).
 
@@ -89,7 +89,7 @@ Clinical significance: Cancer prevention (adjunctive), anti-aging, DNA health, c
 
 **Dried Bark Decoction (OPTIMAL—WATER EXTRACTION):** 1-3g dried inner bark, simmered 10-15 min (water extraction optimal), 1-2× daily. Traditional preparation.
 
-**Bark Tincture (Fresh Bark—CONCENTRATED):** 20-40 drops, 1-2× daily. Concentrated alkaloid extract.
+**Bark Extract (Fresh Bark—CONCENTRATED):** 20-40 drops, 1-2× daily. Concentrated alkaloid extract.
 
 **Standardized Extract (If Available):** 500-1500mg extract standardized to alkaloid content, 1-2× daily. Most reliable dosing.
 
@@ -104,7 +104,7 @@ Clinical significance: Cancer prevention (adjunctive), anti-aging, DNA health, c
 
 **Protocol 1: Immune Support (ILLNESS—ACUTE—3-7 DAYS)** — Decoction (2-3g), 2-3× daily during illness. Immune activation; recovery support; constitutional strengthening. Intensive immune support.
 
-**Protocol 2: Anti-Inflammatory (ARTHRITIS/PAIN—4-8 WEEKS)** — Decoction (1-2g) or tincture (30 drops), 2× daily for 4-8 weeks. Joint pain decreases; inflammation reduces; mobility improves; cumulative benefit.
+**Protocol 2: Anti-Inflammatory (ARTHRITIS/PAIN—4-8 WEEKS)** — Decoction (1-2g) or extract (30 drops), 2× daily for 4-8 weeks. Joint pain decreases; inflammation reduces; mobility improves; cumulative benefit.
 
 **Protocol 3: Constitutional Immune Tonification (FOUNDATIONAL—ONGOING)** — Decoction (1-2g), 1× daily indefinite. Baseline immune strength; constitutional tonification; infection prevention; safe indefinite.
 
@@ -205,7 +205,7 @@ Clinical significance: Cancer prevention (adjunctive), anti-aging, DNA health, c
 
 **Synergistic with Anti-Inflammatory Herbs:** Pairs excellent with Turmeric + Ginger (triple anti-inflammatory effect; complementary mechanisms).
 
-**Taste Bitter:** Warn clients on bitter taste (positive sign of alkaloid content, but not pleasant). Decoction form least pleasant; tincture/extract more palatable.
+**Taste Bitter:** Warn clients on bitter taste (positive sign of alkaloid content, but not pleasant). Decoction form least pleasant; extract/extract more palatable.
 
 ---
 

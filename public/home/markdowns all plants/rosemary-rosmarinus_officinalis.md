@@ -88,7 +88,7 @@ Topical preparations and internal use slightly improve peripheral circulation; m
 - 1–2 g dried leaves per 150–250 ml boiling water; infuse 10–15 minutes.[web:29][web:35]  
 - Daily dose 2–6 g herb divided in 2–3 cups per day.[web:29][web:35]
 
-**Tincture:**  
+**Extract:**  
 - 1:5 (40–60% alcohol): 1–4 ml 2–3× daily.
 
 **Essential Oil (Internal Use):**  
@@ -108,7 +108,7 @@ Topical preparations and internal use slightly improve peripheral circulation; m
 - Combine with gotu kola, ginkgo, or bacopa for cognition.
 
 **Protocol 2: Digestive Support Post-Fatty Meals**  
-- 1 cup rosemary tea after meals or 1–2 ml tincture as aperitif/digestif; combine with bitter allies (artichoke, gentian) as needed.[web:29]
+- 1 cup rosemary tea after meals or 1–2 ml extract as aperitif/digestif; combine with bitter allies (artichoke, gentian) as needed.[web:29]
 
 **Protocol 3: Musculoskeletal Ache & Cold Hands/Feet**  
 - Topical rosemary rub (diluted EO) + internal tea; combine with ginger for cold, stagnant patterns.
@@ -184,7 +184,7 @@ Clarity is a form of kindness — to self and others. Remembering who we are and
 **Backend Requirements:**  
 - [ ] Tag as “cognitive stimulant / digestive aromatic / circulatory tonic.”  
 - [ ] Distinguish culinary vs. therapeutic doses.  
-- [ ] Block internal EO recommendations; restrict to tea/tincture/culinary.
+- [ ] Block internal EO recommendations; restrict to tea/extract/culinary.
 
 **Safety Screening:**  
 - [ ] Questions about pregnancy, epilepsy, and high blood pressure if considering upper-end doses.
@@ -203,6 +203,6 @@ Clarity is a form of kindness — to self and others. Remembering who we are and
 
 ---
 
-*Generated for: Functional Beverage / Tincture Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*  
+*Generated for: Functional Beverage / Extract Formulation AI App*  
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*  
 *Date: February 2026*

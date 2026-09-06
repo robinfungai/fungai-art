@@ -22,7 +22,7 @@ engine, a member network, and a content layer:
 | `/shop` | Static apothecary shop with Stripe-backed checkout |
 | `/mixology` | Materia medica browse &mdash; 168 botanicals, filter by element / category / tradition |
 | `/herbal-engine-2/` | Tailored formula composer &mdash; takes intent, constitution, delivery, returns a recipe |
-| `/extraction` | Five-method extraction protocols &mdash; spagyric, cold tincture, decoction, dual, oil infusion |
+| `/extraction` | Five-method extraction protocols &mdash; spagyric, cold extract, decoction, dual, oil infusion |
 | `/health` | Health-intelligence symptom matcher with safety filters |
 | `/foraging` | Predictive foraging map (React + MapLibre) over Sweden / Berlin / France / Med / Levant |
 | `/community` | Spore portal &mdash; living member network, $MH economy, calendar, admin |

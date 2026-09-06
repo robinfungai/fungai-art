@@ -5,9 +5,9 @@
 **Primary Species:** Verbena officinalis L. (Vervain, Common vervain) — Perennial herb native to Europe and naturalized widely; slender, somewhat woody stems with small lilac flowers; not the same as blue vervain (Verbena hastata), though actions overlap.[web:116][web:107][web:110]  
 **Botanical Family:** Verbenaceae.[web:116]  
 **Part Used:** **Aerial parts** (flowering tops, leaves, upper stems) collected in bloom.[web:116][web:110]  
-**Harvesting & Processing:** Harvest flowering tops during peak bloom; dry rapidly in shade with airflow. Fresh plant tinctures commonly used for heightened nervine activity.[web:116][web:110]  
+**Harvesting & Processing:** Harvest flowering tops during peak bloom; dry rapidly in shade with airflow. Fresh plant extracts commonly used for heightened nervine activity.[web:116][web:110]  
 **Quality Indicators:** Characteristic bitter, slightly aromatic taste; greenish to grey‑green dried tops with intact flowers; not dusty or brown.[web:116][web:110]  
-**Storage:** Dried herb in airtight containers, cool and dark; best potency within 1 year. Tinctures stable several years in dark glass.[web:116]  
+**Storage:** Dried herb in airtight containers, cool and dark; best potency within 1 year. Extracts stable several years in dark glass.[web:116]  
 **Historical Context:** Sacred herb in European folk magic (associated with purification, prophecy, and protection), and medicinally as a **bitter nervine, hepatic, and remedy for stress, headaches, and women’s complaints**.[web:104][web:107][web:110][web:120]
 
 ---
@@ -92,7 +92,7 @@ Timeline: Several cycles for full effect.
 - 1–2 teaspoons (~1–3 g) dried herb per 250 ml boiling water; infuse 10–15 minutes; **1–3× daily**.[web:116][web:110]  
 - Bitter taste: often combined with aromatics (mint, lemon balm).
 
-**Tincture (1:5 40–60%):**  
+**Extract (1:5 40–60%):**  
 - Common range: **1–5 ml, 2–3× daily** (≈20–100 drops per dose).[web:116][web:107][web:110]  
 - Lower end for sensitive individuals; higher end for acute tension episodes.
 
@@ -106,21 +106,21 @@ Timeline: Several cycles for full effect.
 **Example Protocols**
 
 **Protocol 1: Overwork / Burnout Nervine (FOUNDATION)**  
-- Tincture 2–3 ml 2× daily (late afternoon and evening) for 6–12 weeks, combined with sleep hygiene and adaptogens (milky oats, ashwagandha for non‑hyperthyroid).  
+- Extract 2–3 ml 2× daily (late afternoon and evening) for 6–12 weeks, combined with sleep hygiene and adaptogens (milky oats, ashwagandha for non‑hyperthyroid).  
 - Optional midday tea with lemon balm and linden.[web:116][web:107][web:110]
 
 **Protocol 2: Tension Headache / Migraine (PATTERN: TENSE, LIVERISH)**  
-- Acute: Tincture 2–4 ml at onset, up to 3× in a day (not exceeding daily max), plus hydration, dark/quiet room.  
+- Acute: Extract 2–4 ml at onset, up to 3× in a day (not exceeding daily max), plus hydration, dark/quiet room.  
 - Tonic: 1–3 ml 2× daily for 2–3 months; combine with feverfew, magnesium, and dietary modifications.
 
 **Protocol 3: PMS & Menstrual Tension**  
-- 1–2 ml tincture 2–3× daily from mid‑cycle through menses; pair with liver bitters (dandelion, artichoke) and menstrual spasmolytics (cramp bark, skullcap).[web:116][web:110]
+- 1–2 ml extract 2–3× daily from mid‑cycle through menses; pair with liver bitters (dandelion, artichoke) and menstrual spasmolytics (cramp bark, skullcap).[web:116][web:110]
 
 **Protocol 4: Digestive Bitter for Stress Gut**  
-- 1–2 ml tincture ~15 minutes before meals, 1–2× daily, in people whose digestion shuts down under stress; often combined with gentian or artichoke.
+- 1–2 ml extract ~15 minutes before meals, 1–2× daily, in people whose digestion shuts down under stress; often combined with gentian or artichoke.
 
 **Protocol 5: Sleep Support (LIGHT TO MODERATE INSOMNIA)**  
-- Evening infusion (2 g herb) + 2–3 ml tincture 30–60 minutes before bed, alongside other sleep nervines (passionflower, hops, chamomile).
+- Evening infusion (2 g herb) + 2–3 ml extract 30–60 minutes before bed, alongside other sleep nervines (passionflower, hops, chamomile).
 
 ---
 
@@ -203,5 +203,5 @@ Vervain is the **overworked person’s ally**—the herb of the one who cannot p
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System*  
+*Use Case: Tailored Extract Recommendation System*  
 *Date: February 2026*

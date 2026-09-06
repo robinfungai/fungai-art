@@ -78,7 +78,7 @@ Traditionally used for eye strain due to reading or screen work; theoretical sup
 - **Infusion:**  
   - 2–4 g dried herb in hot water, steep 10–15 minutes, up to 3× daily.[web:147]  
 
-- **Tincture (1:5):**  
+- **Extract (1:5):**  
   - 2–6 ml, 3× daily.[web:147]  
 
 - **Liquid Extract / Capsules:**  
@@ -113,7 +113,7 @@ Traditionally used for eye strain due to reading or screen work; theoretical sup
 - 2–4 g infusion 2–3× daily with goldenrod, elderflower, and yarrow; 2–4 weeks.[web:147]  
 
 **Protocol 4: Eye Strain / VDT Overuse**  
-- Internal: light Euphrasia tea or tincture plus screen hygiene and rest.
+- Internal: light Euphrasia tea or extract plus screen hygiene and rest.
 
 ---
 
@@ -187,7 +187,7 @@ Eyebright is the **clarifier of perception**—cooling inflamed, watery vision s
 - Pregnancy/lactation and children → avoid high‑dose internal use; no DIY eye washes.
 
 **Positioning:**  
-- “Cooling, astringent **mucosal tonic for eyes and sinuses**; best in sterile commercial formulations for eye use, plus internal tea/tincture for allergic and catarrhal patterns.”
+- “Cooling, astringent **mucosal tonic for eyes and sinuses**; best in sterile commercial formulations for eye use, plus internal tea/extract for allergic and catarrhal patterns.”
 
 **Liability Copy:**  
 - “Do not use homemade eyebright in your eyes; only sterile products designed for ophthalmic use are appropriate.”[web:144]  
@@ -196,5 +196,5 @@ Eyebright is the **clarifier of perception**—cooling inflamed, watery vision s
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System*  
+*Use Case: Tailored Extract Recommendation System*  
 *Date: February 2026*

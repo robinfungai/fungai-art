@@ -92,7 +92,7 @@ Clinical significance: Anxiety support; stress resilience; mind clarity combinat
 
 **Tea:** 1-2 tsp dried herb per 8oz, steep 10-15 min, 2-3× daily.
 
-**Tincture:** 30-60 drops, 2-3× daily.
+**Extract:** 30-60 drops, 2-3× daily.
 
 **Standardized Extract:** 250-500mg (60% asiaticoside), 2× daily (most researched form).
 
@@ -199,5 +199,5 @@ Common CYP450 Substrate Drugs: Warfarin, simvastatin, citalopram, fluoxetine, om
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System*
+*Use Case: Tailored Extract Recommendation System*
 *Date: February 2026*

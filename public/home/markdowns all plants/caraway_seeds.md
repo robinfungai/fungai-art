@@ -96,8 +96,8 @@ Timeline: Days to weeks.
 **Topical Essential Oil:**  
 - 2% caraway oil in semisolid preparation applied as thin layer to abdominal area; can be used in infants and older, once daily and as directed.[web:127]
 
-**Tincture / Fluid Extract:**  
-- Tincture 1:5 ~40–50%: often 1–2 ml 2–3× daily as part of digestive formulas (standardised products vary).
+**Extract / Fluid Extract:**  
+- Extract 1:5 ~40–50%: often 1–2 ml 2–3× daily as part of digestive formulas (standardised products vary).
 
 **Duration:**  
 - Safe for long‑term food‑level use.  
@@ -195,5 +195,5 @@ Caraway is a **warm kitchen ally**, a seed of comfort and release—turning heav
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System*  
+*Use Case: Tailored Extract Recommendation System*  
 *Date: February 2026*

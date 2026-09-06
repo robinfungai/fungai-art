@@ -15,7 +15,7 @@
 - **Echinacea purpurea:** aerial parts (leaves, flowers) + root; aerial parts more commonly used (available, less expensive)
 - **Echinacea angustifolia:** root only (traditional, most potent, more expensive)
 
-**Harvesting & Processing:** Root dug autumn (peak alkaloid concentration); aerial parts harvested at flowering peak; dried at low temperature; whole pieces > powders. Tinctures (fresh plant in alcohol) most potent preparation (extract polysaccharides + alkamides effectively).
+**Harvesting & Processing:** Root dug autumn (peak alkaloid concentration); aerial parts harvested at flowering peak; dried at low temperature; whole pieces > powders. Extracts (fresh plant in alcohol) most potent preparation (extract polysaccharides + alkamides effectively).
 
 **Quality Indicators:** 
 - **Purpurea:** Purple flowers (anthocyanin indicator), green aerial parts.
@@ -88,11 +88,11 @@ Timeline: Develops over first 1-2 days.
 
 **Dosage Range (Timing-Dependent—CRITICAL):**
 
-**Tincture (Fresh Plant—Most Potent—PREFERRED):** 60-90 drops, every 1-2 hours for first 12-24 hours (acute phase), then 3-4× daily for 5-10 days total. Fresh plant extracts = highest alkamide + polysaccharide concentration. **MOST EFFECTIVE PREPARATION.**
+**Extract (Fresh Plant—Most Potent—PREFERRED):** 60-90 drops, every 1-2 hours for first 12-24 hours (acute phase), then 3-4× daily for 5-10 days total. Fresh plant extracts = highest alkamide + polysaccharide concentration. **MOST EFFECTIVE PREPARATION.**
 
-**Dried Herb Tea:** 1-2 tsp aerial parts, 3-4× daily for 5-7 days (less potent than tincture but acceptable).
+**Dried Herb Tea:** 1-2 tsp aerial parts, 3-4× daily for 5-7 days (less potent than extract but acceptable).
 
-**Standardized Extract (Alkamide-Standardized):** 300-400mg, 4-6× daily at first sign (less potent than fresh tincture).
+**Standardized Extract (Alkamide-Standardized):** 300-400mg, 4-6× daily at first sign (less potent than fresh extract).
 
 **Duration:** 
 - **Acute use only:** 3-7 days total (overstimulating if prolonged; tolerance develops; becomes ineffective).
@@ -105,15 +105,15 @@ Timeline: Develops over first 1-2 days.
 
 **BEST PREPARATIONS:**
 
-**Protocol 1: Cold/Flu at FIRST SIGN (ACUTE ONLY—MOST STUDIED)** — Tincture 60-90 drops every 1-2 hours for first 12-24 hours, then 3-4× daily for total 5-10 days. Duration reduction 1-2 days (RCT-documented). **MUST start within 12-24 hours for benefit.**
+**Protocol 1: Cold/Flu at FIRST SIGN (ACUTE ONLY—MOST STUDIED)** — Extract 60-90 drops every 1-2 hours for first 12-24 hours, then 3-4× daily for total 5-10 days. Duration reduction 1-2 days (RCT-documented). **MUST start within 12-24 hours for benefit.**
 
-**Protocol 2: Mild Cold (Early Prevention—PRE-SYMPTOM)** — Tincture 60 drops, 4× daily for 1-2 weeks during exposure (co-worker sick, family sick). Modest prevention (conflicting evidence, but traditional use suggests benefit). **NOT effective once infected; must be preventive.**
+**Protocol 2: Mild Cold (Early Prevention—PRE-SYMPTOM)** — Extract 60 drops, 4× daily for 1-2 weeks during exposure (co-worker sick, family sick). Modest prevention (conflicting evidence, but traditional use suggests benefit). **NOT effective once infected; must be preventive.**
 
-**Protocol 3: Upper Respiratory Infection (Acute—BACTERIAL OR VIRAL)** — Tincture 60-90 drops, 4-6× daily for 5-7 days. Infection duration shortens; severity reduces. Adjunctive to medical care (not replacement for antibiotics if bacterial).
+**Protocol 3: Upper Respiratory Infection (Acute—BACTERIAL OR VIRAL)** — Extract 60-90 drops, 4-6× daily for 5-7 days. Infection duration shortens; severity reduces. Adjunctive to medical care (not replacement for antibiotics if bacterial).
 
-**Protocol 4: Post-Infection Recovery (BRIEF—1-2 WEEKS MAXIMUM)** — Tincture 60 drops, 2-3× daily for 1-2 weeks post-infection (recovery support). **NOT long-term; overstimulating if prolonged.**
+**Protocol 4: Post-Infection Recovery (BRIEF—1-2 WEEKS MAXIMUM)** — Extract 60 drops, 2-3× daily for 1-2 weeks post-infection (recovery support). **NOT long-term; overstimulating if prolonged.**
 
-**Protocol 5: Symptom Relief (DURING INFECTION)** — Tincture 60 drops, 4× daily during acute phase for symptom severity reduction. Duration may not shorten, but severity/perception improves.
+**Protocol 5: Symptom Relief (DURING INFECTION)** — Extract 60 drops, 4× daily during acute phase for symptom severity reduction. Duration may not shorten, but severity/perception improves.
 
 **Protocol 6: DO NOT USE—Daily Chronic Immune Support.** Overstimulating; tolerance develops; becomes ineffective when acutely needed. Use Astragalus instead (foundational, balanced).
 
@@ -200,7 +200,7 @@ Timeline: Develops over first 1-2 days.
 
 ## CLINICAL NOTES & PRACTITIONER GUIDANCE
 
-**Fresh Plant Tincture Optimal:** Fresh Echinacea tincture (alkamides + polysaccharides preserved optimally) = most effective. Dried herbs acceptable but less potent.
+**Fresh Plant Extract Optimal:** Fresh Echinacea extract (alkamides + polysaccharides preserved optimally) = most effective. Dried herbs acceptable but less potent.
 
 **Timing Non-Negotiable:** Emphasize to clients: use ONLY at first symptom (within 12-24 hours). Delayed use (day 2+) = minimal benefit. Many failures result from delayed starts.
 

@@ -5,9 +5,9 @@
 **Primary Species:** Glechoma hederacea L. (Ground ivy, Gill‑over‑the‑ground, Alehoof) — Creeping perennial mint native to Europe and Western Asia, naturalized widely; aromatic, scalloped leaves and small purple flowers.[web:130][web:133][web:136]  
 **Botanical Family:** Lamiaceae (mint family).[web:130]  
 **Part Used:** **Aerial parts** (leaves, stems, flowering tops) fresh or dried.[web:130][web:133]  
-**Harvesting & Processing:** Harvest in spring or early flowering; dry quickly in shade with airflow. Often tinctured fresh for stronger aromatics.[web:130][web:133]  
-**Quality Indicators:** Bright to deep green leaves, aromatic minty/resinous scent with a slightly bitter note; no mold or excessive browning. Fresh plant tinctures retain strong aroma.[web:130][web:133]  
-**Storage:** Dried herb in airtight containers, cool/dark; best within 1 year. Tincture stable several years in dark glass.[web:130]  
+**Harvesting & Processing:** Harvest in spring or early flowering; dry quickly in shade with airflow. Often extractd fresh for stronger aromatics.[web:130][web:133]  
+**Quality Indicators:** Bright to deep green leaves, aromatic minty/resinous scent with a slightly bitter note; no mold or excessive browning. Fresh plant extracts retain strong aroma.[web:130][web:133]  
+**Storage:** Dried herb in airtight containers, cool/dark; best within 1 year. Extract stable several years in dark glass.[web:130]  
 **Historical Context:** Traditional European remedy for **catarrh (ear, nose, throat congestion), chronic bronchitis, digestive upset, and kidney/bladder issues**; also historically used in brewing (“alehoof”) to clarify and flavor beer before hops.[web:130][web:133]
 
 ---
@@ -77,7 +77,7 @@ Effect: Supports host defenses and mucosal resilience in infections; theoretical
 - 2–4 g dried herb per cup, up to **3× daily**.[web:130]  
 - Combine with other respiratory or digestive herbs as needed.
 
-**Tincture:**  
+**Extract:**  
 
 - 1:5 (25–40%): **5–10 ml, up to 3× daily**; max weekly dose for 1:2 extract around 20–40 ml/week in some traditions.[web:130][web:133]  
 - Fresh 1:2 (100% alcohol): 15–60 drops up to 3× daily.[web:133]
@@ -92,13 +92,13 @@ Effect: Supports host defenses and mucosal resilience in infections; theoretical
 
 **Protocol 1: Chronic Sinus Catarrh / Glue Ear (FOUNDATION)**  
 - Infusion 2–4 g dried herb 2–3× daily, possibly with elderflower, yarrow, and peppermint.  
-- Tincture 2–4 ml 2–3× daily for 4–6 weeks.[web:130][web:133]
+- Extract 2–4 ml 2–3× daily for 4–6 weeks.[web:130][web:133]
 
 **Protocol 2: Chronic Bronchitis with Dampness**  
-- Tea or tincture with thyme, mullein, and elecampane; ground ivy providing anticatarrhal and antimicrobial backbone.
+- Tea or extract with thyme, mullein, and elecampane; ground ivy providing anticatarrhal and antimicrobial backbone.
 
 **Protocol 3: Cold/Damp Digestive Sluggishness**  
-- Small doses (1–2 ml tincture before meals) with caraway and gentian for “heavy, mucousy” digestion.
+- Small doses (1–2 ml extract before meals) with caraway and gentian for “heavy, mucousy” digestion.
 
 **Protocol 4: Kidney/Urinary Drainage**  
 - 2 g infusion 2–3× daily with goldenrod and nettle for mild urinary congestion (short term).
@@ -123,7 +123,7 @@ Effect: Supports host defenses and mucosal resilience in infections; theoretical
   - Limited data; generally recommended to avoid high‑dose medicinal use in pregnancy; food‑like amounts probably safe.[web:130]
 
 - **Children:**  
-  - Moderate doses of tea or low‑dose tincture may be used by experienced practitioners; avoid high doses due to limited data and cytotoxic signals in vitro.[web:130][web:136]
+  - Moderate doses of tea or low‑dose extract may be used by experienced practitioners; avoid high doses due to limited data and cytotoxic signals in vitro.[web:130][web:136]
 
 **MAJOR CAUTIONS**
 
@@ -182,5 +182,5 @@ Ground ivy is a **creeping, clearing ally**—it threads through dense undergrow
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System*  
+*Use Case: Tailored Extract Recommendation System*  
 *Date: February 2026*

@@ -81,7 +81,7 @@ Timeline: Develops over hours-days.
 
 **Dosage Range:**
 **Tea/Infusion (BEST FOR EXPECTORANT ACTION):** 1-2 tsp dried herb per 250 ml water, steeped 10 minutes (optimal extraction of volatile oils + expectorant saponins + anti-inflammatory flavonoids), 3-4× daily for acute respiratory conditions; can use 1-2× daily for chronic/maintenance. Warm tea preferred (volatile oils + expectorant effects enhanced by warmth).
-**Tincture (1:5 Alcohol-Based):** 30-60 drops, 2-3× daily. Convenient dosing; alcohol extraction adequate for volatile oils + antimicrobial compounds, though less potent for expectorant action (saponins water-soluble) than tea.
+**Extract (1:5 Alcohol-Based):** 30-60 drops, 2-3× daily. Convenient dosing; alcohol extraction adequate for volatile oils + antimicrobial compounds, though less potent for expectorant action (saponins water-soluble) than tea.
 **Culinary Use (Generous):** Use thyme abundantly in cooking (herbs, marinades, soups, teas). Therapeutic food medicine approach; mild effect but cumulative with regular use. Safe indefinite culinary use.
 **Essential Oil (NOT for Internal Use):** Used only for aromatherapy/diffusion, topical (diluted). DO NOT ingest undiluted (concentrated volatile oils irritant—toxicity risk with ingestion).
 **Honey-Based Preparation (Traditional for Cough):** Thyme steeped in raw honey (2+ weeks), strained. Spoon honey-extract for throat soothing + cough relief. Traditional cough remedy.
@@ -129,7 +129,7 @@ Timeline: Develops over hours-days.
 **Safety Profile:** GRADE A — Extremely safe; minimal contraindications; suitable all populations including children, elderly, pregnancy (culinary amounts; high-dose concentrated forms use caution).
 
 **Contraindications (Rare/Minor):**
-**Pregnancy (High-Dose Concentrated Forms Only):** Essential oil + high-dose concentrated forms: emmenagogue (uterine stimulant) potential. Culinary amounts (herb in food) safe. Concentrated tinctures/extracts: use caution or avoid; consult provider.
+**Pregnancy (High-Dose Concentrated Forms Only):** Essential oil + high-dose concentrated forms: emmenagogue (uterine stimulant) potential. Culinary amounts (herb in food) safe. Concentrated extracts/extracts: use caution or avoid; consult provider.
 **Rare Essential Oil Sensitivity:** Direct ingestion of concentrated essential oil (DO NOT do this)—irritant; GI upset. Whole herb tea/culinary use does not have this concern (volatile oils in whole herb naturally diluted).
 **Rare Allergy (Lamiaceae Family):** Rare allergy to mint family; mild sensitivity (rash, itching) possible. Discontinue if allergy occurs.
 
@@ -201,9 +201,9 @@ Timeline: Develops over hours-days.
 
 ## CLINICAL NOTES & PRACTITIONER GUIDANCE
 
-**Quality & Sourcing:** Whole dried flowering tops (most potent; highest volatile oil + bioactive content), not powdered (volatile oils oxidize rapidly). Dried herb preferred over tincture for expectorant action (saponins water-soluble; better extracted in tea than alcohol). Distinctive peppery aroma indicates quality (volatile oil content).
+**Quality & Sourcing:** Whole dried flowering tops (most potent; highest volatile oil + bioactive content), not powdered (volatile oils oxidize rapidly). Dried herb preferred over extract for expectorant action (saponins water-soluble; better extracted in tea than alcohol). Distinctive peppery aroma indicates quality (volatile oil content).
 **Storage:** Airtight glass, cool dark location; volatile oils volatile—potency decreases after 12-18 months. Refresh supply seasonally for optimal effect.
-**Preparation Method Critical:** Tea/infusion superior to tincture for expectorant action (saponins + volatile oils better extracted in hot water). Longer steep (10 min) extracts more saponins + volatiles. Warm preparation optimal (volatile oil effects enhanced by warmth).
+**Preparation Method Critical:** Tea/infusion superior to extract for expectorant action (saponins + volatile oils better extracted in hot water). Longer steep (10 min) extracts more saponins + volatiles. Warm preparation optimal (volatile oil effects enhanced by warmth).
 **Acute vs. Chronic Distinction:** Acute respiratory (cough, infection): intensive dosing (3-4× daily) short-term (1-2 weeks). Chronic conditions (bronchitis, respiratory tonification): gentler dosing (1-2× daily) ongoing indefinite.
 **Integration with Respiratory Protocols:** Can pair with all respiratory herbs (Mullein, Elecampane, Licorice, Ginger, Plantain, etc.). Often backbone of acute respiratory formulas (expectorant driver).
 **Integration with Medical Respiratory Treatment:** Safe adjunct to pharmaceutical respiratory care; does NOT interfere with asthma inhalers, bronchodilators, antibiotics, other medications. Enhances natural healing + may reduce pharmaceutical need over time (under medical supervision).
@@ -221,7 +221,7 @@ Timeline: Develops over hours-days.
 - [ ] NO mandatory drug interaction screening needed (completely safe)
 - [ ] NO psychiatric screening needed (safe with all mental health presentations)
 - [ ] NO duration limits (safe indefinite long-term use)
-- [ ] Preparation method flag: Tea/infusion superior to tincture (expectorant action)
+- [ ] Preparation method flag: Tea/infusion superior to extract (expectorant action)
 - [ ] Pregnancy caution (concentrated forms only; culinary safe)
 **Safety Screening (Minimal):**
 - [ ] Pregnancy screening (concentrated forms caution; culinary safe)
@@ -240,12 +240,12 @@ Timeline: Develops over hours-days.
 - [ ] Recommend for chronic respiratory tonification (long-term baseline improvement)
 - [ ] Recommend for children (safe, effective, pleasant—honey preparation)
 - [ ] Safe to pair with all respiratory herbs + all medications
-- [ ] Emphasize tea preparation (superior to tincture for expectorant action)
+- [ ] Emphasize tea preparation (superior to extract for expectorant action)
 - [ ] Encourage culinary use (ongoing mild support + enjoyment)
 - [ ] Encourage long-term use for chronic conditions (cumulative benefit)
 **Liability Protection (Minimal):**
 - [ ] "Very safe herb; suitable all populations"
-- [ ] "Tea preparation recommended over tincture for optimal expectorant action"
+- [ ] "Tea preparation recommended over extract for optimal expectorant action"
 - [ ] "Concentrated forms: use caution in pregnancy (culinary amounts safe)"
 - [ ] "Safe with all medications and herbs"
 - [ ] "For chronic respiratory: long-term use safe + beneficial; effects cumulative"
@@ -255,7 +255,7 @@ Timeline: Develops over hours-days.
 
 ## THYME MASTER MONOGRAPH — COMPLETE
 
-**This document synthesizes:** Primary expectorant volatile oil pharmacology (thymol + carvacrol mucus-thinning, cilia activation), secondary antispasmodic smooth muscle relaxation, potent antimicrobial thymol mechanisms (bactericidal/virucidal), anti-inflammatory flavonoid action (tissue healing), immune stimulation (short-term acute support), respiratory tonification (cumulative long-term), "thymos" courage teaching (metal element voice + truth-speaking), precise preparation methodology (tea superior to tincture for expectorant action), acute vs. chronic dosing protocols, 8-protocol approach, children's herb + honey remedy tradition, culinary integration (ongoing mild support), ancient Greek warrior tradition (courage in expression), and AI-level implementation (minimal screening, preparation method flags, children's designation, culinary emphasis, chronic tonification frame).
+**This document synthesizes:** Primary expectorant volatile oil pharmacology (thymol + carvacrol mucus-thinning, cilia activation), secondary antispasmodic smooth muscle relaxation, potent antimicrobial thymol mechanisms (bactericidal/virucidal), anti-inflammatory flavonoid action (tissue healing), immune stimulation (short-term acute support), respiratory tonification (cumulative long-term), "thymos" courage teaching (metal element voice + truth-speaking), precise preparation methodology (tea superior to extract for expectorant action), acute vs. chronic dosing protocols, 8-protocol approach, children's herb + honey remedy tradition, culinary integration (ongoing mild support), ancient Greek warrior tradition (courage in expression), and AI-level implementation (minimal screening, preparation method flags, children's designation, culinary emphasis, chronic tonification frame).
 **Key Distinctions:**
 - **Expectorant primary:** Mobilizing congestion (not suppressing cough)
 - **Tea superior:** Expectorant action requires water extraction (saponins water-soluble)
@@ -271,5 +271,5 @@ Timeline: Develops over hours-days.
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*
 *Date: February 2026*

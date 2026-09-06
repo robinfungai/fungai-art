@@ -86,7 +86,7 @@ Traditionally increases milk flow in breastfeeding; data mixed but widely used.[
 **Tea/Infusion (Crushed Seed):**  
 - 1–2 tsp lightly crushed seeds per 250 ml boiling water; steep 10–15 minutes; 1–3× daily.[web:58]  
 
-**Tincture:**  
+**Extract:**  
 - 1:5 (45–60% alcohol): 2–4 ml 2–3× daily (adults).
 
 **Chew Seed:**  
@@ -101,7 +101,7 @@ Traditionally increases milk flow in breastfeeding; data mixed but widely used.[
 **Best Preparations & Protocols:**  
 
 **Protocol 1: Adult Gas / Bloating**  
-- 1 cup fennel tea after meals or 1–2 ml tincture before meals.  
+- 1 cup fennel tea after meals or 1–2 ml extract before meals.  
 
 **Protocol 2: Breastfeeding Support**  
 - 1–2 cups fennel tea daily; often with fenugreek and blessed thistle.  
@@ -188,6 +188,6 @@ Comfort is not laziness; a relaxed gut and balanced hormones are foundations for
 
 ---
 
-*Generated for: Functional Beverage / Tincture Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*  
+*Generated for: Functional Beverage / Extract Formulation AI App*  
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*  
 *Date: February 2026*

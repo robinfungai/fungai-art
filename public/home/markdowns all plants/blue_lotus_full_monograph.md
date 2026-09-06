@@ -11,7 +11,7 @@
 
 **Part Used:** Nymphaea caerulea folium + florum — **Petals + leaves** (whole flower optimal); dried at low temperature to preserve alkaloids + aromatic compounds; fresh petals highest potency. Some preparations use aqueous or alcoholic extract (concentrated).
 
-**Harvesting & Processing:** Flowers harvested early morning (peak alkaloid concentration); petals separated (highest bioactivity); dried quickly at low temperature (<40°C—critical to preserve alkaloids); whole flowers stored. Fresh plant tincture most potent.
+**Harvesting & Processing:** Flowers harvested early morning (peak alkaloid concentration); petals separated (highest bioactivity); dried quickly at low temperature (<40°C—critical to preserve alkaloids); whole flowers stored. Fresh plant extract most potent.
 
 **Quality Indicators:** Bright blue petals (anthocyanin indicator); characteristic aquatic aroma (aromatic compounds); soft texture. Potency indicated by color intensity + aroma strength (fresh petals superior to dried).
 
@@ -109,7 +109,7 @@ Clinical significance: Meditation practice, shamanic journey, inner vision work,
 
 **Dosage Range (CONSCIOUSNESS-ALTERING—INTENTIONAL USE REQUIRED):**
 
-**Tincture (Fresh Plant—MOST POTENT):** 10-20 drops in warm water, 30-60 min before desired effect (meditation, sleep, dreamwork). Fresh herb tincture highest alkaloid concentration.
+**Extract (Fresh Plant—MOST POTENT):** 10-20 drops in warm water, 30-60 min before desired effect (meditation, sleep, dreamwork). Fresh herb extract highest alkaloid concentration.
 
 **Ceremonial Infusion (Dried Petals—TRADITIONAL):** 2-4g dried petals + flowers steeped 10-15 min in hot water (NOT boiling—preserves alkaloids). Consume ceremonially (mindful preparation enhances effect).
 
@@ -136,17 +136,17 @@ Clinical significance: Meditation practice, shamanic journey, inner vision work,
 
 **Protocol 1: Lucid Dreaming Gateway (DREAMWORK FOCUSED—2-3× WEEKLY)** — Ceremonial infusion (2-4g petals, 10-15 min steep) + intention setting 30-60 min before bed. Journal dreams immediately upon waking. Lucid dreaming capacity develops over 2-3 weeks. **Weekly rest days prevent tolerance.**
 
-**Protocol 2: Meditation Deepening (SPIRITUAL PRACTICE—2-3× WEEKLY)** — Tincture 15-20 drops 30 min before meditation; sit in quiet space, 1-2 hours. Meditation depth enhances; hypnagogic visions; inner vision work. Cumulative over sessions.
+**Protocol 2: Meditation Deepening (SPIRITUAL PRACTICE—2-3× WEEKLY)** — Extract 15-20 drops 30 min before meditation; sit in quiet space, 1-2 hours. Meditation depth enhances; hypnagogic visions; inner vision work. Cumulative over sessions.
 
 **Protocol 3: Heart-Opening Ceremony (EMOTIONAL WORK—WEEKLY)** — Ceremonial infusion + intention of forgiveness/self-love + journaling afterward. Heart opening, emotional vulnerability, compassion activation. Healing-focused use.
 
-**Protocol 4: Consciousness Exploration (SPIRITUAL—1-2× MONTHLY—EXPERIENCED ONLY)** — Tincture 15-20 drops in safe, quiet setting, 2-4 hours free. Non-ordinary consciousness exploration, intuitive clarity, creative inspiration access. **Requires experience with non-ordinary states; NOT recommended for first-timers without guidance.**
+**Protocol 4: Consciousness Exploration (SPIRITUAL—1-2× MONTHLY—EXPERIENCED ONLY)** — Extract 15-20 drops in safe, quiet setting, 2-4 hours free. Non-ordinary consciousness exploration, intuitive clarity, creative inspiration access. **Requires experience with non-ordinary states; NOT recommended for first-timers without guidance.**
 
-**Protocol 5: Synergistic Dream Blend (ENHANCED DREAMWORK—2-3× WEEKLY)** — Blue Lotus tincture 15 drops + Mugwort tincture 15 drops + Passionflower tincture 15 drops, combined 30-60 min before bed. Triple dream enhancement (Blue Lotus consciousness opening + Mugwort visionary dreaming + Passionflower emotional ease). Most potent dreamwork formula.
+**Protocol 5: Synergistic Dream Blend (ENHANCED DREAMWORK—2-3× WEEKLY)** — Blue Lotus extract 15 drops + Mugwort extract 15 drops + Passionflower extract 15 drops, combined 30-60 min before bed. Triple dream enhancement (Blue Lotus consciousness opening + Mugwort visionary dreaming + Passionflower emotional ease). Most potent dreamwork formula.
 
 **Protocol 6: Sacred Ceremony (CEREMONIAL—MONTHLY OR SEASONAL)** — Full ceremonial preparation: intention setting + mindful infusion creation + consumption + sacred space setup + meditation/journeying + journal integration. Sacramental consciousness use; deepest effect; meaningful spiritual integration.
 
-**Protocol 7: Heart + Third Eye Meditation (SPIRITUAL DEVELOPMENT—2× WEEKLY)** — Tincture 15 drops + meditation focusing on heart (emotional opening) + third eye (intuitive knowing); 1-2 hours. Develops heart-intuition integration; spiritual perception.
+**Protocol 7: Heart + Third Eye Meditation (SPIRITUAL DEVELOPMENT—2× WEEKLY)** — Extract 15 drops + meditation focusing on heart (emotional opening) + third eye (intuitive knowing); 1-2 hours. Develops heart-intuition integration; spiritual perception.
 
 **Protocol 8: Sustainable Practice (LONG-TERM INTEGRATION—WEEKLY)** — Ceremonial use 1× weekly (Friday or Saturday evening) for year-round practice. Dreams remain vivid; consciousness shifts accessible on-demand; spiritual development sustainable; no tolerance buildup.
 

@@ -93,7 +93,7 @@ Unlike finasteride, saw palmetto tends to have fewer sexual side effects at typi
 **Crude Berry / Powder:**  
 - 1–2 g dried berries 2–3× daily (less standardized; weaker evidence).[web:24]
 
-**Tincture:**  
+**Extract:**  
 - 1:5 in 60–70% alcohol: 2–4 ml 2–3× daily; less studied but used in traditional Western herbal practice.
 
 **Duration:**  
@@ -109,7 +109,7 @@ Unlike finasteride, saw palmetto tends to have fewer sexual side effects at typi
 - 160 mg/day standardized extract, combined with anti-inflammatory diet, exercise, and possible partners like nettle root and pygeum.  
 
 **Protocol 3: Pelvic Congestion + Mild LUTS (Herbalist Pattern)**  
-- Saw palmetto tincture 2–4 ml BID with nettle root, yarrow, and anti-inflammatory herbs (turmeric, rosemary) to address pelvic stagnation.
+- Saw palmetto extract 2–4 ml BID with nettle root, yarrow, and anti-inflammatory herbs (turmeric, rosemary) to address pelvic stagnation.
 
 ---
 
@@ -199,6 +199,6 @@ Strength is not constant strain; true potency arises from stable roots and relax
 
 ---
 
-*Generated for: Functional Beverage / Tincture Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*  
+*Generated for: Functional Beverage / Extract Formulation AI App*  
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*  
 *Date: February 2026*

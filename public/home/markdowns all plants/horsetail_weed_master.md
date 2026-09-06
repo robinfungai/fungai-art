@@ -114,7 +114,7 @@ Tannins, silica, and minerals contribute to **astringent, toning effects** on mu
 - **Dried aerial herb:** ~2 g per 150 ml boiling water (approx. 1–2 tsp); steep 10–15 minutes; strain.[web:110][web:116][web:124]  
 - **Dose:** 2–4× daily between meals; daily dose around **6 g** dried herb (traditional).  
 
-### Tincture
+### Extract
 
 - **Typical strength:** 1:5 in 25–40% ethanol (or similar).[web:113]  
 - **Dose (adult):** 2–4 ml, 2–3× daily, depending on concentrate strength.
@@ -139,7 +139,7 @@ Tannins, silica, and minerals contribute to **astringent, toning effects** on mu
 - **Not** a substitute for antibiotics or urgent care in serious infection.
 
 **Protocol 2: Connective Tissue & Bone Support (LONG‑TERM ADJUNCT)**  
-- Horsetail tea 1 cup, 1–2× daily, or tincture 2–3 ml, 2× daily, for 3–6+ months as part of a broader bone protocol (Ca, vitamin D, K2, protein, weight‑bearing exercise).[web:117][web:121]  
+- Horsetail tea 1 cup, 1–2× daily, or extract 2–3 ml, 2× daily, for 3–6+ months as part of a broader bone protocol (Ca, vitamin D, K2, protein, weight‑bearing exercise).[web:117][web:121]  
 - Goal: Provide silica and minerals to support bone density, joint health, hair, nails.
 
 **Protocol 3: Post‑Fracture / Post‑Orthopaedic Recovery (ADJUNCT)**  
@@ -147,7 +147,7 @@ Tannins, silica, and minerals contribute to **astringent, toning effects** on mu
 - Combine with Nettle, Oatstraw, and mineral‑rich diet.
 
 **Protocol 4: Cosmetic Hair / Nail / Skin Tonic**  
-- Low‑dose tea or tincture daily, combined with silica‑rich diet (oats, millet, nettle, bamboo shoots), for several months.  
+- Low‑dose tea or extract daily, combined with silica‑rich diet (oats, millet, nettle, bamboo shoots), for several months.  
 - Goal: Strengthen keratin structures; improve nail brittleness and hair resilience.
 
 ---
@@ -263,7 +263,7 @@ You can stand tall **without** bracing. Your bones and boundaries can be strong 
 - **Species ID Essential:** Avoid confusing *E. arvense* with toxic species such as *E. palustre* (higher thiaminase/alkaloids).[web:122]  
 - **Form Choice:**  
   - Tea for diuretic/flushing actions.  
-  - Tincture or powdered extract for structural support (bone, hair, nails).  
+  - Extract or powdered extract for structural support (bone, hair, nails).  
 - **Synergy:**  
   - With **Goldenrod, Cornsilk, Plantain** in urinary formulas.  
   - With **Nettle, Oatstraw, Alfalfa, Bamboo silica** in bone/connective tissue stacks.  
@@ -274,5 +274,5 @@ You can stand tall **without** bracing. Your bones and boundaries can be strong 
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System*  
+*Use Case: Tailored Extract Recommendation System*  
 *Date: February 2026*

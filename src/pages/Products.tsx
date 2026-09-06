@@ -17,7 +17,7 @@ const Products = () => {
 
   const categories = [
     { id: "all", name: "All Products" },
-    { id: "Tinctures", name: "Tinctures" },
+    { id: "Extracts", name: "Extracts" },
     { id: "Composition", name: "Compositions" },
     { id: "Flower", name: "Flowers" },
     { id: "Herbal Mix", name: "Herbal Mix" },
@@ -79,7 +79,7 @@ const Products = () => {
             Magick Potions
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Discover our full spectrum tinctures and indigenous herbs
+            Discover our full spectrum extracts and indigenous herbs
           </p>
         </div>
 

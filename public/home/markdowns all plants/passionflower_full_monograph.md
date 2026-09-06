@@ -9,9 +9,9 @@
 
 **Botanical Family:** Passifloraceae (passion flower family)
 
-**Part Used:** Passiflora incarnata herba — **Leaves + aerial parts** (above-ground flowering plant); dried optimal to concentrate flavonoids; fresh plant tincture highly potent. Whole plant used (not isolated flower).
+**Part Used:** Passiflora incarnata herba — **Leaves + aerial parts** (above-ground flowering plant); dried optimal to concentrate flavonoids; fresh plant extract highly potent. Whole plant used (not isolated flower).
 
-**Harvesting & Processing:** Harvested during flowering (peak alkaloid + flavonoid concentration); dried at low temperature to preserve volatile compounds + alkaloids; whole aerial parts stored. Fresh plant tincture most potent.
+**Harvesting & Processing:** Harvested during flowering (peak alkaloid + flavonoid concentration); dried at low temperature to preserve volatile compounds + alkaloids; whole aerial parts stored. Fresh plant extract most potent.
 
 **Quality Indicators:** Green-brown dried color; characteristic aromatic, vanilla-like scent (volatile oils); slightly bitter taste. Potency indicated by aroma intensity + bitter taste (fresh = strongest).
 
@@ -105,11 +105,11 @@ Clinical significance: Nervous palpitations, panic attacks, heart-anxiety link, 
 
 **Dosage Range (Gentle Nervine—Safe Ongoing Use):**
 
-**Tincture (Fresh Plant—MOST POTENT):** 20-40 drops, 2-3× daily (or as needed for acute anxiety). Fresh herb tincture highest bioactivity.
+**Extract (Fresh Plant—MOST POTENT):** 20-40 drops, 2-3× daily (or as needed for acute anxiety). Fresh herb extract highest bioactivity.
 
 **Infusion (Dried Aerial Parts—TRADITIONAL):** 2-4g dried herb steeped 10-15 min in hot water, 2-3× daily (or evening for sleep).
 
-**Tea (Convenience—ACCEPTABLE):** Dried herb steep 10-15 min, 2-3× daily (slightly less potent than tincture).
+**Tea (Convenience—ACCEPTABLE):** Dried herb steep 10-15 min, 2-3× daily (slightly less potent than extract).
 
 **Timing:** Afternoon-evening optimal (anxiety support throughout day; evening for sleep support). Safe throughout day (non-sedating for most).
 
@@ -122,21 +122,21 @@ Clinical significance: Nervous palpitations, panic attacks, heart-anxiety link, 
 
 **BEST PREPARATIONS:**
 
-**Protocol 1: Anxiety Management (DAILY—2-4 WEEKS)** — Tincture 20-30 drops, 2-3× daily (morning + afternoon + evening as needed) for 2-4 weeks. Anxiety decreases; calm focus improves; nervous tension eases. Non-addictive alternative to benzodiazepines.
+**Protocol 1: Anxiety Management (DAILY—2-4 WEEKS)** — Extract 20-30 drops, 2-3× daily (morning + afternoon + evening as needed) for 2-4 weeks. Anxiety decreases; calm focus improves; nervous tension eases. Non-addictive alternative to benzodiazepines.
 
-**Protocol 2: Sleep Onset Support (EVENING—ONGOING)** — Tincture 30-40 drops or infusion (2-4g) 30-60 min before bed, nightly or as needed. Racing mind quiets; sleep onset eases; sleep quality improves. Safe ongoing indefinite.
+**Protocol 2: Sleep Onset Support (EVENING—ONGOING)** — Extract 30-40 drops or infusion (2-4g) 30-60 min before bed, nightly or as needed. Racing mind quiets; sleep onset eases; sleep quality improves. Safe ongoing indefinite.
 
-**Protocol 3: Acute Anxiety/Panic (AS-NEEDED—EMERGENCY)** — Tincture 30-40 drops in water as needed during panic/anxiety spike. Calm develops within 15-30 min. Can repeat every 2-3 hours as needed. Non-addictive panic support.
+**Protocol 3: Acute Anxiety/Panic (AS-NEEDED—EMERGENCY)** — Extract 30-40 drops in water as needed during panic/anxiety spike. Calm develops within 15-30 min. Can repeat every 2-3 hours as needed. Non-addictive panic support.
 
-**Protocol 4: Gentle Nervine Blend (ANXIETY + SLEEP—SYNERGISTIC)** — Passionflower tincture 25 drops + Lemon Balm tincture 20 drops + Chamomile infusion 10 drops, combined, 2-3× daily. Triple gentle nervine support; synergistic anxiety + sleep effect.
+**Protocol 4: Gentle Nervine Blend (ANXIETY + SLEEP—SYNERGISTIC)** — Passionflower extract 25 drops + Lemon Balm extract 20 drops + Chamomile infusion 10 drops, combined, 2-3× daily. Triple gentle nervine support; synergistic anxiety + sleep effect.
 
-**Protocol 5: Strong Sleep Support (RACING MIND—COMBINING NERVINES)** — Passionflower 30 drops + Valerian tincture 20 drops (REDUCED DOSE due to combination—avoid overstimulation), taken 30-60 min before bed. **NOTE: Together = stronger sedation; use reduced doses; NOT addictive.**
+**Protocol 5: Strong Sleep Support (RACING MIND—COMBINING NERVINES)** — Passionflower 30 drops + Valerian extract 20 drops (REDUCED DOSE due to combination—avoid overstimulation), taken 30-60 min before bed. **NOTE: Together = stronger sedation; use reduced doses; NOT addictive.**
 
-**Protocol 6: Emotional Processing (GRIEF + INTENSITY—THERAPEUTIC PAIRING)** — Tincture 20-30 drops, 2-3× daily during grief/emotional work; pair with therapy/journaling. Facilitates emotional processing; safe container for feeling. Cumulative benefit over weeks-months.
+**Protocol 6: Emotional Processing (GRIEF + INTENSITY—THERAPEUTIC PAIRING)** — Extract 20-30 drops, 2-3× daily during grief/emotional work; pair with therapy/journaling. Facilitates emotional processing; safe container for feeling. Cumulative benefit over weeks-months.
 
-**Protocol 7: Menstrual Support (CRAMPING + EMOTIONAL—CYCLICAL)** — Tincture 20-30 drops, 2-3× daily during menstrual cycle (especially days before + during). Cramping decreases; emotional intensity eases; PMS support.
+**Protocol 7: Menstrual Support (CRAMPING + EMOTIONAL—CYCLICAL)** — Extract 20-30 drops, 2-3× daily during menstrual cycle (especially days before + during). Cramping decreases; emotional intensity eases; PMS support.
 
-**Protocol 8: Foundational Nervine (MAINTENANCE—ONGOING)** — Tincture 15-20 drops, 1-2× daily indefinite. Baseline nervous system support; ongoing anxiety management; sleep quality maintenance; safe, non-addictive long-term.
+**Protocol 8: Foundational Nervine (MAINTENANCE—ONGOING)** — Extract 15-20 drops, 1-2× daily indefinite. Baseline nervous system support; ongoing anxiety management; sleep quality maintenance; safe, non-addictive long-term.
 
 ---
 

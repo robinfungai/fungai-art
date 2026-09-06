@@ -95,7 +95,7 @@ Effect: Clears pathogens and toxins via purgation; reduces inflammation in gut.
 **Western Herbal Dosing:**
 
 - Dried root in capsule: often 250–500 mg, 1–2× daily short‑term (similar to other stimulant laxatives).  
-- Tincture: 1:5 root — **0.5–2 ml at bedtime** as needed, short term; combined with other herbs to soften effect (e.g., carminatives, demulcents).
+- Extract: 1:5 root — **0.5–2 ml at bedtime** as needed, short term; combined with other herbs to soften effect (e.g., carminatives, demulcents).
 
 **Duration:**  
 
@@ -116,7 +116,7 @@ Effect: Clears pathogens and toxins via purgation; reduces inflammation in gut.
 - Wine‑fried Da Huang in moderate dose within formulas for cirrhosis, trauma, or deep tissue heat‑stasis, under TCM guidance.[web:111]
 
 **Protocol 4: Western Short‑Term Constipation Relief**  
-- 250–500 mg root (or equivalent tincture) at bedtime as needed, no more than a few days in a row; avoid chronic use.
+- 250–500 mg root (or equivalent extract) at bedtime as needed, no more than a few days in a row; avoid chronic use.
 
 ---
 
@@ -226,5 +226,5 @@ Da Huang is the **purging judge**—the herb that says, “This must go now.” 
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System*  
+*Use Case: Tailored Extract Recommendation System*  
 *Date: February 2026*

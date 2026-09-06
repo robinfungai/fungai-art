@@ -103,7 +103,7 @@ Clinical significance: menstruation-related depletion, postpartum rebuilding, po
 
 **Tea / Short Infusion (Light Daily Use):** 1–2 tsp dried leaf per cup, steep 10 minutes, 1–3× daily. Gentler and more casual than deep nutritive infusion.
 
-**Tincture (Less Optimal for Mineral Work):** 30–60 drops, 2–3× daily. Useful for portability and allergy-support formulas, but inferior to infusion for mineral extraction.
+**Extract (Less Optimal for Mineral Work):** 30–60 drops, 2–3× daily. Useful for portability and allergy-support formulas, but inferior to infusion for mineral extraction.
 
 **Powder / Capsules:** Useful as adjunctive nutritive support, but not equal to long infusion for hydration-plus-mineral delivery.
 
@@ -193,7 +193,7 @@ Clinical significance: menstruation-related depletion, postpartum rebuilding, po
 
 ## AI APP INTEGRATION
 
-**MANDATORY screening:** Diuretic medication use, kidney disease context, anticoagulant consistency at large doses, pregnancy trimester context, whether user seeks nutritive infusion versus tincture convenience.
+**MANDATORY screening:** Diuretic medication use, kidney disease context, anticoagulant consistency at large doses, pregnancy trimester context, whether user seeks nutritive infusion versus extract convenience.
 
 **Positioning:** "Foundational mineral tonic; one of the best daily rebuilding herbs; ideal for long-steep infusion, depletion, connective tissue support, postpartum nourishment and gentle allergy support."
 
@@ -205,7 +205,7 @@ Clinical significance: menstruation-related depletion, postpartum rebuilding, po
 - **Raspberry leaf = more uterine-tonic / reproductive support**  
 - **Oatstraw = more nervous system remineralising and softening**
 
-**Liability:** "Very safe and food-like; infusion preferred over tincture for true nutritive effect. Use caution with diuretics, kidney disease and large-dose vitamin-K-sensitive protocols."
+**Liability:** "Very safe and food-like; infusion preferred over extract for true nutritive effect. Use caution with diuretics, kidney disease and large-dose vitamin-K-sensitive protocols."
 
 ---
 

@@ -105,7 +105,7 @@ Bitters stimulate digestive secretions; support liver function.
 
 **Dosage Range:**  
 **Tea (Infusion—Preferred for Extraction):** 2-4 g dried leaf per 250 ml water, steeped 10-15 minutes (longer steep extracts tannins more fully), 2-3× daily. Traditional preparation; most efficient extraction of tannins + bioactives; pleasant taste (slightly astringent).  
-**Tincture (1:5 ratio, alcohol-based):** 20-40 drops (1-2 ml), 2-3× daily. Convenient dosing; alcohol extraction less efficient for tannins than water/tea (tannins are water-soluble), but adequate potency.  
+**Extract (1:5 ratio, alcohol-based):** 20-40 drops (1-2 ml), 2-3× daily. Convenient dosing; alcohol extraction less efficient for tannins than water/tea (tannins are water-soluble), but adequate potency.  
 **Capsules:** 300-500 mg powdered herb, 2-3× daily (if powder form preferred).  
 **Maceration (Cold Steep):** For highest tannin preservation, steep overnight in cool water (8-12 hours), then strain. Not commonly done but optimal for tannin preservation.  
 **Duration:** Safe for continuous indefinite long-term use (years); effects are cumulative + get better with time.
@@ -115,7 +115,7 @@ Bitters stimulate digestive secretions; support liver function.
 **Protocol 2: Cycle-Focused (Luteal Phase Intensive)** — 2-4 g steeped 10-15 min, 3× daily, starting 7-10 days before menstruation through end of period. Extra support for heavy bleeding, cramping, cycle irregularity. Can rotate: 3× daily luteal phase; 1× daily follicular phase.  
 **Protocol 3: Postpartum Recovery (Weeks 2-12)** — 2-4 g steeped 10-15 min, 2-3× daily starting week 2-3 postpartum (after initial bleeding stabilizes). Supports uterine involution, tissue healing, energy recovery. Combine with Raspberry Leaf (uterine) + Nettle (minerals) + Motherwort (emotional). Duration: 4-12 weeks postpartum.  
 **Protocol 4: Heavy Bleeding Support (Menorrhagia)** — 3-4 g steeped 15 min, 3× daily during bleeding days + 2× daily luteal phase. Hemostatic + tonifying approach. Combine with Shepherd's Purse (stronger hemostatic acute action) for heavy bleeders. Duration: Ongoing (safe long-term).  
-**Protocol 5: Synergistic Women's Trinity (Comprehensive Cycle)** — Lady's Mantle tea 2 g + Vitex tincture 30 drops + Motherwort tincture 20 drops, 2× daily (follicular phase); increase to 3× daily luteal phase. Addresses tissue tonification (Lady's Mantle) + hormonal balance (Vitex) + uterine stimulation + emotional support (Motherwort). Duration: 3-6 months minimum for full benefits.  
+**Protocol 5: Synergistic Women's Trinity (Comprehensive Cycle)** — Lady's Mantle tea 2 g + Vitex extract 30 drops + Motherwort extract 20 drops, 2× daily (follicular phase); increase to 3× daily luteal phase. Addresses tissue tonification (Lady's Mantle) + hormonal balance (Vitex) + uterine stimulation + emotional support (Motherwort). Duration: 3-6 months minimum for full benefits.  
 **Protocol 6: Pelvic Floor Weakness/Prolapse Support (With PT)** — 2-4 g steeped 10-15 min, 2-3× daily ongoing (concurrent with pelvic floor physical therapy). Astringent tonification supports PT work. Combine with Gotu Kola (nerve/tissue support), Motherwort (pelvic tone). Duration: 3-6 months with PT.  
 **Protocol 7: Slow, Patient Tonification (Minimal Dose, Maximum Consistency)** — 1-2 g steeped 10 min, 1× daily (evening preferred), taken for months-years as foundational support. For those preferring minimal intervention; slow, patient approach. Effects cumulative + patient; deep results over 12+ months.
 

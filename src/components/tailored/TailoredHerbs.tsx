@@ -175,7 +175,7 @@ const matchProtocolClientSide = (userAnswers: UserAnswers): typeof PROTOCOLS[0] 
       {currentStep === 0 ? (
         <div className="intro-screen">
           <div className="intro-content">
-            <h1 className="intro-title">Tailored Tinctures</h1>
+            <h1 className="intro-title">Tailored Extracts</h1>
             <p className="intro-subtitle">A Personalized Journey Into Herbal Wisdom</p>
             <p className="intro-description">
               Through this brief ritual, we'll discover which of our 32 plant allies is calling to you right now. 

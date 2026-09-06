@@ -71,7 +71,7 @@ Dosage Range
 - Tea / decoction: 2–5 g dried hips per 250 ml, simmer or steep covered 10–20 minutes.  
 - Powder: 2–5 g daily.  
 - Syrup: product dependent; often 5–10 ml daily or as needed.  
-- Tincture: less common than teas, syrups, powders, or glycerites.
+- Extract: less common than teas, syrups, powders, or glycerites.
 
 Best Preparations / Protocols  
 Protocol 1 Winter Tonic FOUNDATION  
@@ -151,4 +151,4 @@ Nutritive, antioxidant-rich fruit tonic for seasonal resilience, recovery, tissu
 Clinical Notes Practitioner Guidance  
 Best presented as a food-herb bridge ingredient with broad appeal and excellent formulation versatility in teas, syrups, powders, and tonic blends.
 
---- Generated for Functional Beverage Formulation AI App Use Case Tailored Tincture Recommendation System Date April 2026
+--- Generated for Functional Beverage Formulation AI App Use Case Tailored Extract Recommendation System Date April 2026

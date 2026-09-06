@@ -11,7 +11,7 @@
 
 **Part Used:** Taraxacum officinalis radix — **Root only** (preferred for bioactives); secondary use: leaves (more diuretic, less bitter); whole root optimal. Fresh root highest potency; dried root stable + effective.
 
-**Harvesting & Processing:** Harvested autumn (peak inulin + bitter concentration in roots); dug entire root; dried at low temperature; whole roots stored or ground. Fresh root tincture most potent; roasted root traditional (tastes "coffee-like").
+**Harvesting & Processing:** Harvested autumn (peak inulin + bitter concentration in roots); dug entire root; dried at low temperature; whole roots stored or ground. Fresh root extract most potent; roasted root traditional (tastes "coffee-like").
 
 **Quality Indicators:** Dark brown dried color; characteristic bitter aroma; bitter taste (bitter principle indicator). Potency indicated by bitter intensity + aroma (fresh = strongest).
 
@@ -101,13 +101,13 @@ Clinical significance: Edema, water retention, kidney support, electrolyte balan
 
 **Dosage Range (Foundational Detox—Safe Ongoing):**
 
-**Tincture (Fresh Root—MOST POTENT):** 20-40 drops, 1-3× daily (best morning—stimulates digestion). Fresh root tincture highest bioactivity.
+**Extract (Fresh Root—MOST POTENT):** 20-40 drops, 1-3× daily (best morning—stimulates digestion). Fresh root extract highest bioactivity.
 
 **Decoction (Dried Root—OPTIMAL for Bitter Extraction):** 2-4g dried root, simmer 10-15 min, 1-3× daily (morning preferred). **Decoction = OPTIMAL** (heat extraction of bitter compounds + minerals).
 
 **Roasted Root Tea (Traditional—COFFEE-LIKE):** Roasted roots (reduce bitterness), brew like coffee; gentler taste (traditional form).
 
-**Tincture (Dried Root—ACCEPTABLE):** Alcohol extracts bitters; good potency (less than fresh but stable).
+**Extract (Dried Root—ACCEPTABLE):** Alcohol extracts bitters; good potency (less than fresh but stable).
 
 **Timing:** Morning preferred (stimulates digestion + detoxification); can continue throughout day.
 
@@ -120,7 +120,7 @@ Clinical significance: Edema, water retention, kidney support, electrolyte balan
 
 **Protocol 1: Detoxification Support (LIVER CLEANSING—8-12 WEEKS)** — Decoction 2-3g, 2× daily (morning + afternoon) for 8-12 weeks. Detoxification improves; bile production stimulates; cholesterol metabolism; energy clarity. Optimal deep detox protocol.
 
-**Protocol 2: Digestive Fire (AGNI STIMULATION—ONGOING)** — Tincture 20-30 drops before meals, 2-3× daily indefinite. Digestive fire ignites; nutrient absorption improves; bloating eases. Foundational digestive support.
+**Protocol 2: Digestive Fire (AGNI STIMULATION—ONGOING)** — Extract 20-30 drops before meals, 2-3× daily indefinite. Digestive fire ignites; nutrient absorption improves; bloating eases. Foundational digestive support.
 
 **Protocol 3: Liver + Microbiome (DUAL SUPPORT—8-12 WEEKS)** — Decoction 2-3g, 2× daily for 8-12 weeks. Liver detoxification + prebiotic gut support (inulin feeds beneficial bacteria); dual healing.
 
@@ -132,7 +132,7 @@ Clinical significance: Edema, water retention, kidney support, electrolyte balan
 
 **Protocol 7: Liver Trinity (COMPREHENSIVE HEPATIC SUPPORT—8-12 WEEKS)** — Dandelion Root 2g decoction + Milk Thistle 1g + Burdock Root 2g, all daily for 8-12 weeks. Triple liver + detoxification + microbiome support (comprehensive).
 
-**Protocol 8: Foundational Daily (INDEFINITE—MAINTENANCE)** — Tincture 15-20 drops, 1× daily indefinite (or cycling). Baseline detoxification + digestive support; safe, non-addictive long-term foundation.
+**Protocol 8: Foundational Daily (INDEFINITE—MAINTENANCE)** — Extract 15-20 drops, 1× daily indefinite (or cycling). Baseline detoxification + digestive support; safe, non-addictive long-term foundation.
 
 ---
 
@@ -212,7 +212,7 @@ Clinical significance: Edema, water retention, kidney support, electrolyte balan
 
 ## CLINICAL NOTES & PRACTITIONER GUIDANCE
 
-**Decoction Optimal:** Emphasize decoction (heat extraction) best for bitter compounds + minerals. Tincture acceptable; tea less optimal (lower bitter extraction).
+**Decoction Optimal:** Emphasize decoction (heat extraction) best for bitter compounds + minerals. Extract acceptable; tea less optimal (lower bitter extraction).
 
 **Seasonal Use:** Traditional seasonal detox (spring/fall). Can cycle year-round; seasonal cycling aligns with body's natural detoxification rhythm.
 

@@ -4,7 +4,7 @@
 
 **Primary Species:** Mentha × piperita L. (hybrid of M. aquatica × M. spicata).[web:257]  
 **Family:** Lamiaceae.  
-**Parts Used:** Leaf (tea, tincture) and **essential oil** (enteric‑coated capsules, topical).[web:257][web:251]
+**Parts Used:** Leaf (tea, extract) and **essential oil** (enteric‑coated capsules, topical).[web:257][web:251]
 
 ### Functional Overview
 

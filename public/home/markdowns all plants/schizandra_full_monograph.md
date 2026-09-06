@@ -99,15 +99,15 @@ Clinical significance: Sleep quality, dream work, insomnia (dysregulated), REM s
 
 ## DOSAGE & PREPARATION
 
-**Dosage Range (CRITICAL: Decoction or Tincture ONLY—Water Extraction Insufficient):**
+**Dosage Range (CRITICAL: Decoction or Extract ONLY—Water Extraction Insufficient):**
 
 **Decoction (Optimal—Lignan Extraction):** 2-4g whole dried berries (or 1-2g concentrated seed extract), simmer 15-20 min, 1-2× daily (morning + afternoon—stimulating initially). **DECOCTION = OPTIMAL** (heat extracts lignans effectively).
 
-**Tincture (Fresh Herb—Concentrated):** 20-40 drops, 1-2× daily (morning + afternoon). Fresh herb tincture concentrates lignans + volatile oils.
+**Extract (Fresh Herb—Concentrated):** 20-40 drops, 1-2× daily (morning + afternoon). Fresh herb extract concentrates lignans + volatile oils.
 
 **Tea (NOT Optimal—Insufficient Extraction):** Whole berries steeped 10-15 min acceptable but less potent (lignans better extracted via heat). If tea form, extend steep to 20 min.
 
-**Standardized Extract (3% Lignans):** 300-600mg daily (if decoction/tincture unavailable; concentrated, reliable dosing).
+**Standardized Extract (3% Lignans):** 300-600mg daily (if decoction/extract unavailable; concentrated, reliable dosing).
 
 **WITH FOOD (Fat-Soluble):** Lignans fat-soluble; take with meals or healthy fat (coconut oil, nuts, seeds) for absorption.
 
@@ -130,7 +130,7 @@ Clinical significance: Sleep quality, dream work, insomnia (dysregulated), REM s
 
 **Protocol 4: Sleep + Dream Work (REM ENHANCEMENT—4-8 WEEKS)** — Decoction 2-3g afternoon/evening (or earlier if stimulation persists) + Reishi mushroom 1g, daily for 4-8 weeks. Dream vividness; REM support; sleep quality. Note: May stimulate initially; if sleep disrupted, adjust timing earlier.
 
-**Protocol 5: Mental Clarity Without Overstimulation (COGNITIVE—8-12 WEEKS)** — Tincture 20-30 drops, 1-2× daily (morning-midday) for 8-12 weeks. Clarity + emotional stability; scattered mind settling; grounding.
+**Protocol 5: Mental Clarity Without Overstimulation (COGNITIVE—8-12 WEEKS)** — Extract 20-30 drops, 1-2× daily (morning-midday) for 8-12 weeks. Clarity + emotional stability; scattered mind settling; grounding.
 
 **Protocol 6: Liver Detoxification Support (PHASE I/II—4-8 WEEKS)** — Decoction 2-3g daily for 4-8 weeks. Detoxification pathways; liver support; cellular regeneration.
 
@@ -235,9 +235,9 @@ Clinical significance: Sleep quality, dream work, insomnia (dysregulated), REM s
 
 **Positioning:** "Adaptogenic specialist (unique lignan mechanism); paradoxical stress reduction + energy maintenance; endurance enhancer (traditional athlete use); jing tonifier (longevity); dreams + sleep; all-systems integration; **CYP450 interactions CRITICAL—prescriber consultation mandatory.**"
 
-**Protocols:** 8-protocol approach with STARK EMPHASIS on CYP450 interactions, initial stimulation phase expectations, decoction/tincture requirement (NOT tea alone).
+**Protocols:** 8-protocol approach with STARK EMPHASIS on CYP450 interactions, initial stimulation phase expectations, decoction/extract requirement (NOT tea alone).
 
-**Liability:** "CRITICAL: CYP450 enzyme induction—many medications at risk (statins, anticonvulsants, SSRIs, birth control, HRT, warfarin, immunosuppressants, others). **Prescriber consultation MANDATORY before recommending.** Initial stimulation expected (weeks 1-4; morning dosing recommended; resolves by week 4+ as effect balances). ACID REFLUX: caution (sour nature). PREGNANCY: consult provider. BREASTFEEDING: insufficient data—consult. DECOCTION/TINCTURE REQUIRED (tea insufficient for lignan extraction). NOT for evening use initially (stimulating)."
+**Liability:** "CRITICAL: CYP450 enzyme induction—many medications at risk (statins, anticonvulsants, SSRIs, birth control, HRT, warfarin, immunosuppressants, others). **Prescriber consultation MANDATORY before recommending.** Initial stimulation expected (weeks 1-4; morning dosing recommended; resolves by week 4+ as effect balances). ACID REFLUX: caution (sour nature). PREGNANCY: consult provider. BREASTFEEDING: insufficient data—consult. DECOCTION/EXTRACT REQUIRED (tea insufficient for lignan extraction). NOT for evening use initially (stimulating)."
 
 ---
 
@@ -245,7 +245,7 @@ Clinical significance: Sleep quality, dream work, insomnia (dysregulated), REM s
 
 **CYP450 Interaction Non-Negotiable:** This is THE critical screening for Schizandra. Before recommending, verify NO CYP450-metabolized medications, or if present, consult prescriber + document. This is not optional.
 
-**Decoction Requirement:** Emphasize—decoction (heat extraction) REQUIRED for lignan bioavailability. Tea alone insufficient. Tincture acceptable alternative. Powder/capsules (whole berry) less optimal (heat extraction necessary).
+**Decoction Requirement:** Emphasize—decoction (heat extraction) REQUIRED for lignan bioavailability. Tea alone insufficient. Extract acceptable alternative. Powder/capsules (whole berry) less optimal (heat extraction necessary).
 
 **Initial Stimulation Normal:** Educate clients—stimulation (energy boost, minor jitters) expected weeks 1-4. Resolves as effect balances. Manage with morning-only dosing, lower initial dose, patient monitoring.
 

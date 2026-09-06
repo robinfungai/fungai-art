@@ -75,7 +75,7 @@ export const EXTRACTION: ExtractionHerb[] = [
     decoctionMin: 30, 
     days: 2,
     spagyric: true,
-    notes: "Order: Decoct for inulin content, or Percolate for a cleaner alterative tincture[cite: 1].",
+    notes: "Order: Decoct for inulin content, or Percolate for a cleaner alterative extract[cite: 1].",
     tcm: { meridians: ["Lung", "Stomach"], element: "Metal" },
     synergy: ["Dandelion Root", "Yellow Dock"],
     caution_level: "LOW"
@@ -257,7 +257,7 @@ export const EXTRACTION: ExtractionHerb[] = [
     ratio: "1:5", 
     days: 14,
     spagyric: false,
-    notes: "Order: Standard maceration. Fine-filter twice to remove irritating tiny hairs from the final tincture.",
+    notes: "Order: Standard maceration. Fine-filter twice to remove irritating tiny hairs from the final extract.",
     tcm: { meridians: ["Lung", "Large Intestine"], element: "Metal" },
     synergy: ["Coltsfoot", "Plantain"],
     caution_level: "LOW"
@@ -932,7 +932,7 @@ export const EXTRACTION: ExtractionHerb[] = [
     ratio: "1:5", 
     days: 14,
     spagyric: false,
-    notes: "Order: High-proof maceration for kavalactones. Water extractions (traditional) work through emulsification, but tinctures require high ethanol.",
+    notes: "Order: High-proof maceration for kavalactones. Water extractions (traditional) work through emulsification, but extracts require high ethanol.",
     tcm: { meridians: ["Spleen", "Stomach", "Kidney"], element: "Earth + Water" },
     synergy: ["Passionflower", "Magnesium"],
     caution_level: "HIGH"
@@ -1577,7 +1577,7 @@ export const EXTRACTION: ExtractionHerb[] = [
     ratio: "1:5", 
     days: 14,
     spagyric: true,
-    notes: "Order: Macerate at room temperature. Boiling water can extract excessive tannins, making the tincture overly astringent and bitter.",
+    notes: "Order: Macerate at room temperature. Boiling water can extract excessive tannins, making the extract overly astringent and bitter.",
     tcm: { meridians: ["Heart", "Bladder", "Stomach"], element: "Fire + Water" },
     synergy: ["Guayusa", "Peppermint"],
     caution_level: "MEDIUM (Caffeine)"
@@ -1716,7 +1716,7 @@ export const EXTRACTION: ExtractionHerb[] = [
     ratio: "1:10", 
     days: 21,
     spagyric: true,
-    notes: "Order: Cold maceration. Traditionally 'whisked' in water to create foam, but for a tincture, a long maceration captures the triterpenoid saponins responsible for lucid dreaming states.",
+    notes: "Order: Cold maceration. Traditionally 'whisked' in water to create foam, but for a extract, a long maceration captures the triterpenoid saponins responsible for lucid dreaming states.",
     tcm: { meridians: ["Heart", "Kidney"], element: "Fire + Water" },
     synergy: ["Mugwort", "Blue Lotus"],
     caution_level: "LOW"
@@ -1864,7 +1864,7 @@ export const EXTRACTION: ExtractionHerb[] = [
   {
     id: 1731, common: "Bilberry", botanical: "Vaccinium myrtillus", part: "berry/leaf",
     ethanol: 40, methods: ["maceration"], ratio: "1:4", days: 14, spagyric: false,
-    notes: "Cold maceration preserves anthocyanins; berries yield a deep blue-purple tincture.",
+    notes: "Cold maceration preserves anthocyanins; berries yield a deep blue-purple extract.",
     tcm: { meridians: ["Liver", "Kidney"], element: "Water" }, synergy: ["Lingonberry", "Elderberry"], caution_level: "LOW"
   },
   {
@@ -1894,7 +1894,7 @@ export const EXTRACTION: ExtractionHerb[] = [
   {
     id: 1736, common: "Rose Petals", botanical: "Rosa damascena", part: "petals",
     ethanol: 40, methods: ["maceration", "distillation"], ratio: "1:4", days: 14, spagyric: true,
-    notes: "Distillation yields rosewater hydrosol; macerate fresh petals in 40% for heart-opening nervine tincture.",
+    notes: "Distillation yields rosewater hydrosol; macerate fresh petals in 40% for heart-opening nervine extract.",
     tcm: { meridians: ["Heart", "Liver"], element: "Fire + Wood" }, synergy: ["Saffron", "Lemon Balm"], caution_level: "LOW"
   },
   {
@@ -1996,19 +1996,19 @@ export const EXTRACTION: ExtractionHerb[] = [
   {
     id: 1753, common: "Broadleaf Plantain", botanical: "Plantago major", part: "leaf",
     ethanol: 40, methods: ["maceration"], ratio: "1:4", days: 14, spagyric: false,
-    notes: "Fresh plant preferred; juice or fresh plant tincture captures mucilage and aucubin intact.",
+    notes: "Fresh plant preferred; juice or fresh plant extract captures mucilage and aucubin intact.",
     tcm: { meridians: ["Lung", "Liver", "Kidney"], element: "Metal + Wood" }, synergy: ["Chickweed", "Calendula"], caution_level: "LOW"
   },
   {
     id: 1754, common: "Chickweed", botanical: "Stellaria media", part: "aerial",
     ethanol: 25, methods: ["maceration"], ratio: "1:4", days: 10, spagyric: false,
-    notes: "Delicate watery herb — use low ethanol or glycerite. Best fresh plant tincture; dries out very fast post-harvest.",
+    notes: "Delicate watery herb — use low ethanol or glycerite. Best fresh plant extract; dries out very fast post-harvest.",
     tcm: { meridians: ["Lung", "Large Intestine"], element: "Metal" }, synergy: ["Broadleaf Plantain", "Calendula"], caution_level: "LOW"
   },
   {
     id: 1755, common: "Ground Ivy", botanical: "Glechoma hederacea", part: "aerial",
     ethanol: 40, methods: ["maceration"], ratio: "1:4", days: 14, spagyric: false,
-    notes: "Harvest before flowering for highest rosmarinic acid. Fresh plant tincture ideal.",
+    notes: "Harvest before flowering for highest rosmarinic acid. Fresh plant extract ideal.",
     tcm: { meridians: ["Lung", "Liver"], element: "Metal + Wood" }, synergy: ["Eyebright", "Elderflower"], caution_level: "LOW"
   },
   {
@@ -2026,7 +2026,7 @@ export const EXTRACTION: ExtractionHerb[] = [
   {
     id: 1758, common: "Jasmine", botanical: "Jasminum officinale", part: "flower",
     ethanol: 40, methods: ["maceration", "cryo-maceration"], ratio: "1:4", days: 10, spagyric: true,
-    notes: "Extremely volatile aromatics — cryo-maceration preserves finest constituents. Room-temp maceration in 40% for tincture.",
+    notes: "Extremely volatile aromatics — cryo-maceration preserves finest constituents. Room-temp maceration in 40% for extract.",
     tcm: { meridians: ["Heart", "Liver"], element: "Fire + Wood" }, synergy: ["Rose Petals", "Saffron"], caution_level: "LOW"
   },
   {
@@ -2074,7 +2074,7 @@ export const EXTRACTION: ExtractionHerb[] = [
   {
     id: 1766, common: "Spirulina", botanical: "Arthrospira platensis", part: "whole alga",
     ethanol: 0, methods: ["decoction"], ratio: "1:5", decoctionMin: 10, spagyric: false,
-    notes: "Aqueous extraction only; ethanol denatures phycocyanin. Typically consumed as powder in water/smoothie. Not suited to tincture.",
+    notes: "Aqueous extraction only; ethanol denatures phycocyanin. Typically consumed as powder in water/smoothie. Not suited to extract.",
     tcm: { meridians: ["Liver", "Kidney"], element: "Water + Wood" }, caution_level: "LOW"
   },
   {
@@ -2320,13 +2320,13 @@ export const EXTRACTION: ExtractionHerb[] = [
   {
     id: 1807, common: "Rowan Berry", botanical: "Sorbus aucuparia", part: "berry",
     ethanol: 40, methods: ["maceration", "decoction"], ratio: "1:4", days: 14, decoctionMin: 20, spagyric: false,
-    notes: "Nordic berry; raw berries contain parasorbic acid (mildly toxic) which is destroyed by cooking or fermentation. Use processed/cooked berries for tincture.",
+    notes: "Nordic berry; raw berries contain parasorbic acid (mildly toxic) which is destroyed by cooking or fermentation. Use processed/cooked berries for extract.",
     tcm: { meridians: ["Lung", "Spleen"], element: "Metal + Earth" }, synergy: ["Rosehip", "Elderberry"], caution_level: "LOW-MEDIUM"
   },
   {
     id: 1808, common: "Cranberry", botanical: "Vaccinium macrocarpon", part: "berry",
     ethanol: 40, methods: ["maceration"], ratio: "1:4", days: 14, spagyric: false,
-    notes: "Proanthocyanidins (A-type) inhibit bacterial adhesion; cold maceration preserves them. Juice more bioavailable than tincture for UTI prevention.",
+    notes: "Proanthocyanidins (A-type) inhibit bacterial adhesion; cold maceration preserves them. Juice more bioavailable than extract for UTI prevention.",
     tcm: { meridians: ["Bladder", "Kidney"], element: "Water" }, synergy: ["Uva Ursi", "Nettle Leaf"], caution_level: "LOW"
   },
   {

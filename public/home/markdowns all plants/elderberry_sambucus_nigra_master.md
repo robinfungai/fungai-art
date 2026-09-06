@@ -8,7 +8,7 @@ Deciduous shrub; **ripe berries** harvested late summer–early autumn when full
 
 **Botanical Family:** Adoxaceae (formerly Caprifoliaceae)  
 **Part Used:** *Sambuci fructus* — **Fully ripe berries only** (de‑stemmed; no green/unripe parts). Flowers used separately; this monograph focuses on **berries**.  
-**Harvesting & Processing:** Umbels cut when berries fully ripe and dark; berries stripped from stems, spoiled/green berries removed; gently dried at ≤45–50 °C to preserve anthocyanins, or processed fresh into syrup/tincture.  
+**Harvesting & Processing:** Umbels cut when berries fully ripe and dark; berries stripped from stems, spoiled/green berries removed; gently dried at ≤45–50 °C to preserve anthocyanins, or processed fresh into syrup/extract.  
 **Quality Indicators:** Deep purple‑black color, sweet‑tart aroma, no mold; minimal stem content; uniform drying without shrivelling to brown. Anthocyanin‑rich juice when rehydrated.  
 **Storage:** Airtight glass, cool dark location; dried berries maintain good potency 12–18 months (anthocyanins degrade with heat/light).  
 **Historical Context:** Long European folk medicine history as “country medicine” against colds, fevers, and “flu”; Hippocrates reputedly called elder the “medicine chest.” Widely used modern herbal immune support, particularly in syrups for children and families.[web:47][web:56]
@@ -122,7 +122,7 @@ Via antiviral, anti‑inflammatory, and antioxidant actions:
   - **Prevention / high‑exposure:** 5–10 ml, 1–2× daily during risk periods.  
 - **Children:** Commonly 2.5–5 ml per dose depending on age and preparation; always ensure no raw/uncooked berries and consider sugar content.
 
-### Tincture
+### Extract
 
 - **Menstruum:** 25–40% ethanol for fresh berries; 40–50% for dried berries.[web:47][web:60]  
 - **Strength:** 1:5 or 1:3 (w:v) common.  
@@ -130,7 +130,7 @@ Via antiviral, anti‑inflammatory, and antioxidant actions:
 
 ### Tea / Decoction
 
-- Less efficient for anthocyanin extraction than standardized syrups/tinctures but still useful.  
+- Less efficient for anthocyanin extraction than standardized syrups/extracts but still useful.  
 - **Dried berries:** 1–2 tbsp per 250–300 ml water; simmer 15–20 minutes; drink 2–3× daily during illness.
 
 ### Standardized Extracts
@@ -271,7 +271,7 @@ Immunity is not a fortress but a conversation. Elderberry teaches that resilienc
 
 - **Quality & Sourcing:** Choose organic or unsprayed wildcrafted berries; verify species (*S. nigra* or *S. canadensis*); inspect for mold and excessive stems.  
 - **Storage:** Keep dried berries cool, dark, and dry; discard if musty or faded to brown.  
-- **Form Preference:** Syrup is often best for children and acute onset; tincture or standardized extract for adults who need portability and lower sugar.  
+- **Form Preference:** Syrup is often best for children and acute onset; extract or standardized extract for adults who need portability and lower sugar.  
 - **Timing:** Emphasize **early use** at symptom onset for maximal antiviral benefit.  
 - **Combination Strategy:**  
   - With **Elderflower, Yarrow, Peppermint, Thyme, or Linden** in cold/flu blends.  
@@ -281,5 +281,5 @@ Immunity is not a fortress but a conversation. Elderberry teaches that resilienc
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System*  
+*Use Case: Tailored Extract Recommendation System*  
 *Date: February 2026*

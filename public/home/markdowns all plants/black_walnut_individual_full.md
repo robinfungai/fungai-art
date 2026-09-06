@@ -11,7 +11,7 @@
 
 **Part Used:** Juglans nigra cortex (green hull—fresh or dried)—**Green fresh hull optimal** (highest juglone + iodine); dried hull also potent. Hull = most medicinal part (NOT the nut kernel itself, though kernel nutritious).
 
-**Harvesting & Processing:** Harvested autumn when hulls mature/darken; dried carefully (can stain—juglone active); whole hull preferred. Fresh hull tincture most potent (juglone preservation).
+**Harvesting & Processing:** Harvested autumn when hulls mature/darken; dried carefully (can stain—juglone active); whole hull preferred. Fresh hull extract most potent (juglone preservation).
 
 **Quality Indicators:** Dark brown/black color (dried—juglone indicator); distinctive strong, slightly bitter aroma; bitter, astringent taste (tannin + juglone marker). Potency indicated by color darkness + bitterness intensity.
 
@@ -88,9 +88,9 @@ Clinical significance: Candida/fungal overgrowth, fungal symptoms, gut health, a
 
 **Dosage Range (Specialized—Protocol-Based):**
 
-**Green Hull Tincture (Fresh Hull—MOST POTENT—PREFERRED):** 10-30 drops, 2-3× daily (diluted in water) during parasite protocol (typically 4-6 weeks). Fresh hull tincture = highest juglone.
+**Green Hull Extract (Fresh Hull—MOST POTENT—PREFERRED):** 10-30 drops, 2-3× daily (diluted in water) during parasite protocol (typically 4-6 weeks). Fresh hull extract = highest juglone.
 
-**Dried Hull Decoction (TRADITIONAL):** 1-2g dried hull, simmered 10 min, 1× daily during protocol (typically 4-6 weeks). Less potent than fresh tincture.
+**Dried Hull Decoction (TRADITIONAL):** 1-2g dried hull, simmered 10 min, 1× daily during protocol (typically 4-6 weeks). Less potent than fresh extract.
 
 **Standardized Extract (If Available):** 500-1000mg extract standardized to juglone, 1-2× daily during protocol. Most reliable dosing.
 
@@ -105,13 +105,13 @@ Clinical significance: Candida/fungal overgrowth, fungal symptoms, gut health, a
 
 **BEST PREPARATIONS:**
 
-**Protocol 1: Parasite Elimination (SPECIALIZED—4-6 WEEKS—PROFESSIONAL PROTOCOL)** — Tincture (15-30 drops), 2-3× daily for 4-6 weeks during professional parasite elimination protocol. Parasites eliminate over 4-6 weeks; digestion + energy recovery; gut health restoration.
+**Protocol 1: Parasite Elimination (SPECIALIZED—4-6 WEEKS—PROFESSIONAL PROTOCOL)** — Extract (15-30 drops), 2-3× daily for 4-6 weeks during professional parasite elimination protocol. Parasites eliminate over 4-6 weeks; digestion + energy recovery; gut health restoration.
 
-**Protocol 2: Antiparasitic Trio (COMPREHENSIVE—4-6 WEEKS—PROFESSIONAL)** — Black Walnut tincture (20 drops) + Wormwood tincture (15 drops) + Cloves (1g), combined 2-3× daily for 4-6 weeks. Triple antiparasitic (complementary mechanisms); comprehensive elimination protocol. **Requires professional herbalist design + monitoring.**
+**Protocol 2: Antiparasitic Trio (COMPREHENSIVE—4-6 WEEKS—PROFESSIONAL)** — Black Walnut extract (20 drops) + Wormwood extract (15 drops) + Cloves (1g), combined 2-3× daily for 4-6 weeks. Triple antiparasitic (complementary mechanisms); comprehensive elimination protocol. **Requires professional herbalist design + monitoring.**
 
-**Protocol 3: Antimicrobial (GUT DYSBIOSIS—2-4 WEEKS—PROFESSIONAL)** — Tincture (15-20 drops), 2× daily for 2-4 weeks. Pathogenic bacteria elimination; gut health; digestion recovery.
+**Protocol 3: Antimicrobial (GUT DYSBIOSIS—2-4 WEEKS—PROFESSIONAL)** — Extract (15-20 drops), 2× daily for 2-4 weeks. Pathogenic bacteria elimination; gut health; digestion recovery.
 
-**Protocol 4: Candida/Fungal (OVERGROWTH—4-6 WEEKS—PROFESSIONAL)** — Tincture (15-20 drops), 2-3× daily for 4-6 weeks. Fungal elimination; symptoms ease; gut health recovery.
+**Protocol 4: Candida/Fungal (OVERGROWTH—4-6 WEEKS—PROFESSIONAL)** — Extract (15-20 drops), 2-3× daily for 4-6 weeks. Fungal elimination; symptoms ease; gut health recovery.
 
 **Limited Protocols—Specialized Professional Use**
 

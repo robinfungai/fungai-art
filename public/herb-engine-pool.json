@@ -3187,33 +3187,6 @@
     "caution_level": "LOW"
   },
   {
-    "id": 310,
-    "name": "Tremella",
-    "primary_functions": [
-      "Skin hydration and barrier protection — TF polysaccharides (glucuronoxylomannans) form hydrating film on skin; bind and retain water comparable to or exceeding hyaluronic acid in some assessments; topical emulsion with 0.1% Tremella extract increased epidermal hydration and reduced TEWL by ~12.4% in human volunteers; anti-photoaging and fibroblast protection from oxidative stress",
-      "Neuroprotection and cognitive support — double-blind RCT: TFP supplementation in individuals with cognitive impairment significantly improved subjective memory complaints, short-term memory and executive function with increased grey matter volume; animal models show enhanced hippocampal CREB neurons, glucose uptake and cholinergic activity; reverses scopolamine-induced memory deficits",
-      "Immunomodulation — TF polysaccharides activate NK cells, macrophages and T/B cells; clinically used in China as CFDA-approved enteric-coated capsule for leukopenia from chemotherapy and radiotherapy; NF-kB inhibition via Akt/p38MAPK/miR-155 suppression; Treg cell ratio increase in atopic dermatitis models",
-      "Anti-inflammatory at innate immune level — polysaccharides decrease ROS and pro-inflammatory cytokines (TNF-alpha, IL-6) in LPS-stimulated macrophages; reduces NF-kB activation; anti-atopic-dermatitis effects (topical and oral) comparable to prednisolone in mouse models via gut-skin-immune axis",
-      "Deep Lung-Stomach yin nourishment (TCM) — moistens Lung yin and Stomach yin; soothes dry cough, dry throat and dry mucosa; post-illness yin depletion recovery; rebuilds fluids and essence after fever, overwork or fluid loss"
-    ],
-    "energetics": [
-      "Neutral to Cool",
-      "Sweet",
-      "Moistening",
-      "Yin-Nourishing",
-      "Jing-Restorative",
-      "Skin-Hydrating",
-      "Neuroprotective"
-    ],
-    "tcm_meridians": [
-      "Lung",
-      "Stomach",
-      "Spleen",
-      "Kidney"
-    ],
-    "caution_level": "LOW-MEDIUM"
-  },
-  {
     "id": 311,
     "name": "Amanita Muscaria",
     "primary_functions": [

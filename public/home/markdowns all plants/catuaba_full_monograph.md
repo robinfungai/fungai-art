@@ -9,9 +9,9 @@
 
 **Botanical Family:** Bignoniaceae (trumpet vine family)
 
-**Part Used:** Anemopaegma mirandum cortex — **Bark only** (aerial bark harvested sustainably from wild trees); dried optimal to concentrate active compounds; whole bark preferred (higher bioactivity than powders). Fresh bark tincture most potent.
+**Part Used:** Anemopaegma mirandum cortex — **Bark only** (aerial bark harvested sustainably from wild trees); dried optimal to concentrate active compounds; whole bark preferred (higher bioactivity than powders). Fresh bark extract most potent.
 
-**Harvesting & Processing:** Sustainably harvested from wild Amazonian trees (sustainable forestry practice); dried at low temperature to preserve alkaloids + volatile oils; whole bark stored. Fresh bark tincture preserves volatiles + alkaloids optimally.
+**Harvesting & Processing:** Sustainably harvested from wild Amazonian trees (sustainable forestry practice); dried at low temperature to preserve alkaloids + volatile oils; whole bark stored. Fresh bark extract preserves volatiles + alkaloids optimally.
 
 **Quality Indicators:** Gray-brown dried color; distinctive warm, earthy aroma; slightly bitter taste. Potency indicated by aroma intensity + bitter taste depth (fresh = strongest).
 
@@ -97,7 +97,7 @@ Clinical significance: Dissociation, disconnection from body, embodiment support
 
 **Dosage Range (Use with Intention—Stimulating but Gentle Sympathomimetic):**
 
-**Tincture (Fresh Bark—MOST POTENT):** 15-30 drops, 1-2× daily (best morning-midday; stimulating—NOT evening). Fresh bark tincture highest alkaloid + volatile oil concentration.
+**Extract (Fresh Bark—MOST POTENT):** 15-30 drops, 1-2× daily (best morning-midday; stimulating—NOT evening). Fresh bark extract highest alkaloid + volatile oil concentration.
 
 **Decoction (Dried Bark—TRADITIONAL):** 1-2g dried bark, simmer 10-15 min, 1-2× daily (morning preferred). Heat extraction optimal for bitter compounds + minerals.
 
@@ -114,21 +114,21 @@ Clinical significance: Dissociation, disconnection from body, embodiment support
 
 **BEST PREPARATIONS:**
 
-**Protocol 1: Sexual Vitality Enhancement (BOTH GENDERS—2-4 WEEKS)** — Tincture 20-30 drops, 1× daily (morning) for 2-4 weeks. Sexual arousal improves; pleasure sensitivity increases; sexual confidence + ease. Effects cumulative; optimal after 2-4 weeks consistent use.
+**Protocol 1: Sexual Vitality Enhancement (BOTH GENDERS—2-4 WEEKS)** — Extract 20-30 drops, 1× daily (morning) for 2-4 weeks. Sexual arousal improves; pleasure sensitivity increases; sexual confidence + ease. Effects cumulative; optimal after 2-4 weeks consistent use.
 
-**Protocol 2: Pre-Intimacy (ACUTE—COUPLES—1-2 HOURS BEFORE)** — Tincture 20-30 drops, 1-2 hours before sexual intimacy (for both partners). Sexual arousal peaks; pleasure sensitivity enhances; anxiety eases; sexual satisfaction improves during session.
+**Protocol 2: Pre-Intimacy (ACUTE—COUPLES—1-2 HOURS BEFORE)** — Extract 20-30 drops, 1-2 hours before sexual intimacy (for both partners). Sexual arousal peaks; pleasure sensitivity enhances; anxiety eases; sexual satisfaction improves during session.
 
-**Protocol 3: Confidence + Embodied Presence (DAYTIME—2-4 WEEKS)** — Tincture 15-20 drops, 1× morning for 2-4 weeks. Embodied presence + confidence during daily life; authentic self-expression; sexual confidence; social ease.
+**Protocol 3: Confidence + Embodied Presence (DAYTIME—2-4 WEEKS)** — Extract 15-20 drops, 1× morning for 2-4 weeks. Embodied presence + confidence during daily life; authentic self-expression; sexual confidence; social ease.
 
-**Protocol 4: Low Libido + Sexual Anxiety (COMPREHENSIVE—4-8 WEEKS)** — Tincture 20-30 drops, 1× daily morning for 4-8 weeks (+ psychological work/partner communication). Removes psychological blocks to desire; sexual anxiety eases; arousal improves; pleasure becomes accessible. Foundational shift over weeks.
+**Protocol 4: Low Libido + Sexual Anxiety (COMPREHENSIVE—4-8 WEEKS)** — Extract 20-30 drops, 1× daily morning for 4-8 weeks (+ psychological work/partner communication). Removes psychological blocks to desire; sexual anxiety eases; arousal improves; pleasure becomes accessible. Foundational shift over weeks.
 
 **Protocol 5: Sexual Vitality Trio (COUPLES—SYNERGISTIC—INTIMATE)** — Catuaba 20 drops + Damiana 20 drops (confidence) + Rose 15 drops (heart-opening), combined, 1-2 hours before intimacy. Triple pleasure + vitality + heart + confidence effect; enhanced sexual satisfaction + emotional intimacy.
 
-**Protocol 6: Masculine Vitality Support (MALE—4-8 WEEKS)** — Tincture 20-30 drops, 1× daily morning for 4-8 weeks (+ Tongkat Ali 1-2g daily for synergistic testosterone support if desired). Sexual function improves; erection strength; stamina; physical confidence; masculine presence.
+**Protocol 6: Masculine Vitality Support (MALE—4-8 WEEKS)** — Extract 20-30 drops, 1× daily morning for 4-8 weeks (+ Tongkat Ali 1-2g daily for synergistic testosterone support if desired). Sexual function improves; erection strength; stamina; physical confidence; masculine presence.
 
-**Protocol 7: Energy + Embodied Confidence (DAYTIME—CYCLING)** — Tincture 15-20 drops, 1× morning for 5 days, then 2 days off (cycling prevents tolerance). Embodied presence + baseline confidence; sexual vitality accessible; energy; authentic self-expression.
+**Protocol 7: Energy + Embodied Confidence (DAYTIME—CYCLING)** — Extract 15-20 drops, 1× morning for 5 days, then 2 days off (cycling prevents tolerance). Embodied presence + baseline confidence; sexual vitality accessible; energy; authentic self-expression.
 
-**Protocol 8: Pleasure-Centered Foundation (COUPLES—MAINTENANCE—CYCLING)** — Tincture 15-20 drops, 1× morning 5 days weekly (cycling 5 on, 2 off). Baseline sexual vitality; pleasure accessibility; confidence; sustainable indefinite with cycling.
+**Protocol 8: Pleasure-Centered Foundation (COUPLES—MAINTENANCE—CYCLING)** — Extract 15-20 drops, 1× morning 5 days weekly (cycling 5 on, 2 off). Baseline sexual vitality; pleasure accessibility; confidence; sustainable indefinite with cycling.
 
 ---
 

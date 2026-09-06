@@ -24,7 +24,7 @@ const CONTRIB_TYPES = [
   { id: "foraging",  label: "Foraging",  icon: "🌿",  desc: "Wild harvest & species ID"  },
   { id: "content",   label: "Content",   icon: "◈",   desc: "Photo, video, copy"         },
   { id: "events",    label: "Events",    icon: "✦",   desc: "Setup & facilitation"        },
-  { id: "lab",       label: "Lab",       icon: "⚗",   desc: "Extraction & tinctures"     },
+  { id: "lab",       label: "Lab",       icon: "⚗",   desc: "Extraction & extracts"     },
   { id: "workshop",  label: "Workshop",  icon: "◉",   desc: "Teaching & demos"           },
   { id: "admin",     label: "Admin",     icon: "○",   desc: "Planning & logistics"       },
   { id: "sales_rep", label: "Sales",     icon: "◎",   desc: "Customer & market"          },

@@ -71,7 +71,7 @@ Timeline: Immediate nutritive benefit (minerals bioavailable); cumulative vitali
 **Dosage Range:**
 **Decoction (OPTIMAL EXTRACTION):** 1-2 tsp dried sliced root per 250 ml, simmer 15-20 minutes (longer simmering extracts minerals optimally), 2-3× daily. Traditional preparation; extracts minerals + inulin efficiently.
 **Cold Infusion (Overnight):** 2-3 tsp sliced root in 250 ml cold water, soak overnight (8+ hours), strain. Optimal for inulin extraction (dissolves in cold water); gentle; pleasant.
-**Tincture:** 60-90 drops, 2-3× daily (less efficient for mineral + inulin extraction than decoction).
+**Extract:** 60-90 drops, 2-3× daily (less efficient for mineral + inulin extraction than decoction).
 **Culinary Use (Gobo):** Use fresh or dried burdock root generously in cooking (soups, stir-fries, roasted). Therapeutic food use; continuous mild benefit.
 **Duration:** Safe long-term indefinite daily use (food-like herb; culinary staple in Japan).
 
@@ -130,5 +130,5 @@ Timeline: Immediate nutritive benefit (minerals bioavailable); cumulative vitali
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System*
+*Use Case: Tailored Extract Recommendation System*
 *Date: February 2026*

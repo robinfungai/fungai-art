@@ -68,7 +68,7 @@ Best suited for **deficient, under‑nourished, overworked, or convalescent** co
 - 2–4 g dried leaf per 250 ml boiling water  
 - Steep 10–20 minutes; drink 1–3 cups daily as a tonic.[web:139][web:145]
 
-### Tincture
+### Extract
 
 - Ratio: 1:3–1:5 in 25–40% alcohol (fresh or well‑dried herb)  
 - Dose: 2–5 ml, 1–3x daily as part of nutritive or women’s‑health blends.

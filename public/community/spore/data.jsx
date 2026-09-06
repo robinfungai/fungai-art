@@ -236,7 +236,7 @@ const EVENTS = [
     contributions: [
       { type: 'kitchen', earn: 80, rep: 2, label: 'Kitchen & ceremonial prep' },
       { type: 'events',  earn: 70, rep: 2, label: 'Event hosting & facilitation' },
-      { type: 'laboratory', earn: 60, rep: 1, label: 'Elixir & tincture prep' },
+      { type: 'laboratory', earn: 60, rep: 1, label: 'Elixir & extract prep' },
     ],
     open: true,
   },
@@ -340,13 +340,13 @@ const EVENTS = [
     freq: '432 Hz',
     color: '#E8B14B',
     capacity: 400,
-    desc: 'Two days at Holzmarkt Berlin dedicated to the fungal kingdom. Foraging walks, mycology talks, mushroom market, tincture bar, lab demos, live music at dusk. Sat 10 & Sun 11 Oct. Full lineup + tickets on the FFF landing page.',
+    desc: 'Two days at Holzmarkt Berlin dedicated to the fungal kingdom. Foraging walks, mycology talks, mushroom market, extract bar, lab demos, live music at dusk. Sat 10 & Sun 11 Oct. Full lineup + tickets on the FFF landing page.',
     url: '/fungi-fever-fest/',
     contributions: [
       { type: 'events',     earn: 120, rep: 3, label: 'Festival crew (both days)' },
       { type: 'foraging',   earn: 80,  rep: 2, label: 'Species table & ID desk' },
       { type: 'kitchen',    earn: 70,  rep: 2, label: 'Mushroom market service' },
-      { type: 'laboratory', earn: 60,  rep: 1, label: 'Tincture-bar shifts' },
+      { type: 'laboratory', earn: 60,  rep: 1, label: 'Extract-bar shifts' },
     ],
     open: true,
     festival: true,
@@ -418,7 +418,7 @@ const EXPERIENCES = [
   },
   {
     id:'e4', title:'Fungi Lab',
-    desc:'Hands-on tincture making and species identification. Small group, deep practice.',
+    desc:'Hands-on extract making and species identification. Small group, deep practice.',
     bg:'#7A4F2E', tag:'locked', tagLabel:'Token-gated', pEur:null, pH:80, minH:80,
   },
   {
@@ -621,7 +621,7 @@ const MEMBERS = [
 
 const CONTRIBUTION_TYPES = [
   { id: 'foraging',    label: 'Foraging',    icon: '🌿', desc: 'Wild harvest, species ID, field medicine' },
-  { id: 'laboratory',  label: 'Laboratory',  icon: '⚗',  desc: 'Extraction, tincture, formulation' },
+  { id: 'laboratory',  label: 'Laboratory',  icon: '⚗',  desc: 'Extraction, extract, formulation' },
   { id: 'events',      label: 'Events',      icon: '✦',  desc: 'Setup, facilitation, hosting' },
   { id: 'sales',       label: 'Sales',       icon: '◎',  desc: 'Customer, market, outreach' },
 ];

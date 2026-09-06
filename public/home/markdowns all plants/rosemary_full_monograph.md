@@ -69,7 +69,7 @@
 **1. Mental Clarity + Cognitive Support (Rosmarinic Acid + Volatile Oils—PRIMARY)**
 Rosmarinic acid inhibits acetylcholinesterase (increases acetylcholine—memory neurotransmitter); volatile oils stimulate prefrontal cortex (executive function).
 Effect: Concentration improves; mental acuity sharpens; memory retrieval easier; cognitive clarity; mental fog clears.
-Timeline: Develops within 30-60 min (acute effect—inhalation/tincture); sustained over 2-4 weeks with consistent use.
+Timeline: Develops within 30-60 min (acute effect—inhalation/extract); sustained over 2-4 weeks with consistent use.
 Clinical significance: Mental fog, concentration, memory, cognitive clarity, executive function, decision-making.
 For AI app: Position as "mental clarity specialist; acetylcholinesterase inhibitor (memory enhancer); prefrontal cortex activator; neuroprotective; circulation enhancer; stimulating (morning use optimal); German Commission E monograph; 80+ studies."
 
@@ -103,13 +103,13 @@ Clinical significance: Cognitive aging prevention, Alzheimer's prevention (preli
 
 **Dosage Range:**
 
-**Tincture (Most Effective—Concentrated Volatile Oils):** 15-30 drops, 1-2× daily (morning to midday—stimulating).
+**Extract (Most Effective—Concentrated Volatile Oils):** 15-30 drops, 1-2× daily (morning to midday—stimulating).
 
 **Tea (Infusion—Volatile Oil Preservation):** 1-2 tsp dried leaf per 8oz hot water, steep 5-10 min, 1-2× daily (NOT long steep—volatile oils lost). Short steep = maximum volatile oil + aromatic compounds.
 
 **Fresh Herb (Highest Volatile Oil):** 2-4 fresh sprigs daily in cooking or as tea (fresh highest potency).
 
-**Dried Powder (Capsules):** 500-1000mg, 2× daily (less volatile oil extraction than tincture).
+**Dried Powder (Capsules):** 500-1000mg, 2× daily (less volatile oil extraction than extract).
 
 **Aromatic (Inhalation—Acute Mental Clarity):** 2-3 drops essential oil on cloth, inhale 2-3 minutes (acute mental clarity effect; fastest route).
 
@@ -123,19 +123,19 @@ Clinical significance: Cognitive aging prevention, Alzheimer's prevention (preli
 
 **BEST PREPARATIONS:**
 
-**Protocol 1: Mental Clarity + Cognitive Focus (MORNING DAILY)** — Tincture 20-30 drops in water, morning on empty stomach for acute clarity; repeat afternoon if needed. Mental fog clears within 30-60 min; focus sharpens; productivity improves.
+**Protocol 1: Mental Clarity + Cognitive Focus (MORNING DAILY)** — Extract 20-30 drops in water, morning on empty stomach for acute clarity; repeat afternoon if needed. Mental fog clears within 30-60 min; focus sharpens; productivity improves.
 
 **Protocol 2: Memory Support (LONG-TERM COGNITIVE)** — Tea 1-2 tsp leaf, 1-2× daily for 8-12 weeks. Memory retrieval improves; cognitive baseline sharpens; neuroprotection cumulative.
 
-**Protocol 3: Pre-Work/Study (ACUTE CLARITY)** — Tincture 20-30 drops 30 min before mental task; or aromatic inhalation 2-3 drops essential oil for immediate clarity. Cognitive performance during task improves.
+**Protocol 3: Pre-Work/Study (ACUTE CLARITY)** — Extract 20-30 drops 30 min before mental task; or aromatic inhalation 2-3 drops essential oil for immediate clarity. Cognitive performance during task improves.
 
 **Protocol 4: Circulation Enhancement (WARMING)** — Tea 1-2 tsp, 1-2× daily for 4-8 weeks. Circulation improves; cold extremities warm; brain oxygenation; energy distribution.
 
-**Protocol 5: Neuroprotection + Cognitive Aging Prevention (LONG-TERM)** — Tea 1-2 tsp or tincture 15-20 drops, daily for 8-12+ weeks indefinite. Age-related cognitive decline prevention; brain longevity; Alzheimer's prevention (preliminary).
+**Protocol 5: Neuroprotection + Cognitive Aging Prevention (LONG-TERM)** — Tea 1-2 tsp or extract 15-20 drops, daily for 8-12+ weeks indefinite. Age-related cognitive decline prevention; brain longevity; Alzheimer's prevention (preliminary).
 
 **Protocol 6: Liver Detoxification (QI MOVING)** — Tea 1-2 tsp, 2× daily for 4-6 weeks. Detoxification support; qi stagnation clears; liver function; energy circulation.
 
-**Protocol 7: Mood + Energy (STIMULATING)** — Tincture 20-30 drops, 1-2× daily morning-afternoon. Mood uplifts; energy increases; mental alertness.
+**Protocol 7: Mood + Energy (STIMULATING)** — Extract 20-30 drops, 1-2× daily morning-afternoon. Mood uplifts; energy increases; mental alertness.
 
 **Protocol 8: Culinary + Medicinal Integration (SUSTAINABLE)** — Fresh rosemary in cooking (meats, soups, oils) + 1 tsp tea 1-2× daily. Continuous cognitive + circulation support.
 
@@ -162,7 +162,7 @@ Clinical significance: Cognitive aging prevention, Alzheimer's prevention (preli
 
 **Seizure History (THUJONE TRACE—CAUTION):** Trace thujone (0.2-0.5%) in volatile oils; theoretical seizure risk (minimal in herb form—higher in essential oil concentrated). **Avoid concentrated essential oil if seizure history; herb safe.**
 
-**Pregnancy (STIMULATING—CAUTION):** Warm, stimulating; traditionally used as uterine stimulant (high doses). **Culinary amounts safe; concentrated tinctures avoid during pregnancy.**
+**Pregnancy (STIMULATING—CAUTION):** Warm, stimulating; traditionally used as uterine stimulant (high doses). **Culinary amounts safe; concentrated extracts avoid during pregnancy.**
 
 **Breastfeeding:** Minimal concern (culinary herb); concentrated essential oil avoid.
 
@@ -170,7 +170,7 @@ Clinical significance: Cognitive aging prevention, Alzheimer's prevention (preli
 
 **Insomnia (CAUTION):** Stimulating; avoid evening; may worsen insomnia (opposite of sleep support).
 
-**Anxiety/Hyperactivity (STIMULATING—CAUTION):** May overstimulate sensitive individuals. Start low (10 drops tincture); monitor response.
+**Anxiety/Hyperactivity (STIMULATING—CAUTION):** May overstimulate sensitive individuals. Start low (10 drops extract); monitor response.
 
 **Herb-to-Herb Interactions:**
 
@@ -229,7 +229,7 @@ Clinical significance: Cognitive aging prevention, Alzheimer's prevention (preli
 
 **Tea Preparation Critical:** Steep only 5-10 min (volatile oils volatile—lost with prolonged steeping + heat exposure). Educate clients on proper preparation.
 
-**Acute Mental Clarity Effect:** Tincture or inhalation = fastest route for immediate cognitive boost. Good for pre-presentation, pre-exam, mental task timing.
+**Acute Mental Clarity Effect:** Extract or inhalation = fastest route for immediate cognitive boost. Good for pre-presentation, pre-exam, mental task timing.
 
 **Long-Term Neuroprotection:** Consistent use 8-12+ weeks for preventive cognitive aging benefits.
 

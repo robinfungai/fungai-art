@@ -11,7 +11,7 @@
 
 **Part Used:** Salix alba cortex (inner bark)—**Inner bark preferred** (highest salicylate concentration); whole dried bark preferred (higher bioactivity). Inner bark = most medicinal part.
 
-**Harvesting & Processing:** Harvested spring (peak salicylate concentration); dried at low temperature to preserve salicylates; whole bark preferred. Fresh bark tincture most potent.
+**Harvesting & Processing:** Harvested spring (peak salicylate concentration); dried at low temperature to preserve salicylates; whole bark preferred. Fresh bark extract most potent.
 
 **Quality Indicators:** Gray-white color (dried); distinctive herbal aroma; bitter taste (salicylate marker). Potency indicated by bark color + bitterness intensity (inner bark = lighter/more bitter).
 
@@ -87,7 +87,7 @@ Clinical significance: Fever reduction, acute illness, temperature regulation.
 
 **Dried Bark Decoction (OPTIMAL—WATER EXTRACTION):** 1-3g dried inner bark, simmered 10-15 min, 1-3× daily. Traditional preparation; best extraction of salicylates.
 
-**Bark Tincture (Fresh Bark—CONCENTRATED):** 20-40 drops, 1-3× daily. Concentrated salicylate extract.
+**Bark Extract (Fresh Bark—CONCENTRATED):** 20-40 drops, 1-3× daily. Concentrated salicylate extract.
 
 **Standardized Extract (If Available—MOST RELIABLE):** 500-1500mg extract standardized to salicylate content, 1-2× daily. Most reliable pain relief dosing.
 

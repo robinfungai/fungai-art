@@ -205,7 +205,7 @@ Chamomile improves sleep quality through multiple mechanisms—none of which for
 Chamomile teaches the nervous system to trust the night, to release vigilance gradually rather than suddenly collapsing into forced sleep. She supports the Shen (spirit/consciousness) in finding its natural resting place.
 
 **For AI App:**
-- Recommend 2-4 g tea or 20-40 drops tincture **30-60 minutes before bed** (allows absorption time)
+- Recommend 2-4 g tea or 20-40 drops extract **30-60 minutes before bed** (allows absorption time)
 - Safe to combine with other sleep herbs (passionflower, valerian, lavender) with monitoring for excessive sedation
 - Can be used nightly long-term (no dependence risk, unlike prescription sleep medications)
 
@@ -257,7 +257,7 @@ Chamomile tonifies Spleen Qi and settles Stomach Qi. The "Spleen" in TCM encompa
 
 **For AI App:**
 - Recommend 2-4 g tea **before or between meals** (stimulates secretions optimally on empty stomach)
-- For cramping: 20-40 drops tincture immediately when needed
+- For cramping: 20-40 drops extract immediately when needed
 - For chronic IBS: Daily tea (2-4 weeks for cumulative anti-inflammatory benefit)
 - Safe to combine with other digestive herbs (peppermint, fennel, ginger)
 
@@ -285,8 +285,8 @@ Apigenin GABA modulation (primary) + sesquiterpene relaxation (secondary) + poly
 - Maximum benefit achieved with daily use (2-4 weeks for full tolerance to anxiety-provoking situations)
 
 **Stress vs. Chronic Anxiety:**
-- **Acute stress/anxiety:** Use PRN (as needed); 2-4 cups tea, 40-60 drops tincture for immediate relief
-- **Chronic anxiety:** Use daily (2-4 g tea, 20-40 drops tincture 2-3× daily); cumulative anxiolytic effect
+- **Acute stress/anxiety:** Use PRN (as needed); 2-4 cups tea, 40-60 drops extract for immediate relief
+- **Chronic anxiety:** Use daily (2-4 g tea, 20-40 drops extract 2-3× daily); cumulative anxiolytic effect
 - **Maintenance:** Long-term daily use safe; no tolerance develops
 
 **TCM Perspective:**
@@ -335,7 +335,7 @@ Chamomile's antispasmodic and anti-inflammatory properties make her particularly
 **Application Across Menstrual Phases:**
 - **Follicular Phase (Days 1-14):** Daily chamomile for anti-inflammatory support, cramping prevention
 - **Ovulation (Day 14±2):** Maintain daily use
-- **Luteal Phase (Days 15-28):** Increase to 3-4 g tea or 40-60 drops tincture daily for PMS support and anxiety
+- **Luteal Phase (Days 15-28):** Increase to 3-4 g tea or 40-60 drops extract daily for PMS support and anxiety
 - **Menstruation (Days 1-5):** 2-4 cups tea daily for cramping, mood, emotional ease
 
 **TCM Perspective:**
@@ -365,7 +365,7 @@ Chamomile tonifies the relationship between Liver (smooth Qi flow) and Uterus (C
 - **Effect:** Stronger, fresher flavor; maximum therapeutic potency
 - **Frequency:** 1-3 cups daily
 
-**Tincture (Alcohol-Based, 1:5 Ratio Typical):**
+**Extract (Alcohol-Based, 1:5 Ratio Typical):**
 - **Standard dose:** 20-40 drops (1-2 ml) in water or tea
 - **Frequency:** 2-3× daily OR 1× daily (for daily tonification) OR as needed (for acute anxiety)
 - **Onset:** Faster absorption than tea (enters bloodstream via mucous membranes)
@@ -427,14 +427,14 @@ Chamomile tonifies the relationship between Liver (smooth Qi flow) and Uterus (C
 **Protocol 5: PMS & Menstrual Cramp Protocol (Women-Specific)**
 - **Follicular Phase (Days 1-14):** 1-2 cups chamomile tea daily (preventive anti-inflammatory)
 - **Ovulation:** Maintain daily use
-- **Luteal Phase (Days 15-28):** Increase to 3-4 cups daily + 40-60 drops tincture if needed for anxiety
-- **Menstruation (Days 1-5):** 2-4 cups daily + additional tincture PRN for cramping
+- **Luteal Phase (Days 15-28):** Increase to 3-4 cups daily + 40-60 drops extract if needed for anxiety
+- **Menstruation (Days 1-5):** 2-4 cups daily + additional extract PRN for cramping
 - **Duration:** Cycle-based year-round for cycle regulation and symptom management
 - **Synergy:** Combine with Vitex (hormonal balance), Motherwort (uterine stimulation), Lady's Mantle (tissue tonification)
 
 **Protocol 6: Acute Anxiety/Panic Response (Immediate Use)**
 - **Option A (Tea):** Prepare strong chamomile tea (4 g flowers, short steep 5 min); drink over 5-10 minutes
-- **Option B (Tincture):** 60 drops in warm water; drink quickly
+- **Option B (Extract):** 60 drops in warm water; drink quickly
 - **Option C (Essential Oil):** 2-3 drops on tissue; hold near nose; breathe deeply 3-5 times
 - **Effect:** Anxiety reduction within 15-30 minutes
 - **Frequency:** As needed; can use 4-5 times daily if necessary (no dependence risk)
@@ -457,7 +457,7 @@ Chamomile tonifies the relationship between Liver (smooth Qi flow) and Uterus (C
 
 **Morning/Daytime Use:**
 - **For:** Anxiety, digestive support, general nervine tonification, focus (calming without sedation)
-- **Dosage:** 1-2 cups tea OR 20-40 drops tincture
+- **Dosage:** 1-2 cups tea OR 20-40 drops extract
 - **Effect:** Anxiolytic effect within 30-60 minutes; maintained alertness
 
 **Before Meals (10-15 Minutes Prior):**
@@ -467,16 +467,16 @@ Chamomile tonifies the relationship between Liver (smooth Qi flow) and Uterus (C
 
 **Afternoon/Transition Time:**
 - **For:** Bridging stress of day to evening; energy dip management; continued anxiety support
-- **Dosage:** 1 cup tea OR 20-40 drops tincture
+- **Dosage:** 1 cup tea OR 20-40 drops extract
 - **Effect:** Gentle anxiety reduction; maintained productivity
 
 **Evening (30-60 Minutes Before Bed):**
 - **For:** Sleep onset; circadian rhythm support; nervous system downregulation
-- **Dosage:** 2-4 g tea (stronger infusion) OR 40-60 drops tincture
+- **Dosage:** 2-4 g tea (stronger infusion) OR 40-60 drops extract
 - **Effect:** Relaxation within 15-30 minutes; sleep onset supported; sleep architecture maintained
 
 **Acute Stress/Anxiety (Anytime):**
-- **Use:** 4 g tea OR 60 drops tincture OR 2-3 drops essential oil (aromatic)
+- **Use:** 4 g tea OR 60 drops extract OR 2-3 drops essential oil (aromatic)
 - **Frequency:** As needed, multiple times daily if necessary
 - **Effect:** Anxiety reduction within 15-30 minutes
 
@@ -827,13 +827,13 @@ For those with trauma histories, chamomile offers gentle reparenting—the safet
 - **Container:** Airtight glass jar (amber/dark glass preferred to block light)
 - **Location:** Cool, dark, dry place; away from heat sources, direct sunlight, humidity
 - **Temperature:** Room temperature (60-75°F / 15-24°C ideal)
-- **Duration:** Properly stored dried flowers maintain potency 12-18 months; tincture 3-5 years
+- **Duration:** Properly stored dried flowers maintain potency 12-18 months; extract 3-5 years
 
 **Preservation Tips:**
 - Store flowers in glass jar with small piece of parchment paper to absorb excess moisture
 - Check monthly for any sign of moisture or mold
 - If exposed to humidity, spread flowers on clean cloth to air-dry, then reseal
-- Tincture benefits from periodic (monthly) inversion to maintain homogeneity
+- Extract benefits from periodic (monthly) inversion to maintain homogeneity
 - Avoid glass containers stored near kitchen heat (stove, oven, direct sunlight)
 
 ### Chamomile as Gateway Herb
@@ -944,7 +944,7 @@ For trauma survivors, chamomile is perfect first herb:
 
 **Timing & Protocol Generator:**
 - [ ] Recommend optimal timing (morning/evening/with meals/before bed) based on user goals
-- [ ] Generate personalized ritual protocol (based on user preferences: quick tea vs. ceremonial vs. tincture)
+- [ ] Generate personalized ritual protocol (based on user preferences: quick tea vs. ceremonial vs. extract)
 - [ ] Create weekly/monthly schedule with reminders
 - [ ] For menstruating individuals: Cycle-based timing recommendations
 - [ ] Track adherence and adjust protocol if needed
@@ -1017,7 +1017,7 @@ For trauma survivors, chamomile is perfect first herb:
    - [ ] Create customizable ritual templates (quick 5-min tea vs. 15-min ceremonial)
    - [ ] Generate weekly schedule with dosing times and reminders
    - [ ] For menstruating individuals: Create cycle-based scheduling (adjust dosing per phase)
-   - [ ] Create printable shopping lists for whole flowers, tinctures, etc.
+   - [ ] Create printable shopping lists for whole flowers, extracts, etc.
    - [ ] Build mobile reminders with customizable notifications
 
 7. **Implement evidence communicator:**
@@ -1067,5 +1067,5 @@ For trauma survivors, chamomile is perfect first herb:
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*
 *Date: February 2026*

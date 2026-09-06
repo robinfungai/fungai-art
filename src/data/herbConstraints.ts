@@ -44,7 +44,7 @@ export const CONSTRAINT_FLAGS = [
   // ── Additions beyond Engine 2 ─────────────────────────────────
   { id: 'children',      icon: '🧒', label: 'For a child under 12',             sub: 'Removes adult-only herbs' },
   { id: 'surgery',       icon: '🏥', label: 'Surgery within 2 weeks',           sub: 'Removes bleeding-risk and anaesthesia-interactive herbs' },
-  { id: 'alcohol',       icon: '🚫', label: 'No alcohol (religious / recovery)', sub: 'Removes ethanol tinctures from suggestions' },
+  { id: 'alcohol',       icon: '🚫', label: 'No alcohol (religious / recovery)', sub: 'Removes ethanol extracts from suggestions' },
 ] as const;
 
 export type ConstraintFlagId = typeof CONSTRAINT_FLAGS[number]['id'];

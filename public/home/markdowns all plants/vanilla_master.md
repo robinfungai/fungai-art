@@ -144,7 +144,7 @@ Vanilla carries the memory of being held safely as an infant. She whispers to th
 
 **Practical Application:**
 - **For acute anxiety/panic:** Inhale vanilla essential oil or scent immediately (direct limbic access)
-- **For chronic anxiety/depression:** Use tincture 2-3× daily for 4+ weeks for cumulative mood elevation
+- **For chronic anxiety/depression:** Use extract 2-3× daily for 4+ weeks for cumulative mood elevation
 - **For trauma survivors:** Vanilla acts as a "safety anchor"—consistent, comforting, triggering felt-sense of protection
 
 ---
@@ -223,7 +223,7 @@ Vanillic acid crosses the blood-brain barrier and acts as free radical scavenger
 - Supports cardiovascular health through anti-inflammatory action
 
 **Practical Application:**
-- **For skin health:** Combine internal tincture + topical vanilla-infused oil
+- **For skin health:** Combine internal extract + topical vanilla-infused oil
 - **For longevity:** Include vanilla as daily antioxidant in morning ritual
 - **For inflammatory conditions:** Use alongside other anti-inflammatory herbs (turmeric, ginger)
 
@@ -243,7 +243,7 @@ Beyond physical digestion, vanilla supports processing of emotions through the g
 **Practical Application:**
 - **For poor appetite:** Add vanilla powder to meals or warm milk
 - **For stress-blocked digestion:** Sip vanilla tea 15 minutes before meals
-- **For emotional holding in the belly:** Use vanilla tincture with intention-setting around emotional release
+- **For emotional holding in the belly:** Use vanilla extract with intention-setting around emotional release
 - **Seasonal support:** Vanilla's warmth particularly helpful in cold seasons when digestive fire weakens
 
 ---
@@ -252,7 +252,7 @@ Beyond physical digestion, vanilla supports processing of emotions through the g
 
 ### Dosage Range
 
-**Tincture (Alcohol-Based, 1:5 ratio):**
+**Extract (Alcohol-Based, 1:5 ratio):**
 - **Standard dose:** 5-20 drops daily in warm beverage
 - **Frequency:** 1-3× daily (morning/afternoon preferred; evening optional)
 - **Acute anxiety/stress:** Can use up to 4× daily as needed
@@ -272,7 +272,7 @@ Beyond physical digestion, vanilla supports processing of emotions through the g
 
 **Extract (Standardized, typically 0.3-0.5% vanillin):**
 - **Dose:** 5-15 drops daily
-- **Concentration:** Higher than tincture; less volume needed
+- **Concentration:** Higher than extract; less volume needed
 - **Quality note:** Ensure alcohol-free options available; alcohol content varies widely in commercial extracts
 
 **Aromatic Inhalation (Essential Oil or Scent):**
@@ -296,9 +296,9 @@ Beyond physical digestion, vanilla supports processing of emotions through the g
 - **Duration:** 15 minutes minimum (ritual time matters for therapeutic effect)
 - **Frequency:** Daily for continuous cumulative benefit
 
-**Protocol 2: Tincture in Warm Water (Most Portable)**
-- **Ingredient:** 10-20 drops vanilla tincture in 1/2 cup warm water (or any warm beverage—tea, milk, coffee)
-- **Preparation:** Add tincture to finished beverage (heat can degrade some compounds)
+**Protocol 2: Extract in Warm Water (Most Portable)**
+- **Ingredient:** 10-20 drops vanilla extract in 1/2 cup warm water (or any warm beverage—tea, milk, coffee)
+- **Preparation:** Add extract to finished beverage (heat can degrade some compounds)
 - **Timing:** Morning/afternoon for anxiety, stress; or evening for sleep
 - **Advantage:** Easy to carry, quick to prepare, precise dosing
 - **Flexibility:** Can be added to existing tea or drink ritual
@@ -336,7 +336,7 @@ Beyond physical digestion, vanilla supports processing of emotions through the g
 - **Preparation:** Macerate 1-2 whole vanilla beans in raw honey (glass jar, room temperature) for 2-4 weeks
 - **Use:** 1 tsp vanilla honey 1-3× daily (straight or in warm beverage)
 - **Advantage:** Long shelf life, concentrated flavor, easy daily use
-- **Dosing:** Equivalent to ~5-10 drops tincture per teaspoon
+- **Dosing:** Equivalent to ~5-10 drops extract per teaspoon
 - **Synergy:** Honey itself is nervine-supportive; combined with vanilla = potent comfort medicine
 
 ### Timing Guidance
@@ -358,7 +358,7 @@ Beyond physical digestion, vanilla supports processing of emotions through the g
 - **Integration:** Can be used alongside other calming interventions (breathing, movement, grounding)
 
 **Postprandial (After Meals):**
-- **Use:** Vanilla tincture or powder added to tea after meals
+- **Use:** Vanilla extract or powder added to tea after meals
 - **Effect:** Enhances digestive secretions, supports appetite stimulation
 - **Timing:** Within 30 minutes after eating
 
@@ -473,7 +473,7 @@ Beyond physical digestion, vanilla supports processing of emotions through the g
 **Alcohol-Based Extract (Commercial):**
 - Some commercial extracts contain 35% alcohol
 - If consuming large volumes, monitor total alcohol intake
-- Solution: Use alcohol-free extracts or tincture sparingly diluted in warm water
+- Solution: Use alcohol-free extracts or extract sparingly diluted in warm water
 - NOT a contraindication for responsible use
 
 ### Herb-to-Herb Synergy (NONE Known Cautions)
@@ -648,12 +648,12 @@ While Fire element dominates (joy, pleasure, warmth), Vanilla's secondary Earth 
 - **Container:** Airtight glass jar (light-blocking amber glass preferred)
 - **Location:** Cool, dark place; away from heat sources, direct sunlight, humidity
 - **Temperature:** Room temperature (60-75°F / 15-24°C ideal)
-- **Duration:** Properly stored whole beans maintain potency 1-2 years; tincture 3-5 years; powder 6-12 months
+- **Duration:** Properly stored whole beans maintain potency 1-2 years; extract 3-5 years; powder 6-12 months
 
 **Preservation Tips:**
 - Store beans in same jar with parchment paper to absorb excess moisture
 - If beans dry out, briefly warm (do not exceed 40°C/104°F) and immediately seal
-- Tincture benefits from periodic (monthly) inversion of bottle
+- Extract benefits from periodic (monthly) inversion of bottle
 - Keep powder in airtight container; store in refrigerator for extended life
 
 ### Vanilla as Gateway Herb
@@ -811,7 +811,7 @@ For trauma survivors, vanilla is foundational "safety herb" used BEFORE deeper n
 6. **Develop protocol generator:**
    - [ ] Create customizable ritual templates (quick 5-min vs. ceremonial 20-min)
    - [ ] Generate weekly schedule with dosing times
-   - [ ] Create printable shopping lists for whole herbs, tinctures, etc.
+   - [ ] Create printable shopping lists for whole herbs, extracts, etc.
    - [ ] Build weekly reminder system
 
 7. **Implement evidence communicator:**
@@ -848,5 +848,5 @@ For trauma survivors, vanilla is foundational "safety herb" used BEFORE deeper n
 *This document synthesizes evidence-based pharmacology, clinical practice, TCM framework, spiritual teaching, and practical ritual into an integrated whole. Use as template for all subsequent herbs. Modify structure as needed for specific herbs, but maintain consistent: Clinical Safety → Dosage/Preparation → Spiritual Layer architecture.*
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*
 *Date: February 2026*

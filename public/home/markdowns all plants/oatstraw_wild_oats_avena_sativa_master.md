@@ -12,7 +12,7 @@ Avena sativa L. (Oats) — Annual grass cultivated worldwide in temperate region
 Poaceae (grass family).[web:23]
 
 **Part Used:**  
-Avenae herba (Oatstraw) — Dried aerial parts (leaves and stems), often combined with or distinguished from milky oat tops (fresh tincture). Oatstraw is particularly valued as a mineral-rich nutritive nervine.[web:8][web:18]
+Avenae herba (Oatstraw) — Dried aerial parts (leaves and stems), often combined with or distinguished from milky oat tops (fresh extract). Oatstraw is particularly valued as a mineral-rich nutritive nervine.[web:8][web:18]
 
 **Harvesting & Processing:**  
 Oatstraw is cut when seeds are in milk or just after; dried promptly at low temperatures in well-ventilated conditions to preserve color and nutrients; stored in whole pieces when possible to slow oxidation, then cut/sifted as needed.[web:8]
@@ -92,7 +92,7 @@ Oat extracts have shown improvements in attention and information processing, an
 **Tea (Short Steep):**  
 - 2–4 tsp cut oatstraw per 250 ml, steep 15–20 minutes; milder and less mineral-rich than long infusion.
 
-**Tincture (Often Milky Oats but can include Oatstraw):**  
+**Extract (Often Milky Oats but can include Oatstraw):**  
 - 1:5 (dried) or 1:2 (fresh milky tops), 3–5 ml 2–3× daily.  
 - Good when tea is impractical; best paired with infusions when deeper rebuilding is needed.[web:23]
 
@@ -109,7 +109,7 @@ Oat extracts have shown improvements in attention and information processing, an
 - Duration: 6–12+ weeks minimum; combine with sleep hygiene and boundaries work.[web:8][web:23]
 
 **Protocol 2: Anxiety with Overwhelm (Non-Sedating)**  
-- 1–2 cups oatstraw infusion 2× daily plus 2–3 ml milky oats tincture 2–3× daily.  
+- 1–2 cups oatstraw infusion 2× daily plus 2–3 ml milky oats extract 2–3× daily.  
 - Combine with skullcap or lemon balm for acute symptom relief.
 
 **Protocol 3: Recovery from Illness or Overwork**  
@@ -156,7 +156,7 @@ GRADE A — Extremely safe; functionally a food. Most individuals can use oatstr
 | Safety (long-term)         | A     | Food status, long-term usage in multiple populations                          |[web:8][web:15][web:18][web:23]
 
 **Historical Use:**  
-Oats and oatstraw have a long European and North American history as “strengthening” foods, nerve tonics, and convalescent foods; milky oats tincture is a cornerstone Western herbal nervine.[web:8][web:18]
+Oats and oatstraw have a long European and North American history as “strengthening” foods, nerve tonics, and convalescent foods; milky oats extract is a cornerstone Western herbal nervine.[web:8][web:18]
 
 ---
 
@@ -193,7 +193,7 @@ The nervous system is like a field — it needs water, minerals, and time to reg
 - **Quality & Sourcing:** Seek bright green, fragrant herb; avoid old, yellow/brown, dusty batches.  
 - **Population Focus:** Ideal for “wired and tired,” chronically stressed, perimenopausal, students, tech workers, caregivers, postpartum, and recovery from substance use or illness.  
 - **Combination Strategy:**  
-  - With milky oats tincture for deep nervous-system rehab.  
+  - With milky oats extract for deep nervous-system rehab.  
   - With adaptogens (ashwagandha, tulsi, reishi) to balance HPA axis while oatstraw works on structural nourishment.  
 - **Patient Education:** Emphasize “slow medicine” — benefits build over weeks; frame as “vitamin-infused herbal water” to anchor daily habit.  
 
@@ -225,5 +225,5 @@ The nervous system is like a field — it needs water, minerals, and time to reg
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*  
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*  
 *Date: February 2026*

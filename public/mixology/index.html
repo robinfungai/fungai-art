@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
@@ -274,8 +274,8 @@ const ELEMS=[{id:'all',l:'All elements'},{id:'F',l:'🔥 Fire',c:'#E8714B'},{id:
 
 const EL_COL={F:'#E8714B',E:'#6BD66F',W:'#4FA8E0',A:'#A88FE0',S:'#E8B14B'};
 const EL_NAME={F:'Fire',E:'Earth',W:'Water',A:'Air',S:'Spirit'};
-const EXT_NAME={D:'Double Extraction',T:'Cold Tincture',DC:'Decoction',O:'Oleoresin',SP:'Spagyric'};
-const EXT_ANCHOR={D:'double',T:'tincture',DC:'decoct',O:'oleo',SP:'spagyric'};
+const EXT_NAME={D:'Double Extraction',T:'Cold Extract',DC:'Decoction',O:'Oleoresin',SP:'Spagyric'};
+const EXT_ANCHOR={D:'double',T:'extract',DC:'decoct',O:'oleo',SP:'spagyric'};
 
 // Traditions & Philosophies — Robin wants to filter the materia medica by
 // the lineage each herb traces back to. Tags are hand-curated below by
@@ -549,7 +549,7 @@ const H=[
   {id:'linden',n:'Linden',el:'W',ext:'T',c:['sleep','heart','nervine'],p:'Relaxation; mild anxiety relief; cardiovascular; gentle nervine.',x:'low'},
   {id:'motherwort',n:'Motherwort',el:'W',ext:'T',c:['sleep','womens','heart','nervine','menstrual'],p:"Women's health; heart tonification; palpitations with anxiety; emotional support.",x:'medium'},
   {id:'oatstraw',n:'Oatstraw (dried)',el:'E',ext:'T',c:['sleep','nervine','nutritive'],p:'Dried straw · nervous system tonification · mineral-rich · gentle long-term restorative.',x:'low'},
-  {id:'avenaMilkySeed',n:'Avena Milky Seed',el:'W',ext:'T',c:['nervine','sleep','adaptogen'],p:'Fresh-pressed milky-stage Avena sativa seed. Profound trophorestorative for chronic exhaustion. 50–60% EtOH fresh plant tincture.',x:'low'},
+  {id:'avenaMilkySeed',n:'Avena Milky Seed',el:'W',ext:'T',c:['nervine','sleep','adaptogen'],p:'Fresh-pressed milky-stage Avena sativa seed. Profound trophorestorative for chronic exhaustion. 50–60% EtOH fresh plant extract.',x:'low'},
   {id:'cannabisSativa',n:'Cannabis sativa',el:'A',ext:'T',c:['pain','sleep','nervine','conscious'],p:'Whole-plant preparation · CBD/CBG-dominant or balanced THC by chemotype · pain · sleep · ceremonial. Legal status varies.',x:'high'},
   {id:'passionflower',n:'Passionflower',el:'W',ext:'T',c:['sleep','nervine','conscious'],p:'Anxiety relief (primary); sleep support; nervine; mild consciousness.',x:'low'},
   {id:'rhodiola',n:'Rhodiola',el:'F',ext:'T',c:['sleep','adaptogen','energy','cognitive'],p:'Adaptogenic; stress reduction; energy; endurance; uplifting adaptogen.',x:'low'},
@@ -914,7 +914,7 @@ const BLEND_NAMES={
   immune:['Forest Shield Elixir','Mycelial Guard','Root Defense'],
   sexual:['Temple Fire Elixir','Sacred Flame','Yang Elixir'],
   cognitive:['Clarity Extract','Mind Nectar','Cerebral Intelligence'],
-  sleep:['Night Elixir','Dream Formula','Moon Tincture'],
+  sleep:['Night Elixir','Dream Formula','Moon Extract'],
   adaptogen:['Resilience Tonic','Equilibrium Elixir','Cortisol Shield'],
   conscious:['Threshold Elixir','Vision Formula','Ceremony Blend'],
   pain:['Ease Extract','Anti-Flame Formula','Relief Elixir'],
@@ -923,13 +923,13 @@ const BLEND_NAMES={
   womens:['Lunar Elixir','Feminine Tonic','Moon Blood Formula'],
   mens:['Solar Tonic','Yang Force Elixir','Virility Extract'],
   heart:['Heart Tonic Elixir','Vascular Intelligence','Cardio Elixir'],
-  liver:['Detox Formula','Liver Intelligence Elixir','Purification Tincture'],
+  liver:['Detox Formula','Liver Intelligence Elixir','Purification Extract'],
   nervine:['Calm Intelligence','Nerve Tonic Elixir','Still Root Formula'],
   fungi:['Mycelium Complex','Fungal Intelligence Elixir','Spore Elixir'],
   antioxid:['Longevity Elixir','Anti-Age Formula','Free Radical Shield'],
   resp:['Lung Tonic','Breath Elixir','Air Intelligence Formula'],
   nutritive:['Deep Nourishment Elixir','Constitutional Tonic','Earth Root Formula'],
-  menstrual:['Lunar Flow Elixir','Menstrual Ally','Moon Cycle Tincture'],
+  menstrual:['Lunar Flow Elixir','Menstrual Ally','Moon Cycle Extract'],
 };
 const EL_READINGS={
   F:'Fire dominant — warming, activating, metabolically stimulating. This blend moves energy outward. Best taken morning or before activity.',
@@ -946,7 +946,7 @@ const DOSE_GUIDE={
 const ESSENCE_LINES={
   'immune,adaptogen':'A deep fortification of the organism — building resistance from the root up.',
   'immune,antioxid':'Longevity intelligence encoded in pigment and polysaccharide.',
-  'sexual,adaptogen':'Desire and resilience, woven into one tincture.',
+  'sexual,adaptogen':'Desire and resilience, woven into one extract.',
   'sexual,energy':'Yang force awakened. Movement, heat, vitality.',
   'sleep,nervine':'The nervous system returns to its natural state of rest.',
   'sleep,conscious':'The dream threshold is a place this blend knows well.',
@@ -955,7 +955,7 @@ const ESSENCE_LINES={
   'conscious,sleep':'The border between dreaming and waking, made porous.',
   'adaptogen,energy':'Sustained vitality without crash — the adaptogenic current.',
   'liver,digest':'The gut-liver axis, tended. Detox begins with digestion.',
-  'womens,menstrual':'The lunar cycle, honoured in tincture form.',
+  'womens,menstrual':'The lunar cycle, honoured in extract form.',
   'mens,sexual':'Androgenic tonification from the plant kingdom.',
 };
 
@@ -986,19 +986,19 @@ function analyzeFormula(){
   const exts=[...new Set(herbs.map(h=>h.ext||'T'))];
   let extRec;
   if(hasFungi&&herbs.length>1){
-    extRec='Double Extraction + Cold Tincture combined. Decoct fungi 4h in 20× water; separately macerate remaining herbs in 60% ethanol (1:5, 4 weeks). Combine 1:1. Final alcohol: ~28–32%.';
+    extRec='Double Extraction + Cold Extract combined. Decoct fungi 4h in 20× water; separately macerate remaining herbs in 60% ethanol (1:5, 4 weeks). Combine 1:1. Final alcohol: ~28–32%.';
   }else if(hasFungi){
-    extRec='Double Extraction. Decoct 4h in 20× water; cool; combine 1:1 with 95% ethanol tincture. Final: 25–30% alcohol.';
+    extRec='Double Extraction. Decoct 4h in 20× water; cool; combine 1:1 with 95% ethanol extract. Final: 25–30% alcohol.';
   }else if(exts.includes('SP')){
-    extRec='Spagyric method. 40–50% ethanol maceration, 6 weeks. Calcine dried marc to white ash — this is the mineral salt body. Reintroduce to tincture. Integrate 2 weeks. Drop-dose formulation.';
+    extRec='Spagyric method. 40–50% ethanol maceration, 6 weeks. Calcine dried marc to white ash — this is the mineral salt body. Reintroduce to extract. Integrate 2 weeks. Drop-dose formulation.';
   }else if(exts.includes('DC')&&exts.includes('T')){
-    extRec='Dual-solvent: decoct root/bark herbs (1:20, 90 min) and separately cold-tincture leaf/flower herbs (60% ethanol, 1:5, 4 weeks). Combine at 1:1. Preserve at ~25% alcohol.';
+    extRec='Dual-solvent: decoct root/bark herbs (1:20, 90 min) and separately cold-extract leaf/flower herbs (60% ethanol, 1:5, 4 weeks). Combine at 1:1. Preserve at ~25% alcohol.';
   }else if(exts.includes('DC')){
     extRec='Decoction. Cold soak 30 min, gentle simmer 60–90 min, 1:20 plant:water. Reduce to 1:5. Add 20% alcohol to preserve. Shelf life: 6+ months.';
   }else if(exts.includes('O')){
-    extRec='Oleoresin / oil infusion for fat-soluble constituents. 60°C, 6–8h, 1:8 plant:oil. Vitamin E (1%) as preservative. Cold-tincture aromatic co-herbs separately and blend.';
+    extRec='Oleoresin / oil infusion for fat-soluble constituents. 60°C, 6–8h, 1:8 plant:oil. Vitamin E (1%) as preservative. Cold-extract aromatic co-herbs separately and blend.';
   }else{
-    extRec='Cold Tincture. 40–60% ethanol, 1:5 ratio, 4–6 weeks. Shake daily. Strain and press marc firmly. Bottle in amber glass. Shelf life: 2+ years.';
+    extRec='Cold Extract. 40–60% ethanol, 1:5 ratio, 4–6 weeks. Shake daily. Strain and press marc firmly. Bottle in amber glass. Shelf life: 2+ years.';
   }
 
   // Synergies — check herbs.ts herb_to_herb_synergy first, then fall back to shared categories
@@ -1152,8 +1152,8 @@ function openM(h){
   const cats=CATS.filter(c=>h.c.includes(c.id));
   const ec=EL_COL[h.el]||'#8B7E62';
   const en=EL_NAME[h.el]||'';
-  const extLabel=EXT_NAME[h.ext||'T']||'Cold Tincture';
-  const extAnchor=EXT_ANCHOR[h.ext||'T']||'tincture';
+  const extLabel=EXT_NAME[h.ext||'T']||'Cold Extract';
+  const extAnchor=EXT_ANCHOR[h.ext||'T']||'extract';
   const db=getDB(h.n); // rich data from herbs.ts
 
   // TCM / energetics section

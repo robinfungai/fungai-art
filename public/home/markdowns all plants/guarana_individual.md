@@ -214,5 +214,5 @@ Clinical significance: Acute energy demand; NOT for chronic use.
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System*
+*Use Case: Tailored Extract Recommendation System*
 *Date: February 2026*

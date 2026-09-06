@@ -52,7 +52,7 @@
 Baicalin + baicalein enhance GABA tone through allosteric (indirect) GABA-A receptor modulation—DIFFERENT mechanism from benzodiazepines which directly bind benzodiazepine site + cause sedation cascade.
 Effect: Anxiety reduction WITHOUT sedation, cognitive impairment, next-day grogginess, or dependence liability.
 **The Paradox:** You become calmer + remain present. Shoulders drop. Jaw unclenches. Mind settles. But you stay awake, aware, functional.
-Timeline: Immediate to semi-immediate (15-30 min after tincture); cumulative baseline shift over 2-4 weeks daily use.
+Timeline: Immediate to semi-immediate (15-30 min after extract); cumulative baseline shift over 2-4 weeks daily use.
 Clinical significance: Unique among anxiolytics—anxiety relief + clarity coexist. Excellent for daytime anxiety (unlike Valerian/most sedating nervines which impair function). Particularly valuable for high-functioning anxiety (anxiety that coexists with need to perform/focus).
 For AI app: Position as "non-sedating anxiolytic for daytime use; maintains alertness + cognitive function; unique among nervines."
 
@@ -85,14 +85,14 @@ Clinical significance: Particularly valuable if anxiety coexists with low mood (
 
 **Dosage Range:**
 **Tea/Infusion (GENTLEST—PREFERRED FOR LONG-TERM TONING):** 1-2 tsp dried herb per 250 ml hot water, steeped 10-15 minutes (longer steep extracts more baicalin/baicalein), 2-3× daily (morning + afternoon, NOT evening—non-sedating so not for sleep). Pleasant herbal taste; gentle, cumulative absorption.
-**Tincture (1:5 Alcohol-Based—FASTEST ONSET):** 30-60 drops (1.5-3 ml) in water, 2-3× daily (morning + afternoon; can dose more frequently for acute anxiety if needed). Faster onset than tea (minutes vs. 15-30 min); more concentrated. Use for acute anxiety episodes or for those needing rapid onset.
+**Extract (1:5 Alcohol-Based—FASTEST ONSET):** 30-60 drops (1.5-3 ml) in water, 2-3× daily (morning + afternoon; can dose more frequently for acute anxiety if needed). Faster onset than tea (minutes vs. 15-30 min); more concentrated. Use for acute anxiety episodes or for those needing rapid onset.
 **Standardized Extract (If Available—10% Baicalin+Baicalein):** 500-1000 mg daily (divided doses, morning + afternoon). Most potent form; reliable dosing (standardized to specific flavonoid %).
-**Dried Leaf Powder (Capsules):** 300-500 mg, 2-3× daily (less efficient than tea/tincture; loses some aromatic compounds).
+**Dried Leaf Powder (Capsules):** 300-500 mg, 2-3× daily (less efficient than tea/extract; loses some aromatic compounds).
 **Duration:** Safe for long-term indefinite daily use (food-like herb; no toxicity documented); effects improve with time (cumulative nervous system toning). No dependence, no tolerance.
 
 **Best Preparations:**
 **Protocol 1: Daily Anxiety + Nervous Tension Toning (FOUNDATION)** — 1-2 tsp dried herb steeped 15 min, taken 2-3× daily (morning, afternoon; NOT evening) for 4-8 weeks minimum. Foundation nervous system tonification; cumulative baseline anxiety reduction. Safe long-term indefinite daily use.
-**Protocol 2: Acute Anxiety Breakthrough (RAPID RELIEF)** — 60 drops tincture in water, as needed for acute anxiety episodes (can dose multiple times daily during high-stress periods). Fast onset (minutes); effective for acute panic/anxiety breakthrough even while on daily tea protocol.
+**Protocol 2: Acute Anxiety Breakthrough (RAPID RELIEF)** — 60 drops extract in water, as needed for acute anxiety episodes (can dose multiple times daily during high-stress periods). Fast onset (minutes); effective for acute panic/anxiety breakthrough even while on daily tea protocol.
 **Protocol 3: Tension Headache + Jaw Clenching (PHYSICAL RELEASE)** — 1-2 tsp steeped 15 min, 2-3× daily + local heat/massage to neck/jaw. Combines nervous system calming (GABA) + physical antispasmodic (catalpol). Particularly effective for tension headaches + bruxism.
 **Protocol 4: Sleep Quality Support (NON-FORCING)** — 1-2 tsp steeped 15 min taken 30-60 min before bed. Does NOT force sleep (non-sedating); rather, removes anxiety barriers to natural sleep onset. Maintains sleep architecture (no REM suppression). Best for anxiety-related insomnia (not primary insomnia).
 **Protocol 5: Anxious Trinity (COMPREHENSIVE NERVINE SUPPORT)** — Skullcap 1 tsp + Lemon Balm 1 tsp (non-sedating nervine, digestive) + Passionflower 0.5 tsp (gentle muscle relaxation, emotional processing), all steeped together 15 min, 2× daily. Triple non-sedating anxiolytic action; synergistic for comprehensive anxiety + nervous tension.
@@ -133,7 +133,7 @@ Clinical significance: Particularly valuable if anxiety coexists with low mood (
 **Safety Profile:** GRADE A — Extremely safe; minimal contraindications; suitable all populations (with noted pregnancy caution).
 
 **Contraindications (Minimal):**
-**Pregnancy (Limited Modern Data—Caution Not Contraindication):** Traditional use in later pregnancy (2nd/3rd trimester) suggests safety; Eclectic herbalists used for nervous conditions in pregnancy. INSUFFICIENT modern RCT data. If uncertain, explore Chamomile or Lemon Balm instead (more data). Culinary amounts safe; high-dose tinctures use caution.
+**Pregnancy (Limited Modern Data—Caution Not Contraindication):** Traditional use in later pregnancy (2nd/3rd trimester) suggests safety; Eclectic herbalists used for nervous conditions in pregnancy. INSUFFICIENT modern RCT data. If uncertain, explore Chamomile or Lemon Balm instead (more data). Culinary amounts safe; high-dose extracts use caution.
 **Liver Disease (Hepatic Metabolism Caution):** Skullcap metabolized hepatically; theoretical caution if severe liver dysfunction. Monitor if compromised liver function.
 
 **Herb-to-Herb Interactions (Safe, Often Synergistic):**
@@ -274,5 +274,5 @@ Clinical significance: Particularly valuable if anxiety coexists with low mood (
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*
 *Date: February 2026*

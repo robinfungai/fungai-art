@@ -66,9 +66,9 @@ Best suited for **hot, congestive, spastic** patterns (migraine, allergic rhinit
 - Typical migraine dose: 50–75 mg PA‑free extract **2×/day**, with meals, for at least 3–4 months.[web:214][web:217][web:219]  
 - Allergic rhinitis: similar doses (per product instructions) during allergy season.[web:221][web:223]
 
-### Tincture
+### Extract
 
-For your system, treat butterbur as a **standardized extract ingredient** rather than a home‑made tincture, or if tinctured, use PA‑removed bulk material.
+For your system, treat butterbur as a **standardized extract ingredient** rather than a home‑made extract, or if extractd, use PA‑removed bulk material.
 
 - Dose (if PA‑free): 0.5–1 ml, 2–3×/day in blends, for limited courses.
 
@@ -97,7 +97,7 @@ Use **only** certified PA‑free products.
 
 **Primary Roles:**
 
-- **Pollen / Hay Fever Allergy Tincture:**  
+- **Pollen / Hay Fever Allergy Extract:**  
   > Butterbur (PA‑free) — Focused anti‑allergic and anti‑spasmodic component; reduces nasal and bronchial reactivity.
 
 - **Migraine Prevention (future protocol):**  

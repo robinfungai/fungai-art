@@ -82,7 +82,7 @@ Timeline: Cumulative over months-years.
 
 **Dosage Range:**
 **Tea/Decoction (OPTIMAL FOR MENSTRUAL SUPPORT):** 1-2 slices dried root per 250 ml, simmer 15-20 minutes (longer simmering extracts aromatic compounds + minerals optimally), 2-3× daily. Traditional preparation; warm (enhances circulation); aromatic compounds extracted optimally.
-**Tincture (1:5 Alcohol-Based):** 30-60 drops, 2-3× daily.
+**Extract (1:5 Alcohol-Based):** 30-60 drops, 2-3× daily.
 **Standardized Extract (If Available—Standardized to Ferulic Acid %):** 500-1000 mg daily, divided doses (most researched form).
 **Duration:** Safe for long-term use; effects improve over time (cumulative cycle regulation improves with continued use).
 
@@ -164,5 +164,5 @@ Timeline: Cumulative over months-years.
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System*
+*Use Case: Tailored Extract Recommendation System*
 *Date: February 2026*

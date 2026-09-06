@@ -108,7 +108,7 @@ Clinical significance: Anti-aging, skin radiance, longevity, cellular resilience
 
 **Capsules (Standardized):** 500mg capsules, 2-4 caps daily (equivalent to 1-2 tsp powder).
 
-**Tincture (Less Optimal—Polysaccharides Extract Better in Decoction):** 30-40 drops, 2× daily.
+**Extract (Less Optimal—Polysaccharides Extract Better in Decoction):** 30-40 drops, 2× daily.
 
 **Honey Integration (Traditional):** 1 tsp pollen mixed with 1 tsp raw honey, taken morning. Enhances absorption + palatability.
 

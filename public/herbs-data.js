@@ -50,11 +50,11 @@ const HERBS = [
       'Drug interactions: anticoagulants (theoretical), hypoglycemics (monitor glucose)',
     ],
     dosage_range:
-      'Tincture: 30–60 drops, 2–3× daily. Standardized extract providing 40–160 mg anthocyanins daily for eye and vascular support. Food use: 50–150 g fresh or frozen berries daily. Effects develop over 6–12 weeks of consistent use.',
+      'Extract: 30–60 drops, 2–3× daily. Standardized extract providing 40–160 mg anthocyanins daily for eye and vascular support. Food use: 50–150 g fresh or frozen berries daily. Effects develop over 6–12 weeks of consistent use.',
     spiritual_layer:
       'Bilberry is the small, dark forest seer — a berry of quiet protection and patient vision. She grows close to the earth in northern woodlands, concentrating centuries of light into deep pigment. She teaches that vision is sustained not by force but by consistent nourishment, and that the clearest sight comes when we protect what is delicate and fragile in ourselves. She whispers: See clearly. Gently. Your inner and outer vision are worth tending.',
     best_preparation:
-      'Tincture for daily ritual use. Standardized extract (25% anthocyanins) for targeted eye strain and vascular protocols. Fresh or frozen berries as a daily food medicine. Combines beautifully with Bacopa and Rosemary for a brain-eye vision stack.',
+      'Extract for daily ritual use. Standardized extract (25% anthocyanins) for targeted eye strain and vascular protocols. Fresh or frozen berries as a daily food medicine. Combines beautifully with Bacopa and Rosemary for a brain-eye vision stack.',
     caution_level: 'LOW',
     safe_pregnancy: null,
     status:
@@ -117,11 +117,11 @@ const HERBS = [
       'Drug interactions: Warfarin (ABSOLUTE AVOID — serious bleeding documented), other anticoagulants (monitor), diabetes meds (monitor glucose)',
     ],
     dosage_range:
-      'Tincture: 30–60 drops, 2–3× daily. Decoction: 1–2 slices dried root per 250 ml, simmer 15–20 minutes, 2–3× daily (optimal extraction of aromatic and mineral compounds). Effects cumulative — noticeable cycle improvement in 1–2 cycles; full regulation over 2–3 cycles.',
+      'Extract: 30–60 drops, 2–3× daily. Decoction: 1–2 slices dried root per 250 ml, simmer 15–20 minutes, 2–3× daily (optimal extraction of aromatic and mineral compounds). Effects cumulative — noticeable cycle improvement in 1–2 cycles; full regulation over 2–3 cycles.',
     spiritual_layer:
       '"Dang gui" — go back, return to order. Angelica is the treasure of women\'s herbalism, ancient and devoted to the sacred rhythm of the menstrual cycle. She teaches that blood is powerful, that cycles are not pathology to suppress but wisdom to honour. She moves what has become stuck, nourishes what has been depleted, and restores natural flow with warmth and sweetness. She whispers: My cycle is sacred. My blood is powerful. My body is wise. I honour my rhythm.',
     best_preparation:
-      'Decoction preferred — simmering 15–20 minutes extracts aromatic phthalides and minerals most fully; warm liquid enhances circulatory effects. Tincture for convenient daily use. Always confirm NOT on warfarin before use. Pairs beautifully with Vitex and Cramp Bark for comprehensive cycle support.',
+      'Decoction preferred — simmering 15–20 minutes extracts aromatic phthalides and minerals most fully; warm liquid enhances circulatory effects. Extract for convenient daily use. Always confirm NOT on warfarin before use. Pairs beautifully with Vitex and Cramp Bark for comprehensive cycle support.',
     caution_level: 'MEDIUM-HIGH',
     safe_pregnancy: false,
     status:
@@ -180,11 +180,11 @@ const HERBS = [
       'Drug interactions: antihypertensives (monitor BP), hypoglycaemics (monitor glucose), anticoagulants (monitor at high dose)',
     ],
     dosage_range:
-      'Tincture: 30–60 drops, 2–3× daily. Fresh or frozen berries: 30–100 g daily. Juice: 100–200 ml daily. Standardized extract providing 50–300 mg anthocyanins daily. Best at 8–12 weeks minimum for cardiometabolic effects.',
+      'Extract: 30–60 drops, 2–3× daily. Fresh or frozen berries: 30–100 g daily. Juice: 100–200 ml daily. Standardized extract providing 50–300 mg anthocyanins daily. Best at 8–12 weeks minimum for cardiometabolic effects.',
     spiritual_layer:
       'Aronia is the dense, protective shield berry — dark, astringent, concentrated with the pigment of deep forests and northern patience. She teaches that dense, consistent nourishment steadily shifts the trajectory of cardiometabolic health — that small, potent daily acts accumulate into profound protection. She whispers: My heart and vessels are protected. I steadily nourish my blood and metabolism with deep, dark vitality.',
     best_preparation:
-      'Juice (100–200 ml daily) for cardiometabolic protocols — most studied form. Tincture for daily ritual convenience. Fresh or frozen berries as food medicine. Pairs well with Bilberry for a comprehensive berry polyphenol protocol. Best alongside dietary shifts (reduced refined carbs and sugar).',
+      'Juice (100–200 ml daily) for cardiometabolic protocols — most studied form. Extract for daily ritual convenience. Fresh or frozen berries as food medicine. Pairs well with Bilberry for a comprehensive berry polyphenol protocol. Best alongside dietary shifts (reduced refined carbs and sugar).',
     caution_level: 'LOW',
     safe_pregnancy: null,
     status:
@@ -249,11 +249,11 @@ const HERBS = [
       'Drug interactions: immunosuppressants (AVOID), levothyroxine (MONITOR TSH), diabetes meds (MONITOR), benzodiazepines (reduce dose), Tamoxifen (consult oncologist)',
     ],
     dosage_range:
-      'Tincture: 40–80 drops, 2–3× daily. Standardised extract (5% withanolides): 300–600 mg daily in divided doses. Cycling protocol recommended: 8–12 weeks on, 2–4 weeks off. Effects noticeable 4–8 weeks; peak 8–12 weeks.',
+      'Extract: 40–80 drops, 2–3× daily. Standardised extract (5% withanolides): 300–600 mg daily in divided doses. Cycling protocol recommended: 8–12 weeks on, 2–4 weeks off. Effects noticeable 4–8 weeks; peak 8–12 weeks.',
     spiritual_layer:
       '"Ashva" (horse) + "gandha" (smell) — the strength and scent of a stallion. Ashwagandha is a rasayana — a rejuvenative that tonifies all seven dhatus (body tissues). She teaches that deep strength does not come from force or stimulation, but from rooted stability and patient adaptation. She is the great grounder — steady, nourishing, adaptable. She whispers: I am resilient. I am grounded. Stress flows through me without sticking. My vitality is stable. I am whole.',
     best_preparation:
-      'Standardised extract (5% withanolides) most researched and reliable. Tincture for flexible daily use. Traditional root powder with warm milk or ghee for rasayana protocol. Always cycle: 8–12 weeks on, 2–4 weeks off. Screen for thyroid, autoimmune and immunosuppressant status before recommending.',
+      'Standardised extract (5% withanolides) most researched and reliable. Extract for flexible daily use. Traditional root powder with warm milk or ghee for rasayana protocol. Always cycle: 8–12 weeks on, 2–4 weeks off. Screen for thyroid, autoimmune and immunosuppressant status before recommending.',
     caution_level: 'MEDIUM-HIGH',
     safe_pregnancy: false,
     status:
@@ -310,11 +310,11 @@ const HERBS = [
       'Drug interactions: immunosuppressants (consult team); otherwise minimal',
     ],
     dosage_range:
-      'Tincture: 60–90 drops, 2–3× daily. Decoction: 2–3 g dried root per 250 ml, simmer 15–20 minutes, 2–3× daily (optimal polysaccharide extraction). Standardised extract (40–50% polysaccharides): 300–400 mg, 2–3× daily. Safe indefinite long-term use — foundational herb; cycles optional.',
+      'Extract: 60–90 drops, 2–3× daily. Decoction: 2–3 g dried root per 250 ml, simmer 15–20 minutes, 2–3× daily (optimal polysaccharide extraction). Standardised extract (40–50% polysaccharides): 300–400 mg, 2–3× daily. Safe indefinite long-term use — foundational herb; cycles optional.',
     spiritual_layer:
       'Huang Qi — Yellow Energy. Astragalus is the foundational qi tonifier — building strength from root, not forcing activation. She teaches that deep immunity is cultivated through patient nourishment, that protective energy is built through consistency, not intensity. She is the guardian who tends the gates quietly, building resilience day by day. She whispers: My immunity is strong. I am protected. I recover swiftly. My foundational qi is nourished. I am resilient and whole.',
     best_preparation:
-      'Decoction as primary traditional form — simmering optimises polysaccharide extraction. Tincture less efficient for polysaccharide extraction but adequate. Standardised extract for concentrated dosing. Safe to use year-round indefinitely as foundational immune herb. Pairs exceptionally with medicinal mushrooms (Reishi, Shiitake) for a complete immune intelligence protocol.',
+      'Decoction as primary traditional form — simmering optimises polysaccharide extraction. Extract less efficient for polysaccharide extraction but adequate. Standardised extract for concentrated dosing. Safe to use year-round indefinitely as foundational immune herb. Pairs exceptionally with medicinal mushrooms (Reishi, Shiitake) for a complete immune intelligence protocol.',
     caution_level: 'LOW',
     safe_pregnancy: null,
     status:
@@ -372,11 +372,11 @@ const HERBS = [
       'Drug interactions: thyroid medications (monitor); otherwise minimal',
     ],
     dosage_range:
-      'Tincture: 60–90 drops, 2× daily with meals and a fat source (bacosides fat-soluble; absorption requires dietary fat). Standardised extract (20% bacosides): 300–600 mg daily with food. Always take morning or afternoon — not evening (mildly stimulating). Minimum 4–8 weeks to notice effects; benefits deepen over months.',
+      'Extract: 60–90 drops, 2× daily with meals and a fat source (bacosides fat-soluble; absorption requires dietary fat). Standardised extract (20% bacosides): 300–600 mg daily with food. Always take morning or afternoon — not evening (mildly stimulating). Minimum 4–8 weeks to notice effects; benefits deepen over months.',
     spiritual_layer:
       '"Brahmi" — related to Brahma, creator consciousness. Bacopa teaches that memory is consciousness itself; that accessing deep knowing requires nourishing the synapses. She grows in wetland margins — between worlds, between states — teaching us to be the bridge between deep memory and present awareness. She whispers: Your mind is capable of vast learning. Memory is not mechanical retrieval but consciousness accessing its own depths. Trust the process of remembering.',
     best_preparation:
-      'Standardised extract (20% bacosides) most researched and reliable. Always take with meals and dietary fat (coconut oil, nut butter, ghee) for bacoside absorption. Tincture for convenient daily use — still take with food. Combine with Ginkgo and Rosemary for a comprehensive cognitive trinity. Minimum 4–8 week commitment before assessing effects.',
+      'Standardised extract (20% bacosides) most researched and reliable. Always take with meals and dietary fat (coconut oil, nut butter, ghee) for bacoside absorption. Extract for convenient daily use — still take with food. Combine with Ginkgo and Rosemary for a comprehensive cognitive trinity. Minimum 4–8 week commitment before assessing effects.',
     caution_level: 'LOW',
     safe_pregnancy: null,
     status:
@@ -438,11 +438,11 @@ const HERBS = [
       'Drug interactions: CYP450 substrates (consult prescriber), diabetes meds (monitor), P-gp substrates (space doses)',
     ],
     dosage_range:
-      'Tincture: 1–2 ml (20–40 drops), 2–3× daily SHORT-TERM ONLY. Decoction: 1–2 g dried bark per 250 ml, simmer 10–15 minutes, 1–3× daily. Standardised berberine: 500 mg 2–3× daily for metabolic protocols (8–12 weeks with monitoring). Maximum continuous use: 4–8 weeks; then break. Not for casual daily tonification.',
+      'Extract: 1–2 ml (20–40 drops), 2–3× daily SHORT-TERM ONLY. Decoction: 1–2 g dried bark per 250 ml, simmer 10–15 minutes, 1–3× daily. Standardised berberine: 500 mg 2–3× daily for metabolic protocols (8–12 weeks with monitoring). Maximum continuous use: 4–8 weeks; then break. Not for casual daily tonification.',
     spiritual_layer:
       'Barberry is the sharp, yellow, boundary-setting bitter — cooling the fire, cutting through excess, infection and metabolic stagnation with clear, decisive action. She teaches that clarity and health sometimes require saying no: to excess sugar, to pathogens, to inflammatory patterns. She supports the liver to process what life brings with clean, discerning power. She whispers: I release excess and heat with clarity. My liver and gut are clear, cool and strong. I maintain bright boundaries in my body and life.',
     best_preparation:
-      'Position as a practitioner-level clinical herb rather than a daily tonic. Short-term cycling protocols (4–8 weeks maximum). Tincture or standardised berberine for metabolic protocols. Always screen for pregnancy, breastfeeding, neonates, CYP450 drug interactions before recommending. Pair with demulcents (marshmallow, slippery elm) to protect mucosa during antimicrobial protocols.',
+      'Position as a practitioner-level clinical herb rather than a daily tonic. Short-term cycling protocols (4–8 weeks maximum). Extract or standardised berberine for metabolic protocols. Always screen for pregnancy, breastfeeding, neonates, CYP450 drug interactions before recommending. Pair with demulcents (marshmallow, slippery elm) to protect mucosa during antimicrobial protocols.',
     caution_level: 'HIGH',
     safe_pregnancy: false,
     status:
@@ -506,7 +506,7 @@ const HERBS = [
     spiritual_layer:
       'Barley is one of humanity\'s oldest cultivated grains — a grounding staple ally of stability and slow release. She teaches that consistency over intensity is the path to lasting health; that daily, steady nourishment quietly reshapes cardiovascular and metabolic fate far more than occasional extremes. She is the patient farmer\'s wisdom, the long horizon, the daily bread of healing. She whispers: I nourish myself with steady, grounding foods. My blood sugars and fats move in smooth, balanced rhythms.',
     best_preparation:
-      'Whole cooked barley grain for food-medicine use — soups, stews, porridges. Barley grass powder in smoothies or water for antioxidant and micronutrient support. β-glucan concentrate for targeted cholesterol protocols. Position primarily as food-medicine rather than tincture. Screen for gluten status before recommending.',
+      'Whole cooked barley grain for food-medicine use — soups, stews, porridges. Barley grass powder in smoothies or water for antioxidant and micronutrient support. β-glucan concentrate for targeted cholesterol protocols. Position primarily as food-medicine rather than extract. Screen for gluten status before recommending.',
     caution_level: 'LOW',
     safe_pregnancy: null,
     status:
@@ -573,11 +573,11 @@ const HERBS = [
       'Drug interactions: sedatives (additive), psychiatric medications (monitor mood), generally minimal',
     ],
     dosage_range:
-      'Tincture: 10–20 drops in warm water, 30–60 minutes before bed or meditation. Ceremonial infusion: 2–4 g dried petals steeped 10–15 minutes (not boiling — preserves alkaloids). Use 2–3 times weekly maximum for dreamwork; avoid daily use to prevent tolerance. Evening use only.',
+      'Extract: 10–20 drops in warm water, 30–60 minutes before bed or meditation. Ceremonial infusion: 2–4 g dried petals steeped 10–15 minutes (not boiling — preserves alkaloids). Use 2–3 times weekly maximum for dreamwork; avoid daily use to prevent tolerance. Evening use only.',
     spiritual_layer:
       'Blue Lotus rises from primordial waters — the ancient Egyptian sacred flower, keeper of the dreaming eye and gateway between worlds. She has opened the visions of pharaohs, priests and meditators across three thousand years. Not a psychedelic — she does not shatter the world; she dissolves the membrane between waking and dreaming, between rational and intuitive, between the seen and the imagined. She teaches that your subconscious speaks in symbols, that your dreams hold medicine, that the third eye is not something to force open but to invite. She whispers: Enter the dream. Your soul speaks in symbols. The answers live beneath the surface of the ordinary mind. Listen deeply.',
     best_preparation:
-      'Ceremonial infusion with mindful preparation and clear intention — the intention-setting ritual enhances effects. Tincture in warm water for convenient use. Fresh petals preferred over dried when available (more aromatic alkaloid compounds). Journal dreams immediately upon waking for integration. Use in safe, quiet, dark space with 2–4 hours free. Combine with Mugwort or Passionflower for enhanced dreamwork protocols.',
+      'Ceremonial infusion with mindful preparation and clear intention — the intention-setting ritual enhances effects. Extract in warm water for convenient use. Fresh petals preferred over dried when available (more aromatic alkaloid compounds). Journal dreams immediately upon waking for integration. Use in safe, quiet, dark space with 2–4 hours free. Combine with Mugwort or Passionflower for enhanced dreamwork protocols.',
     caution_level: 'HIGH',
     safe_pregnancy: false,
     status:
@@ -699,7 +699,7 @@ const HERBS = [
       'Drug interactions: anticoagulants (mild monitor); otherwise minimal',
     ],
     dosage_range:
-      'Whole seeds: 1–2 teaspoons (5–10 g) daily chewed or in food. Cold-pressed oil: 1–2 teaspoons (5–10 ml) daily — most concentrated form. Tincture: 30–60 drops, 1–2× daily. Safe indefinite daily use; effects cumulative over 4–8 weeks for constitutional immune strengthening.',
+      'Whole seeds: 1–2 teaspoons (5–10 g) daily chewed or in food. Cold-pressed oil: 1–2 teaspoons (5–10 ml) daily — most concentrated form. Extract: 30–60 drops, 1–2× daily. Safe indefinite daily use; effects cumulative over 4–8 weeks for constitutional immune strengthening.',
     spiritual_layer:
       'Black Cumin carries 3000 years of Middle Eastern and South Asian healing wisdom — seeds small enough to hold between two fingers, dense with ancient protective power. In Islamic tradition she is "cure for everything except death" — not as hyperbole but as testimony to the breadth of her healing gifts. She teaches that potency can live in small things, that immune strength is cultivated through consistency, that tradition carries truth when it endures across millennia. She whispers: My immunity is strong. I am protected. I am resilient. My cells are shielded. I am whole and blessed.',
     best_preparation:
@@ -760,11 +760,11 @@ const HERBS = [
       'Drug interactions: thyroid medications (iodine content; monitor); otherwise minimal',
     ],
     dosage_range:
-      'Tincture (fresh hull — most potent): 10–30 drops, 2–3× daily during professional 4–6 week parasite protocol. NOT for casual indefinite use. Always part of a designed protocol including bowel support and post-protocol flora rebuild.',
+      'Extract (fresh hull — most potent): 10–30 drops, 2–3× daily during professional 4–6 week parasite protocol. NOT for casual indefinite use. Always part of a designed protocol including bowel support and post-protocol flora rebuild.',
     spiritual_layer:
       'Black Walnut is the defender of the inner terrain — a North American guardian whose dark hull teaches the power of protection and elimination. She carries centuries of Native American wisdom about maintaining a clean, defended internal environment. Juglone stains everything it touches dark — a reminder that her medicine leaves a mark, that real cleansing is not subtle. She teaches that boundaries matter, that the body has a right to be free of unwanted invaders, that elimination is a sacred act of self-respect. She whispers: My body is clean. I am protected. I am clear. My digestion is strong. I am defended and free.',
     best_preparation:
-      'Fresh hull tincture preferred for highest juglone concentration. Always part of a professional antiparasitic protocol. Typical structure: 4–6 weeks dosing, often combined with Wormwood and Cloves; bowel support throughout; probiotics and Burdock for flora rebuild after completing protocol. Requires professional herbalist design and monitoring. Warn about expected loose stools and juglone staining.',
+      'Fresh hull extract preferred for highest juglone concentration. Always part of a professional antiparasitic protocol. Typical structure: 4–6 weeks dosing, often combined with Wormwood and Cloves; bowel support throughout; probiotics and Burdock for flora rebuild after completing protocol. Requires professional herbalist design and monitoring. Warn about expected loose stools and juglone staining.',
     caution_level: 'HIGH',
     safe_pregnancy: false,
     status:
@@ -890,7 +890,7 @@ const HERBS = [
       'Drug interactions: warfarin (modest monitor INR), diabetes meds (monitor glucose); otherwise minimal',
     ],
     dosage_range:
-      'Fresh or frozen berries: 1/2–1 cup (150–300 g) daily — most bioavailable form. Freeze-dried powder: 10–20 g daily. Tincture: 30–60 drops, 2–3× daily. Food use is preferred — enjoyable, sustainable, highest compliance. Effects cumulative over 4–8 weeks minimum.',
+      'Fresh or frozen berries: 1/2–1 cup (150–300 g) daily — most bioavailable form. Freeze-dried powder: 10–20 g daily. Extract: 30–60 drops, 2–3× daily. Food use is preferred — enjoyable, sustainable, highest compliance. Effects cumulative over 4–8 weeks minimum.',
     spiritual_layer:
       'Blueberries are gifts from the wild — small, profound, abundant. In Indigenous traditions across North America, wild berries represent survival, abundance and gratitude — medicine that grows freely, available to all. She is perhaps the most democratic of healers: no ceremony required, no special preparation, just daily presence and consistency. She teaches that the body heals through gentle, consistent nourishment; that simplicity + persistence = profound medicine. The deepest healing often comes not from dramatic interventions but from daily gifts. She whispers: My mind is clear. My memory is strong. I learn easily. Nature feeds me wisely. I am abundantly nourished.',
     best_preparation:
@@ -957,11 +957,11 @@ const HERBS = [
       'Drug interactions: SSRIs/SNRIs (monitor; consult psychiatrist), MAOIs (likely avoid), antihypertensives (monitor BP)',
     ],
     dosage_range:
-      'Tincture: 20–40 drops, 1–2× daily for daily emotional support. Decoction: 2–4 g dried root per 250 ml, simmer 20 minutes, 1–2× daily. Ceremonial use (higher doses 5–10 g) requires experienced facilitation and psychological preparation. Daily use: periodic breaks (1 week per month) recommended.',
+      'Extract: 20–40 drops, 1–2× daily for daily emotional support. Decoction: 2–4 g dried root per 250 ml, simmer 20 minutes, 1–2× daily. Ceremonial use (higher doses 5–10 g) requires experienced facilitation and psychological preparation. Daily use: periodic breaks (1 week per month) recommended.',
     spiritual_layer:
       'Bobinsana is the "plant teacher of the heart" in Amazonian tradition — an ancient wisdom keeper growing along riverbanks, rooted in water and earth, flowering in soft pink. She teaches that the heart is the seat of all healing; that consciousness expands through heart opening, not through force or breaking but through softening. She dissolves the armour we build to survive, creating space for grief to flow, for love to re-enter, for the sacred vulnerability that is the mark of a truly open life. She whispers: My heart opens. My armour softens. My grief flows. My emotions are sacred. My heart knows. I am emotionally alive.',
     best_preparation:
-      'Decoction for traditional emotional support and daily use. Tincture for convenience. Best combined with therapeutic support (counselling, grief work) for deep emotional processing. Ceremonial visionary work requires experienced facilitation and integration practices. Ethical sourcing from sustainable wild-crafted sources critical.',
+      'Decoction for traditional emotional support and daily use. Extract for convenience. Best combined with therapeutic support (counselling, grief work) for deep emotional processing. Ceremonial visionary work requires experienced facilitation and integration practices. Ethical sourcing from sustainable wild-crafted sources critical.',
     caution_level: 'MEDIUM-HIGH',
     safe_pregnancy: false,
     status:
@@ -1020,11 +1020,11 @@ const HERBS = [
       'Drug interactions: oral medications (space by 1–2 hours); anticoagulants (mild haemostatic; monitor at high doses)',
     ],
     dosage_range:
-      'Tincture: 30–60 drops, 2–3× daily. Infusion: 2–4 g dried leaf per 250 ml, steep 10–15 minutes, 2–3× daily. Fresh leaf poultice applied directly for topical wound and bite first aid — most potent acute use. Infused oil or salve for ongoing wound and skin support.',
+      'Extract: 30–60 drops, 2–3× daily. Infusion: 2–4 g dried leaf per 250 ml, steep 10–15 minutes, 2–3× daily. Fresh leaf poultice applied directly for topical wound and bite first aid — most potent acute use. Infused oil or salve for ongoing wound and skin support.',
     spiritual_layer:
       'Plantain is the first-aid weed — the quiet street-level guardian that appears wherever humans tread, offering cooling protection exactly when life burns, stings or chafes. "White man\'s footprint" is her colonial name, but her wisdom predates it — she has grown where people walk since long before memory, a living reminder that medicine is close, accessible and democratic. She teaches that relief can be simple and near, that the most profound healing is often gentle and immediate, that soothing the irritated places — in body and in life — requires cooling, moistening and gently containing rather than force. She whispers: Soothe the irritated places. Relief is nearer than you think. Protection can be simple.',
     best_preparation:
-      'Fresh leaf poultice is the most powerful acute preparation — crush or chew fresh leaf and apply directly to bites, stings or wounds; refresh every 30–60 minutes. Infusion for internal respiratory and GI use. Infused oil or salve for ongoing skin healing. Tincture for convenient daily use. Pairs classically with Mullein and Licorice for respiratory formulas.',
+      'Fresh leaf poultice is the most powerful acute preparation — crush or chew fresh leaf and apply directly to bites, stings or wounds; refresh every 30–60 minutes. Infusion for internal respiratory and GI use. Infused oil or salve for ongoing skin healing. Extract for convenient daily use. Pairs classically with Mullein and Licorice for respiratory formulas.',
     caution_level: 'LOW',
     safe_pregnancy: null,
     status:
@@ -1084,11 +1084,11 @@ const HERBS = [
       'Drug interactions: diabetes meds (monitor glucose), diuretics (monitor electrolytes); otherwise minimal',
     ],
     dosage_range:
-      'Tincture: 60–90 drops, 2–3× daily. Decoction: 1–2 tsp dried sliced root per 250 ml, simmer 15–20 minutes, 2–3× daily (optimal for mineral and inulin extraction). Cold overnight infusion: 2–3 tsp in cold water soaked 8+ hours (best for inulin preservation). Culinary use as Gobo: 2–3 times weekly in soups and stir-fries. Safe indefinite long-term use.',
+      'Extract: 60–90 drops, 2–3× daily. Decoction: 1–2 tsp dried sliced root per 250 ml, simmer 15–20 minutes, 2–3× daily (optimal for mineral and inulin extraction). Cold overnight infusion: 2–3 tsp in cold water soaked 8+ hours (best for inulin preservation). Culinary use as Gobo: 2–3 times weekly in soups and stir-fries. Safe indefinite long-term use.',
     spiritual_layer:
       'Burdock is the deep nourisher — her roots go down into dark earth, pulling up mineral wisdom from depths that sunlight never reaches. She is the teacher of foundational nourishment, of feeding what feeds you (your microbiome), of healing from the inside out. The bur that clings to clothing inspired Velcro — even her seed dispersal holds a teaching about connection and being carried forward. She teaches that true strength comes from rootedness, from tending the invisible world beneath the surface — the bacterial allies who digest our food, protect our gut and communicate with our immune system. She whispers: I am rooted. I am nourished. My foundations are strong. My bacterial allies feed me. I heal from inside out.',
     best_preparation:
-      'Decoction most efficient for mineral and inulin extraction — simmer 15–20 minutes. Cold overnight infusion optimal for inulin extraction. Culinary use as Gobo is most sustainable long-term approach. Tincture less efficient for minerals but convenient. Combine with Nettle and Dandelion for a comprehensive liver-microbiome-mineral foundation protocol.',
+      'Decoction most efficient for mineral and inulin extraction — simmer 15–20 minutes. Cold overnight infusion optimal for inulin extraction. Culinary use as Gobo is most sustainable long-term approach. Extract less efficient for minerals but convenient. Combine with Nettle and Dandelion for a comprehensive liver-microbiome-mineral foundation protocol.',
     caution_level: 'LOW',
     safe_pregnancy: null,
     status:
@@ -1182,7 +1182,7 @@ const HERBS = [
     ],
     pharmacology:
       'CRITICAL SAFETY: crude Petasites contains pyrrolizidine alkaloids (PAs) — hepatotoxic compounds; internal use of crude herb is CONTRAINDICATED. PA-FREE standardised extract is the ONLY safe internal form. Primary bioactives in PA-free extract: petasin and isopetasin (sesquiterpene esters; TRPA1 desensitisation; leukotriene and prostaglandin inhibition; vascular smooth muscle relaxation). Multiple RCTs for migraine prevention (50–75 mg PA-free extract twice daily) and allergic rhinitis (comparable to cetirizine). Grade B+ for migraine prophylaxis; Grade B+ for allergic rhinitis; Grade C+ for bronchial spasm.',
-    flavor_profile: 'Bitter-aromatic — standardised extract form; not used as tea or tincture from crude herb',
+    flavor_profile: 'Bitter-aromatic — standardised extract form; not used as tea or extract from crude herb',
     contraindications: [
       'CRUDE HERB — ABSOLUTELY CONTRAINDICATED INTERNALLY: pyrrolizidine alkaloids are hepatotoxic; only PA-free standardised extract safe for internal use',
       'Liver disease or hepatotoxic medications — AVOID or use only with close monitoring; even PA-free extracts warrant liver caution',
@@ -1280,11 +1280,11 @@ const HERBS = [
       'Drug interactions: diabetes meds (monitor), iron supplements (space doses); otherwise minimal',
     ],
     dosage_range:
-      'Tincture: 30–60 drops, 1–2× daily. Tea: 1–2 g dried leaves steeped 10 minutes, 1–2× daily. Best taken 1–2 hours before desired effect for acute use. For cumulative baseline: consistent daily use 2–4 weeks.',
+      'Extract: 30–60 drops, 1–2× daily. Tea: 1–2 g dried leaves steeped 10 minutes, 1–2× daily. Best taken 1–2 hours before desired effect for acute use. For cumulative baseline: consistent daily use 2–4 weeks.',
     spiritual_layer:
       'Damiana is the Mexican sacred sexuality herb — 400 years of indigenous and colonial tradition celebrating the arousal of life force itself. She grows in dry, sun-drenched Mexican hillsides, concentrating the heat and fire of her landscape into leaves that warm from the inside out. She teaches that sexuality is sacred, that confidence is embodied not performed, that pleasure is medicine not indulgence. She activates the sacral centre — the seat of creativity, desire and authentic power. She whispers: You are magnetic. You are alive in your body. Your desire is sacred. Your pleasure is medicine. Step into your power.',
     best_preparation:
-      'Tincture for consistent daily use. Tea for ritual preparation 1–2 hours before. Works most powerfully when combined with intention and embodiment practice. Pairs beautifully with Catuaba for a comprehensive sexual vitality protocol, and with Rose or Hawthorn for heart-centred sensual work.',
+      'Extract for consistent daily use. Tea for ritual preparation 1–2 hours before. Works most powerfully when combined with intention and embodiment practice. Pairs beautifully with Catuaba for a comprehensive sexual vitality protocol, and with Rose or Hawthorn for heart-centred sensual work.',
     caution_level: 'LOW-MEDIUM',
     safe_pregnancy: null,
     status:
@@ -1350,11 +1350,11 @@ const HERBS = [
       'Drug interactions: diabetes meds, diuretics, warfarin (monitor), lithium (monitor)',
     ],
     dosage_range:
-      'Tincture: 30–60 drops, 2–3× daily. Decoction: 1–2 tsp dried root per 250 ml, simmer 15 minutes, 2–3× daily. Roasted root as traditional coffee substitute (medicinal food-medicine). Safe long-term indefinite use as foundational herb.',
+      'Extract: 30–60 drops, 2–3× daily. Decoction: 1–2 tsp dried root per 250 ml, simmer 15 minutes, 2–3× daily. Roasted root as traditional coffee substitute (medicinal food-medicine). Safe long-term indefinite use as foundational herb.',
     spiritual_layer:
       'Dandelion is the indestructible yellow sun of the garden — what gardeners call a weed is what healers call a teacher. She grows through concrete and returns after every attempt at removal, teaching resilience, adaptation and the power of persistence. Her taproot goes deep, pulling up minerals from soil layers other plants cannot reach — a teacher of accessing nourishment from depth. She teaches that the most powerful medicine is often the most overlooked, that resilience is grown in adversity, that even the most broken ground can produce gold. She whispers: I clear what is stuck. I feed what is depleted. I move the stagnant liver. I am resilient and everywhere. I am available to you.',
     best_preparation:
-      'Roasted root as daily coffee substitute — most pleasant and sustainable for long-term use. Decoction most efficient for bitter and mineral extraction. Tincture for convenient daily dosing. Raw fresh root most potent. Screen for gallstones and bile duct obstruction before recommending. Pairs powerfully with Burdock and Milk Thistle for a comprehensive liver-microbiome protocol.',
+      'Roasted root as daily coffee substitute — most pleasant and sustainable for long-term use. Decoction most efficient for bitter and mineral extraction. Extract for convenient daily dosing. Raw fresh root most potent. Screen for gallstones and bile duct obstruction before recommending. Pairs powerfully with Burdock and Milk Thistle for a comprehensive liver-microbiome protocol.',
     caution_level: 'LOW-MEDIUM',
     safe_pregnancy: null,
     status:
@@ -1414,15 +1414,15 @@ const HERBS = [
       'Drug interactions: immunosuppressants (consult), diabetes meds (monitor), diuretics (monitor)',
     ],
     dosage_range:
-      'Tincture (from properly processed ripe berries): 30–60 drops, 2–3× daily. Syrup: 1–2 tablespoons daily (adults); 1 teaspoon daily (children). At first sign of illness: double dose for first 48 hours then return to standard. Effects best when started early in illness.',
+      'Extract (from properly processed ripe berries): 30–60 drops, 2–3× daily. Syrup: 1–2 tablespoons daily (adults); 1 teaspoon daily (children). At first sign of illness: double dose for first 48 hours then return to standard. Effects best when started early in illness.',
     spiritual_layer:
       'Elderberry is the "medicine chest" of Hippocrates — the old country medicine that preceded every pharmaceutical cold remedy by millennia. She is the grandmother hedge plant, the protective boundary of the European farmstead, her dark berries appearing like clustered stars in autumn. She teaches flexible, intelligent boundaries — able to respond to viral stress at the body\'s surface while remaining permeable for connection. Her medicine lives at the threshold — between inside and outside, between vulnerable and defended. She whispers: I guard your respiratory boundaries with wisdom. I respond to threat without becoming rigid. I am the ancient medicine of the hedgerow, available and generous.',
     best_preparation:
-      'Syrup (cooked ripe berries with honey) — most traditional, most palatable for all ages, most studied form. Tincture from properly processed ripe berries for convenient daily use. Always ensure fully ripe, properly cooked or processed berries. Never use raw, unripe berries or any other plant part.',
+      'Syrup (cooked ripe berries with honey) — most traditional, most palatable for all ages, most studied form. Extract from properly processed ripe berries for convenient daily use. Always ensure fully ripe, properly cooked or processed berries. Never use raw, unripe berries or any other plant part.',
     caution_level: 'LOW-MEDIUM',
     safe_pregnancy: null,
     status:
-      'Safe when fully ripe berries are properly processed. CRITICAL: raw or unripe berries are toxic. Excellent food-medicine for cold and flu prevention and treatment. Start at first sign of illness for maximum benefit. Generally safe and food-like at standard syrup/tincture doses. Autoimmune caution.',
+      'Safe when fully ripe berries are properly processed. CRITICAL: raw or unripe berries are toxic. Excellent food-medicine for cold and flu prevention and treatment. Start at first sign of illness for maximum benefit. Generally safe and food-like at standard syrup/extract doses. Autoimmune caution.',
   },
 
   // ─────────────────────────────────────────────
@@ -1482,11 +1482,11 @@ const HERBS = [
       'Drug interactions: sedatives, CNS depressants, antipsychotics (professional supervision)',
     ],
     dosage_range:
-      'Tincture: 10–20 drops in warm water, 30–60 minutes before bed. Tea: 1–2 g dried herb steeped 10–15 minutes, ceremonially consumed before bed. Use 2–3 times weekly maximum; avoid daily habituation. Evening and bedtime use only.',
+      'Extract: 10–20 drops in warm water, 30–60 minutes before bed. Tea: 1–2 g dried herb steeped 10–15 minutes, ceremonially consumed before bed. Use 2–3 times weekly maximum; avoid daily habituation. Evening and bedtime use only.',
     spiritual_layer:
       'Calea Zacatachichi is the dream master\'s herb — "leaf of god" in Chontal Mazatec, used by indigenous healers of Oaxaca and Chiapas for generations to receive guidance through dreams. She teaches that dreams are not random noise but medicine, guidance and truth encoded in the language of symbols. She is the consciousness bridge — the herb that teaches the waking mind to remain awake while the body sleeps, to witness the dream from within. Her bitterness is deliberate: this is serious medicine, requiring respect, preparation and integration. She whispers: Your dreams are not random. Listen deeply. Your soul speaks in symbols. The answers live in the dream. I am the key.',
     best_preparation:
-      'Ceremonial tea with clear intention setting before bed — intention shapes the dream trajectory. Tincture in warm water for convenient preparation. Journal dreams immediately upon waking for integration. Use in safe, quiet sleeping environment. Combine with Mugwort for amplified dream protocols.',
+      'Ceremonial tea with clear intention setting before bed — intention shapes the dream trajectory. Extract in warm water for convenient preparation. Journal dreams immediately upon waking for integration. Use in safe, quiet sleeping environment. Combine with Mugwort for amplified dream protocols.',
     caution_level: 'HIGH',
     safe_pregnancy: false,
     status:
@@ -1545,11 +1545,11 @@ const HERBS = [
       'Drug interactions: diabetes meds and antihypertensives at medicinal doses (monitor); culinary doses minimal interaction',
     ],
     dosage_range:
-      'Tincture: 20–40 drops, 2–3× daily. Culinary use: 1–3 pods or 1/4–1/2 teaspoon seeds daily in food and tea — pleasant, sustainable food-medicine. Medicinal dose: up to 3 g seeds daily for cardiometabolic protocols (with monitoring). Crush pods fresh before steeping for maximum volatile oil release.',
+      'Extract: 20–40 drops, 2–3× daily. Culinary use: 1–3 pods or 1/4–1/2 teaspoon seeds daily in food and tea — pleasant, sustainable food-medicine. Medicinal dose: up to 3 g seeds daily for cardiometabolic protocols (with monitoring). Crush pods fresh before steeping for maximum volatile oil release.',
     spiritual_layer:
       'Cardamom is the Queen of Spices — 3000 years of Ayurvedic reverence for her sattvic, prana-enhancing nature. She grows in the misty forests of the Western Ghats, her pods ripening slowly to perfection. She is a heart-opener — warming without aggravating, uplifting without overstimulating, clearing heaviness while protecting the mucosa. In Ayurveda she is considered "good for the mind and heart" — precisely because she is both warming and sweet, both activating and grounding. She teaches that true warmth opens rather than burns, that the heart can be bright and calm simultaneously. She whispers: I warm your heart and clear your mind. My sweetness uplifts. My warmth opens. I am the queen who serves.',
     best_preparation:
-      'Freshly crushed pods steeped in hot milk or tea — most aromatic and effective traditional form. Whole pods used in cooking. Tincture for convenient daily use. Combine with Ginger and Cinnamon for a warming spice trinity. Excellent in chai protocols and tonic elixirs.',
+      'Freshly crushed pods steeped in hot milk or tea — most aromatic and effective traditional form. Whole pods used in cooking. Extract for convenient daily use. Combine with Ginger and Cinnamon for a warming spice trinity. Excellent in chai protocols and tonic elixirs.',
     caution_level: 'LOW',
     safe_pregnancy: null,
     status:
@@ -1611,11 +1611,11 @@ const HERBS = [
       'Drug interactions: cardiovascular meds (monitor), stimulant meds (monitor); otherwise minimal',
     ],
     dosage_range:
-      'Tincture: 20–40 drops, 1–2× daily. Decoction: 1–2 g dried bark per 250 ml, simmer 15 minutes, 1–2× daily. Best taken 1–2 hours before desired acute effect. Cumulative baseline improvement over 2–4 weeks of consistent use.',
+      'Extract: 20–40 drops, 1–2× daily. Decoction: 1–2 g dried bark per 250 ml, simmer 15 minutes, 1–2× daily. Best taken 1–2 hours before desired acute effect. Cumulative baseline improvement over 2–4 weeks of consistent use.',
     spiritual_layer:
       'Catuaba is the Amazonian tree of awakened masculine vitality — 400 years of indigenous reverence for the bark that ignites dormant life force. She grows in the deep Amazon as a woody climber, her bark concentrating the forest\'s vital power into concentrated alkaloids that warm from the inside. She teaches that sexual vitality is not separate from spiritual power — that the same life force that animates sexuality also animates creativity, courage and authentic presence. She is not about performance but about awakening. She whispers: Your vitality is not lost, only sleeping. I warm the embers. Your fire returns. Your confidence rises. You are alive in your body.',
     best_preparation:
-      'Tincture from sustainably sourced bark for convenient daily use. Decoction for traditional preparation. Always verify sustainable sourcing. Pairs powerfully with Damiana for a comprehensive sexual vitality protocol. Best taken consistently over 2–4 weeks for cumulative baseline improvement rather than acute single-dose use.',
+      'Extract from sustainably sourced bark for convenient daily use. Decoction for traditional preparation. Always verify sustainable sourcing. Pairs powerfully with Damiana for a comprehensive sexual vitality protocol. Best taken consistently over 2–4 weeks for cumulative baseline improvement rather than acute single-dose use.',
     caution_level: 'LOW-MEDIUM',
     safe_pregnancy: null,
     status:
@@ -1678,11 +1678,11 @@ const HERBS = [
       'Drug interactions: ACE inhibitors (cough), anticoagulants (monitor), diabetes meds (monitor)',
     ],
     dosage_range:
-      'Tincture: 5–20 drops in warm water, 1–2× daily (start very low and titrate). Culinary: gradual integration into food. Topical cream (0.025–0.075% capsaicin): apply 3–4× daily for 3–7 days for analgesic desensitisation. Internal: always with food to minimise GI irritation.',
+      'Extract: 5–20 drops in warm water, 1–2× daily (start very low and titrate). Culinary: gradual integration into food. Topical cream (0.025–0.075% capsaicin): apply 3–4× daily for 3–7 days for analgesic desensitisation. Internal: always with food to minimise GI irritation.',
     spiritual_layer:
       'Cayenne is the fierce fire teacher — 5000 years of Mesoamerican reverence for the fruit that transforms, ignites and catalyses. She is not subtle. She demands that you wake up, that you activate, that you move what has become stuck and frozen. She is the herb for times when gentleness has failed, when the cold has gone too deep, when the circulation needs to be commanded rather than coaxed. She teaches that transformation sometimes requires fierce medicine, that fire can heal what warmth cannot reach, that activation is a form of love when directed wisely. She whispers: Wake up. Circulate. Move the frozen places. Your body can generate its own fire. I show you how.',
     best_preparation:
-      'Topical capsaicin cream for musculoskeletal and neuropathic pain — most evidence-based application. Internal as culinary spice — most sustainable and pleasant. Tincture in warm water for circulatory and metabolic protocols. Always start low internally and titrate to tolerance. Never use near eyes or broken skin.',
+      'Topical capsaicin cream for musculoskeletal and neuropathic pain — most evidence-based application. Internal as culinary spice — most sustainable and pleasant. Extract in warm water for circulatory and metabolic protocols. Always start low internally and titrate to tolerance. Never use near eyes or broken skin.',
     caution_level: 'MEDIUM',
     safe_pregnancy: null,
     status:
@@ -1742,11 +1742,11 @@ const HERBS = [
       'Drug interactions: warfarin at very high doses (negligible at standard tea); benzodiazepines (mild additive — usually beneficial)',
     ],
     dosage_range:
-      'Tincture: 20–40 drops, 2–4× daily including before bed. Tea: 2–4 g dried flower per 250 ml, steep 5–10 minutes, 2–4× daily. Safe for continuous long-term use. For children: half adult dose. For infants with colic: dilute tea, small amounts under paediatric guidance.',
+      'Extract: 20–40 drops, 2–4× daily including before bed. Tea: 2–4 g dried flower per 250 ml, steep 5–10 minutes, 2–4× daily. Safe for continuous long-term use. For children: half adult dose. For infants with colic: dilute tea, small amounts under paediatric guidance.',
     spiritual_layer:
       'Chamomile is the gentle healer — the ancient medicine of ease and childhood comfort, the grandmother tea of every European tradition. She is the Sun\'s flower that calms rather than activates, warms rather than burns, grounds rather than sedates. She has been soothing nervous systems since before memory — in medieval monastery gardens, on farmhouse windowsills, in mother\'s cupboards across centuries. She teaches that rest is productive, that gentleness is strength, that the nervous system remembers safety and can be taught it again with patient, consistent care. She whispers: You are safe to rest. Your body knows how to heal. Gentleness is enough. Let the tension dissolve.',
     best_preparation:
-      'Fresh or dried flower infusion as daily tea — most pleasant, most traditional, most safe for long-term use. Honey enhances the soothing effect. Blended with Passionflower for enhanced sleep support. Topical poultice or compress for skin healing. Tincture for convenient dosing.',
+      'Fresh or dried flower infusion as daily tea — most pleasant, most traditional, most safe for long-term use. Honey enhances the soothing effect. Blended with Passionflower for enhanced sleep support. Topical poultice or compress for skin healing. Extract for convenient dosing.',
     caution_level: 'LOW',
     safe_pregnancy: true,
     status:
@@ -1873,11 +1873,11 @@ const HERBS = [
       'Drug interactions: immunosuppressants (ABSOLUTELY CONTRAINDICATED); otherwise minimal',
     ],
     dosage_range:
-      'Tincture (fresh plant — most potent): 60–90 drops every 1–2 hours for first 12–24 hours at onset, then 3–4× daily for 5–10 days total. MAXIMUM 7–10 days continuous use. NEVER for daily prevention. Start within 12–24 hours of first symptoms for efficacy.',
+      'Extract (fresh plant — most potent): 60–90 drops every 1–2 hours for first 12–24 hours at onset, then 3–4× daily for 5–10 days total. MAXIMUM 7–10 days continuous use. NEVER for daily prevention. Start within 12–24 hours of first symptoms for efficacy.',
     spiritual_layer:
       'Echinacea is the warrior herb — Purple Coneflower, native American sacred plant whose bold purple flowers face the sun with fierce confidence. She is not subtle and she is not for every day. She is the defender who steps forward when the boundary has been breached, the immune warrior called up in an acute moment of need. She teaches that fierce protection is temporary — that the warrior cannot always be at full activation, that rest is required between battles. She is for the acute moment only. She whispers: I am strong. My immune is fierce. I fight infection. I recover swiftly. Then rest — I am acute-only medicine.',
     best_preparation:
-      'Fresh plant tincture most potent (highest alkamide and polysaccharide concentration). TIMING IS EVERYTHING: start at first symptom, within 12–24 hours. Use intensively for first 24 hours, then standard dosing for 5–10 days. Never use preventively or daily. Screen for autoimmune, immunosuppression and Asteraceae allergy before recommending.',
+      'Fresh plant extract most potent (highest alkamide and polysaccharide concentration). TIMING IS EVERYTHING: start at first symptom, within 12–24 hours. Use intensively for first 24 hours, then standard dosing for 5–10 days. Never use preventively or daily. Screen for autoimmune, immunosuppression and Asteraceae allergy before recommending.',
     caution_level: 'MEDIUM',
     safe_pregnancy: null,
     status:
@@ -1903,7 +1903,7 @@ const HERBS = [
     ],
     secondary_benefits: [
       'Capillary strengthening — flavonoids improve microcirculation and vascular integrity',
-      'Internal lymphatic and immune support — tea or tincture for systemic lymphatic movement',
+      'Internal lymphatic and immune support — tea or extract for systemic lymphatic movement',
       'Anti-inflammatory for internal use — digestive and systemic inflammation support',
       'Vascular support — capillary resilience and skin health',
     ],
@@ -1935,11 +1935,11 @@ const HERBS = [
       'Drug interactions: immunosuppressants (internal — monitor); topical interaction risk negligible',
     ],
     dosage_range:
-      'Topical: infused oil or salve applied 2–3× daily to wounds, eczema or scarring. Tincture topical application for acute wounds. Internal tincture: 30–60 drops, 2–3× daily for lymphatic support (with ragweed allergy screen). Tea: 1–2 tsp dried flowers steeped 10 minutes, 2–3× daily for internal use.',
+      'Topical: infused oil or salve applied 2–3× daily to wounds, eczema or scarring. Extract topical application for acute wounds. Internal extract: 30–60 drops, 2–3× daily for lymphatic support (with ragweed allergy screen). Tea: 1–2 tsp dried flowers steeped 10 minutes, 2–3× daily for internal use.',
     spiritual_layer:
       'Calendula is the Sun\'s flower — radiant, warm, opening. Medieval herbalists dedicated her to the Virgin Mary ("Calendar" = Marian festival dates), recognising in her golden brightness a quality of divine warmth and healing grace. She opens toward the sun and closes with evening — a daily practice of expansion and drawing in. She teaches that healing flows through warmth, light and opening to transformation; that scars — physical and emotional — can be remodelled into integrated wisdom rather than fixed wounds. She whispers: My skin heals. My wounds close. Scars become wisdom. I am warm and radiant. I open to transformation. I am whole.',
     best_preparation:
-      'Infused oil (dried flowers in carrier oil steeped 2–4 weeks) most studied and effective topical form. Salve for portable wound-healing application. Tincture for internal lymphatic use. Screen for ragweed allergy before recommending. Topical use primary; internal use emerging but less studied.',
+      'Infused oil (dried flowers in carrier oil steeped 2–4 weeks) most studied and effective topical form. Salve for portable wound-healing application. Extract for internal lymphatic use. Screen for ragweed allergy before recommending. Topical use primary; internal use emerging but less studied.',
     caution_level: 'LOW-MEDIUM',
     safe_pregnancy: null,
     status:
@@ -2063,11 +2063,11 @@ const HERBS = [
       'Drug interactions: immunosuppressants (consult), BP medications (monitor); otherwise minimal',
     ],
     dosage_range:
-      'Tincture: 20–40 drops, 1–2× daily. Decoction: 1–3 g dried inner bark, simmered 10–15 minutes, 1–2× daily. Effects cumulative over 4–8 weeks for immune and anti-inflammatory benefit. Safe long-term with sustainability awareness.',
+      'Extract: 20–40 drops, 1–2× daily. Decoction: 1–3 g dried inner bark, simmered 10–15 minutes, 1–2× daily. Effects cumulative over 4–8 weeks for immune and anti-inflammatory benefit. Safe long-term with sustainability awareness.',
     spiritual_layer:
       'Cat\'s Claw is the jungle warrior — a woody Amazonian climber whose distinctive claw-shaped thorns grip the forest canopy as it ascends toward light. She carries centuries of Peruvian indigenous wisdom about immune strength, survival and the fierce intelligence of the jungle. She teaches that deep immune activation is not aggression but connection — connecting to earth\'s healing intelligence, the immune wisdom of the rainforest itself. Her sustainability challenge is part of her teaching: we must protect what protects us. She whispers: My immunity is fierce. My body defends itself. I am connected to earth\'s healing. I protect what is wild within me and without.',
     best_preparation:
-      'Decoction for traditional water extraction of alkaloids and polyphenols. Tincture for convenient daily dosing. Always verify sustainable sourcing — cultivated or certified sustainable only. Combine with Turmeric and Ginger for a comprehensive joint and immune anti-inflammatory protocol.',
+      'Decoction for traditional water extraction of alkaloids and polyphenols. Extract for convenient daily dosing. Always verify sustainable sourcing — cultivated or certified sustainable only. Combine with Turmeric and Ginger for a comprehensive joint and immune anti-inflammatory protocol.',
     caution_level: 'LOW-MEDIUM',
     safe_pregnancy: null,
     status:
@@ -2129,11 +2129,11 @@ const HERBS = [
       'Drug interactions: dopamine agonists and antagonists (coordinate with prescriber), hormonal contraceptives (monitor)',
     ],
     dosage_range:
-      'Standardised extract: 20–40 mg daily once in the morning. Traditional tincture 1:5: 1–5 ml once daily morning. Minimum 3 months continuous use before full assessment; may continue 6–12 months. Take continuously through all cycle phases (not just luteal) for PMS and cycle regulation.',
+      'Standardised extract: 20–40 mg daily once in the morning. Traditional extract 1:5: 1–5 ml once daily morning. Minimum 3 months continuous use before full assessment; may continue 6–12 months. Take continuously through all cycle phases (not just luteal) for PMS and cycle regulation.',
     spiritual_layer:
       'Vitex is the cycle harmoniser — the Mediterranean shrub whose peppery berries were traditionally used by monks to dampen libido (hence "chaste tree") but whose deeper gift is rhythmic regulation, restoring the sacred dance of the menstrual cycle where stress, prolactin and hormonal chaos have disrupted it. She teaches that regulation is liberation — that reclaiming regular ovulation, clear phases and predictable cycles frees energy for creativity, insight and embodied life rather than monthly battle with one\'s own hormones. She whispers: My hormones move in wise rhythmic patterns. I release what distorts my cycle. My body\'s timing aligns with my deeper life rhythm. My cycle is restored.',
     best_preparation:
-      'Standardised extract (20–40 mg) once daily in morning — most researched and reliable form. Traditional tincture for flexible dosing. Mandatory screening: confirm not pregnant; screen for dopamine-related medications and prolactinoma under endocrine care; ask about hormone-sensitive cancers. Minimum 3 months before assessing full benefit.',
+      'Standardised extract (20–40 mg) once daily in morning — most researched and reliable form. Traditional extract for flexible dosing. Mandatory screening: confirm not pregnant; screen for dopamine-related medications and prolactinoma under endocrine care; ask about hormone-sensitive cancers. Minimum 3 months before assessing full benefit.',
     caution_level: 'MEDIUM',
     safe_pregnancy: false,
     status:
@@ -2192,7 +2192,7 @@ const HERBS = [
       'Drug interactions: diuretics (monitor), antihypertensives (mild additive; monitor); otherwise minimal',
     ],
     dosage_range:
-      'Fresh food: handful of leaves in salads, pestos or smoothies daily in season. Tea: 1–5 g dried herb, steep 10–15 minutes, up to 3× daily. Tincture: 6–30 ml daily divided. Topical: fresh poultice for bites and rashes; salve for chronic eczema and psoriasis itch; compress for heat rashes and burns.',
+      'Fresh food: handful of leaves in salads, pestos or smoothies daily in season. Tea: 1–5 g dried herb, steep 10–15 minutes, up to 3× daily. Extract: 6–30 ml daily divided. Topical: fresh poultice for bites and rashes; salve for chronic eczema and psoriasis itch; compress for heat rashes and burns.',
     spiritual_layer:
       'Chickweed is the playful cooling maiden — the tiny star herb (Stellaria = star) that creeps softly across disturbed and garden ground, soothing irritation and bringing levity wherever heat and stuck patterns have accumulated. She is the weed that appears wherever the earth has been turned and treated harshly, offering cooling medicine for the very conditions that created her habitat. She teaches that irritation and burning — on the skin, in the gut, in emotions — can be resolved through gentle moistening, playfulness and release rather than suppression or force. She whispers: I cool and soften where life has inflamed me. My skin, gut and lymph flow are soothed and free. Irritation dissolves into ease.',
     best_preparation:
@@ -2254,11 +2254,11 @@ const HERBS = [
       'Drug interactions: minimal; theoretical absorption enhancement via mucosal circulation',
     ],
     dosage_range:
-      'Tincture: 1–10 drops at a time, up to several times daily (LOW DOSE HERB — very potent at tiny doses). Topical: 1–5 drops in a little water as swish/gargle for oral infections; spit out. Chewed root: tiny piece until tingling begins. NOT for high-dose internal use.',
+      'Extract: 1–10 drops at a time, up to several times daily (LOW DOSE HERB — very potent at tiny doses). Topical: 1–5 drops in a little water as swish/gargle for oral infections; spit out. Chewed root: tiny piece until tingling begins. NOT for high-dose internal use.',
     spiritual_layer:
       'Chilcuague is the Aztec golden root — a low-dose, high-impact pungent that announces itself immediately and completely. She is the teacher of presence: it is impossible to be absent when Chilcuague is in your mouth. She teaches that some medicines work through intensity and immediacy rather than subtlety and accumulation — that awakening can be sharp and precise rather than gradual. She is the traditional Mexican oral healer, the pre-colonial dentist\'s companion. She whispers: Feel this. Be present. Your mouth awakens. Your digestion stirs. Your awareness sharpens to this moment.',
     best_preparation:
-      'Tincture in drop doses — most controlled and predictable delivery. Swish/gargle preparation for oral antimicrobial use. Tiny piece of dried root chewed for immediate toothache relief. Combine 1–3 drops with Clove and Sage for a powerful oral health gargle formula.',
+      'Extract in drop doses — most controlled and predictable delivery. Swish/gargle preparation for oral antimicrobial use. Tiny piece of dried root chewed for immediate toothache relief. Combine 1–3 drops with Clove and Sage for a powerful oral health gargle formula.',
     caution_level: 'MEDIUM',
     safe_pregnancy: null,
     status:
@@ -2319,11 +2319,11 @@ const HERBS = [
       'Drug interactions: diabetes meds (monitor glucose), anticoagulants (monitor INR), hepatotoxic meds with cassia (prefer verum)',
     ],
     dosage_range:
-      'Culinary: 0.5–2 g daily in food and tea — widely safe for most populations. Medicinal cassia for glycaemic support: 1–2 g/day for 3 months (monitor liver function in at-risk individuals). Prefer C. verum for long-term daily use. Tincture: 20–40 drops, 2–3× daily.',
+      'Culinary: 0.5–2 g daily in food and tea — widely safe for most populations. Medicinal cassia for glycaemic support: 1–2 g/day for 3 months (monitor liver function in at-risk individuals). Prefer C. verum for long-term daily use. Extract: 20–40 drops, 2–3× daily.',
     spiritual_layer:
       'Cinnamon is the hearth spice — the warmth that awakens digestion, circulation and emotional comfort. She is ancient trade, ancient medicine and ancient comfort: written in the oldest texts of Ayurveda, TCM and European herbalism as the warming companion for cold constitutions, sluggish digestion and the chill of winter. She teaches that warmth must be proportionate — healing when wisely measured, potentially damaging when excessive. Like the hearth fire itself, she requires tending and calibration. She whispers: I welcome gentle, proportionate warmth into my system. My digestion, blood and mood are warmed but not inflamed. I calibrate warmth with wisdom.',
     best_preparation:
-      'C. verum (Ceylon cinnamon) preferred for long-term daily use — dramatically lower coumarin than cassia. Culinary integration most sustainable. Medicinal cassia for targeted 3-month glycaemic protocols with liver function monitoring in at-risk patients. Tincture for convenient dosing. Combine with Ginger and Cardamom for warming tonic formulas.',
+      'C. verum (Ceylon cinnamon) preferred for long-term daily use — dramatically lower coumarin than cassia. Culinary integration most sustainable. Medicinal cassia for targeted 3-month glycaemic protocols with liver function monitoring in at-risk patients. Extract for convenient dosing. Combine with Ginger and Cardamom for warming tonic formulas.',
     caution_level: 'LOW-MEDIUM',
     safe_pregnancy: null,
     status:
@@ -2382,7 +2382,7 @@ const HERBS = [
       'Drug interactions: anticoagulants (monitor at medicinal doses); culinary doses minimal interaction',
     ],
     dosage_range:
-      'Culinary: 2–5 whole cloves or 0.5–1 g powder daily in food and tea — safe indefinite use. Tincture: 20–40 drops, 1–2× daily. Dental topical: 1–2 drops clove oil diluted in carrier oil, applied to affected area. Antiparasitic protocol: 1–2 g alongside Black Walnut and Wormwood — professional protocol only.',
+      'Culinary: 2–5 whole cloves or 0.5–1 g powder daily in food and tea — safe indefinite use. Extract: 20–40 drops, 1–2× daily. Dental topical: 1–2 drops clove oil diluted in carrier oil, applied to affected area. Antiparasitic protocol: 1–2 g alongside Black Walnut and Wormwood — professional protocol only.',
     spiritual_layer:
       'Cloves carry the warmth of the Spice Islands — Indonesian maritime trading history condensed into tiny dried flower buds that contain more warmth than their size suggests. She teaches that great potency can live in small things, that warming and antimicrobial action can coexist with pleasure and culinary delight, that medicine can be delicious. The original global trade routes formed around her and her Spice Island siblings — evidence that humanity has always sought warming, protecting, aromatic medicines. She whispers: I warm your fire. I protect your warmth. I cleanse from within. I ease your pain. I am the ancient spice of healing and pleasure.',
     best_preparation:
@@ -2451,7 +2451,7 @@ const HERBS = [
     caution_level: 'VERY HIGH',
     safe_pregnancy: false,
     status:
-      'ETHNOBOTANICAL REFERENCE ONLY — not an active tincture recommendation. Schedule I internationally. Illegal outside Andean countries. Ethical concerns: non-traditional demand supports illicit cocaine supply chains. Educational context only.',
+      'ETHNOBOTANICAL REFERENCE ONLY — not an active extract recommendation. Schedule I internationally. Illegal outside Andean countries. Ethical concerns: non-traditional demand supports illicit cocaine supply chains. Educational context only.',
   },
 
   // ─────────────────────────────────────────────
@@ -2573,7 +2573,7 @@ const HERBS = [
       'Drug interactions: None documented; minimal risk',
     ],
     dosage_range:
-      'Tincture: 30–60 drops, 2–4× daily. Decoction: 1–2 tsp cut lichen simmered 10–20 minutes, 2–4× daily. Cold maceration (maximum demulcent): 1–2 tbsp lichen in 500 ml cold water soaked several hours; drink in divided doses. Syrup or lozenges for acute throat irritation. Safe for weeks to months of use.',
+      'Extract: 30–60 drops, 2–4× daily. Decoction: 1–2 tsp cut lichen simmered 10–20 minutes, 2–4× daily. Cold maceration (maximum demulcent): 1–2 tbsp lichen in 500 ml cold water soaked several hours; drink in divided doses. Syrup or lozenges for acute throat irritation. Safe for weeks to months of use.',
     spiritual_layer:
       'Iceland Moss grows on bare arctic rock where almost nothing else can survive — a lichen, which is not one organism but two living as one (fungus and alga in symbiosis). She teaches that the harshest environments can be survived through relationship, through the building of protective inner coatings, through finding nourishment in the most elemental places. She is the inner lining itself — teaching that we can grow a protective layer in harsh conditions so that exposure does not equal damage. She whispers: My inner surfaces are protected. I soften friction. I allow healing in harsh conditions. I grow strong at the edges of what is livable.',
     best_preparation:
@@ -2638,7 +2638,7 @@ const HERBS = [
       'Drug interactions: immunosuppressants (consult), diabetes meds (monitor); otherwise minimal',
     ],
     dosage_range:
-      'Tincture (fresh flowers — most potent): 20–40 drops, 1–3× daily. Dried flower infusion: 2–4 g steeped 5–10 minutes, 1–3× daily. Elderflower cordial diluted: 1–2 tablespoons daily. Intensify during illness (double dose first 48 hours). Safe long-term indefinite use.',
+      'Extract (fresh flowers — most potent): 20–40 drops, 1–3× daily. Dried flower infusion: 2–4 g steeped 5–10 minutes, 1–3× daily. Elderflower cordial diluted: 1–2 tablespoons daily. Intensify during illness (double dose first 48 hours). Safe long-term indefinite use.',
     spiritual_layer:
       'Elderflower is the elder\'s gift — delicate white flower clusters that appear in early summer on the same shrub that bears dark autumn berries, teaching the unity of gentle and fierce medicine. She is the "medicine chest of the country people" — the herb Hippocrates called first among all. Her flowers are the most approachable aspect of the elder: white, fragrant, cooling, generous. She teaches that immunity is not aggression but wisdom — the body\'s capacity to recognise what belongs and what does not, to respond intelligently rather than reactively. She whispers: My immunity is strong and wise. I am resilient. My defences are intelligent. I am protected by ancient medicine.',
     best_preparation:
@@ -2825,11 +2825,11 @@ const HERBS = [
       'Drug interactions: None documented; topical interaction risk negligible',
     ],
     dosage_range:
-      'Internal tincture: 2–6 ml, 3× daily. Infusion: 2–4 g dried herb steeped 10–15 minutes, up to 3× daily. Topical (STERILE COMMERCIAL ONLY): 1 drop per eye 3–5× daily for acute conjunctivitis. NEVER use DIY home-made preparations in eyes.',
+      'Internal extract: 2–6 ml, 3× daily. Infusion: 2–4 g dried herb steeped 10–15 minutes, up to 3× daily. Topical (STERILE COMMERCIAL ONLY): 1 drop per eye 3–5× daily for acute conjunctivitis. NEVER use DIY home-made preparations in eyes.',
     spiritual_layer:
       'Eyebright is the clarifier of perception — cooling inflamed, watery vision so that both physical sight and inner insight become sharper and less clouded by irritation. She grows as a tiny semi-parasitic plant drawing nutrients from grasses, teaching that some medicine is found at the margins, in the relationship between things. She teaches that how we see the world depends on the state of our tissues and nerves: when swollen and irritated, perception is distorted; when cooled and toned, we see with balanced clarity. She whispers: My sight is clear and calm. The tissues of my eyes and sinuses are cooled and toned. I soften irritation and see the world with balanced clarity.',
     best_preparation:
-      'Internal infusion or tincture combined with commercial sterile eye drops for topical application. NEVER recommend DIY eye preparations. Screen for serious eye disease indicators (pain, photophobia, vision changes) before recommending — urgent medical referral if present. Combine with Nettle and Chamomile for allergic hayfever eye protocol.',
+      'Internal infusion or extract combined with commercial sterile eye drops for topical application. NEVER recommend DIY eye preparations. Screen for serious eye disease indicators (pain, photophobia, vision changes) before recommending — urgent medical referral if present. Combine with Nettle and Chamomile for allergic hayfever eye protocol.',
     caution_level: 'LOW-MEDIUM',
     safe_pregnancy: null,
     status:
@@ -2944,11 +2944,11 @@ const HERBS = [
       'Drug interactions: hormonal therapies (monitor); otherwise minimal',
     ],
     dosage_range:
-      'Tincture: 2–4 ml, 2–3× daily. Infusion: 1–2 tsp lightly crushed seeds per 250 ml, steeped 10–15 minutes, 1–3× daily. Chew seeds after meals as a pleasant digestive aid. Safe long-term in culinary doses.',
+      'Extract: 2–4 ml, 2–3× daily. Infusion: 1–2 tsp lightly crushed seeds per 250 ml, steeped 10–15 minutes, 1–3× daily. Chew seeds after meals as a pleasant digestive aid. Safe long-term in culinary doses.',
     spiritual_layer:
       'Fennel is the gentle hearth-fire of the Mediterranean — a tall, feathery plant with golden umbels that has seasoned food and medicine across centuries of Mediterranean culture. She teaches that comfort and flow replace gripping and stagnation; that the digestive fire, when gently tended rather than forced, transforms nourishment into vitality. She is the herb of sweet warm digestive ease, the feminine endocrine balancer, the mother\'s milk supporter. She whispers: Warmth and flow return to my centre. I digest life with ease. My body knows how to process and transform what I receive.',
     best_preparation:
-      'Freshly crushed seeds steeped as tea — most aromatic and effective. Chewed seeds after meals for immediate digestive support. Tincture for convenient daily use. Screen oestrogen-sensitive conditions before recommending therapeutic doses. Pairs classically with Chamomile and Caraway for a comprehensive digestive formula.',
+      'Freshly crushed seeds steeped as tea — most aromatic and effective. Chewed seeds after meals for immediate digestive support. Extract for convenient daily use. Screen oestrogen-sensitive conditions before recommending therapeutic doses. Pairs classically with Chamomile and Caraway for a comprehensive digestive formula.',
     caution_level: 'LOW-MEDIUM',
     safe_pregnancy: null,
     status:
@@ -3012,7 +3012,7 @@ const HERBS = [
       'Drug interactions: Warfarin (monitor INR), antiplatelets (monitor), diabetes meds (monitor glucose), saquinavir (consult)',
     ],
     dosage_range:
-      'Fresh cloves (antimicrobial): 1–3 cloves daily, crushed, consumed within 10–15 minutes of crushing — MUST be raw. Cooked garlic (immune/cardiovascular — allicin not required): 2–3 cloves daily indefinitely. Aged garlic extract (odour-free, cardiovascular/immune): 600–1200 mg daily. Tincture: 30–60 drops, 2–3× daily.',
+      'Fresh cloves (antimicrobial): 1–3 cloves daily, crushed, consumed within 10–15 minutes of crushing — MUST be raw. Cooked garlic (immune/cardiovascular — allicin not required): 2–3 cloves daily indefinitely. Aged garlic extract (odour-free, cardiovascular/immune): 600–1200 mg daily. Extract: 30–60 drops, 2–3× daily.',
     spiritual_layer:
       'Garlic is the warrior\'s plant — pungent, powerful, fiercely protective. Three thousand years of human tradition from ancient Egypt to medieval plague remedies to modern immunology confirm her as one of the most reliable antimicrobial allies the plant world offers. She teaches that fierce protection can be simple and accessible, that the most powerful medicine is often found in the kitchen rather than the laboratory, that odour — which so many would erase — is itself the mark of her power. She whispers: I am protected. My immunity is fierce. Infection cannot take hold. My heart is strong. I am guarded by ancient medicine.',
     best_preparation:
@@ -3147,7 +3147,7 @@ const HERBS = [
       'Drug interactions: diabetes meds (monitor), Warfarin (minimal, monitor), antihypertensives (monitor), MAOIs (consult)',
     ],
     dosage_range:
-      'Asian/Korean Red: 1–3 g daily in standardised extract (2–3% ginsenosides). American: 1–3 g daily (milder). Standardised extract: 200–400 mg daily. Tincture: 40–80 drops, 2–3× daily. CYCLING: 8–12 weeks on, 2–4 weeks off. Morning use only. Full benefit at 8–12 weeks.',
+      'Asian/Korean Red: 1–3 g daily in standardised extract (2–3% ginsenosides). American: 1–3 g daily (milder). Standardised extract: 200–400 mg daily. Extract: 40–80 drops, 2–3× daily. CYCLING: 8–12 weeks on, 2–4 weeks off. Morning use only. Full benefit at 8–12 weeks.',
     spiritual_layer:
       '"Panax" from Greek "pan" (all) + "akos" (cure) — the all-healer. "Root of man" — the human-shaped root that Chinese medicine has revered for 4000 years as the supreme qi tonifier, the plant that gives back what life takes away. She teaches that foundational strength takes time, that deep nourishment is transformation, that patience builds vitality that cannot be rushed. She is the elder of adaptogens — ancient, potent, patient. She whispers: I am vital. My energy is strong. I am resilient. My qi flows freely. I am restored. Ancient wisdom rebuilds me.',
     best_preparation:
@@ -3273,7 +3273,7 @@ const HERBS = [
       'Drug interactions: CYP2C9/2C19/3A4 substrates (CRITICAL — consult pharmacist), benzodiazepines (monitor), lithium (monitor)',
     ],
     dosage_range:
-      'Tincture: 30–60 drops, 2–3× daily. Standardised extract (60% asiaticoside): 250–500 mg, 2× daily. Tea: 1–2 tsp dried herb per 250 ml, steeped 10–15 minutes, 2–3× daily. Cycling: 3 months on, 2–4 weeks off recommended. Minimum 4–8 weeks for cognitive effects.',
+      'Extract: 30–60 drops, 2–3× daily. Standardised extract (60% asiaticoside): 250–500 mg, 2× daily. Tea: 1–2 tsp dried herb per 250 ml, steeped 10–15 minutes, 2–3× daily. Cycling: 3 months on, 2–4 weeks off recommended. Minimum 4–8 weeks for cognitive effects.',
     spiritual_layer:
       'Gotu Kola is the "Herb of Enlightenment" in Buddhist tradition — the herb that Sri Lankan legend says elephants (the longest-lived animals) eat for their wisdom and longevity. She grows at the margins of water and land, in the liminal zone between worlds — fitting for a herb that teaches the mind to be present at the edge of knowing and not-knowing. She teaches that clarity comes through nourishment, that the mind blooms when consistently tended, that insight is not seized but allowed to arise through patient cultivation. She whispers: My mind is clear. I learn easily. I remember. My circulation flows freely. I am calm and alert. I am enlightened.',
     best_preparation:
@@ -3336,11 +3336,11 @@ const HERBS = [
       'Drug interactions: hepatotoxic medications (avoid combination); otherwise minimal',
     ],
     dosage_range:
-      'Tincture: 5–10 ml, up to 3× daily (1:5). Infusion: 2–4 g dried herb per cup, up to 3× daily. Duration: 2–6 weeks for catarrh episodes; lower doses intermittently for chronic patterns. Use as formula component rather than standalone.',
+      'Extract: 5–10 ml, up to 3× daily (1:5). Infusion: 2–4 g dried herb per cup, up to 3× daily. Duration: 2–6 weeks for catarrh episodes; lower doses intermittently for chronic patterns. Use as formula component rather than standalone.',
     spiritual_layer:
       'Ground Ivy is the creeping, clearing ally — she threads through dense undergrowth and stuck spaces, gently lifting and drying hidden accumulations. The old "alehoof" name reminds us she was trusted enough to preserve and clarify beer before hops replaced her — a testament to both her antimicrobial properties and her place in daily European life. She teaches that we should attend to the lingering, low-grade congestion before it hardens — that the subtle accumulations in sinuses, ears, gut and emotional body require regular gentle clearing. She whispers: Stagnant residues in my head, chest and gut are gently cleared. I breathe and think more freely. I attend to the subtle before it becomes the stuck.',
     best_preparation:
-      'Formula component combined with other respiratory and digestive herbs. Infusion or tincture for 2–6 week courses during catarrh episodes. Screen for liver disease and pregnancy before recommending. Avoid high or prolonged doses.',
+      'Formula component combined with other respiratory and digestive herbs. Infusion or extract for 2–6 week courses during catarrh episodes. Screen for liver disease and pregnancy before recommending. Avoid high or prolonged doses.',
     caution_level: 'LOW-MEDIUM',
     safe_pregnancy: null,
     status:
@@ -3468,7 +3468,7 @@ const HERBS = [
       'Drug interactions: levothyroxine (MONITOR TSH), diabetes meds (MONITOR glucose), anticoagulants (monitor), immunosuppressants (monitor)',
     ],
     dosage_range:
-      'Fresh leaf tea: 5–10 fresh leaves steeped 5–10 minutes, 2–3× daily — most potent and pleasant. Dried leaf tea: 1–2 tsp, 2–3× daily. Tincture: 30–60 drops, 2–3× daily. Standardised extract: 300–600 mg, 2× daily. Cycling: 8–12 weeks on, 2–4 weeks off.',
+      'Fresh leaf tea: 5–10 fresh leaves steeped 5–10 minutes, 2–3× daily — most potent and pleasant. Dried leaf tea: 1–2 tsp, 2–3× daily. Extract: 30–60 drops, 2–3× daily. Standardised extract: 300–600 mg, 2× daily. Cycling: 8–12 weeks on, 2–4 weeks off.',
     spiritual_layer:
       'Tulsi — "the incomparable one" — is perhaps the most revered herb in Ayurvedic and Hindu tradition. She is dedicated to Lakshmi and Krishna; every traditional Indian household keeps a Tulsi plant as a living sacred presence. She is sattvic — pure, clarity-producing, consciousness-elevating. She teaches that the sacred lives in the everyday, that daily ritual transforms ordinary action into medicine for the soul, that reverence elevates health and health elevates reverence. She whispers: I am resilient. I am calm and clear. My heart is open. I am sacred and whole. I am elevated and grounded simultaneously. I am at peace with what is.',
     best_preparation:
@@ -3537,11 +3537,11 @@ const HERBS = [
       'Drug interactions: benzodiazepines (additive — reduce doses), alcohol (avoid), hormone therapies (monitor), antihistamines (enhanced drowsiness)',
     ],
     dosage_range:
-      'Tincture: 1–3 ml (20–60 drops), 30–60 minutes before bed for sleep. Calming or digestive: 0.5–1 ml before dinner. Tea: 0.5–1 tsp dried strobiles per 250 ml, covered steep 10–15 minutes, 1–2× daily. Evening use only for sedative purposes.',
+      'Extract: 1–3 ml (20–60 drops), 30–60 minutes before bed for sleep. Calming or digestive: 0.5–1 ml before dinner. Tea: 0.5–1 tsp dried strobiles per 250 ml, covered steep 10–15 minutes, 1–2× daily. Evening use only for sedative purposes.',
     spiritual_layer:
       'Hops is the grounding sedative — the herb that helps the body "stand down" after battle, that signals to the activated nervous system that the threat has passed and rest is now permitted. She is heavy, earthy, bitter — medicine that makes no pretence of subtlety, that announces her arrival with unmistakable weight. She teaches that rest is not weakness but recovery, that the body cannot always be at full activation, that the nervous system requires periods of genuine downregulation to heal and regenerate. She whispers: The tension releases. The mental chatter quiets. You have done enough today. Your body knows how to rest. Let the weight of the day be laid down.',
     best_preparation:
-      'Evening use only for sedative purposes. Tincture in 65% ethanol for best bitter acid extraction. Classic combination with Valerian for sleep — most evidence-based pairing. Screen for depression and oestrogen-sensitive conditions before recommending. Short-term use preferred for acute insomnia; monitor mood with longer use.',
+      'Evening use only for sedative purposes. Extract in 65% ethanol for best bitter acid extraction. Classic combination with Valerian for sleep — most evidence-based pairing. Screen for depression and oestrogen-sensitive conditions before recommending. Short-term use preferred for acute insomnia; monitor mood with longer use.',
     caution_level: 'MEDIUM',
     safe_pregnancy: false,
     status:
@@ -3603,7 +3603,7 @@ const HERBS = [
       'Drug interactions: diuretics (monitor electrolytes), lithium (monitor levels), diabetes meds (monitor glucose)',
     ],
     dosage_range:
-      'Tincture: 30–60 drops, 2–3× daily. Infusion: 1–2 tsp dried herb per 250 ml, steeped 10–15 minutes, 2–3× daily. Standardised extract (900 mg/day used in clinical trial comparable to hydrochlorothiazide). Safe for weeks to months of use with electrolyte awareness.',
+      'Extract: 30–60 drops, 2–3× daily. Infusion: 1–2 tsp dried herb per 250 ml, steeped 10–15 minutes, 2–3× daily. Standardised extract (900 mg/day used in clinical trial comparable to hydrochlorothiazide). Safe for weeks to months of use with electrolyte awareness.',
     spiritual_layer:
       'Horsetail is one of the oldest living plants on Earth — a 300 million year old lineage that survived mass extinctions, glaciations and continental drift unchanged. She is the "living fossil" — teaching structural integrity through deep time, resilience through consistency, the building of inner scaffolding that outlasts all apparent catastrophe. She carries the mineral memory of ancient seas in her silica-dense stems. She teaches that true structural strength is built slowly, mineral by mineral, over time — that bones, connective tissue and boundaries are cultivated through patient, consistent nourishment. She whispers: My structure is strong. I am built to last. My bones and tissues are mineralised with ancient wisdom. I stand upright through time.',
     best_preparation:
@@ -3703,7 +3703,7 @@ const HERBS = [
     ],
     pharmacology:
       'Primary bioactives: flavonoids — quercetin (positive inotrope; increases cardiac contractility via improved calcium handling and cellular energy metabolism; NOT stimulatory — increases efficiency not rate), hyperoside (cardiac contractility; vascular effects; neuroprotective), vitexin and isovitexin (cardiovascular support; mild anxiolytic via GABA activity), OPC proanthocyanidins (1–3%; antioxidant more potent than vitamin C; vascular wall integrity; endothelial health). Multiple clinical trials; German Commission E monograph; SPICE and WS1442 standardised extract studies. Minimum 8 weeks for cardiovascular benefit; peak benefit 3–6 months. Grade B+ positive inotropic; Grade B+ antioxidant cardiovascular; Grade A safety.',
-    flavor_profile: 'Gently sweet, slightly tart and warmly floral — pleasant as tea or tincture',
+    flavor_profile: 'Gently sweet, slightly tart and warmly floral — pleasant as tea or extract',
     contraindications: [
       'Serious heart disease — use under medical supervision and alongside (not replacing) pharmaceutical cardiac medications',
       'Cardiac glycosides (digoxin) — potential additive positive inotropic effect; consult cardiologist; dose adjustment may be needed',
@@ -3733,7 +3733,7 @@ const HERBS = [
       'Drug interactions: digoxin (monitor — additive inotropic), antihypertensives (monitor BP), PDE5 inhibitors (monitor hypotension), nitrates (monitor hypotension)',
     ],
     dosage_range:
-      'Tincture: 40–80 drops, 2–3× daily. Standardised extract (WS1442 or equivalent): 300–600 mg, 2–3× daily. Tea: 1–2 tsp dried leaf and flower per 250 ml, steeped 10–15 minutes, 2–3× daily. Minimum 8 weeks before assessing cardiovascular benefit; peak benefit at 3–6 months of consistent use.',
+      'Extract: 40–80 drops, 2–3× daily. Standardised extract (WS1442 or equivalent): 300–600 mg, 2–3× daily. Tea: 1–2 tsp dried leaf and flower per 250 ml, steeped 10–15 minutes, 2–3× daily. Minimum 8 weeks before assessing cardiovascular benefit; peak benefit at 3–6 months of consistent use.',
     spiritual_layer:
       'Hawthorn is the heart herb above all others — the thorned guardian of the emotional heart as much as the physical one. In Celtic tradition she is the May tree, the tree of Beltane, the threshold guardian between worlds. Her thorns protect; her flowers open. She teaches that real cardiac strength requires vulnerability, that the open heart is not the weak heart but the most resilient one — the one that can receive love and give it without breaking. She teaches that grief is not weakness but the price of love, and that moving through grief opens the heart to greater capacity. She whispers: Your heart is strong enough to be open. Real strength is vulnerability. I strengthen you from the inside as I open you to connection.',
     best_preparation:
@@ -3802,7 +3802,7 @@ const HERBS = [
       'Drug interactions: Nitrates (ABSOLUTELY CONTRAINDICATED), antihypertensives (monitor), Warfarin (monitor INR), other PDE5 inhibitors (AVOID)',
     ],
     dosage_range:
-      'Tincture: 30–60 drops, 1–2× daily. Standardised extract (icariin-standardised): 500–1500 mg daily. Decoction: 1–2 g dried aerial parts per 250 ml, simmered 15 minutes. Cumulative baseline improvement over 2–4 weeks. Acute effect 1–2 hours.',
+      'Extract: 30–60 drops, 1–2× daily. Standardised extract (icariin-standardised): 500–1500 mg daily. Decoction: 1–2 g dried aerial parts per 250 ml, simmered 15 minutes. Cumulative baseline improvement over 2–4 weeks. Acute effect 1–2 hours.',
     spiritual_layer:
       '"Yin Yang Huo" — literally "herbal fire for yang." Epimedium teaches the integration of masculine activation with deeper nourishment, of sexual fire with constitutional essence. The famous name comes from a goat herder who noticed his goats\' dramatically increased sexual activity after grazing on this plant — folk observation confirmed two millennia later by molecular pharmacology. She teaches that sexual vitality is not separate from overall vitality, that the same fire that animates sexuality also animates creativity, courage and authentic power. She whispers: My constitutional fire awakens. My circulation opens. My confidence rises from deep roots. I am awake in my body and vital in my expression.',
     best_preparation:
@@ -3869,7 +3869,7 @@ const HERBS = [
       'Drug interactions: thyroid meds (monitor TSH), diabetes meds (monitor glucose); otherwise minimal',
     ],
     dosage_range:
-      'Dried leaf powder: 1–2 teaspoons (5–10 g) in water, smoothie or food, 1–2× daily. Fresh leaf infusion: young leaves steeped 5–10 minutes, 1–2× daily. Tincture: 20–40 drops, 1–2× daily. Safe indefinite daily use — treat as nutritive food-medicine foundation.',
+      'Dried leaf powder: 1–2 teaspoons (5–10 g) in water, smoothie or food, 1–2× daily. Fresh leaf infusion: young leaves steeped 5–10 minutes, 1–2× daily. Extract: 20–40 drops, 1–2× daily. Safe indefinite daily use — treat as nutritive food-medicine foundation.',
     spiritual_layer:
       'Moringa grows in tropical and subtropical soils that other trees would struggle with, providing complete nourishment from leaves alone — the "Miracle Tree" name earned by feeding malnourished communities across Africa and South Asia. She is the great nourisher, the teacher that true vitality flows from thorough nutrition rather than stimulation, that the body\'s deepest intelligence activates when given what it actually needs. She asks not to be taken dramatically but consistently — a teaspoon of green powder in the morning, day after day, quietly rebuilding what modern living erodes. She whispers: Eat fully. Nourish deeply. Your body deserves complete nutrition. I am whole food medicine. I am the tree of life.',
     best_preparation:
@@ -3936,11 +3936,11 @@ const HERBS = [
       'Drug interactions: cardiac medications (monitor — consult cardiologist), hormonal therapies (monitor), MAOIs (consult)',
     ],
     dosage_range:
-      'Tincture: 20–40 drops (1–2 ml), 2–3× daily. Tea: 1–2 g dried herb steeped 10–15 minutes, 2–3× daily. Daytime appropriate. Follicular phase preferred for menstrual regulation work. For acute PMS: increase to 3× daily starting 5–7 days before expected period.',
+      'Extract: 20–40 drops (1–2 ml), 2–3× daily. Tea: 1–2 g dried herb steeped 10–15 minutes, 2–3× daily. Daytime appropriate. Follicular phase preferred for menstrual regulation work. For acute PMS: increase to 3× daily starting 5–7 days before expected period.',
     spiritual_layer:
       'Motherwort embodies the fierce mother archetype — the paradox of supreme tenderness held alongside unwavering strength. Her name is her teaching: the mother\'s heart must be strong enough to feel deeply while remaining stable under pressure. She is Fire (courage, passion, activation) grounded in Earth (stability, presence, love). For 1000 years, she has been the herb women reach for when they need to feel braver, when they need to say no from love rather than fear, when they need their heart to be both open and protected. She whispers: Your heart is stronger than you know. Feel deeply and stand firm. Tenderness and strength are the same.',
     best_preparation:
-      'Tincture for reliable leonurine extraction and convenient dosing. Fresh-herb tincture at peak bloom for highest potency. Cycle-aware timing: follicular phase for menstrual regulation; throughout cycle for heart and anxiety support. Postpartum use: weeks 2–12 after bleeding stabilises. Pairs definitively with Hawthorn for comprehensive heart medicine.',
+      'Extract for reliable leonurine extraction and convenient dosing. Fresh-herb extract at peak bloom for highest potency. Cycle-aware timing: follicular phase for menstrual regulation; throughout cycle for heart and anxiety support. Postpartum use: weeks 2–12 after bleeding stabilises. Pairs definitively with Hawthorn for comprehensive heart medicine.',
     caution_level: 'MEDIUM',
     safe_pregnancy: null,
     status:
@@ -4065,7 +4065,7 @@ const HERBS = [
       'Drug interactions: None documented; iron supplements (space by 1–2 hours)',
     ],
     dosage_range:
-      'Tea: 2–4 g dried leaf steeped 10–15 minutes (longer steep extracts more tannins), 2–3× daily. Tincture: 20–40 drops (1–2 ml), 2–3× daily. Safe indefinite long-term daily use — effects cumulative; minimum 2–4 menstrual cycles before assessing full benefit. Luteal phase emphasis (5–7 days before and through menstruation) for heavy bleeding support.',
+      'Tea: 2–4 g dried leaf steeped 10–15 minutes (longer steep extracts more tannins), 2–3× daily. Extract: 20–40 drops (1–2 ml), 2–3× daily. Safe indefinite long-term daily use — effects cumulative; minimum 2–4 menstrual cycles before assessing full benefit. Luteal phase emphasis (5–7 days before and through menstruation) for heavy bleeding support.',
     spiritual_layer:
       'Lady\'s Mantle is the gentle grandmother — patient, consistent, foundational. Named for the Virgin Mary\'s protective cloak, she represents gentle protection and the slow work of restoration. She collects dew in her cupped leaves each morning — a daily practice of receiving, of gathering, of patient accumulation. She teaches that deep healing is slow work, that consistency matters more than intensity, that what life and time have worn thin can be rebuilt through patient, repeated attention. She is not dramatic but she is transformative, working cycle by cycle to rebuild uterine tissue, tone blood vessels, and return the body to its natural order. She whispers: You will be restored. Trust the slow repair. I am with you in the patient work, cycle by cycle.',
     best_preparation:
@@ -4104,9 +4104,9 @@ const HERBS = [
     flavor_profile: 'Floral, sweet, slightly herbaceous and distinctively aromatic — pleasant and universally accessible',
     contraindications: [
       'Essential oil undiluted on skin — ALWAYS dilute to 2–3% in carrier oil; never apply neat (irritation risk)',
-      'Pregnancy first trimester — CAUTION with high-dose essential oil; tea and tincture are safer; generally regarded as safe after first trimester',
+      'Pregnancy first trimester — CAUTION with high-dose essential oil; tea and extract are safer; generally regarded as safe after first trimester',
       'Infants under 6 months — avoid essential oil (immature detoxification); diluted tea is safe',
-      'Essential oil internally undiluted — AVOID: mucous membrane irritation; use tincture or tea instead',
+      'Essential oil internally undiluted — AVOID: mucous membrane irritation; use extract or tea instead',
       'Otherwise: Grade A safety — suitable for all ages, all populations, all medications',
     ],
     herb_to_herb_synergy: [
@@ -4131,11 +4131,11 @@ const HERBS = [
       'Drug interactions: benzodiazepines (mild theoretical additive; generally safe); otherwise NONE — safe with all medications',
     ],
     dosage_range:
-      'Tea: 1–2 g dried flowers per 250 ml, steeped 5–10 minutes, 1–3× daily. Tincture: 20–40 drops, 2–4× daily or as needed. Essential oil aromatic: 2–5 drops on diffuser, pillow or tissue — fastest effect (seconds to minutes). Essential oil topical (diluted 2–3%): massage to temples, neck and shoulders for tension headaches. Never ingest essential oil undiluted.',
+      'Tea: 1–2 g dried flowers per 250 ml, steeped 5–10 minutes, 1–3× daily. Extract: 20–40 drops, 2–4× daily or as needed. Essential oil aromatic: 2–5 drops on diffuser, pillow or tissue — fastest effect (seconds to minutes). Essential oil topical (diluted 2–3%): massage to temples, neck and shoulders for tension headaches. Never ingest essential oil undiluted.',
     spiritual_layer:
       'Lavender is the harmoniser, the herb of paradox resolved — she teaches the nervous system that calm and clarity are not opposites, that rest and awareness coexist, that one can be fully present without being fully activated. In Metal element terms, she is the boundary herb: strengthening the membrane between self and the world so that what comes in can be processed without overwhelming, and what goes out reflects genuine presence rather than reactivity. Her two-thousand-year track record across every major healing tradition speaks to something fundamental about human nervous systems and the medicine they need. She whispers: Peace does not mean sleep. You can be calm and awake. You can be open and safe. You can hold both clarity and rest. Ease is your birthright.',
     best_preparation:
-      'Aromatic inhalation (essential oil on tissue or diffuser) for acute anxiety — fastest route, seconds to minutes. Daily tea for foundational anxiety baseline. Diluted topical oil plus internal tincture for tension headaches. Safe as a daily indefinite foundation herb for all populations. No drug screening necessary.',
+      'Aromatic inhalation (essential oil on tissue or diffuser) for acute anxiety — fastest route, seconds to minutes. Daily tea for foundational anxiety baseline. Diluted topical oil plus internal extract for tension headaches. Safe as a daily indefinite foundation herb for all populations. No drug screening necessary.',
     caution_level: 'LOW',
     safe_pregnancy: null,
     status:
@@ -4170,7 +4170,7 @@ const HERBS = [
     flavor_profile: 'Fresh, lemon-scented, gently sweet and brightening — one of the most pleasantly aromatic medicinal herbs',
     contraindications: [
       'Thyroid conditions (hypothyroidism) — MONITOR: historical concern about thyrotropin suppression; monitor TSH with regular high-dose use; consult provider',
-      'Pregnancy — SAFE: gentle, soothing, traditionally used; tea and tincture appropriate',
+      'Pregnancy — SAFE: gentle, soothing, traditionally used; tea and extract appropriate',
       'Breastfeeding — SAFE: mild and supportive; no documented adverse effects',
       'No significant contraindications or drug interactions — Grade A safety profile',
     ],
@@ -4196,11 +4196,11 @@ const HERBS = [
       'Drug interactions: None confirmed; thyroid meds (monitor TSH with high-dose use); sedatives (mild additive — usually beneficial)',
     ],
     dosage_range:
-      'Tincture (fresh herb most potent for viral use): 20–40 drops, 2–4× daily. Tea: 2–4 g dried herb per 250 ml, steeped 5–10 minutes, 2–3× daily. Topical (cold sores): fresh herb juice or cooled strong tea applied 3–4× daily plus internal tincture simultaneously. Safe indefinite daily use.',
+      'Extract (fresh herb most potent for viral use): 20–40 drops, 2–4× daily. Tea: 2–4 g dried herb per 250 ml, steeped 5–10 minutes, 2–3× daily. Topical (cold sores): fresh herb juice or cooled strong tea applied 3–4× daily plus internal extract simultaneously. Safe indefinite daily use.',
     spiritual_layer:
       'Lemon Balm opens the heart\'s window to lightness — she is the herb of paradox, producing calm and joy simultaneously rather than forcing a choice between them. Her name "Melissa" means bee in Greek, and her flowers are beloved by bees: she carries the quality of sweet, purposeful industry combined with the ease of a creature that finds nourishment everywhere it lands. She is the gentle guardian of ease, teaching the nervous system that safety and openness can coexist, that the heart can be calm without being closed, bright without being agitated. She whispers: You are safe. Your heart is open. Breathe. Release. Feel light. I am the sweetness at the centre of the nervous system\'s storm.',
     best_preparation:
-      'Fresh herb tincture for maximum viral support (highest rosmarinic acid). Daily tea for nervine and mood foundation. Cold sore protocol: topical fresh herb simultaneous with internal tincture (synergistic). Safe in all populations including pregnancy, breastfeeding, children. No drug interaction screening required.',
+      'Fresh herb extract for maximum viral support (highest rosmarinic acid). Daily tea for nervine and mood foundation. Cold sore protocol: topical fresh herb simultaneous with internal extract (synergistic). Safe in all populations including pregnancy, breastfeeding, children. No drug interaction screening required.',
     caution_level: 'LOW',
     safe_pregnancy: true,
     status:
@@ -4260,7 +4260,7 @@ const HERBS = [
       'Drug interactions: antihypertensives (monitor BP), benzodiazepines (mild additive — usually beneficial for tapering); otherwise minimal',
     ],
     dosage_range:
-      'Tea: 1–2 tsp dried flowers steeped 5–15 minutes (longer steep extracts more mucilage and flavonoids), 2–3× daily. Tincture: 30–60 drops, 2–3× daily. Children\'s fever: 1–2 tsp flowers steeped 5–10 minutes, given warm 3–4× daily during acute fever. Safe indefinite daily use — effects improve and deepen over months of consistent use.',
+      'Tea: 1–2 tsp dried flowers steeped 5–15 minutes (longer steep extracts more mucilage and flavonoids), 2–3× daily. Extract: 30–60 drops, 2–3× daily. Children\'s fever: 1–2 tsp flowers steeped 5–10 minutes, given warm 3–4× daily during acute fever. Safe indefinite daily use — effects improve and deepen over months of consistent use.',
     spiritual_layer:
       'Linden is the tree of love — in Germanic and Nordic traditions she is sacred to Freya, the goddess of love; village assemblies were held beneath her canopy; she is the tree where judgements of the heart were made. Her sweetness is not passive: it is the active, generous sweetness of a tree that has stood for centuries providing shade, medicine, food for bees and sanctuary for communities. She teaches that gentleness is strength, that cooling someone\'s fever with loving care is as effective as forcing relief, that emotional opening need not be traumatic. She teaches that one can arrive at vulnerability gradually, safely, at the nervous system\'s own pace. She whispers: I am gently held. My heart can open safely. Ease comes naturally. Gentleness is my strength.',
     best_preparation:
@@ -4325,7 +4325,7 @@ const HERBS = [
       'Drug interactions: None documented',
     ],
     dosage_range:
-      'Fresh flower infusion: 5–10 fresh flowers steeped 5–10 minutes, 1–2× daily (evening optimal). Dried flower infusion: 2–4 g steeped 5–10 minutes, 1–2× daily. Tincture (fresh flowers): 15–30 drops, 1–2× daily. Aroma is the primary therapeutic vehicle — fresh flowers offer the most profound aromatic experience.',
+      'Fresh flower infusion: 5–10 fresh flowers steeped 5–10 minutes, 1–2× daily (evening optimal). Dried flower infusion: 2–4 g steeped 5–10 minutes, 1–2× daily. Extract (fresh flowers): 15–30 drops, 1–2× daily. Aroma is the primary therapeutic vehicle — fresh flowers offer the most profound aromatic experience.',
     spiritual_layer:
       'Jasmine is the night-blooming flower — she opens in darkness when most flowers close, teaching that beauty happens in surrender, not effort, and that vulnerability blossoms in the tender hours. For centuries in Persia, India and the Middle East she has been the flower of spiritual ceremony, love and the sacred feminine. Her fragrance is said to dissolve the armour around the heart without force — gently, inevitably, through the olfactory gateway that bypasses rational resistance and speaks directly to the limbic soul. She teaches that fragrance is essence, that emotion is truth, that opening the heart is not dangerous but liberating. She whispers: My heart is open. I am joyful. I am vulnerable. I am beautiful. Beauty happens in the dark.',
     best_preparation:
@@ -4390,7 +4390,7 @@ const HERBS = [
       'Drug interactions: diuretics (monitor), nephrotoxic drugs (avoid), diabetes meds (monitor)',
     ],
     dosage_range:
-      'Tea: 2–3 g freshly crushed berries per 150 ml, steeped 10–15 minutes, 2–3× daily — MAXIMUM 2–4 weeks. Tincture: 1–2 ml, 2–3× daily for digestive use. Always combine with high fluid intake. Duration cap is non-negotiable.',
+      'Tea: 2–3 g freshly crushed berries per 150 ml, steeped 10–15 minutes, 2–3× daily — MAXIMUM 2–4 weeks. Extract: 1–2 ml, 2–3× daily for digestive use. Always combine with high fluid intake. Duration cap is non-negotiable.',
     spiritual_layer:
       'Juniper is the cleansing fire and clear waters — one of the oldest ritual plants in the Northern Hemisphere, burned as purifying smoke from Scandinavia to Tibet, its smoke used to clear spaces of stagnant or harmful energies. She teaches that purification is powerful and necessary but must be time-limited and respectful of the organs that do the clearing — the kidney and bladder are not filters to be permanently flushed but living organs requiring gentleness after the work is done. She whispers: I release what I no longer need and honour the vessels that carry my waters. Purification is powerful. Duration matters.',
     best_preparation:
@@ -4454,7 +4454,7 @@ const HERBS = [
       'Drug interactions: SSRIs/SNRIs (MONITOR — consult prescriber), MAOIs (CONTRAINDICATED), psychiatric meds (consult)',
     ],
     dosage_range:
-      'Fermented leaf infusion: 0.5–1 g per 250 ml, steeped 5–10 minutes, 1–2× daily (fermented is more concentrated). Dried leaf infusion: 1–2 g, steeped 5–10 minutes, 1–3× daily. Tincture: 20–30 drops, 1–3× daily. Standardised extract: 200–400 mg (mesembrine-standardised), 1–2× daily. Morning or afternoon optimal.',
+      'Fermented leaf infusion: 0.5–1 g per 250 ml, steeped 5–10 minutes, 1–2× daily (fermented is more concentrated). Dried leaf infusion: 1–2 g, steeped 5–10 minutes, 1–3× daily. Extract: 20–30 drops, 1–3× daily. Standardised extract: 200–400 mg (mesembrine-standardised), 1–2× daily. Morning or afternoon optimal.',
     spiritual_layer:
       'Kanna carries the social and emotional wisdom of the Khoi people of South Africa — a succulent that has been used for centuries in ceremony, in preparation for difficult conversations, in the facilitation of community and connection. She teaches that mood is not fixed, that pleasure is medicine, that connection with others is a valid therapeutic pathway. The Khoi understood something that Western psychiatry has only recently begun to articulate: that serotonin is not just neurochemistry but a felt sense of belonging and safety in the world. She whispers: Your mood is valid. Your pleasure is worthy. Your connection is sacred. Your joy heals. Community heals. You are whole.',
     best_preparation:
@@ -4779,7 +4779,7 @@ const HERBS = [
       'Drug interactions: Warfarin (MONITOR INR), immunosuppressants (theoretical), diabetes meds (monitor)',
     ],
     dosage_range:
-      'Infusion: 2–4 g dried leaf per 250 ml, steeped 10–20 minutes, 1–3× daily. Tincture: 2–5 ml, 1–3× daily. Powder: 1–5 g/day in smoothies or food. Long-term low-dose daily use typical — treat as food rather than short-course medicine.',
+      'Infusion: 2–4 g dried leaf per 250 ml, steeped 10–20 minutes, 1–3× daily. Extract: 2–5 ml, 1–3× daily. Powder: 1–5 g/day in smoothies or food. Long-term low-dose daily use typical — treat as food rather than short-course medicine.',
     spiritual_layer:
       'Lucerne (Alfalfa) is named from the Arabic "al-fac-facah" — "father of all foods" — a name reflecting her extraordinary capacity to concentrate nourishment from deep in the earth. Her roots reach 20 feet or more into the soil, accessing mineral layers unavailable to most plants, accumulating what they find into leaves that humans then consume. She is a teacher of deep nourishment, of the patient work of reaching down for sustenance rather than accepting only what the surface provides. She is not dramatic — a quiet, green, nourishing presence — but her consistency over months and years rebuilds what depletion has eroded. She whispers: Nourishment comes from depth. Patient, daily, gentle accumulation builds what dramatic interventions cannot.',
     best_preparation:
@@ -5030,11 +5030,11 @@ const HERBS = [
       'Drug interactions: NSAIDs (additive — coordinate), Warfarin (monitor INR), Aspirin (additive — coordinate)',
     ],
     dosage_range:
-      'Tincture (fresh herb most potent): 20–40 drops, 2–3× daily (after meals optimal for GI benefit). Infusion: 2–4 g dried herb steeped 10–15 minutes, 2–3× daily. Safe indefinite long-term use as NSAID alternative. Distinctive vanilla aroma makes compliance pleasant.',
+      'Extract (fresh herb most potent): 20–40 drops, 2–3× daily (after meals optimal for GI benefit). Infusion: 2–4 g dried herb steeped 10–15 minutes, 2–3× daily. Safe indefinite long-term use as NSAID alternative. Distinctive vanilla aroma makes compliance pleasant.',
     spiritual_layer:
       'Meadowsweet is the gentle healer — the queen of the meadow who grows in damp lowlands and riverbanks, offering her cream-coloured flowers as a scent of sweetness and healing. She was the sacred herb of the druids, one of three most honoured plants. She teaches that pain can be met with gentleness, that inflammation need not be fought with harsh pharmaceutical force, that the wisdom of the body\'s healing response deserves support rather than suppression. Her discovery as the source of aspirin was simultaneously a triumph and a tragedy — the chemical was isolated and stripped of the tannins that protected the stomach, creating a drug that healed with one hand and damaged with the other. She reminds us: the whole plant knows something the extracted chemical has forgotten. She whispers: I am comfortable. My body is at ease. I heal with kindness. The whole is wiser than the part.',
     best_preparation:
-      'Fresh herb tincture for maximum potency. Tea for pleasant daily GI and pain support — the vanilla aroma makes this an enjoyable daily medicine. After-meals dosing for acid and GI benefit. Screen for aspirin sensitivity and Warfarin before recommending. Excellent NSAID alternative for long-term sustainable pain management.',
+      'Fresh herb extract for maximum potency. Tea for pleasant daily GI and pain support — the vanilla aroma makes this an enjoyable daily medicine. After-meals dosing for acid and GI benefit. Screen for aspirin sensitivity and Warfarin before recommending. Excellent NSAID alternative for long-term sustainable pain management.',
     caution_level: 'LOW-MEDIUM',
     safe_pregnancy: null,
     status:
@@ -5093,7 +5093,7 @@ const HERBS = [
       'Drug interactions: hepatotoxic meds (coordinate — silymarin protective); CYP450 (minor; generally not significant)',
     ],
     dosage_range:
-      'Standardised extract (70–80% silymarin): 200–400 mg, 2–3× daily (most researched and reliable form). Seed powder: 1–2 tsp (3–6 g), 1–2× daily. Tincture: 60–90 drops, 2–3× daily. Safe long-term indefinite preventive use; 8–12+ weeks for recovery from acute liver damage.',
+      'Standardised extract (70–80% silymarin): 200–400 mg, 2–3× daily (most researched and reliable form). Seed powder: 1–2 tsp (3–6 g), 1–2× daily. Extract: 60–90 drops, 2–3× daily. Safe long-term indefinite preventive use; 8–12+ weeks for recovery from acute liver damage.',
     spiritual_layer:
       'Milk Thistle is Mary\'s Thistle — the white-veined, spiny-leaved plant of legend whose milk-white markings are said to be drops from the Virgin\'s milk as she nursed the infant Jesus. She is the guardian, the fierce protector with thorns on the outside and medicine within. She teaches that protection and regeneration are the same impulse — the thorns protect what the silymarin repairs. She stands at the liver, our primary detoxification organ, our metabolic gatekeeper, and says: nothing passes here that should not pass. The liver regenerates; the damage is recoverable; the body knows how to repair itself when supported. She whispers: My liver is protected. I am detoxifying. I heal. My body heals itself. Damage is recoverable.',
     best_preparation:
@@ -5160,7 +5160,7 @@ const HERBS = [
       'Drug interactions: CNS depressants (additive), Warfarin (monitor INR), emmenagogue drugs (additive)',
     ],
     dosage_range:
-      'Tea: 0.5–2 g dried herb per 250 ml, steeped covered 10–15 minutes, 1–3× daily. Lower range for dreamwork (0.5–1 g evening); higher for digestion and menstrual use (1.5–2 g). Tincture: 2–4 ml, 1–3× daily. CYCLIC USE: several weeks on, then a break. Dream protocol: 7 nights on, at least 7 nights off.',
+      'Tea: 0.5–2 g dried herb per 250 ml, steeped covered 10–15 minutes, 1–3× daily. Lower range for dreamwork (0.5–1 g evening); higher for digestion and menstrual use (1.5–2 g). Extract: 2–4 ml, 1–3× daily. CYCLIC USE: several weeks on, then a break. Dream protocol: 7 nights on, at least 7 nights off.',
     spiritual_layer:
       'Mugwort is the lunar, liminal herb — guardian of the gates between waking and dreaming, between the conscious and unconscious, between the body and the spirit. She is "Mother of Herbs" — the sacred plant of Artemis, goddess of the moon, the hunt and the wildness of life. She has been used by midwives, dreamers, seers and those crossing rites of passage for 2000+ years across European, Asian and Ayurvedic traditions. She teaches that dreams are not random noise but a guidance system for the soul — that when we honour our dreams and our cycles, we reclaim exiled parts of ourselves and walk more clearly aligned with our deep inner knowing. She whispers: My dreams are wise. My cycles are sacred. I listen to the messages of my body and my subconscious. I walk between worlds with protection, clarity and courage.',
     best_preparation:
@@ -5195,7 +5195,7 @@ const HERBS = [
       'Grade A safety for all populations including children, pregnancy and breastfeeding',
     ],
     pharmacology:
-      'Primary bioactives: mucilage (5–10% dried leaf; polysaccharides forming demulcent protective coating on inflamed mucous membranes), saponins (3–5%; lower surface tension of respiratory secretions; expectorant; antimicrobial; mild immune stimulation), verbascoside (iridoid glycoside 0.5–1%; anti-inflammatory via TNF-α and IL-6 reduction; antioxidant; neuroprotective), flavonoids (1–2%; antioxidant; anti-inflammatory). PREPARATION NOTE: tea/infusion is superior to tincture for demulcent action — mucilage is water-soluble and requires water extraction (not alcohol). Warm tea enhances demulcent coating effect. Grade B+ demulcent; Grade B expectorant; Grade B+ anti-inflammatory; Grade A safety.',
+      'Primary bioactives: mucilage (5–10% dried leaf; polysaccharides forming demulcent protective coating on inflamed mucous membranes), saponins (3–5%; lower surface tension of respiratory secretions; expectorant; antimicrobial; mild immune stimulation), verbascoside (iridoid glycoside 0.5–1%; anti-inflammatory via TNF-α and IL-6 reduction; antioxidant; neuroprotective), flavonoids (1–2%; antioxidant; anti-inflammatory). PREPARATION NOTE: tea/infusion is superior to extract for demulcent action — mucilage is water-soluble and requires water extraction (not alcohol). Warm tea enhances demulcent coating effect. Grade B+ demulcent; Grade B expectorant; Grade B+ anti-inflammatory; Grade A safety.',
     flavor_profile: 'Mild, slightly sweet and pleasantly herbaceous — among the most palatable medicinal herbs; flower preparation gentler and more pleasant than leaf',
     contraindications: [
       'Rare Scrophulariaceae family allergy — very rare; discontinue if rash or respiratory sensitivity occurs',
@@ -5230,7 +5230,7 @@ const HERBS = [
     caution_level: 'LOW',
     safe_pregnancy: true,
     status:
-      'Grade A safety — universally safe; all populations including children, pregnancy and breastfeeding. Grade B+ demulcent and anti-inflammatory evidence. Tea superior to tincture. No drug interactions. One of the most universally applicable and gently powerful herbs for respiratory health.',
+      'Grade A safety — universally safe; all populations including children, pregnancy and breastfeeding. Grade B+ demulcent and anti-inflammatory evidence. Tea superior to extract. No drug interactions. One of the most universally applicable and gently powerful herbs for respiratory health.',
   },
 
   // ─────────────────────────────────────────────
@@ -5287,7 +5287,7 @@ const HERBS = [
       'Drug interactions: stimulant meds (monitor), antihypertensives (monitor BP); otherwise minimal',
     ],
     dosage_range:
-      'Decoction: 2–4 g dried root/bark per 250 ml simmered 15–20 minutes, 1–2× daily. Tincture: 2–4 ml, 1–2× daily. Powder/capsules: 500–1000 mg, 1–2× daily. Often used in 4–8 week cycles then reassessed.',
+      'Decoction: 2–4 g dried root/bark per 250 ml simmered 15–20 minutes, 1–2× daily. Extract: 2–4 ml, 1–2× daily. Powder/capsules: 500–1000 mg, 1–2× daily. Often used in 4–8 week cycles then reassessed.',
     spiritual_layer:
       'Muira Puama is "potency wood" — the Amazonian tree whose bark teaches that desire, when aligned with heart and mind and purpose, becomes potency rather than compulsion. The indigenous peoples of the Brazilian Amazon have used her for centuries, understanding that healthy sexuality is inseparable from overall vitality, from connection to life force itself. She teaches that libido is directional: when it flows through the channels of purpose, love and authentic relationship it becomes medicine; when it dissipates in compulsion or anxiety it becomes depletion. She whispers: My desire and my purpose align. My energy rises in service of what truly matters. Potency is rooted in depth, not surface.',
     best_preparation:
@@ -5357,7 +5357,7 @@ const HERBS = [
     spiritual_layer:
       'Nettle is the fierce nourisher — her sting teaches respect before she shares her gifts; the protective defence of something truly generous. She grows in the most nutritionally rich soils — wherever nitrogen and human activity have concentrated the earth\'s wealth, there Nettle appears, pulling up mineral treasure and offering it to whoever has the wisdom to wear gloves and harvest carefully. She teaches that strong boundaries allow generous giving, that fierceness and generosity are not opposites but aspects of the same integrity. She is the reminder that the most nourishing things in life sometimes require something of us before they give. She whispers: I am nourished. My foundations are solid. My bones are strong. My hair and skin glow. I am abundant. My boundaries protect my generosity. I am rooted and rising.',
     best_preparation:
-      'Long-steep infusion (10–15 minutes minimum; overnight preferred for intensive mineral building) — not tincture, not capsules; the minerals are water-soluble and need adequate steeping time in hot water. Generous amounts: 1–2 oz (30–60 g) per quart is traditional. Daily ritual. Safe in pregnancy, breastfeeding, children and all populations except with caution in renal disease and alongside diuretic medications.',
+      'Long-steep infusion (10–15 minutes minimum; overnight preferred for intensive mineral building) — not extract, not capsules; the minerals are water-soluble and need adequate steeping time in hot water. Generous amounts: 1–2 oz (30–60 g) per quart is traditional. Daily ritual. Safe in pregnancy, breastfeeding, children and all populations except with caution in renal disease and alongside diuretic medications.',
     caution_level: 'LOW',
     safe_pregnancy: null,
     status:
@@ -5398,7 +5398,7 @@ const HERBS = [
     herb_to_herb_synergy: [
       'Nettle and Lucerne (Alfalfa) — foundational mineral-rich "green trinity" for comprehensive nutritive rebuilding',
       'Skullcap and Lemon Balm — nervine trio for anxiety with exhaustion; Oatstraw provides mineral foundation',
-      'Milky Oats tincture (fresh Avena sativa) — combined for deep nervous system rehabilitation',
+      'Milky Oats extract (fresh Avena sativa) — combined for deep nervous system rehabilitation',
       'Ashwagandha and Holy Basil — adaptogenic HPA axis support while Oatstraw provides structural mineral foundation',
     ],
     herb_to_herb_caution: [
@@ -5413,7 +5413,7 @@ const HERBS = [
       'Drug interactions: None documented',
     ],
     dosage_range:
-      'Infusion (OPTIMAL — minerals and avenanthramides require water extraction): 1–2 oz (30–60 g) dried oatstraw per quart of just-boiled water, steeped 4–8 hours covered (or overnight), then refrigerate and drink 1–4 cups throughout the day. Short steep (15–20 minutes): gentler and less mineral-rich but still therapeutic. Tincture (milky oats 1:2 fresh): 3–5 ml, 2–3× daily. Duration: 6–12 weeks minimum for burnout recovery; safe indefinitely.',
+      'Infusion (OPTIMAL — minerals and avenanthramides require water extraction): 1–2 oz (30–60 g) dried oatstraw per quart of just-boiled water, steeped 4–8 hours covered (or overnight), then refrigerate and drink 1–4 cups throughout the day. Short steep (15–20 minutes): gentler and less mineral-rich but still therapeutic. Extract (milky oats 1:2 fresh): 3–5 ml, 2–3× daily. Duration: 6–12 weeks minimum for burnout recovery; safe indefinitely.',
     spiritual_layer:
       'Oatstraw is quiet nourishment — she does not announce herself with bitterness or potency but with gentle sweetness and a bright green infusion. She is the "re-mothering" herb — the sense of someone making you soup and reminding you to rest. She teaches that rebuilding comes from small, consistent acts of care rather than heroic surges of willpower, that the nervous system is like a field that needs water, minerals and time to regrow after drought, not more ploughing. She is for the wired-and-tired, the chronically depleted, those who have given so much that they have forgotten what it feels like to be genuinely nourished. She whispers: I nourish myself deeply. Slow steadiness rebuilds me. I am allowed to rest and refill. The field regrows.',
     best_preparation:
@@ -5455,9 +5455,9 @@ const HERBS = [
       'Primary bioactives: volatile oils (4–6% dried herb; carvacrol 20–80% — primary antimicrobial; bactericidal via membrane disruption and metabolic enzyme inhibition; fungicidal via ergosterol synthesis inhibition; antiparasitic; thymol 5–10% — antimicrobial, antispasmodic), rosmarinic acid (1–4%; phenolic; potent NF-κB inhibition; anti-inflammatory; antioxidant), flavonoids — apigenin, luteolin (1–2%; antioxidant; anti-inflammatory). Grade A antimicrobial (in vitro); Grade B+ antifungal; Grade B antiparasitic and anti-inflammatory; Grade A antioxidant; Grade A culinary safety. Carvacrol content varies by variety: Greek and Spanish oregano 20–80%; Turkish varieties often lower — specify high-carvacrol variety for medicinal use.',
     flavor_profile: 'Warm, peppery, slightly bitter and resinously aromatic — characteristic Mediterranean Mediterranean culinary signature',
     contraindications: [
-      'Pregnancy — concentrated tinctures and essential oil CAUTION: emmenagogue potential at high doses; CULINARY amounts entirely safe',
+      'Pregnancy — concentrated extracts and essential oil CAUTION: emmenagogue potential at high doses; CULINARY amounts entirely safe',
       'Breastfeeding — culinary amounts safe; high-dose concentrated forms insufficient data',
-      'Essential oil undiluted internally — DO NOT ingest: GI irritation and toxicity risk; whole herb tea and tincture are safe',
+      'Essential oil undiluted internally — DO NOT ingest: GI irritation and toxicity risk; whole herb tea and extract are safe',
       'Bleeding disorders — minor theoretical antiplatelet activity; generally safe; monitor if severe coagulopathy',
       'Immunosuppressant therapy — may partially stimulate immunity; monitor if intentional immune suppression (transplant, autoimmune medical treatment)',
       'Otherwise: Grade A culinary safety — centuries Mediterranean use with no documented toxicity from whole herb',
@@ -5473,7 +5473,7 @@ const HERBS = [
       'Anticoagulant herbs with Warfarin — mild additive antiplatelet; monitor INR',
     ],
     herb_to_drug_interactions: [
-      'Anticoagulants (Warfarin) — theoretical mild antiplatelet; monitor INR at high doses; generally safe at culinary and standard tincture doses',
+      'Anticoagulants (Warfarin) — theoretical mild antiplatelet; monitor INR at high doses; generally safe at culinary and standard extract doses',
       'Immunosuppressants — immune stimulation may partially counteract; monitor if intentional immunosuppression',
       'No CYP450 interactions documented; safe with all other medications',
     ],
@@ -5483,7 +5483,7 @@ const HERBS = [
       'Drug interactions: anticoagulants (mild theoretical — monitor), immunosuppressants (monitor); otherwise safe with all medications',
     ],
     dosage_range:
-      'Culinary (MOST SUSTAINABLE): 1–2 tbsp fresh or 1–2 tsp dried daily in cooking — indefinitely safe therapeutic food medicine. Tea: 1–2 tsp dried herb steeped 10–15 minutes (warm, covered), 2–3× daily. Tincture: 30–60 drops, 2–3× daily. For acute infection: intensive dosing 2–4 weeks then break. Standardised extract (50%+ carvacrol): 500–1000 mg daily.',
+      'Culinary (MOST SUSTAINABLE): 1–2 tbsp fresh or 1–2 tsp dried daily in cooking — indefinitely safe therapeutic food medicine. Tea: 1–2 tsp dried herb steeped 10–15 minutes (warm, covered), 2–3× daily. Extract: 30–60 drops, 2–3× daily. For acute infection: intensive dosing 2–4 weeks then break. Standardised extract (50%+ carvacrol): 500–1000 mg daily.',
     spiritual_layer:
       'Oregano is "joy of the mountain" in Greek — ganos (joy) and oros (mountain) — sacred to Aphrodite, goddess of love, who grew it on Mount Olympus. She is the fierce protector whose pungent warmth teaches that love sometimes looks fierce, that genuine protection sets boundaries, that the most loving act can be the removal of what harms. Her antimicrobial precision — discerning what belongs in the body and what must be expelled — is a teaching about healthy immunity at every level: physical, emotional and relational. She grows on mountain heights where conditions are harsh, teaching that resilience develops in difficult terrain. She whispers: I am protected. My boundaries are strong. I discern what belongs. I am fierce and loving simultaneously. My strength protects myself and others.',
     best_preparation:
@@ -5548,11 +5548,11 @@ const HERBS = [
       'Drug interactions: SSRIs (monitor — generally compatible), benzodiazepines (additive — coordinate with prescriber), CNS depressants (additive sedation)',
     ],
     dosage_range:
-      'Tincture (fresh herb most potent): 20–40 drops, 2–3× daily, or 30–40 drops 30–60 minutes before sleep for racing-mind insomnia. Infusion: 2–4 g dried herb steeped 10–15 minutes, 2–3× daily. Safe ongoing indefinite use. No tolerance or dependence development. Afternoon and evening dosing optimal; safe throughout day for most.',
+      'Extract (fresh herb most potent): 20–40 drops, 2–3× daily, or 30–40 drops 30–60 minutes before sleep for racing-mind insomnia. Infusion: 2–4 g dried herb steeped 10–15 minutes, 2–3× daily. Safe ongoing indefinite use. No tolerance or dependence development. Afternoon and evening dosing optimal; safe throughout day for most.',
     spiritual_layer:
       'Passionflower is the surrenderer and the releaser — her intricate climbing vine teaches flexibility and yielding; her impossibly complex flower (designed by Spanish missionaries to symbolise the Passion of Christ) holds all the beauty and paradox of emotional complexity. She teaches the sacred work of letting go: releasing the tension we grip, processing the emotions we hold, surrendering what no longer serves. She opens the hands that have been clenched around fear, grief and urgency, and teaches the body that it is safe to rest while remaining present. She whispers: It is safe to feel. It is safe to rest. You can let go now. Surrender is not defeat. It is how the deepest healing enters.',
     best_preparation:
-      'Fresh herb tincture for highest potency. Evening timing for sleep support (30–60 minutes before bed is critical). Acute anxiety: keep tincture accessible throughout the day for as-needed dosing. Screen for depression (monitor mood), CNS depressants and SSRIs. The non-addictive quality is the central clinical message — safe to use daily indefinitely, unlike any pharmaceutical equivalent.',
+      'Fresh herb extract for highest potency. Evening timing for sleep support (30–60 minutes before bed is critical). Acute anxiety: keep extract accessible throughout the day for as-needed dosing. Screen for depression (monitor mood), CNS depressants and SSRIs. The non-addictive quality is the central clinical message — safe to use daily indefinitely, unlike any pharmaceutical equivalent.',
     caution_level: 'LOW-MEDIUM',
     safe_pregnancy: null,
     status:
@@ -5785,8 +5785,8 @@ const HERBS = [
       'Insomnia — OPPOSITE CONTRAINDICATION: worsens sleep; do not recommend for anyone with active sleep disruption',
       'High blood pressure — MONITOR: mild sympathomimetic effect; generally manageable but monitor BP',
       'Seizure history — CAUTION with concentrated essential oil only: trace thujone (0.2–0.5%); whole herb is safe; avoid concentrated essential oil',
-      'Pregnancy — concentrated tinctures and essential oil CAUTION: uterine stimulant potential at high doses; culinary amounts entirely safe',
-      'Anxiety and hyperactivity — START LOW: stimulating; may overstimulate sensitive individuals; 10 drops tincture initially; monitor',
+      'Pregnancy — concentrated extracts and essential oil CAUTION: uterine stimulant potential at high doses; culinary amounts entirely safe',
+      'Anxiety and hyperactivity — START LOW: stimulating; may overstimulate sensitive individuals; 10 drops extract initially; monitor',
     ],
     herb_to_herb_synergy: [
       'Ginkgo — triple cognitive enhancement: acetylcholinesterase (Rosemary) plus ginkgolide circulation and neuroprotection',
@@ -5801,7 +5801,7 @@ const HERBS = [
     herb_to_drug_interactions: [
       'Blood pressure medications — mild additive or antagonistic effect; monitor BP',
       'Seizure medications — trace thujone in whole herb is minimal; concentrated essential oil caution only',
-      'No significant drug interactions from whole herb at culinary or standard tincture doses',
+      'No significant drug interactions from whole herb at culinary or standard extract doses',
     ],
     herb_interactions: [
       'Synergy: Ginkgo, Gotu Kola, Lemon Balm, Lavender',
@@ -5809,11 +5809,11 @@ const HERBS = [
       'Drug interactions: antihypertensives (monitor BP); otherwise minimal from whole herb',
     ],
     dosage_range:
-      'Tincture (most concentrated): 15–30 drops, 1–2× daily morning only. Tea: 1–2 tsp dried leaf steeped 5–10 minutes ONLY (NOT longer — volatile oils lost); 1–2× daily morning. Aromatic inhalation (2–3 drops essential oil on cloth): fastest route for acute mental clarity effect. Fresh herb in cooking: daily cognitive and circulation support at gentle maintenance level. MORNING TO MIDDAY ONLY.',
+      'Extract (most concentrated): 15–30 drops, 1–2× daily morning only. Tea: 1–2 tsp dried leaf steeped 5–10 minutes ONLY (NOT longer — volatile oils lost); 1–2× daily morning. Aromatic inhalation (2–3 drops essential oil on cloth): fastest route for acute mental clarity effect. Fresh herb in cooking: daily cognitive and circulation support at gentle maintenance level. MORNING TO MIDDAY ONLY.',
     spiritual_layer:
       'Rosemary is the guardian of memory and clarity — from the Latin ros marinus, "dew of the sea," she grows on Mediterranean cliffs where sea air meets rock, where clarity and salt and light converge. She has been the herb of remembrance at funerals and weddings for millennia, understood as the keeper of continuity between past and present. Her teaching is that memory is sacred, that clarity of mind is a form of respect for what has come before and what is yet to be created. The Greek students who wore rosemary garlands while studying understood something neuroscience has now confirmed: her aromatic compounds reach the brain and enhance its function directly. She whispers: My mind is clear. My memory is sharp. My thoughts flow freely. I am awake. I am focused. I remember. I am brilliant.',
     best_preparation:
-      'Short-steep tea (5–10 minutes maximum — critical) or tincture for morning cognitive support. Aromatic inhalation for immediate pre-task clarity. Fresh herb in daily cooking for sustained gentle benefit. MORNING ONLY — non-negotiable. Screen for insomnia, anxiety/hyperactivity (start low), high blood pressure (monitor) and pregnancy (concentrated forms).',
+      'Short-steep tea (5–10 minutes maximum — critical) or extract for morning cognitive support. Aromatic inhalation for immediate pre-task clarity. Fresh herb in daily cooking for sustained gentle benefit. MORNING ONLY — non-negotiable. Screen for insomnia, anxiety/hyperactivity (start low), high blood pressure (monitor) and pregnancy (concentrated forms).',
     caution_level: 'LOW-MEDIUM',
     safe_pregnancy: null,
     status:
@@ -5844,7 +5844,7 @@ const HERBS = [
       '3000+ years "red gold" — Persian, Indian, Mediterranean medicinal and culinary tradition',
     ],
     pharmacology:
-      'Primary bioactives: crocin (10–15%; yellow-orange water-soluble pigment; crosses blood-brain barrier; mild serotonin reuptake inhibitor — SSRI-like mechanism; antidepressant comparable to low-dose SSRI in RCTs; vasodilatory; mild anticoagulant), safranal (0.4–0.6%; orange-red volatile pigment; neuroprotective; inhibits tau protein aggregation; antioxidant; crosses blood-brain barrier; gives saffron its characteristic aroma), picrocrocin (5–10%; bitter principle; anti-inflammatory; antimicrobial), flavonoids — kaempferol, quercetin (1–2%; antioxidant; anti-inflammatory), carotenoids — β-carotene, lycopene (antioxidant), minerals — iron, magnesium, copper. COST: ~$8–15 per serving for whole stigmas; tincture form (2–5 drops) most cost-effective for long-term use. Timeline: 4–8 weeks minimum for mood effects (like pharmaceutical antidepressants — not acute). Grade B mood elevation (multiple RCTs, SSRI mechanism confirmed); Grade A safety (centuries use; minimal contraindications).',
+      'Primary bioactives: crocin (10–15%; yellow-orange water-soluble pigment; crosses blood-brain barrier; mild serotonin reuptake inhibitor — SSRI-like mechanism; antidepressant comparable to low-dose SSRI in RCTs; vasodilatory; mild anticoagulant), safranal (0.4–0.6%; orange-red volatile pigment; neuroprotective; inhibits tau protein aggregation; antioxidant; crosses blood-brain barrier; gives saffron its characteristic aroma), picrocrocin (5–10%; bitter principle; anti-inflammatory; antimicrobial), flavonoids — kaempferol, quercetin (1–2%; antioxidant; anti-inflammatory), carotenoids — β-carotene, lycopene (antioxidant), minerals — iron, magnesium, copper. COST: ~$8–15 per serving for whole stigmas; extract form (2–5 drops) most cost-effective for long-term use. Timeline: 4–8 weeks minimum for mood effects (like pharmaceutical antidepressants — not acute). Grade B mood elevation (multiple RCTs, SSRI mechanism confirmed); Grade A safety (centuries use; minimal contraindications).',
     flavor_profile: 'Uniquely complex — warm, slightly sweet, subtly earthy and distinctively honeyed; the most characterful of all spice aromas',
     contraindications: [
       'Anticoagulants (Warfarin, high-dose aspirin, DOACs) — MONITOR INR: mild anticoagulant activity; additive blood-thinning possible; manageable with monitoring and prescriber awareness',
@@ -5874,15 +5874,15 @@ const HERBS = [
       'Drug interactions: anticoagulants (monitor INR), SSRIs (monitor — generally compatible); otherwise minimal',
     ],
     dosage_range:
-      'Whole stigmas (traditional ceremonial): 3–5 stigmas steeped 10–15 minutes in hot (not boiling) water, 1–2× daily. Tincture (most cost-effective for long-term): 2–5 drops, 1–2× daily. Take with meals (fat-soluble crocin — absorption enhanced). Timeline: 4–8 weeks minimum for mood effects. Cost note: recommend tincture for daily use; whole stigmas for ceremonial occasions or weekly ritual.',
+      'Whole stigmas (traditional ceremonial): 3–5 stigmas steeped 10–15 minutes in hot (not boiling) water, 1–2× daily. Extract (most cost-effective for long-term): 2–5 drops, 1–2× daily. Take with meals (fat-soluble crocin — absorption enhanced). Timeline: 4–8 weeks minimum for mood effects. Cost note: recommend extract for daily use; whole stigmas for ceremonial occasions or weekly ritual.',
     spiritual_layer:
       'Saffron is gold distilled into plant form — the most precious spice in the world by weight, each gram representing the hand-harvested stigmas of 150–200 flowers. She has been called "red gold" across Persia, India, Rome, Spain and Morocco for three millennia, reserved for royalty, ceremony, the highest celebrations of life. She teaches that luxury is not indulgence but sacred self-love, that one\'s own wellbeing deserves the most precious attention, that the heart deserves warmth and radiance rather than just adequate functioning. Her crimson colour is the colour of life, of warmth, of the sun\'s first and last light. She whispers: I am radiant. My heart is warm. I am worthy of beauty and luxury. My mood is lifted. I glow from within. I love myself. I am precious. I am whole.',
     best_preparation:
-      'Tincture for cost-effective daily mood support; whole stigmas for ceremonial weekly ritual. Morning or evening (not stimulating; neutral timing). With fat-containing meals for absorption. Screen for anticoagulants (monitor INR) and SSRIs (monitor serotonin). CRITICAL timeline education: 4–8 weeks for mood effects — identical pace to pharmaceutical antidepressants. The no-sexual-side-effects advantage over SSRIs is the central clinical message for eligible clients.',
+      'Extract for cost-effective daily mood support; whole stigmas for ceremonial weekly ritual. Morning or evening (not stimulating; neutral timing). With fat-containing meals for absorption. Screen for anticoagulants (monitor INR) and SSRIs (monitor serotonin). CRITICAL timeline education: 4–8 weeks for mood effects — identical pace to pharmaceutical antidepressants. The no-sexual-side-effects advantage over SSRIs is the central clinical message for eligible clients.',
     caution_level: 'LOW',
     safe_pregnancy: null,
     status:
-      'Grade B mood elevation (multiple RCTs; SSRI-equivalent mechanism; no sexual dysfunction). Grade A safety (centuries use). 4–8 week timeline for mood effects. Key advantage over pharmaceutical SSRIs: no sexual dysfunction side effects. Screen anticoagulants (INR monitoring) and SSRIs (additive serotonin — monitor). Tincture most cost-effective for long-term use.',
+      'Grade B mood elevation (multiple RCTs; SSRI-equivalent mechanism; no sexual dysfunction). Grade A safety (centuries use). 4–8 week timeline for mood effects. Key advantage over pharmaceutical SSRIs: no sexual dysfunction side effects. Screen anticoagulants (INR monitoring) and SSRIs (additive serotonin — monitor). Extract most cost-effective for long-term use.',
   },
 
   // ─────────────────────────────────────────────
@@ -5908,7 +5908,7 @@ const HERBS = [
       '2000+ years traditional use — Chinese martial arts, Soviet space programme, Korean mountain training; one of the most extensively used adaptogens in Eastern medicine',
     ],
     pharmacology:
-      'Primary bioactives: lignans (1–3%; schizandrin A/B/C, deoxyschizandrin, γ-schizandrin, gomisin — UNIQUE bioactive class; distinct from polysaccharides, alkaloids or glycosides; HPA axis modulation via glucocorticoid receptor sensitivity and catecholamine balance; NOT direct hormone agonism), polysaccharides (10–20%; immune modulation), flavonoids — quercetin, kaempferol (3–5%; antioxidant; anti-inflammatory), organic acids — citric, malic, tartaric (5–10%; astringency; mineral binding; sour taste), volatile oils (trace; CNS modulation). PREPARATION CRITICAL: decoction (heat extraction) required for lignan bioavailability; tea alone insufficient; tincture acceptable alternative. INITIAL STIMULATION: weeks 1–4 often stimulating (energy boost, possible mild sleep disruption); settles into balanced adaptive equilibrium by week 4+; morning dosing initially. CRITICAL INTERACTION: CYP450 enzyme induction — many medications at risk (statins, anticonvulsants, SSRIs, oral contraceptives, HRT, Warfarin, immunosuppressants); prescriber consultation MANDATORY before recommending. Grade B+ adaptogenic properties; Grade A CYP450 interaction risk.',
+      'Primary bioactives: lignans (1–3%; schizandrin A/B/C, deoxyschizandrin, γ-schizandrin, gomisin — UNIQUE bioactive class; distinct from polysaccharides, alkaloids or glycosides; HPA axis modulation via glucocorticoid receptor sensitivity and catecholamine balance; NOT direct hormone agonism), polysaccharides (10–20%; immune modulation), flavonoids — quercetin, kaempferol (3–5%; antioxidant; anti-inflammatory), organic acids — citric, malic, tartaric (5–10%; astringency; mineral binding; sour taste), volatile oils (trace; CNS modulation). PREPARATION CRITICAL: decoction (heat extraction) required for lignan bioavailability; tea alone insufficient; extract acceptable alternative. INITIAL STIMULATION: weeks 1–4 often stimulating (energy boost, possible mild sleep disruption); settles into balanced adaptive equilibrium by week 4+; morning dosing initially. CRITICAL INTERACTION: CYP450 enzyme induction — many medications at risk (statins, anticonvulsants, SSRIs, oral contraceptives, HRT, Warfarin, immunosuppressants); prescriber consultation MANDATORY before recommending. Grade B+ adaptogenic properties; Grade A CYP450 interaction risk.',
     flavor_profile: 'Remarkably complex — all five flavours simultaneously: sweet, sour, salty, bitter and pungent; astringent; the most multi-dimensional herbal taste',
     contraindications: [
       'CYP450-metabolised medications — CRITICAL INTERACTION: lignans induce CYP450 enzymes; PRESCRIBER CONSULTATION MANDATORY; medications at risk: statins, anticonvulsants, SSRIs, oral contraceptives, HRT, Warfarin, immunosuppressants (tacrolimus, cyclosporine — transplant rejection risk), and many others',
@@ -5937,7 +5937,7 @@ const HERBS = [
       'Drug interactions: CYP450 substrates — CRITICAL (prescriber consultation mandatory for all prescription medications)',
     ],
     dosage_range:
-      'Decoction (OPTIMAL — lignan extraction): 2–4 g whole dried berries simmered 15–20 minutes, 1–2× daily (morning initially; afternoon once adaptation phase settles). Tincture (acceptable alternative): 20–40 drops, 1–2× daily. Standardised extract (3% lignans): 300–600 mg daily. WITH FOOD (fat-soluble lignans — fat enhances absorption). NOT evening initially (stimulating weeks 1–4). Long-term safe with appropriate screening; cycles optional (8–12 weeks on, 1–2 weeks off).',
+      'Decoction (OPTIMAL — lignan extraction): 2–4 g whole dried berries simmered 15–20 minutes, 1–2× daily (morning initially; afternoon once adaptation phase settles). Extract (acceptable alternative): 20–40 drops, 1–2× daily. Standardised extract (3% lignans): 300–600 mg daily. WITH FOOD (fat-soluble lignans — fat enhances absorption). NOT evening initially (stimulating weeks 1–4). Long-term safe with appropriate screening; cycles optional (8–12 weeks on, 1–2 weeks off).',
     spiritual_layer:
       'Schisandra is the Five-Flavour Fruit — the only herb that contains all five flavours simultaneously: sweet, sour, salty, bitter and pungent, each one corresponding to one of the Five Elements, one of the five organ systems, one of the five seasons. She holds the whole year within a single berry. She teaches that true adaptation means holding opposites without resolving them prematurely — that the ability to contain sweetness and bitterness, rest and action, expansion and contraction is not confusion but wisdom. She is the medicine of integration: all seasons present at once, all elements in balance, all aspects of life acknowledged. She whispers: I am adaptable. I am resilient. I contain all seasons. My stamina is sustained. My essence is deep. I am balanced. I am whole. I am integrated.',
     best_preparation:
@@ -6067,7 +6067,7 @@ const HERBS = [
       'Drug interactions: benzodiazepines (mild additive — coordinate tapering with prescriber); otherwise NONE — safe with all medications',
     ],
     dosage_range:
-      'Tea (preferred for long-term toning — longer steep extracts more baicalin): 1–2 tsp dried herb steeped 10–15 minutes, 2–3× daily. Morning and afternoon — NOT evening (non-sedating; will not support sleep if sedation is needed). Tincture (fastest onset for acute anxiety): 30–60 drops, 2–3× daily, or as needed during acute anxiety episodes. DAYTIME USE. Safe indefinite long-term daily use — no tolerance, no dependence, no withdrawal.',
+      'Tea (preferred for long-term toning — longer steep extracts more baicalin): 1–2 tsp dried herb steeped 10–15 minutes, 2–3× daily. Morning and afternoon — NOT evening (non-sedating; will not support sleep if sedation is needed). Extract (fastest onset for acute anxiety): 30–60 drops, 2–3× daily, or as needed during acute anxiety episodes. DAYTIME USE. Safe indefinite long-term daily use — no tolerance, no dependence, no withdrawal.',
     spiritual_layer:
       'Skullcap teaches the paradox of calm presence — that grounding does not require sedation, that safety allows authentic awareness rather than requiring the numbing of awareness. She wears a tiny purple helmet flower, and her teaching is similarly precise: she does not blunt the senses or force surrender; she teaches the nervous system a different rhythm, a different baseline. She whispers: Your vigilance is not protecting you — your presence is. She holds the distinction between vigilance (fear-based hyperalertness) and presence (grounded awareness) with extraordinary clarity. The nervous system is not the enemy; it is an intelligence that has learned a pattern of survival. Skullcap teaches it a new pattern — one where safety and awareness coexist, where the body can relax without losing contact with what matters. I am safe. My nervous system is intelligent. I am present without fear. I am grounded and clear. Calm presence is my natural state.',
     best_preparation:
@@ -6132,7 +6132,7 @@ const HERBS = [
       'Drug interactions: diuretics (monitor electrolytes), lithium (monitor levels); otherwise minimal',
     ],
     dosage_range:
-      'Tea: 3–5 g dried herb per 150 ml boiling water, steeped 5–10 minutes, 2–4× daily (6–12 g/day total); always with ≥2 L water daily for irrigation benefit. Tincture (1:5 in 45% ethanol): 0.5–1 ml, 2–4× daily. Fluid extract (1:1): 0.5–2 ml, 2–3× daily. Duration: 2–4 week therapeutic courses for urinary or allergy complaints; repeat as needed. Long-term use well tolerated when kidney and heart function are normal.',
+      'Tea: 3–5 g dried herb per 150 ml boiling water, steeped 5–10 minutes, 2–4× daily (6–12 g/day total); always with ≥2 L water daily for irrigation benefit. Extract (1:5 in 45% ethanol): 0.5–1 ml, 2–4× daily. Fluid extract (1:1): 0.5–2 ml, 2–3× daily. Duration: 2–4 week therapeutic courses for urinary or allergy complaints; repeat as needed. Long-term use well tolerated when kidney and heart function are normal.',
     spiritual_layer:
       'Goldenrod is the bright wand of the hedgerow — rising like a sunbeam over meadows and forest edges, she teaches uprightness and flow. When resentment, grief or fear pools and stagnates in the kidneys and mucosa we feel bogged down and leaky. Goldenrod teaches clear, warm release: flushing what no longer serves while toning the boundaries that keep us whole. She is the golden flush of autumn that clears the season, stands tall without rigidity and releases without losing herself. She whispers: I release what is stagnant. My waters flow clear and free. My boundaries are toned, not rigid. I stand upright in my own golden light. I am cleansed, steady and renewed.',
     best_preparation:
@@ -6273,7 +6273,7 @@ const HERBS = [
       'Drug interactions: SSRIs/MAOIs (CONTRAINDICATED), contraceptives (pregnancy risk), warfarin (clotting risk), immunosuppressants (organ rejection), HIV meds, chemo, statins, digoxin and many others via CYP3A4',
     ],
     dosage_range:
-      'Standardised extract (0.3% hypericin, 2–4% hyperforin — STRONGLY PREFERRED): 300–600 mg daily in 2–3 divided doses. Tincture (fresh peak-bloom herb — highest hyperforin): 30–60 drops, 2–3× daily. Dried herb tea: 2–4 g steeped 10 minutes, 1–2× daily (hyperforin partially lost). Morning or early afternoon dosing (mood-elevating — avoid evening). MINIMUM 4–8 WEEKS before assessing efficacy. Taper over 1–2 weeks on discontinuation. Comprehensive drug interaction screening is MANDATORY before any recommendation.',
+      'Standardised extract (0.3% hypericin, 2–4% hyperforin — STRONGLY PREFERRED): 300–600 mg daily in 2–3 divided doses. Extract (fresh peak-bloom herb — highest hyperforin): 30–60 drops, 2–3× daily. Dried herb tea: 2–4 g steeped 10 minutes, 1–2× daily (hyperforin partially lost). Morning or early afternoon dosing (mood-elevating — avoid evening). MINIMUM 4–8 WEEKS before assessing efficacy. Taper over 1–2 weeks on discontinuation. Comprehensive drug interaction screening is MANDATORY before any recommendation.',
     spiritual_layer:
       'St. John\'s Wort is the light-bringer — gathered at summer solstice when solar power peaks; hypericin literally absorbs light. She is captured sunshine, brought into winter darkness for those whose inner light has dimmed. She carries the teaching that joy is not gone but covered by depression\'s grey, that the hero\'s descent into darkness always contains the seed of emergence. Her secondary Metal element demands honesty: know your medications, know your limits, speak truth — her light cannot penetrate deceit. She whispers: The sun still shines within me. Darkness is temporary. My light is not extinguished. I choose to rise. I choose illumination. I am resilient. I am worth the effort of climbing back to light.',
     best_preparation:
@@ -6369,10 +6369,10 @@ const HERBS = [
       '2000+ years Mediterranean culinary and medicinal use; used in WWI and WWII military medical supplies for thymol antiseptic properties',
     ],
     pharmacology:
-      'Primary bioactives: volatile oils (35–54% of dry herb; thymol 40–50% — PRIMARY antimicrobial and expectorant; bactericidal/virucidal via membrane disruption; stimulates mucociliary clearance; antispasmodic; antioxidant; carvacrol — secondary antimicrobial + antispasmodic; smooth muscle relaxation; linalool — mild anxiolytic contribution), flavonoids (apigenin, luteolin — 1–2%; anti-inflammatory; antioxidant), tannins (trace; astringent; antimicrobial). PREPARATION CRITICAL: tea superior to tincture for expectorant action (saponins water-soluble). DOSING CRITICAL: 3–4× daily for acute respiratory (mobilises congestion); 1–2× daily for chronic tonification. Grade A safety; Grade B+ expectorant and antimicrobial; Grade B antispasmodic and anti-inflammatory; Grade C+ respiratory tonification.',
+      'Primary bioactives: volatile oils (35–54% of dry herb; thymol 40–50% — PRIMARY antimicrobial and expectorant; bactericidal/virucidal via membrane disruption; stimulates mucociliary clearance; antispasmodic; antioxidant; carvacrol — secondary antimicrobial + antispasmodic; smooth muscle relaxation; linalool — mild anxiolytic contribution), flavonoids (apigenin, luteolin — 1–2%; anti-inflammatory; antioxidant), tannins (trace; astringent; antimicrobial). PREPARATION CRITICAL: tea superior to extract for expectorant action (saponins water-soluble). DOSING CRITICAL: 3–4× daily for acute respiratory (mobilises congestion); 1–2× daily for chronic tonification. Grade A safety; Grade B+ expectorant and antimicrobial; Grade B antispasmodic and anti-inflammatory; Grade C+ respiratory tonification.',
     flavor_profile: 'Warm, peppery and highly aromatic with characteristic Mediterranean volatile pungency — pleasantly stimulating and medicinal',
     contraindications: [
-      'Pregnancy (concentrated forms only) — essential oil and high-dose concentrated extracts have emmenagogue potential; CULINARY amounts in food are entirely safe; tinctures and concentrated extracts: use caution or avoid; consult provider',
+      'Pregnancy (concentrated forms only) — essential oil and high-dose concentrated extracts have emmenagogue potential; CULINARY amounts in food are entirely safe; extracts and concentrated extracts: use caution or avoid; consult provider',
       'Lamiaceae family allergy (very rare) — mild skin sensitivity possible; discontinue if reaction',
       'Essential oil undiluted internally — NEVER: concentrated volatile oils cause GI irritation and toxicity; whole herb tea and culinary use are safe at all doses',
       'Otherwise: Grade A safety — suitable for all populations including children and elderly; one of the safest respiratory herbs in the library',
@@ -6397,15 +6397,15 @@ const HERBS = [
       'Drug interactions: None known; safe with all medications',
     ],
     dosage_range:
-      'Tea (SUPERIOR to tincture for expectorant action — saponins water-soluble): 1–2 tsp dried herb steeped 10 minutes (not shorter — need full extraction), 3–4× daily for acute respiratory; 1–2× daily for chronic/maintenance. WARM preparation optimal (volatile oil effects enhanced by heat). Tincture: 30–60 drops, 2–3× daily (adequate but less potent for expectorant). Culinary: abundant use in cooking 3–7× weekly (ongoing mild baseline support). Honey-thyme preparation: steep 1–2 tsp in warm honey 2–4 weeks; 1 tsp as needed for cough. Safe indefinite long-term use.',
+      'Tea (SUPERIOR to extract for expectorant action — saponins water-soluble): 1–2 tsp dried herb steeped 10 minutes (not shorter — need full extraction), 3–4× daily for acute respiratory; 1–2× daily for chronic/maintenance. WARM preparation optimal (volatile oil effects enhanced by heat). Extract: 30–60 drops, 2–3× daily (adequate but less potent for expectorant). Culinary: abundant use in cooking 3–7× weekly (ongoing mild baseline support). Honey-thyme preparation: steep 1–2 tsp in warm honey 2–4 weeks; 1 tsp as needed for cough. Safe indefinite long-term use.',
     spiritual_layer:
       'Thyme carries the ancient Greek name thymos — courage, soul, will. Medieval knights wore thyme on their armour; it was burned as protective and purifying incense. She is the voice-opener, the truth-facilitator, the herb of courageous expression. Metal element in TCM governs voice, clarity and boundaries — Thyme teaches both physical respiratory clarity (opening airways) and metaphorical clarity (finding and speaking voice, truth, authentic expression). The sore throat that accompanies unexpressed words, the held breath of unspoken feeling — Thyme clears both. She whispers: My voice is clear. My breath is free. I speak truth. My throat opens. My lungs expand. I am brave. I am heard. My voice matters.',
     best_preparation:
-      'Tea is the first recommendation (not tincture) for respiratory use — 10-minute steep, warm, 3–4× daily in acute phases. Honey preparation is ideal for children and for palatability. Pair with Mullein for dry irritating cough (Thyme mobilises, Mullein soothes). Screen only for concentrated-form pregnancy caution and Lamiaceae allergy (both very rare). Safe for everyone including children and elderly. No drug interaction screening required.',
+      'Tea is the first recommendation (not extract) for respiratory use — 10-minute steep, warm, 3–4× daily in acute phases. Honey preparation is ideal for children and for palatability. Pair with Mullein for dry irritating cough (Thyme mobilises, Mullein soothes). Screen only for concentrated-form pregnancy caution and Lamiaceae allergy (both very rare). Safe for everyone including children and elderly. No drug interaction screening required.',
     caution_level: 'LOW',
     safe_pregnancy: null,
     status:
-      'Grade A safety (universally safe; suitable all ages including children). Grade B+ expectorant and antimicrobial. Grade B antispasmodic and anti-inflammatory. Tea preparation superior to tincture for expectorant action (non-negotiable preparation guidance). 3–4× daily for acute respiratory. Minimal contraindications. No drug interactions. One of the most clinically accessible and broadly applicable respiratory herbs.',
+      'Grade A safety (universally safe; suitable all ages including children). Grade B+ expectorant and antimicrobial. Grade B antispasmodic and anti-inflammatory. Tea preparation superior to extract for expectorant action (non-negotiable preparation guidance). 3–4× daily for acute respiratory. Minimal contraindications. No drug interactions. One of the most clinically accessible and broadly applicable respiratory herbs.',
   },
 
   // ─────────────────────────────────────────────
@@ -6462,7 +6462,7 @@ const HERBS = [
       'Drug interactions: diabetes meds (hypoglycaemia risk — monitor glucose), antihypertensives (monitor BP), anticoagulants (monitor INR)',
     ],
     dosage_range:
-      'Standardised extract (eurycomanone 10–30% — ESSENTIAL; most reliable clinical form): 200–400 mg daily with meals or fat source (optimal absorption). Root powder: 3–9 g daily (less reliable due to variable eurycomanone content). Tincture (1:5 alcohol): 30–60 drops, 2–3× daily. CYCLING PROTOCOL MANDATORY: 8–12 weeks on, 4–6 weeks off; repeat. Sexual function and testosterone begin improving at 4–8 weeks; peak effect at 8–12 weeks. MANDATORY screening: prostate cancer (HARD BLOCK), hormone-sensitive cancers (HARD BLOCK), PSA/prostate history, BP, heart disease, diabetes medications.',
+      'Standardised extract (eurycomanone 10–30% — ESSENTIAL; most reliable clinical form): 200–400 mg daily with meals or fat source (optimal absorption). Root powder: 3–9 g daily (less reliable due to variable eurycomanone content). Extract (1:5 alcohol): 30–60 drops, 2–3× daily. CYCLING PROTOCOL MANDATORY: 8–12 weeks on, 4–6 weeks off; repeat. Sexual function and testosterone begin improving at 4–8 weeks; peak effect at 8–12 weeks. MANDATORY screening: prostate cancer (HARD BLOCK), hormone-sensitive cancers (HARD BLOCK), PSA/prostate history, BP, heart disease, diabetes medications.',
     spiritual_layer:
       'Tongkat Ali is rooted masculine vitality — not the aggression of testosterone weaponised, but the grounded, enduring strength of a man aligned with his body\'s own intelligence. She is the Malaysian ginseng that has nourished warriors and farmers in the rainforest for centuries, teaching that real vitality is earned through rootedness, that sexual confidence is an expression of embodied health, that honoring the body\'s natural testosterone rhythms is wisdom not forcing. She teaches that true masculine strength is patience, groundedness and pleasure in embodiment. She whispers: My body is strong. My vitality is natural. My sexual function is healthy. My confidence is grounded. My pleasure is sacred. I honor my masculine energy. My strength serves life.',
     best_preparation:
@@ -6593,7 +6593,7 @@ const HERBS = [
       'Drug interactions: anticoagulants/antiplatelets (additive at high doses — monitor), antidiabetics (monitor glucose)',
     ],
     dosage_range:
-      'Culinary (most sustainable): 1–3 g powdered rhizome daily in cooking with fat and black pepper — indefinitely. Standardised curcumin extract (95% curcuminoids): 500–1500 mg/day in divided doses, with piperine and fat-containing meals. Golden Milk: 0.5–1 tsp turmeric with black pepper pinch, warming spices, simmered in milk or plant milk with ghee or coconut oil — 1 cup daily. Tincture or fluid extract: 2–5 ml, 2–3× daily with food. Bioavailability note: piperine (black pepper) and fat are NON-NEGOTIABLE — without them, curcumin absorption is <1%.',
+      'Culinary (most sustainable): 1–3 g powdered rhizome daily in cooking with fat and black pepper — indefinitely. Standardised curcumin extract (95% curcuminoids): 500–1500 mg/day in divided doses, with piperine and fat-containing meals. Golden Milk: 0.5–1 tsp turmeric with black pepper pinch, warming spices, simmered in milk or plant milk with ghee or coconut oil — 1 cup daily. Extract or fluid extract: 2–5 ml, 2–3× daily with food. Bioavailability note: piperine (black pepper) and fat are NON-NEGOTIABLE — without them, curcumin absorption is <1%.',
     spiritual_layer:
       'Turmeric is golden flow — the colour of the sun, of autumn fields, of sacred marks drawn on skin for millennia in India. She teaches that stagnation is not permanent, that inflammation is a signal of overload that can be redirected into purposeful circulation. In Ayurveda she is the herb of purification and blessing — she clears what has accumulated, invites what has hardened to soften, and turns murky inflammatory reactivity into clear, directed energy. She teaches the emotional equivalent: that bitterness dissolves when it is allowed to flow, that the liver meridian governs both physical detoxification and the smooth movement of feeling through life. She whispers: My inner fire serves healing. Stagnation melts. I move with clarity and purpose.',
     best_preparation:
@@ -6655,7 +6655,7 @@ const HERBS = [
       'Drug interactions: None known',
     ],
     dosage_range:
-      'Whole bean: 0.5–1 bean scraped into warm milk, smoothie or culinary preparation daily. Tincture (most cost-effective): 10–20 drops, 1–3× daily in warm liquid. Powder (whole bean): 0.25–0.5 g daily. Aromatherapy (immediate effect): 2–3 drops essential oil on cloth or diffused — direct limbic access within seconds to minutes. Warm milk ritual (foundational): 1 cup warm milk with scraped vanilla bean and honey — 15 minutes of intentional ceremony. Safe indefinite daily use.',
+      'Whole bean: 0.5–1 bean scraped into warm milk, smoothie or culinary preparation daily. Extract (most cost-effective): 10–20 drops, 1–3× daily in warm liquid. Powder (whole bean): 0.25–0.5 g daily. Aromatherapy (immediate effect): 2–3 drops essential oil on cloth or diffused — direct limbic access within seconds to minutes. Warm milk ritual (foundational): 1 cup warm milk with scraped vanilla bean and honey — 15 minutes of intentional ceremony. Safe indefinite daily use.',
     spiritual_layer:
       'Vanilla is the rarest and most patient of flavours — her pods require hand-pollination, months of careful curing, and the labour of thousands of hands to become the scent that the entire world recognises as comfort. She is the Orchid of pleasure, teaching that sweetness is not indulgence but medicine, that pleasure is a valid therapeutic pathway, that the nervous system that knows how to receive ease is a nervous system that can heal. She teaches that luxury is not about external wealth but about the quality of presence one brings to receiving. She carries the ancient memory of being held safely — she whispers to the oldest part of the nervous system: You have been safe before. You can be safe again. You are worthy of sweetness. She whispers: I am worthy of pleasure. I allow sweetness. I receive comfort without guilt. I am safe. I am cared for. I enjoy this life.',
     best_preparation:
@@ -6691,7 +6691,7 @@ const HERBS = [
     ],
     pharmacology:
       'Primary bioactives: valerenic acid, hydroxyvalerenic acid, acetoxyvalerenic acid (positive GABA-A receptor modulation; inhibition of GABA breakdown; mild adenosine and serotonin receptor interaction; sedative and anxiolytic), volatile oils (0.2–1%; bornyl isovalerate — characteristic pungent odour; mild sedative contribution), valepotriates (iridoids — historically implicated; unstable with heat and long storage), flavonoids and lignans (antioxidant; minor neuroprotection). CYCLING: recommend limiting continuous high-dose use to 4–6 weeks before tapering or cycling; taper gradually to avoid rebound in sensitive individuals. Grade A sleep improvement (EMA monograph; multiple RCTs); Grade B+ anxiolytic; Grade B antispasmodic.',
-    flavor_profile: 'Strong, earthy and characteristic pungent — distinctively funky aroma from bornyl isovalerate; typically taken in tincture or capsule to avoid taste',
+    flavor_profile: 'Strong, earthy and characteristic pungent — distinctively funky aroma from bornyl isovalerate; typically taken in extract or capsule to avoid taste',
     contraindications: [
       'Pregnancy and breastfeeding — insufficient safety data; avoid or use only under professional supervision',
       'Children under 12 — very low doses only with professional guidance; not in standardised adult doses',
@@ -6721,11 +6721,11 @@ const HERBS = [
       'Drug interactions: CNS depressants (additive sedation — coordinate with prescriber), CYP3A4 substrates (caution; limited data)',
     ],
     dosage_range:
-      'Tincture (1:5 in 40–70% alcohol): 2–4 ml (40–80 drops) 30–60 minutes before bed for insomnia; optional 1–2 ml afternoon dose to soften the landing. For daytime anxiety: 1–2 ml up to 3× daily. Tea: 2–3 g dried root per 250 ml, steeped 10–15 minutes, 1–2× daily (less efficient for lipophilic constituents). Standardised extract (capsules, 0.8% valerenic acids): 300–600 mg 30–60 minutes before bed. Duration: 2–4 weeks to evaluate full effect; maximum 4–6 weeks continuous high-dose before reassessing or cycling. Taper gradually on discontinuation.',
+      'Extract (1:5 in 40–70% alcohol): 2–4 ml (40–80 drops) 30–60 minutes before bed for insomnia; optional 1–2 ml afternoon dose to soften the landing. For daytime anxiety: 1–2 ml up to 3× daily. Tea: 2–3 g dried root per 250 ml, steeped 10–15 minutes, 1–2× daily (less efficient for lipophilic constituents). Standardised extract (capsules, 0.8% valerenic acids): 300–600 mg 30–60 minutes before bed. Duration: 2–4 weeks to evaluate full effect; maximum 4–6 weeks continuous high-dose before reassessing or cycling. Taper gradually on discontinuation.',
     spiritual_layer:
       'Valerian is earth-root medicine — she grows deep, smells of the subterranean, and carries the teaching that safety is felt in the body when the mind releases its grip. True rest is not collapse but consent to being held by the earth; valerian teaches that the vigilance we maintain against an imagined threat costs more than the threat itself. She is the night companion for the one whose mind will not stop — the one who solves problems in the dark, who carries the world into sleep. She reaches her roots into the ground and says: This is where the thinking can rest. The earth holds what you cannot. She whispers: My body is safe. My mind releases. Rest is allowed. Sleep comes naturally. I do not have to hold everything alone.',
     best_preparation:
-      'Evening tincture 30–60 minutes before bed is the most reliable delivery. Set the 2–4 week expectation clearly — clients who expect immediate results will abandon a herb that requires consistency to work. Optional afternoon dose helps "soften the landing" for anxious hypervigilant types. Screen for liver disease, pregnancy, CNS depressants and alcohol use. Cycling at 4–6 weeks: taper and rotate with other nervines (Skullcap, Passionflower) for chronic insomnia.',
+      'Evening extract 30–60 minutes before bed is the most reliable delivery. Set the 2–4 week expectation clearly — clients who expect immediate results will abandon a herb that requires consistency to work. Optional afternoon dose helps "soften the landing" for anxious hypervigilant types. Screen for liver disease, pregnancy, CNS depressants and alcohol use. Cycling at 4–6 weeks: taper and rotate with other nervines (Skullcap, Passionflower) for chronic insomnia.',
     caution_level: 'LOW-MEDIUM',
     safe_pregnancy: false,
     status:
@@ -6789,11 +6789,11 @@ const HERBS = [
       'Drug interactions: CNS depressants (additive — monitor), antihypertensives (monitor BP), antiepileptics (supervision required)',
     ],
     dosage_range:
-      'Tincture (1:5 in 40–60% alcohol): 1–5 ml, 2–3× daily; lower end for sensitive individuals; higher end for acute tension episodes. Tea: 1–2 tsp (1–3 g) dried herb per 250 ml, steeped 10–15 minutes, 1–3× daily (bitter — combine with Lemon Balm or Mint for palatability). Duration: several months at moderate doses; often cycled (5 days on / 2 off) for long-term stress patterns. For migraines and PMS: expect 2–3 cycles or 4–8 weeks for full effect.',
+      'Extract (1:5 in 40–60% alcohol): 1–5 ml, 2–3× daily; lower end for sensitive individuals; higher end for acute tension episodes. Tea: 1–2 tsp (1–3 g) dried herb per 250 ml, steeped 10–15 minutes, 1–3× daily (bitter — combine with Lemon Balm or Mint for palatability). Duration: several months at moderate doses; often cycled (5 days on / 2 off) for long-term stress patterns. For migraines and PMS: expect 2–3 cycles or 4–8 weeks for full effect.',
     spiritual_layer:
       'Vervain is the overworked person\'s ally — the herb of the one who cannot put the burden down, whose mind keeps spinning, whose shoulders hold the world. She is sacred to every tradition that recognised the person who serves too much and rests too little: the intellectual, the caretaker, the duty-bound. She teaches that true service and intellect must be anchored in relaxation and flow — otherwise tension jams the liver, the head aches and the spirit cannot hear itself. She releases the sense of duty that has become suffering, the hypervigilance that has mistaken itself for care. She whispers: I release what I cannot carry. My nerves unwind, my liver and mind are at ease. I serve and create from a relaxed, steady centre.',
     best_preparation:
-      'Tincture 2–3 ml twice daily (late afternoon and evening) for burnout and ANS rebalancing. Bitter taste — combine with Lemon Balm in tea or tincture blend for palatability and complementary action. For tension headache: acute dose of 2–4 ml at onset; tonic 1–3 ml twice daily long-term with Feverfew and magnesium. MANDATORY screening: pregnancy and trying to conceive (BLOCK/strong caution). Monitor CNS depressants, antiepileptics and very low BP.',
+      'Extract 2–3 ml twice daily (late afternoon and evening) for burnout and ANS rebalancing. Bitter taste — combine with Lemon Balm in tea or extract blend for palatability and complementary action. For tension headache: acute dose of 2–4 ml at onset; tonic 1–3 ml twice daily long-term with Feverfew and magnesium. MANDATORY screening: pregnancy and trying to conceive (BLOCK/strong caution). Monitor CNS depressants, antiepileptics and very low BP.',
     caution_level: 'LOW-MEDIUM',
     safe_pregnancy: false,
     status:
@@ -6825,7 +6825,7 @@ const HERBS = [
     ],
     pharmacology:
       'Primary bioactives: iridoids (0.5–1%; agnuside, aucubin — modulate LH release; enhance progesterone via corpus luteum; NOT phytoprogesterone; unique mechanism), flavonoids (minor; antioxidant; anti-inflammatory), essential oil (2–3% volatile; minor aromatic effects). CAUTION with dopamine antagonist medications: Vitex enhances dopamine and may counteract antipsychotics and metoclopramide. PREGNANCY ABSOLUTE CONTRAINDICATION. HORMONAL CONTRACEPTIVES: may reduce contraceptive efficacy (hormone modulation) — backup contraception or consult prescriber. Grade A cycle regulation and PMS/PMDD (100+ RCTs; mechanism confirmed; German Commission E monograph); Grade B+ fertility support and luteal phase; Grade A safety when screened appropriately.',
-    flavor_profile: 'Mildly bitter and slightly peppery — characteristic berry; typically taken as standardised extract or tincture',
+    flavor_profile: 'Mildly bitter and slightly peppery — characteristic berry; typically taken as standardised extract or extract',
     contraindications: [
       'Pregnancy — ABSOLUTELY CONTRAINDICATED: progesterone-enhancing; may affect pregnancy hormones; HARD BLOCK',
       'Breastfeeding — CAUTION/AVOID concentrated forms: some traditional use but insufficient modern data; consult provider',
@@ -6855,7 +6855,7 @@ const HERBS = [
       'Drug interactions: hormonal contraceptives (efficacy — backup contraception), dopamine antagonists (counteraction — consult prescriber), HRT (consult prescriber)',
     ],
     dosage_range:
-      'Standardised extract (0.6% agnuside): 20–40 mg daily (some formulas 500 mg extract daily). Dried berry: 1–2 tsp (3–4 g), 1–2× daily. Tincture (1:5 alcohol): 40–60 drops, 2× daily. MINIMUM 3 months for significant effects (hormonal changes require multiple cycles); optimal effect 3–6 months. Safe long-term indefinite with optional cycling (3 months on, 1 month off). Morning dosing standard. Continuous throughout cycle (not just luteal phase) for cycle regulation; optional luteal-phase-only timing for PMS focus.',
+      'Standardised extract (0.6% agnuside): 20–40 mg daily (some formulas 500 mg extract daily). Dried berry: 1–2 tsp (3–4 g), 1–2× daily. Extract (1:5 alcohol): 40–60 drops, 2× daily. MINIMUM 3 months for significant effects (hormonal changes require multiple cycles); optimal effect 3–6 months. Safe long-term indefinite with optional cycling (3 months on, 1 month off). Morning dosing standard. Continuous throughout cycle (not just luteal phase) for cycle regulation; optional luteal-phase-only timing for PMS focus.',
     spiritual_layer:
       'Vitex — Chaste Tree, Abraham\'s Balm — is the keeper of women\'s cycle wisdom. The monks who used her to reduce desire misunderstood her; she was never about suppression but about regulation, about the power of rhythm, about honouring the phases of the moon reflected in the female body. She teaches that the luteal phase is sacred — the inward space of integration, creativity and deep knowing that Western culture has pathologised as PMS. She teaches that cycle regularity is body confidence, that body wisdom is trustworthy, that the progesterone-nourished second half of the cycle is not a liability but a gift of depth. She whispers: My cycle is regular. My luteal phase is strong. I honour my rhythms. I am fertile. I am balanced. My body is wise. I am whole.',
     best_preparation:
@@ -6918,7 +6918,7 @@ const HERBS = [
       'Drug interactions: CNS depressants (additive — monitor), hepatically metabolised drugs (theoretical — monitor)',
     ],
     dosage_range:
-      'Dried leaf and flower infusion (SAFEST): 2–4 g steeped 5–10 minutes, 1–2× daily. Fresh infusion most potent. Tincture (fresh plant): 20–40 drops, 1–2× daily. Traditional smoking (CEREMONIAL — use cautiously — combustion byproducts): small amounts of fresh or dried leaves; fastest onset; most potent; not recommended for daily respiratory health. Afternoon or evening timing for relaxation. Low doses fine during daytime (non-drowsy). Safe indefinite daily use (non-addictive; no tolerance).',
+      'Dried leaf and flower infusion (SAFEST): 2–4 g steeped 5–10 minutes, 1–2× daily. Fresh infusion most potent. Extract (fresh plant): 20–40 drops, 1–2× daily. Traditional smoking (CEREMONIAL — use cautiously — combustion byproducts): small amounts of fresh or dried leaves; fastest onset; most potent; not recommended for daily respiratory health. Afternoon or evening timing for relaxation. Low doses fine during daytime (non-drowsy). Safe indefinite daily use (non-addictive; no tolerance).',
     spiritual_layer:
       'Wild Dagga carries the joy of South African wildness — the orange-red flowers blazing like flames above the savanna, the lion\'s ear hearing what others miss. She teaches that pleasure is not earned through suffering, that mild euphoria is a gift of nature available without intoxication, that the relaxed clear mind is not a compromise of function but an enhancement of it. She carries the teaching of the paradox: that you can be fully present AND at ease, fully awake AND at rest. She is the reminder that African traditional knowledge understood something pharmaceuticals have struggled to achieve — gentle, non-addictive pleasure as medicine. She whispers: I am relaxed. I am joyful. I am clear. I am present. I am peaceful. I am connected. I am whole. I am pleased.',
     best_preparation:
@@ -6983,7 +6983,7 @@ const HERBS = [
       'Drug interactions: anticoagulants (monitor INR), NSAIDs (additive — consult prescriber), aspirin (additive)',
     ],
     dosage_range:
-      'Decoction (OPTIMAL — water extracts salicylates well): 1–3 g dried inner bark simmered 10–15 minutes, 1–3× daily. Tincture (fresh bark): 20–40 drops, 1–3× daily. Standardised extract (when available — most reliable): 500–1500 mg standardised to salicylate content, 1–2× daily. With meals (additional GI protection; improves tolerance). Onset: 1–2 weeks for initial benefit; cumulative baseline decrease over 2–4 weeks. Safe indefinite long-term use for chronic pain management.',
+      'Decoction (OPTIMAL — water extracts salicylates well): 1–3 g dried inner bark simmered 10–15 minutes, 1–3× daily. Extract (fresh bark): 20–40 drops, 1–3× daily. Standardised extract (when available — most reliable): 500–1500 mg standardised to salicylate content, 1–2× daily. With meals (additional GI protection; improves tolerance). Onset: 1–2 weeks for initial benefit; cumulative baseline decrease over 2–4 weeks. Safe indefinite long-term use for chronic pain management.',
     spiritual_layer:
       'Willow Bark is ancient healing medicine — the original aspirin that humanity reached for across every continent where willows grow, long before anyone understood why. She grows beside water, her branches bending without breaking in the strongest wind, teaching that flexibility is strength and that yielding to what moves us is not weakness. The Willow has always been associated with grief, emotion, deep feeling — and it is fitting that her pain-relieving gift comes from her bark, her outer protective layer. She teaches: pain is a message, not a permanent sentence; your body knows how to communicate and how to heal; gentleness applied consistently is more powerful than force. She whispers: My pain eases. My body heals. I am gentle with myself. I am supported. I am whole. I am comfortable. I am well.',
     best_preparation:
@@ -7048,7 +7048,7 @@ const HERBS = [
       'Drug interactions: anticonvulsants (seizure risk — AVOID), anticoagulants (theoretical — monitor)',
     ],
     dosage_range:
-      'Tea/infusion (GENTLEST): 0.5–1 tsp dried herb steeped 10–15 minutes, 1–2× BEFORE meals (intensely bitter; pre-meal optimal). Tincture (1:5 alcohol; START LOW): 10–20 drops, 2–3× daily. PARASITE PROTOCOL (INTENSIVE): 20–40 drops tincture 3× daily for 2 weeks, then MANDATORY 1–2 week break; repeat 2–3 cycles maximum. ALWAYS use in antiparasitic trio (Black Walnut + Clove + Wormwood) — reduces individual herb dose and toxicity risk. MAXIMUM 3 cycles per year. ABSOLUTELY NOT for casual or indefinite use.',
+      'Tea/infusion (GENTLEST): 0.5–1 tsp dried herb steeped 10–15 minutes, 1–2× BEFORE meals (intensely bitter; pre-meal optimal). Extract (1:5 alcohol; START LOW): 10–20 drops, 2–3× daily. PARASITE PROTOCOL (INTENSIVE): 20–40 drops extract 3× daily for 2 weeks, then MANDATORY 1–2 week break; repeat 2–3 cycles maximum. ALWAYS use in antiparasitic trio (Black Walnut + Clove + Wormwood) — reduces individual herb dose and toxicity risk. MAXIMUM 3 cycles per year. ABSOLUTELY NOT for casual or indefinite use.',
     spiritual_layer:
       'Wormwood is the fierce protector — her very name tells her story: werm (worm), the ancient antiparasitic function that defined her role for every culture that knew her. She is sharp, bitter, uncompromising — the herb that removes what does not belong, that sets boundaries without apology, that teaches that fierce protection is compatible with wisdom. She grew around the graves of warriors and in the wormwood forests of Central Asia; she was the secret of absinthe and the nightmare of excess. Her teaching is precision: she is most powerful when used exactly, for exactly as long as needed, then set aside. She whispers: I am protected. My boundaries are clear and firm. I remove invaders. I stand strong. I trust my fierce wisdom. I am safe.',
     best_preparation:
@@ -7110,7 +7110,7 @@ const HERBS = [
       'Drug interactions: anticoagulants (theoretical — monitor), antihypertensives (monitor at high doses)',
     ],
     dosage_range:
-      'Tea/infusion: 1–2 tsp dried herb per 250 ml boiling water, steeped 10–15 minutes; 1–3× daily for digestion and circulation; 3–5× daily (served HOT) for acute fever and diaphoretic effect. Tincture (1:5 in 40–60% alcohol): 2–4 ml, 2–3× daily; 1–2 ml every 1–3 hours for acute fever. Topical: fresh crushed leaves applied directly to wound or cut; strong infusion as wound wash or sitz bath. Duration: acute fever — days; digestive and menstrual — weeks to months with breaks.',
+      'Tea/infusion: 1–2 tsp dried herb per 250 ml boiling water, steeped 10–15 minutes; 1–3× daily for digestion and circulation; 3–5× daily (served HOT) for acute fever and diaphoretic effect. Extract (1:5 in 40–60% alcohol): 2–4 ml, 2–3× daily; 1–2 ml every 1–3 hours for acute fever. Topical: fresh crushed leaves applied directly to wound or cut; strong infusion as wound wash or sitz bath. Duration: acute fever — days; digestive and menstrual — weeks to months with breaks.',
     spiritual_layer:
       'Yarrow is named for Achilles — the warrior who was invulnerable everywhere except his heel, who knew how to fight but not how to be vulnerable in the right places. She is boundary and bridge simultaneously: she knows when to stop the bleeding (literal and emotional) and when to open channels so stagnation cannot calcify. She is the energetic shield of the empath, the boundary-keeper for those who need to learn where they end and others begin. In her warrior-healer teaching she holds both courage and care — she teaches that we can stand and mend, that strength includes the wisdom to be tender with what is genuinely wounded. She whispers: My boundaries are clear. I hold what is mine and release what is not. I am protected and free.',
     best_preparation:
@@ -7145,7 +7145,7 @@ const HERBS = [
     ],
     pharmacology:
       'Primary bioactives: anthraquinones (emodin, chrysophanol — stimulant laxative via colonic motility increase; antiparasitic; anti-inflammatory; PRIMARY driver of laxative action), oxalates (SIGNIFICANT: can bind calcium; contribute to kidney stone risk and kidney damage at high intake; animal toxicity documented at excess), tannins (astringent; antimicrobial; provide moderate mucosal protection), iron and other minerals (bioavailable forms; traditional iron-support use). SAFETY: NOT for long-term continuous use (anthraquinone dependence; oxalate accumulation; electrolyte loss via prolonged stimulant laxative action). Grade C+ digestive bitter and iron support (traditional plus mechanistic; limited direct RCTs); Grade B safety for short-term courses; Grade D safety for long-term high-dose use.',
-    flavor_profile: 'Bitter and astringent — characteristic earthy dock root bitterness; typically taken as tincture or capsule',
+    flavor_profile: 'Bitter and astringent — characteristic earthy dock root bitterness; typically taken as extract or capsule',
     contraindications: [
       'Pregnancy — AVOID: anthraquinone laxatives stimulate uterine smooth muscle; miscarriage risk',
       'Kidney stones or kidney disease — AVOID: significant oxalate content can worsen kidney stone formation or damage renal function; hard stop',
@@ -7172,7 +7172,7 @@ const HERBS = [
       'Drug interactions: thiazide diuretics (potassium loss — monitor electrolytes), stimulant laxative medications (additive — avoid)',
     ],
     dosage_range:
-      'Decoction: 1–2 g root in 250 ml water, simmered 10–15 minutes, 1–3× daily for short courses only. Tincture (1:5): 1–4 ml, 1–3× daily. Duration: SHORT COURSES ONLY — use in time-limited phases (1–3 weeks) with clear therapeutic goals (constipation reset, iron support phase); then reassess and discontinue or rotate. NOT for daily chronic long-term use.',
+      'Decoction: 1–2 g root in 250 ml water, simmered 10–15 minutes, 1–3× daily for short courses only. Extract (1:5): 1–4 ml, 1–3× daily. Duration: SHORT COURSES ONLY — use in time-limited phases (1–3 weeks) with clear therapeutic goals (constipation reset, iron support phase); then reassess and discontinue or rotate. NOT for daily chronic long-term use.',
     spiritual_layer:
       'Yellow Dock is the iron bitter of the hedgerow — the plant that pushes its deep taproot through the hardest, most compacted soil to pull up iron and minerals that surface-feeding plants cannot reach. She teaches that depth of nourishment sometimes requires bitterness, that the most necessary work is not always the most comfortable, that sluggish systems sometimes need a strong, temporary stimulus before they remember how to move on their own. She is the short-term clearing teacher — not the long gentle tonic but the precise, brief intervention that restores function so the body can take over again. She whispers: I move what has stagnated. I clear briefly and precisely. I restore function so life can flow again. I nourish from depth.',
     best_preparation:
@@ -7558,7 +7558,7 @@ const HERBS = [
       'Drug interactions: Digoxin (SERIOUS — hypokalaemia; CONTRAINDICATED without monitoring), diuretics and corticosteroids (potassium loss — monitor), anticoagulants (discontinue pre-surgery)',
     ],
     dosage_range:
-      'TCM decoction (3–12 g/day dried root in formula; added in last 5–10 minutes of boiling to preserve anthraquinones). Western capsule: 250–500 mg, 1–2× daily short-term only. Tincture (1:5): 0.5–2 ml at bedtime as needed, short-term. ALWAYS combine with carminatives to reduce griping. Duration: MAXIMUM few days to 2 weeks per course; then complete stop. For chronic constipation: REDIRECT to safer options (bulk-forming, osmotic laxatives, dietary fibre, movement).',
+      'TCM decoction (3–12 g/day dried root in formula; added in last 5–10 minutes of boiling to preserve anthraquinones). Western capsule: 250–500 mg, 1–2× daily short-term only. Extract (1:5): 0.5–2 ml at bedtime as needed, short-term. ALWAYS combine with carminatives to reduce griping. Duration: MAXIMUM few days to 2 weeks per course; then complete stop. For chronic constipation: REDIRECT to safer options (bulk-forming, osmotic laxatives, dietary fibre, movement).',
     spiritual_layer:
       'Da Huang is the purging judge — the herb that says "this must go now" with uncompromising clarity. She embodies the teaching of right medicine, right moment: that strong purgation has a legitimate role in acute crisis and serious accumulation, but is dangerous when used casually or chronically. She teaches precision and respect for powerful forces — the same forceful clarity that resolves an acute toxic blockage becomes destructive when applied indefinitely to a system that needs rebuilding rather than evacuation. She is the short, fierce intervention that clears the way for something new, then steps back. She whispers: I release what is truly toxic at the right time and in the right way. I honour my body\'s need for elimination without abusing strong forces. I choose clarity and respect in cleansing.',
     best_preparation:
@@ -7619,11 +7619,11 @@ const HERBS = [
       'Drug interactions: None documented',
     ],
     dosage_range:
-      'Tea: 1–2 tsp dried petals per 250 ml hot water, steeped covered 10–15 minutes, 1–3× daily. Cold infusion (preserves volatile oils better): petals in room-temperature water for several hours; drink cool. Tincture (1:5 in 40–60% alcohol): 1–4 ml, 1–3× daily; often blended with other heart herbs. Glycerite: excellent for children and highly sensitive individuals; 1–4 ml, 1–3× daily. Honey preparation: petals infused in raw honey 2–4 weeks; 1 tsp as needed for sore throat and grief ritual. Topical: rose water or hydrosol as facial toner and eye compress. Safe indefinite long-term daily use.',
+      'Tea: 1–2 tsp dried petals per 250 ml hot water, steeped covered 10–15 minutes, 1–3× daily. Cold infusion (preserves volatile oils better): petals in room-temperature water for several hours; drink cool. Extract (1:5 in 40–60% alcohol): 1–4 ml, 1–3× daily; often blended with other heart herbs. Glycerite: excellent for children and highly sensitive individuals; 1–4 ml, 1–3× daily. Honey preparation: petals infused in raw honey 2–4 weeks; 1 tsp as needed for sore throat and grief ritual. Topical: rose water or hydrosol as facial toner and eye compress. Safe indefinite long-term daily use.',
     spiritual_layer:
       'Rose is heart intelligence — the fusion of softness and discernment that distinguishes love from dissolution. She embodies the paradox of the thorned flower: that vulnerability without boundaries creates chaos, and boundaries without softness create isolation. The rose teaches that the heart can remain open even after pain — but only when thorns (healthy limits) are honoured. She is the grief companion who sits beside sorrow without rushing it, the self-love advocate who insists that beauty practices are self-honoring not vanity, the intimacy teacher who says that safe vulnerability is the most courageous act. She carries millennia of use in love, ceremony and healing across every culture that grew her. She whispers: My heart is soft and strong. I can feel deeply and remain safe. Love begins within me.',
     best_preparation:
-      'Cover the cup while steeping to preserve volatile aromatic oils (they are the primary therapeutic constituents and escape with steam). Cold infusion preserves even more volatiles — recommended for emotional and aromatic benefit. Rose-honey infusion for sore throat and grief ritual use is deeply effective and richly therapeutic. For PMS: combine with Vitex tincture and Motherwort for hormonal plus emotional dual action. No drug interaction screening required. No contraindications beyond rare Rosaceae allergy. Rose is the easiest recommend in the entire library.',
+      'Cover the cup while steeping to preserve volatile aromatic oils (they are the primary therapeutic constituents and escape with steam). Cold infusion preserves even more volatiles — recommended for emotional and aromatic benefit. Rose-honey infusion for sore throat and grief ritual use is deeply effective and richly therapeutic. For PMS: combine with Vitex extract and Motherwort for hormonal plus emotional dual action. No drug interaction screening required. No contraindications beyond rare Rosaceae allergy. Rose is the easiest recommend in the entire library.',
     caution_level: 'LOW',
     safe_pregnancy: true,
     status:
@@ -7684,7 +7684,7 @@ const HERBS = [
       'Drug interactions: anticonvulsants (concentrated forms only — tea safe), hormone therapies (mild phytoestrogenic — inform prescriber)',
     ],
     dosage_range:
-      'GARGLE (MOST EFFECTIVE FOR SORE THROAT): strong tea (2–3 tsp dried leaf steeped 15 minutes in 250 ml hot water), gargle 30–60 seconds, spit or swallow, 4–6× daily for acute sore throat (3–7 days). Tea (internal): 1–2 tsp dried leaf per 250 ml hot water, steeped 5–10 minutes, 2–3× daily. Hot flashes: same tea dose 2–3× daily for 4–8 week trial. Tincture: 40–60 drops, 2–3× daily. Culinary use: fresh or dried sage in cooking indefinitely. ESSENTIAL OIL: topical only (diluted); NEVER internal.',
+      'GARGLE (MOST EFFECTIVE FOR SORE THROAT): strong tea (2–3 tsp dried leaf steeped 15 minutes in 250 ml hot water), gargle 30–60 seconds, spit or swallow, 4–6× daily for acute sore throat (3–7 days). Tea (internal): 1–2 tsp dried leaf per 250 ml hot water, steeped 5–10 minutes, 2–3× daily. Hot flashes: same tea dose 2–3× daily for 4–8 week trial. Extract: 40–60 drops, 2–3× daily. Culinary use: fresh or dried sage in cooking indefinitely. ESSENTIAL OIL: topical only (diluted); NEVER internal.',
     spiritual_layer:
       'Sage is the wise one — her very name contains wisdom (Latin: salvere, to save; salvia, the sage plant). She has been burned in every culture that found her to clear the air, both physically (antimicrobial smoke) and energetically (clearing stagnant energy). She is the protector of the voice, the guardian of the throat, the keeper of the truth that wants to be spoken clearly. Metal element in TCM governs voice, clarity and the ability to discern what is true — Sage embodies all of this. She cools what is too hot, tightens what has become lax, kills what does not belong, and holds the space for clear communication. She whispers: My throat is clear. My voice is strong. I speak truth. I am protected. I am wise. I am healthy. My breath is easy.',
     best_preparation:
@@ -7749,7 +7749,7 @@ const HERBS = [
       'Drug interactions: hormone therapies (anti-androgenic overlap — inform prescriber), finasteride or dutasteride (overlapping mechanism — consult urologist), anticoagulants (MONITOR INR), PSA testing (disclose use — may suppress values)',
     ],
     dosage_range:
-      'Standardised lipophilic extract (320 mg/day — CLINICAL RESEARCH FORM; 80–90% fatty acids): 160 mg twice daily with meals. Crude dried berry: 1–2 g, 2–3× daily (less standardised; weaker evidence). Tincture (1:5 in 60–70% alcohol): 2–4 ml, 2–3× daily. Duration: minimum 3–6 months before evaluating symptom scores; may continue long-term if tolerated and effective. ALWAYS under clinician monitoring with regular IPSS symptom scoring and PSA awareness.',
+      'Standardised lipophilic extract (320 mg/day — CLINICAL RESEARCH FORM; 80–90% fatty acids): 160 mg twice daily with meals. Crude dried berry: 1–2 g, 2–3× daily (less standardised; weaker evidence). Extract (1:5 in 60–70% alcohol): 2–4 ml, 2–3× daily. Duration: minimum 3–6 months before evaluating symptom scores; may continue long-term if tolerated and effective. ALWAYS under clinician monitoring with regular IPSS symptom scoring and PSA awareness.',
     spiritual_layer:
       'Saw Palmetto grows in the sandy coastal lowlands of the American Southeast — a slow-growing, ancient palm that reaches its full expression only over decades, teaching that mature masculine vitality is not about urgency or force but about deep roots and steady presence. She embodies the shift from "prove myself" energy to "I am enough" groundedness — the mature masculine archetype that holds its centre in the lower body without leaking energy through anxiety, urgency or overcompensation. She teaches that true potency arises from stable roots and relaxed flow, that the pelvis can be a place of groundedness rather than pressure. She whispers: My roots are strong. My power is steady. I release pressure and trust my body\'s rhythm.',
     best_preparation:
@@ -7853,7 +7853,7 @@ const HERBS = [
     ],
     pharmacology:
       'Primary bioactives: triterpenoids (betulin and betulinic acid — anticancer via apoptosis and anti-angiogenesis; antiviral; anti-inflammatory; polyporenic acids — lanostane-type; anti-inflammatory; antithrombin; antimicrobial; cytotoxic), polysaccharides and beta-glucans (immunomodulatory via Dectin-1, TLR2/4, complement receptors; activate macrophages, NK cells, T cells), phenolic compounds and flavonoids (antioxidant; antimicrobial; cytoprotective), piptamine and related antibiotic compounds (strong activity against E. coli and multiple bacteria). Evidence grades: Grade B+ antimicrobial and antiparasitic (in vitro and traditional use); Grade B antiviral (in vitro triterpene evidence); Grade B immunomodulating (in vitro and ex vivo human cell studies); Grade B anticancer (in vitro plus some in vivo models); Grade B anti-inflammatory; Grade B+ traditional safety at moderate doses.',
-    flavor_profile: 'Mild, slightly bitter and astringent — clean and woody; inner flesh is pale cream-white; typically consumed as decoction or tincture rather than food',
+    flavor_profile: 'Mild, slightly bitter and astringent — clean and woody; inner flesh is pale cream-white; typically consumed as decoction or extract rather than food',
     contraindications: [
       'Autoimmune disease or immunosuppressants/biologics/immune checkpoint inhibitors — CAUTION: immunomodulating effects may interfere with intentional immunosuppression or worsen some autoimmune conditions; individualized evaluation required',
       'Active cancer treatment — adjunct only; coordinate with oncology team; never replace standard cancer therapy',
@@ -7882,7 +7882,7 @@ const HERBS = [
       'Drug interactions: immunosuppressants (modulation risk), anticoagulants (mild theoretical — monitor), chemotherapy (coordinate with oncologist)',
     ],
     dosage_range:
-      'Decoction (traditional and optimal for gut/antiparasitic work): 3–6 g dried inner flesh slices simmered in 500–750 ml water for 30–60 minutes; 1 cup, 1–3× daily. Tincture or dual extract (1:5 to 1:3 in 40–70% ethanol combined with decoction): 1–3 ml, 1–3× daily. Powder or capsules: 500–1500 mg daily in 2–3 divided doses. Duration: 1–4 weeks for acute antiparasitic or infection support; 2–3+ months for immune terrain or oncology adjunct work. Always from clean birch stands away from pollution.',
+      'Decoction (traditional and optimal for gut/antiparasitic work): 3–6 g dried inner flesh slices simmered in 500–750 ml water for 30–60 minutes; 1 cup, 1–3× daily. Extract or dual extract (1:5 to 1:3 in 40–70% ethanol combined with decoction): 1–3 ml, 1–3× daily. Powder or capsules: 500–1500 mg daily in 2–3 divided doses. Duration: 1–4 weeks for acute antiparasitic or infection support; 2–3+ months for immune terrain or oncology adjunct work. Always from clean birch stands away from pollution.',
     spiritual_layer:
       'Birch Polypore is the birch sentinel — a guardian that appears when birch is stressed or dying, turning breakdown into medicine. She teaches that even in decline and decay, there is protective intelligence and an opportunity for purification. She is the world\'s oldest documented human medicine — carried through an alpine crossing five thousand years ago by a traveller whose body has told us more about human health than almost anything else in history. She reclaims territory from parasites, literal and metaphorical, and resets the boundary between host and world. She whispers: I reclaim my inner territory. What feeds on me without permission is released. My defences are clear and intelligent. I am cleansed, protected, and aligned with my birch-bright resilience.',
     best_preparation:
@@ -7987,7 +7987,7 @@ const HERBS = [
     ],
     pharmacology:
       'Primary bioactives: cordycepin / 3-deoxyadenosine (especially abundant in C. militaris; KEY — ATP/AMPK/GLUT4/PDH upregulation; anti-fatigue; anti-inflammatory; antitumour; antiplatelet; antiviral), polysaccharides and beta-glucans (immunomodulatory; antioxidant; hypoglycaemic; nephroprotective; hepatoprotective; anti-fibrotic), sterols and fatty acids (ergosterol derivatives; anti-inflammatory; cholesterol-modulating), adenosine, inosine and guanosine (energy metabolism and vascular tone), L-tryptophan and amino acids (serotonin precursor and general protein support). C. militaris has higher and more consistent cordycepin than wild O. sinensis. Grade A-minus ATP/energy metabolism (strong animal and mechanistic data); Grade B exercise performance (human RCT plus animal); Grade B+ immunomodulation (human capsule/beverage studies plus preclinical); Grade B CKD adjunct (RCTs and 2025 meta-analysis); Grade B antiplatelet risk (in vitro/ex vivo confirmed).',
-    flavor_profile: 'Mildly earthy and subtly sweet — more neutral than most medicinal mushrooms; pleasant in tincture, powder or functional beverage preparations',
+    flavor_profile: 'Mildly earthy and subtly sweet — more neutral than most medicinal mushrooms; pleasant in extract, powder or functional beverage preparations',
     contraindications: [
       'Autoimmune disease (RA, SLE, MS, Hashimoto\'s etc.) — CAUTION: immune activation may exacerbate; use only under practitioner supervision',
       'Organ transplant recipients — CAUTION: immune activation could theoretically contribute to graft rejection by counteracting immunosuppressive drugs; consult transplant team',
@@ -8126,7 +8126,7 @@ const HERBS = [
     ],
     pharmacology:
       'Primary bioactives: muscimol (GABA analog; potent GABA-A agonist; CNS inhibition — sedation, ataxia, muscle relaxation, altered perception; also partial GABA-A-rho agonist), ibotenic acid (glutamate/aspartate analog; NMDA and metabotropic glutamate receptor agonist; neuroexcitatory; neurotoxic at high exposures; decarboxylates to muscimol; used to induce brain lesions in animal models). Clinical toxidrome: mixed excitatory-depressive; onset 30 min–2 hours; mydriasis, flushing, diaphoresis, GI symptoms; alternating agitation/hallucinations and somnolence/ataxia/stupor; seizures and respiratory depression in severe cases; mostly self-limited but fatalities documented. No therapeutic dose established. Rising commercial products with unregulated muscimol/ibotenic acid content creating public health emergency.',
-    flavor_profile: 'Not consumed therapeutically — this entry is educational/taxonomic only; do not use as a beverage or tincture ingredient',
+    flavor_profile: 'Not consumed therapeutically — this entry is educational/taxonomic only; do not use as a beverage or extract ingredient',
     contraindications: [
       'ABSOLUTE BLOCK FOR ALL INTERNAL USE — no safe established therapeutic dose; toxidrome unpredictable; fatalities documented',
       'ANY use by children or adolescents — ABSOLUTE BLOCK: severe neurological harm risk',
@@ -8154,7 +8154,7 @@ const HERBS = [
     spiritual_layer:
       'Amanita muscaria is the threshold grandmother — a liminal fungus sitting at the edge between waking and dream, inhibition and excitation. Unlike psilocybin which reveals patterns, she collapses and scrambles ordinary patterns, forcing a more chaotic re-encounter with self and unconscious content. She is the icon of the threshold itself: simultaneously the fairy-tale mushroom of childhood, the shaman\'s gateway, and the pharmacological teacher that shows what happens when GABA and glutamate are yanked in opposite directions simultaneously. Her teaching is: Not all gateways are gentle or precise. Some medicines teach by destabilising what you take for granted. True respect includes knowing when not to cross a threshold.',
     best_preparation:
-      'DATABASE ENTRY IS EDUCATIONAL AND TAXONOMIC ONLY. Do not include in any tincture, beverage or supplement formulation. For educational content: describe taxonomy, ethnomycology and pharmacological mechanism. Clearly distinguish from psilocybin-containing mushrooms (different mechanism entirely). Always communicate that commercial muscimol products are an emerging public health risk with unregulated content and unpredictable toxicity.',
+      'DATABASE ENTRY IS EDUCATIONAL AND TAXONOMIC ONLY. Do not include in any extract, beverage or supplement formulation. For educational content: describe taxonomy, ethnomycology and pharmacological mechanism. Clearly distinguish from psilocybin-containing mushrooms (different mechanism entirely). Always communicate that commercial muscimol products are an emerging public health risk with unregulated content and unpredictable toxicity.',
     caution_level: 'VERY HIGH',
     safe_pregnancy: false,
     status:
@@ -8518,7 +8518,7 @@ const HERBS = [
       'Drug interactions: anticoagulants and antiplatelets (MONITOR — hericenone B), Alzheimer\'s medications (complementary — inform prescriber)',
     ],
     dosage_range:
-      'Fruiting body dried powder: 0.8–3 g daily (0.8 g used in MCI RCT; higher doses used in practice). Erinacine A-enriched mycelium (EAHE) capsules: 3×350 mg daily as used in Alzheimer\'s pilot RCT. Tincture or dual extract: 1–3 ml daily. TIMING: morning or daytime (cognitive-activating; may be mildly stimulating for some individuals in the evening). Duration: minimum 8–16 weeks before assessing cognitive effects; continued intake required for sustained benefit (cognitive scores decline after stopping).',
+      'Fruiting body dried powder: 0.8–3 g daily (0.8 g used in MCI RCT; higher doses used in practice). Erinacine A-enriched mycelium (EAHE) capsules: 3×350 mg daily as used in Alzheimer\'s pilot RCT. Extract or dual extract: 1–3 ml daily. TIMING: morning or daytime (cognitive-activating; may be mildly stimulating for some individuals in the evening). Duration: minimum 8–16 weeks before assessing cognitive effects; continued intake required for sustained benefit (cognitive scores decline after stopping).',
     spiritual_layer:
       'Lion\'s Mane is the white mane of the forest mind — a fungal brain hanging from hardwood, mirroring dendrites and axons in physical form. She is the mushroom that does not disrupt consciousness but patiently rebuilds its infrastructure: more NGF here, more BDNF there, more synaptic connections, more neuronal survival. Her teaching is structural rewiring rather than acute disruption — she shows that the deepest cognitive healing is not a lightning strike but the result of patient, sustained nourishment of the neural terrain over months and years. She whispers: Your brain is not fixed. New growth is possible wherever attention, nourishment and time converge. Creativity, clarity and healing are not lightning strikes — they are the result of patient rewiring.',
     best_preparation:
@@ -8619,7 +8619,7 @@ const HERBS = [
     ],
     pharmacology:
       'Primary bioactives: polysaccharides and protein-bound polysaccharides/proteoglycans (PL, PLP, P1, Mesima glycopeptide — immunomodulatory via T/B cells, NK cells, macrophages; antitumour; Th1/Th2 modulation; anti-allergic; nonspecific biological response modifier), phenylpropanoids and polyphenols (hispolon — anticancer via ER-alpha reduction; antiviral; antioxidant; hispidin — anticancer; antiviral; immunomodulatory; caffeic acid, davallialactone — anti-inflammatory; antioxidant), triterpenoids and furans (anti-inflammatory; antioxidant). Evidence: Grade B antitumour (strong in vitro and animal; limited human clinical); Grade B immunomodulation (cell/animal work plus small clinical trial); Grade B-minus anti-asthmatic/allergic (OVA animal models); Grade C women\'s health (clinical practice and anecdotal); Grade B general safety.',
-    flavor_profile: 'Distinctly bitter and woody — hard polypore; not a culinary mushroom; typically consumed as decoction, tincture or standardised extract',
+    flavor_profile: 'Distinctly bitter and woody — hard polypore; not a culinary mushroom; typically consumed as decoction, extract or standardised extract',
     contraindications: [
       'Autoimmune disease or immunosuppressants/biologics/transplant — CAUTION: strong immune activation and NK enhancement may exacerbate autoimmune conditions or counteract immunosuppressive therapy; use only under specialist supervision',
       'Concurrent chemotherapy or biologics — coordinate with oncology team; Th1 immune activation may interact with specific treatment protocols',
@@ -8646,7 +8646,7 @@ const HERBS = [
       'Drug interactions: immunosuppressants (counteraction — specialist required), chemotherapy (coordinate with oncologist), anticoagulants (theoretical — monitor)',
     ],
     dosage_range:
-      'Decoction (traditional): 3–9 g dried fruiting body simmered 30–60 minutes; 1–2 cups daily. Tincture or standardised proteoglycan extract: 500–1500 mg daily in divided doses. Fertility protocol (clinical practice): ~3 g/day standardised extract for NK cell normalisation. Human immune RCT: oral P. linteus extract (dose per clinical protocol; product-specific). Duration: 8–12 week minimum for immune outcomes; reassess and cycle.',
+      'Decoction (traditional): 3–9 g dried fruiting body simmered 30–60 minutes; 1–2 cups daily. Extract or standardised proteoglycan extract: 500–1500 mg daily in divided doses. Fertility protocol (clinical practice): ~3 g/day standardised extract for NK cell normalisation. Human immune RCT: oral P. linteus extract (dose per clinical protocol; product-specific). Duration: 8–12 week minimum for immune outcomes; reassess and cycle.',
     spiritual_layer:
       'Mesima is the black hoof at the mulberry trunk — dense, dark and slow-growing, embodying structured immunological discipline. She teaches that defence can be refined not just amplified, that true protection is the art of saying yes and no in the right measure — to tumours, to allergens, to pregnancies, to bleeding. She has guarded health in East Asia for thousands of years with the patience of a polypore that grows for decades on a single tree. She whispers: Defense can be refined, not just amplified. True protection is the art of saying yes and no in the right measure. Balance your guardians, and life can take root where it was once rejected.',
     best_preparation:
@@ -8801,12 +8801,12 @@ const HERBS = [
     secondary_benefits: [
       'Haemostatic traditional use — traditional application for haemorrhage and bleeding; fomitoside-related compounds and triterpenes may contribute',
       'Taxonomy caution — North American red-belted polypores were frequently misidentified; many are actually Fomitopsis mounceae or F. ochracea with potentially different chemistry; European and Asian F. pinicola is the reference medicinal species',
-      'Non-culinary polypore — woody, corky, hoof-shaped bracket; only suitable as decoction, powder or tincture; never eaten raw',
+      'Non-culinary polypore — woody, corky, hoof-shaped bracket; only suitable as decoction, powder or extract; never eaten raw',
       'Boreal forest medicine — widely distributed in boreal and temperate forests across Europe and Asia; grows on conifer and hardwood deadwood; traditionally harvested from clean forest stands',
     ],
     pharmacology:
       'Primary bioactives: polysaccharides (beta-glucans and heteroglycans — anti-angiogenic; anti-inflammatory; antihyperglycaemic; immunomodulatory; no endothelial cytotoxicity), lanostane-type triterpenoids and triterpene glycosides (pinicolasin J and related — anti-inflammatory via neutrophil enzyme inhibition; antimicrobial; cytotoxic; fomitoside E — COX-2 inhibition; cardiovascular-supportive), sterols, phenolics, coumarins (additional antioxidant and antimicrobial activity). SPECIES IDENTITY CRITICAL: especially in North America where misidentification is common; European and Asian collections are the pharmacological reference. Evidence: Grade B anticancer (in vitro plus limited in vivo); Grade B+ anti-angiogenic and anti-inflammatory (polysaccharides and triterpenoids); Grade B-minus antihyperglycaemic and lipid (animal with striking effect sizes); Grade B-minus antimicrobial (in vitro anti-quorum-sensing); Grade B traditional safety.',
-    flavor_profile: 'Not for food consumption — woody polypore; consumed as decoction, powder or tincture only; strongly bitter and astringent as decoction',
+    flavor_profile: 'Not for food consumption — woody polypore; consumed as decoction, powder or extract only; strongly bitter and astringent as decoction',
     contraindications: [
       'Cancer self-treatment without oncologist oversight — BLOCK: experimental preclinical only; no human clinical cancer trials; adjunct context only',
       'Autoimmune or immunosuppressive therapy — CAUTION: immunomodulatory polysaccharides may conflict; practitioner oversight',
@@ -8835,11 +8835,11 @@ const HERBS = [
       'Drug interactions: diabetes medications (MONITOR CLOSELY — powerful glucose-lowering in animal models), anticoagulants (monitor), immunosuppressants (practitioner oversight)',
     ],
     dosage_range:
-      'Decoction (traditional): dried polypore slices or powder simmered 30–60 minutes; standard TCM bracket polypore dosing 3–9 g daily. Tincture or extract: 1–3 ml daily. Duration: short to medium courses (4–8 weeks) with reassessment; monitoring important given striking metabolic effect sizes. NOTE: no standardised consumer dosing established for F. pinicola specifically; extrapolated from traditional bracket polypore practice.',
+      'Decoction (traditional): dried polypore slices or powder simmered 30–60 minutes; standard TCM bracket polypore dosing 3–9 g daily. Extract or extract: 1–3 ml daily. Duration: short to medium courses (4–8 weeks) with reassessment; monitoring important given striking metabolic effect sizes. NOTE: no standardised consumer dosing established for F. pinicola specifically; extrapolated from traditional bracket polypore practice.',
     spiritual_layer:
       'Red-Belted Polypore is the forest belt of regulation — a layered, red-banded bracket that slowly edits the tree\'s biomass, mirroring gradual profound rebalancing of inflammation, metabolism and tissue growth. She grows where wood needs regulated decomposition, teaching that overgrowth, inflammation and excess sugar all respond to the same quiet discipline: steady, structural change that recalibrates without catastrophe. She whispers: Correction can be gradual yet far-reaching. Overgrowth, inflammation and excess sugar all respond to the same quiet discipline. True guardianship is not flashy; it is persistent recalibration.',
     best_preparation:
-      'Decoction for traditional use; tincture or standardised extract for metabolic and anti-inflammatory protocols. SPECIES IDENTITY IS CRITICAL — especially in North America (misidentification risk); only use verified European/Asian F. pinicola or confirmed species. Screen diabetes medications (MONITOR CLOSELY — powerful glucose-lowering in animal models). Oncology: preclinical only, adjunct framing, oncologist coordination. Experimental status is honest framing — promising but not yet clinically validated.',
+      'Decoction for traditional use; extract or standardised extract for metabolic and anti-inflammatory protocols. SPECIES IDENTITY IS CRITICAL — especially in North America (misidentification risk); only use verified European/Asian F. pinicola or confirmed species. Screen diabetes medications (MONITOR CLOSELY — powerful glucose-lowering in animal models). Oncology: preclinical only, adjunct framing, oncologist coordination. Experimental status is honest framing — promising but not yet clinically validated.',
     caution_level: 'MEDIUM',
     safe_pregnancy: false,
     status:
@@ -8871,7 +8871,7 @@ const HERBS = [
     ],
     pharmacology:
       'Primary bioactives: polysaccharides (beta-1,3/1,6-D-glucans and heteropolysaccharides; 30–50% in some extracts; PRIMARY immunomodulatory via TLRs and Dectin-1; antioxidant; anti-inflammatory; antidiabetic; sleep-promoting via GLAA), triterpenoids (ganoderic, ganodermic, lucidenic acids; 1–2% or higher in ethanol extracts; anti-inflammatory; hepatoprotective; antihypertensive; antiallergic; antitumour; CNS-modulating; sleep support via HPA cytokine modulation), sterols (ergosterol), peptides, nucleosides (adenosine). PREPARATION: hot-water extract = polysaccharides (sleep, immune); ethanol extract = triterpenes (liver, inflammation, CNS); dual extract = full spectrum (optimal). Evidence: Grade B sleep (preclinical plus network pharmacology; emerging human data); Grade B+ immune modulation (12-week RCT confirmed); Grade B anti-inflammatory and antioxidant; Grade B+ safety healthy adults (RCTs and traditional use; isolated hepatotoxicity cases).',
-    flavor_profile: 'Distinctly bitter and slightly woody — characteristic lacquer-resin bitterness from triterpenes; typically taken as tincture, dual extract or decoction; less palatable as plain powder',
+    flavor_profile: 'Distinctly bitter and slightly woody — characteristic lacquer-resin bitterness from triterpenes; typically taken as extract, dual extract or decoction; less palatable as plain powder',
     contraindications: [
       'Transplant recipients or strong immunosuppressants — CAUTION: immune-enhancing T cells, NK cells and IgA may counteract immunosuppressive therapy; consult transplant team',
       'Complex autoimmune diseases — case-by-case; beneficial modulation vs potential exacerbation is context-dependent; use low-and-slow under practitioner supervision',
@@ -8901,7 +8901,7 @@ const HERBS = [
       'Drug interactions: immunosuppressants (transplant team required), anticoagulants (monitor INR), antihypertensives (mild additive — monitor)',
     ],
     dosage_range:
-      'Tincture (dual or ethanol-rich for triterpenes): 1–3 ml daily (20–60 drops), ideally in evening. Hot-water extract capsules/powder (polysaccharides): 500–1500 mg daily. Whole powder: 1–3 g daily with hot liquid or decoction. Spore powder: per product; clinical evidence for sleep most established with whole extract forms. DUAL EXTRACT optimal for full-spectrum Reishi (polysaccharides + triterpenes). Duration: sleep and stress benefits 2–8 weeks; immune and longevity terrain support months to years of continuous or cyclical use. Evening dosing for Shen calming and sleep support.',
+      'Extract (dual or ethanol-rich for triterpenes): 1–3 ml daily (20–60 drops), ideally in evening. Hot-water extract capsules/powder (polysaccharides): 500–1500 mg daily. Whole powder: 1–3 g daily with hot liquid or decoction. Spore powder: per product; clinical evidence for sleep most established with whole extract forms. DUAL EXTRACT optimal for full-spectrum Reishi (polysaccharides + triterpenes). Duration: sleep and stress benefits 2–8 weeks; immune and longevity terrain support months to years of continuous or cyclical use. Evening dosing for Shen calming and sleep support.',
     spiritual_layer:
       'Reishi is the immortality mushroom — not because she makes you live forever, but because she connects finite form to an enduring current. She grows on old wood, transforming decay into a glossy, heart-shaped lacquer that feels like a physicalised aura. Her teaching has three dimensions: that rest is a skill to be trained not a collapse to be earned through exhaustion; that soft power recalibrates the HPA axis rather than driving on cortisol borrowed from tomorrow; and that spiritual potency — what the Chinese meant by Lingzhi — is the quality of action that flows from deeper values rather than reactive fear. She is the slow foundational adaptogen of mushroom medicine. She whispers: My nervous system is safe to rest. Calm and clarity can exist together in me. My immune system is wise, not frantic. Restoration is not a luxury; it is my foundation.',
     best_preparation:
@@ -9065,7 +9065,7 @@ const HERBS = [
     ],
     pharmacology:
       'Primary bioactives: polysaccharides and beta-glucans (immunomodulatory — enhance deficient responses and down-regulate excessive inflammation; prebiotic-like; support gut and systemic immune balance), insoluble cell wall fibers (purified chitin-glucan matrices — bind heavy metals, dyes and radionuclides; support intestinal health and microbiota; normalise hepatic/renal markers), phenolic compounds and polyphenols (phenolic acids, flavonoids and fomentariol benzotropolone — potent antioxidant and anti-inflammatory via ERK/JNK and NO/ROS pathway modulation), triterpenoids and sterols (antitumour; hepatoprotective; anti-inflammatory). Evidence: Grade A antioxidant; Grade B+ anti-inflammatory and anti-nociceptive (animal and macrophage models); Grade B+ immunomodulatory (in vitro, ex vivo, emerging clinical); Grade B antimicrobial and antitumour; Grade B-minus gut-liver-kidney (animal, ex vivo, early clinical); Grade B+ safety at traditional and moderate dosing.',
-    flavor_profile: 'Not a culinary mushroom — hard, woody, perennial conk; consumed as decoction or tincture only; characteristic bitter-astringent taste',
+    flavor_profile: 'Not a culinary mushroom — hard, woody, perennial conk; consumed as decoction or extract only; characteristic bitter-astringent taste',
     contraindications: [
       'Autoimmune disease or immunosuppressive/biologic therapies — CAUTION: immune-modulating effects require careful individualisation; coordinate with medical team; start low and go slow',
       'Active cancer treatment — adjunctive only under oncology supervision; never replace conventional cancer treatment',
@@ -9095,7 +9095,7 @@ const HERBS = [
       'Drug interactions: immunosuppressants and biologics (immune modulation — monitor), anticoagulants (limited data — caution in high-risk), chemotherapy and radiotherapy (integrative oncology coordination required)',
     ],
     dosage_range:
-      'Decoction (traditional and foundational): 3–6 g dried inner tissue (amadou layer or sliced conk) simmered in 500–750 ml water for 30–60 minutes; 1 cup, 1–3× daily in chronic protocols. Tincture or fluid extract (40–70% ethanol, 1:5 to 1:3): approximately 1–3 ml, 1–3× daily. Purified insoluble fiber preparations (capsules or powder): hundreds of mg to a few grams daily in divided doses under practitioner supervision. Duration: designed for long-term terrain-level protocols — 2–3 months or longer with periodic reassessment. Topical wound use: processed amadou layer as styptic pad in traditional first-aid contexts.',
+      'Decoction (traditional and foundational): 3–6 g dried inner tissue (amadou layer or sliced conk) simmered in 500–750 ml water for 30–60 minutes; 1 cup, 1–3× daily in chronic protocols. Extract or fluid extract (40–70% ethanol, 1:5 to 1:3): approximately 1–3 ml, 1–3× daily. Purified insoluble fiber preparations (capsules or powder): hundreds of mg to a few grams daily in divided doses under practitioner supervision. Duration: designed for long-term terrain-level protocols — 2–3 months or longer with periodic reassessment. Topical wound use: processed amadou layer as styptic pad in traditional first-aid contexts.',
     spiritual_layer:
       'Tinder Fungus is the keeper of the ember — fire stored inside wood, the bridge between earth, fire, air and deep time. She has kept human fire alive for at least five thousand years; Ötzi the Iceman carried her across an alpine crossing as the technology that made warmth and cooking and survival possible. She is medicine for those walking long roads through complexity: chronic illness, multi-system failure, the exhausted terrain that has been burning low for years. Her teaching is that healing in chronic illness is a slow ember-carrying process — protect the spark of vitality, tend it carefully, and let it gradually reshape the terrain of your body and life. She whispers: My inner fire is steady, not frantic. I carry my spark through long nights. My terrain is slowly changing toward balance. I am patient, persistent, and quietly powerful.',
     best_preparation:
@@ -9400,7 +9400,7 @@ const HERBS = [
       'Synergy: Nettle, Shatavari, Rose, Oatstraw',
       'Caution: Stacked high-tannin formulas may cause GI dryness'
     ],
-    dosage_range: '1-3 cups as a standard infusion daily; Tincture 2-5ml daily',
+    dosage_range: '1-3 cups as a standard infusion daily; Extract 2-5ml daily',
     spiritual_layer: 'Raspberry leaf teaches resilient softness. She strengthens by toning the container, helping the body hold itself with dignity and grounded intelligence. She whispers: I am held. My tissues are strong and supple.',
     best_preparation: 'Long Infusion (Tea) is superior for mineral extraction.',
     caution_level: 'LOW',
@@ -9533,11 +9533,11 @@ const HERBS = [
       'Drug interactions: anticoagulants (monitor), diabetes medications (monitor), antihypertensives (mild additive)',
     ],
     dosage_range:
-      'Tincture: 20–60 drops, 2–3× daily. Fresh tea: 3–6 thin slices per 250 ml, steeped 10–15 min, 1–3× daily. Powder: 1–2 g daily in divided doses. Dried ginger is hotter and stronger than fresh.',
+      'Extract: 20–60 drops, 2–3× daily. Fresh tea: 3–6 thin slices per 250 ml, steeped 10–15 min, 1–3× daily. Powder: 1–2 g daily in divided doses. Dried ginger is hotter and stronger than fresh.',
     spiritual_layer:
       'Ginger is the spark that returns circulation to what has gone cold, damp or hesitant. She teaches movement, warmth and readiness. Where there is stagnation she brings flow; where there is collapse she brings a modest, intelligent flame. She whispers: Move. Warm. Begin again. Let the fire return without violence.',
     best_preparation:
-      'Fresh infusion for nausea, colds and daily digestive use. Tincture for formula flexibility. Powder or decocted dried ginger for deeper warming and anti-inflammatory formulas. One of the best bridge herbs in formula design.',
+      'Fresh infusion for nausea, colds and daily digestive use. Extract for formula flexibility. Powder or decocted dried ginger for deeper warming and anti-inflammatory formulas. One of the best bridge herbs in formula design.',
     caution_level: 'LOW-MEDIUM',
     safe_pregnancy: null,
     status:
@@ -9596,7 +9596,7 @@ const HERBS = [
       'Drug interactions: anti-inflammatory meds (review), anticoagulants (theoretical), complex polypharmacy (review)',
     ],
     dosage_range:
-      'Standardised extract: 300–500 mg, 2–3× daily (standardised to ≥30% boswellic acids). Tincture: 20–40 drops, 2–3× daily if used. Effects require 2–8 weeks of consistent use.',
+      'Standardised extract: 300–500 mg, 2–3× daily (standardised to ≥30% boswellic acids). Extract: 20–40 drops, 2–3× daily if used. Effects require 2–8 weeks of consistent use.',
     spiritual_layer:
       'Boswellia is the resin of sacred repair. She rises as smoke in temples and moves through tissues where pain has lingered too long. She teaches that inflammation is sometimes a cry for space, reverence and release. She whispers: Soften the fire. Clear the chamber. Let pain become prayer — and then let it loosen.',
     best_preparation:
@@ -9634,7 +9634,7 @@ const HERBS = [
     'Autoimmune disease — theoretical caution in highly immune-reactive or flare-prone individuals; assess context rather than absolute avoidance',
     'Immunosuppressant medications and transplant patients — use only with medical review; acute immune activation may be undesirable',
     'Pregnancy — moderate short-term traditional use appears low concern, but robust high-dose safety data are limited; keep conservative unless clinician-guided',
-    'Diabetes or sugar-sensitive clients — syrups may contain high sugar or honey; use low-sugar extract or tincture when appropriate',
+    'Diabetes or sugar-sensitive clients — syrups may contain high sugar or honey; use low-sugar extract or extract when appropriate',
   ],
   herb_to_herb_synergy: [
     'Ginger — warming antiviral and circulatory synergy; excellent in acute winter syrup formulas',
@@ -9658,11 +9658,11 @@ const HERBS = [
     'Drug interactions: immunosuppressants (review), diabetes meds when using sweet syrups (monitor glucose); otherwise minimal',
   ],
   dosage_range:
-    'Syrup: 5–10 ml, 2–4× daily during acute illness, especially in the first 24–48 hours. Tincture: 30–60 drops, 2–4× daily. Decoction / strong berry tea: 1–2 tbsp dried berries simmered in 250–500 ml water for 20–30 minutes, 1–3× daily. Best used short-term for acute phases rather than indefinite daily use.',
+    'Syrup: 5–10 ml, 2–4× daily during acute illness, especially in the first 24–48 hours. Extract: 30–60 drops, 2–4× daily. Decoction / strong berry tea: 1–2 tbsp dried berries simmered in 250–500 ml water for 20–30 minutes, 1–3× daily. Best used short-term for acute phases rather than indefinite daily use.',
   spiritual_layer:
     'Elderberry is the dark guardian of the threshold — the hedge medicine that stands between home and wilderness, self and invasion, safety and uncertainty. She teaches intelligent defence rather than panic, reminding the body that boundaries can be both soft and strong. In moments of exposure, fragility or viral challenge, she gathers the immune field and whispers: Protect the borders. Meet the intrusion early. Trust the ancient intelligence of your body. You are guarded. You are held.',
   best_preparation:
-    'Syrup is the classic preparation for acute use, family compliance and repeated dosing. Tincture is ideal for portability and low-sugar protocols. Decoction of dried berries works well for strong winter formulas. Always use properly prepared ripe berries only. Pairs beautifully with Ginger and Thyme in acute respiratory support blends.',
+    'Syrup is the classic preparation for acute use, family compliance and repeated dosing. Extract is ideal for portability and low-sugar protocols. Decoction of dried berries works well for strong winter formulas. Always use properly prepared ripe berries only. Pairs beautifully with Ginger and Thyme in acute respiratory support blends.',
   caution_level: 'LOW-MEDIUM',
   safe_pregnancy: null,
   status:
@@ -9689,7 +9689,7 @@ const HERBS = [
     'Gentle kidney and fluid metabolism support without aggressive depletion',
   ],
   pharmacology:
-    'Primary bioactives: minerals (potassium, calcium, magnesium, iron, silica, zinc, chromium, selenium, manganese — exceptional nutritive density), silica (connective tissue, collagen structure, hair/skin/nails/bones), flavonoids including quercetin and kaempferol (mast cell stabilisation, antihistamine, anti-inflammatory), chlorophyll and carotenoids (green nutritive antioxidant support), polysaccharide fractions with mild immune-tonic value. Mechanism: most of nettle leaf’s best constituents are water-extractable, making long infusion superior to tincture for true nutritive effect. Grade A for nutritive value and safety; Grade B for allergy support and gentle diuresis.',
+    'Primary bioactives: minerals (potassium, calcium, magnesium, iron, silica, zinc, chromium, selenium, manganese — exceptional nutritive density), silica (connective tissue, collagen structure, hair/skin/nails/bones), flavonoids including quercetin and kaempferol (mast cell stabilisation, antihistamine, anti-inflammatory), chlorophyll and carotenoids (green nutritive antioxidant support), polysaccharide fractions with mild immune-tonic value. Mechanism: most of nettle leaf’s best constituents are water-extractable, making long infusion superior to extract for true nutritive effect. Grade A for nutritive value and safety; Grade B for allergy support and gentle diuresis.',
   flavor_profile: 'Green, grassy, soft and mineral-rich with a clean nourishing depth',
   contraindications: [
     'Diuretic medications — caution: additive diuresis; monitor hydration and electrolytes',
@@ -9720,15 +9720,15 @@ const HERBS = [
     'Drug interactions: diuretics (monitor), anticoagulants at large doses (monitor INR), diabetes meds (monitor glucose), iron supplements (space doses)',
   ],
   dosage_range:
-    'Long infusion (optimal): 2–4 g dried leaf per cup steeped 10–15 minutes minimum, 2–4 cups daily. Intensive nutritive protocol: 30–60 g per quart steeped several hours or overnight, consumed across the day. Tincture: 30–60 drops, 2–3× daily, though tincture is inferior for mineral extraction. Safe for long-term daily use.',
+    'Long infusion (optimal): 2–4 g dried leaf per cup steeped 10–15 minutes minimum, 2–4 cups daily. Intensive nutritive protocol: 30–60 g per quart steeped several hours or overnight, consumed across the day. Extract: 30–60 drops, 2–3× daily, though extract is inferior for mineral extraction. Safe for long-term daily use.',
   spiritual_layer:
     'Nettle Leaf is the fierce nourisher — the green medicine of strong boundaries and deep rebuilding. Her sting teaches respect; her nourishment teaches abundance. She restores what depletion erodes, drawing mineral wealth from the earth and returning it to blood, bone, skin and nerve. She whispers: I am nourished from the root. My reserves return. My strength is quiet, steady and real. My boundaries protect my generosity.',
   best_preparation:
-    'Long-steep infusion is the gold standard. This is not primarily a tincture herb if the goal is true remineralisation — the medicine lives in the water extraction. Best used as a daily tonic tea or overnight infusion. Pairs exceptionally well with Oatstraw and Raspberry Leaf in rebuilding protocols.',
+    'Long-steep infusion is the gold standard. This is not primarily a extract herb if the goal is true remineralisation — the medicine lives in the water extraction. Best used as a daily tonic tea or overnight infusion. Pairs exceptionally well with Oatstraw and Raspberry Leaf in rebuilding protocols.',
   caution_level: 'LOW',
   safe_pregnancy: null,
   status:
-    'Grade A safety and one of the best foundational nutritive herbs in Western herbalism. Excellent for mineral repletion, connective tissue support, postpartum rebuilding, gentle allergy support and long-term constitutional nourishment. Infusion is far superior to tincture for its core medicinal value.',
+    'Grade A safety and one of the best foundational nutritive herbs in Western herbalism. Excellent for mineral repletion, connective tissue support, postpartum rebuilding, gentle allergy support and long-term constitutional nourishment. Infusion is far superior to extract for its core medicinal value.',
 },
 {
   id: 242,
@@ -9769,7 +9769,7 @@ const HERBS = [
     'Other highly astringent herbs in dry constipation or very depleted constitutions may be overly drying',
   ],
   herb_to_drug_interactions: [
-    'No major drug interactions well documented at traditional food or tincture-equivalent doses',
+    'No major drug interactions well documented at traditional food or extract-equivalent doses',
     'Use moderate doses alongside tightly managed diabetes treatment if sweetened syrups or preserves are the delivery format',
   ],
   herb_interactions: [
@@ -9778,7 +9778,7 @@ const HERBS = [
     'Drug interactions: none major documented; watch sugar load if using sweet syrups in diabetes',
   ],
   dosage_range:
-    'Cooked berry syrup: 1–2 tsp, 1–3× daily. Tincture: 20–40 drops, 2–3× daily. Dried berry decoction: 1–2 tsp per 250 ml, simmer 10–15 minutes. Jam, conserve or oxymel forms often better tolerated than raw preparations. Always use properly prepared ripe berries.',
+    'Cooked berry syrup: 1–2 tsp, 1–3× daily. Extract: 20–40 drops, 2–3× daily. Dried berry decoction: 1–2 tsp per 250 ml, simmer 10–15 minutes. Jam, conserve or oxymel forms often better tolerated than raw preparations. Always use properly prepared ripe berries.',
   spiritual_layer:
     'Rowan is the mountain threshold guardian — the old tree of protection, crossings and clear boundaries. Her berries carry the medicine of watchfulness, brightness and sovereignty in harsh landscapes. She teaches that protection is not fear but alignment, that a clear boundary can also be beautiful, and that wild tartness awakens discernment. She whispers: Guard what is sacred. Brighten the threshold. Keep the path clear.',
   best_preparation:
@@ -9838,11 +9838,11 @@ const HERBS = [
     'Drug interactions: CYP3A4/2C9 substrates — monitor closely',
   ],
   dosage_range:
-    'Dried peel decoction: 1–3 g per 250 ml, simmer 15–20 minutes, 1–2× daily for 5–10 days. Tincture (1:5, 45% EtOH): 15–30 drops, 2–3× daily. Mouth rinse: stronger decoction, swish 1 min. Short cycles only — do not use the concentrated peel continuously.',
+    'Dried peel decoction: 1–3 g per 250 ml, simmer 15–20 minutes, 1–2× daily for 5–10 days. Extract (1:5, 45% EtOH): 15–30 drops, 2–3× daily. Mouth rinse: stronger decoction, swish 1 min. Short cycles only — do not use the concentrated peel continuously.',
   spiritual_layer:
     'The pomegranate peel is the boundary the fruit keeps. She is the medicine of containment — the architecture that holds the jewelled seeds safe. In the Persephone myth, she is the threshold between worlds. Her medicine is to gather what is scattered, to bind what has been leaking, to bring the wandering mucosa back to its centre. She whispers: I hold the line. I gather the scattered. Boundary is also a form of love.',
   best_preparation:
-    'Dried, well-stored peel from organic pomegranate. Decoction is traditional. Tincture preserves the polyphenols but the decoction extracts more of the punicalagins. Short cycles (5–10 days) work better than continuous use. Pair with a demulcent if used for more than a week. Excellent in oral rinses and topical wound washes.',
+    'Dried, well-stored peel from organic pomegranate. Decoction is traditional. Extract preserves the polyphenols but the decoction extracts more of the punicalagins. Short cycles (5–10 days) work better than continuous use. Pair with a demulcent if used for more than a week. Excellent in oral rinses and topical wound washes.',
   caution_level: 'MEDIUM',
   safe_pregnancy: false,
   status:
@@ -9897,11 +9897,11 @@ const HERBS = [
     'Drug interactions: same CYP profile as peel — far gentler at culinary doses',
   ],
   dosage_range:
-    'Fresh arils: ½–1 whole fruit daily as food. Juice: 100–250 ml daily (watch sugar load). Dried arils: 5–10 g daily in tea or trail blends. Tincture (1:3, 35% EtOH): 30–60 drops, 2× daily. Seed oil capsules per product label.',
+    'Fresh arils: ½–1 whole fruit daily as food. Juice: 100–250 ml daily (watch sugar load). Dried arils: 5–10 g daily in tea or trail blends. Extract (1:3, 35% EtOH): 30–60 drops, 2× daily. Seed oil capsules per product label.',
   spiritual_layer:
     'Pomegranate seeds are the jewelled inheritance of the underworld — Persephone\'s six seeds, the contract between light and shadow. Their medicine is fertility, return, and the courage to taste both worlds. They teach that abundance lives inside structure, that sweet medicine can still carry seed-stone weight, and that wholeness includes the descent. She whispers: I carry the seeds of return. Taste the underworld; it ripens you.',
   best_preparation:
-    'Whole fresh arils are the highest-fidelity preparation — eat as food medicine. Tincture and dried preparations preserve polyphenols. Pomegranate seed oil for skin and inflammation. In traditional Persian and Ayurvedic medicine the seeds are sometimes paired with the peel for combined astringent-nourishing action.',
+    'Whole fresh arils are the highest-fidelity preparation — eat as food medicine. Extract and dried preparations preserve polyphenols. Pomegranate seed oil for skin and inflammation. In traditional Persian and Ayurvedic medicine the seeds are sometimes paired with the peel for combined astringent-nourishing action.',
   caution_level: 'LOW',
   safe_pregnancy: true,
   status:
@@ -9958,11 +9958,11 @@ const HERBS = [
     'Drug interactions: extensive CYP / P-gp profile — monitor levels carefully',
   ],
   dosage_range:
-    'Tincture (1:5, 50% EtOH): 5–15 drops, 2× daily. Powder: 250–500 mg, 1–2× daily with food. Trikatu blend (with Ginger and Black Pepper, 1:1:1): 500 mg before meals. Always dose downward in heat patterns.',
+    'Extract (1:5, 50% EtOH): 5–15 drops, 2× daily. Powder: 250–500 mg, 1–2× daily with food. Trikatu blend (with Ginger and Black Pepper, 1:1:1): 500 mg before meals. Always dose downward in heat patterns.',
   spiritual_layer:
     'Pippali is the spark in the kindling — the medicine of ignition. She teaches that nothing transforms without fire and that the right small heat at the right moment is the difference between digestion and decay. She whispers: I am the spark that wakes the engine. I open what is closed. I make the medicine arrive.',
   best_preparation:
-    'Decoction with milk (traditional pippali ksheera) for respiratory and rejuvenation. Tincture for bioavailability protocols. Trikatu powder (pippali + ginger + black pepper) before meals for cold digestion. Always pair with a fat-soluble carrier herb so the piperine has something to amplify.',
+    'Decoction with milk (traditional pippali ksheera) for respiratory and rejuvenation. Extract for bioavailability protocols. Trikatu powder (pippali + ginger + black pepper) before meals for cold digestion. Always pair with a fat-soluble carrier herb so the piperine has something to amplify.',
   caution_level: 'MEDIUM-HIGH',
   safe_pregnancy: false,
   status:
@@ -10015,11 +10015,11 @@ const HERBS = [
     'Drug interactions: anticoagulants (mild additive), hypoglycemics (mild additive)',
   ],
   dosage_range:
-    'Tincture (1:5, 50% EtOH): 20–40 drops, 2–3× daily. Fresh rhizome decoction: 3–5 g per 250 ml, simmered 10 min. Powder: 500 mg–1 g, 1–2× daily. Culinary use freely.',
+    'Extract (1:5, 50% EtOH): 20–40 drops, 2–3× daily. Fresh rhizome decoction: 3–5 g per 250 ml, simmered 10 min. Powder: 500 mg–1 g, 1–2× daily. Culinary use freely.',
   spiritual_layer:
     'Galangal is the aromatic compass of the SE Asian kitchen — the rhizome that points the digestive fire toward warmth and discernment. She teaches that food is the first medicine and that what we taste shapes what we become. She whispers: Wake the fire. Taste the world. Move what has been still.',
   best_preparation:
-    'Fresh rhizome decoction or coconut-milk infusion (traditional Tom Kha gai) for digestive warmth. Tincture for portable carry. Culinary medicine in curries and broths.',
+    'Fresh rhizome decoction or coconut-milk infusion (traditional Tom Kha gai) for digestive warmth. Extract for portable carry. Culinary medicine in curries and broths.',
   caution_level: 'LOW',
   safe_pregnancy: null,
   status:
@@ -10072,11 +10072,11 @@ const HERBS = [
     'Drug interactions: antihypertensives (mild additive), anticoagulants (mild additive)',
   ],
   dosage_range:
-    'Tincture (1:5, 50% EtOH): 15–30 drops, 2–3× daily. Decoction: 1–2 crushed pods per 250 ml, simmer 15 min. Powder: 250–500 mg as digestive after meals. Culinary use freely.',
+    'Extract (1:5, 50% EtOH): 15–30 drops, 2–3× daily. Decoction: 1–2 crushed pods per 250 ml, simmer 15 min. Powder: 250–500 mg as digestive after meals. Culinary use freely.',
   spiritual_layer:
     'Black Cardamom is the smoke-cured Himalayan keeper — the medicine of long winters and cooking fires that never go out. She teaches that smoke can be medicine, that what is dried in heat carries the memory of the fire, and that warming the lungs warms the whole inner geography. She whispers: I am the kept fire. I open the breath. I carry the mountain.',
   best_preparation:
-    'Crushed pod decoction with ginger and milk (Himalayan chai tradition). Tincture for portable lung-warming carry. Powdered in spice blends for chronic cold-pattern digestion.',
+    'Crushed pod decoction with ginger and milk (Himalayan chai tradition). Extract for portable lung-warming carry. Powdered in spice blends for chronic cold-pattern digestion.',
   caution_level: 'LOW-MEDIUM',
   safe_pregnancy: null,
   status:
@@ -10129,11 +10129,11 @@ const HERBS = [
     'Drug interactions: anticonvulsants (theoretical), local anesthetics (additive)',
   ],
   dosage_range:
-    'Tincture (1:5, 65% EtOH): 8–20 drops, 2× daily. Powder: 250–500 mg, 1–2× daily with food. Topical oil infusion 5–10% for localized analgesia. Culinary use as sensory medicine.',
+    'Extract (1:5, 65% EtOH): 8–20 drops, 2× daily. Powder: 250–500 mg, 1–2× daily with food. Topical oil infusion 5–10% for localized analgesia. Culinary use as sensory medicine.',
   spiritual_layer:
     'Szechuan Pepper is the sensory shock that wakes the tongue out of its sleep. Her tingling teaches that medicine can be a doorway through sensation — that to feel more is to be more present. She whispers: I open the doors of perception in your mouth. I numb so you can sense what is beneath the noise.',
   best_preparation:
-    'Toasted then crushed for maximum aroma. Tincture preserves alkylamides. Oil infusion for topical analgesia. Culinary inclusion in cold-pattern winter dishes.',
+    'Toasted then crushed for maximum aroma. Extract preserves alkylamides. Oil infusion for topical analgesia. Culinary inclusion in cold-pattern winter dishes.',
   caution_level: 'MEDIUM',
   safe_pregnancy: false,
   status:
@@ -10185,11 +10185,11 @@ const HERBS = [
     'Drug interactions: monitor diabetic glycemic load; mild additive sedation at high doses',
   ],
   dosage_range:
-    'Decoction: 6–15 g dried aril per 250 ml, simmered 15–20 min. Tincture (1:4, 35% EtOH): 30–60 drops, 2–3× daily. Long-cycle Yin tonic protocols 4–12 weeks.',
+    'Decoction: 6–15 g dried aril per 250 ml, simmered 15–20 min. Extract (1:4, 35% EtOH): 30–60 drops, 2–3× daily. Long-cycle Yin tonic protocols 4–12 weeks.',
   spiritual_layer:
     'Longan is the dragon\'s eye — the dried sweetness that watches over the Heart and the Spleen. She teaches that softness is restoration, that the worn-out organism needs sweet food before it needs more striving, and that to sleep well is to be safely held. She whispers: Rest. Be sweet to yourself. The Heart remembers its own quiet.',
   best_preparation:
-    'Decoction with Jujube and Goji as a daily blood-building tea. Tincture for portable use. Cooked into rice porridges in TCM convalescence cooking. Sweet carrier in bitter herb formulas.',
+    'Decoction with Jujube and Goji as a daily blood-building tea. Extract for portable use. Cooked into rice porridges in TCM convalescence cooking. Sweet carrier in bitter herb formulas.',
   caution_level: 'LOW',
   safe_pregnancy: null,
   status:
@@ -10245,11 +10245,11 @@ const HERBS = [
     'Drug interactions: lithium, digoxin, warfarin, diabetes meds — monitor',
   ],
   dosage_range:
-    'Powder: 500 mg – 2 g, 1–2× daily, often before sleep. Triphala: 1–3 g at bedtime in warm water. Decoction: 3–6 g per 250 ml. Tincture (1:5, 50% EtOH): 20–40 drops, 2× daily. Long-cycle rasayana use possible.',
+    'Powder: 500 mg – 2 g, 1–2× daily, often before sleep. Triphala: 1–3 g at bedtime in warm water. Decoction: 3–6 g per 250 ml. Extract (1:5, 50% EtOH): 20–40 drops, 2× daily. Long-cycle rasayana use possible.',
   spiritual_layer:
     'Haritaki is called the Mother of Plants and the Fruit of Immortality. The Medicine Buddha holds her in his hand. She teaches that healing is regulation, not just stimulation — that wisdom medicine knows when to release and when to hold. She whispers: I balance every direction. I cleanse and I retain. I am the regulator of the inner river.',
   best_preparation:
-    'As part of Triphala for daily use. Powder in warm water before sleep for gentle laxative-detox. Decoction for stronger constipation. Tincture for portable carry. Traditional Tibetan use: dried fruit kept under the tongue as a meditation aid.',
+    'As part of Triphala for daily use. Powder in warm water before sleep for gentle laxative-detox. Decoction for stronger constipation. Extract for portable carry. Traditional Tibetan use: dried fruit kept under the tongue as a meditation aid.',
   caution_level: 'MEDIUM',
   safe_pregnancy: false,
   status:
@@ -10304,11 +10304,11 @@ const HERBS = [
     'Drug interactions: immunosuppressants (avoid), anticoagulants (mild)',
   ],
   dosage_range:
-    'Decoction: 9–30 g (often 15 g) dried sliced root per 500 ml, simmered 30–60 min. Tincture (1:5, 50% EtOH): 30–60 drops, 2–3× daily. Long-cycle Qi-building protocols 8–24 weeks. Wild-foraged dosed slightly lower (more concentrated).',
+    'Decoction: 9–30 g (often 15 g) dried sliced root per 500 ml, simmered 30–60 min. Extract (1:5, 50% EtOH): 30–60 drops, 2–3× daily. Long-cycle Qi-building protocols 8–24 weeks. Wild-foraged dosed slightly lower (more concentrated).',
   spiritual_layer:
     'Wild Huang Qi is the yellow root that holds the earth and lifts the Qi. She teaches that protection is something you build slowly — that the strongest immunity is not reactive but already standing. She whispers: I am the field that holds you. I lift what is collapsed. I make you ready before the wind comes.',
   best_preparation:
-    'Long decoction is traditional — slice and simmer 30–60 min for full polysaccharide and saponin extraction. Often added to bone broths or rice congee. Wild root is precious — use in shorter, more concentrated cycles. Tincture preserves saponins for daily portable use.',
+    'Long decoction is traditional — slice and simmer 30–60 min for full polysaccharide and saponin extraction. Often added to bone broths or rice congee. Wild root is precious — use in shorter, more concentrated cycles. Extract preserves saponins for daily portable use.',
   caution_level: 'LOW-MEDIUM',
   safe_pregnancy: true,
   status:
@@ -10361,7 +10361,7 @@ const HERBS = [
     'Drug interactions: mild diuretic additive',
   ],
   dosage_range:
-    'Decoction: 6–15 g per 500 ml, simmered 20–30 min. Tincture (1:4, 35% EtOH): 30–60 drops, 2–3× daily. Long-cycle Yin-building protocols.',
+    'Decoction: 6–15 g per 500 ml, simmered 20–30 min. Extract (1:4, 35% EtOH): 30–60 drops, 2–3× daily. Long-cycle Yin-building protocols.',
   spiritual_layer:
     'Tian Men Dong is the celestial gate — the root that opens the upper passages where the Heart-Mind meets the breath. In Daoist alchemy she is the moisture of the upper heavens, the cool dew that softens what has been burned hard. She whispers: I open the gate. I cool what has been too long on fire. I return the dew to the dry world.',
   best_preparation:
@@ -10423,11 +10423,11 @@ const HERBS = [
     'Drug interactions: extensive — cardiac glycosides, antihypertensives, MAOIs, immunosuppressants',
   ],
   dosage_range:
-    'Cold infusion (traditional, lowers toxin extraction): 1 tsp dried herb in 250 ml COLD water overnight, strain, drink 1× daily. Tincture (1:10, 25% EtOH from dried herb only): 10–20 drops, 1–2× daily. Anthroposophic injectable extracts (e.g., Iscador, Helixor) — clinical use only.',
+    'Cold infusion (traditional, lowers toxin extraction): 1 tsp dried herb in 250 ml COLD water overnight, strain, drink 1× daily. Extract (1:10, 25% EtOH from dried herb only): 10–20 drops, 1–2× daily. Anthroposophic injectable extracts (e.g., Iscador, Helixor) — clinical use only.',
   spiritual_layer:
     'Mistletoe is the plant between worlds — neither rooted in earth nor sky but suspended in the branches of another tree. She is the Druidic golden bough, the kiss of solstice, the Norse killer of Baldr. Her medicine is liminal: between waking and sleep, between health and illness, between life and what comes next. She teaches that the most powerful medicines live at the threshold and require ceremony to approach. She whispers: I am between. I hold the door open. Cross with care.',
   best_preparation:
-    'Cold infusion (overnight, never boiled — heat increases toxin extraction). Dried herb tincture only. Internal use requires practitioner oversight. Topical and ritual use is the safest layperson approach. For cancer adjuvant work, only properly prepared pharmaceutical extracts under medical supervision.',
+    'Cold infusion (overnight, never boiled — heat increases toxin extraction). Dried herb extract only. Internal use requires practitioner oversight. Topical and ritual use is the safest layperson approach. For cancer adjuvant work, only properly prepared pharmaceutical extracts under medical supervision.',
   caution_level: 'HIGH',
   safe_pregnancy: false,
   status:
@@ -10479,11 +10479,11 @@ const HERBS = [
     'Drug interactions: MAOIs/SSRIs (theoretical), hepatic drugs (caution)',
   ],
   dosage_range:
-    'Decoction: 6–15 g dried whole plant per 500 ml, simmered 20 min. Tincture (1:5, 45% EtOH): 20–40 drops, 2–3× daily. Topical poultice for wounds.',
+    'Decoction: 6–15 g dried whole plant per 500 ml, simmered 20 min. Extract (1:5, 45% EtOH): 20–40 drops, 2–3× daily. Topical poultice for wounds.',
   spiritual_layer:
     'Phyllodium is the SE Asian forest understorey medicine — the quiet leaf at the foot of larger trees that knows how to clear the liver and steady the breath. She teaches that not all powerful medicines announce themselves loudly. Many of the strongest ones live close to the ground, waiting to be recognized. She whispers: I am the quiet leaf. I clear what is held in the liver. I help the spirit breathe.',
   best_preparation:
-    'Decoction is traditional. Tincture preserves the alkaloid fraction. Topical poultice for wounds. Best sourced from ethical, traceable SE Asian suppliers; wild-harvest pressure is a real issue.',
+    'Decoction is traditional. Extract preserves the alkaloid fraction. Topical poultice for wounds. Best sourced from ethical, traceable SE Asian suppliers; wild-harvest pressure is a real issue.',
   caution_level: 'MEDIUM',
   safe_pregnancy: false,
   status:
@@ -10538,11 +10538,11 @@ const HERBS = [
     'Drug interactions: sedatives, SSRIs — practitioner oversight',
   ],
   dosage_range:
-    'Traditional: 250 mg – 1 g dried powdered root chewed or whisked with water into foam at sunrise on an empty stomach, then slept on for incubation. Tincture (1:5, 30% EtOH): 10–20 drops at bedtime. Use cyclically (3 nights on, 4 nights off) rather than continuously.',
+    'Traditional: 250 mg – 1 g dried powdered root chewed or whisked with water into foam at sunrise on an empty stomach, then slept on for incubation. Extract (1:5, 30% EtOH): 10–20 drops at bedtime. Use cyclically (3 nights on, 4 nights off) rather than continuously.',
   spiritual_layer:
     'Undlela Zimhlophe — "the white paths" — is the dream-teacher of the Xhosa diviner lineage. She opens the road between waking and ancestor, between confusion and answer. To take her is to enter ceremony. She teaches that the dream world has its own intelligence and that listening there is a discipline. She whispers: I open the white path. Walk it with respect. The ancestors are watching what you do with the medicine.',
   best_preparation:
-    'Traditionally: dried root powder whisked vigorously with water at sunrise on empty stomach, the foam (the active fraction) is drunk, then sleep is taken for dream incubation. Tincture works for portable use. Approach as ceremony, not supplementation. Sourcing ethics are critical — wild-harvest pressure is severe; cultivated or ceremonial-supply chain only.',
+    'Traditionally: dried root powder whisked vigorously with water at sunrise on empty stomach, the foam (the active fraction) is drunk, then sleep is taken for dream incubation. Extract works for portable use. Approach as ceremony, not supplementation. Sourcing ethics are critical — wild-harvest pressure is severe; cultivated or ceremonial-supply chain only.',
   caution_level: 'MEDIUM-HIGH',
   safe_pregnancy: false,
   status:
@@ -10599,11 +10599,11 @@ const HERBS = [
     'Drug interactions: anticoagulants (monitor), antihypertensives (mild additive), CYP3A4 substrates (caution at high doses)',
   ],
   dosage_range:
-    'OPC extract (95% standardised): 100–300 mg daily, divided. Tincture (1:5, 65% EtOH from defatted seed): 30–60 drops, 2× daily. Grape seed oil for culinary / topical use freely. Cycle 12 weeks on, 2–4 weeks off for high-dose protocols.',
+    'OPC extract (95% standardised): 100–300 mg daily, divided. Extract (1:5, 65% EtOH from defatted seed): 30–60 drops, 2× daily. Grape seed oil for culinary / topical use freely. Cycle 12 weeks on, 2–4 weeks off for high-dose protocols.',
   spiritual_layer:
     'The grape seed is the tightly-held jewel inside the wine. She teaches that the most concentrated medicine lives in the smallest, hardest place — that the seed survives the crushing and carries the next generation. She whispers: I am what remains after the wine. I protect the vessel from within. I make the small blood vessels strong enough for joy.',
   best_preparation:
-    'Standardised 85–95% OPC extract for clinical vascular work. Tincture from defatted, ground seed for traditional preparations. Cold-pressed grape seed oil for culinary and skincare use (high smoke point, light flavour). Pair with vitamin C for amplified vascular protection.',
+    'Standardised 85–95% OPC extract for clinical vascular work. Extract from defatted, ground seed for traditional preparations. Cold-pressed grape seed oil for culinary and skincare use (high smoke point, light flavour). Pair with vitamin C for amplified vascular protection.',
   caution_level: 'LOW-MEDIUM',
   safe_pregnancy: null,
   status:
@@ -10740,7 +10740,7 @@ const HERBS = [
   flavor_profile: 'Earthy, bitter, deeply rooted',
   contraindications: ['Kapha-aggravated conditions (heavy, congested)', 'Acute infection without practitioner oversight'],
   herb_interactions: ['Synergy: Ashwagandha, Bala, Vidari kand', 'Caution: blood thinners (one of the ten roots is mildly antiplatelet)'],
-  dosage_range: 'Decoction 50–100 ml; kwath powder 3–6 g; ready-formulated tinctures per product label.',
+  dosage_range: 'Decoction 50–100 ml; kwath powder 3–6 g; ready-formulated extracts per product label.',
   spiritual_layer: 'Ten roots, ten directions — the plant council convened around an exhausted nervous system. The medicine of being held.',
   best_preparation: 'Decoction (Dashmool kwath) is the classical form. Modern liquid extracts also work.',
   caution_level: 'LOW-MEDIUM', safe_pregnancy: null,

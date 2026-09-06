@@ -97,7 +97,7 @@ Clinical significance: Infected wounds (adjunctive), infection prevention.
 
 **Dried Leaf Tea (INTERNAL—RESPIRATORY/THROAT):** 1-2 tsp dried leaf per 8oz hot water, steep 10 minutes, 2-3× daily.
 
-**Tincture (1:5 Alcohol-Based—CONVENIENT):** 30-60 drops, 2-3× daily.
+**Extract (1:5 Alcohol-Based—CONVENIENT):** 30-60 drops, 2-3× daily.
 
 **Infused Oil (TOPICAL—WOUNDS/HEALING):** Steep dried leaf in oil 2-4 weeks, strain; apply topically 2-3× daily.
 
@@ -196,7 +196,7 @@ Clinical significance: Infected wounds (adjunctive), infection prevention.
 
 ## CLINICAL NOTES & PRACTITIONER GUIDANCE
 
-**Quality & Sourcing:** Fresh leaf (optimal for poultices, most potent); dried leaf (convenient for tea, tincture); wild-crafted (free, abundant).
+**Quality & Sourcing:** Fresh leaf (optimal for poultices, most potent); dried leaf (convenient for tea, extract); wild-crafted (free, abundant).
 
 **Storage:** Dried leaf indefinite; fresh (use immediately, or refrigerate 1-2 days); infused oils indefinite.
 
@@ -209,5 +209,5 @@ Clinical significance: Infected wounds (adjunctive), infection prevention.
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System*
+*Use Case: Tailored Extract Recommendation System*
 *Date: February 2026*

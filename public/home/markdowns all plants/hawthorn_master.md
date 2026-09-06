@@ -87,21 +87,21 @@ Clinical significance: Valuable for emotional guardedness, grief processing, rel
 ## DOSAGE & PREPARATION
 
 **Dosage Range:**
-**Tincture (1:5 Alcohol-Based—MOST EFFICIENT):** 40-60 drops (2-3 ml), 2-3× daily. Efficient extraction of flavonoids + proanthocyanidins; convenient dosing; fast absorption.
-**Tea/Infusion (Leaf+Flower):** 1-2 tsp dried leaf+flower per 250 ml hot water, steeped 10-15 minutes, 2-3× daily. Traditional; pleasant; slower absorption than tincture but effective.
+**Extract (1:5 Alcohol-Based—MOST EFFICIENT):** 40-60 drops (2-3 ml), 2-3× daily. Efficient extraction of flavonoids + proanthocyanidins; convenient dosing; fast absorption.
+**Tea/Infusion (Leaf+Flower):** 1-2 tsp dried leaf+flower per 250 ml hot water, steeped 10-15 minutes, 2-3× daily. Traditional; pleasant; slower absorption than extract but effective.
 **Decoction (Berries—If Using):** 1-2 tsp dried berries per 250 ml, simmer 15-20 minutes, 2-3× daily. Berries contain less flavonoids than leaf+flower but more accessible/pleasant taste.
 **Standardized Extract (If Available):** Standardized to flavonoid % (30%+ flavonoids optimal); 500-1000 mg daily divided doses. Most potent; reliable dosing.
 **Duration:** Safe long-term indefinite daily use (food-like herb used for 1000+ years); benefits improve over time (cumulative cardiac strengthening).
 
 **Best Preparations:**
-**Protocol 1: Cardiac Strengthening Tonic (FOUNDATION—LONG-TERM)** — 40-60 drops tincture, 2-3× daily indefinite OR 1-2 tsp tea, 2-3× daily indefinite. Cumulative cardiac function improvement over weeks-months. Safe long-term indefinite use; effects deepen over time.
+**Protocol 1: Cardiac Strengthening Tonic (FOUNDATION—LONG-TERM)** — 40-60 drops extract, 2-3× daily indefinite OR 1-2 tsp tea, 2-3× daily indefinite. Cumulative cardiac function improvement over weeks-months. Safe long-term indefinite use; effects deepen over time.
 **Protocol 2: Heart + Circulation Support (COMPREHENSIVE)** — Hawthorn leaf+flower 1 tsp + Ginkgo leaf 1 tsp (circulation enhancement) + Rose petals 0.5 tsp (emotional heart opening), steeped together 15 min, 2× daily. Comprehensive cardiovascular + emotional support.
 **Protocol 3: Heart + Emotional Opening (VULNERABILITY SUPPORT)** — Hawthorn leaf+flower 1 tsp + Motherwort 0.5 tsp (courage in vulnerability) + Rose 0.5 tsp (tenderness), steeped 15 min, 1-2× daily. For emotional guarding + grief processing.
-**Protocol 4: Blood Pressure Support (GENTLE ANTIHYPERTENSIVE)** — 40-60 drops tincture, 3× daily for 8-12 weeks, then reassess. Gentle, cumulative blood pressure reduction (not acute like pharmaceuticals). Safe adjunct to medications.
-**Protocol 5: Heart Weakness/Cardiomyopathy (ADJUNCTIVE)** — 60 drops tincture, 3× daily OR 1-2 tsp tea, 3× daily. ALWAYS with medical supervision + pharmaceutical cardiac support. Hawthorn adjunctive strengthening support.
-**Protocol 6: Circulatory Enhancement (RAYNAUD'S, COLD EXTREMITIES)** — 40-60 drops tincture, 3× daily for 8-12 weeks. Improves peripheral circulation; warms extremities. Often paired with Ginkgo (circulation) + Ginger (warming).
-**Protocol 7: Grief Processing Ritual (EMOTIONAL WORK)** — 40-60 drops tincture or 1-2 tsp tea, 1-2× daily during emotional/grief work. Supports emotional opening, vulnerability, authentic feeling. Often paired with therapy, journaling, somatic work.
-**Protocol 8: Long-Term Cardiovascular Prevention (LONGEVITY)** — 40-60 drops tincture OR 1-2 tsp tea, 1× daily indefinite. Preventive cardiovascular health; antioxidant protection; heart strengthening. Investment in 70-year-old self.
+**Protocol 4: Blood Pressure Support (GENTLE ANTIHYPERTENSIVE)** — 40-60 drops extract, 3× daily for 8-12 weeks, then reassess. Gentle, cumulative blood pressure reduction (not acute like pharmaceuticals). Safe adjunct to medications.
+**Protocol 5: Heart Weakness/Cardiomyopathy (ADJUNCTIVE)** — 60 drops extract, 3× daily OR 1-2 tsp tea, 3× daily. ALWAYS with medical supervision + pharmaceutical cardiac support. Hawthorn adjunctive strengthening support.
+**Protocol 6: Circulatory Enhancement (RAYNAUD'S, COLD EXTREMITIES)** — 40-60 drops extract, 3× daily for 8-12 weeks. Improves peripheral circulation; warms extremities. Often paired with Ginkgo (circulation) + Ginger (warming).
+**Protocol 7: Grief Processing Ritual (EMOTIONAL WORK)** — 40-60 drops extract or 1-2 tsp tea, 1-2× daily during emotional/grief work. Supports emotional opening, vulnerability, authentic feeling. Often paired with therapy, journaling, somatic work.
+**Protocol 8: Long-Term Cardiovascular Prevention (LONGEVITY)** — 40-60 drops extract OR 1-2 tsp tea, 1× daily indefinite. Preventive cardiovascular health; antioxidant protection; heart strengthening. Investment in 70-year-old self.
 
 **Timing:**
 **With meals** (supports absorption; flavonoids fat-soluble, small amount dietary fat improves bioavailability).
@@ -276,5 +276,5 @@ Clinical significance: Valuable for emotional guardedness, grief processing, rel
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*
 *Date: February 2026*

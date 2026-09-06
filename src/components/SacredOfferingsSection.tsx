@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Leaf, Sparkles, Droplets, Flower2 } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 // Import category background images
-import tinctures from '@/assets/tinctures-bg.jpg';
+import extracts from '@/assets/extracts-bg.jpg';
 import powders from '@/assets/powders-bg.jpg';
 import extracts from '@/assets/extracts-bg.jpg';
 import flowers from '@/assets/flowers-bg.jpg';
@@ -19,11 +19,11 @@ const SacredOfferingsSection = () => {
 
   const categories = [
     { 
-      id: 'tinctures', 
-      name: 'Tinctures', 
+      id: 'extracts', 
+      name: 'Extracts', 
       icon: <Droplets className="h-6 w-6" />,
       description: '30ml bottle with pipette easy for dosing, UV protected mirrored glass',
-      image: tinctures,
+      image: extracts,
       productCount: '14+ products'
     },
     { 

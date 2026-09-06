@@ -87,7 +87,7 @@ Rose polyphenols scavenge radicals and reduce inflammatory mediators, supporting
 **Cold Infusion:**  
 - For preserving volatile oils and a subtler profile, infuse petals in room-temperature water for several hours and drink cool.
 
-**Tincture:**  
+**Extract:**  
 - 1:5 (40–60% alcohol) at 1–4 ml 1–3× daily; often blended with other heart herbs.
 
 **Glycerite:**  
@@ -105,11 +105,11 @@ Rose polyphenols scavenge radicals and reduce inflammatory mediators, supporting
 **Best Preparations & Protocols:**  
 
 **Protocol 1: Grief & Heartbreak Support**  
-- 1–2 cups rose tea daily + 1–2 ml tincture up to 3× daily.  
+- 1–2 cups rose tea daily + 1–2 ml extract up to 3× daily.  
 - Combine with hawthorn and linden for deeper heart and nervous system support.
 
 **Protocol 2: PMS with Irritability & Breast Tenderness**  
-- Rose + chasteberry + motherwort; tea or tincture combinations to move Liver Qi and ease emotional swings.
+- Rose + chasteberry + motherwort; tea or extract combinations to move Liver Qi and ease emotional swings.
 
 **Protocol 3: Sore Throat / Vocal Support**  
 - Rose-honey elixir (rose petals infused in honey) taken by teaspoon; can combine with thyme or sage for antimicrobial synergy.
@@ -220,5 +220,5 @@ The heart can stay open even after pain — but only when thorns (healthy bounda
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*  
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*  
 *Date: February 2026*

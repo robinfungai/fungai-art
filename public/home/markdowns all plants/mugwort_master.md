@@ -95,7 +95,7 @@ Timeline: Acute infections days to weeks; liver support months for noticeable sy
 - **Tea/Infusion (OPTIMAL FOR DREAMS & DIGESTION):**  
   0.5–2 g dried herb per 250 ml hot water; steep covered 10–15 minutes; take 1–3× daily. Lower range for dreamwork; higher range for digestion and menses.
 
-- **Tincture (1:5, 40–60% alcohol):**  
+- **Extract (1:5, 40–60% alcohol):**  
   2–4 ml (≈40–80 drops), 1–3× daily. Adjust toward lower end for long‑term dreamwork or in sensitive individuals.
 
 - **Moxa / Fumigation (Traditional Use):**  
@@ -111,7 +111,7 @@ Timeline: Acute infections days to weeks; liver support months for noticeable sy
 - Combine with cramp bark or ginger if desired.  
 
 **Protocol 2: Digestive Tonic (BITTER BEFORE MEALS)**  
-- Tincture 2–3 ml in a little water 10–15 minutes before meals, 2–3× daily, for 2–4 weeks.  
+- Extract 2–3 ml in a little water 10–15 minutes before meals, 2–3× daily, for 2–4 weeks.  
 
 **Protocol 3: Dream Enhancement (EVENING RITUAL)**  
 - 0.5–1 g tea taken 30–60 minutes before bed, 1× nightly for up to 7 nights, then at least 7 days off.  
@@ -263,5 +263,5 @@ Dreams are not random noise; they are a subtle guidance system for the soul. Mug
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System*  
+*Use Case: Tailored Extract Recommendation System*  
 *Date: February 2026*

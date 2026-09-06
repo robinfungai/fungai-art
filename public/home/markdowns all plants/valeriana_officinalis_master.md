@@ -95,7 +95,7 @@ Ongoing use in appropriate doses supports a more balanced stress response and ne
 - 2–3 g dried root per 250 ml water, steeped 10–15 minutes, 1–2× daily, usually evening.  
 - Less efficient for some lipophilic constituents but useful when alcohol is contraindicated.[web:21]
 
-**Tincture (1:5 in 40–70% alcohol):**  
+**Extract (1:5 in 40–70% alcohol):**  
 - 2–4 ml (approx. 40–80 drops), 1–3× daily.  
 - For insomnia: full dose 30–60 minutes before bed; optional smaller dose in late afternoon to “soften the landing.”[web:21]
 
@@ -109,16 +109,16 @@ Ongoing use in appropriate doses supports a more balanced stress response and ne
 **Best Preparations & Protocols:**  
 
 **Protocol 1: Anxiety-Related Insomnia (Short–Moderate Term)**  
-- 300–600 mg standardized extract or 3–4 ml tincture 30–60 minutes before bed.  
-- Optionally 1–2 ml tincture in late afternoon if evening anxiety ramps up.  
+- 300–600 mg standardized extract or 3–4 ml extract 30–60 minutes before bed.  
+- Optionally 1–2 ml extract in late afternoon if evening anxiety ramps up.  
 - Duration: 2–6 weeks, then reassess and taper if appropriate.[web:21]
 
 **Protocol 2: Daytime Anxiety & Tension**  
-- 1–2 ml tincture up to 3× daily for mild-moderate anxiety with muscle tension.  
+- 1–2 ml extract up to 3× daily for mild-moderate anxiety with muscle tension.  
 - Combine with Milky oats or Lemon balm for “soft-focus” calm rather than heavy sedation.
 
 **Protocol 3: Tension Headache/Muscle Spasm**  
-- 2–3 ml tincture at onset, repeat every few hours as needed (within daily limits).  
+- 2–3 ml extract at onset, repeat every few hours as needed (within daily limits).  
 - Pair with magnesium, skullcap, or cramp bark depending on pattern.
 
 **Protocol 4: Perimenopausal Sleep Disturbance**  
@@ -210,7 +210,7 @@ True rest is not collapse but **consent** to being held by the earth. When the n
 
 ## CLINICAL NOTES & PRACTITIONER GUIDANCE
 
-- **Quality & Sourcing:** Prefer preparations specifying valerenic acid content; avoid very old stock (odor fades). Tinctures and standardized extracts generally more reliable than simple tea for consistent effect.[web:13][web:21]  
+- **Quality & Sourcing:** Prefer preparations specifying valerenic acid content; avoid very old stock (odor fades). Extracts and standardized extracts generally more reliable than simple tea for consistent effect.[web:13][web:21]  
 - **Onset Expectations:** Set expectation that full benefit may take 2–4 weeks of consistent nighttime use; avoid “failed in one night” narratives.  
 - **Patient Matching:** Best in wired-tired, anxious, overthinking constitutions rather than deeply depleted, cold, or very hypotensive patients.  
 - **Combination Strategy:**  
@@ -253,5 +253,5 @@ True rest is not collapse but **consent** to being held by the earth. When the n
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System with Multi-Layer User Interface*  
+*Use Case: Tailored Extract Recommendation System with Multi-Layer User Interface*  
 *Date: February 2026*

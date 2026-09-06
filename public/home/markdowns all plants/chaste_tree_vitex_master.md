@@ -5,7 +5,7 @@
 **Primary Species:** Vitex agnus-castus L. (Chaste tree, Chasteberry, Monk’s pepper) — Deciduous shrub native to the Mediterranean and Western Asia; aromatic leaves and spikes of purple flowers followed by small, peppery berries.[web:145][web:148][web:151]  
 **Botanical Family:** Lamiaceae (formerly Verbenaceae).  
 **Part Used:** **Dried fruits (berries)**.[web:148][web:151]  
-**Harvesting & Processing:** Berries collected when fully mature and dried; tinctures and extracts prepared from dried fruit, often hydroalcoholic, sometimes standardized.[web:148]  
+**Harvesting & Processing:** Berries collected when fully mature and dried; extracts and extracts prepared from dried fruit, often hydroalcoholic, sometimes standardized.[web:148]  
 **Quality Indicators:** Brownish, pepper‑like fruits with strong aromatic, slightly bitter flavor; free of mold. Extracts should state drug:extract ratio and solvent.[web:148]  
 **Storage:** Dried berries in airtight glass, cool/dark; stable 1–2 years. Extracts per manufacturer’s guidance.[web:148]  
 **Historical Context:** Traditional use since antiquity for **menstrual irregularities, PMS, “uterine conditions,” and as an anaphrodisiac** (monastic use).[web:148][web:151] Modern evidence focuses on **luteal phase defects, PMS/PMDD, hyperprolactinemia, and PCOS‑related ovulatory issues.**[web:145][web:148][web:151]
@@ -89,7 +89,7 @@ Timeline: 3–6 months.
 **Traditional Whole Berry:**
 
 - 500–1000 mg dried berries once daily (capsule), or  
-- Tincture: 1:5 — **1–5 ml once daily**, usually in the morning.[web:148]
+- Extract: 1:5 — **1–5 ml once daily**, usually in the morning.[web:148]
 
 **Dosing Principles:**
 
@@ -201,5 +201,5 @@ Vitex is the **cycle harmonizer**, helping restore rhythm where stress, prolacti
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System*  
+*Use Case: Tailored Extract Recommendation System*  
 *Date: February 2026*

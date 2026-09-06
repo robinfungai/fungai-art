@@ -5,13 +5,13 @@
 
 ## BOTANICAL & IDENTIFICATION
 
-**Primary Species:** Calliandra angustifolia (Spruce ex Benth.) Burkart (Bobinsana, Pink Powder Puff Tree) — Amazonian native (Peru, Ecuador, Colombia, Brazil); riverine rainforest plant. Woody shrub; **root and stem bark** harvested traditionally; dried at low temperature; tinctures created; ceremonial use in shamanic context.
+**Primary Species:** Calliandra angustifolia (Spruce ex Benth.) Burkart (Bobinsana, Pink Powder Puff Tree) — Amazonian native (Peru, Ecuador, Colombia, Brazil); riverine rainforest plant. Woody shrub; **root and stem bark** harvested traditionally; dried at low temperature; extracts created; ceremonial use in shamanic context.
 
 **Botanical Family:** Fabaceae (pea/legume family)
 
 **Part Used:** Calliandra angustifolia radix + cortex (root + bark); traditionally harvested with ecological respect.
 
-**Harvesting & Processing:** Root + bark harvested, dried at low temperature; prepared as traditional decoction or tincture. **Ethical sourcing critical**—wild-crafted from sustainable sources.
+**Harvesting & Processing:** Root + bark harvested, dried at low temperature; prepared as traditional decoction or extract. **Ethical sourcing critical**—wild-crafted from sustainable sources.
 
 **Quality Indicators:** Dark brown color; distinctive earthy aroma; characteristic astringency + slight sweetness. Potency indicated by aroma + color.
 
@@ -94,7 +94,7 @@ Clinical significance: Grief processing, heartbreak healing, emotional release, 
 
 **Tea/Decoction (Traditional—Gentlest):** 2-4g dried root per 250ml, simmer 20 minutes, 1-2× daily. Traditional preparation; gentle; palatable.
 
-**Tincture (1:5 Alcohol-Based):** 20-40 drops, 1-2× daily (more concentrated; smaller volume).
+**Extract (1:5 Alcohol-Based):** 20-40 drops, 1-2× daily (more concentrated; smaller volume).
 
 **Ceremonial Tea (Experienced Practitioners—Higher Doses):** 5-10g dried root, simmered 20-30 minutes, single dose in ceremonial context. **Requires experienced guide + psychological preparation.**
 
@@ -227,5 +227,5 @@ Clinical significance: Grief processing, heartbreak healing, emotional release, 
 ---
 
 *Generated for: Functional Beverage Formulation AI App*
-*Use Case: Tailored Tincture Recommendation System*
+*Use Case: Tailored Extract Recommendation System*
 *Date: February 2026*

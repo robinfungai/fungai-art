@@ -105,7 +105,7 @@ Clinical significance: Respiratory health, congestion, cough, sinus clarity, bro
 
 **Elderflower Cordial (Concentrated Infusion):** Traditional preparation; dilute with water; 1-2 tablespoons daily. Sweet, enjoyable.
 
-**Flower Tincture (Fresh Flowers—CONCENTRATED):** 20-40 drops, 1-3× daily during illness. Concentrated flavonoid extract.
+**Flower Extract (Fresh Flowers—CONCENTRATED):** 20-40 drops, 1-3× daily during illness. Concentrated flavonoid extract.
 
 **Timing:** Throughout day (no time restriction); especially during illness or illness season (fall/winter).
 

@@ -86,7 +86,7 @@ Clinical significance: Adjunct, not stand‑alone therapy, for mild UT irritatio
 - **1–5 g dried herb** infused in one cup boiling water, steep 10–15 min; up to **3× daily**.[web:99][web:119]  
 - Lower doses for chronic use, higher for short‑term acute cooling.
 
-**Tincture:**  
+**Extract:**  
 - 1:5 (45% alcohol) — **6–30 ml per day** divided doses.[web:99]  
 - Adjust to sensitivity; chickweed is mild but can be surprisingly effective even at modest doses.
 
@@ -204,5 +204,5 @@ Chickweed is the **playful, cooling maiden**—a tiny star herb that creeps soft
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System*  
+*Use Case: Tailored Extract Recommendation System*  
 *Date: February 2026*

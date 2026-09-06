@@ -5,9 +5,9 @@
 **Primary Species:** Lobelia inflata L. (Indian tobacco) — Annual/biennial native to eastern North America; slender herb with small pale flowers and characteristic **inflated seed pods**.[web:156][web:160]  
 **Botanical Family:** Campanulaceae.[web:156]  
 **Part Used:** **Aerial parts** (leaf, flowering tops, pods), fresh or dried.[web:154][web:155][web:160]  
-**Harvesting & Processing:** Aerial parts collected when pods are well‑developed but still green; dried in thin layers with good airflow. Historically used as fresh plant tincture for stronger activity.[web:155][web:160]  
+**Harvesting & Processing:** Aerial parts collected when pods are well‑developed but still green; dried in thin layers with good airflow. Historically used as fresh plant extract for stronger activity.[web:155][web:160]  
 **Quality Indicators:** Light‑green to brownish herb, characteristic pungent odor and acrid taste; properly dried material retains some color and sharpness, not musty.[web:155][web:160]  
-**Storage:** Dried herb airtight, cool/dark; best within 1–2 years. Tinctures stable several years in dark glass.[web:154][web:155]  
+**Storage:** Dried herb airtight, cool/dark; best within 1–2 years. Extracts stable several years in dark glass.[web:154][web:155]  
 **Historical Context:** Core herb of the **Thomsonian and Eclectic** schools as a “depressing emetic,” bronchodilator, anti‑asthmatic, and relaxant for muscular tension; once used for smoking cessation and as a respiratory stimulant in poisonings. Modern pharmacology has revealed a **narrow therapeutic window and significant toxicity**, so mainstream references now warn against internal use.[web:154][web:155][web:162][web:158][web:168]
 
 ---
@@ -79,7 +79,7 @@ Mainstream safety references: **“Likely unsafe” by mouth** at anything beyon
 
 **Traditional Low‑Dose Use (Herbalist Practice):**
 
-- **Tincture (1:5 in ~50–70% alcohol):**  
+- **Extract (1:5 in ~50–70% alcohol):**  
   - Low dose: **1–5 drops** up to 3–4× daily (i.e., micro‑dosing), often in formula.[web:155][web:160]  
   - Some Eclectic formulas historically used 5–15 drops per dose; this is now considered **high‑risk** and is avoided by most modern practitioners.
 
@@ -88,7 +88,7 @@ Mainstream safety references: **“Likely unsafe” by mouth** at anything beyon
 
 **Emetic Doses (OBSOLETE & UNSAFE):**
 
-- Doses high enough to induce vomiting (multiple ml tincture or grams herb) can cause severe toxicity; **not advised**.[web:155][web:160][web:168][web:164]
+- Doses high enough to induce vomiting (multiple ml extract or grams herb) can cause severe toxicity; **not advised**.[web:155][web:160][web:168][web:164]
 
 **Duration:**  
 
@@ -200,5 +200,5 @@ Lobelia is a **threshold herb**, used historically in moments of crisis and tran
 ---
 
 *Generated for: Functional Beverage Formulation AI App*  
-*Use Case: Tailored Tincture Recommendation System (Restricted Herb)*  
+*Use Case: Tailored Extract Recommendation System (Restricted Herb)*  
 *Date: February 2026*

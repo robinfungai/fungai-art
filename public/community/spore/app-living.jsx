@@ -3853,10 +3853,10 @@ function LiveInventoryPanel({ currentMember, onToast }) {
 const PRODUCT_INVENTORY_LIST = [
   'ADHD Support', 'Afghan Saffron (', 'Amanita Muscaria',
   'Blue Lotus (dried 100g)', 'Butterfly Pea (dried 100g)',
-  'Chaga Syrup', 'Chaga Tincture', 'Healthy Aging',
+  'Chaga Syrup', 'Chaga Extract', 'Healthy Aging',
   'Horny Goat Weed (dried 100g)', 'Kumbaya Herbal Smoke Blend',
   'Lucid', 'Mineral Tonic', 'Moon Support', 'Pine Cones',
-  'Reishi Tincture', 'Ruby No.7', 'Sacred Lavendula (foraged 50g)',
+  'Reishi Extract', 'Ruby No.7', 'Sacred Lavendula (foraged 50g)',
   'Shilajit + Gold', 'Temple Nectar', 'Wild Cordyceps',
 ];
 
@@ -4227,13 +4227,13 @@ const METHODS = [
     tag: 'PARACELSUS · 16TH C.',
     color: '#C48838',
     desc: 'Separate, purify, recombine. The plant is split into its three philosophical principles — sulfur (essence), mercury (spirit), salt (body) — then reunited into a potentised whole.',
-    steps: ['Macerate in alcohol 4–6 wks', 'Distil the alcohol (spirit)', 'Calcine the marc to white ash', 'Dissolve ash back into the tincture'],
+    steps: ['Macerate in alcohol 4–6 wks', 'Distil the alcohol (spirit)', 'Calcine the marc to white ash', 'Dissolve ash back into the extract'],
     ratio: '1:5 plant to solvent',
     time: '6–10 weeks',
   },
   {
-    id: 'tincture',
-    name: 'Cold Tincture',
+    id: 'extract',
+    name: 'Cold Extract',
     tag: 'FOLK HERBALISM',
     color: '#3B6D11',
     desc: 'The foundational extraction. Fresh or dried plant material macerated in ethanol, drawing out both water and alcohol soluble constituents. Simple, reliable, broad-spectrum.',
@@ -4257,8 +4257,8 @@ const METHODS = [
     tag: 'FUNGI · POLYSACCHARIDES',
     color: '#0F6E56',
     desc: 'Hot water pulls the beta-glucans; alcohol captures the triterpenes. Essential for reishi, chaga, turkey tail — no single solvent gets everything.',
-    steps: ['Decoct in water 2–4 hrs', 'Cool completely', 'Combine 1:1 with 95% ethanol tincture', 'Final 25–30% alcohol content'],
-    ratio: '1:1 decoction to tincture',
+    steps: ['Decoct in water 2–4 hrs', 'Cool completely', 'Combine 1:1 with 95% ethanol extract', 'Final 25–30% alcohol content'],
+    ratio: '1:1 decoction to extract',
     time: '4–8 weeks total',
   },
   {
