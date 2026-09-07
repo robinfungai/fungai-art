@@ -898,13 +898,14 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   <div class="products-grid">
 
     <!-- Blue Lotus 100g dried flower
-         Robin wants a zoomed-in EXTRACT photo instead of the flower shot.
-         Upload target: public/home/products/blue-lotus-extract.webp
-         Fallback below chains to the existing flower photo, then a
-         placeholder, so the card never renders empty. -->
+         Robin uploaded blue-lotus-flower.webp — the actual dried
+         flower photo, not the extract shot originally planned. That
+         works fine since this SKU is the dried flowers, not an
+         extract. Fallback chain: new flower photo → old blue-lotus
+         asset → placeholder. -->
     <div class="product-card reveal" data-category="flowers">
       <div class="product-img-wrap">
-        <img src="/home/products/blue-lotus-extract.webp" alt="Blue Lotus extract" loading="lazy" decoding="async" class="product-photo" onerror="this.onerror=null;this.src='/home/products/blue-lotus.webp'">
+        <img src="/home/products/blue-lotus-flower.webp" alt="Blue Lotus" loading="lazy" decoding="async" class="product-photo" onerror="this.onerror=null;this.src='/home/products/blue-lotus.webp'">
         <div class="product-hover-cta"><button class="quick-add" onclick="addToCart('Blue Lotus (dried 100g)',44)">Add to basket</button></div>
       </div>
       <div class="product-info">
