@@ -31,3 +31,13 @@ dist-ssr
 *.sln
 *.sw?
 .claude/worktrees/
+
+# Image-tool backups (rotate / compress scripts write these next
+# to the file being modified so a wrong-direction rotation or
+# too-aggressive compression is reversible locally). Not for the
+# repo — restore by renaming, or delete when confirmed happy.
+*.original.webp
+*.original.jpg
+*.original.jpeg
+*.original.png
+*.bak
