@@ -25,6 +25,7 @@ const STATIC_PAGES = [
   '/the-house-ethos', '/the-tasting-arc', '/dinner-experience-sample-menu',
   // Consumer-facing quiz landing (IG traffic → reserve extract)
   '/find-your-formula',
+  '/find-your-formula-pro',
 ];
 const serveStaticPages = () => ({
   name: 'serve-static-pages',

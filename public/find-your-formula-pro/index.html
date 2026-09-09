@@ -162,184 +162,183 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .q-opt-label{display:block;font-family:var(--sans);font-weight:500;font-size:16px;color:var(--parchment);line-height:1.3;margin-bottom:10px}
 .q-opt-desc{display:block;font-family:var(--sans);font-weight:300;font-size:14px;color:var(--dust);line-height:1.6;letter-spacing:0.005em}
 
-/* ── Q1 floating bubbles — glassmorphic 12-orb grid ────────
-   Frosted-glass fill, radial specular highlight top-center for the
-   glossy 3D effect, multi-layer box-shadow: colored neon aura
-   outside + subtle inner shadow for volumetric depth. */
 /* ════════════════════════════════════════════════════════════════
-   LIVING ALCHEMICAL NODES — the intention selector
+   LIVING NODES — v3 (organic-constellation pass)
    ────────────────────────────────────────────────────────────────
-   Each bubble is a suspended glass droplet with an internal
-   wandering nucleus and a subtle atmospheric halo. The category's
-   hue exists as GLOW / EDGE / NUCLEUS, not as a background fill —
-   the bubble itself stays dark and translucent so the composition
-   reads as a dark biological cosmos rather than a bright grid.
-   Motion is CSS-only; the JS side just sets --mx/--my on
-   pointermove for the magnetic tilt.
-
-   Three layered materials per bubble:
-     1. Atmospheric halo (box-shadow spread + outer glow)
-     2. Glass sphere (backdrop-filter + specular via ::before)
-     3. Wandering nucleus (.bubble-nucleus, absolutely positioned)
-
-   Motion:
-     - bubble-breath   — very slow scale + opacity ripple (14s)
-     - nucleus-wander  — internal orb drifts within the sphere (22s)
-     - magnetic hover  — --mx / --my mix into transform + nucleus pos
-
-   Reduced-motion: kills all animation, keeps hover contrast.
-   ════════════════════════════════════════════════════════════════ */
-
-/* ════════════════════════════════════════════════════════════════
-   LIVING ALCHEMICAL NODES — v2 (post-user-feedback)
-   ────────────────────────────────────────────────────────────────
-   Simplifications after Robin's mobile pass:
-     - Grid spacing tightened so all 12 fit on one screen again
-     - Subtitle removed from inside the bubble (didn't fit, and
-       hovering doesn't map to touch UX)
-     - Magnetic tilt removed — the same interaction on a touchscreen
-       was jittery and the sibling-dim on hover felt overengineered
-       for a decision that auto-advances anyway
-   What stayed:
-     - Glass materiality (dark, translucent, hue as rim + halo)
-     - Wandering nucleus (the "alive" cue)
-     - Slow breath
-     - Selected state = concentric hue rings
-     - Reduced-motion escape hatch
+   Ethos: living technology. Quiet. Precise. Organic. Beautiful.
+   Redesign brief: sophistication through restraint, not accretion.
+   Superseded from v2:
+     - Dropped `backdrop-filter: blur(...) saturate(...)` — that was
+       the glassmorphism tell. Nodes are now membranes on void, not
+       glass on card.
+     - Dropped the ::before specular highlight — cosmetic gloss;
+       reads as UI, not as tissue.
+     - Collapsed the 5-layer box-shadow stack into 2 layers (inner
+       rim + outer diffuse hue). One-layer thinking, not stacked
+       effects.
+     - Removed `bubble-breath` scale animation entirely. 12 nodes
+       breathing in phased unison read as mechanical; a single
+       nucleus opacity/scale pulse per node is the biological cue.
+     - Constellation offsets — each node ships with a hand-tuned
+       ~1-2px translate via `nth-child`, breaking grid regularity
+       into biological jitter. Uses the individual `translate:`
+       property so it composes with `scale:` on selection instead
+       of clobbering `transform:`.
+   Materials per node (was 3, now 2):
+     - Membrane (single radial in hue, hairline hue border, one
+       diffuse hue drop-shadow)
+     - Nucleus (opacity-pulse only, no positional wander)
+   Motion — one layer per node + one ambient layer for the field:
+     - nucleus-pulse (34s, opacity + tiny scale) — the alive cue
+     - field-drift  (62s, ambient background) — unchanged in kind
+   Selection = hairline hue ring at 100%, two thin concentric hue
+   rings, `scale:1.025`. The rings do the signalling, not the size.
+   Reduced-motion → animations off; selected state stays legible.
    ════════════════════════════════════════════════════════════════ */
 
 .q-bubbles{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:14px 12px;
-  padding:14px 0 18px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px 16px;
+  padding:22px 4px 24px;
   position:relative;isolation:isolate;
 }
-/* Subtle atmospheric field behind the grid — never competes with
-   the bubbles. Slow drift is fine because it's low-contrast. */
+/* Ambient field — three low-alpha wells at hue-anchor points, blurred
+   into a slow atmospheric drift. Sits behind the grid and never
+   competes with a node's own halo. */
 .q-bubbles::before{
-  content:'';position:absolute;inset:-16px -8px;z-index:-1;
+  content:'';position:absolute;inset:-24px -12px;z-index:-1;
   background:
-    radial-gradient(ellipse 70% 55% at 20% 20%, rgba(232,177,75,0.04), transparent 65%),
-    radial-gradient(ellipse 60% 50% at 80% 60%, rgba(168,143,224,0.04), transparent 65%),
-    radial-gradient(ellipse 55% 45% at 50% 90%, rgba(79,182,161,0.03), transparent 65%);
-  filter:blur(36px);
-  animation:field-drift 42s ease-in-out infinite;
+    radial-gradient(ellipse 60% 45% at 22% 22%, rgba(232,177,75,0.032), transparent 68%),
+    radial-gradient(ellipse 55% 45% at 78% 60%, rgba(168,143,224,0.028), transparent 68%),
+    radial-gradient(ellipse 50% 40% at 50% 88%, rgba(79,182,161,0.022), transparent 68%);
+  filter:blur(48px);
+  animation:field-drift 62s ease-in-out infinite;
   pointer-events:none;
 }
 @keyframes field-drift{
   0%,100%{transform:translate3d(0,0,0)}
-  50%    {transform:translate3d(4px,-6px,0)}
+  50%    {transform:translate3d(3px,-4px,0)}
 }
-@media (min-width:520px){.q-bubbles{grid-template-columns:repeat(4,1fr);gap:16px}}
+@media (min-width:520px){.q-bubbles{grid-template-columns:repeat(4,1fr);gap:22px 20px}}
 
 .bubble{
   position:relative;aspect-ratio:1;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
   text-align:center;padding:8px;
-  font-family:var(--sans);font-weight:500;font-size:12px;line-height:1.22;letter-spacing:0.005em;
+  font-family:var(--sans);font-weight:400;font-size:11.5px;line-height:1.26;letter-spacing:0.008em;
   color:var(--parchment);cursor:pointer;
-  /* Deep glass — hue as rim + halo, body stays dark. */
+  /* Membrane — one radial in hue at ~10% strength on deep void.
+     No backdrop-filter (no glass), no specular sheen. */
   background:
-    radial-gradient(ellipse 60% 45% at 45% 22%, rgba(255,255,255,0.14), rgba(255,255,255,0) 70%),
-    radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--hue) 12%, rgba(15,17,20,0.7)) 0%, rgba(6,8,10,0.78) 78%);
-  -webkit-backdrop-filter:blur(10px) saturate(1.15);
-          backdrop-filter:blur(10px) saturate(1.15);
-  border:0.5px solid color-mix(in srgb, var(--hue) 55%, rgba(255,255,255,0.10));
+    radial-gradient(circle at 50% 55%,
+      color-mix(in srgb, var(--hue) 10%, rgba(10,13,17,0.94)) 0%,
+      rgba(5,7,10,0.96) 82%);
+  border:0.5px solid color-mix(in srgb, var(--hue) 34%, rgba(255,255,255,0.05));
   box-shadow:
-    inset 0 1.5px 3px rgba(255,255,255,0.18),
-    inset 0 -12px 24px rgba(0,0,0,0.55),
-    inset 0 0 0 0.5px color-mix(in srgb, var(--hue) 30%, transparent),
-    0 0 22px -4px color-mix(in srgb, var(--hue) 38%, transparent),
-    0 14px 30px -16px rgba(0,0,0,0.65);
+    inset 0 0 0 0.5px color-mix(in srgb, var(--hue) 10%, transparent),
+    0 0 24px -8px color-mix(in srgb, var(--hue) 22%, transparent);
+  /* Individual transform components — translate carries the per-node
+     constellation offset, scale carries hover / selection. They compose
+     natively (Chrome 104+, Firefox 72+, Safari 14.1+), so neither
+     clobbers the other. */
+  translate:0 0;
+  scale:1;
   transition:
-    transform .35s cubic-bezier(.22,.61,.36,1),
-    box-shadow .4s ease,
+    scale .5s cubic-bezier(.22,.61,.36,1),
+    box-shadow .45s ease,
     border-color .4s ease;
-  animation:bubble-breath 14s ease-in-out infinite;
-  will-change:transform;
+  will-change:scale;
 }
-/* Specular highlight — static, no cursor tracking. */
-.bubble::before{
-  content:'';position:absolute;inset:0;border-radius:inherit;
-  background:radial-gradient(ellipse 55% 40% at 35% 18%, rgba(255,255,255,0.38), rgba(255,255,255,0) 70%);
-  pointer-events:none;
-}
-/* Internal wandering nucleus — the "alive" cue. Fixed relative to
-   the bubble (no cursor magnet math) so touch works cleanly. */
+/* Nucleus — cell interior. Opacity + tiny scale pulse is the entire
+   motion budget per node. No positional wander, no glow travel. */
 .bubble-nucleus{
   position:absolute;top:50%;left:50%;
-  width:34%;height:34%;border-radius:50%;
+  width:36%;height:36%;border-radius:50%;
   background:radial-gradient(
-    circle at 40% 40%,
-    color-mix(in srgb, var(--hue) 90%, white 10%),
-    color-mix(in srgb, var(--hue) 55%, transparent) 55%,
-    transparent 80%);
-  filter:blur(6px);opacity:0.55;pointer-events:none;
+    circle at 45% 45%,
+    color-mix(in srgb, var(--hue) 86%, white 6%),
+    color-mix(in srgb, var(--hue) 42%, transparent) 58%,
+    transparent 82%);
+  filter:blur(7px);opacity:0.5;pointer-events:none;
   transform:translate(-50%,-50%);
-  animation:nucleus-wander 22s ease-in-out infinite;
-  will-change:transform, opacity;
-  transition:opacity .35s ease, width .35s ease, height .35s ease, filter .35s ease;
+  animation:nucleus-pulse 34s ease-in-out infinite;
+  will-change:opacity;
+  transition:opacity .4s ease, width .4s ease, height .4s ease, filter .4s ease;
 }
-/* Label — the visual anchor. Always visible, always centered.
-   Subtitle removed per feedback — didn't fit at 3-col mobile width
-   and hover-only reveals don't map to touch. Data field o.sub is
-   kept for a future results-screen use. */
 .bubble > span{
   position:relative;z-index:1;
   max-width:100%;overflow-wrap:break-word;
-  text-shadow:0 1px 6px rgba(0,0,0,0.85), 0 0 2px rgba(0,0,0,0.6);
+  text-shadow:0 1px 4px rgba(0,0,0,0.92);
   pointer-events:none;
 }
 
-/* HOVER (desktop / keyboard focus only) — very restrained.
-   Nucleus brightens, border strengthens, no scale / no lift / no
-   sibling dim. Touch devices skip this entirely. */
-.bubble:hover, .bubble:focus-visible{
-  border-color:color-mix(in srgb, var(--hue) 70%, rgba(255,255,255,0.15));
-  box-shadow:
-    inset 0 1.5px 3px rgba(255,255,255,0.22),
-    inset 0 -12px 24px rgba(0,0,0,0.5),
-    inset 0 0 0 0.5px color-mix(in srgb, var(--hue) 50%, transparent),
-    0 0 32px -2px color-mix(in srgb, var(--hue) 50%, transparent),
-    0 16px 34px -16px rgba(0,0,0,0.7);
+/* HOVER — border colour only. No box-shadow change, no scale. The
+   nucleus lifting is enough of a signal that the node is alive to
+   your presence. */
+.bubble:hover{
+  border-color:color-mix(in srgb, var(--hue) 62%, rgba(255,255,255,0.08));
 }
-.bubble:hover .bubble-nucleus, .bubble:focus-visible .bubble-nucleus{
-  opacity:0.85;
-}
-.bubble:focus-visible{outline:none}
+.bubble:hover .bubble-nucleus{opacity:0.78}
 
-/* SELECTED — the bubble becomes an active node.
-   Three concentric hue-tinted ring shadows; nucleus at full
-   intensity. This is the ONLY state with a real transform (small
-   scale up), and it's mild enough to feel like confirmation not
-   theatrics. */
-.bubble.on{
-  transform:scale(1.08);
-  border-color:color-mix(in srgb, var(--hue) 85%, white 10%);
+/* FOCUS — same border shift as hover, plus a keyboard-visible ring
+   in hue. Ring is a hairline halo, not the neon focus-outline. */
+.bubble:focus-visible{
+  outline:none;
+  border-color:color-mix(in srgb, var(--hue) 62%, rgba(255,255,255,0.08));
   box-shadow:
-    inset 0 2px 4px rgba(255,255,255,0.28),
-    inset 0 -12px 24px rgba(0,0,0,0.42),
-    inset 0 0 0 0.5px color-mix(in srgb, var(--hue) 70%, transparent),
-    0 0 0 3px color-mix(in srgb, var(--hue) 22%, transparent),
-    0 0 0 7px color-mix(in srgb, var(--hue) 10%, transparent),
-    0 0 44px -2px color-mix(in srgb, var(--hue) 65%, transparent),
-    0 18px 40px -16px rgba(0,0,0,0.7);
+    inset 0 0 0 0.5px color-mix(in srgb, var(--hue) 20%, transparent),
+    0 0 0 2px color-mix(in srgb, var(--hue) 30%, transparent),
+    0 0 24px -8px color-mix(in srgb, var(--hue) 28%, transparent);
+}
+.bubble:focus-visible .bubble-nucleus{opacity:0.78}
+
+/* SELECTED — hairline hue outline + two very thin concentric hue rings.
+   Rings do the signalling; scale is only 1.025 (was 1.08 in v2). */
+.bubble.on{
+  scale:1.025;
+  border-color:color-mix(in srgb, var(--hue) 88%, white 6%);
+  box-shadow:
+    inset 0 0 0 0.5px color-mix(in srgb, var(--hue) 42%, transparent),
+    0 0 0 1.5px color-mix(in srgb, var(--hue) 55%, transparent),
+    0 0 0 5px  color-mix(in srgb, var(--hue) 14%, transparent),
+    0 0 34px -6px color-mix(in srgb, var(--hue) 42%, transparent);
   z-index:2;
 }
 .bubble.on .bubble-nucleus{
-  width:48%;height:48%;
-  opacity:1;filter:blur(4px);
+  width:52%;height:52%;
+  opacity:0.95;filter:blur(5px);
 }
 
-/* Per-child phase offsets so the ambient motion never pulses in
-   unison. Nothing else is per-child — DOM stays flat. */
-.bubble:nth-child(3n+1){animation-delay:-0s;animation-duration:14s}
-.bubble:nth-child(3n+2){animation-delay:-4.6s;animation-duration:16s}
-.bubble:nth-child(3n+3){animation-delay:-9.2s;animation-duration:13s}
-.bubble:nth-child(4n+1) .bubble-nucleus{animation-delay:-0s;   animation-duration:22s}
-.bubble:nth-child(4n+2) .bubble-nucleus{animation-delay:-6s;   animation-duration:26s}
-.bubble:nth-child(4n+3) .bubble-nucleus{animation-delay:-12s;  animation-duration:19s}
-.bubble:nth-child(4n)   .bubble-nucleus{animation-delay:-18s;  animation-duration:24s}
+/* Constellation micro-offsets — pull each node off the grid baseline
+   by 1-2px in a hand-tuned direction. Reads as biological jitter, not
+   random noise. Applied to `translate:` (individual transform property)
+   so `scale:` on hover/selection composes cleanly. */
+.bubble:nth-child(1) {translate: 1px -2px}
+.bubble:nth-child(2) {translate:-2px  1px}
+.bubble:nth-child(3) {translate: 2px  2px}
+.bubble:nth-child(4) {translate:-1px -1px}
+.bubble:nth-child(5) {translate: 1px  2px}
+.bubble:nth-child(6) {translate:-2px -2px}
+.bubble:nth-child(7) {translate: 2px -1px}
+.bubble:nth-child(8) {translate:-1px  2px}
+.bubble:nth-child(9) {translate: 1px  1px}
+.bubble:nth-child(10){translate:-2px -1px}
+.bubble:nth-child(11){translate: 2px  1px}
+.bubble:nth-child(12){translate:-1px -2px}
 
+/* Nucleus phase offsets — keeps the field from pulsing in unison. */
+.bubble:nth-child(4n+1) .bubble-nucleus{animation-delay:-0s;   animation-duration:34s}
+.bubble:nth-child(4n+2) .bubble-nucleus{animation-delay:-8.5s; animation-duration:38s}
+.bubble:nth-child(4n+3) .bubble-nucleus{animation-delay:-17s;  animation-duration:31s}
+.bubble:nth-child(4n)   .bubble-nucleus{animation-delay:-25.5s;animation-duration:36s}
+
+@keyframes nucleus-pulse{
+  0%,100%{opacity:0.5; transform:translate(-50%,-50%) scale(1)}
+  50%    {opacity:0.65;transform:translate(-50%,-50%) scale(1.04)}
+}
+
+/* Legacy keyframes retained for the Q2 archetype balloons (.q-balloon,
+   .q-balloon-nucleus) which still use the v2 motion vocabulary. The
+   Q1 intention nodes above no longer reference either of these. */
 @keyframes bubble-breath{
   0%,100%{transform:scale(1)}
   50%   {transform:scale(1.012)}
@@ -351,56 +350,72 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
   75%    {transform:translate(calc(-50% - 7px), calc(-50% + 4px))}
 }
 
-/* Accessibility — respect the OS-level reduced motion pref. */
+/* Reduced-motion — motion off, selection still legible. */
 @media (prefers-reduced-motion:reduce){
-  .q-bubbles::before, .bubble, .bubble-nucleus{animation:none}
-  .bubble.on{transform:scale(1.06)}
+  .q-bubbles::before, .bubble-nucleus{animation:none}
+  .bubble.on{scale:1.02}
 }
 
 /* ── Ranked mode (Q1 intention: pick 1-2-3 in order) ────────────────
-   A small numbered badge in the top-right corner marks the pick
-   rank. When the max is reached, unpicked bubbles dim slightly
-   so the field reads as "you're done ranking, tap Continue" without
-   any modal or interruption. */
+   Rank marker is a hairline outline circle in the node's hue, not a
+   solid pill — reads as a status glyph, not app chrome. Full-dim on
+   unpicked once max is reached, so the field says "done ranking" via
+   composition rather than a modal. */
 .bubble-rank{
   position:absolute;
-  top:2px;right:2px;
-  min-width:20px;height:20px;padding:0 5px;
-  border-radius:999px;
+  top:5px;right:5px;
+  width:22px;height:22px;padding:0;
+  border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.04em;
-  color:#0a0a0a;
-  background:color-mix(in srgb, var(--hue) 92%, white 8%);
-  border:0.5px solid rgba(255,255,255,0.35);
-  box-shadow:0 0 8px color-mix(in srgb, var(--hue) 55%, transparent);
+  font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:0.02em;
+  color:color-mix(in srgb, var(--hue) 90%, white 10%);
+  background:rgba(6,8,10,0.72);
+  border:0.5px solid color-mix(in srgb, var(--hue) 68%, transparent);
+  box-shadow:0 0 0 0.5px rgba(6,8,10,0.7);
   pointer-events:none;
   z-index:3;
 }
 .q-bubbles.ranked-full .bubble:not(.on){
-  opacity:0.42;filter:saturate(0.55);
+  opacity:0.32;filter:saturate(0.5);
+  transition:opacity .5s ease, filter .5s ease;
 }
-/* Continue affordance when in ranked mode + at least one pick */
+/* Continue affordance — appears after first pick in ranked mode. */
 .q-ranked-cta{
   display:flex;align-items:center;justify-content:center;
-  gap:14px;margin:14px 0 4px;
+  gap:16px;margin:16px 0 4px;
   font-family:var(--sans);
 }
 .q-ranked-cta-count{
-  font-family:var(--mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;
   color:var(--dust-d);
 }
+/* Hairline outline pill — the solid-gold v2 button read as generic
+   "primary CTA". This one echoes the node aesthetic: hairline hue
+   border, transparent centre, hue-tinted mono text. */
 .q-ranked-cta-btn{
-  padding:11px 26px;border-radius:999px;
-  background:linear-gradient(180deg, color-mix(in srgb, var(--amber, #E8B14B) 92%, white 8%), color-mix(in srgb, var(--amber, #E8B14B) 65%, transparent));
-  border:0.5px solid color-mix(in srgb, var(--amber, #E8B14B) 55%, rgba(255,255,255,0.15));
-  color:#0a0a0a;
-  font-family:var(--mono);font-size:10px;letter-spacing:0.22em;text-transform:uppercase;font-weight:600;
+  padding:12px 28px;border-radius:999px;
+  background:transparent;
+  border:0.5px solid color-mix(in srgb, var(--amber-l, #E8B14B) 55%, rgba(255,255,255,0.08));
+  color:color-mix(in srgb, var(--amber-l, #E8B14B) 92%, white 8%);
+  font-family:var(--mono);font-size:10px;letter-spacing:0.26em;text-transform:uppercase;font-weight:500;
   cursor:pointer;
-  box-shadow:0 0 22px -4px color-mix(in srgb, var(--amber, #E8B14B) 40%, transparent);
-  transition:transform .25s, box-shadow .25s, opacity .25s;
+  box-shadow:
+    inset 0 0 0 0.5px color-mix(in srgb, var(--amber-l, #E8B14B) 18%, transparent),
+    0 0 22px -8px color-mix(in srgb, var(--amber-l, #E8B14B) 30%, transparent);
+  transition: background .3s ease, border-color .3s ease, box-shadow .3s ease, color .3s ease;
 }
-.q-ranked-cta-btn:hover{transform:translateY(-2px);box-shadow:0 4px 26px -2px color-mix(in srgb, var(--amber, #E8B14B) 60%, transparent);}
-.q-ranked-cta-btn:disabled{opacity:0.35;cursor:default;transform:none;box-shadow:none}
+.q-ranked-cta-btn:hover{
+  background: color-mix(in srgb, var(--amber-l, #E8B14B) 10%, transparent);
+  border-color: color-mix(in srgb, var(--amber-l, #E8B14B) 78%, rgba(255,255,255,0.14));
+  color: color-mix(in srgb, var(--amber-l, #E8B14B) 100%, white 0%);
+  box-shadow:
+    inset 0 0 0 0.5px color-mix(in srgb, var(--amber-l, #E8B14B) 32%, transparent),
+    0 0 30px -6px color-mix(in srgb, var(--amber-l, #E8B14B) 52%, transparent);
+}
+.q-ranked-cta-btn:disabled{
+  opacity:0.3;cursor:default;background:transparent;color:var(--dust-d);
+  border-color:var(--rule);box-shadow:none;
+}
 
 /* ── Q2 sub-question header (back-to-archetype affordance) ── */
 .q-sub-back{background:none;border:none;color:var(--dust-d);cursor:pointer;font-family:var(--mono);font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;padding:6px 0 12px;display:inline-flex;align-items:center;gap:6px}
