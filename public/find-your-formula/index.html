@@ -264,23 +264,84 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
   will-change:opacity;
   transition:opacity .4s ease, width .4s ease, height .4s ease, filter .4s ease;
 }
-.bubble > span{
+/* ── Typography v4 — botanical specimen label × editorial ─────────
+   Three layers per node, each a discrete typographic zone:
+     1. .bubble-micro    — classification eyebrow (uppercase, tight,
+        hue-tinted). Sits above the primary.
+     2. .bubble-primary  — the intention itself. Sentence case, DM
+        Sans 400, controlled hard line-break via <span> children so
+        wrapping never becomes automatic ("Stress &" / "resilience"
+        rather than a mid-word break).
+     3. .bubble-meta     — biological metadata (uppercase, low
+        contrast). Sits below. Present at low opacity idle, lifts on
+        hover / selection.
+   Optical centering: the wrapper is padded 2% at the bottom so text
+   sits marginally above the geometric centre of the sphere, which
+   compensates for the nucleus glow's bottom-heavier visual weight.
+   No white-only fills — colour comes through --parchment (warm
+   off-white) with hue only in the micro-label. */
+.bubble-typo{
   position:relative;z-index:1;
-  max-width:100%;overflow-wrap:break-word;
-  text-shadow:0 1px 4px rgba(0,0,0,0.92);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:0;
+  padding:0 6% 3%;  /* bottom padding = optical lift */
+  max-width:100%;
   pointer-events:none;
 }
+.bubble-micro{
+  font-family:var(--sans);font-weight:500;
+  font-size:clamp(7.5px, 1.6vw, 9.5px);
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:color-mix(in srgb, var(--hue) 55%, var(--parchment) 45%);
+  opacity:0.6;
+  margin-bottom:6px;
+  line-height:1;
+  text-shadow:0 1px 2px rgba(0,0,0,0.7);
+  white-space:nowrap;overflow:hidden;text-overflow:clip;
+  max-width:100%;
+  transition:opacity .35s ease, color .35s ease, letter-spacing .35s ease;
+}
+.bubble-primary{
+  font-family:var(--sans);font-weight:400;
+  font-size:clamp(12.5px, 3vw, 17px);
+  line-height:1.12;letter-spacing:-0.006em;
+  color:color-mix(in srgb, var(--parchment) 88%, transparent);
+  display:flex;flex-direction:column;align-items:center;
+  text-shadow:0 1px 3px rgba(0,0,0,0.85);
+  transition:color .35s ease;
+}
+.bubble-primary > span{display:block}
+.bubble-meta{
+  font-family:var(--sans);font-weight:400;
+  font-size:clamp(7px, 1.35vw, 8.5px);
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--dust);
+  opacity:0.24;
+  margin-top:7px;
+  line-height:1.35;text-align:center;
+  text-shadow:0 1px 2px rgba(0,0,0,0.6);
+  max-width:100%;
+  transition:opacity .4s ease, letter-spacing .4s ease;
+}
 
-/* HOVER — border colour only. No box-shadow change, no scale. The
-   nucleus lifting is enough of a signal that the node is alive to
-   your presence. */
+/* HOVER — border colour, nucleus lift, and typographic reveal. The
+   micro brightens, the primary firms up, the meta emerges. No scale,
+   no bounce, no shadow theatre. */
 .bubble:hover{
   border-color:color-mix(in srgb, var(--hue) 62%, rgba(255,255,255,0.08));
 }
 .bubble:hover .bubble-nucleus{opacity:0.78}
+.bubble:hover .bubble-micro{
+  opacity:0.9;
+  color:color-mix(in srgb, var(--hue) 72%, var(--parchment) 28%);
+}
+.bubble:hover .bubble-primary{
+  color:color-mix(in srgb, var(--parchment) 98%, transparent);
+}
+.bubble:hover .bubble-meta{opacity:0.48}
 
-/* FOCUS — same border shift as hover, plus a keyboard-visible ring
-   in hue. Ring is a hairline halo, not the neon focus-outline. */
+/* FOCUS — same typographic lift as hover, plus a hairline hue halo
+   for keyboard visibility. */
 .bubble:focus-visible{
   outline:none;
   border-color:color-mix(in srgb, var(--hue) 62%, rgba(255,255,255,0.08));
@@ -290,9 +351,19 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
     0 0 24px -8px color-mix(in srgb, var(--hue) 28%, transparent);
 }
 .bubble:focus-visible .bubble-nucleus{opacity:0.78}
+.bubble:focus-visible .bubble-micro{
+  opacity:0.9;
+  color:color-mix(in srgb, var(--hue) 72%, var(--parchment) 28%);
+}
+.bubble:focus-visible .bubble-primary{
+  color:color-mix(in srgb, var(--parchment) 98%, transparent);
+}
+.bubble:focus-visible .bubble-meta{opacity:0.48}
 
 /* SELECTED — hairline hue outline + two very thin concentric hue rings.
-   Rings do the signalling; scale is only 1.025 (was 1.08 in v2). */
+   Rings do the signalling; scale is only 1.025 (was 1.08 in v2).
+   Typography: micro fully activated (hue-forward), primary at full
+   parchment, meta lifts to a legible-but-quiet 0.6. */
 .bubble.on{
   scale:1.025;
   border-color:color-mix(in srgb, var(--hue) 88%, white 6%);
@@ -306,6 +377,17 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .bubble.on .bubble-nucleus{
   width:52%;height:52%;
   opacity:0.95;filter:blur(5px);
+}
+.bubble.on .bubble-micro{
+  opacity:0.96;
+  color:color-mix(in srgb, var(--hue) 82%, var(--parchment) 18%);
+  letter-spacing:0.2em;
+}
+.bubble.on .bubble-primary{
+  color:var(--parchment);
+}
+.bubble.on .bubble-meta{
+  opacity:0.6;
 }
 
 /* Constellation micro-offsets — pull each node off the grid baseline
@@ -1590,15 +1672,55 @@ function renderQuestionBody(q, opts){
       }
     }
 
+    // Typography v4 — split each option into three typographic layers:
+    //   micro (specimen classification, e.g. "HPA AXIS"),
+    //   primary (the intention, hard-broken at a controlled seam),
+    //   meta (full biological classification, uppercased).
+    // The controlled line-break rule: for 3-word labels like
+    // "Stress & resilience" we keep "Stress &" on line 1 and the noun
+    // on line 2. For 2-word labels ("Hormonal balance") we split
+    // one/one. Anything else falls back to a balanced word-count split.
+    // Micro derives from the first ·-segment of o.sub, uppercased —
+    // gives every node a biotech-classification eyebrow without
+    // duplicating the primary label.
+    function _breakLabel(label){
+      const w = String(label || '').split(' ').filter(Boolean);
+      if (w.length <= 1) return [label, ''];
+      if (w.length === 2) return [w[0], w[1]];
+      if (w.length === 3) return [w[0]+' '+w[1], w[2]];
+      const half = Math.ceil(w.length/2);
+      return [w.slice(0,half).join(' '), w.slice(half).join(' ')];
+    }
+    function _firstSubSegment(sub){
+      return String(sub || '').split('·')[0].trim().toUpperCase();
+    }
+    function _uppercaseSub(sub){
+      return String(sub || '').toUpperCase();
+    }
+    function _escapeHtml(s){
+      return String(s || '').replace(/[&<>"']/g, c => (
+        { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]
+      ));
+    }
     q.options.forEach(o => {
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'bubble';
       b.dataset.v = o.v;
       if (o.related) b.dataset.related = o.related;
       b.style.setProperty('--hue', o.hue || '#E8B14B');
+      const [line1, line2] = _breakLabel(o.label);
+      const micro = _firstSubSegment(o.sub);
+      const meta  = _uppercaseSub(o.sub);
       b.innerHTML =
         '<span class="bubble-nucleus"></span>' +
-        '<span>' + o.label + '</span>';
+        '<span class="bubble-typo">' +
+          (micro ? '<span class="bubble-micro">' + _escapeHtml(micro) + '</span>' : '') +
+          '<span class="bubble-primary">' +
+            '<span>' + _escapeHtml(line1) + '</span>' +
+            (line2 ? '<span>' + _escapeHtml(line2) + '</span>' : '') +
+          '</span>' +
+          (meta ? '<span class="bubble-meta">' + _escapeHtml(meta) + '</span>' : '') +
+        '</span>';
 
       b.addEventListener('click', () => {
         const v = o.v;

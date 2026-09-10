@@ -10618,21 +10618,10 @@ const HERBS = [
 // while still satisfying the full interface for TypeScript.
 // ════════════════════════════════════════════════════════════════════════════
 
-// ── Strictly Ayurvedic (16 herbs) — Rasayanas, structural, organ-specific ──
-{
-  id: 500, name: 'Shilajit', botanical: 'Asphaltum / Mineral Pitch (Himalayan)',
-  tcm_meridians: [], tcm_element: 'Earth + Water',
-  energetics: ['Warm', 'Bitter', 'Pungent', 'Mineral-rich', 'Yang-Rebuilding'],
-  primary_functions: ['Premier Ayurvedic rasayana — mineral-density adaptogen', 'Amplifier for other herbs (yogavahi action)', 'ATP / mitochondrial support via fulvic acid + DBPs', 'Anti-fatigue, libido, cognitive stamina'],
-  secondary_benefits: ['84+ trace minerals', 'Chronic-fatigue adjunct', 'Iron-shuttling via fulvic acid'],
-  flavor_profile: 'Bitter, smoky, mineral, slightly tar-like',
-  contraindications: ['Hyperuricaemia / gout — purine-adjacent caution', 'Iron overload disorders', 'Always source pharmaceutical-grade — raw shilajit can carry heavy metals'],
-  herb_interactions: ['Synergy: Ashwagandha, Gokshura, Triphala', 'Caution: do not combine with iron supplements (over-shuttling)'],
-  dosage_range: '300–500 mg/day with warm water on empty stomach. Cycle 8 weeks on / 2 off.',
-  spiritual_layer: 'The stone\'s slow exudation — the patience of the mountain offered as a daily drop. Reminds the body of geological time.',
-  best_preparation: 'Resin dissolved in warm (not hot) water. Pills work but resin is the traditional reference form.',
-  caution_level: 'LOW-MEDIUM', safe_pregnancy: false,
-},
+// ── Strictly Ayurvedic (15 herbs) — Rasayanas, structural, organ-specific ──
+// Shilajit lives in the primary block above (id 280, "Shilajit (Mineral
+// Pitch)") — a duplicate id:500 short-form used to sit here but the two
+// entries were competing in engine reads, so the short form is retired.
 {
   id: 501, name: 'Guduchi', botanical: 'Tinospora cordifolia (stem · root · fruit)',
   tcm_meridians: [], tcm_element: 'Water + Air',
