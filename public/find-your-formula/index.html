@@ -290,14 +290,21 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 }
 .bubble-micro{
   font-family:var(--sans);font-weight:500;
-  font-size:clamp(7.5px, 1.6vw, 9.5px);
-  letter-spacing:0.18em;text-transform:uppercase;
+  /* Responsive tightening — at the 320-375px viewport range a bubble
+     leaves only ~60-75px for the micro. Both font size and tracking
+     scale down there so 10-11 char classifications (MICROBIOME,
+     GLUTATHIONE) fit without clipping. The two hard outliers
+     (MITOCHONDRIA, BETA-GLUCANS) are substituted upstream by the JS
+     MICRO_OVERRIDES map — see the render function. */
+  font-size:clamp(7px, 1.55vw, 9.5px);
+  letter-spacing:clamp(0.11em, 0.4vw, 0.18em);
+  text-transform:uppercase;
   color:color-mix(in srgb, var(--hue) 55%, var(--parchment) 45%);
   opacity:0.6;
   margin-bottom:6px;
   line-height:1;
   text-shadow:0 1px 2px rgba(0,0,0,0.7);
-  white-space:nowrap;overflow:hidden;text-overflow:clip;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   max-width:100%;
   transition:opacity .35s ease, color .35s ease, letter-spacing .35s ease;
 }
@@ -1691,7 +1698,17 @@ function renderQuestionBody(q, opts){
       const half = Math.ceil(w.length/2);
       return [w.slice(0,half).join(' '), w.slice(half).join(' ')];
     }
-    function _firstSubSegment(sub){
+    // Two micro classifications from the sub field are too long for a
+    // 320-375px viewport bubble (12 chars each), where the label rail
+    // has ~60-75px of usable width. Substitutes preserve the biotech
+    // classification character: MITO is the standard biochem shorthand
+    // for mitochondria; NK CELLS is the sub's second segment.
+    const MICRO_OVERRIDES = {
+      energy:   'MITO',
+      immunity: 'NK CELLS',
+    };
+    function _firstSubSegment(sub, key){
+      if (key && MICRO_OVERRIDES[key]) return MICRO_OVERRIDES[key];
       return String(sub || '').split('·')[0].trim().toUpperCase();
     }
     function _uppercaseSub(sub){
@@ -1709,7 +1726,7 @@ function renderQuestionBody(q, opts){
       if (o.related) b.dataset.related = o.related;
       b.style.setProperty('--hue', o.hue || '#E8B14B');
       const [line1, line2] = _breakLabel(o.label);
-      const micro = _firstSubSegment(o.sub);
+      const micro = _firstSubSegment(o.sub, o.v);
       const meta  = _uppercaseSub(o.sub);
       b.innerHTML =
         '<span class="bubble-nucleus"></span>' +
