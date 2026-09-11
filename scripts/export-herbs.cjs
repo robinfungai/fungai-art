@@ -84,3 +84,28 @@ fs.writeFileSync(outPath, output);
 
 const size = (fs.statSync(outPath).size / 1024).toFixed(1);
 console.log(`✓ herbs-data.js written — ${size} KB — ${js.split("name:").length - 1} herbs`);
+
+// ── Also emit a Node-safe copy for the private server engine ───────
+// public/herbs-data.js uses `window.HERB_DB = HERBS` which crashes in
+// Node (no window). src/server/formula-engine/ needs to require the
+// data from a Netlify function context, so we also emit a plain
+// module.exports copy here. Both files are byte-equivalent in the
+// HERBS payload; only the export wrapper differs.
+//
+// This file is SERVER-ONLY. Nothing under src/server/ is imported by
+// any client (React or static-HTML) code — the whole subtree is
+// invisible to the Vite client bundle by construction.
+const serverOutput = `/* Auto-generated from src/data/herbs.ts — do not edit directly.
+ * SERVER-ONLY: this file lives under src/server/ and must never be
+ * imported by client code. The Vite client bundle does not touch
+ * src/server/**.
+ */
+const HERBS = ${herbsStr};
+module.exports = HERBS;
+`;
+const serverPath = path.join(__dirname, '../src/server/herb-data/herbs.generated.cjs');
+// Ensure the destination dir exists so a fresh clone works.
+fs.mkdirSync(path.dirname(serverPath), { recursive: true });
+fs.writeFileSync(serverPath, serverOutput);
+const serverSize = (fs.statSync(serverPath).size / 1024).toFixed(1);
+console.log(`✓ src/server/herb-data/herbs.generated.cjs written — ${serverSize} KB (Node-safe copy for the private engine)`);

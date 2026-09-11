@@ -337,7 +337,7 @@
       "Memory enhancement — long-term potentiation (LTP) support; improved information retention and recall",
       "Brain-specific antioxidant protection — anthocyanins uniquely accumulate in hippocampus and frontal cortex",
       "Neuroprotection — reduces β-amyloid and tau aggregation; neuroinflammation prevention; Alzheimer\\",
-      ",\r\n      "
+      ",\n      "
     ],
     "energetics": [
       "Cool",
@@ -538,7 +538,7 @@
       "Cold and flu duration reduction — clinical trials show reduced duration and severity when taken early",
       "Balanced immune modulation — polysaccharides and polyphenols modulate cytokines without overstimulation",
       "Wei Qi protection — strengthens respiratory mucosal defence at the body\\",
-      ",\r\n      "
+      ",\n      "
     ],
     "energetics": [
       "Cool",
@@ -1646,8 +1646,8 @@
       "Non-sedating anxiolytic — quercetin and kaempferol flavonoids provide gentle GABA modulation without CNS suppression; calm alertness maintained",
       "Gentle sleep support — mucilage soothes nervous system; flavonoids remove anxiety barriers to natural sleep without forcing or suppressing architecture",
       "Heart opening and emotional facilitation — facilitates vulnerability, grief processing and emotional opening at the nervous system\\",
-      ",\r\n      ",
-      ",\r\n      "
+      ",\n      ",
+      ",\n      "
     ],
     "energetics": [
       "Cool",
@@ -1853,7 +1853,7 @@
       "Cardiometabolic support — saponins and fibre support LDL reduction and lipid profile improvement; mild blood sugar modulation",
       "Gentle digestive tonic — fibre-rich, mildly bitter; supports digestive atony, mild constipation and liver-gallbladder bile flow",
       "Phytoestrogenic women\\",
-      ",\r\n      "
+      ",\n      "
     ],
     "energetics": [
       "Neutral",
@@ -2251,8 +2251,8 @@
     "primary_functions": [
       "Mental clarity and cognitive focus — rosmarinic acid inhibits acetylcholinesterase (increases acetylcholine — the memory and focus neurotransmitter); camphor and cineole activate prefrontal cortex function; acute and cumulative cognitive enhancement",
       "Memory support — acetylcholinesterase inhibition mechanism (same target as pharmaceutical Alzheimer\\",
-      ",\r\n      ",
-      ",\r\n      ",
+      ",\n      ",
+      ",\n      ",
       "s prevention (preliminary research)",
       "Liver qi movement and detoxification — bitter principles stimulate bile production; detoxification pathway support; stagnation clearance"
     ],
@@ -2279,7 +2279,7 @@
       "Blood circulation and vitality — vasodilatory; mild anticoagulant; increases blood flow to extremities and organs; traditional warming and enlivening effect",
       "Heart opening and emotional warmth — facilitates emotional vulnerability, self-love and compassion; traditional ceremonial medicine for the heart",
       "Neuroprotection — safranal crosses blood-brain barrier; inhibits tau protein aggregation (Alzheimer\\",
-      ",\r\n      "
+      ",\n      "
     ],
     "energetics": [
       "Warm",
@@ -2329,8 +2329,8 @@
       "Mitochondrial ATP enhancement — fulvic acid stabilises CoQ10 in inner mitochondrial membrane; increases electron transport chain efficiency up to 40%; stimulates mitochondrial biogenesis; cellular energy multiplication",
       "Testosterone support (hypogonadal men) — increases LH release and enhances Leydig cell steroidogenesis; documented 15–20% testosterone increase in hypogonadal men",
       "Neuroprotection via tau inhibition — fulvic acid crosses blood-brain barrier; specifically inhibits tau protein aggregation (hallmark of Alzheimer\\",
-      ",\r\n      ",
-      ",\r\n      "
+      ",\n      ",
+      ",\n      "
     ],
     "energetics": [
       "Warm",
@@ -2372,7 +2372,7 @@
     "caution_level": "LOW"
   },
   {
-    "id": 279,
+    "id": 540,
     "name": "Goldenrod",
     "primary_functions": [
       "Urinary irrigation and diuretic — flavonoids (quercetin, hyperoside, rutin) and glycosides (leiocarposide) increase urine volume via neutral endopeptidase inhibition and natriuretic peptide modulation; pharmacopoeial ",
@@ -2400,14 +2400,14 @@
     "caution_level": "LOW-MEDIUM"
   },
   {
-    "id": 280,
+    "id": 541,
     "name": "Spirulina",
     "primary_functions": [
       "Foundational nutritive tonification — 60–70% complete protein (all 9 essential amino acids; bioavailability comparable to animal proteins); comprehensive mineral matrix (iron 15–25 mg/100g in heme-like forms; calcium, magnesium, zinc, selenium, chromium); B-vitamin complex; GLA omega-6 fatty acid; densest plant-source nutrition available",
       "Immune stimulation and resilience — polysaccharides (rhamnose and arabinose) directly activate macrophages and NK cells (innate immunity); phycocyanin (1–2%) provides additional anti-inflammatory and immune-modulating activity",
       "Heavy-metal binding detoxification (adjunctive) — chlorophyll binds lead, mercury and cadmium; polysaccharides support elimination pathways; NOT a standalone detox — requires comprehensive protocol",
       "Antioxidant and neuroprotective — phycocyanin crosses blood-brain barrier; scavenges free radicals in brain tissue; reduces neuroinflammation; emerging neuroprotective potential (Alzheimer\\",
-      ",\r\n      "
+      ",\n      "
     ],
     "energetics": [
       "Cool",
@@ -2427,7 +2427,7 @@
     "caution_level": "MEDIUM"
   },
   {
-    "id": 281,
+    "id": 542,
     "name": "St. John",
     "primary_functions": [
       "SSRI-equivalent antidepressant (mild-moderate depression) — hyperforin inhibits reuptake of serotonin, dopamine and norepinephrine; multiple RCTs and Cochrane meta-analysis confirm efficacy equal to SSRIs (fluoxetine, sertraline, paroxetine) for mild-to-moderate depression with fewer side effects",
@@ -2593,8 +2593,8 @@
       "Limbic mood elevation and anxiety reduction — vanillin crosses the blood-brain barrier and directly activates limbic structures (amygdala, hippocampus); triggers reward pathway activation (nucleus accumbens, VTA); RCTs confirm 25–35% reduction in anxiety scores with vanillin aromatherapy; immediate via scent; cumulative via oral ingestion (2–4 weeks)",
       "Parasympathetic activation and cortisol reduction — mild GABAergic properties plus parasympathetic nervous system activation reduce sympathetic overdrive; HPA axis modulation reduces cortisol response to stress; signals safety without sedation",
       "Neurotransmitter receptor sensitisation — does NOT directly increase serotonin or dopamine; rather enhances receptor sensitivity and signal transduction efficiency; no downregulation; no tolerance; sustainable mood support that amplifies the body\\",
-      ",\r\n      ",
-      ",\r\n      "
+      ",\n      ",
+      ",\n      "
     ],
     "energetics": [
       "Warm",
@@ -2775,9 +2775,9 @@
     "primary_functions": [
       "Haemostatic and wound healing — astringent tannins plus local vasoconstriction and anti-inflammatory effects stop minor bleeding and accelerate wound repair; fresh-crushed leaf or powdered dry herb applied directly to cuts, scrapes and nosebleeds; the legendary battlefield herb of Achilles",
       "Diaphoretic and fever management — promotes sweating and peripheral circulation when taken hot; assists the body\\",
-      ",\r\n      ",
-      ",\r\n      ",
-      ",\r\n      "
+      ",\n      ",
+      ",\n      ",
+      ",\n      "
     ],
     "energetics": [
       "Warm",
@@ -2853,8 +2853,8 @@
       "Mucilaginous GI demulcent — rich mucilaginous polysaccharides coat and protect irritated mucosa throughout the gastrointestinal tract from oesophagus to large intestine; physical barrier protection against acid, inflammation and irritation; first choice for GERD, oesophagitis, gastritis and IBD flares",
       "Respiratory demulcent and throat soother — mucilage coats and soothes irritated throat and upper respiratory mucosa; immediate symptom relief for sore throat, dry cough and laryngitis",
       "IBD flare soothing — observational and case data show symptom relief in IBD (Crohn\\",
-      ",\r\n      ",
-      ",\r\n      "
+      ",\n      ",
+      ",\n      "
     ],
     "energetics": [
       "Cool",
@@ -2930,8 +2930,8 @@
       "Blood and qi tonification — polysaccharides (20–50%) plus natural iron and B vitamins support red blood cell production and haemoglobin synthesis; sweet nature tonifies Spleen qi (foundational energy production); traditional TCM foundational blood-building food-medicine for 3000+ years",
       "Immune baseline modulation — polysaccharides activate macrophages and NK cells in a balanced way similar to Astragalus (NOT overstimulation); strengthens immune resilience without triggering autoimmune flares",
       "Gentle sleep support and spirit calming — polysaccharides, cyclic nucleotides and minor saponins provide mild anxiolytic and Shen-calming activity; traditional children\\",
-      ",\r\n      ",
-      ",\r\n      "
+      ",\n      ",
+      ",\n      "
     ],
     "energetics": [
       "Warm",
@@ -3341,9 +3341,9 @@
       "NGF and BDNF stimulation — hericenones C-H (fruiting body aromatic meroterpenoids) stimulate NGF synthesis via PKA pathway; erinacines A-K (mycelium cyathane diterpenoids) stimulate both NGF and BDNF expression; erinacine C and Z1 increase both simultaneously; whole extracts also increase BDNF in stress and neurodegenerative models; these neurotrophins drive neuronal survival, synaptic plasticity, hippocampal neurogenesis and cognitive function",
       "Cognitive improvement in MCI — double-blind placebo-controlled RCT (30 Japanese adults 50–80 years with mild cognitive impairment): 0.8 g/day dried fruiting body powder for 16 weeks produced significantly higher cognitive scores (HDS-R) at weeks 8, 12 and 16 vs placebo; scores declined after discontinuation indicating continued intake needed; no adverse effects",
       "Cognitive benefit in mild Alzheimer\\",
-      ",\r\n      ",
+      ",\n      ",
       "s and Parkinson\\",
-      ",\r\n      "
+      ",\n      "
     ],
     "energetics": [
       "Neutral",
@@ -3498,10 +3498,10 @@
     "name": "Reishi",
     "primary_functions": [
       "Shen calming and sleep facilitation — aqueous extract potentiates pentobarbital-induced sleep via GABAergic mechanism (antagonised by flumazenil); GLAA acidic polysaccharide promotes sleep via gut microbiota-dependent serotonin-associated pathway; spore extract improved total, REM and NREM sleep and prevented cognitive deficits in Alzheimer\\",
-      ",\r\n      ",
-      ",\r\n      ",
-      ",\r\n      ",
-      ",\r\n      "
+      ",\n      ",
+      ",\n      ",
+      ",\n      ",
+      ",\n      "
     ],
     "energetics": [
       "Neutral to Slightly Warm",
@@ -3786,7 +3786,7 @@
     "caution_level": "MEDIUM"
   },
   {
-    "id": 240,
+    "id": 537,
     "name": "Ginger",
     "primary_functions": [
       "Digestive carminative and anti-nausea — gingerols and shogaols reduce nausea, bloating, gas and gastric stagnation",
@@ -3811,7 +3811,7 @@
     "caution_level": "LOW-MEDIUM"
   },
   {
-    "id": 241,
+    "id": 538,
     "name": "Boswellia",
     "primary_functions": [
       "Anti-inflammatory joint and tissue support — boswellic acids inhibit 5-LOX and reduce leukotriene-driven inflammation",
@@ -3836,8 +3836,8 @@
     "caution_level": "MEDIUM"
   },
   {
-    "id": 216,
-    "name": "Elderberry",
+    "id": 543,
+    "name": "Elderberry (Cooked Berry)",
     "primary_functions": [
       "Acute viral modulation — anthocyanins may interfere with viral adhesion and early replication; most effective when used at first sign of illness",
       "Respiratory boundary defence — supports lung and upper respiratory immune response during colds, influenza-like illness and seasonal exposure",
@@ -3862,32 +3862,7 @@
     "caution_level": "LOW-MEDIUM"
   },
   {
-    "id": 270,
-    "name": "Nettle Leaf",
-    "primary_functions": [
-      "Foundational mineral tonification — one of the most mineral-rich commonly available herbs; long-steep infusion provides broad-spectrum nutritive support for depleted constitutions",
-      "Silica and connective tissue support — silica-rich leaf helps strengthen hair, skin, nails, bones and tendons through cumulative collagen-supportive nutrition",
-      "Potassium-sparing diuretic action — gently increases urinary flow without the depletion pattern of many harsher diuretics",
-      "Quercetin-rich antihistamine support — flavonoids help stabilise mast cell response and reduce baseline allergic reactivity over time",
-      "Blood and recovery nourishment — iron, chlorophyll and broad nutrient density support rebuilding after illness, menstruation, stress and postpartum depletion"
-    ],
-    "energetics": [
-      "Cool",
-      "Dry",
-      "Nutritive",
-      "Mineral-Rich",
-      "Grounding",
-      "Strengthening"
-    ],
-    "tcm_meridians": [
-      "Kidney",
-      "Spleen",
-      "Liver"
-    ],
-    "caution_level": "LOW"
-  },
-  {
-    "id": 242,
+    "id": 539,
     "name": "Rowan Berry",
     "primary_functions": [
       "Astringent gut support — tannins help tone overly loose, damp or irritated digestive tissue",
@@ -4258,25 +4233,6 @@
       "Liver",
       "Kidney"
     ],
-    "caution_level": "LOW-MEDIUM"
-  },
-  {
-    "id": 500,
-    "name": "Shilajit",
-    "primary_functions": [
-      "Premier Ayurvedic rasayana — mineral-density adaptogen",
-      "Amplifier for other herbs (yogavahi action)",
-      "ATP / mitochondrial support via fulvic acid + DBPs",
-      "Anti-fatigue, libido, cognitive stamina"
-    ],
-    "energetics": [
-      "Warm",
-      "Bitter",
-      "Pungent",
-      "Mineral-rich",
-      "Yang-Rebuilding"
-    ],
-    "tcm_meridians": [],
     "caution_level": "LOW-MEDIUM"
   },
   {

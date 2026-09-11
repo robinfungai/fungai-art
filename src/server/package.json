@@ -1,0 +1,4 @@
+{
+  "//": "Scopes src/server/ to CommonJS so require()/module.exports work. Overrides the repo root's type:module. Matches the pattern used by netlify/functions/package.json.",
+  "type": "commonjs"
+}

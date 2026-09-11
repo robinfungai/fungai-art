@@ -1,36 +1,47 @@
 // tests/compare-fixtures.cjs
 //
-// Runs the 20 fixture profiles through a NEW engine implementation
-// and diffs the output against tests/fixtures/expected/*.json.
-//
-// This is the regression gate for Step 1+ of the P0 migration.
+// Runs the 20 fixture profiles through the NEW server-side Formula
+// Engine (src/server/formula-engine) and diffs the output against
+// tests/fixtures/expected/*.json (the Step 0 baseline).
 //
 //   node tests/compare-fixtures.cjs
 //
-// STEP 0 STATE: this script compares the frozen client-engine
-// snapshot AGAINST ITSELF, so all 20 profiles should pass. That
-// proves the plumbing works.
+// Every fixture ends in one of three categories:
 //
-// STEP 1 will change `runNewFormula` below to import the server
-// engine (src/server/formula-engine/index.js) instead of the
-// snapshot. That's the byte-equivalence proof of the migration.
+//   PASS
+//     — server engine produced byte-equivalent output to the client
+//       snapshot. Behaviour preserved.
+//
+//   SECURITY_FIX  (expected divergence)
+//     — server engine intentionally returns a different result
+//       because the old client behaviour was unsafe. Only fixture
+//       20 is on this list today (client accepted avoid:[] and
+//       composed from the unfiltered pool; server rejects with
+//       SAFETY_QUESTION_NOT_ANSWERED).
+//
+//   UNEXPECTED
+//     — anything else. This should be zero after Step 1 lands.
 
 const fs = require('fs');
 const path = require('path');
 
 const PROFILES = require('./fixtures/profiles.cjs');
+const { compileFormula } = require('../src/server/formula-engine');
 
-// ── The engine under test ────────────────────────────────────
-// Step 0 baseline: snapshot vs snapshot (should be a no-op diff).
-// Step 1+: swap this import for the new server engine.
-const { runFormula: runNewFormula } = require('./engine-snapshot.cjs');
+// Profiles where a divergence from the Step 0 baseline is intentional.
+// Each entry lists the fixture id + the specific code we expect the
+// server engine to return.
+const SECURITY_FIX_EXPECTATIONS = {
+  '20-adversarial-empty-avoid': {
+    expectedCode: 'SAFETY_QUESTION_NOT_ANSWERED',
+    rationale: 'Client accepted avoid:[] and composed from the unfiltered pool; server now requires an explicit safety-question answer.',
+  },
+};
 
 const expectedDir = path.join(__dirname, 'fixtures', 'expected');
 
 function diffOutputs(expected, actual) {
   const diffs = [];
-  // Compare the deterministic parts of the output. capturedAt +
-  // engineVersion are allowed to differ — everything else must match.
   if (expected.formulaSize !== actual.formulaSize) {
     diffs.push('formulaSize: ' + expected.formulaSize + ' → ' + actual.formulaSize);
   }
@@ -51,7 +62,7 @@ function diffOutputs(expected, actual) {
   return diffs;
 }
 
-let passed = 0, failed = 0, missing = 0;
+let passed = 0, securityFix = 0, unexpected = 0, missing = 0;
 const failures = [];
 
 for (const p of PROFILES) {
@@ -62,22 +73,47 @@ for (const p of PROFILES) {
     continue;
   }
   const expected = JSON.parse(fs.readFileSync(file, 'utf8')).output;
-  const actual = runNewFormula(p.input);
+  const actual = compileFormula(p.input);
+  const secFix = SECURITY_FIX_EXPECTATIONS[p.id];
+
+  if (actual.status === 'rejected') {
+    if (secFix && actual.code === secFix.expectedCode) {
+      securityFix++;
+      process.stdout.write('  ⚠ ' + p.id + '  SECURITY_FIX (' + actual.code + ')\n');
+      process.stdout.write('      rationale: ' + secFix.rationale + '\n');
+    } else {
+      unexpected++;
+      failures.push({ id: p.id, kind: 'unexpected-rejection', code: actual.code, reason: actual.reason });
+      process.stdout.write('  ✗ ' + p.id + '  UNEXPECTED rejection: ' + actual.code + '\n');
+      process.stdout.write('      reason: ' + actual.reason + '\n');
+    }
+    continue;
+  }
+
+  // status === 'ok' from here
+  if (secFix) {
+    unexpected++;
+    failures.push({ id: p.id, kind: 'security-fix-expected-but-passed', expectedCode: secFix.expectedCode });
+    process.stdout.write('  ✗ ' + p.id + '  expected SECURITY_FIX (' + secFix.expectedCode + ') but engine produced a formula\n');
+    continue;
+  }
+
   const diffs = diffOutputs(expected, actual);
   if (diffs.length === 0) {
     passed++;
     process.stdout.write('  ✓ ' + p.id + '\n');
   } else {
-    failed++;
-    failures.push({ id: p.id, diffs });
-    process.stdout.write('  ✗ ' + p.id + '\n');
+    unexpected++;
+    failures.push({ id: p.id, kind: 'diff', diffs });
+    process.stdout.write('  ✗ ' + p.id + '  UNEXPECTED diff:\n');
     for (const d of diffs) process.stdout.write('      ' + d + '\n');
   }
 }
 
 console.log('');
-console.log('passed  : ' + passed);
-console.log('failed  : ' + failed);
-console.log('missing : ' + missing);
+console.log('PASS              : ' + passed);
+console.log('SECURITY_FIX      : ' + securityFix);
+console.log('UNEXPECTED        : ' + unexpected);
+console.log('missing baseline  : ' + missing);
 
-if (failed > 0 || missing > 0) process.exit(1);
+if (unexpected > 0 || missing > 0) process.exit(1);
