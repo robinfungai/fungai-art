@@ -1,0 +1,24 @@
+{
+  "id": "08-thyroid",
+  "description": "Thyroid flag — removes iodine-affecting + thyroid-active herbs (bladderwrack, ashwagandha at high doses etc).",
+  "input": {
+    "intention": "energy",
+    "intentions": [
+      "energy",
+      "cognitive"
+    ],
+    "pattern": "cold",
+    "patternSub": "heavy",
+    "time": "morning",
+    "stress": "push",
+    "duration": "year_plus",
+    "avoid": [
+      "thyroid"
+    ],
+    "age": "41_60",
+    "sleep": "restorative_6plus",
+    "notes": "On levothyroxine for Hashimoto's",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "02-ranked-multi-intention",
+  "description": "Three ranked intentions: stress 1st, sleep 2nd, cognitive 3rd. Composer should weight the pick to primary first.",
+  "input": {
+    "intention": "stress",
+    "intentions": [
+      "stress",
+      "sleep",
+      "cognitive"
+    ],
+    "pattern": "depleted",
+    "patternSub": "overworked",
+    "time": "evening",
+    "stress": "collapse",
+    "duration": "months",
+    "avoid": [
+      "none"
+    ],
+    "age": "25_40",
+    "sleep": "not_restorative_6plus",
+    "notes": "",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "11-trace-heavy",
+  "description": "Beauty + digestion — pulls in aromatic/carminative traces (ginger, cardamom, fennel, rose). Tests trace-cap: max 1 trace at ≤5%.",
+  "input": {
+    "intention": "beauty",
+    "intentions": [
+      "beauty",
+      "digestion"
+    ],
+    "pattern": "depleted",
+    "patternSub": "dry",
+    "time": "midday",
+    "stress": "ride",
+    "duration": "months",
+    "avoid": [
+      "none"
+    ],
+    "age": "25_40",
+    "sleep": "restorative_6plus",
+    "notes": "",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  }
+}

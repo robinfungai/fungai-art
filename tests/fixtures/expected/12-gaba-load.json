@@ -1,0 +1,126 @@
+{
+  "profileId": "12-gaba-load",
+  "description": "Anxiety + sleep + stress — heavy pull toward valerian/hops/passionflower/magnolia stack. Tests cap: max 2 GABAergics.",
+  "input": {
+    "intention": "anxiety",
+    "intentions": [
+      "anxiety",
+      "sleep",
+      "stress"
+    ],
+    "pattern": "mixed",
+    "patternSub": "tension",
+    "time": "night",
+    "stress": "off",
+    "duration": "months",
+    "avoid": [
+      "none"
+    ],
+    "age": "25_40",
+    "sleep": "very_broken",
+    "notes": "Racing mind at 3am, tension held in neck and jaw",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  },
+  "output": {
+    "engineVersion": "1.0.0-clientside",
+    "herbDbVersion": "2026.09-198herbs",
+    "capturedAt": "2026-09-11T21:19:48.787Z",
+    "targetHerbCount": 6,
+    "formulaSize": 6,
+    "filteredOut": {
+      "removed": 0,
+      "total": 194,
+      "byFlag": {},
+      "examples": []
+    },
+    "herbs": [
+      {
+        "id": 273,
+        "name": "Passionflower",
+        "botanical": "Passiflora incarnata (aerial parts — leaves and flowering tops)",
+        "category": "nervine",
+        "score": 18.17,
+        "percentage": 21,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 281,
+        "name": "Skullcap",
+        "botanical": "Scutellaria lateriflora (aerial parts — flowering tops — \"Helmet Flower\")",
+        "category": "adaptogen",
+        "score": 18.17,
+        "percentage": 22,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 515,
+        "name": "Rudraksha",
+        "botanical": "Elaeocarpus ganitrus (seed pods)",
+        "category": "nervine",
+        "score": 13,
+        "percentage": 15,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 254,
+        "name": "Jasmine",
+        "botanical": "Jasminum officinale / Jasminum sambac (flowers — harvested at dusk)",
+        "category": "aromatic",
+        "score": 11.67,
+        "percentage": 14,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 542,
+        "name": "St. John's Wort",
+        "botanical": "Hypericum perforatum (aerial parts — leaves, stems and flowering tops; harvested at summer solstice — \"Captured Sunshine\")",
+        "category": "other",
+        "score": 11.67,
+        "percentage": 14,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": true,
+        "isGated": false
+      },
+      {
+        "id": 316,
+        "name": "Fu Ling",
+        "botanical": "Wolfiporia cocos (syn. Poria cocos) (sclerotium — \"White Stone of Stillness\")",
+        "category": "other",
+        "score": 11.67,
+        "percentage": 14,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      }
+    ],
+    "percentageTotal": 100,
+    "synergies": [
+      {
+        "a": "Passionflower",
+        "b": "Skullcap",
+        "note": "Skullcap — dual non-sedating anxiolytic; nervous tension plus emotional processing"
+      },
+      {
+        "a": "Passionflower",
+        "b": "Jasmine",
+        "note": "Passionflower — enhanced sleep and emotional ease combined"
+      }
+    ],
+    "cautions": []
+  }
+}

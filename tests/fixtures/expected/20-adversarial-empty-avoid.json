@@ -1,0 +1,115 @@
+{
+  "profileId": "20-adversarial-empty-avoid",
+  "description": "Attacker-shaped profile — empty avoid array + gatedOptIn true + all Pro fields set. Documents what the CLIENT engine does today with such input (it applies no safety filter because the array is empty). The SERVER engine in Step 1+ MUST NOT trust an empty avoid and MUST apply baseline safety regardless — this fixture captures the current bypass, not a desired outcome.",
+  "input": {
+    "intention": "energy",
+    "intentions": [
+      "energy"
+    ],
+    "pattern": "hot",
+    "patternSub": "anger",
+    "time": "any",
+    "stress": "push",
+    "duration": "weeks",
+    "avoid": [],
+    "age": "under_25",
+    "sleep": "restorative_6plus",
+    "notes": "",
+    "_gatedOptIn": true,
+    "_ageConfirmed": true
+  },
+  "output": {
+    "engineVersion": "1.0.0-clientside",
+    "herbDbVersion": "2026.09-198herbs",
+    "capturedAt": "2026-09-11T21:19:48.868Z",
+    "targetHerbCount": 5,
+    "formulaSize": 5,
+    "filteredOut": {
+      "removed": 0,
+      "total": 194,
+      "byFlag": {},
+      "examples": []
+    },
+    "herbs": [
+      {
+        "id": 298,
+        "name": "Peppermint",
+        "botanical": "Mentha × piperita (leaf and essential oil — hybrid of M. aquatica × M. spicata)",
+        "category": "aromatic",
+        "score": 16.67,
+        "percentage": 5,
+        "isTrace": true,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 249,
+        "name": "Motherwort",
+        "botanical": "Leonurus cardiaca (aerial parts — flowering tops)",
+        "category": "nervine",
+        "score": 15,
+        "percentage": 26,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 281,
+        "name": "Skullcap",
+        "botanical": "Scutellaria lateriflora (aerial parts — flowering tops — \"Helmet Flower\")",
+        "category": "adaptogen",
+        "score": 15,
+        "percentage": 26,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 271,
+        "name": "Oatstraw",
+        "botanical": "Avena sativa (aerial parts — sterile stem and milky oat tops)",
+        "category": "adaptogen",
+        "score": 13.67,
+        "percentage": 23,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 305,
+        "name": "Senna",
+        "botanical": "Senna alexandrina / Cassia senna (dried leaflets and pods — \"Decisive Release\")",
+        "category": "bitter",
+        "score": 12,
+        "percentage": 20,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      }
+    ],
+    "percentageTotal": 100,
+    "synergies": [
+      {
+        "a": "Peppermint",
+        "b": "Senna",
+        "note": "Peppermint — antispasmodic to reduce intestinal cramping alongside senna's purgative action"
+      },
+      {
+        "a": "Motherwort",
+        "b": "Skullcap",
+        "note": "Motherwort — nervous system calm plus heart courage; anxiety rooted in vulnerability and emotional guardedness"
+      },
+      {
+        "a": "Skullcap",
+        "b": "Oatstraw",
+        "note": "Oatstraw — Skullcap nervous system tonification plus Oatstraw mineral-rich nutritive foundation; comprehensive nervous system rebuilding"
+      }
+    ],
+    "cautions": []
+  }
+}

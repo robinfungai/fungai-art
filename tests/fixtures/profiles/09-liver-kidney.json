@@ -1,0 +1,24 @@
+{
+  "id": "09-liver-kidney",
+  "description": "Liver or kidney condition — removes hepatotoxic + oxalate-rich herbs.",
+  "input": {
+    "intention": "detox",
+    "intentions": [
+      "detox",
+      "digestion"
+    ],
+    "pattern": "depleted",
+    "patternSub": "purposeless",
+    "time": "midday",
+    "stress": "off",
+    "duration": "year_plus",
+    "avoid": [
+      "liver_kidney"
+    ],
+    "age": "41_60",
+    "sleep": "not_restorative_6plus",
+    "notes": "Elevated liver enzymes after a year of chronic stress",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "15-max-size",
+  "description": "Long notes + sub-pattern + year_plus + very_broken sleep + 2 med flags. All +1 triggers fire → target 7.",
+  "input": {
+    "intention": "hormones",
+    "intentions": [
+      "hormones",
+      "mood",
+      "sleep"
+    ],
+    "pattern": "depleted",
+    "patternSub": "anxious_empty",
+    "time": "night",
+    "stress": "collapse",
+    "duration": "year_plus",
+    "avoid": [
+      "psych_meds",
+      "contraceptive"
+    ],
+    "age": "25_40",
+    "sleep": "very_broken",
+    "notes": "Postpartum, second baby, deep hormonal-emotional-sleep hole. Prior herb use: passionflower did nothing, ashwagandha helped for a month then plateaued. Really need something that holds the whole weave — mood, sleep, hormonal reset all at once.",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  }
+}

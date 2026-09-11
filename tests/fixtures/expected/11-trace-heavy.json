@@ -1,0 +1,102 @@
+{
+  "profileId": "11-trace-heavy",
+  "description": "Beauty + digestion — pulls in aromatic/carminative traces (ginger, cardamom, fennel, rose). Tests trace-cap: max 1 trace at ≤5%.",
+  "input": {
+    "intention": "beauty",
+    "intentions": [
+      "beauty",
+      "digestion"
+    ],
+    "pattern": "depleted",
+    "patternSub": "dry",
+    "time": "midday",
+    "stress": "ride",
+    "duration": "months",
+    "avoid": [
+      "none"
+    ],
+    "age": "25_40",
+    "sleep": "restorative_6plus",
+    "notes": "",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  },
+  "output": {
+    "engineVersion": "1.0.0-clientside",
+    "herbDbVersion": "2026.09-198herbs",
+    "capturedAt": "2026-09-11T21:19:48.776Z",
+    "targetHerbCount": 5,
+    "formulaSize": 5,
+    "filteredOut": {
+      "removed": 0,
+      "total": 194,
+      "byFlag": {},
+      "examples": []
+    },
+    "herbs": [
+      {
+        "id": 285,
+        "name": "Tremella",
+        "botanical": "Tremella fuciformis (fruiting body — \"Snow Fungus / White Wood Ear\")",
+        "category": "mushroom",
+        "score": 13,
+        "percentage": 22,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 241,
+        "name": "Goji Berry",
+        "botanical": "Lycium barbarum / Lycium chinense (dried ripe berries — Wolfberry, Gou Qi Zi)",
+        "category": "tonic",
+        "score": 12,
+        "percentage": 21,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 520,
+        "name": "Bakuchi",
+        "botanical": "Psoralea corylifolia (seeds)",
+        "category": "bitter",
+        "score": 11.67,
+        "percentage": 21,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 4,
+        "name": "Bacopa",
+        "botanical": "Bacopa monnieri (aerial parts — Brahmi)",
+        "category": "nervine",
+        "score": 10,
+        "percentage": 18,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 223,
+        "name": "Cat's Claw",
+        "botanical": "Uncaria tomentosa (inner bark — sustainably harvested Peruvian Amazon)",
+        "category": "bitter",
+        "score": 10,
+        "percentage": 18,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      }
+    ],
+    "percentageTotal": 100,
+    "synergies": [],
+    "cautions": []
+  }
+}

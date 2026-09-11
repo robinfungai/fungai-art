@@ -1,0 +1,119 @@
+{
+  "profileId": "07-pregnancy",
+  "description": "Pregnancy flag — removes emmenagogues, uterine stimulants, infant-transfer-risk herbs. Highest-stakes safety path.",
+  "input": {
+    "intention": "anxiety",
+    "intentions": [
+      "anxiety",
+      "sleep"
+    ],
+    "pattern": "depleted",
+    "patternSub": "anxious_empty",
+    "time": "night",
+    "stress": "ride",
+    "duration": "weeks",
+    "avoid": [
+      "pregnancy"
+    ],
+    "age": "25_40",
+    "sleep": "not_restorative_6plus",
+    "notes": "Second trimester, gentle only",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  },
+  "output": {
+    "engineVersion": "1.0.0-clientside",
+    "herbDbVersion": "2026.09-198herbs",
+    "capturedAt": "2026-09-11T21:19:48.723Z",
+    "targetHerbCount": 5,
+    "formulaSize": 5,
+    "filteredOut": {
+      "removed": 149,
+      "total": 194,
+      "byFlag": {
+        "pregnancy": 149
+      },
+      "examples": [
+        "Bilberry",
+        "Angelica (Dong Quai)",
+        "Ashwagandha",
+        "Bacopa",
+        "Barberry",
+        "Blue Lotus",
+        "Black Cumin",
+        "Black Walnut"
+      ]
+    },
+    "herbs": [
+      {
+        "id": 300,
+        "name": "Red Dates",
+        "botanical": "Ziziphus jujuba (whole dried fruit — \"Chinese Red Date / Jujube\")",
+        "category": "nervine",
+        "score": 20.67,
+        "percentage": 27,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 271,
+        "name": "Oatstraw",
+        "botanical": "Avena sativa (aerial parts — sterile stem and milky oat tops)",
+        "category": "adaptogen",
+        "score": 17.67,
+        "percentage": 24,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 323,
+        "name": "Reishi",
+        "botanical": "Ganoderma lucidum (fruiting body, mycelium and spores — \"Mushroom of Immortality / Lingzhi\")",
+        "category": "mushroom",
+        "score": 14.67,
+        "percentage": 20,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 268,
+        "name": "Mullein",
+        "botanical": "Verbascum thapsus (leaf and flower — \"Grandmother Herb\")",
+        "category": "other",
+        "score": 11.67,
+        "percentage": 16,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 307,
+        "name": "Chaga",
+        "botanical": "Inonotus obliquus (sterile sclerotial conk from birch — \"Mushroom of Immortality\")",
+        "category": "mushroom",
+        "score": 10,
+        "percentage": 13,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      }
+    ],
+    "percentageTotal": 100,
+    "synergies": [
+      {
+        "a": "Reishi",
+        "b": "Chaga",
+        "note": "Reishi and Lion's Mane — deep terrain tonic trio; Chaga antioxidant protection plus Reishi Shen calming plus Lion's Mane neurotropic; comprehensive medicinal mushroom stack"
+      }
+    ],
+    "cautions": []
+  }
+}

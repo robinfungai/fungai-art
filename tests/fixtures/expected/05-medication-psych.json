@@ -1,0 +1,136 @@
+{
+  "profileId": "05-medication-psych",
+  "description": "SSRI-compatible filter path — removes MAOIs + serotonin-syndrome-risk herbs (St John's Wort etc).",
+  "input": {
+    "intention": "mood",
+    "intentions": [
+      "mood",
+      "anxiety"
+    ],
+    "pattern": "depleted",
+    "patternSub": "anxious_empty",
+    "time": "morning",
+    "stress": "numb",
+    "duration": "year_plus",
+    "avoid": [
+      "psych_meds"
+    ],
+    "age": "25_40",
+    "sleep": "not_restorative_6plus",
+    "notes": "On an SSRI for 3 years",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  },
+  "output": {
+    "engineVersion": "1.0.0-clientside",
+    "herbDbVersion": "2026.09-198herbs",
+    "capturedAt": "2026-09-11T21:19:48.703Z",
+    "targetHerbCount": 6,
+    "formulaSize": 6,
+    "filteredOut": {
+      "removed": 26,
+      "total": 194,
+      "byFlag": {
+        "psych_meds": 26
+      },
+      "examples": [
+        "Blue Lotus",
+        "Bobinsana",
+        "Dandelion Root",
+        "Calea Zacatachichi",
+        "Vitex (Chaste Tree)",
+        "Ephedra (Ma Huang)",
+        "Ginkgo",
+        "Ginseng"
+      ]
+    },
+    "herbs": [
+      {
+        "id": 103,
+        "name": "Ashwagandha",
+        "botanical": "Withania somnifera (root — 2–3 year matured, standardised to 5% withanolides)",
+        "category": "adaptogen",
+        "score": 20,
+        "percentage": 18,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 300,
+        "name": "Red Dates",
+        "botanical": "Ziziphus jujuba (whole dried fruit — \"Chinese Red Date / Jujube\")",
+        "category": "nervine",
+        "score": 20,
+        "percentage": 18,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 316,
+        "name": "Fu Ling",
+        "botanical": "Wolfiporia cocos (syn. Poria cocos) (sclerotium — \"White Stone of Stillness\")",
+        "category": "other",
+        "score": 20,
+        "percentage": 18,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 413,
+        "name": "Longan",
+        "botanical": "Dimocarpus longan / Euphoria longana (dried aril — Long Yan Rou)",
+        "category": "nervine",
+        "score": 20,
+        "percentage": 18,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 271,
+        "name": "Oatstraw",
+        "botanical": "Avena sativa (aerial parts — sterile stem and milky oat tops)",
+        "category": "adaptogen",
+        "score": 17,
+        "percentage": 15,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 262,
+        "name": "Maca",
+        "botanical": "Lepidium meyenii (root/tuber — all-gender sexual vitality and energy)",
+        "category": "nutritive",
+        "score": 14.67,
+        "percentage": 13,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": true,
+        "isGated": false
+      }
+    ],
+    "percentageTotal": 100,
+    "synergies": [
+      {
+        "a": "Ashwagandha",
+        "b": "Oatstraw",
+        "note": "Reishi and Oatstraw — grounding, nourishing, deeply balancing formula"
+      },
+      {
+        "a": "Ashwagandha",
+        "b": "Maca",
+        "note": "Ashwagandha — HPA axis grounding combined with Maca Jing nourishment"
+      }
+    ],
+    "cautions": []
+  }
+}

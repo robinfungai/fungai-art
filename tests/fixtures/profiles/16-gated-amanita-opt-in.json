@@ -1,0 +1,24 @@
+{
+  "id": "16-gated-amanita-opt-in",
+  "description": "_gatedOptIn: true → ceremonial allies (Amanita muscaria, blue lotus) become eligible.",
+  "input": {
+    "intention": "mood",
+    "intentions": [
+      "mood",
+      "sleep"
+    ],
+    "pattern": "mixed",
+    "patternSub": "stuck",
+    "time": "evening",
+    "stress": "off",
+    "duration": "year_plus",
+    "avoid": [
+      "none"
+    ],
+    "age": "41_60",
+    "sleep": "not_restorative_6plus",
+    "notes": "Open to ceremonial allies for the deeper work",
+    "_gatedOptIn": true,
+    "_ageConfirmed": true
+  }
+}

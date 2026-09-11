@@ -1,0 +1,118 @@
+{
+  "profileId": "13-stim-load",
+  "description": "Energy + cognitive + performance-lean — pulls toward ginseng/cordyceps/rhodiola/guarana stack. Tests cap: max 2 CNS stimulants.",
+  "input": {
+    "intention": "energy",
+    "intentions": [
+      "energy",
+      "cognitive"
+    ],
+    "pattern": "depleted",
+    "patternSub": "overworked",
+    "time": "midday",
+    "stress": "push",
+    "duration": "months",
+    "avoid": [
+      "none"
+    ],
+    "age": "25_40",
+    "sleep": "restorative_6plus",
+    "notes": "Need cognitive endurance for a long project",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  },
+  "output": {
+    "engineVersion": "1.0.0-clientside",
+    "herbDbVersion": "2026.09-198herbs",
+    "capturedAt": "2026-09-11T21:19:48.796Z",
+    "targetHerbCount": 5,
+    "formulaSize": 5,
+    "filteredOut": {
+      "removed": 0,
+      "total": 194,
+      "byFlag": {},
+      "examples": []
+    },
+    "herbs": [
+      {
+        "id": 262,
+        "name": "Maca",
+        "botanical": "Lepidium meyenii (root/tuber — all-gender sexual vitality and energy)",
+        "category": "nutritive",
+        "score": 19.67,
+        "percentage": 22,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": true,
+        "isGated": false
+      },
+      {
+        "id": 280,
+        "name": "Shilajit (Mineral Pitch)",
+        "botanical": "Asphaltum / Mineral Pitch (Himalayan rock exudate — \"Destroyer of Weakness\")",
+        "category": "tonic",
+        "score": 19.67,
+        "percentage": 22,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 263,
+        "name": "Maca Negra (Black Maca)",
+        "botanical": "Lepidium meyenii var. negra (black tuber — male-specific vitality)",
+        "category": "other",
+        "score": 17.67,
+        "percentage": 20,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": true,
+        "isGated": false
+      },
+      {
+        "id": 241,
+        "name": "Goji Berry",
+        "botanical": "Lycium barbarum / Lycium chinense (dried ripe berries — Wolfberry, Gou Qi Zi)",
+        "category": "tonic",
+        "score": 16.67,
+        "percentage": 19,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 275,
+        "name": "Pine Pollen",
+        "botanical": "Pinus densiflora / Pinus sylvestris (pollen — male reproductive dust)",
+        "category": "adaptogen",
+        "score": 14.67,
+        "percentage": 17,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      }
+    ],
+    "percentageTotal": 100,
+    "synergies": [
+      {
+        "a": "Maca",
+        "b": "Maca Negra (Black Maca)",
+        "note": "Ginseng — adaptogenic energy combined with Maca nutritive sexual vitality"
+      },
+      {
+        "a": "Maca",
+        "b": "Pine Pollen",
+        "note": "Maca — complementary Andean nutritive and phytoandrogen support; comprehensive vitality"
+      },
+      {
+        "a": "Maca Negra (Black Maca)",
+        "b": "Pine Pollen",
+        "note": "Maca — complementary Andean nutritive and phytoandrogen support; comprehensive vitality"
+      }
+    ],
+    "cautions": []
+  }
+}

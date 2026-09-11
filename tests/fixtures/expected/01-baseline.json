@@ -1,0 +1,112 @@
+{
+  "profileId": "01-baseline",
+  "description": "Single stress intention, moderate body, recent onset, no safety flags. The reference \"clean\" profile — everything else deviates from this.",
+  "input": {
+    "intention": "stress",
+    "intentions": [
+      "stress"
+    ],
+    "pattern": "mixed",
+    "patternSub": "sighing",
+    "time": "evening",
+    "stress": "push",
+    "duration": "weeks",
+    "avoid": [
+      "none"
+    ],
+    "age": "25_40",
+    "sleep": "restorative_6plus",
+    "notes": "",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  },
+  "output": {
+    "engineVersion": "1.0.0-clientside",
+    "herbDbVersion": "2026.09-198herbs",
+    "capturedAt": "2026-09-11T21:19:48.634Z",
+    "targetHerbCount": 5,
+    "formulaSize": 5,
+    "filteredOut": {
+      "removed": 0,
+      "total": 194,
+      "byFlag": {},
+      "examples": []
+    },
+    "herbs": [
+      {
+        "id": 302,
+        "name": "Rose Petals",
+        "botanical": "Rosa gallica / Rosa damascena / Rosa centifolia (dried petals — \"Heart Intelligence\")",
+        "category": "nervine",
+        "score": 16.67,
+        "percentage": 33,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 251,
+        "name": "Lavender",
+        "botanical": "Lavandula angustifolia (flowers and aerial parts; essential oil)",
+        "category": "nervine",
+        "score": 14,
+        "percentage": 5,
+        "isTrace": true,
+        "isGABAergic": true,
+        "isCNSStimulant": true,
+        "isGated": false
+      },
+      {
+        "id": 308,
+        "name": "Cordyceps",
+        "botanical": "Cordyceps militaris (cultivated — preferred) / Ophiocordyceps sinensis (wild — ethically problematic)",
+        "category": "mushroom",
+        "score": 10.67,
+        "percentage": 21,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": true,
+        "isGated": false
+      },
+      {
+        "id": 323,
+        "name": "Reishi",
+        "botanical": "Ganoderma lucidum (fruiting body, mycelium and spores — \"Mushroom of Immortality / Lingzhi\")",
+        "category": "mushroom",
+        "score": 10.67,
+        "percentage": 21,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 301,
+        "name": "Rhubarb Root",
+        "botanical": "Rheum palmatum / Rheum officinale (rhizome and root — \"Da Huang / The Purging Judge\")",
+        "category": "bitter",
+        "score": 10,
+        "percentage": 20,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      }
+    ],
+    "percentageTotal": 100,
+    "synergies": [
+      {
+        "a": "Rose Petals",
+        "b": "Lavender",
+        "note": "Rose and Hawthorn — heart-opening emotional ease trio"
+      },
+      {
+        "a": "Cordyceps",
+        "b": "Reishi",
+        "note": "Reishi — complementary Jing tonic stack: Cordyceps Yang-activating performance plus Reishi Shen calming and immune modulation; the classic TCM Lung-Kidney restoration duo"
+      }
+    ],
+    "cautions": []
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "12-gaba-load",
+  "description": "Anxiety + sleep + stress — heavy pull toward valerian/hops/passionflower/magnolia stack. Tests cap: max 2 GABAergics.",
+  "input": {
+    "intention": "anxiety",
+    "intentions": [
+      "anxiety",
+      "sleep",
+      "stress"
+    ],
+    "pattern": "mixed",
+    "patternSub": "tension",
+    "time": "night",
+    "stress": "off",
+    "duration": "months",
+    "avoid": [
+      "none"
+    ],
+    "age": "25_40",
+    "sleep": "very_broken",
+    "notes": "Racing mind at 3am, tension held in neck and jaw",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  }
+}

@@ -1,0 +1,155 @@
+{
+  "profileId": "06-medication-cardio",
+  "description": "Cardio + hypertension flags — should remove antiplatelet, digoxin-interactive, and vasoconstrictive herbs.",
+  "input": {
+    "intention": "stress",
+    "intentions": [
+      "stress",
+      "sleep"
+    ],
+    "pattern": "hot",
+    "patternSub": "inflamed",
+    "time": "evening",
+    "stress": "push",
+    "duration": "year_plus",
+    "avoid": [
+      "cardio_meds",
+      "hypertension"
+    ],
+    "age": "60_plus",
+    "sleep": "very_broken",
+    "notes": "On a beta-blocker and low-dose aspirin",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  },
+  "output": {
+    "engineVersion": "1.0.0-clientside",
+    "herbDbVersion": "2026.09-198herbs",
+    "capturedAt": "2026-09-11T21:19:48.718Z",
+    "targetHerbCount": 7,
+    "formulaSize": 7,
+    "filteredOut": {
+      "removed": 94,
+      "total": 194,
+      "byFlag": {
+        "cardio_meds": 91,
+        "hypertension": 3
+      },
+      "examples": [
+        "Bilberry",
+        "Angelica (Dong Quai)",
+        "Aronia Berry",
+        "Bacopa",
+        "Black Cumin",
+        "Bladderwrack",
+        "Blueberry",
+        "Bobinsana"
+      ]
+    },
+    "herbs": [
+      {
+        "id": 287,
+        "name": "Vanilla",
+        "botanical": "Vanilla planifolia / Vanilla tahitensis (cured pod — \"The Comfort of the Orchid\")",
+        "category": "adaptogen",
+        "score": 18.67,
+        "percentage": 16,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 288,
+        "name": "Valerian",
+        "botanical": "Valeriana officinalis (root and rhizome — \"Night Medicine for the Overthinking Mind\")",
+        "category": "nervine",
+        "score": 18.67,
+        "percentage": 16,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 300,
+        "name": "Red Dates",
+        "botanical": "Ziziphus jujuba (whole dried fruit — \"Chinese Red Date / Jujube\")",
+        "category": "nervine",
+        "score": 18.67,
+        "percentage": 16,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 316,
+        "name": "Fu Ling",
+        "botanical": "Wolfiporia cocos (syn. Poria cocos) (sclerotium — \"White Stone of Stillness\")",
+        "category": "other",
+        "score": 17,
+        "percentage": 14,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 204,
+        "name": "Astragalus",
+        "botanical": "Astragalus membranaceus (root — Huang Qi)",
+        "category": "adaptogen",
+        "score": 16.67,
+        "percentage": 14,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 212,
+        "name": "Burdock",
+        "botanical": "Arctium lappa (root — Gobo)",
+        "category": "tonic",
+        "score": 16,
+        "percentage": 13,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 224,
+        "name": "Vitex (Chaste Tree)",
+        "botanical": "Vitex agnus-castus (dried berries)",
+        "category": "bitter",
+        "score": 13.67,
+        "percentage": 11,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      }
+    ],
+    "percentageTotal": 100,
+    "synergies": [
+      {
+        "a": "Red Dates",
+        "b": "Astragalus",
+        "note": "Astragalus and Ginseng — triple qi tonification; foundational energy rebuilding; classical TCM tonic trio"
+      },
+      {
+        "a": "Fu Ling",
+        "b": "Astragalus",
+        "note": "Astragalus — Lung and spleen qi building; Wei Qi support and deep tonification"
+      },
+      {
+        "a": "Astragalus",
+        "b": "Burdock",
+        "note": "Astragalus — immune and microbiome combined foundational protocol"
+      }
+    ],
+    "cautions": []
+  }
+}

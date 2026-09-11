@@ -1,0 +1,23 @@
+{
+  "id": "14-min-size",
+  "description": "Simple clean profile — no notes, no sub, weeks duration, restorative sleep. targetHerbCount() should drop to 3.",
+  "input": {
+    "intention": "immunity",
+    "intentions": [
+      "immunity"
+    ],
+    "pattern": "cold",
+    "patternSub": "",
+    "time": "any",
+    "stress": "ride",
+    "duration": "weeks",
+    "avoid": [
+      "none"
+    ],
+    "age": "25_40",
+    "sleep": "restorative_6plus",
+    "notes": "",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  }
+}

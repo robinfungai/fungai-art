@@ -1,0 +1,24 @@
+{
+  "id": "07-pregnancy",
+  "description": "Pregnancy flag — removes emmenagogues, uterine stimulants, infant-transfer-risk herbs. Highest-stakes safety path.",
+  "input": {
+    "intention": "anxiety",
+    "intentions": [
+      "anxiety",
+      "sleep"
+    ],
+    "pattern": "depleted",
+    "patternSub": "anxious_empty",
+    "time": "night",
+    "stress": "ride",
+    "duration": "weeks",
+    "avoid": [
+      "pregnancy"
+    ],
+    "age": "25_40",
+    "sleep": "not_restorative_6plus",
+    "notes": "Second trimester, gentle only",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  }
+}

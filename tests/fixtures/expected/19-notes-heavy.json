@@ -1,0 +1,125 @@
+{
+  "profileId": "19-notes-heavy",
+  "description": "Long notes field — triggers notes-boost path + notes-length complexity bump. Names specific herbs to test notesBoost keyword matching.",
+  "input": {
+    "intention": "cognitive",
+    "intentions": [
+      "cognitive",
+      "stress"
+    ],
+    "pattern": "depleted",
+    "patternSub": "overworked",
+    "time": "morning",
+    "stress": "push",
+    "duration": "months",
+    "avoid": [
+      "none"
+    ],
+    "age": "25_40",
+    "sleep": "not_restorative_6plus",
+    "notes": "PhD write-up phase. Need focus without the crash. Prior use: bacopa was excellent for memory but too slow to feel, lion's mane felt clean and I want more of that, rhodiola gave me a headache above 300mg, and I gave up on caffeine 6 months ago because of anxiety spikes. Deeply prefer nootropics that also support HPA rather than push it.",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  },
+  "output": {
+    "engineVersion": "1.0.0-clientside",
+    "herbDbVersion": "2026.09-198herbs",
+    "capturedAt": "2026-09-11T21:19:48.860Z",
+    "targetHerbCount": 6,
+    "formulaSize": 6,
+    "filteredOut": {
+      "removed": 0,
+      "total": 194,
+      "byFlag": {},
+      "examples": []
+    },
+    "herbs": [
+      {
+        "id": 275,
+        "name": "Pine Pollen",
+        "botanical": "Pinus densiflora / Pinus sylvestris (pollen — male reproductive dust)",
+        "category": "adaptogen",
+        "score": 21.67,
+        "percentage": 18,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 241,
+        "name": "Goji Berry",
+        "botanical": "Lycium barbarum / Lycium chinense (dried ripe berries — Wolfberry, Gou Qi Zi)",
+        "category": "tonic",
+        "score": 19.67,
+        "percentage": 17,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 280,
+        "name": "Shilajit (Mineral Pitch)",
+        "botanical": "Asphaltum / Mineral Pitch (Himalayan rock exudate — \"Destroyer of Weakness\")",
+        "category": "tonic",
+        "score": 19.67,
+        "percentage": 17,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 296,
+        "name": "Yerba Mate",
+        "botanical": "Ilex paraguariensis (leaves — \"The Social Energy of South America\")",
+        "category": "adaptogen",
+        "score": 19,
+        "percentage": 16,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": true,
+        "isGated": false
+      },
+      {
+        "id": 262,
+        "name": "Maca",
+        "botanical": "Lepidium meyenii (root/tuber — all-gender sexual vitality and energy)",
+        "category": "nutritive",
+        "score": 18.67,
+        "percentage": 16,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": true,
+        "isGated": false
+      },
+      {
+        "id": 413,
+        "name": "Longan",
+        "botanical": "Dimocarpus longan / Euphoria longana (dried aril — Long Yan Rou)",
+        "category": "nervine",
+        "score": 18.67,
+        "percentage": 16,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      }
+    ],
+    "percentageTotal": 100,
+    "synergies": [
+      {
+        "a": "Pine Pollen",
+        "b": "Maca",
+        "note": "Maca — complementary Andean nutritive and phytoandrogen support; comprehensive vitality"
+      },
+      {
+        "a": "Goji Berry",
+        "b": "Longan",
+        "note": "Jujube (Da Zao) and Goji (Gou Qi Zi) — classical Heart-Spleen blood-building triad"
+      }
+    ],
+    "cautions": []
+  }
+}

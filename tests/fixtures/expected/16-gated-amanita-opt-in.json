@@ -1,0 +1,125 @@
+{
+  "profileId": "16-gated-amanita-opt-in",
+  "description": "_gatedOptIn: true → ceremonial allies (Amanita muscaria, blue lotus) become eligible.",
+  "input": {
+    "intention": "mood",
+    "intentions": [
+      "mood",
+      "sleep"
+    ],
+    "pattern": "mixed",
+    "patternSub": "stuck",
+    "time": "evening",
+    "stress": "off",
+    "duration": "year_plus",
+    "avoid": [
+      "none"
+    ],
+    "age": "41_60",
+    "sleep": "not_restorative_6plus",
+    "notes": "Open to ceremonial allies for the deeper work",
+    "_gatedOptIn": true,
+    "_ageConfirmed": true
+  },
+  "output": {
+    "engineVersion": "1.0.0-clientside",
+    "herbDbVersion": "2026.09-198herbs",
+    "capturedAt": "2026-09-11T21:19:48.826Z",
+    "targetHerbCount": 6,
+    "formulaSize": 6,
+    "filteredOut": {
+      "removed": 0,
+      "total": 194,
+      "byFlag": {},
+      "examples": []
+    },
+    "herbs": [
+      {
+        "id": 215,
+        "name": "Damiana",
+        "botanical": "Turnera diffusa (leaf — aerial parts)",
+        "category": "nervine",
+        "score": 21.67,
+        "percentage": 21,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 302,
+        "name": "Rose Petals",
+        "botanical": "Rosa gallica / Rosa damascena / Rosa centifolia (dried petals — \"Heart Intelligence\")",
+        "category": "nervine",
+        "score": 20.67,
+        "percentage": 19,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 110,
+        "name": "Holy Basil (Tulsi)",
+        "botanical": "Ocimum sanctum (aerial parts — \"The Incomparable One\")",
+        "category": "adaptogen",
+        "score": 20,
+        "percentage": 18,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 296,
+        "name": "Yerba Mate",
+        "botanical": "Ilex paraguariensis (leaves — \"The Social Energy of South America\")",
+        "category": "adaptogen",
+        "score": 15.67,
+        "percentage": 14,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": true,
+        "isGated": false
+      },
+      {
+        "id": 102,
+        "name": "Bobinsana",
+        "botanical": "Calliandra angustifolia (root and bark — Amazonian)",
+        "category": "tonic",
+        "score": 15.5,
+        "percentage": 14,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 308,
+        "name": "Cordyceps",
+        "botanical": "Cordyceps militaris (cultivated — preferred) / Ophiocordyceps sinensis (wild — ethically problematic)",
+        "category": "mushroom",
+        "score": 15,
+        "percentage": 14,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": true,
+        "isGated": false
+      }
+    ],
+    "percentageTotal": 100,
+    "synergies": [
+      {
+        "a": "Damiana",
+        "b": "Rose Petals",
+        "note": "Rose and Hawthorn — heart-opening and sensual embodiment protocol"
+      },
+      {
+        "a": "Rose Petals",
+        "b": "Bobinsana",
+        "note": "Rose, Hawthorn and Motherwort — heart-opening emotional support formula; complementary heart meridian herbs"
+      }
+    ],
+    "cautions": []
+  }
+}

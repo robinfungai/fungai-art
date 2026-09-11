@@ -1,0 +1,25 @@
+{
+  "id": "10-lifelong-chronic",
+  "description": "Lifelong duration + hot body + inflammation sub-pattern. Complexity trigger paths: patternSub +1, lifelong +1, notes +1 → target 6-7.",
+  "input": {
+    "intention": "pain",
+    "intentions": [
+      "pain",
+      "stress",
+      "sleep"
+    ],
+    "pattern": "hot",
+    "patternSub": "inflamed",
+    "time": "any",
+    "stress": "push",
+    "duration": "lifelong",
+    "avoid": [
+      "none"
+    ],
+    "age": "41_60",
+    "sleep": "very_broken",
+    "notes": "Chronic pain for 15 years, fibro-adjacent, sleep interrupts nightly, stress is the trigger. Prior herb trial: turmeric helped modestly, ashwagandha was OK but flattening at high doses.",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  }
+}

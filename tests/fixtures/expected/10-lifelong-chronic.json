@@ -1,0 +1,148 @@
+{
+  "profileId": "10-lifelong-chronic",
+  "description": "Lifelong duration + hot body + inflammation sub-pattern. Complexity trigger paths: patternSub +1, lifelong +1, notes +1 → target 6-7.",
+  "input": {
+    "intention": "pain",
+    "intentions": [
+      "pain",
+      "stress",
+      "sleep"
+    ],
+    "pattern": "hot",
+    "patternSub": "inflamed",
+    "time": "any",
+    "stress": "push",
+    "duration": "lifelong",
+    "avoid": [
+      "none"
+    ],
+    "age": "41_60",
+    "sleep": "very_broken",
+    "notes": "Chronic pain for 15 years, fibro-adjacent, sleep interrupts nightly, stress is the trigger. Prior herb trial: turmeric helped modestly, ashwagandha was OK but flattening at high doses.",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  },
+  "output": {
+    "engineVersion": "1.0.0-clientside",
+    "herbDbVersion": "2026.09-198herbs",
+    "capturedAt": "2026-09-11T21:19:48.772Z",
+    "targetHerbCount": 7,
+    "formulaSize": 7,
+    "filteredOut": {
+      "removed": 0,
+      "total": 194,
+      "byFlag": {},
+      "examples": []
+    },
+    "herbs": [
+      {
+        "id": 317,
+        "name": "Lion's Mane",
+        "botanical": "Hericium erinaceus (fruiting body and mycelium — \"Neuron Awakener\")",
+        "category": "mushroom",
+        "score": 22.5,
+        "percentage": 17,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 323,
+        "name": "Reishi",
+        "botanical": "Ganoderma lucidum (fruiting body, mycelium and spores — \"Mushroom of Immortality / Lingzhi\")",
+        "category": "mushroom",
+        "score": 22.5,
+        "percentage": 17,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 287,
+        "name": "Vanilla",
+        "botanical": "Vanilla planifolia / Vanilla tahitensis (cured pod — \"The Comfort of the Orchid\")",
+        "category": "adaptogen",
+        "score": 19.5,
+        "percentage": 14,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 300,
+        "name": "Red Dates",
+        "botanical": "Ziziphus jujuba (whole dried fruit — \"Chinese Red Date / Jujube\")",
+        "category": "nervine",
+        "score": 19.5,
+        "percentage": 14,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 503,
+        "name": "Shankhpushpi",
+        "botanical": "Convolvulus pluricaulis / Evolvulus alsinoides",
+        "category": "nervine",
+        "score": 19.5,
+        "percentage": 14,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 316,
+        "name": "Fu Ling",
+        "botanical": "Wolfiporia cocos (syn. Poria cocos) (sclerotium — \"White Stone of Stillness\")",
+        "category": "other",
+        "score": 16.5,
+        "percentage": 12,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 204,
+        "name": "Astragalus",
+        "botanical": "Astragalus membranaceus (root — Huang Qi)",
+        "category": "adaptogen",
+        "score": 16,
+        "percentage": 12,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      }
+    ],
+    "percentageTotal": 100,
+    "synergies": [
+      {
+        "a": "Lion's Mane",
+        "b": "Reishi",
+        "note": "Reishi — Shen calming and immune terrain plus Lion's Mane NGF/BDNF neurotropic; comprehensive brain-spirit medicine pairing"
+      },
+      {
+        "a": "Reishi",
+        "b": "Astragalus",
+        "note": "Astragalus — deep immune and Wei Qi foundation; Reishi inner Shen plus Astragalus outer protection"
+      },
+      {
+        "a": "Red Dates",
+        "b": "Astragalus",
+        "note": "Astragalus and Ginseng — triple qi tonification; foundational energy rebuilding; classical TCM tonic trio"
+      },
+      {
+        "a": "Fu Ling",
+        "b": "Astragalus",
+        "note": "Astragalus — Lung and spleen qi building; Wei Qi support and deep tonification"
+      }
+    ],
+    "cautions": []
+  }
+}

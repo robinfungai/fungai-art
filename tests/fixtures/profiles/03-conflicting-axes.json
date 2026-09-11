@@ -1,0 +1,25 @@
+{
+  "id": "03-conflicting-axes",
+  "description": "Energy + sleep + anxiety together — inherently in tension (stim vs sedate). Tests the load caps.",
+  "input": {
+    "intention": "energy",
+    "intentions": [
+      "energy",
+      "sleep",
+      "anxiety"
+    ],
+    "pattern": "mixed",
+    "patternSub": "up_down",
+    "time": "midday",
+    "stress": "off",
+    "duration": "months",
+    "avoid": [
+      "none"
+    ],
+    "age": "25_40",
+    "sleep": "under_6",
+    "notes": "Wired but exhausted, need afternoon focus AND sleep",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "id": "04-max-safety-restrictions",
+  "description": "All 10 avoid flags active except \"none\". Pool should shrink hard; picker should still produce a formula from what remains.",
+  "input": {
+    "intention": "stress",
+    "intentions": [
+      "stress"
+    ],
+    "pattern": "depleted",
+    "patternSub": "dry",
+    "time": "evening",
+    "stress": "collapse",
+    "duration": "year_plus",
+    "avoid": [
+      "pregnancy",
+      "cardio_meds",
+      "psych_meds",
+      "autoimmune",
+      "liver_kidney",
+      "thyroid",
+      "hypertension",
+      "contraceptive",
+      "sedatives",
+      "allergy"
+    ],
+    "age": "41_60",
+    "sleep": "not_restorative_6plus",
+    "notes": "",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  }
+}

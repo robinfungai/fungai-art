@@ -1,0 +1,25 @@
+{
+  "id": "06-medication-cardio",
+  "description": "Cardio + hypertension flags — should remove antiplatelet, digoxin-interactive, and vasoconstrictive herbs.",
+  "input": {
+    "intention": "stress",
+    "intentions": [
+      "stress",
+      "sleep"
+    ],
+    "pattern": "hot",
+    "patternSub": "inflamed",
+    "time": "evening",
+    "stress": "push",
+    "duration": "year_plus",
+    "avoid": [
+      "cardio_meds",
+      "hypertension"
+    ],
+    "age": "60_plus",
+    "sleep": "very_broken",
+    "notes": "On a beta-blocker and low-dose aspirin",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  }
+}

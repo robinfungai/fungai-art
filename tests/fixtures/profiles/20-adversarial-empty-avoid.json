@@ -1,0 +1,21 @@
+{
+  "id": "20-adversarial-empty-avoid",
+  "description": "Attacker-shaped profile — empty avoid array + gatedOptIn true + all Pro fields set. Documents what the CLIENT engine does today with such input (it applies no safety filter because the array is empty). The SERVER engine in Step 1+ MUST NOT trust an empty avoid and MUST apply baseline safety regardless — this fixture captures the current bypass, not a desired outcome.",
+  "input": {
+    "intention": "energy",
+    "intentions": [
+      "energy"
+    ],
+    "pattern": "hot",
+    "patternSub": "anger",
+    "time": "any",
+    "stress": "push",
+    "duration": "weeks",
+    "avoid": [],
+    "age": "under_25",
+    "sleep": "restorative_6plus",
+    "notes": "",
+    "_gatedOptIn": true,
+    "_ageConfirmed": true
+  }
+}

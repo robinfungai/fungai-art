@@ -1,0 +1,147 @@
+{
+  "profileId": "09-liver-kidney",
+  "description": "Liver or kidney condition — removes hepatotoxic + oxalate-rich herbs.",
+  "input": {
+    "intention": "detox",
+    "intentions": [
+      "detox",
+      "digestion"
+    ],
+    "pattern": "depleted",
+    "patternSub": "purposeless",
+    "time": "midday",
+    "stress": "off",
+    "duration": "year_plus",
+    "avoid": [
+      "liver_kidney"
+    ],
+    "age": "41_60",
+    "sleep": "not_restorative_6plus",
+    "notes": "Elevated liver enzymes after a year of chronic stress",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  },
+  "output": {
+    "engineVersion": "1.0.0-clientside",
+    "herbDbVersion": "2026.09-198herbs",
+    "capturedAt": "2026-09-11T21:19:48.758Z",
+    "targetHerbCount": 6,
+    "formulaSize": 6,
+    "filteredOut": {
+      "removed": 22,
+      "total": 194,
+      "byFlag": {
+        "liver_kidney": 22
+      },
+      "examples": [
+        "Butterbur",
+        "Cinnamon",
+        "Cranberry",
+        "Fadogia",
+        "Gotu Kola",
+        "Ground Ivy",
+        "Juniper",
+        "Kava Kava"
+      ]
+    },
+    "herbs": [
+      {
+        "id": 300,
+        "name": "Red Dates",
+        "botanical": "Ziziphus jujuba (whole dried fruit — \"Chinese Red Date / Jujube\")",
+        "category": "nervine",
+        "score": 20,
+        "percentage": 16,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 103,
+        "name": "Ashwagandha",
+        "botanical": "Withania somnifera (root — 2–3 year matured, standardised to 5% withanolides)",
+        "category": "adaptogen",
+        "score": 18,
+        "percentage": 17,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 215,
+        "name": "Damiana",
+        "botanical": "Turnera diffusa (leaf — aerial parts)",
+        "category": "nervine",
+        "score": 18,
+        "percentage": 17,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 276,
+        "name": "Rhodiola",
+        "botanical": "Rhodiola rosea (root and rhizome — standardised 3%+ rosavins)",
+        "category": "adaptogen",
+        "score": 18,
+        "percentage": 17,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": true,
+        "isGated": false
+      },
+      {
+        "id": 316,
+        "name": "Fu Ling",
+        "botanical": "Wolfiporia cocos (syn. Poria cocos) (sclerotium — \"White Stone of Stillness\")",
+        "category": "other",
+        "score": 18,
+        "percentage": 17,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 241,
+        "name": "Goji Berry",
+        "botanical": "Lycium barbarum / Lycium chinense (dried ripe berries — Wolfberry, Gou Qi Zi)",
+        "category": "tonic",
+        "score": 17,
+        "percentage": 16,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      }
+    ],
+    "percentageTotal": 100,
+    "synergies": [
+      {
+        "a": "Red Dates",
+        "b": "Goji Berry",
+        "note": "Goji Berries — dual blood tonification; traditional classic pairing; complementary polysaccharide and flavonoid profiles"
+      },
+      {
+        "a": "Ashwagandha",
+        "b": "Damiana",
+        "note": "Ashwagandha — adaptogenic grounding plus sexual confidence; testosterone and arousal support"
+      },
+      {
+        "a": "Ashwagandha",
+        "b": "Rhodiola",
+        "note": "Holy Basil and Rhodiola — adaptogenic stress resilience stack (monitor for overstimulation)"
+      }
+    ],
+    "cautions": [
+      {
+        "a": "Ashwagandha",
+        "b": "Rhodiola",
+        "note": "Stimulant herbs (Guarana, high-dose Rhodiola, Coffee) — overstimulation risk"
+      }
+    ]
+  }
+}

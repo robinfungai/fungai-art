@@ -1,0 +1,115 @@
+{
+  "profileId": "03-conflicting-axes",
+  "description": "Energy + sleep + anxiety together — inherently in tension (stim vs sedate). Tests the load caps.",
+  "input": {
+    "intention": "energy",
+    "intentions": [
+      "energy",
+      "sleep",
+      "anxiety"
+    ],
+    "pattern": "mixed",
+    "patternSub": "up_down",
+    "time": "midday",
+    "stress": "off",
+    "duration": "months",
+    "avoid": [
+      "none"
+    ],
+    "age": "25_40",
+    "sleep": "under_6",
+    "notes": "Wired but exhausted, need afternoon focus AND sleep",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  },
+  "output": {
+    "engineVersion": "1.0.0-clientside",
+    "herbDbVersion": "2026.09-198herbs",
+    "capturedAt": "2026-09-11T21:19:48.688Z",
+    "targetHerbCount": 6,
+    "formulaSize": 6,
+    "filteredOut": {
+      "removed": 0,
+      "total": 194,
+      "byFlag": {},
+      "examples": []
+    },
+    "herbs": [
+      {
+        "id": 323,
+        "name": "Reishi",
+        "botanical": "Ganoderma lucidum (fruiting body, mycelium and spores — \"Mushroom of Immortality / Lingzhi\")",
+        "category": "mushroom",
+        "score": 18.5,
+        "percentage": 23,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 243,
+        "name": "Hops",
+        "botanical": "Humulus lupulus (strobiles — female cones)",
+        "category": "nervine",
+        "score": 16.17,
+        "percentage": 20,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 413,
+        "name": "Longan",
+        "botanical": "Dimocarpus longan / Euphoria longana (dried aril — Long Yan Rou)",
+        "category": "nervine",
+        "score": 14.5,
+        "percentage": 18,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 316,
+        "name": "Fu Ling",
+        "botanical": "Wolfiporia cocos (syn. Poria cocos) (sclerotium — \"White Stone of Stillness\")",
+        "category": "other",
+        "score": 14.17,
+        "percentage": 17,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 277,
+        "name": "Rosemary",
+        "botanical": "Rosmarinus officinalis (leaves — \"Dew of the Sea\")",
+        "category": "mover",
+        "score": 14,
+        "percentage": 5,
+        "isTrace": true,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 218,
+        "name": "Catuaba",
+        "botanical": "Anemopaegma mirandum (bark — sustainably wild-crafted Amazonian)",
+        "category": "adaptogen",
+        "score": 13.67,
+        "percentage": 17,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      }
+    ],
+    "percentageTotal": 100,
+    "synergies": [],
+    "cautions": []
+  }
+}

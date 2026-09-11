@@ -1,0 +1,23 @@
+{
+  "id": "01-baseline",
+  "description": "Single stress intention, moderate body, recent onset, no safety flags. The reference \"clean\" profile — everything else deviates from this.",
+  "input": {
+    "intention": "stress",
+    "intentions": [
+      "stress"
+    ],
+    "pattern": "mixed",
+    "patternSub": "sighing",
+    "time": "evening",
+    "stress": "push",
+    "duration": "weeks",
+    "avoid": [
+      "none"
+    ],
+    "age": "25_40",
+    "sleep": "restorative_6plus",
+    "notes": "",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  }
+}

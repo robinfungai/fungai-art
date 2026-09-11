@@ -1,0 +1,24 @@
+{
+  "id": "19-notes-heavy",
+  "description": "Long notes field — triggers notes-boost path + notes-length complexity bump. Names specific herbs to test notesBoost keyword matching.",
+  "input": {
+    "intention": "cognitive",
+    "intentions": [
+      "cognitive",
+      "stress"
+    ],
+    "pattern": "depleted",
+    "patternSub": "overworked",
+    "time": "morning",
+    "stress": "push",
+    "duration": "months",
+    "avoid": [
+      "none"
+    ],
+    "age": "25_40",
+    "sleep": "not_restorative_6plus",
+    "notes": "PhD write-up phase. Need focus without the crash. Prior use: bacopa was excellent for memory but too slow to feel, lion's mane felt clean and I want more of that, rhodiola gave me a headache above 300mg, and I gave up on caffeine 6 months ago because of anxiety spikes. Deeply prefer nootropics that also support HPA rather than push it.",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  }
+}

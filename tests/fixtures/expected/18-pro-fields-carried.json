@@ -1,0 +1,141 @@
+{
+  "profileId": "18-pro-fields-carried",
+  "description": "Pro-mode profile carrying nervous, energy_curve, digestion, emotional, somatic, cycle, prior_herbs. Current engine ignores these — regression test confirms they don't change output.",
+  "input": {
+    "intention": "stress",
+    "intentions": [
+      "stress",
+      "anxiety",
+      "sleep"
+    ],
+    "pattern": "depleted",
+    "patternSub": "anxious_empty",
+    "time": "evening",
+    "stress": "push",
+    "duration": "year_plus",
+    "avoid": [
+      "none"
+    ],
+    "age": "25_40",
+    "sleep": "hard_onset",
+    "notes": "Post-burnout, first six months of rebuild",
+    "nervous": "wired_tired",
+    "energy_curve": "am_good_pm_crash",
+    "digestion": "anxious_gut",
+    "emotional": "worry_loops",
+    "somatic": [
+      "chest",
+      "solar_plexus",
+      "head_mind"
+    ],
+    "cycle": "not_applicable",
+    "prior_herbs": [
+      "adaptogens_regular",
+      "nootropics"
+    ],
+    "support": "deep_restore",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  },
+  "output": {
+    "engineVersion": "1.0.0-clientside",
+    "herbDbVersion": "2026.09-198herbs",
+    "capturedAt": "2026-09-11T21:19:48.846Z",
+    "targetHerbCount": 6,
+    "formulaSize": 6,
+    "filteredOut": {
+      "removed": 0,
+      "total": 194,
+      "byFlag": {},
+      "examples": []
+    },
+    "herbs": [
+      {
+        "id": 271,
+        "name": "Oatstraw",
+        "botanical": "Avena sativa (aerial parts — sterile stem and milky oat tops)",
+        "category": "adaptogen",
+        "score": 23.67,
+        "percentage": 21,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 103,
+        "name": "Ashwagandha",
+        "botanical": "Withania somnifera (root — 2–3 year matured, standardised to 5% withanolides)",
+        "category": "adaptogen",
+        "score": 22.17,
+        "percentage": 19,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 300,
+        "name": "Red Dates",
+        "botanical": "Ziziphus jujuba (whole dried fruit — \"Chinese Red Date / Jujube\")",
+        "category": "nervine",
+        "score": 19.17,
+        "percentage": 16,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 316,
+        "name": "Fu Ling",
+        "botanical": "Wolfiporia cocos (syn. Poria cocos) (sclerotium — \"White Stone of Stillness\")",
+        "category": "other",
+        "score": 17.5,
+        "percentage": 15,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 413,
+        "name": "Longan",
+        "botanical": "Dimocarpus longan / Euphoria longana (dried aril — Long Yan Rou)",
+        "category": "nervine",
+        "score": 17.5,
+        "percentage": 15,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 279,
+        "name": "Schisandra (Five-Flavour Fruit)",
+        "botanical": "Schisandra chinensis (whole dried berries — \"Magnolia Vine\")",
+        "category": "mushroom",
+        "score": 16.17,
+        "percentage": 14,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      }
+    ],
+    "percentageTotal": 100,
+    "synergies": [
+      {
+        "a": "Oatstraw",
+        "b": "Ashwagandha",
+        "note": "Ashwagandha and Holy Basil — adaptogenic HPA axis support while Oatstraw provides structural mineral foundation"
+      },
+      {
+        "a": "Fu Ling",
+        "b": "Schisandra (Five-Flavour Fruit)",
+        "note": "Schisandra and Ziziphus seed — Shen-calming formula for heart-spleen insomnia pattern"
+      }
+    ],
+    "cautions": []
+  }
+}

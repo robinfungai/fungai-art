@@ -1,0 +1,124 @@
+{
+  "profileId": "02-ranked-multi-intention",
+  "description": "Three ranked intentions: stress 1st, sleep 2nd, cognitive 3rd. Composer should weight the pick to primary first.",
+  "input": {
+    "intention": "stress",
+    "intentions": [
+      "stress",
+      "sleep",
+      "cognitive"
+    ],
+    "pattern": "depleted",
+    "patternSub": "overworked",
+    "time": "evening",
+    "stress": "collapse",
+    "duration": "months",
+    "avoid": [
+      "none"
+    ],
+    "age": "25_40",
+    "sleep": "not_restorative_6plus",
+    "notes": "",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  },
+  "output": {
+    "engineVersion": "1.0.0-clientside",
+    "herbDbVersion": "2026.09-198herbs",
+    "capturedAt": "2026-09-11T21:19:48.674Z",
+    "targetHerbCount": 5,
+    "formulaSize": 5,
+    "filteredOut": {
+      "removed": 0,
+      "total": 194,
+      "byFlag": {},
+      "examples": []
+    },
+    "herbs": [
+      {
+        "id": 241,
+        "name": "Goji Berry",
+        "botanical": "Lycium barbarum / Lycium chinense (dried ripe berries — Wolfberry, Gou Qi Zi)",
+        "category": "tonic",
+        "score": 20.17,
+        "percentage": 23,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 275,
+        "name": "Pine Pollen",
+        "botanical": "Pinus densiflora / Pinus sylvestris (pollen — male reproductive dust)",
+        "category": "adaptogen",
+        "score": 20.17,
+        "percentage": 23,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 280,
+        "name": "Shilajit (Mineral Pitch)",
+        "botanical": "Asphaltum / Mineral Pitch (Himalayan rock exudate — \"Destroyer of Weakness\")",
+        "category": "tonic",
+        "score": 17.17,
+        "percentage": 20,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 263,
+        "name": "Maca Negra (Black Maca)",
+        "botanical": "Lepidium meyenii var. negra (black tuber — male-specific vitality)",
+        "category": "other",
+        "score": 15,
+        "percentage": 17,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": true,
+        "isGated": false
+      },
+      {
+        "id": 103,
+        "name": "Ashwagandha",
+        "botanical": "Withania somnifera (root — 2–3 year matured, standardised to 5% withanolides)",
+        "category": "adaptogen",
+        "score": 14.67,
+        "percentage": 17,
+        "isTrace": false,
+        "isGABAergic": true,
+        "isCNSStimulant": false,
+        "isGated": false
+      }
+    ],
+    "percentageTotal": 100,
+    "synergies": [
+      {
+        "a": "Pine Pollen",
+        "b": "Maca Negra (Black Maca)",
+        "note": "Maca — complementary Andean nutritive and phytoandrogen support; comprehensive vitality"
+      },
+      {
+        "a": "Pine Pollen",
+        "b": "Ashwagandha",
+        "note": "Ashwagandha — adaptogenic HPA grounding combined with Pine Pollen nutritive foundation"
+      },
+      {
+        "a": "Shilajit (Mineral Pitch)",
+        "b": "Ashwagandha",
+        "note": "Ashwagandha and Rhodiola — adaptogenic plus mineral tonification; comprehensive resilience stack"
+      },
+      {
+        "a": "Maca Negra (Black Maca)",
+        "b": "Ashwagandha",
+        "note": "Ashwagandha — HPA grounding with Yang tonification comprehensive male vitality stack"
+      }
+    ],
+    "cautions": []
+  }
+}

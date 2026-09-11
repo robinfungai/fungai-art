@@ -1,0 +1,150 @@
+{
+  "profileId": "04-max-safety-restrictions",
+  "description": "All 10 avoid flags active except \"none\". Pool should shrink hard; picker should still produce a formula from what remains.",
+  "input": {
+    "intention": "stress",
+    "intentions": [
+      "stress"
+    ],
+    "pattern": "depleted",
+    "patternSub": "dry",
+    "time": "evening",
+    "stress": "collapse",
+    "duration": "year_plus",
+    "avoid": [
+      "pregnancy",
+      "cardio_meds",
+      "psych_meds",
+      "autoimmune",
+      "liver_kidney",
+      "thyroid",
+      "hypertension",
+      "contraceptive",
+      "sedatives",
+      "allergy"
+    ],
+    "age": "41_60",
+    "sleep": "not_restorative_6plus",
+    "notes": "",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  },
+  "output": {
+    "engineVersion": "1.0.0-clientside",
+    "herbDbVersion": "2026.09-198herbs",
+    "capturedAt": "2026-09-11T21:19:48.694Z",
+    "targetHerbCount": 7,
+    "formulaSize": 7,
+    "filteredOut": {
+      "removed": 178,
+      "total": 194,
+      "byFlag": {
+        "pregnancy": 149,
+        "cardio_meds": 19,
+        "autoimmune": 6,
+        "liver_kidney": 2,
+        "psych_meds": 1,
+        "hypertension": 1
+      },
+      "examples": [
+        "Bilberry",
+        "Angelica (Dong Quai)",
+        "Aronia Berry",
+        "Ashwagandha",
+        "Astragalus",
+        "Bacopa",
+        "Barberry",
+        "Barley"
+      ]
+    },
+    "herbs": [
+      {
+        "id": 406,
+        "name": "Shatavari",
+        "botanical": "Asparagus racemosus (root)",
+        "category": "adaptogen",
+        "score": 23.67,
+        "percentage": 26,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 275,
+        "name": "Pine Pollen",
+        "botanical": "Pinus densiflora / Pinus sylvestris (pollen — male reproductive dust)",
+        "category": "adaptogen",
+        "score": 17.67,
+        "percentage": 20,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 300,
+        "name": "Red Dates",
+        "botanical": "Ziziphus jujuba (whole dried fruit — \"Chinese Red Date / Jujube\")",
+        "category": "nervine",
+        "score": 17.67,
+        "percentage": 20,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 315,
+        "name": "Enoki",
+        "botanical": "Flammulina velutipes (fruiting body — \"Winter Filament / Golden Needle Mushroom\")",
+        "category": "tonic",
+        "score": 10.67,
+        "percentage": 12,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 508,
+        "name": "Dashmool",
+        "botanical": "Ten-root compound (traditional Ayurvedic formula)",
+        "category": "bitter",
+        "score": 9,
+        "percentage": 10,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 237,
+        "name": "Fennel",
+        "botanical": "Foeniculum vulgare (dried ripe fruits — seeds)",
+        "category": "aromatic",
+        "score": 7,
+        "percentage": 5,
+        "isTrace": true,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 268,
+        "name": "Mullein",
+        "botanical": "Verbascum thapsus (leaf and flower — \"Grandmother Herb\")",
+        "category": "other",
+        "score": 6,
+        "percentage": 7,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      }
+    ],
+    "percentageTotal": 100,
+    "synergies": [],
+    "cautions": []
+  }
+}

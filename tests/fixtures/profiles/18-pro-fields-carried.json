@@ -1,0 +1,40 @@
+{
+  "id": "18-pro-fields-carried",
+  "description": "Pro-mode profile carrying nervous, energy_curve, digestion, emotional, somatic, cycle, prior_herbs. Current engine ignores these — regression test confirms they don't change output.",
+  "input": {
+    "intention": "stress",
+    "intentions": [
+      "stress",
+      "anxiety",
+      "sleep"
+    ],
+    "pattern": "depleted",
+    "patternSub": "anxious_empty",
+    "time": "evening",
+    "stress": "push",
+    "duration": "year_plus",
+    "avoid": [
+      "none"
+    ],
+    "age": "25_40",
+    "sleep": "hard_onset",
+    "notes": "Post-burnout, first six months of rebuild",
+    "nervous": "wired_tired",
+    "energy_curve": "am_good_pm_crash",
+    "digestion": "anxious_gut",
+    "emotional": "worry_loops",
+    "somatic": [
+      "chest",
+      "solar_plexus",
+      "head_mind"
+    ],
+    "cycle": "not_applicable",
+    "prior_herbs": [
+      "adaptogens_regular",
+      "nootropics"
+    ],
+    "support": "deep_restore",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  }
+}

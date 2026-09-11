@@ -1,0 +1,24 @@
+{
+  "id": "05-medication-psych",
+  "description": "SSRI-compatible filter path — removes MAOIs + serotonin-syndrome-risk herbs (St John's Wort etc).",
+  "input": {
+    "intention": "mood",
+    "intentions": [
+      "mood",
+      "anxiety"
+    ],
+    "pattern": "depleted",
+    "patternSub": "anxious_empty",
+    "time": "morning",
+    "stress": "numb",
+    "duration": "year_plus",
+    "avoid": [
+      "psych_meds"
+    ],
+    "age": "25_40",
+    "sleep": "not_restorative_6plus",
+    "notes": "On an SSRI for 3 years",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  }
+}

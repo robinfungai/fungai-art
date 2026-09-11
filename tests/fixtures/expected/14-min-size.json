@@ -1,0 +1,77 @@
+{
+  "profileId": "14-min-size",
+  "description": "Simple clean profile — no notes, no sub, weeks duration, restorative sleep. targetHerbCount() should drop to 3.",
+  "input": {
+    "intention": "immunity",
+    "intentions": [
+      "immunity"
+    ],
+    "pattern": "cold",
+    "patternSub": "",
+    "time": "any",
+    "stress": "ride",
+    "duration": "weeks",
+    "avoid": [
+      "none"
+    ],
+    "age": "25_40",
+    "sleep": "restorative_6plus",
+    "notes": "",
+    "_gatedOptIn": false,
+    "_ageConfirmed": true
+  },
+  "output": {
+    "engineVersion": "1.0.0-clientside",
+    "herbDbVersion": "2026.09-198herbs",
+    "capturedAt": "2026-09-11T21:19:48.801Z",
+    "targetHerbCount": 3,
+    "formulaSize": 3,
+    "filteredOut": {
+      "removed": 0,
+      "total": 194,
+      "byFlag": {},
+      "examples": []
+    },
+    "herbs": [
+      {
+        "id": 255,
+        "name": "Juniper",
+        "botanical": "Juniperus communis (ripe cone-berries — short-term use only)",
+        "category": "aromatic",
+        "score": 13.67,
+        "percentage": 5,
+        "isTrace": true,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 268,
+        "name": "Mullein",
+        "botanical": "Verbascum thapsus (leaf and flower — \"Grandmother Herb\")",
+        "category": "other",
+        "score": 13.67,
+        "percentage": 47,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      },
+      {
+        "id": 543,
+        "name": "Elderberry (Cooked Berry)",
+        "botanical": "Sambucus nigra (fully ripe cooked berry)",
+        "category": "other",
+        "score": 13.67,
+        "percentage": 48,
+        "isTrace": false,
+        "isGABAergic": false,
+        "isCNSStimulant": false,
+        "isGated": false
+      }
+    ],
+    "percentageTotal": 100,
+    "synergies": [],
+    "cautions": []
+  }
+}
