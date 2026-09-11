@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "build:herbs-data": "node scripts/export-herbs.cjs",
     "build:herb-pool": "node scripts/build-herb-pool.cjs",
     "build:engine2": "node scripts/sync-engine2.cjs",
-    "build": "npm run build:herb-pool && npm run build:engine2 && vite build && node scripts/swap-index.cjs",
+    "build": "npm run build:herbs-data && npm run build:herb-pool && npm run build:engine2 && vite build && node scripts/swap-index.cjs",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

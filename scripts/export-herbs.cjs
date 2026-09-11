@@ -1,6 +1,11 @@
 /**
  * Converts src/data/herbs.ts → public/herbs-data.js
  * Strips TypeScript syntax with regex, outputs window.HERB_DB = [...]
+ *
+ * Also runs an integrity check: fails loudly if the source file has
+ * duplicate `id:` values. This class of bug is invisible at runtime
+ * (name-based lookups still work; id-based ones return the wrong
+ * herb) so we catch it at build time instead of in production.
  */
 const fs = require('fs');
 const path = require('path');
@@ -16,6 +21,30 @@ if (herbsStart === -1) {
   console.error('Could not find "export const HERBS" in herbs.ts');
   process.exit(1);
 }
+
+// ── Integrity check: no duplicate ids ──────────────────────────────
+// Scans the entire file (both 4-space and 2-space indented blocks)
+// for id assignments and flags any that appear twice. Runs BEFORE
+// generating the .js so a broken source aborts the build.
+const idRe = /^ *id:\s*(\d+)\s*,/gm;
+const seen = new Map(); // id -> [line, ...]
+let m;
+while ((m = idRe.exec(src)) !== null) {
+  const id = Number(m[1]);
+  const line = src.slice(0, m.index).split('\n').length;
+  if (!seen.has(id)) seen.set(id, []);
+  seen.get(id).push(line);
+}
+const dupes = [...seen.entries()].filter(([, lines]) => lines.length > 1);
+if (dupes.length) {
+  console.error('✗ Duplicate herb ids in src/data/herbs.ts:');
+  dupes.forEach(([id, lines]) => {
+    console.error(`    id ${id} appears at lines: ${lines.join(', ')}`);
+  });
+  console.error('  Renumber the newer entries to a fresh id above the max.');
+  process.exit(1);
+}
+console.log(`✓ No duplicate ids (${seen.size} unique herbs).`);
 
 // Take only the data portion (from export const HERBS onwards)
 // and strip the 'export' keyword — the data itself is pure JS
