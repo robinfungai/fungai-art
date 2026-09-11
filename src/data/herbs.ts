@@ -33,6 +33,44 @@ export interface Herb {
   status?: string;
   /** Optional Covenant profile — see covenant.ts. Fill in as herbs are reviewed. */
   covenant?: HerbCovenantProfile;
+
+  // ── QUIZ-MATCHING TAGS ──────────────────────────────────────────
+  // Structured 1:1 matchers to the /find-your-formula quiz values.
+  // All optional; herbs without them fall back to freeform text
+  // interpretation of energetics / primary_functions by the composer.
+  // Populate incrementally, starting with the featured herbs.
+
+  /** Nervous-system typology fit. Maps to the `nervous` quiz answer. */
+  nervous_system_fit?: ('wired' | 'tired' | 'wired_tired' | 'steady' | 'reactive' | 'flat')[];
+
+  /** Energy-curve fit. Maps to the `energy_curve` quiz answer. */
+  energy_pattern?: ('am_boost' | 'sustained' | 'pm_stabilise' | 'restorative_only' | 'acute_only' | 'crash_repair')[];
+
+  /** Which sleep-architecture patterns this herb actually addresses. */
+  sleep_action?: ('onset' | 'maintenance' | 'early_wake' | 'restoration' | 'dream_soften')[];
+
+  /** Digestion tone — the quality this herb brings to the gut. */
+  digestion_fit?: ('warming' | 'cooling' | 'moving' | 'astringent' | 'demulcent' | 'bitter' | 'carminative')[];
+
+  /** Regional body affinity. Maps to the somatic-map quiz answer. */
+  regional_affinity?: ('head' | 'chest' | 'heart' | 'solar_plexus' | 'gut' | 'liver' | 'kidneys' | 'pelvis' | 'joints' | 'skin' | 'whole')[];
+
+  // ── COMPOSER QUALITY FIELDS ─────────────────────────────────────
+
+  /** How quickly effects appear — determines pace + support-type fit. */
+  onset_time?: 'immediate' | 'hours' | 'days' | 'weeks' | 'months';
+
+  /** Botanical family. Helps composer avoid over-stacking one family; feeds allergy filter. */
+  family?: string;
+
+  /** One-line poetic name for the composer voice — "The night traveller", "Heart-opener". */
+  epithet?: string;
+
+  /** Origin region. Feeds the story + sustainability layer. */
+  origin_region?: 'Nordic wild' | 'European' | 'Ayurvedic' | 'Chinese' | 'Central American' | 'Mediterranean' | 'Global';
+
+  /** Structured evidence tier. Preferred over freeform `status` for filtering. */
+  evidence_grade?: 'A' | 'B+' | 'B' | 'B-' | 'C' | 'traditional';
 }
 
 export interface Protocol {
