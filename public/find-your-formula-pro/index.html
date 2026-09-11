@@ -3326,6 +3326,291 @@ async function shadowComposeToServer(profile, clientHerbs) {
   }
 }
 
+// ════════════════════════════════════════════════════════════════
+// STEP 4 · Server-authoritative composition (opt-in via URL param)
+// ────────────────────────────────────────────────────────────────
+// Mirrors the Basic client. When the URL carries `?fyf_server=1`,
+// the reveal is driven by the server response — the client engine
+// never renders a formula the user sees, and NEVER acts as a silent
+// fallback if the server fails.
+// Full doc in public/find-your-formula/index.html at the equivalent
+// block; kept in sync here.
+// ════════════════════════════════════════════════════════════════
+function _fyfServerModeActive() {
+  try {
+    const u = new URL(location.href);
+    return u.searchParams.get('fyf_server') === '1';
+  } catch (_) { return false; }
+}
+let _fyfServerComposeInFlight = false;
+
+function _fyfEnrichServerHerbs(serverHerbs) {
+  const db = (typeof window !== 'undefined' && window.HERB_DB) || [];
+  return (serverHerbs || []).map(sh => {
+    const full = db.find(h => h && h.name === sh.name) ||
+                 db.find(h => h && h.botanical === sh.botanical);
+    if (full) {
+      return Object.assign({}, full, {
+        name:       sh.name,
+        botanical:  sh.botanical,
+        percentage: sh.percentage,
+      });
+    }
+    return {
+      name:       sh.name,
+      botanical:  sh.botanical,
+      percentage: sh.percentage,
+      primary_functions:      [],
+      secondary_benefits:     [],
+      energetics:             [],
+      spiritual_layer:        '',
+      pharmacology:           '',
+      herb_to_herb_synergy:   [],
+      herb_to_herb_caution:   [],
+    };
+  });
+}
+
+function _fyfRenderServerErrorState({ kind, backToSafety, retry }) {
+  const result = document.getElementById('result');
+  ['bottle','rTagline','rStory','rHerbs','rSynergy','rWhyCard'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+  const howMade = document.querySelector('.r-howmade');
+  if (howMade) howMade.style.display = 'none';
+  const safety  = document.getElementById('rSafety');
+  if (safety)   safety.style.display = 'none';
+  const reserve = document.querySelector('.reserve');
+  if (reserve)  reserve.style.display = 'none';
+
+  const COPY = {
+    NEED_SAFETY: {
+      eyebrow: '✦ One more detail',
+      heading: 'We need one more detail before we can safely compose your formula.',
+      body:    'Please take a moment to confirm the safety question — it lets us shape the blend around anything you\'re managing.',
+      cta:     'Answer the safety question',
+      action:  backToSafety,
+    },
+    NO_VIABLE: {
+      eyebrow: '✦ Composition paused',
+      heading: 'We couldn\'t safely compose a formula from these answers.',
+      body:    'Your combination of intentions and safety filters left too few compatible allies. Try slightly different answers, or reach Robin directly and we\'ll compose together.',
+      cta:     'Go back and adjust',
+      action:  backToSafety,
+    },
+    RATE_LIMIT: {
+      eyebrow: '✦ Please retry',
+      heading: 'A little too much at once.',
+      body:    'The composer is throttled to protect the server. Please try again in about a minute.',
+      cta:     'Retry',
+      action:  retry,
+    },
+    SERVER_ERROR: {
+      eyebrow: '✦ Composer unavailable',
+      heading: 'The composer is temporarily unavailable.',
+      body:    'This should be a hiccup, not a permanent thing. Please try again in a moment.',
+      cta:     'Retry',
+      action:  retry,
+    },
+    NETWORK: {
+      eyebrow: '✦ Connection lost',
+      heading: 'We couldn\'t reach the composer.',
+      body:    'Check your connection and try again.',
+      cta:     'Retry',
+      action:  retry,
+    },
+    VALIDATION: {
+      eyebrow: '✦ Something looked off',
+      heading: 'The answers didn\'t come through cleanly.',
+      body:    'Please start the reading again — should take under a minute.',
+      cta:     'Start over',
+      action:  () => go(0),
+    },
+  };
+  const c = COPY[kind] || COPY.SERVER_ERROR;
+
+  let panel = document.getElementById('rServerErr');
+  if (!panel) {
+    panel = document.createElement('div');
+    panel.id = 'rServerErr';
+    panel.style.cssText = 'padding:32px 24px;text-align:center;background:var(--card);border:0.5px solid var(--rule-strong);border-radius:20px;margin-bottom:22px';
+    result.insertBefore(panel, result.querySelector('.r-actions'));
+  }
+  panel.innerHTML =
+    '<div style="font-family:var(--mono);font-size:10px;letter-spacing:0.32em;text-transform:uppercase;color:var(--amber-l);margin-bottom:14px">' + c.eyebrow + '</div>' +
+    '<h2 style="font-family:var(--display);font-weight:300;font-size:26px;color:var(--parchment);line-height:1.15;margin-bottom:16px">' + c.heading + '</h2>' +
+    '<p style="font-size:15px;color:var(--dust);line-height:1.7;margin-bottom:22px">' + c.body + '</p>' +
+    '<button type="button" id="rServerErrCta" style="padding:14px 28px;background:linear-gradient(180deg,var(--amber-l),var(--amber));color:var(--void);border:none;border-radius:999px;font-family:var(--mono);font-size:11px;letter-spacing:0.24em;text-transform:uppercase;font-weight:500;cursor:pointer">' + c.cta + '</button>';
+  const btn = document.getElementById('rServerErrCta');
+  if (btn && typeof c.action === 'function') btn.addEventListener('click', c.action);
+}
+
+async function _fyfRenderResultServerMode(a) {
+  if (_fyfServerComposeInFlight) return;
+
+  const profileKey = _fyfShadowKey(a);
+  const cached = window.__currentFormula;
+  if (cached && cached._source === 'server' && cached._profileKey === profileKey && cached._serverBody) {
+    return _fyfPaintServerReveal(a, cached._serverBody);
+  }
+
+  _fyfServerComposeInFlight = true;
+
+  const safetyPageIndex = PAGES.findIndex(p => Array.isArray(p.keys) && p.keys.includes('avoid'));
+  const backToSafety = () => go(safetyPageIndex >= 0 ? safetyPageIndex : 0);
+  const retry = () => { _fyfServerComposeInFlight = false; renderResult(); };
+
+  const controller = new AbortController();
+  const timeoutId  = setTimeout(() => { try { controller.abort(); } catch (_) {} }, 8000);
+  let res, body;
+  try {
+    res = await fetch('/api/fyf/compose', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ profile: a }),
+      signal:  controller.signal,
+    });
+    clearTimeout(timeoutId);
+    body = await res.json();
+  } catch (e) {
+    clearTimeout(timeoutId);
+    _fyfServerComposeInFlight = false;
+    return _fyfRenderServerErrorState({
+      kind: (e && e.name === 'AbortError') ? 'NETWORK' : 'NETWORK',
+      backToSafety, retry,
+    });
+  }
+
+  if (res.status !== 200) {
+    _fyfServerComposeInFlight = false;
+    if (body && body.code === 'SAFETY_QUESTION_NOT_ANSWERED') {
+      return _fyfRenderServerErrorState({ kind: 'NEED_SAFETY', backToSafety, retry });
+    }
+    if (res.status === 422 || (body && body.code === 'NO_VIABLE_FORMULA')) {
+      return _fyfRenderServerErrorState({ kind: 'NO_VIABLE', backToSafety, retry });
+    }
+    if (res.status === 429) {
+      return _fyfRenderServerErrorState({ kind: 'RATE_LIMIT', backToSafety, retry });
+    }
+    if (res.status >= 500) {
+      return _fyfRenderServerErrorState({ kind: 'SERVER_ERROR', backToSafety, retry });
+    }
+    return _fyfRenderServerErrorState({ kind: 'VALIDATION', backToSafety, retry });
+  }
+
+  _fyfPaintServerReveal(a, body);
+  _fyfServerComposeInFlight = false;
+}
+
+function _fyfPaintServerReveal(a, body) {
+  const serverFormula = (body && body.formula) || {};
+  const enrichedHerbs = _fyfEnrichServerHerbs(serverFormula.herbs || []);
+  const serverName    = serverFormula.name || pickName(a.intention);
+  const serverPct     = (serverFormula.herbs || []).map(h => h.percentage);
+  const formulaId     = body.formulaId || null;
+  const profileKey    = _fyfShadowKey(a);
+
+  window.__currentFormula = {
+    name:         serverName,
+    herbs:        enrichedHerbs,
+    percentages:  serverPct,
+    synergies:    [],
+    formulaId:    formulaId,
+    _source:      'server',
+    _serverBody:  body,
+    _profileKey:  profileKey,
+  };
+  window.__currentFormulaName = serverName;
+
+  const bottleEl = document.getElementById('bottle');
+  if (bottleEl) bottleEl.innerHTML = '';
+
+  document.getElementById('bottle').insertAdjacentHTML('beforeend', bottleCard(a.intention, enrichedHerbs, serverName));
+  document.getElementById('rTagline').textContent = enrichedHerbs.length + ' allies · Tailored Elixir · 30 ml';
+  try { document.getElementById('rStory').innerHTML = storyFor(a, enrichedHerbs); } catch (_) {}
+  document.getElementById('rHerbCount').textContent = enrichedHerbs.length + ' allies · woven together';
+  document.getElementById('rSafety').textContent  = safetyLine(a);
+
+  const filterInfo = countFilteredOut(a);
+  const filterEl   = document.getElementById('rFilterNote');
+  if (filterInfo.removed > 0 && filterEl) {
+    filterEl.hidden = false;
+    document.getElementById('rFilterCount').textContent = filterInfo.removed;
+    const flagLabels = {
+      pregnancy: 'pregnancy / breastfeeding',
+      cardio_meds: 'cardio / blood-thinner conflict',
+      psych_meds: 'antidepressant conflict',
+      autoimmune: 'immune-modulating conflict',
+      liver_kidney: 'hepatotoxic / kidney risk',
+      thyroid: 'thyroid conflict',
+      hypertension: 'blood-pressure risk',
+      contraceptive: 'contraceptive-pill interaction (CYP3A4)',
+      sedatives: 'benzodiazepine / sedative additive',
+      allergy: 'Asteraceae / salicylate allergy',
+    };
+    const rows = Object.entries(filterInfo.byFlag).map(([flag, n]) => (
+      '<li>' + n + ' herbs removed for ' + (flagLabels[flag] || flag) + '</li>'
+    )).join('');
+    const eg = filterInfo.examples.length
+      ? '<div style="margin-top:8px;font-style:italic;color:var(--dust-d);font-size:11.5px">Removed: ' + filterInfo.examples.join(', ') + (filterInfo.removed > filterInfo.examples.length ? ' + ' + (filterInfo.removed - filterInfo.examples.length) + ' more' : '') + '</div>'
+      : '';
+    document.getElementById('rFilterBody').innerHTML = '<ul>' + rows + '</ul>' + eg;
+  }
+
+  const list = document.getElementById('rHerbList');
+  if (list) {
+    list.innerHTML = '';
+    enrichedHerbs.forEach((h, i) => {
+      const el = document.createElement('div');
+      el.className = 'r-herb';
+      const trace = isTrace(h);
+      const realPct = serverPct[i] > 0 ? serverPct[i] : 1;
+      el.innerHTML =
+        '<span class="r-herb-n" data-pct="' + realPct + '%">??%</span>' +
+        '<div>' +
+          '<div class="r-herb-name">' + h.name + '</div>' +
+          '<div class="r-herb-latin">' + (h.botanical || '') + '</div>' +
+          '<div class="r-herb-note">' + shortNote(h) + '</div>' +
+          (trace ? '<span class="r-herb-tag trace">◇ Trace ingredient · potent flavour</span>' : '') +
+        '</div>';
+      list.appendChild(el);
+    });
+  }
+
+  try {
+    const pairs = checkFormulaPairs(enrichedHerbs);
+    const synEl  = document.getElementById('rSynergy');
+    const synBody= document.getElementById('rSynergyPairs');
+    if (synEl && synBody && (pairs.synergies.length || pairs.cautions.length)) {
+      synBody.innerHTML = '';
+      synEl.hidden = false;
+      pairs.synergies.forEach(p => {
+        const row = document.createElement('div');
+        row.className = 'r-synergy-pair';
+        row.innerHTML = '<div class="r-synergy-names">' + p.a + ' <span class="amp">&amp;</span> ' + p.b + '</div>' +
+                        '<div class="r-synergy-note">' + (p.note || 'traditional pairing').replace(/^[^—:]*[—:]\s*/, '') + '</div>';
+        synBody.appendChild(row);
+      });
+      window.__currentFormula.synergies = pairs.synergies;
+    }
+  } catch (_) {}
+
+  try {
+    document.getElementById('rWhyText').innerHTML = buildWhyText(a, enrichedHerbs, serverPct);
+  } catch (_) {}
+
+  if (a.notes && a.notes.trim().length > 20) {
+    mycoStory(a, enrichedHerbs, serverPct, window.__currentFormula.synergies || []).then(text => {
+      if (!text) return;
+      const storyEl = document.getElementById('rStory');
+      if (storyEl) storyEl.innerHTML = text;
+    }).catch(() => {});
+  }
+
+  _fyfServerComposeInFlight = false;
+}
+
 // ── Render the result screen ──────────────────────────────
 function renderResult(){
   const a = state.answers;
@@ -3337,6 +3622,13 @@ function renderResult(){
   a.time      = a.time      || 'any';
   a.stress    = a.stress    || 'ride';
   a.avoid     = Array.isArray(a.avoid) ? a.avoid : ['none'];
+
+  // STEP 4 · Server-authoritative fork. See Basic client for the full
+  // doc. When ?fyf_server=1 is on, the server owns the reveal.
+  if (_fyfServerModeActive()) {
+    _fyfRenderResultServerMode(a);
+    return;
+  }
 
   // Start with the deterministic pick as the "safe" formula — renders
   // instantly. In parallel, ask MYCO to compose from the shortlist; if

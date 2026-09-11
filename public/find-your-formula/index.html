@@ -3203,6 +3203,370 @@ async function shadowComposeToServer(profile, clientHerbs) {
   }
 }
 
+// ════════════════════════════════════════════════════════════════
+// STEP 4 · Server-authoritative composition (opt-in via URL param)
+// ────────────────────────────────────────────────────────────────
+// When the URL carries `?fyf_server=1`, the reveal is driven by the
+// server response — the client engine (pickFormula etc) never renders
+// a formula the user sees, and NEVER acts as a silent fallback if the
+// server fails. Client-mode (default) is untouched.
+//
+// Feature-flag scope: strictly a migration/testing toggle. When Step 4
+// is proven under real traffic, Step 4b flips the default and the URL
+// param becomes redundant (and later gets removed altogether).
+//
+// Constraints preserved:
+//   · Server 200 → server formula rendered
+//   · Server 400 SAFETY_QUESTION_NOT_ANSWERED → "one more detail" UX
+//     with back-to-safety-question action (no error code exposed)
+//   · Server 400 (other) → validation-error retry UX
+//   · Server 422 NO_VIABLE_FORMULA → "couldn't compose safely" UX
+//   · Server 429 → try again in a moment
+//   · Server 5xx / timeout / network → graceful error state
+//   · NEVER pickFormula() as fallback in server mode
+//   · MYCO compose swap is suppressed in server mode (would overwrite
+//     the authoritative herbs). MYCO story narrative may still fire.
+//   · Duplicate-request guard so multiple renderResult() calls don't
+//     create duplicate authoritative formula records in Supabase.
+//   · formulaId is stored in window.__currentFormula for Step 5 to
+//     pass into the reservation flow.
+// ════════════════════════════════════════════════════════════════
+function _fyfServerModeActive() {
+  try {
+    const u = new URL(location.href);
+    return u.searchParams.get('fyf_server') === '1';
+  } catch (_) { return false; }
+}
+// In-flight guard — prevents duplicate authoritative compose requests
+// from repeated event handlers, re-renders, or double-clicks.
+let _fyfServerComposeInFlight = false;
+
+// Bridge helper (temporary until Step 8 removes /herbs-data.js). The
+// server response contains only display-safe fields per herb (name,
+// botanical, percentage). Some existing reveal helpers (storyFor,
+// shortNote, buildWhyText, checkFormulaPairs) still read local herb
+// metadata like primary_functions and herb_to_herb_synergy. This
+// looks up the server-picked herbs in the local HERB_DB to enrich
+// them for DISPLAY purposes only — the server's authority over
+// selection, percentages, and safety is preserved. The client cannot
+// substitute a different herb via this lookup.
+function _fyfEnrichServerHerbs(serverHerbs) {
+  const db = (typeof window !== 'undefined' && window.HERB_DB) || [];
+  return (serverHerbs || []).map(sh => {
+    const full = db.find(h => h && h.name === sh.name) ||
+                 db.find(h => h && h.botanical === sh.botanical);
+    if (full) {
+      // Enrich full herb metadata for display. Server-authoritative
+      // fields (name, botanical, percentage) win — the client's local
+      // copy cannot override them.
+      return Object.assign({}, full, {
+        name:       sh.name,
+        botanical:  sh.botanical,
+        percentage: sh.percentage,
+      });
+    }
+    // Local DB doesn't have it → render with only the server-provided
+    // fields. Display helpers that expect primary_functions etc will
+    // gracefully return empty strings.
+    return {
+      name:       sh.name,
+      botanical:  sh.botanical,
+      percentage: sh.percentage,
+      primary_functions:      [],
+      secondary_benefits:     [],
+      energetics:             [],
+      spiritual_layer:        '',
+      pharmacology:           '',
+      herb_to_herb_synergy:   [],
+      herb_to_herb_caution:   [],
+    };
+  });
+}
+
+// Render one of the server-mode error states inside the reveal. Copy
+// deliberately avoids exposing the internal error code — that stays
+// available on the caller for routing/telemetry, never surfaced to
+// the user.
+function _fyfRenderServerErrorState({ kind, backToSafety, retry }) {
+  const result = document.getElementById('result');
+  // Hide all normal reveal sections while the error state is shown.
+  ['bottle','rTagline','rStory','rHerbs','rSynergy','rWhyCard'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+  const howMade = document.querySelector('.r-howmade');
+  if (howMade) howMade.style.display = 'none';
+  const safety  = document.getElementById('rSafety');
+  if (safety)   safety.style.display = 'none';
+  const reserve = document.querySelector('.reserve');
+  if (reserve)  reserve.style.display = 'none';
+
+  const COPY = {
+    NEED_SAFETY: {
+      eyebrow: '✦ One more detail',
+      heading: 'We need one more detail before we can safely compose your formula.',
+      body:    'Please take a moment to confirm the safety question — it lets us shape the blend around anything you\'re managing.',
+      cta:     'Answer the safety question',
+      action:  backToSafety,
+    },
+    NO_VIABLE: {
+      eyebrow: '✦ Composition paused',
+      heading: 'We couldn\'t safely compose a formula from these answers.',
+      body:    'Your combination of intentions and safety filters left too few compatible allies. Try slightly different answers, or reach Robin directly and we\'ll compose together.',
+      cta:     'Go back and adjust',
+      action:  backToSafety,
+    },
+    RATE_LIMIT: {
+      eyebrow: '✦ Please retry',
+      heading: 'A little too much at once.',
+      body:    'The composer is throttled to protect the server. Please try again in about a minute.',
+      cta:     'Retry',
+      action:  retry,
+    },
+    SERVER_ERROR: {
+      eyebrow: '✦ Composer unavailable',
+      heading: 'The composer is temporarily unavailable.',
+      body:    'This should be a hiccup, not a permanent thing. Please try again in a moment.',
+      cta:     'Retry',
+      action:  retry,
+    },
+    NETWORK: {
+      eyebrow: '✦ Connection lost',
+      heading: 'We couldn\'t reach the composer.',
+      body:    'Check your connection and try again.',
+      cta:     'Retry',
+      action:  retry,
+    },
+    VALIDATION: {
+      eyebrow: '✦ Something looked off',
+      heading: 'The answers didn\'t come through cleanly.',
+      body:    'Please start the reading again — should take under a minute.',
+      cta:     'Start over',
+      action:  () => go(0),
+    },
+  };
+  const c = COPY[kind] || COPY.SERVER_ERROR;
+
+  let panel = document.getElementById('rServerErr');
+  if (!panel) {
+    panel = document.createElement('div');
+    panel.id = 'rServerErr';
+    panel.style.cssText = 'padding:32px 24px;text-align:center;background:var(--card);border:0.5px solid var(--rule-strong);border-radius:20px;margin-bottom:22px';
+    result.insertBefore(panel, result.querySelector('.r-actions'));
+  }
+  panel.innerHTML =
+    '<div style="font-family:var(--mono);font-size:10px;letter-spacing:0.32em;text-transform:uppercase;color:var(--amber-l);margin-bottom:14px">' + c.eyebrow + '</div>' +
+    '<h2 style="font-family:var(--display);font-weight:300;font-size:26px;color:var(--parchment);line-height:1.15;margin-bottom:16px">' + c.heading + '</h2>' +
+    '<p style="font-size:15px;color:var(--dust);line-height:1.7;margin-bottom:22px">' + c.body + '</p>' +
+    '<button type="button" id="rServerErrCta" style="padding:14px 28px;background:linear-gradient(180deg,var(--amber-l),var(--amber));color:var(--void);border:none;border-radius:999px;font-family:var(--mono);font-size:11px;letter-spacing:0.24em;text-transform:uppercase;font-weight:500;cursor:pointer">' + c.cta + '</button>';
+  const btn = document.getElementById('rServerErrCta');
+  if (btn && typeof c.action === 'function') btn.addEventListener('click', c.action);
+}
+
+// The awaited server-mode compose. Returns nothing — its job is to
+// mutate the DOM (either the reveal or an error state).
+async function _fyfRenderResultServerMode(a) {
+  if (_fyfServerComposeInFlight) return;
+
+  // Cache-hit dedupe — if we ALREADY have an authoritative server
+  // formula for this exact profile in this session, re-render from
+  // the cached body instead of creating a fresh Supabase row via
+  // another POST. Same profile → same formula → reuse formulaId.
+  // Uses the Step 3 profile-hash function (identical output for
+  // identical inputs).
+  const profileKey = _fyfShadowKey(a);
+  const cached = window.__currentFormula;
+  if (cached && cached._source === 'server' && cached._profileKey === profileKey && cached._serverBody) {
+    return _fyfPaintServerReveal(a, cached._serverBody);
+  }
+
+  _fyfServerComposeInFlight = true;
+
+  // Route "back to safety" — the safety question lives on the
+  // "The container" page (index 2 in the Basic PAGES array). Use the
+  // page name to look up its index so this stays correct if PAGES
+  // is reordered.
+  const safetyPageIndex = PAGES.findIndex(p => Array.isArray(p.keys) && p.keys.includes('avoid'));
+  const backToSafety = () => go(safetyPageIndex >= 0 ? safetyPageIndex : 0);
+  const retry = () => { _fyfServerComposeInFlight = false; renderResult(); };
+
+  const controller = new AbortController();
+  const timeoutId  = setTimeout(() => { try { controller.abort(); } catch (_) {} }, 8000);
+  let res, body;
+  try {
+    res = await fetch('/api/fyf/compose', {
+      method:  'POST',
+      // No X-FYF-Mode header — this is a REAL authoritative call.
+      // Server persists (per env config) and returns a formulaId.
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ profile: a }),
+      signal:  controller.signal,
+    });
+    clearTimeout(timeoutId);
+    body = await res.json();
+  } catch (e) {
+    clearTimeout(timeoutId);
+    _fyfServerComposeInFlight = false;
+    return _fyfRenderServerErrorState({
+      kind:         (e && e.name === 'AbortError') ? 'NETWORK' : 'NETWORK',
+      backToSafety, retry,
+    });
+  }
+
+  // Non-2xx branch — classify and render the appropriate error state.
+  // The client-side pickFormula() is NEVER called as a fallback.
+  if (res.status !== 200) {
+    _fyfServerComposeInFlight = false;
+    if (body && body.code === 'SAFETY_QUESTION_NOT_ANSWERED') {
+      return _fyfRenderServerErrorState({ kind: 'NEED_SAFETY', backToSafety, retry });
+    }
+    if (res.status === 422 || (body && body.code === 'NO_VIABLE_FORMULA')) {
+      return _fyfRenderServerErrorState({ kind: 'NO_VIABLE', backToSafety, retry });
+    }
+    if (res.status === 429) {
+      return _fyfRenderServerErrorState({ kind: 'RATE_LIMIT', backToSafety, retry });
+    }
+    if (res.status >= 500) {
+      return _fyfRenderServerErrorState({ kind: 'SERVER_ERROR', backToSafety, retry });
+    }
+    // Other 400 (PROFILE_INVALID, AGE_GATE_NOT_ACKNOWLEDGED, MALFORMED_JSON…)
+    return _fyfRenderServerErrorState({ kind: 'VALIDATION', backToSafety, retry });
+  }
+
+  // ── SERVER 200 — server formula is authoritative ────────────
+  // Delegate to the shared paint function so cache-hit and fresh-
+  // response paths render identically.
+  _fyfPaintServerReveal(a, body);
+  _fyfServerComposeInFlight = false;
+}
+
+// Shared render function — paints the reveal from a server response
+// body. Called from both the fresh-fetch success path AND the cache-
+// hit early return. Percentages + herbs + name all come from the
+// server; no pickFormula() runs.
+function _fyfPaintServerReveal(a, body) {
+  const serverFormula = (body && body.formula) || {};
+  const enrichedHerbs = _fyfEnrichServerHerbs(serverFormula.herbs || []);
+  const serverName    = serverFormula.name || pickName(a.intention);
+  const serverPct     = (serverFormula.herbs || []).map(h => h.percentage);
+  const formulaId     = body.formulaId || null;
+  const profileKey    = _fyfShadowKey(a);
+
+  // Stash the authoritative formula on window state so downstream
+  // consumers (reservation submit, etc) read from it rather than
+  // re-invoking pickFormula. formulaId is preserved for Step 5.
+  window.__currentFormula = {
+    name:         serverName,
+    herbs:        enrichedHerbs,
+    percentages:  serverPct,
+    synergies:    [],
+    formulaId:    formulaId,
+    _source:      'server',
+    _serverBody:  body,
+    _profileKey:  profileKey,
+  };
+  window.__currentFormulaName = serverName;
+
+  // Clear the bottle before painting — cache-hit re-renders would
+  // otherwise stack a second bottle image on top of the first.
+  const bottleEl = document.getElementById('bottle');
+  if (bottleEl) bottleEl.innerHTML = '';
+
+  // Render — reuses the same DOM helpers as client mode, but with the
+  // authoritative server herbs. NO pickFormula() call.
+  document.getElementById('bottle').insertAdjacentHTML('beforeend', bottleCard(a.intention, enrichedHerbs, serverName));
+  document.getElementById('rTagline').textContent = enrichedHerbs.length + ' allies · Tailored Elixir · 30 ml';
+  try { document.getElementById('rStory').innerHTML = storyFor(a, enrichedHerbs); } catch (_) {}
+  document.getElementById('rHerbCount').textContent = enrichedHerbs.length + ' allies · woven together';
+  document.getElementById('rSafety').textContent  = safetyLine(a);
+
+  // Filter transparency — same helper as client mode.
+  const filterInfo = countFilteredOut(a);
+  const filterEl   = document.getElementById('rFilterNote');
+  if (filterInfo.removed > 0 && filterEl) {
+    filterEl.hidden = false;
+    document.getElementById('rFilterCount').textContent = filterInfo.removed;
+    const flagLabels = {
+      pregnancy: 'pregnancy / breastfeeding',
+      cardio_meds: 'cardio / blood-thinner conflict',
+      psych_meds: 'antidepressant conflict',
+      autoimmune: 'immune-modulating conflict',
+      liver_kidney: 'hepatotoxic / kidney risk',
+      thyroid: 'thyroid conflict',
+      hypertension: 'blood-pressure risk',
+      contraceptive: 'contraceptive-pill interaction (CYP3A4)',
+      sedatives: 'benzodiazepine / sedative additive',
+      allergy: 'Asteraceae / salicylate allergy',
+    };
+    const rows = Object.entries(filterInfo.byFlag).map(([flag, n]) => (
+      '<li>' + n + ' herbs removed for ' + (flagLabels[flag] || flag) + '</li>'
+    )).join('');
+    const eg = filterInfo.examples.length
+      ? '<div style="margin-top:8px;font-style:italic;color:var(--dust-d);font-size:11.5px">Removed: ' + filterInfo.examples.join(', ') + (filterInfo.removed > filterInfo.examples.length ? ' + ' + (filterInfo.removed - filterInfo.examples.length) + ' more' : '') + '</div>'
+      : '';
+    document.getElementById('rFilterBody').innerHTML = '<ul>' + rows + '</ul>' + eg;
+  }
+
+  // Herb list — driven by the authoritative server herbs +
+  // authoritative server percentages.
+  const list = document.getElementById('rHerbList');
+  if (list) {
+    list.innerHTML = '';
+    enrichedHerbs.forEach((h, i) => {
+      const el = document.createElement('div');
+      el.className = 'r-herb';
+      const trace = isTrace(h);
+      const realPct = serverPct[i] > 0 ? serverPct[i] : 1;
+      el.innerHTML =
+        '<span class="r-herb-n" data-pct="' + realPct + '%">??%</span>' +
+        '<div>' +
+          '<div class="r-herb-name">' + h.name + '</div>' +
+          '<div class="r-herb-latin">' + (h.botanical || '') + '</div>' +
+          '<div class="r-herb-note">' + shortNote(h) + '</div>' +
+          (trace ? '<span class="r-herb-tag trace">◇ Trace ingredient · potent flavour</span>' : '') +
+        '</div>';
+      list.appendChild(el);
+    });
+  }
+
+  // Synergy card — same helper.
+  try {
+    const pairs = checkFormulaPairs(enrichedHerbs);
+    const synEl  = document.getElementById('rSynergy');
+    const synBody= document.getElementById('rSynergyPairs');
+    if (synEl && synBody && (pairs.synergies.length || pairs.cautions.length)) {
+      synBody.innerHTML = '';
+      synEl.hidden = false;
+      pairs.synergies.forEach(p => {
+        const row = document.createElement('div');
+        row.className = 'r-synergy-pair';
+        row.innerHTML = '<div class="r-synergy-names">' + p.a + ' <span class="amp">&amp;</span> ' + p.b + '</div>' +
+                        '<div class="r-synergy-note">' + (p.note || 'traditional pairing').replace(/^[^—:]*[—:]\s*/, '') + '</div>';
+        synBody.appendChild(row);
+      });
+      window.__currentFormula.synergies = pairs.synergies;
+    }
+  } catch (_) {}
+
+  // Why-this-formula body — uses primary_functions on enriched herbs.
+  try {
+    document.getElementById('rWhyText').innerHTML = buildWhyText(a, enrichedHerbs, serverPct);
+  } catch (_) {}
+
+  // Ask MYCO for a narrative for the free-text reading — this is
+  // presentational only and does NOT swap herbs. mycoCompose (which
+  // WOULD swap herbs) is deliberately not fired in server mode.
+  if (a.notes && a.notes.trim().length > 20) {
+    mycoStory(a, enrichedHerbs, serverPct, window.__currentFormula.synergies || []).then(text => {
+      if (!text) return;
+      const storyEl = document.getElementById('rStory');
+      if (storyEl) storyEl.innerHTML = text;
+    }).catch(() => {});
+  }
+
+  _fyfServerComposeInFlight = false;
+}
+
 // ── Render the result screen ──────────────────────────────
 function renderResult(){
   const a = state.answers;
@@ -3214,6 +3578,17 @@ function renderResult(){
   a.time      = a.time      || 'any';
   a.stress    = a.stress    || 'ride';
   a.avoid     = Array.isArray(a.avoid) ? a.avoid : ['none'];
+
+  // STEP 4 · Server-authoritative fork. When ?fyf_server=1 is on, we
+  // hand the whole reveal off to the server. The client engine below
+  // is never invoked in that path — the server is the single source of
+  // truth for herbs, percentages, name, and formulaId. If the server
+  // fails, we render an error state; we do NOT silently render a
+  // client-computed formula.
+  if (_fyfServerModeActive()) {
+    _fyfRenderResultServerMode(a);
+    return;
+  }
 
   // Start with the deterministic pick as the "safe" formula — renders
   // instantly. In parallel, ask MYCO to compose from the shortlist; if
