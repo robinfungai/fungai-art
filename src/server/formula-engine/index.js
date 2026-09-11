@@ -21,6 +21,7 @@ const { checkFormulaPairs } = require('./interactions');
 const { validateAndNormalizeAvoid, countFilteredOut } = require('./safety');
 const { isTrace } = require('./traces');
 const { isGABAergic, isCNSStimulant } = require('./pharmacology');
+const { pickName } = require('./naming');
 const VERSION = require('./version');
 
 /**
@@ -68,6 +69,7 @@ function compileFormula(profile) {
     herbDbVersion:    VERSION.herbDbVersion,
     safetyRulesVersion: VERSION.safetyRulesVersion,
     capturedAt:       new Date().toISOString(),
+    name:             pickName(profileForEngine),
     targetHerbCount:  target,
     formulaSize:      herbs.length,
     filteredOut:      filtered,

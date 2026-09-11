@@ -7,6 +7,7 @@
     "dev": "vite",
     "test:fixtures:capture": "node tests/capture-fixtures.cjs",
     "test:fixtures:compare": "node tests/compare-fixtures.cjs",
+    "test:shadow": "node tests/shadow-verify.cjs",
     "build:herbs-data": "node scripts/export-herbs.cjs",
     "build:herb-pool": "node scripts/build-herb-pool.cjs",
     "build:engine2": "node scripts/sync-engine2.cjs",
