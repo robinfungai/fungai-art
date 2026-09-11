@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
 <title>Find Your Formula · Fungai Art</title>
-<meta name="description" content="Six questions. One custom spagyric extract, hand-poured in Berlin, shipped home. Sublingual drops, slow-pace plant medicine — built for how you actually feel."/>
+<meta name="description" content="Ten questions. One custom spagyric extract, hand-poured in Berlin, shipped home. Sublingual drops, slow-pace plant medicine — built for how you actually feel."/>
 <meta name="keywords" content="custom spagyric extract, personalised herbal formula, adaptogen quiz, plant medicine, Fungai Art, sublingual drops"/>
 <link rel="canonical" href="https://www.fungai.art/find-your-formula/"/>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
@@ -13,12 +13,12 @@
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Fungai Art"/>
 <meta property="og:title" content="Find Your Formula · Fungai Art"/>
-<meta property="og:description" content="Six questions. A spagyric extract hand-poured for how you actually feel. Shipped home."/>
+<meta property="og:description" content="Ten questions. A spagyric extract hand-poured for how you actually feel. Shipped home."/>
 <meta property="og:image" content="https://www.fungai.art/fungai-art-logo.png"/>
 <meta property="og:url" content="https://www.fungai.art/find-your-formula/"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Find Your Formula · Fungai Art"/>
-<meta name="twitter:description" content="Six questions. A spagyric extract hand-poured for you."/>
+<meta name="twitter:description" content="Ten questions. A spagyric extract hand-poured for you."/>
 <meta name="theme-color" content="#0A0D11"/>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -911,7 +911,7 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 
   <!-- ── ENTRY ─────────────────────────────────────────── -->
   <section id="entry" class="hero">
-    <span class="hero-eyebrow">◇ 6 questions · 60 seconds</span>
+    <span class="hero-eyebrow">◇ 10 questions · 90 seconds</span>
     <h1>Your temple,<br><em>your formula</em>.</h1>
     <p class="hero-sub">
       Six questions, and we have tailor-made your spagyric extract with herbal allies &amp; mushrooms foraged in Sweden. Matched to how you<u>_</u>feel.
@@ -1367,6 +1367,48 @@ const QUESTIONS = [
     ],
   },
   {
+    // Nervous-system typology — highest-value single axis in the whole
+    // reading. The same "give me energy" reads very differently from a
+    // wired-tired burnout person (needs down-regulation first), from a
+    // flat person (needs gentle activation), from a steady person
+    // (just performance). Composer weights adaptogen class + nervines
+    // + pace heavily off this signal.
+    key:'nervous',
+    title:'Your <em>nervous system</em>, most days',
+    hint:'The closest one. If none feel right, pick the least wrong.',
+    type:'compact-single',
+    options:[
+      { v:'wired',       glyph:'⚡', label:'Wired',             desc:'Alert, restless, hard to switch off.' },
+      { v:'tired',       glyph:'◌',  label:'Tired',             desc:'Low activation, sluggish, easily depleted.' },
+      { v:'wired_tired', glyph:'◍',  label:'Wired + tired',     desc:'Activated but exhausted — the classic burnout curve.' },
+      { v:'steady',      glyph:'◇',  label:'Steady',            desc:'Generally regulated. Resilient.' },
+      { v:'reactive',    glyph:'✦',  label:'Reactive',          desc:'Easily overstimulated by sound, people, caffeine, stress.' },
+      { v:'flat',        glyph:'○',  label:'Flat',              desc:'Emotionally or cognitively muted. Nothing quite reaches.' },
+    ],
+  },
+  {
+    // Energy curve — circadian / metabolic signature. "Low energy" is
+    // meaningless without knowing when it collapses. AM-good/PM-crash
+    // reads cortisol; slow-am/strong-pm reads night owl; wave pattern
+    // reads dysautonomia-adjacent. Biases the composer between
+    // mitochondrial (cordyceps, rhodiola), regulatory (schisandra,
+    // licorice) and restorative (reishi, ashwagandha) allies.
+    key:'energy_curve',
+    title:'How does your <em>energy behave</em> through the day?',
+    hint:'The shape of the day, not the average.',
+    type:'compact-single',
+    options:[
+      { v:'low_waking',      glyph:'◐', label:'Low from waking',                desc:'Never really lifts off in the morning.' },
+      { v:'am_good_pm_crash',glyph:'▼', label:'Good morning → afternoon crash', desc:'Cortisol curve collapses around 2–4pm.' },
+      { v:'slow_am_strong_pm',glyph:'▲',label:'Slow morning → strong evening',  desc:'Night owl. Comes online late.' },
+      { v:'moderate',        glyph:'◇', label:'Consistently moderate',           desc:'Flat and steady. Never peaks, never crashes.' },
+      { v:'high_unstable',   glyph:'⚡', label:'High but unstable',              desc:'Big peaks + hard drops. Blood-sugar / dopamine-y.' },
+      { v:'waves',           glyph:'∿', label:'Waves',                           desc:'Comes and goes without clear pattern.' },
+      { v:'crash_mental',    glyph:'◍', label:'Crashes after mental effort',    desc:'Focus depletes the tank fast.' },
+      { v:'crash_physical',  glyph:'○', label:'Crashes after physical effort',  desc:'Post-exertion drop is disproportionate.' },
+    ],
+  },
+  {
     key:'avoid',
     title:'Anything we should be <em>careful of</em>?',
     hint:'Tap all that apply. Herbs with known interactions get filtered from your pool.',
@@ -1442,13 +1484,19 @@ const QUESTIONS = [
 // row above the page already shows the "N of M" counter, so
 // duplicating it inside the eyebrow reads as visual clutter.
 const PAGES = [
-  { eyebrow: 'The calling',        keys: ['intention'] },
-  { eyebrow: 'The body',           keys: ['pattern']   },
-  { eyebrow: 'The container',      keys: ['avoid']     },
-  { eyebrow: 'Rhythm & pattern',   keys: ['time','stress','duration'] },
-  // Notes first — Robin wanted the free-text bar on top of this page,
-  // then age + sleep tucked underneath as playful compact pills.
-  { eyebrow: 'Context & priority', keys: ['notes','age','sleep'] },
+  { eyebrow: 'The calling',           keys: ['intention'] },
+  { eyebrow: 'The body',              keys: ['pattern']   },
+  { eyebrow: 'The container',         keys: ['avoid']     },
+  // Rhythm page packs the four short single-selects that map when +
+  // how + how long a pattern behaves, plus the nervous-system read.
+  // Four compact-singles at 4-6 options each fit comfortably; the
+  // nervous axis lives here because it's the "state" that shapes how
+  // the composer reads the rhythm answers.
+  { eyebrow: 'Rhythm & nervous system', keys: ['time','stress','duration','nervous'] },
+  // Notes on top, then age + sleep architecture + energy curve as
+  // compact pills below. Energy curve sits here so it lands right
+  // after sleep (paired physiological axes), keeping page count at 5.
+  { eyebrow: 'Context & priority',    keys: ['notes','age','sleep','energy_curve'] },
 ];
 function getQuestion(key){ return QUESTIONS.find(q => q.key === key); }
 
