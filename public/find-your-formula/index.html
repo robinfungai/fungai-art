@@ -1407,11 +1407,21 @@ const QUESTIONS = [
     key:'sleep',
     title:'Your <em>sleep</em>',
     type:'compact-single',
+    // Sleep architecture — 7 patterns instead of a coarse quality
+    // rating. Each pattern maps to a distinct herb family:
+    // passionflower/valerian for onset; magnolia/kava for maintenance;
+    // jujube/albizia for the 3am wake typical of Liver Qi stagnation;
+    // reishi/ashwagandha for the "sleeps but not restored" pattern.
+    title:'How does your <em>sleep</em> actually behave?',
+    hint:'The pattern, not just the hours.',
     options:[
-      { v:'restorative_6plus',     glyph:'🌕', label:'6+ hours · restorative' },
-      { v:'not_restorative_6plus', glyph:'🌗', label:'6+ hours · not restorative' },
-      { v:'under_6',               glyph:'🌘', label:'Under 6 hours' },
-      { v:'very_broken',           glyph:'🌪', label:'Very broken' },
+      { v:'restorative',    glyph:'🌕', label:'Sleeps well · wakes restored',    desc:'The reference case.' },
+      { v:'hard_onset',     glyph:'🌑', label:'Hard to fall asleep',             desc:'Mind still running.' },
+      { v:'wakes_middle',   glyph:'🌘', label:'Wakes in the middle of the night',desc:'Falls asleep fine, wakes at 2–4am.' },
+      { v:'early_wake',     glyph:'🌒', label:'Wakes too early, can\'t return',  desc:'5am eyes-open, low mood.' },
+      { v:'sleeps_no_rest', glyph:'🌗', label:'Sleeps hours but not restored',   desc:'Wakes tired despite duration.' },
+      { v:'vivid_restless', glyph:'🌪', label:'Vivid dreams · restless',         desc:'Dreams heavy, body tosses.' },
+      { v:'very_broken',    glyph:'⚡', label:'Very broken',                     desc:'Barely any coherent block.' },
     ],
   },
   {
