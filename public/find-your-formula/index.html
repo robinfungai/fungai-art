@@ -3063,6 +3063,146 @@ function safetyLine(a){
   return parts.join(' ');
 }
 
+// ════════════════════════════════════════════════════════════════
+// STEP 3 · Shadow integration with /api/fyf/compose
+// ────────────────────────────────────────────────────────────────
+// Fires the server-side compose IN PARALLEL with the client-side
+// reveal for regression comparison. The user's visible formula is
+// UNAFFECTED — the client engine remains authoritative. This block
+// exists only to prove real-world traffic produces the same result
+// on the server before we flip authority in Step 4+.
+//
+// Privacy:
+//   · Full profile is sent to /compose (the server engine needs it
+//     to reproduce). No IP, no lat/long, no user agent, no
+//     fingerprint is added client-side (the browser already sends
+//     Origin + X-Forwarded-For — no fields WE add).
+//   · console.log lines are LOCAL to the user's DevTools; nothing
+//     is shipped to any analytics endpoint. Divergence records use
+//     a short 8-char hash of the herb list, not raw names.
+//
+// Retention:
+//   · The X-FYF-Mode: shadow header tells /compose to SKIP Supabase
+//     persistence for shadow calls. Nothing is stored server-side.
+//
+// Failure semantics:
+//   · Any exception, timeout, non-2xx, or malformed response is
+//     swallowed. The user's reveal is never blocked or affected.
+//   · One shadow call per unique profile per session (sessionStorage
+//     de-dupe key) so back/forward navigation doesn't re-fire.
+// ════════════════════════════════════════════════════════════════
+function _fyfShadowHash(str) {
+  // djb2 hash → 8-char hex. Enough to distinguish divergent runs in
+  // logs without leaking specific herb names or profile content.
+  let h = 5381;
+  const s = String(str || '');
+  for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+  return Math.abs(h).toString(16).padStart(8, '0').slice(0, 8);
+}
+
+function _fyfShadowKey(profile) {
+  // Stable per-profile key for de-dupe. Serialises all top-level
+  // profile fields (sorted keys → deterministic ordering) so the
+  // same profile always produces the same 8-char hash. Different
+  // Pro-mode fields → different hash, so Basic and Pro shadow calls
+  // don't collide even for the same core answers.
+  const keys = Object.keys(profile || {}).sort();
+  const stable = keys.map(k => k + ':' + JSON.stringify(profile[k])).join('|');
+  return _fyfShadowHash(stable);
+}
+
+// Divergence codes the shadow comparison classifies against.
+const _FYF_SHADOW_EXPECTED_SECURITY = {
+  // Client sends avoid:[] → old client engine composes from unfiltered
+  // pool; server rejects. Step 1 SECURITY_FIX. Not a bug — expected.
+  SAFETY_QUESTION_NOT_ANSWERED: (profile) => !Array.isArray(profile.avoid) || profile.avoid.length === 0,
+};
+
+async function shadowComposeToServer(profile, clientHerbs) {
+  // De-dupe within this session — one shadow call per unique profile.
+  const key = _fyfShadowKey(profile);
+  try {
+    const last = sessionStorage.getItem('fyf_shadow_last_key');
+    if (last === key) return;
+    sessionStorage.setItem('fyf_shadow_last_key', key);
+  } catch (_) {}
+
+  // Assign client percentages so the shadow log compares against the
+  // same {name, percentage} shape the reveal shows. Guarded so a stray
+  // exception here never impacts the user's flow.
+  let clientView;
+  try {
+    const clientPct = assignPercentages(clientHerbs);
+    clientView = {
+      size:  clientHerbs.length,
+      total: clientPct.reduce((a, b) => a + b, 0),
+      herbs: clientHerbs.map((h, i) => (h.name || '') + '@' + clientPct[i]),
+    };
+  } catch (_) { return; }
+
+  const controller = new AbortController();
+  const timeoutId  = setTimeout(() => { try { controller.abort(); } catch (_) {} }, 8000);
+  let res, body;
+  try {
+    res = await fetch('/api/fyf/compose', {
+      method:  'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-FYF-Mode':   'shadow',
+      },
+      body:   JSON.stringify({ profile }),
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+    body = await res.json();
+  } catch (e) {
+    clearTimeout(timeoutId);
+    console.log('[fyf-shadow] server unreachable/timeout — client result unaffected. reason:',
+                (e && e.name === 'AbortError') ? 'timeout' : (e && e.message) || 'error');
+    return;
+  }
+
+  const clientHash = _fyfShadowHash(clientView.herbs.join('|'));
+
+  // Server returned a non-200 — classify.
+  if (res.status !== 200) {
+    const expectedRule = body && body.code && _FYF_SHADOW_EXPECTED_SECURITY[body.code];
+    const isExpected   = typeof expectedRule === 'function' && expectedRule(profile);
+    if (isExpected) {
+      console.log('[fyf-shadow] EXPECTED_SECURITY_DIVERGENCE code=' + body.code + ' profile=' + key);
+    } else if (res.status === 429) {
+      console.log('[fyf-shadow] rate-limited (server 429) — no comparison this session');
+    } else if (res.status >= 500) {
+      console.log('[fyf-shadow] server ' + res.status + ' — client result unaffected');
+    } else {
+      console.warn('[fyf-shadow] UNEXPECTED_DIVERGENCE server ' + res.status + ' code=' + (body && body.code) + ' profile=' + key);
+    }
+    return;
+  }
+
+  // Server 200 — compare display-safe fields only.
+  const serverHerbs = (body && body.formula && body.formula.herbs) || [];
+  const serverView = {
+    size:  (body.formula && body.formula.size) || 0,
+    total: (body.formula && body.formula.totalPercentage) || 0,
+    herbs: serverHerbs.map(h => (h.name || '') + '@' + h.percentage),
+  };
+  const serverHash = _fyfShadowHash(serverView.herbs.join('|'));
+
+  const diffs = [];
+  if (clientView.size  !== serverView.size)  diffs.push('size(' + clientView.size + '→' + serverView.size + ')');
+  if (clientView.total !== serverView.total) diffs.push('total(' + clientView.total + '→' + serverView.total + ')');
+  if (clientView.herbs.join('|') !== serverView.herbs.join('|')) diffs.push('herbs');
+
+  if (diffs.length === 0) {
+    console.log('[fyf-shadow] PASS engineVersion=' + body.engineVersion + ' profile=' + key + ' hash=' + clientHash);
+  } else {
+    console.warn('[fyf-shadow] UNEXPECTED_DIVERGENCE fields=[' + diffs.join(',') + '] profile=' + key +
+                 ' clientHash=' + clientHash + ' serverHash=' + serverHash +
+                 ' engineVersion=' + body.engineVersion);
+  }
+}
+
 // ── Render the result screen ──────────────────────────────
 function renderResult(){
   const a = state.answers;
@@ -3087,6 +3227,11 @@ function renderResult(){
     return renderRefusal(a, herbs);
   }
   const name  = pickName(a.intention);
+
+  // STEP 3 · Fire the server-side compose in parallel for shadow
+  // comparison. Fire-and-forget; failures never affect the reveal.
+  // The user's visible formula continues to come from `herbs` above.
+  try { shadowComposeToServer(a, herbs); } catch (_) { /* never breaks reveal */ }
 
   document.getElementById('bottle').insertAdjacentHTML('beforeend', bottleCard(a.intention, herbs, name));
   document.getElementById('rTagline').textContent = herbs.length + ' allies · Tailored Elixir · 30 ml';

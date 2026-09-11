@@ -210,11 +210,17 @@ async function runAdversarialSuite(handler) {
       raw:  true,
       expect: (r) => r.status === 400 && r.body.code === 'MALFORMED_JSON',
     },
+    {
+      name: 'J · X-FYF-Mode: shadow → response says persisted:false regardless of env',
+      body: { profile: VALID_BASE_PROFILE() },
+      extraHeaders: { 'X-FYF-Mode': 'shadow' },
+      expect: (r) => r.status === 200 && r.body.persisted === false,
+    },
   ];
 
   let passed = 0, failed = 0;
   for (const c of cases) {
-    const r = await invokeHandler(handler, c.raw ? c.body : c.body);
+    const r = await invokeHandler(handler, c.raw ? c.body : c.body, c.extraHeaders || {});
     const ok = c.expect(r);
     if (ok) {
       passed++;

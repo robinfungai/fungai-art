@@ -54,7 +54,9 @@ function corsFor(origin) {
   const allow = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
   return {
     'Access-Control-Allow-Origin':  allow,
-    'Access-Control-Allow-Headers': 'Content-Type',
+    // X-FYF-Mode allows the browser preflight to permit the shadow-mode
+    // header the Step 3 client sets. Content-Type is the standard one.
+    'Access-Control-Allow-Headers': 'Content-Type, X-FYF-Mode',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Vary': 'Origin',
   };
@@ -358,6 +360,17 @@ export default async function handler(req) {
   // Persist. Ephemeral fallback if Supabase is unconfigured (dev/
   // local). In production Robin's env vars are set and persistence
   // is required for reservation to work later.
+  //
+  // SHADOW MODE (Step 3 of P0): if the caller sends
+  // `X-FYF-Mode: shadow`, this request is a parallel comparison call
+  // from the client (not a real reveal — the client's own engine is
+  // still authoritative). We SKIP persistence for shadow calls so
+  // real-user reveals don't create thousands of orphan rows during
+  // the shadow-testing window. Everything else — validation, engine
+  // execution, safety enforcement, response shape — is identical.
+  const mode = String(req.headers.get('x-fyf-mode') || '').toLowerCase();
+  const isShadow = mode === 'shadow';
+
   const formulaId = newFormulaId();
   const persistPayload = {
     id:                  formulaId,
@@ -372,7 +385,10 @@ export default async function handler(req) {
   const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
   const SUPABASE_SRV = process.env.SUPABASE_SERVICE_ROLE_KEY;
   let persisted = false;
-  if (SUPABASE_URL && SUPABASE_SRV) {
+  if (isShadow) {
+    // Shadow request — do not persist. Client uses response only for
+    // client-side comparison against its own engine output.
+  } else if (SUPABASE_URL && SUPABASE_SRV) {
     try {
       const sb = createClient(SUPABASE_URL, SUPABASE_SRV, {
         auth: { autoRefreshToken: false, persistSession: false },
