@@ -6138,7 +6138,7 @@ export const HERBS: Herb[] = [
   // GOLDENROD / SOLIDAGO
   // ─────────────────────────────────────────────
   {
-    id: 279,
+    id: 540,
     name: 'Goldenrod',
     botanical: 'Solidago virgaurea / S. canadensis / S. gigantea (aerial parts — flowering tops and leaves)',
     tcm_meridians: ['Lung', 'Kidney', 'Bladder', 'Spleen'],
@@ -6204,7 +6204,7 @@ export const HERBS: Herb[] = [
   // SPIRULINA
   // ─────────────────────────────────────────────
   {
-    id: 280,
+    id: 541,
     name: 'Spirulina',
     botanical: 'Arthrospira platensis (whole dried organism — "Ancient Blue-Green Life")',
     tcm_meridians: ['Spleen', 'Stomach', 'Liver', 'Kidney'],
@@ -6269,7 +6269,7 @@ export const HERBS: Herb[] = [
   // ST. JOHN\'S WORT
   // ─────────────────────────────────────────────
   {
-    id: 281,
+    id: 542,
     name: "St. John's Wort",
     botanical: 'Hypericum perforatum (aerial parts — leaves, stems and flowering tops; harvested at summer solstice — "Captured Sunshine")',
     tcm_meridians: ['Heart', 'Liver', 'Solar Plexus', 'Nervous System'],
@@ -9537,7 +9537,7 @@ export const HERBS: Herb[] = [
     status: 'Excellent cooling restorative. Best for dry/hot/depleted presentations.'
   },
   {
-    id: 240,
+    id: 537,
     name: 'Ginger',
     botanical: 'Zingiber officinale (rhizome — fresh or dried)',
     tcm_meridians: ['Lung', 'Spleen', 'Stomach'],
@@ -9601,7 +9601,7 @@ export const HERBS: Herb[] = [
       'Widely used global food-medicine herb with strong evidence for nausea, digestive support, circulatory warming and anti-inflammatory support. Excellent formula bridge herb.',
   },
   {
-    id: 241,
+    id: 538,
     name: 'Boswellia',
     botanical: 'Boswellia serrata (resin — standardised extract or whole oleo-gum resin)',
     tcm_meridians: ['Liver', 'Lung', 'Kidney'],
@@ -9664,8 +9664,8 @@ export const HERBS: Herb[] = [
       'Valuable anti-inflammatory resin herb for joints, connective tissue and chronic inflammatory stiffness. Best as a quality standardised extract. Strong choice when common kitchen anti-inflammatories are insufficient.',
   },
   {
-  id: 216,
-  name: 'Elderberry',
+  id: 543,
+  name: 'Elderberry (Cooked Berry)',
   botanical: 'Sambucus nigra (fully ripe cooked berry)',
   tcm_meridians: ['Lung', 'Spleen', 'Heart'],
   tcm_element: 'Metal + Earth',
@@ -9726,69 +9726,7 @@ export const HERBS: Herb[] = [
     'Excellent acute respiratory and viral-support herb with long European use and good modern evidence for early-stage illness support. Best positioned as a first-response seasonal ally rather than a long-term daily tonic. Proper preparation is essential: ripe cooked berry only; avoid raw stems, bark, leaves and unripe berries.',
 },
 {
-  id: 270,
-  name: 'Nettle Leaf',
-  botanical: 'Urtica dioica (leaf only — harvested spring-summer)',
-  tcm_meridians: ['Kidney', 'Spleen', 'Liver'],
-  tcm_element: 'Earth + Metal',
-  energetics: ['Cool', 'Dry', 'Nutritive', 'Mineral-Rich', 'Grounding', 'Strengthening'],
-  primary_functions: [
-    'Foundational mineral tonification — one of the most mineral-rich commonly available herbs; long-steep infusion provides broad-spectrum nutritive support for depleted constitutions',
-    'Silica and connective tissue support — silica-rich leaf helps strengthen hair, skin, nails, bones and tendons through cumulative collagen-supportive nutrition',
-    'Potassium-sparing diuretic action — gently increases urinary flow without the depletion pattern of many harsher diuretics',
-    'Quercetin-rich antihistamine support — flavonoids help stabilise mast cell response and reduce baseline allergic reactivity over time',
-    'Blood and recovery nourishment — iron, chlorophyll and broad nutrient density support rebuilding after illness, menstruation, stress and postpartum depletion',
-  ],
-  secondary_benefits: [
-    'Galactagogue tradition — commonly used to support milk supply and nutritive density in breastfeeding',
-    'Pregnancy mineral support — especially valuable in second and third trimester as a food-like tonic herb',
-    'Post-illness and post-burnout rebuilding — one of the best green recovery infusions',
-    'Gentle kidney and fluid metabolism support without aggressive depletion',
-  ],
-  pharmacology:
-    'Primary bioactives: minerals (potassium, calcium, magnesium, iron, silica, zinc, chromium, selenium, manganese — exceptional nutritive density), silica (connective tissue, collagen structure, hair/skin/nails/bones), flavonoids including quercetin and kaempferol (mast cell stabilisation, antihistamine, anti-inflammatory), chlorophyll and carotenoids (green nutritive antioxidant support), polysaccharide fractions with mild immune-tonic value. Mechanism: most of nettle leaf’s best constituents are water-extractable, making long infusion superior to extract for true nutritive effect. Grade A for nutritive value and safety; Grade B for allergy support and gentle diuresis.',
-  flavor_profile: 'Green, grassy, soft and mineral-rich with a clean nourishing depth',
-  contraindications: [
-    'Diuretic medications — caution: additive diuresis; monitor hydration and electrolytes',
-    'Kidney disease — caution: even gentle diuretic action may need adjustment in advanced renal conditions',
-    'Pregnancy first trimester — generally low concern in food-like amounts, but conservative use is reasonable where uncertainty exists',
-    'Anticoagulants — large sustained doses may matter because of vitamin K content; monitor consistency rather than assume absolute incompatibility',
-    'Iron supplements — separate by 1–2 hours if using high-dose iron therapeutically; minor absorption interference is possible',
-  ],
-  herb_to_herb_synergy: [
-    'Oatstraw — classic remineralising nerve-and-tissue tonic pairing',
-    'Lucerne (Alfalfa) — broad-spectrum green nutritive mineral synergy',
-    'Raspberry Leaf — postpartum and reproductive nutritive rebuilding formula',
-    'Dandelion Leaf — fluid movement plus mineral-rich spring tonic combination',
-    'Chamomile — allergy and inflammatory tissue support synergy',
-  ],
-  herb_to_herb_caution: [
-    'Other strong diuretic herbs — cumulative fluid movement may be too drying in depleted constitutions',
-  ],
-  herb_to_drug_interactions: [
-    'Diuretic medications — additive effect; monitor hydration and electrolytes',
-    'Anticoagulants — monitor INR consistency at very large daily doses because of vitamin K content',
-    'Diabetes medications — mild glucose-lowering or metabolic support is possible; monitor if tightly controlled',
-    'Iron supplements — space by 1–2 hours if using therapeutic iron dosing',
-  ],
-  herb_interactions: [
-    'Synergy: Oatstraw, Lucerne, Raspberry Leaf, Dandelion Leaf, Chamomile',
-    'Caution: stacking with other strong diuretics in depleted or dry clients',
-    'Drug interactions: diuretics (monitor), anticoagulants at large doses (monitor INR), diabetes meds (monitor glucose), iron supplements (space doses)',
-  ],
-  dosage_range:
-    'Long infusion (optimal): 2–4 g dried leaf per cup steeped 10–15 minutes minimum, 2–4 cups daily. Intensive nutritive protocol: 30–60 g per quart steeped several hours or overnight, consumed across the day. Extract: 30–60 drops, 2–3× daily, though extract is inferior for mineral extraction. Safe for long-term daily use.',
-  spiritual_layer:
-    'Nettle Leaf is the fierce nourisher — the green medicine of strong boundaries and deep rebuilding. Her sting teaches respect; her nourishment teaches abundance. She restores what depletion erodes, drawing mineral wealth from the earth and returning it to blood, bone, skin and nerve. She whispers: I am nourished from the root. My reserves return. My strength is quiet, steady and real. My boundaries protect my generosity.',
-  best_preparation:
-    'Long-steep infusion is the gold standard. This is not primarily a extract herb if the goal is true remineralisation — the medicine lives in the water extraction. Best used as a daily tonic tea or overnight infusion. Pairs exceptionally well with Oatstraw and Raspberry Leaf in rebuilding protocols.',
-  caution_level: 'LOW',
-  safe_pregnancy: null,
-  status:
-    'Grade A safety and one of the best foundational nutritive herbs in Western herbalism. Excellent for mineral repletion, connective tissue support, postpartum rebuilding, gentle allergy support and long-term constitutional nourishment. Infusion is far superior to extract for its core medicinal value.',
-},
-{
-  id: 242,
+  id: 539,
   name: 'Rowan Berry',
   botanical: 'Sorbus aucuparia (fully ripe berry, preferably cooked, dried or frost-softened)',
   tcm_meridians: ['Liver', 'Spleen', 'Kidney'],
@@ -10675,21 +10613,10 @@ export const HERBS: Herb[] = [
 // while still satisfying the full interface for TypeScript.
 // ════════════════════════════════════════════════════════════════════════════
 
-// ── Strictly Ayurvedic (16 herbs) — Rasayanas, structural, organ-specific ──
-{
-  id: 500, name: 'Shilajit', botanical: 'Asphaltum / Mineral Pitch (Himalayan)',
-  tcm_meridians: [], tcm_element: 'Earth + Water',
-  energetics: ['Warm', 'Bitter', 'Pungent', 'Mineral-rich', 'Yang-Rebuilding'],
-  primary_functions: ['Premier Ayurvedic rasayana — mineral-density adaptogen', 'Amplifier for other herbs (yogavahi action)', 'ATP / mitochondrial support via fulvic acid + DBPs', 'Anti-fatigue, libido, cognitive stamina'],
-  secondary_benefits: ['84+ trace minerals', 'Chronic-fatigue adjunct', 'Iron-shuttling via fulvic acid'],
-  flavor_profile: 'Bitter, smoky, mineral, slightly tar-like',
-  contraindications: ['Hyperuricaemia / gout — purine-adjacent caution', 'Iron overload disorders', 'Always source pharmaceutical-grade — raw shilajit can carry heavy metals'],
-  herb_interactions: ['Synergy: Ashwagandha, Gokshura, Triphala', 'Caution: do not combine with iron supplements (over-shuttling)'],
-  dosage_range: '300–500 mg/day with warm water on empty stomach. Cycle 8 weeks on / 2 off.',
-  spiritual_layer: 'The stone\'s slow exudation — the patience of the mountain offered as a daily drop. Reminds the body of geological time.',
-  best_preparation: 'Resin dissolved in warm (not hot) water. Pills work but resin is the traditional reference form.',
-  caution_level: 'LOW-MEDIUM', safe_pregnancy: false,
-},
+// ── Strictly Ayurvedic (15 herbs) — Rasayanas, structural, organ-specific ──
+// Shilajit lives in the primary block above (id 280, "Shilajit (Mineral
+// Pitch)") — a duplicate id:500 short-form used to sit here but the two
+// entries were competing in engine reads, so the short form is retired.
 {
   id: 501, name: 'Guduchi', botanical: 'Tinospora cordifolia (stem · root · fruit)',
   tcm_meridians: [], tcm_element: 'Water + Air',
