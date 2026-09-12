@@ -711,6 +711,86 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .q-skip{font-family:var(--mono);font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--dust-d);background:none;border:none;cursor:pointer;padding:8px 4px}
 .q-skip:hover{color:var(--amber-l)}
 
+/* ═══════════════════════════════════════════════════════════════
+   Progressive page — one sub-question at a time (Page 4 · Rhythm)
+   ═══════════════════════════════════════════════════════════════
+   Turns a multi-question page into a guided walk. Global aesthetic
+   stays: dark canvas, cream serif question, amber accents. Only
+   the *pacing* changes — a single question fills the viewport at
+   a time, the user picks, a soft settle animation plays, the next
+   question rises into position. Back walks sub-questions before
+   crossing pages. All answers persist through state.answers as
+   before — this is a rendering strategy, not a data change.        */
+
+/* Sub-progress dots — five subtle mycelial nodes, active one glowing */
+.q-subprog{display:flex;gap:10px;justify-content:center;margin:2px 0 22px;align-items:center}
+.q-subprog-dot{width:7px;height:7px;border-radius:50%;background:rgba(232,177,75,0.14);border:0.5px solid rgba(232,177,75,0.28);transition:all .5s cubic-bezier(0.22,0.61,0.36,1)}
+.q-subprog-dot.done{background:rgba(232,177,75,0.55);border-color:rgba(232,177,75,0.55);box-shadow:0 0 6px -1px rgba(232,177,75,0.3)}
+.q-subprog-dot.now{background:var(--amber-l);border-color:var(--amber-l);width:22px;border-radius:4px;box-shadow:0 0 14px -2px rgba(232,177,75,0.7)}
+
+/* Sub-question fade+rise on mount */
+.q-progressive-body{animation:qFadeUp .55s cubic-bezier(0.22,0.61,0.36,1) both}
+@keyframes qFadeUp{
+  from{opacity:0;transform:translateY(12px)}
+  to  {opacity:1;transform:translateY(0)}
+}
+
+/* Enhanced selected state — settling animation + stronger amber glow */
+.q-wrap-progressive .q-opt{transition:border-color .3s cubic-bezier(0.22,0.61,0.36,1),background .3s ease,box-shadow .3s ease,opacity .35s ease,transform .35s cubic-bezier(0.22,0.61,0.36,1)}
+.q-wrap-progressive .q-opt.on{
+  border-color:var(--amber-l);
+  background:rgba(232,177,75,0.09);
+  box-shadow:0 0 26px -4px rgba(232,177,75,0.5),inset 0 0 0 0.5px rgba(232,177,75,0.4);
+  animation:qSettle .55s cubic-bezier(0.22,0.61,0.36,1)
+}
+.q-wrap-progressive .q-opt.on .q-opt-glyph{color:var(--amber);transform:scale(1.08);transition:transform .35s cubic-bezier(0.22,0.61,0.36,1),color .3s ease}
+@keyframes qSettle{
+  0%  {transform:scale(1)}
+  35% {transform:scale(1.015)}
+  100%{transform:scale(1)}
+}
+/* Options that are NOT selected fade slightly quieter once one is picked */
+.q-wrap-progressive .q-options.has-pick .q-opt:not(.on){opacity:0.5}
+
+/* Contextual CTA — subtle when disabled, radiant when ready */
+.q-btn-progressive{transition:opacity .4s cubic-bezier(0.22,0.61,0.36,1),box-shadow .4s ease,transform .18s}
+.q-btn-progressive.is-ready{box-shadow:0 12px 34px -8px rgba(232,177,75,0.72),0 0 30px -6px rgba(232,177,75,0.55)}
+
+/* In-page back — small tertiary affordance above the question, only
+   visible on sub-questions 1-3 (sub-Q 0's back = global backBtn) */
+.q-subback{background:none;border:none;color:var(--dust-d);font-family:var(--mono);font-size:9.5px;letter-spacing:0.24em;text-transform:uppercase;cursor:pointer;padding:6px 0;margin-bottom:10px;opacity:0.7;transition:opacity .2s,color .2s}
+.q-subback:hover{opacity:1;color:var(--amber-l)}
+
+/* Zigzag 2-Q sub-page — two questions side by side on desktop with a
+   subtle vertical offset (Q2 pushed down ~40px) that gives the page
+   organic rhythm rather than symmetric-grid rigidity. On mobile the
+   whole thing stacks vertically. .q-block gets its own margin reset
+   inside so nothing double-margins the gap. */
+.q-zigzag{display:grid;grid-template-columns:1fr;gap:32px 28px;align-items:start}
+@media (min-width:760px){
+  .q-zigzag{grid-template-columns:1fr 1fr;gap:24px 32px}
+  .q-zigzag-a{transform:translateY(0)}
+  .q-zigzag-b{transform:translateY(38px)}
+}
+.q-zigzag .q-block{margin-bottom:0}
+/* Smaller titles inside zigzag so two of them fit comfortably side by
+   side without either dominating. The italicised amber accents on
+   .q-title em still pop; only the base weight/size are dialled back. */
+.q-zigzag .q-title{font-size:clamp(22px,3.6vw,30px);line-height:1.15;margin-bottom:10px}
+.q-zigzag .q-hint{font-size:12.5px;margin-bottom:14px;opacity:0.85}
+/* Zigzag options remain full-size q-opt cards (readable + tappable)
+   but a touch tighter vertically so both columns stay in view without
+   forcing scroll on typical laptop viewports. */
+.q-zigzag .q-opt{padding:13px 15px}
+.q-zigzag .q-opt-label{font-size:15px;margin-bottom:6px}
+.q-zigzag .q-opt-desc{font-size:12.5px;line-height:1.5}
+
+@media (prefers-reduced-motion:reduce){
+  .q-progressive-body{animation:none}
+  .q-wrap-progressive .q-opt.on{animation:none}
+  .q-wrap-progressive .q-opt{transition:none}
+}
+
 /* ── Result screen ───────────────────────────────────── */
 .result{display:none;flex-direction:column;padding:16px 0 40px;flex:1}
 .result.on{display:flex;animation:qFade .8s cubic-bezier(0.22,0.61,0.36,1)}
@@ -921,16 +1001,18 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
       <span>slow-pace medicine</span>
       <span>by herbalists</span>
     </div>
-    <!-- 18+ age gate. Ticking this confirms adult status AND opens
-         the full palette, including ceremonial allies like Amanita
-         muscaria (legal in Sweden/Germany/most EU where we operate).
-         The picker reads _gatedOptIn to decide whether to consider
-         gated herbs — with the standalone opt-in removed, adulthood
-         is the single consent gate. -->
+    <!-- Consent gate. Age moved INTO the questionnaire (with a
+         dedicated under-18 pathway that returns a gentle formula),
+         so the entry gate now only carries the GDPR / data-consent
+         acknowledgement. _ageConfirmed remains as the flag so the
+         router logic + downstream code doesn't need to change; it
+         just semantically means "consented to proceed" now. Gated
+         allies (Amanita etc) get opened by the age Q pick, not
+         here — see the age-Q change handler in state.answers.age. -->
     <div class="hero-gate">
       <label class="hero-gate-row">
         <input type="checkbox" id="gateAdult"/>
-        <span>I confirm I am <strong>18 years or older</strong>.</span>
+        <span>I accept the <a href="/privacy" target="_blank" rel="noopener" style="color:var(--amber-l);text-decoration:none;border-bottom:0.5px solid rgba(232,177,75,0.4)">privacy terms</a> and understand my answers stay with Robin only.</span>
       </label>
     </div>
     <div style="display:flex;justify-content:center">
@@ -938,7 +1020,7 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
         Begin the reading <span class="arrow">→</span>
       </button>
     </div>
-    <div class="hero-note">Not medical advice. Traditional herbal support only. 18+ only.</div>
+    <div class="hero-note">Not medical advice. Traditional herbal support only. Under-18 formulas skip every psychoactive + sedating ally.</div>
   </section>
 
   <!-- ── PROGRESS ──────────────────────────────────────── -->
@@ -1433,12 +1515,19 @@ const QUESTIONS = [
     // Life-cycle emoji: sprout → herb → tree → autumn leaf.
     key:'age',
     title:'I am',
+    hint:'Under-18 formulas skip every psychoactive + sedating ally — a gentle, food-grade blend, and Robin confirms it personally before it ships.',
     type:'compact-single',
     options:[
-      { v:'under_25', glyph:'🌱', label:'Under 25' },
-      { v:'25_40',    glyph:'🌿', label:'25–40'    },
-      { v:'41_60',    glyph:'🌳', label:'41–60'    },
-      { v:'60_plus',  glyph:'🍂', label:'60+'      },
+      // under_18 is the safety option. If picked, the compose payload
+      // silently gets sedatives + psych_meds + contraceptive appended
+      // to avoid[] so the engine filters those categories out, and a
+      // _minor flag is stamped on answers so Robin sees it in the
+      // reservation email + can review before shipping.
+      { v:'under_18', glyph:'✿', label:'Under 18',    desc:'Non-psychoactive, gentle formula. Robin will confirm personally.' },
+      { v:'under_25', glyph:'🌱', label:'18–25'                                                                              },
+      { v:'25_40',    glyph:'🌿', label:'25–40'                                                                              },
+      { v:'41_60',    glyph:'🌳', label:'41–60'                                                                              },
+      { v:'60_plus',  glyph:'🍂', label:'60+'                                                                                },
     ],
   },
   {
@@ -1487,16 +1576,33 @@ const PAGES = [
   { eyebrow: 'The calling',           keys: ['intention'] },
   { eyebrow: 'The body',              keys: ['pattern']   },
   { eyebrow: 'The container',         keys: ['avoid']     },
-  // Rhythm page packs the four short single-selects that map when +
-  // how + how long a pattern behaves, plus the nervous-system read.
-  // Four compact-singles at 4-6 options each fit comfortably; the
-  // nervous axis lives here because it's the "state" that shapes how
-  // the composer reads the rhythm answers.
-  { eyebrow: 'Rhythm & nervous system', keys: ['time','stress','duration','nervous'] },
-  // Notes on top, then age + sleep architecture + energy curve as
-  // compact pills below. Energy curve sits here so it lands right
-  // after sleep (paired physiological axes), keeping page count at 5.
-  { eyebrow: 'Context & priority',    keys: ['notes','age','sleep','energy_curve'] },
+  // ── Your rhythm & context ─────────────────────────────────
+  // The previous 4-Q Rhythm page + 4-Q Context page were fused into
+  // one progressive carousel with 5 SUB-PAGES. The first three sub-
+  // pages carry two related questions in a "zigzag" layout (side by
+  // side on desktop with vertical offset, stacked on mobile). Auto-
+  // advance on 2-Q sub-pages fires only once BOTH are answered.
+  //
+  // Sub-page 4 (notes) is a free-text textarea — no auto-advance,
+  // the CTA is always ready because notes are optional.
+  //
+  // Sub-page 5 (age) carries the new under_18 option and is the LAST
+  // sub-page of the LAST page — its CTA reads "Reveal my formula →"
+  // and firing it kicks off the seed-to-bloom compose sequence.
+  //
+  // subLabels aren't used here — nextLabel on each sub-page drives
+  // the contextual CTA ("Continue to inner state →" etc). See
+  // renderPageProgressive for the exact CTA-text logic.
+  { eyebrow: 'Your rhythm & context',
+    progressive: true,
+    subPages: [
+      { keys: ['time', 'stress'],           layout: 'zigzag', nextLabel: 'inner state'    },
+      { keys: ['nervous', 'energy_curve'],  layout: 'zigzag', nextLabel: 'the arc'        },
+      { keys: ['sleep', 'duration'],        layout: 'zigzag', nextLabel: 'your priority' },
+      { keys: ['notes'],                                       nextLabel: 'one last thing' },
+      { keys: ['age']                                                                     },
+    ],
+  },
 ];
 function getQuestion(key){ return QUESTIONS.find(q => q.key === key); }
 
@@ -1504,6 +1610,11 @@ function getQuestion(key){ return QUESTIONS.find(q => q.key === key); }
 const state = {
   step: -1, // -1 = entry screen
   answers: {},
+  // Sub-step inside a progressive page (Page 4 · Rhythm). Persists
+  // across reloads so a mid-page tab-switcher returns where they left
+  // off. Bounded on entry: if the current page isn't progressive OR
+  // the value overshoots the page's question count, it resets to 0.
+  progressiveSubStep: 0,
 };
 
 // Restore any in-progress session so an IG-tab-switcher doesn't lose it.
@@ -1528,11 +1639,13 @@ const result    = document.getElementById('result');
 const startBtn  = document.getElementById('startBtn');
 
 // ── Boot ──────────────────────────────────────────────────
-// Age gate — Begin button stays disabled until the 18+ checkbox is
-// ticked. Adulthood is the single consent gate: confirming 18+ also
-// opens ceremonial allies like Amanita muscaria (_gatedOptIn=true).
-// Legal in Sweden/Germany/most EU where we ship; the separate opt-in
-// was a UX-audit gesture, not a legal requirement.
+// GDPR consent gate — Begin button stays disabled until the privacy
+// checkbox is ticked. Age moved INTO the questionnaire (sub-page 5
+// of the last carousel page), so this gate no longer verifies age.
+// _ageConfirmed is kept as the flag name so the resume/router logic
+// stays unchanged; it now semantically means "consented to proceed".
+// _gatedOptIn is defaulted OPTIMISTIC here and downgraded later by
+// the age-Q handler if the user picks under_18.
 const gateAdult = document.getElementById('gateAdult');
 function updateStartBtn(){ startBtn.disabled = !(gateAdult && gateAdult.checked); }
 if (gateAdult) gateAdult.addEventListener('change', updateStartBtn);
@@ -1545,7 +1658,23 @@ startBtn.addEventListener('click', () => {
   persist();
   go(0);
 });
-backBtn.addEventListener('click', () => { if (state.step > 0) go(state.step - 1); });
+// Back button — on a PROGRESSIVE page mid-sub-question, walks one
+// sub-question back (in-page) rather than jumping across pages. Only
+// crosses to the previous PAGE when the user is on the first sub-Q
+// (or on any non-progressive page). Preserves all answers.
+backBtn.addEventListener('click', () => {
+  if (state.step <= 0) return;
+  const page = PAGES[state.step];
+  if (page && page.progressive && state.progressiveSubStep > 0) {
+    state.progressiveSubStep = state.progressiveSubStep - 1;
+    persist();
+    go(state.step);
+  } else {
+    state.progressiveSubStep = 0;
+    persist();
+    go(state.step - 1);
+  }
+});
 
 // Validate cached step against the current PAGES contract. If the
 // user's cached step is out-of-range (e.g. we shipped a new page
@@ -1567,10 +1696,25 @@ function go(step){
   result.classList.toggle('on', step === PAGES.length);
   quiz.innerHTML = '';
   if (step >= 0 && step < PAGES.length){
-    quiz.appendChild(renderPage(PAGES[step]));
+    const page = PAGES[step];
+    // Bounds-check the sub-step so a stale localStorage value from a
+    // previous PAGES contract can't crash into an out-of-range question.
+    if (page.progressive) {
+      // Progressive pages count sub-PAGES now (each holding 1 or 2
+      // questions), not sub-questions. Bounds-check on that length.
+      const nSub = Array.isArray(page.subPages) ? page.subPages.length : (page.keys || []).length;
+      if (typeof state.progressiveSubStep !== 'number' || state.progressiveSubStep < 0 || state.progressiveSubStep >= nSub) {
+        state.progressiveSubStep = 0;
+      }
+    } else {
+      state.progressiveSubStep = 0;
+    }
+    quiz.appendChild(page.progressive ? renderPageProgressive(page) : renderPage(page));
     progressLbl.textContent = (step + 1) + ' of ' + PAGES.length;
     progressFill.style.width = (100 * (step + 1) / PAGES.length) + '%';
-    backBtn.disabled = step === 0;
+    // Back is only truly at-start on step 0 sub-Q 0. On progressive
+    // pages, sub-Q > 0 still lets the user walk backwards in-page.
+    backBtn.disabled = step === 0 && !(page.progressive && state.progressiveSubStep > 0);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } else if (step === PAGES.length){
     renderResult();
@@ -1633,12 +1777,165 @@ function renderPage(page){
   return wrap;
 }
 
+// ── Progressive page renderer — one sub-page at a time ────────────
+// Used for pages flagged { progressive: true, subPages: [...] }.
+// Each sub-page carries ONE or TWO questions:
+//   · 1-Q sub-page: fills the viewport, pick auto-advances (~500ms)
+//   · 2-Q sub-page: zigzag layout (side-by-side + vertical offset on
+//     desktop, stacked on mobile). Auto-advance fires only once
+//     BOTH questions are answered — the settle window is longer
+//     (~600ms) so the user sees both selected states land before
+//     the next sub-page rises into position.
+//
+// state.progressiveSubStep indexes into subPages. Bounded on entry.
+// All answers persist through state.answers as before — this is
+// purely a pacing/rendering change on top of the same data model.
+function renderPageProgressive(page){
+  const wrap = document.createElement('section');
+  wrap.className = 'q-wrap on q-wrap-progressive';
+
+  const subPages = Array.isArray(page.subPages) ? page.subPages : [];
+  const subStep  = state.progressiveSubStep || 0;
+  const sub      = subPages[subStep];
+  if (!sub) return wrap; // defensive — bounded elsewhere
+
+  const questions = (sub.keys || []).map(getQuestion).filter(Boolean);
+  if (questions.length === 0) return wrap;
+
+  const isLastSubPage = subStep === subPages.length - 1;
+  const isTwoQ        = questions.length === 2 && sub.layout === 'zigzag';
+  const isFinalPage   = state.step === PAGES.length - 1;
+
+  // Page-level eyebrow (matches non-progressive pages)
+  const eyebrow = document.createElement('div');
+  eyebrow.className = 'q-eyebrow';
+  eyebrow.textContent = page.eyebrow;
+  wrap.appendChild(eyebrow);
+
+  // Sub-progress — one dot per sub-page. Small, subtle constellation
+  // that quietly communicates depth without being decorative clutter.
+  const dots = document.createElement('div');
+  dots.className = 'q-subprog';
+  for (let i = 0; i < subPages.length; i++) {
+    const dot = document.createElement('span');
+    dot.className = 'q-subprog-dot' +
+      (i < subStep ? ' done' : i === subStep ? ' now' : '');
+    dots.appendChild(dot);
+  }
+  wrap.appendChild(dots);
+
+  // Question body — full-size (not compact). autoAdvance:false because
+  // we manage the advance ourselves (sub-step-aware, not step-aware).
+  // hideInlineCta:true suppresses the text-type's own Skip/Continue row.
+  //
+  // 2-Q sub-pages wrap both questions in a .q-zigzag flex container
+  // that goes side-by-side on desktop with a vertical offset for
+  // rhythm, and stacks on mobile.
+  const bodyWrap = document.createElement('div');
+  bodyWrap.className = 'q-progressive-body' + (isTwoQ ? ' q-zigzag' : '');
+  questions.forEach((q, i) => {
+    const b = renderQuestionBody(q, { compact: false, autoAdvance: false, hideInlineCta: true });
+    if (isTwoQ) b.classList.add('q-zigzag-cell', i === 0 ? 'q-zigzag-a' : 'q-zigzag-b');
+    bodyWrap.appendChild(b);
+  });
+  wrap.appendChild(bodyWrap);
+
+  // Contextual CTA — reflects what comes next. On non-final sub-pages
+  // the label names the NEXT sub-page (sub.nextLabel or fallback);
+  // on the last sub-page of the LAST page it becomes "Reveal my formula".
+  let ctaText;
+  if (isLastSubPage && isFinalPage) ctaText = 'Reveal my formula →';
+  else if (isLastSubPage)           ctaText = 'Continue →';
+  else if (sub.nextLabel)           ctaText = 'Continue to ' + sub.nextLabel + ' →';
+  else                              ctaText = 'Continue →';
+
+  const ctaRow = document.createElement('div');
+  ctaRow.className = 'q-cta q-cta-sticky';
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'q-btn q-btn-progressive';
+  btn.textContent = ctaText;
+
+  // A question is "answered" if it has a value; free-text is always
+  // considered answered (notes are optional). Sub-page is answered
+  // when ALL its questions are.
+  const qAnswered = (q) => {
+    if (q.type === 'text') return true;
+    const v = state.answers[q.key];
+    if (q.type === 'multi') return Array.isArray(v) && v.length > 0;
+    return v != null && v !== '';
+  };
+  const isAllAnswered = () => questions.every(qAnswered);
+  const paintCTA = () => {
+    if (isAllAnswered()) {
+      btn.classList.add('is-ready');
+      btn.disabled = false;
+      btn.style.opacity = '';
+    } else {
+      btn.classList.remove('is-ready');
+      btn.disabled = true;
+      btn.style.opacity = '0.45';
+    }
+  };
+  paintCTA();
+
+  const advance = () => {
+    if (!isAllAnswered()) return;
+    if (isLastSubPage) {
+      state.progressiveSubStep = 0;
+      persist();
+      go(state.step + 1);
+    } else {
+      state.progressiveSubStep = subStep + 1;
+      persist();
+      go(state.step);
+    }
+  };
+  btn.addEventListener('click', advance);
+  ctaRow.appendChild(btn);
+  wrap.appendChild(ctaRow);
+
+  // Pick side-effects — for each option across ALL question bodies:
+  //   · mark its own .q-options container with .has-pick so unselected fade
+  //   · repaint the CTA
+  //   · auto-advance once every sub-page question is answered
+  //     (500ms settle for 1-Q, 600ms for 2-Q so the second pick's
+  //     selected animation gets a moment to land visually before the
+  //     transition to the next sub-page begins)
+  const settleMs = isTwoQ ? 600 : 500;
+  const allBodies = bodyWrap.querySelectorAll('.q-block');
+  allBodies.forEach((body, i) => {
+    const q = questions[i];
+    if (!q) return;
+    const optsHost = body.querySelector('.q-options');
+    body.querySelectorAll('.q-opt').forEach(el => {
+      el.addEventListener('click', () => {
+        setTimeout(() => {
+          if (optsHost) optsHost.classList.add('has-pick');
+          paintCTA();
+          if (isAllAnswered()) setTimeout(advance, settleMs);
+        }, 20);
+      });
+    });
+    // Stamp .has-pick on re-render if this question already has a value
+    if (optsHost && q.type !== 'text' && qAnswered(q)) {
+      optsHost.classList.add('has-pick');
+    }
+  });
+
+  return wrap;
+}
+
 // Render just the "body" of a question (title, hint, options / textarea).
 // Called by renderPage for each question on the page.
 function renderQuestionBody(q, opts){
   opts = opts || {};
   const compact = !!opts.compact;
   const autoAdvance = opts.autoAdvance !== false;
+  // hideInlineCta: text-type questions normally render their own
+  // Skip / See-my-formula row inline. Progressive mode manages its
+  // OWN CTA (contextual "Continue to X"), so it opts out here.
+  const hideInlineCta = !!opts.hideInlineCta;
   const container = document.createElement('div');
   container.className = 'q-block' + (compact ? ' q-compact' : '');
 
@@ -1662,8 +1959,13 @@ function renderQuestionBody(q, opts){
     ta.value = state.answers[q.key] || '';
     ta.addEventListener('input', () => { state.answers[q.key] = ta.value; persist(); });
     container.appendChild(ta);
-    // Standalone (not on multi-Q page) → own See-my-formula CTA
-    if (!compact) {
+    // Standalone (not on multi-Q page) → own See-my-formula CTA.
+    // Progressive mode passes hideInlineCta to suppress this row; its
+    // own contextual CTA takes over. Also auto-focus the textarea in
+    // that case so the user can type immediately without extra tap.
+    if (hideInlineCta) {
+      setTimeout(() => ta.focus(), 200);
+    } else if (!compact) {
       const row = document.createElement('div'); row.className = 'q-cta';
       const skip = document.createElement('button'); skip.type='button'; skip.className='q-skip'; skip.textContent='Skip';
       const nxt  = document.createElement('button'); nxt.type='button';  nxt.className='q-btn';   nxt.textContent='See my formula →';
@@ -3692,6 +3994,25 @@ async function _fyfRenderResultServerMode(a) {
   // for cold-start + persist + response transfer. Compose blocking
   // is intentional (Robin's UX call — the wait builds anticipation).
   const timeoutId  = setTimeout(() => { try { controller.abort(); } catch (_) {} }, 35000);
+
+  // Minor-safety hardening — if the user picked under_18 on the age
+  // question, extend avoid[] with sedatives/psych_meds/contraceptive
+  // silently so the server engine filters those categories out (no
+  // psychoactive, no CNS depressants, no hormonal-pathway herbs). A
+  // _minor flag is also stamped so Robin can review before shipping.
+  // Non-destructive: a shallow clone is passed to the wire so state
+  // still reflects the user's original answers on this device.
+  const profileForWire = Object.assign({}, a);
+  if (a.age === 'under_18') {
+    const avoid = Array.isArray(a.avoid) ? a.avoid.slice() : [];
+    ['sedatives','psych_meds','contraceptive'].forEach(f => {
+      if (!avoid.includes(f)) avoid.push(f);
+    });
+    profileForWire.avoid   = avoid;
+    profileForWire._minor  = true;
+    profileForWire._gatedOptIn = false; // no ceremonial allies for minors
+  }
+
   let res, body;
   try {
     res = await fetch('/api/fyf/compose', {
@@ -3699,7 +4020,7 @@ async function _fyfRenderResultServerMode(a) {
       // No X-FYF-Mode header — this is a REAL authoritative call.
       // Server persists (per env config) and returns a formulaId.
       headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ profile: a }),
+      body:    JSON.stringify({ profile: profileForWire }),
       signal:  controller.signal,
     });
     clearTimeout(timeoutId);
@@ -3878,33 +4199,93 @@ function _fyfPaintServerReveal(a, body) {
     document.getElementById('rWhyText').innerHTML = buildWhyText(a, enrichedHerbs, serverPct);
   } catch (_) {}
 
-  // STEP 5.5 · If the server engine invoked MYCO successfully, surface
-  // MYCO's overall reasoning inside the "Why this formula" reveal —
-  // matches the client-mode pattern (client-mode mycoCompose callback,
-  // "MYCO's reasoning:" paragraph). Same badge swap on the story
-  // eyebrow so the user sees "Composed by MYCO".
-  if (body && body.mycoUsed === true) {
-    if (body.mycoOverall) {
-      try {
-        const dimReveal = document.querySelector('.r-why-reveal');
-        if (dimReveal) {
-          dimReveal.insertAdjacentHTML('beforeend',
-            '<p><em>MYCO\'s reasoning:</em> ' + escapeHtml(body.mycoOverall) + '</p>');
-        }
-      } catch (_) {}
-    }
-    const composerBadge = document.querySelector('.r-story .r-story-eyebrow');
-    if (composerBadge) composerBadge.textContent = '✦ Composed by MYCO · the alchemist';
+  // STEP 5.5g+ · Make MYCO's work + the user's own words VISIBLE.
+  //
+  // Before: eyebrow flipped to "Composed by MYCO" in 9px mono (easy
+  // to miss), MYCO's reasoning was hidden behind the reserve gate, and
+  // the free-text notes were sent silently to the server with no echo
+  // in the reveal — users had no way to see their words landed.
+  //
+  // After: a proper composer badge, a "you told us —" echo of the
+  // notes above the story, and MYCO's overall reasoning surfaced
+  // inline (not gated) whenever it's available.
+  const noteRaw = String((a && a.notes) || '').trim();
+  const hasNote = noteRaw.length > 0;
+  const mycoOK  = body && body.mycoUsed === true;
+
+  // Composer badge — larger, glyphed, unmissable. Replaces the tiny
+  // "The reading" eyebrow. Text reflects what actually happened:
+  //   · MYCO composed AND user gave a note   → composed + tuned to you
+  //   · MYCO composed, no note                → composed by MYCO
+  //   · MYCO fell back, user gave a note      → the reading (tuned to your note)
+  //   · deterministic, no note                → the reading
+  const composerBadge = document.querySelector('.r-story .r-story-eyebrow');
+  if (composerBadge) {
+    let label = 'The reading';
+    if (mycoOK && hasNote) label = '✦ Composed by MYCO · the alchemist · tuned to your note';
+    else if (mycoOK)       label = '✦ Composed by MYCO · the alchemist';
+    else if (hasNote)      label = '◇ The reading · tuned to your note';
+    composerBadge.textContent = label;
+    composerBadge.style.fontSize = '10.5px';
+    composerBadge.style.letterSpacing = '0.24em';
   }
 
-  // Ask MYCO for a narrative for the free-text reading — this is
-  // presentational only and does NOT swap herbs. mycoCompose (which
+  // Note echo — quiet italic pull-quote above the story text so the
+  // user sees their exact words came through. Trims long notes to
+  // ~180 chars with an ellipsis (safety: escaped, so <script> in a
+  // note can never execute).
+  if (hasNote) {
+    const storyEl = document.getElementById('rStory');
+    if (storyEl && !document.getElementById('rNoteEcho')) {
+      const echo = document.createElement('div');
+      echo.id = 'rNoteEcho';
+      const shown = noteRaw.length > 180 ? noteRaw.slice(0, 180).trimEnd() + '…' : noteRaw;
+      echo.style.cssText =
+        'font-family:var(--serif);font-style:italic;font-size:14px;line-height:1.6;' +
+        'color:var(--dust);border-left:1.5px solid rgba(232,177,75,0.35);' +
+        'padding:2px 0 2px 14px;margin:0 0 14px 0;opacity:0.9';
+      echo.innerHTML =
+        '<span style="font-family:var(--mono);font-size:9px;letter-spacing:0.28em;' +
+        'text-transform:uppercase;color:var(--amber-l);opacity:0.85;font-style:normal;' +
+        'display:block;margin-bottom:6px">◇ You told us</span>' +
+        '&ldquo;' + escapeHtml(shown) + '&rdquo;';
+      storyEl.parentNode.insertBefore(echo, storyEl);
+    }
+  }
+
+  // MYCO's overall reasoning — surface inline (not gated behind the
+  // reserve wall) whenever we have it. This is the 2-3 sentence
+  // customer-facing note about WHY this composition, from MYCO.
+  if (mycoOK && body.mycoOverall) {
+    const storyEl = document.getElementById('rStory');
+    if (storyEl && !document.getElementById('rMycoReasoning')) {
+      const reasoning = document.createElement('div');
+      reasoning.id = 'rMycoReasoning';
+      reasoning.style.cssText =
+        'margin-top:14px;padding-top:14px;border-top:0.5px solid rgba(232,177,75,0.25);' +
+        'font-family:var(--serif);font-size:14.5px;line-height:1.65;color:var(--dust)';
+      reasoning.innerHTML =
+        '<span style="font-family:var(--mono);font-size:9px;letter-spacing:0.28em;' +
+        'text-transform:uppercase;color:var(--amber-l);opacity:0.85;display:block;' +
+        'margin-bottom:6px">✦ MYCO&rsquo;s reasoning</span>' +
+        escapeHtml(body.mycoOverall);
+      storyEl.appendChild(reasoning);
+    }
+  }
+
+  // Ask MYCO for a lyrical narrative for the free-text reading — this
+  // is presentational only and does NOT swap herbs. mycoCompose (which
   // WOULD swap herbs) is deliberately not fired in server mode.
-  if (a.notes && a.notes.trim().length > 20) {
+  if (hasNote && noteRaw.length > 20) {
     mycoStory(a, enrichedHerbs, serverPct, window.__currentFormula.synergies || []).then(text => {
       if (!text) return;
       const storyEl = document.getElementById('rStory');
-      if (storyEl) storyEl.innerHTML = text;
+      if (!storyEl) return;
+      // Replace ONLY the base story text — preserve the reasoning
+      // block we already appended (if any) by re-appending it after.
+      const reasoning = document.getElementById('rMycoReasoning');
+      storyEl.innerHTML = text;
+      if (reasoning) storyEl.appendChild(reasoning);
     }).catch(() => {});
   }
 

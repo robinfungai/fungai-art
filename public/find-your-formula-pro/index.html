@@ -3833,27 +3833,67 @@ function _fyfPaintServerReveal(a, body) {
     document.getElementById('rWhyText').innerHTML = buildWhyText(a, enrichedHerbs, serverPct);
   } catch (_) {}
 
-  // STEP 5.5 · surface MYCO's overall reasoning inside "Why this formula"
-  // reveal + swap the story eyebrow badge. Mirrors Basic client.
-  if (body && body.mycoUsed === true) {
-    if (body.mycoOverall) {
-      try {
-        const dimReveal = document.querySelector('.r-why-reveal');
-        if (dimReveal) {
-          dimReveal.insertAdjacentHTML('beforeend',
-            '<p><em>MYCO\'s reasoning:</em> ' + escapeHtml(body.mycoOverall) + '</p>');
-        }
-      } catch (_) {}
-    }
-    const composerBadge = document.querySelector('.r-story .r-story-eyebrow');
-    if (composerBadge) composerBadge.textContent = '✦ Composed by MYCO · the alchemist';
+  // STEP 5.5g+ · Make MYCO's work + the user's own words VISIBLE.
+  // Mirror of Basic — see public/find-your-formula/index.html for full doc.
+  const noteRaw = String((a && a.notes) || '').trim();
+  const hasNote = noteRaw.length > 0;
+  const mycoOK  = body && body.mycoUsed === true;
+
+  const composerBadge = document.querySelector('.r-story .r-story-eyebrow');
+  if (composerBadge) {
+    let label = 'The reading';
+    if (mycoOK && hasNote) label = '✦ Composed by MYCO · the alchemist · tuned to your note';
+    else if (mycoOK)       label = '✦ Composed by MYCO · the alchemist';
+    else if (hasNote)      label = '◇ The reading · tuned to your note';
+    composerBadge.textContent = label;
+    composerBadge.style.fontSize = '10.5px';
+    composerBadge.style.letterSpacing = '0.24em';
   }
 
-  if (a.notes && a.notes.trim().length > 20) {
+  if (hasNote) {
+    const storyEl = document.getElementById('rStory');
+    if (storyEl && !document.getElementById('rNoteEcho')) {
+      const echo = document.createElement('div');
+      echo.id = 'rNoteEcho';
+      const shown = noteRaw.length > 180 ? noteRaw.slice(0, 180).trimEnd() + '…' : noteRaw;
+      echo.style.cssText =
+        'font-family:var(--serif);font-style:italic;font-size:14px;line-height:1.6;' +
+        'color:var(--dust);border-left:1.5px solid rgba(232,177,75,0.35);' +
+        'padding:2px 0 2px 14px;margin:0 0 14px 0;opacity:0.9';
+      echo.innerHTML =
+        '<span style="font-family:var(--mono);font-size:9px;letter-spacing:0.28em;' +
+        'text-transform:uppercase;color:var(--amber-l);opacity:0.85;font-style:normal;' +
+        'display:block;margin-bottom:6px">◇ You told us</span>' +
+        '&ldquo;' + escapeHtml(shown) + '&rdquo;';
+      storyEl.parentNode.insertBefore(echo, storyEl);
+    }
+  }
+
+  if (mycoOK && body.mycoOverall) {
+    const storyEl = document.getElementById('rStory');
+    if (storyEl && !document.getElementById('rMycoReasoning')) {
+      const reasoning = document.createElement('div');
+      reasoning.id = 'rMycoReasoning';
+      reasoning.style.cssText =
+        'margin-top:14px;padding-top:14px;border-top:0.5px solid rgba(232,177,75,0.25);' +
+        'font-family:var(--serif);font-size:14.5px;line-height:1.65;color:var(--dust)';
+      reasoning.innerHTML =
+        '<span style="font-family:var(--mono);font-size:9px;letter-spacing:0.28em;' +
+        'text-transform:uppercase;color:var(--amber-l);opacity:0.85;display:block;' +
+        'margin-bottom:6px">✦ MYCO&rsquo;s reasoning</span>' +
+        escapeHtml(body.mycoOverall);
+      storyEl.appendChild(reasoning);
+    }
+  }
+
+  if (hasNote && noteRaw.length > 20) {
     mycoStory(a, enrichedHerbs, serverPct, window.__currentFormula.synergies || []).then(text => {
       if (!text) return;
       const storyEl = document.getElementById('rStory');
-      if (storyEl) storyEl.innerHTML = text;
+      if (!storyEl) return;
+      const reasoning = document.getElementById('rMycoReasoning');
+      storyEl.innerHTML = text;
+      if (reasoning) storyEl.appendChild(reasoning);
     }).catch(() => {});
   }
 

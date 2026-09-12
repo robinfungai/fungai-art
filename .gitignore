@@ -41,3 +41,6 @@ dist-ssr
 *.original.jpeg
 *.original.png
 *.bak
+
+# Local Netlify folder
+.netlify
