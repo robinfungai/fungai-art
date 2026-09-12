@@ -3368,21 +3368,98 @@ function _fyfRenderServerErrorState({ kind, backToSafety, retry }) {
   if (btn && typeof c.action === 'function') btn.addEventListener('click', c.action);
 }
 
-// Step 5.5f · Growing-plant composing card. Renders as a prominent
-// centered element in the reveal area while /api/fyf/compose is in
-// flight (which now includes the ~10-15s MYCO call). Hides ALL other
-// reveal sections during compose so the user sees ONE beautiful
-// reveal, not a deterministic-then-swap flicker.
+// ═══════════════════════════════════════════════════════════════════
+// Step 5.5g · SEED-TO-BLOOM COMPOSING SEQUENCE
+// ───────────────────────────────────────────────────────────────────
+// Three-phase anticipation animation that plays during /api/fyf/compose:
 //
-// This is a TEMPORARY placeholder — Robin's real "seed → sprout →
-// leaves → bloom" SVG/canvas animation slots into _fyfShowComposingCard
-// and _fyfHideComposingCard later. Interface stays the same.
-let _fyfComposingCardInterval = null;
+//   Phase A — Anticipation reel (runs the whole compose wait).
+//     · Text cycles 5 lines every 2.4s with fade + scale.
+//     · A horizontal reel of seed glyphs scrolls continuously.
+//   Phase B — Herb-by-herb growth (post-compose, ~0.9s per herb).
+//     · For each herb in the returned formula: seed → sprout → plant,
+//       label fades in underneath, then the plant orbits into a
+//       holding row above the reel.
+//   Phase C — Roulette + product unlock (~1.6s).
+//     · Reel spins fast, decelerates, lands on ✦, then the whole
+//       card dissolves and the real reveal fades in beneath it.
+//
+// ASSET SWAP POINTS (all emoji-based placeholders — real photographs
+// go here later, no orchestration code needs to change):
+//
+//   FYF_HERB_ART  →  map herb name to { seed, plant, bloom } glyphs.
+//                    Replace with { seed: '/herbs/seeds/ashwagandha.webp',
+//                    plant: '/herbs/plants/ashwagandha.webp', ... }.
+//   FYF_REEL_SEED_POOL  → glyphs the Phase A reel scrolls through.
+//                    Replace with an array of image URLs.
+//   `renderGlyph(emoji, sizePx)` helper below is the only place we
+//   render the visual token — swap its innerHTML to return <img>
+//   tags when images are available.
+//
+// Timing budget (post-compose):
+//   Phase B: 5 herbs × ~900ms  = 4.5s
+//   Phase C: 1.6s
+//   Total finale: ~6.1s
+//   With a typical 10-13s compose, total UX ≈ 16-19s.
+// ═══════════════════════════════════════════════════════════════════
+
+const FYF_PHASE_A_MESSAGES = [
+  { emoji: '🌰', text: 'MYCO is composing your formula…' },
+  { emoji: '🌱', text: 'Listening to your nervous system…' },
+  { emoji: '🌿', text: 'Gathering the allies…' },
+  { emoji: '🍃', text: 'Distilling the essence…' },
+  { emoji: '✦',  text: 'Your formula is ready' },
+];
+
+// Placeholder seed pool for the Phase A reel + Phase C roulette. Real
+// photograph URLs slot in here.
+const FYF_REEL_SEED_POOL = [
+  '🌰','🌱','🌾','🍄','🌿','🌸','🪷','🌺','🌻','🍁',
+  '🌷','🌼','☘️','🍀','🌵','🌾','🥀','🪴','🌳','🌱',
+];
+
+// Herb-specific glyphs for Phase B. Fallback for unmapped herbs =
+// generic seed→plant→bloom triad. Add real herbs as Robin populates.
+const FYF_HERB_ART = {
+  'Ashwagandha':        { seed: '🌾', plant: '🌿', bloom: '🌼' },
+  'Reishi':             { seed: '🍄', plant: '🍄', bloom: '🍄' },
+  'Cordyceps':          { seed: '🍄', plant: '🍄', bloom: '🍄' },
+  "Lion's Mane":        { seed: '🍄', plant: '🍄', bloom: '🍄' },
+  'Chaga':              { seed: '🍄', plant: '🍄', bloom: '🍄' },
+  'Rose Petals':        { seed: '🌰', plant: '🌿', bloom: '🌹' },
+  'Lavender':           { seed: '🌱', plant: '🌿', bloom: '💜' },
+  'Passionflower':      { seed: '🌱', plant: '🌿', bloom: '🌸' },
+  'Damiana':            { seed: '🌰', plant: '🌿', bloom: '🌼' },
+  'Blue Lotus':         { seed: '🌰', plant: '🌿', bloom: '🪷' },
+  'Nettle':             { seed: '🌱', plant: '🌿', bloom: '☘️' },
+  'Oatstraw':           { seed: '🌾', plant: '🌾', bloom: '🌾' },
+  'Shilajit (Mineral Pitch)': { seed: '🪨', plant: '🪨', bloom: '✦' },
+  'Rhodiola':           { seed: '🌱', plant: '🌿', bloom: '🌸' },
+  'Schisandra':         { seed: '🌰', plant: '🌿', bloom: '🍒' },
+};
+const FYF_HERB_ART_DEFAULT = { seed: '🌰', plant: '🌿', bloom: '✿' };
+function _fyfArtFor(name) {
+  return FYF_HERB_ART[name] || FYF_HERB_ART_DEFAULT;
+}
+
+// Render a single glyph token. When real images arrive, swap this
+// body to return `<img src="..." />` and everything else keeps working.
+function _fyfRenderGlyph(glyph, sizePx) {
+  return '<span style="font-size:' + (sizePx || 64) + 'px;line-height:1;' +
+         'display:inline-block;filter:drop-shadow(0 0 22px rgba(232,177,75,0.35))">' +
+         glyph + '</span>';
+}
+
+// Composing card + phase-state module scope
+let _fyfPhaseAReelInterval  = null;
+let _fyfPhaseATextInterval  = null;
+let _fyfPhaseAActive        = false;
+
 function _fyfShowComposingCard() {
   const result = document.getElementById('result');
   if (!result) return;
 
-  // Hide the reveal sections that would otherwise flash empty content.
+  // Hide the reveal sections so ONLY the composing card is visible.
   ['bottle','rTagline','rStory','rHerbCount','rHerbs','rSynergy','rWhyCard'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = 'none';
@@ -3395,44 +3472,180 @@ function _fyfShowComposingCard() {
     card = document.createElement('div');
     card.id = 'fyfComposingCard';
     card.style.cssText =
-      'padding:60px 24px;text-align:center;min-height:55vh;' +
-      'display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px';
+      'padding:36px 20px 40px;text-align:center;min-height:60vh;' +
+      'display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px';
     result.insertBefore(card, result.firstChild);
   }
   card.innerHTML =
-    '<div id="fyfComposingEmoji" style="font-size:88px;line-height:1;transition:transform .5s cubic-bezier(0.22,0.61,0.36,1);filter:drop-shadow(0 0 32px rgba(232,177,75,0.4))">🌰</div>' +
-    '<div style="font-family:var(--display);font-weight:300;font-size:28px;color:var(--parchment);letter-spacing:-0.005em;line-height:1.1;max-width:440px">MYCO is composing your formula</div>' +
-    '<div id="fyfComposingSub" style="font-family:var(--sans);font-weight:300;font-size:14px;color:var(--dust);opacity:0.75;max-width:400px;line-height:1.65;font-style:italic">Weaving your allies. This takes 10&ndash;15 seconds &mdash; the deeper the reading, the richer the composition.</div>' +
-    '<div id="fyfComposingDots" style="margin-top:14px;font-family:var(--mono);font-size:10px;letter-spacing:0.42em;color:var(--amber-l);opacity:0.7">◇   ◇   ◇   ◇   ◇</div>';
+    // Holding row for revealed herbs (Phase B fills this)
+    '<div id="fyfHerbHoldingRow" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;min-height:60px;align-items:center;transition:opacity .4s ease"></div>' +
+    // Main stage — the reel/seed/plant currently being shown
+    '<div id="fyfComposingStage" style="width:180px;height:180px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:50%;' +
+      'background:radial-gradient(circle at 50% 55%, rgba(232,177,75,0.10) 0%, rgba(5,7,10,0.6) 82%);' +
+      'box-shadow:inset 0 0 0 0.5px rgba(232,177,75,0.20), 0 0 40px -10px rgba(232,177,75,0.35)">' +
+      '<div id="fyfStageEmoji" style="transition:transform .5s cubic-bezier(0.22,0.61,0.36,1),opacity .4s ease;font-size:88px;line-height:1;filter:drop-shadow(0 0 30px rgba(232,177,75,0.45))">🌰</div>' +
+    '</div>' +
+    // Text — cross-faded (see Phase A cycle below)
+    '<div style="display:flex;flex-direction:column;align-items:center;gap:8px;min-height:64px">' +
+      '<div id="fyfComposingText" style="font-family:var(--display);font-weight:300;font-size:26px;color:var(--parchment);letter-spacing:-0.005em;line-height:1.15;max-width:440px;transition:opacity .5s ease, transform .5s ease">MYCO is composing your formula…</div>' +
+      '<div id="fyfComposingSub"  style="font-family:var(--sans);font-weight:300;font-size:13px;color:var(--dust);opacity:0.65;max-width:400px;line-height:1.55;font-style:italic">Weaving your allies from the shortlist. This takes 10&ndash;15 seconds.</div>' +
+    '</div>' +
+    '<div id="fyfComposingDots" style="margin-top:6px;font-family:var(--mono);font-size:10px;letter-spacing:0.42em;color:var(--amber-l);opacity:0.65">◇   ◇   ◇   ◇   ◇</div>';
 
-  // Emoji cycle. Placeholder animation — swap for Robin's real
-  // plantae SVG whenever ready. Interface: setInterval on the same
-  // #fyfComposingEmoji element.
-  const emoji = document.getElementById('fyfComposingEmoji');
+  _fyfStartPhaseA();
+}
+
+// ── Phase A ──────────────────────────────────────────────────────
+// Runs while /api/fyf/compose is in flight. Text cycles + seed reel
+// tumbles through FYF_REEL_SEED_POOL. Ends when Phase B starts.
+function _fyfStartPhaseA() {
+  _fyfPhaseAActive = true;
+  const stage = document.getElementById('fyfStageEmoji');
+  const text  = document.getElementById('fyfComposingText');
   const dots  = document.getElementById('fyfComposingDots');
-  const frames    = ['🌰','🌱','🌿','🍃','✦'];
+
+  // Reel: fast tumble through seed pool (every 180ms). Feels like the
+  // AI is browsing the catalog.
+  let reelIdx = 0;
+  _fyfPhaseAReelInterval = setInterval(() => {
+    if (!_fyfPhaseAActive) return;
+    reelIdx = (reelIdx + 1) % FYF_REEL_SEED_POOL.length;
+    if (stage) stage.textContent = FYF_REEL_SEED_POOL[reelIdx];
+  }, 180);
+
+  // Text cycle: crossfade every 2.4s through the 5 messages.
+  let textIdx = 0;
   const dotFrames = ['◇   ◇   ◇   ◇   ◇','◈   ◇   ◇   ◇   ◇','◈   ◈   ◇   ◇   ◇','◈   ◈   ◈   ◇   ◇','◈   ◈   ◈   ◈   ◇','◈   ◈   ◈   ◈   ◈'];
-  let i = 0;
-  _fyfComposingCardInterval = setInterval(() => {
-    i = (i + 1) % frames.length;
-    if (emoji) {
-      emoji.style.transform = 'scale(0.82)';
+  _fyfPhaseATextInterval = setInterval(() => {
+    if (!_fyfPhaseAActive) return;
+    textIdx = (textIdx + 1) % FYF_PHASE_A_MESSAGES.length;
+    if (text) {
+      text.style.opacity = '0';
+      text.style.transform = 'translateY(6px)';
       setTimeout(() => {
-        emoji.textContent = frames[i];
-        emoji.style.transform = 'scale(1)';
-      }, 200);
+        text.textContent = FYF_PHASE_A_MESSAGES[textIdx].text;
+        text.style.opacity = '1';
+        text.style.transform = 'translateY(0)';
+      }, 250);
     }
-    if (dots) dots.textContent = dotFrames[Math.min(i + 1, dotFrames.length - 1)];
-  }, 2200);
+    if (dots) dots.textContent = dotFrames[Math.min(textIdx + 1, dotFrames.length - 1)];
+  }, 2400);
+}
+
+function _fyfStopPhaseA() {
+  _fyfPhaseAActive = false;
+  if (_fyfPhaseAReelInterval) { clearInterval(_fyfPhaseAReelInterval); _fyfPhaseAReelInterval = null; }
+  if (_fyfPhaseATextInterval) { clearInterval(_fyfPhaseATextInterval); _fyfPhaseATextInterval = null; }
+}
+
+// ── Phase B ──────────────────────────────────────────────────────
+// Called AFTER compose returns with a real formula. Iterates through
+// each herb: reel decelerates → lands on seed → morphs to sprout →
+// morphs to bloom → label fades in → whole thing shrinks and joins
+// the herb-holding row above the stage. Then the next herb starts.
+// Returns a Promise that resolves when all herbs have been shown.
+async function _fyfPlayPhaseB(herbs) {
+  const stage = document.getElementById('fyfStageEmoji');
+  const holdingRow = document.getElementById('fyfHerbHoldingRow');
+  const text = document.getElementById('fyfComposingText');
+  const sub  = document.getElementById('fyfComposingSub');
+  if (text) text.textContent = 'Gathering your allies…';
+  if (sub)  sub.textContent  = 'MYCO is choosing from your shortlist';
+
+  const wait = (ms) => new Promise(r => setTimeout(r, ms));
+
+  for (let i = 0; i < herbs.length; i++) {
+    const h = herbs[i];
+    const art = _fyfArtFor(h.name);
+
+    // Seed
+    if (stage) {
+      stage.style.opacity = '0';
+      stage.style.transform = 'scale(0.6)';
+      await wait(200);
+      stage.textContent = art.seed;
+      stage.style.opacity = '1';
+      stage.style.transform = 'scale(1)';
+    }
+    await wait(260);
+
+    // Plant
+    if (stage) {
+      stage.style.transform = 'scale(0.9)';
+      await wait(180);
+      stage.textContent = art.plant;
+      stage.style.transform = 'scale(1.05)';
+    }
+    await wait(240);
+
+    // Bloom + label
+    if (stage) {
+      stage.textContent = art.bloom;
+      stage.style.transform = 'scale(1)';
+    }
+    if (text) text.textContent = h.name;
+    await wait(300);
+
+    // Move into the holding row above the stage
+    if (holdingRow) {
+      const chip = document.createElement('div');
+      chip.style.cssText =
+        'display:flex;flex-direction:column;align-items:center;gap:3px;' +
+        'opacity:0;transform:translateY(8px) scale(0.7);transition:opacity .4s ease, transform .4s cubic-bezier(0.22,0.61,0.36,1)';
+      chip.innerHTML =
+        _fyfRenderGlyph(art.bloom, 34) +
+        '<span style="font-family:var(--mono);font-size:8.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber-l);opacity:0.85;max-width:60px;line-height:1.2;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + h.name + '</span>';
+      holdingRow.appendChild(chip);
+      // Force reflow before the transition
+      void chip.offsetWidth;
+      chip.style.opacity = '1';
+      chip.style.transform = 'translateY(0) scale(1)';
+    }
+    await wait(100);
+  }
+}
+
+// ── Phase C ──────────────────────────────────────────────────────
+// Final roulette flourish. Reel spins fast, decelerates dramatically,
+// lands on ✦, whole card fades out. Resolves when done.
+async function _fyfPlayPhaseC() {
+  const stage = document.getElementById('fyfStageEmoji');
+  const text  = document.getElementById('fyfComposingText');
+  const sub   = document.getElementById('fyfComposingSub');
+  const dots  = document.getElementById('fyfComposingDots');
+
+  if (text) text.textContent = 'Your formula is ready';
+  if (sub)  sub.textContent  = '';
+  if (dots) dots.textContent = '◈   ◈   ◈   ◈   ◈';
+
+  // Fast reel, ~35ms per glyph, decelerating.
+  const wait = (ms) => new Promise(r => setTimeout(r, ms));
+  const stages = 22;
+  for (let i = 0; i < stages; i++) {
+    if (stage) stage.textContent = FYF_REEL_SEED_POOL[i % FYF_REEL_SEED_POOL.length];
+    // Ease-out: each step waits a bit longer
+    await wait(35 + i * 12);
+  }
+
+  // Final flourish glyph
+  if (stage) {
+    stage.style.transform = 'scale(1.4)';
+    stage.textContent = '✦';
+    await wait(400);
+    stage.style.transform = 'scale(1)';
+  }
+  await wait(300);
 }
 
 function _fyfHideComposingCard() {
-  if (_fyfComposingCardInterval) {
-    clearInterval(_fyfComposingCardInterval);
-    _fyfComposingCardInterval = null;
-  }
+  _fyfStopPhaseA();
   const card = document.getElementById('fyfComposingCard');
-  if (card) card.remove();
+  if (card) {
+    // Fade out gracefully
+    card.style.transition = 'opacity .4s ease';
+    card.style.opacity = '0';
+    setTimeout(() => { if (card && card.parentNode) card.remove(); }, 420);
+  }
   ['bottle','rTagline','rStory','rHerbCount','rHerbs','rSynergy','rWhyCard'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = '';
@@ -3521,7 +3734,15 @@ async function _fyfRenderResultServerMode(a) {
   }
 
   // ── SERVER 200 — server formula is authoritative ────────────
-  // Hide the composing card, then paint the reveal.
+  // Step 5.5g · Run the herb-by-herb growth (Phase B) + roulette
+  // finale (Phase C) BEFORE hiding the card + painting the reveal.
+  // The full sequence is compose (~10-15s) + finale (~6s) ≈ 16-21s.
+  try {
+    _fyfStopPhaseA();
+    const finalHerbs = (body && body.formula && body.formula.herbs) || [];
+    await _fyfPlayPhaseB(finalHerbs);
+    await _fyfPlayPhaseC();
+  } catch (_) { /* animation never blocks the reveal */ }
   _fyfHideComposingCard();
   _fyfPaintServerReveal(a, body);
   _fyfServerComposeInFlight = false;

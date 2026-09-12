@@ -3445,9 +3445,51 @@ function _fyfRenderServerErrorState({ kind, backToSafety, retry }) {
   if (btn && typeof c.action === 'function') btn.addEventListener('click', c.action);
 }
 
-// Step 5.5f · Growing-plant composing card — see Basic client for
-// full doc. Same interface, kept in sync.
-let _fyfComposingCardInterval = null;
+// ═══════════════════════════════════════════════════════════════════
+// Step 5.5g · Seed-to-bloom composing sequence — mirror of Basic
+// client. See public/find-your-formula/index.html for the full spec.
+// ═══════════════════════════════════════════════════════════════════
+
+const FYF_PHASE_A_MESSAGES = [
+  { emoji: '🌰', text: 'MYCO is composing your formula…' },
+  { emoji: '🌱', text: 'Listening to your nervous system…' },
+  { emoji: '🌿', text: 'Gathering the allies…' },
+  { emoji: '🍃', text: 'Distilling the essence…' },
+  { emoji: '✦',  text: 'Your formula is ready' },
+];
+const FYF_REEL_SEED_POOL = [
+  '🌰','🌱','🌾','🍄','🌿','🌸','🪷','🌺','🌻','🍁',
+  '🌷','🌼','☘️','🍀','🌵','🌾','🥀','🪴','🌳','🌱',
+];
+const FYF_HERB_ART = {
+  'Ashwagandha':        { seed: '🌾', plant: '🌿', bloom: '🌼' },
+  'Reishi':             { seed: '🍄', plant: '🍄', bloom: '🍄' },
+  'Cordyceps':          { seed: '🍄', plant: '🍄', bloom: '🍄' },
+  "Lion's Mane":        { seed: '🍄', plant: '🍄', bloom: '🍄' },
+  'Chaga':              { seed: '🍄', plant: '🍄', bloom: '🍄' },
+  'Rose Petals':        { seed: '🌰', plant: '🌿', bloom: '🌹' },
+  'Lavender':           { seed: '🌱', plant: '🌿', bloom: '💜' },
+  'Passionflower':      { seed: '🌱', plant: '🌿', bloom: '🌸' },
+  'Damiana':            { seed: '🌰', plant: '🌿', bloom: '🌼' },
+  'Blue Lotus':         { seed: '🌰', plant: '🌿', bloom: '🪷' },
+  'Nettle':             { seed: '🌱', plant: '🌿', bloom: '☘️' },
+  'Oatstraw':           { seed: '🌾', plant: '🌾', bloom: '🌾' },
+  'Shilajit (Mineral Pitch)': { seed: '🪨', plant: '🪨', bloom: '✦' },
+  'Rhodiola':           { seed: '🌱', plant: '🌿', bloom: '🌸' },
+  'Schisandra':         { seed: '🌰', plant: '🌿', bloom: '🍒' },
+};
+const FYF_HERB_ART_DEFAULT = { seed: '🌰', plant: '🌿', bloom: '✿' };
+function _fyfArtFor(name) { return FYF_HERB_ART[name] || FYF_HERB_ART_DEFAULT; }
+function _fyfRenderGlyph(glyph, sizePx) {
+  return '<span style="font-size:' + (sizePx || 64) + 'px;line-height:1;' +
+         'display:inline-block;filter:drop-shadow(0 0 22px rgba(232,177,75,0.35))">' +
+         glyph + '</span>';
+}
+
+let _fyfPhaseAReelInterval  = null;
+let _fyfPhaseATextInterval  = null;
+let _fyfPhaseAActive        = false;
+
 function _fyfShowComposingCard() {
   const result = document.getElementById('result');
   if (!result) return;
@@ -3463,40 +3505,149 @@ function _fyfShowComposingCard() {
     card = document.createElement('div');
     card.id = 'fyfComposingCard';
     card.style.cssText =
-      'padding:60px 24px;text-align:center;min-height:55vh;' +
-      'display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px';
+      'padding:36px 20px 40px;text-align:center;min-height:60vh;' +
+      'display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px';
     result.insertBefore(card, result.firstChild);
   }
   card.innerHTML =
-    '<div id="fyfComposingEmoji" style="font-size:88px;line-height:1;transition:transform .5s cubic-bezier(0.22,0.61,0.36,1);filter:drop-shadow(0 0 32px rgba(232,177,75,0.4))">🌰</div>' +
-    '<div style="font-family:var(--display);font-weight:300;font-size:28px;color:var(--parchment);letter-spacing:-0.005em;line-height:1.1;max-width:440px">MYCO is composing your formula</div>' +
-    '<div id="fyfComposingSub" style="font-family:var(--sans);font-weight:300;font-size:14px;color:var(--dust);opacity:0.75;max-width:400px;line-height:1.65;font-style:italic">Weaving your allies. This takes 10&ndash;15 seconds &mdash; the deeper the reading, the richer the composition.</div>' +
-    '<div id="fyfComposingDots" style="margin-top:14px;font-family:var(--mono);font-size:10px;letter-spacing:0.42em;color:var(--amber-l);opacity:0.7">◇   ◇   ◇   ◇   ◇</div>';
+    '<div id="fyfHerbHoldingRow" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;min-height:60px;align-items:center;transition:opacity .4s ease"></div>' +
+    '<div id="fyfComposingStage" style="width:180px;height:180px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:50%;' +
+      'background:radial-gradient(circle at 50% 55%, rgba(232,177,75,0.10) 0%, rgba(5,7,10,0.6) 82%);' +
+      'box-shadow:inset 0 0 0 0.5px rgba(232,177,75,0.20), 0 0 40px -10px rgba(232,177,75,0.35)">' +
+      '<div id="fyfStageEmoji" style="transition:transform .5s cubic-bezier(0.22,0.61,0.36,1),opacity .4s ease;font-size:88px;line-height:1;filter:drop-shadow(0 0 30px rgba(232,177,75,0.45))">🌰</div>' +
+    '</div>' +
+    '<div style="display:flex;flex-direction:column;align-items:center;gap:8px;min-height:64px">' +
+      '<div id="fyfComposingText" style="font-family:var(--display);font-weight:300;font-size:26px;color:var(--parchment);letter-spacing:-0.005em;line-height:1.15;max-width:440px;transition:opacity .5s ease, transform .5s ease">MYCO is composing your formula…</div>' +
+      '<div id="fyfComposingSub"  style="font-family:var(--sans);font-weight:300;font-size:13px;color:var(--dust);opacity:0.65;max-width:400px;line-height:1.55;font-style:italic">Weaving your allies from the shortlist. This takes 10&ndash;15 seconds.</div>' +
+    '</div>' +
+    '<div id="fyfComposingDots" style="margin-top:6px;font-family:var(--mono);font-size:10px;letter-spacing:0.42em;color:var(--amber-l);opacity:0.65">◇   ◇   ◇   ◇   ◇</div>';
 
-  const emoji = document.getElementById('fyfComposingEmoji');
-  const dots  = document.getElementById('fyfComposingDots');
-  const frames    = ['🌰','🌱','🌿','🍃','✦'];
-  const dotFrames = ['◇   ◇   ◇   ◇   ◇','◈   ◇   ◇   ◇   ◇','◈   ◈   ◇   ◇   ◇','◈   ◈   ◈   ◇   ◇','◈   ◈   ◈   ◈   ◇','◈   ◈   ◈   ◈   ◈'];
-  let i = 0;
-  _fyfComposingCardInterval = setInterval(() => {
-    i = (i + 1) % frames.length;
-    if (emoji) {
-      emoji.style.transform = 'scale(0.82)';
-      setTimeout(() => {
-        emoji.textContent = frames[i];
-        emoji.style.transform = 'scale(1)';
-      }, 200);
-    }
-    if (dots) dots.textContent = dotFrames[Math.min(i + 1, dotFrames.length - 1)];
-  }, 2200);
+  _fyfStartPhaseA();
 }
-function _fyfHideComposingCard() {
-  if (_fyfComposingCardInterval) {
-    clearInterval(_fyfComposingCardInterval);
-    _fyfComposingCardInterval = null;
+
+function _fyfStartPhaseA() {
+  _fyfPhaseAActive = true;
+  const stage = document.getElementById('fyfStageEmoji');
+  const text  = document.getElementById('fyfComposingText');
+  const dots  = document.getElementById('fyfComposingDots');
+
+  let reelIdx = 0;
+  _fyfPhaseAReelInterval = setInterval(() => {
+    if (!_fyfPhaseAActive) return;
+    reelIdx = (reelIdx + 1) % FYF_REEL_SEED_POOL.length;
+    if (stage) stage.textContent = FYF_REEL_SEED_POOL[reelIdx];
+  }, 180);
+
+  let textIdx = 0;
+  const dotFrames = ['◇   ◇   ◇   ◇   ◇','◈   ◇   ◇   ◇   ◇','◈   ◈   ◇   ◇   ◇','◈   ◈   ◈   ◇   ◇','◈   ◈   ◈   ◈   ◇','◈   ◈   ◈   ◈   ◈'];
+  _fyfPhaseATextInterval = setInterval(() => {
+    if (!_fyfPhaseAActive) return;
+    textIdx = (textIdx + 1) % FYF_PHASE_A_MESSAGES.length;
+    if (text) {
+      text.style.opacity = '0';
+      text.style.transform = 'translateY(6px)';
+      setTimeout(() => {
+        text.textContent = FYF_PHASE_A_MESSAGES[textIdx].text;
+        text.style.opacity = '1';
+        text.style.transform = 'translateY(0)';
+      }, 250);
+    }
+    if (dots) dots.textContent = dotFrames[Math.min(textIdx + 1, dotFrames.length - 1)];
+  }, 2400);
+}
+
+function _fyfStopPhaseA() {
+  _fyfPhaseAActive = false;
+  if (_fyfPhaseAReelInterval) { clearInterval(_fyfPhaseAReelInterval); _fyfPhaseAReelInterval = null; }
+  if (_fyfPhaseATextInterval) { clearInterval(_fyfPhaseATextInterval); _fyfPhaseATextInterval = null; }
+}
+
+async function _fyfPlayPhaseB(herbs) {
+  const stage = document.getElementById('fyfStageEmoji');
+  const holdingRow = document.getElementById('fyfHerbHoldingRow');
+  const text = document.getElementById('fyfComposingText');
+  const sub  = document.getElementById('fyfComposingSub');
+  if (text) text.textContent = 'Gathering your allies…';
+  if (sub)  sub.textContent  = 'MYCO is choosing from your shortlist';
+  const wait = (ms) => new Promise(r => setTimeout(r, ms));
+
+  for (let i = 0; i < herbs.length; i++) {
+    const h = herbs[i];
+    const art = _fyfArtFor(h.name);
+
+    if (stage) {
+      stage.style.opacity = '0';
+      stage.style.transform = 'scale(0.6)';
+      await wait(200);
+      stage.textContent = art.seed;
+      stage.style.opacity = '1';
+      stage.style.transform = 'scale(1)';
+    }
+    await wait(260);
+
+    if (stage) {
+      stage.style.transform = 'scale(0.9)';
+      await wait(180);
+      stage.textContent = art.plant;
+      stage.style.transform = 'scale(1.05)';
+    }
+    await wait(240);
+
+    if (stage) {
+      stage.textContent = art.bloom;
+      stage.style.transform = 'scale(1)';
+    }
+    if (text) text.textContent = h.name;
+    await wait(300);
+
+    if (holdingRow) {
+      const chip = document.createElement('div');
+      chip.style.cssText =
+        'display:flex;flex-direction:column;align-items:center;gap:3px;' +
+        'opacity:0;transform:translateY(8px) scale(0.7);transition:opacity .4s ease, transform .4s cubic-bezier(0.22,0.61,0.36,1)';
+      chip.innerHTML =
+        _fyfRenderGlyph(art.bloom, 34) +
+        '<span style="font-family:var(--mono);font-size:8.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber-l);opacity:0.85;max-width:60px;line-height:1.2;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + h.name + '</span>';
+      holdingRow.appendChild(chip);
+      void chip.offsetWidth;
+      chip.style.opacity = '1';
+      chip.style.transform = 'translateY(0) scale(1)';
+    }
+    await wait(100);
   }
+}
+
+async function _fyfPlayPhaseC() {
+  const stage = document.getElementById('fyfStageEmoji');
+  const text  = document.getElementById('fyfComposingText');
+  const sub   = document.getElementById('fyfComposingSub');
+  const dots  = document.getElementById('fyfComposingDots');
+  if (text) text.textContent = 'Your formula is ready';
+  if (sub)  sub.textContent  = '';
+  if (dots) dots.textContent = '◈   ◈   ◈   ◈   ◈';
+  const wait = (ms) => new Promise(r => setTimeout(r, ms));
+  const stages = 22;
+  for (let i = 0; i < stages; i++) {
+    if (stage) stage.textContent = FYF_REEL_SEED_POOL[i % FYF_REEL_SEED_POOL.length];
+    await wait(35 + i * 12);
+  }
+  if (stage) {
+    stage.style.transform = 'scale(1.4)';
+    stage.textContent = '✦';
+    await wait(400);
+    stage.style.transform = 'scale(1)';
+  }
+  await wait(300);
+}
+
+function _fyfHideComposingCard() {
+  _fyfStopPhaseA();
   const card = document.getElementById('fyfComposingCard');
-  if (card) card.remove();
+  if (card) {
+    card.style.transition = 'opacity .4s ease';
+    card.style.opacity = '0';
+    setTimeout(() => { if (card && card.parentNode) card.remove(); }, 420);
+  }
   ['bottle','rTagline','rStory','rHerbCount','rHerbs','rSynergy','rWhyCard'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = '';
@@ -3561,6 +3712,14 @@ async function _fyfRenderResultServerMode(a) {
     return _fyfRenderServerErrorState({ kind: 'VALIDATION', backToSafety, retry });
   }
 
+  // Step 5.5g · Play Phase B (herb-by-herb growth) + Phase C
+  // (roulette finale) BEFORE hiding the card + painting reveal.
+  try {
+    _fyfStopPhaseA();
+    const finalHerbs = (body && body.formula && body.formula.herbs) || [];
+    await _fyfPlayPhaseB(finalHerbs);
+    await _fyfPlayPhaseC();
+  } catch (_) {}
   _fyfHideComposingCard();
   _fyfPaintServerReveal(a, body);
   _fyfServerComposeInFlight = false;
