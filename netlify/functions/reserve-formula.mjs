@@ -277,13 +277,32 @@ export default async function handler(req) {
   console.log('[reserve-formula] source=authoritative',
     'formulaId=' + rawFormulaId,
     'engine=' + (engineVersion || '-'));
-  // ── Micronutrient allies (Robin-only, never sent to customer) ──
-  // Client computes possibleMicronutrients from the quiz answers and
-  // passes them through. Values are advisory pointers — Robin decides
-  // whether to add any as a companion recommendation with the extract.
-  // Never rendered in the customer email; only in Robin's inbox copy.
+  // ── Micronutrient allies · UNTRUSTED CLIENT INPUT (Round 2 · #6) ──
+  // The client currently computes possibleMicronutrients from the quiz
+  // and passes them through for Robin's admin-only email. Post-audit
+  // this is treated as UNTRUSTED — a hostile client could forge the
+  // list to plant misleading advisories in Robin's inbox.
+  //
+  // Two guards until the compute moves server-side (deferred):
+  //  1. Hard length + shape sanitisation (was already partial — now
+  //     also caps individual field lengths so a giant string can't
+  //     bloat the email).
+  //  2. Rendered under a bold "UNVERIFIED / client-computed" banner
+  //     in Robin's email so he knows this section is NOT authoritative
+  //     and should be sanity-checked. Removed entirely if the client
+  //     didn't send it; never fabricated server-side.
+  //
+  // Follow-up: move computeMicronutrients() to the server so the
+  // authoritative flag can flip and this banner comes off.
   const possibleMicronutrients = Array.isArray(body.possibleMicronutrients)
-    ? body.possibleMicronutrients.slice(0, 15).filter(x => x && typeof x.nutrient === 'string')
+    ? body.possibleMicronutrients
+        .slice(0, 15)
+        .filter(x => x && typeof x.nutrient === 'string')
+        .map(x => ({
+          nutrient: String(x.nutrient).slice(0, 80),
+          reason:   String(x.reason || '').slice(0, 300),
+          priority: Number.isFinite(Number(x.priority)) ? Math.max(0, Math.min(10, Number(x.priority))) : 0,
+        }))
     : [];
 
   // Rich customer-email content — the story + per-herb one-liners
@@ -449,18 +468,18 @@ function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, 
         ${notes ? `<div style="margin-top:20px;padding:14px 16px;background:#1A1E24;border-left:2px solid #E8B14B;border-radius:4px;"><div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#8B7E62;margin-bottom:6px;">Priority + prior herb experience</div><div style="font-family:Georgia,serif;font-style:italic;font-size:14px;color:#EDE5D8;line-height:1.7;">"${esc(notes)}"</div></div>` : ''}
 
         ${possibleMicronutrients.length ? `
-        <!-- MICRONUTRIENT ALLIES — Robin's eyes only (NEVER shown to customer).
-             Client computed these from the quiz answers as advisory pointers
-             for possible mineral / vitamin / amino-acid deficiencies that
-             may sit under the customer's presentation. Robin decides whether
-             to mention any of them as a companion recommendation alongside
-             the extract. -->
-        <div style="margin-top:20px;padding:16px 18px;background:#0f1a1a;border:0.5px solid rgba(107,214,111,.22);border-radius:8px;">
-          <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#6BD66F;margin-bottom:10px;">◈ Possible micronutrient allies · Robin-only</div>
-          <div style="font-family:Georgia,serif;font-style:italic;font-size:11.5px;color:#8B7E62;line-height:1.55;margin-bottom:12px;">Advisory pointers derived from the customer's answers. Not shown to them. Consider mentioning any that resonate with your clinical read as a companion recommendation to the extract.</div>
+        <!-- MICRONUTRIENT ALLIES · UNVERIFIED (client-computed).
+             Round 2 · Item #6: this section is CLIENT-SUPPLIED and
+             NOT authoritative until computeMicronutrients moves
+             server-side. A hostile client could forge entries. Robin
+             should sanity-check every row before mentioning any of
+             them to the customer. Amber-warning colour reflects this. -->
+        <div style="margin-top:20px;padding:16px 18px;background:#241a0f;border:0.5px solid rgba(232,177,75,.35);border-radius:8px;">
+          <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#E8B14B;margin-bottom:6px;">⚠ Possible micronutrient allies · UNVERIFIED (client-computed)</div>
+          <div style="font-family:Georgia,serif;font-style:italic;font-size:11.5px;color:#C9B894;line-height:1.55;margin-bottom:12px;">These entries were computed in the customer's browser and shipped as-is. Treat as directional only — a modified frontend could forge entries. Do not repeat verbatim to the customer without your own clinical read. Server-side compute is a follow-up.</div>
           <table cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:13px;color:#C9B894;">
             ${possibleMicronutrients.map(m => `<tr>
-              <td style="padding:6px 8px 6px 0;vertical-align:top;color:#B6F0AE;font-family:'Courier New',monospace;font-size:12px;letter-spacing:.04em;white-space:nowrap;width:170px;">${esc(m.nutrient)}</td>
+              <td style="padding:6px 8px 6px 0;vertical-align:top;color:#F5D689;font-family:'Courier New',monospace;font-size:12px;letter-spacing:.04em;white-space:nowrap;width:170px;">${esc(m.nutrient)}</td>
               <td style="padding:6px 0;color:#8B7E62;font-family:Georgia,serif;font-style:italic;font-size:12.5px;line-height:1.5;">${esc(m.reason || '')}</td>
             </tr>`).join('')}
           </table>
@@ -507,7 +526,7 @@ ${synergies && synergies.length ? 'SYNERGIES:\n' + synergies.map(s => '  • ' +
   Filters:   ${Array.isArray(q.avoid) ? q.avoid.join(', ') : (q.avoid || '—')}
   ${q.duration ? 'Duration:  ' + q.duration + '\n  ' : ''}${q.age ? 'Age:       ' + q.age + '\n  ' : ''}${q.sleep ? 'Sleep:     ' + q.sleep : ''}
 
-${notes ? 'Priority + prior herb experience:\n  "' + notes + '"\n\n' : ''}${possibleMicronutrients.length ? 'POSSIBLE MICRONUTRIENT ALLIES (ROBIN-ONLY — not shown to customer):\n  Advisory pointers derived from the answers. Consider whether any\n  belong in a companion recommendation alongside the extract.\n\n' + possibleMicronutrients.map(m => '  · ' + m.nutrient + ' — ' + (m.reason || '')).join('\n') + '\n\n' : ''}${geo.country ? 'EDGE-DETECTED COUNTRY: ' + geo.country + ' (sanity check vs. form; VPN bypasses)\n\n' : ''}Reply to this email to reach the customer. Confirm the formula together first, then send the Stripe link.
+${notes ? 'Priority + prior herb experience:\n  "' + notes + '"\n\n' : ''}${possibleMicronutrients.length ? '⚠ POSSIBLE MICRONUTRIENT ALLIES · UNVERIFIED (client-computed):\n  Treat as directional only — computed in the customer browser and\n  shipped as-is; a modified frontend could forge entries. Do not repeat\n  verbatim to the customer without your own clinical read.\n\n' + possibleMicronutrients.map(m => '  · ' + m.nutrient + ' — ' + (m.reason || '')).join('\n') + '\n\n' : ''}${geo.country ? 'EDGE-DETECTED COUNTRY: ' + geo.country + ' (sanity check vs. form; VPN bypasses)\n\n' : ''}Reply to this email to reach the customer. Confirm the formula together first, then send the Stripe link.
 `;
 }
 
