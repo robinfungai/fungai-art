@@ -10,7 +10,7 @@
 
 const { ensurePool, shortNote } = require('./axes');
 const { scoreHerb } = require('./scoring');
-const { safetyFilter } = require('./safety');
+const { safetyFilter, applyMinorGate } = require('./safety');
 const { isTrace } = require('./traces');
 const { isGABAergic, isCNSStimulant, categoryOf } = require('./pharmacology');
 
@@ -31,8 +31,13 @@ function targetHerbCount(a) {
 function pickFormula(a) {
   const pool = ensurePool();
   if (!pool || !pool.length) return [];
-  const safe = pool.filter(h => safetyFilter(h, a.avoid || []));
-  const scored = safe.map(h => ({ h, s: scoreHerb(h, a) })).filter(x => x.s > 0);
+  // Two-stage safety: (1) user's own avoid[] filter, then (2) minor
+  // gate — the second is a no-op unless a._minor is truthy, in which
+  // case it strips gated/sedative/psych_med/contraceptive/GABA-heavy/
+  // CNS-stimulant herbs regardless of what avoid[] said.
+  const safe        = pool.filter(h => safetyFilter(h, a.avoid || []));
+  const minorGated  = applyMinorGate(safe, a);
+  const scored = minorGated.map(h => ({ h, s: scoreHerb(h, a) })).filter(x => x.s > 0);
   scored.sort((x, y) => y.s - x.s);
 
   const seen = new Set();
@@ -90,8 +95,9 @@ function pickFormula(a) {
 function buildScoredCandidates(a, limit = 20) {
   const pool = ensurePool();
   if (!pool || !pool.length) return [];
-  const safe = pool.filter(h => safetyFilter(h, a.avoid || []));
-  const scored = safe.map(h => ({ h, s: scoreHerb(h, a) })).filter(x => x.s > 0);
+  const safe       = pool.filter(h => safetyFilter(h, a.avoid || []));
+  const minorGated = applyMinorGate(safe, a);
+  const scored = minorGated.map(h => ({ h, s: scoreHerb(h, a) })).filter(x => x.s > 0);
   scored.sort((x, y) => y.s - x.s);
 
   const seen = new Set();
