@@ -3468,9 +3468,9 @@ async function _fyfRenderResultServerMode(a) {
   } catch (_) {}
 
   const controller = new AbortController();
-  // 30s hard timeout — see equivalent block in find-your-formula for
-  // rationale. Server-side MYCO can take 8-14s p95.
-  const timeoutId  = setTimeout(() => { try { controller.abort(); } catch (_) {} }, 30000);
+  // 35s hard timeout — must exceed MYCO_TIMEOUT_MS (25s) + Netlify
+  // cold-start + response transfer. See Basic client for full note.
+  const timeoutId  = setTimeout(() => { try { controller.abort(); } catch (_) {} }, 35000);
   let res, body;
   try {
     res = await fetch('/api/fyf/compose', {

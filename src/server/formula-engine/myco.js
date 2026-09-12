@@ -17,13 +17,12 @@
 
 const ANTHROPIC_ENDPOINT = 'https://api.anthropic.com/v1/messages';
 
-// 12s hard timeout on the Anthropic call. Opus 5 with adaptive
-// thinking + effort:medium typically returns in 5-10s; 6s was too
-// tight in practice (see Step 5.5b diagnosis — server function ran
-// 6.5s + Netlify cold-start pushed total client-side latency past
-// the original 8s client abort). Anything past 12s falls back to the
-// deterministic path so the reveal isn't blocked indefinitely.
-const MYCO_TIMEOUT_MS = 12000;
+// 25s hard timeout on the Anthropic call. Live diagnosis (Step 5.5c):
+// Opus 5 with adaptive thinking + effort:medium regularly runs 10-15s
+// under real load (12878ms observed → aborted right at old 12s ceiling
+// → MYCO_UNAVAILABLE fallback). 25s covers p99 without letting a
+// genuinely stuck request block the reveal forever.
+const MYCO_TIMEOUT_MS = 25000;
 
 // Compose the shortlist Anthropic sees. Uses the same shape myco-agent
 // used — id + name + botanical + category + pre-score + trace flag +

@@ -3399,13 +3399,11 @@ async function _fyfRenderResultServerMode(a) {
   } catch (_) {}
 
   const controller = new AbortController();
-  // 30s hard timeout on the server-mode compose fetch. Server-side
-  // MYCO (Claude Opus 5 with adaptive thinking) takes 5-10s; add
-  // Netlify cold-start (~1-2s) + response transfer, real p95 is
-  // 8-14s. The original 8s ceiling was aborting successful responses
-  // mid-transfer. 30s covers cold-start + slow Anthropic days without
-  // the reveal feeling truly hung.
-  const timeoutId  = setTimeout(() => { try { controller.abort(); } catch (_) {} }, 30000);
+  // 35s hard timeout on the server-mode compose fetch. Must be higher
+  // than MYCO_TIMEOUT_MS (25s server-side) + Netlify cold-start (~2s)
+  // + response transfer (~1s). Bumped from 30s to 35s alongside the
+  // Step 5.5c server-side bump.
+  const timeoutId  = setTimeout(() => { try { controller.abort(); } catch (_) {} }, 35000);
   let res, body;
   try {
     res = await fetch('/api/fyf/compose', {
