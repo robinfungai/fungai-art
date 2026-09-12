@@ -41,6 +41,7 @@ import { createClient } from '@supabase/supabase-js';
 import crypto from 'node:crypto';
 import { compileFormula, composeFormulaWithMyco } from '../../src/server/formula-engine/index.js';
 import { buildDisplayBundle } from '../../src/server/formula-engine/display.js';
+import { sanitiseNarrative }  from '../../src/server/formula-engine/narrative-sanitiser.js';
 
 // ── Origin gate ──────────────────────────────────────────────────
 const ALLOWED_ORIGINS = [
@@ -262,6 +263,13 @@ function sanitisedResponse({ formulaId, engineResult, profile, persisted, upgrad
     percentages,
   });
 
+  // Round 2 · Item #7 — sanitise the MYCO narrative once here so both
+  // the customer-facing string and the observability field stay in sync.
+  const narrativeIn  = engineResult.mycoUsed === true ? engineResult.mycoOverall : '';
+  const narrativeOut = engineResult.mycoUsed === true
+    ? sanitiseNarrative(narrativeIn, profile)
+    : { text: '', action: null, hits: [] };
+
   return {
     status:              'ok',
     formulaId,                                              // opaque
@@ -308,12 +316,19 @@ function sanitisedResponse({ formulaId, engineResult, profile, persisted, upgrad
     // means shadow-mode compose (deterministic-only by design).
     // mycoFallbackReason is a stable enum from myco-validator.js —
     // safe to expose; contains no proprietary rules or herb data.
-    // mycoOverall is the 2-3 sentence customer-facing reasoning MYCO
-    // returned — shown in the "Why this formula" reveal card.
-    mycoUsed:           typeof engineResult.mycoUsed === 'boolean' ? engineResult.mycoUsed : null,
-    mycoFallbackReason: engineResult.mycoFallbackReason || null,
-    mycoOverall:        engineResult.mycoUsed === true ? String(engineResult.mycoOverall || '').slice(0, 1200) : null,
-    mycoUpgradePending: !!upgradeEligible,
+    //
+    // AUDIT_FIX (Round 2 · Item #7) — mycoOverall now passes through
+    // sanitiseNarrative() before hitting the wire. MYCO stays clever
+    // internally; the CUSTOMER-facing sentence has HIGH-severity
+    // medical claims replaced with a safe deterministic template and
+    // LOW-severity phrases (repair X / prescription / absolute claims)
+    // soft-rewritten. mycoNarrativeAction lets Robin see what
+    // happened in his admin email downstream.
+    mycoUsed:            typeof engineResult.mycoUsed === 'boolean' ? engineResult.mycoUsed : null,
+    mycoFallbackReason:  engineResult.mycoFallbackReason || null,
+    mycoOverall:         engineResult.mycoUsed === true ? narrativeOut.text.slice(0, 1200) : null,
+    mycoNarrativeAction: narrativeOut.action,     // 'passed' | 'rewritten' | 'replaced' | null
+    mycoUpgradePending:  !!upgradeEligible,
   };
 }
 
