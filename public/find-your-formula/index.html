@@ -3524,6 +3524,36 @@ function _fyfPaintServerReveal(a, body) {
 // scope as part of Step 6 so every caller resolves to the same impl.
 function escapeHtml(s){ return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
+// ── Safety-copy display helpers ───────────────────────────────────
+// safetyLine + hasMedicationFlag are display-layer utilities the
+// reveal calls to paint the disclaimer at the bottom of the herb
+// card ("Traditional herbal support only — …"). Were accidentally
+// swept into the Step 6 engine-strip delete but they're not engine
+// code — they read state.answers and emit prose only. Restored here
+// so _fyfPaintServerReveal's `document.getElementById('rSafety')
+// .textContent = safetyLine(a)` doesn't throw ReferenceError and
+// abort the reveal midway (bottle + herb list would silently vanish
+// even though the compose call succeeded).
+const MED_FLAG_KEYS = ['cardio_meds','psych_meds','contraceptive','sedatives','autoimmune','liver_kidney','thyroid','hypertension'];
+function hasMedicationFlag(a) {
+  const avoid = (a && a.avoid) || [];
+  return MED_FLAG_KEYS.some(k => avoid.includes(k));
+}
+function safetyLine(a) {
+  const parts = [];
+  parts.push('Traditional herbal support only — not a substitute for medical advice or diagnosis.');
+  if ((a && a.avoid || []).includes('pregnancy')) {
+    parts.push('Pregnancy / breastfeeding filter is active — uterine stimulants and emmenagogues excluded.');
+  }
+  if (hasMedicationFlag(a)) {
+    parts.push('You told us you\'re managing a medication or condition — please confirm this blend with your practitioner before starting.');
+  }
+  if (a && a._minor) {
+    parts.push('Under-18 formula — psychoactive and sedating allies are excluded, and Robin will personally confirm before shipping.');
+  }
+  return parts.join(' ');
+}
+
 // ── renderResult · server-authoritative only (Step 6) ──────────────
 // The client engine (pickFormula, scoring, shadowComposeToServer,
 // mycoCompose, renderRefusal, …) was stripped in Step 6. Server mode
