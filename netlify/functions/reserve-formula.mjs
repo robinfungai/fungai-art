@@ -85,6 +85,47 @@ setInterval(() => {
   }
 }, RATE_WINDOW_MS).unref?.();
 
+// ── Round 2 · Item #4 · idempotency (light, in-memory) ──────────
+// Full distributed idempotency needs a shared store (Supabase table
+// with unique constraint, or Redis) — see Batch D. For now, a per-
+// instance Map keyed by the client's Idempotency-Key header. Catches
+// double-clicks and rapid retries within the same Netlify container.
+//
+// Cross-container replays (rare — Netlify's warm containers usually
+// serve for minutes) will still slip through until Batch D lands the
+// durable table. Documented; not a regression from the previous
+// behaviour (which had zero idempotency).
+const IDEMP_TTL_MS = 5 * 60_000;         // 5 minutes
+const idempCache   = new Map();          // key → { body, httpStatus, expiresAt }
+
+function idempotencyGet(key) {
+  const slot = idempCache.get(key);
+  if (!slot) return null;
+  if (Date.now() > slot.expiresAt) { idempCache.delete(key); return null; }
+  return slot;
+}
+function idempotencyPut(key, body, httpStatus) {
+  if (!key) return;
+  idempCache.set(key, { body, httpStatus, expiresAt: Date.now() + IDEMP_TTL_MS });
+}
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, slot] of idempCache.entries()) {
+    if (now > slot.expiresAt) idempCache.delete(key);
+  }
+}, IDEMP_TTL_MS).unref?.();
+
+// Validate the client-supplied Idempotency-Key header. Optional — if
+// missing/malformed we log + continue without dedup (backwards compat
+// with old clients pre-Round-2). RFC-ish shape: 8-64 chars, printable
+// ASCII, no whitespace. A UUID v4 (36 chars) fits comfortably.
+const IDEMP_KEY_RE = /^[A-Za-z0-9_\-]{8,64}$/;
+function validateIdempotencyKey(raw) {
+  if (!raw) return null;
+  const s = String(raw).trim();
+  return IDEMP_KEY_RE.test(s) ? s : null;
+}
+
 // ─────────────────────────────────────────────────────────────────
 // STEP 5 · Authoritative-formula resolver
 // ─────────────────────────────────────────────────────────────────
@@ -149,6 +190,20 @@ export default async function handler(req) {
 
   if (origin && !ALLOWED_ORIGINS.includes(origin)) {
     return json({ error: 'Origin not allowed.' }, 403, cors);
+  }
+
+  // Round 2 · Item #4 — idempotency short-circuit. If we've seen this
+  // Idempotency-Key in the last 5 min, replay the cached response
+  // instead of processing (and re-sending emails, re-creating reservation
+  // rows). Rate limiter runs AFTER this — a cached replay doesn't consume
+  // a rate-limit slot because no real work is done.
+  const idempKey = validateIdempotencyKey(req.headers.get('idempotency-key'));
+  if (idempKey) {
+    const cached = idempotencyGet(idempKey);
+    if (cached) {
+      console.log('[reserve-formula] idempotency HIT key=' + idempKey.slice(0, 8) + '…');
+      return json(cached.body, cached.httpStatus, { ...cors, 'X-Idempotency-Replay': 'true' });
+    }
   }
 
   const ip = (req.headers.get('x-nf-client-connection-ip')
@@ -391,7 +446,7 @@ export default async function handler(req) {
   else if (robinOk || customerOk) { status = 'partial';   httpStatus = 202; }
   else                            { status = 'failed';    httpStatus = 500; }
 
-  return json({
+  const responseBody = {
     status,                              // ← the semantic field the client reads
     ok: robinOk && customerOk,           // legacy field for stale clients
     sent: robinOk && customerOk,         // legacy field
@@ -400,7 +455,18 @@ export default async function handler(req) {
     // Echo the (minimised, country-only per Item #2) geo back so
     // the client can include it in the Supabase Formula Book insert.
     geo: geo,
-  }, httpStatus, cors);
+  };
+
+  // Round 2 · Item #4 — cache the response under the idempotency key
+  // so a repeat POST within 5 min replays instead of re-sending emails.
+  // ONLY cache non-failure outcomes; a 'failed' reservation should be
+  // retryable (network flake, transient Resend outage, etc). Caching
+  // the failure would trap the customer in a permanent failed state.
+  if (idempKey && status !== 'failed') {
+    idempotencyPut(idempKey, responseBody, httpStatus);
+  }
+
+  return json(responseBody, httpStatus, cors);
 }
 
 async function sendResend(key, payload){

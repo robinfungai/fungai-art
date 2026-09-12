@@ -57,8 +57,8 @@ check('server: `failed` iff both emails failed', () => ({
 
 check('server: returns the semantic httpStatus (not always 200)', () => ({
   // The response builder uses `httpStatus` (200/202/500) rather than a
-  // hard-coded 200. Look for the closing brace + argument order.
-  pass: /\},\s*httpStatus,\s*cors\);/.test(SRC),
+  // hard-coded 200. Post-Item-#4 refactor uses a `responseBody` var.
+  pass: /json\(responseBody, httpStatus, cors\)/.test(SRC),
   detail: '',
 }));
 

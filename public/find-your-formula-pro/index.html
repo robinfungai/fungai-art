@@ -3371,6 +3371,11 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     // hid server failures + showed a "reserved" success card even
     // when nothing went through). Now: non-2xx renders a real error
     // state with a user-triggered "email Robin directly" CTA.
+    // Round 2 · Item #4 — idempotency key (mirror of Basic).
+    const idempotencyKey = (typeof crypto !== 'undefined' && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : ('fyf-' + Date.now() + '-' + Math.random().toString(36).slice(2, 14));
+
     // Round 2 · Item #3 — see Basic client for full doc. Tri-state.
     let reservationStatus = 'failed';
     let serverErr = null;
@@ -3381,7 +3386,10 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
       const abortT = setTimeout(() => ctrl.abort(), 20000);
       const res = await fetch('/api/reserve-formula', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Idempotency-Key': idempotencyKey,   // Round 2 · Item #4
+        },
         body: JSON.stringify(payload),
         signal: ctrl.signal,
       });

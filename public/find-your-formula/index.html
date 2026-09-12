@@ -3708,6 +3708,15 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     // showed a "reserved" success card even when nothing went through).
     // Now: non-2xx renders a real error state with a user-triggered
     // "email Robin directly" CTA. No fake success, no hidden failures.
+    // Round 2 · Item #4 — durable-ish idempotency (light). A single
+    // UUID identifies THIS reservation attempt; retries within the
+    // same submit reuse it so the server dedupes (5-min TTL). If the
+    // user closes the tab and re-submits later they get a fresh key
+    // and a fresh reservation, which is the correct behaviour.
+    const idempotencyKey = (typeof crypto !== 'undefined' && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : ('fyf-' + Date.now() + '-' + Math.random().toString(36).slice(2, 14));
+
     // Round 2 · Item #3 — read the tri-state SEMANTIC field, not res.ok.
     //   'confirmed' → 200, both emails sent, full success UI
     //   'partial'   → 202, one email delivered, muted "check spam" UI
@@ -3721,7 +3730,10 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
       const abortT = setTimeout(() => ctrl.abort(), 20000);
       const res = await fetch('/api/reserve-formula', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Idempotency-Key': idempotencyKey,   // Round 2 · Item #4
+        },
         body: JSON.stringify(payload),
         signal: ctrl.signal,
       });
