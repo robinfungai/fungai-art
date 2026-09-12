@@ -39,7 +39,7 @@
 
 import { createClient } from '@supabase/supabase-js';
 import crypto from 'node:crypto';
-import { compileFormula } from '../../src/server/formula-engine/index.js';
+import { compileFormula, composeFormulaWithMyco } from '../../src/server/formula-engine/index.js';
 
 // ── Origin gate ──────────────────────────────────────────────────
 const ALLOWED_ORIGINS = [
@@ -346,26 +346,24 @@ export default async function handler(req) {
   // validateAndNormalizeAvoid — SAFETY_QUESTION_NOT_ANSWERED gets
   // surfaced as a rejected response here.
   //
-  // STEP 5.5e · Async upgrade architecture. This endpoint is now
-  // ALWAYS fast (deterministic only). MYCO upgrade happens via a
-  // separate POST /api/fyf/upgrade call the client fires after
-  // rendering the deterministic reveal — matches client-mode's
-  // "reveal fast, upgrade silently" UX pattern without giving up
-  // server authority (MYCO validator still runs in /upgrade).
-  //
-  // Response includes `mycoUpgradePending: true` for non-shadow
-  // callers so the client knows to fire the /upgrade call.
+  // Step 5.5f · Single-reveal blocking architecture. Robin's product
+  // call — the 10-15s wait is intentional UX (growing-plant loader
+  // builds anticipation). Compose ALWAYS awaits MYCO + validator +
+  // deterministic fallback. Shadow requests still skip MYCO for
+  // fast fixture comparison.
   let engineResult;
   try {
-    engineResult = compileFormula(vp.profile);
+    const modeHdr = String(req.headers.get('x-fyf-mode') || '').toLowerCase();
+    if (modeHdr === 'shadow') {
+      engineResult = compileFormula(vp.profile);
+    } else {
+      engineResult = await composeFormulaWithMyco(vp.profile);
+    }
   } catch (e) {
     console.error('[fyf-compose] engine threw:', e && e.stack ? e.stack : e);
     return jsonResponse(500, cors, { status: 'error', code: 'INTERNAL_ERROR' });
   }
-  // Flag whether the caller should fire /api/fyf/upgrade next.
-  // Shadow mode never upgrades (comparison-only, no persistence).
-  const modeHdrForFlag = String(req.headers.get('x-fyf-mode') || '').toLowerCase();
-  const upgradeEligible = modeHdrForFlag !== 'shadow';
+  const upgradeEligible = false; // legacy field; upgrade endpoint retired
 
   if (engineResult.status === 'rejected') {
     return jsonResponse(400, cors, {

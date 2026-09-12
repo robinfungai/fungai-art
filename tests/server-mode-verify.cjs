@@ -60,6 +60,11 @@ function stubEl() {
     querySelectorAll: () => [],
     addEventListener(ev, fn) { this._listeners.push({ ev, fn }); },
     click() { this._listeners.forEach(l => l.fn && l.fn()); },
+    // Step 5.5f · composing-card cleanup calls remove(); firstChild
+    // is used by insertBefore(newNode, result.firstChild). Both
+    // stubbed so the composing-card lifecycle survives the sandbox.
+    remove() { /* no-op; the test doesn't verify DOM removal */ },
+    get firstChild() { return this.children[0] || null; },
   };
   return el;
 }
@@ -96,6 +101,8 @@ function buildSandbox({ fetchImpl, urlHref, herbDb = [] } = {}) {
     },
     setTimeout: (fn, ms) => setTimeout(fn, ms),
     clearTimeout: (id) => clearTimeout(id),
+    setInterval: (fn, ms) => setInterval(fn, ms),
+    clearInterval: (id) => clearInterval(id),
 
     // Stubbed engine helpers — the server-mode path calls into these
     // for DISPLAY only. Tests assert whether/when they fire.
@@ -308,15 +315,20 @@ async function assertI_clientCannotOverwriteServerFormula() {
   };
 }
 
-async function assertJ_defaultURL_unchanged() {
-  // With NO ?fyf_server=1 param, the server-mode fork is skipped.
-  // We verify by calling _fyfServerModeActive() directly.
-  const { sandbox } = buildSandbox({
+async function assertJ_serverModeAlwaysOn() {
+  // Step 5.5f · Server-mode is now the default for ALL URLs. The
+  // ?fyf_server=1 param is retired. _fyfServerModeActive() must
+  // return true regardless of URL shape.
+  const { sandbox: sboxPlain } = buildSandbox({
     urlHref: 'https://www.fungai.art/find-your-formula/',
   });
+  const { sandbox: sboxFlag } = buildSandbox({
+    urlHref: 'https://www.fungai.art/find-your-formula/?fyf_server=1',
+  });
   return {
-    pass: sandbox._fyfServerModeActive() === false,
-    detail: `_fyfServerModeActive() = ${sandbox._fyfServerModeActive()}`,
+    pass: sboxPlain._fyfServerModeActive() === true
+       && sboxFlag._fyfServerModeActive() === true,
+    detail: 'plain=' + sboxPlain._fyfServerModeActive() + ' with-flag=' + sboxFlag._fyfServerModeActive(),
   };
 }
 
@@ -332,7 +344,7 @@ async function assertJ_defaultURL_unchanged() {
     ['G · server 422 → no formula reveal',                          assertG_422_noFormulaReveal],
     ['H · formulaId preserved in __currentFormula',                 assertH_formulaIdPreserved],
     ['I · client cannot overwrite server formula (cache-hit)',      assertI_clientCannotOverwriteServerFormula],
-    ['J · normal URL (no flag) → server-mode fork skipped',         assertJ_defaultURL_unchanged],
+    ['J · server-mode always on (default for every URL)',           assertJ_serverModeAlwaysOn],
   ];
   let pass = 0, fail = 0;
   for (const [name, fn] of cases) {
