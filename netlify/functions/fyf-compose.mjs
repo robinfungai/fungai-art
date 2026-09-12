@@ -39,7 +39,7 @@
 
 import { createClient } from '@supabase/supabase-js';
 import crypto from 'node:crypto';
-import { compileFormula, composeFormulaWithMyco } from '../../src/server/formula-engine/index.js';
+import { compileFormula } from '../../src/server/formula-engine/index.js';
 
 // ── Origin gate ──────────────────────────────────────────────────
 const ALLOWED_ORIGINS = [
@@ -233,7 +233,7 @@ function newFormulaId() {
 // ── Sanitised response builder ───────────────────────────────────
 // Filters the engine's rich output down to the display-safe subset.
 // Everything the audit's constraint #5 forbids is stripped here.
-function sanitisedResponse({ formulaId, engineResult, persisted }) {
+function sanitisedResponse({ formulaId, engineResult, persisted, upgradeEligible }) {
   return {
     status:              'ok',
     formulaId,                                              // opaque
@@ -274,6 +274,7 @@ function sanitisedResponse({ formulaId, engineResult, persisted }) {
     mycoUsed:           typeof engineResult.mycoUsed === 'boolean' ? engineResult.mycoUsed : null,
     mycoFallbackReason: engineResult.mycoFallbackReason || null,
     mycoOverall:        engineResult.mycoUsed === true ? String(engineResult.mycoOverall || '').slice(0, 1200) : null,
+    mycoUpgradePending: !!upgradeEligible,
   };
 }
 
@@ -345,25 +346,26 @@ export default async function handler(req) {
   // validateAndNormalizeAvoid — SAFETY_QUESTION_NOT_ANSWERED gets
   // surfaced as a rejected response here.
   //
-  // STEP 5.5 · Runs composeFormulaWithMyco which:
-  //   1. Deterministic pick (baseline safety net — always computed)
-  //   2. Asks Claude Opus 5 for a proposal from the candidate set
-  //   3. Validates the proposal against every safety + load cap
-  //   4. Uses MYCO if valid, deterministic if not
-  // Shadow requests (X-FYF-Mode: shadow) SKIP MYCO to avoid burning
-  // Anthropic tokens on comparison-only calls that will never persist.
+  // STEP 5.5e · Async upgrade architecture. This endpoint is now
+  // ALWAYS fast (deterministic only). MYCO upgrade happens via a
+  // separate POST /api/fyf/upgrade call the client fires after
+  // rendering the deterministic reveal — matches client-mode's
+  // "reveal fast, upgrade silently" UX pattern without giving up
+  // server authority (MYCO validator still runs in /upgrade).
+  //
+  // Response includes `mycoUpgradePending: true` for non-shadow
+  // callers so the client knows to fire the /upgrade call.
   let engineResult;
   try {
-    const modeHdr = String(req.headers.get('x-fyf-mode') || '').toLowerCase();
-    if (modeHdr === 'shadow') {
-      engineResult = compileFormula(vp.profile);
-    } else {
-      engineResult = await composeFormulaWithMyco(vp.profile);
-    }
+    engineResult = compileFormula(vp.profile);
   } catch (e) {
     console.error('[fyf-compose] engine threw:', e && e.stack ? e.stack : e);
     return jsonResponse(500, cors, { status: 'error', code: 'INTERNAL_ERROR' });
   }
+  // Flag whether the caller should fire /api/fyf/upgrade next.
+  // Shadow mode never upgrades (comparison-only, no persistence).
+  const modeHdrForFlag = String(req.headers.get('x-fyf-mode') || '').toLowerCase();
+  const upgradeEligible = modeHdrForFlag !== 'shadow';
 
   if (engineResult.status === 'rejected') {
     return jsonResponse(400, cors, {
@@ -439,6 +441,6 @@ export default async function handler(req) {
   }
 
   return jsonResponse(200, cors,
-    sanitisedResponse({ formulaId, engineResult, persisted })
+    sanitisedResponse({ formulaId, engineResult, persisted, upgradeEligible })
   );
 }

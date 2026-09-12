@@ -118,6 +118,12 @@
   to     = "/.netlify/functions/fyf-compose"
   status = 200
 
+# Step 5.5e · async MYCO upgrade for a stored formulaId.
+[[redirects]]
+  from   = "/api/fyf/upgrade"
+  to     = "/.netlify/functions/fyf-upgrade"
+  status = 200
+
 # Proxy /api/* to Netlify functions
 [[redirects]]
   from   = "/api/*"

@@ -3363,6 +3363,107 @@ function _fyfRenderServerErrorState({ kind, backToSafety, retry }) {
   if (btn && typeof c.action === 'function') btn.addEventListener('click', c.action);
 }
 
+// Step 5.5e · Growing-plant loader for the MYCO upgrade phase.
+// Placeholder cycle — Robin's real "seed → bloom" plantae UX slots in
+// here later. For now: cycles through five emoji states every 2.4s so
+// the user sees something is happening while /api/fyf/upgrade runs.
+const _FYF_MYCO_LOADER_FRAMES = [
+  '🌰  MYCO is composing your formula…',
+  '🌱  MYCO is composing your formula…',
+  '🌿  MYCO is composing your formula…',
+  '🍃  MYCO is composing your formula…',
+  '✦  MYCO is composing your formula…',
+];
+let _fyfMycoLoaderIntervalId = null;
+let _fyfMycoLoaderOriginalText = null;
+function _fyfStartMycoLoader() {
+  try {
+    const el = document.querySelector('.r-story .r-story-eyebrow');
+    if (!el) return;
+    if (_fyfMycoLoaderIntervalId) return;      // already running
+    _fyfMycoLoaderOriginalText = el.textContent;
+    let i = 0;
+    el.textContent = _FYF_MYCO_LOADER_FRAMES[0];
+    _fyfMycoLoaderIntervalId = setInterval(() => {
+      i = (i + 1) % _FYF_MYCO_LOADER_FRAMES.length;
+      el.textContent = _FYF_MYCO_LOADER_FRAMES[i];
+    }, 2400);
+  } catch (_) {}
+}
+function _fyfStopMycoLoader() {
+  try {
+    if (_fyfMycoLoaderIntervalId) {
+      clearInterval(_fyfMycoLoaderIntervalId);
+      _fyfMycoLoaderIntervalId = null;
+    }
+    // If the paint function already replaced the badge (with "✦
+    // Composed by MYCO · the alchemist" or similar), leave that. If
+    // the loader is still showing a frame, revert to the original.
+    const el = document.querySelector('.r-story .r-story-eyebrow');
+    if (el && _fyfMycoLoaderOriginalText !== null) {
+      const cur = el.textContent || '';
+      if (_FYF_MYCO_LOADER_FRAMES.some(f => cur === f)) {
+        el.textContent = _fyfMycoLoaderOriginalText;
+      }
+    }
+    _fyfMycoLoaderOriginalText = null;
+  } catch (_) {}
+}
+
+// Step 5.5e · Fire the async MYCO upgrade for a stored formulaId.
+// Never blocks the reveal. On success, re-renders herbs + reasoning
+// via _fyfPaintServerReveal. On failure, quietly logs — user keeps
+// the deterministic formula that's already rendered.
+async function _fyfRequestMycoUpgrade(a, formulaId) {
+  const controller = new AbortController();
+  // 35s hard timeout — server budget is 25s for Anthropic + 5-10s
+  // for cold-start + persist + response transfer.
+  const timeoutId = setTimeout(() => { try { controller.abort(); } catch (_) {} }, 35000);
+  let res, body;
+  try {
+    res = await fetch('/api/fyf/upgrade', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ formulaId }),
+      signal:  controller.signal,
+    });
+    clearTimeout(timeoutId);
+    body = await res.json();
+  } catch (e) {
+    clearTimeout(timeoutId);
+    console.log('[fyf-upgrade] server unreachable/timeout — deterministic reveal kept. reason:',
+                (e && e.name === 'AbortError') ? 'timeout' : (e && e.message) || 'error');
+    return;
+  }
+
+  if (res.status !== 200 || !body || body.status !== 'ok') {
+    console.log('[fyf-upgrade] non-200 (' + res.status + ') — deterministic reveal kept. code=' + (body && body.code));
+    return;
+  }
+
+  // Only re-paint if the upgrade actually differs from what's on
+  // screen — MYCO fallback (validator rejection, timeout) may return
+  // the same deterministic herbs, in which case there's nothing to
+  // change and we shouldn't re-render.
+  const currentIds = ((window.__currentFormula && window.__currentFormula.herbs) || [])
+    .map(h => (h.name || '') + '@' + (h.percentage || 0)).join('|');
+  const upgradedIds = ((body.formula && body.formula.herbs) || [])
+    .map(h => (h.name || '') + '@' + (h.percentage || 0)).join('|');
+
+  if (currentIds === upgradedIds) {
+    // Same herbs — MYCO didn't improve. Just update the badge to
+    // reflect the actual mycoUsed status.
+    if (body.mycoUsed !== true) {
+      // Deterministic was authoritative — leave badge alone (loader
+      // will restore original in _fyfStopMycoLoader).
+    }
+    return;
+  }
+
+  // Upgrade differs — re-paint the reveal with the upgraded body.
+  _fyfPaintServerReveal(a, body);
+}
+
 // The awaited server-mode compose. Returns nothing — its job is to
 // mutate the DOM (either the reveal or an error state).
 async function _fyfRenderResultServerMode(a) {
@@ -3390,20 +3491,17 @@ async function _fyfRenderResultServerMode(a) {
   const backToSafety = () => go(safetyPageIndex >= 0 ? safetyPageIndex : 0);
   const retry = () => { _fyfServerComposeInFlight = false; renderResult(); };
 
-  // Composing indicator — reveal DOM is empty until the fetch resolves,
-  // which with server-side MYCO is 5-15s. Show a friendly holding line
-  // so the user doesn't stare at nothing.
-  try {
-    const tag = document.getElementById('rTagline');
-    if (tag) tag.textContent = 'Composing your formula…';
-  } catch (_) {}
+  // Step 5.5e · Compose is now FAST (deterministic only). The MYCO
+  // upgrade happens via a separate /api/fyf/upgrade call after the
+  // deterministic reveal paints — see the async upgrade block after
+  // _fyfPaintServerReveal returns. No pre-fetch tagline needed;
+  // reveal appears in <1s.
 
   const controller = new AbortController();
-  // 35s hard timeout on the server-mode compose fetch. Must be higher
-  // than MYCO_TIMEOUT_MS (25s server-side) + Netlify cold-start (~2s)
-  // + response transfer (~1s). Bumped from 30s to 35s alongside the
-  // Step 5.5c server-side bump.
-  const timeoutId  = setTimeout(() => { try { controller.abort(); } catch (_) {} }, 35000);
+  // 8s abort covers cold-start of the (now fast) deterministic
+  // compose. Server-side MYCO is out of this call and belongs to
+  // the /upgrade endpoint's own longer budget.
+  const timeoutId  = setTimeout(() => { try { controller.abort(); } catch (_) {} }, 8000);
   let res, body;
   try {
     res = await fetch('/api/fyf/compose', {
@@ -3450,6 +3548,16 @@ async function _fyfRenderResultServerMode(a) {
   // response paths render identically.
   _fyfPaintServerReveal(a, body);
   _fyfServerComposeInFlight = false;
+
+  // Step 5.5e · Async MYCO upgrade. Compose returned fast with a
+  // deterministic formula. Fire /api/fyf/upgrade in parallel to
+  // upgrade with MYCO+validator. Loader plays until it returns.
+  if (body && body.mycoUpgradePending && body.formulaId) {
+    _fyfStartMycoLoader();
+    _fyfRequestMycoUpgrade(a, body.formulaId).finally(() => {
+      _fyfStopMycoLoader();
+    });
+  }
 }
 
 // Shared render function — paints the reveal from a server response

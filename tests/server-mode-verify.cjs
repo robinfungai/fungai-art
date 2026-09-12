@@ -36,6 +36,7 @@ if (!block || block.length < 4000) {
 }
 
 function stubEl() {
+  const classNames = new Set();
   const el = {
     innerHTML: '',
     style: {},
@@ -43,10 +44,20 @@ function stubEl() {
     textContent: '',
     children: [],
     _listeners: [],
+    // classList stub — Step 5.5e added `.classList.add('pct-locked')`
+    // on the herbs container so tests that render the reveal need this.
+    classList: {
+      add:    (n) => classNames.add(n),
+      remove: (n) => classNames.delete(n),
+      contains: (n) => classNames.has(n),
+      toggle: (n) => classNames.has(n) ? classNames.delete(n) : classNames.add(n),
+    },
+    getAttribute: (_) => null,
     appendChild(c) { this.children.push(c); return c; },
     insertAdjacentHTML(_, html) { this.innerHTML += html; },
     insertBefore(node) { this.children.unshift(node); return node; },
     querySelector() { return stubEl(); },
+    querySelectorAll: () => [],
     addEventListener(ev, fn) { this._listeners.push({ ev, fn }); },
     click() { this._listeners.forEach(l => l.fn && l.fn()); },
   };
