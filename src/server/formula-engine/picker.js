@@ -107,9 +107,16 @@ function buildScoredCandidates(a, limit = 20) {
     .filter(x => openToGated || !x.h.gated)
     .slice(0, limit)
     .map(x => Object.assign({}, x.h, {
-      _score:   x.s,
-      _cat:     categoryOf(x.h),
-      _isTrace: isTrace(x.h),
+      _score:          x.s,
+      _cat:            categoryOf(x.h),
+      _isTrace:        isTrace(x.h),
+      // Include the load-cap flags MYCO needs so it can respect the
+      // GABA / STIM / TRACE caps in its picks. Without these, MYCO
+      // doesn't know which herbs the validator will treat as
+      // pharmacologically loaded and regularly proposes formulas
+      // the validator rejects (MYCO_GABA_LOAD_EXCEEDED etc).
+      _isGABAergic:    isGABAergic(x.h),
+      _isCNSStimulant: isCNSStimulant(x.h),
     }));
 }
 

@@ -28,14 +28,21 @@ const MYCO_TIMEOUT_MS = 25000;
 // used — id + name + botanical + category + pre-score + trace flag +
 // short functions blurb — so the model's prompting is consistent.
 function _buildShortlistText(candidates) {
-  return candidates.slice(0, 20).map((h, i) => (
-    (i + 1) + '. id=' + (h.id || '') + ' · ' + (h.name || '') +
-    ' (' + (h.botanical || '') + ')' +
-    ' · category:' + (h._cat || 'other') +
-    ' · pre-score:' + (h._score || 0) +
-    (h._isTrace ? ' · TRACE' : '') +
-    '\n     ' + (((h.primary_functions || [])[0]) || '').slice(0, 220)
-  )).join('\n');
+  return candidates.slice(0, 20).map((h, i) => {
+    const tags = [];
+    if (h._isTrace)        tags.push('TRACE');
+    if (h._isGABAergic)    tags.push('GABA');
+    if (h._isCNSStimulant) tags.push('STIM');
+    const tagStr = tags.length ? ' · ' + tags.join('/') : '';
+    return (
+      (i + 1) + '. id=' + (h.id || '') + ' · ' + (h.name || '') +
+      ' (' + (h.botanical || '') + ')' +
+      ' · category:' + (h._cat || 'other') +
+      ' · pre-score:' + (h._score || 0) +
+      tagStr +
+      '\n     ' + (((h.primary_functions || [])[0]) || '').slice(0, 220)
+    );
+  }).join('\n');
 }
 
 function _buildComposeUser(quiz, shortlistText) {
@@ -62,12 +69,16 @@ function _buildComposeUser(quiz, shortlistText) {
 
 const COMPOSE_SYS =
   'You are MYCO — a plant-medicine formula composer. You will pick 5 to 7 herbs from a shortlist for one specific person, and explain WHY in one paragraph.\n\n' +
-  'HARD RULES:\n' +
+  'HARD RULES (violations get the whole formula rejected by a deterministic validator downstream):\n' +
   '- Pick ONLY from the shortlist ids provided. Never invent a herb.\n' +
   '- Pick between 5 and 7 herbs. Prefer 5 unless the case genuinely calls for more (multi-axis complexity, chronic + acute together, layered request).\n' +
-  '- Percentages must sum to 100 (integers). Any TRACE-marked herb ≤ 5%.\n' +
-  '- Balance categories — no more than 2 herbs of the same category. Mix adaptogens, nervines, tonics, movers, mushrooms.\n' +
-  '- Do NOT diagnose. Do NOT prescribe. This is traditional herbal support, not medical treatment.\n' +
+  '- Percentages must sum to 100 (integers).\n' +
+  '- Category balance — no more than 2 herbs of the same category (adaptogen / nervine / tonic / mover / mushroom / bitter / aromatic / nutritive / other).\n' +
+  '- Load caps enforced by the shortlist tags:\n' +
+  '    · TRACE — max 1 TRACE-marked herb in the formula, and its pct MUST be ≤ 5% (potent essential-oil, would dominate flavour + carry safety risk at higher doses).\n' +
+  '    · GABA  — max 2 GABA-marked herbs (additive CNS depression risk if stacked further).\n' +
+  '    · STIM  — max 2 STIM-marked herbs (additive adrenergic drive if stacked further).\n' +
+  '- Do NOT diagnose. Do NOT prescribe. Traditional herbal support only, not medical treatment.\n' +
   '- Reference the free-text explicitly if it names a priority, prior herb experience, or contraindication history.\n\n' +
   'OUTPUT FORMAT — return ONLY valid JSON, no preamble, no code fences, matching:\n' +
   '{\n' +
