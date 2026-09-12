@@ -44,7 +44,10 @@ function compileFormula(profile) {
   try {
     normalisedAvoid = validateAndNormalizeAvoid(profile.avoid);
   } catch (e) {
-    if (e && e.code === 'SAFETY_QUESTION_NOT_ANSWERED') {
+    // Both errors validateAndNormalizeAvoid can throw are client-fault
+    // input problems, not server bugs. Surface each with its own code
+    // so the caller can respond appropriately (retake vs. malformed).
+    if (e && (e.code === 'SAFETY_QUESTION_NOT_ANSWERED' || e.code === 'SAFETY_FLAGS_CONFLICT')) {
       return {
         status: 'rejected',
         code:   e.code,
@@ -87,6 +90,12 @@ function compileFormula(profile) {
       isCNSStimulant:  isCNSStimulant(h),
       isGated:         !!h.gated,
     })),
+    // AUDIT_FIX (Finding #7) internal field — carries the FULL herb
+    // metadata (primary_functions, herb_to_herb_synergy, pharmacology,
+    // etc) so the response sanitiser can pre-compute display strings
+    // (shortNote, storyText, whyText, synergyPairs) before shipping.
+    // MUST NEVER appear on the wire. sanitisedResponse strips it.
+    _engineHerbs:     herbs,
     percentageTotal:  percentages.reduce((a, b) => a + b, 0),
     synergies:        pairs.synergies,
     cautions:         pairs.cautions,
@@ -175,6 +184,11 @@ async function composeFormulaWithMyco(profile, opts = {}) {
       isGated:         !!h.gated,
       mycoReason:      String(validation.reasons[i] || '').slice(0, 300),
     })),
+    // AUDIT_FIX (Finding #7) — same internal field as compileFormula.
+    // Carries the FULL herb metadata (the finalHerbs from validator)
+    // so sanitisedResponse can pre-compute display strings before
+    // shipping. Must be stripped by the sanitiser.
+    _engineHerbs:     finalHerbs,
     percentageTotal:  finalPcts.reduce((a, b) => a + b, 0),
     synergies:        pairs.synergies,
     cautions:         pairs.cautions,

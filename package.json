@@ -11,6 +11,7 @@
     "test:reserve": "node tests/reserve-formula-verify.cjs",
     "test:myco-validator": "node tests/myco-validator-verify.cjs",
     "test:minor-gate": "node tests/minor-gate-verify.cjs",
+    "test:safety-flags-conflict": "node tests/safety-flags-conflict-verify.cjs",
     "build:herbs-data": "node scripts/export-herbs.cjs",
     "build:herb-pool": "node scripts/build-herb-pool.cjs",
     "build:engine2": "node scripts/sync-engine2.cjs",

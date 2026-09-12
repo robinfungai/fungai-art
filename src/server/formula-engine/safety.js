@@ -66,6 +66,22 @@ function validateAndNormalizeAvoid(avoid) {
     err.code = 'SAFETY_QUESTION_NOT_ANSWERED';
     throw err;
   }
+  // AUDIT_FIX (Finding #8): "none" is mutually exclusive with every
+  // other flag. A malformed/hostile client that sends
+  // avoid:["none", "pregnancy"] previously reached safetyFilter,
+  // which short-circuits on .includes("none") and DISABLES all
+  // filtering — the pregnancy flag was silently dropped, and the
+  // formula composed from the unfiltered pool including uterine
+  // stimulants. Rejecting the combination closes that bypass; the
+  // client already sends one form or the other, never both.
+  if (cleaned.includes('none') && cleaned.length > 1) {
+    const err = new Error(
+      '"none" must be the sole entry in avoid[]. Do not combine it ' +
+      'with any other flag — this is a mutually-exclusive sentinel.'
+    );
+    err.code = 'SAFETY_FLAGS_CONFLICT';
+    throw err;
+  }
   return cleaned;
 }
 

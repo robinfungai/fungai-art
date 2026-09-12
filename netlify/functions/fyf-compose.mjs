@@ -40,6 +40,7 @@
 import { createClient } from '@supabase/supabase-js';
 import crypto from 'node:crypto';
 import { compileFormula, composeFormulaWithMyco } from '../../src/server/formula-engine/index.js';
+import { buildDisplayBundle } from '../../src/server/formula-engine/display.js';
 
 // ── Origin gate ──────────────────────────────────────────────────
 const ALLOWED_ORIGINS = [
@@ -232,8 +233,35 @@ function newFormulaId() {
 
 // ── Sanitised response builder ───────────────────────────────────
 // Filters the engine's rich output down to the display-safe subset.
-// Everything the audit's constraint #5 forbids is stripped here.
-function sanitisedResponse({ formulaId, engineResult, persisted, upgradeEligible }) {
+//
+// AUDIT_FIX (Finding #7): the previous version shipped the raw herb
+// metadata (primary_functions, secondary_benefits, energetics,
+// spiritual_layer, pharmacology, tcm_element, herb_to_herb_synergy,
+// herb_to_herb_caution) to the browser so the client could compute
+// display strings. That was a meaningful IP leak — a scraper hitting
+// /api/fyf/compose could harvest a substantial subset of the herb DB.
+//
+// This version pre-computes ALL customer-facing display strings on the
+// server (storyText, whyText, per-herb shortNote, synergy/caution
+// pairs with their notes) and ships ONLY strings the client needs to
+// render. The raw source arrays never leave the server.
+//
+// Per herb the wire carries: { name, botanical, percentage, shortNote, isTrace }
+// Per formula the wire carries: { synergies, cautions, storyText, whyText }
+// Everything else stays inside `_engineHerbs` which sanitisedResponse
+// receives via engineResult but never puts on the response.
+function sanitisedResponse({ formulaId, engineResult, profile, persisted, upgradeEligible }) {
+  // engineResult._engineHerbs is the internal-only full-metadata array
+  // that display.buildDisplayBundle needs. Fallback empty means the
+  // display bundle collapses to empty strings — safe, never crashes.
+  const engineHerbs = Array.isArray(engineResult._engineHerbs) ? engineResult._engineHerbs : [];
+  const percentages = engineResult.herbs.map(h => h.percentage);
+  const display     = buildDisplayBundle({
+    profile,
+    enrichedHerbs: engineHerbs,
+    percentages,
+  });
+
   return {
     status:              'ok',
     formulaId,                                              // opaque
@@ -246,30 +274,27 @@ function sanitisedResponse({ formulaId, engineResult, persisted, upgradeEligible
       name:              engineResult.name,
       size:              engineResult.formulaSize,
       totalPercentage:   engineResult.percentageTotal,
-      herbs: engineResult.herbs.map(h => ({
-        // Display-safe fields only. Herb.id (numeric catalogue id),
-        // category, score, isGABAergic/isCNSStimulant/isTrace, gated
-        // flag — all OMITTED. The reserve-formula lookup uses
-        // formulaId to fetch the stored formula server-side; the
-        // client never needs the internal id.
-        //
-        // Step 8 · display enrichment. Ships the fields the client's
-        // reveal helpers (storyFor / shortNote / buildWhyText /
-        // checkFormulaPairs) read from each herb, so the client no
-        // longer needs to load the full /herbs-data.js catalog just
-        // to paint the herb list. Server DB stays authoritative.
-        name:                 h.name,
-        botanical:            h.botanical,
-        percentage:           h.percentage,
-        primary_functions:    Array.isArray(h.primary_functions)    ? h.primary_functions.slice(0, 3)    : [],
-        secondary_benefits:   Array.isArray(h.secondary_benefits)   ? h.secondary_benefits.slice(0, 3)   : [],
-        energetics:           Array.isArray(h.energetics)           ? h.energetics.slice(0, 4)           : [],
-        spiritual_layer:      typeof h.spiritual_layer === 'string' ? h.spiritual_layer.slice(0, 400)    : '',
-        pharmacology:         typeof h.pharmacology    === 'string' ? h.pharmacology.slice(0, 400)       : '',
-        tcm_element:          typeof h.tcm_element     === 'string' ? h.tcm_element                      : '',
-        herb_to_herb_synergy: Array.isArray(h.herb_to_herb_synergy) ? h.herb_to_herb_synergy.slice(0, 6) : [],
-        herb_to_herb_caution: Array.isArray(h.herb_to_herb_caution) ? h.herb_to_herb_caution.slice(0, 6) : [],
+      herbs: engineResult.herbs.map((h, i) => ({
+        // Display-safe fields only. Internal ids, categories, scores,
+        // load-cap flags, gated flag — all OMITTED. The reserve-formula
+        // lookup uses formulaId to fetch the stored formula server-side;
+        // the client never needs internal metadata.
+        name:       h.name,
+        botanical:  h.botanical,
+        percentage: h.percentage,
+        // AUDIT_FIX (Finding #7): pre-computed 140-char summary — the
+        // SINGLE pharma-derived string per herb that reaches the wire.
+        // Raw primary_functions / secondary_benefits / energetics /
+        // spiritual_layer / pharmacology / tcm_element / synergy /
+        // caution arrays are NEVER shipped.
+        shortNote:  display.herbLines[i] ? display.herbLines[i].shortNote : '',
+        isTrace:    !!h.isTrace,
       })),
+      // Pre-computed formula-level display strings.
+      synergies:  display.synergies,
+      cautions:   display.cautions,
+      storyText:  display.storyText,
+      whyText:    display.whyText,
     },
     safetyReport: {
       // Only the flags the user themselves set — not the count of
@@ -463,6 +488,6 @@ export default async function handler(req) {
   }
 
   return jsonResponse(200, cors,
-    sanitisedResponse({ formulaId, engineResult, persisted, upgradeEligible })
+    sanitisedResponse({ formulaId, engineResult, profile: vp.profile, persisted, upgradeEligible })
   );
 }
