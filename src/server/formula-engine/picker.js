@@ -82,4 +82,35 @@ function pickFormula(a) {
   return composed.map(x => Object.assign({}, x.h, { _score: x.s, _cat: categoryOf(x.h) }));
 }
 
-module.exports = { targetHerbCount, pickFormula };
+// STEP 5.5 · Candidate set builder for the MYCO validator path.
+// Returns the top-N scored, deduplicated herbs — BEFORE the category/
+// load caps in pickFormula run. This is the bounded universe MYCO is
+// allowed to pick within. myco-validator.js rejects any pick outside
+// this set, then applies the same caps pickFormula applies.
+function buildScoredCandidates(a, limit = 20) {
+  const pool = ensurePool();
+  if (!pool || !pool.length) return [];
+  const safe = pool.filter(h => safetyFilter(h, a.avoid || []));
+  const scored = safe.map(h => ({ h, s: scoreHerb(h, a) })).filter(x => x.s > 0);
+  scored.sort((x, y) => y.s - x.s);
+
+  const seen = new Set();
+  const uniq = scored.filter(x => {
+    const key = (shortNote(x.h) || x.h.name).slice(0, 40);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+
+  const openToGated = !!a._gatedOptIn;
+  return uniq
+    .filter(x => openToGated || !x.h.gated)
+    .slice(0, limit)
+    .map(x => Object.assign({}, x.h, {
+      _score:   x.s,
+      _cat:     categoryOf(x.h),
+      _isTrace: isTrace(x.h),
+    }));
+}
+
+module.exports = { targetHerbCount, pickFormula, buildScoredCandidates };

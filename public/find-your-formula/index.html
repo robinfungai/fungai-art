@@ -3970,9 +3970,15 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
   try {
     // Post to the dedicated /api/reserve-formula endpoint which sends
     // Robin the full reservation via Resend AND emails the user a
-    // proper confirmation with their formula. Falls back to mailto:
-    // if the endpoint is unreachable.
+    // proper confirmation with their formula.
+    //
+    // STEP 5.5 · The previous version auto-opened a mailto: draft on
+    // ANY non-2xx response (silent fallback that hid server failures +
+    // showed a "reserved" success card even when nothing went through).
+    // Now: non-2xx renders a real error state with a user-triggered
+    // "email Robin directly" CTA. No fake success, no hidden failures.
     let ok = false;
+    let serverErr = null;         // { status, code, message } on non-2xx
     let serverGeo = null;
     try {
       const ctrl = new AbortController();
@@ -3985,22 +3991,57 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
       });
       clearTimeout(abortT);
       ok = res.ok;
+      let bodyJson = null;
+      try { bodyJson = await res.json(); } catch (_) {}
       if (ok) {
-        try { const d = await res.json(); serverGeo = d?.geo || null; } catch (_) {}
+        serverGeo = bodyJson?.geo || null;
+      } else {
+        serverErr = {
+          status:  res.status,
+          code:    bodyJson?.code    || null,
+          message: bodyJson?.message || null,
+        };
+        console.error('[reserve] server responded ' + res.status, bodyJson);
       }
-    } catch (_) {}
-    clearTimeout(stuckSafety);
-    if (!ok) {
-      const notesForRobin =
-        'FIND-YOUR-FORMULA reservation\n' +
-        'Ship to: ' + payload.name + ' · ' + payload.city + ', ' + payload.country + '\n' +
-        'Formula: ' + payload.formulaName + ' (' + payload.formula.map(f => f.name).join(', ') + ')\n' +
-        'Quiz: ' + JSON.stringify(payload.quiz) + '\n' +
-        (payload.notes ? 'Notes: ' + payload.notes + '\n' : '');
-      const subject = encodeURIComponent('Formula reservation · ' + payload.name);
-      const body    = encodeURIComponent(notesForRobin + '\nContact email: ' + payload.email);
-      window.location.href = 'mailto:robin@fungai.art?subject=' + subject + '&body=' + body;
+    } catch (e) {
+      serverErr = { status: 0, code: 'NETWORK', message: (e && e.message) || 'network' };
+      console.error('[reserve] fetch failed', e);
     }
+    clearTimeout(stuckSafety);
+
+    if (!ok) {
+      // Render an honest error state. Do NOT show the success card,
+      // do NOT auto-open mailto — offer it as a user-clicked fallback.
+      const codeCopy = {
+        FORMULA_NOT_FOUND:            'The reading has expired. Please retake the quiz and reserve again.',
+        FORMULA_ID_INVALID:           'The reading link looks malformed. Please retake the quiz and try again.',
+        FORMULA_LOOKUP_UNAVAILABLE:   'The reservation service is temporarily unavailable. Please try again in a minute.',
+        FORMULA_LOOKUP_FAILED:        'Something went wrong looking up your reading. Please try again — or email Robin directly.',
+        NETWORK:                      'We couldn\'t reach the reservation service. Check your connection and try again.',
+      };
+      const msg = (serverErr && codeCopy[serverErr.code])
+               || (serverErr && serverErr.message)
+               || 'The reservation didn\'t go through. Please try again — or email Robin directly.';
+      errEl.hidden = false;
+      errEl.innerHTML =
+        '<div style="padding:16px 18px;background:rgba(225,107,107,0.08);border:0.5px solid rgba(225,107,107,0.35);border-radius:12px;font-size:14px;line-height:1.5;color:var(--parchment)">' +
+          '<div style="font-family:var(--mono);font-size:9.5px;letter-spacing:0.24em;text-transform:uppercase;color:var(--coral);margin-bottom:8px">⚠ Reservation didn\'t go through</div>' +
+          '<div style="margin-bottom:12px">' + msg + '</div>' +
+          '<div style="display:flex;gap:10px;flex-wrap:wrap">' +
+            '<button type="button" id="reserveRetry" style="padding:9px 18px;background:var(--amber-l);color:var(--void);border:none;border-radius:999px;font-family:var(--mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer">Retry</button>' +
+            '<a href="mailto:robin@fungai.art?subject=' + encodeURIComponent('Formula reservation · ' + payload.name) + '&body=' + encodeURIComponent('Hi Robin — I tried to reserve on fungai.art and got an error. Formula: ' + payload.formulaName + '. My email: ' + payload.email) + '" style="padding:9px 18px;background:transparent;color:var(--dust);border:0.5px solid var(--rule-strong);border-radius:999px;font-family:var(--mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none">Email Robin instead</a>' +
+          '</div>' +
+        '</div>';
+      const retryBtn = document.getElementById('reserveRetry');
+      if (retryBtn) retryBtn.addEventListener('click', () => {
+        errEl.hidden = true;
+        btn.disabled = false; btn.textContent = 'Reserve my bottle';
+        form.style.display = '';
+      });
+      btn.disabled = false; btn.textContent = 'Reserve my bottle';
+      return;
+    }
+
     document.getElementById('reservedEmail').textContent = payload.email;
     document.getElementById('reserveThanks').classList.add('on');
     form.style.display = 'none';

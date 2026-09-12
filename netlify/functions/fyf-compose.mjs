@@ -39,7 +39,7 @@
 
 import { createClient } from '@supabase/supabase-js';
 import crypto from 'node:crypto';
-import { compileFormula } from '../../src/server/formula-engine/index.js';
+import { compileFormula, composeFormulaWithMyco } from '../../src/server/formula-engine/index.js';
 
 // ── Origin gate ──────────────────────────────────────────────────
 const ALLOWED_ORIGINS = [
@@ -263,6 +263,11 @@ function sanitisedResponse({ formulaId, engineResult, persisted }) {
       // These would let a scraper reverse-engineer the safety ontology.
       flagsApplied:      (engineResult.filteredOut && Object.keys(engineResult.filteredOut.byFlag || {})) || [],
     },
+    // Observability field — tells the caller (and the stored formula
+    // used by reserve-formula's admin email) whether MYCO was used or
+    // whether we fell back to deterministic. mycoUsed absent (undefined)
+    // means shadow-mode compose (deterministic-only by design).
+    mycoUsed: typeof engineResult.mycoUsed === 'boolean' ? engineResult.mycoUsed : null,
   };
 }
 
@@ -333,9 +338,22 @@ export default async function handler(req) {
   // Compose. The engine internally validates avoid via
   // validateAndNormalizeAvoid — SAFETY_QUESTION_NOT_ANSWERED gets
   // surfaced as a rejected response here.
+  //
+  // STEP 5.5 · Runs composeFormulaWithMyco which:
+  //   1. Deterministic pick (baseline safety net — always computed)
+  //   2. Asks Claude Opus 5 for a proposal from the candidate set
+  //   3. Validates the proposal against every safety + load cap
+  //   4. Uses MYCO if valid, deterministic if not
+  // Shadow requests (X-FYF-Mode: shadow) SKIP MYCO to avoid burning
+  // Anthropic tokens on comparison-only calls that will never persist.
   let engineResult;
   try {
-    engineResult = compileFormula(vp.profile);
+    const modeHdr = String(req.headers.get('x-fyf-mode') || '').toLowerCase();
+    if (modeHdr === 'shadow') {
+      engineResult = compileFormula(vp.profile);
+    } else {
+      engineResult = await composeFormulaWithMyco(vp.profile);
+    }
   } catch (e) {
     console.error('[fyf-compose] engine threw:', e && e.stack ? e.stack : e);
     return jsonResponse(500, cors, { status: 'error', code: 'INTERNAL_ERROR' });
