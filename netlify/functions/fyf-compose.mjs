@@ -263,11 +263,14 @@ function sanitisedResponse({ formulaId, engineResult, persisted }) {
       // These would let a scraper reverse-engineer the safety ontology.
       flagsApplied:      (engineResult.filteredOut && Object.keys(engineResult.filteredOut.byFlag || {})) || [],
     },
-    // Observability field — tells the caller (and the stored formula
+    // Observability fields — tells the caller (and the stored formula
     // used by reserve-formula's admin email) whether MYCO was used or
     // whether we fell back to deterministic. mycoUsed absent (undefined)
     // means shadow-mode compose (deterministic-only by design).
-    mycoUsed: typeof engineResult.mycoUsed === 'boolean' ? engineResult.mycoUsed : null,
+    // mycoFallbackReason is a stable enum from myco-validator.js —
+    // safe to expose; contains no proprietary rules or herb data.
+    mycoUsed:           typeof engineResult.mycoUsed === 'boolean' ? engineResult.mycoUsed : null,
+    mycoFallbackReason: engineResult.mycoFallbackReason || null,
   };
 }
 

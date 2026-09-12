@@ -134,6 +134,8 @@ async function composeFormulaWithMyco(profile, opts = {}) {
   // JSON, empty picks). Fully swallowed → baseline used.
   const proposal = await askMyco(candidates, normalisedProfile, opts);
   if (!proposal) {
+    // eslint-disable-next-line no-console
+    console.log('[compose] MYCO returned null — falling back to deterministic (MYCO_UNAVAILABLE)');
     return { ...baseline, mycoUsed: false, mycoFallbackReason: 'MYCO_UNAVAILABLE' };
   }
 
