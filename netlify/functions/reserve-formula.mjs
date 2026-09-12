@@ -103,6 +103,18 @@ setInterval(() => {
 // client from env vars.
 export const FORMULA_ID_RE = /^fyf_[a-f0-9]{32}$/;
 
+// Round 2 · Item #5 — bottle-size validation. Exported so tests can
+// drive the same allowlist the handler uses without duplication.
+export const ALLOWED_BOTTLE_SIZES = [15, 30];
+export const DEFAULT_BOTTLE_ML    = 30;
+export function normaliseBottleMl(raw) {
+  if (raw === undefined || raw === null) return DEFAULT_BOTTLE_ML;
+  const n = Number(raw);
+  if (!Number.isFinite(n) || !Number.isInteger(n)) return DEFAULT_BOTTLE_ML;
+  if (!ALLOWED_BOTTLE_SIZES.includes(n)) return DEFAULT_BOTTLE_ML;
+  return n;
+}
+
 export async function resolveAuthoritativeFormula({ rawFormulaId, sbClient }) {
   const id = String(rawFormulaId || '').trim();
   // Step 7: formulaId is REQUIRED. Absent id → missing_id (handler
@@ -194,7 +206,15 @@ export default async function handler(req) {
   const city    = String(body.city    || '').trim().slice(0, 80);
   const country = String(body.country || '').trim().slice(0, 80);
   const notes   = String(body.notes   || '').trim().slice(0, 1000);
-  const bottleMl    = Number(body.bottleMl) || 30;
+  // Round 2 · Item #5 — bottle size allowlist. See normaliseBottleMl
+  // at the top of this file. Client cannot dictate the pour spec that
+  // lands in Robin's admin email. Silent snap-to-default (with log) on
+  // invalid input; we don't reject the whole reservation over an ml bug.
+  const bottleMlSnappedFrom = body.bottleMl;
+  const bottleMl            = normaliseBottleMl(body.bottleMl);
+  if (bottleMlSnappedFrom !== undefined && bottleMlSnappedFrom !== null && bottleMl !== Number(bottleMlSnappedFrom)) {
+    console.warn('[reserve-formula] rejected bottleMl=' + JSON.stringify(bottleMlSnappedFrom) + ' → snapping to ' + bottleMl);
+  }
 
   // ── STEP 7 · Authoritative-formula resolution ─────────────────
   // formulaId is REQUIRED. We look it up in the private fyf_formulas
