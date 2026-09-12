@@ -3311,6 +3311,22 @@ async function _fyfRenderResultServerMode(a) {
 // body. Called from both the fresh-fetch success path AND the cache-
 // hit early return. Percentages + herbs + name all come from the
 // server; no pickFormula() runs.
+// AUDIT_FIX (Round 2, Item #1) · deep-freeze helper.
+// Recursively Object.freeze()s an object graph — any attempt by later
+// UI code to mutate the authoritative formula throws in strict-mode
+// scripts and silently no-ops otherwise (still catches mistakes in
+// dev). Cheap for the object sizes we ship (<10 herbs, one string
+// per field). Ignores non-object leaves + already-frozen sub-trees.
+function _fyfDeepFreeze(obj) {
+  if (obj === null || typeof obj !== 'object' || Object.isFrozen(obj)) return obj;
+  Object.freeze(obj);
+  for (const key of Object.keys(obj)) {
+    const v = obj[key];
+    if (v && typeof v === 'object') _fyfDeepFreeze(v);
+  }
+  return obj;
+}
+
 function _fyfPaintServerReveal(a, body) {
   const serverFormula = (body && body.formula) || {};
   const enrichedHerbs = _fyfEnrichServerHerbs(serverFormula.herbs || []);
@@ -3319,20 +3335,42 @@ function _fyfPaintServerReveal(a, body) {
   const formulaId     = body.formulaId || null;
   const profileKey    = _fyfShadowKey(a);
 
-  // Stash the authoritative formula on window state so downstream
-  // consumers (reservation submit, etc) read from it rather than
-  // re-invoking pickFormula. formulaId is preserved for Step 5.
-  window.__currentFormula = {
+  // AUDIT_FIX (Round 2 · Item #1): separate AUTHORITATIVE from DISPLAY.
+  //
+  //   window.__authoritativeFormula  — deep-frozen; exact server snapshot.
+  //                                     reservation submit reads from here.
+  //   window.__displayFormula        — mutable; UI/animation/note-echo state.
+  //   window.__currentFormula        — alias for authoritative (backwards-
+  //                                     compat with reserve-submit code that
+  //                                     was written before the split).
+  //
+  // Any later code that tries `window.__currentFormula.synergies = X`
+  // or similar will now silently no-op (or throw in strict mode) —
+  // the frozen authoritative can't be mutated even by mistake.
+  const authoritative = _fyfDeepFreeze({
     name:         serverName,
     herbs:        enrichedHerbs,
     percentages:  serverPct,
-    synergies:    [],
+    // Synergies + cautions come from the server pre-computed (Round 2 · #7).
+    // Frozen as part of the authoritative snapshot.
+    synergies:    Array.isArray(serverFormula.synergies) ? serverFormula.synergies : [],
+    cautions:     Array.isArray(serverFormula.cautions)  ? serverFormula.cautions  : [],
     formulaId:    formulaId,
+    engineVersion: body.engineVersion || null,
+    herbDbVersion: body.herbDbVersion || null,
     _source:      'server',
-    _serverBody:  body,
     _profileKey:  profileKey,
+    _serverBody:  body,  // deep-frozen too → cache-hit re-render is safe
+  });
+  window.__authoritativeFormula = authoritative;
+  window.__currentFormula       = authoritative;      // alias, same frozen ref
+  window.__displayFormula       = {                   // mutable — UI state only
+    revealedPercentages: false,
+    noteEchoRendered:    false,
+    mycoReasoningShown:  false,
+    storyOverriddenByMycoStory: false,
   };
-  window.__currentFormulaName = serverName;
+  window.__currentFormulaName   = serverName;
 
   // Clear the bottle before painting — cache-hit re-renders would
   // otherwise stack a second bottle image on top of the first.
@@ -3406,7 +3444,10 @@ function _fyfPaintServerReveal(a, body) {
         row.textContent = '⚠ Caution · ' + p.a + ' + ' + p.b + ' — ' + (p.note || '').replace(/^[^—:]*[—:]\s*/, '');
         synBody.appendChild(row);
       });
-      window.__currentFormula.synergies = synergies;
+      // AUDIT_FIX (Round 2 · Item #1): removed
+      //   window.__currentFormula.synergies = synergies
+      // — the authoritative object is now frozen and MUST NOT be
+      // mutated. Synergies live inside the frozen snapshot already.
     }
   } catch (_) {}
 

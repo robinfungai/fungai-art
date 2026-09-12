@@ -3077,6 +3077,17 @@ async function _fyfRenderResultServerMode(a) {
   _fyfServerComposeInFlight = false;
 }
 
+// AUDIT_FIX (Round 2 · Item #1) · deep-freeze helper (mirror of Basic).
+function _fyfDeepFreeze(obj) {
+  if (obj === null || typeof obj !== 'object' || Object.isFrozen(obj)) return obj;
+  Object.freeze(obj);
+  for (const key of Object.keys(obj)) {
+    const v = obj[key];
+    if (v && typeof v === 'object') _fyfDeepFreeze(v);
+  }
+  return obj;
+}
+
 function _fyfPaintServerReveal(a, body) {
   const serverFormula = (body && body.formula) || {};
   const enrichedHerbs = _fyfEnrichServerHerbs(serverFormula.herbs || []);
@@ -3085,17 +3096,29 @@ function _fyfPaintServerReveal(a, body) {
   const formulaId     = body.formulaId || null;
   const profileKey    = _fyfShadowKey(a);
 
-  window.__currentFormula = {
+  // AUDIT_FIX (Round 2 · Item #1) — see Basic client for full doc.
+  const authoritative = _fyfDeepFreeze({
     name:         serverName,
     herbs:        enrichedHerbs,
     percentages:  serverPct,
-    synergies:    [],
+    synergies:    Array.isArray(serverFormula.synergies) ? serverFormula.synergies : [],
+    cautions:     Array.isArray(serverFormula.cautions)  ? serverFormula.cautions  : [],
     formulaId:    formulaId,
+    engineVersion: body.engineVersion || null,
+    herbDbVersion: body.herbDbVersion || null,
     _source:      'server',
-    _serverBody:  body,
     _profileKey:  profileKey,
+    _serverBody:  body,  // deep-frozen; cache-hit re-render is safe
+  });
+  window.__authoritativeFormula = authoritative;
+  window.__currentFormula       = authoritative;      // alias, frozen
+  window.__displayFormula       = {                   // mutable UI state
+    revealedPercentages: false,
+    noteEchoRendered:    false,
+    mycoReasoningShown:  false,
+    storyOverriddenByMycoStory: false,
   };
-  window.__currentFormulaName = serverName;
+  window.__currentFormulaName   = serverName;
 
   const bottleEl = document.getElementById('bottle');
   if (bottleEl) bottleEl.innerHTML = '';
@@ -3160,7 +3183,8 @@ function _fyfPaintServerReveal(a, body) {
         row.textContent = '⚠ Caution · ' + p.a + ' + ' + p.b + ' — ' + (p.note || '').replace(/^[^—:]*[—:]\s*/, '');
         synBody.appendChild(row);
       });
-      window.__currentFormula.synergies = synergies;
+      // AUDIT_FIX (Round 2 · Item #1) — authoritative object is frozen;
+      // mutation removed. Synergies live inside the frozen snapshot.
     }
   } catch (_) {}
 
