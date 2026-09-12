@@ -3808,13 +3808,17 @@ async function archiveFormulaToAcademy({ name, herbs, percentages, notes, contac
       notes: (notes || '').slice(0, 500),
       source: 'find-your-formula',
       quiz_snapshot: quiz || null,
-      origin_city:        geo?.city         || null,
+      // Round 2 · Item #2 — geo minimisation. Only country retained;
+      // the other origin_* columns are silently NULLed until the SQL
+      // migration drops them entirely (follow-up). No lat/lng/ip/city/
+      // subdivision/timezone reaches Supabase from the FYF flow anymore.
       origin_country:     geo?.country      || null,
-      origin_subdivision: geo?.subdivision  || null,
-      origin_timezone:    geo?.timezone     || null,
-      origin_ip:          geo?.ip           || null,
-      origin_lat:         geo?.latitude     || null,
-      origin_lng:         geo?.longitude    || null,
+      origin_city:        null,
+      origin_subdivision: null,
+      origin_timezone:    null,
+      origin_ip:          null,
+      origin_lat:         null,
+      origin_lng:         null,
     });
   } catch (_) { /* silent — either table missing or RLS blocked anon */ }
 }

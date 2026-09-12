@@ -154,26 +154,38 @@ export default async function handler(req) {
   try { body = await req.json(); }
   catch { return json({ error: 'Bad JSON body' }, 400, cors); }
 
-  // ── Geo capture from Netlify headers ──────────────────────
-  // Netlify Edge injects x-nf-geo (JSON) + x-nf-client-connection-ip
-  // + x-country on every request at no extra cost. Robin gets city /
-  // country / IP on every reservation so he sees where the request
-  // came from (VPN bypasses this — expected, called out to Robin).
-  let geo = { city: null, country: null, subdivision: null, timezone: null, ip: null, latitude: null, longitude: null };
+  // ── Geo capture — MINIMIZED (Round 2 · Item #2) ───────────────
+  // The questionnaire touches health-adjacent selections (pregnancy,
+  // medications, mental-health flags). Collecting precise geo alongside
+  // that data is over-collection under GDPR minimisation. Retained
+  // fields, with documented rationale:
+  //
+  //   country — operationally useful. Robin needs to know the ship-to
+  //             country upfront (EU vs US vs other → different shipping
+  //             + import + herbal-import rules), and country is also
+  //             one of the required form fields the customer types.
+  //             The Netlify-derived value is a sanity cross-check only,
+  //             never persisted separately.
+  //
+  // Explicitly DROPPED (were captured pre-Round 2):
+  //   city         — no operational use in the reservation flow
+  //   subdivision  — no operational use
+  //   timezone     — no operational use
+  //   latitude     — precise coords have no bearing on formula
+  //   longitude    — precise coords have no bearing on formula
+  //   ip           — not needed for reservation; rate-limiting reads
+  //                  x-forwarded-for at request time but does not store it
+  //
+  // Nothing in the reservation flow needs a coord/city/IP. If shipping
+  // logistics ever needs city, the customer types it into the form —
+  // no need for silent header capture.
+  let geo = { country: null };
   try {
     const rawGeo = req.headers.get('x-nf-geo');
     if (rawGeo) {
       const parsed = JSON.parse(rawGeo);
-      geo.city         = parsed.city         || null;
-      geo.country      = parsed.country?.name || parsed.country?.code || null;
-      geo.subdivision  = parsed.subdivision?.name || null;
-      geo.timezone     = parsed.timezone     || null;
-      geo.latitude     = parsed.latitude     || null;
-      geo.longitude    = parsed.longitude    || null;
+      geo.country = parsed.country?.name || parsed.country?.code || null;
     }
-    geo.ip = req.headers.get('x-nf-client-connection-ip')
-          || req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
-          || null;
     if (!geo.country) geo.country = req.headers.get('x-country') || null;
   } catch (_) { /* headers missing / malformed — leave geo blank */ }
 
@@ -434,17 +446,10 @@ function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, 
           </table>
         </div>` : ''}
 
-        ${(geo.city || geo.country || geo.ip) ? `
-        <div style="margin-top:20px;padding:14px 16px;background:#141821;border:0.5px solid rgba(232,177,75,.12);border-radius:6px;">
-          <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#8B7E62;margin-bottom:8px;">◉ Origin (edge-detected)</div>
-          <table cellpadding="0" cellspacing="0" style="width:100%;font-family:'Courier New',monospace;font-size:12px;color:#C9B894;">
-            ${geo.city         ? `<tr><td style="padding:3px 0;width:90px;color:#8B7E62;">City</td><td>${esc(geo.city)}${geo.subdivision ? ', ' + esc(geo.subdivision) : ''}</td></tr>` : ''}
-            ${geo.country      ? `<tr><td style="padding:3px 0;color:#8B7E62;">Country</td><td>${esc(geo.country)}</td></tr>` : ''}
-            ${geo.timezone     ? `<tr><td style="padding:3px 0;color:#8B7E62;">Timezone</td><td>${esc(geo.timezone)}</td></tr>` : ''}
-            ${geo.ip           ? `<tr><td style="padding:3px 0;color:#8B7E62;">IP</td><td><code>${esc(geo.ip)}</code></td></tr>` : ''}
-            ${(geo.latitude && geo.longitude) ? `<tr><td style="padding:3px 0;color:#8B7E62;">Coords</td><td>${geo.latitude}, ${geo.longitude}</td></tr>` : ''}
-          </table>
-          <div style="font-family:Georgia,serif;font-style:italic;font-size:11px;color:#8B7E62;margin-top:8px;">VPN bypasses this &mdash; treat as directional signal, not proof.</div>
+        ${geo.country ? `
+        <div style="margin-top:20px;padding:12px 16px;background:#141821;border:0.5px solid rgba(232,177,75,.12);border-radius:6px;">
+          <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#8B7E62;">◉ Edge-detected country: <span style="color:#C9B894;">${esc(geo.country)}</span></div>
+          <div style="font-family:Georgia,serif;font-style:italic;font-size:11px;color:#8B7E62;margin-top:6px;">Sanity check vs. the form's country field. VPN bypasses this — treat as directional.</div>
         </div>` : ''}
 
         <p style="margin:24px 0 0;font-size:12px;color:#8B7E62;line-height:1.7;">Reply to this email to reach <strong style="color:#EDE5D8;">${esc(name)}</strong> — the reply-to is set to their address. Confirm the formula together with them first, then send the Stripe link.</p>
@@ -482,7 +487,7 @@ ${synergies && synergies.length ? 'SYNERGIES:\n' + synergies.map(s => '  • ' +
   Filters:   ${Array.isArray(q.avoid) ? q.avoid.join(', ') : (q.avoid || '—')}
   ${q.duration ? 'Duration:  ' + q.duration + '\n  ' : ''}${q.age ? 'Age:       ' + q.age + '\n  ' : ''}${q.sleep ? 'Sleep:     ' + q.sleep : ''}
 
-${notes ? 'Priority + prior herb experience:\n  "' + notes + '"\n\n' : ''}${possibleMicronutrients.length ? 'POSSIBLE MICRONUTRIENT ALLIES (ROBIN-ONLY — not shown to customer):\n  Advisory pointers derived from the answers. Consider whether any\n  belong in a companion recommendation alongside the extract.\n\n' + possibleMicronutrients.map(m => '  · ' + m.nutrient + ' — ' + (m.reason || '')).join('\n') + '\n\n' : ''}${(geo.city || geo.country || geo.ip) ? 'ORIGIN (edge-detected — VPN bypasses):\n' + (geo.city ? '  City:     ' + geo.city + (geo.subdivision ? ', ' + geo.subdivision : '') + '\n' : '') + (geo.country ? '  Country:  ' + geo.country + '\n' : '') + (geo.timezone ? '  Timezone: ' + geo.timezone + '\n' : '') + (geo.ip ? '  IP:       ' + geo.ip + '\n' : '') + '\n' : ''}Reply to this email to reach the customer. Confirm the formula together first, then send the Stripe link.
+${notes ? 'Priority + prior herb experience:\n  "' + notes + '"\n\n' : ''}${possibleMicronutrients.length ? 'POSSIBLE MICRONUTRIENT ALLIES (ROBIN-ONLY — not shown to customer):\n  Advisory pointers derived from the answers. Consider whether any\n  belong in a companion recommendation alongside the extract.\n\n' + possibleMicronutrients.map(m => '  · ' + m.nutrient + ' — ' + (m.reason || '')).join('\n') + '\n\n' : ''}${geo.country ? 'EDGE-DETECTED COUNTRY: ' + geo.country + ' (sanity check vs. form; VPN bypasses)\n\n' : ''}Reply to this email to reach the customer. Confirm the formula together first, then send the Stripe link.
 `;
 }
 
