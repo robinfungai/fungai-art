@@ -367,15 +367,40 @@ export default async function handler(req) {
       customerErr: results[1].status === 'rejected' ? String(results[1].reason)                   : (results[1].value?.detail || null),
     });
   }
+  // ── Round 2 · Item #3 · explicit reservation semantics ──────
+  // Three tri-state outcomes the client MUST branch on (never on
+  // res.ok alone):
+  //
+  //   confirmed → both emails sent. Show "Your formula is reserved.
+  //               Robin will be in touch." Full-confidence copy.
+  //   partial   → one email failed. Reservation is durable (Robin
+  //               got the notification OR would get retried by
+  //               follow-up flow), but customer confirmation
+  //               didn't reach the inbox. UI should say "Reservation
+  //               received. Confirmation email delayed — check spam
+  //               or reach Robin directly at robin@fungai.art."
+  //   failed    → nothing landed. UI must NOT claim reservation;
+  //               show the error state + retry.
+  //
+  // Semantic HTTP mapping:
+  //   200 → confirmed
+  //   202 → partial (accepted for follow-up)
+  //   500 → failed (nothing durable landed)
+  let status, httpStatus;
+  if (robinOk && customerOk)      { status = 'confirmed'; httpStatus = 200; }
+  else if (robinOk || customerOk) { status = 'partial';   httpStatus = 202; }
+  else                            { status = 'failed';    httpStatus = 500; }
+
   return json({
-    ok: true,
-    sent: robinOk && customerOk,
-    partial: !robinOk || !customerOk,
+    status,                              // ← the semantic field the client reads
+    ok: robinOk && customerOk,           // legacy field for stale clients
+    sent: robinOk && customerOk,         // legacy field
+    partial: !robinOk || !customerOk,    // legacy field
     robinOk, customerOk,
-    // Echo the geo back so the client can include it in the Supabase
-    // insert to /alchemy academy — same source of truth.
+    // Echo the (minimised, country-only per Item #2) geo back so
+    // the client can include it in the Supabase Formula Book insert.
     geo: geo,
-  }, 200, cors);
+  }, httpStatus, cors);
 }
 
 async function sendResend(key, payload){

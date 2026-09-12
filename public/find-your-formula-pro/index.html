@@ -3371,9 +3371,11 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     // hid server failures + showed a "reserved" success card even
     // when nothing went through). Now: non-2xx renders a real error
     // state with a user-triggered "email Robin directly" CTA.
-    let ok = false;
+    // Round 2 · Item #3 — see Basic client for full doc. Tri-state.
+    let reservationStatus = 'failed';
     let serverErr = null;
     let serverGeo = null;
+    let partialNote = null;
     try {
       const ctrl = new AbortController();
       const abortT = setTimeout(() => ctrl.abort(), 20000);
@@ -3384,26 +3386,42 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
         signal: ctrl.signal,
       });
       clearTimeout(abortT);
-      ok = res.ok;
       let bodyJson = null;
       try { bodyJson = await res.json(); } catch (_) {}
-      if (ok) {
+      const explicit = bodyJson && typeof bodyJson.status === 'string' ? bodyJson.status : null;
+      if (explicit === 'confirmed' || explicit === 'partial' || explicit === 'failed') {
+        reservationStatus = explicit;
+      } else if (res.status === 200) reservationStatus = 'confirmed';
+      else if (res.status === 202)   reservationStatus = 'partial';
+      else                            reservationStatus = 'failed';
+
+      if (reservationStatus === 'confirmed' || reservationStatus === 'partial') {
         serverGeo = bodyJson?.geo || null;
+        if (reservationStatus === 'partial') {
+          if (bodyJson && bodyJson.robinOk === true && bodyJson.customerOk === false) {
+            partialNote = 'Robin has your reservation — but the confirmation email to you didn\'t send. Check your spam folder in a few minutes, or write to robin@fungai.art if nothing arrives.';
+          } else if (bodyJson && bodyJson.robinOk === false && bodyJson.customerOk === true) {
+            partialNote = 'Your confirmation email is on its way — but Robin\'s notification hit a snag. Please forward the confirmation to robin@fungai.art so he can pick it up.';
+          } else {
+            partialNote = 'Reservation received — but one of the two emails is delayed. Give it a few minutes, and reach robin@fungai.art if nothing lands.';
+          }
+        }
       } else {
         serverErr = {
           status:  res.status,
           code:    bodyJson?.code    || null,
           message: bodyJson?.message || null,
         };
-        console.error('[reserve] server responded ' + res.status, bodyJson);
+        console.error('[reserve] server responded ' + res.status + ' status=' + reservationStatus, bodyJson);
       }
     } catch (e) {
       serverErr = { status: 0, code: 'NETWORK', message: (e && e.message) || 'network' };
+      reservationStatus = 'failed';
       console.error('[reserve] fetch failed', e);
     }
     clearTimeout(stuckSafety);
 
-    if (!ok) {
+    if (reservationStatus === 'failed') {
       const codeCopy = {
         FORMULA_NOT_FOUND:            'The reading has expired. Please retake the quiz and reserve again.',
         FORMULA_ID_INVALID:           'The reading link looks malformed. Please retake the quiz and try again.',
@@ -3436,6 +3454,16 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
 
     document.getElementById('reservedEmail').textContent = payload.email;
     document.getElementById('reserveThanks').classList.add('on');
+    if (reservationStatus === 'partial' && partialNote) {
+      const thanks = document.getElementById('reserveThanks');
+      if (thanks && !document.getElementById('reservePartialNote')) {
+        const note = document.createElement('div');
+        note.id = 'reservePartialNote';
+        note.style.cssText = 'margin-top:14px;padding:12px 14px;background:rgba(232,177,75,0.08);border-left:2px solid var(--amber-l);border-radius:6px;font-family:var(--serif);font-style:italic;font-size:13.5px;color:var(--parchment);line-height:1.6';
+        note.textContent = '⚠ ' + partialNote;
+        thanks.appendChild(note);
+      }
+    }
     form.style.display = 'none';
     // Unlock the "Why this formula" fade + herb percentages —
     // reservation was the gate for both. Full reasoning reveals with

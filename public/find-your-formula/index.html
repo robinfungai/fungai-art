@@ -3708,9 +3708,14 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     // showed a "reserved" success card even when nothing went through).
     // Now: non-2xx renders a real error state with a user-triggered
     // "email Robin directly" CTA. No fake success, no hidden failures.
-    let ok = false;
-    let serverErr = null;         // { status, code, message } on non-2xx
+    // Round 2 · Item #3 — read the tri-state SEMANTIC field, not res.ok.
+    //   'confirmed' → 200, both emails sent, full success UI
+    //   'partial'   → 202, one email delivered, muted "check spam" UI
+    //   'failed'    → 5xx or nothing durable, error UI
+    let reservationStatus = 'failed';    // safe default
+    let serverErr = null;
     let serverGeo = null;
+    let partialNote = null;              // extra copy for the partial branch
     try {
       const ctrl = new AbortController();
       const abortT = setTimeout(() => ctrl.abort(), 20000);
@@ -3721,26 +3726,50 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
         signal: ctrl.signal,
       });
       clearTimeout(abortT);
-      ok = res.ok;
       let bodyJson = null;
       try { bodyJson = await res.json(); } catch (_) {}
-      if (ok) {
+
+      // Trust the explicit status FIELD first (new contract). Fall back
+      // to the HTTP mapping for old-server compat.
+      const explicit = bodyJson && typeof bodyJson.status === 'string' ? bodyJson.status : null;
+      if (explicit === 'confirmed' || explicit === 'partial' || explicit === 'failed') {
+        reservationStatus = explicit;
+      } else if (res.status === 200) {
+        reservationStatus = 'confirmed';
+      } else if (res.status === 202) {
+        reservationStatus = 'partial';
+      } else {
+        reservationStatus = 'failed';
+      }
+
+      if (reservationStatus === 'confirmed' || reservationStatus === 'partial') {
         serverGeo = bodyJson?.geo || null;
+        if (reservationStatus === 'partial') {
+          // Which side failed — Robin got it or the customer did?
+          if (bodyJson && bodyJson.robinOk === true && bodyJson.customerOk === false) {
+            partialNote = 'Robin has your reservation — but the confirmation email to you didn\'t send. Check your spam folder in a few minutes, or write to robin@fungai.art if nothing arrives.';
+          } else if (bodyJson && bodyJson.robinOk === false && bodyJson.customerOk === true) {
+            partialNote = 'Your confirmation email is on its way — but Robin\'s notification hit a snag. Please forward the confirmation to robin@fungai.art so he can pick it up.';
+          } else {
+            partialNote = 'Reservation received — but one of the two emails is delayed. Give it a few minutes, and reach robin@fungai.art if nothing lands.';
+          }
+        }
       } else {
         serverErr = {
           status:  res.status,
           code:    bodyJson?.code    || null,
           message: bodyJson?.message || null,
         };
-        console.error('[reserve] server responded ' + res.status, bodyJson);
+        console.error('[reserve] server responded ' + res.status + ' status=' + reservationStatus, bodyJson);
       }
     } catch (e) {
       serverErr = { status: 0, code: 'NETWORK', message: (e && e.message) || 'network' };
+      reservationStatus = 'failed';
       console.error('[reserve] fetch failed', e);
     }
     clearTimeout(stuckSafety);
 
-    if (!ok) {
+    if (reservationStatus === 'failed') {
       // Render an honest error state. Do NOT show the success card,
       // do NOT auto-open mailto — offer it as a user-clicked fallback.
       const codeCopy = {
@@ -3773,8 +3802,23 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
       return;
     }
 
+    // Round 2 · Item #3 — surface the partial state honestly. The
+    // reservation IS durable (one email did land), so we still lock
+    // the form + reveal the paywall content, but we amend the thanks
+    // copy with the partial-state note so the customer knows if
+    // their confirmation email is delayed.
     document.getElementById('reservedEmail').textContent = payload.email;
     document.getElementById('reserveThanks').classList.add('on');
+    if (reservationStatus === 'partial' && partialNote) {
+      const thanks = document.getElementById('reserveThanks');
+      if (thanks && !document.getElementById('reservePartialNote')) {
+        const note = document.createElement('div');
+        note.id = 'reservePartialNote';
+        note.style.cssText = 'margin-top:14px;padding:12px 14px;background:rgba(232,177,75,0.08);border-left:2px solid var(--amber-l);border-radius:6px;font-family:var(--serif);font-style:italic;font-size:13.5px;color:var(--parchment);line-height:1.6';
+        note.textContent = '⚠ ' + partialNote;
+        thanks.appendChild(note);
+      }
+    }
     form.style.display = 'none';
     // Unlock the "Why this formula" fade + herb percentages —
     // reservation was the gate for both. Full reasoning reveals with
