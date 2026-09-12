@@ -3917,6 +3917,12 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     city:        String(fd.get('city')    || '').trim(),
     country:     String(fd.get('country') || '').trim(),
     notes:       String(fd.get('notes')   || '').trim(),
+    // STEP 5 · Include the server-issued formulaId when present. The
+    // reserve endpoint prefers this over the client-supplied formula
+    // fields — the stored formula becomes authoritative on the email.
+    // Legacy fields below are kept for backwards compatibility (Step 7
+    // strips them once every client sends formulaId).
+    formulaId:   (cur && cur.formulaId) || null,
     formulaName: cur.name || window.__currentFormulaName || '',
     quiz:        state.answers,
     formula:     currentHerbs.map(h => ({ id: h.id, name: h.name, botanical: h.botanical || '' })),

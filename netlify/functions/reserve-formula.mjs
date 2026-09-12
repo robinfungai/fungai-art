@@ -14,11 +14,24 @@
 // Optional env vars:
 //   FORMULA_FROM     — default 'Fungai Art <noreply@fungai.art>'
 //   FORMULA_INBOX    — default 'robin@fungai.art' (Robin's inbox)
+//   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY — enables formulaId lookup
+//                                              (Step 5 dual-mode)
 //
 // The subscribe-newsletter function silently dropped everything
 // except `email`, which is why reservations were vanishing before
 // this endpoint existed.
+//
+// STEP 5 dual-mode (server-authoritative reservation):
+//   If the body carries `formulaId` (opaque fyf_<32-hex>), we look
+//   the formula up in the private fyf_formulas store and use the
+//   STORED formula/profile as the source of truth. Client-supplied
+//   `formula`/`percentages`/`synergies`/`quiz` fields are IGNORED in
+//   that path — see resolveAuthoritativeFormula() below.
+//   Absent formulaId → legacy path (existing behaviour, client-
+//   supplied fields, will be removed in Step 7).
 // ════════════════════════════════════════════════════════════════
+
+import { createClient } from '@supabase/supabase-js';
 
 // ── Origin gate ──────────────────────────────────────────────────
 // Locked to Fungai origins so a random site can't POST here and
@@ -67,6 +80,43 @@ setInterval(() => {
     if (now - slot.windowStart > RATE_WINDOW_MS * 2) rateState.delete(ip);
   }
 }, RATE_WINDOW_MS).unref?.();
+
+// ─────────────────────────────────────────────────────────────────
+// STEP 5 · Authoritative-formula resolver
+// ─────────────────────────────────────────────────────────────────
+// When the client sends `formulaId`, we look it up in the private
+// fyf_formulas store and USE THE STORED FORMULA as the source of
+// truth — client-supplied `formula`/`percentages`/`synergies`/`quiz`
+// fields are IGNORED entirely in that path. This closes the tampering
+// gap where the client could pre-compute a formula and post whatever
+// they wanted at reservation time.
+//
+// The formulaId format is enforced (opaque `fyf_<32-hex>` from Step 2)
+// so a malformed id is rejected before any DB lookup runs.
+//
+// Extracted into a named export so tests can drive it with a stub
+// Supabase client — the module-level `handler` uses it with a real
+// client from env vars.
+export const FORMULA_ID_RE = /^fyf_[a-f0-9]{32}$/;
+
+export async function resolveAuthoritativeFormula({ rawFormulaId, sbClient }) {
+  const id = String(rawFormulaId || '').trim();
+  if (!id) return { source: 'legacy' };
+  if (!FORMULA_ID_RE.test(id)) return { source: 'invalid_id' };
+  if (!sbClient) return { source: 'lookup_unavailable' };
+  try {
+    const { data, error } = await sbClient
+      .from('fyf_formulas')
+      .select('id, engine_version, herb_db_version, safety_rules_version, profile, formula, created_at')
+      .eq('id', id)
+      .maybeSingle();
+    if (error) throw error;
+    if (!data) return { source: 'not_found' };
+    return { source: 'authoritative', row: data };
+  } catch (e) {
+    return { source: 'lookup_error', error: e };
+  }
+}
 
 export default async function handler(req) {
   const origin = req.headers.get('origin') || '';
@@ -124,12 +174,82 @@ export default async function handler(req) {
   const city    = String(body.city    || '').trim().slice(0, 80);
   const country = String(body.country || '').trim().slice(0, 80);
   const notes   = String(body.notes   || '').trim().slice(0, 1000);
-  const formulaName = String(body.formulaName || '').trim().slice(0, 80);
-  const quiz    = (body.quiz    && typeof body.quiz    === 'object') ? body.quiz    : {};
-  const formula = Array.isArray(body.formula) ? body.formula.slice(0, 10) : [];
-  const percentages = Array.isArray(body.percentages) ? body.percentages.slice(0, 10) : [];
-  const synergies   = Array.isArray(body.synergies) ? body.synergies.slice(0, 10) : [];
   const bottleMl    = Number(body.bottleMl) || 30;
+
+  // ── STEP 5 · Authoritative-formula resolution ─────────────────
+  // If formulaId is present, resolve it server-side and use the
+  // STORED formula. Any `formula` / `percentages` / `synergies` /
+  // `quiz` / `formulaName` fields the client also sent are IGNORED
+  // in the authoritative path — a client cannot forge a formula and
+  // have the reservation email carry it.
+  const rawFormulaId = String(body.formulaId || '').trim();
+  const SUPABASE_URL_LOCAL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+  const SUPABASE_SRV_LOCAL = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const sbClient = (SUPABASE_URL_LOCAL && SUPABASE_SRV_LOCAL)
+    ? createClient(SUPABASE_URL_LOCAL, SUPABASE_SRV_LOCAL, {
+        auth: { autoRefreshToken: false, persistSession: false },
+      })
+    : null;
+  const resolved = await resolveAuthoritativeFormula({ rawFormulaId, sbClient });
+
+  // Explicit routing on the resolver outcome. Legacy-path callers
+  // (formulaId absent) fall through to the existing client-supplied
+  // fields. Every other non-'legacy' outcome is a hard status.
+  if (resolved.source === 'invalid_id') {
+    return json({ status: 'rejected', code: 'FORMULA_ID_INVALID' }, 400, cors);
+  }
+  if (resolved.source === 'lookup_unavailable') {
+    // Client sent a formulaId but this deployment can't verify it.
+    // Do NOT silently accept the client's shape — that would defeat
+    // the whole point of Step 5.
+    console.error('[reserve-formula] formulaId sent but Supabase unconfigured');
+    return json({ status: 'error', code: 'FORMULA_LOOKUP_UNAVAILABLE' }, 503, cors);
+  }
+  if (resolved.source === 'not_found') {
+    return json({
+      status: 'rejected', code: 'FORMULA_NOT_FOUND',
+      message: 'This reading is no longer available. Please retake the quiz.',
+    }, 404, cors);
+  }
+  if (resolved.source === 'lookup_error') {
+    console.error('[reserve-formula] formulaId lookup failed:', resolved.error && resolved.error.message);
+    return json({ status: 'error', code: 'FORMULA_LOOKUP_FAILED' }, 500, cors);
+  }
+
+  // Derive the fields the rest of this function uses. Server-
+  // authoritative path overrides ALL client-supplied formula fields.
+  let formulaName, quiz, formula, percentages, synergies, engineVersion, herbDbVersion, isAuthoritative;
+  if (resolved.source === 'authoritative') {
+    const row = resolved.row;
+    const storedFormula  = row.formula || {};
+    const storedHerbs    = Array.isArray(storedFormula.herbs) ? storedFormula.herbs : [];
+    formulaName    = String(storedFormula.name || '').slice(0, 80);
+    quiz           = (row.profile && typeof row.profile === 'object') ? row.profile : {};
+    formula        = storedHerbs.map(h => ({ id: h.id, name: h.name, botanical: h.botanical || '' }));
+    percentages    = storedHerbs.map(h => h.percentage);
+    synergies      = Array.isArray(storedFormula.synergies) ? storedFormula.synergies : [];
+    engineVersion  = row.engine_version || '';
+    herbDbVersion  = row.herb_db_version || '';
+    isAuthoritative = true;
+  } else {
+    // Legacy path (formulaId absent). Existing behaviour. Will be
+    // removed in Step 7 once every client sends formulaId.
+    formulaName   = String(body.formulaName || '').trim().slice(0, 80);
+    quiz          = (body.quiz    && typeof body.quiz    === 'object') ? body.quiz    : {};
+    formula       = Array.isArray(body.formula) ? body.formula.slice(0, 10) : [];
+    percentages   = Array.isArray(body.percentages) ? body.percentages.slice(0, 10) : [];
+    synergies     = Array.isArray(body.synergies) ? body.synergies.slice(0, 10) : [];
+    engineVersion = '';
+    herbDbVersion = '';
+    isAuthoritative = false;
+  }
+
+  // Log which source served this reservation. No PII in the log line —
+  // just the formulaId (opaque, non-enumerable) and the source label.
+  console.log('[reserve-formula]',
+    isAuthoritative ? 'source=authoritative' : 'source=legacy_client',
+    'formulaId=' + (rawFormulaId || '-'),
+    'engine=' + (engineVersion || '-'));
   // ── Micronutrient allies (Robin-only, never sent to customer) ──
   // Client computes possibleMicronutrients from the quiz answers and
   // passes them through. Values are advisory pointers — Robin decides
@@ -180,8 +300,8 @@ export default async function handler(req) {
 
   // ── 1. Notify Robin ────────────────────────────────────────────
   const robinSubject = `✦ Formula reservation · ${formulaName || 'unnamed'} · ${name}${geo.country ? ' · ' + geo.country : ''}`;
-  const robinHtml = buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients });
-  const robinText = buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients });
+  const robinHtml = buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients, formulaId: rawFormulaId, isAuthoritative, engineVersion });
+  const robinText = buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients, formulaId: rawFormulaId, isAuthoritative, engineVersion });
 
   // ── 2. Confirm to customer ─────────────────────────────────────
   const customerSubject = `Your formula is reserved · ${formulaName || 'Fungai Art'}`;
@@ -237,7 +357,7 @@ function json(body, status = 200, cors = {}) {
 
 // ── Email bodies ─────────────────────────────────────────────────
 
-function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients }){
+function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients, formulaId, isAuthoritative, engineVersion }){
   geo = geo || {};
   possibleMicronutrients = Array.isArray(possibleMicronutrients) ? possibleMicronutrients : [];
   const q = quiz || {};
@@ -249,6 +369,13 @@ function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, 
         <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:#E8B14B;margin-bottom:14px;">✦ New formula reservation</div>
         <h1 style="font-family:Georgia,serif;font-style:italic;font-weight:400;font-size:26px;color:#E6D9B5;margin:0 0 8px;line-height:1.15;">${esc(formulaName || 'Unnamed formula')}</h1>
         <p style="font-size:14px;color:#8B7E62;margin:0 0 22px;">for <strong style="color:#EDE5D8;">${esc(name)}</strong> · ${esc(city)}, ${esc(country)} · <strong style="color:#F5D689;">${bottleMl} ml</strong> bottle</p>
+
+        <!-- Source badge — server-authoritative vs legacy client -->
+        <div style="margin:0 0 18px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.16em;color:${isAuthoritative ? '#7bd4a1' : '#E8B14B'};">
+          ${isAuthoritative
+            ? `◇ server-authoritative · id ${esc(formulaId)} · engine ${esc(engineVersion || '-')}`
+            : `◇ legacy client-supplied (pre-Step-5 client)`}
+        </div>
 
         <!-- POUR SPEC — table Robin can work from directly at the bench -->
         <div style="margin:0 0 6px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#E8B14B;">Pour spec · ${bottleMl} ml total</div>
@@ -333,7 +460,7 @@ function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, 
   </body></html>`;
 }
 
-function buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients }){
+function buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients, formulaId, isAuthoritative, engineVersion }){
   geo = geo || {};
   possibleMicronutrients = Array.isArray(possibleMicronutrients) ? possibleMicronutrients : [];
   const q = quiz || {};
@@ -345,6 +472,9 @@ function buildRobinText({ email, name, city, country, notes, formulaName, quiz, 
 Formula: ${formulaName || 'Unnamed'}
 For:     ${name} · ${city}, ${country}
 Email:   ${email}
+Source:  ${isAuthoritative
+  ? 'server-authoritative · id ' + (formulaId || '-') + ' · engine ' + (engineVersion || '-')
+  : 'legacy client-supplied (pre-Step-5 client)'}
 
 POUR SPEC:
   ${pad('Herb', 32)}${pad('%', 6)}${pad('ml', 8)}

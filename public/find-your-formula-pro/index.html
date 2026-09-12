@@ -3956,6 +3956,10 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     city:        String(fd.get('city')    || '').trim(),
     country:     String(fd.get('country') || '').trim(),
     notes:       String(fd.get('notes')   || '').trim(),
+    // STEP 5 · Include the server-issued formulaId when present. See
+    // the equivalent block in find-your-formula/index.html for the
+    // full rationale.
+    formulaId:   (cur && cur.formulaId) || null,
     formulaName: cur.name || window.__currentFormulaName || '',
     quiz:        state.answers,
     formula:     currentHerbs.map(h => ({ id: h.id, name: h.name, botanical: h.botanical || '' })),

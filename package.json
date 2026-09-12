@@ -10,6 +10,7 @@
     "test:shadow": "node tests/shadow-verify.cjs",
     "test:shadow:client": "node tests/client-shadow-verify.cjs",
     "test:server-mode": "node tests/server-mode-verify.cjs",
+    "test:reserve": "node tests/reserve-formula-verify.cjs",
     "build:herbs-data": "node scripts/export-herbs.cjs",
     "build:herb-pool": "node scripts/build-herb-pool.cjs",
     "build:engine2": "node scripts/sync-engine2.cjs",
