@@ -1,0 +1,27 @@
+Copyright © 2026 Robin Fungai Art. All Rights Reserved.
+
+This repository, its source code, its herbal composition engine, its AI
+prompts, its data schemas, its UI, its marketing copy, and its brand
+identity are the exclusive property of Robin Fungai Art.
+
+NO PUBLIC LICENSE IS GRANTED.
+
+You may NOT:
+  · copy, reproduce, or redistribute any part of this codebase
+  · deploy or operate a service derived from this codebase
+  · use the herbal composition logic, scoring methodology, safety
+    rules, MYCO prompt engineering, or formula-naming conventions
+    in any product or service
+  · publish, mirror, or share the source code or any derivative work
+  · use "Fungai Art", "MYCO", or any related brand identifier in
+    connection with a competing or derivative product
+
+Contents of this repository are shared with a limited audience for
+review, audit, contracting, or investment purposes only. Access does
+not grant a license to any of the rights reserved above.
+
+Third-party dependencies remain under their own licenses (see
+package.json). Nothing in this notice affects the rights of upstream
+projects (React, Vite, Supabase client, Anthropic SDK, etc.).
+
+For licensing enquiries, contact: robin@fungai.art

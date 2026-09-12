@@ -312,6 +312,16 @@ export default async function handler(req) {
     return jsonResponse(405, cors, { status: 'error', code: 'METHOD_NOT_ALLOWED' });
   }
 
+  // Origin gate — matches the reserve-formula pattern. Requests from
+  // an origin that isn't in the allow-list are rejected. Requests with
+  // NO origin header still pass through (curl / Postman / native
+  // clients) — a full lock would break local dev + testing. If the
+  // paid-ad launch reveals cost-abuse from headless scrapers hitting
+  // this endpoint, tighten to `require an allowed origin` here.
+  if (origin && !ALLOWED_ORIGINS.includes(origin)) {
+    return jsonResponse(403, cors, { status: 'error', code: 'ORIGIN_NOT_ALLOWED' });
+  }
+
   // Rate limit BEFORE parsing so a flood of oversized bodies can't
   // burn function-second cost.
   const ip = req.headers.get('x-forwarded-for') || req.headers.get('client-ip') || 'unknown';
