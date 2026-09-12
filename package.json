@@ -18,6 +18,7 @@
     "test:micronutrient-untrusted": "node tests/micronutrient-untrusted-verify.cjs",
     "test:synergy-consistency": "node tests/client-server-synergy-consistency-verify.cjs",
     "test:authoritative-formula": "node tests/authoritative-formula-verify.cjs",
+    "test:myco-adversarial": "node tests/myco-adversarial-verify.cjs",
     "build:herbs-data": "node scripts/export-herbs.cjs",
     "build:herb-pool": "node scripts/build-herb-pool.cjs",
     "build:engine2": "node scripts/sync-engine2.cjs",
