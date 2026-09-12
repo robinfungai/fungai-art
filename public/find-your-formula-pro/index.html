@@ -3461,8 +3461,16 @@ async function _fyfRenderResultServerMode(a) {
   const backToSafety = () => go(safetyPageIndex >= 0 ? safetyPageIndex : 0);
   const retry = () => { _fyfServerComposeInFlight = false; renderResult(); };
 
+  // Composing indicator — reveal DOM is empty until the fetch resolves.
+  try {
+    const tag = document.getElementById('rTagline');
+    if (tag) tag.textContent = 'Composing your formula…';
+  } catch (_) {}
+
   const controller = new AbortController();
-  const timeoutId  = setTimeout(() => { try { controller.abort(); } catch (_) {} }, 8000);
+  // 30s hard timeout — see equivalent block in find-your-formula for
+  // rationale. Server-side MYCO can take 8-14s p95.
+  const timeoutId  = setTimeout(() => { try { controller.abort(); } catch (_) {} }, 30000);
   let res, body;
   try {
     res = await fetch('/api/fyf/compose', {

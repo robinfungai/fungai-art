@@ -17,10 +17,13 @@
 
 const ANTHROPIC_ENDPOINT = 'https://api.anthropic.com/v1/messages';
 
-// 6s hard timeout on the Anthropic call. Compose typically returns in
-// 3-5s with effort:medium. Anything longer and we drop back to the
-// deterministic path so the user reveal isn't blocked.
-const MYCO_TIMEOUT_MS = 6000;
+// 12s hard timeout on the Anthropic call. Opus 5 with adaptive
+// thinking + effort:medium typically returns in 5-10s; 6s was too
+// tight in practice (see Step 5.5b diagnosis — server function ran
+// 6.5s + Netlify cold-start pushed total client-side latency past
+// the original 8s client abort). Anything past 12s falls back to the
+// deterministic path so the reveal isn't blocked indefinitely.
+const MYCO_TIMEOUT_MS = 12000;
 
 // Compose the shortlist Anthropic sees. Uses the same shape myco-agent
 // used — id + name + botanical + category + pre-score + trace flag +
