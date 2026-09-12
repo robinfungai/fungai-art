@@ -1,12 +1,12 @@
 // tests/reserve-formula-verify.cjs
 //
-// Step 5 tests — verify the dual-mode reserve endpoint:
+// Step 7 tests — reserve endpoint is formulaId-ONLY:
 //   · authoritative path (formulaId → server lookup → use stored)
 //   · forged-field-ignored path (client sends both id + tampered
 //     `formula[]` → server uses stored, ignores forged)
 //   · not-found path (formulaId is a valid shape but no row exists)
 //   · malformed formulaId path (rejected before any DB lookup)
-//   · legacy path (no formulaId → existing behaviour unchanged)
+//   · missing formulaId → rejected (was: legacy path — retired in Step 7)
 //   · lookup-unavailable path (formulaId sent but no Supabase)
 //
 // Approach: unit-test the exported `resolveAuthoritativeFormula`
@@ -81,10 +81,10 @@ async function run() {
   });
 
   cases.push({
-    name: 'no formulaId → legacy',
+    name: 'no formulaId → missing_id (Step 7: legacy path retired)',
     run: async () => {
       const r = await resolveAuthoritativeFormula({ rawFormulaId: '', sbClient: stubSb() });
-      return { pass: r.source === 'legacy', detail: `source=${r.source}` };
+      return { pass: r.source === 'missing_id', detail: `source=${r.source}` };
     },
   });
 
