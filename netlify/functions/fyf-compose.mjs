@@ -269,8 +269,11 @@ function sanitisedResponse({ formulaId, engineResult, persisted }) {
     // means shadow-mode compose (deterministic-only by design).
     // mycoFallbackReason is a stable enum from myco-validator.js —
     // safe to expose; contains no proprietary rules or herb data.
+    // mycoOverall is the 2-3 sentence customer-facing reasoning MYCO
+    // returned — shown in the "Why this formula" reveal card.
     mycoUsed:           typeof engineResult.mycoUsed === 'boolean' ? engineResult.mycoUsed : null,
     mycoFallbackReason: engineResult.mycoFallbackReason || null,
+    mycoOverall:        engineResult.mycoUsed === true ? String(engineResult.mycoOverall || '').slice(0, 1200) : null,
   };
 }
 

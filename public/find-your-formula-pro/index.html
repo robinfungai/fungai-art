@@ -3567,6 +3567,10 @@ function _fyfPaintServerReveal(a, body) {
   }
 
   const list = document.getElementById('rHerbList');
+  // STEP 5.5 · percentages start hidden; window.__revealPercentages
+  // swaps ??% for the real values on reserve success or apothecary tap.
+  const herbsBox = document.getElementById('rHerbs');
+  if (herbsBox) herbsBox.classList.add('pct-locked');
   if (list) {
     list.innerHTML = '';
     enrichedHerbs.forEach((h, i) => {
@@ -3585,6 +3589,13 @@ function _fyfPaintServerReveal(a, body) {
       list.appendChild(el);
     });
   }
+  window.__revealPercentages = function() {
+    document.querySelectorAll('#rHerbList .r-herb-n').forEach(n => {
+      const real = n.getAttribute('data-pct');
+      if (real) n.textContent = real;
+    });
+    if (herbsBox) herbsBox.classList.remove('pct-locked');
+  };
 
   try {
     const pairs = checkFormulaPairs(enrichedHerbs);
@@ -3607,6 +3618,22 @@ function _fyfPaintServerReveal(a, body) {
   try {
     document.getElementById('rWhyText').innerHTML = buildWhyText(a, enrichedHerbs, serverPct);
   } catch (_) {}
+
+  // STEP 5.5 · surface MYCO's overall reasoning inside "Why this formula"
+  // reveal + swap the story eyebrow badge. Mirrors Basic client.
+  if (body && body.mycoUsed === true) {
+    if (body.mycoOverall) {
+      try {
+        const dimReveal = document.querySelector('.r-why-reveal');
+        if (dimReveal) {
+          dimReveal.insertAdjacentHTML('beforeend',
+            '<p><em>MYCO\'s reasoning:</em> ' + escapeHtml(body.mycoOverall) + '</p>');
+        }
+      } catch (_) {}
+    }
+    const composerBadge = document.querySelector('.r-story .r-story-eyebrow');
+    if (composerBadge) composerBadge.textContent = '✦ Composed by MYCO · the alchemist';
+  }
 
   if (a.notes && a.notes.trim().length > 20) {
     mycoStory(a, enrichedHerbs, serverPct, window.__currentFormula.synergies || []).then(text => {
