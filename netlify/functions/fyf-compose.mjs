@@ -247,14 +247,28 @@ function sanitisedResponse({ formulaId, engineResult, persisted, upgradeEligible
       size:              engineResult.formulaSize,
       totalPercentage:   engineResult.percentageTotal,
       herbs: engineResult.herbs.map(h => ({
-        // Only display-safe fields. Herb.id (numeric catalogue id),
+        // Display-safe fields only. Herb.id (numeric catalogue id),
         // category, score, isGABAergic/isCNSStimulant/isTrace, gated
         // flag — all OMITTED. The reserve-formula lookup uses
         // formulaId to fetch the stored formula server-side; the
         // client never needs the internal id.
-        name:            h.name,
-        botanical:       h.botanical,
-        percentage:      h.percentage,
+        //
+        // Step 8 · display enrichment. Ships the fields the client's
+        // reveal helpers (storyFor / shortNote / buildWhyText /
+        // checkFormulaPairs) read from each herb, so the client no
+        // longer needs to load the full /herbs-data.js catalog just
+        // to paint the herb list. Server DB stays authoritative.
+        name:                 h.name,
+        botanical:            h.botanical,
+        percentage:           h.percentage,
+        primary_functions:    Array.isArray(h.primary_functions)    ? h.primary_functions.slice(0, 3)    : [],
+        secondary_benefits:   Array.isArray(h.secondary_benefits)   ? h.secondary_benefits.slice(0, 3)   : [],
+        energetics:           Array.isArray(h.energetics)           ? h.energetics.slice(0, 4)           : [],
+        spiritual_layer:      typeof h.spiritual_layer === 'string' ? h.spiritual_layer.slice(0, 400)    : '',
+        pharmacology:         typeof h.pharmacology    === 'string' ? h.pharmacology.slice(0, 400)       : '',
+        tcm_element:          typeof h.tcm_element     === 'string' ? h.tcm_element                      : '',
+        herb_to_herb_synergy: Array.isArray(h.herb_to_herb_synergy) ? h.herb_to_herb_synergy.slice(0, 6) : [],
+        herb_to_herb_caution: Array.isArray(h.herb_to_herb_caution) ? h.herb_to_herb_caution.slice(0, 6) : [],
       })),
     },
     safetyReport: {

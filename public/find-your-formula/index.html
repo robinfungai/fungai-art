@@ -1138,8 +1138,7 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 <!-- The full 207-herb catalog (auto-generated from src/data/herbs.ts).
      Sets `HERBS` in the script global scope. ~1MB, worth the download
      because the alternative is duplicating 30 curated herbs here. -->
-<script src="/herbs-data.js"></script>
-
+<!-- Step 8: /herbs-data.js no longer loaded — server ships enriched herb fields in the compose response. Kept as a public file for /extraction and /mixology until they are rebuilt. -->
 <!-- Supabase client — used to archive successful reservations into the
      shared `formulas` table so they appear on /community/academy/'s
      Formula Book. Silently no-ops if not available. -->
@@ -2812,36 +2811,27 @@ let _fyfServerComposeInFlight = false;
 // selection, percentages, and safety is preserved. The client cannot
 // substitute a different herb via this lookup.
 function _fyfEnrichServerHerbs(serverHerbs) {
-  const db = (typeof window !== 'undefined' && window.HERB_DB) || [];
-  return (serverHerbs || []).map(sh => {
-    const full = db.find(h => h && h.name === sh.name) ||
-                 db.find(h => h && h.botanical === sh.botanical);
-    if (full) {
-      // Enrich full herb metadata for display. Server-authoritative
-      // fields (name, botanical, percentage) win — the client's local
-      // copy cannot override them.
-      return Object.assign({}, full, {
-        name:       sh.name,
-        botanical:  sh.botanical,
-        percentage: sh.percentage,
-      });
-    }
-    // Local DB doesn't have it → render with only the server-provided
-    // fields. Display helpers that expect primary_functions etc will
-    // gracefully return empty strings.
-    return {
-      name:       sh.name,
-      botanical:  sh.botanical,
-      percentage: sh.percentage,
-      primary_functions:      [],
-      secondary_benefits:     [],
-      energetics:             [],
-      spiritual_layer:        '',
-      pharmacology:           '',
-      herb_to_herb_synergy:   [],
-      herb_to_herb_caution:   [],
-    };
-  });
+  // Step 8: pass-through. The /api/fyf/compose response now ships the
+  // display fields (primary_functions, secondary_benefits, energetics,
+  // herb_to_herb_synergy, herb_to_herb_caution, spiritual_layer,
+  // pharmacology, tcm_element) alongside name/botanical/percentage —
+  // so the client no longer needs to cross-reference window.HERB_DB.
+  // Kept as a shim that defensively coerces missing fields so downstream
+  // helpers (shortNote, checkFormulaPairs, buildWhyText, storyFor)
+  // never trip on undefined.
+  return (serverHerbs || []).map(sh => ({
+    name:                 sh.name,
+    botanical:            sh.botanical || '',
+    percentage:           sh.percentage,
+    primary_functions:    Array.isArray(sh.primary_functions)    ? sh.primary_functions    : [],
+    secondary_benefits:   Array.isArray(sh.secondary_benefits)   ? sh.secondary_benefits   : [],
+    energetics:           Array.isArray(sh.energetics)           ? sh.energetics           : [],
+    spiritual_layer:      typeof sh.spiritual_layer === 'string' ? sh.spiritual_layer   : '',
+    pharmacology:         typeof sh.pharmacology    === 'string' ? sh.pharmacology      : '',
+    tcm_element:          typeof sh.tcm_element     === 'string' ? sh.tcm_element       : '',
+    herb_to_herb_synergy: Array.isArray(sh.herb_to_herb_synergy) ? sh.herb_to_herb_synergy : [],
+    herb_to_herb_caution: Array.isArray(sh.herb_to_herb_caution) ? sh.herb_to_herb_caution : [],
+  }));
 }
 
 // Render one of the server-mode error states inside the reveal. Copy
