@@ -57,9 +57,22 @@ function compileFormula(profile) {
     }
     throw e;
   }
-  // Downstream code uses the normalised copy; the original client
-  // input is not trusted past this point.
-  const profileForEngine = Object.assign({}, profile, { avoid: normalisedAvoid });
+  // ── Round 2 · Item #0 · Age model normalisation ───────────────
+  // The age question inside the quiz is the CANONICAL age input.
+  // profile._minor arriving from the client is NEVER trusted — the
+  // server derives it from profile.age === 'under_18'. A modified
+  // client that omits _minor (or falsifies age) still hits the same
+  // minor-gate the questionnaire promises, because the engine reads
+  // the AGE ANSWER itself, not a flag the client is free to omit.
+  //
+  // No second checkbox, no duplicate confirmation. The entry gate is
+  // GDPR-only. The age answer + this server-side derivation is the
+  // single source of truth for minor eligibility.
+  const derivedMinor = profile.age === 'under_18';
+  const profileForEngine = Object.assign({}, profile, {
+    avoid:   normalisedAvoid,
+    _minor:  derivedMinor,
+  });
 
   // ── Step 2: Deterministic pick + percentages ───────────────────
   const herbs = pickFormula(profileForEngine);
@@ -134,8 +147,13 @@ async function composeFormulaWithMyco(profile, opts = {}) {
   // Build the candidate set MYCO is bounded to. Uses the same safety
   // filter + scorer + dedup pipeline as pickFormula, but returns the
   // top 20 (broader than pickFormula's cap-limited final pick).
+  //
+  // Round 2 · Item #0 — server-derive _minor from the canonical age
+  // answer (identical rule as compileFormula). Ensures the candidate
+  // set MYCO is offered is minor-safe when profile.age === 'under_18'.
   const normalisedProfile = Object.assign({}, profile, {
-    avoid: baseline.filteredOut && Array.isArray(profile.avoid) ? profile.avoid : profile.avoid,
+    avoid:  baseline.filteredOut && Array.isArray(profile.avoid) ? profile.avoid : profile.avoid,
+    _minor: profile.age === 'under_18',
   });
   const candidates = buildScoredCandidates(normalisedProfile, 20);
 

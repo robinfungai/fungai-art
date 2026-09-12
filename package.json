@@ -13,6 +13,7 @@
     "test:minor-gate": "node tests/minor-gate-verify.cjs",
     "test:safety-flags-conflict": "node tests/safety-flags-conflict-verify.cjs",
     "test:geo-minimisation": "node tests/geo-minimisation-verify.cjs",
+    "test:age-canonical": "node tests/age-canonical-verify.cjs",
     "build:herbs-data": "node scripts/export-herbs.cjs",
     "build:herb-pool": "node scripts/build-herb-pool.cjs",
     "build:engine2": "node scripts/sync-engine2.cjs",

@@ -126,7 +126,7 @@ cases.push({
 cases.push({
   name: 'compileFormula (_minor:true) returns non-empty formula',
   run: () => {
-    const profile = Object.assign({}, baseProfile, { _minor: true });
+    const profile = Object.assign({}, baseProfile, { age: 'under_18' });
     const result = compileFormula(profile);
     return {
       pass: result.status === 'ok' && Array.isArray(result.herbs) && result.herbs.length >= 3,
@@ -138,7 +138,7 @@ cases.push({
 cases.push({
   name: 'compileFormula (_minor:true) contains zero gated herbs',
   run: () => {
-    const profile = Object.assign({}, baseProfile, { _minor: true });
+    const profile = Object.assign({}, baseProfile, { age: 'under_18' });
     const result = compileFormula(profile);
     if (result.status !== 'ok') return { pass: false, detail: 'compose failed' };
     const bad = result.herbs.filter(h => h.isGated);
@@ -149,7 +149,7 @@ cases.push({
 cases.push({
   name: 'compileFormula (_minor:true) contains zero GABAergic herbs',
   run: () => {
-    const profile = Object.assign({}, baseProfile, { _minor: true });
+    const profile = Object.assign({}, baseProfile, { age: 'under_18' });
     const result = compileFormula(profile);
     if (result.status !== 'ok') return { pass: false, detail: 'compose failed' };
     const bad = result.herbs.filter(h => h.isGABAergic);
@@ -160,7 +160,7 @@ cases.push({
 cases.push({
   name: 'compileFormula (_minor:true) contains zero CNS stimulants',
   run: () => {
-    const profile = Object.assign({}, baseProfile, { _minor: true });
+    const profile = Object.assign({}, baseProfile, { age: 'under_18' });
     const result = compileFormula(profile);
     if (result.status !== 'ok') return { pass: false, detail: 'compose failed' };
     const bad = result.herbs.filter(h => h.isCNSStimulant);
@@ -175,7 +175,7 @@ cases.push({
   name: 'minor gate holds even if client did NOT amend avoid[]',
   run: () => {
     const profile = Object.assign({}, baseProfile, {
-      _minor: true,
+      age: 'under_18',
       avoid: ['none'],  // adversarial: client claims nothing to avoid
     });
     const result = compileFormula(profile);
@@ -196,7 +196,7 @@ cases.push({
 cases.push({
   name: 'non-minor profile is UNAFFECTED by the gate',
   run: () => {
-    const minorProfile = Object.assign({}, baseProfile, { _minor: true });
+    const minorProfile = Object.assign({}, baseProfile, { age: 'under_18' });
     const adultProfile = Object.assign({}, baseProfile, { _minor: false });
     const minorResult = compileFormula(minorProfile);
     const adultResult = compileFormula(adultProfile);
