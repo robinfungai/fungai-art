@@ -3377,25 +3377,40 @@ function _fyfPaintServerReveal(a, body) {
   const bottleEl = document.getElementById('bottle');
   if (bottleEl) bottleEl.innerHTML = '';
 
-  // AUDIT_FIX (Finding #7) — render EVERYTHING from server-pre-computed
-  // strings. Client no longer calls storyFor / buildWhyText / shortNote /
-  // checkFormulaPairs (those still exist as dead code for now but are
-  // never invoked from the paint path). The raw pharmacology / synergy
-  // arrays are no longer on the wire — a scraper hitting compose can no
-  // longer reconstruct the herb DB.
-  document.getElementById('bottle').insertAdjacentHTML('beforeend', bottleCard(a.intention, enrichedHerbs, serverName));
-  document.getElementById('rTagline').textContent = enrichedHerbs.length + ' allies · Tailored Elixir · 30 ml';
-  const storyEl0 = document.getElementById('rStory');
-  if (storyEl0) storyEl0.innerHTML = String(serverFormula.storyText || '');
-  document.getElementById('rHerbCount').textContent = enrichedHerbs.length + ' allies · woven together';
-  document.getElementById('rSafety').textContent  = safetyLine(a);
+  // Defensive paint — each section wrapped so one throw doesn't
+  // kill the rest of the reveal (bottle failure shouldn't erase
+  // the herb list, etc). Any failure logs a WARN to the browser
+  // console so it surfaces in DevTools; the user still gets the
+  // best-effort render of the remaining sections.
+  const paintStep = (label, fn) => { try { fn(); } catch (e) { console.warn('[reveal:' + label + '] failed:', e && e.message || e); } };
 
-  // Herb list — server ships `shortNote` and `isTrace` per herb; the
-  // client no longer needs the raw pharmacology fields.
-  const list = document.getElementById('rHerbList');
+  paintStep('bottle', () => {
+    const el = document.getElementById('bottle');
+    if (el) el.insertAdjacentHTML('beforeend', bottleCard(a.intention, enrichedHerbs, serverName));
+  });
+  paintStep('tagline', () => {
+    const el = document.getElementById('rTagline');
+    if (el) el.textContent = enrichedHerbs.length + ' allies · Tailored Elixir · 30 ml';
+  });
+  paintStep('story', () => {
+    const el = document.getElementById('rStory');
+    if (el) el.innerHTML = String(serverFormula.storyText || '');
+  });
+  paintStep('herbCount', () => {
+    const el = document.getElementById('rHerbCount');
+    if (el) el.textContent = enrichedHerbs.length + ' allies · woven together';
+  });
+  paintStep('safety', () => {
+    const el = document.getElementById('rSafety');
+    if (el) el.textContent = safetyLine(a);
+  });
+
+  // Herb list — server ships `shortNote` and `isTrace` per herb.
+  const list     = document.getElementById('rHerbList');
   const herbsBox = document.getElementById('rHerbs');
-  if (herbsBox) herbsBox.classList.add('pct-locked');
-  if (list) {
+  paintStep('herbList', () => {
+    if (herbsBox) herbsBox.classList.add('pct-locked');
+    if (!list) return;
     list.innerHTML = '';
     enrichedHerbs.forEach((h, i) => {
       const el = document.createElement('div');
@@ -3412,7 +3427,7 @@ function _fyfPaintServerReveal(a, body) {
         '</div>';
       list.appendChild(el);
     });
-  }
+  });
   window.__revealPercentages = function() {
     document.querySelectorAll('#rHerbList .r-herb-n').forEach(n => {
       const real = n.getAttribute('data-pct');
