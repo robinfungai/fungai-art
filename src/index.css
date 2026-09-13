@@ -18,6 +18,12 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
+    /* Dark-theme default — belt-and-braces with the <meta name="color-scheme"
+       content="dark"> in every entry HTML. Tells the UA to render form
+       controls, scrollbars, autofill highlights, and video controls with
+       dark defaults regardless of the visitor's OS setting. */
+    color-scheme: dark;
+
     /* Mystical Forest Color Palette */
     --background: 25 15% 8%;
     --foreground: 45 25% 92%;
