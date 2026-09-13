@@ -241,7 +241,119 @@ function InstallButton() {
   );
 }
 
+// AUDIT_FIX (Foraging audit · S-03, P0). First-run acknowledgement +
+// persistent caution + terms in PWA scope. Handled entirely in-app
+// (no /terms route needed, no manifest scope change) via an initial
+// modal that gates interaction, a persistent caution line, and an
+// in-modal "read the full terms" section. Acknowledgement persists
+// in localStorage so returning users skip the modal but the caution
+// line stays visible always.
+const FYF_ACK_STORAGE_KEY = 'fyf_forage_ack_v1';
+
+function ForageAcknowledgementModal({ onAcknowledge }: { onAcknowledge: () => void }) {
+  const [showTerms, setShowTerms] = useState(false);
+  return (
+    <div style={{
+      position: 'fixed', inset: 0, zIndex: 999,
+      background: 'rgba(4,8,6,0.94)', backdropFilter: 'blur(10px)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      padding: 20,
+    }} role="dialog" aria-modal="true" aria-labelledby="forage-ack-title">
+      <div style={{
+        maxWidth: 480, width: '100%',
+        background: '#07110d', border: '0.5px solid rgba(232,177,75,0.4)',
+        borderRadius: 16, padding: '28px 26px',
+        color: '#E6D9B5', fontFamily: "'Cormorant Garamond', serif",
+        maxHeight: 'calc(100vh - 40px)', overflowY: 'auto',
+      }}>
+        <div style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.28em', textTransform: 'uppercase', color: '#E8B14B', marginBottom: 12 }}>
+          Before you begin
+        </div>
+        <h2 id="forage-ack-title" style={{ fontStyle: 'italic', fontWeight: 400, fontSize: 22, margin: '0 0 16px', lineHeight: 1.2, color: '#EDE5D8' }}>
+          This is a research tool, not identification.
+        </h2>
+        <div style={{ fontSize: 14, lineHeight: 1.7, color: '#C9B894', marginBottom: 14 }}>
+          Species probabilities are predictive signals from ecological modelling. They are <strong style={{ color: '#EDE5D8' }}>not identifications</strong> and cannot tell you what is safe to eat, touch, or bring home.
+        </div>
+        <div style={{ fontSize: 14, lineHeight: 1.7, color: '#C9B894', marginBottom: 14 }}>
+          Every species has toxic lookalikes. Some are lethal. Before consuming, touching, or preparing any wild plant or fungus, verify identification with a qualified local expert and a physical field guide — not this app.
+        </div>
+        {!showTerms && (
+          <button
+            type="button"
+            onClick={() => setShowTerms(true)}
+            style={{
+              background: 'none', border: 'none', color: '#E8B14B',
+              fontFamily: 'monospace', fontSize: 10, letterSpacing: '0.2em',
+              textTransform: 'uppercase', cursor: 'pointer', padding: '4px 0',
+              textDecoration: 'underline', textUnderlineOffset: 3,
+            }}
+          >
+            Read the full terms →
+          </button>
+        )}
+        {showTerms && (
+          <div style={{ marginTop: 12, marginBottom: 16, padding: '14px 16px', background: 'rgba(232,177,75,0.05)', border: '0.5px solid rgba(232,177,75,0.15)', borderRadius: 8, fontSize: 13, lineHeight: 1.65, color: '#C9B894' }}>
+            <p style={{ margin: '0 0 10px' }}>By using the Foraging Map you acknowledge:</p>
+            <ul style={{ margin: 0, padding: '0 0 0 18px' }}>
+              <li style={{ marginBottom: 6 }}>The app displays predictive probabilities based on habitat, season, and weather — <strong>not real-time verified sightings</strong>.</li>
+              <li style={{ marginBottom: 6 }}>Species tags (edible / medicinal) are informational only. <strong>Consuming misidentified plants or fungi can cause severe illness or death.</strong></li>
+              <li style={{ marginBottom: 6 }}>You are responsible for verifying every identification yourself, respecting local foraging laws, and honouring landowner permission and protected-area rules.</li>
+              <li style={{ marginBottom: 6 }}>Location data stays on your device unless you explicitly submit it to a Fungai Art form.</li>
+              <li>Fungai Art accepts no liability for outcomes of foraging decisions made with this tool.</li>
+            </ul>
+          </div>
+        )}
+        <button
+          type="button"
+          onClick={onAcknowledge}
+          style={{
+            display: 'block', width: '100%', marginTop: 18,
+            padding: '13px 20px',
+            background: 'linear-gradient(135deg, #E8B14B, #B58A38)',
+            color: '#07110d', border: 'none', borderRadius: 999,
+            fontFamily: 'monospace', fontSize: 11, letterSpacing: '0.24em',
+            textTransform: 'uppercase', fontWeight: 500, cursor: 'pointer',
+          }}
+        >
+          I understand — enter the map
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function ForagePersistentCaution() {
+  // Always visible bar at the top of the app. Read-only cue that
+  // reinforces the acknowledgement modal's message every session,
+  // without repeating the modal itself.
+  return (
+    <div style={{
+      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 8,
+      background: 'rgba(4,8,6,0.85)', backdropFilter: 'blur(6px)',
+      borderBottom: '0.5px solid rgba(232,177,75,0.18)',
+      padding: '5px 14px', textAlign: 'center',
+      fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.18em',
+      textTransform: 'uppercase', color: '#8B7E62',
+      pointerEvents: 'none',
+    }} role="note" aria-label="Foraging caution">
+      ◇ Predictive tool · not identification · verify with a qualified local expert before use
+    </div>
+  );
+}
+
 export default function ForagingApp() {
+  // AUDIT_FIX (S-03) — gate the app on first-run acknowledgement.
+  // localStorage read wrapped in try/catch (private-mode + a11y).
+  const [acknowledged, setAcknowledged] = useState<boolean>(() => {
+    try { return localStorage.getItem(FYF_ACK_STORAGE_KEY) === 'true'; }
+    catch { return false; }
+  });
+  const acknowledge = useCallback(() => {
+    try { localStorage.setItem(FYF_ACK_STORAGE_KEY, 'true'); } catch (_) {}
+    setAcknowledged(true);
+  }, []);
+
   const [selectedNode, setSelectedNode] = useState<EcoNode | null>(null);
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [seasons, setSeasons] = useState<Season[]>([getCurrentSeason()]);
@@ -756,6 +868,15 @@ export default function ForagingApp() {
 
   return (
     <div style={{ width: '100vw', height: '100vh', position: 'relative', background: '#07110d', overflow: 'hidden' }}>
+
+      {/* AUDIT_FIX (S-03) — first-run acknowledgement modal.
+          Blocks interaction until the user taps "I understand".
+          Persists to localStorage so returning users skip it. */}
+      {!acknowledged && <ForageAcknowledgementModal onAcknowledge={acknowledge} />}
+
+      {/* AUDIT_FIX (S-03) — persistent caution line at top of app.
+          Present every session, above the top bar. Read-only. */}
+      <ForagePersistentCaution />
 
       {/* Top bar */}
       <div style={{
