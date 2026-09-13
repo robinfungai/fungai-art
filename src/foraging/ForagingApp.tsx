@@ -11,6 +11,7 @@ import { VILDMAD_OBS } from '../data/vildMadObs';
 import { HARVEST_BY_MONTH, HARVEST_PLANTS, MONTH_SV } from '../data/harvestCalendar';
 import { EcoNode, Season, HabitatType } from '../types/EcoNode';
 import NodePanel from './NodePanel';
+import { scoreSpecies, rainBoostFor } from './scoring';
 
 // Moon phase calculation (pure JS, no API)
 function getMoonPhase() {
@@ -623,7 +624,8 @@ export default function ForagingApp() {
     // Aggregate species across the 3 nearest nodes, deduped + scored
     const seasonNow = getCurrentSeason();
     const rain10d = userConditions?.totalRain10d ?? 0;
-    const rainBoost = rain10d > 25 ? 0.25 : rain10d > 10 ? 0.1 : 0;
+    // AUDIT_FIX (D-01) — rain-boost via shared scoring module.
+    const rainBoost = rainBoostFor(rain10d);
 
     type Scored = {
       name: string; probability: number; distKm: number; node: EcoNode;
@@ -637,12 +639,15 @@ export default function ForagingApp() {
     for (const { node, km } of ranked) {
       for (const sp of node.species) {
         const inSeason = sp.peak_season.includes(seasonNow);
-        const fungal = isFungal(sp.name);
-        const base = sp.probability;
-        const seasonMult = inSeason ? 1.2 : 0.55;
-        const distPenalty = Math.max(0.5, 1 - km / 250);
-        const weatherBonus = fungal ? rainBoost : 0;
-        const probability = Math.min(1, base * seasonMult * distPenalty + weatherBonus);
+        const fungal   = isFungal(sp.name);
+        // AUDIT_FIX (D-01) — shared scoring so NodePanel + this list
+        // read at the same strength for the same species.
+        const probability = scoreSpecies({
+          base:         sp.probability,
+          inSeason,
+          distanceKm:   km,
+          weatherBoost: fungal ? rainBoost : 0,
+        });
         scored.push({
           name: sp.name, probability, distKm: km, node,
           inSeason, medicinal: sp.medicinal, edible: sp.edible,

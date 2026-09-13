@@ -1,6 +1,7 @@
 import React from 'react';
 import { EcoNode, Season } from '../types/EcoNode';
 import { HABITAT_COLORS, HABITAT_LABELS } from '../data/ecoNodes';
+import { scoreSpecies, isSpeciesInSeason } from './scoring';
 
 interface NodePanelProps {
   node: EcoNode | null;
@@ -177,8 +178,13 @@ export default function NodePanel({ node, activeSeason, onClose }: NodePanelProp
             Species Intelligence · {sortedSpecies.length} plants
           </div>
           {sortedSpecies.map(sp => {
-            const inSeason = sp.peak_season.some(s => activeSeason.includes(s));
-            const adjProb = inSeason ? Math.min(1, sp.probability * 1.25) : sp.probability * 0.45;
+            // AUDIT_FIX (D-01) — shared scoring module. Same formula
+            // as ForagingApp's "Growing around you" list, so a species
+            // reads at consistent strength across both panels. Prior
+            // ad-hoc math (1.25/0.45) was replaced by the canonical
+            // seasonMult 1.20/0.55 in ./scoring.
+            const inSeason = isSpeciesInSeason(sp, activeSeason);
+            const adjProb  = scoreSpecies({ base: sp.probability, inSeason });
             return (
               <div key={sp.name} style={{ marginBottom: 12, paddingBottom: 12, borderBottom: '0.5px solid rgba(255,255,255,0.06)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 4 }}>
