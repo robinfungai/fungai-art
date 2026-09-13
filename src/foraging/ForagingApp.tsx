@@ -300,7 +300,15 @@ function ForageAcknowledgementModal({ onAcknowledge }: { onAcknowledge: () => vo
               <li style={{ marginBottom: 6 }}>The app displays predictive probabilities based on habitat, season, and weather — <strong>not real-time verified sightings</strong>.</li>
               <li style={{ marginBottom: 6 }}>Species tags (edible / medicinal) are informational only. <strong>Consuming misidentified plants or fungi can cause severe illness or death.</strong></li>
               <li style={{ marginBottom: 6 }}>You are responsible for verifying every identification yourself, respecting local foraging laws, and honouring landowner permission and protected-area rules.</li>
-              <li style={{ marginBottom: 6 }}>Location data stays on your device unless you explicitly submit it to a Fungai Art form.</li>
+              <li style={{ marginBottom: 6 }}>
+                <strong>How your location is used.</strong> If you allow geolocation, your approximate coordinates (rounded to ~1&nbsp;km) are passed through Fungai Art&rsquo;s own proxy to:
+                <ul style={{ margin: '4px 0 0', padding: '0 0 0 18px', fontSize: 12.5 }}>
+                  <li><strong>Open-Meteo</strong> — for weather at your location</li>
+                  <li><strong>BigDataCloud</strong> — for reverse-geocoding (city / region / country name only)</li>
+                  <li><strong>GBIF</strong> &amp; <strong>iNaturalist</strong> — for nearby species observations</li>
+                </ul>
+                Your precise GPS coordinates never leave your device.
+              </li>
               <li>Fungai Art accepts no liability for outcomes of foraging decisions made with this tool.</li>
             </ul>
           </div>
@@ -532,17 +540,22 @@ export default function ForagingApp() {
       .then(data => { if (data.score) setUserConditions(data); })
       .catch(() => {});
 
-    // Reverse geocode → city, region, country. Uses BigDataCloud's
-    // client-side reverse-geocode endpoint (free, no API key, CORS-
-    // enabled, ~5m accuracy). Best-effort — failure is silent, the
-    // rest of the app doesn't depend on it.
-    fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${userLocation.lat}&longitude=${userLocation.lng}&localityLanguage=en`)
+    // AUDIT_FIX (C-04) — reverse geocode via our own /api proxy, with
+    // coords ROUNDED to 2 decimals (~1 km granularity) before they
+    // leave the browser. Prior version hit BigDataCloud directly with
+    // GPS-precise coords — third-party privacy leak. Server also
+    // rounds defensively + returns only { city, region, country,
+    // approxLat, approxLng }; nothing else from BigDataCloud reaches
+    // the client. Failure is silent (best-effort feature).
+    const approxLat = Math.round(userLocation.lat * 100) / 100;
+    const approxLng = Math.round(userLocation.lng * 100) / 100;
+    fetch(`/api/reverse-geocode?lat=${approxLat}&lng=${approxLng}`)
       .then(r => r.json())
       .then(data => {
         setUserPlace({
-          city:    data.city || data.locality || data.localityInfo?.administrative?.[3]?.name || null,
-          region:  data.principalSubdivision || null,
-          country: data.countryName || null,
+          city:    data.city    || null,
+          region:  data.region  || null,
+          country: data.country || null,
         });
       })
       .catch(() => {});
