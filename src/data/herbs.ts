@@ -495,6 +495,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A safety — 3000+ years Ayurvedic use with excellent safety profile. No dependence, tolerance or withdrawal. Exceptional for memory, learning, cognitive clarity and neuroprotection. Fat-soluble — must take with meals. Effects cumulative over 4–12 weeks. Long-term indefinite use safe and beneficial.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['reactive', 'wired', 'flat'],
+    energy_pattern: ['sustained'],
+    regional_affinity: ['head'],
+    onset_time: 'weeks',
+    family: 'Plantaginaceae',
+    epithet: 'The memory-water',
+    origin_region: 'Ayurvedic',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -696,6 +705,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Absolute contraindication in psychosis and breastfeeding. Avoid in pregnancy. Not for daily use. Exceptional for intentional dreamwork, meditation deepening, heart-opening and consciousness exploration when used with clear intention, proper setting and integration practices. Effects 30–60 min onset; 4–6 hours duration.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'reactive', 'flat'],
+    energy_pattern: ['pm_stabilise'],
+    sleep_action: ['onset', 'dream_soften'],
+    regional_affinity: ['head', 'heart'],
+    onset_time: 'hours',
+    family: 'Nymphaeaceae',
+    epithet: 'The Nile\'s dream',
+    origin_region: 'African',
+    evidence_grade: 'traditional',
   },
 
   // ─────────────────────────────────────────────
@@ -1493,6 +1512,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A safety — 5000+ years traditional use globally. Absolute contraindication with bile duct obstruction and active gallstones. Otherwise foundational food-medicine herb excellent for liver detoxification, digestive bitters, microbiome support and mineral nutrition. Safe indefinite long-term use.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained', 'restorative_only'],
+    digestion_fit: ['bitter', 'cooling', 'moving'],
+    regional_affinity: ['liver', 'gut', 'kidneys'],
+    onset_time: 'days',
+    family: 'Asteraceae',
+    epithet: 'The weed that runs deep',
+    origin_region: 'European',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -1557,6 +1585,14 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Safe when fully ripe berries are properly processed. CRITICAL: raw or unripe berries are toxic. Excellent food-medicine for cold and flu prevention and treatment. Start at first sign of illness for maximum benefit. Generally safe and food-like at standard syrup/extract doses. Autoimmune caution.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only'],
+    regional_affinity: ['chest', 'whole'],
+    onset_time: 'immediate',
+    family: 'Adoxaceae',
+    epithet: 'The elder\'s dark fruit',
+    origin_region: 'European',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -1894,6 +1930,17 @@ export const HERBS: Herb[] = [
     safe_pregnancy: true,
     status:
       'Grade A safety and efficacy — clinically proven safe and effective for anxiety, sleep, digestion and immune support. Suitable for all ages including pregnancy, breastfeeding and infants under guidance. No significant contraindications or drug interactions at standard doses. One of the most universally well-tolerated herbs in the world.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'reactive', 'wired_tired'],
+    energy_pattern: ['pm_stabilise', 'restorative_only'],
+    sleep_action: ['onset'],
+    digestion_fit: ['cooling', 'carminative', 'bitter'],
+    regional_affinity: ['gut', 'head', 'chest'],
+    onset_time: 'immediate',
+    family: 'Asteraceae',
+    epithet: 'The evening apple',
+    origin_region: 'European',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -2471,6 +2518,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Safe and effective warming digestive and metabolic spice. C. verum preferred for long-term use (low coumarin). Cassia safe at 1–2 g/day for 3 months for glycaemic support. High cassia doses long-term may exceed coumarin TDI — liver monitoring in at-risk individuals. Grade B evidence for glycaemic control; Grade B+ for digestive carminative action.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'flat'],
+    energy_pattern: ['am_boost', 'sustained'],
+    digestion_fit: ['warming', 'carminative'],
+    regional_affinity: ['gut', 'kidneys', 'whole'],
+    onset_time: 'immediate',
+    family: 'Lauraceae',
+    epithet: 'The sweet warmer',
+    origin_region: 'Ayurvedic',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -3299,6 +3356,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade A adaptogenic and energy evidence (200+ studies). Excellent for qi tonification, stress resilience, energy, cognitive and sexual function. Morning use essential. Cycling protocol recommended. Screen for stimulant sensitivity. 4000+ years traditional use. One of the most researched herbs in the world.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'flat'],
+    energy_pattern: ['am_boost', 'sustained'],
+    regional_affinity: ['kidneys', 'chest', 'whole'],
+    onset_time: 'days',
+    family: 'Araliaceae',
+    epithet: 'The man-root',
+    origin_region: 'Chinese',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -3435,6 +3501,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade B+ cognitive and venous insufficiency evidence (100+ studies). CRITICAL: CYP450 inhibition — pharmacist consultation mandatory if on medications. Liver caution. Excellent herb when screened appropriately. Minimum 4–8 weeks for cognitive benefit. Cycling recommended.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['flat', 'reactive', 'wired_tired'],
+    energy_pattern: ['sustained', 'pm_stabilise'],
+    regional_affinity: ['head', 'skin', 'whole'],
+    onset_time: 'weeks',
+    family: 'Apiaceae',
+    epithet: 'The scholar\'s herb',
+    origin_region: 'Ayurvedic',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -4388,6 +4463,17 @@ export const HERBS: Herb[] = [
     safe_pregnancy: true,
     status:
       'Grade A safety — German Commission E monograph. Food herb tradition with excellent safety record. Grade B anxiety and viral support (HSV). Unique paradoxical calm-uplift effect. Safe in pregnancy and breastfeeding. No drug interactions confirmed. Excellent everyday nervine for all populations.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'reactive', 'wired_tired'],
+    energy_pattern: ['pm_stabilise', 'restorative_only'],
+    sleep_action: ['onset'],
+    digestion_fit: ['cooling', 'carminative'],
+    regional_affinity: ['gut', 'head', 'heart'],
+    onset_time: 'immediate',
+    family: 'Lamiaceae',
+    epithet: 'The gladdening leaf',
+    origin_region: 'Mediterranean',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -4721,6 +4807,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade B+ anxiolytic efficacy (multiple RCTs). Grade B+ hepatotoxic risk (low incidence but serious — liver injury, failure and transplant cases documented). RESTRICTED HERB: mandatory liver screening; 3-month maximum; no alcohol; noble-cultivar aqueous root preparation only; never aerial parts or ethanol extracts. Safer nervines are first-line default.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'reactive', 'wired_tired'],
+    energy_pattern: ['pm_stabilise', 'restorative_only'],
+    sleep_action: ['onset'],
+    regional_affinity: ['head', 'chest'],
+    onset_time: 'immediate',
+    family: 'Piperaceae',
+    epithet: 'The council-root',
+    origin_region: 'Global',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -5312,6 +5408,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A hepatoprotection, liver regeneration and liver damage recovery (300+ studies; German Commission E monograph). One of the most researched herbs in the world. Grade A safety. Universally applicable liver guardian. No significant drug interactions. Safe long-term.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['restorative_only', 'sustained'],
+    digestion_fit: ['bitter', 'cooling'],
+    regional_affinity: ['liver', 'gut'],
+    onset_time: 'weeks',
+    family: 'Asteraceae',
+    epithet: 'The liver\'s shield',
+    origin_region: 'Mediterranean',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -5582,6 +5687,14 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A mineral content and safety. Most mineral-rich commonly available herb — unmatched nutritive foundation. Safe indefinitely for all populations with renal and diuretic medication caution. Long-steep infusion essential. Cumulative connective tissue, bone, hair and skin benefits over 4–12 weeks.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained', 'restorative_only'],
+    regional_affinity: ['kidneys', 'joints', 'whole'],
+    onset_time: 'weeks',
+    family: 'Urticaceae',
+    epithet: 'The mineral spring',
+    origin_region: 'European',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -5787,6 +5900,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade B anxiety evidence (multiple human RCTs; GABA mechanism confirmed). Grade A safety (300+ years; non-addictive; no dependence). Paradoxical calm-alert state is the defining quality. Screen depression, CNS depressants and SSRIs. Safe long-term daily use. The defining non-addictive benzodiazepine alternative.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'reactive', 'wired_tired'],
+    energy_pattern: ['pm_stabilise', 'restorative_only'],
+    sleep_action: ['onset', 'maintenance'],
+    regional_affinity: ['head', 'heart', 'chest'],
+    onset_time: 'hours',
+    family: 'Passifloraceae',
+    epithet: 'The vine that unclenches',
+    origin_region: 'Central American',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -5991,6 +6114,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade A adaptogenic stress resilience (multiple robust RCTs). Grade A antidepressant for mild-moderate depression (SSRI-equivalent efficacy with fewer side effects). CRITICAL safety: bipolar HARD BLOCK; SSRI serotonin syndrome (especially paroxetine — documented). Stimulating — morning only. Cycling protocol mandatory. Extensive psychiatric screening required before every recommendation.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['flat', 'tired', 'wired_tired'],
+    energy_pattern: ['am_boost', 'sustained'],
+    regional_affinity: ['head', 'whole'],
+    onset_time: 'days',
+    family: 'Crassulaceae',
+    epithet: 'The high-altitude fire',
+    origin_region: 'Nordic wild',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -6195,6 +6327,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade B+ adaptogenic properties (200+ studies; unique lignan mechanism; endurance evidence). Grade A CYP450 interaction risk — the defining safety concern. Decoction preparation essential. Initial stimulation phase (weeks 1–4): manage with morning dosing. CYP450 prescriber consultation mandatory before all recommendations involving prescription medications.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired_tired', 'tired', 'reactive'],
+    energy_pattern: ['sustained', 'am_boost'],
+    regional_affinity: ['liver', 'kidneys', 'chest'],
+    onset_time: 'weeks',
+    family: 'Schisandraceae',
+    epithet: 'The five-flavour berry',
+    origin_region: 'Chinese',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -6870,6 +7011,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A anti-inflammatory for osteoarthritis (multiple RCTs; NF-κB inhibition confirmed). Grade A antioxidant. Grade B+ hepatoprotective and choleretic. Grade A culinary safety. BIOAVAILABILITY: piperine plus fat mandatory — always instruct. Screen for gallstones (choleretic), anticoagulants (additive), surgery (discontinue 2 weeks pre-op). Safe indefinitely at culinary doses.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    digestion_fit: ['warming', 'bitter', 'moving'],
+    regional_affinity: ['joints', 'liver', 'whole'],
+    onset_time: 'weeks',
+    family: 'Zingiberaceae',
+    epithet: 'The golden mender',
+    origin_region: 'Ayurvedic',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -7008,6 +7158,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade A sleep improvement (EMA monograph; multiple RCTs). Grade B+ anxiolytic. Grade B antispasmodic. 2–4 weeks for full effect (set expectations). Maximum 4–6 weeks continuous high-dose; taper gradually. Screen for CNS depressants (additive sedation — coordinate with prescriber), liver disease, pregnancy (avoid). Non-habit-forming at appropriate doses. Rotate and cycle for long-term use.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'reactive'],
+    energy_pattern: ['restorative_only'],
+    sleep_action: ['onset', 'maintenance'],
+    regional_affinity: ['head', 'gut'],
+    onset_time: 'hours',
+    family: 'Caprifoliaceae',
+    epithet: 'The root that pulls sleep down',
+    origin_region: 'European',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -9938,6 +10098,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Widely used global food-medicine herb with strong evidence for nausea, digestive support, circulatory warming and anti-inflammatory support. Excellent formula bridge herb.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['flat', 'tired'],
+    energy_pattern: ['am_boost', 'sustained'],
+    digestion_fit: ['warming', 'carminative', 'moving'],
+    regional_affinity: ['gut', 'chest', 'joints'],
+    onset_time: 'immediate',
+    family: 'Zingiberaceae',
+    epithet: 'The kitchen fire',
+    origin_region: 'Ayurvedic',
+    evidence_grade: 'A',
   },
   {
     id: 538,
