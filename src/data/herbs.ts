@@ -1080,6 +1080,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Absolute contraindication in pregnancy. SSRIs/SNRIs require careful monitoring and psychiatric consultation. Exceptional for emotional heart-opening, grief processing and heart-centred consciousness work in appropriate contexts with proper support. Traditional evidence rich; modern pharmacology limited. Research grade C.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['reactive', 'wired', 'flat'],
+    energy_pattern: ['pm_stabilise', 'restorative_only'],
+    sleep_action: ['dream_soften'],
+    regional_affinity: ['heart', 'chest'],
+    onset_time: 'weeks',
+    family: 'Fabaceae',
+    epithet: 'The dreaming tree',
+    origin_region: 'Central American',
+    evidence_grade: 'traditional',
   },
 
   // ─────────────────────────────────────────────
@@ -1744,6 +1754,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Generally safe with 400+ years traditional use. Excellent for sexual vitality, confidence and energy building. Caution in pregnancy and with cardiovascular conditions. Sustainability: wild-harvested Amazonian herb — support sustainably sourced products only. Effects cumulative over 2–4 weeks.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'flat', 'wired_tired'],
+    energy_pattern: ['pm_stabilise', 'sustained'],
+    regional_affinity: ['pelvis', 'heart'],
+    onset_time: 'days',
+    family: 'Erythroxylaceae',
+    epithet: 'The joy-tree',
+    origin_region: 'Central American',
+    evidence_grade: 'traditional',
   },
 
   // ─────────────────────────────────────────────
@@ -3611,6 +3630,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade B+ adaptogenic and anxiolytic evidence (100+ studies). CRITICAL monitoring: TSH if on levothyroxine; blood sugar if on diabetes medications. 5000+ years sacred traditional use. Excellent for stress resilience, anxiety without sedation, anti-inflammation and immune modulation. Cycling recommended.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'wired_tired', 'reactive'],
+    energy_pattern: ['pm_stabilise', 'sustained'],
+    sleep_action: ['onset'],
+    regional_affinity: ['chest', 'heart', 'solar_plexus'],
+    onset_time: 'weeks',
+    family: 'Lamiaceae',
+    epithet: 'The queen of herbs',
+    origin_region: 'Ayurvedic',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -3680,6 +3709,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade B+ sleep and anxiolytic evidence. Excellent for wired-but-tired patterns, stress-related insomnia and nervous tension with underlying fatigue. CRITICAL: avoid in depression (hops depression risk); avoid in oestrogen-sensitive conditions; avoid in pregnancy. Evening use only. Best combined with Valerian for sleep protocols.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'wired_tired'],
+    energy_pattern: ['restorative_only'],
+    sleep_action: ['onset', 'maintenance'],
+    regional_affinity: ['head', 'gut'],
+    onset_time: 'hours',
+    family: 'Cannabaceae',
+    epithet: 'The bitter sleeper',
+    origin_region: 'European',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -4274,6 +4313,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A anxiolytic evidence (multiple RCTs; 30–40% anxiety reduction; comparable to benzodiazepines for mild anxiety). Grade A safety — 2000+ years global use. Universal nervine: daytime appropriate, all ages, all medications. The defining "calm-alert" herb. No drug interactions confirmed.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'reactive'],
+    energy_pattern: ['pm_stabilise', 'restorative_only'],
+    sleep_action: ['onset'],
+    regional_affinity: ['head', 'chest', 'heart'],
+    onset_time: 'immediate',
+    family: 'Lamiaceae',
+    epithet: 'The blue calm',
+    origin_region: 'Mediterranean',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -4597,6 +4646,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade B mood and anxiety evidence (mesembrine SSRI-like mechanism confirmed; RCTs emerging). CRITICAL: SSRI/SNRI serotonin monitoring; MAOI absolute contraindication; bipolar disorder consult. Non-addictive; no tolerance. Safe long-term for appropriate populations. Natural serotonin-supporting alternative.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['flat', 'wired_tired'],
+    energy_pattern: ['am_boost', 'pm_stabilise'],
+    regional_affinity: ['head', 'heart'],
+    onset_time: 'hours',
+    family: 'Aizoaceae',
+    epithet: 'The mood lift',
+    origin_region: 'Global',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -5054,6 +5112,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade A food safety (root vegetable). Grade B male sexual vitality (emerging variety-specific research). Prostate cancer history: consult oncologist (testosterone-supporting but not -increasing). Minimum 4–12 weeks for full benefit. Male-specific Yang tonification and sexual vitality herb.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'flat'],
+    energy_pattern: ['am_boost', 'sustained'],
+    regional_affinity: ['kidneys', 'pelvis'],
+    onset_time: 'days',
+    family: 'Brassicaceae',
+    epithet: 'The dark root',
+    origin_region: 'Central American',
+    evidence_grade: 'B-',
   },
 
   // ─────────────────────────────────────────────
@@ -5990,6 +6057,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade B+ mental clarity and cognitive focus. German Commission E monograph. Grade A culinary safety. TIMING IS THE SAFETY: morning only; evening is contraindicated. Short steep preparation essential. Screen insomnia, hypertension, anxiety, pregnancy (concentrated forms). No significant drug interactions from whole herb.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['flat', 'tired'],
+    energy_pattern: ['am_boost', 'sustained'],
+    digestion_fit: ['warming', 'carminative'],
+    regional_affinity: ['head', 'chest'],
+    onset_time: 'immediate',
+    family: 'Lamiaceae',
+    epithet: 'The bright memory',
+    origin_region: 'Mediterranean',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -6257,6 +6334,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade B+ non-sedating anxiolytic (human trials emerging; GABA mechanism confirmed; long traditional evidence). Grade A safety — 200+ years; no serious adverse events; no drug interactions. The defining daytime non-sedating nervine. Cumulative 4–8 week toning effect. No tolerance or dependence. Improves with consistent long-term use. Safe indefinitely.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'reactive', 'wired_tired'],
+    energy_pattern: ['pm_stabilise', 'restorative_only'],
+    sleep_action: ['onset'],
+    regional_affinity: ['head', 'chest'],
+    onset_time: 'hours',
+    family: 'Lamiaceae',
+    epithet: 'The quiet mind',
+    origin_region: 'European',
+    evidence_grade: 'B',
   },
   // ─────────────────────────────────────────────
   // GOLDENROD / SOLIDAGO
@@ -6845,6 +6932,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: true,
     status:
       'Grade A sensory and emotional anxiolytic (RCT evidence; limbic mechanism confirmed). Grade B antioxidant and anti-inflammatory. Grade A safety — universally gentle; suitable all populations. No drug interactions. No contraindications except verified natural source requirement. The foundational pleasure and comfort herb of the library.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['reactive', 'wired'],
+    energy_pattern: ['pm_stabilise'],
+    sleep_action: ['onset'],
+    regional_affinity: ['heart', 'chest'],
+    onset_time: 'immediate',
+    family: 'Orchidaceae',
+    epithet: 'The comfort bean',
+    origin_region: 'Central American',
+    evidence_grade: 'traditional',
   },
 
   // ─────────────────────────────────────────────
@@ -7430,6 +7527,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A energy and mental clarity (caffeine mechanism; extensive evidence). Grade B antioxidant (polyphenol confirmed). Grade A safety (1000+ years traditional use; safer than high-caffeine alternatives). MORNING TO AFTERNOON ONLY (stimulating). Lower caffeine than coffee = balanced energy without excessive jitteriness; safer for sensitive individuals. Screen anxiety (monitor), cardiac arrhythmia (consult cardiologist), hypertension (monitor), pregnancy (minimise caffeine). Social and ceremonial dimension is part of the therapeutic value.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'flat'],
+    energy_pattern: ['am_boost', 'sustained'],
+    digestion_fit: ['warming', 'bitter'],
+    regional_affinity: ['chest', 'gut'],
+    onset_time: 'immediate',
+    family: 'Aquifoliaceae',
+    epithet: 'The green fire',
+    origin_region: 'Central American',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -7759,6 +7866,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade A stimulant laxative (pharmacological data confirmed). Grade A chronic toxicity and dependence risk (well documented across anthraquinone class). ABSOLUTE CONTRAINDICATIONS: pregnancy (HARD BLOCK — purgative and blood-moving); bowel obstruction (HARD BLOCK — perforation risk); severe deficiency. SERIOUS drug interaction: digoxin (hypokalaemia — cardiac toxicity risk). MAXIMUM 2 weeks per course. Restricted herb — practitioner mode only; not for consumer self-recommendation. Always redirect chronic constipation to safer strategies.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only'],
+    digestion_fit: ['moving', 'cooling', 'bitter'],
+    regional_affinity: ['gut', 'liver'],
+    onset_time: 'hours',
+    family: 'Polygonaceae',
+    epithet: 'The purging judge',
+    origin_region: 'Chinese',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -8163,6 +8279,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade A antioxidant (Nrf2 activation; very high SOD-related capacity). Grade A-minus immunomodulation (robust preclinical; emerging human data). Grade B+ antitumour preclinical; Grade B metabolic and antiviral. HARD BLOCKS: kidney stones and CKD (oxalate nephropathy confirmed in case reports). Cycling protocol mandatory. Screen transplant/immunosuppressants and diabetes medications. Adjunct only in oncology — never replace standard treatment.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['flat', 'wired_tired'],
+    energy_pattern: ['sustained', 'restorative_only'],
+    regional_affinity: ['whole', 'gut', 'chest'],
+    onset_time: 'weeks',
+    family: 'Hymenochaetaceae',
+    epithet: 'The black diamond',
+    origin_region: 'Nordic wild',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -8371,6 +8496,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'EDUCATIONAL AND TAXONOMIC ENTRY ONLY — NOT FOR THERAPEUTIC FORMULATION. Pharmacological archetype: GABA-A agonist (muscimol) plus NMDA/mGluR agonist (ibotenic acid). Mixed excitatory-depressive toxidrome. Fatalities documented. No approved clinical indications. Rising commercial products creating public health emergency. Hard block for all internal use recommendations.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['reactive', 'wired'],
+    energy_pattern: ['restorative_only'],
+    sleep_action: ['onset', 'dream_soften'],
+    regional_affinity: ['head', 'whole'],
+    onset_time: 'immediate',
+    family: 'Amanitaceae',
+    epithet: 'The red sentinel',
+    origin_region: 'Nordic wild',
+    evidence_grade: 'traditional',
   },
 
   // ─────────────────────────────────────────────
@@ -8612,6 +8747,14 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade B+ antioxidant and anti-ageing (strong preclinical data; SFPS confirmed). Grade B periodontal/gum protection (human fibroblast work). Grade B renoprotective and metabolic. Grade B culinary safety. Note: high-dose wild extract toxicity exists but is irrelevant to culinary portions of cultivated enoki. Daily culinary integration is the primary recommendation.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained', 'restorative_only'],
+    regional_affinity: ['whole', 'kidneys'],
+    onset_time: 'weeks',
+    family: 'Physalacriaceae',
+    epithet: 'The winter filament',
+    origin_region: 'Chinese',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -8750,6 +8893,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A-minus NGF/BDNF stimulation (multiple in vitro and in vivo confirmations). Grade B+ MCI cognitive improvement (RCT confirmed). Grade B mild AD cognitive benefit (pilot RCT). Grade A-minus general safety. Antiplatelet caution (hericenone B — discuss with prescriber if on anticoagulants). Continued intake required for sustained benefit. Fruiting body vs mycelium distinction matters for product selection.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['flat', 'wired_tired', 'reactive'],
+    energy_pattern: ['sustained', 'am_boost'],
+    regional_affinity: ['head', 'whole'],
+    onset_time: 'weeks',
+    family: 'Hericiaceae',
+    epithet: 'The nerve-weaver',
+    origin_region: 'Chinese',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -9711,6 +9863,17 @@ export const HERBS: Herb[] = [
     caution_level: 'MEDIUM',
     safe_pregnancy: null,
     status: 'Excellent cooling restorative. Best for dry/hot/depleted presentations.'
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'wired_tired', 'reactive'],
+    energy_pattern: ['sustained', 'restorative_only'],
+    sleep_action: ['restoration'],
+    digestion_fit: ['cooling', 'demulcent'],
+    regional_affinity: ['pelvis', 'whole'],
+    onset_time: 'weeks',
+    family: 'Asparagaceae',
+    epithet: 'The hundred-rooted mother',
+    origin_region: 'Ayurvedic',
+    evidence_grade: 'B',
   },
   {
     id: 537,
@@ -10915,6 +11078,16 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'Ten roots, ten directions — the plant council convened around an exhausted nervous system. The medicine of being held.',
   best_preparation: 'Decoction (Dashmool kwath) is the classical form. Modern liquid extracts also work.',
   caution_level: 'LOW-MEDIUM', safe_pregnancy: null,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  nervous_system_fit: ['reactive', 'wired_tired'],
+  energy_pattern: ['restorative_only', 'pm_stabilise'],
+  sleep_action: ['onset', 'maintenance'],
+  regional_affinity: ['pelvis', 'joints', 'whole'],
+  onset_time: 'weeks',
+  family: 'Multi-plant formula',
+  epithet: 'The ten roots',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'traditional',
 },
 {
   id: 509, name: 'Gandira', botanical: 'Coleus forskohlii (root)',
