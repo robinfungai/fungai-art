@@ -424,6 +424,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A safety — one of the most extensively researched immune herbs (150+ studies). Safe indefinite long-term use. Non-stimulating; suitable as foundational daily herb. Theoretical autoimmune caution (trial 2–4 weeks, monitor). Exceptional for illness prevention, post-illness recovery and foundational immune building.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'wired_tired', 'flat'],
+    energy_pattern:     ['sustained', 'pm_stabilise'],
+    regional_affinity:  ['chest', 'whole'],   // Wei Qi = body-wide protective field
+    onset_time:         'weeks',
+    family:             'Fabaceae',
+    epithet:            'The outer shield',
+    origin_region:      'Chinese',
+    evidence_grade:     'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -1394,6 +1403,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Very safe at standard doses with 400+ years traditional use. Excellent for sexual vitality, confidence, embodied presence and mood elevation. Caution in pregnancy. Moderate evidence base; traditional use extensive. Effects develop over 2–4 weeks of consistent use with cumulative baseline improvement.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'flat', 'wired_tired'],
+    energy_pattern:     ['pm_stabilise', 'restorative_only'],
+    sleep_action:       ['onset'],
+    regional_affinity:  ['pelvis', 'heart', 'solar_plexus'],
+    onset_time:         'hours',
+    family:             'Passifloraceae',
+    epithet:            'The pleasure nervine',
+    origin_region:      'Central American',
+    evidence_grade:     'B',
   },
 
   // ─────────────────────────────────────────────
@@ -3323,6 +3342,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A- safety — no known toxicity; traditional food-medicine. Excellent as daily blood and yin tonic, retinal support and metabolic adjunct. Warfarin case reports — monitor INR. Pleasant and accessible for long-term use. Food-level doses safe for all populations.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'flat', 'wired_tired'],
+    energy_pattern:     ['sustained', 'restorative_only'],
+    sleep_action:       ['restoration'],
+    regional_affinity:  ['liver', 'kidneys', 'whole'],
+    onset_time:         'weeks',
+    family:             'Solanaceae',
+    epithet:            'The bright fruit',
+    origin_region:      'Chinese',
+    evidence_grade:     'B',
   },
 
   // ─────────────────────────────────────────────
@@ -4955,6 +4984,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A food safety (root vegetable; centuries traditional use). Grade B sexual vitality and hormone balance evidence (200+ studies). All-gender sexual vitality support. Cumulative 4–12 weeks for full benefit. Minimal contraindications. Excellent daily food-medicine foundation.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'flat'],
+    energy_pattern:     ['am_boost', 'sustained'],
+    regional_affinity:  ['kidneys', 'pelvis', 'solar_plexus'],
+    onset_time:         'days',
+    family:             'Brassicaceae',
+    epithet:            'The Andean root',
+    origin_region:      'Central American',
+    evidence_grade:     'B',
   },
 
   // ─────────────────────────────────────────────
@@ -5336,6 +5374,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: true,
     status:
       'Grade A safety — universally safe; all populations including children, pregnancy and breastfeeding. Grade B+ demulcent and anti-inflammatory evidence. Tea superior to extract. No drug interactions. One of the most universally applicable and gently powerful herbs for respiratory health.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['reactive', 'wired'],   // soothes irritation more than tone
+    energy_pattern:     ['restorative_only'],
+    digestion_fit:      ['demulcent', 'cooling'],
+    regional_affinity:  ['chest', 'whole'],
+    onset_time:         'hours',
+    family:             'Scrophulariaceae',
+    epithet:            'The soft lung',
+    origin_region:      'European',
+    evidence_grade:     'B',
   },
 
   // ─────────────────────────────────────────────
@@ -5799,6 +5847,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: true,
     status:
       'Grade A nutritional composition (200+ nutrients documented; complete amino acid profile confirmed). Grade C phytoandrogen activity (mechanism plausible; limited RCTs). Grade A safety — food source; hypoallergenic; safe for all populations. Cumulative effect: 4–12+ weeks. Morning dosing optimal.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'flat'],
+    energy_pattern:     ['am_boost', 'sustained'],
+    regional_affinity:  ['kidneys', 'pelvis', 'whole'],
+    onset_time:         'days',
+    family:             'Pinaceae',
+    epithet:            'The golden dust',
+    origin_region:      'Global',
+    evidence_grade:     'C',
   },
 
   // ─────────────────────────────────────────────
@@ -6128,6 +6185,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade B+ mitochondrial ATP (emerging RCT evidence; mechanism confirmed). Grade B testosterone in hypogonadal men. SOURCE QUALITY IS THE DEFINING SAFETY ISSUE — heavy metal contamination risk in unverified products is serious. Absolute contraindications: haemochromatosis, sickle cell, thalassemia. Gout caution. Pregnancy avoid. Iron interaction monitoring. Indefinitely safe when clean-sourced.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'flat', 'wired_tired'],
+    energy_pattern:     ['sustained', 'am_boost'],
+    regional_affinity:  ['kidneys', 'whole'],
+    onset_time:         'weeks',
+    family:             'Mineral resin',  // not a plant — fulvic/humic complex
+    epithet:            'The mountain resin',
+    origin_region:      'Ayurvedic',
+    evidence_grade:     'B',
   },
 
   // ─────────────────────────────────────────────
@@ -7615,6 +7681,17 @@ export const HERBS: Herb[] = [
     safe_pregnancy: true,
     status:
       'Grade B blood and qi tonification (traditional evidence 3000+ years; mechanism plausible). Grade B sleep support and immune baseline. Grade A safety — food source; suitable all ages and populations including children and pregnancy. Minimal contraindications (diabetes: portion-manage; loose stools: moderation). Cumulative effect over weeks to months. Culinary integration is the defining recommendation.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'wired_tired', 'reactive'],
+    energy_pattern:     ['sustained', 'restorative_only'],
+    sleep_action:       ['onset', 'restoration'],
+    digestion_fit:      ['warming', 'demulcent'],
+    regional_affinity:  ['solar_plexus', 'heart', 'whole'],
+    onset_time:         'weeks',
+    family:             'Rhamnaceae',
+    epithet:            'The sweet mother',
+    origin_region:      'Chinese',
+    evidence_grade:     'B',
   },
 
   // ─────────────────────────────────────────────
@@ -8155,6 +8232,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade A-minus ATP/energy metabolism (AMPK/GLUT4/PDH mechanism confirmed; strong animal data). Grade B exercise performance (human RCT). Grade B+ immunomodulation (human studies). Grade B CKD adjunct (RCTs plus 2025 meta-analysis). Grade B antiplatelet risk (documented in vitro and ex vivo). HARD ETHICAL BLOCK: always use cultivated C. militaris. Screen autoimmune disease, transplant, anticoagulants, diabetes medications. Morning dosing only.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'wired_tired', 'flat'],
+    energy_pattern:     ['am_boost', 'sustained'],
+    regional_affinity:  ['chest', 'kidneys', 'whole'],
+    onset_time:         'days',
+    family:             'Ophiocordycipitaceae',
+    epithet:            'The mountain athlete',
+    origin_region:      'Chinese',
+    evidence_grade:     'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -10279,6 +10365,17 @@ export const HERBS: Herb[] = [
   safe_pregnancy: null,
   status:
     'Premier Heart-Spleen restorative for insomnia, post-illness depletion, and Blood deficiency. Easy to add to daily diet as food. The Damp-Heat caution is real but rarely a problem in cold-Northern climates.',
+  // ── Quiz-matcher + composer-quality enrichment ──
+  nervous_system_fit: ['tired', 'wired_tired', 'reactive'],
+  energy_pattern:     ['sustained', 'pm_stabilise', 'restorative_only'],
+  sleep_action:       ['onset', 'maintenance'],
+  digestion_fit:      ['warming'],
+  regional_affinity:  ['heart', 'solar_plexus'],
+  onset_time:         'weeks',
+  family:             'Sapindaceae',
+  epithet:            'The sweet dragon eye',
+  origin_region:      'Chinese',
+  evidence_grade:     'traditional',
 },
 {
   id: 414,
