@@ -722,11 +722,101 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
    crossing pages. All answers persist through state.answers as
    before — this is a rendering strategy, not a data change.        */
 
-/* Sub-progress dots — five subtle mycelial nodes, active one glowing */
+/* ═══════════════════════════════════════════════════════════════
+   Round 2 · Visual redesign · botanical progress + growing visual
+   ═══════════════════════════════════════════════════════════════
+   Replaces the 5 sub-progress dots with 5 botanical progress nodes
+   (seed / root / stem / leaf / flower) connected by a thin animated
+   progress line. Adds a persistent central botanical illustration
+   that grows as the user completes each sub-page. Copy is updated
+   per the brief so each stage names its botanical metaphor.
+
+   Kept CLASSICALLY MINIMAL — dark background, warm ivory, gold
+   accents preserved. No parallax, no rapid loops, no shaking.
+   Motion budget stays inside the brief's 150-700ms scale.        */
+
+/* Legacy dot fallback kept in case older code references it. */
 .q-subprog{display:flex;gap:10px;justify-content:center;margin:2px 0 22px;align-items:center}
 .q-subprog-dot{width:7px;height:7px;border-radius:50%;background:rgba(232,177,75,0.14);border:0.5px solid rgba(232,177,75,0.28);transition:all .5s cubic-bezier(0.22,0.61,0.36,1)}
 .q-subprog-dot.done{background:rgba(232,177,75,0.55);border-color:rgba(232,177,75,0.55);box-shadow:0 0 6px -1px rgba(232,177,75,0.3)}
 .q-subprog-dot.now{background:var(--amber-l);border-color:var(--amber-l);width:22px;border-radius:4px;box-shadow:0 0 14px -2px rgba(232,177,75,0.7)}
+
+/* ── Five-node botanical stages nav ────────────────────────────── */
+.fyf-stages{position:relative;margin:2px 0 4px;padding:8px 8px 6px}
+.fyf-stages-row{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2;gap:4px}
+.fyf-stages-track{position:absolute;left:8%;right:8%;top:calc(14px + 20px);height:1px;background:rgba(232,177,75,0.12);z-index:1;overflow:hidden;border-radius:1px}
+.fyf-stages-fill{height:100%;background:linear-gradient(90deg,rgba(232,177,75,0.5),var(--amber-l));transform-origin:left center;transform:scaleX(var(--fyf-progress,0));transition:transform .38s cubic-bezier(0.22,0.61,0.36,1);will-change:transform}
+
+/* Each node: SVG icon + tiny label. Circle background for state. */
+.fyf-stage{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;text-decoration:none;color:inherit;padding:0;background:none;border:0;cursor:default;font:inherit;min-width:0}
+.fyf-stage[data-clickable="true"]{cursor:pointer}
+.fyf-stage-glyph{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(5,7,10,0.85);border:0.5px solid rgba(232,177,75,0.22);transition:border-color .3s ease,background .3s ease,transform .38s cubic-bezier(0.22,0.61,0.36,1),box-shadow .38s ease;position:relative}
+.fyf-stage-glyph svg{width:20px;height:20px;color:rgba(232,177,75,0.28);transition:color .38s ease,transform .38s cubic-bezier(0.22,0.61,0.36,1)}
+.fyf-stage-label{font-family:var(--mono);font-size:8.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--dust-d);opacity:0.55;transition:opacity .3s ease,color .3s ease;text-align:center;line-height:1.2;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* Done state — filled amber icon, subtle glow */
+.fyf-stage.is-done .fyf-stage-glyph{border-color:rgba(232,177,75,0.5);background:rgba(232,177,75,0.06);box-shadow:0 0 8px -2px rgba(232,177,75,0.35)}
+.fyf-stage.is-done .fyf-stage-glyph svg{color:var(--amber-l)}
+.fyf-stage.is-done .fyf-stage-label{opacity:0.75;color:var(--dust)}
+/* Now state — larger, brighter, aria-current="step" */
+.fyf-stage.is-now .fyf-stage-glyph{border-color:var(--amber-l);background:rgba(232,177,75,0.09);box-shadow:0 0 20px -4px rgba(232,177,75,0.55),inset 0 0 0 0.5px rgba(232,177,75,0.4);transform:scale(1.06)}
+.fyf-stage.is-now .fyf-stage-glyph svg{color:var(--amber-l);transform:scale(1.05)}
+.fyf-stage.is-now .fyf-stage-label{opacity:1;color:var(--amber-l)}
+/* Focus for keyboard nav on completed nodes */
+.fyf-stage[data-clickable="true"]:focus-visible .fyf-stage-glyph{outline:2px solid var(--amber-l);outline-offset:3px}
+/* Only the current label stays visible on mobile — others hide,
+   symbols still communicate progress per brief */
+@media (max-width:640px){
+  .fyf-stage:not(.is-now) .fyf-stage-label{display:none}
+  .fyf-stage-glyph{width:34px;height:34px}
+  .fyf-stage-glyph svg{width:18px;height:18px}
+  .fyf-stages-track{top:calc(14px + 17px)}
+}
+
+/* Screen-reader-only text equivalent for progress */
+.fyf-stages-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ── Central botanical growth visual ──────────────────────────── */
+/* Tighter: smaller SVG, less vertical padding, sits just below the
+   stages nav so the two feel like one composed unit rather than two
+   floating decorations with dead space between them. */
+.fyf-botanical{display:flex;justify-content:center;align-items:flex-end;height:74px;margin:-4px 0 14px;position:relative;overflow:visible}
+.fyf-botanical svg{width:120px;height:74px;color:var(--amber-l);opacity:0.85;transition:opacity .5s ease}
+@media (max-width:640px){ .fyf-botanical{height:58px;margin-top:-2px} .fyf-botanical svg{width:96px;height:58px} }
+/* The growth elements — controlled per stage via inline attrs */
+.fyf-botanical .g-seed,
+.fyf-botanical .g-root,
+.fyf-botanical .g-stem,
+.fyf-botanical .g-leaf-l,
+.fyf-botanical .g-leaf-r,
+.fyf-botanical .g-flower{opacity:0;transform:scaleY(0);transform-origin:center bottom;transition:opacity .5s cubic-bezier(0.22,0.61,0.36,1),transform .6s cubic-bezier(0.22,0.61,0.36,1)}
+.fyf-botanical[data-stage="1"] .g-seed,
+.fyf-botanical[data-stage="2"] .g-seed, .fyf-botanical[data-stage="2"] .g-root,
+.fyf-botanical[data-stage="3"] .g-seed, .fyf-botanical[data-stage="3"] .g-root, .fyf-botanical[data-stage="3"] .g-stem,
+.fyf-botanical[data-stage="4"] .g-seed, .fyf-botanical[data-stage="4"] .g-root, .fyf-botanical[data-stage="4"] .g-stem, .fyf-botanical[data-stage="4"] .g-leaf-l, .fyf-botanical[data-stage="4"] .g-leaf-r,
+.fyf-botanical[data-stage="5"] .g-seed, .fyf-botanical[data-stage="5"] .g-root, .fyf-botanical[data-stage="5"] .g-stem, .fyf-botanical[data-stage="5"] .g-leaf-l, .fyf-botanical[data-stage="5"] .g-leaf-r, .fyf-botanical[data-stage="5"] .g-flower{opacity:1;transform:scaleY(1)}
+/* Slight stagger — leaves lag the stem, flower lags the leaves */
+.fyf-botanical .g-stem{transition-delay:80ms}
+.fyf-botanical .g-leaf-l{transition-delay:180ms;transform-origin:right center}
+.fyf-botanical .g-leaf-r{transition-delay:240ms;transform-origin:left center}
+.fyf-botanical .g-flower{transition-delay:320ms}
+
+/* Reduced motion for both new systems */
+@media (prefers-reduced-motion:reduce){
+  .fyf-stages-fill,
+  .fyf-stage-glyph,
+  .fyf-stage-glyph svg,
+  .fyf-botanical svg,
+  .fyf-botanical .g-seed,
+  .fyf-botanical .g-root,
+  .fyf-botanical .g-stem,
+  .fyf-botanical .g-leaf-l,
+  .fyf-botanical .g-leaf-r,
+  .fyf-botanical .g-flower{transition:none}
+}
+
+/* Transition copy — quieter than the question. Serif italic in dust,
+   not amber, so the actual question keeps typographic primacy. */
+.q-transition{font-family:var(--serif);font-style:italic;font-size:13.5px;line-height:1.5;color:var(--dust-d);text-align:center;max-width:440px;margin:0 auto 20px;opacity:0.75;animation:qFadeUp .55s cubic-bezier(0.22,0.61,0.36,1) both;animation-delay:80ms}
 
 /* Sub-question fade+rise on mount */
 .q-progressive-body{animation:qFadeUp .55s cubic-bezier(0.22,0.61,0.36,1) both}
@@ -1480,11 +1570,33 @@ const PAGES = [
   { eyebrow: 'Your rhythm & context',
     progressive: true,
     subPages: [
-      { keys: ['time', 'stress'],           layout: 'zigzag', nextLabel: 'inner state'    },
-      { keys: ['nervous', 'energy_curve'],  layout: 'zigzag', nextLabel: 'the arc'        },
-      { keys: ['sleep', 'duration'],        layout: 'zigzag', nextLabel: 'your priority' },
-      { keys: ['notes'],                                       nextLabel: 'one last thing' },
-      { keys: ['age']                                                                     },
+      // Round 2 visual · each sub-page now carries a botanical stage
+      // (seed/root/stem/leaf/flower) that drives the progress nav's
+      // 5 nodes and the central growth visual. transitionCopy is a
+      // short one-liner shown as an italic pre-heading. stageLabel
+      // is the tiny mono-cap label under the current botanical node.
+      // Cohesive single-word stage names (per user feedback — the
+      // earlier mix of "Rhythm & response" / "One last thing" felt
+      // uneven). Each name is a noun that maps 1:1 to the sub-page
+      // content, so the botanical progress nav reads as a coherent
+      // arc: Rhythm → State → Arc → Voice → Ground.
+      { keys: ['time', 'stress'],           layout: 'zigzag',
+        stageLabel: 'Rhythm',   botanicalStage: 1,
+        transitionCopy: 'Let\'s begin with your rhythm.',
+        nextLabel: 'state' },
+      { keys: ['nervous', 'energy_curve'],  layout: 'zigzag',
+        stageLabel: 'State',    botanicalStage: 2,
+        transitionCopy: 'Now notice the quality of your energy.',
+        nextLabel: 'arc' },
+      { keys: ['sleep', 'duration'],        layout: 'zigzag',
+        stageLabel: 'Arc',      botanicalStage: 3,
+        transitionCopy: 'Some patterns are recent. Others have deeper roots.',
+        nextLabel: 'voice' },
+      { keys: ['notes'],                    stageLabel: 'Voice',    botanicalStage: 4,
+        transitionCopy: 'One thing matters most. Say it in your own words.',
+        nextLabel: 'ground' },
+      { keys: ['age'],                      stageLabel: 'Ground',   botanicalStage: 5,
+        transitionCopy: 'A last piece of context so the reading fits you.' },
     ],
   },
 ];
@@ -1594,8 +1706,20 @@ function go(step){
       state.progressiveSubStep = 0;
     }
     quiz.appendChild(page.progressive ? renderPageProgressive(page) : renderPage(page));
-    progressLbl.textContent = (step + 1) + ' of ' + PAGES.length;
-    progressFill.style.width = (100 * (step + 1) / PAGES.length) + '%';
+    // Progressive pages have their own botanical 5-node progress nav
+    // — hide the top "N of N" counter so it doesn't compete visually.
+    // Non-progressive pages (calling/body/container) keep the counter.
+    if (page.progressive) {
+      const nSub = Array.isArray(page.subPages) ? page.subPages.length : 1;
+      const sub  = state.progressiveSubStep || 0;
+      progressLbl.textContent = 'Step ' + (sub + 1) + ' of ' + nSub;
+      // Bar reflects sub-page progress within this page, not the
+      // page count — feels smoother because the botanical nav agrees.
+      progressFill.style.width = (100 * (sub + 1) / nSub) + '%';
+    } else {
+      progressLbl.textContent = (step + 1) + ' of ' + PAGES.length;
+      progressFill.style.width = (100 * (step + 1) / PAGES.length) + '%';
+    }
     // Back is only truly at-start on step 0 sub-Q 0. On progressive
     // pages, sub-Q > 0 still lets the user walk backwards in-page.
     backBtn.disabled = step === 0 && !(page.progressive && state.progressiveSubStep > 0);
@@ -1661,6 +1785,144 @@ function renderPage(page){
   return wrap;
 }
 
+// ═══════════════════════════════════════════════════════════════
+// Round 2 visual · botanical progress nodes + growth visual
+// ═══════════════════════════════════════════════════════════════
+// Five SVG glyphs — one per botanical stage. Kept intentionally
+// minimal + tonal (single-stroke gold on dark). Rendered via
+// currentColor so state CSS can shift them to amber-l on 'now'
+// and 'done' without redefining the SVG.
+const _FYF_STAGE_SVGS = {
+  // 1 · Seed — small oval kernel resting on a horizon
+  1: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><ellipse cx="12" cy="14" rx="4" ry="5"/><path d="M4 19h16"/></svg>',
+  // 2 · Root — three fine roots descending from a seed
+  2: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><ellipse cx="12" cy="6" rx="3" ry="3.5"/><path d="M12 9.5v3M12 12.5c-2 2-2.5 4-2 6M12 12.5c2 2 2.5 4 2 6M12 12.5v6.5"/></svg>',
+  // 3 · Stem — a rising line with a small node
+  3: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M12 21V6"/><circle cx="12" cy="5" r="2"/></svg>',
+  // 4 · Leaf — a single leaf offset from the stem
+  4: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9"/><path d="M12 12c-3-2-6-1.5-6 1.5s3 3.5 6 2Z"/></svg>',
+  // 5 · Flower — a bloom of six petals on a stem
+  5: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-7"/><circle cx="12" cy="8" r="1.6"/><path d="M12 3v3.5M17 5.5l-2.2 2.2M20 10.5l-3 .8M17 15.5l-2.2-2.2M7 15.5l2.2-2.2M4 10.5l3 .8M7 5.5l2.2 2.2"/></svg>',
+};
+
+// Build the 5-node botanical stages nav — semantic <nav> with a
+// live-region sr text equivalent so screen readers get the state.
+function _fyfBuildStagesNav(subPages, subStep) {
+  const nav = document.createElement('nav');
+  nav.className = 'fyf-stages';
+  nav.setAttribute('aria-label', 'Questionnaire progress');
+
+  const totalStages = subPages.length;
+  const currentIdx  = subStep;
+  const doneCount   = currentIdx;
+  const progress    = totalStages > 1 ? doneCount / (totalStages - 1) : 0;
+
+  const track = document.createElement('div');
+  track.className = 'fyf-stages-track';
+  const fill = document.createElement('div');
+  fill.className = 'fyf-stages-fill';
+  fill.style.setProperty('--fyf-progress', String(progress));
+  track.appendChild(fill);
+  nav.appendChild(track);
+
+  const row = document.createElement('div');
+  row.className = 'fyf-stages-row';
+
+  for (let i = 0; i < totalStages; i++) {
+    const sp = subPages[i];
+    const stageNum = sp.botanicalStage || (i + 1);
+    const label    = sp.stageLabel     || ('Step ' + (i + 1));
+    const isNow    = i === currentIdx;
+    const isDone   = i < currentIdx;
+    const clickable = isDone; // completed nodes are keyboard-accessible
+
+    const node = document.createElement(clickable ? 'button' : 'div');
+    node.className = 'fyf-stage' + (isNow ? ' is-now' : isDone ? ' is-done' : '');
+    if (clickable) {
+      node.type = 'button';
+      node.setAttribute('data-clickable', 'true');
+      node.setAttribute('aria-label', 'Return to ' + label + ' (step ' + (i + 1) + ' of ' + totalStages + ')');
+      node.addEventListener('click', () => {
+        state.progressiveSubStep = i;
+        persist();
+        go(state.step);
+      });
+    } else {
+      node.setAttribute('role', 'group');
+      node.setAttribute('aria-label', label + ' (step ' + (i + 1) + ' of ' + totalStages + ')');
+    }
+    if (isNow) node.setAttribute('aria-current', 'step');
+
+    const glyph = document.createElement('span');
+    glyph.className = 'fyf-stage-glyph';
+    glyph.setAttribute('aria-hidden', 'true');
+    glyph.innerHTML = _FYF_STAGE_SVGS[stageNum] || _FYF_STAGE_SVGS[1];
+    node.appendChild(glyph);
+
+    const lab = document.createElement('span');
+    lab.className = 'fyf-stage-label';
+    lab.textContent = label;
+    node.appendChild(lab);
+
+    row.appendChild(node);
+  }
+  nav.appendChild(row);
+
+  // Screen-reader-only text equivalent — never rely on visual alone
+  const sr = document.createElement('div');
+  sr.className = 'fyf-stages-sr';
+  sr.setAttribute('aria-live', 'polite');
+  sr.textContent = 'Step ' + (currentIdx + 1) + ' of ' + totalStages + ': '
+                 + (subPages[currentIdx].stageLabel || '')
+                 + (doneCount > 0 ? '. ' + doneCount + ' step' + (doneCount === 1 ? '' : 's') + ' completed.' : '.');
+  nav.appendChild(sr);
+
+  return nav;
+}
+
+// Persistent central botanical growth visual. Renders all 6 pieces
+// at once; CSS controls which are visible per data-stage attribute.
+// Grown-through parts stay put — the visual isn't rebuilt between
+// question transitions.
+function _fyfBuildBotanicalGrowth(stage) {
+  const wrap = document.createElement('div');
+  wrap.className = 'fyf-botanical';
+  wrap.setAttribute('data-stage', String(stage));
+  wrap.setAttribute('aria-hidden', 'true');
+  // ViewBox re-centered so the SEED sits mid-frame at stage 1 — no
+  // lonely dot at the bottom. Roots grow downward, stem+leaves+flower
+  // rise upward. Each element uses the same anchor point (cx=90).
+  wrap.innerHTML =
+    '<svg viewBox="0 0 180 120" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">' +
+      // seed — slightly larger, sits in the middle
+      '<ellipse class="g-seed" cx="90" cy="72" rx="7" ry="9" fill="rgba(232,177,75,0.18)"/>' +
+      // seed halo — always visible so stage 1 has depth
+      '<circle cx="90" cy="72" r="16" fill="none" stroke="rgba(232,177,75,0.08)" stroke-width="0.5"/>' +
+      // roots — descend below the seed
+      '<g class="g-root" stroke-width="0.9" opacity="0.8">' +
+        '<path d="M90 80c-4 5-8 8-10 14"/>' +
+        '<path d="M90 80v14"/>' +
+        '<path d="M90 80c4 5 8 8 10 14"/>' +
+      '</g>' +
+      // stem — rises above the seed
+      '<path class="g-stem" d="M90 64V26"/>' +
+      // leaves — flank the mid-stem
+      '<path class="g-leaf-l" d="M90 46c-14-3-22-1-24 5s10 7 22 2Z" fill="rgba(232,177,75,0.09)"/>' +
+      '<path class="g-leaf-r" d="M90 38c14-3 22-1 24 5s-10 7-22 2Z" fill="rgba(232,177,75,0.09)"/>' +
+      // flower — bloom at the crown
+      '<g class="g-flower">' +
+        '<circle cx="90" cy="22" r="3" fill="rgba(232,177,75,0.4)"/>' +
+        '<circle cx="90" cy="14" r="3.5" fill="none"/>' +
+        '<circle cx="96" cy="18" r="3.5" fill="none"/>' +
+        '<circle cx="96" cy="26" r="3.5" fill="none"/>' +
+        '<circle cx="90" cy="30" r="3.5" fill="none"/>' +
+        '<circle cx="84" cy="26" r="3.5" fill="none"/>' +
+        '<circle cx="84" cy="18" r="3.5" fill="none"/>' +
+      '</g>' +
+    '</svg>';
+  return wrap;
+}
+
 // ── Progressive page renderer — one sub-page at a time ────────────
 // Used for pages flagged { progressive: true, subPages: [...] }.
 // Each sub-page carries ONE or TWO questions:
@@ -1696,17 +1958,25 @@ function renderPageProgressive(page){
   eyebrow.textContent = page.eyebrow;
   wrap.appendChild(eyebrow);
 
-  // Sub-progress — one dot per sub-page. Small, subtle constellation
-  // that quietly communicates depth without being decorative clutter.
-  const dots = document.createElement('div');
-  dots.className = 'q-subprog';
-  for (let i = 0; i < subPages.length; i++) {
-    const dot = document.createElement('span');
-    dot.className = 'q-subprog-dot' +
-      (i < subStep ? ' done' : i === subStep ? ' now' : '');
-    dots.appendChild(dot);
+  // Round 2 visual redesign — botanical progress nav (5 nodes:
+  // seed → root → stem → leaf → flower) with a thin animated line
+  // that fills as sub-pages are completed. Replaces the flat dots.
+  wrap.appendChild(_fyfBuildStagesNav(subPages, subStep));
+
+  // Persistent central botanical growth visual — grows from seed
+  // through flower as the user progresses. Anchored above the
+  // question body so it doesn't rebuild between transitions.
+  wrap.appendChild(_fyfBuildBotanicalGrowth(sub.botanicalStage || (subStep + 1)));
+
+  // Transition copy — a short italic pre-heading (per the brief's
+  // "supportive microcopy") that names what this stage is about
+  // without becoming a second question. Renders as .q-transition.
+  if (sub.transitionCopy) {
+    const trans = document.createElement('div');
+    trans.className = 'q-transition';
+    trans.textContent = sub.transitionCopy;
+    wrap.appendChild(trans);
   }
-  wrap.appendChild(dots);
 
   // Question body — full-size (not compact). autoAdvance:false because
   // we manage the advance ourselves (sub-step-aware, not step-aware).
@@ -1724,17 +1994,23 @@ function renderPageProgressive(page){
   });
   wrap.appendChild(bodyWrap);
 
-  // Contextual CTA — reflects what comes next. On non-final sub-pages
-  // the label names the NEXT sub-page (sub.nextLabel or fallback);
-  // on the last sub-page of the LAST page it becomes "Reveal my formula".
+  // Contextual CTA — theatrical text is dropped when auto-advance
+  // handles the transition (user feedback: "the anticipation text
+  // doesn't make sense if it's not meant to be clicked"). The
+  // button is hidden entirely on pill-select sub-pages; the pill
+  // click IS the trigger. Kept ONLY for:
+  //   · text-input sub-pages (notes) — nothing to auto-advance from
+  //   · the very last sub-page of the final page — REVEAL is a
+  //     deliberate commitment moment, not a passive transition
+  const hasTextQ    = questions.some(q => q.type === 'text');
+  const showCTA     = hasTextQ || (isLastSubPage && isFinalPage);
   let ctaText;
   if (isLastSubPage && isFinalPage) ctaText = 'Reveal my formula →';
-  else if (isLastSubPage)           ctaText = 'Continue →';
-  else if (sub.nextLabel)           ctaText = 'Continue to ' + sub.nextLabel + ' →';
   else                              ctaText = 'Continue →';
 
   const ctaRow = document.createElement('div');
   ctaRow.className = 'q-cta q-cta-sticky';
+  if (!showCTA) ctaRow.hidden = true;
   const btn = document.createElement('button');
   btn.type = 'button';
   btn.className = 'q-btn q-btn-progressive';
@@ -3378,8 +3654,7 @@ function _fyfPaintServerReveal(a, body) {
   if (bottleEl) bottleEl.innerHTML = '';
 
   // Defensive paint — each section wrapped so one throw doesn't
-  // kill the rest of the reveal (bottle failure shouldn't erase
-  // the herb list, etc). Any failure logs a WARN to the browser
+  // kill the rest of the reveal. Any failure logs a WARN to the
   // console so it surfaces in DevTools; the user still gets the
   // best-effort render of the remaining sections.
   const paintStep = (label, fn) => { try { fn(); } catch (e) { console.warn('[reveal:' + label + '] failed:', e && e.message || e); } };
