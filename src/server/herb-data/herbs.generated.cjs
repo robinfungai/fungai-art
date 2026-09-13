@@ -262,6 +262,16 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'CRITICAL screening required: absolute contraindication in hyperthyroidism, autoimmune disease and immunosuppressants. Avoid in pregnancy. Otherwise exceptional adaptogen with 100+ RCTs. Effects develop over 4–12 weeks. Cycling protocol recommended. One of the most researched herbs in the world for stress resilience, anxiety and vitality.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'wired_tired', 'flat'],  // best for the burnout curve; less useful for pure "tired"
+    energy_pattern:     ['sustained', 'pm_stabilise', 'crash_repair'],
+    sleep_action:       ['maintenance', 'restoration'],    // slow-build not onset
+    regional_affinity:  ['solar_plexus', 'kidneys', 'whole'],
+    onset_time:         'weeks',
+    family:             'Solanaceae',
+    epithet:            'The steady anchor',
+    origin_region:      'Ayurvedic',
+    evidence_grade:     'A',
   },
 
   // ─────────────────────────────────────────────
@@ -5426,6 +5436,16 @@ const HERBS = [
     safe_pregnancy: true,
     status:
       'Grade A safety — food status; gluten caution only. Grade B+ nervine restorative (strong traditional use; clinical cognitive studies). Fundamentally different from acute nervines — works through slow mineral and nutritive rebuilding over weeks to months. Ideal for burnout, exhaustion, chronic stress and post-illness recovery.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'wired_tired', 'flat', 'reactive'],
+    energy_pattern:     ['sustained', 'crash_repair', 'restorative_only'],
+    sleep_action:       ['restoration', 'maintenance'],
+    regional_affinity:  ['whole', 'chest', 'joints'],  // mineral rebuild → connective tissue
+    onset_time:         'weeks',
+    family:             'Poaceae',
+    epithet:            'The mineral field',
+    origin_region:      'European',
+    evidence_grade:     'B+',
   },
   // ============================================================
   // BATCH 07 — 10 herbs converted from monographs
@@ -7632,6 +7652,17 @@ const HERBS = [
     safe_pregnancy: true,
     status:
       'Grade B anxiolytic and mood support (human studies plus traditional evidence). Grade B+ astringent and mucosal toning. Grade A safety — food and tea; suitable all populations including pregnancy, children, elderly. No drug interactions. Rare Rosaceae allergy is the only contraindication. Universal and gentle enough to include in virtually any emotional, nervous system or women\'s health formula.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['reactive', 'wired', 'wired_tired', 'flat'],
+    energy_pattern:     ['pm_stabilise', 'restorative_only'],
+    sleep_action:       ['onset', 'dream_soften'],  // soft companion, not sedative
+    digestion_fit:      ['cooling', 'astringent', 'demulcent'],
+    regional_affinity:  ['heart', 'chest', 'pelvis'],
+    onset_time:         'immediate',   // limbic activation is fast
+    family:             'Rosaceae',
+    epithet:            'The heart-opener',
+    origin_region:      'Mediterranean',
+    evidence_grade:     'B',
   },
 
   // ─────────────────────────────────────────────
@@ -8467,6 +8498,17 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade B+ diuretic and renoprotective (preclinical; growing clinical). Grade B antitumour (multiple models). Grade B immunomodulation. Grade A traditional safety (millennia of use). TCM pattern differentiation is the key clinical variable. Processing variant selection (Fu Ling vs Fu Shen vs Fu Ling Pi) changes indication. Reassess every 8–12 weeks.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'wired_tired', 'reactive'],  // damp-clearing settles a heavy fog
+    energy_pattern:     ['sustained', 'pm_stabilise'],
+    sleep_action:       ['maintenance', 'restoration'],  // Fu Shen variant addresses onset too
+    digestion_fit:      ['moving', 'warming', 'bitter'],  // classic damp-transformer
+    regional_affinity:  ['gut', 'kidneys', 'solar_plexus'],
+    onset_time:         'weeks',
+    family:             'Polyporaceae',
+    epithet:            'The still white stone',
+    origin_region:      'Chinese',
+    evidence_grade:     'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -8914,6 +8956,16 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade B sleep promotion (preclinical mechanism confirmed; emerging human data). Grade B+ immune modulation (12-week RCT confirmed; T cell, NK cell and IgA enhancement). Grade B anti-inflammatory and antioxidant. Grade B+ safety in healthy adults (RCTs and traditional use; isolated rare hepatotoxicity with high-dose unregulated powder plus alcohol). Screen transplant, immunosuppressants, liver disease, anticoagulants and hypotension. Dual extract preferred. Evening dosing for Shen calming.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'wired_tired', 'reactive'],
+    energy_pattern:     ['restorative_only', 'pm_stabilise'],
+    sleep_action:       ['maintenance', 'restoration', 'dream_soften'],
+    regional_affinity:  ['heart', 'chest', 'whole'],
+    onset_time:         'weeks',
+    family:             'Ganodermataceae',
+    epithet:            'The immortality mushroom',
+    origin_region:      'Chinese',
+    evidence_grade:     'B+',
   },
 
   // ─────────────────────────────────────────────
