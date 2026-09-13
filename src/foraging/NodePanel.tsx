@@ -143,7 +143,29 @@ export default function NodePanel({ node, activeSeason, onClose }: NodePanelProp
                   </div>
                   <div style={{ display: 'flex', gap: 4 }}>
                     {sp.medicinal && <span style={{ fontSize: 8, padding: '1px 5px', borderRadius: 3, background: 'rgba(107,214,111,0.1)', color: '#6BD66F', border: '0.5px solid rgba(107,214,111,0.25)' }}>medicinal</span>}
-                    {sp.edible && <span style={{ fontSize: 8, padding: '1px 5px', borderRadius: 3, background: 'rgba(232,177,75,0.1)', color: '#E8B14B', border: '0.5px solid rgba(232,177,75,0.25)' }}>edible</span>}
+                    {/*
+                      AUDIT_FIX (S-01, P0). The edible chip only renders when
+                      BOTH lookalike + toxicity fields are populated — the
+                      schema, not the copywriter, enforces the caution. If
+                      confusableWith is absent, the species hasn't been
+                      audited for lethal lookalikes and no green "edible" chip
+                      should mislead the user. When toxicityClass is
+                      severe/lethal, the chip escalates visually.
+                    */}
+                    {sp.edible && Array.isArray(sp.confusableWith) && sp.toxicityClass !== undefined && (() => {
+                      const risky = sp.toxicityClass === 'severe' || sp.toxicityClass === 'lethal';
+                      return (
+                        <span title={sp.confusableWith.length ? 'Lookalikes: ' + sp.confusableWith.join(', ') + ' · toxicity ' + sp.toxicityClass : 'Audited: no toxic lookalikes'}
+                              style={{
+                                fontSize: 8, padding: '1px 5px', borderRadius: 3,
+                                background: risky ? 'rgba(225,107,107,0.10)' : 'rgba(232,177,75,0.1)',
+                                color:      risky ? '#E16B6B'                : '#E8B14B',
+                                border:     '0.5px solid ' + (risky ? 'rgba(225,107,107,0.35)' : 'rgba(232,177,75,0.25)'),
+                              }}>
+                          {risky ? '⚠ edible · ' + sp.toxicityClass + ' lookalike' : 'edible'}
+                        </span>
+                      );
+                    })()}
                     {inSeason && <span style={{ fontSize: 8, padding: '1px 5px', borderRadius: 3, background: 'rgba(107,214,111,0.06)', color: '#6BD66F' }}>now ✓</span>}
                   </div>
                 </div>
