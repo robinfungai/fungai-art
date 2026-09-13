@@ -500,6 +500,15 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'CRITICAL: Absolute contraindication in pregnancy, breastfeeding and neonates. CYP450 drug interaction screening essential. Short-term cycling protocols only (4–8 weeks maximum). Strong clinical herb for gut infections, metabolic syndrome and liver-skin axis — but practitioner-level use. Not a casual daily tonic.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only', 'sustained'],
+    digestion_fit: ['bitter', 'cooling'],
+    regional_affinity: ['gut', 'liver'],
+    onset_time: 'days',
+    family: 'Berberidaceae',
+    epithet: 'The berberine thorn',
+    origin_region: 'European',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -771,6 +780,15 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade A safety — 3000+ years traditional use; 400+ modern studies. Excellent for immune support, antioxidant protection and anti-inflammatory support. Safe indefinite daily use. Versatile food-medicine integration. Minimal contraindications. One of the most historically validated herbs in the world.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    digestion_fit: ['warming', 'moving'],
+    regional_affinity: ['chest', 'gut', 'whole'],
+    onset_time: 'weeks',
+    family: 'Ranunculaceae',
+    epithet: 'The prophet\'s seed',
+    origin_region: 'Mediterranean',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -832,6 +850,15 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'SPECIALIST HERB — professional protocol required. Absolute contraindication in pregnancy. Not for casual self-care. Requires parasite confirmation before use. Powerful antiparasitic and antimicrobial in the right context with proper professional guidance. Expected loose stools are part of the elimination process.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only'],
+    digestion_fit: ['bitter', 'warming'],
+    regional_affinity: ['gut', 'skin'],
+    onset_time: 'days',
+    family: 'Juglandaceae',
+    epithet: 'The vermifuge nut',
+    origin_region: 'European',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -2590,6 +2617,15 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade A safety at culinary doses. Excellent antimicrobial, dental analgesic, warming digestive and antiparasitic herb. Essential oil must be diluted and dosed carefully. Safe indefinite use in food-spice form. Antiparasitic protocols require professional design. One of the most versatile and pleasant food-medicines available.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only', 'am_boost'],
+    digestion_fit: ['warming', 'carminative'],
+    regional_affinity: ['gut', 'head'],
+    onset_time: 'immediate',
+    family: 'Myrtaceae',
+    epithet: 'The nail-bud',
+    origin_region: 'Global',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -4816,6 +4852,15 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'Grade B+ short-term diuretic and carminative. EMA traditional herbal medicinal product for urinary flushing. HARD LIMIT: 2–4 weeks maximum due to renal irritation risk. Contraindicated in kidney disease. Avoid in pregnancy. Short-term, well-hydrated, demulcent-supported use only.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only', 'sustained'],
+    digestion_fit: ['warming', 'moving'],
+    regional_affinity: ['kidneys', 'joints'],
+    onset_time: 'hours',
+    family: 'Cupressaceae',
+    epithet: 'The needle-berry',
+    origin_region: 'Nordic wild',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -5446,6 +5491,16 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'EU traditional herbal medicinal product. Grade B carminative and antispasmodic. Food amounts safe indefinitely. Medicinal short-term doses possibly safe; long-term high-dose avoid. Pregnancy: avoid medicinal doses and essential oil. Excellent gentle culinary-medicine herb for mild GI and respiratory complaints.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'reactive'],
+    energy_pattern: ['pm_stabilise'],
+    digestion_fit: ['warming', 'carminative'],
+    regional_affinity: ['chest', 'gut'],
+    onset_time: 'immediate',
+    family: 'Lamiaceae',
+    epithet: 'The joy-herb',
+    origin_region: 'Mediterranean',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -6964,6 +7019,15 @@ const HERBS = [
     safe_pregnancy: true,
     status:
       'Grade B carminative and digestive warming (anethole mechanism confirmed). Grade B antispasmodic. Grade A safety (food-spice form; centuries culinary use; no documented toxicity). Minimal contraindications. Culinary integration is primary recommendation. Excellent compliance due to pleasant licorice flavour.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    digestion_fit: ['warming', 'carminative'],
+    energy_pattern: ['sustained'],
+    regional_affinity: ['gut', 'chest'],
+    onset_time: 'immediate',
+    family: 'Schisandraceae',
+    epithet: 'The eight-point star',
+    origin_region: 'Chinese',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -8703,6 +8767,15 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'Grade B+ antimicrobial and antiparasitic (in vitro; traditional; mechanistic). Grade B antiviral (triterpene in vitro data). Grade B immunomodulating and anticancer. Grade B+ safety at traditional doses. Oldest documented human medicinal mushroom. Adjunct only in oncology — coordinate with medical team. Screen autoimmune conditions and immunosuppressants.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained', 'restorative_only'],
+    digestion_fit: ['bitter'],
+    regional_affinity: ['gut', 'whole'],
+    onset_time: 'weeks',
+    family: 'Fomitopsidaceae',
+    epithet: 'The birch shelf',
+    origin_region: 'Nordic wild',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -9126,6 +9199,14 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade B+ antidiabetic preclinical (comatin outperforms metformin in animal models). Grade B+ antioxidant and hepatoprotective. Grade B anti-inflammatory and anticancer. Grade C+ clinical (limited human data). MISIDENTIFICATION RISK with Coprinopsis atramentaria (alcohol-reactive). Heavy metal accumulation risk in urban environments. Rapidly autolysing — short harvesting window. Diabetes medication monitoring essential for concentrated extracts.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    regional_affinity: ['whole', 'gut'],
+    onset_time: 'weeks',
+    family: 'Agaricaceae',
+    epithet: 'The ink-cap',
+    origin_region: 'European',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -9539,6 +9620,14 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade B antitumour (strong preclinical; limited clinical). Grade B immunomodulation (human RCT confirmed in healthy adults). Grade B-minus anti-asthmatic/allergic (OVA models). Grade C women\'s health and fertility (clinical practice; minimal formal trials). Specialist supervision for autoimmune, transplant, chemotherapy and perioperative contexts. Human immune RCT provides clinical validation for immune function use.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained', 'restorative_only'],
+    regional_affinity: ['whole', 'pelvis'],
+    onset_time: 'weeks',
+    family: 'Hymenochaetaceae',
+    epithet: 'The mulberry conk',
+    origin_region: 'Chinese',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -9600,6 +9689,14 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade A culinary and nutritional value. Grade B+ antioxidant. Grade B+ hepatoprotection (consistent Nrf-2/NF-kB mechanism; alcohol and DSS injury models; mycelial polysaccharides confirmed 2026). Grade B immunomodulation and gut health. CRITICAL safety: never confuse with Gyromitra false morels (gyromitrin/MMH — potentially fatal). Always cook thoroughly. Positive species identification is the non-negotiable safety requirement.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    regional_affinity: ['whole', 'gut'],
+    onset_time: 'weeks',
+    family: 'Morchellaceae',
+    epithet: 'The honeycomb-cap',
+    origin_region: 'European',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -9663,6 +9760,14 @@ const HERBS = [
     safe_pregnancy: true,
     status:
       'Grade B+ respiratory immunity (pleuran; multiple controlled trials in athletes and children). Grade B antidiabetic and hypolipidaemic. Grade B cardiovascular. Grade A culinary safety. Pleuran standardised beta-glucan is the clinical product for respiratory protocols. Monitor diabetes medications with concentrated extracts. Daily culinary integration is primary recommendation.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    regional_affinity: ['whole'],
+    onset_time: 'weeks',
+    family: 'Pleurotaceae',
+    epithet: 'The tree-oyster',
+    origin_region: 'Global',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -9728,6 +9833,14 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'Grade B anticancer (preclinical; limited clinical). Grade B+ anti-angiogenic and anti-inflammatory (polysaccharides and triterpenoids confirmed). Grade B-minus antihyperglycaemic and lipid (animal models with striking effect sizes). Grade B-minus antimicrobial. Grade B traditional safety. SPECIES IDENTITY CRITICAL (misidentification risk in North America). MONITOR diabetes medications closely (powerful glucose-lowering preclinical data). Experimental status — no human clinical trials established.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained', 'restorative_only'],
+    regional_affinity: ['whole', 'chest'],
+    onset_time: 'weeks',
+    family: 'Fomitopsidaceae',
+    epithet: 'The red belt',
+    origin_region: 'Nordic wild',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -9868,6 +9981,14 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'Grade B+ immune activation (NK cell preclinical plus human data). Grade B+ antitumour (preclinical). Grade B-minus cancer adjuvant (small trials). Grade B idiosyncratic hepatotoxicity (case series: two fatalities in cancer patients; Memorial Sloan Kettering explicitly warns). SERIOUS SAFETY CONCERN in oncology and liver-disease contexts. CONTRAINDICATED in transplant and autoimmune (Th1/Th17) contexts without specialist. LFT monitoring mandatory for any use.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained', 'restorative_only'],
+    regional_affinity: ['whole'],
+    onset_time: 'weeks',
+    family: 'Agaricaceae',
+    epithet: 'The sun-agaric',
+    origin_region: 'Central American',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -9933,6 +10054,14 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'Grade B+ antilipid and hepatoprotective (HFD and ALD animal models). Grade B immunomodulation (human T cell and NK data). Grade B anticancer (in vitro). Grade B antiviral influenza (in ovo). Grade C clinical (strong preclinical candidate; minimal human trials). Source quality critical (heavy metal risk). Screen autoimmune, immunosuppressants and diabetes medications. Sanghuang-type Hymenochaetaceae with rich polyphenol pharmacology.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    regional_affinity: ['whole'],
+    onset_time: 'weeks',
+    family: 'Hymenochaetaceae',
+    epithet: 'The oak-shelf',
+    origin_region: 'European',
+    evidence_grade: 'traditional',
   },
   // ─────────────────────────────────────────────
   // TINDER FUNGUS (AMADOU / ICEMAN CONK)
@@ -9998,6 +10127,14 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'Grade A antioxidant (strong in vitro and chemical assay data). Grade B+ anti-inflammatory and immunomodulatory (animal models and macrophage studies; emerging clinical). Grade B antimicrobial and antitumour (in vitro and animal). Grade B+ safety at traditional dosing (5000+ years use; modern preparations well tolerated). Screen autoimmune, immunosuppressants and active cancer treatment. Deep terrain medicine — 2–3+ month protocols.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['restorative_only'],
+    regional_affinity: ['whole'],
+    onset_time: 'weeks',
+    family: 'Polyporaceae',
+    epithet: 'The hoof of the forest',
+    origin_region: 'Nordic wild',
+    evidence_grade: 'traditional',
   },
 
   // ─────────────────────────────────────────────
@@ -10139,6 +10276,14 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'Grade B+ anti-gout and hypoglycaemic (strong animal data; gout animal models and diabetic mouse models with gut microbiota confirmation). Grade B antitumour and immunomodulation. Grade B neuroprotection (stroke model). Grade B hepatoprotective and cardiovascular. Grade C+ clinical (limited human data). IDENTITY CRITICAL: False Chaga is NOT Chaga; always label clearly as Phellinus igniarius / Willow Bracket / False Chaga. Screen diabetes medications and anticoagulants.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['restorative_only'],
+    regional_affinity: ['whole', 'chest'],
+    onset_time: 'weeks',
+    family: 'Polyporaceae',
+    epithet: 'The willow-shelf',
+    origin_region: 'Nordic wild',
+    evidence_grade: 'traditional',
   },
 
   // ─────────────────────────────────────────────
@@ -10205,6 +10350,14 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade B+ diuretic and renoprotective (traditional centuries use; modern animal models; growing clinical evidence). Grade B hepatoprotective and HBV adjuvant (CFDA-approved in China). Grade B antitumour and immunomodulatory. Grade A traditional safety. TCM pattern differentiation is the key clinical variable (damp vs dry constitution). Sclerotium identity verification mandatory. Classical pairing with Fu Ling is the foundational TCM formulation context.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only', 'sustained'],
+    regional_affinity: ['kidneys', 'gut'],
+    onset_time: 'days',
+    family: 'Polyporaceae',
+    epithet: 'The pig-tuber',
+    origin_region: 'Chinese',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
