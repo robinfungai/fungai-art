@@ -76,7 +76,12 @@ interface ForageConditions {
 }
 
 // Organic earthy map style — CARTO Voyager (warm/natural tones, no account needed).
-const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json';
+// CARTO dark-matter — the actual dark basemap. Prior default was
+// voyager-gl-style which is CARTO's cream/beige LIGHT basemap (the
+// button was labelled "🌑 Dark" but the tiles were not). This is a
+// genuine dark palette that matches the app's #07110d ground.
+// Free (attribution required — see ForageDataCredits component).
+const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
 
 // Free satellite imagery — ESRI World Imagery + CARTO dark_only_labels
 // overlay so country / region / city names still read at every zoom.
