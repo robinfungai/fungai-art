@@ -59,6 +59,14 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Very safe food-like herb. Excellent for screen workers, visual fatigue, microvascular support and cardiometabolic polyphenol protocols. Effects cumulative over 6–12 weeks. No significant drug interactions at typical doses.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    regional_affinity: ['head', 'kidneys'],
+    onset_time: 'weeks',
+    family: 'Ericaceae',
+    epithet: 'The eye-berry',
+    origin_region: 'Nordic wild',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -198,6 +206,14 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Very safe, food-like berry herb. Excellent for cardiometabolic resilience, blood pressure and lipid support, hepatoprotection and antioxidant protocols. Effects develop over 6–12 weeks. Monitor blood pressure if on antihypertensives.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained', 'restorative_only'],
+    regional_affinity: ['heart', 'whole'],
+    onset_time: 'weeks',
+    family: 'Rosaceae',
+    epithet: 'The dark chokeberry',
+    origin_region: 'Nordic wild',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -946,6 +962,14 @@ const HERBS = [
     safe_pregnancy: true,
     status:
       'Grade A safety — food-source herb with centuries of traditional use and extensive modern research. Exceptional for memory, cognitive aging prevention, neuroprotection and general antioxidant support. BBB-crossing anthocyanins make this uniquely valuable as a brain herb. Safe for all ages including pregnancy. Effects cumulative over 4–12 weeks.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    regional_affinity: ['head', 'whole'],
+    onset_time: 'weeks',
+    family: 'Ericaceae',
+    epithet: 'The blue field-jewel',
+    origin_region: 'European',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -1285,6 +1309,14 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'CRITICAL: PA-free standardised extract ONLY — crude herb internally is hepatotoxic and absolutely contraindicated. Evidence-based herb for migraine prevention and allergic rhinitis when PA-free certified extract is used. Liver caution even with PA-free extract. Excellent for practitioners managing migraine and seasonal allergy protocols.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only'],
+    regional_affinity: ['head', 'chest'],
+    onset_time: 'hours',
+    family: 'Asteraceae',
+    epithet: 'The migraine hood',
+    origin_region: 'European',
+    evidence_grade: 'A',
   },
   // ============================================================
   // BATCH 03 — 20 herbs converted from monographs
@@ -2892,6 +2924,15 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'BANNED/RESTRICTED — DO NOT RECOMMEND. Ephedra sinica banned USA (2004 FDA), restricted/banned EU and many countries. Documented deaths from cardiac adverse effects. Grade F safety. Always redirect to safer alternatives for respiratory (Eucalyptus), energy (Guayusa/Guarana) and immune-respiratory (Elderflower) support.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired'],
+    energy_pattern: ['acute_only'],
+    regional_affinity: ['chest'],
+    onset_time: 'immediate',
+    family: 'Ephedraceae',
+    epithet: 'The desert stimulant',
+    origin_region: 'Chinese',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -2956,6 +2997,14 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade A respiratory opening and decongestant efficacy. 200+ years Australian and global use. Excellent for acute respiratory congestion, sinusitis and antimicrobial respiratory support. Essential oil requires careful dosing — inhalation safest. Children under 6: avoid essential oil. Asthma: caution and monitor.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only'],
+    regional_affinity: ['chest', 'head'],
+    onset_time: 'immediate',
+    family: 'Myrtaceae',
+    epithet: 'The blue gum',
+    origin_region: 'Global',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -3017,6 +3066,14 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade C+ for conjunctivitis symptom relief (limited trials but strong tradition). Safe internally at standard doses. CRITICAL: Only commercial sterile preparations for ophthalmic use — DIY eye washes are likely unsafe. Refer serious eye symptoms to ophthalmology immediately.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only'],
+    regional_affinity: ['head'],
+    onset_time: 'immediate',
+    family: 'Orobanchaceae',
+    epithet: 'The vision-clearer',
+    origin_region: 'European',
+    evidence_grade: 'B-',
   },
 
   // ─────────────────────────────────────────────
@@ -3074,6 +3131,15 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'GRADE E — NOT RECOMMENDED. No human RCTs; significant animal organ toxicity (liver, kidney, reproductive organs). Popular online marketing without scientific basis. Always redirect to safer evidence-based alternatives: Ashwagandha, Tongkat Ali, Maca for testosterone and vitality support.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired'],
+    energy_pattern: ['am_boost', 'sustained'],
+    regional_affinity: ['pelvis', 'kidneys'],
+    onset_time: 'days',
+    family: 'Rubiaceae',
+    epithet: 'The savanna spike',
+    origin_region: 'African',
+    evidence_grade: 'B-',
   },
 
   // ─────────────────────────────────────────────
@@ -3574,6 +3640,14 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Traditional European anticatarrhal herb with strong folk medicine heritage. Good formula component for chronic sinus, ear and bronchial catarrh. Caution with liver disease and high doses (in vitro cytotoxicity at elevated concentrations). Pregnancy: avoid medicinal doses. Best as part of multi-herb respiratory formula.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained', 'acute_only'],
+    regional_affinity: ['head', 'chest'],
+    onset_time: 'hours',
+    family: 'Lamiaceae',
+    epithet: 'The creeping cure',
+    origin_region: 'European',
+    evidence_grade: 'traditional',
   },
 
   // ─────────────────────────────────────────────
@@ -3934,6 +4008,15 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'Excellent for acute mental energy, cognitive clarity and lucid dreaming protocols. Same contraindication profile as Guarana (hypertension, anxiety, heart conditions, stimulant medications are absolute contraindications). Unique lucid dreaming application when used with traditional timing. Not for daily use.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'flat'],
+    energy_pattern: ['am_boost', 'sustained'],
+    regional_affinity: ['head', 'chest'],
+    onset_time: 'immediate',
+    family: 'Aquifoliaceae',
+    epithet: 'The dream tea',
+    origin_region: 'Central American',
+    evidence_grade: 'traditional',
   },
 
   // ─────────────────────────────────────────────
@@ -4078,6 +4161,15 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'Grade B human evidence for erectile function; Grade A mechanism (PDE5 inhibition confirmed). CRITICAL: Nitrate absolute contraindication (same as Viagra). Medical consultation required for cardiovascular disease. Antihypertensive medication monitoring essential. Excellent natural erectile and sexual vitality herb when appropriately screened.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'flat'],
+    energy_pattern: ['sustained'],
+    regional_affinity: ['pelvis', 'kidneys'],
+    onset_time: 'days',
+    family: 'Berberidaceae',
+    epithet: 'The mountain climber',
+    origin_region: 'Chinese',
+    evidence_grade: 'B',
   },
   // ============================================================
   // BATCH 05 — 7 herbs converted from monographs
@@ -4145,6 +4237,14 @@ const HERBS = [
     safe_pregnancy: true,
     status:
       'Grade A nutritive safety — 5000+ years Ayurvedic and African use. Most nutrient-dense commonly available plant on Earth. Excellent foundational daily food-medicine for all populations. Safe in pregnancy and breastfeeding. Only caution: thyroid medication monitoring for trace goitrogens.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    regional_affinity: ['whole'],
+    onset_time: 'weeks',
+    family: 'Moringaceae',
+    epithet: 'The tree of life',
+    origin_region: 'Ayurvedic',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -4285,6 +4385,15 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       "GRADE D — DO NOT RECOMMEND FOR CONSUMER SELF-CARE. Opioid-like addiction risk (physiological dependency in 2–8 weeks; withdrawal syndrome documented). No consumer wellness protocols. Safer pain relief alternatives: Devil's Claw, Black Cumin, Ginger. If client already using: addiction medicine referral + harm reduction protocol only.",
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired_tired', 'reactive'],
+    energy_pattern: ['am_boost', 'pm_stabilise'],
+    regional_affinity: ['head', 'whole'],
+    onset_time: 'immediate',
+    family: 'Rubiaceae',
+    epithet: 'The two-faced leaf',
+    origin_region: 'Global',
+    evidence_grade: 'B-',
   },
 
   // ─────────────────────────────────────────────
@@ -4998,6 +5107,14 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade A safety — traditional food with no documented toxicity. Grade B+ UTI prevention (superior to cranberry). Grade B+ metabolic health. Warfarin and diabetes medication monitoring only significant cautions. Excellent daily food-medicine foundation for urinary and metabolic health.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    regional_affinity: ['kidneys', 'gut'],
+    onset_time: 'weeks',
+    family: 'Ericaceae',
+    epithet: 'The lingon',
+    origin_region: 'Nordic wild',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -6702,6 +6819,14 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade A nutritive completeness (protein, minerals, vitamins confirmed). Grade B+ immune stimulation. Grade A safety if clean verified source. ABSOLUTE CONTRAINDICATION: PKU (phenylalanine — HARD BLOCK). CAUTION: autoimmune disease (immune-stimulating). Source quality is the primary safety variable — third-party heavy-metal testing mandatory. Safe indefinite daily use from verified clean source.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    regional_affinity: ['whole'],
+    onset_time: 'weeks',
+    family: 'Arthrospiraceae',
+    epithet: 'The blue-green thread',
+    origin_region: 'Global',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -7427,6 +7552,15 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'Grade A cycle regulation and PMS/PMDD (100+ RCTs; German Commission E monograph; mechanism confirmed). Grade B+ fertility support and luteal phase. ABSOLUTE CONTRAINDICATION: pregnancy (HARD BLOCK). MAJOR CAUTIONS: hormonal contraceptives (efficacy risk — backup contraception); dopamine antagonists (counteraction — prescriber). Three-month minimum timeline. Standardised extract preferred.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['reactive', 'wired_tired'],
+    energy_pattern: ['restorative_only', 'sustained'],
+    regional_affinity: ['pelvis'],
+    onset_time: 'weeks',
+    family: 'Lamiaceae',
+    epithet: 'The moon-pod',
+    origin_region: 'Mediterranean',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -7490,6 +7624,16 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'Grade C+ relaxation (mechanism emerging; centuries traditional use). Grade B safety (traditional use; well-tolerated; alkaloid content documented). Non-addictive; non-intoxicating at normal doses; paradoxical calm-alert; safe indefinite daily use. CAUTION: pregnancy (likely avoid), breastfeeding (likely avoid), liver disease (monitor). Educate on non-intoxicating nature clearly.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['flat', 'wired_tired'],
+    energy_pattern: ['pm_stabilise'],
+    sleep_action: ['onset', 'dream_soften'],
+    regional_affinity: ['head', 'chest'],
+    onset_time: 'immediate',
+    family: 'Lamiaceae',
+    epithet: 'The lion\'s tail',
+    origin_region: 'African',
+    evidence_grade: 'traditional',
   },
 
   // ─────────────────────────────────────────────
@@ -10208,6 +10352,14 @@ const HERBS = [
     caution_level: 'LOW',
     safe_pregnancy: true,
     status: 'Very safe, food-like restorative. Prioritize deseeded material.'
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained', 'restorative_only'],
+    regional_affinity: ['joints', 'skin', 'whole'],
+    onset_time: 'weeks',
+    family: 'Rosaceae',
+    epithet: 'The hedge-red',
+    origin_region: 'European',
+    evidence_grade: 'A',
   },
   {
     id: 406,
