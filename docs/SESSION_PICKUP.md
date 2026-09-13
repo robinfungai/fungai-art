@@ -1,6 +1,37 @@
-# Session pickup — 2026-09-13 early hours
+# Session pickup — 2026-09-13 late night
 
 Written at the end of a long session so tomorrow's context lands cleanly.
+
+---
+
+## LATE-NIGHT ADDENDUM · Foraging audit sweep (LOCAL, not pushed)
+
+After the FYF Round 2 work below, the user green-lit a run through the Foraging App audit backlog (from the "Foraging Map Audit" deck). All 7 P0s from that audit are now committed **locally** (Netlify credit constraint — deferred push).
+
+| Commit    | Item | What |
+|-----------|------|------|
+| `7b3baa6` | S-01 | Schema-enforce the edible chip (already pushed earlier in this session) |
+| `0e22b8d` | D-03 | Cap nearest-node radius at 250 km + honest out-of-range panel |
+| `3b14f29` | S-03 | First-run acknowledgement modal + persistent caution + in-app terms |
+| `b9ca41c` | C-03 | Visible data-credits pill (iNaturalist, GBIF, Open-Meteo, Esri, CARTO/OSM) — basemap swap deferred |
+| `c88374e` | S-02 | Replace probability percentages with 5-band likelihood labels |
+| `098ee61` | D-01 | One shared scoring module (`src/foraging/scoring.ts`) — kills NodePanel/ForagingApp drift |
+| `aac6482` | C-04 | `/api/reverse-geocode` proxy + coord rounding to 2 dp + processors named at permission |
+
+**Deferred from the Foraging audit** (need dedicated sessions):
+- Esri basemap **replacement** (audit C-03 second half — Robin picks the licensed source: Mapbox Satellite / MapTiler / self-hosted Sentinel)
+- **22 P1/P2 items** — U-01…C-05 range (type scale, hit areas, layout ownership, tile eviction, error boundary, mapbox-gl removal, timezone bug, etc.). Full list is on the audit deck slides 40–41.
+- Foraging test coverage — the new `src/foraging/scoring.ts` has no unit tests yet; sibling to `tests/*-verify.cjs` would fit.
+
+**When you're ready to push tonight's foraging work:**
+```
+git push origin main
+```
+That ships all 6 unpushed foraging commits together (`0e22b8d` through `aac6482`). S-01 (`7b3baa6`) was already pushed earlier.
+
+---
+
+
 
 ## Where things stand
 
