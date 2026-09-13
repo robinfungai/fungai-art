@@ -389,9 +389,19 @@ export default function ForagingApp() {
     });
   }, [userPlace]);
 
-  // 3. Derive: nearest EcoNodes (up to 3 within ~250km), the dominant
-  //    habitat, a poetic zone label, and an aggregated species list
-  //    weighted by base probability × season match × weather context.
+  // 3. Derive: nearest EcoNodes (up to 3 STRICTLY within 250km), the
+  //    dominant habitat, a poetic zone label, and an aggregated
+  //    species list weighted by base probability × season match ×
+  //    weather context.
+  //
+  //    AUDIT_FIX (Foraging audit · D-03, P0). Prior code took the
+  //    3 nearest nodes regardless of distance, so a user in São Paulo
+  //    would still see "Birch-Pine Medicinal Corridor · 7,824 km away"
+  //    with confidently-scored species. The distPenalty softened this
+  //    but never zeroed it. NOW: nodes beyond MAX_NODE_KM are filtered
+  //    out BEFORE ranking, and if the resulting set is empty we return
+  //    an outOfRange marker so the UI can show an honest "no coverage
+  //    here yet" state instead of confidently-wrong data.
   //
   //    Wrapped in useMemo so every mouse-hover on a marker (which
   //    triggers hoveredNode setState) doesn't re-run Haversine across
@@ -409,11 +419,19 @@ export default function ForagingApp() {
       return 2 * R * Math.asin(Math.sqrt(h));
     };
     const userPt: [number, number] = [userLocation.lng, userLocation.lat];
-    const ranked = ECO_NODES
+    const MAX_NODE_KM = 250; // AUDIT_FIX (D-03) — honest coverage radius
+    const withDist    = ECO_NODES
       .map(n => ({ node: n, km: dist(userPt, n.coordinates) }))
-      .sort((a, b) => a.km - b.km)
-      .slice(0, 3);
-    if (!ranked.length) return null;
+      .sort((a, b) => a.km - b.km);
+    const nearestKm = withDist.length ? withDist[0].km : Infinity;
+    const ranked    = withDist.filter(x => x.km <= MAX_NODE_KM).slice(0, 3);
+    if (!ranked.length) {
+      // Out-of-range — the user is somewhere our EcoNode catalog
+      // doesn't cover yet. Return a shape the UI can branch on to
+      // render an honest empty state (see the "no coverage here"
+      // panel below) rather than fake proximity to a distant node.
+      return { outOfRange: true as const, nearestKm };
+    }
     // Dominant habitat = nearest. Poetic zone names per habitat type.
     const ZONE_NAMES: Record<HabitatType, string> = {
       birch_edge: 'Birch-Pine Medicinal Corridor',
@@ -473,6 +491,7 @@ export default function ForagingApp() {
     const all = [...bestByName.values()].sort((a, b) => b.probability - a.probability);
 
     return {
+      outOfRange: false as const,
       zoneName,
       dominantHabitat: ranked[0].node.nodeType,
       nearestKm: ranked[0].km,
@@ -943,10 +962,50 @@ export default function ForagingApp() {
         )}
       </div>
 
+      {/* AUDIT_FIX (D-03) · Honest out-of-range panel. When the user
+          is farther than 250 km from every EcoNode in the catalog,
+          userInsight resolves to { outOfRange:true } and we surface
+          this small honest panel instead of fabricated proximity to
+          a distant node. Same anchor/position as the normal panel. */}
+      {userLocation && growingPanelOpen && userInsight && userInsight.outOfRange && (
+        <div style={{
+          position: 'absolute', top: 76, right: 16, zIndex: 9,
+          width: 'min(360px, calc(100vw - 32px))',
+          background: 'rgba(7,17,13,0.92)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          border: '0.5px solid rgba(232,177,75,0.25)',
+          borderRadius: 14,
+          padding: '18px 18px 16px',
+          boxShadow: '0 12px 48px rgba(0,0,0,0.55)',
+          color: '#E6D9B5',
+          fontFamily: "'Cormorant Garamond', serif",
+        }}>
+          <button
+            onClick={() => setGrowingPanelOpen(false)}
+            style={{ position: 'absolute', top: 10, right: 12, background: 'none', border: 'none', color: '#8B7E62', fontSize: 18, cursor: 'pointer', lineHeight: 1 }}
+            title="Hide panel"
+          >×</button>
+          <div style={{ fontFamily: 'monospace', fontSize: 8.5, letterSpacing: '0.28em', textTransform: 'uppercase', color: '#E8B14B', marginBottom: 8 }}>
+            ◇ Outside covered range
+          </div>
+          <div style={{ fontStyle: 'italic', fontSize: 15.5, color: '#E6D9B5', lineHeight: 1.45, marginBottom: 10 }}>
+            Your location is more than 250 km from any node in our current catalog.
+          </div>
+          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 13, color: '#8B7E62', lineHeight: 1.6, marginBottom: 12 }}>
+            Nearest node: {Math.round(userInsight.nearestKm).toLocaleString()} km away.
+            Rather than show species and probabilities that don&rsquo;t reflect your ecology, we&rsquo;re leaving this quiet until the catalog reaches your region.
+          </div>
+          <div style={{ fontFamily: 'monospace', fontSize: 8.5, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#4d5a52', lineHeight: 1.6 }}>
+            You can still tap any pin on the map to explore what&rsquo;s there.
+          </div>
+        </div>
+      )}
+
       {/* "Growing Around You" — ecological intelligence overlay.
           Renders only when user has shared location AND the panel is open.
           Floats over the map, top-right on desktop / collapsible on mobile. */}
-      {userLocation && growingPanelOpen && userInsight && (
+      {userLocation && growingPanelOpen && userInsight && !userInsight.outOfRange && (
         <div style={{
           position: 'absolute', top: 76, right: 16, zIndex: 9,
           width: 'min(360px, calc(100vw - 32px))',
@@ -1046,7 +1105,8 @@ export default function ForagingApp() {
         </div>
       )}
 
-      {/* Reopen-panel handle when closed */}
+      {/* Reopen-panel handle when closed (works for both in-range +
+          out-of-range panels — user can always toggle either back). */}
       {userLocation && !growingPanelOpen && userInsight && (
         <button
           onClick={() => setGrowingPanelOpen(true)}
