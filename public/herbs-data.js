@@ -1647,6 +1647,15 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade A safety — 3000+ years culinary and Ayurvedic use. Excellent for digestive support, respiratory clearing, cardiometabolic modulation and mood elevation. Safe food-medicine for most populations. Minor caution with active GERD/ulcers and high Pitta constitution.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    digestion_fit: ['warming', 'carminative'],
+    energy_pattern: ['sustained'],
+    regional_affinity: ['gut', 'chest', 'head'],
+    onset_time: 'immediate',
+    family: 'Zingiberaceae',
+    epithet: 'The queen of spice',
+    origin_region: 'Ayurvedic',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -1789,6 +1798,15 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Very safe at culinary doses with 5000+ years use. Topical capsaicin cream evidence-based for arthritis and neuropathic pain. Internal medicinal doses: caution with GI conditions. Avoid near mucous membranes and eyes. Excellent for circulation, metabolism, pain and digestive fire when used appropriately.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['am_boost', 'acute_only'],
+    digestion_fit: ['warming', 'moving'],
+    regional_affinity: ['heart', 'chest', 'whole'],
+    onset_time: 'immediate',
+    family: 'Solanaceae',
+    epithet: 'The circulator',
+    origin_region: 'Central American',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -2268,6 +2286,15 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'Grade B+ evidence for PMS/PMDD and hyperprolactinaemia. Multiple RCTs confirm efficacy. CRITICAL screening: confirm not pregnant; discontinue at positive pregnancy test; screen for dopamine medications and hormone-sensitive cancers. Minimum 3 months for full assessment. Excellent targeted herb for specific hormonal patterns.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['reactive', 'wired_tired'],
+    energy_pattern: ['restorative_only', 'sustained'],
+    regional_affinity: ['pelvis'],
+    onset_time: 'weeks',
+    family: 'Lamiaceae',
+    epithet: 'The moon-pod',
+    origin_region: 'Mediterranean',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -2658,6 +2685,14 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade A evidence for UTI prevention (40+ RCTs). PAC content verification non-negotiable (minimum 36 mg daily). CRITICAL: Warfarin absolute contraindication or intensive INR monitoring. Kidney stone caution. Excellent UTI specialist herb when quality product used consistently.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only', 'sustained'],
+    regional_affinity: ['kidneys', 'pelvis'],
+    onset_time: 'immediate',
+    family: 'Ericaceae',
+    epithet: 'The bog-red',
+    origin_region: 'Nordic wild',
+    evidence_grade: 'A',
   },
   // ============================================================
   // BATCH 04 — 20 herbs converted from monographs
@@ -3101,6 +3136,15 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade B+ safety — widely used as food with excellent culinary safety record. Excellent digestive carminative and gentle phytoestrogenic herb. Screen oestrogen-sensitive conditions for therapeutic doses. Infant use: dilute, short-term, age-appropriate only. Effects develop over days to weeks.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    digestion_fit: ['warming', 'carminative', 'moving'],
+    energy_pattern: ['sustained'],
+    regional_affinity: ['gut', 'chest'],
+    onset_time: 'immediate',
+    family: 'Apiaceae',
+    epithet: 'The sweet stalk',
+    origin_region: 'Mediterranean',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -3235,6 +3279,15 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade B+ evidence for cognitive support and circulation. German Commission E monograph. CRITICAL: Warfarin interaction — avoid or intensive INR monitoring. Stop 2 weeks pre-surgery. Standardised extract essential. Minimum 4–8 weeks for cognitive benefit. One of the most researched herbs in the world.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['flat', 'tired'],
+    energy_pattern: ['sustained'],
+    regional_affinity: ['head', 'chest'],
+    onset_time: 'weeks',
+    family: 'Ginkgoaceae',
+    epithet: 'The living fossil',
+    origin_region: 'Chinese',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -3585,6 +3638,15 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'Grade A acute stimulation efficacy. ACUTE USE ONLY — 2–3 times weekly maximum; daily use creates tolerance and dependency. Five absolute contraindications (hypertension, anxiety, insomnia, heart conditions, stimulant medications) must be screened. Excellent tool for specific acute demand situations in appropriate populations.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'flat'],
+    energy_pattern: ['am_boost'],
+    regional_affinity: ['head', 'whole'],
+    onset_time: 'immediate',
+    family: 'Sapindaceae',
+    epithet: 'The Amazonian eye',
+    origin_region: 'Central American',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -5628,6 +5690,15 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade B- sexual function and libido (small human trials plus extensive traditional use). Grade C+ cognitive and anti-fatigue. Appropriate safety for moderate-term use in low-risk individuals. Cardiovascular screening required. Not a substitute for medical evaluation of persistent sexual dysfunction.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'flat'],
+    energy_pattern: ['sustained'],
+    regional_affinity: ['pelvis', 'head'],
+    onset_time: 'days',
+    family: 'Olacaceae',
+    epithet: 'The potency-wood',
+    origin_region: 'Central American',
+    evidence_grade: 'traditional',
   },
 
   // ─────────────────────────────────────────────
@@ -6271,6 +6342,15 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade B mood elevation (multiple RCTs; SSRI-equivalent mechanism; no sexual dysfunction). Grade A safety (centuries use). 4–8 week timeline for mood effects. Key advantage over pharmaceutical SSRIs: no sexual dysfunction side effects. Screen anticoagulants (INR monitoring) and SSRIs (additive serotonin — monitor). Extract most cost-effective for long-term use.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['flat', 'reactive', 'wired_tired'],
+    energy_pattern: ['sustained'],
+    regional_affinity: ['heart', 'head'],
+    onset_time: 'weeks',
+    family: 'Iridaceae',
+    epithet: 'The red thread',
+    origin_region: 'Mediterranean',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -6897,6 +6977,15 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'Grade A testosterone increase (40+ RCTs; 15–25% documented; mechanism confirmed). Grade A sexual function (multiple RCTs). Grade B+ sperm quality and athletic performance. ABSOLUTE CONTRAINDICATIONS: prostate cancer (HARD BLOCK); hormone-sensitive cancers (HARD BLOCK). Standardised extract (eurycomanone 10–30%) essential. Cycling protocol (8–12 on/4–6 off) mandatory. Cancer screening non-negotiable before every recommendation.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'flat'],
+    energy_pattern: ['am_boost', 'sustained'],
+    regional_affinity: ['pelvis', 'kidneys'],
+    onset_time: 'weeks',
+    family: 'Simaroubaceae',
+    epithet: 'The long jack',
+    origin_region: 'Global',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -6961,6 +7050,15 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade A-minus immune and leukopenia support (CFDA-approved clinical drug in China). Grade B+ neuroprotection (RCT confirmed) and skin hydration. Grade B metabolic support. Grade A safety for culinary use. CAUTION: autoimmune disease (immunomodulator — practitioner oversight); pregnancy/breastfeeding (insufficient high-dose data); anticoagulant use (theoretical — monitor). Excellent long-term tonic food mushroom.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['restorative_only', 'sustained'],
+    digestion_fit: ['cooling', 'demulcent'],
+    regional_affinity: ['skin', 'chest', 'whole'],
+    onset_time: 'weeks',
+    family: 'Tremellaceae',
+    epithet: 'The silver ear',
+    origin_region: 'Chinese',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -7457,6 +7555,15 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'Grade B pain relief (salicylate mechanism confirmed; RCTs comparable to aspirin). Grade B anti-inflammatory. Grade A safety (2000+ years; GI-protective tannins advantage over synthetic aspirin). CAUTION: salicylate allergy (discontinue if reaction), anticoagulants (monitor INR), surgery (discontinue 2 weeks pre-op), pregnancy (consult). Onset: 1–2 weeks minimum. GI-protective advantage is the key clinical differentiator from synthetic aspirin.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only'],
+    digestion_fit: ['cooling', 'bitter'],
+    regional_affinity: ['joints', 'head', 'whole'],
+    onset_time: 'immediate',
+    family: 'Salicaceae',
+    epithet: 'The river-tree',
+    origin_region: 'European',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -7805,6 +7912,15 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade B+ demulcent and mucosal soothing (mechanism confirmed; traditional evidence). FDA GRAS for oral use. CRITICAL DRUG INTERACTION: reduces absorption of ALL oral medications — 2-hour separation is non-negotiable and applies to every pharmaceutical. Conservative caution in pregnancy (folkloric history; oral use probably safe but insufficient concentrated-supplement data). Safe long-term for GI, respiratory and urinary mucosal soothing when medications are appropriately separated.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['restorative_only'],
+    digestion_fit: ['cooling', 'demulcent'],
+    regional_affinity: ['gut', 'chest'],
+    onset_time: 'immediate',
+    family: 'Ulmaceae',
+    epithet: 'The soothing sheath',
+    origin_region: 'European',
+    evidence_grade: 'B',
   },
   // ─────────────────────────────────────────────
   // PEPPERMINT
@@ -8302,6 +8418,14 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'Grade B LUTS and BPH symptom relief (many RCTs; modest positive results; some large trials show no significant benefit — mixed evidence). Grade B+ prostate anti-inflammatory (mechanistic and histological data). Grade A-minus safety. MANDATORY medical evaluation of LUTS before recommendation (rule out malignancy and acute retention). PSA suppression: disclose to clinician before PSA testing. 320 mg/day standardised lipophilic extract is the clinical form. Minimum 3–6 month trial.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained', 'restorative_only'],
+    regional_affinity: ['pelvis', 'kidneys'],
+    onset_time: 'weeks',
+    family: 'Arecaceae',
+    epithet: 'The palmetto shield',
+    origin_region: 'European',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -8654,6 +8778,14 @@ const HERBS = [
     safe_pregnancy: true,
     status:
       'Grade B+ immune enhancement (4-week whole-mushroom human RCT confirmed). Grade B+ lentinan cancer adjuvant (clinical approval in Asia; multiple studies). Grade B cholesterol and lipids. Grade A culinary safety. COOKING IS MANDATORY (flagellate dermatitis from raw). Culinary daily integration is the primary recommendation. Lentinan and LEM require oncologist coordination.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    regional_affinity: ['whole', 'chest'],
+    onset_time: 'weeks',
+    family: 'Marasmiaceae',
+    epithet: 'The oak-mushroom',
+    origin_region: 'Chinese',
+    evidence_grade: 'B+',
   },
 
   // TREMELLA — canonical entry is id 285 above (Snow Fungus / White Wood
@@ -9192,6 +9324,14 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade B+ immune activation (multiple animal studies plus Phase I/II human immune data). Grade B-minus cancer adjuvancy (case series plus small trials). Grade B-minus glucose and insulin (strong animal data; limited human). Grade B safety. Screen autoimmune, immunosuppressants, diabetes medications and transplant. Adjunct only in oncology. Maitake+Shiitake combination is the strongest oral beta-glucan immune protocol studied.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained', 'restorative_only'],
+    regional_affinity: ['whole', 'chest'],
+    onset_time: 'weeks',
+    family: 'Grifolaceae',
+    epithet: 'The dancing mushroom',
+    origin_region: 'Chinese',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -9782,6 +9922,14 @@ const HERBS = [
     safe_pregnancy: null,
     status:
       'Grade A immunomodulation (PSK/PSP; extensive in vitro, in vivo and human studies). Grade B+ oncology adjuvant (23-RCT meta-analysis; HR ~0.82 mortality reduction). Grade B+ microbiome and prebiotic (human RCT confirmed). Grade A-minus safety (Phase I plus large clinical oncology experience). PSK prescription-approved in Japan since 1977 — strongest regulatory standing of any medicinal mushroom. CONTRAINDICATED with transplant immunosuppressants without oversight. Coordinate with oncology team for cancer immunotherapy.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained', 'restorative_only'],
+    regional_affinity: ['whole', 'gut'],
+    onset_time: 'weeks',
+    family: 'Polyporaceae',
+    epithet: 'The rainbow bracket',
+    origin_region: 'Chinese',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -10244,6 +10392,14 @@ const HERBS = [
     safe_pregnancy: false,
     status:
       'Valuable anti-inflammatory resin herb for joints, connective tissue and chronic inflammatory stiffness. Best as a quality standardised extract. Strong choice when common kitchen anti-inflammatories are insufficient.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    regional_affinity: ['joints', 'gut'],
+    onset_time: 'weeks',
+    family: 'Burseraceae',
+    epithet: 'The frankincense-tree',
+    origin_region: 'Ayurvedic',
+    evidence_grade: 'A',
   },
   {
   id: 543,
