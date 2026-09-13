@@ -23,18 +23,62 @@ const MOISTURE_LABEL = (m: number) => {
   return 'Arid';
 };
 
+/**
+ * AUDIT_FIX (Foraging audit · S-02, P0 · ship-blocking).
+ *
+ * Prior UI rendered a species probability as a precise percentage
+ * (e.g. "72%"). That number carries connotations of measured
+ * confidence that the underlying model does not have — it's a
+ * heuristic composed of base likelihood × season match × distance
+ * penalty × rain boost. Showing "72%" implies statistical
+ * calibration that isn't real.
+ *
+ * Fix (per audit): replace the percentage number with a HABITAT
+ * LIKELIHOOD BAND — five bands labelled in natural language so the
+ * reader gets a qualitative signal without false precision. The
+ * bar visualization stays (useful visual hierarchy) but no numeric
+ * label. Colour + fill length carry the signal; the label names
+ * the band.
+ *
+ *   ≥ 0.75  very likely       (deep amber-green)
+ *   ≥ 0.55  likely            (amber-green)
+ *   ≥ 0.35  possible          (amber)
+ *   ≥ 0.15  unlikely          (dust)
+ *   <  0.15 rarely here       (dust-dim)
+ *
+ * Out-of-season entries drop a band regardless — the picker's
+ * inSeason multiplier already dims them, this just names it.
+ */
+type LikelihoodBand = { label: string; color: string; fill: number };
+
+function bandFor(value: number, season_match: boolean): LikelihoodBand {
+  const dim = { label: 'not this season', color: '#3d4a43', fill: 0.15 };
+  if (!season_match) return dim;
+  if (value >= 0.75) return { label: 'very likely here', color: '#6BD66F', fill: 0.95 };
+  if (value >= 0.55) return { label: 'likely here',      color: '#8CCF6E', fill: 0.75 };
+  if (value >= 0.35) return { label: 'possible',         color: '#C48838', fill: 0.55 };
+  if (value >= 0.15) return { label: 'unlikely',         color: '#8B7E62', fill: 0.35 };
+  return                     { label: 'rarely here',     color: '#5f5648', fill: 0.20 };
+}
+
 function ProbBar({ value, season_match }: { value: number; season_match: boolean }) {
-  const pct = Math.round(value * 100);
-  const color = season_match
-    ? value > 0.7 ? '#6BD66F' : value > 0.4 ? '#C48838' : '#8B7E62'
-    : '#3d4a43';
+  const b = bandFor(value, season_match);
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}
+         title="Habitat likelihood — a qualitative signal from ecological modelling, not a measurement.">
       <div style={{ flex: 1, height: 3, background: '#1a2228', borderRadius: 2, overflow: 'hidden' }}>
-        <div style={{ width: `${pct}%`, height: '100%', background: color, borderRadius: 2, transition: 'width 0.4s' }} />
+        <div style={{
+          width: `${Math.round(b.fill * 100)}%`,
+          height: '100%', background: b.color, borderRadius: 2,
+          transition: 'width 0.4s',
+        }} />
       </div>
-      <span style={{ fontFamily: 'var(--fm, monospace)', fontSize: 10, color, width: 32, textAlign: 'right' }}>
-        {pct}%
+      <span style={{
+        fontFamily: 'monospace', fontSize: 8.5, color: b.color,
+        letterSpacing: '0.12em', textTransform: 'uppercase',
+        minWidth: 90, textAlign: 'right', whiteSpace: 'nowrap',
+      }}>
+        {b.label}
       </span>
     </div>
   );

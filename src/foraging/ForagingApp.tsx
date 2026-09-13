@@ -1241,7 +1241,10 @@ export default function ForagingApp() {
                 {userInsight.highProbability.map(s => (
                   <div key={s.name} style={{ display: 'flex', alignItems: 'baseline', gap: 8, padding: '6px 10px', background: 'rgba(107,214,111,0.05)', border: '0.5px solid rgba(107,214,111,0.18)', borderRadius: 6 }}>
                     <span style={{ fontSize: 13, color: '#E6D9B5', flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.name}</span>
-                    <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#6BD66F', flexShrink: 0 }}>{Math.round(s.probability * 100)}%</span>
+                    {/* AUDIT_FIX (S-02) — likelihood band label, not "%" */}
+                    <span style={{ fontFamily: 'monospace', fontSize: 8.5, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#6BD66F', flexShrink: 0 }}>
+                      {s.probability >= 0.75 ? 'very likely' : 'likely'}
+                    </span>
                     <span style={{ fontFamily: 'monospace', fontSize: 8.5, color: '#4d5a52', flexShrink: 0 }}>{s.distKm < 10 ? '<10' : Math.round(s.distKm)}km</span>
                   </div>
                 ))}
