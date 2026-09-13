@@ -323,6 +323,65 @@ function ForageAcknowledgementModal({ onAcknowledge }: { onAcknowledge: () => vo
   );
 }
 
+// AUDIT_FIX (Foraging audit · C-03, P0). Prior UI displayed data
+// sourced from iNaturalist + GBIF + Open-Meteo + Esri + CARTO/OSM
+// with no visible credit line. Only the Esri attribution lived
+// inside the MapLibre source config (which renders in a small "i"
+// toggle at best). iNaturalist requires explicit attribution under
+// CC-BY-NC; GBIF asks for attribution as a scholarly courtesy.
+//
+// Fix: a small persistent "Data credits" pill in the bottom-right,
+// tap/hover to expand into a full attribution block. Ships all
+// current sources explicitly.
+//
+// (The Esri basemap swap for a properly-licensed source is a
+// separate follow-up — deferred to a future session when Robin
+// picks the replacement tiles.)
+function ForageDataCredits() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{
+      position: 'fixed', bottom: 10, right: 10, zIndex: 8,
+      fontFamily: 'monospace', fontSize: 8.5, letterSpacing: '0.14em',
+      color: '#8B7E62', textTransform: 'uppercase',
+      background: 'rgba(4,8,6,0.85)', backdropFilter: 'blur(6px)',
+      border: '0.5px solid rgba(232,177,75,0.18)',
+      borderRadius: 6, overflow: 'hidden',
+      maxWidth: 'calc(100vw - 20px)',
+    }}>
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        style={{
+          background: 'none', border: 'none', color: 'inherit',
+          font: 'inherit', letterSpacing: 'inherit', textTransform: 'inherit',
+          padding: '5px 10px', cursor: 'pointer', display: 'block',
+        }}
+        aria-expanded={open}
+        aria-controls="forage-data-credits-body"
+      >
+        ◇ Data credits {open ? '▾' : '▸'}
+      </button>
+      {open && (
+        <div id="forage-data-credits-body" style={{
+          padding: '4px 10px 10px', maxWidth: 320,
+          fontFamily: "'Cormorant Garamond', serif",
+          fontStyle: 'italic', fontSize: 12, letterSpacing: 'normal',
+          textTransform: 'none', color: '#C9B894', lineHeight: 1.55,
+        }}>
+          <div style={{ marginBottom: 4 }}><strong style={{ color: '#EDE5D8' }}>Species observations:</strong> GBIF.org (Global Biodiversity Information Facility) and iNaturalist research-grade observations (CC-BY-NC by their observers).</div>
+          <div style={{ marginBottom: 4 }}><strong style={{ color: '#EDE5D8' }}>Weather &amp; conditions:</strong> Open-Meteo (CC-BY).</div>
+          <div style={{ marginBottom: 4 }}><strong style={{ color: '#EDE5D8' }}>Satellite tiles:</strong> © Esri &amp; Earthstar Geographics.</div>
+          <div style={{ marginBottom: 4 }}><strong style={{ color: '#EDE5D8' }}>Labels &amp; base tiles:</strong> © OpenStreetMap contributors, © CARTO.</div>
+          <div style={{ marginTop: 6, fontFamily: 'monospace', fontSize: 8.5, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#8B7E62' }}>
+            Ecological node data · Fungai Art
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ForagePersistentCaution() {
   // Always visible bar at the top of the app. Read-only cue that
   // reinforces the acknowledgement modal's message every session,
@@ -877,6 +936,11 @@ export default function ForagingApp() {
       {/* AUDIT_FIX (S-03) — persistent caution line at top of app.
           Present every session, above the top bar. Read-only. */}
       <ForagePersistentCaution />
+
+      {/* AUDIT_FIX (C-03) — persistent data-credits pill (bottom-right).
+          Ships attribution for iNaturalist, GBIF, Open-Meteo, Esri
+          and CARTO/OSM in one collapsible affordance. */}
+      <ForageDataCredits />
 
       {/* Top bar */}
       <div style={{
