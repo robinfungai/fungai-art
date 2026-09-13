@@ -221,6 +221,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'CRITICAL: Absolute contraindication with warfarin (documented serious bleeding). Avoid first trimester. Otherwise excellent blood tonic and menstrual regulator with 2000+ years of use. Monitor during first cycle in heavy bleeders (blood-moving may initially increase then normalise flow). Effects improve over 2–3 menstrual cycles.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'wired_tired'],
+    energy_pattern: ['sustained', 'restorative_only'],
+    regional_affinity: ['pelvis', 'heart', 'liver'],
+    onset_time: 'weeks',
+    family: 'Apiaceae',
+    epithet: 'The woman\'s root',
+    origin_region: 'Chinese',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -1236,6 +1245,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A safety — Japanese culinary staple with centuries of use. Excellent for microbiome health, dysbiosis healing, liver support and foundational mineral nutrition. Safe indefinite long-term use. Monitor blood sugar if on diabetes medications. One of the most versatile foundational herbs available.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained', 'restorative_only'],
+    digestion_fit: ['bitter', 'cooling'],
+    regional_affinity: ['liver', 'skin', 'kidneys'],
+    onset_time: 'weeks',
+    family: 'Asteraceae',
+    epithet: 'The blood-cleanser',
+    origin_region: 'European',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -2072,6 +2090,14 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A evidence for cold duration reduction (100+ RCTs). ACUTE USE ONLY — 7–10 days maximum. Absolute contraindication in autoimmune disease, immunosuppression and Asteraceae allergy. Timing-critical: start within 12–24 hours. Never for daily prevention or long-term use. Use Astragalus for foundational immune support instead.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only'],
+    regional_affinity: ['chest', 'whole'],
+    onset_time: 'immediate',
+    family: 'Asteraceae',
+    epithet: 'The prairie shield',
+    origin_region: 'European',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -2134,6 +2160,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A topical wound healing — German Commission E monograph. Excellent first-aid herb and skin regeneration specialist. CRITICAL: ragweed allergy screening before topical use. Internal use safe at standard doses when ragweed allergy excluded. Pregnancy: topical safe throughout; internal therapeutic doses avoid.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    digestion_fit: ['cooling', 'demulcent'],
+    regional_affinity: ['skin', 'gut', 'pelvis'],
+    onset_time: 'days',
+    family: 'Asteraceae',
+    epithet: 'The sun-cup',
+    origin_region: 'Mediterranean',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -2847,6 +2882,14 @@ export const HERBS: Herb[] = [
     safe_pregnancy: true,
     status:
       'Grade A safety — 1000+ years traditional use. Excellent for immune activation, antiviral support, fever management and respiratory health. Safe in pregnancy and breastfeeding. Pleasant tasting — high compliance for all ages. Excellent seasonal prevention herb.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only'],
+    regional_affinity: ['chest', 'head'],
+    onset_time: 'immediate',
+    family: 'Adoxaceae',
+    epithet: 'The fever-breaker',
+    origin_region: 'European',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -3990,6 +4033,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A safety; Grade B+ cardiovascular efficacy. German Commission E monograph. One of the safest and most evidence-supported cardiovascular herbs. Medical supervision important if on cardiac medications. Minimum 8 weeks for benefit. Profound emotional and physical heart herb — one of the most beloved in Western herbal tradition.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['reactive', 'wired'],
+    energy_pattern: ['sustained', 'restorative_only'],
+    regional_affinity: ['heart', 'chest'],
+    onset_time: 'weeks',
+    family: 'Rosaceae',
+    epithet: 'The heart-hedge',
+    origin_region: 'European',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -4193,6 +4245,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A safety with appropriate screening. Grade B cardiovascular and palpitation evidence. Absolute contraindication in first trimester. Menorrhagia caution. Excellent as long-term foundational herb for women\'s reproductive, cardiac and emotional work. Daytime appropriate. Cumulative benefit over 2–4 weeks, full menstrual tonification over 3–6 months.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'reactive', 'wired_tired'],
+    energy_pattern: ['pm_stabilise', 'restorative_only'],
+    sleep_action: ['onset'],
+    regional_affinity: ['heart', 'chest', 'pelvis'],
+    onset_time: 'hours',
+    family: 'Lamiaceae',
+    epithet: 'The lion-hearted mother',
+    origin_region: 'European',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -4538,6 +4600,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: true,
     status:
       'Grade A safety — universally safe; all populations, all ages, all medications. Grade B+ non-sedating anxiolytic evidence. Unique quality: maintains full alertness and cognitive function while reducing anxiety. Gets better with long-term consistent use. Excellent children\'s herb. The most gentle and universally applicable nervine in Western herbal tradition.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'reactive'],
+    energy_pattern: ['pm_stabilise', 'restorative_only'],
+    sleep_action: ['onset'],
+    regional_affinity: ['heart', 'chest', 'head'],
+    onset_time: 'immediate',
+    family: 'Malvaceae',
+    epithet: 'The village elder-tree',
+    origin_region: 'European',
+    evidence_grade: 'B',
   },
   // ============================================================
   // BATCH 06 — 20 herbs converted from monographs
@@ -4885,6 +4957,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A- anti-ulcer mucosal protection (especially DGL). Grade B+ hepatoprotective. CRITICAL safety distinction: DGL vs. whole root. Whole root: well-documented dose-dependent pseudoaldosteronism risk; maximum 4–6 weeks; contraindicated in hypertension, CV disease, kidney disease, diuretics, corticosteroids. DGL: safe for extended GI use.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'wired_tired'],
+    energy_pattern: ['sustained', 'restorative_only'],
+    digestion_fit: ['warming', 'demulcent'],
+    regional_affinity: ['gut', 'chest', 'whole'],
+    onset_time: 'days',
+    family: 'Fabaceae',
+    epithet: 'The harmoniser',
+    origin_region: 'Chinese',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -5345,6 +5427,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A safety — medieval and modern use with no serious adverse events. Grade B digestive and anti-inflammatory evidence. The defining "stomach-safe pain relief" herb. NSAID alternative with added GI protection. Aspirin sensitivity caution. Warfarin monitoring. Safe long-term daily use.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only'],
+    digestion_fit: ['cooling', 'demulcent'],
+    regional_affinity: ['gut', 'joints'],
+    onset_time: 'immediate',
+    family: 'Rosaceae',
+    epithet: 'The meadow\'s aspirin',
+    origin_region: 'European',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -5484,6 +5575,17 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade B digestive and menstrual evidence. Grade C dream enhancement (traditional and anecdotal; plausible neuroactive basis). Grade A pregnancy risk (emmenagogue — HARD BLOCK). Cyclic use essential (thujone). Asteraceae allergy and seizure screening mandatory. Excellent menstrual, digestive and dreamwork herb in appropriate populations.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['flat', 'reactive'],
+    energy_pattern: ['pm_stabilise'],
+    sleep_action: ['dream_soften'],
+    digestion_fit: ['bitter', 'warming'],
+    regional_affinity: ['pelvis', 'gut', 'head'],
+    onset_time: 'hours',
+    family: 'Asteraceae',
+    epithet: 'The dream-guide',
+    origin_region: 'European',
+    evidence_grade: 'traditional',
   },
 
   // ─────────────────────────────────────────────
@@ -6815,6 +6917,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A safety (universally safe; suitable all ages including children). Grade B+ expectorant and antimicrobial. Grade B antispasmodic and anti-inflammatory. Tea preparation superior to extract for expectorant action (non-negotiable preparation guidance). 3–4× daily for acute respiratory. Minimal contraindications. No drug interactions. One of the most clinically accessible and broadly applicable respiratory herbs.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired'],
+    energy_pattern: ['am_boost', 'sustained'],
+    digestion_fit: ['warming', 'carminative'],
+    regional_affinity: ['chest', 'gut'],
+    onset_time: 'immediate',
+    family: 'Lamiaceae',
+    epithet: 'The garden antiseptic',
+    origin_region: 'Mediterranean',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -7236,6 +7348,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade B anxiolytic and nervine (animal models plus strong traditional clinical use). Grade B-minus neuroprotection (in vitro; no human trials). Strong traditional evidence for burnout, tension headache, PMS-liver pattern and stress gut. BLOCK in pregnancy (uterine-stimulating reputation). Screen CNS depressants and antiepileptics. 4–8 weeks for full PMS and migraine effect.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'wired_tired', 'reactive'],
+    energy_pattern: ['pm_stabilise', 'restorative_only'],
+    sleep_action: ['onset'],
+    regional_affinity: ['head', 'liver', 'chest'],
+    onset_time: 'hours',
+    family: 'Verbenaceae',
+    epithet: 'The druids\' herb',
+    origin_region: 'European',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -7495,6 +7617,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade B+ antiparasitic (traditional evidence; mechanism confirmed). Grade A neurotoxicity concern (convulsant; seizure risk — well documented). ABSOLUTE CONTRAINDICATIONS: pregnancy (HARD BLOCK — abortifacient and fetotoxic), seizure disorders (HARD BLOCK — convulsant), anticonvulsants (avoid). MAXIMUM 2–4 weeks per cycle; mandatory breaks; maximum 3 cycles per year. Always use in antiparasitic trio to reduce individual herb dose. Not for casual consumer recommendation — practitioner mode required.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only'],
+    digestion_fit: ['bitter', 'warming', 'moving'],
+    regional_affinity: ['gut', 'liver'],
+    onset_time: 'immediate',
+    family: 'Asteraceae',
+    epithet: 'The bitter green',
+    origin_region: 'European',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -7557,6 +7688,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade B+ haemostatic and wound healing. Grade B+ anti-inflammatory and antispasmodic. Grade B digestive and hepatic support. Grade B+ safety for short-term use. HARD BLOCK: pregnancy (uterine-stimulating emmenagogue). Screen Asteraceae allergy. Acute fever: serve HOT 3–5× daily. Diaphoretic trio (Yarrow + Elderflower + Peppermint) is the defining preparation.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only', 'sustained'],
+    digestion_fit: ['bitter', 'warming'],
+    regional_affinity: ['gut', 'pelvis', 'chest'],
+    onset_time: 'immediate',
+    family: 'Asteraceae',
+    epithet: 'The soldier\'s herb',
+    origin_region: 'European',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -7824,6 +7964,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade B+ IBS antispasmodic (enteric-coated oil; systematic reviews; multiple RCTs). Grade B topical analgesia for tension headache. Grade A safety at tea and culinary doses. CRITICAL: enteric coating mandatory for IBS use (plain capsules and tea cause reflux). HARD BLOCK: children under 8 for any menthol near face (laryngospasm). AVOID in significant GERD and biliary obstruction (concentrated oil). Culinary and tea use safe for all other populations.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['flat'],
+    energy_pattern: ['am_boost'],
+    digestion_fit: ['cooling', 'carminative', 'moving'],
+    regional_affinity: ['gut', 'head', 'chest'],
+    onset_time: 'immediate',
+    family: 'Lamiaceae',
+    epithet: 'The cool relay',
+    origin_region: 'European',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -8172,6 +8322,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade B+ sore throat and antimicrobial (Commission E monograph; tannin and thujone mechanism confirmed). Grade B menopausal hot flashes (traditional evidence; mechanism unclear; variable response). Grade A safety for dried leaf tea. ABSOLUTE BLOCK: essential oil internal use (neurotoxic). CAUTION: breastfeeding (anti-galactagogue — may dry up milk). CAUTION in pregnancy for concentrated forms (culinary/tea safe). Gargling is the optimal sore-throat delivery route.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['flat', 'wired_tired'],
+    energy_pattern: ['sustained'],
+    digestion_fit: ['warming', 'bitter'],
+    regional_affinity: ['chest', 'head', 'whole'],
+    onset_time: 'immediate',
+    family: 'Lamiaceae',
+    epithet: 'The wise leaf',
+    origin_region: 'Mediterranean',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -9951,6 +10111,14 @@ export const HERBS: Herb[] = [
     caution_level: 'LOW',
     safe_pregnancy: null,
     status: 'Gentle, mineral-rich tonic. Excellent long-game herb for tissue resilience.'
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained', 'restorative_only'],
+    regional_affinity: ['pelvis', 'gut'],
+    onset_time: 'weeks',
+    family: 'Rosaceae',
+    epithet: 'The womb-tonic',
+    origin_region: 'European',
+    evidence_grade: 'B',
   },
   {
     id: 405,
