@@ -769,35 +769,41 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .q-subprog-dot.done{background:rgba(232,177,75,0.55);border-color:rgba(232,177,75,0.55);box-shadow:0 0 6px -1px rgba(232,177,75,0.3)}
 .q-subprog-dot.now{background:var(--amber-l);border-color:var(--amber-l);width:22px;border-radius:4px;box-shadow:0 0 14px -2px rgba(232,177,75,0.7)}
 
-/* ── Five-node botanical stages nav ────────────────────────────── */
-.fyf-stages{position:relative;margin:2px 0 4px;padding:8px 8px 6px}
-.fyf-stages-row{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2;gap:4px}
-.fyf-stages-track{position:absolute;left:8%;right:8%;top:calc(14px + 20px);height:1px;background:rgba(232,177,75,0.12);z-index:1;overflow:hidden;border-radius:1px}
-.fyf-stages-fill{height:100%;background:linear-gradient(90deg,rgba(232,177,75,0.5),var(--amber-l));transform-origin:left center;transform:scaleX(var(--fyf-progress,0));transition:transform .38s cubic-bezier(0.22,0.61,0.36,1);will-change:transform}
+/* ── Five-node botanical stages nav ──────────────────────────────
+   Sleek strip: the whole Rhythm → Ground row reads as one integrated
+   line, with the connecting rail passing THROUGH the node centers
+   so the icons feel threaded onto a continuous filament rather than
+   floating pills above a separate track. Circles are pared back to
+   28px; labels sit tight underneath in 8px mono. */
+.fyf-stages{position:relative;margin:2px auto 2px;padding:4px 4px 4px;max-width:520px}
+.fyf-stages-row{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2;gap:0}
+.fyf-stages-track{position:absolute;left:calc(10% + 14px);right:calc(10% + 14px);top:calc(4px + 14px);height:1px;background:rgba(232,177,75,0.14);z-index:1;overflow:hidden;border-radius:1px}
+.fyf-stages-fill{height:100%;background:linear-gradient(90deg,rgba(232,177,75,0.4),var(--amber-l));transform-origin:left center;transform:scaleX(var(--fyf-progress,0));transition:transform .42s cubic-bezier(0.22,0.61,0.36,1);will-change:transform;box-shadow:0 0 8px -1px rgba(232,177,75,0.35)}
 
 /* Each node: SVG icon + tiny label. Circle background for state. */
-.fyf-stage{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;text-decoration:none;color:inherit;padding:0;background:none;border:0;cursor:default;font:inherit;min-width:0}
+.fyf-stage{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;color:inherit;padding:0;background:none;border:0;cursor:default;font:inherit;min-width:0}
 .fyf-stage[data-clickable="true"]{cursor:pointer}
-.fyf-stage-glyph{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(5,7,10,0.85);border:0.5px solid rgba(232,177,75,0.22);transition:border-color .3s ease,background .3s ease,transform .38s cubic-bezier(0.22,0.61,0.36,1),box-shadow .38s ease;position:relative}
-.fyf-stage-glyph svg{width:20px;height:20px;color:rgba(232,177,75,0.28);transition:color .38s ease,transform .38s cubic-bezier(0.22,0.61,0.36,1)}
-.fyf-stage-label{font-family:var(--mono);font-size:8.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--dust-d);opacity:0.55;transition:opacity .3s ease,color .3s ease;text-align:center;line-height:1.2;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fyf-stage-glyph{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(5,7,10,0.92);border:0.5px solid rgba(232,177,75,0.22);transition:border-color .3s ease,background .3s ease,transform .38s cubic-bezier(0.22,0.61,0.36,1),box-shadow .38s ease;position:relative}
+.fyf-stage-glyph svg{width:15px;height:15px;color:rgba(232,177,75,0.3);transition:color .38s ease,transform .38s cubic-bezier(0.22,0.61,0.36,1)}
+.fyf-stage-label{font-family:var(--mono);font-size:7.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--dust-d);opacity:0.45;transition:opacity .3s ease,color .3s ease;text-align:center;line-height:1.15;max-width:60px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* Done state — filled amber icon, subtle glow */
-.fyf-stage.is-done .fyf-stage-glyph{border-color:rgba(232,177,75,0.5);background:rgba(232,177,75,0.06);box-shadow:0 0 8px -2px rgba(232,177,75,0.35)}
+.fyf-stage.is-done .fyf-stage-glyph{border-color:rgba(232,177,75,0.55);background:rgba(232,177,75,0.05);box-shadow:0 0 6px -2px rgba(232,177,75,0.4)}
 .fyf-stage.is-done .fyf-stage-glyph svg{color:var(--amber-l)}
-.fyf-stage.is-done .fyf-stage-label{opacity:0.75;color:var(--dust)}
+.fyf-stage.is-done .fyf-stage-label{opacity:0.65;color:var(--dust)}
 /* Now state — larger, brighter, aria-current="step" */
-.fyf-stage.is-now .fyf-stage-glyph{border-color:var(--amber-l);background:rgba(232,177,75,0.09);box-shadow:0 0 20px -4px rgba(232,177,75,0.55),inset 0 0 0 0.5px rgba(232,177,75,0.4);transform:scale(1.06)}
-.fyf-stage.is-now .fyf-stage-glyph svg{color:var(--amber-l);transform:scale(1.05)}
-.fyf-stage.is-now .fyf-stage-label{opacity:1;color:var(--amber-l)}
+.fyf-stage.is-now .fyf-stage-glyph{border-color:var(--amber-l);background:rgba(232,177,75,0.08);box-shadow:0 0 16px -3px rgba(232,177,75,0.55),inset 0 0 0 0.5px rgba(232,177,75,0.35);transform:scale(1.12)}
+.fyf-stage.is-now .fyf-stage-glyph svg{color:var(--amber-l);transform:scale(1.04)}
+.fyf-stage.is-now .fyf-stage-label{opacity:1;color:var(--amber-l);letter-spacing:0.24em}
 /* Focus for keyboard nav on completed nodes */
-.fyf-stage[data-clickable="true"]:focus-visible .fyf-stage-glyph{outline:2px solid var(--amber-l);outline-offset:3px}
-/* Only the current label stays visible on mobile — others hide,
-   symbols still communicate progress per brief */
+.fyf-stage[data-clickable="true"]:focus-visible .fyf-stage-glyph{outline:2px solid var(--amber-l);outline-offset:2px}
+/* Only the current label stays visible on mobile — symbols still
+   communicate progress; single label reads as caption of "you are here". */
 @media (max-width:640px){
+  .fyf-stages{max-width:400px}
   .fyf-stage:not(.is-now) .fyf-stage-label{display:none}
-  .fyf-stage-glyph{width:34px;height:34px}
-  .fyf-stage-glyph svg{width:18px;height:18px}
-  .fyf-stages-track{top:calc(14px + 17px)}
+  .fyf-stage-glyph{width:24px;height:24px}
+  .fyf-stage-glyph svg{width:13px;height:13px}
+  .fyf-stages-track{top:calc(4px + 12px)}
 }
 
 /* Screen-reader-only text equivalent for progress */
@@ -807,9 +813,9 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 /* Tighter: smaller SVG, less vertical padding, sits just below the
    stages nav so the two feel like one composed unit rather than two
    floating decorations with dead space between them. */
-.fyf-botanical{display:flex;justify-content:center;align-items:flex-end;height:74px;margin:-4px 0 14px;position:relative;overflow:visible}
-.fyf-botanical svg{width:120px;height:74px;color:var(--amber-l);opacity:0.85;transition:opacity .5s ease}
-@media (max-width:640px){ .fyf-botanical{height:58px;margin-top:-2px} .fyf-botanical svg{width:96px;height:58px} }
+.fyf-botanical{display:flex;justify-content:center;align-items:flex-end;height:56px;margin:-10px 0 10px;position:relative;overflow:visible}
+.fyf-botanical svg{width:88px;height:56px;color:var(--amber-l);opacity:0.75;transition:opacity .5s ease}
+@media (max-width:640px){ .fyf-botanical{height:46px;margin-top:-8px} .fyf-botanical svg{width:72px;height:46px} }
 /* The growth elements — controlled per stage via inline attrs */
 .fyf-botanical .g-seed,
 .fyf-botanical .g-root,
