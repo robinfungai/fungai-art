@@ -430,8 +430,57 @@ export default function ForagingApp() {
   const [selectedNode, setSelectedNode] = useState<EcoNode | null>(null);
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [seasons, setSeasons] = useState<Season[]>([getCurrentSeason()]);
-  const [mapMode, setMapMode] = useState<'dark' | 'satellite'>('dark');
+  // Satellite imagery is the default basemap; Dark stays one tap away.
+  const [mapMode, setMapMode] = useState<'dark' | 'satellite'>('satellite');
   const [habitatFilter, setHabitatFilter] = useState<HabitatType | 'all'>('all');
+
+  // ── Mobile top bar + immersive map ─────────────────────────────────
+  //   topbarOpen: on phones the habitat chips + extras row of the top bar
+  //   collapses behind a "Habitat ▾" toggle (the bottom legend already
+  //   covers filtering). immersive: full-screen map — the top bar shrinks
+  //   to the toolbar row only. A phone held sideways is immersive
+  //   automatically; the ⛶ button also asks the browser for real
+  //   fullscreen where supported (not iPhone Safari — CSS-only there).
+  const [topbarOpen, setTopbarOpen] = useState(false);
+  const [immersive, setImmersive] = useState(false);
+  const [landscapePhone, setLandscapePhone] = useState(false);
+  const isImmersive = immersive || landscapePhone;
+  const topbarRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    const mq = window.matchMedia('(orientation: landscape) and (max-height: 520px)');
+    const sync = () => setLandscapePhone(mq.matches);
+    sync();
+    if (mq.addEventListener) mq.addEventListener('change', sync); else mq.addListener(sync);
+    return () => { if (mq.removeEventListener) mq.removeEventListener('change', sync); else mq.removeListener(sync); };
+  }, []);
+  useEffect(() => {
+    // Leaving browser fullscreen via Esc / system gesture leaves immersive too.
+    const onFs = () => { if (!document.fullscreenElement) setImmersive(false); };
+    document.addEventListener('fullscreenchange', onFs);
+    return () => document.removeEventListener('fullscreenchange', onFs);
+  }, []);
+  const toggleImmersive = useCallback(() => {
+    const next = !immersive;
+    const root: any = document.documentElement;
+    try {
+      if (next && !document.fullscreenElement && root.requestFullscreen) root.requestFullscreen().catch(() => {});
+      if (!next && document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(() => {});
+    } catch (_) {}
+    setImmersive(next);
+  }, [immersive]);
+  // Publish the top bar's live height as --forage-top so floating panels
+  // sit just below it however many rows it wraps to (1 on desktop, 2–3
+  // on phones, 1 slim row when immersive).
+  useEffect(() => {
+    const el = topbarRef.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(() => {
+      document.documentElement.style.setProperty('--forage-top', `${el.offsetHeight}px`);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
   // Mobile legend collapse state — desktop ignores this (CSS shows the body always).
   const [legendOpen, setLegendOpen] = useState(false);
   const [gbifObs, setGbifObs] = useState<GBIFObs[]>([]);
@@ -518,9 +567,13 @@ export default function ForagingApp() {
   const [mycoResolvedLoc, setMycoResolvedLoc] = useState<MycoResolvedLocation | null>(null);
 
   const mapRef = useRef<any>(null);
+  const [mapReady, setMapReady] = useState(false);
 
-  // 1. Ask for geolocation on first mount
+  // 1. Ask for geolocation as soon as the visitor has accepted the terms
+  //    (the acknowledgement modal explains how location is used). Visitors
+  //    who accepted on an earlier visit are asked straight away on mount.
   useEffect(() => {
+    if (!acknowledged) return;
     if (!('geolocation' in navigator)) { setGeoStatus('unavailable'); return; }
     setGeoStatus('requesting');
     navigator.geolocation.getCurrentPosition(
@@ -531,15 +584,21 @@ export default function ForagingApp() {
       () => { setGeoStatus('denied'); },
       { enableHighAccuracy: false, timeout: 8000, maximumAge: 5 * 60 * 1000 }
     );
-  }, []);
+  }, [acknowledged]);
 
-  // 2. When we have user location, fly the map there + fetch weather for
-  //    that point. Independent of selectedNode so the two panels can coexist.
+  // 2a. Fly to the visitor once BOTH the location is known AND the map has
+  //     loaded. Geolocation often answers before MapLibre finishes loading,
+  //     and a flyTo issued to an unloaded map is silently dropped — which
+  //     left phones sitting on the Europe overview.
+  useEffect(() => {
+    if (!userLocation || !mapReady || !mapRef.current) return;
+    mapRef.current.flyTo({ center: [userLocation.lng, userLocation.lat], zoom: 8, duration: 1800, essential: true });
+  }, [userLocation, mapReady]);
+
+  // 2b. When we have user location, fetch weather for that point.
+  //     Independent of selectedNode so the two panels can coexist.
   useEffect(() => {
     if (!userLocation) return;
-    if (mapRef.current) {
-      mapRef.current.flyTo({ center: [userLocation.lng, userLocation.lat], zoom: 8, duration: 1800, essential: true });
-    }
     fetch(`/api/forage-conditions?lat=${userLocation.lat}&lng=${userLocation.lng}`)
       .then(r => r.json())
       .then(data => { if (data.score) setUserConditions(data); })
@@ -966,7 +1025,7 @@ export default function ForagingApp() {
       <ForageDataCredits />
 
       {/* Top bar */}
-      <div style={{
+      <div ref={topbarRef} className={`forage-topbar${topbarOpen ? ' is-open' : ''}${isImmersive ? ' is-immersive' : ''}`} style={{
         position: 'absolute', top: 0, left: 0, right: 0, zIndex: 10,
         background: 'rgba(7,17,13,0.92)',
         backdropFilter: 'blur(14px)',
@@ -977,27 +1036,62 @@ export default function ForagingApp() {
       }}>
         {/* Brand — title now reads as the page header rather than a small chip,
             so the map page announces itself with the same weight as the home hero. */}
-        <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none', flexShrink: 0 }}>
+        <a href="/" className="forage-brand" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none', flexShrink: 0 }}>
           <img src="/fungi.png" alt="Fungai Art" style={{ height: 38, width: 38, objectFit: 'cover', borderRadius: '50%', border: '1px solid rgba(232,177,75,0.55)', boxShadow: '0 0 10px rgba(232,177,75,0.4)' }} onError={e => (e.currentTarget.style.display = 'none')} />
-          <div>
-            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 26, color: '#E6D9B5', lineHeight: 1, letterSpacing: '0.005em' }}>
+          <div className="forage-brand-text">
+            <div className="forage-brand-title" style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 26, color: '#E6D9B5', lineHeight: 1, letterSpacing: '0.005em' }}>
               The Foraging Map
             </div>
-            <div style={{ fontFamily: 'monospace', fontSize: 8.5, letterSpacing: '0.26em', textTransform: 'uppercase', color: '#B6F0AE', marginTop: 4 }}>
+            <div className="forage-brand-sub" style={{ fontFamily: 'monospace', fontSize: 8.5, letterSpacing: '0.26em', textTransform: 'uppercase', color: '#B6F0AE', marginTop: 4 }}>
               Fungai Art &middot; Ecological Intelligence
             </div>
           </div>
         </a>
 
-        <div style={{ width: '0.5px', height: 32, background: 'rgba(255,255,255,0.1)', flexShrink: 0 }} />
+        {/* Phone-only controls (hidden on desktop by CSS): collapse the
+            habitat row, and enter/leave the full-screen map. */}
+        <div className="forage-mobile-controls">
+          <button
+            className="forage-habitat-toggle"
+            onClick={() => setTopbarOpen(o => !o)}
+            aria-expanded={topbarOpen}
+            style={{
+              fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.12em', textTransform: 'uppercase',
+              padding: '6px 10px', borderRadius: 5, cursor: 'pointer',
+              background: topbarOpen || habitatFilter !== 'all' ? 'rgba(107,214,111,0.12)' : 'none',
+              border: topbarOpen || habitatFilter !== 'all' ? '0.5px solid rgba(107,214,111,0.4)' : '0.5px solid rgba(255,255,255,0.14)',
+              color: topbarOpen || habitatFilter !== 'all' ? '#B6F0AE' : '#8B7E62',
+            }}
+          >
+            Habitat{habitatFilter !== 'all' ? ` · ${HABITAT_LABELS[habitatFilter as HabitatType]}` : ''} {topbarOpen ? '▴' : '▾'}
+          </button>
+          <button
+            className="forage-fs-toggle"
+            onClick={toggleImmersive}
+            aria-pressed={immersive}
+            aria-label={immersive ? 'Exit full-screen map' : 'Full-screen map'}
+            title={immersive ? 'Exit full screen' : 'Full-screen map'}
+            style={{
+              fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.12em', textTransform: 'uppercase',
+              padding: '6px 10px', borderRadius: 5, cursor: 'pointer', flexShrink: 0,
+              background: immersive ? 'rgba(232,177,75,0.14)' : 'none',
+              border: immersive ? '0.5px solid rgba(232,177,75,0.5)' : '0.5px solid rgba(255,255,255,0.14)',
+              color: immersive ? '#E8B14B' : '#8B7E62',
+            }}
+          >
+            {immersive ? '✕ Exit' : '⛶ Full'}
+          </button>
+        </div>
+
+        <div className="forage-divider" style={{ width: '0.5px', height: 32, background: 'rgba(255,255,255,0.1)', flexShrink: 0 }} />
 
         {/* Season filter (multi-select) */}
-        <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 7.5, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#4d5a52', marginRight: 2 }}>Season</div>
+        <div className="forage-seasons" style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
+          <div className="forage-season-label" style={{ fontFamily: 'monospace', fontSize: 7.5, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#4d5a52', marginRight: 2 }}>Season</div>
           {SEASONS.map(s => {
             const active = seasons.includes(s);
             return (
-              <button key={s} onClick={() => {
+              <button key={s} aria-label={s} aria-pressed={active} onClick={() => {
                 setSeasons(prev => {
                   if (prev.includes(s)) {
                     // Don't allow removing the last active season
@@ -1013,29 +1107,39 @@ export default function ForagingApp() {
                 border: active ? '0.5px solid rgba(107,214,111,0.4)' : '0.5px solid rgba(255,255,255,0.1)',
                 color: active ? '#B6F0AE' : '#8B7E62',
               }}>
-                {SEASON_ICONS[s]} {s}
+                {SEASON_ICONS[s]}<span className="forage-season-name"> {s}</span>
               </button>
             );
           })}
         </div>
 
-        <div style={{ width: '0.5px', height: 32, background: 'rgba(255,255,255,0.1)', flexShrink: 0 }} />
+        <div className="forage-divider" style={{ width: '0.5px', height: 32, background: 'rgba(255,255,255,0.1)', flexShrink: 0 }} />
 
-        {/* Map mode toggle */}
-        <button onClick={() => setMapMode(m => m === 'dark' ? 'satellite' : 'dark')} style={{
-          fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.12em', textTransform: 'uppercase',
-          padding: '4px 10px', borderRadius: 5, cursor: 'pointer', transition: 'all 0.15s', flexShrink: 0,
-          background: mapMode === 'satellite' ? 'rgba(79,168,224,0.14)' : 'none',
-          border: mapMode === 'satellite' ? '0.5px solid rgba(79,168,224,0.45)' : '0.5px solid rgba(255,255,255,0.1)',
-          color: mapMode === 'satellite' ? '#7EC8E8' : '#8B7E62',
+        {/* Map style — two explicit options. Satellite (default) is Esri
+            World Imagery + a labels overlay; Dark is CARTO dark-matter. */}
+        <div className="forage-mapmode" role="group" aria-label="Map style" style={{
+          display: 'flex', flexShrink: 0, borderRadius: 5, overflow: 'hidden',
+          border: '0.5px solid rgba(255,255,255,0.14)',
         }}>
-          {mapMode === 'satellite' ? '🛰 Satellite' : '🌑 Dark'}
-        </button>
+          {([['satellite', '🛰', 'Satellite'], ['dark', '🌑', 'Dark']] as const).map(([mode, icon, label]) => {
+            const on = mapMode === mode;
+            return (
+              <button key={mode} onClick={() => setMapMode(mode)} aria-pressed={on} style={{
+                fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.12em', textTransform: 'uppercase',
+                padding: '5px 10px', cursor: 'pointer', border: 'none', transition: 'all 0.15s',
+                background: on ? (mode === 'satellite' ? 'rgba(79,168,224,0.16)' : 'rgba(255,255,255,0.09)') : 'transparent',
+                color: on ? (mode === 'satellite' ? '#7EC8E8' : '#E6D9B5') : '#8B7E62',
+              }}>
+                {icon}<span className="forage-mapmode-label"> {label}</span>
+              </button>
+            );
+          })}
+        </div>
 
-        <div style={{ width: '0.5px', height: 32, background: 'rgba(255,255,255,0.1)', flexShrink: 0 }} />
+        <div className="forage-divider" style={{ width: '0.5px', height: 32, background: 'rgba(255,255,255,0.1)', flexShrink: 0 }} />
 
         {/* Habitat filter */}
-        <div style={{ display: 'flex', gap: 5, alignItems: 'center', flexWrap: 'wrap' }}>
+        <div className="forage-habitats" style={{ display: 'flex', gap: 5, alignItems: 'center', flexWrap: 'wrap' }}>
           <div style={{ fontFamily: 'monospace', fontSize: 7.5, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#4d5a52', marginRight: 2 }}>Habitat</div>
           <button onClick={() => setHabitatFilter('all')} style={{
             fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.12em', textTransform: 'uppercase',
@@ -1128,11 +1232,54 @@ export default function ForagingApp() {
             ◎ GBIF
           </a>
         </div>
-        <style>{`@media (max-width: 768px){ .forage-sources { display: none !important; } }`}</style>
+        <style>{`
+          @media (max-width: 768px){ .forage-sources { display: none !important; } }
+          .forage-mobile-controls { display: none; }
+
+          /* ── Phones: brand + controls → toolbar (seasons · map style) →
+                collapsible habitat / extras rows ─────────────────────── */
+          @media (max-width: 768px) {
+            .forage-topbar { padding: 8px 12px !important; gap: 8px 8px !important; }
+            .forage-brand { gap: 9px !important; }
+            .forage-brand img { height: 30px !important; width: 30px !important; }
+            .forage-brand-title { font-size: 20px !important; }
+            .forage-brand-sub { display: none !important; }
+            .forage-divider, .forage-season-label, .forage-season-name { display: none !important; }
+            .forage-mobile-controls { display: flex; margin-left: auto; gap: 6px; align-items: center; }
+            .forage-seasons button { padding: 5px 8px !important; font-size: 12px !important; }
+            .forage-mapmode { margin-left: auto; }
+            .forage-habitats, .forage-extra { display: none !important; }
+            .forage-topbar.is-open .forage-habitats { display: flex !important; flex-basis: 100%; }
+            .forage-topbar.is-open .forage-extra { display: flex !important; }
+          }
+
+          /* ── Immersive (⛶ Full, or any phone held sideways): the top bar
+                keeps only the toolbar row, fixed at the top of the map ── */
+          .forage-topbar.is-immersive { padding: 6px 12px !important; gap: 8px !important; flex-wrap: nowrap !important; }
+          .forage-topbar.is-immersive .forage-brand-text,
+          .forage-topbar.is-immersive .forage-divider,
+          .forage-topbar.is-immersive .forage-season-label,
+          .forage-topbar.is-immersive .forage-season-name,
+          .forage-topbar.is-immersive .forage-habitats,
+          .forage-topbar.is-immersive .forage-sources,
+          .forage-topbar.is-immersive .forage-extra,
+          .forage-topbar.is-immersive .forage-habitat-toggle { display: none !important; }
+          .forage-topbar.is-immersive .forage-brand img { height: 26px !important; width: 26px !important; }
+          .forage-topbar.is-immersive .forage-seasons button { padding: 4px 8px !important; font-size: 12px !important; }
+          .forage-topbar.is-immersive .forage-mobile-controls { display: flex !important; order: 9; margin-left: 0; }
+          .forage-topbar.is-immersive .forage-mapmode { margin-left: auto; }
+          @media (max-width: 480px) {
+            .forage-topbar.is-immersive .forage-mapmode-label { display: none; }
+            .forage-topbar.is-immersive .forage-mapmode button { padding: 5px 9px !important; font-size: 12px !important; }
+            .forage-topbar.is-immersive .forage-seasons button { padding: 4px 7px !important; }
+          }
+          /* On phones the "Growing around you" panel owns the top of the map. */
+          @media (max-width: 768px) { .forage-nodes-badge.has-panel { display: none !important; } }
+        `}</style>
 
         {/* Moon phase */}
         {(() => { const m = getMoonPhase(); return (
-          <div title={`${m.name} · day ${m.day} of lunar cycle`} style={{
+          <div className="forage-extra" title={`${m.name} · day ${m.day} of lunar cycle`} style={{
             fontFamily: 'monospace', fontSize: 8, color: '#8B7E62', flexShrink: 0,
             display: 'flex', alignItems: 'center', gap: 5, cursor: 'default',
             padding: '4px 8px', border: '0.5px solid rgba(255,255,255,0.08)', borderRadius: 4,
@@ -1143,10 +1290,10 @@ export default function ForagingApp() {
         ); })()}
 
         {/* PWA install button — only shown when browser fires beforeinstallprompt */}
-        <InstallButton />
+        <span className="forage-extra" style={{ display: 'contents' }}><InstallButton /></span>
 
         {/* Node count */}
-        <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#4d5a52', flexShrink: 0 }}>
+        <div className="forage-extra" style={{ fontFamily: 'monospace', fontSize: 9, color: '#4d5a52', flexShrink: 0 }}>
           {filteredNodes.length} nodes · {filteredNodes.filter(n => n.best_season.some(s => seasons.includes(s))).length} active now
         </div>
 
@@ -1177,7 +1324,7 @@ export default function ForagingApp() {
           a distant node. Same anchor/position as the normal panel. */}
       {userLocation && growingPanelOpen && userInsight && userInsight.outOfRange && (
         <div style={{
-          position: 'absolute', top: 76, right: 16, zIndex: 9,
+          position: 'absolute', top: 'calc(var(--forage-top, 64px) + 12px)', right: 16, zIndex: 9,
           width: 'min(360px, calc(100vw - 32px))',
           background: 'rgba(7,17,13,0.92)',
           backdropFilter: 'blur(16px)',
@@ -1215,9 +1362,9 @@ export default function ForagingApp() {
           Floats over the map, top-right on desktop / collapsible on mobile. */}
       {userLocation && growingPanelOpen && userInsight && !userInsight.outOfRange && (
         <div style={{
-          position: 'absolute', top: 76, right: 16, zIndex: 9,
+          position: 'absolute', top: 'calc(var(--forage-top, 64px) + 12px)', right: 16, zIndex: 9,
           width: 'min(360px, calc(100vw - 32px))',
-          maxHeight: 'calc(100vh - 110px)',
+          maxHeight: 'calc(100vh - var(--forage-top, 64px) - 34px)',
           overflowY: 'auto',
           background: 'rgba(7,17,13,0.92)',
           backdropFilter: 'blur(16px)',
@@ -1322,7 +1469,7 @@ export default function ForagingApp() {
         <button
           onClick={() => setGrowingPanelOpen(true)}
           style={{
-            position: 'absolute', top: 76, right: 16, zIndex: 9,
+            position: 'absolute', top: 'calc(var(--forage-top, 64px) + 12px)', right: 16, zIndex: 9,
             background: 'rgba(7,17,13,0.92)', backdropFilter: 'blur(14px)',
             border: '0.5px solid rgba(107,214,111,0.35)', borderRadius: 99,
             padding: '8px 16px', color: '#6BD66F', cursor: 'pointer',
@@ -1336,7 +1483,7 @@ export default function ForagingApp() {
       {/* Geolocation status pill — small unobtrusive feedback while requesting */}
       {geoStatus === 'requesting' && (
         <div style={{
-          position: 'absolute', top: 76, right: 16, zIndex: 9,
+          position: 'absolute', top: 'calc(var(--forage-top, 64px) + 12px)', right: 16, zIndex: 9,
           background: 'rgba(7,17,13,0.92)', backdropFilter: 'blur(14px)',
           border: '0.5px solid rgba(107,214,111,0.25)', borderRadius: 99,
           padding: '8px 16px', color: '#8B7E62',
@@ -1352,7 +1499,17 @@ export default function ForagingApp() {
         initialViewState={{ longitude: 18, latitude: 50, zoom: 3.6 }}
         style={{ width: '100%', height: '100%' }}
         mapStyle={mapMode === 'satellite' ? SATELLITE_STYLE : MAP_STYLE}
-        onLoad={handleMapSettle}
+        // Phones (and sideways phones): attribution sits behind MapLibre's
+        // (i) toggle instead of a two-line strip over Harvest / Ask MYCO —
+        // the full credits stay one tap away there and in the Data credits pill.
+        attributionControl={{ compact: typeof window !== 'undefined' && (window.innerWidth <= 768 || window.innerHeight <= 520) ? true : undefined }}
+        onLoad={(e: any) => {
+          setMapReady(true);
+          handleMapSettle();
+          // MapLibre opens a compact attribution until the first drag — start it closed.
+          const attrib = e?.target?.getContainer?.()?.querySelector?.('.maplibregl-ctrl-attrib.maplibregl-compact');
+          if (attrib) { attrib.classList.remove('maplibregl-compact-show'); attrib.removeAttribute('open'); }
+        }}
         onMoveEnd={handleMapSettle}
         onMouseDown={(e: any) => {
           longPressStartRef.current = { x: e.point?.x || 0, y: e.point?.y || 0 };
@@ -1762,7 +1919,7 @@ export default function ForagingApp() {
           collapses to a single "Habitats ▾" pill that expands inline so it
           stops eating half the map. The collapsible state lives on a CSS
           class triggered by the .legend-mobile-toggle button. */}
-      <div className="forage-legend" style={{
+      <div className={`forage-legend${isImmersive ? ' is-immersive' : ''}`} style={{
         position: 'absolute', bottom: 80, left: 20, zIndex: 10,
         background: 'rgba(7,17,13,0.9)',
         backdropFilter: 'blur(12px)',
@@ -1852,6 +2009,11 @@ export default function ForagingApp() {
             .forage-legend-body { display: none; margin-top: 8px; }
             .forage-legend-body.open { display: block; }
           }
+          /* Immersive / sideways phone: the legend collapses to its pill at any width */
+          .forage-legend.is-immersive { bottom: 56px !important; padding: 7px 12px !important; max-width: 220px; max-height: calc(100vh - var(--forage-top, 44px) - 80px); overflow-y: auto; }
+          .forage-legend.is-immersive .forage-legend-toggle { display: block !important; }
+          .forage-legend.is-immersive .forage-legend-body { display: none; margin-top: 8px; }
+          .forage-legend.is-immersive .forage-legend-body.open { display: block; }
         `}</style>
       </div>
 
@@ -2215,10 +2377,10 @@ export default function ForagingApp() {
         />
       )}
 
-      {/* Node count badge when no node selected */}
-      {!selectedNode && (
-        <div style={{
-          position: 'absolute', top: 90, left: '50%', transform: 'translateX(-50%)',
+      {/* Node count badge when no node selected (hidden on the immersive map) */}
+      {!selectedNode && !isImmersive && (
+        <div className={`forage-nodes-badge${userLocation && growingPanelOpen && userInsight ? ' has-panel' : ''}`} style={{
+          position: 'absolute', top: 'calc(var(--forage-top, 64px) + 14px)', left: '50%', transform: 'translateX(-50%)',
           background: 'rgba(7,17,13,0.85)',
           backdropFilter: 'blur(8px)',
           border: '0.5px solid rgba(107,214,111,0.2)',
