@@ -773,84 +773,94 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .q-subprog-dot.done{background:rgba(232,177,75,0.55);border-color:rgba(232,177,75,0.55);box-shadow:0 0 6px -1px rgba(232,177,75,0.3)}
 .q-subprog-dot.now{background:var(--amber-l);border-color:var(--amber-l);width:22px;border-radius:4px;box-shadow:0 0 14px -2px rgba(232,177,75,0.7)}
 
-/* ── Five-node botanical stages nav ──────────────────────────────
-   Round-3 layout: on desktop, the strip becomes a RIGHT-SIDE vertical
-   rail — Rhythm at the top, Ground at the bottom. Each row is icon +
-   label laid out horizontally. Rail is fixed to the right edge of the
-   .q-wrap-progressive container so it hovers alongside the questions
-   without pushing them off-center.
-   Mobile keeps the compact top strip (space too tight for a side rail).
-   Every state token — is-now / is-done / focus — is preserved. */
-.fyf-stages{position:relative;margin:2px auto 2px;padding:4px 4px 4px;max-width:520px}
-.fyf-stages-row{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2;gap:0}
-.fyf-stages-track{position:absolute;left:calc(10% + 14px);right:calc(10% + 14px);top:calc(4px + 14px);height:1px;background:rgba(232,177,75,0.14);z-index:1;overflow:hidden;border-radius:1px}
-.fyf-stages-fill{height:100%;background:linear-gradient(90deg,rgba(232,177,75,0.4),var(--amber-l));transform-origin:left center;transform:scaleX(var(--fyf-progress,0));transition:transform .42s cubic-bezier(0.22,0.61,0.36,1);will-change:transform;box-shadow:0 0 8px -1px rgba(232,177,75,0.35)}
+/* ── Five-node botanical stages rail ─────────────────────────────
+   Round-4 layout: FIXED to the right edge of the viewport and vertically
+   centred at every size — Rhythm at the top, Ground at the bottom. The
+   nav renders into #fyfRail (outside <main>) so page fades and desktop
+   zoom never drag it around.
+   ≥960px: icon + label rows, sized with --fyf-zoom like the page.
+   <960px: icons only, and <main> keeps a right gutter so nothing sits
+   underneath the rail. Every state token — is-now / is-done / focus —
+   is preserved. */
+#fyfRail:empty{display:none}
+.fyf-stages{position:fixed;top:50%;right:clamp(14px,2.4vw,48px);transform:translateY(-50%);z-index:25;margin:0;padding:10px 6px;animation:fyfRailIn .45s ease both}
+@keyframes fyfRailIn{from{opacity:0}to{opacity:1}}
+.fyf-stages-row{display:flex;flex-direction:column;align-items:stretch;gap:calc(22px * var(--fyf-zoom,1));position:relative;z-index:2}
+/* Vertical filament — runs through the icon column, not the labels */
+.fyf-stages-track{position:absolute;left:calc(6px + 14px * var(--fyf-zoom,1));top:calc(10px + 14px * var(--fyf-zoom,1));bottom:calc(10px + 14px * var(--fyf-zoom,1));width:1px;background:rgba(232,177,75,0.14);z-index:1;overflow:hidden;border-radius:1px}
+.fyf-stages-fill{width:100%;height:100%;background:linear-gradient(180deg,rgba(232,177,75,0.4),var(--amber-l));transform-origin:top center;transform:scaleY(var(--fyf-progress,0));transition:transform .42s cubic-bezier(0.22,0.61,0.36,1);will-change:transform;box-shadow:0 0 8px -1px rgba(232,177,75,0.35)}
 
-/* Each node: SVG icon + tiny label. Circle background for state. */
-.fyf-stage{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;color:inherit;padding:0;background:none;border:0;cursor:default;font:inherit;min-width:0}
+/* Each stage: icon + label side by side. Circle background for state. */
+.fyf-stage{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:calc(12px * var(--fyf-zoom,1));text-decoration:none;color:inherit;padding:0;background:none;border:0;cursor:default;font:inherit;text-align:left}
 .fyf-stage[data-clickable="true"]{cursor:pointer}
-.fyf-stage-glyph{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(5,7,10,0.92);border:0.5px solid rgba(232,177,75,0.22);transition:border-color .3s ease,background .3s ease,transform .38s cubic-bezier(0.22,0.61,0.36,1),box-shadow .38s ease;position:relative;flex-shrink:0}
-.fyf-stage-glyph svg{width:15px;height:15px;color:rgba(232,177,75,0.3);transition:color .38s ease,transform .38s cubic-bezier(0.22,0.61,0.36,1)}
-.fyf-stage-label{font-family:var(--mono);font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:var(--dust-d);opacity:0.5;transition:opacity .3s ease,color .3s ease;text-align:center;line-height:1.15;max-width:60px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fyf-stage-glyph{width:calc(28px * var(--fyf-zoom,1));height:calc(28px * var(--fyf-zoom,1));display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(5,7,10,0.92);border:0.5px solid rgba(232,177,75,0.22);transition:border-color .3s ease,background .3s ease,transform .38s cubic-bezier(0.22,0.61,0.36,1),box-shadow .38s ease;position:relative;flex-shrink:0}
+.fyf-stage-glyph svg{width:calc(15px * var(--fyf-zoom,1));height:calc(15px * var(--fyf-zoom,1));color:rgba(232,177,75,0.3);transition:color .38s ease,transform .38s cubic-bezier(0.22,0.61,0.36,1)}
+.fyf-stage-label{font-family:var(--mono);font-size:calc(9px * var(--fyf-zoom,1));letter-spacing:0.24em;text-transform:uppercase;color:var(--dust-d);opacity:0.55;transition:opacity .3s ease,color .3s ease;line-height:1.2;white-space:nowrap}
 /* Done state — filled amber icon, subtle glow */
 .fyf-stage.is-done .fyf-stage-glyph{border-color:rgba(232,177,75,0.55);background:rgba(232,177,75,0.05);box-shadow:0 0 6px -2px rgba(232,177,75,0.4)}
 .fyf-stage.is-done .fyf-stage-glyph svg{color:var(--amber-l)}
-.fyf-stage.is-done .fyf-stage-label{opacity:0.7;color:var(--dust)}
+.fyf-stage.is-done .fyf-stage-label{opacity:0.75;color:var(--dust)}
 /* Now state — larger, brighter, aria-current="step" */
 .fyf-stage.is-now .fyf-stage-glyph{border-color:var(--amber-l);background:rgba(232,177,75,0.08);box-shadow:0 0 16px -3px rgba(232,177,75,0.55),inset 0 0 0 0.5px rgba(232,177,75,0.35);transform:scale(1.14)}
 .fyf-stage.is-now .fyf-stage-glyph svg{color:var(--amber-l);transform:scale(1.04)}
-.fyf-stage.is-now .fyf-stage-label{opacity:1;color:var(--amber-l);letter-spacing:0.24em}
+.fyf-stage.is-now .fyf-stage-label{opacity:1;color:var(--amber-l)}
 /* Focus for keyboard nav on completed nodes */
 .fyf-stage[data-clickable="true"]:focus-visible .fyf-stage-glyph{outline:2px solid var(--amber-l);outline-offset:2px}
-/* Only the current label stays visible on mobile — symbols still
-   communicate progress; single label reads as caption of "you are here". */
+
+/* Phones + tablets: icons-only rail hugging the edge; <main> keeps a
+   right gutter while the rail is on screen. */
+@media (max-width:959px){
+  .fyf-stages{right:4px;padding:8px 4px}
+  .fyf-stages-row{gap:18px}
+  .fyf-stage-label{display:none}
+  .fyf-stage-glyph{width:26px;height:26px}
+  .fyf-stage-glyph svg{width:14px;height:14px}
+  .fyf-stages-track{left:calc(4px + 13px);top:calc(8px + 13px);bottom:calc(8px + 13px)}
+  body.fyf-rail-on main{padding-right:44px}
+}
 @media (max-width:640px){
-  .fyf-stages{max-width:400px}
-  .fyf-stage:not(.is-now) .fyf-stage-label{display:none}
-  .fyf-stage-glyph{width:24px;height:24px}
-  .fyf-stage-glyph svg{width:13px;height:13px}
-  .fyf-stages-track{top:calc(4px + 12px)}
+  body.fyf-rail-on main{padding-left:18px;padding-right:40px}
 }
 
-/* ── WIDE DESKTOP: right-side vertical rail ─────────────────────
-   Only activates at ≥ 1240px, where the two-column zigzag pair
-   plus a 180px rail can all breathe. On anything narrower the top
-   horizontal strip stays (defined in the block above) so the pair
-   of questions gets full width. */
-@media (min-width:1240px){
-  .q-wrap-progressive{position:relative;padding-right:200px}
-  .q-wrap-progressive .fyf-stages{
-    position:absolute;top:8px;right:0;width:180px;max-width:180px;
-    margin:0;padding:12px 8px 12px 20px
-  }
-  .q-wrap-progressive .fyf-stages-row{
-    flex-direction:column;align-items:stretch;gap:22px
-  }
-  /* Vertical filament — runs through the icon column, not the labels */
-  .q-wrap-progressive .fyf-stages-track{
-    top:calc(12px + 14px);bottom:calc(12px + 14px);height:auto;
-    left:calc(20px + 14px);right:auto;width:1px
-  }
-  .q-wrap-progressive .fyf-stages-fill{
-    width:100%;height:100%;transform-origin:top center;
-    transform:scaleY(var(--fyf-progress,0));
-    background:linear-gradient(180deg,rgba(232,177,75,0.4),var(--amber-l))
-  }
-  /* Each stage — icon + label horizontal, left-aligned */
-  .q-wrap-progressive .fyf-stage{
-    flex:0 0 auto;flex-direction:row;align-items:center;gap:12px;
-    justify-content:flex-start;text-align:left
-  }
-  .q-wrap-progressive .fyf-stage-label{
-    text-align:left;max-width:none;font-size:9px;letter-spacing:0.24em;
-    opacity:0.55;white-space:normal;line-height:1.2
-  }
-  .q-wrap-progressive .fyf-stage.is-done .fyf-stage-label{opacity:0.75}
-  .q-wrap-progressive .fyf-stage.is-now .fyf-stage-label{opacity:1}
+/* `hidden` must win over .q-cta's display:flex — first-visit phone
+   slides auto-advance and shouldn't spend a sticky bar on a dead button. */
+.q-cta[hidden]{display:none !important}
+
+/* Phone slides carry ONE question — tighten the chrome around it so a
+   slide fits the screen without scrolling on common phones. */
+@media (max-width:640px){
+  body.fyf-rail-on .progress{padding-top:12px}
+  body.fyf-rail-on .progress-row{margin-bottom:8px}
+  .q-wrap-progressive{padding-bottom:12px}
+  .q-wrap-progressive .q-eyebrow{margin-bottom:4px}
+  .q-wrap-progressive .q-transition{font-size:10px;margin-bottom:8px;text-align:left}
+  .q-wrap-progressive .q-title{font-size:clamp(25px,7vw,31px);line-height:1.08;margin-bottom:8px}
+  .q-wrap-progressive .q-hint{font-size:14px;line-height:1.45;margin-bottom:14px}
+  .q-wrap-progressive .q-options-compact{gap:6px !important}
+  .q-wrap-progressive .q-opt-compact{padding:9px 14px !important}
+  .q-wrap-progressive .q-cta-sticky{margin-top:12px;padding-top:12px}
 }
-@media (min-width:1440px){
-  .q-wrap-progressive{padding-right:220px}
-  .q-wrap-progressive .fyf-stages{width:200px;max-width:200px}
+/* Short phones (SE / mini class): same content, denser pills. */
+@media (max-width:640px) and (max-height:740px){
+  body.fyf-rail-on .progress{padding-top:8px}
+  .q-wrap-progressive .q-transition{display:none}
+  .q-wrap-progressive .q-title{font-size:23px;margin-bottom:6px}
+  .q-wrap-progressive .q-hint{font-size:13px;margin-bottom:10px}
+  .q-wrap-progressive .q-options-compact{gap:5px !important}
+  .q-wrap-progressive .q-opt-compact{padding:7px 12px !important;gap:8px !important}
+  .q-wrap-progressive .q-opt-compact .q-opt-body{gap:2px 6px !important}
+  .q-wrap-progressive .q-opt-compact .q-opt-label{font-size:13px !important}
+  .q-wrap-progressive .q-opt-compact .q-opt-desc{font-size:11px !important;line-height:1.3 !important}
+}
+
+/* ── Proportional desktop scale ──────────────────────────────────
+   The quiz is designed as a 640px column. From 960px up, JS sets
+   --fyf-zoom (1 → 1.8 from the viewport) and every block inside <main>
+   is zoomed by it, so type, pills and spacing grow with the screen
+   instead of staying laptop-sized on a large display. */
+@media (min-width:960px){
+  main{max-width:calc(640px * var(--fyf-zoom,1))}
+  #entry,#progress,#quiz > .q-wrap,#result{zoom:var(--fyf-zoom,1)}
 }
 
 /* Screen-reader-only text equivalent for progress */
@@ -1199,7 +1209,7 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
          here — see the age-Q change handler in state.answers.age. -->
     <div class="hero-gate">
       <label class="hero-gate-row">
-        <input type="checkbox" id="gateAdult"/>
+        <input type="checkbox" id="gateAdult" autocomplete="off"/>
         <span>I accept the <a href="/privacy" target="_blank" rel="noopener" style="color:var(--amber-l);text-decoration:none;border-bottom:0.5px solid rgba(232,177,75,0.4)">privacy terms</a> and understand my answers stay with Robin only.</span>
       </label>
     </div>
@@ -1222,6 +1232,8 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 
   <!-- ── QUESTIONS (rendered by JS) ────────────────────── -->
   <div id="quiz"></div>
+  <!-- Stages rail (Rhythm → Ground) is rendered into #fyfRail, which sits
+       after </main> so the page's fade + zoom never move the fixed rail. -->
 
   <!-- ── RESULT ────────────────────────────────────────── -->
   <section class="result" id="result">
@@ -1322,6 +1334,7 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
   </section>
 
 </main>
+<div id="fyfRail"></div>
 
 <!-- The full 207-herb catalog (auto-generated from src/data/herbs.ts).
      Sets `HERBS` in the script global scope. ~1MB, worth the download
@@ -1597,7 +1610,6 @@ const QUESTIONS = [
     // Life-cycle emoji: sprout → herb → tree → autumn leaf.
     key:'age',
     title:'I am',
-    hint:'Under-18 formulas skip every psychoactive + sedating ally — a gentle, food-grade blend, and Robin confirms it personally before it ships.',
     type:'compact-single',
     options:[
       // under_18 is the safety option. If picked, the compose payload
@@ -1625,7 +1637,7 @@ const QUESTIONS = [
     // passionflower/valerian for onset; magnolia/kava for maintenance;
     // jujube/albizia for the 3am wake typical of Liver Qi stagnation;
     // reishi/ashwagandha for the "sleeps but not restored" pattern.
-    title:'How does your <em>sleep</em> actually behave?',
+    title:'How does your <em>sleep</em> behave?',
     hint:'The pattern, not just the hours.',
     options:[
       { v:'restorative',    glyph:'🌕', label:'Sleeps well · wakes restored',    desc:'The reference case.' },
@@ -1719,14 +1731,47 @@ const state = {
   // off. Bounded on entry: if the current page isn't progressive OR
   // the value overshoots the page's question count, it resets to 0.
   progressiveSubStep: 0,
+  // Key of the first question on the current carousel slide. Resume +
+  // breakpoint changes map it back to a slide index, because phones and
+  // desktop slice the carousel differently.
+  progressiveKey: null,
 };
 
-// Restore any in-progress session so an IG-tab-switcher doesn't lose it.
+// Restore an in-progress session so leaving the page — an IG tab-switch,
+// or the OS killing the in-app browser in the background — doesn't lose
+// it. A refresh the visitor makes themselves starts fresh at the consent
+// gate instead: a refresh fires `pagehide` right before reloading, so we
+// stamp that moment in sessionStorage (survives reloads in the same tab).
+// A reload WITHOUT a fresh stamp is the browser restoring a killed tab,
+// which resumes like any other return.
+const _fyfNavType = (() => {
+  try {
+    const nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+    if (nav && nav.type) return nav.type;
+    if (performance.navigation) return performance.navigation.type === 1 ? 'reload' : 'navigate';
+  } catch (_) {}
+  return 'navigate';
+})();
+const _fyfUserRefreshed = (() => {
+  try {
+    const stamp = Number(sessionStorage.getItem('fyf_pagehide') || 0);
+    sessionStorage.removeItem('fyf_pagehide');
+    return _fyfNavType === 'reload' && stamp > 0 && Date.now() - stamp < 15000;
+  } catch (_) { return _fyfNavType === 'reload'; }
+})();
+window.addEventListener('pagehide', () => {
+  try { sessionStorage.setItem('fyf_pagehide', String(Date.now())); } catch (_) {}
+});
 try {
-  const cached = JSON.parse(localStorage.getItem('fyf_state') || 'null');
-  if (cached && cached.step != null && cached.step >= 0 && cached.step < PAGES.length) {
-    state.step = cached.step;
-    state.answers = cached.answers || {};
+  if (_fyfUserRefreshed) {
+    localStorage.removeItem('fyf_state');
+  } else {
+    const cached = JSON.parse(localStorage.getItem('fyf_state') || 'null');
+    if (cached && cached.step != null && cached.step >= 0 && cached.step < PAGES.length) {
+      state.step = cached.step;
+      state.answers = cached.answers || {};
+      if (typeof cached.progressiveKey === 'string') state.progressiveKey = cached.progressiveKey;
+    }
   }
 } catch (_) {}
 
@@ -1751,6 +1796,9 @@ const startBtn  = document.getElementById('startBtn');
 // _gatedOptIn is defaulted OPTIMISTIC here and downgraded later by
 // the age-Q handler if the user picks under_18.
 const gateAdult = document.getElementById('gateAdult');
+// Never inherit a ticked box from the browser's form restore — every
+// fresh start asks for consent again.
+if (gateAdult) gateAdult.checked = false;
 function updateStartBtn(){ startBtn.disabled = !(gateAdult && gateAdult.checked); }
 if (gateAdult) gateAdult.addEventListener('change', updateStartBtn);
 updateStartBtn();
@@ -1780,16 +1828,9 @@ backBtn.addEventListener('click', () => {
   }
 });
 
-// Validate cached step against the current PAGES contract. If the
-// user's cached step is out-of-range (e.g. we shipped a new page
-// count since their last visit), reset to the entry gate instead of
-// crashing into a page that doesn't exist.
-if (state.step >= 0 && state.step < PAGES.length) {
-  // Also require age confirmation before resuming — a returning user
-  // who never ticked the gate shouldn't skip it.
-  if (state.answers._ageConfirmed) go(state.step);
-  else state.step = -1;
-}
+// Resume of a cached session runs at the END of this script (see
+// "Resume" below) — not here — because rendering touches top-level
+// consts declared further down (e.g. _FYF_STAGE_SVGS).
 
 // ── Router ────────────────────────────────────────────────
 function go(step){
@@ -1799,14 +1840,18 @@ function go(step){
   progress.classList.toggle('on', step >= 0 && step < PAGES.length);
   result.classList.toggle('on', step === PAGES.length);
   quiz.innerHTML = '';
+  // The stages rail only exists on the progressive page; it lives outside
+  // <main> (see #fyfRail), so clear it here and let the renderer refill it.
+  _fyfRailHost().replaceChildren();
+  document.body.classList.toggle('fyf-rail-on', step >= 0 && step < PAGES.length && !!PAGES[step].progressive);
   if (step >= 0 && step < PAGES.length){
     const page = PAGES[step];
     // Bounds-check the sub-step so a stale localStorage value from a
     // previous PAGES contract can't crash into an out-of-range question.
     if (page.progressive) {
-      // Progressive pages count sub-PAGES now (each holding 1 or 2
-      // questions), not sub-questions. Bounds-check on that length.
-      const nSub = Array.isArray(page.subPages) ? page.subPages.length : (page.keys || []).length;
+      // Progressive pages count SLIDES — sub-pages on desktop, single
+      // questions on phones (see _fyfSlides). Bounds-check on that length.
+      const nSub = _fyfSlides(page).length;
       if (typeof state.progressiveSubStep !== 'number' || state.progressiveSubStep < 0 || state.progressiveSubStep >= nSub) {
         state.progressiveSubStep = 0;
       }
@@ -1818,7 +1863,7 @@ function go(step){
     // — hide the top "N of N" counter so it doesn't compete visually.
     // Non-progressive pages (calling/body/container) keep the counter.
     if (page.progressive) {
-      const nSub = Array.isArray(page.subPages) ? page.subPages.length : 1;
+      const nSub = _fyfSlides(page).length;
       const sub  = state.progressiveSubStep || 0;
       progressLbl.textContent = 'Step ' + (sub + 1) + ' of ' + nSub;
       // Bar reflects sub-page progress within this page, not the
@@ -1915,13 +1960,15 @@ const _FYF_STAGE_SVGS = {
 
 // Build the 5-node botanical stages nav — semantic <nav> with a
 // live-region sr text equivalent so screen readers get the state.
-function _fyfBuildStagesNav(subPages, subStep) {
+// stageIdx is the STAGE (Rhythm…Ground), not the slide: on phones a
+// stage spans two slides. Completed stages jump to their first slide.
+function _fyfBuildStagesNav(subPages, stageIdx, slides) {
   const nav = document.createElement('nav');
   nav.className = 'fyf-stages';
   nav.setAttribute('aria-label', 'Questionnaire progress');
 
   const totalStages = subPages.length;
-  const currentIdx  = subStep;
+  const currentIdx  = stageIdx;
   const doneCount   = currentIdx;
   const progress    = totalStages > 1 ? doneCount / (totalStages - 1) : 0;
 
@@ -1951,7 +1998,8 @@ function _fyfBuildStagesNav(subPages, subStep) {
       node.setAttribute('data-clickable', 'true');
       node.setAttribute('aria-label', 'Return to ' + label + ' (step ' + (i + 1) + ' of ' + totalStages + ')');
       node.addEventListener('click', () => {
-        state.progressiveSubStep = i;
+        const first = slides ? slides.findIndex(s => s.stageIdx === i) : i;
+        state.progressiveSubStep = Math.max(0, first);
         persist();
         go(state.step);
       });
@@ -2044,19 +2092,72 @@ function _fyfBuildBotanicalGrowth(stage) {
 // state.progressiveSubStep indexes into subPages. Bounded on entry.
 // All answers persist through state.answers as before — this is
 // purely a pacing/rendering change on top of the same data model.
+// Phone = the same 640px breakpoint the CTA logic has always used.
+function _fyfIsPhone(){
+  return !!(window.matchMedia && window.matchMedia('(max-width: 640px)').matches);
+}
+
+// Slides for a progressive page. Desktop: one slide per sub-page (two
+// questions side by side). Phone: ONE question per slide so a slide never
+// needs scrolling — time → stress → nervous → energy_curve → sleep →
+// duration → notes → age. Each slide keeps its stageIdx so the rail still
+// reads Rhythm → Ground; only the first slide of a stage carries the
+// stage's transition copy, and the stage's nextCTA sits on its last slide.
+function _fyfSlides(page){
+  const subPages = Array.isArray(page.subPages) ? page.subPages : [];
+  const phone = _fyfIsPhone();
+  const slides = [];
+  subPages.forEach((sp, stageIdx) => {
+    const keys = sp.keys || [];
+    if (!phone || keys.length < 2) { slides.push(Object.assign({}, sp, { stageIdx })); return; }
+    keys.forEach((key, j) => {
+      const last = j === keys.length - 1;
+      slides.push(Object.assign({}, sp, {
+        keys: [key], layout: null, stageIdx,
+        transitionCopy: j === 0 ? sp.transitionCopy : '',
+        nextCTA: last ? sp.nextCTA : 'Continue',
+      }));
+    });
+  });
+  return slides;
+}
+
+// Point progressiveSubStep at the slide holding state.progressiveKey in
+// the CURRENT layout. Used on resume and when the phone breakpoint flips.
+function _fyfSyncSubStepToKey(){
+  const page = PAGES[state.step];
+  if (!page || !page.progressive || !state.progressiveKey) return;
+  const idx = _fyfSlides(page).findIndex(s => (s.keys || []).includes(state.progressiveKey));
+  if (idx >= 0) state.progressiveSubStep = idx;
+}
+
+// The rail's host sits outside <main>: page fades (transform) and desktop
+// zoom on <main>'s blocks would otherwise drag a position:fixed rail along.
+function _fyfRailHost(){
+  let el = document.getElementById('fyfRail');
+  if (!el) { el = document.createElement('div'); el.id = 'fyfRail'; document.body.appendChild(el); }
+  return el;
+}
+
 function renderPageProgressive(page){
   const wrap = document.createElement('section');
   wrap.className = 'q-wrap on q-wrap-progressive';
 
   const subPages = Array.isArray(page.subPages) ? page.subPages : [];
+  const slides   = _fyfSlides(page);
   const subStep  = state.progressiveSubStep || 0;
-  const sub      = subPages[subStep];
+  const sub      = slides[subStep];
   if (!sub) return wrap; // defensive — bounded elsewhere
 
   const questions = (sub.keys || []).map(getQuestion).filter(Boolean);
   if (questions.length === 0) return wrap;
 
-  const isLastSubPage = subStep === subPages.length - 1;
+  // Remember WHICH question this slide shows (not just its index) so a
+  // resume or a rotation lands on the same question in either layout.
+  state.progressiveKey = sub.keys[0];
+  persist();
+
+  const isLastSubPage = subStep === slides.length - 1;
   const isTwoQ        = questions.length === 2 && sub.layout === 'zigzag';
   const isFinalPage   = state.step === PAGES.length - 1;
 
@@ -2069,12 +2170,13 @@ function renderPageProgressive(page){
   // Round 2 visual redesign — botanical progress nav (5 nodes:
   // seed → root → stem → leaf → flower) with a thin animated line
   // that fills as sub-pages are completed. Replaces the flat dots.
-  wrap.appendChild(_fyfBuildStagesNav(subPages, subStep));
+  // Rendered into the fixed right-hand rail host, not into the page.
+  _fyfRailHost().replaceChildren(_fyfBuildStagesNav(subPages, sub.stageIdx, slides));
 
   // Persistent central botanical growth visual — grows from seed
   // through flower as the user progresses. Anchored above the
   // question body so it doesn't rebuild between transitions.
-  wrap.appendChild(_fyfBuildBotanicalGrowth(sub.botanicalStage || (subStep + 1)));
+  wrap.appendChild(_fyfBuildBotanicalGrowth(sub.botanicalStage || (sub.stageIdx + 1)));
 
   // Transition copy — a short italic pre-heading (per the brief's
   // "supportive microcopy") that names what this stage is about
@@ -2112,14 +2214,29 @@ function renderPageProgressive(page){
   // "Desktop" here means pointer-fine + no coarse pointer, matched
   // via matchMedia. Kept in a var so a resize during the questionnaire
   // rebuild picks up the new mode.
-  const isMobileViewport = (typeof window !== 'undefined' &&
-    window.matchMedia && window.matchMedia('(max-width: 640px)').matches);
+  const isMobileViewport = _fyfIsPhone();
   const hasTextQ    = questions.some(q => q.type === 'text');
   const isRevealCTA = isLastSubPage && isFinalPage;
-  // Show CTA when: reveal moment, text-input page (notes), OR desktop
+
+  // A question is "answered" if it has a value; free-text is always
+  // considered answered (notes are optional). Sub-page is answered
+  // when ALL its questions are.
+  const qAnswered = (q) => {
+    if (q.type === 'text') return true;
+    const v = state.answers[q.key];
+    if (q.type === 'multi') return Array.isArray(v) && v.length > 0;
+    return v != null && v !== '';
+  };
+  const isAllAnswered = () => questions.every(qAnswered);
+  // Already answered when the slide opened = the visitor came BACK here
+  // (back button, rail, resume). Revisits never auto-advance — they show
+  // the Continue button so a second look doesn't fling them forward.
+  const answeredOnEntry = !hasTextQ && isAllAnswered();
+
+  // Show CTA when: reveal moment, text-input page (notes), desktop
   // viewport (where the user drives the flow with the button instead
-  // of pill-triggered auto-advance).
-  const showCTA     = isRevealCTA || hasTextQ || !isMobileViewport;
+  // of pill-triggered auto-advance), OR a revisited slide.
+  const showCTA     = isRevealCTA || hasTextQ || !isMobileViewport || answeredOnEntry;
   let ctaText;
   if (isRevealCTA)          ctaText = 'Reveal my formula →';
   else if (sub.nextCTA)     ctaText = sub.nextCTA + ' →';
@@ -2132,17 +2249,6 @@ function renderPageProgressive(page){
   btn.type = 'button';
   btn.className = 'q-btn q-btn-progressive';
   btn.textContent = ctaText;
-
-  // A question is "answered" if it has a value; free-text is always
-  // considered answered (notes are optional). Sub-page is answered
-  // when ALL its questions are.
-  const qAnswered = (q) => {
-    if (q.type === 'text') return true;
-    const v = state.answers[q.key];
-    if (q.type === 'multi') return Array.isArray(v) && v.length > 0;
-    return v != null && v !== '';
-  };
-  const isAllAnswered = () => questions.every(qAnswered);
   const paintCTA = () => {
     if (isAllAnswered()) {
       btn.classList.add('is-ready');
@@ -2156,8 +2262,12 @@ function renderPageProgressive(page){
   };
   paintCTA();
 
+  // Guard: a quick double pick (or pick + button tap) schedules two
+  // advances — only the first may move the carousel.
+  let advanced = false;
   const advance = () => {
-    if (!isAllAnswered()) return;
+    if (advanced || !isAllAnswered()) return;
+    advanced = true;
     if (isLastSubPage) {
       state.progressiveSubStep = 0;
       persist();
@@ -2195,7 +2305,7 @@ function renderPageProgressive(page){
           // to consider the choice and preview the ally shortlist
           // without being flung to the next sub-page. Notes/reveal
           // pages never auto-advance regardless of viewport.
-          if (isAllAnswered() && isMobileViewport && !hasTextQ && !isRevealCTA) {
+          if (isAllAnswered() && isMobileViewport && !hasTextQ && !isRevealCTA && !answeredOnEntry) {
             setTimeout(advance, settleMs);
           }
         }, 20);
@@ -4383,6 +4493,51 @@ document.getElementById('restartBtn').addEventListener('click', () => {
   document.getElementById('reserveForm').reset();
   go(-1);
 });
+
+// ── Resume ────────────────────────────────────────────────
+// Must stay LAST in the script. go() renders pages that read top-level
+// consts declared above (e.g. _FYF_STAGE_SVGS); calling it earlier threw
+// a TDZ ReferenceError on reload mid-carousel, leaving an empty quiz that
+// every refresh re-entered because the step lives in localStorage.
+// Validate cached step against the current PAGES contract. If the
+// user's cached step is out-of-range (e.g. we shipped a new page
+// count since their last visit), reset to the entry gate instead of
+// crashing into a page that doesn't exist.
+// ── Viewport ──────────────────────────────────────────────
+// Desktop scale: the quiz is laid out as a 640px column. From 960px up,
+// --fyf-zoom grows with the screen (width vs a 1032px reference, capped
+// by height vs 800px, clamped 1–1.8) and every block in <main> is zoomed
+// by it, so type, pills and spacing keep their proportion to the screen.
+function _fyfApplyZoom(){
+  const w = window.innerWidth, h = window.innerHeight;
+  const z = w < 960 ? 1 : Math.min(1.8, Math.max(1, Math.min(w / 1032, h / 800)));
+  document.documentElement.style.setProperty('--fyf-zoom', z.toFixed(3));
+}
+_fyfApplyZoom();
+window.addEventListener('resize', _fyfApplyZoom);
+// Crossing the phone breakpoint (rotation, resizing a window) re-slices
+// the rhythm carousel — keep the visitor on the same question.
+if (window.matchMedia) {
+  const phoneMq = window.matchMedia('(max-width: 640px)');
+  const onPhoneChange = () => {
+    const page = PAGES[state.step];
+    if (!page || !page.progressive) return;
+    _fyfSyncSubStepToKey();
+    go(state.step);
+  };
+  if (phoneMq.addEventListener) phoneMq.addEventListener('change', onPhoneChange);
+  else if (phoneMq.addListener) phoneMq.addListener(onPhoneChange);
+}
+
+if (state.step >= 0 && state.step < PAGES.length) {
+  // Also require age confirmation before resuming — a returning user
+  // who never ticked the gate shouldn't skip it.
+  if (state.answers._ageConfirmed) {
+    _fyfSyncSubStepToKey();
+    go(state.step);
+  }
+  else state.step = -1;
+}
 </script>
 </body>
 </html>
