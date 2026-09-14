@@ -67,7 +67,7 @@ export interface Herb {
   epithet?: string;
 
   /** Origin region. Feeds the story + sustainability layer. */
-  origin_region?: 'Nordic wild' | 'European' | 'Ayurvedic' | 'Chinese' | 'Central American' | 'Mediterranean' | 'Global';
+  origin_region?: 'Nordic wild' | 'European' | 'Ayurvedic' | 'Chinese' | 'Central American' | 'South American' | 'African' | 'Mediterranean' | 'Global';
 
   /** Structured evidence tier. Preferred over freeform `status` for filtering. */
   evidence_grade?: 'A' | 'B+' | 'B' | 'B-' | 'C' | 'traditional';
@@ -668,6 +668,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Very safe food-medicine for gluten-tolerant individuals. EFSA-recognised health claim for LDL lowering. Excellent for cardiometabolic support, glycaemic smoothing, gut microbiota and general nutritive nourishment. Screen for coeliac, gluten sensitivity and IBS. Effects cumulative over 6–12 weeks.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    digestion_fit: ['demulcent'],
+    regional_affinity: ['gut', 'heart'],
+    onset_time: 'weeks',
+    family: 'Poaceae',
+    epithet: 'The field grain',
+    origin_region: 'Global',
+    evidence_grade: 'B+',
   },
   // ============================================================
   // BATCH 02 — Herbs converted from monographs
@@ -813,6 +822,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'RESTRICTED HERB — neurotoxicity concern (β-asarone) dominates modern safety analysis. Banned as food additive in USA; restricted in EU (max 0.5 g/day). Absolute contraindication in pregnancy, breastfeeding and seizure disorders. Not for daily or long-term use. Traditional wisdom is real, but safer alternatives exist for all applications. Use only with full awareness of neurotoxicity risk and regulatory status.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    // restricted/educational entry — descriptive tags only, no fit tags on purpose (excluded from the consumer pool: acorus calamus)
+    energy_pattern: ['acute_only'],
+    regional_affinity: ['head', 'gut'],
+    onset_time: 'hours',
+    family: 'Acoraceae',
+    epithet: 'The sweet flag',
+    origin_region: 'Global',
+    evidence_grade: 'traditional',
   },
 
   // ─────────────────────────────────────────────
@@ -1021,6 +1039,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Excellent food-medicine for hypothyroid support, mineral nutrition, metabolic enhancement and immune support when from verified clean sources. CRITICAL: absolute contraindication in hyperthyroidism and Graves\' disease. Sourcing and heavy metal testing non-negotiable. TSH monitoring essential if on thyroid medication.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired'],
+    energy_pattern: ['sustained'],
+    regional_affinity: ['whole'],
+    onset_time: 'weeks',
+    family: 'Fucaceae',
+    epithet: 'The sea\'s mineral',
+    origin_region: 'Nordic wild',
+    evidence_grade: 'B-',
   },
 
   // ─────────────────────────────────────────────
@@ -1232,6 +1259,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Very safe food-medicine herb. Excellent topical first-aid vulnerary and internal respiratory and mucosal soother. Rare hypersensitivity possible. Seed preparations require separate careful handling. Leaf use safe for all populations at standard doses.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['restorative_only'],
+    digestion_fit: ['demulcent'],
+    regional_affinity: ['skin', 'chest', 'gut'],
+    onset_time: 'hours',
+    family: 'Plantaginaceae',
+    epithet: 'The wayside healer',
+    origin_region: 'European',
+    evidence_grade: 'B-',
   },
 
   // ─────────────────────────────────────────────
@@ -1368,6 +1404,14 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Evidence-based venotonic herb with EMA monograph and multiple RCTs. Excellent for CVI, varicose veins and haemorrhoids. CRITICAL: screen for urgent DVT, heart failure and renal insufficiency red flags before recommending. Standardised extract required for reliable ruscogenin dosing. Minimum 12 weeks for full benefit.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    regional_affinity: ['pelvis', 'whole'],
+    onset_time: 'weeks',
+    family: 'Asparagaceae',
+    epithet: 'The vein-lifter',
+    origin_region: 'Mediterranean',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -1738,6 +1782,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Absolute contraindication in psychosis, bipolar disorder, dissociative disorders and severe depression without therapeutic support. Not for daily use. Excellent for intentional dream work, lucid dreaming and visionary exploration when used with proper psychiatric screening, clear intention and integration practices.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['pm_stabilise'],
+    sleep_action: ['dream_soften'],  // oneirogen — vivifies dreams rather than softening them; nearest tag
+    digestion_fit: ['bitter'],
+    regional_affinity: ['head'],
+    onset_time: 'hours',
+    family: 'Asteraceae',
+    epithet: 'The dream herb',
+    origin_region: 'Central American',
+    evidence_grade: 'traditional',
   },
 
   // ─────────────────────────────────────────────
@@ -2102,6 +2156,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Evidence-based herb for OA and chronic low back pain. Grade B+ for analgesia — multiple RCTs show benefit comparable to low-dose NSAIDs. Contraindicated in GI ulcers, pregnancy and active gallstones. Monitor cardiovascular status at higher doses. Minimum 8–12 weeks for therapeutic assessment.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    digestion_fit: ['bitter'],
+    regional_affinity: ['joints'],
+    onset_time: 'weeks',
+    family: 'Pedaliaceae',
+    epithet: 'The desert claw',
+    origin_region: 'African',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -2309,6 +2372,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A- safety — widespread culinary use with low toxicity. Excellent reliable carminative for gas, bloating, colic and IBS-type symptoms. Essential oil requires careful dosing and is not for internal use in pregnancy, lactation or children. Seed/tea preparations safe for most populations including infants with appropriate dosing guidance.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only'],
+    digestion_fit: ['warming', 'carminative', 'moving'],
+    regional_affinity: ['gut'],
+    onset_time: 'immediate',
+    family: 'Apiaceae',
+    epithet: 'The gentle seed',
+    origin_region: 'European',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -2374,6 +2446,14 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade B immune activation and anti-inflammatory evidence with 200+ studies and centuries traditional use. Safe long-term with appropriate screening. SUSTAINABILITY CONCERN: wild-harvested Amazon herb — support cultivated sources only. Autoimmune and immunosuppressant caution. Effects cumulative over 4–8 weeks.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    regional_affinity: ['joints', 'whole'],
+    onset_time: 'weeks',
+    family: 'Rubiaceae',
+    epithet: 'The Amazon vine',
+    origin_region: 'South American',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -2512,6 +2592,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A- safety at moderate doses. Excellent cooling, demulcent, anti-itch herb for hot skin and mucosal conditions. Safe food-medicine for most populations. Avoid excessive consumption (saponin-related GI upset). Medicinal doses in pregnancy: consult provider. Kidney disease: electrolyte monitoring.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['restorative_only'],
+    digestion_fit: ['cooling', 'demulcent'],
+    regional_affinity: ['skin'],
+    onset_time: 'days',
+    family: 'Caryophyllaceae',
+    epithet: 'The little star',
+    origin_region: 'European',
+    evidence_grade: 'traditional',
   },
 
   // ─────────────────────────────────────────────
@@ -2574,6 +2663,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Traditional Mexican ethnobotanical with limited modern safety data at systemic doses. Excellent for oral pain, gum infection and digestive stimulation when used in low, topical doses. Not for high-dose internal use. Always start with smallest possible amount — highly potent at tiny doses.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only'],
+    digestion_fit: ['warming'],
+    regional_affinity: ['head', 'gut'],
+    onset_time: 'immediate',
+    family: 'Asteraceae',
+    epithet: 'The golden root',
+    origin_region: 'Central American',
+    evidence_grade: 'traditional',
   },
 
   // ─────────────────────────────────────────────
@@ -2782,6 +2880,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'ETHNOBOTANICAL REFERENCE ONLY — not an active extract recommendation. Schedule I internationally. Illegal outside Andean countries. Ethical concerns: non-traditional demand supports illicit cocaine supply chains. Educational context only.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    // restricted/educational entry — descriptive tags only, no fit tags on purpose (excluded from the consumer pool: coca leaf)
+    energy_pattern: ['acute_only'],
+    regional_affinity: ['head', 'chest'],
+    onset_time: 'immediate',
+    family: 'Erythroxylaceae',
+    epithet: 'The Andean leaf',
+    origin_region: 'South American',
+    evidence_grade: 'traditional',
   },
 
   // ─────────────────────────────────────────────
@@ -2920,6 +3027,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A- safety — EMA-registered traditional herbal medicinal product in EU. Excellent for dry cough, hoarseness, throat irritation, gastritis and mucosal fragility. Unique demulcent-plus-bitter profile. Safe for weeks to months. Minimal contraindications.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['restorative_only'],
+    digestion_fit: ['demulcent', 'bitter'],
+    regional_affinity: ['chest', 'gut'],
+    onset_time: 'hours',
+    family: 'Parmeliaceae',
+    epithet: 'The tundra lichen',
+    origin_region: 'Nordic wild',
+    evidence_grade: 'B-',
   },
 
   // ─────────────────────────────────────────────
@@ -3410,6 +3526,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade B+ safety — 3000+ years food-medicine with excellent traditional record. Excellent antimicrobial (fresh-crushed), cardiovascular and immune herb. Warfarin screening essential. Antimicrobial use requires fresh preparation — cooking destroys allicin. One of the most versatile and evidence-supported herbs in the world.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained', 'acute_only'],
+    digestion_fit: ['warming', 'moving'],
+    regional_affinity: ['heart', 'chest', 'gut'],
+    onset_time: 'days',
+    family: 'Amaryllidaceae',
+    epithet: 'The stinking rose',
+    origin_region: 'Global',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -4075,6 +4200,14 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'EMA-registered traditional herbal medicinal product for urinary flushing. Grade B+ diuretic; Grade B bone and connective tissue support. Screen for serious oedema causes before recommending. Electrolyte monitoring with concurrent diuretics. Safe for weeks to months at standard doses.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    regional_affinity: ['kidneys', 'joints', 'skin'],
+    onset_time: 'weeks',
+    family: 'Equisetaceae',
+    epithet: 'The living fossil',
+    origin_region: 'European',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -4591,6 +4724,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A+ safety — one of the safest herbs in Western herbal tradition; suitable for all ages and populations. Grade B evidence for uterine tonification, haemostasis and menstrual regulation. Requires patience: 2–4 cycles minimum for assessment; 6–12 months for full tonification. Foundational, irreplaceable women\'s reproductive herb.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    digestion_fit: ['astringent'],
+    regional_affinity: ['pelvis'],
+    onset_time: 'weeks',
+    family: 'Rosaceae',
+    epithet: 'The little alchemist',
+    origin_region: 'European',
+    evidence_grade: 'B-',
   },
 
   // ─────────────────────────────────────────────
@@ -4882,6 +5024,16 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade A safety — centuries traditional use. Grade C emotional opening evidence (aromatherapy plausible mechanism; limited RCTs). Avoid in pregnancy. Excellent for emotional opening, mood elevation, sleep support and sensual pleasure. Aroma is the primary therapeutic vehicle.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'reactive', 'flat'],
+    energy_pattern: ['pm_stabilise'],
+    sleep_action: ['onset'],
+    regional_affinity: ['heart', 'chest'],
+    onset_time: 'immediate',
+    family: 'Oleaceae',
+    epithet: 'The night bloom',
+    origin_region: 'Global',
+    evidence_grade: 'C',
   },
 
   // ─────────────────────────────────────────────
@@ -5320,6 +5472,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'RESTRICTED PRACTITIONER-ONLY HERB. Likely unsafe for internal consumer use. Narrow therapeutic window with documented toxicity at moderate doses. Multiple absolute contraindications. Safer alternatives exist for all indications. Not for consumer self-care app recommendation.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    // practitioner-only herb — descriptive tags only, no fit tags on purpose
+    energy_pattern: ['acute_only'],
+    regional_affinity: ['chest'],
+    onset_time: 'immediate',
+    family: 'Campanulaceae',
+    epithet: 'The breath loosener',
+    origin_region: 'Global',
+    evidence_grade: 'traditional',
   },
 
   // ─────────────────────────────────────────────
@@ -5382,6 +5543,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade B cardiometabolic; Grade A- food safety. Excellent quiet background herb for long-term nutritive rebuilding. Key cautions: Warfarin (INR), SLE/autoimmune (L-canavanine), oestrogen-sensitive cancers (phytoestrogens). Best as part of mineral tonic blend rather than standalone primary herb.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired'],
+    energy_pattern: ['sustained', 'restorative_only'],
+    regional_affinity: ['whole'],
+    onset_time: 'weeks',
+    family: 'Fabaceae',
+    epithet: 'The deep-rooted nourisher',
+    origin_region: 'Global',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -6180,6 +6350,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: null,
     status:
       'Grade A antimicrobial (in vitro) and antioxidant. Broadest-spectrum herbal antimicrobial available. Culinary amounts safe indefinitely and for all populations. Concentrated forms: pregnancy caution. Safe with all medications. Synergises definitively with Garlic and Ginger for antimicrobial protocols.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only'],
+    digestion_fit: ['warming', 'carminative'],
+    regional_affinity: ['gut', 'chest'],
+    onset_time: 'hours',
+    family: 'Lamiaceae',
+    epithet: 'Joy of the mountain',
+    origin_region: 'Mediterranean',
+    evidence_grade: 'B-',
   },
 
   // ─────────────────────────────────────────────
@@ -6321,6 +6500,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'RESTRICTED HERB — not for standard consumer recommendation. Grade B antifungal/antimicrobial in vitro. Critical safety concerns: pregnancy HARD BLOCK (teratogenic); bleeding risk (anticoagulants and surgery CONTRAINDICATED); high-dose lapachol toxicity documented. Topical use safer than internal. Always offer safer antimicrobial alternatives first.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only'],
+    digestion_fit: ['bitter', 'astringent'],
+    regional_affinity: ['gut', 'skin'],
+    onset_time: 'days',
+    family: 'Bignoniaceae',
+    epithet: 'The trumpet tree',
+    origin_region: 'South American',
+    evidence_grade: 'C',
   },
 
   // ─────────────────────────────────────────────
@@ -6904,6 +7092,14 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade B+ diuretic and urinary anti-inflammatory. EMA HMPC traditional use monograph for lower urinary tract irrigation. Grade B upper respiratory anti-catarrhal. Grade A safety. HARD BLOCK: oedema from heart or kidney failure. Screen Asteraceae allergy. Adjunctive to medical UTI care — not standalone antibiotic. 2–4 week courses; repeat as needed.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only', 'sustained'],
+    regional_affinity: ['kidneys', 'chest'],
+    onset_time: 'days',
+    family: 'Asteraceae',
+    epithet: 'The meadow\'s golden flush',
+    origin_region: 'European',
+    evidence_grade: 'B+',
   },
 
   // ─────────────────────────────────────────────
@@ -7053,6 +7249,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade A antidepressant for mild-moderate depression (Cochrane meta-analysis; SSRI-equivalent; fewer side effects). Grade A drug interaction risk (CYP3A4 induction — 50%+ of medications affected). ABSOLUTE CONTRAINDICATIONS: SSRIs/MAOIs (serotonin syndrome), oral contraceptives (pregnancy risk), warfarin (clotting risk), immunosuppressants/transplant (organ rejection), bipolar disorder (mania). 4–8 week minimum for efficacy. Comprehensive drug screening mandatory every recommendation.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['flat', 'tired'],
+    energy_pattern: ['sustained'],
+    regional_affinity: ['head', 'whole'],
+    onset_time: 'weeks',
+    family: 'Hypericaceae',
+    epithet: 'Captured sunshine',
+    origin_region: 'European',
+    evidence_grade: 'A',
   },
 
   // ─────────────────────────────────────────────
@@ -8074,6 +8279,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade C+ digestive bitter and iron support (traditional plus mechanistic; limited RCTs). Grade B safety for SHORT courses only. NOT for long-term continuous use (anthraquinone dependence; oxalate accumulation). AVOID: pregnancy (uterine stimulant); kidney stones/disease (oxalate risk); IBD active flares. Screen thiazide diuretics (potassium loss). Secondary herb in defined short courses — not a primary long-term tonic.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only'],
+    digestion_fit: ['bitter', 'moving'],
+    regional_affinity: ['liver', 'gut', 'skin'],
+    onset_time: 'days',
+    family: 'Polygonaceae',
+    epithet: 'The iron bitter',
+    origin_region: 'European',
+    evidence_grade: 'C',
   },
 
   // ─────────────────────────────────────────────
@@ -8360,6 +8574,14 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade C antiviral and anti-inflammatory (mechanistic and in vitro; minimal human data). Grade C+ respiratory decongestant (traditional use; aromatic chemistry). SPECIES SAFETY is the defining concern — yew (Taxus) is deadly; must use only verified safe Pinus species. HARD BLOCK in pregnancy (abortifacient risk with certain species; animal data). Adjunct only — not a standalone treatment. Modest evidence; valuable traditional and accessible respiratory support.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only'],
+    regional_affinity: ['chest'],
+    onset_time: 'hours',
+    family: 'Pinaceae',
+    epithet: 'The forest breath',
+    origin_region: 'Nordic wild',
+    evidence_grade: 'C',
   },
 
   // ─────────────────────────────────────────────
@@ -8798,6 +9020,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'Grade A stimulant laxative (well-established pharmacology; EU monograph; OTC regulatory approval). Grade D long-term safety (dependence, hypokalaemia, cathartic colon — well documented). ABSOLUTE CONTRAINDICATIONS: intestinal obstruction (HARD BLOCK), appendicitis (HARD BLOCK), active IBD, children under 12. SERIOUS drug interaction: Digoxin (hypokalaemia → toxicity; contraindicated without monitoring). Maximum 1–2 weeks without medical supervision. ALWAYS pair with carminatives. Short-term bridge only — always transition to sustainable root-cause bowel strategies.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['acute_only'],
+    digestion_fit: ['moving', 'bitter'],
+    regional_affinity: ['gut'],
+    onset_time: 'hours',
+    family: 'Fabaceae',
+    epithet: 'The decisive release',
+    origin_region: 'African',
+    evidence_grade: 'A',
   },
   // ─────────────────────────────────────────────
   // BIRCH POLYPORE (ICEMAN'S MUSHROOM)
@@ -9231,6 +9462,15 @@ export const HERBS: Herb[] = [
     safe_pregnancy: false,
     status:
       'EDUCATIONAL AND TAXONOMIC ENTRY ONLY — NOT FOR THERAPEUTIC FORMULATION. Poisonous mushroom. Higher alkaloid concentration than A. muscaria = narrower safety margin = more frequent severe poisonings. Fatal cases documented. Absolutely no therapeutic use. Hard block all recommendations.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    // toxic, educational entry (gated) — NOT for formulation; descriptive tags only, no fit tags on purpose
+    energy_pattern: ['acute_only'],
+    regional_affinity: ['head'],
+    onset_time: 'hours',
+    family: 'Amanitaceae',
+    epithet: 'The panther\'s warning',
+    origin_region: 'European',
+    evidence_grade: 'C',
   },
 
   // ─────────────────────────────────────────────
@@ -9362,6 +9602,14 @@ export const HERBS: Herb[] = [
     safe_pregnancy: true,
     status:
       'Grade B trained immunity (macrophage beta-glucan epigenetic reprogramming confirmed; human data). Grade B+ vitamin D status (clinical trials confirmed). Grade B gut microbiota and cardiometabolic. Grade A culinary safety. No drug interactions at food doses. Daily culinary integration is the primary recommendation.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern: ['sustained'],
+    regional_affinity: ['gut', 'whole'],
+    onset_time: 'weeks',
+    family: 'Agaricaceae',
+    epithet: 'The commoner\'s shield',
+    origin_region: 'Global',
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────
@@ -10519,7 +10767,16 @@ export const HERBS: Herb[] = [
       'EDUCATIONAL AND RESEARCH-CONTEXTUAL ENTRY ONLY — this database entry describes the pharmacological, clinical and historical context of Psilocybe cubensis and psilocybin-assisted therapy for professional and educational purposes. In jurisdictions where licensed therapeutic services exist (Oregon psilocybin services, clinical trials, Dutch retreat contexts): the complete therapeutic protocol — psychiatric screening, preparation sessions, facilitated dosing session, integration support — is the medicine; the mushroom alone is not. MANDATORY CLINICAL SCREENING before any exposure: personal/family history of psychosis or schizophrenia (ABSOLUTE HARD BLOCK), bipolar I disorder (HARD BLOCK), cardiovascular conditions, active severe suicidality, current medications (especially SSRIs, MAOIs and lithium — serious interactions). Cultivated strain identification: all P. cubensis strains share the same pharmacology; alkaloid content varies significantly; standardised pharmaceutical psilocybin removes variability for clinical purposes.',
     caution_level: 'VERY HIGH',
     safe_pregnancy: false,
-    status: 'EDUCATIONAL AND RESEARCH-CONTEXTUAL ENTRY — legal status is Schedule I or equivalent in most jurisdictions. Multiple controlled human trials for TRD, MDD, cancer-related anxiety/depression, AUD and tobacco dependence. 5-HT2A agonism; DMN reduction; neuroplasticity confirmed. ABSOLUTE CONTRAINDICATIONS: personal/family psychosis or schizophrenia, bipolar I disorder. SERIOUS DRUG INTERACTIONS: MAOIs (serotonin syndrome risk), lithium (seizure risk), SSRIs/SNRIs (receptor downregulation). Low physiological toxicity; risk is psychological and contextual. Complete therapeutic protocol (preparation, session, integration) is the effective clinical unit. Only discuss in context of licensed therapeutic services or clinical trials.'
+    status: 'EDUCATIONAL AND RESEARCH-CONTEXTUAL ENTRY — legal status is Schedule I or equivalent in most jurisdictions. Multiple controlled human trials for TRD, MDD, cancer-related anxiety/depression, AUD and tobacco dependence. 5-HT2A agonism; DMN reduction; neuroplasticity confirmed. ABSOLUTE CONTRAINDICATIONS: personal/family psychosis or schizophrenia, bipolar I disorder. SERIOUS DRUG INTERACTIONS: MAOIs (serotonin syndrome risk), lithium (seizure risk), SSRIs/SNRIs (receptor downregulation). Low physiological toxicity; risk is psychological and contextual. Complete therapeutic protocol (preparation, session, integration) is the effective clinical unit. Only discuss in context of licensed therapeutic services or clinical trials.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    // restricted/educational entry — descriptive tags only, no fit tags on purpose (excluded from the consumer pool: psilocybe)
+    energy_pattern: ['acute_only'],
+    regional_affinity: ['head'],
+    onset_time: 'hours',
+    family: 'Hymenogastraceae',
+    epithet: 'The golden teacher',
+    origin_region: 'Global',
+    evidence_grade: 'B',
   },
   {
     id: 404,
@@ -10862,6 +11119,14 @@ export const HERBS: Herb[] = [
   safe_pregnancy: null,
   status:
     'Excellent acute respiratory and viral-support herb with long European use and good modern evidence for early-stage illness support. Best positioned as a first-response seasonal ally rather than a long-term daily tonic. Proper preparation is essential: ripe cooked berry only; avoid raw stems, bark, leaves and unripe berries.',
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['acute_only'],
+  regional_affinity: ['chest', 'whole'],
+  onset_time: 'days',
+  family: 'Adoxaceae',
+  epithet: 'The elder\'s winter shield',
+  origin_region: 'European',
+  evidence_grade: 'B',
 },
 {
   id: 539,
@@ -10920,6 +11185,15 @@ export const HERBS: Herb[] = [
   safe_pregnancy: null,
   status:
     'Traditional northern European protective berry with best use in properly prepared food-medicine forms. Valuable for astringent digestive support, antioxidant resilience and winter formulas. Avoid raw under-ripe use; cooked or dried preparations preferred.',
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  digestion_fit: ['astringent'],
+  regional_affinity: ['gut'],
+  onset_time: 'days',
+  family: 'Rosaceae',
+  epithet: 'The protective berry',
+  origin_region: 'Nordic wild',
+  evidence_grade: 'traditional',
 },
 {
   id: 407,
@@ -10980,6 +11254,15 @@ export const HERBS: Herb[] = [
   safe_pregnancy: false,
   status:
     'Underused traditional astringent of exceptional polyphenol density. Best deployed in short cycles for acute or chronic gut dysbiosis, oral inflammation and post-pathogen restoration. Drug-interaction profile means it deserves a careful practitioner eye.',
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['acute_only'],
+  digestion_fit: ['astringent'],
+  regional_affinity: ['gut'],
+  onset_time: 'days',
+  family: 'Lythraceae',
+  epithet: 'The binding rind',
+  origin_region: 'Mediterranean',
+  evidence_grade: 'C',
 },
 {
   id: 408,
@@ -11039,6 +11322,15 @@ export const HERBS: Herb[] = [
   safe_pregnancy: true,
   status:
     'Premier cardiovascular and Yin-restorative food medicine. Daily use as food is ideal; concentrated preparations work for targeted protocols but carry the CYP-interaction profile of the wider Punica granatum plant.',
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  digestion_fit: ['cooling'],
+  regional_affinity: ['heart', 'pelvis'],
+  onset_time: 'weeks',
+  family: 'Lythraceae',
+  epithet: 'The ruby jewel',
+  origin_region: 'Mediterranean',
+  evidence_grade: 'B',
 },
 {
   id: 409,
@@ -11100,6 +11392,15 @@ export const HERBS: Herb[] = [
   safe_pregnancy: false,
   status:
     'The bioavailability master and Agni-igniter. Indispensable as a carrier for turmeric, ashwagandha and rasayana formulas, but its drug-interaction profile demands a careful practitioner eye in anyone on prescription medication.',
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  digestion_fit: ['warming', 'moving'],
+  regional_affinity: ['gut', 'chest'],
+  onset_time: 'hours',
+  family: 'Piperaceae',
+  epithet: 'The fire carrier',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'B-',
 },
 {
   id: 410,
@@ -11157,6 +11458,15 @@ export const HERBS: Herb[] = [
   safe_pregnancy: null,
   status:
     'A reliable warming digestive of exceptional culinary continuity — medicine you can put in a soup and still call medicine. Greater Galangal (A. galanga) is the everyday food version; Lesser (A. officinarum) the stronger clinical form.',
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['acute_only'],
+  digestion_fit: ['warming', 'carminative'],
+  regional_affinity: ['gut'],
+  onset_time: 'hours',
+  family: 'Zingiberaceae',
+  epithet: 'The warming root',
+  origin_region: 'Chinese',
+  evidence_grade: 'C',
 },
 {
   id: 411,
@@ -11214,6 +11524,15 @@ export const HERBS: Herb[] = [
   safe_pregnancy: null,
   status:
     'The brooding, smoky cousin to green cardamom — distinct medicine, not a substitute. Best in cold-damp lung and digestive patterns and as a sensory-mood deepener in ceremonial elixirs.',
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['acute_only'],
+  digestion_fit: ['warming', 'carminative'],
+  regional_affinity: ['gut', 'chest'],
+  onset_time: 'hours',
+  family: 'Zingiberaceae',
+  epithet: 'The smoky pod',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'traditional',
 },
 {
   id: 412,
@@ -11271,6 +11590,15 @@ export const HERBS: Herb[] = [
   safe_pregnancy: false,
   status:
     'A unique sensory-pharmacological tool that doesn\'t map cleanly to any Western category. Indispensable in cold-pattern abdominal protocols and as a topical analgesic. The "ma la" sensation is not pain — it is a different language of touch.',
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['acute_only'],
+  digestion_fit: ['warming', 'moving'],
+  regional_affinity: ['gut'],
+  onset_time: 'immediate',
+  family: 'Rutaceae',
+  epithet: 'The numbing spark',
+  origin_region: 'Chinese',
+  evidence_grade: 'traditional',
 },
 {
   id: 413,
@@ -11398,6 +11726,15 @@ export const HERBS: Herb[] = [
   safe_pregnancy: false,
   status:
     'The "King of Medicines" in Ayurveda and one of the most revered plants in Asian traditional medicine. Adaptogenic GI action makes her remarkably versatile. Drug-interaction profile requires practitioner oversight.',
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  digestion_fit: ['astringent', 'moving'],
+  regional_affinity: ['gut', 'head'],
+  onset_time: 'weeks',
+  family: 'Combretaceae',
+  epithet: 'The king of medicines',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'C',
 },
 {
   id: 415,
@@ -11457,6 +11794,15 @@ export const HERBS: Herb[] = [
   safe_pregnancy: true,
   status:
     'The Qi-foundation of TCM. Wild-foraged variety is increasingly rare and deserves respectful sourcing. Avoid during acute infection but unbeatable for chronic depletion, recovery and Wei-Qi rebuilding.',
+  // ── Quiz-matcher + composer-quality enrichment ──
+  nervous_system_fit: ['tired'],
+  energy_pattern: ['sustained', 'crash_repair'],
+  regional_affinity: ['chest', 'whole'],
+  onset_time: 'weeks',
+  family: 'Fabaceae',
+  epithet: 'The yellow leader',
+  origin_region: 'Chinese',
+  evidence_grade: 'B',
 },
 {
   id: 416,
@@ -11514,6 +11860,15 @@ export const HERBS: Herb[] = [
   safe_pregnancy: null,
   status:
     'Foundational TCM Yin-tonic for chronic dry-cough, vocal depletion and Kidney-Yin patterns. Daoist longevity tradition holds her especially dear. Sourcing quality matters — look for translucent, sweet, intact roots.',
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['restorative_only'],
+  digestion_fit: ['cooling', 'demulcent'],
+  regional_affinity: ['chest', 'kidneys'],
+  onset_time: 'weeks',
+  family: 'Asparagaceae',
+  epithet: 'Heaven\'s gate root',
+  origin_region: 'Chinese',
+  evidence_grade: 'traditional',
 },
 {
   id: 417,
@@ -11576,6 +11931,15 @@ export const HERBS: Herb[] = [
   safe_pregnancy: false,
   status:
     'A profound plant medicine that lives at the edge of safe self-administration. Internal use deserves a practitioner. Ceremonial and symbolic use is unrestricted. The anthroposophic injectable lineage (Steiner) sits in a different clinical category and is established adjuvant oncology in parts of Europe.',
+  // ── Quiz-matcher + composer-quality enrichment ──
+  nervous_system_fit: ['wired', 'reactive'],
+  energy_pattern: ['pm_stabilise'],
+  regional_affinity: ['heart', 'head'],
+  onset_time: 'weeks',
+  family: 'Santalaceae',
+  epithet: 'The golden bough',
+  origin_region: 'European',
+  evidence_grade: 'B-',
 },
 {
   id: 418,
@@ -11632,6 +11996,14 @@ export const HERBS: Herb[] = [
   safe_pregnancy: false,
   status:
     'A regionally important hepatoprotective and traditional medicine still being mapped by Western herbalism. Sourcing ethics matter. Best used with practitioner oversight given the still-emerging pharmacology profile.',
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  regional_affinity: ['liver'],
+  onset_time: 'weeks',
+  family: 'Fabaceae',
+  epithet: 'The liver shield',
+  origin_region: 'Chinese',
+  evidence_grade: 'C',
 },
 {
   id: 419,
@@ -11691,6 +12063,16 @@ export const HERBS: Herb[] = [
   safe_pregnancy: false,
   status:
     'A sacred ceremonial plant of the Eastern Cape Xhosa lineage. Use as ritual, not recreation. Ethical sourcing is non-negotiable: wild populations are under severe pressure. Profound dream-work tool when held with respect.',
+  // ── Quiz-matcher + composer-quality enrichment ──
+  nervous_system_fit: ['reactive', 'wired'],
+  energy_pattern: ['pm_stabilise'],
+  sleep_action: ['dream_soften'],
+  regional_affinity: ['head'],
+  onset_time: 'hours',
+  family: 'Caryophyllaceae',
+  epithet: 'The white path',
+  origin_region: 'African',
+  evidence_grade: 'traditional',
 },
 {
   id: 420,
@@ -11752,6 +12134,14 @@ export const HERBS: Herb[] = [
   safe_pregnancy: null,
   status:
     'A workhorse vascular polyphenol with strong evidence in venous insufficiency, capillary fragility and antioxidant protocols. Drug-interaction profile is modest but real for high OPC doses; food-grade grape consumption stays safe.',
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  regional_affinity: ['heart', 'skin', 'whole'],
+  onset_time: 'weeks',
+  family: 'Vitaceae',
+  epithet: 'The vineyard\'s shield',
+  origin_region: 'Mediterranean',
+  evidence_grade: 'B+',
 },
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -11779,6 +12169,16 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'Giloy roots itself wherever it touches — climbing, generous, almost impossible to kill. The medicine of the long return.',
   best_preparation: 'Stem decoction (kashayam) or guduchi satva. Long-cycle use traditional.',
   caution_level: 'LOW', safe_pregnancy: false,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  nervous_system_fit: ['tired', 'wired_tired'],
+  energy_pattern: ['sustained'],
+  digestion_fit: ['bitter', 'cooling'],
+  regional_affinity: ['liver', 'whole'],
+  onset_time: 'weeks',
+  family: 'Menispermaceae',
+  epithet: 'The immortal vine',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'B-',
 },
 {
   id: 502, name: 'Punarnava', botanical: 'Boerhavia diffusa (root)',
@@ -11793,6 +12193,14 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'The plant that renews the body when the body has forgotten how to renew itself. Brings water back to its right path.',
   best_preparation: 'Root decoction or powder in warm water. Punarnavasava (fermented preparation) is the traditional polished form.',
   caution_level: 'LOW', safe_pregnancy: false,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  regional_affinity: ['kidneys', 'liver'],
+  onset_time: 'weeks',
+  family: 'Nyctaginaceae',
+  epithet: 'The renewer',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'C',
 },
 {
   id: 503, name: 'Shankhpushpi', botanical: 'Convolvulus pluricaulis / Evolvulus alsinoides',
@@ -11807,6 +12215,16 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'Conch-flower — said to open the inner chamber where memory and intuition meet. The student\'s herb.',
   best_preparation: 'Powder in warm milk before study or sleep. Classical preparation: Shankhpushpi syrup with brahmi.',
   caution_level: 'LOW', safe_pregnancy: null,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  nervous_system_fit: ['wired', 'reactive'],
+  energy_pattern: ['sustained', 'pm_stabilise'],
+  sleep_action: ['onset'],
+  regional_affinity: ['head'],
+  onset_time: 'weeks',
+  family: 'Convolvulaceae',
+  epithet: 'The conch flower',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'C',
 },
 {
   id: 504, name: 'Arjuna', botanical: 'Terminalia arjuna (bark)',
@@ -11821,6 +12239,14 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'The warrior\'s tree — bark that holds the strength of the wood, given to the heart that grieves. Pain is metabolised back into capacity.',
   best_preparation: 'Bark ksheer pak (milk decoction) is the gold-standard preparation for cardiac support. Daily long-cycle.',
   caution_level: 'LOW-MEDIUM', safe_pregnancy: null,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  regional_affinity: ['heart'],
+  onset_time: 'weeks',
+  family: 'Combretaceae',
+  epithet: 'The heart\'s guardian',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'B',
 },
 {
   id: 505, name: 'Hadjod', botanical: 'Cissus quadrangularis (stem)',
@@ -11835,6 +12261,14 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'The plant that knits the broken back together. Stem with four faces, four directions, four winds — what is structured can be re-structured.',
   best_preparation: 'Fresh stem juice or stem powder in warm milk. Traditional adjunct: ghee.',
   caution_level: 'LOW', safe_pregnancy: false,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  regional_affinity: ['joints'],
+  onset_time: 'weeks',
+  family: 'Vitaceae',
+  epithet: 'The bone setter',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'B-',
 },
 {
   id: 506, name: 'Shallaki', botanical: 'Boswellia serrata (gum resin)',
@@ -11849,6 +12283,14 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'The tree\'s wound becomes the tree\'s medicine. Resin that has felt injury offers itself for the joints of others.',
   best_preparation: 'Standardised extract for clinical work. Burning resin for respiratory smoke / ceremonial use.',
   caution_level: 'LOW', safe_pregnancy: false,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  regional_affinity: ['joints', 'chest', 'gut'],
+  onset_time: 'weeks',
+  family: 'Burseraceae',
+  epithet: 'The frankincense tree',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'B+',
 },
 {
   id: 507, name: 'Rasna', botanical: 'Pluchea lanceolata / Alpinia galanga (leaf · rhizome)',
@@ -11863,6 +12305,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'Wind-medicine. Where the nervous system has been blown into pain, Rasna brings the wind home.',
   best_preparation: 'Decoction (kwath) classical. Powder with warm water or milk.',
   caution_level: 'LOW', safe_pregnancy: null,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  digestion_fit: ['warming'],
+  regional_affinity: ['joints'],
+  onset_time: 'weeks',
+  family: 'Asteraceae',
+  epithet: 'The Vata soother',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'traditional',
 },
 {
   id: 508, name: 'Dashmool', botanical: 'Ten-root compound (traditional Ayurvedic formula)',
@@ -11901,6 +12352,14 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'Root that opens what has closed — vessels, bronchi, intracellular doors. The medicine of the choking pattern.',
   best_preparation: 'Standardised extract for clinical reliability. Powder for traditional use.',
   caution_level: 'MEDIUM', safe_pregnancy: false,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  regional_affinity: ['chest', 'heart'],
+  onset_time: 'weeks',
+  family: 'Lamiaceae',
+  epithet: 'The breath opener',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'B-',
 },
 {
   id: 510, name: 'Vijaysar', botanical: 'Pterocarpus marsupium (heartwood)',
@@ -11915,6 +12374,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'Wood that drinks the water and gives the sweetness back as balance. A relationship the body has to remember daily.',
   best_preparation: 'Vijaysar wood tumbler (traditional) is the iconic preparation. Decoction or powder otherwise.',
   caution_level: 'LOW', safe_pregnancy: null,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  digestion_fit: ['astringent'],
+  regional_affinity: ['gut', 'whole'],
+  onset_time: 'weeks',
+  family: 'Fabaceae',
+  epithet: 'The victory wood',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'C',
 },
 {
   id: 511, name: 'Nirgundi', botanical: 'Vitex negundo (leaves)',
@@ -11929,6 +12397,14 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'The hot leaf that pulls cold and stagnation out through the skin. Old fire returns to the surface to release.',
   best_preparation: 'Nirgundi oil (taila) for topical joint application; fresh leaf juice internally.',
   caution_level: 'LOW-MEDIUM', safe_pregnancy: false,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['acute_only'],
+  regional_affinity: ['joints'],
+  onset_time: 'days',
+  family: 'Lamiaceae',
+  epithet: 'The nerve-pain leaf',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'C',
 },
 {
   id: 512, name: 'Ashoka', botanical: 'Saraca asoca (bark)',
@@ -11943,6 +12419,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'The "sorrowless" tree — said to bloom when a virtuous woman touches it. Holds grief stored in the pelvic bowl.',
   best_preparation: 'Ashokarishta (classical fermented liquid) is the gold-standard form. Bark decoction also classical.',
   caution_level: 'LOW-MEDIUM', safe_pregnancy: null,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  digestion_fit: ['astringent'],
+  regional_affinity: ['pelvis'],
+  onset_time: 'weeks',
+  family: 'Fabaceae',
+  epithet: 'The sorrowless tree',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'traditional',
 },
 {
   id: 513, name: 'Lodhra', botanical: 'Symplocos racemosa (bark · leaves)',
@@ -11957,6 +12442,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'The astringent gather-back of what is leaking. Heat that has flooded the tissues finds its container again.',
   best_preparation: 'Bark powder in honey or warm water. Topical paste for skin or oral inflammation.',
   caution_level: 'LOW', safe_pregnancy: null,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  digestion_fit: ['astringent'],
+  regional_affinity: ['pelvis', 'skin'],
+  onset_time: 'weeks',
+  family: 'Symplocaceae',
+  epithet: 'The binding bark',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'traditional',
 },
 {
   id: 514, name: 'Nagkesar', botanical: 'Mesua ferrea (seed · flower)',
@@ -11971,6 +12465,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'The iron-flower that staunches the wound and cools the burn at the same time. Speed and grace.',
   best_preparation: 'Dried flower or seed powder in honey or sugar syrup; oil infusion for topical.',
   caution_level: 'LOW-MEDIUM', safe_pregnancy: false,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['acute_only'],
+  digestion_fit: ['astringent'],
+  regional_affinity: ['pelvis', 'skin'],
+  onset_time: 'days',
+  family: 'Calophyllaceae',
+  epithet: 'The ironwood blossom',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'traditional',
 },
 {
   id: 515, name: 'Rudraksha', botanical: 'Elaeocarpus ganitrus (seed pods)',
@@ -11985,6 +12488,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'Shiva\'s tears. The bead that holds the meditative current between the heart and the third eye. Sacred for sustained practice.',
   best_preparation: 'Mala (worn). Internal preparation: overnight water infusion of cleaned seeds.',
   caution_level: 'LOW', safe_pregnancy: null,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  nervous_system_fit: ['wired', 'reactive'],
+  energy_pattern: ['pm_stabilise'],
+  regional_affinity: ['head', 'heart'],
+  onset_time: 'weeks',
+  family: 'Elaeocarpaceae',
+  epithet: 'The tear of Shiva',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'traditional',
 },
 
 // ── Ayurveda + TCM cross-over (23 herbs that exist in both traditions) ──
@@ -12004,6 +12516,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'The seed that calls light back to the skin. Holds memory of sun where the pigment has been forgotten.',
   best_preparation: 'Oil infusion topical (under guidance) + low-dose internal. Modern bakuchiol cosmetics use the gentler isomer.',
   caution_level: 'MEDIUM', safe_pregnancy: false,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  digestion_fit: ['warming'],
+  regional_affinity: ['skin', 'kidneys'],
+  onset_time: 'months',
+  family: 'Fabaceae',
+  epithet: 'The pigment restorer',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'B-',
 },
 {
   id: 521, name: 'Senna', botanical: 'Cassia angustifolia / Senna alexandrina (leaves · pods)',
@@ -12018,6 +12539,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'A blunt instrument. Sometimes the body must release before it can listen — but Senna is the eject, not the home.',
   best_preparation: 'Overnight cold infusion of pods (gentler than leaves). Always short-cycle.',
   caution_level: 'MEDIUM-HIGH', safe_pregnancy: false,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['acute_only'],
+  digestion_fit: ['moving'],
+  regional_affinity: ['gut'],
+  onset_time: 'hours',
+  family: 'Fabaceae',
+  epithet: 'The bowel\'s broom',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'A',
 },
 {
   id: 522, name: 'Gokshura', botanical: 'Tribulus terrestris (fruit)',
@@ -12032,6 +12562,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'The spiky fruit that pushes through the desert floor. Tenacity offered as a medicine for stuck Yang.',
   best_preparation: 'Powder in warm milk (Ayurvedic). Standardised extract (modern). Decoction.',
   caution_level: 'LOW-MEDIUM', safe_pregnancy: false,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  nervous_system_fit: ['tired'],
+  energy_pattern: ['sustained'],
+  regional_affinity: ['kidneys', 'pelvis'],
+  onset_time: 'weeks',
+  family: 'Zygophyllaceae',
+  epithet: 'The caltrop',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'C',
 },
 {
   id: 523, name: 'Amla', botanical: 'Emblica officinalis / Phyllanthus emblica (fruit)',
@@ -12046,6 +12585,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'The fruit that gives every taste except salty. A complete world in one bite. The body remembers itself with sour.',
   best_preparation: 'Fresh fruit ideal. Powder, juice, or Chyawanprash (classical rasayana jam) for daily use.',
   caution_level: 'LOW', safe_pregnancy: true,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained', 'restorative_only'],
+  digestion_fit: ['cooling'],
+  regional_affinity: ['liver', 'whole'],
+  onset_time: 'weeks',
+  family: 'Phyllanthaceae',
+  epithet: 'The nurse fruit',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'B',
 },
 {
   id: 524, name: 'Bibhitaki', botanical: 'Terminalia bellerica (fruit)',
@@ -12060,6 +12608,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'The fruit that helps the breath release what it has been holding. Voice returns to its proper register.',
   best_preparation: 'Always preferable as Triphala. Solo powder in warm water for short cycles.',
   caution_level: 'LOW', safe_pregnancy: null,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  digestion_fit: ['astringent'],
+  regional_affinity: ['chest', 'gut'],
+  onset_time: 'weeks',
+  family: 'Combretaceae',
+  epithet: 'Triphala\'s third fruit',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'traditional',
 },
 {
   id: 525, name: 'Guggulu', botanical: 'Commiphora mukul / Commiphora wightii (gum resin)',
@@ -12074,6 +12631,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'Sister resin to myrrh — twin medicines from different continents. Moves the blood where grief has settled into the body.',
   best_preparation: 'Purified (shodhita) guggulu only. Classical preparations: Yogaraj guggulu (joints), Triphala guggulu (lipids).',
   caution_level: 'MEDIUM', safe_pregnancy: false,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  digestion_fit: ['warming'],
+  regional_affinity: ['joints', 'heart'],
+  onset_time: 'weeks',
+  family: 'Burseraceae',
+  epithet: 'The resin carrier',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'B-',
 },
 {
   id: 526, name: 'Kalmegh', botanical: 'Andrographis paniculata (whole plant)',
@@ -12088,6 +12654,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'King of bitters. The plant that does not flatter — that meets infection and inflammation with directness.',
   best_preparation: 'Standardised extract for acute use. Short cycles (5–14 days) typical.',
   caution_level: 'MEDIUM', safe_pregnancy: false,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['acute_only'],
+  digestion_fit: ['bitter', 'cooling'],
+  regional_affinity: ['chest', 'liver'],
+  onset_time: 'days',
+  family: 'Acanthaceae',
+  epithet: 'The king of bitters',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'B+',
 },
 {
   id: 527, name: 'Manjistha', botanical: 'Rubia cordifolia (root)',
@@ -12102,6 +12677,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'The red-rooted plant that follows the blood wherever it has stagnated. Old patterns are loosened and re-circulated.',
   best_preparation: 'Decoction (kashayam) or powder. Topically as paste for skin conditions.',
   caution_level: 'LOW-MEDIUM', safe_pregnancy: false,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  digestion_fit: ['cooling'],
+  regional_affinity: ['skin', 'liver'],
+  onset_time: 'weeks',
+  family: 'Rubiaceae',
+  epithet: 'The red root',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'C',
 },
 {
   id: 528, name: 'Khadira', botanical: 'Acacia catechu (heartwood)',
@@ -12116,6 +12700,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'The catechu — what the body has dampened with old pain dries under its presence. Skin returns to its proper boundary.',
   best_preparation: 'Khadirarishta (classical fermented liquid) for skin protocols. Powder for topical pastes and rinses.',
   caution_level: 'LOW', safe_pregnancy: null,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  digestion_fit: ['astringent'],
+  regional_affinity: ['skin', 'head'],
+  onset_time: 'weeks',
+  family: 'Fabaceae',
+  epithet: 'The catechu heartwood',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'traditional',
 },
 {
   id: 529, name: 'Nishoth', botanical: 'Operculina turpethum (root)',
@@ -12130,6 +12723,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'A door that opens fast. Sometimes the body has held so much for so long that gentleness is no longer kind. Use with reverence.',
   best_preparation: 'Always within a Panchakarma protocol led by a vaidya. Not for casual self-use.',
   caution_level: 'HIGH', safe_pregnancy: false,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['acute_only'],
+  digestion_fit: ['moving'],
+  regional_affinity: ['gut'],
+  onset_time: 'hours',
+  family: 'Convolvulaceae',
+  epithet: 'The drastic cleanse',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'traditional',
 },
 {
   id: 530, name: 'Ajwan', botanical: 'Apium graveolens (celery seed)',
@@ -12144,6 +12746,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'Small seed of cool fire — meets hot stagnation in the liver with a clean kind of pungency.',
   best_preparation: 'Seed infusion, or ground into food. Classical Ayurvedic anti-gout decoction.',
   caution_level: 'LOW', safe_pregnancy: false,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  digestion_fit: ['carminative'],
+  regional_affinity: ['joints', 'kidneys', 'gut'],
+  onset_time: 'weeks',
+  family: 'Apiaceae',
+  epithet: 'The gout seed',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'C',
 },
 {
   id: 531, name: 'Neem', botanical: 'Azadirachta indica (leaf · bark)',
@@ -12158,6 +12769,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'The bitter that erases what is not the self. Where you have been colonised by foreign forces, Neem clears the boundary.',
   best_preparation: 'Short-cycle internal use (powder or decoction). Oil for topical and insect protocols. Twigs for oral health.',
   caution_level: 'MEDIUM', safe_pregnancy: false,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['acute_only', 'sustained'],
+  digestion_fit: ['bitter', 'cooling'],
+  regional_affinity: ['skin', 'gut'],
+  onset_time: 'weeks',
+  family: 'Meliaceae',
+  epithet: 'The village pharmacy',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'B-',
 },
 {
   id: 532, name: 'Anantmul', botanical: 'Hemidesmus indicus (root)',
@@ -12172,6 +12792,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'Sweet root that hands the body back its cool — pleasure as medicine, the opposite of austerity.',
   best_preparation: 'Decoction or sweet syrup (Saribadyasava). Powder in warm milk for skin protocols.',
   caution_level: 'LOW', safe_pregnancy: true,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  digestion_fit: ['cooling', 'demulcent'],
+  regional_affinity: ['skin', 'whole'],
+  onset_time: 'weeks',
+  family: 'Apocynaceae',
+  epithet: 'The endless root',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'traditional',
 },
 {
   id: 533, name: 'Karanja', botanical: 'Pongamia pinnata (seed · oil · leaf · bark)',
@@ -12186,6 +12815,14 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'The companion plant — its oil seals what is open, its bitterness clears what is festering. A guardian medicine.',
   best_preparation: 'Karanja taila (oil) for topical. Leaf paste for skin sores.',
   caution_level: 'MEDIUM', safe_pregnancy: false,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['acute_only'],
+  regional_affinity: ['skin'],
+  onset_time: 'days',
+  family: 'Fabaceae',
+  epithet: 'The healing oil tree',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'traditional',
 },
 {
   id: 534, name: 'Bael', botanical: 'Aegle marmelos (leaves · fruit)',
@@ -12200,6 +12837,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'Three-leafed leaf, Trikuta — offering to Shiva, the three eyes returned. The astringent of devotion.',
   best_preparation: 'Unripe fruit powder for chronic loose-bowel patterns. Ripe fruit pulp as a healing food.',
   caution_level: 'LOW', safe_pregnancy: null,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  digestion_fit: ['astringent', 'cooling'],
+  regional_affinity: ['gut'],
+  onset_time: 'days',
+  family: 'Rutaceae',
+  epithet: 'Shiva\'s fruit',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'C',
 },
 {
   id: 535, name: 'Chandrashoor', botanical: 'Lepidium sativum (garden cress seeds)',
@@ -12214,6 +12860,15 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'Small seed that pulls water out of the chest. Old grief stored as phlegm finds its release.',
   best_preparation: 'Overnight soak in milk or water. Heated in ghee for traditional post-partum laddoos.',
   caution_level: 'LOW-MEDIUM', safe_pregnancy: false,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['sustained'],
+  digestion_fit: ['warming'],
+  regional_affinity: ['chest', 'pelvis'],
+  onset_time: 'weeks',
+  family: 'Brassicaceae',
+  epithet: 'The cress seed',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'traditional',
 },
 {
   id: 536, name: 'Amaltas', botanical: 'Cassia fistula (fruit pulp)',
@@ -12228,5 +12883,14 @@ export const HERBS: Herb[] = [
   spiritual_layer: 'The golden-shower tree — its sweet pod calls heat down and out gently. The kindest laxative the Ayurvedic pharmacy knows.',
   best_preparation: 'Fruit-pulp paste in warm water at bedtime. Often combined with raisins or fennel.',
   caution_level: 'LOW', safe_pregnancy: null,
+  // ── Quiz-matcher + composer-quality enrichment ──
+  energy_pattern: ['acute_only'],
+  digestion_fit: ['cooling', 'moving'],
+  regional_affinity: ['gut'],
+  onset_time: 'hours',
+  family: 'Fabaceae',
+  epithet: 'The golden shower',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'traditional',
 },
 ];
