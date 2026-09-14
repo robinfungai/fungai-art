@@ -145,7 +145,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
 .divider{width:60px;height:0.5px;background:var(--lichen);margin:60px 0;opacity:0.4}
 
 /* CONCEPT */
-.concept{padding:140px 0}
+.concept{padding:140px 0 56px}
 .concept-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
 /* Floating featured photo — soft rounded shape, radial-fade edges
    so it blends into the surrounding text instead of sitting in a
@@ -185,7 +185,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
 
 /* FACILITATOR — split card. Photo on the left, bio on the right.
    Nothing sits on top of Robin's face; readers see both clearly. */
-.artists{padding:140px 0}
+.artists{padding:40px 0 56px}
 .artists-header{text-align:center;margin-bottom:80px}
 .artists-header .hero-sub{font-size:60px;display:block;text-align:center}
 .artists-grid{display:grid;grid-template-columns:1fr;gap:2px;max-width:1080px;margin:0 auto}
@@ -295,9 +295,9 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   .btn-primary,.btn-ghost{padding:12px 22px;font-size:10.5px;letter-spacing:1.5px}
   /* Section padding trims — many sections used 140px vertical which
      ate the mobile viewport. Halved so more content fits per scroll. */
-  .concept{padding:80px 0}
+  .concept{padding:80px 0 32px}
   .principles{padding:80px 0}
-  .artists{padding:80px 0}
+  .artists{padding:24px 0 40px}
   .sensory{padding:80px 0}
   .allies{padding:80px 0}
   .events{padding:64px 0}
@@ -319,6 +319,9 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
      global-nav.js takes over the actual navigation) */
   .nav{padding:14px 20px}
   .nav-brand .main{font-size:16px}
+  /* global-nav.js pins its 52px hamburger at top-right on phones — slide
+     Book left of it so neither hides the other. */
+  .nav-cta{margin-right:62px}
   /* Scroll hint hidden on mobile — takes space away from CTA */
   .scroll-hint{display:none}
 }
@@ -332,7 +335,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   .hero-actions .btn-primary,.hero-actions .btn-ghost{text-align:center;padding:14px 24px}
   .artist-img{height:320px}
   .sensory-img img{height:300px !important}
-  .concept{padding:60px 0}
+  .concept{padding:60px 0 24px}
   .events{padding:48px 0}
 }
 </style>
@@ -356,7 +359,8 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   <div class="nav-links">
     <a href="/#shop">Shop</a>
     <a href="/community">Community</a>
-    <a href="/mixology">Herbal Engine</a>
+    <a href="/find-your-formula">Tailored Elixir</a>
+    <a href="/mixology">Mixology</a>
     <a href="/#forage">Foraging</a>
   </div>
   <a href="mailto:robin@fungai.art?subject=Dinner%20Experience%20booking" class="nav-cta">Book</a>
@@ -386,31 +390,6 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   <div class="scroll-hint">Scroll</div>
 </div>
 
-<!-- TOP CTA — sleek strip right under the hero. First thing after
-     the scroll — announces the next dinner + a direct reserve link. -->
-<section class="top-cta">
-  <div class="top-cta-inner">
-    <span class="top-cta-eyebrow">Next dinner</span>
-    <span class="top-cta-when">Sat 11 Oct 2026 &middot; Holzmarkt Berlin</span>
-    <a href="#reserve" class="top-cta-link">Reserve a seat &rarr;</a>
-  </div>
-</section>
-<style>
-  .top-cta { background: linear-gradient(90deg, rgba(232,177,75,0.06), rgba(232,177,75,0.12), rgba(232,177,75,0.06)); border-bottom: 0.5px solid rgba(232,177,75,0.25); padding: 22px 24px; }
-  .top-cta-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: baseline; justify-content: center; gap: 24px; flex-wrap: wrap; text-align: center; }
-  .top-cta-eyebrow { font-family: 'Bayer',var(--sans); font-size: 9.5px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--amber-lt,#E8B14B); }
-  .top-cta-when { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--parchment); letter-spacing: 0.005em; }
-  .top-cta-link { font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--amber-lt,#E8B14B); text-decoration: none; padding: 8px 20px; border: 0.5px solid rgba(232,177,75,0.4); border-radius: 999px; transition: background 0.2s, color 0.2s; }
-  .top-cta-link:hover { background: var(--amber-lt); color: var(--void); }
-  @media (max-width: 640px) {
-    .top-cta { padding: 16px 18px; }
-    .top-cta-inner { gap: 10px 14px; }
-    .top-cta-when { font-size: 15px; }
-    .top-cta-eyebrow { font-size: 8.5px; letter-spacing: 0.24em; }
-    .top-cta-link { font-size: 10px; padding: 8px 16px; letter-spacing: 0.2em; }
-  }
-</style>
-
 <!-- CONCEPT -->
 <section id="concept" class="concept">
   <div class="wrap">
@@ -420,7 +399,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
         <h2 class="sec-title">A tasting arc where mycology, cuisine and ceremony <em>meet at the table</em></h2>
         <p class="sec-body">Six to nine courses, one long evening. The Fungai Art Dinner Experience is a fully composed meal built on foraged mushrooms, adaptogenic extracts, sacred botanicals and slow-cooked forest ferments. Each course is a movement &mdash; a shift in taste, temperature and intention &mdash; held together by candlelight, low sound and the pace of shared attention.</p>
         <blockquote class="concept-quote">"The meal is the medicine. The table is the ritual."</blockquote>
-        <p class="sec-body">Guests are received at dusk with a mycofermented aperitif and a shot from the <a href="/tymetonics" style="color:var(--mist);text-decoration:none;border-bottom:0.5px solid rgba(136,186,200,0.4);">New Tyme Tonics</a> elixir line &mdash; the tonic-vinegar and hydromel sister project of the dinner. From there the arc unfolds: bitter, umami, savoury, sweet, sober close. Between courses, brief context on the ingredients &mdash; where the chanterelles were pulled, why the amuse-bouche carries a micro-drop of amanita, what the pine pollen is doing on the palate. Nothing hidden, nothing decorative. Everything on the plate has a reason to be there.</p>
+        <p class="sec-body">Guests are received at dusk with a mycofermented aperitif and a shot of love from the sub-brand <a href="/tymetonics" style="color:var(--mist);text-decoration:none;border-bottom:0.5px solid rgba(136,186,200,0.4);">New Tyme Tonics</a> &mdash; the mobile elixarium created by Fungai Art, and a sister project of the dinner. From there the arc unfolds: bitter, umami, savoury, sweet, sober close. Between courses, brief context on the ingredients &mdash; where the chanterelles were pulled, why the amuse-bouche carries a micro-drop of amanita, what the pine pollen is doing on the palate. Nothing hidden, nothing decorative. Everything on the plate has a reason to be there.</p>
         <div class="divider"></div>
         <p class="sec-body" style="color:var(--mist);font-family:var(--serif);font-style:italic;font-size:16px;">Woven throughout: a ceremonial micro-drop of <strong style="color:var(--amber-lt,#E8B14B);font-weight:500;">Amanita muscaria</strong> &mdash; softly, deliberately, refusable at the table.</p>
       </div>
@@ -433,10 +412,11 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
       <style>
         .concept-caption {
           margin-top: 14px;
-          font-family: var(--serif);
-          font-style: italic;
-          font-size: 13.5px;
-          line-height: 1.6;
+          font-family: 'Bayer', var(--sans);
+          font-style: normal;
+          text-transform: lowercase;
+          font-size: 12.5px;
+          line-height: 1.7;
           color: var(--dust);
           letter-spacing: 0.01em;
           text-align: right;
@@ -453,7 +433,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
     <div class="artists-header reveal">
       <span class="sec-label">The Host</span>
       <span class="hero-sub">chef &amp; forager</span>
-      <p style="font-size:15px;font-family:var(--serif);font-style:italic;color:var(--dust);max-width:600px;margin:0 auto;">"The dinner is where my two lives sit down at the same table &mdash; the kitchen and the forest, the plate and the extract, the meal and the medicine."</p>
+      <p style="font-size:15px;font-family:'Bayer',var(--sans);font-style:normal;text-transform:lowercase;line-height:1.7;color:var(--dust);max-width:600px;margin:0 auto;">"The dinner is where my two lives sit down at the same table &mdash; the kitchen and the forest, the plate and the extract, the meal and the medicine."</p>
     </div>
     <div class="artists-grid">
       <div class="artist-card reveal">
@@ -535,7 +515,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   </div>
 </section>
 <style>
-  .gathering { position: relative; padding: 130px 24px; background: linear-gradient(180deg, var(--void) 0%, #0A1310 55%, var(--void) 100%); overflow: hidden; }
+  .gathering { position: relative; padding: 48px 24px 130px; background: linear-gradient(180deg, var(--void) 0%, #0A1310 55%, var(--void) 100%); overflow: hidden; }
   .gathering-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
   .gathering-glyph { position: absolute; color: var(--amber-lt,#E8B14B); opacity: 0.10; user-select: none; }
   .gathering-glyph.g-1 { top: 10%;  left: 6%;  font-size: 38px; animation: gather-drift 22s ease-in-out infinite; }
@@ -550,7 +530,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   .gathering-head .sec-label { display: block; margin-bottom: 14px; }
   .gathering-head .sec-title { font-family: 'TAN-PARADISO','Cormorant Garamond',serif; font-weight: 300; font-size: clamp(38px, 5vw, 62px); line-height: 1; color: var(--parchment); letter-spacing: 0.005em; margin-bottom: 18px; }
   .gathering-head .sec-title em { font-style: italic; color: var(--amber-lt,#E8B14B); }
-  .gathering-lede { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--dust); line-height: 1.7; opacity: 0.9; }
+  .gathering-lede { font-family: 'Bayer', var(--sans); font-style: normal; text-transform: lowercase; font-size: 15px; color: var(--dust); line-height: 1.7; opacity: 0.9; }
 
   .gathering-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; align-items: stretch; }
   .lane { position: relative; padding: 40px 32px 36px; background: rgba(232,177,75,0.03); border: 0.5px solid rgba(232,177,75,0.16); display: flex; flex-direction: column; transition: border-color 0.35s ease, background 0.35s ease, transform 0.35s ease; }
@@ -560,11 +540,11 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   .lane-title { font-family: 'TAN-PARADISO','Cormorant Garamond', serif; font-weight: 300; font-size: 32px; line-height: 1; color: var(--parchment); letter-spacing: 0.005em; }
   .lane-title em { font-style: italic; color: var(--amber-lt,#E8B14B); }
   .lane-list { list-style: none; display: flex; flex-direction: column; gap: 14px; margin: 0; padding: 0; }
-  .lane-list li { font-family: var(--serif); font-size: 15px; line-height: 1.65; color: var(--dust); padding-left: 14px; position: relative; }
+  .lane-list li { font-family: var(--sans); font-weight: 300; font-size: 13.5px; line-height: 1.6; color: var(--dust); padding-left: 14px; position: relative; }
   .lane-list li::before { content: '·'; position: absolute; left: 0; top: -2px; color: var(--amber-lt,#E8B14B); font-size: 20px; line-height: 1; }
-  .lane-list li strong { color: var(--parchment); font-weight: 500; font-style: italic; }
-  .lane-list-flavours li em { font-style: italic; color: var(--parchment); }
-  .lane-note { font-family: var(--serif); font-style: italic; font-size: 13.5px; color: var(--mist); line-height: 1.65; margin-top: 18px; opacity: 0.9; }
+  .lane-list li strong { color: var(--parchment); font-weight: 500; font-style: normal; }
+  .lane-list-flavours li em { font-style: normal; font-weight: 500; color: var(--parchment); }
+  .lane-note { font-family: var(--sans); font-style: normal; font-weight: 300; font-size: 12.5px; color: var(--mist); line-height: 1.65; margin-top: 18px; opacity: 0.9; }
   .lane-note a { color: var(--amber-lt,#E8B14B); text-decoration: none; border-bottom: 0.5px solid rgba(232,177,75,0.4); }
   .lane-link { margin-top: auto; padding-top: 28px; display: inline-block; font-family: 'Bayer', var(--sans); font-size: 10.5px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--amber-lt,#E8B14B); text-decoration: none; transition: color 0.2s; }
   .lane-link:hover { color: var(--parchment); }
@@ -585,11 +565,35 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   .gathering.gathered .lane.lane-pantry   { transition-delay: 320ms, 320ms, 0s, 0s; }
   .gathering.gathered .lane.lane-container{ transition-delay: 380ms, 380ms, 0s, 0s; }
 
+  /* ≤960px: the triptych stays a triptych — three slim lanes side by
+     side instead of three tall stacked cards. */
   @media (max-width: 960px) {
-    .gathering-grid { grid-template-columns: 1fr; gap: 20px; }
-    .gathering { padding: 90px 20px; }
-    .lane { padding: 32px 24px; }
-    .lane-title { font-size: 26px; }
+    .gathering { padding: 32px 16px 80px; }
+    .gathering-head { margin-bottom: 36px; }
+    .gathering-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .lane { padding: 20px 14px 16px; }
+    .lane:hover { transform: none; }
+    .lane-head { padding-bottom: 12px; margin-bottom: 14px; }
+    .lane-kicker { font-size: 8.5px; letter-spacing: 0.2em; margin-bottom: 8px; }
+    .lane-title { font-size: 22px; }
+    .lane-list { gap: 10px; }
+    .lane-list li { font-size: 12.5px; line-height: 1.45; }
+    .lane-note { font-size: 11.5px; margin-top: 12px; }
+    .lane-link { padding-top: 16px; font-size: 9px; letter-spacing: 0.16em; }
+  }
+  @media (max-width: 560px) {
+    .gathering { padding: 28px 10px 64px; }
+    .gathering-head { margin-bottom: 26px; }
+    .gathering-grid { gap: 5px; }
+    .lane { padding: 12px 8px 10px; }
+    .lane-head { padding-bottom: 8px; margin-bottom: 10px; }
+    .lane-kicker { font-size: 7px; letter-spacing: 0.12em; margin-bottom: 5px; }
+    .lane-title { font-size: 16px; }
+    .lane-list { gap: 8px; }
+    .lane-list li { font-size: 10.5px; line-height: 1.4; padding-left: 0; }
+    .lane-list li::before { display: none; }
+    .lane-note { font-size: 10px; line-height: 1.4; margin-top: 8px; }
+    .lane-link { padding-top: 10px; font-size: 7.5px; letter-spacing: 0.1em; line-height: 1.5; }
   }
   @media (prefers-reduced-motion: reduce) {
     .gathering-glyph { animation: none; }
@@ -721,205 +725,194 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   .mid-cta-label { font-family: 'Bayer',var(--sans); font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--lichen); }
   .mid-cta-link { font-family: 'TAN-PARADISO',var(--serif); font-style: italic; font-size: 28px; color: var(--amber-lt,#E8B14B); text-decoration: none; letter-spacing: 0.005em; transition: color 0.2s; }
   .mid-cta-link:hover { color: var(--parchment); }
-  .mid-cta-note { font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--dust); opacity: 0.75; }
+  .mid-cta-note { font-family: 'Bayer', var(--sans); font-style: normal; text-transform: lowercase; font-size: 13px; color: var(--dust); opacity: 0.75; }
   @media (max-width: 640px) {
     .mid-cta { padding: 32px 20px; }
     .mid-cta-inner { gap: 10px 14px; flex-direction: column; }
     .mid-cta-label { font-size: 9px; letter-spacing: 0.24em; }
     .mid-cta-link { font-size: 22px; }
-    .mid-cta-note { font-size: 12.5px; }
+    .mid-cta-note { font-size: 12px; }
   }
 </style>
 
-<!-- ══════════════ FUNGI FEVER FEST · RESERVATION ══════════════
-     Sliding-scale reservation flow modelled on /sensorium. mailto
-     submission goes straight to Robin (who confirms + collects
-     payment / gives dietary sign-off). No Stripe path yet — event
-     seats are limited and the personal reply is part of the
-     ceremony. Header image reused from /sensorium/hero.webp per
-     the shared-lineage brand.                                     -->
-<section id="reserve" class="ff-section" style="padding:0;margin:0;background:var(--void);position:relative;overflow:hidden;">
-
-  <!-- Hero band with Sensorium artwork as backdrop -->
-  <div class="ff-hero" style="position:relative;min-height:420px;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:100px 20px;">
-    <div style="position:absolute;inset:0;">
-      <img src="/sensorium/hero.webp" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;opacity:0.85;" loading="lazy">
-      <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,9,12,0.65) 0%,rgba(5,9,12,0.4) 40%,rgba(5,9,12,0.85) 100%);"></div>
-    </div>
-    <div class="reveal" style="position:relative;z-index:1;text-align:center;max-width:720px;">
-      <p style="font-family:var(--sans);font-weight:500;letter-spacing:0.32em;font-size:10px;color:var(--amber-lt,#E8B14B);text-transform:uppercase;margin-bottom:20px;">Fungi Fever Fest &middot; Holzmarkt Berlin</p>
-      <h2 style="font-family:'TAN-PARADISO',var(--serif);font-weight:300;font-size:clamp(48px,7vw,88px);line-height:0.95;color:var(--parchment);margin-bottom:18px;letter-spacing:0.005em;">Reserve your <em style="font-style:italic;color:var(--mist);">seat</em></h2>
-      <div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:24px;font-family:var(--sans);letter-spacing:0.22em;font-size:11px;text-transform:uppercase;color:var(--dust);">
-        <span>Sat 11 Oct 2026</span>
-        <span style="color:var(--amber-lt);font-size:8px;">✦</span>
-        <span>Holzmarkt, Berlin</span>
-        <span style="color:var(--amber-lt);font-size:8px;">✦</span>
-        <span>6&ndash;9 courses &middot; 8&ndash;50 seats</span>
-      </div>
-      <p style="font-family:var(--serif);font-style:italic;font-size:16px;color:var(--parchment);line-height:1.7;max-width:560px;margin:0 auto;">
-        The Fungai Art Dinner Experience returns to Berlin as part of Fungi Fever Fest &mdash; a full evening's arc for the mycophile community. Early bird tier open now &mdash; standard rate rises closer to the event.
-      </p>
-    </div>
+<!-- ══════════════ OUTRO · ENQUIRE ══════════════
+     Replaces the Fungi Fever Fest reservation block. The outro photo
+     (a full service, plated by hand) is the sell — dimmed, full-bleed,
+     brightest behind the pitch so the plates stay legible. The form
+     posts to /api/dinner-contact (Resend → robin@fungai.art, reply-to
+     the guest) and falls back to a prefilled mailto if the function is
+     unreachable (plain Vite dev, Resend down, rate-limited) so an
+     enquiry is never silently lost. id="reserve" is kept so existing
+     links (/home dinner CTA, Spore listing) still land here.        -->
+<section id="reserve" class="outro">
+  <div class="outro-bg" aria-hidden="true">
+    <img src="/dinner-experience/outro.webp" alt="" loading="lazy">
   </div>
+  <div class="outro-inner">
+    <div class="outro-pitch reveal">
+      <span class="outro-eyebrow">Private dinners &middot; residencies &middot; worldwide</span>
+      <h2 class="outro-title">Let&rsquo;s set <em>your</em> table.</h2>
+      <p class="outro-body">Tell Robin about the evening you have in mind &mdash; a private dinner, a residency, a seat at the next table. Every enquiry is read and answered personally.</p>
+      <ul class="outro-points">
+        <li>6&ndash;9 courses &middot; 8&ndash;50 guests</li>
+        <li>Foraged, fermented, plated by hand</li>
+        <li>A personal reply within 48 hours</li>
+      </ul>
+    </div>
 
-  <!-- What we know so far — structured detail block. Robin fills
-       in specifics (doors, dress, meeting point, wine pairing) as
-       the event firms up. -->
-  <div class="wrap" style="max-width:900px;margin:0 auto;padding:64px 24px 0;">
-    <div class="ff-details reveal">
-      <div class="ff-details-head">
-        <span class="ff-details-label">What we know so far</span>
-        <span class="ff-details-note">More info in the weeks before &mdash; details land in your inbox once you've reserved.</span>
+    <form class="outro-form reveal reveal-d1" id="dinnerContact" novalidate>
+      <div class="outro-row">
+        <label class="outro-field">
+          <span class="outro-label">Name</span>
+          <input name="name" type="text" autocomplete="name" required maxlength="100" placeholder="your name">
+        </label>
+        <label class="outro-field">
+          <span class="outro-label">Email</span>
+          <input name="email" type="email" autocomplete="email" required maxlength="200" placeholder="your email">
+        </label>
       </div>
-      <div class="ff-details-grid">
-        <div><span class="ff-d-key">Date</span><span class="ff-d-val">Saturday 11 October 2026</span></div>
-        <div><span class="ff-d-key">Doors</span><span class="ff-d-val">More info soon</span></div>
-        <div><span class="ff-d-key">Venue</span><span class="ff-d-val">Holzmarkt, Berlin</span></div>
-        <div><span class="ff-d-key">Format</span><span class="ff-d-val">6&ndash;9 courses &middot; 8&ndash;50 seats</span></div>
-        <div><span class="ff-d-key">Duration</span><span class="ff-d-val">~3.5 hours</span></div>
-        <div><span class="ff-d-key">Pairing</span><span class="ff-d-val">Non-alcoholic base &middot; wine on request</span></div>
-        <div><span class="ff-d-key">Dress</span><span class="ff-d-val">Yourself, at ease</span></div>
-        <div><span class="ff-d-key">Part of</span><span class="ff-d-val">Fungi Fever Fest weekend</span></div>
-      </div>
+
+      <fieldset class="outro-field outro-interest">
+        <legend class="outro-label">I&rsquo;m dreaming of</legend>
+        <div class="outro-chips">
+          <label class="outro-chip"><input type="radio" name="interest" value="A private dinner" checked><span>A private dinner</span></label>
+          <label class="outro-chip"><input type="radio" name="interest" value="A seat at the next dinner"><span>A seat at the next dinner</span></label>
+          <label class="outro-chip"><input type="radio" name="interest" value="A residency or collaboration"><span>A residency or collab</span></label>
+          <label class="outro-chip"><input type="radio" name="interest" value="Something else"><span>Something else</span></label>
+        </div>
+      </fieldset>
+
+      <label class="outro-field">
+        <span class="outro-label">Your evening <span class="outro-opt">(guests, date, place, dietary needs)</span></span>
+        <textarea name="message" rows="4" maxlength="2000" placeholder="e.g. 20 guests · late spring · a house outside Stockholm · two vegans"></textarea>
+      </label>
+
+      <!-- Honeypot — hidden from people, filled by bots. -->
+      <label class="outro-hp" aria-hidden="true">Company <input name="company" type="text" tabindex="-1" autocomplete="off"></label>
+
+      <button type="submit" class="outro-submit">Send to Robin <span aria-hidden="true">&rarr;</span></button>
+      <p class="outro-status" id="dinnerContactStatus" role="status" aria-live="polite">Goes straight to robin@fungai.art</p>
+    </form>
+
+    <div class="outro-thanks" id="dinnerContactThanks" hidden>
+      <span class="outro-eyebrow">Received</span>
+      <p class="outro-thanks-title">Thank you.</p>
+      <p class="outro-body">Your message is with Robin. Expect a personal reply within 48 hours &mdash; check your spam folder if nothing arrives.</p>
     </div>
-  </div>
-  <style>
-    .ff-details { padding: 0; }
-    .ff-details-head { text-align: center; margin-bottom: 32px; display: flex; flex-direction: column; gap: 8px; }
-    .ff-details-label { font-family: 'Bayer',var(--sans); font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--amber-lt,#E8B14B); }
-    .ff-details-note { font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--dust); opacity: 0.8; max-width: 480px; margin: 0 auto; line-height: 1.6; }
-    .ff-details-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px 24px; padding: 32px 0 0; border-top: 0.5px solid rgba(232,177,75,0.2); }
-    .ff-details-grid > div { display: flex; flex-direction: column; gap: 6px; }
-    .ff-d-key { font-family: 'Bayer',var(--sans); font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--lichen); }
-    .ff-d-val { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--parchment); line-height: 1.4; }
-    @media (max-width: 720px) { .ff-details-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 400px) { .ff-details-grid { grid-template-columns: 1fr; gap: 16px; } .ff-d-val { font-size: 15px; } .ff-details-label { font-size: 9px; letter-spacing: 0.28em; } }
-  </style>
-
-  <!-- Ticket + form -->
-  <div class="wrap" style="max-width:780px;margin:0 auto;padding:60px 24px 100px;">
-
-    <!-- Ticket — single tier €77 early bird -->
-    <div class="ff-tickets reveal" style="margin-bottom:44px;">
-      <div class="ff-single-ticket" style="padding:36px 32px;border:1.5px solid var(--amber-lt,#E8B14B);border-radius:2px;background:linear-gradient(160deg,rgba(232,177,75,0.08),rgba(232,177,75,0.02));display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;">
-        <div>
-          <p style="font-family:var(--sans);font-weight:500;letter-spacing:0.24em;font-size:10px;color:var(--amber-lt,#E8B14B);text-transform:uppercase;margin-bottom:10px;">Early bird &middot; open now</p>
-          <p style="font-family:'TAN-PARADISO',var(--serif);font-size:clamp(48px,6vw,72px);color:var(--parchment);line-height:1;margin-bottom:8px;">&euro;77</p>
-          <p style="font-family:var(--serif);font-style:italic;font-size:14px;color:var(--dust);line-height:1.6;max-width:340px;">Includes the full arc &mdash; six to nine courses, non-alcoholic pairing, and the elixir sequence from New Tyme Tonics.</p>
-        </div>
-        <div style="text-align:right;">
-          <p style="font-family:'Bayer',var(--sans);font-size:9px;letter-spacing:0.32em;text-transform:uppercase;color:var(--lichen);margin-bottom:4px;">Standard rate</p>
-          <p style="font-family:var(--serif);font-style:italic;font-size:15px;color:var(--dust);opacity:0.7;">rises closer to the event</p>
-        </div>
-      </div>
-    </div>
-
-    <div id="ff-form-container">
-      <form id="ff-form" novalidate style="display:flex;flex-direction:column;gap:18px;" onsubmit="return submitFungiRSVP(event)">
-        <div class="ff-name-row" style="display:flex;gap:14px;flex-wrap:wrap;">
-          <div style="flex:1;min-width:200px;display:flex;flex-direction:column;gap:8px;">
-            <label for="ff-fn" style="font-family:var(--sans);font-weight:500;letter-spacing:0.22em;font-size:9px;color:var(--lichen);text-transform:uppercase;">First Name</label>
-            <input id="ff-fn" name="fn" type="text" required placeholder="your first name" style="padding:14px 16px;font-size:15px;background:rgba(136,186,200,0.05);border:1px solid rgba(136,186,200,0.22);color:var(--parchment);font-family:var(--sans);outline:none;">
-          </div>
-          <div style="flex:1;min-width:200px;display:flex;flex-direction:column;gap:8px;">
-            <label for="ff-ln" style="font-family:var(--sans);font-weight:500;letter-spacing:0.22em;font-size:9px;color:var(--lichen);text-transform:uppercase;">Last Name</label>
-            <input id="ff-ln" name="ln" type="text" required placeholder="your last name" style="padding:14px 16px;font-size:15px;background:rgba(136,186,200,0.05);border:1px solid rgba(136,186,200,0.22);color:var(--parchment);font-family:var(--sans);outline:none;">
-          </div>
-        </div>
-
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <label for="ff-em" style="font-family:var(--sans);font-weight:500;letter-spacing:0.22em;font-size:9px;color:var(--lichen);text-transform:uppercase;">Email</label>
-          <input id="ff-em" name="em" type="email" required placeholder="your email address" style="padding:14px 16px;font-size:15px;background:rgba(136,186,200,0.05);border:1px solid rgba(136,186,200,0.22);color:var(--parchment);font-family:var(--sans);outline:none;">
-        </div>
-
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <label for="ff-diet" style="font-family:var(--sans);font-weight:500;letter-spacing:0.22em;font-size:9px;color:var(--lichen);text-transform:uppercase;">Dietary &amp; allergies <span style="opacity:0.5;">(important)</span></label>
-          <input id="ff-diet" name="diet" type="text" placeholder="e.g. vegan · no nuts · gluten-free" style="padding:14px 16px;font-size:15px;background:rgba(136,186,200,0.05);border:1px solid rgba(136,186,200,0.22);color:var(--parchment);font-family:var(--sans);outline:none;">
-        </div>
-
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <label for="ff-note" style="font-family:var(--sans);font-weight:500;letter-spacing:0.22em;font-size:9px;color:var(--lichen);text-transform:uppercase;">A note <span style="opacity:0.5;">(optional)</span></label>
-          <textarea id="ff-note" name="note" rows="3" placeholder="anything you'd like Robin to know" style="padding:14px 16px;font-size:15px;background:rgba(136,186,200,0.05);border:1px solid rgba(136,186,200,0.22);color:var(--parchment);font-family:var(--sans);outline:none;resize:vertical;"></textarea>
-        </div>
-
-        <div style="margin-top:8px;display:flex;flex-direction:column;gap:12px;">
-          <button type="submit" id="ff-submit" style="font-family:var(--sans);font-weight:500;letter-spacing:0.22em;font-size:11px;text-transform:uppercase;color:var(--void);background:var(--amber-lt,#E8B14B);border:none;padding:17px 36px;cursor:pointer;width:100%;transition:opacity 0.2s;">Send reservation &mdash; &euro;77</button>
-          <p style="font-family:var(--serif);font-style:italic;font-size:12px;color:var(--dust);text-align:center;opacity:0.7;">This opens your email client. Robin writes back personally to confirm the seat + share payment details.</p>
-        </div>
-      </form>
-    </div>
-
-    <div id="ff-confirmation" style="display:none;text-align:center;padding:60px 0;" aria-live="polite" role="status">
-      <div style="width:36px;height:1px;background:var(--amber-lt);margin:0 auto 36px;opacity:0.6;"></div>
-      <p style="font-family:var(--serif);font-style:italic;font-size:24px;color:var(--parchment);margin-bottom:16px;line-height:1.5;">Thank you.</p>
-      <p style="font-family:var(--serif);font-size:15px;color:var(--dust);line-height:1.75;max-width:440px;margin:0 auto;">Your reservation request is on its way. Robin will write back within 48 hours to confirm your seat and share the payment link.<br><br>Looking forward to the table.</p>
-      <div style="width:36px;height:1px;background:var(--amber-lt);margin:36px auto 0;opacity:0.6;"></div>
-    </div>
-
   </div>
 </section>
-
 <style>
-  .ff-ticket:hover { border-color: rgba(232,177,75,0.55) !important; background: rgba(232,177,75,0.04) !important; }
-  .ff-ticket.ff-selected { border-color: var(--amber-lt,#E8B14B) !important; background: rgba(232,177,75,0.07) !important; }
-  .ff-ticket p:last-child { color: var(--dust); }
-  #ff-form input:focus, #ff-form textarea:focus { border-color: rgba(232,177,75,0.55) !important; }
-  #ff-form ::placeholder { color: rgba(192,180,154,0.4); font-style: italic; }
-  #ff-submit:hover { opacity: 0.85; }
-  @media (max-width: 640px) {
-    .ff-tickets { flex-direction: column; }
+  .outro { position: relative; overflow: hidden; background: var(--void); padding: clamp(110px, 16vh, 180px) 24px; }
+  .outro-bg { position: absolute; inset: 0; }
+  .outro-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; filter: saturate(0.92) contrast(1.04); }
+  /* Dim: heavy at the top/bottom seams so the section melts into the
+     page, lighter in the middle-left where the pitch sits, so the
+     plates read through instead of turning into a grey wash. */
+  .outro-bg::after { content: ''; position: absolute; inset: 0; background:
+      linear-gradient(180deg, rgba(5,9,12,0.96) 0%, rgba(5,9,12,0.42) 18%, rgba(5,9,12,0.42) 78%, rgba(5,9,12,0.97) 100%),
+      linear-gradient(90deg, rgba(5,9,12,0.72) 0%, rgba(5,9,12,0.45) 36%, rgba(5,9,12,0.1) 56%, rgba(5,9,12,0.55) 100%); }
+  .outro-inner { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 1fr minmax(0, 460px); gap: 72px; align-items: center; }
+
+  .outro-eyebrow { display: block; font-family: 'Bayer', var(--sans); font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--amber-lt, #E8B14B); text-shadow: 0 1px 12px rgba(0,0,0,0.7); }
+  .outro-title { font-family: 'TAN-PARADISO', var(--serif); font-weight: 300; font-size: clamp(48px, 7vw, 104px); line-height: 0.95; letter-spacing: 0.005em; color: var(--parchment); margin: 28px 0 24px; text-shadow: 0 2px 40px rgba(0,0,0,0.65); }
+  .outro-title em { font-style: italic; color: var(--amber-lt, #E8B14B); }
+  .outro-body { font-family: var(--serif); font-size: 15px; line-height: 1.8; color: var(--parchment); max-width: 44ch; text-shadow: 0 1px 18px rgba(0,0,0,0.85); }
+  .outro-points { list-style: none; margin: 30px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .outro-points li { position: relative; padding-left: 20px; font-family: 'Bayer', var(--sans); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--parchment); text-shadow: 0 1px 12px rgba(0,0,0,0.8); }
+  .outro-points li::before { content: '\2726'; position: absolute; left: 0; top: 1px; font-size: 9px; color: var(--amber-lt, #E8B14B); }
+
+  .outro-form { display: flex; flex-direction: column; gap: 20px; padding: 36px 32px 30px; background: rgba(5,9,12,0.78); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border: 0.5px solid rgba(232,177,75,0.3); box-shadow: 0 40px 90px rgba(0,0,0,0.5); }
+  .outro-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .outro-field { display: flex; flex-direction: column; gap: 8px; min-width: 0; border: 0; padding: 0; margin: 0; }
+  .outro-label { font-family: 'Bayer', var(--sans); font-size: 9.5px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--mist); padding: 0; }
+  .outro-opt { letter-spacing: 0.08em; text-transform: none; color: var(--dust); opacity: 0.7; }
+  .outro-field input, .outro-field textarea { width: 100%; padding: 13px 14px; font: 300 15px/1.5 var(--sans); color: var(--parchment); background: rgba(136,186,200,0.06); border: 1px solid rgba(136,186,200,0.22); border-radius: 0; outline: none; transition: border-color 0.2s, background 0.2s; }
+  .outro-field textarea { resize: vertical; min-height: 104px; }
+  .outro-field input:focus, .outro-field textarea:focus { border-color: rgba(232,177,75,0.65); background: rgba(136,186,200,0.09); }
+  .outro-field input[aria-invalid="true"] { border-color: #d9826b; }
+  .outro-field ::placeholder { color: rgba(192,180,154,0.45); }
+
+  .outro-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .outro-chip { position: relative; cursor: pointer; }
+  .outro-chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .outro-chip span { display: inline-block; padding: 8px 14px; font: 400 12.5px/1.2 var(--sans); letter-spacing: 0.02em; color: var(--dust); border: 0.5px solid rgba(232,177,75,0.3); border-radius: 999px; transition: background 0.2s, color 0.2s, border-color 0.2s; }
+  .outro-chip:hover span { border-color: rgba(232,177,75,0.65); color: var(--parchment); }
+  .outro-chip input:checked + span { background: var(--amber-lt, #E8B14B); border-color: var(--amber-lt, #E8B14B); color: var(--void); }
+  .outro-chip input:focus-visible + span { outline: 2px solid var(--mist); outline-offset: 2px; }
+
+  .outro-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .outro-submit { margin-top: 4px; width: 100%; padding: 17px 28px; font: 500 11px/1 var(--sans); letter-spacing: 0.24em; text-transform: uppercase; color: var(--void); background: var(--amber-lt, #E8B14B); border: 0; cursor: pointer; transition: opacity 0.2s, transform 0.2s; }
+  .outro-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+  .outro-submit:disabled { opacity: 0.55; cursor: progress; transform: none; }
+  .outro-status { margin: -6px 0 0; text-align: center; font-family: 'Bayer', var(--sans); font-size: 10px; letter-spacing: 0.12em; color: var(--dust); opacity: 0.75; line-height: 1.6; }
+  .outro-status.is-error { color: #e9a08c; opacity: 1; }
+
+  .outro-thanks { padding: 44px 36px; background: rgba(5,9,12,0.78); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border: 0.5px solid rgba(232,177,75,0.3); }
+  .outro-thanks-title { font-family: 'TAN-PARADISO', var(--serif); font-size: 44px; line-height: 1; color: var(--parchment); margin: 16px 0 14px; }
+
+  @media (max-width: 900px) {
+    .outro { padding: 96px 20px 80px; }
+    .outro-inner { grid-template-columns: 1fr; gap: 40px; }
+    .outro-bg::after { background:
+        linear-gradient(180deg, rgba(5,9,12,0.95) 0%, rgba(5,9,12,0.35) 14%, rgba(5,9,12,0.5) 42%, rgba(5,9,12,0.9) 62%, rgba(5,9,12,0.97) 100%); }
+  }
+  @media (max-width: 520px) {
+    .outro-row { grid-template-columns: 1fr; }
+    .outro-form, .outro-thanks { padding: 28px 20px 24px; }
+    .outro-points li { font-size: 9.5px; letter-spacing: 0.16em; }
   }
 </style>
 <script>
   (function(){
-    var selected = 66;
-    var card66 = document.getElementById('ff-card-77');
-    var card88 = document.getElementById('ff-card-77b');
-    var disp = document.getElementById('ff-amount-display');
-    var submitBtn = document.getElementById('ff-submit');
-    function selectAmount(amt){
-      selected = amt;
-      card66.classList.toggle('ff-selected', amt === 66);
-      card88.classList.toggle('ff-selected', amt === 88);
-      card66.setAttribute('aria-pressed', amt === 66 ? 'true' : 'false');
-      card88.setAttribute('aria-pressed', amt === 88 ? 'true' : 'false');
-      disp.innerHTML = '&euro;' + amt;
-      submitBtn.innerHTML = 'Send reservation &mdash; &euro;' + amt;
-    }
-    if (card66) card66.addEventListener('click', function(){ selectAmount(66); });
-    if (card88) card88.addEventListener('click', function(){ selectAmount(88); });
+    var form = document.getElementById('dinnerContact');
+    if (!form) return;
+    var statusEl = document.getElementById('dinnerContactStatus');
+    var thanks = document.getElementById('dinnerContactThanks');
+    var btn = form.querySelector('.outro-submit');
+    var idle = statusEl.textContent;
 
-    window.submitFungiRSVP = function(e){
+    function field(n){ return form.elements[n]; }
+    function val(n){ var el = field(n); return el ? String(el.value || '').trim() : ''; }
+    function setStatus(msg, isError){ statusEl.textContent = msg; statusEl.classList.toggle('is-error', !!isError); }
+    function invalid(n, msg){ var el = field(n); el.setAttribute('aria-invalid', 'true'); el.focus(); setStatus(msg, true); }
+    ['name', 'email'].forEach(function(n){
+      field(n).addEventListener('input', function(){ this.removeAttribute('aria-invalid'); if (statusEl.classList.contains('is-error')) setStatus(idle); });
+    });
+
+    function openMailto(d){
+      var subject = 'Dinner Experience enquiry · ' + d.name + ' · ' + d.interest;
+      var body = ['Name: ' + d.name, 'Email: ' + d.email, 'Dreaming of: ' + d.interest, '', d.message || '(no message)', '', 'Sent from fungai.art/dinner-experience'].join('\n');
+      window.location.href = 'mailto:robin@fungai.art?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    }
+
+    form.addEventListener('submit', function(e){
       e.preventDefault();
-      var form = document.getElementById('ff-form');
-      var fn = form.querySelector('[name="fn"]').value.trim();
-      var ln = form.querySelector('[name="ln"]').value.trim();
-      var em = form.querySelector('[name="em"]').value.trim();
-      var diet = form.querySelector('[name="diet"]').value.trim();
-      var note = form.querySelector('[name="note"]').value.trim();
-      if (!fn || !ln || !em) {
-        if (!fn) form.querySelector('[name="fn"]').focus();
-        else if (!ln) form.querySelector('[name="ln"]').focus();
-        else form.querySelector('[name="em"]').focus();
-        return false;
-      }
-      var subj = 'Fungi Fever Fest reservation -- ' + fn + ' ' + ln + ' -- €' + selected;
-      var body = [
-        'First name: ' + fn,
-        'Last name: ' + ln,
-        'Email: ' + em,
-        'Contribution: €' + selected,
-        'Dietary / allergies: ' + (diet || '(none stated)'),
-        'Note: ' + (note || '--'),
-        '',
-        'Reservation via fungai.art/dinner-experience#reserve',
-        'Event: Fungi Fever Fest, Holzmarkt Berlin, Sat 11 Oct 2026'
-      ].join('\n');
-      window.location.href = 'mailto:robin@fungai.art?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
-      document.getElementById('ff-form-container').style.display = 'none';
-      document.getElementById('ff-confirmation').style.display = 'block';
-      return false;
-    };
+      var checked = form.querySelector('input[name="interest"]:checked');
+      var d = { name: val('name'), email: val('email'), interest: checked ? checked.value : 'Something else', message: val('message'), company: val('company') };
+      if (!d.name) return invalid('name', 'Add your name so Robin knows who is writing.');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) return invalid('email', 'That email address doesn’t look right.');
+
+      btn.disabled = true;
+      setStatus('Sending…');
+      fetch('/api/dinner-contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) })
+        .then(function(res){ return res.json().catch(function(){ return {}; }).then(function(data){ return { res: res, data: data }; }); })
+        .then(function(r){
+          if (r.res.ok && r.data.sent) {
+            form.hidden = true;
+            thanks.hidden = false;
+            return;
+          }
+          if (r.res.status === 400 && r.data.error) { btn.disabled = false; setStatus(r.data.error, true); return; }
+          throw new Error('not sent');
+        })
+        .catch(function(){
+          // Function unreachable or email not sent — hand the message to
+          // the visitor's mail app so the enquiry still reaches Robin.
+          btn.disabled = false;
+          openMailto(d);
+          setStatus('Your mail app should open with the message ready — just press send. Or write to robin@fungai.art.');
+        });
+    });
   })();
 </script>
 
@@ -932,7 +925,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
       <span class="sec-label" style="color:var(--amber-lt,#E8B14B);">Track record</span>
       <h2 class="sec-title">Where the table has already <em>set</em>.</h2>
       <div class="events-alive-total">
-        <span class="events-alive-total-num">225+</span>
+        <span class="events-alive-total-num">285+</span>
         <span class="events-alive-total-label">guests fed &middot; 4 countries &middot; since 2023</span>
       </div>
     </div>
@@ -959,10 +952,10 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
         </div>
       </a>
       <a href="#" class="events-alive-card reveal" onclick="event.preventDefault();">
-        <div class="events-alive-pax private">◯</div>
+        <div class="events-alive-pax">60</div>
         <div class="events-alive-body">
-          <div class="events-alive-venue">Private villas</div>
-          <div class="events-alive-meta">Bali &middot; Stockholm &middot; Ibiza</div>
+          <div class="events-alive-venue">Mexico City</div>
+          <div class="events-alive-meta">Mexico &middot; Sensual Dinner</div>
         </div>
       </a>
     </div>
@@ -998,48 +991,29 @@ html.reveal-anim .reveal.in{opacity:1;transform:none}
   }
 </style>
 
-<!-- BOTTOM CTA BANNER — sleek closing invitation. Replaces the old
-     private-event booking block (booking flow will live on an
-     affiliate link Robin sets up separately). -->
+<!-- BOTTOM SIGN-OFF — the closing photo + enquiry form now live in the
+     outro section (#reserve); this strip just carries the handles. -->
 <section class="bottom-cta">
-  <div class="bottom-cta-bg">
-    <img src="/dinner-experience/outro.webp" alt="" loading="lazy">
-  </div>
-  <div class="bottom-cta-content">
-    <h2 class="bottom-cta-title"><a href="#reserve" class="bottom-cta-reserve">Reserve a seat <span class="arrow">&rarr;</span></a></h2>
-    <p class="bottom-cta-meta">Sat 11 Oct 2026 &middot; Holzmarkt Berlin &middot; &euro;77 early bird</p>
-    <div class="bottom-cta-social">
-      <a href="mailto:robin@fungai.art?subject=Dinner%20Experience%20inquiry">robin@fungai.art</a>
-      <span aria-hidden="true">&middot;</span>
-      <a href="https://www.instagram.com/fungai.art" target="_blank" rel="noopener noreferrer">@fungai.art</a>
-      <span aria-hidden="true">&middot;</span>
-      <a href="/">fungai.art</a>
-    </div>
+  <div class="bottom-cta-social">
+    <a href="#reserve">Enquire</a>
+    <span aria-hidden="true">&middot;</span>
+    <a href="mailto:robin@fungai.art?subject=Dinner%20Experience%20inquiry">robin@fungai.art</a>
+    <span aria-hidden="true">&middot;</span>
+    <a href="https://www.instagram.com/fungai.art" target="_blank" rel="noopener noreferrer">@fungai.art</a>
+    <span aria-hidden="true">&middot;</span>
+    <a href="/">fungai.art</a>
   </div>
 </section>
 <style>
-  .bottom-cta { position: relative; min-height: 320px; display: flex; align-items: center; justify-content: center; padding: 64px 24px; overflow: hidden; text-align: center; }
-  .bottom-cta-bg { position: absolute; inset: 0; }
-  .bottom-cta-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
-  .bottom-cta-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,9,12,0.78) 0%, rgba(5,9,12,0.62) 45%, rgba(5,9,12,0.90) 100%); }
-  .bottom-cta-content { position: relative; z-index: 1; max-width: 720px; }
-  .bottom-cta-title { font-family: 'TAN-PARADISO','Cormorant Garamond',serif; font-weight: 300; font-size: clamp(38px, 6vw, 68px); line-height: 1.05; letter-spacing: 0.005em; margin: 0 0 14px; }
-  .bottom-cta-reserve { color: var(--parchment); text-decoration: none; display: inline-flex; align-items: baseline; gap: 18px; padding-bottom: 6px; border-bottom: 0.5px solid rgba(232,177,75,0.5); transition: color 0.2s, border-color 0.2s; }
-  .bottom-cta-reserve .arrow { font-size: 0.7em; color: var(--amber-lt,#E8B14B); transition: transform 0.25s; display: inline-block; }
-  .bottom-cta-reserve:hover { color: var(--amber-lt,#E8B14B); border-color: var(--amber-lt,#E8B14B); }
-  .bottom-cta-reserve:hover .arrow { transform: translateX(6px); }
-  .bottom-cta-meta { font-family: 'Bayer',var(--sans); font-size: 10.5px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--amber-lt,#E8B14B); margin: 0 0 22px; }
-  .bottom-cta-social { font-family: var(--sans); font-size: 10.5px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--dust); opacity: 0.75; }
+  .bottom-cta { padding: 40px 24px; text-align: center; background: var(--void); border-top: 0.5px solid rgba(232,177,75,0.14); }
+  .bottom-cta-social { font-family: var(--sans); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dust); opacity: 0.8; }
   .bottom-cta-social a { color: inherit; text-decoration: none; transition: color 0.2s; }
-  .bottom-cta-social a:hover { color: var(--amber-lt); }
+  .bottom-cta-social a:hover { color: var(--amber-lt, #E8B14B); }
   .bottom-cta-social span { margin: 0 10px; }
   @media (max-width: 640px) {
-    .bottom-cta { min-height: 260px; padding: 48px 20px; }
-    .bottom-cta-title { font-size: clamp(28px, 8vw, 46px); }
-    .bottom-cta-reserve { gap: 12px; }
-    .bottom-cta-meta { font-size: 9px; letter-spacing: 0.20em; margin-bottom: 18px; }
-    .bottom-cta-social { font-size: 9.5px; letter-spacing: 0.18em; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 0; }
-    .bottom-cta-social span { margin: 0 6px; }
+    .bottom-cta { padding: 32px 20px; }
+    .bottom-cta-social { font-size: 9.5px; letter-spacing: 0.16em; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 0; }
+    .bottom-cta-social span { margin: 0 8px; }
   }
 </style>
 
