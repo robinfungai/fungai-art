@@ -76,19 +76,26 @@ interface ForageConditions {
   forecast: { date: string; rain: number; tMax: number; tMin: number }[];
 }
 
-// Organic earthy map style — CARTO Voyager (warm/natural tones, no account needed).
-// CARTO dark-matter — the actual dark basemap. Prior default was
-// voyager-gl-style which is CARTO's cream/beige LIGHT basemap (the
-// button was labelled "🌑 Dark" but the tiles were not). This is a
-// genuine dark palette that matches the app's #07110d ground.
-// Free (attribution required — see ForageDataCredits component).
-const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
+// ── Basemaps · licensing ───────────────────────────────────────────
+// fungai.art is a commercial site. The public Esri World Imagery tile
+// server and CARTO basemaps are NOT licensed for commercial use without
+// an account. The licensed path is Esri's ArcGIS Location Platform
+// (free tier: 2M basemap tiles / month, commercial apps allowed), keyed
+// by VITE_ARCGIS_API_KEY at build time. With the key set, both map modes
+// come from the ArcGIS Basemap Styles service (v2) and carry Esri's own
+// attribution. Without it, the legacy public sources below stay as a
+// fallback so the map never goes blank — set the key to be licensed.
+const ARCGIS_API_KEY: string | undefined = import.meta.env.VITE_ARCGIS_API_KEY || undefined;
+const arcgisStyle = (name: string) =>
+  `https://basemapstyles-api.arcgis.com/arcgis/rest/services/styles/v2/styles/${name}?token=${encodeURIComponent(ARCGIS_API_KEY || '')}`;
+const BASEMAP_LICENSED = !!ARCGIS_API_KEY;
 
-// Free satellite imagery — ESRI World Imagery + CARTO dark_only_labels
-// overlay so country / region / city names still read at every zoom.
-// Bare satellite imagery has no place labels; the labels-only tileset
-// is a transparent PNG so it composites cleanly on top.
-const SATELLITE_STYLE = {
+// Legacy fallback — CARTO dark-matter (dark palette matching #07110d).
+const LEGACY_DARK_STYLE = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
+
+// Legacy fallback — Esri World Imagery + CARTO dark_only_labels overlay
+// so country / region / city names still read at every zoom.
+const LEGACY_SATELLITE_STYLE = {
   version: 8 as const,
   sources: {
     satellite: {
@@ -113,6 +120,9 @@ const SATELLITE_STYLE = {
     { id: 'labels-layer',    type: 'raster' as const, source: 'labels'    },
   ],
 };
+
+const MAP_STYLE       = BASEMAP_LICENSED ? arcgisStyle('arcgis/dark-gray') : LEGACY_DARK_STYLE;
+const SATELLITE_STYLE = BASEMAP_LICENSED ? arcgisStyle('arcgis/imagery')   : LEGACY_SATELLITE_STYLE;
 
 const SEASONS: Season[] = ['spring', 'summer', 'autumn', 'winter'];
 const SEASON_ICONS: Record<Season, string> = {
@@ -386,8 +396,14 @@ function ForageDataCredits() {
         }}>
           <div style={{ marginBottom: 4 }}><strong style={{ color: '#EDE5D8' }}>Species observations:</strong> GBIF.org (Global Biodiversity Information Facility) and iNaturalist research-grade observations (CC-BY-NC by their observers).</div>
           <div style={{ marginBottom: 4 }}><strong style={{ color: '#EDE5D8' }}>Weather &amp; conditions:</strong> Open-Meteo (CC-BY).</div>
-          <div style={{ marginBottom: 4 }}><strong style={{ color: '#EDE5D8' }}>Satellite tiles:</strong> © Esri &amp; Earthstar Geographics.</div>
-          <div style={{ marginBottom: 4 }}><strong style={{ color: '#EDE5D8' }}>Labels &amp; base tiles:</strong> © OpenStreetMap contributors, © CARTO.</div>
+          {BASEMAP_LICENSED ? (
+            <div style={{ marginBottom: 4 }}><strong style={{ color: '#EDE5D8' }}>Basemaps:</strong> Powered by Esri · © Esri, Maxar, Earthstar Geographics, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors and the GIS user community.</div>
+          ) : (
+            <>
+              <div style={{ marginBottom: 4 }}><strong style={{ color: '#EDE5D8' }}>Satellite tiles:</strong> © Esri &amp; Earthstar Geographics.</div>
+              <div style={{ marginBottom: 4 }}><strong style={{ color: '#EDE5D8' }}>Labels &amp; base tiles:</strong> © OpenStreetMap contributors, © CARTO.</div>
+            </>
+          )}
           <div style={{ marginTop: 6, fontFamily: 'monospace', fontSize: 8.5, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#8B7E62' }}>
             Ecological node data · Fungai Art
           </div>
