@@ -108,7 +108,22 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .hero h1{font-family:var(--display);font-weight:300;font-size:clamp(42px,10vw,68px);line-height:0.98;color:var(--parchment);letter-spacing:-0.005em;margin-bottom:18px}
 .hero h1 em{font-style:italic;background:linear-gradient(120deg,var(--amber-l),var(--sage) 60%,var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero-sub{font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.65;color:var(--dust);max-width:440px;margin:0 auto 34px}
-.hero-meta{display:flex;justify-content:center;gap:6px 22px;flex-wrap:wrap;font-family:var(--mono);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--dust-d);margin-bottom:36px}
+.hero-meta{display:flex;justify-content:center;gap:6px 22px;flex-wrap:wrap;font-family:var(--mono);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--dust-d);margin-bottom:24px}
+/* ── Trust microcopy panel (Round 2 visual brief) ────────────────
+   Quiet framing before the first question. No right answers, brief,
+   revisable, not a diagnosis. Kept compact + collapsible-feeling via
+   the subtle inner rule — no bright chrome. Serif italic for warmth
+   on the first three lines; the caution line and privacy footnote
+   are mono-caps to read as fine-print. */
+.hero-trust{max-width:460px;margin:0 auto 30px;padding:18px 20px 14px;background:rgba(232,177,75,0.025);border:0.5px solid rgba(232,177,75,0.14);border-radius:14px;text-align:left}
+.hero-trust-line{font-family:var(--serif);font-style:italic;font-size:14px;line-height:1.6;color:var(--parchment);opacity:0.85;margin:0 0 8px}
+.hero-trust-line:nth-child(3){margin-bottom:12px}
+.hero-trust-caution{font-family:var(--mono) !important;font-style:normal !important;font-size:9.5px !important;letter-spacing:0.16em;text-transform:uppercase;color:var(--amber-l) !important;opacity:0.7 !important;padding-top:10px;border-top:0.5px solid rgba(232,177,75,0.12);margin-top:2px !important}
+.hero-trust-privacy{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--dust-d);opacity:0.65;margin-top:10px;padding-top:8px;border-top:0.5px dashed rgba(255,255,255,0.05)}
+@media (max-width:640px){
+  .hero-trust{padding:14px 16px 12px;margin-bottom:22px}
+  .hero-trust-line{font-size:13px}
+}
 .hero-meta span{display:inline-flex;align-items:center;gap:6px}
 .hero-meta span::before{content:'◇';color:var(--amber-l);font-size:10px}
 .hero-cta{display:inline-flex;align-items:center;gap:14px;padding:18px 32px;background:linear-gradient(135deg,var(--amber-l),var(--amber));color:var(--void);font-family:var(--mono);font-size:11px;letter-spacing:0.28em;text-transform:uppercase;text-decoration:none;border:none;border-radius:999px;cursor:pointer;transition:transform .2s,box-shadow .2s,opacity .25s;font-weight:500;box-shadow:0 12px 40px -12px rgba(232,177,75,0.5)}
@@ -156,6 +171,18 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .q-opt:active{transform:scale(0.99)}
 .q-opt.on{border-color:var(--amber-l);background:rgba(232,177,75,0.06);box-shadow:0 0 18px -6px rgba(232,177,75,0.35)}
 .q-opt-glyph{font-family:var(--display);font-style:italic;font-size:24px;color:var(--amber-l);line-height:1;flex-shrink:0;width:28px;text-align:center;margin-top:-2px}
+/* SVG motif variant — inherits currentColor from the amber-l seed
+   above so the same selected/idle transitions apply. Slightly larger
+   effective size than text glyphs to hold graphic weight. */
+.q-opt-glyph-svg{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;margin-top:-4px}
+.q-opt-glyph-svg svg{width:26px;height:26px;color:currentColor;transition:transform .35s cubic-bezier(0.22,0.61,0.36,1),opacity .3s ease;opacity:0.85}
+.q-opt.on .q-opt-glyph-svg svg{opacity:1;transform:scale(1.06)}
+.q-opt-compact .q-opt-glyph-svg{width:26px;height:26px;margin-top:-2px}
+.q-opt-compact .q-opt-glyph-svg svg{width:22px;height:22px}
+@media (prefers-reduced-motion:reduce){
+  .q-opt-glyph-svg svg{transition:opacity .2s ease}
+  .q-opt.on .q-opt-glyph-svg svg{transform:none}
+}
 .q-opt-body{flex:1;min-width:0}
 /* Both label and desc are span children of .q-opt-body but need to
    stack vertically with space between — margin-bottom on inline is
@@ -1092,6 +1119,17 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
       <span>slow-pace medicine</span>
       <span>by herbalists</span>
     </div>
+
+    <!-- Trust microcopy — kept compact, quiet. Sets the frame before
+         the first question: no right answers, brief, revisable, not a
+         diagnosis. Copy per Round 2 visual brief. -->
+    <div class="hero-trust" role="note" aria-label="About this reading">
+      <div class="hero-trust-line">A short reflection on your current pattern.</div>
+      <div class="hero-trust-line">There are no right answers. Choose what feels closest to your experience lately.</div>
+      <div class="hero-trust-line">This takes about 2 minutes, and you can change any answer before your result is created.</div>
+      <div class="hero-trust-line hero-trust-caution">This is not a diagnosis. It is a moment to notice your current pattern.</div>
+      <div class="hero-trust-privacy">Your answers are used to create this experience. We do not need your name to begin.</div>
+    </div>
     <!-- Consent gate. Age moved INTO the questionnaire (with a
          dedicated under-18 pathway that returns a gentle formula),
          so the entry gate now only carries the GDPR / data-consent
@@ -1389,12 +1427,22 @@ const QUESTIONS = [
     title:'What time of day is <em>hardest</em>?',
     hint:'Tells us about your rhythm and where the extract needs to land.',
     type:'compact-single',
+    // Per-answer visual motifs (Round 2 visual brief). Each SVG reads
+    // as its time — sun rising/at-peak/setting, crescent + stars, full-day
+    // orbit — never a health-symbolic assessment. Motifs stay decorative
+    // (aria-hidden) and inherit currentColor from the pill's selected/idle
+    // state; the text label + desc remain the accessible content.
     options:[
-      { v:'morning',  glyph:'◐',  label:'Morning',            desc:'Getting started is slow.' },
-      { v:'midday',   glyph:'●',  label:'Midday',             desc:'The 2pm dip. Focus collapses.' },
-      { v:'evening',  glyph:'◑',  label:'Evening',            desc:'Can\'t drop out of the day.' },
-      { v:'night',    glyph:'○',  label:'Deep night',         desc:'Waking at 3am. Racing mind.' },
-      { v:'any',      glyph:'◈',  label:'Not time-specific',  desc:'Whole-day thing.' },
+      { v:'morning',  glyph:'◐',  label:'Morning',            desc:'Getting started is slow.',
+        motif:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M4 18h16" opacity="0.5"/><path d="M12 6v-2" opacity="0.7"/><path d="M5.5 11l-1.4-1.4" opacity="0.55"/><path d="M18.5 11l1.4-1.4" opacity="0.55"/><circle cx="12" cy="14" r="4" fill="currentColor" opacity="0.18"/><path d="M8 18a4 4 0 0 1 8 0"/></svg>' },
+      { v:'midday',   glyph:'●',  label:'Midday',             desc:'The 2pm dip. Focus collapses.',
+        motif:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" opacity="0.25"/><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4l1.4-1.4M17 7l1.4-1.4" opacity="0.7"/></svg>' },
+      { v:'evening',  glyph:'◑',  label:'Evening',            desc:'Can\'t drop out of the day.',
+        motif:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M4 18h16" opacity="0.5"/><circle cx="12" cy="17" r="4" fill="currentColor" opacity="0.16"/><path d="M8 18a4 4 0 0 1 8 0"/><path d="M12 12v-3M8.5 12l-1.2-1.2M15.5 12l1.2-1.2" opacity="0.45"/></svg>' },
+      { v:'night',    glyph:'○',  label:'Deep night',         desc:'Waking at 3am. Racing mind.',
+        motif:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 13.5a5.5 5.5 0 1 1-5-8 4 4 0 0 0 5 8z" fill="currentColor" opacity="0.14"/><path d="M15.5 13.5a5.5 5.5 0 1 1-5-8 4 4 0 0 0 5 8z"/><circle cx="18" cy="7" r="0.55" fill="currentColor" opacity="0.75"/><circle cx="20" cy="12" r="0.4" fill="currentColor" opacity="0.55"/></svg>' },
+      { v:'any',      glyph:'◈',  label:'Not time-specific',  desc:'Whole-day thing.',
+        motif:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><circle cx="12" cy="12" r="7.5" opacity="0.55"/><circle cx="12" cy="12" r="7.5" stroke-dasharray="1 3" opacity="0.35"/><circle cx="12" cy="12" r="1.6" fill="currentColor" opacity="0.75"/></svg>' },
     ],
   },
   {
@@ -1586,7 +1634,7 @@ const PAGES = [
         transitionCopy: 'Let\'s begin with your rhythm.',
         nextLabel: 'state' },
       { keys: ['nervous', 'energy_curve'],  layout: 'zigzag',
-        stageLabel: 'State',    botanicalStage: 2,
+        stageLabel: 'Body',     botanicalStage: 2,
         transitionCopy: 'Now notice the quality of your energy.',
         nextLabel: 'arc' },
       { keys: ['sleep', 'duration'],        layout: 'zigzag',
@@ -2330,7 +2378,13 @@ function renderQuestionBody(q, opts){
     b.dataset.v = o.v;
     if (q.type === 'multi' && Array.isArray(current) && current.includes(o.v)) b.classList.add('on');
     if ((q.type === 'single' || q.type === 'branch' || q.type === 'compact-single') && current === o.v) b.classList.add('on');
-    b.innerHTML = '<span class="q-opt-glyph">' + (o.glyph || '◇') + '</span><span class="q-opt-body"><span class="q-opt-label">' + o.label + '</span>' + (o.desc ? '<span class="q-opt-desc">' + o.desc + '</span>' : '') + '</span>';
+    // Two glyph paths — richer per-answer SVG motifs (o.motif) fall back
+    // to the display-font text glyph (o.glyph) when a motif isn't defined.
+    // .q-opt-glyph-svg keeps SVGs centered + colour-inherited from the pill.
+    const glyphMarkup = o.motif
+      ? '<span class="q-opt-glyph q-opt-glyph-svg" aria-hidden="true">' + o.motif + '</span>'
+      : '<span class="q-opt-glyph">' + (o.glyph || '◇') + '</span>';
+    b.innerHTML = glyphMarkup + '<span class="q-opt-body"><span class="q-opt-label">' + o.label + '</span>' + (o.desc ? '<span class="q-opt-desc">' + o.desc + '</span>' : '') + '</span>';
     b.addEventListener('click', () => onPick(q, o.v, b, optsEl, autoAdvance));
     optsEl.appendChild(b);
   });
