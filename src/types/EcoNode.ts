@@ -10,7 +10,11 @@ export type HabitatType =
   | 'mountain_forest'
   | 'mediterranean'
   | 'ancient_forest'
-  | 'jungle_edge';
+  | 'jungle_edge'
+  // Coprophilous + nitrophilous fungi: grazed pasture, dung, manured
+  // ground, compost, wood chips and mulch. Nodes of this type carry
+  // their deadly residents as species entries (see `poisonous`).
+  | 'nutrient_rich';
 
 export type Season = 'spring' | 'summer' | 'autumn' | 'winter';
 
@@ -55,6 +59,12 @@ export interface SpeciesEntry {
   confusableWith?: string[];
   /** Risk class of the worst realistic lookalike. */
   toxicityClass?: ToxicityClass;
+  /**
+   * The species' OWN toxicity — for entries listed because they are
+   * dangerous residents of a habitat (e.g. Pholiotina rugosa in wood
+   * chips). NodePanel renders a red "deadly" / "poisonous" chip.
+   */
+  poisonous?: Exclude<ToxicityClass, 'none'>;
 }
 
 export interface EcoNode {

@@ -889,6 +889,57 @@ export const ECO_NODES: EcoNode[] = [
     extraction_notes: 'Lavender: oil infusion (50°C max to preserve linalool). Rosemary: 40% ethanol extract. St. John\'s Wort: warm oil infusion (red oil = correct preparation).',
     lore: 'The Sintra hills catch the Atlantic cloud every afternoon. Below the mist, the rosemary and rock rose grow on limestone terraces that have been farmed since the Romans. The Fungai Art Lisbon studio residency explores this Atlantic pharmacy.',
   },
+
+  // ── Nutrient-rich · dung & compost ──────────────────────────────────
+  // Coprophilous (dung-loving) and nitrophilous fungi. Every edible entry
+  // carries confusableWith + toxicityClass (S-01), and the deadly
+  // residents of each habitat are species entries in their own right
+  // (`poisonous`) — the node shows what lives here, not just what's edible.
+  // No extraction_notes: nothing here is an extraction ally.
+  {
+    id: 'sweden-osterlen-grazed-pasture',
+    region: 'Skåne, Sweden',
+    location: 'Österlen — Grazed Pastures & Dung-Rich Turf',
+    nodeType: 'nutrient_rich',
+    coordinates: [14.22, 55.64],
+    moisture: 0.55,
+    altitude: 45,
+    best_season: ['summer', 'autumn'],
+    species: [
+      { name: 'Dung Roundhead (Protostropharia semiglobata)', probability: 0.74, peak_season: ['summer','autumn'], note: 'Directly on cow and horse dung — the signature fungus of grazed land. Not edible.' },
+      { name: 'Shaggy Ink Cap (Coprinus comatus)',            probability: 0.68, peak_season: ['autumn'],          edible: true, confusableWith: ['Common Ink Cap (Coprinopsis atramentaria)'], toxicityClass: 'mild', note: 'Disturbed, manured ground and track edges. Only young, white-gilled caps — it dissolves to ink within hours of picking.' },
+      { name: 'Field Mushroom (Agaricus campestris)',          probability: 0.60, peak_season: ['summer','autumn'], edible: true, confusableWith: ['Destroying Angel (Amanita virosa)', 'Yellow Stainer (Agaricus xanthodermus)'], toxicityClass: 'lethal', note: 'Short grazed turf after warm rain. Gills pink turning chocolate, never white; no sac (volva) at the base.' },
+      { name: 'Fairy Ring Champignon (Marasmius oreades)',    probability: 0.58, peak_season: ['summer','autumn'], edible: true, confusableWith: ['Fool\'s Funnel (Clitocybe rivulosa)'], toxicityClass: 'severe', note: 'Rings in grazed and mown grass — its muscarine-bearing lookalike fruits in the same rings.' },
+      { name: 'Egghead Mottlegill (Panaeolus semiovatus)',    probability: 0.50, peak_season: ['summer','autumn'], note: 'On old horse and cow dung. Not edible.' },
+      { name: 'Yellow Fieldcap (Bolbitius titubans)',         probability: 0.44, peak_season: ['summer','autumn'], note: 'Manured grass and dung; collapses within a day. Not edible.' },
+      { name: 'Conecaps (Conocybe & Pholiotina species)',     probability: 0.40, peak_season: ['summer','autumn'], poisonous: 'lethal', note: 'DEADLY in part — Pholiotina rugosa carries amatoxins. Small brown mushrooms of manured lawns and pasture, indistinguishable in the field from harmless ones.' },
+    ],
+    medicinal: [],
+    folklore: ['Grazing keeps European pasture fungi alive: livestock hold the turf short and return nitrogen as dung, feeding coprophilous species that disappear within a few years of grazing stopping or artificial fertiliser taking over.'],
+    lore: 'Österlen\'s cattle pastures run down to the Baltic between beech hangers and apple orchards. After late-summer rain the dung and the turf around it fruit in sequence — roundheads and mottlegills on the dung itself, field mushrooms and fairy rings in the grass. Study and photograph: the little brown mushrooms here are where serious poisonings start.',
+  },
+  {
+    id: 'germany-berlin-mulch-compost',
+    region: 'Berlin, Germany',
+    location: 'Berlin — Community Gardens, Mulch & Compost (Tempelhofer Feld)',
+    nodeType: 'nutrient_rich',
+    coordinates: [13.405, 52.474],
+    moisture: 0.50,
+    altitude: 45,
+    best_season: ['spring', 'summer', 'autumn'],
+    species: [
+      { name: 'Common Ink Cap (Coprinopsis atramentaria)',      probability: 0.60, peak_season: ['spring','autumn'], poisonous: 'mild', note: 'Buried wood and compost-rich soil. Contains coprine — with alcohol, even days later, it causes flushing, nausea and palpitations. Treat as not edible.' },
+      { name: 'Shaggy Ink Cap (Coprinus comatus)',              probability: 0.58, peak_season: ['autumn'],          edible: true, confusableWith: ['Common Ink Cap (Coprinopsis atramentaria)'], toxicityClass: 'mild', note: 'Freshly turned soil, path edges and compost margins. Only young, white-gilled caps.' },
+      { name: 'Wine Cap (Stropharia rugosoannulata)',           probability: 0.42, peak_season: ['summer','autumn'], edible: true, confusableWith: ['Pholiotina rugosa', 'Deadly Galerina (Galerina marginata)'], toxicityClass: 'lethal', note: 'Fresh wood-chip beds. Large wine-red cap with a ridged ring — deadly small brown species share the same chips.' },
+      { name: 'Yellow Fieldcap (Bolbitius titubans)',           probability: 0.38, peak_season: ['summer','autumn'], note: 'Manure, compost and wood chips. Not edible.' },
+      { name: 'Pholiotina rugosa',                              probability: 0.36, peak_season: ['spring','summer','autumn'], poisonous: 'lethal', note: 'DEADLY — amatoxins, the same toxins as the death cap. A small brown mushroom common in wood chips and mulch beds.' },
+      { name: 'Deadly Galerina (Galerina marginata)',           probability: 0.30, peak_season: ['autumn'],          poisonous: 'lethal', note: 'DEADLY — amatoxins. On buried wood and chips; mistaken for edible brown clusters.' },
+      { name: 'Plantpot Dapperling (Leucocoprinus birnbaumii)', probability: 0.30, peak_season: ['summer'],          poisonous: 'mild', note: 'Sulphur-yellow, in compost, raised beds and greenhouses. Poisonous.' },
+    ],
+    medicinal: [],
+    folklore: ['City compost and wood-chip mulch are among the richest fungal habitats in Europe\'s cities — and the most treacherous: the same beds that fruit wine caps and ink caps host amatoxin-bearing Pholiotina and Galerina.'],
+    lore: 'The Allmende gardens on the old Tempelhof airfield run on compost heaps, straw and chipped wood. Through a wet autumn the beds fruit constantly — ink caps along the paths, yellow dapperlings in the raised beds, small brown mushrooms everywhere in the chips. A place to learn to look, not to pick.',
+  },
 ];
 
 export const HABITAT_COLORS: Record<string, string> = {
@@ -904,6 +955,7 @@ export const HABITAT_COLORS: Record<string, string> = {
   mediterranean:   '#E8714B',
   ancient_forest:  '#C48838',
   jungle_edge:     '#4A7A3A',
+  nutrient_rich:   '#B5895A',
 };
 
 export const HABITAT_LABELS: Record<string, string> = {
@@ -919,6 +971,7 @@ export const HABITAT_LABELS: Record<string, string> = {
   mediterranean:   'Mediterranean',
   ancient_forest:  'Ancient Forest',
   jungle_edge:     'Jungle Edge',
+  nutrient_rich:   '💩 Nutrient-rich',
 };
 
 export const SEASON_PROBABILITY = (base: number, nodeSeason: string[], currentSeason: string): number => {

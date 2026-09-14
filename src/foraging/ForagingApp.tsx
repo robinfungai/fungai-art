@@ -12,6 +12,7 @@ import { HARVEST_BY_MONTH, HARVEST_PLANTS, MONTH_SV } from '../data/harvestCalen
 import { EcoNode, Season, HabitatType } from '../types/EcoNode';
 import NodePanel from './NodePanel';
 import { scoreSpecies, rainBoostFor } from './scoring';
+import { NUTRIENT_RICH_CAUTION } from './nutrientRich';
 
 // Moon phase calculation (pure JS, no API)
 function getMoonPhase() {
@@ -433,6 +434,10 @@ export default function ForagingApp() {
   // Satellite imagery is the default basemap; Dark stays one tap away.
   const [mapMode, setMapMode] = useState<'dark' | 'satellite'>('satellite');
   const [habitatFilter, setHabitatFilter] = useState<HabitatType | 'all'>('all');
+  // The nutrient-rich caution opens every time that habitat is selected;
+  // the visitor can shrink it to a one-line pill but not dismiss it.
+  const [nutrientCautionOpen, setNutrientCautionOpen] = useState(true);
+  useEffect(() => { if (habitatFilter === 'nutrient_rich') setNutrientCautionOpen(true); }, [habitatFilter]);
 
   // ── Mobile top bar + immersive map ─────────────────────────────────
   //   topbarOpen: on phones the habitat chips + extras row of the top bar
@@ -695,6 +700,7 @@ export default function ForagingApp() {
       mediterranean: 'Aromatic Sun-Cured Garrigue',
       ancient_forest: 'Old-Growth Lichen Sanctum',
       jungle_edge: 'Jungle Margin Bioactive Belt',
+      nutrient_rich: 'Nitrogen-Rich Pasture & Compost Belt',
     };
     const zoneName = ZONE_NAMES[ranked[0].node.nodeType] || 'Living Ecological Zone';
 
@@ -707,9 +713,12 @@ export default function ForagingApp() {
     type Scored = {
       name: string; probability: number; distKm: number; node: EcoNode;
       inSeason: boolean; medicinal?: boolean; edible?: boolean;
+      poisonous?: 'mild' | 'severe' | 'lethal';
       isFungal: boolean;
     };
-    const FUNGAL_HINTS = ['mycelium', 'mushroom', 'fung', 'chag', 'reishi', 'porc', 'morch', 'plurot', 'oyst', 'cantharel', 'chant', 'maitak', 'wood ear', 'birch poly'];
+    const FUNGAL_HINTS = ['mycelium', 'mushroom', 'fung', 'chag', 'reishi', 'porc', 'morch', 'plurot', 'oyst', 'cantharel', 'chant', 'maitak', 'wood ear', 'birch poly',
+      // nutrient-rich habitat genera (dung, compost, wood chips)
+      'coprin', 'agaricus', 'marasmius', 'panaeolus', 'bolbitius', 'stropharia', 'conocybe', 'pholiotina', 'galerina', 'leucocoprinus'];
     const isFungal = (name: string) => FUNGAL_HINTS.some(h => name.toLowerCase().includes(h));
 
     const scored: Scored[] = [];
@@ -728,6 +737,7 @@ export default function ForagingApp() {
         scored.push({
           name: sp.name, probability, distKm: km, node,
           inSeason, medicinal: sp.medicinal, edible: sp.edible,
+          poisonous: sp.poisonous,
           isFungal: fungal,
         });
       }
@@ -953,6 +963,10 @@ export default function ForagingApp() {
           lat, lng,
           regionName: mycoRegionName.trim() || undefined,
           history: mycoMessages.slice(-6),
+          // With the nutrient-rich habitat selected MYCO answers about dung /
+          // compost / wood-chip fungi, lookalikes first (a 💩 in the question
+          // does the same server-side).
+          habitatFocus: habitatFilter === 'nutrient_rich' ? 'nutrient_rich' : undefined,
         }),
       });
       const data = await res.json();
@@ -992,7 +1006,7 @@ export default function ForagingApp() {
     } finally {
       setMycoLoading(false);
     }
-  }, [mycoMessages, mycoLoading, userLocation, selectedNode, mycoRegionName]);
+  }, [mycoMessages, mycoLoading, userLocation, selectedNode, mycoRegionName, habitatFilter]);
 
   const handleNodeClick = useCallback((node: EcoNode) => {
     setSelectedNode(prev => prev?.id === node.id ? null : node);
@@ -1432,6 +1446,12 @@ export default function ForagingApp() {
                 {userInsight.emergingAfterRain.map(s => (
                   <div key={s.name} style={{ display: 'flex', alignItems: 'baseline', gap: 8, padding: '6px 10px', background: 'rgba(196,136,56,0.06)', border: '0.5px solid rgba(196,136,56,0.22)', borderRadius: 6 }}>
                     <span style={{ fontSize: 13, color: '#E6D9B5', flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.name}</span>
+                    {/* Dangerous residents (nutrient-rich habitats) are flagged here too, never listed bare */}
+                    {s.poisonous && (
+                      <span style={{ fontFamily: 'monospace', fontSize: 8.5, letterSpacing: '0.1em', textTransform: 'uppercase', flexShrink: 0, color: s.poisonous === 'mild' ? '#E8B14B' : '#E16B6B' }}>
+                        {s.poisonous === 'lethal' ? '☠ deadly' : '⚠ poisonous'}
+                      </span>
+                    )}
                     <span style={{ fontFamily: 'monospace', fontSize: 9, color: '#E8B14B', flexShrink: 0 }}>{Math.round(s.probability * 100)}%</span>
                   </div>
                 ))}
@@ -2377,8 +2397,56 @@ export default function ForagingApp() {
         />
       )}
 
+      {/* 💩 Nutrient-rich habitat caution — front and centre while the filter
+          is on. Under the top bar on desktop; just above the Habitats pill on
+          phones (clear of the Growing panel). Shrinks to a pill, never hides. */}
+      {habitatFilter === 'nutrient_rich' && !selectedNode && (
+        <div className={`forage-nutrient-caution${nutrientCautionOpen ? ' open' : ''}`} role="note" aria-live="polite" style={{
+          position: 'absolute', zIndex: 11,
+          top: 'calc(var(--forage-top, 64px) + 14px)', left: '50%', transform: 'translateX(-50%)',
+          width: nutrientCautionOpen ? 'min(560px, calc(100vw - 24px))' : 'auto',
+          background: 'rgba(16,9,8,0.94)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
+          border: '0.5px solid rgba(225,107,107,0.55)', borderRadius: nutrientCautionOpen ? 12 : 999,
+          boxShadow: '0 10px 36px rgba(0,0,0,0.5)',
+          padding: nutrientCautionOpen ? '12px 16px 12px' : '6px 14px',
+          color: '#E6D9B5',
+        }}>
+          <button
+            onClick={() => setNutrientCautionOpen(o => !o)}
+            aria-expanded={nutrientCautionOpen}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 8, width: '100%', background: 'none', border: 'none', padding: 0, cursor: 'pointer',
+              fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#E16B6B', textAlign: 'left',
+            }}
+          >
+            <span style={{ flex: 1 }}>☠ {NUTRIENT_RICH_CAUTION.title}</span>
+            <span style={{ color: '#8B7E62' }}>{nutrientCautionOpen ? '▴' : '▾'}</span>
+          </button>
+          {nutrientCautionOpen && (
+            <>
+              <ul style={{ margin: '8px 0 0', padding: 0, listStyle: 'none' }}>
+                {NUTRIENT_RICH_CAUTION.points.map(p => (
+                  <li key={p} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 14, lineHeight: 1.45, margin: '0 0 5px', paddingLeft: 12, position: 'relative' }}>
+                    <span style={{ position: 'absolute', left: 0, color: '#E16B6B' }}>·</span>{p}
+                  </li>
+                ))}
+              </ul>
+              <div style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#E8B14B', marginTop: 6 }}>
+                {NUTRIENT_RICH_CAUTION.footer}
+              </div>
+            </>
+          )}
+          <style>{`
+            @media (max-width: 768px) {
+              .forage-nutrient-caution { top: auto !important; bottom: 112px; max-height: 46vh; overflow-y: auto; }
+              .forage-nutrient-caution li { font-size: 13px !important; }
+            }
+          `}</style>
+        </div>
+      )}
+
       {/* Node count badge when no node selected (hidden on the immersive map) */}
-      {!selectedNode && !isImmersive && (
+      {!selectedNode && !isImmersive && habitatFilter !== 'nutrient_rich' && (
         <div className={`forage-nodes-badge${userLocation && growingPanelOpen && userInsight ? ' has-panel' : ''}`} style={{
           position: 'absolute', top: 'calc(var(--forage-top, 64px) + 14px)', left: '50%', transform: 'translateX(-50%)',
           background: 'rgba(7,17,13,0.85)',

@@ -544,7 +544,15 @@ Plant/herb note: Kingdom Plantae in citizen-science databases includes trees, or
 - Do not identify a mushroom from a photo (you cannot see photos here anyway).
 - If asked about a specific rare / protected species, add a foraging-ethics note ("do not harvest fewer than three mature fruiting bodies from a stand; leave the mycelium intact").
 - Sensitive locations (protected areas, private land) — remind the user to check local law.
-- LEGAL NOTE for Sweden: Amanita muscaria's active compounds (muscimol, ibotenic acid) are scheduled as narcotics under Swedish law (LVFS 2011:10). If the resolved location is in Sweden and the user asks about picking Amanita, add a clear note that possessing extracts or preparations is illegal there — even though the mushroom itself is present in the ecology. Do NOT provide this warning for Germany, most other EU, or the US (Louisiana excepted) where the compounds are not scheduled.`;
+- LEGAL NOTE for Sweden: Amanita muscaria's active compounds (muscimol, ibotenic acid) are scheduled as narcotics under Swedish law (LVFS 2011:10). If the resolved location is in Sweden and the user asks about picking Amanita, add a clear note that possessing extracts or preparations is illegal there — even though the mushroom itself is present in the ecology. Do NOT provide this warning for Germany, most other EU, or the US (Louisiana excepted) where the compounds are not scheduled.
+
+## HABITAT FOCUS · NUTRIENT-RICH (when habitatFocus is "nutrient_rich")
+The user selected the map's "💩 Nutrient-rich · dung & compost" habitat, or put 💩 in the question. Treat the question as being about coprophilous and nitrophilous fungi and the habitats that host them: grazed pasture, dung, manured ground, compost heaps, wood chips and mulch beds.
+- Describe where these habitats occur around the resolved location (pasture belts, stables and riding trails, allotments, park mulch beds) and when they fruit, using the weather layer.
+- Name species plainly — common + Latin — from the fungi layers that fit these habitats (e.g. Coprinus, Coprinopsis, Agaricus, Marasmius, Panaeolus, Protostropharia, Bolbitius, Stropharia, Conocybe, Pholiotina, Galerina, Leucocoprinus).
+- Lead with the dangerous residents before any edible: Pholiotina rugosa and Galerina (amatoxins) in wood chips and mulch; Conocybe/Pholiotina and Inocybe in manured grass; white Amanita lookalikes for white Agaricus. Say that little brown mushrooms in these habitats cannot be identified safely in the field.
+- Psilocybin species (e.g. Psilocybe semilanceata, Psilocybe cubensis): if they appear in the data or the question, state plainly that they are controlled substances in Sweden, Germany, Denmark, the UK and most of Europe, and that they grow alongside deadly lookalikes. Give no guidance on finding, picking, preparing or dosing them.
+- Frame everything as ecology and field study; the consumption rail above still applies.`;
 
 export const handler = async (event) => {
   const origin = event.headers?.origin || event.headers?.Origin || '';
@@ -589,6 +597,11 @@ export const handler = async (event) => {
       .replace(/[\s()\[\]{}.!?;:]+$/, '')  // note: comma NOT included here — "Örebro, Sweden" is valid
       .trim();
     const history    = Array.isArray(body.history) ? body.history.slice(-6) : [];
+    // Nutrient-rich habitat mode: the map's 💩 habitat filter, or 💩 typed
+    // into the question. Only this one value is recognised.
+    const habitatFocus = body.habitatFocus === 'nutrient_rich' || question.includes('💩')
+      ? 'nutrient_rich'
+      : null;
 
     if (!question) return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'Empty question.' }) };
 
@@ -678,6 +691,7 @@ export const handler = async (event) => {
         resolvedFrom, // 'geocoded' | 'coords' — tell MYCO where the location came from
       },
       today:   new Date().toISOString().slice(0, 10),
+      habitatFocus, // 'nutrient_rich' | null — see HABITAT FOCUS in the system prompt
       weather: weather || 'unavailable',
       fungiSightings: {
         recent:           fungiRecent   || 'unavailable',

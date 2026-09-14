@@ -2,6 +2,7 @@ import React from 'react';
 import { EcoNode, Season } from '../types/EcoNode';
 import { HABITAT_COLORS, HABITAT_LABELS } from '../data/ecoNodes';
 import { scoreSpecies, isSpeciesInSeason } from './scoring';
+import { NUTRIENT_RICH_CAUTION } from './nutrientRich';
 
 interface NodePanelProps {
   node: EcoNode | null;
@@ -172,10 +173,25 @@ export default function NodePanel({ node, activeSeason, onClose }: NodePanelProp
 
       <div className="np-scroll" style={{ flex: 1, overflowY: 'auto', padding: '16px 20px' }}>
 
+        {/* Nutrient-rich habitats: the lookalike warning comes BEFORE any species. */}
+        {node.nodeType === 'nutrient_rich' && (
+          <div role="note" style={{ marginBottom: 18, padding: '12px 14px', background: 'rgba(225,107,107,0.08)', border: '0.5px solid rgba(225,107,107,0.45)', borderRadius: 8 }}>
+            <div style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#E16B6B', marginBottom: 8 }}>
+              ☠ {NUTRIENT_RICH_CAUTION.title}
+            </div>
+            {NUTRIENT_RICH_CAUTION.points.map(p => (
+              <div key={p} style={{ fontSize: 11.5, color: '#E6D9B5', lineHeight: 1.55, marginBottom: 6 }}>{p}</div>
+            ))}
+            <div style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#E8B14B', marginTop: 8 }}>
+              {NUTRIENT_RICH_CAUTION.footer}
+            </div>
+          </div>
+        )}
+
         {/* Species */}
         <div style={{ marginBottom: 20 }}>
           <div style={{ fontFamily: 'monospace', fontSize: 7.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#8B7E62', marginBottom: 10 }}>
-            Species Intelligence · {sortedSpecies.length} plants
+            Species Intelligence · {sortedSpecies.length} species
           </div>
           {sortedSpecies.map(sp => {
             // AUDIT_FIX (D-01) — shared scoring module. Same formula
@@ -192,7 +208,17 @@ export default function NodePanel({ node, activeSeason, onClose }: NodePanelProp
                     {sp.name}
                   </div>
                   <div style={{ display: 'flex', gap: 4 }}>
-                    {sp.medicinal && <span style={{ fontSize: 8, padding: '1px 5px', borderRadius: 3, background: 'rgba(107,214,111,0.1)', color: '#6BD66F', border: '0.5px solid rgba(107,214,111,0.25)' }}>medicinal</span>}
+                    {sp.poisonous && (
+                      <span title={'Toxicity: ' + sp.poisonous} style={{
+                        fontSize: 8, padding: '1px 5px', borderRadius: 3, whiteSpace: 'nowrap',
+                        background: sp.poisonous === 'mild' ? 'rgba(232,177,75,0.10)' : 'rgba(225,107,107,0.12)',
+                        color:      sp.poisonous === 'mild' ? '#E8B14B'                : '#E16B6B',
+                        border: '0.5px solid ' + (sp.poisonous === 'mild' ? 'rgba(232,177,75,0.3)' : 'rgba(225,107,107,0.45)'),
+                      }}>
+                        {sp.poisonous === 'lethal' ? '☠ deadly' : '⚠ poisonous'}
+                      </span>
+                    )}
+                    {sp.medicinal &&<span style={{ fontSize: 8, padding: '1px 5px', borderRadius: 3, background: 'rgba(107,214,111,0.1)', color: '#6BD66F', border: '0.5px solid rgba(107,214,111,0.25)' }}>medicinal</span>}
                     {/*
                       AUDIT_FIX (S-01, P0). The edible chip only renders when
                       BOTH lookalike + toxicity fields are populated — the
@@ -232,6 +258,7 @@ export default function NodePanel({ node, activeSeason, onClose }: NodePanelProp
         </div>
 
         {/* Medicinal uses */}
+        {node.medicinal.length > 0 && (
         <div style={{ marginBottom: 18 }}>
           <div style={{ fontFamily: 'monospace', fontSize: 7.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#8B7E62', marginBottom: 8 }}>Medicinal Intelligence</div>
           <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
@@ -242,6 +269,7 @@ export default function NodePanel({ node, activeSeason, onClose }: NodePanelProp
             ))}
           </div>
         </div>
+        )}
 
         {/* Extraction notes */}
         {node.extraction_notes && (
