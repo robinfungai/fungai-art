@@ -812,17 +812,15 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
   .fyf-stages-track{top:calc(4px + 12px)}
 }
 
-/* ── DESKTOP: right-side vertical rail ─────────────────────────
-   ≥ 900px viewport: relocate the nav to the right side of the
-   .q-wrap-progressive container. Stages stack vertically top→bottom,
-   each stage becomes a horizontal row (icon + label side-by-side)
-   with a subtle vertical filament running through the icon centers.
-   The main question area gets `padding-right` to reserve the rail's
-   space, so the questionnaire stays visually centered under it. */
-@media (min-width:900px){
+/* ── WIDE DESKTOP: right-side vertical rail ─────────────────────
+   Only activates at ≥ 1240px, where the two-column zigzag pair
+   plus a 180px rail can all breathe. On anything narrower the top
+   horizontal strip stays (defined in the block above) so the pair
+   of questions gets full width. */
+@media (min-width:1240px){
   .q-wrap-progressive{position:relative;padding-right:200px}
   .q-wrap-progressive .fyf-stages{
-    position:absolute;top:8px;right:8px;width:170px;max-width:170px;
+    position:absolute;top:8px;right:0;width:180px;max-width:180px;
     margin:0;padding:12px 8px 12px 20px
   }
   .q-wrap-progressive .fyf-stages-row{
@@ -850,8 +848,8 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
   .q-wrap-progressive .fyf-stage.is-done .fyf-stage-label{opacity:0.75}
   .q-wrap-progressive .fyf-stage.is-now .fyf-stage-label{opacity:1}
 }
-@media (min-width:1180px){
-  .q-wrap-progressive{padding-right:230px}
+@media (min-width:1440px){
+  .q-wrap-progressive{padding-right:220px}
   .q-wrap-progressive .fyf-stages{width:200px;max-width:200px}
 }
 
