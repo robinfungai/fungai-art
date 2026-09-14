@@ -10555,7 +10555,7 @@ export const HERBS: Herb[] = [
     best_preparation: 'Long Infusion (Tea) is superior for mineral extraction.',
     caution_level: 'LOW',
     safe_pregnancy: null,
-    status: 'Gentle, mineral-rich tonic. Excellent long-game herb for tissue resilience.'
+    status: 'Gentle, mineral-rich tonic. Excellent long-game herb for tissue resilience.',
     // ── Quiz-matcher + composer-quality enrichment ──
     energy_pattern: ['sustained', 'restorative_only'],
     regional_affinity: ['pelvis', 'gut'],
@@ -10599,7 +10599,7 @@ export const HERBS: Herb[] = [
     best_preparation: 'Syrup, Tea, or Powder.',
     caution_level: 'LOW',
     safe_pregnancy: true,
-    status: 'Very safe, food-like restorative. Prioritize deseeded material.'
+    status: 'Very safe, food-like restorative. Prioritize deseeded material.',
     // ── Quiz-matcher + composer-quality enrichment ──
     energy_pattern: ['sustained', 'restorative_only'],
     regional_affinity: ['joints', 'skin', 'whole'],
@@ -10643,7 +10643,7 @@ export const HERBS: Herb[] = [
     best_preparation: 'Powder in warm milk or nourishing decoction.',
     caution_level: 'MEDIUM',
     safe_pregnancy: null,
-    status: 'Excellent cooling restorative. Best for dry/hot/depleted presentations.'
+    status: 'Excellent cooling restorative. Best for dry/hot/depleted presentations.',
     // ── Quiz-matcher + composer-quality enrichment ──
     nervous_system_fit: ['tired', 'wired_tired', 'reactive'],
     energy_pattern: ['sustained', 'restorative_only'],
