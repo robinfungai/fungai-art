@@ -3280,9 +3280,72 @@ function buildWhyText(a, herbs, pct){
 // /api/myco-agent for the personal reading paragraph, not for
 // composition.
 
+// ── MYCO personalisation (only fires when user filled the notes) ──
+// Restored: Step 6 deleted this along with the client engine, but
+// _fyfPaintServerReveal still calls it whenever the note is > 20 chars
+// — the reveal threw a ReferenceError right after painting, the personal
+// reading never appeared and the in-flight guard stayed stuck.
+// Sends the quiz + note + resolved herbs to /api/myco-agent, asks for a
+// 3-sentence personal reading, and returns it (HTML-escaped) for the
+// reveal story. Returns null silently if MYCO is unreachable or refuses
+// — the template story already renders first.
+async function mycoStory(a, herbs, percentages, synergies){
+  if (!a.notes || !a.notes.trim()) return null;
+  const herbLines = herbs.map((h, i) => (percentages[i] || 0) + '% ' + h.name).join(', ');
+  const synergyLines = (synergies || []).length
+    ? synergies.map(s => s.a + ' + ' + s.b).join(' · ')
+    : 'none flagged';
+  const message =
+    'Write a personal 3-sentence "reading" for someone who took a plant-medicine quiz. ' +
+    'Warm, alchemical, poetic but not woo. Reference their personal note explicitly. ' +
+    'Where it fits naturally, name one of the synergy pairs from the formula so the reading ' +
+    'shows what the blend is doing. Do not diagnose, prescribe, or mention AI/MYCO. Prose only.\n\n' +
+    'Intention: '   + a.intention + '\n' +
+    'Body pattern: '+ a.pattern   + (a.patternSub ? ' / ' + a.patternSub : '') + '\n' +
+    'Hardest time: '+ a.time      + '\n' +
+    'Meets stress by: ' + a.stress + '\n' +
+    (a.duration ? 'Duration of pattern: ' + a.duration + '\n' : '') +
+    (a.age      ? 'Age bracket: '          + a.age      + '\n' : '') +
+    (a.sleep    ? 'Sleep quality: '        + a.sleep    + '\n' : '') +
+    'Personal note (also treat as priority + prior herb experience): "' + a.notes.trim().slice(0, 500) + '"\n' +
+    'Formula (with percentages): ' + herbLines + '\n' +
+    'Synergy pairs woven in: ' + synergyLines;
+  try {
+    const res = await fetch('/api/myco-agent', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ message, history: [], context: { source:'find-your-formula' } }),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const text = (data && data.reply) ? String(data.reply).trim() : null;
+    if (!text || /can't give medical/i.test(text)) return null;
+    // The caller assigns this to innerHTML — never inject model output raw.
+    return escapeHtml(text);
+  } catch (_) { return null; }
+}
+
 
 // Step 6: shadowComposeToServer removed — no client-side compose
 // to shadow anymore. Server compose is authoritative and only path.
+
+// Profile hash — still REQUIRED by the server-mode reveal
+// (_fyfRenderResultServerMode + _fyfPaintServerReveal key the cached
+// formula on it). Step 6 removed these alongside the shadow call, which
+// made every reveal throw "_fyfShadowKey is not defined" before the
+// compose request was sent. Identical to find-your-formula-pro.
+function _fyfShadowHash(str) {
+  let h = 5381;
+  const s = String(str || '');
+  for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+  return Math.abs(h).toString(16).padStart(8, '0').slice(0, 8);
+}
+
+function _fyfShadowKey(profile) {
+  const keys = Object.keys(profile || {}).sort();
+  const stable = keys.map(k => k + ':' + JSON.stringify(profile[k])).join('|');
+  return _fyfShadowHash(stable);
+}
 
 // ════════════════════════════════════════════════════════════════
 // STEP 4 · Server-authoritative composition (opt-in via URL param)
