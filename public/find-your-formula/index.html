@@ -1430,8 +1430,8 @@ const QUESTIONS = [
   },
   {
     key:'time',
-    title:'What time of day is <em>hardest</em>?',
-    hint:'Tells us about your rhythm and where the extract needs to land.',
+    title:'When does the day feel <em>most difficult</em>?',
+    hint:'Choose the time when your energy, focus, or calm feels hardest to work with.',
     type:'compact-single',
     // Per-answer visual motifs (Round 2 visual brief). Each SVG reads
     // as its time — sun rising/at-peak/setting, crescent + stars, full-day
@@ -1453,28 +1453,28 @@ const QUESTIONS = [
   },
   {
     key:'stress',
-    title:'How do you <em>meet stress</em> lately?',
-    hint:'No wrong answer. This shapes which allies fit you now.',
+    title:'What happens when <em>stress begins to build</em>?',
+    hint:'Choose the response that feels closest to how you have been lately.',
     type:'compact-single',
     options:[
-      { v:'push',     glyph:'▲',  label:'Push through',    desc:'Chin down, keep going.' },
-      { v:'collapse', glyph:'▽',  label:'Collapse',        desc:'Shutdown. Recover-mode.' },
-      { v:'numb',     glyph:'○',  label:'Numb it out',     desc:'Distraction, a drink.' },
-      { v:'ride',     glyph:'◇',  label:'Ride it well',    desc:'Mostly rolling with it.' },
-      { v:'off',      glyph:'◌',  label:'Something\'s off',desc:'Not-quite-right.' },
+      { v:'push',     glyph:'▲',  label:'Push through',      desc:'You keep moving, even when your reserves are low.' },
+      { v:'collapse', glyph:'▽',  label:'Collapse',          desc:'You shut down and need recovery mode.' },
+      { v:'numb',     glyph:'○',  label:'Numb it out',       desc:'You reach for distraction, stimulation, or something to take the edge off.' },
+      { v:'ride',     glyph:'◇',  label:'Ride it well',      desc:'You adapt and keep moving with the wave.' },
+      { v:'off',      glyph:'◌',  label:'Something feels off',desc:'Nothing is clearly wrong, but you do not feel quite right.' },
     ],
   },
   {
     // NEW · Duration axis — acute vs chronic → different herb families.
     key:'duration',
-    title:'How long has this been the <em>pattern</em>?',
-    hint:'Acute needs different allies than chronic.',
+    title:'How long have you been experiencing <em>this rhythm</em>?',
+    hint:'Choose the option that feels most accurate.',
     type:'compact-single',
     options:[
-      { v:'weeks',      glyph:'◌', label:'A few weeks',     desc:'Recent shift, still fresh.' },
-      { v:'months',     glyph:'◐', label:'A few months',    desc:'Longer arc, settling in.' },
-      { v:'year_plus',  glyph:'●', label:'A year or more',  desc:'Chronic, layered.' },
-      { v:'lifelong',   glyph:'◈', label:'As long as I remember', desc:'Constitutional / lifelong.' },
+      { v:'weeks',      glyph:'◌', label:'A few weeks',            desc:'A recent shift; it still feels fresh.' },
+      { v:'months',     glyph:'◐', label:'A few months',           desc:'A longer arc; it may be settling in.' },
+      { v:'year_plus',  glyph:'●', label:'A year or more',         desc:'A longstanding pattern with deeper roots.' },
+      { v:'lifelong',   glyph:'◈', label:'As long as I remember',  desc:'It feels woven into your baseline.' },
     ],
   },
   {
@@ -1485,15 +1485,15 @@ const QUESTIONS = [
     // (just performance). Composer weights adaptogen class + nervines
     // + pace heavily off this signal.
     key:'nervous',
-    title:'Your <em>nervous system</em>, most days',
-    hint:'The closest one. If none feel right, pick the least wrong.',
+    title:'How does your <em>energy usually feel</em>?',
+    hint:'Choose the state that comes closest to most days. Not what it should be — what it feels like.',
     type:'compact-single',
     options:[
-      { v:'wired',       glyph:'⚡', label:'Wired',             desc:'Alert, restless, hard to switch off.' },
-      { v:'tired',       glyph:'◌',  label:'Tired',             desc:'Low activation, sluggish, easily depleted.' },
-      { v:'wired_tired', glyph:'◍',  label:'Wired + tired',     desc:'Activated but exhausted — the classic burnout curve.' },
-      { v:'steady',      glyph:'◇',  label:'Steady',            desc:'Generally regulated. Resilient.' },
-      { v:'reactive',    glyph:'✦',  label:'Reactive',          desc:'Easily overstimulated by sound, people, caffeine, stress.' },
+      { v:'wired',       glyph:'⚡', label:'Wired',             desc:'Alert, restless, and hard to switch off.' },
+      { v:'tired',       glyph:'◌',  label:'Tired',             desc:'Low activation, sluggish, and easily depleted.' },
+      { v:'wired_tired', glyph:'◍',  label:'Wired + tired',     desc:'Activated but exhausted.' },
+      { v:'steady',      glyph:'◇',  label:'Steady',            desc:'Generally resilient and able to adapt.' },
+      { v:'reactive',    glyph:'✦',  label:'Reactive',          desc:'Easily overstimulated by sound, people, caffeine, or stress.' },
       { v:'flat',        glyph:'○',  label:'Flat',              desc:'Emotionally or cognitively muted. Nothing quite reaches.' },
     ],
   },
@@ -1638,18 +1638,18 @@ const PAGES = [
       { keys: ['time', 'stress'],           layout: 'zigzag',
         stageLabel: 'Rhythm',   botanicalStage: 1,
         transitionCopy: 'Let\'s begin with your rhythm.',
-        nextLabel: 'state' },
+        nextCTA: 'Continue to how your body feels' },
       { keys: ['nervous', 'energy_curve'],  layout: 'zigzag',
         stageLabel: 'Body',     botanicalStage: 2,
         transitionCopy: 'Now notice the quality of your energy.',
-        nextLabel: 'arc' },
+        nextCTA: 'See the next layer' },
       { keys: ['sleep', 'duration'],        layout: 'zigzag',
         stageLabel: 'Arc',      botanicalStage: 3,
-        transitionCopy: 'Some patterns are recent. Others have deeper roots.',
-        nextLabel: 'voice' },
+        transitionCopy: 'Patterns have a history. Let\'s place yours in time.',
+        nextCTA: 'Continue your pattern' },
       { keys: ['notes'],                    stageLabel: 'Voice',    botanicalStage: 4,
         transitionCopy: 'One thing matters most. Say it in your own words.',
-        nextLabel: 'ground' },
+        nextCTA: 'One last piece of context' },
       { keys: ['age'],                      stageLabel: 'Ground',   botanicalStage: 5,
         transitionCopy: 'A last piece of context so the reading fits you.' },
     ],
@@ -2049,19 +2049,28 @@ function renderPageProgressive(page){
   });
   wrap.appendChild(bodyWrap);
 
-  // Contextual CTA — theatrical text is dropped when auto-advance
-  // handles the transition (user feedback: "the anticipation text
-  // doesn't make sense if it's not meant to be clicked"). The
-  // button is hidden entirely on pill-select sub-pages; the pill
-  // click IS the trigger. Kept ONLY for:
-  //   · text-input sub-pages (notes) — nothing to auto-advance from
-  //   · the very last sub-page of the final page — REVEAL is a
-  //     deliberate commitment moment, not a passive transition
+  // Contextual CTA — mobile auto-advances (no click needed), desktop
+  // shows a contextual button with a descriptive phrase drawn from
+  // sub.nextCTA (falls back to a generic label). The final reveal
+  // button always shows because it's a commitment moment, not a
+  // passive transition. Text-input pages (notes) also always show
+  // because there's nothing to auto-advance from.
+  //
+  // "Desktop" here means pointer-fine + no coarse pointer, matched
+  // via matchMedia. Kept in a var so a resize during the questionnaire
+  // rebuild picks up the new mode.
+  const isMobileViewport = (typeof window !== 'undefined' &&
+    window.matchMedia && window.matchMedia('(max-width: 640px)').matches);
   const hasTextQ    = questions.some(q => q.type === 'text');
-  const showCTA     = hasTextQ || (isLastSubPage && isFinalPage);
+  const isRevealCTA = isLastSubPage && isFinalPage;
+  // Show CTA when: reveal moment, text-input page (notes), OR desktop
+  // viewport (where the user drives the flow with the button instead
+  // of pill-triggered auto-advance).
+  const showCTA     = isRevealCTA || hasTextQ || !isMobileViewport;
   let ctaText;
-  if (isLastSubPage && isFinalPage) ctaText = 'Reveal my formula →';
-  else                              ctaText = 'Continue →';
+  if (isRevealCTA)          ctaText = 'Reveal my formula →';
+  else if (sub.nextCTA)     ctaText = sub.nextCTA + ' →';
+  else                      ctaText = 'Continue →';
 
   const ctaRow = document.createElement('div');
   ctaRow.className = 'q-cta q-cta-sticky';
@@ -2128,7 +2137,14 @@ function renderPageProgressive(page){
         setTimeout(() => {
           if (optsHost) optsHost.classList.add('has-pick');
           paintCTA();
-          if (isAllAnswered()) setTimeout(advance, settleMs);
+          // Auto-advance on mobile only. Desktop users drive the
+          // flow with the contextual button below — gives them time
+          // to consider the choice and preview the ally shortlist
+          // without being flung to the next sub-page. Notes/reveal
+          // pages never auto-advance regardless of viewport.
+          if (isAllAnswered() && isMobileViewport && !hasTextQ && !isRevealCTA) {
+            setTimeout(advance, settleMs);
+          }
         }, 20);
       });
     });
