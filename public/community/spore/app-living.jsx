@@ -3850,21 +3850,53 @@ function LiveInventoryPanel({ currentMember, onToast }) {
    Admins (Robin / Stephanie) are the only writers — gated by the
    same is_admin RLS as the herb inventory.
 ─────────────────────────────────────────────────────────────── */
-const PRODUCT_INVENTORY_LIST = [
+// Fallback list only — the panel reads the live product names from /shop
+// (the addToCart('Name', …) strings it uses as product_id) so it can never
+// drift out of sync again. The June list had fallen behind: Nervous System
+// Tonic, Nettle Extract, Shilajit Paste and Sleepy Sleepy had no row to edit.
+const PRODUCT_INVENTORY_FALLBACK = [
   'ADHD Support', 'Afghan Saffron (', 'Amanita Muscaria',
   'Blue Lotus (dried 100g)', 'Butterfly Pea (dried 100g)',
   'Chaga Syrup', 'Chaga Extract', 'Healthy Aging',
-  'Horny Goat Weed (dried 100g)', 'Kumbaya Herbal Smoke Blend',
-  'Lucid', 'Mineral Tonic', 'Moon Support', 'Pine Cones',
-  'Reishi Extract', 'Ruby No.7', 'Sacred Lavendula (foraged 50g)',
-  'Shilajit + Gold', 'Temple Nectar', 'Wild Cordyceps',
+  'Kumbaya Herbal Smoke Blend', 'Lucid', 'Mineral Tonic', 'Moon Support',
+  'Nervous System Tonic', 'Nettle Extract', 'Pine Cones', 'Ruby No.7',
+  'Sacred Lavendula (foraged 50g)', 'Shilajit Paste', 'Sleepy Sleepy',
+  'Temple Nectar', 'Wild Cordyceps',
 ];
+
+async function loadShopProductIds() {
+  try {
+    const res = await fetch('/shop/index.html', { cache: 'no-store' });
+    if (!res.ok) throw new Error('shop ' + res.status);
+    const html = await res.text();
+    const names = [...html.matchAll(/addToCart\('([^']+)'/g)].map(m => m[1]).filter(n => n && n !== 'Name');
+    const unique = [...new Set(names)];
+    return unique.length >= 5 ? unique : PRODUCT_INVENTORY_FALLBACK;
+  } catch {
+    return PRODUCT_INVENTORY_FALLBACK;
+  }
+}
+
+// Turn a Supabase error into something an admin can act on.
+function explainInventoryError(err, hasSession) {
+  const msg = (err && (err.message || String(err))) || 'Unknown error';
+  if (!hasSession) return 'You are not signed in to your admin account on this device, so saves are refused. Sign in with robin@fungai.art (magic link) and try again.';
+  if (err && (err.code === '42501' || /row-level security|permission denied/i.test(msg))) {
+    return 'Supabase refused the save: this login is not marked admin (profiles.is_admin) or the session belongs to another account. Details: ' + msg;
+  }
+  if (err && err.code === '23503') return 'Saved profile link is stale (updated_by). Details: ' + msg;
+  return 'Save failed: ' + msg;
+}
 
 function ProductInventoryPanel({ currentMember, onToast }) {
   const [counts,   setCounts]   = useState({});       // { product_id: stock_count }
   const [pending,  setPending]  = useState(new Set());
   const [loading,  setLoading]  = useState(true);
   const [error,    setError]    = useState('');
+  const [productIds, setProductIds] = useState(PRODUCT_INVENTORY_FALLBACK);
+  // null = still checking; false = no Supabase session (saves would be refused)
+  const [session, setSession] = useState(null);
+  const PRODUCT_INVENTORY_LIST = productIds;
 
   useEffect(() => {
     let cancelled = false;
@@ -3873,6 +3905,13 @@ function ProductInventoryPanel({ currentMember, onToast }) {
         await window.SBready;
         if (cancelled) return;
         if (!window.SBclient) { setLoading(false); return; }
+        const [ids, sess] = await Promise.all([
+          loadShopProductIds(),
+          window.SBauth ? window.SBauth.getSession() : null,
+        ]);
+        if (cancelled) return;
+        setProductIds(ids);
+        setSession(sess || false);
         const { data, error: e } = await window.SBclient
           .from('product_inventory')
           .select('product_id, stock_count');
@@ -3901,21 +3940,37 @@ function ProductInventoryPanel({ currentMember, onToast }) {
     // Optimistic UI
     setCounts(c => ({ ...c, [product_id]: next }));
     setPending(p => { const n = new Set(p); n.add(product_id); return n; });
+    let hasSession = !!session;
     try {
       if (!window.SBclient) throw new Error('Supabase client not loaded');
+      // Re-check the session at save time — the magic-link session can expire
+      // while the panel stays open.
+      const live = window.SBauth ? await window.SBauth.getSession() : null;
+      hasSession = !!live;
+      setSession(live || false);
+      if (!live) throw new Error('No Supabase session');
       let updated_by = null;
       try {
         const cached = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null');
         updated_by = (cached && cached.cloudId) || null;
       } catch {}
-      const { error: e } = await window.SBclient
+      // updated_by must be a real profiles.id uuid (FK) — never send a local id.
+      if (updated_by && !/^[0-9a-f-]{36}$/i.test(updated_by)) updated_by = null;
+      const { data: saved, error: e } = await window.SBclient
         .from('product_inventory')
-        .upsert({ product_id, stock_count: next, updated_by }, { onConflict: 'product_id' });
+        .upsert({ product_id, stock_count: next, updated_by }, { onConflict: 'product_id' })
+        .select('product_id, stock_count');
       if (e) throw e;
+      // RLS can silently affect zero rows — treat "nothing came back" as refused.
+      if (!saved || !saved.length) throw Object.assign(new Error('The database accepted the request but saved nothing (row-level security).'), { code: '42501' });
+      setError('');
+      onToast && onToast(`${product_id.replace(/ \($/, '')} → ${next} in stock`, 'success');
     } catch (err) {
-      // revert
+      // revert, and keep the reason on screen (a toast is too easy to miss)
       setCounts(c => ({ ...c, [product_id]: prev }));
-      onToast && onToast('Save failed: ' + (err.message || err), 'bad');
+      const why = explainInventoryError(err, hasSession);
+      setError(why);
+      onToast && onToast(why, 'bad');
     } finally {
       setPending(p => { const n = new Set(p); n.delete(product_id); return n; });
     }
@@ -3936,8 +3991,13 @@ function ProductInventoryPanel({ currentMember, onToast }) {
         </p>
       </div>
       <div style={{ margin:'12px 16px 28px', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, overflow:'hidden' }}>
+        {!loading && session === false && (
+          <div style={{ padding:'10px 14px', background:'rgba(225,107,107,0.08)', borderBottom:'0.5px solid var(--rule)', fontFamily:'var(--font-mono)', fontSize:10, color:'#E16B6B', letterSpacing:'0.08em', lineHeight:1.6 }}>
+            ⚠ Not signed in to your admin account on this device — stock changes can't be saved until you sign in with robin@fungai.art (magic link).
+          </div>
+        )}
         {error && (
-          <div style={{ padding:'10px 14px', background:'rgba(232,177,75,0.06)', borderBottom:'0.5px solid var(--rule)', fontFamily:'var(--font-mono)', fontSize:10, color:'var(--nutrient-l)', letterSpacing:'0.12em' }}>
+          <div style={{ padding:'10px 14px', background:'rgba(232,177,75,0.06)', borderBottom:'0.5px solid var(--rule)', fontFamily:'var(--font-mono)', fontSize:10, color:'var(--nutrient-l)', letterSpacing:'0.08em', lineHeight:1.6 }}>
             ⚠ {error}
           </div>
         )}
