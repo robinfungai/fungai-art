@@ -611,7 +611,7 @@ html.reveal-anim .reveal.in { opacity: 1; transform: translateY(0); }
   background: linear-gradient(transparent, rgba(6,11,6,0.85));
 }
 .edit-label { font-size: 7.5px; letter-spacing: 0.42em; text-transform: uppercase; color: var(--lime); display: block; margin-bottom: 6px; }
-.edit-title { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--parchment); line-height: 1.3; }
+.edit-title { font-family: 'IM Fell English', 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 18px; color: var(--parchment); line-height: 1.3; }
 
 /* ─── SHOP ───────────────────────────────────── */
 .shop { background: var(--void); padding: 100px 0; }
@@ -719,10 +719,19 @@ html.reveal-anim .reveal.in { opacity: 1; transform: translateY(0); }
 }
 .annotation {
   position: absolute;
-  font-size: 11.5px; color: var(--mist); line-height: 1.5;
-  max-width: 140px;
+  font-size: 12px; color: #cfe3ea; line-height: 1.5;
+  max-width: 160px;
+  /* Dark hue behind the callouts — they sit over the photo and were
+     unreadable against the light parts of the image. */
+  background: rgba(5,9,12,0.78);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  border: 0.5px solid rgba(136,186,200,0.22);
+  border-radius: 8px;
+  padding: 8px 11px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  z-index: 2;
 }
-.annotation strong { display: block; color: var(--parchment); font-size: 11px; font-family: var(--sans); letter-spacing: 0.06em; font-weight: 400; margin-bottom: 2px; }
+.annotation strong { display: block; color: var(--parchment); font-size: 11.5px; font-family: var(--sans); letter-spacing: 0.06em; font-weight: 500; margin-bottom: 2px; }
 .annotation::before {
   content: '';
   position: absolute; background: rgba(158,212,56,0.3);
@@ -738,8 +747,8 @@ html.reveal-anim .reveal.in { opacity: 1; transform: translateY(0); }
 .feature-text .sec-label { margin-bottom: 12px; }
 .feature-text h2 { margin-bottom: 24px; }
 .feature-text blockquote {
-  font-family: var(--serif); font-style: italic;
-  font-size: 17px; color: var(--parchment); line-height: 1.55;
+  font-family: 'IM Fell English', 'Cormorant Garamond', Georgia, serif; font-style: italic;
+  font-size: 18px; color: var(--parchment); line-height: 1.55;
   border-left: 2px solid var(--amber); padding-left: 20px;
   margin: 0 0 24px;
 }
@@ -1295,8 +1304,6 @@ html.reveal-anim .reveal.in { opacity: 1; transform: translateY(0); }
   .spore-grid { grid-template-columns: 1fr !important; gap: 18px !important; }
   .spore-embed { max-width: 380px; margin: 0 auto; }
 
-  /* Foraging section nodes list and "our nodes" — keep 2-up on phones */
-  .nodes-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
 }
 /* Hamburger button — invisible by default, becomes visible inside the
    mobile media query above. Three-line icon, opens .mobile-menu drawer. */
@@ -1356,6 +1363,8 @@ html.reveal-anim .reveal.in { opacity: 1; transform: translateY(0); }
   })();
 </script>
 <script src="/global-nav.js" defer></script>
+<!-- Subtle living mycelium, behind these sections only -->
+<script src="/mycelium-field.js" data-variant="subtle" data-targets="#manifesto,#journal,#about" defer></script>
 </head>
 <body>
 
@@ -1656,15 +1665,15 @@ function toggleMobileMenu() {
       gap: 12px;
       font-family: 'Josefin Sans', var(--sans);
       font-weight: 100;
-      font-size: 8px;
+      font-size: 9px;
       letter-spacing: 0.4em;
-      color: #1e3828;
+      color: #6f9a80;
       text-transform: uppercase;
       margin-bottom: 36px;
     }
     .medicine-pip {
       width: 4px; height: 4px;
-      border: 0.5px solid #1e3828;
+      border: 0.5px solid #6f9a80;
       border-radius: 50%;
       display: inline-block;
     }
@@ -1687,26 +1696,27 @@ function toggleMobileMenu() {
       margin: 0;
       letter-spacing: 0;
     }
+    /* Readability pass — both lines were #2a4e38 at weight 200 on the
+       near-black void (contrast ≈ 2:1). Now parchment tones, larger, 300. */
     .medicine-body {
       font-family: 'Spectral', 'Cormorant Garamond', Georgia, serif;
-      font-weight: 200;
+      font-weight: 300;
       font-style: italic;
-      font-size: 16px;
-      line-height: 1.8;
-      color: #2a4e38;
-      max-width: 480px;
-      margin: 22px auto 0;
+      font-size: clamp(19px, 2vw, 22px);
+      line-height: 1.7;
+      color: #d9cfbd;
+      max-width: 560px;
+      margin: 24px auto 0;
     }
     .medicine-fine {
       font-family: 'Spectral', 'Cormorant Garamond', Georgia, serif;
-      font-weight: 200;
+      font-weight: 300;
       font-style: italic;
-      font-size: 14px;
+      font-size: clamp(16px, 1.6vw, 18px);
       line-height: 1.75;
-      color: #2a4e38;
-      max-width: 620px;
+      color: #b9c4b6;
+      max-width: 660px;
       margin: 18px auto 0;
-      opacity: 0.78;
     }
     .medicine-actions {
       display: flex;
@@ -2101,7 +2111,7 @@ function toggleMobileMenu() {
 
       <div class="dinner-proof">
         <span class="dinner-proof-label">Previously</span>
-        <span class="dinner-proof-body">Garbicz Lichtung · 90 pax &nbsp;·&nbsp; Per Anhalter Berlin · 70 pax &nbsp;·&nbsp; Astral Plans Paris · 65 pax &nbsp;·&nbsp; Mexico City sensual dinner · 60 pax</span>
+        <span class="dinner-proof-body">Garbicz Lichtung · 90 pax &nbsp;·&nbsp; Per Anhalter Berlin · 70 pax &nbsp;·&nbsp; Astral Plans Paris · 65 pax</span>
       </div>
     </div>
 
@@ -2211,7 +2221,7 @@ function toggleMobileMenu() {
       max-width: 560px;
     }
     .dinner-quote {
-      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-family: 'IM Fell English', 'Cormorant Garamond', Georgia, serif;
       font-style: italic;
       font-size: 17px;
       line-height: 1.55;
@@ -2310,18 +2320,16 @@ function toggleMobileMenu() {
     }
     .dinner-proof-label {
       font-family: 'Bayer', var(--sans);
-      font-size: 8.5px;
+      font-size: 10px;
       letter-spacing: 0.36em;
       text-transform: uppercase;
       color: var(--amber-lt, #E8B14B);
-      opacity: 0.7;
     }
     .dinner-proof-body {
-      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-family: 'IM Fell English', 'Cormorant Garamond', Georgia, serif;
       font-style: italic;
-      font-size: 13.5px;
-      color: var(--cream, #C9B894);
-      opacity: 0.85;
+      font-size: 17px;
+      color: var(--parchment, #EDE5D8);
       line-height: 1.55;
     }
 
@@ -2374,7 +2382,7 @@ function toggleMobileMenu() {
       .dinner-cta-row { flex-direction: column; align-items: stretch; gap: 12px; }
       .dinner-cta-primary { padding: 15px 24px; }
       .dinner-cta-secondary { text-align: center; padding: 12px; }
-      .dinner-proof-body { font-size: 12.5px; }
+      .dinner-proof-body { font-size: 15.5px; }
     }
   </style>
 </section>
@@ -2484,32 +2492,57 @@ function toggleMobileMenu() {
               return '<div class="forage-item"><span class="forage-item-dot"></span><span class="forage-item-name">' + name + '</span><span class="forage-item-window">' + win + '</span></div>';
             }).join('');
           }
+          function showForageFor(lat, lon, suffix) {
+            const btn = document.getElementById('foragePreviewShare');
+            const region = pickForageRegion(lat, lon);
+            if (!region) {
+              renderForageItems([], 'Outside current regional data — the full map at /foraging covers more.');
+              return false;
+            }
+            const month = new Date().getMonth() + 1;
+            // find closest month key in the region's items
+            const monthKeys = Object.keys(region.items).map(Number).sort(function(a,b){return Math.abs(a-month)-Math.abs(b-month);});
+            const best = region.items[monthKeys[0]] || [];
+            const nice = { 'nordic':'Nordic boreal','central-eu':'Central Europe','mediterranean':'Mediterranean','levant':'Levant coast' }[region.region] || 'Your region';
+            renderForageItems(best, nice + ' · ' + new Date().toLocaleString('en', { month: 'long' }) + (suffix || ''));
+            if (btn) btn.classList.add('is-hidden');
+            return true;
+          }
+          // Fallback when precise location is blocked / times out: the city-level
+          // area Netlify already derives from the connection (no prompt, no GPS).
+          function approxForagePreview(reason) {
+            const btn = document.getElementById('foragePreviewShare');
+            return fetch('/api/approx-location', { cache: 'no-store' })
+              .then(function(r) { return r.ok ? r.json() : null; })
+              .then(function(g) {
+                if (g && typeof g.lat === 'number' && typeof g.lng === 'number') {
+                  const where = g.city ? ' · around ' + g.city : '';
+                  if (showForageFor(g.lat, g.lng, where)) return;
+                }
+                throw new Error('no approx');
+              })
+              .catch(function() {
+                renderForageItems([], reason);
+                if (btn) { btn.disabled = false; btn.textContent = 'Try again →'; }
+              });
+          }
           function requestForagePreview() {
             const btn = document.getElementById('foragePreviewShare');
             if (!('geolocation' in navigator)) {
-              renderForageItems([], 'Location not available in this browser');
-              if (btn) btn.classList.add('is-hidden');
+              approxForagePreview('Location isn’t available in this browser — open the full map at /foraging.');
               return;
             }
-            if (btn) { btn.textContent = 'Locating…'; }
+            if (btn) { btn.textContent = 'Locating…'; btn.disabled = true; }
             navigator.geolocation.getCurrentPosition(function(pos) {
-              const lat = pos.coords.latitude, lon = pos.coords.longitude;
-              const region = pickForageRegion(lat, lon);
-              if (btn) btn.classList.add('is-hidden');
-              if (!region) {
-                renderForageItems([], 'Outside current regional data — the full map at /foraging covers more.');
-                return;
-              }
-              const month = new Date().getMonth() + 1;
-              // find closest month key in the region's items
-              const monthKeys = Object.keys(region.items).map(Number).sort(function(a,b){return Math.abs(a-month)-Math.abs(b-month);});
-              const best = region.items[monthKeys[0]] || [];
-              const nice = { 'nordic':'Nordic boreal','central-eu':'Central Europe','mediterranean':'Mediterranean','levant':'Levant coast' }[region.region] || 'Your region';
-              renderForageItems(best, nice + ' · ' + new Date().toLocaleString('en', { month: 'long' }));
-            }, function() {
-              renderForageItems([], 'Location declined. Open the full map at /foraging.');
-              if (btn) { btn.textContent = 'Location declined'; btn.disabled = true; }
-            }, { enableHighAccuracy: false, timeout: 8000, maximumAge: 300000 });
+              if (btn) btn.disabled = false;
+              showForageFor(pos.coords.latitude, pos.coords.longitude, '');
+            }, function(err) {
+              // 1 = blocked for this site; 2 = no position fix; 3 = timed out.
+              const reason = err && err.code === 1
+                ? 'Location is blocked for fungai.art in your browser settings — allow it there, or open the full map at /foraging.'
+                : 'Couldn’t get a location fix just now — try again, or open the full map at /foraging.';
+              approxForagePreview(reason);
+            }, { enableHighAccuracy: false, timeout: 15000, maximumAge: 600000 });
           }
           window.requestForagePreview = requestForagePreview;
         </script>
@@ -2524,288 +2557,31 @@ function toggleMobileMenu() {
       <div class="reveal reveal-d2" style="display:flex;flex-direction:column;gap:16px;">
         <!-- Live map embed -->
         <div style="background:var(--forest-card);border:0.5px solid rgba(107,214,111,0.18);padding:0;border-radius:14px;position:relative;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,0.4);">
-          <div style="position:absolute;top:14px;left:16px;z-index:3;font-family:'Bayer',var(--sans);font-size:8.5px;letter-spacing:3px;text-transform:uppercase;color:#B6F0AE;background:rgba(6,11,6,0.72);backdrop-filter:blur(6px);padding:6px 12px;border-radius:99px;border:0.5px solid rgba(182,240,174,0.25);pointer-events:none;">Live · Foraging arc · 5 nodes</div>
+          <div style="position:absolute;top:14px;left:16px;z-index:3;font-family:'Bayer',var(--sans);font-size:8.5px;letter-spacing:3px;text-transform:uppercase;color:#B6F0AE;background:rgba(6,11,6,0.72);backdrop-filter:blur(6px);padding:6px 12px;border-radius:99px;border:0.5px solid rgba(182,240,174,0.25);pointer-events:none;">Live &middot; the Foraging Map</div>
           <div style="position:absolute;top:14px;right:16px;z-index:3;display:flex;align-items:center;gap:6px;font-family:'Bayer',var(--sans);font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:#B6F0AE;background:rgba(6,11,6,0.72);backdrop-filter:blur(6px);padding:6px 10px;border-radius:99px;border:0.5px solid rgba(107,214,111,0.3);pointer-events:none;">
             <span style="width:6px;height:6px;border-radius:50%;background:#6BD66F;box-shadow:0 0 8px rgba(107,214,111,0.8);"></span> Real coordinates
           </div>
-          <!-- Foraging preview map — replaces the previous iframe which
-               kept blanking out due to geolocation + service-worker
-               edge cases. This is a self-contained inline SVG of the
-               European/Mediterranean arc with hand-placed nodes, each
-               labelled with the herb that defines it. Lightweight, no
-               JS framework needed. The full live foraging map lives at
-               /foraging (linked below). -->
-          <div style="position:relative;background:#070d0b;border:0.5px solid rgba(196,134,46,0.18);border-radius:8px;overflow:hidden;">
-            <svg id="foragePreviewSvg" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" style="width:100%;height:auto;display:block;font-family:'Cormorant Garamond',Georgia,serif;">
-              <!-- Background gradient -->
-              <defs>
-                <radialGradient id="forageBg" cx="50%" cy="50%" r="70%">
-                  <stop offset="0%"  stop-color="#0d1810"/>
-                  <stop offset="60%" stop-color="#070d0b"/>
-                  <stop offset="100%" stop-color="#050807"/>
-                </radialGradient>
-                <radialGradient id="forageGlow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#E8B14B" stop-opacity="0.55"/>
-                  <stop offset="60%" stop-color="#E8B14B" stop-opacity="0.18"/>
-                  <stop offset="100%" stop-color="#E8B14B" stop-opacity="0"/>
-                </radialGradient>
-              </defs>
-              <rect width="600" height="360" fill="url(#forageBg)"/>
-
-              <!-- European / Mediterranean / Levant landmasses. Coordinates
-                   are real [lon, lat] coastline samples (Natural Earth 10m,
-                   simplified) projected to the 600×360 canvas at render time.
-                   This is why the shapes actually read as Europe instead of
-                   stylised blobs. -->
-              <defs>
-                <linearGradient id="forageLand" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%"  stop-color="#0e2417"/>
-                  <stop offset="100%" stop-color="#091b10"/>
-                </linearGradient>
-                <radialGradient id="forageSea" cx="50%" cy="100%" r="120%">
-                  <stop offset="0%"  stop-color="rgba(60,110,140,0.06)"/>
-                  <stop offset="60%" stop-color="rgba(40,80,110,0.02)"/>
-                  <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
-                </radialGradient>
-              </defs>
-
-              <!-- Mediterranean / Black Sea wash — sits under the land to suggest body of water -->
-              <rect x="120" y="240" width="460" height="100" fill="url(#forageSea)" rx="40" />
-
-              <!-- Land paths + country borders are injected here by the inline
-                   script below. Two layers: filled land masses (forageLandG)
-                   under a thinner border overlay (forageBorderG) so countries
-                   read distinctly without the map feeling fussy. -->
-              <g id="forageLandG" fill="url(#forageLand)" stroke="rgba(60,110,80,0.55)" stroke-width="0.6" stroke-linejoin="round" stroke-linecap="round"></g>
-              <g id="forageBorderG" fill="none" stroke="rgba(180,200,170,0.18)" stroke-width="0.35" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="1.5 2"></g>
-              <script>/* <![CDATA[ */
-              (function(){
-                // Equirectangular projection — same window the node coordinates were placed in.
-                var LON_MIN=-12, LON_MAX=50, LAT_MIN=30, LAT_MAX=68, W=600, H=360;
-                function proj(c){
-                  var x=((c[0]-LON_MIN)/(LON_MAX-LON_MIN))*W;
-                  var y=((LAT_MAX-c[1])/(LAT_MAX-LAT_MIN))*H;
-                  return x.toFixed(1)+','+y.toFixed(1);
-                }
-                // Catmull-Rom → cubic Bézier smoothing. Same input points,
-                // but the path between them is now a continuous curve rather
-                // than straight segments — coastlines read as organic shore
-                // lines instead of polygon edges.
-                function projXY(c){
-                  return [
-                    ((c[0]-LON_MIN)/(LON_MAX-LON_MIN))*W,
-                    ((LAT_MAX-c[1])/(LAT_MAX-LAT_MIN))*H,
-                  ];
-                }
-                function smoothPath(coords, closed){
-                  if (!coords.length) return '';
-                  var pts = coords.map(projXY);
-                  var n = pts.length;
-                  var d = 'M'+pts[0][0].toFixed(1)+','+pts[0][1].toFixed(1);
-                  // Tension — higher value pulls the curve further out from the
-                  // straight line. 0.75 gives organic, well-rounded coastlines
-                  // without overshoot artifacts. Was 0.5 (more polygonal).
-                  var t = 0.75;
-                  for (var i = 0; i < (closed ? n : n-1); i++){
-                    var p0 = pts[(i-1+n) % n];
-                    var p1 = pts[i % n];
-                    var p2 = pts[(i+1) % n];
-                    var p3 = pts[(i+2) % n];
-                    if (!closed) {
-                      if (i === 0)   p0 = p1;
-                      if (i === n-2) p3 = p2;
-                    }
-                    var c1x = p1[0] + (p2[0]-p0[0])/6 * t;
-                    var c1y = p1[1] + (p2[1]-p0[1])/6 * t;
-                    var c2x = p2[0] - (p3[0]-p1[0])/6 * t;
-                    var c2y = p2[1] - (p3[1]-p1[1])/6 * t;
-                    d += 'C'+c1x.toFixed(1)+','+c1y.toFixed(1)+' '+c2x.toFixed(1)+','+c2y.toFixed(1)+' '+p2[0].toFixed(1)+','+p2[1].toFixed(1);
-                  }
-                  return d + (closed ? 'Z' : '');
-                }
-                function pathClosed(coords){ return smoothPath(coords, true); }
-                function pathOpen(coords){ return smoothPath(coords, false); }
-                // [lon, lat] coast samples — picked to read as real Europe at this resolution.
-                // More vertices per coast vs. the previous version for smoother curves; new
-                // polygons for Ukraine + Crimea (Black Sea coast) and the Alpine / Carpathian
-                // central European mass that now visibly extends Czechia / Slovakia / Hungary
-                // / Switzerland / Austria.
-                var REGIONS = [
-                  /* Iberia — refined Atlantic and Med coastlines */
-                  [[-9.5,36.0],[-8.5,36.5],[-7.0,36.8],[-5.5,36.0],[-3.5,36.6],[-2.0,36.7],[-0.7,37.6],[0.2,38.7],[0.7,40.7],[1.6,41.0],[2.5,41.5],[3.2,42.0],[3.0,42.4],[1.7,42.4],[0.5,42.7],[-1.4,43.3],[-2.5,43.4],[-3.5,43.5],[-5.0,43.6],[-5.9,43.7],[-7.7,43.7],[-9.0,43.0],[-9.3,42.0],[-8.8,41.0],[-8.7,39.5],[-8.9,38.7],[-9.4,38.0],[-9.0,37.0]],
-                  /* France + Benelux — added Brittany / Cotentin peninsulas */
-                  [[-1.7,43.4],[1.5,42.5],[3.0,42.4],[4.6,43.4],[5.5,43.3],[6.8,43.1],[7.5,43.7],[7.7,44.0],[7.2,44.5],[6.9,45.0],[7.0,45.9],[6.3,46.4],[6.5,46.7],[7.6,47.6],[8.2,48.9],[7.5,49.3],[6.5,49.5],[4.8,49.8],[3.1,50.8],[2.5,51.1],[1.6,50.9],[0.7,50.0],[1.5,49.3],[-0.8,49.4],[-1.5,49.7],[-1.9,49.7],[-2.0,48.6],[-3.4,48.8],[-4.7,48.4],[-4.8,47.9],[-2.4,47.2],[-1.6,46.7],[-1.0,46.5],[-1.2,45.7],[-1.0,44.6]],
-                  /* Great Britain — added Wash + east coast detail + Cornish curl */
-                  [[-5.0,50.0],[-3.5,50.1],[-1.5,50.5],[0.3,50.7],[1.3,51.4],[1.5,52.0],[1.4,52.7],[0.4,53.0],[0.0,53.5],[-0.5,53.7],[-1.0,54.3],[-1.3,55.0],[-1.5,55.5],[-2.0,55.7],[-2.5,55.8],[-3.0,55.9],[-3.0,56.6],[-2.3,57.5],[-3.2,58.3],[-4.6,58.7],[-5.5,58.6],[-5.4,57.5],[-5.5,57.0],[-5.4,56.5],[-4.5,55.8],[-4.9,54.8],[-3.5,54.5],[-3.0,54.0],[-4.5,53.4],[-5.0,53.0],[-5.2,52.0],[-5.0,51.7]],
-                  /* Ireland — softer west-coast curve */
-                  [[-10.0,51.4],[-9.5,51.8],[-10.5,52.3],[-10.0,53.0],[-9.5,53.4],[-9.0,54.0],[-8.0,54.5],[-7.5,55.1],[-7.0,55.2],[-6.0,54.7],[-5.5,54.0],[-6.3,53.4],[-6.0,52.8],[-6.2,52.2],[-7.0,52.0],[-8.5,51.8],[-9.5,51.5]],
-                  /* Central Europe — Germany + Poland + Baltic + Czechia + Slovakia +
-                     Hungary + Austria + Switzerland + Alps. Extended south so the
-                     Alpine arc and Carpathian basin are visible. */
-                  [[6.5,49.5],[7.5,48.5],[8.0,47.7],[9.5,47.0],[11.0,46.8],[12.5,46.7],[14.0,46.5],[15.5,46.5],[17.0,46.0],[18.5,45.8],[20.0,45.5],[21.5,45.0],[22.5,45.5],[22.0,47.0],[22.5,49.0],[23.0,52.0],[22.5,54.5],[19.5,54.5],[17.0,54.7],[14.2,54.1],[12.0,54.5],[9.7,54.0],[8.6,53.8],[6.5,53.4],[6.0,52.5],[6.5,51.0]],
-                  /* Scandinavia — Norway / Sweden / Finnish tip with more fjord vertices */
-                  [[5.5,58.4],[6.9,58.0],[10.7,59.0],[11.2,58.7],[11.0,58.0],[12.0,56.5],[13.5,55.4],[14.5,55.5],[16.0,56.2],[16.4,57.4],[17.0,58.7],[18.7,59.5],[19.0,60.6],[22.0,60.7],[24.0,63.0],[22.0,65.5],[24.5,66.0],[22.0,68.0],[19.0,68.5],[17.0,68.0],[15.0,67.0],[12.0,65.5],[10.0,64.0],[7.5,62.5],[5.5,60.5]],
-                  /* Italy mainland — softer Adriatic, fuller boot */
-                  [[6.7,43.8],[7.5,44.0],[9.2,44.4],[12.4,45.6],[13.6,45.8],[13.5,45.0],[12.4,44.2],[14.0,42.5],[16.0,41.9],[17.5,41.2],[18.5,40.0],[18.0,40.5],[17.5,39.5],[17.0,39.0],[16.0,38.5],[15.7,38.3],[15.6,38.6],[16.0,39.5],[15.5,40.0],[14.0,40.5],[13.0,40.7],[11.0,42.4],[10.0,43.5],[8.0,44.0]],
-                  /* Sicily */
-                  [[12.5,38.0],[15.6,38.2],[15.0,37.0],[12.5,37.5]],
-                  /* Sardinia (new) */
-                  [[8.5,41.0],[9.6,41.0],[9.7,39.5],[8.7,39.2],[8.4,40.0]],
-                  /* Corsica (new) */
-                  [[8.6,42.3],[9.5,42.5],[9.4,43.0],[8.5,42.7]],
-                  /* Balkans + Greece mainland with sharper peninsulas */
-                  [[13.5,45.5],[15.0,44.5],[17.0,43.0],[18.5,42.6],[19.5,42.0],[20.5,41.0],[21.0,37.5],[22.5,37.5],[23.0,36.5],[24.5,38.5],[26.0,37.5],[26.5,40.5],[26.5,41.0],[24.0,41.5],[22.5,42.0],[20.0,42.5],[18.0,45.0]],
-                  /* Romania + Bulgaria — Black Sea east coast at lon 28 */
-                  [[20.0,45.5],[22.5,45.5],[24.5,44.0],[27.0,43.7],[28.0,43.5],[28.3,42.5],[28.0,42.0],[27.0,42.0],[26.5,41.0],[24.5,41.5],[23.0,42.0],[22.5,44.0],[21.0,45.0]],
-                  /* Ukraine + Belarus + Moldova — extends east, opens onto Black Sea */
-                  [[23.0,52.0],[26.0,51.5],[30.0,51.5],[33.0,52.0],[35.0,51.0],[37.0,49.5],[38.0,48.5],[37.5,47.0],[35.5,46.5],[34.0,45.0],[32.5,46.0],[31.0,46.6],[30.0,46.5],[28.0,45.5],[26.5,46.0],[24.5,46.5],[22.5,47.0],[22.0,49.0],[22.5,51.0]],
-                  /* Crimea — small peninsula off Ukraine */
-                  [[33.5,45.4],[35.5,45.0],[36.5,44.6],[36.0,44.4],[34.0,44.6],[33.0,45.2]],
-                  /* Anatolia / Turkey — extended Black Sea coast */
-                  [[26.0,41.0],[28.0,41.0],[29.0,41.0],[30.0,41.5],[33.5,42.0],[35.0,42.0],[37.0,41.0],[40.0,41.0],[41.5,41.5],[41.5,40.0],[40.0,38.0],[37.5,36.7],[34.0,36.5],[32.0,36.5],[30.0,36.5],[28.0,36.5],[27.5,37.5],[26.0,38.0],[26.5,39.0]],
-                  /* Levant coast — Lebanon / Syria / Israel */
-                  [[35.5,36.0],[36.0,35.5],[36.0,32.5],[35.0,31.5],[34.5,31.0],[34.5,33.5],[35.0,34.5]],
-                  /* North Africa coast band — caps the view at the bottom */
-                  [[-12,35.0],[-5,35.8],[0,36.5],[9,37.0],[11,33.0],[20,32.5],[33,31.5],[35,31.0],[50,30.5],[50,30.0],[-12,30.0]],
-                ];
-                // Additional islands + visible smaller regions: Finland separate
-                // from Scandinavia, Baltic states (Estonia/Latvia/Lithuania),
-                // Malta, Cyprus. Lebanon coast slightly enlarged below.
-                REGIONS.push(
-                  /* Finland — east of Sweden, separated by the Gulf of Bothnia */
-                  [[21.5,60.5],[23.5,60.0],[25.5,60.5],[27.5,60.5],[29.5,61.0],[31.0,62.5],[30.5,64.0],[29.5,65.5],[28.0,67.0],[27.0,68.5],[25.0,69.5],[23.0,68.0],[22.0,66.0],[22.5,64.0],[22.0,62.0]],
-                  /* Baltic states — Estonia + Latvia + Lithuania between Poland and Finland */
-                  [[20.5,55.0],[22.5,54.5],[24.5,54.5],[26.5,55.0],[28.0,55.5],[28.0,57.0],[27.5,58.5],[25.5,59.5],[23.5,59.5],[21.5,58.5],[20.5,57.0]],
-                  /* Malta — small island south of Sicily */
-                  [[14.3,35.95],[14.6,35.85],[14.55,35.78],[14.25,35.85]],
-                  /* Cyprus — Med island east of Anatolia */
-                  [[32.3,34.6],[33.5,34.55],[34.6,34.95],[34.0,35.3],[32.5,35.1]],
-                  /* Lebanon highlighted — slightly enlarged so the Beirut node sits visibly inside */
-                  [[35.1,34.7],[35.7,34.6],[36.4,34.5],[36.6,33.8],[36.0,33.1],[35.3,33.05],[35.1,33.8]]
-                );
-                // Country borders — drawn as thin dashed lines on top of the land
-                // fill. Open paths (no Z) so they read as borders, not closed polygons.
-                // Only the most recognisable lines so the map stays uncluttered.
-                var BORDERS = [
-                  // Spain ↔ Portugal (Iberian spine)
-                  [[-9.0,42.0],[-8.5,40.0],[-7.5,38.5],[-7.0,37.5]],
-                  // France ↔ Spain (Pyrenees)
-                  [[-1.4,43.3],[0.5,42.7],[1.7,42.4],[3.0,42.4]],
-                  // Switzerland — Alpine triangle. Rhine northern border + Alps southern.
-                  [[6.0,46.0],[7.5,46.7],[9.5,47.5],[10.5,46.9],[9.5,46.0],[7.5,45.8],[6.0,46.0]],
-                  // France ↔ Germany (Rhine, roughly)
-                  [[7.5,48.0],[8.0,49.0],[6.5,49.5]],
-                  // Czechia + Slovakia (combined silhouette inside central Europe)
-                  [[12.5,49.5],[14.5,50.5],[16.0,50.5],[18.0,49.5],[19.5,49.3],[21.0,49.0],[22.0,48.8],[21.0,48.6],[18.0,48.0],[16.0,48.0],[13.5,49.0],[12.5,49.5]],
-                  // Hungary (lozenge under Slovakia)
-                  [[16.0,48.5],[19.0,48.5],[22.0,47.8],[22.0,46.0],[17.0,46.0],[16.0,46.5],[16.0,48.5]],
-                  // Austria (Alpine wedge between Switzerland and Hungary)
-                  [[9.5,47.5],[12.0,47.7],[14.5,47.7],[16.0,48.0],[16.0,46.5],[12.5,46.7],[9.5,47.0],[9.5,47.5]],
-                  // Poland (east-of-Germany lozenge)
-                  [[14.5,53.5],[18.0,54.5],[22.5,54.0],[23.0,52.0],[22.0,49.5],[18.0,49.7],[15.0,50.5],[14.5,53.5]],
-                  // Ukraine ↔ Belarus (Pripyat marshes-ish horizontal)
-                  [[23.0,52.0],[28.0,52.0],[32.0,52.0],[33.0,52.0]],
-                  // Romania ↔ Ukraine (Carpathian arc)
-                  [[22.5,47.0],[24.5,47.5],[26.5,47.5],[28.0,46.0]],
-                ];
-                var g = document.getElementById('forageLandG');
-                if (g) g.innerHTML = REGIONS.map(function(r){return '<path d="'+pathClosed(r)+'"/>';}).join('');
-                var b = document.getElementById('forageBorderG');
-                if (b) b.innerHTML = BORDERS.map(function(r){return '<path d="'+pathOpen(r)+'"/>';}).join('');
-              })();
-              /* ]]> */</script>
-
-              <!-- Soft connection arcs between nodes — now align with the
-                   real projected node positions so the arcs follow the
-                   geographic flow (Sweden → Berlin → Riviera → Anatolia → Levant). -->
-              <g fill="none" stroke="rgba(232,177,75,0.22)" stroke-width="0.9" stroke-dasharray="2 5">
-                <!-- Sweden → Berlin (southward through Baltic / Germany) -->
-                <path d="M 262 66 Q 248 110 246 147"/>
-                <!-- Berlin → Riviera (south-west through France) -->
-                <path d="M 246 147 Q 210 190 187 230"/>
-                <!-- Riviera → Cappadocia (long arc across the Med, bowed south) -->
-                <path d="M 187 230 Q 320 308 453 278"/>
-                <!-- Cappadocia → Beirut (short southern hop) -->
-                <path d="M 453 278 Q 460 300 460 323"/>
-              </g>
-
-              <!-- 5 herb-nodes. Coordinates projected from real lon/lat with
-                   the same equirectangular function as the land paths above,
-                   so the nodes sit on the actual map. Each label sits on a
-                   dark rounded pill so the herb name reads cleanly against
-                   land, coastline, or sea — was previously plain text that
-                   disappeared into busy areas of the map. -->
-              <defs>
-                <filter id="forageLabelShadow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="0" dy="1" stdDeviation="1.2" flood-color="#000" flood-opacity="0.6"/>
-                </filter>
-              </defs>
-              <g>
-                <!-- 1. Sweden / Dalarna — pine cones & chaga -->
-                <g transform="translate(262,66)">
-                  <circle r="22" fill="url(#forageGlow)">
-                    <animate attributeName="r" values="18;26;18" dur="6s" repeatCount="indefinite"/>
-                  </circle>
-                  <circle r="5" fill="#E8B14B" stroke="#fff" stroke-width="0.5"/>
-                  <rect x="-32" y="-44" width="64" height="14" rx="7" fill="rgba(7,13,11,0.85)" stroke="rgba(232,177,75,0.3)" stroke-width="0.5"/>
-                  <text x="0" y="-34" text-anchor="middle" fill="#F5D689" font-size="9" letter-spacing="2" font-weight="600" font-family="'Courier New',monospace">DALARNA</text>
-                  <rect x="-52" y="30" width="104" height="20" rx="10" fill="rgba(7,13,11,0.92)" stroke="rgba(232,177,75,0.35)" stroke-width="0.5"/>
-                  <text x="0" y="44" text-anchor="middle" fill="#E6D9B5" font-style="italic" font-size="13" font-family="'Cormorant Garamond',Georgia,serif" filter="url(#forageLabelShadow)">Pine cones &amp; Chaga</text>
-                </g>
-                <!-- 2. Berlin — elderflower -->
-                <g transform="translate(246,147)">
-                  <circle r="22" fill="url(#forageGlow)">
-                    <animate attributeName="r" values="18;26;18" dur="6.5s" begin="0.8s" repeatCount="indefinite"/>
-                  </circle>
-                  <circle r="5" fill="#E8B14B" stroke="#fff" stroke-width="0.5"/>
-                  <rect x="-28" y="-44" width="56" height="14" rx="7" fill="rgba(7,13,11,0.85)" stroke="rgba(232,177,75,0.3)" stroke-width="0.5"/>
-                  <text x="0" y="-34" text-anchor="middle" fill="#F5D689" font-size="9" letter-spacing="2" font-weight="600" font-family="'Courier New',monospace">BERLIN</text>
-                  <rect x="-40" y="30" width="80" height="20" rx="10" fill="rgba(7,13,11,0.92)" stroke="rgba(232,177,75,0.35)" stroke-width="0.5"/>
-                  <text x="0" y="44" text-anchor="middle" fill="#E6D9B5" font-style="italic" font-size="13" font-family="'Cormorant Garamond',Georgia,serif" filter="url(#forageLabelShadow)">Elderflower</text>
-                </g>
-                <!-- 3. French Riviera (Nice) — rosemary -->
-                <g transform="translate(187,230)">
-                  <circle r="22" fill="url(#forageGlow)">
-                    <animate attributeName="r" values="18;26;18" dur="7s" begin="1.6s" repeatCount="indefinite"/>
-                  </circle>
-                  <circle r="5" fill="#E8B14B" stroke="#fff" stroke-width="0.5"/>
-                  <rect x="-30" y="-44" width="60" height="14" rx="7" fill="rgba(7,13,11,0.85)" stroke="rgba(232,177,75,0.3)" stroke-width="0.5"/>
-                  <text x="0" y="-34" text-anchor="middle" fill="#F5D689" font-size="9" letter-spacing="2" font-weight="600" font-family="'Courier New',monospace">RIVIERA</text>
-                  <rect x="-38" y="30" width="76" height="20" rx="10" fill="rgba(7,13,11,0.92)" stroke="rgba(232,177,75,0.35)" stroke-width="0.5"/>
-                  <text x="0" y="44" text-anchor="middle" fill="#E6D9B5" font-style="italic" font-size="13" font-family="'Cormorant Garamond',Georgia,serif" filter="url(#forageLabelShadow)">Wild Rosemary</text>
-                </g>
-                <!-- 4. Cappadocia — lavender -->
-                <g transform="translate(453,278)">
-                  <circle r="22" fill="url(#forageGlow)">
-                    <animate attributeName="r" values="18;26;18" dur="6.8s" begin="2.4s" repeatCount="indefinite"/>
-                  </circle>
-                  <circle r="5" fill="#E8B14B" stroke="#fff" stroke-width="0.5"/>
-                  <rect x="-42" y="-44" width="84" height="14" rx="7" fill="rgba(7,13,11,0.85)" stroke="rgba(232,177,75,0.3)" stroke-width="0.5"/>
-                  <text x="0" y="-34" text-anchor="middle" fill="#F5D689" font-size="9" letter-spacing="2" font-weight="600" font-family="'Courier New',monospace">CAPPADOCIA</text>
-                  <rect x="-44" y="30" width="88" height="20" rx="10" fill="rgba(7,13,11,0.92)" stroke="rgba(232,177,75,0.35)" stroke-width="0.5"/>
-                  <text x="0" y="44" text-anchor="middle" fill="#E6D9B5" font-style="italic" font-size="13" font-family="'Cormorant Garamond',Georgia,serif" filter="url(#forageLabelShadow)">Wild Lavender</text>
-                </g>
-                <!-- 5. Beirut — custard apple -->
-                <g transform="translate(460,323)">
-                  <circle r="22" fill="url(#forageGlow)">
-                    <animate attributeName="r" values="18;26;18" dur="6.2s" begin="3.2s" repeatCount="indefinite"/>
-                  </circle>
-                  <circle r="5" fill="#E8B14B" stroke="#fff" stroke-width="0.5"/>
-                  <rect x="-28" y="-44" width="56" height="14" rx="7" fill="rgba(7,13,11,0.85)" stroke="rgba(232,177,75,0.3)" stroke-width="0.5"/>
-                  <text x="0" y="-34" text-anchor="middle" fill="#F5D689" font-size="9" letter-spacing="2" font-weight="600" font-family="'Courier New',monospace">BEIRUT</text>
-                  <rect x="-46" y="30" width="92" height="20" rx="10" fill="rgba(7,13,11,0.92)" stroke="rgba(232,177,75,0.35)" stroke-width="0.5"/>
-                  <text x="0" y="44" text-anchor="middle" fill="#E6D9B5" font-style="italic" font-size="13" font-family="'Cormorant Garamond',Georgia,serif" filter="url(#forageLabelShadow)">Custard Apple</text>
-                </g>
-              </g>
-
-              <!-- Subtle frame label -->
-              <text x="20" y="28" fill="#8B7E62" font-size="9" letter-spacing="3" font-family="'Courier New',monospace">FUNGAI ART · FORAGING ARC</text>
-              <text x="580" y="28" text-anchor="end" fill="#8B7E62" font-size="9" letter-spacing="3" font-family="'Courier New',monospace">5 ACTIVE NODES · LIVE</text>
-            </svg>
-          </div>
+          <!-- Foraging preview — a real snapshot of /foraging (satellite
+               basemap + the live node markers), linked to the full map.
+               Replaces the hand-drawn SVG outline of Europe. Re-capture
+               public/home/forage-map-preview.webp when nodes or basemap change. -->
+          <a href="/foraging" class="forage-map-shot" aria-label="Open the Foraging Map">
+            <img src="/home/forage-map-preview.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="The Fungai Art Foraging Map in satellite view, with foraging nodes from Sweden and Denmark through Germany and France to Portugal">
+            <span class="forage-map-cta">Open the live map &rarr;</span>
+            <span class="forage-map-credit">Imagery &copy; Esri &middot; labels &copy; OpenStreetMap, CARTO</span>
+          </a>
+          <style>
+            .forage-map-shot{position:relative;display:block;border-radius:8px;overflow:hidden;line-height:0}
+            .forage-map-shot img{width:100%;height:auto;display:block;transition:transform .6s ease}
+            .forage-map-shot::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(5,9,12,.5) 0%,rgba(5,9,12,0) 22%,rgba(5,9,12,0) 68%,rgba(5,9,12,.6) 100%)}
+            .forage-map-shot:hover img{transform:scale(1.03)}
+            .forage-map-cta{position:absolute;left:16px;bottom:14px;z-index:2;line-height:1;font-family:'Bayer',var(--sans);font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:#05090C;background:#B6F0AE;padding:9px 14px;border-radius:999px}
+            .forage-map-credit{position:absolute;right:10px;bottom:12px;z-index:2;line-height:1.2;font-size:9px;color:rgba(237,229,216,.8);text-shadow:0 1px 4px rgba(0,0,0,.9)}
+          </style>
         </div>
         <div style="padding:22px 26px;background:rgba(107,214,111,0.04);border:0.5px solid rgba(107,214,111,0.15);border-radius:14px;">
-          <p style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:400;font-size:20px;color:var(--parchment);line-height:1.5;">"Forage with us. Learn the names, properties, and stories of wild plants you walk past every day."</p>
+          <p style="font-family:'IM Fell English','Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:400;font-size:20px;color:var(--parchment);line-height:1.5;">"Forage with us. Learn the names, properties, and stories of wild plants you walk past every day."</p>
         </div>
       </div>
     </div>
@@ -2828,6 +2604,9 @@ function toggleMobileMenu() {
           data-instgrm-version="14"
           style="background:#fff;border:0;border-radius:14px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;min-width:0;padding:0;width:100%;">
         </blockquote>
+        <!-- Fallback card (shown when Instagram's embed stays blank). Drop the
+             post photo at /home/spore/DO6ApsxDDdd.webp and it appears here. -->
+        <a class="spore-fallback" href="https://www.instagram.com/p/DO6ApsxDDdd/?img_index=1" target="_blank" rel="noopener noreferrer" data-photo="/home/spore/DO6ApsxDDdd.webp"><span class="spore-fallback-media" aria-hidden="true"></span><span class="spore-fallback-body"><span class="spore-fallback-handle">@fungai.art</span><span class="spore-fallback-title">Robin &amp; Steph</span><span class="spore-fallback-cta">View on Instagram &rarr;</span></span></a>
       </div>
       <!-- Pinned post 2 — older "Inner Architecture" carousel DTx5LGZjM0j -->
       <div class="spore-embed">
@@ -2836,6 +2615,7 @@ function toggleMobileMenu() {
           data-instgrm-version="14"
           style="background:#fff;border:0;border-radius:14px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;min-width:0;padding:0;width:100%;">
         </blockquote>
+        <a class="spore-fallback" href="https://www.instagram.com/p/DTx5LGZjM0j/" target="_blank" rel="noopener noreferrer" data-photo="/home/spore/DTx5LGZjM0j.webp"><span class="spore-fallback-media" aria-hidden="true"></span><span class="spore-fallback-body"><span class="spore-fallback-handle">@fungai.art</span><span class="spore-fallback-title">Inner Architecture</span><span class="spore-fallback-cta">View on Instagram &rarr;</span></span></a>
       </div>
       <!-- Pinned post 3 — reel DXe14z9jG2H -->
       <div class="spore-embed">
@@ -2844,6 +2624,7 @@ function toggleMobileMenu() {
           data-instgrm-version="14"
           style="background:#fff;border:0;border-radius:14px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;min-width:0;padding:0;width:100%;">
         </blockquote>
+        <a class="spore-fallback" href="https://www.instagram.com/reel/DXe14z9jG2H/" target="_blank" rel="noopener noreferrer" data-photo="/home/spore/DXe14z9jG2H.webp"><span class="spore-fallback-media" aria-hidden="true"></span><span class="spore-fallback-body"><span class="spore-fallback-handle">@fungai.art</span><span class="spore-fallback-title">Field reel</span><span class="spore-fallback-cta">View on Instagram &rarr;</span></span></a>
       </div>
       <script async src="//www.instagram.com/embed.js"></script>
     </div>
@@ -2860,6 +2641,20 @@ function toggleMobileMenu() {
        override aggressively below for any path embed.js takes. */
     .spore-grid { display:grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap:18px !important; align-items:start; max-width:1280px; margin:0 auto; }
     .spore-embed { width:100% !important; min-width:0 !important; max-width:none !important; }
+    /* Linked fallback card — hidden until the embed is known to be blank. */
+    .spore-fallback { display:none; position:relative; aspect-ratio:4/5; border-radius:14px; overflow:hidden; text-decoration:none; color:var(--parchment);
+      background:radial-gradient(ellipse 80% 60% at 30% 20%, rgba(168,143,224,0.25), transparent 60%), radial-gradient(ellipse 70% 60% at 80% 90%, rgba(232,177,75,0.22), transparent 60%), var(--forest-card);
+      border:0.5px solid rgba(136,186,200,0.25); box-shadow:0 12px 40px rgba(0,0,0,0.35); }
+    .spore-embed.is-fallback .spore-fallback { display:block; }
+    .spore-embed.is-fallback .instagram-media, .spore-embed.is-fallback iframe { display:none !important; }
+    .spore-fallback-media { position:absolute; inset:0; background-size:cover; background-position:center; transition:transform .6s ease; }
+    .spore-fallback:not(.has-photo) .spore-fallback-media::after { content:''; position:absolute; left:50%; top:42%; width:56px; height:56px; transform:translate(-50%,-50%); border-radius:16px; border:2px solid rgba(237,229,216,0.55);
+      background:radial-gradient(circle at 50% 50%, transparent 11px, rgba(237,229,216,0.55) 12px, rgba(237,229,216,0.55) 14px, transparent 15px); }
+    .spore-fallback:hover .spore-fallback-media { transform:scale(1.04); }
+    .spore-fallback-body { position:absolute; left:0; right:0; bottom:0; padding:48px 18px 18px; display:flex; flex-direction:column; gap:4px; background:linear-gradient(180deg, transparent, rgba(5,9,12,0.9)); }
+    .spore-fallback-handle { font-family:'Bayer',var(--sans); font-size:9.5px; letter-spacing:0.28em; text-transform:uppercase; color:var(--amber-lt); }
+    .spore-fallback-title { font-family:'IM Fell English','Cormorant Garamond',Georgia,serif; font-style:italic; font-size:22px; line-height:1.15; }
+    .spore-fallback-cta { font-family:'Bayer',var(--sans); font-size:9.5px; letter-spacing:0.22em; text-transform:uppercase; color:#B6F0AE; margin-top:6px; }
     .spore-embed > * { width:100% !important; max-width:100% !important; min-width:0 !important; }
     .spore-embed .instagram-media,
     .spore-embed blockquote.instagram-media,
@@ -2895,6 +2690,27 @@ function toggleMobileMenu() {
       }
       window.addEventListener('load', () => setTimeout(go, 400));
     })();
+    // Fallback cards — Instagram's embed frame often stays 0px tall
+    // (tracking protection, logged-out/consent walls, script blocked).
+    // If an embed hasn't sized itself after ~7s, show the linked card
+    // instead; the card uses the post photo when /home/spore/<id>.webp exists.
+    (function sporeFallbacks(){
+      document.querySelectorAll('#journal .spore-fallback[data-photo]').forEach(function(card){
+        var img = new Image();
+        img.onload = function(){ card.classList.add('has-photo'); card.querySelector('.spore-fallback-media').style.backgroundImage = 'url("' + card.getAttribute('data-photo') + '")'; };
+        img.src = card.getAttribute('data-photo');
+      });
+      function check(){
+        document.querySelectorAll('#journal .spore-embed').forEach(function(embed){
+          if (embed.classList.contains('is-fallback')) return;
+          var frame = embed.querySelector('iframe');
+          if (!frame || frame.offsetHeight < 60) embed.classList.add('is-fallback');
+        });
+      }
+      // Timers, not window 'load' — Instagram's embeds keep the page's load
+      // event from ever firing, so a load-based check never ran.
+      setTimeout(check, 9000);
+    })();
   </script>
 </section>
 
@@ -2916,7 +2732,7 @@ function toggleMobileMenu() {
         <img src="/home/team/robin-portrait.jpg" alt="Robin Floræsta" loading="lazy" class="team-photo" style="object-position:center 25%;" onerror="this.style.display='none'">
         <div class="team-scrim"></div>
         <div class="team-body">
-          <div style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-lt);margin-bottom:6px;">Founder &middot; Chef &middot; Forager</div>
+          <div style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber-lt);margin-bottom:6px;">Founder &middot; Chef &middot; Forager &middot; Alchemist</div>
           <div class="team-name">Robin Floræsta</div>
           <p class="team-bio">Forager and former private chef, now dedicated to translating the intelligence of plants and mushrooms into alchemy. Fifteen years of European kitchens meeting a decade of Swedish autumn foraging. The apothecary is the daytime version; the <a href="/dinner-experience" style="color:var(--amber-lt);text-decoration:none;border-bottom:0.5px solid rgba(232,177,75,0.5);">Dinner Experience</a> is where the two lives sit down at the same table.</p>
           <a href="mailto:robin@fungai.art" class="team-contact">robin@fungai.art</a>
@@ -2931,7 +2747,7 @@ function toggleMobileMenu() {
       .team-card--wide .team-scrim{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 0%,transparent 40%,rgba(3,6,8,0.5) 55%,rgba(3,6,8,0.85) 100%);}
       .team-card--wide .team-body{position:relative;padding:52px 48px;display:flex;flex-direction:column;justify-content:center;z-index:2;background:rgba(3,6,8,0.75);}
       .team-name{
-        font-family:'Cormorant Garamond',Georgia,serif;
+        font-family:'IM Fell English','Cormorant Garamond',Georgia,serif;
         font-style:italic; font-weight:400;
         color:var(--parchment);
         font-size:44px; line-height:1.05;
@@ -2955,63 +2771,10 @@ function toggleMobileMenu() {
       }
     </style>
 
-    <!-- Cities / Nodes — replaces the numbers panel -->
-    <div class="reveal reveal-d2" style="margin-top:64px;">
-      <div style="text-align:center;margin-bottom:32px;">
-        <span style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber);">Wherever the plants grow</span>
-        <h3 style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;font-size:clamp(28px,4vw,42px);color:var(--parchment);margin-top:8px;line-height:1.05;letter-spacing:0.005em;">Our <em style="color:var(--amber-lt);font-style:italic;">nodes.</em></h3>
-      </div>
-      <style>
-        /* Compact node tiles — Robin asked for smaller boxes so the row reads
-           as a constellation, not a wall of paragraphs. 6 cols → 3 → 2 → 1. */
-        .nodes-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:rgba(158,212,56,0.07);border-radius:14px;overflow:hidden;}
-        @media (max-width:1100px){.nodes-grid{grid-template-columns:repeat(3,1fr);}}
-        @media (max-width:720px){.nodes-grid{grid-template-columns:repeat(2,1fr);}}
-        @media (max-width:420px){.nodes-grid{grid-template-columns:1fr;}}
-        .node-tile{padding:18px 16px;background:var(--forest-card);border-left:3px solid var(--amber-lt);}
-        .node-tile .node-dot{width:7px;height:7px;border-radius:50%;}
-        .node-tile .node-name{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:400;font-size:19px;color:var(--parchment);letter-spacing:0.005em;}
-        .node-tile .node-role{font-family:'Bayer',var(--sans);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--amber-lt);margin-top:5px;}
-        .node-tile .node-body{font-family:'Kiona',var(--sans);font-size:11.5px;color:var(--cream);line-height:1.55;margin-top:8px;opacity:0.85;}
-      </style>
-      <div class="nodes-grid">
-        <div class="node-tile" style="border-left-color:#6BD66F;">
-          <div style="display:flex;align-items:center;gap:8px;"><div class="node-dot" style="background:#6BD66F;box-shadow:0 0 8px rgba(107,214,111,0.6);"></div><div class="node-name">Sweden</div></div>
-          <div class="node-role">Foraging</div>
-          <p class="node-body">Origin point. Königshyttan and Bergslagen forests. Chaga, pine pollen, amanita.</p>
-        </div>
-        <div class="node-tile" style="border-left-color:#88BAC8;">
-          <div style="display:flex;align-items:center;gap:8px;"><div class="node-dot" style="background:#88BAC8;box-shadow:0 0 8px rgba(136,186,200,0.6);"></div><div class="node-name">Berlin</div></div>
-          <div class="node-role">Lab &amp; Ceremony</div>
-          <p class="node-body">Production lab and <span class="mt-name">Dinner Experience</span> home. Where the extracts are composed.</p>
-        </div>
-        <div class="node-tile" style="border-left-color:#E8B14B;">
-          <div style="display:flex;align-items:center;gap:8px;"><div class="node-dot" style="background:#E8B14B;box-shadow:0 0 8px rgba(232,177,75,0.6);"></div><div class="node-name">Lisbon</div></div>
-          <div class="node-role">Market &amp; Science</div>
-          <p class="node-body">Atlantic distribution. Sintra hills as botanical pharmacy.</p>
-        </div>
-        <div class="node-tile" style="border-left-color:#A88FE0;">
-          <div style="display:flex;align-items:center;gap:8px;"><div class="node-dot" style="background:#A88FE0;box-shadow:0 0 8px rgba(168,143,224,0.6);"></div><div class="node-name">Beirut</div></div>
-          <div class="node-role">Laboratory</div>
-          <p class="node-body">Mediterranean cedar mountains and the chemistry side. Where the work becomes precise.</p>
-        </div>
-        <div class="node-tile" style="border-left-color:#9ED438;">
-          <div style="display:flex;align-items:center;gap:8px;"><div class="node-dot" style="background:#9ED438;box-shadow:0 0 8px rgba(158,212,56,0.6);"></div><div class="node-name">Riga Castle</div></div>
-          <div class="node-role">Forest &amp; Events</div>
-          <p class="node-body">Baltic forest grounds and event-space residency. Slow gatherings, woodland ceremonies.</p>
-        </div>
-        <div class="node-tile" style="border-left-color:#E8714B;">
-          <div style="display:flex;align-items:center;gap:8px;"><div class="node-dot" style="background:#E8714B;opacity:0.7;"></div><div class="node-name">Genoa</div></div>
-          <div class="node-role" style="opacity:0.7;">In development</div>
-          <p class="node-body" style="opacity:0.7;">Ligurian coast &mdash; emerging southern node. Coming 2026&ndash;27.</p>
-        </div>
-      </div>
-    </div>
-
     <!-- Vision -->
     <div class="reveal reveal-d3" style="margin-top:48px;padding:42px 44px;background:radial-gradient(ellipse 70% 60% at 20% 30%,rgba(196,134,46,0.06),transparent 60%),var(--forest-mid);border:0.5px solid rgba(158,212,56,0.1);border-radius:18px;">
       <span style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber);">An invitation</span>
-      <p style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(22px,2.8vw,30px);color:var(--parchment);line-height:1.4;margin:14px 0 18px;border-left:2px solid rgba(196,134,46,0.55);padding-left:22px;letter-spacing:-0.005em;">If anything here resonates — write to us, walk with us, or sit with us at a ceremony. We answer everyone, slowly and carefully.</p>
+      <p style="font-family:'IM Fell English','Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(22px,2.8vw,30px);color:var(--parchment);line-height:1.4;margin:14px 0 18px;border-left:2px solid rgba(196,134,46,0.55);padding-left:22px;letter-spacing:-0.005em;">If anything here resonates — write to us, walk with us, or sit with us at a ceremony. We answer everyone, slowly and carefully.</p>
       <p style="font-family:'Kiona',var(--sans);font-size:14px;color:var(--cream);line-height:1.85;margin-bottom:28px;max-width:64ch;">There is no algorithm here, no funnel, no growth team. Just two humans and a small circle of friends, growing one conversation at a time.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
         <a href="mailto:robin@fungai.art" class="btn-primary" style="text-decoration:none;">✉ Email us</a>
