@@ -49,7 +49,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
 .hero-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--lichen);display:block;margin-bottom:20px}
 .hero-title{font-family:var(--serif);font-size:clamp(52px,8vw,96px);font-weight:300;line-height:1.0;color:var(--parchment)}
 .hero-title em{font-style:italic;color:var(--mist)}
-.hero-script{font-family:var(--script);font-size:clamp(32px,5vw,56px);color:var(--dust);display:block;margin-top:8px}
+/* Bayer wasn't loaded on /shop — the existing 'Bayer' labels were silently falling back. */
+@font-face{font-family:'Bayer';src:url('/fonts/Bayer-TypeArchiType.otf') format('opentype');font-display:swap}
+.hero-script{font-family:'Bayer','DM Sans',sans-serif;font-size:clamp(18px,2.4vw,28px);letter-spacing:0.06em;text-transform:lowercase;color:var(--dust);display:block;margin-top:14px}
 .hero-sub{font-size:14px;color:var(--dust);max-width:560px;margin:24px auto 0;line-height:1.8}
 
 /* FILTERS — sticky under the nav. Was top:57px which sat BEHIND the
