@@ -59,7 +59,7 @@
     bar.setAttribute('aria-label', 'Cookie notice');
     bar.innerHTML = [
       '<div class="fc-text">',
-      '<b>The forest leaves few traces.</b> We store only what your cart and saved formulas need — no analytics, no tracking. ',
+      '<b>The forest leaves few traces.</b> We store only what each feature needs — no analytics, no ad trackers. Embedded Instagram posts may set their own cookies. ',
       '<a href="/privacy">Privacy</a> · <a href="/terms">Terms</a>',
       '</div>',
       '<div class="fc-actions">',

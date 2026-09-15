@@ -66,34 +66,36 @@ section strong{color:var(--ml);font-weight:500;}
 <h1 class="hero-title">Privacy <em>policy.</em></h1>
 <p class="hero-blurb">We treat your data the way we treat the forest — minimally disturbed, ethically harvested, never sold. This page explains what we collect, why, and what your rights are.</p>
 
-<div class="meta">Last updated 23 May 2026 · Effective immediately</div>
+<div class="meta">Last updated 15 September 2026 · Effective immediately</div>
 
 <div class="tldr">
   <div class="tldr-label">⟡ In one sentence</div>
-  <div class="tldr-text">We store only what your shopping cart and saved formulas need to work — no analytics, no tracking pixels, no selling your data, ever.</div>
+  <div class="tldr-text">We collect only what each part of the site needs to work — no analytics, no advertising trackers, no selling your data, ever — and we tell you below exactly what goes where.</div>
 </div>
 
 <section>
   <h2>Who <em>we are</em></h2>
-  <p>Fungai Art is an independent artistic and herbal practice operated by Robin Fungi and Steph Teÿæ. Contact: <strong>robin@fungai.art</strong>. We are the data controller for personal information collected through this website (fungai.art).</p>
+  <p>Fungai Art is an independent herbal and artistic practice run by Robin Floræsta. Contact: <strong>robin@fungai.art</strong>. We are the data controller for personal information collected through this website (fungai.art).</p>
 </section>
 
 <section>
-  <h2>What we <em>collect</em></h2>
+  <h2>What we <em>collect</em> — feature by feature</h2>
   <ul>
-    <li><strong>Local browser storage (localStorage)</strong> — your shopping cart, any herbal formulas you save in the Herbal Engine, and your cookie-notice acknowledgement. This data <em>never leaves your browser</em>. We don't see it.</li>
-    <li><strong>Order information (only if you purchase)</strong> — name, email, shipping address, items ordered. Used to fulfil and ship your order. Stored securely; deleted on request.</li>
-    <li><strong>Newsletter email (only if you subscribe)</strong> — email address you submit to the newsletter form. Used only to send the monthly Field Notes. Unsubscribe anytime, instantly.</li>
-    <li><strong>Payment information</strong> — processed by Stripe. Fungai Art never sees your card number. Stripe's privacy policy: <a href="https://stripe.com/privacy">stripe.com/privacy</a></li>
+    <li><strong>Visiting the site</strong> — our host (Netlify) processes your IP address and basic request data to deliver pages and protect the site. Server logs are kept briefly. <em>Basis: legitimate interest (running a secure website).</em></li>
+    <li><strong>Shop &amp; orders</strong> — name, email, shipping address and the items you order, used to fulfil and ship your order and to send order emails. Card payments are handled entirely by Stripe; we never see your card number. <em>Basis: contract; legal obligation (bookkeeping).</em></li>
+    <li><strong>Find Your Formula</strong> — your quiz answers, which can include <strong>health-related information</strong> (for example medications, pregnancy, health conditions, sleep, how you feel, your age range) and any note you write. We store them securely in our database to compose your formula and, if you reserve it, to prepare it. An AI model (Anthropic&rsquo;s Claude) assists the composition and writes your personal reading; under Anthropic&rsquo;s commercial terms this data is not used to train its models. If you reserve a formula we also receive your name, email, city and country, and send a confirmation email. <em>Basis: your explicit consent, given on the start screen — you can withdraw it at any time by emailing us, and we will delete your answers.</em></li>
+    <li><strong>Dinner Experience enquiries</strong> — the name, email and message you send through the enquiry form are emailed to Robin. <em>Basis: steps you ask for before a booking; legitimate interest in answering you.</em></li>
+    <li><strong>Newsletter</strong> — the email address you subscribe with, used only to send Field Notes. Unsubscribe anytime, instantly. <em>Basis: consent.</em></li>
+    <li><strong>Community (Spore)</strong> — if you join: your email (for magic-link sign-in), the profile you create (name, bio, picture), and what you post, comment, send or RSVP to inside the community. Community administrators can see member email addresses to run the community. <em>Basis: contract (providing the membership).</em></li>
+    <li><strong>Foraging Map</strong> — only if you allow location: your position is used in your browser, and rounded to about 1&nbsp;km before it reaches our servers to look up your place name, local weather and nearby species sightings. Questions you ask MYCO (the map&rsquo;s AI guide) are processed by Anthropic together with that approximate location. On the homepage, if precise location isn&rsquo;t shared, we show what&rsquo;s in season using the approximate city our host derives from your connection; it isn&rsquo;t stored. Nothing is used to build a profile of you. <em>Basis: consent (your browser&rsquo;s location prompt).</em></li>
   </ul>
 </section>
 
 <section>
   <h2>What we <em>do not</em> collect</h2>
   <ul>
-    <li>No Google Analytics, Facebook Pixel, or any third-party tracking</li>
-    <li>No advertising identifiers</li>
-    <li>No behavioural profiling or cross-site tracking</li>
+    <li>No Google Analytics, advertising pixels or analytics cookies</li>
+    <li>No advertising identifiers or behavioural profiling</li>
     <li>No fingerprinting</li>
     <li>No data sold to anyone, for any reason, ever</li>
   </ul>
@@ -101,26 +103,32 @@ section strong{color:var(--ml);font-weight:500;}
 
 <section>
   <h2>Third-party <em>services</em></h2>
-  <p>The site uses these external services. Each handles data only as needed for the function listed:</p>
+  <p>These providers handle data on our behalf, each only for the function listed:</p>
   <ul>
-    <li><strong>Netlify</strong> — hosting and form submissions. Server logs may retain IP addresses briefly for security. <a href="https://www.netlify.com/privacy/">netlify.com/privacy</a></li>
-    <li><strong>Stripe</strong> — payment processing (only when you check out). <a href="https://stripe.com/privacy">stripe.com/privacy</a></li>
-    <li><strong>Open-Meteo</strong> — weather data for the Foraging Map. No personal data sent. CC BY 4.0 licensed.</li>
-    <li><strong>GBIF</strong> — biodiversity observations for the Foraging Map. Public CC0 data. No personal data sent.</li>
-    <li><strong>CARTO basemaps</strong> — map tiles. Loaded directly by your browser; CARTO may log the tile requests.</li>
+    <li><strong>Netlify</strong> — hosting and the site&rsquo;s server functions. <a href="https://www.netlify.com/privacy/">netlify.com/privacy</a></li>
+    <li><strong>Supabase</strong> — our database and community sign-in (formula records, orders, newsletter list, community content). <a href="https://supabase.com/privacy">supabase.com/privacy</a></li>
+    <li><strong>Stripe</strong> — payment processing, only when you check out. <a href="https://stripe.com/privacy">stripe.com/privacy</a></li>
+    <li><strong>Resend</strong> — sends emails (formula reservations, order and enquiry notifications, newsletter). <a href="https://resend.com/legal/privacy-policy">resend.com/legal/privacy-policy</a></li>
+    <li><strong>Anthropic</strong> — the AI model behind formula composition, personal readings and MYCO. <a href="https://www.anthropic.com/legal/privacy">anthropic.com/legal/privacy</a></li>
+    <li><strong>Map &amp; nature data for the Foraging Map</strong> — Esri and CARTO (map tiles, loaded by your browser, so they see your IP address), BigDataCloud (place name from rounded coordinates), Open-Meteo (weather), iNaturalist and GBIF (public species observations). No names or contact details are sent to them.</li>
+    <li><strong>Instagram (Meta)</strong> — posts embedded on the homepage are loaded from Instagram, which receives your IP address and may set its own cookies. <a href="https://privacycenter.instagram.com/policy">Instagram privacy policy</a></li>
+    <li><strong>Fonts &amp; code libraries</strong> — Google Fonts, Fontshare and unpkg deliver typefaces and code to your browser and see your IP address; CoinGecko provides crypto price rates when a price is shown in crypto.</li>
   </ul>
+  <p>Some of these providers are based outside the EU/EEA (mainly in the United States). Where that is the case, transfers rely on the provider&rsquo;s safeguards, such as the EU–US Data Privacy Framework or the European Commission&rsquo;s Standard Contractual Clauses.</p>
 </section>
 
 <section>
   <h2>Cookies &amp; <em>local storage</em></h2>
-  <p>We use the bare minimum:</p>
+  <p>We use the bare minimum, and nothing for marketing or analytics:</p>
   <ul>
-    <li><strong>fungai_cart</strong> — your shopping cart (localStorage, browser-only)</li>
-    <li><strong>fungai_formulas</strong> — formulas you save in the Herbal Engine (localStorage, browser-only)</li>
-    <li><strong>fungai_cookie_ack</strong> — remembers that you've seen this notice (localStorage, browser-only)</li>
-    <li><strong>Stripe session cookies</strong> — only set when you check out, for fraud prevention</li>
+    <li><strong>fa_cart_v1</strong> — your shopping cart (browser only)</li>
+    <li><strong>fungai_cookie_ack</strong> — remembers your choice on the cookie notice (browser only)</li>
+    <li><strong>Formula quiz progress</strong> — lets you pick up the quiz where you left off; cleared when you refresh the start screen or finish (browser only)</li>
+    <li><strong>Foraging Map &amp; community settings</strong> — your map acknowledgement and, if you&rsquo;re a member, your sign-in session</li>
+    <li><strong>Stripe cookies</strong> — only set when you check out, for fraud prevention</li>
+    <li><strong>Instagram cookies</strong> — may be set by the embedded posts on the homepage (see above)</li>
   </ul>
-  <p>Clearing your browser data removes all of the above. We do not use marketing or analytics cookies of any kind.</p>
+  <p>Clearing your browser data removes everything stored in your browser.</p>
 </section>
 
 <section>
@@ -132,7 +140,7 @@ section strong{color:var(--ml);font-weight:500;}
     <li><strong>Delete</strong> — request deletion of your data ("right to be forgotten")</li>
     <li><strong>Portability</strong> — receive your data in machine-readable form</li>
     <li><strong>Object</strong> — stop us using your data for any specific purpose</li>
-    <li><strong>Withdraw consent</strong> — unsubscribe, remove yourself, anytime</li>
+    <li><strong>Withdraw consent</strong> — for your formula answers, the newsletter or location, anytime, without affecting what happened before</li>
   </ul>
   <p>To exercise any of these, email <strong>robin@fungai.art</strong>. We'll respond within 30 days — usually within 48 hours.</p>
 </section>
@@ -140,20 +148,23 @@ section strong{color:var(--ml);font-weight:500;}
 <section>
   <h2>Data <em>retention</em></h2>
   <ul>
-    <li>Order records — kept for 7 years (Swedish accounting law requirement), then deleted</li>
+    <li>Order records — kept for 7 years (Swedish accounting law), then deleted</li>
+    <li>Formula quiz answers and reservations — kept while we prepare and follow up on your formula; deleted on request at any time</li>
+    <li>Enquiry and contact emails — kept as long as the conversation is useful, then deleted</li>
+    <li>Community account and content — until you delete your account or ask us to</li>
     <li>Newsletter email — until you unsubscribe</li>
-    <li>Local browser data — until you clear it or revisit this site after a long absence</li>
+    <li>Local browser data — until you clear it</li>
   </ul>
 </section>
 
 <section>
   <h2>Security</h2>
-  <p>The site is served over HTTPS only. Payments are processed by Stripe (PCI-DSS Level 1). We do not store payment data on our servers. Newsletter and form submissions are stored by Netlify with industry-standard encryption.</p>
+  <p>The site is served over HTTPS only. Payments are processed by Stripe (PCI-DSS Level 1); we never store card data. Our database uses access rules so each part of the site can only read or write what it needs, and only administrators can see community member emails.</p>
 </section>
 
 <section>
   <h2>Children</h2>
-  <p>The site is not intended for users under 18. We do not knowingly collect data from minors. Some herbs documented in our materia medica are restricted for adult use only.</p>
+  <p>The site is intended for adults. Find Your Formula offers an &ldquo;Under 18&rdquo; answer so that younger visitors only ever receive a gentle, non-psychoactive formula that Robin reviews personally before anything is prepared; please complete the quiz together with a parent or guardian if you are under 18. Some herbs documented in our materia medica are restricted to adults.</p>
 </section>
 
 <section>
