@@ -37,6 +37,15 @@ interface GBIFObs { id: number; lat: number; lng: number; species: string; date:
 // GBIF + iNaturalist, fetched for the current map viewport). Denser
 // than the per-species per-node loader because it asks the sources for
 // EVERY mushroom in the bbox, not just the primary species of one node.
+// Verified sighting from /api/nutrient-fungi (dung / compost / wood-chip fungi)
+interface NutrientObs {
+  id: string; lat: number; lng: number;
+  species: string; commonName?: string | null;
+  date: string | null; region: string | null;
+  source: 'GBIF' | 'iNaturalist'; url?: string;
+  habitat: string; danger: 'lethal' | 'toxic' | 'caution' | null; note: string; group: string;
+}
+
 interface FungalObs {
   id: string;
   lat: number;
@@ -842,6 +851,45 @@ export default function ForagingApp() {
   //   instead of letting three overlapping fetches race for setState.
   //   Saves bandwidth + battery in the field on mobile.
   const fungalAbortRef = useRef<AbortController | null>(null);
+
+  // ── Nutrient-rich sightings layer (💩 habitat) ────────────────────────
+  //   Real, community-verified sightings of dung / compost / wood-chip
+  //   fungi inside the visible map area (/api/nutrient-fungi: iNaturalist
+  //   research grade + GBIF, last 3 years). Deadly residents are tagged so
+  //   they're drawn red. Replaces "two curated nodes" with actual places.
+  const [nutrientObs, setNutrientObs] = useState<NutrientObs[]>([]);
+  const [nutrientState, setNutrientState] = useState<'idle' | 'loading' | 'ready' | 'too-wide' | 'error'>('idle');
+  const [selectedNutrient, setSelectedNutrient] = useState<NutrientObs | null>(null);
+  const nutrientAbortRef = useRef<AbortController | null>(null);
+  const nutrientTimerRef = useRef<any>(null);
+  const fetchNutrientForView = useCallback(() => {
+    if (habitatFilter !== 'nutrient_rich' || !mapRef.current) return;
+    const map = mapRef.current.getMap ? mapRef.current.getMap() : mapRef.current;
+    if (!map || !map.getBounds) return;
+    clearTimeout(nutrientTimerRef.current);
+    nutrientTimerRef.current = setTimeout(() => {
+      const b = map.getBounds();
+      const bbox = { minLat: b.getSouth(), maxLat: b.getNorth(), minLng: b.getWest(), maxLng: b.getEast() };
+      if (bbox.maxLat - bbox.minLat > 30 || bbox.maxLng - bbox.minLng > 45) { setNutrientState('too-wide'); setNutrientObs([]); return; }
+      if (nutrientAbortRef.current) nutrientAbortRef.current.abort();
+      const ctrl = new AbortController();
+      nutrientAbortRef.current = ctrl;
+      setNutrientState('loading');
+      fetch(`/api/nutrient-fungi?minLat=${bbox.minLat.toFixed(3)}&maxLat=${bbox.maxLat.toFixed(3)}&minLng=${bbox.minLng.toFixed(3)}&maxLng=${bbox.maxLng.toFixed(3)}`, { signal: ctrl.signal })
+        .then(r => r.json())
+        .then(data => {
+          if (nutrientAbortRef.current !== ctrl) return;
+          if (data.tooWide) { setNutrientState('too-wide'); setNutrientObs([]); return; }
+          setNutrientObs(Array.isArray(data.observations) ? data.observations : []);
+          setNutrientState('ready');
+        })
+        .catch(err => { if (err?.name !== 'AbortError') setNutrientState('error'); });
+    }, 450);
+  }, [habitatFilter]);
+  useEffect(() => {
+    if (habitatFilter === 'nutrient_rich') { fetchNutrientForView(); return; }
+    setNutrientObs([]); setSelectedNutrient(null); setNutrientState('idle');
+  }, [habitatFilter, fetchNutrientForView]);
   const fetchFungalForBbox = useCallback((bbox: { minLat: number; maxLat: number; minLng: number; maxLng: number }, zoom: number) => {
     // Skip huge bboxes — pulling >100 deg lat/lng would time out and
     // wouldn't render anything useful anyway. iNat/GBIF caps at 300pts.
@@ -1546,7 +1594,7 @@ export default function ForagingApp() {
           const attrib = e?.target?.getContainer?.()?.querySelector?.('.maplibregl-ctrl-attrib.maplibregl-compact');
           if (attrib) { attrib.classList.remove('maplibregl-compact-show'); attrib.removeAttribute('open'); }
         }}
-        onMoveEnd={handleMapSettle}
+        onMoveEnd={() => { handleMapSettle(); fetchNutrientForView(); }}
         onMouseDown={(e: any) => {
           longPressStartRef.current = { x: e.point?.x || 0, y: e.point?.y || 0 };
           clearTimeout(longPressTimerRef.current);
@@ -1607,7 +1655,28 @@ export default function ForagingApp() {
             it's distinct from GBIF-per-node yellow, Skogs green,
             Vild Mad orange. Sourced from GBIF Kingdom Fungi +
             iNaturalist research-grade, last 12 months. */}
-        {showFungalLayer && fungalObs.map(obs => (
+        {/* 💩 Nutrient-rich sightings — deadly residents drawn red. */}
+        {habitatFilter === 'nutrient_rich' && nutrientObs.map(obs => {
+          const deadly = obs.danger === 'lethal';
+          const risky = obs.danger === 'toxic';
+          return (
+            <Marker key={`nutrient-${obs.id}`} longitude={obs.lng} latitude={obs.lat} anchor="center">
+              <button
+                onClick={e => { e.stopPropagation(); setSelectedNutrient(obs); }}
+                aria-label={`${obs.species}${deadly ? ' — deadly' : ''}`}
+                title={`${obs.species} · ${obs.habitat}`}
+                style={{
+                  width: deadly ? 11 : 8, height: deadly ? 11 : 8, padding: 0, borderRadius: '50%', cursor: 'pointer',
+                  background: deadly ? '#E16B6B' : risky ? '#E8A04B' : '#B5895A',
+                  border: deadly ? '1.5px solid #fff' : '0.5px solid rgba(255,235,200,0.8)',
+                  boxShadow: deadly ? '0 0 8px rgba(225,107,107,0.9)' : '0 0 4px rgba(181,137,90,0.6)',
+                }}
+              />
+            </Marker>
+          );
+        })}
+
+        {showFungalLayer && habitatFilter !== 'nutrient_rich' && fungalObs.map(obs => (
           <Marker key={`fungal-${obs.id}`} longitude={obs.lng} latitude={obs.lat} anchor="center">
             <div
               onMouseEnter={() => setHoveredFungal(obs)}
@@ -2438,6 +2507,15 @@ export default function ForagingApp() {
             <span style={{ flex: 1 }}>☠ {NUTRIENT_RICH_CAUTION.title}</span>
             <span style={{ color: '#8B7E62' }}>{nutrientCautionOpen ? '▴' : '▾'}</span>
           </button>
+          {/* Live layer status — what the dots on the map are */}
+          <div style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.1em', color: '#C9B894', marginTop: 6, lineHeight: 1.5 }}>
+            {nutrientState === 'loading' && '◐ Loading verified sightings in view…'}
+            {nutrientState === 'too-wide' && '◇ Zoom in to a region to map verified dung, compost & wood-chip fungi sightings.'}
+            {nutrientState === 'error' && '◇ Sightings layer unavailable right now.'}
+            {nutrientState === 'ready' && (nutrientObs.length
+              ? <>● {nutrientObs.length} verified sightings in view · <span style={{ color: '#E16B6B' }}>{nutrientObs.filter(o => o.danger === 'lethal').length} deadly</span> · iNaturalist + GBIF, last 3 years</>
+              : '○ No verified sightings in this view yet — try zooming out a little.')}
+          </div>
           {nutrientCautionOpen && (
             <>
               <ul style={{ margin: '8px 0 0', padding: 0, listStyle: 'none' }}>
@@ -2458,6 +2536,30 @@ export default function ForagingApp() {
               .forage-nutrient-caution li { font-size: 13px !important; }
             }
           `}</style>
+        </div>
+      )}
+
+      {/* Tapped nutrient-rich sighting — species, habitat and danger first */}
+      {selectedNutrient && habitatFilter === 'nutrient_rich' && (
+        <div role="dialog" aria-label={`Sighting: ${selectedNutrient.species}`} style={{
+          position: 'absolute', left: '50%', bottom: 118, transform: 'translateX(-50%)', zIndex: 21,
+          width: 'min(380px, calc(100vw - 24px))', background: 'rgba(12,10,8,0.96)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
+          border: `0.5px solid ${selectedNutrient.danger === 'lethal' ? 'rgba(225,107,107,0.7)' : 'rgba(181,137,90,0.5)'}`,
+          borderRadius: 12, padding: '14px 16px', color: '#E6D9B5', boxShadow: '0 12px 40px rgba(0,0,0,0.55)',
+        }}>
+          <button onClick={() => setSelectedNutrient(null)} aria-label="Close" style={{ position: 'absolute', top: 8, right: 10, background: 'none', border: 'none', color: '#8B7E62', fontSize: 18, cursor: 'pointer' }}>×</button>
+          {selectedNutrient.danger === 'lethal' && (
+            <div style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#E16B6B', marginBottom: 6 }}>☠ Deadly · amatoxins</div>
+          )}
+          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 19, lineHeight: 1.15, paddingRight: 20 }}>{selectedNutrient.species}</div>
+          {selectedNutrient.commonName && <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#C9B894', marginTop: 2 }}>{selectedNutrient.commonName}</div>}
+          <div style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#B5895A', marginTop: 8 }}>Habitat · {selectedNutrient.habitat}</div>
+          <div style={{ fontSize: 13, lineHeight: 1.5, color: selectedNutrient.danger ? '#F0C9B8' : '#C9B894', marginTop: 6 }}>{selectedNutrient.note}</div>
+          <div style={{ fontFamily: 'monospace', fontSize: 8.5, color: '#8B7E62', marginTop: 8, display: 'flex', justifyContent: 'space-between', gap: 8, flexWrap: 'wrap' }}>
+            <span>{selectedNutrient.date || 'date unknown'}{selectedNutrient.region ? ` · ${selectedNutrient.region}` : ''}</span>
+            {selectedNutrient.url && <a href={selectedNutrient.url} target="_blank" rel="noopener noreferrer" style={{ color: '#B6F0AE', textDecoration: 'none' }}>{selectedNutrient.source} record →</a>}
+          </div>
+          <div style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#E8B14B', marginTop: 8 }}>Record of a past sighting · never eat anything identified from this map</div>
         </div>
       )}
 
