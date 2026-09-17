@@ -1,0 +1,26 @@
+{
+  "description": "MYCO retrieval evaluation set. Fixed questions with the knowledge each MUST surface. Runs offline — no API calls, no cost. Add a case whenever MYCO answers something badly, so the fix stays fixed.",
+  "cases": [
+    { "q": "is reishi safe to take with warfarin",                      "herb": "Reishi",       "type": "safety" },
+    { "q": "what are the contraindications for ashwagandha",            "herb": "Ashwagandha",  "type": "safety" },
+    { "q": "can I take blue lotus while pregnant",                      "herb": "Blue Lotus",   "type": "safety" },
+    { "q": "how do you make a double extraction for chaga",             "type": "proprietary" },
+    { "q": "what ratio do we use for a cold maceration of dried herb",  "type": "proprietary" },
+    { "q": "how does your formula engine decide which herbs to pick",   "type": "proprietary" },
+    { "q": "what does ashwagandha do for cortisol",                     "herb": "Ashwagandha",  "type": "evidence" },
+    { "q": "lion's mane and nerve growth factor",                       "herb": "Lion's Mane" },
+    { "q": "cordyceps for stamina and oxygen use",                      "herb": "Cordyceps" },
+    { "q": "which part of nettle is used and when is it harvested",     "herb": "Nettle",       "type": "identification" },
+    { "q": "what is the tcm element and meridian for schisandra",       "herb": "Schisandra",   "type": "traditional" },
+    { "q": "traditional ceremonial framing of amanita muscaria",        "herb": "Amanita Muscaria" },
+    { "q": "dosage range for mucuna pruriens",                          "herb": "Mucuna",       "type": "preparation" },
+    { "q": "can I take mucuna with an antidepressant",                  "herb": "Mucuna",       "type": "safety" },
+    { "q": "how long should I macerate passionflower",                  "herb": "Passionflower" },
+    { "q": "does st john's wort interact with the contraceptive pill",  "herb": "St. John's Wort", "type": "safety" },
+    { "q": "milk thistle liver support evidence",                       "herb": "Milk Thistle" },
+    { "q": "best preparation method for turkey tail",                   "herb": "Turkey Tail" },
+    { "q": "what is damiana traditionally used for",                    "herb": "Damiana" },
+    { "q": "rhodiola and fatigue research",                             "herb": "Rhodiola" },
+    { "q": "which herbs should be avoided with blood thinners",         "type": "safety" }
+  ]
+}

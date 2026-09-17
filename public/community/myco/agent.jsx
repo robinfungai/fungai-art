@@ -80,7 +80,14 @@
         if (data.error) {
           setError(data.error);
         } else {
-          setMsgs(prev => [...prev, { role:'assistant', content: data.reply }]);
+          setMsgs(prev => [...prev, {
+            role:'assistant',
+            content: data.reply,
+            // Knowledge layer: what MYCO actually read to answer, and
+            // how well the knowledge base covered the question.
+            sources: Array.isArray(data.sources) ? data.sources : [],
+            confidence: data.confidence || null,
+          }]);
         }
       } catch (e) {
         setError('Network error — check connection.');
@@ -150,7 +157,26 @@
                   {m.role === 'assistant' && (
                     <div className="myco-msg-avatar">M</div>
                   )}
-                  <div className="myco-bubble">{fmtContent(m.content)}</div>
+                  <div className="myco-bubble">
+                    {fmtContent(m.content)}
+                    {m.role === 'assistant' && m.sources && m.sources.length > 0 && (
+                      <div className="myco-sources">
+                        <div className="myco-sources-head">
+                          <span className={'myco-conf myco-conf-' + ((m.confidence && m.confidence.level) || 'low')} />
+                          {m.confidence && m.confidence.level === 'none'
+                            ? 'not covered by the knowledge base'
+                            : 'read from ' + m.sources.length + (m.sources.length === 1 ? ' source' : ' sources')}
+                        </div>
+                        {m.sources.map(s => (
+                          <div key={s.ref} className="myco-source">
+                            <span className="myco-source-ref">{s.ref}</span>
+                            <span className="myco-source-title">{s.title}</span>
+                            <span className="myco-source-kind">{s.label}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
               {loading && (
