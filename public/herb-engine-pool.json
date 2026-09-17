@@ -2070,6 +2070,31 @@
     "caution_level": "LOW-MEDIUM"
   },
   {
+    "id": 544,
+    "name": "Mucuna",
+    "primary_functions": [
+      "Direct dopamine precursor — seed carries L-DOPA, which crosses the blood-brain barrier and converts to dopamine (unlike dopamine itself)",
+      "Mood and motivation — dopaminergic lift for flat affect, anhedonia and absent drive; the flat-affect axis, not the agitated one",
+      "Male reproductive tonic — Ayurvedic vajikarana; studies show improved sperm parameters and testosterone in infertile men",
+      "Stress-axis modulation — reduces cortisol and oxidative stress markers in the same infertility trials",
+      "Neuroprotection — antioxidant seed constituents studied alongside L-DOPA in Parkinsonian models"
+    ],
+    "energetics": [
+      "Warm",
+      "Sweet",
+      "Bitter",
+      "Tonifying",
+      "Yang-Activating",
+      "Shen-Lifting"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Liver",
+      "Heart"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
     "id": 270,
     "name": "Nettle",
     "primary_functions": [

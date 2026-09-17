@@ -6139,6 +6139,89 @@ export const HERBS: Herb[] = [
   },
 
   // ─────────────────────────────────────────────
+  // MUCUNA
+  // ─────────────────────────────────────────────
+  {
+    id: 544,
+    name: 'Mucuna',
+    botanical: 'Mucuna pruriens (seed — standardised to 15–20% L-DOPA; "Velvet Bean", Kapikacchu)',
+    tcm_meridians: ['Kidney', 'Liver', 'Heart'],
+    tcm_element: 'Water + Fire',
+    energetics: ['Warm', 'Sweet', 'Bitter', 'Tonifying', 'Yang-Activating', 'Shen-Lifting'],
+    primary_functions: [
+      'Direct dopamine precursor — seed carries L-DOPA, which crosses the blood-brain barrier and converts to dopamine (unlike dopamine itself)',
+      'Mood and motivation — dopaminergic lift for flat affect, anhedonia and absent drive; the flat-affect axis, not the agitated one',
+      'Male reproductive tonic — Ayurvedic vajikarana; studies show improved sperm parameters and testosterone in infertile men',
+      'Stress-axis modulation — reduces cortisol and oxidative stress markers in the same infertility trials',
+      'Neuroprotection — antioxidant seed constituents studied alongside L-DOPA in Parkinsonian models',
+    ],
+    secondary_benefits: [
+      'Libido and sexual vitality — traditional aphrodisiac use across Ayurveda and West African practice',
+      'Deeper, more vivid dreaming — a well-known folk effect of evening dopaminergic support',
+      'Blood-sugar support — traditional use in diabetes; modest modern evidence',
+      'Rebuilding rasayana in convalescence — Kapikacchu as a restorative seed tonic',
+    ],
+    pharmacology:
+      'Primary bioactive: L-DOPA (levodopa) at 3–7% in raw seed, 15–20% in standardised extract — a direct precursor that bypasses the rate-limiting tyrosine hydroxylase step. Supporting: serotonin, 5-HTP traces, nicotine-like alkaloids, tryptamines (including trace DMT and bufotenine in some analyses, not psychoactive at food doses), antioxidant phenolics. Evidence: Grade B — several small human RCTs in Parkinson\'s disease (comparable or faster onset than synthetic levodopa at matched L-DOPA dose, with fewer dyskinesias in short trials) and in male infertility. NOT studied for general mood enhancement in healthy people; that use is extrapolation.',
+    flavor_profile: 'Sweet, bean-like, faintly bitter and roasted — unmistakably a legume',
+    contraindications: [
+      'MAOIs (including moclobemide, selegiline, rasagiline) — ABSOLUTELY CONTRAINDICATED: hypertensive crisis risk with a dopamine precursor',
+      'Parkinson\'s medication (levodopa/carbidopa) — ABSOLUTELY CONTRAINDICATED without neurologist supervision: additive L-DOPA, dyskinesia and overdose risk',
+      'Antipsychotics and dopamine antagonists — direct pharmacological opposition; do not combine',
+      'Psychiatric medication generally (SSRIs, SNRIs, lithium, mood stabilisers) — AVOID without prescriber oversight',
+      'Bipolar disorder or psychosis history — AVOID: dopaminergic load can precipitate mania or psychosis',
+      'Pregnancy and breastfeeding — AVOID: L-DOPA suppresses prolactin; no safety data',
+      'Melanoma history — CAUTION: levodopa is a melanin precursor; conventional levodopa carries this warning',
+      'Cardiovascular disease, arrhythmia or uncontrolled hypertension — CAUTION: dopaminergic cardiovascular effects',
+      'Peptic ulcer, and anyone prone to nausea — CAUTION: nausea is the most common adverse effect',
+      'Raw seed-pod hairs are a potent skin irritant — only properly processed seed material is used',
+    ],
+    herb_to_herb_synergy: [
+      'Rhodiola — daytime drive and dopaminergic support without heavy stimulation',
+      'Bacopa or Lion\'s Mane — motivation paired with cognitive support',
+      'Ashwagandha — grounds the activation and supports the stress axis alongside it',
+    ],
+    herb_to_herb_caution: [
+      'Other dopaminergic or strongly stimulating herbs (high-dose Rhodiola, Guarana, Kola Nut) — overstimulation, insomnia, agitation',
+      'St John\'s Wort, Syrian Rue, Yohimbe and any MAOI-acting botanical — serious interaction risk',
+      'Sedating nervines late in the day — the pairing works against itself',
+    ],
+    herb_to_drug_interactions: [
+      'MAOIs — AVOID (hypertensive crisis)',
+      'Levodopa/carbidopa — AVOID without neurologist supervision (additive dose)',
+      'Antipsychotics / dopamine antagonists — opposing action; avoid',
+      'Antidepressants (SSRI, SNRI, tricyclic) — AVOID without prescriber oversight',
+      'Antihypertensives — MONITOR blood pressure; additive lowering reported',
+      'Diabetes medication — MONITOR glucose',
+    ],
+    herb_interactions: [
+      'Synergy: Rhodiola, Bacopa, Lion\'s Mane, Ashwagandha',
+      'Caution: dopaminergic and stimulant herbs, MAOI-acting botanicals, evening sedatives',
+      'Drug interactions: MAOIs (AVOID), levodopa (AVOID unsupervised), antipsychotics (AVOID), antidepressants (AVOID unsupervised), antihypertensives and diabetes meds (MONITOR)',
+    ],
+    dosage_range:
+      'Extract: 20–40 drops in the morning or early afternoon. Standardised seed extract (15–20% L-DOPA): 100–300 mg daily, started at the low end. Cycle 5 days on / 2 off, or 6–8 weeks on / 2 weeks off — continuous dopaminergic loading is not advised. Not an evening herb for most people.',
+    spiritual_layer:
+      'Kapikacchu — "the itching monkey" — named for the seed pods that set skin alight, and for the restless mind it addresses. Mucuna sits at the threshold where motivation becomes movement. She does not lend borrowed energy; she returns wanting to those who have gone numb. Traditionally she is the seed of renewed potency — of the will to reach again. She asks for rhythm and restraint: take her in daylight, put her down regularly, and let the dreams she stirs be part of the teaching.',
+    best_preparation:
+      'Standardised seed extract is the reliable form — raw seed L-DOPA content swings widely with growing conditions. Take in the morning or early afternoon with food if nausea appears; keep away from protein-heavy meals, which compete for the same amino-acid transport. Always cycle. Screen for psychiatric medication, Parkinson\'s medication and bipolar history before recommending.',
+    caution_level: 'HIGH',
+    safe_pregnancy: false,
+    status:
+      'CRITICAL screening required: a genuine pharmacological dopamine precursor, not a gentle tonic. Absolute contraindication with MAOIs, Parkinson\'s medication, antipsychotics and psychiatric medication generally; avoid in bipolar or psychosis history and in pregnancy. Excluded automatically for anyone flagging psychiatric medication, and never offered to under-18s. Evidence is Grade B in Parkinson\'s disease and male infertility; general mood use is extrapolated from those, not directly studied.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['flat', 'tired'],           // wrong ally for wired or reactive states
+    energy_pattern:     ['am_boost', 'sustained'],
+    sleep_action:       [],                          // daytime herb — no sleep claim
+    regional_affinity:  ['head', 'pelvis'],
+    onset_time:         'hours',
+    family:             'Fabaceae',
+    epithet:            'The returning wanting',
+    origin_region:      'Ayurvedic',
+    evidence_grade:     'B',
+  },
+
+  // ─────────────────────────────────────────────
   // NETTLE
   // ─────────────────────────────────────────────
   {
