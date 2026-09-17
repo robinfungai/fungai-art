@@ -6,6 +6,10 @@
 //
 // LIFTED VERBATIM from
 //   public/find-your-formula/index.html lines 2040–2199.
+// nervousBoost / energyCurveBoost and the 7-pattern sleep branches were
+// added later (engine 2.1) so those quiz answers shape the formula.
+
+const { isGABAergic, isCNSStimulant } = require('./pharmacology');
 
 const SUBPATTERN_AFFINITY = {
   anger:       ['bupleurum','peony','chrysanthemum','gardenia','skullcap','passionflower','motherwort','mint'],
@@ -64,6 +68,101 @@ function ageBoost(h, age) {
   return 0;
 }
 
+// ── Rhythm-answer vocabulary ─────────────────────────────────────
+// Shared by the nervous-system, energy-curve and sleep-pattern boosts.
+// Each boost checks penalties (stimulant / sedative load) BEFORE the
+// positive matches, because a stimulant herb will also match "energ…".
+const RX = {
+  calming:    /nervine|anxiolytic|calm|sedativ|relax|sooth|settle|gaba|shen/,
+  gentle:     /nervine|trophorestor|gentle|sooth|calm/,
+  restoring:  /adaptogen|hpa|adrenal|restor|nourish|trophorestor|convalescen/,
+  adrenal:    /adaptogen|cortisol|hpa|adrenal/,
+  energising: /energ|vital|stamina|fatigue|endurance|mitochondri|qi tonic|yang tonic|invigorat/,
+  lifting:    /mood|antidepress|uplift|heart.?open|dopamin|motivat|melanchol|joy/,
+  focus:      /cognit|memory|focus|concentrat|mental (?:fatigue|clarity|stamina|energy)|neuroprotect|acetylcholi/,
+  bloodSugar: /blood.?sugar|glyc[a]?emi|insulin|glucose/,
+  // Deliberately narrow — "regulat/modulat" alone matches most of the
+  // catalogue (immunomodulating, qi-regulating…) and stops discriminating.
+  balancing:  /amphoteric|adaptogen|stabili[sz]\w* (?:mood|energy|blood)|(?:mood|energy|hormon\w*|blood.?sugar) balanc/,
+  circadian:  /circadian|melaton|sleep|evening|night/,
+  physical:   /stamina|endurance|athlet|recovery|muscle|exercise|physical performance|mitochondri|\batp\b/,
+  onset:      /sleep onset|fall(?:ing)? asleep|insomni|anxiolytic|racing|nervine|calm/,
+  maintain:   /deep sleep|night wak|sleep maint|stay(?:ing)? asleep|hypnotic|insomni|liver.*heat|shen/,
+  dreaming:   /oneirogen|lucid|dream.?enhanc|vivid dream|visionary/,
+};
+
+const _textCache = new WeakMap();
+function rhythmText(h) {
+  let t = _textCache.get(h);
+  if (t === undefined) {
+    t = ((h.primary_functions || []).concat(h.secondary_benefits || [], h.energetics || [], [h.pharmacology || '']))
+      .join(' | ').toLowerCase();
+    _textCache.set(h, t);
+  }
+  return t;
+}
+
+// "How does your energy usually feel?" — the nervous-system typology.
+// Same intention reads differently per state: a wired person needs
+// down-regulation before any lift; a flat person needs gentle lift,
+// not more sedation.
+function nervousBoost(h, nervous) {
+  if (!nervous || nervous === 'steady') return 0;
+  const t = rhythmText(h);
+  const stim = isCNSStimulant(h), gaba = isGABAergic(h);
+  switch (nervous) {
+    case 'wired':
+      if (stim) return -3;
+      return RX.calming.test(t) ? 3 : 0;
+    case 'tired':
+      if (gaba) return -2;
+      if (RX.energising.test(t)) return 3;
+      return RX.restoring.test(t) ? 2 : 0;
+    case 'wired_tired':
+      if (stim) return -3;
+      if (RX.restoring.test(t)) return 3;
+      return RX.calming.test(t) ? 2 : 0;
+    case 'reactive':
+      if (stim) return -4;
+      return RX.gentle.test(t) ? 3 : 0;
+    case 'flat':
+      if (gaba) return -2;
+      if (RX.lifting.test(t)) return 3;
+      return RX.energising.test(t) ? 1 : 0;
+  }
+  return 0;
+}
+
+// "How does your energy behave through the day?" — the shape of the
+// day biases between adrenal/blood-sugar regulation, focus and
+// physical recovery allies.
+function energyCurveBoost(h, curve) {
+  if (!curve || curve === 'moderate') return 0;
+  const t = rhythmText(h);
+  const stim = isCNSStimulant(h);
+  switch (curve) {
+    case 'low_waking':
+      if (isGABAergic(h)) return -1;
+      if (RX.adrenal.test(t)) return 3;
+      return RX.energising.test(t) ? 2 : 0;
+    case 'am_good_pm_crash':
+      return RX.adrenal.test(t) || RX.bloodSugar.test(t) ? 3 : 0;
+    case 'slow_am_strong_pm':
+      if (stim) return -2;
+      return RX.circadian.test(t) ? 2 : 0;
+    case 'high_unstable':
+      if (stim) return -3;
+      return RX.bloodSugar.test(t) || RX.balancing.test(t) ? 3 : 0;
+    case 'waves':
+      return RX.balancing.test(t) || RX.adrenal.test(t) ? 2 : 0;
+    case 'crash_mental':
+      return RX.focus.test(t) ? 3 : 0;
+    case 'crash_physical':
+      return RX.physical.test(t) ? 3 : 0;
+  }
+  return 0;
+}
+
 function sleepBoost(h, sleep) {
   // 'restorative' (the 7-option pattern's baseline) and
   // 'restorative_6plus' (the 4-option quality's baseline) both mean
@@ -75,6 +174,29 @@ function sleepBoost(h, sleep) {
   }
   if (sleep === 'not_restorative_6plus') {
     if (/restor|adaptogen|adrenal|hpa|shen|kidney.*yin/.test(text)) return 3;
+  }
+  // The 7-pattern sleep question — each pattern leans on a different
+  // family of herbs; stimulants are pushed down for every disturbed one.
+  const t = rhythmText(h);
+  const stim = isCNSStimulant(h);
+  switch (sleep) {
+    case 'hard_onset':
+      if (stim) return -2;
+      return isGABAergic(h) || RX.onset.test(t) ? 3 : 0;
+    case 'wakes_middle':
+      if (stim) return -2;
+      return RX.maintain.test(t) ? 3 : 0;
+    case 'early_wake':
+      if (stim) return -1;
+      return RX.lifting.test(t) || /shen|sleep/.test(t) ? 2 : 0;
+    case 'sleeps_no_rest':
+      return /restor|adaptogen|adrenal|hpa|shen|kidney.*yin|nourish/.test(t) ? 3 : 0;
+    case 'vivid_restless':
+      // Dream-enhancing allies (calea, mugwort, blue lotus…) make vivid,
+      // restless nights worse — push them out before rewarding calm.
+      if (RX.dreaming.test(t)) return -4;
+      if (stim) return -2;
+      return RX.calming.test(t) ? 3 : 0;
   }
   return 0;
 }
@@ -139,11 +261,14 @@ function scoreHerb(h, a) {
   s += durationBoost(h, a.duration);
   s += ageBoost(h, a.age);
   s += sleepBoost(h, a.sleep);
+  s += nervousBoost(h, a.nervous);
+  s += energyCurveBoost(h, a.energy_curve);
   return s;
 }
 
 module.exports = {
   SUBPATTERN_AFFINITY, NOTES_KEYWORDS,
   subPatternBoost, durationBoost, ageBoost, sleepBoost, notesBoost,
+  nervousBoost, energyCurveBoost,
   scoreHerb,
 };

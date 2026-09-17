@@ -38,6 +38,17 @@ const SECURITY_FIX_EXPECTATIONS = {
   },
 };
 
+// Profiles whose output changed because of a DELIBERATE methodology
+// change after the Step 0 baseline. The Step 0 files stay frozen; the
+// new output is pinned here instead, so the fixture still regression-
+// locks the engine rather than getting a free pass.
+const METHODOLOGY_CHANGE_EXPECTATIONS = {
+  '18-pro-fields-carried': {
+    herbs: '271:Oatstraw@21|103:Ashwagandha@19|300:Red Dates@17|279:Schisandra (Five-Flavour Fruit)@15|413:Longan@14|316:Fu Ling@14',
+    rationale: 'Engine 2.1: nervous (wired+tired), energy_curve and the hard_onset sleep pattern now score herbs.',
+  },
+};
+
 const expectedDir = path.join(__dirname, 'fixtures', 'expected');
 
 function diffOutputs(expected, actual) {
@@ -62,7 +73,7 @@ function diffOutputs(expected, actual) {
   return diffs;
 }
 
-let passed = 0, securityFix = 0, unexpected = 0, missing = 0;
+let passed = 0, securityFix = 0, methodologyChange = 0, unexpected = 0, missing = 0;
 const failures = [];
 
 for (const p of PROFILES) {
@@ -98,6 +109,22 @@ for (const p of PROFILES) {
     continue;
   }
 
+  const change = METHODOLOGY_CHANGE_EXPECTATIONS[p.id];
+  if (change) {
+    const got = (actual.herbs || []).map(h => h.id + ':' + h.name + '@' + h.percentage).join('|');
+    if (got === change.herbs) {
+      methodologyChange++;
+      process.stdout.write('  ◇ ' + p.id + '  METHODOLOGY_CHANGE (pinned)\n');
+      process.stdout.write('      rationale: ' + change.rationale + '\n');
+    } else {
+      unexpected++;
+      failures.push({ id: p.id, kind: 'methodology-pin-diff' });
+      process.stdout.write('  ✗ ' + p.id + '  UNEXPECTED diff against pinned methodology output:\n');
+      process.stdout.write('      pinned: ' + change.herbs + '\n      actual: ' + got + '\n');
+    }
+    continue;
+  }
+
   const diffs = diffOutputs(expected, actual);
   if (diffs.length === 0) {
     passed++;
@@ -113,6 +140,7 @@ for (const p of PROFILES) {
 console.log('');
 console.log('PASS              : ' + passed);
 console.log('SECURITY_FIX      : ' + securityFix);
+console.log('METHODOLOGY_CHANGE: ' + methodologyChange);
 console.log('UNEXPECTED        : ' + unexpected);
 console.log('missing baseline  : ' + missing);
 

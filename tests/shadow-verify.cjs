@@ -68,6 +68,14 @@ const SECURITY_FIX_EXPECTATIONS = {
   },
 };
 
+// Deliberate post-baseline methodology changes — new output pinned
+// here (see tests/compare-fixtures.cjs for the same list).
+const METHODOLOGY_CHANGE_EXPECTATIONS = {
+  '18-pro-fields-carried': {
+    herbs: 'Oatstraw@21|Ashwagandha@19|Red Dates@17|Schisandra (Five-Flavour Fruit)@15|Longan@14|Fu Ling@14',
+  },
+};
+
 function diffCoreFormula(expected, actual) {
   // Compare display-safe fields. The endpoint sanitises the engine's
   // rich output down to { name, botanical, percentage } per herb, so
@@ -109,6 +117,18 @@ async function runFixtureSuite(handler) {
     if (r.status !== 200) {
       unexpected++;
       console.log('  ✗ ' + p.id.padEnd(40) + '  UNEXPECTED ' + r.status + ' ' + JSON.stringify(r.body));
+      continue;
+    }
+    const change = METHODOLOGY_CHANGE_EXPECTATIONS[p.id];
+    if (change) {
+      const got = (r.body.formula.herbs || []).map(h => h.name + '@' + h.percentage).join('|');
+      if (got === change.herbs) {
+        pass++;
+        console.log('  ◇ ' + p.id.padEnd(40) + '  200 METHODOLOGY_CHANGE (pinned) · id=' + r.body.formulaId);
+      } else {
+        unexpected++;
+        console.log('  ✗ ' + p.id.padEnd(40) + '  UNEXPECTED diff against pinned output:\n      pinned: ' + change.herbs + '\n      actual: ' + got);
+      }
       continue;
     }
     const diffs = diffCoreFormula(expected, r.body);
@@ -215,6 +235,14 @@ async function runAdversarialSuite(handler) {
       body: { profile: VALID_BASE_PROFILE() },
       extraHeaders: { 'X-FYF-Mode': 'shadow' },
       expect: (r) => r.status === 200 && r.body.persisted === false,
+    },
+    {
+      // Regression: 'under_18' was missing from the age enum, so every
+      // minor was rejected PROFILE_INVALID instead of reaching the gate.
+      name: 'K · age: under_18 is accepted (minor gate applies, not a 400)',
+      body: { profile: Object.assign(VALID_BASE_PROFILE(), { age: 'under_18', avoid: ['sedatives', 'psych_meds', 'contraceptive'], _minor: true }) },
+      extraHeaders: { 'X-FYF-Mode': 'shadow' },
+      expect: (r) => r.status === 200 && r.body.formula && r.body.formula.size > 0,
     },
   ];
 

@@ -107,7 +107,9 @@ const ENUMS = {
   time:       new Set(['morning','midday','evening','night','any']),
   stress:     new Set(['push','collapse','numb','ride','off']),
   duration:   new Set(['weeks','months','year_plus','lifelong']),
-  age:        new Set(['under_25','25_40','41_60','60_plus']),
+  // under_18 must be accepted here — the engine derives the minor gate
+  // from it. Leaving it out rejected every under-18 profile outright.
+  age:        new Set(['under_18','under_25','25_40','41_60','60_plus']),
   // sleep accepts BOTH the current 4-option client values AND the new
   // 7-pattern architecture values (Pro's expanded sleep question) —
   // the engine tolerates both, and Step 2 must not restrict either.

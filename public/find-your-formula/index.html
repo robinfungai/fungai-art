@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="dark">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
 <title>Find Your Formula · Fungai Art</title>
-<meta name="description" content="Ten questions. One custom spagyric extract, hand-poured in Berlin, shipped home. Sublingual drops, slow-pace plant medicine — built for how you actually feel."/>
+<meta name="description" content="Ten questions. One custom spagyric extract, hand-poured in Berlin, shipped home. Sublingual drops, slow-pace plant medicine — built for how you feel."/>
 <meta name="keywords" content="custom spagyric extract, personalised herbal formula, adaptogen quiz, plant medicine, Fungai Art, sublingual drops"/>
 <link rel="canonical" href="https://www.fungai.art/find-your-formula/"/>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
@@ -14,7 +14,7 @@
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Fungai Art"/>
 <meta property="og:title" content="Find Your Formula · Fungai Art"/>
-<meta property="og:description" content="Ten questions. A spagyric extract hand-poured for how you actually feel. Shipped home."/>
+<meta property="og:description" content="Ten questions. A spagyric extract hand-poured for how you feel. Shipped home."/>
 <meta property="og:image" content="https://www.fungai.art/fungai-art-logo.png"/>
 <meta property="og:url" content="https://www.fungai.art/find-your-formula/"/>
 <meta name="twitter:card" content="summary_large_image"/>
@@ -1481,8 +1481,8 @@ const QUESTIONS = [
     // depth without ever surfacing TCM jargon.
     key:'pattern',
     eyebrow:'02 of 06 · The body',
-    title:'How does your body <em>actually feel</em>?',
-    hint:'Not what you want it to feel — what it actually feels most days.',
+    title:'How does your body <em>feel</em>?',
+    hint:'Not what you want it to feel — what it feels like most days.',
     type:'branch',
     options:[
       { v:'hot',      hue:'#E16B6B', label:'A lit match',    desc:'Warm, reactive, inflamed.',
@@ -2626,7 +2626,7 @@ function renderBranchBalloons(q){
   title.innerHTML = q.title;
   wrap.appendChild(title);
   const hint = document.createElement('div'); hint.className = 'q-hint';
-  hint.textContent = q.hint || 'Not what you want it to feel — what it actually feels most days.';
+  hint.textContent = q.hint || 'Not what you want it to feel — what it feels like most days.';
   wrap.appendChild(hint);
 
   const grid = document.createElement('div'); grid.className = 'q-balloons';
@@ -2770,232 +2770,270 @@ function onPick(q, v, btnEl, optsEl, autoAdvance){
 // mineral / vitamin / amino-acid allies that may sit underneath
 // the presentation. This is ROBIN-ONLY information — the client
 // sends it to /api/reserve-formula, which renders it in Robin's
-// admin email but NEVER in the customer confirmation. The customer
-// experience stays clean; Robin gets the deeper read.
+// admin email but NEVER in the customer confirmation.
 //
 // The engine is opinionated, not diagnostic: it points at nutrients
-// that plausibly connect to the axes the customer surfaced. Robin
-// then decides — with his own eye — whether to include any as a
-// companion recommendation alongside the bespoke extract.
+// that plausibly connect to what the customer described. Robin then
+// decides — with his own eye — whether to mention any of them.
 //
 // Design:
-//   - Ranked intentions (primary/secondary/tertiary) weight each
-//     mapped nutrient. Primary = 3, secondary = 2, tertiary = 1.
-//   - Pattern archetype + sub-pattern add specific bio-tuned hits.
-//   - Age band + sleep quality contribute their own layers.
-//   - avoid[] flags REMOVE contraindicated nutrients (thyroid → no
-//     iodine, sedatives → no 5-HTP, pregnancy → strict prenatal-only
-//     shortlist, cardio_meds → no high-dose fish oil, etc.).
-//   - Herbs already in the picked formula that duplicate a nutrient
-//     mechanism (Turmeric ↔ Curcumin) are dropped from the shortlist
-//     to avoid redundant recommendation.
+//   - MN_CATALOGUE holds ONE canonical entry per nutrient: a plain,
+//     evidence-level "why", a standing caution, the safety flags that
+//     remove it, and whether it may appear for under-18s / pregnancy.
+//   - Every answer ADDS points to the nutrients it points at — ranked
+//     intentions 3/2/1, the body pattern, and all the rhythm answers
+//     (time, stress response, energy feel, energy curve, sleep pattern,
+//     duration), age, the pill and a few notes keywords. A nutrient
+//     several answers converge on outranks a one-off match. Some
+//     answers SUBTRACT (e.g. L-tyrosine for a wired or reactive system).
+//   - "Test first", weak-evidence and legally-grey entries carry a
+//     damp factor so a single signal never puts them at the top.
+//   - avoid[] flags remove contraindicated entries; pregnancy and
+//     under-18 switch to whitelists.
+//   - Nutrients duplicated by a herb already in the formula drop out.
 //
-// Returns [{ nutrient, reason, priority }] top ~10.
+// Returns [{ nutrient, reason, priority }] — top 10. `reason` is kept
+// under the 300-char cap reserve-formula applies to each entry.
+const MN_CATALOGUE = {
+  mg:          { n:'Magnesium glycinate', why:'Often low under long-term stress; supports muscle relaxation and sleep quality', warn:'Not with kidney disease; take 4 h apart from thyroid meds and some antibiotics', drop:['liver_kidney'], minor:true, preg:true },
+  theanine:    { n:'L-Theanine', why:'Calm focus without sedation (~200 mg); small human trials for stress and sleep', warn:'Can add to sedatives; may slightly lower blood pressure', drop:['sedatives'] },
+  bcomplex:    { n:'B-complex (activated forms)', why:'Cofactors for energy metabolism and neurotransmitter synthesis; helps most where intake is poor', warn:'Check the B6 dose: EU upper limit is 12 mg/day (nerve symptoms above that long-term)' },
+  b6:          { n:'Vitamin B6 (P5P)', why:'Cofactor for GABA and serotonin; some evidence for PMS symptoms', warn:'Low dose only (EU upper limit 12 mg/day); can make dreams more vivid' },
+  vitc:        { n:'Vitamin C', why:'Needed for collagen and immune-cell function; the adrenal glands store and use large amounts', warn:'High doses raise kidney-stone risk', drop:['liver_kidney'], minor:true },
+  glycine:     { n:'Glycine', why:'3 g before bed improved sleep quality and next-day alertness in small trials', warn:'Mildly sedating; not with sedatives', drop:['sedatives'] },
+  htp:         { n:'5-HTP', why:'Serotonin precursor; small, mixed trials for low mood', warn:'Never with antidepressants, triptans or tramadol (serotonin syndrome)', drop:['psych_meds','sedatives'] },
+  melatonin:   { n:'Melatonin (0.5–1 mg)', why:'Best evidence for shifting a late body clock earlier; modest effect on falling asleep', warn:'Classed as a medicine in Sweden and some EU countries: check before recommending. Not with sedatives', drop:['sedatives'], damp:0.7 },
+  b12:         { n:'Vitamin B12', why:'Deficiency causes tiredness and low mood; common if vegan, over 60, or on metformin or acid-reducers', warn:'Blood test first where possible', minor:true },
+  iron:        { n:'Iron (bisglycinate)', why:'Low iron stores cause fatigue, cold hands, poor exercise tolerance and restless legs', warn:'Only if ferritin tests low, never blind. Take 4 h apart from thyroid meds', drop:['liver_kidney'], minor:true, preg:true, damp:0.6 },
+  coq10:       { n:'CoQ10 (ubiquinol)', why:'Part of cellular energy production; levels fall with age and on statins', warn:'Can weaken warfarin; may lower blood pressure', drop:['cardio_meds'] },
+  nad:         { n:'NAD+ precursor (nicotinamide riboside)', why:'NAD+ declines with age; human benefits are still early', warn:'Prefer nicotinamide riboside (EU-authorised); check NMN\'s EU novel-food status before recommending it', damp:0.6 },
+  carnitine:   { n:'Acetyl-L-carnitine', why:'Moves fats into mitochondria; best evidence for fatigue in older adults', warn:'Can blunt thyroid hormone; avoid with thyroid conditions', drop:['thyroid'], damp:0.8 },
+  creatine:    { n:'Creatine monohydrate', why:'Strong evidence for strength and recovery; small trials for mental fatigue and sleep loss', warn:'Avoid with kidney disease; raises creatinine on blood tests', drop:['liver_kidney'] },
+  vitd:        { n:'Vitamin D3 + K2', why:'Commonly low in northern Europe; deficiency is linked to low mood, fatigue and frequent infections', warn:'Test 25(OH)D where possible. Use D3 alone with blood thinners (K2 counteracts warfarin)', minor:true, preg:true },
+  omega3:      { n:'Omega-3 (EPA + DHA)', why:'EPA-rich oils (~1 g EPA) help low mood in meta-analyses; DHA is structural in the brain; mildly anti-inflammatory', warn:'High doses add bleeding risk with blood thinners', drop:['cardio_meds'], minor:true },
+  citicoline:  { n:'Citicoline (CDP-choline)', why:'Choline source for acetylcholine; small trials for attention and mental energy', warn:'Prefer over alpha-GPC, which was linked to higher stroke risk in one large study' },
+  ps:          { n:'Phosphatidylserine', why:'Some evidence for memory in older adults and for blunting the cortisol response to stress', warn:'May add to blood thinners', drop:['cardio_meds'], damp:0.8 },
+  huperzine:   { n:'Huperzine-A', why:'Slows acetylcholine breakdown; small trials, mostly in dementia', warn:'Drug-like: not with heart-rhythm meds or beta-blockers. Treated as a medicine in several EU countries, so check first', drop:['cardio_meds'], damp:0.5 },
+  zinc:        { n:'Zinc (picolinate)', why:'Needed for immune function, hormone production and skin healing; intake is often low', warn:'Stay under 25 mg/day long-term (causes copper loss)', minor:true },
+  dim:         { n:'DIM (diindolylmethane)', why:'Shifts oestrogen metabolism; human evidence is limited', warn:'Not with the pill, hormone therapy or hormone-sensitive conditions', drop:['contraceptive'], damp:0.7 },
+  iodine:      { n:'Iodine', why:'Needed for thyroid hormone; only helps if intake is truly low', warn:'Test thyroid (TSH) first; excess can trigger thyroid disease', drop:['thyroid'], damp:0.5 },
+  zinccarn:    { n:'Zinc-carnosine', why:'Supports stomach-lining repair; small trials', warn:'Counts toward the daily zinc total' },
+  glutamine:   { n:'L-Glutamine', why:'Main fuel for gut-lining cells; small trials for gut permeability and IBS', warn:'Avoid with liver disease', drop:['liver_kidney'] },
+  betaine:     { n:'Betaine HCl', why:'Only for confirmed low stomach acid', warn:'Not with ulcers, gastritis, NSAIDs or steroids', damp:0.5 },
+  probiotics:  { n:'Probiotics (strain-specific)', why:'Pick strains with trials for the specific complaint (IBS, antibiotic recovery)', warn:'Avoid with severe immune suppression', drop:['autoimmune'], minor:true },
+  enzymes:     { n:'Digestive enzymes', why:'For bloating and heaviness after meals; evidence is limited', warn:'', damp:0.8 },
+  selenium:    { n:'Selenium', why:'Intake is low across much of Europe; needed for antioxidant enzymes and thyroid function', warn:'Narrow safe range: stay under 255 µg/day in total' },
+  quercetin:   { n:'Quercetin', why:'Antihistamine-like effects in lab studies; human evidence is limited', warn:'Liver-enzyme interactions (e.g. blood thinners, ciclosporin)', drop:['cardio_meds','autoimmune'], damp:0.7 },
+  curcumin:    { n:'Curcumin', why:'Matched ibuprofen for knee osteoarthritis pain in several trials', warn:'Adds bleeding risk with blood thinners; rare liver injury with high-absorption forms; not with gallstones', drop:['cardio_meds','liver_kidney'], herbs:['turmeric','curcuma'] },
+  msm:         { n:'MSM', why:'Small trials for joint pain and stiffness', warn:'' },
+  boswellia:   { n:'Boswellia serrata', why:'Anti-inflammatory through a different pathway to NSAIDs; trials in osteoarthritis', warn:'Limited data with blood thinners', drop:['cardio_meds'], herbs:['boswellia','frankincense'] },
+  pea:         { n:'PEA (palmitoylethanolamide)', why:'Fatty-acid compound the body makes itself; trials for nerve and chronic pain', warn:'' },
+  nac:         { n:'NAC (N-acetylcysteine)', why:'Glutathione precursor for liver antioxidant defence; small trials for cravings and compulsive habits', warn:'Not with nitrate heart medication; rarely triggers asthma', drop:['cardio_meds'] },
+  ala:         { n:'Alpha-lipoic acid', why:'Antioxidant; best evidence for diabetic nerve pain', warn:'Can lower blood sugar; may affect thyroid medication', drop:['thyroid'] },
+  chromium:    { n:'Chromium picolinate', why:'Small trials for steadier blood sugar and fewer sugar cravings', warn:'Can lower blood sugar with diabetes medication', damp:0.8 },
+  collagen:    { n:'Collagen peptides', why:'Trials show better skin elasticity and hydration after 8–12 weeks', warn:'' },
+  biotin:      { n:'Biotin', why:'Only helps hair and nails when deficient, which is rare', warn:'Distorts thyroid, heart and hormone blood tests: stop 3 days before testing', drop:['thyroid'], damp:0.6 },
+  betacarotene:{ n:'Beta-carotene', why:'Converted to vitamin A as needed; some protection against sun sensitivity', warn:'Not for smokers or ex-smokers (raised lung-cancer risk in trials)', damp:0.7 },
+  hyaluronic:  { n:'Hyaluronic acid (oral)', why:'Small trials show better skin moisture', warn:'' },
+  saffron:     { n:'Saffron extract', why:'Standardised extract (~30 mg/day) matched some antidepressants in small trials', warn:'Not with antidepressants; high doses are unsafe in pregnancy', drop:['psych_meds'], herbs:['saffron','crocus'] },
+  tyrosine:    { n:'L-Tyrosine', why:'Dopamine building block; small trials for focus under stress and sleep loss', warn:'Not with MAOIs, thyroid medication or levodopa; can raise blood pressure', drop:['psych_meds','thyroid','hypertension'] },
+  same:        { n:'SAMe', why:'Trials for depression and osteoarthritis', warn:'Not with antidepressants or bipolar disorder (can trigger mania)', drop:['psych_meds'] },
+  // Pregnancy-only entries (added by the prenatal whitelist below).
+  choline:     { n:'Choline', why:'Needed for fetal brain development; most prenatal vitamins contain too little', warn:'Confirm the dose with a midwife or doctor', preg:true },
+  folate:      { n:'Folate (methylfolate)', why:'Lowers neural-tube defect risk; ideally started before conception', warn:'Confirm the dose with a midwife or doctor', preg:true },
+  dha:         { n:'DHA (algal)', why:'Supports fetal brain and eye development; algal source avoids mercury', warn:'Confirm the dose with a midwife or doctor', preg:true },
+};
+
 function computeMicronutrients(a, pickedHerbs){
-  const bank = new Map(); // key: nutrient name → { reason, priority }
-  const add = (nutrient, reason, priority) => {
-    const prev = bank.get(nutrient);
-    if (!prev) { bank.set(nutrient, { reason, priority }); return; }
-    // Keep the highest priority + merge reasons if new axis contributes
-    if (priority > prev.priority) prev.priority = priority;
-    if (reason && !prev.reason.includes(reason)) {
-      prev.reason = prev.reason + '; ' + reason;
-    }
+  a = a || {};
+  const bank = new Map(); // id → { score, labels:Set }
+  const hit = (id, pts, label) => {
+    if (!MN_CATALOGUE[id] || !pts) return;
+    const e = bank.get(id) || { score: 0, labels: new Set() };
+    e.score += pts;
+    if (label && pts > 0) e.labels.add(label);
+    bank.set(id, e);
+  };
+  const apply = (map, key, label, scale) => {
+    (map[key] || []).forEach(([id, pts], i) => hit(id, pts * (scale || 1) - (scale ? i * 0.1 : 0), label));
   };
 
-  // ── Intention layer (ranked) ─────────────────────────────────────
-  const INT_MAP = {
-    stress: [
-      ['Magnesium glycinate',   'HPA-axis buffer; often depleted by chronic cortisol load'],
-      ['L-Theanine',            'Alpha-wave calm without sedation; pairs with adaptogens'],
-      ['B-complex (activated)', 'Cofactor for neurotransmitter synthesis under chronic stress'],
-      ['Vitamin C (ascorbate)', 'Adrenal cortex uses more than any other tissue during stress'],
-    ],
-    anxiety: [
-      ['Magnesium glycinate',   'GABAergic tone; hypomagnesaemia is a common anxiety substrate'],
-      ['L-Theanine',            'Fast-acting alpha-wave calm, no morning grog'],
-      ['Glycine',               'Inhibitory neurotransmitter + evening thermal drop'],
-      ['5-HTP',                 'Serotonin precursor; NOT combined with SSRIs/MAOIs'],
-      ['Vitamin B6 (P5P)',      'Rate-limiting cofactor for GABA + serotonin synthesis'],
-    ],
-    sleep: [
-      ['Magnesium threonate',   'Crosses blood-brain barrier better than glycinate for sleep architecture'],
-      ['Glycine',               '3 g at bedtime — REM improvement, faster sleep onset'],
-      ['Melatonin (low-dose)',  '0.3–1 mg physiologic dose, not 5-10 mg pharmacologic'],
-      ['L-Theanine',            'Sleep-onset support when the mind will not settle'],
-      ['Apigenin',              'Chamomile flavonoid; GABA-A modulator, gentle sleep'],
-    ],
-    energy: [
-      ['B12 (methylcobalamin)', 'Foundational for energy; commonly low in vegetarian / older presentations'],
-      ['Iron (bisglycinate)',   'Only if ferritin is confirmed low — do not blind-supplement iron'],
-      ['CoQ10 (ubiquinol)',     'Mitochondrial ATP synthesis; especially useful over 40 or with statins'],
-      ['NAD+ / NMN',            'NAD precursor for mitochondrial + sirtuin support'],
-      ['L-Carnitine',           'Fat-to-mitochondria transporter; energetic fatigue'],
-    ],
-    mood: [
-      ['Vitamin D3 (with K2)',  'Every mood presentation deserves a serum 25(OH)D read — deficiency is stubborn'],
-      ['Omega-3 (EPA-forward)', '1-2 g EPA daily has RCT-grade evidence for depression'],
-      ['SAMe',                  'Methyl donor; comparable to SSRIs in some trials; not with bipolar'],
-      ['5-HTP',                 'Serotonin precursor; NOT combined with SSRIs/MAOIs'],
-      ['Saffron (Crocus)',      'Standardized extract has SSRI-comparable RCT results'],
-      ['L-Tyrosine',            'Dopamine precursor for flat-affect / motivation presentations'],
-    ],
-    cognitive: [
-      ['Omega-3 (DHA-forward)', 'Neuronal membrane fluidity; foundational for cognition'],
-      ['Alpha-GPC / Choline',   'Acetylcholine precursor; short-term focus + long-term neuroprotection'],
-      ['Phosphatidylserine',    'Membrane phospholipid; cortisol modulator; memory support'],
-      ['Huperzine-A',           'Acetylcholinesterase inhibitor; cycle 4-weeks-on / 1-off; NOT with cholinergic drugs'],
-      ['NAD+ / NMN',            'Neuronal energy + sirtuin activation'],
-      ['Lion\'s Mane (already in herb pool)', 'NGF/BDNF stimulator'],
-    ],
-    hormones: [
-      ['Vitamin D3 (with K2)',  'Every steroid hormone synthesizes from cholesterol pathway D3 is upstream of'],
-      ['Zinc (picolinate)',     'Cofactor for testosterone + aromatase modulation'],
-      ['Magnesium glycinate',   'Progesterone cofactor; PMS symptom relief'],
-      ['DIM (diindolylmethane)','Estrogen metabolite balance (2-OH vs 16-OH pathway)'],
-      ['Vitamin B6 (P5P)',      'Progesterone cofactor + PMS mood support'],
-      ['Iodine',                'Thyroid substrate — only if thyroid function is confirmed low'],
-    ],
-    digestion: [
-      ['Zinc-carnosine',        'Gastric + intestinal mucosal healing'],
-      ['L-Glutamine',           'Enterocyte primary fuel; gut lining repair'],
-      ['Betaine HCl',           'For hypochlorhydria presentations; NOT with ulcer / NSAID use'],
-      ['Probiotics (strain-specific)', 'Match to symptom pattern — not a generic multi'],
-      ['Digestive enzymes',     'For bloating / undigested-stool presentations'],
-    ],
-    immunity: [
-      ['Vitamin C (ascorbate)', 'Innate immune cell function; short-term high-dose for acute'],
-      ['Vitamin D3 (with K2)',  'Modulates T-cell response; foundational not acute'],
-      ['Zinc (picolinate)',     'Rate-limiting for many immune-cell functions'],
-      ['Selenium',              'Glutathione peroxidase cofactor; deficiency common in NW Europe'],
-      ['Quercetin',             'Zinc ionophore + mast-cell stabilizer'],
-      ['Beta-glucans (already in herb pool)', 'Trained-immunity via fungal β-glucans'],
-    ],
-    pain: [
-      ['Omega-3 (EPA-forward)', 'Resolvins + protectins — endogenous anti-inflammatory pathway'],
-      ['Curcumin (with piperine)', 'NF-κB inhibitor; equal to some NSAIDs in trials'],
-      ['MSM (methylsulfonylmethane)', 'Sulfur donor for connective tissue + anti-inflammatory'],
-      ['Boswellia serrata',     '5-LOX inhibitor; different pathway than NSAIDs'],
-      ['Magnesium (glycinate or malate)', 'NMDA modulator; muscle-tension pain'],
-      ['PEA (palmitoylethanolamide)', 'Endogenous fatty-acid amide; neuropathic + inflammatory pain'],
-    ],
-    detox: [
-      ['NAC (N-acetylcysteine)', 'Glutathione precursor; upstream of Phase II conjugation'],
-      ['Glutathione (liposomal)', 'Master antioxidant; oral bioavailability variable — liposomal preferred'],
-      ['Alpha-Lipoic Acid',     'Both water- and fat-soluble antioxidant; regenerates other antioxidants'],
-      ['Molybdenum',            'Sulfite oxidase + aldehyde oxidase cofactor; often overlooked'],
-      ['B-complex (activated)', 'Phase II methylation + conjugation cofactor'],
-    ],
-    beauty: [
-      ['Collagen peptides',     'Bioavailable proline + glycine + hydroxyproline for connective tissue'],
-      ['Vitamin C (ascorbate)', 'Rate-limiting for collagen cross-linking'],
-      ['Zinc (picolinate)',     'Wound healing + hormonal acne modulation'],
-      ['Biotin',                'Hair + nail keratin; deficiency rare but supplementation is popular'],
-      ['Beta-carotene',         'Vitamin A precursor; skin cell turnover; safer than retinol at supplement doses'],
-      ['MSM',                   'Sulfur for skin, hair, connective tissue'],
-      ['Hyaluronic acid',       'Extracellular matrix moisture; oral shows measurable skin hydration'],
-    ],
+  // ── Intentions (ranked 3 / 2 / 1; list order = strength of evidence) ──
+  const INT = {
+    stress:    [['mg',1],['theanine',1],['bcomplex',1],['vitc',1]],
+    anxiety:   [['mg',1],['theanine',1],['glycine',1],['htp',1],['b6',1]],
+    sleep:     [['mg',1],['glycine',1],['theanine',1],['melatonin',1]],
+    energy:    [['b12',1],['iron',1],['coq10',1],['creatine',1],['carnitine',1],['nad',1]],
+    mood:      [['vitd',1],['omega3',1],['saffron',1],['htp',1],['same',1],['tyrosine',1]],
+    cognitive: [['omega3',1],['citicoline',1],['creatine',1],['ps',1],['huperzine',1]],
+    hormones:  [['vitd',1],['zinc',1],['mg',1],['b6',1],['dim',1]],
+    digestion: [['zinccarn',1],['glutamine',1],['probiotics',1],['enzymes',1],['betaine',1]],
+    immunity:  [['vitd',1],['vitc',1],['zinc',1],['selenium',1],['quercetin',1]],
+    pain:      [['omega3',1],['curcumin',1],['mg',1],['boswellia',1],['msm',1],['pea',1]],
+    detox:     [['nac',1],['ala',1],['bcomplex',1],['selenium',1]],
+    beauty:    [['collagen',1],['vitc',1],['zinc',1],['hyaluronic',1],['betacarotene',1],['biotin',1]],
   };
-
   const ranked = Array.isArray(a.intentions) && a.intentions.length
     ? a.intentions.slice(0, 3)
     : (a.intention ? [a.intention] : []);
-  ranked.forEach((intent, idx) => {
-    const weight = idx === 0 ? 3 : idx === 1 ? 2 : 1;
-    const list = INT_MAP[intent] || [];
-    list.forEach(([nutrient, reason]) => add(nutrient, reason + ' (via ' + intent + ')', weight));
-  });
+  ranked.forEach((intent, idx) => apply(INT, intent, intent, idx === 0 ? 3 : idx === 1 ? 2 : 1));
 
-  // ── Pattern + subpattern layer ───────────────────────────────────
-  const PATTERN_MAP = {
-    hot:      [['Magnesium glycinate', 'Cooling nervine mineral; useful in hot / reactive presentations']],
-    cold:     [['Iron (bisglycinate)', 'Ferritin check for cold-extremity presentations'],
-               ['Iodine',              'Thyroid check if cold + low energy']],
-    mixed:    [['L-Theanine',          'Nervous-system equanimity for oscillating states']],
-    depleted: [['NAD+ / NMN',          'Mitochondrial rebuild for chronic depletion'],
-               ['B-complex (activated)', 'Foundational for depleted-nervous-system presentations']],
-  };
-  if (PATTERN_MAP[a.pattern]) PATTERN_MAP[a.pattern].forEach(([n, r]) => add(n, r, 2));
+  // ── Body pattern + sub-pattern ───────────────────────────────────
+  apply({
+    hot:      [['mg',2],['omega3',1]],
+    cold:     [['iron',2],['b12',1],['iodine',1]],
+    mixed:    [['theanine',2],['mg',1]],
+    depleted: [['bcomplex',2],['vitd',1],['b12',1],['nad',1]],
+  }, a.pattern, a.pattern + ' pattern');
+  apply({
+    anger:         [['mg',1],['theanine',1]],
+    inflamed:      [['omega3',2],['curcumin',1]],
+    hot_night:     [['mg',1]],
+    cold_hands:    [['iron',2]],
+    heavy:         [['bcomplex',1],['vitd',1]],
+    pale:          [['iron',2],['b12',2]],
+    low_drive:     [['vitd',1],['tyrosine',1],['zinc',1]],
+    up_down:       [['omega3',1],['mg',1]],
+    tension:       [['mg',2]],
+    sighing:       [['mg',2]],
+    purposeless:   [['omega3',1],['vitd',1],['saffron',1]],
+    dry:           [['omega3',2],['hyaluronic',1]],
+    overworked:    [['mg',1],['bcomplex',1],['nad',1]],
+    anxious_empty: [['mg',2],['theanine',2]],
+  }, a.patternSub, String(a.patternSub || '').replace(/_/g, ' '));
 
-  const SUB_MAP = {
-    hot_night:     [['Magnesium glycinate', 'Vasomotor / night-heat presentations']],
-    inflamed:      [['Omega-3 (EPA-forward)', 'Systemic inflammation of tissue presentation']],
-    cold_hands:    [['Iron (bisglycinate)', 'Ferritin often below optimal in cold-hand presentations']],
-    pale:          [['Iron (bisglycinate)', 'Pale + low-appetite pattern often iron-tied'],
-                    ['B12 (methylcobalamin)', 'Also consider B12 for pallor + low energy']],
-    heavy:         [['B-complex (activated)', 'Damp-heavy presentations often benefit from methylation support']],
-    dry:           [['Omega-3 (DHA-forward)', 'Cell-membrane fluidity for dry-tissue presentations'],
-                    ['Hyaluronic acid',       'Oral HA measurable in skin + joint hydration']],
-    overworked:    [['NAD+ / NMN',           'Chronic overwork depletes NAD faster than repletion']],
-    anxious_empty: [['Magnesium threonate',  'CNS-crossing form for wired-and-tired presentations'],
-                    ['L-Theanine',           'Alpha-wave calm without sedation']],
-    tension:       [['Magnesium glycinate',  'Muscle-relaxant mineral for wandering-tension presentations']],
-    sighing:       [['Magnesium glycinate',  'Diaphragmatic + respiratory muscle relaxation']],
-  };
-  if (SUB_MAP[a.patternSub]) SUB_MAP[a.patternSub].forEach(([n, r]) => add(n, r, 2));
+  // ── Rhythm: hardest time of day ──────────────────────────────────
+  apply({
+    morning: [['b12',1],['vitd',1]],
+    midday:  [['chromium',1],['bcomplex',1]],
+    evening: [['mg',1],['theanine',1]],
+    night:   [['mg',1],['glycine',1]],
+  }, a.time, { morning:'hard mornings', midday:'midday dip', evening:'can\'t wind down', night:'3am waking' }[a.time]);
 
-  // ── Age layer ────────────────────────────────────────────────────
-  if (a.age === '45_plus' || a.age === '45+') {
-    add('CoQ10 (ubiquinol)', 'Endogenous production drops sharply after 40', 2);
-    add('NAD+ / NMN', 'NAD levels decline with age', 2);
-    add('Vitamin D3 (with K2)', 'Absorption drops with age; deficiency very common over 45', 2);
+  // ── Rhythm: response to stress ───────────────────────────────────
+  apply({
+    push:     [['mg',2],['bcomplex',2],['vitc',1]],
+    collapse: [['bcomplex',2],['b12',1],['iron',1],['vitd',1]],
+    numb:     [['nac',2],['chromium',1],['mg',1]],
+    off:      [['vitd',2],['b12',1],['iron',1]],
+  }, a.stress, { push:'pushes through', collapse:'collapses under stress', numb:'numbs stress', off:'feels "off"' }[a.stress]);
+
+  // ── Energy feel (nervous-system state) ───────────────────────────
+  apply({
+    wired:       [['mg',2],['theanine',2],['glycine',1],['tyrosine',-2],['huperzine',-1],['citicoline',-1]],
+    tired:       [['b12',2],['iron',2],['coq10',1],['vitd',1],['creatine',1]],
+    wired_tired: [['mg',2],['bcomplex',2],['theanine',1],['vitc',1],['tyrosine',-2]],
+    reactive:    [['mg',2],['theanine',2],['tyrosine',-3],['huperzine',-2],['citicoline',-1]],
+    flat:        [['omega3',2],['vitd',2],['saffron',1],['tyrosine',1],['same',1]],
+  }, a.nervous, String(a.nervous || '').replace('_', ' + ') + ' energy');
+
+  // ── Energy curve through the day ─────────────────────────────────
+  apply({
+    low_waking:        [['b12',2],['iron',2],['vitd',2]],
+    am_good_pm_crash:  [['chromium',2],['mg',1],['bcomplex',1]],
+    slow_am_strong_pm: [['melatonin',3],['mg',1]],
+    high_unstable:     [['chromium',2],['mg',1],['omega3',1],['tyrosine',-2]],
+    waves:             [['vitd',1],['b12',1],['iron',1]],
+    crash_mental:      [['creatine',2],['citicoline',2],['omega3',1],['theanine',1]],
+    crash_physical:    [['iron',2],['coq10',2],['creatine',2],['mg',1]],
+  }, a.energy_curve, {
+    low_waking:'low from waking', am_good_pm_crash:'afternoon crash', slow_am_strong_pm:'late body clock',
+    high_unstable:'energy spikes + drops', waves:'energy in waves', crash_mental:'crashes after mental effort',
+    crash_physical:'crashes after exertion',
+  }[a.energy_curve]);
+
+  // ── Sleep pattern ────────────────────────────────────────────────
+  apply({
+    hard_onset:     [['mg',2],['theanine',2],['glycine',2],['melatonin',1]],
+    wakes_middle:   [['mg',2],['glycine',2]],
+    early_wake:     [['omega3',1],['vitd',1],['saffron',1],['mg',1]],
+    sleeps_no_rest: [['iron',2],['vitd',1],['mg',1],['b12',1]],
+    vivid_restless: [['mg',2],['iron',1],['b6',-2],['melatonin',-1]],
+    very_broken:    [['mg',3],['glycine',2]],
+    broken:         [['mg',3],['glycine',2]],
+  }, a.sleep, {
+    hard_onset:'hard to fall asleep', wakes_middle:'wakes at night', early_wake:'wakes too early',
+    sleeps_no_rest:'unrefreshing sleep', vivid_restless:'restless sleep', very_broken:'very broken sleep', broken:'broken sleep',
+  }[a.sleep]);
+
+  // ── Duration · age · the pill ────────────────────────────────────
+  if (a.duration === 'year_plus' || a.duration === 'lifelong') {
+    [['vitd',1],['b12',1],['iron',1],['mg',1]].forEach(([id, pts]) => hit(id, pts, 'long-standing'));
   }
-  if (a.age === '60_plus' || a.age === '60+') {
-    add('Vitamin K2 (MK-7)', 'Directs calcium to bone rather than arteries', 2);
+  if (a.age === '41_60') { hit('coq10', 1, '41–60'); hit('vitd', 1, '41–60'); }
+  if (a.age === '60_plus') { hit('vitd', 2, '60+'); hit('b12', 2, '60+'); hit('coq10', 1, '60+'); hit('nad', 1, '60+'); }
+  const avoid = (Array.isArray(a.avoid) ? a.avoid : []).filter(f => f !== 'none');
+  if (avoid.includes('contraceptive')) {
+    [['bcomplex',1],['mg',1],['zinc',1]].forEach(([id, pts]) => hit(id, pts, 'the pill depletes it'));
   }
 
-  // ── Sleep quality layer ──────────────────────────────────────────
-  if (a.sleep === 'very_broken' || a.sleep === 'broken') {
-    add('Magnesium threonate', 'CNS-crossing form is superior for sleep architecture', 3);
-    add('Glycine', '3 g at bedtime for REM improvement', 2);
-  }
-
-  // ── Notes-text keyword layer (light-touch) ───────────────────────
+  // ── Notes keywords (light-touch) ─────────────────────────────────
   const notes = String(a.notes || '').toLowerCase();
-  if (/headache|migraine/.test(notes)) add('Magnesium glycinate', 'Migraine prophylaxis at 400-600 mg/day (per notes)', 2);
-  if (/cramp|spasm/.test(notes))        add('Magnesium glycinate', 'Muscle cramp presentations (per notes)', 2);
-  if (/anxiety|panic/.test(notes))      add('L-Theanine', 'Anxiety mention in free-text (per notes)', 2);
-  if (/tinnitus|ear ring/.test(notes))  add('Zinc (picolinate)', 'Zinc deficiency correlates with tinnitus in some populations', 2);
+  const NOTE_HITS = [
+    [/headache|migraine/,             [['mg',2]],                          'migraine (notes)'],
+    [/cramp|spasm/,                   [['mg',1]],                          'cramps (notes)'],
+    [/anxiety|panic/,                 [['theanine',1]],                    'anxiety (notes)'],
+    [/tinnitus|ear ring/,             [['zinc',1]],                        'tinnitus (notes)'],
+    [/vegan|vegetarian|plant.based/,  [['b12',3],['iron',1],['omega3',1]], 'plant-based diet (notes)'],
+    [/\bpms\b|period|menstrua/,       [['b6',1],['mg',1]],                 'cycle (notes)'],
+    [/restless leg/,                  [['iron',2],['mg',1]],               'restless legs (notes)'],
+    [/statin/,                        [['coq10',2]],                       'statins (notes)'],
+    [/joint|arthrit/,                 [['curcumin',1],['omega3',1]],       'joints (notes)'],
+    [/bloat|\bibs\b/,                 [['probiotics',1]],                  'gut (notes)'],
+    [/\bflu\b|\bcolds?\b|infection/,  [['vitc',1],['zinc',1],['vitd',1]],  'infections (notes)'],
+  ];
+  NOTE_HITS.forEach(([re, hits, label]) => { if (re.test(notes)) hits.forEach(([id, pts]) => hit(id, pts, label)); });
 
-  // ── Contraindication filter (avoid[] flags) ─────────────────────
-  const avoid = Array.isArray(a.avoid) ? a.avoid : [];
-  const dropIf = (cond, names) => { if (cond) names.forEach(n => bank.delete(n)); };
-  dropIf(avoid.includes('thyroid'),      ['Iodine']);
-  dropIf(avoid.includes('psych_meds'),   ['5-HTP', 'SAMe', 'L-Tyrosine']); // MAOI/SSRI interactions
-  dropIf(avoid.includes('sedatives'),    ['5-HTP', 'Glycine', 'Melatonin (low-dose)', 'L-Theanine']);
-  dropIf(avoid.includes('cardio_meds'),  ['Omega-3 (EPA-forward)', 'Omega-3 (DHA-forward)']); // bleeding + statin interactions
-  dropIf(avoid.includes('autoimmune'),   ['Beta-glucans (already in herb pool)']);
-  dropIf(avoid.includes('liver_kidney'), ['Iron (bisglycinate)', 'NAC (N-acetylcysteine)']);
-  if (avoid.includes('pregnancy')) {
-    // Prenatal-safe shortlist only. Blow away everything else.
-    const safe = new Set(['Vitamin D3 (with K2)', 'Choline', 'Iron (bisglycinate)', 'Magnesium glycinate', 'DHA (algal)', 'Folate (methylfolate)']);
-    for (const key of [...bank.keys()]) if (!safe.has(key)) bank.delete(key);
-    add('Choline', 'Prenatal recommendation for fetal neural development — often overlooked', 3);
-    add('Folate (methylfolate)', 'Prenatal foundational', 3);
-    add('DHA (algal)', 'Prenatal DHA for fetal brain — algal source avoids fish/mercury concerns', 3);
+  // B6 sits inside the B-complex — fold it in when both are present.
+  if (bank.has('b6') && bank.has('bcomplex')) {
+    const b6 = bank.get('b6'), bc = bank.get('bcomplex');
+    bc.score += Math.max(0, b6.score) * 0.5;
+    b6.labels.forEach(l => bc.labels.add(l));
+    bank.delete('b6');
   }
 
-  // ── Deduplicate against herbs already in the picked formula ─────
-  const herbNames = new Set((Array.isArray(pickedHerbs) ? pickedHerbs : []).map(h => (h.name || '').toLowerCase()));
-  const HERB_REDUNDANT = {
-    'Curcumin (with piperine)':   ['turmeric', 'curcuma'],
-    'Beta-glucans (already in herb pool)': ['reishi', 'chaga', 'lion\'s mane', 'cordyceps', 'maitake', 'turkey tail'],
-    'Lion\'s Mane (already in herb pool)': ['lion\'s mane'],
-    'Saffron (Crocus)':           ['saffron'],
-    'Apigenin':                   ['chamomile'],
-    'Melatonin (low-dose)':       [],
-  };
-  for (const [nutrient, herbs] of Object.entries(HERB_REDUNDANT)) {
-    if (herbs.some(h => [...herbNames].some(hn => hn.includes(h)))) {
-      bank.delete(nutrient);
-    }
+  // ── Safety flags ─────────────────────────────────────────────────
+  for (const [id] of [...bank]) {
+    const drop = MN_CATALOGUE[id].drop || [];
+    if (avoid.some(f => drop.includes(f))) bank.delete(id);
+  }
+  const minor = a.age === 'under_18';
+  const pregnant = avoid.includes('pregnancy');
+  if (pregnant) {
+    // Prenatal whitelist only — everything else goes.
+    for (const [id] of [...bank]) if (!MN_CATALOGUE[id].preg) bank.delete(id);
+    hit('folate', 6, 'pregnancy'); hit('choline', 5, 'pregnancy'); hit('dha', 5, 'pregnancy');
+  } else if (minor) {
+    // Under-18 whitelist: basic, food-level nutrients only. No amino
+    // acids, nootropics, hormone modulators or sleep hormones.
+    for (const [id] of [...bank]) if (!MN_CATALOGUE[id].minor) bank.delete(id);
   }
 
-  // Sort by priority DESC, then alphabetically. Top 12.
+  // ── Drop nutrients a herb in the formula already covers ─────────
+  const herbNames = (Array.isArray(pickedHerbs) ? pickedHerbs : [])
+    .map(h => String((h && h.name) || '').toLowerCase());
+  for (const [id] of [...bank]) {
+    const needles = MN_CATALOGUE[id].herbs || [];
+    if (needles.some(n => herbNames.some(hn => hn.includes(n)))) bank.delete(id);
+  }
+
+  const vitdPlain = minor || pregnant || avoid.includes('cardio_meds');
   return [...bank.entries()]
-    .sort((a, b) => (b[1].priority - a[1].priority) || a[0].localeCompare(b[0]))
-    .slice(0, 12)
-    .map(([nutrient, { reason, priority }]) => ({ nutrient, reason, priority }));
+    .map(([id, e]) => ({ id, e, rank: e.score * (MN_CATALOGUE[id].damp || 1) }))
+    .filter(x => x.rank > 0.5)
+    .sort((x, y) => (y.rank - x.rank) || MN_CATALOGUE[x.id].n.localeCompare(MN_CATALOGUE[y.id].n))
+    .slice(0, 10)
+    .map(({ id, e, rank }) => {
+      const c = MN_CATALOGUE[id];
+      let name = c.n, warn = c.warn;
+      if (id === 'vitd' && vitdPlain) { name = 'Vitamin D3'; warn = 'Test 25(OH)D where possible'; }
+      if (minor) warn ='Under 18: age-appropriate dose, agree with a parent or GP' + (warn ? '. ' + warn : '');
+      const head = c.why + '.' + (warn ? ' ⚠ ' + warn + '.' : '');
+      let from = [...e.labels].join(', ');
+      let reason = from ? head + ' From: ' + from : head;
+      if (reason.length > 298) reason = reason.slice(0, 297) + '…';
+      return { nutrient: name, reason, priority: Math.max(1, Math.min(10, Math.round(rank))) };
+    });
 }
 
 // Step 6: assignPercentages removed — server ships percentages.

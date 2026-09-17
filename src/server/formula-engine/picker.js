@@ -22,7 +22,7 @@ function targetHerbCount(a) {
   if (a.sleep === 'very_broken' || a.sleep === 'under_6') n += 1;
   const medFlags = (a.avoid || []).filter(k => k !== 'none').length;
   if (medFlags >= 2) n += 1;
-  if (!a.notes && !a.patternSub && a.duration === 'weeks' && a.sleep === 'restorative_6plus') {
+  if (!a.notes && !a.patternSub && a.duration === 'weeks' && (a.sleep === 'restorative_6plus' || a.sleep === 'restorative')) {
     n = 3;
   }
   return Math.min(7, Math.max(3, n));

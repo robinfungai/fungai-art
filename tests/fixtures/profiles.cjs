@@ -334,7 +334,7 @@ const PROFILES = [
   //
   {
     id: '18-pro-fields-carried',
-    description: 'Pro-mode profile carrying nervous, energy_curve, digestion, emotional, somatic, cycle, prior_herbs. Current engine ignores these — regression test confirms they don\'t change output.',
+    description: 'Pro-mode profile carrying nervous, energy_curve, digestion, emotional, somatic, cycle, prior_herbs. Since engine 2.1 nervous, energy_curve and the 7-pattern sleep answer shape scoring; digestion, emotional, somatic, cycle and prior_herbs are still ignored.',
     input: {
       intention: 'stress',
       intentions: ['stress', 'anxiety', 'sleep'],
