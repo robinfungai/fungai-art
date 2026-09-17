@@ -95,6 +95,10 @@
 #     blocks (the quiz, the shop, the home page). Removing this needs
 #     per-request nonces, which static hosting can't issue.
 #
+#   ('unsafe-eval' was removed on 17 Sep 2026 — /community now ships
+#     precompiled JS from scripts/build-community.cjs instead of
+#     compiling JSX in the browser. Historic note below.)
+#
 #   'unsafe-eval' — /community compiles its JSX in the browser with
 #     Babel standalone, which is eval. Precompiling the portal at build
 #     time is what removes this; until then the policy would break the
@@ -112,7 +116,7 @@
     X-Content-Type-Options    = "nosniff"
     Referrer-Policy           = "strict-origin-when-cross-origin"
     Permissions-Policy        = "camera=(), microphone=(), geolocation=(self), payment=(self)"
-    Content-Security-Policy   = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://unpkg.com https://cdn.jsdelivr.net https://www.instagram.com https://platform.instagram.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.fontshare.com; font-src 'self' data: https://fonts.gstatic.com https://cdn.fontshare.com; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; connect-src 'self' https://cyhpvsyvxzfadtyvcuwp.supabase.co wss://cyhpvsyvxzfadtyvcuwp.supabase.co https://api.stripe.com https://api.coingecko.com https://api.bigdatacloud.net https://basemapstyles-api.arcgis.com https://ibasemaps-api.arcgis.com https://server.arcgisonline.com https://services.arcgisonline.com https://a.basemaps.cartocdn.com https://b.basemaps.cartocdn.com https://c.basemaps.cartocdn.com https://d.basemaps.cartocdn.com https://basemaps.cartocdn.com https://polygon-rpc.com https://www.instagram.com; worker-src 'self' blob:; child-src 'self' blob:; frame-src 'self' https://js.stripe.com https://www.instagram.com; upgrade-insecure-requests"
+    Content-Security-Policy   = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com https://unpkg.com https://cdn.jsdelivr.net https://www.instagram.com https://platform.instagram.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.fontshare.com; font-src 'self' data: https://fonts.gstatic.com https://cdn.fontshare.com; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; connect-src 'self' https://cyhpvsyvxzfadtyvcuwp.supabase.co wss://cyhpvsyvxzfadtyvcuwp.supabase.co https://api.stripe.com https://api.coingecko.com https://api.bigdatacloud.net https://basemapstyles-api.arcgis.com https://ibasemaps-api.arcgis.com https://server.arcgisonline.com https://services.arcgisonline.com https://a.basemaps.cartocdn.com https://b.basemaps.cartocdn.com https://c.basemaps.cartocdn.com https://d.basemaps.cartocdn.com https://basemaps.cartocdn.com https://polygon-rpc.com https://www.instagram.com; worker-src 'self' blob:; child-src 'self' blob:; frame-src 'self' https://js.stripe.com https://www.instagram.com; upgrade-insecure-requests"
 
 # Force browsers to revalidate the favicon — avoids stale cached icons persisting across deploys
 [[headers]]

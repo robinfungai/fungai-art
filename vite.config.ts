@@ -2,6 +2,13 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import fs from 'fs'
+import { createRequire } from 'module'
+
+// vite.config.ts is bundled to ESM before it runs, so a bare require() of a
+// CJS file gets rewritten and its own require('fs') fails. createRequire
+// gives us the real Node resolver, keeping scripts/build-community.cjs the
+// single source of truth for how portal JSX is compiled.
+const nodeRequire = createRequire(import.meta.url)
 
 // In production, scripts/swap-index.cjs makes dist/index.html = the static
 // home page (public/home/index.html) and moves the React app to /app.html.
@@ -27,6 +34,34 @@ const STATIC_PAGES = [
   '/find-your-formula',
   '/find-your-formula-pro',
 ];
+
+// Academy P0.5 · the community portal no longer ships raw JSX with
+// @babel/standalone — scripts/build-community.cjs compiles each .jsx to a
+// sibling .js at build time. In dev those artifacts may be missing or stale,
+// so compile on request: /community/spore/app-living.js is served from
+// app-living.jsx through the same esbuild transform the build script uses.
+const compileJsx = () => ({
+  name: 'compile-community-jsx',
+  configureServer(server: any) {
+    const { compileSource } = nodeRequire('./scripts/build-community.cjs');
+    server.middlewares.use((req: any, res: any, next: any) => {
+      const pathOnly = (req.url || '').split('?')[0];
+      if (!pathOnly.startsWith('/community/') || !pathOnly.endsWith('.js')) return next();
+      const jsxPath = path.resolve(__dirname, 'public' + pathOnly.replace(/\.js$/, '.jsx'));
+      if (!fs.existsSync(jsxPath)) return next();
+      try {
+        const code = compileSource(fs.readFileSync(jsxPath, 'utf8'), pathOnly);
+        res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+        res.setHeader('Cache-Control', 'no-store');
+        res.end(code);
+      } catch (e: any) {
+        res.statusCode = 500;
+        res.end('/* JSX compile error in ' + pathOnly + ': ' + String(e && e.message) + ' */');
+      }
+    });
+  },
+});
+
 const serveStaticPages = () => ({
   name: 'serve-static-pages',
   configureServer(server: any) {
@@ -61,7 +96,7 @@ export default defineConfig({
   // unknown routes (that's the SPA default and was loading the React shell
   // when visiting /community, /shop, etc.).
   appType: 'mpa',
-  plugins: [react(), serveStaticPages()],
+  plugins: [react(), compileJsx(), serveStaticPages()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

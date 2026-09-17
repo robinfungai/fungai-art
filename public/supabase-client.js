@@ -409,6 +409,58 @@
         },
       };
 
+      // ── Server-authoritative identity (Academy P0.5) ───────────────
+      // window.SBidentity.get() asks /api/me who the caller is, with the
+      // Supabase access token attached. The server verifies the token and
+      // answers from the database — role, admin, tier, entitlements — so
+      // the UI stops trusting the member snapshot in localStorage.
+      //
+      // Shape: { signedIn, profileId, name, email, role, isAdmin, tier,
+      //          repPoints, entitlements[] }  ·  or { unavailable: true }
+      // when the endpoint cannot answer (not deployed, env var missing).
+      // Callers treat `unavailable` as "fall back to the legacy client
+      // flag", never as "grant access".
+      window.SBidentity = {
+        _cache: null,
+        _inflight: null,
+        async get(force) {
+          if (!force && this._cache) return this._cache;
+          if (this._inflight) return this._inflight;
+          this._inflight = (async () => {
+            let token = null;
+            try {
+              const session = await window.SBauth.getSession();
+              token = session && session.access_token;
+            } catch (_) {}
+            try {
+              const res = await fetch('/api/me', {
+                headers: token ? { Authorization: 'Bearer ' + token } : {},
+                cache: 'no-store',
+              });
+              if (res.status === 503) return { unavailable: true, signedIn: false, isAdmin: false, entitlements: [] };
+              if (!res.ok)            return { unavailable: true, signedIn: false, isAdmin: false, entitlements: [] };
+              const me = await res.json();
+              this._cache = me;
+              window.FA_IDENTITY = me;
+              window.dispatchEvent(new CustomEvent('fa:identity', { detail: me }));
+              return me;
+            } catch (_) {
+              return { unavailable: true, signedIn: false, isAdmin: false, entitlements: [] };
+            } finally {
+              this._inflight = null;
+            }
+          })();
+          return this._inflight;
+        },
+        // True only when the SERVER says so. Unknown / unavailable → false.
+        isAdmin() { return !!(window.FA_IDENTITY && window.FA_IDENTITY.isAdmin); },
+        has(entitlement) {
+          const me = window.FA_IDENTITY;
+          return !!(me && (me.isAdmin || (me.entitlements || []).includes(entitlement)));
+        },
+        clear() { this._cache = null; window.FA_IDENTITY = null; },
+      };
+
       console.log('[Supabase] ready');
       window.dispatchEvent(new CustomEvent('supabase:ready'));
       resolve(window.SBclient);

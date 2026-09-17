@@ -7,6 +7,25 @@ const { useState, useEffect, useCallback, useRef } = React;
 const storageKey  = (id) => `spore_state_${id}`;
 const pinKey      = (id) => `spore_pin_${id}`;
 
+// ── Academy P0.5 · admin is a SERVER fact ────────────────────────────
+// window.FA_IDENTITY is filled by SBidentity.get() (supabase-client.js),
+// which asks /api/me with the Supabase access token; the server verifies
+// the token and answers from the database. The cached member flag is only
+// consulted when that endpoint could not answer at all (not deployed, env
+// var missing) so the portal keeps working offline-ish — and the database
+// enforces the real boundary either way through RLS.
+function faIsAdmin(member) {
+  const me = (typeof window !== 'undefined') ? window.FA_IDENTITY : null;
+  if (me && !me.unavailable) return !!me.isAdmin;
+  return !!(member && member.admin);
+}
+// Same rule, when only the local member id is in scope.
+function faIsAdminById(memberId) {
+  const me = (typeof window !== 'undefined') ? window.FA_IDENTITY : null;
+  if (me && !me.unavailable) return !!me.isAdmin;
+  return memberId === 'robin' || memberId === 'stephanie';
+}
+
 function defaultState(member) {
   return {
     balance:       member ? member.balance : 120,
@@ -1035,7 +1054,7 @@ function TokenSupplyPill() {
 }
 
 function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) {
-  const isAdmin = currentMember && currentMember.admin;
+  const isAdmin = faIsAdmin(currentMember);
   const [mobileOpen, setMobileOpen] = useState(false);
   const tabs = [
     { id:'network',  label:'Network',         icon:'◉' },
@@ -2352,7 +2371,7 @@ function MembersPage({ currentMember, economy }) {
 
   const CONTRIB_LABELS = ['Not active','Minimal','Part-time','Regular','Full dedication','Leading the node'];
 
-  const isAdmin = currentMember.admin;
+  const isAdmin = faIsAdmin(currentMember);
 
   // ── Supabase auth state — MUST be declared BEFORE the admin-sheet early
   //    return below, otherwise the second render (when an admin taps a
@@ -3181,7 +3200,7 @@ function PendingContributionsBlock({ onToast }) {
 }
 
 function WeeklyReportBlock({ currentMemberId, onToast }) {
-  const isAdmin = currentMemberId === 'robin' || currentMemberId === 'stephanie';
+  const isAdmin = faIsAdminById(currentMemberId);
   if (!isAdmin) return null;
   const existing = SporeEconomy.thisWeekReport(currentMemberId);
   const [body, setBody] = useState(existing ? existing.body : '');
@@ -4747,7 +4766,7 @@ function QuickNav({ tab, onTab, currentMember }) {
   // Kept 1:1 in sync with TopBar tabs so the mobile sidebar and the
   // dropdown never diverge. If you add/remove/rename a tab in TopBar,
   // do the same here.
-  const isAdmin = currentMember && currentMember.admin;
+  const isAdmin = faIsAdmin(currentMember);
   const items = [
     { icon:'◉', label:'Network',        id:'network'  },
     { icon:'△', label:'Calendar',       id:'calendar' },
@@ -4913,10 +4932,33 @@ function App() {
   const [tweaks,    setTweak]    = useTweaks(TWEAK_DEFAULTS);
   const [cloudVer,  setCloudVer] = useState(0);    // bumps when Supabase profiles load → forces re-render
   const [sbUser,    setSbUser]   = useState(null); // currently signed-in Supabase user (or null)
+  // Server-authoritative identity. Nothing privileged is rendered on the
+  // browser's own word once this arrives; see faIsAdmin above.
+  const [identity,  setIdentity] = useState(typeof window !== 'undefined' ? window.FA_IDENTITY : null);
 
   const economy = useEconomy(currentMember ? currentMember.id : '__guest__');
   const tier    = SporeData.reputationTier(economy.state.reputation);
   const onToast = (msg, kind) => setToast({ msg, kind });
+
+  // Resolve who the server says we are, once on mount and again on every
+  // auth change (sign-in, sign-out, token refresh).
+  useEffect(() => {
+    let alive = true;
+    const resolve = () => {
+      if (!window.SBidentity) return;
+      window.SBidentity.get(true).then(me => { if (alive) setIdentity(me); }).catch(() => {});
+    };
+    resolve();
+    const onReady = () => resolve();
+    window.addEventListener('supabase:ready', onReady);
+    let sub = null;
+    try { sub = window.SBauth && window.SBauth.onAuthChange(() => resolve()); } catch (_) {}
+    return () => {
+      alive = false;
+      window.removeEventListener('supabase:ready', onReady);
+      try { sub && sub.data && sub.data.subscription && sub.data.subscription.unsubscribe(); } catch (_) {}
+    };
+  }, []);
 
   // Global toast bridge — anywhere in the tree (including the welcome/login
   // screen rendered above App's main return) can dispatch a `spore:toast`
