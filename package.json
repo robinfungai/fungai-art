@@ -25,14 +25,16 @@
     "build:herbs-data": "node scripts/export-herbs.cjs",
     "build:herb-pool": "node scripts/build-herb-pool.cjs",
     "build:engine2": "node scripts/sync-engine2.cjs",
-    "build": "npm run build:herbs-data && npm run build:herb-pool && npm run build:engine2 && npm run build:myco-kb && npm run build:community && vite build && node scripts/swap-index.cjs",
+    "build": "npm run build:herbs-data && npm run build:herb-pool && npm run build:engine2 && npm run build:entity-map && npm run build:myco-kb && npm run build:community && vite build && node scripts/swap-index.cjs",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "build:myco-kb": "node scripts/build-myco-kb.cjs",
     "test:myco-kb": "node tests/myco-kb-verify.cjs",
     "check:claims": "node scripts/check-claims.cjs",
     "test:claims": "node tests/claims-verify.cjs",
-    "build:community": "node scripts/build-community.cjs"
+    "build:community": "node scripts/build-community.cjs",
+    "build:entity-map": "node scripts/build-entity-map.cjs",
+    "test:entity-map": "node tests/entity-map-verify.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

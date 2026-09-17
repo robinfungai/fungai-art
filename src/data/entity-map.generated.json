@@ -1,0 +1,2801 @@
+{
+  "generatedAt": "2026-09-17T17:08:39.836Z",
+  "counts": {
+    "botanicals": 199,
+    "monographs": 128,
+    "monographsMatched": 128,
+    "products": 21,
+    "productsWithBotanical": 6
+  },
+  "botanicals": [
+    {
+      "id": 201,
+      "slug": "bilberry",
+      "name": "Bilberry",
+      "botanical": "Vaccinium myrtillus (ripe berry)",
+      "latin": "Vaccinium myrtillus",
+      "genus": "Vaccinium",
+      "species": "myrtillus"
+    },
+    {
+      "id": 202,
+      "slug": "angelica-dong-quai",
+      "name": "Angelica (Dong Quai)",
+      "botanical": "Angelica sinensis (root — 2–3 year matured)",
+      "latin": "Angelica sinensis",
+      "genus": "Angelica",
+      "species": "sinensis"
+    },
+    {
+      "id": 203,
+      "slug": "aronia-berry",
+      "name": "Aronia Berry",
+      "botanical": "Aronia melanocarpa (ripe berry)",
+      "latin": "Aronia melanocarpa",
+      "genus": "Aronia",
+      "species": "melanocarpa"
+    },
+    {
+      "id": 103,
+      "slug": "ashwagandha",
+      "name": "Ashwagandha",
+      "botanical": "Withania somnifera (root — 2–3 year matured, standardised to 5% withanolides)",
+      "latin": "Withania somnifera",
+      "genus": "Withania",
+      "species": "somnifera"
+    },
+    {
+      "id": 204,
+      "slug": "astragalus",
+      "name": "Astragalus",
+      "botanical": "Astragalus membranaceus (root — Huang Qi)",
+      "latin": "Astragalus membranaceus",
+      "genus": "Astragalus",
+      "species": "membranaceus"
+    },
+    {
+      "id": 4,
+      "slug": "bacopa",
+      "name": "Bacopa",
+      "botanical": "Bacopa monnieri (aerial parts — Brahmi)",
+      "latin": "Bacopa monnieri",
+      "genus": "Bacopa",
+      "species": "monnieri"
+    },
+    {
+      "id": 205,
+      "slug": "barberry",
+      "name": "Barberry",
+      "botanical": "Berberis vulgaris (root bark and stem bark)",
+      "latin": "Berberis vulgaris",
+      "genus": "Berberis",
+      "species": "vulgaris"
+    },
+    {
+      "id": 206,
+      "slug": "barley",
+      "name": "Barley",
+      "botanical": "Hordeum vulgare (grain, bran and young barley grass)",
+      "latin": "Hordeum vulgare",
+      "genus": "Hordeum",
+      "species": "vulgare"
+    },
+    {
+      "id": 126,
+      "slug": "blue-lotus",
+      "name": "Blue Lotus",
+      "botanical": "Nymphaea caerulea (petals and leaves)",
+      "latin": "Nymphaea caerulea",
+      "genus": "Nymphaea",
+      "species": "caerulea"
+    },
+    {
+      "id": 207,
+      "slug": "calamus",
+      "name": "Calamus",
+      "botanical": "Acorus calamus (rhizome — Sweet Flag, Rat Root)",
+      "latin": "Acorus calamus",
+      "genus": "Acorus",
+      "species": "calamus"
+    },
+    {
+      "id": 208,
+      "slug": "black-cumin",
+      "name": "Black Cumin",
+      "botanical": "Nigella sativa (seed and cold-pressed seed oil)",
+      "latin": "Nigella sativa",
+      "genus": "Nigella",
+      "species": "sativa"
+    },
+    {
+      "id": 209,
+      "slug": "black-walnut",
+      "name": "Black Walnut",
+      "botanical": "Juglans nigra (green hull — outer casing)",
+      "latin": "Juglans nigra",
+      "genus": "Juglans",
+      "species": "nigra"
+    },
+    {
+      "id": 210,
+      "slug": "bladderwrack",
+      "name": "Bladderwrack",
+      "botanical": "Fucus vesiculosus (whole dried thallus — Atlantic seaweed)",
+      "latin": "Fucus vesiculosus",
+      "genus": "Fucus",
+      "species": "vesiculosus"
+    },
+    {
+      "id": 211,
+      "slug": "blueberry",
+      "name": "Blueberry",
+      "botanical": "Vaccinium corymbosum / Vaccinium angustifolium (ripe berry)",
+      "latin": "Vaccinium corymbosum / Vaccinium angustifolium",
+      "genus": "Vaccinium",
+      "species": "corymbosum"
+    },
+    {
+      "id": 102,
+      "slug": "bobinsana",
+      "name": "Bobinsana",
+      "botanical": "Calliandra angustifolia (root and bark — Amazonian)",
+      "latin": "Calliandra angustifolia",
+      "genus": "Calliandra",
+      "species": "angustifolia"
+    },
+    {
+      "id": 104,
+      "slug": "broadleaf-plantain",
+      "name": "Broadleaf Plantain",
+      "botanical": "Plantago major (leaf — aerial parts)",
+      "latin": "Plantago major",
+      "genus": "Plantago",
+      "species": "major"
+    },
+    {
+      "id": 212,
+      "slug": "burdock",
+      "name": "Burdock",
+      "botanical": "Arctium lappa (root — Gobo)",
+      "latin": "Arctium lappa",
+      "genus": "Arctium",
+      "species": "lappa"
+    },
+    {
+      "id": 213,
+      "slug": "butchers-broom",
+      "name": "Butcher's Broom",
+      "botanical": "Ruscus aculeatus (rhizome and root — standardised to ruscogenins)",
+      "latin": "Ruscus aculeatus",
+      "genus": "Ruscus",
+      "species": "aculeatus"
+    },
+    {
+      "id": 214,
+      "slug": "butterbur",
+      "name": "Butterbur",
+      "botanical": "Petasites hybridus (root and rhizome — PA-FREE extract only)",
+      "latin": "Petasites hybridus",
+      "genus": "Petasites",
+      "species": "hybridus"
+    },
+    {
+      "id": 215,
+      "slug": "damiana",
+      "name": "Damiana",
+      "botanical": "Turnera diffusa (leaf — aerial parts)",
+      "latin": "Turnera diffusa",
+      "genus": "Turnera",
+      "species": "diffusa"
+    },
+    {
+      "id": 107,
+      "slug": "dandelion-root",
+      "name": "Dandelion Root",
+      "botanical": "Taraxacum officinale (root — preferred over leaf for medicinal use)",
+      "latin": "Taraxacum officinale",
+      "genus": "Taraxacum",
+      "species": "officinale"
+    },
+    {
+      "id": 216,
+      "slug": "elderberry",
+      "name": "Elderberry",
+      "botanical": "Sambucus nigra / Sambucus canadensis (ripe berries only — never raw or unripe)",
+      "latin": "Sambucus nigra / Sambucus canadensis",
+      "genus": "Sambucus",
+      "species": "nigra"
+    },
+    {
+      "id": 132,
+      "slug": "calea-zacatachichi",
+      "name": "Calea Zacatachichi",
+      "botanical": "Calea zacatachichi / Calea ternifolia (aerial parts, leaves and flowering tops)",
+      "latin": "Calea zacatachichi / Calea ternifolia",
+      "genus": "Calea",
+      "species": "zacatachichi"
+    },
+    {
+      "id": 217,
+      "slug": "cardamom",
+      "name": "Cardamom",
+      "botanical": "Elettaria cardamomum (seeds within dried pods — Queen of Spices)",
+      "latin": "Elettaria cardamomum",
+      "genus": "Elettaria",
+      "species": "cardamomum"
+    },
+    {
+      "id": 218,
+      "slug": "catuaba",
+      "name": "Catuaba",
+      "botanical": "Anemopaegma mirandum (bark — sustainably wild-crafted Amazonian)",
+      "latin": "Anemopaegma mirandum",
+      "genus": "Anemopaegma",
+      "species": "mirandum"
+    },
+    {
+      "id": 219,
+      "slug": "cayenne",
+      "name": "Cayenne",
+      "botanical": "Capsicum annuum (dried fruit — potency measured in Scoville Heat Units)",
+      "latin": "Capsicum annuum",
+      "genus": "Capsicum",
+      "species": "annuum"
+    },
+    {
+      "id": 128,
+      "slug": "chamomile",
+      "name": "Chamomile",
+      "botanical": "Matricaria chamomilla (German) / Chamaemelum nobile (Roman) (flower heads)",
+      "latin": "Matricaria chamomilla",
+      "genus": "Matricaria",
+      "species": "chamomilla"
+    },
+    {
+      "id": 220,
+      "slug": "devils-claw",
+      "name": "Devil's Claw",
+      "botanical": "Harpagophytum procumbens (dried secondary tuberous roots)",
+      "latin": "Harpagophytum procumbens",
+      "genus": "Harpagophytum",
+      "species": "procumbens"
+    },
+    {
+      "id": 221,
+      "slug": "echinacea",
+      "name": "Echinacea",
+      "botanical": "Echinacea purpurea (aerial parts + root) / Echinacea angustifolia (root — most potent)",
+      "latin": "Echinacea purpurea",
+      "genus": "Echinacea",
+      "species": "purpurea"
+    },
+    {
+      "id": 106,
+      "slug": "calendula",
+      "name": "Calendula",
+      "botanical": "Calendula officinalis (flower heads — petals only)",
+      "latin": "Calendula officinalis",
+      "genus": "Calendula",
+      "species": "officinalis"
+    },
+    {
+      "id": 222,
+      "slug": "caraway",
+      "name": "Caraway",
+      "botanical": "Carum carvi (dried fruits — seeds)",
+      "latin": "Carum carvi",
+      "genus": "Carum",
+      "species": "carvi"
+    },
+    {
+      "id": 223,
+      "slug": "cats-claw",
+      "name": "Cat's Claw",
+      "botanical": "Uncaria tomentosa (inner bark — sustainably harvested Peruvian Amazon)",
+      "latin": "Uncaria tomentosa",
+      "genus": "Uncaria",
+      "species": "tomentosa"
+    },
+    {
+      "id": 224,
+      "slug": "vitex-chaste-tree",
+      "name": "Vitex (Chaste Tree)",
+      "botanical": "Vitex agnus-castus (dried berries)",
+      "latin": "Vitex agnus-castus",
+      "genus": "Vitex",
+      "species": "agnus-castus"
+    },
+    {
+      "id": 225,
+      "slug": "chickweed",
+      "name": "Chickweed",
+      "botanical": "Stellaria media (aerial parts — fresh or dried)",
+      "latin": "Stellaria media",
+      "genus": "Stellaria",
+      "species": "media"
+    },
+    {
+      "id": 226,
+      "slug": "chilcuague",
+      "name": "Chilcuague",
+      "botanical": "Heliopsis longipes (root — Aztec Golden Root)",
+      "latin": "Heliopsis longipes",
+      "genus": "Heliopsis",
+      "species": "longipes"
+    },
+    {
+      "id": 227,
+      "slug": "cinnamon",
+      "name": "Cinnamon",
+      "botanical": "Cinnamomum verum (Ceylon/true — preferred) / Cinnamomum cassia (inner bark)",
+      "latin": "Cinnamomum verum",
+      "genus": "Cinnamomum",
+      "species": "verum"
+    },
+    {
+      "id": 228,
+      "slug": "cloves",
+      "name": "Cloves",
+      "botanical": "Syzygium aromaticum (dried flower buds)",
+      "latin": "Syzygium aromaticum",
+      "genus": "Syzygium",
+      "species": "aromaticum"
+    },
+    {
+      "id": 229,
+      "slug": "coca-leaf",
+      "name": "Coca Leaf",
+      "botanical": "Erythroxylum coca / E. novogranatense (leaf — Andean traditional)",
+      "latin": "Erythroxylum coca / E. novogranatense",
+      "genus": "Erythroxylum",
+      "species": "coca"
+    },
+    {
+      "id": 230,
+      "slug": "cranberry",
+      "name": "Cranberry",
+      "botanical": "Vaccinium macrocarpon (ripe berries — PAC-standardised extract preferred)",
+      "latin": "Vaccinium macrocarpon",
+      "genus": "Vaccinium",
+      "species": "macrocarpon"
+    },
+    {
+      "id": 231,
+      "slug": "iceland-moss",
+      "name": "Iceland Moss",
+      "botanical": "Cetraria islandica (whole dried lichen thallus)",
+      "latin": "Cetraria islandica",
+      "genus": "Cetraria",
+      "species": "islandica"
+    },
+    {
+      "id": 232,
+      "slug": "elderflower",
+      "name": "Elderflower",
+      "botanical": "Sambucus nigra (flowers — fresh or dried; different from elderberry)",
+      "latin": "Sambucus nigra",
+      "genus": "Sambucus",
+      "species": "nigra"
+    },
+    {
+      "id": 233,
+      "slug": "ephedra-ma-huang",
+      "name": "Ephedra (Ma Huang)",
+      "botanical": "Ephedra sinica (aerial stem) — BANNED/RESTRICTED — NOT FOR RECOMMENDATION",
+      "latin": "Ephedra sinica",
+      "genus": "Ephedra",
+      "species": "sinica"
+    },
+    {
+      "id": 234,
+      "slug": "eucalyptus",
+      "name": "Eucalyptus",
+      "botanical": "Eucalyptus globulus (Blue Gum — leaves and essential oil)",
+      "latin": "Eucalyptus globulus",
+      "genus": "Eucalyptus",
+      "species": "globulus"
+    },
+    {
+      "id": 235,
+      "slug": "eyebright",
+      "name": "Eyebright",
+      "botanical": "Euphrasia officinalis / E. rostkoviana (aerial parts)",
+      "latin": "Euphrasia officinalis / E. rostkoviana",
+      "genus": "Euphrasia",
+      "species": "officinalis"
+    },
+    {
+      "id": 236,
+      "slug": "fadogia",
+      "name": "Fadogia",
+      "botanical": "Fadogia agrestis (stem and root — West African)",
+      "latin": "Fadogia agrestis",
+      "genus": "Fadogia",
+      "species": "agrestis"
+    },
+    {
+      "id": 237,
+      "slug": "fennel",
+      "name": "Fennel",
+      "botanical": "Foeniculum vulgare (dried ripe fruits — seeds)",
+      "latin": "Foeniculum vulgare",
+      "genus": "Foeniculum",
+      "species": "vulgare"
+    },
+    {
+      "id": 238,
+      "slug": "garlic",
+      "name": "Garlic",
+      "botanical": "Allium sativum (bulb cloves — fresh-crushed for antimicrobial use)",
+      "latin": "Allium sativum",
+      "genus": "Allium",
+      "species": "sativum"
+    },
+    {
+      "id": 239,
+      "slug": "ginkgo",
+      "name": "Ginkgo",
+      "botanical": "Ginkgo biloba (leaf only — standardised to 24% flavones, 6% terpene lactones)",
+      "latin": "Ginkgo biloba",
+      "genus": "Ginkgo",
+      "species": "biloba"
+    },
+    {
+      "id": 240,
+      "slug": "ginseng",
+      "name": "Ginseng",
+      "botanical": "Panax ginseng (Asian — most potent) / Panax quinquefolius (American — milder) (root)",
+      "latin": "Panax ginseng",
+      "genus": "Panax",
+      "species": "ginseng"
+    },
+    {
+      "id": 241,
+      "slug": "goji-berry",
+      "name": "Goji Berry",
+      "botanical": "Lycium barbarum / Lycium chinense (dried ripe berries — Wolfberry, Gou Qi Zi)",
+      "latin": "Lycium barbarum / Lycium chinense",
+      "genus": "Lycium",
+      "species": "barbarum"
+    },
+    {
+      "id": 108,
+      "slug": "gotu-kola",
+      "name": "Gotu Kola",
+      "botanical": "Centella asiatica (aerial parts — Brahmi, Asiatic Pennywort)",
+      "latin": "Centella asiatica",
+      "genus": "Centella",
+      "species": "asiatica"
+    },
+    {
+      "id": 242,
+      "slug": "ground-ivy",
+      "name": "Ground Ivy",
+      "botanical": "Glechoma hederacea (aerial parts — Gill-over-the-ground, Alehoof)",
+      "latin": "Glechoma hederacea",
+      "genus": "Glechoma",
+      "species": "hederacea"
+    },
+    {
+      "id": 109,
+      "slug": "guarana",
+      "name": "Guarana",
+      "botanical": "Paullinia cupana (seed — highest caffeine of any plant)",
+      "latin": "Paullinia cupana",
+      "genus": "Paullinia",
+      "species": "cupana"
+    },
+    {
+      "id": 110,
+      "slug": "holy-basil-tulsi",
+      "name": "Holy Basil (Tulsi)",
+      "botanical": "Ocimum sanctum (aerial parts — \"The Incomparable One\")",
+      "latin": "Ocimum sanctum",
+      "genus": "Ocimum",
+      "species": "sanctum"
+    },
+    {
+      "id": 243,
+      "slug": "hops",
+      "name": "Hops",
+      "botanical": "Humulus lupulus (strobiles — female cones)",
+      "latin": "Humulus lupulus",
+      "genus": "Humulus",
+      "species": "lupulus"
+    },
+    {
+      "id": 244,
+      "slug": "horsetail",
+      "name": "Horsetail",
+      "botanical": "Equisetum arvense (sterile aerial shoots — \"Living Fossil\")",
+      "latin": "Equisetum arvense",
+      "genus": "Equisetum",
+      "species": "arvense"
+    },
+    {
+      "id": 245,
+      "slug": "guayusa",
+      "name": "Guayusa",
+      "botanical": "Ilex guayusa (leaves — Ecuadorian Amazon)",
+      "latin": "Ilex guayusa",
+      "genus": "Ilex",
+      "species": "guayusa"
+    },
+    {
+      "id": 246,
+      "slug": "hawthorn",
+      "name": "Hawthorn",
+      "botanical": "Crataegus spp. (leaf with flower — Crataegus folium cum flore; also berries)",
+      "latin": "Crataegus spp.",
+      "genus": "Crataegus",
+      "species": "spp."
+    },
+    {
+      "id": 247,
+      "slug": "horny-goat-weed",
+      "name": "Horny Goat Weed",
+      "botanical": "Epimedium grandiflorum (aerial parts — Yin Yang Huo)",
+      "latin": "Epimedium grandiflorum",
+      "genus": "Epimedium",
+      "species": "grandiflorum"
+    },
+    {
+      "id": 248,
+      "slug": "moringa",
+      "name": "Moringa",
+      "botanical": "Moringa oleifera (leaf — Drumstick Tree, Miracle Tree)",
+      "latin": "Moringa oleifera",
+      "genus": "Moringa",
+      "species": "oleifera"
+    },
+    {
+      "id": 249,
+      "slug": "motherwort",
+      "name": "Motherwort",
+      "botanical": "Leonurus cardiaca (aerial parts — flowering tops)",
+      "latin": "Leonurus cardiaca",
+      "genus": "Leonurus",
+      "species": "cardiaca"
+    },
+    {
+      "id": 250,
+      "slug": "kratom",
+      "name": "Kratom",
+      "botanical": "Mitragyna speciosa (leaf — Southeast Asian — ADDICTION RISK — NOT FOR RECOMMENDATION)",
+      "latin": "Mitragyna speciosa",
+      "genus": "Mitragyna",
+      "species": "speciosa"
+    },
+    {
+      "id": 105,
+      "slug": "ladys-mantle",
+      "name": "Lady's Mantle",
+      "botanical": "Alchemilla vulgaris / A. xanthochlora (aerial parts — leaves; \"Little Alchemist\")",
+      "latin": "Alchemilla vulgaris / A. xanthochlora",
+      "genus": "Alchemilla",
+      "species": "vulgaris"
+    },
+    {
+      "id": 251,
+      "slug": "lavender",
+      "name": "Lavender",
+      "botanical": "Lavandula angustifolia (flowers and aerial parts; essential oil)",
+      "latin": "Lavandula angustifolia",
+      "genus": "Lavandula",
+      "species": "angustifolia"
+    },
+    {
+      "id": 252,
+      "slug": "lemon-balm",
+      "name": "Lemon Balm",
+      "botanical": "Melissa officinalis (leaves — \"Melissa\")",
+      "latin": "Melissa officinalis",
+      "genus": "Melissa",
+      "species": "officinalis"
+    },
+    {
+      "id": 253,
+      "slug": "linden",
+      "name": "Linden",
+      "botanical": "Tilia cordata / Tilia europaea (flowers with bracts)",
+      "latin": "Tilia cordata / Tilia europaea",
+      "genus": "Tilia",
+      "species": "cordata"
+    },
+    {
+      "id": 254,
+      "slug": "jasmine",
+      "name": "Jasmine",
+      "botanical": "Jasminum officinale / Jasminum sambac (flowers — harvested at dusk)",
+      "latin": "Jasminum officinale / Jasminum sambac",
+      "genus": "Jasminum",
+      "species": "officinale"
+    },
+    {
+      "id": 255,
+      "slug": "juniper",
+      "name": "Juniper",
+      "botanical": "Juniperus communis (ripe cone-berries — short-term use only)",
+      "latin": "Juniperus communis",
+      "genus": "Juniperus",
+      "species": "communis"
+    },
+    {
+      "id": 256,
+      "slug": "kanna",
+      "name": "Kanna",
+      "botanical": "Sceletium tortuosum (fermented dried leaves — traditional Khoi preparation)",
+      "latin": "Sceletium tortuosum",
+      "genus": "Sceletium",
+      "species": "tortuosum"
+    },
+    {
+      "id": 257,
+      "slug": "kava-kava",
+      "name": "Kava Kava",
+      "botanical": "Piper methysticum (peeled rhizome — noble cultivar, root only, never aerial parts)",
+      "latin": "Piper methysticum",
+      "genus": "Piper",
+      "species": "methysticum"
+    },
+    {
+      "id": 258,
+      "slug": "licorice-root",
+      "name": "Licorice Root",
+      "botanical": "Glycyrrhiza glabra / G. uralensis (root — two forms: whole root and DGL)",
+      "latin": "Glycyrrhiza glabra / G. uralensis",
+      "genus": "Glycyrrhiza",
+      "species": "glabra"
+    },
+    {
+      "id": 259,
+      "slug": "lingonberry",
+      "name": "Lingonberry",
+      "botanical": "Vaccinium vitis-idaea (ripe berries — Cowberry, Nordic staple food)",
+      "latin": "Vaccinium vitis-idaea",
+      "genus": "Vaccinium",
+      "species": "vitis-idaea"
+    },
+    {
+      "id": 260,
+      "slug": "lobelia-indian-tobacco",
+      "name": "Lobelia (Indian Tobacco)",
+      "botanical": "Lobelia inflata (aerial parts — RESTRICTED — practitioner-only herb)",
+      "latin": "Lobelia inflata",
+      "genus": "Lobelia",
+      "species": "inflata"
+    },
+    {
+      "id": 261,
+      "slug": "lucerne-alfalfa",
+      "name": "Lucerne (Alfalfa)",
+      "botanical": "Medicago sativa (leaf and aerial parts — deep-rooted mineral accumulator)",
+      "latin": "Medicago sativa",
+      "genus": "Medicago",
+      "species": "sativa"
+    },
+    {
+      "id": 262,
+      "slug": "maca",
+      "name": "Maca",
+      "botanical": "Lepidium meyenii (root/tuber — all-gender sexual vitality and energy)",
+      "latin": "Lepidium meyenii",
+      "genus": "Lepidium",
+      "species": "meyenii"
+    },
+    {
+      "id": 263,
+      "slug": "maca-negra-black-maca",
+      "name": "Maca Negra (Black Maca)",
+      "botanical": "Lepidium meyenii var. negra (black tuber — male-specific vitality)",
+      "latin": "Lepidium meyenii var. negra",
+      "genus": "Lepidium",
+      "species": "meyenii"
+    },
+    {
+      "id": 264,
+      "slug": "marjoram-sweet-marjoram",
+      "name": "Marjoram (Sweet Marjoram)",
+      "botanical": "Origanum majorana (flowering aerial parts — sweet marjoram)",
+      "latin": "Origanum majorana",
+      "genus": "Origanum",
+      "species": "majorana"
+    },
+    {
+      "id": 265,
+      "slug": "meadowsweet",
+      "name": "Meadowsweet",
+      "botanical": "Filipendula ulmaria (aerial parts — flowers and leaves — \"Queen of the Meadow\")",
+      "latin": "Filipendula ulmaria",
+      "genus": "Filipendula",
+      "species": "ulmaria"
+    },
+    {
+      "id": 266,
+      "slug": "milk-thistle",
+      "name": "Milk Thistle",
+      "botanical": "Silybum marianum (seeds — standardised 70–80% silymarin)",
+      "latin": "Silybum marianum",
+      "genus": "Silybum",
+      "species": "marianum"
+    },
+    {
+      "id": 267,
+      "slug": "mugwort",
+      "name": "Mugwort",
+      "botanical": "Artemisia vulgaris (leaves and flowering tops — \"Mother of Herbs\")",
+      "latin": "Artemisia vulgaris",
+      "genus": "Artemisia",
+      "species": "vulgaris"
+    },
+    {
+      "id": 268,
+      "slug": "mullein",
+      "name": "Mullein",
+      "botanical": "Verbascum thapsus (leaf and flower — \"Grandmother Herb\")",
+      "latin": "Verbascum thapsus",
+      "genus": "Verbascum",
+      "species": "thapsus"
+    },
+    {
+      "id": 269,
+      "slug": "muira-puama",
+      "name": "Muira Puama",
+      "botanical": "Ptychopetalum olacoides (root and stem bark — \"Potency Wood\")",
+      "latin": "Ptychopetalum olacoides",
+      "genus": "Ptychopetalum",
+      "species": "olacoides"
+    },
+    {
+      "id": 544,
+      "slug": "mucuna",
+      "name": "Mucuna",
+      "botanical": "Mucuna pruriens (seed — standardised to 15–20% L-DOPA; \"Velvet Bean\", Kapikacchu)",
+      "latin": "Mucuna pruriens",
+      "genus": "Mucuna",
+      "species": "pruriens"
+    },
+    {
+      "id": 270,
+      "slug": "nettle",
+      "name": "Nettle",
+      "botanical": "Urtica dioica (leaf only — harvested spring-summer)",
+      "latin": "Urtica dioica",
+      "genus": "Urtica",
+      "species": "dioica"
+    },
+    {
+      "id": 271,
+      "slug": "oatstraw",
+      "name": "Oatstraw",
+      "botanical": "Avena sativa (aerial parts — sterile stem and milky oat tops)",
+      "latin": "Avena sativa",
+      "genus": "Avena",
+      "species": "sativa"
+    },
+    {
+      "id": 272,
+      "slug": "oregano",
+      "name": "Oregano",
+      "botanical": "Origanum vulgare (leaves and flowering tops — \"Joy of the Mountain\")",
+      "latin": "Origanum vulgare",
+      "genus": "Origanum",
+      "species": "vulgare"
+    },
+    {
+      "id": 273,
+      "slug": "passionflower",
+      "name": "Passionflower",
+      "botanical": "Passiflora incarnata (aerial parts — leaves and flowering tops)",
+      "latin": "Passiflora incarnata",
+      "genus": "Passiflora",
+      "species": "incarnata"
+    },
+    {
+      "id": 274,
+      "slug": "pau-darco",
+      "name": "Pau d'Arco",
+      "botanical": "Handroanthus impetiginosus / Tabebuia impetiginosa (inner bark — CAUTION: restricted use)",
+      "latin": "Handroanthus impetiginosus / Tabebuia impetiginosa",
+      "genus": "Handroanthus",
+      "species": "impetiginosus"
+    },
+    {
+      "id": 275,
+      "slug": "pine-pollen",
+      "name": "Pine Pollen",
+      "botanical": "Pinus densiflora / Pinus sylvestris (pollen — male reproductive dust)",
+      "latin": "Pinus densiflora / Pinus sylvestris",
+      "genus": "Pinus",
+      "species": "densiflora"
+    },
+    {
+      "id": 276,
+      "slug": "rhodiola",
+      "name": "Rhodiola",
+      "botanical": "Rhodiola rosea (root and rhizome — standardised 3%+ rosavins)",
+      "latin": "Rhodiola rosea",
+      "genus": "Rhodiola",
+      "species": "rosea"
+    },
+    {
+      "id": 277,
+      "slug": "rosemary",
+      "name": "Rosemary",
+      "botanical": "Rosmarinus officinalis (leaves — \"Dew of the Sea\")",
+      "latin": "Rosmarinus officinalis",
+      "genus": "Rosmarinus",
+      "species": "officinalis"
+    },
+    {
+      "id": 278,
+      "slug": "saffron",
+      "name": "Saffron",
+      "botanical": "Crocus sativus (stigmas only — three red threads per flower — \"Red Gold\")",
+      "latin": "Crocus sativus",
+      "genus": "Crocus",
+      "species": "sativus"
+    },
+    {
+      "id": 279,
+      "slug": "schisandra-five-flavour-fruit",
+      "name": "Schisandra (Five-Flavour Fruit)",
+      "botanical": "Schisandra chinensis (whole dried berries — \"Magnolia Vine\")",
+      "latin": "Schisandra chinensis",
+      "genus": "Schisandra",
+      "species": "chinensis"
+    },
+    {
+      "id": 280,
+      "slug": "shilajit-mineral-pitch",
+      "name": "Shilajit (Mineral Pitch)",
+      "botanical": "Asphaltum / Mineral Pitch (Himalayan rock exudate — \"Destroyer of Weakness\")",
+      "latin": "Asphaltum / Mineral Pitch",
+      "genus": "Asphaltum",
+      "species": "/"
+    },
+    {
+      "id": 281,
+      "slug": "skullcap",
+      "name": "Skullcap",
+      "botanical": "Scutellaria lateriflora (aerial parts — flowering tops — \"Helmet Flower\")",
+      "latin": "Scutellaria lateriflora",
+      "genus": "Scutellaria",
+      "species": "lateriflora"
+    },
+    {
+      "id": 540,
+      "slug": "goldenrod",
+      "name": "Goldenrod",
+      "botanical": "Solidago virgaurea / S. canadensis / S. gigantea (aerial parts — flowering tops and leaves)",
+      "latin": "Solidago virgaurea / S. canadensis / S. gigantea",
+      "genus": "Solidago",
+      "species": "virgaurea"
+    },
+    {
+      "id": 541,
+      "slug": "spirulina",
+      "name": "Spirulina",
+      "botanical": "Arthrospira platensis (whole dried organism — \"Ancient Blue-Green Life\")",
+      "latin": "Arthrospira platensis",
+      "genus": "Arthrospira",
+      "species": "platensis"
+    },
+    {
+      "id": 542,
+      "slug": "st-johns-wort",
+      "name": "St. John's Wort",
+      "botanical": "Hypericum perforatum (aerial parts — leaves, stems and flowering tops; harvested at summer solstice — \"Captured Sunshine\")",
+      "latin": "Hypericum perforatum",
+      "genus": "Hypericum",
+      "species": "perforatum"
+    },
+    {
+      "id": 282,
+      "slug": "star-anise",
+      "name": "Star Anise",
+      "botanical": "Illicium verum (seed pods — \"Eight-Pointed Star of the East\")",
+      "latin": "Illicium verum",
+      "genus": "Illicium",
+      "species": "verum"
+    },
+    {
+      "id": 283,
+      "slug": "thyme",
+      "name": "Thyme",
+      "botanical": "Thymus vulgaris (leaves and flowering tops — \"Thymos: Courage\")",
+      "latin": "Thymus vulgaris",
+      "genus": "Thymus",
+      "species": "vulgaris"
+    },
+    {
+      "id": 284,
+      "slug": "tongkat-ali",
+      "name": "Tongkat Ali",
+      "botanical": "Eurycoma longifolia (root — \"Malaysian Ginseng\"; standardised to eurycomanone 10–30%)",
+      "latin": "Eurycoma longifolia",
+      "genus": "Eurycoma",
+      "species": "longifolia"
+    },
+    {
+      "id": 285,
+      "slug": "tremella",
+      "name": "Tremella",
+      "botanical": "Tremella fuciformis (fruiting body — \"Snow Fungus / White Wood Ear\")",
+      "latin": "Tremella fuciformis",
+      "genus": "Tremella",
+      "species": "fuciformis"
+    },
+    {
+      "id": 286,
+      "slug": "turmeric",
+      "name": "Turmeric",
+      "botanical": "Curcuma longa (rhizome — \"Golden Root\")",
+      "latin": "Curcuma longa",
+      "genus": "Curcuma",
+      "species": "longa"
+    },
+    {
+      "id": 287,
+      "slug": "vanilla",
+      "name": "Vanilla",
+      "botanical": "Vanilla planifolia / Vanilla tahitensis (cured pod — \"The Comfort of the Orchid\")",
+      "latin": "Vanilla planifolia / Vanilla tahitensis",
+      "genus": "Vanilla",
+      "species": "planifolia"
+    },
+    {
+      "id": 288,
+      "slug": "valerian",
+      "name": "Valerian",
+      "botanical": "Valeriana officinalis (root and rhizome — \"Night Medicine for the Overthinking Mind\")",
+      "latin": "Valeriana officinalis",
+      "genus": "Valeriana",
+      "species": "officinalis"
+    },
+    {
+      "id": 289,
+      "slug": "vervain",
+      "name": "Vervain",
+      "botanical": "Verbena officinalis (aerial parts — flowering tops, leaves and upper stems)",
+      "latin": "Verbena officinalis",
+      "genus": "Verbena",
+      "species": "officinalis"
+    },
+    {
+      "id": 290,
+      "slug": "vitex",
+      "name": "Vitex",
+      "botanical": "Vitex agnus-castus (dried berries — \"Chaste Tree / Abraham's Balm\")",
+      "latin": "Vitex agnus-castus",
+      "genus": "Vitex",
+      "species": "agnus-castus"
+    },
+    {
+      "id": 291,
+      "slug": "wild-dagga",
+      "name": "Wild Dagga",
+      "botanical": "Leonotis leonurus (leaves and flowers — \"Lion's Ear\")",
+      "latin": "Leonotis leonurus",
+      "genus": "Leonotis",
+      "species": "leonurus"
+    },
+    {
+      "id": 292,
+      "slug": "willow-bark",
+      "name": "Willow Bark",
+      "botanical": "Salix alba / Salix spp. (inner bark — \"The Original Aspirin\")",
+      "latin": "Salix alba / Salix spp.",
+      "genus": "Salix",
+      "species": "alba"
+    },
+    {
+      "id": 293,
+      "slug": "wormwood",
+      "name": "Wormwood",
+      "botanical": "Artemisia absinthium (aerial parts — leaves and flowering tops; \"Grand Wormwood\")",
+      "latin": "Artemisia absinthium",
+      "genus": "Artemisia",
+      "species": "absinthium"
+    },
+    {
+      "id": 294,
+      "slug": "yarrow",
+      "name": "Yarrow",
+      "botanical": "Achillea millefolium (aerial parts — leaves and flowering tops — \"Soldier's Woundwort\")",
+      "latin": "Achillea millefolium",
+      "genus": "Achillea",
+      "species": "millefolium"
+    },
+    {
+      "id": 295,
+      "slug": "yellow-dock-root",
+      "name": "Yellow Dock Root",
+      "botanical": "Rumex crispus (root — \"Iron Bitter of the Hedgerow\")",
+      "latin": "Rumex crispus",
+      "genus": "Rumex",
+      "species": "crispus"
+    },
+    {
+      "id": 296,
+      "slug": "yerba-mate",
+      "name": "Yerba Mate",
+      "botanical": "Ilex paraguariensis (leaves — \"The Social Energy of South America\")",
+      "latin": "Ilex paraguariensis",
+      "genus": "Ilex",
+      "species": "paraguariensis"
+    },
+    {
+      "id": 297,
+      "slug": "slippery-elm-bark",
+      "name": "Slippery Elm Bark",
+      "botanical": "Ulmus rubra (inner bark — \"The Healing Bark of the Red Elm\")",
+      "latin": "Ulmus rubra",
+      "genus": "Ulmus",
+      "species": "rubra"
+    },
+    {
+      "id": 298,
+      "slug": "peppermint",
+      "name": "Peppermint",
+      "botanical": "Mentha × piperita (leaf and essential oil — hybrid of M. aquatica × M. spicata)",
+      "latin": "Mentha × piperita",
+      "genus": "Mentha",
+      "species": "×"
+    },
+    {
+      "id": 299,
+      "slug": "pine-needles",
+      "name": "Pine Needles",
+      "botanical": "Pinus sylvestris / Pinus strobus (needles — safe species only; NEVER yew or toxic conifers)",
+      "latin": "Pinus sylvestris / Pinus strobus",
+      "genus": "Pinus",
+      "species": "sylvestris"
+    },
+    {
+      "id": 300,
+      "slug": "red-dates",
+      "name": "Red Dates",
+      "botanical": "Ziziphus jujuba (whole dried fruit — \"Chinese Red Date / Jujube\")",
+      "latin": "Ziziphus jujuba",
+      "genus": "Ziziphus",
+      "species": "jujuba"
+    },
+    {
+      "id": 301,
+      "slug": "rhubarb-root",
+      "name": "Rhubarb Root",
+      "botanical": "Rheum palmatum / Rheum officinale (rhizome and root — \"Da Huang / The Purging Judge\")",
+      "latin": "Rheum palmatum / Rheum officinale",
+      "genus": "Rheum",
+      "species": "palmatum"
+    },
+    {
+      "id": 302,
+      "slug": "rose-petals",
+      "name": "Rose Petals",
+      "botanical": "Rosa gallica / Rosa damascena / Rosa centifolia (dried petals — \"Heart Intelligence\")",
+      "latin": "Rosa gallica / Rosa damascena / Rosa centifolia",
+      "genus": "Rosa",
+      "species": "gallica"
+    },
+    {
+      "id": 303,
+      "slug": "sage",
+      "name": "Sage",
+      "botanical": "Salvia officinalis (leaves — \"Salvia: The Wise One\")",
+      "latin": "Salvia officinalis",
+      "genus": "Salvia",
+      "species": "officinalis"
+    },
+    {
+      "id": 304,
+      "slug": "saw-palmetto",
+      "name": "Saw Palmetto",
+      "botanical": "Serenoa repens (dried berries — \"Rooted Masculine Medicine\")",
+      "latin": "Serenoa repens",
+      "genus": "Serenoa",
+      "species": "repens"
+    },
+    {
+      "id": 305,
+      "slug": "senna",
+      "name": "Senna",
+      "botanical": "Senna alexandrina / Cassia senna (dried leaflets and pods — \"Decisive Release\")",
+      "latin": "Senna alexandrina / Cassia senna",
+      "genus": "Senna",
+      "species": "alexandrina"
+    },
+    {
+      "id": 306,
+      "slug": "birch-polypore",
+      "name": "Birch Polypore",
+      "botanical": "Fomitopsis betulina (syn. Piptoporus betulinus) (fruiting body inner flesh — \"Iceman's Mushroom\")",
+      "latin": "Fomitopsis betulina",
+      "genus": "Fomitopsis",
+      "species": "betulina"
+    },
+    {
+      "id": 307,
+      "slug": "chaga",
+      "name": "Chaga",
+      "botanical": "Inonotus obliquus (sterile sclerotial conk from birch — \"Mushroom of Immortality\")",
+      "latin": "Inonotus obliquus",
+      "genus": "Inonotus",
+      "species": "obliquus"
+    },
+    {
+      "id": 308,
+      "slug": "cordyceps",
+      "name": "Cordyceps",
+      "botanical": "Cordyceps militaris (cultivated — preferred) / Ophiocordyceps sinensis (wild — ethically problematic)",
+      "latin": "Cordyceps militaris",
+      "genus": "Cordyceps",
+      "species": "militaris"
+    },
+    {
+      "id": 309,
+      "slug": "shiitake",
+      "name": "Shiitake",
+      "botanical": "Lentinula edodes (fruiting body and mycelia — \"Kitchen Healer\")",
+      "latin": "Lentinula edodes",
+      "genus": "Lentinula",
+      "species": "edodes"
+    },
+    {
+      "id": 311,
+      "slug": "amanita-muscaria",
+      "name": "Amanita Muscaria",
+      "botanical": "Amanita muscaria (fruiting body — \"Fly Agaric / Threshold Grandmother\")",
+      "latin": "Amanita muscaria",
+      "genus": "Amanita",
+      "species": "muscaria"
+    },
+    {
+      "id": 312,
+      "slug": "amanita-pantherina",
+      "name": "Amanita Pantherina",
+      "botanical": "Amanita pantherina (fruiting body — \"Panther Cap\")",
+      "latin": "Amanita pantherina",
+      "genus": "Amanita",
+      "species": "pantherina"
+    },
+    {
+      "id": 313,
+      "slug": "shaggy-mane",
+      "name": "Shaggy Mane",
+      "botanical": "Coprinus comatus (young fruiting body only — \"Shaggy Ink Cap / Ephemeral Glycaemic Scalpel\")",
+      "latin": "Coprinus comatus",
+      "genus": "Coprinus",
+      "species": "comatus"
+    },
+    {
+      "id": 314,
+      "slug": "button-mushroom",
+      "name": "Button Mushroom",
+      "botanical": "Agaricus bisporus (fruiting body — Button / Cremini / Portobello — \"Commoner's Shield\")",
+      "latin": "Agaricus bisporus",
+      "genus": "Agaricus",
+      "species": "bisporus"
+    },
+    {
+      "id": 315,
+      "slug": "enoki",
+      "name": "Enoki",
+      "botanical": "Flammulina velutipes (fruiting body — \"Winter Filament / Golden Needle Mushroom\")",
+      "latin": "Flammulina velutipes",
+      "genus": "Flammulina",
+      "species": "velutipes"
+    },
+    {
+      "id": 316,
+      "slug": "fu-ling",
+      "name": "Fu Ling",
+      "botanical": "Wolfiporia cocos (syn. Poria cocos) (sclerotium — \"White Stone of Stillness\")",
+      "latin": "Wolfiporia cocos",
+      "genus": "Wolfiporia",
+      "species": "cocos"
+    },
+    {
+      "id": 317,
+      "slug": "lions-mane",
+      "name": "Lion's Mane",
+      "botanical": "Hericium erinaceus (fruiting body and mycelium — \"Neuron Awakener\")",
+      "latin": "Hericium erinaceus",
+      "genus": "Hericium",
+      "species": "erinaceus"
+    },
+    {
+      "id": 318,
+      "slug": "maitake",
+      "name": "Maitake",
+      "botanical": "Grifola frondosa (fruiting body — \"Hen of the Woods / Dancing Sentinel\")",
+      "latin": "Grifola frondosa",
+      "genus": "Grifola",
+      "species": "frondosa"
+    },
+    {
+      "id": 319,
+      "slug": "mesima",
+      "name": "Mesima",
+      "botanical": "Phellinus linteus (fruiting body — \"Black Hoof / Sang-Hwang / Immune Sculptor\")",
+      "latin": "Phellinus linteus",
+      "genus": "Phellinus",
+      "species": "linteus"
+    },
+    {
+      "id": 320,
+      "slug": "morels",
+      "name": "Morels",
+      "botanical": "Morchella esculenta / M. conica / M. importuna (fruiting body — \"Spring Scout\")",
+      "latin": "Morchella esculenta / M. conica / M. importuna",
+      "genus": "Morchella",
+      "species": "esculenta"
+    },
+    {
+      "id": 321,
+      "slug": "oyster-mushroom",
+      "name": "Oyster Mushroom",
+      "botanical": "Pleurotus ostreatus (fruiting body — \"Metabolic Ventilator\")",
+      "latin": "Pleurotus ostreatus",
+      "genus": "Pleurotus",
+      "species": "ostreatus"
+    },
+    {
+      "id": 322,
+      "slug": "red-belted-polypore",
+      "name": "Red-Belted Polypore",
+      "botanical": "Fomitopsis pinicola (fruiting body — \"Forest Belt of Regulation\")",
+      "latin": "Fomitopsis pinicola",
+      "genus": "Fomitopsis",
+      "species": "pinicola"
+    },
+    {
+      "id": 323,
+      "slug": "reishi",
+      "name": "Reishi",
+      "botanical": "Ganoderma lucidum (fruiting body, mycelium and spores — \"Mushroom of Immortality / Lingzhi\")",
+      "latin": "Ganoderma lucidum",
+      "genus": "Ganoderma",
+      "species": "lucidum"
+    },
+    {
+      "id": 324,
+      "slug": "royal-sun-mushroom",
+      "name": "Royal Sun Mushroom",
+      "botanical": "Agaricus subrufescens (syn. Agaricus blazei) (fruiting body — \"Cogumelo do Sol / Immune Activator from Brazil\")",
+      "latin": "Agaricus subrufescens",
+      "genus": "Agaricus",
+      "species": "subrufescens"
+    },
+    {
+      "id": 325,
+      "slug": "shaggy-bracket",
+      "name": "Shaggy Bracket",
+      "botanical": "Inonotus hispidus (fruiting body — \"Sanghuang Ally / Shaggy Lipid Filter\")",
+      "latin": "Inonotus hispidus",
+      "genus": "Inonotus",
+      "species": "hispidus"
+    },
+    {
+      "id": 326,
+      "slug": "tinder-fungus",
+      "name": "Tinder Fungus",
+      "botanical": "Fomes fomentarius (fruiting body — amadou layer and insoluble fibers — \"Keeper of the Ember\")",
+      "latin": "Fomes fomentarius",
+      "genus": "Fomes",
+      "species": "fomentarius"
+    },
+    {
+      "id": 327,
+      "slug": "turkey-tail",
+      "name": "Turkey Tail",
+      "botanical": "Trametes versicolor (syn. Coriolus versicolor) (fruiting body and mycelium — \"Yún Zhī / Cloud Mushroom\")",
+      "latin": "Trametes versicolor",
+      "genus": "Trametes",
+      "species": "versicolor"
+    },
+    {
+      "id": 328,
+      "slug": "willow-bracket",
+      "name": "Willow Bracket",
+      "botanical": "Phellinus igniarius (fruiting body — \"False Chaga / Willow Mesima / Blood-River Stone\")",
+      "latin": "Phellinus igniarius",
+      "genus": "Phellinus",
+      "species": "igniarius"
+    },
+    {
+      "id": 329,
+      "slug": "zhu-ling",
+      "name": "Zhu Ling",
+      "botanical": "Polyporus umbellatus (sclerotium — \"Underground Sieve / Drainage and Protection Fungus\")",
+      "latin": "Polyporus umbellatus",
+      "genus": "Polyporus",
+      "species": "umbellatus"
+    },
+    {
+      "id": 330,
+      "slug": "psilocybe-cubensis",
+      "name": "Psilocybe Cubensis",
+      "botanical": "Psilocybe cubensis (fruiting body — \"Psychoplastogen / 5-HT2A Catalyst\"; LEGAL STATUS VARIES — SCHEDULE I IN MOST JURISDICTIONS)",
+      "latin": "Psilocybe cubensis",
+      "genus": "Psilocybe",
+      "species": "cubensis"
+    },
+    {
+      "id": 404,
+      "slug": "raspberry-leaf",
+      "name": "Raspberry Leaf",
+      "botanical": "Rubus idaeus",
+      "latin": "Rubus idaeus",
+      "genus": "Rubus",
+      "species": "idaeus"
+    },
+    {
+      "id": 405,
+      "slug": "rosehip",
+      "name": "Rosehip",
+      "botanical": "Rosa canina / Rosa spp. (fruit)",
+      "latin": "Rosa canina / Rosa spp.",
+      "genus": "Rosa",
+      "species": "canina"
+    },
+    {
+      "id": 406,
+      "slug": "shatavari",
+      "name": "Shatavari",
+      "botanical": "Asparagus racemosus (root)",
+      "latin": "Asparagus racemosus",
+      "genus": "Asparagus",
+      "species": "racemosus"
+    },
+    {
+      "id": 537,
+      "slug": "ginger",
+      "name": "Ginger",
+      "botanical": "Zingiber officinale (rhizome — fresh or dried)",
+      "latin": "Zingiber officinale",
+      "genus": "Zingiber",
+      "species": "officinale"
+    },
+    {
+      "id": 538,
+      "slug": "boswellia",
+      "name": "Boswellia",
+      "botanical": "Boswellia serrata (resin — standardised extract or whole oleo-gum resin)",
+      "latin": "Boswellia serrata",
+      "genus": "Boswellia",
+      "species": "serrata"
+    },
+    {
+      "id": 543,
+      "slug": "elderberry-cooked-berry",
+      "name": "Elderberry (Cooked Berry)",
+      "botanical": "Sambucus nigra (fully ripe cooked berry)",
+      "latin": "Sambucus nigra",
+      "genus": "Sambucus",
+      "species": "nigra"
+    },
+    {
+      "id": 539,
+      "slug": "rowan-berry",
+      "name": "Rowan Berry",
+      "botanical": "Sorbus aucuparia (fully ripe berry, preferably cooked, dried or frost-softened)",
+      "latin": "Sorbus aucuparia",
+      "genus": "Sorbus",
+      "species": "aucuparia"
+    },
+    {
+      "id": 407,
+      "slug": "pomegranate-skin",
+      "name": "Pomegranate Skin",
+      "botanical": "Punica granatum (dried pericarp / peel)",
+      "latin": "Punica granatum",
+      "genus": "Punica",
+      "species": "granatum"
+    },
+    {
+      "id": 408,
+      "slug": "pomegranate-seeds",
+      "name": "Pomegranate Seeds",
+      "botanical": "Punica granatum (whole arils / seeds, fresh or dried)",
+      "latin": "Punica granatum",
+      "genus": "Punica",
+      "species": "granatum"
+    },
+    {
+      "id": 409,
+      "slug": "long-pepper",
+      "name": "Long Pepper",
+      "botanical": "Piper longum (dried unripe fruit catkin — Pippali)",
+      "latin": "Piper longum",
+      "genus": "Piper",
+      "species": "longum"
+    },
+    {
+      "id": 410,
+      "slug": "galangal",
+      "name": "Galangal",
+      "botanical": "Alpinia galanga / Alpinia officinarum (rhizome)",
+      "latin": "Alpinia galanga / Alpinia officinarum",
+      "genus": "Alpinia",
+      "species": "galanga"
+    },
+    {
+      "id": 411,
+      "slug": "black-cardamom",
+      "name": "Black Cardamom",
+      "botanical": "Amomum subulatum (smoke-dried pod)",
+      "latin": "Amomum subulatum",
+      "genus": "Amomum",
+      "species": "subulatum"
+    },
+    {
+      "id": 412,
+      "slug": "szechuan-pepper",
+      "name": "Szechuan Pepper",
+      "botanical": "Zanthoxylum bungeanum / Zanthoxylum piperitum (dried husk)",
+      "latin": "Zanthoxylum bungeanum / Zanthoxylum piperitum",
+      "genus": "Zanthoxylum",
+      "species": "bungeanum"
+    },
+    {
+      "id": 413,
+      "slug": "longan",
+      "name": "Longan",
+      "botanical": "Dimocarpus longan / Euphoria longana (dried aril — Long Yan Rou)",
+      "latin": "Dimocarpus longan / Euphoria longana",
+      "genus": "Dimocarpus",
+      "species": "longan"
+    },
+    {
+      "id": 414,
+      "slug": "haritaki",
+      "name": "Haritaki",
+      "botanical": "Terminalia chebula (dried mature fruit)",
+      "latin": "Terminalia chebula",
+      "genus": "Terminalia",
+      "species": "chebula"
+    },
+    {
+      "id": 415,
+      "slug": "red-astragalus-wild",
+      "name": "Red Astragalus (Wild)",
+      "botanical": "Astragalus mongholicus / Astragalus membranaceus (wild root — Huang Qi)",
+      "latin": "Astragalus mongholicus / Astragalus membranaceus",
+      "genus": "Astragalus",
+      "species": "mongholicus"
+    },
+    {
+      "id": 416,
+      "slug": "tian-men-dong",
+      "name": "Tian Men Dong",
+      "botanical": "Asparagus cochinchinensis (root tuber)",
+      "latin": "Asparagus cochinchinensis",
+      "genus": "Asparagus",
+      "species": "cochinchinensis"
+    },
+    {
+      "id": 417,
+      "slug": "mistletoe",
+      "name": "Mistletoe",
+      "botanical": "Viscum album (whole herb — European mistletoe)",
+      "latin": "Viscum album",
+      "genus": "Viscum",
+      "species": "album"
+    },
+    {
+      "id": 418,
+      "slug": "phyllodium-pulchellum",
+      "name": "Phyllodium pulchellum",
+      "botanical": "Phyllodium pulchellum / Desmodium pulchellum (whole plant — Pai Qian Cao)",
+      "latin": "Phyllodium pulchellum / Desmodium pulchellum",
+      "genus": "Phyllodium",
+      "species": "pulchellum"
+    },
+    {
+      "id": 419,
+      "slug": "african-dream-root",
+      "name": "African Dream Root",
+      "botanical": "Silene undulata / Silene capensis (root — Undlela Zimhlophe)",
+      "latin": "Silene undulata / Silene capensis",
+      "genus": "Silene",
+      "species": "undulata"
+    },
+    {
+      "id": 420,
+      "slug": "grape-seed",
+      "name": "Grape Seed",
+      "botanical": "Vitis vinifera (seed — standardised extract or cold-pressed oil)",
+      "latin": "Vitis vinifera",
+      "genus": "Vitis",
+      "species": "vinifera"
+    },
+    {
+      "id": 501,
+      "slug": "guduchi",
+      "name": "Guduchi",
+      "botanical": "Tinospora cordifolia (stem · root · fruit)",
+      "latin": "Tinospora cordifolia",
+      "genus": "Tinospora",
+      "species": "cordifolia"
+    },
+    {
+      "id": 502,
+      "slug": "punarnava",
+      "name": "Punarnava",
+      "botanical": "Boerhavia diffusa (root)",
+      "latin": "Boerhavia diffusa",
+      "genus": "Boerhavia",
+      "species": "diffusa"
+    },
+    {
+      "id": 503,
+      "slug": "shankhpushpi",
+      "name": "Shankhpushpi",
+      "botanical": "Convolvulus pluricaulis / Evolvulus alsinoides",
+      "latin": "Convolvulus pluricaulis / Evolvulus alsinoides",
+      "genus": "Convolvulus",
+      "species": "pluricaulis"
+    },
+    {
+      "id": 504,
+      "slug": "arjuna",
+      "name": "Arjuna",
+      "botanical": "Terminalia arjuna (bark)",
+      "latin": "Terminalia arjuna",
+      "genus": "Terminalia",
+      "species": "arjuna"
+    },
+    {
+      "id": 505,
+      "slug": "hadjod",
+      "name": "Hadjod",
+      "botanical": "Cissus quadrangularis (stem)",
+      "latin": "Cissus quadrangularis",
+      "genus": "Cissus",
+      "species": "quadrangularis"
+    },
+    {
+      "id": 506,
+      "slug": "shallaki",
+      "name": "Shallaki",
+      "botanical": "Boswellia serrata (gum resin)",
+      "latin": "Boswellia serrata",
+      "genus": "Boswellia",
+      "species": "serrata"
+    },
+    {
+      "id": 507,
+      "slug": "rasna",
+      "name": "Rasna",
+      "botanical": "Pluchea lanceolata / Alpinia galanga (leaf · rhizome)",
+      "latin": "Pluchea lanceolata / Alpinia galanga",
+      "genus": "Pluchea",
+      "species": "lanceolata"
+    },
+    {
+      "id": 508,
+      "slug": "dashmool",
+      "name": "Dashmool",
+      "botanical": "Ten-root compound (traditional Ayurvedic formula)",
+      "latin": "Ten-root compound",
+      "genus": "Ten-root",
+      "species": "compound"
+    },
+    {
+      "id": 509,
+      "slug": "gandira",
+      "name": "Gandira",
+      "botanical": "Coleus forskohlii (root)",
+      "latin": "Coleus forskohlii",
+      "genus": "Coleus",
+      "species": "forskohlii"
+    },
+    {
+      "id": 510,
+      "slug": "vijaysar",
+      "name": "Vijaysar",
+      "botanical": "Pterocarpus marsupium (heartwood)",
+      "latin": "Pterocarpus marsupium",
+      "genus": "Pterocarpus",
+      "species": "marsupium"
+    },
+    {
+      "id": 511,
+      "slug": "nirgundi",
+      "name": "Nirgundi",
+      "botanical": "Vitex negundo (leaves)",
+      "latin": "Vitex negundo",
+      "genus": "Vitex",
+      "species": "negundo"
+    },
+    {
+      "id": 512,
+      "slug": "ashoka",
+      "name": "Ashoka",
+      "botanical": "Saraca asoca (bark)",
+      "latin": "Saraca asoca",
+      "genus": "Saraca",
+      "species": "asoca"
+    },
+    {
+      "id": 513,
+      "slug": "lodhra",
+      "name": "Lodhra",
+      "botanical": "Symplocos racemosa (bark · leaves)",
+      "latin": "Symplocos racemosa",
+      "genus": "Symplocos",
+      "species": "racemosa"
+    },
+    {
+      "id": 514,
+      "slug": "nagkesar",
+      "name": "Nagkesar",
+      "botanical": "Mesua ferrea (seed · flower)",
+      "latin": "Mesua ferrea",
+      "genus": "Mesua",
+      "species": "ferrea"
+    },
+    {
+      "id": 515,
+      "slug": "rudraksha",
+      "name": "Rudraksha",
+      "botanical": "Elaeocarpus ganitrus (seed pods)",
+      "latin": "Elaeocarpus ganitrus",
+      "genus": "Elaeocarpus",
+      "species": "ganitrus"
+    },
+    {
+      "id": 520,
+      "slug": "bakuchi",
+      "name": "Bakuchi",
+      "botanical": "Psoralea corylifolia (seeds)",
+      "latin": "Psoralea corylifolia",
+      "genus": "Psoralea",
+      "species": "corylifolia"
+    },
+    {
+      "id": 521,
+      "slug": "senna",
+      "name": "Senna",
+      "botanical": "Cassia angustifolia / Senna alexandrina (leaves · pods)",
+      "latin": "Cassia angustifolia / Senna alexandrina",
+      "genus": "Cassia",
+      "species": "angustifolia"
+    },
+    {
+      "id": 522,
+      "slug": "gokshura",
+      "name": "Gokshura",
+      "botanical": "Tribulus terrestris (fruit)",
+      "latin": "Tribulus terrestris",
+      "genus": "Tribulus",
+      "species": "terrestris"
+    },
+    {
+      "id": 523,
+      "slug": "amla",
+      "name": "Amla",
+      "botanical": "Emblica officinalis / Phyllanthus emblica (fruit)",
+      "latin": "Emblica officinalis / Phyllanthus emblica",
+      "genus": "Emblica",
+      "species": "officinalis"
+    },
+    {
+      "id": 524,
+      "slug": "bibhitaki",
+      "name": "Bibhitaki",
+      "botanical": "Terminalia bellerica (fruit)",
+      "latin": "Terminalia bellerica",
+      "genus": "Terminalia",
+      "species": "bellerica"
+    },
+    {
+      "id": 525,
+      "slug": "guggulu",
+      "name": "Guggulu",
+      "botanical": "Commiphora mukul / Commiphora wightii (gum resin)",
+      "latin": "Commiphora mukul / Commiphora wightii",
+      "genus": "Commiphora",
+      "species": "mukul"
+    },
+    {
+      "id": 526,
+      "slug": "kalmegh",
+      "name": "Kalmegh",
+      "botanical": "Andrographis paniculata (whole plant)",
+      "latin": "Andrographis paniculata",
+      "genus": "Andrographis",
+      "species": "paniculata"
+    },
+    {
+      "id": 527,
+      "slug": "manjistha",
+      "name": "Manjistha",
+      "botanical": "Rubia cordifolia (root)",
+      "latin": "Rubia cordifolia",
+      "genus": "Rubia",
+      "species": "cordifolia"
+    },
+    {
+      "id": 528,
+      "slug": "khadira",
+      "name": "Khadira",
+      "botanical": "Acacia catechu (heartwood)",
+      "latin": "Acacia catechu",
+      "genus": "Acacia",
+      "species": "catechu"
+    },
+    {
+      "id": 529,
+      "slug": "nishoth",
+      "name": "Nishoth",
+      "botanical": "Operculina turpethum (root)",
+      "latin": "Operculina turpethum",
+      "genus": "Operculina",
+      "species": "turpethum"
+    },
+    {
+      "id": 530,
+      "slug": "ajwan",
+      "name": "Ajwan",
+      "botanical": "Apium graveolens (celery seed)",
+      "latin": "Apium graveolens",
+      "genus": "Apium",
+      "species": "graveolens"
+    },
+    {
+      "id": 531,
+      "slug": "neem",
+      "name": "Neem",
+      "botanical": "Azadirachta indica (leaf · bark)",
+      "latin": "Azadirachta indica",
+      "genus": "Azadirachta",
+      "species": "indica"
+    },
+    {
+      "id": 532,
+      "slug": "anantmul",
+      "name": "Anantmul",
+      "botanical": "Hemidesmus indicus (root)",
+      "latin": "Hemidesmus indicus",
+      "genus": "Hemidesmus",
+      "species": "indicus"
+    },
+    {
+      "id": 533,
+      "slug": "karanja",
+      "name": "Karanja",
+      "botanical": "Pongamia pinnata (seed · oil · leaf · bark)",
+      "latin": "Pongamia pinnata",
+      "genus": "Pongamia",
+      "species": "pinnata"
+    },
+    {
+      "id": 534,
+      "slug": "bael",
+      "name": "Bael",
+      "botanical": "Aegle marmelos (leaves · fruit)",
+      "latin": "Aegle marmelos",
+      "genus": "Aegle",
+      "species": "marmelos"
+    },
+    {
+      "id": 535,
+      "slug": "chandrashoor",
+      "name": "Chandrashoor",
+      "botanical": "Lepidium sativum (garden cress seeds)",
+      "latin": "Lepidium sativum",
+      "genus": "Lepidium",
+      "species": "sativum"
+    },
+    {
+      "id": 536,
+      "slug": "amaltas",
+      "name": "Amaltas",
+      "botanical": "Cassia fistula (fruit pulp)",
+      "latin": "Cassia fistula",
+      "genus": "Cassia",
+      "species": "fistula"
+    }
+  ],
+  "monographs": [
+    {
+      "file": "angelica_individual.md",
+      "title": "ANGELICA / DONG QUAI (Angelica sinensis)",
+      "botanicalId": 202,
+      "matchedBy": "title"
+    },
+    {
+      "file": "aronia_berry_master.md",
+      "title": "ARONIA (Aronia melanocarpa) – BLACK CHOKEBERRY",
+      "botanicalId": 203,
+      "matchedBy": "title"
+    },
+    {
+      "file": "ashwagandha_individual.md",
+      "title": "ASHWAGANDHA (Withania somnifera)",
+      "botanicalId": 103,
+      "matchedBy": "title"
+    },
+    {
+      "file": "astragalus_full_monograph.md",
+      "title": "ASTRAGALUS (Astragalus membranaceus)",
+      "botanicalId": 204,
+      "matchedBy": "title"
+    },
+    {
+      "file": "bacopa_individual.md",
+      "title": "BACOPA (Bacopa monnieri)",
+      "botanicalId": 4,
+      "matchedBy": "title"
+    },
+    {
+      "file": "barberry_master.md",
+      "title": "BARBERRY (Berberis vulgaris)",
+      "botanicalId": 205,
+      "matchedBy": "title"
+    },
+    {
+      "file": "barley_master.md",
+      "title": "BARLEY (Hordeum vulgare) – GRAIN & GRASS",
+      "botanicalId": 206,
+      "matchedBy": "title"
+    },
+    {
+      "file": "bilberry_master.md",
+      "title": "BILBERRY (Vaccinium myrtillus)",
+      "botanicalId": 201,
+      "matchedBy": "title"
+    },
+    {
+      "file": "black_cumin_individual_full.md",
+      "title": "BLACK CUMIN (Nigella sativa)",
+      "botanicalId": 208,
+      "matchedBy": "title"
+    },
+    {
+      "file": "black_walnut_individual_full.md",
+      "title": "BLACK WALNUT (Juglans nigra)",
+      "botanicalId": 209,
+      "matchedBy": "title"
+    },
+    {
+      "file": "bladderwrack_individual.md",
+      "title": "BLADDERWRACK (Fucus vesiculosus)",
+      "botanicalId": 210,
+      "matchedBy": "title"
+    },
+    {
+      "file": "blueberry_individual.md",
+      "title": "BLUEBERRY (Vaccinium corymbosum / V. angustifolium)",
+      "botanicalId": 211,
+      "matchedBy": "title"
+    },
+    {
+      "file": "blue_lotus_full_monograph.md",
+      "title": "BLUE LOTUS (Nymphaea caerulea)",
+      "botanicalId": 126,
+      "matchedBy": "title"
+    },
+    {
+      "file": "bobinsana_individual.md",
+      "title": "BOBINSANA (Calliandra angustifolia)",
+      "botanicalId": 102,
+      "matchedBy": "title"
+    },
+    {
+      "file": "broadleaf_plantain_master.md",
+      "title": "BROADLEAF PLANTAIN (Plantago major) – PLANTAIN",
+      "botanicalId": 104,
+      "matchedBy": "title"
+    },
+    {
+      "file": "burdock_individual.md",
+      "title": "BURDOCK (Arctium lappa)",
+      "botanicalId": 212,
+      "matchedBy": "title"
+    },
+    {
+      "file": "butchers_broom_master.md",
+      "title": "BUTCHER’S BROOM (Ruscus aculeatus)",
+      "botanicalId": 213,
+      "matchedBy": "title"
+    },
+    {
+      "file": "butterbur_master.md",
+      "title": "PETASITES HYBRIDUS (BUTTERBUR)",
+      "botanicalId": 214,
+      "matchedBy": "title"
+    },
+    {
+      "file": "calamus_master.md",
+      "title": null,
+      "botanicalId": 207,
+      "matchedBy": "filename"
+    },
+    {
+      "file": "calea_zacatachichi_master.md",
+      "title": "CALEA ZACATACHICHI (Calea zacatachichi)",
+      "botanicalId": 132,
+      "matchedBy": "title"
+    },
+    {
+      "file": "calendula_individual.md",
+      "title": "CALENDULA (Calendula officinalis)",
+      "botanicalId": 106,
+      "matchedBy": "title"
+    },
+    {
+      "file": "caraway_seeds.md",
+      "title": "CARAWAY (Carum carvi)",
+      "botanicalId": 222,
+      "matchedBy": "title"
+    },
+    {
+      "file": "cardamom_master.md",
+      "title": "CARDAMOM (Elettaria cardamomum)",
+      "botanicalId": 217,
+      "matchedBy": "title"
+    },
+    {
+      "file": "cats_claw_individual.md",
+      "title": "CAT'S CLAW (Uncaria tomentosa)",
+      "botanicalId": 223,
+      "matchedBy": "title"
+    },
+    {
+      "file": "catuaba_full_monograph.md",
+      "title": "CATUABA (Anemopaegma mirandum)",
+      "botanicalId": 218,
+      "matchedBy": "title"
+    },
+    {
+      "file": "cayenne_full_monograph.md",
+      "title": "CAYENNE (Capsicum annuum)",
+      "botanicalId": 219,
+      "matchedBy": "title"
+    },
+    {
+      "file": "chamomile_master.md",
+      "title": "CHAMOMILE (Matricaria chamomilla / Chamaemelum nobile)",
+      "botanicalId": 128,
+      "matchedBy": "title"
+    },
+    {
+      "file": "chaste_tree_vitex_master.md",
+      "title": "VITEX (Vitex agnus-castus) – CHASTE TREE BERRY",
+      "botanicalId": 224,
+      "matchedBy": "title"
+    },
+    {
+      "file": "chickweed_master.md",
+      "title": "CHICKWEED (Stellaria media)",
+      "botanicalId": 225,
+      "matchedBy": "title"
+    },
+    {
+      "file": "chilcuague_master.md",
+      "title": "CHILCUAGUE / CHILCUAGUE ROOT",
+      "botanicalId": 226,
+      "matchedBy": "filename"
+    },
+    {
+      "file": "cinnamon_master.md",
+      "title": "CINNAMON (Cinnamomum verum / C. cassia)",
+      "botanicalId": 227,
+      "matchedBy": "title"
+    },
+    {
+      "file": "cloves_individual_full.md",
+      "title": "CLOVES (Syzygium aromaticum)",
+      "botanicalId": 228,
+      "matchedBy": "title"
+    },
+    {
+      "file": "coca_leaf_master.md",
+      "title": "COCA LEAF (Erythroxylum coca and related spp.)",
+      "botanicalId": 229,
+      "matchedBy": "title"
+    },
+    {
+      "file": "cranberry_individual.md",
+      "title": "CRANBERRY (Vaccinium macrocarpon)",
+      "botanicalId": 230,
+      "matchedBy": "title"
+    },
+    {
+      "file": "damiana_full_monograph.md",
+      "title": "DAMIANA (Turnera diffusa)",
+      "botanicalId": 215,
+      "matchedBy": "title"
+    },
+    {
+      "file": "dandelion_root_full_monograph.md",
+      "title": "DANDELION ROOT (Taraxacum officinale)",
+      "botanicalId": 107,
+      "matchedBy": "title"
+    },
+    {
+      "file": "devils_claw_master.md",
+      "title": "DEVIL’S CLAW (Harpagophytum procumbens)",
+      "botanicalId": 220,
+      "matchedBy": "title"
+    },
+    {
+      "file": "echinacea_full_monograph.md",
+      "title": "ECHINACEA (Echinacea purpurea / Echinacea angustifolia)",
+      "botanicalId": 221,
+      "matchedBy": "title"
+    },
+    {
+      "file": "elderberry_sambucus_nigra_master.md",
+      "title": "ELDERBERRY (Sambucus nigra / Sambucus canadensis)",
+      "botanicalId": 216,
+      "matchedBy": "title"
+    },
+    {
+      "file": "elderflower_full_monograph.md",
+      "title": "ELDERFLOWER (Sambucus nigra — Flowers)",
+      "botanicalId": 232,
+      "matchedBy": "title"
+    },
+    {
+      "file": "ephedra_individual_full.md",
+      "title": "EPHEDRA (Ephedra sinica)",
+      "botanicalId": 233,
+      "matchedBy": "title"
+    },
+    {
+      "file": "eucalyptus_individual.md",
+      "title": "EUCALYPTUS (Eucalyptus globulus)",
+      "botanicalId": 234,
+      "matchedBy": "title"
+    },
+    {
+      "file": "eyebright_master.md",
+      "title": "EYEBRIGHT (Euphrasia officinalis, E. rostkoviana) – EUPHRASIA",
+      "botanicalId": 235,
+      "matchedBy": "title"
+    },
+    {
+      "file": "fadogia_agrestis.md",
+      "title": "FADOGIA (Fadogia agrestis)",
+      "botanicalId": 236,
+      "matchedBy": "title"
+    },
+    {
+      "file": "fennel_master.md",
+      "title": "FENNEL (Foeniculum vulgare) — Seed",
+      "botanicalId": 237,
+      "matchedBy": "title"
+    },
+    {
+      "file": "garlic_full_monograph.md",
+      "title": "GARLIC (Allium sativum)",
+      "botanicalId": 238,
+      "matchedBy": "title"
+    },
+    {
+      "file": "ginkgo_individual.md",
+      "title": "GINKGO (Ginkgo biloba)",
+      "botanicalId": 239,
+      "matchedBy": "title"
+    },
+    {
+      "file": "ginseng_individual.md",
+      "title": "GINSENG (Panax spp.)",
+      "botanicalId": 240,
+      "matchedBy": "title"
+    },
+    {
+      "file": "goji-lycium_barbarum_wolfberry.md",
+      "title": "GOJI BERRY / WOLFBERRY (Lycium barbarum, L. chinense)",
+      "botanicalId": 241,
+      "matchedBy": "title-first"
+    },
+    {
+      "file": "gotu_kola_individual.md",
+      "title": "GOTU KOLA (Centella asiatica)",
+      "botanicalId": 108,
+      "matchedBy": "title"
+    },
+    {
+      "file": "ground_ivy_master.md",
+      "title": "GROUND IVY (Glechoma hederacea) – GILL‑OVER‑THE‑GROUND",
+      "botanicalId": 242,
+      "matchedBy": "title"
+    },
+    {
+      "file": "guarana_individual.md",
+      "title": "GUARANA (Paullinia cupana)",
+      "botanicalId": 109,
+      "matchedBy": "title"
+    },
+    {
+      "file": "guayusa_full_monograph.md",
+      "title": "GUAYUSA (Ilex guayusa)",
+      "botanicalId": 245,
+      "matchedBy": "title"
+    },
+    {
+      "file": "hawthorn_master.md",
+      "title": "HAWTHORN (Crataegus spp.)",
+      "botanicalId": 246,
+      "matchedBy": "title"
+    },
+    {
+      "file": "holy_basil_individual.md",
+      "title": "HOLY BASIL (Ocimum sanctum / Tulsi)",
+      "botanicalId": 110,
+      "matchedBy": "title"
+    },
+    {
+      "file": "hops_humulus_master.md",
+      "title": "Hops (Humulus lupulus)",
+      "botanicalId": 243,
+      "matchedBy": "title"
+    },
+    {
+      "file": "horny_goat_weed_full_monograph.md",
+      "title": "HORNY GOAT WEED (Epimedium grandiflorum)",
+      "botanicalId": 247,
+      "matchedBy": "title"
+    },
+    {
+      "file": "horsetail_weed_master.md",
+      "title": "HORSETAIL (Equisetum arvense)",
+      "botanicalId": 244,
+      "matchedBy": "title"
+    },
+    {
+      "file": "iceland_moss-cetraria_islandica.md",
+      "title": "ICELAND MOSS (Cetraria islandica / Lichen islandicus)",
+      "botanicalId": 231,
+      "matchedBy": "title"
+    },
+    {
+      "file": "jasmine_full_monograph.md",
+      "title": "JASMINE (Jasminum officinale / Jasminum sambac)",
+      "botanicalId": 254,
+      "matchedBy": "title"
+    },
+    {
+      "file": "juniper-juniperus_communis_berry.md",
+      "title": "JUNIPER (Juniperus communis)",
+      "botanicalId": 255,
+      "matchedBy": "title"
+    },
+    {
+      "file": "kanna_individual.md",
+      "title": "KANNA (Sceletium tortuosum)",
+      "botanicalId": 256,
+      "matchedBy": "title"
+    },
+    {
+      "file": "kava-piper_methysticum.md",
+      "title": "KAVA KAVA (Piper methysticum)",
+      "botanicalId": 257,
+      "matchedBy": "title"
+    },
+    {
+      "file": "kratom_individual_full.md",
+      "title": "KRATOM (Mitragyna speciosa)",
+      "botanicalId": 250,
+      "matchedBy": "title"
+    },
+    {
+      "file": "lady's mantle_master.md",
+      "title": "(Alchemilla vulgaris / Alchemilla mollis / Alchemilla xanthochlora)",
+      "botanicalId": 105,
+      "matchedBy": "filename"
+    },
+    {
+      "file": "lavender_master.md",
+      "title": "LAVENDER (Lavandula angustifolia / Lavandula officinalis)",
+      "botanicalId": 251,
+      "matchedBy": "title"
+    },
+    {
+      "file": "lemon_balm_full_monograph.md",
+      "title": "LEMON BALM (Melissa officinalis)",
+      "botanicalId": 252,
+      "matchedBy": "title"
+    },
+    {
+      "file": "licorice_root_master.md",
+      "title": "LICORICE ROOT (Glycyrrhiza glabra, G. uralensis)",
+      "botanicalId": 258,
+      "matchedBy": "title"
+    },
+    {
+      "file": "linden_master.md",
+      "title": "LINDEN (Tilia cordata / Tilia europaea)",
+      "botanicalId": 253,
+      "matchedBy": "title"
+    },
+    {
+      "file": "lingonberry_individual.md",
+      "title": "LINGONBERRY (Vaccinium vitis-idaea)",
+      "botanicalId": 259,
+      "matchedBy": "title"
+    },
+    {
+      "file": "lobelia_indian_tobacco_master.md",
+      "title": "LOBELIA (Lobelia inflata) – INDIAN TOBACCO",
+      "botanicalId": 260,
+      "matchedBy": "title"
+    },
+    {
+      "file": "lucerne_master.md",
+      "title": "LUCERNE / ALFALFA",
+      "botanicalId": 261,
+      "matchedBy": "title"
+    },
+    {
+      "file": "maca_individual.md",
+      "title": "MACA (Lepidium meyenii)",
+      "botanicalId": 262,
+      "matchedBy": "title"
+    },
+    {
+      "file": "maca_negra_individual.md",
+      "title": "MACA NEGRA (Lepidium meyenii—Black Variety)",
+      "botanicalId": 263,
+      "matchedBy": "title"
+    },
+    {
+      "file": "marjoram_origanum_majorana.md",
+      "title": "MARJORAM (Origanum majorana) – SWEET MARJORAM",
+      "botanicalId": 264,
+      "matchedBy": "title"
+    },
+    {
+      "file": "meadowsweet_full_monograph.md",
+      "title": "MEADOWSWEET (Filipendula ulmaria)",
+      "botanicalId": 265,
+      "matchedBy": "title"
+    },
+    {
+      "file": "milk_thistle_individual.md",
+      "title": "MILK THISTLE (Silybum marianum)",
+      "botanicalId": 266,
+      "matchedBy": "title"
+    },
+    {
+      "file": "moringa_full_monograph.md",
+      "title": "MORINGA (Moringa oleifera)",
+      "botanicalId": 248,
+      "matchedBy": "title"
+    },
+    {
+      "file": "motherwort_master.md",
+      "title": "MOTHERWORT (Leonurus cardiaca)",
+      "botanicalId": 249,
+      "matchedBy": "title"
+    },
+    {
+      "file": "mugwort_master.md",
+      "title": "MUGWORT (Artemisia vulgaris)",
+      "botanicalId": 267,
+      "matchedBy": "title"
+    },
+    {
+      "file": "muira_puama_master.md",
+      "title": "MUIRA PUAMA (Ptychopetalum olacoides)",
+      "botanicalId": 269,
+      "matchedBy": "title"
+    },
+    {
+      "file": "mullein_master.md",
+      "title": "MULLEIN (Verbascum thapsus)",
+      "botanicalId": 268,
+      "matchedBy": "title"
+    },
+    {
+      "file": "nettle_individual.md",
+      "title": "NETTLE (Urtica dioica)",
+      "botanicalId": 270,
+      "matchedBy": "title"
+    },
+    {
+      "file": "nettle_leaf_master.md",
+      "title": "NETTLE LEAF (Urtica dioica)",
+      "botanicalId": 270,
+      "matchedBy": "latin"
+    },
+    {
+      "file": "oatstraw_wild_oats_avena_sativa_master.md",
+      "title": "OATSTRAW (Avena sativa)",
+      "botanicalId": 271,
+      "matchedBy": "title"
+    },
+    {
+      "file": "oregano_master.md",
+      "title": "OREGANO (Origanum vulgare)",
+      "botanicalId": 272,
+      "matchedBy": "title"
+    },
+    {
+      "file": "passionflower_full_monograph.md",
+      "title": "PASSIONFLOWER (Passiflora incarnata)",
+      "botanicalId": 273,
+      "matchedBy": "title"
+    },
+    {
+      "file": "pau_d'arco_master.md",
+      "title": "PAU D’ARCO (Handroanthus / Tabebuia impetiginosus)",
+      "botanicalId": 274,
+      "matchedBy": "title"
+    },
+    {
+      "file": "peppermint_mentha_piperita.md",
+      "title": "PEPPERMINT (Mentha × piperita) – LEAF & OIL",
+      "botanicalId": 298,
+      "matchedBy": "title"
+    },
+    {
+      "file": "pine_needles_master.md",
+      "title": "PINE NEEDLE (Pinus spp.) – PINE NEEDLE TEA",
+      "botanicalId": 299,
+      "matchedBy": "filename"
+    },
+    {
+      "file": "pine_pollen_full_monograph.md",
+      "title": "PINE POLLEN (Pinus densiflora / Pinus sylvestris)",
+      "botanicalId": 275,
+      "matchedBy": "title"
+    },
+    {
+      "file": "plantain_individual.md",
+      "title": "BROADLEAF PLANTAIN (Plantago major)",
+      "botanicalId": 104,
+      "matchedBy": "title"
+    },
+    {
+      "file": "raspberry_leaf_individual.md",
+      "title": null,
+      "botanicalId": 404,
+      "matchedBy": "filename"
+    },
+    {
+      "file": "red_dates_full_monograph.md",
+      "title": "RED DATES (Ziziphus jujuba / Ziziphus mauritiana)",
+      "botanicalId": 300,
+      "matchedBy": "title"
+    },
+    {
+      "file": "rhodiola_master.md",
+      "title": "RHODIOLA (Rhodiola rosea)",
+      "botanicalId": 276,
+      "matchedBy": "title"
+    },
+    {
+      "file": "rhubarb_root_master.md",
+      "title": "RHUBARB ROOT (Rheum palmatum / Rheum officinale) – DA HUANG",
+      "botanicalId": 301,
+      "matchedBy": "title"
+    },
+    {
+      "file": "rosehip_individual.md",
+      "title": null,
+      "botanicalId": 405,
+      "matchedBy": "filename"
+    },
+    {
+      "file": "rosemary-rosmarinus_officinalis.md",
+      "title": "ROSEMARY (Rosmarinus officinalis / Salvia rosmarinus)",
+      "botanicalId": 277,
+      "matchedBy": "title"
+    },
+    {
+      "file": "rosemary_full_monograph.md",
+      "title": "ROSEMARY (Rosmarinus officinalis)",
+      "botanicalId": 277,
+      "matchedBy": "title"
+    },
+    {
+      "file": "rose_petals_rosa_damascena.md",
+      "title": "ROSE PETALS (Rosa spp., e.g., Rosa gallica, R. damascena)",
+      "botanicalId": 302,
+      "matchedBy": "title"
+    },
+    {
+      "file": "rowan_berry_master.md",
+      "title": "Rowan Berry",
+      "botanicalId": 539,
+      "matchedBy": "title"
+    },
+    {
+      "file": "saffron_full_monograph.md",
+      "title": "SAFFRON (Crocus sativus)",
+      "botanicalId": 278,
+      "matchedBy": "title"
+    },
+    {
+      "file": "sage_full_monograph.md",
+      "title": "SAGE (Salvia officinalis)",
+      "botanicalId": 303,
+      "matchedBy": "title"
+    },
+    {
+      "file": "saw_palmetto_master.md",
+      "title": "SAW PALMETTO (Serenoa repens)",
+      "botanicalId": 304,
+      "matchedBy": "title"
+    },
+    {
+      "file": "schizandra_full_monograph.md",
+      "title": "SCHIZANDRA (Schisandra chinensis)",
+      "botanicalId": 279,
+      "matchedBy": "latin"
+    },
+    {
+      "file": "senna_alexandria_leaf_pod_master.md",
+      "title": "SENNA (Senna alexandrina / Cassia senna)",
+      "botanicalId": 305,
+      "matchedBy": "title"
+    },
+    {
+      "file": "shatavari_individual.md",
+      "title": null,
+      "botanicalId": 406,
+      "matchedBy": "filename"
+    },
+    {
+      "file": "shilajit_individual.md",
+      "title": "SHILAJIT (Asphaltum/Mineral Pitch)",
+      "botanicalId": 280,
+      "matchedBy": "title"
+    },
+    {
+      "file": "skullcap_master.md",
+      "title": "SKULLCAP (Scutellaria lateriflora)",
+      "botanicalId": 281,
+      "matchedBy": "title"
+    },
+    {
+      "file": "slippery_elm_bark.md",
+      "title": "SLIPPERY ELM (Ulmus rubra) – INNER BARK",
+      "botanicalId": 297,
+      "matchedBy": "title"
+    },
+    {
+      "file": "solidago_gullris_goldenrod_master.md",
+      "title": "GOLDENROD / SOLIDAGO (Solidago virgaurea, S. canadensis, S. gigantea)",
+      "botanicalId": 540,
+      "matchedBy": "latin"
+    },
+    {
+      "file": "spirulina_master.md",
+      "title": "SPIRULINA (Arthrospira platensis)",
+      "botanicalId": 541,
+      "matchedBy": "title"
+    },
+    {
+      "file": "star_anise_individual_full.md",
+      "title": "STAR ANISE (Illicium verum)",
+      "botanicalId": 282,
+      "matchedBy": "title"
+    },
+    {
+      "file": "st_johns_wort_master.md",
+      "title": "ST. JOHN'S WORT (Hypericum perforatum)",
+      "botanicalId": 542,
+      "matchedBy": "title"
+    },
+    {
+      "file": "thyme_master.md",
+      "title": "THYME (Thymus vulgaris)",
+      "botanicalId": 283,
+      "matchedBy": "title"
+    },
+    {
+      "file": "tongkat_ali_individual.md",
+      "title": "TONGKAT ALI (Eurycoma longifolia)",
+      "botanicalId": 284,
+      "matchedBy": "title"
+    },
+    {
+      "file": "tremella_master.md",
+      "title": "TREMELLA (Tremella fuciformis) – SNOW FUNGUS / WHITE WOOD EAR",
+      "botanicalId": 285,
+      "matchedBy": "title"
+    },
+    {
+      "file": "turmeric-curcuma_longa_root.md",
+      "title": "TURMERIC (Curcuma longa)",
+      "botanicalId": 286,
+      "matchedBy": "title"
+    },
+    {
+      "file": "valeriana_officinalis_master.md",
+      "title": "VALERIANA (Valeriana officinalis)",
+      "botanicalId": 288,
+      "matchedBy": "latin"
+    },
+    {
+      "file": "vanilla_master.md",
+      "title": "VANILLA (Vanilla planifolia / Vanilla tahitensis)",
+      "botanicalId": 287,
+      "matchedBy": "title"
+    },
+    {
+      "file": "verbena_master.md",
+      "title": "VERVAIN (Verbena officinalis) – COMMON VERVAIN",
+      "botanicalId": 289,
+      "matchedBy": "title"
+    },
+    {
+      "file": "vitex_individual.md",
+      "title": "VITEX (Vitex agnus-castus)",
+      "botanicalId": 224,
+      "matchedBy": "title"
+    },
+    {
+      "file": "wild_dagga_individual.md",
+      "title": "WILD DAGGA (Leonotis leonurus)",
+      "botanicalId": 291,
+      "matchedBy": "title"
+    },
+    {
+      "file": "willow_bark_full_monograph.md",
+      "title": "WILLOW BARK (Salix alba / Salix species)",
+      "botanicalId": 292,
+      "matchedBy": "title"
+    },
+    {
+      "file": "wormwood_individual.md",
+      "title": "WORMWOOD (Artemisia absinthium)",
+      "botanicalId": 293,
+      "matchedBy": "title"
+    },
+    {
+      "file": "yarrow-achillea_millefolium.md",
+      "title": "YARROW (Achillea millefolium)",
+      "botanicalId": 294,
+      "matchedBy": "title"
+    },
+    {
+      "file": "yellow_dock_root_master.md",
+      "title": "YELLOW DOCK (Rumex crispus) – ROOT",
+      "botanicalId": 295,
+      "matchedBy": "title"
+    },
+    {
+      "file": "yerba_mate_full_monograph.md",
+      "title": "YERBA MATE (Ilex paraguariensis)",
+      "botanicalId": 296,
+      "matchedBy": "title"
+    }
+  ],
+  "products": [
+    {
+      "productId": "adhd-support",
+      "displayName": "ADHD Support",
+      "shopStrings": [
+        "ADHD Support"
+      ],
+      "botanicalId": null,
+      "inStockTable": true
+    },
+    {
+      "productId": "afghan-saffron",
+      "displayName": "Afghan Saffron",
+      "shopStrings": [
+        "Afghan Saffron ("
+      ],
+      "botanicalId": null,
+      "inStockTable": true
+    },
+    {
+      "productId": "amanita-muscaria",
+      "displayName": "Amanita Muscaria",
+      "shopStrings": [
+        "Amanita Muscaria"
+      ],
+      "botanicalId": 311,
+      "inStockTable": true
+    },
+    {
+      "productId": "blue-lotus",
+      "displayName": "Blue Lotus",
+      "shopStrings": [
+        "Blue Lotus (dried 100g)"
+      ],
+      "botanicalId": 126,
+      "inStockTable": true
+    },
+    {
+      "productId": "butterfly-pea",
+      "displayName": "Butterfly Pea",
+      "shopStrings": [
+        "Butterfly Pea (dried 100g)"
+      ],
+      "botanicalId": null,
+      "inStockTable": true
+    },
+    {
+      "productId": "chaga-extract",
+      "displayName": "Chaga Extract",
+      "shopStrings": [
+        "Chaga Extract"
+      ],
+      "botanicalId": 307,
+      "inStockTable": true
+    },
+    {
+      "productId": "chaga-syrup",
+      "displayName": "Chaga Syrup",
+      "shopStrings": [
+        "Chaga Syrup"
+      ],
+      "botanicalId": 307,
+      "inStockTable": true
+    },
+    {
+      "productId": "healthy-aging",
+      "displayName": "Healthy Aging",
+      "shopStrings": [
+        "Healthy Aging"
+      ],
+      "botanicalId": null,
+      "inStockTable": true
+    },
+    {
+      "productId": "kumbaya-herbal-smoke-blend",
+      "displayName": "Kumbaya Herbal Smoke Blend",
+      "shopStrings": [
+        "Kumbaya Herbal Smoke Blend"
+      ],
+      "botanicalId": null,
+      "inStockTable": true
+    },
+    {
+      "productId": "lucid",
+      "displayName": "Lucid",
+      "shopStrings": [
+        "Lucid"
+      ],
+      "botanicalId": null,
+      "inStockTable": true
+    },
+    {
+      "productId": "mineral-tonic",
+      "displayName": "Mineral Tonic",
+      "shopStrings": [
+        "Mineral Tonic"
+      ],
+      "botanicalId": null,
+      "inStockTable": true
+    },
+    {
+      "productId": "moon-support",
+      "displayName": "Moon Support",
+      "shopStrings": [
+        "Moon Support"
+      ],
+      "botanicalId": null,
+      "inStockTable": true
+    },
+    {
+      "productId": "nervous-system-tonic",
+      "displayName": "Nervous System Tonic",
+      "shopStrings": [
+        "Nervous System Tonic"
+      ],
+      "botanicalId": null,
+      "inStockTable": false
+    },
+    {
+      "productId": "nettle-extract",
+      "displayName": "Nettle Extract",
+      "shopStrings": [
+        "Nettle Extract"
+      ],
+      "botanicalId": 270,
+      "inStockTable": false
+    },
+    {
+      "productId": "pine-cones",
+      "displayName": "Pine Cones",
+      "shopStrings": [
+        "Pine Cones"
+      ],
+      "botanicalId": null,
+      "inStockTable": true
+    },
+    {
+      "productId": "ruby-no-7",
+      "displayName": "Ruby No.7",
+      "shopStrings": [
+        "Ruby No.7"
+      ],
+      "botanicalId": null,
+      "inStockTable": true
+    },
+    {
+      "productId": "sacred-lavendula",
+      "displayName": "Sacred Lavendula",
+      "shopStrings": [
+        "Sacred Lavendula (foraged 50g)"
+      ],
+      "botanicalId": null,
+      "inStockTable": true
+    },
+    {
+      "productId": "shilajit-paste",
+      "displayName": "Shilajit Paste",
+      "shopStrings": [
+        "Shilajit Paste"
+      ],
+      "botanicalId": null,
+      "inStockTable": false
+    },
+    {
+      "productId": "sleepy-sleepy",
+      "displayName": "Sleepy Sleepy",
+      "shopStrings": [
+        "Sleepy Sleepy"
+      ],
+      "botanicalId": null,
+      "inStockTable": false
+    },
+    {
+      "productId": "temple-nectar",
+      "displayName": "Temple Nectar",
+      "shopStrings": [
+        "Temple Nectar"
+      ],
+      "botanicalId": null,
+      "inStockTable": true
+    },
+    {
+      "productId": "wild-cordyceps",
+      "displayName": "Wild Cordyceps",
+      "shopStrings": [
+        "Wild Cordyceps"
+      ],
+      "botanicalId": 308,
+      "inStockTable": true
+    }
+  ],
+  "unresolved": [
+    {
+      "kind": "stock-row-without-product",
+      "stockId": "Horny Goat Weed (dried 100g)",
+      "slug": "horny-goat-weed"
+    },
+    {
+      "kind": "stock-row-without-product",
+      "stockId": "Reishi Extract",
+      "slug": "reishi-extract"
+    },
+    {
+      "kind": "stock-row-without-product",
+      "stockId": "Shilajit + Gold",
+      "slug": "shilajit-gold"
+    },
+    {
+      "kind": "product-without-stock-row",
+      "productId": "nervous-system-tonic",
+      "displayName": "Nervous System Tonic"
+    },
+    {
+      "kind": "product-without-stock-row",
+      "productId": "nettle-extract",
+      "displayName": "Nettle Extract"
+    },
+    {
+      "kind": "product-without-stock-row",
+      "productId": "shilajit-paste",
+      "displayName": "Shilajit Paste"
+    },
+    {
+      "kind": "product-without-stock-row",
+      "productId": "sleepy-sleepy",
+      "displayName": "Sleepy Sleepy"
+    }
+  ]
+}
