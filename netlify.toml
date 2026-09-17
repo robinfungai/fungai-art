@@ -82,6 +82,29 @@
     Cache-Control      = "no-store"
 
 # Base security headers on every response (public + private).
+#
+# Content-Security-Policy — the XSS containment layer. If a script ever
+# gets injected (a comment, a lab note, a profile field, a compromised
+# dependency), this is what stops it loading code from an attacker's
+# server or posting stolen data anywhere. Every host below is one the
+# site genuinely uses; anything else is refused by the browser.
+#
+# Two deliberate weakenings, both forced by how the site is built:
+#
+#   'unsafe-inline' — pages carry large inline <script> and style
+#     blocks (the quiz, the shop, the home page). Removing this needs
+#     per-request nonces, which static hosting can't issue.
+#
+#   'unsafe-eval' — /community compiles its JSX in the browser with
+#     Babel standalone, which is eval. Precompiling the portal at build
+#     time is what removes this; until then the policy would break the
+#     member portal without it. NOTE: a single policy is applied to
+#     every path on purpose — Netlify applies ALL matching header rules,
+#     and two CSP headers are enforced as their intersection, so a
+#     "looser rule for /community" would not do what it looks like.
+#
+# Even weakened, this blocks the attacks that matter most here: loading
+# a script from an unknown host, and exfiltrating data to one.
 [[headers]]
   for = "/*"
   [headers.values]
@@ -89,6 +112,7 @@
     X-Content-Type-Options    = "nosniff"
     Referrer-Policy           = "strict-origin-when-cross-origin"
     Permissions-Policy        = "camera=(), microphone=(), geolocation=(self), payment=(self)"
+    Content-Security-Policy   = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://unpkg.com https://cdn.jsdelivr.net https://www.instagram.com https://platform.instagram.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.fontshare.com; font-src 'self' data: https://fonts.gstatic.com https://cdn.fontshare.com; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; connect-src 'self' https://cyhpvsyvxzfadtyvcuwp.supabase.co wss://cyhpvsyvxzfadtyvcuwp.supabase.co https://api.stripe.com https://api.coingecko.com https://api.bigdatacloud.net https://basemapstyles-api.arcgis.com https://ibasemaps-api.arcgis.com https://server.arcgisonline.com https://services.arcgisonline.com https://a.basemaps.cartocdn.com https://b.basemaps.cartocdn.com https://c.basemaps.cartocdn.com https://d.basemaps.cartocdn.com https://basemaps.cartocdn.com https://polygon-rpc.com https://www.instagram.com; worker-src 'self' blob:; child-src 'self' blob:; frame-src 'self' https://js.stripe.com https://www.instagram.com; upgrade-insecure-requests"
 
 # Force browsers to revalidate the favicon — avoids stale cached icons persisting across deploys
 [[headers]]
