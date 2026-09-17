@@ -4553,7 +4553,10 @@ async function archiveFormulaToAcademy({ name, herbs, percentages, notes, contac
       herb_names: herbNames,
       percentages: percentages || [],
       bottle_ml: 30,
-      maker_label: contactName || null,
+      // The customer's name is NOT written here. This table is shared
+      // (the academy reads a view of it); the name belongs in the
+      // reservation email only. See supabase-formulas-health-lockdown.sql.
+      maker_label: null,
       notes: (notes || '').slice(0, 500),
       source: 'find-your-formula',
       quiz_snapshot: quiz || null,

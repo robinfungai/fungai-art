@@ -28,6 +28,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
 .meta{font-family:var(--fm);font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--md);padding-bottom:14px;border-bottom:0.5px solid var(--r);margin-bottom:36px;}
 section{margin-bottom:38px;}
 section h2{font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml);margin-bottom:14px;letter-spacing:-.01em;}
+section h3{font-family:var(--fd);font-style:italic;font-size:16px;color:var(--ml);margin-bottom:8px;letter-spacing:-.01em;}
 section h2 em{color:var(--a);}
 section p,section li{font-size:14px;color:var(--m);line-height:1.75;margin-bottom:12px;}
 section ul{padding-left:20px;list-style:none;}
@@ -66,7 +67,7 @@ section strong{color:var(--ml);font-weight:500;}
 <h1 class="hero-title">Privacy <em>policy.</em></h1>
 <p class="hero-blurb">We treat your data the way we treat the forest — minimally disturbed, ethically harvested, never sold. This page explains what we collect, why, and what your rights are.</p>
 
-<div class="meta">Last updated 15 September 2026 · Effective immediately</div>
+<div class="meta">Last updated 17 September 2026 · Effective immediately</div>
 
 <div class="tldr">
   <div class="tldr-label">⟡ In one sentence</div>
@@ -142,7 +143,19 @@ section strong{color:var(--ml);font-weight:500;}
     <li><strong>Object</strong> — stop us using your data for any specific purpose</li>
     <li><strong>Withdraw consent</strong> — for your formula answers, the newsletter or location, anytime, without affecting what happened before</li>
   </ul>
-  <p>To exercise any of these, email <strong>robin@fungai.art</strong>. We'll respond within 30 days — usually within 48 hours.</p>
+  <p>To exercise any of these, email <strong>robin@fungai.art</strong>. We'll respond within 30 days — usually within 48 hours. It's free.</p>
+
+  <h3 style="margin-top:22px;">Getting a copy of your data</h3>
+  <p>Email us from the address you used on the site, and say what you want a copy of (or say "everything"). If we can't tell from the email alone that the request is yours, we'll ask one question to confirm it — we won't ask for ID documents. You'll get a machine-readable file (JSON, plus CSV for orders) covering your community profile and content, formula readings and reservations, orders, newsletter status and any enquiry emails.</p>
+
+  <h3 style="margin-top:22px;">Deleting your data</h3>
+  <p>Email us and say what you want removed. We will delete your community profile and everything you posted, your formula readings and reservations, your newsletter subscription, your uploaded picture, and our email correspondence with you.</p>
+  <p>Two things we cannot delete on request, and why:</p>
+  <ul>
+    <li><strong>Completed orders</strong> — Swedish accounting law requires us to keep the invoice record for seven years. We can remove everything not required by that law, and the record is then deleted automatically.</li>
+    <li><strong>Payment records held by Stripe</strong> — Stripe keeps its own records as the payment processor, under its own legal duties.</li>
+  </ul>
+  <p>Deletion happens within 30 days. Encrypted database backups roll over within about a week after that, which is when the last copies disappear.</p>
 </section>
 
 <section>
@@ -154,12 +167,39 @@ section strong{color:var(--ml);font-weight:500;}
     <li>Community account and content — until you delete your account or ask us to</li>
     <li>Newsletter email — until you unsubscribe</li>
     <li>Local browser data — until you clear it</li>
+    <li>MYCO conversations — not stored at all (see below)</li>
+    <li>Encrypted database backups — roll over on about a seven-day cycle, so deleted data can persist in a backup for up to a week longer</li>
   </ul>
 </section>
 
 <section>
+  <h2>MYCO, our <em>AI assistant</em></h2>
+  <p>MYCO answers questions on the site. Here is exactly what happens when you talk to it.</p>
+  <ul>
+    <li><strong>What it stores: nothing.</strong> Your conversation lives in your browser for as long as the panel is open and is never written to our database. Close it, and it's gone.</li>
+    <li><strong>Where your message goes.</strong> It is sent to Anthropic, which runs the language model on our behalf as our processor. Under our agreement with them, your messages are <strong>not used to train their models</strong>. They keep them only briefly for abuse monitoring.</li>
+    <li><strong>What MYCO knows.</strong> It answers from our own knowledge base — our herb database, plant monographs and our house protocols — and tells you which sources it used. It has no access to our member database, your account, your orders or your formula.</li>
+    <li><strong>Does talking to MYCO improve it?</strong> Not automatically, and not today. Nothing you type is fed back into it. If we ever start keeping conversations to improve MYCO's answers, we will say so here first, explain the choice, and ask before using anything of yours.</li>
+    <li><strong>What it will not do.</strong> MYCO does not diagnose, prescribe, or advise on medical conditions or medication — it refuses those questions.</li>
+  </ul>
+  <p style="font-size:12px;color:var(--md);margin-top:10px;">Please don't type anything into MYCO you'd mind us seeing in a support conversation — treat it like an email, not a diary.</p>
+</section>
+
+<section>
   <h2>Security</h2>
-  <p>The site is served over HTTPS only. Payments are processed by Stripe (PCI-DSS Level 1); we never store card data. Our database uses access rules so each part of the site can only read or write what it needs, and only administrators can see community member emails.</p>
+  <p>The site is served over HTTPS only. Payments are processed by Stripe (PCI-DSS Level 1); we never store card data. Our database uses access rules so each part of the site can only read or write what it needs, and only administrators can see community member emails. Data is encrypted in transit and at rest, backups are encrypted, and sign-in uses a one-time email link — we never hold a password of yours, because we never ask for one.</p>
+</section>
+
+<section>
+  <h2>If something <em>goes wrong</em></h2>
+  <p>If personal data is ever exposed, lost or accessed by someone who shouldn't have it, we will:</p>
+  <ul>
+    <li>Contain it, work out exactly what was affected, and write down what happened.</li>
+    <li>Report it to the Swedish data protection authority (IMY) <strong>within 72 hours</strong> of becoming aware, unless it's clear there's no risk to anyone.</li>
+    <li>Tell you directly, without delay, if the breach is likely to put you at real risk — in plain words: what happened, what it means for you, and what we're doing about it.</li>
+    <li>Keep a record of every incident, including the ones we don't have to report.</li>
+  </ul>
+  <p>If you think you've found a security problem on this site, please email <strong>robin@fungai.art</strong> — we'd genuinely rather hear it from you than find out later.</p>
 </section>
 
 <section>

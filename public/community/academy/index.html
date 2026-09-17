@@ -2400,7 +2400,10 @@ function lnMoveNote(fromCat, id, toCat){
     if (!window.SBclient) return;
     try {
       const { data: fRows, error: fErr } = await window.SBclient
-        .from('formulas')
+        // formulas_public, not the base table: the base table carries
+        // quiz_snapshot (health answers) and is now readable only by the
+        // row's author or an admin. See supabase-formulas-health-lockdown.sql.
+        .from('formulas_public')
         .select('id, name, herb_ids, herb_names, maker_label, notes, author_id, created_at')
         .order('created_at', { ascending: false })
         .limit(100);
