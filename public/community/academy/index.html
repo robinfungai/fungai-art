@@ -454,6 +454,74 @@
 <script src="/global-nav.js" defer></script>
 <!-- Living mycelium background (same as /community) -->
 <script src="/mycelium-field.js" data-variant="community" defer></script>
+<style id="fa-formula-drawer">
+  .fb-fab{position:fixed;right:20px;bottom:20px;z-index:900;width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(15,12,8,.92);border:1px solid rgba(232,177,75,.55);color:#F5D689;cursor:pointer;box-shadow:0 10px 30px -8px rgba(0,0,0,.7),0 0 0 4px rgba(232,177,75,.06);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .25s,border-color .25s}
+  .fb-fab:hover,.fb-fab[aria-expanded="true"]{transform:translateY(-2px);border-color:#F5D689}
+  .fb-fab:focus-visible,.fb-close:focus-visible{outline:1.5px solid #F5D689;outline-offset:3px}
+  .fb-fab svg{width:22px;height:22px}
+  .fb-count{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:#9ED438;color:#0a0c09;font:600 10px/20px 'Geist Mono',monospace;text-align:center}
+  .fb-count[hidden],.fb-overlay[hidden],.fb-drawer[hidden]{display:none}
+  /* A modal: above the member banner (9000) and mobile menu button (8500),
+     below the academy gate (9998) and cookie notice (9999). */
+  .fb-overlay{position:fixed;inset:0;z-index:9100;background:rgba(5,6,4,.6);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);opacity:0;transition:opacity .28s}
+  .fb-overlay.is-open{opacity:1}
+  .fb-drawer{position:fixed;top:0;right:0;bottom:0;z-index:9110;width:min(640px,100vw);overflow-y:auto;overscroll-behavior:contain;background:linear-gradient(180deg,#100e0a,#0a0c09);border-left:.5px solid rgba(232,177,75,.25);padding:30px 28px 56px;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);box-shadow:-30px 0 60px -20px rgba(0,0,0,.8)}
+  .fb-drawer.is-open{transform:none}
+  .fb-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:10px}
+  .fb-close{flex:0 0 auto;width:38px;height:38px;border-radius:50%;border:.5px solid rgba(232,177,75,.35);background:rgba(232,177,75,.06);color:#E6D9B5;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .fb-close svg{width:18px;height:18px}
+  .fb-intro{font-family:'Cormorant Garamond',Georgia,serif;font-size:14.5px;color:#8B7E62;line-height:1.7;margin:4px 0 26px;max-width:62ch}
+  @media (max-width:640px){.fb-fab{right:16px;bottom:16px}.fb-drawer{padding:22px 16px 44px}}
+  @media (prefers-reduced-motion:reduce){.fb-drawer,.fb-overlay,.fb-fab{transition:none}}
+</style>
+<style id="fa-shiny-cta">
+  /* Mirrors src/components/ui/shiny-button.css — keep the two in step. */
+  @import url("https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,500&display=swap");
+  @property --gradient-angle{syntax:"<angle>";initial-value:0deg;inherits:false}
+  @property --gradient-angle-offset{syntax:"<angle>";initial-value:0deg;inherits:false}
+  @property --gradient-percent{syntax:"<percentage>";initial-value:5%;inherits:false}
+  @property --gradient-shine{syntax:"<color>";initial-value:white;inherits:false}
+  .shiny-cta{--shiny-cta-bg:#000;--shiny-cta-bg-subtle:#1a1818;--shiny-cta-fg:#fff;--shiny-cta-highlight:blue;--shiny-cta-highlight-subtle:#8484ff;--animation:gradient-angle linear infinite;--duration:3s;--shadow-size:2px;--transition:800ms cubic-bezier(.25,1,.5,1);isolation:isolate;position:relative;overflow:hidden;cursor:pointer;outline-offset:4px;padding:1.25rem 2.5rem;font-family:"Inter",sans-serif;font-size:1.125rem;line-height:1.2;font-weight:500;border:1px solid transparent;border-radius:360px;color:var(--shiny-cta-fg);background:linear-gradient(var(--shiny-cta-bg),var(--shiny-cta-bg)) padding-box,conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),transparent,var(--shiny-cta-highlight) var(--gradient-percent),var(--gradient-shine) calc(var(--gradient-percent) * 2),var(--shiny-cta-highlight) calc(var(--gradient-percent) * 3),transparent calc(var(--gradient-percent) * 4)) border-box;box-shadow:inset 0 0 0 1px var(--shiny-cta-bg-subtle);transition:var(--transition);transition-property:--gradient-angle-offset,--gradient-percent,--gradient-shine}
+  .shiny-cta::before,.shiny-cta::after,.shiny-cta span::before{content:"";pointer-events:none;position:absolute;inset-inline-start:50%;inset-block-start:50%;translate:-50% -50%;z-index:-1}
+  .shiny-cta:active{translate:0 1px}
+  .shiny-cta::before{--size:calc(100% - var(--shadow-size) * 3);--position:2px;--space:calc(var(--position) * 2);width:var(--size);height:var(--size);background:radial-gradient(circle at var(--position) var(--position),white calc(var(--position) / 4),transparent 0) padding-box;background-size:var(--space) var(--space);background-repeat:space;mask-image:conic-gradient(from calc(var(--gradient-angle) + 45deg),black,transparent 10% 90%,black);border-radius:inherit;opacity:.4;z-index:-1}
+  .shiny-cta::after{--animation:shimmer linear infinite;width:100%;aspect-ratio:1;background:linear-gradient(-50deg,transparent,var(--shiny-cta-highlight),transparent);mask-image:radial-gradient(circle at bottom,transparent 40%,black);opacity:.6}
+  .shiny-cta span{z-index:1}
+  .shiny-cta span::before{--size:calc(100% + 1rem);width:var(--size);height:var(--size);box-shadow:inset 0 -1ex 2rem 4px var(--shiny-cta-highlight);opacity:0;transition:opacity var(--transition);animation:calc(var(--duration) * 1.5) breathe linear infinite}
+  .shiny-cta,.shiny-cta::before,.shiny-cta::after{animation:var(--animation) var(--duration),var(--animation) calc(var(--duration) / .4) reverse paused;animation-composition:add}
+  .shiny-cta:is(:hover,:focus-visible){--gradient-percent:20%;--gradient-angle-offset:95deg;--gradient-shine:var(--shiny-cta-highlight-subtle)}
+  .shiny-cta:is(:hover,:focus-visible),.shiny-cta:is(:hover,:focus-visible)::before,.shiny-cta:is(:hover,:focus-visible)::after{animation-play-state:running}
+  .shiny-cta:is(:hover,:focus-visible) span::before{opacity:1}
+  @keyframes gradient-angle{to{--gradient-angle:360deg}}
+  @keyframes shimmer{to{rotate:360deg}}
+  @keyframes breathe{from,to{scale:1}50%{scale:1.2}}
+  @media (prefers-reduced-motion:reduce){.shiny-cta,.shiny-cta::before,.shiny-cta::after,.shiny-cta span::before{animation:none}}
+
+  /* Fungai palette on the shiny button: forest ground, gold light. */
+  .shiny-cta.fa-myc{--shiny-cta-bg:#07110d;--shiny-cta-bg-subtle:#1d2a1f;--shiny-cta-fg:#F1E9D2;--shiny-cta-highlight:#E8B14B;--shiny-cta-highlight-subtle:#F5D689}
+
+  .myc-cta{position:relative;max-width:660px;margin:110px auto 30px;padding:56px 20px 44px;text-align:center}
+  .myc-cta[hidden]{display:none}
+  .myc-cta::before{content:"";position:absolute;inset:-40px 0 0;background:radial-gradient(ellipse at 50% 35%,rgba(232,177,75,.12),transparent 62%);pointer-events:none;z-index:-1}
+  .myc-admin-note{font-family:'Geist Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:#9ED438;margin-bottom:18px}
+  .myc-eyebrow{font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:#8B7E62}
+  .myc-title{font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-size:clamp(30px,4.6vw,46px);line-height:1.08;color:#E6D9B5;margin:14px 0 14px}
+  .myc-title em{color:#F5D689}
+  .myc-lede{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:17.5px;line-height:1.6;color:#C9B894;max-width:46ch;margin:0 auto 32px}
+  .myc-form{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:470px;margin:0 auto;animation:mycIn .5s ease both}
+  .myc-form[hidden]{display:none}
+  .myc-form input{flex:1 1 240px;min-width:0;padding:14px 20px;border-radius:999px;border:1px solid rgba(232,177,75,.4);background:rgba(7,17,13,.85);color:#F1E9D2;font-size:15px;font-family:inherit}
+  .myc-form input:focus{outline:none;border-color:#F5D689;box-shadow:0 0 0 3px rgba(232,177,75,.15)}
+  .myc-form button{padding:14px 22px;border-radius:999px;border:0;background:#E8B14B;color:#0a0c09;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer}
+  .myc-form button:disabled{opacity:.6;cursor:wait}
+  .myc-fine{flex-basis:100%;margin-top:10px;font-size:11.5px;color:#8B7E62}
+  .myc-fine a{color:#C9B894}
+  .myc-msg{flex-basis:100%;min-height:1.2em;font-size:12.5px;color:#E8A07C}
+  .myc-done{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:19px;color:#E6D9B5;line-height:1.5;animation:mycIn .5s ease both}
+  .myc-more{display:block;width:fit-content;margin:26px auto 0;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:#8B7E62;text-decoration:none;border-bottom:.5px solid rgba(139,126,98,.45)}
+  .myc-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  @keyframes mycIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
 </head>
 <style>
 /* ── Login gate overlay ── */
@@ -588,19 +656,9 @@
 
   <div class="methods" id="methods"></div>
 
-  <!-- ══ FORMULA BOOK ══════════════════════════════════════════════════════
-       Every formula a visitor builds in the Herbal Engine (or Mixology)
-       is mirrored into localStorage under fungai_alchemy_academy. This
-       section reads that store so visitors can see their own work, and
-       admins can see all formulas on this device with their city-level
-       origin (when not VPN-shielded).
-       ──────────────────────────────────────────────────────────────────── -->
-  <div class="sec-head" id="formulas" style="margin-top:64px;">
-    <div class="sec-eyebrow">Personal alchemy archive</div>
-    <div class="sec-title">Formula <em>book.</em></div>
-    <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:14.5px;color:#8B7E62;line-height:1.7;margin-top:8px;max-width:62ch;">Every formula you build in the Herbal Engine or Mixology is saved to this book. City-level origin is recorded when you&rsquo;re not on a VPN &mdash; we never log anything finer than your city, and never if you&rsquo;re shielded.</p>
-  </div>
-  <div id="formulaBook" style="margin-top:32px;"></div>
+  <!-- Formula book: moved out of the page flow into a pop-out drawer
+       (#fbFab + #fbDrawer, just after .wrap). The renderer still fills
+       #formulaBook; "#formulas" links open the drawer. -->
 
   <!-- Traditions & Philosophies filter — sits BETWEEN the universal
        sections (Five methods + Formula book, which always show) and the
@@ -1035,11 +1093,50 @@
     <div id="snippetList" style="margin-top:22px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;"></div>
   </section>
 
+  <!-- ══ ENTER THE MYCELIUM ═════════════════════════════════════════════
+       Shown to visitors who aren't members (admins see it as a preview).
+       The shiny button reveals an email form → /api/subscribe-newsletter
+       with source "academy-mycelium". Same design as the React component
+       src/components/ui/shiny-button.tsx — this static page can't import
+       it, so the CSS is mirrored in the <style id="fa-shiny-cta"> block. -->
+  <section class="myc-cta" id="myceliumCta" hidden aria-labelledby="mycTitle">
+    <p class="myc-admin-note" hidden>Admin preview · visitors who aren't members see this</p>
+    <p class="myc-eyebrow">The Mycelium</p>
+    <h2 class="myc-title" id="mycTitle">There is more <em>beneath the surface.</em></h2>
+    <p class="myc-lede">Every lab note, every shared formula and the study chapters live inside the member network. Leave your email and we&rsquo;ll send you the way in.</p>
+    <button type="button" class="shiny-cta fa-myc" id="mycCtaBtn" aria-expanded="false" aria-controls="mycCtaForm"><span>Enter the mycelium</span></button>
+    <form class="myc-form" id="mycCtaForm" hidden novalidate>
+      <label for="mycEmail" class="myc-sr">Email address</label>
+      <input type="email" id="mycEmail" name="email" required autocomplete="email" inputmode="email" placeholder="you@forest.earth">
+      <button type="submit" id="mycSubmit">Send me the way in</button>
+      <p class="myc-fine">A welcome letter, then monthly field notes. Unsubscribe any time. <a href="/privacy">Privacy</a></p>
+      <p class="myc-msg" id="mycMsg" role="status" aria-live="polite"></p>
+    </form>
+    <a class="myc-more" href="/members">What membership includes &rarr;</a>
+  </section>
+
   <div class="footer">
     <div class="footer-fine">Fungai Art · Alchemy Academy · Member only</div>
   </div>
 
 </div>
+
+<!-- ══ FORMULA BOOK · pop-out ══════════════════════════════════════════
+     Every formula built in the Herbal Engine or Mixology, plus shared
+     cloud formulas. Collapsed to a book icon; opens as a side drawer. -->
+<button type="button" class="fb-fab" id="fbFab" aria-label="Open your formula book" aria-controls="fbDrawer" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg><span class="fb-count" id="fbCount" hidden></span></button>
+<div class="fb-overlay" id="fbOverlay" hidden></div>
+<aside class="fb-drawer" id="fbDrawer" role="dialog" aria-modal="true" aria-labelledby="fbTitle" hidden>
+  <div class="fb-head">
+    <div>
+      <div class="sec-eyebrow">Personal alchemy archive</div>
+      <div class="sec-title" id="fbTitle">Formula <em>book.</em></div>
+    </div>
+    <button type="button" class="fb-close" id="fbClose" aria-label="Close the formula book"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  </div>
+  <p class="fb-intro">Every formula you build in the Herbal Engine or Mixology is saved to this book. City-level origin is recorded when you&rsquo;re not on a VPN &mdash; we never log anything finer than your city, and never if you&rsquo;re shielded.</p>
+  <div id="formulaBook"></div>
+</aside>
 
 <script>
 const METHODS = [
@@ -2500,6 +2597,8 @@ function lnMoveNote(fromCat, id, toCat){
       };
     });
     var list = listCloud.concat(listA).concat(listBNorm).sort(function(a,b){ return (b.ts||0) - (a.ts||0); });
+    window.__faFormulaCount = list.length;
+    try { window.dispatchEvent(new CustomEvent('fa:formula-count', { detail: list.length })); } catch (e) {}
     if (!list.length) {
       host.innerHTML = '<div style="padding:36px 28px;border:0.5px dashed rgba(232,177,75,0.3);border-radius:12px;background:rgba(10,12,9,0.4);text-align:center;">' +
         '<div style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:#8B7E62;margin-bottom:8px;">Empty</div>' +
@@ -2617,5 +2716,99 @@ function lnMoveNote(fromCat, id, toCat){
 </script>
 <script src="/community/claim-notice.js" defer></script>
 <script src="/cookie-banner.js" defer></script>
+<script>
+// ── Formula book drawer ──────────────────────────────────────────────
+(function(){
+  var fab = document.getElementById('fbFab'), drawer = document.getElementById('fbDrawer');
+  var overlay = document.getElementById('fbOverlay'), closeBtn = document.getElementById('fbClose');
+  var count = document.getElementById('fbCount');
+  if (!fab || !drawer || !overlay || !closeBtn) return;
+  var lastFocus = null, hideT = null;
+  function open(){
+    if (!drawer.hidden && drawer.classList.contains('is-open')) return;
+    clearTimeout(hideT);
+    lastFocus = document.activeElement;
+    drawer.hidden = false; overlay.hidden = false;
+    requestAnimationFrame(function(){ drawer.classList.add('is-open'); overlay.classList.add('is-open'); });
+    fab.setAttribute('aria-expanded', 'true');
+    document.documentElement.style.overflow = 'hidden';
+    closeBtn.focus({ preventScroll: true });
+  }
+  function close(){
+    if (drawer.hidden) return;
+    drawer.classList.remove('is-open'); overlay.classList.remove('is-open');
+    fab.setAttribute('aria-expanded', 'false');
+    document.documentElement.style.overflow = '';
+    hideT = setTimeout(function(){ drawer.hidden = true; overlay.hidden = true; }, 300);
+    if (location.hash === '#formulas') history.replaceState(null, '', location.pathname + location.search);
+    (lastFocus && lastFocus.focus ? lastFocus : fab).focus({ preventScroll: true });
+  }
+  fab.addEventListener('click', function(){ drawer.hidden ? open() : close(); });
+  overlay.addEventListener('click', close);
+  closeBtn.addEventListener('click', close);
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !drawer.hidden) close(); });
+  // "#formulas" links (hero chip here, Mixology's link in) open the drawer.
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href$="#formulas"]');
+    if (!a) return;
+    if (a.pathname && a.pathname.replace(/\/$/, '') !== location.pathname.replace(/\/$/, '')) return;
+    e.preventDefault(); open();
+  });
+  window.addEventListener('hashchange', function(){ if (location.hash === '#formulas') open(); });
+  if (location.hash === '#formulas') { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', open); else open(); }
+  function setCount(n){
+    n = n | 0;
+    count.textContent = n > 99 ? '99+' : String(n);
+    count.hidden = n === 0;
+    fab.setAttribute('aria-label', 'Open your formula book' + (n ? ' (' + n + (n === 1 ? ' formula)' : ' formulas)') : ''));
+  }
+  window.addEventListener('fa:formula-count', function(e){ setCount(e.detail); });
+  if (typeof window.__faFormulaCount === 'number') setCount(window.__faFormulaCount);
+})();
+
+// ── Enter the mycelium · email capture ───────────────────────────────
+(function(){
+  var sec = document.getElementById('myceliumCta');
+  if (!sec) return;
+  var member = null;
+  try { member = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null'); } catch (e) {}
+  var isMember = !!(member && member.id);
+  var isAdmin = !!(member && (member.admin || member.is_admin));
+  if (isMember && !isAdmin) return;           // members are already inside
+  sec.hidden = false;
+  if (isAdmin) sec.querySelector('.myc-admin-note').hidden = false;
+
+  var btn = document.getElementById('mycCtaBtn'), form = document.getElementById('mycCtaForm');
+  var input = document.getElementById('mycEmail'), submit = document.getElementById('mycSubmit');
+  var msg = document.getElementById('mycMsg');
+  btn.addEventListener('click', function(){
+    btn.setAttribute('aria-expanded', 'true');
+    btn.hidden = true;
+    form.hidden = false;
+    input.focus();
+  });
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    var email = input.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = 'That email doesn\u2019t look right.'; input.focus(); return; }
+    submit.disabled = true; submit.textContent = 'Sending\u2026'; msg.textContent = '';
+    try {
+      var res = await fetch('/api/subscribe-newsletter', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, source: 'academy-mycelium' }),
+      });
+      var data = await res.json().catch(function(){ return {}; });
+      if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+      var done = document.createElement('p');
+      done.className = 'myc-done';
+      done.textContent = 'Welcome. A letter is on its way to ' + email + ' \u2014 the way in starts there.';
+      form.replaceWith(done);
+    } catch (err) {
+      msg.textContent = 'That didn\u2019t go through (' + (err && err.message ? err.message : 'network') + '). Try again, or write to robin@fungai.art.';
+      submit.disabled = false; submit.textContent = 'Send me the way in';
+    }
+  });
+})();
+</script>
 </body>
 </html>

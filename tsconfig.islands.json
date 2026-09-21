@@ -1,0 +1,18 @@
+{
+  "//": "Type-checks the static-page islands and the components they use. src/components is excluded from tsconfig.app.json (legacy files fail strict mode), so these are checked here instead: npm run typecheck:islands",
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "composite": false,
+    "incremental": false,
+    "noEmit": true
+  },
+  "include": [
+    "src/islands",
+    "src/components/ui/shiny-button.tsx",
+    "src/components/ui/cobe-globe.tsx",
+    "src/components/ui/3d-gallery-photography.tsx",
+    "src/components/ui/wave-background.tsx",
+    "src/vite-env.d.ts"
+  ],
+  "exclude": []
+}

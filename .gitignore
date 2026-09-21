@@ -58,3 +58,6 @@ public/community/myco/agent.js
 !public/community/myco/prompts.js
 !public/community/myco/context.js
 !public/community/dm/crypto.js
+
+# React islands for static pages, bundled by scripts/build-islands.cjs
+public/islands/

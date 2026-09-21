@@ -67,6 +67,7 @@ function main() {
     console.error('public/community not found');
     process.exit(1);
   }
+  vendorCobe();
   const files = walk(DIR);
   let bytesIn = 0, bytesOut = 0;
 
@@ -102,6 +103,23 @@ function main() {
   console.log('');
   console.log('compiled : ' + files.length + ' files');
   console.log('in/out   : ' + (bytesIn / 1024).toFixed(0) + ' KB → ' + (bytesOut / 1024).toFixed(0) + ' KB');
+}
+
+// The network globe (spore/network-globe.jsx) uses cobe. The portal has no
+// bundler, so a local copy of cobe's single-file ESM build lives in
+// public/community/vendor/ and index.html loads it as a module. Refresh it
+// from node_modules each build so it can never drift from package.json.
+function vendorCobe() {
+  const src = path.join(ROOT, 'node_modules', 'cobe', 'dist', 'index.esm.js');
+  if (!fs.existsSync(src)) { console.error('✗ cobe not installed — run npm install'); process.exit(1); }
+  const version = require(path.join(ROOT, 'node_modules', 'cobe', 'package.json')).version;
+  const out = path.join(DIR, 'vendor', 'cobe.esm.js');
+  fs.mkdirSync(path.dirname(out), { recursive: true });
+  const header = '/*! cobe ' + version + ' · MIT · https://github.com/shuding/cobe\n'
+    + '   Local copy for the Spore portal, refreshed from node_modules by\n'
+    + '   scripts/build-community.cjs — do not edit by hand. */\n';
+  fs.writeFileSync(out, header + fs.readFileSync(src, 'utf8'));
+  console.log('  ✓ ' + path.relative(ROOT, out).padEnd(46) + 'cobe ' + version);
 }
 
 // Scripts the portal actually loads, in order, read from the HTML so the

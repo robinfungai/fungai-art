@@ -39,6 +39,9 @@
   <script src="spore/data.js"></script>
   <script src="spore/tweaks-panel.js"></script>
   <script src="spore/network-living.js"></script>
+  <script src="spore/network-globe.js"></script>
+  <!-- cobe (WebGL globe for the network) — local copy, see scripts/build-community.cjs -->
+  <script type="module">import createGlobe from "/community/vendor/cobe.esm.js"; window.createGlobe = createGlobe; window.dispatchEvent(new Event("cobe:ready"));</script>
 
   <!-- MYCO — its own folder now. Loaded BEFORE app-living because
        app-living references the global window.MycoAgent. See

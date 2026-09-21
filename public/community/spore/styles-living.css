@@ -2098,11 +2098,11 @@ input[type='range'].cs-range::-webkit-slider-thumb {
   overflow: hidden;
   margin-bottom: 16px;
   position: relative;
-  /* Map needs height to feel like the centrepiece of the page on desktop */
-  aspect-ratio: 16 / 7;
+  /* Holds the round network globe — sized by the globe, not a wide crop. */
+  padding: 14px 0 56px;
 }
 @media (max-width: 680px) {
-  .welcome-map-frame { aspect-ratio: 16 / 11; }
+  .welcome-map-frame { padding: 10px 0 64px; }
 }
 .welcome-section-eyebrow {
   font-family: var(--font-mono);
@@ -3023,3 +3023,26 @@ input[type='range'].cs-range::-webkit-slider-thumb {
   border-radius: 0;
 }
 .earn-event .earn-opt:last-child { border-bottom: none; }
+
+/* ── Network globe (cobe · network-globe.jsx) ─────────────────── */
+.ng-wrap { position: relative; width: 100%; aspect-ratio: 1; margin: 0 auto; user-select: none; -webkit-user-select: none; }
+.ng-canvas { display: block; width: 100%; height: 100%; cursor: grab; opacity: 0; transition: opacity 1.2s ease; border-radius: 50%; touch-action: none; }
+.net-canvas .ng-wrap { padding: 8px 0 0; }
+.ng-label {
+  position: absolute; bottom: anchor(top); left: anchor(center); translate: -50% 0; margin-bottom: 8px;
+  padding: 3px 7px; border: 0.5px solid var(--rule); border-radius: 3px;
+  background: rgba(10, 9, 8, 0.86); color: var(--mycelium-l);
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap;
+  cursor: pointer; z-index: 1; transition: opacity 0.8s, filter 0.8s, border-color 0.2s;
+}
+.ng-label::after { content: ""; position: absolute; top: 100%; left: 50%; transform: translate(-50%, -1px); border: 4px solid transparent; border-top-color: rgba(10, 9, 8, 0.86); }
+.ng-label:hover { border-color: var(--mycelium-d); }
+.ng-label.is-selected { background: #9ED438; border-color: #9ED438; color: #0A0908; z-index: 2; }
+.ng-label.is-selected::after { border-top-color: #9ED438; }
+.ng-label.is-proposed { color: #E8B14B; }
+/* Labels ride on CSS anchor positioning; where it's missing, the dots still show. */
+@supports not (anchor-name: --a) { .ng-label { display: none; } }
+.ng-fallback { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin: 0 auto; padding: 24px 12px; }
+.ng-chip { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; border: 0.5px solid var(--rule); background: transparent; color: var(--mycelium); cursor: pointer; }
+.ng-chip.is-selected { background: #9ED438; color: #0A0908; border-color: #9ED438; }
+@media (prefers-reduced-motion: reduce) { .ng-canvas, .ng-label { transition: none; } }

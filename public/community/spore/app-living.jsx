@@ -757,16 +757,7 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
         <div className="welcome-section-title">The <em>network.</em></div>
 
         <div className="welcome-map-frame">
-          <LivingNetworkMap
-            nodes={SporeData.NETWORK_NODES.filter(n =>
-              ['berlin','sweden','lisbon','festival','beirut','genoa','atitlan','nosara'].includes(n.id)
-            )}
-            selected={null}
-            onSelect={() => {}}
-            flowIntensity={1.2}
-            viewBox={{ lonMin: -94, lonMax: 44, latMin: 8, latMax: 66 }}
-            speed={0.4}
-          />
+          <NetworkGlobe nodes={SporeData.NETWORK_NODES} maxSize={520} speed={0.0018} />
           <div style={{ position:'absolute', bottom:10, left:10, right:10, display:'flex', justifyContent:'space-between', alignItems:'flex-end', pointerEvents:'none' }}>
             <div style={{ background:'rgba(6,8,9,.7)', backdropFilter:'blur(8px)', border:'0.5px solid var(--rule)', borderRadius:6, padding:'6px 10px' }}>
               <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>Nodes</div>
@@ -1223,16 +1214,13 @@ function NetworkPage({ economy, onToast, flowRate }) {
       </div>
 
       <div className="net-canvas">
-        {/* Tight crop: left edge at Lake Atitlán / Nosara (~-95° lon),
-            right edge at Hokkaido (~145° lon). Lat -15 → 70 covers Bali
-            in the south up through the Nordic foraging node. Same crop
-            the welcome map uses, just wider in lon to include Asia. */}
-        <LivingNetworkMap
+        {/* Every node on a WebGL globe; picking a node (here or in the list
+            below) turns the globe to face it. The flow-rate tweak sets the spin. */}
+        <NetworkGlobe
           nodes={SporeData.NETWORK_NODES}
           selected={selected}
           onSelect={setSelected}
-          flowIntensity={Math.max(0.5, flowRate)}
-          viewBox={{ lonMin: -95, lonMax: 148, latMin: -15, latMax: 70 }}
+          speed={0.0015 * Math.max(0.5, flowRate)}
         />
         <div className="net-overlay">
           <div className="net-overlay-stat">
