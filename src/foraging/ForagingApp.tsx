@@ -1594,6 +1594,11 @@ export default function ForagingApp() {
           const attrib = e?.target?.getContainer?.()?.querySelector?.('.maplibregl-ctrl-attrib.maplibregl-compact');
           if (attrib) { attrib.classList.remove('maplibregl-compact-show'); attrib.removeAttribute('open'); }
         }}
+        // Any camera movement (drag, zoom, flyTo) cancels a pending long
+        // press. The move handlers below can't do it alone: MapLibre stops
+        // firing map `mousemove` while a pan is active, so on desktop a
+        // drag held past 700 ms used to pop the long-press menu mid-drag.
+        onMoveStart={() => { clearTimeout(longPressTimerRef.current); longPressStartRef.current = null; }}
         onMoveEnd={() => { handleMapSettle(); fetchNutrientForView(); }}
         onMouseDown={(e: any) => {
           longPressStartRef.current = { x: e.point?.x || 0, y: e.point?.y || 0 };
@@ -1903,8 +1908,10 @@ export default function ForagingApp() {
       {longPressMenu && (
         <>
           <div
-            onClick={() => setLongPressMenu(null)}
-            onTouchStart={() => setLongPressMenu(null)}
+            // Close on press, not click: a click never fires when the press
+            // and release land on different elements, which left this
+            // invisible backdrop up and swallowing the next drag.
+            onPointerDown={() => setLongPressMenu(null)}
             style={{
               position: 'fixed', inset: 0, zIndex: 40,
               background: 'transparent',
