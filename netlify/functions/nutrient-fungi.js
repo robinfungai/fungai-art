@@ -15,6 +15,11 @@
 // SOURCES (free, no key): iNaturalist research-grade + GBIF occurrences.
 // Reached at /api/nutrient-fungi?minLat=&maxLat=&minLng=&maxLng=
 
+import { createGuard } from "../../src/server/proxy-guard.mjs";
+
+// Fungai-only CORS + per-IP rate limit (see src/server/proxy-guard.mjs).
+const guard = createGuard({ name: "nutrient-fungi" });
+
 const GBIF_BASE = 'https://api.gbif.org/v1/occurrence/search';
 const INAT_BASE = 'https://api.inaturalist.org/v1/observations';
 const UA = { 'User-Agent': 'Fungai-Art-Foraging/1.0 (robin@fungai.art)' };
@@ -116,8 +121,9 @@ export async function collectNutrientObservations(bbox, { monthsBack = 36, limit
 }
 
 export const handler = async (event) => {
-  const cors = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Content-Type', 'Content-Type': 'application/json' };
-  if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers: cors, body: '' };
+  const gate = guard.event(event);
+  if (gate.response) return gate.response;
+  const cors = { ...gate.cors, 'Content-Type': 'application/json' };
 
   const qs = event.queryStringParameters || {};
   const bbox = clampBbox(parseFloat(qs.minLat ?? '55'), parseFloat(qs.maxLat ?? '56'), parseFloat(qs.minLng ?? '13'), parseFloat(qs.maxLng ?? '14.5'));

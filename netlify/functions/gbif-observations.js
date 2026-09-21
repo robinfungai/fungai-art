@@ -2,6 +2,11 @@
 // CC0 licensed open observation data — no API key required
 // Docs: https://www.gbif.org/developer/occurrence
 
+import { createGuard } from "../../src/server/proxy-guard.mjs";
+
+// Fungai-only CORS + per-IP rate limit (see src/server/proxy-guard.mjs).
+const guard = createGuard({ name: "gbif-observations" });
+
 const GBIF_BASE = 'https://api.gbif.org/v1/occurrence/search';
 
 // Map of common herb/fungi names to GBIF scientific names
@@ -39,6 +44,8 @@ const SPECIES_MAP = {
 };
 
 export default async function handler(req, context) {
+  const gate = guard.request(req);
+  if (gate.response) return gate.response;
   const url = new URL(req.url);
   const taxon = url.searchParams.get('taxon') || '';
   const lat = parseFloat(url.searchParams.get('lat') || '59.5');
@@ -75,7 +82,7 @@ export default async function handler(req, context) {
 
     if (!res.ok) {
       return new Response(JSON.stringify({ error: 'GBIF request failed', status: res.status }), {
-        status: 502, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        status: 502, headers: { 'Content-Type': 'application/json', ...gate.cors },
       });
     }
 
@@ -111,13 +118,13 @@ export default async function handler(req, context) {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
+        ...gate.cors,
         'Cache-Control': 'public, max-age=3600', // 1hr cache
       },
     });
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), {
-      status: 500, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      status: 500, headers: { 'Content-Type': 'application/json', ...gate.cors },
     });
   }
 }

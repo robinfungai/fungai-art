@@ -38,6 +38,7 @@
     "build:safety-rules": "node scripts/build-safety-rules.cjs",
     "test:safety-rules": "node tests/safety-rules-verify.cjs",
     "test:explorer": "node tests/explorer-verify.cjs",
+    "test:forage-proxies": "node tests/forage-proxies-verify.cjs",
     "test:sw-forage": "node tests/sw-forage-verify.cjs"
   },
   "dependencies": {

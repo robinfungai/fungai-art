@@ -21,6 +21,11 @@
 // Merged, deduplicated by lat/lng rounded to 4 decimals (~11m).
 // Cached aggressively — bbox tiles change slowly.
 
+import { createGuard } from "../../src/server/proxy-guard.mjs";
+
+// Fungai-only CORS + per-IP rate limit (see src/server/proxy-guard.mjs).
+const guard = createGuard({ name: "mushroom-observations" });
+
 const GBIF_BASE   = 'https://api.gbif.org/v1/occurrence/search';
 const INAT_BASE   = 'https://api.inaturalist.org/v1/observations';
 const KINGDOM_FUNGI_GBIF_KEY = 5;
@@ -115,12 +120,9 @@ async function fetchINat(bbox, monthsBack, limit) {
 }
 
 export const handler = async (event) => {
-  const cors = {
-    'Access-Control-Allow-Origin':  '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Content-Type': 'application/json',
-  };
-  if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers: cors, body: '' };
+  const gate = guard.event(event);
+  if (gate.response) return gate.response;
+  const cors = { ...gate.cors, 'Content-Type': 'application/json' };
 
   const qs = event.queryStringParameters || {};
   const bbox = clampBbox(

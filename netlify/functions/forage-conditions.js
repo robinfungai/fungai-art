@@ -2,7 +2,14 @@
 // Returns weather data + a 1-10 foraging score for given coordinates
 // Mushroom conditions model: rainfall 3-7 days ago + temperature + humidity
 
+import { createGuard } from "../../src/server/proxy-guard.mjs";
+
+// Fungai-only CORS + per-IP rate limit (see src/server/proxy-guard.mjs).
+const guard = createGuard({ name: "forage-conditions" });
+
 export default async function handler(req) {
+  const gate = guard.request(req);
+  if (gate.response) return gate.response;
   const url = new URL(req.url);
   const lat = parseFloat(url.searchParams.get('lat') || '60');
   const lng = parseFloat(url.searchParams.get('lng') || '15');
@@ -133,14 +140,14 @@ export default async function handler(req) {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
+        ...gate.cors,
         'Cache-Control': 'public, max-age=1800', // 30-min cache
       },
     });
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      headers: { 'Content-Type': 'application/json', ...gate.cors },
     });
   }
 }
