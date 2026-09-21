@@ -36,7 +36,8 @@
     "build:entity-map": "node scripts/build-entity-map.cjs",
     "test:entity-map": "node tests/entity-map-verify.cjs",
     "build:safety-rules": "node scripts/build-safety-rules.cjs",
-    "test:safety-rules": "node tests/safety-rules-verify.cjs"
+    "test:safety-rules": "node tests/safety-rules-verify.cjs",
+    "test:explorer": "node tests/explorer-verify.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

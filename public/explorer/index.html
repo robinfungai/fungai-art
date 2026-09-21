@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="dark">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Explorer · Fungai Art</title>
+<meta name="description" content="The Fungai Art apothecary told in chapters: sacred fungi, night and dream, ground and rhythm, heart and senses, forest specials, a bespoke bottle and the Dinner Experience."/>
+<link rel="canonical" href="https://www.fungai.art/explorer/"/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
+<link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
+<link rel="apple-touch-icon" href="/fungi.png?v=3"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Fungai Art"/>
+<meta property="og:title" content="The Explorer · Fungai Art"/>
+<meta property="og:description" content="The apothecary in seven chapters. Wander in, gather bottles, check out in one basket."/>
+<meta property="og:image" content="https://www.fungai.art/home/amanita123.webp"/>
+<meta property="og:url" content="https://www.fungai.art/explorer/"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.fungai.art/home/amanita123.webp"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════════════════════════
+   THE EXPLORER — chapter-selection layout (after Sybarite's "The
+   Future of Experience"), in the Fungai palette. Data lives in
+   chapters.js; this file only renders it.
+   ════════════════════════════════════════════════════════════════ */
+:root{
+  --void:#05090C; --forest:#080F13; --card:#111D22; --card-hi:#16262C; --moss:#1A2E33;
+  --lichen:#4D869B; --mist:#88BAC8; --parchment:#EDE5D8; --dust:#C0B49A; --coral:#CE6C52;
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif; --script:'Pinyon Script',cursive;
+  --gutter:44px; --card-w:300px; --gap:30px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{background:var(--void);color:var(--parchment);font-family:var(--sans);font-weight:300;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;opacity:0.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit}
+:focus-visible{outline:1.5px solid var(--mist);outline-offset:3px}
+
+/* ── NAV (same shape as /shop so the member banner offsets it) ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:16px var(--gutter);display:flex;align-items:center;justify-content:space-between;background:rgba(5,9,12,0.86);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:0.5px solid rgba(136,186,200,0.07)}
+.nav-brand{text-decoration:none;display:flex;align-items:center;gap:12px}
+.nav-brand img{height:36px;width:auto;opacity:0.9}
+.nav-brand-text{display:flex;flex-direction:column;line-height:1.2}
+.nav-brand-text .main{font-family:var(--serif);font-size:17px;color:var(--parchment);letter-spacing:0.5px}
+.nav-brand-text .sub{font-size:8.5px;letter-spacing:3px;color:var(--lichen);text-transform:uppercase}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:var(--dust);text-decoration:none;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--mist)}
+.nav-basket{display:flex;align-items:center;gap:8px;padding:8px 18px;border:0.5px solid rgba(136,186,200,0.3);color:var(--mist);text-decoration:none;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;transition:background .2s}
+.nav-basket:hover{background:rgba(136,186,200,0.08)}
+.basket-count{background:var(--lichen);color:var(--parchment);border-radius:50%;min-width:18px;height:18px;padding:0 4px;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:500;letter-spacing:0}
+.basket-count.is-empty{display:none}
+
+/* ── MASTHEAD ── */
+.mast{padding:128px var(--gutter) 8px;text-align:center}
+.mast-presents{display:flex;align-items:baseline;justify-content:center;gap:14px;margin-bottom:6px}
+.mast-brand{font-family:var(--sans);font-weight:500;font-size:clamp(14px,1.6vw,20px);letter-spacing:0.34em;text-transform:uppercase;color:var(--parchment)}
+.mast-script{font-family:var(--script);font-size:clamp(22px,2.4vw,32px);color:var(--dust);line-height:1}
+.mast-title{font-family:var(--serif);font-weight:500;text-transform:uppercase;font-size:clamp(46px,8.2vw,108px);line-height:0.92;letter-spacing:-0.015em;color:var(--parchment)}
+.mast-strap{margin-top:16px;font-size:11px;font-weight:500;letter-spacing:0.26em;text-transform:uppercase;color:var(--dust)}
+.mast-event{display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:8px 16px;border-radius:999px;border:0.5px solid rgba(232,154,168,0.45);color:var(--parchment);text-decoration:none;font-size:12px;letter-spacing:0.04em;transition:background .25s,border-color .25s}
+.mast-event:hover{background:rgba(232,154,168,0.1);border-color:rgba(232,154,168,0.8)}
+.mast-event .dot{width:7px;height:7px;border-radius:50%;background:#E89AA8;box-shadow:0 0 0 4px rgba(232,154,168,0.18)}
+.mast-event[hidden]{display:none}
+
+/* ── CHAPTER RAIL ── */
+.rail{position:relative;margin-top:18px}
+.rail-track{list-style:none;display:flex;gap:var(--gap);overflow-x:auto;overflow-y:hidden;padding:34px var(--gutter) 40px;scroll-snap-type:x proximity;scroll-padding-inline:var(--gutter);scrollbar-width:none;-webkit-overflow-scrolling:touch;cursor:grab}
+.rail-track::-webkit-scrollbar{display:none}
+.rail-track.is-dragging{cursor:grabbing;scroll-snap-type:none;user-select:none}
+.rail-track.is-dragging a{pointer-events:none}
+.rail-track li{flex:0 0 var(--card-w);scroll-snap-align:start}
+
+.chapter-card{--c:var(--mist);position:relative;display:flex;flex-direction:column;align-items:center;height:100%;padding:30px 24px 50px;border-radius:10px;background:var(--card);border:0.5px solid rgba(136,186,200,0.08);text-decoration:none;transform-origin:center;transition:transform .5s var(--ease),background-color .35s ease,box-shadow .5s var(--ease),border-color .35s}
+.chapter-kicker{display:block;font-size:12px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--parchment);margin-bottom:22px;transition:color .35s}
+.chapter-media{display:block;position:relative;width:100%}
+.chapter-frame{display:block;position:relative;width:100%;aspect-ratio:252/272;border-radius:7px;overflow:hidden;background:var(--moss)}
+.chapter-frame img,.chapter-frame video{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease),filter .5s}
+.chapter-frame img{filter:saturate(0.92) brightness(0.9)}
+.chapter-pill{position:absolute;left:50%;bottom:0;transform:translate(-50%,50%);max-width:calc(100% + 16px);padding:9px 16px 7px;border-radius:12px;background:var(--parchment);color:var(--void);font-family:var(--serif);font-weight:500;font-size:clamp(19px,1.7vw,23px);line-height:1;letter-spacing:-0.01em;text-transform:uppercase;white-space:nowrap;box-shadow:0 1px 0 rgba(5,9,12,0.2),0 8px 20px -10px rgba(0,0,0,0.6)}
+
+.chapter-card.is-current,
+.chapter-card:focus-visible{background:var(--c);border-color:transparent;transform:scale(1.06);box-shadow:0 34px 60px -26px rgba(0,0,0,0.85)}
+.chapter-card.is-current .chapter-kicker,
+.chapter-card:focus-visible .chapter-kicker{color:var(--void)}
+.chapter-card.is-current .chapter-frame img,
+.chapter-card:focus-visible .chapter-frame img{filter:none}
+@media (hover:hover){
+  .chapter-card:hover{background:var(--c);border-color:transparent;transform:scale(1.06);box-shadow:0 34px 60px -26px rgba(0,0,0,0.85)}
+  .chapter-card:hover .chapter-kicker{color:var(--void)}
+  .chapter-card:hover .chapter-frame img{filter:none;transform:scale(1.04)}
+}
+.chapter-card:focus-visible{outline-offset:6px}
+
+.rail-controls{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 var(--gutter)}
+.rail-arrow{width:56px;height:28px;border-radius:999px;border:0;background:var(--parchment);color:var(--void);font-size:17px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .25s,color .25s,opacity .25s}
+.rail-arrow:hover{background:var(--mist)}
+.rail-arrow:disabled{background:rgba(237,229,216,0.14);color:var(--dust);cursor:default}
+.rail-hint{font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(192,180,154,0.6);text-align:center}
+
+/* ── CHAPTER VIEW ── */
+.chapter-view{--c:var(--mist);position:relative;max-width:1240px;margin:0 auto;padding:88px var(--gutter) 40px;outline:none;scroll-margin-top:64px}
+.chapter-view::before{content:'';display:block;width:64px;height:2px;background:var(--c);margin-bottom:34px}
+.ch-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:56px;align-items:start}
+.ch-kicker{font-size:11px;font-weight:500;letter-spacing:0.24em;text-transform:uppercase;color:var(--c);margin-bottom:14px}
+.ch-title{font-family:var(--serif);font-weight:300;font-size:clamp(44px,5.6vw,76px);line-height:0.98;letter-spacing:-0.01em;color:var(--parchment)}
+.ch-lede{margin-top:18px;font-family:var(--serif);font-style:italic;font-size:clamp(21px,2vw,26px);line-height:1.35;color:var(--dust)}
+.ch-body p{font-size:16px;line-height:1.8;color:rgba(237,229,216,0.82);max-width:62ch}
+.ch-body p+p{margin-top:16px}
+.ch-event{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.ch-event-label{font-size:10px;font-weight:500;letter-spacing:0.24em;text-transform:uppercase;color:var(--c);margin-right:4px}
+.ch-event-line{padding:6px 14px;border-radius:999px;background:rgba(237,229,216,0.06);border:0.5px solid rgba(237,229,216,0.16);font-size:13px;color:var(--parchment)}
+.ch-actions{margin-top:30px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.ch-cta{display:inline-flex;align-items:center;gap:10px;padding:13px 24px;border-radius:999px;background:var(--c);color:var(--void);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;transition:filter .2s,transform .2s}
+.ch-cta:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.ch-link{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;border:0.5px solid rgba(237,229,216,0.24);border-color:color-mix(in srgb,var(--c) 45%,transparent);color:var(--parchment);text-decoration:none;font-size:12.5px;transition:background .2s,border-color .2s}
+.ch-link:hover{background:rgba(237,229,216,0.06);border-color:var(--c)}
+
+.ch-products{margin-top:72px}
+.ch-products-head{display:flex;align-items:baseline;gap:18px;margin-bottom:26px}
+.ch-products-head h3{font-family:var(--serif);font-weight:300;font-size:30px;color:var(--parchment)}
+.ch-products-head h3 em{font-style:italic;color:var(--c)}
+.ch-products-head .line{flex:1;height:0.5px;background:rgba(136,186,200,0.16)}
+.ch-products-head .count{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--dust)}
+.pc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:28px}
+
+.pc{position:relative;display:flex;flex-direction:column;background:var(--card);border:0.5px solid rgba(136,186,200,0.08);border-radius:8px;overflow:hidden;transition:border-color .3s,transform .4s var(--ease)}
+.pc:hover{border-color:color-mix(in srgb,var(--c) 40%,transparent)}
+.pc-media{position:relative;display:block;aspect-ratio:3/4;background:var(--moss);overflow:hidden}
+.pc-media img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.pc:hover .pc-media img{transform:scale(1.04)}
+.pc-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,#1E3438 0%,#0D1619 72%)}
+.pc-ph span{font-family:var(--serif);font-style:italic;font-size:30px;color:rgba(237,229,216,0.55)}
+.pc-badge{position:absolute;top:12px;right:12px;z-index:2;padding:4px 10px;border-radius:2px;font-size:8.5px;letter-spacing:0.16em;text-transform:uppercase;font-weight:500}
+.pc-badge.low{background:rgba(232,177,75,0.9);color:#1A1208}
+.pc-badge.out{background:rgba(206,108,82,0.92);color:#fff}
+.pc-info{display:flex;flex-direction:column;flex:1;padding:18px 18px 18px}
+.pc-label{font-size:9.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--lichen);margin-bottom:6px}
+.pc-name{font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.1;color:var(--parchment);margin-bottom:8px}
+.pc-name a{text-decoration:none}
+.pc-note{font-size:13.5px;line-height:1.6;color:rgba(192,180,154,0.9);flex:1}
+.pc-sizes{display:flex;gap:6px;margin-top:14px}
+.pc-size-btn{padding:5px 11px;border-radius:999px;border:0.5px solid rgba(237,229,216,0.22);background:none;font-size:11.5px;color:var(--dust);cursor:pointer;transition:all .2s}
+.pc-size-btn[aria-checked="true"]{background:var(--parchment);color:var(--void);border-color:var(--parchment)}
+.pc-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:16px;padding-top:14px;border-top:0.5px solid rgba(136,186,200,0.08)}
+.pc-price{display:flex;align-items:baseline;gap:8px}
+.pc-price .size{font-size:10.5px;letter-spacing:0.08em;color:var(--lichen)}
+.pc-price .amount{font-family:var(--serif);font-size:22px;color:var(--mist)}
+.pc-add{padding:9px 14px;border:0.5px solid rgba(136,186,200,0.35);border-radius:2px;background:none;color:var(--mist);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s,border-color .2s}
+.pc-add:hover{background:var(--c);border-color:var(--c);color:var(--void)}
+.pc-add:disabled{opacity:0.4;cursor:not-allowed;background:none;color:var(--dust);border-color:rgba(237,229,216,0.2)}
+.pc-more{margin-top:12px;font-size:11.5px;color:var(--dust);text-decoration:none;border-bottom:0.5px solid rgba(192,180,154,0.3);align-self:flex-start;transition:color .2s,border-color .2s}
+.pc-more:hover{color:var(--parchment);border-color:var(--parchment)}
+.pc.is-unavailable .pc-ph span{opacity:0.2}
+.pc.is-unavailable .pc-media img{filter:saturate(0.3) brightness(0.6) blur(1px)}
+.pc.is-unavailable .pc-media::after{content:'Currently unavailable';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);padding:8px 16px;border-radius:2px;background:rgba(5,9,12,0.92);border:0.5px solid rgba(232,177,75,0.5);color:#F5D689;font-size:9px;letter-spacing:0.24em;text-transform:uppercase;white-space:nowrap}
+
+.ch-pager{display:flex;justify-content:space-between;gap:20px;margin-top:88px;padding-top:28px;border-top:0.5px solid rgba(136,186,200,0.12)}
+.ch-pager a{display:flex;flex-direction:column;gap:6px;text-decoration:none;max-width:48%}
+.ch-pager a.next{text-align:right;margin-left:auto}
+.ch-pager .dir{font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--dust)}
+.ch-pager .name{font-family:var(--serif);font-size:clamp(22px,2.4vw,32px);line-height:1.1;color:var(--parchment);transition:color .2s}
+.ch-pager a:hover .name{color:var(--c)}
+
+/* ── FOOTER ── */
+.foot{margin-top:72px;padding:28px var(--gutter) 40px;border-top:0.5px solid rgba(136,186,200,0.1);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px}
+.foot-group{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:6px 6px 6px 16px;border-radius:999px;background:rgba(237,229,216,0.04)}
+.foot-group .lbl{font-size:11px;color:var(--dust);margin-right:6px}
+.foot-pill{padding:7px 14px;border-radius:999px;background:rgba(237,229,216,0.08);color:var(--parchment);text-decoration:none;font-size:12px;transition:background .2s}
+.foot-pill:hover{background:rgba(237,229,216,0.16)}
+.foot-copy{width:100%;text-align:center;font-size:10.5px;letter-spacing:0.1em;color:rgba(192,180,154,0.5);margin-top:8px}
+
+/* ── TOAST ── */
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,24px);z-index:1000;padding:13px 20px;border-radius:3px;background:var(--parchment);color:var(--void);font-size:13px;box-shadow:0 14px 40px -12px rgba(0,0,0,0.7);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;max-width:calc(100vw - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.toast a{color:var(--void);font-weight:500;text-decoration:none;border-bottom:0.5px solid rgba(5,9,12,0.4);margin-left:8px;white-space:nowrap}
+
+.noscript{max-width:640px;margin:40px auto;padding:0 var(--gutter);text-align:center;color:var(--dust)}
+.noscript a{color:var(--mist)}
+
+/* ── RESPONSIVE ── */
+@media (max-width:980px){
+  .ch-grid{grid-template-columns:1fr;gap:28px}
+}
+@media (max-width:768px){
+  :root{--gutter:18px;--card-w:min(74vw,290px);--gap:18px}
+  .nav{padding:12px 84px 12px var(--gutter)}
+  .nav-links{display:none}
+  .nav-brand-text .sub{display:none}
+  .mast{padding-top:104px}
+  .mast-presents{gap:10px}
+  .rail-track{padding-top:26px;padding-bottom:32px}
+  .rail-hint{display:none}
+  .chapter-view{padding-top:60px}
+  .ch-products{margin-top:52px}
+  .pc-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .pc-info{padding:14px 12px}
+  .pc-name{font-size:20px}
+  .pc-note{font-size:12.5px}
+  .pc-foot{flex-direction:column;align-items:stretch}
+  .pc-add{width:100%;padding:10px}
+  .foot{justify-content:center}
+}
+@media (max-width:420px){
+  .pc-grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important;scroll-behavior:auto !important}
+  .chapter-card.is-current,.chapter-card:hover,.chapter-card:focus-visible{transform:none}
+}
+</style>
+<script src="/global-nav.js" defer></script>
+</head>
+<body>
+
+<nav class="nav" id="mainNav" aria-label="Main">
+  <a href="/" class="nav-brand">
+    <img src="/fungai-art-logo.png" alt="">
+    <span class="nav-brand-text"><span class="main">Fungai Art</span><span class="sub">Entheobotanicals</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/explorer" class="active" aria-current="page">Explorer</a>
+    <a href="/shop">Shop</a>
+    <a href="/dinner-experience">Dinner</a>
+    <a href="/community">Community</a>
+  </div>
+  <a class="nav-basket" href="/shop#basket">Basket <span class="basket-count is-empty" id="basketCount">0</span></a>
+</nav>
+
+<header class="mast">
+  <p class="mast-presents"><span class="mast-brand">Fungai Art</span><span class="mast-script">presents</span></p>
+  <h1 class="mast-title">The Explorer</h1>
+  <p class="mast-strap">The apothecary in seven chapters</p>
+  <a class="mast-event" id="mastEvent" href="#at-the-table" hidden></a>
+</header>
+
+<section class="rail" aria-label="Chapters">
+  <ol class="rail-track" id="railTrack"></ol>
+  <div class="rail-controls">
+    <button class="rail-arrow" id="railPrev" type="button" aria-label="Scroll chapters left">&larr;</button>
+    <p class="rail-hint">Drag, scroll or use the arrow keys</p>
+    <button class="rail-arrow" id="railNext" type="button" aria-label="Scroll chapters right">&rarr;</button>
+  </div>
+</section>
+
+<main class="chapter-view" id="chapter" tabindex="-1"></main>
+
+<noscript>
+  <p class="noscript">The Explorer needs JavaScript to open its chapters. Everything in it is also in <a href="/shop">the apothecary</a>.</p>
+</noscript>
+
+<footer class="foot">
+  <div class="foot-group">
+    <span class="lbl">Get in touch</span>
+    <a class="foot-pill" href="mailto:robin@fungai.art">robin@fungai.art</a>
+    <a class="foot-pill" href="https://www.instagram.com/fungai.art" rel="noopener" target="_blank">Instagram</a>
+  </div>
+  <div class="foot-group">
+    <a class="foot-pill" href="/shop">The full apothecary &rarr;</a>
+    <a class="foot-pill" href="/#newsletter">Monthly field notes &rarr;</a>
+  </div>
+  <p class="foot-copy">&copy; Fungai Art &middot; <a href="/privacy" style="color:inherit">Privacy</a> &middot; <a href="/terms" style="color:inherit">Terms</a></p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="/explorer/chapters.js"></script>
+<script>
+(function(){
+  'use strict';
+  const DATA = window.FA_EXPLORER;
+  if (!DATA || !Array.isArray(DATA.chapters) || !DATA.chapters.length) return;
+  const CHAPTERS = DATA.chapters;
+  const PRODUCTS = DATA.products || {};
+
+  const track   = document.getElementById('railTrack');
+  const view    = document.getElementById('chapter');
+  const prevBtn = document.getElementById('railPrev');
+  const nextBtn = document.getElementById('railNext');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const esc = (s) => String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  const euro = (n) => '€' + (Math.round(n * 100) / 100).toString();
+
+  // ── Rail ───────────────────────────────────────────────────────
+  track.innerHTML = CHAPTERS.map((c, i) => {
+    const media = c.video
+      ? `<video muted loop playsinline preload="none" poster="${esc(c.img)}"><source src="${esc(c.video)}" type="video/mp4"></video>`
+      : `<img src="${esc(c.img)}" alt="" loading="${i < 4 ? 'eager' : 'lazy'}" decoding="async">`;
+    return `<li><a class="chapter-card" href="#${esc(c.slug)}" data-slug="${esc(c.slug)}" style="--c:${esc(c.colour)}" aria-label="${esc(c.kicker)}: ${esc(c.title)}">
+      <span class="chapter-kicker">${esc(c.kicker)}</span>
+      <span class="chapter-media">
+        <span class="chapter-frame">${media}</span>
+        <span class="chapter-pill">${esc(c.title)}</span>
+      </span>
+    </a></li>`;
+  }).join('');
+  const cards = Array.from(track.querySelectorAll('.chapter-card'));
+
+  // Hover video (only chapters that define one).
+  cards.forEach(card => {
+    const v = card.querySelector('video');
+    if (!v) return;
+    card.addEventListener('pointerenter', () => { v.play().catch(() => {}); });
+    card.addEventListener('pointerleave', () => { v.pause(); });
+  });
+
+  function stepWidth(){
+    const li = track.querySelector('li');
+    if (!li) return 300;
+    const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 0;
+    return li.getBoundingClientRect().width + gap;
+  }
+  function updateArrows(){
+    const max = track.scrollWidth - track.clientWidth;
+    prevBtn.disabled = track.scrollLeft <= 2;
+    nextBtn.disabled = track.scrollLeft >= max - 2;
+  }
+  function scrollRail(dir){
+    const n = Math.max(1, Math.floor(track.clientWidth / stepWidth()) - 1);
+    track.scrollBy({ left: dir * n * stepWidth(), behavior: reduceMotion ? 'auto' : 'smooth' });
+  }
+  prevBtn.addEventListener('click', () => scrollRail(-1));
+  nextBtn.addEventListener('click', () => scrollRail(1));
+  track.addEventListener('scroll', updateArrows, { passive: true });
+  window.addEventListener('resize', updateArrows);
+
+  // Arrow keys move between cards.
+  track.addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    const i = cards.indexOf(document.activeElement);
+    if (i < 0) return;
+    e.preventDefault();
+    const next = cards[Math.min(cards.length - 1, Math.max(0, i + (e.key === 'ArrowRight' ? 1 : -1)))];
+    next.focus({ preventScroll: true });
+    next.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: reduceMotion ? 'auto' : 'smooth' });
+  });
+
+  // Mouse drag to scroll. Touch and trackpads scroll natively.
+  let drag = null;
+  track.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    drag = { x: e.clientX, left: track.scrollLeft, moved: false };
+  });
+  window.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x;
+    if (!drag.moved && Math.abs(dx) > 6) { drag.moved = true; track.classList.add('is-dragging'); }
+    if (drag.moved) track.scrollLeft = drag.left - dx;
+  });
+  // Swallow only the click that the browser fires as part of the drag's
+  // pointerup. If the drag ends outside the rail no click arrives, so the
+  // guard is dropped on the next tick instead of eating a later real click.
+  const swallowClick = (ev) => { ev.preventDefault(); ev.stopPropagation(); };
+  window.addEventListener('pointerup', () => {
+    if (!drag) return;
+    const moved = drag.moved;
+    drag = null;
+    if (moved) {
+      track.addEventListener('click', swallowClick, { capture: true, once: true });
+      setTimeout(() => {
+        track.removeEventListener('click', swallowClick, { capture: true });
+        track.classList.remove('is-dragging');
+      }, 0);
+    }
+  });
+
+  // Clicking the chapter that is already open changes no hash, so no
+  // hashchange fires: scroll to it directly instead of doing nothing.
+  track.addEventListener('click', (e) => {
+    const card = e.target.closest('.chapter-card');
+    if (!card || location.hash !== '#' + card.dataset.slug) return;
+    e.preventDefault();
+    view.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    view.focus({ preventScroll: true });
+  });
+
+  // ── Dated notice (masthead + chapter) ──────────────────────────
+  const today = new Date().toISOString().slice(0, 10);
+  const liveEvent = (c) => c.event && (!c.event.until || today < c.event.until);
+  const eventChapter = CHAPTERS.find(liveEvent);
+  if (eventChapter) {
+    const mast = document.getElementById('mastEvent');
+    mast.href = '#' + eventChapter.slug;
+    mast.innerHTML = `<span class="dot" aria-hidden="true"></span>${esc(eventChapter.event.label)} &middot; ${eventChapter.event.lines.map(esc).join(' &middot; ')} <span aria-hidden="true">&rarr;</span>`;
+    mast.hidden = false;
+  }
+
+  // ── Chapter view ───────────────────────────────────────────────
+  function productCard(key){
+    const p = PRODUCTS[key];
+    if (!p) return '';
+    const sizes = Array.isArray(p.sizes) && p.sizes.length ? p.sizes : null;
+    const first = sizes ? sizes[0] : { size: p.size, name: key, price: p.price };
+    const media = p.img
+      ? `<img src="${esc(p.img)}" alt="${esc(p.title)}" loading="lazy" decoding="async">`
+      : `<span class="pc-ph"><span>${esc(p.placeholder || p.title)}</span></span>`;
+    const mediaTag = p.href && !p.unavailable
+      ? `<a class="pc-media" href="${esc(p.href)}" tabindex="-1" aria-hidden="true">${media}</a>`
+      : `<div class="pc-media">${media}</div>`;
+    const sizeChips = sizes ? `<div class="pc-sizes" role="radiogroup" aria-label="Size">${sizes.map((s, i) =>
+      `<button type="button" class="pc-size-btn" role="radio" aria-checked="${i === 0}" data-name="${esc(s.name)}" data-price="${s.price}" data-size="${esc(s.size)}">${esc(s.size)}</button>`).join('')}</div>` : '';
+    const name = p.href && !p.unavailable ? `<a href="${esc(p.href)}">${esc(p.title)}</a>` : esc(p.title);
+    return `<article class="pc${p.unavailable ? ' is-unavailable' : ''}" data-name="${esc(first.name)}">
+      ${mediaTag}
+      <div class="pc-info">
+        <p class="pc-label">${esc(p.label)}</p>
+        <h4 class="pc-name">${name}</h4>
+        <p class="pc-note">${esc(p.note)}</p>
+        ${sizeChips}
+        <div class="pc-foot">
+          <span class="pc-price"><span class="size">${esc(first.size || '')}</span><span class="amount">${euro(first.price)}</span></span>
+          <button type="button" class="pc-add" data-name="${esc(first.name)}" data-price="${first.price}" ${p.unavailable ? 'disabled' : ''}>${p.unavailable ? 'Unavailable' : 'Add to basket'}</button>
+        </div>
+        ${p.href && !p.unavailable ? `<a class="pc-more" href="${esc(p.href)}">Read the full page &rarr;</a>` : ''}
+      </div>
+    </article>`;
+  }
+
+  function render(slug, opts){
+    opts = opts || {};
+    const idx = Math.max(0, CHAPTERS.findIndex(c => c.slug === slug));
+    const c = CHAPTERS[idx];
+    const prev = CHAPTERS[idx - 1], next = CHAPTERS[idx + 1];
+    const products = (c.products || []).filter(k => PRODUCTS[k]);
+
+    view.style.setProperty('--c', c.colour);
+    view.setAttribute('aria-label', c.kicker + ': ' + c.title);
+    view.innerHTML = `
+      <div class="ch-grid">
+        <div>
+          <p class="ch-kicker">${esc(c.kicker)}</p>
+          <h2 class="ch-title">${esc(c.title)}</h2>
+          ${c.lede ? `<p class="ch-lede">${esc(c.lede)}</p>` : ''}
+        </div>
+        <div>
+          <div class="ch-body">${(c.body || []).map(p => `<p>${esc(p)}</p>`).join('')}</div>
+          ${liveEvent(c) ? `<div class="ch-event"><span class="ch-event-label">${esc(c.event.label)}</span>${c.event.lines.map(l => `<span class="ch-event-line">${esc(l)}</span>`).join('')}</div>` : ''}
+          ${(c.cta || (c.links && c.links.length)) ? `<div class="ch-actions">
+            ${c.cta ? `<a class="ch-cta" href="${esc(c.cta.href)}">${esc(c.cta.label)} <span aria-hidden="true">&rarr;</span></a>` : ''}
+            ${(c.links || []).map(l => `<a class="ch-link" href="${esc(l.href)}">${esc(l.label)}</a>`).join('')}
+          </div>` : ''}
+        </div>
+      </div>
+      ${products.length ? `<section class="ch-products" aria-label="Products in this chapter">
+        <div class="ch-products-head"><h3>From this <em>chapter</em></h3><span class="line"></span><span class="count">${products.length} ${products.length === 1 ? 'offering' : 'offerings'}</span></div>
+        <div class="pc-grid">${products.map(productCard).join('')}</div>
+      </section>` : ''}
+      <nav class="ch-pager" aria-label="Chapters">
+        ${prev ? `<a class="prev" href="#${esc(prev.slug)}"><span class="dir">&larr; ${esc(prev.kicker)}</span><span class="name">${esc(prev.title)}</span></a>` : '<span></span>'}
+        ${next ? `<a class="next" href="#${esc(next.slug)}"><span class="dir">${esc(next.kicker)} &rarr;</span><span class="name">${esc(next.title)}</span></a>` : `<a class="next" href="/shop"><span class="dir">Afterword &rarr;</span><span class="name">The full apothecary</span></a>`}
+      </nav>`;
+
+    cards.forEach(card => {
+      const on = card.dataset.slug === c.slug;
+      card.classList.toggle('is-current', on);
+      if (on) card.setAttribute('aria-current', 'true'); else card.removeAttribute('aria-current');
+    });
+    document.title = (idx === 0 ? 'The Explorer' : c.title + ' · The Explorer') + ' · Fungai Art';
+    applyStock();
+
+    if (opts.revealCard) {
+      const card = cards[idx];
+      const r = card.getBoundingClientRect(), tr = track.getBoundingClientRect();
+      if (r.left < tr.left || r.right > tr.right) {
+        track.scrollTo({ left: card.parentElement.offsetLeft - track.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft), behavior: 'auto' });
+      }
+    }
+    if (opts.scroll) {
+      view.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      view.focus({ preventScroll: true });
+    }
+  }
+
+  function slugFromHash(){
+    const s = decodeURIComponent(location.hash.replace(/^#/, ''));
+    return CHAPTERS.some(c => c.slug === s) ? s : null;
+  }
+  window.addEventListener('hashchange', () => {
+    const s = slugFromHash();
+    if (s) render(s, { scroll: true, revealCard: true });
+  });
+  // Size chips (saffron) swap the price + the cart name on that card.
+  view.addEventListener('click', (e) => {
+    const chip = e.target.closest('.pc-size-btn');
+    if (!chip) return;
+    const card = chip.closest('.pc');
+    card.querySelectorAll('.pc-size-btn').forEach(b => b.setAttribute('aria-checked', String(b === chip)));
+    card.dataset.name = chip.dataset.name;
+    card.querySelector('.pc-price .size').textContent = chip.dataset.size;
+    card.querySelector('.pc-price .amount').textContent = euro(Number(chip.dataset.price));
+    const add = card.querySelector('.pc-add');
+    add.dataset.name = chip.dataset.name;
+    add.dataset.price = chip.dataset.price;
+    applyStock();
+  });
+
+  // ── Basket — same localStorage key + shape as /shop and the product
+  // pages, so the drawer + checkout on /shop pick it up unchanged. The
+  // server re-prices every line from its own catalog at checkout.
+  const CART_KEY = 'fa_cart_v1';
+  function loadCart(){
+    try {
+      const c = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+      return Array.isArray(c) ? c.filter(i => i && typeof i.name === 'string' && typeof i.price === 'number' && typeof i.qty === 'number') : [];
+    } catch { return []; }
+  }
+  function saveCart(c){ try { localStorage.setItem(CART_KEY, JSON.stringify(c)); return true; } catch { return false; } }
+  function refreshCount(){
+    const q = loadCart().reduce((a, i) => a + (i.qty || 0), 0);
+    const chip = document.getElementById('basketCount');
+    chip.textContent = q;
+    chip.classList.toggle('is-empty', q === 0);
+  }
+  let toastT;
+  function toast(html){
+    const t = document.getElementById('toast');
+    t.innerHTML = html;
+    t.classList.add('show');
+    clearTimeout(toastT);
+    toastT = setTimeout(() => t.classList.remove('show'), 4200);
+  }
+  view.addEventListener('click', (e) => {
+    const btn = e.target.closest('.pc-add');
+    if (!btn || btn.disabled) return;
+    const name = btn.dataset.name, price = Number(btn.dataset.price);
+    if (!name || !(price > 0)) return;
+    const cart = loadCart();
+    const ex = cart.find(i => i.name === name);
+    if (ex) ex.qty++; else cart.push({ name, price, qty: 1 });
+    if (!saveCart(cart)) { toast('Your browser blocked the basket. Please add this from <a href="/shop">the shop</a>.'); return; }
+    refreshCount();
+    toast(`Added — ${esc(name)} <a href="/shop#basket">Continue in basket &rarr;</a>`);
+  });
+  refreshCount();
+  window.addEventListener('storage', refreshCount);
+
+  // ── Live stock (same product_inventory table the shop reads). ──
+  let stock = null;
+  function applyStock(){
+    if (!stock) return;
+    view.querySelectorAll('.pc').forEach(card => {
+      if (card.classList.contains('is-unavailable')) return;
+      const btn = card.querySelector('.pc-add');
+      const old = card.querySelector('.pc-badge');
+      if (old) old.remove();
+      btn.disabled = false;
+      btn.textContent = 'Add to basket';
+      const n = stock.get(card.dataset.name);
+      if (typeof n !== 'number') return;
+      const media = card.querySelector('.pc-media');
+      if (n <= 0) {
+        media.insertAdjacentHTML('beforeend', '<span class="pc-badge out">Sold out</span>');
+        btn.disabled = true;
+        btn.textContent = 'Sold out';
+      } else if (n <= 3) {
+        media.insertAdjacentHTML('beforeend', `<span class="pc-badge low">${n} left</span>`);
+      }
+    });
+  }
+  window.addEventListener('load', async () => {
+    try {
+      if (!window.SBready) await new Promise(r => setTimeout(r, 400));
+      if (!window.SBready) return;
+      await window.SBready;
+      if (!window.SBclient) return;
+      const { data, error } = await window.SBclient.from('product_inventory').select('product_id, stock_count');
+      if (error) { console.warn('[Explorer] inventory fetch failed:', error.message); return; }
+      stock = new Map((data || []).map(r => [r.product_id, r.stock_count]));
+      applyStock();
+    } catch (e) { console.warn('[Explorer] live stock failed:', e); }
+  });
+
+  // First render goes last: render() calls applyStock(), which reads
+  // `stock`, and every click handler above must exist before a chapter
+  // is on screen.
+  const initial = slugFromHash();
+  render(initial || CHAPTERS[0].slug, { revealCard: true, scroll: !!initial });
+  updateArrows();
+})();
+</script>
+<script src="/supabase-client.js" defer></script>
+<script src="/cookie-banner.js" defer></script>
+</body>
+</html>

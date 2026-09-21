@@ -607,6 +607,7 @@
       <button id="fa-sub-nav-drawer-close" aria-label="Close menu">✕</button>
       <div class="fa-sub-nav-section">Explore</div>
       <a href="/">Home</a>
+      <a href="/explorer">Explorer <span class="fa-tag">· chapters</span></a>
       <a href="/shop">Shop <span class="fa-tag">· apothecary</span></a>
       <a href="/dinner-experience">Dinner Experience <span class="fa-tag">· ceremony</span></a>
       <div class="fa-sub-nav-section">Intelligence</div>

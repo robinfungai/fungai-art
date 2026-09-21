@@ -33,6 +33,8 @@ const STATIC_PAGES = [
   // Consumer-facing quiz landing (IG traffic → reserve extract)
   '/find-your-formula',
   '/find-your-formula-pro',
+  // Chapter-selection gateway into the shop (public/explorer/)
+  '/explorer',
 ];
 
 // Academy P0.5 · the community portal no longer ships raw JSX with

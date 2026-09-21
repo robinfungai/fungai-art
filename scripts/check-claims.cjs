@@ -82,6 +82,7 @@ const SURFACES = [
       'public/shop', 'public/home/index.html', 'public/find-your-formula/index.html',
       'public/find-your-formula-pro/index.html', 'public/mixology/index.html',
       'public/dinner-experience/index.html', 'public/patron/index.html',
+      'public/explorer',
     ] },
   { name: 'editorial',  weight: 'report', paths: [
       'public/community/academy', 'public/health', 'public/extraction',
