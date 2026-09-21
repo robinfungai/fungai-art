@@ -1967,11 +1967,16 @@ export default function ForagingApp() {
               onClick={() => {
                 // Best-effort reverse-geocode → auto-fill MYCO's region
                 // name so the panel opens ready to ask about that spot.
+                // Same privacy path as the GPS lookup (audit C-04): round
+                // to ~1 km and go through our proxy, never straight to
+                // BigDataCloud with the exact pressed coordinates.
                 setMycoRegionName(''); // clear stale entry
-                fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${longPressMenu.lat}&longitude=${longPressMenu.lng}&localityLanguage=en`)
+                const approxLat = Math.round(longPressMenu.lat * 100) / 100;
+                const approxLng = Math.round(longPressMenu.lng * 100) / 100;
+                fetch(`/api/reverse-geocode?lat=${approxLat}&lng=${approxLng}`)
                   .then(r => r.json())
                   .then(d => {
-                    const parts = [d.city || d.locality, d.principalSubdivision, d.countryName].filter(Boolean);
+                    const parts = [d.city, d.region, d.country].filter(Boolean);
                     if (parts.length) setMycoRegionName(parts.slice(0, 2).join(', '));
                   })
                   .catch(() => {});
