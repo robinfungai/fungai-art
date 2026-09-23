@@ -1,4 +1,3 @@
-import React from 'react';
 import { EcoNode, Season } from '../types/EcoNode';
 import { HABITAT_COLORS, HABITAT_LABELS } from '../data/ecoNodes';
 import { scoreSpecies, isSpeciesInSeason } from './scoring';

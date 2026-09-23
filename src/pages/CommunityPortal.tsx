@@ -370,7 +370,11 @@ function Dashboard({ member, onLogout }: DashboardProps) {
   const [notes, setNotes] = useState(() => lsGet<string>(K.notes(member.name), ""));
 
   function getActive() {
-    return lsGet<{ branch: Branch; start: number } | null>(K.active(member.name), null);
+    // `ct` is written by startTimer() below and read in three places. It was
+    // missing from this type, so every read of active.ct was a type error
+    // while the value was in fact always there. Optional because a record
+    // written before ct existed, or a branch-only timer, legitimately lacks it.
+    return lsGet<{ branch: Branch; ct?: ContribId; start: number } | null>(K.active(member.name), null);
   }
 
   const [isRunning, setIsRunning] = useState(() => getActive() !== null);
@@ -439,7 +443,9 @@ function Dashboard({ member, onLogout }: DashboardProps) {
   const activeRec = getActive();
   const activeCt = activeRec?.ct as ContribId | undefined;
   const activeBranch: Branch = (activeRec?.branch as Branch) ?? branch;
-  const totalSec = accSec(activeBranch) + (isRunning && activeBranch === branch ? sessionSec : 0);
+  // NOTE: `totalSec` was computed here and never read — the readout that used it
+  // is gone from the JSX. Recompute it where it is displayed if that was a
+  // regression: accSec(activeBranch) + (isRunning && activeBranch === branch ? sessionSec : 0)
 
   const sessions = lsGet<Session[]>(K.sessions(member.name), []).slice(0, 5);
 
@@ -705,7 +711,7 @@ function AdminPanel() {
   });
   const [newPw, setNewPw] = useState("");
   const [pwSaved, setPwSaved] = useState(false);
-  const [tick, setTick] = useState(0);
+  const [, setTick] = useState(0);  // value unread — setTick drives the live-timer re-render
 
   // Live tick for active timers
   useEffect(() => {
