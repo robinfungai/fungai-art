@@ -7,16 +7,56 @@
 // LIFTED VERBATIM from
 //   public/find-your-formula/index.html lines 2634–2656.
 
+// 2026-09-24 — matching was `firstWord(name)` with keys under 4 chars
+// dropped entirely. That made 11 of 243 herbs UNMATCHABLE, so any
+// caution naming them was invisible to this checker. The list included
+// St. John's Wort ("st."), the single most interaction-prone herb in the
+// pharmacopeia, plus Dan Shen ("dan"), Red Yeast Rice ("red") and
+// He Shou Wu ("he"). A written caution that the engine cannot see is not
+// a safety control, it is a comment.
+//
+// Keys are MULTI-WORD PHRASES plus the original single first word. Phrases
+// are specific enough to be safe — 'red yeast rice' cannot collide the way
+// bare 'red' would. Deliberately NOT every 4+ char token: that would make
+// 'extract', 'root', 'leaf' and 'bark' into match keys and fire on almost
+// any prose, which is a worse failure than the one being fixed.
+function nameKeys(name) {
+  const raw = String(name || '').toLowerCase().replace(/\s+/g, ' ').trim();
+  if (!raw) return [];
+  const keys = new Set();
+  const add = s => {
+    const v = String(s || '').replace(/[/,]+$/, '').replace(/^[/,]+/, '')
+      .replace(/\s+/g, ' ').trim();
+    if (v.length >= 4) keys.add(v);
+  };
+  // Each slash-separated alias, and the whole string, each also with any
+  // "(...)" qualifier stripped: 'He Shou Wu / Fo-Ti', 'Amla / Amalaki'.
+  const variants = [raw, ...raw.split('/')];
+  for (const v of variants) {
+    const clean = v.replace(/\([^)]*\)/g, '').replace(/\s+/g, ' ').trim();
+    add(v);
+    add(clean);
+    // Progressive multi-word prefixes, so prose naming 'Dan Shen' still
+    // matches the record called 'Dan Shen Root Extract'.
+    const toks = clean.split(' ').filter(Boolean);
+    for (let n = 2; n < toks.length; n++) add(toks.slice(0, n).join(' '));
+    // The original single-first-word key, unchanged, 4+ chars only.
+    if (toks[0] && toks[0].length >= 4) keys.add(toks[0]);
+  }
+  return [...keys];
+}
+
 function checkFormulaPairs(herbs) {
   const synergies = [];
   const cautions  = [];
-  function firstWord(name) { return String(name || '').toLowerCase().split(/[\s()]+/).filter(Boolean)[0] || ''; }
   function match(h, target) {
-    const key = firstWord(target.name);
-    if (!key || key.length < 4) return null;
-    const syn = (h.herb_to_herb_synergy || []).find(s => s.toLowerCase().includes(key));
-    const cau = (h.herb_to_herb_caution || []).find(s => s.toLowerCase().includes(key));
-    return { syn, cau };
+    const keys = nameKeys(target.name);
+    if (!keys.length) return null;
+    const hit = list => (list || []).find(s => {
+      const t = String(s).toLowerCase();
+      return keys.some(k => t.includes(k));
+    });
+    return { syn: hit(h.herb_to_herb_synergy), cau: hit(h.herb_to_herb_caution) };
   }
   for (let i = 0; i < herbs.length; i++) {
     for (let j = i + 1; j < herbs.length; j++) {
