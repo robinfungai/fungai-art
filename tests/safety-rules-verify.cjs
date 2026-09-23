@@ -36,14 +36,31 @@ t('per-herb flags match the engine, herb for herb', () => {
   };
 });
 
-t('the divergence between engine and per-rule flags is exactly the known 3', () => {
+t('the divergence between engine and per-rule flags is exactly the known 6', () => {
   // The engine joins every contraindication and drug interaction into one
   // string before matching, so a pattern can span two unrelated entries.
   // Bacopa, Catuaba and Peppermint pick up 'cardio_meds' that way — they
   // are withheld from anyone on heart medication with no rule behind it.
   // Documented here rather than silently fixed: changing it changes which
   // formulas those customers get, which is Robin's call.
-  const expected = ['Bacopa', 'Catuaba', 'Peppermint'];
+  //
+  // Toothed Clubmoss (id 561) joined on 2026-09-24 by the same mechanism:
+  // /heart.*medicat/ spans its "heart block" contraindication and its
+  // "Alzheimer's medications" interaction. Unlike the other three the
+  // resulting flag is correct on the merits — Huperzine-A carries a real
+  // beta-blocker/bradycardia interaction — so it is allowed to stand.
+  //
+  // Genistein (id 571) joined the same day picking up 'contraceptive':
+  // /estrogen.*bind/ spans its "estrogen-receptor positive cancers"
+  // contraindication and its Tamoxifen "competitive binding" interaction.
+  // Also correct on the merits — it is a phytoestrogen SERM, and holding
+  // it back from anyone on hormonal contraception is the right default.
+  //
+  // Kudzu Root (id 585) follows for the same reason and by the same
+  // regex: dense puerarin/daidzein isoflavones plus an explicit Tamoxifen
+  // competitive-binding interaction. Withholding it from hormonal
+  // contraception is likewise the right default, so it stands too.
+  const expected = ['Bacopa', 'Catuaba', 'Genistein', 'Kudzu Root', 'Peppermint', 'Toothed Clubmoss'];
   const actual = safety.divergence.map(d => d.botanical).sort();
   return {
     pass: actual.join(',') === expected.join(','),

@@ -3703,11 +3703,14 @@ const HERBS = [
       'Pregnancy — insufficient modern safety data; traditional Ayurvedic use limited; CAUTION/AVOID therapeutic doses',
       'Breastfeeding — insufficient data; CAUTION',
       'Sedatives and CNS depressants — mild additive effect from GABA activity; monitor; reduce doses if combining',
+      'Trying to conceive — high doses show reversible anti-fertility effects in murine models (reduced sperm motility, reduced ovarian weight); pause during active conception attempts',
     ],
     herb_to_herb_synergy: [
       "Lion's Mane and Bacopa — cognitive trinity: neuroplasticity (Gotu Kola) + NGF (Lion's Mane) + BDNF/LTP (Bacopa)",
       'Hawthorn and Horse Chestnut — venous integrity and cardiovascular circulation combined',
       'Bilberry — combined capillary protection and cognitive neuroprotection',
+      'Horse Chestnut (id 553) and Grape Seed (id 420) — structural venous repair and edema reduction, compounded across three mechanisms',
+      'Vitamin C / Camu Camu (id 566) — required as a co-factor for the collagen synthesis Centella triggers; without it the fibroblast stimulation has nothing to build from',
     ],
     herb_to_herb_caution: [
       'CYP450-inhibiting herbs (Kava, St. John\'s Wort) — compound CYP450 inhibition; drug interaction risk increases',
@@ -10071,9 +10074,12 @@ const HERBS = [
       'Shiitake and Maitake — comprehensive daily immune-training mushroom trio via different beta-glucan structures and immune mechanisms',
       'Garlic and Ginger — antimicrobial amplification; culinary synergy for immune and cardiovascular kitchen medicine',
       'Berberine herbs — complementary antidiabetic mechanisms; DPP-4 plus alpha-glucosidase inhibition',
+      'Vitamin C / Camu Camu (id 566) — taken concurrently, ascorbic acid helps break down the fungal chitin cell wall and measurably improves beta-glucan absorption in the gut',
+      'Lion\'s Mane — compounded neurological and ergothioneine-driven mitochondrial protection',
     ],
     herb_to_herb_caution: [
       'No significant herb-to-herb concerns at culinary doses',
+      'Red Yeast Rice (id 557) — NOT a synergy despite both being lipid-lowering: both carry monacolin K / lovastatin, and Red Yeast Rice is dosed to deliver 5–10 mg of it. Stacking two statin sources is the myopathy scenario, not a stacked benefit. Pair with Garlic or Artichoke instead if a second lipid mechanism is wanted',
     ],
     herb_to_drug_interactions: [
       'Diabetes medications — MONITOR: polysaccharide glucose-lowering activity may enhance hypoglycaemic effect with concentrated extracts',
@@ -12104,6 +12110,7 @@ const HERBS = [
   ],
   herb_to_herb_caution: [
     'Other antiplatelet herbs (Ginkgo, Garlic, high-dose Turmeric, Ginger) — additive bleeding risk',
+    'Iron-rich botanicals (Nettle, Yellow Dock) — the condensed tannins chelate non-heme iron in the gut and neutralise both herbs; separate dosing by at least 2 hours',
   ],
   herb_to_drug_interactions: [
     'Warfarin and other anticoagulants — additive antiplatelet effect; monitor INR',
@@ -12565,22 +12572,59 @@ const HERBS = [
   evidence_grade: 'C',
 },
 {
-  id: 523, name: 'Amla', botanical: 'Emblica officinalis / Phyllanthus emblica (fruit)',
-  tcm_meridians: ['Lung'], tcm_element: 'Wood + Metal',
-  energetics: ['Cool', 'Sour', 'Sweet', 'Astringent', 'Fluid-Generating'],
-  primary_functions: ['TCM Yu Gan Zi — clears Lung heat, generates fluids', 'Ayurvedic rasayana — one of the three Triphala fruits', 'Highest natural vitamin C density', 'Liver protective polyphenol load'],
-  secondary_benefits: ['Hair / nail support', 'Skin antioxidant'],
-  flavor_profile: 'Intensely sour, slightly sweet, astringent',
-  contraindications: ['Severe acid reflux (acidic)', 'On blood thinners — mild antiplatelet'],
-  herb_interactions: ['Synergy: Triphala (with Haritaki + Bibhitaki), Brahmi for cognitive', 'Caution: anticoagulants in high doses'],
-  dosage_range: 'Fresh fruit 1–3/day; juice 10–20 ml; powder 3–6 g/day; classical Chyawanprash.',
-  spiritual_layer: 'The fruit that gives every taste except salty. A complete world in one bite. The body remembers itself with sour.',
-  best_preparation: 'Fresh fruit ideal. Powder, juice, or Chyawanprash (classical rasayana jam) for daily use.',
+  // 2026-09-24 · Substantially enriched from Robin's Amla/Amalaki notes.
+  // The original was six short lines with no pharmacology field. The
+  // emblicanin tannin matrix — which shields the ascorbic acid so it
+  // survives a 95°C decoction — is the fact that changes how this herb
+  // is actually prepared, and it was missing entirely.
+  id: 523, name: 'Amla / Amalaki', botanical: 'Emblica officinalis / Phyllanthus emblica (fruit)',
+  tcm_meridians: ['Lung', 'Liver', 'Stomach', 'Heart'], tcm_element: 'Wood + Metal',
+  energetics: ['Cool', 'Moistening', 'Sour', 'Sweet', 'Astringent', 'Fluid-Generating'],
+  primary_functions: [
+    'Tridoshic Rasayana — the premier Pitta-pacifying tonic in Ayurveda, reducing systemic heat and inflammation without extinguishing the digestive fire (Agni)',
+    'Ascorbic acid / tannin matrix — an exceptionally dense, heat-stable form of natural vitamin C protected by hydrolysable tannins (emblicanin A and B), outperforming synthetic ascorbic acid in antioxidant assays',
+    'TCM Yu Gan Zi — clears Lung heat and generates fluids',
+    'Hepatoprotective and radioprotective — shields liver parenchyma from heavy metal toxicity and protects cellular DNA from radiation-induced chromosomal damage',
+    'Connective tissue and hair tonic — stimulates procollagen synthesis and strengthens the hair follicle bed, traditionally against premature greying',
+  ],
+  secondary_benefits: [
+    'Gastroprotective — soothes hyperacidity, gastric ulcers, and acid reflux through its cooling, mucosal-healing action',
+    'The foundational third of Triphala, with Haritaki and Bibhitaki, for daily digestive regulation',
+    'Hair, nail and skin antioxidant support',
+  ],
+  pharmacology: 'The fruit carries dense gallic acid, ellagic acid, and unique tannins (emblicanins) that form a protective shield around the endogenous vitamin C. This matrix prevents the ascorbic acid oxidising even under prolonged heat, which is why Amla — almost uniquely among vitamin C sources — can be decocted without losing its antioxidant capacity. It reduces lipid peroxidation and scavenges superoxide radicals.',
+  flavor_profile: 'Intensely sour, astringent and slightly bitter, with the characteristic trick of leaving a sweet aftertaste when water is drunk afterwards',
+  contraindications: [
+    'Severe acid reflux — the fruit is markedly acidic despite its cooling action',
+    'On blood thinners — mild antiplatelet activity at high doses',
+    'Acute diarrhea — high doses of the raw fruit have a mild laxative effect that will worsen loose stools',
+    'Severe Kapha accumulation (damp/cold) — its cooling, moistening nature needs balancing with warming spices such as ginger or black pepper in cold constitutions',
+  ],
+  herb_to_herb_synergy: [
+    'Haritaki and Bibhitaki — the classical Triphala, for digestive tone, detoxification and ocular health',
+    'Shatavari and Ashwagandha — a systemic longevity and endocrine-nourishing protocol',
+    'Gotu Kola (id 108) and Brahmi — for cognitive cooling, neuro-regeneration and hair retention',
+  ],
+  herb_to_herb_caution: ['None widely documented; a foundational and forgiving food-medicine'],
+  herb_to_drug_interactions: [
+    'Anticoagulants — mild antiplatelet effect at high doses',
+    'Antidiabetics — may lower blood glucose; monitor parameters',
+    'Iron supplements — the dense vitamin C matrix substantially enhances non-heme iron absorption. A benefit rather than a hazard, but it changes effective iron dosing',
+  ],
+  herb_interactions: [
+    'Synergy: Triphala (Haritaki + Bibhitaki), Shatavari, Gotu Kola, Brahmi',
+    'Caution: Over-cooling in extreme Kapha without warming spices',
+    'Drug interactions: anticoagulants, antidiabetics, iron (enhanced absorption)',
+  ],
+  dosage_range: 'Fruit powder (churna) 3–6 g daily; fresh fruit 1–3/day; juice 10–20 ml; decoction 5–10 g simmered; Triphala 1–3 g at bedtime; classical Chyawanprash.',
+  spiritual_layer: 'Amla is the Mother Fruit of India, said to have sprouted from the tears of Brahma. It gives every taste except salty — a complete world in one bite. It holds the fierce electric sourness of the sun yet acts as the cooling shade for the blood. It teaches the paradox of fire without destruction. She whispers: I cool the boiling blood. I hold the light inside the tannin. I rebuild the burned earth.',
+  best_preparation: 'Fresh fruit is ideal. As a rasayana the powder is traditionally taken with a carrier (anupana) — warm ghee, honey, or warm water. Unusually among vitamin C sources, the emblicanin matrix protects the ascorbic acid through a 95°C water decoction, so it can be boiled without losing potency. Powder, juice, or Chyawanprash for daily use.',
   caution_level: 'LOW', safe_pregnancy: true,
+  status: 'The apex antioxidant of Ayurvedic medicine, and one of the few vitamin C botanicals that survives heat processing intact.',
   // ── Quiz-matcher + composer-quality enrichment ──
   energy_pattern: ['sustained', 'restorative_only'],
-  digestion_fit: ['cooling'],
-  regional_affinity: ['liver', 'whole'],
+  digestion_fit: ['cooling', 'astringent'],
+  regional_affinity: ['liver', 'gut', 'skin', 'whole'],
   onset_time: 'weeks',
   family: 'Phyllanthaceae',
   epithet: 'The nurse fruit',
@@ -12634,27 +12678,69 @@ const HERBS = [
   evidence_grade: 'B-',
 },
 {
-  id: 526, name: 'Kalmegh', botanical: 'Andrographis paniculata (whole plant)',
-  tcm_meridians: ['Lung', 'Large Intestine'], tcm_element: 'Metal + Water',
-  energetics: ['Very Cold', 'Bitter', 'Heat-Clearing'],
-  primary_functions: ['TCM Chuan Xin Lian — clears toxic heat from Lungs, throat, intestines', 'Ayurvedic "King of Bitters" — liver protection, fever clearance', 'Immune-modulating in acute respiratory infections', 'Andrographolide is well-researched antiviral'],
-  secondary_benefits: ['Liver enzyme balance', 'Anti-parasitic in folk use'],
-  flavor_profile: 'Extremely bitter — among the bitterest medicinal plants',
-  contraindications: ['Cold-pattern constitutions', 'Pregnancy — uterine activity', 'Long-term use — practitioner oversight'],
-  herb_interactions: ['Synergy: Guduchi (immune), Bhumyamlaki (liver)', 'Caution: anticoagulants, immunosuppressants'],
-  dosage_range: 'Standardised extract (10% andrographolides) 200–400 mg 2–3× daily during acute episodes (max 14 days).',
-  spiritual_layer: 'King of bitters. The plant that does not flatter — that meets infection and inflammation with directness.',
-  best_preparation: 'Standardised extract for acute use. Short cycles (5–14 days) typical.',
-  caution_level: 'MEDIUM', safe_pregnancy: false,
+  // 2026-09-24 · Substantially enriched. The original entry was four
+  // short lines; the detail below (Buhner protocol, blood-brain-barrier
+  // penetration, the reversible spermatogenesis halt, biliary colic
+  // risk, split interaction arrays) came from Robin's Andrographis
+  // notes. caution_level raised MEDIUM → HIGH and evidence_grade B+ → A
+  // on the strength of it: an abortifacient that also suppresses sperm
+  // count is not a MEDIUM herb.
+  id: 526, name: 'Kalmegh / Andrographis', botanical: 'Andrographis paniculata (whole plant / aerial parts)',
+  tcm_meridians: ['Lung', 'Stomach', 'Large Intestine', 'Liver'], tcm_element: 'Metal + Earth',
+  energetics: ['Extremely Cold', 'Dry', 'Intensely Bitter', 'Heat-Clearing'],
+  primary_functions: [
+    'The "King of Bitters" (TCM: Chuan Xin Lian) — a premier broad-spectrum antiviral and antibacterial, halting upper respiratory infection, influenza, and pharyngitis when taken at onset',
+    'Systemic anti-spirochetal (Buhner Protocol) — acts across the blood-brain barrier to clear Borrelia burgdorferi from the central nervous system and joints',
+    'Immunostimulant — drives macrophage phagocytosis and natural killer cell activity',
+    'Hepatoprotective and choleretic — protects liver parenchyma from toxic and viral damage while strongly stimulating bile flow',
+  ],
+  secondary_benefits: [
+    'Used clinically for ulcerative colitis and acute infectious diarrhea',
+    'Reduces systemic inflammation via NF-κB and COX-2 suppression',
+    'Anti-parasitic in folk use; supports liver enzyme balance',
+  ],
+  pharmacology: 'Clinical efficacy is driven by diterpene lactones, primarily andrographolide — a highly bitter compound that penetrates tissue deeply, including across the blood-brain barrier and into joint capsules. It directly inhibits viral replication and bacterial quorum sensing while simultaneously triggering a strong host immune response.',
+  flavor_profile: 'Penetratingly, aggressively bitter — traditionally named the most bitter plant in both the Ayurvedic and TCM materia medica',
+  contraindications: [
+    'Pregnancy — STRICTLY CONTRAINDICATED; historically used as an abortifacient and contraceptive, halting implantation',
+    'Male fertility protocols — high doses temporarily halt spermatogenesis, reversible on cessation',
+    'Gallbladder obstruction — strong bile-stimulating action can provoke biliary colic if stones are present',
+    'Spleen cold deficiency / cold-pattern constitutions — its aggressive coldness causes severe nausea and diarrhea in weak, cold digestion',
+    'Long-term use — practitioner oversight; strictly pulse-dosed or used for acute windows',
+  ],
+  herb_to_herb_synergy: [
+    'Knotweed (id 563) and Cat’s Claw — the trinity of the Buhner Lyme protocol',
+    'Eleuthero (Siberian Ginseng) — paired in Scandinavian cold and flu formulas (Kan Jang) to provide immune stimulation while counteracting the extreme fatigue of viral onset',
+    'Isatis (Ban Lan Gen) and Honeysuckle (id 581) — for severe acute viral throat infection',
+    'Guduchi for immune support, Bhumyamlaki for liver — the classical Ayurvedic pairings',
+  ],
+  herb_to_herb_caution: ['Other extreme bitters (Goldenseal id 569, Coptis, Phellodendron id 584) without warming demulcents; risks severe GI shock and desiccation'],
+  herb_to_drug_interactions: [
+    'Immunosuppressants — direct antagonism; it heavily stimulates the immune system',
+    'Anticoagulants and antihypertensives — high doses exhibit mild blood-thinning and hypotensive effects',
+    'Chemotherapy — may alter drug clearance via CYP450 modulation',
+  ],
+  herb_interactions: [
+    'Synergy: Knotweed, Cat’s Claw, Eleuthero, Guduchi, Bhumyamlaki',
+    'Caution: Heavy bitter stacking without GI protection',
+    'Drug interactions: Immunosuppressants (CRITICAL), anticoagulants',
+  ],
+  dosage_range: 'Standardised extract (10–30% andrographolides): 200–1200 mg daily during acute infection. Raw powder: 3–6 g daily, requiring encapsulation given the severity of the bitterness. Short cycles of 5–14 days; max 14 days.',
+  spiritual_layer: 'Andrographis is the unforgiving winter wind. It is the absolute absence of sweetness, a biological shock that snaps the immune system awake. The plant that does not flatter — it meets infection and inflammation with directness. She whispers: I am the bitter awakening. I bring the cold fire to burn away the plague.',
+  best_preparation: 'Given its unbearable bitterness, encapsulation of standardised extract is the clinical norm. In liquid extraction, hydroethanolic tinctures at 60% EtOH capture the diterpene lactones well, but patient compliance is famously difficult on taste alone.',
+  caution_level: 'HIGH', safe_pregnancy: false,
+  status: 'A frontline clinical botanical for acute respiratory viruses and Lyme disease. Its extreme bitterness and coldness demand short-term or heavily buffered use.',
   // ── Quiz-matcher + composer-quality enrichment ──
+  // 'clearing/descending/stimulating' → acute_only · 'corrosive' carried as bitter,
+  // warning in prose · 'lungs' → chest · 'immune system' → whole
   energy_pattern: ['acute_only'],
   digestion_fit: ['bitter', 'cooling'],
-  regional_affinity: ['chest', 'liver'],
-  onset_time: 'days',
+  regional_affinity: ['chest', 'liver', 'joints', 'whole'],
+  onset_time: 'hours',
   family: 'Acanthaceae',
   epithet: 'The king of bitters',
   origin_region: 'Ayurvedic',
-  evidence_grade: 'B+',
+  evidence_grade: 'A',
 },
 {
   id: 527, name: 'Manjistha', botanical: 'Rubia cordifolia (root)',
@@ -12884,6 +12970,2406 @@ const HERBS = [
   epithet: 'The golden shower',
   origin_region: 'Ayurvedic',
   evidence_grade: 'traditional',
+},
+// ════════════════════════════════════════════════════════════════
+// 2026-09-23 · Clinical-extract expansion (ids 545–559)
+//
+// Fifteen botanicals weighted toward standardised extracts: vascular
+// (Horse Chestnut, Grape Leaf), metabolic/lipid (Red Yeast Rice,
+// Artichoke, Lotus Leaf, Cassia Seed, Citrus Aurantium), longevity
+// (Resveratrol, Astaxanthin, Jiaogulan), and the two potent outliers
+// (Yohimbe, Cistanche). Black Pepper enters as the bio-enhancer the
+// polyphenol entries name as a mandatory pairing.
+//
+// The source notes carried a richer tag vocabulary than the Herb
+// interface allows ('moistening', 'descending', 'veins', 'East Asian',
+// 'days to weeks'). Those are mapped onto the declared unions below
+// rather than widening them, because picker.js / scoring.js read the
+// FREE TEXT (primary_functions, energetics, pharmacology,
+// spiritual_layer, contraindications) via inferAxes() and only ever
+// read one tag field directly — evidence_grade. Widening the unions
+// would have changed no engine behaviour; the clinical detail that
+// actually steers a formula lives in the prose, preserved verbatim.
+//
+// Turmeric Extract and Grape Seed Extract were dropped from this
+// batch: Curcuma longa and Vitis vinifera (seed) are already in the
+// catalogue as 'Turmeric' and 'Grape Seed' (id 420).
+// ════════════════════════════════════════════════════════════════
+{
+  id: 545, name: 'Jiaogulan', botanical: 'Gynostemma pentaphyllum (leaf)',
+  tcm_meridians: ['Spleen', 'Lung', 'Heart'], tcm_element: 'Earth + Metal',
+  energetics: ['Cool', 'Moistening', 'Sweet', 'Slightly Bitter', 'Adaptogenic'],
+  primary_functions: [
+    'AMPK activator — the "Immortality Herb"; regulates cellular energy homeostasis and lipid metabolism',
+    'Yin-nourishing adaptogen — builds resilience to stress without the heating/stimulating effects of Panax ginseng',
+    'Cardiovascular protector — supports healthy endothelial function and nitric oxide production',
+    'Respiratory tonic — traditionally used for chronic respiratory weakness and to clear lung heat',
+    'Hepatoprotective — assists liver function and protects against oxidative liver damage',
+  ],
+  secondary_benefits: [
+    'Supports healthy weight management via metabolic regulation',
+    'Neuromodulator — calms the central nervous system to improve sleep latency',
+    'Mild immunomodulator for systemic defense',
+  ],
+  pharmacology: 'Contains over 170 different triterpenoid saponins called gypenosides, many of which are structurally identical to the ginsenosides found in Panax ginseng. Exhibits strong antioxidant (SOD and glutathione upregulation), anti-inflammatory, and metabolic-regulating effects via AMPK pathway activation.',
+  flavor_profile: 'A bright, grassy sweetness with a lingering, clean bitter finish — highly palatable as a daily infusion',
+  contraindications: [
+    'Pregnancy and lactation — lack of safety data; potential uterine stimulation',
+    'Bleeding disorders — mild antiplatelet activity; discontinue 2 weeks prior to surgery',
+    'Autoimmune conditions — immune-stimulating properties may exacerbate symptoms in rare cases',
+  ],
+  herb_to_herb_synergy: [
+    'Jujube and Schisandra — for deep nervous system nourishment and adaptogenic grounding',
+    'Hawthorn and Dan Shen — for advanced cardiovascular and microcirculation protocols',
+    'Astragalus — for a balanced, non-stimulating immune and Qi-building stack',
+  ],
+  herb_to_herb_caution: ['Strongly cooling herbs (like Coptis) in cold/deficient constitutions — may cause digestive upset'],
+  herb_to_drug_interactions: [
+    'Immunosuppressants — may theoretically antagonize drug efficacy',
+    'Anticoagulants/Antiplatelets (Warfarin, Aspirin) — increased bleeding risk',
+    'Antidiabetic medications — additive hypoglycemic effects; requires glucose monitoring',
+  ],
+  herb_interactions: [
+    'Synergy: Jujube, Schisandra, Hawthorn, Astragalus',
+    'Caution: Overly cooling combinations in Yang deficiency',
+    'Drug interactions: Anticoagulants, immunosuppressants, diabetes meds — monitor closely',
+  ],
+  dosage_range: 'Infusion: 2–4 g steeped in 80°C water for 10–15 mins, 2–3× daily. Extract (1:5, 40% EtOH): 30–60 drops, 2× daily. Powder: 1–3 g daily.',
+  spiritual_layer: 'Jiaogulan is the Southern Ginseng, the quiet observer of the forest floor. She does not force energy; she uncovers it. She teaches the body the forgotten language of balance, finding the exact point between exhaustion and overstimulation. She whispers: I am the deep well. I cool the engine and sustain the spark. I offer endurance without the fire.',
+  best_preparation: 'Exceptional as a standalone water infusion (steeped at 80°C to preserve delicate volatile compounds). For clinical tincture, a standard hydroethanolic percolation (40–50% EtOH) efficiently captures the water-soluble and partially lipid-soluble gypenosides.',
+  caution_level: 'LOW', safe_pregnancy: false,
+  status: 'A premier, non-stimulating adaptogen with profound metabolic and cardiovascular benefits. Increasingly utilized as a sustainable, cooling alternative to true Ginseng.',
+  // ── Quiz-matcher + composer-quality enrichment ──
+  // 'calming' → pm_stabilise · 'moistening' → demulcent · 'metabolic system' → whole · 'East Asian' → Chinese
+  nervous_system_fit: ['wired_tired', 'wired'],
+  energy_pattern: ['sustained', 'pm_stabilise'],
+  sleep_action: ['onset'],
+  digestion_fit: ['cooling', 'demulcent'],
+  regional_affinity: ['heart', 'chest', 'whole'],
+  onset_time: 'weeks',
+  family: 'Cucurbitaceae',
+  epithet: 'The herb of immortality',
+  origin_region: 'Chinese',
+  evidence_grade: 'B',
+},
+{
+  id: 546, name: 'Feverfew', botanical: 'Tanacetum parthenium (aerial parts)',
+  tcm_meridians: ['Liver', 'Pericardium'], tcm_element: 'Wood',
+  energetics: ['Cool', 'Dry', 'Bitter', 'Pungent', 'Relaxing'],
+  primary_functions: [
+    'Migraine prophylactic — inhibits serotonin release from platelets and reduces blood vessel constriction',
+    'Prostaglandin inhibitor — directly reduces inflammatory signaling pathways associated with headaches',
+    'Uterine stimulant and emmenagogue — traditionally used to bring on delayed menses and clear stagnation',
+    'Antispasmodic — relaxes smooth muscle tissue throughout the vascular and digestive systems',
+  ],
+  secondary_benefits: [
+    'Provides relief for mild rheumatoid arthritis and joint pain',
+    'Allergy support — dampens histamine release from mast cells',
+    'Bitter digestive tonic — stimulates gastric secretions when taken before meals',
+  ],
+  pharmacology: 'Active constituents include sesquiterpene lactones, primarily parthenolide, found in the superficial leaf glands. Parthenolide binds to and inhibits IKKβ, preventing the activation of NF-κB (a major inflammatory pathway). These compounds are highly sensitive to heat and degrade upon prolonged high-temperature exposure.',
+  flavor_profile: 'Intensely bitter, sharply aromatic, and slightly camphorous — challenging as a standalone tea',
+  contraindications: [
+    'Pregnancy — strictly contraindicated; active emmenagogue and uterine stimulant',
+    'Asteraceae family allergy (Ragweed, Chamomile, Daisies) — potential for cross-reactivity',
+    'Pre-surgery — discontinue 2 weeks prior due to antiplatelet activity',
+    'Sudden withdrawal — stopping abruptly after long-term use can cause "post-feverfew syndrome" (rebound headaches, anxiety, muscle pain)',
+  ],
+  herb_to_herb_synergy: [
+    'Motherwort and Cramp Bark — for dysmenorrhea and intense uterine cramping',
+    'Butterbur and Skullcap — the classic neurological stack for migraine prevention',
+    'Peppermint and Ginger — to offset its intense bitterness and aid the digestive/nausea component of migraines',
+  ],
+  herb_to_herb_caution: ['Concurrent use with other strong antiplatelet herbs (Ginkgo, Garlic) increases bleeding risk'],
+  herb_to_drug_interactions: [
+    'NSAIDs (Ibuprofen, Aspirin) — may negate feverfew’s effects or increase gastric irritation',
+    'Anticoagulants (Warfarin) — additive blood-thinning effects',
+    'Cytochrome P450 substrates — may inhibit liver enzyme metabolism',
+  ],
+  herb_interactions: [
+    'Synergy: Butterbur, Motherwort, Skullcap',
+    'Caution: Asteraceae sensitivities, heavy blood-thinning herbs',
+    'Drug interactions: NSAIDs, anticoagulants — monitor',
+  ],
+  dosage_range: 'Freeze-dried leaf: 50–150 mg daily (standardized to 0.2% parthenolide). Tincture (1:5, 60% EtOH): 15–30 drops, 1–3× daily. Fresh leaf: 1–3 leaves daily.',
+  spiritual_layer: 'Feverfew is the tension breaker. She addresses the heat that rises to the head when we refuse to let go of control. She teaches the blood to release its grip and the vessels to breathe. She whispers: I am the cooling wind through a tight room. Unclench the jaw, drop the shoulders, let the pressure fall to the earth.',
+  best_preparation: 'Best processed as a fresh plant tincture (1:2 ratio, 75% EtOH) or cold maceration. Parthenolide is highly heat-sensitive; entirely avoid decoction or heating above 40°C during extraction to preserve the medicinal sesquiterpene lactones.',
+  caution_level: 'HIGH', safe_pregnancy: false,
+  status: 'A clinically validated migraine prophylactic that requires consistent daily use (4–6 weeks) to alter vascular physiology. Proper raw material sourcing and low-heat processing are critical for efficacy.',
+  // 'relaxing/descending' → sustained (daily prophylaxis, not evening-specific) · 'uterus' → pelvis · 'vasculature' → whole
+  energy_pattern: ['sustained'],
+  digestion_fit: ['bitter'],
+  regional_affinity: ['head', 'pelvis', 'whole'],
+  onset_time: 'weeks',
+  family: 'Asteraceae',
+  epithet: 'The tension breaker',
+  origin_region: 'Mediterranean',
+  evidence_grade: 'A',
+},
+{
+  id: 547, name: 'Artichoke Extract', botanical: 'Cynara scolymus (leaf)',
+  tcm_meridians: ['Liver', 'Gallbladder', 'Stomach'], tcm_element: 'Wood',
+  energetics: ['Cool', 'Dry', 'Bitter', 'Moving'],
+  primary_functions: [
+    'Choleretic and cholagogue — actively stimulates the liver to produce bile and encourages gallbladder emptying',
+    'Hepatoprotective — shields liver parenchyma from toxic damage and promotes cellular regeneration',
+    'Lipid regulator — inhibits HMG-CoA reductase and enhances cholesterol excretion via bile, effectively lowering LDL and triglycerides',
+    'Digestive bitter — relieves functional dyspepsia, bloating, and postprandial fullness by upregulating digestive secretions',
+  ],
+  secondary_benefits: [
+    'Endothelial support — promotes nitric oxide production for healthy blood pressure',
+    'Mild diuretic — assists in the clearance of water-soluble metabolic waste',
+    'Blood sugar regulation — slows glucose absorption and improves insulin sensitivity',
+  ],
+  pharmacology: 'Active compounds include caffeoylquinic acids (predominantly cynarin and chlorogenic acid) and flavonoids (luteolin). Cynarin drives the profound bile-stimulating effects, while luteolin provides potent antioxidant activity and direct inhibition of cholesterol synthesis pathways in the liver.',
+  flavor_profile: 'Distinctly bitter and slightly astringent with an earthy, herbaceous baseline',
+  contraindications: [
+    'Bile duct obstruction — strictly contraindicated due to strong cholagogue activity',
+    'Gallstones — use with high caution and practitioner supervision; can provoke biliary colic',
+    'Asteraceae family allergy — potential for cross-reactivity',
+  ],
+  herb_to_herb_synergy: [
+    'Milk Thistle and Dandelion Root — the classic triad for comprehensive liver detoxification and regeneration',
+    'Red Yeast Rice — for a highly effective, stacked lipid-lowering protocol',
+    'Turmeric — to synergize bile production and systemic anti-inflammatory actions',
+  ],
+  herb_to_herb_caution: ['Overuse with other strong cooling/drying bitters in Vata-dominant or deeply cold constitutions without a warming balancer'],
+  herb_to_drug_interactions: [
+    'Lipid-lowering medications (Statins) — additive effects; monitor liver enzymes and lipid panels',
+    'Antidiabetic drugs — potential additive hypoglycemic effects',
+  ],
+  herb_interactions: [
+    'Synergy: Milk Thistle, Dandelion, Red Yeast Rice, Turmeric',
+    'Caution: Heavy stacking with other profound cooling bitters in cold constitutions',
+    'Drug interactions: Statins, diabetes medications — requires monitoring',
+  ],
+  dosage_range: 'Standardized Extract (typically 5% cynarin): 300–600 mg, 1–3× daily before meals. Tincture (1:5, 40% EtOH): 20–40 drops, 3× daily. Leaf infusion: 2–3 g steeped 15 mins.',
+  spiritual_layer: 'Artichoke is the armored heart of the garden. She is the deep cleanser of resentment, targeting the liver where anger and unexpressed frustration stagnate. She teaches that to digest life fully, we must maintain the flow of our internal rivers. She whispers: I break down the heavy burdens. I encourage the gallbladder to release its stone. I turn the bitter into movement.',
+  best_preparation: 'Standardized extracts provide the most clinical consistency for lipid management. For fluid extracts, use a hydroethanolic percolation (40–50% EtOH) to capture both the water-soluble chlorogenic acids and the less soluble flavonoids. Keep processing temperatures below 60°C to preserve enzymatic activity.',
+  caution_level: 'MEDIUM',
+  safe_pregnancy: true, // Source note: safe at dietary levels; therapeutic extracts lack safety data.
+  status: 'A top-tier clinical botanical for non-alcoholic fatty liver disease (NAFLD), hyperlipidemia, and functional dyspepsia. Relies on its profound ability to clear metabolic bottlenecks via enhanced bile flow.',
+  // 'descending/moving' → sustained · gallbladder folds into liver
+  energy_pattern: ['sustained'],
+  digestion_fit: ['bitter', 'cooling', 'moving'],
+  regional_affinity: ['liver', 'gut'],
+  onset_time: 'days',
+  family: 'Asteraceae',
+  epithet: 'The bile mover',
+  origin_region: 'Mediterranean',
+  evidence_grade: 'A',
+},
+{
+  id: 548, name: 'Astaxanthin', botanical: 'Haematococcus pluvialis (microalgae)',
+  tcm_meridians: ['Liver', 'Heart', 'Kidney', 'Stomach'], tcm_element: 'Water + Fire',
+  energetics: ['Cooling', 'Moistening', 'Sweet'],
+  primary_functions: [
+    'Apex cellular antioxidant — spans the entire cell membrane bilayer, neutralizing free radicals both inside and outside the cell',
+    'Mitochondrial protector — shields energy-producing centers from oxidative stress, vastly improving muscular endurance and recovery',
+    'Ocular and neurological shield — crosses both the blood-brain and blood-retinal barriers to prevent macular degeneration and neuroinflammation',
+    'Internal UV defense — accumulates in the epidermis to protect against photo-aging and UV-induced DNA damage',
+  ],
+  secondary_benefits: [
+    'Cardiovascular health — prevents the oxidation of LDL cholesterol and improves blood rheology (flow)',
+    'Gastric health — clinically shown to reduce inflammation associated with H. pylori infections',
+    'Skin elasticity — preserves collagen integrity and skin moisture levels',
+  ],
+  pharmacology: 'A deeply pigmented keto-carotenoid. Unlike beta-carotene or lycopene, astaxanthin never becomes a pro-oxidant in the body. Its unique polar-nonpolar-polar molecular structure allows it to anchor itself across cellular membranes, quenching singlet oxygen far more effectively than Vitamin C or Vitamin E.',
+  flavor_profile: 'Mildly oceanic and slightly sweet; generally imperceptible in encapsulated or liposomal forms',
+  contraindications: [
+    'Bleeding disorders or impending surgery — exceptionally high doses may slightly prolong bleeding time',
+    'Known severe algae allergies (exceedingly rare for this species)',
+  ],
+  herb_to_herb_synergy: [
+    'Omega-3 Fatty Acids (Algal Oil / Fish Oil) — the ultimate lipid carrier to maximize astaxanthin bioavailability',
+    'Lutein and Zeaxanthin (Marigold Extract) — for a comprehensive, synergistic ocular defense stack',
+    'Cordyceps — to massively compound mitochondrial ATP production and physical endurance',
+  ],
+  herb_to_herb_caution: ['Highly competitive absorption can occur if taken with massive doses of other carotenoids without sufficient fat'],
+  herb_to_drug_interactions: [
+    '5-alpha-reductase inhibitors — astaxanthin possesses mild 5-AR inhibitory effects, potentially compounding prostate/hair loss medications',
+    'Antihypertensives — may cause slight additive blood pressure lowering',
+  ],
+  herb_interactions: [
+    'Synergy: Omega-3s, Lutein, Zeaxanthin, Cordyceps',
+    'Caution: High-dose carotenoid competition without fats',
+    'Drug interactions: 5-AR inhibitors (theoretical additive effect)',
+  ],
+  dosage_range: 'Standardized Extract (typically 5–10% oleoresin): 4–12 mg daily for general health/skin; 12–24 mg daily for intense athletic recovery or joint pain. Must be taken with a fat source.',
+  spiritual_layer: 'Astaxanthin is the survival mechanism of the primordial waters. When the algae faces drought, extreme heat, or starvation, it produces this crimson armor to sleep safely for decades until the rains return. She teaches deep cellular resilience. She whispers: I am the red shield. I absorb the burning light so you may thrive in the harshest environments. I hold the memory of survival.',
+  best_preparation: 'Supercritical CO2 extraction of the cracked microalgae biomass yields the highest quality, solvent-free oleoresin. Because it is intensely lipophilic, formulation must include a carrier oil (like MCT, olive, or algal oil) or utilize a liposomal delivery system to ensure intestinal absorption.',
+  caution_level: 'LOW',
+  safe_pregnancy: true, // Source note: generally safe, but clinical trials in pregnancy are lacking.
+  status: 'Widely regarded as one of the most powerful natural antioxidants known. A foundational nutraceutical for anti-aging, extreme endurance, and cellular membrane integrity.',
+  // 'protecting/sustaining' → sustained · 'eyes' + 'brain' → head · 'muscles' → joints · 'Aquatic / Global' → Global
+  energy_pattern: ['sustained'],
+  digestion_fit: ['demulcent'],
+  regional_affinity: ['head', 'skin', 'joints', 'whole'],
+  onset_time: 'months',
+  family: 'Haematococcaceae',
+  epithet: 'The red shield',
+  origin_region: 'Global',
+  evidence_grade: 'A',
+},
+{
+  id: 549, name: 'Black Pepper Extract', botanical: 'Piper nigrum (fruit)',
+  tcm_meridians: ['Stomach', 'Large Intestine', 'Spleen'], tcm_element: 'Fire + Metal',
+  energetics: ['Hot', 'Dry', 'Pungent', 'Stimulating'],
+  primary_functions: [
+    'Universal bio-enhancer — inhibits enzymes (UGTs and CYP3A4) and efflux pumps (P-glycoprotein) in the gut and liver to dramatically increase the plasma levels of co-administered botanicals',
+    'Digestive fire ignition — stimulates hydrochloric acid secretion, pancreatic enzymes, and overall gastric motility',
+    'Thermogenic agent — increases basal metabolic rate and promotes lipid metabolism via sympathetic nervous system activation',
+    'Carminative — actively dispels trapped intestinal gas and relieves functional cramping',
+  ],
+  secondary_benefits: [
+    'Mild analgesic and anti-inflammatory properties, particularly in joint matrices',
+    'Mildly antimicrobial in the upper gastrointestinal tract',
+    'Enhances the absorption of water-soluble vitamins (B-complex, Vitamin C) and minerals (Selenium, Iron)',
+  ],
+  pharmacology: 'Therapeutic efficacy is entirely driven by the alkaloid piperine. Piperine temporarily downregulates glucuronidation in the liver and alters the permeability of the intestinal wall. This prevents the immediate breakdown of complex polyphenols (like curcumin and resveratrol), allowing them to circulate systemically rather than being rapidly excreted.',
+  flavor_profile: 'Sharply pungent, intensely hot, and instantly penetrating with a lingering resinous bite',
+  contraindications: [
+    'Active peptic ulcers or acute gastritis — the heat and direct stimulation will severely aggravate mucosal damage',
+    'High Pitta / Yin Deficiency with Heat — will exacerbate conditions of systemic dryness, overheating, and inflammation',
+    'Narrow therapeutic index drugs — requires strict caution (see interactions)',
+  ],
+  herb_to_herb_synergy: [
+    'Turmeric (Curcumin) — the definitive pairing; piperine dramatically raises curcumin bioavailability',
+    'Resveratrol and Green Tea Extract (EGCG) — prevents their rapid glucuronidation, vastly improving cellular uptake',
+    'Ginger and Long Pepper (Pippali) — forms the classical Ayurvedic "Trikatu" formula for profound metabolic awakening',
+  ],
+  herb_to_herb_caution: ['Overheating when combined with heavy doses of Cayenne, Garlic, or standard medicinal Ginsengs in hot climates or constitutions'],
+  herb_to_drug_interactions: [
+    'Pharmaceuticals metabolized by CYP3A4 (Statins, Calcium Channel Blockers, certain antidepressants) — piperine can drastically increase blood levels of these drugs, leading to potential toxicity',
+    'Phenytoin, Propranolol, Theophylline — altered clearance rates; requires strict separation or avoidance',
+  ],
+  herb_interactions: [
+    'Synergy: Curcumin, Resveratrol, EGCG, Ginger, Long Pepper',
+    'Caution: Overly heating stacks in hot/dry constitutions',
+    'Drug interactions: CYP3A4 substrates, narrow-window pharmaceuticals — high risk of elevated drug serum levels',
+  ],
+  dosage_range: 'Standardized Extract (typically 95% piperine): 5–20 mg per day. Typically dosed at 5 mg piperine per 500 mg of curcumin. Whole ground pepper: 1–3 g in culinary or decoction applications.',
+  spiritual_layer: 'Black Pepper is the spark in the dark. She is the catalyst that refuses stagnation, demanding that what is consumed is actually utilized. She teaches that even the most potent medicine is useless if it cannot be absorbed. She whispers: I open the gates. I awaken the fire in the belly. I am the bridge between the root and the blood.',
+  best_preparation: 'For bio-enhancement in extraction formulas, a standardized 95% piperine extract is preferred. If utilizing whole peppercorns for a liquid engine output, extract using high-proof ethanol (75–90% EtOH) as piperine is an alkaloid with poor water solubility. Grinding must occur immediately before solvent exposure to prevent volatile aromatic loss.',
+  caution_level: 'HIGH',
+  safe_pregnancy: true, // Source note: safe at culinary doses; high-dose extracts not recommended.
+  status: 'The industry standard for botanical formulation logistics. Indispensable for unlocking the systemic potential of heavy, complex polyphenols that the human body otherwise struggles to assimilate.',
+  // 'penetrating/stimulating/ascending' → am_boost · 'stomach' → gut · 'vasculature' → whole · 'South Asian' → Ayurvedic
+  energy_pattern: ['am_boost'],
+  digestion_fit: ['warming', 'moving', 'carminative'],
+  regional_affinity: ['gut', 'liver', 'whole'],
+  onset_time: 'immediate',
+  family: 'Piperaceae',
+  epithet: 'The bio-enhancer',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'A',
+},
+{
+  id: 550, name: 'Cassia Seed Extract', botanical: 'Cassia obtusifolia / Senna obtusifolia (seed)',
+  tcm_meridians: ['Liver', 'Large Intestine', 'Kidney'], tcm_element: 'Wood + Water',
+  energetics: ['Cool', 'Moistening', 'Sweet', 'Slightly Bitter', 'Salty'],
+  primary_functions: [
+    'Clears Liver heat and brightens the eyes (Ming Mu) — traditional remedy for red, painful, or dry eyes',
+    'Moistens the intestines and unblocks the bowels — provides a gentle laxative effect for chronic constipation',
+    'Lipid metabolic regulator — downregulates intracellular lipid accumulation via MAPK signaling pathways',
+    'Hypotensive support — cools ascending liver fire to help manage mild hypertension',
+  ],
+  secondary_benefits: [
+    'Antioxidant and hepatoprotective properties via high phenolic content',
+    'Aids in clearing post-meal heaviness and supports weight management',
+    'Demonstrates antibacterial and antifungal properties',
+  ],
+  pharmacology: 'Rich in anthraquinones (emodin, chrysophanol, rhein) which provide the mild aperient/laxative action. Water and ethanol extracts demonstrate significant lipid-lowering and liver-protecting properties in metabolic models.',
+  flavor_profile: 'Earthy, slightly sweet, and mild; often roasted (dry-fried) to produce a coffee-like, nutty flavor that is gentler on the stomach',
+  contraindications: [
+    'Spleen/Stomach deficiency with cold and diarrhea — cooling and laxative nature will aggravate',
+    'Pregnancy — anthraquinone content and laxative effects pose risks',
+    'Hypotension — may excessively lower blood pressure in susceptible individuals',
+  ],
+  herb_to_herb_synergy: [
+    'Lotus Leaf and Hawthorn — classic metabolic and lipid-clearing extraction stack',
+    'Chrysanthemum and Goji Berry — for nourishing Liver Yin and clearing eye heat',
+  ],
+  herb_to_herb_caution: ['Other cold-natured laxatives (like Rhubarb) in frail constitutions'],
+  herb_to_drug_interactions: [
+    'Antihypertensives — potential additive blood pressure lowering effects',
+    'Cholesterol medications — additive lipid reduction',
+  ],
+  herb_interactions: [
+    'Synergy: Lotus Leaf, Hawthorn, Chrysanthemum, Goji',
+    'Caution: Heavy stacking with extreme cold laxatives',
+    'Drug interactions: Antihypertensives, statins',
+  ],
+  dosage_range: 'Powder: 3 g daily for metabolic support. Decoction: 9–15 g (crushed before boiling). Extract (1:5, 40% EtOH): 30–60 drops, 2× daily.',
+  spiritual_layer: 'Cassia is the seed of clarity. It descends what is stuck and cools what is inflamed, clearing the fog from the eyes and the heat from the liver. It teaches that clear vision requires an unburdened system.',
+  best_preparation: 'Dry-frying (roasting) the seeds prior to water decoction or hydroethanolic percolation reduces the harshness of the cold/laxative properties while unlocking a deep, nutty aromatic profile.',
+  caution_level: 'LOW', safe_pregnancy: false,
+  status: 'A staple TCM botanical for descending heat and clearing metabolic congestion. Excellent for modern sedentary and over-nourished constitutions.',
+  // 'descending/cooling' → pm_stabilise · 'eyes' → head · 'bowels' → gut · 'East Asian' → Chinese
+  energy_pattern: ['pm_stabilise'],
+  digestion_fit: ['cooling', 'moving', 'demulcent'],
+  regional_affinity: ['liver', 'head', 'gut'],
+  onset_time: 'days',
+  family: 'Fabaceae',
+  epithet: 'The seed of clarity',
+  origin_region: 'Chinese',
+  evidence_grade: 'B',
+},
+{
+  id: 551, name: 'Citrus Aurantium Extract', botanical: 'Citrus aurantium (immature fruit/peel)',
+  tcm_meridians: ['Spleen', 'Stomach', 'Large Intestine'], tcm_element: 'Earth',
+  energetics: ['Slightly Cold', 'Dry', 'Bitter', 'Pungent', 'Moving'],
+  primary_functions: [
+    'Qi regulator and stagnation breaker (Zhi Shi) — intensely moves trapped digestive energy and relieves abdominal distention',
+    'Thermogenic metabolic enhancer — increases resting metabolic rate and fat oxidation without extreme CNS stimulation',
+    'Expectorant — directs Qi downward to clear phlegm and ease chest congestion',
+    'Hepatocellular metabolic stimulant — promotes glycolysis and glycogenolysis',
+  ],
+  secondary_benefits: [
+    'Gastroprotective against ulcers and improves gut function',
+    'Essential oil inhalation demonstrates mild anxiolytic and mood-regulating effects',
+  ],
+  pharmacology: 'Contains the protoalkaloid p-synephrine, which structurally resembles ephedrine but is bulkier, heavily reducing its transport into the central nervous system. It binds primarily to beta-3 adrenergic receptors (driving lipolysis and thermogenesis) with very low affinity for cardiovascular alpha and beta-1 receptors.',
+  flavor_profile: 'Sharply bitter, intensely aromatic, and distinctly citrus-resinous',
+  contraindications: [
+    'Pregnancy — strongly moves Qi downward',
+    'Severe cardiovascular conditions (Long QT syndrome, uncontrolled hypertension) — especially if stacked with caffeine or other stimulants',
+    'Pre-surgery — discontinue 2 weeks prior due to mild stimulant effects',
+  ],
+  herb_to_herb_synergy: [
+    'Green Tea (EGCG) or Guarana — heavily compounds the thermogenic and lipolytic effects',
+    'Magnolia Bark — classic TCM pairing for severe abdominal bloating and trapped gas',
+  ],
+  herb_to_herb_caution: ['High doses of caffeine or ephedra — drastically amplifies cardiovascular risks and heart rate'],
+  herb_to_drug_interactions: [
+    'MAO Inhibitors — tyramine and synephrine content can trigger deadly side effects',
+    'CYP3A4 and CYP2D6 substrates — bitter orange can inhibit liver enzymes, altering drug clearance',
+    'Stimulant medications (Amphetamines) — additive nervous system stress and blood pressure increase',
+  ],
+  herb_interactions: [
+    'Synergy: Green Tea, Guarana, Magnolia Bark',
+    'Caution: Caffeine stacking in sensitive individuals',
+    'Drug interactions: MAOIs, CYP3A4/CYP2D6 metabolized drugs, CNS stimulants',
+  ],
+  dosage_range: 'Standardized Extract: 100–150 mg, 2–3× daily for weight management applications. Decoction of dried peel: 3–9 g.',
+  spiritual_layer: 'Bitter orange is the great disperser. It shatters stagnation in the physical and energetic gut. It teaches that energy must not pool and rot; it must be broken open and circulated.',
+  best_preparation: 'Hydroethanolic extraction (60–70% EtOH) captures both the essential oil fractions and the alkaloid (synephrine) profile efficiently. Avoid boiling the volatile essential oils if using for respiratory or mood applications.',
+  caution_level: 'HIGH', safe_pregnancy: false,
+  status: 'A powerful Qi-mover and the modern industry standard for ephedra-free thermogenesis. Requires precise formulation to avoid cardiovascular overstimulation.',
+  // 'moving/descending/breaking' → am_boost (daytime thermogenic) · 'adipose tissue' → whole · 'East Asian' → Chinese
+  energy_pattern: ['am_boost'],
+  digestion_fit: ['moving', 'bitter', 'carminative'],
+  regional_affinity: ['gut', 'chest', 'whole'],
+  onset_time: 'hours',
+  family: 'Rutaceae',
+  epithet: 'The stagnation breaker',
+  origin_region: 'Chinese',
+  evidence_grade: 'B',
+},
+{
+  id: 552, name: 'Grape Leaf Extract', botanical: 'Vitis vinifera (red vine leaf)',
+  tcm_meridians: ['Liver', 'Spleen'], tcm_element: 'Wood',
+  energetics: ['Cool', 'Dry', 'Astringent'],
+  primary_functions: [
+    'Endothelial barrier reinforcement — protects venous endothelium and limits vascular permeability to halt edema (fluid leakage)',
+    'Microcirculation optimizer — stimulates nitric oxide synthase (NOS) to naturally vasodilate and reduce excessive venous tone',
+    'Red blood cell deformability — improves the physical flexibility of erythrocytes, allowing smoother passage through dense capillaries',
+    'Chronic Venous Insufficiency (CVI) relief — clinically validated to reduce calf/ankle circumference and heavy leg sensations',
+  ],
+  secondary_benefits: [
+    'Powerful free-radical scavenger against ROS-induced vascular damage',
+    'Inhibits lipoxygenase (LOX), reducing systemic inflammatory responses',
+  ],
+  pharmacology: 'Rich in polyphenols, specifically quercetin glucuronide, isoquercitrin, and kaempferol. The clinical benchmark is the standardized extract AS 195. It operates via multiple pathways (NO production, ROS inhibition, endothelial shielding) rather than a singular mechanism.',
+  flavor_profile: 'Astringent, mildly sour, and deeply tannic',
+  contraindications: ['Severe, late-stage CVI requiring surgical intervention — does not replace compression therapy or surgery in advanced stages'],
+  herb_to_herb_synergy: [
+    'Diosmin and Hesperidin — for an impenetrable microcirculation and vein-structural stack',
+    'Horse Chestnut (Aescin) — heavily compounds the reduction of capillary leakage and ankle edema',
+    'Grape Seed (OPCs) — to cross-cover all venous and arterial oxidative defense systems',
+  ],
+  herb_to_herb_caution: ['Prolonged use with other intense astringents in deeply dry (Vata) constitutions'],
+  herb_to_drug_interactions: ['No major negative interactions clinically documented; potential mild additive effects with vasodilators'],
+  herb_interactions: [
+    'Synergy: Diosmin, Horse Chestnut, Grape Seed Extract',
+    'Caution: Dry constitutions due to high tannin load',
+    'Drug interactions: Minimal; observe with blood pressure medications',
+  ],
+  dosage_range: 'Standardized Extract (AS 195 equivalent): 720 mg daily for at least 12 weeks to see structural edema reduction.',
+  spiritual_layer: 'The red leaf of the vine holds the blueprint of flow. It guards the rivers of the body, ensuring the banks do not leak and the fluid returns to the heart. It teaches structural integrity in the face of downward pressure.',
+  best_preparation: 'Standardized hydroethanolic extracts are required to pull the complex flavonoid matrix. Water alone will not efficiently yield the protective aglycones necessary for vascular reinforcement.',
+  caution_level: 'LOW', safe_pregnancy: true,
+  status: 'A premier European phytotherapeutic agent for heavy legs, vascular permeability, and venous pooling. Requires consistent loading for 12 weeks.',
+  // 'lifting/containing' → sustained · 'veins'/'capillaries'/'lower extremities' → joints (legs) + whole
+  energy_pattern: ['sustained'],
+  digestion_fit: ['astringent'],
+  regional_affinity: ['joints', 'whole'],
+  onset_time: 'months',
+  family: 'Vitaceae',
+  epithet: 'The vein structuralist',
+  origin_region: 'Mediterranean',
+  evidence_grade: 'A',
+},
+{
+  id: 553, name: 'Horse Chestnut Extract', botanical: 'Aesculus hippocastanum (seed extract)',
+  tcm_meridians: ['Liver', 'Spleen', 'Stomach'], tcm_element: 'Wood',
+  energetics: ['Cool', 'Dry', 'Bitter', 'Astringent'],
+  primary_functions: [
+    'Venous tonic — reduces capillary permeability and increases venous tone to stop fluid leakage into surrounding tissues',
+    'Anti-edema — the standard European phytomedicine for chronic venous insufficiency (CVI), heavy legs, and peripheral swelling',
+    'Anti-inflammatory — inhibits elastase and hyaluronidase, the enzymes that degrade vascular structural integrity',
+  ],
+  secondary_benefits: [
+    'Provides profound relief for acute and chronic hemorrhoids by shrinking swollen perianal veins',
+    'Supports the resolution of post-surgical and post-traumatic soft tissue swelling',
+  ],
+  pharmacology: 'The primary active complex is a triterpene saponin mixture called aescin (or escin). Aescin "seals" leaking capillaries by altering the molecular permeability of the vascular wall. Unprocessed, raw seeds contain a toxic coumarin derivative called esculin, which must be removed during commercial extraction.',
+  flavor_profile: 'Intensely bitter and highly astringent',
+  contraindications: [
+    'Raw, unprocessed seeds — strictly contraindicated due to esculin toxicity (causes red blood cell destruction)',
+    'Renal impairment — high doses of saponins can burden kidney filtration',
+    'Bleeding disorders — possesses mild anti-platelet aggregation effects',
+  ],
+  herb_to_herb_synergy: [
+    'Grape Leaf and Diosmin — the ultimate vascular matrix stack for heavy legs and CVI',
+    'Butcher’s Broom (Ruscus aculeatus) — heavily compounds the vasoconstrictive and anti-edema actions',
+  ],
+  herb_to_herb_caution: ['Other heavy saponin-rich herbs in sensitive digestive tracts, which may cause nausea'],
+  herb_to_drug_interactions: [
+    'Anticoagulants (Warfarin, Aspirin) — additive blood-thinning effects',
+    'Lithium — diuretic properties may impair lithium clearance',
+    'Oral antidiabetics — may lower blood glucose, requiring monitoring',
+  ],
+  herb_interactions: [
+    'Synergy: Grape Leaf, Diosmin, Butcher’s Broom',
+    'Caution: Heavy saponin stacking',
+    'Drug interactions: Anticoagulants, Lithium, Diabetes meds',
+  ],
+  dosage_range: 'Standardized Extract (typically 16–20% aescin): 300 mg, 2× daily (delivering 100 mg total aescin daily). Must use commercial extracts to ensure esculin is removed.',
+  spiritual_layer: 'Horse Chestnut is the master of containment. She addresses the heavy, stagnant waters of the lower body, teaching the vessels how to hold their boundaries. She whispers: I repair the breaking walls. I gather what is leaking and pull the pressure back to the center.',
+  best_preparation: 'Must be a standardized, purified extract. Due to the toxicity of esculin in the raw nuts, traditional home decoctions or tinctures of raw material are not recommended. Standardized extracts rely on hydroethanolic solvents at controlled temperatures (below 60°C).',
+  caution_level: 'HIGH',
+  safe_pregnancy: false, // Source note: clinical extracts are sometimes used for pregnancy edema under strict supervision, but generally avoided.
+  status: 'A top-tier, clinically validated botanical for chronic venous insufficiency and hemorrhoids. Efficacy requires aescin standardization.',
+  // 'lifting/containing/astringing' → sustained · 'veins'/'lower extremities' → joints (legs) + whole · hemorrhoids → pelvis
+  energy_pattern: ['sustained'],
+  digestion_fit: ['astringent'],
+  regional_affinity: ['pelvis', 'joints', 'whole'],
+  onset_time: 'weeks',
+  family: 'Sapindaceae',
+  epithet: 'The vascular sealant',
+  origin_region: 'European',
+  evidence_grade: 'A',
+},
+{
+  id: 554, name: 'Kelp Extract Powder', botanical: 'Ascophyllum nodosum / Laminaria spp. (thallus)',
+  tcm_meridians: ['Kidney', 'Liver', 'Stomach'], tcm_element: 'Water',
+  energetics: ['Cold', 'Moistening', 'Salty', 'Softening'],
+  primary_functions: [
+    'Thyroid nourisher — provides highly bioavailable iodine to support the synthesis of T3 and T4 thyroid hormones',
+    'Metabolic regulator — combats hypothyroid-induced fatigue, weight gain, and sluggish basal metabolic rate',
+    'Nodule softener (Kun Bu) — traditionally used in TCM to resolve "phlegm-nodules", softening hard masses like goiters and swollen lymph nodes',
+    'Heavy metal chelator — rich in alginates that bind to heavy metals and radioactive isotopes in the gut, preventing their absorption',
+  ],
+  secondary_benefits: [
+    'Gut microbiome support via prebiotic fucoidans',
+    'Remineralizes the body with trace ocean minerals (magnesium, calcium, potassium)',
+  ],
+  pharmacology: 'Rich in iodine, alginic acid, and fucoidan. The iodine is incorporated directly into thyroid hormone production. Alginates are hydrophilic polysaccharides that form a viscous gel in the stomach, providing physical gastric soothing and systemic chelation.',
+  flavor_profile: 'Deeply oceanic, profoundly salty, and dense with umami',
+  contraindications: [
+    'Hyperthyroidism (Graves’ disease) — strictly contraindicated; exogenous iodine will exacerbate the condition',
+    'Hashimoto’s thyroiditis — requires caution; in some autoimmune profiles, excess iodine triggers a flare-up',
+    'Iodine-induced acne — high doses can trigger cystic dermal eruptions in sensitive individuals',
+  ],
+  herb_to_herb_synergy: [
+    'Ashwagandha and Guggul — for comprehensive, multi-pathway thyroid and metabolic stimulation',
+    'Medicinal Mushrooms (Reishi, Lion’s Mane) — to compound immune modulation and trace mineral absorption',
+  ],
+  herb_to_herb_caution: ['Other iodine-rich seaweeds (Bladderwrack, Irish Moss) — easily exceeds the tolerable upper intake level for iodine'],
+  herb_to_drug_interactions: [
+    'Thyroid hormone replacement (Levothyroxine) — alters TSH levels, requiring strict medical monitoring and potential dosage adjustments',
+    'Potassium-sparing diuretics — high potassium content in kelp may cause hyperkalemia',
+  ],
+  herb_interactions: [
+    'Synergy: Ashwagandha, Guggul, Mushrooms',
+    'Caution: Iodine stacking with other seaweeds',
+    'Drug interactions: Levothyroxine (high alert), Potassium-sparing diuretics',
+  ],
+  dosage_range: 'Standardized extracts vary heavily by iodine concentration. Typically dosed to provide 150–500 mcg of iodine daily. Raw powder: 1–3 g daily.',
+  spiritual_layer: 'Kelp is the dense, fluid intelligence of the deep ocean. She holds the salt of the earth and the memory of the sea. She teaches softening — breaking down the hardened, calcified knots in the body and mind. She whispers: I bring the rhythm of the tide to the stagnant pools. I dissolve the stone.',
+  best_preparation: 'Standardized extracts ensure safe, quantified iodine levels. If using raw powder in beverage formulations, cold maceration or gentle suspension below 45°C preserves the delicate fucoidans and enzymatic profile.',
+  caution_level: 'MEDIUM',
+  safe_pregnancy: false, // Source note: high iodine risks neonatal hypothyroidism; prenatal vitamins are a safer iodine source.
+  status: 'The premier botanical for iodine repletion and sluggish metabolism, requiring strict dosage control to avoid thyroid suppression.',
+  // 'descending/softening/nourishing' → sustained · 'thyroid' → chest (throat axis) · 'lymphatics' + 'metabolism' → whole
+  energy_pattern: ['sustained'],
+  digestion_fit: ['cooling', 'demulcent'],
+  regional_affinity: ['chest', 'whole'],
+  onset_time: 'weeks',
+  family: 'Fucaceae / Laminariaceae',
+  epithet: 'The ocean’s apothecary',
+  origin_region: 'Global',
+  evidence_grade: 'B',
+},
+{
+  id: 555, name: 'Lotus Leaf Extract', botanical: 'Nelumbo nucifera (leaf)',
+  tcm_meridians: ['Liver', 'Spleen', 'Stomach', 'Heart'], tcm_element: 'Earth + Fire',
+  energetics: ['Slightly Cold', 'Dry', 'Bitter', 'Astringent'],
+  primary_functions: [
+    'Clears Summer-Heat — TCM specific for heat exhaustion, irritability, and excessive sweating accompanied by digestive dampness',
+    'Lipid metabolism regulator — downregulates adipogenesis (fat cell formation) and prevents dietary fat absorption',
+    'Fluid balancer — acts as a mild diuretic to drain dampness and reduce water retention',
+    'Astringes bleeding — traditionally used to stop passive hemorrhaging (epistaxis, heavy menses) due to heat in the blood',
+  ],
+  secondary_benefits: [
+    'Hepatoprotective properties against fatty liver (NAFLD)',
+    'Provides a gentle digestive reset for overconsumption of greasy, heavy foods',
+  ],
+  pharmacology: 'Key active compounds include the alkaloid nuciferine and various flavonoids (quercetin, rutin). Nuciferine actively stimulates lipid metabolism and exhibits anti-obesity effects in animal models, while the flavonoids provide the astringent and antioxidant actions.',
+  flavor_profile: 'Mildly bitter, grassy, and gently astringent with a clean, dry finish',
+  contraindications: [
+    'Cold, deficient Spleen and Stomach (TCM) — its cold/astringent nature will aggravate poor digestion and loose stools',
+    'Dehydration — diuretic properties will worsen fluid loss',
+    'Pregnancy — avoided for lack of safety data and mild alkaloid content',
+  ],
+  herb_to_herb_synergy: [
+    'Cassia Seed Extract — the definitive TCM pairing for clearing systemic heat, lubricating the bowels, and modulating weight',
+    'Hawthorn (Shan Zha) — for profound lipid-lowering and blood-moving action',
+    'Green Tea Extract — compounds the thermogenic and lipolytic effects',
+  ],
+  herb_to_herb_caution: ['Excessive stacking with other strong diuretics (Dandelion leaf, Juniper) leading to electrolyte depletion'],
+  herb_to_drug_interactions: [
+    'Antidiabetics — potential additive blood glucose lowering',
+    'Cholesterol medications — additive lipid-lowering effects',
+  ],
+  herb_interactions: [
+    'Synergy: Cassia Seed, Hawthorn, Green Tea',
+    'Caution: Heavy diuretic stacking',
+    'Drug interactions: Antidiabetics, Statins',
+  ],
+  dosage_range: 'Extract (standardized for nuciferine): 300–600 mg daily. Dried leaf decoction: 9–15 g steeped in hot water.',
+  spiritual_layer: 'The Lotus leaf rests above the muddy water, completely untainted by the swamp below. She is the ultimate symbol of purity rising from stagnation. She teaches how to move through heavy, greasy environments without absorbing the sludge. She whispers: Let the heavy things wash off you. Remain buoyant. Remain clear.',
+  best_preparation: 'Water decoction (at 90–95°C) efficiently extracts the flavonoids and water-soluble alkaloids. For clinical weight management formulations, hydroethanolic extracts targeting nuciferine are optimal.',
+  caution_level: 'LOW', safe_pregnancy: false,
+  status: 'A gentle yet highly effective metabolic botanical for lipid regulation and heat clearing. Ideal for modern sedentary constitutions.',
+  // 'descending/clearing/draining' → sustained · 'adipose tissue'/'fluids' → whole · 'days to weeks' → days · 'East Asian' → Chinese
+  energy_pattern: ['sustained'],
+  digestion_fit: ['cooling', 'astringent'],
+  regional_affinity: ['liver', 'gut', 'whole'],
+  onset_time: 'days',
+  family: 'Nelumbonaceae',
+  epithet: 'The fat clearer',
+  origin_region: 'Chinese',
+  evidence_grade: 'B',
+},
+{
+  id: 556, name: 'Red Wine Extract / Resveratrol', botanical: 'Vitis vinifera (skin extract) / Polygonum cuspidatum (root)',
+  tcm_meridians: ['Heart', 'Liver', 'Kidney'], tcm_element: 'Fire + Water',
+  energetics: ['Cooling', 'Dry', 'Astringent'],
+  primary_functions: [
+    'SIRT1 activator — switches on sirtuin pathways associated with cellular longevity and mimics the biological effects of calorie restriction',
+    'Cardioprotective — prevents LDL oxidation, inhibits platelet aggregation, and promotes vasodilation via nitric oxide synthesis',
+    'Neuroprotective — crosses the blood-brain barrier to reduce neuroinflammation and clear beta-amyloid plaques',
+    'Potent antioxidant — neutralizes reactive oxygen species (ROS) systemically',
+  ],
+  secondary_benefits: [
+    'Improves insulin sensitivity and mitochondrial biogenesis (AMPK activation)',
+    'Possesses mild phytoestrogenic activity to support menopausal transitions',
+  ],
+  pharmacology: 'Trans-resveratrol is a stilbenoid polyphenol. While native to red wine grapes, most high-yield commercial extracts are derived from Japanese Knotweed (Polygonum cuspidatum). Resveratrol suffers from exceptionally rapid glucuronidation in the liver, meaning its natural oral bioavailability is very low. It must be paired with an inhibitor or a lipid delivery system.',
+  flavor_profile: 'Deeply astringent, highly tannic, and mildly sour (if Vitis derived); earthy and bitter (if Polygonum derived)',
+  contraindications: [
+    'Bleeding disorders — inhibits platelet aggregation',
+    'Hormone-sensitive conditions — acts as a mixed estrogen agonist/antagonist; use caution in estrogen-receptor-positive cancers',
+    'Pregnancy — phytoestrogenic activity makes it unsuitable',
+    'Upcoming surgery — discontinue 2 weeks prior',
+  ],
+  herb_to_herb_synergy: [
+    'Black Pepper Extract (Piperine) — critical; inhibits glucuronidation to make resveratrol systemically available',
+    'Quercetin — synergistic flavonoid that also slows resveratrol breakdown in the gut',
+    'Grape Seed Extract (OPCs) — provides full-spectrum "French Paradox" cardiovascular shielding',
+  ],
+  herb_to_herb_caution: ['High doses of other blood-thinning herbs (Garlic, Ginkgo)'],
+  herb_to_drug_interactions: [
+    'Anticoagulants/Antiplatelets (Warfarin, Clopidogrel) — drastically increases bleeding risk',
+    'CYP3A4 substrates — resveratrol inhibits certain liver enzymes, altering the clearance of various pharmaceuticals (e.g. statins, calcium channel blockers)',
+  ],
+  herb_interactions: [
+    'Synergy: Piperine (essential), Quercetin, Grape Seed',
+    'Caution: Heavy blood-moving stacks',
+    'Drug interactions: Anticoagulants, CYP3A4 metabolized drugs',
+  ],
+  dosage_range: 'Standardized trans-resveratrol: 250–1000 mg daily. Efficacy is highly dependent on formulation with a bio-enhancer (10–20 mg Piperine).',
+  spiritual_layer: 'Resveratrol is the vine’s stress response. It is synthesized precisely when the plant is attacked by fungi, drought, or UV radiation. She teaches the biology of resilience — that controlled adversity is the trigger for longevity. She whispers: What challenges the organism, arms the organism. I am the memory of surviving the drought.',
+  best_preparation: 'Commercial extracts of Japanese Knotweed root (standardized to 98% trans-resveratrol) are the practical route to clinical dosing. For liquid formulations, resveratrol is highly alcohol-soluble but precipitates in water; requires high-proof ethanol (75%+) or lipid emulsion.',
+  caution_level: 'MEDIUM', safe_pregnancy: false,
+  status: 'The crown jewel of longevity research. Astounding potential, but entirely bottlenecked by its poor pharmacokinetics if not formulated correctly.',
+  // 'protecting/sustaining/cooling' → sustained · 'brain'/'mitochondria' → head + whole · 'Mediterranean / East Asian' → Mediterranean
+  energy_pattern: ['sustained'],
+  digestion_fit: ['astringent'],
+  regional_affinity: ['heart', 'head', 'whole'],
+  onset_time: 'months',
+  family: 'Vitaceae / Polygonaceae',
+  epithet: 'The longevity molecule',
+  origin_region: 'Mediterranean',
+  evidence_grade: 'A',
+},
+{
+  id: 557, name: 'Red Yeast Rice', botanical: 'Monascus purpureus fermented on Oryza sativa',
+  tcm_meridians: ['Spleen', 'Liver', 'Large Intestine'], tcm_element: 'Earth',
+  energetics: ['Warm', 'Dry', 'Sweet', 'Moving'],
+  primary_functions: [
+    'Lipid controller — naturally inhibits HMG-CoA reductase (the liver enzyme responsible for cholesterol synthesis), profoundly lowering LDL and triglycerides',
+    'Blood invigorator (TCM) — breaks up blood stasis and improves systemic microcirculation',
+    'Resolves food stagnation — strengthens the Spleen/Stomach to process heavy, greasy meals',
+  ],
+  secondary_benefits: [
+    'Supports healthy blood pressure via improved endothelial function and reduced plaque formation',
+    'Anti-inflammatory effects specific to the vascular wall',
+  ],
+  pharmacology: 'The fermentation process produces naturally occurring statins called monacolins. Monacolin K is chemically identical to the pharmaceutical statin drug Lovastatin. Because it acts as a statin, it also inhibits the endogenous production of Coenzyme Q10 (CoQ10), a critical mitochondrial cofactor.',
+  flavor_profile: 'Earthy, slightly sweet, with distinct fermented and umami notes',
+  contraindications: [
+    'Pregnancy and lactation — strictly contraindicated; cholesterol is essential for fetal development (teratogenic risk)',
+    'Liver disease — can elevate liver enzymes (AST/ALT) mimicking pharmaceutical statin stress',
+    'Concurrent statin use — never combine with prescribed statins; leads to severe myopathy (muscle breakdown)',
+  ],
+  herb_to_herb_synergy: [
+    'Coenzyme Q10 (CoQ10) — mandatory daily synergy. Red Yeast Rice depletes CoQ10; supplementing it prevents statin-induced muscle pain',
+    'Artichoke Extract — stacks lipid-lowering mechanisms (inhibition via RYR + excretion via Artichoke bile stimulation)',
+    'Hawthorn — for comprehensive cardiovascular tone and blood flow',
+  ],
+  herb_to_herb_caution: ['Avoid high-dose combinations with Niacin (Vitamin B3) due to increased risk of myopathy'],
+  herb_to_drug_interactions: [
+    'Pharmaceutical statins (Lipitor, Crestor) — absolute contraindication',
+    'Grapefruit juice / CYP3A4 inhibitors — prevents the breakdown of Monacolin K, pushing serum levels into dangerous toxicity',
+    'Hepatotoxic drugs — compounds liver stress',
+  ],
+  herb_interactions: [
+    'Synergy: CoQ10 (essential), Artichoke, Hawthorn',
+    'Caution: High-dose Niacin',
+    'Drug interactions: Statins (CRITICAL), Grapefruit juice, CYP3A4 inhibitors',
+  ],
+  dosage_range: 'Standardized Extract: 1200–2400 mg daily (yielding roughly 5–10 mg of Monacolin K). Must be taken alongside 100–200 mg of CoQ10.',
+  spiritual_layer: 'Red Yeast Rice is the alchemy of grain and fungi. It takes the heavy, stagnant nourishment of rice and ferments it into a moving, dynamic medicine. It teaches that stagnation can be eaten away by biological heat. She whispers: I metabolize the heavy burdens. I keep the crimson river moving.',
+  best_preparation: 'Must rely on highly controlled commercial fermentation. Poorly fermented Red Yeast Rice produces a toxic byproduct called citrinin (a mycotoxin associated with kidney damage). Only use citrinin-free certified extracts.',
+  caution_level: 'HIGH', safe_pregnancy: false,
+  status: 'A powerful, clinically validated alternative to pharmaceutical statins. It must be treated with the same respect and monitoring as a pharmaceutical drug, requiring mandatory CoQ10 supplementation.',
+  // 'moving/descending/warming' → sustained · 'blood'/'vasculature' → heart + whole · 'East Asian' → Chinese
+  energy_pattern: ['sustained'],
+  digestion_fit: ['moving', 'warming'],
+  regional_affinity: ['liver', 'heart', 'whole'],
+  onset_time: 'weeks',
+  family: 'Monascaceae (fungus) / Poaceae (rice)',
+  epithet: 'The blood mover',
+  origin_region: 'Chinese',
+  evidence_grade: 'A',
+},
+{
+  id: 558, name: 'Yohimbe Bark', botanical: 'Pausinystalia yohimbe (bark)',
+  tcm_meridians: ['Kidney', 'Heart'], tcm_element: 'Fire + Water',
+  energetics: ['Hot', 'Dry', 'Stimulating', 'Ascending'],
+  primary_functions: [
+    'Alpha-2 adrenergic antagonist — blocks pre-synaptic alpha-2 receptors, leading to large sympathetic nervous system outflow and norepinephrine release',
+    'Vasodilator and aphrodisiac — promotes pelvic vasodilation and increased blood flow to extremities, clinically utilized for erectile dysfunction',
+    'Lipolysis catalyst — mobilizes stubborn adipose tissue (particularly in areas dense with alpha-2 receptors) by overriding the body’s fat-storage feedback loop',
+  ],
+  secondary_benefits: [
+    'Increases systemic physical energy and delays exhaustion during extreme anaerobic training',
+    'Mild MAO (monoamine oxidase) inhibition, which can elevate mood and dopamine levels',
+  ],
+  pharmacology: 'The primary indole alkaloid, yohimbine, crosses the blood-brain barrier to trigger central and peripheral adrenergic activity. Clinical data demonstrates efficacy in psychogenic and organic impotence. Its narrow therapeutic index means slight overdoses cause severe tachycardia, hypertension, and panic-like anxiety.',
+  flavor_profile: 'Harshly bitter, astringent, and earthy with a sharply metallic finish',
+  contraindications: [
+    'Hypertension and cardiovascular disease — strictly contraindicated due to intense noradrenaline spikes',
+    'Anxiety, PTSD, or panic disorders — strongly exacerbates sympathetic fight-or-flight states',
+    'Kidney disease — traditional and clinical literature warns against renal stress from alkaloid clearance',
+    'Pregnancy and lactation — absolutely contraindicated',
+    'Not for anyone under 18 — adult-only botanical with a narrow therapeutic index',
+  ],
+  herb_to_herb_synergy: [
+    'Maca and Panax Ginseng — for a stacked, multi-pathway libido and erectile support protocol',
+    'Caffeine (with extreme caution) — heavily compounds the lipolytic and stimulant effects',
+  ],
+  herb_to_herb_caution: ['Concurrent use with any other heavy stimulants (Ephedra, Bitter Orange/Synephrine) dramatically increases cardiovascular risk'],
+  herb_to_drug_interactions: [
+    'MAOIs and SSRIs — severe risk of hypertensive crisis and serotonin syndrome',
+    'Antihypertensives (Clonidine) — yohimbine directly antagonizes alpha-2 agonists, neutralizing the medication',
+    'Tricyclic antidepressants — additive cardiovascular toxicity',
+  ],
+  herb_interactions: [
+    'Synergy: Maca, Panax Ginseng',
+    'Caution: Heavy stimulants, high-dose Caffeine',
+    'Drug interactions: Antihypertensives, MAOIs, SSRIs, Tricyclics (CRITICAL)',
+  ],
+  dosage_range: 'Standardized Extract (typically 2–8% yohimbine): clinically, 5–15 mg of pure yohimbine alkaloid daily. Bark powder: 500 mg – 1 g (highly variable alkaloid content makes raw powder dangerous). Must be taken away from tyramine-rich foods.',
+  spiritual_layer: 'Yohimbe is the lightning strike in the dark forest. It forces awake the dormant, dragging the primal fire up from the root to the heart. It does not ask for permission; it demands movement. It teaches that raw, untamed energy is dangerous if the vessel is not strong enough to hold the current.',
+  best_preparation: 'Standardized extracts (HCl form or standardized bark extract) are necessary for safety. Traditional decoctions of the raw bark are notoriously unpredictable due to vast variations in alkaloid concentration across different trees. If using bark, boil gently at 90°C for 30 minutes with ascorbic acid to increase alkaloid solubility.',
+  caution_level: 'HIGH', safe_pregnancy: false,
+  status: 'A highly potent, clinically validated alpha-2 antagonist with a narrow therapeutic window; side effects (tachycardia, anxiety) are common. LEGAL NOTE: yohimbine is prescription-only in Germany and restricted in food supplements across much of the EU — verify jurisdiction before offering it in any product.',
+  // nervous_system_fit deliberately unset: every typology that reads as a fit
+  // ('flat', 'tired') is also a profile this herb can destabilise. Leaving it
+  // blank keeps the picker from reaching it on typology alone.
+  // 'ascending/stimulating/breaking' → am_boost + acute_only · 'nervous system' → head · 'West African' → African
+  energy_pattern: ['am_boost', 'acute_only'],
+  digestion_fit: ['warming', 'moving'],
+  regional_affinity: ['head', 'pelvis', 'heart'],
+  onset_time: 'immediate',
+  family: 'Rubiaceae',
+  epithet: 'The primal fire',
+  origin_region: 'African',
+  evidence_grade: 'A',
+},
+{
+  id: 559, name: 'Cistanche', botanical: 'Cistanche salsa / Cistanche deserticola (fleshy stem)',
+  tcm_meridians: ['Kidney', 'Large Intestine'], tcm_element: 'Water',
+  energetics: ['Warm', 'Sweet', 'Salty', 'Moistening'],
+  primary_functions: [
+    'Kidney Yang tonic — replenishes profound exhaustion, supports endocrine function, and increases libido without the harsh, drying heat of other Yang tonics',
+    'Neuroprotective and cognitive enhancer — upregulates nerve growth factor (NGF) and protects against dopaminergic neuron apoptosis',
+    'Mitochondrial ATP stimulator — enhances cellular energy output and significantly reduces physical fatigue in strenuous exertion',
+    'Bowel moistener — gently lubricates the intestines to relieve chronic constipation, particularly in the elderly or deeply deficient',
+  ],
+  secondary_benefits: [
+    'Immunomodulatory — enhances macrophage phagocytosis and cellular immunity',
+    'Promotes bone health by regulating osteoblast function',
+  ],
+  pharmacology: 'Known as the "Ginseng of the Desert". The pharmacological heavyweights are phenylethanoid glycosides (PhGs), particularly echinacoside and acteoside. These compounds possess profound antioxidant, neuroprotective, and mild androgenic-like effects, modulating the hypothalamic-pituitary-gonadal (HPG) axis.',
+  flavor_profile: 'Earthy, deeply sweet, and mildly salty with a heavy, grounding resonance',
+  contraindications: [
+    'Spleen deficiency with loose stools — its moistening/lubricating nature will worsen diarrhea',
+    'Yin deficiency with prominent heat signs — though a gentle Yang tonic, it still adds warmth to a system lacking coolant',
+    'Pregnancy — avoided for its strong endocrine-modulating effects',
+  ],
+  herb_to_herb_synergy: [
+    'Maca and Tongkat Ali — for a powerful, stacked androgen-support and libido formula',
+    'Schisandra and Goji Berry — classic TCM pairings to lock in Kidney essence (Jing) while nourishing Yang',
+    'Eucommia — for structural integrity, bone density, and lower back strength',
+  ],
+  herb_to_herb_caution: ['Heavy cooling/draining herbs that counter its building, warming nature'],
+  herb_to_drug_interactions: ['Immunosuppressants — potential theoretical antagonism due to its immune-stimulating properties'],
+  herb_interactions: [
+    'Synergy: Maca, Tongkat Ali, Schisandra, Eucommia',
+    'Caution: Overuse in diarrhea or severe Yin deficiency',
+    'Drug interactions: Minimal; theoretical interaction with immunosuppressants',
+  ],
+  dosage_range: 'Standardized Extract (often 20% echinacoside / 5% acteoside): 200–500 mg daily. Raw slice decoction: 10–15 g slowly simmered.',
+  spiritual_layer: 'Cistanche is the survivor of the deep desert — a parasitic plant that draws water and life from the roots of its host in the harshest, driest environments on earth. It teaches the conservation and precise deployment of vital force. She whispers: I store the deep reserves. I bring the oasis to the barren places. Endure.',
+  best_preparation: 'Traditionally sliced and cooked into long-simmering restorative broths or decoctions (95°C for 45+ minutes). For clinical potency targeting neurogenesis and fatigue, dual-extracted powders standardizing the phenylethanoid glycosides are superior.',
+  caution_level: 'LOW', safe_pregnancy: false,
+  status: 'A premier, deeply restorative Yang and Jing tonic with strong clinical validation for neuroprotection and anti-fatigue. Notably safe compared to other hormone-modulating botanicals.',
+  // 'building/sustaining/warming' → sustained + crash_repair · 'brain' → head · 'Central/East Asian (Desert)' → Chinese
+  nervous_system_fit: ['tired', 'flat'],
+  energy_pattern: ['sustained', 'crash_repair'],
+  digestion_fit: ['demulcent', 'warming'],
+  regional_affinity: ['kidneys', 'head', 'pelvis'],
+  onset_time: 'weeks',
+  family: 'Orobanchaceae',
+  epithet: 'The desert ginseng',
+  origin_region: 'Chinese',
+  evidence_grade: 'A',
+},
+// ════════════════════════════════════════════════════════════════
+// 2026-09-24 · Clinical-extract expansion, batch 2 (ids 560–568)
+//
+// Nine botanicals: essential-fatty-acid and vascular-structural
+// (Evening Primrose, Sophora Flower), cholinergic nootropic (Toothed
+// Clubmoss), structural tonic (Eucommia), stilbene/anti-spirochetal
+// (Knotweed), dermal repair (Gromwell), whole-food vitamin C
+// (Camu Camu), berberine metabolic (Indian Barberry), and one
+// pharmaceutical-grade immunosuppressant held out of the pool
+// entirely (Thunder God Vine — see its entry and axes.js).
+//
+// Gotu Kola was dropped: Centella asiatica is already id 108.
+//
+// Same mapping discipline as ids 545–559 — the source notes' richer
+// tag vocabulary ('moistening', 'binding', 'GI tract', 'days to
+// weeks') is folded onto the declared unions, since the engine reads
+// the prose via inferAxes() and only evidence_grade directly. One
+// exception: origin_region gained 'North American', because the union
+// genuinely had no home for Oenothera and mapping it to 'Global'
+// would have been wrong rather than merely lossy. Nothing reads that
+// field, so the addition is free.
+// ════════════════════════════════════════════════════════════════
+{
+  id: 560, name: 'Evening Primrose', botanical: 'Oenothera biennis L. (seed oil)',
+  tcm_meridians: ['Liver', 'Spleen', 'Heart'], tcm_element: 'Wood + Earth',
+  energetics: ['Cool', 'Moistening', 'Sweet'],
+  primary_functions: [
+    'Prostaglandin modulator — provides dense Gamma-Linolenic Acid (GLA), bypassing the rate-limiting D6D enzyme to directly synthesize anti-inflammatory Prostaglandin E1 (PGE1)',
+    'Hormonal balancer — clinically utilized for Premenstrual Syndrome (PMS), mastalgia (breast tenderness), and menopausal hot flashes by stabilizing systemic lipid-hormone pathways',
+    'Skin barrier repair — highly effective for atopic dermatitis, eczema, and psoriasis by structurally reinforcing the stratum corneum with essential fatty acids',
+  ],
+  secondary_benefits: [
+    'Supports nerve health in diabetic neuropathy via improved microcirculation to nerve sheaths',
+    'Mild joint support in rheumatoid arthritis when combined with marine Omega-3s',
+  ],
+  pharmacology: 'O. biennis seed oil contains 7–10% Gamma-Linolenic Acid (GLA) and around 70% Linoleic Acid (LA). Clinical literature identifies GLA as the critical metabolic precursor to anti-inflammatory eicosanoids. Many individuals (due to stress, aging, or zinc/B6 deficiencies) lack the delta-6-desaturase (D6D) enzyme required to convert dietary fats into GLA; Evening Primrose circumvents this bottleneck completely.',
+  flavor_profile: 'Bland, oily, and slightly nutty (typically consumed via softgel)',
+  contraindications: [
+    'Bleeding disorders or upcoming surgery — mild anti-platelet aggregation effects via prostaglandin modulation',
+    'Seizure disorders — historically cautioned against use with phenothiazines (schizophrenia meds) due to a theoretical lowered seizure threshold; recent literature disputes this, but the caution remains standard',
+    'Pregnancy — unsafe in early and mid-pregnancy; the prostaglandin effect risks stimulating contractions',
+  ],
+  herb_to_herb_synergy: [
+    'Fish Oil / Algal Oil (Omega-3s) — combining Omega-6 GLA with Omega-3 EPA/DHA creates a balanced, dual-pathway anti-inflammatory engine',
+    'Vitex (Chaste Tree Berry) — the definitive stack for PMS, hormonal acne, and cyclical mastalgia',
+    'Vitamin E — essential as a co-antioxidant to prevent the delicate polyunsaturated oil from oxidizing in the body',
+  ],
+  herb_to_herb_caution: ['High doses of competing Omega-6 seed oils (soybean, corn) push the pathway toward inflammatory Arachidonic Acid instead'],
+  herb_to_drug_interactions: [
+    'Anticoagulants (Warfarin, Aspirin) — additive blood-thinning effect',
+    'Phenothiazines (antipsychotics) — historical (if debated) risk of lowering the seizure threshold',
+  ],
+  herb_interactions: [
+    'Synergy: Omega-3s, Vitex, Vitamin E',
+    'Caution: Competing inflammatory seed oils',
+    'Drug interactions: Anticoagulants, Phenothiazines (caution in epilepsy)',
+  ],
+  dosage_range: 'Standardized Seed Oil (typically 9% GLA): 1000–3000 mg daily (yielding roughly 90–270 mg of GLA), taken with meals. For severe eczema or neuropathy, doses up to 4000 mg are used in clinical trials.',
+  spiritual_layer: 'Evening Primrose opens only at dusk, turning its face to the moon and the night pollinators. It represents the cyclical, the hidden, and the feminine hormonal rhythm. It teaches that the deepest healing sometimes requires the cooling, quiet moisture of the night. She whispers: I soothe the friction. I lubricate the sharp edges. I am the cool oil on the burn.',
+  best_preparation: 'Strictly a cold-pressed seed oil, encapsulated in softgels to prevent oxidation. The oil is highly sensitive to light, heat, and oxygen. Never heat Evening Primrose oil; it must be consumed cold or at room temperature.',
+  caution_level: 'LOW', safe_pregnancy: false,
+  status: 'The benchmark botanical source of GLA. Extremely well-documented in clinical dermatology and gynecology for its structural anti-inflammatory properties.',
+  // 'moistening/cooling/smoothing' → sustained · 'heavy' → demulcent · 'uterus' → pelvis · 'nervous system' → head
+  energy_pattern: ['sustained'],
+  digestion_fit: ['demulcent'],
+  regional_affinity: ['skin', 'pelvis', 'head'],
+  onset_time: 'months',
+  family: 'Onagraceae',
+  epithet: 'The lunar lipid',
+  origin_region: 'North American',
+  evidence_grade: 'A',
+},
+{
+  id: 561, name: 'Toothed Clubmoss', botanical: 'Huperzia serrata (aerial parts)',
+  tcm_meridians: ['Heart', 'Liver', 'Spleen'], tcm_element: 'Fire + Wood',
+  energetics: ['Cold', 'Bitter', 'Pungent', 'Moving'],
+  primary_functions: [
+    'Acetylcholinesterase (AChE) inhibitor — reversibly binds the enzyme that breaks down acetylcholine, pooling the neurotransmitter in the brain for memory and focus',
+    'NMDA receptor antagonist — protects neurons from glutamate-induced excitotoxicity and cellular death',
+    'Neurogenesis catalyst — stimulates the proliferation of hippocampal neural stem cells, actively repairing cognitive decline',
+    'Clears heat and toxicity (TCM) — traditionally used to disperse swelling, clear fever, and heal traumatic bruising',
+  ],
+  secondary_benefits: [
+    'Markedly enhances REM sleep and lucid dreaming due to high acetylcholine levels',
+    'Used in sports performance for "mind-muscle connection" and explosive focus',
+  ],
+  pharmacology: 'The active sesquiterpene alkaloid, Huperzine-A, is among the most potent natural AChE inhibitors known. It is highly selective for the brain (crossing the BBB easily) with a long half-life, matching pharmaceutical counterparts like donepezil in some neuroprotective trials without the heavy liver toxicity.',
+  flavor_profile: 'Fiercely bitter, acrid, and metallic',
+  contraindications: [
+    'Epilepsy or seizure disorders — elevated acetylcholine can alter electrical thresholds',
+    'Bradycardia (slow heart rate) or heart block — cholinergic activity can further depress cardiac rhythm',
+    'Active asthma or COPD — increased acetylcholine can stimulate bronchial secretions and constriction',
+    'Peptic ulcers — cholinergic stimulation increases gastric acid secretion',
+    'Pregnancy and lactation — no safety data for a potent centrally-acting alkaloid',
+    'Not for anyone under 18 — dosed in micrograms, with a narrow window',
+  ],
+  herb_to_herb_synergy: [
+    'Alpha-GPC or Citicoline — the definitive nootropic stack; the choline source provides raw material to build acetylcholine while Huperzine-A prevents its breakdown',
+    'Lion’s Mane Extract — for compounded nerve growth factor (NGF) and neuro-regeneration',
+    'Ginkgo Biloba — stacks vascular brain flow with neurotransmitter retention',
+  ],
+  herb_to_herb_caution: ['Other cholinergic herbs or intense CNS stimulants without proper cycling; can cause acetylcholine overload (brain fog, muscle twitching, low mood)'],
+  herb_to_drug_interactions: [
+    'Anticholinergic drugs (Benadryl, Atropine) — direct molecular antagonism; Huperzine will neutralize the drug',
+    'Alzheimer’s medications (Donepezil, Rivastigmine) — extreme risk of cholinergic crisis if combined',
+    'Beta-blockers — additive risk of severe bradycardia',
+  ],
+  herb_interactions: [
+    'Synergy: Alpha-GPC, Lion’s Mane, Ginkgo Biloba',
+    'Caution: Heavy cholinergic stacking without cycling',
+    'Drug interactions: Alzheimer’s meds (CRITICAL), Anticholinergics, Beta-blockers',
+  ],
+  dosage_range: 'Purified Extract (Huperzine-A): micro-dosed at 50–200 MICROGRAMS (mcg) daily. Given the long half-life, cycling is strongly recommended (e.g. 5 days on, 2 days off) to prevent receptor downregulation. Raw herb use is dangerous due to alkaloid fluctuation.',
+  spiritual_layer: 'Clubmoss is an ancient survivor, a living fossil from the Carboniferous. It holds the oldest memories of the earth. It is the architect of the mind, building bridges over broken synapses. It teaches clarity through retention. She whispers: I do not let the thought escape. I hold the spark. I remember.',
+  best_preparation: 'Must use highly standardized extracts isolating Huperzine-A (typically 1%). Traditional decoction is imprecise and risks cholinergic toxicity. Formulate strictly in microgram weights.',
+  caution_level: 'HIGH', safe_pregnancy: false,
+  status: 'A pharmaceutical-grade botanical nootropic. Unmatched for memory retention and neuroprotection, but requires rigorous dose management and cycling.',
+  // 'ascending/binding/clarifying' → am_boost · 'brain' + 'nervous system' → head · 'minutes to hours' → immediate
+  // nervous_system_fit left unset: the epilepsy and bradycardia contraindications
+  // make every typology that reads as a fit also a profile this can destabilise.
+  energy_pattern: ['am_boost'],
+  digestion_fit: ['cooling'],
+  regional_affinity: ['head'],
+  onset_time: 'immediate',
+  family: 'Lycopodiaceae',
+  epithet: 'The memory keeper',
+  origin_region: 'Chinese',
+  evidence_grade: 'A',
+},
+{
+  id: 562, name: 'Eucommia', botanical: 'Eucommia ulmoides (bark)',
+  tcm_meridians: ['Kidney', 'Liver'], tcm_element: 'Water + Wood',
+  energetics: ['Warm', 'Sweet', 'Slightly Pungent'],
+  primary_functions: [
+    'Tonifies Kidney and Liver Yang — the primary TCM botanical for strengthening physical structure: bones, ligaments, tendons, and the lower back',
+    'Antihypertensive agent — induces endothelium-dependent vasorelaxation via the nitric oxide-cGMP pathway, lowering high blood pressure',
+    'Osteogenic catalyst — stimulates osteoblast proliferation and inhibits osteoclasts, clinically evaluated for osteoporosis and fracture healing',
+    'Calms the fetus — traditionally used to prevent miscarriage caused by Kidney deficiency and structural weakness',
+  ],
+  secondary_benefits: [
+    'Neuroprotective and antioxidant actions in Parkinsonian models',
+    'Promotes collagen synthesis and skin elasticity',
+  ],
+  pharmacology: 'The bark is rich in lignans (specifically pinoresinol diglucoside), iridoids (aucubin), and flavonoids. The literature confirms a dual-action capability: it operates as a vasodilator lowering blood pressure while simultaneously acting as a deep structural anabolic agent for connective tissue and bone density.',
+  flavor_profile: 'Mildly sweet, slightly woody, and earthy; the bark contains a unique rubbery latex that gives it a distinct texture when snapped',
+  contraindications: [
+    'Severe Yin deficiency with intense internal heat — the warming nature may aggravate, though it is generally a balanced tonic',
+    'Hypotension — may excessively lower blood pressure in individuals who already run low',
+  ],
+  herb_to_herb_synergy: [
+    'Dipsacus (Xu Duan) and Drynaria (Gu Sui Bu) — the orthopedic stack for mending broken bones, torn ligaments, and severe joint trauma',
+    'Cistanche and Morinda — for comprehensive Kidney Yang nourishment, lower back strength, and endocrine support',
+    'Hawthorn and Dan Shen — for a stacked antihypertensive and cardiovascular matrix',
+  ],
+  herb_to_herb_caution: ['None widely documented; an exceedingly safe, foundational tonic'],
+  herb_to_drug_interactions: [
+    'Antihypertensive medications (ACE inhibitors, Beta-blockers) — additive blood pressure-lowering effects; monitor to avoid hypotensive episodes',
+    'Anticoagulants — minor risk of interaction, monitor parameters',
+  ],
+  herb_interactions: [
+    'Synergy: Dipsacus, Drynaria, Cistanche, Hawthorn',
+    'Caution: Overly warming formulas in severe Yin deficiency',
+    'Drug interactions: Antihypertensives (monitor BP closely)',
+  ],
+  dosage_range: 'Decoction: 9–15 g of bark daily (requires long boiling). Extract (1:5, 40% EtOH): 30–60 drops, 2–3× daily. Standardized Powder: 1–3 g daily.',
+  spiritual_layer: 'Eucommia is the backbone of the forest. When the bark is broken, silver threads of liquid rubber hold the two halves together. It is the medicine of resilience, of bending without breaking. It teaches structural integrity. She whispers: I reinforce the pillars. I hold the joints together. Stand tall.',
+  best_preparation: 'The bark is traditionally dry-fried (often with a saltwater solution) to direct its actions into the Kidney meridian. For extraction, a long water decoction (95°C for 60 mins) pulls the water-soluble iridoids and lignans. Hydroethanolic tinctures at 40% EtOH are also highly effective.',
+  caution_level: 'LOW',
+  safe_pregnancy: true, // Source note: used in TCM to stabilise pregnancy, though western clinical data is sparse.
+  status: 'A top-tier structural tonic. One of the few botanicals recognised for simultaneous bone/tendon anabolism and hypertension management.',
+  // 'building/stabilizing/descending' → sustained + crash_repair · 'bones'/'lower back' → kidneys + joints · 'weeks to months' → months
+  energy_pattern: ['sustained', 'crash_repair'],
+  digestion_fit: ['warming'],
+  regional_affinity: ['kidneys', 'joints', 'whole'],
+  onset_time: 'months',
+  family: 'Eucommiaceae',
+  epithet: 'The structural architect',
+  origin_region: 'Chinese',
+  evidence_grade: 'A',
+},
+{
+  id: 563, name: 'Knotweed', botanical: 'Polygonum cuspidatum / P. sachalinense / Reynoutria japonica · sachalinensis (root/rhizome)',
+  tcm_meridians: ['Liver', 'Gallbladder', 'Lung'], tcm_element: 'Wood + Metal',
+  energetics: ['Cold', 'Dry', 'Bitter', 'Moving'],
+  primary_functions: [
+    'Endothelial protector and SIRT1 activator — the most concentrated botanical source of trans-resveratrol, mimicking calorie restriction and protecting vascular walls',
+    'Systemic anti-spirochetal (Buhner Protocol) — acts to halt endothelial adherence and crossing by Borrelia burgdorferi (Lyme disease) bacteria',
+    'Blood invigorator (TCM: Hu Zhang) — clears heat, resolves toxicity, and breaks up blood stasis associated with inflammatory joint and pelvic pain',
+    'Hepatoprotective and cholagogue — clears damp-heat from the Liver and Gallbladder, supporting bile flow and clearing jaundice',
+    'Modulates angiogenesis — inhibits abnormal blood vessel growth associated with tumor progression and severe inflammatory states',
+  ],
+  secondary_benefits: [
+    'Topical burn and wound healer — traditional TCM application for severe burns, via its cooling and blood-moving properties',
+    'Mild antitussive — helps clear lung heat and resolve thick, yellow phlegm in respiratory infections',
+    'Antifungal and plant-defence-elicitor activity, most pronounced in the sachalinense (giant) material',
+  ],
+  pharmacology: 'The rhizome contains high levels of trans-resveratrol, polydatin, and anthraquinones (notably emodin). Unlike red wine extracts, knotweed delivers a dense, highly bioavailable matrix of stilbenes. Polydatin acts as a precursor to resveratrol while providing its own neuroprotective and cardioprotective effects. Emodin provides mild laxative and strong antimicrobial actions. Both the Japanese (P. cuspidatum) and Giant (P. sachalinense) species are carried under this single entry: their stilbene and anthraquinone profiles are near-identical, the giant form runs somewhat denser and carries extra antifungal secondary metabolites, and clinical protocols treat them as interchangeable. Held as one herb so the picker cannot stack two copies of the same medicine.',
+  flavor_profile: 'Intensely bitter, earthy, and distinctly astringent',
+  contraindications: [
+    'Pregnancy — strictly contraindicated; moves blood heavily and poses a severe risk of miscarriage',
+    'Cold/deficient Spleen and Stomach — its cold, bitter, mildly laxative properties cause severe digestive distress and diarrhea in depleted individuals',
+    'Pre-surgery — discontinue 2 weeks prior due to antiplatelet activity',
+  ],
+  herb_to_herb_synergy: [
+    'Cat’s Claw and Andrographis — the foundational core of the Buhner Lyme Protocol for modulating immune response and clearing spirochetes',
+    'Black Pepper Extract (Piperine) — required to inhibit glucuronidation and raise the bioavailability of its trans-resveratrol',
+    'Dan Shen (Salvia miltiorrhiza) — for cardiovascular and microcirculation protection',
+  ],
+  herb_to_herb_caution: ['Rhubarb (Da Huang) or Cassia Seed — stacking heavy anthraquinones induces severe purgative effects'],
+  herb_to_drug_interactions: [
+    'Anticoagulants (Warfarin, Plavix) — additive blood-thinning effect',
+    'CYP3A4 substrates — resveratrol inhibits certain CYP enzymes, potentially altering the clearance of statins and calcium channel blockers',
+  ],
+  herb_interactions: [
+    'Synergy: Cat’s Claw, Andrographis, Piperine, Dan Shen',
+    'Caution: Heavy laxatives (Rhubarb, Cassia)',
+    'Drug interactions: Anticoagulants, CYP3A4-metabolized drugs',
+  ],
+  dosage_range: 'Standardized Extract (often 50–98% trans-resveratrol): 200–1000 mg daily. Raw root decoction: 9–15 g (simmered 45 mins). Tincture (1:5, 60% EtOH): 30–60 drops, 3× daily.',
+  spiritual_layer: 'Knotweed is the ultimate biological opportunist, capable of breaking through concrete and thriving in toxic, destroyed soils. It is the medicine of invasive resilience. She teaches how to reclaim territory from the deepest, most systemic infections. She whispers: I break the stone. I occupy the wasteland. I will not be eradicated.',
+  best_preparation: 'For clinical resveratrol loading, a highly standardized extract is required. For whole-plant synergy (as used in Lyme protocols), a hydroethanolic percolation at 60% EtOH captures both the water-soluble polydatin and the alcohol-soluble resveratrol and emodin.',
+  caution_level: 'MEDIUM', safe_pregnancy: false,
+  status: 'A top-tier botanical for systemic endothelial inflammation, longevity pathways, and tick-borne infections. Requires careful dosing to avoid GI upset from emodin. Note: overlaps id 556 (Red Wine Extract / Resveratrol), which uses this same root as one of its two stilbene sources — 556 is the isolated standardised extract, this is the whole rhizome.',
+  // 'breaking/clearing/cooling' → sustained · 'vasculature' → whole · 'days to weeks' → days · 'East Asian' → Chinese
+  energy_pattern: ['sustained'],
+  digestion_fit: ['cooling', 'moving'],
+  regional_affinity: ['liver', 'joints', 'whole'],
+  onset_time: 'days',
+  family: 'Polygonaceae',
+  epithet: 'The concrete breaker',
+  origin_region: 'Chinese',
+  evidence_grade: 'A',
+},
+{
+  id: 564, name: 'Thunder God Vine', botanical: 'Tripterygium wilfordii (root core/xylem — NOT FOR RECOMMENDATION — clinical supervision only)',
+  tcm_meridians: ['Liver', 'Kidney', 'Spleen'], tcm_element: 'Wood',
+  energetics: ['Cold', 'Bitter', 'Acrid', 'Highly Toxic'],
+  primary_functions: [
+    'NF-κB inhibitor — delivers pharmaceutical-grade suppression of systemic inflammatory cascades, clinically used for severe Rheumatoid Arthritis',
+    'Immunosuppressant — induces apoptosis in hyperactive T-cells and B-cells, halting autoimmune tissue destruction',
+    'Anti-tumor agent — triptolide demonstrates anti-proliferative effects across multiple aggressive cancer cell lines in vitro',
+    'Dispels Wind-Dampness (TCM: Lei Gong Teng) — clears deep, intractable joint pain, swelling, and deformity',
+  ],
+  secondary_benefits: [
+    'Evaluated clinically for severe systemic lupus erythematosus (SLE) and nephrotic syndrome',
+    'Historically researched as a non-hormonal male contraceptive (induces reversible oligozoospermia)',
+  ],
+  pharmacology: 'An extremely narrow-therapeutic-index botanical. Active diterpenoids (triptolide) and triterpenoids (celastrol) are among the most potent natural anti-inflammatories known, but carry extreme risks of hepatotoxicity, nephrotoxicity, and reproductive toxicity. Triptolide inhibits RNA polymerase II, shutting down transcription in rapidly dividing immune cells.',
+  flavor_profile: 'Intensely bitter and acrid — raw tasting is genuinely dangerous',
+  contraindications: [
+    'Pregnancy and lactation — ABSOLUTELY CONTRAINDICATED; teratogenic and abortifacient',
+    'Reproductive age — causes severe, sometimes irreversible amenorrhea in women and drastically reduced sperm count and motility in men',
+    'Liver or kidney impairment — high risk of acute organ failure; hepatotoxic and nephrotoxic',
+    'Immunocompromised states — a heavy immunosuppressant, severely increasing infection risk',
+    'Ulcers or GI bleeding — extreme mucosal irritant',
+    'Not for anyone under 18 under any circumstances',
+  ],
+  herb_to_herb_synergy: [
+    'Licorice Root (Gan Cao) — mandatory TCM pairing to modulate and partially neutralise its toxicity',
+    'Avoid synergistic stacking generally; it operates as a standalone pharmaceutical equivalent',
+  ],
+  herb_to_herb_caution: ['Any other hepatotoxic or nephrotoxic botanical'],
+  herb_to_drug_interactions: [
+    'Immunosuppressants (Methotrexate, Prednisone) — extreme additive risk of bone marrow suppression and fatal infections',
+    'Hepatotoxic drugs — severe additive risk of acute liver failure',
+  ],
+  herb_interactions: [
+    'Synergy: Licorice (for toxicity mitigation only)',
+    'Caution: everything — do not stack casually',
+    'Drug interactions: Immunosuppressants, hepatotoxic agents (CRITICAL)',
+  ],
+  dosage_range: 'STRICT MEDICAL SUPERVISION ONLY. Standardized multi-glycoside extracts are dosed in micro-milligrams under clinical trial protocols. Traditional decoction of the root (xylem ONLY — the bark is lethal) requires 1–2 hours minimum boiling to partially degrade the toxic diterpenoids. Do not formulate outside a clinical setting.',
+  spiritual_layer: 'Thunder God Vine is the earth’s chemotherapy. It is the wrath of the forest, a violent intervention for when the body’s own defence system has gone mad and begun to devour itself. It teaches the razor-thin line between medicine and poison. She whispers: I will burn down the entire house to stop the fire. Do not summon me unless you have no other choice.',
+  best_preparation: 'Requires pharmaceutical-level processing to separate the therapeutic core (xylem) from the highly toxic root bark. Never tincture or extract at home. Only commercially prepared, clinically standardized multi-glycoside tablets under a physician’s care.',
+  caution_level: 'VERY HIGH',
+  safe_pregnancy: false,
+  status: 'CATALOGUE REFERENCE ONLY — listed in RESTRICTED_NAMES (src/server/formula-engine/axes.js) and therefore never offered by the formula engine, following the same treatment as Kratom. One of the most potent and dangerous plants in the global pharmacopeia: capable of halting severe rheumatoid arthritis where pharmaceuticals fail, but carrying a massive payload of reproductive and organ toxicity. Source notes marked it caution_level EXTREME, which the schema has no value for; VERY HIGH is the ceiling, and the restriction — not the label — is what actually keeps it out of a bottle.',
+  // 'destroying/suppressing/clearing' → acute_only · digestion_fit omitted entirely:
+  // the source value 'corrosive' has no honest mapping and 'bitter' would understate it.
+  // 'immune system'/'reproductive organs' → whole + pelvis.
+  energy_pattern: ['acute_only'],
+  regional_affinity: ['joints', 'pelvis', 'whole'],
+  onset_time: 'days',
+  family: 'Celastraceae',
+  epithet: 'The thunder god',
+  origin_region: 'Chinese',
+  evidence_grade: 'A',
+},
+{
+  id: 565, name: 'Gromwell Root / Shikonin', botanical: 'Lithospermum erythrorhizon (root — Shikon / Zi Cao)',
+  tcm_meridians: ['Heart', 'Liver'], tcm_element: 'Fire + Wood',
+  energetics: ['Cold', 'Sweet', 'Salty', 'Descending'],
+  primary_functions: [
+    'Wound healing and tissue regeneration — highly active topically to promote granulation, accelerate re-epithelialization, and clear necrotic tissue in severe burns, frostbite, and chronic ulcers',
+    'Cools Blood and Vents Rashes (TCM: Zi Cao) — internally clears blood-level heat manifesting as dark purple macules, eczema, measles, and psoriasis',
+    'Antimicrobial and anti-inflammatory — shikonin directly inhibits leukotriene biosynthesis via 5-LOX suppression and exerts strong bactericidal action against dermal pathogens including Staphylococcus aureus and Trichophyton',
+    'Anti-tumor properties — shikonin selectively induces necroptosis in multiple cancer cell lines while bypassing drug-resistance mechanisms',
+  ],
+  secondary_benefits: [
+    'Stains carrier oils and alcohol a brilliant, fast ruby-red — a historical dye and modern cosmetic colorant',
+    'Hepatoprotective in purified shikonin forms, though the raw plant carries PA cautions',
+  ],
+  pharmacology: 'The vibrant red of the root comes from naphthoquinone pigments, primarily shikonin and its enantiomer alkannin. Shikonin is intensely lipophilic and highly active topically. Purified shikonin is used in oncology and extreme dermatology; the whole root (Shikon) provides a buffered, complex matrix instead. Note: the Boraginaceae family inherently produces Pyrrolizidine Alkaloids (PAs), which are hepatotoxic cumulatively — internal use of the raw root requires caution, while topical application carries essentially zero PA risk because the alkaloids are water-soluble and the actives are not.',
+  flavor_profile: 'Sweet, earthy, and slightly metallic/salty',
+  contraindications: [
+    'Pregnancy — internal use contraindicated due to potential Pyrrolizidine Alkaloid exposure to the fetus',
+    'Liver disease — internal use of the raw root should be avoided to prevent PA-induced veno-occlusive liver disease',
+    'Spleen Qi deficiency — its intense cold nature aggravates loose stools and weak digestion when taken internally',
+  ],
+  herb_to_herb_synergy: [
+    'Angelica sinensis (Dong Quai) and Sesame Oil — traditionally cooked together to form "Zi Yun Gao" (Purple Cloud Ointment) for severe burns and eczema',
+    'Sophora flavescens (Ku Shen) — stacked for severe, weeping, itching dermal infections',
+  ],
+  herb_to_herb_caution: ['Comfrey or Coltsfoot taken internally — stacking PA-containing herbs sharply increases liver toxicity risk'],
+  herb_to_drug_interactions: ['Hepatotoxic drugs — internal use compounds liver stress due to PA content'],
+  herb_interactions: [
+    'Synergy: Angelica sinensis (topical), Sophora flavescens',
+    'Caution: Other PA-containing herbs (Comfrey, Borage)',
+    'Drug interactions: Hepatotoxic medications',
+  ],
+  dosage_range: 'Topical: infused at 10–20% in carrier oils. Internal decoction (TCM): 3–9 g, strictly short-term. Purified shikonin extract is used in clinical oncology and dermatology trials, not widely available for internal retail use.',
+  spiritual_layer: 'Gromwell is the blood-cooler. It pulls the chaotic fire out of the deep layers of the body and pushes it out through the skin, leaving behind a brilliant crimson dye as proof of the extraction. It teaches the alchemy of turning internal heat into external beauty. She whispers: Let the fire rise to the surface, and I will cool the ash.',
+  best_preparation: 'The gold standard is a cold or warm (never hot) maceration in a lipid carrier such as sesame or olive oil over several weeks, below 60°C. This is not merely the best yield — it is the safest route: the lipid pulls the red naphthoquinones while leaving the water-soluble, liver-toxic pyrrolizidine alkaloids behind in the marc. The result is a deeply red medicinal oil for salves (Zi Yun Gao). Shikonin is also alcohol-soluble, so tinctures at 75%+ EtOH work for the actives, but water decoctions capture the PAs along with far less of the pigment.',
+  caution_level: 'MEDIUM', safe_pregnancy: false,
+  status: 'A legendary topical botanical for dermal repair and burn trauma. Internal use is effective for heat-toxin conditions but bottlenecked by the inherent hepatotoxicity of its PA content.',
+  // 'cooling/venting/repairing' → sustained · 'blood' → whole · 'days (topical)' → days
+  energy_pattern: ['sustained'],
+  digestion_fit: ['cooling'],
+  regional_affinity: ['skin', 'heart', 'whole'],
+  onset_time: 'days',
+  family: 'Boraginaceae',
+  epithet: 'The purple cloud',
+  origin_region: 'Chinese',
+  evidence_grade: 'B',
+},
+{
+  id: 566, name: 'Camu Camu', botanical: 'Myrciaria dubia (fruit)',
+  tcm_meridians: ['Spleen', 'Stomach', 'Lung'], tcm_element: 'Earth + Metal',
+  energetics: ['Cool', 'Moistening', 'Sour', 'Astringent'],
+  primary_functions: [
+    'Apex vitamin C source — delivers one of the highest recorded botanical concentrations of natural ascorbic acid (up to 3–5% of fresh weight), driving systemic collagen synthesis',
+    'Antioxidant shield — dense ellagic acid and anthocyanins protect cellular DNA from oxidative stress more effectively than synthetic vitamin C equivalents',
+    'Anti-inflammatory cascade blocker — shown to lower high-sensitivity C-reactive protein (hs-CRP) and pro-inflammatory cytokines',
+    'Immune modulator — supports leukocyte production and phagocytosis during acute viral or bacterial onset',
+  ],
+  secondary_benefits: [
+    'Neuroprotective — the antioxidant matrix shields the brain from lipid peroxidation',
+    'Hepatoprotective — assists liver phase-I and phase-II detoxification pathways via dense ascorbic acid availability',
+    'Enhances non-heme iron absorption in the gut',
+  ],
+  pharmacology: 'Though famous for vitamin C, Camu Camu’s efficacy is driven by the synergistic matrix of ascorbic acid bound to complex polyphenols (ellagitannins, proanthocyanidins). In comparative human trials, Camu Camu juice outperformed equivalent doses of synthetic vitamin C in reducing systemic oxidative stress markers, indicating the whole-fruit matrix matters.',
+  flavor_profile: 'Fiercely sour, highly astringent, and brightly acidic with subtle berry notes',
+  contraindications: [
+    'Gastritis or active peptic ulcers — the intense acidity can irritate an inflamed mucosal lining',
+    'Iron storage disease (Hemochromatosis) — high vitamin C intake excessively increases dietary iron absorption',
+    'History of calcium-oxalate kidney stones — high-dose vitamin C metabolism can elevate urinary oxalate excretion in susceptible individuals',
+  ],
+  herb_to_herb_synergy: [
+    'Iron-rich botanicals (Nettle Leaf, Yellow Dock) — Camu Camu is the biological catalyst that unlocks plant-based non-heme iron',
+    'Grape Seed Extract or Pine Bark — vitamin C is required to recycle and maintain the structural integrity of OPCs',
+    'Medicinal Mushrooms (Turkey Tail, Reishi) — vitamin C helps break down dense chitin in mushroom cell walls, maximising beta-glucan absorption',
+  ],
+  herb_to_herb_caution: ['Heavy stacking with other extreme astringents (raw Cranberry, Uva Ursi) may cause temporary stomach upset'],
+  herb_to_drug_interactions: [
+    'Chemotherapy / radiation — high-dose antioxidants can theoretically interfere with therapies that rely on oxidative stress to kill cancer cells; requires oncologist supervision',
+    'Amphetamines (ADHD medications) — high doses of vitamin C acidify the urine, increasing excretion and reducing the half-life of amphetamine-based drugs',
+  ],
+  herb_interactions: [
+    'Synergy: Nettle Leaf, Grape Seed Extract, Medicinal Mushrooms',
+    'Caution: Heavy astringents on an empty stomach',
+    'Drug interactions: Chemotherapy, Amphetamines (increased clearance rate)',
+  ],
+  dosage_range: 'Whole Fruit Powder: 2–5 g daily (providing roughly 200–500 mg of complexed vitamin C). Best dissolved in water or blended into cold liquids, away from heat.',
+  spiritual_layer: 'Camu Camu is the concentrated sun of the flooded Amazon basin. It takes the extreme moisture and heat of the rainforest and distils it into an electric, violently sour spark of life. It teaches preservation. She whispers: I hold the light inside the water. I bind the flesh together. I do not let the structure fray.',
+  best_preparation: 'Must be a raw, low-temperature freeze-dried powder. Ascorbic acid is violently unstable when exposed to heat, light, and oxygen. Never boil Camu Camu; mix into room-temperature or cold matrices immediately before consumption.',
+  caution_level: 'LOW',
+  safe_pregnancy: true, // Source note: excellent prenatal vitamin C source, though mega-dosing should be avoided.
+  status: 'The gold standard for whole-food vitamin C. Strong for collagen support and immune resilience, and a clear case of the botanical matrix outperforming the isolated synthetic molecule.',
+  // 'astringing/protecting/brightening' → sustained · 'sour' → astringent · 'immune system' → whole
+  energy_pattern: ['sustained'],
+  digestion_fit: ['cooling', 'astringent'],
+  regional_affinity: ['skin', 'liver', 'whole'],
+  onset_time: 'hours',
+  family: 'Myrtaceae',
+  epithet: 'The electric berry',
+  origin_region: 'South American',
+  evidence_grade: 'A',
+},
+{
+  id: 567, name: 'Sophora Flower', botanical: 'Sophora japonica / Styphnolobium japonicum (flower bud)',
+  tcm_meridians: ['Liver', 'Large Intestine'], tcm_element: 'Wood + Metal',
+  energetics: ['Cold', 'Bitter', 'Astringent', 'Descending'],
+  primary_functions: [
+    'Vascular structural protectant — delivers extreme concentrations of rutin to decrease capillary permeability and fragility',
+    'Cools Blood and Stops Bleeding (TCM: Huai Hua Mi) — the premier botanical for lower gastrointestinal bleeding, particularly hemorrhoids and ulcerative colitis',
+    'Clears Liver Fire — descends hyperactive liver heat manifesting as red eyes, dizziness, and hypertension',
+    'Anti-inflammatory cascade blocker — inhibits 5-LOX and COX-2 pathways systemically',
+  ],
+  secondary_benefits: [
+    'Antioxidant support against lipid peroxidation',
+    'Historically used to protect against radiation-induced vascular damage',
+  ],
+  pharmacology: 'The unexpanded flower buds contain up to 20–25% rutin (quercetin-3-O-rutinoside) by dry weight. Rutin acts as a vitamin P factor, physically reinforcing the endothelial lining of capillaries. The buds also contain sophoricoside, which exhibits mild anti-estrogenic and immunosuppressive activity.',
+  flavor_profile: 'Distinctly bitter, dry, and highly astringent',
+  contraindications: [
+    'Spleen and Stomach cold deficiency — its intense descending, cold nature severely aggravates poor digestion, causing diarrhea and cramping',
+    'Pregnancy — strong downward-moving and blood-cooling properties pose a risk without expert TCM supervision',
+  ],
+  herb_to_herb_synergy: [
+    'Sanguisorba (Di Yu) — the classical TCM pairing for aggressive lower GI bleeding and bloody dysentery',
+    'Vitamin C (Camu Camu) — enhances the bioavailability and structural efficacy of the rutin molecule in vascular repair',
+    'Chrysanthemum — for venting severe Liver Fire, hypertension, and ocular inflammation',
+  ],
+  herb_to_herb_caution: ['Other intensely cold, descending herbs in constitutions that are already deficient or cold'],
+  herb_to_drug_interactions: [
+    'Antihypertensives — additive blood pressure-lowering effect',
+    'Anticoagulants — while it stops passive bleeding via vascular sealing, high-dose flavonoids can exhibit mild anti-platelet effects in healthy vessels',
+  ],
+  herb_interactions: [
+    'Synergy: Sanguisorba, Vitamin C, Chrysanthemum',
+    'Caution: Heavy stacking with cold/purgative herbs',
+    'Drug interactions: Antihypertensives (monitor)',
+  ],
+  dosage_range: 'Standardized Rutin Extract: 200–500 mg daily. TCM decoction: 4.5–9 g of the dried buds. For hemostatic purposes the buds are traditionally dry-fried (charred) to increase astringency.',
+  spiritual_layer: 'The Pagoda Tree is the sentinel of the blood. It stands at the boundary of the vessel wall, ensuring the river stays within its banks. It cools the boiling blood that seeks to escape its containment. She whispers: I patch the microscopic tears. I seal the gates. I calm the crimson storm.',
+  best_preparation: 'To arrest bleeding, the buds must be charred (dry-fried until black outside, brown within). For maximum rutin extraction in a liquid engine, use high-proof ethanol (75–85% EtOH) — rutin is highly insoluble in cold water and precipitates easily. A prolonged hot water decoction at 95°C is the alternative.',
+  caution_level: 'MEDIUM', safe_pregnancy: false,
+  status: 'One of the densest natural sources of rutin. Highly dependable for fragile capillaries and hemorrhoidal bleeding. Note: shares the epithet "The vascular sealant" with Horse Chestnut (id 553) in the source notes — kept distinct here as the two work by different mechanisms (rutin reinforcement vs aescin sealing).',
+  // 'descending/cooling/containing' → pm_stabilise · 'large intestine' → gut · 'capillaries' → whole
+  energy_pattern: ['pm_stabilise'],
+  digestion_fit: ['cooling', 'astringent'],
+  regional_affinity: ['gut', 'liver', 'whole'],
+  onset_time: 'days',
+  family: 'Fabaceae',
+  epithet: 'The pagoda sentinel',
+  origin_region: 'Chinese',
+  evidence_grade: 'A',
+},
+{
+  id: 568, name: 'Indian Barberry', botanical: 'Berberis aristata (root / stem bark)',
+  tcm_meridians: ['Liver', 'Gallbladder', 'Large Intestine'], tcm_element: 'Wood + Earth',
+  energetics: ['Cold', 'Dry', 'Intensely Bitter'],
+  primary_functions: [
+    'AMPK activator — a systemic metabolic master switch, improving insulin sensitivity, stimulating glycolysis, and lowering blood glucose comparably to Metformin',
+    'Broad-spectrum antimicrobial — disrupts bacterial cell division, clears GI parasites (Giardia, Candida), and halts secretory diarrhea',
+    'Choleretic and hepatoprotective — stimulates bile flow to clear liver congestion, jaundice, and gallbladder sludge',
+    'Lipid modulator — upregulates LDL receptors in the liver, increasing the clearance of cholesterol from the bloodstream',
+  ],
+  secondary_benefits: [
+    'Modulates the gut microbiome, selectively killing pathogenic bacteria while sparing certain beneficial strains (Bifidobacteria)',
+    'Reduces systemic inflammation via AMP-activated protein kinase pathways',
+  ],
+  pharmacology: 'Driven by isoquinoline alkaloids, predominantly berberine. Berberine has notoriously low oral bioavailability (under 1%) because it is rapidly expelled from intestinal cells by P-glycoprotein efflux pumps — which keeps it concentrated in the gut for profound local antimicrobial action. Systemic metabolic effects occur via gut-microbiome signalling and eventual hepatic AMPK activation.',
+  flavor_profile: 'Violently bitter, woody, and lingeringly acrid; coats the mouth',
+  contraindications: [
+    'Pregnancy — STRICTLY CONTRAINDICATED; stimulates uterine contractions and crosses the placenta, risking kernicterus in the fetus by displacing bilirubin',
+    'Neonates and infants — absolute contraindication due to bilirubin displacement',
+    'Long-term uninterrupted use — acts as an herbal antibiotic; limit to 4–8 weeks to avoid damaging gut mucosal ecology',
+  ],
+  herb_to_herb_synergy: [
+    'Milk Thistle (Silymarin) — a validated synergy; silymarin inhibits P-glycoprotein, markedly increasing berberine absorption into the bloodstream',
+    'Gymnema sylvestre — the blood-sugar regulating stack',
+    'Coptis chinensis or Goldenseal — for compounded antimicrobial and anti-parasitic GI clearing',
+  ],
+  herb_to_herb_caution: ['Other profoundly cold, bitter herbs for extended periods without a warming balancer such as Ginger, which will erode Spleen Qi (digestive fire)'],
+  herb_to_drug_interactions: [
+    'Metformin or insulin — extreme additive hypoglycemic risk; requires strict medical monitoring',
+    'CYP3A4 substrates / macrolide antibiotics — berberine inhibits liver enzymes, potentially causing dangerous buildups of pharmaceuticals (especially statins or clarithromycin)',
+    'Immunosuppressants (Cyclosporine) — increases drug serum levels to toxic ranges',
+  ],
+  herb_interactions: [
+    'Synergy: Milk Thistle, Gymnema, Caprylic Acid',
+    'Caution: Overuse damages gut flora',
+    'Drug interactions: Antidiabetics (CRITICAL), CYP3A4 substrates, Macrolides',
+  ],
+  dosage_range: 'Standardized Berberine HCl Extract: 500 mg, 2–3× daily with meals for metabolic purposes. Raw root decoction: 3–6 g daily (requires boiling). Cycle strictly: 8 weeks on, 2 weeks off.',
+  spiritual_layer: 'Barberry is the golden sword. It is unapologetic, intensely bitter, and carries the bright yellow signature of bile and liver medicine. It slashes through stagnation, corruption, and metabolic laziness. It teaches that deep purification requires a ruthless, bitter truth. She whispers: I cut away the rot. I wake the sleeping engine. I tolerate no parasites.',
+  best_preparation: 'For systemic metabolic action (blood sugar, lipids), isolated Berberine HCl with a bio-enhancer (silymarin or sodium caprate) is far superior. For GI antimicrobial action, hydroethanolic tinctures of the whole root bark at 60–70% EtOH deliver the alkaloids directly to the intestinal lumen.',
+  caution_level: 'HIGH', safe_pregnancy: false,
+  status: 'A top-tier clinical botanical matching pharmaceutical efficacy for Type 2 Diabetes management and GI infections. Warrants respect and cycling. Distinct from id 205 (Barberry, Berberis vulgaris) — same genus and alkaloid, different species and a denser berberine yield.',
+  // 'clearing/descending/cooling' → sustained · 'drying' has no union value, dropped ·
+  // 'GI tract' → gut · 'gallbladder' folds into liver · 'Himalayan / South Asian' → Ayurvedic
+  energy_pattern: ['sustained'],
+  digestion_fit: ['bitter', 'cooling'],
+  regional_affinity: ['liver', 'gut'],
+  onset_time: 'days',
+  family: 'Berberidaceae',
+  epithet: 'The golden sword',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'A',
+},
+// ════════════════════════════════════════════════════════════════
+// 2026-09-24 · Clinical-extract expansion, batch 3 (ids 569–577)
+//
+// Eight botanicals: mucosal/antimicrobial (Goldenseal, Tormentil),
+// carbohydrate and lipogenesis blockers (White Kidney Bean, Mulberry
+// Leaf, Garcinia), endocrine (Genistein, Fenugreek), and the premier
+// TCM cardiovascular root (Dan Shen) — which a dozen existing entries
+// already named as a synergy partner without it existing here at all.
+//
+// 'Shikon / Gromwell Root' from the same source batch was NOT added:
+// Lithospermum erythrorhizon is already id 565. Its stronger passages
+// were merged into that entry instead.
+//
+// Giant Knotweed was originally added here as id 572 and has since been
+// folded into id 563 ('Knotweed'), by Robin's decision on 2026-09-24:
+// one knotweed, not two near-identical species competing for the same
+// slot. Id 572 is retired and must not be reused.
+//
+// Mapping discipline unchanged — see the note above ids 545–559.
+// ════════════════════════════════════════════════════════════════
+{
+  id: 569, name: 'Goldenseal', botanical: 'Hydrastis canadensis (root / rhizome)',
+  tcm_meridians: ['Stomach', 'Large Intestine', 'Liver'], tcm_element: 'Earth + Wood',
+  energetics: ['Very Cold', 'Very Dry', 'Extremely Bitter'],
+  primary_functions: [
+    'Mucous membrane trophorestorative — astringes, tones, and heals boggy, inflamed, hyper-secreting mucosal tissue (sinus, throat, GI, vaginal)',
+    'Broad-spectrum antimicrobial — highly active against Streptococcus, Staphylococcus, E. coli, and Giardia due to high isoquinoline alkaloid content',
+    'Intense digestive bitter — stimulates gastric acid, pepsin, and bile production to correct severely sluggish digestion and liver congestion',
+    'Anti-catarrhal — stops thick, yellow/green infected mucus production in acute upper respiratory infections',
+  ],
+  secondary_benefits: [
+    'Applied topically as an antimicrobial wash for conjunctivitis, infected wounds, and oral ulcers',
+    'Possesses efflux pump inhibitor (EPI) activity, preventing bacteria from expelling antimicrobials and so blunting microbial drug resistance',
+  ],
+  pharmacology: 'The rhizome contains a complex matrix of alkaloids, primarily hydrastine, berberine, and canadaline. Though it shares berberine with Berberis aristata, Goldenseal is pharmacologically distinct because of hydrastine, which specifically targets and tightens mucous membranes. Minor flavonoids in the root also inhibit the very bacterial efflux pumps that usually reject berberine, making the whole root considerably more potent than isolated alkaloid extracts.',
+  flavor_profile: 'Penetratingly bitter, sharply acrid, and earthy',
+  contraindications: [
+    'Pregnancy — STRICTLY CONTRAINDICATED; stimulates the uterus and contains berberine, risking neonatal jaundice and kernicterus',
+    'Dry mucosal conditions — its intense drying, astringent nature severely aggravates atrophic, dry, or cracked tissue',
+    'Long-term use — damages the gut microbiome and excessively dries the body; strictly limit to acute use of 10–14 days',
+    'Neonates and infants — berberine displaces bilirubin',
+  ],
+  herb_to_herb_synergy: [
+    'Echinacea (root/seed) — the classic North American respiratory stack; Echinacea stimulates the immune system while Goldenseal acts on the mucosal terrain and the pathogen directly',
+    'Myrrh (Commiphora myrrha) — compounds the antimicrobial and astringent actions for severe throat and GI infections',
+    'Marshmallow Root (Althaea) — added to offset the extreme drying nature of Goldenseal in delicate constitutions',
+  ],
+  herb_to_herb_caution: ['Other intensely drying, astringent herbs (Uva Ursi, Barberry, Tormentil) — can push the body into severe fluid depletion'],
+  herb_to_drug_interactions: [
+    'CYP3A4 and CYP2D6 substrates — Goldenseal is a potent inhibitor of these liver enzymes, drastically slowing the clearance of many pharmaceuticals (statins, antidepressants, beta-blockers)',
+    'Antibiotics (macrolides, tetracyclines) — alters drug metabolism and serum levels',
+  ],
+  herb_interactions: [
+    'Synergy: Echinacea, Myrrh, Marshmallow',
+    'Caution: Over-drying without demulcents',
+    'Drug interactions: CYP3A4/CYP2D6 substrates (CRITICAL)',
+  ],
+  dosage_range: 'Standardized Extract (typically 5% hydrastine): 250–500 mg, 3× daily. Tincture (1:5, 60–70% EtOH): 20–40 drops, 3× daily. Strictly short-term acute use, 7–14 days.',
+  spiritual_layer: 'Goldenseal is the bitter medicine of the deep woods. It is an endangered elder that demands respect. It acts as the boundary keeper of the body’s wet borders, shocking stagnant, infected swamps back into tight, clean rivers. She whispers: I pull the rot from the wall. I dry the swamp. I do not stay long.',
+  best_preparation: 'Because the alkaloids are poorly water-soluble, hydroethanolic tincturing at 60–75% EtOH is far superior to water decoction for acute antimicrobial use. Due to severe ecological overharvesting, ONLY purchase cultivated roots — never wildcrafted.',
+  caution_level: 'HIGH', safe_pregnancy: false,
+  status: 'A phenomenally powerful mucosal astringent and antimicrobial, but ecologically vulnerable and frequently misused. Not a daily preventative — an acute intervention tool.',
+  // 'drying/clearing/astringing' + the explicit 7–14 day ceiling → acute_only ·
+  // 'mucous membranes'/'respiratory tract' → chest + whole · 'GI tract' → gut
+  energy_pattern: ['acute_only'],
+  digestion_fit: ['bitter', 'astringent'],
+  regional_affinity: ['gut', 'chest', 'whole'],
+  onset_time: 'hours',
+  family: 'Ranunculaceae',
+  epithet: 'The mucosal master',
+  origin_region: 'North American',
+  evidence_grade: 'B',
+},
+{
+  id: 570, name: 'White Kidney Bean Extract', botanical: 'Phaseolus vulgaris (seed extract)',
+  tcm_meridians: ['Spleen', 'Stomach', 'Kidney'], tcm_element: 'Earth',
+  energetics: ['Neutral', 'Bland', 'Sweet'],
+  primary_functions: [
+    'Alpha-amylase inhibitor — binds and blocks the pancreatic enzyme responsible for breaking complex carbohydrates into absorbable sugars',
+    'Carbohydrate blocking — clinically validated to reduce the glycemic impact and caloric absorption of starch-heavy meals, aiding weight management',
+    'Blood sugar stabilizer — blunts post-prandial blood glucose and insulin spikes',
+  ],
+  secondary_benefits: [
+    'Increases resistant starch in the lower intestine, feeding beneficial bifidobacteria in the microbiome',
+    'Mild diuretic and dampness-draining properties (TCM)',
+  ],
+  pharmacology: 'Clinical efficacy rests on the glycoprotein phaseolamin, a competitive inhibitor of human salivary and pancreatic alpha-amylase. By preventing the cleavage of long-chain starches, carbohydrates pass through the small intestine unabsorbed. Critically, it blocks only complex starches (pasta, bread, potatoes) and has ZERO effect on simple sugars such as sucrose or fructose.',
+  flavor_profile: 'Bland, starchy, slightly earthy; unnoticeable when encapsulated',
+  contraindications: [
+    'Raw or improperly extracted beans — inherently contain phytohemagglutinin (PHA), a highly toxic lectin causing severe gastroenteritis, nausea, and intestinal bleeding. Commercial extracts undergo strict thermal processing to destroy PHA while preserving phaseolamin',
+    'Hypoglycemia — can push blood sugar too low when combined with prolonged fasting or antidiabetic drugs',
+    'Pregnancy — avoided; fetal development requires unrestricted caloric and carbohydrate absorption',
+  ],
+  herb_to_herb_synergy: [
+    'Berberine or Gymnema — the metabolic stack; Phaseolus blocks new carbs entering while Berberine and Gymnema clear existing glucose from the blood',
+    'Green Tea Extract (EGCG) — pairs carbohydrate blocking with thermogenic fat oxidation',
+    'Mulberry Leaf (DNJ) — dual-pathway carbohydrate blocking, amylase plus alpha-glucosidase',
+  ],
+  herb_to_herb_caution: ['None noted with properly processed extracts, though excessive use causes intense flatulence as undigested carbs ferment in the colon'],
+  herb_to_drug_interactions: [
+    'Acarbose or Miglitol (alpha-glucosidase inhibitors) — profound additive effects; combining pharmaceutical and botanical carb-blockers causes severe GI distress and risks hypoglycemia',
+    'Insulin or sulfonylureas — blunted meal absorption may require medication dosage adjustment to prevent dangerous blood sugar drops',
+  ],
+  herb_interactions: [
+    'Synergy: Berberine, Gymnema, Green Tea, Mulberry Leaf',
+    'Caution: Heavy stacking with other GI-altering weight loss aids',
+    'Drug interactions: Acarbose, Insulin (monitor blood glucose)',
+  ],
+  dosage_range: 'Standardized Extract (phaseolamin): 500–1500 mg, taken 15–30 minutes BEFORE a starch-heavy meal. Taking it after the meal is entirely useless.',
+  spiritual_layer: 'The bean is the ultimate storage of energy. But in its extract form it teaches the body how to refuse excess. It acts as the gatekeeper of the gut, turning heavy, dense carbohydrates into harmless passing fibre. She whispers: I close the door to the sugar. I let the heavy burden pass through without consequence.',
+  best_preparation: 'Must be a commercially standardized phaseolamin extract. Home extraction or consumption of raw white kidney bean powder is genuinely dangerous due to toxic lectins (PHA). Thermal processing in manufacturing destroys the toxin while isolating the enzyme inhibitor.',
+  caution_level: 'MEDIUM', safe_pregnancy: false,
+  status: 'The only clinically validated natural carbohydrate blocker. Highly effective against starch-heavy diets, and completely useless against simple sugars or high-fat meals.',
+  // 'blocking/descending' → sustained (taken at every starch meal, not an acute course) ·
+  // digestion_fit omitted: 'neutral'/'bland' have no union value and any pick would misrepresent it ·
+  // 'small intestine' → gut · 'pancreas' → solar_plexus · 'Mesoamerican' → Central American
+  energy_pattern: ['sustained'],
+  regional_affinity: ['gut', 'solar_plexus'],
+  onset_time: 'immediate',
+  family: 'Fabaceae',
+  epithet: 'The starch blocker',
+  origin_region: 'Central American',
+  evidence_grade: 'A',
+},
+{
+  id: 571, name: 'Genistein', botanical: 'Sophora japonica / Glycine max (purified isoflavone)',
+  tcm_meridians: ['Kidney', 'Liver'], tcm_element: 'Water',
+  energetics: ['Cool', 'Moistening', 'Sweet'],
+  primary_functions: [
+    'Selective Estrogen Receptor Modulator — competitively binds estrogen receptor beta (ERβ), providing mild estrogenic support in deficiency while blocking potent endogenous estrogens in excess',
+    'Tyrosine kinase inhibitor — blocks epidermal growth factor receptor (EGFR) pathways, researched for halting cellular hyper-proliferation and tumor angiogenesis',
+    'Osteogenic catalyst — stimulates osteoblast activity and inhibits osteoclast resorption, preserving bone mineral density through menopausal transition',
+    'Cardioprotective — improves endothelial nitric oxide synthase (eNOS) and arterial compliance, defending against post-menopausal vascular rigidity',
+  ],
+  secondary_benefits: [
+    'Neuroprotective against beta-amyloid toxicity via its antioxidant capacity',
+    'Reduces the frequency and severity of vasomotor symptoms (hot flashes)',
+  ],
+  pharmacology: 'A potent phytoestrogen and isoflavone. Structurally similar to mammalian estradiol, it exhibits far higher affinity for ER-beta (bone, cardiovascular tissue, brain) than ER-alpha (breast and uterine tissue). This gives tissue-specific protection without the proliferative risks of synthetic hormone replacement therapy.',
+  flavor_profile: 'Bland and slightly chalky in isolate form',
+  contraindications: [
+    'Active estrogen-receptor positive (ER+) cancers — despite being a SERM, oncological consensus advises strict avoidance or extreme caution',
+    'Pregnancy and lactation — disrupts the finely tuned maternal endocrine environment',
+    'Hypothyroidism — high doses of isoflavones can inhibit thyroid peroxidase if iodine status is low',
+  ],
+  herb_to_herb_synergy: [
+    'Black Cohosh (Cimicifuga racemosa) — the comprehensive non-hormonal stack for menopausal symptom relief',
+    'Vitamin D3 and Vitamin K2 — heavily synergistic for driving genistein-mobilised calcium into the bone matrix',
+  ],
+  herb_to_herb_caution: ['High-dose stacking with other potent phytoestrogens (Red Clover, Pueraria mirifica) without monitoring for estrogen dominance'],
+  herb_to_drug_interactions: [
+    'Tamoxifen or aromatase inhibitors — direct competitive binding at the receptor site; may neutralise the pharmaceutical',
+    'Thyroid hormone replacement (Levothyroxine) — may reduce absorption or alter free T3/T4 conversion',
+  ],
+  herb_interactions: [
+    'Synergy: Black Cohosh, Vitamin D3/K2',
+    'Caution: Heavy phytoestrogen stacking',
+    'Drug interactions: Tamoxifen (CRITICAL), Levothyroxine (monitor)',
+  ],
+  dosage_range: 'Standardized Isolate (often 98% genistein): 30–60 mg daily. Requires consistent daily loading for 4–6 weeks to saturate beta-receptors.',
+  spiritual_layer: 'Genistein is the great modulator, the balancer of the scales. It teaches adaptation to shifting seasons, stepping in to fill the hollow places left by retreating youth, yet refusing to overgrow. She whispers: I am the surrogate moon. I provide the light when the primary source fades. I stabilise the core.',
+  best_preparation: 'Strictly an industrial standardized isolate. Hydroethanolic percolation of raw soy or Sophora cannot reach the clinical density required (30+ mg of pure genistein) without an impractical volume of raw material.',
+  caution_level: 'HIGH', safe_pregnancy: false,
+  status: 'A heavily researched pharmaceutical-grade botanical isolate. The premier natural intervention for menopausal bone loss and vascular rigidity, demanding strict endocrine respect. Note: its Sophora japonica source is also id 567 (Sophora Flower) — that entry is the whole rutin-bearing flower bud, this is the purified isoflavone.',
+  // 'modulating/sustaining/cooling' → sustained · digestion_fit omitted ('nourishing'/'neutral'
+  // have no union value) · 'bones' → joints · 'endocrine system' → whole · 'weeks to months' → months
+  energy_pattern: ['sustained'],
+  regional_affinity: ['joints', 'heart', 'whole'],
+  onset_time: 'months',
+  family: 'Fabaceae',
+  epithet: 'The endocrine modulator',
+  origin_region: 'Chinese',
+  evidence_grade: 'A',
+},
+{
+  id: 573, name: 'Garcinia Cambogia Extract', botanical: 'Garcinia gummi-gutta (fruit rind)',
+  tcm_meridians: ['Stomach', 'Spleen', 'Liver'], tcm_element: 'Earth',
+  energetics: ['Cool', 'Dry', 'Sour', 'Astringent'],
+  primary_functions: [
+    'ATP-citrate lyase inhibitor — binds and blocks the enzyme required to convert excess dietary carbohydrate into fatty acids, stalling de novo lipogenesis',
+    'Appetite suppressant — elevates central serotonin, promoting satiety and reducing emotional or stress-driven carbohydrate cravings',
+    'Glycogen storage catalyst — diverts blocked carbohydrate away from lipid storage and into hepatic glycogen, signalling the brain that energy stores are full',
+  ],
+  secondary_benefits: [
+    'Mildly improves lipid profiles, lowering LDL cholesterol and triglycerides in hyperlipidemic models',
+    'Traditional Ayurvedic use for soothing gastric ulcers via the astringent, cooling rind',
+  ],
+  pharmacology: 'Clinical efficacy rests entirely on (-)-hydroxycitric acid (HCA), a competitive inhibitor of ATP-citrate lyase. By halting the cleavage of citrate into acetyl-CoA, the body cannot readily synthesise new fat from excess sugars. The serotonin increase is likely a downstream effect of altered brain energy metabolism and glycogen signalling.',
+  flavor_profile: 'Sharply sour, highly acidic, and intensely astringent',
+  contraindications: [
+    'Hepatotoxicity risk — numerous case reports of acute liver injury surround multi-ingredient weight loss supplements containing Garcinia, though whether Garcinia alone or hidden adulterants are responsible is heavily debated. Use with extreme caution in pre-existing liver disease',
+    'SSRI or MAOI antidepressants — the serotonin-elevating effect creates a theoretical risk of serotonin syndrome',
+    'Dementia or Alzheimer’s — interfering with brain acetylcholine and citrate metabolism could theoretically worsen cognitive decline',
+    'Pregnancy — no safety data for a metabolic blocker during fetal development',
+  ],
+  herb_to_herb_synergy: [
+    'Gymnema sylvestre — the metabolic control stack; Gymnema kills the sugar craving on the tongue and in the blood while Garcinia blocks conversion of ingested sugar into fat',
+    'Green Tea Extract (EGCG) — pairs de novo lipogenesis blocking with active thermogenesis and fat oxidation',
+  ],
+  herb_to_herb_caution: ['Heavy stacking with other serotonin-elevating botanicals (St. John’s Wort, Griffonia/5-HTP) sharply increases the risk of serotonin overload'],
+  herb_to_drug_interactions: [
+    'Antidepressants (SSRIs) — risk of serotonin syndrome',
+    'Statin medications — additive risk of liver toxicity and rhabdomyolysis',
+    'Antidiabetics — may lower blood glucose; monitor to prevent hypoglycemia',
+  ],
+  herb_interactions: [
+    'Synergy: Gymnema, Green Tea Extract',
+    'Caution: St. John’s Wort, Griffonia (5-HTP)',
+    'Drug interactions: SSRIs (CRITICAL), Statins, Antidiabetics',
+  ],
+  dosage_range: 'Standardized Extract (strictly 50–60% HCA): 500–1000 mg taken 30–60 minutes BEFORE meals, 2–3× daily. Taking it after a meal neutralises its efficacy.',
+  spiritual_layer: 'Garcinia is the boundary of consumption. It is intensely sour, a flavour that traditionally arrests and pulls inward. It teaches the body to recognise when it is full, breaking the cycle of bottomless, stress-driven hunger. She whispers: You have enough. The stores are full. Stop seeking the sugar.',
+  best_preparation: 'Must be a standardized HCA extract, usually stabilised as a calcium or potassium salt. Standard tinctures or decoctions of the raw rind do not yield clinical levels of HCA and are highly unstable.',
+  caution_level: 'HIGH', safe_pregnancy: false,
+  status: 'A popular but heavily scrutinised metabolic blocker. Efficacy requires precise pre-meal timing and a standardized HCA percentage. Liver enzyme monitoring is strongly advised.',
+  // 'astringing/blocking/descending' → sustained · 'sour' → astringent ·
+  // 'brain' → head · 'adipose tissue' → whole · 'South/Southeast Asian' → Ayurvedic
+  energy_pattern: ['sustained'],
+  digestion_fit: ['astringent', 'cooling'],
+  regional_affinity: ['liver', 'head', 'whole'],
+  onset_time: 'immediate',
+  family: 'Clusiaceae',
+  epithet: 'The fat blocker',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'B',
+},
+{
+  id: 574, name: 'Dan Shen Root Extract', botanical: 'Salvia miltiorrhiza (root)',
+  tcm_meridians: ['Heart', 'Pericardium', 'Liver'], tcm_element: 'Fire + Wood',
+  energetics: ['Cool', 'Moving', 'Bitter'],
+  primary_functions: [
+    'Invigorates Blood and breaks stasis (Huo Xue Hua Yu) — the premier TCM botanical for dissolving microvascular clots, clearing angina pectoris, and restoring circulation to ischemic tissue',
+    'Cardioprotective and anti-fibrotic — protects the myocardium from ischemia-reperfusion injury and prevents cardiac and hepatic fibrosis',
+    'Nourishes Blood and calms the Shen — unique among blood-movers, it gently sedates the nervous system to relieve insomnia, irritability, and palpitations caused by Heart heat',
+    'Microcirculation enhancer — dilates the coronary arteries and improves red blood cell deformability for passage through tight capillaries',
+  ],
+  secondary_benefits: [
+    'Clears heat and soothes irritability associated with severe dysmenorrhea or amenorrhea',
+    'Accelerates healing of severe traumatic bruising and sports injuries by clearing congealed blood',
+  ],
+  pharmacology: 'A masterpiece of chemical duality. The root contains water-soluble phenolic acids (salvianolic acids, rosmarinic acid) providing intense antioxidant and endothelial protection, and highly lipophilic diterpenoids (tanshinones I and IIA) providing the aggressive anti-inflammatory, anti-fibrotic, blood-moving action.',
+  flavor_profile: 'Distinctly bitter, earthy, and mildly astringent',
+  contraindications: [
+    'Bleeding disorders — strictly contraindicated in hemophilia or active hemorrhage',
+    'Pregnancy — the strong blood-moving properties can induce miscarriage',
+    'Pre-surgery — discontinue at least 2 weeks prior due to severe antiplatelet and anticoagulant effects',
+    'Concurrent Warfarin or Plavix — absolute contraindication',
+  ],
+  herb_to_herb_synergy: [
+    'Tienchi Ginseng (Panax notoginseng) — the legendary TCM cardiovascular stack; Dan Shen dilates and moves blood while Notoginseng heals the vessel wall and balances flow',
+    'Hawthorn (Shan Zha) — compounds coronary artery dilation and lipid-lowering effects',
+    'Knotweed — heavily stacked in longevity and endothelial protection protocols',
+  ],
+  herb_to_herb_caution: ['Intense stacking with other heavy blood thinners (Ginkgo, Garlic, Turmeric) will severely compromise clotting capability'],
+  herb_to_drug_interactions: [
+    'Anticoagulants (Warfarin, Heparin, Plavix) — severe, life-threatening risk of internal hemorrhage',
+    'CYP450 substrates — tanshinones can induce or inhibit various liver enzymes, altering the clearance of cardiovascular drugs',
+  ],
+  herb_interactions: [
+    'Synergy: Panax notoginseng, Hawthorn, Knotweed',
+    'Caution: Heavy blood-moving formulas',
+    'Drug interactions: Anticoagulants (CRITICAL), CYP450 substrates',
+  ],
+  dosage_range: 'TCM Decoction: 9–15 g daily. Dual Extract (standardized for tanshinones and salvianolic acid): 300–800 mg daily. Tincture: 30–60 drops, 3× daily.',
+  spiritual_layer: 'Dan Shen is the crimson root of the Heart. It clears the stagnant physical blood in the chest, but it also clears the stagnant emotional blood — the trapped grief and unresolved trauma that leave the Spirit fluttering in anxiety. She whispers: I break the dam in the physical heart and the spiritual heart. Let the crimson river flow freely.',
+  best_preparation: 'Because the salvianolic acids are entirely water-soluble and the tanshinones intensely lipophilic, a true clinical engine requires dual extraction: a water decoction strictly at 90°C to prevent degradation of salvianolic acid B, followed by a high-proof ethanol maceration (75–85% EtOH) of the marc to capture the crimson tanshinones.',
+  caution_level: 'HIGH', safe_pregnancy: false,
+  status: 'The gold standard of botanical cardiology. Clinically unrivalled for ischemic heart disease and microcirculation, but demanding absolute vigilance around blood-thinning interactions. A dozen existing catalogue entries already name Dan Shen as a synergy partner — this is the first time it exists as its own herb.',
+  // 'moving/clearing/descending/calming' → sustained + pm_stabilise (it is the rare
+  // blood-mover that also settles the Shen) · 'vasculature' → whole omitted in favour of
+  // heart · 'uterus' → pelvis · 'hours to days' → hours
+  nervous_system_fit: ['wired'],
+  energy_pattern: ['sustained', 'pm_stabilise'],
+  sleep_action: ['onset'],
+  digestion_fit: ['cooling', 'moving'],
+  regional_affinity: ['heart', 'liver', 'pelvis'],
+  onset_time: 'hours',
+  family: 'Lamiaceae',
+  epithet: 'The crimson flow',
+  origin_region: 'Chinese',
+  evidence_grade: 'A',
+},
+{
+  id: 575, name: 'Tormentil', botanical: 'Potentilla erecta (rhizome)',
+  tcm_meridians: ['Large Intestine', 'Spleen', 'Stomach'], tcm_element: 'Earth',
+  energetics: ['Cold', 'Extremely Dry', 'Intensely Astringent'],
+  primary_functions: [
+    'Mucosal astringent and tannic sealer — delivers an immense tannin payload to cross-link mucosal proteins, tightening, drying, and sealing inflamed or leaking tissue',
+    'Anti-diarrheal — the traditional European powerhouse for arresting severe acute watery diarrhea and soothing inflammatory bowel flares',
+    'Topical hemostatic — applied directly to bleeding wounds, bleeding gums, or mouth ulcers to coagulate blood and close the tissue',
+    'Antimicrobial — the dense tannic environment deprives pathogenic gut bacteria of the iron required for replication',
+  ],
+  secondary_benefits: [
+    'Highly effective as an oral gargle for pharyngitis, tonsillitis, and severe sore throat',
+    'Used as a sitz bath or topical wash for bleeding hemorrhoids and weeping eczema',
+  ],
+  pharmacology: 'The rhizome is among the most tannin-dense botanicals known, carrying 15–20% condensed tannins (primarily agrimoniin) alongside tormentillic acid, a triterpene. These tannins precipitate proteins on contact with mucous membranes, forming a protective impermeable layer that stops fluid leakage, blocks microbial invasion, and halts bleeding.',
+  flavor_profile: 'Violently astringent, extremely dry, and profoundly tannic; immediately pulls the moisture from the mouth',
+  contraindications: [
+    'Dry or atrophic conditions (high Vata) — severely exacerbates chronic constipation, dry mucous membranes, and systemic dehydration',
+    'Empty stomach — the massive tannin load can cause severe nausea, gastric irritation, and vomiting if taken without food',
+    'Iron deficiency anemia — tannins aggressively chelate non-heme iron in the gut, preventing absorption',
+    'Pregnancy — internal use avoided for uterine-stimulating potential and extreme bowel disruption; topical and gargle use is safe',
+  ],
+  herb_to_herb_synergy: [
+    'Marshmallow Root (Althaea) or Slippery Elm — crucial in formulation to provide a demulcent buffer, preventing Tormentil from over-desiccating the GI tract',
+    'Myrrh (Commiphora myrrha) — forms a near-impenetrable antimicrobial and astringent shield for severe oral and throat infections',
+  ],
+  herb_to_herb_caution: [
+    'Other heavy astringents (Oak Bark, Cranesbill, Uva Ursi, Goldenseal) — combining creates an intolerable drying effect that can shock the kidneys and gut',
+    'Iron-rich tonics (Yellow Dock, Nettle) — the tannins bind the iron, rendering both herbs useless',
+  ],
+  herb_to_drug_interactions: [
+    'Mineral supplements (iron, zinc, calcium) — tannins bind and block absorption; separate dosing by at least 2 hours',
+    'Alkaloid-containing medications — tannins can precipitate pharmaceutical alkaloids in the gut, halting absorption',
+  ],
+  herb_interactions: [
+    'Synergy: Marshmallow Root, Myrrh',
+    'Caution: Heavy astringents, iron-rich herbs',
+    'Drug interactions: Mineral supplements, alkaloid pharmaceuticals',
+  ],
+  dosage_range: 'Decoction: 2–3 g of crushed rhizome boiled 15 mins. Tincture (1:5, 40–50% EtOH): 10–30 drops, up to 4× daily for acute diarrhea. Mouthwash/gargle: 30 drops of tincture in warm water.',
+  spiritual_layer: 'Tormentil is the emergency brake. It is the medicine of absolute containment, used when the body’s boundaries have failed and the vital fluids are pouring out. It teaches the power of contraction. She whispers: I close the open gates. I pull the tissue back together. I stop the leak.',
+  best_preparation: 'For maximum astringency, hydroethanolic extraction at 40–50% EtOH or cold maceration over several weeks pulls the tannin payload while preserving the delicate flavonoids that boiling would destroy. Given its extreme dryness, liquid extracts should always be diluted in water before administration.',
+  caution_level: 'MEDIUM', safe_pregnancy: false,
+  status: 'The undisputed European king of astringency. Unparalleled for acute diarrhea and mucosal bleeding, but requires a demulcent buffer to prevent severe tissue desiccation.',
+  // 'astringing/binding/stopping' + acute-diarrhea framing → acute_only ·
+  // 'binding'/'drying' → astringent · 'GI tract' → gut · 'oral mucosa' → head
+  energy_pattern: ['acute_only'],
+  digestion_fit: ['astringent'],
+  regional_affinity: ['gut', 'head', 'skin'],
+  onset_time: 'immediate',
+  family: 'Rosaceae',
+  epithet: 'The tissue sealer',
+  origin_region: 'European',
+  evidence_grade: 'B',
+},
+{
+  id: 576, name: 'Mulberry Leaf', botanical: 'Morus alba (leaf)',
+  tcm_meridians: ['Lung', 'Liver'], tcm_element: 'Metal + Wood',
+  energetics: ['Cold', 'Sweet', 'Bitter', 'Light'],
+  primary_functions: [
+    'Alpha-glucosidase inhibitor (DNJ) — prevents enzymatic breakdown of complex carbohydrates in the gut, blunting post-prandial blood sugar spikes',
+    'Clears Lung heat (TCM: Sang Ye) — resolves dry hot coughs, thick yellow phlegm, and sore throat from wind-heat invasion',
+    'Cools Liver fire and brightens the eyes — reduces red, painful, or dry eyes associated with ascending liver heat',
+    'Lipid modulator — inhibits LDL oxidation and lowers serum triglycerides via flavonoid interactions',
+  ],
+  secondary_benefits: [
+    'Mildly promotes sweating to clear early-stage fevers',
+    'Rich in GABA, giving a gentle calming effect on the central nervous system',
+  ],
+  pharmacology: 'The clinical metabolic powerhouse is the iminosugar 1-deoxynojirimycin (DNJ), a competitive inhibitor of intestinal alpha-glucosidase. Taken before a carbohydrate-heavy meal, it forces starches through the upper GI tract undigested. The leaf also carries rutin and quercetin, providing endothelial protection.',
+  flavor_profile: 'Mild, grassy, slightly sweet, and pleasantly herbaceous — close to a light green tea',
+  contraindications: [
+    'Cold, weak digestion (Spleen Qi deficiency) — the cold, bitter nature can cause mild diarrhea or bloating, particularly as it forces undigested carbs into the lower intestine',
+    'Hypoglycemia — can lower blood sugar excessively if taken while fasting',
+  ],
+  herb_to_herb_synergy: [
+    'Chrysanthemum (Ju Hua) — the classic TCM pairing to clear eye heat, soothe headaches, and lower mild hypertension',
+    'White Kidney Bean Extract (phaseolamin) — a stacked dual-pathway carbohydrate block, amylase plus alpha-glucosidase',
+    'Gymnema sylvestre — for full-spectrum metabolic and glycemic control',
+  ],
+  herb_to_herb_caution: ['Other heavy cold or purgative herbs in deficient constitutions'],
+  herb_to_drug_interactions: [
+    'Antidiabetics (insulin, metformin) — additive hypoglycemic effects; requires strict glucose monitoring',
+    'Acarbose — direct mechanism overlap; combining botanical and pharmaceutical alpha-glucosidase inhibitors causes severe GI distress',
+  ],
+  herb_interactions: [
+    'Synergy: Chrysanthemum, White Kidney Bean, Gymnema',
+    'Caution: Overly cooling stacks in cold constitutions',
+    'Drug interactions: Antidiabetics, Acarbose (CRITICAL)',
+  ],
+  dosage_range: 'Standardized DNJ Extract: 250–500 mg taken 15 mins BEFORE meals. Dried leaf infusion: 5–10 g steeped in hot water. Glycemic effects require pre-meal timing.',
+  spiritual_layer: 'Mulberry leaf is the sole sustenance of the silkworm, a creature that takes this simple green leaf and transforms it into the strongest, most elegant thread on earth. It is the medicine of quiet, cool transformation. She whispers: I take the heavy sugar and weave it into harmless fibre. I cool the engine. I spin the silk.',
+  best_preparation: 'Standardized extracts targeting DNJ (often 1–2%) are required for clinical metabolic blocking. For respiratory or eye heat, a simple water infusion at 90°C extracts the cooling flavonoids and volatile oils efficiently. Do not heavily boil the leaves.',
+  caution_level: 'LOW',
+  safe_pregnancy: true, // Source note: safe as a tea, but clinical DNJ extracts lack broad pregnancy safety data.
+  status: 'A highly palatable, clinically validated botanical for glycemic control and respiratory heat. Its carb-blocking efficacy relies entirely on pre-meal timing.',
+  // 'cooling/descending/clearing' → sustained · 'lungs' → chest · 'eyes' → head ·
+  // 'pancreas' folds into gut · onset takes the faster of the two stated actions
+  energy_pattern: ['sustained'],
+  digestion_fit: ['cooling'],
+  regional_affinity: ['chest', 'liver', 'head'],
+  onset_time: 'immediate',
+  family: 'Moraceae',
+  epithet: 'The silkworm’s medicine',
+  origin_region: 'Chinese',
+  evidence_grade: 'A',
+},
+{
+  id: 577, name: 'Fenugreek', botanical: 'Trigonella foenum-graecum (seed)',
+  tcm_meridians: ['Kidney', 'Liver', 'Spleen'], tcm_element: 'Water + Earth',
+  energetics: ['Warm', 'Dry', 'Bitter', 'Sweet'],
+  primary_functions: [
+    'Androgen and free testosterone modulator — furostanolic saponins inhibit 5-alpha reductase and aromatase, limiting conversion of testosterone into DHT or estrogen and so raising free testosterone and libido',
+    'Metabolic regulator and insulin sensitizer — 4-hydroxyisoleucine, a unique amino acid, directly stimulates insulin secretion and enhances cellular glucose uptake',
+    'Galactagogue — traditionally and clinically used to increase breast milk production via phytoestrogenic stimulation of prolactin',
+    'Warms Kidney Yang (TCM: Hu Lu Ba) — dispels deep chronic cold in the lower back, reproductive organs, and pelvic basin',
+  ],
+  secondary_benefits: [
+    'Highly mucilaginous when soaked, giving a soothing demulcent effect for gastric ulcers and acid reflux',
+    'Lowers serum cholesterol and triglycerides via dense soluble fibre binding in the gut',
+  ],
+  pharmacology: 'The seeds contain steroidal saponins (diosgenin, yamogenin, testofen) plus the unique amino acid 4-hydroxyisoleucine. The saponins act as hormone precursors and modulators, balancing estrogenic (prolactin, milk) and androgenic (testosterone, libido) pathways depending on the physiological environment. Dense galactomannan fibre blunts carbohydrate absorption.',
+  flavor_profile: 'Deeply aromatic, bitter-sweet, and pungent; smells intensely of maple syrup and burnt sugar',
+  contraindications: [
+    'Pregnancy — STRICTLY CONTRAINDICATED; a strong uterine stimulant historically used to induce labour and expel the placenta',
+    'Hormone-sensitive cancers — phytoestrogenic and steroidal saponin activity warrants caution in ER+ breast cancer',
+    'Hypoglycemia — strong insulin-stimulating properties can cause dangerous blood sugar drops on an empty stomach',
+  ],
+  herb_to_herb_synergy: [
+    'Maca and Tongkat Ali — heavily synergistic for libido, free testosterone retention, and athletic stamina',
+    'Blessed Thistle and Fennel Seed — the gold-standard botanical stack for increasing breast milk volume',
+    'Cinnamon and Bitter Melon — compounds insulin sensitivity and metabolic regulation',
+  ],
+  herb_to_herb_caution: ['Other heavy mucilaginous herbs (Slippery Elm) taken alongside medication — the thick gel blocks drug absorption in the gut'],
+  herb_to_drug_interactions: [
+    'Antidiabetics (insulin, metformin) — severe risk of additive hypoglycemia; requires dosage monitoring',
+    'Oral medications generally — the dense mucilage can physically block absorption; space doses by 2 hours',
+  ],
+  herb_interactions: [
+    'Synergy: Maca, Blessed Thistle, Cinnamon',
+    'Caution: Heavy mucilage stacking near medication times',
+    'Drug interactions: Antidiabetics (CRITICAL), generalised drug malabsorption',
+  ],
+  dosage_range: 'Standardized Saponin Extract (e.g. Testofen): 300–600 mg daily. Raw seed powder: 2–5 g daily, often soaked or cooked into curries. For lactation: roughly 1000 mg, 3× daily.',
+  spiritual_layer: 'Fenugreek is the golden seed of the desert. It carries the warming, grounding scent of earth and maple. It is the awakener of dormant seeds — whether that seed is the milk required for new life, or the fire required for procreation. She whispers: I warm the frozen root. I draw the milk from the stone. I bring the vital fire back to the pelvis.',
+  best_preparation: 'For metabolic and hormonal extraction, hydroethanolic percolation at 50% EtOH captures the steroidal saponins and amino acids. If using whole seeds for GI soothing, cold-soak them overnight to release the thick healing mucilage without destroying the enzymes.',
+  caution_level: 'MEDIUM', safe_pregnancy: false,
+  status: 'A highly versatile botanical bridging endocrinology, metabolism, and obstetrics. Imparts a harmless but unmistakable maple syrup odour to sweat and urine at high doses.',
+  // 'warming/stimulating/nourishing' → sustained + crash_repair · 'moistening' → demulcent ·
+  // 'reproductive organs' → pelvis · 'pancreas' → gut · 'Mediterranean / South Asian' → Mediterranean
+  energy_pattern: ['sustained', 'crash_repair'],
+  digestion_fit: ['warming', 'demulcent'],
+  regional_affinity: ['pelvis', 'kidneys', 'gut'],
+  onset_time: 'days',
+  family: 'Fabaceae',
+  epithet: 'The golden awakener',
+  origin_region: 'Mediterranean',
+  evidence_grade: 'A',
+},
+// ════════════════════════════════════════════════════════════════
+// 2026-09-24 · Clinical-extract expansion, batch 4 (ids 578–586)
+//
+// Nine botanicals: heat-clearing / anti-toxic (Hedyotis, Sophora Root,
+// Honeysuckle, Phellodendron), Amazonian carotenoid food (Aguaje),
+// structural and vascular (Avocado ASU, Pine Bark), muscle-releasing
+// vasodilator (Kudzu), and one stimulant laxative that is only safe
+// as aged bark (Buckthorn).
+//
+// Andrographis from the same source batch was NOT added: Andrographis
+// paniculata is already id 526 ('Kalmegh'). Its stronger passages were
+// merged into that entry instead.
+//
+// Four entries arrived with digestion_fit 'corrosive' (Sophora Root,
+// Phellodendron, Buckthorn) or 'nourishing'/'heavy'. The union has no
+// honest equivalent for 'corrosive' — 'bitter' understates a herb that
+// destroys digestive fire — so those entries carry 'bitter' plus the
+// warning in prose, where inferAxes() actually reads it, rather than a
+// tag that would read as merely unpleasant.
+// ════════════════════════════════════════════════════════════════
+{
+  id: 578, name: 'Hedyotis Diffusa', botanical: 'Oldenlandia diffusa / Hedyotis diffusa (whole plant)',
+  tcm_meridians: ['Liver', 'Stomach', 'Large Intestine'], tcm_element: 'Wood + Earth',
+  energetics: ['Cold', 'Bitter', 'Sweet'],
+  primary_functions: [
+    'Clears Heat and Resolves Toxicity (TCM: Bai Hua She She Cao) — a premier detoxifying herb for severe festering infections, snakebite, and deep-seated tissue abscess',
+    'Oncological apoptosis catalyst — researched in TCM and integrative oncology for inducing apoptosis and inhibiting angiogenesis in colorectal, hepatic, and lung cancer cell lines',
+    'Clears Damp-Heat — drains inflammatory fluid congestion in the lower burner; used clinically for severe urinary tract infection, pelvic inflammatory disease, and appendicitis',
+    'Immunomodulator — stimulates macrophage phagocytosis to clear cellular debris and bacterial load from the blood',
+  ],
+  secondary_benefits: [
+    'Hepatoprotective during viral hepatitis flare-ups by clearing liver heat',
+    'Applied topically as a poultice for venomous snakebite and severe cystic acne',
+  ],
+  pharmacology: 'The active matrix is driven by iridoid glycosides, triterpenes (ursolic acid, oleanolic acid), and flavonoids. Ursolic acid is well documented for anti-tumor and anti-angiogenic properties. The herb operates via multiple pathways (p53 activation, Bax/Bcl-2 modulation) to trigger programmed cell death in abnormal cells while sparing healthy tissue.',
+  flavor_profile: 'Mildly bitter, slightly sweet, and grassy',
+  contraindications: [
+    'Pregnancy — STRICTLY CONTRAINDICATED; the intense cold and detoxifying action risks destabilising the fetus and inducing miscarriage',
+    'Spleen/Stomach cold deficiency — its aggressive cold nature severely damages digestive fire, causing diarrhea and fatigue if used long-term without warming herbs',
+  ],
+  herb_to_herb_synergy: [
+    'Scutellaria barbata (Ban Zhi Lian) — the inseparable TCM oncological pairing; together they form the baseline of hundreds of integrative cancer protocols in Chinese hospitals',
+    'Andrographis / Kalmegh (id 526) and Isatis Root — for stacked antiviral and antibacterial blood clearing',
+  ],
+  herb_to_herb_caution: ['Other intensely cold, draining herbs (Coptis, Rhubarb) in frail, elderly, or chemotherapy-depleted patients without Qi support such as Astragalus'],
+  herb_to_drug_interactions: [
+    'Chemotherapy agents — complex interactions; widely used in China to enhance chemotherapy efficacy and reduce tumor resistance, but MUST be managed by an integrative oncologist',
+    'Immunosuppressants — potential theoretical antagonism due to its immune-stimulating properties',
+  ],
+  herb_interactions: [
+    'Synergy: Scutellaria barbata, Andrographis, Isatis',
+    'Caution: Over-clearing in depleted, cold constitutions',
+    'Drug interactions: Chemotherapeutics (requires expert management)',
+  ],
+  dosage_range: 'TCM Decoction: 15–60 g daily, often dosed very high in oncological settings. Extract (1:5, 40% EtOH): 40–60 drops, 3× daily. Must be cycled or paired with Spleen-protecting herbs.',
+  spiritual_layer: 'Hedyotis is the snake-needle grass. It grows low, wild, and untamed, seeking out the darkest, most venomous heat in the body. It is the medicine of deep extraction, drawing out the toxins the body has walled off. She whispers: I find the hidden venom. I break the hardened masses. I pull the heat from the deepest marrow.',
+  best_preparation: 'A long water decoction at 95°C for 45–60 minutes is the clinical standard, extracting the iridoids and polysaccharides that carry the immune and oncological action. Hydroethanolic tinctures at 40–50% EtOH are effective for the triterpenes.',
+  caution_level: 'HIGH', safe_pregnancy: false,
+  status: 'A heavyweight in integrative oncology and severe infection management. Requires practitioner oversight to prevent digestive collapse from its intense cold.',
+  // 'clearing/draining/destroying' → sustained · 'intestines' → gut · 'cellular matrices' → whole
+  energy_pattern: ['sustained'],
+  digestion_fit: ['cooling', 'bitter'],
+  regional_affinity: ['liver', 'gut', 'whole'],
+  onset_time: 'days',
+  family: 'Rubiaceae',
+  epithet: 'The venom clearer',
+  origin_region: 'Chinese',
+  evidence_grade: 'A',
+},
+{
+  id: 579, name: 'Aguaje', botanical: 'Mauritia flexuosa (fruit)',
+  tcm_meridians: ['Spleen', 'Kidney', 'Stomach'], tcm_element: 'Earth + Water',
+  energetics: ['Cooling', 'Moistening', 'Sweet', 'Nourishing'],
+  primary_functions: [
+    'Apex provitamin A source — an extraordinary concentration of beta-carotene, supporting retinal health, skin elasticity, and immune function',
+    'Phytoestrogenic modulator — rich in plant sterols that gently bind estrogen receptors; prized in Amazonian tradition for balancing menopausal symptoms and restoring hormonal equilibrium',
+    'Lipid antioxidant — the dense orange fruit oil is packed with tocopherols and oleic acid, protecting cellular membranes from oxidative degradation and UV damage',
+  ],
+  secondary_benefits: [
+    'Deeply hydrating for the skin, applied topically or consumed, supporting collagen matrices',
+    'A dense, high-calorie survival food for indigenous populations, providing essential fatty acids',
+  ],
+  pharmacology: 'The mesocarp is an oil-rich matrix of carotenoids, ascorbic acid, tocopherols, and phytoestrogens (primarily beta-sitosterol). Because the beta-carotene is naturally emulsified in the fruit’s high oleic acid content, oral bioavailability and conversion to retinol is exceptionally high compared to non-fat botanical sources.',
+  flavor_profile: 'Earthy, dense, slightly sweet, and mildly tart with a rich oily mouthfeel',
+  contraindications: [
+    'Hormone-sensitive conditions — given its phytoestrogenic properties, caution is advised in ER+ breast or uterine cancers pending more clinical data',
+    'Caloric restriction contexts — an exceptionally calorie and lipid dense fruit; excessive consumption contributes to weight gain',
+  ],
+  herb_to_herb_synergy: [
+    'Maca Root (Lepidium meyenii) — the South American endocrine stack; Maca drives central HPA axis regulation while Aguaje supplies the lipid and phytoestrogen building blocks for hormonal expression',
+    'Camu Camu (id 566) — Aguaje carries the fat-soluble vitamins A and E, Camu Camu the water-soluble C; together a full-spectrum Amazonian antioxidant shield',
+  ],
+  herb_to_herb_caution: ['None widely documented; fundamentally a dense food crop'],
+  herb_to_drug_interactions: ['Isotretinoin (Accutane) — extreme doses of beta-carotene could theoretically compound vitamin A toxicity, though conversion is generally self-regulating'],
+  herb_interactions: [
+    'Synergy: Maca Root, Camu Camu',
+    'Caution: Caloric overconsumption',
+    'Drug interactions: Isotretinoin (theoretical)',
+  ],
+  dosage_range: 'Fruit Powder: 3–10 g daily, blended into smoothies or milks. Aguaje Oil: 1–2 tsp daily internally, or applied topically to skin and hair.',
+  spiritual_layer: 'Aguaje is known as the Tree of Life in the Amazon. It grows in swampy, flooded ground, pulling the heavy water and the fierce equatorial sun into its bright orange, scale-covered fruit. It is the medicine of deep nourishment — abundance, fertility, softness. She whispers: I hold the sun inside the water. I soften the edges. I nourish the root.',
+  best_preparation: 'Must be a freeze-dried powder or cold-pressed oil to preserve the delicate carotenoids and tocopherols. Never boil or expose to high heat — the fatty acids oxidise and the vitamins degrade. Being fat-soluble, it requires no additional bio-enhancer.',
+  caution_level: 'LOW',
+  safe_pregnancy: true, // Source note: safe as a traditional food; supplemental mega-dosing should be cleared with a practitioner.
+  status: 'An Amazonian superfruit for skin health and hormonal support. Its efficacy lies in a naturally bioavailable matrix of fats and carotenoids rather than any single isolated compound.',
+  // 'nourishing/moistening/softening' → sustained · 'heavy' → demulcent ·
+  // 'endocrine system' → whole · 'eyes' → head · 'Amazonian' → South American
+  energy_pattern: ['sustained'],
+  digestion_fit: ['demulcent'],
+  regional_affinity: ['skin', 'head', 'whole'],
+  onset_time: 'weeks',
+  family: 'Arecaceae',
+  epithet: 'The tree of life',
+  origin_region: 'South American',
+  evidence_grade: 'C',
+},
+{
+  id: 580, name: 'Sophora Root', botanical: 'Sophora flavescens (root — Ku Shen)',
+  tcm_meridians: ['Heart', 'Liver', 'Stomach', 'Large Intestine', 'Bladder'], tcm_element: 'Fire + Water',
+  energetics: ['Cold', 'Extremely Dry', 'Intensely Bitter'],
+  primary_functions: [
+    'Dries Damp-Heat and kills parasites (TCM: Ku Shen) — intensely drains weeping, infected, inflamed conditions in the lower burner (vaginitis, severe urinary tract infection, dysentery)',
+    'Anti-arrhythmic — the alkaloid oxymatrine regulates cardiac action potentials and is used in Chinese hospitals for ventricular and atrial arrhythmias',
+    'Anti-pruritic and dermal antimicrobial — applied topically and internally to clear severe weeping eczema, psoriasis, and scabies',
+    'Hepatoprotective and antiviral — researched for reducing liver fibrosis and viral load in chronic Hepatitis B and C',
+  ],
+  secondary_benefits: [
+    'Oncological support — matrine induces apoptosis and cell-cycle arrest in gastric, hepatic, and melanoma cell lines',
+    'Mild diuretic action to flush inflammatory exudate',
+  ],
+  pharmacology: 'The clinical power lies in quinolizidine alkaloids, primarily matrine and oxymatrine, alongside prenylated flavonoids (kurarinone). These alkaloids act as cardiac rhythm stabilisers, direct viral replication inhibitors, and broad-spectrum agents against dermatophytes and protozoa. Note this is Sophora flavescens — a different species from Sophora japonica (ids 567, 571), with an entirely different alkaloid-driven profile rather than a rutin/isoflavone one.',
+  flavor_profile: 'Violently bitter, lingeringly acrid, and intensely drying',
+  contraindications: [
+    'Pregnancy — strictly contraindicated; the aggressive cold, drying nature and alkaloid profile present severe risk',
+    'Cold or deficient Spleen (TCM) — its extreme bitterness rapidly destroys digestive fire, causing diarrhea and severe fatigue with long-term use',
+    'Renal insufficiency — high alkaloid doses may burden compromised kidneys',
+  ],
+  herb_to_herb_synergy: [
+    'Dictamnus (Bai Xian Pi) and Cnidium (She Chuang Zi) — the TCM topical triad for severe fungal infection, weeping eczema, and vulvar pruritus',
+    'Schisandra (Wu Wei Zi) — historically paired to protect the liver and offset the harsh draining nature during viral hepatitis treatment',
+    'Gromwell / Shikon (id 565) — stacked for severe weeping, itching dermal infection',
+  ],
+  herb_to_herb_caution: ['Other profoundly cold, bitter herbs (Coptis, Gentian) without a warming Spleen protector; causes digestive collapse'],
+  herb_to_drug_interactions: [
+    'Anti-arrhythmic drugs — potential additive or competitive effects on cardiac electrical pathways; requires cardiological supervision',
+    'Immunosuppressants — complex interactions given its own immunomodulatory and antiviral action',
+  ],
+  herb_interactions: [
+    'Synergy: Dictamnus, Cnidium, Schisandra',
+    'Caution: Overly bitter/cold stacking',
+    'Drug interactions: Anti-arrhythmics (CRITICAL)',
+  ],
+  dosage_range: 'Standardized Extract (oxymatrine): dosed clinically under strict supervision. TCM Decoction: 3–9 g daily, short term. Topical wash: 15–30 g boiled aggressively.',
+  spiritual_layer: 'Sophora is the bitter scorched earth. It does not gently correct; it drains the swamp, killing the parasites and fungus that thrive in stagnation. It teaches that some infections require an uncompromising, inhospitable environment to be eradicated. She whispers: I dry the damp rot. I make the soil too bitter for the invader to survive.',
+  best_preparation: 'For topical washes against fungus and eczema, an aggressive water decoction boiled 45 minutes at 95°C and applied externally is exceptional. For systemic clinical use in arrhythmia or hepatitis, standardized pharmaceutical-grade extracts isolating oxymatrine are necessary to avoid the harsh GI effects of the raw root.',
+  caution_level: 'HIGH', safe_pregnancy: false,
+  status: 'A potent, pharmaceutical-grade botanical with specific clinical applications in cardiology, hepatology, and dermatology. Not for casual or prolonged use.',
+  // 'draining/drying/cooling/destroying' → acute_only (short-term only by its own dosing note) ·
+  // 'corrosive' has no union value — carried as bitter, with the real warning in the prose ·
+  // 'lower pelvis' → pelvis
+  energy_pattern: ['acute_only'],
+  digestion_fit: ['bitter', 'cooling'],
+  regional_affinity: ['skin', 'heart', 'liver', 'pelvis'],
+  onset_time: 'days',
+  family: 'Fabaceae',
+  epithet: 'The swamp drainer',
+  origin_region: 'Chinese',
+  evidence_grade: 'A',
+},
+{
+  id: 581, name: 'Honeysuckle Flower', botanical: 'Lonicera japonica (flower bud / pollen)',
+  tcm_meridians: ['Lung', 'Stomach', 'Large Intestine'], tcm_element: 'Metal + Earth',
+  energetics: ['Cold', 'Sweet', 'Aromatic'],
+  primary_functions: [
+    'Clears Heat and Resolves Toxicity (TCM: Jin Yin Hua) — the premier botanical for venting early-stage Wind-Heat invasion, targeting severe sore throat, fever, and acute tonsillitis',
+    'Broad-spectrum antimicrobial — highly active against respiratory pathogens including Streptococcus pneumoniae and various influenza strains',
+    'Anti-inflammatory cascade blocker — downregulates pro-inflammatory cytokines in the respiratory and gastrointestinal tracts',
+    'Clears summer-heat and damp-heat — traditionally used for inflammatory skin eruptions, boils, and dysentery',
+  ],
+  secondary_benefits: [
+    'Hepatoprotective and antioxidant via high chlorogenic acid content',
+    'The pollen offers a concentrated, easily assimilated matrix of the flower’s volatile compounds and amino acids',
+  ],
+  pharmacology: 'The unexpanded flower buds and pollen are dense with chlorogenic acid, luteolin, and iridoid glycosides. Chlorogenic acid acts as a profound antioxidant and antiviral, while luteolin specifically blocks respiratory inflammation. The volatile essential oils (linalool, geraniol) carry the aromatic diaphoretic action that vents fevers.',
+  flavor_profile: 'Sweet, highly aromatic, softly floral, and slightly cooling',
+  contraindications: [
+    'Spleen and Stomach cold deficiency — its sweet, cold nature can cause loose stools if overused in weak, cold digestion',
+    'G6PD deficiency — high doses of certain Honeysuckle extracts have historically been cautioned here over a theoretical risk of hemolytic anemia, though clinical occurrences are extremely rare',
+  ],
+  herb_to_herb_synergy: [
+    'Forsythia (Lian Qiao) — the unbreakable TCM pairing ("Yin Qiao") for early-stage viral respiratory infection and sore throat',
+    'Chrysanthemum and Peppermint — a cooling aromatic stack to vent fevers, clear head congestion, and soothe red eyes',
+    'Isatis Root (Ban Lan Gen) and Kalmegh (id 526) — compounds the antiviral matrix for severe viral pharyngitis',
+  ],
+  herb_to_herb_caution: ['Intense warming tonics (Aconite, Dry Ginger) — neutralise Honeysuckle’s cooling, heat-clearing purpose entirely'],
+  herb_to_drug_interactions: ['Minimal documented severe interactions; high doses of chlorogenic acid may mildly slow clotting, so observe caution with anticoagulants'],
+  herb_interactions: [
+    'Synergy: Forsythia, Chrysanthemum, Peppermint, Isatis',
+    'Caution: Warming tonics that neutralise its effect',
+    'Drug interactions: Anticoagulants (mild observation)',
+  ],
+  dosage_range: 'TCM Decoction: 9–15 g of dried buds daily. Tincture (1:5, 40–50% EtOH): 30–60 drops, 3–4× daily during acute infection. Infusion: 3–6 g steeped in hot water.',
+  spiritual_layer: 'Honeysuckle is the sweet breath of the cool morning. Unlike the harsh bitters that destroy heat, Honeysuckle coaxes the heat out through the skin with grace and aroma. It teaches the medicine of gentle extraction. She whispers: I open the pores. I breathe out the fire. I soothe the burning throat with the memory of spring.',
+  best_preparation: 'Because the medicine leans on aromatic volatile oils alongside the chlorogenic acid, decoctions must be short. Do not boil Honeysuckle longer than 10–15 minutes, or simply steep at 90°C — beyond that the antiviral aromatics evaporate and efficacy plummets.',
+  caution_level: 'LOW',
+  safe_pregnancy: true, // Source note: safe for short-term acute use in pregnancy; mega-dosing avoided.
+  status: 'The champion for early-stage sore throat and viral respiratory onset. Palatable, safe, and highly synergistic with other antivirals.',
+  // 'venting/cooling/ascending' → acute_only (taken at onset, for a short window) ·
+  // 'light' → cooling · 'throat' → chest · 'lungs' → chest
+  energy_pattern: ['acute_only'],
+  digestion_fit: ['cooling'],
+  regional_affinity: ['chest', 'head', 'skin'],
+  onset_time: 'hours',
+  family: 'Caprifoliaceae',
+  epithet: 'The sweet venter',
+  origin_region: 'Chinese',
+  evidence_grade: 'A',
+},
+{
+  id: 582, name: 'Avocado Extract', botanical: 'Persea americana (unsaponifiables / leaf / seed)',
+  tcm_meridians: ['Liver', 'Kidney', 'Large Intestine'], tcm_element: 'Earth + Wood',
+  energetics: ['Cooling', 'Moistening', 'Nourishing'],
+  primary_functions: [
+    'Cartilage regeneration and joint shield (ASU) — Avocado Soybean Unsaponifiables inhibit IL-1, halting cartilage degradation while stimulating collagen and aggrecan synthesis in osteoarthritis',
+    'Hypotensive and vasodilator (leaf extract) — traditionally and clinically validated to lower blood pressure via vasorelaxation and mild diuretic pathways',
+    'Lipid metabolism modulator (seed extract) — the seed carries antioxidant and hypolipidemic properties, reducing oxidised LDL and visceral fat accumulation',
+    'Skin barrier repair — the lipid matrix penetrates the stratum corneum to restore elasticity, hydration, and wound healing in severe dermal damage',
+  ],
+  secondary_benefits: [
+    'The leaf extract provides mild analgesic and anti-ulcerogenic properties',
+    'Rich in lutein and zeaxanthin (fruit and oil) for macular and ocular protection',
+  ],
+  pharmacology: 'The most validated fraction is ASU, a 1:2 ratio of avocado and soybean unsaponifiable fats — the fraction of oil that does not form soap. ASU directly alters the inflammatory cascade in joint synovium. The leaf and seed, by contrast, contain a completely different matrix of persin, flavonoids, and condensed tannins driving the hypotensive and metabolic effects. These are three different medicines from one plant and should not be conflated.',
+  flavor_profile: 'Bland, oily, slightly earthy (extracts and ASU); the leaf is mildly astringent and grassy',
+  contraindications: [
+    'Latex allergy — high risk of cross-reactivity (avocado-latex syndrome)',
+    'Pregnancy — the leaf and seed extracts, unlike the fruit, lack safety data and have historical use as emmenagogues',
+    'Household animals — persin, concentrated in leaves and skin, is highly toxic to birds, horses, and many domestic pets (causing myocardial necrosis) while harmless to humans; store leaf material out of reach',
+  ],
+  herb_to_herb_synergy: [
+    'Soybean unsaponifiables — the mandatory clinical synergy; avocado unsaponifiables must be paired with soy to reach the pharmaceutical-grade joint repair seen in osteoarthritis trials',
+    'Boswellia and Curcumin — compounds the anti-inflammatory matrix for severe joint degradation',
+    'Olive Leaf Extract — pairs with Avocado Leaf for a stacked botanical hypotensive protocol',
+  ],
+  herb_to_herb_caution: ['None established for human use'],
+  herb_to_drug_interactions: [
+    'Antihypertensives — the leaf extract may have additive blood pressure-lowering effects',
+    'Warfarin — high consumption of the fruit or oil supplies vitamin K, which antagonises anticoagulant efficacy',
+  ],
+  herb_interactions: [
+    'Synergy: Soybean Unsaponifiables (ASU), Boswellia, Olive Leaf',
+    'Caution: Latex cross-reactivity',
+    'Drug interactions: Antihypertensives, Warfarin',
+  ],
+  dosage_range: 'Standardized ASU: 300 mg daily for osteoarthritis, requiring 2–3 months to build efficacy. Leaf decoction: 3–5 g steeped, for hypotensive support.',
+  spiritual_layer: 'The avocado is the alligator pear, holding a massive dense seed of potential surrounded by pure lipid nourishment. It teaches the medicine of deep lubrication and unhurried repair. She whispers: I grease the grinding joints. I restore the dry, cracked earth. I bring the heavy, sustaining fat to the starving tissue.',
+  best_preparation: 'For joint repair, rely strictly on pharmaceutical-grade ASU extraction — a complex industrial process isolating the unsaponifiable lipids. For blood pressure, a standard hot water decoction at 95°C of the dried leaves extracts the active flavonoids and tannins.',
+  caution_level: 'LOW',
+  safe_pregnancy: false, // Source note: the FRUIT is safe and recommended; the LEAF and SEED extracts are contraindicated. This entry is the extract.
+  status: 'ASU is a frontline prescription medication for osteoarthritis in parts of Europe. The leaf and seed remain potent, underutilised metabolic and cardiovascular tools.',
+  // 'lubricating/repairing/descending' → sustained · 'moistening'/'heavy' → demulcent ·
+  // 'vasculature' → whole · 'Mesoamerican' → Central American
+  energy_pattern: ['sustained'],
+  digestion_fit: ['demulcent'],
+  regional_affinity: ['joints', 'skin', 'whole'],
+  onset_time: 'months',
+  family: 'Lauraceae',
+  epithet: 'The joint lubricator',
+  origin_region: 'Central American',
+  evidence_grade: 'A',
+},
+{
+  id: 583, name: 'Pine Bark Extract', botanical: 'Pinus pinaster / Pinus massoniana (inner bark)',
+  tcm_meridians: ['Kidney', 'Heart', 'Liver'], tcm_element: 'Water + Wood',
+  energetics: ['Cool', 'Dry', 'Astringent'],
+  primary_functions: [
+    'Apex OPC antioxidant — delivers a dense concentration of oligomeric proanthocyanidins that neutralise systemic oxidative stress and recycle vitamins C and E',
+    'Endothelial nitric oxide booster — stimulates endothelial nitric oxide synthase (eNOS), improving vasodilation, blood flow, and erectile function',
+    'Collagen cross-linker — binds collagen and elastin fibres in skin and blood vessels, protecting them from enzymatic degradation by collagenase and elastase',
+    'Microcirculation and edema relief — seals leaking capillaries; clinically validated to reduce lower limb swelling, diabetic retinopathy, and chronic venous insufficiency',
+  ],
+  secondary_benefits: [
+    'Crosses the blood-brain barrier to reduce neuroinflammation; trialled for ADHD and cognitive decline',
+    'Reduces systemic histamine release, giving significant allergy and asthma relief',
+  ],
+  pharmacology: 'The inner bark is standardized to 65–75% procyanidins. These complex phenolics have an extraordinary affinity for connective tissue. By acting simultaneously as a vasorelaxant (via nitric oxide) and a structural astringent (sealing leaks), it balances vascular tone from both directions. Its antioxidant capacity substantially outperforms isolated vitamins.',
+  flavor_profile: 'Deeply astringent, highly tannic, and distinctly resinous and woody',
+  contraindications: [
+    'Autoimmune conditions — in rare cases its immune-modulating and stimulating properties can exacerbate flares (lupus, MS)',
+    'Bleeding disorders — mild, dose-dependent anti-platelet aggregation effects',
+    'Pre-surgery — discontinue 2 weeks prior to avoid excessive bleeding',
+    'Pregnancy — lacks broad safety data; generally avoided, though limited trials exist for pregnancy-related pelvic pain under strict supervision',
+  ],
+  herb_to_herb_synergy: [
+    'Vitamin C / Camu Camu (id 566) — the core biological synergy; OPCs and vitamin C rely on each other for cellular recycling and collagen synthesis',
+    'L-Arginine or L-Citrulline — stacked with Pine Bark, creates a sustained nitric oxide pump for athletic endurance or severe erectile dysfunction',
+    'Grape Seed Extract (id 420) — compounds the OPC matrix across all vascular and skin parameters',
+  ],
+  herb_to_herb_caution: ['Iron-rich botanicals (Nettle Leaf, Yellow Dock) — the dense tannins chelate non-heme iron in the gut; separate doses by 2 hours'],
+  herb_to_drug_interactions: [
+    'Anticoagulants and antiplatelets (Aspirin, Warfarin) — additive blood-thinning effect',
+    'Antihypertensives — additive vasodilation may lower blood pressure too far in sensitive patients',
+    'Immunosuppressants — may theoretically antagonise drug efficacy',
+  ],
+  herb_interactions: [
+    'Synergy: Vitamin C, L-Arginine, Grape Seed Extract',
+    'Caution: Iron chelation (take separately)',
+    'Drug interactions: Anticoagulants, Antihypertensives, Immunosuppressants',
+  ],
+  dosage_range: 'Standardized Extract (Pycnogenol-type, 65–75% OPCs): 50–200 mg daily. Best taken with or shortly after meals to avoid mild gastric upset from the heavy tannins.',
+  spiritual_layer: 'Pine Bark is the shield of the ancient sentinel. The tree produces these dense resins and tannins to protect its vulnerable core from radiation, fungus, and the freezing coast. It teaches absolute structural endurance. She whispers: I bind the fraying threads. I pull the walls tight. I hold the sap inside the tree so you may outlast the winter.',
+  best_preparation: 'Strictly a standardized clinical extract. Traditional decoctions or tinctures of raw pine bark yield volatile, imprecise amounts of OPCs alongside excessive raw tannins that disrupt digestion.',
+  caution_level: 'LOW', safe_pregnancy: false,
+  status: 'A heavily patented (Pycnogenol) and globally validated clinical extract. Among the most effective botanicals available for vascular integrity, nitric oxide production, and connective-tissue ageing. Distinct from Pine Pollen and Pine Needle already in the catalogue — different plant part, entirely different chemistry.',
+  // 'binding/protecting/flowing' → sustained · 'connective tissue'/'vasculature' → whole ·
+  // 'brain' → head · 'days to weeks' → days
+  energy_pattern: ['sustained'],
+  digestion_fit: ['astringent'],
+  regional_affinity: ['skin', 'head', 'whole'],
+  onset_time: 'days',
+  family: 'Pinaceae',
+  epithet: 'The vascular sentinel',
+  origin_region: 'Mediterranean',
+  evidence_grade: 'A',
+},
+{
+  id: 584, name: 'Phellodendron / Amur Cork Tree', botanical: 'Phellodendron amurense / chinense (bark)',
+  tcm_meridians: ['Kidney', 'Bladder', 'Large Intestine'], tcm_element: 'Water + Fire',
+  energetics: ['Cold', 'Dry', 'Intensely Bitter', 'Descending'],
+  primary_functions: [
+    'Clears Damp-Heat in the Lower Burner (TCM: Huang Bai) — targets severe inflammation, burning, and infection in the pelvic region, including urinary tract infection, prostatitis, and vaginal dysbiosis',
+    'Broad-spectrum antimicrobial — a dense payload of isoquinoline alkaloids that disrupt bacterial cell division and fungal biofilm integrity',
+    'Quells Kidney Yin deficiency fire — drains the false ascending heat (night sweats, hot flashes, restlessness) that appears when the body’s cooling fluids are deeply exhausted',
+    'Anti-inflammatory joint shield — downregulates COX-2 and iNOS pathways, protecting cartilage in inflammatory osteoarthritis models',
+  ],
+  secondary_benefits: [
+    'Applied topically for severe weeping red skin lesions and infected burns',
+    'A mild metabolic regulator, improving cellular glucose uptake much as other berberine-bearing plants do',
+  ],
+  pharmacology: 'The vibrant yellow bark is driven by a matrix of alkaloids: berberine, palmatine, jatrorrhizine, and phellodendrine. Unlike Coptis, which targets the upper body and Heart, or Scutellaria, which targets the Lungs, Phellodendron directs these antimicrobial and anti-inflammatory alkaloids downward to the genitourinary and lower GI tracts. That directional specificity is the whole point of choosing it over other berberine sources.',
+  flavor_profile: 'Violently bitter, intensely drying, and persistently acrid',
+  contraindications: [
+    'Pregnancy — strictly contraindicated; the downward-moving cold nature and berberine content risk destabilising the fetus and displacing bilirubin (kernicterus)',
+    'Cold, weak digestion (Spleen Yang deficiency) — the extreme bitterness freezes digestive fire, causing severe diarrhea and fatigue if unbuffered',
+    'Long-term uninterrupted use — acts as an herbal antibiotic; limit to 4–6 weeks to avoid gut flora destruction',
+    'Neonates and infants — berberine displaces bilirubin',
+  ],
+  herb_to_herb_synergy: [
+    'Anemarrhena (Zhi Mu) — the classical TCM pairing, nourishing Kidney Yin while clearing the false fire of night sweats and menopause',
+    'Atractylodes (Cang Zhu) — forms "Er Miao San" (Two-Marvel Powder) to clear damp-heat and swelling from the knees and lower joints',
+    'Milk Thistle (Silymarin) — a P-glycoprotein inhibitor that substantially increases systemic absorption of its berberine content',
+  ],
+  herb_to_herb_caution: ['Other extreme cold, bitter botanicals without warming demulcents; risks profound digestive shock'],
+  herb_to_drug_interactions: [
+    'CYP3A4 substrates — berberine inhibits liver enzymes, potentially causing toxic buildups of statins, macrolide antibiotics, and immunosuppressants',
+    'Antidiabetics — additive blood sugar-lowering effect',
+  ],
+  herb_interactions: [
+    'Synergy: Anemarrhena, Atractylodes, Milk Thistle',
+    'Caution: Heavy bitter stacking without GI protection',
+    'Drug interactions: CYP3A4-metabolized drugs (CRITICAL), Antidiabetics',
+  ],
+  dosage_range: 'TCM Decoction: 3–9 g daily. Standardized Extract (berberine/phellodendrine): 300–500 mg, 2–3× daily. Strictly cycle 4–6 weeks on, then break.',
+  spiritual_layer: 'The Cork Tree wears a deeply fissured, thick outer armour, but its inner core is brilliant medicinal yellow. It is the medicine of descending the chaotic fire. It teaches that not all heat is true strength — sometimes heat is only the friction of an empty, exhausted vessel. She whispers: I extinguish the false fire. I drain the swamp. Return the heat to the root.',
+  best_preparation: 'For systemic metabolic or antimicrobial action, hydroethanolic tinctures at 60% EtOH or standardized extracts pull the lipophilic alkaloids well. For TCM Kidney fire, the bark is traditionally dry-fried with salt water to direct its action straight to the Kidneys.',
+  caution_level: 'HIGH', safe_pregnancy: false,
+  status: 'A frontline clinical botanical for pelvic damp-heat and a premier berberine source. Requires strict cycling and Spleen protection. Note the catalogue now holds three berberine-bearing herbs — Barberry (205), Indian Barberry (568) and this one — which differ by directional affinity, not mechanism; treat them as alternates rather than a stack.',
+  // 'descending/draining/cooling' → pm_stabilise · 'corrosive' carried as bitter, warning in prose ·
+  // 'bladder'/'lower intestines' → pelvis + gut · 'knees' → joints
+  energy_pattern: ['pm_stabilise'],
+  digestion_fit: ['bitter', 'cooling'],
+  regional_affinity: ['kidneys', 'pelvis', 'gut', 'joints'],
+  onset_time: 'days',
+  family: 'Rutaceae',
+  epithet: 'The pelvic cooler',
+  origin_region: 'Chinese',
+  evidence_grade: 'A',
+},
+{
+  id: 585, name: 'Kudzu Root', botanical: 'Pueraria lobata / Pueraria montana (root)',
+  tcm_meridians: ['Spleen', 'Stomach', 'Lung'], tcm_element: 'Earth + Metal',
+  energetics: ['Cool', 'Moistening', 'Sweet', 'Acrid'],
+  primary_functions: [
+    'Releases the Muscle Layer (TCM: Ge Gen) — profoundly relaxes tight, spasming muscles in the upper back, neck, and shoulders caused by tension, fever, or exogenous wind-cold',
+    'Cardiovascular and cerebrovascular dilator — dilates coronary arteries and cerebral vessels, improving blood flow to heart and brain to relieve ischemia and hypertension',
+    'Alcohol craving and metabolism modulator — inhibits ALDH2 to alter alcohol metabolism, reducing the desire to drink and protecting the liver from ethanol-induced oxidative stress',
+    'Phytoestrogenic support — dense isoflavones bind ER-beta receptors, giving mild estrogenic support for menopausal hot flashes and bone density retention',
+  ],
+  secondary_benefits: [
+    'Generates fluids to quench severe thirst associated with stomach heat or diabetes',
+    'Relieves acute diarrhea by regulating intestinal motility and calming GI spasm',
+  ],
+  pharmacology: 'The root is a powerhouse of isoflavones, primarily puerarin, daidzein, and genistein. Puerarin is unique to this genus and acts as a potent vasodilator, neuroprotector, and cardioprotector. The isoflavones cross the blood-brain barrier to modulate neurotransmitter release associated with addiction and tension.',
+  flavor_profile: 'Mildly sweet, distinctly starchy, and gently earthy',
+  contraindications: [
+    'Estrogen-receptor positive (ER+) cancers — the dense phytoestrogen profile requires extreme caution or avoidance',
+    'Pregnancy — the isoflavone payload may disrupt the sensitive endocrine balance of fetal development',
+  ],
+  herb_to_herb_synergy: [
+    'Cinnamon Twig (Gui Zhi) and Peony (Bai Shao) — forms "Ge Gen Tang" (Kudzu Decoction) for severe neck and shoulder rigidity and early-stage fever',
+    'Dan Shen (id 574) — compounds the cardiovascular dilation and microcirculation effects',
+    'Milk Thistle and Hovenia dulcis (Japanese Raisin) — the stack for liver protection and alcohol metabolism',
+  ],
+  herb_to_herb_caution: ['Heavy stacking with other profound phytoestrogens (Red Clover, Genistein id 571, soy isoflavones) without monitoring for estrogen dominance'],
+  herb_to_drug_interactions: [
+    'Antidiabetics — potential additive hypoglycemic effects',
+    'Tamoxifen / aromatase inhibitors — direct competitive binding at the estrogen receptor; may neutralise the pharmaceutical',
+    'Methotrexate — puerarin may inhibit its excretion, increasing drug toxicity',
+  ],
+  herb_interactions: [
+    'Synergy: Cinnamon Twig, Dan Shen, Hovenia dulcis',
+    'Caution: Phytoestrogen stacking',
+    'Drug interactions: Tamoxifen (CRITICAL), Antidiabetics, Methotrexate',
+  ],
+  dosage_range: 'TCM Decoction: 9–15 g daily, simmered. Standardized Extract (puerarin 40–80%): 200–500 mg daily. Powdered starch: 5–10 g dissolved in hot water as a thick soothing gruel.',
+  spiritual_layer: 'Kudzu is the vine that ate the South — an unstoppable, aggressively expansive force. But beneath the earth its massive tuber holds the medicine of relaxation. It teaches that the antidote to extreme rigidity is unyielding expansion. She whispers: I unbind the knots. I soften the iron shoulders. I open the vessels so the river can run wide.',
+  best_preparation: 'For acute muscle tension and fluid generation, a robust water decoction at 95°C for 45 minutes of the sliced root is excellent. For clinical cardiovascular or addiction protocols, hydroethanolic extracts at 50% EtOH targeting puerarin and daidzein are optimal.',
+  caution_level: 'MEDIUM', safe_pregnancy: false,
+  status: 'A dual-purpose botanical: unmatched for upper-body muscle rigidity, and a clinical heavyweight for cardiovascular dilation and addiction modulation.',
+  // 'expanding/relaxing/ascending' → pm_stabilise + acute_only (it is both a standing
+  // relaxant and the classic onset-of-fever intervention) · 'soothing' → demulcent ·
+  // 'neck/shoulders' → chest · 'cardiovascular system' → heart · 'brain' → head
+  nervous_system_fit: ['wired', 'reactive'],
+  energy_pattern: ['pm_stabilise', 'acute_only'],
+  digestion_fit: ['demulcent', 'cooling'],
+  regional_affinity: ['chest', 'heart', 'head'],
+  onset_time: 'hours',
+  family: 'Fabaceae',
+  epithet: 'The tension unbinder',
+  origin_region: 'Chinese',
+  evidence_grade: 'A',
+},
+{
+  id: 586, name: 'Buckthorn Bark', botanical: 'Rhamnus frangula / Frangula alnus (AGED bark — fresh bark is an emetic)',
+  tcm_meridians: ['Large Intestine', 'Liver'], tcm_element: 'Wood',
+  energetics: ['Cold', 'Dry', 'Bitter'],
+  primary_functions: [
+    'Stimulant laxative — anthraquinone glycosides stimulate vigorous colonic peristalsis to clear severe acute constipation',
+    'Hydrates the bowel lumen — prevents reabsorption of water and electrolytes from the large intestine, giving a softer, bulkier stool',
+    'Cholagogue — stimulates bile flow from liver and gallbladder to relieve hepatic congestion and aid fat digestion',
+  ],
+  secondary_benefits: [
+    'Provides deep GI clearing prior to medical procedures or during severe bowel impaction',
+    'Historically used topically as a wash for parasitic skin infections and warts',
+  ],
+  pharmacology: 'The active compounds are anthraquinone glycosides, specifically frangulin and glucofrangulin. CRITICAL: fresh buckthorn bark contains highly toxic, severely irritating reduced anthrones that cause violent vomiting, severe cramping, and gastric spasm. The bark MUST be aged at least one year, or artificially heat-treated, to oxidise the anthrones into stable therapeutic anthraquinones. This is not a quality preference — unaged bark is an emetic poison.',
+  flavor_profile: 'Harshly bitter, astringent, and slightly sweet',
+  contraindications: [
+    'FRESH BARK — STRICTLY CONTRAINDICATED; causes violent emesis and severe gastric pain',
+    'Pregnancy and lactation — absolutely contraindicated; induces pelvic congestion and crosses into breast milk, causing severe diarrhea in the infant',
+    'Appendicitis or bowel obstruction — stimulant laxatives can cause fatal rupture in these states',
+    'Long-term use beyond 10–14 days — causes melanosis coli, severe potassium depletion, and laxative dependency (lazy bowel syndrome)',
+    'Children under 12 — not appropriate at any dose',
+  ],
+  herb_to_herb_synergy: [
+    'Fennel Seed, Ginger, or Peppermint — the mandatory antispasmodic stack; must always be formulated with aromatic carminatives to prevent the severe cramping anthraquinone laxatives cause',
+    'Licorice Root — buffers the harshness and protects the gastric mucosa from extreme irritation',
+  ],
+  herb_to_herb_caution: [
+    'Other stimulant laxatives (Senna, Rhubarb, Aloe resin, Cascara, Cassia Seed) — compounding anthraquinones causes violent, dangerous purgation',
+    'Diuretics (Dandelion leaf, Juniper) — compounds extreme potassium and fluid loss',
+  ],
+  herb_to_drug_interactions: [
+    'Potassium-depleting diuretics (thiazides) — high risk of severe hypokalemia',
+    'Cardiac glycosides (Digoxin) — laxative-induced hypokalemia drastically increases digoxin toxicity',
+    'Anti-arrhythmics — electrolyte imbalance can trigger fatal arrhythmias',
+  ],
+  herb_interactions: [
+    'Synergy: Fennel Seed, Ginger, Licorice',
+    'Caution: Heavy laxatives, Diuretics',
+    'Drug interactions: Digoxin (CRITICAL), Potassium-wasting diuretics',
+  ],
+  dosage_range: 'Decoction of AGED bark: 1–2 g steeped in hot water, taken before bed. Tincture (1:5, 40% EtOH): 10–30 drops. Strictly acute, short-term use — 7 days maximum.',
+  spiritual_layer: 'Buckthorn is the harsh evictor. It does not ask the body to release; it demands it. It teaches the necessity of letting go of toxic accumulation, and warns that violent clearing always costs the body’s reserves. She whispers: I will break the dam. I will empty the vessel. But do not rely on my violence.',
+  best_preparation: 'The bark MUST be aged a minimum of one year in open air to oxidise the toxic anthrones, or artificially aged by heating at 100°C for one hour. For extraction, a hot water decoction at 95°C pulls the glycosides. Always formulate with Fennel or Ginger.',
+  caution_level: 'HIGH', safe_pregnancy: false,
+  status: 'A highly effective pharmaceutical-grade botanical laxative, and one of the few entries in this catalogue where the preparation step is itself the safety control. Requires absolute strictness on aging the bark and limiting duration.',
+  // 'descending/purging/clearing' → acute_only · 'corrosive' carried as bitter with the
+  // warning in prose · 'large intestine' → gut · onset 6–12h overnight → hours
+  energy_pattern: ['acute_only'],
+  digestion_fit: ['bitter', 'moving'],
+  regional_affinity: ['gut', 'liver'],
+  onset_time: 'hours',
+  family: 'Rhamnaceae',
+  epithet: 'The aged evictor',
+  origin_region: 'European',
+  evidence_grade: 'A',
+},
+// ════════════════════════════════════════════════════════════════
+// 2026-09-24 · Clinical-extract expansion, batch 5 (ids 587–589)
+//
+// Only three of the six entries in this source batch were new:
+//   · Oyster Mushroom  → already id 321, far richer there; two items
+//     merged in (the vitamin-C/chitin synergy, and a correction: the
+//     source listed Red Yeast Rice as a synergy, but both carry
+//     monacolin K, so it is recorded as a caution instead).
+//   · Amla / Amalaki   → already id 523; substantially enriched there.
+//   · Jiaogulan        → already id 545, added earlier in this same
+//     session's first batch. Byte-for-byte the same entry. Skipped.
+//
+// Note on Polygonaceae: He Shou Wu (P. multiflorum) is a different
+// species from Knotweed (id 563, P. cuspidatum / sachalinense) and a
+// different medicine — blood/Jing tonic vs stilbene anti-spirochetal.
+// Held separately on purpose, unlike the two knotweeds.
+// ════════════════════════════════════════════════════════════════
+{
+  id: 587, name: 'Mangosteen Extract', botanical: 'Garcinia mangostana (pericarp / rind)',
+  tcm_meridians: ['Large Intestine', 'Spleen', 'Stomach'], tcm_element: 'Earth',
+  energetics: ['Cold', 'Dry', 'Astringent', 'Bitter'],
+  primary_functions: [
+    'Apex xanthone antioxidant — dense alpha-mangostin scavenges reactive oxygen species and protects cellular lipid membranes more effectively than standard vitamin E',
+    'Systemic anti-inflammatory — blocks COX-2 and prevents synthesis of Prostaglandin E2, reducing joint pain and severe systemic inflammation',
+    'Antimicrobial and anti-acne agent — alpha-mangostin targets and destroys Propionibacterium acnes and MRSA in clinical trials',
+    'Oncological apoptosis catalyst — researched for inducing programmed cell death in breast, prostate and leukemia cell lines via mitochondrial pathways',
+  ],
+  secondary_benefits: [
+    'Intense mucosal astringent; the traditional Southeast Asian remedy for acute dysentery and severe weeping skin infection',
+    'Supports blood sugar metabolism by inhibiting alpha-amylase in the gut',
+  ],
+  pharmacology: 'While the inner fruit is sweet and nourishing, the clinical medicine lies entirely in the dark purple rind. The pericarp is one of the most xanthone-dense botanical structures known, carrying primarily alpha- and gamma-mangostin. These xanthones are highly lipophilic, penetrating deeply into tissue to exert COX-2 inhibiting and free-radical neutralising effects. Note this is Garcinia mangostana — a different species from Garcinia Cambogia (id 573, G. gummi-gutta), with an entirely different xanthone-driven action rather than an HCA one.',
+  flavor_profile: 'The rind and extract are intensely bitter, sharply astringent and profoundly tannic — nothing like the sweet fruit',
+  contraindications: [
+    'Bleeding disorders — the high xanthone concentration exhibits mild anti-platelet aggregation; caution in hemophilia',
+    'Pre-surgery — discontinue 2 weeks prior due to altered clotting capability',
+    'Pregnancy — safety data for high-dose xanthone extracts is absent; avoid',
+  ],
+  herb_to_herb_synergy: [
+    'Turmeric (id 286) and Boswellia — a stacked matrix for severe multi-pathway joint inflammation, covering COX-2 and LOX',
+    'Black Pepper Extract (id 549) — required to raise systemic bioavailability of the heavy xanthone molecules',
+    'Gotu Kola (id 108) — traditionally paired topically and internally to heal severe acne, scarring and weeping skin lesions',
+  ],
+  herb_to_herb_caution: ['Iron-rich botanicals (Nettle, Yellow Dock) — the massive tannin payload in the rind chelates non-heme iron in the gut and renders it useless; separate by 2 hours'],
+  herb_to_drug_interactions: [
+    'Anticoagulants (Warfarin, Aspirin) — additive blood-thinning effect',
+    'Chemotherapeutics — high-dose antioxidants can theoretically interfere with oxidation-reliant treatment; requires oncologist oversight',
+  ],
+  herb_interactions: [
+    'Synergy: Curcumin, Boswellia, Piperine, Gotu Kola',
+    'Caution: Iron chelation (take separately)',
+    'Drug interactions: Anticoagulants, Chemotherapy',
+  ],
+  dosage_range: 'Standardized Rind Extract (xanthones 10–40%): 300–800 mg daily. Raw rind powder: 1–3 g, very astringent. Must be taken with a fat source to achieve xanthone absorption.',
+  spiritual_layer: 'Mangosteen is called the Queen of Fruits, but her true power is in her armour. The thick, bitter, bleeding purple rind protects the delicate sweet fruit from all jungle rot and insects. She teaches the necessity of a fiercely defended boundary. She whispers: I am the impenetrable wall. I preserve the sweet core by repelling the corruption.',
+  best_preparation: 'The clinical action is in the rind, not the juice. Because xanthones are lipophilic and highly insoluble in water, hydroethanolic tinctures at 70%+ EtOH or standardized isolates are required for internal efficacy — a water decoction extracts only the drying tannins and leaves the medicine behind.',
+  caution_level: 'MEDIUM', safe_pregnancy: false,
+  status: 'A tropical pharmaceutical-grade anti-inflammatory and antimicrobial. Efficacy depends entirely on using the rind rather than the culinary fruit pulp — commercial "mangosteen juice" products are largely the wrong part of the plant.',
+  // 'protecting/astringing/cooling' → sustained · 'drying' has no union value ·
+  // 'cellular membranes' → whole · 'days to weeks' → days · 'Southeast Asian' → Ayurvedic
+  energy_pattern: ['sustained'],
+  digestion_fit: ['astringent', 'bitter'],
+  regional_affinity: ['skin', 'joints', 'whole'],
+  onset_time: 'days',
+  family: 'Clusiaceae',
+  epithet: 'The purple armour',
+  origin_region: 'Ayurvedic',
+  evidence_grade: 'A',
+},
+{
+  id: 588, name: 'Bayberry', botanical: 'Myrica cerifera (root bark)',
+  tcm_meridians: ['Spleen', 'Stomach', 'Large Intestine'], tcm_element: 'Earth',
+  energetics: ['Warm', 'Extremely Dry', 'Intensely Astringent', 'Stimulating'],
+  primary_functions: [
+    'Systemic astringent and circulatory stimulant — uniquely pairs intense tissue tightening with circulatory stimulation, driving blood to the mucous membranes while sealing them against leakage',
+    'Mucosal hemostatic — rapidly arrests passive mucosal bleeding in the gums, uterus, and gastrointestinal tract',
+    'Diaphoretic and fever breaker — stimulates peripheral capillary circulation to force a sweat, breaking deep-seated cold-onset fevers',
+    'Gargle and wash — the premier oral rinse for spongy bleeding gums, severe tonsillitis, and chronic pharyngitis',
+  ],
+  secondary_benefits: [
+    'Relieves acute watery diarrhea by drying and toning a relaxed, atonic bowel lining',
+    'Emetic at high doses — traditionally used to forcefully clear the stomach of toxic or stagnant material',
+  ],
+  pharmacology: 'The root bark contains dense condensed tannins, triterpenes (myricadiol), and the flavonoid myricitrin. Myricitrin drives the circulatory stimulation and acts as a cholagogue. The tannins cross-link proteins to create a temporary impenetrable barrier against bacterial invasion and fluid loss. The combination of astringency with warmth is what distinguishes it — most astringents are cooling.',
+  flavor_profile: 'Fiercely astringent, bitterly acrid, woody, and warming',
+  contraindications: [
+    'Pregnancy — STRICTLY CONTRAINDICATED; strong downward-moving, circulatory-stimulating and potentially uterine-contracting',
+    'Dry or atrophic mucosa (high Vata) — its intense drying nature will damage and crack tissue already deficient in moisture',
+    'Empty stomach — the massive tannin load causes severe nausea and potential vomiting',
+    'Iron deficiency anemia — tannins chelate non-heme iron in the gut',
+  ],
+  herb_to_herb_synergy: [
+    'Cayenne (Capsicum) — forms the Thomsonian "Composition Powder", a circulatory and diaphoretic engine for breaking severe chills',
+    'Myrrh (Commiphora myrrha) — stacked for oral health washes against bleeding gums and oral ulcers',
+    'Ginger and Clove — buffer the intense astringency and push the warming action deeper into the core',
+  ],
+  herb_to_herb_caution: [
+    'Other heavy astringents (Oak Bark, Tormentil id 575, Goldenseal id 569) without demulcents; creates an intolerable drying effect on kidneys and gut',
+    'Iron-rich botanicals — the tannins instantly chelate non-heme iron',
+  ],
+  herb_to_drug_interactions: [
+    'Mineral supplements (iron, zinc) — tannins bind and block absorption; separate by 2 hours',
+    'Alkaloid pharmaceuticals — tannins precipitate alkaloids in the gut',
+  ],
+  herb_interactions: [
+    'Synergy: Cayenne, Myrrh, Ginger',
+    'Caution: Heavy astringents, iron-rich herbs',
+    'Drug interactions: Mineral supplements, alkaloid drugs',
+  ],
+  dosage_range: 'Decoction: 1–2 g of root bark simmered 20 mins. Tincture (1:5, 60% EtOH): 10–30 drops. Gargle: 30 drops of tincture in warm water. Avoid mega-dosing — the emetic threshold is not far above the therapeutic one.',
+  spiritual_layer: 'Bayberry is the warming vice. It is the medicine of absolute tension, used when the body has become too relaxed, too cold, and is leaking its vital fluids. It teaches the necessity of boundaries and heat. She whispers: I pull the slack walls tight. I drive the warm blood to the frozen surface. I close the open wounds.',
+  best_preparation: 'For oral washes or systemic astringency, a hydroethanolic extract at 60% EtOH captures both the lipophilic triterpenes and the tannins. Water decoction pulls the tannins efficiently but leaves some of the circulatory stimulants behind. Always dilute liquid extracts in water before taking.',
+  caution_level: 'MEDIUM', safe_pregnancy: false,
+  status: 'A legendary North American physiomedicalist botanical, unusual for combining tissue sealing with heat and blood flow rather than cooling.',
+  // 'astringing/warming/stimulating' → acute_only (fever-breaking and acute bleeding use) ·
+  // 'drying' has no union value · 'mucous membranes'/'gums' → head · 'GI tract' → gut ·
+  // 'capillaries' → whole
+  energy_pattern: ['acute_only'],
+  digestion_fit: ['astringent', 'warming'],
+  regional_affinity: ['head', 'gut', 'whole'],
+  onset_time: 'immediate',
+  family: 'Myricaceae',
+  epithet: 'The warming seal',
+  origin_region: 'North American',
+  evidence_grade: 'B',
+},
+{
+  id: 589, name: 'He Shou Wu / Fo-Ti', botanical: 'Polygonum multiflorum / Fallopia multiflora (PREPARED root — zhi he shou wu)',
+  tcm_meridians: ['Liver', 'Kidney'], tcm_element: 'Wood + Water',
+  energetics: ['Warm', 'Sweet', 'Bitter', 'Astringent'],
+  primary_functions: [
+    'Nourishes Blood and Jing (Essence) — the premier TCM tonic for profound blood deficiency, addressing premature greying, dizziness, and extreme constitutional exhaustion',
+    'Neuroprotective and longevity catalyst — upregulates superoxide dismutase and acts as an MAO-B inhibitor, protecting dopaminergic neurons and slowing cellular senescence',
+    'Astringes Jing — stabilises the lower gates against leakage of essence (spermatorrhea, frequent urination, vaginal discharge) arising from Kidney deficiency',
+    'Lipid modulator — inhibits cholesterol absorption in the gut and limits atherosclerotic plaque formation',
+  ],
+  secondary_benefits: [
+    'Strengthens the physical structure of lower back, knees, and tendons via Liver and Kidney nourishment',
+    'Supports fertility and healthy menstrual cycles in severely blood-deficient states',
+  ],
+  pharmacology: 'The root is rich in anthraquinones (emodin), stilbenes (tetrahydroxystilbene glucoside, TSG), and dense phospholipids. TSG acts much like resveratrol, giving antioxidant and neuroprotective effects. CRITICAL: the raw, unprepared root is a harsh cold laxative and carries a materially higher hepatotoxic risk. The traditional curing — stewing in black bean broth — alters the chemistry, destroying the laxative anthraquinones and concentrating the warm tonic phospholipids. Raw and prepared are effectively two different herbs sharing a botanical name.',
+  flavor_profile: 'Rich, earthy, deeply sweet and slightly bitter-astringent, close to a dense roasted chicory',
+  contraindications: [
+    'RAW, UNPREPARED ROOT — strictly contraindicated for tonic use; acts as a cold purgative and carries the higher liver toxicity risk',
+    'Idiosyncratic hepatotoxicity — rare but well documented cases of severe liver injury in susceptible individuals, possibly genetic or from improper curing. Discontinue immediately on jaundice, dark urine, or extreme fatigue',
+    'Spleen deficiency with damp-phlegm — its heavy, rich, cloying nature suffocates a weak digestive system, causing severe bloating and loose stools',
+    'Pregnancy — avoided for liver toxicity concerns and complex endocrine effects',
+    'Pre-existing liver disease — avoid',
+  ],
+  herb_to_herb_synergy: [
+    'Dong Quai (Angelica sinensis) and Rehmannia (Shu Di Huang) — the TCM blood-building and marrow-nourishing stack',
+    'Goji Berry and Schisandra — compounds the stabilisation of Kidney Jing and Liver Blood',
+    'Ligusticum (Chuan Xiong) — added to move the blood, preventing the heavy rich root from stagnating in the digestive tract',
+  ],
+  herb_to_herb_caution: ['Avoid stacking with harsh cold purgatives or any other known hepatotoxic botanical (Gromwell id 565 internally, Comfrey, Kava)'],
+  herb_to_drug_interactions: [
+    'Hepatotoxic pharmaceuticals — severe additive risk of acute liver injury',
+    'Antidiabetics and lipid-lowering drugs — may alter serum levels; monitor',
+  ],
+  herb_interactions: [
+    'Synergy: Dong Quai, Rehmannia, Goji Berry, Ligusticum',
+    'Caution: Hepatotoxic stacking; heavy cloying herbs without moving spices',
+    'Drug interactions: Hepatotoxic drugs (CRITICAL)',
+  ],
+  dosage_range: 'PREPARED (zhi) root only. Decoction: 9–15 g simmered 45+ mins. Standardized Extract: 300–500 mg daily. Monitor liver enzymes during long-term use.',
+  spiritual_layer: 'He Shou Wu translates as "Mr. He’s Black Hair". It is the medicine of deep reserve, drawing the dense heavy minerals of the earth into the marrow and the blood. It teaches that true vitality is not a frantic burning energy but a deep, quiet, inexhaustible well. She whispers: I anchor the root. I blacken the silver thread. I turn the hollow bone to iron.',
+  best_preparation: 'MUST be zhi (prepared). The root is sliced, soaked, and stewed in black soybean broth until the liquid is fully absorbed and the root turns pitch black. For liquid engines, a long water decoction at 95°C for 60 minutes or hydroethanolic percolation at 40% EtOH of the PREPARED root captures the TSG and phospholipids. As with Buckthorn (id 586), the preparation step is itself the safety control.',
+  caution_level: 'HIGH', safe_pregnancy: false,
+  status: 'A legendary longevity and blood tonic — astoundingly effective for exhaustion and premature ageing, but marred by modern sourcing problems and genuine idiosyncratic liver toxicity. Not the same plant as Knotweed (id 563) despite the shared genus; different species, different medicine.',
+  // 'nourishing/anchoring/building' → sustained + crash_repair · 'heavy'/'cloying' → demulcent ·
+  // 'blood' → whole · 'hair' → skin · 'weeks to months' → months
+  nervous_system_fit: ['tired', 'flat'],
+  energy_pattern: ['sustained', 'crash_repair'],
+  digestion_fit: ['demulcent', 'warming'],
+  regional_affinity: ['liver', 'kidneys', 'skin', 'whole'],
+  onset_time: 'months',
+  family: 'Polygonaceae',
+  epithet: 'The black-haired longevity root',
+  origin_region: 'Chinese',
+  evidence_grade: 'B',
 },
 ];
 module.exports = HERBS;

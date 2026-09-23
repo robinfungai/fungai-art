@@ -27,10 +27,30 @@ const RESTRICTED_NAMES = [
   'dmt','n,n-dmt',
   'coca leaf','erythroxylum','cocaine',
   'acorus calamus','calamus root',
+  // Not a recreational drug — a pharmaceutical-grade immunosuppressant.
+  // Tripterygium wilfordii (id 564) is teratogenic, abortifacient,
+  // hepato- and nephrotoxic, and causes sometimes-irreversible
+  // infertility. It earns its place in the Materia Medica as reference,
+  // but the quiz must never put it in a bottle. Same treatment as
+  // Kratom: catalogued, never recommended.
+  'tripterygium','thunder god vine','lei gong teng',
 ];
+// Word-boundary match, NOT a bare substring test. A plain includes()
+// let a short entry ban an unrelated botanical by accident: 'lsa'
+// (lysergic acid amide) matched Cistanche saLSAa — the legal Kidney
+// tonic was silently dropped from the candidate pool with no error
+// raised anywhere. Boundaries keep every real entry matching
+// ('psilocybe' still catches 'Psilocybe cubensis') while requiring the
+// token to sit on its own rather than inside a longer word.
+//
+// RESTRICTED_NAMES holds only letters, digits, spaces, commas and
+// hyphens — no regex metacharacters — so the tokens are used as-is.
+const RESTRICTED_RE = RESTRICTED_NAMES.map(
+  r => new RegExp('(^|[^a-z0-9])' + r + '([^a-z0-9]|$)', 'i')
+);
 function isRestricted(h) {
   const s = ((h.name || '') + ' ' + (h.botanical || '')).toLowerCase();
-  return RESTRICTED_NAMES.some(r => s.includes(r));
+  return RESTRICTED_RE.some(re => re.test(s));
 }
 
 // Gated herbs — legal, but held out of the candidate pool until the

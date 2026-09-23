@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-23T16:15:47.676Z",
+  "generatedAt": "2026-09-23T22:52:31.496Z",
   "counts": {
-    "botanicals": 199,
+    "botanicals": 243,
     "monographs": 128,
     "monographsMatched": 128,
     "products": 21,
@@ -1675,8 +1675,8 @@
     },
     {
       "id": 523,
-      "slug": "amla",
-      "name": "Amla",
+      "slug": "amla-amalaki",
+      "name": "Amla / Amalaki",
       "botanical": "Emblica officinalis / Phyllanthus emblica (fruit)",
       "latin": "Emblica officinalis / Phyllanthus emblica",
       "genus": "Emblica",
@@ -1702,9 +1702,9 @@
     },
     {
       "id": 526,
-      "slug": "kalmegh",
-      "name": "Kalmegh",
-      "botanical": "Andrographis paniculata (whole plant)",
+      "slug": "kalmegh-andrographis",
+      "name": "Kalmegh / Andrographis",
+      "botanical": "Andrographis paniculata (whole plant / aerial parts)",
       "latin": "Andrographis paniculata",
       "genus": "Andrographis",
       "species": "paniculata"
@@ -1798,6 +1798,402 @@
       "latin": "Cassia fistula",
       "genus": "Cassia",
       "species": "fistula"
+    },
+    {
+      "id": 545,
+      "slug": "jiaogulan",
+      "name": "Jiaogulan",
+      "botanical": "Gynostemma pentaphyllum (leaf)",
+      "latin": "Gynostemma pentaphyllum",
+      "genus": "Gynostemma",
+      "species": "pentaphyllum"
+    },
+    {
+      "id": 546,
+      "slug": "feverfew",
+      "name": "Feverfew",
+      "botanical": "Tanacetum parthenium (aerial parts)",
+      "latin": "Tanacetum parthenium",
+      "genus": "Tanacetum",
+      "species": "parthenium"
+    },
+    {
+      "id": 547,
+      "slug": "artichoke-extract",
+      "name": "Artichoke Extract",
+      "botanical": "Cynara scolymus (leaf)",
+      "latin": "Cynara scolymus",
+      "genus": "Cynara",
+      "species": "scolymus"
+    },
+    {
+      "id": 548,
+      "slug": "astaxanthin",
+      "name": "Astaxanthin",
+      "botanical": "Haematococcus pluvialis (microalgae)",
+      "latin": "Haematococcus pluvialis",
+      "genus": "Haematococcus",
+      "species": "pluvialis"
+    },
+    {
+      "id": 549,
+      "slug": "black-pepper-extract",
+      "name": "Black Pepper Extract",
+      "botanical": "Piper nigrum (fruit)",
+      "latin": "Piper nigrum",
+      "genus": "Piper",
+      "species": "nigrum"
+    },
+    {
+      "id": 550,
+      "slug": "cassia-seed-extract",
+      "name": "Cassia Seed Extract",
+      "botanical": "Cassia obtusifolia / Senna obtusifolia (seed)",
+      "latin": "Cassia obtusifolia / Senna obtusifolia",
+      "genus": "Cassia",
+      "species": "obtusifolia"
+    },
+    {
+      "id": 551,
+      "slug": "citrus-aurantium-extract",
+      "name": "Citrus Aurantium Extract",
+      "botanical": "Citrus aurantium (immature fruit/peel)",
+      "latin": "Citrus aurantium",
+      "genus": "Citrus",
+      "species": "aurantium"
+    },
+    {
+      "id": 552,
+      "slug": "grape-leaf-extract",
+      "name": "Grape Leaf Extract",
+      "botanical": "Vitis vinifera (red vine leaf)",
+      "latin": "Vitis vinifera",
+      "genus": "Vitis",
+      "species": "vinifera"
+    },
+    {
+      "id": 553,
+      "slug": "horse-chestnut-extract",
+      "name": "Horse Chestnut Extract",
+      "botanical": "Aesculus hippocastanum (seed extract)",
+      "latin": "Aesculus hippocastanum",
+      "genus": "Aesculus",
+      "species": "hippocastanum"
+    },
+    {
+      "id": 554,
+      "slug": "kelp-extract-powder",
+      "name": "Kelp Extract Powder",
+      "botanical": "Ascophyllum nodosum / Laminaria spp. (thallus)",
+      "latin": "Ascophyllum nodosum / Laminaria spp.",
+      "genus": "Ascophyllum",
+      "species": "nodosum"
+    },
+    {
+      "id": 555,
+      "slug": "lotus-leaf-extract",
+      "name": "Lotus Leaf Extract",
+      "botanical": "Nelumbo nucifera (leaf)",
+      "latin": "Nelumbo nucifera",
+      "genus": "Nelumbo",
+      "species": "nucifera"
+    },
+    {
+      "id": 556,
+      "slug": "red-wine-extract-resveratrol",
+      "name": "Red Wine Extract / Resveratrol",
+      "botanical": "Vitis vinifera (skin extract) / Polygonum cuspidatum (root)",
+      "latin": "Vitis vinifera",
+      "genus": "Vitis",
+      "species": "vinifera"
+    },
+    {
+      "id": 557,
+      "slug": "red-yeast-rice",
+      "name": "Red Yeast Rice",
+      "botanical": "Monascus purpureus fermented on Oryza sativa",
+      "latin": "Monascus purpureus fermented on Oryza sativa",
+      "genus": "Monascus",
+      "species": "purpureus"
+    },
+    {
+      "id": 558,
+      "slug": "yohimbe-bark",
+      "name": "Yohimbe Bark",
+      "botanical": "Pausinystalia yohimbe (bark)",
+      "latin": "Pausinystalia yohimbe",
+      "genus": "Pausinystalia",
+      "species": "yohimbe"
+    },
+    {
+      "id": 559,
+      "slug": "cistanche",
+      "name": "Cistanche",
+      "botanical": "Cistanche salsa / Cistanche deserticola (fleshy stem)",
+      "latin": "Cistanche salsa / Cistanche deserticola",
+      "genus": "Cistanche",
+      "species": "salsa"
+    },
+    {
+      "id": 560,
+      "slug": "evening-primrose",
+      "name": "Evening Primrose",
+      "botanical": "Oenothera biennis L. (seed oil)",
+      "latin": "Oenothera biennis L.",
+      "genus": "Oenothera",
+      "species": "biennis"
+    },
+    {
+      "id": 561,
+      "slug": "toothed-clubmoss",
+      "name": "Toothed Clubmoss",
+      "botanical": "Huperzia serrata (aerial parts)",
+      "latin": "Huperzia serrata",
+      "genus": "Huperzia",
+      "species": "serrata"
+    },
+    {
+      "id": 562,
+      "slug": "eucommia",
+      "name": "Eucommia",
+      "botanical": "Eucommia ulmoides (bark)",
+      "latin": "Eucommia ulmoides",
+      "genus": "Eucommia",
+      "species": "ulmoides"
+    },
+    {
+      "id": 563,
+      "slug": "knotweed",
+      "name": "Knotweed",
+      "botanical": "Polygonum cuspidatum / P. sachalinense / Reynoutria japonica · sachalinensis (root/rhizome)",
+      "latin": "Polygonum cuspidatum / P. sachalinense / Reynoutria japonica · sachalinensis",
+      "genus": "Polygonum",
+      "species": "cuspidatum"
+    },
+    {
+      "id": 564,
+      "slug": "thunder-god-vine",
+      "name": "Thunder God Vine",
+      "botanical": "Tripterygium wilfordii (root core/xylem — NOT FOR RECOMMENDATION — clinical supervision only)",
+      "latin": "Tripterygium wilfordii",
+      "genus": "Tripterygium",
+      "species": "wilfordii"
+    },
+    {
+      "id": 565,
+      "slug": "gromwell-root-shikonin",
+      "name": "Gromwell Root / Shikonin",
+      "botanical": "Lithospermum erythrorhizon (root — Shikon / Zi Cao)",
+      "latin": "Lithospermum erythrorhizon",
+      "genus": "Lithospermum",
+      "species": "erythrorhizon"
+    },
+    {
+      "id": 566,
+      "slug": "camu-camu",
+      "name": "Camu Camu",
+      "botanical": "Myrciaria dubia (fruit)",
+      "latin": "Myrciaria dubia",
+      "genus": "Myrciaria",
+      "species": "dubia"
+    },
+    {
+      "id": 567,
+      "slug": "sophora-flower",
+      "name": "Sophora Flower",
+      "botanical": "Sophora japonica / Styphnolobium japonicum (flower bud)",
+      "latin": "Sophora japonica / Styphnolobium japonicum",
+      "genus": "Sophora",
+      "species": "japonica"
+    },
+    {
+      "id": 568,
+      "slug": "indian-barberry",
+      "name": "Indian Barberry",
+      "botanical": "Berberis aristata (root / stem bark)",
+      "latin": "Berberis aristata",
+      "genus": "Berberis",
+      "species": "aristata"
+    },
+    {
+      "id": 569,
+      "slug": "goldenseal",
+      "name": "Goldenseal",
+      "botanical": "Hydrastis canadensis (root / rhizome)",
+      "latin": "Hydrastis canadensis",
+      "genus": "Hydrastis",
+      "species": "canadensis"
+    },
+    {
+      "id": 570,
+      "slug": "white-kidney-bean-extract",
+      "name": "White Kidney Bean Extract",
+      "botanical": "Phaseolus vulgaris (seed extract)",
+      "latin": "Phaseolus vulgaris",
+      "genus": "Phaseolus",
+      "species": "vulgaris"
+    },
+    {
+      "id": 571,
+      "slug": "genistein",
+      "name": "Genistein",
+      "botanical": "Sophora japonica / Glycine max (purified isoflavone)",
+      "latin": "Sophora japonica / Glycine max",
+      "genus": "Sophora",
+      "species": "japonica"
+    },
+    {
+      "id": 573,
+      "slug": "garcinia-cambogia-extract",
+      "name": "Garcinia Cambogia Extract",
+      "botanical": "Garcinia gummi-gutta (fruit rind)",
+      "latin": "Garcinia gummi-gutta",
+      "genus": "Garcinia",
+      "species": "gummi-gutta"
+    },
+    {
+      "id": 574,
+      "slug": "dan-shen-root-extract",
+      "name": "Dan Shen Root Extract",
+      "botanical": "Salvia miltiorrhiza (root)",
+      "latin": "Salvia miltiorrhiza",
+      "genus": "Salvia",
+      "species": "miltiorrhiza"
+    },
+    {
+      "id": 575,
+      "slug": "tormentil",
+      "name": "Tormentil",
+      "botanical": "Potentilla erecta (rhizome)",
+      "latin": "Potentilla erecta",
+      "genus": "Potentilla",
+      "species": "erecta"
+    },
+    {
+      "id": 576,
+      "slug": "mulberry-leaf",
+      "name": "Mulberry Leaf",
+      "botanical": "Morus alba (leaf)",
+      "latin": "Morus alba",
+      "genus": "Morus",
+      "species": "alba"
+    },
+    {
+      "id": 577,
+      "slug": "fenugreek",
+      "name": "Fenugreek",
+      "botanical": "Trigonella foenum-graecum (seed)",
+      "latin": "Trigonella foenum-graecum",
+      "genus": "Trigonella",
+      "species": "foenum-graecum"
+    },
+    {
+      "id": 578,
+      "slug": "hedyotis-diffusa",
+      "name": "Hedyotis Diffusa",
+      "botanical": "Oldenlandia diffusa / Hedyotis diffusa (whole plant)",
+      "latin": "Oldenlandia diffusa / Hedyotis diffusa",
+      "genus": "Oldenlandia",
+      "species": "diffusa"
+    },
+    {
+      "id": 579,
+      "slug": "aguaje",
+      "name": "Aguaje",
+      "botanical": "Mauritia flexuosa (fruit)",
+      "latin": "Mauritia flexuosa",
+      "genus": "Mauritia",
+      "species": "flexuosa"
+    },
+    {
+      "id": 580,
+      "slug": "sophora-root",
+      "name": "Sophora Root",
+      "botanical": "Sophora flavescens (root — Ku Shen)",
+      "latin": "Sophora flavescens",
+      "genus": "Sophora",
+      "species": "flavescens"
+    },
+    {
+      "id": 581,
+      "slug": "honeysuckle-flower",
+      "name": "Honeysuckle Flower",
+      "botanical": "Lonicera japonica (flower bud / pollen)",
+      "latin": "Lonicera japonica",
+      "genus": "Lonicera",
+      "species": "japonica"
+    },
+    {
+      "id": 582,
+      "slug": "avocado-extract",
+      "name": "Avocado Extract",
+      "botanical": "Persea americana (unsaponifiables / leaf / seed)",
+      "latin": "Persea americana",
+      "genus": "Persea",
+      "species": "americana"
+    },
+    {
+      "id": 583,
+      "slug": "pine-bark-extract",
+      "name": "Pine Bark Extract",
+      "botanical": "Pinus pinaster / Pinus massoniana (inner bark)",
+      "latin": "Pinus pinaster / Pinus massoniana",
+      "genus": "Pinus",
+      "species": "pinaster"
+    },
+    {
+      "id": 584,
+      "slug": "phellodendron-amur-cork-tree",
+      "name": "Phellodendron / Amur Cork Tree",
+      "botanical": "Phellodendron amurense / chinense (bark)",
+      "latin": "Phellodendron amurense / chinense",
+      "genus": "Phellodendron",
+      "species": "amurense"
+    },
+    {
+      "id": 585,
+      "slug": "kudzu-root",
+      "name": "Kudzu Root",
+      "botanical": "Pueraria lobata / Pueraria montana (root)",
+      "latin": "Pueraria lobata / Pueraria montana",
+      "genus": "Pueraria",
+      "species": "lobata"
+    },
+    {
+      "id": 586,
+      "slug": "buckthorn-bark",
+      "name": "Buckthorn Bark",
+      "botanical": "Rhamnus frangula / Frangula alnus (AGED bark — fresh bark is an emetic)",
+      "latin": "Rhamnus frangula / Frangula alnus",
+      "genus": "Rhamnus",
+      "species": "frangula"
+    },
+    {
+      "id": 587,
+      "slug": "mangosteen-extract",
+      "name": "Mangosteen Extract",
+      "botanical": "Garcinia mangostana (pericarp / rind)",
+      "latin": "Garcinia mangostana",
+      "genus": "Garcinia",
+      "species": "mangostana"
+    },
+    {
+      "id": 588,
+      "slug": "bayberry",
+      "name": "Bayberry",
+      "botanical": "Myrica cerifera (root bark)",
+      "latin": "Myrica cerifera",
+      "genus": "Myrica",
+      "species": "cerifera"
+    },
+    {
+      "id": 589,
+      "slug": "he-shou-wu-fo-ti",
+      "name": "He Shou Wu / Fo-Ti",
+      "botanical": "Polygonum multiflorum / Fallopia multiflora (PREPARED root — zhi he shou wu)",
+      "latin": "Polygonum multiflorum / Fallopia multiflora",
+      "genus": "Polygonum",
+      "species": "multiflorum"
     }
   ],
   "monographs": [

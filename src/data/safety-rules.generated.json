@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-23T16:15:48.293Z",
+  "generatedAt": "2026-09-23T22:52:32.513Z",
   "counts": {
-    "botanicals": 199,
-    "rules": 1700,
+    "botanicals": 243,
+    "rules": 2000,
     "byType": {
-      "contraindication": 968,
-      "drug_interaction": 479,
-      "herb_interaction": 253
+      "contraindication": 1116,
+      "drug_interaction": 580,
+      "herb_interaction": 304
     },
     "bySeverity": {
-      "unspecified": 724,
-      "caution": 282,
-      "monitor": 351,
-      "avoid": 243,
-      "absolute": 100
+      "unspecified": 951,
+      "caution": 312,
+      "monitor": 356,
+      "avoid": 259,
+      "absolute": 122
     }
   },
   "flagsByBotanicalId": {
@@ -802,6 +802,10 @@
       "thyroid"
     ],
     "526": [
+      "autoimmune",
+      "cardio_meds",
+      "contraceptive",
+      "hypertension",
       "pregnancy"
     ],
     "527": [
@@ -870,6 +874,192 @@
       "hypertension",
       "pregnancy",
       "psych_meds"
+    ],
+    "545": [
+      "allergy",
+      "autoimmune",
+      "cardio_meds",
+      "pregnancy"
+    ],
+    "546": [
+      "allergy",
+      "cardio_meds",
+      "pregnancy"
+    ],
+    "547": [
+      "allergy"
+    ],
+    "548": [
+      "cardio_meds",
+      "hypertension"
+    ],
+    "549": [
+      "contraceptive",
+      "psych_meds"
+    ],
+    "550": [
+      "cardio_meds",
+      "hypertension",
+      "pregnancy"
+    ],
+    "551": [
+      "cardio_meds",
+      "contraceptive",
+      "hypertension",
+      "pregnancy"
+    ],
+    "552": [],
+    "553": [
+      "allergy",
+      "cardio_meds",
+      "psych_meds"
+    ],
+    "554": [
+      "autoimmune",
+      "thyroid"
+    ],
+    "555": [
+      "pregnancy"
+    ],
+    "556": [
+      "cardio_meds",
+      "contraceptive",
+      "pregnancy"
+    ],
+    "557": [
+      "contraceptive",
+      "liver_kidney",
+      "pregnancy"
+    ],
+    "558": [
+      "cardio_meds",
+      "hypertension",
+      "pregnancy",
+      "psych_meds"
+    ],
+    "559": [
+      "autoimmune",
+      "pregnancy"
+    ],
+    "560": [
+      "allergy",
+      "cardio_meds",
+      "pregnancy",
+      "psych_meds"
+    ],
+    "561": [
+      "autoimmune",
+      "cardio_meds",
+      "pregnancy"
+    ],
+    "562": [
+      "cardio_meds",
+      "hypertension"
+    ],
+    "563": [
+      "cardio_meds",
+      "contraceptive",
+      "pregnancy"
+    ],
+    "564": [
+      "autoimmune",
+      "liver_kidney",
+      "pregnancy"
+    ],
+    "565": [
+      "liver_kidney",
+      "pregnancy"
+    ],
+    "566": [
+      "liver_kidney"
+    ],
+    "567": [
+      "cardio_meds",
+      "hypertension",
+      "pregnancy"
+    ],
+    "568": [
+      "autoimmune",
+      "contraceptive",
+      "pregnancy"
+    ],
+    "569": [
+      "contraceptive",
+      "pregnancy",
+      "psych_meds"
+    ],
+    "570": [
+      "pregnancy"
+    ],
+    "571": [
+      "contraceptive",
+      "pregnancy",
+      "thyroid"
+    ],
+    "573": [
+      "liver_kidney",
+      "pregnancy",
+      "psych_meds"
+    ],
+    "574": [
+      "cardio_meds",
+      "pregnancy"
+    ],
+    "575": [
+      "pregnancy"
+    ],
+    "576": [],
+    "577": [
+      "pregnancy"
+    ],
+    "578": [
+      "autoimmune",
+      "pregnancy"
+    ],
+    "579": [],
+    "580": [
+      "autoimmune",
+      "pregnancy"
+    ],
+    "581": [
+      "cardio_meds"
+    ],
+    "582": [
+      "cardio_meds",
+      "hypertension",
+      "pregnancy"
+    ],
+    "583": [
+      "allergy",
+      "autoimmune",
+      "cardio_meds",
+      "hypertension",
+      "pregnancy"
+    ],
+    "584": [
+      "autoimmune",
+      "contraceptive",
+      "pregnancy"
+    ],
+    "585": [
+      "contraceptive",
+      "pregnancy"
+    ],
+    "586": [
+      "cardio_meds",
+      "pregnancy"
+    ],
+    "587": [
+      "allergy",
+      "cardio_meds",
+      "pregnancy"
+    ],
+    "588": [
+      "pregnancy"
+    ],
+    "589": [
+      "liver_kidney",
+      "pregnancy"
     ]
   },
   "flagsPerRuleByBotanicalId": {
@@ -1655,6 +1845,10 @@
       "thyroid"
     ],
     "526": [
+      "autoimmune",
+      "cardio_meds",
+      "contraceptive",
+      "hypertension",
       "pregnancy"
     ],
     "527": [
@@ -1723,6 +1917,189 @@
       "hypertension",
       "pregnancy",
       "psych_meds"
+    ],
+    "545": [
+      "allergy",
+      "autoimmune",
+      "cardio_meds",
+      "pregnancy"
+    ],
+    "546": [
+      "allergy",
+      "cardio_meds",
+      "pregnancy"
+    ],
+    "547": [
+      "allergy"
+    ],
+    "548": [
+      "cardio_meds",
+      "hypertension"
+    ],
+    "549": [
+      "contraceptive",
+      "psych_meds"
+    ],
+    "550": [
+      "cardio_meds",
+      "hypertension",
+      "pregnancy"
+    ],
+    "551": [
+      "cardio_meds",
+      "contraceptive",
+      "hypertension",
+      "pregnancy"
+    ],
+    "552": [],
+    "553": [
+      "allergy",
+      "cardio_meds",
+      "psych_meds"
+    ],
+    "554": [
+      "autoimmune",
+      "thyroid"
+    ],
+    "555": [
+      "pregnancy"
+    ],
+    "556": [
+      "cardio_meds",
+      "contraceptive",
+      "pregnancy"
+    ],
+    "557": [
+      "contraceptive",
+      "liver_kidney",
+      "pregnancy"
+    ],
+    "558": [
+      "cardio_meds",
+      "hypertension",
+      "pregnancy",
+      "psych_meds"
+    ],
+    "559": [
+      "autoimmune",
+      "pregnancy"
+    ],
+    "560": [
+      "allergy",
+      "cardio_meds",
+      "pregnancy",
+      "psych_meds"
+    ],
+    "561": [
+      "autoimmune",
+      "pregnancy"
+    ],
+    "562": [
+      "cardio_meds",
+      "hypertension"
+    ],
+    "563": [
+      "cardio_meds",
+      "contraceptive",
+      "pregnancy"
+    ],
+    "564": [
+      "autoimmune",
+      "liver_kidney",
+      "pregnancy"
+    ],
+    "565": [
+      "liver_kidney",
+      "pregnancy"
+    ],
+    "566": [
+      "liver_kidney"
+    ],
+    "567": [
+      "cardio_meds",
+      "hypertension",
+      "pregnancy"
+    ],
+    "568": [
+      "autoimmune",
+      "contraceptive",
+      "pregnancy"
+    ],
+    "569": [
+      "contraceptive",
+      "pregnancy",
+      "psych_meds"
+    ],
+    "570": [
+      "pregnancy"
+    ],
+    "571": [
+      "pregnancy",
+      "thyroid"
+    ],
+    "573": [
+      "liver_kidney",
+      "pregnancy",
+      "psych_meds"
+    ],
+    "574": [
+      "cardio_meds",
+      "pregnancy"
+    ],
+    "575": [
+      "pregnancy"
+    ],
+    "576": [],
+    "577": [
+      "pregnancy"
+    ],
+    "578": [
+      "autoimmune",
+      "pregnancy"
+    ],
+    "579": [],
+    "580": [
+      "autoimmune",
+      "pregnancy"
+    ],
+    "581": [
+      "cardio_meds"
+    ],
+    "582": [
+      "cardio_meds",
+      "hypertension",
+      "pregnancy"
+    ],
+    "583": [
+      "allergy",
+      "autoimmune",
+      "cardio_meds",
+      "hypertension",
+      "pregnancy"
+    ],
+    "584": [
+      "autoimmune",
+      "contraceptive",
+      "pregnancy"
+    ],
+    "585": [
+      "pregnancy"
+    ],
+    "586": [
+      "cardio_meds",
+      "pregnancy"
+    ],
+    "587": [
+      "allergy",
+      "cardio_meds",
+      "pregnancy"
+    ],
+    "588": [
+      "pregnancy"
+    ],
+    "589": [
+      "liver_kidney",
+      "pregnancy"
     ]
   },
   "divergence": [
@@ -1747,6 +2124,30 @@
       "botanical": "Peppermint",
       "engineOnly": [
         "cardio_meds"
+      ],
+      "why": "engine pattern matched across two unrelated entries in the joined text"
+    },
+    {
+      "botanicalId": 561,
+      "botanical": "Toothed Clubmoss",
+      "engineOnly": [
+        "cardio_meds"
+      ],
+      "why": "engine pattern matched across two unrelated entries in the joined text"
+    },
+    {
+      "botanicalId": 571,
+      "botanical": "Genistein",
+      "engineOnly": [
+        "contraceptive"
+      ],
+      "why": "engine pattern matched across two unrelated entries in the joined text"
+    },
+    {
+      "botanicalId": 585,
+      "botanical": "Kudzu Root",
+      "engineOnly": [
+        "contraceptive"
       ],
       "why": "engine pattern matched across two unrelated entries in the joined text"
     }
@@ -7579,6 +7980,17 @@
       "flags": [
         "sedatives"
       ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:108:contraindication:6",
+      "botanicalId": 108,
+      "botanical": "Gotu Kola",
+      "ruleType": "contraindication",
+      "subject": "Trying to conceive",
+      "severity": "unspecified",
+      "reason": "high doses show reversible anti-fertility effects in murine models (reduced sperm motility, reduced ovarian weight); pause during active conception attempts",
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -17821,6 +18233,17 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:321:herb_interaction:2",
+      "botanicalId": 321,
+      "botanical": "Oyster Mushroom",
+      "ruleType": "herb_interaction",
+      "subject": "Red Yeast Rice (id 557)",
+      "severity": "unspecified",
+      "reason": "NOT a synergy despite both being lipid-lowering: both carry monacolin K / lovastatin, and Red Yeast Rice is dosed to deliver 5–10 mg of it. Stacking two statin sources is the myopathy scenario, not a stacked benefit. Pair with Garlic or Artichoke instead if a second lipid mechanism is wanted",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
       "id": "safety:322:contraindication:1",
       "botanicalId": 322,
       "botanical": "Red-Belted Polypore",
@@ -21043,6 +21466,17 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:420:herb_interaction:2",
+      "botanicalId": 420,
+      "botanical": "Grape Seed",
+      "ruleType": "herb_interaction",
+      "subject": "Iron-rich botanicals (Nettle, Yellow Dock)",
+      "severity": "unspecified",
+      "reason": "the condensed tannins chelate non-heme iron in the gut and neutralise both herbs; separate dosing by at least 2 hours",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
       "id": "safety:501:contraindication:1",
       "botanicalId": 501,
       "botanical": "Guduchi",
@@ -21554,26 +21988,94 @@
     {
       "id": "safety:523:contraindication:1",
       "botanicalId": 523,
-      "botanical": "Amla",
+      "botanical": "Amla / Amalaki",
       "ruleType": "contraindication",
-      "subject": "Severe acid reflux (acidic)",
+      "subject": "Severe acid reflux",
       "severity": "unspecified",
-      "reason": null,
+      "reason": "the fruit is markedly acidic despite its cooling action",
       "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
       "id": "safety:523:contraindication:2",
       "botanicalId": 523,
-      "botanical": "Amla",
+      "botanical": "Amla / Amalaki",
       "ruleType": "contraindication",
       "subject": "On blood thinners",
       "severity": "unspecified",
-      "reason": "mild antiplatelet",
+      "reason": "mild antiplatelet activity at high doses",
       "flags": [
         "cardio_meds"
       ],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:523:contraindication:3",
+      "botanicalId": 523,
+      "botanical": "Amla / Amalaki",
+      "ruleType": "contraindication",
+      "subject": "Acute diarrhea",
+      "severity": "unspecified",
+      "reason": "high doses of the raw fruit have a mild laxative effect that will worsen loose stools",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:523:contraindication:4",
+      "botanicalId": 523,
+      "botanical": "Amla / Amalaki",
+      "ruleType": "contraindication",
+      "subject": "Severe Kapha accumulation (damp/cold)",
+      "severity": "unspecified",
+      "reason": "its cooling, moistening nature needs balancing with warming spices such as ginger or black pepper in cold constitutions",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:523:drug_interaction:1",
+      "botanicalId": 523,
+      "botanical": "Amla / Amalaki",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants",
+      "severity": "unspecified",
+      "reason": "mild antiplatelet effect at high doses",
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:523:drug_interaction:2",
+      "botanicalId": 523,
+      "botanical": "Amla / Amalaki",
+      "ruleType": "drug_interaction",
+      "subject": "Antidiabetics",
+      "severity": "monitor",
+      "reason": "may lower blood glucose; monitor parameters",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:523:drug_interaction:3",
+      "botanicalId": 523,
+      "botanical": "Amla / Amalaki",
+      "ruleType": "drug_interaction",
+      "subject": "Iron supplements",
+      "severity": "unspecified",
+      "reason": "the dense vitamin C matrix substantially enhances non-heme iron absorption. A benefit rather than a hazard, but it changes effective iron dosing",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:523:herb_interaction:1",
+      "botanicalId": 523,
+      "botanical": "Amla / Amalaki",
+      "ruleType": "herb_interaction",
+      "subject": "None widely documented; a foundational and forgiving food-medicine",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
     },
     {
       "id": "safety:524:contraindication:1",
@@ -21639,37 +22141,109 @@
     {
       "id": "safety:526:contraindication:1",
       "botanicalId": 526,
-      "botanical": "Kalmegh",
+      "botanical": "Kalmegh / Andrographis",
       "ruleType": "contraindication",
-      "subject": "Cold-pattern constitutions",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
+      "subject": "Pregnancy",
+      "severity": "absolute",
+      "reason": "STRICTLY CONTRAINDICATED; historically used as an abortifacient and contraceptive, halting implantation",
+      "flags": [
+        "pregnancy",
+        "contraceptive"
+      ],
       "source": "herbs.ts · contraindications"
     },
     {
       "id": "safety:526:contraindication:2",
       "botanicalId": 526,
-      "botanical": "Kalmegh",
+      "botanical": "Kalmegh / Andrographis",
       "ruleType": "contraindication",
-      "subject": "Pregnancy",
+      "subject": "Male fertility protocols",
       "severity": "unspecified",
-      "reason": "uterine activity",
-      "flags": [
-        "pregnancy"
-      ],
+      "reason": "high doses temporarily halt spermatogenesis, reversible on cessation",
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
       "id": "safety:526:contraindication:3",
       "botanicalId": 526,
-      "botanical": "Kalmegh",
+      "botanical": "Kalmegh / Andrographis",
+      "ruleType": "contraindication",
+      "subject": "Gallbladder obstruction",
+      "severity": "unspecified",
+      "reason": "strong bile-stimulating action can provoke biliary colic if stones are present",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:526:contraindication:4",
+      "botanicalId": 526,
+      "botanical": "Kalmegh / Andrographis",
+      "ruleType": "contraindication",
+      "subject": "Spleen cold deficiency / cold-pattern constitutions",
+      "severity": "unspecified",
+      "reason": "its aggressive coldness causes severe nausea and diarrhea in weak, cold digestion",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:526:contraindication:5",
+      "botanicalId": 526,
+      "botanical": "Kalmegh / Andrographis",
       "ruleType": "contraindication",
       "subject": "Long-term use",
       "severity": "unspecified",
-      "reason": "practitioner oversight",
+      "reason": "practitioner oversight; strictly pulse-dosed or used for acute windows",
       "flags": [],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:526:drug_interaction:1",
+      "botanicalId": 526,
+      "botanical": "Kalmegh / Andrographis",
+      "ruleType": "drug_interaction",
+      "subject": "Immunosuppressants",
+      "severity": "unspecified",
+      "reason": "direct antagonism; it heavily stimulates the immune system",
+      "flags": [
+        "autoimmune"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:526:drug_interaction:2",
+      "botanicalId": 526,
+      "botanical": "Kalmegh / Andrographis",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants and antihypertensives",
+      "severity": "unspecified",
+      "reason": "high doses exhibit mild blood-thinning and hypotensive effects",
+      "flags": [
+        "cardio_meds",
+        "hypertension"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:526:drug_interaction:3",
+      "botanicalId": 526,
+      "botanical": "Kalmegh / Andrographis",
+      "ruleType": "drug_interaction",
+      "subject": "Chemotherapy",
+      "severity": "unspecified",
+      "reason": "may alter drug clearance via CYP450 modulation",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:526:herb_interaction:1",
+      "botanicalId": 526,
+      "botanical": "Kalmegh / Andrographis",
+      "ruleType": "herb_interaction",
+      "subject": "Other extreme bitters (Goldenseal id 569, Coptis, Phellodendron id 584) without warming demulcents; risks severe GI shock and desiccation",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
     },
     {
       "id": "safety:527:contraindication:1",
@@ -21974,6 +22548,3373 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:545:contraindication:1",
+      "botanicalId": 545,
+      "botanical": "Jiaogulan",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and lactation",
+      "severity": "unspecified",
+      "reason": "lack of safety data; potential uterine stimulation",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:545:contraindication:2",
+      "botanicalId": 545,
+      "botanical": "Jiaogulan",
+      "ruleType": "contraindication",
+      "subject": "Bleeding disorders",
+      "severity": "avoid",
+      "reason": "mild antiplatelet activity; discontinue 2 weeks prior to surgery",
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:545:contraindication:3",
+      "botanicalId": 545,
+      "botanical": "Jiaogulan",
+      "ruleType": "contraindication",
+      "subject": "Autoimmune conditions",
+      "severity": "unspecified",
+      "reason": "immune-stimulating properties may exacerbate symptoms in rare cases",
+      "flags": [
+        "autoimmune"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:545:drug_interaction:1",
+      "botanicalId": 545,
+      "botanical": "Jiaogulan",
+      "ruleType": "drug_interaction",
+      "subject": "Immunosuppressants",
+      "severity": "unspecified",
+      "reason": "may theoretically antagonize drug efficacy",
+      "flags": [
+        "autoimmune"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:545:drug_interaction:2",
+      "botanicalId": 545,
+      "botanical": "Jiaogulan",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants/Antiplatelets (Warfarin, Aspirin)",
+      "severity": "unspecified",
+      "reason": "increased bleeding risk",
+      "flags": [
+        "cardio_meds",
+        "allergy"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:545:drug_interaction:3",
+      "botanicalId": 545,
+      "botanical": "Jiaogulan",
+      "ruleType": "drug_interaction",
+      "subject": "Antidiabetic medications",
+      "severity": "unspecified",
+      "reason": "additive hypoglycemic effects; requires glucose monitoring",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:545:herb_interaction:1",
+      "botanicalId": 545,
+      "botanical": "Jiaogulan",
+      "ruleType": "herb_interaction",
+      "subject": "Strongly cooling herbs (like Coptis) in cold/deficient constitutions",
+      "severity": "unspecified",
+      "reason": "may cause digestive upset",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:546:contraindication:1",
+      "botanicalId": 546,
+      "botanical": "Feverfew",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "absolute",
+      "reason": "strictly contraindicated; active emmenagogue and uterine stimulant",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:546:contraindication:2",
+      "botanicalId": 546,
+      "botanical": "Feverfew",
+      "ruleType": "contraindication",
+      "subject": "Asteraceae family allergy (Ragweed, Chamomile, Daisies)",
+      "severity": "unspecified",
+      "reason": "potential for cross-reactivity",
+      "flags": [
+        "allergy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:546:contraindication:3",
+      "botanicalId": 546,
+      "botanical": "Feverfew",
+      "ruleType": "contraindication",
+      "subject": "Pre-surgery",
+      "severity": "avoid",
+      "reason": "discontinue 2 weeks prior due to antiplatelet activity",
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:546:contraindication:4",
+      "botanicalId": 546,
+      "botanical": "Feverfew",
+      "ruleType": "contraindication",
+      "subject": "Sudden withdrawal",
+      "severity": "unspecified",
+      "reason": "stopping abruptly after long-term use can cause \"post-feverfew syndrome\" (rebound headaches, anxiety, muscle pain)",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:546:drug_interaction:1",
+      "botanicalId": 546,
+      "botanical": "Feverfew",
+      "ruleType": "drug_interaction",
+      "subject": "NSAIDs (Ibuprofen, Aspirin)",
+      "severity": "unspecified",
+      "reason": "may negate feverfew’s effects or increase gastric irritation",
+      "flags": [
+        "allergy"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:546:drug_interaction:2",
+      "botanicalId": 546,
+      "botanical": "Feverfew",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants (Warfarin)",
+      "severity": "unspecified",
+      "reason": "additive blood-thinning effects",
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:546:drug_interaction:3",
+      "botanicalId": 546,
+      "botanical": "Feverfew",
+      "ruleType": "drug_interaction",
+      "subject": "Cytochrome P450 substrates",
+      "severity": "unspecified",
+      "reason": "may inhibit liver enzyme metabolism",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:546:herb_interaction:1",
+      "botanicalId": 546,
+      "botanical": "Feverfew",
+      "ruleType": "herb_interaction",
+      "subject": "Concurrent use with other strong antiplatelet herbs (Ginkgo, Garlic) increases bleeding risk",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:547:contraindication:1",
+      "botanicalId": 547,
+      "botanical": "Artichoke Extract",
+      "ruleType": "contraindication",
+      "subject": "Bile duct obstruction",
+      "severity": "absolute",
+      "reason": "strictly contraindicated due to strong cholagogue activity",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:547:contraindication:2",
+      "botanicalId": 547,
+      "botanical": "Artichoke Extract",
+      "ruleType": "contraindication",
+      "subject": "Gallstones",
+      "severity": "caution",
+      "reason": "use with high caution and practitioner supervision; can provoke biliary colic",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:547:contraindication:3",
+      "botanicalId": 547,
+      "botanical": "Artichoke Extract",
+      "ruleType": "contraindication",
+      "subject": "Asteraceae family allergy",
+      "severity": "unspecified",
+      "reason": "potential for cross-reactivity",
+      "flags": [
+        "allergy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:547:drug_interaction:1",
+      "botanicalId": 547,
+      "botanical": "Artichoke Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Lipid-lowering medications (Statins)",
+      "severity": "monitor",
+      "reason": "additive effects; monitor liver enzymes and lipid panels",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:547:drug_interaction:2",
+      "botanicalId": 547,
+      "botanical": "Artichoke Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Antidiabetic drugs",
+      "severity": "unspecified",
+      "reason": "potential additive hypoglycemic effects",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:547:herb_interaction:1",
+      "botanicalId": 547,
+      "botanical": "Artichoke Extract",
+      "ruleType": "herb_interaction",
+      "subject": "Overuse with other strong cooling/drying bitters in Vata-dominant or deeply cold constitutions without a warming balancer",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:548:contraindication:1",
+      "botanicalId": 548,
+      "botanical": "Astaxanthin",
+      "ruleType": "contraindication",
+      "subject": "Bleeding disorders or impending surgery",
+      "severity": "unspecified",
+      "reason": "exceptionally high doses may slightly prolong bleeding time",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:548:contraindication:2",
+      "botanicalId": 548,
+      "botanical": "Astaxanthin",
+      "ruleType": "contraindication",
+      "subject": "Known severe algae allergies (exceedingly rare for this species)",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:548:drug_interaction:1",
+      "botanicalId": 548,
+      "botanical": "Astaxanthin",
+      "ruleType": "drug_interaction",
+      "subject": "5-alpha-reductase inhibitors",
+      "severity": "unspecified",
+      "reason": "astaxanthin possesses mild 5-AR inhibitory effects, potentially compounding prostate/hair loss medications",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:548:drug_interaction:2",
+      "botanicalId": 548,
+      "botanical": "Astaxanthin",
+      "ruleType": "drug_interaction",
+      "subject": "Antihypertensives",
+      "severity": "unspecified",
+      "reason": "may cause slight additive blood pressure lowering",
+      "flags": [
+        "cardio_meds",
+        "hypertension"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:548:herb_interaction:1",
+      "botanicalId": 548,
+      "botanical": "Astaxanthin",
+      "ruleType": "herb_interaction",
+      "subject": "Highly competitive absorption can occur if taken with massive doses of other carotenoids without sufficient fat",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:549:contraindication:1",
+      "botanicalId": 549,
+      "botanical": "Black Pepper Extract",
+      "ruleType": "contraindication",
+      "subject": "Active peptic ulcers or acute gastritis",
+      "severity": "unspecified",
+      "reason": "the heat and direct stimulation will severely aggravate mucosal damage",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:549:contraindication:2",
+      "botanicalId": 549,
+      "botanical": "Black Pepper Extract",
+      "ruleType": "contraindication",
+      "subject": "High Pitta / Yin Deficiency with Heat",
+      "severity": "unspecified",
+      "reason": "will exacerbate conditions of systemic dryness, overheating, and inflammation",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:549:contraindication:3",
+      "botanicalId": 549,
+      "botanical": "Black Pepper Extract",
+      "ruleType": "contraindication",
+      "subject": "Narrow therapeutic index drugs",
+      "severity": "caution",
+      "reason": "requires strict caution (see interactions)",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:549:drug_interaction:1",
+      "botanicalId": 549,
+      "botanical": "Black Pepper Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Pharmaceuticals metabolized by CYP3A4 (Statins, Calcium Channel Blockers, certain antidepressants) — piperine can drastically increase blood levels of these drugs, leading to potential toxicity",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "psych_meds",
+        "contraceptive"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:549:drug_interaction:2",
+      "botanicalId": 549,
+      "botanical": "Black Pepper Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Phenytoin, Propranolol, Theophylline",
+      "severity": "unspecified",
+      "reason": "altered clearance rates; requires strict separation or avoidance",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:549:herb_interaction:1",
+      "botanicalId": 549,
+      "botanical": "Black Pepper Extract",
+      "ruleType": "herb_interaction",
+      "subject": "Overheating when combined with heavy doses of Cayenne, Garlic, or standard medicinal Ginsengs in hot climates or constitutions",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:550:contraindication:1",
+      "botanicalId": 550,
+      "botanical": "Cassia Seed Extract",
+      "ruleType": "contraindication",
+      "subject": "Spleen/Stomach deficiency with cold and diarrhea",
+      "severity": "unspecified",
+      "reason": "cooling and laxative nature will aggravate",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:550:contraindication:2",
+      "botanicalId": 550,
+      "botanical": "Cassia Seed Extract",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "unspecified",
+      "reason": "anthraquinone content and laxative effects pose risks",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:550:contraindication:3",
+      "botanicalId": 550,
+      "botanical": "Cassia Seed Extract",
+      "ruleType": "contraindication",
+      "subject": "Hypotension",
+      "severity": "unspecified",
+      "reason": "may excessively lower blood pressure in susceptible individuals",
+      "flags": [
+        "hypertension"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:550:drug_interaction:1",
+      "botanicalId": 550,
+      "botanical": "Cassia Seed Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Antihypertensives",
+      "severity": "unspecified",
+      "reason": "potential additive blood pressure lowering effects",
+      "flags": [
+        "cardio_meds",
+        "hypertension"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:550:drug_interaction:2",
+      "botanicalId": 550,
+      "botanical": "Cassia Seed Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Cholesterol medications",
+      "severity": "unspecified",
+      "reason": "additive lipid reduction",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:550:herb_interaction:1",
+      "botanicalId": 550,
+      "botanical": "Cassia Seed Extract",
+      "ruleType": "herb_interaction",
+      "subject": "Other cold-natured laxatives (like Rhubarb) in frail constitutions",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:551:contraindication:1",
+      "botanicalId": 551,
+      "botanical": "Citrus Aurantium Extract",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "unspecified",
+      "reason": "strongly moves Qi downward",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:551:contraindication:2",
+      "botanicalId": 551,
+      "botanical": "Citrus Aurantium Extract",
+      "ruleType": "contraindication",
+      "subject": "Severe cardiovascular conditions (Long QT syndrome, uncontrolled hypertension)",
+      "severity": "unspecified",
+      "reason": "especially if stacked with caffeine or other stimulants",
+      "flags": [
+        "cardio_meds",
+        "hypertension"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:551:contraindication:3",
+      "botanicalId": 551,
+      "botanical": "Citrus Aurantium Extract",
+      "ruleType": "contraindication",
+      "subject": "Pre-surgery",
+      "severity": "avoid",
+      "reason": "discontinue 2 weeks prior due to mild stimulant effects",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:551:drug_interaction:1",
+      "botanicalId": 551,
+      "botanical": "Citrus Aurantium Extract",
+      "ruleType": "drug_interaction",
+      "subject": "MAO Inhibitors",
+      "severity": "unspecified",
+      "reason": "tyramine and synephrine content can trigger deadly side effects",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:551:drug_interaction:2",
+      "botanicalId": 551,
+      "botanical": "Citrus Aurantium Extract",
+      "ruleType": "drug_interaction",
+      "subject": "CYP3A4 and CYP2D6 substrates",
+      "severity": "unspecified",
+      "reason": "bitter orange can inhibit liver enzymes, altering drug clearance",
+      "flags": [
+        "contraceptive"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:551:drug_interaction:3",
+      "botanicalId": 551,
+      "botanical": "Citrus Aurantium Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Stimulant medications (Amphetamines)",
+      "severity": "unspecified",
+      "reason": "additive nervous system stress and blood pressure increase",
+      "flags": [
+        "hypertension"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:551:herb_interaction:1",
+      "botanicalId": 551,
+      "botanical": "Citrus Aurantium Extract",
+      "ruleType": "herb_interaction",
+      "subject": "High doses of caffeine or ephedra",
+      "severity": "unspecified",
+      "reason": "drastically amplifies cardiovascular risks and heart rate",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:552:contraindication:1",
+      "botanicalId": 552,
+      "botanical": "Grape Leaf Extract",
+      "ruleType": "contraindication",
+      "subject": "Severe, late-stage CVI requiring surgical intervention",
+      "severity": "unspecified",
+      "reason": "does not replace compression therapy or surgery in advanced stages",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:552:drug_interaction:1",
+      "botanicalId": 552,
+      "botanical": "Grape Leaf Extract",
+      "ruleType": "drug_interaction",
+      "subject": "No major negative interactions clinically documented; potential mild additive effects with vasodilators",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:552:herb_interaction:1",
+      "botanicalId": 552,
+      "botanical": "Grape Leaf Extract",
+      "ruleType": "herb_interaction",
+      "subject": "Prolonged use with other intense astringents in deeply dry (Vata) constitutions",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:553:contraindication:1",
+      "botanicalId": 553,
+      "botanical": "Horse Chestnut Extract",
+      "ruleType": "contraindication",
+      "subject": "Raw, unprocessed seeds",
+      "severity": "absolute",
+      "reason": "strictly contraindicated due to esculin toxicity (causes red blood cell destruction)",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:553:contraindication:2",
+      "botanicalId": 553,
+      "botanical": "Horse Chestnut Extract",
+      "ruleType": "contraindication",
+      "subject": "Renal impairment",
+      "severity": "unspecified",
+      "reason": "high doses of saponins can burden kidney filtration",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:553:contraindication:3",
+      "botanicalId": 553,
+      "botanical": "Horse Chestnut Extract",
+      "ruleType": "contraindication",
+      "subject": "Bleeding disorders",
+      "severity": "unspecified",
+      "reason": "possesses mild anti-platelet aggregation effects",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:553:drug_interaction:1",
+      "botanicalId": 553,
+      "botanical": "Horse Chestnut Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants (Warfarin, Aspirin)",
+      "severity": "unspecified",
+      "reason": "additive blood-thinning effects",
+      "flags": [
+        "cardio_meds",
+        "allergy"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:553:drug_interaction:2",
+      "botanicalId": 553,
+      "botanical": "Horse Chestnut Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Lithium",
+      "severity": "unspecified",
+      "reason": "diuretic properties may impair lithium clearance",
+      "flags": [
+        "psych_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:553:drug_interaction:3",
+      "botanicalId": 553,
+      "botanical": "Horse Chestnut Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Oral antidiabetics",
+      "severity": "unspecified",
+      "reason": "may lower blood glucose, requiring monitoring",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:553:herb_interaction:1",
+      "botanicalId": 553,
+      "botanical": "Horse Chestnut Extract",
+      "ruleType": "herb_interaction",
+      "subject": "Other heavy saponin-rich herbs in sensitive digestive tracts, which may cause nausea",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:554:contraindication:1",
+      "botanicalId": 554,
+      "botanical": "Kelp Extract Powder",
+      "ruleType": "contraindication",
+      "subject": "Hyperthyroidism (Graves’ disease)",
+      "severity": "absolute",
+      "reason": "strictly contraindicated; exogenous iodine will exacerbate the condition",
+      "flags": [
+        "thyroid"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:554:contraindication:2",
+      "botanicalId": 554,
+      "botanical": "Kelp Extract Powder",
+      "ruleType": "contraindication",
+      "subject": "Hashimoto’s thyroiditis",
+      "severity": "caution",
+      "reason": "requires caution; in some autoimmune profiles, excess iodine triggers a flare-up",
+      "flags": [
+        "autoimmune",
+        "thyroid"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:554:contraindication:3",
+      "botanicalId": 554,
+      "botanical": "Kelp Extract Powder",
+      "ruleType": "contraindication",
+      "subject": "Iodine-induced acne",
+      "severity": "unspecified",
+      "reason": "high doses can trigger cystic dermal eruptions in sensitive individuals",
+      "flags": [
+        "thyroid"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:554:drug_interaction:1",
+      "botanicalId": 554,
+      "botanical": "Kelp Extract Powder",
+      "ruleType": "drug_interaction",
+      "subject": "Thyroid hormone replacement (Levothyroxine)",
+      "severity": "unspecified",
+      "reason": "alters TSH levels, requiring strict medical monitoring and potential dosage adjustments",
+      "flags": [
+        "thyroid"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:554:drug_interaction:2",
+      "botanicalId": 554,
+      "botanical": "Kelp Extract Powder",
+      "ruleType": "drug_interaction",
+      "subject": "Potassium-sparing diuretics",
+      "severity": "unspecified",
+      "reason": "high potassium content in kelp may cause hyperkalemia",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:554:herb_interaction:1",
+      "botanicalId": 554,
+      "botanical": "Kelp Extract Powder",
+      "ruleType": "herb_interaction",
+      "subject": "Other iodine-rich seaweeds (Bladderwrack, Irish Moss)",
+      "severity": "unspecified",
+      "reason": "easily exceeds the tolerable upper intake level for iodine",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:555:contraindication:1",
+      "botanicalId": 555,
+      "botanical": "Lotus Leaf Extract",
+      "ruleType": "contraindication",
+      "subject": "Cold, deficient Spleen and Stomach (TCM)",
+      "severity": "unspecified",
+      "reason": "its cold/astringent nature will aggravate poor digestion and loose stools",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:555:contraindication:2",
+      "botanicalId": 555,
+      "botanical": "Lotus Leaf Extract",
+      "ruleType": "contraindication",
+      "subject": "Dehydration",
+      "severity": "unspecified",
+      "reason": "diuretic properties will worsen fluid loss",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:555:contraindication:3",
+      "botanicalId": 555,
+      "botanical": "Lotus Leaf Extract",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "unspecified",
+      "reason": "avoided for lack of safety data and mild alkaloid content",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:555:drug_interaction:1",
+      "botanicalId": 555,
+      "botanical": "Lotus Leaf Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Antidiabetics",
+      "severity": "unspecified",
+      "reason": "potential additive blood glucose lowering",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:555:drug_interaction:2",
+      "botanicalId": 555,
+      "botanical": "Lotus Leaf Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Cholesterol medications",
+      "severity": "unspecified",
+      "reason": "additive lipid-lowering effects",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:555:herb_interaction:1",
+      "botanicalId": 555,
+      "botanical": "Lotus Leaf Extract",
+      "ruleType": "herb_interaction",
+      "subject": "Excessive stacking with other strong diuretics (Dandelion leaf, Juniper) leading to electrolyte depletion",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:556:contraindication:1",
+      "botanicalId": 556,
+      "botanical": "Red Wine Extract / Resveratrol",
+      "ruleType": "contraindication",
+      "subject": "Bleeding disorders",
+      "severity": "unspecified",
+      "reason": "inhibits platelet aggregation",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:556:contraindication:2",
+      "botanicalId": 556,
+      "botanical": "Red Wine Extract / Resveratrol",
+      "ruleType": "contraindication",
+      "subject": "Hormone-sensitive conditions",
+      "severity": "caution",
+      "reason": "acts as a mixed estrogen agonist/antagonist; use caution in estrogen-receptor-positive cancers",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:556:contraindication:3",
+      "botanicalId": 556,
+      "botanical": "Red Wine Extract / Resveratrol",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "unspecified",
+      "reason": "phytoestrogenic activity makes it unsuitable",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:556:contraindication:4",
+      "botanicalId": 556,
+      "botanical": "Red Wine Extract / Resveratrol",
+      "ruleType": "contraindication",
+      "subject": "Upcoming surgery",
+      "severity": "avoid",
+      "reason": "discontinue 2 weeks prior",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:556:drug_interaction:1",
+      "botanicalId": 556,
+      "botanical": "Red Wine Extract / Resveratrol",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants/Antiplatelets (Warfarin, Clopidogrel)",
+      "severity": "unspecified",
+      "reason": "drastically increases bleeding risk",
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:556:drug_interaction:2",
+      "botanicalId": 556,
+      "botanical": "Red Wine Extract / Resveratrol",
+      "ruleType": "drug_interaction",
+      "subject": "CYP3A4 substrates",
+      "severity": "unspecified",
+      "reason": "resveratrol inhibits certain liver enzymes, altering the clearance of various pharmaceuticals (e.g. statins, calcium channel blockers)",
+      "flags": [
+        "contraceptive"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:556:herb_interaction:1",
+      "botanicalId": 556,
+      "botanical": "Red Wine Extract / Resveratrol",
+      "ruleType": "herb_interaction",
+      "subject": "High doses of other blood-thinning herbs (Garlic, Ginkgo)",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:557:contraindication:1",
+      "botanicalId": 557,
+      "botanical": "Red Yeast Rice",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and lactation",
+      "severity": "absolute",
+      "reason": "strictly contraindicated; cholesterol is essential for fetal development (teratogenic risk)",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:557:contraindication:2",
+      "botanicalId": 557,
+      "botanical": "Red Yeast Rice",
+      "ruleType": "contraindication",
+      "subject": "Liver disease",
+      "severity": "unspecified",
+      "reason": "can elevate liver enzymes (AST/ALT) mimicking pharmaceutical statin stress",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:557:contraindication:3",
+      "botanicalId": 557,
+      "botanical": "Red Yeast Rice",
+      "ruleType": "contraindication",
+      "subject": "Concurrent statin use",
+      "severity": "absolute",
+      "reason": "never combine with prescribed statins; leads to severe myopathy (muscle breakdown)",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:557:drug_interaction:1",
+      "botanicalId": 557,
+      "botanical": "Red Yeast Rice",
+      "ruleType": "drug_interaction",
+      "subject": "Pharmaceutical statins (Lipitor, Crestor)",
+      "severity": "unspecified",
+      "reason": "absolute contraindication",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:557:drug_interaction:2",
+      "botanicalId": 557,
+      "botanical": "Red Yeast Rice",
+      "ruleType": "drug_interaction",
+      "subject": "Grapefruit juice / CYP3A4 inhibitors",
+      "severity": "unspecified",
+      "reason": "prevents the breakdown of Monacolin K, pushing serum levels into dangerous toxicity",
+      "flags": [
+        "contraceptive"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:557:drug_interaction:3",
+      "botanicalId": 557,
+      "botanical": "Red Yeast Rice",
+      "ruleType": "drug_interaction",
+      "subject": "Hepatotoxic drugs",
+      "severity": "unspecified",
+      "reason": "compounds liver stress",
+      "flags": [
+        "liver_kidney"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:557:herb_interaction:1",
+      "botanicalId": 557,
+      "botanical": "Red Yeast Rice",
+      "ruleType": "herb_interaction",
+      "subject": "Avoid high-dose combinations with Niacin (Vitamin B3) due to increased risk of myopathy",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:558:contraindication:1",
+      "botanicalId": 558,
+      "botanical": "Yohimbe Bark",
+      "ruleType": "contraindication",
+      "subject": "Hypertension and cardiovascular disease",
+      "severity": "absolute",
+      "reason": "strictly contraindicated due to intense noradrenaline spikes",
+      "flags": [
+        "cardio_meds",
+        "hypertension"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:558:contraindication:2",
+      "botanicalId": 558,
+      "botanical": "Yohimbe Bark",
+      "ruleType": "contraindication",
+      "subject": "Anxiety, PTSD, or panic disorders",
+      "severity": "unspecified",
+      "reason": "strongly exacerbates sympathetic fight-or-flight states",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:558:contraindication:3",
+      "botanicalId": 558,
+      "botanical": "Yohimbe Bark",
+      "ruleType": "contraindication",
+      "subject": "Kidney disease",
+      "severity": "unspecified",
+      "reason": "traditional and clinical literature warns against renal stress from alkaloid clearance",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:558:contraindication:4",
+      "botanicalId": 558,
+      "botanical": "Yohimbe Bark",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and lactation",
+      "severity": "absolute",
+      "reason": "absolutely contraindicated",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:558:contraindication:5",
+      "botanicalId": 558,
+      "botanical": "Yohimbe Bark",
+      "ruleType": "contraindication",
+      "subject": "Not for anyone under 18",
+      "severity": "unspecified",
+      "reason": "adult-only botanical with a narrow therapeutic index",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:558:drug_interaction:1",
+      "botanicalId": 558,
+      "botanical": "Yohimbe Bark",
+      "ruleType": "drug_interaction",
+      "subject": "MAOIs and SSRIs",
+      "severity": "caution",
+      "reason": "severe risk of hypertensive crisis and serotonin syndrome",
+      "flags": [
+        "cardio_meds",
+        "psych_meds",
+        "hypertension"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:558:drug_interaction:2",
+      "botanicalId": 558,
+      "botanical": "Yohimbe Bark",
+      "ruleType": "drug_interaction",
+      "subject": "Antihypertensives (Clonidine)",
+      "severity": "unspecified",
+      "reason": "yohimbine directly antagonizes alpha-2 agonists, neutralizing the medication",
+      "flags": [
+        "cardio_meds",
+        "hypertension"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:558:drug_interaction:3",
+      "botanicalId": 558,
+      "botanical": "Yohimbe Bark",
+      "ruleType": "drug_interaction",
+      "subject": "Tricyclic antidepressants",
+      "severity": "unspecified",
+      "reason": "additive cardiovascular toxicity",
+      "flags": [
+        "psych_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:558:herb_interaction:1",
+      "botanicalId": 558,
+      "botanical": "Yohimbe Bark",
+      "ruleType": "herb_interaction",
+      "subject": "Concurrent use with any other heavy stimulants (Ephedra, Bitter Orange/Synephrine) dramatically increases cardiovascular risk",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:559:contraindication:1",
+      "botanicalId": 559,
+      "botanical": "Cistanche",
+      "ruleType": "contraindication",
+      "subject": "Spleen deficiency with loose stools",
+      "severity": "unspecified",
+      "reason": "its moistening/lubricating nature will worsen diarrhea",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:559:contraindication:2",
+      "botanicalId": 559,
+      "botanical": "Cistanche",
+      "ruleType": "contraindication",
+      "subject": "Yin deficiency with prominent heat signs",
+      "severity": "unspecified",
+      "reason": "though a gentle Yang tonic, it still adds warmth to a system lacking coolant",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:559:contraindication:3",
+      "botanicalId": 559,
+      "botanical": "Cistanche",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "unspecified",
+      "reason": "avoided for its strong endocrine-modulating effects",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:559:drug_interaction:1",
+      "botanicalId": 559,
+      "botanical": "Cistanche",
+      "ruleType": "drug_interaction",
+      "subject": "Immunosuppressants",
+      "severity": "unspecified",
+      "reason": "potential theoretical antagonism due to its immune-stimulating properties",
+      "flags": [
+        "autoimmune"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:559:herb_interaction:1",
+      "botanicalId": 559,
+      "botanical": "Cistanche",
+      "ruleType": "herb_interaction",
+      "subject": "Heavy cooling/draining herbs that counter its building, warming nature",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:560:contraindication:1",
+      "botanicalId": 560,
+      "botanical": "Evening Primrose",
+      "ruleType": "contraindication",
+      "subject": "Bleeding disorders or upcoming surgery",
+      "severity": "unspecified",
+      "reason": "mild anti-platelet aggregation effects via prostaglandin modulation",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:560:contraindication:2",
+      "botanicalId": 560,
+      "botanical": "Evening Primrose",
+      "ruleType": "contraindication",
+      "subject": "Seizure disorders",
+      "severity": "caution",
+      "reason": "historically cautioned against use with phenothiazines (schizophrenia meds) due to a theoretical lowered seizure threshold; recent literature disputes this, but the caution remains standard",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:560:contraindication:3",
+      "botanicalId": 560,
+      "botanical": "Evening Primrose",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "unspecified",
+      "reason": "unsafe in early and mid-pregnancy; the prostaglandin effect risks stimulating contractions",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:560:drug_interaction:1",
+      "botanicalId": 560,
+      "botanical": "Evening Primrose",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants (Warfarin, Aspirin)",
+      "severity": "unspecified",
+      "reason": "additive blood-thinning effect",
+      "flags": [
+        "cardio_meds",
+        "allergy"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:560:drug_interaction:2",
+      "botanicalId": 560,
+      "botanical": "Evening Primrose",
+      "ruleType": "drug_interaction",
+      "subject": "Phenothiazines (antipsychotics)",
+      "severity": "caution",
+      "reason": "historical (if debated) risk of lowering the seizure threshold",
+      "flags": [
+        "psych_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:560:herb_interaction:1",
+      "botanicalId": 560,
+      "botanical": "Evening Primrose",
+      "ruleType": "herb_interaction",
+      "subject": "High doses of competing Omega-6 seed oils (soybean, corn) push the pathway toward inflammatory Arachidonic Acid instead",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:561:contraindication:1",
+      "botanicalId": 561,
+      "botanical": "Toothed Clubmoss",
+      "ruleType": "contraindication",
+      "subject": "Epilepsy or seizure disorders",
+      "severity": "unspecified",
+      "reason": "elevated acetylcholine can alter electrical thresholds",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:561:contraindication:2",
+      "botanicalId": 561,
+      "botanical": "Toothed Clubmoss",
+      "ruleType": "contraindication",
+      "subject": "Bradycardia (slow heart rate) or heart block",
+      "severity": "unspecified",
+      "reason": "cholinergic activity can further depress cardiac rhythm",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:561:contraindication:3",
+      "botanicalId": 561,
+      "botanical": "Toothed Clubmoss",
+      "ruleType": "contraindication",
+      "subject": "Active asthma or COPD",
+      "severity": "unspecified",
+      "reason": "increased acetylcholine can stimulate bronchial secretions and constriction",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:561:contraindication:4",
+      "botanicalId": 561,
+      "botanical": "Toothed Clubmoss",
+      "ruleType": "contraindication",
+      "subject": "Peptic ulcers",
+      "severity": "unspecified",
+      "reason": "cholinergic stimulation increases gastric acid secretion",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:561:contraindication:5",
+      "botanicalId": 561,
+      "botanical": "Toothed Clubmoss",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and lactation",
+      "severity": "unspecified",
+      "reason": "no safety data for a potent centrally-acting alkaloid",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:561:contraindication:6",
+      "botanicalId": 561,
+      "botanical": "Toothed Clubmoss",
+      "ruleType": "contraindication",
+      "subject": "Not for anyone under 18",
+      "severity": "unspecified",
+      "reason": "dosed in micrograms, with a narrow window",
+      "flags": [
+        "autoimmune"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:561:drug_interaction:1",
+      "botanicalId": 561,
+      "botanical": "Toothed Clubmoss",
+      "ruleType": "drug_interaction",
+      "subject": "Anticholinergic drugs (Benadryl, Atropine)",
+      "severity": "unspecified",
+      "reason": "direct molecular antagonism; Huperzine will neutralize the drug",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:561:drug_interaction:2",
+      "botanicalId": 561,
+      "botanical": "Toothed Clubmoss",
+      "ruleType": "drug_interaction",
+      "subject": "Alzheimer’s medications (Donepezil, Rivastigmine)",
+      "severity": "caution",
+      "reason": "extreme risk of cholinergic crisis if combined",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:561:drug_interaction:3",
+      "botanicalId": 561,
+      "botanical": "Toothed Clubmoss",
+      "ruleType": "drug_interaction",
+      "subject": "Beta-blockers",
+      "severity": "caution",
+      "reason": "additive risk of severe bradycardia",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:561:herb_interaction:1",
+      "botanicalId": 561,
+      "botanical": "Toothed Clubmoss",
+      "ruleType": "herb_interaction",
+      "subject": "Other cholinergic herbs or intense CNS stimulants without proper cycling; can cause acetylcholine overload (brain fog, muscle twitching, low mood)",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:562:contraindication:1",
+      "botanicalId": 562,
+      "botanical": "Eucommia",
+      "ruleType": "contraindication",
+      "subject": "Severe Yin deficiency with intense internal heat",
+      "severity": "unspecified",
+      "reason": "the warming nature may aggravate, though it is generally a balanced tonic",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:562:contraindication:2",
+      "botanicalId": 562,
+      "botanical": "Eucommia",
+      "ruleType": "contraindication",
+      "subject": "Hypotension",
+      "severity": "unspecified",
+      "reason": "may excessively lower blood pressure in individuals who already run low",
+      "flags": [
+        "hypertension"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:562:drug_interaction:1",
+      "botanicalId": 562,
+      "botanical": "Eucommia",
+      "ruleType": "drug_interaction",
+      "subject": "Antihypertensive medications (ACE inhibitors, Beta-blockers)",
+      "severity": "avoid",
+      "reason": "additive blood pressure-lowering effects; monitor to avoid hypotensive episodes",
+      "flags": [
+        "cardio_meds",
+        "hypertension"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:562:drug_interaction:2",
+      "botanicalId": 562,
+      "botanical": "Eucommia",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants",
+      "severity": "monitor",
+      "reason": "minor risk of interaction, monitor parameters",
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:562:herb_interaction:1",
+      "botanicalId": 562,
+      "botanical": "Eucommia",
+      "ruleType": "herb_interaction",
+      "subject": "None widely documented; an exceedingly safe, foundational tonic",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:563:contraindication:1",
+      "botanicalId": 563,
+      "botanical": "Knotweed",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "absolute",
+      "reason": "strictly contraindicated; moves blood heavily and poses a severe risk of miscarriage",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:563:contraindication:2",
+      "botanicalId": 563,
+      "botanical": "Knotweed",
+      "ruleType": "contraindication",
+      "subject": "Cold/deficient Spleen and Stomach",
+      "severity": "unspecified",
+      "reason": "its cold, bitter, mildly laxative properties cause severe digestive distress and diarrhea in depleted individuals",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:563:contraindication:3",
+      "botanicalId": 563,
+      "botanical": "Knotweed",
+      "ruleType": "contraindication",
+      "subject": "Pre-surgery",
+      "severity": "avoid",
+      "reason": "discontinue 2 weeks prior due to antiplatelet activity",
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:563:drug_interaction:1",
+      "botanicalId": 563,
+      "botanical": "Knotweed",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants (Warfarin, Plavix)",
+      "severity": "unspecified",
+      "reason": "additive blood-thinning effect",
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:563:drug_interaction:2",
+      "botanicalId": 563,
+      "botanical": "Knotweed",
+      "ruleType": "drug_interaction",
+      "subject": "CYP3A4 substrates",
+      "severity": "unspecified",
+      "reason": "resveratrol inhibits certain CYP enzymes, potentially altering the clearance of statins and calcium channel blockers",
+      "flags": [
+        "contraceptive"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:563:herb_interaction:1",
+      "botanicalId": 563,
+      "botanical": "Knotweed",
+      "ruleType": "herb_interaction",
+      "subject": "Rhubarb (Da Huang) or Cassia Seed",
+      "severity": "unspecified",
+      "reason": "stacking heavy anthraquinones induces severe purgative effects",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:564:contraindication:1",
+      "botanicalId": 564,
+      "botanical": "Thunder God Vine",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and lactation",
+      "severity": "absolute",
+      "reason": "ABSOLUTELY CONTRAINDICATED; teratogenic and abortifacient",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:564:contraindication:2",
+      "botanicalId": 564,
+      "botanical": "Thunder God Vine",
+      "ruleType": "contraindication",
+      "subject": "Reproductive age",
+      "severity": "unspecified",
+      "reason": "causes severe, sometimes irreversible amenorrhea in women and drastically reduced sperm count and motility in men",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:564:contraindication:3",
+      "botanicalId": 564,
+      "botanical": "Thunder God Vine",
+      "ruleType": "contraindication",
+      "subject": "Liver or kidney impairment",
+      "severity": "caution",
+      "reason": "high risk of acute organ failure; hepatotoxic and nephrotoxic",
+      "flags": [
+        "liver_kidney"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:564:contraindication:4",
+      "botanicalId": 564,
+      "botanical": "Thunder God Vine",
+      "ruleType": "contraindication",
+      "subject": "Immunocompromised states",
+      "severity": "unspecified",
+      "reason": "a heavy immunosuppressant, severely increasing infection risk",
+      "flags": [
+        "autoimmune"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:564:contraindication:5",
+      "botanicalId": 564,
+      "botanical": "Thunder God Vine",
+      "ruleType": "contraindication",
+      "subject": "Ulcers or GI bleeding",
+      "severity": "unspecified",
+      "reason": "extreme mucosal irritant",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:564:contraindication:6",
+      "botanicalId": 564,
+      "botanical": "Thunder God Vine",
+      "ruleType": "contraindication",
+      "subject": "Not for anyone under 18 under any circumstances",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:564:drug_interaction:1",
+      "botanicalId": 564,
+      "botanical": "Thunder God Vine",
+      "ruleType": "drug_interaction",
+      "subject": "Immunosuppressants (Methotrexate, Prednisone)",
+      "severity": "caution",
+      "reason": "extreme additive risk of bone marrow suppression and fatal infections",
+      "flags": [
+        "autoimmune"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:564:drug_interaction:2",
+      "botanicalId": 564,
+      "botanical": "Thunder God Vine",
+      "ruleType": "drug_interaction",
+      "subject": "Hepatotoxic drugs",
+      "severity": "caution",
+      "reason": "severe additive risk of acute liver failure",
+      "flags": [
+        "liver_kidney"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:564:herb_interaction:1",
+      "botanicalId": 564,
+      "botanical": "Thunder God Vine",
+      "ruleType": "herb_interaction",
+      "subject": "Any other hepatotoxic or nephrotoxic botanical",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:565:contraindication:1",
+      "botanicalId": 565,
+      "botanical": "Gromwell Root / Shikonin",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "unspecified",
+      "reason": "internal use contraindicated due to potential Pyrrolizidine Alkaloid exposure to the fetus",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:565:contraindication:2",
+      "botanicalId": 565,
+      "botanical": "Gromwell Root / Shikonin",
+      "ruleType": "contraindication",
+      "subject": "Liver disease",
+      "severity": "unspecified",
+      "reason": "internal use of the raw root should be avoided to prevent PA-induced veno-occlusive liver disease",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:565:contraindication:3",
+      "botanicalId": 565,
+      "botanical": "Gromwell Root / Shikonin",
+      "ruleType": "contraindication",
+      "subject": "Spleen Qi deficiency",
+      "severity": "unspecified",
+      "reason": "its intense cold nature aggravates loose stools and weak digestion when taken internally",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:565:drug_interaction:1",
+      "botanicalId": 565,
+      "botanical": "Gromwell Root / Shikonin",
+      "ruleType": "drug_interaction",
+      "subject": "Hepatotoxic drugs",
+      "severity": "unspecified",
+      "reason": "internal use compounds liver stress due to PA content",
+      "flags": [
+        "liver_kidney"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:565:herb_interaction:1",
+      "botanicalId": 565,
+      "botanical": "Gromwell Root / Shikonin",
+      "ruleType": "herb_interaction",
+      "subject": "Comfrey or Coltsfoot taken internally",
+      "severity": "unspecified",
+      "reason": "stacking PA-containing herbs sharply increases liver toxicity risk",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:566:contraindication:1",
+      "botanicalId": 566,
+      "botanical": "Camu Camu",
+      "ruleType": "contraindication",
+      "subject": "Gastritis or active peptic ulcers",
+      "severity": "unspecified",
+      "reason": "the intense acidity can irritate an inflamed mucosal lining",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:566:contraindication:2",
+      "botanicalId": 566,
+      "botanical": "Camu Camu",
+      "ruleType": "contraindication",
+      "subject": "Iron storage disease (Hemochromatosis)",
+      "severity": "unspecified",
+      "reason": "high vitamin C intake excessively increases dietary iron absorption",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:566:contraindication:3",
+      "botanicalId": 566,
+      "botanical": "Camu Camu",
+      "ruleType": "contraindication",
+      "subject": "History of calcium-oxalate kidney stones",
+      "severity": "unspecified",
+      "reason": "high-dose vitamin C metabolism can elevate urinary oxalate excretion in susceptible individuals",
+      "flags": [
+        "liver_kidney"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:566:drug_interaction:1",
+      "botanicalId": 566,
+      "botanical": "Camu Camu",
+      "ruleType": "drug_interaction",
+      "subject": "Chemotherapy / radiation",
+      "severity": "unspecified",
+      "reason": "high-dose antioxidants can theoretically interfere with therapies that rely on oxidative stress to kill cancer cells; requires oncologist supervision",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:566:drug_interaction:2",
+      "botanicalId": 566,
+      "botanical": "Camu Camu",
+      "ruleType": "drug_interaction",
+      "subject": "Amphetamines (ADHD medications)",
+      "severity": "unspecified",
+      "reason": "high doses of vitamin C acidify the urine, increasing excretion and reducing the half-life of amphetamine-based drugs",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:566:herb_interaction:1",
+      "botanicalId": 566,
+      "botanical": "Camu Camu",
+      "ruleType": "herb_interaction",
+      "subject": "Heavy stacking with other extreme astringents (raw Cranberry, Uva Ursi) may cause temporary stomach upset",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:567:contraindication:1",
+      "botanicalId": 567,
+      "botanical": "Sophora Flower",
+      "ruleType": "contraindication",
+      "subject": "Spleen and Stomach cold deficiency",
+      "severity": "unspecified",
+      "reason": "its intense descending, cold nature severely aggravates poor digestion, causing diarrhea and cramping",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:567:contraindication:2",
+      "botanicalId": 567,
+      "botanical": "Sophora Flower",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "unspecified",
+      "reason": "strong downward-moving and blood-cooling properties pose a risk without expert TCM supervision",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:567:drug_interaction:1",
+      "botanicalId": 567,
+      "botanical": "Sophora Flower",
+      "ruleType": "drug_interaction",
+      "subject": "Antihypertensives",
+      "severity": "unspecified",
+      "reason": "additive blood pressure-lowering effect",
+      "flags": [
+        "cardio_meds",
+        "hypertension"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:567:drug_interaction:2",
+      "botanicalId": 567,
+      "botanical": "Sophora Flower",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants",
+      "severity": "unspecified",
+      "reason": "while it stops passive bleeding via vascular sealing, high-dose flavonoids can exhibit mild anti-platelet effects in healthy vessels",
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:567:herb_interaction:1",
+      "botanicalId": 567,
+      "botanical": "Sophora Flower",
+      "ruleType": "herb_interaction",
+      "subject": "Other intensely cold, descending herbs in constitutions that are already deficient or cold",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:568:contraindication:1",
+      "botanicalId": 568,
+      "botanical": "Indian Barberry",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "absolute",
+      "reason": "STRICTLY CONTRAINDICATED; stimulates uterine contractions and crosses the placenta, risking kernicterus in the fetus by displacing bilirubin",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:568:contraindication:2",
+      "botanicalId": 568,
+      "botanical": "Indian Barberry",
+      "ruleType": "contraindication",
+      "subject": "Neonates and infants",
+      "severity": "unspecified",
+      "reason": "absolute contraindication due to bilirubin displacement",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:568:contraindication:3",
+      "botanicalId": 568,
+      "botanical": "Indian Barberry",
+      "ruleType": "contraindication",
+      "subject": "Long-term uninterrupted use",
+      "severity": "avoid",
+      "reason": "acts as an herbal antibiotic; limit to 4–8 weeks to avoid damaging gut mucosal ecology",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:568:drug_interaction:1",
+      "botanicalId": 568,
+      "botanical": "Indian Barberry",
+      "ruleType": "drug_interaction",
+      "subject": "Metformin or insulin",
+      "severity": "unspecified",
+      "reason": "extreme additive hypoglycemic risk; requires strict medical monitoring",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:568:drug_interaction:2",
+      "botanicalId": 568,
+      "botanical": "Indian Barberry",
+      "ruleType": "drug_interaction",
+      "subject": "CYP3A4 substrates / macrolide antibiotics",
+      "severity": "unspecified",
+      "reason": "berberine inhibits liver enzymes, potentially causing dangerous buildups of pharmaceuticals (especially statins or clarithromycin)",
+      "flags": [
+        "contraceptive"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:568:drug_interaction:3",
+      "botanicalId": 568,
+      "botanical": "Indian Barberry",
+      "ruleType": "drug_interaction",
+      "subject": "Immunosuppressants (Cyclosporine)",
+      "severity": "unspecified",
+      "reason": "increases drug serum levels to toxic ranges",
+      "flags": [
+        "autoimmune"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:568:herb_interaction:1",
+      "botanicalId": 568,
+      "botanical": "Indian Barberry",
+      "ruleType": "herb_interaction",
+      "subject": "Other profoundly cold, bitter herbs for extended periods without a warming balancer such as Ginger, which will erode Spleen Qi (digestive fire)",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:569:contraindication:1",
+      "botanicalId": 569,
+      "botanical": "Goldenseal",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "absolute",
+      "reason": "STRICTLY CONTRAINDICATED; stimulates the uterus and contains berberine, risking neonatal jaundice and kernicterus",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:569:contraindication:2",
+      "botanicalId": 569,
+      "botanical": "Goldenseal",
+      "ruleType": "contraindication",
+      "subject": "Dry mucosal conditions",
+      "severity": "unspecified",
+      "reason": "its intense drying, astringent nature severely aggravates atrophic, dry, or cracked tissue",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:569:contraindication:3",
+      "botanicalId": 569,
+      "botanical": "Goldenseal",
+      "ruleType": "contraindication",
+      "subject": "Long-term use",
+      "severity": "unspecified",
+      "reason": "damages the gut microbiome and excessively dries the body; strictly limit to acute use of 10–14 days",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:569:contraindication:4",
+      "botanicalId": 569,
+      "botanical": "Goldenseal",
+      "ruleType": "contraindication",
+      "subject": "Neonates and infants",
+      "severity": "unspecified",
+      "reason": "berberine displaces bilirubin",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:569:drug_interaction:1",
+      "botanicalId": 569,
+      "botanical": "Goldenseal",
+      "ruleType": "drug_interaction",
+      "subject": "CYP3A4 and CYP2D6 substrates",
+      "severity": "unspecified",
+      "reason": "Goldenseal is a potent inhibitor of these liver enzymes, drastically slowing the clearance of many pharmaceuticals (statins, antidepressants, beta-blockers)",
+      "flags": [
+        "psych_meds",
+        "contraceptive"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:569:drug_interaction:2",
+      "botanicalId": 569,
+      "botanical": "Goldenseal",
+      "ruleType": "drug_interaction",
+      "subject": "Antibiotics (macrolides, tetracyclines)",
+      "severity": "unspecified",
+      "reason": "alters drug metabolism and serum levels",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:569:herb_interaction:1",
+      "botanicalId": 569,
+      "botanical": "Goldenseal",
+      "ruleType": "herb_interaction",
+      "subject": "Other intensely drying, astringent herbs (Uva Ursi, Barberry, Tormentil)",
+      "severity": "unspecified",
+      "reason": "can push the body into severe fluid depletion",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:570:contraindication:1",
+      "botanicalId": 570,
+      "botanical": "White Kidney Bean Extract",
+      "ruleType": "contraindication",
+      "subject": "Raw or improperly extracted beans",
+      "severity": "unspecified",
+      "reason": "inherently contain phytohemagglutinin (PHA), a highly toxic lectin causing severe gastroenteritis, nausea, and intestinal bleeding. Commercial extracts undergo strict thermal processing to destroy PHA while preserving phaseolamin",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:570:contraindication:2",
+      "botanicalId": 570,
+      "botanical": "White Kidney Bean Extract",
+      "ruleType": "contraindication",
+      "subject": "Hypoglycemia",
+      "severity": "unspecified",
+      "reason": "can push blood sugar too low when combined with prolonged fasting or antidiabetic drugs",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:570:contraindication:3",
+      "botanicalId": 570,
+      "botanical": "White Kidney Bean Extract",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "unspecified",
+      "reason": "avoided; fetal development requires unrestricted caloric and carbohydrate absorption",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:570:drug_interaction:1",
+      "botanicalId": 570,
+      "botanical": "White Kidney Bean Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Acarbose or Miglitol (alpha-glucosidase inhibitors)",
+      "severity": "unspecified",
+      "reason": "profound additive effects; combining pharmaceutical and botanical carb-blockers causes severe GI distress and risks hypoglycemia",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:570:drug_interaction:2",
+      "botanicalId": 570,
+      "botanical": "White Kidney Bean Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Insulin or sulfonylureas",
+      "severity": "unspecified",
+      "reason": "blunted meal absorption may require medication dosage adjustment to prevent dangerous blood sugar drops",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:570:herb_interaction:1",
+      "botanicalId": 570,
+      "botanical": "White Kidney Bean Extract",
+      "ruleType": "herb_interaction",
+      "subject": "None noted with properly processed extracts, though excessive use causes intense flatulence as undigested carbs ferment in the colon",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:571:contraindication:1",
+      "botanicalId": 571,
+      "botanical": "Genistein",
+      "ruleType": "contraindication",
+      "subject": "Active estrogen-receptor positive (ER+) cancers",
+      "severity": "caution",
+      "reason": "despite being a SERM, oncological consensus advises strict avoidance or extreme caution",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:571:contraindication:2",
+      "botanicalId": 571,
+      "botanical": "Genistein",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and lactation",
+      "severity": "unspecified",
+      "reason": "disrupts the finely tuned maternal endocrine environment",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:571:contraindication:3",
+      "botanicalId": 571,
+      "botanical": "Genistein",
+      "ruleType": "contraindication",
+      "subject": "Hypothyroidism",
+      "severity": "unspecified",
+      "reason": "high doses of isoflavones can inhibit thyroid peroxidase if iodine status is low",
+      "flags": [
+        "thyroid"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:571:drug_interaction:1",
+      "botanicalId": 571,
+      "botanical": "Genistein",
+      "ruleType": "drug_interaction",
+      "subject": "Tamoxifen or aromatase inhibitors",
+      "severity": "unspecified",
+      "reason": "direct competitive binding at the receptor site; may neutralise the pharmaceutical",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:571:drug_interaction:2",
+      "botanicalId": 571,
+      "botanical": "Genistein",
+      "ruleType": "drug_interaction",
+      "subject": "Thyroid hormone replacement (Levothyroxine)",
+      "severity": "caution",
+      "reason": "may reduce absorption or alter free T3/T4 conversion",
+      "flags": [
+        "thyroid"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:571:herb_interaction:1",
+      "botanicalId": 571,
+      "botanical": "Genistein",
+      "ruleType": "herb_interaction",
+      "subject": "High-dose stacking with other potent phytoestrogens (Red Clover, Pueraria mirifica) without monitoring for estrogen dominance",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:573:contraindication:1",
+      "botanicalId": 573,
+      "botanical": "Garcinia Cambogia Extract",
+      "ruleType": "contraindication",
+      "subject": "Hepatotoxicity risk",
+      "severity": "caution",
+      "reason": "numerous case reports of acute liver injury surround multi-ingredient weight loss supplements containing Garcinia, though whether Garcinia alone or hidden adulterants are responsible is heavily debated. Use with extreme caution in pre-existing liver disease",
+      "flags": [
+        "liver_kidney"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:573:contraindication:2",
+      "botanicalId": 573,
+      "botanical": "Garcinia Cambogia Extract",
+      "ruleType": "contraindication",
+      "subject": "SSRI or MAOI antidepressants",
+      "severity": "caution",
+      "reason": "the serotonin-elevating effect creates a theoretical risk of serotonin syndrome",
+      "flags": [
+        "psych_meds"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:573:contraindication:3",
+      "botanicalId": 573,
+      "botanical": "Garcinia Cambogia Extract",
+      "ruleType": "contraindication",
+      "subject": "Dementia or Alzheimer’s",
+      "severity": "unspecified",
+      "reason": "interfering with brain acetylcholine and citrate metabolism could theoretically worsen cognitive decline",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:573:contraindication:4",
+      "botanicalId": 573,
+      "botanical": "Garcinia Cambogia Extract",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "unspecified",
+      "reason": "no safety data for a metabolic blocker during fetal development",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:573:drug_interaction:1",
+      "botanicalId": 573,
+      "botanical": "Garcinia Cambogia Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Antidepressants (SSRIs)",
+      "severity": "caution",
+      "reason": "risk of serotonin syndrome",
+      "flags": [
+        "psych_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:573:drug_interaction:2",
+      "botanicalId": 573,
+      "botanical": "Garcinia Cambogia Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Statin medications",
+      "severity": "caution",
+      "reason": "additive risk of liver toxicity and rhabdomyolysis",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:573:drug_interaction:3",
+      "botanicalId": 573,
+      "botanical": "Garcinia Cambogia Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Antidiabetics",
+      "severity": "monitor",
+      "reason": "may lower blood glucose; monitor to prevent hypoglycemia",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:573:herb_interaction:1",
+      "botanicalId": 573,
+      "botanical": "Garcinia Cambogia Extract",
+      "ruleType": "herb_interaction",
+      "subject": "Heavy stacking with other serotonin-elevating botanicals (St. John’s Wort, Griffonia/5-HTP) sharply increases the risk of serotonin overload",
+      "severity": "caution",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:574:contraindication:1",
+      "botanicalId": 574,
+      "botanical": "Dan Shen Root Extract",
+      "ruleType": "contraindication",
+      "subject": "Bleeding disorders",
+      "severity": "absolute",
+      "reason": "strictly contraindicated in hemophilia or active hemorrhage",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:574:contraindication:2",
+      "botanicalId": 574,
+      "botanical": "Dan Shen Root Extract",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "unspecified",
+      "reason": "the strong blood-moving properties can induce miscarriage",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:574:contraindication:3",
+      "botanicalId": 574,
+      "botanical": "Dan Shen Root Extract",
+      "ruleType": "contraindication",
+      "subject": "Pre-surgery",
+      "severity": "avoid",
+      "reason": "discontinue at least 2 weeks prior due to severe antiplatelet and anticoagulant effects",
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:574:contraindication:4",
+      "botanicalId": 574,
+      "botanical": "Dan Shen Root Extract",
+      "ruleType": "contraindication",
+      "subject": "Concurrent Warfarin or Plavix",
+      "severity": "unspecified",
+      "reason": "absolute contraindication",
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:574:drug_interaction:1",
+      "botanicalId": 574,
+      "botanical": "Dan Shen Root Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants (Warfarin, Heparin, Plavix)",
+      "severity": "caution",
+      "reason": "severe, life-threatening risk of internal hemorrhage",
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:574:drug_interaction:2",
+      "botanicalId": 574,
+      "botanical": "Dan Shen Root Extract",
+      "ruleType": "drug_interaction",
+      "subject": "CYP450 substrates",
+      "severity": "unspecified",
+      "reason": "tanshinones can induce or inhibit various liver enzymes, altering the clearance of cardiovascular drugs",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:574:herb_interaction:1",
+      "botanicalId": 574,
+      "botanical": "Dan Shen Root Extract",
+      "ruleType": "herb_interaction",
+      "subject": "Intense stacking with other heavy blood thinners (Ginkgo, Garlic, Turmeric) will severely compromise clotting capability",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:575:contraindication:1",
+      "botanicalId": 575,
+      "botanical": "Tormentil",
+      "ruleType": "contraindication",
+      "subject": "Dry or atrophic conditions (high Vata)",
+      "severity": "unspecified",
+      "reason": "severely exacerbates chronic constipation, dry mucous membranes, and systemic dehydration",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:575:contraindication:2",
+      "botanicalId": 575,
+      "botanical": "Tormentil",
+      "ruleType": "contraindication",
+      "subject": "Empty stomach",
+      "severity": "unspecified",
+      "reason": "the massive tannin load can cause severe nausea, gastric irritation, and vomiting if taken without food",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:575:contraindication:3",
+      "botanicalId": 575,
+      "botanical": "Tormentil",
+      "ruleType": "contraindication",
+      "subject": "Iron deficiency anemia",
+      "severity": "unspecified",
+      "reason": "tannins aggressively chelate non-heme iron in the gut, preventing absorption",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:575:contraindication:4",
+      "botanicalId": 575,
+      "botanical": "Tormentil",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "unspecified",
+      "reason": "internal use avoided for uterine-stimulating potential and extreme bowel disruption; topical and gargle use is safe",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:575:drug_interaction:1",
+      "botanicalId": 575,
+      "botanical": "Tormentil",
+      "ruleType": "drug_interaction",
+      "subject": "Mineral supplements (iron, zinc, calcium)",
+      "severity": "unspecified",
+      "reason": "tannins bind and block absorption; separate dosing by at least 2 hours",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:575:drug_interaction:2",
+      "botanicalId": 575,
+      "botanical": "Tormentil",
+      "ruleType": "drug_interaction",
+      "subject": "Alkaloid-containing medications",
+      "severity": "unspecified",
+      "reason": "tannins can precipitate pharmaceutical alkaloids in the gut, halting absorption",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:575:herb_interaction:1",
+      "botanicalId": 575,
+      "botanical": "Tormentil",
+      "ruleType": "herb_interaction",
+      "subject": "Other heavy astringents (Oak Bark, Cranesbill, Uva Ursi, Goldenseal)",
+      "severity": "unspecified",
+      "reason": "combining creates an intolerable drying effect that can shock the kidneys and gut",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:575:herb_interaction:2",
+      "botanicalId": 575,
+      "botanical": "Tormentil",
+      "ruleType": "herb_interaction",
+      "subject": "Iron-rich tonics (Yellow Dock, Nettle)",
+      "severity": "unspecified",
+      "reason": "the tannins bind the iron, rendering both herbs useless",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:576:contraindication:1",
+      "botanicalId": 576,
+      "botanical": "Mulberry Leaf",
+      "ruleType": "contraindication",
+      "subject": "Cold, weak digestion (Spleen Qi deficiency)",
+      "severity": "unspecified",
+      "reason": "the cold, bitter nature can cause mild diarrhea or bloating, particularly as it forces undigested carbs into the lower intestine",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:576:contraindication:2",
+      "botanicalId": 576,
+      "botanical": "Mulberry Leaf",
+      "ruleType": "contraindication",
+      "subject": "Hypoglycemia",
+      "severity": "unspecified",
+      "reason": "can lower blood sugar excessively if taken while fasting",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:576:drug_interaction:1",
+      "botanicalId": 576,
+      "botanical": "Mulberry Leaf",
+      "ruleType": "drug_interaction",
+      "subject": "Antidiabetics (insulin, metformin)",
+      "severity": "unspecified",
+      "reason": "additive hypoglycemic effects; requires strict glucose monitoring",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:576:drug_interaction:2",
+      "botanicalId": 576,
+      "botanical": "Mulberry Leaf",
+      "ruleType": "drug_interaction",
+      "subject": "Acarbose",
+      "severity": "unspecified",
+      "reason": "direct mechanism overlap; combining botanical and pharmaceutical alpha-glucosidase inhibitors causes severe GI distress",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:576:herb_interaction:1",
+      "botanicalId": 576,
+      "botanical": "Mulberry Leaf",
+      "ruleType": "herb_interaction",
+      "subject": "Other heavy cold or purgative herbs in deficient constitutions",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:577:contraindication:1",
+      "botanicalId": 577,
+      "botanical": "Fenugreek",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "absolute",
+      "reason": "STRICTLY CONTRAINDICATED; a strong uterine stimulant historically used to induce labour and expel the placenta",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:577:contraindication:2",
+      "botanicalId": 577,
+      "botanical": "Fenugreek",
+      "ruleType": "contraindication",
+      "subject": "Hormone-sensitive cancers",
+      "severity": "caution",
+      "reason": "phytoestrogenic and steroidal saponin activity warrants caution in ER+ breast cancer",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:577:contraindication:3",
+      "botanicalId": 577,
+      "botanical": "Fenugreek",
+      "ruleType": "contraindication",
+      "subject": "Hypoglycemia",
+      "severity": "unspecified",
+      "reason": "strong insulin-stimulating properties can cause dangerous blood sugar drops on an empty stomach",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:577:drug_interaction:1",
+      "botanicalId": 577,
+      "botanical": "Fenugreek",
+      "ruleType": "drug_interaction",
+      "subject": "Antidiabetics (insulin, metformin)",
+      "severity": "caution",
+      "reason": "severe risk of additive hypoglycemia; requires dosage monitoring",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:577:drug_interaction:2",
+      "botanicalId": 577,
+      "botanical": "Fenugreek",
+      "ruleType": "drug_interaction",
+      "subject": "Oral medications generally",
+      "severity": "unspecified",
+      "reason": "the dense mucilage can physically block absorption; space doses by 2 hours",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:577:herb_interaction:1",
+      "botanicalId": 577,
+      "botanical": "Fenugreek",
+      "ruleType": "herb_interaction",
+      "subject": "Other heavy mucilaginous herbs (Slippery Elm) taken alongside medication",
+      "severity": "unspecified",
+      "reason": "the thick gel blocks drug absorption in the gut",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:578:contraindication:1",
+      "botanicalId": 578,
+      "botanical": "Hedyotis Diffusa",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "absolute",
+      "reason": "STRICTLY CONTRAINDICATED; the intense cold and detoxifying action risks destabilising the fetus and inducing miscarriage",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:578:contraindication:2",
+      "botanicalId": 578,
+      "botanical": "Hedyotis Diffusa",
+      "ruleType": "contraindication",
+      "subject": "Spleen/Stomach cold deficiency",
+      "severity": "unspecified",
+      "reason": "its aggressive cold nature severely damages digestive fire, causing diarrhea and fatigue if used long-term without warming herbs",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:578:drug_interaction:1",
+      "botanicalId": 578,
+      "botanical": "Hedyotis Diffusa",
+      "ruleType": "drug_interaction",
+      "subject": "Chemotherapy agents",
+      "severity": "unspecified",
+      "reason": "complex interactions; widely used in China to enhance chemotherapy efficacy and reduce tumor resistance, but MUST be managed by an integrative oncologist",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:578:drug_interaction:2",
+      "botanicalId": 578,
+      "botanical": "Hedyotis Diffusa",
+      "ruleType": "drug_interaction",
+      "subject": "Immunosuppressants",
+      "severity": "unspecified",
+      "reason": "potential theoretical antagonism due to its immune-stimulating properties",
+      "flags": [
+        "autoimmune"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:578:herb_interaction:1",
+      "botanicalId": 578,
+      "botanical": "Hedyotis Diffusa",
+      "ruleType": "herb_interaction",
+      "subject": "Other intensely cold, draining herbs (Coptis, Rhubarb) in frail, elderly, or chemotherapy-depleted patients without Qi support such as Astragalus",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:579:contraindication:1",
+      "botanicalId": 579,
+      "botanical": "Aguaje",
+      "ruleType": "contraindication",
+      "subject": "Hormone-sensitive conditions",
+      "severity": "caution",
+      "reason": "given its phytoestrogenic properties, caution is advised in ER+ breast or uterine cancers pending more clinical data",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:579:contraindication:2",
+      "botanicalId": 579,
+      "botanical": "Aguaje",
+      "ruleType": "contraindication",
+      "subject": "Caloric restriction contexts",
+      "severity": "unspecified",
+      "reason": "an exceptionally calorie and lipid dense fruit; excessive consumption contributes to weight gain",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:579:drug_interaction:1",
+      "botanicalId": 579,
+      "botanical": "Aguaje",
+      "ruleType": "drug_interaction",
+      "subject": "Isotretinoin (Accutane)",
+      "severity": "unspecified",
+      "reason": "extreme doses of beta-carotene could theoretically compound vitamin A toxicity, though conversion is generally self-regulating",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:579:herb_interaction:1",
+      "botanicalId": 579,
+      "botanical": "Aguaje",
+      "ruleType": "herb_interaction",
+      "subject": "None widely documented; fundamentally a dense food crop",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:580:contraindication:1",
+      "botanicalId": 580,
+      "botanical": "Sophora Root",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "absolute",
+      "reason": "strictly contraindicated; the aggressive cold, drying nature and alkaloid profile present severe risk",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:580:contraindication:2",
+      "botanicalId": 580,
+      "botanical": "Sophora Root",
+      "ruleType": "contraindication",
+      "subject": "Cold or deficient Spleen (TCM)",
+      "severity": "unspecified",
+      "reason": "its extreme bitterness rapidly destroys digestive fire, causing diarrhea and severe fatigue with long-term use",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:580:contraindication:3",
+      "botanicalId": 580,
+      "botanical": "Sophora Root",
+      "ruleType": "contraindication",
+      "subject": "Renal insufficiency",
+      "severity": "unspecified",
+      "reason": "high alkaloid doses may burden compromised kidneys",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:580:drug_interaction:1",
+      "botanicalId": 580,
+      "botanical": "Sophora Root",
+      "ruleType": "drug_interaction",
+      "subject": "Anti-arrhythmic drugs",
+      "severity": "unspecified",
+      "reason": "potential additive or competitive effects on cardiac electrical pathways; requires cardiological supervision",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:580:drug_interaction:2",
+      "botanicalId": 580,
+      "botanical": "Sophora Root",
+      "ruleType": "drug_interaction",
+      "subject": "Immunosuppressants",
+      "severity": "unspecified",
+      "reason": "complex interactions given its own immunomodulatory and antiviral action",
+      "flags": [
+        "autoimmune"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:580:herb_interaction:1",
+      "botanicalId": 580,
+      "botanical": "Sophora Root",
+      "ruleType": "herb_interaction",
+      "subject": "Other profoundly cold, bitter herbs (Coptis, Gentian) without a warming Spleen protector; causes digestive collapse",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:581:contraindication:1",
+      "botanicalId": 581,
+      "botanical": "Honeysuckle Flower",
+      "ruleType": "contraindication",
+      "subject": "Spleen and Stomach cold deficiency",
+      "severity": "unspecified",
+      "reason": "its sweet, cold nature can cause loose stools if overused in weak, cold digestion",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:581:contraindication:2",
+      "botanicalId": 581,
+      "botanical": "Honeysuckle Flower",
+      "ruleType": "contraindication",
+      "subject": "G6PD deficiency",
+      "severity": "caution",
+      "reason": "high doses of certain Honeysuckle extracts have historically been cautioned here over a theoretical risk of hemolytic anemia, though clinical occurrences are extremely rare",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:581:drug_interaction:1",
+      "botanicalId": 581,
+      "botanical": "Honeysuckle Flower",
+      "ruleType": "drug_interaction",
+      "subject": "Minimal documented severe interactions; high doses of chlorogenic acid may mildly slow clotting, so observe caution with anticoagulants",
+      "severity": "caution",
+      "reason": null,
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:581:herb_interaction:1",
+      "botanicalId": 581,
+      "botanical": "Honeysuckle Flower",
+      "ruleType": "herb_interaction",
+      "subject": "Intense warming tonics (Aconite, Dry Ginger)",
+      "severity": "unspecified",
+      "reason": "neutralise Honeysuckle’s cooling, heat-clearing purpose entirely",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:582:contraindication:1",
+      "botanicalId": 582,
+      "botanical": "Avocado Extract",
+      "ruleType": "contraindication",
+      "subject": "Latex allergy",
+      "severity": "caution",
+      "reason": "high risk of cross-reactivity (avocado-latex syndrome)",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:582:contraindication:2",
+      "botanicalId": 582,
+      "botanical": "Avocado Extract",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "unspecified",
+      "reason": "the leaf and seed extracts, unlike the fruit, lack safety data and have historical use as emmenagogues",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:582:contraindication:3",
+      "botanicalId": 582,
+      "botanical": "Avocado Extract",
+      "ruleType": "contraindication",
+      "subject": "Household animals",
+      "severity": "unspecified",
+      "reason": "persin, concentrated in leaves and skin, is highly toxic to birds, horses, and many domestic pets (causing myocardial necrosis) while harmless to humans; store leaf material out of reach",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:582:drug_interaction:1",
+      "botanicalId": 582,
+      "botanical": "Avocado Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Antihypertensives",
+      "severity": "unspecified",
+      "reason": "the leaf extract may have additive blood pressure-lowering effects",
+      "flags": [
+        "cardio_meds",
+        "hypertension"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:582:drug_interaction:2",
+      "botanicalId": 582,
+      "botanical": "Avocado Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Warfarin",
+      "severity": "unspecified",
+      "reason": "high consumption of the fruit or oil supplies vitamin K, which antagonises anticoagulant efficacy",
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:582:herb_interaction:1",
+      "botanicalId": 582,
+      "botanical": "Avocado Extract",
+      "ruleType": "herb_interaction",
+      "subject": "None established for human use",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:583:contraindication:1",
+      "botanicalId": 583,
+      "botanical": "Pine Bark Extract",
+      "ruleType": "contraindication",
+      "subject": "Autoimmune conditions",
+      "severity": "unspecified",
+      "reason": "in rare cases its immune-modulating and stimulating properties can exacerbate flares (lupus, MS)",
+      "flags": [
+        "autoimmune"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:583:contraindication:2",
+      "botanicalId": 583,
+      "botanical": "Pine Bark Extract",
+      "ruleType": "contraindication",
+      "subject": "Bleeding disorders",
+      "severity": "unspecified",
+      "reason": "mild, dose-dependent anti-platelet aggregation effects",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:583:contraindication:3",
+      "botanicalId": 583,
+      "botanical": "Pine Bark Extract",
+      "ruleType": "contraindication",
+      "subject": "Pre-surgery",
+      "severity": "avoid",
+      "reason": "discontinue 2 weeks prior to avoid excessive bleeding",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:583:contraindication:4",
+      "botanicalId": 583,
+      "botanical": "Pine Bark Extract",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "unspecified",
+      "reason": "lacks broad safety data; generally avoided, though limited trials exist for pregnancy-related pelvic pain under strict supervision",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:583:drug_interaction:1",
+      "botanicalId": 583,
+      "botanical": "Pine Bark Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants and antiplatelets (Aspirin, Warfarin)",
+      "severity": "unspecified",
+      "reason": "additive blood-thinning effect",
+      "flags": [
+        "cardio_meds",
+        "allergy"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:583:drug_interaction:2",
+      "botanicalId": 583,
+      "botanical": "Pine Bark Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Antihypertensives",
+      "severity": "unspecified",
+      "reason": "additive vasodilation may lower blood pressure too far in sensitive patients",
+      "flags": [
+        "cardio_meds",
+        "hypertension"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:583:drug_interaction:3",
+      "botanicalId": 583,
+      "botanical": "Pine Bark Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Immunosuppressants",
+      "severity": "unspecified",
+      "reason": "may theoretically antagonise drug efficacy",
+      "flags": [
+        "autoimmune"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:583:herb_interaction:1",
+      "botanicalId": 583,
+      "botanical": "Pine Bark Extract",
+      "ruleType": "herb_interaction",
+      "subject": "Iron-rich botanicals (Nettle Leaf, Yellow Dock)",
+      "severity": "unspecified",
+      "reason": "the dense tannins chelate non-heme iron in the gut; separate doses by 2 hours",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:584:contraindication:1",
+      "botanicalId": 584,
+      "botanical": "Phellodendron / Amur Cork Tree",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "absolute",
+      "reason": "strictly contraindicated; the downward-moving cold nature and berberine content risk destabilising the fetus and displacing bilirubin (kernicterus)",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:584:contraindication:2",
+      "botanicalId": 584,
+      "botanical": "Phellodendron / Amur Cork Tree",
+      "ruleType": "contraindication",
+      "subject": "Cold, weak digestion (Spleen Yang deficiency)",
+      "severity": "unspecified",
+      "reason": "the extreme bitterness freezes digestive fire, causing severe diarrhea and fatigue if unbuffered",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:584:contraindication:3",
+      "botanicalId": 584,
+      "botanical": "Phellodendron / Amur Cork Tree",
+      "ruleType": "contraindication",
+      "subject": "Long-term uninterrupted use",
+      "severity": "avoid",
+      "reason": "acts as an herbal antibiotic; limit to 4–6 weeks to avoid gut flora destruction",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:584:contraindication:4",
+      "botanicalId": 584,
+      "botanical": "Phellodendron / Amur Cork Tree",
+      "ruleType": "contraindication",
+      "subject": "Neonates and infants",
+      "severity": "unspecified",
+      "reason": "berberine displaces bilirubin",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:584:drug_interaction:1",
+      "botanicalId": 584,
+      "botanical": "Phellodendron / Amur Cork Tree",
+      "ruleType": "drug_interaction",
+      "subject": "CYP3A4 substrates",
+      "severity": "unspecified",
+      "reason": "berberine inhibits liver enzymes, potentially causing toxic buildups of statins, macrolide antibiotics, and immunosuppressants",
+      "flags": [
+        "autoimmune",
+        "contraceptive"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:584:drug_interaction:2",
+      "botanicalId": 584,
+      "botanical": "Phellodendron / Amur Cork Tree",
+      "ruleType": "drug_interaction",
+      "subject": "Antidiabetics",
+      "severity": "unspecified",
+      "reason": "additive blood sugar-lowering effect",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:584:herb_interaction:1",
+      "botanicalId": 584,
+      "botanical": "Phellodendron / Amur Cork Tree",
+      "ruleType": "herb_interaction",
+      "subject": "Other extreme cold, bitter botanicals without warming demulcents; risks profound digestive shock",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:585:contraindication:1",
+      "botanicalId": 585,
+      "botanical": "Kudzu Root",
+      "ruleType": "contraindication",
+      "subject": "Estrogen-receptor positive (ER+) cancers",
+      "severity": "caution",
+      "reason": "the dense phytoestrogen profile requires extreme caution or avoidance",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:585:contraindication:2",
+      "botanicalId": 585,
+      "botanical": "Kudzu Root",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "unspecified",
+      "reason": "the isoflavone payload may disrupt the sensitive endocrine balance of fetal development",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:585:drug_interaction:1",
+      "botanicalId": 585,
+      "botanical": "Kudzu Root",
+      "ruleType": "drug_interaction",
+      "subject": "Antidiabetics",
+      "severity": "unspecified",
+      "reason": "potential additive hypoglycemic effects",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:585:drug_interaction:2",
+      "botanicalId": 585,
+      "botanical": "Kudzu Root",
+      "ruleType": "drug_interaction",
+      "subject": "Tamoxifen / aromatase inhibitors",
+      "severity": "unspecified",
+      "reason": "direct competitive binding at the estrogen receptor; may neutralise the pharmaceutical",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:585:drug_interaction:3",
+      "botanicalId": 585,
+      "botanical": "Kudzu Root",
+      "ruleType": "drug_interaction",
+      "subject": "Methotrexate",
+      "severity": "unspecified",
+      "reason": "puerarin may inhibit its excretion, increasing drug toxicity",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:585:herb_interaction:1",
+      "botanicalId": 585,
+      "botanical": "Kudzu Root",
+      "ruleType": "herb_interaction",
+      "subject": "Heavy stacking with other profound phytoestrogens (Red Clover, Genistein id 571, soy isoflavones) without monitoring for estrogen dominance",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:586:contraindication:1",
+      "botanicalId": 586,
+      "botanical": "Buckthorn Bark",
+      "ruleType": "contraindication",
+      "subject": "FRESH BARK",
+      "severity": "absolute",
+      "reason": "STRICTLY CONTRAINDICATED; causes violent emesis and severe gastric pain",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:586:contraindication:2",
+      "botanicalId": 586,
+      "botanical": "Buckthorn Bark",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and lactation",
+      "severity": "absolute",
+      "reason": "absolutely contraindicated; induces pelvic congestion and crosses into breast milk, causing severe diarrhea in the infant",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:586:contraindication:3",
+      "botanicalId": 586,
+      "botanical": "Buckthorn Bark",
+      "ruleType": "contraindication",
+      "subject": "Appendicitis or bowel obstruction",
+      "severity": "unspecified",
+      "reason": "stimulant laxatives can cause fatal rupture in these states",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:586:contraindication:4",
+      "botanicalId": 586,
+      "botanical": "Buckthorn Bark",
+      "ruleType": "contraindication",
+      "subject": "Long-term use beyond 10–14 days",
+      "severity": "unspecified",
+      "reason": "causes melanosis coli, severe potassium depletion, and laxative dependency (lazy bowel syndrome)",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:586:contraindication:5",
+      "botanicalId": 586,
+      "botanical": "Buckthorn Bark",
+      "ruleType": "contraindication",
+      "subject": "Children under 12",
+      "severity": "unspecified",
+      "reason": "not appropriate at any dose",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:586:drug_interaction:1",
+      "botanicalId": 586,
+      "botanical": "Buckthorn Bark",
+      "ruleType": "drug_interaction",
+      "subject": "Potassium-depleting diuretics (thiazides)",
+      "severity": "caution",
+      "reason": "high risk of severe hypokalemia",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:586:drug_interaction:2",
+      "botanicalId": 586,
+      "botanical": "Buckthorn Bark",
+      "ruleType": "drug_interaction",
+      "subject": "Cardiac glycosides (Digoxin)",
+      "severity": "unspecified",
+      "reason": "laxative-induced hypokalemia drastically increases digoxin toxicity",
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:586:drug_interaction:3",
+      "botanicalId": 586,
+      "botanical": "Buckthorn Bark",
+      "ruleType": "drug_interaction",
+      "subject": "Anti-arrhythmics",
+      "severity": "unspecified",
+      "reason": "electrolyte imbalance can trigger fatal arrhythmias",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:586:herb_interaction:1",
+      "botanicalId": 586,
+      "botanical": "Buckthorn Bark",
+      "ruleType": "herb_interaction",
+      "subject": "Other stimulant laxatives (Senna, Rhubarb, Aloe resin, Cascara, Cassia Seed)",
+      "severity": "unspecified",
+      "reason": "compounding anthraquinones causes violent, dangerous purgation",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:586:herb_interaction:2",
+      "botanicalId": 586,
+      "botanical": "Buckthorn Bark",
+      "ruleType": "herb_interaction",
+      "subject": "Diuretics (Dandelion leaf, Juniper)",
+      "severity": "unspecified",
+      "reason": "compounds extreme potassium and fluid loss",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:587:contraindication:1",
+      "botanicalId": 587,
+      "botanical": "Mangosteen Extract",
+      "ruleType": "contraindication",
+      "subject": "Bleeding disorders",
+      "severity": "caution",
+      "reason": "the high xanthone concentration exhibits mild anti-platelet aggregation; caution in hemophilia",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:587:contraindication:2",
+      "botanicalId": 587,
+      "botanical": "Mangosteen Extract",
+      "ruleType": "contraindication",
+      "subject": "Pre-surgery",
+      "severity": "avoid",
+      "reason": "discontinue 2 weeks prior due to altered clotting capability",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:587:contraindication:3",
+      "botanicalId": 587,
+      "botanical": "Mangosteen Extract",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "avoid",
+      "reason": "safety data for high-dose xanthone extracts is absent; avoid",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:587:drug_interaction:1",
+      "botanicalId": 587,
+      "botanical": "Mangosteen Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants (Warfarin, Aspirin)",
+      "severity": "unspecified",
+      "reason": "additive blood-thinning effect",
+      "flags": [
+        "cardio_meds",
+        "allergy"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:587:drug_interaction:2",
+      "botanicalId": 587,
+      "botanical": "Mangosteen Extract",
+      "ruleType": "drug_interaction",
+      "subject": "Chemotherapeutics",
+      "severity": "unspecified",
+      "reason": "high-dose antioxidants can theoretically interfere with oxidation-reliant treatment; requires oncologist oversight",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:587:herb_interaction:1",
+      "botanicalId": 587,
+      "botanical": "Mangosteen Extract",
+      "ruleType": "herb_interaction",
+      "subject": "Iron-rich botanicals (Nettle, Yellow Dock)",
+      "severity": "unspecified",
+      "reason": "the massive tannin payload in the rind chelates non-heme iron in the gut and renders it useless; separate by 2 hours",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:588:contraindication:1",
+      "botanicalId": 588,
+      "botanical": "Bayberry",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "absolute",
+      "reason": "STRICTLY CONTRAINDICATED; strong downward-moving, circulatory-stimulating and potentially uterine-contracting",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:588:contraindication:2",
+      "botanicalId": 588,
+      "botanical": "Bayberry",
+      "ruleType": "contraindication",
+      "subject": "Dry or atrophic mucosa (high Vata)",
+      "severity": "unspecified",
+      "reason": "its intense drying nature will damage and crack tissue already deficient in moisture",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:588:contraindication:3",
+      "botanicalId": 588,
+      "botanical": "Bayberry",
+      "ruleType": "contraindication",
+      "subject": "Empty stomach",
+      "severity": "unspecified",
+      "reason": "the massive tannin load causes severe nausea and potential vomiting",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:588:contraindication:4",
+      "botanicalId": 588,
+      "botanical": "Bayberry",
+      "ruleType": "contraindication",
+      "subject": "Iron deficiency anemia",
+      "severity": "unspecified",
+      "reason": "tannins chelate non-heme iron in the gut",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:588:drug_interaction:1",
+      "botanicalId": 588,
+      "botanical": "Bayberry",
+      "ruleType": "drug_interaction",
+      "subject": "Mineral supplements (iron, zinc)",
+      "severity": "unspecified",
+      "reason": "tannins bind and block absorption; separate by 2 hours",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:588:drug_interaction:2",
+      "botanicalId": 588,
+      "botanical": "Bayberry",
+      "ruleType": "drug_interaction",
+      "subject": "Alkaloid pharmaceuticals",
+      "severity": "unspecified",
+      "reason": "tannins precipitate alkaloids in the gut",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:588:herb_interaction:1",
+      "botanicalId": 588,
+      "botanical": "Bayberry",
+      "ruleType": "herb_interaction",
+      "subject": "Other heavy astringents (Oak Bark, Tormentil id 575, Goldenseal id 569) without demulcents; creates an intolerable drying effect on kidneys and gut",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:588:herb_interaction:2",
+      "botanicalId": 588,
+      "botanical": "Bayberry",
+      "ruleType": "herb_interaction",
+      "subject": "Iron-rich botanicals",
+      "severity": "unspecified",
+      "reason": "the tannins instantly chelate non-heme iron",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:589:contraindication:1",
+      "botanicalId": 589,
+      "botanical": "He Shou Wu / Fo-Ti",
+      "ruleType": "contraindication",
+      "subject": "RAW, UNPREPARED ROOT",
+      "severity": "absolute",
+      "reason": "strictly contraindicated for tonic use; acts as a cold purgative and carries the higher liver toxicity risk",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:589:contraindication:2",
+      "botanicalId": 589,
+      "botanical": "He Shou Wu / Fo-Ti",
+      "ruleType": "contraindication",
+      "subject": "Idiosyncratic hepatotoxicity",
+      "severity": "avoid",
+      "reason": "rare but well documented cases of severe liver injury in susceptible individuals, possibly genetic or from improper curing. Discontinue immediately on jaundice, dark urine, or extreme fatigue",
+      "flags": [
+        "liver_kidney"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:589:contraindication:3",
+      "botanicalId": 589,
+      "botanical": "He Shou Wu / Fo-Ti",
+      "ruleType": "contraindication",
+      "subject": "Spleen deficiency with damp-phlegm",
+      "severity": "unspecified",
+      "reason": "its heavy, rich, cloying nature suffocates a weak digestive system, causing severe bloating and loose stools",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:589:contraindication:4",
+      "botanicalId": 589,
+      "botanical": "He Shou Wu / Fo-Ti",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "unspecified",
+      "reason": "avoided for liver toxicity concerns and complex endocrine effects",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:589:contraindication:5",
+      "botanicalId": 589,
+      "botanical": "He Shou Wu / Fo-Ti",
+      "ruleType": "contraindication",
+      "subject": "Pre-existing liver disease",
+      "severity": "avoid",
+      "reason": "avoid",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:589:drug_interaction:1",
+      "botanicalId": 589,
+      "botanical": "He Shou Wu / Fo-Ti",
+      "ruleType": "drug_interaction",
+      "subject": "Hepatotoxic pharmaceuticals",
+      "severity": "caution",
+      "reason": "severe additive risk of acute liver injury",
+      "flags": [
+        "liver_kidney"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:589:drug_interaction:2",
+      "botanicalId": 589,
+      "botanical": "He Shou Wu / Fo-Ti",
+      "ruleType": "drug_interaction",
+      "subject": "Antidiabetics and lipid-lowering drugs",
+      "severity": "monitor",
+      "reason": "may alter serum levels; monitor",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:589:herb_interaction:1",
+      "botanicalId": 589,
+      "botanical": "He Shou Wu / Fo-Ti",
+      "ruleType": "herb_interaction",
+      "subject": "Avoid stacking with harsh cold purgatives or any other known hepatotoxic botanical (Gromwell id 565 internally, Comfrey, Kava)",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
     }
   ]
 }

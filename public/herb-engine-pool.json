@@ -4603,27 +4603,6 @@
     "caution_level": "LOW-MEDIUM"
   },
   {
-    "id": 523,
-    "name": "Amla",
-    "primary_functions": [
-      "TCM Yu Gan Zi — clears Lung heat, generates fluids",
-      "Ayurvedic rasayana — one of the three Triphala fruits",
-      "Highest natural vitamin C density",
-      "Liver protective polyphenol load"
-    ],
-    "energetics": [
-      "Cool",
-      "Sour",
-      "Sweet",
-      "Astringent",
-      "Fluid-Generating"
-    ],
-    "tcm_meridians": [
-      "Lung"
-    ],
-    "caution_level": "LOW"
-  },
-  {
     "id": 524,
     "name": "Bibhitaki",
     "primary_functions": [
@@ -4664,27 +4643,6 @@
       "Heart",
       "Spleen",
       "Liver"
-    ],
-    "caution_level": "MEDIUM"
-  },
-  {
-    "id": 526,
-    "name": "Kalmegh",
-    "primary_functions": [
-      "TCM Chuan Xin Lian — clears toxic heat from Lungs, throat, intestines",
-      "Ayurvedic ",
-      " — liver protection, fever clearance",
-      "Immune-modulating in acute respiratory infections",
-      "Andrographolide is well-researched antiviral"
-    ],
-    "energetics": [
-      "Very Cold",
-      "Bitter",
-      "Heat-Clearing"
-    ],
-    "tcm_meridians": [
-      "Lung",
-      "Large Intestine"
     ],
     "caution_level": "MEDIUM"
   },
@@ -4894,5 +4852,949 @@
       "Large Intestine"
     ],
     "caution_level": "LOW"
+  },
+  {
+    "id": 545,
+    "name": "Jiaogulan",
+    "primary_functions": [
+      "AMPK activator — the ",
+      "; regulates cellular energy homeostasis and lipid metabolism",
+      "Yin-nourishing adaptogen — builds resilience to stress without the heating/stimulating effects of Panax ginseng",
+      "Cardiovascular protector — supports healthy endothelial function and nitric oxide production",
+      "Respiratory tonic — traditionally used for chronic respiratory weakness and to clear lung heat",
+      "Hepatoprotective — assists liver function and protects against oxidative liver damage"
+    ],
+    "energetics": [
+      "Cool",
+      "Moistening",
+      "Sweet",
+      "Slightly Bitter",
+      "Adaptogenic"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Lung",
+      "Heart"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 546,
+    "name": "Feverfew",
+    "primary_functions": [
+      "Migraine prophylactic — inhibits serotonin release from platelets and reduces blood vessel constriction",
+      "Prostaglandin inhibitor — directly reduces inflammatory signaling pathways associated with headaches",
+      "Uterine stimulant and emmenagogue — traditionally used to bring on delayed menses and clear stagnation",
+      "Antispasmodic — relaxes smooth muscle tissue throughout the vascular and digestive systems"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Bitter",
+      "Pungent",
+      "Relaxing"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Pericardium"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 547,
+    "name": "Artichoke Extract",
+    "primary_functions": [
+      "Choleretic and cholagogue — actively stimulates the liver to produce bile and encourages gallbladder emptying",
+      "Hepatoprotective — shields liver parenchyma from toxic damage and promotes cellular regeneration",
+      "Lipid regulator — inhibits HMG-CoA reductase and enhances cholesterol excretion via bile, effectively lowering LDL and triglycerides",
+      "Digestive bitter — relieves functional dyspepsia, bloating, and postprandial fullness by upregulating digestive secretions"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Bitter",
+      "Moving"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Gallbladder",
+      "Stomach"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 548,
+    "name": "Astaxanthin",
+    "primary_functions": [
+      "Apex cellular antioxidant — spans the entire cell membrane bilayer, neutralizing free radicals both inside and outside the cell",
+      "Mitochondrial protector — shields energy-producing centers from oxidative stress, vastly improving muscular endurance and recovery",
+      "Ocular and neurological shield — crosses both the blood-brain and blood-retinal barriers to prevent macular degeneration and neuroinflammation",
+      "Internal UV defense — accumulates in the epidermis to protect against photo-aging and UV-induced DNA damage"
+    ],
+    "energetics": [
+      "Cooling",
+      "Moistening",
+      "Sweet"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Heart",
+      "Kidney",
+      "Stomach"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 549,
+    "name": "Black Pepper Extract",
+    "primary_functions": [
+      "Universal bio-enhancer — inhibits enzymes (UGTs and CYP3A4) and efflux pumps (P-glycoprotein) in the gut and liver to dramatically increase the plasma levels of co-administered botanicals",
+      "Digestive fire ignition — stimulates hydrochloric acid secretion, pancreatic enzymes, and overall gastric motility",
+      "Thermogenic agent — increases basal metabolic rate and promotes lipid metabolism via sympathetic nervous system activation",
+      "Carminative — actively dispels trapped intestinal gas and relieves functional cramping"
+    ],
+    "energetics": [
+      "Hot",
+      "Dry",
+      "Pungent",
+      "Stimulating"
+    ],
+    "tcm_meridians": [
+      "Stomach",
+      "Large Intestine",
+      "Spleen"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 550,
+    "name": "Cassia Seed Extract",
+    "primary_functions": [
+      "Clears Liver heat and brightens the eyes (Ming Mu) — traditional remedy for red, painful, or dry eyes",
+      "Moistens the intestines and unblocks the bowels — provides a gentle laxative effect for chronic constipation",
+      "Lipid metabolic regulator — downregulates intracellular lipid accumulation via MAPK signaling pathways",
+      "Hypotensive support — cools ascending liver fire to help manage mild hypertension"
+    ],
+    "energetics": [
+      "Cool",
+      "Moistening",
+      "Sweet",
+      "Slightly Bitter",
+      "Salty"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Large Intestine",
+      "Kidney"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 551,
+    "name": "Citrus Aurantium Extract",
+    "primary_functions": [
+      "Qi regulator and stagnation breaker (Zhi Shi) — intensely moves trapped digestive energy and relieves abdominal distention",
+      "Thermogenic metabolic enhancer — increases resting metabolic rate and fat oxidation without extreme CNS stimulation",
+      "Expectorant — directs Qi downward to clear phlegm and ease chest congestion",
+      "Hepatocellular metabolic stimulant — promotes glycolysis and glycogenolysis"
+    ],
+    "energetics": [
+      "Slightly Cold",
+      "Dry",
+      "Bitter",
+      "Pungent",
+      "Moving"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Large Intestine"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 552,
+    "name": "Grape Leaf Extract",
+    "primary_functions": [
+      "Endothelial barrier reinforcement — protects venous endothelium and limits vascular permeability to halt edema (fluid leakage)",
+      "Microcirculation optimizer — stimulates nitric oxide synthase (NOS) to naturally vasodilate and reduce excessive venous tone",
+      "Red blood cell deformability — improves the physical flexibility of erythrocytes, allowing smoother passage through dense capillaries",
+      "Chronic Venous Insufficiency (CVI) relief — clinically validated to reduce calf/ankle circumference and heavy leg sensations"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Astringent"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Spleen"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 553,
+    "name": "Horse Chestnut Extract",
+    "primary_functions": [
+      "Venous tonic — reduces capillary permeability and increases venous tone to stop fluid leakage into surrounding tissues",
+      "Anti-edema — the standard European phytomedicine for chronic venous insufficiency (CVI), heavy legs, and peripheral swelling",
+      "Anti-inflammatory — inhibits elastase and hyaluronidase, the enzymes that degrade vascular structural integrity"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Bitter",
+      "Astringent"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Spleen",
+      "Stomach"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 554,
+    "name": "Kelp Extract Powder",
+    "primary_functions": [
+      "Thyroid nourisher — provides highly bioavailable iodine to support the synthesis of T3 and T4 thyroid hormones",
+      "Metabolic regulator — combats hypothyroid-induced fatigue, weight gain, and sluggish basal metabolic rate",
+      "Nodule softener (Kun Bu) — traditionally used in TCM to resolve ",
+      ", softening hard masses like goiters and swollen lymph nodes",
+      "Heavy metal chelator — rich in alginates that bind to heavy metals and radioactive isotopes in the gut, preventing their absorption"
+    ],
+    "energetics": [
+      "Cold",
+      "Moistening",
+      "Salty",
+      "Softening"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Liver",
+      "Stomach"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 555,
+    "name": "Lotus Leaf Extract",
+    "primary_functions": [
+      "Clears Summer-Heat — TCM specific for heat exhaustion, irritability, and excessive sweating accompanied by digestive dampness",
+      "Lipid metabolism regulator — downregulates adipogenesis (fat cell formation) and prevents dietary fat absorption",
+      "Fluid balancer — acts as a mild diuretic to drain dampness and reduce water retention",
+      "Astringes bleeding — traditionally used to stop passive hemorrhaging (epistaxis, heavy menses) due to heat in the blood"
+    ],
+    "energetics": [
+      "Slightly Cold",
+      "Dry",
+      "Bitter",
+      "Astringent"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Spleen",
+      "Stomach",
+      "Heart"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 556,
+    "name": "Red Wine Extract / Resveratrol",
+    "primary_functions": [
+      "SIRT1 activator — switches on sirtuin pathways associated with cellular longevity and mimics the biological effects of calorie restriction",
+      "Cardioprotective — prevents LDL oxidation, inhibits platelet aggregation, and promotes vasodilation via nitric oxide synthesis",
+      "Neuroprotective — crosses the blood-brain barrier to reduce neuroinflammation and clear beta-amyloid plaques",
+      "Potent antioxidant — neutralizes reactive oxygen species (ROS) systemically"
+    ],
+    "energetics": [
+      "Cooling",
+      "Dry",
+      "Astringent"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 557,
+    "name": "Red Yeast Rice",
+    "primary_functions": [
+      "Lipid controller — naturally inhibits HMG-CoA reductase (the liver enzyme responsible for cholesterol synthesis), profoundly lowering LDL and triglycerides",
+      "Blood invigorator (TCM) — breaks up blood stasis and improves systemic microcirculation",
+      "Resolves food stagnation — strengthens the Spleen/Stomach to process heavy, greasy meals"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Sweet",
+      "Moving"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Liver",
+      "Large Intestine"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 558,
+    "name": "Yohimbe Bark",
+    "primary_functions": [
+      "Alpha-2 adrenergic antagonist — blocks pre-synaptic alpha-2 receptors, leading to large sympathetic nervous system outflow and norepinephrine release",
+      "Vasodilator and aphrodisiac — promotes pelvic vasodilation and increased blood flow to extremities, clinically utilized for erectile dysfunction",
+      "Lipolysis catalyst — mobilizes stubborn adipose tissue (particularly in areas dense with alpha-2 receptors) by overriding the body’s fat-storage feedback loop"
+    ],
+    "energetics": [
+      "Hot",
+      "Dry",
+      "Stimulating",
+      "Ascending"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Heart"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 559,
+    "name": "Cistanche",
+    "primary_functions": [
+      "Kidney Yang tonic — replenishes profound exhaustion, supports endocrine function, and increases libido without the harsh, drying heat of other Yang tonics",
+      "Neuroprotective and cognitive enhancer — upregulates nerve growth factor (NGF) and protects against dopaminergic neuron apoptosis",
+      "Mitochondrial ATP stimulator — enhances cellular energy output and significantly reduces physical fatigue in strenuous exertion",
+      "Bowel moistener — gently lubricates the intestines to relieve chronic constipation, particularly in the elderly or deeply deficient"
+    ],
+    "energetics": [
+      "Warm",
+      "Sweet",
+      "Salty",
+      "Moistening"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Large Intestine"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 560,
+    "name": "Evening Primrose",
+    "primary_functions": [
+      "Prostaglandin modulator — provides dense Gamma-Linolenic Acid (GLA), bypassing the rate-limiting D6D enzyme to directly synthesize anti-inflammatory Prostaglandin E1 (PGE1)",
+      "Hormonal balancer — clinically utilized for Premenstrual Syndrome (PMS), mastalgia (breast tenderness), and menopausal hot flashes by stabilizing systemic lipid-hormone pathways",
+      "Skin barrier repair — highly effective for atopic dermatitis, eczema, and psoriasis by structurally reinforcing the stratum corneum with essential fatty acids"
+    ],
+    "energetics": [
+      "Cool",
+      "Moistening",
+      "Sweet"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Spleen",
+      "Heart"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 561,
+    "name": "Toothed Clubmoss",
+    "primary_functions": [
+      "Acetylcholinesterase (AChE) inhibitor — reversibly binds the enzyme that breaks down acetylcholine, pooling the neurotransmitter in the brain for memory and focus",
+      "NMDA receptor antagonist — protects neurons from glutamate-induced excitotoxicity and cellular death",
+      "Neurogenesis catalyst — stimulates the proliferation of hippocampal neural stem cells, actively repairing cognitive decline",
+      "Clears heat and toxicity (TCM) — traditionally used to disperse swelling, clear fever, and heal traumatic bruising"
+    ],
+    "energetics": [
+      "Cold",
+      "Bitter",
+      "Pungent",
+      "Moving"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Spleen"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 562,
+    "name": "Eucommia",
+    "primary_functions": [
+      "Tonifies Kidney and Liver Yang — the primary TCM botanical for strengthening physical structure: bones, ligaments, tendons, and the lower back",
+      "Antihypertensive agent — induces endothelium-dependent vasorelaxation via the nitric oxide-cGMP pathway, lowering high blood pressure",
+      "Osteogenic catalyst — stimulates osteoblast proliferation and inhibits osteoclasts, clinically evaluated for osteoporosis and fracture healing",
+      "Calms the fetus — traditionally used to prevent miscarriage caused by Kidney deficiency and structural weakness"
+    ],
+    "energetics": [
+      "Warm",
+      "Sweet",
+      "Slightly Pungent"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Liver"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 563,
+    "name": "Knotweed",
+    "primary_functions": [
+      "Endothelial protector and SIRT1 activator — the most concentrated botanical source of trans-resveratrol, mimicking calorie restriction and protecting vascular walls",
+      "Systemic anti-spirochetal (Buhner Protocol) — acts to halt endothelial adherence and crossing by Borrelia burgdorferi (Lyme disease) bacteria",
+      "Blood invigorator (TCM: Hu Zhang) — clears heat, resolves toxicity, and breaks up blood stasis associated with inflammatory joint and pelvic pain",
+      "Hepatoprotective and cholagogue — clears damp-heat from the Liver and Gallbladder, supporting bile flow and clearing jaundice",
+      "Modulates angiogenesis — inhibits abnormal blood vessel growth associated with tumor progression and severe inflammatory states"
+    ],
+    "energetics": [
+      "Cold",
+      "Dry",
+      "Bitter",
+      "Moving"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Gallbladder",
+      "Lung"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 564,
+    "name": "Thunder God Vine",
+    "primary_functions": [
+      "NF-κB inhibitor — delivers pharmaceutical-grade suppression of systemic inflammatory cascades, clinically used for severe Rheumatoid Arthritis",
+      "Immunosuppressant — induces apoptosis in hyperactive T-cells and B-cells, halting autoimmune tissue destruction",
+      "Anti-tumor agent — triptolide demonstrates anti-proliferative effects across multiple aggressive cancer cell lines in vitro",
+      "Dispels Wind-Dampness (TCM: Lei Gong Teng) — clears deep, intractable joint pain, swelling, and deformity"
+    ],
+    "energetics": [
+      "Cold",
+      "Bitter",
+      "Acrid",
+      "Highly Toxic"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Kidney",
+      "Spleen"
+    ],
+    "caution_level": "VERY HIGH"
+  },
+  {
+    "id": 565,
+    "name": "Gromwell Root / Shikonin",
+    "primary_functions": [
+      "Wound healing and tissue regeneration — highly active topically to promote granulation, accelerate re-epithelialization, and clear necrotic tissue in severe burns, frostbite, and chronic ulcers",
+      "Cools Blood and Vents Rashes (TCM: Zi Cao) — internally clears blood-level heat manifesting as dark purple macules, eczema, measles, and psoriasis",
+      "Antimicrobial and anti-inflammatory — shikonin directly inhibits leukotriene biosynthesis via 5-LOX suppression and exerts strong bactericidal action against dermal pathogens including Staphylococcus aureus and Trichophyton",
+      "Anti-tumor properties — shikonin selectively induces necroptosis in multiple cancer cell lines while bypassing drug-resistance mechanisms"
+    ],
+    "energetics": [
+      "Cold",
+      "Sweet",
+      "Salty",
+      "Descending"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 566,
+    "name": "Camu Camu",
+    "primary_functions": [
+      "Apex vitamin C source — delivers one of the highest recorded botanical concentrations of natural ascorbic acid (up to 3–5% of fresh weight), driving systemic collagen synthesis",
+      "Antioxidant shield — dense ellagic acid and anthocyanins protect cellular DNA from oxidative stress more effectively than synthetic vitamin C equivalents",
+      "Anti-inflammatory cascade blocker — shown to lower high-sensitivity C-reactive protein (hs-CRP) and pro-inflammatory cytokines",
+      "Immune modulator — supports leukocyte production and phagocytosis during acute viral or bacterial onset"
+    ],
+    "energetics": [
+      "Cool",
+      "Moistening",
+      "Sour",
+      "Astringent"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Lung"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 567,
+    "name": "Sophora Flower",
+    "primary_functions": [
+      "Vascular structural protectant — delivers extreme concentrations of rutin to decrease capillary permeability and fragility",
+      "Cools Blood and Stops Bleeding (TCM: Huai Hua Mi) — the premier botanical for lower gastrointestinal bleeding, particularly hemorrhoids and ulcerative colitis",
+      "Clears Liver Fire — descends hyperactive liver heat manifesting as red eyes, dizziness, and hypertension",
+      "Anti-inflammatory cascade blocker — inhibits 5-LOX and COX-2 pathways systemically"
+    ],
+    "energetics": [
+      "Cold",
+      "Bitter",
+      "Astringent",
+      "Descending"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Large Intestine"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 568,
+    "name": "Indian Barberry",
+    "primary_functions": [
+      "AMPK activator — a systemic metabolic master switch, improving insulin sensitivity, stimulating glycolysis, and lowering blood glucose comparably to Metformin",
+      "Broad-spectrum antimicrobial — disrupts bacterial cell division, clears GI parasites (Giardia, Candida), and halts secretory diarrhea",
+      "Choleretic and hepatoprotective — stimulates bile flow to clear liver congestion, jaundice, and gallbladder sludge",
+      "Lipid modulator — upregulates LDL receptors in the liver, increasing the clearance of cholesterol from the bloodstream"
+    ],
+    "energetics": [
+      "Cold",
+      "Dry",
+      "Intensely Bitter"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Gallbladder",
+      "Large Intestine"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 569,
+    "name": "Goldenseal",
+    "primary_functions": [
+      "Mucous membrane trophorestorative — astringes, tones, and heals boggy, inflamed, hyper-secreting mucosal tissue (sinus, throat, GI, vaginal)",
+      "Broad-spectrum antimicrobial — highly active against Streptococcus, Staphylococcus, E. coli, and Giardia due to high isoquinoline alkaloid content",
+      "Intense digestive bitter — stimulates gastric acid, pepsin, and bile production to correct severely sluggish digestion and liver congestion",
+      "Anti-catarrhal — stops thick, yellow/green infected mucus production in acute upper respiratory infections"
+    ],
+    "energetics": [
+      "Very Cold",
+      "Very Dry",
+      "Extremely Bitter"
+    ],
+    "tcm_meridians": [
+      "Stomach",
+      "Large Intestine",
+      "Liver"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 570,
+    "name": "White Kidney Bean Extract",
+    "primary_functions": [
+      "Alpha-amylase inhibitor — binds and blocks the pancreatic enzyme responsible for breaking complex carbohydrates into absorbable sugars",
+      "Carbohydrate blocking — clinically validated to reduce the glycemic impact and caloric absorption of starch-heavy meals, aiding weight management",
+      "Blood sugar stabilizer — blunts post-prandial blood glucose and insulin spikes"
+    ],
+    "energetics": [
+      "Neutral",
+      "Bland",
+      "Sweet"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Kidney"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 571,
+    "name": "Genistein",
+    "primary_functions": [
+      "Selective Estrogen Receptor Modulator — competitively binds estrogen receptor beta (ERβ), providing mild estrogenic support in deficiency while blocking potent endogenous estrogens in excess",
+      "Tyrosine kinase inhibitor — blocks epidermal growth factor receptor (EGFR) pathways, researched for halting cellular hyper-proliferation and tumor angiogenesis",
+      "Osteogenic catalyst — stimulates osteoblast activity and inhibits osteoclast resorption, preserving bone mineral density through menopausal transition",
+      "Cardioprotective — improves endothelial nitric oxide synthase (eNOS) and arterial compliance, defending against post-menopausal vascular rigidity"
+    ],
+    "energetics": [
+      "Cool",
+      "Moistening",
+      "Sweet"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Liver"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 573,
+    "name": "Garcinia Cambogia Extract",
+    "primary_functions": [
+      "ATP-citrate lyase inhibitor — binds and blocks the enzyme required to convert excess dietary carbohydrate into fatty acids, stalling de novo lipogenesis",
+      "Appetite suppressant — elevates central serotonin, promoting satiety and reducing emotional or stress-driven carbohydrate cravings",
+      "Glycogen storage catalyst — diverts blocked carbohydrate away from lipid storage and into hepatic glycogen, signalling the brain that energy stores are full"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Sour",
+      "Astringent"
+    ],
+    "tcm_meridians": [
+      "Stomach",
+      "Spleen",
+      "Liver"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 574,
+    "name": "Dan Shen Root Extract",
+    "primary_functions": [
+      "Invigorates Blood and breaks stasis (Huo Xue Hua Yu) — the premier TCM botanical for dissolving microvascular clots, clearing angina pectoris, and restoring circulation to ischemic tissue",
+      "Cardioprotective and anti-fibrotic — protects the myocardium from ischemia-reperfusion injury and prevents cardiac and hepatic fibrosis",
+      "Nourishes Blood and calms the Shen — unique among blood-movers, it gently sedates the nervous system to relieve insomnia, irritability, and palpitations caused by Heart heat",
+      "Microcirculation enhancer — dilates the coronary arteries and improves red blood cell deformability for passage through tight capillaries"
+    ],
+    "energetics": [
+      "Cool",
+      "Moving",
+      "Bitter"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Pericardium",
+      "Liver"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 575,
+    "name": "Tormentil",
+    "primary_functions": [
+      "Mucosal astringent and tannic sealer — delivers an immense tannin payload to cross-link mucosal proteins, tightening, drying, and sealing inflamed or leaking tissue",
+      "Anti-diarrheal — the traditional European powerhouse for arresting severe acute watery diarrhea and soothing inflammatory bowel flares",
+      "Topical hemostatic — applied directly to bleeding wounds, bleeding gums, or mouth ulcers to coagulate blood and close the tissue",
+      "Antimicrobial — the dense tannic environment deprives pathogenic gut bacteria of the iron required for replication"
+    ],
+    "energetics": [
+      "Cold",
+      "Extremely Dry",
+      "Intensely Astringent"
+    ],
+    "tcm_meridians": [
+      "Large Intestine",
+      "Spleen",
+      "Stomach"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 576,
+    "name": "Mulberry Leaf",
+    "primary_functions": [
+      "Alpha-glucosidase inhibitor (DNJ) — prevents enzymatic breakdown of complex carbohydrates in the gut, blunting post-prandial blood sugar spikes",
+      "Clears Lung heat (TCM: Sang Ye) — resolves dry hot coughs, thick yellow phlegm, and sore throat from wind-heat invasion",
+      "Cools Liver fire and brightens the eyes — reduces red, painful, or dry eyes associated with ascending liver heat",
+      "Lipid modulator — inhibits LDL oxidation and lowers serum triglycerides via flavonoid interactions"
+    ],
+    "energetics": [
+      "Cold",
+      "Sweet",
+      "Bitter",
+      "Light"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Liver"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 577,
+    "name": "Fenugreek",
+    "primary_functions": [
+      "Androgen and free testosterone modulator — furostanolic saponins inhibit 5-alpha reductase and aromatase, limiting conversion of testosterone into DHT or estrogen and so raising free testosterone and libido",
+      "Metabolic regulator and insulin sensitizer — 4-hydroxyisoleucine, a unique amino acid, directly stimulates insulin secretion and enhances cellular glucose uptake",
+      "Galactagogue — traditionally and clinically used to increase breast milk production via phytoestrogenic stimulation of prolactin",
+      "Warms Kidney Yang (TCM: Hu Lu Ba) — dispels deep chronic cold in the lower back, reproductive organs, and pelvic basin"
+    ],
+    "energetics": [
+      "Warm",
+      "Dry",
+      "Bitter",
+      "Sweet"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Liver",
+      "Spleen"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 578,
+    "name": "Hedyotis Diffusa",
+    "primary_functions": [
+      "Clears Heat and Resolves Toxicity (TCM: Bai Hua She She Cao) — a premier detoxifying herb for severe festering infections, snakebite, and deep-seated tissue abscess",
+      "Oncological apoptosis catalyst — researched in TCM and integrative oncology for inducing apoptosis and inhibiting angiogenesis in colorectal, hepatic, and lung cancer cell lines",
+      "Clears Damp-Heat — drains inflammatory fluid congestion in the lower burner; used clinically for severe urinary tract infection, pelvic inflammatory disease, and appendicitis",
+      "Immunomodulator — stimulates macrophage phagocytosis to clear cellular debris and bacterial load from the blood"
+    ],
+    "energetics": [
+      "Cold",
+      "Bitter",
+      "Sweet"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Stomach",
+      "Large Intestine"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 579,
+    "name": "Aguaje",
+    "primary_functions": [
+      "Apex provitamin A source — an extraordinary concentration of beta-carotene, supporting retinal health, skin elasticity, and immune function",
+      "Phytoestrogenic modulator — rich in plant sterols that gently bind estrogen receptors; prized in Amazonian tradition for balancing menopausal symptoms and restoring hormonal equilibrium",
+      "Lipid antioxidant — the dense orange fruit oil is packed with tocopherols and oleic acid, protecting cellular membranes from oxidative degradation and UV damage"
+    ],
+    "energetics": [
+      "Cooling",
+      "Moistening",
+      "Sweet",
+      "Nourishing"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Kidney",
+      "Stomach"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 580,
+    "name": "Sophora Root",
+    "primary_functions": [
+      "Dries Damp-Heat and kills parasites (TCM: Ku Shen) — intensely drains weeping, infected, inflamed conditions in the lower burner (vaginitis, severe urinary tract infection, dysentery)",
+      "Anti-arrhythmic — the alkaloid oxymatrine regulates cardiac action potentials and is used in Chinese hospitals for ventricular and atrial arrhythmias",
+      "Anti-pruritic and dermal antimicrobial — applied topically and internally to clear severe weeping eczema, psoriasis, and scabies",
+      "Hepatoprotective and antiviral — researched for reducing liver fibrosis and viral load in chronic Hepatitis B and C"
+    ],
+    "energetics": [
+      "Cold",
+      "Extremely Dry",
+      "Intensely Bitter"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Stomach",
+      "Large Intestine",
+      "Bladder"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 581,
+    "name": "Honeysuckle Flower",
+    "primary_functions": [
+      "Clears Heat and Resolves Toxicity (TCM: Jin Yin Hua) — the premier botanical for venting early-stage Wind-Heat invasion, targeting severe sore throat, fever, and acute tonsillitis",
+      "Broad-spectrum antimicrobial — highly active against respiratory pathogens including Streptococcus pneumoniae and various influenza strains",
+      "Anti-inflammatory cascade blocker — downregulates pro-inflammatory cytokines in the respiratory and gastrointestinal tracts",
+      "Clears summer-heat and damp-heat — traditionally used for inflammatory skin eruptions, boils, and dysentery"
+    ],
+    "energetics": [
+      "Cold",
+      "Sweet",
+      "Aromatic"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Stomach",
+      "Large Intestine"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 582,
+    "name": "Avocado Extract",
+    "primary_functions": [
+      "Cartilage regeneration and joint shield (ASU) — Avocado Soybean Unsaponifiables inhibit IL-1, halting cartilage degradation while stimulating collagen and aggrecan synthesis in osteoarthritis",
+      "Hypotensive and vasodilator (leaf extract) — traditionally and clinically validated to lower blood pressure via vasorelaxation and mild diuretic pathways",
+      "Lipid metabolism modulator (seed extract) — the seed carries antioxidant and hypolipidemic properties, reducing oxidised LDL and visceral fat accumulation",
+      "Skin barrier repair — the lipid matrix penetrates the stratum corneum to restore elasticity, hydration, and wound healing in severe dermal damage"
+    ],
+    "energetics": [
+      "Cooling",
+      "Moistening",
+      "Nourishing"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Kidney",
+      "Large Intestine"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 583,
+    "name": "Pine Bark Extract",
+    "primary_functions": [
+      "Apex OPC antioxidant — delivers a dense concentration of oligomeric proanthocyanidins that neutralise systemic oxidative stress and recycle vitamins C and E",
+      "Endothelial nitric oxide booster — stimulates endothelial nitric oxide synthase (eNOS), improving vasodilation, blood flow, and erectile function",
+      "Collagen cross-linker — binds collagen and elastin fibres in skin and blood vessels, protecting them from enzymatic degradation by collagenase and elastase",
+      "Microcirculation and edema relief — seals leaking capillaries; clinically validated to reduce lower limb swelling, diabetic retinopathy, and chronic venous insufficiency"
+    ],
+    "energetics": [
+      "Cool",
+      "Dry",
+      "Astringent"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Heart",
+      "Liver"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 584,
+    "name": "Phellodendron / Amur Cork Tree",
+    "primary_functions": [
+      "Clears Damp-Heat in the Lower Burner (TCM: Huang Bai) — targets severe inflammation, burning, and infection in the pelvic region, including urinary tract infection, prostatitis, and vaginal dysbiosis",
+      "Broad-spectrum antimicrobial — a dense payload of isoquinoline alkaloids that disrupt bacterial cell division and fungal biofilm integrity",
+      "Quells Kidney Yin deficiency fire — drains the false ascending heat (night sweats, hot flashes, restlessness) that appears when the body’s cooling fluids are deeply exhausted",
+      "Anti-inflammatory joint shield — downregulates COX-2 and iNOS pathways, protecting cartilage in inflammatory osteoarthritis models"
+    ],
+    "energetics": [
+      "Cold",
+      "Dry",
+      "Intensely Bitter",
+      "Descending"
+    ],
+    "tcm_meridians": [
+      "Kidney",
+      "Bladder",
+      "Large Intestine"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 585,
+    "name": "Kudzu Root",
+    "primary_functions": [
+      "Releases the Muscle Layer (TCM: Ge Gen) — profoundly relaxes tight, spasming muscles in the upper back, neck, and shoulders caused by tension, fever, or exogenous wind-cold",
+      "Cardiovascular and cerebrovascular dilator — dilates coronary arteries and cerebral vessels, improving blood flow to heart and brain to relieve ischemia and hypertension",
+      "Alcohol craving and metabolism modulator — inhibits ALDH2 to alter alcohol metabolism, reducing the desire to drink and protecting the liver from ethanol-induced oxidative stress",
+      "Phytoestrogenic support — dense isoflavones bind ER-beta receptors, giving mild estrogenic support for menopausal hot flashes and bone density retention"
+    ],
+    "energetics": [
+      "Cool",
+      "Moistening",
+      "Sweet",
+      "Acrid"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Lung"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 586,
+    "name": "Buckthorn Bark",
+    "primary_functions": [
+      "Stimulant laxative — anthraquinone glycosides stimulate vigorous colonic peristalsis to clear severe acute constipation",
+      "Hydrates the bowel lumen — prevents reabsorption of water and electrolytes from the large intestine, giving a softer, bulkier stool",
+      "Cholagogue — stimulates bile flow from liver and gallbladder to relieve hepatic congestion and aid fat digestion"
+    ],
+    "energetics": [
+      "Cold",
+      "Dry",
+      "Bitter"
+    ],
+    "tcm_meridians": [
+      "Large Intestine",
+      "Liver"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 587,
+    "name": "Mangosteen Extract",
+    "primary_functions": [
+      "Apex xanthone antioxidant — dense alpha-mangostin scavenges reactive oxygen species and protects cellular lipid membranes more effectively than standard vitamin E",
+      "Systemic anti-inflammatory — blocks COX-2 and prevents synthesis of Prostaglandin E2, reducing joint pain and severe systemic inflammation",
+      "Antimicrobial and anti-acne agent — alpha-mangostin targets and destroys Propionibacterium acnes and MRSA in clinical trials",
+      "Oncological apoptosis catalyst — researched for inducing programmed cell death in breast, prostate and leukemia cell lines via mitochondrial pathways"
+    ],
+    "energetics": [
+      "Cold",
+      "Dry",
+      "Astringent",
+      "Bitter"
+    ],
+    "tcm_meridians": [
+      "Large Intestine",
+      "Spleen",
+      "Stomach"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 588,
+    "name": "Bayberry",
+    "primary_functions": [
+      "Systemic astringent and circulatory stimulant — uniquely pairs intense tissue tightening with circulatory stimulation, driving blood to the mucous membranes while sealing them against leakage",
+      "Mucosal hemostatic — rapidly arrests passive mucosal bleeding in the gums, uterus, and gastrointestinal tract",
+      "Diaphoretic and fever breaker — stimulates peripheral capillary circulation to force a sweat, breaking deep-seated cold-onset fevers",
+      "Gargle and wash — the premier oral rinse for spongy bleeding gums, severe tonsillitis, and chronic pharyngitis"
+    ],
+    "energetics": [
+      "Warm",
+      "Extremely Dry",
+      "Intensely Astringent",
+      "Stimulating"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Large Intestine"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 589,
+    "name": "He Shou Wu / Fo-Ti",
+    "primary_functions": [
+      "Nourishes Blood and Jing (Essence) — the premier TCM tonic for profound blood deficiency, addressing premature greying, dizziness, and extreme constitutional exhaustion",
+      "Neuroprotective and longevity catalyst — upregulates superoxide dismutase and acts as an MAO-B inhibitor, protecting dopaminergic neurons and slowing cellular senescence",
+      "Astringes Jing — stabilises the lower gates against leakage of essence (spermatorrhea, frequent urination, vaginal discharge) arising from Kidney deficiency",
+      "Lipid modulator — inhibits cholesterol absorption in the gut and limits atherosclerotic plaque formation"
+    ],
+    "energetics": [
+      "Warm",
+      "Sweet",
+      "Bitter",
+      "Astringent"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "HIGH"
   }
 ]
