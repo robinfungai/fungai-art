@@ -20,6 +20,7 @@
  */
 
 import { groundQuestion, verifyAnswer, GROUNDING_RULES, KB_VERSION } from '../../src/server/myco/grounding.cjs';
+import { retrieveLabNotes } from '../../src/server/myco/lab-notes.cjs';
 import { guardReply } from '../../src/server/myco/claims-guard.cjs';
 
 const ALLOWED_ORIGINS = [
@@ -428,8 +429,18 @@ export const handler = async (event) => {
     // warfarin?" still resolves to the herb being discussed.
     const lastUserTurn = [...safeHistory].reverse().find(m => m.role === 'user');
     const retrievalQuery = (lastUserTurn ? lastUserTurn.content.slice(0, 300) + ' ' : '') + userMessage;
+    //
+    // The Academy lab notebook is retrieved live (Supabase, 2-min cache)
+    // rather than from the built KB, so research posted this morning is
+    // answerable this morning. It never blocks an answer: on any failure
+    // retrieveLabNotes returns [] and the static knowledge base stands
+    // alone.
+    let labExtra = [];
+    try { labExtra = await retrieveLabNotes(retrievalQuery, 3); }
+    catch (_) { labExtra = []; }
+
     let grounded = { block: '', sources: [] };
-    try { grounded = groundQuestion(retrievalQuery, { k: 6 }); }
+    try { grounded = groundQuestion(retrievalQuery, { k: 6, extra: labExtra }); }
     catch (_) { grounded = { block: '', sources: [] }; }
 
     const res = await fetch('https://api.anthropic.com/v1/messages', {

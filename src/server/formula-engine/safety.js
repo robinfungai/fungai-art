@@ -124,7 +124,10 @@ function safetyFilter(h, avoid) {
 const MINOR_BANNED_FLAGS = new Set(['sedatives', 'psych_meds', 'contraceptive']);
 
 function passesMinorGate(h) {
-  if (h && h.gated) return false;
+  // Both checks, deliberately. `minorBanned` is the standing under-18
+  // ban; `gated` is still honoured so anything gated in future is also
+  // withheld from minors by default.
+  if (h && (h.minorBanned || h.gated)) return false;
   const flags = (h && h._ax && h._ax.flags) || [];
   for (const f of flags) if (MINOR_BANNED_FLAGS.has(f)) return false;
   if (isGABAergic(h))    return false;

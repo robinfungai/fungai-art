@@ -20,7 +20,7 @@ const STATIC_PAGES = [
   '/home',     '/shop',          '/mixology',          '/extraction',
   '/health',   '/herbal-engine-2', '/community',       '/community/academy',
   '/tymetonics','/members',       '/dinner-experience',  '/mycelium',  '/draw',
-  '/patron',   '/onboard',       '/sporing',           '/mycel-basket',
+  '/onboard',  '/mycel-basket',
   '/privacy',  '/terms',         '/covenant',
   // Product detail pages — one static HTML per hero product under /shop/[slug]/
   '/shop/amanita',      '/shop/adhd-support', '/shop/sleepy-sleepy',

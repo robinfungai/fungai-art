@@ -14,6 +14,80 @@ const { safetyFilter, applyMinorGate } = require('./safety');
 const { isTrace } = require('./traces');
 const { isGABAergic, isCNSStimulant, categoryOf } = require('./pharmacology');
 
+// ── Tie-breaking ──────────────────────────────────────────────────
+// scoreHerb builds a score from a handful of coarse constants —
+// pattern 4, stress 3, time 2, intention 5/n — so exact ties are
+// common: for some profiles the top six candidates score identically.
+//
+// Until 2026-09-23 those ties fell through to Array.prototype.sort's
+// stability, which meant POSITION IN herbs.ts decided the bottle. An
+// ordering nobody designed was doing the picking, and it showed:
+// Ashwagandha appeared in 39.6% of formulas, the top five herbs took
+// 28.1% of all seats, and 54 herbs never appeared at all.
+//
+// Ties now break on two criteria that were actually chosen:
+//   1. evidence grade — the better-evidenced herb wins
+//   2. a hash of (answers, herb id) — rotates which of several equally
+//      graded herbs is seated, from one profile to the next
+//
+// Determinism is preserved: the hash depends only on the answers and
+// the herb, never on clock or randomness, so identical answers always
+// yield an identical bottle. (tests/fixtures compare on this.)
+const GRADE_RANK = {
+  'A+': 0, 'A': 1, 'A-': 2,
+  'B+': 3, 'B': 4, 'B-': 5,
+  'C+': 6, 'C': 7, 'C-': 8,
+  'D+': 9, 'D': 10, 'D-': 11,
+};
+function gradeRank(h) {
+  const g = String((h && h.evidence_grade) || '').trim().toUpperCase();
+  // Ungraded sits mid-table: an unknown grade should neither win nor
+  // lose a tie against a graded herb on the strength of its blankness.
+  return Object.prototype.hasOwnProperty.call(GRADE_RANK, g) ? GRADE_RANK[g] : 6.5;
+}
+
+function fnv1a(str) {
+  let x = 2166136261 >>> 0;
+  for (let i = 0; i < str.length; i++) {
+    x ^= str.charCodeAt(i);
+    x = Math.imul(x, 16777619) >>> 0;
+  }
+  return x >>> 0;
+}
+
+function profileSeed(a) {
+  return [
+    a.intention, (a.intentions || []).join(','), a.pattern, a.patternSub,
+    a.time, a.stress, a.duration, a.age, a.sleep, (a.avoid || []).join(','),
+  ].join('|');
+}
+
+// Comparator for two equally-scored candidates, bound to one profile.
+function makeTieBreaker(a) {
+  const seed = profileSeed(a);
+  return (x, y) => {
+    const g = gradeRank(x.h) - gradeRank(y.h);
+    if (g !== 0) return g;
+    const hx = fnv1a(seed + '::' + String(x.h.id || x.h.name));
+    const hy = fnv1a(seed + '::' + String(y.h.id || y.h.name));
+    if (hx !== hy) return hx - hy;
+    return String(x.h.name).localeCompare(String(y.h.name));
+  };
+}
+
+// Sort by score, then by the designed tie-break. EPS guards against
+// float noise from the 5/n intention term.
+const SCORE_EPS = 1e-9;
+function sortScored(scored, a) {
+  const tie = makeTieBreaker(a);
+  scored.sort((x, y) => {
+    const d = y.s - x.s;
+    if (Math.abs(d) > SCORE_EPS) return d;
+    return tie(x, y);
+  });
+  return scored;
+}
+
 function targetHerbCount(a) {
   let n = 4;
   if (a.notes && a.notes.trim().length > 80) n += 1;
@@ -38,7 +112,7 @@ function pickFormula(a) {
   const safe        = pool.filter(h => safetyFilter(h, a.avoid || []));
   const minorGated  = applyMinorGate(safe, a);
   const scored = minorGated.map(h => ({ h, s: scoreHerb(h, a) })).filter(x => x.s > 0);
-  scored.sort((x, y) => y.s - x.s);
+  sortScored(scored, a);
 
   const seen = new Set();
   const uniq = scored.filter(x => {
@@ -98,7 +172,7 @@ function buildScoredCandidates(a, limit = 20) {
   const safe       = pool.filter(h => safetyFilter(h, a.avoid || []));
   const minorGated = applyMinorGate(safe, a);
   const scored = minorGated.map(h => ({ h, s: scoreHerb(h, a) })).filter(x => x.s > 0);
-  scored.sort((x, y) => y.s - x.s);
+  sortScored(scored, a);
 
   const seen = new Set();
   const uniq = scored.filter(x => {

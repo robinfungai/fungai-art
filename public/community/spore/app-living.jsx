@@ -524,9 +524,9 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
           <a href="/mixology">Herbals</a>
           <a href="/foraging">Foraging</a>
           <a href="/extraction">Extraction</a>
-          <a href="/patron/">Patronage</a>
+          <a href="/members#patronage">Patronage</a>
           <a href="/onboard/">Onboard</a>
-          <a href="/sporing/">Sporing</a>
+          <a href="/members#sporing">Sporing</a>
           {/* $MYCEL pill — now points at /members/ which has the actual
               "what are Hyphae" substance: token role, mycoTrust, earn /
               spend mechanics. Was /sporing/ (the ledger), wrong target. */}

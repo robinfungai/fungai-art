@@ -6,8 +6,15 @@
 //   sources                                    → chunks
 //   ─────────────────────────────────────────────────────────────
 //   src/data/herbs.ts (via herbs.generated)    → 5 chunks per herb
+//   src/data/extraction.ts                     → 1 chunk per protocol
 //   public/home/markdowns all plants/*.md      → one per ## section
 //   knowledge/proprietary/*.md                 → one per ## section
+//
+// extraction.ts was invisible to MYCO until 2026-09-23, which is why it
+// could not answer "how do I extract cleavers" — the answer was sitting
+// in the extraction table (succus, fresh plant, heat destroys it) while
+// MYCO only ever read herbs.ts, where Cleavers has no record at all.
+// 199 protocols, every one with a solvent, a ratio and a method.
 //
 // Every chunk carries a SOURCE TYPE, which is what lets MYCO say
 // "this is established evidence" vs "this is traditional knowledge"
@@ -160,6 +167,63 @@ function buildHerbChunks() {
   }
 }
 
+// ── 1b · Extraction protocols ────────────────────────────────────
+// src/data/extraction.ts is TypeScript, so it is transformed with the
+// esbuild already in the project rather than regex-stripped — the same
+// data feeds /extraction, and the two must not drift.
+function buildExtractionChunks() {
+  const file = path.join(ROOT, 'src', 'data', 'extraction.ts');
+  if (!fs.existsSync(file)) return;
+
+  let EXTRACTION;
+  try {
+    const { transformSync } = require('esbuild');
+    const js = transformSync(fs.readFileSync(file, 'utf8'), {
+      loader: 'ts', format: 'cjs', target: 'node18',
+    }).code;
+    const mod = { exports: {} };
+    new Function('module', 'exports', 'require', js)(mod, mod.exports, require);
+    EXTRACTION = mod.exports.EXTRACTION;
+  } catch (e) {
+    console.warn('  ! extraction.ts could not be loaded: ' + e.message);
+    return;
+  }
+  if (!Array.isArray(EXTRACTION)) return;
+
+  const list = v => (Array.isArray(v) ? v.filter(Boolean).join(', ') : (v || ''));
+  for (const x of EXTRACTION) {
+    if (!x || !x.common) continue;
+    // [cite: n] markers are editorial bookkeeping from the source
+    // document — they read as broken citations next to MYCO's own [K1]
+    // refs, so they are stripped here rather than confusing the model.
+    const notes = String(x.notes || '').replace(/\s*\[cite:[^\]]*\]/g, '').trim();
+    addChunk({
+      id:      'extract:' + slugify(x.id || x.common),
+      type:    'preparation',
+      herb:    x.common,
+      title:   x.common + ' — extraction protocol',
+      section: 'Extraction',
+      source:  'Fungai extraction protocol · ' + x.common +
+               (x.botanical ? ' (' + x.botanical + ')' : ''),
+      text: [
+        x.common + (x.botanical ? ' (' + x.botanical + ')' : ''),
+        x.part ? 'Part used: ' + x.part : '',
+        x.methods ? 'Method: ' + list(x.methods) : '',
+        x.ethanol != null ? 'Solvent: ' + x.ethanol + '% ethanol' : '',
+        x.ratio ? 'Ratio: ' + x.ratio : '',
+        x.days != null ? 'Maceration / percolation: ' + x.days + ' days' : '',
+        x.decoctionMin != null ? 'Decoction: ' + x.decoctionMin + ' minutes' : '',
+        'Spagyric: ' + (x.spagyric ? 'yes' : 'no'),
+        notes ? 'Notes: ' + notes : '',
+        x.tcm && x.tcm.meridians ? 'TCM meridians: ' + list(x.tcm.meridians) : '',
+        x.tcm && x.tcm.element ? 'TCM element: ' + x.tcm.element : '',
+        x.synergy ? 'Synergy: ' + list(x.synergy) : '',
+        x.caution_level ? 'Caution level: ' + x.caution_level : '',
+      ].filter(Boolean).join('\n'),
+    });
+  }
+}
+
 // ── 2 · Long-form monographs ─────────────────────────────────────
 function buildMonographChunks() {
   if (!fs.existsSync(MONOGRAPHS)) return;
@@ -225,6 +289,7 @@ function buildProprietaryChunks() {
 }
 
 buildHerbChunks();
+buildExtractionChunks();
 buildMonographChunks();
 buildProprietaryChunks();
 

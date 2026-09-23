@@ -425,6 +425,17 @@
       color:var(--nutrient-l);
     }
     .lab-entry.editing .lab-entry-actions{ display:none; }
+    /* "On this device only" — a note that has never reached Supabase.
+       Amber rather than red: nothing is lost, it just isn't shared yet.
+       The title attribute carries the database's own reason. */
+    .lab-entry-local{
+      font-family:'Geist Mono',monospace; font-size:8px;
+      letter-spacing:0.16em; text-transform:uppercase;
+      color:#F0C46A; background:rgba(232,177,75,0.10);
+      border:0.5px solid rgba(232,177,75,0.32);
+      border-radius:999px; padding:2px 8px; margin-left:8px;
+      cursor:help; white-space:nowrap;
+    }
     /* Move-to-chapter dropdown — themed to match dark surface, no native
        white box. Rounded pill, mono caps, subtle hover lift. */
     .lab-entry-move, .ln-move-select {
@@ -452,6 +463,14 @@
     }
   </style>
 <script src="/global-nav.js" defer></script>
+<!-- Supabase client. MUST stay above the inline scripts below: they call
+     `await window.SBready`, and until 2026-09-23 this tag sat at the very
+     bottom of the page. SBready did not exist yet when they ran, so
+     `await undefined` resolved immediately with window.SBclient still
+     unset and every cloud call on this page silently gave up — the
+     shared lab notebook never loaded, stuck notes were never retried,
+     and a magic-link session was never reconciled. -->
+<script src="/supabase-client.js"></script>
 <!-- Living mycelium background (same as /community) -->
 <script src="/mycelium-field.js" data-variant="community" defer></script>
 <style id="fa-formula-drawer">
@@ -1339,18 +1358,29 @@ function labKey(chapterId) {
 // own device.
 window.LAB_CLOUD = window.LAB_CLOUD || {};
 
+// Raw per-device entries. Anything that WRITES back to localStorage has
+// to start here, never from loadEntries(): loadEntries() returns the
+// merge of this device plus everyone else's cloud notes, and saving that
+// merged list copies other members' notes onto this device while quietly
+// dropping whatever the merge deduped away.
+function loadLocalEntries(id) {
+  try {
+    const v = JSON.parse(localStorage.getItem(labKey(id)) || '[]');
+    return Array.isArray(v) ? v : [];
+  } catch { return []; }
+}
+
 function loadEntries(id) {
   // Cloud entries first (everyone's notes), then local entries that
   // haven't been mirrored yet (offline writes from this device).
-  // Dedupe by cloud id vs. local timestamp.
+  // Dedupe by cloud id, then by local timestamp.
   const cloud = (window.LAB_CLOUD && window.LAB_CLOUD[id]) || [];
-  let local = [];
-  try { local = JSON.parse(localStorage.getItem(labKey(id)) || '[]'); } catch {}
+  const local = loadLocalEntries(id);
 
-  // Local entries that haven't been synced are flagged with _pendingCloud:
-  // true OR they have no cloud counterpart. Merge them in front (newest first).
+  const cloudIds   = new Set(cloud.map(e => e._cloudId).filter(Boolean));
   const cloudTimes = new Set(cloud.map(e => e.ts));
-  const localOnly = local.filter(e => !cloudTimes.has(e.ts));
+  const localOnly = local.filter(e =>
+    !(e._cloudId && cloudIds.has(e._cloudId)) && !cloudTimes.has(e.ts));
 
   return [...localOnly, ...cloud].sort((a, b) => (b.ts || 0) - (a.ts || 0));
 }
@@ -1359,12 +1389,39 @@ function saveEntries(id, entries) {
   try { localStorage.setItem(labKey(id), JSON.stringify(entries)); } catch {}
 }
 
+// Escape for an HTML attribute (title="…"), used for sync tooltips.
+function labAttr(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+
+// Wait until /supabase-client.js has actually produced a client. The tag
+// now sits in <head>, but this keeps the page correct whatever the order:
+// it settles on SBready, on the 'supabase:ready' event, or by polling.
+function labAwaitSupabase(timeoutMs = 15000) {
+  if (window.SBclient) return Promise.resolve(true);
+  return new Promise(resolve => {
+    let settled = false;
+    const finish = () => { if (!settled) { settled = true; resolve(!!window.SBclient); } };
+    window.addEventListener('supabase:ready', finish, { once: true });
+    const started = Date.now();
+    (function poll() {
+      if (settled) return;
+      if (window.SBclient) return finish();
+      if (window.SBready && typeof window.SBready.then === 'function') {
+        window.SBready.then(finish, finish);
+      }
+      if (Date.now() - started > timeoutMs) return finish();
+      setTimeout(poll, 100);
+    })();
+  });
+}
+
 // Pull ALL lab notes from Supabase. Public-readable (RLS allows anon),
 // so this works even when the visitor isn't signed in.
 async function loadLabNotesFromCloud() {
-  if (!window.SBclient) {
-    try { await window.SBready; } catch { return; }
-  }
+  if (!window.SBclient) await labAwaitSupabase();
   if (!window.SBclient) return;
   try {
     const { data, error } = await window.SBclient
@@ -1404,26 +1461,81 @@ async function loadLabNotesFromCloud() {
   }
 }
 
-// Push a single entry to the cloud. Best-effort — failure leaves the
-// local entry in place, and the next page load will retry implicitly
-// via loadLabNotesFromCloud (the local entry sits alongside cloud
-// entries until it's mirrored).
+// ── Cloud sync: the limits, and why notes went missing ────────────
+//
+// The live INSERT policy (supabase-hardening-round-2.sql §2a) caps a
+// note at 8,000 characters and author_name at 60, and author_id is a
+// foreign key into profiles. A row that breaks any of those is refused
+// by Postgres — and until now that refusal only reached console.warn,
+// so the note stayed on the device and the member was never told.
+// Everything below exists to make a failed push visible and retryable
+// instead of silent.
+const LAB_TEXT_MAX        = 8000;   // char_length(text) BETWEEN 1 AND 8000
+const LAB_AUTHOR_NAME_MAX = 60;     // char_length(author_name) <= 60
+const LAB_CHAPTER_ID_MAX  = 100;    // char_length(chapter_id) BETWEEN 1 AND 100
+const LAB_UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+// Last failure, so the sync bar can show it and the console can be asked
+// directly: window.LAB_SYNC.lastError
+window.LAB_SYNC = window.LAB_SYNC || { lastError: null, lastRun: 0 };
+
+// Notes with a push already in the air, keyed "<chapterId>:<ts>". A note
+// gets its _cloudId only when the insert comes back, so without this a
+// sweep running alongside a fresh save would treat it as pending and
+// insert it a second time. Also guards against two overlapping sweeps.
+const LAB_IN_FLIGHT = new Set();
+let labRetryRunning = false;
+
+// Turn a Postgres / PostgREST error into something a member can act on.
+// Unknown codes fall through to the raw message — never hide it.
+function labSyncExplain(err) {
+  if (!err) return '';
+  const code = err.code || '';
+  const msg  = err.message || String(err);
+  if (code === 'TOO_LONG')  return msg;
+  if (code === 'NO_CLIENT') return 'The Supabase client never loaded on this page — check the console for a blocked script.';
+  if (code === 'PGRST205' || code === '42P01' || /relation.*does not exist/i.test(msg))
+    return 'The lab_notes table does not exist in the database. Run supabase-lab-notes.sql.';
+  if (code === '42501' || /row-level security/i.test(msg))
+    return 'The database refused the write (row-level security). The INSERT policy on lab_notes is probably still the members-only one — run supabase-lab-notes-sync-fix.sql.';
+  if (code === '23503') return 'The member profile cached on this device no longer exists in the database.';
+  if (code === '22P02') return 'The member id cached on this device is not a valid profile id.';
+  if (code === 'PGRST301' || /JWT|token is expired/i.test(msg))
+    return 'The sign-in session has expired. Sign in again from /community/, then press Sync now.';
+  if (/Failed to fetch|NetworkError|network/i.test(msg))
+    return 'No connection to Supabase — offline, or the request was blocked.';
+  return msg + (code ? ' (' + code + ')' : '');
+}
+
+// Push a single entry to the cloud.
+//
+// Returns { id, error } — never a bare null. The caller stores the error
+// on the local entry so the notebook can say what went wrong instead of
+// implying the note was saved everywhere.
 async function pushLabNoteToCloud({ text, chapterId, ts }) {
-  if (!window.SBclient) return null;
+  if (!window.SBclient) {
+    return { id: null, error: { code: 'NO_CLIENT', message: 'Supabase client not loaded.' } };
+  }
+  // Check the policy's limits before the round-trip, so the reason reads
+  // as "8,412 of 8,000 characters" rather than a generic permissions
+  // refusal that sends you looking in the wrong place.
+  const body = String(text || '');
+  if (!body.trim()) return { id: null, error: { code: 'EMPTY', message: 'Empty note.' } };
+  if (body.length > LAB_TEXT_MAX) {
+    return { id: null, error: { code: 'TOO_LONG', message:
+      'This note is ' + body.length.toLocaleString('en-GB') + ' characters; the shared notebook accepts '
+      + LAB_TEXT_MAX.toLocaleString('en-GB') + '. Split it and every part will sync.' } };
+  }
+  if (!chapterId || chapterId.length > LAB_CHAPTER_ID_MAX) {
+    return { id: null, error: { code: 'BAD_CHAPTER', message: 'The chapter id is missing or too long.' } };
+  }
+
   try {
-    // Previously this early-returned when SBauth.getUser() was null,
-    // which silently dropped notes whenever a member's Supabase auth
-    // session had expired (very common — the spore portal carries
-    // identity in localStorage long after the Supabase JWT is gone).
-    // That's how Douglas's spagyric entries ended up local-only.
-    // The new lab_notes RLS allows anon inserts; we still try to
-    // attach a profileId when one is available, but no auth check
-    // here. author_name carries attribution either way.
+    // No auth check here on purpose: the spore portal carries identity in
+    // localStorage long after the Supabase JWT is gone, and the insert
+    // policy accepts anon. author_name carries attribution either way.
     const user = window.SBauth ? await window.SBauth.getUser().catch(() => null) : null;
 
-    // Look up the author's profile + character_name. The profiles.id
-    // is needed for author_id (FK + RLS); character_name is the display
-    // tag on the entry.
     let profileId = null;
     let authorName = null;
     try {
@@ -1436,29 +1548,69 @@ async function pushLabNoteToCloud({ text, chapterId, ts }) {
         if (mine) { profileId = mine.id; authorName = mine.character_name; }
       } catch {}
     }
-
-    const { data, error } = await window.SBclient
-      .from('lab_notes')
-      .insert({
-        chapter_id: chapterId,
-        text,
-        author_id: profileId,
-        author_name: authorName,
-        created_at: new Date(ts).toISOString(),
-      })
-      .select('id')
-      .single();
-    if (error) {
-      const code = error.code || '';
-      if (code !== 'PGRST205' && code !== '42P01' && !/relation.*does not exist/i.test(error.message || '')) {
-        console.warn('[lab-notes] cloud push failed:', error.message);
-      }
-      return null;
+    // A non-uuid cloudId (an old 'robin'-style member id) makes Postgres
+    // reject the whole row with 22P02. Attribution lives in author_name,
+    // so drop a malformed id rather than lose the note over it.
+    if (profileId && !LAB_UUID_RE.test(String(profileId))) profileId = null;
+    if (authorName && authorName.length > LAB_AUTHOR_NAME_MAX) {
+      authorName = authorName.slice(0, LAB_AUTHOR_NAME_MAX);
     }
-    return data?.id || null;
+
+    const row = {
+      chapter_id: chapterId,
+      text: body,
+      author_id: profileId,
+      author_name: authorName,
+      created_at: new Date(ts).toISOString(),
+    };
+
+    let { data, error } = await window.SBclient
+      .from('lab_notes').insert(row).select('id').single();
+
+    // The profile row was deleted, or belongs to a different database.
+    // The note matters more than the link — retry it unattributed.
+    if (error && (error.code === '23503' || error.code === '22P02') && row.author_id) {
+      row.author_id = null;
+      ({ data, error } = await window.SBclient
+        .from('lab_notes').insert(row).select('id').single());
+    }
+
+    if (error) {
+      const err = { code: error.code || '', message: error.message || String(error) };
+      window.LAB_SYNC.lastError = err;
+      console.warn('[lab-notes] cloud push failed:', err.code, err.message);
+      return { id: null, error: err };
+    }
+    return { id: data?.id || null, error: null };
   } catch (e) {
+    const err = { code: 'THREW', message: e?.message || String(e) };
+    window.LAB_SYNC.lastError = err;
     console.warn('[lab-notes] cloud push threw:', e);
+    return { id: null, error: err };
+  }
+}
+
+// UPDATE and DELETE on lab_notes need an authenticated session whose
+// profile authored the row (supabase-lab-notes.sql). An anonymous portal
+// identity cannot change a cloud note — and RLS expresses that as zero
+// rows affected, not as an error, so check the returned rows. Without
+// this, editing or deleting a shared note looked like it worked and then
+// reverted on the next page load.
+async function labCloudWrite(op, cloudId, patch) {
+  if (!window.SBclient) return { code: 'NO_CLIENT', message: 'Supabase client not loaded.' };
+  try {
+    const q = window.SBclient.from('lab_notes');
+    const { data, error } = await (op === 'delete'
+      ? q.delete().eq('id', cloudId).select('id')
+      : q.update(patch).eq('id', cloudId).select('id'));
+    if (error) return { code: error.code || '', message: error.message || String(error) };
+    if (!data || !data.length) {
+      return { code: 'NO_ROWS', message:
+        'The database accepted the request but changed nothing — shared notes can only be edited or deleted by their author, signed in from /community/.' };
+    }
     return null;
+  } catch (e) {
+    return { code: 'THREW', message: e?.message || String(e) };
   }
 }
 
@@ -1516,6 +1668,22 @@ function renderEntries(chapterId) {
         const editedTag = e.editedTs
           ? `<span style="font-family:var(--font-mono);font-size:8px;letter-spacing:0.16em;color:var(--mycelium-d);opacity:0.7;margin-left:6px;">edited</span>`
           : '';
+        // The one thing this notebook never said out loud: an entry with
+        // no _cloudId has never reached Supabase, so nobody else can see
+        // it. The tooltip carries the database's own reason for refusing.
+        const isLocalOnly = !e._cloudId;
+        const syncWhy = isLocalOnly
+          ? (e._syncError ? labSyncExplain(e._syncError)
+                          : 'Not in the shared notebook yet — press Sync now at the top of the notebook.')
+          : '';
+        const syncTag = isLocalOnly
+          ? `<span class="lab-entry-local" title="${labAttr(syncWhy)}">on this device only</span>`
+          : '';
+        // Over the 8,000-character cap there is nothing to retry until the
+        // note is split, so offer that as the action instead of a retry.
+        const splitBtn = (isLocalOnly && e._syncError && e._syncError.code === 'TOO_LONG')
+          ? `<button class="lab-entry-edit" onclick="labSplitEntry('${chapterId}', ${i})" title="${labAttr(syncWhy)}">split &amp; sync</button>`
+          : '';
         // Author byline — so members can tell whose notes are whose
         // when they sync to a new device. Cloud entries carry `_author`;
         // local-only entries fall back to the current member's name (the
@@ -1534,8 +1702,9 @@ function renderEntries(chapterId) {
         return `
           <div class="lab-entry" id="entry-${chapterId}-${i}">
             <div class="lab-entry-text">${body}</div>
-            <div class="lab-entry-meta">${authorByline}${fmtDate(e.ts)}${editedTag}</div>
+            <div class="lab-entry-meta">${authorByline}${fmtDate(e.ts)}${editedTag}${syncTag}</div>
             <div class="lab-entry-actions">
+              ${splitBtn}
               ${editBtn}
               ${move}
               <button class="lab-entry-del" onclick="deleteEntry('${chapterId}', ${i})" title="Delete">✕</button>
@@ -1552,17 +1721,39 @@ function labExpand(chapterId, i){
   if (s) s.style.display = 'none';
   if (f) f.style.display = 'block';
 }
-function labMoveEntry(fromId, idx, toId){
+async function labMoveEntry(fromId, idx, toId){
   if (!toId) return;
   // Any signed-in member can move entries between chapters now (used to be
   // admin-only). Lab notebook itself is sign-in-gated upstream.
-  const from = loadEntries(fromId);
-  const [moved] = from.splice(idx, 1);
-  if (!moved) return;
-  saveEntries(fromId, from);
-  const to = loadEntries(toId);
-  to.unshift(moved);
-  saveEntries(toId, to);
+  const entry = loadEntries(fromId)[idx];
+  if (!entry) return;
+
+  // A shared note lives in Supabase, so the move has to happen there or
+  // it silently reverts on the next load. This used to splice the MERGED
+  // list and save it to localStorage, which copied every other member's
+  // notes onto this device as a side effect.
+  if (entry._cloudId) {
+    const err = await labCloudWrite('update', entry._cloudId, { chapter_id: toId });
+    if (err) {
+      alert('Could not move it in the shared notebook.\n\n' + labSyncExplain(err));
+      renderEntries(fromId);
+      return;
+    }
+    window.LAB_CLOUD[fromId] = (window.LAB_CLOUD[fromId] || [])
+      .filter(e => e._cloudId !== entry._cloudId);
+    if (!window.LAB_CLOUD[toId]) window.LAB_CLOUD[toId] = [];
+    window.LAB_CLOUD[toId].unshift(entry);
+  }
+
+  const from = loadLocalEntries(fromId);
+  const li = from.findIndex(e => e.ts === entry.ts);
+  if (li >= 0) {
+    const [moved] = from.splice(li, 1);
+    saveEntries(fromId, from);
+    const to = loadLocalEntries(toId);
+    to.unshift(moved);
+    saveEntries(toId, to);
+  }
   renderEntries(fromId);
   renderEntries(toId);
 }
@@ -1576,7 +1767,7 @@ function saveEntry(chapterId) {
 
   // Write locally FIRST so the entry is visible immediately, even if
   // the cloud push fails or the user is offline.
-  const local = (() => { try { return JSON.parse(localStorage.getItem(labKey(chapterId)) || '[]'); } catch { return []; } })();
+  const local = loadLocalEntries(chapterId);
   local.unshift({ text, ts });
   saveEntries(chapterId, local);
 
@@ -1592,17 +1783,25 @@ function saveEntry(chapterId) {
   // Best-effort push to Supabase so the note becomes visible to every
   // other member (and the public). Silent on failure — the local copy
   // is the source of truth until the SQL migration runs.
-  pushLabNoteToCloud({ text, chapterId, ts }).then(cloudId => {
-    if (!cloudId) return;
-    // Stamp the local entry with its cloud id + push it into the cloud
-    // bucket so it merges cleanly with the next loadEntries() call.
-    try {
-      const cur = JSON.parse(localStorage.getItem(labKey(chapterId)) || '[]');
-      const idx = cur.findIndex(e => e.ts === ts);
-      if (idx >= 0) { cur[idx]._cloudId = cloudId; saveEntries(chapterId, cur); }
-    } catch {}
-    if (!window.LAB_CLOUD[chapterId]) window.LAB_CLOUD[chapterId] = [];
-    window.LAB_CLOUD[chapterId].unshift({ text, ts, _cloudId: cloudId });
+  const flightKey = chapterId + ':' + ts;
+  LAB_IN_FLIGHT.add(flightKey);
+  pushLabNoteToCloud({ text, chapterId, ts }).then(({ id: cloudId, error }) => {
+    LAB_IN_FLIGHT.delete(flightKey);
+    // Stamp the local entry with its cloud id — or with the reason it
+    // was refused, so the entry can say "on this device only" and why.
+    const cur = loadLocalEntries(chapterId);
+    const idx = cur.findIndex(e => e.ts === ts);
+    if (idx >= 0) {
+      if (cloudId) { cur[idx]._cloudId = cloudId; delete cur[idx]._syncError; }
+      else if (error) { cur[idx]._syncError = error; }
+      saveEntries(chapterId, cur);
+    }
+    if (cloudId) {
+      if (!window.LAB_CLOUD[chapterId]) window.LAB_CLOUD[chapterId] = [];
+      window.LAB_CLOUD[chapterId].unshift({ text, ts, _cloudId: cloudId });
+    }
+    renderEntries(chapterId);
+    try { renderLabSyncBar(); } catch {}
   });
 }
 
@@ -1635,12 +1834,28 @@ function indexEntryForMyco({ text, chapterId, ts }) {
   try { localStorage.setItem(idxKey, JSON.stringify(idx)); } catch (e) {}
 }
 
-function deleteEntry(chapterId, index) {
+async function deleteEntry(chapterId, index) {
   if (!confirm('Delete this entry?')) return;
-  const entries = loadEntries(chapterId);
-  entries.splice(index, 1);
-  saveEntries(chapterId, entries);
+  const entry = loadEntries(chapterId)[index];
+  if (!entry) return;
+
+  // A note that lives in the cloud has to be deleted there as well.
+  // Splicing the merged list only ever touched localStorage, so the row
+  // stayed in Supabase and the note reappeared on the next page load.
+  if (entry._cloudId) {
+    const err = await labCloudWrite('delete', entry._cloudId);
+    if (err) {
+      alert('Could not delete it from the shared notebook, so it is still visible to other members.\n\n' + labSyncExplain(err));
+      return;
+    }
+    Object.keys(window.LAB_CLOUD || {}).forEach(k => {
+      window.LAB_CLOUD[k] = (window.LAB_CLOUD[k] || [])
+        .filter(e => e._cloudId !== entry._cloudId);
+    });
+  }
+  saveEntries(chapterId, loadLocalEntries(chapterId).filter(e => e.ts !== entry.ts));
   renderEntries(chapterId);
+  try { renderLabSyncBar(); } catch {}
 }
 
 // Inline edit: replace the entry's rendered text + meta with a textarea +
@@ -1674,18 +1889,43 @@ function editEntry(chapterId, index){
 function cancelEdit(chapterId, index){
   renderEntries(chapterId);
 }
-function commitEdit(chapterId, index){
+async function commitEdit(chapterId, index){
   const ta = document.getElementById(`edit-area-${chapterId}-${index}`);
   if (!ta) return;
   const next = ta.value.trim();
   if (!next) { alert('An entry needs some text.'); return; }
-  const entries = loadEntries(chapterId);
-  const entry = entries[index];
+  const entry = loadEntries(chapterId)[index];
   if (!entry) return;
-  entry.text = next;
-  entry.editedTs = Date.now();
-  saveEntries(chapterId, entries);
+  const editedTs = Date.now();
+
+  // Editing a shared note has to reach Supabase. Before this, the edit
+  // was written to localStorage under the cloud row's timestamp, the
+  // merge deduped it away on the next load, and the change vanished.
+  if (entry._cloudId) {
+    if (next.length > LAB_TEXT_MAX) {
+      alert('This note is now ' + next.length.toLocaleString('en-GB')
+          + ' characters; the shared notebook accepts ' + LAB_TEXT_MAX.toLocaleString('en-GB') + '.');
+      return;
+    }
+    const err = await labCloudWrite('update', entry._cloudId, { text: next });
+    if (err) { alert('Could not save it to the shared notebook.\n\n' + labSyncExplain(err)); return; }
+    (window.LAB_CLOUD[chapterId] || []).forEach(e => {
+      if (e._cloudId === entry._cloudId) { e.text = next; e.editedTs = editedTs; }
+    });
+  }
+
+  // Mirror onto the device copy when there is one. A note that only
+  // exists in the cloud has no local row, and must not gain one here.
+  const local = loadLocalEntries(chapterId);
+  const li = local.findIndex(e => e.ts === entry.ts);
+  if (li >= 0) {
+    local[li].text = next;
+    local[li].editedTs = editedTs;
+    delete local[li]._syncError;   // it may fit the cap now
+    saveEntries(chapterId, local);
+  }
   renderEntries(chapterId);
+  try { renderLabSyncBar(); } catch {}
 }
 
 function toggleLab(id) {
@@ -1735,6 +1975,13 @@ function buildLabNotebook() {
   const container = document.getElementById('labChapters');
   if (!container) return;
   container.innerHTML = '';   // safe re-render if buildLabNotebook is called again
+
+  // Home for the sync bar. Always present so renderLabSyncBar() has
+  // somewhere to paint; it hides itself when there is nothing to say.
+  const syncBar = document.createElement('div');
+  syncBar.id = 'labSyncBar';
+  syncBar.style.display = 'none';
+  container.appendChild(syncBar);
 
   // Friendly sign-in prompt for visitors. Doesn't block the chapters,
   // just sits at the top of the section with a clear path back to /community.
@@ -1849,12 +2096,22 @@ function buildLabNotebook() {
         if (ta && count) {
           ta.addEventListener('input', () => {
             const n = ta.value.length;
-            count.textContent = n > 0 ? `${n} chars` : '';
+            // Warn at the database's hard cap while the note can still be
+            // shortened, instead of after the save quietly fails to sync.
+            if (n > LAB_TEXT_MAX) {
+              count.innerHTML = '<span style="color:#E1A7A0;">' + n.toLocaleString('en-GB')
+                + ' chars — over the ' + LAB_TEXT_MAX.toLocaleString('en-GB')
+                + ' the shared notebook accepts. Save it and it stays on this device until you split it.</span>';
+            } else {
+              count.textContent = n > 0 ? `${n} chars` : '';
+            }
           });
         }
       }, 0);
     }
   });
+
+  try { renderLabSyncBar(); } catch {}
 }
 
 // ── Login gate check ──────────────────────────────────────
@@ -1966,56 +2223,217 @@ window.__faDeleteLabChapter = async function(chapterId, label){
 buildLabNotebook();
 pullCustomLabChapters();
 
-// Fetch shared lab notes from Supabase. Public-readable (RLS allows
-// anon), so this works for visitors too. Triggers a re-render when
-// the data lands. Best-effort — silently no-ops if the table isn't
-// installed yet.
+// Fetch the shared lab notes and flush anything this device is still
+// holding. Both calls used to sit behind `await window.SBready` while
+// that promise did not exist yet — see labAwaitSupabase().
 (async function pullCloudLabNotes() {
-  try { await window.SBready; } catch { return; }
-  loadLabNotesFromCloud();
-  // Retry pending local writes — entries written while the auth
-  // session was expired or while RLS rejected anon inserts. Douglas
-  // and any other member with stuck local-only notes get them pushed
-  // to the cloud automatically on next page load after the fix.
-  retryPendingLabNotes();
+  const ready = await labAwaitSupabase();
+  if (!ready) {
+    console.warn('[lab-notes] Supabase never became available; the notebook is device-local this session.');
+    try { renderLabSyncBar({ tone: 'err', text: 'Could not reach Supabase on this page load — notes on this device are safe, but nothing synced.' }); } catch {}
+    return;
+  }
+  await loadLabNotesFromCloud();
+  // Flush notes written while the auth session was expired, while RLS
+  // refused the insert, or simply while this boot sequence was broken.
+  const res = await retryPendingLabNotes();
+  try { buildLabNotebook(); } catch {}
+  if (res.failed) {
+    console.warn('[lab-notes] ' + res.failed + ' note(s) still local-only:', labSyncExplain(res.firstError));
+  }
 })();
 
-// Scan every chapter's localStorage for entries lacking _cloudId,
-// push them to Supabase, stamp _cloudId back on success. Idempotent
-// because chapter_id + text + created_at uniquely identifies a row;
-// duplicates would only occur if a member writes the same note text
-// at the same millisecond, which is fine for now.
-async function retryPendingLabNotes(){
-  if (!window.SBclient) return;
-  let totalPushed = 0;
+// Every chapter id that could hold notes on this device: the built-in
+// chapters, any custom cloud ones, plus a sweep of localStorage so notes
+// filed under a chapter that has since been renamed or deleted still get
+// counted and retried instead of being stranded.
+function labAllChapterIds() {
+  const ids = (typeof LAB_CHAPTERS !== 'undefined' ? LAB_CHAPTERS.map(c => c.id) : []);
+  (window.__faCustomLabChapters || []).forEach(c => { if (!ids.includes(c.id)) ids.push(c.id); });
   try {
-    // The set of chapter ids = LAB_CHAPTERS plus any custom cloud ones.
-    const ids = (typeof LAB_CHAPTERS !== 'undefined' ? LAB_CHAPTERS.map(c => c.id) : []);
-    if (window.__faCustomLabChapters) {
-      window.__faCustomLabChapters.forEach(c => { if (!ids.includes(c.id)) ids.push(c.id); });
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.indexOf('lab_entries_') === 0) {
+        const id = k.slice('lab_entries_'.length);
+        if (id && !ids.includes(id)) ids.push(id);
+      }
     }
-    for (const chapterId of ids) {
-      let local = [];
-      try { local = JSON.parse(localStorage.getItem(labKey(chapterId)) || '[]'); } catch {}
-      const pending = local.filter(e => !e._cloudId);
+  } catch {}
+  return ids;
+}
+
+// How many notes on this device have never reached the cloud.
+function labPendingCount() {
+  let n = 0;
+  labAllChapterIds().forEach(id => {
+    n += loadLocalEntries(id).filter(e => e && !e._cloudId).length;
+  });
+  return n;
+}
+
+// Scan every chapter's localStorage for entries lacking _cloudId, push
+// them, and stamp either the cloud id or the refusal back onto the entry.
+// Returns { pushed, failed, firstError } so the caller can say something
+// true rather than nothing at all.
+async function retryPendingLabNotes(){
+  const out = { pushed: 0, failed: 0, firstError: null };
+  if (!window.SBclient) {
+    out.firstError = { code: 'NO_CLIENT', message: 'Supabase client not loaded.' };
+    return out;
+  }
+  // The boot sweep and a "Sync now" click can overlap. Two sweeps over
+  // the same pending notes would insert every one of them twice.
+  if (labRetryRunning) return out;
+  labRetryRunning = true;
+  try {
+    let sameCode = null, sameCount = 0;
+    for (const chapterId of labAllChapterIds()) {
+      const local = loadLocalEntries(chapterId);
+      const pending = local.filter(e =>
+        e && !e._cloudId && typeof e.text === 'string' && e.text.trim()
+        && !LAB_IN_FLIGHT.has(chapterId + ':' + e.ts));
       if (!pending.length) continue;
+      let dirty = false;
       for (const entry of pending) {
-        const cloudId = await pushLabNoteToCloud({
+        // A policy refusal answers the same way for every row. Give up
+        // after three identical failures rather than firing 39 doomed
+        // requests; TOO_LONG is per-note, so it never trips this.
+        if (sameCount >= 3 && sameCode && sameCode !== 'TOO_LONG') { out.failed++; continue; }
+        const { id: cloudId, error } = await pushLabNoteToCloud({
           text: entry.text, chapterId, ts: entry.ts,
         });
         if (cloudId) {
           entry._cloudId = cloudId;
-          totalPushed++;
+          delete entry._syncError;
+          out.pushed++;
+          sameCode = null; sameCount = 0;
+        } else {
+          entry._syncError = error;
+          out.failed++;
+          if (!out.firstError) out.firstError = error;
+          const code = (error && error.code) || '';
+          if (code === sameCode) sameCount++; else { sameCode = code; sameCount = 1; }
         }
+        dirty = true;
       }
-      saveEntries(chapterId, local);
+      if (dirty) saveEntries(chapterId, local);
     }
-    if (totalPushed > 0) {
-      // Re-pull cloud entries + re-render so the newly-synced notes appear
-      // for every other reader on this page right now.
-      loadLabNotesFromCloud();
-    }
-  } catch (e) { console.warn('[lab-notes] retry threw:', e); }
+    if (out.pushed > 0) await loadLabNotesFromCloud();
+  } catch (e) {
+    out.firstError = out.firstError || { code: 'THREW', message: e?.message || String(e) };
+    console.warn('[lab-notes] retry threw:', e);
+  } finally {
+    labRetryRunning = false;
+  }
+  return out;
+}
+// global-nav.js runs its own silent copy of this sweep on every page.
+// Publishing ours lets it stand down here — two concurrent sweeps of the
+// same pending notes insert each one twice.
+window.retryPendingLabNotes = retryPendingLabNotes;
+
+// ── Sync bar ──────────────────────────────────────────────────────
+// Sits above the chapters and is the point of this fix: it counts the
+// notes that never left the device and gives one button that retries
+// them and reports the database's actual answer. Until now the only
+// trace of a refused push was a console.warn nobody would ever read.
+function renderLabSyncBar(status) {
+  const bar = document.getElementById('labSyncBar');
+  if (!bar) return;
+  const pending = labPendingCount();
+  if (!pending && !status) { bar.innerHTML = ''; bar.style.display = 'none'; return; }
+
+  const tone = status ? status.tone : (pending ? 'warn' : 'ok');
+  const edge = tone === 'err' ? 'rgba(225,107,107,0.45)' : tone === 'ok' ? 'rgba(107,214,111,0.35)' : 'rgba(232,177,75,0.32)';
+  const wash = tone === 'err' ? 'rgba(225,107,107,0.05)' : tone === 'ok' ? 'rgba(107,214,111,0.04)' : 'rgba(232,177,75,0.05)';
+  const ink  = tone === 'err' ? '#E1A7A0' : tone === 'ok' ? '#B6F0AE' : '#F0C46A';
+
+  const headline = pending
+    ? pending + ' note' + (pending === 1 ? '' : 's') + ' ' + (pending === 1 ? 'is' : 'are')
+      + ' on this device only — no one else can see ' + (pending === 1 ? 'it' : 'them') + ' yet.'
+    : 'Every note on this device is in the shared notebook.';
+
+  const detail = status
+    ? '<div style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.08em;line-height:1.7;color:'
+      + ink + ';margin-top:8px;">' + labAttr(status.text) + '</div>'
+    : '';
+
+  bar.style.cssText = 'display:block;margin-bottom:18px;padding:13px 17px;border:0.5px solid '
+    + edge + ';border-radius:10px;background:' + wash + ';';
+  bar.innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;">'
+    +   '<div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-style:italic;font-size:14px;color:#C9B894;line-height:1.55;flex:1;min-width:200px;">'
+    +     labAttr(headline)
+    +   '</div>'
+    +   '<button id="labSyncBtn" onclick="window.__faLabSyncNow()" style="font-family:\'Geist Mono\',monospace;font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;color:#F5D689;padding:9px 16px;border:0.5px solid rgba(232,177,75,0.45);border-radius:999px;background:rgba(232,177,75,0.06);cursor:pointer;">Sync now</button>'
+    + '</div>'
+    + detail;
+}
+
+// Manual retry. Always says something: how many went up, or exactly what
+// the database refused and why.
+window.__faLabSyncNow = async function () {
+  const btn = document.getElementById('labSyncBtn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Syncing…'; }
+  window.LAB_SYNC.lastError = null;
+  if (!window.SBclient) await labAwaitSupabase();
+
+  const res = await retryPendingLabNotes();
+  window.LAB_SYNC.lastRun = Date.now();
+
+  let status;
+  if (res.pushed && !res.failed) {
+    status = { tone: 'ok', text: 'Pushed ' + res.pushed + ' note' + (res.pushed === 1 ? '' : 's') + ' to the shared notebook.' };
+  } else if (res.pushed && res.failed) {
+    status = { tone: 'warn', text: 'Pushed ' + res.pushed + '; ' + res.failed + ' still stuck — ' + labSyncExplain(res.firstError) };
+  } else if (res.failed) {
+    status = { tone: 'err', text: 'Nothing synced. The database said: ' + labSyncExplain(res.firstError) };
+  } else {
+    status = { tone: 'ok', text: 'Nothing waiting — everything on this device is already shared.' };
+  }
+  // Rebuild so the per-note badges agree, then paint the result over the
+  // fresh bar (buildLabNotebook renders it without a status).
+  try { buildLabNotebook(); } catch {}
+  renderLabSyncBar(status);
+};
+
+// Split an over-long note into parts that fit the 8,000-character cap,
+// breaking at a paragraph, then a sentence, then a word.
+function labSplitText(text, max) {
+  const parts = [];
+  let rest = String(text).trim();
+  while (rest.length > max) {
+    let cut = rest.lastIndexOf('\n\n', max);
+    if (cut < max * 0.5) cut = rest.lastIndexOf('. ', max);
+    if (cut < max * 0.5) cut = rest.lastIndexOf(' ', max);
+    if (cut < max * 0.5) cut = max;
+    parts.push(rest.slice(0, cut).trim());
+    rest = rest.slice(cut).trim();
+  }
+  if (rest) parts.push(rest);
+  return parts;
+}
+
+// Replace one over-long local note with numbered parts that each fit the
+// cap, then sync. Nothing is discarded — the text is divided, not cut.
+function labSplitEntry(chapterId, index) {
+  const entry = loadEntries(chapterId)[index];
+  if (!entry) return;
+  const parts = labSplitText(entry.text || '', LAB_TEXT_MAX - 40);  // room for the "(1/3) " prefix
+  if (parts.length < 2) { alert('This note already fits — press Sync now.'); return; }
+  if (!confirm('Split this note into ' + parts.length + ' parts so it can sync?\n\nNothing is removed: the text is divided at paragraph breaks and each part is numbered.')) return;
+
+  const local = loadLocalEntries(chapterId);
+  const li = local.findIndex(e => e.ts === entry.ts);
+  if (li < 0) return;
+  const base = entry.ts;
+  local.splice(li, 1, ...parts.map((text, n) => ({
+    text: '(' + (n + 1) + '/' + parts.length + ') ' + text,
+    ts: base + n,            // keeps the original order, stays unique
+  })));
+  saveEntries(chapterId, local);
+  renderEntries(chapterId);
+  window.__faLabSyncNow();
 }
 
 // ── Snippets ────────────────────────────────────────────────
@@ -2174,9 +2592,11 @@ async function retryPendingLabNotes(){
   // Already flagged signed-in? Nothing to do.
   if (localStorage.getItem('spore_active_member')) return;
 
-  // Wait for the Supabase client to load (script is appended below).
-  // SBready resolves once createClient is done.
-  try { await window.SBready; } catch { return; }
+  // Wait for a real Supabase client. This used to `await window.SBready`
+  // while /supabase-client.js was still further down the page, so the
+  // promise was undefined, the await resolved immediately, and a member
+  // signed in by magic link never got their flag written here.
+  await labAwaitSupabase();
   if (!window.SBauth) return;
 
   try {
@@ -2209,7 +2629,7 @@ async function retryPendingLabNotes(){
   } catch {}
 })();
 </script>
-<script src="/supabase-client.js"></script>
+<!-- /supabase-client.js moved into <head> — see the comment there. -->
 
 <!-- Removed: a duplicate lab-notes block was here. The existing
      LAB_CHAPTERS notebook above already covers this — and that's where the
@@ -2715,6 +3135,10 @@ function lnMoveNote(fromCat, id, toCat){
 })();
 </script>
 <script src="/community/claim-notice.js" defer></script>
+<!-- MYCO on the Academy. Vanilla panel over the SAME /api/myco-agent
+     endpoint the Spore portal uses — the portal's agent.jsx needs React +
+     Babel, which this page does not load, so only the UI is new. -->
+<script src="/community/academy/myco-academy.js" defer></script>
 <script src="/cookie-banner.js" defer></script>
 <script>
 // ── Formula book drawer ──────────────────────────────────────────────

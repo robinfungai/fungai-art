@@ -253,7 +253,25 @@ function scoreHerb(h, a) {
       s += 1.5 / Math.max(1, ax.intentions.length);
     }
   }
-  if (ax.patterns.includes(a.pattern))     s += 4;
+  if (ax.patterns.includes(a.pattern)) {
+    s += 4;
+  } else if (ax.patterns.length === 1 && ax.patterns[0] === 'mixed') {
+    // 'mixed' is the fallback axes.js assigns when a plant does not sort
+    // cleanly into hot / cold / depleted. It means constitutionally
+    // NEUTRAL, not "matches nothing" — but scoring treated it as a
+    // non-match, so the three herbs whose only pattern is 'mixed' (both
+    // Amanitas and Maitake) forfeited the single largest scoring term on
+    // every profile and could never be seated. Half credit: a neutral
+    // herb is neither disqualified nor preferred over one that genuinely
+    // matches the pattern the person described.
+    //
+    // ONLY when 'mixed' is the herb's sole pattern. A herb carrying
+    // 'mixed' alongside a real one is already classified, and giving it
+    // consolation credit on every non-matching profile lifted eleven
+    // herbs at once — Cordyceps to 45% of bottles — which is the same
+    // concentration problem the tie-break fix had just undone.
+    s += 2;
+  }
   if (ax.times.includes(a.time))           s += 2;
   if (ax.stress.includes(a.stress))        s += 3;
   s += notesBoost(h, a.notes);

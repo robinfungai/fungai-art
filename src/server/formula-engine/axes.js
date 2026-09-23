@@ -33,16 +33,36 @@ function isRestricted(h) {
   return RESTRICTED_NAMES.some(r => s.includes(r));
 }
 
-// Gated herbs — legal but require explicit user opt-in on the entry
-// gate before entering the candidate pool. Amanita muscaria is the
-// main one; Robin sells it, but a casual quiz-taker who's never met
-// it shouldn't be auto-assigned it.
-const GATED_NAMES = [
-  'amanita muscaria','amanita_muscaria','amanita pantherina',
-];
+// Gated herbs — legal, but held out of the candidate pool until the
+// quiz-taker opts in on the entry gate.
+//
+// EMPTY since 2026-09-23, by Robin's decision: the Amanitas were the
+// only entries, and holding them behind an opt-in meant they almost
+// never reached a bottle. They are a product Fungai Art sells and
+// formulates with, so they now compete for a place like any other
+// herb. The mechanism stays — add a name here to gate something again.
+//
+// This is NOT the under-18 protection. That lives in MINOR_BANNED_NAMES
+// below and is unaffected: opening the ceremonial gate must never mean
+// a minor can be assigned a psychoactive.
+const GATED_NAMES = [];
 function isGated(h) {
+  if (!GATED_NAMES.length) return false;
   const s = ((h.name || '') + ' ' + (h.botanical || '')).toLowerCase();
   return GATED_NAMES.some(r => s.includes(r));
+}
+
+// Never given to a minor, whatever the ceremonial gate says and
+// whatever else the pool allows. Previously this protection rode on
+// `gated`, so emptying that list would have silently handed Amanita to
+// under-18s — it is its own list now precisely so the two decisions
+// can never be coupled again.
+const MINOR_BANNED_NAMES = [
+  'amanita muscaria','amanita_muscaria','amanita pantherina',
+];
+function isMinorBanned(h) {
+  const s = ((h.name || '') + ' ' + (h.botanical || '')).toLowerCase();
+  return MINOR_BANNED_NAMES.some(r => s.includes(r));
 }
 
 function inferAxes(h) {
@@ -130,7 +150,11 @@ function ensurePool() {
   if (!Array.isArray(herbs) || !herbs.length) return null;
   POOL = herbs
     .filter(h => !isRestricted(h))
-    .map(h => Object.assign({}, h, { _ax: inferAxes(h), gated: isGated(h) }));
+    .map(h => Object.assign({}, h, {
+      _ax: inferAxes(h),
+      gated: isGated(h),
+      minorBanned: isMinorBanned(h),
+    }));
   return POOL;
 }
 
@@ -144,6 +168,6 @@ function shortNote(h) {
 }
 
 module.exports = {
-  RESTRICTED_NAMES, GATED_NAMES,
+  RESTRICTED_NAMES, GATED_NAMES, MINOR_BANNED_NAMES, isMinorBanned,
   isRestricted, isGated, inferAxes, ensurePool, shortNote,
 };

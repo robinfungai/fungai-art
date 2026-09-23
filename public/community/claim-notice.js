@@ -49,6 +49,16 @@
   // The portal renders its own sign-in screen, so a "sign in" banner
   // above it is noise. The Academy has no such screen — there the
   // silence is exactly the problem this notice exists to explain.
+  // A spore-portal identity in localStorage. Enough for the nav and the
+  // lab notebook, never enough for the server — it is not a credential.
+  function hasLocalIdentity() {
+    try {
+      if (localStorage.getItem('spore_active_member')) return true;
+      var full = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null');
+      return !!(full && full.id);
+    } catch (e) { return false; }
+  }
+
   function isPortalRoot() {
     var p = location.pathname.replace(/\/+$/, '');
     return p === '/community' || p === '/community/index.html';
@@ -86,6 +96,17 @@
         body.appendChild(who);
       }
       cta.textContent = 'Claim your profile →';
+    } else if (hasLocalIdentity()) {
+      // The confusing case: the portal nav says "Robin" and the lab
+      // notebook is writable, because BOTH read a localStorage identity
+      // — but /api/me verifies a real Supabase session, and there isn't
+      // one. Saying "sign in" to someone who believes they already are
+      // reads as a bug. Name what is actually missing instead.
+      tag.textContent = 'This device only';
+      body.innerHTML = 'You\'re signed in on this device, but the network can\'t verify it — ' +
+                       'there\'s no email session here. Sign in once with your email and your ' +
+                       'notes follow you to every device instead of living in this browser.';
+      cta.textContent = 'Sign in with email →';
     } else {
       body.textContent = 'The Academy is open to members. Sign in with your email and the notes, ' +
                          'chapters and formulas appear here.';

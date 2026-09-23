@@ -158,6 +158,39 @@
   to     = "/.netlify/functions/fyf-upgrade"
   status = 200
 
+# /patron and /sporing were absorbed into /members on 2026-09-23 (acts IX
+# and X). 301 so the old links, and anything already indexed, land on the
+# right part of the page instead of a 404.
+[[redirects]]
+  from   = "/patron"
+  to     = "/members#patronage"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/patron/*"
+  to     = "/members#patronage"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/patronage"
+  to     = "/members#patronage"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/sporing"
+  to     = "/members#sporing"
+  status = 301
+  force  = true
+
+[[redirects]]
+  from   = "/sporing/*"
+  to     = "/members#sporing"
+  status = 301
+  force  = true
+
 # Proxy /api/* to Netlify functions
 [[redirects]]
   from   = "/api/*"

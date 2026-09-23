@@ -46,8 +46,8 @@
     { href: '/community/academy/',  label: 'Academy',    match: /^\/community\/academy\// },
     { href: '/mycelium',            label: 'Mycelium',   match: /^\/mycelium\/?$/ },
     { href: '/members',             label: 'Membership', match: /^\/members\/?$/ },
-    { href: '/sporing',             label: 'Sporing',    match: /^\/sporing\/?$/ },
-    { href: '/patron',              label: 'Patronage',  match: /^\/patron\/?$/ },
+    { href: '/members#sporing',             label: 'Sporing',    match: /^\/sporing\/?$/ },
+    { href: '/members#patronage',              label: 'Patronage',  match: /^\/patron\/?$/ },
   ];
 
   function readMember(){
@@ -521,9 +521,15 @@
   // `lab_entries_*`, finds entries without `_cloudId`, pushes each.
   // Idempotent — entries that already have `_cloudId` are skipped.
   let _labSyncing = false;
+  let _labSyncReported = false;
   async function syncStuckLabNotes() {
     if (_labSyncing) return;
     if (!window.SBclient) return;
+    // The Academy page runs its own sweep of exactly these keys, with
+    // error reporting and the 8,000-char guard. Running both races over
+    // the same pending entries and inserts each note twice, so stand
+    // down wherever that one is present.
+    if (typeof window.retryPendingLabNotes === 'function') return;
     _labSyncing = true;
     try {
       // Resolve author identity once for the whole batch — saves N profile
@@ -534,6 +540,14 @@
         const cached = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null');
         if (cached) { profileId = cached.cloudId || null; authorName = cached.name || null; }
       } catch {}
+      // author_id is a FK into profiles and author_name is capped at 60
+      // by the INSERT policy. A stale or non-uuid id makes Postgres
+      // reject the whole row (22P02 / 23503) and the note stays stuck
+      // for good — attribution is not worth losing the note over.
+      if (profileId && !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(String(profileId))) {
+        profileId = null;
+      }
+      if (authorName && authorName.length > 60) authorName = authorName.slice(0, 60);
 
       // Walk localStorage for chapter buckets.
       const chapterKeys = [];
@@ -547,7 +561,11 @@
         const chapterId = key.slice('lab_entries_'.length);
         let local = [];
         try { local = JSON.parse(localStorage.getItem(key) || '[]'); } catch {}
-        const pending = local.filter(e => e && !e._cloudId && typeof e.text === 'string' && e.text.trim());
+        // The INSERT policy caps text at 8,000 characters. Anything
+        // longer can only be fixed by splitting it, which the Academy
+        // notebook offers — pushing it here just burns a round-trip.
+        const pending = local.filter(e =>
+          e && !e._cloudId && typeof e.text === 'string' && e.text.trim() && e.text.length <= 8000);
         if (!pending.length) continue;
 
         for (const entry of pending) {
@@ -566,8 +584,20 @@
             if (!error && data?.id) {
               entry._cloudId = data.id;
               if (authorName && !entry._author) entry._author = authorName;
+              delete entry._syncError;
+            } else if (error) {
+              // Record why, and say so once. Swallowing this is how a
+              // year of notes sat on one device without anyone knowing.
+              entry._syncError = { code: error.code || '', message: error.message || String(error) };
+              if (!_labSyncReported) {
+                _labSyncReported = true;
+                console.warn('[lab-notes] stuck notes are not syncing:', error.code || '', error.message || error,
+                             '\u2014 open /community/academy/ and press "Sync now" for the full reason.');
+              }
             }
-          } catch {}
+          } catch (e) {
+            entry._syncError = { code: 'THREW', message: e?.message || String(e) };
+          }
         }
         try { localStorage.setItem(key, JSON.stringify(local)); } catch {}
       }
@@ -619,7 +649,7 @@
       <a href="/community">Portal</a>
       <a href="/community/academy/">Alchemy Academy</a>
       <a href="/members">Membership</a>
-      <a href="/patron">Patronage</a>
+      <a href="/members#patronage">Patronage</a>
       <div class="fa-sub-nav-section">Sub-lines</div>
       <a href="/moder-jord">Moder Jord <span class="fa-tag">· nordic body-craft</span></a>
       <a href="/tymetonics">Tyme Tonics <span class="fa-tag">· living drinks</span></a>

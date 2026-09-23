@@ -612,6 +612,79 @@ html.reveal-anim .reveal.in{opacity:1;transform:translateY(0);}
   })();
 </script>
 <script src="/global-nav.js" defer></script>
+<!-- Shiny CTA — mirrored from /community/academy/ so the threshold button
+     carries the same living border as "Enter the mycelium". Keep the two
+     in step; both mirror src/components/ui/shiny-button.css. -->
+<style id="fa-shiny-cta">
+  /* Mirrors src/components/ui/shiny-button.css — keep the two in step. */
+  @import url("https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,500&display=swap");
+  @property --gradient-angle{syntax:"<angle>";initial-value:0deg;inherits:false}
+  @property --gradient-angle-offset{syntax:"<angle>";initial-value:0deg;inherits:false}
+  @property --gradient-percent{syntax:"<percentage>";initial-value:5%;inherits:false}
+  @property --gradient-shine{syntax:"<color>";initial-value:white;inherits:false}
+  .shiny-cta{--shiny-cta-bg:#000;--shiny-cta-bg-subtle:#1a1818;--shiny-cta-fg:#fff;--shiny-cta-highlight:blue;--shiny-cta-highlight-subtle:#8484ff;--animation:gradient-angle linear infinite;--duration:3s;--shadow-size:2px;--transition:800ms cubic-bezier(.25,1,.5,1);isolation:isolate;position:relative;overflow:hidden;cursor:pointer;outline-offset:4px;padding:1.25rem 2.5rem;font-family:"Inter",sans-serif;font-size:1.125rem;line-height:1.2;font-weight:500;border:1px solid transparent;border-radius:360px;color:var(--shiny-cta-fg);background:linear-gradient(var(--shiny-cta-bg),var(--shiny-cta-bg)) padding-box,conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),transparent,var(--shiny-cta-highlight) var(--gradient-percent),var(--gradient-shine) calc(var(--gradient-percent) * 2),var(--shiny-cta-highlight) calc(var(--gradient-percent) * 3),transparent calc(var(--gradient-percent) * 4)) border-box;box-shadow:inset 0 0 0 1px var(--shiny-cta-bg-subtle);transition:var(--transition);transition-property:--gradient-angle-offset,--gradient-percent,--gradient-shine}
+  .shiny-cta::before,.shiny-cta::after,.shiny-cta span::before{content:"";pointer-events:none;position:absolute;inset-inline-start:50%;inset-block-start:50%;translate:-50% -50%;z-index:-1}
+  .shiny-cta:active{translate:0 1px}
+  .shiny-cta::before{--size:calc(100% - var(--shadow-size) * 3);--position:2px;--space:calc(var(--position) * 2);width:var(--size);height:var(--size);background:radial-gradient(circle at var(--position) var(--position),white calc(var(--position) / 4),transparent 0) padding-box;background-size:var(--space) var(--space);background-repeat:space;mask-image:conic-gradient(from calc(var(--gradient-angle) + 45deg),black,transparent 10% 90%,black);border-radius:inherit;opacity:.4;z-index:-1}
+  .shiny-cta::after{--animation:shimmer linear infinite;width:100%;aspect-ratio:1;background:linear-gradient(-50deg,transparent,var(--shiny-cta-highlight),transparent);mask-image:radial-gradient(circle at bottom,transparent 40%,black);opacity:.6}
+  .shiny-cta span{z-index:1}
+  .shiny-cta span::before{--size:calc(100% + 1rem);width:var(--size);height:var(--size);box-shadow:inset 0 -1ex 2rem 4px var(--shiny-cta-highlight);opacity:0;transition:opacity var(--transition);animation:calc(var(--duration) * 1.5) breathe linear infinite}
+  .shiny-cta,.shiny-cta::before,.shiny-cta::after{animation:var(--animation) var(--duration),var(--animation) calc(var(--duration) / .4) reverse paused;animation-composition:add}
+  .shiny-cta:is(:hover,:focus-visible){--gradient-percent:20%;--gradient-angle-offset:95deg;--gradient-shine:var(--shiny-cta-highlight-subtle)}
+  .shiny-cta:is(:hover,:focus-visible),.shiny-cta:is(:hover,:focus-visible)::before,.shiny-cta:is(:hover,:focus-visible)::after{animation-play-state:running}
+  .shiny-cta:is(:hover,:focus-visible) span::before{opacity:1}
+  @keyframes gradient-angle{to{--gradient-angle:360deg}}
+  @keyframes shimmer{to{rotate:360deg}}
+  @keyframes breathe{from,to{scale:1}50%{scale:1.2}}
+  @media (prefers-reduced-motion:reduce){.shiny-cta,.shiny-cta::before,.shiny-cta::after,.shiny-cta span::before{animation:none}}
+
+  /* Fungai palette on the shiny button: forest ground, gold light. */
+  .shiny-cta.fa-myc{--shiny-cta-bg:#07110d;--shiny-cta-bg-subtle:#1d2a1f;--shiny-cta-fg:#F1E9D2;--shiny-cta-highlight:#E8B14B;--shiny-cta-highlight-subtle:#F5D689}
+
+  .myc-cta{position:relative;max-width:660px;margin:110px auto 30px;padding:56px 20px 44px;text-align:center}
+  .myc-cta[hidden]{display:none}
+  .myc-cta::before{content:"";position:absolute;inset:-40px 0 0;background:radial-gradient(ellipse at 50% 35%,rgba(232,177,75,.12),transparent 62%);pointer-events:none;z-index:-1}
+  .myc-admin-note{font-family:'Geist Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:#9ED438;margin-bottom:18px}
+  .myc-eyebrow{font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:#8B7E62}
+  .myc-title{font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-size:clamp(30px,4.6vw,46px);line-height:1.08;color:#E6D9B5;margin:14px 0 14px}
+  .myc-title em{color:#F5D689}
+  .myc-lede{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:17.5px;line-height:1.6;color:#C9B894;max-width:46ch;margin:0 auto 32px}
+  .myc-form{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:470px;margin:0 auto;animation:mycIn .5s ease both}
+  .myc-form[hidden]{display:none}
+  .myc-form input{flex:1 1 240px;min-width:0;padding:14px 20px;border-radius:999px;border:1px solid rgba(232,177,75,.4);background:rgba(7,17,13,.85);color:#F1E9D2;font-size:15px;font-family:inherit}
+  .myc-form input:focus{outline:none;border-color:#F5D689;box-shadow:0 0 0 3px rgba(232,177,75,.15)}
+  .myc-form button{padding:14px 22px;border-radius:999px;border:0;background:#E8B14B;color:#0a0c09;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer}
+  .myc-form button:disabled{opacity:.6;cursor:wait}
+  .myc-fine{flex-basis:100%;margin-top:10px;font-size:11.5px;color:#8B7E62}
+  .myc-fine a{color:#C9B894}
+  .myc-msg{flex-basis:100%;min-height:1.2em;font-size:12.5px;color:#E8A07C}
+  .myc-done{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:19px;color:#E6D9B5;line-height:1.5;animation:mycIn .5s ease both}
+  .myc-more{display:block;width:fit-content;margin:26px auto 0;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:#8B7E62;text-decoration:none;border-bottom:.5px solid rgba(139,126,98,.45)}
+  .myc-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  @keyframes mycIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
+<style id="fa-members-absorbed">
+  /* /patron and /sporing were separate pages until 2026-09-23. Their
+     content lives here now, reusing this page's own components —
+     .ladder for the tiers, .join-card for the flow, .vocab for the
+     plain-language table, .balances for the ledger. Only the few
+     things those components could not express are defined here. */
+  .pat-clarity{border:0.5px solid var(--al);border-radius:12px;padding:22px 24px;
+    background:rgba(232,177,75,0.035);margin:26px 0 8px}
+  .pat-clarity-h{font-family:var(--fm);font-size:9px;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--a);margin-bottom:14px}
+  .pat-isnot{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .pat-isnot h4{font-family:var(--fm);font-size:9px;letter-spacing:0.2em;
+    text-transform:uppercase;margin:0 0 7px;font-weight:400}
+  .pat-is h4{color:var(--gl)} .pat-not h4{color:var(--rl)}
+  .pat-isnot p{margin:0;font-size:14px;line-height:1.7;color:var(--ml)}
+  .pat-faq{width:100%;border-collapse:collapse;margin-top:18px}
+  .pat-faq td{padding:9px 0;border-bottom:0.5px solid var(--r);font-size:13.5px;
+    color:var(--ml);vertical-align:top}
+  .pat-faq td:last-child{text-align:right;color:var(--gl);white-space:nowrap;padding-left:16px}
+  .pat-tier-perks{margin:8px 0 0;padding-left:18px;font-size:13px;line-height:1.75;color:var(--md)}
+  @media(max-width:620px){.pat-faq td:last-child{white-space:normal}}
+</style>
 </head>
 <body>
 
@@ -776,7 +849,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:translateY(0);}
       <div class="door-body">Vendors, artists, farmers, suppliers, translators &mdash; anyone whose work supports The Mycelium receives Hyphae for services rendered. Settle in EUR, MYCEL, or a mix.</div>
       <div class="door-cta">Write to us</div>
     </a>
-    <a href="/patron" class="door door--patron reveal">
+    <a href="#patronage" class="door door--patron reveal">
       <div class="door-num">⟡⟡⟡ Door III</div>
       <div class="door-name">Patronage</div>
       <div class="door-body">A 24-month pre-paid subscription: contribute resources to The Mycelium, receive Hyphae at start, draw extracts and ceremonies over the period. Not investment &mdash; patronage.</div>
@@ -1019,7 +1092,7 @@ html.reveal-anim .reveal.in{opacity:1;transform:translateY(0);}
   <div id="becomeGate" class="threshold-gate reveal">
     <label for="becomeCode" class="threshold-label">Network passcode</label>
     <input id="becomeCode" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="8" placeholder="••••" autocomplete="off" class="threshold-input">
-    <button id="becomeUnlock" type="button" class="threshold-btn threshold-btn--amber">Unlock signup</button>
+    <button id="becomeUnlock" type="button" class="shiny-cta fa-members-cta"><span>Unlock signup</span></button>
     <div id="becomeError" class="threshold-msg"></div>
   </div>
   <div id="becomeForm" class="threshold-form">
@@ -1073,6 +1146,153 @@ html.reveal-anim .reveal.in{opacity:1;transform:translateY(0);}
 </div><!-- /.wrap -->
 
 <!-- ────── Closing chord ────── -->
+
+<!-- ════════════════════════════════════════════════════════════
+     ACT IX — PATRONAGE  (absorbed from /patron, 2026-09-23)
+     The "what it is / is not" block and the FAQ are kept in full and
+     deliberately: they are the securities-law clarity, not marketing
+     copy, and shortening them would be the wrong kind of compacting.
+     ════════════════════════════════════════════════════════════ -->
+<section class="act" id="patronage">
+  <div class="act-mark reveal">
+    <span class="act-roman">IX</span>
+    <span class="act-rule"></span>
+    <span class="act-eyebrow">Door III &middot; in full</span>
+  </div>
+  <h2 class="act-title reveal">Patrons of the <em>mycelium</em>.</h2>
+  <p class="act-blurb reveal">
+    A patron supplies resources to The Mycelium &mdash; material, financial or relational &mdash;
+    in exchange for extracts, ceremonies, and a long-term place in the network.
+    Patronage is not investment. There is no expectation of profit. Patrons receive
+    real goods of real value over a real timeline.
+  </p>
+
+  <div class="pat-clarity reveal">
+    <div class="pat-clarity-h">&#9878; Plain language &middot; what patronage is and is not</div>
+    <div class="pat-isnot">
+      <div class="pat-is">
+        <h4>What it is</h4>
+        <p>A pre-paid subscription to Fungai Art extracts and experiences over 24 months.
+        You receive Hyphae ($MYCEL utility tokens) which you draw down for goods. After
+        24 months you may request a refund of any unused balance, denominated in EUR at
+        the rate at the time of refund.</p>
+      </div>
+      <div class="pat-not">
+        <h4>What it is not</h4>
+        <p>An investment. There is no expected return beyond the goods and experiences
+        delivered. Hyphae are not securities. The Mycelium does not promise capital
+        appreciation, dividends, or any financial return. Refunds restore unused balance
+        only &mdash; not interest, not appreciation.</p>
+      </div>
+    </div>
+    <table class="pat-faq">
+      <tr><td>Will my contribution grow in value?</td><td>No.</td></tr>
+      <tr><td>Will I earn interest or dividends?</td><td>No.</td></tr>
+      <tr><td>Can I withdraw my contribution at any time?</td><td>Refund of unused balance after 24 months.</td></tr>
+      <tr><td>Are Hyphae sold on public exchanges?</td><td>No &mdash; never listed.</td></tr>
+      <tr><td>Do I receive real goods of real value?</td><td>Yes &mdash; extracts, ceremonies, retreats, academy.</td></tr>
+      <tr><td>Is this a security?</td><td>No &mdash; a utility token for in-network goods.</td></tr>
+    </table>
+  </div>
+
+  <div class="ladder" style="margin-top:34px;">
+    <div class="ladder-row reveal">
+      <div class="ladder-amount">€500</div>
+      <div class="ladder-name">⟡ Spore patron <span style="color:var(--md);font-family:var(--fm);font-size:9px;letter-spacing:0.2em;">&middot; 24 months</span></div>
+      <div class="ladder-desc">
+        <ul class="pat-tier-perks"><li>500 Hyphae issued at start</li><li>Draw 1 extract per quarter (8 total)</li><li>Members-only access — academy + drawing menu</li><li>Newsletter from the field</li><li>1 foraging circle seat</li></ul>
+      </div>
+      <a class="ladder-action" href="mailto:robin@fungai.art?subject=Spore%20patron">Become a Spore &rarr;</a>
+    </div>
+    <div class="ladder-row reveal">
+      <div class="ladder-amount">€1,500</div>
+      <div class="ladder-name">⟡⟡ Hypha patron <span style="color:var(--md);font-family:var(--fm);font-size:9px;letter-spacing:0.2em;">&middot; 24 months</span></div>
+      <div class="ladder-desc">
+        <ul class="pat-tier-perks"><li>1,500 Hyphae issued at start</li><li>Quarterly extract or special extract</li><li>2 ceremony seats over 24 months</li><li>Full academy access</li><li>Priority booking on retreats</li><li>Direct line to Robin &amp; Steph</li></ul>
+      </div>
+      <a class="ladder-action" href="mailto:robin@fungai.art?subject=Hypha%20patron">Become a Hypha &rarr;</a>
+    </div>
+    <div class="ladder-row reveal">
+      <div class="ladder-amount">€5,000+</div>
+      <div class="ladder-name">⟡⟡⟡ Mycelium patron <span style="color:var(--md);font-family:var(--fm);font-size:9px;letter-spacing:0.2em;">&middot; 24 months</span></div>
+      <div class="ladder-desc">
+        <ul class="pat-tier-perks"><li>5,000+ Hyphae issued at start</li><li>Monthly extract delivery</li><li>Reserved retreat seat (Astral Plans, Lebanon)</li><li>1-on-1 sessions with Robin or Steph</li><li>Founding circle voice (mycoTrust)</li><li>Acknowledgement in project documentation</li><li>Custom commission possible</li></ul>
+      </div>
+      <a class="ladder-action" href="mailto:robin@fungai.art?subject=Mycelium%20patron">Become a Mycelium &rarr;</a>
+    </div>
+  </div>
+
+  <h3 class="act-title reveal" style="font-size:clamp(22px,3vw,30px);margin-top:44px;">How patronage <em>works</em>.</h3>
+  <div class="join-card">
+    <div class="join-step reveal">
+      <div class="join-num">1</div>
+      <div class="join-text"><strong style="color:var(--ml);">Initial conversation.</strong> Email <a href="mailto:robin@fungai.art" style="color:var(--gl);">robin@fungai.art</a> with your name, the tier that interests you, and a short note on why you&rsquo;d like to be part of the network. We talk first &mdash; fit matters more than money.</div>
+    </div>
+    <div class="join-step reveal">
+      <div class="join-num">2</div>
+      <div class="join-text"><strong style="color:var(--ml);">Pre-paid subscription agreement.</strong> A short consumer-style contract: amount, term, what you receive, refund terms. Standard EU consumer protection applies. The contract is between you and Fungai Art O&Uuml; (Estonia).</div>
+    </div>
+    <div class="join-step reveal">
+      <div class="join-num">3</div>
+      <div class="join-text"><strong style="color:var(--ml);">Payment.</strong> Bank transfer to Fungai Art O&Uuml;. Stripe also available. Crypto (USDC, EURC on Polygon) accepted. We invoice properly.</div>
+    </div>
+    <div class="join-step reveal">
+      <div class="join-num">4</div>
+      <div class="join-text"><strong style="color:var(--ml);">Hyphae issued.</strong> Your tier&rsquo;s allocation appears in your wallet immediately. Draw goods from the drawing menu any time.</div>
+    </div>
+    <div class="join-step reveal">
+      <div class="join-num">5</div>
+      <div class="join-text"><strong style="color:var(--ml);">24 months of flow.</strong> Draw extracts, attend ceremonies, learn at the academy, come on retreats. Unspent Hyphae roll over &mdash; they do not expire mid-contract.</div>
+    </div>
+    <div class="join-step reveal">
+      <div class="join-num">6</div>
+      <div class="join-text"><strong style="color:var(--ml);">End of term &mdash; three doors.</strong> At month 24: renew and keep your accumulated mycoTrust; continue at-will, drawing remaining Hyphae as goods; or request a refund of unused balance in EUR at the basket reference rate on the refund date.</div>
+    </div>
+  </div>
+
+  <p class="act-blurb reveal" style="margin-top:30px;">
+    <strong style="color:var(--ml);">Why patronage, not investment.</strong>
+    Fungai Art is an art and herbal practice, not a startup. We don&rsquo;t want venture
+    capital, equity dilution, or pressure to scale to where it kills the quality.
+    Patronage is the ancient way artists and apothecaries were funded &mdash; a circle of
+    supporters who trust the work and want it to continue. You receive real goods, real
+    teaching, real time. The contribution is fair on both sides.
+  </p>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     ACT X — THE SPORING LEDGER  (absorbed from /sporing, 2026-09-23)
+     ════════════════════════════════════════════════════════════ -->
+<section class="act" id="sporing">
+  <div class="act-mark reveal">
+    <span class="act-roman">X</span>
+    <span class="act-rule"></span>
+    <span class="act-eyebrow">The public ledger</span>
+  </div>
+  <h2 class="act-title reveal">The <em>Sporing</em>.</h2>
+  <p class="act-blurb reveal">
+    Every Hypha sporeed, drawn and gifted is recorded on Polygon &mdash; transparent,
+    immutable, public. The chain itself is the receipt; this is a human-readable view of
+    the same data anyone can read on Polygonscan.
+  </p>
+
+  <div class="pre-launch reveal">
+    &#10022; Pre-launch view &middot; illustrative entries until the $MYCEL contract is live on Polygon.
+    Once deployed, this reads directly from chain events.
+  </div>
+
+  <div class="balances" style="margin-top:22px;">
+    <div class="bal-cell reveal"><div class="bal-num" id="ledgerCirculating">&mdash;</div><div class="bal-lbl">Hyphae circulating</div></div>
+    <div class="bal-cell reveal"><div class="bal-num" id="ledgerSporeed">&mdash;</div><div class="bal-lbl">Total sporeed</div></div>
+    <div class="bal-cell reveal"><div class="bal-num" id="ledgerDrawn">&mdash;</div><div class="bal-lbl">Total drawn</div></div>
+    <div class="bal-cell reveal"><div class="bal-num" id="ledgerThreads">&mdash;</div><div class="bal-lbl">Active threads</div></div>
+  </div>
+  <p class="bal-note reveal">
+    Figures appear once the contract is deployed. Until then the ledger is intentionally
+    empty rather than illustrative &mdash; a number here would be a claim we cannot yet evidence.
+  </p>
+</section>
+
 <div class="coda">
   <div class="coda-mark">✦</div>
   <div class="coda-title">The network breathes when you breathe with it.</div>
