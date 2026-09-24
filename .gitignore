@@ -69,3 +69,12 @@ public/atlas/data/
 # scripts/build-herb-monographs.cjs. Regenerate, do not commit: committing
 # them would duplicate herbs.ts in a second format that can drift.
 public/home/markdowns all plants/generated/
+
+# Atlas media staged for the map build but not referenced by any page.
+# Kept on disk, out of git: ~4 MB of video that nothing loads. Delete these
+# lines when a page actually uses them.
+public/atlas/15201936_1080_1920_30fps.mp4
+public/atlas/second (1).mp4
+public/atlas/the1 (1).mp4
+public/atlas/second-photo.jpg
+public/atlas/third-photo.jpg
