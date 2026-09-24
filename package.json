@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node scripts/build-islands.cjs && vite",
+    "dev": "node scripts/build-atlas.cjs && node scripts/build-islands.cjs && vite",
     "test:fixtures:capture": "node tests/capture-fixtures.cjs",
     "test:fixtures:compare": "node tests/compare-fixtures.cjs",
     "test:shadow": "node tests/shadow-verify.cjs",
@@ -24,8 +24,9 @@
     "test:reservation-idempotency": "node tests/reservation-idempotency-verify.cjs",
     "build:herbs-data": "node scripts/export-herbs.cjs",
     "build:herb-pool": "node scripts/build-herb-pool.cjs",
+    "build:atlas": "node scripts/build-atlas.cjs",
     "build:engine2": "node scripts/sync-engine2.cjs",
-    "build": "npm run build:herbs-data && npm run build:herb-pool && npm run build:engine2 && npm run build:entity-map && npm run build:safety-rules && npm run build:myco-kb && npm run build:community && npm run build:islands && vite build && node scripts/swap-index.cjs",
+    "build": "npm run build:herbs-data && npm run build:atlas && npm run build:herb-pool && npm run build:engine2 && npm run build:entity-map && npm run build:safety-rules && npm run build:myco-kb && npm run build:community && npm run build:islands && vite build && node scripts/swap-index.cjs",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "build:myco-kb": "node scripts/build-myco-kb.cjs",
@@ -40,6 +41,7 @@
     "build:safety-rules": "node scripts/build-safety-rules.cjs",
     "test:safety-rules": "node tests/safety-rules-verify.cjs",
     "test:explorer": "node tests/explorer-verify.cjs",
+    "test:atlas": "node tests/atlas-verify.cjs",
     "test:forage-proxies": "node tests/forage-proxies-verify.cjs",
     "test:sw-forage": "node tests/sw-forage-verify.cjs"
   },

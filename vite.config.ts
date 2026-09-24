@@ -35,6 +35,10 @@ const STATIC_PAGES = [
   '/find-your-formula-pro',
   // Chapter-selection gateway into the shop (public/explorer/)
   '/explorer',
+  // The botanical atlas (public/atlas/). Note public/atlas/ also holds the
+  // hero media and the generated data, which Vite serves as static files —
+  // only the bare /atlas path needs this entry.
+  '/atlas',
 ];
 
 // Academy P0.5 · the community portal no longer ships raw JSX with

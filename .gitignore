@@ -61,3 +61,6 @@ public/community/myco/agent.js
 
 # React islands for static pages, bundled by scripts/build-islands.cjs
 public/islands/
+
+# Atlas dataset, generated from herbs.ts by scripts/build-atlas.cjs
+public/atlas/data/

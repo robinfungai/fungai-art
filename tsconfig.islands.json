@@ -12,6 +12,7 @@
     "src/components/ui/cobe-globe.tsx",
     "src/components/ui/3d-gallery-photography.tsx",
     "src/components/ui/wave-background.tsx",
+    "src/components/ui/scroll-expansion-hero.tsx",
     "src/vite-env.d.ts"
   ],
   "exclude": []

@@ -21,8 +21,10 @@ const ROOT = path.resolve(__dirname, '..');
 const OUT  = path.join(ROOT, 'public', 'islands');
 
 const ENTRIES = {
-  'shop-gallery': 'src/islands/shop-gallery.tsx',
-  'waves':        'src/islands/waves.tsx',
+  'shop-gallery':   'src/islands/shop-gallery.tsx',
+  'waves':          'src/islands/waves.tsx',
+  'atlas-hero':     'src/islands/atlas-hero.tsx',
+  'atlas-explorer': 'src/islands/atlas-explorer.tsx',
 };
 
 fs.rmSync(OUT, { recursive: true, force: true });

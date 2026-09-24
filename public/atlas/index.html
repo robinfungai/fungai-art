@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="dark">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Atlas · Fungai Art</title>
+<meta name="description" content="A living intelligence of plants, fungi and human intention. 243 organisms with their taxonomy, chemistry, tradition, extraction, safety and relationships."/>
+<meta name="author" content="Fungai Art"/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
+<link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
+<link rel="apple-touch-icon" href="/fungi.png?v=3"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Fungai Art"/>
+<meta property="og:title" content="The Atlas · Fungai Art"/>
+<meta property="og:description" content="Explore the intelligence of the botanical world — 243 organisms, their chemistry, their traditions, and how they relate to one another."/>
+<meta property="og:image" content="https://www.fungai.art/fungi.png?v=3"/>
+<meta property="og:url" content="https://www.fungai.art/atlas"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="The Atlas · Fungai Art"/>
+<meta name="twitter:description" content="243 organisms — taxonomy, chemistry, tradition, safety and the relationships between them."/>
+<meta name="twitter:image" content="https://www.fungai.art/fungi.png?v=3"/>
+<link rel="canonical" href="https://www.fungai.art/atlas"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+<!-- The hero video is the first paint on this page; the index feeds the
+     explorer below it. Both are wanted immediately. -->
+<link rel="preload" as="image" href="/atlas/first-photo.jpg">
+<link rel="prefetch" as="fetch" href="/atlas/data/index.json" crossorigin>
+
+<style>
+:root {
+  /* Fungai Art palette — shared with public/home/index.html */
+  --void:       #05090C;
+  --forest:     #080F13;
+  --forest-mid: #0D1619;
+  --forest-card:#111D22;
+  --moss:       #1A2E33;
+  --fern:       #1E3438;
+  --sage:       #336065;
+  --lichen:     #4D869B;
+  --mist:       #88BAC8;
+  --parchment:  #EDE5D8;
+  --cream:      #E5D9C5;
+  --dust:       #C0B49A;
+  --amber:      #88BAC8;
+  --amber-lt:   #A8D4E0;
+  --coral:      #CE6C52;
+  --serif:      'Cormorant Garamond', Georgia, serif;
+  --sans:       'DM Sans', system-ui, sans-serif;
+  --mono:       'Courier New', ui-monospace, monospace;
+  --rule:       rgba(136,186,200,.14);
+  --rule-strong:rgba(136,186,200,.28);
+  --max:        1536px;
+  --gutter:     56px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--void); }
+body {
+  font-family: var(--sans); font-weight: 300;
+  color: var(--parchment); -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+@media (max-width: 760px) { :root { --gutter: 20px; } }
+
+/* ── Masthead ─────────────────────────────────────────────────── */
+.mast {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px var(--gutter);
+  background: linear-gradient(180deg, rgba(5,9,12,.92), rgba(5,9,12,0));
+  backdrop-filter: blur(3px);
+}
+.mast-brand {
+  font-family: var(--serif); font-size: 19px; letter-spacing: .34em;
+  text-transform: uppercase; text-decoration: none; color: var(--parchment);
+}
+.mast-nav { display: flex; gap: 26px; }
+.mast-nav a {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .26em;
+  text-transform: uppercase; color: var(--dust); text-decoration: none;
+  padding-bottom: 3px; border-bottom: 1px solid transparent; transition: color .25s, border-color .25s;
+}
+.mast-nav a:hover, .mast-nav a[aria-current] { color: var(--amber-lt); border-bottom-color: var(--rule-strong); }
+@media (max-width: 900px) {
+  .mast { padding: 14px 20px; }
+  .mast-nav { gap: 14px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .mast-nav a { font-size: 9px; letter-spacing: .18em; white-space: nowrap; }
+}
+
+/* ── The three doors (children of the hero) ───────────────────── */
+.doors { padding: 96px var(--gutter) 40px; max-width: var(--max); margin: 0 auto; }
+.doors-lede {
+  font-family: var(--serif); font-style: italic; font-weight: 300;
+  font-size: clamp(1.5rem, 3.4vw, 2.6rem); line-height: 1.25;
+  color: var(--cream); text-align: center; margin: 0 0 64px;
+}
+.doors-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 0.5px solid var(--rule); }
+@media (max-width: 900px) { .doors-row { grid-template-columns: 1fr; } .doors { padding-top: 64px; } }
+.door {
+  position: relative; display: flex; flex-direction: column; gap: 14px;
+  padding: 44px 34px 64px; background: var(--forest);
+  text-decoration: none; transition: background .4s ease;
+  min-height: 300px;
+}
+.door:hover { background: var(--forest-mid); }
+.door-primary { background: var(--forest-card); }
+.door-primary:hover { background: #16262C; }
+.door-glyph { font-size: 22px; color: var(--amber); line-height: 1; }
+.door-kicker {
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: .3em;
+  text-transform: uppercase; color: var(--sage);
+}
+.door-title {
+  font-family: var(--serif); font-size: clamp(1.4rem, 2.1vw, 1.9rem);
+  letter-spacing: .06em; color: var(--parchment); line-height: 1.1;
+}
+.door-line { font-size: 14px; line-height: 1.65; color: var(--dust); max-width: 34ch; }
+.door-go {
+  position: absolute; left: 34px; bottom: 30px; color: var(--amber);
+  font-size: 15px; transition: transform .35s cubic-bezier(.16,1,.3,1);
+}
+.door:hover .door-go { transform: translateX(8px); }
+
+/* ── Atlas explorer ───────────────────────────────────────────── */
+#atlas { scroll-margin-top: 70px; padding: 40px 0 120px; }
+.atl { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+.atl-msg {
+  padding: 40px 0; color: var(--dust); font-size: 14px; grid-column: 1 / -1;
+}
+.atl-msg code { font-family: var(--mono); font-size: 12px; color: var(--amber-lt); }
+.atl-head { border-top: 0.5px solid var(--rule); padding-top: 34px; margin-bottom: 38px; }
+.atl-kicker {
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: .32em;
+  text-transform: uppercase; color: var(--sage); margin-bottom: 14px;
+}
+.atl-head h2 {
+  font-family: var(--serif); font-weight: 300; font-size: clamp(2.2rem, 6vw, 4.4rem);
+  letter-spacing: .08em; margin: 0 0 16px; color: var(--parchment);
+}
+.atl-lede { font-size: 15px; line-height: 1.7; color: var(--dust); max-width: 62ch; margin: 0; }
+
+.atl-search { display: flex; gap: 12px; align-items: center; margin-bottom: 34px; flex-wrap: wrap; }
+.atl-search input {
+  flex: 1 1 320px; background: var(--forest); color: var(--parchment);
+  border: 0.5px solid var(--rule); border-radius: 999px;
+  padding: 13px 22px; font-family: var(--sans); font-size: 14px; font-weight: 300;
+}
+.atl-search input::placeholder { color: rgba(192,180,154,.45); }
+.atl-search input:focus { outline: none; border-color: var(--rule-strong); }
+.atl-clear {
+  background: transparent; color: var(--dust); border: 0.5px solid var(--rule);
+  border-radius: 999px; padding: 12px 20px; cursor: pointer;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+}
+.atl-clear:hover { color: var(--amber-lt); border-color: var(--rule-strong); }
+
+.atl-rails { display: flex; flex-direction: column; gap: 22px; margin-bottom: 34px; }
+.atl-rail-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 11px; flex-wrap: wrap; }
+.atl-rail-label {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .28em;
+  text-transform: uppercase; color: var(--amber);
+}
+.atl-rail-sub { font-size: 12px; color: var(--sage); font-style: italic; }
+.atl-derived {
+  font-family: var(--mono); font-size: 8.5px; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--sage);
+  border: 0.5px solid var(--rule); border-radius: 3px; padding: 2px 6px; cursor: help;
+}
+.atl-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.atl-chip {
+  background: transparent; color: var(--dust); cursor: pointer;
+  border: 0.5px solid var(--rule); border-radius: 999px; padding: 7px 14px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  transition: color .2s, border-color .2s, background .2s;
+}
+.atl-chip:hover { color: var(--parchment); border-color: var(--rule-strong); }
+.atl-chip.is-on { color: var(--void); background: var(--amber-lt); border-color: var(--amber-lt); }
+.atl-chip-n { margin-left: 7px; opacity: .55; font-size: 9px; }
+
+.atl-count {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--sage);
+  padding-bottom: 12px; border-bottom: 0.5px solid var(--rule); margin-bottom: 1px;
+}
+.atl-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1px; background: var(--rule); border: 0.5px solid var(--rule);
+}
+.atl-card {
+  display: flex; flex-direction: column; gap: 6px; align-items: flex-start;
+  padding: 22px 20px 18px; background: var(--forest); border: none; cursor: pointer;
+  text-align: left; font-family: inherit; color: inherit; transition: background .3s;
+  min-height: 168px;
+}
+.atl-card:hover { background: var(--forest-card); }
+.atl-card-glyph { color: var(--amber); font-size: 15px; line-height: 1; margin-bottom: 4px; }
+.atl-card-name { font-family: var(--serif); font-size: 19px; color: var(--parchment); line-height: 1.15; }
+.atl-card-bin { font-style: italic; font-size: 12.5px; color: var(--lichen); }
+.atl-card-ep { font-size: 12px; color: var(--sage); line-height: 1.5; }
+.atl-card-foot {
+  margin-top: auto; padding-top: 12px; display: flex; gap: 10px; align-items: center;
+  font-family: var(--mono); font-size: 8.5px; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--sage);
+}
+.atl-grade { border: 0.5px solid var(--rule); border-radius: 3px; padding: 2px 5px; }
+
+/* ── Dossier overlay ──────────────────────────────────────────── */
+.atl-overlay { position: fixed; inset: 0; z-index: 60; display: flex; justify-content: flex-end; }
+.atl-scrim { position: absolute; inset: 0; background: rgba(5,9,12,.82); border: none; cursor: pointer; backdrop-filter: blur(4px); }
+.atl-panel {
+  position: relative; width: min(760px, 100%); height: 100%; overflow-y: auto;
+  background: var(--forest); border-left: 0.5px solid var(--rule-strong);
+  padding: 0 0 80px; animation: atl-in .42s cubic-bezier(.16,1,.3,1);
+}
+@keyframes atl-in { from { transform: translateX(28px); opacity: 0 } to { transform: none; opacity: 1 } }
+@media (prefers-reduced-motion: reduce) { .atl-panel { animation: none } }
+.atl-close {
+  position: absolute; top: 18px; right: 20px; z-index: 2;
+  background: rgba(5,9,12,.6); color: var(--dust); border: 0.5px solid var(--rule);
+  border-radius: 999px; width: 34px; height: 34px; cursor: pointer; font-size: 13px;
+}
+.atl-close:hover { color: var(--parchment); }
+.atl-anchor {
+  position: relative; height: 190px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 12px;
+  background: radial-gradient(70% 120% at 50% 0%, var(--moss), var(--forest));
+  border-bottom: 0.5px solid var(--rule);
+}
+.atl-anchor-glyph { font-size: 44px; color: var(--amber); opacity: .65; }
+.atl-anchor-note {
+  font-family: var(--mono); font-size: 8.5px; letter-spacing: .26em;
+  text-transform: uppercase; color: var(--sage);
+}
+.atl-dhead { padding: 32px var(--gutter) 24px; }
+@media (max-width: 760px) { .atl-dhead, .atl-body, .atl-tabs { --gutter: 20px } }
+.atl-ordinal {
+  font-family: var(--mono); font-size: 11px; letter-spacing: .3em; color: var(--sage); margin-bottom: 12px;
+}
+.atl-dhead h3 {
+  font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 5vw, 3.1rem);
+  letter-spacing: .04em; margin: 0 0 8px; color: var(--parchment); line-height: 1.05;
+}
+.atl-bin { font-style: italic; font-size: 15px; color: var(--lichen); margin-bottom: 12px; }
+.atl-ep { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--dust); margin: 0 0 18px; }
+.atl-badges { display: flex; flex-wrap: wrap; gap: 7px; }
+.atl-badge {
+  font-family: var(--mono); font-size: 9px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--dust); border: 0.5px solid var(--rule); border-radius: 3px; padding: 4px 8px;
+}
+.atl-tabs {
+  display: flex; gap: 4px; overflow-x: auto; padding: 0 var(--gutter);
+  border-bottom: 0.5px solid var(--rule); position: sticky; top: 0;
+  background: var(--forest); z-index: 1; -webkit-overflow-scrolling: touch;
+}
+.atl-tab {
+  background: transparent; border: none; border-bottom: 1px solid transparent;
+  color: var(--sage); cursor: pointer; padding: 15px 12px; white-space: nowrap;
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: .2em; text-transform: uppercase;
+}
+.atl-tab:hover { color: var(--dust); }
+.atl-tab.is-on { color: var(--amber-lt); border-bottom-color: var(--amber-lt); }
+.atl-body { padding: 30px var(--gutter) 0; }
+.atl-layer {
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: .26em; text-transform: uppercase;
+  color: var(--amber); margin: 34px 0 18px; padding-bottom: 9px; border-bottom: 0.5px solid var(--rule);
+}
+.atl-layer:first-child { margin-top: 0; }
+.atl-field { display: grid; grid-template-columns: 148px 1fr; gap: 20px; margin-bottom: 20px; }
+@media (max-width: 640px) { .atl-field { grid-template-columns: 1fr; gap: 6px } }
+.atl-field-label {
+  font-family: var(--mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--sage); padding-top: 3px;
+}
+.atl-field-val { font-size: 14px; line-height: 1.7; color: var(--parchment); min-width: 0; }
+.atl-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.atl-tag {
+  font-family: var(--mono); font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--amber-lt); background: rgba(136,186,200,.08);
+  border: 0.5px solid var(--rule); border-radius: 3px; padding: 4px 8px;
+}
+.atl-empty { color: var(--sage); font-style: italic; font-size: 13.5px; }
+.atl-prose { margin: 0; font-size: 14px; line-height: 1.75; color: var(--dust); }
+.atl-list { margin: 0; padding-left: 17px; }
+.atl-list li { margin-bottom: 10px; font-size: 13.5px; line-height: 1.65; color: var(--dust); }
+.atl-list-caution li::marker { color: var(--coral); }
+.atl-note { color: var(--sage); }
+.atl-link {
+  background: none; border: none; padding: 0; cursor: pointer; font: inherit;
+  color: var(--amber-lt); border-bottom: 0.5px solid var(--rule-strong);
+}
+.atl-link:hover { color: var(--parchment); }
+.atl-disclaimer {
+  margin-top: 30px; padding: 16px 18px; font-size: 12.5px; line-height: 1.65;
+  color: var(--dust); background: rgba(206,108,82,.06);
+  border: 0.5px solid rgba(206,108,82,.28); border-radius: 8px;
+}
+
+/* ── Relationship graph ───────────────────────────────────────── */
+.atl-graph-wrap { margin: 0 0 26px; }
+.atl-graph { width: 100%; max-width: 430px; height: auto; display: block; margin: 0 auto; }
+.atl-edge { stroke: var(--rule-strong); stroke-width: .7; }
+.atl-node-core { fill: var(--moss); stroke: var(--amber); stroke-width: 1; }
+.atl-node-core-label { fill: var(--parchment); font-family: var(--sans); font-size: 9px; }
+.atl-node { cursor: pointer; }
+.atl-node circle { fill: var(--forest-card); stroke: var(--rule-strong); stroke-width: .7; transition: fill .25s, stroke .25s; }
+.atl-node text { fill: var(--dust); font-family: var(--sans); font-size: 7.5px; pointer-events: none; }
+.atl-node:hover circle, .atl-node:focus circle { fill: var(--fern); stroke: var(--amber-lt); }
+.atl-node:hover text, .atl-node:focus text { fill: var(--parchment); }
+.atl-node:focus { outline: none; }
+.atl-graph-hint {
+  text-align: center; font-family: var(--mono); font-size: 9px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--sage); margin: 10px 0 0;
+}
+
+/* ── Foot ─────────────────────────────────────────────────────── */
+.atl-foot {
+  border-top: 0.5px solid var(--rule); padding: 40px var(--gutter) 60px;
+  max-width: var(--max); margin: 0 auto;
+  display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--sage);
+}
+.atl-foot a { color: var(--dust); text-decoration: none; }
+.atl-foot a:hover { color: var(--amber-lt); }
+
+/* No-JS: the hero and explorer are both islands. Say so rather than
+   showing an empty page. */
+.nojs { display: none; padding: 140px var(--gutter) 60px; max-width: 62ch; margin: 0 auto; }
+.nojs h1 { font-family: var(--serif); font-weight: 300; font-size: 2.4rem; }
+.nojs p { color: var(--dust); line-height: 1.7; }
+.no-js .nojs { display: block; }
+</style>
+</head>
+<body class="no-js">
+<script>document.body.classList.remove('no-js');</script>
+
+<header class="mast">
+  <a class="mast-brand" href="/">Fungai</a>
+  <nav class="mast-nav" aria-label="Primary">
+    <a href="/find-your-formula">Formula</a>
+    <a href="/atlas" aria-current="page">Atlas</a>
+    <a href="/foraging">Field</a>
+    <a href="/mixology">Alchemy</a>
+    <a href="/community/academy">Journal</a>
+    <a href="/shop">Apothecary</a>
+  </nav>
+</header>
+
+<noscript>
+  <div class="nojs" style="display:block">
+    <h1>The Atlas</h1>
+    <p>The atlas is an interactive index of 243 organisms and needs JavaScript to
+    explore. The catalogue itself is also readable through the
+    <a href="/find-your-formula">guided reading</a>, and the extracts are in the
+    <a href="/shop">apothecary</a>.</p>
+  </div>
+</noscript>
+
+<main>
+  <!-- Scroll-expansion hero + the three doors · src/islands/atlas-hero.tsx -->
+  <div id="atlas-hero"></div>
+
+  <!-- The atlas proper · src/islands/atlas-explorer.tsx -->
+  <section id="atlas" aria-label="The Atlas">
+    <div id="atlas-explorer"></div>
+  </section>
+</main>
+
+<footer class="atl-foot">
+  <span>Fungai Art · Berlin</span>
+  <span>
+    <a href="/find-your-formula">Find your formula</a> ·
+    <a href="/shop">Apothecary</a> ·
+    <a href="/privacy">Privacy</a>
+  </span>
+</footer>
+
+<script type="module" src="/islands/atlas-hero.js"></script>
+<script type="module" src="/islands/atlas-explorer.js"></script>
+</body>
+</html>
