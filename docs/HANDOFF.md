@@ -6,10 +6,11 @@ costs tokens for no new information.
 
 ---
 
-## State: 19 commits on `main`, NOTHING PUSHED
+## State: 20 commits on `main`, NOTHING PUSHED
 
 ```
-(pending)  fix(data)+feat(analytics): city, merged duplicates, 5 pharmacology gaps
+9d84d8a  fix(repo): untrack the atlas media nothing loads
+9c50fc4  feat(analytics+data): city, merged duplicates, 5 pharmacology gaps
 a585ec5  feat(atlas): ecology on the herb record -- 92% can be placed
 1bf02f8  feat(monographs): a page for every herb, rendered from its record
 b0ccfdb  feat(analytics): count page views, email traffic twice a month
@@ -29,6 +30,13 @@ e37793a  fix(types): portal timer's contribution id was never in its own type
 e20868a  feat(herbs): 199 -> 243 herbs
 1cb56eb  fix(academy+engine)  <- from an earlier session, still unpushed
 ```
+
+### ⚠ `git add -A -- public/` IS NOT SAFE IN THIS REPO
+
+`public/` holds deliberately-untracked media beside source. `9c50fc4` swept in
+~4 MB of atlas video that nothing references; `9d84d8a` untracked it again and
+gitignored it. Stage explicit paths, or check `git status` for `??` entries
+before a broad add.
 
 **Robin is pushing after this session and moving to the atlas next.**
 
