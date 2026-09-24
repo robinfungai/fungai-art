@@ -63,5 +63,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
   try { document.getElementById('lost-path').textContent = 'tried: ' + window.location.pathname; } catch(e){}
 </script>
 <script src="/cookie-banner.js" defer></script>
+<!-- page-view beacon · no cookie, no visitor id, honours DNT (public/visit.js) -->
+<script src="/visit.js" defer></script>
 </body>
 </html>

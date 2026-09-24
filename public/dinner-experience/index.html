@@ -1079,5 +1079,7 @@ const obs = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
 <script src="/cookie-banner.js" defer></script>
+<!-- page-view beacon · no cookie, no visitor id, honours DNT (public/visit.js) -->
+<script src="/visit.js" defer></script>
 </body>
 </html>

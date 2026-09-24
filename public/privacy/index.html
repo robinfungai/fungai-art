@@ -103,6 +103,31 @@ section strong{color:var(--ml);font-weight:500;}
 </section>
 
 <section>
+  <h2>Counting <em>page views</em></h2>
+  <p>We count how many times each page is opened, so we know whether any of
+  this is reaching anyone. It is our own counter — no third party is involved
+  and no data leaves our own database.</p>
+  <p>For each page opened we record: <strong>the page path</strong>, the
+  <strong>country</strong> the request came from, whether the device is a
+  phone, tablet or computer, the operating system and browser family, your
+  browser's <strong>primary language</strong> (for example "de"), and the
+  <strong>website that linked you here</strong> — the site's name only, never
+  the full address it linked from.</p>
+  <p>We do <strong>not</strong> record your IP address, your city, your
+  coordinates, or the full text of your browser's identification string. We do
+  not set a cookie, store anything on your device, or create any kind of
+  visitor identifier. That is deliberate and it has a consequence we want to
+  be straight about: <strong>we can count page views, and we cannot count
+  people.</strong> Two visits by you and one visit each by two strangers look
+  identical to us, because nothing we keep can tell them apart.</p>
+  <p>If your browser sends a <strong>Do Not Track</strong> signal, we do not
+  count the visit at all.</p>
+  <p>These records are deleted after <strong>90 days</strong>. Robin receives a
+  summary by email twice a month; it contains only totals, never anything
+  about an individual.</p>
+</section>
+
+<section>
   <h2>Third-party <em>services</em></h2>
   <p>These providers handle data on our behalf, each only for the function listed:</p>
   <ul>
@@ -233,5 +258,7 @@ section strong{color:var(--ml);font-weight:500;}
 
 </div>
 <script src="/cookie-banner.js" defer></script>
+<!-- page-view beacon · no cookie, no visitor id, honours DNT (public/visit.js) -->
+<script src="/visit.js" defer></script>
 </body>
 </html>

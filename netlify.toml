@@ -191,6 +191,15 @@
   status = 301
   force  = true
 
+# Page-view beacon → collect-visit. The function also declares
+# config.path = '/api/visit', but the generic /api/* rule below would
+# otherwise rewrite this to /.netlify/functions/visit — a name that does
+# not exist. Named explicitly, like the fyf rules, and must precede /api/*.
+[[redirects]]
+  from   = "/api/visit"
+  to     = "/.netlify/functions/collect-visit"
+  status = 200
+
 # Proxy /api/* to Netlify functions
 [[redirects]]
   from   = "/api/*"
