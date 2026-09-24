@@ -135,6 +135,61 @@ a { color: inherit; }
 }
 .atl-msg code { font-family: var(--mono); font-size: 12px; color: var(--amber-lt); }
 .atl-head { border-top: 0.5px solid var(--rule); padding-top: 34px; margin-bottom: 38px; }
+
+/* ── The globe · the Atlas's spatial layer ─────────────────────────
+   Dark, instrument-like, no map chrome. The readout and the footnote are
+   part of the design rather than afterthoughts: the footnote is what makes
+   a region-level globe honest instead of looking like an imprecise pin map. */
+.atl-globe { position: relative; height: clamp(420px, 62vh, 680px); margin: 0 0 30px;
+  border: 0.5px solid var(--rule); border-radius: 3px; overflow: hidden;
+  background: radial-gradient(circle at 50% 42%, #0d1610 0%, #060a07 62%, #040705 100%); }
+.atl-globe canvas { display: block; touch-action: none; cursor: grab; }
+.atl-globe canvas:active { cursor: grabbing; }
+
+.atl-globe-loading, .atl-globe-fallback { display: flex; align-items: center; justify-content: center;
+  height: 100%; padding: 30px; text-align: center; }
+.atl-globe-fallback p { max-width: 46ch; font-family: var(--fs); font-size: 14px;
+  line-height: 1.7; color: var(--md); font-style: italic; }
+.atl-globe-loading { font-family: var(--fm); font-size: 9px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--md); }
+
+/* Region names, drawn in the 3D scene by drei's Html */
+.atl-globe-region { display: flex; flex-direction: column; align-items: center; gap: 2px;
+  white-space: nowrap; user-select: none; }
+.atl-globe-region-name { font-family: var(--fm); font-size: 8px; letter-spacing: .22em;
+  text-transform: uppercase; color: rgba(230,217,181,.62); text-shadow: 0 0 10px #000; }
+.atl-globe-region-count { font-family: var(--fm); font-size: 8.5px; letter-spacing: .1em;
+  color: var(--nutrient, #E8B14B); }
+
+/* Hover identity — common name, Latin name, region */
+.atl-globe-readout { position: absolute; left: 0; right: 0; bottom: 42px; display: flex;
+  flex-direction: column; align-items: center; gap: 3px; pointer-events: none; padding: 0 16px; }
+.atl-globe-readout-name { font-family: var(--fd, 'Cormorant Garamond', Georgia, serif);
+  font-size: 22px; color: var(--ml, #E6D9B5); letter-spacing: -.01em; }
+.atl-globe-readout-bino { font-family: var(--fs, 'Cormorant Garamond', Georgia, serif);
+  font-style: italic; font-size: 13px; color: var(--md, #8B7E62); }
+.atl-globe-readout-region { font-family: var(--fm); font-size: 8px; letter-spacing: .22em;
+  text-transform: uppercase; color: rgba(158,212,56,.7); margin-top: 2px; }
+.atl-globe-readout-hint { font-family: var(--fm); font-size: 8.5px; letter-spacing: .2em;
+  text-transform: uppercase; color: rgba(139,126,98,.7); }
+
+/* The honest footnote */
+.atl-globe-note { position: absolute; left: 0; right: 0; bottom: 0; margin: 0;
+  padding: 9px 16px; background: linear-gradient(to top, rgba(4,7,5,.92), rgba(4,7,5,0));
+  font-family: var(--fm); font-size: 8px; letter-spacing: .07em; line-height: 1.65;
+  color: rgba(139,126,98,.85); text-align: center; pointer-events: none; }
+.atl-globe-note strong { color: var(--ml, #E6D9B5); font-weight: 400; }
+.atl-globe-note em { font-style: italic; color: rgba(158,212,56,.8); }
+
+@media (max-width: 640px) {
+  .atl-globe { height: clamp(340px, 52vh, 460px); }
+  .atl-globe-readout { bottom: 54px; }
+  .atl-globe-readout-name { font-size: 18px; }
+  .atl-globe-note { font-size: 7.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .atl-globe canvas { cursor: default; }
+}
 .atl-kicker {
   font-family: var(--mono); font-size: 9.5px; letter-spacing: .32em;
   text-transform: uppercase; color: var(--sage); margin-bottom: 14px;

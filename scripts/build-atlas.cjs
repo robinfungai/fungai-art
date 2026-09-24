@@ -285,6 +285,13 @@ const records = HERBS.map(h => {
       type, parts, chem,
       states, statesAlso: stateTiers.secondary,
       ecology: eco, preparations: preps,
+      // Recorded coarse geography, for the globe. There are no coordinates
+      // anywhere in herbs.ts and none are invented: a node sits at a REGION,
+      // never at a collection site. `tradition` is recorded on 100% and
+      // native_range on 92%, which is what makes a region-density globe
+      // honest where a pin map would not be.
+      native_range: (h.ecology && h.ecology.native_range) || [],
+      habitat: (h.ecology && h.ecology.habitat) ? true : false,
       tradition: TRADITION_LABEL[h.origin_region] || 'GLOBAL',
       element: h.tcm_element || '', meridians: h.tcm_meridians || [],
       energetics: h.energetics || [],

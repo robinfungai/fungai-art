@@ -13,7 +13,12 @@
 // presenting a pattern match as a curated fact.
 
 import { createRoot } from 'react-dom/client';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
+// Lazy: three + drei is the heaviest thing on the page and the grid must not
+// wait for it. If WebGL is missing the globe renders a note and the grid is
+// untouched — see atlas-globe.tsx.
+const AtlasGlobe = lazy(() => import('../components/ui/atlas-globe'));
 
 // ── Types (mirror scripts/build-atlas.cjs output) ────────────────
 interface Slim {
@@ -175,6 +180,26 @@ export default function AtlasExplorer() {
 
   const activeCount = Object.values(sel).reduce((s, v) => s + v.length, 0);
 
+  // What the globe needs from the page's state.
+  //
+  // visibleSlugs: the facet filters and the search already decide `results`,
+  // so the globe dims whatever they excluded instead of running its own
+  // filter. Passing null when nothing is filtered keeps every node at full
+  // presence rather than making "no filter" look like a filter.
+  const visibleSlugs = useMemo(
+    () => (activeCount || query ? new Set(results.map(o => o.slug)) : null),
+    [results, activeCount, query],
+  );
+
+  // emphasis: choosing a single kingdom is the Atlas changing state, not a
+  // checkbox being ticked. One type selected means that kingdom dominates
+  // and the rest recede; two or more is a filter, and `visibleSlugs`
+  // already expresses that.
+  const emphasis = useMemo(() => {
+    const types = sel.type || [];
+    return types.length === 1 ? types[0] : null;
+  }, [sel]);
+
   if (error) {
     return (
       <div className="atl-msg">
@@ -195,6 +220,22 @@ export default function AtlasExplorer() {
           its taxonomy, chemistry, tradition, safety and its relationships to the others.
         </p>
       </header>
+
+      {/* The spatial layer. Lazy so the 3D bundle is not on the critical path,
+          and deliberately ABOVE the search: the globe is a way in, the grid
+          below is the complete and accessible way in. They share `openSlug`
+          and `open`, which is why selecting a node on the globe opens exactly
+          the same dossier — and writes the same shareable hash — as clicking a
+          card. One state, two surfaces. */}
+      <Suspense fallback={<div className="atl-globe atl-globe-loading">Assembling the world…</div>}>
+        <AtlasGlobe
+          organisms={index.organisms}
+          selectedSlug={openSlug}
+          onSelect={open}
+          visibleSlugs={visibleSlugs}
+          emphasis={emphasis}
+        />
+      </Suspense>
 
       <div className="atl-search">
         <input

@@ -13,6 +13,7 @@
     "src/components/ui/3d-gallery-photography.tsx",
     "src/components/ui/wave-background.tsx",
     "src/components/ui/scroll-expansion-hero.tsx",
+    "src/components/ui/atlas-globe.tsx",
     "src/vite-env.d.ts"
   ],
   "exclude": []
