@@ -74,3 +74,6 @@ public/home/markdowns all plants/generated/
 # unused stills here meant an image could be used on the page, work locally,
 # and silently not deploy. Atlas art is small and belongs in the repo; if a
 # large unused clip turns up again, delete it rather than ignore it.
+
+# Generated card thumbnails — npm run build:thumbnails
+public/atlas/thumb/

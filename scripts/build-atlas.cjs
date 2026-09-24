@@ -43,6 +43,7 @@ if (!Array.isArray(HERBS) || !HERBS.length) {
 
 // Declared here so record building can read it; populated below the helpers.
 let PORTRAITS = {};
+let PORTRAITS_FULL = {};
 let PORTRAITS_UNMATCHED = [];
 
 const slugify = s => String(s)
@@ -83,10 +84,11 @@ function buildPortraits(herbs) {
     }
   }
 
-  const portraits = {};
+  const portraits = {};   // card-sized
+  const full = {};        // original, for the dossier
   const unmatched = [];
   let files = [];
-  try { files = fs.readdirSync(dir); } catch (_) { return { portraits, unmatched }; }
+  try { files = fs.readdirSync(dir); } catch (_) { return { portraits, full, unmatched }; }
   for (const f of files) {
     if (!/\.(jpe?g|png|webp|avif)$/i.test(f)) continue;
     const base = f.replace(/\.[^.]+$/, '');
@@ -103,10 +105,16 @@ function buildPortraits(herbs) {
       const names = new Set(starts.map(([, v]) => v));
       if (names.size === 1) hit = starts[0][1];
     }
-    if (hit) portraits[hit] = '/atlas/' + f;
-    else unmatched.push(f);
+    if (hit) {
+      // A card is ~260 px wide; the originals are 130–1200 KB. Use the
+      // generated thumbnail when build:thumbnails has been run, and fall back
+      // to the original so the grid still works before anyone runs it.
+      const thumb = path.join(dir, 'thumb', base + '.webp');
+      portraits[hit] = fs.existsSync(thumb) ? '/atlas/thumb/' + base + '.webp' : '/atlas/' + f;
+      full[hit] = '/atlas/' + f;
+    } else unmatched.push(f);
   }
-  return { portraits, unmatched };
+  return { portraits, full, unmatched };
 }
 
 // ── Layer 01 · Identity — organism type ──────────────────────────
@@ -319,7 +327,7 @@ function resolveMentions(list, selfId) {
 
 // ── Build ────────────────────────────────────────────────────────
 const slugSeen = new Set();
-({ portraits: PORTRAITS, unmatched: PORTRAITS_UNMATCHED } = buildPortraits(HERBS));
+({ portraits: PORTRAITS, full: PORTRAITS_FULL, unmatched: PORTRAITS_UNMATCHED } = buildPortraits(HERBS));
 
 const records = HERBS.map(h => {
   let slug = slugify(h.name);
@@ -367,6 +375,7 @@ const records = HERBS.map(h => {
     },
     dossier: {
       id: h.id, slug, name: h.name, binomial, botanical: h.botanical || '',
+      image: PORTRAITS_FULL[h.name] || '',
       family: h.family || '', epithet: h.epithet || '', type,
       layers: {
         identity:     { family: h.family || '', binomial, epithet: h.epithet || '', type, parts },
