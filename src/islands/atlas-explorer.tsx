@@ -41,7 +41,7 @@ interface Slim {
   ecology: string[]; preparations: string[];
   tradition: string; element: string; meridians: string[];
   energetics: string[]; body: string[]; onset: string; energyPattern: string[];
-  grade: string; caution_level: string;
+  grade: string; caution_level: string; image?: string;
   synergy: number[]; cautionEdges: number[];
 }
 interface FacetGroup { derived: boolean; values: { value: string; count: number }[] }
@@ -346,10 +346,18 @@ export default function AtlasExplorer() {
       <div className="atl-grid">
         {results.map(o => (
           <button type="button" className="atl-card" key={o.id} onClick={() => open(o.slug)}>
-            {/* A seal drawn from this organism's own record — kingdom,
-                chemistry, tradition, evidence, caution. See organism-sigil.tsx
-                for why this is not a photograph or a repeated icon. */}
-            <OrganismSigil className="atl-card-sigil" record={o} size={44} />
+            {/* A photograph where one exists — matched at build time by
+                filename, see buildPortraits in scripts/build-atlas.cjs — and
+                otherwise a seal drawn from this organism's own record. The
+                sigil is not a placeholder for a missing picture; it carries
+                kingdom, chemistry, tradition, evidence and caution. */}
+            {o.image ? (
+              <span className="atl-card-portrait">
+                <img src={o.image} alt="" loading="lazy" decoding="async" />
+              </span>
+            ) : (
+              <OrganismSigil className="atl-card-sigil" record={o} size={44} />
+            )}
             <span className="atl-card-name">{o.name}</span>
             <span className="atl-card-bin">{o.binomial}</span>
             {o.epithet && <span className="atl-card-ep">{o.epithet}</span>}

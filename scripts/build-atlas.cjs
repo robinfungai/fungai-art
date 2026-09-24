@@ -41,12 +41,73 @@ if (!Array.isArray(HERBS) || !HERBS.length) {
   process.exit(1);
 }
 
+// Declared here so record building can read it; populated below the helpers.
+let PORTRAITS = {};
+let PORTRAITS_UNMATCHED = [];
+
 const slugify = s => String(s)
   .toLowerCase()
   .replace(/\([^)]*\)/g, ' ')
   .replace(/['’]/g, '')
   .replace(/[^a-z0-9]+/g, '-')
   .replace(/^-+|-+$/g, '');
+
+// ── Portraits ────────────────────────────────────────────────────
+// Robin drops photographs into public/atlas/ named by English or Latin name.
+// They are matched to records HERE, at build time, so adding a picture is
+// copying a file — no code edit, no manifest to keep in sync.
+//
+// Matching is STRICT: slug, display name, alias or binomial, compared with
+// punctuation and case removed. Nothing fuzzy. "wild-rosemary" must not
+// silently become Rosmarinus officinalis, because wild rosemary is
+// Rhododendron tomentosum and that is a different plant — the same mistake
+// as Ajwain/Ajwan, which cost an afternoon.
+//
+// Unmatched files are REPORTED rather than ignored, because an unmatched
+// photograph means one of two interesting things: the file is misnamed, or
+// the catalogue is missing a herb.
+const RESERVED_IMAGES = new Set(['first-photo', 'second-photo', 'third-photo', 'new-vid']);
+
+function buildPortraits(herbs) {
+  const dir = path.join(ROOT, 'public', 'atlas');
+  const key = v => String(v || '').toLowerCase().replace(/\([^)]*\)/g, ' ').replace(/[^a-z0-9]/g, '');
+  const byKey = new Map();
+  for (const h of herbs) {
+    const names = [slugify(h.name), h.name, ...(h.aliases || []), ...String(h.name).split('/')];
+    // Binomial without the parenthetical part-of-plant note.
+    const bino = String(h.botanical || '').replace(/\([^)]*\)/g, ' ').split('/')[0].trim();
+    if (bino) names.push(bino, bino.split(/\s+/).slice(0, 2).join(' '));
+    for (const n of names) {
+      const k = key(n);
+      if (k.length >= 4 && !byKey.has(k)) byKey.set(k, h.name);
+    }
+  }
+
+  const portraits = {};
+  const unmatched = [];
+  let files = [];
+  try { files = fs.readdirSync(dir); } catch (_) { return { portraits, unmatched }; }
+  for (const f of files) {
+    if (!/\.(jpe?g|png|webp|avif)$/i.test(f)) continue;
+    const base = f.replace(/\.[^.]+$/, '');
+    if (RESERVED_IMAGES.has(base)) continue;
+    const k = key(base);
+    let hit = byKey.get(k);
+    // A filename may be SHORTER than the record name — dandelion.jpg for
+    // "Dandelion Root" — and that is safe when exactly one record starts with
+    // it. The reverse is not: "wild-rosemary" carries an extra qualifier, so
+    // it can never match "rosemary", which is the whole point. Ambiguity is
+    // left unmatched rather than guessed.
+    if (!hit && k.length >= 5) {
+      const starts = [...byKey.entries()].filter(([rk]) => rk.startsWith(k));
+      const names = new Set(starts.map(([, v]) => v));
+      if (names.size === 1) hit = starts[0][1];
+    }
+    if (hit) portraits[hit] = '/atlas/' + f;
+    else unmatched.push(f);
+  }
+  return { portraits, unmatched };
+}
 
 // ── Layer 01 · Identity — organism type ──────────────────────────
 // MUSHROOM_NAMES mirrors the set in src/App.tsx.
@@ -258,6 +319,8 @@ function resolveMentions(list, selfId) {
 
 // ── Build ────────────────────────────────────────────────────────
 const slugSeen = new Set();
+({ portraits: PORTRAITS, unmatched: PORTRAITS_UNMATCHED } = buildPortraits(HERBS));
+
 const records = HERBS.map(h => {
   let slug = slugify(h.name);
   if (slugSeen.has(slug)) slug = `${slug}-${h.id}`;   // ids are unique, names are not guaranteed
@@ -290,6 +353,7 @@ const records = HERBS.map(h => {
       // never at a collection site. `tradition` is recorded on 100% and
       // native_range on 92%, which is what makes a region-density globe
       // honest where a pin map would not be.
+      image: PORTRAITS[h.name] || '',
       native_range: (h.ecology && h.ecology.native_range) || [],
       habitat: (h.ecology && h.ecology.habitat) ? true : false,
       tradition: TRADITION_LABEL[h.origin_region] || 'GLOBAL',
@@ -308,7 +372,8 @@ const records = HERBS.map(h => {
         identity:     { family: h.family || '', binomial, epithet: h.epithet || '', type, parts },
         ecology:      { biomes: eco, origin: h.origin_region || '',
                         tradition: TRADITION_LABEL[h.origin_region] || 'GLOBAL',
-                        native_range: (h.ecology && h.ecology.native_range) || [],
+                        image: PORTRAITS[h.name] || '',
+      native_range: (h.ecology && h.ecology.native_range) || [],
                         habitat: (h.ecology && h.ecology.habitat) || '',
                         source: (h.ecology && h.ecology.source) || 'derived' },
         material:     { parts, preparationNote: h.best_preparation || '' },
@@ -397,5 +462,15 @@ console.log('    ecology / biome   ' + pct(covered(s => s.ecology)) + '   <- low
   const habitat = HERBS.filter(h => h.ecology && h.ecology.habitat).length;
   console.log('    native range      ' + pct(range) + '   <- what the map can place today');
   console.log('    habitat written   ' + pct(habitat) + '   <- see docs/ECOLOGY-GAPS.txt');
+}
+{
+  // Portraits. The unmatched list is the useful half: a photograph with no
+  // record means either the file is misnamed or the catalogue is short a herb.
+  const n = Object.keys(PORTRAITS).length;
+  console.log('  PORTRAITS: ' + n + ' of ' + HERBS.length + ' organisms have a photograph');
+  if (PORTRAITS_UNMATCHED.length) {
+    console.log('  ' + PORTRAITS_UNMATCHED.length + ' image(s) matched NO record — misnamed, or the herb is missing:');
+    for (const f of PORTRAITS_UNMATCHED) console.log('    ' + f);
+  }
 }
 console.log(`  relationship graph: ${edgeTotal} resolved synergy edges, ${unresolved} declared mentions unresolved`);
