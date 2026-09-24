@@ -23,7 +23,7 @@
 // wrapper here and the rule in grounding.cjs both say so, because a
 // single line of defence against injection is not one.
 
-const { tokenize } = require('./retrieve.cjs');
+const { tokenize, W_FUZZY } = require('./terminology.cjs');
 
 // The anon key is public by design — it is in every page of the site,
 // and lab_notes reads are public (supabase-lab-notes.sql). Env vars win
@@ -114,36 +114,51 @@ async function loadLabNotes() {
 // length normalisation buys nothing that matters, and this stays
 // readable. Recency breaks ties: a newer note on the same subject is
 // usually the better one.
+//
+// The notebook is scored through the SAME reading of the question as the
+// static corpus (terminology.cjs), passed in by the caller. A member who
+// types "ashwaganda" must reach a lab note about Ashwagandha as surely as
+// they reach the monograph — and the notebook is where a misspelling is
+// most likely, because notes are written at the bench in a hurry too.
+//
+// Expansion terms count for the score but NOT for the relevance gate
+// below: a note earns its place by sharing words the member actually
+// typed, not words we guessed on their behalf.
 
-function scoreLabNotes(query, chunks, k = 3) {
-  const qTerms = tokenize(query);
-  if (!qTerms.length || !chunks.length) return [];
+function scoreLabNotes(query, chunks, k = 3, interpretation = null) {
+  const weights = interpretation && interpretation.weights instanceof Map
+    ? interpretation.weights
+    : new Map(tokenize(query).map(t => [t, 1]));
+  if (!weights.size || !chunks.length) return [];
 
-  const qSet = new Set(qTerms);
   const N = chunks.length;
+  const typed = new Set();
+  for (const [t, w] of weights) if (w >= W_FUZZY) typed.add(t);
 
   // Document frequency across the notebook.
   const df = new Map();
   const docTerms = chunks.map(c => {
     const terms = tokenize(c.title + ' ' + c.text);
     const seen = new Set(terms);
-    for (const t of seen) if (qSet.has(t)) df.set(t, (df.get(t) || 0) + 1);
+    for (const t of seen) if (weights.has(t)) df.set(t, (df.get(t) || 0) + 1);
     return terms;
   });
 
   const ranked = [];
   for (let i = 0; i < N; i++) {
     const tf = new Map();
-    for (const t of docTerms[i]) if (qSet.has(t)) tf.set(t, (tf.get(t) || 0) + 1);
+    for (const t of docTerms[i]) if (weights.has(t)) tf.set(t, (tf.get(t) || 0) + 1);
     if (!tf.size) continue;
     let score = 0;
+    let typedHits = 0;
     for (const [t, n] of tf) {
       const idf = Math.log(1 + (N + 1) / ((df.get(t) || 0) + 0.5));
-      score += idf * (1 + Math.log(n));
+      score += idf * (1 + Math.log(n)) * (weights.get(t) || 1);
+      if (typed.has(t)) typedHits++;
     }
     // A note is only worth surfacing if it is actually about the
     // question — one incidental word match is noise.
-    if (tf.size < 2 && qTerms.length > 2) continue;
+    if (typedHits < 2 && typed.size > 2) continue;
     ranked.push({ chunk: chunks[i], score: Math.round(score * 100) / 100 });
   }
   ranked.sort((a, b) => b.score - a.score);
@@ -153,11 +168,14 @@ function scoreLabNotes(query, chunks, k = 3) {
 /**
  * Retrieve lab-notebook extracts for a question.
  * Returns [] on any failure — the static KB always still answers.
+ *
+ * @param {object} [interpretation] the reading from interpretQuery(), so
+ *        the notebook and the static corpus answer the same question.
  */
-async function retrieveLabNotes(question, k = 3) {
+async function retrieveLabNotes(question, k = 3, interpretation = null) {
   try {
     const chunks = await loadLabNotes();
-    return scoreLabNotes(question, chunks || [], k);
+    return scoreLabNotes(question, chunks || [], k, interpretation);
   } catch (_) {
     return [];
   }

@@ -6,17 +6,22 @@ costs tokens for no new information.
 
 ---
 
-## State: 7 commits on `main`, NOTHING PUSHED
+## State: 9 commits on `main`, NOTHING PUSHED
 
 ```
-f5e74a1  feat(atlas): /atlas -- scroll hero, 243-organism explorer, synergy graph
+(this session) feat(myco): terminology layer -- misspellings, synonyms, binomials
+52d61a3  feat(atlas): /atlas -- scroll hero, 243-organism explorer, synergy graph
 e6aca82  fix(reserve): a missing Resend key told customers their order landed
+05dbd96  docs: session handoff
 059a4de  fix(safety): interaction checker could not see 11 herbs, incl St John's Wort
 57c4942  docs: park the typecheck backlog
 e37793a  fix(types): portal timer's contribution id was never in its own type
 e20868a  feat(herbs): 199 -> 243 herbs, one knotweed, Thunder God Vine out of formulas
 1cb56eb  fix(academy+engine)  <- from an earlier session, still unpushed
 ```
+
+Note: the atlas commit is `52d61a3`, not the `f5e74a1` an earlier copy of this
+file recorded — it was amended after that line was written.
 
 Untracked and DELIBERATELY so: four unused clips/stills in `public/atlas/`
 (~9.8 MB). Only `new-vid.mp4` and `first-photo.jpg` are committed, because
@@ -173,16 +178,111 @@ The synergy graph resolves **643 edges** from the existing prose using the same
 atlas and the safety checker agree on what counts as a mention of a herb.
 Change one, change the other.
 
+## Done since: the terminology layer
+
+MYCO could only answer a well-spelled question. Measured before the change,
+against a corpus that plainly holds the answer:
+
+```
+"what are ashwaganda contraindacations"  -> NOTHING retrieved at all
+"is rishi safe with warfrin"             -> three unrelated herbs
+"lions mane for memory"                  -> Tremella, Kelp, Toothed Clubmoss
+"standardised" vs "standardized"         -> two disjoint result sets
+"is it safe with coumadin"               -> nothing about warfarin
+```
+
+Two of those are not typos. `lions mane` failed because the tokeniser kept
+apostrophes, so "Lion's" indexed as the term `lion'` — a token no question
+ever produces. `standardised/standardized` failed because 130 monographs
+written over years contain both spellings, so either question reached half
+the shelf.
+
+| file | what it is |
+|---|---|
+| `src/server/myco/vocabulary.cjs` | DATA, hand-edited: 93 equivalence groups, 74 one-way widenings, 163 misspellings, negators |
+| `src/server/myco/terminology.cjs` | the machinery: tokenising, 5-pass correction, expansion, negation |
+| `tests/myco-terminology-verify.cjs` | `npm run test:myco-terminology` — 80 checks |
+
+Correction runs five passes, cheapest and surest first: already in the corpus
+→ orthographic variant (UK/US, æ/œ, -ise/-ize, by RULE not table) → curated
+table → bounded Damerau-Levenshtein → leave it as typed. **The corpus is the
+dictionary** — there is no external word list, so a correction can only ever
+point at something retrievable.
+
+Wired into: the static KB, the **Academy lab notes** (one reading of one
+question is shared by both, so a misspelling cannot reach the monograph and
+miss the bench note on the same plant), `groundQuestion`, and the endpoint,
+which returns `readAs` so the Academy chat shows *read as rishi → reishi*. A
+silent correction is a wrong answer the member cannot spot.
+
+`build-myco-kb.cjs` now emits an **entity table**: 689 names across 242
+organisms — display name, slash aliases, full binomial, and genus only where
+it is unambiguous. `ganoderna lucidem` (two errors in a binomial) resolves to
+Reishi. Vaccinium resolves to nothing, because four of our plants share it.
+
+### Two things worth knowing
+
+- **`coumadin` must never be fuzzy-matched.** The corpus contains *coumarin*,
+  a different molecule, one edit away. Curated vocabulary is therefore
+  exempt from fuzzy correction (`protectedTerms`), and coumadin reaches
+  warfarin by the EQUIVALENT table instead. There is a test pinning this.
+- **Negation is counted in WORDS, not characters.** A character window wide
+  enough for "not sedating" also suppressed *nordic* in "not sedating with a
+  nordic forest profile" — a negator reaching four words past its object.
+
+### What the dead-term report tells us
+
+Every curated term is checked against the corpus at lexicon build time; 40 are
+DEAD (absent, therefore dropped and reported). Most are fair — we simply do
+not use "soporific" or "tisane". But the ecology block is the exception:
+
+```
+taiga  montane  subalpine  peat  mire  mycorrhizal  endophyte  saprotroph  decomposer  understory
+```
+
+That is independent confirmation of the atlas habitat gap below — the words
+are missing because the knowledge is. Recording habitat in `herbs.ts` would
+light up both the atlas's 38% ecology coverage and these expansions at once.
+
+Also found: our own material is split on one plant — a monograph headed
+**SCHIZANDRA** and a database record called **Schisandra**. The EQUIVALENT
+group joins them; the underlying inconsistency is still there.
+
+### The engine, deliberately narrower
+
+`scoring.js · notesBoost` scores the quiz's free-text notes by substring
+match, so a misspelling did not weaken an intention — it deleted it
+("anxeity" contains no `anxi`). It now matches the corrected text as well as
+the original, so correction can only ever ADD.
+
+That path is **table-only**: no fuzzy matching, because half the keyword list
+is four-letter prefixes and `anti-inflammatory` is one edit from `anxi`, and
+because a wrong guess there changes which herbs go in a bottle rather than
+which paragraph ranks third. Verified: fixture comparison unchanged at 12
+UNEXPECTED. `19-notes-heavy` is in that set and is the fixture this touches —
+its diff is byte-identical with the correction disabled, so it is the
+pre-existing equal-score tie order, not this change.
+
+If you would rather decide the engine half separately, it is one line:
+`const n = raw;` in `notesBoost`.
+
 ## Next session: pick ONE
 
 1. **Caution-veto severity taxonomy** -- still needs Robin's decision on what
    rejects. Unchanged from the last handoff.
 2. **Compose endpoint hardening** -- still needs infra/deploy decisions.
-3. **Atlas follow-ons** -- record habitat in herbs.ts (closes the 38%); site-wide
-   nav rename to FORMULA/ATLAS/FIELD/ALCHEMY/JOURNAL/APOTHECARY (only /atlas
-   uses it today); per-organism visuals when the Higgsfield budget exists (the
-   dossier has the slot reserved and labelled).
+3. **Atlas follow-ons** -- record habitat in herbs.ts (closes the 38%, AND the
+   10 dead ecology expansions above -- one edit, two payoffs, now the
+   best-evidenced item on this list); site-wide nav rename to
+   FORMULA/ATLAS/FIELD/ALCHEMY/JOURNAL/APOTHECARY (only /atlas uses it today);
+   per-organism visuals when the Higgsfield budget exists (the dossier has the
+   slot reserved and labelled).
 4. **Typecheck backlog** -- see `docs/TYPECHECK-BACKLOG.md`.
+5. **Terminology follow-ons** -- `npm run test:myco-terminology` prints the dead
+   terms every run; that list is the to-do. Negation currently only stops
+   WIDENING a ruled-out term, it does not down-weight the term itself, so
+   "not sedating" still scores `sedating` at full weight. Doing that properly
+   changes which extracts reach MYCO, so it is a decision, not a patch.
 
 ## How to be economical next session
 
@@ -191,7 +291,9 @@ Change one, change the other.
   unless the herb data actually changes.
 - Verification commands that matter:
   - `npx tsc --noEmit -p tsconfig.app.json 2>&1 | grep "data/herbs"`
+    (47 errors is the documented backlog, not a regression)
   - `npm run test:safety-rules` (and `minor-gate`, `myco-validator`)
+  - `npm run test:myco-kb` and `npm run test:myco-terminology`
 - Fixture comparison shows **12 UNEXPECTED**; 10 predate today, 2 are the herb
   additions. Baselines need re-capturing (`npm run test:fixtures:capture`) but
   that is pre-existing debt — do not treat it as a regression.

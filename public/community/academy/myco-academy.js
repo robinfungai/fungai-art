@@ -75,6 +75,8 @@
     '.myco-ac-msg.bot{color:#C9B894;align-self:flex-start;max-width:100%}',
     '.myco-ac-sources{margin-top:8px;padding-top:8px;border-top:0.5px solid rgba(255,255,255,.08);',
     '  font-family:"Geist Mono",monospace;font-size:8.5px;letter-spacing:.06em;line-height:1.75;color:#7E8F6B}',
+    '.myco-ac-readas{margin-top:7px;font-family:"Geist Mono",monospace;font-size:8.5px;letter-spacing:.1em;',
+    '  color:#8B7E62;font-style:normal}',
     '.myco-ac-conf{display:inline-block;margin-top:7px;font-family:"Geist Mono",monospace;font-size:8px;',
     '  letter-spacing:.18em;text-transform:uppercase;padding:2px 8px;border-radius:999px}',
     '.myco-ac-chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 16px 12px}',
@@ -141,6 +143,20 @@
     var el = document.createElement('div');
     el.className = 'myco-ac-msg ' + (role === 'user' ? 'user' : 'bot');
     el.innerHTML = esc(text);
+
+    // Spelling MYCO corrected before searching. Shown because a silent
+    // correction is a wrong answer waiting to happen: if we read "rishi"
+    // as Reishi and the member meant something else, they have to be able
+    // to see that and say so.
+    if (extra && extra.readAs && extra.readAs.corrections && extra.readAs.corrections.length) {
+      var ra = document.createElement('div');
+      ra.className = 'myco-ac-readas';
+      ra.textContent = 'read as ' + extra.readAs.corrections.map(function (c) {
+        return c.from + ' → ' + c.to;
+      }).join(' · ');
+      ra.title = 'MYCO searched for the corrected spelling. Say so if that is not what you meant.';
+      el.appendChild(ra);
+    }
 
     // Show what MYCO actually read. A citation the model invented has
     // already been stripped server-side, so anything here is real.
@@ -227,6 +243,7 @@
         addMsg('bot', data.reply || '(empty reply)', {
           sources: Array.isArray(data.sources) ? data.sources : [],
           confidence: data.confidence || null,
+          readAs: data.readAs || null,
         });
         history.push({ role: 'user', content: msg });
         history.push({ role: 'assistant', content: data.reply || '' });

@@ -10,6 +10,7 @@
 // added later (engine 2.1) so those quiz answers shape the formula.
 
 const { isGABAergic, isCNSStimulant } = require('./pharmacology');
+const { applyMisspellings } = require('../myco/terminology.cjs');
 
 const SUBPATTERN_AFFINITY = {
   anger:       ['bupleurum','peony','chrysanthemum','gardenia','skullcap','passionflower','motherwort','mint'],
@@ -221,9 +222,27 @@ const NOTES_KEYWORDS = [
   'ceremon','ritual','meditat','prayer',
 ];
 
+// The notes field is scored by substring match, which means a misspelling
+// does not weaken an intention — it deletes it. "anxeity" contains no
+// 'anxi', so someone who typed that got no anxiety weighting at all, and
+// nothing anywhere told them or us.
+//
+// Correction is the curated table ONLY (see applyMisspellings): no fuzzy
+// matching against this keyword list, because half of these keys are
+// four-letter prefixes and 'anti-inflammatory' is one edit from 'anxi'.
+// A false boost here does not rank a paragraph lower, it puts a different
+// herb in a bottle.
+//
+// The original text is matched as well as the corrected one, so this can
+// only ever ADD an intention the member expressed, never remove one they
+// spelled correctly.
 function notesBoost(h, notes) {
   if (!notes) return 0;
-  const n = String(notes).toLowerCase();
+  const raw = String(notes).toLowerCase();
+  const fixed = applyMisspellings(raw);
+  // ' | ' between the two readings so no keyword can match across the
+  // join — none of them contain a pipe.
+  const n = fixed.corrections.length ? raw + ' | ' + fixed.text.toLowerCase() : raw;
   const t = (
     (h.primary_functions   || []).join(' | ') + ' | ' +
     (h.secondary_benefits  || []).join(' | ') + ' | ' +

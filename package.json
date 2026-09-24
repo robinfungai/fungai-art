@@ -31,6 +31,7 @@
     "preview": "vite preview",
     "build:myco-kb": "node scripts/build-myco-kb.cjs",
     "test:myco-kb": "node tests/myco-kb-verify.cjs",
+    "test:myco-terminology": "node tests/myco-terminology-verify.cjs",
     "check:claims": "node scripts/check-claims.cjs",
     "test:claims": "node tests/claims-verify.cjs",
     "build:community": "node scripts/build-community.cjs",

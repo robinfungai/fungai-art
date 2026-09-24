@@ -20,6 +20,7 @@
  */
 
 import { groundQuestion, verifyAnswer, GROUNDING_RULES, KB_VERSION } from '../../src/server/myco/grounding.cjs';
+import { interpretQuery } from '../../src/server/myco/retrieve.cjs';
 import { retrieveLabNotes } from '../../src/server/myco/lab-notes.cjs';
 import { guardReply } from '../../src/server/myco/claims-guard.cjs';
 
@@ -430,17 +431,26 @@ export const handler = async (event) => {
     const lastUserTurn = [...safeHistory].reverse().find(m => m.role === 'user');
     const retrievalQuery = (lastUserTurn ? lastUserTurn.content.slice(0, 300) + ' ' : '') + userMessage;
     //
+    // The question is read ONCE, through the terminology layer, and that
+    // one reading is given to both corpora. If the static knowledge base
+    // corrected "ashwaganda" and the lab notebook did not, a member's
+    // question would reach the monograph and miss the bench note on the
+    // same plant — so the two must not read the question separately.
+    let reading = null;
+    try { reading = interpretQuery(retrievalQuery); }
+    catch (_) { reading = null; }
+    //
     // The Academy lab notebook is retrieved live (Supabase, 2-min cache)
     // rather than from the built KB, so research posted this morning is
     // answerable this morning. It never blocks an answer: on any failure
     // retrieveLabNotes returns [] and the static knowledge base stands
     // alone.
     let labExtra = [];
-    try { labExtra = await retrieveLabNotes(retrievalQuery, 3); }
+    try { labExtra = await retrieveLabNotes(retrievalQuery, 3, reading); }
     catch (_) { labExtra = []; }
 
     let grounded = { block: '', sources: [] };
-    try { grounded = groundQuestion(retrievalQuery, { k: 6, extra: labExtra }); }
+    try { grounded = groundQuestion(retrievalQuery, { k: 6, extra: labExtra, interpretation: reading }); }
     catch (_) { grounded = { block: '', sources: [] }; }
 
     const res = await fetch('https://api.anthropic.com/v1/messages', {
@@ -498,6 +508,14 @@ export const handler = async (event) => {
         // they would point at sources for text no longer shown.
         sources:    guarded.replaced ? [] : checked.citations,
         confidence: guarded.replaced ? { level: 'none', reason: 'claims guard replaced the answer' } : checked.confidence,
+        // What the terminology layer made of the question. Only
+        // corrections travel: a member should be told we read "ashwaganda"
+        // as Ashwagandha, because if we got it wrong they need to see
+        // that. Spelling variants and widened search terms are how the
+        // retrieval worked, not something to put in front of them.
+        readAs: reading && reading.corrections.length
+          ? { corrections: reading.corrections.slice(0, 6) }
+          : null,
         kbVersion:  KB_VERSION,
       }),
     };
