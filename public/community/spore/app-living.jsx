@@ -1198,7 +1198,7 @@ function ActiveNodesPanel({ selected, onSelect }) {
 
 /* ── Network page ─────────────────────────────────────────── */
 
-function NetworkPage({ economy, onToast, flowRate }) {
+function NetworkPage({ economy, onToast, flowRate, currentMember, onOpenSection }) {
   const [selected, setSelected] = useState('berlin');
   const node      = SporeData.NETWORK_NODES.find(n => n.id === selected);
   const liveCount = SporeData.NETWORK_NODES.filter(n => n.activity !== 'proposed').length;
@@ -1212,6 +1212,12 @@ function NetworkPage({ economy, onToast, flowRate }) {
         <h2 className="section-title">The <em>network.</em></h2>
         <p className="section-blurb">A hidden, intelligent network beneath the surface. Tend a node — nutrients flow, the organism grows.</p>
       </div>
+
+      {/* The fairy ring — portal/fairy-ring.jsx. Phase 1: it sits at the
+          top of the portal home alongside the existing nav rather than
+          replacing it. onTab is handed down from App so Step in moves
+          tabs exactly as the old nav does. */}
+      <FairyRing role={faIsAdmin(currentMember) ? 'admin' : 'member'} onOpenSection={onOpenSection} />
 
       <div className="net-canvas">
         {/* Every node on a WebGL globe; picking a node (here or in the list
@@ -4817,6 +4823,19 @@ const AdminKanban = (typeof window !== 'undefined' && window.AdminKanban)
   ? window.AdminKanban
   : function AdminKanbanMissing() { return null; };
 
+/* ── The fairy ring ──────────────────────────────────────────
+   portal/fairy-ring.jsx sets window.FairyRing and is loaded BEFORE
+   this file in /community/index.html. Same defensive shim as above:
+   if it failed to load, the Network tab renders as it always did
+   rather than taking the portal down.
+
+   PHASE 1 — the ring is ADDITIVE. The tab row and QuickNav are still
+   here and still work. Consolidating navigation is Phase 3, and doing
+   it now would mean shipping a half-migrated nav for a week. */
+const FairyRing = (typeof window !== 'undefined' && window.FairyRing)
+  ? window.FairyRing
+  : function FairyRingMissing() { return null; };
+
 // The old inline MycoAgent (~200 lines) lived here. Its
 // replacement is now:
 //   public/community/myco/prompts.js  · chips + client-refuse
@@ -5332,7 +5351,8 @@ function App() {
       />
       <SystemStats state={economy.state} tier={tier} flowRate={tweaks.flowRate} />
 
-      {tab === 'network'  && <NetworkPage economy={economy} onToast={onToast} flowRate={tweaks.flowRate} />}
+      {tab === 'network'  && <NetworkPage economy={economy} onToast={onToast} flowRate={tweaks.flowRate}
+                                          currentMember={currentMember} onOpenSection={setTab} />}
       {tab === 'calendar' && <CalendarPage economy={economy} onToast={onToast} />}
       {tab === 'shop'     && <ApothecaryPage economy={economy} onToast={onToast} />}
       {tab === 'exp'      && <ExperiencesPage economy={economy} onToast={onToast} />}

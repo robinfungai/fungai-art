@@ -40,6 +40,7 @@
     "test:dm-crypto": "node tests/dm-crypto-verify.cjs",
     "test:dm-vault": "node tests/dm-vault-verify.cjs",
     "test:admin-board": "node tests/admin-board-verify.cjs",
+    "test:fairy-ring": "node tests/fairy-ring-verify.cjs",
     "check:claims": "node scripts/check-claims.cjs",
     "test:claims": "node tests/claims-verify.cjs",
     "build:community": "node scripts/build-community.cjs",

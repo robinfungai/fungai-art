@@ -27,6 +27,8 @@
   <!-- Admin planning board. Own stylesheet so the board can move out of
        the Admin tab later without unpicking 75 KB of portal CSS. -->
   <link rel="stylesheet" href="admin/kanban.css" />
+  <!-- Portal home as a fairy ring. Own stylesheet, portal tokens only. -->
+  <link rel="stylesheet" href="portal/fairy-ring.css" />
 
   <!-- React 18.3.1, production UMD, vendored locally by scripts/build-community.cjs.
        Was react.development.js from unpkg: 1,162 KB, with every dev-only warning
@@ -59,6 +61,13 @@
   <!-- Admin planning board — sets window.AdminKanban, so like the MYCO
        scripts above it must load BEFORE app-living, which shims it. -->
   <script src="admin/kanban.js"></script>
+
+  <!-- The fairy ring. sections.js must come first (the other two read
+       window.PortalSections), and all three before app-living, which
+       shims them the way it shims MycoAgent. -->
+  <script src="portal/sections.js"></script>
+  <script src="portal/organism.js"></script>
+  <script src="portal/fairy-ring.js"></script>
 
   <script src="spore/app-living.js"></script>
 <script src="claim-notice.js" defer></script>
