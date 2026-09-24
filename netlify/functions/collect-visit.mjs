@@ -5,14 +5,19 @@
  * so the endpoint cannot be used to read anything back.
  *
  * ── WHAT IT REFUSES TO COLLECT ───────────────────────────────────
- * No IP. No city. No lat/lng. No cookie or generated visitor id. The
- * User-Agent is read, reduced to three coarse buckets, and dropped.
+ * No IP. No lat/lng. No cookie or generated visitor id. The User-Agent is
+ * read, reduced to three coarse buckets, and dropped.
  *
- * The country comes from Netlify's `x-nf-geo` header, and ONLY the
- * country field of it. reserve-formula.mjs was cut back to exactly this
- * under GDPR minimisation and tests/geo-minimisation-verify.cjs keeps it
- * there; analytics collecting more than the checkout does would make that
- * policy meaningless.
+ * Country and CITY come from Netlify's `x-nf-geo` header; coordinates and
+ * the timezone in that payload are never read. City is collected on
+ * Robin's explicit instruction (2026-09-24).
+ *
+ * reserve-formula.mjs is still country-only and
+ * tests/geo-minimisation-verify.cjs keeps it that way. The two are not
+ * inconsistent: an order is attached to a named person at an address, so a
+ * city there adds nothing and risks plenty. A page view here has no
+ * subject at all — no id, no cookie, no IP — so "Berlin · mobile ·
+ * /shop" cannot be joined to another row, to an order, or to a person.
  *
  * The consequence, stated plainly because it shapes the report: these are
  * PAGE VIEWS, not unique visitors. Counting people requires identifying
@@ -68,19 +73,29 @@ function classifyUA(ua) {
   return { is_bot, device, os, browser };
 }
 
-/** Country, and nothing else, out of Netlify's geo header. */
-function countryOnly(headers) {
+/**
+ * Country and city out of Netlify's geo header — and nothing else from it.
+ * The same payload carries latitude, longitude, subdivision and timezone;
+ * those are deliberately not read.
+ */
+function geoOf(headers) {
+  const out = { country: null, city: null };
   const direct = headers.get('x-country') || headers.get('x-nf-country');
-  if (direct && /^[A-Za-z]{2}$/.test(direct)) return direct.toUpperCase();
+  if (direct && /^[A-Za-z]{2}$/.test(direct)) out.country = direct.toUpperCase();
   const raw = headers.get('x-nf-geo');
-  if (!raw) return null;
-  try {
-    const parsed = JSON.parse(Buffer.from(raw, 'base64').toString('utf8'));
-    const code = parsed && parsed.country && parsed.country.code;
-    return /^[A-Za-z]{2}$/.test(String(code || '')) ? String(code).toUpperCase() : null;
-  } catch (_) {
-    return null;
+  if (raw) {
+    try {
+      const parsed = JSON.parse(Buffer.from(raw, 'base64').toString('utf8'));
+      const code = parsed && parsed.country && parsed.country.code;
+      if (/^[A-Za-z]{2}$/.test(String(code || ''))) out.country = String(code).toUpperCase();
+      const city = parsed && parsed.city;
+      if (city && typeof city === 'string' && city.trim()) {
+        // Letters, spaces and the punctuation real place names use.
+        out.city = city.trim().replace(/[^\p{L}\p{M}\s.'-]/gu, '').slice(0, 64) || null;
+      }
+    } catch (_) { /* header absent or malformed — country stays whatever it was */ }
   }
+  return out;
 }
 
 /** The referring HOST, never the full URL — a referrer can carry search terms. */
@@ -124,9 +139,11 @@ export default async (request) => {
   try { body = await request.json(); } catch (_) { body = {}; }
 
   const ua = classifyUA(request.headers.get('user-agent'));
+  const geo = geoOf(request.headers);
   const row = {
     path:     cleanPath(body.p),
-    country:  countryOnly(request.headers),
+    country:  geo.country,
+    city:     geo.city,
     device:   ua.device,
     os:       ua.os,
     browser:  ua.browser,

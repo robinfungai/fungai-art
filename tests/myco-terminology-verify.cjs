@@ -19,6 +19,8 @@
 //
 //   node tests/myco-terminology-verify.cjs
 
+const fs   = require('fs');
+const path = require('path');
 const T = require('../src/server/myco/terminology.cjs');
 const { search, interpretQuery, lexiconReport, lexicon } = require('../src/server/myco/retrieve.cjs');
 const { scoreLabNotes } = require('../src/server/myco/lab-notes.cjs');
@@ -345,10 +347,22 @@ for (const d of report.dead) (deadByTable[d.table] = deadByTable[d.table] || [])
 // A MISSPELLINGS entry whose target is absent from the corpus can never
 // do anything — unlike an EQUIVALENT member, which is one of several
 // names for a thing and may reasonably outrun the corpus.
-const deadMiss = deadByTable.MISSPELLINGS || [];
+// Two consumers, so two places a target can legitimately live: the MYCO
+// corpus, or the formula engine's NOTES_KEYWORDS. 'prayer' left the corpus
+// when three duplicate records were retired but is still an engine keyword,
+// and an entry serving the engine is not dead.
+const ENGINE_KEYWORDS = (() => {
+  const src = fs.readFileSync(path.join(__dirname, '..', 'src', 'server', 'formula-engine', 'scoring.js'), 'utf8');
+  const block = (src.match(/const NOTES_KEYWORDS = \[([\s\S]*?)\];/) || [, ''])[1];
+  return [...block.matchAll(/'([^']+)'/g)].map(m => m[1]);
+})();
+const servesEngine = term => ENGINE_KEYWORDS.some(k => String(term).toLowerCase().includes(k));
+const deadMiss = (deadByTable.MISSPELLINGS || [])
+  .filter(t => !servesEngine(String(t).split('→').pop()));
 deadMiss.length === 0
-  ? pass('every misspelling points at a word the corpus has')
-  : fail('every misspelling points at a word the corpus has', deadMiss.join(' | '));
+  ? pass('every misspelling serves the corpus or the engine',
+         ENGINE_KEYWORDS.length + ' engine keywords consulted')
+  : fail('every misspelling serves the corpus or the engine', deadMiss.join(' | '));
 
 // A no-op entry: key and value are the same word once stemmed. That is a
 // plural, not a misspelling, and it does nothing for either caller.

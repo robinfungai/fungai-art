@@ -6,17 +6,23 @@
 -- this is the store behind it.
 --
 -- ── WHAT IS DELIBERATELY NOT HERE ────────────────────────────────
--- No IP address. No city. No latitude or longitude. No cookie, no
--- localStorage id, no fingerprint, no cross-page visitor id. Nothing
--- that identifies a person or lets two page views be tied to the same
--- one.
+-- No IP address. No latitude or longitude. No cookie, no localStorage id,
+-- no fingerprint, no cross-page visitor id. Nothing that identifies a
+-- person or lets two page views be tied to the same one.
 --
--- That is not caution for its own sake: the reservation flow was already
--- cut back to COUNTRY ONLY under GDPR minimisation, and
--- tests/geo-minimisation-verify.cjs fails the build if city or lat/lng
--- creeps back in. Analytics collecting more than the checkout does would
--- make that policy a fiction. tests/visits-minimisation-verify.cjs holds
--- this file to the same line.
+-- CITY IS COLLECTED, on Robin's explicit instruction (2026-09-24), and it
+-- is the one place this file goes further than the checkout does. The
+-- reservation flow is still COUNTRY ONLY and
+-- tests/geo-minimisation-verify.cjs keeps it there — that restraint is
+-- about an ORDER, which is tied to a named person with an address, where
+-- a city adds nothing and risks plenty. A page view is not.
+--
+-- The distinction that makes city defensible here: these rows have no
+-- subject. There is no id, no cookie and no IP, so a row saying
+-- "Berlin · mobile · /shop" cannot be joined to any other row, to an
+-- order, or to a person. It is a tally mark with a label.
+-- tests/visits-minimisation-verify.cjs enforces exactly that, and would
+-- fail the moment anything identifying were added alongside.
 --
 -- The practical consequence: these are PAGE VIEWS, not unique visitors.
 -- A report that says "412 views from Germany" is honest; one that says
@@ -33,8 +39,11 @@ CREATE TABLE IF NOT EXISTS public.page_views (
   -- magic-link token or an email in a URL can never land here.
   path        text NOT NULL,
 
-  -- Country from the Netlify edge header. Two letters, nothing finer.
+  -- Country and city from the Netlify edge header. City is the finest
+  -- geography kept; coordinates are never read. See the note above on why
+  -- city is acceptable here and not in the checkout.
   country     text,
+  city        text,
 
   -- Coarse buckets, derived from the User-Agent and then thrown away.
   -- The UA string itself is never stored: it is close enough to a
@@ -53,9 +62,14 @@ CREATE TABLE IF NOT EXISTS public.page_views (
   is_bot      boolean NOT NULL DEFAULT false
 );
 
+-- Added after the table shipped country-only, so this is a migration as
+-- well as part of the create. Harmless either way.
+ALTER TABLE public.page_views ADD COLUMN IF NOT EXISTS city text;
+
 CREATE INDEX IF NOT EXISTS page_views_created_idx ON public.page_views (created_at DESC);
 CREATE INDEX IF NOT EXISTS page_views_country_idx ON public.page_views (country, created_at DESC);
 CREATE INDEX IF NOT EXISTS page_views_path_idx    ON public.page_views (path, created_at DESC);
+CREATE INDEX IF NOT EXISTS page_views_city_idx    ON public.page_views (country, city, created_at DESC);
 
 ALTER TABLE public.page_views ENABLE ROW LEVEL SECURITY;
 
@@ -76,6 +90,7 @@ CREATE POLICY "page_views_anon_insert"
     AND path NOT LIKE '%?%'
     AND path NOT LIKE '%#%'
     AND (country  IS NULL OR char_length(country)  <= 2)
+    AND (city     IS NULL OR char_length(city)     <= 64)
     AND (device   IS NULL OR char_length(device)   <= 10)
     AND (os       IS NULL OR char_length(os)       <= 10)
     AND (browser  IS NULL OR char_length(browser)  <= 10)

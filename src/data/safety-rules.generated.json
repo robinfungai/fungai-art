@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-09-24T13:32:48.363Z",
+  "generatedAt": "2026-09-24T13:50:00.609Z",
   "counts": {
-    "botanicals": 245,
-    "rules": 2197,
+    "botanicals": 242,
+    "rules": 2170,
     "byType": {
-      "contraindication": 1186,
-      "drug_interaction": 665,
-      "herb_interaction": 346
+      "contraindication": 1170,
+      "drug_interaction": 658,
+      "herb_interaction": 342
     },
     "bySeverity": {
-      "unspecified": 1088,
-      "caution": 314,
-      "monitor": 373,
-      "avoid": 295,
+      "unspecified": 1070,
+      "caution": 311,
+      "monitor": 370,
+      "avoid": 292,
       "absolute": 127
     }
   },
@@ -181,12 +181,6 @@
       "autoimmune",
       "hypertension",
       "pregnancy"
-    ],
-    "224": [
-      "autoimmune",
-      "contraceptive",
-      "pregnancy",
-      "psych_meds"
     ],
     "225": [
       "cardio_meds",
@@ -811,9 +805,6 @@
       "liver_kidney",
       "pregnancy"
     ],
-    "521": [
-      "pregnancy"
-    ],
     "522": [
       "cardio_meds",
       "hypertension",
@@ -882,11 +873,6 @@
     "537": [
       "cardio_meds",
       "hypertension",
-      "pregnancy"
-    ],
-    "538": [
-      "autoimmune",
-      "cardio_meds",
       "pregnancy"
     ],
     "539": [
@@ -1283,12 +1269,6 @@
       "hypertension",
       "pregnancy"
     ],
-    "224": [
-      "autoimmune",
-      "contraceptive",
-      "pregnancy",
-      "psych_meds"
-    ],
     "225": [
       "cardio_meds",
       "hypertension",
@@ -1911,9 +1891,6 @@
       "liver_kidney",
       "pregnancy"
     ],
-    "521": [
-      "pregnancy"
-    ],
     "522": [
       "cardio_meds",
       "hypertension",
@@ -1982,11 +1959,6 @@
     "537": [
       "cardio_meds",
       "hypertension",
-      "pregnancy"
-    ],
-    "538": [
-      "autoimmune",
-      "cardio_meds",
       "pregnancy"
     ],
     "539": [
@@ -6010,138 +5982,6 @@
       "subject": "Echinacea",
       "severity": "unspecified",
       "reason": "both immune-stimulating; generally choose one or alternate rather than combine long-term",
-      "flags": [],
-      "source": "herbs.ts · herb_to_herb_caution"
-    },
-    {
-      "id": "safety:224:contraindication:1",
-      "botanicalId": 224,
-      "botanical": "Vitex (Chaste Tree)",
-      "ruleType": "contraindication",
-      "subject": "Established pregnancy",
-      "severity": "avoid",
-      "reason": "NOT RECOMMENDED once pregnancy confirmed; stop at positive test; theoretical hormonal modulation",
-      "flags": [
-        "pregnancy"
-      ],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:224:contraindication:2",
-      "botanicalId": 224,
-      "botanical": "Vitex (Chaste Tree)",
-      "ruleType": "contraindication",
-      "subject": "Hormone-sensitive cancers (breast, uterine)",
-      "severity": "avoid",
-      "reason": "modulates oestrogen/progesterone balance; avoid without oncology approval",
-      "flags": [],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:224:contraindication:3",
-      "botanicalId": 224,
-      "botanical": "Vitex (Chaste Tree)",
-      "ruleType": "contraindication",
-      "subject": "Dopamine agonists (bromocriptine, cabergoline)",
-      "severity": "unspecified",
-      "reason": "may blunt or amplify effects; coordinate with prescriber",
-      "flags": [],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:224:contraindication:4",
-      "botanicalId": 224,
-      "botanical": "Vitex (Chaste Tree)",
-      "ruleType": "contraindication",
-      "subject": "Dopamine antagonists (antipsychotics)",
-      "severity": "unspecified",
-      "reason": "D2 agonism may counteract therapeutic effect; coordinate with psychiatrist",
-      "flags": [
-        "psych_meds"
-      ],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:224:contraindication:5",
-      "botanicalId": 224,
-      "botanical": "Vitex (Chaste Tree)",
-      "ruleType": "contraindication",
-      "subject": "Adolescents",
-      "severity": "unspecified",
-      "reason": "hormonal axis still developing; use only under practitioner supervision",
-      "flags": [],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:224:contraindication:6",
-      "botanicalId": 224,
-      "botanical": "Vitex (Chaste Tree)",
-      "ruleType": "contraindication",
-      "subject": "Hormonal contraceptives",
-      "severity": "unspecified",
-      "reason": "theoretical interaction; data mixed; most clinicians allow concurrent use with monitoring",
-      "flags": [
-        "contraceptive"
-      ],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:224:drug_interaction:1",
-      "botanicalId": 224,
-      "botanical": "Vitex (Chaste Tree)",
-      "ruleType": "drug_interaction",
-      "subject": "Dopamine agonists (bromocriptine, cabergoline, levodopa)",
-      "severity": "unspecified",
-      "reason": "may interfere with or amplify effects",
-      "flags": [],
-      "source": "herbs.ts · herb_to_drug_interactions"
-    },
-    {
-      "id": "safety:224:drug_interaction:2",
-      "botanicalId": 224,
-      "botanical": "Vitex (Chaste Tree)",
-      "ruleType": "drug_interaction",
-      "subject": "Antipsychotics (dopamine antagonists)",
-      "severity": "unspecified",
-      "reason": "D2 agonism may counteract therapeutic effect; coordinate with psychiatrist",
-      "flags": [
-        "psych_meds"
-      ],
-      "source": "herbs.ts · herb_to_drug_interactions"
-    },
-    {
-      "id": "safety:224:drug_interaction:3",
-      "botanicalId": 224,
-      "botanical": "Vitex (Chaste Tree)",
-      "ruleType": "drug_interaction",
-      "subject": "Hormonal contraceptives",
-      "severity": "monitor",
-      "reason": "theoretical interaction; monitor cycles and symptoms",
-      "flags": [
-        "autoimmune",
-        "contraceptive"
-      ],
-      "source": "herbs.ts · herb_to_drug_interactions"
-    },
-    {
-      "id": "safety:224:herb_interaction:1",
-      "botanicalId": 224,
-      "botanical": "Vitex (Chaste Tree)",
-      "ruleType": "herb_interaction",
-      "subject": "Other phytoestrogenic herbs",
-      "severity": "monitor",
-      "reason": "cumulative hormonal effects; monitor carefully",
-      "flags": [],
-      "source": "herbs.ts · herb_to_herb_caution"
-    },
-    {
-      "id": "safety:224:herb_interaction:2",
-      "botanicalId": 224,
-      "botanical": "Vitex (Chaste Tree)",
-      "ruleType": "herb_interaction",
-      "subject": "Other prolactin-affecting herbs",
-      "severity": "unspecified",
-      "reason": "unclear interactions; assess individually",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
     },
@@ -19824,137 +19664,6 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
-      "id": "safety:538:contraindication:1",
-      "botanicalId": 538,
-      "botanical": "Boswellia",
-      "ruleType": "contraindication",
-      "subject": "Pregnancy",
-      "severity": "avoid",
-      "reason": "insufficient safety data at therapeutic doses; avoid unless professionally guided",
-      "flags": [
-        "pregnancy"
-      ],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:538:contraindication:2",
-      "botanicalId": 538,
-      "botanical": "Boswellia",
-      "ruleType": "contraindication",
-      "subject": "GI sensitivity",
-      "severity": "unspecified",
-      "reason": "concentrated extracts may irritate if taken on empty stomach",
-      "flags": [],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:538:contraindication:3",
-      "botanicalId": 538,
-      "botanical": "Boswellia",
-      "ruleType": "contraindication",
-      "subject": "Anticoagulants and antiplatelets",
-      "severity": "caution",
-      "reason": "theoretical caution in multi-herb anti-inflammatory stacks",
-      "flags": [
-        "cardio_meds"
-      ],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:538:contraindication:4",
-      "botanicalId": 538,
-      "botanical": "Boswellia",
-      "ruleType": "contraindication",
-      "subject": "Autoimmune disease",
-      "severity": "unspecified",
-      "reason": "use clinical judgment; not an absolute contraindication",
-      "flags": [
-        "autoimmune"
-      ],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:538:contraindication:5",
-      "botanicalId": 538,
-      "botanical": "Boswellia",
-      "ruleType": "contraindication",
-      "subject": "Pre-surgery",
-      "severity": "caution",
-      "reason": "caution with concentrated anti-inflammatory supplementation in surgical context",
-      "flags": [],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:538:drug_interaction:1",
-      "botanicalId": 538,
-      "botanical": "Boswellia",
-      "ruleType": "drug_interaction",
-      "subject": "Anti-inflammatory medications",
-      "severity": "monitor",
-      "reason": "monitor for additive GI effects or protocol overlap",
-      "flags": [],
-      "source": "herbs.ts · herb_to_drug_interactions"
-    },
-    {
-      "id": "safety:538:drug_interaction:2",
-      "botanicalId": 538,
-      "botanical": "Boswellia",
-      "ruleType": "drug_interaction",
-      "subject": "Anticoagulants and antiplatelets",
-      "severity": "caution",
-      "reason": "theoretical caution at concentrated extract doses",
-      "flags": [
-        "cardio_meds"
-      ],
-      "source": "herbs.ts · herb_to_drug_interactions"
-    },
-    {
-      "id": "safety:538:drug_interaction:3",
-      "botanicalId": 538,
-      "botanical": "Boswellia",
-      "ruleType": "drug_interaction",
-      "subject": "Immunomodulating therapies",
-      "severity": "unspecified",
-      "reason": "practitioner review in complex autoimmune cases",
-      "flags": [
-        "autoimmune"
-      ],
-      "source": "herbs.ts · herb_to_drug_interactions"
-    },
-    {
-      "id": "safety:538:drug_interaction:4",
-      "botanicalId": 538,
-      "botanical": "Boswellia",
-      "ruleType": "drug_interaction",
-      "subject": "Generally low CYP interaction profile but review in polypharmacy",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · herb_to_drug_interactions"
-    },
-    {
-      "id": "safety:538:herb_interaction:1",
-      "botanicalId": 538,
-      "botanical": "Boswellia",
-      "ruleType": "herb_interaction",
-      "subject": "Multiple strong anti-inflammatory herbs in GI-sensitive individuals",
-      "severity": "unspecified",
-      "reason": "may be too drying; add demulcents",
-      "flags": [],
-      "source": "herbs.ts · herb_to_herb_caution"
-    },
-    {
-      "id": "safety:538:herb_interaction:2",
-      "botanicalId": 538,
-      "botanical": "Boswellia",
-      "ruleType": "herb_interaction",
-      "subject": "Very bitter and drying herbs in dry constitutions",
-      "severity": "unspecified",
-      "reason": "use with nourishing herbs",
-      "flags": [],
-      "source": "herbs.ts · herb_to_herb_caution"
-    },
-    {
       "id": "safety:543:contraindication:1",
       "botanicalId": 543,
       "botanical": "Elderberry (Cooked Berry)",
@@ -23117,63 +22826,6 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
-    },
-    {
-      "id": "safety:521:contraindication:1",
-      "botanicalId": 521,
-      "botanical": "Senna",
-      "ruleType": "contraindication",
-      "subject": "IBD (Crohn's, ulcerative colitis)",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:521:contraindication:2",
-      "botanicalId": 521,
-      "botanical": "Senna",
-      "ruleType": "contraindication",
-      "subject": "Intestinal obstruction",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:521:contraindication:3",
-      "botanicalId": 521,
-      "botanical": "Senna",
-      "ruleType": "contraindication",
-      "subject": "Pregnancy",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [
-        "pregnancy"
-      ],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:521:contraindication:4",
-      "botanicalId": 521,
-      "botanical": "Senna",
-      "ruleType": "contraindication",
-      "subject": "Children under 12",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:521:contraindication:5",
-      "botanicalId": 521,
-      "botanical": "Senna",
-      "ruleType": "contraindication",
-      "subject": "Long-term use (>1–2 weeks)",
-      "severity": "unspecified",
-      "reason": "laxative dependency",
-      "flags": [],
-      "source": "herbs.ts · contraindications"
     },
     {
       "id": "safety:522:contraindication:1",

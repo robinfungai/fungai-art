@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-24T13:32:42.541Z",
+  "generatedAt": "2026-09-24T13:49:56.378Z",
   "counts": {
-    "botanicals": 245,
+    "botanicals": 242,
     "monographs": 128,
     "monographsMatched": 128,
     "products": 21,
@@ -295,15 +295,6 @@
       "latin": "Uncaria tomentosa",
       "genus": "Uncaria",
       "species": "tomentosa"
-    },
-    {
-      "id": 224,
-      "slug": "vitex-chaste-tree",
-      "name": "Vitex (Chaste Tree)",
-      "botanical": "Vitex agnus-castus (dried berries)",
-      "latin": "Vitex agnus-castus",
-      "genus": "Vitex",
-      "species": "agnus-castus"
     },
     {
       "id": 225,
@@ -1359,15 +1350,6 @@
       "species": "officinale"
     },
     {
-      "id": 538,
-      "slug": "boswellia",
-      "name": "Boswellia",
-      "botanical": "Boswellia serrata (resin — standardised extract or whole oleo-gum resin)",
-      "latin": "Boswellia serrata",
-      "genus": "Boswellia",
-      "species": "serrata"
-    },
-    {
       "id": 543,
       "slug": "elderberry-cooked-berry",
       "name": "Elderberry (Cooked Berry)",
@@ -1654,15 +1636,6 @@
       "latin": "Psoralea corylifolia",
       "genus": "Psoralea",
       "species": "corylifolia"
-    },
-    {
-      "id": 521,
-      "slug": "senna",
-      "name": "Senna",
-      "botanical": "Cassia angustifolia / Senna alexandrina (leaves · pods)",
-      "latin": "Cassia angustifolia / Senna alexandrina",
-      "genus": "Cassia",
-      "species": "angustifolia"
     },
     {
       "id": 522,
@@ -2380,7 +2353,7 @@
     {
       "file": "chaste_tree_vitex_master.md",
       "title": "VITEX (Vitex agnus-castus) – CHASTE TREE BERRY",
-      "botanicalId": 224,
+      "botanicalId": 290,
       "matchedBy": "title"
     },
     {
@@ -2944,7 +2917,7 @@
     {
       "file": "vitex_individual.md",
       "title": "VITEX (Vitex agnus-castus)",
-      "botanicalId": 224,
+      "botanicalId": 290,
       "matchedBy": "title"
     },
     {

@@ -6,23 +6,31 @@ costs tokens for no new information.
 
 ---
 
-## State: 13 commits on `main`, NOTHING PUSHED
+## State: 19 commits on `main`, NOTHING PUSHED
 
 ```
-b0be953  feat(herbs): Ayurvedic batch -- 21 stubs upgraded, 5 new, 243 -> 248
+(pending)  fix(data)+feat(analytics): city, merged duplicates, 5 pharmacology gaps
+a585ec5  feat(atlas): ecology on the herb record -- 92% can be placed
+1bf02f8  feat(monographs): a page for every herb, rendered from its record
+b0ccfdb  feat(analytics): count page views, email traffic twice a month
+79d108b  fix(herbs): I created 3 duplicate plants -- merged, aliases carry names
+d552735  docs: handoff
+b0be953  feat(herbs): Ayurvedic batch
 64e170e  chore(monograph): rename schizandra_full_monograph.md -> schisandra
 fc897e0  fix(legal): remove a company that does not exist and a person who left
 a114f72  fix(data): one plant, two spellings -- Schisandra invisible in 4 places
 f5e24c5  feat(myco): read the question a member actually typed
-52d61a3  feat(atlas): /atlas -- scroll hero, 243-organism explorer, synergy graph
+52d61a3  feat(atlas): /atlas -- scroll hero, explorer, synergy graph
 e6aca82  fix(reserve): a missing Resend key told customers their order landed
 05dbd96  docs: session handoff
 059a4de  fix(safety): interaction checker could not see 11 herbs, incl St John's Wort
 57c4942  docs: park the typecheck backlog
 e37793a  fix(types): portal timer's contribution id was never in its own type
-e20868a  feat(herbs): 199 -> 243 herbs, one knotweed, Thunder God Vine out of formulas
+e20868a  feat(herbs): 199 -> 243 herbs
 1cb56eb  fix(academy+engine)  <- from an earlier session, still unpushed
 ```
+
+**Robin is pushing after this session and moving to the atlas next.**
 
 Note: the atlas commit is `52d61a3`, not the `f5e74a1` an earlier copy of this
 file recorded — it was amended after that line was written.
@@ -270,6 +278,89 @@ pre-existing equal-score tie order, not this change.
 If you would rather decide the engine half separately, it is one line:
 `const n = raw;` in `notesBoost`.
 
+## NEXT SESSION IS THE ATLAS MAP — start here
+
+Everything below in this section is what the map now has to work with.
+
+### Ecology is a field now
+
+`Herb.ecology = { native_range, biomes, habitat, substrate?, source }` where
+`source` is `'recorded' | 'derived' | 'mixed'`. Populated by
+`npm run build:herb-ecology` (dry-run by default, `--apply` to write).
+
+```
+native range   92%  (223/242)  <- what the map can place TODAY
+habitat prose  26%  (64/242)   <- quoted from hand-written monographs
+biome          39%             <- old keyword guess, now only the FALLBACK
+```
+
+`build-atlas.cjs` prefers the recorded biome and only regexes when there is
+none. Its coverage report prints all three lines, because biome alone
+understated what the map can do.
+
+**The 180 missing habitat lines are a WRITING job, not an extraction job.**
+Measured: only 75 of 128 monographs contain a habitat sentence and only 18 of
+242 records mention habitat in their own text. That is the real reason the
+atlas was stuck at 38%, and widening the regexes cannot fix it. Full list:
+`docs/ECOLOGY-GAPS.txt`.
+
+A sensible order if Robin wants to fill them: the 8 with nothing at all first,
+then the Nordic and European herbs (the ones a Berlin-based map would show
+first), then the rest.
+
+### Aliases are a field now, and matter to the map
+
+`Herb.aliases = string[]`. Read by `interactions.js nameKeys()`, the MYCO
+entity table and the atlas synergy graph. NOT a slash in `name` — `name` is an
+identifier, `sync-engine2` derives Engine 2 slugs from it and
+`public/herb-engine-ids.json` is a COMMITTED list holding it verbatim.
+
+### Catalogue is 242, not 245
+
+Three pre-existing duplicates merged this session, richer record surviving and
+the loser's name kept as an alias:
+
+| retired | survivor | alias added |
+|---|---|---|
+| 521 Senna | **305 Senna** | — (same name) |
+| 538 Boswellia | **506 Shallaki** | `Boswellia` |
+| 224 Vitex (Chaste Tree) | **290 Vitex** | `Chaste Tree`, `Chasteberry` |
+
+Also removed 5 stale rows from `public/herb-engine-ids.json` (216 → 211),
+which mirrored the same duplicates and is read by the Spore app.
+
+**Retired ids are never recycled**: 224, 521, 538, 572, 592, 593, 594.
+
+**One naming clash left deliberately unresolved:** 530 **Ajwan** is
+*Apium graveolens* (celery seed) and 590 **Ajwain** is *Trachyspermum ammi*.
+Different plants, confusably named (Ajmoda vs Yavani). Both records now say so
+in their pharmacology. Robin may want to rename 530 to "Celery Seed" — that is
+a display-name change with slug implications, so it was not done unasked.
+
+## ⚠ FIVE PHARMACOLOGY ENTRIES ROBIN MUST CHECK
+
+Robin asked for these and said he would double-check. Each was drafted from
+**that record's own recorded botanical**, not from a monograph, and each is
+marked in `herbs.ts` with:
+
+```
+// ⚠ pharmacology + status drafted 2026-09-24 from this record's own
+//   botanical, not from a monograph — Robin to verify before relying on it.
+```
+
+Grep for `drafted 2026-09-24` to find all five.
+
+| id | plant | the claim most worth checking |
+|---|---|---|
+| 508 Dashmool | ten-root compound | chemistry given as the sum of the classical ten roots; a supplier's actual list may differ |
+| 509 Gandira | *Coleus forskohlii* | forskolin → adenylate cyclase → cAMP; Grade B for IOP/bronchodilation, C for weight |
+| 515 Rudraksha | *Elaeocarpus ganitrus* | graded **D** on purpose — almost no human data, historically WORN not ingested |
+| 529 Nishoth | *Operculina turpethum* | hydragogue resin glycosides, NOT anthraquinone; steep dose-response, supervised use only |
+| 530 Ajwan | *Apium graveolens* | phototoxic furanocoumarins + recognised allergen (birch/mugwort cross-reactivity) |
+
+`status` was filled on the same five. Catalogue now has **zero** records
+missing `pharmacology` or `status`.
+
 ## OPEN — three things waiting on Robin
 
 ### 1 · The three held herb records
@@ -306,7 +397,42 @@ matched by name and upgraded in place, new ones get ids from 590 up, the Herb
 unions are enforced, and `name` / `spiritual_layer` / `epithet` are never
 overwritten. Dry run by default.
 
-### 3 · Bi-weekly traffic email — PARKED at Robin's request
+### 3 · Traffic email — BUILT. One step left: run the SQL.
+
+`supabase-visits.sql` has **not been run yet** as far as this session knows.
+Nothing else is needed — `RESEND_API_KEY`, `SUPABASE_SERVICE_KEY` and
+`SUPABASE_SERVICE_ROLE_KEY` are already used by other functions, so they are
+set, and `visitor-digest.mjs` accepts either service-key name.
+
+```
+public/visit.js                       beacon, on all 39 pages
+netlify/functions/collect-visit.mjs   → public.page_views, returns 204
+netlify/functions/visitor-digest.mjs  09:00 on the 1st and 15th, via Resend
+supabase-visits.sql                   table + RLS + 90-day prune  ← RUN THIS
+tests/visits-minimisation-verify.cjs  38 checks
+```
+
+Verify in order: beacon returns **204** in the Network tab → `select count(*)
+from page_views;` → `/.netlify/functions/visitor-digest?dry=1` returns the
+report as plain text without sending.
+
+**CITY IS COLLECTED**, on Robin's instruction (2026-09-24). The SQL carries
+`ALTER TABLE ... ADD COLUMN IF NOT EXISTS city text` so it is a migration as
+well as a create — safe to re-run if the country-only version already went in.
+
+Do not "fix" the apparent inconsistency with `reserve-formula.mjs`, which is
+still country-only and has `tests/geo-minimisation-verify.cjs` enforcing it.
+They differ on purpose: an order is attached to a named person at an address,
+where a city adds nothing and risks plenty. A page view has **no subject** —
+no IP, no cookie, no id, no stored User-Agent — so a row reading
+"Berlin · mobile · /shop" cannot be joined to another row, to an order, or to
+a person. `visits-minimisation` enforces exactly that and fails the moment
+anything identifying is added next to the city.
+
+Privacy page discloses all of it, including that the city is approximate and
+that we count views and cannot count people.
+
+### 3b · The earlier analytics finding, kept for the record
 
 **There is no analytics on the site at all.** No Plausible, no GA, nothing. The
 eight "umami" matches in the codebase are the flavour, in the dinner menu copy.

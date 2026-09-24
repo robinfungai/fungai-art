@@ -810,31 +810,6 @@
     "caution_level": "LOW-MEDIUM"
   },
   {
-    "id": 224,
-    "name": "Vitex (Chaste Tree)",
-    "primary_functions": [
-      "Pituitary dopaminergic modulation — diterpenes bind D2 receptors; reduce elevated prolactin and normalise luteal phase",
-      "PMS and PMDD symptom relief — breast tenderness, irritability, mood swings and headaches; multiple RCTs confirmed",
-      "Hyperprolactinaemia support — normalises prolactin, restores GnRH pulsatility, supports corpus luteum progesterone",
-      "Menstrual cycle regulation — amenorrhoea and oligomenorrhoea where stress and elevated prolactin are factors",
-      "PCOS adjunct — lowers elevated testosterone and normalises cycles in some PCOS presentations"
-    ],
-    "energetics": [
-      "Neutral",
-      "Slightly Cool",
-      "Bitter",
-      "Pungent",
-      "Aromatic",
-      "Cycle-Regulating"
-    ],
-    "tcm_meridians": [
-      "Liver",
-      "Spleen",
-      "Uterus"
-    ],
-    "caution_level": "MEDIUM"
-  },
-  {
     "id": 225,
     "name": "Chickweed",
     "primary_functions": [
@@ -3836,31 +3811,6 @@
     "caution_level": "LOW-MEDIUM"
   },
   {
-    "id": 538,
-    "name": "Boswellia",
-    "primary_functions": [
-      "Anti-inflammatory joint and tissue support — boswellic acids inhibit 5-LOX and reduce leukotriene-driven inflammation",
-      "Osteoarthritis and musculoskeletal pain — improves pain, stiffness and function over weeks",
-      "Gut inflammatory support — useful in inflamed mucosal patterns including IBD (practitioner-guided)",
-      "Respiratory inflammatory modulation — reduces inflammatory signalling in airway tissue",
-      "Tissue repair and post-injury support — where inflammation and stagnation persist together"
-    ],
-    "energetics": [
-      "Warm",
-      "Dry",
-      "Bitter",
-      "Aromatic",
-      "Anti-inflammatory",
-      "Pain-Relieving"
-    ],
-    "tcm_meridians": [
-      "Liver",
-      "Lung",
-      "Kidney"
-    ],
-    "caution_level": "MEDIUM"
-  },
-  {
     "id": 543,
     "name": "Elderberry (Cooked Berry)",
     "primary_functions": [
@@ -4654,26 +4604,6 @@
       "Spleen"
     ],
     "caution_level": "HIGH"
-  },
-  {
-    "id": 521,
-    "name": "Senna",
-    "primary_functions": [
-      "TCM Fan Xie Ye — drains heat from intestines, clears stagnant food",
-      "Acute constipation (short-term)",
-      "Pre-procedure bowel preparation",
-      "Sennosides stimulate colon motility"
-    ],
-    "energetics": [
-      "Cool",
-      "Bitter",
-      "Sweet",
-      "Purgative"
-    ],
-    "tcm_meridians": [
-      "Large Intestine"
-    ],
-    "caution_level": "MEDIUM-HIGH"
   },
   {
     "id": 522,

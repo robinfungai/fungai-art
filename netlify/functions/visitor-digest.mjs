@@ -82,7 +82,7 @@ async function fetchRows() {
   const out = [];
   for (let from = 0; from < 50000; from += 1000) {
     const url = SUPABASE_URL + '/rest/v1/page_views' +
-      '?select=path,country,device,os,browser,referrer,lang,is_bot,created_at' +
+      '?select=path,country,city,device,os,browser,referrer,lang,is_bot,created_at' +
       '&created_at=gte.' + encodeURIComponent(since) + '&order=created_at.asc';
     const res = await fetch(url, {
       headers: {
@@ -130,6 +130,11 @@ function buildReport(rows) {
   }
 
   text += section('WHERE FROM', countries, total, 12, named) + '\n';
+  // City is finer than country, and finer than the checkout keeps. It is here
+  // because Robin asked for it and because these rows have no subject to
+  // attach it to. "unknown" is shown rather than hidden, so a run that is
+  // mostly unknown reads as a gap in the edge data instead of as a place.
+  text += section('CITIES', tally(human, 'city'), total, 15) + '\n';
   text += section('MOST VISITED', tally(human, 'path'), total, 12) + '\n';
   text += section('HOW THEY GOT HERE', tally(human, 'referrer'), total, 8) + '\n';
   text += section('DEVICE', tally(human, 'device'), total, 4) + '\n';
@@ -143,9 +148,10 @@ function buildReport(rows) {
 
   text += '\n' + '─'.repeat(58) + '\n';
   text += 'These are PAGE VIEWS, not unique visitors. Nothing is stored that\n';
-  text += 'could tie two views to one person — no cookie, no id, no IP, and\n';
-  text += 'country only, never city. Counting people would mean identifying\n';
-  text += 'them. Do Not Track is honoured, so a few visits go uncounted.\n';
+  text += 'could tie two views to one person — no cookie, no id, no IP. Country\n';
+  text += 'and city come from the edge; coordinates are never read. Counting\n';
+  text += 'people would mean identifying them, so these stay views. Do Not\n';
+  text += 'Track is honoured, so a few visits go uncounted.\n';
   return { text, total, bots };
 }
 

@@ -2540,81 +2540,6 @@ const HERBS = [
   // ─────────────────────────────────────────────
   // VITEX (CHASTE TREE)
   // ─────────────────────────────────────────────
-  {
-    id: 224,
-    name: 'Vitex (Chaste Tree)',
-    botanical: 'Vitex agnus-castus (dried berries)',
-    tcm_meridians: ['Liver', 'Spleen', 'Uterus'],
-    tcm_element: 'Wood + Earth',
-    energetics: ['Neutral', 'Slightly Cool', 'Bitter', 'Pungent', 'Aromatic', 'Cycle-Regulating'],
-    primary_functions: [
-      'Pituitary dopaminergic modulation — diterpenes bind D2 receptors; reduce elevated prolactin and normalise luteal phase',
-      'PMS and PMDD symptom relief — breast tenderness, irritability, mood swings and headaches; multiple RCTs confirmed',
-      'Hyperprolactinaemia support — normalises prolactin, restores GnRH pulsatility, supports corpus luteum progesterone',
-      'Menstrual cycle regulation — amenorrhoea and oligomenorrhoea where stress and elevated prolactin are factors',
-      'PCOS adjunct — lowers elevated testosterone and normalises cycles in some PCOS presentations',
-    ],
-    secondary_benefits: [
-      'Cyclic mastalgia (breast tenderness) relief — primary traditional indication with strong modern evidence',
-      'Perimenopausal cyclic PMS and mood support',
-      'Fertility support through restored ovulation in luteal phase defect',
-      'Traditional "monk\'s pepper" — centuries of use for menstrual and reproductive regulation',
-    ],
-    pharmacology:
-      'Primary bioactives: diterpenes (rotundifuran and related — dopamine D2 receptor agonists at pituitary; reduce prolactin secretion from anterior pituitary; normalise luteal phase progesterone; dose-dependent effects — low doses may increase prolactin, higher doses decrease), flavonoids (casticin, vitexin — antioxidant; receptor signalling modulation), essential oil and iridoids (minor roles). Dose-dependent endocrine effects: higher doses (20–40 mg standardised extract) are standard for PMS/prolactin work. Multiple RCTs: up to 93% of women reporting PMS improvement in some trials. Minimum 3 months for full effect.',
-    flavor_profile: 'Bitter, pungent and aromatic — characteristic Mediterranean shrub',
-    contraindications: [
-      'Established pregnancy — NOT RECOMMENDED once pregnancy confirmed; stop at positive test; theoretical hormonal modulation',
-      'Hormone-sensitive cancers (breast, uterine) — modulates oestrogen/progesterone balance; avoid without oncology approval',
-      'Dopamine agonists (bromocriptine, cabergoline) — may blunt or amplify effects; coordinate with prescriber',
-      'Dopamine antagonists (antipsychotics) — D2 agonism may counteract therapeutic effect; coordinate with psychiatrist',
-      'Adolescents — hormonal axis still developing; use only under practitioner supervision',
-      'Hormonal contraceptives — theoretical interaction; data mixed; most clinicians allow concurrent use with monitoring',
-    ],
-    herb_to_herb_synergy: [
-      "Lady's Mantle — tissue tonification complement to hormonal regulation; comprehensive menstrual support",
-      'Angelica (Dong Quai) — blood-moving and hormonal regulation combined women\'s cycle protocol',
-      'Raspberry Leaf — uterine toning and cycle support stack',
-      'Ashwagandha — adaptogenic HPA axis support combined with HPO axis modulation',
-    ],
-    herb_to_herb_caution: [
-      'Other phytoestrogenic herbs — cumulative hormonal effects; monitor carefully',
-      'Other prolactin-affecting herbs — unclear interactions; assess individually',
-    ],
-    herb_to_drug_interactions: [
-      'Dopamine agonists (bromocriptine, cabergoline, levodopa) — may interfere with or amplify effects',
-      'Antipsychotics (dopamine antagonists) — D2 agonism may counteract therapeutic effect; coordinate with psychiatrist',
-      'Hormonal contraceptives — theoretical interaction; monitor cycles and symptoms',
-    ],
-    herb_interactions: [
-      "Synergy: Lady's Mantle, Angelica, Raspberry Leaf, Ashwagandha",
-      'Caution: other phytoestrogenic herbs (cumulative hormonal effects)',
-      'Drug interactions: dopamine agonists and antagonists (coordinate with prescriber), hormonal contraceptives (monitor)',
-    ],
-    dosage_range:
-      'Standardised extract: 20–40 mg daily once in the morning. Traditional extract 1:5: 1–5 ml once daily morning. Minimum 3 months continuous use before full assessment; may continue 6–12 months. Take continuously through all cycle phases (not just luteal) for PMS and cycle regulation.',
-    spiritual_layer:
-      'Vitex is the cycle harmoniser — the Mediterranean shrub whose peppery berries were traditionally used by monks to dampen libido (hence "chaste tree") but whose deeper gift is rhythmic regulation, restoring the sacred dance of the menstrual cycle where stress, prolactin and hormonal chaos have disrupted it. She teaches that regulation is liberation — that reclaiming regular ovulation, clear phases and predictable cycles frees energy for creativity, insight and embodied life rather than monthly battle with one\'s own hormones. She whispers: My hormones move in wise rhythmic patterns. I release what distorts my cycle. My body\'s timing aligns with my deeper life rhythm. My cycle is restored.',
-    best_preparation:
-      'Standardised extract (20–40 mg) once daily in morning — most researched and reliable form. Traditional extract for flexible dosing. Mandatory screening: confirm not pregnant; screen for dopamine-related medications and prolactinoma under endocrine care; ask about hormone-sensitive cancers. Minimum 3 months before assessing full benefit.',
-    caution_level: 'MEDIUM',
-    safe_pregnancy: false,
-    status:
-      'Grade B+ evidence for PMS/PMDD and hyperprolactinaemia. Multiple RCTs confirm efficacy. CRITICAL screening: confirm not pregnant; discontinue at positive pregnancy test; screen for dopamine medications and hormone-sensitive cancers. Minimum 3 months for full assessment. Excellent targeted herb for specific hormonal patterns.',
-    // ── Quiz-matcher + composer-quality enrichment ──
-    nervous_system_fit: ['reactive', 'wired_tired'],
-    energy_pattern: ['restorative_only', 'sustained'],
-    regional_affinity: ['pelvis'],
-    onset_time: 'weeks',
-    family: 'Lamiaceae',
-    epithet: 'The moon-pod',
-    origin_region: 'Mediterranean',
-    ecology: {
-      native_range: ['Mediterranean basin'],
-      source: 'derived',
-    },
-    evidence_grade: 'B+',
-  },
 
   // ─────────────────────────────────────────────
   // CHICKWEED
@@ -8417,6 +8342,7 @@ const HERBS = [
   {
     id: 290,
     name: 'Vitex',
+    aliases: ['Chaste Tree', 'Chasteberry'],
     botanical: 'Vitex agnus-castus (dried berries — "Chaste Tree / Abraham\'s Balm")',
     tcm_meridians: ['Liver', 'Kidney', 'Uterus'],
     tcm_element: 'Water + Earth',
@@ -11757,82 +11683,6 @@ const HERBS = [
     evidence_grade: 'A',
   },
   {
-    id: 538,
-    name: 'Boswellia',
-    botanical: 'Boswellia serrata (resin — standardised extract or whole oleo-gum resin)',
-    tcm_meridians: ['Liver', 'Lung', 'Kidney'],
-    tcm_element: 'Wood + Metal + Water',
-    energetics: ['Warm', 'Dry', 'Bitter', 'Aromatic', 'Anti-inflammatory', 'Pain-Relieving'],
-    primary_functions: [
-      'Anti-inflammatory joint and tissue support — boswellic acids inhibit 5-LOX and reduce leukotriene-driven inflammation',
-      'Osteoarthritis and musculoskeletal pain — improves pain, stiffness and function over weeks',
-      'Gut inflammatory support — useful in inflamed mucosal patterns including IBD (practitioner-guided)',
-      'Respiratory inflammatory modulation — reduces inflammatory signalling in airway tissue',
-      'Tissue repair and post-injury support — where inflammation and stagnation persist together',
-    ],
-    secondary_benefits: [
-      'May support neuroinflammatory reduction and cognitive clarity in inflammatory states',
-      'Traditional incense resin — ceremonial, mood and nervous system orientation',
-      'Useful in chronic pain formulas where Turmeric alone is insufficient',
-      'Can pair with warming circulation herbs to reduce cold-stiff inflammatory patterns',
-    ],
-    pharmacology:
-      'Primary bioactives — boswellic acids (including AKBA) inhibit 5-lipoxygenase and leukotriene synthesis. Particularly relevant where leukotriene-driven inflammation is prominent. Evidence strongest for osteoarthritis, some IBD contexts and general pain-stiffness reduction. Extract quality is critical; standardise to ≥30% boswellic acids.',
-    flavor_profile: 'Bitter, resinous, pine-citrus aromatic and slightly astringent',
-    contraindications: [
-      'Pregnancy — insufficient safety data at therapeutic doses; avoid unless professionally guided',
-      'GI sensitivity — concentrated extracts may irritate if taken on empty stomach',
-      'Anticoagulants and antiplatelets — theoretical caution in multi-herb anti-inflammatory stacks',
-      'Autoimmune disease — use clinical judgment; not an absolute contraindication',
-      'Pre-surgery — caution with concentrated anti-inflammatory supplementation in surgical context',
-    ],
-    herb_to_herb_synergy: [
-      'Turmeric and Ginger — comprehensive anti-inflammatory and pain formula',
-      "Devil's Claw — chronic joint pain and mobility support",
-      "Cat's Claw — inflamed connective tissue and immune-inflammatory patterns",
-      'Reishi — chronic inflammatory resilience and systemic regulation',
-      'Myrrh and resinous aromatics — ceremonial or tissue-repair oriented formulas',
-    ],
-    herb_to_herb_caution: [
-      'Multiple strong anti-inflammatory herbs in GI-sensitive individuals — may be too drying; add demulcents',
-      'Very bitter and drying herbs in dry constitutions — use with nourishing herbs',
-    ],
-    herb_to_drug_interactions: [
-      'Anti-inflammatory medications — monitor for additive GI effects or protocol overlap',
-      'Anticoagulants and antiplatelets — theoretical caution at concentrated extract doses',
-      'Immunomodulating therapies — practitioner review in complex autoimmune cases',
-      'Generally low CYP interaction profile but review in polypharmacy',
-    ],
-    herb_interactions: [
-      "Synergy: Turmeric, Ginger, Devil's Claw, Cat's Claw, Reishi, Myrrh",
-      'Caution: very drying anti-inflammatory stacks in depleted or dry constitutions',
-      'Drug interactions: anti-inflammatory meds (review), anticoagulants (theoretical), complex polypharmacy (review)',
-    ],
-    dosage_range:
-      'Standardised extract: 300–500 mg, 2–3× daily (standardised to ≥30% boswellic acids). Extract: 20–40 drops, 2–3× daily if used. Effects require 2–8 weeks of consistent use.',
-    spiritual_layer:
-      'Boswellia is the resin of sacred repair. She rises as smoke in temples and moves through tissues where pain has lingered too long. She teaches that inflammation is sometimes a cry for space, reverence and release. She whispers: Soften the fire. Clear the chamber. Let pain become prayer — and then let it loosen.',
-    best_preparation:
-      'Standardised extract is the best clinical form for reliable anti-inflammatory action. Whole resin suits ceremonial and traditional preparations. Pair with Ginger or Turmeric for broader anti-inflammatory formulas.',
-    caution_level: 'MEDIUM',
-    safe_pregnancy: false,
-    status:
-      'Valuable anti-inflammatory resin herb for joints, connective tissue and chronic inflammatory stiffness. Best as a quality standardised extract. Strong choice when common kitchen anti-inflammatories are insufficient.',
-    // ── Quiz-matcher + composer-quality enrichment ──
-    energy_pattern: ['sustained'],
-    regional_affinity: ['joints', 'gut'],
-    onset_time: 'weeks',
-    family: 'Burseraceae',
-    epithet: 'The frankincense-tree',
-    origin_region: 'Ayurvedic',
-    ecology: {
-      native_range: ['Indian subcontinent'],
-      biomes: ['ARID'],
-      source: 'derived',
-    },
-    evidence_grade: 'A',
-  },
-  {
   id: 543,
   name: 'Elderberry (Cooked Berry)',
   botanical: 'Sambucus nigra (fully ripe cooked berry)',
@@ -13520,6 +13370,7 @@ const HERBS = [
     {
     id: 506,
     name: 'Shallaki',
+    aliases: ['Boswellia'],
     botanical: 'Boswellia serrata (oleo gum resin exudate; "Indian Frankincense / Salai Guggul"; API name Kunduru)',
     tcm_meridians: ['Heart', 'Liver', 'Spleen'],
     tcm_element: 'Fire + Wood',
@@ -13724,6 +13575,12 @@ const HERBS = [
   primary_functions: ['Classical compound — ten roots ground severe Vata derangement', 'Nervous exhaustion, postpartum recovery, post-illness depletion', 'Mild anti-inflammatory across multiple systems', 'Brimhana (building) action'],
   secondary_benefits: ['Sleep restoration', 'Post-surgical convalescence'],
   flavor_profile: 'Earthy, bitter, deeply rooted',
+    // ⚠ pharmacology + status drafted 2026-09-24 from this record's own
+    //   botanical, not from a monograph — Robin to verify before relying on it.
+    pharmacology:
+      'Not a single plant: a classical ten-root compound, so its chemistry is the sum of its parts rather than one profile. The brihat panchamula (five great roots — Bilva/Aegle marmelos, Agnimantha/Premna, Shyonaka/Oroxylum indicum, Patala/Stereospermum, Gambhari/Gmelina arborea) contribute iridoid and lignan glycosides, coumarins and sterols; the laghu panchamula (five lesser roots — Shalaparni/Desmodium gangeticum, Prishnaparni/Uraria picta, Brihati/Solanum indicum, Kantakari/Solanum xanthocarpum, Gokshura/Tribulus terrestris) contribute steroidal saponins, alkaloids and flavonoids. Mechanisms reported for the whole decoction are anti-inflammatory (COX and cytokine suppression in rodent models), antispasmodic on smooth muscle, and analgesic. Grade C: classical use is extensive and animal data supportive, controlled human trials are few, and composition varies between manufacturers — which is itself the main caveat for any ten-herb formula.',
+    status:
+      'Grade C for the compound as a whole. Classical use extensive, animal data supportive, controlled human trials few. Because it is a formula rather than a plant, the real variable is the supplier: verify the actual root list and ratios against their specification rather than assuming the classical ten.',
   contraindications: ['Kapha-aggravated conditions (heavy, congested)', 'Acute infection without practitioner oversight'],
   herb_interactions: ['Synergy: Ashwagandha, Bala, Vidari kand', 'Caution: blood thinners (one of the ten roots is mildly antiplatelet)'],
   dosage_range: 'Decoction 50–100 ml; kwath powder 3–6 g; ready-formulated extracts per product label.',
@@ -13752,6 +13609,12 @@ const HERBS = [
   primary_functions: ['Forskolin activates adenylate cyclase → cAMP — heart and lung support', 'Bronchodilation in asthma protocols', 'Vasodilation and mild blood pressure lowering', 'Modern weight-management research'],
   secondary_benefits: ['Glaucoma adjunct (intraocular pressure)', 'Thyroid function support'],
   flavor_profile: 'Pungent, slightly bitter',
+    // ⚠ pharmacology + status drafted 2026-09-24 from this record's own
+    //   botanical, not from a monograph — Robin to verify before relying on it.
+    pharmacology:
+      'Primary bioactive: forskolin (coleonol), a labdane diterpene, with related coleonones and the root essential oil. The mechanism is unusually well defined for an Ayurvedic root — forskolin activates adenylate cyclase directly, independently of G-protein-coupled receptors, raising intracellular cAMP. Downstream that gives smooth-muscle relaxation (bronchodilation, vasodilation), positive inotropy, increased thyroid hormone release, reduced intraocular pressure, and activation of hormone-sensitive lipase, which is the basis of both the asthma and the body-composition literature. Grade B for intraocular pressure and bronchodilation (small human trials with a clear mechanism); Grade C for weight management, where results are inconsistent and effect sizes small. Oral bioavailability of forskolin is poor, which is why standardised extracts (commonly 10 to 20% forskolin) and inhaled or ophthalmic routes dominate the trial record.',
+    status:
+      'Grade B for intraocular pressure and bronchodilation; Grade C for body composition. Mechanism is better characterised than for most roots in this catalogue. Poor oral bioavailability is the practical limit, so the standardisation percentage matters more here than the raw dose.',
   contraindications: ['Anticoagulants — additive bleeding risk', 'Antihypertensives — additive BP-lowering', 'Pregnancy — avoid'],
   herb_interactions: ['Synergy: Arjuna for heart, Vasaka for lungs', 'Caution: blood thinners, BP medications'],
   dosage_range: 'Standardised extract (10% forskolin) 100–250 mg twice daily; root powder 1–2 g.',
@@ -14273,6 +14136,12 @@ const HERBS = [
   primary_functions: ['Calms central nervous system — traditional meditation aid', 'Stabilises blood pressure', 'Settles overactive mind for spiritual practice', 'Mild cardioprotective in folk use'],
   secondary_benefits: ['Sleep quality', 'Worn as mala for sustained electromagnetic / spiritual effect'],
   flavor_profile: 'Slightly bitter when chewed — primarily a worn / ceremonial item',
+    // ⚠ pharmacology + status drafted 2026-09-24 from this record's own
+    //   botanical, not from a monograph — Robin to verify before relying on it.
+    pharmacology:
+      'Bioactives reported from the seed and pericarp: indolizidine alkaloids (elaeocarpine, isoelaeocarpine, rudrakine), flavonoids (quercetin and myricetin glycosides), gallic and ellagic acid, tannins and sterols. Reported mechanisms come almost entirely from rodent and in vitro work — antihypertensive and mild sedative effects attributed to the alkaloid fraction, anticonvulsant activity in chemically induced seizure models, and antioxidant and anti-inflammatory action from the polyphenols. Grade D: the devotional and traditional use is very well attested, the pharmacology is not. There is next to no controlled human data, and the seed historical use is overwhelmingly to be WORN rather than ingested, so the internal preparation should be read as traditional practice rather than an evidenced intervention.',
+    status:
+      'Grade D. Tradition is strong and the pharmacology is thin — rodent and in vitro only, essentially no human trials. Its principal historical use is as a worn mala, not an ingested medicine, and the record should be read that way.',
   contraindications: ['Very low blood pressure', 'Allergy to seed material (rare)'],
   herb_interactions: ['Synergy: Brahmi, Jatamansi, Shankhpushpi for nervine ceremonial stacks', 'Caution: heavy sedatives'],
   dosage_range: 'Most commonly worn (mala). Internal use: 1–2 seeds soaked in water overnight, the water drunk in the morning.',
@@ -14399,35 +14268,6 @@ const HERBS = [
       'Ayurvedic Pharmacopoeia of India, Part I, Vol I, monograph Bakuci (Fruit)',
     ],
   },
-{
-  id: 521, name: 'Senna', botanical: 'Cassia angustifolia / Senna alexandrina (leaves · pods)',
-  tcm_meridians: ['Large Intestine'], tcm_element: 'Water',
-  energetics: ['Cool', 'Bitter', 'Sweet', 'Purgative'],
-  primary_functions: ['TCM Fan Xie Ye — drains heat from intestines, clears stagnant food', 'Acute constipation (short-term)', 'Pre-procedure bowel preparation', 'Sennosides stimulate colon motility'],
-  secondary_benefits: ['Quick action (6–12 h)', 'Pre-surgery / colonoscopy use'],
-  flavor_profile: 'Bitter, slightly sweet',
-  contraindications: ['IBD (Crohn\'s, ulcerative colitis)', 'Intestinal obstruction', 'Pregnancy', 'Children under 12', 'Long-term use (>1–2 weeks) — laxative dependency'],
-  herb_interactions: ['Synergy: Triphala for gentler long-term use (substitute senna)', 'Caution: digoxin (potassium loss), diuretics, all laxatives'],
-  dosage_range: 'Leaf or pod infusion 1–2 g overnight steep. Short cycles only — 3–7 days maximum.',
-  spiritual_layer: 'A blunt instrument. Sometimes the body must release before it can listen — but Senna is the eject, not the home.',
-  best_preparation: 'Overnight cold infusion of pods (gentler than leaves). Always short-cycle.',
-  caution_level: 'MEDIUM-HIGH', safe_pregnancy: false,
-  // ── Quiz-matcher + composer-quality enrichment ──
-  energy_pattern: ['acute_only'],
-  digestion_fit: ['moving'],
-  regional_affinity: ['gut'],
-  onset_time: 'hours',
-  family: 'Fabaceae',
-  epithet: 'The bowel\'s broom',
-  origin_region: 'Ayurvedic',
-    ecology: {
-      native_range: ['Indian subcontinent'],
-      habitat:
-        'angustifolia Vahl) — Shrub native to Northeast Africa and the Arabian Peninsula;',
-      source: 'recorded',
-    },
-  evidence_grade: 'A',
-},
     {
     id: 522,
     name: 'Gokshura',
@@ -15079,6 +14919,12 @@ const HERBS = [
   primary_functions: ['Drastic hydragogue purgative — clears severe lower-body damp-heat', 'Ascites, oedema, deep constipation (specialist use only)', 'TCM cousin: Fang Ji family of aggressive water-purgers', 'Classical Ayurvedic shodhana (cleansing) herb'],
   secondary_benefits: ['Anti-inflammatory in skin protocols', 'Mild antimicrobial'],
   flavor_profile: 'Pungent, bitter, acrid',
+    // ⚠ pharmacology + status drafted 2026-09-24 from this record's own
+    //   botanical, not from a monograph — Robin to verify before relying on it.
+    pharmacology:
+      'Primary bioactives: the resin glycoside fraction (turpethin with alpha- and beta-turpethin), plus lupeol, scopoletin, beta-sitosterol, coumarins and a small alkaloid fraction. The mechanism is hydragogue rather than anthraquinone: the resin glycosides irritate the intestinal mucosa and draw water into the lumen, producing a brisk watery purge. That is chemically unrelated to the sennosides in Senna and considerably more drastic. Hepatoprotective and anti-inflammatory activity is also reported in rodent models. Grade C for the purgative action, which is unambiguous, long documented and mechanistically clear; Grade D for everything else. The dose-response is steep and the margin between purgation and fluid and electrolyte loss is narrow, which is exactly why the classical texts place it inside a supervised shodhana protocol and never in self-care.',
+    status:
+      'Grade C for purgation, Grade D for every other claimed action. Steep dose-response with a narrow margin before fluid and electrolyte loss. Classical use is inside a supervised Panchakarma protocol only; it should not reach a self-selected formula.',
   contraindications: ['Pregnancy', 'Children', 'Vata-aggravated dry conditions', 'Inflammatory bowel', 'Practitioner-only use — drastic action'],
   herb_interactions: ['Synergy: typically combined with sweet/oily carriers in Panchakarma', 'Caution: any chronic medication — clears too aggressively'],
   dosage_range: 'Specialist Panchakarma use only. Powder 1–3 g under direct supervision. Never self-administered.',
@@ -15106,6 +14952,12 @@ const HERBS = [
   primary_functions: ['TCM Qin Cai Zi — clears heat, lowers Liver Yang, promotes urination', 'Ayurvedic digestive carminative', 'Uric acid clearance — gout support', 'Mild diuretic and BP regulator'],
   secondary_benefits: ['Anti-inflammatory in joint conditions', 'Anti-spasmodic in digestion'],
   flavor_profile: 'Aromatic, pungent, slightly bitter',
+    // ⚠ pharmacology + status drafted 2026-09-24 from this record's own
+    //   botanical, not from a monograph — Robin to verify before relying on it.
+    pharmacology:
+      'A NOTE ON THE NAME FIRST: this record is celery seed (Apium graveolens), NOT Ajwain (Trachyspermum ammi, id 590). The two carry confusably similar Indian names — Ajmoda against Yavani — and they are different plants with different chemistry. What follows is celery. Primary bioactives: phthalides (3-n-butylphthalide, sedanenolide, sedanolide), the flavone apigenin and its glycoside apiin, furanocoumarins (bergapten, xanthotoxin), and an essential oil rich in limonene and beta-selinene. Mechanisms: the phthalides relax vascular smooth muscle and account for the antihypertensive and reported mild sedative effects; apigenin contributes anti-inflammatory and COX-inhibitory action; the oil and coumarins give the diuretic and uricosuric effect used for gout. Grade C for blood pressure and gout support (small human trials plus consistent animal data); Grade B safety as a food, with two real caveats — the furanocoumarins are phototoxic, and celery is a recognised allergen with cross-reactivity to birch pollen and mugwort.',
+    status:
+      'Grade C for blood pressure and gout support; Grade B safety as a food. Two caveats that are not optional: phototoxic furanocoumarins, and celery is a recognised allergen cross-reacting with birch pollen and mugwort. Also worth resolving the name clash with Ajwain (id 590) — they are different plants.',
   contraindications: ['Pregnancy — uterine activity at therapeutic doses', 'On diuretics', 'Bleeding disorders (mild)'],
   herb_interactions: ['Synergy: Triphala (uric acid); Punarnava (urinary)', 'Caution: diuretics, blood thinners'],
   dosage_range: 'Seed infusion 1–2 g per 250 ml; ground seed 1–2 g/day in food.',

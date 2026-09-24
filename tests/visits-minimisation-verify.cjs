@@ -2,11 +2,16 @@
 //
 // Holds the visitor counter to the same line as the checkout.
 //
-// reserve-formula.mjs was cut back to COUNTRY ONLY under GDPR
-// minimisation, and tests/geo-minimisation-verify.cjs keeps it there.
-// Analytics collecting more than the checkout does would make that policy
-// a fiction, so this file fails the build if the beacon, the collector or
-// the schema starts gathering a person rather than a page.
+// The line is NOT "collect as little as the checkout". Robin asked for city
+// on 2026-09-24 and city is collected; reserve-formula.mjs stays country-only
+// because an order is attached to a named person at an address, where a city
+// adds nothing and risks plenty.
+//
+// The line this file actually holds is: A PAGE VIEW HAS NO SUBJECT. No IP, no
+// cookie, no generated id, no stored User-Agent, no coordinates — so a row
+// saying "Berlin · mobile · /shop" cannot be joined to another row, to an
+// order, or to a person. City is a label on a tally mark. The moment anything
+// identifying is added alongside it, that stops being true and this fails.
 //
 //   node tests/visits-minimisation-verify.cjs
 
@@ -31,18 +36,23 @@ const test = (n, cond, d) => (cond ? ok(n, d) : bad(n, d));
 
 console.log('\n── NO PERSON IS COLLECTED ──');
 // The column list is the contract. Anything not here cannot be stored.
-const ALLOWED = ['id', 'created_at', 'path', 'country', 'device', 'os', 'browser', 'referrer', 'lang', 'is_bot'];
+const ALLOWED = ['id', 'created_at', 'path', 'country', 'city', 'device', 'os', 'browser', 'referrer', 'lang', 'is_bot'];
 const declared = [...SQL.matchAll(/^\s{2}([a-z_]+)\s+(?:bigserial|timestamptz|text|boolean)/gm)].map(m => m[1]);
 const extra = declared.filter(c => !ALLOWED.includes(c));
 test('page_views declares only the agreed columns', extra.length === 0, extra.length ? 'unexpected: ' + extra.join(', ') : declared.length + ' columns');
 
-for (const forbidden of ['ip', 'ip_address', 'city', 'latitude', 'longitude', 'lat', 'lng', 'subdivision', 'timezone', 'visitor_id', 'session_id', 'fingerprint', 'user_agent']) {
+// city is intentionally absent from this list. Everything that could
+// IDENTIFY someone is not.
+for (const forbidden of ['ip', 'ip_address', 'latitude', 'longitude', 'lat', 'lng', 'subdivision', 'timezone', 'visitor_id', 'session_id', 'fingerprint', 'user_agent']) {
   test('no `' + forbidden + '` column', !declared.includes(forbidden));
 }
 
 console.log('\n── THE COLLECTOR ──');
-test('reads country and nothing else from x-nf-geo',
-  COLLECT.includes('countryOnly') && !/parsed\.(city|latitude|longitude|subdivision|timezone)/.test(COLLECT));
+test('reads country and city from x-nf-geo, and nothing else',
+  COLLECT.includes('geoOf') && /parsed\.city/.test(COLLECT) &&
+  !/parsed\.(latitude|longitude|subdivision|timezone)/.test(COLLECT));
+test('city is length-capped and stripped to place-name characters',
+  /slice\(0, 64\)/.test(COLLECT) && /\p\{L\}/.test(COLLECT));
 test('never stores the raw User-Agent',
   !/user_agent|ua:\s*s\b|row\.ua/.test(COLLECT) && COLLECT.includes('classifyUA'));
 test('never reads a client IP header',
@@ -61,6 +71,8 @@ test('skips localhost and previews', /localhost/.test(BEACON) && /deploy-preview
 
 console.log('\n── THE DATABASE GUARDS THE PATH TOO ──');
 test('CHECK rejects a path holding a query string', /path NOT LIKE '%\?%'/.test(SQL));
+test('city is length-capped in the insert policy', /char_length\(city\)\s*<=\s*64/.test(SQL));
+test('city column exists and is migratable', /ADD COLUMN IF NOT EXISTS city text/.test(SQL));
 test('CHECK rejects a path holding a fragment', /path NOT LIKE '%#%'/.test(SQL));
 test('anon may INSERT', /FOR INSERT\s*\n\s*TO anon/.test(SQL));
 test('anon may NOT SELECT — traffic is not public',
@@ -71,6 +83,7 @@ console.log('\n── THE REPORT IS HONEST ──');
 test('digest reads with the service role, not anon', /SERVICE_KEY/.test(DIGEST) && !/SUPABASE_ANON/.test(DIGEST));
 test('digest never claims unique visitors', !/unique visitor/i.test(codeOnly(DIGEST).replace(/not unique visitors/gi, '')));
 test('digest says views, not visitors, in the email body', /PAGE VIEWS, not unique visitors/.test(DIGEST));
+test('digest reports cities', /section\('CITIES'/.test(DIGEST));
 test('bots are separated rather than dropped', /is_bot/.test(DIGEST) && /crawlers/.test(DIGEST));
 test('runs twice a month', /schedule:\s*'0 9 1,15 \* \*'/.test(DIGEST));
 
