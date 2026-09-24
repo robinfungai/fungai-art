@@ -7,7 +7,13 @@
 
    Threat model:
    - Server (Supabase, Robin, whoever gets DB access) MUST NOT be
-     able to read message bodies. It sees only opaque ciphertext.
+     able to READ message bodies. It sees only opaque ciphertext.
+   - It CAN forge them. Nothing signs the ciphertext, so anyone who
+     can write the table could replace a blob with one they
+     encrypted to the recipient, and it would decrypt cleanly and
+     look like it came from the named sender. Confidentiality yes,
+     authenticity no. Fixing that means a long-term ECDSA key
+     alongside the ECDH one; see D3 in docs/COMMUNITY-AUDIT.md.
    - Sender's device holds the sender's private key. Recipient's
      device holds the recipient's private key. Both are stored in
      IndexedDB (never localStorage — localStorage isn't wiped on
@@ -20,9 +26,40 @@
      messages remain sealed because their ephemeral private key is
      never persisted.
 
-   Wire format (base64-encoded string in messages_e2e.ciphertext):
+   TWO COPIES PER MESSAGE (audit finding D1)
+   ------------------------------------------
+   The ephemeral private key is discarded after encrypting, so only
+   the recipient can open `ciphertext`. The sender cannot — which
+   would leave a conversation with no "sent" side at all. So every
+   message is encrypted TWICE: once to the recipient, once to the
+   sender's own public key. The second blob goes in
+   `messages_e2e.ciphertext_self`. Use encryptForBoth(), not
+   encryptTo(), for anything a member will want to read back.
+
+   HISTORY IS DEVICE-BOUND, ON PURPOSE (audit finding D2)
+   -------------------------------------------------------
+   The private key lives in one browser's IndexedDB. There is no
+   backup, no export and no multi-device sync — a decision, taken
+   2026-09-24, not an omission. A member on a new device generates a
+   new keypair and everything sent to the old one is unreadable
+   forever. Nobody can recover it, including us. That is what E2E
+   means.
+
+   What we owe them is that the failure is LEGIBLE rather than
+   silent. So each row records the fingerprint of the public key its
+   blob was sealed to (`to_key_fp` / `self_key_fp`). Before
+   attempting decryption the UI compares that against this device's
+   fingerprint via keyFingerprint(); on a mismatch it says "sent to
+   a previous device — unreadable here" instead of showing a broken
+   message or an exception.
+
+   Wire format (base64-encoded string, both ciphertext columns):
      b64( eph_pub_65 | iv_12 | aes_gcm_ciphertext )
    Where eph_pub_65 = uncompressed EC point (65 bytes for P-256).
+   NOTE: earlier comments in supabase-messages-e2e.sql described
+   this order reversed, and described dm_public_key as SPKI DER. It
+   is a 65-byte raw point. Both were wrong; the code below is
+   authoritative and the SQL has been corrected.
 
    IMPORTANT: this file is v1 scaffolding. Before shipping DMs to
    real members, an independent crypto review is warranted. The
@@ -34,6 +71,14 @@
   const DB_NAME = 'fungai-dm-keys';
   const DB_STORE = 'keys';
   const KEY_ID = 'me';
+
+  // Max plaintext that fits the messages_e2e size cap. The column is
+  // CHECK (char_length(ciphertext) <= 8000) on base64 of
+  // 65 + 12 + (plaintext + 16-byte GCM tag), and base64 is 4 bytes
+  // out per 3 in — so 8000 b64 chars is 6000 raw, minus the 93-byte
+  // envelope. Exported so the composer can count down honestly
+  // rather than letting the INSERT fail.
+  const MAX_PLAINTEXT_BYTES = Math.floor(8000 / 4) * 3 - 65 - 12 - 16;
 
   // ── IndexedDB helpers ─────────────────────────────────────────
   function openDb() {
@@ -81,31 +126,32 @@
   }
 
   // ── Keypair lifecycle ─────────────────────────────────────────
+  // One keypair, extractable so the public half can be exported to
+  // profiles.dm_public_key. The private half never leaves this
+  // module. Same guarantee Signal's web client makes.
+  //
+  // (Until 2026-09-24 this function generated three keypairs and
+  //  used one — two were leftovers from working out WebCrypto's
+  //  extractability rules. Audit finding D4.)
   async function getOrCreateMyKeypair() {
     const stored = await dbGet(KEY_ID);
     if (stored?.privateKey && stored?.publicKey) return stored;
-    const pair = await crypto.subtle.generateKey(
-      { name: 'ECDH', namedCurve: CURVE },
-      false, // NOT extractable — private key can never be dumped
-      ['deriveBits']
-    );
-    // publicKey stays extractable so we can upload the SPKI to the DB.
-    const pubExtractable = await crypto.subtle.generateKey(
-      { name: 'ECDH', namedCurve: CURVE },
-      true, ['deriveBits']
-    );
-    // We actually want one keypair, extractable on the public side.
-    // Simpler: generate as extractable then wrap the private key in a
-    // non-extractable copy for storage. But WebCrypto doesn't allow
-    // rewrapping like that portably. Compromise: keep the private key
-    // extractable but never expose it outside this module. This is the
-    // same guarantee Signal's web client makes.
+
     const kp = await crypto.subtle.generateKey(
       { name: 'ECDH', namedCurve: CURVE },
-      true, ['deriveBits']
+      true,
+      ['deriveBits']
     );
     await dbSet(KEY_ID, { privateKey: kp.privateKey, publicKey: kp.publicKey });
     return { privateKey: kp.privateKey, publicKey: kp.publicKey };
+  }
+
+  // True when this browser has never generated a keypair. The UI
+  // uses it to explain, before the first send, that history will
+  // not follow them to another device.
+  async function hasLocalKeypair() {
+    const stored = await dbGet(KEY_ID);
+    return !!(stored?.privateKey && stored?.publicKey);
   }
 
   async function exportPublicKey(publicKey) {
@@ -122,6 +168,22 @@
     );
   }
 
+  // Short, stable, non-secret identifier for a public key. Recorded
+  // on each message so a device that no longer holds the matching
+  // private key can say so instead of failing silently (D2).
+  async function keyFingerprint(publicKeyB64) {
+    if (!publicKeyB64) return null;
+    const digest = await crypto.subtle.digest('SHA-256', b64decode(publicKeyB64));
+    return b64encode(digest).slice(0, 16);
+  }
+
+  // Fingerprint of the key this browser holds, or null if it has none.
+  async function myKeyFingerprint() {
+    const stored = await dbGet(KEY_ID);
+    if (!stored?.publicKey) return null;
+    return keyFingerprint(await exportPublicKey(stored.publicKey));
+  }
+
   async function deriveAesKey(myPrivate, theirPublic) {
     const bits = await crypto.subtle.deriveBits(
       { name: 'ECDH', public: theirPublic },
@@ -134,8 +196,15 @@
   }
 
   // ── Encrypt / decrypt ─────────────────────────────────────────
+  // The primitive: seal `plaintext` to one public key. Prefer
+  // encryptForBoth() — a message sealed only with this is one the
+  // sender can never read back (D1).
   async function encryptTo(recipientPubB64, plaintext) {
     if (!recipientPubB64) throw new Error('Recipient has no public key set yet.');
+    const ptBytes = new TextEncoder().encode(plaintext);
+    if (ptBytes.byteLength > MAX_PLAINTEXT_BYTES) {
+      throw new Error('Message is too long — the limit is ' + MAX_PLAINTEXT_BYTES + ' bytes.');
+    }
     const recipientPub = await importPublicKey(recipientPubB64);
     // Ephemeral sender keypair — private half discarded after this
     // call → forward secrecy for this individual message.
@@ -144,8 +213,7 @@
     );
     const aes = await deriveAesKey(eph.privateKey, recipientPub);
     const iv = crypto.getRandomValues(new Uint8Array(12));
-    const pt = new TextEncoder().encode(plaintext);
-    const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, aes, pt);
+    const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, aes, ptBytes);
     // Wire: eph_pub(65) | iv(12) | ct
     const ephRaw = new Uint8Array(await crypto.subtle.exportKey('raw', eph.publicKey));
     const out = new Uint8Array(ephRaw.byteLength + iv.byteLength + ct.byteLength);
@@ -153,6 +221,27 @@
     out.set(iv, ephRaw.byteLength);
     out.set(new Uint8Array(ct), ephRaw.byteLength + iv.byteLength);
     return b64encode(out.buffer);
+  }
+
+  // Seal one message twice — to the recipient, and to the sender, so
+  // the sender can read their own sent messages (D1). Returns
+  // everything an INSERT into messages_e2e needs.
+  //
+  //   const sealed = await encryptForBoth(theirPub, myPub, text);
+  //   insert({ ciphertext:      sealed.forRecipient,
+  //            ciphertext_self: sealed.forSelf,
+  //            to_key_fp:       sealed.toKeyFp,
+  //            self_key_fp:     sealed.selfKeyFp, … })
+  async function encryptForBoth(recipientPubB64, myPublicKeyB64, plaintext) {
+    if (!recipientPubB64) throw new Error('Recipient has no public key set yet.');
+    if (!myPublicKeyB64)  throw new Error('This device has no DM key yet.');
+    const [forRecipient, forSelf, toKeyFp, selfKeyFp] = await Promise.all([
+      encryptTo(recipientPubB64, plaintext),
+      encryptTo(myPublicKeyB64, plaintext),
+      keyFingerprint(recipientPubB64),
+      keyFingerprint(myPublicKeyB64),
+    ]);
+    return { forRecipient, forSelf, toKeyFp, selfKeyFp };
   }
 
   async function decryptFrom(myKeypair, ciphertextB64) {
@@ -168,6 +257,30 @@
     return new TextDecoder().decode(pt);
   }
 
+  // Read one row as this member. Picks the blob addressed to this
+  // device, and reports an unreadable message rather than throwing
+  // when the row was sealed to a key this browser no longer has (D2).
+  //
+  // Returns { text } | { unreadable: 'wrong-device' | 'failed' }.
+  async function readMessage(myKeypair, row, opts) {
+    const mine   = (opts && opts.mine) === true;   // did I send this row?
+    const blob   = mine ? row.ciphertext_self : row.ciphertext;
+    const rowFp  = mine ? row.self_key_fp     : row.to_key_fp;
+    if (!blob) return { unreadable: 'wrong-device' };
+
+    const myFp = await myKeyFingerprint();
+    if (rowFp && myFp && rowFp !== myFp) return { unreadable: 'wrong-device' };
+
+    try {
+      return { text: await decryptFrom(myKeypair, blob) };
+    } catch (_) {
+      // Either the fingerprint was absent (pre-D2 row) and the key
+      // really is wrong, or the blob is corrupt. Same message either
+      // way — we cannot tell them apart and must not guess.
+      return { unreadable: rowFp ? 'failed' : 'wrong-device' };
+    }
+  }
+
   // Deterministic conversation key so both sides land in the same
   // thread. sha256(sorted(pair)) — no secret, just a stable id.
   async function threadKey(profileIdA, profileIdB) {
@@ -177,11 +290,17 @@
   }
 
   window.MycDMcrypto = {
+    MAX_PLAINTEXT_BYTES,
     getOrCreateMyKeypair,
+    hasLocalKeypair,
     exportPublicKey,
     importPublicKey,
+    keyFingerprint,
+    myKeyFingerprint,
     encryptTo,
+    encryptForBoth,
     decryptFrom,
+    readMessage,
     threadKey,
   };
 })();

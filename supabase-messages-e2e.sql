@@ -28,7 +28,10 @@
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 -- 1) Public keys live on `profiles`. If your profiles table doesn't
---    have the column yet, this ALTER adds it. base64(SPKI DER).
+--    have the column yet, this ALTER adds it.
+--    Format: base64 of the RAW 65-byte uncompressed P-256 point, as
+--    produced by crypto.subtle.exportKey('raw', …) in dm/crypto.js.
+--    (An earlier version of this comment said SPKI DER. It never was.)
 ALTER TABLE public.profiles
   ADD COLUMN IF NOT EXISTS dm_public_key text;
 
@@ -37,9 +40,14 @@ CREATE TABLE IF NOT EXISTS public.messages_e2e (
   id                 uuid        NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
   from_auth_user_id  uuid        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   to_profile_id      uuid        NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
-  -- Opaque payload: base64(AES-GCM ciphertext | 12-byte IV | 65-byte
-  -- ephemeral ECDH pubkey). Client parses on receive. Server never
-  -- opens it. Size cap keeps rogue clients from blowing up storage.
+  -- Opaque payload, in THIS byte order:
+  --   base64( 65-byte ephemeral ECDH pubkey | 12-byte IV | AES-GCM ciphertext )
+  -- Client parses on receive. Server never opens it. Size cap keeps
+  -- rogue clients from blowing up storage — 8000 base64 chars works
+  -- out to ~5,900 bytes of plaintext, exported as
+  -- MycDMcrypto.MAX_PLAINTEXT_BYTES so the composer can count down.
+  -- (An earlier version of this comment listed the three parts in the
+  --  reverse order. dm/crypto.js is authoritative.)
   ciphertext         text        NOT NULL CHECK (char_length(ciphertext) <= 8000),
   -- Metadata the client controls but the server can index. Kept
   -- deliberately minimal — anything the DB indexes is metadata that
@@ -75,7 +83,13 @@ CREATE POLICY "messages_e2e_read"
     OR to_profile_id IN (SELECT id FROM public.profiles WHERE auth_user_id = auth.uid())
   );
 
--- Recipient can mark read_at. Neither party can UPDATE anything else.
+-- Recipient can mark read_at.
+--
+-- NOTE: this policy alone does NOT stop them updating other columns —
+-- an RLS UPDATE policy constrains which ROWS you may touch, never
+-- which COLUMNS. Column privileges do that, and they are applied in
+-- supabase-messages-e2e-sender-copy.sql. Run that file too, or the
+-- recipient can rewrite the ciphertext of anything sent to them.
 DROP POLICY IF EXISTS "messages_e2e_mark_read" ON public.messages_e2e;
 CREATE POLICY "messages_e2e_mark_read"
   ON public.messages_e2e FOR UPDATE
