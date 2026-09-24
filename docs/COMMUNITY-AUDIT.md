@@ -393,6 +393,22 @@ most likely to matter legally in the EU.
 The named next feature. **Further along than "not started", and with one design
 gap that has to be decided before any UI is written.**
 
+> **STATUS, 2026-09-24, after commit `69a970f`.** Robin decided both open
+> questions and they are implemented: **D1** is fixed (two blobs per message,
+> `ciphertext_self`), and **D2** is settled as *device-bound history* with a
+> legible failure rather than a silent one. **D4** and **D5** are fixed. A
+> sixth finding, not in the original list, was found and fixed with them: the
+> `mark_read` policy did not restrict columns, so the recipient could rewrite
+> the ciphertext of anything sent to them.
+>
+> **D3 remains open** — nothing signs the ciphertext, so the server cannot
+> read a message but can forge one.
+>
+> Still to do before members use it: run
+> `supabase-messages-e2e-sender-copy.sql`, enable Realtime on `messages_e2e`,
+> build `dm/dm.jsx`, and get the independent crypto review the file header
+> asks for. Guarded by `npm run test:dm-crypto` (11 checks).
+
 ### What exists
 
 | piece | state |
@@ -571,16 +587,21 @@ Its B3 (no stable IDs across domains) was not re-examined this pass.
 **Before the portal gets larger**
 
 1. Paginate `fetchAll()` and select named columns — the 1,000-member ceiling (§7)
+   · *Robin, 2026-09-24: acknowledged, not urgent at 12 members.*
 2. Reconstruct the `profiles` DDL into a `.sql` file (§6)
 3. Move the economy server-side, or remove it from the UI until it is real (§5)
 4. `spore-gate.js` → RLS, if any restriction will ever be paid for (§6)
 5. Delete the admin allowlists; read `profiles.is_admin` via `fa_is_admin()` (§6)
+   · *Partly under way: the admin board added 2026-09-24 gates on
+   `fa_is_admin()` and reads no allowlist, so the pattern now exists in the
+   portal to copy.*
 
 **For messaging**
 
-6. Decide D1 and D2 (§9) — both change schema or UI states
-7. Enable Realtime; build `dm.jsx` as its own island
+6. ~~Decide D1 and D2~~ — **done 2026-09-24**, commit `69a970f` (§9)
+7. Enable Realtime; build `dm.jsx` as its own file
 8. Independent crypto review before real members rely on it
+9. **D3** — sign the ciphertext, or state plainly that the server can forge (§9)
 
 **Cheap, and worth doing while nearby**
 
