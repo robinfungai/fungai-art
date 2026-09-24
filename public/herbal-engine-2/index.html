@@ -557,7 +557,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
 
   <!-- POOL SELECTOR — sits before the formula-building buttons so it's
        the first question the user answers. Three clear options:
-       (1) In stock — European Folk herbs + damiana + schizandra (the ones
+       (1) In stock — European Folk herbs + damiana + schisandra (the ones
            we actually have in the apothecary right now)
        (2) TCM + Ayurveda — the classical Chinese + Ayurvedic materia medica
        (3) All herbs — every botanical in the 201-plant database. -->
@@ -567,7 +567,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
       <button class="poolcard on" id="preset_in_stock" onclick="applyPreset('in_stock')">
         <span class="poolcard-name">In stock</span>
         <span class="poolcard-count" id="pc_in_stock">&mdash;</span>
-        <span class="poolcard-sub">European folk + damiana + schizandra</span>
+        <span class="poolcard-sub">European folk + damiana + schisandra</span>
       </button>
       <button class="poolcard" id="preset_tcm_ayur" onclick="applyPreset('tcm_ayur')">
         <span class="poolcard-name">TCM + Ayurveda</span>
@@ -686,7 +686,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-heig
     </p>
     <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(13.5px,1.7vw,16px);color:#C9B894;line-height:1.78;letter-spacing:0.002em;margin:0;">
       The AI reads pharmacology &mdash; not keywords. It knows that
-      <em>schizandra adaptogenic</em> means HPA-axis modulation via lignans,
+      <em>schisandra adaptogenic</em> means HPA-axis modulation via lignans,
       that <em>passionflower</em> binds GABA-A through chrysin, that mixing
       cordyceps with citalopram requires caution. Each run sharpens the
       next: anonymised formula outcomes, marker-by-marker feedback, and
@@ -1123,7 +1123,7 @@ var curExtractName='';
 /* ─── PRESET / STOCK ──────────────────────────────────────
    Three pool presets, computed off the live HB array so the counts
    are always correct (no stale hand-maintained lists):
-     - in_stock : European Folk herbs + damiana + schizandra (the
+     - in_stock : European Folk herbs + damiana + schisandra (the
                   apothecary's actual stocked range right now)
      - tcm_ayur : herbs tagged tcm OR ayurvedic
      - all      : every botanical in the database
@@ -1132,7 +1132,7 @@ var curExtractName='';
 // Fallback "In stock" list used when the cloud inventory isn't yet
 // reachable (table not installed, Supabase down, first paint before
 // fetch completes). Same range that was previously hardcoded.
-const IN_STOCK_EXTRA_IDS = ['damiana', 'schizandra_five_flavour_fruit'];
+const IN_STOCK_EXTRA_IDS = ['damiana', 'schisandra_five_flavour_fruit'];
 
 // The live "In stock" id-set is populated from Supabase by
 // loadLiveInventory(). null = not loaded yet; an empty Set is a valid

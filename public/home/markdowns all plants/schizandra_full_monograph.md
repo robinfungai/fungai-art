@@ -1,4 +1,4 @@
-# SCHIZANDRA (Schisandra chinensis)
+# SCHISANDRA / SCHIZANDRA (Schisandra chinensis)
 ## Master Monograph: Complete Integration Across All Departments
 
 ---

@@ -425,7 +425,7 @@ export const HERBS: Herb[] = [
       'Reishi and Shiitake mushrooms — triple immune and qi support; foundational pairing',
       'Ginseng — foundational qi tonification powerhouse; complementary',
       'Holy Basil and Ashwagandha — adaptogenic and immune stack',
-      'Schizandra — endurance, stress resilience and immune foundation',
+      'Schisandra — endurance, stress resilience and immune foundation',
     ],
     herb_to_herb_caution: [
       'Other immune-stimulating herbs in transplant patients or those on immunosuppressants',
@@ -435,7 +435,7 @@ export const HERBS: Herb[] = [
       'No other significant drug interactions documented',
     ],
     herb_interactions: [
-      'Synergy: Reishi, Shiitake, Ginseng, Holy Basil, Ashwagandha, Schizandra',
+      'Synergy: Reishi, Shiitake, Ginseng, Holy Basil, Ashwagandha, Schisandra',
       'Caution: immune-stimulating herbs in immunosuppressed patients',
       'Drug interactions: immunosuppressants (consult team); otherwise minimal',
     ],
@@ -3651,7 +3651,7 @@ export const HERBS: Herb[] = [
     herb_to_herb_synergy: [
       'Astragalus — combined foundational qi tonification and immune support',
       'Eleuthero (Siberian Ginseng) — synergistic adaptogenic resilience stack',
-      'Schizandra — endurance, Jing and adaptogenic combined protocol',
+      'Schisandra — endurance, Jing and adaptogenic combined protocol',
       'Reishi — foundational qi and spiritual depth combined',
     ],
     herb_to_herb_caution: [
@@ -3665,7 +3665,7 @@ export const HERBS: Herb[] = [
       'MAOIs — theoretical interaction; consult',
     ],
     herb_interactions: [
-      'Synergy: Astragalus, Eleuthero, Schizandra, Reishi',
+      'Synergy: Astragalus, Eleuthero, Schisandra, Reishi',
       'Caution: stimulant herbs (overstimulation); sedative herbs (contradictory)',
       'Drug interactions: diabetes meds (monitor), Warfarin (minimal, monitor), antihypertensives (monitor), MAOIs (consult)',
     ],
@@ -3724,7 +3724,7 @@ export const HERBS: Herb[] = [
     ],
     herb_to_herb_synergy: [
       'Bilberry — combined retinal and microvascular antioxidant protection',
-      'Jujube and Schizandra — traditional TCM yin-blood and sleep support formula',
+      'Jujube and Schisandra — traditional TCM yin-blood and sleep support formula',
       'Barley and green tea — metabolic support and antioxidant daily protocol',
       'Astragalus — foundational qi and blood combined tonification',
     ],
@@ -3736,7 +3736,7 @@ export const HERBS: Herb[] = [
       'Narrow therapeutic index drugs — theoretical CYP/P-gp modulation (limited data; monitor)',
     ],
     herb_interactions: [
-      'Synergy: Bilberry, Jujube, Schizandra, Barley, Green Tea, Astragalus',
+      'Synergy: Bilberry, Jujube, Schisandra, Barley, Green Tea, Astragalus',
       'Caution: anticoagulant herbs with Warfarin',
       'Drug interactions: Warfarin (monitor INR), narrow TI drugs (theoretical; monitor)',
     ],
@@ -3745,7 +3745,7 @@ export const HERBS: Herb[] = [
     spiritual_layer:
       'Goji is the gentle blood-brightener — a sweet red berry that nourishes deep reserves while keeping sight clear and spirits buoyant. Two thousand years of Chinese longevity medicine and countless grandmothers\' soups are its testimony. She teaches that profound change often comes from small, consistent, pleasant inputs rather than heroic interventions — that the daily handful of sweet red berries nourishing yin, brightening eyes, and supporting blood is as powerful as any complex formula. She whispers: I nourish my blood and essence gently every day. My eyes, nerves and heart are sustained by steady sweetness. Longevity arises from consistent, loving care.',
     best_preparation:
-      'Dried berries as daily food — eaten plain, in soups, teas and porridges. Most sustainable, most enjoyable, highest compliance form. Decoction combined with Jujube and Schizandra for traditional yin-blood and sleep formula. Screen for Warfarin before recommending therapeutic doses.',
+      'Dried berries as daily food — eaten plain, in soups, teas and porridges. Most sustainable, most enjoyable, highest compliance form. Decoction combined with Jujube and Schisandra for traditional yin-blood and sleep formula. Screen for Warfarin before recommending therapeutic doses.',
     caution_level: 'LOW',
     safe_pregnancy: null,
     status:

@@ -321,10 +321,19 @@ function buildLexicon(vocabulary, entities = [], surfaceOf = new Map()) {
     for (const h of herbs || []) e.herbs.add(h);
   };
 
-  // Which herb, if any, each curated phrase names.
-  const herbByKey = new Map();
+  // Which herbs each curated phrase names. A LIST, not one herb: our own
+  // records are sometimes split across two spellings of the same organism
+  // — a monograph headed "SCHISANDRA / SCHIZANDRA" and a database entry
+  // called "Schisandra (Five-Flavour Fruit)" — and both must light up from
+  // either spelling, or half the knowledge stays behind.
+  const herbsByKey = new Map();
   for (const e of entities) {
-    for (const key of e.keys || []) herbByKey.set(normPhrase(key), e.herb);
+    for (const key of e.keys || []) {
+      const k = normPhrase(key);
+      let list = herbsByKey.get(k);
+      if (!list) { list = []; herbsByKey.set(k, list); }
+      if (!list.includes(e.herb)) list.push(e.herb);
+    }
   }
 
   for (const group of EQUIVALENT) {
@@ -332,9 +341,9 @@ function buildLexicon(vocabulary, entities = [], surfaceOf = new Map()) {
     const resolved = group.map(m => ({
       phrase: m,
       terms: liveTerms(m, 'EQUIVALENT'),
-      herb: herbByKey.get(normPhrase(m)) || null,
+      herbs: herbsByKey.get(normPhrase(m)) || [],
     }));
-    const groupHerbs = resolved.map(r => r.herb).filter(Boolean);
+    const groupHerbs = resolved.flatMap(r => r.herbs);
     for (const self of resolved) {
       const others = [];
       for (const other of resolved) if (other !== self) others.push(...other.terms);
