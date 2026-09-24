@@ -102,6 +102,12 @@ export default defineConfig({
   // unknown routes (that's the SPA default and was loading the React shell
   // when visiting /community, /shop, etc.).
   appType: 'mpa',
+  // Pin the dev port. Vite's default is to hop to 5174, 5175… when 5173 is
+  // busy, and a Supabase session is stored per ORIGIN — port included. So a
+  // silent hop signs you out and makes it look like the token expired, which
+  // is what it looked like on 2026-09-25. strictPort fails loudly instead, so
+  // you go and close the other server rather than re-doing a magic link.
+  server: { port: 5173, strictPort: true },
   plugins: [react(), compileJsx(), serveStaticPages()],
   resolve: {
     alias: {
