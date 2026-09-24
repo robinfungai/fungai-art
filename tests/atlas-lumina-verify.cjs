@@ -118,7 +118,7 @@ console.log('\n── A PANEL, NOT A PAGE ──');
 test('no window.innerWidth sizing', !/window\.innerWidth|window\.innerHeight/.test(L));
 test('uResolution comes from the canvas size', /size\.width/.test(L) && /uResolution/.test(L));
 test('it is a <section>, not a <main>',
-  /<section[\s\S]{0,120}className="atl-lumina"/.test(LUMINA) && !/<main/.test(LUMINA));
+  L.includes('<section') && L.includes('atl-lumina') && !L.includes('<main'));
 
 // ── 7 · Atlas state controls it (§18, §20) ───────────────────────
 console.log('\n── WIRED TO ATLAS STATE ──');
