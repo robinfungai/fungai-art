@@ -47,6 +47,7 @@
     "test:explorer": "node tests/explorer-verify.cjs",
     "test:atlas": "node tests/atlas-verify.cjs",
     "test:atlas-geography": "node tests/atlas-geography-verify.cjs",
+    "test:atlas-lumina": "node tests/atlas-lumina-verify.cjs",
     "test:forage-proxies": "node tests/forage-proxies-verify.cjs",
     "test:sw-forage": "node tests/sw-forage-verify.cjs"
   },

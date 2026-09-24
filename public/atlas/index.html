@@ -136,6 +136,48 @@ a { color: inherit; }
 .atl-msg code { font-family: var(--mono); font-size: 12px; color: var(--amber-lt); }
 .atl-head { border-top: 0.5px solid var(--rule); padding-top: 34px; margin-bottom: 38px; }
 
+/* ── Lumina · the Fungi Kingdom's visual transformation ─────────────
+   Mounts only while one kingdom is selected and that kingdom is fungi. The
+   caption and the two choices are React-rendered DOM over the canvas, not
+   innerHTML written into it. */
+.atl-lumina { position: relative; height: clamp(360px, 56vh, 620px); margin: 0 0 30px;
+  border: 0.5px solid var(--rule); border-radius: 3px; overflow: hidden; background: #050806; }
+.atl-lumina canvas, .atl-lumina-canvas { display: block; width: 100% !important; height: 100% !important; }
+.atl-lumina-fallback { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* A floor for the type to sit on, so a pale photograph never eats it. */
+.atl-lumina::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to top, rgba(4,7,5,.86) 0%, rgba(4,7,5,.25) 34%, rgba(4,7,5,0) 62%); }
+
+.atl-lumina-caption { position: absolute; left: 26px; bottom: 74px; z-index: 2; pointer-events: none; }
+.atl-lumina-name { margin: 0; font-family: var(--fd, 'Cormorant Garamond', Georgia, serif);
+  font-size: clamp(26px, 4.4vw, 44px); font-weight: 400; letter-spacing: -.015em;
+  color: var(--ml, #E6D9B5); line-height: 1.05; }
+.atl-lumina-bino { display: block; margin-top: 4px; font-family: var(--fs, Georgia, serif);
+  font-style: italic; font-size: clamp(13px, 1.5vw, 16px); color: rgba(230,217,181,.66); }
+
+.atl-lumina-choice { position: absolute; left: 26px; right: 26px; bottom: 22px; z-index: 2;
+  display: flex; gap: 26px; flex-wrap: wrap; }
+.atl-lumina-pick { display: flex; flex-direction: column; gap: 7px; padding: 0; min-width: 116px;
+  background: none; border: none; cursor: pointer; text-align: left; }
+.atl-lumina-pick-rule { display: block; height: 1px; width: 100%;
+  background: rgba(230,217,181,.22); transition: background .35s ease, height .35s ease; }
+.atl-lumina-pick-name { font-family: var(--fm); font-size: 9px; letter-spacing: .22em;
+  text-transform: uppercase; color: rgba(230,217,181,.55); transition: color .35s ease; }
+.atl-lumina-pick:hover .atl-lumina-pick-name,
+.atl-lumina-pick:focus-visible .atl-lumina-pick-name { color: var(--ml, #E6D9B5); }
+.atl-lumina-pick:hover .atl-lumina-pick-rule,
+.atl-lumina-pick:focus-visible .atl-lumina-pick-rule { background: rgba(158,212,56,.55); }
+.atl-lumina-pick.is-active .atl-lumina-pick-rule { background: var(--nutrient, #E8B14B); height: 2px; }
+.atl-lumina-pick.is-active .atl-lumina-pick-name { color: var(--nutrient, #E8B14B); }
+.atl-lumina-pick:focus-visible { outline: 1px solid rgba(158,212,56,.6); outline-offset: 6px; }
+
+@media (max-width: 640px) {
+  .atl-lumina { height: clamp(300px, 46vh, 420px); }
+  .atl-lumina-caption { left: 16px; bottom: 68px; }
+  .atl-lumina-choice { left: 16px; right: 16px; gap: 18px; }
+}
+
 /* ── The globe · the Atlas's spatial layer ─────────────────────────
    Dark, instrument-like, no map chrome. The readout and the footnote are
    part of the design rather than afterthoughts: the footnote is what makes

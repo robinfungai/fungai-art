@@ -19,6 +19,17 @@ import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } fro
 // wait for it. If WebGL is missing the globe renders a note and the grid is
 // untouched — see atlas-globe.tsx.
 const AtlasGlobe = lazy(() => import('../components/ui/atlas-globe'));
+const AtlasLumina = lazy(() => import('../components/ui/atlas-lumina'));
+
+// The only two organisms with photographic material, per the brief's asset
+// rule. This map is the seam for §36: when Higgsfield produces per-organism
+// imagery it becomes a `visualAssets` field on the record and this constant
+// goes away. Until then, inventing entries here would mean pointing at files
+// that do not exist.
+const FUNGAL_IMAGERY: Record<string, string> = {
+  'turkey-tail':      '/atlas/second-photo.jpg',
+  'amanita-muscaria': '/atlas/third-photo.jpg',
+};
 
 // ── Types (mirror scripts/build-atlas.cjs output) ────────────────
 interface Slim {
@@ -200,6 +211,30 @@ export default function AtlasExplorer() {
     return types.length === 1 ? types[0] : null;
   }, [sel]);
 
+  // ── Fungi Kingdom (§15) ────────────────────────────────────────
+  // Lumina mounts only in this state, which is the architecture §18 asks
+  // for: ATLAS STATE → selectedKingdom → FUNGI KINGDOM → LUMINA MOUNTS.
+  // It is not a page and it is not always present.
+  const fungiKingdom = emphasis === 'fungus';
+
+  const luminaOrganisms = useMemo(() => {
+    if (!index) return [];
+    return index.organisms
+      .filter(o => FUNGAL_IMAGERY[o.slug])
+      .map(o => ({
+        slug: o.slug, name: o.name, binomial: o.binomial, image: FUNGAL_IMAGERY[o.slug],
+      }));
+  }, [index]);
+
+  // §20: the morph and the dossier must stay synchronised. They do because
+  // this is the same `open` the globe and the grid call — selecting in Lumina
+  // transitions the shader AND opens that organism's record AND writes the
+  // shareable hash. One path, not three.
+  const luminaActive = useMemo(() => {
+    if (openSlug && FUNGAL_IMAGERY[openSlug]) return openSlug;
+    return null;
+  }, [openSlug]);
+
   if (error) {
     return (
       <div className="atl-msg">
@@ -236,6 +271,16 @@ export default function AtlasExplorer() {
           emphasis={emphasis}
         />
       </Suspense>
+
+      {fungiKingdom && luminaOrganisms.length > 0 && (
+        <Suspense fallback={null}>
+          <AtlasLumina
+            organisms={luminaOrganisms}
+            activeSlug={luminaActive}
+            onSelect={open}
+          />
+        </Suspense>
+      )}
 
       <div className="atl-search">
         <input
