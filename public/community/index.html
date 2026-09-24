@@ -24,6 +24,9 @@
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=zodiak@400,500&f[]=geist-mono@400,500&display=swap" />
 
   <link rel="stylesheet" href="spore/styles-living.css" />
+  <!-- Admin planning board. Own stylesheet so the board can move out of
+       the Admin tab later without unpicking 75 KB of portal CSS. -->
+  <link rel="stylesheet" href="admin/kanban.css" />
 
   <!-- React 18.3.1, production UMD, vendored locally by scripts/build-community.cjs.
        Was react.development.js from unpkg: 1,162 KB, with every dev-only warning
@@ -52,6 +55,10 @@
   <script src="myco/prompts.js"></script>
   <script src="myco/context.js"></script>
   <script src="myco/agent.js"></script>
+
+  <!-- Admin planning board — sets window.AdminKanban, so like the MYCO
+       scripts above it must load BEFORE app-living, which shims it. -->
+  <script src="admin/kanban.js"></script>
 
   <script src="spore/app-living.js"></script>
 <script src="claim-notice.js" defer></script>

@@ -3585,6 +3585,18 @@ function AdminPage({ onToast, currentMember }) {
       {/* Weekly report — Robin and Stephanie each submit one per week */}
       <WeeklyReportBlock currentMemberId={currentMemberId} onToast={onToast} />
 
+      {/* Planning board — admin/kanban.jsx, backed by public.board_cards.
+          Admin-only in RLS via fa_is_admin(), so a non-admin who reaches
+          this component sees the denial state rather than an empty board. */}
+      <div className="section" style={{ paddingBottom: 0 }}>
+        <div className="section-eyebrow">Planning</div>
+        <h3 style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:20, color:'var(--mycelium-l)', marginTop:4, marginBottom:2 }}>The <em>board.</em></h3>
+        <p style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', lineHeight:1.6, margin:'4px 0 10px' }}>
+          Drag to move or reorder. Drag to the barrel to delete. Saved to Supabase, not this browser.
+        </p>
+      </div>
+      <AdminKanban onToast={onToast} />
+
       {/* Per-member feature restrictions — collapsed by default. Each member
           row is now a single-line summary that expands on click; the long
           list of 3-toggle-pill rows was eating most of the page. */}
@@ -4795,6 +4807,15 @@ function QuickNav({ tab, onTab, currentMember }) {
 const MycoAgent = (typeof window !== 'undefined' && window.MycoAgent)
   ? window.MycoAgent
   : function MycoAgentMissing() { return null; };
+
+/* ── Admin planning board ────────────────────────────────────
+   Same shim, same reason: admin/kanban.jsx sets window.AdminKanban
+   and is loaded BEFORE this file in /community/index.html. If it
+   failed to load, the Admin tab renders without the board rather
+   than taking the whole portal down. */
+const AdminKanban = (typeof window !== 'undefined' && window.AdminKanban)
+  ? window.AdminKanban
+  : function AdminKanbanMissing() { return null; };
 
 // The old inline MycoAgent (~200 lines) lived here. Its
 // replacement is now:

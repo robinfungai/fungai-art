@@ -1,0 +1,315 @@
+/* ────────────────────────────────────────────────────────────────
+   admin/kanban.css — the admin planning board
+   ────────────────────────────────────────────────────────────────
+   Tokens come from spore/styles-living.css (--soil-*, --mycelium-*,
+   --spore, --fungal, --nutrient, --rule, --font-*). Nothing here
+   defines a colour literally except the delete state, which is the
+   portal's existing red (#E16B6B, as used by spore-gate.js).
+
+   The reference component was Tailwind on neutral-900/violet-400.
+   Translated rather than copied: this sits inside the apothecary
+   palette and should read as part of it.
+
+   framer-motion is not a dependency, so the movement is CSS. Card
+   lift on drag, indicator fade, barrel colour change — transitions
+   only, and all of them behind prefers-reduced-motion.
+   ──────────────────────────────────────────────────────────────── */
+
+.kb-wrap {
+  margin: 0 16px 28px;
+}
+
+/* ── board: horizontal scroll, columns keep their width ────────── */
+.kb-board {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px 2px 14px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule-strong) transparent;
+}
+.kb-board::-webkit-scrollbar        { height: 6px; }
+.kb-board::-webkit-scrollbar-track  { background: transparent; }
+.kb-board::-webkit-scrollbar-thumb  { background: var(--rule-strong); border-radius: 3px; }
+
+/* ── column ────────────────────────────────────────────────────── */
+.kb-col {
+  flex: 0 0 236px;
+  width: 236px;
+  min-width: 236px;
+}
+.kb-col-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding: 0 2px;
+}
+.kb-col-title {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.kb-col-count {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--mycelium-d);
+  background: var(--soil-3);
+  border: 0.5px solid var(--rule);
+  border-radius: 999px;
+  min-width: 20px;
+  text-align: center;
+  padding: 2px 6px;
+}
+.kb-col-body {
+  min-height: 120px;
+  padding: 6px;
+  border-radius: 10px;
+  border: 0.5px solid transparent;
+  background: transparent;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+.kb-col-body.is-active {
+  background: rgba(201, 184, 148, 0.045);
+  border-color: var(--rule);
+}
+
+/* ── card ──────────────────────────────────────────────────────── */
+.kb-card {
+  cursor: grab;
+  border: 0.5px solid var(--rule);
+  border-radius: 8px;
+  background: var(--soil-3);
+  padding: 10px 11px;
+  transition: border-color 160ms ease, background-color 160ms ease,
+              transform 160ms ease, box-shadow 160ms ease;
+}
+.kb-card:hover {
+  border-color: var(--rule-strong);
+  background: var(--soil-4);
+}
+.kb-card:active { cursor: grabbing; }
+.kb-card.is-dragging {
+  opacity: 0.45;
+  transform: scale(0.98);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+.kb-card-text {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--mycelium-l);
+  overflow-wrap: anywhere;
+}
+
+/* ── drop indicator ────────────────────────────────────────────── */
+/* Opacity is driven imperatively during dragover (see kanban.jsx) —
+   one style write per move rather than a React render per pixel. */
+.kb-indicator {
+  height: 2px;
+  width: 100%;
+  margin: 3px 0;
+  border-radius: 2px;
+  background: var(--spore);
+  opacity: 0;
+  transition: opacity 90ms ease;
+}
+
+/* ── add card ──────────────────────────────────────────────────── */
+.kb-add-open {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 4px;
+  padding: 7px 9px;
+  background: none;
+  border: 0.5px dashed var(--rule);
+  border-radius: 8px;
+  color: var(--mycelium-d);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+.kb-add-open:hover {
+  color: var(--mycelium-l);
+  border-color: var(--rule-strong);
+}
+.kb-add-form { margin-top: 4px; }
+.kb-add-input {
+  width: 100%;
+  min-height: 62px;
+  resize: vertical;
+  padding: 9px 10px;
+  border-radius: 8px;
+  border: 0.5px solid var(--spore-d);
+  background: rgba(107, 214, 111, 0.06);
+  color: var(--mycelium-l);
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+.kb-add-input::placeholder { color: var(--mycelium-d); }
+.kb-add-input:focus {
+  outline: none;
+  border-color: var(--spore);
+}
+.kb-add-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 6px;
+}
+.kb-add-cancel,
+.kb-add-submit {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-radius: 6px;
+  padding: 6px 11px;
+  cursor: pointer;
+  transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
+}
+.kb-add-cancel {
+  background: none;
+  border: 0.5px solid transparent;
+  color: var(--mycelium-d);
+}
+.kb-add-cancel:hover { color: var(--mycelium-l); }
+.kb-add-submit {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(107, 214, 111, 0.1);
+  border: 0.5px solid var(--spore-d);
+  color: var(--spore-l);
+}
+.kb-add-submit:hover {
+  background: rgba(107, 214, 111, 0.18);
+  border-color: var(--spore);
+}
+
+/* ── burn barrel ───────────────────────────────────────────────── */
+.kb-barrel {
+  flex: 0 0 172px;
+  width: 172px;
+  min-width: 172px;
+  margin-top: 26px;
+  height: 172px;
+  display: grid;
+  place-content: center;
+  gap: 10px;
+  justify-items: center;
+  border-radius: 10px;
+  border: 0.5px dashed var(--rule-strong);
+  background: rgba(201, 184, 148, 0.02);
+  color: var(--mycelium-d);
+  text-align: center;
+  padding: 12px;
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+.kb-barrel.is-hot {
+  border-style: solid;
+  border-color: rgba(225, 107, 107, 0.55);
+  background: rgba(225, 107, 107, 0.09);
+  color: #E16B6B;
+}
+.kb-barrel-label {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+/* ── icons ─────────────────────────────────────────────────────── */
+.kb-ico    { width: 12px; height: 12px; flex: 0 0 12px; }
+.kb-ico-lg { width: 30px; height: 30px; }
+.kb-barrel.is-hot .kb-flame { animation: kb-bounce 900ms ease-in-out infinite; }
+@keyframes kb-bounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+
+/* ── states ────────────────────────────────────────────────────── */
+.kb-state {
+  padding: 16px 14px;
+  border-radius: 10px;
+  border: 0.5px solid var(--rule);
+  background: var(--soil-2);
+  color: var(--mycelium-d);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  line-height: 1.7;
+}
+.kb-state-warn {
+  border-color: rgba(232, 177, 75, 0.3);
+  background: rgba(232, 177, 75, 0.05);
+  color: var(--nutrient-l);
+}
+.kb-state code {
+  font-family: var(--font-mono);
+  color: var(--mycelium-l);
+  background: var(--soil-4);
+  border-radius: 3px;
+  padding: 1px 4px;
+}
+.kb-retry {
+  margin-left: 10px;
+  background: none;
+  border: 0.5px solid var(--rule-strong);
+  border-radius: 6px;
+  color: var(--mycelium-l);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.kb-empty-hint {
+  margin: 2px 2px 0;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  line-height: 1.7;
+  color: var(--mycelium-d);
+}
+.kb-empty-hint code {
+  color: var(--mycelium);
+  background: var(--soil-3);
+  border-radius: 3px;
+  padding: 1px 4px;
+}
+
+/* ── narrow screens ────────────────────────────────────────────── */
+/* Columns stay their width and the board scrolls sideways — a kanban
+   that reflows into one column stops being a kanban. */
+@media (max-width: 640px) {
+  .kb-wrap { margin: 0 10px 22px; }
+  .kb-col  { flex-basis: 208px; width: 208px; min-width: 208px; }
+  .kb-barrel { flex-basis: 150px; width: 150px; min-width: 150px; height: 150px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kb-card,
+  .kb-col-body,
+  .kb-indicator,
+  .kb-barrel,
+  .kb-add-open,
+  .kb-add-cancel,
+  .kb-add-submit { transition: none; }
+  .kb-barrel.is-hot .kb-flame { animation: none; }
+}

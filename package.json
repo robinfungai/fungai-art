@@ -36,6 +36,8 @@
     "build:herb-monographs": "node scripts/build-herb-monographs.cjs --apply",
     "test:myco-kb": "node tests/myco-kb-verify.cjs",
     "test:myco-terminology": "node tests/myco-terminology-verify.cjs",
+    "test:dm-crypto": "node tests/dm-crypto-verify.cjs",
+    "test:admin-board": "node tests/admin-board-verify.cjs",
     "check:claims": "node scripts/check-claims.cjs",
     "test:claims": "node tests/claims-verify.cjs",
     "build:community": "node scripts/build-community.cjs",
