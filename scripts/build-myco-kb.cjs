@@ -187,6 +187,12 @@ function buildHerbChunks() {
   for (const h of herbs) {
     addEntityKey(h.name, h.name);
     for (const part of String(h.name).split('/')) addEntityKey(h.name, part);
+    // Every other name the plant answers to (herbs.ts `aliases`), so a
+    // question about Shankhapushpi reaches the record called Shankhpushpi.
+    for (const a of h.aliases || []) {
+      addEntityKey(h.name, a);
+      for (const part of String(a).split('/')) addEntityKey(h.name, part);
+    }
     for (const b of binomials(h.botanical)) addEntityKey(h.name, b);
     for (const g of genera(h.botanical)) {
       if (genusCount.get(g) === 1) addEntityKey(h.name, g);

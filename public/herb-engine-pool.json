@@ -4319,19 +4319,27 @@
     "id": 503,
     "name": "Shankhpushpi",
     "primary_functions": [
-      "Foundational Medhya Rasayana — premier brain tonic",
-      "Enhances memory, intellect, cognitive resilience",
-      "Calms anxiety and stress overload",
-      "Supports nervous system without sedation"
+      "Memory and cognition: API karma Medhya (intellect promoting) and Rasayana; one of the four classical Medhya Rasayanas (with Brahmi, Mandukaparni and Guduchi). Nootropic and memory enhancing effects in rodent learning models",
+      "Anxiety and mental unrest: API use Manasaroga (mental disorders) and karma Mohanashaka (clears confusion and delusion); anxiolytic and antidepressant like effects in animals",
+      "Sleep: calming, cooling action used for difficulty falling asleep with a racing mind",
+      "Seizure disorders: API use Apasmara (epilepsy); anticonvulsant activity in animal models. Important: an Ayurvedic Shankhapushpi syrup lowered phenytoin levels and worsened seizure control in patients, so it must not be combined with antiepileptic drugs without supervision",
+      "Strength and longevity: API karma Balya (strengthening) and Ayushya (promotes lifespan)"
     ],
     "energetics": [
       "Cool",
       "Bitter",
-      "Pungent",
-      "Medhya (brain-tonifying)"
+      "Astringent",
+      "Calming",
+      "Mind Clearing",
+      "Nerve Nourishing",
+      "Spirit Anchoring"
     ],
-    "tcm_meridians": [],
-    "caution_level": "LOW"
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "MEDIUM"
   },
   {
     "id": 504,
@@ -4581,21 +4589,27 @@
     "id": 514,
     "name": "Nagkesar",
     "primary_functions": [
-      "Heat-clearing and blood-stanching",
-      "Haemostatic in heavy menstruation",
-      "Anti-inflammatory in joint conditions",
-      "Anti-microbial in skin care"
+      "Bleeding disorders: API use Raktapitta (bleeding from heat) and classical use for bleeding haemorrhoids and heavy menstrual bleeding; coumarins and astringent compounds give haemostatic effects",
+      "Urinary and bladder: API karma Vastivatamayaghna (removes Vata disorders of the bladder) and use Vastiroga (bladder disorders)",
+      "Gout and swelling: API uses Vatarakta (gout and inflammatory arthritis) and Shopharoga (oedema)",
+      "Head and neck conditions: API karma Urdhvajatrugatarogahara (treats disorders above the clavicle); aromatic stamens clear Kapha from head and sinuses",
+      "Complexion: API karma Varnya (improves complexion); used in skin and beauty oils like Candanabalalakshadi Taila"
     ],
     "energetics": [
-      "Hot",
-      "Pungent",
+      "Warm",
       "Bitter",
-      "Drying",
       "Astringent",
-      "Blood-stanching"
+      "Pungent",
+      "Aromatic",
+      "Bleeding Stopping",
+      "Kapha Clearing"
     ],
-    "tcm_meridians": [],
-    "caution_level": "LOW-MEDIUM"
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Large Intestine"
+    ],
+    "caution_level": "LOW"
   },
   {
     "id": 515,
@@ -4864,21 +4878,25 @@
     "id": 532,
     "name": "Anantmul",
     "primary_functions": [
-      "Indian Sarsaparilla — cools blood, clears damp-heat from skin",
-      "TCM cousin: Tu Fu Ling — relieves toxicity, soothes painful joints",
-      "Chronic skin conditions with heat signature",
-      "Cooling Pitta-pacifier in long protocols"
+      "Cooling blood purifier: API karma Raktashodhaka (blood purifier) and Tridoshanashana (balances all three doshas), uses Raktavikara (blood disorders), Kushtha and Kandu (skin disease, itching). The gentle, sweet counterpart to bitter blood cleansers like Neem",
+      "Digestive restorer: API karma Dipana (kindles digestion) and Amanashana (clears ama), uses Aruci (loss of appetite), Agnimandya (weak digestion), Atisara (diarrhoea); unusual in being sweet and cooling yet appetite stimulating",
+      "Fever and heat: API karma Jvarahara (antipyretic) and use Jvara; the classic summer cooler",
+      "Antitoxic and protective: API karma Vishaghna; in mouse bone marrow, root extract protected against cisplatin induced chromosomal damage in an inverse dose dependent way, though the extract itself reduced cell division at all doses tested",
+      "Respiratory: API uses Kasa and Shvasa (cough and breathlessness)"
     ],
     "energetics": [
       "Cool",
       "Sweet",
-      "Bitter",
-      "Demulcent",
-      "Blood-Cooling"
+      "Heavy",
+      "Moist",
+      "Blood Cooling",
+      "Nourishing",
+      "Aromatic"
     ],
     "tcm_meridians": [
       "Heart",
-      "Liver"
+      "Liver",
+      "Kidney"
     ],
     "caution_level": "LOW"
   },
@@ -5976,84 +5994,6 @@
       "Heart",
       "Liver",
       "Large Intestine"
-    ],
-    "caution_level": "MEDIUM"
-  },
-  {
-    "id": 592,
-    "name": "Nagakesar",
-    "primary_functions": [
-      "Bleeding disorders: API use Raktapitta (bleeding from heat) and classical use for bleeding haemorrhoids and heavy menstrual bleeding; coumarins and astringent compounds give haemostatic effects",
-      "Urinary and bladder: API karma Vastivatamayaghna (removes Vata disorders of the bladder) and use Vastiroga (bladder disorders)",
-      "Gout and swelling: API uses Vatarakta (gout and inflammatory arthritis) and Shopharoga (oedema)",
-      "Head and neck conditions: API karma Urdhvajatrugatarogahara (treats disorders above the clavicle); aromatic stamens clear Kapha from head and sinuses",
-      "Complexion: API karma Varnya (improves complexion); used in skin and beauty oils like Candanabalalakshadi Taila"
-    ],
-    "energetics": [
-      "Warm",
-      "Bitter",
-      "Astringent",
-      "Pungent",
-      "Aromatic",
-      "Bleeding Stopping",
-      "Kapha Clearing"
-    ],
-    "tcm_meridians": [
-      "Heart",
-      "Liver",
-      "Large Intestine"
-    ],
-    "caution_level": "LOW"
-  },
-  {
-    "id": 593,
-    "name": "Sariva",
-    "primary_functions": [
-      "Cooling blood purifier: API karma Raktashodhaka (blood purifier) and Tridoshanashana (balances all three doshas), uses Raktavikara (blood disorders), Kushtha and Kandu (skin disease, itching). The gentle, sweet counterpart to bitter blood cleansers like Neem",
-      "Digestive restorer: API karma Dipana (kindles digestion) and Amanashana (clears ama), uses Aruci (loss of appetite), Agnimandya (weak digestion), Atisara (diarrhoea); unusual in being sweet and cooling yet appetite stimulating",
-      "Fever and heat: API karma Jvarahara (antipyretic) and use Jvara; the classic summer cooler",
-      "Antitoxic and protective: API karma Vishaghna; in mouse bone marrow, root extract protected against cisplatin induced chromosomal damage in an inverse dose dependent way, though the extract itself reduced cell division at all doses tested",
-      "Respiratory: API uses Kasa and Shvasa (cough and breathlessness)"
-    ],
-    "energetics": [
-      "Cool",
-      "Sweet",
-      "Heavy",
-      "Moist",
-      "Blood Cooling",
-      "Nourishing",
-      "Aromatic"
-    ],
-    "tcm_meridians": [
-      "Heart",
-      "Liver",
-      "Kidney"
-    ],
-    "caution_level": "LOW"
-  },
-  {
-    "id": 594,
-    "name": "Shankhapushpi",
-    "primary_functions": [
-      "Memory and cognition: API karma Medhya (intellect promoting) and Rasayana; one of the four classical Medhya Rasayanas (with Brahmi, Mandukaparni and Guduchi). Nootropic and memory enhancing effects in rodent learning models",
-      "Anxiety and mental unrest: API use Manasaroga (mental disorders) and karma Mohanashaka (clears confusion and delusion); anxiolytic and antidepressant like effects in animals",
-      "Sleep: calming, cooling action used for difficulty falling asleep with a racing mind",
-      "Seizure disorders: API use Apasmara (epilepsy); anticonvulsant activity in animal models. Important: an Ayurvedic Shankhapushpi syrup lowered phenytoin levels and worsened seizure control in patients, so it must not be combined with antiepileptic drugs without supervision",
-      "Strength and longevity: API karma Balya (strengthening) and Ayushya (promotes lifespan)"
-    ],
-    "energetics": [
-      "Cool",
-      "Bitter",
-      "Astringent",
-      "Calming",
-      "Mind Clearing",
-      "Nerve Nourishing",
-      "Spirit Anchoring"
-    ],
-    "tcm_meridians": [
-      "Heart",
-      "Liver",
-      "Kidney"
     ],
     "caution_level": "MEDIUM"
   }

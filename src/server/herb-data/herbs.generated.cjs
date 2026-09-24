@@ -12155,7 +12155,7 @@ const HERBS = [
 // Shilajit lives in the primary block above (id 280, "Shilajit (Mineral
 // Pitch)") — a duplicate id:500 short-form used to sit here but the two
 // entries were competing in engine reads, so the short form is retired.
-  {
+    {
     id: 501,
     name: 'Guduchi',
     botanical: 'Tinospora cordifolia (dried mature stem, also used fresh; "Giloy / Amrita / Heart leaved Moonseed")',
@@ -12190,7 +12190,7 @@ const HERBS = [
       'Amla: cooling Rasayana pair for Pitta, immunity and liver',
       'Neem and Kiratatikta or Kalmegh: bitter fever and blood clearing trio',
       'Rasna, Devadaru, Eranda root and Shunthi: Rasna Panchaka for Vata and joint inflammation',
-      'Guggulu: Amritadi style joint formulas',
+      'Guggul: Amritadi style joint formulas',
       'Ashwagandha: immune resilience with nervous system support',
       'Ginger: warms the bitterness for cold digestion',
     ],
@@ -12206,7 +12206,7 @@ const HERBS = [
       'Antihypertensives: mild additive lowering reported in animals',
     ],
     herb_interactions: [
-      'Synergy: Amla, Neem, Kalmegh, Rasna Panchaka herbs, Guggulu, Ashwagandha, Ginger',
+      'Synergy: Amla, Neem, Kalmegh, Rasna Panchaka herbs, Guggul, Ashwagandha, Ginger',
       'Caution: Immune stimulants in autoimmunity; hypoglycaemic herbs; hepatotoxic herbs',
       'Drug interactions: Immunosuppressants; antidiabetics; hepatotoxic drugs; antihypertensives',
     ],
@@ -12260,7 +12260,7 @@ const HERBS = [
       'Ayurvedic Pharmacopoeia of India, Part I, Vol I, monograph Guduci (Stem)',
     ],
   },
-  {
+    {
     id: 502,
     name: 'Punarnava',
     botanical: 'Boerhavia diffusa (dried whole plant, red variety; "Hogweed / Horse Purslane / Spreading Hogweed")',
@@ -12357,31 +12357,108 @@ const HERBS = [
       'Ayurvedic Pharmacopoeia of India, Part I, Vol I, monograph Punarnava (Rakta) (Whole plant)',
     ],
   },
-{
-  id: 503, name: 'Shankhpushpi', botanical: 'Convolvulus pluricaulis / Evolvulus alsinoides',
-  tcm_meridians: [], tcm_element: 'Air + Ether',
-  energetics: ['Cool', 'Bitter', 'Pungent', 'Medhya (brain-tonifying)'],
-  primary_functions: ['Foundational Medhya Rasayana — premier brain tonic', 'Enhances memory, intellect, cognitive resilience', 'Calms anxiety and stress overload', 'Supports nervous system without sedation'],
-  secondary_benefits: ['Sleep quality', 'Convalescence after illness'],
-  flavor_profile: 'Mild, slightly bitter, green',
-  contraindications: ['Severe hypotension — mild BP-lowering effect', 'Pregnancy — limited data'],
-  herb_interactions: ['Synergy: Brahmi, Mandukaparni, Jatamansi for full Medhya stack', 'Caution: heavy sedatives'],
-  dosage_range: 'Powder 3–6 g/day with milk or ghee; juice (fresh) 10–20 ml.',
-  spiritual_layer: 'Conch-flower — said to open the inner chamber where memory and intuition meet. The student\'s herb.',
-  best_preparation: 'Powder in warm milk before study or sleep. Classical preparation: Shankhpushpi syrup with brahmi.',
-  caution_level: 'LOW', safe_pregnancy: null,
-  // ── Quiz-matcher + composer-quality enrichment ──
-  nervous_system_fit: ['wired', 'reactive'],
-  energy_pattern: ['sustained', 'pm_stabilise'],
-  sleep_action: ['onset'],
-  regional_affinity: ['head'],
-  onset_time: 'weeks',
-  family: 'Convolvulaceae',
-  epithet: 'The conch flower',
-  origin_region: 'Ayurvedic',
-  evidence_grade: 'C',
-},
   {
+    id: 503,
+    name: 'Shankhpushpi',
+    aliases: ['Shankhapushpi'],
+    botanical: 'Convolvulus pluricaulis (dried whole plant; syn. Convolvulus prostratus; "the conch flower")',
+    tcm_meridians: ['Heart', 'Liver', 'Kidney'],
+    tcm_element: 'Fire + Water',
+    energetics: ['Cool', 'Bitter', 'Astringent', 'Calming', 'Mind Clearing', 'Nerve Nourishing', 'Spirit Anchoring'],
+    primary_functions: [
+      'Memory and cognition: API karma Medhya (intellect promoting) and Rasayana; one of the four classical Medhya Rasayanas (with Brahmi, Mandukaparni and Guduchi). Nootropic and memory enhancing effects in rodent learning models',
+      'Anxiety and mental unrest: API use Manasaroga (mental disorders) and karma Mohanashaka (clears confusion and delusion); anxiolytic and antidepressant like effects in animals',
+      'Sleep: calming, cooling action used for difficulty falling asleep with a racing mind',
+      'Seizure disorders: API use Apasmara (epilepsy); anticonvulsant activity in animal models. Important: an Ayurvedic Shankhapushpi syrup lowered phenytoin levels and worsened seizure control in patients, so it must not be combined with antiepileptic drugs without supervision',
+      'Strength and longevity: API karma Balya (strengthening) and Ayushya (promotes lifespan)',
+    ],
+    secondary_benefits: [
+      'Hypertension with stress: mild blood pressure lowering in folk practice and animal studies',
+      'Thyroid: reduced thyroid hormone levels in hyperthyroid animal models (relevant as caution with thyroid medication)',
+      'Children\'s learning and exam stress in traditional use, inside formulas like Brahmi Ghrita and Manasamitra Vataka',
+    ],
+    pharmacology:
+      'Primary bioactives: tropane type alkaloids (convolamine, convoline, convolidine, convolvine, shankhapushpine), coumarins (scopoletin), flavonoids (kaempferol and glycosides), triterpenes, sterols (beta sitosterol), fatty acids. API constituents: alkaloid. Mechanisms: cholinergic support and acetylcholinesterase modulation, GABAergic and anxiolytic activity, antioxidant neuroprotection, reduced stress hormone responses in animal models. Grade C cognition and anxiety (animal data plus small clinical studies of formulas); Grade B safety with an important antiepileptic interaction.',
+    flavor_profile: 'Bitter, grassy and slightly astringent with a mild, hay like aroma; fresh juice is green and cooling',
+    contraindications: [
+      'Antiepileptic drugs: documented interaction with phenytoin (reduced levels, loss of seizure control); do not combine without neurologist supervision',
+      'Pregnancy and breastfeeding: insufficient data; avoid',
+      'Sedatives and alcohol: possible additive calming effect',
+      'Hypothyroid or on thyroid medication: thyroid lowering in animal studies; monitor',
+      'Low blood pressure: mild additive lowering',
+      'Identity: several plants are sold as Shankhapushpi; confirm botanical source',
+    ],
+    herb_to_herb_synergy: [
+      'Brahmi (Bacopa): the classic Medhya pair for memory and calm',
+      'Jatamansi and Vacha: Manasamitra style formulas for anxiety and sleep',
+      'Ashwagandha: stress resilience with nervous system nourishment',
+      'Guduchi and Mandukaparni (Gotu kola): the rest of the Medhya Rasayana group',
+      'Ghee and milk: classical carriers that carry the herb to the nervous tissue (Brahmi Ghrita)',
+    ],
+    herb_to_herb_caution: [
+      'Other sedative herbs (Jatamansi, Tagara, Valerian, Kava) at high dose: additive drowsiness',
+    ],
+    herb_to_drug_interactions: [
+      'Phenytoin and other antiepileptics: clinically documented reduction in phenytoin levels with seizure breakthrough',
+      'Benzodiazepines, sleep medication, alcohol: additive sedation',
+      'Thyroid medication: possible interference',
+      'Antihypertensives: additive lowering',
+    ],
+    herb_interactions: [
+      'Synergy: Brahmi, Jatamansi, Vacha, Ashwagandha, Gotu kola, Guduchi, ghee',
+      'Caution: Other sedatives at high dose',
+      'Drug interactions: Phenytoin and antiepileptics (documented); sedatives; thyroid medication; antihypertensives',
+    ],
+    dosage_range:
+      'API dose: 3 to 8 g whole plant powder daily. Fresh juice: 10 to 20 ml. Syrup or ghee preparations per product. Tincture (practitioner range): 1:5 in 40 to 50% ethanol, 2 to 4 ml daily, often split with a larger evening dose for sleep. Calming effects within days; cognitive effects over 4 to 12 weeks.',
+    spiritual_layer:
+      'Conch-flower — said to open the inner chamber where memory and intuition meet. The student\'s herb.',
+    best_preparation:
+      'Classical ghee and milk preparations (Brahmi Ghrita) deliver her into the nervous system best; fresh juice or powder in warm milk at night for sleep onset. For tinctures, mid proof (40 to 50%). Pair with Brahmi for memory, with Jatamansi for anxiety and sleep. Screen every client for antiepileptic drugs before including her in a formula.',
+    caution_level: 'MEDIUM',
+    safe_pregnancy: false,
+    status:
+      'Grade C cognition, anxiety and sleep support (animal data, small formula studies). Good general safety; the phenytoin interaction is real and documented. Authenticate the plant. Calming in days, cognitive over weeks.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired_tired', 'wired', 'reactive'],
+    energy_pattern:     ['restorative_only'],
+    sleep_action:       ['onset'],
+    digestion_fit:      ['cooling', 'bitter'],
+    regional_affinity:  ['head', 'heart'],
+    onset_time:         'weeks',
+    family:             'Convolvulaceae',
+    epithet: 'The conch flower',
+    origin_region:      'Ayurvedic',
+    evidence_grade:     'C',
+    // ── Ayurvedic Pharmacopoeia layer ──
+    ayurveda: {
+      sanskrit_name: 'Shankhapushpi',
+      api_reference: 'Ayurvedic Pharmacopoeia of India, Part I, Vol II: Shankhapushpi (Whole plant)',
+      part_used: 'Whole plant',
+      synonyms: ['Shankhapushpa', 'Shankhahva'],
+      rasa: ['Tikta (bitter)', 'Katu (pungent)', 'Kashaya (astringent)'],
+      guna: ['Sara (mobile, flowing)'],
+      virya: 'Shita (cooling)',
+      vipaka: 'Katu (pungent)',
+      karma: ['Pittahara (reduces Pitta)', 'Kaphahara (reduces Kapha)', 'Rasayana (rejuvenative)', 'Medhya (intellect promoting)', 'Balya (strengthening)', 'Mohanashaka (clears delusion and confusion)', 'Ayushya (promotes longevity)'],
+      dosha_action: 'Pacifies Pitta and Kapha; calms Vata of the mind',
+      therapeutic_uses: ['Manasaroga (mental disorders)', 'Apasmara (epilepsy)'],
+      classical_formulations: ['Agastyaharitaki Rasayana', 'Brahma Rasayana', 'Brahmi Ghrita', 'Manasamitra Vataka', 'Gorocanadi Vati', 'Brahmi Vati'],
+      api_dose: '3 to 8 g powder',
+      quality_standards: 'Foreign matter not more than 2%; acid insoluble ash not more than 8%; alcohol soluble extractive not less than 6%; water soluble extractive not less than 10%',
+      substitution_alert: 'The API itself notes that Clitoria ternatea and Evolvulus alsinoides are used as Shankhapushpi in parts of India; Canscora decussata is also sold under the name. These plants differ in chemistry. Specify Convolvulus pluricaulis.',
+    },
+    research_notes: [
+      'Sethiya, Nahata, Dixit and Mishra (2010), Journal of Advanced Pharmaceutical Technology and Research: comparative pharmacognostical investigation of four plants traditionally used as Shankhpushpi in India (Convolvulus pluricaulis, Evolvulus alsinoides, Clitoria ternatea, Canscora decussata), giving identification markers to resolve the substitution problem.',
+      'Dandekar et al. (1992), Journal of Ethnopharmacology: clinically important interaction in which a Shankhapushpi preparation reduced plasma phenytoin levels and seizure control; confirmed in animal studies.',
+    ],
+    references: [
+      'Sethiya NK, Nahata A, Dixit VK, Mishra SH. Comparative pharmacognostical investigation on four ethanobotanicals traditionally used as Shankhpushpi in India. J Adv Pharm Technol Res. 2010;1(4):388 to 395. PMC3255406',
+      'Dandekar UP, Chandra RS, Dalvi SS, et al. Analysis of a clinically important interaction between phenytoin and Shankhapushpi, an Ayurvedic preparation. J Ethnopharmacol. 1992;35(3):285 to 288',
+      'Ayurvedic Pharmacopoeia of India, Part I, Vol II, monograph Shankhapushpi (Whole plant)',
+    ],
+  },
+    {
     id: 504,
     name: 'Arjuna',
     botanical: 'Terminalia arjuna (stem bark; the white barked river tree)',
@@ -12413,7 +12490,7 @@ const HERBS = [
     ],
     herb_to_herb_synergy: [
       'Amla: heart, vessel and lipid axis; antioxidant layering',
-      'Guggulu: the classical Hridroga and Medoroga pairing (with Guggulu caveats)',
+      'Guggul: the classical Hridroga and Medoroga pairing (with Guggul caveats)',
       'Punarnava: fluid and oedema support in heart failure style patterns',
       'Pushkaramula or Shankhapushpi: the chest and mind component of heart distress',
       'Hawthorn (Crataegus): Western cardiotonic partner; complementary flavonoid and OPC profiles',
@@ -12430,7 +12507,7 @@ const HERBS = [
       'Tannin rich bark can bind iron and some oral drugs; separate by 2 hours',
     ],
     herb_interactions: [
-      'Synergy: Amla, Guggulu, Punarnava, Shankhapushpi, Hawthorn, Hadjod',
+      'Synergy: Amla, Guggul, Punarnava, Shankhapushpi, Hawthorn, Hadjod',
       'Caution: Other hypotensive herbs; cardiac glycoside plants',
       'Drug interactions: Antihypertensives, beta blockers, nitrates, anticoagulants (monitor); separate from iron and oral drugs',
     ],
@@ -12482,7 +12559,7 @@ const HERBS = [
       'Ayurvedic Pharmacopoeia of India, Part I, Vol II, monograph Arjuna (Stem bark)',
     ],
   },
-  {
+    {
     id: 505,
     name: 'Hadjod',
     botanical: 'Cissus quadrangularis (dried four angled stem; "Veld Grape / Bone Setter / Asthisamhara")',
@@ -12512,7 +12589,7 @@ const HERBS = [
     ],
     herb_to_herb_synergy: [
       'Arjuna: Bhagnasandhana (fracture uniting) classical pairing',
-      'Laksha (lac resin) and Guggulu: Lakshadi and Abha Guggulu style bone formulas',
+      'Laksha (lac resin) and Guggul: Lakshadi and Abha Guggulu style bone formulas',
       'Ashwagandha and Shatavari: rebuild tissue after injury',
       'Chandrashoor: calcium and iron rich seed for postpartum and fracture nutrition',
       'Vitamin D and calcium foods: practical modern partners',
@@ -12527,7 +12604,7 @@ const HERBS = [
       'Bisphosphonates and osteoporosis drugs: no known interaction, but coordinate with the prescriber',
     ],
     herb_interactions: [
-      'Synergy: Arjuna, Laksha, Guggulu, Ashwagandha, Shatavari, Chandrashoor',
+      'Synergy: Arjuna, Laksha, Guggul, Ashwagandha, Shatavari, Chandrashoor',
       'Caution: Oxalate load in stone formers; hypoglycaemic herbs',
       'Drug interactions: Antidiabetics (monitor); corticosteroids (theoretical)',
     ],
@@ -12577,10 +12654,10 @@ const HERBS = [
       'Ayurvedic Pharmacopoeia of India, Part I, Vol III, monograph Asthisamhrita (Stem)',
     ],
   },
-  {
+    {
     id: 506,
     name: 'Shallaki',
-    botanical: 'Boswellia serrata (oleo gum resin exudate; "Indian Frankincense / Salai Guggulu"; API name Kunduru)',
+    botanical: 'Boswellia serrata (oleo gum resin exudate; "Indian Frankincense / Salai Guggul"; API name Kunduru)',
     tcm_meridians: ['Heart', 'Liver', 'Spleen'],
     tcm_element: 'Fire + Wood',
     energetics: ['Warm', 'Bitter', 'Pungent', 'Sweet', 'Aromatic', 'Blood Moving', 'Pain Relieving', 'Joint Soothing'],
@@ -12608,7 +12685,7 @@ const HERBS = [
     herb_to_herb_synergy: [
       'Turmeric (curcumin): complementary COX and LOX pathways; widely combined in joint products',
       'Ashwagandha and Guduchi: joint and immune Rasayana combinations',
-      'Guggulu: resin pairing for Vata and Kapha joint patterns',
+      'Guggul: resin pairing for Vata and Kapha joint patterns',
       'Nirgundi and Rasna: external and internal pain relief team',
       'Ginger: warming anti inflammatory partner that improves tolerance',
     ],
@@ -12622,7 +12699,7 @@ const HERBS = [
       'CYP substrates: in vitro inhibition of several CYP enzymes reported; clinical relevance unclear',
     ],
     herb_interactions: [
-      'Synergy: Turmeric, Ashwagandha, Guduchi, Guggulu, Nirgundi, Rasna, Ginger',
+      'Synergy: Turmeric, Ashwagandha, Guduchi, Guggul, Nirgundi, Rasna, Ginger',
       'Caution: Antiplatelet herbs at high dose',
       'Drug interactions: NSAIDs (additive); anticoagulants and immunosuppressants (theoretical); CYP substrates (unclear)',
     ],
@@ -12674,7 +12751,7 @@ const HERBS = [
       'Ayurvedic Pharmacopoeia of India, Part I, Vol IV, monograph Kunduru (Exudate)',
     ],
   },
-  {
+    {
     id: 507,
     name: 'Rasna',
     botanical: 'Pluchea lanceolata (dried leaf per API Vol III; "Rayasan"; identity of classical Rasna is debated)',
@@ -12703,7 +12780,7 @@ const HERBS = [
     herb_to_herb_synergy: [
       'Guduchi, Devadaru, Eranda root, Shunthi: Rasna Panchaka',
       'Eranda (castor) root: Rasnairandadi Kvatha for sciatica and lumbar pain',
-      'Guggulu: Rasnadi Guggulu style joint formulas',
+      'Guggul: Rasnadi Guggulu style joint formulas',
       'Dashamula: the ten roots for deep Vata',
       'Nirgundi and Shallaki: complementary pain and inflammation herbs',
       'Ginger: warming, ama digesting partner',
@@ -12717,7 +12794,7 @@ const HERBS = [
       'Limited modern interaction data overall; monitor medicated clients',
     ],
     herb_interactions: [
-      'Synergy: Guduchi, Devadaru, Eranda root, Shunthi, Guggulu, Dashamula, Nirgundi, Shallaki',
+      'Synergy: Guduchi, Devadaru, Eranda root, Shunthi, Guggul, Dashamula, Nirgundi, Shallaki',
       'Caution: Heating herbs in hot inflammation',
       'Drug interactions: NSAIDs and steroids (additive); anticoagulants (theoretical)',
     ],
@@ -12814,7 +12891,7 @@ const HERBS = [
   origin_region: 'Ayurvedic',
   evidence_grade: 'B-',
 },
-  {
+    {
     id: 510,
     name: 'Vijaysar',
     botanical: 'Pterocarpus marsupium (heartwood; "Indian Kino Tree / Malabar Kino / Asana / Bijasal")',
@@ -12847,7 +12924,7 @@ const HERBS = [
       'Gymnema (Gudmar) and Jamun seed: the Ayurvedic glucose trio',
       'Amla and Haridra (turmeric): Nisha Amalaki style metabolic pairing',
       'Guduchi: metabolic and immune support',
-      'Triphala and Guggulu: Medodosha (fat tissue) protocols',
+      'Triphala and Guggul: Medodosha (fat tissue) protocols',
       'Khadira and Neem: skin and blood clearing',
     ],
     herb_to_herb_caution: [
@@ -12859,7 +12936,7 @@ const HERBS = [
       'Iron and oral drugs: tannins may bind; separate by 2 hours',
     ],
     herb_interactions: [
-      'Synergy: Gymnema, Jamun, Amla, Turmeric, Guduchi, Triphala, Guggulu, Khadira',
+      'Synergy: Gymnema, Jamun, Amla, Turmeric, Guduchi, Triphala, Guggul, Khadira',
       'Caution: Stacking hypoglycaemic herbs; stacking astringents',
       'Drug interactions: Antidiabetic drugs and insulin (monitor); iron and oral drugs (binding)',
     ],
@@ -12911,7 +12988,7 @@ const HERBS = [
       'Ayurvedic Pharmacopoeia of India, Part I, Vol I, monograph Asana (Heart wood)',
     ],
   },
-  {
+    {
     id: 511,
     name: 'Nirgundi',
     botanical: 'Vitex negundo (dried leaf; "Five leaved Chaste Tree / Sambhalu")',
@@ -12941,7 +13018,7 @@ const HERBS = [
       'Skin sensitivity: patch test fresh leaf poultices',
     ],
     herb_to_herb_synergy: [
-      'Rasna and Guggulu: Vata and joint pain formulas',
+      'Rasna and Guggul: Vata and joint pain formulas',
       'Dashamula: the ten root anti Vata backbone (Dashamula Taila includes Nirgundi)',
       'Shallaki: complementary anti inflammatory pathways for arthritis',
       'Tulsi and Vasa: respiratory steams and cough',
@@ -12956,7 +13033,7 @@ const HERBS = [
       'Anticonvulsants and sedatives: animal data show CNS effects; theoretical',
     ],
     herb_interactions: [
-      'Synergy: Rasna, Guggulu, Dashamula, Shallaki, Tulsi, Vasa, sesame oil',
+      'Synergy: Rasna, Guggul, Dashamula, Shallaki, Tulsi, Vasa, sesame oil',
       'Caution: Hormonally active herbs in hormone sensitive conditions',
       'Drug interactions: Hormonal and dopaminergic drugs (theoretical); NSAIDs (additive); CNS drugs (theoretical)',
     ],
@@ -13006,7 +13083,7 @@ const HERBS = [
       'Ayurvedic Pharmacopoeia of India, Part I, Vol III, monograph Nirgundi (Leaf)',
     ],
   },
-  {
+    {
     id: 512,
     name: 'Ashoka',
     botanical: 'Saraca asoca (dried stem bark; syn. Saraca indica; "the tree without sorrow")',
@@ -13101,7 +13178,7 @@ const HERBS = [
       'Ayurvedic Pharmacopoeia of India, Part I, Vol I, monograph Ashoka (Stem bark)',
     ],
   },
-  {
+    {
     id: 513,
     name: 'Lodhra',
     botanical: 'Symplocos racemosa (dried stem bark; "Symplocos bark / Lodh tree")',
@@ -13194,29 +13271,100 @@ const HERBS = [
       'Ayurvedic Pharmacopoeia of India, Part I, Vol I, monograph Lodhra (Stem bark)',
     ],
   },
-{
-  id: 514, name: 'Nagkesar', botanical: 'Mesua ferrea (seed · flower)',
-  tcm_meridians: [], tcm_element: 'Fire',
-  energetics: ['Hot', 'Pungent', 'Bitter', 'Drying', 'Astringent', 'Blood-stanching'],
-  primary_functions: ['Heat-clearing and blood-stanching', 'Haemostatic in heavy menstruation', 'Anti-inflammatory in joint conditions', 'Anti-microbial in skin care'],
-  secondary_benefits: ['Aromatic-stimulant carrier', 'Traditional anti-spasmodic'],
-  flavor_profile: 'Aromatic, pungent, slightly bitter',
-  contraindications: ['Pregnancy', 'Hot dry constitutions'],
-  herb_interactions: ['Synergy: Lodhra for women\'s heat-bleeding; Ashoka for uterine', 'Caution: blood thinners'],
-  dosage_range: 'Powder 1–3 g/day; decoction 30–50 ml.',
-  spiritual_layer: 'The iron-flower that staunches the wound and cools the burn at the same time. Speed and grace.',
-  best_preparation: 'Dried flower or seed powder in honey or sugar syrup; oil infusion for topical.',
-  caution_level: 'LOW-MEDIUM', safe_pregnancy: false,
-  // ── Quiz-matcher + composer-quality enrichment ──
-  energy_pattern: ['acute_only'],
-  digestion_fit: ['astringent'],
-  regional_affinity: ['pelvis', 'skin'],
-  onset_time: 'days',
-  family: 'Calophyllaceae',
-  epithet: 'The ironwood blossom',
-  origin_region: 'Ayurvedic',
-  evidence_grade: 'traditional',
-},
+  {
+    id: 514,
+    name: 'Nagkesar',
+    aliases: ['Nagakesar'],
+    botanical: 'Mesua ferrea (dried stamens; "Cobra\'s Saffron / Ceylon Ironwood / Nag Champa tree")',
+    tcm_meridians: ['Heart', 'Liver', 'Large Intestine'],
+    tcm_element: 'Fire + Metal',
+    energetics: ['Warm', 'Bitter', 'Astringent', 'Pungent', 'Aromatic', 'Bleeding Stopping', 'Kapha Clearing'],
+    primary_functions: [
+      'Bleeding disorders: API use Raktapitta (bleeding from heat) and classical use for bleeding haemorrhoids and heavy menstrual bleeding; coumarins and astringent compounds give haemostatic effects',
+      'Urinary and bladder: API karma Vastivatamayaghna (removes Vata disorders of the bladder) and use Vastiroga (bladder disorders)',
+      'Gout and swelling: API uses Vatarakta (gout and inflammatory arthritis) and Shopharoga (oedema)',
+      'Head and neck conditions: API karma Urdhvajatrugatarogahara (treats disorders above the clavicle); aromatic stamens clear Kapha from head and sinuses',
+      'Complexion: API karma Varnya (improves complexion); used in skin and beauty oils like Candanabalalakshadi Taila',
+    ],
+    secondary_benefits: [
+      'Fragrance: the stamens and flowers are prized in perfumery and incense; the tree is sacred and its wood extremely hard (ironwood)',
+      'Antimicrobial and anti inflammatory activity of mesuol and xanthones in laboratory studies',
+      'Digestive aromatic in Nagakesaradi Curna for loose stool with bleeding',
+    ],
+    pharmacology:
+      'Primary bioactives: essential oil (sesquiterpenes), 4 phenylcoumarins (mesuol, mesuagin, mammeisin, mammeigin), xanthones (mesuaxanthone A and B, euxanthone), flavonoids, triterpenes (alpha and beta amyrin), oleoresin. API constituents: essential oil and oleoresin. Mechanisms: astringent haemostasis, anti inflammatory and antimicrobial coumarins and xanthones, antioxidant activity in vitro. Grade D efficacy (classical use and pharmacognosy; minimal clinical work); Grade B safety at API doses. Authenticity is the main practical issue.',
+    flavor_profile: 'Floral, spicy and bitter, like saffron threads with a clove and pepper edge; astringent finish',
+    contraindications: [
+      'Pregnancy and breastfeeding: insufficient data; avoid',
+      'Constipation: astringent',
+      'Undiagnosed bleeding: always investigate rectal or uterine bleeding before herbal treatment',
+      'Adulteration: market Nagakesar may be a different plant; unauthenticated material cannot be assumed safe or effective',
+    ],
+    herb_to_herb_synergy: [
+      'Lodhra, Lajjalu and Ashoka: bleeding and uterine formulas',
+      'Bilva and Kutaja: loose stool with bleeding',
+      'Sandalwood and Manjistha: cooling complexion oils and pastes',
+      'Cardamom, Cinnamon and Tejpatra: the aromatic group (Caturjata) in which Nagakesar is the fourth member',
+    ],
+    herb_to_herb_caution: [
+      'Stacking astringents in constipation',
+    ],
+    herb_to_drug_interactions: [
+      'Anticoagulants: opposing intent (haemostatic); inform prescriber',
+      'Oral drugs: astringent compounds may slow absorption; separate by 2 hours',
+    ],
+    herb_interactions: [
+      'Synergy: Lodhra, Lajjalu, Ashoka, Bilva, Kutaja, Sandalwood, Caturjata spices',
+      'Caution: Stacking astringents',
+      'Drug interactions: Anticoagulants (opposing intent); separate from oral drugs',
+    ],
+    dosage_range:
+      'API dose: 1 to 3 g stamen powder daily. Traditional: 1 to 2 g with butter and sugar candy for bleeding piles. Tincture (practitioner range): 1:5 in 65 to 75% ethanol to capture the essential oil and coumarins, 1 to 2 ml. Effects on bleeding within days.',
+    spiritual_layer:
+      'The iron-flower that staunches the wound and cools the burn at the same time. Speed and grace.',
+    best_preparation:
+      'Powder with butter or ghee and rock candy for bleeding piles; inside Caturjata spice blends for digestion; in complexion oils externally. For tinctures, use higher proof (65 to 75%) for the aromatic fraction. Source only authenticated Mesua ferrea stamens and ask suppliers for identification data.',
+    caution_level: 'LOW',
+    safe_pregnancy: false,
+    status:
+      'Grade D (classical and pharmacognostic evidence). Good safety at API doses. Authenticity and substitution are the main risks. Onset in days for bleeding.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['reactive'],
+    energy_pattern:     ['restorative_only'],
+    sleep_action:       [],
+    digestion_fit:      ['astringent', 'warming'],
+    regional_affinity:  ['pelvis', 'heart', 'head'],
+    onset_time:         'days',
+    family:             'Calophyllaceae',
+    epithet: 'The ironwood blossom',
+    origin_region:      'Ayurvedic',
+    evidence_grade:     'D',
+    // ── Ayurvedic Pharmacopoeia layer ──
+    ayurveda: {
+      sanskrit_name: 'Nagakeshara',
+      api_reference: 'Ayurvedic Pharmacopoeia of India, Part I, Vol II: Nagakeshara (Stamen)',
+      part_used: 'Dried stamens',
+      synonyms: ['Keshara', 'Nagapushpa', 'Naga', 'Hema', 'Gajakeshara'],
+      rasa: ['Tikta (bitter)', 'Katu (pungent)', 'Kashaya (astringent)'],
+      guna: ['Laghu (light)', 'Ruksha (dry)'],
+      virya: 'Ushna (heating)',
+      vipaka: 'Katu (pungent)',
+      karma: ['Kaphahara (reduces Kapha)', 'Varnya (improves complexion)', 'Vastivatamayaghna (treats Vata disorders of the bladder)', 'Urdhvajatrugatarogahara (treats disorders above the clavicle)'],
+      dosha_action: 'Pacifies Kapha and Pitta (bleeding); Vata in the bladder',
+      therapeutic_uses: ['Vatarakta (gout)', 'Shopharoga (oedema)', 'Vastiroga (bladder disorders)', 'Raktapitta (bleeding disorders)'],
+      classical_formulations: ['Candanabalalakshadi Taila', 'Kumaryasava', 'Nagakesaradi Curna'],
+      api_dose: '1 to 3 g powder',
+      quality_standards: 'Foreign matter not more than 2%; acid insoluble ash not more than 3%; alcohol soluble extractive not less than 15%; water soluble extractive not less than 12%',
+      substitution_alert: 'Three different drugs are sold as Nagakesara across India: dried floral buds or stamens of Mesua ferrea (official), dried fruits of Dillenia pentagyna, and dried fruiting inflorescences of Cinnamomum wightii. Ochrocarpus longifolius (red Nagakesar, Surangi) is another common substitute. Request botanical identity confirmation.',
+    },
+    research_notes: [
+      'Nagakesara: a comparative pharmacognosy (PMC3331473): documents that dried floral buds of Mesua ferrea, dried fruits of Dillenia pentagyna and dried fruiting inflorescence of Cinnamomum wightii are all used as Nagakesara in different regions, and sets out pharmacognostic features to tell them apart. Key for quality control rather than efficacy.',
+    ],
+    references: [
+      'Nagakesara: a comparative pharmacognosy. PMID 22557537; PMC3331473',
+      'Ayurvedic Pharmacopoeia of India, Part I, Vol II, monograph Nagakeshara (Stamen)',
+    ],
+  },
 {
   id: 515, name: 'Rudraksha', botanical: 'Elaeocarpus ganitrus (seed pods)',
   tcm_meridians: ['Heart'], tcm_element: 'Water',
@@ -13245,7 +13393,7 @@ const HERBS = [
 // Turmeric, Ginger, Cinnamon, Licorice are already in the materia medica
 // under their common names — we don't duplicate them here. The rest are
 // added below with both Ayurvedic and TCM names + TCM meridians/element.
-  {
+    {
     id: 520,
     name: 'Bakuchi',
     botanical: 'Psoralea corylifolia (syn. Cullen corylifolium; dried ripe fruit, used as seed; "Babchi")',
@@ -13365,7 +13513,7 @@ const HERBS = [
   origin_region: 'Ayurvedic',
   evidence_grade: 'A',
 },
-  {
+    {
     id: 522,
     name: 'Gokshura',
     botanical: 'Tribulus terrestris (dried ripe fruit and root; "Caltrops / Puncture Vine / Gokhru")',
@@ -13398,7 +13546,7 @@ const HERBS = [
       'Punarnava: the renal and urinary partnership (Gokshura Punarnava Basti)',
       'Varuna (Crataeva nurvala) and Pashanabheda: classical stone formulas (Gokshuradi Guggulu tradition)',
       'Shatavari and Ashwagandha: reproductive tonic trio',
-      'Guggulu: Gokshuradi Guggulu for urinary and joint patterns',
+      'Guggul: Gokshuradi Guggulu for urinary and joint patterns',
       'Bilva root, Agnimantha, Shyonaka, Patala, Gambhari, Brihati, Kantakari, Shalaparni, Prishniparni: the rest of Dashamula',
     ],
     herb_to_herb_caution: [
@@ -13412,7 +13560,7 @@ const HERBS = [
       'Hormone therapies (androgens, estrogens, antiandrogens): theoretical interaction via steroidal saponins',
     ],
     herb_interactions: [
-      'Synergy: Punarnava, Varuna, Pashanabheda, Shatavari, Ashwagandha, Guggulu, Dashamula roots',
+      'Synergy: Punarnava, Varuna, Pashanabheda, Shatavari, Ashwagandha, Guggul, Dashamula roots',
       'Caution: Other diuretics; other hypoglycaemics',
       'Drug interactions: Lithium; diuretics and antihypertensives; antidiabetics; hormone therapies (theoretical)',
     ],
@@ -13524,7 +13672,7 @@ const HERBS = [
   origin_region: 'Ayurvedic',
   evidence_grade: 'B',
 },
-  {
+    {
     id: 524,
     name: 'Bibhitaki',
     botanical: 'Terminalia bellirica (pericarp of the dried ripe fruit; "Beleric Myrobalan / Bahera")',
@@ -13618,10 +13766,11 @@ const HERBS = [
       'Ayurvedic Pharmacopoeia of India, Part I, Vol I, monograph Bibhitaka (Fruit)',
     ],
   },
-  {
+    {
     id: 525,
     name: 'Guggulu',
-    botanical: 'Commiphora wightii (syn. Commiphora mukul; oleo gum resin exudate; "Indian Bdellium / Gum Guggulu")',
+    aliases: ['Guggul'],
+    botanical: 'Commiphora wightii (syn. Commiphora mukul; oleo gum resin exudate; "Indian Bdellium / Gum Guggul")',
     tcm_meridians: ['Heart', 'Liver', 'Spleen'],
     tcm_element: 'Fire + Wood',
     energetics: ['Hot', 'Bitter', 'Pungent', 'Penetrating', 'Scraping', 'Channel Clearing', 'Blood Moving'],
@@ -13718,7 +13867,7 @@ const HERBS = [
     ],
     references: [
       'Deng R. Therapeutic effects of guggul and its constituent guggulsterone: cardiovascular benefits. Cardiovasc Drug Rev. 2007;25(4):375 to 390. PMID 18078436',
-      'Szapary PO, Wolfe ML, Bloedon LT, et al. Gugguluipid for the treatment of hypercholesterolemia: a randomized controlled trial. JAMA. 2003;290(6):765 to 772',
+      'Szapary PO, Wolfe ML, Bloedon LT, et al. Guggulipid for the treatment of hypercholesterolemia: a randomized controlled trial. JAMA. 2003;290(6):765 to 772',
       'Dalvi SS, Nayak VK, Pohujani SM, et al. Effect of gugulipid on bioavailability of diltiazem and propranolol. J Assoc Physicians India. 1994;42(6):454 to 455',
       'Ayurvedic Pharmacopoeia of India, Part I, Vol I, monograph Guggulu (Exudate)',
     ],
@@ -13788,7 +13937,7 @@ const HERBS = [
   origin_region: 'Ayurvedic',
   evidence_grade: 'A',
 },
-  {
+    {
     id: 527,
     name: 'Manjistha',
     botanical: 'Rubia cordifolia (dried stem per API Vol III; root widely used in trade; "Indian Madder")',
@@ -13826,7 +13975,7 @@ const HERBS = [
       'Ashoka and Lodhra: menstrual formulas where stagnation and bleeding coexist',
     ],
     herb_to_herb_caution: [
-      'Emmenagogue herbs in pregnancy (Nirgundi, Guggulu, Kalmegh): never combine in pregnancy',
+      'Emmenagogue herbs in pregnancy (Nirgundi, Guggul, Kalmegh): never combine in pregnancy',
       'Anticoagulant or antiplatelet herbs at high dose: theoretical additive effect via PAF inhibition',
     ],
     herb_to_drug_interactions: [
@@ -13885,7 +14034,7 @@ const HERBS = [
       'Ayurvedic Pharmacopoeia of India, Part I, Vol III, monograph Manjishtha (Stem)',
     ],
   },
-  {
+    {
     id: 528,
     name: 'Khadira',
     botanical: 'Acacia catechu (syn. Senegalia catechu; dried heartwood; "Black Catechu / Cutch Tree / Khair")',
@@ -14025,7 +14174,7 @@ const HERBS = [
   origin_region: 'Ayurvedic',
   evidence_grade: 'C',
 },
-  {
+    {
     id: 531,
     name: 'Neem',
     botanical: 'Azadirachta indica (dried leaf and stem bark; "Margosa / Indian Lilac / the village pharmacy")',
@@ -14124,30 +14273,102 @@ const HERBS = [
       'Ayurvedic Pharmacopoeia of India, Part I, Vol II, monographs Nimba (Leaf) and Nimba (Stem bark)',
     ],
   },
-{
-  id: 532, name: 'Anantmul', botanical: 'Hemidesmus indicus (root)',
-  tcm_meridians: ['Heart', 'Liver'], tcm_element: 'Water',
-  energetics: ['Cool', 'Sweet', 'Bitter', 'Demulcent', 'Blood-Cooling'],
-  primary_functions: ['Indian Sarsaparilla — cools blood, clears damp-heat from skin', 'TCM cousin: Tu Fu Ling — relieves toxicity, soothes painful joints', 'Chronic skin conditions with heat signature', 'Cooling Pitta-pacifier in long protocols'],
-  secondary_benefits: ['Mild diuretic', 'Reproductive cooling tonic'],
-  flavor_profile: 'Sweet-vanilla-like, slightly bitter undertone',
-  contraindications: ['Severe Kapha (damp / cold) constitutions in long-term use'],
-  herb_interactions: ['Synergy: Manjistha, Neem (skin); Shatavari (Pitta-cooling)', 'Caution: stacked sweet-cooling herbs in cold patterns'],
-  dosage_range: 'Root powder 3–6 g/day; decoction 50–100 ml; classical Saribadyasava.',
-  spiritual_layer: 'Sweet root that hands the body back its cool — pleasure as medicine, the opposite of austerity.',
-  best_preparation: 'Decoction or sweet syrup (Saribadyasava). Powder in warm milk for skin protocols.',
-  caution_level: 'LOW', safe_pregnancy: true,
-  // ── Quiz-matcher + composer-quality enrichment ──
-  energy_pattern: ['sustained'],
-  digestion_fit: ['cooling', 'demulcent'],
-  regional_affinity: ['skin', 'whole'],
-  onset_time: 'weeks',
-  family: 'Apocynaceae',
-  epithet: 'The endless root',
-  origin_region: 'Ayurvedic',
-  evidence_grade: 'traditional',
-},
   {
+    id: 532,
+    name: 'Anantmul',
+    aliases: ['Sariva'],
+    botanical: 'Hemidesmus indicus (dried root; "Indian Sarsaparilla / Anantamul / Nannari")',
+    tcm_meridians: ['Heart', 'Liver', 'Kidney'],
+    tcm_element: 'Water + Fire',
+    energetics: ['Cool', 'Sweet', 'Heavy', 'Moist', 'Blood Cooling', 'Nourishing', 'Aromatic'],
+    primary_functions: [
+      'Cooling blood purifier: API karma Raktashodhaka (blood purifier) and Tridoshanashana (balances all three doshas), uses Raktavikara (blood disorders), Kushtha and Kandu (skin disease, itching). The gentle, sweet counterpart to bitter blood cleansers like Neem',
+      'Digestive restorer: API karma Dipana (kindles digestion) and Amanashana (clears ama), uses Aruci (loss of appetite), Agnimandya (weak digestion), Atisara (diarrhoea); unusual in being sweet and cooling yet appetite stimulating',
+      'Fever and heat: API karma Jvarahara (antipyretic) and use Jvara; the classic summer cooler',
+      'Antitoxic and protective: API karma Vishaghna; in mouse bone marrow, root extract protected against cisplatin induced chromosomal damage in an inverse dose dependent way, though the extract itself reduced cell division at all doses tested',
+      'Respiratory: API uses Kasa and Shvasa (cough and breathlessness)',
+    ],
+    secondary_benefits: [
+      'Nannari sharbat: the vanilla scented root syrup of South India, a traditional summer drink and a brilliant base for keg tonics and sodas',
+      'Urinary heat and burning: cooling diuretic tradition',
+      'Pairs beautifully in flavour as well as action: its sweetness masks bitter herbs in formulas',
+    ],
+    pharmacology:
+      'Primary bioactives: 2 hydroxy 4 methoxybenzaldehyde (the vanilla like aroma compound and main flavour marker), coumarinolignoids (hemidesmin 1 and 2), pregnane glycosides, triterpenes (lupeol, beta amyrin), sterols, saponins, tannins, essential oil. API constituents: essential oil, saponin, resin, tannins, sterols and glucosides. Mechanisms: antioxidant, anti inflammatory, hepatoprotective, antimicrobial and immunomodulatory activity in experimental models; genoprotection with cytotoxicity signal in mouse bone marrow. Grade D efficacy (mostly preclinical); Grade B safety as a traditional food syrup, with the cytotoxicity finding noted.',
+    flavor_profile: 'Sweet, vanilla and sarsaparilla like, with a woody, slightly bitter finish; the root smells of vanilla and dried hay',
+    contraindications: [
+      'Pregnancy and breastfeeding: insufficient data at therapeutic doses; food syrup amounts are traditional',
+      'Cytotoxicity signal: extract reduced mitotic index in mouse bone marrow at all doses tested; avoid high dose concentrated extracts, especially long term, until clarified',
+      'Cold, Kapha type congestion with heaviness: heavy and cooling; balance with ginger',
+      'Diabetes: when prepared as sweetened syrup, sugar load matters more than the root itself',
+    ],
+    herb_to_herb_synergy: [
+      'Manjistha and Neem: skin and blood clearing where Sariva softens the bitterness',
+      'Guduchi: cooling immune and liver pairing',
+      'Ushira (vetiver) and Sandalwood: summer cooling drinks and heat conditions',
+      'Amla: cooling Rasayana partner',
+      'Ginger and Lemon: flavour and function balance in tonics',
+    ],
+    herb_to_herb_caution: [
+      'Other cytotoxic or chemotherapy adjunct herbs in cancer care: coordinate with oncology',
+    ],
+    herb_to_drug_interactions: [
+      'Chemotherapy (cisplatin and others): the protective finding is preclinical; do not combine without oncology approval',
+      'Diuretics: mild additive effect in folk use; theoretical',
+      'Limited modern interaction data overall',
+    ],
+    herb_interactions: [
+      'Synergy: Manjistha, Neem, Guduchi, Ushira, Sandalwood, Amla, Ginger',
+      'Caution: Cancer care combinations',
+      'Drug interactions: Chemotherapy (coordinate); diuretics (theoretical)',
+    ],
+    dosage_range:
+      'API dose: 20 to 30 g root for decoction. Powder: 3 to 6 g. Sarivadyasava: 15 to 30 ml with equal water after meals. Nannari syrup: 20 to 30 ml syrup diluted in 200 ml water or soda. Tincture (practitioner range): 1:5 in 50 to 60% ethanol to capture the aromatic benzaldehyde; for beverages, a hot water infusion then syrup preserves the vanilla character best. Effects over 2 to 8 weeks.',
+    spiritual_layer:
+      'Sweet root that hands the body back its cool — pleasure as medicine, the opposite of austerity.',
+    best_preparation:
+      'For New Tyme Tonics style drinks: cold soak or gentle hot infusion of chopped root, strain, then syrup with jaggery or cane sugar and a squeeze of lime, the nannari way. For tinctures, 50 to 60% ethanol. As a formula corrective, add Sariva to bitter blood clearing blends to lift both flavour and tolerability. Keep concentrated extract doses modest until the cytotoxicity question is clarified.',
+    caution_level: 'LOW',
+    safe_pregnancy: false,
+    status:
+      'Grade D efficacy (preclinical); traditional food use supports safety at culinary doses. Preclinical cytotoxicity at all tested extract doses in mouse bone marrow warrants modest dosing. Standout flavour herb for tonics and syrups.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['reactive', 'wired_tired'],
+    energy_pattern:     ['sustained'],
+    sleep_action:       [],
+    digestion_fit:      ['cooling', 'demulcent'],
+    regional_affinity:  ['heart', 'pelvis', 'whole'],
+    onset_time:         'weeks',
+    family:             'Apocynaceae',
+    epithet: 'The endless root',
+    origin_region:      'Ayurvedic',
+    evidence_grade:     'D',
+    // ── Ayurvedic Pharmacopoeia layer ──
+    ayurveda: {
+      sanskrit_name: 'Shveta Sariva',
+      api_reference: 'Ayurvedic Pharmacopoeia of India, Part I, Vol I: Shveta Sariva (Root)',
+      part_used: 'Root',
+      synonyms: ['Ananta', 'Gopasuta', 'Sariva'],
+      rasa: ['Madhura (sweet)'],
+      guna: ['Snigdha (unctuous)', 'Guru (heavy)'],
+      virya: 'Shita (cooling)',
+      vipaka: 'Madhura (sweet)',
+      karma: ['Tridoshanashana (balances all three doshas)', 'Dipana (kindles digestion)', 'Raktashodhaka (blood purifier)', 'Amanashana (destroys ama)', 'Vishaghna (antitoxic)', 'Jvarahara (antipyretic)'],
+      dosha_action: 'Balances all three doshas; especially cools Pitta',
+      therapeutic_uses: ['Aruci (anorexia)', 'Agnimandya (weak digestion)', 'Atisara (diarrhoea)', 'Kasa (cough)', 'Shvasa (dyspnoea)', 'Kandu (itching)', 'Kushtha (skin disease)', 'Jvara (fever)', 'Raktavikara (blood disorders)'],
+      classical_formulations: ['Sarivadyasava'],
+      api_dose: '20 to 30 g for decoction',
+      quality_standards: 'Foreign matter not more than 2%; acid insoluble ash not more than 0.5%; alcohol soluble extractive not less than 15%; water soluble extractive not less than 13%',
+    },
+    research_notes: [
+      'Protective effect of Hemidesmus indicus root extract against cisplatin induced cytogenetic damage in mouse bone marrow cells (Genetics and Molecular Biology, 2010): pretreatment with the extract reduced cisplatin induced chromosomal aberrations and micronuclei in an inverse dose dependent manner, but the extract itself was cytotoxic (reduced mitotic index) at all doses tested. Mixed message: protective and cytotoxic in the same model.',
+    ],
+    references: [
+      'Protective effect of Hemidesmus indicus R.Br. root extract against cisplatin induced cytogenetic damage in mouse bone marrow cells. Genet Mol Biol. 2010;33(1). PMID 21637624; PMC3036083',
+      'Ayurvedic Pharmacopoeia of India, Part I, Vol I, monograph Shveta Sariva (Root)',
+    ],
+  },
+    {
     id: 533,
     name: 'Karanja',
     botanical: 'Pongamia pinnata (syn. Millettia pinnata; seed and seed oil; also root, bark and leaf in API Vol II; "Indian Beech / Pongam")',
@@ -14240,7 +14461,7 @@ const HERBS = [
       'Ayurvedic Pharmacopoeia of India, Part I, Vol I, monograph Karanja (Seed); Vol II, Karanja root, root bark, stem bark and leaf monographs',
     ],
   },
-  {
+    {
     id: 534,
     name: 'Bael',
     botanical: 'Aegle marmelos (unripe or half ripe fruit pulp; root is a Dashamula member; "Bengal Quince / Stone Apple / Bilva")',
@@ -14340,7 +14561,7 @@ const HERBS = [
       'Ayurvedic Pharmacopoeia of India, Part I, Vol I, monograph Bilva (Fruit pulp); Vol III, monograph Bilva (Root)',
     ],
   },
-  {
+    {
     id: 535,
     name: 'Chandrashoor',
     botanical: 'Lepidium sativum (dried seed; "Garden Cress / Halim / Aliv")',
@@ -14433,7 +14654,7 @@ const HERBS = [
       'Ayurvedic Pharmacopoeia of India, Part I, Vol I, monograph Candrashura (Seed)',
     ],
   },
-  {
+    {
     id: 536,
     name: 'Amaltas',
     botanical: 'Cassia fistula (fruit pulp from the long black pods; "Indian Laburnum / Golden Shower / Purging Cassia")',
@@ -16932,7 +17153,7 @@ const HERBS = [
   // ─────────────────────────────────────────────
   // Ayurvedic Pharmacopoeia of India batch — ids 590–594
   // ─────────────────────────────────────────────
-  {
+    {
     id: 590,
     name: 'Ajwain',
     botanical: 'Trachyspermum ammi (dried fruit, often called seed; syn. Carum copticum; "Bishop\'s weed / Carom")',
@@ -17001,7 +17222,7 @@ const HERBS = [
     regional_affinity:  ['solar_plexus'],
     onset_time:         'hours',
     family:             'Apiaceae',
-    epithet:            'The kitchen ember',
+    epithet: 'The kitchen ember',
     origin_region:      'Ayurvedic',
     evidence_grade:     'C',
     // ── Ayurvedic Pharmacopoeia layer ──
@@ -17029,7 +17250,7 @@ const HERBS = [
       'Ayurvedic Pharmacopoeia of India, Part I, Vol I, monograph Yavani (Fruit)',
     ],
   },
-  {
+    {
     id: 591,
     name: 'Lajjalu',
     botanical: 'Mimosa pudica (dried whole plant; "Touch me not / Sensitive Plant / Chhuimui")',
@@ -17096,7 +17317,7 @@ const HERBS = [
     regional_affinity:  ['pelvis', 'heart'],
     onset_time:         'days',
     family:             'Fabaceae',
-    epithet:            'The shy one',
+    epithet: 'The shy one',
     origin_region:      'Ayurvedic',
     evidence_grade:     'D',
     // ── Ayurvedic Pharmacopoeia layer ──
@@ -17122,293 +17343,6 @@ const HERBS = [
     references: [
       'Sudheendran A, Shajahan MA, Premlal S. Diuretic activity of ethanolic root extract of Mimosa pudica in albino rats. Ayu. 2021;42(1):52 to 56. PMID 36743273',
       'Ayurvedic Pharmacopoeia of India, Part I, Vol II, monograph Lajjalu (Whole plant)',
-    ],
-  },
-  {
-    id: 592,
-    name: 'Nagakesar',
-    botanical: 'Mesua ferrea (dried stamens; "Cobra\'s Saffron / Ceylon Ironwood / Nag Champa tree")',
-    tcm_meridians: ['Heart', 'Liver', 'Large Intestine'],
-    tcm_element: 'Fire + Metal',
-    energetics: ['Warm', 'Bitter', 'Astringent', 'Pungent', 'Aromatic', 'Bleeding Stopping', 'Kapha Clearing'],
-    primary_functions: [
-      'Bleeding disorders: API use Raktapitta (bleeding from heat) and classical use for bleeding haemorrhoids and heavy menstrual bleeding; coumarins and astringent compounds give haemostatic effects',
-      'Urinary and bladder: API karma Vastivatamayaghna (removes Vata disorders of the bladder) and use Vastiroga (bladder disorders)',
-      'Gout and swelling: API uses Vatarakta (gout and inflammatory arthritis) and Shopharoga (oedema)',
-      'Head and neck conditions: API karma Urdhvajatrugatarogahara (treats disorders above the clavicle); aromatic stamens clear Kapha from head and sinuses',
-      'Complexion: API karma Varnya (improves complexion); used in skin and beauty oils like Candanabalalakshadi Taila',
-    ],
-    secondary_benefits: [
-      'Fragrance: the stamens and flowers are prized in perfumery and incense; the tree is sacred and its wood extremely hard (ironwood)',
-      'Antimicrobial and anti inflammatory activity of mesuol and xanthones in laboratory studies',
-      'Digestive aromatic in Nagakesaradi Curna for loose stool with bleeding',
-    ],
-    pharmacology:
-      'Primary bioactives: essential oil (sesquiterpenes), 4 phenylcoumarins (mesuol, mesuagin, mammeisin, mammeigin), xanthones (mesuaxanthone A and B, euxanthone), flavonoids, triterpenes (alpha and beta amyrin), oleoresin. API constituents: essential oil and oleoresin. Mechanisms: astringent haemostasis, anti inflammatory and antimicrobial coumarins and xanthones, antioxidant activity in vitro. Grade D efficacy (classical use and pharmacognosy; minimal clinical work); Grade B safety at API doses. Authenticity is the main practical issue.',
-    flavor_profile: 'Floral, spicy and bitter, like saffron threads with a clove and pepper edge; astringent finish',
-    contraindications: [
-      'Pregnancy and breastfeeding: insufficient data; avoid',
-      'Constipation: astringent',
-      'Undiagnosed bleeding: always investigate rectal or uterine bleeding before herbal treatment',
-      'Adulteration: market Nagakesar may be a different plant; unauthenticated material cannot be assumed safe or effective',
-    ],
-    herb_to_herb_synergy: [
-      'Lodhra, Lajjalu and Ashoka: bleeding and uterine formulas',
-      'Bilva and Kutaja: loose stool with bleeding',
-      'Sandalwood and Manjistha: cooling complexion oils and pastes',
-      'Cardamom, Cinnamon and Tejpatra: the aromatic group (Caturjata) in which Nagakesar is the fourth member',
-    ],
-    herb_to_herb_caution: [
-      'Stacking astringents in constipation',
-    ],
-    herb_to_drug_interactions: [
-      'Anticoagulants: opposing intent (haemostatic); inform prescriber',
-      'Oral drugs: astringent compounds may slow absorption; separate by 2 hours',
-    ],
-    herb_interactions: [
-      'Synergy: Lodhra, Lajjalu, Ashoka, Bilva, Kutaja, Sandalwood, Caturjata spices',
-      'Caution: Stacking astringents',
-      'Drug interactions: Anticoagulants (opposing intent); separate from oral drugs',
-    ],
-    dosage_range:
-      'API dose: 1 to 3 g stamen powder daily. Traditional: 1 to 2 g with butter and sugar candy for bleeding piles. Tincture (practitioner range): 1:5 in 65 to 75% ethanol to capture the essential oil and coumarins, 1 to 2 ml. Effects on bleeding within days.',
-    spiritual_layer:
-      'Nagakesar is the golden stamen of the ironwood, the hardest wood in the forest carrying the softest, most fragrant flower. She is the medicine of strength that stays tender. She stops what is spilling, whether blood or energy, and perfumes the space that is left. She whispers: I can be strong and soft at once. I keep my life force within me. My presence is fragrant and steady.',
-    best_preparation:
-      'Powder with butter or ghee and rock candy for bleeding piles; inside Caturjata spice blends for digestion; in complexion oils externally. For tinctures, use higher proof (65 to 75%) for the aromatic fraction. Source only authenticated Mesua ferrea stamens and ask suppliers for identification data.',
-    caution_level: 'LOW',
-    safe_pregnancy: false,
-    status:
-      'Grade D (classical and pharmacognostic evidence). Good safety at API doses. Authenticity and substitution are the main risks. Onset in days for bleeding.',
-    // ── Quiz-matcher + composer-quality enrichment ──
-    nervous_system_fit: ['reactive'],
-    energy_pattern:     ['restorative_only'],
-    sleep_action:       [],
-    digestion_fit:      ['astringent', 'warming'],
-    regional_affinity:  ['pelvis', 'heart', 'head'],
-    onset_time:         'days',
-    family:             'Calophyllaceae',
-    epithet:            'The cobra saffron',
-    origin_region:      'Ayurvedic',
-    evidence_grade:     'D',
-    // ── Ayurvedic Pharmacopoeia layer ──
-    ayurveda: {
-      sanskrit_name: 'Nagakeshara',
-      api_reference: 'Ayurvedic Pharmacopoeia of India, Part I, Vol II: Nagakeshara (Stamen)',
-      part_used: 'Dried stamens',
-      synonyms: ['Keshara', 'Nagapushpa', 'Naga', 'Hema', 'Gajakeshara'],
-      rasa: ['Tikta (bitter)', 'Katu (pungent)', 'Kashaya (astringent)'],
-      guna: ['Laghu (light)', 'Ruksha (dry)'],
-      virya: 'Ushna (heating)',
-      vipaka: 'Katu (pungent)',
-      karma: ['Kaphahara (reduces Kapha)', 'Varnya (improves complexion)', 'Vastivatamayaghna (treats Vata disorders of the bladder)', 'Urdhvajatrugatarogahara (treats disorders above the clavicle)'],
-      dosha_action: 'Pacifies Kapha and Pitta (bleeding); Vata in the bladder',
-      therapeutic_uses: ['Vatarakta (gout)', 'Shopharoga (oedema)', 'Vastiroga (bladder disorders)', 'Raktapitta (bleeding disorders)'],
-      classical_formulations: ['Candanabalalakshadi Taila', 'Kumaryasava', 'Nagakesaradi Curna'],
-      api_dose: '1 to 3 g powder',
-      quality_standards: 'Foreign matter not more than 2%; acid insoluble ash not more than 3%; alcohol soluble extractive not less than 15%; water soluble extractive not less than 12%',
-      substitution_alert: 'Three different drugs are sold as Nagakesara across India: dried floral buds or stamens of Mesua ferrea (official), dried fruits of Dillenia pentagyna, and dried fruiting inflorescences of Cinnamomum wightii. Ochrocarpus longifolius (red Nagakesar, Surangi) is another common substitute. Request botanical identity confirmation.',
-    },
-    research_notes: [
-      'Nagakesara: a comparative pharmacognosy (PMC3331473): documents that dried floral buds of Mesua ferrea, dried fruits of Dillenia pentagyna and dried fruiting inflorescence of Cinnamomum wightii are all used as Nagakesara in different regions, and sets out pharmacognostic features to tell them apart. Key for quality control rather than efficacy.',
-    ],
-    references: [
-      'Nagakesara: a comparative pharmacognosy. PMID 22557537; PMC3331473',
-      'Ayurvedic Pharmacopoeia of India, Part I, Vol II, monograph Nagakeshara (Stamen)',
-    ],
-  },
-  {
-    id: 593,
-    name: 'Sariva',
-    botanical: 'Hemidesmus indicus (dried root; "Indian Sarsaparilla / Anantamul / Nannari")',
-    tcm_meridians: ['Heart', 'Liver', 'Kidney'],
-    tcm_element: 'Water + Fire',
-    energetics: ['Cool', 'Sweet', 'Heavy', 'Moist', 'Blood Cooling', 'Nourishing', 'Aromatic'],
-    primary_functions: [
-      'Cooling blood purifier: API karma Raktashodhaka (blood purifier) and Tridoshanashana (balances all three doshas), uses Raktavikara (blood disorders), Kushtha and Kandu (skin disease, itching). The gentle, sweet counterpart to bitter blood cleansers like Neem',
-      'Digestive restorer: API karma Dipana (kindles digestion) and Amanashana (clears ama), uses Aruci (loss of appetite), Agnimandya (weak digestion), Atisara (diarrhoea); unusual in being sweet and cooling yet appetite stimulating',
-      'Fever and heat: API karma Jvarahara (antipyretic) and use Jvara; the classic summer cooler',
-      'Antitoxic and protective: API karma Vishaghna; in mouse bone marrow, root extract protected against cisplatin induced chromosomal damage in an inverse dose dependent way, though the extract itself reduced cell division at all doses tested',
-      'Respiratory: API uses Kasa and Shvasa (cough and breathlessness)',
-    ],
-    secondary_benefits: [
-      'Nannari sharbat: the vanilla scented root syrup of South India, a traditional summer drink and a brilliant base for keg tonics and sodas',
-      'Urinary heat and burning: cooling diuretic tradition',
-      'Pairs beautifully in flavour as well as action: its sweetness masks bitter herbs in formulas',
-    ],
-    pharmacology:
-      'Primary bioactives: 2 hydroxy 4 methoxybenzaldehyde (the vanilla like aroma compound and main flavour marker), coumarinolignoids (hemidesmin 1 and 2), pregnane glycosides, triterpenes (lupeol, beta amyrin), sterols, saponins, tannins, essential oil. API constituents: essential oil, saponin, resin, tannins, sterols and glucosides. Mechanisms: antioxidant, anti inflammatory, hepatoprotective, antimicrobial and immunomodulatory activity in experimental models; genoprotection with cytotoxicity signal in mouse bone marrow. Grade D efficacy (mostly preclinical); Grade B safety as a traditional food syrup, with the cytotoxicity finding noted.',
-    flavor_profile: 'Sweet, vanilla and sarsaparilla like, with a woody, slightly bitter finish; the root smells of vanilla and dried hay',
-    contraindications: [
-      'Pregnancy and breastfeeding: insufficient data at therapeutic doses; food syrup amounts are traditional',
-      'Cytotoxicity signal: extract reduced mitotic index in mouse bone marrow at all doses tested; avoid high dose concentrated extracts, especially long term, until clarified',
-      'Cold, Kapha type congestion with heaviness: heavy and cooling; balance with ginger',
-      'Diabetes: when prepared as sweetened syrup, sugar load matters more than the root itself',
-    ],
-    herb_to_herb_synergy: [
-      'Manjistha and Neem: skin and blood clearing where Sariva softens the bitterness',
-      'Guduchi: cooling immune and liver pairing',
-      'Ushira (vetiver) and Sandalwood: summer cooling drinks and heat conditions',
-      'Amla: cooling Rasayana partner',
-      'Ginger and Lemon: flavour and function balance in tonics',
-    ],
-    herb_to_herb_caution: [
-      'Other cytotoxic or chemotherapy adjunct herbs in cancer care: coordinate with oncology',
-    ],
-    herb_to_drug_interactions: [
-      'Chemotherapy (cisplatin and others): the protective finding is preclinical; do not combine without oncology approval',
-      'Diuretics: mild additive effect in folk use; theoretical',
-      'Limited modern interaction data overall',
-    ],
-    herb_interactions: [
-      'Synergy: Manjistha, Neem, Guduchi, Ushira, Sandalwood, Amla, Ginger',
-      'Caution: Cancer care combinations',
-      'Drug interactions: Chemotherapy (coordinate); diuretics (theoretical)',
-    ],
-    dosage_range:
-      'API dose: 20 to 30 g root for decoction. Powder: 3 to 6 g. Sarivadyasava: 15 to 30 ml with equal water after meals. Nannari syrup: 20 to 30 ml syrup diluted in 200 ml water or soda. Tincture (practitioner range): 1:5 in 50 to 60% ethanol to capture the aromatic benzaldehyde; for beverages, a hot water infusion then syrup preserves the vanilla character best. Effects over 2 to 8 weeks.',
-    spiritual_layer:
-      'Sariva is Ananta, the endless one, a slender root that winds for metres through dry ground and smells of vanilla when you break it. She is the medicine of sweetness that cleans rather than cloys. She cools the blood, soothes the skin and brings back the appetite for life. She whispers: Sweetness can heal me. I cool what burns without losing my warmth. My roots run deep and endless.',
-    best_preparation:
-      'For New Tyme Tonics style drinks: cold soak or gentle hot infusion of chopped root, strain, then syrup with jaggery or cane sugar and a squeeze of lime, the nannari way. For tinctures, 50 to 60% ethanol. As a formula corrective, add Sariva to bitter blood clearing blends to lift both flavour and tolerability. Keep concentrated extract doses modest until the cytotoxicity question is clarified.',
-    caution_level: 'LOW',
-    safe_pregnancy: false,
-    status:
-      'Grade D efficacy (preclinical); traditional food use supports safety at culinary doses. Preclinical cytotoxicity at all tested extract doses in mouse bone marrow warrants modest dosing. Standout flavour herb for tonics and syrups.',
-    // ── Quiz-matcher + composer-quality enrichment ──
-    nervous_system_fit: ['reactive', 'wired_tired'],
-    energy_pattern:     ['sustained'],
-    sleep_action:       [],
-    digestion_fit:      ['cooling', 'demulcent'],
-    regional_affinity:  ['heart', 'pelvis', 'whole'],
-    onset_time:         'weeks',
-    family:             'Apocynaceae',
-    epithet:            'The endless sweet root',
-    origin_region:      'Ayurvedic',
-    evidence_grade:     'D',
-    // ── Ayurvedic Pharmacopoeia layer ──
-    ayurveda: {
-      sanskrit_name: 'Shveta Sariva',
-      api_reference: 'Ayurvedic Pharmacopoeia of India, Part I, Vol I: Shveta Sariva (Root)',
-      part_used: 'Root',
-      synonyms: ['Ananta', 'Gopasuta', 'Sariva'],
-      rasa: ['Madhura (sweet)'],
-      guna: ['Snigdha (unctuous)', 'Guru (heavy)'],
-      virya: 'Shita (cooling)',
-      vipaka: 'Madhura (sweet)',
-      karma: ['Tridoshanashana (balances all three doshas)', 'Dipana (kindles digestion)', 'Raktashodhaka (blood purifier)', 'Amanashana (destroys ama)', 'Vishaghna (antitoxic)', 'Jvarahara (antipyretic)'],
-      dosha_action: 'Balances all three doshas; especially cools Pitta',
-      therapeutic_uses: ['Aruci (anorexia)', 'Agnimandya (weak digestion)', 'Atisara (diarrhoea)', 'Kasa (cough)', 'Shvasa (dyspnoea)', 'Kandu (itching)', 'Kushtha (skin disease)', 'Jvara (fever)', 'Raktavikara (blood disorders)'],
-      classical_formulations: ['Sarivadyasava'],
-      api_dose: '20 to 30 g for decoction',
-      quality_standards: 'Foreign matter not more than 2%; acid insoluble ash not more than 0.5%; alcohol soluble extractive not less than 15%; water soluble extractive not less than 13%',
-    },
-    research_notes: [
-      'Protective effect of Hemidesmus indicus root extract against cisplatin induced cytogenetic damage in mouse bone marrow cells (Genetics and Molecular Biology, 2010): pretreatment with the extract reduced cisplatin induced chromosomal aberrations and micronuclei in an inverse dose dependent manner, but the extract itself was cytotoxic (reduced mitotic index) at all doses tested. Mixed message: protective and cytotoxic in the same model.',
-    ],
-    references: [
-      'Protective effect of Hemidesmus indicus R.Br. root extract against cisplatin induced cytogenetic damage in mouse bone marrow cells. Genet Mol Biol. 2010;33(1). PMID 21637624; PMC3036083',
-      'Ayurvedic Pharmacopoeia of India, Part I, Vol I, monograph Shveta Sariva (Root)',
-    ],
-  },
-  {
-    id: 594,
-    name: 'Shankhapushpi',
-    botanical: 'Convolvulus pluricaulis (dried whole plant; syn. Convolvulus prostratus; "the conch flower")',
-    tcm_meridians: ['Heart', 'Liver', 'Kidney'],
-    tcm_element: 'Fire + Water',
-    energetics: ['Cool', 'Bitter', 'Astringent', 'Calming', 'Mind Clearing', 'Nerve Nourishing', 'Spirit Anchoring'],
-    primary_functions: [
-      'Memory and cognition: API karma Medhya (intellect promoting) and Rasayana; one of the four classical Medhya Rasayanas (with Brahmi, Mandukaparni and Guduchi). Nootropic and memory enhancing effects in rodent learning models',
-      'Anxiety and mental unrest: API use Manasaroga (mental disorders) and karma Mohanashaka (clears confusion and delusion); anxiolytic and antidepressant like effects in animals',
-      'Sleep: calming, cooling action used for difficulty falling asleep with a racing mind',
-      'Seizure disorders: API use Apasmara (epilepsy); anticonvulsant activity in animal models. Important: an Ayurvedic Shankhapushpi syrup lowered phenytoin levels and worsened seizure control in patients, so it must not be combined with antiepileptic drugs without supervision',
-      'Strength and longevity: API karma Balya (strengthening) and Ayushya (promotes lifespan)',
-    ],
-    secondary_benefits: [
-      'Hypertension with stress: mild blood pressure lowering in folk practice and animal studies',
-      'Thyroid: reduced thyroid hormone levels in hyperthyroid animal models (relevant as caution with thyroid medication)',
-      'Children\'s learning and exam stress in traditional use, inside formulas like Brahmi Ghrita and Manasamitra Vataka',
-    ],
-    pharmacology:
-      'Primary bioactives: tropane type alkaloids (convolamine, convoline, convolidine, convolvine, shankhapushpine), coumarins (scopoletin), flavonoids (kaempferol and glycosides), triterpenes, sterols (beta sitosterol), fatty acids. API constituents: alkaloid. Mechanisms: cholinergic support and acetylcholinesterase modulation, GABAergic and anxiolytic activity, antioxidant neuroprotection, reduced stress hormone responses in animal models. Grade C cognition and anxiety (animal data plus small clinical studies of formulas); Grade B safety with an important antiepileptic interaction.',
-    flavor_profile: 'Bitter, grassy and slightly astringent with a mild, hay like aroma; fresh juice is green and cooling',
-    contraindications: [
-      'Antiepileptic drugs: documented interaction with phenytoin (reduced levels, loss of seizure control); do not combine without neurologist supervision',
-      'Pregnancy and breastfeeding: insufficient data; avoid',
-      'Sedatives and alcohol: possible additive calming effect',
-      'Hypothyroid or on thyroid medication: thyroid lowering in animal studies; monitor',
-      'Low blood pressure: mild additive lowering',
-      'Identity: several plants are sold as Shankhapushpi; confirm botanical source',
-    ],
-    herb_to_herb_synergy: [
-      'Brahmi (Bacopa): the classic Medhya pair for memory and calm',
-      'Jatamansi and Vacha: Manasamitra style formulas for anxiety and sleep',
-      'Ashwagandha: stress resilience with nervous system nourishment',
-      'Guduchi and Mandukaparni (Gotu kola): the rest of the Medhya Rasayana group',
-      'Ghee and milk: classical carriers that carry the herb to the nervous tissue (Brahmi Ghrita)',
-    ],
-    herb_to_herb_caution: [
-      'Other sedative herbs (Jatamansi, Tagara, Valerian, Kava) at high dose: additive drowsiness',
-    ],
-    herb_to_drug_interactions: [
-      'Phenytoin and other antiepileptics: clinically documented reduction in phenytoin levels with seizure breakthrough',
-      'Benzodiazepines, sleep medication, alcohol: additive sedation',
-      'Thyroid medication: possible interference',
-      'Antihypertensives: additive lowering',
-    ],
-    herb_interactions: [
-      'Synergy: Brahmi, Jatamansi, Vacha, Ashwagandha, Gotu kola, Guduchi, ghee',
-      'Caution: Other sedatives at high dose',
-      'Drug interactions: Phenytoin and antiepileptics (documented); sedatives; thyroid medication; antihypertensives',
-    ],
-    dosage_range:
-      'API dose: 3 to 8 g whole plant powder daily. Fresh juice: 10 to 20 ml. Syrup or ghee preparations per product. Tincture (practitioner range): 1:5 in 40 to 50% ethanol, 2 to 4 ml daily, often split with a larger evening dose for sleep. Calming effects within days; cognitive effects over 4 to 12 weeks.',
-    spiritual_layer:
-      'Shankhapushpi carries a small white flower shaped like the conch shell blown at the start of every ceremony to call the mind to attention. She is the medicine for the mind that spins, the thoughts that will not settle at night, the memory that slips under stress. She does not sedate the spirit. She tunes it, like the long clear note of the shell. She whispers: My mind is clear and quiet. I remember who I am. I can rest and still be awake inside.',
-    best_preparation:
-      'Classical ghee and milk preparations (Brahmi Ghrita) deliver her into the nervous system best; fresh juice or powder in warm milk at night for sleep onset. For tinctures, mid proof (40 to 50%). Pair with Brahmi for memory, with Jatamansi for anxiety and sleep. Screen every client for antiepileptic drugs before including her in a formula.',
-    caution_level: 'MEDIUM',
-    safe_pregnancy: false,
-    status:
-      'Grade C cognition, anxiety and sleep support (animal data, small formula studies). Good general safety; the phenytoin interaction is real and documented. Authenticate the plant. Calming in days, cognitive over weeks.',
-    // ── Quiz-matcher + composer-quality enrichment ──
-    nervous_system_fit: ['wired_tired', 'wired', 'reactive'],
-    energy_pattern:     ['restorative_only'],
-    sleep_action:       ['onset'],
-    digestion_fit:      ['cooling', 'bitter'],
-    regional_affinity:  ['head', 'heart'],
-    onset_time:         'weeks',
-    family:             'Convolvulaceae',
-    epithet:            'The conch flower',
-    origin_region:      'Ayurvedic',
-    evidence_grade:     'C',
-    // ── Ayurvedic Pharmacopoeia layer ──
-    ayurveda: {
-      sanskrit_name: 'Shankhapushpi',
-      api_reference: 'Ayurvedic Pharmacopoeia of India, Part I, Vol II: Shankhapushpi (Whole plant)',
-      part_used: 'Whole plant',
-      synonyms: ['Shankhapushpa', 'Shankhahva'],
-      rasa: ['Tikta (bitter)', 'Katu (pungent)', 'Kashaya (astringent)'],
-      guna: ['Sara (mobile, flowing)'],
-      virya: 'Shita (cooling)',
-      vipaka: 'Katu (pungent)',
-      karma: ['Pittahara (reduces Pitta)', 'Kaphahara (reduces Kapha)', 'Rasayana (rejuvenative)', 'Medhya (intellect promoting)', 'Balya (strengthening)', 'Mohanashaka (clears delusion and confusion)', 'Ayushya (promotes longevity)'],
-      dosha_action: 'Pacifies Pitta and Kapha; calms Vata of the mind',
-      therapeutic_uses: ['Manasaroga (mental disorders)', 'Apasmara (epilepsy)'],
-      classical_formulations: ['Agastyaharitaki Rasayana', 'Brahma Rasayana', 'Brahmi Ghrita', 'Manasamitra Vataka', 'Gorocanadi Vati', 'Brahmi Vati'],
-      api_dose: '3 to 8 g powder',
-      quality_standards: 'Foreign matter not more than 2%; acid insoluble ash not more than 8%; alcohol soluble extractive not less than 6%; water soluble extractive not less than 10%',
-      substitution_alert: 'The API itself notes that Clitoria ternatea and Evolvulus alsinoides are used as Shankhapushpi in parts of India; Canscora decussata is also sold under the name. These plants differ in chemistry. Specify Convolvulus pluricaulis.',
-    },
-    research_notes: [
-      'Sethiya, Nahata, Dixit and Mishra (2010), Journal of Advanced Pharmaceutical Technology and Research: comparative pharmacognostical investigation of four plants traditionally used as Shankhpushpi in India (Convolvulus pluricaulis, Evolvulus alsinoides, Clitoria ternatea, Canscora decussata), giving identification markers to resolve the substitution problem.',
-      'Dandekar et al. (1992), Journal of Ethnopharmacology: clinically important interaction in which a Shankhapushpi preparation reduced plasma phenytoin levels and seizure control; confirmed in animal studies.',
-    ],
-    references: [
-      'Sethiya NK, Nahata A, Dixit VK, Mishra SH. Comparative pharmacognostical investigation on four ethanobotanicals traditionally used as Shankhpushpi in India. J Adv Pharm Technol Res. 2010;1(4):388 to 395. PMC3255406',
-      'Dandekar UP, Chandra RS, Dalvi SS, et al. Analysis of a clinically important interaction between phenytoin and Shankhapushpi, an Ayurvedic preparation. J Ethnopharmacol. 1992;35(3):285 to 288',
-      'Ayurvedic Pharmacopoeia of India, Part I, Vol II, monograph Shankhapushpi (Whole plant)',
     ],
   },
 ];

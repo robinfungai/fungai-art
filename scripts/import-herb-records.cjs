@@ -99,6 +99,33 @@ const VOICE_FIELDS = ['spiritual_layer', 'epithet', 'name'];
 
 const nrm = s => String(s || '').toLowerCase().replace(/[^a-z]/g, '');
 
+/**
+ * The binomial in a botanical field — the only reliable identity key here.
+ *
+ * Display names are NOT reliable. Matching on them let three duplicates
+ * through on the first run of this script:
+ *
+ *   503 Shankhpushpi  vs  594 Shankhapushpi   (one vowel)
+ *   514 Nagkesar      vs  592 Nagakesar       (one vowel)
+ *   532 Anantmul      vs  593 Sariva          (different language entirely)
+ *
+ * all three being Convolvulus pluricaulis, Mesua ferrea and Hemidesmus
+ * indicus respectively. The binomial caught what the name could not.
+ *
+ * It also has to NOT over-match: Ajwain (Trachyspermum ammi) and Ajwan
+ * (Apium graveolens) are confusably named and genuinely different plants,
+ * and their binomials are what keeps them apart.
+ */
+function binomialsOf(botanical) {
+  const out = [];
+  const cleaned = String(botanical || '').replace(/\([^)]*\)/g, ' ').replace(/["“”]/g, ' ');
+  for (const part of cleaned.split('/')) {
+    const m = part.trim().match(/^([A-Z][a-z]{3,})\s+([a-z][a-z-]{2,})/);
+    if (m) out.push((m[1] + ' ' + m[2]).toLowerCase());
+  }
+  return out;
+}
+
 // ── herbs.ts, split into top-level records ───────────────────────
 // A character scanner rather than a regex: record bodies contain braces
 // inside strings, apostrophes inside comments ("the tree's wound") and
@@ -179,6 +206,14 @@ function replaceField(text, field, blockText) {
   return out.join('\n');
 }
 
+/** Put a new field's line directly after an existing field's block. */
+function insertAfterField(text, field, line) {
+  const b = fieldBlock(text, field);
+  if (!b) return text;
+  const out = b.lines.slice(0, b.end).concat([line], b.lines.slice(b.end));
+  return out.join('\n');
+}
+
 /** A single-quoted JS string literal, escaped the way herbs.ts writes them. */
 function jsStr(s) {
   return "'" + String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'") + "'";
@@ -252,6 +287,8 @@ function main() {
                   .split(',').filter(Boolean).map(Number));
   const diffOnly = (args.find(a => a.startsWith('--diff=')) || '').replace('--diff=', '')
                   .split(',').filter(Boolean).map(Number);
+  const dropIds = (args.find(a => a.startsWith('--drop=')) || '').replace('--drop=', '')
+                  .split(',').filter(Boolean).map(Number);
 
   if (!dir) {
     console.error('usage: node scripts/import-herb-records.cjs "<staging dir>" [--apply] [--skip=id,id] [--diff=id,id]');
@@ -275,18 +312,74 @@ function main() {
 
   for (const item of batch) {
     if (item.skip) { plan.push({ ...item, action: 'skip' }); continue; }
+    // BINOMIAL FIRST. A shared binomial is the same organism whatever the two
+    // records call it; a shared name is only a hint.
     const incoming = nrm(item.obj.name);
-    const match = existing.find(r => {
+    const inBino = binomialsOf(item.obj.botanical);
+    const nameLike = r => {
       const head = nrm(String(r.name).split('/')[0].replace(/\(.*/, ''));
-      return nrm(r.name).includes(incoming) || incoming.includes(head);
-    });
+      const aliases = (r.obj && r.obj.aliases) || [];
+      return nrm(r.name).includes(incoming) || incoming.includes(head) ||
+             aliases.some(a => nrm(a) === incoming);
+    };
+
+    // All records sharing this binomial. Usually one; sometimes not, because
+    // herbs.ts already holds genuine splits (Elderberry / Elderflower, both
+    // Sambucus nigra) and genuine duplicates (Shallaki / Boswellia, both
+    // Boswellia serrata). Taking the first would move Shallaki's monograph
+    // into the Boswellia record.
+    const binoHits = inBino.length
+      ? existing.filter(r => r.obj && binomialsOf(r.obj.botanical).some(b => inBino.includes(b)))
+      : [];
+    let match = null, matchedBy = null;
+    if (binoHits.length === 1) { match = binoHits[0]; matchedBy = 'binomial'; }
+    else if (binoHits.length > 1) {
+      const narrowed = binoHits.filter(nameLike);
+      if (narrowed.length === 1) { match = narrowed[0]; matchedBy = 'binomial+name'; }
+      else {
+        plan.push({ ...item, action: 'ambiguous',
+          note: inBino[0] + ' matches ' + binoHits.map(r => r.id + ' ' + r.name).join(' / ') });
+        continue;
+      }
+    }
+    if (!match) {
+      match = existing.find(r => {
+        const head = nrm(String(r.name).split('/')[0].replace(/\(.*/, ''));
+        const aliases = (r.obj && r.obj.aliases) || [];
+        return nrm(r.name).includes(incoming) || incoming.includes(head) ||
+               aliases.some(a => nrm(a) === incoming);
+      });
+      if (match) matchedBy = 'name';
+    }
     if (match) {
-      plan.push({ ...item, action: skip.has(match.id) ? 'held' : 'upgrade', target: match });
+      plan.push({ ...item, action: skip.has(match.id) ? 'held' : 'upgrade', target: match, matchedBy });
     } else {
       plan.push({ ...item, action: 'add', newId: nextId });
       usedIds.add(nextId);
       while (usedIds.has(nextId)) nextId++;
     }
+  }
+
+  // ── Drop mode ─────────────────────────────────────────────────
+  // Retire records by id. Used when a batch turns out to duplicate a plant
+  // already in the file under another transliteration — drop the newcomer,
+  // then re-run the import so the corrected matcher merges it into the
+  // original instead. A dropped id is retired, not recycled (cf. 572).
+  if (dropIds.length) {
+    const kill = existing.filter(r => dropIds.includes(r.id));
+    if (!kill.length) { console.log('no records match --drop=' + dropIds.join(',')); return; }
+    for (const r of kill) console.log('drop  id ' + r.id + '  ' + r.name);
+    if (!apply) { console.log('\nDRY RUN. Add --apply to write.'); return; }
+    for (const r of kill.sort((a, b) => b.from - a.from)) {
+      let from = r.from, to = r.to;
+      while (from > 0 && /[ \t]/.test(src[from - 1])) from--;     // its indent
+      if (src[from - 1] === '\n') from--;                          // and newline
+      while (to < src.length && /[,\t ]/.test(src[to])) to++;      // trailing comma
+      src = src.slice(0, from) + src.slice(to);
+    }
+    fs.writeFileSync(HERBS_TS, src);
+    console.log('\nwrote src/data/herbs.ts  (' + kill.length + ' retired)');
+    return;
   }
 
   // ── Field diff mode ───────────────────────────────────────────
@@ -328,11 +421,16 @@ function main() {
   console.log('action    file                        → id    note');
   console.log('─'.repeat(78));
 
-  let nUp = 0, nAdd = 0, nHeld = 0, nSkip = 0;
+  let nUp = 0, nAdd = 0, nHeld = 0, nSkip = 0, nAmb = 0;
   const edits = [];
 
   for (const p of plan) {
     if (p.action === 'skip') { nSkip++; console.log('skip      ' + p.file.padEnd(28) + '        ' + p.skip); continue; }
+    if (p.action === 'ambiguous') {
+      nAmb++;
+      console.log('AMBIGUOUS ' + p.file.padEnd(28) + '        ' + p.note);
+      continue;
+    }
     if (p.action === 'held') { nHeld++; console.log('HELD      ' + p.file.padEnd(28) + '→ ' + String(p.target.id).padEnd(6) + 'left for review (--diff=' + p.target.id + ')'); continue; }
 
     const targetId = p.action === 'upgrade' ? p.target.id : p.newId;
@@ -374,6 +472,38 @@ function main() {
       console.error('  text written to ' + dump);
       process.exit(1);
     }
+    // 4 · A batch that calls the plant something else is telling us a name,
+    //     not asking for a rename. Keep it as an alias so nameKeys(), the
+    //     MYCO entity table and the atlas all resolve it — "Shankhapushpi"
+    //     must reach the record called "Shankhpushpi".
+    const aliasesAdded = [];
+    if (p.action === 'upgrade' && p.target.obj) {
+      const have = new Set([
+        ...(p.target.obj.aliases || []),
+        ...(reparsed.aliases || []),
+      ].map(a => String(a)));
+      const canonical = nrm(p.target.obj.name);
+      for (const cand of [p.obj.name, ...(p.obj.aliases || [])]) {
+        if (!cand || nrm(cand) === canonical) continue;
+        if (![...have].some(a => nrm(a) === nrm(cand))) have.add(String(cand));
+      }
+      if (have.size) {
+        const list = [...have].sort();
+        const line = '    aliases: [' + list.map(jsStr).join(', ') + '],';
+        text = fieldBlock(text, 'aliases')
+          ? replaceField(text, 'aliases', line)
+          : insertAfterField(text, 'name', line);
+        for (const a of list) if (!(p.target.obj.aliases || []).includes(a)) aliasesAdded.push(a);
+      }
+    }
+
+    try {
+      reparsed = new Function('return (' + text.replace(/,\s*$/, '') + ')')();
+    } catch (err) {
+      console.error('\n  ' + p.file + ' broke while adding aliases: ' + err.message);
+      process.exit(1);
+    }
+
     const bad = violations(reparsed);
     const notes = [];
     if (n.applied.length) notes.push(n.applied.length + ' normalised');
@@ -388,7 +518,7 @@ function main() {
   }
 
   console.log('─'.repeat(78));
-  console.log('upgrade ' + nUp + ' · add ' + nAdd + ' · held ' + nHeld + ' · skipped ' + nSkip);
+  console.log('upgrade ' + nUp + ' · add ' + nAdd + ' · held ' + nHeld + ' · ambiguous ' + nAmb + ' · skipped ' + nSkip);
 
   if (!apply) { console.log('\nDRY RUN. Re-run with --apply to write herbs.ts.'); return; }
 

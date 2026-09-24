@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-09-24T09:52:59.237Z",
+  "generatedAt": "2026-09-24T10:19:44.143Z",
   "counts": {
-    "botanicals": 248,
-    "rules": 2202,
+    "botanicals": 245,
+    "rules": 2197,
     "byType": {
-      "contraindication": 1191,
+      "contraindication": 1186,
       "drug_interaction": 665,
       "herb_interaction": 346
     },
     "bySeverity": {
-      "unspecified": 1093,
+      "unspecified": 1088,
       "caution": 314,
       "monitor": 373,
       "avoid": 295,
@@ -755,7 +755,11 @@
       "psych_meds"
     ],
     "503": [
-      "pregnancy"
+      "cardio_meds",
+      "hypertension",
+      "pregnancy",
+      "sedatives",
+      "thyroid"
     ],
     "504": [
       "cardio_meds",
@@ -797,6 +801,7 @@
       "pregnancy"
     ],
     "514": [
+      "cardio_meds",
       "pregnancy"
     ],
     "515": [
@@ -854,7 +859,9 @@
       "liver_kidney",
       "pregnancy"
     ],
-    "532": [],
+    "532": [
+      "pregnancy"
+    ],
     "533": [
       "pregnancy"
     ],
@@ -1108,20 +1115,6 @@
     "591": [
       "pregnancy",
       "psych_meds",
-      "sedatives",
-      "thyroid"
-    ],
-    "592": [
-      "cardio_meds",
-      "pregnancy"
-    ],
-    "593": [
-      "pregnancy"
-    ],
-    "594": [
-      "cardio_meds",
-      "hypertension",
-      "pregnancy",
       "sedatives",
       "thyroid"
     ]
@@ -1862,7 +1855,11 @@
       "psych_meds"
     ],
     "503": [
-      "pregnancy"
+      "cardio_meds",
+      "hypertension",
+      "pregnancy",
+      "sedatives",
+      "thyroid"
     ],
     "504": [
       "cardio_meds",
@@ -1904,6 +1901,7 @@
       "pregnancy"
     ],
     "514": [
+      "cardio_meds",
       "pregnancy"
     ],
     "515": [
@@ -1961,7 +1959,9 @@
       "liver_kidney",
       "pregnancy"
     ],
-    "532": [],
+    "532": [
+      "pregnancy"
+    ],
     "533": [
       "pregnancy"
     ],
@@ -2212,20 +2212,6 @@
     "591": [
       "pregnancy",
       "psych_meds",
-      "sedatives",
-      "thyroid"
-    ],
-    "592": [
-      "cardio_meds",
-      "pregnancy"
-    ],
-    "593": [
-      "pregnancy"
-    ],
-    "594": [
-      "cardio_meds",
-      "hypertension",
-      "pregnancy",
       "sedatives",
       "thyroid"
     ]
@@ -21892,9 +21878,9 @@
       "botanicalId": 503,
       "botanical": "Shankhpushpi",
       "ruleType": "contraindication",
-      "subject": "Severe hypotension",
+      "subject": "Antiepileptic drugs: documented interaction with phenytoin (reduced levels, loss of seizure control); do not combine without neurologist supervision",
       "severity": "unspecified",
-      "reason": "mild BP-lowering effect",
+      "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
     },
@@ -21903,13 +21889,125 @@
       "botanicalId": 503,
       "botanical": "Shankhpushpi",
       "ruleType": "contraindication",
-      "subject": "Pregnancy",
-      "severity": "unspecified",
-      "reason": "limited data",
+      "subject": "Pregnancy and breastfeeding: insufficient data; avoid",
+      "severity": "avoid",
+      "reason": null,
       "flags": [
         "pregnancy"
       ],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:503:contraindication:3",
+      "botanicalId": 503,
+      "botanical": "Shankhpushpi",
+      "ruleType": "contraindication",
+      "subject": "Sedatives and alcohol: possible additive calming effect",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "sedatives"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:503:contraindication:4",
+      "botanicalId": 503,
+      "botanical": "Shankhpushpi",
+      "ruleType": "contraindication",
+      "subject": "Hypothyroid or on thyroid medication: thyroid lowering in animal studies; monitor",
+      "severity": "monitor",
+      "reason": null,
+      "flags": [
+        "thyroid"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:503:contraindication:5",
+      "botanicalId": 503,
+      "botanical": "Shankhpushpi",
+      "ruleType": "contraindication",
+      "subject": "Low blood pressure: mild additive lowering",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "hypertension"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:503:contraindication:6",
+      "botanicalId": 503,
+      "botanical": "Shankhpushpi",
+      "ruleType": "contraindication",
+      "subject": "Identity: several plants are sold as Shankhapushpi; confirm botanical source",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:503:drug_interaction:1",
+      "botanicalId": 503,
+      "botanical": "Shankhpushpi",
+      "ruleType": "drug_interaction",
+      "subject": "Phenytoin and other antiepileptics: clinically documented reduction in phenytoin levels with seizure breakthrough",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:503:drug_interaction:2",
+      "botanicalId": 503,
+      "botanical": "Shankhpushpi",
+      "ruleType": "drug_interaction",
+      "subject": "Benzodiazepines, sleep medication, alcohol: additive sedation",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "sedatives"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:503:drug_interaction:3",
+      "botanicalId": 503,
+      "botanical": "Shankhpushpi",
+      "ruleType": "drug_interaction",
+      "subject": "Thyroid medication: possible interference",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "thyroid"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:503:drug_interaction:4",
+      "botanicalId": 503,
+      "botanical": "Shankhpushpi",
+      "ruleType": "drug_interaction",
+      "subject": "Antihypertensives: additive lowering",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "cardio_meds",
+        "hypertension"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:503:herb_interaction:1",
+      "botanicalId": 503,
+      "botanical": "Shankhpushpi",
+      "ruleType": "herb_interaction",
+      "subject": "Other sedative herbs (Jatamansi, Tagara, Valerian, Kava) at high dose: additive drowsiness",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
     },
     {
       "id": "safety:504:contraindication:1",
@@ -22793,8 +22891,8 @@
       "botanicalId": 514,
       "botanical": "Nagkesar",
       "ruleType": "contraindication",
-      "subject": "Pregnancy",
-      "severity": "unspecified",
+      "subject": "Pregnancy and breastfeeding: insufficient data; avoid",
+      "severity": "avoid",
       "reason": null,
       "flags": [
         "pregnancy"
@@ -22806,11 +22904,68 @@
       "botanicalId": 514,
       "botanical": "Nagkesar",
       "ruleType": "contraindication",
-      "subject": "Hot dry constitutions",
+      "subject": "Constipation: astringent",
       "severity": "unspecified",
       "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:514:contraindication:3",
+      "botanicalId": 514,
+      "botanical": "Nagkesar",
+      "ruleType": "contraindication",
+      "subject": "Undiagnosed bleeding: always investigate rectal or uterine bleeding before herbal treatment",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:514:contraindication:4",
+      "botanicalId": 514,
+      "botanical": "Nagkesar",
+      "ruleType": "contraindication",
+      "subject": "Adulteration: market Nagakesar may be a different plant; unauthenticated material cannot be assumed safe or effective",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:514:drug_interaction:1",
+      "botanicalId": 514,
+      "botanical": "Nagkesar",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants: opposing intent (haemostatic); inform prescriber",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:514:drug_interaction:2",
+      "botanicalId": 514,
+      "botanical": "Nagkesar",
+      "ruleType": "drug_interaction",
+      "subject": "Oral drugs: astringent compounds may slow absorption; separate by 2 hours",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:514:herb_interaction:1",
+      "botanicalId": 514,
+      "botanical": "Nagkesar",
+      "ruleType": "herb_interaction",
+      "subject": "Stacking astringents in constipation",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
     },
     {
       "id": "safety:515:contraindication:1",
@@ -23695,7 +23850,7 @@
       "botanicalId": 527,
       "botanical": "Manjistha",
       "ruleType": "herb_interaction",
-      "subject": "Emmenagogue herbs in pregnancy (Nirgundi, Guggulu, Kalmegh): never combine in pregnancy",
+      "subject": "Emmenagogue herbs in pregnancy (Nirgundi, Guggul, Kalmegh): never combine in pregnancy",
       "severity": "absolute",
       "reason": null,
       "flags": [],
@@ -24054,11 +24209,90 @@
       "botanicalId": 532,
       "botanical": "Anantmul",
       "ruleType": "contraindication",
-      "subject": "Severe Kapha (damp / cold) constitutions in long-term use",
+      "subject": "Pregnancy and breastfeeding: insufficient data at therapeutic doses; food syrup amounts are traditional",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:532:contraindication:2",
+      "botanicalId": 532,
+      "botanical": "Anantmul",
+      "ruleType": "contraindication",
+      "subject": "Cytotoxicity signal: extract reduced mitotic index in mouse bone marrow at all doses tested; avoid high dose concentrated extracts, especially long term, until clarified",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:532:contraindication:3",
+      "botanicalId": 532,
+      "botanical": "Anantmul",
+      "ruleType": "contraindication",
+      "subject": "Cold, Kapha type congestion with heaviness: heavy and cooling; balance with ginger",
       "severity": "unspecified",
       "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:532:contraindication:4",
+      "botanicalId": 532,
+      "botanical": "Anantmul",
+      "ruleType": "contraindication",
+      "subject": "Diabetes: when prepared as sweetened syrup, sugar load matters more than the root itself",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:532:drug_interaction:1",
+      "botanicalId": 532,
+      "botanical": "Anantmul",
+      "ruleType": "drug_interaction",
+      "subject": "Chemotherapy (cisplatin and others): the protective finding is preclinical; do not combine without oncology approval",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:532:drug_interaction:2",
+      "botanicalId": 532,
+      "botanical": "Anantmul",
+      "ruleType": "drug_interaction",
+      "subject": "Diuretics: mild additive effect in folk use; theoretical",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:532:drug_interaction:3",
+      "botanicalId": 532,
+      "botanical": "Anantmul",
+      "ruleType": "drug_interaction",
+      "subject": "Limited modern interaction data overall",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:532:herb_interaction:1",
+      "botanicalId": 532,
+      "botanical": "Anantmul",
+      "ruleType": "herb_interaction",
+      "subject": "Other cytotoxic or chemotherapy adjunct herbs in cancer care: coordinate with oncology",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
     },
     {
       "id": "safety:533:contraindication:1",
@@ -28104,313 +28338,6 @@
       "botanical": "Lajjalu",
       "ruleType": "herb_interaction",
       "subject": "Other sedative herbs (Jatamansi, Tagara, Valerian): additive drowsiness",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · herb_to_herb_caution"
-    },
-    {
-      "id": "safety:592:contraindication:1",
-      "botanicalId": 592,
-      "botanical": "Nagakesar",
-      "ruleType": "contraindication",
-      "subject": "Pregnancy and breastfeeding: insufficient data; avoid",
-      "severity": "avoid",
-      "reason": null,
-      "flags": [
-        "pregnancy"
-      ],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:592:contraindication:2",
-      "botanicalId": 592,
-      "botanical": "Nagakesar",
-      "ruleType": "contraindication",
-      "subject": "Constipation: astringent",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:592:contraindication:3",
-      "botanicalId": 592,
-      "botanical": "Nagakesar",
-      "ruleType": "contraindication",
-      "subject": "Undiagnosed bleeding: always investigate rectal or uterine bleeding before herbal treatment",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:592:contraindication:4",
-      "botanicalId": 592,
-      "botanical": "Nagakesar",
-      "ruleType": "contraindication",
-      "subject": "Adulteration: market Nagakesar may be a different plant; unauthenticated material cannot be assumed safe or effective",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:592:drug_interaction:1",
-      "botanicalId": 592,
-      "botanical": "Nagakesar",
-      "ruleType": "drug_interaction",
-      "subject": "Anticoagulants: opposing intent (haemostatic); inform prescriber",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [
-        "cardio_meds"
-      ],
-      "source": "herbs.ts · herb_to_drug_interactions"
-    },
-    {
-      "id": "safety:592:drug_interaction:2",
-      "botanicalId": 592,
-      "botanical": "Nagakesar",
-      "ruleType": "drug_interaction",
-      "subject": "Oral drugs: astringent compounds may slow absorption; separate by 2 hours",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · herb_to_drug_interactions"
-    },
-    {
-      "id": "safety:592:herb_interaction:1",
-      "botanicalId": 592,
-      "botanical": "Nagakesar",
-      "ruleType": "herb_interaction",
-      "subject": "Stacking astringents in constipation",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · herb_to_herb_caution"
-    },
-    {
-      "id": "safety:593:contraindication:1",
-      "botanicalId": 593,
-      "botanical": "Sariva",
-      "ruleType": "contraindication",
-      "subject": "Pregnancy and breastfeeding: insufficient data at therapeutic doses; food syrup amounts are traditional",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [
-        "pregnancy"
-      ],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:593:contraindication:2",
-      "botanicalId": 593,
-      "botanical": "Sariva",
-      "ruleType": "contraindication",
-      "subject": "Cytotoxicity signal: extract reduced mitotic index in mouse bone marrow at all doses tested; avoid high dose concentrated extracts, especially long term, until clarified",
-      "severity": "avoid",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:593:contraindication:3",
-      "botanicalId": 593,
-      "botanical": "Sariva",
-      "ruleType": "contraindication",
-      "subject": "Cold, Kapha type congestion with heaviness: heavy and cooling; balance with ginger",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:593:contraindication:4",
-      "botanicalId": 593,
-      "botanical": "Sariva",
-      "ruleType": "contraindication",
-      "subject": "Diabetes: when prepared as sweetened syrup, sugar load matters more than the root itself",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:593:drug_interaction:1",
-      "botanicalId": 593,
-      "botanical": "Sariva",
-      "ruleType": "drug_interaction",
-      "subject": "Chemotherapy (cisplatin and others): the protective finding is preclinical; do not combine without oncology approval",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · herb_to_drug_interactions"
-    },
-    {
-      "id": "safety:593:drug_interaction:2",
-      "botanicalId": 593,
-      "botanical": "Sariva",
-      "ruleType": "drug_interaction",
-      "subject": "Diuretics: mild additive effect in folk use; theoretical",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · herb_to_drug_interactions"
-    },
-    {
-      "id": "safety:593:drug_interaction:3",
-      "botanicalId": 593,
-      "botanical": "Sariva",
-      "ruleType": "drug_interaction",
-      "subject": "Limited modern interaction data overall",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · herb_to_drug_interactions"
-    },
-    {
-      "id": "safety:593:herb_interaction:1",
-      "botanicalId": 593,
-      "botanical": "Sariva",
-      "ruleType": "herb_interaction",
-      "subject": "Other cytotoxic or chemotherapy adjunct herbs in cancer care: coordinate with oncology",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · herb_to_herb_caution"
-    },
-    {
-      "id": "safety:594:contraindication:1",
-      "botanicalId": 594,
-      "botanical": "Shankhapushpi",
-      "ruleType": "contraindication",
-      "subject": "Antiepileptic drugs: documented interaction with phenytoin (reduced levels, loss of seizure control); do not combine without neurologist supervision",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:594:contraindication:2",
-      "botanicalId": 594,
-      "botanical": "Shankhapushpi",
-      "ruleType": "contraindication",
-      "subject": "Pregnancy and breastfeeding: insufficient data; avoid",
-      "severity": "avoid",
-      "reason": null,
-      "flags": [
-        "pregnancy"
-      ],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:594:contraindication:3",
-      "botanicalId": 594,
-      "botanical": "Shankhapushpi",
-      "ruleType": "contraindication",
-      "subject": "Sedatives and alcohol: possible additive calming effect",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [
-        "sedatives"
-      ],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:594:contraindication:4",
-      "botanicalId": 594,
-      "botanical": "Shankhapushpi",
-      "ruleType": "contraindication",
-      "subject": "Hypothyroid or on thyroid medication: thyroid lowering in animal studies; monitor",
-      "severity": "monitor",
-      "reason": null,
-      "flags": [
-        "thyroid"
-      ],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:594:contraindication:5",
-      "botanicalId": 594,
-      "botanical": "Shankhapushpi",
-      "ruleType": "contraindication",
-      "subject": "Low blood pressure: mild additive lowering",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [
-        "hypertension"
-      ],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:594:contraindication:6",
-      "botanicalId": 594,
-      "botanical": "Shankhapushpi",
-      "ruleType": "contraindication",
-      "subject": "Identity: several plants are sold as Shankhapushpi; confirm botanical source",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:594:drug_interaction:1",
-      "botanicalId": 594,
-      "botanical": "Shankhapushpi",
-      "ruleType": "drug_interaction",
-      "subject": "Phenytoin and other antiepileptics: clinically documented reduction in phenytoin levels with seizure breakthrough",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · herb_to_drug_interactions"
-    },
-    {
-      "id": "safety:594:drug_interaction:2",
-      "botanicalId": 594,
-      "botanical": "Shankhapushpi",
-      "ruleType": "drug_interaction",
-      "subject": "Benzodiazepines, sleep medication, alcohol: additive sedation",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [
-        "sedatives"
-      ],
-      "source": "herbs.ts · herb_to_drug_interactions"
-    },
-    {
-      "id": "safety:594:drug_interaction:3",
-      "botanicalId": 594,
-      "botanical": "Shankhapushpi",
-      "ruleType": "drug_interaction",
-      "subject": "Thyroid medication: possible interference",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [
-        "thyroid"
-      ],
-      "source": "herbs.ts · herb_to_drug_interactions"
-    },
-    {
-      "id": "safety:594:drug_interaction:4",
-      "botanicalId": 594,
-      "botanical": "Shankhapushpi",
-      "ruleType": "drug_interaction",
-      "subject": "Antihypertensives: additive lowering",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [
-        "cardio_meds",
-        "hypertension"
-      ],
-      "source": "herbs.ts · herb_to_drug_interactions"
-    },
-    {
-      "id": "safety:594:herb_interaction:1",
-      "botanicalId": 594,
-      "botanical": "Shankhapushpi",
-      "ruleType": "herb_interaction",
-      "subject": "Other sedative herbs (Jatamansi, Tagara, Valerian, Kava) at high dose: additive drowsiness",
       "severity": "unspecified",
       "reason": null,
       "flags": [],

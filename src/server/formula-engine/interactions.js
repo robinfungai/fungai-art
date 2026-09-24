@@ -20,10 +20,25 @@
 // bare 'red' would. Deliberately NOT every 4+ char token: that would make
 // 'extract', 'root', 'leaf' and 'bark' into match keys and fire on almost
 // any prose, which is a worse failure than the one being fixed.
-function nameKeys(name) {
-  const raw = String(name || '').toLowerCase().replace(/\s+/g, ' ').trim();
-  if (!raw) return [];
+// 2026-09-24 — now takes the HERB, not just its name, so `aliases` count.
+// A plant answers to more than one word: Shankhpushpi is also
+// Shankhapushpi, Anantmul is also Sariva, Guggulu is also Guggul. Another
+// herb's prose naming it by any of those has to match, or the synergy is
+// written down and invisible — the Schisandra failure, generalised.
+function nameKeys(herb) {
+  const names = typeof herb === 'string'
+    ? [herb]
+    : [herb && herb.name, ...((herb && herb.aliases) || [])];
   const keys = new Set();
+  for (const name of names) {
+    if (!name) continue;
+    collectKeys(String(name).toLowerCase().replace(/\s+/g, ' ').trim(), keys);
+  }
+  return [...keys];
+}
+
+function collectKeys(raw, keys) {
+  if (!raw) return;
   const add = s => {
     const v = String(s || '').replace(/[/,]+$/, '').replace(/^[/,]+/, '')
       .replace(/\s+/g, ' ').trim();
@@ -43,14 +58,13 @@ function nameKeys(name) {
     // The original single-first-word key, unchanged, 4+ chars only.
     if (toks[0] && toks[0].length >= 4) keys.add(toks[0]);
   }
-  return [...keys];
 }
 
 function checkFormulaPairs(herbs) {
   const synergies = [];
   const cautions  = [];
   function match(h, target) {
-    const keys = nameKeys(target.name);
+    const keys = nameKeys(target);
     if (!keys.length) return null;
     const hit = list => (list || []).find(s => {
       const t = String(s).toLowerCase();

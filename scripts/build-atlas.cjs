@@ -229,7 +229,8 @@ function nameKeys(name) {
   return [...keys];
 }
 
-const KEYED = HERBS.map(h => ({ h, keys: nameKeys(h.name) }));
+const KEYED = HERBS.map(h => ({ h, keys: [...new Set([h.name, ...(h.aliases || [])]
+  .filter(Boolean).flatMap(n => nameKeys(n)))] }));
 
 // A mention resolves to the herb with the LONGEST matching key, so
 // 'Red Yeast Rice' in prose beats bare 'rice' and 'Maca Negra' beats 'Maca'.

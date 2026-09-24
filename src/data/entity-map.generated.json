@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-24T09:52:57.357Z",
+  "generatedAt": "2026-09-24T10:19:42.694Z",
   "counts": {
-    "botanicals": 248,
+    "botanicals": 245,
     "monographs": 128,
     "monographsMatched": 128,
     "products": 21,
@@ -1533,8 +1533,8 @@
       "id": 503,
       "slug": "shankhpushpi",
       "name": "Shankhpushpi",
-      "botanical": "Convolvulus pluricaulis / Evolvulus alsinoides",
-      "latin": "Convolvulus pluricaulis / Evolvulus alsinoides",
+      "botanical": "Convolvulus pluricaulis (dried whole plant; syn. Convolvulus prostratus; \"the conch flower\")",
+      "latin": "Convolvulus pluricaulis",
       "genus": "Convolvulus",
       "species": "pluricaulis"
     },
@@ -1560,7 +1560,7 @@
       "id": 506,
       "slug": "shallaki",
       "name": "Shallaki",
-      "botanical": "Boswellia serrata (oleo gum resin exudate; \"Indian Frankincense / Salai Guggulu\"; API name Kunduru)",
+      "botanical": "Boswellia serrata (oleo gum resin exudate; \"Indian Frankincense / Salai Guggul\"; API name Kunduru)",
       "latin": "Boswellia serrata",
       "genus": "Boswellia",
       "species": "serrata"
@@ -1632,7 +1632,7 @@
       "id": 514,
       "slug": "nagkesar",
       "name": "Nagkesar",
-      "botanical": "Mesua ferrea (seed · flower)",
+      "botanical": "Mesua ferrea (dried stamens; \"Cobra's Saffron / Ceylon Ironwood / Nag Champa tree\")",
       "latin": "Mesua ferrea",
       "genus": "Mesua",
       "species": "ferrea"
@@ -1695,7 +1695,7 @@
       "id": 525,
       "slug": "guggulu",
       "name": "Guggulu",
-      "botanical": "Commiphora wightii (syn. Commiphora mukul; oleo gum resin exudate; \"Indian Bdellium / Gum Guggulu\")",
+      "botanical": "Commiphora wightii (syn. Commiphora mukul; oleo gum resin exudate; \"Indian Bdellium / Gum Guggul\")",
       "latin": "Commiphora wightii",
       "genus": "Commiphora",
       "species": "wightii"
@@ -1758,7 +1758,7 @@
       "id": 532,
       "slug": "anantmul",
       "name": "Anantmul",
-      "botanical": "Hemidesmus indicus (root)",
+      "botanical": "Hemidesmus indicus (dried root; \"Indian Sarsaparilla / Anantamul / Nannari\")",
       "latin": "Hemidesmus indicus",
       "genus": "Hemidesmus",
       "species": "indicus"
@@ -2212,33 +2212,6 @@
       "latin": "Mimosa pudica",
       "genus": "Mimosa",
       "species": "pudica"
-    },
-    {
-      "id": 592,
-      "slug": "nagakesar",
-      "name": "Nagakesar",
-      "botanical": "Mesua ferrea (dried stamens; \"Cobra's Saffron / Ceylon Ironwood / Nag Champa tree\")",
-      "latin": "Mesua ferrea",
-      "genus": "Mesua",
-      "species": "ferrea"
-    },
-    {
-      "id": 593,
-      "slug": "sariva",
-      "name": "Sariva",
-      "botanical": "Hemidesmus indicus (dried root; \"Indian Sarsaparilla / Anantamul / Nannari\")",
-      "latin": "Hemidesmus indicus",
-      "genus": "Hemidesmus",
-      "species": "indicus"
-    },
-    {
-      "id": 594,
-      "slug": "shankhapushpi",
-      "name": "Shankhapushpi",
-      "botanical": "Convolvulus pluricaulis (dried whole plant; syn. Convolvulus prostratus; \"the conch flower\")",
-      "latin": "Convolvulus pluricaulis",
-      "genus": "Convolvulus",
-      "species": "pluricaulis"
     }
   ],
   "monographs": [

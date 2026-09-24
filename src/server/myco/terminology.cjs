@@ -189,29 +189,44 @@ const VARIANT_RULES = [
 ];
 // Pairs no rule expresses cleanly. Both directions are tried.
 //
-// The medical ligatures are HERE rather than in VARIANT_RULES for a reason.
-// A rule can strip a ligature (oe → e) but it cannot put one back: there is
-// no safe way to decide which of the e's in a word wants an o in front of
-// it, and guessing turns every "e" into a candidate. Without these pairs the
-// layer was one-directional — "oestrogen" found "estrogen", and "estrogen"
-// found nothing extra, so a US-spelled question still saw half the shelf.
-// The set is closed and worth writing out.
+// This list is deliberately SHORT, and does not include the medical
+// ligatures. A rule can strip a ligature (oe → e) but it cannot put one
+// back — there is no safe way to decide which "e" in a word wants an "o" in
+// front of it. Rather than hand-write every æ/œ word in medicine, the
+// reverse direction is DERIVED FROM THE CORPUS: see ligaturePairs() below.
+// That way the day a monograph first says "hyperoestrogenism", both
+// spellings become searchable without anyone editing this file.
 const VARIANT_PAIRS = [
   ['mould', 'mold'], ['licence', 'license'], ['practise', 'practice'],
   ['grey', 'gray'], ['centre', 'center'], ['fibre', 'fiber'],
   ['litre', 'liter'], ['metre', 'meter'], ['ageing', 'aging'],
   ['draught', 'draft'], ['plough', 'plow'], ['storey', 'story'],
-  // ── medical æ / œ ──
-  ['oestrogen', 'estrogen'], ['oestrus', 'estrus'], ['oedema', 'edema'],
-  ['oesophag', 'esophag'], ['foetal', 'fetal'], ['foetus', 'fetus'],
-  ['diarrhoea', 'diarrhea'], ['anaemia', 'anemia'], ['anaemic', 'anemic'],
-  ['haemo', 'hemo'], ['haema', 'hema'], ['haemorrh', 'hemorrh'],
-  ['paediatric', 'pediatric'], ['anaesth', 'anesth'], ['caesar', 'cesar'],
-  ['gynaecolog', 'gynecolog'], ['orthopaedic', 'orthopedic'],
-  ['leukaemia', 'leukemia'], ['ischaemia', 'ischemia'],
-  ['ischaemic', 'ischemic'], ['coeliac', 'celiac'], ['dysmenorrhoea', 'dysmenorrhea'],
-  ['amenorrhoea', 'amenorrhea'], ['glycaemi', 'glycemi'], ['hypoglycaemi', 'hypoglycemi'],
 ];
+
+/**
+ * Ligature pairs the CORPUS itself contains.
+ *
+ * Scans the vocabulary for any term holding "ae" or "oe" whose de-ligatured
+ * form is also a term in the corpus — oestrogen/estrogen, anaemia/anemia,
+ * haemostatic/hemostatic, glycaemic/glycemic, dysmenorrhoea/dysmenorrhea.
+ * Both directions are registered, so whichever spelling a member types,
+ * both are searched.
+ *
+ * Requiring BOTH forms to be present is what makes this safe. It cannot
+ * invent a pairing: "algae" stays alone because "alge" is not a word we
+ * use, and "aloe" stays alone because "alo" is not either.
+ */
+function ligaturePairs(vocab) {
+  const pairs = new Map();   // term → the other spelling
+  for (const term of vocab.keys()) {
+    if (!/(ae|oe)/.test(term)) continue;
+    const flat = term.replace(/ae/g, 'e').replace(/oe/g, 'e');
+    if (flat === term || !vocab.has(flat)) continue;
+    pairs.set(term, flat);
+    pairs.set(flat, term);
+  }
+  return pairs;
+}
 
 function orthographicVariants(w) {
   const out = new Set();
@@ -415,8 +430,11 @@ function buildLexicon(vocabulary, entities = [], surfaceOf = new Map()) {
     if (vocab.has(t)) displayOf.set(t, right);
   }
 
+  // Ligature spellings the corpus actually holds, derived not listed.
+  const ligatures = ligaturePairs(vocab);
+
   return {
-    vocab, candidates, byHead, byFold, byTail, displayOf,
+    vocab, candidates, byHead, byFold, byTail, displayOf, ligatures,
     triggers, misspellings, entityKeys, protectedTerms, dead,
     stats: {
       corpusTerms: vocab.size,
@@ -425,6 +443,7 @@ function buildLexicon(vocabulary, entities = [], surfaceOf = new Map()) {
       misspellings: misspellings.size,
       entityKeys: entityKeys.length,
       protected: protectedTerms.size,
+      ligaturePairs: ligatures.size / 2,
       dead: dead.length,
     },
   };
@@ -502,9 +521,12 @@ function interpret(query, lex) {
   // same word rather than a guess at a related one.
   const variantsOf = term => {
     const out = [];
+    // Derived first: a ligature pair found in the corpus is not a guess.
+    const lig = lex.ligatures && lex.ligatures.get(term);
+    if (lig && lig !== term) out.push(lig);
     for (const v of orthographicVariants(term)) {
       const sv = stem(v);
-      if (sv !== term && lex.vocab.has(sv)) out.push(sv);
+      if (sv !== term && sv !== lig && lex.vocab.has(sv)) out.push(sv);
     }
     return out;
   };
@@ -669,7 +691,7 @@ function negatorBefore(hay, at) {
 
 module.exports = {
   tokenize, tokenPairs, stem, normPhrase, deaccent, foldSpelling,
-  orthographicVariants, editDistance, budgetFor, buildLexicon, interpret,
+  orthographicVariants, ligaturePairs, editDistance, budgetFor, buildLexicon, interpret,
   applyMisspellings, fuzzyCorrect,
   STOP, W_TYPED, W_CORRECTED, W_FUZZY, W_VARIANT, W_EXPANSION,
 };
