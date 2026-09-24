@@ -159,6 +159,11 @@ function groundQuestion(question, opts = {}) {
     label: TYPE_LABEL[r.chunk.type] || r.chunk.type,
     source: r.chunk.source,
     score: r.score,
+    // SERVER-ONLY. verifyVerbatimNumbers() needs the chunk body to
+    // check that a stated dose or ratio actually occurs in the source
+    // it cites. verifyAnswer() strips this before returning citations,
+    // so the full corpus text never reaches the browser.
+    text:  r.chunk.text || '',
   }));
   return { results, block, sources, reading };
 }
@@ -193,36 +198,169 @@ function scoreConfidence(results, citedRefs, answerText, citedTypes = []) {
  * Verify an answer's citations against what was retrieved.
  * Strips references the model invented, and reports what it used.
  */
+const REFUSAL =
+  'Insufficient verified evidence in the corpus to confirm this specific claim.';
+
+// Numbers that carry meaning in a herbal answer: doses, ratios,
+// strengths, temperatures, durations. Ordered longest-form first so
+// "60°C" matches as one token rather than as a bare "60".
+const NUM_PATTERNS = [
+  /\d+(?:\.\d+)?\s*:\s*\d+(?:\.\d+)?/g,                       // 1:5   ratios
+  /\d+(?:\.\d+)?\s*°\s*[CF]\b/gi,                             // 60°C
+  /\d+(?:\.\d+)?\s*%/g,                                        // 70%
+  /\d+(?:\.\d+)?\s*(?:mcg|µg|ug|mg|g|kg|ml|l|iu|cfu)\b/gi,     // 500mg
+  /\d+(?:\.\d+)?\s*(?:seconds?|minutes?|hours?|days?|weeks?|months?|years?)\b/gi,
+  /\d+(?:\.\d+)?/g,                                            // bare numerals
+];
+
+// Whitespace and unit spelling vary between a model's prose and a
+// monograph ("500 mg" vs "500mg", "60 °C" vs "60°C"). Collapse both
+// sides the same way so formatting is never mistaken for a factual
+// mismatch — we are checking the claim, not the typography.
+function normaliseNumeric(s) {
+  return String(s || '')
+    .toLowerCase()
+    .replace(/µg|mcg/g, 'ug')
+    .replace(/\s+/g, '')
+    .replace(/°/g, '');
+}
+
+/**
+ * Every number a sentence states must occur in the chunks it cites.
+ *
+ * A stripped citation used to leave the claim standing; a WRONG NUMBER
+ * inside a correctly-cited sentence was never checked at all. "Macerate
+ * at 60°C for 24 hours" citing a chunk that says 40°C and 8 hours reads
+ * as fully sourced, and is the kind of error that burns a batch or a
+ * person.
+ *
+ * Citation markers are removed before extraction — [K1] must never be
+ * read as the number 1.
+ *
+ * Returns { ok, missing[], checked[] }.
+ */
+function verifyVerbatimNumbers(claimText, citedChunksText) {
+  const claim = String(claimText || '').replace(/\[[^\]]*\]/g, ' ');
+  const hay = normaliseNumeric(citedChunksText);
+
+  const found = [];
+  const seen = new Set();
+  let rest = claim;
+  for (const re of NUM_PATTERNS) {
+    re.lastIndex = 0;
+    const hits = rest.match(re) || [];
+    for (const h of hits) {
+      const norm = normaliseNumeric(h);
+      if (!norm || seen.has(norm)) continue;
+      seen.add(norm);
+      found.push({ raw: h.trim(), norm });
+    }
+    // Take matched spans out so a bare-numeral pass cannot re-report
+    // the 60 inside an already-matched "60°C".
+    rest = rest.replace(re, ' ');
+  }
+
+  const missing = found.filter(t => !hay.includes(t.norm)).map(t => t.raw);
+  return { ok: missing.length === 0, missing, checked: found.map(t => t.raw) };
+}
+
+// Split on sentence ends, keeping the terminator, so a dropped claim
+// leaves clean prose rather than a dangling fragment.
+function splitSentences(text) {
+  const parts = String(text || '').match(/[^.!?]+[.!?]+["')\]]*\s*|[^.!?]+$/g);
+  return parts ? parts.filter(s => s.trim()) : [];
+}
+
+/**
+ * Fail-closed verification.
+ *
+ * WHAT CHANGED, and why it matters: this used to strip an invented
+ * citation tag and keep the sentence. So a model that hallucinated
+ * "[K99]" had its tag quietly removed and its unsupported claim
+ * delivered to the member as ordinary prose — the stripping made the
+ * answer look MORE authoritative, not less, because nothing was left
+ * to mark it as unsourced.
+ *
+ * Now a sentence is dropped outright when it either cites something
+ * that was never retrieved, or states a number its own cited chunks
+ * do not contain. If nothing survives, the whole answer is refused.
+ */
 function verifyAnswer(answerText, sources) {
   const valid = new Set(sources.map(s => s.ref.toUpperCase()));
+  const byRef = new Map(sources.map(s => [s.ref.toUpperCase(), s]));
   const used = new Set();
   const invalid = new Set();
+  const dropped = [];
+  const flags = [];
 
-  const text = String(answerText || '').replace(/\[(K\d{1,2}(?:\s*,\s*K?\d{1,2})*)\]/gi, (match, inner) => {
-    const refs = inner.split(/\s*,\s*/).map(r => {
-      const n = r.replace(/[^0-9]/g, '');
-      return 'K' + n;
+  const kept = [];
+  for (const sentence of splitSentences(answerText)) {
+    const refsHere = [];
+    let sawInvalid = false;
+
+    const cleaned = sentence.replace(/\[(K\d{1,2}(?:\s*,\s*K?\d{1,2})*)\]/gi, (m, inner) => {
+      const refs = inner.split(/\s*,\s*/).map(r => 'K' + r.replace(/[^0-9]/g, ''));
+      const keep = refs.filter(r => {
+        if (valid.has(r)) { refsHere.push(r); return true; }
+        invalid.add(r); sawInvalid = true; return false;
+      });
+      return keep.length ? '[' + keep.join(', ') + ']' : '';
     });
-    const keep = refs.filter(r => {
-      if (valid.has(r)) { used.add(r); return true; }
-      invalid.add(r);
-      return false;
-    });
-    return keep.length ? '[' + keep.join(', ') + ']' : '';
-  }).replace(/ {2,}/g, ' ').replace(/ \./g, '.');
+
+    if (sawInvalid) {
+      dropped.push({ sentence: sentence.trim(), reason: 'fabricated_citation' });
+      if (!flags.includes('fabricated_citation')) flags.push('fabricated_citation');
+      continue;
+    }
+
+    if (refsHere.length) {
+      const citedText = refsHere
+        .map(r => (byRef.get(r) && byRef.get(r).text) || '')
+        .join('\n');
+      const num = verifyVerbatimNumbers(cleaned, citedText);
+      if (!num.ok) {
+        dropped.push({
+          sentence: sentence.trim(),
+          reason: 'verbatim_number_mismatch',
+          missing: num.missing,
+        });
+        if (!flags.includes('verbatim_number_mismatch')) flags.push('verbatim_number_mismatch');
+        continue;
+      }
+    }
+
+    refsHere.forEach(r => used.add(r));
+    kept.push(cleaned);
+  }
+
+  let text = kept.join('').replace(/ {2,}/g, ' ').replace(/ \./g, '.').trim();
+  let refused = false;
+
+  // Fail closed. An answer whose every sentence was dropped must not
+  // come back as an empty string that the UI renders as a blank reply.
+  if (!text) { text = REFUSAL; refused = true; used.clear(); }
 
   const citedRefs = [...used];
   const citedTypes = sources.filter(s => used.has(s.ref)).map(s => s.type);
-  const confidence = scoreConfidence(
-    sources.map(s => ({ score: s.score })), citedRefs, text, citedTypes
-  );
+  const confidence = refused
+    ? 0
+    : scoreConfidence(sources.map(s => ({ score: s.score })), citedRefs, text, citedTypes);
+
   return {
     text,
-    citations: sources.filter(s => used.has(s.ref)),
+    // `text` is stripped here: the chunk bodies are for server-side
+    // verification and have no business being shipped to the browser.
+    citations: sources.filter(s => used.has(s.ref)).map(({ text: _omit, ...rest }) => rest),
     invalidRefs: [...invalid],
+    droppedClaims: dropped,
+    verificationFlags: flags,
+    refused,
     confidence,
     kbVersion: KB_VERSION,
   };
 }
 
-module.exports = { groundQuestion, readingBlock, verifyAnswer, GROUNDING_RULES, TYPE_LABEL, KB_VERSION };
+module.exports = {
+  groundQuestion, readingBlock, verifyAnswer, verifyVerbatimNumbers,
+  GROUNDING_RULES, TYPE_LABEL, KB_VERSION, REFUSAL,
+};

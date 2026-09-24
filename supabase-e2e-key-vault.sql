@@ -45,9 +45,21 @@ CREATE TABLE IF NOT EXISTS public.user_key_vault (
   user_id               uuid        NOT NULL PRIMARY KEY
                                     REFERENCES auth.users(id) ON DELETE CASCADE,
 
-  -- Public half. Readable by other members through the view below,
-  -- because ECDH to this member is impossible without it.
+  -- Public half, TWICE, and the duplication is deliberate.
+  --
+  -- public_key_jwk is the canonical record: the same JWK shape the
+  -- wrapped private key uses, so a future client can rebuild the
+  -- whole keypair from this table alone.
+  --
+  -- public_key_raw is base64 of the 65-byte uncompressed P-256 point,
+  -- which is what dm/crypto.js has always spoken and what
+  -- profiles.dm_public_key already holds. Storing the JWK alone and
+  -- syncing THAT into dm_public_key would put a JSON blob in a column
+  -- every existing caller parses as a raw point — silently breaking
+  -- every DM. Postgres cannot convert between the two, so the client
+  -- writes both and the trigger below mirrors the raw one.
   public_key_jwk        text        NOT NULL,
+  public_key_raw        text        NOT NULL,
 
   -- SHA-256 of the public key, short form (e.g. "8F3A-99C1"). Shown
   -- in the UI so two members can compare out of band and know they
@@ -136,7 +148,7 @@ REVOKE ALL ON public.user_key_vault FROM anon;
 DROP VIEW IF EXISTS public.user_public_keys;
 CREATE VIEW public.user_public_keys
   WITH (security_invoker = false)
-  AS SELECT user_id, public_key_jwk, key_fingerprint
+  AS SELECT user_id, public_key_jwk, public_key_raw, key_fingerprint
      FROM public.user_key_vault;
 
 GRANT SELECT ON public.user_public_keys TO authenticated;
@@ -158,14 +170,14 @@ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public
 AS $$
 BEGIN
   UPDATE public.profiles
-     SET dm_public_key = NEW.public_key_jwk
+     SET dm_public_key = NEW.public_key_raw   -- raw point, NOT the JWK
    WHERE auth_user_id = NEW.user_id;
   RETURN NEW;
 END $$;
 
 DROP TRIGGER IF EXISTS user_key_vault_sync_profile ON public.user_key_vault;
 CREATE TRIGGER user_key_vault_sync_profile
-  AFTER INSERT OR UPDATE OF public_key_jwk ON public.user_key_vault
+  AFTER INSERT OR UPDATE OF public_key_raw ON public.user_key_vault
   FOR EACH ROW EXECUTE FUNCTION public.sync_dm_public_key();
 
 -- ── Verify ──────────────────────────────────────────────────────
