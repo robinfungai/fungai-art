@@ -63,18 +63,48 @@ function splitNote(text) {
   return capped;
 }
 
-async function loadLabNotes() {
-  const now = Date.now();
-  if (cache.chunks && now - cache.at < CACHE_TTL_MS) return cache.chunks;
+// ── Access tiers ────────────────────────────────────────────────
+// supabase-rbac-tiers.sql adds lab_notes.access_tier, default 1.
+//
+// MYCO is open to the whole world right now — /foraging, /extraction,
+// /mixology, /community — and this must not change that. Every row is
+// tier 1 and an anonymous caller resolves to tier 1, so the filter is
+// a no-op the day it ships. It exists so Q2 2027, when MYCO moves
+// behind the member portal, is a data change rather than a rewrite.
+//
+// The filter is applied HERE rather than in RLS because this file
+// reads with the anon key, and lab_notes deliberately keeps
+// SELECT USING (true) so MYCO can see notes at all. Closing that
+// policy today would silently empty MYCO's live retrieval — see
+// docs/COMMUNITY-AUDIT.md §6.
+const PUBLIC_TIER = 1;
 
-  const url = SUPABASE_URL.replace(/\/+$/, '') +
-    '/rest/v1/lab_notes?select=id,chapter_id,text,author_name,created_at' +
-    '&order=created_at.desc&limit=' + MAX_NOTES;
+// A viewer sees their own tier and everything below it. An undefined
+// tier is treated as PUBLIC_TIER rather than as "unrestricted": an
+// unknown caller must never be the most privileged one.
+function filterByTier(chunks, viewerTier) {
+  const tier = Number.isFinite(viewerTier) ? viewerTier : PUBLIC_TIER;
+  return chunks.filter(c => (Number.isFinite(c.accessTier) ? c.accessTier : PUBLIC_TIER) <= tier);
+}
+
+async function loadLabNotes(viewerTier) {
+  const now = Date.now();
+  if (cache.chunks && now - cache.at < CACHE_TTL_MS) return filterByTier(cache.chunks, viewerTier);
+
+  const base = SUPABASE_URL.replace(/\/+$/, '') + '/rest/v1/lab_notes?';
+  const tail = '&order=created_at.desc&limit=' + MAX_NOTES;
+  // Ask for access_tier, but survive its absence. If the migration has
+  // not been run the column does not exist and PostgREST answers 400 —
+  // which would take every lab note out of MYCO's context. A missing
+  // column must degrade to "everything is public", which is what it
+  // was a moment before the column existed.
+  const withTier    = base + 'select=id,chapter_id,text,author_name,created_at,access_tier' + tail;
+  const withoutTier = base + 'select=id,chapter_id,text,author_name,created_at' + tail;
 
   try {
-    const res = await fetch(url, {
-      headers: { apikey: SUPABASE_ANON, Authorization: 'Bearer ' + SUPABASE_ANON },
-    });
+    const headers = { apikey: SUPABASE_ANON, Authorization: 'Bearer ' + SUPABASE_ANON };
+    let res = await fetch(withTier, { headers });
+    if (res.status === 400) res = await fetch(withoutTier, { headers });
     if (!res.ok) {
       cache = { at: now, chunks: [], error: 'lab_notes HTTP ' + res.status };
       return cache.chunks;
@@ -96,11 +126,18 @@ async function loadLabNotes() {
           source: 'Academy lab note — ' + who + ', ' + when,
           herb:  null,
           text:  part,
+          // Absent column (migration not run yet) means public, which
+          // is exactly what it was a moment before the column existed.
+          accessTier: Number.isFinite(r.access_tier) ? r.access_tier : PUBLIC_TIER,
         });
       });
     }
+    // Cache every chunk at every tier; filter on the way out. Caching
+    // a filtered list would serve one viewer's tier to the next caller
+    // for two minutes — the cache is per function instance, not per
+    // session.
     cache = { at: now, chunks, error: null };
-    return chunks;
+    return filterByTier(chunks, viewerTier);
   } catch (e) {
     // Never let the notebook being unreachable break an answer — MYCO
     // falls back to the static knowledge base.
@@ -172,9 +209,9 @@ function scoreLabNotes(query, chunks, k = 3, interpretation = null) {
  * @param {object} [interpretation] the reading from interpretQuery(), so
  *        the notebook and the static corpus answer the same question.
  */
-async function retrieveLabNotes(question, k = 3, interpretation = null) {
+async function retrieveLabNotes(question, k = 3, interpretation = null, viewerTier = PUBLIC_TIER) {
   try {
-    const chunks = await loadLabNotes();
+    const chunks = await loadLabNotes(viewerTier);
     return scoreLabNotes(question, chunks || [], k, interpretation);
   } catch (_) {
     return [];
@@ -185,4 +222,4 @@ function labNotesStatus() {
   return { cached: (cache.chunks || []).length, at: cache.at, error: cache.error };
 }
 
-module.exports = { retrieveLabNotes, loadLabNotes, scoreLabNotes, labNotesStatus };
+module.exports = { retrieveLabNotes, loadLabNotes, scoreLabNotes, labNotesStatus, filterByTier, PUBLIC_TIER };
