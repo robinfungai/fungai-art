@@ -6,10 +6,14 @@ costs tokens for no new information.
 
 ---
 
-## State: 9 commits on `main`, NOTHING PUSHED
+## State: 13 commits on `main`, NOTHING PUSHED
 
 ```
-(this session) feat(myco): terminology layer -- misspellings, synonyms, binomials
+b0be953  feat(herbs): Ayurvedic batch -- 21 stubs upgraded, 5 new, 243 -> 248
+64e170e  chore(monograph): rename schizandra_full_monograph.md -> schisandra
+fc897e0  fix(legal): remove a company that does not exist and a person who left
+a114f72  fix(data): one plant, two spellings -- Schisandra invisible in 4 places
+f5e24c5  feat(myco): read the question a member actually typed
 52d61a3  feat(atlas): /atlas -- scroll hero, 243-organism explorer, synergy graph
 e6aca82  fix(reserve): a missing Resend key told customers their order landed
 05dbd96  docs: session handoff
@@ -265,6 +269,68 @@ pre-existing equal-score tie order, not this change.
 
 If you would rather decide the engine half separately, it is one line:
 `const n = raw;` in `notesBoost`.
+
+## OPEN — three things waiting on Robin
+
+### 1 · The three held herb records
+
+`Amla 523`, `Haritaki 414`, `Kalmegh 526` were NOT imported: they carry the
+enrichment from an earlier session. See the diff with
+
+```
+node scripts/import-herb-records.cjs "<batch dir>" --diff=523,414,526
+```
+
+What the diff says:
+
+| id | verdict |
+|---|---|
+| **414 Haritaki** | safe to apply as-is — incoming is richer on every field, name identical |
+| **523 Amla** | apply, but `name` would go `"Amla / Amalaki"` → `"Amla"`, losing the alias |
+| **526 Kalmegh** | apply, but `name` would go `"Kalmegh / Andrographis"` → `"Kalmegh"` |
+
+The importer now keeps the existing `name` on every upgrade, so applying these
+is safe — but `regional_affinity` also shrinks (Amla 4→3 items, Kalmegh 4→2),
+so they are worth a look rather than a blind `--apply`.
+
+### 2 · More batches are coming
+
+Put the files in ANY staging folder and give the path. **Not** in
+`public/home/markdowns all plants` — that is the monograph corpus, and these
+are herbs.ts records; the KB builder would take the H1 as the plant name and
+invent 29 organisms called "301 · Ajwain".
+
+`scripts/import-herb-records.cjs` handles the rest: filename numbers are
+ignored (they are batch document numbers, not ids), existing records are
+matched by name and upgraded in place, new ones get ids from 590 up, the Herb
+unions are enforced, and `name` / `spiritual_layer` / `epithet` are never
+overwritten. Dry run by default.
+
+### 3 · Bi-weekly traffic email — PARKED at Robin's request
+
+**There is no analytics on the site at all.** No Plausible, no GA, nothing. The
+eight "umami" matches in the codebase are the flavour, in the dinner menu copy.
+So `/patron` page views were never recorded and cannot be recovered.
+
+What a report could be built from instead (Supabase, no vendor):
+`orders`, `formulas`, `myco_memory` (which already logs `formula_generated` /
+`formula_reserved` / `composer_fired`), `newsletter_subscribers`, `event_rsvps`,
+`lab_notes`. `netlify/functions/myco-monthly-digest.mjs` is the working pattern
+— scheduled function + Resend + `DIGEST_INBOX`.
+
+Read-only counts with the anon key, for the record:
+
+```
+lab_notes                41 rows   <- genuinely public, real
+formulas                 401 permission denied (locked down, as designed)
+orders / myco_memory / newsletter_subscribers / event_rsvps   0 rows
+entitlements             404 — THE TABLE DOES NOT EXIST (schema never applied)
+founding-cohort.json     1 member, awaiting_wallet, contract_deployed: false
+```
+
+**Those zeros are not evidence.** RLS hides rows from anon, so 0 means "0
+visible to anon". Only Stripe plus the service-role key can answer whether
+anyone ever paid.
 
 ## Next session: pick ONE
 
