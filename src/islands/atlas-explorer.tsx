@@ -13,6 +13,7 @@
 // presenting a pattern match as a curated fact.
 
 import { createRoot } from 'react-dom/client';
+import OrganismSigil from '../components/ui/organism-sigil';
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 // Lazy: three + drei is the heaviest thing on the page and the grid must not
@@ -345,7 +346,10 @@ export default function AtlasExplorer() {
       <div className="atl-grid">
         {results.map(o => (
           <button type="button" className="atl-card" key={o.id} onClick={() => open(o.slug)}>
-            <span className="atl-card-glyph" aria-hidden="true">{TYPE_GLYPH[o.type] || '✦'}</span>
+            {/* A seal drawn from this organism's own record — kingdom,
+                chemistry, tradition, evidence, caution. See organism-sigil.tsx
+                for why this is not a photograph or a repeated icon. */}
+            <OrganismSigil className="atl-card-sigil" record={o} size={44} />
             <span className="atl-card-name">{o.name}</span>
             <span className="atl-card-bin">{o.binomial}</span>
             {o.epithet && <span className="atl-card-ep">{o.epithet}</span>}

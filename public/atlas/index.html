@@ -136,6 +136,13 @@ a { color: inherit; }
 .atl-msg code { font-family: var(--mono); font-size: 12px; color: var(--amber-lt); }
 .atl-head { border-top: 0.5px solid var(--rule); padding-top: 34px; margin-bottom: 38px; }
 
+/* The organism seal. Sits where a photograph would, and lifts on hover so
+   the card feels like an object rather than a row. */
+.atl-card-sigil { display: block; margin: 0 0 12px; opacity: .82;
+  transition: opacity .3s ease, transform .35s cubic-bezier(.2,.7,.3,1); }
+.atl-card:hover .atl-card-sigil,
+.atl-card:focus-visible .atl-card-sigil { opacity: 1; transform: translateY(-2px) scale(1.06); }
+
 /* ── Lumina · the Fungi Kingdom's visual transformation ─────────────
    Mounts only while one kingdom is selected and that kingdom is fungi. The
    caption and the two choices are React-rendered DOM over the canvas, not
@@ -184,7 +191,7 @@ a { color: inherit; }
    a region-level globe honest instead of looking like an imprecise pin map. */
 .atl-globe { position: relative; height: clamp(420px, 62vh, 680px); margin: 0 0 30px;
   border: 0.5px solid var(--rule); border-radius: 3px; overflow: hidden;
-  background: radial-gradient(circle at 50% 42%, #0d1610 0%, #060a07 62%, #040705 100%); }
+  background: radial-gradient(circle at 50% 42%, #0D1619 0%, #080F13 64%, #05090C 100%); }
 .atl-globe canvas { display: block; touch-action: none; cursor: grab; }
 .atl-globe canvas:active { cursor: grabbing; }
 
@@ -199,9 +206,9 @@ a { color: inherit; }
 .atl-globe-region { display: flex; flex-direction: column; align-items: center; gap: 2px;
   white-space: nowrap; user-select: none; }
 .atl-globe-region-name { font-family: var(--fm); font-size: 8px; letter-spacing: .22em;
-  text-transform: uppercase; color: rgba(230,217,181,.62); text-shadow: 0 0 10px #000; }
+  text-transform: uppercase; color: rgba(237,229,216,.72); text-shadow: 0 0 12px #05090C; }
 .atl-globe-region-count { font-family: var(--fm); font-size: 8.5px; letter-spacing: .1em;
-  color: var(--nutrient, #E8B14B); }
+  color: #88BAC8; }
 
 /* Hover identity — common name, Latin name, region */
 .atl-globe-readout { position: absolute; left: 0; right: 0; bottom: 42px; display: flex;
@@ -211,17 +218,17 @@ a { color: inherit; }
 .atl-globe-readout-bino { font-family: var(--fs, 'Cormorant Garamond', Georgia, serif);
   font-style: italic; font-size: 13px; color: var(--md, #8B7E62); }
 .atl-globe-readout-region { font-family: var(--fm); font-size: 8px; letter-spacing: .22em;
-  text-transform: uppercase; color: rgba(158,212,56,.7); margin-top: 2px; }
+  text-transform: uppercase; color: rgba(136,186,200,.85); margin-top: 2px; }
 .atl-globe-readout-hint { font-family: var(--fm); font-size: 8.5px; letter-spacing: .2em;
-  text-transform: uppercase; color: rgba(139,126,98,.7); }
+  text-transform: uppercase; color: rgba(192,180,154,.7); }
 
 /* The honest footnote */
 .atl-globe-note { position: absolute; left: 0; right: 0; bottom: 0; margin: 0;
-  padding: 9px 16px; background: linear-gradient(to top, rgba(4,7,5,.92), rgba(4,7,5,0));
+  padding: 9px 16px; background: linear-gradient(to top, rgba(5,9,12,.94), rgba(5,9,12,0));
   font-family: var(--fm); font-size: 8px; letter-spacing: .07em; line-height: 1.65;
-  color: rgba(139,126,98,.85); text-align: center; pointer-events: none; }
+  color: rgba(192,180,154,.8); text-align: center; pointer-events: none; }
 .atl-globe-note strong { color: var(--ml, #E6D9B5); font-weight: 400; }
-.atl-globe-note em { font-style: italic; color: rgba(158,212,56,.8); }
+.atl-globe-note em { font-style: italic; color: rgba(136,186,200,.9); }
 
 @media (max-width: 640px) {
   .atl-globe { height: clamp(340px, 52vh, 460px); }

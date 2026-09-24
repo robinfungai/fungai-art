@@ -43,16 +43,22 @@ import {
 } from '../../islands/atlas-regions';
 
 // ── Palette ──────────────────────────────────────────────────────
-// Borrowed from the page's own tokens rather than invented, so the globe
-// belongs to the site: mycelium green for life, nutrient amber for the
-// thing you have chosen, soil for everything resting.
+// Taken from /atlas's OWN tokens. The first version invented a palette —
+// #9ED438 and #E8B14B, neither of which appears anywhere on this page — and
+// the result read as neon green against a forest-and-teal design. The page
+// is cool water and warm parchment, so the earth is teal and the living
+// things on it are dust and bone.
+//
+//   --forest #080F13   --moss #1A2E33   --fern #1E3438
+//   --sage   #336065   --lichen #4D869B --mist #88BAC8
+//   --dust   #C0B49A   --cream #E5D9C5  --parchment #EDE5D8
 const C = {
-  idle:      new THREE.Color('#7E8F6B'),
-  hover:     new THREE.Color('#E6D9B5'),
-  selected:  new THREE.Color('#E8B14B'),
-  connected: new THREE.Color('#9ED438'),
-  dimmed:    new THREE.Color('#2A3328'),
-  fungus:    new THREE.Color('#B6F0AE'),
+  idle:      new THREE.Color('#C0B49A'),   // dust — warm against the cool earth
+  hover:     new THREE.Color('#EDE5D8'),   // parchment
+  selected:  new THREE.Color('#A8D4E0'),   // amber-lt, the page's highlight
+  connected: new THREE.Color('#88BAC8'),   // mist
+  dimmed:    new THREE.Color('#1E3438'),   // fern — present, not shouting
+  fungus:    new THREE.Color('#E5D9C5'),   // cream
 };
 
 export interface GlobeOrganism extends Placeable {
@@ -83,7 +89,7 @@ interface GlobeProps {
 // Earth would promise a precision the data does not have.
 function Sphere() {
   const uniforms = useMemo(
-    () => ({ uRim: { value: new THREE.Color('#9ED438') }, uBase: { value: new THREE.Color('#0b120c') } }),
+    () => ({ uRim: { value: new THREE.Color('#336065') }, uBase: { value: new THREE.Color('#080F13') } }),
     [],
   );
   return (
@@ -105,14 +111,15 @@ function Sphere() {
           void main() {
             float rim = 1.0 - max(dot(vN, vV), 0.0);
             rim = pow(rim, 3.0);
-            gl_FragColor = vec4(uBase + uRim * rim * 0.55, 1.0);
+            gl_FragColor = vec4(uBase + uRim * rim * 0.85, 1.0);
           }`}
       />
     </mesh>
   );
 }
 
-/** A graticule. Reads as an instrument rather than a map. */
+/** A graticule. Now barely there — the coastlines carry the geography and
+ *  this is just enough grid to read as an instrument. */
 function Graticule() {
   const geometry = useMemo(() => {
     const pts: number[] = [];
@@ -134,7 +141,52 @@ function Graticule() {
   useEffect(() => () => geometry.dispose(), [geometry]);
   return (
     <lineSegments geometry={geometry}>
-      <lineBasicMaterial color="#9ED438" transparent opacity={0.07} />
+      <lineBasicMaterial color="#1A2E33" transparent opacity={0.5} />
+    </lineSegments>
+  );
+}
+
+/**
+ * The land.
+ *
+ * Natural Earth 110m coastline, public domain, simplified to 128 lines and
+ * 3,643 points and committed as public/atlas/coastline.json (38 KB). Fetched
+ * rather than drawn: a hand-approximated Earth would be a fabricated map, and
+ * this globe's whole argument is that it does not invent geography.
+ *
+ * Drawn as segments just above the surface so it reads as a shoreline rather
+ * than a texture, and it is the REASON the globe looks like a world — before
+ * it there was only a graticule, which is a ball with a grid on it.
+ */
+function Coastline() {
+  const [geometry, setGeometry] = useState<THREE.BufferGeometry | null>(null);
+
+  useEffect(() => {
+    let live = true;
+    fetch('/atlas/coastline.json')
+      .then(r => (r.ok ? r.json() : Promise.reject(new Error('coastline ' + r.status))))
+      .then((data: { lines: number[][] }) => {
+        if (!live) return;
+        const pts: number[] = [];
+        for (const flat of data.lines) {
+          for (let i = 0; i + 3 < flat.length; i += 2) {
+            pts.push(...latLonToVec3(flat[i + 1], flat[i], 1.004));
+            pts.push(...latLonToVec3(flat[i + 3], flat[i + 2], 1.004));
+          }
+        }
+        const g = new THREE.BufferGeometry();
+        g.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+        setGeometry(g);
+      })
+      .catch(e => console.warn('[atlas-globe] ' + e.message));
+    return () => { live = false; };
+  }, []);
+
+  useEffect(() => () => geometry?.dispose(), [geometry]);
+  if (!geometry) return null;
+  return (
+    <lineSegments geometry={geometry}>
+      <lineBasicMaterial color="#4D869B" transparent opacity={0.62} />
     </lineSegments>
   );
 }
@@ -159,8 +211,18 @@ function Nodes({
     const pos = new Float32Array(placed.length * 3);
     placed.forEach((p, i) => { pos[i * 3] = p.position[0]; pos[i * 3 + 1] = p.position[1]; pos[i * 3 + 2] = p.position[2]; });
     g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    g.setAttribute('color', new THREE.BufferAttribute(new Float32Array(placed.length * 3), 3));
-    g.setAttribute('size', new THREE.BufferAttribute(new Float32Array(placed.length), 1));
+    // Seeded, not zeroed. A zero-filled colour attribute is black and a
+    // zero-filled size attribute is a zero-pixel point, so an unseeded first
+    // frame draws nothing at all — and if anything ever stops the per-frame
+    // write, "nothing at all" is what stays on screen.
+    const col = new Float32Array(placed.length * 3);
+    const siz = new Float32Array(placed.length);
+    for (let i = 0; i < placed.length; i++) {
+      col[i * 3] = C.idle.r; col[i * 3 + 1] = C.idle.g; col[i * 3 + 2] = C.idle.b;
+      siz[i] = 6;
+    }
+    g.setAttribute('color', new THREE.BufferAttribute(col, 3));
+    g.setAttribute('size', new THREE.BufferAttribute(siz, 1));
     return g;
   }, [placed]);
 
@@ -184,7 +246,10 @@ function Nodes({
   useFrame(() => {
     const colors = geometry.getAttribute('color') as THREE.BufferAttribute;
     const sizes = geometry.getAttribute('size') as THREE.BufferAttribute;
-    const tierScale = tier === 'WORLD' ? 0.55 : tier === 'REGION' ? 0.8 : 1;
+    // At world scale nodes recede but must still READ as a field of points —
+    // the first version scaled 2.6px down to 1.4px, which is indistinguishable
+    // from an empty globe.
+    const tierScale = tier === 'WORLD' ? 0.75 : tier === 'REGION' ? 0.9 : 1;
 
     for (let i = 0; i < placed.length; i++) {
       const o = placed[i].organism;
@@ -193,13 +258,13 @@ function Nodes({
       const filteredOut = !!visibleSlugs && !visibleSlugs.has(o.slug);
       const offEmphasis = !!emphasis && o.type !== emphasis;
 
-      let c = C.idle, size = 2.6;
+      let c = C.idle, size = 6;
       if (emphasis === 'fungus' && o.type === 'fungus') c = C.fungus;
-      if (filteredOut || (offEmphasis && !isSel)) { c = C.dimmed; size = 1.4; }
-      else if (isSel) { c = C.selected; size = 9; }
-      else if (isCon) { c = C.connected; size = 5.2; }
-      else if (i === hovered) { c = C.hover; size = 6; }
-      else if (selectedSlug) { c = C.dimmed; size = 1.8; }   // selection owns the hierarchy
+      if (filteredOut || (offEmphasis && !isSel)) { c = C.dimmed; size = 3; }
+      else if (isSel) { c = C.selected; size = 17; }
+      else if (isCon) { c = C.connected; size = 11; }
+      else if (i === hovered) { c = C.hover; size = 13; }
+      else if (selectedSlug) { c = C.dimmed; size = 4; }   // selection owns the hierarchy
 
       colors.setXYZ(i, c.r, c.g, c.b);
       sizes.setX(i, size * tierScale);
@@ -274,18 +339,45 @@ function Nodes({
   );
 }
 
-/** Region names. Nine labels, so plain DOM via drei is the right tool. */
+/**
+ * Region names. Nine labels, so plain DOM via drei is the right tool.
+ *
+ * Back-hemisphere culling is done here rather than with drei's `occlude`.
+ * That prop raycasts against the scene and proved unreliable against a
+ * shader-material sphere — it hid every label, which is exactly what a
+ * label that never appears looks like. A dot product is deterministic:
+ * if the region's outward normal faces away from the camera, it is round
+ * the back and should not be drawn.
+ */
 function RegionLabels({ counts, tier }: { counts: { region: typeof REGIONS[number]; count: number }[]; tier: Tier }) {
+  const [facing, setFacing] = useState<Record<string, boolean>>({});
+  const positions = useMemo(
+    () => counts.map(c => ({
+      id: c.region.id,
+      v: new THREE.Vector3(...latLonToVec3(c.region.lat, c.region.lon, 1)),
+    })),
+    [counts],
+  );
+
+  // Cheap, and only touches React when a label crosses the horizon.
+  const last = useRef<string>('');
+  useFrame(({ camera }) => {
+    const next: Record<string, boolean> = {};
+    for (const p of positions) next[p.id] = p.v.dot(camera.position) > 0.18;
+    const key = Object.entries(next).map(([k, v]) => k + (v ? '1' : '0')).join();
+    if (key !== last.current) { last.current = key; setFacing(next); }
+  });
+
   if (tier === 'ORGANISM') return null;
   return (
     <>
-      {counts.map(({ region, count }) => (
+      {counts.filter(c => facing[c.region.id]).map(({ region, count }) => (
         <Html
           key={region.id}
-          position={latLonToVec3(region.lat, region.lon, 1.06)}
+          position={latLonToVec3(region.lat, region.lon, 1.07)}
           center
+          zIndexRange={[20, 0]}
           style={{ pointerEvents: 'none' }}
-          occlude
         >
           <div className="atl-globe-region">
             <span className="atl-globe-region-name">{region.label}</span>
@@ -363,6 +455,7 @@ export default function AtlasGlobe({
         <ambientLight intensity={0.6} />
         <Sphere />
         <Graticule />
+        <Coastline />
         <Nodes
           placed={placed}
           selectedSlug={selectedSlug}
