@@ -43,9 +43,13 @@ before a broad add.
 Note: the atlas commit is `52d61a3`, not the `f5e74a1` an earlier copy of this
 file recorded — it was amended after that line was written.
 
-Untracked and DELIBERATELY so: four unused clips/stills in `public/atlas/`
-(~9.8 MB). Only `new-vid.mp4` and `first-photo.jpg` are committed, because
-only those two are referenced by the hero. See the atlas section below.
+Untracked and DELIBERATELY so, now via `.gitignore` rather than luck: five
+unused clips/stills in `public/atlas/` — `15201936_1080_1920_30fps.mp4`,
+`second (1).mp4`, `the1 (1).mp4`, `second-photo.jpg`, `third-photo.jpg`. They
+are **on disk and ready for the map build**, just not in git. Only
+`new-vid.mp4` and `first-photo.jpg` are committed, because only those two are
+referenced (by `atlas-hero`). Delete the matching `.gitignore` lines when a
+page actually loads one of the others.
 
 Pushing sends last session's lab-notes fix up too. Robin has a hard rule:
 **never push without an explicit "push" in the same message.**
