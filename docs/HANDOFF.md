@@ -373,6 +373,65 @@ Grep for `drafted 2026-09-24` to find all five.
 `status` was filled on the same five. Catalogue now has **zero** records
 missing `pharmacology` or `status`.
 
+## NEXT SESSION: COMMUNITY PORTAL FORK
+
+Read `docs/COMMUNITY-PORTAL-ARCHITECTURE.md` FIRST. It maps identity, Supabase,
+Resend, MYCO, the Academy, money, and the seven things a client fork must
+change. Written for exactly this.
+
+The headline for the fork: **admin is a hardcoded email allowlist** in
+`global-nav.js`, the Academy and the Spore app. It works because RLS is the
+real gate, but it does not survive a second tenant. That is change #1.
+
+## ⚠ FIRST THING NEXT SESSION: THREE HERBS, ONE WITH A SAFETY PROBLEM
+
+Robin photographed three plants that have NO record in herbs.ts, and asked for
+them to be added. Two are simple. One is not, which is why they were parked
+rather than rushed at the end of a session:
+
+| herb | status |
+|---|---|
+| **Green tea** — *Camellia sinensis* | straightforward, add it |
+| **Hibiscus** — *Hibiscus sabdariffa* | straightforward, add it |
+| **Comfrey** — *Symphytum officinale* | **STOP AND THINK** |
+
+**Comfrey contains hepatotoxic pyrrolizidine alkaloids.** Internal use is
+restricted or banned in Germany, the UK and the US, and it is a documented
+cause of hepatic veno-occlusive disease. It is a genuinely useful topical herb
+and a genuinely dangerous internal one.
+
+So it cannot be added as an ordinary record in a database that feeds a formula
+engine. It needs the Thunder God Vine treatment: in the catalogue and the
+atlas, **never reachable by a formula** — `RESTRICTED_NAMES`,
+`caution_level: 'HIGH'`, `safe_pregnancy: false`, and contraindications that
+say external-use-only in plain words. That is a decision to take deliberately
+with Robin, not a record to type quickly.
+
+Their photographs are already sitting in `public/atlas/` and the atlas build
+prints them as unmatched every run, so they cannot be forgotten.
+
+Also unmatched, and probably just misnamed: `wild-rosemary.jpg` (wild rosemary
+is *Rhododendron tomentosum*, the catalogue has *Rosmarinus officinalis*) and
+`wild-thyme.jpg` (*Thymus serpyllum* vs *T. vulgaris*). Rename them if they
+are the cultivated species and they will match automatically.
+
+## ATLAS — where it got to
+
+Shipped: the hero, a region-density globe on real coastlines in the page's own
+palette, Lumina's glass morph with a visible 7-second drift, photographs on the
+cards with sigils where there is no photograph.
+
+**One command outstanding: `npm i -D sharp`, then `npm run build:thumbnails`.**
+Without it the cards use full-size photographs. 16 images average 430 KB; at
+260 herbs that is ~112 MB and a ~5 MB first screen. The thumbnail pipeline
+takes that to ~10 MB and ~0.5 MB. `scripts/compress-image.cjs` also needs
+sharp and has been dead this whole time.
+
+Parked, not started: Botanical Mycelium graph (§13 — the best remaining piece,
+740 recorded edges behind it), the three flagship portals (§27), and the
+ecology/human-state/preparation rails as state changes rather than filters
+(§24–26).
+
 ## OPEN — three things waiting on Robin
 
 ### 1 · The three held herb records
