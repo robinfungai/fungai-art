@@ -191,7 +191,13 @@ const BIOMES = [
   ['ARID',          /\b(aloe|jojoba|chaparral|syrian rue|peganum|damiana|ephedra|desert|hoodia|kanna|sceletium|frankincense|myrrh|boswellia|commiphora|opuntia|prickly pear|yucca)\b/i],
   ['STEPPE',        /\b(astragalus|licorice|glycyrrhiza|schisandra|saffron|crocus|steppe|mongolian|siberian|eleuthero|milk vetch)\b/i],
 ];
+// RECORDED FIRST. herbs.ts now carries an `ecology` block (see
+// scripts/build-herb-ecology.cjs); the keyword table below is only the
+// fallback for records that have none. That is the whole point of the
+// field: a curated biome should never be overruled by a regex.
 function ecology(h) {
+  const rec = h.ecology && Array.isArray(h.ecology.biomes) ? h.ecology.biomes : null;
+  if (rec && rec.length) return rec;
   const src = `${h.name} ${h.botanical || ''} ${h.family || ''}`;
   return BIOMES.filter(([, re]) => re.test(src)).map(([label]) => label);
 }
@@ -293,7 +299,11 @@ const records = HERBS.map(h => {
       family: h.family || '', epithet: h.epithet || '', type,
       layers: {
         identity:     { family: h.family || '', binomial, epithet: h.epithet || '', type, parts },
-        ecology:      { biomes: eco, origin: h.origin_region || '', tradition: TRADITION_LABEL[h.origin_region] || 'GLOBAL' },
+        ecology:      { biomes: eco, origin: h.origin_region || '',
+                        tradition: TRADITION_LABEL[h.origin_region] || 'GLOBAL',
+                        native_range: (h.ecology && h.ecology.native_range) || [],
+                        habitat: (h.ecology && h.ecology.habitat) || '',
+                        source: (h.ecology && h.ecology.source) || 'derived' },
         material:     { parts, preparationNote: h.best_preparation || '' },
         chemistry:    { classes: chem, pharmacology: h.pharmacology || '' },
         tradition:    { meridians: h.tcm_meridians || [], element: h.tcm_element || '',
@@ -372,4 +382,13 @@ console.log('    chemistry classes ' + pct(covered(s => s.chem)));
 console.log('    human state       ' + pct(covered(s => s.states)));
 console.log('    preparation       ' + pct(covered(s => s.preparations)));
 console.log('    ecology / biome   ' + pct(covered(s => s.ecology)) + '   <- lowest-confidence facet');
+// Biome is not the whole of ecology, and reporting it alone understates what
+// the map can actually place. native_range is recorded from origin_region on
+// almost every herb; habitat prose is the part still waiting to be written.
+{
+  const range   = HERBS.filter(h => h.ecology && (h.ecology.native_range || []).length).length;
+  const habitat = HERBS.filter(h => h.ecology && h.ecology.habitat).length;
+  console.log('    native range      ' + pct(range) + '   <- what the map can place today');
+  console.log('    habitat written   ' + pct(habitat) + '   <- see docs/ECOLOGY-GAPS.txt');
+}
 console.log(`  relationship graph: ${edgeTotal} resolved synergy edges, ${unresolved} declared mentions unresolved`);

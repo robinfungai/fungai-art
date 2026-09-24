@@ -70,6 +70,11 @@ const HERBS = [
     family: 'Ericaceae',
     epithet: 'The eye-berry',
     origin_region: 'Nordic wild',
+    ecology: {
+      native_range: ['Fennoscandia', 'Northern Europe'],
+      biomes: ['BOREAL FOREST'],
+      source: 'derived',
+    },
     evidence_grade: 'B+',
   },
 
@@ -146,6 +151,10 @@ const HERBS = [
     family: 'Apiaceae',
     epithet: 'The woman\'s root',
     origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
     evidence_grade: 'B+',
   },
 
@@ -217,6 +226,10 @@ const HERBS = [
     family: 'Rosaceae',
     epithet: 'The dark chokeberry',
     origin_region: 'Nordic wild',
+    ecology: {
+      native_range: ['Fennoscandia', 'Northern Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'B+',
   },
 
@@ -296,6 +309,12 @@ const HERBS = [
     family:             'Solanaceae',
     epithet:            'The steady anchor',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      habitat:
+        'BOTANICAL & IDENTIFICATION Primary Species: Withania somnifera (L.) Dunal (Ashwagandha, Indian Ginseng, Winter Cherry) — South Asian native (India, Pakistan, Sri Lanka);',
+      source: 'recorded',
+    },
     evidence_grade:     'A',
   },
 
@@ -366,6 +385,13 @@ const HERBS = [
     family:             'Fabaceae',
     epithet:            'The outer shield',
     origin_region:      'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      biomes: ['STEPPE'],
+      habitat:
+        '(Astragalus, Milk Vetch, Huang Qi) — Chinese native;',
+      source: 'mixed',
+    },
     evidence_grade:     'B+',
   },
 
@@ -437,6 +463,12 @@ const HERBS = [
     family: 'Plantaginaceae',
     epithet: 'The memory-water',
     origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      habitat:
+        'grows in wetland environments;',
+      source: 'recorded',
+    },
     evidence_grade: 'A',
   },
 
@@ -512,6 +544,10 @@ const HERBS = [
     family: 'Berberidaceae',
     epithet: 'The berberine thorn',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'A',
   },
 
@@ -666,6 +702,13 @@ const HERBS = [
     family: 'Nymphaeaceae',
     epithet: 'The Nile\'s dream',
     origin_region: 'African',
+    ecology: {
+      native_range: ['Africa'],
+      biomes: ['BOG'],
+      habitat:
+        '(Blue Lotus, Blue Water Lily, Egyptian Blue Lotus) — Ancient Egyptian native;',
+      source: 'mixed',
+    },
     evidence_grade: 'traditional',
   },
 
@@ -739,6 +782,10 @@ const HERBS = [
     family: 'Acoraceae',
     epithet: 'The sweet flag',
     origin_region: 'Global',
+    ecology: {
+      biomes: ['BOG'],
+      source: 'derived',
+    },
     evidence_grade: 'traditional',
   },
 
@@ -810,6 +857,12 @@ const HERBS = [
     family: 'Ranunculaceae',
     epithet: 'The prophet\'s seed',
     origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      habitat:
+        '(Black Cumin, Nigella, Kalonji, Black Seeds) — Middle Eastern/South Asian native;',
+      source: 'recorded',
+    },
     evidence_grade: 'A',
   },
 
@@ -880,6 +933,12 @@ const HERBS = [
     family: 'Juglandaceae',
     epithet: 'The vermifuge nut',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      habitat:
+        '(Black Walnut) — North American native;',
+      source: 'recorded',
+    },
     evidence_grade: 'B',
   },
 
@@ -956,6 +1015,11 @@ const HERBS = [
     family: 'Fucaceae',
     epithet: 'The sea\'s mineral',
     origin_region: 'Nordic wild',
+    ecology: {
+      native_range: ['Fennoscandia', 'Northern Europe'],
+      biomes: ['COAST'],
+      source: 'derived',
+    },
     evidence_grade: 'B-',
   },
 
@@ -1027,6 +1091,12 @@ const HERBS = [
     family: 'Ericaceae',
     epithet: 'The blue field-jewel',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      habitat:
+        'Historical Context: Native American traditional food + medicine;',
+      source: 'recorded',
+    },
     evidence_grade: 'A',
   },
 
@@ -1104,6 +1174,13 @@ const HERBS = [
     family: 'Fabaceae',
     epithet: 'The dreaming tree',
     origin_region: 'Central American',
+    ecology: {
+      native_range: ['Central America'],
+      biomes: ['TROPICAL'],
+      habitat:
+        'BOTANICAL & IDENTIFICATION Primary Species: Calliandra angustifolia (Spruce ex Benth.) Burkart (Bobinsana, Pink Powder Puff Tree) — Amazonian native (Peru, Ecuador, Colombia, Brazil);',
+      source: 'mixed',
+    },
     evidence_grade: 'traditional',
   },
 
@@ -1176,6 +1253,13 @@ const HERBS = [
     family: 'Plantaginaceae',
     epithet: 'The wayside healer',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['MEADOW'],
+      habitat:
+        '(Broadleaf Plantain, Common Plantain, White Man\'s Foot) — Widespread temperate native;',
+      source: 'mixed',
+    },
     evidence_grade: 'B-',
   },
 
@@ -1249,6 +1333,11 @@ const HERBS = [
     family: 'Asteraceae',
     epithet: 'The blood-cleanser',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['MEADOW'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -1320,6 +1409,10 @@ const HERBS = [
     family: 'Asparagaceae',
     epithet: 'The vein-lifter',
     origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      source: 'derived',
+    },
     evidence_grade: 'B+',
   },
 
@@ -1391,6 +1484,10 @@ const HERBS = [
     family: 'Asteraceae',
     epithet: 'The migraine hood',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'A',
   },
   // ============================================================
@@ -1471,6 +1568,13 @@ const HERBS = [
     family:             'Passifloraceae',
     epithet:            'The pleasure nervine',
     origin_region:      'Central American',
+    ecology: {
+      native_range: ['Central America'],
+      biomes: ['ARID'],
+      habitat:
+        '(Damiana, Mexican Damiana) — Mexican + Central American native;',
+      source: 'mixed',
+    },
     evidence_grade:     'B',
   },
 
@@ -1550,6 +1654,13 @@ const HERBS = [
     family: 'Asteraceae',
     epithet: 'The weed that runs deep',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['MEADOW'],
+      habitat:
+        'Weber ex Wiggers (Dandelion, Lion\'s Tooth, Taraxacum) — Eurasian native;',
+      source: 'mixed',
+    },
     evidence_grade: 'B',
   },
 
@@ -1622,6 +1733,10 @@ const HERBS = [
     family: 'Adoxaceae',
     epithet: 'The elder\'s dark fruit',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'B+',
   },
 
@@ -1700,6 +1815,12 @@ const HERBS = [
     family: 'Asteraceae',
     epithet: 'The dream herb',
     origin_region: 'Central American',
+    ecology: {
+      native_range: ['Central America'],
+      habitat:
+        '— Mexican native (Oaxaca, Chiapas regions);',
+      source: 'recorded',
+    },
     evidence_grade: 'traditional',
   },
 
@@ -1772,6 +1893,11 @@ const HERBS = [
     family: 'Zingiberaceae',
     epithet: 'The queen of spice',
     origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      biomes: ['TROPICAL'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -1847,6 +1973,11 @@ const HERBS = [
     family: 'Erythroxylaceae',
     epithet: 'The joy-tree',
     origin_region: 'Central American',
+    ecology: {
+      native_range: ['Central America'],
+      biomes: ['TROPICAL'],
+      source: 'derived',
+    },
     evidence_grade: 'traditional',
   },
 
@@ -1923,6 +2054,12 @@ const HERBS = [
     family: 'Solanaceae',
     epithet: 'The circulator',
     origin_region: 'Central American',
+    ecology: {
+      native_range: ['Central America'],
+      habitat:
+        'Historical Context: Mesoamerican native use (5000+ years);',
+      source: 'recorded',
+    },
     evidence_grade: 'B+',
   },
 
@@ -1998,6 +2135,11 @@ const HERBS = [
     family: 'Asteraceae',
     epithet: 'The evening apple',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['MEADOW'],
+      source: 'derived',
+    },
     evidence_grade: 'A',
   },
 
@@ -2073,6 +2215,12 @@ const HERBS = [
     family: 'Pedaliaceae',
     epithet: 'The desert claw',
     origin_region: 'African',
+    ecology: {
+      native_range: ['Africa'],
+      habitat:
+        '(Devil’s Claw) — Perennial plant native to the Kalahari and Namibian regions of southern Africa;',
+      source: 'recorded',
+    },
     evidence_grade: 'B+',
   },
 
@@ -2146,6 +2294,12 @@ const HERBS = [
     family: 'Asteraceae',
     epithet: 'The prairie shield',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      habitat:
+        'Historical Context: North American native;',
+      source: 'recorded',
+    },
     evidence_grade: 'B+',
   },
 
@@ -2217,6 +2371,13 @@ const HERBS = [
     family: 'Asteraceae',
     epithet: 'The sun-cup',
     origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      biomes: ['GARDEN'],
+      habitat:
+        '(Calendula, Pot Marigold, Marigold) — Mediterranean native;',
+      source: 'mixed',
+    },
     evidence_grade: 'B+',
   },
 
@@ -2289,6 +2450,10 @@ const HERBS = [
     family: 'Apiaceae',
     epithet: 'The gentle seed',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -2362,6 +2527,13 @@ const HERBS = [
     family: 'Rubiaceae',
     epithet: 'The Amazon vine',
     origin_region: 'South American',
+    ecology: {
+      native_range: ['South America'],
+      biomes: ['TROPICAL'],
+      habitat:
+        '(Cat\'s Claw, Uña de Gato) — Peruvian Amazon native;',
+      source: 'mixed',
+    },
     evidence_grade: 'B',
   },
 
@@ -2437,6 +2609,10 @@ const HERBS = [
     family: 'Lamiaceae',
     epithet: 'The moon-pod',
     origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      source: 'derived',
+    },
     evidence_grade: 'B+',
   },
 
@@ -2509,6 +2685,10 @@ const HERBS = [
     family: 'Caryophyllaceae',
     epithet: 'The little star',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'traditional',
   },
 
@@ -2580,6 +2760,10 @@ const HERBS = [
     family: 'Asteraceae',
     epithet: 'The golden root',
     origin_region: 'Central American',
+    ecology: {
+      native_range: ['Central America'],
+      source: 'derived',
+    },
     evidence_grade: 'traditional',
   },
 
@@ -2655,6 +2839,11 @@ const HERBS = [
     family: 'Lauraceae',
     epithet: 'The sweet warmer',
     origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      biomes: ['TROPICAL'],
+      source: 'derived',
+    },
     evidence_grade: 'A',
   },
 
@@ -2727,6 +2916,11 @@ const HERBS = [
     family: 'Myrtaceae',
     epithet: 'The nail-bud',
     origin_region: 'Global',
+    ecology: {
+      habitat:
+        '& L.M.Perry (Cloves, Cengkeh) — Indonesian (Maluku Islands/"Spice Islands") native;',
+      source: 'recorded',
+    },
     evidence_grade: 'B+',
   },
 
@@ -2797,6 +2991,11 @@ const HERBS = [
     family: 'Erythroxylaceae',
     epithet: 'The Andean leaf',
     origin_region: 'South American',
+    ecology: {
+      native_range: ['South America'],
+      biomes: ['MOUNTAIN', 'TROPICAL'],
+      source: 'derived',
+    },
     evidence_grade: 'traditional',
   },
 
@@ -2871,6 +3070,13 @@ const HERBS = [
     family: 'Ericaceae',
     epithet: 'The bog-red',
     origin_region: 'Nordic wild',
+    ecology: {
+      native_range: ['Fennoscandia', 'Northern Europe'],
+      biomes: ['BOG'],
+      habitat:
+        'grows in wetland environments.',
+      source: 'mixed',
+    },
     evidence_grade: 'A',
   },
   // ============================================================
@@ -2944,6 +3150,12 @@ const HERBS = [
     family: 'Parmeliaceae',
     epithet: 'The tundra lichen',
     origin_region: 'Nordic wild',
+    ecology: {
+      native_range: ['Fennoscandia', 'Northern Europe'],
+      habitat:
+        '(Iceland Moss, Lichen islandicus) — A lichen (symbiosis of fungus + alga) native to arctic and subarctic regions;',
+      source: 'recorded',
+    },
     evidence_grade: 'B-',
   },
 
@@ -3017,6 +3229,12 @@ const HERBS = [
     family: 'Adoxaceae',
     epithet: 'The fever-breaker',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      habitat:
+        '(Black Elder, European Elder) — European native;',
+      source: 'recorded',
+    },
     evidence_grade: 'B',
   },
 
@@ -3088,6 +3306,11 @@ const HERBS = [
     family: 'Ephedraceae',
     epithet: 'The desert stimulant',
     origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      biomes: ['ARID'],
+      source: 'derived',
+    },
     evidence_grade: 'A',
   },
 
@@ -3160,6 +3383,11 @@ const HERBS = [
     family: 'Myrtaceae',
     epithet: 'The blue gum',
     origin_region: 'Global',
+    ecology: {
+      habitat:
+        '(Blue Gum Eucalyptus) — Australian native;',
+      source: 'recorded',
+    },
     evidence_grade: 'B+',
   },
 
@@ -3229,6 +3457,10 @@ const HERBS = [
     family: 'Orobanchaceae',
     epithet: 'The vision-clearer',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'B-',
   },
 
@@ -3295,6 +3527,12 @@ const HERBS = [
     family: 'Rubiaceae',
     epithet: 'The savanna spike',
     origin_region: 'African',
+    ecology: {
+      native_range: ['Africa'],
+      habitat:
+        '— Shrub native to West Africa (Nigeria and surrounding regions).',
+      source: 'recorded',
+    },
     evidence_grade: 'B-',
   },
 
@@ -3366,6 +3604,13 @@ const HERBS = [
     family: 'Apiaceae',
     epithet: 'The sweet stalk',
     origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      biomes: ['GARDEN'],
+      habitat:
+        '(Fennel) — Aromatic perennial/biannual plant native to Mediterranean, now naturalized worldwide.',
+      source: 'mixed',
+    },
     evidence_grade: 'B+',
   },
 
@@ -3443,6 +3688,12 @@ const HERBS = [
     family: 'Amaryllidaceae',
     epithet: 'The stinking rose',
     origin_region: 'Global',
+    ecology: {
+      biomes: ['GARDEN'],
+      habitat:
+        '(Garlic, Common Garlic) — Temperate Asian native (Central Asia);',
+      source: 'mixed',
+    },
     evidence_grade: 'B+',
   },
 
@@ -3518,6 +3769,13 @@ const HERBS = [
     family: 'Ginkgoaceae',
     epithet: 'The living fossil',
     origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      biomes: ['FOREST'],
+      habitat:
+        '(Ginkgo, Maidenhair Tree, Living Fossil) — Ancient Chinese native;',
+      source: 'mixed',
+    },
     evidence_grade: 'A',
   },
 
@@ -3596,6 +3854,10 @@ const HERBS = [
     family: 'Araliaceae',
     epithet: 'The man-root',
     origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
     evidence_grade: 'A',
   },
 
@@ -3668,6 +3930,10 @@ const HERBS = [
     family:             'Solanaceae',
     epithet:            'The bright fruit',
     origin_region:      'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
     evidence_grade:     'B',
   },
 
@@ -3744,6 +4010,13 @@ const HERBS = [
     family: 'Apiaceae',
     epithet: 'The scholar\'s herb',
     origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      biomes: ['BOG'],
+      habitat:
+        'BOTANICAL & IDENTIFICATION Primary Species: Centella asiatica (L.) Urban (Gotu Kola, Asiatic Pennywort, Brahmi) — Tropical Asian native (India, Southeast Asia);',
+      source: 'mixed',
+    },
     evidence_grade: 'B',
   },
 
@@ -3815,6 +4088,10 @@ const HERBS = [
     family: 'Lamiaceae',
     epithet: 'The creeping cure',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'traditional',
   },
 
@@ -3888,6 +4165,13 @@ const HERBS = [
     family: 'Sapindaceae',
     epithet: 'The Amazonian eye',
     origin_region: 'Central American',
+    ecology: {
+      native_range: ['Central America'],
+      biomes: ['TROPICAL'],
+      habitat:
+        'BOTANICAL & IDENTIFICATION Primary Species: Paullinia cupana Kunth (Guarana, Guaraná) — Amazonian native (Brazil, Peru);',
+      source: 'mixed',
+    },
     evidence_grade: 'B',
   },
 
@@ -3966,6 +4250,11 @@ const HERBS = [
     family: 'Lamiaceae',
     epithet: 'The queen of herbs',
     origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      biomes: ['GARDEN'],
+      source: 'derived',
+    },
     evidence_grade: 'B+',
   },
 
@@ -4045,6 +4334,10 @@ const HERBS = [
     family: 'Cannabaceae',
     epithet: 'The bitter sleeper',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -4119,6 +4412,11 @@ const HERBS = [
     family: 'Equisetaceae',
     epithet: 'The living fossil',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['BOG'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -4192,6 +4490,13 @@ const HERBS = [
     family: 'Aquifoliaceae',
     epithet: 'The dream tea',
     origin_region: 'Central American',
+    ecology: {
+      native_range: ['Central America'],
+      biomes: ['TROPICAL'],
+      habitat:
+        '(Guayusa, Wayusa) — Ecuadorian Amazon native;',
+      source: 'mixed',
+    },
     evidence_grade: 'traditional',
   },
 
@@ -4267,6 +4572,13 @@ const HERBS = [
     family: 'Rosaceae',
     epithet: 'The heart-hedge',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['FOREST'],
+      habitat:
+        'distributed temperate Northern Hemisphere.',
+      source: 'mixed',
+    },
     evidence_grade: 'A',
   },
 
@@ -4345,6 +4657,12 @@ const HERBS = [
     family: 'Berberidaceae',
     epithet: 'The mountain climber',
     origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      habitat:
+        '(Horny Goat Weed, Yin Yang Huo, Epimedium, Bishop\'s Hat) — Asian native (China, Korea, Japan, Tibet);',
+      source: 'recorded',
+    },
     evidence_grade: 'B',
   },
   // ============================================================
@@ -4420,6 +4738,13 @@ const HERBS = [
     family: 'Moringaceae',
     epithet: 'The tree of life',
     origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      biomes: ['TROPICAL'],
+      habitat:
+        '(Moringa, Drumstick Tree, Horseradish Tree, Miracle Tree) — Indian native (now pantropical);',
+      source: 'mixed',
+    },
     evidence_grade: 'B',
   },
 
@@ -4497,6 +4822,12 @@ const HERBS = [
     family: 'Lamiaceae',
     epithet: 'The lion-hearted mother',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      habitat:
+        'naturalized across temperate regions globally.',
+      source: 'recorded',
+    },
     evidence_grade: 'B',
   },
 
@@ -4569,6 +4900,11 @@ const HERBS = [
     family: 'Rubiaceae',
     epithet: 'The two-faced leaf',
     origin_region: 'Global',
+    ecology: {
+      habitat:
+        '(Kratom, Ketum, Mitragyna) — Southeast Asian (Indonesia, Malaysia, Thailand) native;',
+      source: 'recorded',
+    },
     evidence_grade: 'B-',
   },
 
@@ -4644,6 +4980,11 @@ const HERBS = [
     family: 'Rosaceae',
     epithet: 'The little alchemist',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['MEADOW'],
+      source: 'derived',
+    },
     evidence_grade: 'B-',
   },
 
@@ -4720,6 +5061,13 @@ const HERBS = [
     family: 'Lamiaceae',
     epithet: 'The blue calm',
     origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      biomes: ['GARDEN'],
+      habitat:
+        '(English lavender, narrow-leafed lavender) — Mediterranean native;',
+      source: 'mixed',
+    },
     evidence_grade: 'B+',
   },
 
@@ -4796,6 +5144,13 @@ const HERBS = [
     family: 'Lamiaceae',
     epithet: 'The gladdening leaf',
     origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      biomes: ['GARDEN'],
+      habitat:
+        '(Lemon Balm, Melissa, Sweet Balm, Garden Balm) — Mediterranean native;',
+      source: 'mixed',
+    },
     evidence_grade: 'B+',
   },
 
@@ -4870,6 +5225,13 @@ const HERBS = [
     family: 'Malvaceae',
     epithet: 'The village elder-tree',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['FOREST'],
+      habitat:
+        'widespread temperate distribution.',
+      source: 'mixed',
+    },
     evidence_grade: 'B',
   },
   // ============================================================
@@ -5019,6 +5381,11 @@ const HERBS = [
     family: 'Cupressaceae',
     epithet: 'The needle-berry',
     origin_region: 'Nordic wild',
+    ecology: {
+      native_range: ['Fennoscandia', 'Northern Europe'],
+      biomes: ['BOREAL FOREST'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -5092,6 +5459,12 @@ const HERBS = [
     family: 'Aizoaceae',
     epithet: 'The mood lift',
     origin_region: 'Global',
+    ecology: {
+      biomes: ['ARID'],
+      habitat:
+        '(Kanna, Sceletium) — South African (Cape region) native;',
+      source: 'mixed',
+    },
     evidence_grade: 'B',
   },
 
@@ -5168,6 +5541,10 @@ const HERBS = [
     family: 'Piperaceae',
     epithet: 'The council-root',
     origin_region: 'Global',
+    ecology: {
+      biomes: ['TROPICAL'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -5246,6 +5623,13 @@ const HERBS = [
     family: 'Fabaceae',
     epithet: 'The harmoniser',
     origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      biomes: ['STEPPE'],
+      habitat:
+        '(Chinese licorice, Gan Cao) — Leguminous perennials native to Europe/Asia;',
+      source: 'mixed',
+    },
     evidence_grade: 'A',
   },
 
@@ -5318,6 +5702,13 @@ const HERBS = [
     family: 'Ericaceae',
     epithet: 'The lingon',
     origin_region: 'Nordic wild',
+    ecology: {
+      native_range: ['Fennoscandia', 'Northern Europe'],
+      biomes: ['BOREAL FOREST'],
+      habitat:
+        '(Lingonberry, Cowberry, Mountain Cranberry) — Northern temperate/boreal native (Scandinavia, Canada, Russia, Northern Europe).',
+      source: 'mixed',
+    },
     evidence_grade: 'B',
   },
 
@@ -5534,6 +5925,13 @@ const HERBS = [
     family:             'Brassicaceae',
     epithet:            'The Andean root',
     origin_region:      'Central American',
+    ecology: {
+      native_range: ['Central America'],
+      biomes: ['MOUNTAIN'],
+      habitat:
+        '(Maca, Peruvian Ginseng) — Andean (Peru) native;',
+      source: 'mixed',
+    },
     evidence_grade:     'B',
   },
 
@@ -5604,6 +6002,11 @@ const HERBS = [
     family: 'Brassicaceae',
     epithet: 'The dark root',
     origin_region: 'Central American',
+    ecology: {
+      native_range: ['Central America'],
+      biomes: ['MOUNTAIN'],
+      source: 'derived',
+    },
     evidence_grade: 'B-',
   },
 
@@ -5677,6 +6080,11 @@ const HERBS = [
     family: 'Lamiaceae',
     epithet: 'The joy-herb',
     origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      biomes: ['GARDEN'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -5751,6 +6159,13 @@ const HERBS = [
     family: 'Rosaceae',
     epithet: 'The meadow\'s aspirin',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['MEADOW', 'BOG'],
+      habitat:
+        '(Meadowsweet, Queen of the Meadow) — European native;',
+      source: 'mixed',
+    },
     evidence_grade: 'B',
   },
 
@@ -5823,6 +6238,12 @@ const HERBS = [
     family: 'Asteraceae',
     epithet: 'The liver\'s shield',
     origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      habitat:
+        '(Milk Thistle, Holy Thistle, Mary\'s Thistle) — Mediterranean native;',
+      source: 'recorded',
+    },
     evidence_grade: 'A',
   },
 
@@ -5901,6 +6322,11 @@ const HERBS = [
     family: 'Asteraceae',
     epithet: 'The dream-guide',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['MEADOW'],
+      source: 'derived',
+    },
     evidence_grade: 'traditional',
   },
 
@@ -5973,6 +6399,13 @@ const HERBS = [
     family:             'Scrophulariaceae',
     epithet:            'The soft lung',
     origin_region:      'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['MEADOW'],
+      habitat:
+        '(Common/Great Mullein) — Mediterranean native;',
+      source: 'mixed',
+    },
     evidence_grade:     'B',
   },
 
@@ -6047,6 +6480,13 @@ const HERBS = [
     family: 'Olacaceae',
     epithet: 'The potency-wood',
     origin_region: 'Central American',
+    ecology: {
+      native_range: ['Central America'],
+      biomes: ['TROPICAL'],
+      habitat:
+        '(Muira Puama, “Potency Wood”) — Small Amazonian tree/shrub native to Brazil and neighboring regions;',
+      source: 'mixed',
+    },
     evidence_grade: 'traditional',
   },
 
@@ -6130,6 +6570,10 @@ const HERBS = [
     family:             'Fabaceae',
     epithet:            'The returning wanting',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'B',
   },
 
@@ -6204,6 +6648,10 @@ const HERBS = [
     family: 'Urticaceae',
     epithet: 'The mineral spring',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'B+',
   },
 
@@ -6274,6 +6722,12 @@ const HERBS = [
     family:             'Poaceae',
     epithet:            'The mineral field',
     origin_region:      'European',
+    ecology: {
+      native_range: ['Europe'],
+      habitat:
+        '(Oats) — Annual grass cultivated worldwide in temperate regions.',
+      source: 'recorded',
+    },
     evidence_grade:     'B+',
   },
   // ============================================================
@@ -6353,6 +6807,13 @@ const HERBS = [
     family: 'Lamiaceae',
     epithet: 'Joy of the mountain',
     origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      biomes: ['MOUNTAIN', 'GARDEN'],
+      habitat:
+        '(Wild Oregano, Mediterranean Oregano) — Mediterranean native;',
+      source: 'mixed',
+    },
     evidence_grade: 'B-',
   },
 
@@ -6428,6 +6889,12 @@ const HERBS = [
     family: 'Passifloraceae',
     epithet: 'The vine that unclenches',
     origin_region: 'Central American',
+    ecology: {
+      native_range: ['Central America'],
+      habitat:
+        'Historical Context: Native American traditional use (300+ years);',
+      source: 'recorded',
+    },
     evidence_grade: 'B+',
   },
 
@@ -6503,6 +6970,10 @@ const HERBS = [
     family: 'Bignoniaceae',
     epithet: 'The trumpet tree',
     origin_region: 'South American',
+    ecology: {
+      native_range: ['South America'],
+      source: 'derived',
+    },
     evidence_grade: 'C',
   },
 
@@ -6573,6 +7044,10 @@ const HERBS = [
     family:             'Pinaceae',
     epithet:            'The golden dust',
     origin_region:      'Global',
+    ecology: {
+      biomes: ['BOREAL FOREST'],
+      source: 'derived',
+    },
     evidence_grade:     'C',
   },
 
@@ -6650,6 +7125,13 @@ const HERBS = [
     family: 'Crassulaceae',
     epithet: 'The high-altitude fire',
     origin_region: 'Nordic wild',
+    ecology: {
+      native_range: ['Fennoscandia', 'Northern Europe'],
+      biomes: ['MOUNTAIN'],
+      habitat:
+        '— Arctic/Subarctic/Alpine native (Scandinavia, Russia, Central Asia, China);',
+      source: 'mixed',
+    },
     evidence_grade: 'B+',
   },
 
@@ -6726,6 +7208,13 @@ const HERBS = [
     family: 'Lamiaceae',
     epithet: 'The bright memory',
     origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      biomes: ['GARDEN'],
+      habitat:
+        'Rosmarinus officinalis L.) — Woody evergreen shrub native to the Mediterranean;',
+      source: 'mixed',
+    },
     evidence_grade: 'B',
   },
 
@@ -6800,6 +7289,13 @@ const HERBS = [
     family: 'Iridaceae',
     epithet: 'The red thread',
     origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      biomes: ['STEPPE'],
+      habitat:
+        '(Saffron, Crocus, Red Gold) — Mediterranean native (Iran largest producer);',
+      source: 'mixed',
+    },
     evidence_grade: 'A',
   },
 
@@ -6872,6 +7368,11 @@ const HERBS = [
     family: 'Schisandraceae',
     epithet: 'The five-flavour berry',
     origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      biomes: ['STEPPE'],
+      source: 'derived',
+    },
     evidence_grade: 'B+',
   },
 
@@ -6948,6 +7449,11 @@ const HERBS = [
     family:             'Mineral resin',  // not a plant — fulvic/humic complex
     epithet:            'The mountain resin',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      biomes: ['MOUNTAIN'],
+      source: 'derived',
+    },
     evidence_grade:     'B',
   },
 
@@ -7021,6 +7527,12 @@ const HERBS = [
     family: 'Lamiaceae',
     epithet: 'The quiet mind',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      habitat:
+        '(American Skullcap, Helmet Flower, Mad-Dog Weed) — North American native;',
+      source: 'recorded',
+    },
     evidence_grade: 'B',
   },
   // ─────────────────────────────────────────────
@@ -7094,6 +7606,10 @@ const HERBS = [
     family: 'Asteraceae',
     epithet: 'The meadow\'s golden flush',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'B+',
   },
 
@@ -7167,6 +7683,11 @@ const HERBS = [
     family: 'Arthrospiraceae',
     epithet: 'The blue-green thread',
     origin_region: 'Global',
+    ecology: {
+      habitat:
+        'Native tropical/subtropical alkaline lakes (Lake Texcoco Mexico—Aztec staple, Lake Chad Africa, Hawaiian ponds).',
+      source: 'recorded',
+    },
     evidence_grade: 'B+',
   },
 
@@ -7252,6 +7773,11 @@ const HERBS = [
     family: 'Hypericaceae',
     epithet: 'Captured sunshine',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['MEADOW'],
+      source: 'derived',
+    },
     evidence_grade: 'A',
   },
 
@@ -7322,6 +7848,12 @@ const HERBS = [
     family: 'Schisandraceae',
     epithet: 'The eight-point star',
     origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      habitat:
+        '(Star Anise, Chinese Star Anise, Badyan) — Southeast Asian (southern China, Vietnam) native;',
+      source: 'recorded',
+    },
     evidence_grade: 'B',
   },
 
@@ -7395,6 +7927,13 @@ const HERBS = [
     family: 'Lamiaceae',
     epithet: 'The garden antiseptic',
     origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      biomes: ['GARDEN'],
+      habitat:
+        '(Common Thyme, Garden Thyme) — Mediterranean native;',
+      source: 'mixed',
+    },
     evidence_grade: 'B+',
   },
 
@@ -7542,6 +8081,10 @@ const HERBS = [
     family: 'Tremellaceae',
     epithet: 'The silver ear',
     origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -7618,6 +8161,13 @@ const HERBS = [
     family: 'Zingiberaceae',
     epithet: 'The golden mender',
     origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      biomes: ['TROPICAL'],
+      habitat:
+        '(Turmeric) — Rhizomatous perennial native to South Asia;',
+      source: 'mixed',
+    },
     evidence_grade: 'A',
   },
 
@@ -7690,6 +8240,11 @@ const HERBS = [
     family: 'Orchidaceae',
     epithet: 'The comfort bean',
     origin_region: 'Central American',
+    ecology: {
+      native_range: ['Central America'],
+      biomes: ['TROPICAL'],
+      source: 'derived',
+    },
     evidence_grade: 'traditional',
   },
 
@@ -7766,6 +8321,10 @@ const HERBS = [
     family: 'Caprifoliaceae',
     epithet: 'The root that pulls sleep down',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -7844,6 +8403,11 @@ const HERBS = [
     family: 'Verbenaceae',
     epithet: 'The druids\' herb',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['MEADOW'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -7919,6 +8483,12 @@ const HERBS = [
     family: 'Lamiaceae',
     epithet: 'The moon-pod',
     origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      habitat:
+        '(Vitex, Chaste Tree, Chasteberry, Abraham\'s Balm) — Mediterranean native;',
+      source: 'recorded',
+    },
     evidence_grade: 'B+',
   },
 
@@ -7992,6 +8562,12 @@ const HERBS = [
     family: 'Lamiaceae',
     epithet: 'The lion\'s tail',
     origin_region: 'African',
+    ecology: {
+      native_range: ['Africa'],
+      habitat:
+        '(Wild Dagga, Lion\'s Ear, Lionsbread) — South African native;',
+      source: 'recorded',
+    },
     evidence_grade: 'traditional',
   },
 
@@ -8066,6 +8642,11 @@ const HERBS = [
     family: 'Salicaceae',
     epithet: 'The river-tree',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['BOG'],
+      source: 'derived',
+    },
     evidence_grade: 'A',
   },
 
@@ -8140,6 +8721,10 @@ const HERBS = [
     family: 'Asteraceae',
     epithet: 'The bitter green',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -8211,6 +8796,13 @@ const HERBS = [
     family: 'Asteraceae',
     epithet: 'The soldier\'s herb',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['MEADOW'],
+      habitat:
+        '(Yarrow, Milfoil) — Perennial herb native to temperate regions of the Northern Hemisphere;',
+      source: 'mixed',
+    },
     evidence_grade: 'B',
   },
 
@@ -8282,6 +8874,10 @@ const HERBS = [
     family: 'Polygonaceae',
     epithet: 'The iron bitter',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'C',
   },
 
@@ -8360,6 +8956,12 @@ const HERBS = [
     family: 'Aquifoliaceae',
     epithet: 'The green fire',
     origin_region: 'Central American',
+    ecology: {
+      native_range: ['Central America'],
+      habitat:
+        '(Yerba Mate, Mate) — South American (Paraguay, Argentina, Brazil) native;',
+      source: 'recorded',
+    },
     evidence_grade: 'B',
   },
 
@@ -8432,6 +9034,10 @@ const HERBS = [
     family: 'Ulmaceae',
     epithet: 'The soothing sheath',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
   // ─────────────────────────────────────────────
@@ -8506,6 +9112,10 @@ const HERBS = [
     family: 'Lamiaceae',
     epithet: 'The cool relay',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'A',
   },
 
@@ -8576,6 +9186,11 @@ const HERBS = [
     family: 'Pinaceae',
     epithet: 'The forest breath',
     origin_region: 'Nordic wild',
+    ecology: {
+      native_range: ['Fennoscandia', 'Northern Europe'],
+      biomes: ['BOREAL FOREST'],
+      source: 'derived',
+    },
     evidence_grade: 'C',
   },
 
@@ -8649,6 +9264,10 @@ const HERBS = [
     family:             'Rhamnaceae',
     epithet:            'The sweet mother',
     origin_region:      'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
     evidence_grade:     'B',
   },
 
@@ -8725,6 +9344,10 @@ const HERBS = [
     family: 'Polygonaceae',
     epithet: 'The purging judge',
     origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
     evidence_grade: 'A',
   },
 
@@ -8797,6 +9420,12 @@ const HERBS = [
     family:             'Rosaceae',
     epithet:            'The heart-opener',
     origin_region:      'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      habitat:
+        'BOTANICAL & IDENTIFICATION Primary Species: Rosa gallica, Rosa centifolia, Rosa damascena and related old garden roses — perennial shrubs native to and cultivated across Europe, Western Asia, and many temperate regions worldwide.',
+      source: 'recorded',
+    },
     evidence_grade:     'B',
   },
 
@@ -8872,6 +9501,13 @@ const HERBS = [
     family: 'Lamiaceae',
     epithet: 'The wise leaf',
     origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      biomes: ['GARDEN'],
+      habitat:
+        '(Sage, Garden Sage, Common Sage) — Mediterranean native;',
+      source: 'mixed',
+    },
     evidence_grade: 'B',
   },
 
@@ -8945,6 +9581,12 @@ const HERBS = [
     family: 'Arecaceae',
     epithet: 'The palmetto shield',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      habitat:
+        'Bartram) Small (Saw Palmetto, Sabal serrulatum) — Small, slow-growing palm native to the southeastern United States (Florida, coastal Carolinas, Gulf Coast).',
+      source: 'recorded',
+    },
     evidence_grade: 'A',
   },
 
@@ -9023,6 +9665,12 @@ const HERBS = [
     family: 'Fabaceae',
     epithet: 'The decisive release',
     origin_region: 'African',
+    ecology: {
+      native_range: ['Africa'],
+      habitat:
+        'angustifolia Vahl) — Shrub native to Northeast Africa and the Arabian Peninsula;',
+      source: 'recorded',
+    },
     evidence_grade: 'A',
   },
   // ─────────────────────────────────────────────
@@ -9096,6 +9744,11 @@ const HERBS = [
     family: 'Fomitopsidaceae',
     epithet: 'The birch shelf',
     origin_region: 'Nordic wild',
+    ecology: {
+      native_range: ['Fennoscandia', 'Northern Europe'],
+      biomes: ['BOREAL FOREST'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -9174,6 +9827,11 @@ const HERBS = [
     family: 'Hymenochaetaceae',
     epithet: 'The black diamond',
     origin_region: 'Nordic wild',
+    ecology: {
+      native_range: ['Fennoscandia', 'Northern Europe'],
+      biomes: ['BOREAL FOREST'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -9252,6 +9910,11 @@ const HERBS = [
     family:             'Ophiocordycipitaceae',
     epithet:            'The mountain athlete',
     origin_region:      'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      biomes: ['MOUNTAIN'],
+      source: 'derived',
+    },
     evidence_grade:     'B+',
   },
 
@@ -9323,6 +9986,11 @@ const HERBS = [
     family: 'Marasmiaceae',
     epithet: 'The oak-mushroom',
     origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      biomes: ['FOREST'],
+      source: 'derived',
+    },
     evidence_grade: 'B+',
   },
 
@@ -9400,6 +10068,10 @@ const HERBS = [
     family: 'Amanitaceae',
     epithet: 'The red sentinel',
     origin_region: 'Nordic wild',
+    ecology: {
+      native_range: ['Fennoscandia', 'Northern Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'traditional',
   },
 
@@ -9465,6 +10137,10 @@ const HERBS = [
     family: 'Amanitaceae',
     epithet: 'The panther\'s warning',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'C',
   },
 
@@ -9536,6 +10212,10 @@ const HERBS = [
     family: 'Agaricaceae',
     epithet: 'The ink-cap',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -9674,6 +10354,11 @@ const HERBS = [
     family: 'Physalacriaceae',
     epithet: 'The winter filament',
     origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      biomes: ['FOREST'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -9748,6 +10433,11 @@ const HERBS = [
     family:             'Polyporaceae',
     epithet:            'The still white stone',
     origin_region:      'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      biomes: ['FOREST'],
+      source: 'derived',
+    },
     evidence_grade:     'B+',
   },
 
@@ -9821,6 +10511,11 @@ const HERBS = [
     family: 'Hericiaceae',
     epithet: 'The nerve-weaver',
     origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      biomes: ['FOREST'],
+      source: 'derived',
+    },
     evidence_grade: 'B+',
   },
 
@@ -9894,6 +10589,11 @@ const HERBS = [
     family: 'Grifolaceae',
     epithet: 'The dancing mushroom',
     origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      biomes: ['FOREST'],
+      source: 'derived',
+    },
     evidence_grade: 'B+',
   },
 
@@ -9965,6 +10665,11 @@ const HERBS = [
     family: 'Hymenochaetaceae',
     epithet: 'The mulberry conk',
     origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      biomes: ['FOREST'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -10034,6 +10739,11 @@ const HERBS = [
     family: 'Morchellaceae',
     epithet: 'The honeycomb-cap',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['FOREST'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -10108,6 +10818,10 @@ const HERBS = [
     family: 'Pleurotaceae',
     epithet: 'The tree-oyster',
     origin_region: 'Global',
+    ecology: {
+      biomes: ['FOREST'],
+      source: 'derived',
+    },
     evidence_grade: 'B+',
   },
 
@@ -10181,6 +10895,11 @@ const HERBS = [
     family: 'Fomitopsidaceae',
     epithet: 'The red belt',
     origin_region: 'Nordic wild',
+    ecology: {
+      native_range: ['Fennoscandia', 'Northern Europe'],
+      biomes: ['BOREAL FOREST'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -10257,6 +10976,11 @@ const HERBS = [
     family:             'Ganodermataceae',
     epithet:            'The immortality mushroom',
     origin_region:      'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      biomes: ['FOREST'],
+      source: 'derived',
+    },
     evidence_grade:     'B+',
   },
 
@@ -10329,6 +11053,10 @@ const HERBS = [
     family: 'Agaricaceae',
     epithet: 'The sun-agaric',
     origin_region: 'Central American',
+    ecology: {
+      native_range: ['Central America'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
 
@@ -10402,6 +11130,11 @@ const HERBS = [
     family: 'Hymenochaetaceae',
     epithet: 'The oak-shelf',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['BOREAL FOREST'],
+      source: 'derived',
+    },
     evidence_grade: 'traditional',
   },
   // ─────────────────────────────────────────────
@@ -10475,6 +11208,11 @@ const HERBS = [
     family: 'Polyporaceae',
     epithet: 'The hoof of the forest',
     origin_region: 'Nordic wild',
+    ecology: {
+      native_range: ['Fennoscandia', 'Northern Europe'],
+      biomes: ['BOREAL FOREST'],
+      source: 'derived',
+    },
     evidence_grade: 'traditional',
   },
 
@@ -10551,6 +11289,11 @@ const HERBS = [
     family: 'Polyporaceae',
     epithet: 'The rainbow bracket',
     origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      biomes: ['FOREST'],
+      source: 'derived',
+    },
     evidence_grade: 'A',
   },
 
@@ -10624,6 +11367,11 @@ const HERBS = [
     family: 'Polyporaceae',
     epithet: 'The willow-shelf',
     origin_region: 'Nordic wild',
+    ecology: {
+      native_range: ['Fennoscandia', 'Northern Europe'],
+      biomes: ['BOREAL FOREST', 'FOREST'],
+      source: 'derived',
+    },
     evidence_grade: 'traditional',
   },
 
@@ -10698,6 +11446,11 @@ const HERBS = [
     family: 'Polyporaceae',
     epithet: 'The pig-tuber',
     origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      biomes: ['FOREST'],
+      source: 'derived',
+    },
     evidence_grade: 'B+',
   },
 
@@ -10818,6 +11571,10 @@ const HERBS = [
     family: 'Rosaceae',
     epithet: 'The womb-tonic',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
   {
@@ -10862,6 +11619,11 @@ const HERBS = [
     family: 'Rosaceae',
     epithet: 'The hedge-red',
     origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['COAST'],
+      source: 'derived',
+    },
     evidence_grade: 'A',
   },
   {
@@ -10909,6 +11671,10 @@ const HERBS = [
     family: 'Asparagaceae',
     epithet: 'The hundred-rooted mother',
     origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade: 'B',
   },
   {
@@ -10983,6 +11749,11 @@ const HERBS = [
     family: 'Zingiberaceae',
     epithet: 'The kitchen fire',
     origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      biomes: ['TROPICAL'],
+      source: 'derived',
+    },
     evidence_grade: 'A',
   },
   {
@@ -11054,6 +11825,11 @@ const HERBS = [
     family: 'Burseraceae',
     epithet: 'The frankincense-tree',
     origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      biomes: ['ARID'],
+      source: 'derived',
+    },
     evidence_grade: 'A',
   },
   {
@@ -11124,6 +11900,10 @@ const HERBS = [
   family: 'Adoxaceae',
   epithet: 'The elder\'s winter shield',
   origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
   evidence_grade: 'B',
 },
 {
@@ -11191,6 +11971,10 @@ const HERBS = [
   family: 'Rosaceae',
   epithet: 'The protective berry',
   origin_region: 'Nordic wild',
+    ecology: {
+      native_range: ['Fennoscandia', 'Northern Europe'],
+      source: 'derived',
+    },
   evidence_grade: 'traditional',
 },
 {
@@ -11260,6 +12044,10 @@ const HERBS = [
   family: 'Lythraceae',
   epithet: 'The binding rind',
   origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      source: 'derived',
+    },
   evidence_grade: 'C',
 },
 {
@@ -11328,6 +12116,10 @@ const HERBS = [
   family: 'Lythraceae',
   epithet: 'The ruby jewel',
   origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      source: 'derived',
+    },
   evidence_grade: 'B',
 },
 {
@@ -11398,6 +12190,10 @@ const HERBS = [
   family: 'Piperaceae',
   epithet: 'The fire carrier',
   origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
   evidence_grade: 'B-',
 },
 {
@@ -11464,6 +12260,11 @@ const HERBS = [
   family: 'Zingiberaceae',
   epithet: 'The warming root',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      biomes: ['TROPICAL'],
+      source: 'derived',
+    },
   evidence_grade: 'C',
 },
 {
@@ -11530,6 +12331,11 @@ const HERBS = [
   family: 'Zingiberaceae',
   epithet: 'The smoky pod',
   origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      biomes: ['TROPICAL'],
+      source: 'derived',
+    },
   evidence_grade: 'traditional',
 },
 {
@@ -11596,6 +12402,10 @@ const HERBS = [
   family: 'Rutaceae',
   epithet: 'The numbing spark',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'traditional',
 },
 {
@@ -11663,6 +12473,10 @@ const HERBS = [
   family:             'Sapindaceae',
   epithet:            'The sweet dragon eye',
   origin_region:      'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade:     'traditional',
 },
 {
@@ -11732,6 +12546,10 @@ const HERBS = [
   family: 'Combretaceae',
   epithet: 'The king of medicines',
   origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
   evidence_grade: 'C',
 },
 {
@@ -11800,6 +12618,11 @@ const HERBS = [
   family: 'Fabaceae',
   epithet: 'The yellow leader',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      biomes: ['STEPPE'],
+      source: 'derived',
+    },
   evidence_grade: 'B',
 },
 {
@@ -11866,6 +12689,10 @@ const HERBS = [
   family: 'Asparagaceae',
   epithet: 'Heaven\'s gate root',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'traditional',
 },
 {
@@ -11937,6 +12764,10 @@ const HERBS = [
   family: 'Santalaceae',
   epithet: 'The golden bough',
   origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
   evidence_grade: 'B-',
 },
 {
@@ -12001,6 +12832,10 @@ const HERBS = [
   family: 'Fabaceae',
   epithet: 'The liver shield',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'C',
 },
 {
@@ -12070,6 +12905,10 @@ const HERBS = [
   family: 'Caryophyllaceae',
   epithet: 'The white path',
   origin_region: 'African',
+    ecology: {
+      native_range: ['Africa'],
+      source: 'derived',
+    },
   evidence_grade: 'traditional',
 },
 {
@@ -12140,6 +12979,10 @@ const HERBS = [
   family: 'Vitaceae',
   epithet: 'The vineyard\'s shield',
   origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      source: 'derived',
+    },
   evidence_grade: 'B+',
 },
 
@@ -12230,6 +13073,10 @@ const HERBS = [
     family:             'Menispermaceae',
     epithet: 'The immortal vine',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'C',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -12331,6 +13178,10 @@ const HERBS = [
     family:             'Nyctaginaceae',
     epithet: 'The renewer',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'C',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -12429,6 +13280,10 @@ const HERBS = [
     family:             'Convolvulaceae',
     epithet: 'The conch flower',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'C',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -12531,6 +13386,10 @@ const HERBS = [
     family:             'Combretaceae',
     epithet: 'The heart\'s guardian',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'B',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -12628,6 +13487,10 @@ const HERBS = [
     family:             'Vitaceae',
     epithet: 'The bone setter',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'C',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -12723,6 +13586,11 @@ const HERBS = [
     family:             'Burseraceae',
     epithet: 'The frankincense tree',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      biomes: ['ARID'],
+      source: 'derived',
+    },
     evidence_grade:     'B',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -12818,6 +13686,10 @@ const HERBS = [
     family:             'Asteraceae',
     epithet: 'The Vata soother',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'D',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -12867,6 +13739,10 @@ const HERBS = [
   family: 'Multi-plant formula',
   epithet: 'The ten roots',
   origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
   evidence_grade: 'traditional',
 },
 {
@@ -12889,6 +13765,10 @@ const HERBS = [
   family: 'Lamiaceae',
   epithet: 'The breath opener',
   origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
   evidence_grade: 'B-',
 },
     {
@@ -12960,6 +13840,10 @@ const HERBS = [
     family:             'Fabaceae',
     epithet: 'The victory wood',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'C',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -13057,6 +13941,10 @@ const HERBS = [
     family:             'Lamiaceae',
     epithet: 'The nerve-pain leaf',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'C',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -13151,6 +14039,10 @@ const HERBS = [
     family:             'Fabaceae',
     epithet: 'The sorrowless tree',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'C',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -13245,6 +14137,10 @@ const HERBS = [
     family:             'Symplocaceae',
     epithet: 'The binding bark',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'D',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -13338,6 +14234,11 @@ const HERBS = [
     family:             'Calophyllaceae',
     epithet: 'The ironwood blossom',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      biomes: ['STEPPE'],
+      source: 'derived',
+    },
     evidence_grade:     'D',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -13386,6 +14287,10 @@ const HERBS = [
   family: 'Elaeocarpaceae',
   epithet: 'The tear of Shiva',
   origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
   evidence_grade: 'traditional',
 },
 
@@ -13462,6 +14367,10 @@ const HERBS = [
     family:             'Fabaceae',
     epithet: 'The pigment restorer',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'B',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -13511,6 +14420,12 @@ const HERBS = [
   family: 'Fabaceae',
   epithet: 'The bowel\'s broom',
   origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      habitat:
+        'angustifolia Vahl) — Shrub native to Northeast Africa and the Arabian Peninsula;',
+      source: 'recorded',
+    },
   evidence_grade: 'A',
 },
     {
@@ -13584,6 +14499,10 @@ const HERBS = [
     family:             'Zygophyllaceae',
     epithet: 'The caltrop',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'C',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -13670,6 +14589,10 @@ const HERBS = [
   family: 'Phyllanthaceae',
   epithet: 'The nurse fruit',
   origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
   evidence_grade: 'B',
 },
     {
@@ -13738,6 +14661,10 @@ const HERBS = [
     family:             'Combretaceae',
     epithet: 'Triphala\'s third fruit',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'C',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -13842,6 +14769,11 @@ const HERBS = [
     family:             'Burseraceae',
     epithet: 'The resin carrier',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      biomes: ['ARID'],
+      source: 'derived',
+    },
     evidence_grade:     'C',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -13935,6 +14867,10 @@ const HERBS = [
   family: 'Acanthaceae',
   epithet: 'The king of bitters',
   origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
     {
@@ -14008,6 +14944,10 @@ const HERBS = [
     family:             'Rubiaceae',
     epithet: 'The red root',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'C',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -14102,6 +15042,10 @@ const HERBS = [
     family:             'Fabaceae',
     epithet: 'The catechu heartwood',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'C',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -14149,6 +15093,10 @@ const HERBS = [
   family: 'Convolvulaceae',
   epithet: 'The drastic cleanse',
   origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
   evidence_grade: 'traditional',
 },
 {
@@ -14172,6 +15120,11 @@ const HERBS = [
   family: 'Apiaceae',
   epithet: 'The gout seed',
   origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      biomes: ['GARDEN'],
+      source: 'derived',
+    },
   evidence_grade: 'C',
 },
     {
@@ -14247,6 +15200,10 @@ const HERBS = [
     family:             'Meliaceae',
     epithet: 'The village pharmacy',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'C',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -14342,6 +15299,10 @@ const HERBS = [
     family:             'Apocynaceae',
     epithet: 'The endless root',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'D',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -14435,6 +15396,11 @@ const HERBS = [
     family:             'Fabaceae',
     epithet: 'The healing oil tree',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      biomes: ['FOREST'],
+      source: 'derived',
+    },
     evidence_grade:     'D',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -14531,6 +15497,10 @@ const HERBS = [
     family:             'Rutaceae',
     epithet: 'Shiva\'s fruit',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'C',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -14628,6 +15598,11 @@ const HERBS = [
     family:             'Brassicaceae',
     epithet: 'The cress seed',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      biomes: ['MOUNTAIN'],
+      source: 'derived',
+    },
     evidence_grade:     'C',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -14723,6 +15698,10 @@ const HERBS = [
     family:             'Fabaceae',
     epithet: 'The golden shower',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'C',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -14828,6 +15807,10 @@ const HERBS = [
   family: 'Cucurbitaceae',
   epithet: 'The herb of immortality',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'B',
 },
 {
@@ -14882,6 +15865,10 @@ const HERBS = [
   family: 'Asteraceae',
   epithet: 'The tension breaker',
   origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -14935,6 +15922,10 @@ const HERBS = [
   family: 'Asteraceae',
   epithet: 'The bile mover',
   origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -15040,6 +16031,10 @@ const HERBS = [
   family: 'Piperaceae',
   epithet: 'The bio-enhancer',
   origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -15091,6 +16086,10 @@ const HERBS = [
   family: 'Fabaceae',
   epithet: 'The seed of clarity',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'B',
 },
 {
@@ -15142,6 +16141,10 @@ const HERBS = [
   family: 'Rutaceae',
   epithet: 'The stagnation breaker',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'B',
 },
 {
@@ -15186,6 +16189,10 @@ const HERBS = [
   family: 'Vitaceae',
   epithet: 'The vein structuralist',
   origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -15237,6 +16244,10 @@ const HERBS = [
   family: 'Sapindaceae',
   epithet: 'The vascular sealant',
   origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -15288,6 +16299,10 @@ const HERBS = [
   family: 'Fucaceae / Laminariaceae',
   epithet: 'The ocean’s apothecary',
   origin_region: 'Global',
+    ecology: {
+      biomes: ['COAST'],
+      source: 'derived',
+    },
   evidence_grade: 'B',
 },
 {
@@ -15339,6 +16354,11 @@ const HERBS = [
   family: 'Nelumbonaceae',
   epithet: 'The fat clearer',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      biomes: ['BOG'],
+      source: 'derived',
+    },
   evidence_grade: 'B',
 },
 {
@@ -15391,6 +16411,10 @@ const HERBS = [
   family: 'Vitaceae / Polygonaceae',
   epithet: 'The longevity molecule',
   origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -15442,6 +16466,10 @@ const HERBS = [
   family: 'Monascaceae (fungus) / Poaceae (rice)',
   epithet: 'The blood mover',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -15497,6 +16525,10 @@ const HERBS = [
   family: 'Rubiaceae',
   epithet: 'The primal fire',
   origin_region: 'African',
+    ecology: {
+      native_range: ['Africa'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -15546,6 +16578,10 @@ const HERBS = [
   family: 'Orobanchaceae',
   epithet: 'The desert ginseng',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 // ════════════════════════════════════════════════════════════════
@@ -15618,6 +16654,10 @@ const HERBS = [
   family: 'Onagraceae',
   epithet: 'The lunar lipid',
   origin_region: 'North American',
+    ecology: {
+      native_range: ['North America'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -15675,6 +16715,10 @@ const HERBS = [
   family: 'Lycopodiaceae',
   epithet: 'The memory keeper',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -15726,6 +16770,10 @@ const HERBS = [
   family: 'Eucommiaceae',
   epithet: 'The structural architect',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -15779,6 +16827,10 @@ const HERBS = [
   family: 'Polygonaceae',
   epithet: 'The concrete breaker',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -15834,6 +16886,10 @@ const HERBS = [
   family: 'Celastraceae',
   epithet: 'The thunder god',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -15881,6 +16937,10 @@ const HERBS = [
   family: 'Boraginaceae',
   epithet: 'The purple cloud',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'B',
 },
 {
@@ -15934,6 +16994,10 @@ const HERBS = [
   family: 'Myrtaceae',
   epithet: 'The electric berry',
   origin_region: 'South American',
+    ecology: {
+      native_range: ['South America'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -15984,6 +17048,10 @@ const HERBS = [
   family: 'Fabaceae',
   epithet: 'The pagoda sentinel',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -16037,6 +17105,10 @@ const HERBS = [
   family: 'Berberidaceae',
   epithet: 'The golden sword',
   origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 // ════════════════════════════════════════════════════════════════
@@ -16110,6 +17182,11 @@ const HERBS = [
   family: 'Ranunculaceae',
   epithet: 'The mucosal master',
   origin_region: 'North American',
+    ecology: {
+      native_range: ['North America'],
+      biomes: ['FOREST'],
+      source: 'derived',
+    },
   evidence_grade: 'B',
 },
 {
@@ -16161,6 +17238,10 @@ const HERBS = [
   family: 'Fabaceae',
   epithet: 'The starch blocker',
   origin_region: 'Central American',
+    ecology: {
+      native_range: ['Central America'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -16211,6 +17292,10 @@ const HERBS = [
   family: 'Fabaceae',
   epithet: 'The endocrine modulator',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -16263,6 +17348,10 @@ const HERBS = [
   family: 'Clusiaceae',
   epithet: 'The fat blocker',
   origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
   evidence_grade: 'B',
 },
 {
@@ -16319,6 +17408,10 @@ const HERBS = [
   family: 'Lamiaceae',
   epithet: 'The crimson flow',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -16374,6 +17467,10 @@ const HERBS = [
   family: 'Rosaceae',
   epithet: 'The tissue sealer',
   origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
   evidence_grade: 'B',
 },
 {
@@ -16426,6 +17523,10 @@ const HERBS = [
   family: 'Moraceae',
   epithet: 'The silkworm’s medicine',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -16478,6 +17579,10 @@ const HERBS = [
   family: 'Fabaceae',
   epithet: 'The golden awakener',
   origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 // ════════════════════════════════════════════════════════════════
@@ -16547,6 +17652,10 @@ const HERBS = [
   family: 'Rubiaceae',
   epithet: 'The venom clearer',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -16594,6 +17703,10 @@ const HERBS = [
   family: 'Arecaceae',
   epithet: 'The tree of life',
   origin_region: 'South American',
+    ecology: {
+      native_range: ['South America'],
+      source: 'derived',
+    },
   evidence_grade: 'C',
 },
 {
@@ -16647,6 +17760,10 @@ const HERBS = [
   family: 'Fabaceae',
   epithet: 'The swamp drainer',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -16696,6 +17813,10 @@ const HERBS = [
   family: 'Caprifoliaceae',
   epithet: 'The sweet venter',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -16749,6 +17870,10 @@ const HERBS = [
   family: 'Lauraceae',
   epithet: 'The joint lubricator',
   origin_region: 'Central American',
+    ecology: {
+      native_range: ['Central America'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -16803,6 +17928,11 @@ const HERBS = [
   family: 'Pinaceae',
   epithet: 'The vascular sentinel',
   origin_region: 'Mediterranean',
+    ecology: {
+      native_range: ['Mediterranean basin'],
+      biomes: ['BOREAL FOREST'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -16856,6 +17986,10 @@ const HERBS = [
   family: 'Rutaceae',
   epithet: 'The pelvic cooler',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -16910,6 +18044,10 @@ const HERBS = [
   family: 'Fabaceae',
   epithet: 'The tension unbinder',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -16966,6 +18104,10 @@ const HERBS = [
   family: 'Rhamnaceae',
   epithet: 'The aged evictor',
   origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 // ════════════════════════════════════════════════════════════════
@@ -17035,6 +18177,10 @@ const HERBS = [
   family: 'Clusiaceae',
   epithet: 'The purple armour',
   origin_region: 'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
   evidence_grade: 'A',
 },
 {
@@ -17092,6 +18238,10 @@ const HERBS = [
   family: 'Myricaceae',
   epithet: 'The warming seal',
   origin_region: 'North American',
+    ecology: {
+      native_range: ['North America'],
+      source: 'derived',
+    },
   evidence_grade: 'B',
 },
 {
@@ -17147,6 +18297,10 @@ const HERBS = [
   family: 'Polygonaceae',
   epithet: 'The black-haired longevity root',
   origin_region: 'Chinese',
+    ecology: {
+      native_range: ['East Asia'],
+      source: 'derived',
+    },
   evidence_grade: 'B',
 },
 
@@ -17224,6 +18378,10 @@ const HERBS = [
     family:             'Apiaceae',
     epithet: 'The kitchen ember',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'C',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {
@@ -17319,6 +18477,10 @@ const HERBS = [
     family:             'Fabaceae',
     epithet: 'The shy one',
     origin_region:      'Ayurvedic',
+    ecology: {
+      native_range: ['Indian subcontinent'],
+      source: 'derived',
+    },
     evidence_grade:     'D',
     // ── Ayurvedic Pharmacopoeia layer ──
     ayurveda: {

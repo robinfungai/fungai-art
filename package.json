@@ -26,6 +26,7 @@
     "build:herbs-data": "node scripts/export-herbs.cjs",
     "build:herb-pool": "node scripts/build-herb-pool.cjs",
     "build:atlas": "node scripts/build-atlas.cjs",
+    "build:herb-ecology": "node scripts/build-herb-ecology.cjs",
     "build:engine2": "node scripts/sync-engine2.cjs",
     "build": "npm run build:herbs-data && npm run build:atlas && npm run build:herb-pool && npm run build:engine2 && npm run build:entity-map && npm run build:safety-rules && npm run build:myco-kb && npm run build:community && npm run build:islands && vite build && node scripts/swap-index.cjs",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
