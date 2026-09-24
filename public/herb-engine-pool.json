@@ -4264,39 +4264,56 @@
     "id": 501,
     "name": "Guduchi",
     "primary_functions": [
-      "One of three Amrit (immortal) herbs — premier immunomodulator",
-      "Clears deep chronic heat and recurrent fevers",
-      "Liver / kidney protective bitter",
-      "Autoimmune-regulating in Ayurvedic context"
+      "Immune modulation: arabinogalactan polysaccharides, syringin, cordifolioside A and alkaloids activate macrophages and modulate lymphocyte function in experimental work; used for recurrent infections and allergic states. A double blind trial in allergic rhinitis reported symptom relief versus placebo",
+      "Fever and inflammation: API karma Jvaraghna (antipyretic) and uses Jvara; antipyretic and anti inflammatory in animal models; the lead herb of Amritarishta and Guduchi Sattva",
+      "Metabolic and liver: hypoglycaemic and hepatoprotective activity in animal models; API uses Prameha (diabetes spectrum), Kamala (jaundice), Pandu (anaemia)",
+      "Joints and blood: API use Vatarakta (gout and inflammatory arthritis) and karma Raktashodhaka (blood purifying); part of Rasna Panchaka for joint and Vata inflammation",
+      "Rasayana for all three doshas: API karma Tridoshashamaka, Balya, Dipana, Rasayana, Samgrahi. The most celebrated rejuvenative vine of Ayurveda"
     ],
     "energetics": [
-      "Cool",
       "Bitter",
-      "Sweet post-digestive",
-      "Tridoshic"
+      "Astringent",
+      "Light",
+      "Heat Clearing",
+      "Immune Modulating",
+      "Rejuvenating",
+      "Blood Cleansing"
     ],
-    "tcm_meridians": [],
-    "caution_level": "LOW"
+    "tcm_meridians": [
+      "Liver",
+      "Spleen",
+      "Lung",
+      "Kidney"
+    ],
+    "caution_level": "MEDIUM"
   },
   {
     "id": 502,
     "name": "Punarnava",
     "primary_functions": [
-      "Tissue-renewing systemic rejuvenative — name = ",
-      "",
-      "Potent diuretic for fluid retention and oedema",
-      "Hepatic and renal protection",
-      "Anti-inflammatory in chronic conditions"
+      "Oedema and fluid retention: API karma Mutrala (diuretic) and Shothahara (reduces swelling) with use Shotha; the classical first choice when the body holds water in the legs, face or abdomen. Potassium salts, punarnavine and rotenoids contribute to diuresis in animal models",
+      "Kidney protection: studied as Gokshura Punarnava Basti in diabetic patients with microalbuminuria; nephroprotective effects against toxin induced kidney injury in animals",
+      "Anaemia and liver: API use Pandu (anaemia); Punarnavadi Mandura pairs the herb with purified iron oxide; hepatoprotective activity in experimental liver injury",
+      "Downward flow and digestion: API karma Anulomana (restores downward movement of Vata) and Vatashleshmahara (reduces Vata and Kapha); eases bloating and sluggish elimination",
+      "Inflammation: boeravinones (rotenoids) and flavonoids inhibit inflammatory mediators and show anti inflammatory and analgesic activity in models"
     ],
     "energetics": [
-      "Cool",
-      "Bitter",
+      "Warm",
       "Sweet",
-      "Diuretic",
-      "Tissue-Renewing"
+      "Bitter",
+      "Astringent",
+      "Dry",
+      "Fluid Draining",
+      "Swelling Reducing",
+      "Renewing"
     ],
-    "tcm_meridians": [],
-    "caution_level": "LOW"
+    "tcm_meridians": [
+      "Kidney",
+      "Bladder",
+      "Spleen",
+      "Liver"
+    ],
+    "caution_level": "MEDIUM"
   },
   {
     "id": 503,
@@ -4320,76 +4337,101 @@
     "id": 504,
     "name": "Arjuna",
     "primary_functions": [
-      "Premier Ayurvedic cardiotonic — strengthens heart muscle",
-      "Coronary blood-flow support",
-      "Addresses emotional grief stored in the heart",
-      "Blood pressure modulation"
+      "Cardioprotection: triterpenoid saponins (arjunolic acid, arjunic acid, arjungenin, arjunetin), flavonoids and oligomeric proanthocyanidins act as antioxidants on the myocardium and endothelium; API karma Hridya (dear to the heart) and use in Hridroga. The single most important heart herb in Ayurveda",
+      "Stable angina and ischaemic heart support: small human trials, including a double blind crossover versus isosorbide mononitrate, reported fewer angina episodes and better exercise tolerance with bark extract; treat as adjunct, never a replacement",
+      "Heart failure and cardiac output: early small trials reported improved ejection fraction and symptoms as add on therapy in refractory failure; replication is still needed",
+      "Lipid and vessel support: hypolipidemic and anti atherogenic effects in animals and small human studies; API uses include Medoroga (obesity and lipid disorders) and Prameha",
+      "Tissue repair: API karma Bhagnasandhanakara (unites fractures) and Vrananashana (heals wounds); the astringent tannins tighten and mend"
     ],
     "energetics": [
       "Cool",
       "Astringent",
-      "Bitter",
-      "Cardiotonic"
+      "Dry",
+      "Heart Protecting",
+      "Blood Stabilizing",
+      "Tissue Mending",
+      "Grounding"
     ],
     "tcm_meridians": [
-      "Heart"
+      "Heart",
+      "Lung",
+      "Liver"
     ],
-    "caution_level": "LOW-MEDIUM"
+    "caution_level": "MEDIUM"
   },
   {
     "id": 505,
     "name": "Hadjod",
     "primary_functions": [
-      "",
-      " — accelerates fracture and joint recovery",
-      "Plant sterols mimic mild anabolic effects on bone",
-      "Tendon and ligament repair",
-      "Anti-inflammatory in musculoskeletal injuries"
+      "Fracture and bone healing: the name means bone joiner; API karma Asthisandhanakara (unites bones) and uses Asthibhagna (fractures) and Sandhi Cyuta (dislocations). Small clinical studies report faster callus formation and pain relief after fractures",
+      "Osteoporosis and bone turnover: in an estrogen deficient (ovariectomized) mouse model, Cissus inhibited RANKL driven osteoclast formation and improved bone health by rebalancing the host osteoimmune system (regulatory versus inflammatory immune cell populations)",
+      "Joint, tendon and ligament support: anti inflammatory and analgesic activity in animal models; used for sprains and chronic joint pain",
+      "Digestion and haemorrhoids: API karma Dipana (kindles digestion) and uses Arsha (haemorrhoids) and Krimi (worms)"
     ],
     "energetics": [
-      "Cool",
+      "Warm",
       "Sweet",
-      "Astringent",
-      "Bone-binding"
+      "Pungent",
+      "Light",
+      "Bone Knitting",
+      "Sinew Mending",
+      "Digestive Kindling"
     ],
-    "tcm_meridians": [],
+    "tcm_meridians": [
+      "Kidney",
+      "Liver"
+    ],
     "caution_level": "LOW"
   },
   {
     "id": 506,
     "name": "Shallaki",
     "primary_functions": [
-      "Boswellic acids — potent 5-LOX inhibitors for joint inflammation",
-      "Mobility and synovial fluid balance",
-      "Asthma and respiratory inflammatory support",
-      "IBD adjunct in clinical Ayurveda"
+      "Osteoarthritis: boswellic acids, especially AKBA (acetyl keto beta boswellic acid), inhibit 5 lipoxygenase and leukotriene synthesis; randomized trials and meta analyses show reduced knee pain and stiffness and improved function. In Sandhivata (osteoarthritis), a 56 patient Ayurvedic clinical study reported improvement with Shallaki resin",
+      "Inflammatory joint and bowel conditions: anti inflammatory action via 5 LOX, mPGES 1 and NF kappa B; studied in rheumatoid arthritis, ulcerative colitis and Crohn\\",
+      ",\n      ",
+      ",\n      "
     ],
     "energetics": [
       "Warm",
       "Bitter",
       "Pungent",
-      "Astringent",
-      "Drying"
+      "Sweet",
+      "Aromatic",
+      "Blood Moving",
+      "Pain Relieving",
+      "Joint Soothing"
     ],
-    "tcm_meridians": [],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Spleen"
+    ],
     "caution_level": "LOW"
   },
   {
     "id": 507,
     "name": "Rasna",
     "primary_functions": [
-      "Dominant Ayurvedic anti-inflammatory for Vata-pattern joint pain",
-      "Clears systemic nervous-system imbalances",
-      "Sciatica and neuralgic pain",
-      "Component of classical Rasna-saptak kwath"
+      "Vata and joint disorders: Charaka names Rasna the best of all Vata pacifiers; API karma Kaphavatahara and uses Vatavyadhi, Amavata (rheumatoid type arthritis), Vatarakta (gout), Adhyavata (stiffness of the thighs); anti inflammatory and antiarthritic activity of Pluchea lanceolata in rat arthritis models",
+      "Digesting ama: API karma Amapacana (digests metabolic toxins); in Ayurvedic theory joint inflammation often starts with undigested ama lodging in the joints, and Rasna clears it",
+      "Rasna Panchaka antioxidant action: the five herb decoction of Rasna, Guduchi, Devadaru, Eranda root and Shunthi reduced oxidative stress markers in mouse liver explant cultures, supporting its use for inflammatory Vata conditions",
+      "Swelling and respiratory: API uses Shotha (swelling), Shvasa (breathlessness), Kasa (cough), Jvara (fever), Udararoga (abdominal disorders), Sidhma (a skin condition)"
     ],
     "energetics": [
       "Warm",
       "Bitter",
-      "Pungent",
-      "Vata-pacifying"
+      "Heavy",
+      "Wind Damp Dispelling",
+      "Joint Warming",
+      "Ama Digesting",
+      "Pain Relieving"
     ],
-    "tcm_meridians": [],
+    "tcm_meridians": [
+      "Liver",
+      "Kidney",
+      "Spleen"
+    ],
     "caution_level": "LOW"
   },
   {
@@ -4433,72 +4475,106 @@
     "id": 510,
     "name": "Vijaysar",
     "primary_functions": [
-      "Classical Ayurvedic herb for blood sugar metabolism",
-      "Beta-cell regenerative effects in research",
-      "Astringent tissue-toning",
-      "Anti-obesity adjunct"
+      "Blood sugar regulation: API use Prameha (the diabetes spectrum) and karma Kaphapittashamaka; (minus) epicatechin, pterostilbene, marsupin and pterosupin lower glucose in animal models, with early reports of beta cell protection and regeneration. An ICMR multicentre open trial (1998) in newly diagnosed type 2 diabetes reported good glycaemic control in most participants on flexible doses",
+      "Fat and weight: API use Medodosha (fat tissue disorders); astringent, light and dry qualities scrape Kapha",
+      "Skin and blood: API karma Tvacya (good for skin), Kushthaghna (cures skin disease), Raktashodhana (blood purifying); uses Kushtha",
+      "Anaemia and worms: API uses Pandu (anaemia) and Krimiroga (worm infestation)",
+      "Rasayana: API karma Rasayana (rejuvenative), Keshya (good for hair), Galadoshaghna (clears throat disorders)"
     ],
     "energetics": [
-      "Cool",
-      "Bitter",
+      "Warm",
       "Astringent",
-      "Blood-sugar-regulating"
+      "Bitter",
+      "Light",
+      "Dry",
+      "Sugar Balancing",
+      "Fat Scraping",
+      "Blood Cleansing"
     ],
-    "tcm_meridians": [],
-    "caution_level": "LOW"
+    "tcm_meridians": [
+      "Spleen",
+      "Kidney",
+      "Liver"
+    ],
+    "caution_level": "MEDIUM"
   },
   {
     "id": 511,
     "name": "Nirgundi",
     "primary_functions": [
-      "Topical and internal anti-inflammatory for joint swelling",
-      "Neuralgic and sciatic pain support",
-      "Anti-spasmodic action",
-      "Mild anti-microbial in wound care"
+      "Nerve and joint pain: API karma Vatashamaka and Shophahara, uses Shula (pain), Vatavyadhi (neuromuscular disorders) and Amavata (inflammatory arthritis); iridoids (agnuside, negundoside) and flavonoids (casticin, vitexin) give analgesic and anti inflammatory effects in animal models",
+      "Sciatica (Gridhrasi): a clinical study found oral Nirgundi Ghana Vati (concentrated extract tablets) and Matra Basti (small oil enema) useful in sciatica patients, supporting its classical pain role",
+      "Swelling and trauma: fresh leaf poultice or steam (Nirgundi Patra Pinda Sweda) for sprains, bruises and swollen joints",
+      "Respiratory: API uses Kasa (cough) and Jvara (fever); aromatic leaves in steam inhalations for congestion",
+      "Memory and mind: API karma Smritiprada (promotes memory), an often forgotten classical use"
     ],
     "energetics": [
       "Warm",
-      "Pungent",
       "Bitter",
-      "Vata-pacifying"
+      "Pungent",
+      "Aromatic",
+      "Pain Relieving",
+      "Swelling Reducing",
+      "Wind Dispelling"
     ],
-    "tcm_meridians": [],
-    "caution_level": "LOW-MEDIUM"
+    "tcm_meridians": [
+      "Lung",
+      "Liver",
+      "Stomach"
+    ],
+    "caution_level": "LOW"
   },
   {
     "id": 512,
     "name": "Ashoka",
     "primary_functions": [
-      "Primary Ayurvedic uterine tonic — regulates female reproductive tract",
-      "Heavy or irregular menstruation",
-      "Endometriosis adjunct in classical practice",
-      "Cooling Pitta-pacifying gynaecological herb"
+      "Heavy menstrual bleeding: tannins, catechins and procyanidins give a strong astringent, haemostatic action; API use Asrigdara (menorrhagia and metrorrhagia). The classical first line bark for excessive or irregular bleeding",
+      "Uterine tonic: stimulates and tones uterine and endometrial tissue in animal models (oxytocic activity reported); Ashokarishta is one of the most prescribed women\\",
+      ",\n      ",
+      ",\n      "
     ],
     "energetics": [
       "Cool",
       "Astringent",
       "Bitter",
-      "Uterine-toning"
+      "Dry",
+      "Uterine Toning",
+      "Blood Stopping",
+      "Spirit Soothing"
     ],
-    "tcm_meridians": [],
-    "caution_level": "LOW-MEDIUM"
+    "tcm_meridians": [
+      "Liver",
+      "Heart",
+      "Spleen",
+      "Chong Mai (Penetrating Vessel)"
+    ],
+    "caution_level": "MEDIUM"
   },
   {
     "id": 513,
     "name": "Lodhra",
     "primary_functions": [
-      "Intense astringent — cools excessive Pitta in blood and reproductive organs",
-      "Uterine bleeding, leucorrhoea, heavy menses",
-      "Skin pigmentation balance in classical use",
-      "Local astringent for wound care"
+      "Leucorrhoea and uterine discharge: API use Pradara (abnormal vaginal discharge and bleeding); the astringent bark tightens mucosa and reduces excessive discharge. One of the two pillars (with Ashoka) of Ayurvedic gynaecology",
+      "Heavy or irregular bleeding: API use Raktapitta and karma Grahi; Lodhrasava and Pushyanuga Curna are classical formulas for menorrhagia",
+      "Diarrhoea and dysentery: API use Atisara; tannins and phenolic glycosides give antidiarrhoeal and antisecretory effects",
+      "Eyes: API karma Cakshushya and use Netraroga; Lodhra decoction as an eyewash for conjunctival inflammation is classical",
+      "Hormonal balance: in animal studies Lodhra extracts reduced androgen levels and improved ovarian cyclicity, prompting interest in PCOS; not yet proven in humans"
     ],
     "energetics": [
       "Cool",
       "Astringent",
-      "Bitter",
-      "Pitta-pacifying"
+      "Light",
+      "Dry",
+      "Uterine Toning",
+      "Discharge Stopping",
+      "Eye Clearing"
     ],
-    "tcm_meridians": [],
+    "tcm_meridians": [
+      "Liver",
+      "Large Intestine",
+      "Chong Mai (Penetrating Vessel)",
+      "Ren Mai (Conception Vessel)"
+    ],
     "caution_level": "LOW"
   },
   {
@@ -4545,22 +4621,25 @@
     "id": 520,
     "name": "Bakuchi",
     "primary_functions": [
-      "TCM Bu Gu Zhi — tonifies Kidney Yang, stabilises essence",
-      "Warms Spleen to stop diarrhoea",
-      "Vitiligo / leucoderma treatment in both traditions",
-      "Topical psoralen for pigmentation"
+      "Vitiligo repigmentation (Shvitra): psoralen and isopsoralen (angelicin) are furanocoumarins that, combined with UVA or sunlight, stimulate melanocytes; this is the traditional root of modern PUVA therapy. API first use: Shvitra",
+      "Chronic skin disease: API uses Kushtha (chronic skin disorders); oil and paste (Somaraji Taila, Avalgujadi Lepa) applied to patches, often with controlled sun exposure",
+      "Bakuchiol, the gentle cousin: a prenylated phenolic monoterpene from the seed with antioxidant, anti inflammatory, antibacterial and estrogen like activity; in a randomized trial, topical bakuchiol matched retinol for photoaging with less stinging and scaling",
+      "Organ protection in experimental models: a 2019 review describes bakuchiol protecting heart (ischaemia reperfusion), liver (fibrosis, toxin injury) and skin via antioxidant and anti inflammatory pathways; preclinical only"
     ],
     "energetics": [
-      "Warm",
-      "Pungent",
       "Bitter",
-      "Kidney-Yang-Tonifying"
+      "Pungent",
+      "Dry",
+      "Penetrating",
+      "Skin Repigmenting",
+      "Photoactive",
+      "Potent"
     ],
     "tcm_meridians": [
       "Kidney",
       "Spleen"
     ],
-    "caution_level": "MEDIUM"
+    "caution_level": "HIGH"
   },
   {
     "id": 521,
@@ -4586,40 +4665,51 @@
     "id": 522,
     "name": "Gokshura",
     "primary_functions": [
-      "TCM Bai Ji Li — calms Liver Yang, extinguishes internal wind",
-      "Urinary tract support — Ayurvedic diuretic for kidney/bladder",
-      "Male reproductive tonic in both traditions",
-      "Eyes (TCM): brightens vision"
+      "Urinary tract and stone support: potassium nitrate and saponins give diuretic action; API karma Mutrala (fruit and root), Ashmarihara (breaks stones) and Vastishodhana (cleanses the bladder); uses Ashmari (urolithiasis) and Mutrakricchra (dysuria). The first herb reached for when urine burns, stalls or carries gravel",
+      "Kidney protective strategy: studied as Gokshura Punarnava Basti (medicated enema) in diabetic patients with microalbuminuria (30 to 300 mg albumin per 24 hours), an early marker of diabetic nephropathy",
+      "Reproductive tonic: API karma Vrishya (aphrodisiac, reproductive tonic) and Brimhana (building); steroidal saponins (protodioscin) are associated with libido and sexual function effects in several small trials, while testosterone raising claims in men are not supported by meta analyses",
+      "Vata and pain: Vatanut (subdues Vata); a member of Dashamula (ten roots) used for pain, stiffness, respiratory Vata and nervous system recovery",
+      "Heart and breath: API uses Hridroga (heart disease), Kasa and Shvasa (cough and breathlessness)"
     ],
     "energetics": [
-      "Warm",
+      "Cool",
       "Sweet",
-      "Pungent",
-      "Yang-Tonifying"
+      "Heavy",
+      "Moistening",
+      "Diuretic",
+      "Nourishing",
+      "Reproductive Toning"
     ],
     "tcm_meridians": [
+      "Kidney",
+      "Bladder",
       "Liver"
     ],
-    "caution_level": "LOW-MEDIUM"
+    "caution_level": "MEDIUM"
   },
   {
     "id": 524,
     "name": "Bibhitaki",
     "primary_functions": [
-      "One of Triphala\\",
-      ", ",
-      ", ",
-      ", "
+      "Respiratory and voice support: API karma Kasahara (relieves cough) and uses Svarabheda (hoarseness) and Kasa; the fruit is the Kapha clearing member of Triphala, drying excess mucus in the chest and throat",
+      "Gentle bowel movement: API karma Bhedaka (breaks hardened stool); milder than Haritaki, often better tolerated",
+      "Eyes and hair: API karma Cakshushya (supports vision) and Keshya (good for hair); reason Triphala is used as an eyewash and hair rinse",
+      "Antimicrobial and anthelmintic: gallic acid, ellagic acid and chebulagic acid show antibacterial activity in vitro; API karma Kriminashana",
+      "Antioxidant and metabolic: polyphenols with hepatoprotective and lipid lowering signals in animal studies"
     ],
     "energetics": [
       "Warm",
       "Astringent",
-      "Bitter",
-      "Pungent"
+      "Dry",
+      "Light",
+      "Mucus Clearing",
+      "Voice Opening",
+      "Gently Moving"
     ],
     "tcm_meridians": [
       "Lung",
-      "Large Intestine"
+      "Large Intestine",
+      "Stomach"
     ],
     "caution_level": "LOW"
   },
@@ -4627,65 +4717,77 @@
     "id": 525,
     "name": "Guggulu",
     "primary_functions": [
-      "TCM cousin: Mo Yao (myrrh) — invigorates Blood, breaks stasis",
-      "Ayurvedic premier yogavahi for joint and lipid formulas",
-      "Cholesterol / lipid balance",
-      "Anti-inflammatory in chronic joint conditions"
+      "Joint and Vata disorders: API karma Vatabalasajit (subdues Vata and Kapha) and uses Vatavyadhi (neuromuscular disorders), Amavata (rheumatoid type inflammatory arthritis); guggulsterones inhibit NF kappa B and inflammatory mediators in experimental models. Yogaraja Guggulu is among the most prescribed joint formulas in Ayurveda",
+      "Lipids and metabolism, with an honest caveat: guggulsterone antagonizes the farnesoid X receptor (FXR) and activates the pregnane X receptor (PXR), altering bile acid and cholesterol handling; early Indian trials reported lipid lowering, but a well designed US RCT found no LDL reduction and more rashes",
+      "Weight and tissue scraping: API karma Medohara (reduces fat tissue) and use Medoroga; the classical lekhana (scraping) resin",
+      "Swellings and glands: API uses Granthi (cysts, nodules), Gandamala (cervical lymphadenitis), Shopha (oedema); Kanchanara and Kaishora Guggulu traditions",
+      "Fracture and tissue repair: API karma Bhagnasandhanakrit (unites fractures) and Rasayana"
     ],
     "energetics": [
-      "Warm",
-      "Pungent",
+      "Hot",
       "Bitter",
-      "Astringent",
-      "Blood-Moving"
+      "Pungent",
+      "Penetrating",
+      "Scraping",
+      "Channel Clearing",
+      "Blood Moving"
     ],
     "tcm_meridians": [
       "Heart",
-      "Spleen",
-      "Liver"
+      "Liver",
+      "Spleen"
     ],
-    "caution_level": "MEDIUM"
+    "caution_level": "HIGH"
   },
   {
     "id": 527,
     "name": "Manjistha",
     "primary_functions": [
-      "TCM Qian Cao — cools and invigorates blood, stops heat-bleeding",
-      "Ayurvedic premier blood purifier and lymphatic mover",
-      "Skin clarity in chronic Pitta/heat conditions",
-      "Breaks up stubborn blood clots in both traditions"
+      "Blood clearing for skin: the foremost Ayurvedic blood purifier; API karma include Varnya (complexion), Kushthaghna (skin disease) and Shonitasthapana (blood stabilizing); used for acne, eczema, psoriasis, pigmentation and inflammatory skin. API uses Kushtha, Visarpa (erysipelas type spreading inflammation), Vyanga (pigmentation)",
+      "Gut ecology: a double blind randomized placebo controlled pilot found Manjistha (like Triphala) modulated human gut microbiota, linking the classical gut and skin axis to measurable change",
+      "Bleeding and circulation paradox: API karma Stambhana (stops bleeding) and Shonitasthapana (stabilizes blood) alongside Artavajanana (promotes menstruation); in Chinese medicine the root (Qian Cao Gen) both cools blood to stop bleeding and moves blood stasis",
+      "Anti inflammatory and swelling: API karma Shothaghna (reduces swelling); anthraquinones and naphthoquinones (mollugin) inhibit inflammatory signalling in experimental models",
+      "Urinary and metabolic: API karma Pramehaghna and uses Prameha and Manjishtha Meha (a classical urinary disorder named after the plant)"
     ],
     "energetics": [
       "Cool",
       "Bitter",
-      "Sweet",
       "Astringent",
-      "Blood-Cooling"
+      "Sweet",
+      "Blood Cooling",
+      "Blood Moving",
+      "Skin Clearing",
+      "Lymph Draining"
     ],
     "tcm_meridians": [
-      "Heart",
-      "Liver"
+      "Liver",
+      "Heart"
     ],
-    "caution_level": "LOW-MEDIUM"
+    "caution_level": "MEDIUM"
   },
   {
     "id": 528,
     "name": "Khadira",
     "primary_functions": [
-      "TCM Er Cha — clears heat and dries damp internally and topically",
-      "Ayurvedic skin and oral medicine",
-      "Bleeding gums and ulcers — astringent",
-      "Diabetic-skin condition adjunct"
+      "Chronic skin disease: Charaka names Khadira the foremost of all herbs for skin disease (Kushthaghna); API karma Kushthaghna and Raktashodhaka (blood purifier); Khadirarishta is the flagship internal skin formula for eczema, psoriasis, urticaria and acne patterns",
+      "Wound healing and swelling: API uses Vrana (wounds) and Shotha (swelling); catechins and tannins precipitate proteins, tighten tissue and are antimicrobial",
+      "Mouth, gums and teeth: API karma Dantya (good for teeth); Khadiradi Gutika is the classical lozenge for mouth ulcers, bleeding gums and sore throat",
+      "Metabolic and fat tissue: API karma Medohara (reduces fat) and use Prameha; catechins show glucose and lipid effects in animal studies",
+      "Historical clinical use in leprosy: a 1969 clinical evaluation of Khadira in lepromatous leprosy is one of the earliest modern studies of an Ayurvedic skin herb"
     ],
     "energetics": [
       "Cool",
       "Bitter",
       "Astringent",
-      "Drying",
-      "Damp-clearing"
+      "Dry",
+      "Skin Clearing",
+      "Blood Cleansing",
+      "Tissue Tightening"
     ],
     "tcm_meridians": [
-      "Lung"
+      "Lung",
+      "Large Intestine",
+      "Liver"
     ],
     "caution_level": "LOW"
   },
@@ -4734,18 +4836,25 @@
     "id": 531,
     "name": "Neem",
     "primary_functions": [
-      "TCM cousin: Ku Lian Pi (Melia azedarach) — kills parasites, dries damp-heat",
-      "Ayurvedic premier skin and blood purifier",
-      "Antimicrobial and anti-parasitic across both traditions",
-      "Bitter that resets the gut microbiome"
+      "Skin disease and wounds: API uses Kushtha (chronic skin disease), Vrana (wounds), Kandu (itching) and karma Vranashodhanakara and Kandughna (bark); nimbidin, nimbin, quercetin and gedunin are antimicrobial, antifungal and anti inflammatory. The first bitter for acne, eczema, fungal skin and infected wounds",
+      "Fever and infection: API use Jvara; long history in malaria like fevers (gedunin and limonoids show antiplasmodial activity in vitro)",
+      "Metabolic and blood sugar: API use Prameha; leaf extracts lower blood glucose in animal models and small human studies",
+      "Oral health: neem twigs (datun) as chewing sticks; neem mouthwashes and gels reduced plaque and gingivitis in dental trials",
+      "Parasites: API use Krimiroga; azadirachtin is a commercial insecticide and neem is used against lice and scabies"
     ],
     "energetics": [
-      "Cool",
+      "Cold",
       "Bitter",
-      "Astringent",
-      "Damp-Heat-Clearing"
+      "Dry",
+      "Light",
+      "Heat Clearing",
+      "Toxin Clearing",
+      "Skin Healing",
+      "Antiparasitic"
     ],
     "tcm_meridians": [
+      "Liver",
+      "Lung",
       "Large Intestine",
       "Stomach"
     ],
@@ -4777,40 +4886,49 @@
     "id": 533,
     "name": "Karanja",
     "primary_functions": [
-      "Resolves toxic skin swellings and damp sores",
-      "Southern Chinese medicine analog: Shui Huang Pi",
-      "Ayurvedic topical for chronic skin conditions",
-      "Anti-microbial in wound care"
+      "Skin disease (external): the seed oil is the classic Ayurvedic oil for eczema, psoriasis like plaques, scabies, fungal infections and chronic itching; API karma Kushthaghna (removes skin disease) and use Kushtha",
+      "Wound cleansing: API karma Vranashodhana (cleanses wounds) and use Vrana; furanoflavonoids (karanjin, pongamol) are antimicrobial and anti inflammatory",
+      "Antiparasitic: API karma Krimijit (destroys worms); the oil and seed cake are used as natural insecticides and for lice and scabies",
+      "Vata and Kapha pain relief (external): warm, sharp oil massaged into cold, stiff joints"
     ],
     "energetics": [
-      "Warm",
-      "Bitter",
+      "Hot",
       "Pungent",
-      "Detoxifying"
+      "Bitter",
+      "Sharp",
+      "Skin Clearing",
+      "Wound Cleansing",
+      "Parasite Expelling"
     ],
     "tcm_meridians": [
-      "Lung"
+      "Lung",
+      "Liver",
+      "Spleen"
     ],
-    "caution_level": "MEDIUM"
+    "caution_level": "HIGH"
   },
   {
     "id": 534,
     "name": "Bael",
     "primary_functions": [
-      "Astringent for chronic diarrhoea and IBS",
-      "TCM analog: Mu Gua — harmonises the Middle",
-      "Cooling Pitta-pacifying digestive",
-      "Sacred to Shiva — temple offering"
+      "Diarrhoea and dysentery: the unripe fruit pulp combines tannins with soothing mucilage and pectin, so it binds loose stool without the harshness of pure astringents; API uses Pravahika (dysentery) and Grahaniroga (malabsorption, IBS like patterns). The defining Ayurvedic gut binder",
+      "Digestive fire with astringency: API karma Dipana and Pacana (kindles and digests) plus Grahi (absorbent); rare to find kindling and binding in one herb",
+      "Gut lining support: coumarins (marmelosin, also called imperatorin), mucilage and polyphenols show antiulcer and anti inflammatory activity in animal models",
+      "Root as Dashamula anchor: Bilva root (API Vol III) is Mutrala and Tridoshaghna and heads the Brihat Panchamula group used for Vata, pain, swelling and nervous system recovery"
     ],
     "energetics": [
-      "Cool",
+      "Warm",
       "Astringent",
       "Bitter",
-      "Sweet"
+      "Binding",
+      "Digestive Kindling",
+      "Gut Soothing",
+      "Sacred"
     ],
     "tcm_meridians": [
-      "Large Intestine",
-      "Spleen"
+      "Spleen",
+      "Stomach",
+      "Large Intestine"
     ],
     "caution_level": "LOW"
   },
@@ -4818,40 +4936,50 @@
     "id": 535,
     "name": "Chandrashoor",
     "primary_functions": [
-      "TCM cousin: Ting Li Zi — drains lungs, moves water",
-      "Anti-asthmatic and expectorant in Ayurveda",
-      "Iron-rich tonic for anaemia (traditional use)",
-      "Post-partum recovery — galactagogue"
+      "Lactation support: in an open label randomized trial, hypogalactic mothers whose diet was supplemented with Chandrashoor produced more expressed breast milk than controls; matches the widespread Indian and Middle Eastern postpartum tradition (halim laddoo, aliv laddoo)",
+      "Strength and nourishment: API karma Balapushtivivardhana (increases strength and nourishment); seeds are rich in protein, iron, calcium, folate and alpha linolenic acid, with a large mucilage fraction",
+      "Hiccup, diarrhoea and joint inflammation: API uses Hikka (hiccup), Atisara (diarrhoea, via soaking mucilage) and Vatarakta (gouty and inflammatory joint pain)",
+      "Bone and fracture healing: folk use for fractures and postpartum bone strength; animal studies show accelerated fracture healing"
     ],
     "energetics": [
       "Hot",
       "Pungent",
-      "Drying"
+      "Bitter",
+      "Mucilaginous",
+      "Building",
+      "Milk Supporting",
+      "Bone Mending"
     ],
     "tcm_meridians": [
-      "Lung"
+      "Lung",
+      "Kidney",
+      "Spleen"
     ],
-    "caution_level": "LOW-MEDIUM"
+    "caution_level": "LOW"
   },
   {
     "id": 536,
     "name": "Amaltas",
     "primary_functions": [
-      "Cooling moistening laxative for heat-induced constipation",
-      "TCM analog: Bo Luo Hui — clears heat, relieves stagnation",
-      "Gentle on children and elderly (vs. Senna)",
-      "Anti-pyretic in fever protocols"
+      "Gentle purgation: the dark sticky pulp contains sugars, mucilage, pectin and small amounts of anthraquinones (rhein type glycosides); API karma Recana (purgative). Charaka names Aragvadha the foremost of mild purgatives (mridu virecana), the one chosen for children, elders and the delicate",
+      "Heat and Pitta clearing through the bowel: used classically in Virechana style cleansing when heat has accumulated in blood, skin and liver",
+      "Skin support: Aragvadhadi formulas are among the most used for itching, eruptions and chronic skin conditions where the gut and blood are implicated",
+      "Softening of hard, dry stool: mucilage and pectin hold water, making it suitable where stimulant laxatives feel too harsh"
     ],
     "energetics": [
-      "Cool",
       "Sweet",
       "Bitter",
-      "Mild Laxative"
+      "Moistening",
+      "Gently Purging",
+      "Heat Clearing",
+      "Softening"
     ],
     "tcm_meridians": [
-      "Large Intestine"
+      "Large Intestine",
+      "Liver",
+      "Stomach"
     ],
-    "caution_level": "LOW"
+    "caution_level": "MEDIUM"
   },
   {
     "id": 545,
@@ -5796,5 +5924,137 @@
       "Kidney"
     ],
     "caution_level": "HIGH"
+  },
+  {
+    "id": 590,
+    "name": "Ajwain",
+    "primary_functions": [
+      "Digestive fire ignition: thymol rich volatile oil (thymol commonly 35 to 60% of the oil) stimulates gastric acid, bile flow and digestive enzyme activity in animal work, and shortens food transit time; API karma Dipana and Pacana (kindles and cooks digestion). The classic answer to heaviness, sluggish appetite and gas after rich meals",
+      "Antispasmodic relief of colic and bloating: calcium channel blocking activity of the oil relaxes intestinal smooth muscle in isolated tissue studies; API karma Anulomana and Shulahara (restores downward flow, removes colicky pain). Fast acting, often within the hour",
+      "Antimicrobial and anthelmintic action: thymol and carvacrol are broadly antibacterial and antifungal in vitro; API karma Krimighna (destroys worms). Traditional use against intestinal parasites and fermentative dysbiosis",
+      "Respiratory decongestion: steam of crushed seed or ajwain in hot water opens nasal and bronchial passages; mild bronchodilator activity reported in small human and animal studies",
+      "Topical warming for cold, stiff joints: warmed seed poultice (pottali) or infused oil for cold type aches and chest congestion"
+    ],
+    "energetics": [
+      "Hot",
+      "Pungent",
+      "Bitter",
+      "Dry",
+      "Penetrating",
+      "Dispersing",
+      "Carminative",
+      "Fire Kindling"
+    ],
+    "tcm_meridians": [
+      "Spleen",
+      "Stomach",
+      "Large Intestine",
+      "Lung"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 591,
+    "name": "Lajjalu",
+    "primary_functions": [
+      "Bleeding and loose stool: API karma Grahi (absorbent, binding) with uses Raktapitta (bleeding disorders), Atisara (diarrhoea); tannins and flavonoids give an astringent, haemostatic action",
+      "Women\\",
+      ",\n      ",
+      ",\n      ",
+      ",\n      "
+    ],
+    "energetics": [
+      "Cool",
+      "Bitter",
+      "Astringent",
+      "Light",
+      "Binding",
+      "Bleeding Stopping",
+      "Calming"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Large Intestine"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 592,
+    "name": "Nagakesar",
+    "primary_functions": [
+      "Bleeding disorders: API use Raktapitta (bleeding from heat) and classical use for bleeding haemorrhoids and heavy menstrual bleeding; coumarins and astringent compounds give haemostatic effects",
+      "Urinary and bladder: API karma Vastivatamayaghna (removes Vata disorders of the bladder) and use Vastiroga (bladder disorders)",
+      "Gout and swelling: API uses Vatarakta (gout and inflammatory arthritis) and Shopharoga (oedema)",
+      "Head and neck conditions: API karma Urdhvajatrugatarogahara (treats disorders above the clavicle); aromatic stamens clear Kapha from head and sinuses",
+      "Complexion: API karma Varnya (improves complexion); used in skin and beauty oils like Candanabalalakshadi Taila"
+    ],
+    "energetics": [
+      "Warm",
+      "Bitter",
+      "Astringent",
+      "Pungent",
+      "Aromatic",
+      "Bleeding Stopping",
+      "Kapha Clearing"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Large Intestine"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 593,
+    "name": "Sariva",
+    "primary_functions": [
+      "Cooling blood purifier: API karma Raktashodhaka (blood purifier) and Tridoshanashana (balances all three doshas), uses Raktavikara (blood disorders), Kushtha and Kandu (skin disease, itching). The gentle, sweet counterpart to bitter blood cleansers like Neem",
+      "Digestive restorer: API karma Dipana (kindles digestion) and Amanashana (clears ama), uses Aruci (loss of appetite), Agnimandya (weak digestion), Atisara (diarrhoea); unusual in being sweet and cooling yet appetite stimulating",
+      "Fever and heat: API karma Jvarahara (antipyretic) and use Jvara; the classic summer cooler",
+      "Antitoxic and protective: API karma Vishaghna; in mouse bone marrow, root extract protected against cisplatin induced chromosomal damage in an inverse dose dependent way, though the extract itself reduced cell division at all doses tested",
+      "Respiratory: API uses Kasa and Shvasa (cough and breathlessness)"
+    ],
+    "energetics": [
+      "Cool",
+      "Sweet",
+      "Heavy",
+      "Moist",
+      "Blood Cooling",
+      "Nourishing",
+      "Aromatic"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "LOW"
+  },
+  {
+    "id": 594,
+    "name": "Shankhapushpi",
+    "primary_functions": [
+      "Memory and cognition: API karma Medhya (intellect promoting) and Rasayana; one of the four classical Medhya Rasayanas (with Brahmi, Mandukaparni and Guduchi). Nootropic and memory enhancing effects in rodent learning models",
+      "Anxiety and mental unrest: API use Manasaroga (mental disorders) and karma Mohanashaka (clears confusion and delusion); anxiolytic and antidepressant like effects in animals",
+      "Sleep: calming, cooling action used for difficulty falling asleep with a racing mind",
+      "Seizure disorders: API use Apasmara (epilepsy); anticonvulsant activity in animal models. Important: an Ayurvedic Shankhapushpi syrup lowered phenytoin levels and worsened seizure control in patients, so it must not be combined with antiepileptic drugs without supervision",
+      "Strength and longevity: API karma Balya (strengthening) and Ayushya (promotes lifespan)"
+    ],
+    "energetics": [
+      "Cool",
+      "Bitter",
+      "Astringent",
+      "Calming",
+      "Mind Clearing",
+      "Nerve Nourishing",
+      "Spirit Anchoring"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "MEDIUM"
   }
 ]

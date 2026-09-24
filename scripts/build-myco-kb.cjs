@@ -246,6 +246,40 @@ function buildHerbChunks() {
         h.dosage_range ? 'Traditional range: ' + h.dosage_range : '',
         h.herb_to_herb_synergy ? 'Synergies: ' + list(h.herb_to_herb_synergy) : '',
       ].filter(Boolean).join('\n') });
+
+    // ── The Ayurvedic Pharmacopoeia layer, where a record has one ──
+    // A sixth chunk, only for herbs carrying `ayurveda`. Without it the
+    // whole layer — rasa, guna, virya, vipaka, karma, the classical
+    // formulations, the API dose and the quality standards — sits in
+    // herbs.ts where MYCO cannot read it, and "what is the virya of
+    // Guduchi" gets "I don't have that in my knowledge base" from a
+    // knowledge base that does.
+    //
+    // Typed 'traditional': this is classical pharmacology transcribed
+    // from the Ayurvedic Pharmacopoeia of India, so MYCO must label it
+    // traditional knowledge and not present it as trial evidence.
+    const a = h.ayurveda;
+    if (a && (a.sanskrit_name || a.api_reference)) {
+      addChunk({ ...base, id: 'herb:' + id + ':ayurveda', type: 'traditional',
+        title: h.name + ' — Ayurvedic pharmacopoeia', section: 'Ayurveda',
+        text: [
+          a.sanskrit_name ? 'Sanskrit name: ' + a.sanskrit_name : '',
+          a.synonyms ? 'Also known as: ' + list(a.synonyms) : '',
+          a.part_used ? 'Part used: ' + a.part_used : '',
+          a.rasa ? 'Rasa (taste): ' + list(a.rasa) : '',
+          a.guna ? 'Guna (quality): ' + list(a.guna) : '',
+          a.virya ? 'Virya (potency): ' + a.virya : '',
+          a.vipaka ? 'Vipaka (post-digestive effect): ' + a.vipaka : '',
+          a.karma ? 'Karma (actions): ' + list(a.karma) : '',
+          a.dosha_action ? 'Dosha action: ' + a.dosha_action : '',
+          a.therapeutic_uses ? 'Classical indications: ' + list(a.therapeutic_uses) : '',
+          a.classical_formulations ? 'Classical formulations: ' + list(a.classical_formulations) : '',
+          a.api_dose ? 'API dose: ' + a.api_dose : '',
+          a.quality_standards ? 'Quality standards: ' + a.quality_standards : '',
+          a.substitution_alert ? 'Substitution alert: ' + a.substitution_alert : '',
+          a.api_reference ? 'Reference: ' + a.api_reference : '',
+        ].filter(Boolean).join('\n') });
+    }
   }
 }
 

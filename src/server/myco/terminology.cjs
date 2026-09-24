@@ -188,11 +188,29 @@ const VARIANT_RULES = [
   [/ll(ing|ed|er|or|ation)$/, 'l$1'], [/l(ing|ed|er|or|ation)$/, 'll$1'],
 ];
 // Pairs no rule expresses cleanly. Both directions are tried.
+//
+// The medical ligatures are HERE rather than in VARIANT_RULES for a reason.
+// A rule can strip a ligature (oe → e) but it cannot put one back: there is
+// no safe way to decide which of the e's in a word wants an o in front of
+// it, and guessing turns every "e" into a candidate. Without these pairs the
+// layer was one-directional — "oestrogen" found "estrogen", and "estrogen"
+// found nothing extra, so a US-spelled question still saw half the shelf.
+// The set is closed and worth writing out.
 const VARIANT_PAIRS = [
   ['mould', 'mold'], ['licence', 'license'], ['practise', 'practice'],
   ['grey', 'gray'], ['centre', 'center'], ['fibre', 'fiber'],
   ['litre', 'liter'], ['metre', 'meter'], ['ageing', 'aging'],
   ['draught', 'draft'], ['plough', 'plow'], ['storey', 'story'],
+  // ── medical æ / œ ──
+  ['oestrogen', 'estrogen'], ['oestrus', 'estrus'], ['oedema', 'edema'],
+  ['oesophag', 'esophag'], ['foetal', 'fetal'], ['foetus', 'fetus'],
+  ['diarrhoea', 'diarrhea'], ['anaemia', 'anemia'], ['anaemic', 'anemic'],
+  ['haemo', 'hemo'], ['haema', 'hema'], ['haemorrh', 'hemorrh'],
+  ['paediatric', 'pediatric'], ['anaesth', 'anesth'], ['caesar', 'cesar'],
+  ['gynaecolog', 'gynecolog'], ['orthopaedic', 'orthopedic'],
+  ['leukaemia', 'leukemia'], ['ischaemia', 'ischemia'],
+  ['ischaemic', 'ischemic'], ['coeliac', 'celiac'], ['dysmenorrhoea', 'dysmenorrhea'],
+  ['amenorrhoea', 'amenorrhea'], ['glycaemi', 'glycemi'], ['hypoglycaemi', 'hypoglycemi'],
 ];
 
 function orthographicVariants(w) {

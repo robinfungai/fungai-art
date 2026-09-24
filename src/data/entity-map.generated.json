@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-24T09:26:05.346Z",
+  "generatedAt": "2026-09-24T09:52:57.357Z",
   "counts": {
-    "botanicals": 243,
+    "botanicals": 248,
     "monographs": 128,
     "monographsMatched": 128,
     "products": 21,
@@ -1515,7 +1515,7 @@
       "id": 501,
       "slug": "guduchi",
       "name": "Guduchi",
-      "botanical": "Tinospora cordifolia (stem · root · fruit)",
+      "botanical": "Tinospora cordifolia (dried mature stem, also used fresh; \"Giloy / Amrita / Heart leaved Moonseed\")",
       "latin": "Tinospora cordifolia",
       "genus": "Tinospora",
       "species": "cordifolia"
@@ -1524,7 +1524,7 @@
       "id": 502,
       "slug": "punarnava",
       "name": "Punarnava",
-      "botanical": "Boerhavia diffusa (root)",
+      "botanical": "Boerhavia diffusa (dried whole plant, red variety; \"Hogweed / Horse Purslane / Spreading Hogweed\")",
       "latin": "Boerhavia diffusa",
       "genus": "Boerhavia",
       "species": "diffusa"
@@ -1542,7 +1542,7 @@
       "id": 504,
       "slug": "arjuna",
       "name": "Arjuna",
-      "botanical": "Terminalia arjuna (bark)",
+      "botanical": "Terminalia arjuna (stem bark; the white barked river tree)",
       "latin": "Terminalia arjuna",
       "genus": "Terminalia",
       "species": "arjuna"
@@ -1551,7 +1551,7 @@
       "id": 505,
       "slug": "hadjod",
       "name": "Hadjod",
-      "botanical": "Cissus quadrangularis (stem)",
+      "botanical": "Cissus quadrangularis (dried four angled stem; \"Veld Grape / Bone Setter / Asthisamhara\")",
       "latin": "Cissus quadrangularis",
       "genus": "Cissus",
       "species": "quadrangularis"
@@ -1560,7 +1560,7 @@
       "id": 506,
       "slug": "shallaki",
       "name": "Shallaki",
-      "botanical": "Boswellia serrata (gum resin)",
+      "botanical": "Boswellia serrata (oleo gum resin exudate; \"Indian Frankincense / Salai Guggulu\"; API name Kunduru)",
       "latin": "Boswellia serrata",
       "genus": "Boswellia",
       "species": "serrata"
@@ -1569,8 +1569,8 @@
       "id": 507,
       "slug": "rasna",
       "name": "Rasna",
-      "botanical": "Pluchea lanceolata / Alpinia galanga (leaf · rhizome)",
-      "latin": "Pluchea lanceolata / Alpinia galanga",
+      "botanical": "Pluchea lanceolata (dried leaf per API Vol III; \"Rayasan\"; identity of classical Rasna is debated)",
+      "latin": "Pluchea lanceolata",
       "genus": "Pluchea",
       "species": "lanceolata"
     },
@@ -1596,7 +1596,7 @@
       "id": 510,
       "slug": "vijaysar",
       "name": "Vijaysar",
-      "botanical": "Pterocarpus marsupium (heartwood)",
+      "botanical": "Pterocarpus marsupium (heartwood; \"Indian Kino Tree / Malabar Kino / Asana / Bijasal\")",
       "latin": "Pterocarpus marsupium",
       "genus": "Pterocarpus",
       "species": "marsupium"
@@ -1605,7 +1605,7 @@
       "id": 511,
       "slug": "nirgundi",
       "name": "Nirgundi",
-      "botanical": "Vitex negundo (leaves)",
+      "botanical": "Vitex negundo (dried leaf; \"Five leaved Chaste Tree / Sambhalu\")",
       "latin": "Vitex negundo",
       "genus": "Vitex",
       "species": "negundo"
@@ -1614,7 +1614,7 @@
       "id": 512,
       "slug": "ashoka",
       "name": "Ashoka",
-      "botanical": "Saraca asoca (bark)",
+      "botanical": "Saraca asoca (dried stem bark; syn. Saraca indica; \"the tree without sorrow\")",
       "latin": "Saraca asoca",
       "genus": "Saraca",
       "species": "asoca"
@@ -1623,7 +1623,7 @@
       "id": 513,
       "slug": "lodhra",
       "name": "Lodhra",
-      "botanical": "Symplocos racemosa (bark · leaves)",
+      "botanical": "Symplocos racemosa (dried stem bark; \"Symplocos bark / Lodh tree\")",
       "latin": "Symplocos racemosa",
       "genus": "Symplocos",
       "species": "racemosa"
@@ -1650,7 +1650,7 @@
       "id": 520,
       "slug": "bakuchi",
       "name": "Bakuchi",
-      "botanical": "Psoralea corylifolia (seeds)",
+      "botanical": "Psoralea corylifolia (syn. Cullen corylifolium; dried ripe fruit, used as seed; \"Babchi\")",
       "latin": "Psoralea corylifolia",
       "genus": "Psoralea",
       "species": "corylifolia"
@@ -1668,7 +1668,7 @@
       "id": 522,
       "slug": "gokshura",
       "name": "Gokshura",
-      "botanical": "Tribulus terrestris (fruit)",
+      "botanical": "Tribulus terrestris (dried ripe fruit and root; \"Caltrops / Puncture Vine / Gokhru\")",
       "latin": "Tribulus terrestris",
       "genus": "Tribulus",
       "species": "terrestris"
@@ -1686,19 +1686,19 @@
       "id": 524,
       "slug": "bibhitaki",
       "name": "Bibhitaki",
-      "botanical": "Terminalia bellerica (fruit)",
-      "latin": "Terminalia bellerica",
+      "botanical": "Terminalia bellirica (pericarp of the dried ripe fruit; \"Beleric Myrobalan / Bahera\")",
+      "latin": "Terminalia bellirica",
       "genus": "Terminalia",
-      "species": "bellerica"
+      "species": "bellirica"
     },
     {
       "id": 525,
       "slug": "guggulu",
       "name": "Guggulu",
-      "botanical": "Commiphora mukul / Commiphora wightii (gum resin)",
-      "latin": "Commiphora mukul / Commiphora wightii",
+      "botanical": "Commiphora wightii (syn. Commiphora mukul; oleo gum resin exudate; \"Indian Bdellium / Gum Guggulu\")",
+      "latin": "Commiphora wightii",
       "genus": "Commiphora",
-      "species": "mukul"
+      "species": "wightii"
     },
     {
       "id": 526,
@@ -1713,7 +1713,7 @@
       "id": 527,
       "slug": "manjistha",
       "name": "Manjistha",
-      "botanical": "Rubia cordifolia (root)",
+      "botanical": "Rubia cordifolia (dried stem per API Vol III; root widely used in trade; \"Indian Madder\")",
       "latin": "Rubia cordifolia",
       "genus": "Rubia",
       "species": "cordifolia"
@@ -1722,7 +1722,7 @@
       "id": 528,
       "slug": "khadira",
       "name": "Khadira",
-      "botanical": "Acacia catechu (heartwood)",
+      "botanical": "Acacia catechu (syn. Senegalia catechu; dried heartwood; \"Black Catechu / Cutch Tree / Khair\")",
       "latin": "Acacia catechu",
       "genus": "Acacia",
       "species": "catechu"
@@ -1749,7 +1749,7 @@
       "id": 531,
       "slug": "neem",
       "name": "Neem",
-      "botanical": "Azadirachta indica (leaf · bark)",
+      "botanical": "Azadirachta indica (dried leaf and stem bark; \"Margosa / Indian Lilac / the village pharmacy\")",
       "latin": "Azadirachta indica",
       "genus": "Azadirachta",
       "species": "indica"
@@ -1767,7 +1767,7 @@
       "id": 533,
       "slug": "karanja",
       "name": "Karanja",
-      "botanical": "Pongamia pinnata (seed · oil · leaf · bark)",
+      "botanical": "Pongamia pinnata (syn. Millettia pinnata; seed and seed oil; also root, bark and leaf in API Vol II; \"Indian Beech / Pongam\")",
       "latin": "Pongamia pinnata",
       "genus": "Pongamia",
       "species": "pinnata"
@@ -1776,7 +1776,7 @@
       "id": 534,
       "slug": "bael",
       "name": "Bael",
-      "botanical": "Aegle marmelos (leaves · fruit)",
+      "botanical": "Aegle marmelos (unripe or half ripe fruit pulp; root is a Dashamula member; \"Bengal Quince / Stone Apple / Bilva\")",
       "latin": "Aegle marmelos",
       "genus": "Aegle",
       "species": "marmelos"
@@ -1785,7 +1785,7 @@
       "id": 535,
       "slug": "chandrashoor",
       "name": "Chandrashoor",
-      "botanical": "Lepidium sativum (garden cress seeds)",
+      "botanical": "Lepidium sativum (dried seed; \"Garden Cress / Halim / Aliv\")",
       "latin": "Lepidium sativum",
       "genus": "Lepidium",
       "species": "sativum"
@@ -1794,7 +1794,7 @@
       "id": 536,
       "slug": "amaltas",
       "name": "Amaltas",
-      "botanical": "Cassia fistula (fruit pulp)",
+      "botanical": "Cassia fistula (fruit pulp from the long black pods; \"Indian Laburnum / Golden Shower / Purging Cassia\")",
       "latin": "Cassia fistula",
       "genus": "Cassia",
       "species": "fistula"
@@ -2194,6 +2194,51 @@
       "latin": "Polygonum multiflorum / Fallopia multiflora",
       "genus": "Polygonum",
       "species": "multiflorum"
+    },
+    {
+      "id": 590,
+      "slug": "ajwain",
+      "name": "Ajwain",
+      "botanical": "Trachyspermum ammi (dried fruit, often called seed; syn. Carum copticum; \"Bishop's weed / Carom\")",
+      "latin": "Trachyspermum ammi",
+      "genus": "Trachyspermum",
+      "species": "ammi"
+    },
+    {
+      "id": 591,
+      "slug": "lajjalu",
+      "name": "Lajjalu",
+      "botanical": "Mimosa pudica (dried whole plant; \"Touch me not / Sensitive Plant / Chhuimui\")",
+      "latin": "Mimosa pudica",
+      "genus": "Mimosa",
+      "species": "pudica"
+    },
+    {
+      "id": 592,
+      "slug": "nagakesar",
+      "name": "Nagakesar",
+      "botanical": "Mesua ferrea (dried stamens; \"Cobra's Saffron / Ceylon Ironwood / Nag Champa tree\")",
+      "latin": "Mesua ferrea",
+      "genus": "Mesua",
+      "species": "ferrea"
+    },
+    {
+      "id": 593,
+      "slug": "sariva",
+      "name": "Sariva",
+      "botanical": "Hemidesmus indicus (dried root; \"Indian Sarsaparilla / Anantamul / Nannari\")",
+      "latin": "Hemidesmus indicus",
+      "genus": "Hemidesmus",
+      "species": "indicus"
+    },
+    {
+      "id": 594,
+      "slug": "shankhapushpi",
+      "name": "Shankhapushpi",
+      "botanical": "Convolvulus pluricaulis (dried whole plant; syn. Convolvulus prostratus; \"the conch flower\")",
+      "latin": "Convolvulus pluricaulis",
+      "genus": "Convolvulus",
+      "species": "pluricaulis"
     }
   ],
   "monographs": [

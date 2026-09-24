@@ -83,7 +83,11 @@ const outPath = path.join(__dirname, '../public/herbs-data.js');
 fs.writeFileSync(outPath, output);
 
 const size = (fs.statSync(outPath).size / 1024).toFixed(1);
-console.log(`✓ herbs-data.js written — ${size} KB — ${js.split("name:").length - 1} herbs`);
+// Count top-level records, not occurrences of "name:" — the Ayurvedic
+// layer added a nested `sanskrit_name:` key, which made the old
+// substring count report 274 herbs for a file holding 248.
+const recordCount = (herbsStr.match(/\n\s*id:\s*\d+/g) || []).length;
+console.log(`✓ herbs-data.js written — ${size} KB — ${recordCount} herbs`);
 
 // ── Also emit a Node-safe copy for the private server engine ───────
 // public/herbs-data.js uses `window.HERB_DB = HERBS` which crashes in

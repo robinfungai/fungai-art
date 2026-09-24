@@ -143,6 +143,27 @@ const EQUIVALENT = [
   ['meridian', 'channel'],
   ['rasayana', 'rejuvenative'],
   ['ayurveda', 'ayurvedic'],
+  // The Ayurvedic Pharmacopoeia layer (see the `ayurveda` block in
+  // herbs.ts). These became live terms with the API batch — before it
+  // the corpus never used them.
+  ['virya', 'potency'],
+  ['vipaka', 'post digestive'],
+  ['ushna', 'heating'],
+  ['shita', 'cooling'],
+  ['katu', 'pungent'],
+  ['tikta', 'bitter'],
+  ['madhura', 'sweet'],
+  ['kashaya', 'astringent'],
+  ['lavana', 'salty'],
+  ['dipana', 'kindles digestive fire'],
+  ['pacana', 'digests ama'],
+  ['anulomana', 'downward flow'],
+  ['krimighna', 'anthelmintic'],
+  ['shulahara', 'relieves colic'],
+  // NOT listed: 'amla' as the Sanskrit for sour. Amla is also one of our
+  // plants (id 523, Amla / Amalaki), and an equivalence from 'amla' to
+  // 'sour' would drag every question about the fruit into the taste
+  // vocabulary. Sanskrit that collides with a herb name stays out.
 
   // Pharmacology
   ['beta glucan', 'betaglucan', 'polysaccharide'],
@@ -250,6 +271,18 @@ const IMPLIES = [
   ['shelf life',       ['storage', 'stability', 'preservation']],
   ['strength',         ['ratio', 'concentration', 'potency']],
   ['how much',         ['dosage', 'dose', 'range']],
+
+  // Ayurvedic questions asked in English
+  ['rasa',             ['taste', 'flavour']],
+  ['guna',             ['quality']],
+  ['karma',            ['actions']],
+  ['dosha',            ['vata', 'pitta', 'kapha']],
+  ['vata',             ['dosha', 'dryness']],
+  ['pitta',            ['dosha', 'heat']],
+  ['kapha',            ['dosha', 'damp']],
+  ['sanskrit name',    ['sanskrit', 'synonyms']],
+  ['classical formula', ['classical formulations', 'traditional formulation']],
+  ['pharmacopoeia',    ['api', 'monograph', 'quality standards']],
 ];
 
 // ── 3 · Misspellings edit distance cannot reach ───────────────────

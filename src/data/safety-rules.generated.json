@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-24T09:00:21.782Z",
+  "generatedAt": "2026-09-24T09:52:59.237Z",
   "counts": {
-    "botanicals": 243,
-    "rules": 2000,
+    "botanicals": 248,
+    "rules": 2202,
     "byType": {
-      "contraindication": 1116,
-      "drug_interaction": 580,
-      "herb_interaction": 304
+      "contraindication": 1191,
+      "drug_interaction": 665,
+      "herb_interaction": 346
     },
     "bySeverity": {
-      "unspecified": 951,
-      "caution": 312,
-      "monitor": 356,
-      "avoid": 259,
-      "absolute": 122
+      "unspecified": 1093,
+      "caution": 314,
+      "monitor": 373,
+      "avoid": 295,
+      "absolute": 127
     }
   },
   "flagsByBotanicalId": {
@@ -742,38 +742,60 @@
       "pregnancy"
     ],
     "501": [
+      "autoimmune",
+      "cardio_meds",
+      "hypertension",
+      "liver_kidney",
       "pregnancy"
     ],
     "502": [
+      "cardio_meds",
+      "hypertension",
+      "pregnancy",
       "psych_meds"
     ],
     "503": [
       "pregnancy"
     ],
     "504": [
-      "cardio_meds"
+      "cardio_meds",
+      "hypertension",
+      "pregnancy"
     ],
     "505": [
+      "liver_kidney",
       "pregnancy"
     ],
     "506": [
+      "autoimmune",
+      "cardio_meds",
       "pregnancy"
     ],
-    "507": [],
+    "507": [
+      "cardio_meds",
+      "pregnancy"
+    ],
     "508": [],
     "509": [
       "cardio_meds",
       "hypertension",
       "pregnancy"
     ],
-    "510": [],
-    "511": [
+    "510": [
       "pregnancy"
+    ],
+    "511": [
+      "pregnancy",
+      "psych_meds"
     ],
     "512": [
+      "cardio_meds",
+      "contraceptive",
       "pregnancy"
     ],
-    "513": [],
+    "513": [
+      "pregnancy"
+    ],
     "514": [
       "pregnancy"
     ],
@@ -781,6 +803,7 @@
       "hypertension"
     ],
     "520": [
+      "liver_kidney",
       "pregnancy"
     ],
     "521": [
@@ -789,7 +812,8 @@
     "522": [
       "cardio_meds",
       "hypertension",
-      "pregnancy"
+      "pregnancy",
+      "psych_meds"
     ],
     "523": [
       "cardio_meds"
@@ -798,6 +822,8 @@
       "pregnancy"
     ],
     "525": [
+      "cardio_meds",
+      "contraceptive",
       "pregnancy",
       "thyroid"
     ],
@@ -810,9 +836,12 @@
     ],
     "527": [
       "cardio_meds",
+      "liver_kidney",
       "pregnancy"
     ],
-    "528": [],
+    "528": [
+      "pregnancy"
+    ],
     "529": [
       "pregnancy"
     ],
@@ -820,19 +849,29 @@
       "pregnancy"
     ],
     "531": [
-      "pregnancy",
-      "thyroid"
+      "autoimmune",
+      "contraceptive",
+      "liver_kidney",
+      "pregnancy"
     ],
     "532": [],
     "533": [
       "pregnancy"
     ],
-    "534": [],
+    "534": [
+      "contraceptive",
+      "pregnancy"
+    ],
     "535": [
+      "cardio_meds",
+      "hypertension",
       "pregnancy",
       "thyroid"
     ],
-    "536": [],
+    "536": [
+      "cardio_meds",
+      "pregnancy"
+    ],
     "537": [
       "cardio_meds",
       "hypertension",
@@ -1060,6 +1099,31 @@
     "589": [
       "liver_kidney",
       "pregnancy"
+    ],
+    "590": [
+      "cardio_meds",
+      "hypertension",
+      "pregnancy"
+    ],
+    "591": [
+      "pregnancy",
+      "psych_meds",
+      "sedatives",
+      "thyroid"
+    ],
+    "592": [
+      "cardio_meds",
+      "pregnancy"
+    ],
+    "593": [
+      "pregnancy"
+    ],
+    "594": [
+      "cardio_meds",
+      "hypertension",
+      "pregnancy",
+      "sedatives",
+      "thyroid"
     ]
   },
   "flagsPerRuleByBotanicalId": {
@@ -1785,38 +1849,60 @@
       "pregnancy"
     ],
     "501": [
+      "autoimmune",
+      "cardio_meds",
+      "hypertension",
+      "liver_kidney",
       "pregnancy"
     ],
     "502": [
+      "cardio_meds",
+      "hypertension",
+      "pregnancy",
       "psych_meds"
     ],
     "503": [
       "pregnancy"
     ],
     "504": [
-      "cardio_meds"
+      "cardio_meds",
+      "hypertension",
+      "pregnancy"
     ],
     "505": [
+      "liver_kidney",
       "pregnancy"
     ],
     "506": [
+      "autoimmune",
+      "cardio_meds",
       "pregnancy"
     ],
-    "507": [],
+    "507": [
+      "cardio_meds",
+      "pregnancy"
+    ],
     "508": [],
     "509": [
       "cardio_meds",
       "hypertension",
       "pregnancy"
     ],
-    "510": [],
-    "511": [
+    "510": [
       "pregnancy"
+    ],
+    "511": [
+      "pregnancy",
+      "psych_meds"
     ],
     "512": [
+      "cardio_meds",
+      "contraceptive",
       "pregnancy"
     ],
-    "513": [],
+    "513": [
+      "pregnancy"
+    ],
     "514": [
       "pregnancy"
     ],
@@ -1824,6 +1910,7 @@
       "hypertension"
     ],
     "520": [
+      "liver_kidney",
       "pregnancy"
     ],
     "521": [
@@ -1832,7 +1919,8 @@
     "522": [
       "cardio_meds",
       "hypertension",
-      "pregnancy"
+      "pregnancy",
+      "psych_meds"
     ],
     "523": [
       "cardio_meds"
@@ -1841,6 +1929,8 @@
       "pregnancy"
     ],
     "525": [
+      "cardio_meds",
+      "contraceptive",
       "pregnancy",
       "thyroid"
     ],
@@ -1853,9 +1943,12 @@
     ],
     "527": [
       "cardio_meds",
+      "liver_kidney",
       "pregnancy"
     ],
-    "528": [],
+    "528": [
+      "pregnancy"
+    ],
     "529": [
       "pregnancy"
     ],
@@ -1863,19 +1956,29 @@
       "pregnancy"
     ],
     "531": [
-      "pregnancy",
-      "thyroid"
+      "autoimmune",
+      "contraceptive",
+      "liver_kidney",
+      "pregnancy"
     ],
     "532": [],
     "533": [
       "pregnancy"
     ],
-    "534": [],
+    "534": [
+      "contraceptive",
+      "pregnancy"
+    ],
     "535": [
+      "cardio_meds",
+      "hypertension",
       "pregnancy",
       "thyroid"
     ],
-    "536": [],
+    "536": [
+      "cardio_meds",
+      "pregnancy"
+    ],
     "537": [
       "cardio_meds",
       "hypertension",
@@ -2100,6 +2203,31 @@
     "589": [
       "liver_kidney",
       "pregnancy"
+    ],
+    "590": [
+      "cardio_meds",
+      "hypertension",
+      "pregnancy"
+    ],
+    "591": [
+      "pregnancy",
+      "psych_meds",
+      "sedatives",
+      "thyroid"
+    ],
+    "592": [
+      "cardio_meds",
+      "pregnancy"
+    ],
+    "593": [
+      "pregnancy"
+    ],
+    "594": [
+      "cardio_meds",
+      "hypertension",
+      "pregnancy",
+      "sedatives",
+      "thyroid"
     ]
   },
   "divergence": [
@@ -21481,11 +21609,12 @@
       "botanicalId": 501,
       "botanical": "Guduchi",
       "ruleType": "contraindication",
-      "subject": "Pregnancy",
-      "severity": "unspecified",
-      "reason": "uterine activity at high doses",
+      "subject": "Liver: case series from India during 2020 to 2021 linked Guduchi use (often self prescribed, long term, during COVID 19) to autoimmune like hepatitis; avoid in liver disease, monitor liver enzymes with prolonged use, stop if jaundice, dark urine or fatigue appear",
+      "severity": "avoid",
+      "reason": null,
       "flags": [
-        "pregnancy"
+        "autoimmune",
+        "liver_kidney"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -21494,10 +21623,13 @@
       "botanicalId": 501,
       "botanical": "Guduchi",
       "ruleType": "contraindication",
-      "subject": "Auto-immune medication: practitioner oversight",
+      "subject": "Autoimmune disease (lupus, rheumatoid arthritis, autoimmune hepatitis, multiple sclerosis): immune stimulating potential; use only with specialist input",
       "severity": "unspecified",
       "reason": null,
-      "flags": [],
+      "flags": [
+        "autoimmune",
+        "liver_kidney"
+      ],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -21505,21 +21637,144 @@
       "botanicalId": 501,
       "botanical": "Guduchi",
       "ruleType": "contraindication",
-      "subject": "May lower blood sugar",
+      "subject": "Immunosuppressed transplant patients or those on immunosuppressants: theoretical antagonism",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "autoimmune"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:501:contraindication:4",
+      "botanicalId": 501,
+      "botanical": "Guduchi",
+      "ruleType": "contraindication",
+      "subject": "Diabetes on medication: additive glucose lowering; monitor",
       "severity": "monitor",
-      "reason": "monitor in diabetics",
+      "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:501:contraindication:5",
+      "botanicalId": 501,
+      "botanical": "Guduchi",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and breastfeeding: insufficient safety data; avoid",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:501:contraindication:6",
+      "botanicalId": 501,
+      "botanical": "Guduchi",
+      "ruleType": "contraindication",
+      "subject": "Surgery: stop 2 weeks before because of glucose effects",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:501:drug_interaction:1",
+      "botanicalId": 501,
+      "botanical": "Guduchi",
+      "ruleType": "drug_interaction",
+      "subject": "Immunosuppressants (ciclosporin, tacrolimus, corticosteroids): theoretical antagonism",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "autoimmune"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:501:drug_interaction:2",
+      "botanicalId": 501,
+      "botanical": "Guduchi",
+      "ruleType": "drug_interaction",
+      "subject": "Antidiabetic drugs and insulin: additive hypoglycaemia; monitor",
+      "severity": "monitor",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:501:drug_interaction:3",
+      "botanicalId": 501,
+      "botanical": "Guduchi",
+      "ruleType": "drug_interaction",
+      "subject": "Hepatotoxic drugs: additive liver risk; monitor enzymes",
+      "severity": "monitor",
+      "reason": null,
+      "flags": [
+        "liver_kidney"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:501:drug_interaction:4",
+      "botanicalId": 501,
+      "botanical": "Guduchi",
+      "ruleType": "drug_interaction",
+      "subject": "Antihypertensives: mild additive lowering reported in animals",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "cardio_meds",
+        "hypertension"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:501:herb_interaction:1",
+      "botanicalId": 501,
+      "botanical": "Guduchi",
+      "ruleType": "herb_interaction",
+      "subject": "Other immune stimulants in autoimmune states (Echinacea, Astragalus at high dose): cumulative stimulation",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:501:herb_interaction:2",
+      "botanicalId": 501,
+      "botanical": "Guduchi",
+      "ruleType": "herb_interaction",
+      "subject": "Other hypoglycaemic herbs (Vijaysar, Gymnema, Bitter melon): additive glucose lowering",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:501:herb_interaction:3",
+      "botanicalId": 501,
+      "botanical": "Guduchi",
+      "ruleType": "herb_interaction",
+      "subject": "Potentially hepatotoxic herbs: additive liver burden",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
     },
     {
       "id": "safety:502:contraindication:1",
       "botanicalId": 502,
       "botanical": "Punarnava",
       "ruleType": "contraindication",
-      "subject": "Severe dehydration",
-      "severity": "unspecified",
-      "reason": "diuretic may aggravate",
-      "flags": [],
+      "subject": "Pregnancy and breastfeeding: avoid therapeutic doses (insufficient data)",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -21527,13 +21782,110 @@
       "botanicalId": 502,
       "botanical": "Punarnava",
       "ruleType": "contraindication",
-      "subject": "Lithium / strong diuretic medications",
+      "subject": "Dehydration, low blood pressure, electrolyte imbalance: diuretic",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "hypertension"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:502:contraindication:3",
+      "botanicalId": 502,
+      "botanical": "Punarnava",
+      "ruleType": "contraindication",
+      "subject": "Heart failure, kidney failure or cirrhosis with oedema: use only alongside medical care; oedema has causes that need diagnosis",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:502:contraindication:4",
+      "botanicalId": 502,
+      "botanical": "Punarnava",
+      "ruleType": "contraindication",
+      "subject": "Lithium users: diuretics can raise lithium levels",
       "severity": "unspecified",
       "reason": null,
       "flags": [
         "psych_meds"
       ],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:502:drug_interaction:1",
+      "botanicalId": 502,
+      "botanical": "Punarnava",
+      "ruleType": "drug_interaction",
+      "subject": "Lithium: raised levels with diuretic effect; avoid or monitor closely",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "psych_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:502:drug_interaction:2",
+      "botanicalId": 502,
+      "botanical": "Punarnava",
+      "ruleType": "drug_interaction",
+      "subject": "Diuretics and antihypertensives: additive effect on fluids and blood pressure",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "cardio_meds",
+        "hypertension"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:502:drug_interaction:3",
+      "botanicalId": 502,
+      "botanical": "Punarnava",
+      "ruleType": "drug_interaction",
+      "subject": "Digoxin: potassium shifts with combined diuretics",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:502:drug_interaction:4",
+      "botanicalId": 502,
+      "botanical": "Punarnava",
+      "ruleType": "drug_interaction",
+      "subject": "Antidiabetic drugs: glucose lowering reported in animals; monitor",
+      "severity": "monitor",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:502:herb_interaction:1",
+      "botanicalId": 502,
+      "botanical": "Punarnava",
+      "ruleType": "herb_interaction",
+      "subject": "Other diuretics (Gokshura at high dose, Dandelion leaf, Horsetail, Juniper): combined fluid and electrolyte loss",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:502:herb_interaction:2",
+      "botanicalId": 502,
+      "botanical": "Punarnava",
+      "ruleType": "herb_interaction",
+      "subject": "Hypotensive herbs: additive blood pressure lowering",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
     },
     {
       "id": "safety:503:contraindication:1",
@@ -21564,11 +21916,11 @@
       "botanicalId": 504,
       "botanical": "Arjuna",
       "ruleType": "contraindication",
-      "subject": "On cardiac glycoside drugs",
+      "subject": "Anyone on cardiac medication: use only with cardiologist awareness; additive effects on blood pressure and heart rate are possible",
       "severity": "unspecified",
-      "reason": "practitioner monitoring",
+      "reason": null,
       "flags": [
-        "cardio_meds"
+        "hypertension"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -21577,22 +21929,130 @@
       "botanicalId": 504,
       "botanical": "Arjuna",
       "ruleType": "contraindication",
-      "subject": "Severe hypotension",
+      "subject": "Hypotension: may lower blood pressure further",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "hypertension"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:504:contraindication:3",
+      "botanicalId": 504,
+      "botanical": "Arjuna",
+      "ruleType": "contraindication",
+      "subject": "Constipation and very dry Vata states: strongly astringent; counter with milk decoction or ghee",
       "severity": "unspecified",
       "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
+      "id": "safety:504:contraindication:4",
+      "botanicalId": 504,
+      "botanical": "Arjuna",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and lactation: insufficient safety data; avoid",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:504:contraindication:5",
+      "botanicalId": 504,
+      "botanical": "Arjuna",
+      "ruleType": "contraindication",
+      "subject": "Never replace emergency or prescribed cardiac treatment with Arjuna",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:504:drug_interaction:1",
+      "botanicalId": 504,
+      "botanical": "Arjuna",
+      "ruleType": "drug_interaction",
+      "subject": "Antihypertensives, beta blockers, nitrates: possible additive effect; monitor pressure and heart rate",
+      "severity": "monitor",
+      "reason": null,
+      "flags": [
+        "cardio_meds",
+        "hypertension"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:504:drug_interaction:2",
+      "botanicalId": 504,
+      "botanical": "Arjuna",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants and antiplatelets: theoretical additive effect (flavonoids, OPCs); monitor INR",
+      "severity": "monitor",
+      "reason": null,
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:504:drug_interaction:3",
+      "botanicalId": 504,
+      "botanical": "Arjuna",
+      "ruleType": "drug_interaction",
+      "subject": "Statins: additive lipid effect",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:504:drug_interaction:4",
+      "botanicalId": 504,
+      "botanical": "Arjuna",
+      "ruleType": "drug_interaction",
+      "subject": "Tannin rich bark can bind iron and some oral drugs; separate by 2 hours",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:504:herb_interaction:1",
+      "botanicalId": 504,
+      "botanical": "Arjuna",
+      "ruleType": "herb_interaction",
+      "subject": "Other hypotensive herbs at high dose (Rauvolfia, Sarpagandha, concentrated Hibiscus): additive BP lowering",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:504:herb_interaction:2",
+      "botanicalId": 504,
+      "botanical": "Arjuna",
+      "ruleType": "herb_interaction",
+      "subject": "Cardiac glycoside plants (Digitalis, Lily of the valley, Oleander): never combine outside specialist care",
+      "severity": "absolute",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
       "id": "safety:505:contraindication:1",
       "botanicalId": 505,
       "botanical": "Hadjod",
       "ruleType": "contraindication",
-      "subject": "Pregnancy",
+      "subject": "Raw fresh stem: calcium oxalate raphides irritate mouth and throat; traditionally cooked with ghee or sesame and tamarind to neutralize",
       "severity": "unspecified",
-      "reason": "limited data",
+      "reason": null,
       "flags": [
-        "pregnancy"
+        "liver_kidney"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -21601,20 +22061,112 @@
       "botanicalId": 505,
       "botanical": "Hadjod",
       "ruleType": "contraindication",
-      "subject": "Hormone-sensitive cancers",
+      "subject": "Pregnancy and breastfeeding: insufficient data; avoid",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:505:contraindication:3",
+      "botanicalId": 505,
+      "botanical": "Hadjod",
+      "ruleType": "contraindication",
+      "subject": "Kidney stones (calcium oxalate type): contains oxalates; caution",
+      "severity": "caution",
+      "reason": null,
+      "flags": [
+        "liver_kidney"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:505:contraindication:4",
+      "botanicalId": 505,
+      "botanical": "Hadjod",
+      "ruleType": "contraindication",
+      "subject": "Diabetes on medication: possible additive glucose lowering",
       "severity": "unspecified",
-      "reason": "practitioner oversight for sterol content",
+      "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:505:contraindication:5",
+      "botanicalId": 505,
+      "botanical": "Hadjod",
+      "ruleType": "contraindication",
+      "subject": "Reported side effects in trials: headache, dry mouth, intestinal gas, insomnia",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:505:drug_interaction:1",
+      "botanicalId": 505,
+      "botanical": "Hadjod",
+      "ruleType": "drug_interaction",
+      "subject": "Antidiabetic drugs: possible additive effect; monitor",
+      "severity": "monitor",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:505:drug_interaction:2",
+      "botanicalId": 505,
+      "botanical": "Hadjod",
+      "ruleType": "drug_interaction",
+      "subject": "Corticosteroids: ketosteroids are proposed to antagonize glucocorticoid effects on bone; theoretical interaction",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:505:drug_interaction:3",
+      "botanicalId": 505,
+      "botanical": "Hadjod",
+      "ruleType": "drug_interaction",
+      "subject": "Bisphosphonates and osteoporosis drugs: no known interaction, but coordinate with the prescriber",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:505:herb_interaction:1",
+      "botanicalId": 505,
+      "botanical": "Hadjod",
+      "ruleType": "herb_interaction",
+      "subject": "Other high oxalate herbs and foods in stone formers",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:505:herb_interaction:2",
+      "botanicalId": 505,
+      "botanical": "Hadjod",
+      "ruleType": "herb_interaction",
+      "subject": "Other hypoglycaemic herbs (Vijaysar, Gymnema): additive glucose lowering",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
     },
     {
       "id": "safety:506:contraindication:1",
       "botanicalId": 506,
       "botanical": "Shallaki",
       "ruleType": "contraindication",
-      "subject": "Pregnancy",
-      "severity": "unspecified",
-      "reason": "uterine activity at high doses",
+      "subject": "Pregnancy and breastfeeding: avoid (emmenagogue tradition, insufficient data)",
+      "severity": "avoid",
+      "reason": null,
       "flags": [
         "pregnancy"
       ],
@@ -21625,21 +22177,106 @@
       "botanicalId": 506,
       "botanical": "Shallaki",
       "ruleType": "contraindication",
-      "subject": "On NSAIDs",
-      "severity": "caution",
-      "reason": "combine carefully (additive GI effects unusual but possible)",
+      "subject": "Gastrointestinal upset: mild nausea, reflux or diarrhoea in some users; take with food",
+      "severity": "unspecified",
+      "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:506:contraindication:3",
+      "botanicalId": 506,
+      "botanical": "Shallaki",
+      "ruleType": "contraindication",
+      "subject": "Allergy: rare contact dermatitis; stop at rash",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:506:contraindication:4",
+      "botanicalId": 506,
+      "botanical": "Shallaki",
+      "ruleType": "contraindication",
+      "subject": "Autoimmune disease on immune therapies: immunomodulatory; coordinate with specialist",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "autoimmune"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:506:drug_interaction:1",
+      "botanicalId": 506,
+      "botanical": "Shallaki",
+      "ruleType": "drug_interaction",
+      "subject": "NSAIDs: possible additive analgesic effect (sometimes allows dose reduction, under medical supervision)",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:506:drug_interaction:2",
+      "botanicalId": 506,
+      "botanical": "Shallaki",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants and antiplatelets: theoretical additive effect; monitor",
+      "severity": "monitor",
+      "reason": null,
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:506:drug_interaction:3",
+      "botanicalId": 506,
+      "botanical": "Shallaki",
+      "ruleType": "drug_interaction",
+      "subject": "Immunosuppressants: theoretical interaction via immunomodulation",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "autoimmune"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:506:drug_interaction:4",
+      "botanicalId": 506,
+      "botanical": "Shallaki",
+      "ruleType": "drug_interaction",
+      "subject": "CYP substrates: in vitro inhibition of several CYP enzymes reported; clinical relevance unclear",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:506:herb_interaction:1",
+      "botanicalId": 506,
+      "botanical": "Shallaki",
+      "ruleType": "herb_interaction",
+      "subject": "Other antiplatelet herbs at high dose: theoretical additive effect",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
     },
     {
       "id": "safety:507:contraindication:1",
       "botanicalId": 507,
       "botanical": "Rasna",
       "ruleType": "contraindication",
-      "subject": "Pitta-aggravated conditions (heat patterns)",
-      "severity": "unspecified",
+      "subject": "Pregnancy and breastfeeding: avoid (insufficient data)",
+      "severity": "avoid",
       "reason": null,
-      "flags": [],
+      "flags": [
+        "pregnancy"
+      ],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -21647,11 +22284,68 @@
       "botanicalId": 507,
       "botanical": "Rasna",
       "ruleType": "contraindication",
-      "subject": "Active gastric ulcer",
+      "subject": "Hot, Pitta type inflammation (hot, red, burning joints): Ushna virya; pair with cooling herbs or choose another",
       "severity": "unspecified",
       "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:507:contraindication:3",
+      "botanicalId": 507,
+      "botanical": "Rasna",
+      "ruleType": "contraindication",
+      "subject": "Identity confusion: suppliers may sell Alpinia galanga, Alpinia officinarum or Vanda roxburghii as Rasna; confirm botanical name",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:507:drug_interaction:1",
+      "botanicalId": 507,
+      "botanical": "Rasna",
+      "ruleType": "drug_interaction",
+      "subject": "NSAIDs and corticosteroids: possible additive anti inflammatory effect; no documented harmful interaction",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:507:drug_interaction:2",
+      "botanicalId": 507,
+      "botanical": "Rasna",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants: quercetin rich preparations may have mild antiplatelet effects; theoretical",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:507:drug_interaction:3",
+      "botanicalId": 507,
+      "botanical": "Rasna",
+      "ruleType": "drug_interaction",
+      "subject": "Limited modern interaction data overall; monitor medicated clients",
+      "severity": "monitor",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:507:herb_interaction:1",
+      "botanicalId": 507,
+      "botanical": "Rasna",
+      "ruleType": "herb_interaction",
+      "subject": "Other strongly heating herbs in Pitta type inflammation",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
     },
     {
       "id": "safety:508:contraindication:1",
@@ -21720,9 +22414,9 @@
       "botanicalId": 510,
       "botanical": "Vijaysar",
       "ruleType": "contraindication",
-      "subject": "Hypoglycaemic medications",
+      "subject": "Diabetes on medication or insulin: additive hypoglycaemia; monitor glucose closely and adjust with the prescriber",
       "severity": "monitor",
-      "reason": "additive effect, monitor",
+      "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
     },
@@ -21731,20 +22425,99 @@
       "botanicalId": 510,
       "botanical": "Vijaysar",
       "ruleType": "contraindication",
-      "subject": "Severe dehydration (astringent)",
+      "subject": "Pregnancy and breastfeeding: insufficient data; avoid",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:510:contraindication:3",
+      "botanicalId": 510,
+      "botanical": "Vijaysar",
+      "ruleType": "contraindication",
+      "subject": "Constipation: astringent (Stambhana)",
       "severity": "unspecified",
       "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
+      "id": "safety:510:contraindication:4",
+      "botanicalId": 510,
+      "botanical": "Vijaysar",
+      "ruleType": "contraindication",
+      "subject": "Surgery: stop 2 weeks before because of glucose effects",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:510:contraindication:5",
+      "botanicalId": 510,
+      "botanical": "Vijaysar",
+      "ruleType": "contraindication",
+      "subject": "Do not replace prescribed diabetes treatment",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:510:drug_interaction:1",
+      "botanicalId": 510,
+      "botanical": "Vijaysar",
+      "ruleType": "drug_interaction",
+      "subject": "Insulin, sulfonylureas, metformin and other antidiabetics: additive glucose lowering",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:510:drug_interaction:2",
+      "botanicalId": 510,
+      "botanical": "Vijaysar",
+      "ruleType": "drug_interaction",
+      "subject": "Iron and oral drugs: tannins may bind; separate by 2 hours",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:510:herb_interaction:1",
+      "botanicalId": 510,
+      "botanical": "Vijaysar",
+      "ruleType": "herb_interaction",
+      "subject": "Other hypoglycaemic herbs (Gymnema, Bitter melon, Fenugreek, Cinnamon extracts, Guduchi) in medicated diabetics: stacking risk",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:510:herb_interaction:2",
+      "botanicalId": 510,
+      "botanical": "Vijaysar",
+      "ruleType": "herb_interaction",
+      "subject": "Other strong astringents with constipation",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
       "id": "safety:511:contraindication:1",
       "botanicalId": 511,
       "botanical": "Nirgundi",
       "ruleType": "contraindication",
-      "subject": "Pregnancy",
-      "severity": "unspecified",
-      "reason": "phyto-progesterone activity",
+      "subject": "Pregnancy: avoid internal use (Vitex species have hormonal activity; antifertility and uterine effects reported in animals); external fomentation is traditionally used postpartum, not in pregnancy",
+      "severity": "avoid",
+      "reason": null,
       "flags": [
         "pregnancy"
       ],
@@ -21755,20 +22528,90 @@
       "botanicalId": 511,
       "botanical": "Nirgundi",
       "ruleType": "contraindication",
-      "subject": "Hormone-sensitive cancers",
+      "subject": "Breastfeeding: insufficient data for internal use",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:511:contraindication:3",
+      "botanicalId": 511,
+      "botanical": "Nirgundi",
+      "ruleType": "contraindication",
+      "subject": "Hormone sensitive conditions: Vitex genus hormonal activity; use cautiously",
       "severity": "unspecified",
       "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
+      "id": "safety:511:contraindication:4",
+      "botanicalId": 511,
+      "botanical": "Nirgundi",
+      "ruleType": "contraindication",
+      "subject": "Skin sensitivity: patch test fresh leaf poultices",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:511:drug_interaction:1",
+      "botanicalId": 511,
+      "botanical": "Nirgundi",
+      "ruleType": "drug_interaction",
+      "subject": "Dopaminergic and hormonal drugs: theoretical interaction by analogy with Vitex agnus castus (dopaminergic and prolactin effects); limited evidence for V. negundo",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "psych_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:511:drug_interaction:2",
+      "botanicalId": 511,
+      "botanical": "Nirgundi",
+      "ruleType": "drug_interaction",
+      "subject": "NSAIDs: possible additive anti inflammatory effect (often desirable)",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:511:drug_interaction:3",
+      "botanicalId": 511,
+      "botanical": "Nirgundi",
+      "ruleType": "drug_interaction",
+      "subject": "Anticonvulsants and sedatives: animal data show CNS effects; theoretical",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:511:herb_interaction:1",
+      "botanicalId": 511,
+      "botanical": "Nirgundi",
+      "ruleType": "herb_interaction",
+      "subject": "Hormonally active herbs (Vitex agnus castus, Shatavari at high dose) in hormone sensitive conditions",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
       "id": "safety:512:contraindication:1",
       "botanicalId": 512,
       "botanical": "Ashoka",
       "ruleType": "contraindication",
-      "subject": "Pregnancy",
-      "severity": "unspecified",
-      "reason": "practitioner oversight (traditional but uterine-active)",
+      "subject": "Pregnancy: avoid; uterine stimulating activity in animal studies",
+      "severity": "avoid",
+      "reason": null,
       "flags": [
         "pregnancy"
       ],
@@ -21779,18 +22622,99 @@
       "botanicalId": 512,
       "botanical": "Ashoka",
       "ruleType": "contraindication",
-      "subject": "Cold-pattern menstrual conditions",
+      "subject": "Constipation: strongly astringent (Grahi); balance with Triphala or warm fluids",
       "severity": "unspecified",
       "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
+      "id": "safety:512:contraindication:3",
+      "botanicalId": 512,
+      "botanical": "Ashoka",
+      "ruleType": "contraindication",
+      "subject": "Undiagnosed heavy bleeding: always rule out fibroids, polyps, endometrial pathology and anaemia before relying on herbs",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:512:contraindication:4",
+      "botanicalId": 512,
+      "botanical": "Ashoka",
+      "ruleType": "contraindication",
+      "subject": "Sourcing: wild Saraca asoca is IUCN Vulnerable and heavily adulterated; see substitution note",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:512:drug_interaction:1",
+      "botanicalId": 512,
+      "botanical": "Ashoka",
+      "ruleType": "drug_interaction",
+      "subject": "Iron supplements and oral drugs: tannins can bind them; separate by 2 hours",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:512:drug_interaction:2",
+      "botanicalId": 512,
+      "botanical": "Ashoka",
+      "ruleType": "drug_interaction",
+      "subject": "Hormonal contraceptives and hormone therapy: no documented interaction, but uterine effects warrant clinical awareness",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "contraceptive"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:512:drug_interaction:3",
+      "botanicalId": 512,
+      "botanical": "Ashoka",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants: opposing intent (haemostatic); inform prescriber",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:512:herb_interaction:1",
+      "botanicalId": 512,
+      "botanical": "Ashoka",
+      "ruleType": "herb_interaction",
+      "subject": "Other strong astringents in high combined doses (Khadira, Lodhra, Arjuna together): constipation, reduced iron absorption",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:512:herb_interaction:2",
+      "botanicalId": 512,
+      "botanical": "Ashoka",
+      "ruleType": "herb_interaction",
+      "subject": "Uterine stimulants (Blue cohosh, high dose Nirgundi): cumulative uterine effect",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
       "id": "safety:513:contraindication:1",
       "botanicalId": 513,
       "botanical": "Lodhra",
       "ruleType": "contraindication",
-      "subject": "Severe dehydration",
+      "subject": "Constipation and very dry states: strongly astringent",
       "severity": "unspecified",
       "reason": null,
       "flags": [],
@@ -21801,11 +22725,68 @@
       "botanicalId": 513,
       "botanical": "Lodhra",
       "ruleType": "contraindication",
-      "subject": "Vata-aggravated dry conditions",
+      "subject": "Pregnancy: insufficient data; avoid therapeutic doses unless prescribed by a practitioner",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:513:contraindication:3",
+      "botanicalId": 513,
+      "botanical": "Lodhra",
+      "ruleType": "contraindication",
+      "subject": "Undiagnosed abnormal bleeding or discharge: investigate infection, cervical pathology and endometrial causes first",
       "severity": "unspecified",
       "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:513:contraindication:4",
+      "botanicalId": 513,
+      "botanical": "Lodhra",
+      "ruleType": "contraindication",
+      "subject": "Iron deficiency: tannins reduce iron absorption; separate",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:513:drug_interaction:1",
+      "botanicalId": 513,
+      "botanical": "Lodhra",
+      "ruleType": "drug_interaction",
+      "subject": "Iron and oral drugs: tannins bind; separate by 2 hours",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:513:drug_interaction:2",
+      "botanicalId": 513,
+      "botanical": "Lodhra",
+      "ruleType": "drug_interaction",
+      "subject": "Hormonal therapies: antiandrogenic effects in animals; theoretical overlap with antiandrogens or fertility treatment; coordinate with clinician",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:513:herb_interaction:1",
+      "botanicalId": 513,
+      "botanical": "Lodhra",
+      "ruleType": "herb_interaction",
+      "subject": "Stacking strong astringents (Khadira, Arjuna, Bilva) with constipation",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
     },
     {
       "id": "safety:514:contraindication:1",
@@ -21860,9 +22841,9 @@
       "botanicalId": 520,
       "botanical": "Bakuchi",
       "ruleType": "contraindication",
-      "subject": "Photosensitivity (psoralens)",
-      "severity": "avoid",
-      "reason": "avoid UV exposure",
+      "subject": "Phototoxicity: oral or topical seed with sun or UV exposure can cause severe blistering burns; strict sun control and practitioner supervision",
+      "severity": "unspecified",
+      "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
     },
@@ -21871,11 +22852,11 @@
       "botanicalId": 520,
       "botanical": "Bakuchi",
       "ruleType": "contraindication",
-      "subject": "Pregnancy",
-      "severity": "unspecified",
+      "subject": "Liver: drug induced liver injury has been reported with Psoralea corylifolia containing products, especially in East Asian case series; avoid in liver disease and with hepatotoxic drugs, monitor liver enzymes with internal use",
+      "severity": "avoid",
       "reason": null,
       "flags": [
-        "pregnancy"
+        "liver_kidney"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -21884,11 +22865,103 @@
       "botanicalId": 520,
       "botanical": "Bakuchi",
       "ruleType": "contraindication",
-      "subject": "Liver conditions",
-      "severity": "unspecified",
-      "reason": "practitioner oversight",
+      "subject": "Pregnancy and breastfeeding: avoid (furanocoumarins, estrogen like compounds, limited safety data)",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:520:contraindication:4",
+      "botanicalId": 520,
+      "botanical": "Bakuchi",
+      "ruleType": "contraindication",
+      "subject": "Children, fair skin types, history of skin cancer, cataract risk: avoid psoralen photoactivation",
+      "severity": "avoid",
+      "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:520:contraindication:5",
+      "botanicalId": 520,
+      "botanical": "Bakuchi",
+      "ruleType": "contraindication",
+      "subject": "Topical bakuchiol cosmetics are a different risk profile from the whole seed and are generally well tolerated",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:520:drug_interaction:1",
+      "botanicalId": 520,
+      "botanical": "Bakuchi",
+      "ruleType": "drug_interaction",
+      "subject": "Photosensitizing drugs (tetracyclines, fluoroquinolones, thiazides, retinoids, amiodarone): additive phototoxicity",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:520:drug_interaction:2",
+      "botanicalId": 520,
+      "botanical": "Bakuchi",
+      "ruleType": "drug_interaction",
+      "subject": "Hepatotoxic drugs (paracetamol at high dose, methotrexate, isoniazid, statins at high dose): additive liver risk",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "liver_kidney"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:520:drug_interaction:3",
+      "botanicalId": 520,
+      "botanical": "Bakuchi",
+      "ruleType": "drug_interaction",
+      "subject": "Methoxsalen or PUVA therapy: do not combine without dermatology supervision",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:520:drug_interaction:4",
+      "botanicalId": 520,
+      "botanical": "Bakuchi",
+      "ruleType": "drug_interaction",
+      "subject": "Hormone sensitive therapies: theoretical interaction with estrogen like isoflavones",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:520:herb_interaction:1",
+      "botanicalId": 520,
+      "botanical": "Bakuchi",
+      "ruleType": "herb_interaction",
+      "subject": "Other photosensitizing herbs (St John's wort, Angelica, Bergamot, Ammi majus, Rue): additive phototoxicity",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:520:herb_interaction:2",
+      "botanicalId": 520,
+      "botanical": "Bakuchi",
+      "ruleType": "herb_interaction",
+      "subject": "Hepatotoxic or high dose liver stressing herbs (Kava, Germander, concentrated green tea extract): additive liver risk",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
     },
     {
       "id": "safety:521:contraindication:1",
@@ -21952,8 +23025,8 @@
       "botanicalId": 522,
       "botanical": "Gokshura",
       "ruleType": "contraindication",
-      "subject": "Pregnancy",
-      "severity": "unspecified",
+      "subject": "Pregnancy and breastfeeding: avoid (animal data raise concerns; insufficient human safety data)",
+      "severity": "avoid",
       "reason": null,
       "flags": [
         "pregnancy"
@@ -21965,9 +23038,9 @@
       "botanicalId": 522,
       "botanical": "Gokshura",
       "ruleType": "contraindication",
-      "subject": "Hormone-sensitive conditions",
-      "severity": "unspecified",
-      "reason": "practitioner oversight",
+      "subject": "Prostate cancer and hormone sensitive conditions: saponins with hormonal activity; avoid without oncology input",
+      "severity": "avoid",
+      "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
     },
@@ -21976,14 +23049,106 @@
       "botanicalId": 522,
       "botanical": "Gokshura",
       "ruleType": "contraindication",
-      "subject": "Severe hypertension",
+      "subject": "Low blood pressure or dehydration: diuretic and mild hypotensive effect",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "hypertension"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:522:contraindication:4",
+      "botanicalId": 522,
+      "botanical": "Gokshura",
+      "ruleType": "contraindication",
+      "subject": "Kidney or liver disease: isolated case reports of kidney and liver injury with high dose or concentrated Tribulus preparations; use traditional doses and monitor",
+      "severity": "monitor",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:522:contraindication:5",
+      "botanicalId": 522,
+      "botanical": "Gokshura",
+      "ruleType": "contraindication",
+      "subject": "Hypoglycaemia risk in diabetics on medication",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:522:drug_interaction:1",
+      "botanicalId": 522,
+      "botanical": "Gokshura",
+      "ruleType": "drug_interaction",
+      "subject": "Lithium: diuretics can raise lithium levels; avoid or monitor closely",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "psych_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:522:drug_interaction:2",
+      "botanicalId": 522,
+      "botanical": "Gokshura",
+      "ruleType": "drug_interaction",
+      "subject": "Diuretics and antihypertensives: additive effects on fluid and blood pressure",
       "severity": "unspecified",
       "reason": null,
       "flags": [
         "cardio_meds",
         "hypertension"
       ],
-      "source": "herbs.ts · contraindications"
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:522:drug_interaction:3",
+      "botanicalId": 522,
+      "botanical": "Gokshura",
+      "ruleType": "drug_interaction",
+      "subject": "Antidiabetic drugs: additive glucose lowering",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:522:drug_interaction:4",
+      "botanicalId": 522,
+      "botanical": "Gokshura",
+      "ruleType": "drug_interaction",
+      "subject": "Hormone therapies (androgens, estrogens, antiandrogens): theoretical interaction via steroidal saponins",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:522:herb_interaction:1",
+      "botanicalId": 522,
+      "botanical": "Gokshura",
+      "ruleType": "herb_interaction",
+      "subject": "Other diuretics (Punarnava at high dose, Dandelion leaf, Horsetail): combined fluid and electrolyte loss",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:522:herb_interaction:2",
+      "botanicalId": 522,
+      "botanical": "Gokshura",
+      "ruleType": "herb_interaction",
+      "subject": "Other hypoglycaemic herbs (Vijaysar, Gymnema, Bitter melon): additive glucose lowering",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
     },
     {
       "id": "safety:523:contraindication:1",
@@ -22082,19 +23247,8 @@
       "botanicalId": 524,
       "botanical": "Bibhitaki",
       "ruleType": "contraindication",
-      "subject": "Vata constitutions in isolation (use within Triphala)",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:524:contraindication:2",
-      "botanicalId": 524,
-      "botanical": "Bibhitaki",
-      "ruleType": "contraindication",
-      "subject": "Pregnancy at high doses",
-      "severity": "unspecified",
+      "subject": "Pregnancy: avoid therapeutic doses (bowel moving and drying); Triphala in pregnancy only under a practitioner",
+      "severity": "avoid",
       "reason": null,
       "flags": [
         "pregnancy"
@@ -22102,11 +23256,77 @@
       "source": "herbs.ts · contraindications"
     },
     {
+      "id": "safety:524:contraindication:2",
+      "botanicalId": 524,
+      "botanical": "Bibhitaki",
+      "ruleType": "contraindication",
+      "subject": "Very dry, depleted, dehydrated states: drying (Ruksha); add ghee or honey",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:524:contraindication:3",
+      "botanicalId": 524,
+      "botanical": "Bibhitaki",
+      "ruleType": "contraindication",
+      "subject": "Seed kernel: the inner nut is traditionally considered intoxicating (madakari) in excess; use pericarp only as the API specifies",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:524:contraindication:4",
+      "botanicalId": 524,
+      "botanical": "Bibhitaki",
+      "ruleType": "contraindication",
+      "subject": "Otherwise: good safety at 3 to 6 g",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:524:drug_interaction:1",
+      "botanicalId": 524,
+      "botanical": "Bibhitaki",
+      "ruleType": "drug_interaction",
+      "subject": "Iron and other oral drugs: tannins may bind; separate by 2 hours",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:524:drug_interaction:2",
+      "botanicalId": 524,
+      "botanical": "Bibhitaki",
+      "ruleType": "drug_interaction",
+      "subject": "Antidiabetic drugs: mild additive glucose lowering reported in animals; monitor",
+      "severity": "monitor",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:524:herb_interaction:1",
+      "botanicalId": 524,
+      "botanical": "Bibhitaki",
+      "ruleType": "herb_interaction",
+      "subject": "Other drying astringents at high doses in Vata types: constipation, dryness",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
       "id": "safety:525:contraindication:1",
       "botanicalId": 525,
       "botanical": "Guggulu",
       "ruleType": "contraindication",
-      "subject": "Pregnancy",
+      "subject": "Pregnancy and breastfeeding: contraindicated (uterine stimulant, emmenagogue)",
       "severity": "unspecified",
       "reason": null,
       "flags": [
@@ -22119,7 +23339,7 @@
       "botanicalId": 525,
       "botanical": "Guggulu",
       "ruleType": "contraindication",
-      "subject": "Severe thyroid dysfunction without practitioner",
+      "subject": "Thyroid disease or thyroid medication: may alter thyroid hormone levels",
       "severity": "unspecified",
       "reason": null,
       "flags": [
@@ -22132,11 +23352,140 @@
       "botanicalId": 525,
       "botanical": "Guggulu",
       "ruleType": "contraindication",
-      "subject": "Active inflammatory GI",
+      "subject": "Bleeding disorders, anticoagulants, upcoming surgery: antiplatelet activity",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:525:contraindication:4",
+      "botanicalId": 525,
+      "botanical": "Guggulu",
+      "ruleType": "contraindication",
+      "subject": "Hormone sensitive conditions (breast, uterine, ovarian cancers, endometriosis): steroid like compounds and possible estrogenic activity",
       "severity": "unspecified",
       "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:525:contraindication:5",
+      "botanicalId": 525,
+      "botanical": "Guggulu",
+      "ruleType": "contraindication",
+      "subject": "Skin hypersensitivity: rash was the main adverse event in the US RCT",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:525:contraindication:6",
+      "botanicalId": 525,
+      "botanical": "Guggulu",
+      "ruleType": "contraindication",
+      "subject": "Unpurified crude guggul: classically must be purified (Shodhana) before internal use",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:525:contraindication:7",
+      "botanicalId": 525,
+      "botanical": "Guggulu",
+      "ruleType": "contraindication",
+      "subject": "Liver disease: PXR activation alters drug metabolism; monitor",
+      "severity": "monitor",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:525:drug_interaction:1",
+      "botanicalId": 525,
+      "botanical": "Guggulu",
+      "ruleType": "drug_interaction",
+      "subject": "Propranolol and diltiazem: guggul reduced their bioavailability in a human study",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:525:drug_interaction:2",
+      "botanicalId": 525,
+      "botanical": "Guggulu",
+      "ruleType": "drug_interaction",
+      "subject": "CYP3A4 substrates generally: PXR activation can induce CYP3A4 and lower drug levels (including some oral contraceptives, statins, calcium channel blockers)",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "contraceptive"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:525:drug_interaction:3",
+      "botanicalId": 525,
+      "botanical": "Guggulu",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants and antiplatelets: additive bleeding risk",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:525:drug_interaction:4",
+      "botanicalId": 525,
+      "botanical": "Guggulu",
+      "ruleType": "drug_interaction",
+      "subject": "Thyroid hormone and antithyroid drugs: altered thyroid activity",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "thyroid"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:525:drug_interaction:5",
+      "botanicalId": 525,
+      "botanical": "Guggulu",
+      "ruleType": "drug_interaction",
+      "subject": "Tamoxifen, estrogens and hormone therapies: theoretical interference",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:525:herb_interaction:1",
+      "botanicalId": 525,
+      "botanical": "Guggulu",
+      "ruleType": "herb_interaction",
+      "subject": "Other antiplatelet herbs (Ginkgo, high dose Garlic, Turmeric extracts, Amla extracts): additive bleeding tendency",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:525:herb_interaction:2",
+      "botanicalId": 525,
+      "botanical": "Guggulu",
+      "ruleType": "herb_interaction",
+      "subject": "Thyroid active herbs (Bladderwrack, Ashwagandha in large doses): additive thyroid effects",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
     },
     {
       "id": "safety:526:contraindication:1",
@@ -22250,8 +23599,8 @@
       "botanicalId": 527,
       "botanical": "Manjistha",
       "ruleType": "contraindication",
-      "subject": "Pregnancy",
-      "severity": "unspecified",
+      "subject": "Pregnancy: avoid; API lists Artavajanana (promotes menstruation)",
+      "severity": "avoid",
       "reason": null,
       "flags": [
         "pregnancy"
@@ -22263,20 +23612,112 @@
       "botanicalId": 527,
       "botanical": "Manjistha",
       "ruleType": "contraindication",
-      "subject": "On anticoagulants",
+      "subject": "Breastfeeding: insufficient data",
       "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:527:contraindication:3",
+      "botanicalId": 527,
+      "botanical": "Manjistha",
+      "ruleType": "contraindication",
+      "subject": "Urine discoloration: pink, red or orange urine is expected from the pigments; clients should not mistake it for blood, but any true haematuria needs investigation",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:527:contraindication:4",
+      "botanicalId": 527,
+      "botanical": "Manjistha",
+      "ruleType": "contraindication",
+      "subject": "Anthraquinone concerns: related species Rubia tinctorum contains lucidin with genotoxicity concerns; R. cordifolia chemistry differs, yet long term high dose use is not well studied; use courses rather than indefinite daily dosing",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:527:contraindication:5",
+      "botanicalId": 527,
+      "botanical": "Manjistha",
+      "ruleType": "contraindication",
+      "subject": "Kidney stones: some anthraquinone pigments chelate calcium; caution in stone formers",
+      "severity": "caution",
+      "reason": null,
+      "flags": [
+        "liver_kidney"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:527:drug_interaction:1",
+      "botanicalId": 527,
+      "botanical": "Manjistha",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants and antiplatelets: theoretical additive effect; monitor",
+      "severity": "monitor",
       "reason": null,
       "flags": [
         "cardio_meds"
       ],
-      "source": "herbs.ts · contraindications"
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:527:drug_interaction:2",
+      "botanicalId": 527,
+      "botanical": "Manjistha",
+      "ruleType": "drug_interaction",
+      "subject": "Urine dipstick and colour based tests: pigments can interfere with visual reading",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:527:drug_interaction:3",
+      "botanicalId": 527,
+      "botanical": "Manjistha",
+      "ruleType": "drug_interaction",
+      "subject": "Drugs affected by gut flora metabolism: microbiome shifts shown in pilot data; clinical relevance unknown",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:527:herb_interaction:1",
+      "botanicalId": 527,
+      "botanical": "Manjistha",
+      "ruleType": "herb_interaction",
+      "subject": "Emmenagogue herbs in pregnancy (Nirgundi, Guggulu, Kalmegh): never combine in pregnancy",
+      "severity": "absolute",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:527:herb_interaction:2",
+      "botanicalId": 527,
+      "botanical": "Manjistha",
+      "ruleType": "herb_interaction",
+      "subject": "Anticoagulant or antiplatelet herbs at high dose: theoretical additive effect via PAF inhibition",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
     },
     {
       "id": "safety:528:contraindication:1",
       "botanicalId": 528,
       "botanical": "Khadira",
       "ruleType": "contraindication",
-      "subject": "Severe dehydration",
+      "subject": "Constipation and very dry states: strongly astringent and drying",
       "severity": "unspecified",
       "reason": null,
       "flags": [],
@@ -22287,11 +23728,79 @@
       "botanicalId": 528,
       "botanical": "Khadira",
       "ruleType": "contraindication",
-      "subject": "Vata-dry constitutions",
+      "subject": "Iron deficiency anaemia: tannins reduce non haem iron absorption; separate from meals and iron",
       "severity": "unspecified",
       "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:528:contraindication:3",
+      "botanicalId": 528,
+      "botanical": "Khadira",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and breastfeeding: insufficient data at therapeutic doses; avoid",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:528:contraindication:4",
+      "botanicalId": 528,
+      "botanical": "Khadira",
+      "ruleType": "contraindication",
+      "subject": "Chronic heavy use as kattha in betel quid is linked with oral disease largely due to areca nut and tobacco; do not use in combination with areca",
+      "severity": "absolute",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:528:drug_interaction:1",
+      "botanicalId": 528,
+      "botanical": "Khadira",
+      "ruleType": "drug_interaction",
+      "subject": "Iron and oral drugs: tannins bind; separate by 2 hours",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:528:drug_interaction:2",
+      "botanicalId": 528,
+      "botanical": "Khadira",
+      "ruleType": "drug_interaction",
+      "subject": "Antidiabetic drugs: possible additive glucose lowering in extract form; monitor",
+      "severity": "monitor",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:528:drug_interaction:3",
+      "botanicalId": 528,
+      "botanical": "Khadira",
+      "ruleType": "drug_interaction",
+      "subject": "Alkaloid drugs: tannins can precipitate some alkaloids in the gut; separate dosing",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:528:herb_interaction:1",
+      "botanicalId": 528,
+      "botanical": "Khadira",
+      "ruleType": "herb_interaction",
+      "subject": "Stacking strong astringents (Lodhra, Ashoka, Arjuna, Bilva) in constipation prone people",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
     },
     {
       "id": "safety:529:contraindication:1",
@@ -22390,8 +23899,8 @@
       "botanicalId": 531,
       "botanical": "Neem",
       "ruleType": "contraindication",
-      "subject": "Pregnancy",
-      "severity": "unspecified",
+      "subject": "Pregnancy, trying to conceive and breastfeeding: avoid internal use (antifertility and anti implantation effects)",
+      "severity": "avoid",
       "reason": null,
       "flags": [
         "pregnancy"
@@ -22403,7 +23912,7 @@
       "botanicalId": 531,
       "botanical": "Neem",
       "ruleType": "contraindication",
-      "subject": "Children under 6",
+      "subject": "Children: neem seed oil ingestion in infants has caused severe poisoning (vomiting, seizures, encephalopathy, metabolic acidosis); never give neem oil internally",
       "severity": "unspecified",
       "reason": null,
       "flags": [],
@@ -22414,7 +23923,7 @@
       "botanicalId": 531,
       "botanical": "Neem",
       "ruleType": "contraindication",
-      "subject": "Vata-dry conditions",
+      "subject": "Long term internal use: API karma Vatala (increases Vata); depleting and cold; keep leaf courses short",
       "severity": "unspecified",
       "reason": null,
       "flags": [],
@@ -22425,13 +23934,120 @@
       "botanicalId": 531,
       "botanical": "Neem",
       "ruleType": "contraindication",
-      "subject": "Low-grade hypothyroid",
+      "subject": "Liver: isolated reports of hepatotoxicity with neem products; avoid in liver disease",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "liver_kidney"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:531:contraindication:5",
+      "botanicalId": 531,
+      "botanical": "Neem",
+      "ruleType": "contraindication",
+      "subject": "Autoimmune disease and immunosuppressant users: immunomodulatory activity",
       "severity": "unspecified",
       "reason": null,
       "flags": [
-        "thyroid"
+        "autoimmune"
       ],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:531:contraindication:6",
+      "botanicalId": 531,
+      "botanical": "Neem",
+      "ruleType": "contraindication",
+      "subject": "Diabetes on medication: additive hypoglycaemia",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:531:contraindication:7",
+      "botanicalId": 531,
+      "botanical": "Neem",
+      "ruleType": "contraindication",
+      "subject": "API note: bark decoction should be used externally",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:531:drug_interaction:1",
+      "botanicalId": 531,
+      "botanical": "Neem",
+      "ruleType": "drug_interaction",
+      "subject": "Antidiabetic drugs and insulin: additive hypoglycaemia",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:531:drug_interaction:2",
+      "botanicalId": 531,
+      "botanical": "Neem",
+      "ruleType": "drug_interaction",
+      "subject": "Immunosuppressants: possible antagonism",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "autoimmune"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:531:drug_interaction:3",
+      "botanicalId": 531,
+      "botanical": "Neem",
+      "ruleType": "drug_interaction",
+      "subject": "Hepatotoxic drugs: additive liver burden",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "liver_kidney"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:531:drug_interaction:4",
+      "botanicalId": 531,
+      "botanical": "Neem",
+      "ruleType": "drug_interaction",
+      "subject": "Fertility treatment and hormonal contraception: antifertility effects in animals; avoid overlap",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "contraceptive"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:531:herb_interaction:1",
+      "botanicalId": 531,
+      "botanical": "Neem",
+      "ruleType": "herb_interaction",
+      "subject": "Other hypoglycaemic herbs (Vijaysar, Gymnema, Bitter melon): additive glucose lowering",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:531:herb_interaction:2",
+      "botanicalId": 531,
+      "botanical": "Neem",
+      "ruleType": "herb_interaction",
+      "subject": "Other antifertility or strongly cold bitters for long durations in Vata types",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
     },
     {
       "id": "safety:532:contraindication:1",
@@ -22449,12 +24065,10 @@
       "botanicalId": 533,
       "botanical": "Karanja",
       "ruleType": "contraindication",
-      "subject": "Pregnancy",
+      "subject": "Internal use: seeds contain karanjin and pongamol, which cause nausea, vomiting and toxicity; the API oral dose is only 0.25 g of seed powder, a signal of how potent it is. Practitioner only",
       "severity": "unspecified",
-      "reason": "topical only with care",
-      "flags": [
-        "pregnancy"
-      ],
+      "reason": null,
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -22462,18 +24076,86 @@
       "botanicalId": 533,
       "botanical": "Karanja",
       "ruleType": "contraindication",
-      "subject": "Internal use practitioner-supervised",
+      "subject": "Pregnancy and breastfeeding: avoid internal use; limit topical use to small areas",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:533:contraindication:3",
+      "botanicalId": 533,
+      "botanical": "Karanja",
+      "ruleType": "contraindication",
+      "subject": "Children: never internal; topical only diluted and on small areas",
       "severity": "unspecified",
       "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
+      "id": "safety:533:contraindication:4",
+      "botanicalId": 533,
+      "botanical": "Karanja",
+      "ruleType": "contraindication",
+      "subject": "Broken, weeping skin with heat: very hot and sharp; can irritate; patch test first",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:533:contraindication:5",
+      "botanicalId": 533,
+      "botanical": "Karanja",
+      "ruleType": "contraindication",
+      "subject": "Eyes and mucous membranes: avoid contact",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:533:drug_interaction:1",
+      "botanicalId": 533,
+      "botanical": "Karanja",
+      "ruleType": "drug_interaction",
+      "subject": "Topical: no significant systemic interactions expected at normal topical use",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:533:drug_interaction:2",
+      "botanicalId": 533,
+      "botanical": "Karanja",
+      "ruleType": "drug_interaction",
+      "subject": "Internal (practitioner only): hypoglycaemic activity reported in animals, so theoretical additive effect with antidiabetic drugs; gastrointestinal toxicity",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:533:herb_interaction:1",
+      "botanicalId": 533,
+      "botanical": "Karanja",
+      "ruleType": "herb_interaction",
+      "subject": "Other irritant or sensitizing topical oils (undiluted essential oils, Bakuchi oil): combined skin irritation",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
       "id": "safety:534:contraindication:1",
       "botanicalId": 534,
       "botanical": "Bael",
       "ruleType": "contraindication",
-      "subject": "Acute constipation",
+      "subject": "Constipation: the unripe pulp is strongly binding (Grahi); use ripe fruit instead",
       "severity": "unspecified",
       "reason": null,
       "flags": [],
@@ -22484,19 +24166,124 @@
       "botanicalId": 534,
       "botanical": "Bael",
       "ruleType": "contraindication",
-      "subject": "Hypoglycaemic medications (fruit)",
+      "subject": "Medication users: in vitro CYP3A4 and CYP1A2 inhibition; caution with narrow therapeutic window drugs",
+      "severity": "caution",
+      "reason": null,
+      "flags": [
+        "contraceptive"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:534:contraindication:3",
+      "botanicalId": 534,
+      "botanical": "Bael",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy: fruit as food is widely eaten; avoid concentrated leaf extracts (antifertility effects reported in animal studies) and therapeutic extract doses",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:534:contraindication:4",
+      "botanicalId": 534,
+      "botanical": "Bael",
+      "ruleType": "contraindication",
+      "subject": "Photosensitivity: contains furanocoumarins; heavy use with strong sun exposure or photosensitizing drugs deserves care",
       "severity": "unspecified",
       "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
+      "id": "safety:534:contraindication:5",
+      "botanicalId": 534,
+      "botanical": "Bael",
+      "ruleType": "contraindication",
+      "subject": "Aegeline as an isolated synthetic compound was an ingredient in a weight loss supplement linked to liver injury in 2013; this does not apply to the fruit but avoid isolated aegeline products",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:534:drug_interaction:1",
+      "botanicalId": 534,
+      "botanical": "Bael",
+      "ruleType": "drug_interaction",
+      "subject": "CYP3A4 substrates (e.g. some statins, calcium channel blockers, ciclosporin, midazolam): possible raised levels, based on in vitro inhibition",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "contraceptive"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:534:drug_interaction:2",
+      "botanicalId": 534,
+      "botanical": "Bael",
+      "ruleType": "drug_interaction",
+      "subject": "CYP1A2 substrates (e.g. theophylline, clozapine, caffeine): possible raised levels",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:534:drug_interaction:3",
+      "botanicalId": 534,
+      "botanical": "Bael",
+      "ruleType": "drug_interaction",
+      "subject": "Antidiabetic drugs: additive glucose lowering with leaf or fruit extracts; monitor",
+      "severity": "monitor",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:534:drug_interaction:4",
+      "botanicalId": 534,
+      "botanical": "Bael",
+      "ruleType": "drug_interaction",
+      "subject": "Oral drugs generally: tannins and fibre may slow absorption; separate by 2 hours",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:534:herb_interaction:1",
+      "botanicalId": 534,
+      "botanical": "Bael",
+      "ruleType": "herb_interaction",
+      "subject": "Other strong binders (Khadira, Lodhra, Ashoka) in constipation prone people",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:534:herb_interaction:2",
+      "botanicalId": 534,
+      "botanical": "Bael",
+      "ruleType": "herb_interaction",
+      "subject": "Grapefruit and other CYP3A4 inhibiting foods and herbs: additive inhibition",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
       "id": "safety:535:contraindication:1",
       "botanicalId": 535,
       "botanical": "Chandrashoor",
       "ruleType": "contraindication",
-      "subject": "Pregnancy",
-      "severity": "unspecified",
+      "subject": "Pregnancy: avoid therapeutic amounts; traditionally regarded as uterine stimulating, which is why it is saved for after delivery",
+      "severity": "avoid",
       "reason": null,
       "flags": [
         "pregnancy"
@@ -22508,18 +24295,7 @@
       "botanicalId": 535,
       "botanical": "Chandrashoor",
       "ruleType": "contraindication",
-      "subject": "Hot constitutions",
-      "severity": "unspecified",
-      "reason": null,
-      "flags": [],
-      "source": "herbs.ts · contraindications"
-    },
-    {
-      "id": "safety:535:contraindication:3",
-      "botanicalId": 535,
-      "botanical": "Chandrashoor",
-      "ruleType": "contraindication",
-      "subject": "Hyperthyroidism",
+      "subject": "Hypothyroidism: glucosinolates are goitrogenic in large, sustained amounts; moderate use with adequate iodine",
       "severity": "unspecified",
       "reason": null,
       "flags": [
@@ -22528,14 +24304,87 @@
       "source": "herbs.ts · contraindications"
     },
     {
+      "id": "safety:535:contraindication:3",
+      "botanicalId": 535,
+      "botanical": "Chandrashoor",
+      "ruleType": "contraindication",
+      "subject": "Hot, Pitta type states: hot and sharp; balance with milk, ghee or coconut",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:535:contraindication:4",
+      "botanicalId": 535,
+      "botanical": "Chandrashoor",
+      "ruleType": "contraindication",
+      "subject": "Always soak the seed before eating; dry seed swallowed in quantity can swell",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:535:drug_interaction:1",
+      "botanicalId": 535,
+      "botanical": "Chandrashoor",
+      "ruleType": "drug_interaction",
+      "subject": "Thyroid medication: large sustained intake may interfere via goitrogenic compounds; monitor",
+      "severity": "monitor",
+      "reason": null,
+      "flags": [
+        "thyroid"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:535:drug_interaction:2",
+      "botanicalId": 535,
+      "botanical": "Chandrashoor",
+      "ruleType": "drug_interaction",
+      "subject": "Antihypertensives and diuretics: mild diuretic and hypotensive effects in animals; theoretical additive effect",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "cardio_meds",
+        "hypertension"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:535:drug_interaction:3",
+      "botanicalId": 535,
+      "botanical": "Chandrashoor",
+      "ruleType": "drug_interaction",
+      "subject": "Oral drugs: mucilage can slow absorption; separate by 2 hours",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:535:herb_interaction:1",
+      "botanicalId": 535,
+      "botanical": "Chandrashoor",
+      "ruleType": "herb_interaction",
+      "subject": "Other goitrogenic foods in very large daily amounts (raw brassicas, soy) in thyroid disease",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
       "id": "safety:536:contraindication:1",
       "botanicalId": 536,
       "botanical": "Amaltas",
       "ruleType": "contraindication",
-      "subject": "Severe diarrhoea",
-      "severity": "unspecified",
+      "subject": "Pregnancy: avoid purgative doses (stimulant laxative class)",
+      "severity": "avoid",
       "reason": null,
-      "flags": [],
+      "flags": [
+        "pregnancy"
+      ],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -22543,11 +24392,114 @@
       "botanicalId": 536,
       "botanical": "Amaltas",
       "ruleType": "contraindication",
-      "subject": "Acute abdomen",
+      "subject": "Intestinal obstruction, acute abdominal pain of unknown cause, inflammatory bowel disease flare, appendicitis: never use purgatives",
+      "severity": "absolute",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:536:contraindication:3",
+      "botanicalId": 536,
+      "botanical": "Amaltas",
+      "ruleType": "contraindication",
+      "subject": "Long term daily use: anthraquinone laxatives can cause dependence, electrolyte loss (especially potassium) and colon pigmentation (melanosis coli) with chronic use; keep to courses",
       "severity": "unspecified",
       "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:536:contraindication:4",
+      "botanicalId": 536,
+      "botanical": "Amaltas",
+      "ruleType": "contraindication",
+      "subject": "Dehydration, frailty with diarrhoea, severe weakness",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:536:contraindication:5",
+      "botanicalId": 536,
+      "botanical": "Amaltas",
+      "ruleType": "contraindication",
+      "subject": "Breastfeeding: anthraquinones can pass into milk in small amounts; use cautiously",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:536:drug_interaction:1",
+      "botanicalId": 536,
+      "botanical": "Amaltas",
+      "ruleType": "drug_interaction",
+      "subject": "Diuretics (loop and thiazide), corticosteroids: additive potassium loss",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:536:drug_interaction:2",
+      "botanicalId": 536,
+      "botanical": "Amaltas",
+      "ruleType": "drug_interaction",
+      "subject": "Digoxin and antiarrhythmics: low potassium raises toxicity risk",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:536:drug_interaction:3",
+      "botanicalId": 536,
+      "botanical": "Amaltas",
+      "ruleType": "drug_interaction",
+      "subject": "Any oral drug with narrow therapeutic window: faster transit can reduce absorption; separate by 2 or more hours",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:536:drug_interaction:4",
+      "botanicalId": 536,
+      "botanical": "Amaltas",
+      "ruleType": "drug_interaction",
+      "subject": "Antidiabetic drugs: preclinical glucose lowering signals; monitor if using pod tea regularly",
+      "severity": "monitor",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:536:herb_interaction:1",
+      "botanicalId": 536,
+      "botanical": "Amaltas",
+      "ruleType": "herb_interaction",
+      "subject": "Senna, Rhubarb, Aloe latex, Cascara: additive anthraquinone load; avoid stacking",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:536:herb_interaction:2",
+      "botanicalId": 536,
+      "botanical": "Amaltas",
+      "ruleType": "herb_interaction",
+      "subject": "Strong diuretics (Punarnava, Gokshura in high doses): combined fluid and potassium loss",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
     },
     {
       "id": "safety:545:contraindication:1",
@@ -25912,6 +27864,554 @@
       "ruleType": "herb_interaction",
       "subject": "Avoid stacking with harsh cold purgatives or any other known hepatotoxic botanical (Gromwell id 565 internally, Comfrey, Kava)",
       "severity": "avoid",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:590:contraindication:1",
+      "botanicalId": 590,
+      "botanical": "Ajwain",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy: culinary amounts are fine; avoid concentrated extracts, essential oil and therapeutic doses (strongly heating, traditionally considered emmenagogue in large amounts)",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:590:contraindication:2",
+      "botanicalId": 590,
+      "botanical": "Ajwain",
+      "ruleType": "contraindication",
+      "subject": "Hyperacidity, active gastric or duodenal ulcer, reflux with burning: hot and sharp (Tikshna); may aggravate Pitta type heartburn",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:590:contraindication:3",
+      "botanicalId": 590,
+      "botanical": "Ajwain",
+      "ruleType": "contraindication",
+      "subject": "Essential oil internally: thymol is irritating to mucosa in concentrated form; never use undiluted oil internally",
+      "severity": "absolute",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:590:contraindication:4",
+      "botanicalId": 590,
+      "botanical": "Ajwain",
+      "ruleType": "contraindication",
+      "subject": "Heat conditions: skin inflammation, bleeding tendencies, hot flushes; balance with cooling herbs",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:590:contraindication:5",
+      "botanicalId": 590,
+      "botanical": "Ajwain",
+      "ruleType": "contraindication",
+      "subject": "Otherwise: Grade A safety as a spice",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:590:drug_interaction:1",
+      "botanicalId": 590,
+      "botanical": "Ajwain",
+      "ruleType": "drug_interaction",
+      "subject": "Antiplatelet and anticoagulant drugs: theoretical additive effect at extract doses (thymol shows antiplatelet activity in vitro); culinary use not a concern",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:590:drug_interaction:2",
+      "botanicalId": 590,
+      "botanical": "Ajwain",
+      "ruleType": "drug_interaction",
+      "subject": "Antihypertensives and calcium channel blockers: theoretical additive effect at extract doses",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "cardio_meds",
+        "hypertension"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:590:drug_interaction:3",
+      "botanicalId": 590,
+      "botanical": "Ajwain",
+      "ruleType": "drug_interaction",
+      "subject": "Acid suppressing medication: Ajwain stimulates acid; opposing intent in reflux patients",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:590:herb_interaction:1",
+      "botanicalId": 590,
+      "botanical": "Ajwain",
+      "ruleType": "herb_interaction",
+      "subject": "Other hot, sharp herbs (Pippali, Chitraka, Black pepper in large amounts): cumulative heat, watch Pitta signs",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:590:herb_interaction:2",
+      "botanicalId": 590,
+      "botanical": "Ajwain",
+      "ruleType": "herb_interaction",
+      "subject": "Thymol rich herbs (Thyme, Oregano oils): additive essential oil load in concentrated preparations",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:591:contraindication:1",
+      "botanicalId": 591,
+      "botanical": "Lajjalu",
+      "ruleType": "contraindication",
+      "subject": "Mimosine: a toxic amino acid known to cause hair loss, thyroid disruption and growth effects in livestock; avoid prolonged high dose use",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "thyroid"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:591:contraindication:2",
+      "botanicalId": 591,
+      "botanical": "Lajjalu",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and breastfeeding: avoid (mimosine is teratogenic in animals)",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:591:contraindication:3",
+      "botanicalId": 591,
+      "botanical": "Lajjalu",
+      "ruleType": "contraindication",
+      "subject": "Thyroid disease: mimosine has antithyroid activity in animals",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "thyroid"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:591:contraindication:4",
+      "botanicalId": 591,
+      "botanical": "Lajjalu",
+      "ruleType": "contraindication",
+      "subject": "Constipation: binding herb",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:591:contraindication:5",
+      "botanicalId": 591,
+      "botanical": "Lajjalu",
+      "ruleType": "contraindication",
+      "subject": "Sedative drugs: possible additive effect",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "sedatives"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:591:drug_interaction:1",
+      "botanicalId": 591,
+      "botanical": "Lajjalu",
+      "ruleType": "drug_interaction",
+      "subject": "Thyroid medication: theoretical interference via mimosine",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "thyroid"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:591:drug_interaction:2",
+      "botanicalId": 591,
+      "botanical": "Lajjalu",
+      "ruleType": "drug_interaction",
+      "subject": "Diuretics and lithium: additive diuresis in animal data; theoretical",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "psych_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:591:drug_interaction:3",
+      "botanicalId": 591,
+      "botanical": "Lajjalu",
+      "ruleType": "drug_interaction",
+      "subject": "CNS depressants: possible additive sedation",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "sedatives"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:591:herb_interaction:1",
+      "botanicalId": 591,
+      "botanical": "Lajjalu",
+      "ruleType": "herb_interaction",
+      "subject": "Other goitrogenic or thyroid active herbs in thyroid disease",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:591:herb_interaction:2",
+      "botanicalId": 591,
+      "botanical": "Lajjalu",
+      "ruleType": "herb_interaction",
+      "subject": "Other sedative herbs (Jatamansi, Tagara, Valerian): additive drowsiness",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:592:contraindication:1",
+      "botanicalId": 592,
+      "botanical": "Nagakesar",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and breastfeeding: insufficient data; avoid",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:592:contraindication:2",
+      "botanicalId": 592,
+      "botanical": "Nagakesar",
+      "ruleType": "contraindication",
+      "subject": "Constipation: astringent",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:592:contraindication:3",
+      "botanicalId": 592,
+      "botanical": "Nagakesar",
+      "ruleType": "contraindication",
+      "subject": "Undiagnosed bleeding: always investigate rectal or uterine bleeding before herbal treatment",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:592:contraindication:4",
+      "botanicalId": 592,
+      "botanical": "Nagakesar",
+      "ruleType": "contraindication",
+      "subject": "Adulteration: market Nagakesar may be a different plant; unauthenticated material cannot be assumed safe or effective",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:592:drug_interaction:1",
+      "botanicalId": 592,
+      "botanical": "Nagakesar",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants: opposing intent (haemostatic); inform prescriber",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:592:drug_interaction:2",
+      "botanicalId": 592,
+      "botanical": "Nagakesar",
+      "ruleType": "drug_interaction",
+      "subject": "Oral drugs: astringent compounds may slow absorption; separate by 2 hours",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:592:herb_interaction:1",
+      "botanicalId": 592,
+      "botanical": "Nagakesar",
+      "ruleType": "herb_interaction",
+      "subject": "Stacking astringents in constipation",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:593:contraindication:1",
+      "botanicalId": 593,
+      "botanical": "Sariva",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and breastfeeding: insufficient data at therapeutic doses; food syrup amounts are traditional",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:593:contraindication:2",
+      "botanicalId": 593,
+      "botanical": "Sariva",
+      "ruleType": "contraindication",
+      "subject": "Cytotoxicity signal: extract reduced mitotic index in mouse bone marrow at all doses tested; avoid high dose concentrated extracts, especially long term, until clarified",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:593:contraindication:3",
+      "botanicalId": 593,
+      "botanical": "Sariva",
+      "ruleType": "contraindication",
+      "subject": "Cold, Kapha type congestion with heaviness: heavy and cooling; balance with ginger",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:593:contraindication:4",
+      "botanicalId": 593,
+      "botanical": "Sariva",
+      "ruleType": "contraindication",
+      "subject": "Diabetes: when prepared as sweetened syrup, sugar load matters more than the root itself",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:593:drug_interaction:1",
+      "botanicalId": 593,
+      "botanical": "Sariva",
+      "ruleType": "drug_interaction",
+      "subject": "Chemotherapy (cisplatin and others): the protective finding is preclinical; do not combine without oncology approval",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:593:drug_interaction:2",
+      "botanicalId": 593,
+      "botanical": "Sariva",
+      "ruleType": "drug_interaction",
+      "subject": "Diuretics: mild additive effect in folk use; theoretical",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:593:drug_interaction:3",
+      "botanicalId": 593,
+      "botanical": "Sariva",
+      "ruleType": "drug_interaction",
+      "subject": "Limited modern interaction data overall",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:593:herb_interaction:1",
+      "botanicalId": 593,
+      "botanical": "Sariva",
+      "ruleType": "herb_interaction",
+      "subject": "Other cytotoxic or chemotherapy adjunct herbs in cancer care: coordinate with oncology",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:594:contraindication:1",
+      "botanicalId": 594,
+      "botanical": "Shankhapushpi",
+      "ruleType": "contraindication",
+      "subject": "Antiepileptic drugs: documented interaction with phenytoin (reduced levels, loss of seizure control); do not combine without neurologist supervision",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:594:contraindication:2",
+      "botanicalId": 594,
+      "botanical": "Shankhapushpi",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and breastfeeding: insufficient data; avoid",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:594:contraindication:3",
+      "botanicalId": 594,
+      "botanical": "Shankhapushpi",
+      "ruleType": "contraindication",
+      "subject": "Sedatives and alcohol: possible additive calming effect",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "sedatives"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:594:contraindication:4",
+      "botanicalId": 594,
+      "botanical": "Shankhapushpi",
+      "ruleType": "contraindication",
+      "subject": "Hypothyroid or on thyroid medication: thyroid lowering in animal studies; monitor",
+      "severity": "monitor",
+      "reason": null,
+      "flags": [
+        "thyroid"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:594:contraindication:5",
+      "botanicalId": 594,
+      "botanical": "Shankhapushpi",
+      "ruleType": "contraindication",
+      "subject": "Low blood pressure: mild additive lowering",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "hypertension"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:594:contraindication:6",
+      "botanicalId": 594,
+      "botanical": "Shankhapushpi",
+      "ruleType": "contraindication",
+      "subject": "Identity: several plants are sold as Shankhapushpi; confirm botanical source",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:594:drug_interaction:1",
+      "botanicalId": 594,
+      "botanical": "Shankhapushpi",
+      "ruleType": "drug_interaction",
+      "subject": "Phenytoin and other antiepileptics: clinically documented reduction in phenytoin levels with seizure breakthrough",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:594:drug_interaction:2",
+      "botanicalId": 594,
+      "botanical": "Shankhapushpi",
+      "ruleType": "drug_interaction",
+      "subject": "Benzodiazepines, sleep medication, alcohol: additive sedation",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "sedatives"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:594:drug_interaction:3",
+      "botanicalId": 594,
+      "botanical": "Shankhapushpi",
+      "ruleType": "drug_interaction",
+      "subject": "Thyroid medication: possible interference",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "thyroid"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:594:drug_interaction:4",
+      "botanicalId": 594,
+      "botanical": "Shankhapushpi",
+      "ruleType": "drug_interaction",
+      "subject": "Antihypertensives: additive lowering",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "cardio_meds",
+        "hypertension"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:594:herb_interaction:1",
+      "botanicalId": 594,
+      "botanical": "Shankhapushpi",
+      "ruleType": "herb_interaction",
+      "subject": "Other sedative herbs (Jatamansi, Tagara, Valerian, Kava) at high dose: additive drowsiness",
+      "severity": "unspecified",
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"

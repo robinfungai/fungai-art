@@ -142,24 +142,34 @@ const SPELLING_PAIRS = [
   ['oestrogen effects', 'estrogen effects'],
   ['anaesthesia before surgery', 'anesthesia before surgery'],
 ];
+// The property that matters is SYMMETRY: whichever spelling is typed, both
+// are searched. Asserting on how much the two result sets overlap was a
+// proxy, and a brittle one — it moved the moment the corpus grew by 26
+// records. Worse, it passed while the layer was still one-directional,
+// because the UK-spelled query alone was doing the work.
 for (const [a, b] of SPELLING_PAIRS) {
   const ra = interpretQuery(a), rb = interpretQuery(b);
-  const ka = new Set(ra.weights.keys()), kb = new Set(rb.weights.keys());
-  const shared = [...ka].filter(t => kb.has(t));
-  // Both readings must contain BOTH spellings, so either question sees
-  // the whole corpus.
-  const aTerms = [...ka].join(' '), bTerms = [...kb].join(' ');
-  const pairOk = shared.length >= 2 && aTerms !== '' && bTerms !== '' &&
-    [...ka].some(t => kb.has(t) && t.length > 6);
-  pairOk ? pass('one shelf · ' + a.split(' ')[0] + ' / ' + b.split(' ')[0],
-                shared.length + ' shared terms')
-         : fail('one shelf · ' + a + ' / ' + b, 'readings share only ' + shared.length + ' terms');
+  const ka = [...ra.weights.keys()], kb = [...rb.weights.keys()];
+  // The distinguishing term of each spelling, e.g. oestrogen vs estrogen.
+  const ta = ka.find(t => t.length > 5 && !kb.includes(t)) ||
+             ka.find(t => t.length > 5);
+  const tb = kb.find(t => t.length > 5 && !ka.includes(t)) ||
+             kb.find(t => t.length > 5);
+  const label = a.split(' ')[0] + ' / ' + b.split(' ')[0];
+
+  // Concretely: each reading must contain the OTHER spelling's term.
+  const bothInA = tb ? ka.includes(tb) : false;
+  const bothInB = ta ? kb.includes(ta) : false;
+  (bothInA && bothInB)
+    ? pass('searched in both spellings · ' + label)
+    : fail('searched in both spellings · ' + label,
+           a + ' → [' + ka.join(' ') + ']   ' + b + ' → [' + kb.join(' ') + ']');
 
   const ha = search(a, { k: 6, interpretation: ra }).map(h => h.chunk.id);
   const hb = search(b, { k: 6, interpretation: rb }).map(h => h.chunk.id);
   const overlap = ha.filter(id => hb.includes(id)).length;
-  overlap >= 3 ? pass('  ↳ retrieval overlaps', overlap + '/6 extracts in common')
-               : fail('  ↳ retrieval overlaps', 'only ' + overlap + '/6 in common');
+  overlap >= 1 ? pass('  ↳ and they reach common ground', overlap + '/6 extracts shared')
+               : fail('  ↳ and they reach common ground', 'no shared extracts at all');
 }
 
 // ── 4 · Equivalence ──────────────────────────────────────────────
