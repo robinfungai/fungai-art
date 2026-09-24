@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-24T09:00:20.206Z",
+  "generatedAt": "2026-09-24T09:26:05.346Z",
   "counts": {
     "botanicals": 243,
     "monographs": 128,
@@ -2822,7 +2822,7 @@
       "matchedBy": "title"
     },
     {
-      "file": "schizandra_full_monograph.md",
+      "file": "schisandra_full_monograph.md",
       "title": "SCHISANDRA / SCHIZANDRA (Schisandra chinensis)",
       "botanicalId": 279,
       "matchedBy": "latin"
