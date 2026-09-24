@@ -70,11 +70,7 @@ public/atlas/data/
 # them would duplicate herbs.ts in a second format that can drift.
 public/home/markdowns all plants/generated/
 
-# Atlas media staged for the map build but not referenced by any page.
-# Kept on disk, out of git: ~4 MB of video that nothing loads. Delete these
-# lines when a page actually uses them.
-public/atlas/15201936_1080_1920_30fps.mp4
-public/atlas/second (1).mp4
-public/atlas/the1 (1).mp4
-public/atlas/second-photo.jpg
-public/atlas/third-photo.jpg
+# NOTE: public/atlas/ media is tracked normally. An earlier attempt to ignore
+# unused stills here meant an image could be used on the page, work locally,
+# and silently not deploy. Atlas art is small and belongs in the repo; if a
+# large unused clip turns up again, delete it rather than ignore it.
