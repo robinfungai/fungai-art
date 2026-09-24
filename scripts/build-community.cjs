@@ -68,6 +68,7 @@ function main() {
     process.exit(1);
   }
   vendorCobe();
+  vendorReact();
   const files = walk(DIR);
   let bytesIn = 0, bytesOut = 0;
 
@@ -85,7 +86,7 @@ function main() {
     fs.writeFileSync(out, banner + code);
     bytesIn  += src.length;
     bytesOut += code.length;
-    console.log('  ✓ ' + path.relative(ROOT, out).padEnd(46) + (code.length / 1024).toFixed(0) + ' KB');
+    console.log('  ✓ ' + path.relative(ROOT, out).padEnd(54) + (code.length / 1024).toFixed(0) + ' KB');
   }
 
   // Guard: the portal's scripts share one global scope, so two top-level
@@ -119,7 +120,27 @@ function vendorCobe() {
     + '   Local copy for the Spore portal, refreshed from node_modules by\n'
     + '   scripts/build-community.cjs — do not edit by hand. */\n';
   fs.writeFileSync(out, header + fs.readFileSync(src, 'utf8'));
-  console.log('  ✓ ' + path.relative(ROOT, out).padEnd(46) + 'cobe ' + version);
+  console.log('  ✓ ' + path.relative(ROOT, out).padEnd(54) + 'cobe ' + version);
+}
+
+// React itself. The portal loaded react.development.js + react-dom.development.js
+// from unpkg — 1,162 KB of unminified React, running every dev-only warning and
+// validation path on a member's first paint. The production UMDs are 139 KB and
+// are the same API. Vendored for the same reasons as cobe: nothing third-party
+// on the critical path, and it cannot drift from package.json.
+function vendorReact() {
+  for (const pkg of ['react', 'react-dom']) {
+    const src = path.join(ROOT, 'node_modules', pkg, 'umd', pkg + '.production.min.js');
+    if (!fs.existsSync(src)) { console.error('✗ ' + pkg + ' not installed — run npm install'); process.exit(1); }
+    const version = require(path.join(ROOT, 'node_modules', pkg, 'package.json')).version;
+    const out = path.join(DIR, 'vendor', pkg + '.production.min.js');
+    fs.mkdirSync(path.dirname(out), { recursive: true });
+    const header = '/*! ' + pkg + ' ' + version + ' · MIT · https://react.dev\n'
+      + '   Local copy for the Spore portal, refreshed from node_modules by\n'
+      + '   scripts/build-community.cjs — do not edit by hand. */\n';
+    fs.writeFileSync(out, header + fs.readFileSync(src, 'utf8'));
+    console.log('  ✓ ' + path.relative(ROOT, out).padEnd(54) + pkg + ' ' + version);
+  }
 }
 
 // Scripts the portal actually loads, in order, read from the HTML so the

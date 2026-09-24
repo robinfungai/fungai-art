@@ -25,8 +25,11 @@
 
   <link rel="stylesheet" href="spore/styles-living.css" />
 
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <!-- React 18.3.1, production UMD, vendored locally by scripts/build-community.cjs.
+       Was react.development.js from unpkg: 1,162 KB, with every dev-only warning
+       and validation path live on a member's first paint. These are 139 KB. -->
+  <script src="vendor/react.production.min.js"></script>
+  <script src="vendor/react-dom.production.min.js"></script>
 <script src="/global-nav.js" defer></script>
 <!-- Living mycelium background (cousin of /members) --><script src="/mycelium-field.js" data-variant="community" defer></script>
 </head>
