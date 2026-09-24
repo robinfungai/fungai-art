@@ -136,23 +136,47 @@ a { color: inherit; }
 .atl-msg code { font-family: var(--mono); font-size: 12px; color: var(--amber-lt); }
 .atl-head { border-top: 0.5px solid var(--rule); padding-top: 34px; margin-bottom: 38px; }
 
-/* A real photograph, where one exists. Same footprint as the seal so the
-   grid keeps its rhythm whether a card has a picture or not. */
-.atl-card-portrait { display: block; width: 100%; aspect-ratio: 4 / 3; margin: 0 0 12px;
-  overflow: hidden; border-radius: 2px; background: var(--forest-mid, #0D1619); }
-.atl-card-portrait img { width: 100%; height: 100%; object-fit: cover; display: block;
-  filter: saturate(.82) contrast(1.04) brightness(.92);
-  transition: transform .6s cubic-bezier(.2,.7,.3,1), filter .4s ease; }
-.atl-card:hover .atl-card-portrait img,
-.atl-card:focus-visible .atl-card-portrait img { transform: scale(1.05);
-  filter: saturate(1) contrast(1.06) brightness(1); }
+/* ── The organism card · type embedded in the photograph ───────────
+   Robin's note: the card should feel like the photograph, not a row with a
+   picture glued on. So the media IS the card — the name sits inside it over
+   a scrim, and a card with no photograph keeps the same frame with its sigil
+   centred, so the grid does not go ragged as pictures arrive one at a time. */
+.atl-card-media { position: relative; display: block; width: 100%; aspect-ratio: 4 / 5;
+  margin: 0 0 10px; overflow: hidden; border-radius: 2px;
+  background: var(--forest-mid, #0D1619); }
+.atl-card-media img { width: 100%; height: 100%; object-fit: cover; display: block;
+  filter: saturate(.8) contrast(1.05) brightness(.82);
+  transition: transform .8s cubic-bezier(.2,.7,.3,1), filter .5s ease; }
+.atl-card:hover .atl-card-media img,
+.atl-card:focus-visible .atl-card-media img { transform: scale(1.06);
+  filter: saturate(1) contrast(1.06) brightness(.98); }
 
-/* The organism seal. Sits where a photograph would, and lifts on hover so
-   the card feels like an object rather than a row. */
-.atl-card-sigil { display: block; margin: 0 0 12px; opacity: .82;
-  transition: opacity .3s ease, transform .35s cubic-bezier(.2,.7,.3,1); }
-.atl-card:hover .atl-card-sigil,
-.atl-card:focus-visible .atl-card-sigil { opacity: 1; transform: translateY(-2px) scale(1.06); }
+/* No photograph yet: the sigil, centred, on the house forest tone. */
+.atl-card-media.is-sigil { display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(160deg, #0D1619 0%, #111D22 55%, #0D1619 100%);
+  border: 0.5px solid rgba(51,96,101,.28); }
+.atl-card-media.is-sigil .atl-card-sigil { opacity: .7; margin: 0 0 22px;
+  transition: opacity .35s ease, transform .5s cubic-bezier(.2,.7,.3,1); }
+.atl-card:hover .atl-card-media.is-sigil .atl-card-sigil { opacity: 1; transform: scale(1.08); }
+
+.atl-card-scrim { position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to top, rgba(5,9,12,.94) 0%, rgba(5,9,12,.55) 26%,
+    rgba(5,9,12,.12) 52%, rgba(5,9,12,0) 74%); }
+
+.atl-card-type { position: absolute; left: 12px; right: 12px; bottom: 11px;
+  display: flex; flex-direction: column; gap: 1px; text-align: left; }
+.atl-card-type .atl-card-name { font-family: var(--fd, 'Cormorant Garamond', Georgia, serif);
+  font-size: 19px; line-height: 1.12; color: var(--parchment, #EDE5D8);
+  letter-spacing: -.01em; text-shadow: 0 1px 14px rgba(5,9,12,.9); }
+.atl-card-type .atl-card-bin { font-family: var(--fs, Georgia, serif); font-style: italic;
+  font-size: 12px; color: rgba(237,229,216,.66); text-shadow: 0 1px 10px rgba(5,9,12,.9); }
+.atl-card-type .atl-card-ep { font-family: var(--fm); font-size: 7.5px; letter-spacing: .2em;
+  text-transform: uppercase; color: rgba(136,186,200,.85); margin-top: 3px; }
+
+@media (max-width: 640px) {
+  .atl-card-media { aspect-ratio: 4 / 4.2; }
+  .atl-card-type .atl-card-name { font-size: 16px; }
+}
 
 /* ── Lumina · the Fungi Kingdom's visual transformation ─────────────
    Mounts only while one kingdom is selected and that kingdom is fungi. The
@@ -178,16 +202,20 @@ a { color: inherit; }
   display: flex; gap: 26px; flex-wrap: wrap; }
 .atl-lumina-pick { display: flex; flex-direction: column; gap: 7px; padding: 0; min-width: 116px;
   background: none; border: none; cursor: pointer; text-align: left; }
-.atl-lumina-pick-rule { display: block; height: 1px; width: 100%;
-  background: rgba(230,217,181,.22); transition: background .35s ease, height .35s ease; }
+.atl-lumina-pick-rule { position: relative; display: block; height: 1px; width: 100%;
+  background: rgba(237,229,216,.22); transition: background .35s ease, height .35s ease; }
+/* The countdown. Fills only on the active choice; any hover or focus on the
+   panel freezes it, so it never runs away from the visitor. */
+.atl-lumina-pick-fill { position: absolute; inset: 0; transform-origin: left center;
+  background: #88BAC8; }
 .atl-lumina-pick-name { font-family: var(--fm); font-size: 9px; letter-spacing: .22em;
-  text-transform: uppercase; color: rgba(230,217,181,.55); transition: color .35s ease; }
+  text-transform: uppercase; color: rgba(237,229,216,.55); transition: color .35s ease; }
 .atl-lumina-pick:hover .atl-lumina-pick-name,
-.atl-lumina-pick:focus-visible .atl-lumina-pick-name { color: var(--ml, #E6D9B5); }
+.atl-lumina-pick:focus-visible .atl-lumina-pick-name { color: var(--parchment, #EDE5D8); }
 .atl-lumina-pick:hover .atl-lumina-pick-rule,
 .atl-lumina-pick:focus-visible .atl-lumina-pick-rule { background: rgba(158,212,56,.55); }
-.atl-lumina-pick.is-active .atl-lumina-pick-rule { background: var(--nutrient, #E8B14B); height: 2px; }
-.atl-lumina-pick.is-active .atl-lumina-pick-name { color: var(--nutrient, #E8B14B); }
+.atl-lumina-pick.is-active .atl-lumina-pick-rule { background: rgba(136,186,200,.25); height: 2px; }
+.atl-lumina-pick.is-active .atl-lumina-pick-name { color: #A8D4E0; }
 .atl-lumina-pick:focus-visible { outline: 1px solid rgba(158,212,56,.6); outline-offset: 6px; }
 
 @media (max-width: 640px) {

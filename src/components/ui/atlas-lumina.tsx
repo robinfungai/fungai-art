@@ -20,9 +20,14 @@
 //   The title is React's to render. The original reached outside its own
 //   tree, which is why it needed `id` attributes that could collide with
 //   anything else on the page.
-// · Autoplay, the progress bars, the slide counter and the 5-second timer.
-//   §21: the visitor controls this. A transition happens BECAUSE an organism
-//   was selected. There is no timer left to remove.
+// · The slide counter, and the original's autoplay machinery — its
+//   setInterval, its stop/start/quickReset dance and its six per-index text
+//   animations. §21 ruled out the slideshow; Robin then asked for a deliberate
+//   7-second ambient drift, which is a different thing and is built as one:
+//   the countdown is VISIBLE in the choice's own rule, any pointer or focus on
+//   the panel freezes it, prefers-reduced-motion disables it, and it advances
+//   through the same onSelect a click uses — so a drift and a choice are the
+//   same event as far as the rest of the Atlas is concerned.
 // · uEffectType and the frost/ripple/plasma/timeshift branches — all four
 //   were `mix(tex1, tex2, progress)` stubs. Dead uniforms and dead branches
 //   in a fragment shader are still compiled.
@@ -65,6 +70,12 @@ interface LuminaProps {
   /** Selecting here opens the same dossier as the globe and the grid. */
   onSelect: (slug: string) => void;
   transitionSeconds?: number;
+  /** Seconds before it moves on by itself. 0 disables. Robin's call: the
+   *  reference's autoplay was removed as demo behaviour, then asked for back
+   *  as a deliberate ambient drift with a visible countdown — which is a
+   *  different thing from a slideshow, because the bar SHOWS it is coming and
+   *  any interaction cancels it. */
+  dwellSeconds?: number;
 }
 
 const VERTEX = `
@@ -267,9 +278,11 @@ function Morph({
 }
 
 export default function AtlasLumina({
-  organisms, activeSlug, onSelect, transitionSeconds = 2.0,
+  organisms, activeSlug, onSelect, transitionSeconds = 2.0, dwellSeconds = 7,
 }: LuminaProps) {
   const [webgl, setWebgl] = useState(true);
+  const [dwell, setDwell] = useState(0);          // 0 → 1 across the dwell
+  const [paused, setPaused] = useState(false);
   useEffect(() => {
     try {
       const c = document.createElement('canvas');
@@ -278,10 +291,45 @@ export default function AtlasLumina({
   }, []);
 
   const active = organisms.find(o => o.slug === activeSlug) || organisms[0];
+
+  // Ambient advance. rAF rather than setInterval so it stops with the tab and
+  // stays in step with the render; reduced motion and hover both hold it.
+  const reduced = useMemo(
+    () => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches,
+    [],
+  );
+  const activeRef = useRef(active?.slug);
+  activeRef.current = active?.slug;
+
+  useEffect(() => {
+    if (!dwellSeconds || reduced || paused || organisms.length < 2) { setDwell(0); return; }
+    let raf = 0;
+    const started = performance.now();
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - started) / (dwellSeconds * 1000));
+      setDwell(t);
+      if (t >= 1) {
+        const i = organisms.findIndex(o => o.slug === activeRef.current);
+        onSelect(organisms[(i + 1) % organisms.length].slug);
+        return;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [dwellSeconds, reduced, paused, organisms, onSelect, active?.slug]);
+
   if (!organisms.length || !active) return null;
 
   return (
-    <section className="atl-lumina" aria-label="Fungal material">
+    <section
+      className="atl-lumina"
+      aria-label="Fungal material"
+      onPointerEnter={() => setPaused(true)}
+      onPointerLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={() => setPaused(false)}
+    >
       {webgl && (
         <Canvas
           className="atl-lumina-canvas"
@@ -317,7 +365,15 @@ export default function AtlasLumina({
             aria-pressed={o.slug === active.slug}
             onClick={() => onSelect(o.slug)}
           >
-            <span className="atl-lumina-pick-rule" aria-hidden="true" />
+            {/* The rule doubles as the countdown: on the active choice it
+                fills left to right over the dwell, so the drift is visible
+                before it happens rather than surprising. */}
+            <span className="atl-lumina-pick-rule" aria-hidden="true">
+              <span
+                className="atl-lumina-pick-fill"
+                style={{ transform: `scaleX(${o.slug === active.slug ? dwell : 0})` }}
+              />
+            </span>
             <span className="atl-lumina-pick-name">{o.name}</span>
           </button>
         ))}

@@ -83,10 +83,19 @@ test('the caption is rendered by React', /className="atl-lumina-name"/.test(LUMI
 
 // ── 4 · Not a slideshow (§21) ────────────────────────────────────
 console.log('\n── THE VISITOR DRIVES IT ──');
-test('no setInterval', !/setInterval/.test(L));
-test('no setTimeout-based advance', !/setTimeout/.test(L));
-test('no autoSlide / autoplay machinery', !/autoSlide|autoplay|SLIDE_DURATION|progressAnimation/i.test(L));
-test('no progress bar or slide counter', !/slide-progress|slideNumber|slideTotal/.test(L));
+// A 7-second ambient drift was asked for AFTER the slideshow was removed.
+// The distinction the brief actually cares about is control, so that is what
+// is tested: the drift must be visible, interruptible, and indistinguishable
+// from a click to the rest of the Atlas.
+test('no setInterval / setTimeout timers', !/setInterval|setTimeout/.test(L),
+  'rAF, so it stops with the tab');
+test('no slide counter', !/slideNumber|slideTotal/.test(L));
+test('the dwell is cancellable by pointer or focus',
+  /onPointerEnter/.test(L) && /onFocusCapture/.test(L) && /paused/.test(L));
+test('the dwell respects prefers-reduced-motion', /prefers-reduced-motion/.test(L));
+test('the countdown is shown, not hidden', /atl-lumina-pick-fill/.test(L));
+test('an auto-advance goes through the same onSelect as a click',
+  /onSelect\(organisms\[\(i \+ 1\) % organisms\.length\]\.slug\)/.test(L));
 test('a transition is driven by the selected slug',
   /activeSlug/.test(L) && /anim\.current\s*=\s*\{/.test(L));
 test('selecting calls back out to the Atlas', /onSelect\(o\.slug\)/.test(L));
@@ -95,8 +104,10 @@ test('selecting calls back out to the Atlas', /onSelect\(o\.slug\)/.test(L));
 console.log('\n── IT CLEANS UP ──');
 test('textures are disposed', /\.dispose\(\)/.test(L) && /map\.forEach\(t => t\.dispose\(\)\)/.test(L));
 test('the ShaderMaterial is disposed', /material\.dispose\(\)/.test(L));
-test('no hand-rolled requestAnimationFrame loop', !/requestAnimationFrame/.test(L),
-  'R3F owns the loop');
+test('the render loop belongs to R3F, not hand-rolled',
+  !/const render = \(\) =>/.test(L) && /useFrame/.test(L));
+test('the only rAF is the dwell, and it is cancelled',
+  /cancelAnimationFrame/.test(L));
 test('no window resize listener', !/addEventListener\(\s*['"]resize/.test(L),
   'uResolution reads R3F size');
 test('rendering goes through R3F Canvas, not a bare WebGLRenderer',
@@ -106,7 +117,8 @@ test('rendering goes through R3F Canvas, not a bare WebGLRenderer',
 console.log('\n── A PANEL, NOT A PAGE ──');
 test('no window.innerWidth sizing', !/window\.innerWidth|window\.innerHeight/.test(L));
 test('uResolution comes from the canvas size', /size\.width/.test(L) && /uResolution/.test(L));
-test('it is a <section>, not a <main>', /<section className="atl-lumina"/.test(LUMINA));
+test('it is a <section>, not a <main>',
+  /<section[\s\S]{0,120}className="atl-lumina"/.test(LUMINA) && !/<main/.test(LUMINA));
 
 // ── 7 · Atlas state controls it (§18, §20) ───────────────────────
 console.log('\n── WIRED TO ATLAS STATE ──');

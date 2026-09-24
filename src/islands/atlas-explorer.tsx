@@ -351,16 +351,21 @@ export default function AtlasExplorer() {
                 otherwise a seal drawn from this organism's own record. The
                 sigil is not a placeholder for a missing picture; it carries
                 kingdom, chemistry, tradition, evidence and caution. */}
-            {o.image ? (
-              <span className="atl-card-portrait">
-                <img src={o.image} alt="" loading="lazy" decoding="async" />
+            {/* The photograph is the card, not an illustration on it. Type
+                sits INSIDE the image over a scrim. Cards without a photograph
+                keep the identical frame and carry the sigil instead, so the
+                grid holds its rhythm either way. */}
+            <span className={'atl-card-media' + (o.image ? '' : ' is-sigil')}>
+              {o.image
+                ? <img src={o.image} alt="" loading="lazy" decoding="async" width={480} height={600} />
+                : <OrganismSigil className="atl-card-sigil" record={o} size={72} />}
+              <span className="atl-card-scrim" aria-hidden="true" />
+              <span className="atl-card-type">
+                <span className="atl-card-name">{o.name}</span>
+                <span className="atl-card-bin">{o.binomial}</span>
+                {o.epithet && <span className="atl-card-ep">{o.epithet}</span>}
               </span>
-            ) : (
-              <OrganismSigil className="atl-card-sigil" record={o} size={44} />
-            )}
-            <span className="atl-card-name">{o.name}</span>
-            <span className="atl-card-bin">{o.binomial}</span>
-            {o.epithet && <span className="atl-card-ep">{o.epithet}</span>}
+            </span>
             <span className="atl-card-foot">
               <span>{o.tradition}</span>
               {o.grade && <span className="atl-grade">{o.grade}</span>}
