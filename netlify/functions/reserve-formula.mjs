@@ -381,9 +381,23 @@ export default async function handler(req) {
     // country before). Robin sees the config problem in the function
     // log without customer data hanging around in a plaintext log
     // stream — matches PII-hygiene practice for the newsletter fn.
-    console.error('[reserve-formula] RESEND_API_KEY not set — reservation email skipped');
-    // Return success so the customer sees a positive UI.
-    return json({ ok: true, sent: false, note: 'Reservation received. Confirmation email pending — Resend key missing on server.' }, 200, cors);
+    console.error('[reserve-formula] RESEND_API_KEY not set — reservation CANNOT be recorded');
+    // Previously this returned HTTP 200 with a truthy `ok` and the UI told
+    // the customer "Reservation received." Nothing was received: with no
+    // Resend key neither email is sent and the reservation exists nowhere
+    // — Robin never hears about the order and the customer believes it
+    // landed. Silent lost orders on a live shop.
+    //
+    // Nothing durable landed, so this is the tri-state `failed` outcome
+    // (see the semantics block below). 503 rather than 500: the request
+    // was fine, the deployment is missing a config value. Matches the
+    // FORMULA_LOOKUP_UNAVAILABLE branch above.
+    return json({
+      status: 'failed',
+      ok: false, sent: false, partial: false,   // legacy fields for stale clients
+      code: 'EMAIL_UNAVAILABLE',
+      message: 'We could not record your reservation. Please email robin@fungai.art directly — your formula is safe.',
+    }, 503, cors);
   }
 
   const from  = process.env.FORMULA_FROM  || 'Fungai Art <noreply@fungai.art>';

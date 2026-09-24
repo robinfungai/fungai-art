@@ -62,6 +62,51 @@ check('server: returns the semantic httpStatus (not always 200)', () => ({
   detail: '',
 }));
 
+// ── Missing RESEND_API_KEY must not fake a reservation ───────
+// Regression guard. This branch used to return 200 {ok:true,sent:false}
+// with the note "Reservation received." — nothing was received, and
+// Robin got no email. Silent lost orders.
+const noKeyBranch = (() => {
+  const i = SRC.indexOf('RESEND_API_KEY not set');
+  if (i < 0) return '';
+  // Stop at the end of this branch's return statement so the window
+  // can't bleed into the normal-path response below.
+  const rest = SRC.slice(i);
+  const end  = rest.indexOf('cors);');
+  return end < 0 ? rest.slice(0, 1400) : rest.slice(0, end + 6);
+})();
+
+check('server: no-RESEND branch exists', () => ({
+  pass: noKeyBranch.length > 0,
+  detail: '',
+}));
+
+check('server: no-RESEND branch never returns 200', () => ({
+  pass: noKeyBranch.length > 0 && !/\}, 200, cors\)/.test(noKeyBranch),
+  detail: '',
+}));
+
+check('server: no-RESEND branch returns 503', () => ({
+  pass: /\}, 503, cors\)/.test(noKeyBranch),
+  detail: '',
+}));
+
+check('server: no-RESEND branch reports status failed', () => ({
+  pass: /status:\s*'failed'/.test(noKeyBranch),
+  detail: '',
+}));
+
+check('server: no-RESEND branch does not claim ok/sent', () => ({
+  pass: /ok:\s*false/.test(noKeyBranch) && /sent:\s*false/.test(noKeyBranch)
+     && !/ok:\s*true/.test(noKeyBranch),
+  detail: '',
+}));
+
+check('server: no-RESEND branch carries EMAIL_UNAVAILABLE code', () => ({
+  pass: /code:\s*'EMAIL_UNAVAILABLE'/.test(noKeyBranch),
+  detail: '',
+}));
+
 // ── Client contract (Basic + Pro) ────────────────────────────────
 function assertClient(label, src) {
   check(label + ': reads bodyJson.status as the semantic field', () => ({
@@ -83,6 +128,10 @@ function assertClient(label, src) {
     pass:
       /reservationStatus === 'partial' && partialNote/.test(src) &&
       /reservePartialNote/.test(src),
+    detail: '',
+  }));
+  check(label + ': has customer-facing copy for EMAIL_UNAVAILABLE', () => ({
+    pass: /EMAIL_UNAVAILABLE:/.test(src),
     detail: '',
   }));
   check(label + ': error branch is entered on reservationStatus === failed (not !res.ok)', () => ({
