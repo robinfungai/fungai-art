@@ -12,7 +12,15 @@
 -- global-nav.js; see docs/COMMUNITY-AUDIT.md §6 for why that list is
 -- a stale duplicate of a fact this database already holds.
 --
--- Depends on: supabase-academy-access.sql (defines fa_is_admin).
+-- Depends on: supabase-fa-is-admin.sql. Run that first.
+--
+-- ⚠ NOT supabase-academy-access.sql, even though it also defines
+--   fa_is_admin(). Its version tests role = 'admin', and profiles.role
+--   is the portal's member persona, not an authorisation role — an
+--   admin who edited their profile would stop being one. That file
+--   also fails outright on this database. Reasons in
+--   supabase-fa-is-admin.sql.
+--
 -- Run this ONCE. Idempotent.
 -- ════════════════════════════════════════════════════════════════
 

@@ -274,6 +274,33 @@ But **the server-side replacement already exists**:
 defines `is_admin_user(uid)` on the same column. The columns are live. The
 client lists are a stale duplicate of a fact the database already holds.
 
+#### ⚠ `profiles.role` means two different things
+
+Found 2026-09-24, by running the academy file against production and watching
+it fail. `role` is **already in use as the portal's member PERSONA** —
+`ProfileEditor` (`app-living.jsx` ~2550) writes it from the vocabulary in
+`data.jsx`: `forager · herbalist · alchemist · ceremony · sound · artist ·
+patron · collaborator · student · seeker · other · founder`.
+
+`supabase-academy-access.sql` assumes the same column is an *authorisation*
+role. Two things follow, and neither is theoretical:
+
+1. Its `CHECK (role IN ('member','forager','steward','admin'))` is **violated
+   by existing rows** — only `forager` appears in both vocabularies. The
+   `ALTER` fails, which is how this was found.
+2. Had it succeeded, **saving any profile would fail**, because the editor
+   writes `role:'alchemist'` and the constraint rejects it.
+
+And the predicate itself is unsafe here: an admin who edited their own profile
+would overwrite `role='admin'` with their persona and silently stop being an
+admin.
+
+So `supabase-fa-is-admin.sql` defines the version this schema actually wants —
+`is_admin` only, the column `global-nav.js`, the Academy and `is_admin_user()`
+already agree on. **The real fix is two columns**: add `profiles.access_role`
+for authorisation, leave `role` to the portal, and point `fa_is_admin()` at the
+new one. Until then, do not run `supabase-academy-access.sql` on this database.
+
 Also still wired in: `teyae@fungai.art` → "Stephanie" in five places, including
 name-guessing (`if (name.includes('steph'))`), despite commit `fc897e0`.
 
