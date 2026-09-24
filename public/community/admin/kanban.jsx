@@ -117,12 +117,25 @@
         setProblem(null);
       } catch (err) {
         if (!mounted.current) return;
-        if (err && err.message === 'OFFLINE') setProblem('offline');
-        // 42501 is Postgres insufficient_privilege; PostgREST also
-        // returns an empty set for a denied SELECT, which is why the
-        // empty board carries its own hint rather than this branch.
-        else if (err && (err.code === '42501' || /permission|policy|RLS/i.test(err.message || ''))) setProblem('denied');
-        else setProblem((err && err.message) || 'Could not load the board.');
+        if (err && err.message === 'OFFLINE') { setProblem('offline'); return; }
+
+        // 42501 is Postgres insufficient_privilege. Every policy on
+        // board_cards is TO authenticated, and anon is REVOKEd, so a
+        // signed-OUT visitor and a signed-in NON-ADMIN both land here
+        // with the same code — and they need completely different
+        // advice. "Check profiles.is_admin" is useless and misleading
+        // to someone whose Supabase token simply expired, which is the
+        // ordinary case: they last about a week.
+        //
+        // So ask who we are before deciding what to say.
+        if (err && (err.code === '42501' || /permission|policy|RLS|JWT/i.test(err.message || ''))) {
+          let signedIn = false;
+          try { signedIn = !!(window.SBauth && await window.SBauth.getUser()); } catch (_) {}
+          if (!mounted.current) return;
+          setProblem(signedIn ? 'denied' : 'signed-out');
+          return;
+        }
+        setProblem((err && err.message) || 'Could not load the board.');
       } finally {
         if (mounted.current) setLoading(false);
       }
@@ -291,12 +304,29 @@
         </div>
       );
     }
+    // The common case, and it is not an error: Supabase tokens last about
+    // a week, so this is what an admin sees on a Monday. Point at the
+    // renew control the portal already shows above, rather than sending
+    // them to the database.
+    if (problem === 'signed-out') {
+      return (
+        <div className="kb-wrap">
+          <div className="kb-state kb-state-warn">
+            Your cloud session has expired, so the board can't tell the
+            database who you are. Use <strong>Renew session</strong> above,
+            then <button className="kb-retry" onClick={refresh}>reload the board</button>
+          </div>
+        </div>
+      );
+    }
     if (problem === 'denied') {
       return (
         <div className="kb-wrap">
           <div className="kb-state kb-state-warn">
-            The board is admin-only at the database layer. Sign in with an
-            account whose profile has <code>is_admin = true</code>.
+            You're signed in, but this account is not an admin. The board is
+            admin-only at the database layer — it needs
+            <code> profiles.is_admin = true</code> on the row your sign-in is
+            linked to.
           </div>
         </div>
       );
