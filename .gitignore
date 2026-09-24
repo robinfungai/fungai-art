@@ -64,3 +64,8 @@ public/islands/
 
 # Atlas dataset, generated from herbs.ts by scripts/build-atlas.cjs
 public/atlas/data/
+
+# Generated herb monographs — rendered from herbs.ts by
+# scripts/build-herb-monographs.cjs. Regenerate, do not commit: committing
+# them would duplicate herbs.ts in a second format that can drift.
+public/home/markdowns all plants/generated/

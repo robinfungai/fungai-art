@@ -31,6 +31,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "build:myco-kb": "node scripts/build-myco-kb.cjs",
+    "build:herb-monographs": "node scripts/build-herb-monographs.cjs --apply",
     "test:myco-kb": "node tests/myco-kb-verify.cjs",
     "test:myco-terminology": "node tests/myco-terminology-verify.cjs",
     "check:claims": "node scripts/check-claims.cjs",
