@@ -1,393 +1,236 @@
-# Handoff · 2026-09-24
+# Handoff · 2026-09-25
 
 **Read this file first. Do not re-explore the codebase to rebuild context.**
-Everything below was already verified with tests this session; re-deriving it
-costs tokens for no new information.
+
+Supersedes the 2026-09-24 handoff, which is preserved as
+`docs/HANDOFF-2026-09-24.md`. Everything from it that is **still open** has
+been carried forward into §6 and §7 below — nothing was dropped. Its long
+"done" narrative was not carried forward; it is history, and it is in the old
+file if you need it.
 
 ---
 
-## State: 20 commits on `main`, NOTHING PUSHED
+## 0 · Where you are, in ten lines
 
-```
-9d84d8a  fix(repo): untrack the atlas media nothing loads
-9c50fc4  feat(analytics+data): city, merged duplicates, 5 pharmacology gaps
-a585ec5  feat(atlas): ecology on the herb record -- 92% can be placed
-1bf02f8  feat(monographs): a page for every herb, rendered from its record
-b0ccfdb  feat(analytics): count page views, email traffic twice a month
-79d108b  fix(herbs): I created 3 duplicate plants -- merged, aliases carry names
-d552735  docs: handoff
-b0be953  feat(herbs): Ayurvedic batch
-64e170e  chore(monograph): rename schizandra_full_monograph.md -> schisandra
-fc897e0  fix(legal): remove a company that does not exist and a person who left
-a114f72  fix(data): one plant, two spellings -- Schisandra invisible in 4 places
-f5e24c5  feat(myco): read the question a member actually typed
-52d61a3  feat(atlas): /atlas -- scroll hero, explorer, synergy graph
-e6aca82  fix(reserve): a missing Resend key told customers their order landed
-05dbd96  docs: session handoff
-059a4de  fix(safety): interaction checker could not see 11 herbs, incl St John's Wort
-57c4942  docs: park the typecheck backlog
-e37793a  fix(types): portal timer's contribution id was never in its own type
-e20868a  feat(herbs): 199 -> 243 herbs
-1cb56eb  fix(academy+engine)  <- from an earlier session, still unpushed
-```
-
-### ⚠ `git add -A -- public/` IS NOT SAFE IN THIS REPO
-
-`public/` holds deliberately-untracked media beside source. `9c50fc4` swept in
-~4 MB of atlas video that nothing references; `9d84d8a` untracked it again and
-gitignored it. Stage explicit paths, or check `git status` for `??` entries
-before a broad add.
-
-**Robin is pushing after this session and moving to the atlas next.**
-
-Note: the atlas commit is `52d61a3`, not the `f5e74a1` an earlier copy of this
-file recorded — it was amended after that line was written.
-
-Untracked and DELIBERATELY so, now via `.gitignore` rather than luck: five
-unused clips/stills in `public/atlas/` — `15201936_1080_1920_30fps.mp4`,
-`second (1).mp4`, `the1 (1).mp4`, `second-photo.jpg`, `third-photo.jpg`. They
-are **on disk and ready for the map build**, just not in git. Only
-`new-vid.mp4` and `first-photo.jpg` are committed, because only those two are
-referenced (by `atlas-hero`). Delete the matching `.gitignore` lines when a
-page actually loads one of the others.
-
-Pushing sends last session's lab-notes fix up too. Robin has a hard rule:
-**never push without an explicit "push" in the same message.**
-
-## Done this session
-
-- Herb catalogue **199 → 243**. Five batches, ids 545–589. Six existing
-  entries enriched (Kalmegh 526, Amla 523, Gotu Kola 108, Grape Seed 420,
-  Gromwell 565, Oyster Mushroom 321). Knotweed consolidated to one entry
-  (563); id 572 retired. Thunder God Vine (564) is in `RESTRICTED_NAMES` so
-  the formula engine cannot reach it — Robin confirmed he wants it in the
-  database and future atlas, never in a formula.
-- Fixed a real `isRestricted()` bug: substring matching meant `'lsa'` matched
-  *Cistanche sa**lsa*** and silently dropped it from the pool.
-- Fixed `checkFormulaPairs()` name matching (see audit item 3 below).
-- Portal `ct` type bug in CommunityPortal.
-
-## THE BIG GOTCHA — verify audit claims before acting
-
-`npx tsc --noEmit -p tsconfig.json` **typechecks nothing** (solution-style,
-`"files": []`). Always use **`tsconfig.app.json`**.
-
-And: **the find-your-formula audit Robin pasted contains a confidently-stated
-P0 that is false.** This is the second audit to do that. Verify every claim
-against the code — and preferably with a runnable test — before changing
-anything.
-
----
-
-## Audit verification status — do not redo this
-
-### Item 1 · "under-18 gate is not server-authoritative" — **FALSE, already fixed**
-
-`index.js:71` and `:156` both do `profile.age === 'under_18'` with the comment
-*"profile._minor arriving from the client is NEVER trusted."* Applied on both
-the deterministic path and the MYCO candidate pool. `passesMinorGate` already
-excludes gated / GABAergic / CNS-stimulant / sedatives / psych_meds /
-contraceptive — the exact list the audit called missing.
-
-Proof (re-runnable):
-
-```js
-// forged payload from the audit: _minor omitted, _gatedOptIn forged true
-{ age:'under_18', _ageConfirmed:true, _gatedOptIn:true, avoid:['none'], ... }
-→ Fu Ling, Pine Bark Extract, Thyme, Oatstraw     VIOLATIONS: NONE
-// same profile as adult, for contrast:
-age:'25_40' → Chamomile, Schisandra, Fu Ling, Vervain   ← 3 of 4 are minor-flagged
-```
-
-**No action needed.**
-
-### Item 2 · "compose endpoint is public and spends money" — **TRUE, unfixed**
-
-Verified: 8/IP/min **in-memory only**; no spend cap; no bot challenge;
-`fyf-compose.mjs:363` passes **no-Origin requests through by design**.
-Calls `claude-opus-5`, max_tokens 4000, on an anonymous public request.
-
-Needs WAF/Netlify rule + challenge + a Supabase-backed budget counter
-(in-memory has the same per-instance flaw as the rate limiter). Deploy and
-config work, not a patch.
-
-### Item 3 · "cautions reported but never veto" — **TRUE. Half fixed in `059a4de`.**
-
-Found worse than reported: name matching used `firstWord()` and dropped keys
-under 4 chars, so **11 of 243 herbs were unmatchable** — St. John's Wort
-(`"st."`), Dan Shen, Red Yeast Rice, He Shou Wu, Fu Ling, Zhu Ling, Pau
-d'Arco, Saw Palmetto, Red Dates, Red Astragalus, Red Wine Extract. SJW —
-the most interaction-prone herb in the pharmacopeia — matched nothing.
-
-Fixed: multi-word phrase keys + aliases + progressive prefixes. Deliberately
-NOT every 4+ char token (that promotes `"extract"`, `"root"`, `"bark"` to
-keys and fires on any prose). Verified: all 11 resolve, 0.07 mean cautions
-per random 5-herb formula, zero fixture drift.
-
-**Still open:** cautions do not block a composition, and `interactions.js` has
-no severity vocabulary at all. INFO / CAUTION / HARD-CONTRAINDICATION with
-rejection changes which formulas ship → **Robin's decision, not a patch.**
-
-### Item on reserve-formula — **TRUE, P1, smallest high-value fix available**
-
-`netlify/functions/reserve-formula.mjs:386` returns HTTP **200** with
-`{ok:true, sent:false}` when `RESEND_API_KEY` is missing, telling the customer
-*"Reservation received."* while Robin receives nothing. **Silent lost orders
-on a live shop.** Fix is small but changes what customers see on failure, so
-it was not shipped unasked.
-
-### localStorage claim — **overstated**
-
-`fyf_state` *is* removed in three places. No time-based expiry, so an
-abandoned mid-quiz session persists. Fair concern, not "retained
-indefinitely".
-
-### Not yet examined
-
-Privacy/transparency gap (Supabase + Anthropic + Resend + Netlify geo vs the
-"stays with Robin only" copy), the constituent-level safety model, the
-post-MYCO evidence recheck, moving micronutrient inference server-side.
-These are a programme of work, not a fix list.
-
----
-
-## Done since: reserve-formula, and /atlas
-
-### reserve-formula 200 -> 503 -- SHIPPED in `e6aca82`
-
-The no-RESEND_API_KEY branch returned HTTP 200 with a truthy `ok` and the quiz
-said "Reservation received." while nothing was sent and nothing was stored. It
-now returns 503 `status:'failed'` + `code:'EMAIL_UNAVAILABLE'`, which both quiz
-pages already branch on, and the existing failure card shows honest copy plus
-the "Email Robin instead" fallback. Six regression guards in
-`npm run test:reservation-semantics` (28/28).
-
-### /atlas -- BUILT, not yet the homepage
-
-`public/atlas/index.html` + two React islands. Deliberately a static page in
-`public/`, like `/shop` and `/find-your-formula`, NOT a route in the React app
--- that is how this repo does public-facing pages, and it means promoting it to
-the homepage later is a one-line change in `scripts/swap-index.cjs`.
-
-Pieces:
-
-| file | what it is |
+| | |
 |---|---|
-| `scripts/build-atlas.cjs` | herbs-data.js -> `public/atlas/data/` (gitignored build artifact) |
-| `src/components/ui/scroll-expansion-hero.tsx` | the scroll-jacking hero, mechanics per the brief |
-| `src/islands/atlas-hero.tsx` | hero + the three doors |
-| `src/islands/atlas-explorer.tsx` | facets, grid, 10-layer dossier, synergy graph |
-| `tests/atlas-verify.cjs` | `npm run test:atlas` -- 46 checks |
+| branch | **`facelift`** — 2 commits ahead of `main` |
+| `main` | **10 commits unpushed** |
+| last work | portal facelift Phase 1 (the fairy ring), `e7a8541` |
+| next work | facelift Phase 2, **after** Robin looks at Phase 1 in a browser |
+| blocked on Robin | four SQL files to run (§2), the ring's look (§3) |
+| ⚠ do not run | `supabase-academy-access.sql` — it breaks two things (§2) |
+| new docs | `docs/COMMUNITY-AUDIT.md`, `docs/FACELIFT.md` |
+| dev server | `npm run dev` → **localhost:5173**, port now pinned |
+| tests | 34 suites, all green |
+| Netlify | nothing pushed, so nothing deployed. All of this is local. |
 
-**The data is the interesting part.** herbs.ts already carried far more than
-name/botanical/part/ratio: meridians, element, energetics, pharmacology prose,
-evidence grade, caution level, contraindications, drug interactions, and
-herb-to-herb synergy/caution lists. Nine of the ten layers are populated from
-recorded fields. Coverage as built:
+---
 
-```
-RECORDED   tradition 100%   body affinity 100%   evidence grade 100%
-DERIVED    type 100%   human state 95%   preparation 95%   part 83%
-           chemistry classes 77%   ECOLOGY 38%  <- the weak one
-```
+## 1 · What happened on 2026-09-25
 
-Facets marked `derived` in index.json are classified from the recorded text by
-the build script; the UI prints a "derived" marker on those rails so a pattern
-match is never presented as a curated fact. **Ecology/biome is the real gap**:
-it is not a field in herbs.ts at all, and the keyword table only reaches 38%.
-Recording habitat properly in herbs.ts is the fix; widening the regexes is not.
+Ten commits on `main`, two on `facelift`. In order:
 
-The synergy graph resolves **643 edges** from the existing prose using the same
-`nameKeys()` matcher as `src/server/formula-engine/interactions.js` -- so the
-atlas and the safety checker agree on what counts as a mention of a herb.
-Change one, change the other.
-
-## Done since: the terminology layer
-
-MYCO could only answer a well-spelled question. Measured before the change,
-against a corpus that plainly holds the answer:
-
-```
-"what are ashwaganda contraindacations"  -> NOTHING retrieved at all
-"is rishi safe with warfrin"             -> three unrelated herbs
-"lions mane for memory"                  -> Tremella, Kelp, Toothed Clubmoss
-"standardised" vs "standardized"         -> two disjoint result sets
-"is it safe with coumadin"               -> nothing about warfarin
-```
-
-Two of those are not typos. `lions mane` failed because the tokeniser kept
-apostrophes, so "Lion's" indexed as the term `lion'` — a token no question
-ever produces. `standardised/standardized` failed because 130 monographs
-written over years contain both spellings, so either question reached half
-the shelf.
-
-| file | what it is |
+| commit | what |
 |---|---|
-| `src/server/myco/vocabulary.cjs` | DATA, hand-edited: 93 equivalence groups, 74 one-way widenings, 163 misspellings, negators |
-| `src/server/myco/terminology.cjs` | the machinery: tokenising, 5-pass correction, expansion, negation |
-| `tests/myco-terminology-verify.cjs` | `npm run test:myco-terminology` — 80 checks |
+| `c992390` | **production React.** `/community` was loading 1,162 KB of *development* React from unpkg on every visit. Now 139 KB, vendored locally. |
+| `66b6b35` | **`docs/COMMUNITY-AUDIT.md`** — full measured audit of `/community`. 659 lines. |
+| `69a970f` | **DM D1 + D2.** The sender can now read their own sent messages; a new device fails legibly instead of silently. |
+| `1ad99c2` | **admin planning board** (kanban) on the Admin tab, backed by `board_cards`. |
+| `e67d905` | audit updated — D1/D2/D4/D5 closed. |
+| `0e0ec12` | **`fa_is_admin()` must read `is_admin`**, not `role`. See §2. |
+| `1b838e1` | the board tells an expired session apart from a non-admin. |
+| `1c956df` | key-vault + RBAC migrations; **`strictPort` on the dev server**. |
+| `76d5932` | **Security Key vault** + **MYCO fails closed** on unsourced claims. |
+| `79a4a02` | MYCO tier-filters lab notes, as a no-op. |
+| `b47d34b` | facelift Phase 0 — brief + audit. |
+| `e7a8541` | facelift Phase 1 — **the fairy ring**. |
 
-Correction runs five passes, cheapest and surest first: already in the corpus
-→ orthographic variant (UK/US, æ/œ, -ise/-ize, by RULE not table) → curated
-table → bounded Damerau-Levenshtein → leave it as typed. **The corpus is the
-dictionary** — there is no external word list, so a correction can only ever
-point at something retrievable.
+### The session-expiry thing, solved
 
-Wired into: the static KB, the **Academy lab notes** (one reading of one
-question is shared by both, so a misspelling cannot reach the monograph and
-miss the bench note on the same plant), `groundQuestion`, and the endpoint,
-which returns `readAs` so the Academy chat shows *read as rishi → reishi*. A
-silent correction is a wrong answer the member cannot spot.
+Robin kept being signed out on localhost and thought the token was expiring.
+It wasn't. **Vite was hopping 5173 → 5174 when the port was busy, and a
+Supabase session is stored per ORIGIN — port included.** Every hop was a fresh
+localStorage. `server.strictPort` now makes it fail loudly instead.
 
-`build-myco-kb.cjs` now emits an **entity table**: 689 names across 242
-organisms — display name, slash aliases, full binomial, and genus only where
-it is unambiguous. `ganoderna lucidem` (two errors in a binomial) resolves to
-Reishi. Vaccinium resolves to nothing, because four of our plants share it.
+Supabase caps JWT expiry at one week, so the "make it a month" ask is not
+available — but it is not needed either: `autoRefreshToken` renews indefinitely
+on a stable origin. Worth checking Authentication → Sessions that **Inactivity
+timeout** and **Time-box user sessions** are both off.
 
-### Two things worth knowing
+---
 
-- **`coumadin` must never be fuzzy-matched.** The corpus contains *coumarin*,
-  a different molecule, one edit away. Curated vocabulary is therefore
-  exempt from fuzzy correction (`protectedTerms`), and coumadin reaches
-  warfarin by the EQUIVALENT table instead. There is a test pinning this.
-- **Negation is counted in WORDS, not characters.** A character window wide
-  enough for "not sedating" also suppressed *nordic* in "not sedating with a
-  nordic forest profile" — a negator reaching four words past its object.
+## 2 · ⚠ SQL — what to run, what never to run
 
-### What the dead-term report tells us
+### Already run (confirmed by Robin)
 
-Every curated term is checked against the corpus at lexicon build time; 40 are
-DEAD (absent, therefore dropped and reported). Most are fair — we simply do
-not use "soporific" or "tisane". But the ecology block is the exception:
+- `fa_is_admin()` — the corrected `is_admin`-only version
+- `supabase-admin-board.sql` — `board_cards` exists, Robin is admin
+
+### Waiting, in this order
+
+| file | why it is waiting |
+|---|---|
+| `supabase-messages-e2e-sender-copy.sql` | safe to run now. Adds `ciphertext_self`, key fingerprints, and column-scoped UPDATE. |
+| `supabase-e2e-key-vault.sql` | **hold.** It installs a trigger that writes `profiles.dm_public_key` from a vault nothing populates until the vault UI exists (§6). |
+| `supabase-rbac-tiers.sql` | safe, but pointless until the client reads `access_role` (§6). |
+| `supabase-visits.sql` | carried over from 2026-09-24. Traffic email is built and waiting on this one statement. |
+
+### 🔴 NEVER run `supabase-academy-access.sql` as it stands
+
+It breaks two things, and we found both the hard way:
+
+1. **`profiles.role` is the member PERSONA**, not an authorisation role —
+   `herbalist`, `patron`, `alchemist`, `founder`, written by ProfileEditor. Its
+   `CHECK (role IN ('member','forager','steward','admin'))` is violated by
+   existing rows, which is how we found it. Had it passed, **saving any profile
+   would then fail**.
+2. Its `fa_is_admin()` tests `role = 'admin'`, so **an admin who edited their
+   own profile would stop being an admin**.
+3. Its §5 closes `lab_notes` to members only — and **MYCO reads `lab_notes`
+   with the anon key**. Running it would silently empty MYCO's live bench-note
+   retrieval. No error; answers would just quietly stop citing the bench.
+
+The real fix is two columns: `access_role` for authorisation (already in
+`supabase-rbac-tiers.sql`), `role` left to the portal. Written up in
+`supabase-fa-is-admin.sql` and `docs/COMMUNITY-AUDIT.md` §6.
+
+---
+
+## 3 · The facelift — where it got to
+
+`docs/FACELIFT.md` holds the brief verbatim and the Phase 0 audit. Branch
+`facelift`.
+
+**Phase 0 · done.** Four findings differed from what the brief assumed:
+
+- the portal types in **Satoshi / Zodiak / Geist Mono**, not the IM Fell /
+  Spectral / Josefin the brief named. **Robin's call: keep the portal's own.**
+- **there is no mycelium sphere in this repo.** Robin's call: build one.
+- five of seven sections are hardcoded or localStorage-backed, so HEALTH,
+  ACTIVITY, FLOW and Pulse have no real source. **Robin's call: hide them.**
+- labels lived in two hand-synced arrays plus a heading per page.
+
+**Phase 1 · done, `e7a8541`.** The ring is on the Network tab, additive — the
+old tab row and QuickNav still work.
 
 ```
-taiga  montane  subalpine  peat  mire  mycorrhizal  endophyte  saprotroph  decomposer  understory
+public/community/portal/sections.jsx     portalSections — THE config
+public/community/portal/fairy-ring.jsx   FairyRing + useOrbit + DetailCard
+public/community/portal/organism.jsx     The Organism, a purpose-built SVG
+public/community/portal/fairy-ring.css   portal tokens only
+tests/fairy-ring-verify.cjs              npm run test:fairy-ring — 35 checks
 ```
 
-That is independent confirmation of the atlas habitat gap below — the words
-are missing because the knowledge is. Recording habitat in `herbs.ts` would
-light up both the atlas's 38% ecology coverage and these expansions at once.
+All six reference bugs fixed and pinned by tests: one rAF loop instead of
+setState every 50ms · angle tweened the short way round · no side effects in a
+state updater · block-bodied ref callbacks · `=== null` not truthiness · real
+buttons.
 
-Also found: our own material is split on one plant — a monograph headed
-**SCHIZANDRA** and a database record called **Schisandra**. The EQUIVALENT
-group joins them; the underlying inconsistency is still there.
-
-### The engine, deliberately narrower
-
-`scoring.js · notesBoost` scores the quiz's free-text notes by substring
-match, so a misspelling did not weaken an intention — it deleted it
-("anxeity" contains no `anxi`). It now matches the corrected text as well as
-the original, so correction can only ever ADD.
-
-That path is **table-only**: no fuzzy matching, because half the keyword list
-is four-letter prefixes and `anti-inflammatory` is one edit from `anxi`, and
-because a wrong guess there changes which herbs go in a bottle rather than
-which paragraph ranks third. Verified: fixture comparison unchanged at 12
-UNEXPECTED. `19-notes-heavy` is in that set and is the fixture this touches —
-its diff is byte-identical with the correction disabled, so it is the
-pre-existing equal-score tie order, not this change.
-
-If you would rather decide the engine half separately, it is one line:
-`const n = raw;` in `notesBoost`.
-
-## NEXT SESSION IS THE ATLAS MAP — start here
-
-Everything below in this section is what the map now has to work with.
-
-### Ecology is a field now
-
-`Herb.ecology = { native_range, biomes, habitat, substrate?, source }` where
-`source` is `'recorded' | 'derived' | 'mixed'`. Populated by
-`npm run build:herb-ecology` (dry-run by default, `--apply` to write).
+**⏸ WAITING ON ROBIN.** He has not looked at it in a browser yet. Do not start
+Phase 2 until he has.
 
 ```
-native range   92%  (223/242)  <- what the map can place TODAY
-habitat prose  26%  (64/242)   <- quoted from hand-written monographs
-biome          39%             <- old keyword guess, now only the FALLBACK
+npm run dev  →  http://localhost:5173/community  →  Network tab
+check at 1440, 768 and 360 wide
 ```
 
-`build-atlas.cjs` prefers the recorded biome and only regexes when there is
-none. Its coverage report prints all three lines, because biome alone
-understated what the map can do.
+**Phase 2** live counts on the five sections with real sources, threads, decay,
+role awareness. **Phase 3** names everywhere from the config, nav consolidation
+(the icon tab row goes), the spore print card. **Phase 4** motion polish,
+mobile, keyboard/SR pass, production build.
 
-**The 180 missing habitat lines are a WRITING job, not an extraction job.**
-Measured: only 75 of 128 monographs contain a habitat sentence and only 18 of
-242 records mention habitat in their own text. That is the real reason the
-atlas was stuck at 38%, and widening the regexes cannot fix it. Full list:
-`docs/ECOLOGY-GAPS.txt`.
+One-liners for the seven sections are drafted in `sections.jsx` and **Robin
+wants to edit them.**
 
-A sensible order if Robin wants to fill them: the 8 with nothing at all first,
-then the Nordic and European herbs (the ones a Berlin-based map would show
-first), then the rest.
+---
 
-### Aliases are a field now, and matter to the map
+## 4 · The community audit — the three that matter
 
-`Herb.aliases = string[]`. Read by `interactions.js nameKeys()`, the MYCO
-entity table and the atlas synergy graph. NOT a slash in `name` — `name` is an
-identifier, `sync-engine2` derives Engine 2 slugs from it and
-`public/herb-engine-ids.json` is a COMMITTED list holding it verbatim.
+`docs/COMMUNITY-AUDIT.md`, 659 lines, every number from a command (§15 lists
+them).
 
-### Catalogue is 242, not 245
-
-Three pre-existing duplicates merged this session, richer record surviving and
-the loser's name kept as an alias:
-
-| retired | survivor | alias added |
+| | finding | status |
 |---|---|---|
-| 521 Senna | **305 Senna** | — (same name) |
-| 538 Boswellia | **506 Shallaki** | `Boswellia` |
-| 224 Vitex (Chaste Tree) | **290 Vitex** | `Chaste Tree`, `Chasteberry` |
+| **B1** | `fetchAll()` selects every profile, no pagination — silently truncates at **1,000 members** | Robin: *acknowledged, not urgent at 12* |
+| **B2** | the economy is `localStorage` only — balance, reputation, unlocks are forgeable from the console, and `unlock()` gates Experiences client-side | **open** |
+| **B3** | **`profiles` has no migration.** 23 SQL files reference it, none creates it. "Run every `.sql` in order" does not reproduce the database | **open** |
 
-Also removed 5 stale rows from `public/herb-engine-ids.json` (216 → 211),
-which mirrored the same duplicates and is read by the Spore app.
+Also still open from that audit:
 
-**Retired ids are never recycled**: 224, 521, 538, 572, 592, 593, 594.
+- **108 KB of dead source** — `spore/app.jsx`, `tracker-app.jsx`,
+  `tracker-data.jsx`, `network-map.jsx`, `styles.css`, `styles-tracker.css`.
+  No page loads any of them; all are compiled every build and deployed.
+- **`maximum-scale=1`** on `community/index.html` disables pinch-zoom — a WCAG
+  2.1 SC 1.4.4 failure on every phone. One attribute. The Academy page does not
+  have it.
+- **supabase-js is unpinned at `@2`** from jsdelivr — a breaking minor release
+  changes the portal with no deploy. Same `vendorCobe()` pattern would fix it.
+- **four hardcoded admin allowlists** still in client JS (`global-nav.js`,
+  `app-living.jsx`, `herbal-engine-2/index.html`, plus `spore-gate.js` trusting
+  localStorage).
+- `lab_notes` and `snippets` are `SELECT USING (true)` — world-readable with
+  the anon key. May be intentional for `lab_notes`; decide it explicitly.
 
-**One naming clash left deliberately unresolved:** 530 **Ajwan** is
-*Apium graveolens* (celery seed) and 590 **Ajwain** is *Trachyspermum ammi*.
-Different plants, confusably named (Ajmoda vs Yavani). Both records now say so
-in their pharmacology. Robin may want to rename 530 to "Celery Seed" — that is
-a display-name change with slug implications, so it was not done unasked.
+---
 
-## ⚠ FIVE PHARMACOLOGY ENTRIES ROBIN MUST CHECK
+## 5 · Encrypted DMs — where they got to
 
-Robin asked for these and said he would double-check. Each was drafted from
-**that record's own recorded botanical**, not from a monograph, and each is
-marked in `herbs.ts` with:
+**Done:** D1 (sender reads own messages), D2 (device-bound failure is legible),
+D4 (three keypairs → one), D5 (two wrong SQL comments), plus one the audit
+missed — the `mark_read` policy did not restrict *columns*, so a recipient
+could rewrite the ciphertext of anything sent to them.
 
-```
-// ⚠ pharmacology + status drafted 2026-09-24 from this record's own
-//   botanical, not from a monograph — Robin to verify before relying on it.
-```
+**The Security Key vault is built and tested but has no UI.** PBKDF2 600k +
+AES-GCM, `FUNG-XXXX-XXXX-XXXX-XXXX` keys, and `openKeypairForVault()` — the
+gate that refuses to mint a new keypair when a vault exists, because otherwise
+a new device orphans all history before the member is offered a restore.
 
-Grep for `drafted 2026-09-24` to find all five.
+`npm run test:dm-vault` — 22 checks. The one that carries it: *a restored
+device decrypts mail sent to the original.*
 
-| id | plant | the claim most worth checking |
-|---|---|---|
-| 508 Dashmool | ten-root compound | chemistry given as the sum of the classical ten roots; a supplier's actual list may differ |
-| 509 Gandira | *Coleus forskohlii* | forskolin → adenylate cyclase → cAMP; Grade B for IOP/bronchodilation, C for weight |
-| 515 Rudraksha | *Elaeocarpus ganitrus* | graded **D** on purpose — almost no human data, historically WORN not ingested |
-| 529 Nishoth | *Operculina turpethum* | hydragogue resin glycosides, NOT anthraquinone; steep dose-response, supervised use only |
-| 530 Ajwan | *Apium graveolens* | phototoxic furanocoumarins + recognised allergen (birch/mugwort cross-reactivity) |
+**Still open:**
+- **`dm/dm.jsx` does not exist.** No DM UI at all.
+- **`dm/vault-ui.jsx` does not exist.** The Security Key card and unlock modal.
+- **Realtime is not enabled** on `messages_e2e`, and the portal has never used
+  Supabase Realtime anywhere.
+- **D3** — nothing signs the ciphertext, so the server cannot *read* a message
+  but *can forge* one. Needs a long-term ECDSA key alongside the ECDH one.
+- The independent crypto review the file header asks for.
 
-`status` was filled on the same five. Catalogue now has **zero** records
-missing `pharmacology` or `status`.
+---
 
-## NEXT SESSION: COMMUNITY PORTAL FORK
+## 6 · Half-finished, and it matters which half
 
-Read `docs/COMMUNITY-PORTAL-ARCHITECTURE.md` FIRST. It maps identity, Supabase,
-Resend, MYCO, the Academy, money, and the seven things a client fork must
-change. Written for exactly this.
+| built | not built |
+|---|---|
+| key vault crypto + SQL | the vault UI, the DM UI |
+| `supabase-rbac-tiers.sql` incl. the escalation trigger | the client refactor — the 4 allowlists still hardcoded |
+| MYCO tier filter in `lab-notes.cjs` | `myco-agent.mjs` does not pass a JWT, so the tier is always the default |
+| the fairy ring, Phase 1 | Phases 2–4 |
 
-The headline for the fork: **admin is a hardcoded email allowlist** in
-`global-nav.js`, the Academy and the Spore app. It works because RLS is the
-real gate, but it does not survive a second tenant. That is change #1.
+**The RBAC trigger is the one to understand.** `profiles` already lets a member
+edit their own row, and RLS cannot restrict which *columns* an update touches —
+so **any member could have run `update profiles set is_admin = true` on
+themselves**, and the client-side allowlist we are deleting was the only thing
+in the way. That trigger closes it. It is in the migration and the migration
+has not been run.
 
-## ⚠ FIRST THING NEXT SESSION: THREE HERBS, ONE WITH A SAFETY PROBLEM
+MYCO stays **open to the whole world** — Robin, 2026-09-25 — through
+`/foraging`, `/extraction`, `/mixology` and `/community`. Tiers ship as a no-op:
+everything is tier 1, anonymous resolves to tier 1. The switch is for **Q2
+2027**, when MYCO goes behind the member portal.
 
-Robin photographed three plants that have NO record in herbs.ts, and asked for
-them to be added. Two are simple. One is not, which is why they were parked
-rather than rushed at the end of a session:
+---
+
+## 7 · Carried forward from 2026-09-24 — still open
+
+Nothing here was touched this session.
+
+### ⚠ Three herbs, one with a safety problem
+
+Photographs sit in `public/atlas/` and the atlas build prints them as unmatched
+every run, so they cannot be forgotten.
 
 | herb | status |
 |---|---|
@@ -395,171 +238,89 @@ rather than rushed at the end of a session:
 | **Hibiscus** — *Hibiscus sabdariffa* | straightforward, add it |
 | **Comfrey** — *Symphytum officinale* | **STOP AND THINK** |
 
-**Comfrey contains hepatotoxic pyrrolizidine alkaloids.** Internal use is
-restricted or banned in Germany, the UK and the US, and it is a documented
-cause of hepatic veno-occlusive disease. It is a genuinely useful topical herb
-and a genuinely dangerous internal one.
+Comfrey contains hepatotoxic pyrrolizidine alkaloids. Internal use is
+restricted or banned in Germany, the UK and the US. It needs the Thunder God
+Vine treatment: in the catalogue and atlas, **never reachable by a formula** —
+`RESTRICTED_NAMES`, `caution_level: 'HIGH'`, `safe_pregnancy: false`, and
+contraindications saying external-use-only in plain words. A decision to take
+deliberately with Robin, not a record to type quickly.
 
-So it cannot be added as an ordinary record in a database that feeds a formula
-engine. It needs the Thunder God Vine treatment: in the catalogue and the
-atlas, **never reachable by a formula** — `RESTRICTED_NAMES`,
-`caution_level: 'HIGH'`, `safe_pregnancy: false`, and contraindications that
-say external-use-only in plain words. That is a decision to take deliberately
-with Robin, not a record to type quickly.
+Also unmatched and probably just misnamed: `wild-rosemary.jpg` (*Rhododendron
+tomentosum* vs the catalogue's *Rosmarinus officinalis*) and `wild-thyme.jpg`
+(*Thymus serpyllum* vs *T. vulgaris*).
 
-Their photographs are already sitting in `public/atlas/` and the atlas build
-prints them as unmatched every run, so they cannot be forgotten.
+### ⚠ Five pharmacology entries Robin must check
 
-Also unmatched, and probably just misnamed: `wild-rosemary.jpg` (wild rosemary
-is *Rhododendron tomentosum*, the catalogue has *Rosmarinus officinalis*) and
-`wild-thyme.jpg` (*Thymus serpyllum* vs *T. vulgaris*). Rename them if they
-are the cultivated species and they will match automatically.
+Drafted from each record's own recorded botanical, not from a monograph.
+`grep "drafted 2026-09-24"` finds all five: **508 Dashmool · 509 Gandira ·
+515 Rudraksha · 529 Nishoth · 530 Ajwan**.
 
-## ATLAS — where it got to
+### Three things waiting on Robin
 
-Shipped: the hero, a region-density globe on real coastlines in the page's own
-palette, Lumina's glass morph with a visible 7-second drift, photographs on the
-cards with sigils where there is no photograph.
+1. **Three held herb records** — Amla 523, Haritaki 414, Kalmegh 526 were not
+   imported. `node scripts/import-herb-records.cjs "<batch dir>" --diff=523,414,526`.
+   414 is safe as-is; 523 and 526 shrink `regional_affinity`, so look first.
+2. **More herb batches** — put them in any staging folder and give the path.
+   **Not** `public/home/markdowns all plants`, which is the monograph corpus.
+3. **Traffic email** — built; `supabase-visits.sql` has not been run.
 
-**One command outstanding: `npm i -D sharp`, then `npm run build:thumbnails`.**
-Without it the cards use full-size photographs. 16 images average 430 KB; at
-260 herbs that is ~112 MB and a ~5 MB first screen. The thumbnail pipeline
-takes that to ~10 MB and ~0.5 MB. `scripts/compress-image.cjs` also needs
-sharp and has been dead this whole time.
+### Atlas
 
-Parked, not started: Botanical Mycelium graph (§13 — the best remaining piece,
-740 recorded edges behind it), the three flagship portals (§27), and the
-ecology/human-state/preparation rails as state changes rather than filters
-(§24–26).
+- **`npm i -D sharp`, then `npm run build:thumbnails`.** Without it the atlas
+  cards use full-size photographs: 16 images average 430 KB, and at 260 herbs
+  that is ~112 MB and a ~5 MB first screen. `scripts/compress-image.cjs` also
+  needs sharp and has been dead the whole time.
+- **Habitat is a writing job, not an extraction job.** 180 records have no
+  habitat line; full list in `docs/ECOLOGY-GAPS.txt`. Recording it closes the
+  atlas's 38% ecology coverage *and* the 10 dead ecology expansions in the
+  terminology report — one edit, two payoffs.
+- Parked: Botanical Mycelium graph (740 recorded edges behind it), the three
+  flagship portals, ecology/human-state/preparation rails as state changes.
 
-## OPEN — three things waiting on Robin
+### Decisions, not patches
 
-### 1 · The three held herb records
+- **Caution-veto severity taxonomy** — cautions still do not block a
+  composition, and `interactions.js` has no severity vocabulary at all.
+  INFO / CAUTION / HARD-CONTRAINDICATION changes which formulas ship.
+- **Compose endpoint hardening** — 8/IP/min in-memory only, no spend cap, no
+  bot challenge, and it calls `claude-opus-5` at max_tokens 4000 on an anonymous
+  public request. Infra and deploy work.
+- **Ajwan 530** is *Apium graveolens* (celery seed) and **590 Ajwain** is
+  *Trachyspermum ammi*. Different plants, confusably named. Renaming 530 to
+  "Celery Seed" is a display-name change with slug implications.
+- **Negation only stops widening**, it does not down-weight the term, so "not
+  sedating" still scores `sedating` at full weight.
 
-`Amla 523`, `Haritaki 414`, `Kalmegh 526` were NOT imported: they carry the
-enrichment from an earlier session. See the diff with
+### Known debt, not regressions
 
-```
-node scripts/import-herb-records.cjs "<batch dir>" --diff=523,414,526
-```
+- **Typecheck backlog: 47 errors**, parked in `docs/TYPECHECK-BACKLOG.md`.
+  Use **`tsconfig.app.json`** — `tsconfig.json` typechecks nothing.
+- **Fixture comparison shows 12 UNEXPECTED.** Baselines need re-capturing
+  (`npm run test:fixtures:capture`). Pre-existing.
+- **Safety-rules known-divergence allowlist is at 6.** All correct on merits.
+- `entitlements` is created by SQL that was never applied, so
+  `fa_has_entitlement()` references a table that does not exist.
 
-What the diff says:
+### From 2026-09-13, still open
 
-| id | verdict |
-|---|---|
-| **414 Haritaki** | safe to apply as-is — incoming is richer on every field, name identical |
-| **523 Amla** | apply, but `name` would go `"Amla / Amalaki"` → `"Amla"`, losing the alias |
-| **526 Kalmegh** | apply, but `name` would go `"Kalmegh / Andrographis"` → `"Kalmegh"` |
+`docs/SESSION_PICKUP.md` — foraging. Esri basemap **replacement** (Robin picks
+the licensed source), **22 P1/P2 items** from the foraging audit deck, and
+`src/foraging/scoring.ts` has no unit tests.
 
-The importer now keeps the existing `name` on every upgrade, so applying these
-is safe — but `regional_affinity` also shrinks (Amla 4→3 items, Kalmegh 4→2),
-so they are worth a look rather than a blind `--apply`.
+---
 
-### 2 · More batches are coming
+## 8 · How to be economical next session
 
-Put the files in ANY staging folder and give the path. **Not** in
-`public/home/markdowns all plants` — that is the monograph corpus, and these
-are herbs.ts records; the KB builder would take the H1 as the plant name and
-invent 29 organisms called "301 · Ajwain".
-
-`scripts/import-herb-records.cjs` handles the rest: filename numbers are
-ignored (they are batch document numbers, not ids), existing records are
-matched by name and upgraded in place, new ones get ids from 590 up, the Herb
-unions are enforced, and `name` / `spiritual_layer` / `epithet` are never
-overwritten. Dry run by default.
-
-### 3 · Traffic email — BUILT. One step left: run the SQL.
-
-`supabase-visits.sql` has **not been run yet** as far as this session knows.
-Nothing else is needed — `RESEND_API_KEY`, `SUPABASE_SERVICE_KEY` and
-`SUPABASE_SERVICE_ROLE_KEY` are already used by other functions, so they are
-set, and `visitor-digest.mjs` accepts either service-key name.
-
-```
-public/visit.js                       beacon, on all 39 pages
-netlify/functions/collect-visit.mjs   → public.page_views, returns 204
-netlify/functions/visitor-digest.mjs  09:00 on the 1st and 15th, via Resend
-supabase-visits.sql                   table + RLS + 90-day prune  ← RUN THIS
-tests/visits-minimisation-verify.cjs  38 checks
-```
-
-Verify in order: beacon returns **204** in the Network tab → `select count(*)
-from page_views;` → `/.netlify/functions/visitor-digest?dry=1` returns the
-report as plain text without sending.
-
-**CITY IS COLLECTED**, on Robin's instruction (2026-09-24). The SQL carries
-`ALTER TABLE ... ADD COLUMN IF NOT EXISTS city text` so it is a migration as
-well as a create — safe to re-run if the country-only version already went in.
-
-Do not "fix" the apparent inconsistency with `reserve-formula.mjs`, which is
-still country-only and has `tests/geo-minimisation-verify.cjs` enforcing it.
-They differ on purpose: an order is attached to a named person at an address,
-where a city adds nothing and risks plenty. A page view has **no subject** —
-no IP, no cookie, no id, no stored User-Agent — so a row reading
-"Berlin · mobile · /shop" cannot be joined to another row, to an order, or to
-a person. `visits-minimisation` enforces exactly that and fails the moment
-anything identifying is added next to the city.
-
-Privacy page discloses all of it, including that the city is approximate and
-that we count views and cannot count people.
-
-### 3b · The earlier analytics finding, kept for the record
-
-**There is no analytics on the site at all.** No Plausible, no GA, nothing. The
-eight "umami" matches in the codebase are the flavour, in the dinner menu copy.
-So `/patron` page views were never recorded and cannot be recovered.
-
-What a report could be built from instead (Supabase, no vendor):
-`orders`, `formulas`, `myco_memory` (which already logs `formula_generated` /
-`formula_reserved` / `composer_fired`), `newsletter_subscribers`, `event_rsvps`,
-`lab_notes`. `netlify/functions/myco-monthly-digest.mjs` is the working pattern
-— scheduled function + Resend + `DIGEST_INBOX`.
-
-Read-only counts with the anon key, for the record:
-
-```
-lab_notes                41 rows   <- genuinely public, real
-formulas                 401 permission denied (locked down, as designed)
-orders / myco_memory / newsletter_subscribers / event_rsvps   0 rows
-entitlements             404 — THE TABLE DOES NOT EXIST (schema never applied)
-founding-cohort.json     1 member, awaiting_wallet, contract_deployed: false
-```
-
-**Those zeros are not evidence.** RLS hides rows from anon, so 0 means "0
-visible to anon". Only Stripe plus the service-role key can answer whether
-anyone ever paid.
-
-## Next session: pick ONE
-
-1. **Caution-veto severity taxonomy** -- still needs Robin's decision on what
-   rejects. Unchanged from the last handoff.
-2. **Compose endpoint hardening** -- still needs infra/deploy decisions.
-3. **Atlas follow-ons** -- record habitat in herbs.ts (closes the 38%, AND the
-   10 dead ecology expansions above -- one edit, two payoffs, now the
-   best-evidenced item on this list); site-wide nav rename to
-   FORMULA/ATLAS/FIELD/ALCHEMY/JOURNAL/APOTHECARY (only /atlas uses it today);
-   per-organism visuals when the Higgsfield budget exists (the dossier has the
-   slot reserved and labelled).
-4. **Typecheck backlog** -- see `docs/TYPECHECK-BACKLOG.md`.
-5. **Terminology follow-ons** -- `npm run test:myco-terminology` prints the dead
-   terms every run; that list is the to-do. Negation currently only stops
-   WIDENING a ruled-out term, it does not down-weight the term itself, so
-   "not sedating" still scores `sedating` at full weight. Doing that properly
-   changes which extracts reach MYCO, so it is a decision, not a patch.
-
-## How to be economical next session
-
-- Read **this file** and `docs/TYPECHECK-BACKLOG.md`. Nothing else up front.
+- Read **this file** and, if touching the portal, `docs/COMMUNITY-AUDIT.md`
+  and `docs/FACELIFT.md`. Nothing else up front.
 - Do **not** re-read `herbs.ts` (14k lines) or re-run the full build chain
-  unless the herb data actually changes.
-- Verification commands that matter:
-  - `npx tsc --noEmit -p tsconfig.app.json 2>&1 | grep "data/herbs"`
-    (47 errors is the documented backlog, not a regression)
-  - `npm run test:safety-rules` (and `minor-gate`, `myco-validator`)
-  - `npm run test:myco-kb` and `npm run test:myco-terminology`
-- Fixture comparison shows **12 UNEXPECTED**; 10 predate today, 2 are the herb
-  additions. Baselines need re-capturing (`npm run test:fixtures:capture`) but
-  that is pre-existing debt — do not treat it as a regression.
-- Safety-rules known-divergence allowlist is at **6** (Bacopa, Catuaba,
-  Genistein, Kudzu Root, Peppermint, Toothed Clubmoss). All correct on the
-  merits; the engine is never less strict than the rules.
+  unless herb data actually changes.
+- `npm run dev` serves `/community` with `.jsx` compiled **on request** — you
+  do **not** need `npm run build:community` in dev. Only for production builds.
+- **`git add -A -- public/` is not safe in this repo.** `public/` holds
+  deliberately-untracked media beside source. Stage explicit paths.
+- Verification that matters: `npx tsc --noEmit -p tsconfig.app.json` ·
+  `npm run test:safety-rules` · `test:myco-kb` · `test:myco-terminology` ·
+  `test:fairy-ring` · `test:dm-vault` · `test:admin-board`.
+- **Never `git push` without an explicit "push" in the same message.** It burns
+  Netlify credits. 10 commits are waiting on `main`.
