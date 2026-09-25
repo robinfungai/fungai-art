@@ -27,10 +27,10 @@ file if you need it.
 
 ---
 
-## 0.5 · Later on 2026-09-25 — the ring became the navigation (UNCOMMITTED)
+## 0.5 · Later on 2026-09-25 — the ring became the navigation (committed f5c1f07, merged, pushed)
 
 Robin looked at Phase 1 and redirected it. Everything below is in the
-working tree on `facelift`, not committed, not pushed.
+`facelift`, merged into `main` and pushed the same evening. **All six SQL files have been run** (verified from outside with the anon key).
 
 - **The fairy ring is the portal's only nav.** Tab row, QuickNav and
   HEALTH/FLOW/ACTIVITY are gone. Full ring on home; inside a section the
