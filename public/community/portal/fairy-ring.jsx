@@ -1,60 +1,59 @@
 /* ────────────────────────────────────────────────────────────────
-   portal/fairy-ring.jsx — the portal home as a fairy ring
+   portal/fairy-ring.jsx — the fairy ring, which IS the portal nav
    ────────────────────────────────────────────────────────────────
    A fairy ring is mycelium growing outward from one point and
    fruiting in a circle at its living edge. The Organism breathes in
-   the middle, sections fruit around it, hyphal threads run between
-   related ones.
+   the middle, the sections fruit around it, and a hypha runs from the
+   centre out to each of them.
 
-   Ported from the 21st.dev Radial Orbital Timeline as a BEHAVIOUR
-   SPEC, not a dependency. No shadcn, no Tailwind, no animation
-   library — /community is static HTML with React as a UMD global and
-   one shared script scope, and the reference's globals.css would have
-   restyled this page and eight other static ones.
+   TWO SIZES, ONE INSTANCE (2026-09-25)
+   On the portal home the ring is full size and drifts. Step into a
+   section and the same component shrinks into the header, where the
+   tab row and the HEALTH / FLOW / ACTIVITY strip used to be, with the
+   open section turned to the front. It is one instance on purpose:
+   the stage's height is a CSS transition, the ResizeObserver follows
+   it frame by frame, and the radius follows the observer — so the
+   ring visibly shrinks into place instead of being swapped for a
+   different widget.
 
-   ── THE SIX FIXES, since the reference ships with them ───────────
-   a) It setState()s every 50ms, so the whole ring rerenders 20×/sec
-      while each node's 700ms CSS transition fights the updates. Here:
-      ONE rAF loop, the angle in a ref, transforms written straight to
-      the node elements. React rerenders only when focus or pause
-      changes — a handful of times per session, not 20 times a second.
-   b) On focus its nodes slide in straight lines across the circle.
-      Here the ANGLE is tweened, and by the short way round, so they
-      travel along the ring like things attached to it.
-   c) toggleItem ran side effects inside a state updater, which React
-      calls twice in StrictMode. Here the next state is computed first,
-      then applied.
-   d) Its ref callback implicitly returns the element; React 19 reads a
-      ref callback's return value as a cleanup function. Block bodies
-      throughout.
-   e) isRelatedToActive used a truthiness check, so an id of 0 breaks
-      it. Everything here compares to null.
-   f) Its nodes are clickable divs. Here they are <button>, and an
-      external section is an <a>.
+   ── STILL TRUE FROM PHASE 1 ──────────────────────────────────────
+   a) ONE rAF loop, angle in a ref, transforms written straight to the
+      node elements. React rerenders on hover, navigation and resize,
+      never per animation frame. The loop stops itself when nothing
+      moves.
+   b) The angle is tweened, the short way round, so nodes travel
+      along the ring rather than across it.
+   c) No side effects inside state updaters.
+   d) Block-bodied ref callbacks — React 19 reads a returned value as
+      a cleanup function.
+   e) Compare to null, never truthiness.
+   f) Real <button>s.
 
-   ── WHAT IS NOT DRAWN ────────────────────────────────────────────
-   Pulse, HEALTH, ACTIVITY and FLOW. None has a real data source; the
-   economy that would drive them is localStorage-only and forgeable
-   (docs/COMMUNITY-AUDIT.md §5). Robin's call on 2026-09-25: hide them
-   rather than show a number that isn't real. Streaming runs at one
-   fixed rate, and the detail card has no Pulse bar until Phase 2.
+   FIXED 2026-09-25: Phase 1 turned the focused node to -90°, the TOP
+   of the ellipse, while the depth maths drew the top as the BACK —
+   smallest and dimmest. So the node you picked shrank away from you.
+   The front is +90°, the bottom of the ellipse, where depth is 1.
    ──────────────────────────────────────────────────────────────── */
 (function () {
-  const { useState, useEffect, useRef, useCallback, useMemo } = React;
+  const { useState, useEffect, useRef, useCallback } = React;
 
-  const TAU        = Math.PI * 2;
-  const LAP_MS     = 120000;   // one lap every two minutes — breathing, not spinning
-  const TWEEN_MS   = 620;      // focus tween
-  const TILT       = 0.42;     // ellipse squash: looking down at a ring in the grass
-  const MIN_R      = 96;
-  const MAX_R      = 250;
+  const TAU      = Math.PI * 2;
+  const FRONT    = Math.PI / 2;  // bottom of the ellipse: nearest, largest
+  const LAP_MS   = 120000;       // one lap every two minutes — breathing, not spinning
+  const TWEEN_MS = 620;
+  const MAX_R    = 290;
+  const MIN_R    = 92;
+
+  // `tilt` squashes the circle into a ring seen lying in grass. The
+  // compact ring is flatter so it fits the header.
+  const MODES = {
+    full:    { tilt: 0.46, glyph: 46, pad: 110 },
+    compact: { tilt: 0.40, glyph: 32, pad: 96  },
+  };
 
   const prefersReducedMotion = () =>
     !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
-  // Shortest signed distance between two angles. Fix (b): without
-  // this, focusing a node on the far side sends everything the long
-  // way round, or straight across the middle.
   function shortestDelta(from, to) {
     let d = (to - from) % TAU;
     if (d >  Math.PI) d -= TAU;
@@ -64,298 +63,350 @@
 
   const easeInOutCubic = t => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
+  // The radius comes from the stage, never from the mode, so it moves
+  // continuously while the stage height animates between the two sizes.
+  function radiusFor(size, mode) {
+    if (!size.w) return MIN_R;
+    const byW = (size.w - mode.pad) / 2;
+    const byH = (size.h - mode.glyph - 34) / (2 * mode.tilt);
+    return Math.max(MIN_R, Math.min(MAX_R, byW, byH));
+  }
+
   /* ── useOrbit ────────────────────────────────────────────────────
-     The whole motion system. Owns the rAF loop, the angle, the focus
-     tween and every reason to stop moving. Returns an imperative
-     `register` so nodes can be positioned without React re-rendering.
+     The whole motion system: the rAF loop, the angle, the tween to
+     the front, and the hyphae from the centre. Positions are written
+     to the DOM directly.
      ──────────────────────────────────────────────────────────────── */
-  function useOrbit({ count, radius, paused, focusIndex, onFrame }) {
-    const angle    = useRef(0);
-    const nodes    = useRef(new Map());   // index → element
-    const tween    = useRef(null);
-    const rafId    = useRef(0);
-    const lastTs   = useRef(0);
-    const visible  = useRef(true);
-    const reduced  = useRef(false);
+  function useOrbit({ count, radius, tilt, drift, focusIndex, threadsRef }) {
+    const angle   = useRef(FRONT);
+    const nodes   = useRef(new Map());   // index → element
+    const tween   = useRef(null);
+    const rafId   = useRef(0);
+    const lastTs  = useRef(0);
+    const reduced = useRef(prefersReducedMotion());
 
-    useEffect(() => { reduced.current = prefersReducedMotion(); }, []);
-
-    // Fix (d): block body, so nothing is returned. React 19 would read
-    // a returned element as this ref's cleanup function.
     const register = useCallback((index, el) => {
       if (el) { nodes.current.set(index, el); }
       else    { nodes.current.delete(index); }
     }, []);
 
-    // Write positions straight to the DOM. This is fix (a): the
-    // expensive part of the reference was making React do this.
     const place = useCallback(() => {
-      const n = count;
-      if (!n) return;
-      for (let i = 0; i < n; i++) {
-        const el = nodes.current.get(i);
-        if (!el) continue;
-        const a = angle.current + (i / n) * TAU;
+      if (!count) return;
+      const threads = threadsRef.current;
+      for (let i = 0; i < count; i++) {
+        const a = angle.current + (i / count) * TAU;
         const x = Math.cos(a) * radius;
-        const y = Math.sin(a) * radius * TILT;
-        // sin runs -1 (back) → 1 (front). Nodes at the back sit
+        const y = Math.sin(a) * radius * tilt;
+        // sin runs -1 (back) → 1 (front). The back of the ring sits
         // smaller and dimmer, which is what makes it read as a ring
         // lying in grass rather than a flat circle of dots.
         const depth = (Math.sin(a) + 1) / 2;
-        const scale = 0.72 + depth * 0.38;
-        el.style.transform =
-          'translate3d(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px,0) scale(' + scale.toFixed(3) + ')';
-        el.style.opacity = (0.45 + depth * 0.55).toFixed(3);
-        el.style.zIndex = String(10 + Math.round(depth * 20));
+        const el = nodes.current.get(i);
+        if (el) {
+          el.style.transform =
+            'translate3d(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px,0) scale(' + (0.74 + depth * 0.34).toFixed(3) + ')';
+          el.style.opacity = (0.5 + depth * 0.5).toFixed(3);
+          el.style.zIndex  = String(10 + Math.round(depth * 20));
+        }
+        const th = threads[i];
+        if (th) {
+          // A hypha from the organism to the node, bowed sideways so it
+          // reads as growth rather than as a spoke.
+          const mx = x * 0.5 - y * 0.35;
+          const my = y * 0.5 + x * 0.35 * tilt;
+          th.setAttribute('d', 'M0,0 Q' + mx.toFixed(1) + ',' + my.toFixed(1) + ' ' + x.toFixed(1) + ',' + y.toFixed(1));
+          th.style.setProperty('--depth', depth.toFixed(3));
+        }
       }
-      if (typeof onFrame === 'function') onFrame(angle.current);
-    }, [count, radius, onFrame]);
+    }, [count, radius, tilt, threadsRef]);
 
-    // Start a tween that brings `focusIndex` to the front of the ring.
-    // Front is -90° (top of the ellipse, nearest the viewer).
+    const placeRef = useRef(place);
+    placeRef.current = place;
+
+    // Bring `focusIndex` to the front. `place` is read through a ref:
+    // with it in the deps, every frame of the shrink animation would
+    // restart the tween and it would never land.
     useEffect(() => {
       if (focusIndex === null || !count) { tween.current = null; return; }
-      const target = -Math.PI / 2 - (focusIndex / count) * TAU;
-      if (reduced.current) {
-        angle.current = target;   // no tween under reduced motion
-        place();
-        return;
-      }
+      const target = FRONT - (focusIndex / count) * TAU;
+      if (reduced.current) { angle.current = target; placeRef.current(); return; }
       tween.current = {
         from: angle.current,
         delta: shortestDelta(angle.current, target),
         start: performance.now(),
       };
-    }, [focusIndex, count, place]);
+    }, [focusIndex, count]);
 
     useEffect(() => {
-      const onVis = () => {
-        visible.current = !document.hidden;
-        lastTs.current = 0;               // don't jump on resume
-      };
-      document.addEventListener('visibilitychange', onVis);
-      return () => document.removeEventListener('visibilitychange', onVis);
-    }, []);
-
-    useEffect(() => {
+      const drifting = drift && focusIndex === null && !reduced.current;
       function frame(ts) {
-        rafId.current = requestAnimationFrame(frame);
-        if (!visible.current) { lastTs.current = ts; return; }
-
-        const dt = lastTs.current ? ts - lastTs.current : 0;
+        rafId.current = 0;
+        const dt = lastTs.current ? Math.min(100, ts - lastTs.current) : 0;
         lastTs.current = ts;
-
+        let more = false;
         if (tween.current) {
           const t = Math.min(1, (ts - tween.current.start) / TWEEN_MS);
           angle.current = tween.current.from + tween.current.delta * easeInOutCubic(t);
           if (t >= 1) tween.current = null;
-          place();
-          return;
-        }
-
-        // Drift stops while something is focused, and under reduced
-        // motion, and while the user has pressed pause.
-        if (!paused && focusIndex === null && !reduced.current && dt) {
+          more = true;
+        } else if (drifting) {
           angle.current = (angle.current + (dt / LAP_MS) * TAU) % TAU;
+          more = true;
         }
         place();
+        // Nothing moving → no loop. The next hover, resize or
+        // navigation starts it again through this effect.
+        if (more) rafId.current = requestAnimationFrame(frame);
       }
+      lastTs.current = 0;
+      place();
       rafId.current = requestAnimationFrame(frame);
-      return () => cancelAnimationFrame(rafId.current);
-    }, [paused, focusIndex, place]);
+      return () => { if (rafId.current) cancelAnimationFrame(rafId.current); };
+    }, [drift, focusIndex, place]);
 
-    return { register, place };
+    // Don't jump a lap's worth on return from a background tab.
+    useEffect(() => {
+      const onVis = () => { lastTs.current = 0; };
+      document.addEventListener('visibilitychange', onVis);
+      return () => document.removeEventListener('visibilitychange', onVis);
+    }, []);
+
+    return { register };
   }
 
-  /* ── DetailCard ─────────────────────────────────────────────── */
-  function DetailCard({ section, onClose, onStepIn, threads }) {
-    if (!section) return null;
-    return (
-      <aside className="fr-card" role="dialog" aria-label={section.label}>
-        <header className="fr-card-head">
-          <div>
-            <p className="fr-card-kicker">{section.subtitle}</p>
-            <h3 className="fr-card-title">{section.label}</h3>
-          </div>
-          <button type="button" className="fr-card-close" onClick={onClose} aria-label="Close">×</button>
-        </header>
-
-        <p className="fr-card-line">{section.line}</p>
-
-        {/* No Pulse bar. It would need a real activity signal and there
-            isn't one — see the header of this file. */}
-
-        {threads.length > 0 && (
-          <div className="fr-card-threads">
-            <p className="fr-card-label">Threads</p>
-            <ul>
-              {threads.map(t => (
-                <li key={t.id}><span className="fr-thread-dot" aria-hidden="true" />{t.label}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {section.external ? (
-          <a className="fr-step-in" href={section.href}>Step in</a>
-        ) : (
-          <button type="button" className="fr-step-in" onClick={onStepIn}>Step in</button>
-        )}
-      </aside>
-    );
+  /* ── Glyphs · one line icon per section ─────────────────────── */
+  const GLYPHS = {
+    network:    <><circle cx="12" cy="12" r="8" /><ellipse cx="12" cy="12" rx="3.6" ry="8" /><path d="M4 12h16" /></>,
+    calendar:   <><rect x="4.5" y="6" width="15" height="13.5" rx="2" /><path d="M4.5 10.5h15M9 4v4M15 4v4" /></>,
+    apothecary: <><path d="M10 3.5h4M10.6 3.5v3.3L7 11.6v7a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-7l-3.6-4.8V3.5" /><path d="M7.2 14.2h9.6" /></>,
+    hyphae:     <><circle cx="12" cy="6.5" r="2.2" /><circle cx="6" cy="17" r="2.2" /><circle cx="18" cy="17" r="2.2" /><path d="M11 8.4 7.1 15M13 8.4l3.9 6.6M8.2 17h7.6" /></>,
+    academy:    <><path d="M12 7.5c-2-1.6-4.8-2-7.5-1.6v11.6c2.7-.4 5.5 0 7.5 1.6 2-1.6 4.8-2 7.5-1.6V5.9c-2.7-.4-5.5 0-7.5 1.6zM12 7.5v11.6" /></>,
+    root:       <><path d="M12 3v7M12 10c0 3-3 4-5 7M12 10c0 3 3 4 5 7M12 13v7.5M7 17l-1.5 3M17 17l1.5 3" /></>,
+  };
+  function Glyph({ name }) {
+    return <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">{GLYPHS[name] || GLYPHS.network}</svg>;
   }
 
-  /* ── FairyRing ──────────────────────────────────────────────── */
-  function FairyRing({ role, onOpenSection }) {
+  /* ── FairyRing ──────────────────────────────────────────────────
+     role        'admin' adds Root to the ring and passes every rank gate
+     active      the open tab id ('home' on the portal home)
+     compact     shrunk into the header
+     onNavigate  (tabId) → void
+     rank        the member's rank id (palawan…founder), for `minRank` gates
+     badges      { [sectionId]: count } — Root's alerts, Hyphae's unread
+     ──────────────────────────────────────────────────────────────── */
+  function FairyRing({ role, active = null, compact = false, onNavigate, rank = 'palawan', badges = null }) {
     const PS = window.PortalSections;
     const Organism = window.PortalOrganism;
-    if (!PS) return null;
+    const { organism, ring } = PS ? PS.visibleFor(role) : { organism: null, ring: [] };
+    const mode = compact ? MODES.compact : MODES.full;
 
-    const { organism, ring, root } = PS.visibleFor(role);
+    const [size, setSize]           = useState({ w: 0, h: 0 });
+    const [hoverId, setHoverId]     = useState(null);
+    const [choiceFor, setChoiceFor] = useState(null);   // node whose choices are open
+    const [pointerIn, setPointerIn] = useState(false);
+    const stageRef   = useRef(null);
+    const threadsRef = useRef([]);
 
-    const [focusId, setFocusId] = useState(null);   // fix (e): null, never falsy-checked
-    const [paused, setPaused]   = useState(false);
-    const [radius, setRadius]   = useState(180);
-    const stageRef = useRef(null);
+    const radius = radiusFor(size, mode);
 
-    const focusIndex = useMemo(() => {
-      if (focusId === null) return null;
-      const i = ring.findIndex(s => s.id === focusId);
-      return i === -1 ? null : i;
-    }, [focusId, ring]);
+    // What sits at the front: an open choice, else (compact only) the
+    // section you are in. The full ring drifts freely.
+    const frontId = choiceFor !== null ? choiceFor : (compact ? active : null);
+    const frontIndex = frontId === null ? -1 : ring.findIndex(s => s.id === frontId);
+    const focusIndex = frontIndex === -1 ? null : frontIndex;
 
-    const { register } = useOrbit({ count: ring.length, radius, paused, focusIndex });
+    const { register } = useOrbit({
+      count: ring.length,
+      radius,
+      tilt: mode.tilt,
+      drift: !compact && !pointerIn,   // hold still under the pointer: easier to hit
+      focusIndex,
+      threadsRef,
+    });
 
-    // Radius from the stage, clamped. The reference hardcodes 200px,
-    // which overflows a 360px phone and looks lost at 1440.
     useEffect(() => {
       const el = stageRef.current;
       if (!el || typeof ResizeObserver === 'undefined') return;
       const ro = new ResizeObserver(entries => {
-        for (const e of entries) {
-          const w = e.contentRect.width, h = e.contentRect.height;
-          const r = Math.min(w * 0.38, h * 0.62);
-          setRadius(Math.max(MIN_R, Math.min(MAX_R, r)));
-        }
+        for (const e of entries) setSize({ w: e.contentRect.width, h: e.contentRect.height });
       });
       ro.observe(el);
       return () => ro.disconnect();
     }, []);
 
-    const focused = focusId === null ? null : PS.byId(focusId);
-    const relatedIds = focused ? (focused.related || []) : [];
+    // An open choice closes on Escape or on a press anywhere outside the ring's nodes.
+    useEffect(() => {
+      if (choiceFor === null) return;
+      const onDown = (e) => {
+        if (!(e.target && e.target.closest && e.target.closest('.fr-node-slot'))) setChoiceFor(null);
+      };
+      const onKey = (e) => { if (e.key === 'Escape') setChoiceFor(null); };
+      document.addEventListener('pointerdown', onDown);
+      document.addEventListener('keydown', onKey);
+      return () => {
+        document.removeEventListener('pointerdown', onDown);
+        document.removeEventListener('keydown', onKey);
+      };
+    }, [choiceFor]);
 
-    // Fix (c): compute, then apply. No side effects inside an updater.
-    const toggle = useCallback((id) => {
-      const next = (focusId === id) ? null : id;
-      setFocusId(next);
-    }, [focusId]);
+    const go = useCallback((id) => {
+      if (typeof onNavigate === 'function') onNavigate(id);
+    }, [onNavigate]);
 
-    const stepIn = useCallback((section) => {
-      if (!section) return;
-      if (section.external && section.href) { window.location.href = section.href; return; }
-      if (typeof onOpenSection === 'function') onOpenSection(section.id);
-    }, [onOpenSection]);
+    // A rank gate this viewer has not reached. Keepers pass them all.
+    const lockedBy = useCallback((minRank) => (
+      minRank && role !== 'admin' && PS && !PS.allows(minRank, rank) ? minRank : null
+    ), [role, rank, PS]);
+    const sayLocked = (label, minRank) => {
+      window.dispatchEvent(new CustomEvent('spore:toast', {
+        detail: { msg: label + ' opens at ' + minRank + '. A keeper sets ranks.' },
+      }));
+    };
 
-    // Arrow keys move around the ring and bring the node to the front.
+    const activate = useCallback((s) => {
+      const gate = lockedBy(s.minRank);
+      if (gate) { sayLocked(s.label, gate); return; }
+      if (s.choices) {
+        const next = choiceFor === s.id ? null : s.id;
+        setChoiceFor(next);
+        return;
+      }
+      setChoiceFor(null);
+      if (s.external && s.href) { window.open(s.href, '_blank', 'noopener'); return; }
+      go(s.id);
+    }, [choiceFor, go, lockedBy]);
+
+    const choose = useCallback((c) => {
+      const gate = lockedBy(c.minRank);
+      if (gate) { sayLocked(c.label, gate); return; }
+      setChoiceFor(null);
+      if (c.href) { window.open(c.href, '_blank', 'noopener'); return; }
+      go(c.id);
+    }, [go, lockedBy]);
+
+    // Arrow keys walk the ring when a node has focus.
     const onKeyDown = useCallback((e) => {
-      if (!ring.length) return;
-      if (e.key === 'Escape') { setFocusId(null); return; }
       const dir = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1
                 : e.key === 'ArrowLeft'  || e.key === 'ArrowUp'   ? -1 : 0;
-      if (!dir) return;
+      if (!dir || !ring.length) return;
+      const focusedId = String((document.activeElement && document.activeElement.id) || '').replace(/^fr-node-/, '');
+      const cur = ring.findIndex(s => s.id === focusedId);
+      if (cur === -1) return;
       e.preventDefault();
-      const cur = focusIndex === null ? -1 : focusIndex;
-      const next = ((cur + dir) % ring.length + ring.length) % ring.length;
-      setFocusId(ring[next].id);
-      const el = document.getElementById('fr-node-' + ring[next].id);
+      const next = ring[(cur + dir + ring.length) % ring.length];
+      const el = document.getElementById('fr-node-' + next.id);
       if (el) el.focus();
-    }, [ring, focusIndex]);
+    }, [ring]);
+
+    if (!PS) return null;
+
+    const isActive = (s) => active === s.id || (!!s.choices && s.choices.some(c => c.id === active));
+    const hovered  = hoverId === null ? null : ring.find(s => s.id === hoverId) || null;
+    const related  = hovered ? (hovered.related || []) : [];
+    const shown    = hovered || organism;
+    const orgSize  = compact
+      ? Math.max(40, Math.min(56, radius * 0.4))
+      : Math.max(110, Math.min(200, radius * 0.62));
 
     return (
-      <section className="fr-wrap">
-        <nav
+      <nav className={'fr-wrap ' + (compact ? 'is-compact' : 'is-full')} aria-label="Portal sections">
+        <div
           className="fr-stage"
           ref={stageRef}
-          aria-label="Portal sections"
           onKeyDown={onKeyDown}
-          onClick={(e) => { if (e.target === e.currentTarget) setFocusId(null); }}
+          onPointerEnter={() => setPointerIn(true)}
+          onPointerLeave={() => { setPointerIn(false); setHoverId(null); }}
         >
+          {/* The ring itself, and one hypha per node. Paths are written
+              by useOrbit every frame the ring moves. */}
+          <svg className="fr-threads" width="1" height="1" aria-hidden="true" focusable="false">
+            <ellipse className="fr-ring-glow" rx={radius} ry={radius * mode.tilt} />
+            <ellipse className="fr-ring" rx={radius} ry={radius * mode.tilt} />
+            {ring.map((s, i) => (
+              <path
+                key={s.id}
+                ref={(el) => { threadsRef.current[i] = el; }}
+                className={'fr-thread' + (s.id === hoverId || isActive(s) ? ' is-on' : '')}
+              />
+            ))}
+          </svg>
+
           <div className="fr-centre">
             {Organism ? (
               <Organism
-                size={Math.max(120, radius * 0.95)}
+                size={orgSize}
                 label={organism.label}
-                focused={focusId === organism.id}
-                onOpen={() => stepIn(organism)}
+                focused={active === organism.id}
+                onOpen={() => { setChoiceFor(null); go(organism.id); }}
               />
             ) : null}
           </div>
 
           <ul className="fr-nodes">
             {ring.map((s, i) => {
-              const isFocused = focusId === s.id;
-              const isRelated = focusId !== null && relatedIds.indexOf(s.id) !== -1;
+              const on = isActive(s);
+              const gate = lockedBy(s.minRank);
+              const badge = badges && badges[s.id] ? badges[s.id] : 0;
               return (
-                <li
-                  key={s.id}
-                  className="fr-node-slot"
-                  ref={(el) => { register(i, el); }}   /* fix (d): block body */
-                >
+                <li key={s.id} className="fr-node-slot" ref={(el) => { register(i, el); }}>
                   <button
                     type="button"
                     id={'fr-node-' + s.id}
                     className={'fr-node' +
-                      (isFocused ? ' is-focused' : '') +
-                      (isRelated ? ' is-related' : '')}
-                    aria-pressed={isFocused}
-                    aria-describedby={isFocused ? 'fr-card-live' : undefined}
-                    onClick={() => (isFocused ? stepIn(s) : toggle(s.id))}
+                      (on ? ' is-active' : '') +
+                      (gate ? ' is-locked' : '') +
+                      (related.indexOf(s.id) !== -1 ? ' is-related' : '') +
+                      (s.requiresRole ? ' is-root' : '')}
+                    aria-current={on ? 'page' : undefined}
+                    aria-haspopup={s.choices && !gate ? 'menu' : undefined}
+                    aria-expanded={s.choices && !gate ? choiceFor === s.id : undefined}
+                    aria-label={s.label + (s.external ? ' (opens in a new tab)' : '') + ' — ' + s.subtitle +
+                      (gate ? ' — opens at ' + gate : '') + (badge ? ' — ' + badge + ' new' : '')}
+                    onClick={() => activate(s)}
+                    onPointerEnter={() => setHoverId(s.id)}
+                    onFocus={() => setHoverId(s.id)}
                   >
-                    <span className="fr-node-glyph" aria-hidden="true" />
-                    <span className="fr-node-label">{s.label}</span>
+                    <span className="fr-node-glyph"><Glyph name={s.icon} /></span>
+                    {badge ? <span className="fr-badge" aria-hidden="true">{badge > 9 ? '9+' : badge}</span> : null}
+                    <span className="fr-node-label" aria-hidden="true">
+                      {s.label}{s.external ? <span className="fr-ext"> ↗</span> : null}
+                      {gate ? <span className="fr-lock"> · {gate}</span> : null}
+                    </span>
                   </button>
+                  {s.choices && choiceFor === s.id ? (
+                    <div className="fr-choices" role="menu" aria-label={s.label}>
+                      {s.choices.map(c => {
+                        const cGate = lockedBy(c.minRank);
+                        return (
+                          <button
+                            key={c.id}
+                            type="button"
+                            role="menuitem"
+                            className={'fr-choice' + (active === c.id ? ' is-active' : '') + (cGate ? ' is-locked' : '')}
+                            onClick={() => choose(c)}
+                          >
+                            <span className="fr-choice-label">{c.label}{c.href ? ' ↗' : ''}</span>
+                            <span className="fr-choice-sub">{cGate ? 'opens at ' + cGate : c.sub}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  ) : null}
                 </li>
               );
             })}
           </ul>
-
-          {root ? (
-            <div className="fr-root">
-              <span className="fr-root-thread" aria-hidden="true" />
-              <button
-                type="button"
-                id={'fr-node-' + root.id}
-                className={'fr-node fr-node-root' + (focusId === root.id ? ' is-focused' : '')}
-                aria-pressed={focusId === root.id}
-                onClick={() => (focusId === root.id ? stepIn(root) : toggle(root.id))}
-              >
-                <span className="fr-node-glyph" aria-hidden="true" />
-                <span className="fr-node-label">{root.label}</span>
-              </button>
-            </div>
-          ) : null}
-        </nav>
-
-        <div className="fr-side">
-          <div id="fr-card-live" aria-live="polite">
-            <DetailCard
-              section={focused}
-              threads={relatedIds.map(id => PS.byId(id)).filter(Boolean)}
-              onClose={() => setFocusId(null)}
-              onStepIn={() => stepIn(focused)}
-            />
-          </div>
-          <button
-            type="button"
-            className="fr-pause"
-            aria-pressed={paused}
-            onClick={() => setPaused(p => !p)}
-          >
-            {paused ? 'Resume drift' : 'Pause drift'}
-          </button>
         </div>
-      </section>
+
+        {!compact ? (
+          <div className="fr-caption" aria-live="polite">
+            <p className="fr-caption-kicker">{shown.subtitle}</p>
+            <h3 className="fr-caption-title">{shown.label}</h3>
+            <p className="fr-caption-line">{shown.line}</p>
+          </div>
+        ) : null}
+      </nav>
     );
   }
 

@@ -1414,7 +1414,6 @@ html.reveal-anim .reveal.in { opacity: 1; transform: translateY(0); }
           <a href="/foraging"><span class="ni-label">Foraging Map</span> <span class="ni-tag">ecology</span></a>
           <a href="/find-your-formula"><span class="ni-label">Tailored Elixir</span> <span class="ni-tag">find your formula</span></a>
           <a href="/mixology"><span class="ni-label">Mixology</span> <span class="ni-tag">synergistic</span></a>
-          <a href="/extraction"><span class="ni-label">Extraction</span> <span class="ni-tag">alchemy</span></a>
         </div>
       </div>
       <!-- Community: single clickable link rather than a hover-dropdown — the
@@ -1449,7 +1448,6 @@ html.reveal-anim .reveal.in { opacity: 1; transform: translateY(0); }
   <a href="/foraging" onclick="toggleMobileMenu()">Foraging Map <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; ecology</span></a>
   <a href="/find-your-formula" onclick="toggleMobileMenu()">Tailored Elixir <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; find your formula</span></a>
   <a href="/mixology" onclick="toggleMobileMenu()">Mixology <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; synergistic</span></a>
-  <a href="/extraction" onclick="toggleMobileMenu()">Extraction <span style="font-family:'Courier New',monospace;font-size:9px;color:var(--lichen);text-transform:lowercase;letter-spacing:0.14em;">&middot; alchemy</span></a>
   <div class="mm-section-title">Community</div>
   <a href="/community" onclick="toggleMobileMenu()">Spore Portal</a>
   <a href="/community/academy/" onclick="toggleMobileMenu()">Alchemy Academy</a>
@@ -1494,10 +1492,6 @@ function toggleMobileMenu() {
       adaptogenic blends, and embodied experiences rooted in ecological care and
       ancient intelligence.
     </p>
-    <div class="hero-actions">
-      <a href="/shop" class="btn-primary">Enter the apothecary</a>
-      <a href="#dinner" class="btn-ghost"><span class="mt-name">Dinner Experience</span></a>
-    </div>
   </div>
 </div>
 
@@ -1643,10 +1637,7 @@ function toggleMobileMenu() {
   <h1 class="medicine-h1">Medicine the way it</h1>
   <h2 class="medicine-h2">used to be made.</h2>
   <p class="medicine-body">
-    Wild-foraged. Slow-extracted. Full-spectrum. Tuned to 111 Hz before it leaves the lab.
-  </p>
-  <p class="medicine-fine">
-    We publish the materia medica as we go &mdash; 199 plants, five extraction methods, real foraging coordinates, traditions of Europe, India, China, and the Americas in one open library. Alchemy as practice, not aesthetic.
+    Wild-foraged. Slow-extracted. Full-spectrum. Tuned to 111 Hz.
   </p>
   <div class="medicine-actions">
     <a href="#shop" class="btn-primary">Enter the apothecary &rarr;</a>
@@ -2557,27 +2548,55 @@ function toggleMobileMenu() {
       <div class="reveal reveal-d2" style="display:flex;flex-direction:column;gap:16px;">
         <!-- Live map embed -->
         <div style="background:var(--forest-card);border:0.5px solid rgba(107,214,111,0.18);padding:0;border-radius:14px;position:relative;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,0.4);">
-          <div style="position:absolute;top:14px;left:16px;z-index:3;font-family:'Bayer',var(--sans);font-size:8.5px;letter-spacing:3px;text-transform:uppercase;color:#B6F0AE;background:rgba(6,11,6,0.72);backdrop-filter:blur(6px);padding:6px 12px;border-radius:99px;border:0.5px solid rgba(182,240,174,0.25);pointer-events:none;">Live &middot; the Foraging Map</div>
-          <div style="position:absolute;top:14px;right:16px;z-index:3;display:flex;align-items:center;gap:6px;font-family:'Bayer',var(--sans);font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:#B6F0AE;background:rgba(6,11,6,0.72);backdrop-filter:blur(6px);padding:6px 10px;border-radius:99px;border:0.5px solid rgba(107,214,111,0.3);pointer-events:none;">
-            <span style="width:6px;height:6px;border-radius:50%;background:#6BD66F;box-shadow:0 0 8px rgba(107,214,111,0.8);"></span> Real coordinates
-          </div>
-          <!-- Foraging preview — a real snapshot of /foraging (satellite
-               basemap + the live node markers), linked to the full map.
-               Replaces the hand-drawn SVG outline of Europe. Re-capture
-               public/home/forage-map-preview.webp when nodes or basemap change. -->
+          <div class="forage-map-chip forage-map-chip--wide" style="left:16px;">Sneak peek &middot; the Baltic arc</div>
+          <div class="forage-map-chip" style="right:16px;"><span class="forage-map-dot"></span> Each pin is a forageable</div>
+          <!-- Foraging sneak peek (2026-09-25) — zoomed into North Germany,
+               Denmark, southern Sweden and the Baltics, so a visitor reads
+               the pins as things they could pick. The map is
+               public/home/forage-baltic.svg, drawn from Natural Earth 1:10m
+               (public domain); the pins are HTML, placed with the same
+               projection. Illustrative spots, not survey coordinates — the
+               real ones are on /foraging. -->
           <a href="/foraging" class="forage-map-shot" aria-label="Open the Foraging Map">
-            <img src="/home/forage-map-preview.webp" width="1200" height="900" loading="lazy" decoding="async"
-                 alt="The Fungai Art Foraging Map in satellite view, with foraging nodes from Sweden and Denmark through Germany and France to Portugal">
+            <span class="fms-stage">
+              <img src="/home/forage-baltic.svg" width="1200" height="900" loading="lazy" decoding="async"
+                   alt="Map of North Germany, Denmark, southern Sweden and the Baltic states, with six forageable plants and fungi pinned: elderberry, hawthorn, chaga, bilberry, sea buckthorn and chanterelle">
+              <span class="fpin" style="left:12.1%;top:75.5%;"><i></i><span><b>Elderberry</b><em>hedgerows &middot; Aug&ndash;Sep</em></span></span>
+              <span class="fpin" style="left:21.5%;top:63.8%;"><i></i><span><b>Hawthorn</b><em>field edges &middot; Sep&ndash;Oct</em></span></span>
+              <span class="fpin" style="left:36.4%;top:47.4%;"><i></i><span><b>Chaga</b><em>on birch &middot; all year</em></span></span>
+              <span class="fpin" style="left:47.1%;top:26.3%;"><i></i><span><b>Bilberry</b><em>pine heath &middot; Jul&ndash;Aug</em></span></span>
+              <span class="fpin" style="left:64.2%;top:66.7%;"><i></i><span><b>Sea buckthorn</b><em>coastal dunes &middot; Sep&ndash;Oct</em></span></span>
+              <span class="fpin fpin--left" style="left:81.8%;top:47.7%;"><i></i><span><b>Chanterelle</b><em>mossy spruce &middot; Jul&ndash;Oct</em></span></span>
+            </span>
             <span class="forage-map-cta">Open the live map &rarr;</span>
-            <span class="forage-map-credit">Imagery &copy; Esri &middot; labels &copy; OpenStreetMap, CARTO</span>
+            <span class="forage-map-credit">Map: Natural Earth</span>
           </a>
           <style>
-            .forage-map-shot{position:relative;display:block;border-radius:8px;overflow:hidden;line-height:0}
-            .forage-map-shot img{width:100%;height:auto;display:block;transition:transform .6s ease}
-            .forage-map-shot::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(5,9,12,.5) 0%,rgba(5,9,12,0) 22%,rgba(5,9,12,0) 68%,rgba(5,9,12,.6) 100%)}
-            .forage-map-shot:hover img{transform:scale(1.03)}
+            .forage-map-chip{position:absolute;top:14px;z-index:3;display:flex;align-items:center;gap:6px;font-family:'Bayer',var(--sans);font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:#B6F0AE;background:rgba(6,11,6,0.72);backdrop-filter:blur(6px);padding:6px 11px;border-radius:99px;border:0.5px solid rgba(182,240,174,0.25);pointer-events:none;}
+            .forage-map-dot{width:6px;height:6px;border-radius:50%;background:#6BD66F;box-shadow:0 0 8px rgba(107,214,111,0.8);}
+            .forage-map-shot{position:relative;display:block;border-radius:8px;overflow:hidden;line-height:0;text-decoration:none}
+            .fms-stage{position:relative;display:block;transition:transform .6s ease;transform-origin:50% 50%}
+            .fms-stage img{width:100%;height:auto;display:block}
+            .forage-map-shot::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(5,9,12,.45) 0%,rgba(5,9,12,0) 20%,rgba(5,9,12,0) 72%,rgba(5,9,12,.55) 100%)}
+            .forage-map-shot:hover .fms-stage{transform:scale(1.03)}
+            .fpin{position:absolute;display:flex;align-items:center;gap:7px;line-height:1.15;transform:translate(-5px,-50%);pointer-events:none}
+            .fpin i{position:relative;flex:0 0 auto;width:10px;height:10px;border-radius:50%;background:#B6F0AE;box-shadow:0 0 0 3px rgba(107,214,111,0.22),0 0 14px rgba(107,214,111,0.9)}
+            .fpin i::after{content:'';position:absolute;inset:-7px;border-radius:50%;border:1px solid rgba(182,240,174,0.55);animation:fpinPulse 2.8s ease-out infinite}
+            .fpin > span{display:grid;gap:2px;padding:5px 9px 5px 8px;border-radius:8px;background:rgba(6,11,6,0.78);border:0.5px solid rgba(182,240,174,0.28);box-shadow:0 4px 14px rgba(0,0,0,0.45);white-space:nowrap}
+            .fpin b{font-family:'IM Fell English','Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:400;font-size:14px;color:var(--parchment)}
+            .fpin em{font-family:'Bayer',var(--sans);font-style:normal;font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;color:#9ED4A0}
+            .fpin--left{flex-direction:row-reverse;transform:translate(calc(-100% + 5px),-50%)}
+            @keyframes fpinPulse{0%{transform:scale(.4);opacity:.9}100%{transform:scale(1.5);opacity:0}}
             .forage-map-cta{position:absolute;left:16px;bottom:14px;z-index:2;line-height:1;font-family:'Bayer',var(--sans);font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:#05090C;background:#B6F0AE;padding:9px 14px;border-radius:999px}
-            .forage-map-credit{position:absolute;right:10px;bottom:12px;z-index:2;line-height:1.2;font-size:9px;color:rgba(237,229,216,.8);text-shadow:0 1px 4px rgba(0,0,0,.9)}
+            .forage-map-credit{position:absolute;right:10px;bottom:12px;z-index:2;line-height:1.2;font-size:9px;color:rgba(237,229,216,.7);text-shadow:0 1px 4px rgba(0,0,0,.9)}
+            @media (max-width:560px){
+              .fpin em{display:none}
+              .fpin b{font-size:11.5px}
+              .fpin > span{padding:3px 7px}
+              .forage-map-chip{font-size:7.5px;letter-spacing:1.4px;padding:5px 8px}
+              .forage-map-chip--wide{display:none}
+            }
+            @media (prefers-reduced-motion: reduce){ .fpin i::after{animation:none} .fms-stage{transition:none} }
           </style>
         </div>
         <div style="padding:22px 26px;background:rgba(107,214,111,0.04);border:0.5px solid rgba(107,214,111,0.15);border-radius:14px;">
@@ -2596,19 +2615,9 @@ function toggleMobileMenu() {
       <h2 class="sec-title" style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;margin-top:6px;">Spore <em>Stories</em></h2>
     </div>
     <div class="spore-grid reveal reveal-d1">
-      <!-- Pinned post 1 — Robin & Steph post DO6ApsxDDdd (Robin's verified
-           link, primary slot, also the one mobile shows). -->
-      <div class="spore-embed">
-        <blockquote class="instagram-media"
-          data-instgrm-permalink="https://www.instagram.com/p/DO6ApsxDDdd/?utm_source=ig_embed"
-          data-instgrm-version="14"
-          style="background:#fff;border:0;border-radius:14px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;min-width:0;padding:0;width:100%;">
-        </blockquote>
-        <!-- Fallback card (shown when Instagram's embed stays blank). Drop the
-             post photo at /home/spore/DO6ApsxDDdd.webp and it appears here. -->
-        <a class="spore-fallback" href="https://www.instagram.com/p/DO6ApsxDDdd/?img_index=1" target="_blank" rel="noopener noreferrer" data-photo="/home/spore/DO6ApsxDDdd.webp"><span class="spore-fallback-media" aria-hidden="true"></span><span class="spore-fallback-body"><span class="spore-fallback-handle">@fungai.art</span><span class="spore-fallback-title">Robin &amp; Steph</span><span class="spore-fallback-cta">View on Instagram &rarr;</span></span></a>
-      </div>
-      <!-- Pinned post 2 — older "Inner Architecture" carousel DTx5LGZjM0j -->
+      <!-- One pinned post (2026-09-25). There were three: the reel on the
+           right never rendered, and Robin kept only this one. Fallback
+           card: drop the post photo at /home/spore/DTx5LGZjM0j.webp. -->
       <div class="spore-embed">
         <blockquote class="instagram-media"
           data-instgrm-permalink="https://www.instagram.com/p/DTx5LGZjM0j/?utm_source=ig_embed"
@@ -2617,15 +2626,6 @@ function toggleMobileMenu() {
         </blockquote>
         <a class="spore-fallback" href="https://www.instagram.com/p/DTx5LGZjM0j/" target="_blank" rel="noopener noreferrer" data-photo="/home/spore/DTx5LGZjM0j.webp"><span class="spore-fallback-media" aria-hidden="true"></span><span class="spore-fallback-body"><span class="spore-fallback-handle">@fungai.art</span><span class="spore-fallback-title">Inner Architecture</span><span class="spore-fallback-cta">View on Instagram &rarr;</span></span></a>
       </div>
-      <!-- Pinned post 3 — reel DXe14z9jG2H -->
-      <div class="spore-embed">
-        <blockquote class="instagram-media"
-          data-instgrm-permalink="https://www.instagram.com/reel/DXe14z9jG2H/?utm_source=ig_embed"
-          data-instgrm-version="14"
-          style="background:#fff;border:0;border-radius:14px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;min-width:0;padding:0;width:100%;">
-        </blockquote>
-        <a class="spore-fallback" href="https://www.instagram.com/reel/DXe14z9jG2H/" target="_blank" rel="noopener noreferrer" data-photo="/home/spore/DXe14z9jG2H.webp"><span class="spore-fallback-media" aria-hidden="true"></span><span class="spore-fallback-body"><span class="spore-fallback-handle">@fungai.art</span><span class="spore-fallback-title">Field reel</span><span class="spore-fallback-cta">View on Instagram &rarr;</span></span></a>
-      </div>
       <script async src="//www.instagram.com/embed.js"></script>
     </div>
     <div style="text-align:center;margin-top:36px;" class="reveal reveal-d2">
@@ -2633,13 +2633,12 @@ function toggleMobileMenu() {
     </div>
   </div>
   <style>
-    /* Desktop — 3-in-grid (side by side) so the section reads as one row,
-       not three full-height stacks. The blockquote and the iframe that
-       Instagram's embed.js swaps in BOTH used to carry inline
+    /* One post, centred at a readable width. The blockquote and the
+       iframe that Instagram's embed.js swaps in BOTH used to carry inline
        min-width:280px which fought the grid. We strip that inline value
        (search the HTML above for min-width:0 on the blockquote) AND
        override aggressively below for any path embed.js takes. */
-    .spore-grid { display:grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap:18px !important; align-items:start; max-width:1280px; margin:0 auto; }
+    .spore-grid { display:grid !important; grid-template-columns: minmax(0, 440px) !important; justify-content:center; gap:18px !important; align-items:start; margin:0 auto; }
     .spore-embed { width:100% !important; min-width:0 !important; max-width:none !important; }
     /* Linked fallback card — hidden until the embed is known to be blank. */
     .spore-fallback { display:none; position:relative; aspect-ratio:4/5; border-radius:14px; overflow:hidden; text-decoration:none; color:var(--parchment);
@@ -2664,16 +2663,8 @@ function toggleMobileMenu() {
       width:100% !important;
       box-sizing:border-box;
     }
-    /* Tablet — fold to 2 columns so each post stays readable */
-    @media (max-width: 900px) and (min-width: 561px) {
-      .spore-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap:18px; max-width:780px; }
-    }
-    /* Phone — single featured post only (the other two add far too much
-       vertical scroll for not much extra signal; the Follow @fungai.art
-       button below the grid covers anyone who wants more). */
     @media (max-width: 560px) {
-      .spore-grid { grid-template-columns: 1fr; gap:24px; max-width:420px; }
-      .spore-embed:nth-child(n+2) { display: none; }
+      .spore-grid { grid-template-columns: minmax(0, 1fr) !important; max-width:420px; }
     }
   </style>
   <script>
@@ -2772,10 +2763,10 @@ function toggleMobileMenu() {
     </style>
 
     <!-- Vision -->
-    <div class="reveal reveal-d3" style="margin-top:48px;padding:42px 44px;background:radial-gradient(ellipse 70% 60% at 20% 30%,rgba(196,134,46,0.06),transparent 60%),var(--forest-mid);border:0.5px solid rgba(158,212,56,0.1);border-radius:18px;">
+    <div id="invitation" class="reveal reveal-d3" style="scroll-margin-top:90px;margin-top:48px;padding:42px 44px;background:radial-gradient(ellipse 70% 60% at 20% 30%,rgba(196,134,46,0.06),transparent 60%),var(--forest-mid);border:0.5px solid rgba(158,212,56,0.1);border-radius:18px;">
       <span style="font-family:'Bayer',var(--sans);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber);">An invitation</span>
-      <p style="font-family:'IM Fell English','Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(22px,2.8vw,30px);color:var(--parchment);line-height:1.4;margin:14px 0 18px;border-left:2px solid rgba(196,134,46,0.55);padding-left:22px;letter-spacing:-0.005em;">If anything here resonates — write to us, walk with us, or sit with us at a ceremony. We answer everyone, slowly and carefully.</p>
-      <p style="font-family:'Kiona',var(--sans);font-size:14px;color:var(--cream);line-height:1.85;margin-bottom:28px;max-width:64ch;">There is no algorithm here, no funnel, no growth team. Just two humans and a small circle of friends, growing one conversation at a time.</p>
+      <p style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:500;font-size:clamp(24px,3vw,32px);color:var(--parchment);line-height:1.35;margin:14px 0 18px;border-left:2px solid rgba(196,134,46,0.55);padding-left:22px;letter-spacing:0;">If anything here resonates — write to us, walk with us, or sit with us at a ceremony. We answer everyone, slowly and carefully.</p>
+      <p style="font-family:'Kiona',var(--sans);font-size:14px;color:var(--cream);line-height:1.85;margin-bottom:28px;max-width:64ch;">There is no algorithm here, no funnel, no growth team. Just a small circle of friends, growing one conversation at a time.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
         <a href="mailto:robin@fungai.art" class="btn-primary" style="text-decoration:none;">✉ Email us</a>
         <a href="https://chat.whatsapp.com/" target="_blank" rel="noopener" id="whatsapp-invite" class="btn-ghost" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;">

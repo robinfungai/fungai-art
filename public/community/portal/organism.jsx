@@ -80,7 +80,7 @@
     // Passing them changes nothing today, on purpose.
     health,
     activity,
-    label = 'The Organism',
+    label = 'Dashboard',
     onOpen,
     focused = false,
   }) {
@@ -90,8 +90,12 @@
       reduced.current = !!(mq && mq.matches);
     }, []);
 
-    const R = size / 2;
-    const strands = useMemo(() => growHyphae(34, R * 0.20, R * 0.92, 20260925), [R]);
+    // Drawn once at a fixed internal size and scaled by CSS. The ring
+    // animates `size` while it shrinks into the header; regrowing 34
+    // strands on every frame of that would be wasted work, and the
+    // strokes are non-scaling (fairy-ring.css) so they stay crisp small.
+    const R = 110;
+    const strands = useMemo(() => growHyphae(34, R * 0.20, R * 0.92, 20260925), []);
 
     return (
       <button
@@ -99,9 +103,9 @@
         className={'fr-organism' + (focused ? ' is-focused' : '')}
         style={{ width: size, height: size }}
         onClick={onOpen}
-        aria-label={label + ' — open the network'}
+        aria-label={label + ' — the portal home'}
       >
-        <svg viewBox={[-R, -R, size, size].join(' ')} aria-hidden="true" focusable="false">
+        <svg viewBox={[-R, -R, R * 2, R * 2].join(' ')} aria-hidden="true" focusable="false">
           <defs>
             <radialGradient id="fr-core">
               <stop offset="0%"   stopColor="var(--spore-l)"  stopOpacity="0.95" />

@@ -127,7 +127,7 @@ function Toast({ message, kind, onClose }) {
 /* ── PIN modal ───────────────────────────────────────────── */
 
 function PinModal({ member, onSuccess, onCancel }) {
-  const tier         = SporeData.reputationTier(member.rep);
+  const tier         = SporeData.rankOf(member);
   const stored       = localStorage.getItem(pinKey(member.id));
   const isNew        = !stored;
   const [step, setStep]   = useState(isNew ? 'set1' : 'verify');
@@ -710,7 +710,7 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
         </p>
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(220px, 1fr))', gap:14 }}>
           {SporeData.MEMBERS.map(m => {
-            const tier = SporeData.reputationTier(m.rep);
+            const tier = SporeData.rankOf(m);
             const node = SporeData.NETWORK_NODES.find(n => n.id === m.node);
             return (
               <div key={m.id} style={{
@@ -852,7 +852,7 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
         </p>
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(220px, 1fr))', gap:14 }}>
           {SporeData.MEMBERS.map(m => {
-            const tier = SporeData.reputationTier(m.rep);
+            const tier = SporeData.rankOf(m);
             const node = SporeData.NETWORK_NODES.find(n => n.id === m.node);
             return (
               <div key={m.id} style={{
@@ -963,7 +963,7 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
         </p>
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(180px, 1fr))', gap:10 }}>
           {SporeData.MEMBERS.map(m => {
-            const tier = SporeData.reputationTier(m.rep);
+            const tier = SporeData.rankOf(m);
             const node = SporeData.NETWORK_NODES.find(n => n.id === m.node);
             return (
               <div key={m.id} style={{
@@ -1044,27 +1044,16 @@ function TokenSupplyPill() {
   );
 }
 
-function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) {
-  const isAdmin = faIsAdmin(currentMember);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const tabs = [
-    { id:'network',  label:'Network',         icon:'◉' },
-    { id:'calendar', label:'Calendar',        icon:'△' },
-    { id:'shop',     label:'Members Shop',    icon:'🌿' },
-    { id:'exp',      label:'Experiences',     icon:'✦' },
-    { id:'members',  label:'Members',         icon:'◈' },
-    { id:'academy',  label:'Alchemy Academy', icon:'⚗', accent:true, external:'/community/academy/' },
-    // External /shop tab removed per design pass — Members Shop above already
-    // covers the apothecary inside the portal, and the main-site nav has the
-    // public shop. Two "Shop" tabs were redundant.
-    ...(isAdmin ? [{ id:'admin', label:'Admin', icon:'⬡', adminTab:true }] : []),
-  ];
-  const activeTab = tabs.find(t => t.id === tab) || tabs[0];
-  const handleTabClick = (t) => {
-    if (t.external) { window.open(t.external, '_blank'); setMobileOpen(false); return; }
-    onTab(t.id);
-    setMobileOpen(false);
-  };
+// The tab row that lived here is gone (2026-09-25): the fairy ring is
+// the navigation now, full size on the home view and shrunk into the
+// header inside a section. See portal/fairy-ring.jsx.
+function TopBar({ state, tier, onWallet, currentMember, onLogout }) {
+  const [unread, setUnread] = useState(0);
+  useEffect(() => {
+    const onUnread = (e) => setUnread((e.detail && e.detail.count) || 0);
+    window.addEventListener('spore:dm-unread', onUnread);
+    return () => window.removeEventListener('spore:dm-unread', onUnread);
+  }, []);
   return (
     <div className="topbar">
       <div className="topbar-row">
@@ -1076,6 +1065,18 @@ function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) 
           </div>
         </div>
         <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+          {currentMember && (
+            <button
+              type="button"
+              className="topbar-dm"
+              onClick={() => window.dispatchEvent(new CustomEvent('spore:dm-open'))}
+              aria-label={unread ? `Messages, ${unread} unread` : 'Messages'}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h16v11H4z" /><path d="m4.5 7 7.5 6 7.5-6" /></svg>
+              <span className="topbar-dm-label">Messages</span>
+              {unread ? <span className="topbar-dm-badge">{unread}</span> : null}
+            </button>
+          )}
           {currentMember && (
             <div className="topbar-member">
               <div className="topbar-member-avatar" style={{ background: tier.color }}>
@@ -1095,76 +1096,13 @@ function TopBar({ state, tier, tab, onTab, onWallet, currentMember, onLogout }) 
           </button>
         </div>
       </div>
-      {/* Desktop tab strip — hidden on phones via CSS */}
-      <div className="tabs tabs-desktop">
-        {tabs.map(t => (
-          <button
-            key={t.id}
-            className={`tab ${tab === t.id ? 'on' : ''} ${t.accent ? 'tab-accent' : ''} ${t.adminTab ? 'tab-admin' : ''}`}
-            onClick={() => handleTabClick(t)}
-          >
-            <span className="tab-icon">{t.icon}</span>
-            <span className="tab-label">{t.label}</span>
-          </button>
-        ))}
-      </div>
-      {/* Mobile compact bar — single active pill + hamburger that opens the
-          full list as a dropdown. Far less vertical real-estate than the
-          horizontally-scrolling row used to take. */}
-      <div className="tabs-mobile">
-        <button className={`tabs-mobile-active ${activeTab.accent ? 'tab-accent' : ''} ${activeTab.adminTab ? 'tab-admin' : ''}`} onClick={() => setMobileOpen(o => !o)} aria-expanded={mobileOpen}>
-          <span className="tab-icon">{activeTab.icon}</span>
-          <span className="tab-label">{activeTab.label}</span>
-          <span className="tabs-mobile-caret">{mobileOpen ? '▴' : '▾'}</span>
-        </button>
-        <button className="tabs-mobile-hamburger" onClick={() => setMobileOpen(o => !o)} aria-label="All sections">
-          <span></span><span></span><span></span>
-        </button>
-        {mobileOpen && (
-          <div className="tabs-mobile-sheet">
-            {tabs.map(t => (
-              <button
-                key={t.id}
-                className={`tabs-mobile-item ${tab === t.id ? 'on' : ''} ${t.accent ? 'tab-accent' : ''} ${t.adminTab ? 'tab-admin' : ''}`}
-                onClick={() => handleTabClick(t)}
-              >
-                <span className="tab-icon">{t.icon}</span>
-                <span className="tab-label">{t.label}</span>
-                {t.external && <span className="tabs-mobile-ext">↗</span>}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
     </div>
   );
 }
 
-/* ── System stats ────────────────────────────────────────── */
-
-function SystemStats({ state, tier, flowRate }) {
-  const health   = Math.min(100, 40 + state.reputation * 6 + state.contributions * 3);
-  const activity = Math.min(100, 25 + state.contributions * 8);
-  return (
-    <div className="sys-stats">
-      <div className="sys-cell">
-        <div className="sys-label"><span className="live-dot" /> Health</div>
-        <div className="sys-val green">{health}%</div>
-        <div className="sys-bar"><span style={{ width:`${health}%` }} /></div>
-      </div>
-      <div className="sys-cell">
-        <div className="sys-label">Flow</div>
-        <div className="sys-val amber">{flowRate.toFixed(1)}<span style={{ fontSize:10, color:'var(--mycelium-d)', marginLeft:4 }}>$H/s</span></div>
-        <div className="sys-bar amber"><span style={{ width:`${Math.min(100, flowRate * 30)}%` }} /></div>
-      </div>
-      <div className="sys-cell">
-        <div className="sys-label">Activity</div>
-        <div className="sys-val blue">{activity}%</div>
-        <div className="sys-bar blue"><span style={{ width:`${activity}%` }} /></div>
-      </div>
-    </div>
-  );
-}
+// SystemStats (HEALTH / FLOW / ACTIVITY) was removed 2026-09-25: all
+// three were computed from the localStorage economy and meant nothing.
+// The compact fairy ring sits where it was.
 
 /* ── Active nodes panel ───────────────────────────────────── */
 
@@ -1198,9 +1136,10 @@ function ActiveNodesPanel({ selected, onSelect }) {
 
 /* ── Network page ─────────────────────────────────────────── */
 
-function NetworkPage({ economy, onToast, flowRate, currentMember, onOpenSection }) {
+function NetworkPage({ economy, onToast, flowRate }) {
   const [selected, setSelected] = useState('berlin');
   const node      = SporeData.NETWORK_NODES.find(n => n.id === selected);
+  const intro     = node && (SporeData.NODE_INTROS || {})[node.id];
   const liveCount = SporeData.NETWORK_NODES.filter(n => n.activity !== 'proposed').length;
   const totalFlow = SporeData.NETWORK_NODES.reduce((a, n) =>
     a + n.contributions.reduce((b, c) => b + c.earn, 0), 0);
@@ -1212,12 +1151,6 @@ function NetworkPage({ economy, onToast, flowRate, currentMember, onOpenSection 
         <h2 className="section-title">The <em>network.</em></h2>
         <p className="section-blurb">A hidden, intelligent network beneath the surface. Tend a node — nutrients flow, the organism grows.</p>
       </div>
-
-      {/* The fairy ring — portal/fairy-ring.jsx. Phase 1: it sits at the
-          top of the portal home alongside the existing nav rather than
-          replacing it. onTab is handed down from App so Step in moves
-          tabs exactly as the old nav does. */}
-      <FairyRing role={faIsAdmin(currentMember) ? 'admin' : 'member'} onOpenSection={onOpenSection} />
 
       <div className="net-canvas">
         {/* Every node on a WebGL globe; picking a node (here or in the list
@@ -1240,12 +1173,23 @@ function NetworkPage({ economy, onToast, flowRate, currentMember, onOpenSection 
         </div>
       </div>
 
+      {/* What this node is. Tap a node on the globe, its label, or a row
+          below — the globe turns to face it and this card follows. */}
+      {node && (
+        <div className="node-intro" style={{ '--node-color': node.color }} aria-live="polite">
+          <p className="node-intro-kicker">{node.sub}</p>
+          <h3 className="node-intro-title">{node.name}</h3>
+          <p className="node-intro-text">{intro || 'A thread of the network. More about this node soon.'}</p>
+          <p className="node-intro-hint">Tap any point on the globe to meet another node</p>
+        </div>
+      )}
+
       <ActiveNodesPanel selected={selected} onSelect={setSelected} />
 
       {node && node.activity !== 'proposed' && (
         <>
           <div className="section">
-            <div className="section-eyebrow">{node.name} · contributions</div>
+            <div className="section-eyebrow">{node.name} · ways to help</div>
             <div style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:22, color:'var(--mycelium-l)', letterSpacing:'-0.02em', marginTop:4 }}>
               Tend the node.
             </div>
@@ -1721,7 +1665,9 @@ function ApothecaryPage({ economy, onToast }) {
 
 /* ── Experiences page ─────────────────────────────────────── */
 
-function ExperiencesPage({ economy, onToast }) {
+// Rendered inside the Calendar since 2026-09-25 (`embedded`): Fruiting
+// and the Mycelium Calendar were merged into one Calendar section.
+function ExperiencesPage({ economy, onToast, embedded = false }) {
   const handle = (e, amount, isEarnBack) => {
     if (isEarnBack) {
       economy.earn(e.earnBack, `${e.title} · joined`, 1);
@@ -1735,9 +1681,9 @@ function ExperiencesPage({ economy, onToast }) {
   };
 
   return (
-    <div className="page-enter">
-      <div className="section">
-        <div className="section-eyebrow">Token-gated access</div>
+    <div className={embedded ? 'cal-exp' : 'page-enter'}>
+      <div className={'section' + (embedded ? ' cal-exp-head' : '')}>
+        <div className="section-eyebrow">{embedded ? 'Beyond the dates' : 'Token-gated access'}</div>
         <h2 className="section-title">Experiences <em>& labs.</em></h2>
         <p className="section-blurb">Some open, some gated. Reputation and balance determine what blooms.</p>
       </div>
@@ -1830,19 +1776,20 @@ function ProfileEditor({ existing, onClose, adminEditingId }) {
   const fileRef                 = useRef(null);
 
   const ROLES = [
-    // 'founder' role removed from the dropdown — Robin & Stephanie are the
-    // only founders and their profiles are pre-seeded with that role.
-    // New members can't claim Founder for themselves.
+    // What a member does, in their own words. RANKS are not on this list
+    // (Robin, 2026-09-25): Founder, Patron, Facilitator and Alchemist are
+    // given by a keeper on the Admin page — see RANKS in data.jsx — so
+    // nobody can title themselves one here. A profile that already holds
+    // one of those words keeps it in the database; the member list stops
+    // showing it until a keeper confirms the rank.
     ['forager', 'Forager — wild plant gathering'],
     ['herbalist', 'Herbalist — traditional medicine'],
-    ['alchemist', 'Alchemist — extraction & elixirs'],
-    ['ceremony', 'Ceremony facilitator'],
+    ['ceremony', 'Ceremony — circles & ritual'],
     ['sound', 'Sound & frequency healer'],
     ['artist', 'Artist · creative collaborator'],
     ['cultivator', 'Cultivator — mycelium · spawn · substrate'],
     ['documenter', 'Documenter — photography · field notes · archive'],
-    ['weaver', 'Community weaver — facilitation · governance'],
-    ['patron', 'Patron — supporting the work'],
+    ['weaver', 'Community weaver — gatherings · governance'],
     ['collaborator', 'Collaborator — vendor / supplier'],
     ['student', 'Student — learning the craft'],
     ['seeker', 'Seeker — just beginning'],
@@ -2168,7 +2115,7 @@ function ProfileEditor({ existing, onClose, adminEditingId }) {
 
 function PublicProfileModal({ member, onClose }) {
   if (!member) return null;
-  const tier = SporeData.reputationTier(member.rep);
+  const tier = SporeData.rankOf(member);
   const node = SporeData.NETWORK_NODES.find(n => n.id === member.node);
   const joined = (() => {
     if (!member.createdAt) return null;
@@ -2300,7 +2247,7 @@ function PublicProfileModal({ member, onClose }) {
             </div>
             <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
               {sameNode.map(m => {
-                const t = SporeData.reputationTier(m.rep);
+                const t = SporeData.rankOf(m);
                 return (
                   <div key={m.id} style={{ display:'flex', alignItems:'center', gap:6, padding:'4px 10px 4px 4px', background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:999 }}>
                     <div style={{ width:20, height:20, borderRadius:'50%', background: t.color, color:'rgba(255,255,255,.9)', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:11 }}>{m.name[0]}</div>
@@ -2322,6 +2269,21 @@ function PublicProfileModal({ member, onClose }) {
               <div style={{ fontFamily:'var(--font-mono)', fontSize:12, color:'var(--mycelium)' }}>{contact}</div>
             )}
           </div>
+        )}
+
+        {/* A direct, end-to-end encrypted line — dm/dm.jsx. Any member to
+            any member, keeper or not. */}
+        {member.cloudId && member.id !== ((() => { try { return localStorage.getItem('spore_active_member'); } catch { return null; } })()) && (
+          <button
+            type="button"
+            className="profile-dm-btn"
+            onClick={() => {
+              window.dispatchEvent(new CustomEvent('spore:dm-open', { detail: { profileId: member.cloudId } }));
+              onClose();
+            }}
+          >
+            ✉ Send {member.name.split(' ')[0]} a message
+          </button>
         )}
       </div>
     </div>
@@ -2409,7 +2371,7 @@ function MembersPage({ currentMember, economy }) {
     const bal   = st ? st.balance   : m.balance;
     const rep   = st ? st.reputation: m.rep;
     const contribs = st ? st.contributions : 0;
-    const tier  = SporeData.reputationTier(rep);
+    const tier  = SporeData.rankOf(m);
     const node  = SporeData.NETWORK_NODES.find(n => n.id === m.node);
     const sales = getMemberSales(m.id);
     const focus = localStorage.getItem(focusKey(m.id)) || '';
@@ -2487,54 +2449,9 @@ function MembersPage({ currentMember, economy }) {
             </>
           )}
 
-          {/* Gift $H · founder-only cross-device */}
-          <div style={{ marginTop:14, padding:'12px 14px', background:'rgba(107,214,111,0.06)', border:'0.5px solid rgba(107,214,111,0.28)', borderRadius:10 }}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--spore-l)', marginBottom:8 }}>◈ Gift $HYPHA</div>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const fd = new FormData(e.currentTarget);
-                const amount = Math.max(0, Math.min(9999, Number(fd.get('amount') || 0)));
-                const note   = String(fd.get('note') || '').slice(0, 120);
-                if (!amount) return;
-                // Local (this device) ledger — bumps the recipient's
-                // spore_state_<id>.balance and appends to their history.
-                try {
-                  const key = 'spore_state_' + m.id;
-                  const raw = localStorage.getItem(key);
-                  const cur = raw ? JSON.parse(raw) : { balance:m.balance||0, reputation:m.rep||0, contributions:0, keys:0, unlocked:[], inventory:[], history:[] };
-                  cur.balance = (cur.balance || 0) + amount;
-                  cur.history = [{ type:'earn', label:`Gift from ${currentMember?.name || 'founder'}${note ? ' — ' + note : ''}`, delta:+amount, ts:Date.now() }, ...(cur.history || [])].slice(0, 30);
-                  localStorage.setItem(key, JSON.stringify(cur));
-                } catch {}
-                // Best-effort cloud ledger via `hypha_gifts` — silently
-                // no-ops if the table doesn't exist yet.
-                (async () => {
-                  try {
-                    if (!window.SBauth || !window.SBclient || !m.cloudId) return;
-                    const u = await window.SBauth.getUser();
-                    if (!u) return;
-                    await window.SBclient.from('hypha_gifts').insert({
-                      from_auth_user_id: u.id,
-                      to_profile_id: m.cloudId,
-                      amount, note,
-                    });
-                  } catch (_) {}
-                })();
-                e.currentTarget.reset();
-                onToast(`✦ Gifted ${amount} $H to ${m.name}`, 'success');
-              }}
-              style={{ display:'grid', gridTemplateColumns:'90px 1fr auto', gap:8 }}
-            >
-              <input name="amount" type="number" min="1" max="9999" step="1" placeholder="20" required
-                style={{ background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:6, color:'var(--mycelium-l)', padding:'8px 10px', fontFamily:'var(--font-mono)', fontSize:12, outline:'none' }} />
-              <input name="note" type="text" maxLength={120} placeholder="Reason (visible in history)"
-                style={{ background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:6, color:'var(--mycelium-l)', padding:'8px 10px', fontFamily:'var(--font-sans)', fontSize:12, outline:'none' }} />
-              <button type="submit"
-                style={{ fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.22em', textTransform:'uppercase', padding:'8px 14px', borderRadius:999, border:'none', cursor:'pointer', background:'linear-gradient(135deg, var(--spore), var(--spore-d))', color:'var(--soil)', fontWeight:500 }}>Gift →</button>
-            </form>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'var(--mycelium-d)', marginTop:6 }}>Local balance updates instantly. Cross-device sync once the <span style={{ color:'var(--spore-l)' }}>hypha_gifts</span> table + trigger exist.</div>
-          </div>
+          {/* The "Gift $HYPHA" form was removed 2026-09-25 (Robin: no
+              focus on $MYCEL / $H money for now). It only ever wrote to
+              the admin's own browser, so gifts never reached anyone. */}
 
           {/* Admin edit — opens ProfileEditor pointed at this member's
               cloud row. Requires an RLS policy on `profiles` allowing
@@ -2770,7 +2687,7 @@ function MembersPage({ currentMember, economy }) {
 
       <div className="members-grid">
         {SporeData.MEMBERS.map(m => {
-          const tier   = SporeData.reputationTier(m.rep);
+          const tier   = SporeData.rankOf(m);
           const node   = SporeData.NETWORK_NODES.find(n => n.id === m.node);
           const focus  = m.id === currentMember.id ? myFocus : ((() => { try { return localStorage.getItem(focusKey(m.id)) || ''; } catch { return ''; } })());
           const ct     = focus ? SporeData.CONTRIBUTION_TYPES.find(c => c.id === focus) : null;
@@ -2790,7 +2707,16 @@ function MembersPage({ currentMember, economy }) {
               }}
               title={isMe ? '' : 'Tap to view profile'}
             >
-              <div className="member-avatar" style={{ background: tier.color }}>{m.name[0]}</div>
+              {/* The photo, when there is one — the card only ever drew the
+                  initial (fixed 2026-09-25). The initial stays underneath,
+                  so a photo that fails to load falls back to it. */}
+              <div className="member-avatar" style={{ background: tier.color, boxShadow: `0 0 0 2px ${tier.color}` }}>
+                {m.name[0]}
+                {m.avatar && (
+                  <img className="member-avatar-img" src={m.avatar} alt="" loading="lazy"
+                       onError={e => { e.currentTarget.style.display = 'none'; }} />
+                )}
+              </div>
               <div className="member-body">
                 <div style={{ display:'flex', alignItems:'center', gap:6, flexWrap:'wrap' }}>
                   <div className="member-name">{m.name}</div>
@@ -2840,7 +2766,7 @@ function MembersPage({ currentMember, economy }) {
 
 function JournalPage({ economy, currentMember }) {
   const history = economy.state.history;
-  const tier    = SporeData.reputationTier(economy.state.reputation);
+  const tier    = SporeData.rankOf(currentMember);
 
   function fmtTime(ts) {
     const d = new Date(ts);
@@ -3546,6 +3472,14 @@ function AdminPage({ onToast, currentMember }) {
         <h2 className="section-title">Admin <em>panel.</em></h2>
       </div>
 
+      {/* Keeper tools — admin/keeper.jsx: orders to ship + low stock,
+          announcements to everyone, and the Dashboard's figures. Ranks
+          are set per member in "All hyphaes" at the bottom. */}
+      {PortalKeeper && <PortalKeeper.KeeperAlerts />}
+      {PortalKeeper && <PortalKeeper.EventsEditor onToast={onToast} freqColors={FREQ_COLORS} />}
+      {PortalKeeper && <PortalKeeper.AnnouncementsEditor onToast={onToast} />}
+      {PortalKeeper && <PortalKeeper.FiguresEditor onToast={onToast} />}
+
       {/* Self-identity tools — make it easy to link this signed-in account to
           the right hardcoded MEMBERS entry without back-and-forth. */}
       <SelfIdentityBlock currentMember={currentMember} onToast={onToast} />
@@ -4144,8 +4078,6 @@ function AdminHyphaeRow({ m, last, isRobin, currentMemberId, onToast }) {
   const [, bump] = useState(0);
   const [open, setOpen] = useState(false);
   const [tick, setTick] = useState(0);
-  const [msgOpen, setMsgOpen] = useState(false);
-  const [msgBody, setMsgBody] = useState('');
   useEffect(() => {
     const refresh = () => bump(b => b + 1);
     window.addEventListener('spore:economy', refresh);
@@ -4155,8 +4087,7 @@ function AdminHyphaeRow({ m, last, isRobin, currentMemberId, onToast }) {
   }, []);
 
   const bal   = SporeEconomy.getBalance(m.id);
-  const rep   = m.rep;
-  const tier  = SporeData.reputationTier(rep);
+  const tier  = SporeData.rankOf(m);
   const hours = SporeEconomy.totalHoursContributed(m.id);
   const recruits = SporeEconomy.recruitsCount(m.id);
   const events = SporeEconomy.eventsParticipatedCount(m.id);
@@ -4183,13 +4114,6 @@ function AdminHyphaeRow({ m, last, isRobin, currentMemberId, onToast }) {
       SporeEconomy.startContrib(m.id);
       onToast(`Started timer for ${m.name}`, 'success');
     }
-  }
-  function sendMsg() {
-    if (!msgBody.trim()) return;
-    SporeEconomy.sendMessage(currentMemberId || 'admin', (SporeData.MEMBERS.find(x => x.id === currentMemberId) || {}).name || 'Admin', m.id, msgBody.trim());
-    setMsgBody('');
-    setMsgOpen(false);
-    onToast(`Message sent to ${m.name}`, 'success');
   }
   async function removeProfile() {
     if (!isRobin) return;
@@ -4271,24 +4195,21 @@ function AdminHyphaeRow({ m, last, isRobin, currentMemberId, onToast }) {
                 {running ? `⏸ Stop · ${runningMin}m` : '▶ Start contribution'}
               </button>
             )}
-            <button onClick={() => setMsgOpen(o => !o)} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.16em', textTransform:'uppercase', padding:'6px 12px', borderRadius:999, background:'var(--soil-3)', border:'0.5px solid var(--rule)', color:'var(--mycelium-d)', cursor:'pointer' }}>
-              ✉ Message
-            </button>
+            {/* Real DMs (dm/dm.jsx). The old inline composer wrote to
+                localStorage in the ADMIN's browser, so it never arrived. */}
+            {m.cloudId && !isMe && (
+              <button onClick={() => window.dispatchEvent(new CustomEvent('spore:dm-open', { detail: { profileId: m.cloudId } }))} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.16em', textTransform:'uppercase', padding:'6px 12px', borderRadius:999, background:'var(--soil-3)', border:'0.5px solid var(--rule)', color:'var(--mycelium-d)', cursor:'pointer' }}>
+                ✉ Message
+              </button>
+            )}
+            {/* Rank → tier (admin/keeper.jsx, supabase-rbac-tiers.sql §3b) */}
+            {PortalKeeper && m.cloudId && !m.admin && <PortalKeeper.RankSelect m={m} onToast={onToast} />}
             {isRobin && !m.admin && (
               <button onClick={removeProfile} style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.16em', textTransform:'uppercase', padding:'6px 12px', borderRadius:999, background:'rgba(225,107,107,0.08)', border:'0.5px solid rgba(225,107,107,0.4)', color:'#E16B6B', cursor:'pointer', marginLeft:'auto' }}>
                 ✕ Remove
               </button>
             )}
           </div>
-          {msgOpen && (
-            <div style={{ marginTop:10, padding:10, background:'var(--soil-3)', border:'0.5px solid var(--rule)', borderRadius:6 }}>
-              <textarea value={msgBody} onChange={e => setMsgBody(e.target.value)} rows={2} placeholder={`Message to ${m.name}…`} style={{ width:'100%', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:4, padding:'8px 10px', color:'var(--mycelium-l)', fontSize:12, lineHeight:1.4, resize:'vertical', outline:'none', fontFamily:'var(--font-sans)', boxSizing:'border-box', marginBottom:8 }} />
-              <div style={{ display:'flex', justifyContent:'flex-end', gap:6 }}>
-                <button onClick={() => { setMsgOpen(false); setMsgBody(''); }} style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', padding:'6px 12px', borderRadius:999, background:'transparent', border:'0.5px solid var(--rule)', color:'var(--mycelium-d)', cursor:'pointer' }}>Cancel</button>
-                <button onClick={sendMsg} style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', padding:'6px 12px', borderRadius:999, background:'linear-gradient(135deg, var(--spore), var(--spore-d))', border:'none', color:'var(--soil)', cursor:'pointer' }}>Send</button>
-              </div>
-            </div>
-          )}
         </div>
       )}
     </div>
@@ -4469,39 +4390,35 @@ function PyramidMark({ color, size = 48 }) {
 function CalendarPage({ economy, onToast }) {
   const now = new Date();
 
-  // ── RSVP state ─────────────────────────────────────────────
-  // localStorage first so it works without any DB change; a cloud
-  // sync via the `event_rsvps` table (see supabase-event-rsvps.sql)
-  // can layer on later without touching this UI.
-  const RSVP_KEY = 'spore_rsvps'; // { [eventId]: 'yes' | 'maybe' }
-  const [rsvps, setRsvps] = useState(() => {
+  // ── RSVPs ──────────────────────────────────────────────────
+  // public.event_rsvps through portal/rsvps.jsx, so every signed-in
+  // member sees who is coming (the table exists as of 2026-09-25).
+  // Without an email session — the legacy PIN sign-in — there is no
+  // auth uid to write under, so the RSVP can only stay on this device.
+  const R = window.PortalRsvps;
+  const rsvpRows = R ? R.useRsvps() : [];
+  const [uid, setUid] = useState(null);
+  useEffect(() => { if (R) R.myUid().then(setUid); }, []);
+  const RSVP_KEY = 'spore_rsvps'; // local fallback: { [eventId]: 'yes' | 'maybe' }
+  const [localRsvps, setLocalRsvps] = useState(() => {
     try { return JSON.parse(localStorage.getItem(RSVP_KEY) || '{}'); } catch { return {}; }
   });
-  function setRsvp(eventId, value) {
-    const next = { ...rsvps };
-    if (value) next[eventId] = value; else delete next[eventId];
-    setRsvps(next);
-    try { localStorage.setItem(RSVP_KEY, JSON.stringify(next)); } catch {}
-    // Best-effort cloud upsert. Silently no-ops if the table doesn't
-    // exist yet — see supabase-event-rsvps.sql.
-    (async () => {
-      try {
-        if (!window.SBauth || !window.SBclient) return;
-        const u = await window.SBauth.getUser();
-        if (!u) return;
-        if (value) {
-          await window.SBclient.from('event_rsvps').upsert({
-            event_id: eventId, auth_user_id: u.id, status: value, updated_at: new Date().toISOString(),
-          }, { onConflict: 'event_id,auth_user_id' });
-        } else {
-          await window.SBclient.from('event_rsvps')
-            .delete()
-            .eq('event_id', eventId)
-            .eq('auth_user_id', u.id);
-        }
-      } catch (_) { /* table may not exist yet */ }
-    })();
-    onToast(value === 'yes' ? '✦ I\'m coming logged' : value === 'maybe' ? '◇ Maybe logged' : 'RSVP cleared', 'success');
+  const rsvps = {};
+  if (uid) rsvpRows.forEach(r => { if (r.auth_user_id === uid) rsvps[r.event_id] = r.status; });
+  else Object.assign(rsvps, localRsvps);
+
+  async function setRsvp(eventId, value) {
+    if (uid && R) {
+      const res = await R.setRsvp(eventId, value);
+      if (!res.ok) { onToast('Could not save your RSVP — try again'); return; }
+    } else {
+      const next = { ...localRsvps };
+      if (value) next[eventId] = value; else delete next[eventId];
+      setLocalRsvps(next);
+      try { localStorage.setItem(RSVP_KEY, JSON.stringify(next)); } catch {}
+      if (value) { onToast('Saved on this device — sign in with your email to appear on the guest list'); return; }
+    }
+    onToast(value === 'yes' ? '✦ You\'re on the guest list' : value === 'maybe' ? '◇ Marked as maybe' : 'RSVP cleared', 'success');
   }
 
   function countdown(dateStr) {
@@ -4560,10 +4477,15 @@ function CalendarPage({ economy, onToast }) {
         {upcoming.map((ev, idx) => {
           const freqColor = FREQ_COLORS[ev.freq] || '#C48838';
           const cd = countdown(ev.date);
-          const isPast = new Date(ev.date) < now;
+          // A cancelled event reads as past: no RSVP, no volunteering.
+          const isPast = new Date(ev.date) < now || !!ev.cancelled;
+          const going  = R ? R.attendeesFor(rsvpRows, ev.id, 'yes')   : [];
+          const maybes = R ? R.attendeesFor(rsvpRows, ev.id, 'maybe') : [];
+          const guests = going.concat(maybes).sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
+          const fill   = ev.capacity ? Math.min(100, Math.round((going.length / ev.capacity) * 100)) : 0;
 
           return (
-            <div key={ev.id} className="cal-card" style={{ borderColor: freqColor + '44' }}>
+            <div key={ev.id} className={'cal-card' + (ev.cancelled ? ' is-cancelled' : '')} style={{ borderColor: freqColor + '44' }}>
               {/* Top row: geom + freq + countdown */}
               <div className="cal-card-top" style={{ background:`linear-gradient(135deg, ${freqColor}0D, transparent 70%)` }}>
                 <PyramidMark color={freqColor} size={36} />
@@ -4573,12 +4495,13 @@ function CalendarPage({ economy, onToast }) {
                 </div>
                 <div className="cal-countdown-wrap">
                   <span className="cal-countdown-val" style={{ color: isPast ? 'var(--mycelium-d)' : 'var(--mycelium-l)' }}>{cd}</span>
-                  <span className="cal-countdown-lbl">{isPast ? 'passed' : 'away'}</span>
+                  <span className="cal-countdown-lbl">{ev.cancelled ? 'cancelled' : isPast ? 'passed' : 'away'}</span>
                 </div>
               </div>
 
               {/* Body */}
               <div className="cal-card-body">
+                {ev.cancelled ? <div className="cal-cancelled">Cancelled</div> : null}
                 <div className="cal-date-row">{fmtDate(ev.date, ev.time)}</div>
                 <div className="cal-title" style={{ color: isPast ? 'var(--mycelium-d)' : 'var(--mycelium-l)' }}>{ev.title}</div>
                 <div className="cal-subtitle">{ev.subtitle}</div>
@@ -4607,11 +4530,12 @@ function CalendarPage({ economy, onToast }) {
                   </a>
                 )}
 
-                {/* Capacity */}
+                {/* Capacity — filled by real "I'm coming" RSVPs. It was a
+                    hardcoded 28% on every card until 2026-09-25. */}
                 <div className="cal-capacity-row">
-                  <div className="cal-capacity-lbl">Capacity · {ev.capacity}</div>
+                  <div className="cal-capacity-lbl">Capacity · {ev.capacity}{going.length ? ` · ${going.length} coming` : ''}</div>
                   <div className="cal-cap-bar">
-                    <div className="cal-cap-fill" style={{ width:'28%', background: freqColor, opacity:0.7 }} />
+                    <div className="cal-cap-fill" style={{ width: fill + '%', background: freqColor, opacity:0.7 }} />
                   </div>
                 </div>
 
@@ -4630,13 +4554,32 @@ function CalendarPage({ economy, onToast }) {
                     >
                       {rsvps[ev.id] === 'maybe' ? '◇ Maybe' : '◇ Maybe'}
                     </button>
-                    {rsvps[ev.id] && (
-                      <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', color:'var(--mycelium-d)', marginLeft:'auto' }}>
-                        RSVP saved · syncs when the table lands
-                      </span>
-                    )}
                   </div>
                 )}
+
+                {/* The guest list — every member can see who is coming. */}
+                {guests.length > 0 ? (
+                  <div className="cal-attend">
+                    <div className="cal-attend-head">
+                      {ev.cancelled ? 'Who was coming' : isPast ? 'Who came' : 'Who’s coming'} · {going.length}{maybes.length ? ` · ${maybes.length} maybe` : ''}
+                    </div>
+                    <ul className="cal-attend-log">
+                      {guests.slice(0, 8).map(a => (
+                        <li key={a.uid}>
+                          {a.avatar
+                            ? <img className="db-avatar" src={a.avatar} alt="" loading="lazy" />
+                            : <span className="db-avatar" aria-hidden="true">{a.name[0]}</span>}
+                          <span className="cal-attend-name">{a.name}</span>
+                          <span className={a.status === 'maybe' ? 'cal-attend-maybe' : ''}>{a.status === 'yes' ? 'is coming' : 'might come'}</span>
+                          <span className="cal-attend-when">{R.ago(a.at)}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    {guests.length > 8 && <div className="cal-attend-more">+ {guests.length - 8} more</div>}
+                  </div>
+                ) : !isPast ? (
+                  <div className="cal-attend-empty">No one has said they&rsquo;re coming yet.</div>
+                ) : null}
 
                 {/* Volunteer contributions */}
                 {!isPast && (
@@ -4662,6 +4605,9 @@ function CalendarPage({ economy, onToast }) {
         })}
       </div>
 
+      {/* Experiences & labs — its own tab (Fruiting) until 2026-09-25 */}
+      <ExperiencesPage economy={economy} onToast={onToast} embedded />
+
       {/* Sacred footer */}
       <div className="cal-footer">
         <div className="cal-footer-glyph">◇ △ ◇</div>
@@ -4681,7 +4627,7 @@ function EarnSheet({ open, onClose, economy, onToast }) {
   const now = new Date();
 
   const upcoming = SporeData.EVENTS
-    .filter(ev => new Date(ev.date) > now)
+    .filter(ev => new Date(ev.date) > now && !ev.cancelled)
     .sort((a, b) => new Date(a.date) - new Date(b.date));
 
   function daysUntil(dateStr) {
@@ -4768,40 +4714,8 @@ function SporeTweaks({ tweaks, setTweak }) {
 
 /* ── Quick nav sidebar ────────────────────────────────────── */
 
-function QuickNav({ tab, onTab, currentMember }) {
-  // Kept 1:1 in sync with TopBar tabs so the mobile sidebar and the
-  // dropdown never diverge. If you add/remove/rename a tab in TopBar,
-  // do the same here.
-  const isAdmin = faIsAdmin(currentMember);
-  const items = [
-    { icon:'◉', label:'Network',        id:'network'  },
-    { icon:'△', label:'Calendar',       id:'calendar' },
-    { icon:'🌿', label:'Members Shop',   id:'shop'     },
-    { icon:'✦', label:'Experiences',    id:'exp'      },
-    { icon:'◈', label:'Members',        id:'members'  },
-    { icon:'⚗', label:'Alchemy Academy', href:'/community/academy/', ext:true },
-    ...(isAdmin ? [{ icon:'⬡', label:'Admin', id:'admin' }] : []),
-  ];
-  return (
-    <div className="quick-nav">
-      {items.map((it) => (
-        <React.Fragment key={it.label}>
-          {it.ext ? (
-            <a href={it.href} target="_blank" className="qn-item" rel="noopener noreferrer">
-              <span className="qn-icon">{it.icon}</span>
-              <span className="qn-label">{it.label}</span>
-            </a>
-          ) : (
-            <button className={`qn-item ${tab === it.id ? 'active' : ''}`} onClick={() => onTab(it.id)}>
-              <span className="qn-icon">{it.icon}</span>
-              <span className="qn-label">{it.label}</span>
-            </button>
-          )}
-        </React.Fragment>
-      ))}
-    </div>
-  );
-}
+// QuickNav, the right-hand icon sidebar, was removed 2026-09-25 along
+// with the tab row: the fairy ring is the one navigation now.
 
 /* ── MYCO AI Agent ───────────────────────────────────────────
    Moved to /community/myco/ (see myco/README.md). This shim
@@ -4823,18 +4737,43 @@ const AdminKanban = (typeof window !== 'undefined' && window.AdminKanban)
   ? window.AdminKanban
   : function AdminKanbanMissing() { return null; };
 
-/* ── The fairy ring ──────────────────────────────────────────
-   portal/fairy-ring.jsx sets window.FairyRing and is loaded BEFORE
-   this file in /community/index.html. Same defensive shim as above:
-   if it failed to load, the Network tab renders as it always did
-   rather than taking the portal down.
-
-   PHASE 1 — the ring is ADDITIVE. The tab row and QuickNav are still
-   here and still work. Consolidating navigation is Phase 3, and doing
-   it now would mean shipping a half-migrated nav for a week. */
+/* ── The fairy ring, the Dashboard, DMs ──────────────────────
+   portal/fairy-ring.jsx, portal/dashboard.jsx and dm/dm.jsx set these
+   globals and load BEFORE this file in /community/index.html. Same
+   defensive shims as above. The ring is the portal's only navigation
+   since 2026-09-25, so if it fails to load App falls back to a plain
+   row of section buttons (SectionFallbackNav) rather than stranding
+   the member on one page. */
 const FairyRing = (typeof window !== 'undefined' && window.FairyRing)
   ? window.FairyRing
-  : function FairyRingMissing() { return null; };
+  : null;
+const PortalDashboard = (typeof window !== 'undefined' && window.PortalDashboard)
+  ? window.PortalDashboard
+  : function PortalDashboardMissing() { return null; };
+const DMCenter = (typeof window !== 'undefined' && window.SporeDM && window.SporeDM.DMCenter)
+  ? window.SporeDM.DMCenter
+  : function DMCenterMissing() { return null; };
+// admin/keeper.jsx — keeper tools; null if it failed to load, and every
+// use below is guarded, so the Admin page still renders without them.
+const PortalKeeper = (typeof window !== 'undefined' && window.PortalKeeper) || null;
+
+function SectionFallbackNav({ tab, onTab, isAdmin }) {
+  const PS = window.PortalSections;
+  const items = PS
+    ? [PS.ORGANISM, ...PS.visibleFor(isAdmin ? 'admin' : 'member').ring]
+    : [{ id:'home', label:'Dashboard' }, { id:'network', label:'Network' }, { id:'calendar', label:'Calendar' },
+       { id:'shop', label:'Members shop' }, { id:'members', label:'Hyphae' }];
+  return (
+    <div className="tabs" style={{ padding:'8px 12px' }}>
+      {items.map(s => (
+        <button key={s.id} className={`tab ${tab === s.id ? 'on' : ''}`}
+          onClick={() => (s.external ? window.open(s.href, '_blank', 'noopener') : onTab(s.id))}>
+          <span className="tab-label">{s.label}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
 
 // The old inline MycoAgent (~200 lines) lived here. Its
 // replacement is now:
@@ -4954,7 +4893,16 @@ function App() {
       return { id: cached.id, name: cached.name, admin: !!cached.admin || forceAdmin, restrictions: cached.restrictions || [], avatar: cached.avatar || null, rep: 0, node: 'berlin' };
     } catch { return null; }
   });
-  const [tab,       setTab]      = useState('network');
+  // The open section lives in the URL hash (#calendar) so Back works, a
+  // link can point at a section, and a reload stays put. Only real
+  // section ids count — a Supabase auth fragment (#access_token=…) or
+  // anything else lands on 'home', the full ring with the dashboard.
+  const tabFromHash = () => {
+    const PS = window.PortalSections;
+    const h = (window.location.hash || '').replace(/^#/, '');
+    return (PS && PS.resolve(h)) || 'home';
+  };
+  const [tab,       setTab]      = useState(tabFromHash);
   const [earnOpen,  setEarnOpen] = useState(false);
   const [toast,     setToast]    = useState({ msg:'', kind:'' });
   const [tweaks,    setTweak]    = useTweaks(TWEAK_DEFAULTS);
@@ -4965,7 +4913,12 @@ function App() {
   const [identity,  setIdentity] = useState(typeof window !== 'undefined' ? window.FA_IDENTITY : null);
 
   const economy = useEconomy(currentMember ? currentMember.id : '__guest__');
-  const tier    = SporeData.reputationTier(economy.state.reputation);
+  // Rank comes from the member's cloud profile (profiles.rank: Palawan ·
+  // Patron · Facilitator · Alchemist · Founder), which only keepers can
+  // change — never from the localStorage economy, which anyone can edit
+  // from the console (COMMUNITY-AUDIT B2).
+  const memberRank = (currentMember && currentMember.rank) || 'palawan';
+  const tier       = SporeData.rankOf(currentMember);
   const onToast = (msg, kind) => setToast({ msg, kind });
 
   // Resolve who the server says we are, once on mount and again on every
@@ -5001,15 +4954,62 @@ function App() {
     return () => window.removeEventListener('spore:toast', onBridge);
   }, []);
 
+  // Keep the hash and the tab in step, both ways. Signed out, the
+  // welcome page owns the hash (#manifesto, #network anchors), so the
+  // tab is not written back to it then.
+  useEffect(() => {
+    if (!currentMember) return;
+    const want = tab === 'home' ? '' : '#' + tab;
+    if ((window.location.hash || '') !== want) {
+      window.history.pushState(null, '', window.location.pathname + window.location.search + want);
+    }
+  }, [tab, currentMember]);
+  useEffect(() => {
+    const onNav = () => setTab(tabFromHash());
+    window.addEventListener('popstate', onNav);
+    window.addEventListener('hashchange', onNav);
+    return () => {
+      window.removeEventListener('popstate', onNav);
+      window.removeEventListener('hashchange', onNav);
+    };
+  }, []);
+
+  // Badges on the ring: unread DMs on Hyphae, keeper alerts on Root.
+  // Hooks, so they sit above App's early returns.
+  const [dmUnread, setDmUnread] = useState(0);
+  useEffect(() => {
+    const onUnread = (e) => setDmUnread((e.detail && e.detail.count) || 0);
+    window.addEventListener('spore:dm-unread', onUnread);
+    return () => window.removeEventListener('spore:dm-unread', onUnread);
+  }, []);
+  const keeperAlerts = PortalKeeper ? PortalKeeper.useKeeperAlerts(faIsAdmin(currentMember)) : null;
+
+  // Events come from public.events once signed in (portal/events.jsx),
+  // swapped into SporeData.EVENTS in place — rerender when they land.
+  useEffect(() => {
+    const onEvents = () => setCloudVer(v => v + 1);
+    window.addEventListener('spore:events-changed', onEvents);
+    return () => window.removeEventListener('spore:events-changed', onEvents);
+  }, []);
+  useEffect(() => {
+    if (currentMember && window.PortalEvents) window.PortalEvents.load();
+  }, [!!currentMember]);
+
+  // The ring calls this. A new section starts at its top.
+  function navigate(id) {
+    setTab(id);
+    try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (_) { window.scrollTo(0, 0); }
+  }
+
   function handleLogin(member) {
     setCurrentMember(member);
-    setTab('network');
+    setTab('home');
     try { localStorage.setItem('spore_active_member', member.id); } catch {}
   }
 
   async function handleLogout() {
     setCurrentMember(null);
-    setTab('network');
+    setTab('home');
     try {
       localStorage.removeItem('spore_active_member');
       localStorage.removeItem('fungai_profile');
@@ -5116,24 +5116,20 @@ function App() {
           if (adminIdFromEmail) match.admin = true;
           if (Array.isArray(mine.restrictions)) match.restrictions = mine.restrictions;
           if (mine.avatar_url) match.avatar = mine.avatar_url;
-          // Make the signed-in user's auth email visible to admins. We write
-          // it to profile.contact only if the user hasn't set their own
-          // contact field — never overwrite a custom value they typed.
-          // Result: as members sign in over time, the admin panel's email
-          // column populates itself.
-          if (user?.email && !mine.contact && window.SBprofiles?.upsert) {
-            try { await window.SBprofiles.upsert({ contact: user.email }); } catch {}
-            match.contact = user.email;
-          } else if (mine.contact) {
-            match.contact = mine.contact;
-          }
+          // This used to write the member's login email into
+          // profile.contact whenever they had not typed one — and profiles
+          // is readable by anyone with the public anon key, so it published
+          // members' emails to the whole internet (audit, 2026-09-25).
+          // Keepers get emails from the get_member_emails RPC instead
+          // (EmailRefreshButton); the member's own email stays local.
+          if (user?.email) match.email = user.email;
+          if (mine.contact) match.contact = mine.contact;
           setCurrentMember(match);
-          // Only land on Members for a FRESH sign-in (tab still on the
-          // unauthenticated default). Supabase fires onAuthChange on every
-          // token refresh too — without this guard, navigating to Admin
-          // (or any other tab) gets reset back to Members the moment the
-          // session JWT refreshes in the background.
-          setTab(prev => prev === 'network' ? 'members' : prev);
+          // A fresh sign-in lands on the home view — the full ring with
+          // the dashboard — and the tab is deliberately NOT touched here:
+          // Supabase fires onAuthChange on every token refresh too, and
+          // resetting it would yank the member out of whatever section
+          // they are in the moment the JWT refreshes in the background.
           // Cross-page gate uses these keys (see /spore-gate.js).
           try { localStorage.setItem('spore_active_member', match.id); } catch {}
           try { localStorage.setItem('spore_active_member_full', JSON.stringify({
@@ -5197,7 +5193,6 @@ function App() {
             match.admin = true;
             match.contact = user.email;
             setCurrentMember(match);
-            setTab(prev => prev === 'network' ? 'members' : prev);
             try { localStorage.setItem('spore_active_member', match.id); } catch {}
             try { localStorage.setItem('spore_active_member_full', JSON.stringify({
               id: match.id, name: match.name, admin: true,
@@ -5337,36 +5332,51 @@ function App() {
     </>;
   }
 
+  // The admin page needs both checks: the ring's own gate, and the
+  // member flag the page itself has always required. A section behind a
+  // rank gate (portal/sections.jsx `minRank`) falls back to home too, so
+  // a typed #hash cannot walk past the ring's lock.
+  const isAdmin = faIsAdmin(currentMember);
+  const PS = window.PortalSections;
+  const rankBlocked = !isAdmin && PS && !PS.allows(PS.minRankForTab(tab), memberRank);
+  const view = (tab === 'admin' && !(isAdmin && currentMember.admin)) || rankBlocked ? 'home' : tab;
+
   return (
     <div className="app">
       {claimUI}
       <TopBar
         state={economy.state}
         tier={tier}
-        tab={tab}
-        onTab={setTab}
         onWallet={() => setEarnOpen(true)}
         currentMember={currentMember}
         onLogout={handleLogout}
       />
-      <SystemStats state={economy.state} tier={tier} flowRate={tweaks.flowRate} />
 
-      {tab === 'network'  && <NetworkPage economy={economy} onToast={onToast} flowRate={tweaks.flowRate}
-                                          currentMember={currentMember} onOpenSection={setTab} />}
-      {tab === 'calendar' && <CalendarPage economy={economy} onToast={onToast} />}
-      {tab === 'shop'     && <ApothecaryPage economy={economy} onToast={onToast} />}
-      {tab === 'exp'      && <ExperiencesPage economy={economy} onToast={onToast} />}
-      {tab === 'members'  && <MembersPage currentMember={currentMember} economy={economy} />}
-      {tab === 'admin'    && currentMember && currentMember.admin && <AdminPage onToast={onToast} currentMember={currentMember} />}
+      {/* The navigation. Full size on home; inside a section the same
+          ring shrinks into this spot, where the tab row and the
+          HEALTH / FLOW / ACTIVITY strip used to be. */}
+      {FairyRing ? (
+        <FairyRing role={isAdmin ? 'admin' : 'member'} active={view} compact={view !== 'home'} onNavigate={navigate}
+                   rank={memberRank} badges={{ admin: keeperAlerts ? keeperAlerts.count : 0, members: dmUnread }} />
+      ) : (
+        <SectionFallbackNav tab={view} onTab={navigate} isAdmin={isAdmin} />
+      )}
+
+      {view === 'home'     && <PortalDashboard currentMember={currentMember} isAdmin={isAdmin} onNavigate={navigate} />}
+      {view === 'network'  && <NetworkPage economy={economy} onToast={onToast} flowRate={tweaks.flowRate} />}
+      {view === 'calendar' && <CalendarPage economy={economy} onToast={onToast} />}
+      {view === 'shop'     && <ApothecaryPage economy={economy} onToast={onToast} />}
+      {view === 'members'  && <MembersPage currentMember={currentMember} economy={economy} />}
+      {view === 'admin'    && <AdminPage onToast={onToast} currentMember={currentMember} />}
 
       <div className="app-footer">
         <ProceduralMark size={32} />
         <div className="app-footer-fine">tend · flow · unlock</div>
       </div>
 
-      <QuickNav tab={tab} onTab={setTab} currentMember={currentMember} />
       <EarnSheet open={earnOpen} onClose={() => setEarnOpen(false)} economy={economy} onToast={onToast} />
       <Toast message={toast.msg} kind={toast.kind} onClose={() => setToast({ msg:'', kind:'' })} />
+      <DMCenter currentMember={currentMember} />
       <MycoAgent currentMember={currentMember} />
       <SporeTweaks tweaks={tweaks} setTweak={setTweak} />
     </div>

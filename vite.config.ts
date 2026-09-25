@@ -81,6 +81,15 @@ const serveStaticPages = () => ({
       }
       // Any /foo or /foo/ that has a public/foo/index.html
       if (STATIC_PAGES.includes(pathOnly)) {
+        // /foo → /foo/, as Netlify does. Served without the slash, the
+        // page's relative scripts (spore/app-living.js, vendor/react…)
+        // resolve against / and 404, and /community renders black.
+        const [urlPath, query] = (req.url || '').split('?');
+        if (!urlPath.endsWith('/')) {
+          res.statusCode = 301;
+          res.setHeader('Location', urlPath + '/' + (query ? '?' + query : ''));
+          return res.end();
+        }
         return sendFile(res, 'public' + pathOnly + '/index.html', next);
       }
       next();

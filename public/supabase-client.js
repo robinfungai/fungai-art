@@ -136,11 +136,22 @@
       };
 
       // ── Profile helpers ─────────────────────────────────────────
+      // What a visitor who is NOT signed in may read of a profile.
+      // supabase-profiles-privacy.sql grants the anon role exactly these
+      // columns — never email, contact, auth_user_id, is_admin, balance or
+      // the DM key — so a signed-out `select('*')` would now be refused.
+      // Keep this list and that GRANT in step.
+      const PUBLIC_PROFILE_COLS = 'id, character_name, avatar_url, bio, role, location, pronouns, '
+        + 'specialties, founding, rep, focus, node, joined, updated, favorite_plant';
       window.SBprofiles = {
         async fetchAll() {
+          // Signed in: members see each other's full card (contact line
+          // included). Signed out: only the public columns.
+          let signedIn = false;
+          try { signedIn = !!(await window.SBauth.getSession()); } catch (_) {}
           const { data, error } = await window.SBclient
             .from('profiles')
-            .select('*')
+            .select(signedIn ? '*' : PUBLIC_PROFILE_COLS)
             .order('founding', { ascending: false })
             .order('rep', { ascending: false });
           if (error) { console.warn('[Supabase] fetchAll error:', error.message); return []; }
@@ -160,11 +171,15 @@
         async upsert(profile) {
           const user = await window.SBauth.getUser();
           if (!user) throw new Error('Must be signed in to save profile');
+          // No `email` in the row: profiles is readable with the public
+          // anon key, so an email written here was an email published
+          // (audit, 2026-09-25). The login email lives in auth.users;
+          // netlify/functions/me.mjs already falls back to it.
           const payload = {
             ...profile,
             auth_user_id: user.id,
-            email: profile.email || user.email,
           };
+          delete payload.email;
           // 1. If this user already has a profile (matched by auth_user_id), UPDATE.
           const existing = await window.SBprofiles.fetchMine();
           if (existing) {
@@ -224,10 +239,12 @@
           delete payload.id;
           delete payload.cloudId;
           delete payload.authUserId;
+          // Read back only public columns: this runs signed-out for invite-
+          // code signups, and anon may not SELECT the private ones.
           const { data, error } = await window.SBclient
             .from('profiles')
             .insert(payload)
-            .select()
+            .select(PUBLIC_PROFILE_COLS)
             .maybeSingle();
           if (error) {
             // Translate the most likely failure: RLS policy missing
@@ -325,7 +342,7 @@
           if (!user) throw new Error('You need to be signed in first.');
           const { data, error } = await window.SBclient
             .from('profiles')
-            .update({ auth_user_id: user.id, email: user.email })
+            .update({ auth_user_id: user.id })   // no email: see PUBLIC_PROFILE_COLS
             .eq('id', profileId)
             .is('auth_user_id', null)
             .select()

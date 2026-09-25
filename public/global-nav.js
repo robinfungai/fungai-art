@@ -88,6 +88,7 @@
   @font-face { font-family:'TAN-PARADISO'; src:url('/fonts/TAN-PARADISO.ttf') format('truetype'); font-display:swap; }
   @font-face { font-family:'TAN-PEARL';    src:url('/fonts/fonnts.com-tan-pearl.otf') format('opentype'); font-display:swap; }
   @font-face { font-family:'Bayer';        src:url('/fonts/Bayer-TypeArchiType.otf') format('opentype'); font-display:swap; }
+  @font-face { font-family:'Kiona';        src:url('/fonts/Kiona-Regular.ttf') format('truetype'); font-display:swap; }
 
   #fa-member-banner, #fa-member-banner *, #fa-member-banner *::before, #fa-member-banner *::after {
     box-sizing: border-box;
@@ -285,44 +286,30 @@
     transition: transform 0.28s ease;
   }
   #fa-sub-nav-drawer.fa-open { transform: translateX(0); }
-  /* In-drawer close button — always visible when drawer is open so
-     the user doesn't have to remember to tap the logo again. */
-  #fa-sub-nav-drawer-close {
-    position: absolute;
-    top: 18px; right: 20px;
-    width: 40px; height: 40px;
-    background: transparent;
-    border: 1px solid rgba(232,177,75,0.5);
-    border-radius: 50%;
-    color: #E8B14B;
-    font-size: 20px;
-    font-family: 'Bayer', 'DM Sans', system-ui, sans-serif;
-    font-weight: 300;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s, border-color 0.2s;
-    -webkit-tap-highlight-color: transparent;
-  }
-  #fa-sub-nav-drawer-close:hover { background: rgba(232,177,75,0.15); border-color: #E8B14B; }
+  /* One close control: the menu button itself turns into the X. A
+     second X inside the drawer sat right beside it (2026-09-25). */
   #fa-sub-nav-drawer .fa-sub-nav-section {
     font-family: 'Bayer', 'DM Sans', sans-serif;
     font-size: 9px;
-    letter-spacing: 0.28em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: #4D869B;
-    margin: 22px 0 10px;
+    color: #E8B14B;
+    margin: 24px 0 8px;
   }
   #fa-sub-nav-drawer .fa-sub-nav-section:first-child { margin-top: 0; }
+  /* Kiona, as the home page's own menu — declared above so it loads on
+     every page. It was Cormorant Garamond, which most pages never load,
+     so the drawer fell back to Georgia and looked off. */
   #fa-sub-nav-drawer a {
     display: block;
     padding: 12px 4px;
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 18px;
+    font-family: 'Kiona', 'DM Sans', system-ui, sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     color: #EDE5D8;
     text-decoration: none;
-    border-bottom: 0.5px solid rgba(136,186,200,0.08);
+    border-bottom: 0.5px solid rgba(196,134,46,0.1);
     transition: color 0.15s;
   }
   #fa-sub-nav-drawer a:hover,
@@ -634,28 +621,24 @@
     drawer.id = 'fa-sub-nav-drawer';
     drawer.setAttribute('aria-label', 'Site navigation');
     drawer.innerHTML = `
-      <button id="fa-sub-nav-drawer-close" aria-label="Close menu">✕</button>
       <div class="fa-sub-nav-section">Explore</div>
       <a href="/">Home</a>
-      <a href="/explorer">Explorer <span class="fa-tag">· chapters</span></a>
       <a href="/shop">Shop <span class="fa-tag">· apothecary</span></a>
       <a href="/dinner-experience">Dinner Experience <span class="fa-tag">· ceremony</span></a>
       <div class="fa-sub-nav-section">Intelligence</div>
       <a href="/foraging">Foraging Map <span class="fa-tag">· ecology</span></a>
-      <a href="/herbal-engine-2/">Herbal Engine <span class="fa-tag">· tailored elixir</span></a>
-      <a href="/mixology">Mixology <span class="fa-tag">· 212 herbs</span></a>
-      <a href="/extraction">Extraction <span class="fa-tag">· alchemy</span></a>
+      <a href="/find-your-formula">Tailored Elixir <span class="fa-tag">· find your formula</span></a>
+      <a href="/mixology">Mixology <span class="fa-tag">· synergistic</span></a>
       <div class="fa-sub-nav-section">Community</div>
-      <a href="/community">Portal</a>
+      <a href="/community">Spore Portal</a>
       <a href="/community/academy/">Alchemy Academy</a>
-      <a href="/members">Membership</a>
+      <a href="/members">$MYCEL Membership</a>
       <a href="/members#patronage">Patronage</a>
       <div class="fa-sub-nav-section">Sub-lines</div>
       <a href="/moder-jord">Moder Jord <span class="fa-tag">· nordic body-craft</span></a>
       <a href="/tymetonics">Tyme Tonics <span class="fa-tag">· living drinks</span></a>
-      <div class="fa-sub-nav-section">Stay in touch</div>
-      <a href="/#newsletter">Newsletter <span class="fa-tag">· monthly field notes</span></a>
-      <a href="mailto:robin@fungai.art">robin@fungai.art</a>
+      <div class="fa-sub-nav-section">Contact</div>
+      <a href="/#invitation">Write to us <span class="fa-tag">· an invitation</span></a>
     `;
 
     document.body.appendChild(overlay);
@@ -690,9 +673,6 @@
       if (drawer.classList.contains('fa-open')) close(); else open();
     });
     overlay.addEventListener('click', close);
-    // In-drawer close button
-    const closeBtn = drawer.querySelector('#fa-sub-nav-drawer-close');
-    if (closeBtn) closeBtn.addEventListener('click', close);
     // ESC to close
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && drawer.classList.contains('fa-open')) close();

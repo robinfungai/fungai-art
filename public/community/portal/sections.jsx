@@ -1,115 +1,134 @@
 /* ────────────────────────────────────────────────────────────────
    portal/sections.jsx — portalSections, the one config
    ────────────────────────────────────────────────────────────────
-   Every display label in the portal comes from here: the fairy ring,
-   the section nav, and the page headings. Renaming happens once.
-
-   Before this file the labels lived in TWO hand-synced arrays —
-   TopBar and QuickNav in app-living.jsx — with QuickNav carrying a
-   comment asking whoever edits one to remember the other. That is the
-   duplication this removes.
+   The fairy ring IS the portal's navigation (2026-09-25). Every label
+   the ring shows, full size on the home view or shrunk into the header
+   inside a section, comes from here. Renaming happens once.
 
    ⚠ `id` IS NOT A LABEL. Ids are load-bearing: app-living.jsx
-   switches on them, they are written to localStorage, and QuickNav
-   and TopBar both dispatch on them. Rename `label` freely; never
-   touch `id`.
+   switches on them and they appear in the URL hash (#calendar).
+   Rename `label` freely; never touch `id`. A retired id goes in
+   LEGACY so an old bookmark still lands somewhere sensible.
 
-   MYTHIC SKIN, RIGOROUS DATA
-   Nothing here carries a number. Metrics arrive in Phase 2 from real
-   sources, and a section whose metric has no source shows none —
-   `metric: null` means the element hides, not that it shows a zero.
+   THE RING, per Robin 2026-09-25
+     centre     Dashboard — Fungai Art as a whole; the portal home
+     Network    the globe, and what each node is
+     Calendar   the Mycelium Calendar, Experiences merged in, and who is coming
+     Apothecary a choice: Members shop, or the Official shop
+     Hyphae     the members, and DMs to any of them
+     Academy    its own page, opened in a new tab
+     Root       keepers only
 
-   HEALTH, ACTIVITY, FLOW and Pulse are deliberately absent. The
-   economy that would drive them is localStorage-only and forgeable
-   from the console (docs/COMMUNITY-AUDIT.md §5), so per Robin's
-   decision on 2026-09-25 they are hidden rather than faked.
+   Retired: Fruiting (merged into Calendar), Larder (now the Members
+   shop door of Apothecary), Almanac and Alchemy (renamed). HEALTH,
+   ACTIVITY, FLOW and Pulse stay gone — nothing real behind them.
    ──────────────────────────────────────────────────────────────── */
 (function () {
 
   // The centre of the ring. Not a ring node — the ring turns around it.
+  // Stepping in means going home: the full ring with the dashboard under it.
   const ORGANISM = {
-    id:       'network',            // unchanged: app-living switches on this
-    label:    'The Organism',
+    id:       'home',
+    label:    'Dashboard',
     subtitle: 'the whole body at once',
-    line:     'One body, many threads. Everything here is one living thing.',
-    metric:   null,                 // no honest health or activity signal yet
+    line:     'Fungai Art as one living thing — the numbers, the season, what is growing.',
+    icon:     'dashboard',
   };
 
   // Ring nodes, in ring order. `related` drives the hyphal threads.
   const RING = [
     {
-      id:       'members',
-      label:    'Hyphae',
-      subtitle: "who's tending",
-      line:     'Each hypha brings a different thread to the mycelium.',
-      related:  ['academy', 'exp'],
-      metric:   { source: 'profiles', label: 'tending' },
-      icon:     'hyphae',
-    },
-    {
-      id:       'exp',
-      label:    'Fruiting',
-      subtitle: 'ceremonies, dinners, activations',
-      line:     'What the mycelium pushes up when the season turns.',
-      related:  ['calendar', 'shop', 'members'],
-      // The one ring node with nothing real behind it: SporeData.EXPERIENCES
-      // is a constant and its unlocks live in localStorage. Shows no number.
-      metric:   null,
-      icon:     'fruiting',
+      id:       'network',
+      label:    'Network',
+      subtitle: 'the globe and its nodes',
+      line:     'Every place the mycelium has reached. Tap a node on the globe to meet it.',
+      related:  ['members', 'calendar'],
+      icon:     'network',
     },
     {
       id:       'calendar',
-      label:    'Almanac',
-      subtitle: 'seasons, harvests, gatherings',
-      line:     'The year read as a body — what wakes, what fruits, what rests.',
-      related:  ['exp', 'shop'],
-      metric:   { source: 'event_rsvps', label: 'upcoming' },
-      icon:     'almanac',
+      label:    'Calendar',
+      subtitle: 'gatherings, dinners, experiences',
+      line:     'The Mycelium Calendar — every gathering and experience, and who is coming.',
+      related:  ['network', 'shop', 'members'],
+      icon:     'calendar',
     },
     {
       id:       'shop',
-      label:    'Larder',
-      subtitle: 'the members shop',
-      line:     'What the bench has made, kept for the people who tend it.',
-      related:  ['calendar', 'academy', 'exp'],
-      metric:   { source: 'product_inventory', label: 'in stock' },
-      icon:     'larder',
+      label:    'Apothecary',
+      subtitle: 'members shop · official shop',
+      line:     'Two doors into the apothecary. Choose one.',
+      related:  ['calendar', 'academy'],
+      icon:     'apothecary',
+      // Pressing the node opens this choice instead of stepping in.
+      choices: [
+        { id: 'shop',     label: 'Members shop',  sub: 'editions kept for the network' },
+        { id: 'official', label: 'Official shop', sub: 'fungai.art/shop', href: '/shop' },
+      ],
+    },
+    {
+      id:       'members',
+      label:    'Hyphae',
+      subtitle: "who's tending",
+      line:     'Every member of the network, and a direct line to each of them.',
+      related:  ['network', 'calendar', 'academy'],
+      icon:     'hyphae',
     },
     {
       id:       'academy',
-      label:    'Alchemy',
+      label:    'Academy',
       subtitle: 'Alchemy Academy',
-      line:     'The devotional practice of meeting the plants and yourself is the alchemy.',
+      line:     'The devotional practice of meeting the plants and yourself.',
       related:  ['members', 'shop'],
-      metric:   { source: 'lab_notes', label: 'notes' },
-      icon:     'alchemy',
-      // The Academy is its own page, not a tab. `href` wins over `id`
-      // dispatch wherever a section is opened.
+      icon:     'academy',
+      // Its own page, not a tab, and it opens in a new tab.
       href:     '/community/academy/',
       external: true,
     },
   ];
 
-  // Root sits UNDER the organism, not on the ring — roots are
-  // underground. Rendered only for keepers. Hiding it is courtesy;
-  // RLS is the real gate (supabase-rbac-tiers.sql).
+  // Keepers only. Hiding it is courtesy; RLS is the real gate
+  // (supabase-rbac-tiers.sql).
   const ROOT = {
-    id:         'admin',
-    label:      'Root',
-    subtitle:   'keepers only',
-    line:       'Underground, where the keepers work.',
-    related:    ['network'],
-    metric:     { source: 'board_cards', label: 'on the board' },
-    icon:       'root',
+    id:           'admin',
+    label:        'Root',
+    subtitle:     'admin · keepers only',
+    line:         'Underground, where the keepers work.',
+    related:      [],
+    icon:         'root',
     requiresRole: 'admin',
   };
 
-  // Grower's words for time, replacing complete / in progress / pending.
-  const STATUS = {
-    pinning:  { label: 'Pinning',  hint: 'coming up' },
-    inflush:  { label: 'In flush', hint: 'open now' },
-    spored:   { label: 'Spored',   hint: 'past' },
-  };
+  // Retired ids → where they live now.
+  const LEGACY = { exp: 'calendar', dashboard: 'home' };
+
+  /* ── Rank gates (2026-09-25) ─────────────────────────────────────
+     Add `minRank: 'Patron'` to any ring node, or to an Apothecary
+     choice, to open it only from that rank up. The ladder is RANKS in
+     spore/data.jsx — Palawan · Patron · Facilitator · Alchemist ·
+     Founder — set by keepers on the Admin page (profiles.rank). Nothing
+     is gated yet. Keepers (admins) pass every gate. A locked node still
+     shows, marked with the rank that opens it.
+     The database mirrors rank as profiles.access_tier (5–9) for RLS. */
+  function rankIndex(r) {
+    const k = String(r || '').toLowerCase();
+    const ranks = (window.SporeData && window.SporeData.RANKS) || [];
+    return ranks.findIndex(x => x.id === k || x.label.toLowerCase() === k);
+  }
+  function allows(minRank, rank) {
+    if (!minRank) return true;
+    const need = rankIndex(minRank);
+    if (need === -1) return true;                 // unknown gate name: do not lock anyone out
+    return rankIndex(rank || 'palawan') >= need;
+  }
+  // The rank a tab needs — from its node, or from the choice that opens it.
+  function minRankForTab(tabId) {
+    for (const s of [ORGANISM, ...RING, ROOT]) {
+      if (s.id === tabId && s.minRank) return s.minRank;
+      for (const c of s.choices || []) if (c.id === tabId && c.minRank) return c.minRank;
+    }
+    return null;
+  }
 
   const ALL = [ORGANISM, ...RING, ROOT];
 
@@ -124,44 +143,40 @@
     return s ? s.label : String(id || '');
   }
 
-  // The ring a given viewer sees. Root is appended for keepers, and
-  // never sits in the ring array itself.
+  // Map any id — current, retired, or junk from a URL hash — to a tab
+  // the portal can render, or null.
+  function resolve(id) {
+    if (!id) return null;
+    const real = LEGACY[id] || id;
+    const s = byId(real);
+    return s && !s.external ? s.id : null;
+  }
+
+  // The ring a given viewer sees. Root joins the ring for keepers.
   function visibleFor(role) {
     const keeper = role === 'admin';
-    return { organism: ORGANISM, ring: RING, root: keeper ? ROOT : null };
+    return { organism: ORGANISM, ring: keeper ? [...RING, ROOT] : RING };
   }
 
   // Threads are declared on both ends or they are not threads. A
   // relation naming a section that does not exist is a typo, and one
-  // declared in only one direction draws a thread that appears from
-  // one node and not the other — so both are checked, here and in
-  // tests/fairy-ring-verify.cjs.
-  //
-  // ONE EXEMPTION, and it is deliberate: a role-gated section may
-  // point at an open one without the open one pointing back. Root →
-  // The Organism is the case. Declaring it symmetrically would put
-  // `admin` in the config every member downloads, and the ring would
-  // have to filter a thread pointing at a node that is not there.
-  // Root's single thread is drawn by .fr-root-thread instead, which is
-  // rendered only for keepers.
+  // declared in only one direction draws a thread from one node and not
+  // the other — so both are checked, here and in tests/fairy-ring-verify.cjs.
   function relationProblems() {
     const ids = new Set(ALL.map(s => s.id));
     const problems = [];
     for (const s of ALL) {
       for (const r of s.related || []) {
         if (!ids.has(r)) { problems.push(s.id + ' → ' + r + ' (no such section)'); continue; }
-        const other = byId(r);
-        const gated = !!s.requiresRole && !other.requiresRole;
-        if (!gated && !(other.related || []).includes(s.id)) {
-          problems.push(s.id + ' → ' + r + ' is one-way');
-        }
+        if (!(byId(r).related || []).includes(s.id)) problems.push(s.id + ' → ' + r + ' is one-way');
       }
     }
     return problems;
   }
 
   window.PortalSections = {
-    ORGANISM, RING, ROOT, ALL, STATUS,
-    byId, labelOf, visibleFor, relationProblems,
+    ORGANISM, RING, ROOT, ALL, LEGACY,
+    byId, labelOf, resolve, visibleFor, relationProblems,
+    allows, minRankForTab,
   };
 })();

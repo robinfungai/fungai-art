@@ -104,10 +104,62 @@
       }
     }
 
+    // MYCO answers in short sections (the server's RESPONSE STYLE asks for
+    // it): "## Heading" lines, "- " or "1." items, **bold**, and [K1]
+    // citations. Built as React elements — never as HTML — so nothing in
+    // a reply can inject markup. Same rules as renderRich() in
+    // academy/myco-academy.js.
+    function inline(text, key) {
+      const out = [];
+      const re = /(\*\*[^*]+\*\*|\[K\d+\])/g;
+      let last = 0, m, n = 0;
+      while ((m = re.exec(text))) {
+        if (m.index > last) out.push(text.slice(last, m.index));
+        const tok = m[0];
+        out.push(tok.startsWith('**')
+          ? <strong key={key + '.' + n++}>{tok.slice(2, -2)}</strong>
+          : <span key={key + '.' + n++} className="myco-cite">{tok}</span>);
+        last = m.index + tok.length;
+      }
+      if (last < text.length) out.push(text.slice(last));
+      return out;
+    }
+
     function fmtContent(text) {
-      return text.split('\n').map((line, i) => (
-        <React.Fragment key={i}>{line}<br/></React.Fragment>
-      ));
+      const out = [];
+      let para = [], items = null;
+      const flushPara = () => {
+        if (para.length) { out.push(<p key={'p' + out.length} className="myco-p">{inline(para.join(' '), 'p' + out.length)}</p>); para = []; }
+      };
+      const flushList = () => {
+        if (items) { out.push(<ul key={'u' + out.length} className="myco-ul">{items}</ul>); items = null; }
+      };
+      String(text || '').split('\n').forEach((raw, i) => {
+        const line = raw.trim();
+        if (!line) { flushPara(); flushList(); return; }
+        const h = line.match(/^#{1,4}\s+(.*)$/);
+        if (h) {
+          flushPara(); flushList();
+          out.push(<div key={'h' + i} className="myco-h">{h[1].replace(/\*\*/g, '')}</div>);
+          return;
+        }
+        const num = line.match(/^(\d+)[.)]\s+(.*)$/);
+        const dot = line.match(/^[-•*]\s+(.*)$/);
+        if (num || dot) {
+          flushPara();
+          (items = items || []).push(
+            <li key={'l' + i}>
+              {num ? <span className="myco-num">{num[1]}. </span> : null}
+              {inline(num ? num[2] : dot[1], 'l' + i)}
+            </li>
+          );
+          return;
+        }
+        flushList();
+        para.push(line);
+      });
+      flushPara(); flushList();
+      return out;
     }
 
     return (
@@ -117,9 +169,9 @@
             <div className="myco-head">
               <div style={{ display:'flex', alignItems:'center', gap:9 }}>
                 <div className="myco-avatar">
-                  <svg viewBox="0 0 24 24" width={16} height={16}>
-                    <polygon points="12,2 22,20 2,20" fill="none" stroke="#C48838" strokeWidth="1.5" />
-                    <circle cx="12" cy="13" r="2.5" fill="#C48838" />
+                  <svg viewBox="0 0 24 24" width={16} height={16} aria-hidden="true">
+                    <polygon points="12,2 22,20 2,20" fill="none" stroke="currentColor" strokeWidth="1.5" />
+                    <circle cx="12" cy="13" r="2.5" fill="currentColor" />
                   </svg>
                 </div>
                 <div>
@@ -140,10 +192,14 @@
                 <div className="myco-empty">
                   <div className="myco-empty-glyph">◇ △ ◇</div>
                   <div className="myco-empty-text">
-                    What shall we cultivate today, {currentMember ? currentMember.name : 'Hyphae'}?
+                    What shall we cultivate today, {currentMember ? currentMember.name.split(' ')[0] : 'Hyphae'}?
                   </div>
-                  <div className="myco-empty-note" style={{ marginTop:8, fontSize:10, opacity:0.6, letterSpacing:'0.08em' }}>
-                    Not medical or diagnostic advice. For ceremony, formulation, alchemy, community.
+                  {/* Same words as the Academy panel: it is the same MYCO. */}
+                  <div className="myco-intro">
+                    I answer from the Fungai Art knowledge base — herb monographs, extraction protocols and our own practice. I cite what I read, and I say so when a question falls outside it.
+                  </div>
+                  <div className="myco-note">
+                    Traditional preparation and research framing — not medical or diagnostic advice.
                   </div>
                   <div className="myco-chips">
                     {chips.map(c => (
@@ -158,7 +214,7 @@
                     <div className="myco-msg-avatar">M</div>
                   )}
                   <div className="myco-bubble">
-                    {fmtContent(m.content)}
+                    {m.role === 'assistant' ? fmtContent(m.content) : m.content}
                     {m.role === 'assistant' && m.sources && m.sources.length > 0 && (
                       <div className="myco-sources">
                         <div className="myco-sources-head">
@@ -218,7 +274,7 @@
                 onClick={() => send()}
                 disabled={!input.trim() || loading}
               >
-                {loading ? '…' : '→'}
+                {loading ? '…' : 'Ask'}
               </button>
             </div>
           </div>

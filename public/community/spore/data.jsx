@@ -449,6 +449,31 @@ function reputationTier(repPoints) {
   return tier;
 }
 
+// ── Ranks (Robin, 2026-09-25) ────────────────────────────────────────────
+// Everyone starts as Palawan. Patron is a paying member. Facilitator and
+// Alchemist are given, not chosen. Founder is Robin. Every rank above
+// Palawan is set by a keeper on the Admin page — a member cannot pick one,
+// and the database refuses it (supabase-rbac-tiers.sql). Admin is a flag,
+// not a rank: Robin is Founder + admin, Steph is Facilitator + admin.
+// Array order is the ladder that rank gates (portal/sections.jsx) climb.
+// The economy's REPUTATION_TIERS above are separate, and parked.
+const RANKS = [
+  { id: 'palawan',     label: 'Palawan',     color: '#8FCB44' },
+  { id: 'patron',      label: 'Patron',      color: '#E8B14B' },
+  { id: 'facilitator', label: 'Facilitator', color: '#3DC9A5' },
+  { id: 'alchemist',   label: 'Alchemist',   color: '#9D90F0' },
+  { id: 'founder',     label: 'Founder',     color: '#F5D689' },
+];
+// Persona words a member may no longer choose for themselves: they are ranks.
+const RANK_ONLY_ROLES = ['patron', 'facilitator', 'alchemist', 'founder', 'admin'];
+
+// A member's rank as { id, label, color } — the same shape reputationTier()
+// returns, so a display can swap one for the other.
+function rankOf(member) {
+  const id = String((member && member.rank) || 'palawan').toLowerCase();
+  return RANKS.find(r => r.id === id) || RANKS[0];
+}
+
 const PHASES = [
   { id:'MOCK',    name:'Mock Economy',  num:'01', items:'UI · fake balances · unlock states' },
   { id:'TESTNET', name:'Web2 Bridge',   num:'02', items:'Stripe · off-chain points · email accounts' },
@@ -462,6 +487,7 @@ const MEMBERS = [
     id: 'robin',
     name: 'Robin',
     role: 'Founder',
+    rank: 'founder',          // always (Robin, 2026-09-25)
     node: 'berlin',
     rep: 15,
     balance: 100,
@@ -477,6 +503,7 @@ const MEMBERS = [
     id: 'stephanie',
     name: 'Stephanie',
     role: 'Facilitator',
+    rank: 'facilitator',
     node: 'berlin',
     rep: 12,
     balance: 100,
@@ -662,8 +689,8 @@ async function loadProfilesFromCloud() {
         if (r.auth_user_id && !existing.auth_user_id) { cloudByName.set(key, r); return; }
         if (!r.auth_user_id && existing.auth_user_id) return;
         // both claimed or both unclaimed — keep the newer
-        const aT = Date.parse(r.updated_at || r.created_at || 0) || 0;
-        const bT = Date.parse(existing.updated_at || existing.created_at || 0) || 0;
+        const aT = Date.parse(r.updated_at || r.updated || r.created_at || r.joined || 0) || 0;
+        const bT = Date.parse(existing.updated_at || existing.updated || existing.created_at || existing.joined || 0) || 0;
         if (aT > bT) cloudByName.set(key, r);
       });
 
@@ -675,6 +702,7 @@ async function loadProfilesFromCloud() {
       usedCloudIds.add(cloud.id);
       return {
         ...m,
+        rank:     cloud.rank     || m.rank || 'palawan',
         rep:      cloud.rep      ?? m.rep,
         balance:  cloud.balance  ?? m.balance,
         focus:    cloud.focus    || m.focus,
@@ -687,7 +715,7 @@ async function loadProfilesFromCloud() {
         contact:  cloud.contact || '',
         favoritePlant: cloud.favorite_plant || '',
         restrictions:  cloud.restrictions   || [],
-        createdAt:     cloud.created_at     || null,
+        createdAt:     cloud.created_at || cloud.joined || null,   // the live table calls it `joined`
         cloudId:  cloud.id,
         authUserId: cloud.auth_user_id || null,
       };
@@ -699,10 +727,19 @@ async function loadProfilesFromCloud() {
       // Skip if this cloud row's normalised name already matches a hardcoded member
       // (defensive — shouldn't happen after step 2, but guards against future edits)
       if (MEMBERS.some(m => normaliseName(m.name) === normaliseName(r.character_name))) return;
+      // A rank word someone once picked as their persona (the editor
+      // offered Alchemist and Patron until 2026-09-25) is not shown as
+      // their role unless a keeper gave them that rank. `claimedRole`
+      // keeps it, so the Admin page can see what they asked for.
+      const rank = r.rank || 'palawan';
+      const persona = String(r.role || '').toLowerCase();
+      const claimsRank = RANK_ONLY_ROLES.indexOf(persona) !== -1 && persona !== rank;
       merged.push({
         id: 'cloud_' + r.id,
         name: r.character_name,
-        role: r.role || 'Member',
+        role: claimsRank ? 'Member' : (r.role || 'Member'),
+        claimedRole: claimsRank ? persona : null,
+        rank,
         node: r.node || 'berlin',
         rep: r.rep ?? 1,
         balance: r.balance ?? 80,
@@ -715,7 +752,7 @@ async function loadProfilesFromCloud() {
         contact:  r.contact || '',
         favoritePlant: r.favorite_plant || '',
         restrictions:  r.restrictions   || [],
-        createdAt:     r.created_at     || null,
+        createdAt:     r.created_at || r.joined || null,
         cloudId: r.id,
         authUserId: r.auth_user_id || null,
       });
@@ -958,8 +995,28 @@ const SporeEconomy = (function () {
   };
 })();
 
+// What each network node is, shown when it is picked on the globe.
+// Generic on purpose (Robin, 2026-09-25: "do something generic based on
+// the demographic") — the place and the kind of work, no claims about
+// who is there. Rewrite any of them freely; the id must match a node.
+const NODE_INTROS = {
+  berlin:   'The home lab. Tinctures are pressed here, the dinners are cooked here, and most of the network meets here first — urban foraging along the Spree, fermentation nights, and the Fungi Fever Fest.',
+  sweden:   'The wild north. Boreal forest, bog and birch — chanterelle, cloudberry and chaga country, where the long foraging expeditions go in late summer.',
+  festival: 'The travelling node. A stand, a ceremony, a workshop: the part of the network that moves with the European festival season.',
+  lisbon:   'An Atlantic studio with year-round light — residencies, workshops, and a bridge to the Iberian plant traditions.',
+  beirut:   'Mediterranean roots: za’atar hillsides, wild-herb markets, and one of the oldest living traditions of plant medicine.',
+  atitlan:  'A farm community on a volcanic lake in the Guatemalan highlands — cacao, highland herbs and Maya plant knowledge.',
+  zanzibar: 'A spice-island farm community — clove, cinnamon and turmeric, and the plant lore of the Swahili coast.',
+  bangkok:  'An urban hub for Southeast Asia — market herbalism, Thai traditional medicine, and fermentation in the heat.',
+  bali:     'A farm community in the volcanic uplands — the jamu tradition, tropical adaptogens, and ceremony woven into daily life.',
+  hokkaido: 'A fungi farm in Japan’s cool north — shiitake, maitake and reishi on hardwood, and a long culture of mushroom craft.',
+  genoa:    'A proposed node on the Ligurian coast: a castle as event grounds, if the network grows into it.',
+  riga:     'Baltic forest and event grounds — birch sap in spring, chanterelles in summer, and a gathering place for the northern network.',
+  nosara:   'The Pacific coast of Costa Rica — tropical dry forest, surf, and a slow blue-zone rhythm of living.',
+};
+
 window.SporeData = {
   NETWORK_NODES, PRODUCTS, EXPERIENCES, REPUTATION_TIERS, PHASES, MEMBERS, CONTRIBUTION_TYPES, EVENTS, reputationTier, loadProfilesFromCloud,
-  TOKEN,
+  TOKEN, NODE_INTROS, RANKS, RANK_ONLY_ROLES, rankOf,
 };
 window.SporeEconomy = SporeEconomy;

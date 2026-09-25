@@ -27,6 +27,59 @@ file if you need it.
 
 ---
 
+## 0.5 · Later on 2026-09-25 — the ring became the navigation (UNCOMMITTED)
+
+Robin looked at Phase 1 and redirected it. Everything below is in the
+working tree on `facelift`, not committed, not pushed.
+
+- **The fairy ring is the portal's only nav.** Tab row, QuickNav and
+  HEALTH/FLOW/ACTIVITY are gone. Full ring on home; inside a section the
+  same instance shrinks into the header (stage height transition →
+  ResizeObserver → radius). Section is in the URL hash (`#calendar`).
+- **Ring:** centre = Dashboard (home) · Network · Calendar · Apothecary
+  (choice: Members shop / Official shop ↗) · Hyphae · Academy ↗ · Root
+  (keepers). Fruiting merged into Calendar; Larder/Almanac/Alchemy retired.
+- **Fixed:** Phase 1 turned the focused node to the BACK of the ring.
+- **New files:** `portal/dashboard.jsx` (draft figures shown to keepers
+  only), `portal/rsvps.jsx` (guest lists from `event_rsvps`, which
+  exists), `portal/portal.css`, `dm/dm.jsx` (real E2E DMs, any member →
+  any member; polls, no Realtime), `scripts/build-forage-baltic.cjs`.
+- **Network:** globe dots are tappable in every browser; each node has
+  a generic intro (`NODE_INTROS` in `spore/data.jsx`).
+- **Site:** global-nav drawer (one X, Kiona, no Explorer/Extraction,
+  Contact → `/#invitation`); landing page (hero buttons, manifesto
+  lines, two of three Instagram posts removed; Baltic foraging preview
+  drawn from Natural Earth replaces the Esri screenshot).
+- `test:fairy-ring` rewritten for all this — 68 checks.
+- **Keeper tools** (`admin/keeper.jsx`, on the Admin page): orders to
+  ship + low stock (≤3) with a badge on Root and a strip on the
+  Dashboard; announcements to everyone; Dashboard figures editor;
+  rank picker per member. New SQL: **`supabase-dashboard-admin.sql`**
+  (site_figures + announcements) — not run yet.
+- **Ranks → tiers:** `supabase-rbac-tiers.sql` (still not run) now also
+  guards `rep` (rank), guards INSERT as well as UPDATE (the first draft
+  let an anon insert carry `access_role='admin'` into a claim), and sets
+  `access_tier` from rank: Spore 5 · Palawan 6 · Mycelium 7 · Forager 8 ·
+  Root Node 9. Ring gates are `minRank` in `portal/sections.jsx` — none
+  set; Robin to decide what each rank opens.
+- **Event manager** (Admin page): add / edit / cancel events, guest lists
+  with copy. Events move to `public.events` — **`supabase-events.sql`**,
+  seeded with the 10 hardcoded events under their existing ids (RSVPs
+  stay attached). `portal/events.jsx` swaps them into `SporeData.EVENTS`.
+- **Audit 2 → `docs/COMMUNITY-AUDIT-2.md`.** 🔴 members' emails were
+  readable with the anon key (client fixed; run
+  **`supabase-profiles-privacy.sql` FIRST**). Its §4 is the SQL queue in
+  order. Fixed during it: gift-form crash, empty "Newest hyphae"
+  (`joined` vs `created_at`), DM inbox Escape.
+- **Later that evening:** emails hidden from signed-out visitors (code +
+  the privacy SQL now revokes anon down to public columns); gift feature
+  removed ($H economy parked); **ranks are now `profiles.rank`** —
+  Palawan (default) · Patron (paid) · Facilitator · Alchemist · Founder
+  (Robin; Steph = Facilitator), keeper-set only, admin stays a separate
+  flag. Supersedes the rep-based ranks above. `test:fairy-ring` = 82.
+
+---
+
 ## 1 · What happened on 2026-09-25
 
 Ten commits on `main`, two on `facelift`. In order:

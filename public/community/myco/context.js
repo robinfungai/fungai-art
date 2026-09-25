@@ -18,10 +18,11 @@
       name:    m.name || m.character_name || null,
       role:    m.role || null,
       node:    m.node || m.location || null,
-      tier:    (m.rep >= 300) ? 'root_node'
-             : (m.rep >= 100) ? 'forager'
-             : (m.rep >= 40)  ? 'mycelium'
-             : (m.rep >= 10)  ? 'palawan' : 'spore',
+      // The member's rank (Palawan · Patron · Facilitator · Alchemist ·
+      // Founder) — keeper-set since 2026-09-25, no longer rep points.
+      tier:    (window.SporeData && window.SporeData.rankOf)
+                 ? window.SporeData.rankOf(m).label
+                 : String(m.rank || 'palawan'),
       admin:   !!m.admin,
       founding:!!m.founding,
     };

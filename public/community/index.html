@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
     <meta name="color-scheme" content="dark">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Spore — Living Network</title>
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex"/>
   <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex"/>
@@ -27,8 +27,10 @@
   <!-- Admin planning board. Own stylesheet so the board can move out of
        the Admin tab later without unpicking 75 KB of portal CSS. -->
   <link rel="stylesheet" href="admin/kanban.css" />
-  <!-- Portal home as a fairy ring. Own stylesheet, portal tokens only. -->
+  <!-- The fairy ring (the portal's navigation), then the Dashboard,
+       the guest lists, DMs and the node intros. Portal tokens only. -->
   <link rel="stylesheet" href="portal/fairy-ring.css" />
+  <link rel="stylesheet" href="portal/portal.css" />
 
   <!-- React 18.3.1, production UMD, vendored locally by scripts/build-community.cjs.
        Was react.development.js from unpkg: 1,162 KB, with every dev-only warning
@@ -61,13 +63,22 @@
   <!-- Admin planning board — sets window.AdminKanban, so like the MYCO
        scripts above it must load BEFORE app-living, which shims it. -->
   <script src="admin/kanban.js"></script>
+  <!-- Keeper tools: alerts, announcements, Dashboard figures, ranks. -->
+  <script src="admin/keeper.js"></script>
 
-  <!-- The fairy ring. sections.js must come first (the other two read
-       window.PortalSections), and all three before app-living, which
-       shims them the way it shims MycoAgent. -->
+  <!-- The fairy ring and the pages it opens. sections.js must come
+       first (the others read window.PortalSections), and all of them
+       before app-living, which shims them the way it shims MycoAgent. -->
   <script src="portal/sections.js"></script>
   <script src="portal/organism.js"></script>
   <script src="portal/fairy-ring.js"></script>
+  <script src="portal/rsvps.js"></script>
+  <script src="portal/events.js"></script>
+  <script src="portal/dashboard.js"></script>
+
+  <!-- Member DMs: the E2E crypto (plain JS), then the inbox UI. -->
+  <script src="dm/crypto.js"></script>
+  <script src="dm/dm.js"></script>
 
   <script src="spore/app-living.js"></script>
 <script src="claim-notice.js" defer></script>

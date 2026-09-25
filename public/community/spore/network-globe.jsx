@@ -50,8 +50,28 @@ function ngLabelled(nodes, selected) {
   return shown;
 }
 
+// The anchor element cobe keeps at each marker's screen position, by
+// marker id. cobe appends them to the canvas's parent: markers first,
+// in marker order, then arcs. Where anchor-name is supported the name
+// says which is which; where it is not (Firefox) the order does.
+function ngMarkerAnchors(wrap, markers) {
+  const divs = Array.from(wrap.children).filter((el) => el.tagName === 'DIV' && el.style.width === '1px');
+  const out = new Map();
+  if (divs.some((el) => el.style.getPropertyValue('anchor-name'))) {
+    divs.forEach((el) => {
+      const n = el.style.getPropertyValue('anchor-name');
+      if (n.indexOf('--cobe-ng-') === 0) out.set(n.slice('--cobe-'.length), el);
+    });
+  } else {
+    markers.forEach((m, i) => { if (divs[i]) out.set(m.id, divs[i]); });
+  }
+  return out;
+}
+
 function NetworkGlobe({ nodes, selected = null, onSelect, hub = 'berlin', speed = 0.002, maxSize = 560 }) {
   const canvasRef = useRef(null);
+  const wrapRef   = useRef(null);
+  const tapRef    = useRef(null);   // where and when the pointer went down
   const focusRef  = useRef(null);   // target phi while turning to a node
   const offset    = useRef({ phi: 0, theta: 0 });
   const drag      = useRef({ active: false, x: 0, y: 0, last: null, phi: 0, theta: 0, vPhi: 0, vTheta: 0 });
@@ -174,7 +194,29 @@ function NetworkGlobe({ nodes, selected = null, onSelect, hub = 'berlin', speed 
     };
   }, [arcs, speed, reduceMotion, placed, hub]);
 
+  // The node nearest a tap, if it is on the visible face of the globe
+  // and within reach of a fingertip. Every node is tappable this way,
+  // including the ones whose label is hidden to keep Europe readable.
+  function pickAt(cx, cy) {
+    const wrap = wrapRef.current;
+    if (!wrap) return null;
+    const box = wrap.getBoundingClientRect();
+    const root = getComputedStyle(document.documentElement);
+    const anchors = ngMarkerAnchors(wrap, markersRef.current);
+    let best = null, bestD = 30;
+    markersRef.current.forEach((m) => {
+      const a = anchors.get(m.id);
+      if (!a || !root.getPropertyValue('--cobe-visible-' + m.id)) return;   // round the back
+      const x = box.left + (parseFloat(a.style.left) / 100) * box.width;
+      const y = box.top + (parseFloat(a.style.top) / 100) * box.height;
+      const dist = Math.hypot(cx - x, cy - y);
+      if (dist < bestD) { bestD = dist; best = m.id.replace(/^ng-/, ''); }
+    });
+    return best;
+  }
+
   function onPointerDown(e) {
+    tapRef.current = { x: e.clientX, y: e.clientY, t: performance.now() };
     const d = drag.current;
     d.active = true; d.x = e.clientX; d.y = e.clientY; d.vPhi = 0; d.vTheta = 0;
     d.last = { x: e.clientX, y: e.clientY, t: performance.now() };
@@ -198,6 +240,22 @@ function NetworkGlobe({ nodes, selected = null, onSelect, hub = 'berlin', speed 
   function onPointerUp(e) {
     const d = drag.current;
     if (!d.active) return;
+    const tap = tapRef.current;
+    tapRef.current = null;
+    // A tap, not a drag: pick the node under it and turn to face it.
+    if (tap && e.type === 'pointerup'
+        && Math.hypot(e.clientX - tap.x, e.clientY - tap.y) < 6
+        && performance.now() - tap.t < 450) {
+      d.phi = 0; d.theta = 0; d.vPhi = 0; d.vTheta = 0; d.active = false; d.last = null;
+      e.currentTarget.style.cursor = 'grab';
+      const id = pickAt(e.clientX, e.clientY);
+      const n = id && placed.find((x) => x.id === id);
+      if (n) {
+        focusRef.current = ngPhiFor(n.latlon[1]);   // also when it was already selected
+        if (onSelect) onSelect(n.id);
+      }
+      return;
+    }
     offset.current.phi += d.phi;
     offset.current.theta += d.theta;
     d.phi = 0; d.theta = 0; d.active = false; d.last = null;
@@ -216,7 +274,7 @@ function NetworkGlobe({ nodes, selected = null, onSelect, hub = 'berlin', speed 
   }
 
   return (
-    <div className="ng-wrap" style={{ maxWidth: maxSize }}>
+    <div className="ng-wrap" ref={wrapRef} style={{ maxWidth: maxSize }}>
       <canvas
         ref={canvasRef}
         className="ng-canvas"
