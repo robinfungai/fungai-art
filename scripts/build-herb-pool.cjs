@@ -4,7 +4,8 @@ const path = require('path');
 const herbsPath = path.resolve(__dirname, '../src/data/herbs.ts');
 
 function extractHerbsFromFile() {
-  const content = fs.readFileSync(herbsPath, 'utf-8');
+  // Normalise Windows line endings so the pool is identical on every checkout (audit M7).
+  const content = fs.readFileSync(herbsPath, 'utf-8').replace(/\r\n/g, '\n');
 
   const pool = [];
 

@@ -281,108 +281,11 @@ export const handler = async (event) => {
   try {
     const { message, history = [], context = null, mode = 'chat', shortlist = null, quiz = null } = JSON.parse(event.body);
 
-    // ── Composer mode ─────────────────────────────────────
-    // Deterministic picker generates the top ~15-20 candidates; MYCO
-    // reads those + the full quiz + free-text and picks the 5-7 that
-    // work best together. Returns structured JSON so the client can
-    // trust the shape. Falls back to picker output if MYCO refuses,
-    // errors, or returns malformed JSON.
+    // Compose mode was retired 2026-09-27 (audit H3): no page calls it —
+    // the quiz composes through /api/fyf/compose — yet it let anyone make
+    // the site pay for an Opus call. Refuse it outright.
     if (mode === 'compose') {
-      if (!Array.isArray(shortlist) || shortlist.length === 0) {
-        return { statusCode: 400, headers: cors, body: JSON.stringify({ error: 'compose mode needs a shortlist array' }) };
-      }
-      const shortlistText = shortlist.slice(0, 20).map((h, i) => {
-        return (i + 1) + '. id=' + (h.id || '') + ' · ' + (h.name || '') +
-               ' (' + (h.botanical || '') + ')' +
-               ' · category:' + (h.category || 'other') +
-               ' · pre-score:' + (h.score || 0) +
-               (h.trace ? ' · TRACE' : '') +
-               '\n     ' + (h.functions || '').slice(0, 220);
-      }).join('\n');
-      const q = quiz || {};
-      const composeSys =
-        'You are MYCO — a plant-medicine formula composer. You will pick 5 to 7 herbs from a shortlist for one specific person, and explain WHY in one paragraph.\n\n' +
-        'HARD RULES:\n' +
-        '- Pick ONLY from the shortlist ids provided. Never invent a herb.\n' +
-        '- Pick between 5 and 7 herbs. Prefer 5 unless the case genuinely calls for more (multi-axis complexity, chronic + acute together, layered request).\n' +
-        '- Percentages must sum to 100 (integers). Any TRACE-marked herb ≤ 5%.\n' +
-        '- Balance categories — no more than 2 herbs of the same category. Mix adaptogens, nervines, tonics, movers, mushrooms.\n' +
-        '- Do NOT diagnose. Do NOT prescribe. This is traditional herbal support, not medical treatment.\n' +
-        '- Reference the free-text explicitly if it names a priority, prior herb experience, or contraindication history.\n\n' +
-        'OUTPUT FORMAT — return ONLY valid JSON, no preamble, no code fences, matching:\n' +
-        '{\n' +
-        '  "picked": [ { "id": "...", "pct": 22, "reason": "one short sentence" }, ... ],\n' +
-        '  "overall": "2-3 sentences of reasoning tying the pick to their answers"\n' +
-        '}';
-      const composeUser =
-        'Quiz answers:\n' +
-        '- Intention: ' + (q.intention || '—') + '\n' +
-        (Array.isArray(q.intentions) && q.intentions.length > 1
-          ? '- Full ranking (primary → tertiary): ' + q.intentions.slice(0, 3).join(' → ') + '  (weight the pick to primary first, secondary secondary, tertiary lightly)\n'
-          : '') +
-        '- Body: ' + (q.pattern || '—') + (q.patternSub ? ' / ' + q.patternSub : '') + '\n' +
-        '- Rhythm: ' + (q.time || '—') + ' hardest\n' +
-        '- Meets stress by: ' + (q.stress || '—') + '\n' +
-        '- Duration: ' + (q.duration || '—') + '\n' +
-        '- Age: ' + (q.age || '—') + '\n' +
-        '- Sleep: ' + (q.sleep || '—') + '\n' +
-        '- Safety filters: ' + (Array.isArray(q.avoid) ? q.avoid.join(', ') : (q.avoid || 'none')) + '\n' +
-        '- Priority + prior herb experience: "' + String(q.notes || '').slice(0, 500) + '"\n\n' +
-        'Shortlist (ranked by the deterministic scorer):\n' + shortlistText + '\n\n' +
-        'Return the JSON now.';
-      // Composer runs on Claude Opus 5 — higher-quality herb-selection
-      // reasoning than Haiku's classifier-tier picks. On Opus 5,
-      // `temperature` and `budget_tokens` are removed (return 400 if
-      // sent), thinking defaults to adaptive, and `output_config.effort`
-      // is the depth lever. Compose is a bounded task so effort:medium
-      // balances quality and cost (~$0.02-0.03 per compose).
-      // Cost note: the chat reveal narrative still runs on Haiku
-      // downstream — this endpoint's compose branch is the only place
-      // Opus 5 fires.
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: anthropicHeaders,
-        body: JSON.stringify({
-          model: 'claude-opus-5',
-          max_tokens: 4000,
-          thinking: { type: 'adaptive' },
-          output_config: { effort: 'medium' },
-          // Prompt caching on the composer's system prompt. composeSys
-          // is stable across every compose (formula-composer rules,
-          // output-format schema); composeUser is fresh per quiz.
-          // Opus 5 input at $15/M, so caching saves ~$0.015 per
-          // cached compose on the shared instructions when reveals
-          // land within a 5-min window.
-          system: [
-            { type: 'text', text: composeSys, cache_control: { type: 'ephemeral' } },
-          ],
-          messages: [{ role: 'user', content: composeUser }],
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok) return { statusCode: res.status, headers: cors, body: JSON.stringify({ error: data.error?.message || 'compose error' }) };
-      // Opus 5 returns thinking blocks first (content[0] can be
-      // { type: 'thinking', thinking: '...' }); the actual response
-      // is in the first block with type:'text'. Iterate defensively.
-      let raw = '';
-      for (const block of (data.content || [])) {
-        if (block && block.type === 'text' && block.text) { raw = block.text; break; }
-      }
-      // Try to extract JSON — the model is instructed to return only JSON
-      // but occasionally wraps it in ```json ... ``` — strip if present.
-      let parsed = null;
-      try {
-        const cleaned = raw.replace(/^\s*```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '').trim();
-        parsed = JSON.parse(cleaned);
-      } catch (_) {
-        // JSON extraction fallback — find the first {...} block
-        const m = raw.match(/\{[\s\S]*\}/);
-        if (m) { try { parsed = JSON.parse(m[0]); } catch (_) {} }
-      }
-      if (!parsed || !Array.isArray(parsed.picked) || parsed.picked.length < 5) {
-        return { statusCode: 200, headers: cors, body: JSON.stringify({ composerFailed: true, raw }) };
-      }
-      return { statusCode: 200, headers: cors, body: JSON.stringify({ picked: parsed.picked, overall: parsed.overall || '' }) };
+      return { statusCode: 410, headers: cors, body: JSON.stringify({ error: 'compose mode is retired; use /api/fyf/compose' }) };
     }
     // ── End composer mode ─────────────────────────────────
 

@@ -82,9 +82,29 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ## 0.10 · START HERE — 2026-09-27, last session of the day (committed, not pushed)
 
-**Robin runs, in this order:**
-1. `supabase-lab-notes-signed-in.sql` (lab notes / snippets: signed-in only; its §5 lists authorless notes to review)
-2. `supabase-medium-fixes.sql` (Afghan Saffron split into 3g/5g/10g stock rows — then set real counts in Admin → Product inventory; search_path on two functions)
+**SQL:** Robin ran `supabase-lab-notes-signed-in.sql` and `supabase-medium-fixes.sql`
+(2026-09-27). He still needs to set real saffron counts per size in Admin →
+Product inventory (each size started with the old shared count).
+
+**Also done at the very end:** M7 (pool parser normalises `\r\n`) and H3b
+(`myco-agent` compose mode deleted, now answers 410). H3 left: (a) Robin sets a
+monthly spend cap in the Anthropic console, (c) Turnstile before the quiz.
+
+**NEXT — cookie banner (Robin's decision, do first):** remove the cookie
+banner entirely. Nothing on the site needs consent except the home page's
+Instagram embed, and Robin would rather drop the live embed than make every
+visitor click (cookie-free browsers never showed it anyway). Plan: delete
+`public/cookie-banner.js` and its script tags; replace the Instagram embed
+block on `/home` with the static preview photos already there
+(`.spore-fallback`, `data-photo=/home/spore/…`) linking to Instagram; remove
+www.instagram.com / platform.instagram.com from the CSP; update the privacy
+page (no banner, no consent needed: only functional storage — basket, sign-in,
+saved formulas). Terms/privacy pages need no approval.
+
+**M1 (sitemap) — wait:** the Atlas becomes the homepage in about a week, once
+Robin finishes its visual upgrade. Do M1 then, in one go: sitemap lists `/`
+(the Atlas), drops /herbal-engine-2/ and /find-your-formula-pro/ (they stay
+live, just not advertised to Google), and settle /extraction/ public vs noindex.
 
 **Done this session (audit 🟡 list, Robin's answers):** M2 Sleepy Sleepy preview €38 ·
 M3 saffron stock per size (admin panel + seed + SQL) · M4 SQL above · M5 cookie
