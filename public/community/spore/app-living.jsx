@@ -3839,7 +3839,7 @@ function LiveInventoryPanel({ currentMember, onToast }) {
 // drift out of sync again. The June list had fallen behind: Nervous System
 // Tonic, Nettle Extract, Shilajit Paste and Sleepy Sleepy had no row to edit.
 const PRODUCT_INVENTORY_FALLBACK = [
-  'ADHD Support', 'Afghan Saffron (', 'Amanita Muscaria',
+  'ADHD Support', 'Afghan Saffron (3g)', 'Afghan Saffron (5g)', 'Afghan Saffron (10g)', 'Amanita Muscaria',
   'Blue Lotus (dried 100g)', 'Butterfly Pea (dried 100g)',
   'Chaga Syrup', 'Chaga Extract', 'Healthy Aging',
   'Kumbaya Herbal Smoke Blend', 'Lucid', 'Mineral Tonic', 'Moon Support',
@@ -3853,7 +3853,13 @@ async function loadShopProductIds() {
     const res = await fetch('/shop/index.html', { cache: 'no-store' });
     if (!res.ok) throw new Error('shop ' + res.status);
     const html = await res.text();
-    const names = [...html.matchAll(/addToCart\('([^']+)'/g)].map(m => m[1]).filter(n => n && n !== 'Name');
+    const raw = [...html.matchAll(/addToCart\('([^']+)'/g)].map(m => m[1]).filter(n => n && n !== 'Name');
+    // Afghan Saffron is added as 'Afghan Saffron (' + grams + 'g)' at click
+    // time, so the pattern only sees 'Afghan Saffron ('. Expand it into one
+    // row per size button (data-g): each size is its own product in the
+    // basket and needs its own stock count (audit M3, 2026-09-27).
+    const grams = [...html.matchAll(/class="saffron-size[^"]*" data-g="(\d+)"/g)].map(m => m[1]);
+    const names = raw.flatMap(n => (n.endsWith(' (') && grams.length) ? grams.map(g => n + g + 'g)') : [n]);
     const unique = [...new Set(names)];
     return unique.length >= 5 ? unique : PRODUCT_INVENTORY_FALLBACK;
   } catch {

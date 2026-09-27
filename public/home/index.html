@@ -2630,7 +2630,27 @@ function toggleMobileMenu() {
         </blockquote>
         <a class="spore-fallback" href="https://www.instagram.com/p/DTx5LGZjM0j/" target="_blank" rel="noopener noreferrer" data-photo="/home/spore/DTx5LGZjM0j.webp"><span class="spore-fallback-media" aria-hidden="true"></span><span class="spore-fallback-body"><span class="spore-fallback-handle">@fungai.art</span><span class="spore-fallback-title">Inner Architecture</span><span class="spore-fallback-cta">View on Instagram &rarr;</span></span></a>
       </div>
-      <script async src="//www.instagram.com/embed.js"></script>
+      <script>
+      /* Instagram's embed script sends the visitor's IP to Meta and can set
+         cookies — the only non-essential third party on the site. It loads
+         only after "accept" in the cookie banner (cookie-banner.js stores
+         the choice and fires fungai:cookie-choice). Until then each post is
+         a plain link to Instagram. (2026-09-27, audit M5) */
+      (function () {
+        function loadInstagram() {
+          if (document.getElementById('ig-embed-js')) return;
+          var s = document.createElement('script');
+          s.id = 'ig-embed-js'; s.async = true; s.src = 'https://www.instagram.com/embed.js';
+          document.body.appendChild(s);
+        }
+        var ack = null;
+        try { ack = localStorage.getItem('fungai_cookie_ack'); } catch (e) {}
+        if (ack === 'accept' || ack === '1') loadInstagram();
+        window.addEventListener('fungai:cookie-choice', function (e) {
+          if (e && e.detail && e.detail.choice === 'accept') loadInstagram();
+        });
+      })();
+      </script>
     </div>
     <div style="text-align:center;margin-top:36px;" class="reveal reveal-d2">
       <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-ghost" rel="noopener noreferrer">Follow @fungai.art</a>

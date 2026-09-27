@@ -81,7 +81,9 @@ GRANT INSERT, UPDATE, DELETE ON public.product_inventory TO authenticated;
 --    the seed here or insert a new row from the admin panel.
 INSERT INTO public.product_inventory (product_id, stock_count) VALUES
   ('ADHD Support',                       5),
-  ('Afghan Saffron (',                   5),
+  ('Afghan Saffron (3g)',                5),
+  ('Afghan Saffron (5g)',                5),
+  ('Afghan Saffron (10g)',               5),
   ('Amanita Muscaria',                   5),
   ('Blue Lotus (dried 100g)',            5),
   ('Butterfly Pea (dried 100g)',         5),

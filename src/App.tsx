@@ -206,8 +206,16 @@ export default function App() {
           tempLabel: r.temp_label,
           synergyCount: r.synergy_count,
         }));
-        setSavedFormulas(cloud);
-        localStorage.setItem("fungai_formulas", JSON.stringify(cloud));
+        // Merge, never replace (audit M9, 2026-09-27): /mixology saves into
+        // the same fungai_formulas key, and replacing it with this device's
+        // cloud list erased those saves on every load. Cloud rows use the
+        // local ids, so matching by id keeps each formula once.
+        let local: SavedFormula[] = [];
+        try { local = JSON.parse(localStorage.getItem("fungai_formulas") ?? "[]"); } catch { local = []; }
+        const cloudIds = new Set(cloud.map((c) => String(c.id)));
+        const merged = [...cloud, ...(Array.isArray(local) ? local : []).filter((l) => l && !cloudIds.has(String(l.id)))];
+        setSavedFormulas(merged);
+        localStorage.setItem("fungai_formulas", JSON.stringify(merged));
         setSyncStatus("synced");
       });
   }, [deviceId]);

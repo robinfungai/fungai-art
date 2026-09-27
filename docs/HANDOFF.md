@@ -80,6 +80,68 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ---
 
+## 0.10 · START HERE — 2026-09-27, last session of the day (committed, not pushed)
+
+**Robin runs, in this order:**
+1. `supabase-lab-notes-signed-in.sql` (lab notes / snippets: signed-in only; its §5 lists authorless notes to review)
+2. `supabase-medium-fixes.sql` (Afghan Saffron split into 3g/5g/10g stock rows — then set real counts in Admin → Product inventory; search_path on two functions)
+
+**Done this session (audit 🟡 list, Robin's answers):** M2 Sleepy Sleepy preview €38 ·
+M3 saffron stock per size (admin panel + seed + SQL) · M4 SQL above · M5 cookie
+banner: NOT added everywhere — nothing on the site needs consent except the
+home page's Instagram embed, which now loads only after "accept" · M6 forage
+test dates relative → **36/36 suites green** · M9 old React app merges saved
+formulas instead of wiping Mixology's · M10 dead portal modules deleted
+(app, tracker-app, tracker-data, network-map, styles, styles-tracker, specimen-fan.png)
+· M12 the 9 atlas photos committed (garlic, moringa compressed) — **from now on
+commit new atlas photos whenever Robin adds them** · M13 ip-block stays (it is the
+ban system) · M14 parked by Robin. Typecheck: still the known 47-error backlog.
+
+**Open — waiting on Robin (explained in chat, not yet decided):**
+- **M1** sitemap/robots: proposal = drop /herbal-engine-2/ and
+  /find-your-formula-pro/ from the sitemap, add /atlas/, list only `/`
+  (not /home/), and decide whether /extraction/ is public (it is both "public"
+  and noindex today).
+- **M7** (Windows line endings in the herb-pool parser — harmless on Netlify,
+  one-line normalise) · **M11** "Coming soon" ×3 on Moder Jord, ×1 on the shop:
+  keep, date, or remove.
+- **M8** Robin wants MORE part-specific herb cards ("more the merrier"): keep
+  Elderberry 216 + Elderberry cooked 543 + Elderflower 232, Pomegranate Skin 407
+  + Seeds/arils 408, Grape Seed 420 + Leaf 552 + Skin/resveratrol 556. New cards
+  to write: pomegranate fruit/juice, grape fruit — full records, follow the
+  herbs-everywhere checklist.
+- **Missing herbs the atlas already has photos for:** wild thyme
+  (Thymus serpyllum), wild rosemary (Rhododendron tomentosum — NOT rosemary),
+  green tea, hibiscus, comfrey. Unmatched on purpose; add the records and the
+  photos appear.
+- **C4 imprint / address:** where Robin runs the business decides it (Berlin →
+  §5 DDG: name, serviceable postal address — PO box not enough, a
+  business-address service is — and email). EU shops must show a geographic
+  address before purchase either way. Build `/imprint` + footer link once
+  Robin gives the address.
+- **H3 Opus cost exposure:** quiz, formula-analysis reading and the dead
+  `myco-agent` compose mode call Opus for anonymous visitors; per-instance
+  rate limits only. Do: (a) Robin sets a monthly spend cap in the Anthropic
+  console; (b) delete the dead compose mode; (c) Cloudflare Turnstile before
+  the quiz's Opus call. (b)+(c) await a yes.
+- **St John's Wort + Kanna** (both serotonin-reuptake inhibitors) can share a
+  bottle — the engine shows herb-pair cautions but never enforces them. Proposed:
+  a "max 1 serotonergic" rule like the sedative/stimulant caps.
+- **Quiz scoring:** the intention answer is worth ≤5 points against pattern +
+  stress + time; with other answers equal, formulas look alike across
+  intentions and laxatives (Rhubarb Root; Senna once) turn up. Look together.
+- **8 records say "practitioner only" but reach customers:** Fadogia, Lobelia,
+  Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja — one word from
+  Robin puts them on `formula_access: 'pro'` like Ephedra. The pro page is
+  public: `_pro` separates the quizzes, it is not a lock (offer: sign-in gate).
+- **/health suggestions:** (1) frame as a learning path, not a clinical-practice
+  plan (Heilpraktiker law); (2) members-only "Practitioner path" in the
+  Academy linked to the PDF library, lab notes, formula analysis, MYCO, with
+  saved progress; (3) show real evidence grades from the herb data; (4) replace
+  generic advice with the Fungai method (1:3, doses, pregnancy/under-18 rules);
+  (5) it is in the sitemap but unlinked — link from the Academy or noindex.
+- Robin will shrink `home/team/robin-portrait.jpg` himself (already 328 KB).
+
 ## 0.9 · 2026-09-27, late — Robin's answers to the audit, worked through (committed, not pushed)
 
 The status table at the top of `docs/SITE-AUDIT-2026-09-27.md` is the

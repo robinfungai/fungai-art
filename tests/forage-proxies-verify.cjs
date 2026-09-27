@@ -29,7 +29,11 @@ const FUNCTIONS = [
 
 // Upstream stub: counts calls, answers with an empty-but-valid payload.
 let upstreamCalls = 0;
-const days = Array.from({ length: 17 }, (_, i) => new Date(Date.UTC(2026, 8, 5 + i)).toISOString().slice(0, 10));
+// Relative to today (audit M6): 14 days back + today + 2 ahead, like the
+// real past_days=14 forecast. It was pinned to 5–21 Sept 2026 and started
+// failing on the 22nd, when "today" fell off the end.
+const _t0 = new Date(); _t0.setUTCHours(0, 0, 0, 0);
+const days = Array.from({ length: 17 }, (_, i) => new Date(_t0.getTime() + (i - 14) * 86400000).toISOString().slice(0, 10));
 const OPEN_METEO = {
   daily: { time: days, precipitation_sum: days.map((_, i) => i % 3), temperature_2m_max: days.map(() => 16), temperature_2m_min: days.map(() => 8), windspeed_10m_max: days.map(() => 12) },
   hourly: { time: days.flatMap(d => Array.from({ length: 24 }, (_, h) => d + 'T' + String(h).padStart(2, '0') + ':00')), relativehumidity_2m: Array(17 * 24).fill(80) },
