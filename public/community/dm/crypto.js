@@ -205,6 +205,20 @@
     if (ptBytes.byteLength > MAX_PLAINTEXT_BYTES) {
       throw new Error('Message is too long — the limit is ' + MAX_PLAINTEXT_BYTES + ' bytes.');
     }
+    return seal(recipientPubB64, ptBytes);
+  }
+
+  // The same seal with no size cap, for things a member keeps for
+  // themselves rather than sends: their MYCO conversation
+  // (myco/agent.jsx). MAX_PLAINTEXT_BYTES exists because of the
+  // messages_e2e column limit, which a kept thread is not bound by.
+  // Open it with decryptFrom(), exactly like a DM.
+  async function sealLarge(recipientPubB64, plaintext) {
+    if (!recipientPubB64) throw new Error('No public key to seal to.');
+    return seal(recipientPubB64, new TextEncoder().encode(plaintext));
+  }
+
+  async function seal(recipientPubB64, ptBytes) {
     const recipientPub = await importPublicKey(recipientPubB64);
     // Ephemeral sender keypair — private half discarded after this
     // call → forward secrecy for this individual message.
@@ -501,6 +515,7 @@
     myKeyFingerprint,
     encryptTo,
     encryptForBoth,
+    sealLarge,
     decryptFrom,
     readMessage,
     threadKey,

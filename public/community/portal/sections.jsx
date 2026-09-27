@@ -87,12 +87,14 @@
     },
   ];
 
-  // Keepers only. Hiding it is courtesy; RLS is the real gate
-  // (supabase-rbac-tiers.sql).
+  // Keepers, and event hosts (Facilitators, Alchemists — Robin,
+  // 2026-09-27), who find only the Event manager there. Hiding it is
+  // courtesy; RLS is the real gate (supabase-rbac-tiers.sql,
+  // supabase-event-hosts.sql).
   const ROOT = {
     id:           'admin',
     label:        'Root',
-    subtitle:     'admin · keepers only',
+    subtitle:     'keepers · event hosts',
     line:         'Underground, where the keepers work.',
     related:      [],
     icon:         'root',
@@ -152,10 +154,11 @@
     return s && !s.external ? s.id : null;
   }
 
-  // The ring a given viewer sees. Root joins the ring for keepers.
+  // The ring a given viewer sees. Root joins the ring for keepers
+  // ('admin') and for event hosts ('host').
   function visibleFor(role) {
-    const keeper = role === 'admin';
-    return { organism: ORGANISM, ring: keeper ? [...RING, ROOT] : RING };
+    const root = role === 'admin' || role === 'host';
+    return { organism: ORGANISM, ring: root ? [...RING, ROOT] : RING };
   }
 
   // Threads are declared on both ends or they are not threads. A

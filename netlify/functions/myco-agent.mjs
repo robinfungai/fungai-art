@@ -22,6 +22,7 @@
 import { groundQuestion, verifyAnswer, GROUNDING_RULES, KB_VERSION } from '../../src/server/myco/grounding.cjs';
 import { interpretQuery } from '../../src/server/myco/retrieve.cjs';
 import { retrieveLabNotes } from '../../src/server/myco/lab-notes.cjs';
+import { retrieveDocChunks } from '../../src/server/myco/academy-docs.cjs';
 import { guardReply } from '../../src/server/myco/claims-guard.cjs';
 
 const ALLOWED_ORIGINS = [
@@ -38,7 +39,9 @@ function corsHeadersFor(origin) {
   const allow = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
   return {
     'Access-Control-Allow-Origin': allow,
-    'Access-Control-Allow-Headers': 'Content-Type',
+    // Authorization carries a signed-in member's Supabase token, which
+    // is what opens the Academy PDFs to their MYCO (academy-docs.cjs).
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Vary': 'Origin',
     'Content-Type': 'application/json',
   };
@@ -459,8 +462,15 @@ export const handler = async (event) => {
     try { labExtra = await retrieveLabNotes(retrievalQuery, 3, reading); }
     catch (_) { labExtra = []; }
 
+    // Academy PDFs — members only. retrieveDocChunks checks the bearer
+    // token with Supabase and returns [] for anyone not signed in, so
+    // an anonymous visitor's answer is built exactly as before.
+    let docExtra = [];
+    try { docExtra = await retrieveDocChunks(retrievalQuery, 3, reading, event.headers); }
+    catch (_) { docExtra = []; }
+
     let grounded = { block: '', sources: [] };
-    try { grounded = groundQuestion(retrievalQuery, { k: 6, extra: labExtra, interpretation: reading }); }
+    try { grounded = groundQuestion(retrievalQuery, { k: 6, extra: [...docExtra, ...labExtra], interpretation: reading }); }
     catch (_) { grounded = { block: '', sources: [] }; }
 
     const res = await fetch('https://api.anthropic.com/v1/messages', {

@@ -303,9 +303,15 @@
     var thinking = addMsg('bot', 'Reading the knowledge base…');
 
     try {
+      // A signed-in member's token lets their MYCO read the Academy PDFs.
+      var auth = {};
+      try {
+        var sess = window.SBauth ? await window.SBauth.getSession() : null;
+        if (sess && sess.access_token) auth = { Authorization: 'Bearer ' + sess.access_token };
+      } catch (_) {}
       var res = await fetch(ENDPOINT, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: Object.assign({ 'Content-Type': 'application/json' }, auth),
         body: JSON.stringify({
           message: msg,
           history: history.slice(-10),

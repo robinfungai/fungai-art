@@ -24,10 +24,44 @@
   function getActive() {
     const full = readJSON('spore_active_member_full');
     if (full && typeof full === 'object') return full;
+    // Signed out: the restrictions of whoever last signed in on this
+    // browser still apply (2026-09-27). The portal writes this key at
+    // every sign-in and never clears it on sign-out, so signing out is
+    // no longer a way round a restriction. See rememberDeviceGate() in
+    // community/spore/app-living.jsx.
+    const device = readJSON('spore_gate_device');
+    if (device && typeof device === 'object') return device;
     // Fallback: id-only marker. We can't enforce restrictions without the full
     // object so we treat this as "not gated."
     const id = (function(){ try { return localStorage.getItem('spore_active_member'); } catch { return null; } })();
     return id ? { id, name: id, admin: false, restrictions: [] } : null;
+  }
+
+  // Where the page has the Supabase client (/mixology does), re-read the
+  // signed-in member's restrictions from the database, so a restriction
+  // a keeper set a minute ago applies now — not at their next portal visit.
+  async function refreshFromDatabase(feature) {
+    try {
+      if (!window.SBclient || !window.SBauth) return;
+      const user = await window.SBauth.getUser();
+      if (!user || !user.id) return;
+      const { data, error } = await window.SBclient.from('profiles')
+        .select('id, character_name, is_admin, restrictions').eq('auth_user_id', user.id).maybeSingle();
+      if (error || !data) return;
+      const restrictions = data.is_admin ? [] : (Array.isArray(data.restrictions) ? data.restrictions : []);
+      const full = readJSON('spore_active_member_full');
+      if (full && typeof full === 'object') {
+        full.restrictions = restrictions;
+        try { localStorage.setItem('spore_active_member_full', JSON.stringify(full)); } catch {}
+      }
+      try {
+        localStorage.setItem('spore_gate_device', JSON.stringify({
+          id: (full && full.id) || data.id, name: data.character_name || (full && full.name) || '',
+          admin: !!data.is_admin, restrictions, at: Date.now(),
+        }));
+      } catch {}
+      if (restrictions.indexOf(feature) >= 0 && !document.getElementById('sporeGateOverlay')) showGate(feature);
+    } catch (_) {}
   }
 
   function isAdmin() {
@@ -78,6 +112,11 @@
   }
 
   function requireAccess(feature, opts) {
+    if (window.SBready && typeof window.SBready.then === 'function') {
+      window.SBready.then(function () { refreshFromDatabase(feature); }, function () {});
+    } else {
+      window.addEventListener('supabase:ready', function () { refreshFromDatabase(feature); }, { once: true });
+    }
     if (!isRestricted(feature)) return;
     function attach() { showGate(feature, opts); }
     if (document.body) attach();

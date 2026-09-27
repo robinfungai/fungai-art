@@ -1,36 +1,50 @@
 -- ════════════════════════════════════════════════════════════════
--- myco_threads — each member's MYCO conversation, on their account
+-- myco_threads — each member's MYCO conversation, ENCRYPTED
 --
 -- Robin, 2026-09-27: whoever is signed in, whatever their rank, their
--- conversation with MYCO is kept. The portal (community/myco/agent.jsx)
--- already keeps it in the browser; this table is what lets it follow
--- the member to another device.
+-- conversation with MYCO is kept — and only ever kept encrypted.
 --
--- One row per auth user: the current thread, last 60 messages.
--- Owner-only: a member reads and writes their own row and nobody
--- else's — not keepers, not the anon key. (The DB console can still
--- read it; this is not encrypted. The DMs are the encrypted channel.)
+-- The portal (community/myco/agent.jsx) seals the whole conversation
+-- in the browser to the member's own device key — the same ECDH key
+-- their DMs use (dm/crypto.js) — and stores only the ciphertext, here
+-- and in the browser. The database, keepers, and the SQL console see
+-- base64 noise. Only a browser holding that member's private key can
+-- open it.
 --
--- Separate from myco_memory (supabase-myco-memory.sql), which is for
--- distilled long-term insights and is not used yet.
+-- One row per member PER DEVICE KEY (key_fp). Another device has
+-- another key and cannot read this one; it keeps its own row instead
+-- of overwriting this one. When the Security Key vault ships
+-- (supabase-e2e-key-vault.sql, on hold) a restored device holds the
+-- same key, and its conversations follow it.
 --
--- Run once in Supabase → SQL Editor. Idempotent. Until it has run the
--- portal keeps the conversation in the browser only, and says nothing.
+-- What encryption does NOT cover, said plainly: to answer, MYCO must
+-- read the question. Each message still travels over HTTPS to our
+-- server and to the model provider. What is encrypted is what is KEPT.
+--
+-- ⚠ Replaces the first version of this file (same day), which stored
+-- messages as plain JSON. If that version was run, this DROPs the
+-- table: the only rows it can hold are plaintext conversations from
+-- 2026-09-27, which is exactly what should not be kept.
+--
+-- Run once in Supabase → SQL Editor. Idempotent.
 -- ════════════════════════════════════════════════════════════════
 
-CREATE TABLE IF NOT EXISTS public.myco_threads (
-  user_id     uuid        PRIMARY KEY DEFAULT auth.uid()
-                          REFERENCES auth.users(id) ON DELETE CASCADE,
-  messages    jsonb       NOT NULL DEFAULT '[]'::jsonb
-                          CHECK (jsonb_typeof(messages) = 'array'),
-  updated_at  timestamptz NOT NULL DEFAULT now()
-);
+DO $$ BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.columns
+             WHERE table_schema = 'public' AND table_name = 'myco_threads'
+               AND column_name = 'messages') THEN
+    DROP TABLE public.myco_threads;
+  END IF;
+END $$;
 
--- 60 messages of up to 12,000 characters is ~720 KB at the very worst;
--- cap the row well above real use and well below abuse.
-ALTER TABLE public.myco_threads DROP CONSTRAINT IF EXISTS myco_threads_size;
-ALTER TABLE public.myco_threads
-  ADD CONSTRAINT myco_threads_size CHECK (pg_column_size(messages) < 1000000);
+CREATE TABLE IF NOT EXISTS public.myco_threads (
+  user_id     uuid        NOT NULL DEFAULT auth.uid()
+                          REFERENCES auth.users(id) ON DELETE CASCADE,
+  key_fp      text        NOT NULL CHECK (char_length(key_fp) BETWEEN 8 AND 64),
+  ciphertext  text        NOT NULL CHECK (char_length(ciphertext) < 2000000),
+  updated_at  timestamptz NOT NULL DEFAULT now(),
+  PRIMARY KEY (user_id, key_fp)
+);
 
 ALTER TABLE public.myco_threads ENABLE ROW LEVEL SECURITY;
 

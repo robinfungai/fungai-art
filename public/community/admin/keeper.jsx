@@ -473,7 +473,9 @@
     );
   }
 
-  function EventsEditor({ onToast, freqColors }) {
+  // canDelete: false for event hosts — they cancel, keepers delete
+  // (supabase-event-hosts.sql keeps DELETE with fa_is_admin()).
+  function EventsEditor({ onToast, freqColors, canDelete = true }) {
     const R  = window.PortalRsvps;
     const PE = window.PortalEvents;
     const rsvps = R ? R.useRsvps() : [];
@@ -527,7 +529,7 @@
           <div className="kp-row-actions">
             <button type="button" className="kp-link" onClick={() => setGuestsFor(open ? null : ev.id)}>{open ? 'Hide guests' : 'Guests (' + guests.length + ')'}</button>
             {canEdit ? <button type="button" className="kp-link" onClick={() => setEditing(ev)}>Edit</button> : null}
-            {canEdit ? <button type="button" className="kp-link" onClick={() => remove(ev)}>Delete</button> : null}
+            {canEdit && canDelete ? <button type="button" className="kp-link" onClick={() => remove(ev)}>Delete</button> : null}
           </div>
           {open ? (
             guests.length ? (

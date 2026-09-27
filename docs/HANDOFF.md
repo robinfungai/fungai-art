@@ -80,6 +80,35 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ---
 
+## 0.6 · 2026-09-27 — two commits on `main`, not pushed
+
+`2da158a` MYCO readable (claims guard kept flattening line breaks → all-caps
+wall), resizable, per-chat DM drafts, shelf = Engine's 240 herbs (written by
+`build:engine2`), banner rank instead of "Unattached", /mycelium asks every visit.
+
+Second commit: **Academy members-only** with a visitor preview (`html.ac-preview`,
+a curtain — private material is locked in the DB) · **Academy PDFs**
+(`academy/academy-docs.js`; text extracted in the keeper's browser with pdf.js;
+MYCO reads it for signed-in members via `src/server/myco/academy-docs.cjs` and
+the member's bearer token; the monthly digest reads new PDFs with the service
+key and proposes page changes) · **MYCO threads encrypted** (sealed to the DM
+device key, `sealLarge` in dm/crypto.js; one row per member per key) ·
+**event hosts** (Facilitator/Alchemist see Root = Event manager only) ·
+**restrictions** now a real column, persist per device across sign-out, and
+"Community" is enforced · **`build:academy`**: `data/academy/<tradition>/*.txt|json`
+→ cards between `academy:<id>` markers, claims-screened, plus live counts.
+
+**SQL queue (Robin runs, any order):** `supabase-restrictions.sql` ·
+`supabase-event-hosts.sql` · `supabase-myco-threads.sql` (replaces the plaintext
+version — drops it if run) · `supabase-academy-docs.sql`.
+Netlify needs `SUPABASE_SERVICE_ROLE_KEY` for the digest to read the library
+(already used by fyf-compose, so probably set).
+
+Open: `public/community/academy/Herbalism Module 1_V3.pdf` is still a public
+file — re-upload it through the library and delete it from the repo.
+
+---
+
 ## 1 · What happened on 2026-09-25
 
 Ten commits on `main`, two on `facelift`. In order:

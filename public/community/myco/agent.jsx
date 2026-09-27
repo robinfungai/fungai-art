@@ -16,20 +16,30 @@
 (function () {
   const { useState, useRef, useEffect } = React;
 
-  /* ── The conversation is kept (Robin, 2026-09-27) ──────────────────
+  /* ── The conversation is kept — ENCRYPTED (Robin, 2026-09-27) ─────
      Every signed-in member, whatever their rank, keeps their MYCO
-     thread. Two layers:
-       · this browser — localStorage, per member, always;
-       · their account — public.myco_threads, one row per auth user,
-         owner-only RLS (supabase-myco-threads.sql). Follows them to
-         another device. Until that SQL has run the cloud layer switches
-         itself off after the first "table missing" and the local copy
-         carries on alone.
-     Visitors who are not signed in are not stored. "Clear" empties
-     both. */
+     thread, and it is only ever kept encrypted. The whole thread is
+     sealed in this browser to the member's own device key — the ECDH
+     key their DMs already use (dm/crypto.js → sealLarge) — and only
+     that ciphertext is stored:
+       · in this browser — localStorage, per member;
+       · on their account — public.myco_threads, one row per member per
+         device key, owner-only RLS (supabase-myco-threads.sql). Until
+         that SQL has run the account layer switches itself off after
+         the first "table missing" and the browser copy carries on.
+     Another device holds another key and cannot open this thread; it
+     keeps its own. When the Security Key vault ships, a restored device
+     holds the same key and its threads follow it.
+     No key (no WebCrypto, not signed in) → nothing is kept at all.
+     Plain text is never written anywhere. "Clear" deletes both copies.
+
+     Not covered, said plainly: to answer, MYCO reads the question, so
+     each message still travels over HTTPS to our server and the model.
+     What is encrypted is what is kept. */
   const KEEP_MAX  = 60;                 // messages kept per member
   const SIZE_KEY  = 'myco_panel_size';
-  const localKey  = (m) => 'myco_thread:' + m.id;
+  const sealedKey = (m) => 'myco_sealed:' + m.id;
+  const legacyKey = (m) => 'myco_thread:' + m.id;   // plaintext, from the first version — sealed then deleted
   const trim      = (list) => list.slice(-KEEP_MAX).map(m => ({
     role: m.role, content: String(m.content || '').slice(0, 12000),
     ...(m.sources && m.sources.length ? { sources: m.sources.slice(0, 8) } : {}),
@@ -37,15 +47,55 @@
   }));
   let cloudOff = false;                 // the table is not there yet
   const missing = (e) => !!e && (e.code === '42P01' || e.code === 'PGRST205' || /does not exist|schema cache/i.test(e.message || ''));
+  const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
-  function readLocal(m) {
-    try { const v = JSON.parse(localStorage.getItem(localKey(m)) || 'null'); return v && Array.isArray(v.msgs) ? v : null; }
-    catch (_) { return null; }
+  // The member's device key. The DM inbox makes it on first portal
+  // load; give it a moment to, so two keypairs are never minted at
+  // once (that would reroute DMs). Only then make one ourselves.
+  let keyP = null;
+  function myKey() {
+    if (keyP) return keyP;
+    keyP = (async () => {
+      const C = window.MycDMcrypto;
+      if (!C || !window.crypto || !window.crypto.subtle || !C.sealLarge) return null;
+      for (let i = 0; i < 8 && !(await C.hasLocalKeypair()); i++) await sleep(750);
+      const kp  = await C.getOrCreateMyKeypair();
+      const pub = await C.exportPublicKey(kp.publicKey);
+      const fp  = await C.keyFingerprint(pub);
+      return { kp, pub, fp };
+    })().catch(() => null);
+    return keyP;
   }
-  function writeLocal(m, msgs) {
+  async function seal(key, msgs, at) {
+    return window.MycDMcrypto.sealLarge(key.pub, JSON.stringify({ at, msgs: trim(msgs) }));
+  }
+  async function unseal(key, ct) {
     try {
-      if (msgs.length) localStorage.setItem(localKey(m), JSON.stringify({ at: Date.now(), msgs: trim(msgs) }));
-      else localStorage.removeItem(localKey(m));
+      const v = JSON.parse(await window.MycDMcrypto.decryptFrom(key.kp, ct));
+      return v && Array.isArray(v.msgs) ? v : null;
+    } catch (_) { return null; }       // sealed to another key
+  }
+
+  async function readLocal(m, key) {
+    let v = null;
+    try { v = JSON.parse(localStorage.getItem(sealedKey(m)) || 'null'); } catch (_) {}
+    if (v && v.fp === key.fp && v.ct) return unseal(key, v.ct);
+    // The first version of this kept plain JSON (for a few hours on
+    // 2026-09-27). Seal it, then delete the plaintext.
+    let old = null;
+    try { old = JSON.parse(localStorage.getItem(legacyKey(m)) || 'null'); } catch (_) {}
+    try { localStorage.removeItem(legacyKey(m)); } catch (_) {}
+    if (old && Array.isArray(old.msgs) && old.msgs.length) {
+      const at = old.at || Date.now();
+      await writeLocal(m, key, old.msgs, at);
+      return { at, msgs: old.msgs };
+    }
+    return null;
+  }
+  async function writeLocal(m, key, msgs, at) {
+    try {
+      if (!msgs.length) { localStorage.removeItem(sealedKey(m)); return; }
+      localStorage.setItem(sealedKey(m), JSON.stringify({ fp: key.fp, ct: await seal(key, msgs, at) }));
     } catch (_) {}
   }
   async function cloudUser() {
@@ -53,22 +103,34 @@
     try { if (window.SBready) await window.SBready; } catch (_) {}
     try { const u = await window.SBauth.getUser(); return (u && u.id) ? u : null; } catch (_) { return null; }
   }
-  async function readCloud() {
+  async function readCloud(key) {
     const u = await cloudUser();
     if (!u) return null;
     const { data, error } = await window.SBclient.from('myco_threads')
-      .select('messages, updated_at').eq('user_id', u.id).maybeSingle();
+      .select('ciphertext').eq('user_id', u.id).eq('key_fp', key.fp).maybeSingle();
     if (error) { if (missing(error)) cloudOff = true; return null; }
-    return data ? { at: Date.parse(data.updated_at) || 0, msgs: Array.isArray(data.messages) ? data.messages : [] } : null;
+    return data && data.ciphertext ? unseal(key, data.ciphertext) : null;
   }
-  async function writeCloud(msgs) {
+  async function writeCloud(key, msgs, at) {
     const u = await cloudUser();
     if (!u) return;
-    const { error } = await window.SBclient.from('myco_threads').upsert(
-      { user_id: u.id, messages: trim(msgs), updated_at: new Date().toISOString() },
-      { onConflict: 'user_id' });
+    const q = window.SBclient.from('myco_threads');
+    const { error } = msgs.length
+      ? await q.upsert({ user_id: u.id, key_fp: key.fp, ciphertext: await seal(key, msgs, at), updated_at: new Date(at).toISOString() },
+                       { onConflict: 'user_id,key_fp' })
+      : await q.delete().eq('user_id', u.id).eq('key_fp', key.fp);
     if (error && missing(error)) cloudOff = true;
     else if (error) console.warn('[myco] conversation not saved to your account:', error.message);
+  }
+
+  // A signed-in member's Supabase token, sent with each question so
+  // their MYCO can read the Academy PDFs (academy-docs.cjs). No token →
+  // MYCO answers exactly as it does for any visitor.
+  async function authHeader() {
+    try {
+      const s = window.SBauth ? await window.SBauth.getSession() : null;
+      return s && s.access_token ? { Authorization: 'Bearer ' + s.access_token } : {};
+    } catch (_) { return {}; }
   }
 
   function readSize() {
@@ -91,26 +153,34 @@
     const loadedFor = useRef(null);     // member id the thread was loaded for
     const saveT     = useRef(null);
     const fromLoad  = useRef(false);    // the next msgs change came from a load, not the member
+    const keyRef    = useRef(null);     // { kp, pub, fp } — the device key the thread is sealed to
 
     // Load this member's thread: local first (instant), then the account
     // copy if it is newer — that is the one from another device.
     const memberId = currentMember ? currentMember.id : null;
     useEffect(() => {
       loadedFor.current = null;
+      keyRef.current = null;
       if (!currentMember) { setMsgs([]); return; }
-      const local = readLocal(currentMember);
-      fromLoad.current = true;
-      setMsgs(local ? local.msgs : []);
-      loadedFor.current = currentMember.id;
+      const member = currentMember;
       let alive = true;
-      readCloud().then(cloud => {
+      (async () => {
+        const key = await myKey();
+        if (!alive || !key) return;               // no key → nothing is kept
+        const local = await readLocal(member, key);
+        if (!alive) return;
+        keyRef.current = key;
+        fromLoad.current = true;
+        setMsgs(local ? local.msgs : []);
+        loadedFor.current = member.id;
+        const cloud = await readCloud(key).catch(() => null);
         if (!alive || !cloud || !cloud.msgs.length) return;
         if (!local || cloud.at > local.at) {
           fromLoad.current = true;
           setMsgs(cloud.msgs);
-          writeLocal(currentMember, cloud.msgs);
+          writeLocal(member, key, cloud.msgs, cloud.at);
         }
-      }).catch(() => {});
+      })();
       return () => { alive = false; };
     }, [memberId]);
 
@@ -120,9 +190,12 @@
       // A load is not an edit: writing it back would stamp an old local
       // copy as new and push it over the account's newer thread.
       if (fromLoad.current) { fromLoad.current = false; return; }
-      writeLocal(currentMember, msgs);
+      const key = keyRef.current;
+      if (!key) return;
+      const at = Date.now();
+      writeLocal(currentMember, key, msgs, at);
       clearTimeout(saveT.current);
-      saveT.current = setTimeout(() => { writeCloud(msgs).catch(() => {}); }, 1200);
+      saveT.current = setTimeout(() => { writeCloud(key, msgs, at).catch(() => {}); }, 1200);
     }, [msgs]);
 
     // Resize from the top-right corner: the panel is pinned bottom-left,
@@ -203,7 +276,7 @@
       try {
         const res = await fetch('/api/myco-agent', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', ...(await authHeader()) },
           body: JSON.stringify({ message: msg, history, context }),
         });
         const data = await res.json();

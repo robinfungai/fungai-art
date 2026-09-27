@@ -26,6 +26,25 @@ function faIsAdminById(memberId) {
   return memberId === 'robin' || memberId === 'stephanie';
 }
 
+// Restrictions follow the DEVICE, not just the session (Robin,
+// 2026-09-27): signing out used to lift them, because /spore-gate.js
+// only read the signed-in member. This key survives sign-out and is
+// overwritten by whoever signs in next on this browser — so a
+// restricted member cannot sign out to get in, and a new member does
+// not inherit someone else's restrictions. The database copy
+// (profiles.restrictions, supabase-restrictions.sql) is what makes it
+// reach the member's devices in the first place.
+function rememberDeviceGate(member) {
+  try {
+    localStorage.setItem('spore_gate_device', JSON.stringify({
+      id: member.id, name: member.name || '',
+      admin: !!member.admin,
+      restrictions: member.admin ? [] : (Array.isArray(member.restrictions) ? member.restrictions : []),
+      at: Date.now(),
+    }));
+  } catch {}
+}
+
 function defaultState(member) {
   return {
     balance:       member ? member.balance : 120,
@@ -3548,7 +3567,7 @@ function AdminPage({ onToast, currentMember }) {
           </div>
           <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>show &darr;</span>
         </summary>
-        <p style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', lineHeight:1.6, margin:'4px 0 10px' }}>Tap a member to expand toggles. Enforced on /mixology and /extraction via /spore-gate.js. Admins always bypass.</p>
+        <p style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--mycelium-d)', lineHeight:1.6, margin:'4px 0 10px' }}>Tap a member to expand toggles. Mixology and Extraction are enforced on those pages (/spore-gate.js), Community on the portal itself. Saved to the member's profile, so it follows them to every device and stays on after they sign out. Admins always bypass.</p>
         <div style={{ margin:'0 0 16px', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, overflow:'hidden' }}>
           {SporeData.MEMBERS.map((m, i, arr) => {
             const r = currentRestrictions(m);
@@ -4769,10 +4788,48 @@ const DMCenter = (typeof window !== 'undefined' && window.SporeDM && window.Spor
 // use below is guarded, so the Admin page still renders without them.
 const PortalKeeper = (typeof window !== 'undefined' && window.PortalKeeper) || null;
 
-function SectionFallbackNav({ tab, onTab, isAdmin }) {
+// Ranks that host events — the same list as fa_can_host_events()
+// in supabase-event-hosts.sql.
+const EVENT_HOST_RANKS = ['facilitator', 'alchemist', 'founder'];
+
+// Root for an event host: the Event manager, and nothing else — no
+// inventory, restrictions, ranks or orders.
+function HostRootPage({ onToast }) {
+  return (
+    <div className="page-enter">
+      <div className="section">
+        <div className="section-eyebrow">Root &middot; event hosts</div>
+        <h2 className="section-title">Your <em>events.</em></h2>
+        <p className="section-blurb" style={{ marginTop:6 }}>
+          As a Facilitator or Alchemist you can create, edit and cancel events and read their guest lists.
+          Everything else down here stays with the keepers.
+        </p>
+      </div>
+      {PortalKeeper
+        ? <PortalKeeper.EventsEditor onToast={onToast} freqColors={FREQ_COLORS} canDelete={false} />
+        : <p className="section-blurb" style={{ margin:'0 16px' }}>The Event manager did not load. Reload the page.</p>}
+    </div>
+  );
+}
+
+// "Community" restricted by a keeper: the portal stays closed to them.
+function RestrictedScreen({ name, onLogout }) {
+  return (
+    <div className="page-enter" style={{ minHeight:'70vh', display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ maxWidth:480, textAlign:'center' }}>
+        <div className="section-eyebrow" style={{ color:'#E16B6B' }}>Restricted &middot; spore network</div>
+        <h2 className="section-title">The portal is <em>closed</em> for {name || 'this profile'}.</h2>
+        <p className="section-blurb" style={{ marginTop:10 }}>A keeper has restricted portal access on your profile. If this is unexpected, write to robin@fungai.art.</p>
+        <button className="btn" style={{ marginTop:18 }} onClick={onLogout}>Sign out</button>
+      </div>
+    </div>
+  );
+}
+
+function SectionFallbackNav({ tab, onTab, role }) {
   const PS = window.PortalSections;
   const items = PS
-    ? [PS.ORGANISM, ...PS.visibleFor(isAdmin ? 'admin' : 'member').ring]
+    ? [PS.ORGANISM, ...PS.visibleFor(role).ring]
     : [{ id:'home', label:'Dashboard' }, { id:'network', label:'Network' }, { id:'calendar', label:'Calendar' },
        { id:'shop', label:'Members shop' }, { id:'members', label:'Hyphae' }];
   return (
@@ -5157,6 +5214,7 @@ function App() {
             // session field next time the cloud token expires.
             email: user?.email || mine?.email || null,
           })); } catch {}
+          rememberDeviceGate(match);
           // Sunday Myco nudge — drops the founder's reminder into the inbox
           // exactly once per Sunday. Safe to call any day; no-ops on M–Sat.
           try {
@@ -5219,6 +5277,7 @@ function App() {
               cloudId: null,
               email: user.email,
             })); } catch {}
+            rememberDeviceGate({ ...match, admin: true });
             // Best-effort: link the profile to this auth.uid in the
             // background so future loads via fetchMine succeed.
             (async () => {
@@ -5357,7 +5416,18 @@ function App() {
   const isAdmin = faIsAdmin(currentMember);
   const PS = window.PortalSections;
   const rankBlocked = !isAdmin && PS && !PS.allows(PS.minRankForTab(tab), memberRank);
-  const view = (tab === 'admin' && !(isAdmin && currentMember.admin)) || rankBlocked ? 'home' : tab;
+  // Facilitators and Alchemists host events: they open Root too, and
+  // find only the Event manager there (Robin, 2026-09-27). The database
+  // enforces it — supabase-event-hosts.sql.
+  const keeper  = isAdmin && currentMember.admin;
+  const canHost = keeper || EVENT_HOST_RANKS.indexOf(memberRank) !== -1;
+  const ringRole = isAdmin ? 'admin' : canHost ? 'host' : 'member';
+  const view = (tab === 'admin' && !canHost) || rankBlocked ? 'home' : tab;
+  // "Restrict features → Community" (Admin page). It was saved but
+  // never enforced anywhere.
+  const communityBlocked = !isAdmin && Array.isArray(currentMember.restrictions)
+    && currentMember.restrictions.indexOf('community') !== -1;
+  if (communityBlocked) return <RestrictedScreen name={currentMember.name} onLogout={handleLogout} />;
 
   return (
     <div className="app">
@@ -5374,10 +5444,10 @@ function App() {
           ring shrinks into this spot, where the tab row and the
           HEALTH / FLOW / ACTIVITY strip used to be. */}
       {FairyRing ? (
-        <FairyRing role={isAdmin ? 'admin' : 'member'} active={view} compact={view !== 'home'} onNavigate={navigate}
+        <FairyRing role={ringRole} active={view} compact={view !== 'home'} onNavigate={navigate}
                    rank={memberRank} badges={{ admin: keeperAlerts ? keeperAlerts.count : 0, members: dmUnread }} />
       ) : (
-        <SectionFallbackNav tab={view} onTab={navigate} isAdmin={isAdmin} />
+        <SectionFallbackNav tab={view} onTab={navigate} role={ringRole} />
       )}
 
       {view === 'home'     && <PortalDashboard currentMember={currentMember} isAdmin={isAdmin} onNavigate={navigate} />}
@@ -5385,7 +5455,9 @@ function App() {
       {view === 'calendar' && <CalendarPage economy={economy} onToast={onToast} />}
       {view === 'shop'     && <ApothecaryPage economy={economy} onToast={onToast} />}
       {view === 'members'  && <MembersPage currentMember={currentMember} economy={economy} />}
-      {view === 'admin'    && <AdminPage onToast={onToast} currentMember={currentMember} />}
+      {view === 'admin'    && (keeper
+        ? <AdminPage onToast={onToast} currentMember={currentMember} />
+        : <HostRootPage onToast={onToast} />)}
 
       <div className="app-footer">
         <ProceduralMark size={32} />

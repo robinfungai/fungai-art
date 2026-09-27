@@ -462,6 +462,51 @@
       font-family:var(--font-mono); font-size:11px;
     }
   </style>
+<!-- ══ MEMBERS ONLY, with a preview (Robin, 2026-09-27) ═════════════
+     A visitor who is not signed in sees #acPreview — what the Academy
+     is, a taste of it, and the way in — and none of the library. The
+     class is set here, before first paint, from the member snapshot
+     the portal keeps; the script at the foot of the page then asks
+     Supabase, so a member who signed in elsewhere is let straight in.
+     This is a curtain, like /code-gate.js: the page's own text is still
+     in its source. What is genuinely private — the PDFs and their text —
+     is locked in the database (supabase-academy-docs.sql). -->
+<script>
+(function () {
+  var m = null;
+  try { m = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null'); } catch (e) {}
+  if (!(m && m.id)) document.documentElement.classList.add('ac-preview');
+})();
+</script>
+<style id="ac-preview-css">
+  #acPreview { display: none; }
+  html.ac-preview #acPreview { display: block; }
+  html.ac-preview .wrap > :not(.nav):not(#acPreview):not(#myceliumCta):not(.footer) { display: none !important; }
+  html.ac-preview #fbFab, html.ac-preview #fbDrawer, html.ac-preview #fbOverlay, html.ac-preview #mycelGate { display: none !important; }
+  .acp-hero { padding: 72px 0 36px; max-width: 760px; }
+  .acp-eyebrow { font-family: var(--font-mono); font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: var(--nutrient); margin-bottom: 18px; }
+  .acp-title { font-family: var(--font-display); font-weight: 400; font-size: clamp(40px, 7vw, 72px); line-height: 1.02; color: var(--mycelium-l); letter-spacing: -.01em; }
+  .acp-title em { color: var(--nutrient-l); }
+  .acp-lede { margin-top: 22px; font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(18px, 2.2vw, 22px); line-height: 1.6; color: var(--mycelium); max-width: 60ch; }
+  .acp-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+  .acp-btn { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase; padding: 14px 24px; border-radius: 999px; text-decoration: none; border: 0.5px solid rgba(232,177,75,.5); color: var(--nutrient-l); background: rgba(232,177,75,.06); transition: background .2s, transform .2s; }
+  .acp-btn:hover { background: rgba(232,177,75,.14); transform: translateY(-1px); }
+  .acp-btn.is-primary { background: linear-gradient(135deg, #E8B14B, #C48838); color: #0d1610; border-color: transparent; font-weight: 600; }
+  .acp-sec { margin-top: 56px; }
+  .acp-sec-title { font-family: var(--font-display); font-style: italic; font-size: 28px; color: var(--mycelium-l); margin-bottom: 18px; }
+  .acp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+  .acp-card { padding: 20px 20px 22px; border: 0.5px solid var(--rule-strong); border-radius: 14px; background: linear-gradient(160deg, rgba(232,177,75,.05), rgba(10,9,8,.2)); }
+  .acp-card-glyph { font-size: 20px; color: var(--nutrient-l); margin-bottom: 12px; }
+  .acp-card-title { font-family: var(--font-display); font-size: 20px; color: var(--mycelium-l); margin-bottom: 8px; }
+  .acp-card p { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 15.5px; line-height: 1.6; color: var(--mycelium); }
+  .acp-card .acp-fig { font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--spore-l); margin-top: 12px; }
+  .acp-trads { display: flex; flex-wrap: wrap; gap: 10px; }
+  .acp-trad { padding: 10px 16px; border-radius: 999px; border: 0.5px solid var(--rule-strong); font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 16px; color: var(--mycelium-l); }
+  .acp-trad span { font-family: var(--font-mono); font-style: normal; font-size: 9.5px; letter-spacing: .12em; color: var(--mycelium-d); margin-left: 8px; }
+  .acp-taste { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  .acp-place { margin-top: 56px; padding: 26px 24px; border-left: 2px solid rgba(232,177,75,.45); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 18px; line-height: 1.7; color: var(--mycelium); max-width: 68ch; }
+  .acp-place a { color: var(--nutrient-l); text-decoration: none; border-bottom: 0.5px solid rgba(245,214,137,.4); }
+</style>
 <script src="/global-nav.js" defer></script>
 <!-- Supabase client. MUST stay above the inline scripts below: they call
      `await window.SBready`, and until 2026-09-23 this tag sat at the very
@@ -649,13 +694,75 @@
     </div>
   </nav>
 
+  <!-- ══ PREVIEW · what a visitor sees (html.ac-preview) ════════════ -->
+  <section id="acPreview" aria-labelledby="acpTitle">
+    <div class="acp-hero">
+      <div class="acp-eyebrow">The Alchemy Academy &middot; for members of the network</div>
+      <h1 class="acp-title" id="acpTitle">Where the network learns to make <em>medicine by hand.</em></h1>
+      <p class="acp-lede">
+        Five extraction methods, <span data-academy="traditions">five</span> living traditions, a
+        <span data-academy="herb-count">240</span>-plant materia medica, whole protocols in our library,
+        and a lab notebook we write together at the bench &mdash; between a lab in Berlin and the forests of Sweden.
+      </p>
+      <div class="acp-cta">
+        <a class="acp-btn is-primary" href="/community/#signin">Sign in to enter &rarr;</a>
+        <a class="acp-btn" href="/members#become">Become a thread</a>
+      </div>
+    </div>
+
+    <div class="acp-sec">
+      <div class="acp-sec-title">Inside the Academy</div>
+      <div class="acp-grid">
+        <div class="acp-card"><div class="acp-card-glyph">⚗</div><div class="acp-card-title">The five methods</div>
+          <p>Spagyric, cold extract, decoction, double extraction, oleoresin &mdash; each with its ratio, its timing, and the philosophy of why it works.</p></div>
+        <div class="acp-card"><div class="acp-card-glyph">◈</div><div class="acp-card-title">Living traditions</div>
+          <p>Ayurveda, Chinese medicine, the Amazon and the Andes, the fertile crescent, and the European folk craft of forest, hedge and shore.</p></div>
+        <div class="acp-card"><div class="acp-card-glyph">▤</div><div class="acp-card-title">The library</div>
+          <p>Whole extraction protocols and course modules, read right in the page &mdash; and read by MYCO too, so it answers from our own practice.</p></div>
+        <div class="acp-card"><div class="acp-card-glyph">⌬</div><div class="acp-card-title">The lab notebook</div>
+          <p>What members observe at the bench, chapter by chapter: macerations, spagyrics, contraindications, field notes.</p>
+          <div class="acp-fig" data-academy-live="lab-notes"></div></div>
+        <div class="acp-card"><div class="acp-card-glyph">△</div><div class="acp-card-title">MYCO</div>
+          <p>Our research companion. It answers from the Fungai Art knowledge base, cites what it read, and says so when a question falls outside it.</p></div>
+        <div class="acp-card"><div class="acp-card-glyph">✦</div><div class="acp-card-title">Formula book &amp; snippets</div>
+          <p>Every formula you build in the Herbal Engine, kept; and small notes, gifts and sparks shared across the network.</p></div>
+      </div>
+    </div>
+
+    <div class="acp-sec">
+      <div class="acp-sec-title">The traditions, today</div>
+      <div class="acp-trads">
+        <div class="acp-trad">European Folk<span data-academy="count-european">96 plants</span></div>
+        <div class="acp-trad">Ayurvedic<span data-academy="count-ayurveda">39 plants</span></div>
+        <div class="acp-trad">Chinese medicine<span data-academy="count-tcm">23 plants</span></div>
+        <div class="acp-trad">Amazonian &amp; Andean<span data-academy="count-amazonian">15 plants</span></div>
+        <div class="acp-trad">Mesopotamian<span data-academy="count-mesopotamian">14 plants</span></div>
+      </div>
+    </div>
+
+    <div class="acp-sec">
+      <div class="acp-sec-title">A taste</div>
+      <div class="acp-taste">
+        <div class="ayur-herb"><div class="ayur-h-name">Chaga <span class="ayur-h-lat">Inonotus obliquus</span></div><div class="ayur-h-desc">Sterile conk of wounded birch. The silent alchemist of Nordic medicine &mdash; dual-extracted, water and ethanol, to draw both lineages of compound.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Guayusa <span class="ayur-h-lat">Ilex guayusa</span></div><div class="ayur-h-desc">Kichwa and Shuar dawn tea, drunk before vision-fasts to sharpen perception.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Saffron <span class="ayur-h-lat">Crocus sativus</span></div><div class="ayur-h-desc">Stigmas of the autumn crocus. Persian origin; treasured since the Minoans, weight for weight the most valuable spice.</div></div>
+      </div>
+    </div>
+
+    <p class="acp-place">
+      The Academy is one room of <a href="/community/">the Spore portal</a> &mdash; with the calendar of dinners and
+      ceremonies, the living map of the network, the members' apothecary and private messages. Members walk
+      between them freely. <a href="/members">What membership includes &rarr;</a>
+    </p>
+  </section>
+
   <div class="hero">
     <div class="hero-eyebrow">The Alchemy Academy &middot; Fungai Art</div>
     <h1 class="hero-title">The library of <em>practice.</em></h1>
     <p class="hero-blurb">
-      Five extraction methods, four living traditions, a 212-plant materia
-      medica, and a notebook the network writes together. <em>Open to anyone &mdash;
-      members can contribute notes, formulas, and snippets.</em>
+      Five extraction methods, <span data-academy="traditions">five</span> living traditions, a <span data-academy="herb-count">240</span>-plant materia
+      medica, and a notebook the network writes together. <em>For members of the
+      network &mdash; every member can contribute notes, formulas, and snippets.</em>
     </p>
     <div class="hero-chips">
       <a href="#methods" class="hero-chip">⚗ Methods</a>
@@ -766,19 +873,19 @@
 
   <div class="trad-bubbles" id="tradBubbles">
     <div class="trad-bubble" data-go="ayurveda" role="button" tabindex="0" aria-label="Open Ayurvedic tradition">
-      <div class="b-icon">🪷</div><div class="b-label">Ayurvedic</div><div class="b-sub">India</div>
+      <div class="b-icon">🪷</div><div class="b-label">Ayurvedic</div><div class="b-sub">India<br/><span data-academy="count-ayurveda">39 plants</span></div>
     </div>
     <div class="trad-bubble" data-go="tcm" role="button" tabindex="0" aria-label="Open TCM tradition">
-      <div class="b-icon">☯</div><div class="b-label">TCM</div><div class="b-sub">China</div>
+      <div class="b-icon">☯</div><div class="b-label">TCM</div><div class="b-sub">China<br/><span data-academy="count-tcm">23 plants</span></div>
     </div>
     <div class="trad-bubble" data-go="amazonian" role="button" tabindex="0" aria-label="Open Amazonian and Andean tradition">
-      <div class="b-icon">🌿</div><div class="b-label">Amazonian<br/>&amp; Andean</div><div class="b-sub">South America</div>
+      <div class="b-icon">🌿</div><div class="b-label">Amazonian<br/>&amp; Andean</div><div class="b-sub">South America<br/><span data-academy="count-amazonian">15 plants</span></div>
     </div>
     <div class="trad-bubble" data-go="mesopotamian" role="button" tabindex="0" aria-label="Open Mesopotamian tradition">
-      <div class="b-icon">𒀭</div><div class="b-label">Mesopotamian</div><div class="b-sub">Levant · Persia</div>
+      <div class="b-icon">𒀭</div><div class="b-label">Mesopotamian</div><div class="b-sub">Levant · Persia<br/><span data-academy="count-mesopotamian">14 plants</span></div>
     </div>
     <div class="trad-bubble" data-go="european" role="button" tabindex="0" aria-label="Open European Folk tradition">
-      <div class="b-icon">🍄</div><div class="b-label">European<br/>Folk</div><div class="b-sub">Forest · field</div>
+      <div class="b-icon">🍄</div><div class="b-label">European<br/>Folk</div><div class="b-sub">Forest · field<br/><span data-academy="count-european">96 plants</span></div>
     </div>
     <div class="trad-bubble" data-go="all" role="button" tabindex="0" aria-label="Show all traditions">
       <div class="b-icon">◈</div><div class="b-label">All traditions</div><div class="b-sub">Open everything</div>
@@ -958,6 +1065,120 @@
         <div class="ayur-herb"><div class="ayur-h-name">Valerian <span class="ayur-h-lat">Valeriana officinalis</span></div><div class="ayur-h-desc">Cat's-favourite root. GABAergic nervine, sleep anchor. Smells like old socks; works like a quiet hand on the chest. Backbone of Robin's Sleepy Sleepy blend.</div></div>
       </div>
     </div>
+    <!-- academy:european:start -->
+    <!-- Generated by scripts/build-academy.cjs from data/academy/european/ — edit the data, not this block. -->
+    <div class="ayur-cat">
+      <div class="ayur-cat-title">Nordic Trees &middot; <em>bark, sap, needle and nut</em></div>
+      <div class="ayur-list">
+        <div class="ayur-herb"><div class="ayur-h-name">Birch <span class="ayur-h-lat">Betula pendula</span></div><div class="ayur-h-desc"><em>Björk</em> in Swedish. Parts used: sap (spring), leaves, catkins, bark fungi.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Linden / Lime <span class="ayur-h-lat">Tilia cordata</span></div><div class="ayur-h-desc"><em>Lind</em> in Swedish. Parts used: flowers, young leaves. Flowers June–July. Sedative, respiratory.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Rowan <span class="ayur-h-lat">Sorbus aucuparia</span></div><div class="ayur-h-desc"><em>Rönn</em> in Swedish. Parts used: berries (after frost). Cook only — raw mildly toxic.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Maple <span class="ayur-h-lat">Acer platanoides</span></div><div class="ayur-h-desc"><em>Skogslönn</em> in Swedish. Parts used: sap (early spring), young leaves.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Bird Cherry <span class="ayur-h-lat">Prunus padus</span></div><div class="ayur-h-desc"><em>Hägg</em> in Swedish. Parts used: flowers, berries (bitter, small quantities).</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Beech <span class="ayur-h-lat">Fagus sylvatica</span></div><div class="ayur-h-desc"><em>Bok</em> in Swedish. Parts used: beechnuts (autumn), young leaves (spring).</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Norway Spruce <span class="ayur-h-lat">Picea abies</span></div><div class="ayur-h-desc"><em>Gran</em> in Swedish. Parts used: young shoots, needles, resin.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Oak <span class="ayur-h-lat">Quercus robur</span></div><div class="ayur-h-desc"><em>Skogsek</em> in Swedish. Parts used: acorns (leached), oak galls (tannin).</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Hazel <span class="ayur-h-lat">Corylus avellana</span></div><div class="ayur-h-desc"><em>Hassel</em> in Swedish. Parts used: hazelnuts (August–October).</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Swedish Whitebeam <span class="ayur-h-lat">Sorbus intermedia</span></div><div class="ayur-h-desc"><em>Oxel</em> in Swedish. Parts used: berries (autumn).</div></div>
+      </div>
+    </div>
+    <div class="ayur-cat">
+      <div class="ayur-cat-title">Meadow, Hedge &amp; Field &middot; <em>the wild pantry</em></div>
+      <div class="ayur-list">
+        <div class="ayur-herb"><div class="ayur-h-name">Lilac <span class="ayur-h-lat">Syringa vulgaris</span></div><div class="ayur-h-desc"><em>Syren</em> in Swedish. Parts used: flowers (edible, decorative). May.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Wild Garlic / Ramsons <span class="ayur-h-lat">Allium ursinum</span></div><div class="ayur-h-desc"><em>Ramslök</em> in Swedish. Parts used: leaves, flowers, bulbs. Beech forest floors April–May. Brief season.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Ground Elder <span class="ayur-h-lat">Aegopodium podagraria</span></div><div class="ayur-h-desc"><em>Kirskål</em> in Swedish. Parts used: young leaves (spring). Medieval gout remedy. Invasive garden weed.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Cow Parsley <span class="ayur-h-lat">Anthriscus sylvestris</span></div><div class="ayur-h-desc"><em>Hundkäx</em> in Swedish. Parts used: young leaves (spring ONLY — do not confuse with hemlock). <strong style="color:#E8714B;">⚠ ID carefully</strong>.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Ground Ivy <span class="ayur-h-lat">Glechoma hederacea</span></div><div class="ayur-h-desc"><em>Jordreva</em> in Swedish. Parts used: leaves, stems. Bitter. Respiratory. Traditional brewing herb.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Meadowsweet <span class="ayur-h-lat">Filipendula ulmaria</span></div><div class="ayur-h-desc"><em>Älggräs</em> in Swedish. Parts used: flowers, leaves. Anti-inflammatory. Wetlands June–August.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Fireweed <span class="ayur-h-lat">Chamaenerion angustifolium</span></div><div class="ayur-h-desc"><em>Mjölke</em> in Swedish. Parts used: young shoots, leaves, flowers. Clearcuts. Young shoots edible like asparagus.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Angelica <span class="ayur-h-lat">Angelica archangelica</span></div><div class="ayur-h-desc"><em>Kvanne</em> in Swedish. Parts used: stems, seeds, root. <strong style="color:#E8714B;">⚠ Resemble hemlock — ID precisely</strong>.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Wood Sorrel <span class="ayur-h-lat">Oxalis acetosella</span></div><div class="ayur-h-desc"><em>Harsyra</em> in Swedish. Parts used: leaves, flowers. Sour, oxalic acid — small quantities.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Polypody Fern <span class="ayur-h-lat">Polypodium vulgare</span></div><div class="ayur-h-desc"><em>Stensöta</em> in Swedish. Parts used: rhizome (sweet). Traditional Nordic sweetener.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Mint <span class="ayur-h-lat">Mentha spp.</span></div><div class="ayur-h-desc"><em>Mynta</em> in Swedish. Parts used: leaves. Water mint most common in Sweden.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Chamomile <span class="ayur-h-lat">Matricaria chamomilla</span></div><div class="ayur-h-desc"><em>Kamomill</em> in Swedish. Parts used: flowers. Roadsides and fields June–September.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Cleavers / Goosegrass <span class="ayur-h-lat">Galium aparine</span></div><div class="ayur-h-desc"><em>Snärjmåra</em> in Swedish. Parts used: young shoots (spring). Lymphatic. Fresh ONLY.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Bog Myrtle <span class="ayur-h-lat">Myrica gale</span></div><div class="ayur-h-desc"><em>Pors</em> in Swedish. Parts used: leaves, catkins. Traditional beer herb. Avoid in pregnancy.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Greater Water Parsnip <span class="ayur-h-lat">Sium latifolium</span></div><div class="ayur-h-desc"><em>Strätta</em> in Swedish. Parts used: young leaves (coastal wetlands). <strong style="color:#E8714B;">⚠ Expert ID required</strong>. <strong style="color:#E8714B;">⚠ Lookalike of deadly water hemlock</strong>. The root is poisonous.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Meadow Vetchling <span class="ayur-h-lat">Lathyrus pratensis</span></div><div class="ayur-h-desc"><em>Gökärt</em> in Swedish. Parts used: young shoots (small quantities). Seeds mildly toxic in quantity.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Lady's Mantle <span class="ayur-h-lat">Alchemilla vulgaris</span></div><div class="ayur-h-desc"><em>Daggkåpa</em> in Swedish. Parts used: leaves, flowers. Astringent. Women's herb.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Tansy <span class="ayur-h-lat">Tanacetum vulgare</span></div><div class="ayur-h-desc"><em>Renfana</em> in Swedish. Parts used: flowers (small quantity only). <strong style="color:#E8714B;">⚠ Toxic in large amounts</strong>. Traditional insect repellent.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Orpine / Stonecrop <span class="ayur-h-lat">Hylotelephium telephium</span></div><div class="ayur-h-desc"><em>Kärleksört</em> in Swedish. Parts used: young leaves (spring). Succulent. Salads.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Herb Bennet <span class="ayur-h-lat">Geum urbanum</span></div><div class="ayur-h-desc"><em>Humleblomster</em> in Swedish. Parts used: root (clove-scented). Root flavours liqueurs traditionally.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Broadleaf Plantain <span class="ayur-h-lat">Plantago major</span></div><div class="ayur-h-desc"><em>Groblad</em> in Swedish. Parts used: leaves, seeds. Nutritive. Wound healing.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Bistort <span class="ayur-h-lat">Bistorta officinalis</span></div><div class="ayur-h-desc"><em>Ormrot</em> in Swedish. Parts used: young leaves, root. Traditional Easter pudding herb in England.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Shepherd's Purse <span class="ayur-h-lat">Capsella bursa-pastoris</span></div><div class="ayur-h-desc"><em>Lomme</em> in Swedish. Parts used: leaves, seeds, root. Year-round. Haemostatic.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Hairy Bittercress <span class="ayur-h-lat">Cardamine hirsuta</span></div><div class="ayur-h-desc"><em>Bergbräsma</em> in Swedish. Parts used: young leaves. Peppery. Early spring.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Garlic Mustard <span class="ayur-h-lat">Alliaria petiolata</span></div><div class="ayur-h-desc"><em>Löktrav</em> in Swedish. Parts used: young leaves, flowers. Garlic-flavoured. Beech edges.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Fat Hen <span class="ayur-h-lat">Chenopodium album</span></div><div class="ayur-h-desc"><em>Svinmålla</em> in Swedish. Parts used: young leaves. Spinach substitute. Nutritive.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Clustered Bellflower <span class="ayur-h-lat">Campanula glomerata</span></div><div class="ayur-h-desc"><em>Knölklocka</em> in Swedish. Parts used: young leaves. Edible. Meadows.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Heather <span class="ayur-h-lat">Calluna vulgaris</span></div><div class="ayur-h-desc"><em>Ljung</em> in Swedish. Parts used: flowers, tips. Traditional ale herb. Anti-bacterial.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Wild Caraway <span class="ayur-h-lat">Carum carvi</span></div><div class="ayur-h-desc"><em>Kummin</em> in Swedish. Parts used: seeds, young leaves. Best autumn-harvested seeds.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Wild Parsnip <span class="ayur-h-lat">Pastinaca sativa</span></div><div class="ayur-h-desc"><em>Palsternacka</em> in Swedish. Parts used: root (autumn). <strong style="color:#E8714B;">⚠ Sap causes photosensitivity burns — gloves</strong>.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Couch Grass <span class="ayur-h-lat">Elymus repens</span></div><div class="ayur-h-desc"><em>Kvickrot</em> in Swedish. Parts used: rhizome. Diuretic. Traditional kidney herb.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Violet <span class="ayur-h-lat">Viola spp.</span></div><div class="ayur-h-desc"><em>Viol</em> in Swedish. Parts used: flowers, leaves. Edible. Decorative. Mild respiratory use.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Common Daisy <span class="ayur-h-lat">Bellis perennis</span></div><div class="ayur-h-desc"><em>Tusensköna</em> in Swedish. Parts used: flowers, young leaves. Anti-inflammatory. Wound herb.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Common Chickweed <span class="ayur-h-lat">Stellaria media</span></div><div class="ayur-h-desc"><em>Våtarv</em> in Swedish. Parts used: leaves, stems. Year-round. Cooling, anti-itch.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Chicory <span class="ayur-h-lat">Cichorium intybus</span></div><div class="ayur-h-desc"><em>Cikoria</em> in Swedish. Parts used: root (roasted coffee), leaves, flowers. Dalarna and coastal Sweden. August–October.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">St. John's Wort <span class="ayur-h-lat">Hypericum perforatum</span></div><div class="ayur-h-desc"><em>Äkta johannesört</em> in Swedish. Parts used: flowers (harvest solstice). Harvest midsummer. <strong style="color:#E8714B;">⚠ Interacts with many medicines — the contraceptive pill, antidepressants, blood thinners. Ask a pharmacist first.</strong></div></div>
+      </div>
+    </div>
+    <div class="ayur-cat">
+      <div class="ayur-cat-title">Wild Berries &middot; <em>the forest floor in fruit</em></div>
+      <div class="ayur-list">
+        <div class="ayur-herb"><div class="ayur-h-name">Wild Strawberry <span class="ayur-h-lat">Fragaria vesca</span></div><div class="ayur-h-desc"><em>Smultron</em> in Swedish. Parts used: berries, leaves. June–July. Intense flavour.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Crowberry <span class="ayur-h-lat">Empetrum nigrum</span></div><div class="ayur-h-desc"><em>Kråkbär</em> in Swedish. Parts used: berries. Year-round (persist through winter). Arctic berry.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Cranberry <span class="ayur-h-lat">Vaccinium oxycoccos</span></div><div class="ayur-h-desc"><em>Tranbär</em> in Swedish. Parts used: berries. Bogs — harvest October–February.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Bilberry <span class="ayur-h-lat">Vaccinium myrtillus</span></div><div class="ayur-h-desc"><em>Blåbär</em> in Swedish. Parts used: berries, leaves. July–September. Leaves medicinal year-round.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Lingonberry <span class="ayur-h-lat">Vaccinium vitis-idaea</span></div><div class="ayur-h-desc"><em>Lingon</em> in Swedish. Parts used: berries. August–October. Leaves year-round.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Raspberry <span class="ayur-h-lat">Rubus idaeus</span></div><div class="ayur-h-desc"><em>Hallon</em> in Swedish. Parts used: berries, leaves. July–August. Leaf tea year-round.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Cloudberry <span class="ayur-h-lat">Rubus chamaemorus</span></div><div class="ayur-h-desc"><em>Hjortron</em> in Swedish. Parts used: berries. July–August only. Northern Sweden and bogs.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Rosehip <span class="ayur-h-lat">Rosa canina</span></div><div class="ayur-h-desc"><em>Nypon</em> in Swedish. Parts used: hips. September–November. Highest vitamin C.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Sea Buckthorn <span class="ayur-h-lat">Hippophae rhamnoides</span></div><div class="ayur-h-desc"><em>Havtorn</em> in Swedish. Parts used: berries. August–February. Coastal. Vitamin C champion.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Sloe <span class="ayur-h-lat">Prunus spinosa</span></div><div class="ayur-h-desc"><em>Slånbär</em> in Swedish. Parts used: berries (after frost). October–November. Hedges.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Aronia / Chokeberry <span class="ayur-h-lat">Aronia melanocarpa</span></div><div class="ayur-h-desc"><em>Aronia</em> in Swedish. Parts used: berries. August–September.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Bog Bilberry <span class="ayur-h-lat">Vaccinium uliginosum</span></div><div class="ayur-h-desc"><em>Odon</em> in Swedish. Parts used: berries. August–September. Bogs. Larger than bilberry.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Dewberry <span class="ayur-h-lat">Rubus saxatilis</span></div><div class="ayur-h-desc"><em>Stenbär</em> in Swedish. Parts used: berries. August. Rocky forest. Tart.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Blackberry <span class="ayur-h-lat">Rubus fruticosus</span></div><div class="ayur-h-desc"><em>Björnbär</em> in Swedish. Parts used: berries, leaves. August–September. Leaves for tannin tea.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Gooseberry <span class="ayur-h-lat">Ribes uva-crispa</span></div><div class="ayur-h-desc"><em>Krusbär</em> in Swedish. Parts used: berries. Wild gooseberry. Tart.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Juniper Berry <span class="ayur-h-lat">Juniperus communis</span></div><div class="ayur-h-desc"><em>Enbär</em> in Swedish. Parts used: ripe dark berries (2-year berries only). October. Diuretic, antimicrobial.</div></div>
+      </div>
+    </div>
+    <div class="ayur-cat">
+      <div class="ayur-cat-title">Forest Fungi &middot; <em>what the mycelium sends up</em></div>
+      <div class="ayur-list">
+        <div class="ayur-herb"><div class="ayur-h-name">Chanterelle <span class="ayur-h-lat">Cantharellus cibarius</span></div><div class="ayur-h-desc"><em>Kantarell</em> in Swedish. Parts used: fruiting body. June–October. Conifer + birch forests.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Porcini / Cep <span class="ayur-h-lat">Boletus edulis</span></div><div class="ayur-h-desc"><em>Karljohan</em> in Swedish. Parts used: fruiting body. August–October. Under spruce and pine.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Black Trumpet <span class="ayur-h-lat">Craterellus cornucopioides</span></div><div class="ayur-h-desc"><em>Trumpetsvamp</em> in Swedish. Parts used: fruiting body. August–October. Deciduous forest floor.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Oyster Mushroom <span class="ayur-h-lat">Pleurotus ostreatus</span></div><div class="ayur-h-desc"><em>Ostronmussling</em> in Swedish. Parts used: fruiting body. On dead wood. Autumn into winter.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Larch Bolete <span class="ayur-h-lat">Suillus grevillei</span></div><div class="ayur-h-desc"><em>Lärksopp</em> in Swedish. Parts used: fruiting body. Under larch trees only. July–October.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Slippery Jack <span class="ayur-h-lat">Suillus luteus</span></div><div class="ayur-h-desc"><em>Smörsopp</em> in Swedish. Parts used: fruiting body (peel cap). Pine forests. July–November.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Sandy Bolete <span class="ayur-h-lat">Suillus variegatus</span></div><div class="ayur-h-desc"><em>Sandsopp</em> in Swedish. Parts used: fruiting body. Dry pine heaths. July–October.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Funnel Chanterelle <span class="ayur-h-lat">Cantharellus tubaeformis</span></div><div class="ayur-h-desc"><em>Trattkantarell</em> in Swedish. Parts used: fruiting body. September–November. Misty forest.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Cauliflower Fungus <span class="ayur-h-lat">Sparassis crispa</span></div><div class="ayur-h-desc"><em>Blomkålssvamp</em> in Swedish. Parts used: fruiting body. At base of pine/fir. August–October.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Bay Bolete <span class="ayur-h-lat">Imleria badia</span></div><div class="ayur-h-desc"><em>Brunsopp</em> in Swedish. Parts used: fruiting body. July–November. Conifer forests.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Rough Bolete <span class="ayur-h-lat">Leccinum scabrum</span></div><div class="ayur-h-desc"><em>Strävsopp</em> in Swedish. Parts used: fruiting body. Under birch. July–October.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Herring Russula <span class="ayur-h-lat">Russula xerampelina</span></div><div class="ayur-h-desc"><em>Sillkremla</em> in Swedish. Parts used: fruiting body. Smells of shellfish when old.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Almond Russula <span class="ayur-h-lat">Russula grata</span></div><div class="ayur-h-desc"><em>Mandelkremla</em> in Swedish. Parts used: fruiting body. Smells of bitter almonds — cook well.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Saffron Milk Cap <span class="ayur-h-lat">Lactarius deliciosus</span></div><div class="ayur-h-desc"><em>Mandelriska</em> in Swedish. Parts used: fruiting body. Orange milk when cut. Excellent edible.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Bleeding Milk Cap <span class="ayur-h-lat">Lactarius deterrimus</span></div><div class="ayur-h-desc"><em>Blodriska</em> in Swedish. Parts used: fruiting body. Turns red when cut. Under spruce.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Parasol Mushroom <span class="ayur-h-lat">Macrolepiota procera</span></div><div class="ayur-h-desc"><em>Stolt fjällskivling</em> in Swedish. Parts used: cap only (cook). Meadows. August–October.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Sheep Polypore <span class="ayur-h-lat">Albatrellus ovinus</span></div><div class="ayur-h-desc"><em>Fårticka</em> in Swedish. Parts used: fruiting body. Pine forests. August–October.</div></div>
+      </div>
+    </div>
+    <div class="ayur-cat">
+      <div class="ayur-cat-title">Coast &amp; Shore &middot; <em>salt-marsh and strand</em></div>
+      <div class="ayur-list">
+        <div class="ayur-herb"><div class="ayur-h-name">Sea Kale <span class="ayur-h-lat">Crambe maritima</span></div><div class="ayur-h-desc"><em>Strandkål</em> in Swedish. Parts used: young shoots (spring), leaves. Coastal rocks. Blanch shoots.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Sea Lavender <span class="ayur-h-lat">Limonium vulgare</span></div><div class="ayur-h-desc"><em>Havssälting</em> in Swedish. Parts used: leaves, flowers. Salt marshes. Drying and preserving uses.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Sea Sandwort <span class="ayur-h-lat">Honckenya peploides</span></div><div class="ayur-h-desc"><em>Saltarv</em> in Swedish. Parts used: young leaves. Sandy coastal beaches.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Spear-leaved Orache <span class="ayur-h-lat">Atriplex prostrata</span></div><div class="ayur-h-desc"><em>Spjutmålla</em> in Swedish. Parts used: young leaves. Coastal. Salty spinach substitute.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Sea Orache <span class="ayur-h-lat">Atriplex littoralis</span></div><div class="ayur-h-desc"><em>Strandmålla</em> in Swedish. Parts used: young leaves. Saline coastal areas.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Sea Aster <span class="ayur-h-lat">Tripolium pannonicum</span></div><div class="ayur-h-desc"><em>Strandaster</em> in Swedish. Parts used: young leaves. Salt marshes.</div></div>
+        <div class="ayur-herb"><div class="ayur-h-name">Sea Violet <span class="ayur-h-lat">Cakile maritima</span></div><div class="ayur-h-desc"><em>Marviol</em> in Swedish. Parts used: young leaves, seed pods. Sandy coasts. Peppery sea rocket.</div></div>
+      </div>
+    </div>
+    <!-- academy:european:end -->
   </div>
 
   <!-- ══ MESOPOTAMIAN & LEVANTINE HERBS ═══════════════════════════════════
@@ -2049,7 +2270,9 @@ function buildLabNotebook() {
     // Auto-expand any chapter that already has entries — that way notes
     // are visible the moment the page loads. Chapters with no entries stay
     // collapsed so the section doesn't feel overwhelming.
-    const bodyOpen = hasEntries;
+    // A chapter holding PDFs opens too (academy-docs.js).
+    const docCount = (window.AcademyDocs && isSignedIn) ? window.AcademyDocs.count(ch.id) : 0;
+    const bodyOpen = hasEntries || docCount > 0;
     // Admin can rename / delete custom chapters they (or any admin)
     // created. Hardcoded chapters can't be renamed from the UI — they
     // live in the HTML source. The stopPropagation calls prevent the
@@ -2078,6 +2301,7 @@ function buildLabNotebook() {
         <div class="lab-ch-toggle" id="lab-toggle-${ch.id}">${bodyOpen ? '▴' : '▾'}</div>
       </div>
       <div class="lab-ch-body" id="lab-body-${ch.id}" style="display:${bodyOpen ? 'block' : 'none'}">
+        <div class="lab-docs" id="docs-${ch.id}"></div>
         ${saveBlock}
         <div class="lab-entries" id="entries-${ch.id}"></div>
       </div>
@@ -2087,6 +2311,10 @@ function buildLabNotebook() {
 
     // Render the entries into the now-visible body
     if (hasEntries) renderEntries(ch.id);
+    // Whole PDFs for this chapter — members read, keepers attach.
+    if (window.AcademyDocs && isSignedIn) {
+      try { window.AcademyDocs.render(ch.id, document.getElementById('docs-' + ch.id), isAdmin); } catch (_) {}
+    }
 
     // Live character count — only when the textarea exists
     if (isSignedIn) {
@@ -3139,6 +3367,8 @@ function lnMoveNote(fromCat, id, toCat){
      endpoint the Spore portal uses — the portal's agent.jsx needs React +
      Babel, which this page does not load, so only the UI is new. -->
 <script src="/community/academy/myco-academy.js" defer></script>
+<!-- Whole PDFs in the lab notebook, which MYCO reads for members. -->
+<script src="/community/academy/academy-docs.js" defer></script>
 <script src="/cookie-banner.js" defer></script>
 <script>
 // ── Formula book drawer ──────────────────────────────────────────────
@@ -3232,6 +3462,38 @@ function lnMoveNote(fromCat, id, toCat){
       submit.disabled = false; submit.textContent = 'Send me the way in';
     }
   });
+})();
+</script>
+<script>
+// Members only · the second half of the check in <head>. A live Supabase
+// session lets a member in even when the portal's snapshot is missing
+// (signed in on /community/academy/ directly, a fresh device).
+(function () {
+  function letIn() { document.documentElement.classList.remove('ac-preview'); }
+  (async function () {
+    try { if (window.SBready) await window.SBready; } catch (e) {}
+    try {
+      var s = window.SBauth ? await window.SBauth.getSession() : null;
+      if (s) letIn();
+      if (window.SBauth && window.SBauth.onAuthChange) {
+        window.SBauth.onAuthChange(function (e) { if (e && e.session) letIn(); });
+      }
+    } catch (e) {}
+    // How many notes the network has written — a count, never their text.
+    try {
+      var el = document.querySelector('[data-academy-live="lab-notes"]');
+      if (el && window.SBclient) {
+        var r = await window.SBclient.from('lab_notes').select('id', { count: 'exact', head: true });
+        if (!r.error && r.count) el.textContent = r.count + ' notes written so far';
+      }
+    } catch (e) {}
+  })();
+  // The materia medica count, live: the Engine's catalogue as it stands
+  // now (the build writes the same number into the page).
+  fetch('/herb-engine-ids.json', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (list) {
+    if (!Array.isArray(list) || !list.length) return;
+    document.querySelectorAll('[data-academy="herb-count"]').forEach(function (el) { el.textContent = list.length; });
+  }).catch(function () {});
 })();
 </script>
 <!-- page-view beacon · no cookie, no visitor id, honours DNT (public/visit.js) -->
