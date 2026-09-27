@@ -293,6 +293,8 @@ const HERBS = [
     best_preparation:
       'Standardised extract (5% withanolides) most researched and reliable. Extract for flexible daily use. Traditional root powder with warm milk or ghee for rasayana protocol. Always cycle: 8–12 weeks on, 2–4 weeks off. Screen for thyroid, autoimmune and immunosuppressant status before recommending.',
     caution_level: 'MEDIUM-HIGH',
+    cns_action: 'calming',
+    cns_evidence: 'Withanolides. Randomised trial in insomnia and anxiety (PMID 31728244); meta-analysis for anxiety and stress (PMID 36017529). Calming by day rather than hypnotic.',
     safe_pregnancy: false,
     status:
       'CRITICAL screening required: absolute contraindication in hyperthyroidism, autoimmune disease and immunosuppressants. Avoid in pregnancy. Otherwise exceptional adaptogen with 100+ RCTs. Effects develop over 4–12 weeks. Cycling protocol recommended. One of the most researched herbs in the world for stress resilience, anxiety and vitality.',
@@ -448,6 +450,8 @@ const HERBS = [
     best_preparation:
       'Standardised extract (20% bacosides) most researched and reliable. Always take with meals and dietary fat (coconut oil, nut butter, ghee) for bacoside absorption. Extract for convenient daily use — still take with food. Combine with Ginkgo and Rosemary for a comprehensive cognitive trinity. Minimum 4–8 week commitment before assessing effects.',
     caution_level: 'LOW',
+    cns_action: 'calming',
+    cns_evidence: 'Bacosides. Meta-analysis of randomised trials: better memory and speed of attention (PMID 24252493). A calming medhya rasayana in Ayurveda; not sedating.',
     safe_pregnancy: null,
     status:
       'Grade A safety — 3000+ years Ayurvedic use with excellent safety profile. No dependence, tolerance or withdrawal. Exceptional for memory, learning, cognitive clarity and neuroprotection. Fat-soluble — must take with meals. Effects cumulative over 4–12 weeks. Long-term indefinite use safe and beneficial.',
@@ -606,6 +610,8 @@ const HERBS = [
     best_preparation:
       'Whole cooked barley grain for food-medicine use — soups, stews, porridges. Barley grass powder in smoothies or water for antioxidant and micronutrient support. β-glucan concentrate for targeted cholesterol protocols. Position primarily as food-medicine rather than extract. Screen for gluten status before recommending.',
     caution_level: 'LOW',
+    cns_action: 'neutral',
+    cns_evidence: 'Contains GABA as a nutrient, but dietary GABA is thought to cross the blood-brain barrier poorly. No sedative action.',
     safe_pregnancy: null,
     status:
       'Very safe food-medicine for gluten-tolerant individuals. EFSA-recognised health claim for LDL lowering. Excellent for cardiometabolic support, glycaemic smoothing, gut microbiota and general nutritive nourishment. Screen for coeliac, gluten sensitivity and IBS. Effects cumulative over 6–12 weeks.',
@@ -686,6 +692,8 @@ const HERBS = [
     best_preparation:
       'Ceremonial infusion with mindful preparation and clear intention — the intention-setting ritual enhances effects. Extract in warm water for convenient use. Fresh petals preferred over dried when available (more aromatic alkaloid compounds). Journal dreams immediately upon waking for integration. Use in safe, quiet, dark space with 2–4 hours free. Combine with Mugwort or Passionflower for enhanced dreamwork protocols.',
     caution_level: 'HIGH',
+    cns_action: 'sedative',
+    cns_evidence: 'Aporphine alkaloids (nuciferine, apomorphine). A case series of emergency admissions describes sedation and perceptual disturbances (PMID 34345890); product safety survey PMID 37894493.',
     safe_pregnancy: false,
     status:
       'Absolute contraindication in psychosis and breastfeeding. Avoid in pregnancy. Not for daily use. Exceptional for intentional dreamwork, meditation deepening, heart-opening and consciousness exploration when used with clear intention, proper setting and integration practices. Effects 30–60 min onset; 4–6 hours duration.',
@@ -767,6 +775,8 @@ const HERBS = [
     best_preparation:
       'For those who choose to use: North American variety only (lower β-asarone); maximum 0.5 g per occasion; infrequent ceremonial use only (monthly at most). Decoction: simmer 0.3–0.5 g dried rhizome 5–10 minutes. Strong recommendation: consider Blue Lotus or Mugwort as safer consciousness alternatives, and Bacopa or Ginkgo as safer cognitive alternatives.',
     caution_level: 'VERY HIGH',
+    cns_action: 'sedative',
+    cns_evidence: 'Asarones. Animal work describes alpha-asarone as a CNS depressant; its hallucinogen reputation is anecdotal. Toxicology review PMID 33236787 (beta-asarone is genotoxic in animals). Restricted: never in a bottle.',
     safe_pregnancy: false,
     status:
       'RESTRICTED HERB — neurotoxicity concern (β-asarone) dominates modern safety analysis. Banned as food additive in USA; restricted in EU (max 0.5 g/day). Absolute contraindication in pregnancy, breastfeeding and seizure disorders. Not for daily or long-term use. Traditional wisdom is real, but safer alternatives exist for all applications. Use only with full awareness of neurotoxicity risk and regulatory status.',
@@ -1158,6 +1168,8 @@ const HERBS = [
     best_preparation:
       'Decoction for traditional emotional support and daily use. Extract for convenience. Best combined with therapeutic support (counselling, grief work) for deep emotional processing. Ceremonial visionary work requires experienced facilitation and integration practices. Ethical sourcing from sustainable wild-crafted sources critical.',
     caution_level: 'MEDIUM-HIGH',
+    cns_action: 'psychoactive',
+    cns_evidence: 'No study in PubMed (searched 2026-09-27). Classed on its Amazonian ceremonial use as a dream and visionary plant, as its own record describes; the effect is unproven.',
     safe_pregnancy: false,
     status:
       'Absolute contraindication in pregnancy. SSRIs/SNRIs require careful monitoring and psychiatric consultation. Exceptional for emotional heart-opening, grief processing and heart-centred consciousness work in appropriate contexts with proper support. Traditional evidence rich; modern pharmacology limited. Research grade C.',
@@ -1552,6 +1564,8 @@ const HERBS = [
     best_preparation:
       'Extract for consistent daily use. Tea for ritual preparation 1–2 hours before. Works most powerfully when combined with intention and embodiment practice. Pairs beautifully with Catuaba for a comprehensive sexual vitality protocol, and with Rose or Hawthorn for heart-centred sensual work.',
     caution_level: 'LOW-MEDIUM',
+    cns_action: 'calming',
+    cns_evidence: 'Traditional nervine and aphrodisiac (review of the genus PMID 24468305). No human CNS trial.',
     safe_pregnancy: null,
     status:
       'Very safe at standard doses with 400+ years traditional use. Excellent for sexual vitality, confidence, embodied presence and mood elevation. Caution in pregnancy. Moderate evidence base; traditional use extensive. Effects develop over 2–4 weeks of consistent use with cumulative baseline improvement.',
@@ -1799,6 +1813,8 @@ const HERBS = [
     best_preparation:
       'Ceremonial tea with clear intention setting before bed — intention shapes the dream trajectory. Extract in warm water for convenient preparation. Journal dreams immediately upon waking for integration. Use in safe, quiet sleeping environment. Combine with Mugwort for amplified dream protocols.',
     caution_level: 'HIGH',
+    cns_action: 'psychoactive',
+    cns_evidence: 'Oneirogen. In a controlled nap study it deepened only the light stages of sleep, caused more awakenings and more dream reports than placebo or diazepam (PMID 3821139).',
     safe_pregnancy: false,
     status:
       'Absolute contraindication in psychosis, bipolar disorder, dissociative disorders and severe depression without therapeutic support. Not for daily use. Excellent for intentional dream work, lucid dreaming and visionary exploration when used with proper psychiatric screening, clear intention and integration practices.',
@@ -1958,6 +1974,8 @@ const HERBS = [
     best_preparation:
       'Extract from sustainably sourced bark for convenient daily use. Decoction for traditional preparation. Always verify sustainable sourcing. Pairs powerfully with Damiana for a comprehensive sexual vitality protocol. Best taken consistently over 2–4 weeks for cumulative baseline improvement rather than acute single-dose use.',
     caution_level: 'LOW-MEDIUM',
+    cns_action: 'activating',
+    cns_evidence: 'In mice, an antidepressant-like effect through dopaminergic mechanisms (PMID 15991001, 21801825). No human CNS trial.',
     safe_pregnancy: null,
     status:
       'Generally safe with 400+ years traditional use. Excellent for sexual vitality, confidence and energy building. Caution in pregnancy and with cardiovascular conditions. Sustainability: wild-harvested Amazonian herb — support sustainably sourced products only. Effects cumulative over 2–4 weeks.',
@@ -2118,6 +2136,8 @@ const HERBS = [
     best_preparation:
       'Fresh or dried flower infusion as daily tea — most pleasant, most traditional, most safe for long-term use. Honey enhances the soothing effect. Blended with Passionflower for enhanced sleep support. Topical poultice or compress for skin healing. Extract for convenient dosing.',
     caution_level: 'LOW',
+    cns_action: 'calming',
+    cns_evidence: 'Apigenin binds the benzodiazepine site of GABA-A receptors. Meta-analysis of sleep trials (PMID 39106912); long-term randomised trial in generalised anxiety (PMID 27912875). Mild.',
     safe_pregnancy: true,
     status:
       'Grade A safety and efficacy — clinically proven safe and effective for anxiety, sleep, digestion and immune support. Suitable for all ages including pregnancy, breastfeeding and infants under guidance. No significant contraindications or drug interactions at standard doses. One of the most universally well-tolerated herbs in the world.',
@@ -2901,6 +2921,8 @@ const HERBS = [
     best_preparation:
       'ETHNOBOTANICAL REFERENCE ONLY. This monograph exists for educational completeness. The app does not recommend, facilitate or provide dosing guidance for coca leaf use outside legally sanctioned Andean traditional contexts.',
     caution_level: 'VERY HIGH',
+    cns_action: 'stimulant',
+    cns_evidence: 'Cocaine and related tropane alkaloids, which block monoamine reuptake (reviews PMID 6379304, 31640255). Restricted: never in a bottle.',
     safe_pregnancy: false,
     status:
       'ETHNOBOTANICAL REFERENCE ONLY — not an active extract recommendation. Schedule I internationally. Illegal outside Andean countries. Ethical concerns: non-traditional demand supports illicit cocaine supply chains. Educational context only.',
@@ -3216,6 +3238,9 @@ const HERBS = [
     best_preparation:
       'NOT FOR RECOMMENDATION. Reference herb only for educational context. Always redirect to safer alternatives.',
     caution_level: 'VERY HIGH',
+    cns_action: 'stimulant',
+    cns_evidence: 'Ephedrine and pseudoephedrine, sympathomimetic amines that raise heart rate and blood pressure (human pharmacokinetic study PMID 9055137; review PMID 31644021).',
+    formula_access: 'pro',
     safe_pregnancy: false,
     status:
       'BANNED/RESTRICTED — DO NOT RECOMMEND. Ephedra sinica banned USA (2004 FDA), restricted/banned EU and many countries. Documented deaths from cardiac adverse effects. Grade F safety. Always redirect to safer alternatives for respiratory (Eucalyptus), energy (Guayusa/Guarana) and immune-respiratory (Elderflower) support.',
@@ -3764,6 +3789,8 @@ const HERBS = [
     best_preparation:
       'Korean Red Ginseng (standardised extract) for maximum potency. American Ginseng for sensitive individuals. Morning use only. Cycling protocol (8–12 weeks on, 2–4 weeks off). Screen for stimulant sensitivity, hypertension, diabetes, oestrogen-sensitive conditions before recommending.',
     caution_level: 'MEDIUM',
+    cns_action: 'activating',
+    cns_evidence: 'Ginsenosides. Not a sympathomimetic, but in a randomised trial in chronic fatigue it improved mental fatigue scores (PMID 23613825). Counted with the stimulants because it is used and felt as energising.',
     safe_pregnancy: false,
     status:
       'Grade A adaptogenic and energy evidence (200+ studies). Excellent for qi tonification, stress resilience, energy, cognitive and sexual function. Morning use essential. Cycling protocol recommended. Screen for stimulant sensitivity. 4000+ years traditional use. One of the most researched herbs in the world.',
@@ -3920,6 +3947,8 @@ const HERBS = [
     best_preparation:
       'Standardised extract for reliable cognitive and venous dosing. Tea for daily ritual use. CYP450 screening non-negotiable — consult pharmacist before combining with medications. Combine with Bacopa and Lion\'s Mane for comprehensive cognitive nourishment protocol.',
     caution_level: 'MEDIUM',
+    cns_action: 'calming',
+    cns_evidence: 'Clinical study in generalised anxiety disorder: PMID 20677602.',
     safe_pregnancy: null,
     status:
       'Grade B+ cognitive and venous insufficiency evidence (100+ studies). CRITICAL: CYP450 inhibition — pharmacist consultation mandatory if on medications. Liver caution. Excellent herb when screened appropriately. Minimum 4–8 weeks for cognitive benefit. Cycling recommended.',
@@ -4075,6 +4104,8 @@ const HERBS = [
     best_preparation:
       'Standardised extract for controlled and predictable caffeine dosing — whole seed is highly variable. L-Theanine combination for smoother focused stimulation. ACUTE USE ONLY — never daily. Contraindication screening non-negotiable before recommending.',
     caution_level: 'MEDIUM-HIGH',
+    cns_action: 'stimulant',
+    cns_evidence: 'Caffeine-rich seed (more caffeine by weight than coffee beans), an adenosine-receptor antagonist. Meta-analysis of its cognitive effects: PMID 36678305.',
     safe_pregnancy: false,
     status:
       'Grade A acute stimulation efficacy. ACUTE USE ONLY — 2–3 times weekly maximum; daily use creates tolerance and dependency. Five absolute contraindications (hypertension, anxiety, insomnia, heart conditions, stimulant medications) must be screened. Excellent tool for specific acute demand situations in appropriate populations.',
@@ -4159,6 +4190,8 @@ const HERBS = [
     best_preparation:
       'Fresh leaf tea is optimal — most potent, most aromatic, most sacred in preparation. Cycling protocol (8–12 weeks on, 2–4 weeks off). Thyroid and diabetes medication monitoring mandatory. Combine with Ashwagandha and Rhodiola for a powerful adaptogenic stress resilience stack.',
     caution_level: 'MEDIUM',
+    cns_action: 'calming',
+    cns_evidence: 'Controlled trial in generalised anxiety disorder: PMID 19253862.',
     safe_pregnancy: null,
     status:
       'Grade B+ adaptogenic and anxiolytic evidence (100+ studies). CRITICAL monitoring: TSH if on levothyroxine; blood sugar if on diabetes medications. 5000+ years sacred traditional use. Excellent for stress resilience, anxiety without sedation, anti-inflammation and immune modulation. Cycling recommended.',
@@ -4243,6 +4276,8 @@ const HERBS = [
     best_preparation:
       'Evening use only for sedative purposes. Extract in 65% ethanol for best bitter acid extraction. Classic combination with Valerian for sleep — most evidence-based pairing. Screen for depression and oestrogen-sensitive conditions before recommending. Short-term use preferred for acute insomnia; monitor mood with longer use.',
     caution_level: 'MEDIUM',
+    cns_action: 'sedative',
+    cns_evidence: 'Humulone and xanthohumol act at GABA-A receptors in animal work (PMID 39522843); the human sleep evidence is for valerian and hops together (randomised trial PMID 40462685).',
     safe_pregnancy: false,
     status:
       'Grade B+ sleep and anxiolytic evidence. Excellent for wired-but-tired patterns, stress-related insomnia and nervous tension with underlying fatigue. CRITICAL: avoid in depression (hops depression risk); avoid in oestrogen-sensitive conditions; avoid in pregnancy. Evening use only. Best combined with Valerian for sleep protocols.',
@@ -4400,6 +4435,8 @@ const HERBS = [
     best_preparation:
       'Morning tea for energy and cognitive clarity. Traditional lucid dreaming protocol: steeped 4–5 hours before intended sleep (specific timing essential). Contraindication screening identical to Guarana required. Not for daily use — tolerance develops.',
     caution_level: 'MEDIUM-HIGH',
+    cns_action: 'stimulant',
+    cns_evidence: 'A caffeine-bearing holly leaf. Randomised dose-response trial on mood, cognition, blood pressure and heart rate: PMID 39014963; novel-food safety review PMID 31366209.',
     safe_pregnancy: false,
     status:
       'Excellent for acute mental energy, cognitive clarity and lucid dreaming protocols. Same contraindication profile as Guarana (hypertension, anxiety, heart conditions, stimulant medications are absolute contraindications). Unique lucid dreaming application when used with traditional timing. Not for daily use.',
@@ -4482,6 +4519,8 @@ const HERBS = [
     best_preparation:
       'Standardised extract for cardiovascular protocols — most reliable dosing. Tea as daily ritual for emotional and preventive use. Medical supervision essential if significant cardiac history. Minimum 8 weeks — this is a slow, cumulative herb. Combine with Linden and Rose for heart-centred emotional and physical protocol.',
     caution_level: 'LOW-MEDIUM',
+    cns_action: 'neutral',
+    cns_evidence: 'Cardiotonic flavonoids; no sedative or stimulant action on the brain.',
     safe_pregnancy: null,
     status:
       'Grade A safety; Grade B+ cardiovascular efficacy. German Commission E monograph. One of the safest and most evidence-supported cardiovascular herbs. Medical supervision important if on cardiac medications. Minimum 8 weeks for benefit. Profound emotional and physical heart herb — one of the most beloved in Western herbal tradition.',
@@ -4731,6 +4770,8 @@ const HERBS = [
     best_preparation:
       'Extract for reliable leonurine extraction and convenient dosing. Fresh-herb extract at peak bloom for highest potency. Cycle-aware timing: follicular phase for menstrual regulation; throughout cycle for heart and anxiety support. Postpartum use: weeks 2–12 after bleeding stabilises. Pairs definitively with Hawthorn for comprehensive heart medicine.',
     caution_level: 'MEDIUM',
+    cns_action: 'calming',
+    cns_evidence: 'Traditional remedy for nervous heart complaints; review of its sedative and hypotensive pharmacology, mostly preclinical (PMID 23042598).',
     safe_pregnancy: null,
     status:
       'Grade A safety with appropriate screening. Grade B cardiovascular and palpitation evidence. Absolute contraindication in first trimester. Menorrhagia caution. Excellent as long-term foundational herb for women\'s reproductive, cardiac and emotional work. Daytime appropriate. Cumulative benefit over 2–4 weeks, full menstrual tonification over 3–6 months.',
@@ -4810,6 +4851,8 @@ const HERBS = [
     best_preparation:
       'NOT FOR RECOMMENDATION. Addiction medicine reference only. If asked by a client, provide non-addictive alternatives and offer to help find appropriate professional support.',
     caution_level: 'VERY HIGH',
+    cns_action: 'psychoactive',
+    cns_evidence: 'Mitragynine and 7-hydroxymitragynine are opioid-receptor agonists: stimulating at low doses, sedating and addictive at higher ones (PMID 38217374). Restricted: never in a bottle.',
     safe_pregnancy: false,
     status:
       "GRADE D — DO NOT RECOMMEND FOR CONSUMER SELF-CARE. Opioid-like addiction risk (physiological dependency in 2–8 weeks; withdrawal syndrome documented). No consumer wellness protocols. Safer pain relief alternatives: Devil's Claw, Black Cumin, Ginger. If client already using: addiction medicine referral + harm reduction protocol only.",
@@ -4970,6 +5013,8 @@ const HERBS = [
     best_preparation:
       'Aromatic inhalation (essential oil on tissue or diffuser) for acute anxiety — fastest route, seconds to minutes. Daily tea for foundational anxiety baseline. Diluted topical oil plus internal extract for tension headaches. Safe as a daily indefinite foundation herb for all populations. No drug screening necessary.',
     caution_level: 'LOW',
+    cns_action: 'calming',
+    cns_evidence: 'Oral lavender oil (Silexan) is anxiolytic in generalised-anxiety trials (PMID 28379882); network meta-analysis of essential oils for anxiety (PMID 37325306). Not sedating at those doses.',
     safe_pregnancy: null,
     status:
       'Grade A anxiolytic evidence (multiple RCTs; 30–40% anxiety reduction; comparable to benzodiazepines for mild anxiety). Grade A safety — 2000+ years global use. Universal nervine: daytime appropriate, all ages, all medications. The defining "calm-alert" herb. No drug interactions confirmed.',
@@ -5052,6 +5097,8 @@ const HERBS = [
     best_preparation:
       'Fresh herb extract for maximum viral support (highest rosmarinic acid). Daily tea for nervine and mood foundation. Cold sore protocol: topical fresh herb simultaneous with internal extract (synergistic). Safe in all populations including pregnancy, breastfeeding, children. No drug interaction screening required.',
     caution_level: 'LOW',
+    cns_action: 'calming',
+    cns_evidence: 'Rosmarinic acid inhibits GABA transaminase. Meta-analysis of clinical trials for anxiety and depression: PMID 34449930.',
     safe_pregnancy: true,
     status:
       'Grade A safety — German Commission E monograph. Food herb tradition with excellent safety record. Grade B anxiety and viral support (HSV). Unique paradoxical calm-uplift effect. Safe in pregnancy and breastfeeding. No drug interactions confirmed. Excellent everyday nervine for all populations.',
@@ -5134,6 +5181,8 @@ const HERBS = [
     best_preparation:
       'Longer steep (10–15 minutes) for full mucilage extraction — most soothing and complete preparation. Evening ritual tea for sleep. Daytime tea for anxiety management while maintaining full function. The definitive gentle nervine for children, elderly and sensitive individuals. No drug interaction screening necessary. Combines definitively with Hawthorn for the heart herb protocol.',
     caution_level: 'LOW',
+    cns_action: 'calming',
+    cns_evidence: 'Traditional nervine for tension and sleep; the evidence is from animal studies (review of anxiolytic and hypnotic flower extracts, PMID 37039741).',
     safe_pregnancy: true,
     status:
       'Grade A safety — universally safe; all populations, all ages, all medications. Grade B+ non-sedating anxiolytic evidence. Unique quality: maintains full alertness and cognitive function while reducing anxiety. Gets better with long-term consistent use. Excellent children\'s herb. The most gentle and universally applicable nervine in Western herbal tradition.',
@@ -5216,6 +5265,8 @@ const HERBS = [
     best_preparation:
       'Fresh flowers harvested at dusk (peak aromatic oil concentration) steeped in hot water — most potent and most ceremonially meaningful. Aromatic engagement is primary: slow sensory attention to scent, colour, taste and warmth transforms medicine into ritual. Evening use optimal for sleep and emotional opening.',
     caution_level: 'LOW',
+    cns_action: 'neutral',
+    cns_evidence: 'No oral trial. The one human study found jasmine oil on the skin raised alertness and blood pressure, the opposite of relaxing (PMID 20184043).',
     safe_pregnancy: false,
     status:
       'Grade A safety — centuries traditional use. Grade C emotional opening evidence (aromatherapy plausible mechanism; limited RCTs). Avoid in pregnancy. Excellent for emotional opening, mood elevation, sleep support and sensual pleasure. Aroma is the primary therapeutic vehicle.',
@@ -5369,6 +5420,8 @@ const HERBS = [
     best_preparation:
       'Fermented leaf (traditional Khoi preparation) for highest alkaloid concentration and most authentic effect. Standardised mesembrine extract for most reliable dosing. Screen for SSRIs, SNRIs, MAOIs and bipolar disorder before recommending. Not for pregnancy or breastfeeding without professional guidance.',
     caution_level: 'MEDIUM',
+    cns_action: 'calming',
+    cns_evidence: 'Mesembrine inhibits serotonin reuptake and PDE4; in a randomised trial Zembrin reduced experimentally induced anxiety (PMID 32761980; review PMID 34333104). Serotonergic: never with antidepressants or St John\'s Wort.',
     safe_pregnancy: null,
     status:
       'Grade B mood and anxiety evidence (mesembrine SSRI-like mechanism confirmed; RCTs emerging). CRITICAL: SSRI/SNRI serotonin monitoring; MAOI absolute contraindication; bipolar disorder consult. Non-addictive; no tolerance. Safe long-term for appropriate populations. Natural serotonin-supporting alternative.',
@@ -5450,6 +5503,8 @@ const HERBS = [
     best_preparation:
       'Traditional aqueous cold-water maceration of noble-cultivar peeled root only — this preparation appears safest based on available evidence. Liver function screening (ALT, AST) before use. Safer nervines (Passionflower, Linden, Lemon Balm, Oatstraw) offered as first-line alternatives; kava reserved for informed consent, short-term anxiolytic use with monitoring.',
     caution_level: 'HIGH',
+    cns_action: 'sedative',
+    cns_evidence: 'Kavalactones; anxiolytic in meta-analyses of randomised trials (PMID 10653213, 15934028). Additive with alcohol and sedative drugs.',
     safe_pregnancy: false,
     status:
       'Grade B+ anxiolytic efficacy (multiple RCTs). Grade B+ hepatotoxic risk (low incidence but serious — liver injury, failure and transplant cases documented). RESTRICTED HERB: mandatory liver screening; 3-month maximum; no alcohol; noble-cultivar aqueous root preparation only; never aerial parts or ethanol extracts. Safer nervines are first-line default.',
@@ -5693,6 +5748,8 @@ const HERBS = [
     best_preparation:
       'NOT FOR CONSUMER RECOMMENDATION. Redirect to safer respiratory alternatives. Reference herb only for historical and educational context.',
     caution_level: 'VERY HIGH',
+    cns_action: 'stimulant',
+    cns_evidence: 'Lobeline acts on nicotinic receptors; once sold as a respiratory stimulant, it was tested as a smoking-cessation aid without trial evidence of benefit (Cochrane PMID 22336780); toxicity review PMID 18516945.',
     safe_pregnancy: false,
     status:
       'RESTRICTED PRACTITIONER-ONLY HERB. Likely unsafe for internal consumer use. Narrow therapeutic window with documented toxicity at moderate doses. Multiple absolute contraindications. Safer alternatives exist for all indications. Not for consumer self-care app recommendation.',
@@ -5835,6 +5892,8 @@ const HERBS = [
     best_preparation:
       'Powder in morning smoothie — most convenient and sustainable. Gelatinised form for better digestibility. All-gender positioning: benefits arousal, desire and sexual response across all genders and orientations. Minimum 4–12 weeks for full benefit. Food-like herb: safe indefinitely.',
     caution_level: 'LOW',
+    cns_action: 'activating',
+    cns_evidence: 'Macamides and glucosinolates. Double-blind crossover trial on performance and fatigue (PMID 40960048); review PMID 38440178.',
     safe_pregnancy: null,
     status:
       'Grade A food safety (root vegetable; centuries traditional use). Grade B sexual vitality and hormone balance evidence (200+ studies). All-gender sexual vitality support. Cumulative 4–12 weeks for full benefit. Minimal contraindications. Excellent daily food-medicine foundation.',
@@ -5912,6 +5971,8 @@ const HERBS = [
     best_preparation:
       'Black root powder in morning smoothie or warm milk. Combine with Muira Puama for classical sexual vitality pairing. Screen prostate cancer history before recommending. Minimum 4–12 weeks for cumulative benefit.',
     caution_level: 'LOW',
+    cns_action: 'activating',
+    cns_evidence: 'The colour types of maca differ; black maca is the one studied for memory and energy (reviews PMID 31951246, 38398854).',
     safe_pregnancy: false,
     status:
       'Grade A food safety (root vegetable). Grade B male sexual vitality (emerging variety-specific research). Prostate cancer history: consult oncologist (testosterone-supporting but not -increasing). Minimum 4–12 weeks for full benefit. Male-specific Yang tonification and sexual vitality herb.',
@@ -6040,6 +6101,8 @@ const HERBS = [
       'Bleeding disorders — CAUTION: mild antiplatelet properties; monitor',
       'Warfarin — MONITOR INR: mild additive antiplatelet; coordinate with prescriber',
       'Chronic NSAID users — COORDINATE: can taper NSAIDs alongside meadowsweet (safer replacement); consult prescriber',
+      'Pregnancy and breastfeeding — NOT RECOMMENDED: no harm is documented, but safety has not been established and the EMA/HMPC monograph advises against use for lack of data (salicylate content)',
+      'Children and adolescents under 18 — NOT RECOMMENDED (EMA/HMPC monograph); salicylate-containing',
       'Otherwise: Grade A safety — medieval to modern use with no serious adverse events',
     ],
     herb_to_herb_synergy: [
@@ -6069,6 +6132,8 @@ const HERBS = [
     best_preparation:
       'Fresh herb extract for maximum potency. Tea for pleasant daily GI and pain support — the vanilla aroma makes this an enjoyable daily medicine. After-meals dosing for acid and GI benefit. Screen for aspirin sensitivity and Warfarin before recommending. Excellent NSAID alternative for long-term sustainable pain management.',
     caution_level: 'LOW-MEDIUM',
+    cns_action: 'neutral',
+    cns_evidence: 'Salicylates and flavonoids for the gut and for pain; no meaningful CNS action.',
     safe_pregnancy: null,
     status:
       'Grade A safety — medieval and modern use with no serious adverse events. Grade B digestive and anti-inflammatory evidence. The defining "stomach-safe pain relief" herb. NSAID alternative with added GI protection. Aspirin sensitivity caution. Warfarin monitoring. Safe long-term daily use.',
@@ -6230,6 +6295,8 @@ const HERBS = [
     best_preparation:
       'Covered infusion (preserves volatile oils) for evening dreamwork at low dose. Cycle-based protocols: menstrual work in luteal phase; digestive bitters before meals; dreamwork in 7-night cycles with breaks. HARD BLOCK in pregnancy — no exceptions. Screen Asteraceae allergy and seizure history.',
     caution_level: 'MEDIUM-HIGH',
+    cns_action: 'neutral',
+    cns_evidence: 'Dream-herb tradition, but no controlled human CNS study found (PubMed, 2026-09-27). Its thujone, where present, blocks GABA-A receptors, so it adds no sedative load.',
     safe_pregnancy: false,
     status:
       'Grade B digestive and menstrual evidence. Grade C dream enhancement (traditional and anecdotal; plausible neuroactive basis). Grade A pregnancy risk (emmenagogue — HARD BLOCK). Cyclic use essential (thujone). Asteraceae allergy and seizure screening mandatory. Excellent menstrual, digestive and dreamwork herb in appropriate populations.',
@@ -6390,6 +6457,8 @@ const HERBS = [
     best_preparation:
       'Decoction (bark or root simmered 15–20 minutes) for most complete traditional extraction. Pairs naturally with Maca and Oatstraw for a comprehensive sexual vitality and nervous system support protocol. Screen for cardiovascular disease and stimulant medication use. Always note that persistent ED may indicate underlying vascular disease — encourage medical evaluation.',
     caution_level: 'LOW-MEDIUM',
+    cns_action: 'activating',
+    cns_evidence: 'Amazonian nerve tonic. In mice it inhibits acetylcholinesterase and improves memory retrieval (PMID 12895682, 15507336). No human CNS trial.',
     safe_pregnancy: null,
     status:
       'Grade B- sexual function and libido (small human trials plus extensive traditional use). Grade C+ cognitive and anti-fatigue. Appropriate safety for moderate-term use in low-risk individuals. Cardiovascular screening required. Not a substitute for medical evaluation of persistent sexual dysfunction.',
@@ -6479,6 +6548,8 @@ const HERBS = [
     best_preparation:
       'Standardised seed extract is the reliable form — raw seed L-DOPA content swings widely with growing conditions. Take in the morning or early afternoon with food if nausea appears; keep away from protein-heavy meals, which compete for the same amino-acid transport. Always cycle. Screen for psychiatric medication, Parkinson\'s medication and bipolar history before recommending.',
     caution_level: 'HIGH',
+    cns_action: 'activating',
+    cns_evidence: 'The seed carries L-DOPA, the dopamine precursor; a 2025 randomised trial compared it with levodopa in Parkinson disease (PMID 40137945; review PMID 28599249). Dangerous with MAO inhibitors.',
     safe_pregnancy: false,
     status:
       'CRITICAL screening required: a genuine pharmacological dopamine precursor, not a gentle tonic. Absolute contraindication with MAOIs, Parkinson\'s medication, antipsychotics and psychiatric medication generally; avoid in bipolar or psychosis history and in pregnancy. Excluded automatically for anyone flagging psychiatric medication, and never offered to under-18s. Evidence is Grade B in Parkinson\'s disease and male infertility; general mood use is extrapolated from those, not directly studied.',
@@ -6631,6 +6702,8 @@ const HERBS = [
     best_preparation:
       'Overnight infusion (4–8 hours) using 1–2 oz per quart — this is the traditional "nourishing herbal infusion" preparation that extracts the full mineral content. Daily ritual over 3–6 months for burnout recovery. Certify gluten-free if celiac disease. No drug interactions. One of the safest and most universally applicable tonic herbs in Western herbalism.',
     caution_level: 'LOW',
+    cns_action: 'calming',
+    cns_evidence: 'Traditional nervine tonic. The human trials measured attention (Stroop, PMID 21711204) and EEG changes during concentration (PMID 21563962), not anxiety itself.',
     safe_pregnancy: true,
     status:
       'Grade A safety — food status; gluten caution only. Grade B+ nervine restorative (strong traditional use; clinical cognitive studies). Fundamentally different from acute nervines — works through slow mineral and nutritive rebuilding over weeks to months. Ideal for burnout, exhaustion, chronic stress and post-illness recovery.',
@@ -6798,6 +6871,8 @@ const HERBS = [
     best_preparation:
       'Fresh herb extract for highest potency. Evening timing for sleep support (30–60 minutes before bed is critical). Acute anxiety: keep extract accessible throughout the day for as-needed dosing. Screen for depression (monitor mood), CNS depressants and SSRIs. The non-addictive quality is the central clinical message — safe to use daily indefinitely, unlike any pharmaceutical equivalent.',
     caution_level: 'LOW-MEDIUM',
+    cns_action: 'sedative',
+    cns_evidence: 'Flavonoids with GABAergic activity. Polysomnography trial in insomnia (PMID 31714321); systematic review PMID 33352740.',
     safe_pregnancy: null,
     status:
       'Grade B anxiety evidence (multiple human RCTs; GABA mechanism confirmed). Grade A safety (300+ years; non-addictive; no dependence). Paradoxical calm-alert state is the defining quality. Screen depression, CNS depressants and SSRIs. Safe long-term daily use. The defining non-addictive benzodiazepine alternative.',
@@ -7035,6 +7110,8 @@ const HERBS = [
     best_preparation:
       'Standardised 3%+ rosvain extract — do not use unstandardised root powder; potency verification is non-negotiable given cost and safety stakes. Morning dosing only. Drug screening mandatory (SSRI, bipolar, MAOI — non-negotiable). Cycling protocol education: 8–12 weeks on, 2–4 week break. Realistic timeline: 8–12 weeks for full effect — set expectations clearly.',
     caution_level: 'HIGH',
+    cns_action: 'activating',
+    cns_evidence: 'Salidroside and rosavins. Systematic review for physical and mental fatigue (PMID 22643043); randomised trial on stress, anxiety and mood (PMID 26502953).',
     safe_pregnancy: false,
     status:
       'Grade A adaptogenic stress resilience (multiple robust RCTs). Grade A antidepressant for mild-moderate depression (SSRI-equivalent efficacy with fewer side effects). CRITICAL safety: bipolar HARD BLOCK; SSRI serotonin syndrome (especially paroxetine — documented). Stimulating — morning only. Cycling protocol mandatory. Extensive psychiatric screening required before every recommendation.',
@@ -7199,6 +7276,8 @@ const HERBS = [
     best_preparation:
       'Extract for cost-effective daily mood support; whole stigmas for ceremonial weekly ritual. Morning or evening (not stimulating; neutral timing). With fat-containing meals for absorption. Screen for anticoagulants (monitor INR) and SSRIs (monitor serotonin). CRITICAL timeline education: 4–8 weeks for mood effects — identical pace to pharmaceutical antidepressants. The no-sexual-side-effects advantage over SSRIs is the central clinical message for eligible clients.',
     caution_level: 'LOW',
+    cns_action: 'calming',
+    cns_evidence: 'Crocin and safranal. In a 2025 meta-analysis it matched SSRIs for depression and anxiety with fewer side effects (PMID 38913392; review PMID 25384672). Serotonergic.',
     safe_pregnancy: null,
     status:
       'Grade B mood elevation (multiple RCTs; SSRI-equivalent mechanism; no sexual dysfunction). Grade A safety (centuries use). 4–8 week timeline for mood effects. Key advantage over pharmaceutical SSRIs: no sexual dysfunction side effects. Screen anticoagulants (INR monitoring) and SSRIs (additive serotonin — monitor). Extract most cost-effective for long-term use.',
@@ -7278,6 +7357,8 @@ const HERBS = [
     best_preparation:
       'Decoction (heat extraction required) is non-negotiable for lignans. CYP450 drug interaction screening is the critical first step before recommending — verify medication list with prescriber. Educate on initial stimulation phase (weeks 1–4) as expected and manageable. Take with food (fat absorption). Morning dosing initially. One of the most rewarding long-term adaptogens when properly selected.',
     caution_level: 'MEDIUM-HIGH',
+    cns_action: 'activating',
+    cns_evidence: 'Lignans (schisandrins, gomisins). The adaptogen research behind its reputation describes it as raising work capacity (reviews PMID 34445021, 31431019); rodent work also shows longer barbiturate sleep, so the profile is mixed. Its own record says stimulating early.',
     safe_pregnancy: null,
     status:
       'Grade B+ adaptogenic properties (200+ studies; unique lignan mechanism; endurance evidence). Grade A CYP450 interaction risk — the defining safety concern. Decoction preparation essential. Initial stimulation phase (weeks 1–4): manage with morning dosing. CYP450 prescriber consultation mandatory before all recommendations involving prescription medications.',
@@ -7436,6 +7517,8 @@ const HERBS = [
     best_preparation:
       'Longer steep tea (10–15 minutes) for maximum baicalin extraction. DAYTIME USE ONLY — the non-sedating quality is the defining clinical value; evening use is appropriate only for anxiety-related insomnia (removes barriers without forcing sleep). No drug screening necessary — safe with all medications. Excellent gateway herb: safe, effective, non-sedating, pleasant; accessible introduction to herbal nervines for anxious individuals who cannot tolerate sedation.',
     caution_level: 'LOW',
+    cns_action: 'calming',
+    cns_evidence: 'Crossover randomised trial: mood improved from baseline on skullcap and not on placebo, though anxiety scores did not differ from placebo (PMID 23878109). Not sedating.',
     safe_pregnancy: null,
     status:
       'Grade B+ non-sedating anxiolytic (human trials emerging; GABA mechanism confirmed; long traditional evidence). Grade A safety — 200+ years; no serious adverse events; no drug interactions. The defining daytime non-sedating nervine. Cumulative 4–8 week toning effect. No tolerance or dependence. Improves with consistent long-term use. Safe indefinitely.',
@@ -7683,6 +7766,8 @@ const HERBS = [
     best_preparation:
       'Standardised 0.3% hypericin extract for consistent antidepressant efficacy. COMPREHENSIVE SCREENING MANDATORY before recommendation: full medication list review against CYP3A4/CYP2C9 interaction database; bipolar disorder or family history (HARD BLOCK); pregnancy/breastfeeding (BLOCK); transplant or immunosuppressant (ABSOLUTE CONTRAINDICATION). Oral contraceptive users must use backup contraception or switch. 4–8 week timeline education is non-negotiable — identical to pharmaceutical SSRIs. Best used in combination with psychotherapy and morning light exposure.',
     caution_level: 'HIGH',
+    cns_action: 'calming',
+    cns_evidence: 'Hyperforin inhibits reuptake of serotonin, noradrenaline and dopamine: an antidepressant, not a sedative, with major drug interactions (reviews PMID 36246064, 41465351).',
     safe_pregnancy: false,
     status:
       'Grade A antidepressant for mild-moderate depression (Cochrane meta-analysis; SSRI-equivalent; fewer side effects). Grade A drug interaction risk (CYP3A4 induction — 50%+ of medications affected). ABSOLUTE CONTRAINDICATIONS: SSRIs/MAOIs (serotonin syndrome), oral contraceptives (pregnancy risk), warfarin (clotting risk), immunosuppressants/transplant (organ rejection), bipolar disorder (mania). 4–8 week minimum for efficacy. Comprehensive drug screening mandatory every recommendation.',
@@ -8149,6 +8234,8 @@ const HERBS = [
     best_preparation:
       'Warm milk ritual is the defining preparation — 15 minutes of intentional warming, scraping the bean, adding honey, drinking slowly and without rushing. This is as much a nervous-system intervention as a herbal one. Aromatherapy for immediate acute anxiety: keep vanilla essential oil accessible. For anhedonia: combine with Cacao and Cardamom (pleasure-medicine triad). No screening required — safe for every population, no drug interactions. Position as the foundational pleasure tonic: begin herbal protocols with Vanilla when clients are disconnected from their capacity to receive.',
     caution_level: 'LOW',
+    cns_action: 'neutral',
+    cns_evidence: 'Its calming reputation rests on the aroma; no oral human trial found (PubMed, 2026-09-27).',
     safe_pregnancy: true,
     status:
       'Grade A sensory and emotional anxiolytic (RCT evidence; limbic mechanism confirmed). Grade B antioxidant and anti-inflammatory. Grade A safety — universally gentle; suitable all populations. No drug interactions. No contraindications except verified natural source requirement. The foundational pleasure and comfort herb of the library.',
@@ -8230,6 +8317,8 @@ const HERBS = [
     best_preparation:
       'Evening extract 30–60 minutes before bed is the most reliable delivery. Set the 2–4 week expectation clearly — clients who expect immediate results will abandon a herb that requires consistency to work. Optional afternoon dose helps "soften the landing" for anxious hypervigilant types. Screen for liver disease, pregnancy, CNS depressants and alcohol use. Cycling at 4–6 weeks: taper and rotate with other nervines (Skullcap, Passionflower) for chronic insomnia.',
     caution_level: 'LOW-MEDIUM',
+    cns_action: 'sedative',
+    cns_evidence: 'Valerenic acid modulates GABA-A receptors. Meta-analysis of sleep trials: PMID 33086877.',
     safe_pregnancy: false,
     status:
       'Grade A sleep improvement (EMA monograph; multiple RCTs). Grade B+ anxiolytic. Grade B antispasmodic. 2–4 weeks for full effect (set expectations). Maximum 4–6 weeks continuous high-dose; taper gradually. Screen for CNS depressants (additive sedation — coordinate with prescriber), liver disease, pregnancy (avoid). Non-habit-forming at appropriate doses. Rotate and cycle for long-term use.',
@@ -8312,6 +8401,8 @@ const HERBS = [
     best_preparation:
       'Extract 2–3 ml twice daily (late afternoon and evening) for burnout and ANS rebalancing. Bitter taste — combine with Lemon Balm in tea or extract blend for palatability and complementary action. For tension headache: acute dose of 2–4 ml at onset; tonic 1–3 ml twice daily long-term with Feverfew and magnesium. MANDATORY screening: pregnancy and trying to conceive (BLOCK/strong caution). Monitor CNS depressants, antiepileptics and very low BP.',
     caution_level: 'LOW-MEDIUM',
+    cns_action: 'calming',
+    cns_evidence: 'Anticonvulsant, anxiolytic and sedative in rodents (PMID 28066246). No human CNS trial.',
     safe_pregnancy: false,
     status:
       'Grade B anxiolytic and nervine (animal models plus strong traditional clinical use). Grade B-minus neuroprotection (in vitro; no human trials). Strong traditional evidence for burnout, tension headache, PMS-liver pattern and stress gut. BLOCK in pregnancy (uterine-stimulating reputation). Screen CNS depressants and antiepileptics. 4–8 weeks for full PMS and migraine effect.',
@@ -8472,6 +8563,8 @@ const HERBS = [
     best_preparation:
       'Infusion (tea) is the daily safest preparation — pleasant earthy flavour; portable; no combustion. Evening use for relaxation and pleasure ritual; daytime low-dose for paradoxical calm-alert work state. Pair with Passionflower for sleep or Lemon Balm for mood. EDUCATE clearly: non-intoxicating at normal doses — no impairment, no altered perception, clarity maintained. Screen for pregnancy and breastfeeding (likely avoid), liver disease (monitor). A herb for pleasure, presence and gentle joy — frame the ritual and intention as part of the medicine.',
     caution_level: 'LOW-MEDIUM',
+    cns_action: 'calming',
+    cns_evidence: 'Drunk and smoked in southern Africa, where its name means wild cannabis; used for epilepsy, headache and cramps (review PMID 26292023). No human CNS trial.',
     safe_pregnancy: false,
     status:
       'Grade C+ relaxation (mechanism emerging; centuries traditional use). Grade B safety (traditional use; well-tolerated; alkaloid content documented). Non-addictive; non-intoxicating at normal doses; paradoxical calm-alert; safe indefinite daily use. CAUTION: pregnancy (likely avoid), breastfeeding (likely avoid), liver disease (monitor). Educate on non-intoxicating nature clearly.',
@@ -8523,6 +8616,7 @@ const HERBS = [
       'Aspirin sensitivity or salicylate allergy — MONITOR: contains salicylates; discontinue if reaction (though often better tolerated than synthetic aspirin)',
       'Bleeding disorders — CAUTION: mild anticoagulant salicylate properties; monitor bleeding time',
       'Pregnancy — CAUTION: salicylate concern similar to aspirin; consult prenatal provider; likely avoid concentrated doses',
+      'Children and adolescents under 18 — CONTRAINDICATED (EMA/HMPC monograph); salicylate-containing',
       'Anticoagulants (Warfarin, DOACs) — MONITOR INR: mild additive anticoagulation; generally manageable with monitoring',
       'Other NSAIDs or aspirin — additive effect; may reduce need but consult prescriber before combining',
       'Surgery — discontinue 2 weeks before: mild anticoagulant effect',
@@ -8866,6 +8960,8 @@ const HERBS = [
     best_preparation:
       'Traditional mate gourd preparation for the full social and cultural dimension — this is an experience, not just a beverage. For clinical use: 2–4 g infusion 1–2× daily, morning to afternoon. For sensitive caffeine responders: start with 1–2 g (lower dose) and assess tolerance. MORNING TO AFTERNOON ONLY — non-negotiable. Screen for anxiety (monitor), cardiac arrhythmia (consult cardiologist), uncontrolled hypertension (consult prescriber) and pregnancy (minimise). The social ritual value enhances compliance and experience.',
     caution_level: 'LOW-MEDIUM',
+    cns_action: 'stimulant',
+    cns_evidence: 'Methylxanthines (caffeine, theobromine) in a caffeine-bearing holly (reviews PMID 18034743, 30213684).',
     safe_pregnancy: null,
     status:
       'Grade A energy and mental clarity (caffeine mechanism; extensive evidence). Grade B antioxidant (polyphenol confirmed). Grade A safety (1000+ years traditional use; safer than high-caffeine alternatives). MORNING TO AFTERNOON ONLY (stimulating). Lower caffeine than coffee = balanced energy without excessive jitteriness; safer for sensitive individuals. Screen anxiety (monitor), cardiac arrhythmia (consult cardiologist), hypertension (monitor), pregnancy (minimise caffeine). Social and ceremonial dimension is part of the therapeutic value.',
@@ -9329,6 +9425,8 @@ const HERBS = [
     best_preparation:
       'Cover the cup while steeping to preserve volatile aromatic oils (they are the primary therapeutic constituents and escape with steam). Cold infusion preserves even more volatiles — recommended for emotional and aromatic benefit. Rose-honey infusion for sore throat and grief ritual use is deeply effective and richly therapeutic. For PMS: combine with Vitex extract and Motherwort for hormonal plus emotional dual action. No drug interaction screening required. No contraindications beyond rare Rosaceae allergy. Rose is the easiest recommend in the entire library.',
     caution_level: 'LOW',
+    cns_action: 'calming',
+    cns_evidence: 'Meta-analysis of randomised trials for anxiety, depression and stress in adults: PMID 34405933.',
     safe_pregnancy: true,
     status:
       'Grade B anxiolytic and mood support (human studies plus traditional evidence). Grade B+ astringent and mucosal toning. Grade A safety — food and tea; suitable all populations including pregnancy, children, elderly. No drug interactions. Rare Rosaceae allergy is the only contraindication. Universal and gentle enough to include in virtually any emotional, nervous system or women\'s health formula.',
@@ -9821,6 +9919,8 @@ const HERBS = [
     best_preparation:
       'ALWAYS specify cultivated C. militaris — never wild O. sinensis (IUCN Red Listed; unnecessary given equivalent pharmacology). Morning or pre-workout dosing for peak effect. Screen for autoimmune disease and transplant (immune activation risk), anticoagulants (documented antiplatelet effect — stop 1–2 weeks before surgery), unstable cardiac disease and diabetes medications (monitor glucose). For CKD protocols: minimum 3 months under medical supervision with regular kidney function monitoring. The sustainable ethics framing (cultivated vs wild) is part of the therapeutic message.',
     caution_level: 'MEDIUM',
+    cns_action: 'activating',
+    cns_evidence: 'Cordycepin and other adenosine analogues; studied for fatigue and exercise capacity (reviews PMID 40608959, 29568244).',
     safe_pregnancy: false,
     status:
       'Grade A-minus ATP/energy metabolism (AMPK/GLUT4/PDH mechanism confirmed; strong animal data). Grade B exercise performance (human RCT). Grade B+ immunomodulation (human studies). Grade B CKD adjunct (RCTs plus 2025 meta-analysis). Grade B antiplatelet risk (documented in vitro and ex vivo). HARD ETHICAL BLOCK: always use cultivated C. militaris. Screen autoimmune disease, transplant, anticoagulants, diabetes medications. Morning dosing only.',
@@ -9978,6 +10078,8 @@ const HERBS = [
     best_preparation:
       'DATABASE ENTRY IS EDUCATIONAL AND TAXONOMIC ONLY. Do not include in any extract, beverage or supplement formulation. For educational content: describe taxonomy, ethnomycology and pharmacological mechanism. Clearly distinguish from psilocybin-containing mushrooms (different mechanism entirely). Always communicate that commercial muscimol products are an emerging public health risk with unregulated content and unpredictable toxicity.',
     caution_level: 'VERY HIGH',
+    cns_action: 'sedative',
+    cns_evidence: 'Muscimol, a potent GABA-A agonist, with ibotenic acid: sedative-hypnotic, and deliriant at higher doses (PMID 6130573, 37824402).',
     safe_pregnancy: false,
     status:
       'EDUCATIONAL AND TAXONOMIC ENTRY ONLY — NOT FOR THERAPEUTIC FORMULATION. Pharmacological archetype: GABA-A agonist (muscimol) plus NMDA/mGluR agonist (ibotenic acid). Mixed excitatory-depressive toxidrome. Fatalities documented. No approved clinical indications. Rising commercial products creating public health emergency. Hard block for all internal use recommendations.',
@@ -10048,6 +10150,8 @@ const HERBS = [
     best_preparation:
       'DATABASE ENTRY IS EDUCATIONAL AND TAXONOMIC ONLY. Absolutely do not include in any therapeutic formulation. More dangerous than A. muscaria due to higher and more variable alkaloid content. Misidentification with A. muscaria is a serious risk. Commercial products claiming to contain Amanita species may contain A. pantherina — this is an emerging public health hazard.',
     caution_level: 'VERY HIGH',
+    cns_action: 'sedative',
+    cns_evidence: 'The same isoxazoles as Amanita muscaria. Poisoning presents with CNS depression, ataxia and hallucinations (case report and review PMID 16564061).',
     safe_pregnancy: false,
     status:
       'EDUCATIONAL AND TAXONOMIC ENTRY ONLY — NOT FOR THERAPEUTIC FORMULATION. Poisonous mushroom. Higher alkaloid concentration than A. muscaria = narrower safety margin = more frequent severe poisonings. Fatal cases documented. Absolutely no therapeutic use. Hard block all recommendations.',
@@ -10886,6 +10990,8 @@ const HERBS = [
     best_preparation:
       'Dual extract is the optimal product form (captures both polysaccharides for immune/sleep and triterpenes for anti-inflammatory/CNS). Evening dosing for Shen calming and sleep. 2–8 week timeline education for full effect — frame as slow foundational medicine not acute intervention. Screen for transplant and strong immunosuppressants (immune enhancement contraindication), liver disease with heavy alcohol use (rare hepatotoxicity cases — choose standardised extracts), anticoagulants (mild triterpenoid effect — monitor INR) and hypotension (mild BP-lowering). Reishi is the anchor herb of any medicinal mushroom stack.',
     caution_level: 'LOW-MEDIUM',
+    cns_action: 'calming',
+    cns_evidence: 'Calms the spirit in Chinese medicine; promotes sleep in mice through a serotonin-involved pathway (PMID 34211003); review PMID 31777017.',
     safe_pregnancy: null,
     status:
       'Grade B sleep promotion (preclinical mechanism confirmed; emerging human data). Grade B+ immune modulation (12-week RCT confirmed; T cell, NK cell and IgA enhancement). Grade B anti-inflammatory and antioxidant. Grade B+ safety in healthy adults (RCTs and traditional use; isolated rare hepatotoxicity with high-dose unregulated powder plus alcohol). Screen transplant, immunosuppressants, liver disease, anticoagulants and hypotension. Dual extract preferred. Evening dosing for Shen calming.',
@@ -11439,6 +11545,8 @@ const HERBS = [
     best_preparation:
       'EDUCATIONAL AND RESEARCH-CONTEXTUAL ENTRY ONLY — this database entry describes the pharmacological, clinical and historical context of Psilocybe cubensis and psilocybin-assisted therapy for professional and educational purposes. In jurisdictions where licensed therapeutic services exist (Oregon psilocybin services, clinical trials, Dutch retreat contexts): the complete therapeutic protocol — psychiatric screening, preparation sessions, facilitated dosing session, integration support — is the medicine; the mushroom alone is not. MANDATORY CLINICAL SCREENING before any exposure: personal/family history of psychosis or schizophrenia (ABSOLUTE HARD BLOCK), bipolar I disorder (HARD BLOCK), cardiovascular conditions, active severe suicidality, current medications (especially SSRIs, MAOIs and lithium — serious interactions). Cultivated strain identification: all P. cubensis strains share the same pharmacology; alkaloid content varies significantly; standardised pharmaceutical psilocybin removes variability for clinical purposes.',
     caution_level: 'VERY HIGH',
+    cns_action: 'psychoactive',
+    cns_evidence: 'Psilocybin becomes psilocin, a 5-HT2A agonist (reviews PMID 42794483, 39412581). Restricted: never in a bottle.',
     safe_pregnancy: false,
     status: 'EDUCATIONAL AND RESEARCH-CONTEXTUAL ENTRY — legal status is Schedule I or equivalent in most jurisdictions. Multiple controlled human trials for TRD, MDD, cancer-related anxiety/depression, AUD and tobacco dependence. 5-HT2A agonism; DMN reduction; neuroplasticity confirmed. ABSOLUTE CONTRAINDICATIONS: personal/family psychosis or schizophrenia, bipolar I disorder. SERIOUS DRUG INTERACTIONS: MAOIs (serotonin syndrome risk), lithium (seizure risk), SSRIs/SNRIs (receptor downregulation). Low physiological toxicity; risk is psychological and contextual. Complete therapeutic protocol (preparation, session, integration) is the effective clinical unit. Only discuss in context of licensed therapeutic services or clinical trials.',
     // ── Quiz-matcher + composer-quality enrichment ──
@@ -11806,6 +11914,8 @@ const HERBS = [
   best_preparation:
     'Best as cooked syrup, oxymel, jam, conserve or dried berry decoction rather than raw berry use. Excellent in northern forest formulas with Rosehip, Nettle and dark berries. Position primarily as a traditional protective berry medicine and ritual food rather than a high-dose standardized supplement.',
   caution_level: 'LOW-MEDIUM',
+  cns_action: 'neutral',
+  cns_evidence: 'No CNS action. It used to be counted as a stimulant because the word search found "mate" inside "glutamate".',
   safe_pregnancy: null,
   status:
     'Traditional northern European protective berry with best use in properly prepared food-medicine forms. Valuable for astringent digestive support, antioxidant resilience and winter formulas. Avoid raw under-ripe use; cooked or dried preparations preferred.',
@@ -12306,6 +12416,8 @@ const HERBS = [
   best_preparation:
     'Decoction with Jujube and Goji as a daily blood-building tea. Extract for portable use. Cooked into rice porridges in TCM convalescence cooking. Sweet carrier in bitter herb formulas.',
   caution_level: 'LOW',
+  cns_action: 'calming',
+  cns_evidence: 'Calms the spirit in Chinese medicine; in mice, with jujube and lettuce, it improved sleep behaviour through GABAergic signalling (PMID 38201029).',
   safe_pregnancy: null,
   status:
     'Premier Heart-Spleen restorative for insomnia, post-illness depletion, and Blood deficiency. Easy to add to daily diet as food. The Damp-Heat caution is real but rarely a problem in cold-Northern climates.',
@@ -12599,6 +12711,8 @@ const HERBS = [
   best_preparation:
     'Cold infusion (overnight, never boiled — heat increases toxin extraction). Dried herb extract only. Internal use requires practitioner oversight. Topical and ritual use is the safest layperson approach. For cancer adjuvant work, only properly prepared pharmaceutical extracts under medical supervision.',
   caution_level: 'HIGH',
+  cns_action: 'calming',
+  cns_evidence: 'European folk nervine for nervousness, epilepsy and headache; review of its CNS evidence, mostly preclinical (PMID 30458281).',
   safe_pregnancy: false,
   status:
     'A profound plant medicine that lives at the edge of safe self-administration. Internal use deserves a practitioner. Ceremonial and symbolic use is unrestricted. The anthroposophic injectable lineage (Steiner) sits in a different clinical category and is established adjuvant oncology in parts of Europe.',
@@ -12739,6 +12853,8 @@ const HERBS = [
   best_preparation:
     'Traditionally: dried root powder whisked vigorously with water at sunrise on empty stomach, the foam (the active fraction) is drunk, then sleep is taken for dream incubation. Extract works for portable use. Approach as ceremony, not supplementation. Sourcing ethics are critical — wild-harvest pressure is severe; cultivated or ceremonial-supply chain only.',
   caution_level: 'MEDIUM-HIGH',
+  cns_action: 'psychoactive',
+  cns_evidence: 'Xhosa dream root. LC-MS/MS of Silene undulata reports harmala alkaloids (MAO inhibitors) and ibogaine; its serotonergic action is from docking only (PMID 38561607).',
   safe_pregnancy: false,
   status:
     'A sacred ceremonial plant of the Eastern Cape Xhosa lineage. Use as ritual, not recreation. Ethical sourcing is non-negotiable: wild populations are under severe pressure. Profound dream-work tool when held with respect.',
@@ -13113,6 +13229,8 @@ const HERBS = [
     best_preparation:
       'Classical ghee and milk preparations (Brahmi Ghrita) deliver her into the nervous system best; fresh juice or powder in warm milk at night for sleep onset. For tinctures, mid proof (40 to 50%). Pair with Brahmi for memory, with Jatamansi for anxiety and sleep. Screen every client for antiepileptic drugs before including her in a formula.',
     caution_level: 'MEDIUM',
+    cns_action: 'calming',
+    cns_evidence: 'Ayurvedic medhya herb; umbrella review of its anxiolytic and cognitive evidence (PMID 35878793).',
     safe_pregnancy: false,
     status:
       'Grade C cognition, anxiety and sleep support (animal data, small formula studies). Good general safety; the phenytoin interaction is real and documented. Authenticate the plant. Calming in days, cognitive over weeks.',
@@ -14144,6 +14262,8 @@ const HERBS = [
   spiritual_layer: 'Shiva\'s tears. The bead that holds the meditative current between the heart and the third eye. Sacred for sustained practice.',
   best_preparation: 'Mala (worn). Internal preparation: overnight water infusion of cleaned seeds.',
   caution_level: 'LOW', safe_pregnancy: null,
+  cns_action: 'calming',
+  cns_evidence: 'Traditional meditation aid. In rats the fruit extracts potentiated barbiturate sleep and acted like antidepressants (PMID 10641045).',
   // ── Quiz-matcher + composer-quality enrichment ──
   nervous_system_fit: ['wired', 'reactive'],
   energy_pattern: ['pm_stabilise'],
@@ -15643,6 +15763,8 @@ const HERBS = [
   spiritual_layer: 'Jiaogulan is the Southern Ginseng, the quiet observer of the forest floor. She does not force energy; she uncovers it. She teaches the body the forgotten language of balance, finding the exact point between exhaustion and overstimulation. She whispers: I am the deep well. I cool the engine and sustain the spark. I offer endurance without the fire.',
   best_preparation: 'Exceptional as a standalone water infusion (steeped at 80°C to preserve delicate volatile compounds). For clinical tincture, a standard hydroethanolic percolation (40–50% EtOH) efficiently captures the water-soluble and partially lipid-soluble gypenosides.',
   caution_level: 'LOW', safe_pregnancy: false,
+  cns_action: 'neutral',
+  cns_evidence: 'Gypenosides; an adaptogen without ginseng\'s stimulating effect, as its own record says. No CNS load.',
   status: 'A premier, non-stimulating adaptogen with profound metabolic and cardiovascular benefits. Increasingly utilized as a sustainable, cooling alternative to true Ginseng.',
   // ── Quiz-matcher + composer-quality enrichment ──
   // 'calming' → pm_stabilise · 'moistening' → demulcent · 'metabolic system' → whole · 'East Asian' → Chinese
@@ -15980,6 +16102,8 @@ const HERBS = [
   spiritual_layer: 'Bitter orange is the great disperser. It shatters stagnation in the physical and energetic gut. It teaches that energy must not pool and rot; it must be broken open and circulated.',
   best_preparation: 'Hydroethanolic extraction (60–70% EtOH) captures both the essential oil fractions and the alkaloid (synephrine) profile efficiently. Avoid boiling the volatile essential oils if using for respiratory or mood applications.',
   caution_level: 'HIGH', safe_pregnancy: false,
+  cns_action: 'stimulant',
+  cns_evidence: 'p-Synephrine, an adrenergic amine sold as an ephedra substitute. A 2022 meta-analysis found it raises blood pressure and heart rate with prolonged use (PMID 36235672; review PMID 28752649).',
   status: 'A powerful Qi-mover and the modern industry standard for ephedra-free thermogenesis. Requires precise formulation to avoid cardiovascular overstimulation.',
   // 'moving/descending/breaking' → am_boost (daytime thermogenic) · 'adipose tissue' → whole · 'East Asian' → Chinese
   energy_pattern: ['am_boost'],
@@ -16361,6 +16485,8 @@ const HERBS = [
   spiritual_layer: 'Yohimbe is the lightning strike in the dark forest. It forces awake the dormant, dragging the primal fire up from the root to the heart. It does not ask for permission; it demands movement. It teaches that raw, untamed energy is dangerous if the vessel is not strong enough to hold the current.',
   best_preparation: 'Standardized extracts (HCl form or standardized bark extract) are necessary for safety. Traditional decoctions of the raw bark are notoriously unpredictable due to vast variations in alkaloid concentration across different trees. If using bark, boil gently at 90°C for 30 minutes with ascorbic acid to increase alkaloid solubility.',
   caution_level: 'HIGH', safe_pregnancy: false,
+  cns_action: 'stimulant',
+  cns_evidence: 'Yohimbine blocks alpha-2 adrenoceptors and so raises noradrenaline: anxiety, higher blood pressure and heart rate. Toxicity report and review: PMID 22432773.',
   status: 'A highly potent, clinically validated alpha-2 antagonist with a narrow therapeutic window; side effects (tachycardia, anxiety) are common. LEGAL NOTE: yohimbine is prescription-only in Germany and restricted in food supplements across much of the EU — verify jurisdiction before offering it in any product.',
   // nervous_system_fit deliberately unset: every typology that reads as a fit
   // ('flat', 'tired') is also a profile this herb can destabilise. Leaving it
@@ -16416,6 +16542,8 @@ const HERBS = [
   spiritual_layer: 'Cistanche is the survivor of the deep desert — a parasitic plant that draws water and life from the roots of its host in the harshest, driest environments on earth. It teaches the conservation and precise deployment of vital force. She whispers: I store the deep reserves. I bring the oasis to the barren places. Endure.',
   best_preparation: 'Traditionally sliced and cooked into long-simmering restorative broths or decoctions (95°C for 45+ minutes). For clinical potency targeting neurogenesis and fatigue, dual-extracted powders standardizing the phenylethanoid glycosides are superior.',
   caution_level: 'LOW', safe_pregnancy: false,
+  cns_action: 'neutral',
+  cns_evidence: 'Kidney-yang tonic; no stimulant or sedative action.',
   status: 'A premier, deeply restorative Yang and Jing tonic with strong clinical validation for neuroprotection and anti-fatigue. Notably safe compared to other hormone-modulating botanicals.',
   // 'building/sustaining/warming' → sustained + crash_repair · 'brain' → head · 'Central/East Asian (Desert)' → Chinese
   nervous_system_fit: ['tired', 'flat'],
@@ -16552,6 +16680,8 @@ const HERBS = [
   spiritual_layer: 'Clubmoss is an ancient survivor, a living fossil from the Carboniferous. It holds the oldest memories of the earth. It is the architect of the mind, building bridges over broken synapses. It teaches clarity through retention. She whispers: I do not let the thought escape. I hold the spark. I remember.',
   best_preparation: 'Must use highly standardized extracts isolating Huperzine-A (typically 1%). Traditional decoction is imprecise and risks cholinergic toxicity. Formulate strictly in microgram weights.',
   caution_level: 'HIGH', safe_pregnancy: false,
+  cns_action: 'activating',
+  cns_evidence: 'Huperzine A, a potent acetylcholinesterase inhibitor (reviews PMID 14725492, 17644292). Cholinergic rather than stimulant; counted with the activating herbs.',
   status: 'A pharmaceutical-grade botanical nootropic. Unmatched for memory retention and neuroprotection, but requires rigorous dose management and cycling.',
   // 'ascending/binding/clarifying' → am_boost · 'brain' + 'nervous system' → head · 'minutes to hours' → immediate
   // nervous_system_fit left unset: the epilepsy and bradycardia contraindications
@@ -18134,6 +18264,8 @@ const HERBS = [
   spiritual_layer: 'He Shou Wu translates as "Mr. He’s Black Hair". It is the medicine of deep reserve, drawing the dense heavy minerals of the earth into the marrow and the blood. It teaches that true vitality is not a frantic burning energy but a deep, quiet, inexhaustible well. She whispers: I anchor the root. I blacken the silver thread. I turn the hollow bone to iron.',
   best_preparation: 'MUST be zhi (prepared). The root is sliced, soaked, and stewed in black soybean broth until the liquid is fully absorbed and the root turns pitch black. For liquid engines, a long water decoction at 95°C for 60 minutes or hydroethanolic percolation at 40% EtOH of the PREPARED root captures the TSG and phospholipids. As with Buckthorn (id 586), the preparation step is itself the safety control.',
   caution_level: 'HIGH', safe_pregnancy: false,
+  cns_action: 'neutral',
+  cns_evidence: 'Blood and jing tonic; no stimulant or sedative action. Its real risk is liver injury (see contraindications).',
   status: 'A legendary longevity and blood tonic — astoundingly effective for exhaustion and premature ageing, but marred by modern sourcing problems and genuine idiosyncratic liver toxicity. Not the same plant as Knotweed (id 563) despite the shared genus; different species, different medicine.',
   // 'nourishing/anchoring/building' → sustained + crash_repair · 'heavy'/'cloying' → demulcent ·
   // 'blood' → whole · 'hair' → skin · 'weeks to months' → months
@@ -18312,6 +18444,8 @@ const HERBS = [
     best_preparation:
       'Use inside classical formulas (Pushyanuga Curna, Samangadi Curna) or as a short decoction course. Avoid long continuous use because of mimosine. External leaf paste for small wounds. A beautiful plant to work with symbolically in ceremony and education; in formulas, keep it a supporting player.',
     caution_level: 'MEDIUM',
+    cns_action: 'neutral',
+    cns_evidence: 'Only rodent studies report GABA-related sedation, and it is not used as a nervine: its API uses are bleeding, diarrhoea and wounds.',
     safe_pregnancy: false,
     status:
       'Grade D (animal diuretic study, classical astringent use). Mimosine content requires short courses and caution in pregnancy and thyroid disease. Onset in days for astringent effects.',

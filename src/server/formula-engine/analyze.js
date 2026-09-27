@@ -26,9 +26,9 @@ const { getAllHerbs } = require('../herb-data');
 const { assignPercentages } = require('./percentages');
 const { checkFormulaPairs } = require('./interactions');
 const { isTrace } = require('./traces');
-// The *Strict flags: the engine's own isCNSStimulant over-matches (see the
-// note in pharmacology.js) and would label Lavender a stimulant here.
-const { isGABAergicStrict: isGABAergic, isCNSStimulantStrict: isCNSStimulant, categoryOf } = require('./pharmacology');
+// The same classifiers the engine uses: each herb's recorded cns_action
+// (herbs.ts), with PubMed evidence in cns_evidence.
+const { isGABAergic, isCNSStimulant, cnsAction, categoryOf } = require('./pharmacology');
 const { isRestricted, isGated } = require('./axes');
 
 const MAX_HERBS = 12;          // what one analysis will take
@@ -153,8 +153,11 @@ function analyzeFormula(input) {
     isTrace:       isTrace(h),
     isGABAergic:   isGABAergic(h),
     isStimulant:   isCNSStimulant(h),
+    cns:           cnsAction(h),
+    cnsEvidence:   h.cns_evidence ? clip(h.cns_evidence, 320) : null,
     restricted:    isRestricted(h),
     gated:         isGated(h),
+    proOnly:       h.formula_access === 'pro',
     actions:       (h.primary_functions || []).slice(0, 3).map(firstClause).filter(Boolean),
     energetics:    (h.energetics || []).slice(0, 5),
     meridians:     h.tcm_meridians || [],
@@ -171,6 +174,7 @@ function analyzeFormula(input) {
   const traces = rows.filter(r => r.isTrace);
   const gaba = rows.filter(r => r.isGABAergic);
   const stim = rows.filter(r => r.isStimulant);
+  const strong = rows.filter(r => r.cns === 'stimulant');
   const over = Object.keys(catCount).filter(c => c !== 'other' && catCount[c] > RULES.MAX_PER_CATEGORY);
   const checks = [
     { id: 'size', ok: rows.length >= RULES.MIN_HERBS && rows.length <= RULES.MAX_HERBS,
@@ -180,13 +184,15 @@ function analyzeFormula(input) {
     { id: 'trace', ok: traces.length <= RULES.MAX_TRACE && traces.every(r => r.percentage <= RULES.TRACE_PCT_CAP),
       label: 'Trace herbs', detail: traces.length ? traces.map(r => r.name + ' ' + r.percentage + '%').join(', ') + ' — potent aromatics stay at or under ' + RULES.TRACE_PCT_CAP + '%, one per bottle.' : 'None.' },
     { id: 'gaba', ok: gaba.length <= RULES.MAX_GABAERGIC,
-      label: 'Sedative load', detail: gaba.length ? gaba.map(r => r.name).join(', ') + (gaba.length > RULES.MAX_GABAERGIC ? ' — more than ' + RULES.MAX_GABAERGIC + ' GABA-acting herbs stack.' : '') : 'No GABA-acting herbs.' },
+      label: 'Sedative load', detail: gaba.length ? gaba.map(r => r.name).join(', ') + (gaba.length > RULES.MAX_GABAERGIC ? ' — more than ' + RULES.MAX_GABAERGIC + ' sedating herbs stack.' : '') : 'No sedating herbs.' },
     { id: 'stim', ok: stim.length <= RULES.MAX_STIMULANT,
-      label: 'Stimulant load', detail: stim.length ? stim.map(r => r.name).join(', ') + (stim.length > RULES.MAX_STIMULANT ? ' — more than ' + RULES.MAX_STIMULANT + ' stimulants stack.' : '') : 'No CNS stimulants.' },
-    { id: 'push-pull', ok: !(gaba.length && stim.length),
-      label: 'Sedative with stimulant', detail: gaba.length && stim.length ? 'Sedating and stimulating herbs pull against each other — intended?' : 'No tug-of-war.' },
+      label: 'Stimulant load', detail: stim.length ? stim.map(r => r.name).join(', ') + (stim.length > RULES.MAX_STIMULANT ? ' — more than ' + RULES.MAX_STIMULANT + ' stimulating herbs stack.' : '') : 'No stimulating herbs.' },
+    { id: 'push-pull', ok: !(gaba.length && strong.length),
+      label: 'Sedative with stimulant', detail: gaba.length && strong.length ? gaba.concat(strong).map(r => r.name).join(', ') + ' — a sedative and a stimulant pull against each other; the engine never bottles the two together.' : 'No tug-of-war.' },
     { id: 'restricted', ok: !rows.some(r => r.restricted),
       label: 'Restricted plants', detail: rows.some(r => r.restricted) ? rows.filter(r => r.restricted).map(r => r.name).join(', ') + ' — catalogue only; the engine never puts these in a bottle.' : 'None.' },
+    { id: 'pro-only', ok: !rows.some(r => r.proOnly),
+      label: 'Pro-only plants', detail: rows.some(r => r.proOnly) ? rows.filter(r => r.proOnly).map(r => r.name).join(', ') + ' — only the pro composer bottles this; a customer formula never does.' : 'None.' },
   ];
 
   // ── Pictures of the whole ──
@@ -207,7 +213,9 @@ function analyzeFormula(input) {
   if (arms.maceration.length) plan.push({ arm: 'Cold extract', herbs: arms.maceration,
     how: 'Macerate at ' + HOUSE_RATIO + ' in the ethanol strength each herb asks for (see /extraction), 4–6 weeks.' });
 
-  const pregnancyAvoid = rows.filter(r => r.safePregnancy === false).map(r => r.name);
+  // Same rule as the engine: only a record marked safe in pregnancy is
+  // offered to a pregnant customer; unknown counts as avoid.
+  const pregnancyAvoid = rows.filter(r => r.safePregnancy !== true).map(r => r.name);
   const highCaution = rows.filter(r => /HIGH/.test(String(r.caution || ''))).map(r => r.name);
 
   return {

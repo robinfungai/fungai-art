@@ -223,6 +223,8 @@ function buildHerbChunks() {
         h.pharmacology ? 'Pharmacology: ' + h.pharmacology : '',
         h.evidence_grade ? 'Evidence grade (our grading): ' + h.evidence_grade : '',
         h.onset_time ? 'Onset: ' + h.onset_time : '',
+        // Recorded, PubMed-backed stimulant / sedative class (2026-09-27).
+        h.cns_action ? 'Effect on the nervous system (recorded): ' + h.cns_action + (h.cns_evidence ? ' — ' + h.cns_evidence : '') : '',
       ].filter(Boolean).join('\n') });
 
     addChunk({ ...base, id: 'herb:' + id + ':tradition', type: 'traditional',
@@ -243,6 +245,8 @@ function buildHerbChunks() {
         h.herb_to_drug_interactions ? 'Drug interactions: ' + list(h.herb_to_drug_interactions) : '',
         h.herb_to_herb_caution ? 'Herb-herb cautions: ' + list(h.herb_to_herb_caution) : '',
         h.safe_pregnancy !== undefined ? 'Pregnancy: ' + h.safe_pregnancy : '',
+        h.safe_pregnancy === null ? 'No pregnancy safety record: the formula engine keeps it away from pregnant and breastfeeding customers.' : '',
+        h.formula_access === 'pro' ? 'Formula access: pro composer only — never in a customer formula.' : '',
       ].filter(Boolean).join('\n') });
 
     addChunk({ ...base, id: 'herb:' + id + ':preparation', type: 'preparation',

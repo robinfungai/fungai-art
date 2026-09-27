@@ -181,7 +181,6 @@ export const ResultScreen: React.FC<ResultScreenProps> = ({ protocol, userAnswer
       </div>
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap');
 
         .result-screen {
           min-height: 100vh;

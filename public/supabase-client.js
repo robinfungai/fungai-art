@@ -1,8 +1,8 @@
 /* ════════════════════════════════════════════════════════════════
    Fungai Art · Supabase client
    ════════════════════════════════════════════════════════════════
-   Loads the Supabase JS SDK from CDN (no npm install needed for
-   static pages), initialises a client with the public anon key,
+   Loads the Supabase JS SDK from /vendor (a pinned copy served by
+   fungai.art itself), initialises a client with the public anon key,
    and exposes window.SBclient + window.SBauth helper functions.
 
    The anon key is public by design — security comes from Row-Level
@@ -11,7 +11,16 @@
 (function () {
   const SUPABASE_URL = 'https://cyhpvsyvxzfadtyvcuwp.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN5aHB2c3l2eHpmYWR0eXZjdXdwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk3NDU5NTYsImV4cCI6MjA4NTMyMTk1Nn0.BFgP50enaZLWEzhvdfHoAYniLyJiFoo6rct7PYKx1k4';
-  const CDN_URL = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js';
+  // Pinned, self-hosted (2026-09-27). This used to load
+  // cdn.jsdelivr.net/npm/@supabase/supabase-js@2 — whatever 2.x was
+  // newest that minute — so a Supabase release could change sign-in on
+  // every page with no deploy and no test run, and jsDelivr saw every
+  // visitor. The copy is the exact build the React app uses (package-lock).
+  // To upgrade: npm update @supabase/supabase-js, copy
+  // node_modules/@supabase/supabase-js/dist/umd/supabase.js to
+  // public/vendor/supabase-js-<version>.js, change this line, test on
+  // localhost, delete the old file.
+  const CDN_URL = '/vendor/supabase-js-2.105.1.js';
 
   // Track readiness — components can `await window.SBready` or listen for 'supabase:ready' event
   window.SBready = new Promise((resolve, reject) => {
@@ -21,7 +30,7 @@
     s.async = true;
     s.onload = () => initClient(resolve);
     s.onerror = (e) => {
-      console.error('[Supabase] Failed to load SDK from CDN:', e);
+      console.error('[Supabase] Failed to load SDK from /vendor:', e);
       reject(e);
     };
     document.head.appendChild(s);

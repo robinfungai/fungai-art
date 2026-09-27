@@ -42,12 +42,7 @@ const SECURITY_FIX_EXPECTATIONS = {
 // change after the Step 0 baseline. The Step 0 files stay frozen; the
 // new output is pinned here instead, so the fixture still regression-
 // locks the engine rather than getting a free pass.
-const METHODOLOGY_CHANGE_EXPECTATIONS = {
-  '18-pro-fields-carried': {
-    herbs: '271:Oatstraw@21|103:Ashwagandha@19|300:Red Dates@17|279:Schisandra (Five-Flavour Fruit)@15|413:Longan@14|316:Fu Ling@14',
-    rationale: 'Engine 2.1: nervous (wired+tired), energy_curve and the hard_onset sleep pattern now score herbs.',
-  },
-};
+const METHODOLOGY_CHANGE_EXPECTATIONS = require('./fixtures/methodology-pins.cjs');
 
 const expectedDir = path.join(__dirname, 'fixtures', 'expected');
 

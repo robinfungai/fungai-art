@@ -23,7 +23,7 @@ const DOORS: Door[] = [
   {
     kicker: 'Begin here',
     title: 'ENTER THE ATLAS',
-    line: 'Explore the intelligence of the botanical world — 243 organisms, their chemistry, their traditions and how they relate to one another.',
+    line: 'Explore the intelligence of the botanical world — 242 organisms, their chemistry, their traditions and how they relate to one another.',
     href: '#atlas',
     glyph: '❋',
     primary: true,

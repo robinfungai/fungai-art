@@ -7,7 +7,12 @@
 
 module.exports = {
   // 2.1.0 — nervous / energy_curve / 7-pattern sleep answers score herbs.
-  engineVersion:      '2.1.0-server',
-  herbDbVersion:      '2026.09-243herbs',
-  safetyRulesVersion: '1.0.0',
+  // 2.2.0 — stimulant / sedative read from herbs.ts cns_action; nothing
+  //         stimulating in an evening or sleep formula; no sedative beside
+  //         a true stimulant; Ephedra pro-only (2026-09-27).
+  engineVersion:      '2.2.0-server',
+  herbDbVersion:      '2026.09-242herbs',
+  // 1.1.0 — unknown pregnancy safety = avoid; under-18s: no HIGH-caution,
+  //         psychoactive, or above-LOW calming herbs (2026-09-27).
+  safetyRulesVersion: '1.1.0',
 };

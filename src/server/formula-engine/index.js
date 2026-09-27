@@ -172,6 +172,7 @@ async function composeFormulaWithMyco(profile, opts = {}) {
     mycoResponse: proposal.picks,
     candidateSet: candidates,
     gatedOptIn:   !!profile._gatedOptIn,
+    pro:          profile._pro === true && profile.age !== 'under_18',
   });
   if (!validation.ok) {
     // Log the specific rule MYCO broke so we can spot systematic

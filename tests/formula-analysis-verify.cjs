@@ -2,9 +2,9 @@
 //
 // The standard formula analysis (src/server/formula-engine/analyze.js):
 // names from every page resolve, percentages behave, the swap diff is
-// right, and the stimulant label is the strict one — the engine's own
-// isCNSStimulant calls Lavender a stimulant ("glutamate" contains
-// "mate"); the analysis must not repeat that.
+// right, and the sedative / stimulant labels come from each herb's
+// recorded cns_action — the old word search called Lavender a stimulant
+// ("glutamate" contains "mate"); nothing may repeat that.
 
 const { analyzeFormula, diffAnalyses, resolveHerb, cleanPercentages } = require('../src/server/formula-engine/analyze.js');
 const P = require('../src/server/formula-engine/pharmacology.js');
@@ -39,12 +39,16 @@ check(eng.herbs.reduce((a, h) => a + h.percentage, 0) === 100, 'engine shares su
 
 console.log('\n── labels are true ──');
 const lavender = getAllHerbs().find(h => h.name === 'Lavender');
-check(P.isCNSStimulant(lavender) === true, 'the engine’s own classifier still over-matches Lavender (left for Robin to decide)');
-check(P.isCNSStimulantStrict(lavender) === false, 'the strict classifier does not');
+check(P.isCNSStimulant(lavender) === false, 'the engine no longer calls Lavender a stimulant');
+check(P.cnsAction(lavender) === 'calming', 'Lavender is recorded as calming');
 check(lav && lav.isStimulant === false, 'the analysis does not label Lavender a stimulant');
 const guarana = analyzeFormula({ herbs: ['Guarana', 'Rhodiola', 'Yerba Mate'] });
 check(guarana.herbs.every(h => h.isStimulant), 'real stimulants are still labelled (Guarana, Rhodiola, Yerba Mate)');
 check(guarana.checks.find(c => c.id === 'stim').ok === false, 'three stimulants break the engine’s cap of two');
+const eph = analyzeFormula({ herbs: ['Ephedra', 'Chamomile', 'Reishi'] });
+check(eph.checks.find(c => c.id === 'pro-only').ok === false, 'Ephedra is flagged as pro-only');
+check(eph.herbs.find(h => /Ephedra/.test(h.name)).cns === 'stimulant', 'Ephedra is a stimulant (the word search never caught it)');
+check(eph.pregnancyAvoid.includes('Reishi'), 'unknown pregnancy safety (Reishi) is listed as not-in-pregnancy');
 
 console.log('\n── the swap ──');
 const base = analyzeFormula({ herbs: ['Reishi', 'Ashwagandha', 'Lemon Balm', 'Tulsi', 'Lavender'], percentages: [30, 25, 25, 15, 5] });

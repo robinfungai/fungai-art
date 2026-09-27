@@ -194,6 +194,13 @@ function validateProfile(raw) {
   // _gatedOptIn — required boolean if ceremonial herbs are to be considered.
   p._gatedOptIn = !!raw._gatedOptIn;
 
+  // _pro — sent only by /find-your-formula-pro. It lets the engine
+  // consider pro-only herbs (herbs.ts formula_access: 'pro', Ephedra).
+  // Like _ageConfirmed it is a client claim, not proof: the pro page
+  // is public, so this is a separation of the two quizzes, not access
+  // control. The engine never honours it for an under-18 profile.
+  p._pro = raw._pro === true;
+
   // _ageConfirmed — required boolean; the entry gate sets this at the
   // start of the flow. Not authoritative on its own (any client can
   // forge it) but its presence means the client acknowledged 18+.

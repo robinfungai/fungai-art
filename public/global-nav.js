@@ -580,6 +580,11 @@
     if (typeof window.retryPendingLabNotes === 'function') return;
     _labSyncing = true;
     try {
+      // Only a signed-in member can write to the notebook (supabase-lab-
+      // notes-signed-in.sql). Signed out, the notes wait on this device
+      // untouched — no failed round-trips, no error stamped on them.
+      const user = window.SBauth ? await window.SBauth.getUser().catch(() => null) : null;
+      if (!user) return;
       // Resolve author identity once for the whole batch — saves N profile
       // lookups when there are many pending entries.
       let profileId = null;

@@ -1,19 +1,20 @@
 {
-  "generatedAt": "2026-09-24T13:50:00.609Z",
+  "generatedAt": "2026-09-27T20:21:00.280Z",
   "counts": {
     "botanicals": 242,
-    "rules": 2170,
+    "rules": 2407,
     "byType": {
-      "contraindication": 1170,
+      "contraindication": 1173,
       "drug_interaction": 658,
-      "herb_interaction": 342
+      "herb_interaction": 342,
+      "record": 234
     },
     "bySeverity": {
       "unspecified": 1070,
-      "caution": 311,
+      "caution": 332,
       "monitor": 370,
-      "avoid": 292,
-      "absolute": 127
+      "avoid": 507,
+      "absolute": 128
     }
   },
   "flagsByBotanicalId": {
@@ -50,6 +51,7 @@
     "107": [
       "allergy",
       "cardio_meds",
+      "pregnancy",
       "psych_meds"
     ],
     "108": [
@@ -62,7 +64,8 @@
     "109": [
       "cardio_meds",
       "hypertension",
-      "pregnancy"
+      "pregnancy",
+      "psych_meds"
     ],
     "110": [
       "autoimmune",
@@ -78,7 +81,6 @@
     "128": [
       "allergy",
       "cardio_meds",
-      "pregnancy",
       "sedatives"
     ],
     "132": [
@@ -97,19 +99,23 @@
     ],
     "203": [
       "cardio_meds",
-      "hypertension"
+      "hypertension",
+      "pregnancy"
     ],
     "204": [
-      "autoimmune"
+      "autoimmune",
+      "pregnancy"
     ],
     "205": [
       "pregnancy"
     ],
     "206": [
-      "autoimmune"
+      "autoimmune",
+      "pregnancy"
     ],
     "207": [
-      "pregnancy"
+      "pregnancy",
+      "sedatives"
     ],
     "208": [
       "autoimmune",
@@ -122,6 +128,7 @@
     ],
     "210": [
       "cardio_meds",
+      "pregnancy",
       "thyroid"
     ],
     "211": [
@@ -151,7 +158,8 @@
     ],
     "217": [
       "cardio_meds",
-      "hypertension"
+      "hypertension",
+      "pregnancy"
     ],
     "218": [
       "cardio_meds",
@@ -209,14 +217,15 @@
     "230": [
       "allergy",
       "cardio_meds",
-      "liver_kidney"
+      "liver_kidney",
+      "pregnancy"
     ],
     "231": [
-      "autoimmune"
-    ],
-    "232": [
       "autoimmune",
       "pregnancy"
+    ],
+    "232": [
+      "autoimmune"
     ],
     "233": [
       "cardio_meds",
@@ -233,9 +242,12 @@
       "pregnancy"
     ],
     "236": [
-      "liver_kidney"
+      "liver_kidney",
+      "pregnancy"
     ],
-    "237": [],
+    "237": [
+      "pregnancy"
+    ],
     "238": [
       "allergy",
       "cardio_meds",
@@ -244,6 +256,7 @@
     "239": [
       "allergy",
       "cardio_meds",
+      "pregnancy",
       "psych_meds"
     ],
     "240": [
@@ -274,7 +287,8 @@
     "245": [
       "cardio_meds",
       "hypertension",
-      "pregnancy"
+      "pregnancy",
+      "psych_meds"
     ],
     "246": [
       "cardio_meds",
@@ -287,7 +301,6 @@
       "pregnancy"
     ],
     "248": [
-      "pregnancy",
       "thyroid"
     ],
     "249": [
@@ -300,6 +313,7 @@
     "250": [
       "liver_kidney",
       "pregnancy",
+      "psych_meds",
       "sedatives"
     ],
     "251": [
@@ -307,14 +321,12 @@
       "sedatives"
     ],
     "252": [
-      "pregnancy",
       "sedatives",
       "thyroid"
     ],
     "253": [
       "cardio_meds",
       "hypertension",
-      "pregnancy",
       "sedatives"
     ],
     "254": [
@@ -342,11 +354,14 @@
     "259": [
       "allergy",
       "cardio_meds",
-      "liver_kidney"
+      "liver_kidney",
+      "pregnancy"
     ],
     "260": [
       "cardio_meds",
+      "hypertension",
       "pregnancy",
+      "psych_meds",
       "sedatives"
     ],
     "261": [
@@ -366,7 +381,8 @@
     ],
     "265": [
       "allergy",
-      "cardio_meds"
+      "cardio_meds",
+      "pregnancy"
     ],
     "266": [
       "allergy",
@@ -444,8 +460,7 @@
       "sedatives"
     ],
     "282": [
-      "autoimmune",
-      "pregnancy"
+      "autoimmune"
     ],
     "283": [
       "autoimmune",
@@ -454,7 +469,8 @@
     "284": [
       "autoimmune",
       "cardio_meds",
-      "hypertension"
+      "hypertension",
+      "pregnancy"
     ],
     "285": [
       "autoimmune",
@@ -466,9 +482,7 @@
       "cardio_meds",
       "pregnancy"
     ],
-    "287": [
-      "pregnancy"
-    ],
+    "287": [],
     "288": [
       "contraceptive",
       "liver_kidney",
@@ -559,7 +573,8 @@
     "307": [
       "autoimmune",
       "cardio_meds",
-      "liver_kidney"
+      "liver_kidney",
+      "pregnancy"
     ],
     "308": [
       "allergy",
@@ -570,8 +585,7 @@
       "thyroid"
     ],
     "309": [
-      "autoimmune",
-      "pregnancy"
+      "autoimmune"
     ],
     "311": [
       "autoimmune",
@@ -584,12 +598,13 @@
       "sedatives"
     ],
     "313": [
-      "autoimmune"
-    ],
-    "314": [
+      "autoimmune",
       "pregnancy"
     ],
-    "315": [],
+    "314": [],
+    "315": [
+      "pregnancy"
+    ],
     "316": [
       "autoimmune",
       "pregnancy"
@@ -600,7 +615,8 @@
     ],
     "318": [
       "autoimmune",
-      "cardio_meds"
+      "cardio_meds",
+      "pregnancy"
     ],
     "319": [
       "autoimmune",
@@ -609,7 +625,8 @@
     ],
     "320": [
       "autoimmune",
-      "liver_kidney"
+      "liver_kidney",
+      "pregnancy"
     ],
     "321": [
       "cardio_meds",
@@ -624,11 +641,13 @@
       "autoimmune",
       "cardio_meds",
       "hypertension",
-      "liver_kidney"
+      "liver_kidney",
+      "pregnancy"
     ],
     "324": [
       "autoimmune",
-      "liver_kidney"
+      "liver_kidney",
+      "pregnancy"
     ],
     "325": [
       "autoimmune",
@@ -658,6 +677,7 @@
     "330": [
       "cardio_meds",
       "hypertension",
+      "pregnancy",
       "psych_meds"
     ],
     "404": [
@@ -666,7 +686,9 @@
     "405": [
       "liver_kidney"
     ],
-    "406": [],
+    "406": [
+      "pregnancy"
+    ],
     "407": [
       "cardio_meds",
       "contraceptive",
@@ -773,7 +795,9 @@
       "cardio_meds",
       "pregnancy"
     ],
-    "508": [],
+    "508": [
+      "pregnancy"
+    ],
     "509": [
       "cardio_meds",
       "hypertension",
@@ -799,7 +823,8 @@
       "pregnancy"
     ],
     "515": [
-      "hypertension"
+      "hypertension",
+      "pregnancy"
     ],
     "520": [
       "liver_kidney",
@@ -887,6 +912,7 @@
     "541": [
       "autoimmune",
       "cardio_meds",
+      "pregnancy",
       "thyroid"
     ],
     "542": [
@@ -938,16 +964,19 @@
       "cardio_meds",
       "contraceptive",
       "hypertension",
-      "pregnancy"
+      "pregnancy",
+      "psych_meds"
     ],
     "552": [],
     "553": [
       "allergy",
       "cardio_meds",
+      "pregnancy",
       "psych_meds"
     ],
     "554": [
       "autoimmune",
+      "pregnancy",
       "thyroid"
     ],
     "555": [
@@ -1138,6 +1167,7 @@
     "107": [
       "allergy",
       "cardio_meds",
+      "pregnancy",
       "psych_meds"
     ],
     "108": [
@@ -1150,7 +1180,8 @@
     "109": [
       "cardio_meds",
       "hypertension",
-      "pregnancy"
+      "pregnancy",
+      "psych_meds"
     ],
     "110": [
       "autoimmune",
@@ -1166,7 +1197,6 @@
     "128": [
       "allergy",
       "cardio_meds",
-      "pregnancy",
       "sedatives"
     ],
     "132": [
@@ -1185,19 +1215,23 @@
     ],
     "203": [
       "cardio_meds",
-      "hypertension"
+      "hypertension",
+      "pregnancy"
     ],
     "204": [
-      "autoimmune"
+      "autoimmune",
+      "pregnancy"
     ],
     "205": [
       "pregnancy"
     ],
     "206": [
-      "autoimmune"
+      "autoimmune",
+      "pregnancy"
     ],
     "207": [
-      "pregnancy"
+      "pregnancy",
+      "sedatives"
     ],
     "208": [
       "autoimmune",
@@ -1210,6 +1244,7 @@
     ],
     "210": [
       "cardio_meds",
+      "pregnancy",
       "thyroid"
     ],
     "211": [
@@ -1239,7 +1274,8 @@
     ],
     "217": [
       "cardio_meds",
-      "hypertension"
+      "hypertension",
+      "pregnancy"
     ],
     "218": [
       "pregnancy"
@@ -1296,14 +1332,15 @@
     "230": [
       "allergy",
       "cardio_meds",
-      "liver_kidney"
+      "liver_kidney",
+      "pregnancy"
     ],
     "231": [
-      "autoimmune"
-    ],
-    "232": [
       "autoimmune",
       "pregnancy"
+    ],
+    "232": [
+      "autoimmune"
     ],
     "233": [
       "cardio_meds",
@@ -1320,9 +1357,12 @@
       "pregnancy"
     ],
     "236": [
-      "liver_kidney"
+      "liver_kidney",
+      "pregnancy"
     ],
-    "237": [],
+    "237": [
+      "pregnancy"
+    ],
     "238": [
       "allergy",
       "cardio_meds",
@@ -1331,6 +1371,7 @@
     "239": [
       "allergy",
       "cardio_meds",
+      "pregnancy",
       "psych_meds"
     ],
     "240": [
@@ -1361,7 +1402,8 @@
     "245": [
       "cardio_meds",
       "hypertension",
-      "pregnancy"
+      "pregnancy",
+      "psych_meds"
     ],
     "246": [
       "cardio_meds",
@@ -1374,7 +1416,6 @@
       "pregnancy"
     ],
     "248": [
-      "pregnancy",
       "thyroid"
     ],
     "249": [
@@ -1387,6 +1428,7 @@
     "250": [
       "liver_kidney",
       "pregnancy",
+      "psych_meds",
       "sedatives"
     ],
     "251": [
@@ -1394,14 +1436,12 @@
       "sedatives"
     ],
     "252": [
-      "pregnancy",
       "sedatives",
       "thyroid"
     ],
     "253": [
       "cardio_meds",
       "hypertension",
-      "pregnancy",
       "sedatives"
     ],
     "254": [
@@ -1429,11 +1469,14 @@
     "259": [
       "allergy",
       "cardio_meds",
-      "liver_kidney"
+      "liver_kidney",
+      "pregnancy"
     ],
     "260": [
       "cardio_meds",
+      "hypertension",
       "pregnancy",
+      "psych_meds",
       "sedatives"
     ],
     "261": [
@@ -1453,7 +1496,8 @@
     ],
     "265": [
       "allergy",
-      "cardio_meds"
+      "cardio_meds",
+      "pregnancy"
     ],
     "266": [
       "allergy",
@@ -1531,8 +1575,7 @@
       "sedatives"
     ],
     "282": [
-      "autoimmune",
-      "pregnancy"
+      "autoimmune"
     ],
     "283": [
       "autoimmune",
@@ -1541,7 +1584,8 @@
     "284": [
       "autoimmune",
       "cardio_meds",
-      "hypertension"
+      "hypertension",
+      "pregnancy"
     ],
     "285": [
       "autoimmune",
@@ -1553,9 +1597,7 @@
       "cardio_meds",
       "pregnancy"
     ],
-    "287": [
-      "pregnancy"
-    ],
+    "287": [],
     "288": [
       "contraceptive",
       "liver_kidney",
@@ -1645,7 +1687,8 @@
     "307": [
       "autoimmune",
       "cardio_meds",
-      "liver_kidney"
+      "liver_kidney",
+      "pregnancy"
     ],
     "308": [
       "allergy",
@@ -1656,8 +1699,7 @@
       "thyroid"
     ],
     "309": [
-      "autoimmune",
-      "pregnancy"
+      "autoimmune"
     ],
     "311": [
       "autoimmune",
@@ -1670,12 +1712,13 @@
       "sedatives"
     ],
     "313": [
-      "autoimmune"
-    ],
-    "314": [
+      "autoimmune",
       "pregnancy"
     ],
-    "315": [],
+    "314": [],
+    "315": [
+      "pregnancy"
+    ],
     "316": [
       "autoimmune",
       "pregnancy"
@@ -1686,7 +1729,8 @@
     ],
     "318": [
       "autoimmune",
-      "cardio_meds"
+      "cardio_meds",
+      "pregnancy"
     ],
     "319": [
       "autoimmune",
@@ -1695,7 +1739,8 @@
     ],
     "320": [
       "autoimmune",
-      "liver_kidney"
+      "liver_kidney",
+      "pregnancy"
     ],
     "321": [
       "cardio_meds",
@@ -1710,11 +1755,13 @@
       "autoimmune",
       "cardio_meds",
       "hypertension",
-      "liver_kidney"
+      "liver_kidney",
+      "pregnancy"
     ],
     "324": [
       "autoimmune",
-      "liver_kidney"
+      "liver_kidney",
+      "pregnancy"
     ],
     "325": [
       "autoimmune",
@@ -1744,6 +1791,7 @@
     "330": [
       "cardio_meds",
       "hypertension",
+      "pregnancy",
       "psych_meds"
     ],
     "404": [
@@ -1752,7 +1800,9 @@
     "405": [
       "liver_kidney"
     ],
-    "406": [],
+    "406": [
+      "pregnancy"
+    ],
     "407": [
       "cardio_meds",
       "contraceptive",
@@ -1859,7 +1909,9 @@
       "cardio_meds",
       "pregnancy"
     ],
-    "508": [],
+    "508": [
+      "pregnancy"
+    ],
     "509": [
       "cardio_meds",
       "hypertension",
@@ -1885,7 +1937,8 @@
       "pregnancy"
     ],
     "515": [
-      "hypertension"
+      "hypertension",
+      "pregnancy"
     ],
     "520": [
       "liver_kidney",
@@ -1973,6 +2026,7 @@
     "541": [
       "autoimmune",
       "cardio_meds",
+      "pregnancy",
       "thyroid"
     ],
     "542": [
@@ -2024,16 +2078,19 @@
       "cardio_meds",
       "contraceptive",
       "hypertension",
-      "pregnancy"
+      "pregnancy",
+      "psych_meds"
     ],
     "552": [],
     "553": [
       "allergy",
       "cardio_meds",
+      "pregnancy",
       "psych_meds"
     ],
     "554": [
       "autoimmune",
+      "pregnancy",
       "thyroid"
     ],
     "555": [
@@ -2323,6 +2380,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:201:record:pregnancy",
+      "botanicalId": 201,
+      "botanical": "Bilberry",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:202:contraindication:1",
       "botanicalId": 202,
       "botanical": "Angelica (Dong Quai)",
@@ -2460,6 +2530,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:202:record:pregnancy",
+      "botanicalId": 202,
+      "botanical": "Angelica (Dong Quai)",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:203:contraindication:1",
       "botanicalId": 203,
       "botanical": "Aronia Berry",
@@ -2567,6 +2650,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:203:record:pregnancy",
+      "botanicalId": 203,
+      "botanical": "Aronia Berry",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:103:contraindication:1",
@@ -2755,6 +2851,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:103:record:pregnancy",
+      "botanicalId": 103,
+      "botanical": "Ashwagandha",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:204:contraindication:1",
       "botanicalId": 204,
       "botanical": "Astragalus",
@@ -2825,6 +2934,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:204:record:pregnancy",
+      "botanicalId": 204,
+      "botanical": "Astragalus",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:4:contraindication:1",
@@ -2906,6 +3028,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:4:record:pregnancy",
+      "botanicalId": 4,
+      "botanical": "Bacopa",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:205:contraindication:1",
@@ -3044,6 +3179,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:205:record:pregnancy",
+      "botanicalId": 205,
+      "botanical": "Barberry",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:206:contraindication:1",
       "botanicalId": 206,
       "botanical": "Barley",
@@ -3154,6 +3302,19 @@
       "reason": "stacked fibre load may cause GI discomfort; titrate gradually",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:206:record:pregnancy",
+      "botanicalId": 206,
+      "botanical": "Barley",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:126:contraindication:1",
@@ -3296,6 +3457,32 @@
       "reason": "additive consciousness-altering effects; unpredictable",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:126:record:pregnancy",
+      "botanicalId": 126,
+      "botanical": "Blue Lotus",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:126:record:cns",
+      "botanicalId": 126,
+      "botanical": "Blue Lotus",
+      "ruleType": "record",
+      "subject": "CNS class: sedative",
+      "severity": "caution",
+      "reason": "Recorded as a sedative: it adds to sleeping pills, benzodiazepines, alcohol and other sedatives.",
+      "flags": [
+        "sedatives"
+      ],
+      "source": "herbs.ts · cns_action"
     },
     {
       "id": "safety:207:contraindication:1",
@@ -3445,6 +3632,32 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:207:record:pregnancy",
+      "botanicalId": 207,
+      "botanical": "Calamus",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:207:record:cns",
+      "botanicalId": 207,
+      "botanical": "Calamus",
+      "ruleType": "record",
+      "subject": "CNS class: sedative",
+      "severity": "caution",
+      "reason": "Recorded as a sedative: it adds to sleeping pills, benzodiazepines, alcohol and other sedatives.",
+      "flags": [
+        "sedatives"
+      ],
+      "source": "herbs.ts · cns_action"
+    },
+    {
       "id": "safety:208:contraindication:1",
       "botanicalId": 208,
       "botanical": "Black Cumin",
@@ -3531,6 +3744,19 @@
       "reason": "monitor bleeding",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:208:record:pregnancy",
+      "botanicalId": 208,
+      "botanical": "Black Cumin",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:209:contraindication:1",
@@ -3625,6 +3851,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:209:record:pregnancy",
+      "botanicalId": 209,
+      "botanical": "Black Walnut",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:210:contraindication:1",
@@ -3784,6 +4023,19 @@
       "reason": "both increase thyroid hormones; TSH monitoring critical",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:210:record:pregnancy",
+      "botanicalId": 210,
+      "botanical": "Bladderwrack",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:211:contraindication:1",
@@ -4041,6 +4293,32 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:102:record:pregnancy",
+      "botanicalId": 102,
+      "botanical": "Bobinsana",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:102:record:cns",
+      "botanicalId": 102,
+      "botanical": "Bobinsana",
+      "ruleType": "record",
+      "subject": "CNS class: psychoactive",
+      "severity": "caution",
+      "reason": "Recorded as psychoactive: it does not belong beside psychiatric medication.",
+      "flags": [
+        "psych_meds"
+      ],
+      "source": "herbs.ts · cns_action"
+    },
+    {
       "id": "safety:104:contraindication:1",
       "botanicalId": 104,
       "botanical": "Broadleaf Plantain",
@@ -4120,6 +4398,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:104:record:pregnancy",
+      "botanicalId": 104,
+      "botanical": "Broadleaf Plantain",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:212:contraindication:1",
@@ -4212,6 +4503,19 @@
       "reason": "food-like safety profile",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:212:record:pregnancy",
+      "botanicalId": 212,
+      "botanical": "Burdock",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:213:contraindication:1",
@@ -4321,6 +4625,19 @@
       "reason": "additive venoconstrictive effects",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:213:record:pregnancy",
+      "botanicalId": 213,
+      "botanical": "Butcher's Broom",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:214:contraindication:1",
@@ -4443,6 +4760,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:214:record:pregnancy",
+      "botanicalId": 214,
+      "botanical": "Butterbur",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:215:contraindication:1",
       "botanicalId": 215,
       "botanical": "Damiana",
@@ -4555,6 +4885,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:215:record:pregnancy",
+      "botanicalId": 215,
+      "botanical": "Damiana",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:107:contraindication:1",
@@ -4710,6 +5053,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:107:record:pregnancy",
+      "botanicalId": 107,
+      "botanical": "Dandelion Root",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:216:contraindication:1",
       "botanicalId": 216,
       "botanical": "Elderberry",
@@ -4817,6 +5173,19 @@
       "reason": "cumulative immune activation",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:216:record:pregnancy",
+      "botanicalId": 216,
+      "botanical": "Elderberry",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:132:contraindication:1",
@@ -4972,6 +5341,32 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:132:record:pregnancy",
+      "botanicalId": 132,
+      "botanical": "Calea Zacatachichi",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:132:record:cns",
+      "botanicalId": 132,
+      "botanical": "Calea Zacatachichi",
+      "ruleType": "record",
+      "subject": "CNS class: psychoactive",
+      "severity": "caution",
+      "reason": "Recorded as psychoactive: it does not belong beside psychiatric medication.",
+      "flags": [
+        "psych_meds"
+      ],
+      "source": "herbs.ts · cns_action"
+    },
+    {
       "id": "safety:217:contraindication:1",
       "botanicalId": 217,
       "botanical": "Cardamom",
@@ -5061,6 +5456,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:217:record:pregnancy",
+      "botanicalId": 217,
+      "botanical": "Cardamom",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:218:contraindication:1",
@@ -5175,6 +5583,19 @@
       "reason": "cumulative cardiovascular effects; monitor",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:218:record:pregnancy",
+      "botanicalId": 218,
+      "botanical": "Catuaba",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:219:contraindication:1",
@@ -5318,6 +5739,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:219:record:pregnancy",
+      "botanicalId": 219,
+      "botanical": "Cayenne",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:128:contraindication:1",
       "botanicalId": 128,
       "botanical": "Chamomile",
@@ -5338,9 +5772,7 @@
       "subject": "No other significant contraindications",
       "severity": "unspecified",
       "reason": "safe in pregnancy and breastfeeding",
-      "flags": [
-        "pregnancy"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -5537,6 +5969,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:220:record:pregnancy",
+      "botanicalId": 220,
+      "botanical": "Devil's Claw",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:221:contraindication:1",
       "botanicalId": 221,
       "botanical": "Echinacea",
@@ -5683,6 +6128,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:221:record:pregnancy",
+      "botanicalId": 221,
+      "botanical": "Echinacea",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:106:contraindication:1",
       "botanicalId": 106,
       "botanical": "Calendula",
@@ -5768,6 +6226,19 @@
       "reason": "polysaccharide immune activation",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:106:record:pregnancy",
+      "botanicalId": 106,
+      "botanical": "Calendula",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:222:contraindication:1",
@@ -5862,6 +6333,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:222:record:pregnancy",
+      "botanicalId": 222,
+      "botanical": "Caraway",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:223:contraindication:1",
@@ -5986,6 +6470,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:223:record:pregnancy",
+      "botanicalId": 223,
+      "botanical": "Cat's Claw",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:225:contraindication:1",
       "botanicalId": 225,
       "botanical": "Chickweed",
@@ -6083,6 +6580,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:225:record:pregnancy",
+      "botanicalId": 225,
+      "botanical": "Chickweed",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:226:contraindication:1",
       "botanicalId": 226,
       "botanical": "Chilcuague",
@@ -6171,6 +6681,19 @@
       "reason": "mucosal irritation risk",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:226:record:pregnancy",
+      "botanicalId": 226,
+      "botanical": "Chilcuague",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:227:contraindication:1",
@@ -6293,6 +6816,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:227:record:pregnancy",
+      "botanicalId": 227,
+      "botanical": "Cinnamon",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:228:contraindication:1",
       "botanicalId": 228,
       "botanical": "Cloves",
@@ -6388,6 +6924,19 @@
       "reason": "additive blood-thinning effect",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:228:record:pregnancy",
+      "botanicalId": 228,
+      "botanical": "Cloves",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:229:contraindication:1",
@@ -6516,6 +7065,34 @@
       "reason": "enhanced monoamine elevation",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:229:record:pregnancy",
+      "botanicalId": 229,
+      "botanical": "Coca Leaf",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:229:record:cns",
+      "botanicalId": 229,
+      "botanical": "Coca Leaf",
+      "ruleType": "record",
+      "subject": "CNS class: stimulant",
+      "severity": "caution",
+      "reason": "Recorded as a stimulant: it raises blood pressure and clashes with MAO inhibitors, lithium and clozapine.",
+      "flags": [
+        "hypertension",
+        "cardio_meds",
+        "psych_meds"
+      ],
+      "source": "herbs.ts · cns_action"
     },
     {
       "id": "safety:230:contraindication:1",
@@ -6651,6 +7228,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:230:record:pregnancy",
+      "botanicalId": 230,
+      "botanical": "Cranberry",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:231:contraindication:1",
       "botanicalId": 231,
       "botanical": "Iceland Moss",
@@ -6708,6 +7298,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:231:record:pregnancy",
+      "botanicalId": 231,
+      "botanical": "Iceland Moss",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:232:contraindication:1",
       "botanicalId": 232,
       "botanical": "Elderflower",
@@ -6716,7 +7319,6 @@
       "severity": "caution",
       "reason": "safe; traditional use supports immune health during pregnancy; consult provider for concentrated forms",
       "flags": [
-        "pregnancy",
         "autoimmune"
       ],
       "source": "herbs.ts · contraindications"
@@ -6729,9 +7331,7 @@
       "subject": "Breastfeeding",
       "severity": "unspecified",
       "reason": "safe; traditional use supports immune milk quality",
-      "flags": [
-        "pregnancy"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -6959,6 +7559,34 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:233:record:pregnancy",
+      "botanicalId": 233,
+      "botanical": "Ephedra (Ma Huang)",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:233:record:cns",
+      "botanicalId": 233,
+      "botanical": "Ephedra (Ma Huang)",
+      "ruleType": "record",
+      "subject": "CNS class: stimulant",
+      "severity": "caution",
+      "reason": "Recorded as a stimulant: it raises blood pressure and clashes with MAO inhibitors, lithium and clozapine.",
+      "flags": [
+        "hypertension",
+        "cardio_meds",
+        "psych_meds"
+      ],
+      "source": "herbs.ts · cns_action"
+    },
+    {
       "id": "safety:234:contraindication:1",
       "botanicalId": 234,
       "botanical": "Eucalyptus",
@@ -7062,6 +7690,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:234:record:pregnancy",
+      "botanicalId": 234,
+      "botanical": "Eucalyptus",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:235:contraindication:1",
       "botanicalId": 235,
       "botanical": "Eyebright",
@@ -7141,6 +7782,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:235:record:pregnancy",
+      "botanicalId": 235,
+      "botanical": "Eyebright",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:236:contraindication:1",
@@ -7246,6 +7900,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:236:record:pregnancy",
+      "botanicalId": 236,
+      "botanical": "Fadogia",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:237:contraindication:1",
       "botanicalId": 237,
       "botanical": "Fennel",
@@ -7321,6 +7988,19 @@
       "reason": "cumulative oestrogenic effect",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:237:record:pregnancy",
+      "botanicalId": 237,
+      "botanical": "Fennel",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:238:contraindication:1",
@@ -7480,6 +8160,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:238:record:pregnancy",
+      "botanicalId": 238,
+      "botanical": "Garlic",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:239:contraindication:1",
       "botanicalId": 239,
       "botanical": "Ginkgo",
@@ -7615,6 +8308,19 @@
       "reason": "cumulative antiplatelet effect; stacking increases bleeding risk significantly",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:239:record:pregnancy",
+      "botanicalId": 239,
+      "botanical": "Ginkgo",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:240:contraindication:1",
@@ -7788,6 +8494,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:240:record:pregnancy",
+      "botanicalId": 240,
+      "botanical": "Ginseng",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:241:contraindication:1",
       "botanicalId": 241,
       "botanical": "Goji Berry",
@@ -7869,6 +8588,19 @@
       "reason": "cumulative INR effects",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:241:record:pregnancy",
+      "botanicalId": 241,
+      "botanical": "Goji Berry",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:108:contraindication:1",
@@ -8010,6 +8742,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:108:record:pregnancy",
+      "botanicalId": 108,
+      "botanical": "Gotu Kola",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:242:contraindication:1",
       "botanicalId": 242,
       "botanical": "Ground Ivy",
@@ -8104,6 +8849,19 @@
       "reason": "avoid combining with Ground Ivy in liver disease (cumulative cytotoxic concern)",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:242:record:pregnancy",
+      "botanicalId": 242,
+      "botanical": "Ground Ivy",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:109:contraindication:1",
@@ -8257,6 +9015,34 @@
       "reason": "cumulative caffeine toxicity",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:109:record:pregnancy",
+      "botanicalId": 109,
+      "botanical": "Guarana",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:109:record:cns",
+      "botanicalId": 109,
+      "botanical": "Guarana",
+      "ruleType": "record",
+      "subject": "CNS class: stimulant",
+      "severity": "caution",
+      "reason": "Recorded as a stimulant: it raises blood pressure and clashes with MAO inhibitors, lithium and clozapine.",
+      "flags": [
+        "hypertension",
+        "cardio_meds",
+        "psych_meds"
+      ],
+      "source": "herbs.ts · cns_action"
     },
     {
       "id": "safety:110:contraindication:1",
@@ -8422,6 +9208,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:110:record:pregnancy",
+      "botanicalId": 110,
+      "botanical": "Holy Basil (Tulsi)",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:243:contraindication:1",
       "botanicalId": 243,
       "botanical": "Hops",
@@ -8566,6 +9365,32 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:243:record:pregnancy",
+      "botanicalId": 243,
+      "botanical": "Hops",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:243:record:cns",
+      "botanicalId": 243,
+      "botanical": "Hops",
+      "ruleType": "record",
+      "subject": "CNS class: sedative",
+      "severity": "caution",
+      "reason": "Recorded as a sedative: it adds to sleeping pills, benzodiazepines, alcohol and other sedatives.",
+      "flags": [
+        "sedatives"
+      ],
+      "source": "herbs.ts · cns_action"
+    },
+    {
       "id": "safety:244:contraindication:1",
       "botanicalId": 244,
       "botanical": "Horsetail",
@@ -8689,6 +9514,19 @@
       "reason": "horsetail does not spare potassium like Dandelion; monitor electrolytes",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:244:record:pregnancy",
+      "botanicalId": 244,
+      "botanical": "Horsetail",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:245:contraindication:1",
@@ -8820,6 +9658,34 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:245:record:pregnancy",
+      "botanicalId": 245,
+      "botanical": "Guayusa",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:245:record:cns",
+      "botanicalId": 245,
+      "botanical": "Guayusa",
+      "ruleType": "record",
+      "subject": "CNS class: stimulant",
+      "severity": "caution",
+      "reason": "Recorded as a stimulant: it raises blood pressure and clashes with MAO inhibitors, lithium and clozapine.",
+      "flags": [
+        "hypertension",
+        "cardio_meds",
+        "psych_meds"
+      ],
+      "source": "herbs.ts · cns_action"
+    },
+    {
       "id": "safety:246:contraindication:1",
       "botanicalId": 246,
       "botanical": "Hawthorn",
@@ -8942,6 +9808,19 @@
       "reason": "additive inotropic effects; professional supervision required",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:246:record:pregnancy",
+      "botanicalId": 246,
+      "botanical": "Hawthorn",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:247:contraindication:1",
@@ -9099,6 +9978,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:247:record:pregnancy",
+      "botanicalId": 247,
+      "botanical": "Horny Goat Weed",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:248:contraindication:1",
       "botanicalId": 248,
       "botanical": "Moringa",
@@ -9119,9 +10011,7 @@
       "subject": "Pregnancy",
       "severity": "caution",
       "reason": "traditionally safe throughout; Ayurvedic use throughout pregnancy; consult provider for high therapeutic doses",
-      "flags": [
-        "pregnancy"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -9132,9 +10022,7 @@
       "subject": "Breastfeeding",
       "severity": "unspecified",
       "reason": "SAFE; traditionally used as galactagogue to support milk production",
-      "flags": [
-        "pregnancy"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -9331,6 +10219,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:249:record:pregnancy",
+      "botanicalId": 249,
+      "botanical": "Motherwort",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:250:contraindication:1",
       "botanicalId": 250,
       "botanical": "Kratom",
@@ -9493,6 +10394,32 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:250:record:pregnancy",
+      "botanicalId": 250,
+      "botanical": "Kratom",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:250:record:cns",
+      "botanicalId": 250,
+      "botanical": "Kratom",
+      "ruleType": "record",
+      "subject": "CNS class: psychoactive",
+      "severity": "caution",
+      "reason": "Recorded as psychoactive: it does not belong beside psychiatric medication.",
+      "flags": [
+        "psych_meds"
+      ],
+      "source": "herbs.ts · cns_action"
+    },
+    {
       "id": "safety:105:contraindication:1",
       "botanicalId": 105,
       "botanical": "Lady's Mantle",
@@ -9594,6 +10521,19 @@
       "reason": "safe with all herbs",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:105:record:pregnancy",
+      "botanicalId": 105,
+      "botanical": "Lady's Mantle",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:251:contraindication:1",
@@ -9699,6 +10639,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:251:record:pregnancy",
+      "botanicalId": 251,
+      "botanical": "Lavender",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:252:contraindication:1",
       "botanicalId": 252,
       "botanical": "Lemon Balm",
@@ -9719,9 +10672,7 @@
       "subject": "Pregnancy",
       "severity": "unspecified",
       "reason": "SAFE: gentle, soothing, traditionally used; tea and extract appropriate",
-      "flags": [
-        "pregnancy"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -9732,9 +10683,7 @@
       "subject": "Breastfeeding",
       "severity": "unspecified",
       "reason": "SAFE: mild and supportive; no documented adverse effects",
-      "flags": [
-        "pregnancy"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -9844,9 +10793,7 @@
       "subject": "Otherwise: Grade A safety",
       "severity": "unspecified",
       "reason": "suitable for all populations including children, elderly, pregnant, breastfeeding",
-      "flags": [
-        "pregnancy"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -9967,6 +10914,19 @@
       "reason": "avoid combination",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:254:record:pregnancy",
+      "botanicalId": 254,
+      "botanical": "Jasmine",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:255:contraindication:1",
@@ -10098,6 +11058,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:255:record:pregnancy",
+      "botanicalId": 255,
+      "botanical": "Juniper",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:256:contraindication:1",
       "botanicalId": 256,
       "botanical": "Kanna",
@@ -10220,6 +11193,19 @@
       "reason": "cumulative mania risk",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:256:record:pregnancy",
+      "botanicalId": 256,
+      "botanical": "Kanna",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:257:contraindication:1",
@@ -10382,6 +11368,32 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:257:record:pregnancy",
+      "botanicalId": 257,
+      "botanical": "Kava Kava",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:257:record:cns",
+      "botanicalId": 257,
+      "botanical": "Kava Kava",
+      "ruleType": "record",
+      "subject": "CNS class: sedative",
+      "severity": "caution",
+      "reason": "Recorded as a sedative: it adds to sleeping pills, benzodiazepines, alcohol and other sedatives.",
+      "flags": [
+        "sedatives"
+      ],
+      "source": "herbs.ts · cns_action"
+    },
+    {
       "id": "safety:258:contraindication:1",
       "botanicalId": 258,
       "botanical": "Licorice Root",
@@ -10538,6 +11550,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:258:record:pregnancy",
+      "botanicalId": 258,
+      "botanical": "Licorice Root",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:259:contraindication:1",
       "botanicalId": 259,
       "botanical": "Lingonberry",
@@ -10643,6 +11668,19 @@
       "reason": "cumulative INR effects; monitor",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:259:record:pregnancy",
+      "botanicalId": 259,
+      "botanical": "Lingonberry",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:260:contraindication:1",
@@ -10829,6 +11867,34 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:260:record:pregnancy",
+      "botanicalId": 260,
+      "botanical": "Lobelia (Indian Tobacco)",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:260:record:cns",
+      "botanicalId": 260,
+      "botanical": "Lobelia (Indian Tobacco)",
+      "ruleType": "record",
+      "subject": "CNS class: stimulant",
+      "severity": "caution",
+      "reason": "Recorded as a stimulant: it raises blood pressure and clashes with MAO inhibitors, lithium and clozapine.",
+      "flags": [
+        "hypertension",
+        "cardio_meds",
+        "psych_meds"
+      ],
+      "source": "herbs.ts · cns_action"
+    },
+    {
       "id": "safety:261:contraindication:1",
       "botanicalId": 261,
       "botanical": "Lucerne (Alfalfa)",
@@ -10927,6 +11993,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:261:record:pregnancy",
+      "botanicalId": 261,
+      "botanical": "Lucerne (Alfalfa)",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:262:contraindication:1",
       "botanicalId": 262,
       "botanical": "Maca",
@@ -11008,6 +12087,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:262:record:pregnancy",
+      "botanicalId": 262,
+      "botanical": "Maca",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:263:contraindication:1",
       "botanicalId": 263,
       "botanical": "Maca Negra (Black Maca)",
@@ -11087,6 +12179,19 @@
       "reason": "cumulative androgenic concern; consult oncologist",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:263:record:pregnancy",
+      "botanicalId": 263,
+      "botanical": "Maca Negra (Black Maca)",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:264:contraindication:1",
@@ -11194,6 +12299,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:264:record:pregnancy",
+      "botanicalId": 264,
+      "botanical": "Marjoram (Sweet Marjoram)",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:265:contraindication:1",
       "botanicalId": 265,
       "botanical": "Meadowsweet",
@@ -11245,6 +12363,33 @@
     },
     {
       "id": "safety:265:contraindication:5",
+      "botanicalId": 265,
+      "botanical": "Meadowsweet",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "NOT RECOMMENDED: no harm is documented, but safety has not been established and the EMA/HMPC monograph advises against use for lack of data (salicylate content)",
+      "flags": [
+        "pregnancy",
+        "allergy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:265:contraindication:6",
+      "botanicalId": 265,
+      "botanical": "Meadowsweet",
+      "ruleType": "contraindication",
+      "subject": "Children and adolescents under 18",
+      "severity": "avoid",
+      "reason": "NOT RECOMMENDED (EMA/HMPC monograph); salicylate-containing",
+      "flags": [
+        "allergy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:265:contraindication:7",
       "botanicalId": 265,
       "botanical": "Meadowsweet",
       "ruleType": "contraindication",
@@ -11312,6 +12457,19 @@
       "reason": "cumulative antiplatelet effect; monitor",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:265:record:pregnancy",
+      "botanicalId": 265,
+      "botanical": "Meadowsweet",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:266:contraindication:1",
@@ -11406,6 +12564,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:266:record:pregnancy",
+      "botanicalId": 266,
+      "botanical": "Milk Thistle",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:267:contraindication:1",
@@ -11552,6 +12723,19 @@
       "reason": "additive neuroactive effects",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:267:record:pregnancy",
+      "botanicalId": 267,
+      "botanical": "Mugwort",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:268:contraindication:1",
@@ -11740,6 +12924,19 @@
       "reason": "potential antagonism of BP-lowering effects",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:269:record:pregnancy",
+      "botanicalId": 269,
+      "botanical": "Muira Puama",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:544:contraindication:1",
@@ -11978,6 +13175,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:544:record:pregnancy",
+      "botanicalId": 544,
+      "botanical": "Mucuna",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:270:contraindication:1",
       "botanicalId": 270,
       "botanical": "Nettle",
@@ -12090,6 +13300,19 @@
       "reason": "cumulative diuresis; monitor electrolytes",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:270:record:pregnancy",
+      "botanicalId": 270,
+      "botanical": "Nettle",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:271:contraindication:1",
@@ -12281,6 +13504,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:272:record:pregnancy",
+      "botanicalId": 272,
+      "botanical": "Oregano",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:273:contraindication:1",
       "botanicalId": 273,
       "botanical": "Passionflower",
@@ -12391,6 +13627,32 @@
       "reason": "both affect monoamine systems; monitor combined serotonin effects",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:273:record:pregnancy",
+      "botanicalId": 273,
+      "botanical": "Passionflower",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:273:record:cns",
+      "botanicalId": 273,
+      "botanical": "Passionflower",
+      "ruleType": "record",
+      "subject": "CNS class: sedative",
+      "severity": "caution",
+      "reason": "Recorded as a sedative: it adds to sleeping pills, benzodiazepines, alcohol and other sedatives.",
+      "flags": [
+        "sedatives"
+      ],
+      "source": "herbs.ts · cns_action"
     },
     {
       "id": "safety:274:contraindication:1",
@@ -12545,6 +13807,19 @@
       "reason": "cumulative liver stress",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:274:record:pregnancy",
+      "botanicalId": 274,
+      "botanical": "Pau d'Arco",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:275:contraindication:1",
@@ -12809,6 +14084,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:276:record:pregnancy",
+      "botanicalId": 276,
+      "botanical": "Rhodiola",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:277:contraindication:1",
       "botanicalId": 277,
       "botanical": "Rosemary",
@@ -12936,6 +14224,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:277:record:pregnancy",
+      "botanicalId": 277,
+      "botanical": "Rosemary",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:278:contraindication:1",
       "botanicalId": 278,
       "botanical": "Saffron",
@@ -13058,6 +14359,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:278:record:pregnancy",
+      "botanicalId": 278,
+      "botanical": "Saffron",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:279:contraindication:1",
       "botanicalId": 279,
       "botanical": "Schisandra (Five-Flavour Fruit)",
@@ -13171,6 +14485,19 @@
       "reason": "opposite energies in early phase; stagger dosing (Schisandra morning; Valerian evening)",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:279:record:pregnancy",
+      "botanicalId": 279,
+      "botanical": "Schisandra (Five-Flavour Fruit)",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:280:contraindication:1",
@@ -13314,6 +14641,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:280:record:pregnancy",
+      "botanicalId": 280,
+      "botanical": "Shilajit (Mineral Pitch)",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:281:contraindication:1",
       "botanicalId": 281,
       "botanical": "Skullcap",
@@ -13393,6 +14733,19 @@
       "reason": "slightly additive calming; usually manageable but monitor",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:281:record:pregnancy",
+      "botanicalId": 281,
+      "botanical": "Skullcap",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:540:contraindication:1",
@@ -13524,6 +14877,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:540:record:pregnancy",
+      "botanicalId": 540,
+      "botanical": "Goldenrod",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:541:contraindication:1",
       "botanicalId": 541,
       "botanical": "Spirulina",
@@ -13640,6 +15006,19 @@
       "reason": "additive iron from spirulina; monitor ferritin if already supplementing",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:541:record:pregnancy",
+      "botanicalId": 541,
+      "botanical": "Spirulina",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:542:contraindication:1",
@@ -13906,6 +15285,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:542:record:pregnancy",
+      "botanicalId": 542,
+      "botanical": "St. John's Wort",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:282:contraindication:1",
       "botanicalId": 282,
       "botanical": "Star Anise",
@@ -13913,9 +15305,7 @@
       "subject": "Pregnancy",
       "severity": "avoid",
       "reason": "LIKELY SAFE at culinary doses (traditional use extensive including for lactation); verify with prenatal provider for early pregnancy; avoid large medicinal doses first trimester",
-      "flags": [
-        "pregnancy"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -13926,9 +15316,7 @@
       "subject": "Breastfeeding",
       "severity": "caution",
       "reason": "LIKELY SAFE and traditionally recommended; traditional galactagogue; consult provider",
-      "flags": [
-        "pregnancy"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -14069,6 +15457,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:283:record:pregnancy",
+      "botanicalId": 283,
+      "botanical": "Thyme",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:284:contraindication:1",
       "botanicalId": 284,
       "botanical": "Tongkat Ali",
@@ -14188,6 +15589,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:284:record:pregnancy",
+      "botanicalId": 284,
+      "botanical": "Tongkat Ali",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:285:contraindication:1",
       "botanicalId": 285,
       "botanical": "Tremella",
@@ -14295,6 +15709,19 @@
       "reason": "cumulative immune modulation; use under practitioner guidance",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:285:record:pregnancy",
+      "botanicalId": 285,
+      "botanical": "Tremella",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:286:contraindication:1",
@@ -14426,6 +15853,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:286:record:pregnancy",
+      "botanicalId": 286,
+      "botanical": "Turmeric",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:287:contraindication:1",
       "botanicalId": 287,
       "botanical": "Vanilla",
@@ -14455,9 +15895,7 @@
       "subject": "Otherwise: Grade A safety",
       "severity": "unspecified",
       "reason": "one of the safest and most gentle herbs in the library; suitable all populations including children, pregnancy, elderly, sensitive individuals",
-      "flags": [
-        "pregnancy"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -14614,6 +16052,32 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:288:record:pregnancy",
+      "botanicalId": 288,
+      "botanical": "Valerian",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:288:record:cns",
+      "botanicalId": 288,
+      "botanical": "Valerian",
+      "ruleType": "record",
+      "subject": "CNS class: sedative",
+      "severity": "caution",
+      "reason": "Recorded as a sedative: it adds to sleeping pills, benzodiazepines, alcohol and other sedatives.",
+      "flags": [
+        "sedatives"
+      ],
+      "source": "herbs.ts · cns_action"
+    },
+    {
       "id": "safety:289:contraindication:1",
       "botanicalId": 289,
       "botanical": "Vervain",
@@ -14760,6 +16224,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:289:record:pregnancy",
+      "botanicalId": 289,
+      "botanical": "Vervain",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:290:contraindication:1",
       "botanicalId": 290,
       "botanical": "Vitex",
@@ -14894,6 +16371,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:290:record:pregnancy",
+      "botanicalId": 290,
+      "botanical": "Vitex",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:291:contraindication:1",
       "botanicalId": 291,
       "botanical": "Wild Dagga",
@@ -15002,6 +16492,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:291:record:pregnancy",
+      "botanicalId": 291,
+      "botanical": "Wild Dagga",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:292:contraindication:1",
       "botanicalId": 292,
       "botanical": "Willow Bark",
@@ -15047,6 +16550,19 @@
       "botanicalId": 292,
       "botanical": "Willow Bark",
       "ruleType": "contraindication",
+      "subject": "Children and adolescents under 18",
+      "severity": "absolute",
+      "reason": "CONTRAINDICATED (EMA/HMPC monograph); salicylate-containing",
+      "flags": [
+        "allergy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:292:contraindication:5",
+      "botanicalId": 292,
+      "botanical": "Willow Bark",
+      "ruleType": "contraindication",
       "subject": "Anticoagulants (Warfarin, DOACs)",
       "severity": "monitor",
       "reason": "MONITOR INR: mild additive anticoagulation; generally manageable with monitoring",
@@ -15056,7 +16572,7 @@
       "source": "herbs.ts · contraindications"
     },
     {
-      "id": "safety:292:contraindication:5",
+      "id": "safety:292:contraindication:6",
       "botanicalId": 292,
       "botanical": "Willow Bark",
       "ruleType": "contraindication",
@@ -15069,7 +16585,7 @@
       "source": "herbs.ts · contraindications"
     },
     {
-      "id": "safety:292:contraindication:6",
+      "id": "safety:292:contraindication:7",
       "botanicalId": 292,
       "botanical": "Willow Bark",
       "ruleType": "contraindication",
@@ -15127,6 +16643,19 @@
       "reason": "additive bleeding; monitor INR",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:292:record:pregnancy",
+      "botanicalId": 292,
+      "botanical": "Willow Bark",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:293:contraindication:1",
@@ -15271,6 +16800,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:293:record:pregnancy",
+      "botanicalId": 293,
+      "botanical": "Wormwood",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:294:contraindication:1",
       "botanicalId": 294,
       "botanical": "Yarrow",
@@ -15357,6 +16899,19 @@
       "reason": "always screen Asteraceae allergy before combining Yarrow with Chamomile, Calendula or Echinacea",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:294:record:pregnancy",
+      "botanicalId": 294,
+      "botanical": "Yarrow",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:295:contraindication:1",
@@ -15462,6 +17017,19 @@
       "reason": "ADDITIVE: increased risk of cramping, diarrhoea and electrolyte imbalance; avoid combining",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:295:record:pregnancy",
+      "botanicalId": 295,
+      "botanical": "Yellow Dock Root",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:296:contraindication:1",
@@ -15621,6 +17189,34 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:296:record:pregnancy",
+      "botanicalId": 296,
+      "botanical": "Yerba Mate",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:296:record:cns",
+      "botanicalId": 296,
+      "botanical": "Yerba Mate",
+      "ruleType": "record",
+      "subject": "CNS class: stimulant",
+      "severity": "caution",
+      "reason": "Recorded as a stimulant: it raises blood pressure and clashes with MAO inhibitors, lithium and clozapine.",
+      "flags": [
+        "hypertension",
+        "cardio_meds",
+        "psych_meds"
+      ],
+      "source": "herbs.ts · cns_action"
+    },
+    {
       "id": "safety:297:contraindication:1",
       "botanicalId": 297,
       "botanical": "Slippery Elm Bark",
@@ -15702,6 +17298,19 @@
       "reason": "mucilage reduces absorption of all co-administered substances; always take Slippery Elm 2 hours apart from any other herb or medication",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:297:record:pregnancy",
+      "botanicalId": 297,
+      "botanical": "Slippery Elm Bark",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:298:contraindication:1",
@@ -15818,6 +17427,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:298:record:pregnancy",
+      "botanicalId": 298,
+      "botanical": "Peppermint",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:299:contraindication:1",
       "botanicalId": 299,
       "botanical": "Pine Needles",
@@ -15908,6 +17530,19 @@
       "reason": "cumulative theoretical effect; avoid in pregnancy regardless",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:299:record:pregnancy",
+      "botanicalId": 299,
+      "botanical": "Pine Needles",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:300:contraindication:1",
@@ -16127,6 +17762,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:301:record:pregnancy",
+      "botanicalId": 301,
+      "botanical": "Rhubarb Root",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:302:contraindication:1",
       "botanicalId": 302,
       "botanical": "Rose Petals",
@@ -16287,6 +17935,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:303:record:pregnancy",
+      "botanicalId": 303,
+      "botanical": "Sage",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:304:contraindication:1",
       "botanicalId": 304,
       "botanical": "Saw Palmetto",
@@ -16401,6 +18062,19 @@
       "reason": "cumulative androgenic modulation; theoretical excess in hormone-sensitive conditions; monitor",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:304:record:pregnancy",
+      "botanicalId": 304,
+      "botanical": "Saw Palmetto",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:305:contraindication:1",
@@ -16574,6 +18248,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:305:record:pregnancy",
+      "botanicalId": 305,
+      "botanical": "Senna",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:306:contraindication:1",
       "botanicalId": 306,
       "botanical": "Birch Polypore",
@@ -16694,6 +18381,19 @@
       "reason": "additive immune activation risk; coordinate carefully",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:306:record:pregnancy",
+      "botanicalId": 306,
+      "botanical": "Birch Polypore",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:307:contraindication:1",
@@ -16870,6 +18570,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:307:record:pregnancy",
+      "botanicalId": 307,
+      "botanical": "Chaga",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:308:contraindication:1",
       "botanicalId": 308,
       "botanical": "Cordyceps",
@@ -17041,6 +18754,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:308:record:pregnancy",
+      "botanicalId": 308,
+      "botanical": "Cordyceps",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:309:contraindication:1",
       "botanicalId": 309,
       "botanical": "Shiitake",
@@ -17094,9 +18820,7 @@
       "subject": "Otherwise: culinary shiitake: Grade A safety",
       "severity": "unspecified",
       "reason": "very low risk widely across all ages and populations including pregnancy at food doses",
-      "flags": [
-        "pregnancy"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -17251,6 +18975,32 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:311:record:pregnancy",
+      "botanicalId": 311,
+      "botanical": "Amanita Muscaria",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:311:record:cns",
+      "botanicalId": 311,
+      "botanical": "Amanita Muscaria",
+      "ruleType": "record",
+      "subject": "CNS class: sedative",
+      "severity": "caution",
+      "reason": "Recorded as a sedative: it adds to sleeping pills, benzodiazepines, alcohol and other sedatives.",
+      "flags": [
+        "sedatives"
+      ],
+      "source": "herbs.ts · cns_action"
+    },
+    {
       "id": "safety:312:contraindication:1",
       "botanicalId": 312,
       "botanical": "Amanita Pantherina",
@@ -17332,6 +19082,32 @@
       "reason": "no therapeutic formulation use; educational entry only",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:312:record:pregnancy",
+      "botanicalId": 312,
+      "botanical": "Amanita Pantherina",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:312:record:cns",
+      "botanicalId": 312,
+      "botanical": "Amanita Pantherina",
+      "ruleType": "record",
+      "subject": "CNS class: sedative",
+      "severity": "caution",
+      "reason": "Recorded as a sedative: it adds to sleeping pills, benzodiazepines, alcohol and other sedatives.",
+      "flags": [
+        "sedatives"
+      ],
+      "source": "herbs.ts · cns_action"
     },
     {
       "id": "safety:313:contraindication:1",
@@ -17437,6 +19213,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:313:record:pregnancy",
+      "botanicalId": 313,
+      "botanical": "Shaggy Mane",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:314:contraindication:1",
       "botanicalId": 314,
       "botanical": "Button Mushroom",
@@ -17466,9 +19255,7 @@
       "subject": "Otherwise: Grade A safety",
       "severity": "unspecified",
       "reason": "globally consumed; very well tolerated across all populations including children, elderly and pregnancy at food doses",
-      "flags": [
-        "pregnancy"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -17593,6 +19380,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:315:record:pregnancy",
+      "botanicalId": 315,
+      "botanical": "Enoki",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:316:contraindication:1",
       "botanicalId": 316,
       "botanical": "Fu Ling",
@@ -17683,6 +19483,19 @@
       "reason": "cumulative drying effect; assess TCM pattern before combining",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:316:record:pregnancy",
+      "botanicalId": 316,
+      "botanical": "Fu Ling",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:317:contraindication:1",
@@ -17777,6 +19590,19 @@
       "reason": "additive antiplatelet effect via hericenone B; monitor in bleeding-risk individuals",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:317:record:pregnancy",
+      "botanicalId": 317,
+      "botanical": "Lion's Mane",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:318:contraindication:1",
@@ -17895,6 +19721,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:318:record:pregnancy",
+      "botanicalId": 318,
+      "botanical": "Maitake",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:319:contraindication:1",
       "botanicalId": 319,
       "botanical": "Mesima",
@@ -18004,6 +19843,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:319:record:pregnancy",
+      "botanicalId": 319,
+      "botanical": "Mesima",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:320:contraindication:1",
       "botanicalId": 320,
       "botanical": "Morels",
@@ -18083,6 +19935,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:320:record:pregnancy",
+      "botanicalId": 320,
+      "botanical": "Morels",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:321:contraindication:1",
@@ -18328,6 +20193,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:322:record:pregnancy",
+      "botanicalId": 322,
+      "botanical": "Red-Belted Polypore",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:323:contraindication:1",
       "botanicalId": 323,
       "botanical": "Reishi",
@@ -18467,6 +20345,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:323:record:pregnancy",
+      "botanicalId": 323,
+      "botanical": "Reishi",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:324:contraindication:1",
       "botanicalId": 324,
       "botanical": "Royal Sun Mushroom",
@@ -18600,6 +20491,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:324:record:pregnancy",
+      "botanicalId": 324,
+      "botanical": "Royal Sun Mushroom",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:325:contraindication:1",
       "botanicalId": 325,
       "botanical": "Shaggy Bracket",
@@ -18717,6 +20621,19 @@
       "reason": "additive glucose-lowering; monitor blood sugar",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:325:record:pregnancy",
+      "botanicalId": 325,
+      "botanical": "Shaggy Bracket",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:326:contraindication:1",
@@ -18848,6 +20765,19 @@
       "reason": "cumulative liver stress; not relevant at therapeutic doses but worth noting in heavy polypharmacy",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:326:record:pregnancy",
+      "botanicalId": 326,
+      "botanical": "Tinder Fungus",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:327:contraindication:1",
@@ -19003,6 +20933,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:327:record:pregnancy",
+      "botanicalId": 327,
+      "botanical": "Turkey Tail",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:328:contraindication:1",
       "botanicalId": 328,
       "botanical": "Willow Bracket",
@@ -19121,6 +21064,19 @@
       "reason": "possible additive blood-moving effects; monitor INR",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:328:record:pregnancy",
+      "botanicalId": 328,
+      "botanical": "Willow Bracket",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:329:contraindication:1",
@@ -19250,6 +21206,19 @@
       "reason": "combined immune activation; practitioner oversight",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:329:record:pregnancy",
+      "botanicalId": 329,
+      "botanical": "Zhu Ling",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:330:contraindication:1",
@@ -19431,6 +21400,32 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:330:record:pregnancy",
+      "botanicalId": 330,
+      "botanical": "Psilocybe Cubensis",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:330:record:cns",
+      "botanicalId": 330,
+      "botanical": "Psilocybe Cubensis",
+      "ruleType": "record",
+      "subject": "CNS class: psychoactive",
+      "severity": "caution",
+      "reason": "Recorded as psychoactive: it does not belong beside psychiatric medication.",
+      "flags": [
+        "psych_meds"
+      ],
+      "source": "herbs.ts · cns_action"
+    },
+    {
       "id": "safety:404:contraindication:1",
       "botanicalId": 404,
       "botanical": "Raspberry Leaf",
@@ -19464,6 +21459,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:404:record:pregnancy",
+      "botanicalId": 404,
+      "botanical": "Raspberry Leaf",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:405:contraindication:1",
@@ -19532,6 +21540,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:406:record:pregnancy",
+      "botanicalId": 406,
+      "botanical": "Shatavari",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:537:contraindication:1",
@@ -19664,6 +21685,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:537:record:pregnancy",
+      "botanicalId": 537,
+      "botanical": "Ginger",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:543:contraindication:1",
       "botanicalId": 543,
       "botanical": "Elderberry (Cooked Berry)",
@@ -19784,6 +21818,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:543:record:pregnancy",
+      "botanicalId": 543,
+      "botanical": "Elderberry (Cooked Berry)",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:539:contraindication:1",
       "botanicalId": 539,
       "botanical": "Rowan Berry",
@@ -19863,6 +21910,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:539:record:pregnancy",
+      "botanicalId": 539,
+      "botanical": "Rowan Berry",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:407:contraindication:1",
@@ -19981,6 +22041,19 @@
       "reason": "tannin chelation reduces uptake",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:407:record:pregnancy",
+      "botanicalId": 407,
+      "botanical": "Pomegranate Skin",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:408:contraindication:1",
@@ -20211,6 +22284,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:409:record:pregnancy",
+      "botanicalId": 409,
+      "botanical": "Long Pepper",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:410:contraindication:1",
       "botanicalId": 410,
       "botanical": "Galangal",
@@ -20292,6 +22378,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:410:record:pregnancy",
+      "botanicalId": 410,
+      "botanical": "Galangal",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:411:contraindication:1",
@@ -20376,6 +22475,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:411:record:pregnancy",
+      "botanicalId": 411,
+      "botanical": "Black Cardamom",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:412:contraindication:1",
@@ -20468,6 +22580,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:412:record:pregnancy",
+      "botanicalId": 412,
+      "botanical": "Szechuan Pepper",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:413:contraindication:1",
       "botanicalId": 413,
       "botanical": "Longan",
@@ -20536,6 +22661,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:413:record:pregnancy",
+      "botanicalId": 413,
+      "botanical": "Longan",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:414:contraindication:1",
@@ -20644,6 +22782,19 @@
       "reason": "tannin chelation",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:414:record:pregnancy",
+      "botanicalId": 414,
+      "botanical": "Haritaki",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:415:contraindication:1",
@@ -20821,6 +22972,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:416:record:pregnancy",
+      "botanicalId": 416,
+      "botanical": "Tian Men Dong",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:417:contraindication:1",
       "botanicalId": 417,
       "botanical": "Mistletoe",
@@ -20972,6 +23136,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:417:record:pregnancy",
+      "botanicalId": 417,
+      "botanical": "Mistletoe",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:418:contraindication:1",
       "botanicalId": 418,
       "botanical": "Phyllodium pulchellum",
@@ -21053,6 +23230,19 @@
       "reason": "overlapping pharmacology",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:418:record:pregnancy",
+      "botanicalId": 418,
+      "botanical": "Phyllodium pulchellum",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:419:contraindication:1",
@@ -21163,6 +23353,32 @@
       "reason": "caution",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:419:record:pregnancy",
+      "botanicalId": 419,
+      "botanical": "African Dream Root",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:419:record:cns",
+      "botanicalId": 419,
+      "botanical": "African Dream Root",
+      "ruleType": "record",
+      "subject": "CNS class: psychoactive",
+      "severity": "caution",
+      "reason": "Recorded as psychoactive: it does not belong beside psychiatric medication.",
+      "flags": [
+        "psych_meds"
+      ],
+      "source": "herbs.ts · cns_action"
     },
     {
       "id": "safety:420:contraindication:1",
@@ -21298,6 +23514,19 @@
       "reason": "the condensed tannins chelate non-heme iron in the gut and neutralise both herbs; separate dosing by at least 2 hours",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:420:record:pregnancy",
+      "botanicalId": 420,
+      "botanical": "Grape Seed",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:501:contraindication:1",
@@ -21460,6 +23689,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:501:record:pregnancy",
+      "botanicalId": 501,
+      "botanical": "Guduchi",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:502:contraindication:1",
       "botanicalId": 502,
       "botanical": "Punarnava",
@@ -21581,6 +23823,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:502:record:pregnancy",
+      "botanicalId": 502,
+      "botanical": "Punarnava",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:503:contraindication:1",
@@ -21719,6 +23974,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:503:record:pregnancy",
+      "botanicalId": 503,
+      "botanical": "Shankhpushpi",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:504:contraindication:1",
       "botanicalId": 504,
       "botanical": "Arjuna",
@@ -21851,6 +24119,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:504:record:pregnancy",
+      "botanicalId": 504,
+      "botanical": "Arjuna",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:505:contraindication:1",
       "botanicalId": 505,
       "botanical": "Hadjod",
@@ -21967,6 +24248,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:505:record:pregnancy",
+      "botanicalId": 505,
+      "botanical": "Hadjod",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:506:contraindication:1",
       "botanicalId": 506,
       "botanical": "Shallaki",
@@ -22074,6 +24368,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:506:record:pregnancy",
+      "botanicalId": 506,
+      "botanical": "Shallaki",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:507:contraindication:1",
       "botanicalId": 507,
       "botanical": "Rasna",
@@ -22155,6 +24462,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:507:record:pregnancy",
+      "botanicalId": 507,
+      "botanical": "Rasna",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:508:contraindication:1",
       "botanicalId": 508,
       "botanical": "Dashmool",
@@ -22175,6 +24495,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:508:record:pregnancy",
+      "botanicalId": 508,
+      "botanical": "Dashmool",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:509:contraindication:1",
@@ -22215,6 +24548,19 @@
         "pregnancy"
       ],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:509:record:pregnancy",
+      "botanicalId": 509,
+      "botanical": "Gandira",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:510:contraindication:1",
@@ -22318,6 +24664,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:510:record:pregnancy",
+      "botanicalId": 510,
+      "botanical": "Vijaysar",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:511:contraindication:1",
       "botanicalId": 511,
       "botanical": "Nirgundi",
@@ -22410,6 +24769,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:511:record:pregnancy",
+      "botanicalId": 511,
+      "botanical": "Nirgundi",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:512:contraindication:1",
@@ -22517,6 +24889,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:512:record:pregnancy",
+      "botanicalId": 512,
+      "botanical": "Ashoka",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:513:contraindication:1",
       "botanicalId": 513,
       "botanical": "Lodhra",
@@ -22594,6 +24979,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:513:record:pregnancy",
+      "botanicalId": 513,
+      "botanical": "Lodhra",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:514:contraindication:1",
@@ -22677,6 +25075,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:514:record:pregnancy",
+      "botanicalId": 514,
+      "botanical": "Nagkesar",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:515:contraindication:1",
       "botanicalId": 515,
       "botanical": "Rudraksha",
@@ -22699,6 +25110,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:515:record:pregnancy",
+      "botanicalId": 515,
+      "botanical": "Rudraksha",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:520:contraindication:1",
@@ -22826,6 +25250,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:520:record:pregnancy",
+      "botanicalId": 520,
+      "botanical": "Bakuchi",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:522:contraindication:1",
@@ -22956,6 +25393,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:522:record:pregnancy",
+      "botanicalId": 522,
+      "botanical": "Gokshura",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:523:contraindication:1",
@@ -23129,6 +25579,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:524:record:pregnancy",
+      "botanicalId": 524,
+      "botanical": "Bibhitaki",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:525:contraindication:1",
       "botanicalId": 525,
       "botanical": "Guggulu",
@@ -23295,6 +25758,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:525:record:pregnancy",
+      "botanicalId": 525,
+      "botanical": "Guggulu",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:526:contraindication:1",
       "botanicalId": 526,
       "botanical": "Kalmegh / Andrographis",
@@ -23400,6 +25876,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:526:record:pregnancy",
+      "botanicalId": 526,
+      "botanical": "Kalmegh / Andrographis",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:527:contraindication:1",
@@ -23520,6 +26009,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:527:record:pregnancy",
+      "botanicalId": 527,
+      "botanical": "Manjistha",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:528:contraindication:1",
       "botanicalId": 528,
       "botanical": "Khadira",
@@ -23610,6 +26112,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:528:record:pregnancy",
+      "botanicalId": 528,
+      "botanical": "Khadira",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:529:contraindication:1",
       "botanicalId": 529,
       "botanical": "Nishoth",
@@ -23667,6 +26182,19 @@
       "source": "herbs.ts · contraindications"
     },
     {
+      "id": "safety:529:record:pregnancy",
+      "botanicalId": 529,
+      "botanical": "Nishoth",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:530:contraindication:1",
       "botanicalId": 530,
       "botanical": "Ajwan",
@@ -23700,6 +26228,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:530:record:pregnancy",
+      "botanicalId": 530,
+      "botanical": "Ajwan",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:531:contraindication:1",
@@ -23857,6 +26398,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:531:record:pregnancy",
+      "botanicalId": 531,
+      "botanical": "Neem",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:532:contraindication:1",
       "botanicalId": 532,
       "botanical": "Anantmul",
@@ -23947,6 +26501,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:532:record:pregnancy",
+      "botanicalId": 532,
+      "botanical": "Anantmul",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:533:contraindication:1",
       "botanicalId": 533,
       "botanical": "Karanja",
@@ -24035,6 +26602,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:533:record:pregnancy",
+      "botanicalId": 533,
+      "botanical": "Karanja",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:534:contraindication:1",
@@ -24164,6 +26744,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:534:record:pregnancy",
+      "botanicalId": 534,
+      "botanical": "Bael",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:535:contraindication:1",
       "botanicalId": 535,
       "botanical": "Chandrashoor",
@@ -24259,6 +26852,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:535:record:pregnancy",
+      "botanicalId": 535,
+      "botanical": "Chandrashoor",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:536:contraindication:1",
@@ -24388,6 +26994,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:536:record:pregnancy",
+      "botanicalId": 536,
+      "botanical": "Amaltas",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:545:contraindication:1",
       "botanicalId": 545,
       "botanical": "Jiaogulan",
@@ -24474,6 +27093,19 @@
       "reason": "may cause digestive upset",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:545:record:pregnancy",
+      "botanicalId": 545,
+      "botanical": "Jiaogulan",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:546:contraindication:1",
@@ -24572,6 +27204,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:546:record:pregnancy",
+      "botanicalId": 546,
+      "botanical": "Feverfew",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:547:contraindication:1",
@@ -24842,6 +27487,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:550:record:pregnancy",
+      "botanicalId": 550,
+      "botanical": "Cassia Seed Extract",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:551:contraindication:1",
       "botanicalId": 551,
       "botanical": "Citrus Aurantium Extract",
@@ -24926,6 +27584,34 @@
       "reason": "drastically amplifies cardiovascular risks and heart rate",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:551:record:pregnancy",
+      "botanicalId": 551,
+      "botanical": "Citrus Aurantium Extract",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:551:record:cns",
+      "botanicalId": 551,
+      "botanical": "Citrus Aurantium Extract",
+      "ruleType": "record",
+      "subject": "CNS class: stimulant",
+      "severity": "caution",
+      "reason": "Recorded as a stimulant: it raises blood pressure and clashes with MAO inhibitors, lithium and clozapine.",
+      "flags": [
+        "hypertension",
+        "cardio_meds",
+        "psych_meds"
+      ],
+      "source": "herbs.ts · cns_action"
     },
     {
       "id": "safety:552:contraindication:1",
@@ -25043,6 +27729,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:553:record:pregnancy",
+      "botanicalId": 553,
+      "botanical": "Horse Chestnut Extract",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:554:contraindication:1",
       "botanicalId": 554,
       "botanical": "Kelp Extract Powder",
@@ -25118,6 +27817,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:554:record:pregnancy",
+      "botanicalId": 554,
+      "botanical": "Kelp Extract Powder",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:555:contraindication:1",
       "botanicalId": 555,
       "botanical": "Lotus Leaf Extract",
@@ -25184,6 +27896,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:555:record:pregnancy",
+      "botanicalId": 555,
+      "botanical": "Lotus Leaf Extract",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:556:contraindication:1",
@@ -25269,6 +27994,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:556:record:pregnancy",
+      "botanicalId": 556,
+      "botanical": "Red Wine Extract / Resveratrol",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:557:contraindication:1",
       "botanicalId": 557,
       "botanical": "Red Yeast Rice",
@@ -25350,6 +28088,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:557:record:pregnancy",
+      "botanicalId": 557,
+      "botanical": "Red Yeast Rice",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:558:contraindication:1",
@@ -25465,6 +28216,34 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:558:record:pregnancy",
+      "botanicalId": 558,
+      "botanical": "Yohimbe Bark",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:558:record:cns",
+      "botanicalId": 558,
+      "botanical": "Yohimbe Bark",
+      "ruleType": "record",
+      "subject": "CNS class: stimulant",
+      "severity": "caution",
+      "reason": "Recorded as a stimulant: it raises blood pressure and clashes with MAO inhibitors, lithium and clozapine.",
+      "flags": [
+        "hypertension",
+        "cardio_meds",
+        "psych_meds"
+      ],
+      "source": "herbs.ts · cns_action"
+    },
+    {
       "id": "safety:559:contraindication:1",
       "botanicalId": 559,
       "botanical": "Cistanche",
@@ -25522,6 +28301,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:559:record:pregnancy",
+      "botanicalId": 559,
+      "botanical": "Cistanche",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:560:contraindication:1",
@@ -25595,6 +28387,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:560:record:pregnancy",
+      "botanicalId": 560,
+      "botanical": "Evening Primrose",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:561:contraindication:1",
@@ -25709,6 +28514,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:561:record:pregnancy",
+      "botanicalId": 561,
+      "botanical": "Toothed Clubmoss",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:562:contraindication:1",
@@ -25847,6 +28665,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:563:record:pregnancy",
+      "botanicalId": 563,
+      "botanical": "Knotweed",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:564:contraindication:1",
       "botanicalId": 564,
       "botanical": "Thunder God Vine",
@@ -25956,6 +28787,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:564:record:pregnancy",
+      "botanicalId": 564,
+      "botanical": "Thunder God Vine",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:565:contraindication:1",
       "botanicalId": 565,
       "botanical": "Gromwell Root / Shikonin",
@@ -26013,6 +28857,19 @@
       "reason": "stacking PA-containing herbs sharply increases liver toxicity risk",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:565:record:pregnancy",
+      "botanicalId": 565,
+      "botanical": "Gromwell Root / Shikonin",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:566:contraindication:1",
@@ -26145,6 +29002,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:567:record:pregnancy",
+      "botanicalId": 567,
+      "botanical": "Sophora Flower",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:568:contraindication:1",
       "botanicalId": 568,
       "botanical": "Indian Barberry",
@@ -26226,6 +29096,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:568:record:pregnancy",
+      "botanicalId": 568,
+      "botanical": "Indian Barberry",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:569:contraindication:1",
@@ -26310,6 +29193,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:569:record:pregnancy",
+      "botanicalId": 569,
+      "botanical": "Goldenseal",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:570:contraindication:1",
       "botanicalId": 570,
       "botanical": "White Kidney Bean Extract",
@@ -26376,6 +29272,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:570:record:pregnancy",
+      "botanicalId": 570,
+      "botanical": "White Kidney Bean Extract",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:571:contraindication:1",
@@ -26448,6 +29357,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:571:record:pregnancy",
+      "botanicalId": 571,
+      "botanical": "Genistein",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:573:contraindication:1",
@@ -26546,6 +29468,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:573:record:pregnancy",
+      "botanicalId": 573,
+      "botanical": "Garcinia Cambogia Extract",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:574:contraindication:1",
       "botanicalId": 574,
       "botanical": "Dan Shen Root Extract",
@@ -26629,6 +29564,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:574:record:pregnancy",
+      "botanicalId": 574,
+      "botanical": "Dan Shen Root Extract",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:575:contraindication:1",
@@ -26719,6 +29667,19 @@
       "reason": "the tannins bind the iron, rendering both herbs useless",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:575:record:pregnancy",
+      "botanicalId": 575,
+      "botanical": "Tormentil",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:576:contraindication:1",
@@ -26844,6 +29805,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:577:record:pregnancy",
+      "botanicalId": 577,
+      "botanical": "Fenugreek",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:578:contraindication:1",
       "botanicalId": 578,
       "botanical": "Hedyotis Diffusa",
@@ -26901,6 +29875,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:578:record:pregnancy",
+      "botanicalId": 578,
+      "botanical": "Hedyotis Diffusa",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:579:contraindication:1",
@@ -27015,6 +30002,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:580:record:pregnancy",
+      "botanicalId": 580,
+      "botanical": "Sophora Root",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:581:contraindication:1",
@@ -27136,6 +30136,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:582:record:pregnancy",
+      "botanicalId": 582,
+      "botanical": "Avocado Extract",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:583:contraindication:1",
       "botanicalId": 583,
       "botanical": "Pine Bark Extract",
@@ -27236,6 +30249,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:583:record:pregnancy",
+      "botanicalId": 583,
+      "botanical": "Pine Bark Extract",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:584:contraindication:1",
       "botanicalId": 584,
       "botanical": "Phellodendron / Amur Cork Tree",
@@ -27318,6 +30344,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:584:record:pregnancy",
+      "botanicalId": 584,
+      "botanical": "Phellodendron / Amur Cork Tree",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:585:contraindication:1",
       "botanicalId": 585,
       "botanical": "Kudzu Root",
@@ -27384,6 +30423,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:585:record:pregnancy",
+      "botanicalId": 585,
+      "botanical": "Kudzu Root",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:586:contraindication:1",
@@ -27500,6 +30552,19 @@
       "source": "herbs.ts · herb_to_herb_caution"
     },
     {
+      "id": "safety:586:record:pregnancy",
+      "botanicalId": 586,
+      "botanical": "Buckthorn Bark",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
       "id": "safety:587:contraindication:1",
       "botanicalId": 587,
       "botanical": "Mangosteen Extract",
@@ -27569,6 +30634,19 @@
       "reason": "the massive tannin payload in the rind chelates non-heme iron in the gut and renders it useless; separate by 2 hours",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:587:record:pregnancy",
+      "botanicalId": 587,
+      "botanical": "Mangosteen Extract",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:588:contraindication:1",
@@ -27659,6 +30737,19 @@
       "reason": "the tannins instantly chelate non-heme iron",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:588:record:pregnancy",
+      "botanicalId": 588,
+      "botanical": "Bayberry",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:589:contraindication:1",
@@ -27753,6 +30844,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:589:record:pregnancy",
+      "botanicalId": 589,
+      "botanical": "He Shou Wu / Fo-Ti",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:590:contraindication:1",
@@ -27870,6 +30974,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:590:record:pregnancy",
+      "botanicalId": 590,
+      "botanical": "Ajwain",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     },
     {
       "id": "safety:591:contraindication:1",
@@ -27994,6 +31111,19 @@
       "reason": null,
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:591:record:pregnancy",
+      "botanicalId": 591,
+      "botanical": "Lajjalu",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
     }
   ]
 }

@@ -17,9 +17,7 @@
 <meta property="og:url" content="https://www.fungai.art/shop"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://www.fungai.art/fungi.png?v=3"/>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@200;300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/fonts/fonts.css">
 <script src="https://js.stripe.com/v3/"></script>
 <style>
 :root{--void:#05090C;--forest:#080F13;--card:#111D22;--moss:#1A2E33;--sage:#336065;--lichen:#4D869B;--mist:#88BAC8;--navy:#333A57;--purple:#422C47;--parchment:#EDE5D8;--dust:#C0B49A;--coral:#CE6C52;--lime-soft:rgba(136,186,200,0.10);--serif:'Cormorant Garamond',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;--script:'Pinyon Script',cursive}
@@ -1565,7 +1563,7 @@ function selectPayTab(tab){
 function initStripe(){
   if(stripeReady)return;stripeReady=true;
   stripe=Stripe(STRIPE_PK);
-  const elements=stripe.elements({fonts:[{cssSrc:'https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400&display=swap'}]});
+  const elements=stripe.elements({fonts:[{cssSrc: location.origin + '/fonts/stripe.css'}]});
   cardElement=elements.create('card',{style:{base:{color:'#EDE5D8',fontFamily:'"DM Sans",sans-serif',fontWeight:'300',fontSize:'14px','::placeholder':{color:'#4D869B'},iconColor:'#88BAC8'},invalid:{color:'#CE6C52'}},hidePostalCode:true});
   cardElement.mount('#cardElement');
   cardElement.on('focus',()=>document.getElementById('stripeWrap').classList.add('focused'));

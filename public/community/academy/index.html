@@ -11,8 +11,7 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
     <link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
     <link rel="apple-touch-icon" href="/fungai-art-logo.png"/>
-  <link rel="preconnect" href="https://api.fontshare.com" />
-  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=zodiak@400,500&f[]=geist-mono@400,500&display=swap" />
+  <link rel="stylesheet" href="/fonts/fonts.css">
   <style>
     :root {
       --soil:       #0A0908;
@@ -540,7 +539,6 @@
 </style>
 <style id="fa-shiny-cta">
   /* Mirrors src/components/ui/shiny-button.css — keep the two in step. */
-  @import url("https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,500&display=swap");
   @property --gradient-angle{syntax:"<angle>";initial-value:0deg;inherits:false}
   @property --gradient-angle-offset{syntax:"<angle>";initial-value:0deg;inherits:false}
   @property --gradient-percent{syntax:"<percentage>";initial-value:5%;inherits:false}
@@ -1756,11 +1754,12 @@ function labSyncExplain(err) {
   const code = err.code || '';
   const msg  = err.message || String(err);
   if (code === 'TOO_LONG')  return msg;
+  if (code === 'SIGNED_OUT') return msg;
   if (code === 'NO_CLIENT') return 'The Supabase client never loaded on this page — check the console for a blocked script.';
   if (code === 'PGRST205' || code === '42P01' || /relation.*does not exist/i.test(msg))
     return 'The lab_notes table does not exist in the database. Run supabase-lab-notes.sql.';
   if (code === '42501' || /row-level security/i.test(msg))
-    return 'The database refused the write (row-level security). The INSERT policy on lab_notes is probably still the members-only one — run supabase-lab-notes-sync-fix.sql.';
+    return 'The database refused the write: only a signed-in member with a claimed profile can add to the shared notebook. Sign in again from /community/, then press Sync now. The note is safe on this device.';
   if (code === '23503') return 'The member profile cached on this device no longer exists in the database.';
   if (code === '22P02') return 'The member id cached on this device is not a valid profile id.';
   if (code === 'PGRST301' || /JWT|token is expired/i.test(msg))
@@ -1794,10 +1793,18 @@ async function pushLabNoteToCloud({ text, chapterId, ts }) {
   }
 
   try {
-    // No auth check here on purpose: the spore portal carries identity in
-    // localStorage long after the Supabase JWT is gone, and the insert
-    // policy accepts anon. author_name carries attribution either way.
+    // Signed-in members only (Robin, 2026-09-27 — supabase-lab-notes-
+    // signed-in.sql). MYCO cites these notes as Fungai Art's own practice,
+    // so a stranger holding the public key must not be able to write one.
+    // Without a live session the note stays on this device, marked, and
+    // the sweep pushes it once the member signs in again. The database
+    // stamps author_id / author_name from the caller's own profile.
     const user = window.SBauth ? await window.SBauth.getUser().catch(() => null) : null;
+    if (!user) {
+      const err = { code: 'SIGNED_OUT', message: 'Saved on this device. Sign in to share it with the notebook; it syncs on its own once you are signed in.' };
+      window.LAB_SYNC.lastError = err;
+      return { id: null, error: err };
+    }
 
     let profileId = null;
     let authorName = null;
@@ -2788,6 +2795,10 @@ function labSplitEntry(chapterId, index) {
     const m = currentMember();
     const authorId    = (m && m.cloudId) || null;
     const authorLabel = (m && m.name) || null;
+    // Signed-in members only; the database stamps the author from the
+    // caller's own profile (supabase-lab-notes-signed-in.sql).
+    const signedIn = window.SBauth ? await window.SBauth.getUser().catch(() => null) : null;
+    if (!signedIn) { alert('Sign in from /community/ to post a snippet.'); return; }
     postBtn.disabled = true; postBtn.textContent = 'Posting…';
     try {
       if (!window.SBclient) throw new Error('Supabase not loaded');
@@ -2798,6 +2809,8 @@ function labSplitEntry(chapterId, index) {
       if (error) {
         if (error.code === '42P01' || error.code === 'PGRST205') {
           alert('Snippets table not installed — run supabase-snippets.sql in Supabase SQL Editor.');
+        } else if (error.code === '42501') {
+          alert('Only a signed-in member with a claimed profile can post. Sign in again from /community/.');
         } else {
           alert('Could not post: ' + (error.message || error.code));
         }

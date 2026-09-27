@@ -1,7 +1,6 @@
 /* Shiny CTA button — used by src/components/ui/shiny-button.tsx.
    Mirrored in public/community/academy/index.html (<style id="fa-shiny-cta">),
    which is a static page and cannot import this file. Keep the two in step. */
-@import url("https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,500&display=swap");
 @property --gradient-angle{syntax:"<angle>";initial-value:0deg;inherits:false}
 @property --gradient-angle-offset{syntax:"<angle>";initial-value:0deg;inherits:false}
 @property --gradient-percent{syntax:"<percentage>";initial-value:5%;inherits:false}

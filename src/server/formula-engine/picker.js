@@ -10,9 +10,9 @@
 
 const { ensurePool, shortNote } = require('./axes');
 const { scoreHerb } = require('./scoring');
-const { safetyFilter, applyMinorGate } = require('./safety');
+const { safetyFilter, applyMinorGate, passesAccess } = require('./safety');
 const { isTrace } = require('./traces');
-const { isGABAergic, isCNSStimulant, categoryOf } = require('./pharmacology');
+const { isGABAergic, isCNSStimulant, isStrongStimulant, fitsTimeOfUse, categoryOf } = require('./pharmacology');
 
 // ── Tie-breaking ──────────────────────────────────────────────────
 // scoreHerb builds a score from a handful of coarse constants —
@@ -105,11 +105,14 @@ function targetHerbCount(a) {
 function pickFormula(a) {
   const pool = ensurePool();
   if (!pool || !pool.length) return [];
-  // Two-stage safety: (1) user's own avoid[] filter, then (2) minor
+  // Two-stage safety: (1) user's own avoid[] filter plus pro-only
+  // access (Ephedra reaches a bottle only from the pro composer) and
+  // time of use (nothing stimulating in an evening or sleep formula —
+  // pharmacology.js fitsTimeOfUse), then (2) minor
   // gate — the second is a no-op unless a._minor is truthy, in which
   // case it strips gated/sedative/psych_med/contraceptive/GABA-heavy/
   // CNS-stimulant herbs regardless of what avoid[] said.
-  const safe        = pool.filter(h => safetyFilter(h, a.avoid || []));
+  const safe        = pool.filter(h => safetyFilter(h, a.avoid || []) && passesAccess(h, a) && fitsTimeOfUse(h, a));
   const minorGated  = applyMinorGate(safe, a);
   const scored = minorGated.map(h => ({ h, s: scoreHerb(h, a) })).filter(x => x.s > 0);
   sortScored(scored, a);
@@ -127,20 +130,22 @@ function pickFormula(a) {
 
   const catCount = {};
   const composed = [];
-  let traceUsed = 0, gabaUsed = 0, stimUsed = 0;
+  let traceUsed = 0, gabaUsed = 0, stimUsed = 0, strongUsed = 0;
   for (const x of uniq) {
     if (composed.length >= target) break;
     if (x.h.gated && !openToGated) continue;
     const cat = categoryOf(x.h);
     if ((catCount[cat] || 0) >= 2) continue;
     if (isTrace(x.h)) { if (traceUsed >= 1) continue; }
-    if (isGABAergic(x.h)) { if (gabaUsed >= 2) continue; }
+    if (isGABAergic(x.h)) { if (gabaUsed >= 2 || strongUsed) continue; }
     if (isCNSStimulant(x.h)) { if (stimUsed >= 2) continue; }
+    if (isStrongStimulant(x.h) && gabaUsed) continue;
     composed.push(x);
     catCount[cat] = (catCount[cat] || 0) + 1;
     if (isTrace(x.h)) traceUsed += 1;
     if (isGABAergic(x.h)) gabaUsed += 1;
     if (isCNSStimulant(x.h)) stimUsed += 1;
+    if (isStrongStimulant(x.h)) strongUsed += 1;
   }
 
   if (composed.length < target) {
@@ -149,12 +154,14 @@ function pickFormula(a) {
       if (composed.includes(x)) continue;
       if (x.h.gated && !openToGated) continue;
       if (isTrace(x.h) && traceUsed >= 1) continue;
-      if (isGABAergic(x.h) && gabaUsed >= 2) continue;
+      if (isGABAergic(x.h) && (gabaUsed >= 2 || strongUsed)) continue;
       if (isCNSStimulant(x.h) && stimUsed >= 2) continue;
+      if (isStrongStimulant(x.h) && gabaUsed) continue;
       composed.push(x);
       if (isTrace(x.h)) traceUsed += 1;
       if (isGABAergic(x.h)) gabaUsed += 1;
       if (isCNSStimulant(x.h)) stimUsed += 1;
+      if (isStrongStimulant(x.h)) strongUsed += 1;
     }
   }
 
@@ -169,7 +176,7 @@ function pickFormula(a) {
 function buildScoredCandidates(a, limit = 20) {
   const pool = ensurePool();
   if (!pool || !pool.length) return [];
-  const safe       = pool.filter(h => safetyFilter(h, a.avoid || []));
+  const safe       = pool.filter(h => safetyFilter(h, a.avoid || []) && passesAccess(h, a) && fitsTimeOfUse(h, a));
   const minorGated = applyMinorGate(safe, a);
   const scored = minorGated.map(h => ({ h, s: scoreHerb(h, a) })).filter(x => x.s > 0);
   sortScored(scored, a);
@@ -197,6 +204,7 @@ function buildScoredCandidates(a, limit = 20) {
       // the validator rejects (MYCO_GABA_LOAD_EXCEEDED etc).
       _isGABAergic:    isGABAergic(x.h),
       _isCNSStimulant: isCNSStimulant(x.h),
+      _isStrongStimulant: isStrongStimulant(x.h),
     }));
 }
 

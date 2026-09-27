@@ -85,9 +85,56 @@ function engineFlagsFor(h) {
   const con = ((h.contraindications || []).concat(h.herb_to_drug_interactions || [])).join(' | ').toLowerCase();
   const out = [];
   for (const [flag, re] of Object.entries(FLAG_PATTERNS)) {
+    if (flag === 'pregnancy') continue;          // read from the record — recordFlagsFor
     if (re.flags.includes('i') ? re.test(con) : re.test(con)) out.push(flag);
   }
+  for (const flag of recordFlagsFor(h)) if (!out.includes(flag)) out.push(flag);
   return out.sort();
+}
+
+// Since 2026-09-27 the engine also reads two record fields directly —
+// VERBATIM with axes.js inferAxes:
+//   · pregnancy comes from safe_pregnancy alone: only true passes;
+//     unknown (null) and false both mean avoid;
+//   · the recorded CNS class implies its medication conflicts.
+function recordFlagsFor(h) {
+  const out = [];
+  if (h.safe_pregnancy !== true) out.push('pregnancy');
+  if (h.cns_action === 'sedative')     out.push('sedatives');
+  if (h.cns_action === 'stimulant')    out.push('hypertension', 'cardio_meds', 'psych_meds');
+  if (h.cns_action === 'psychoactive') out.push('psych_meds');
+  return out;
+}
+
+// The same facts as addressable rules, so every engine flag has a rule
+// behind it and MYCO can retrieve "no pregnancy record — avoid".
+function recordRulesFor(h) {
+  const rules = [];
+  if (h.safe_pregnancy !== true) {
+    rules.push({
+      id: 'safety:' + h.id + ':record:pregnancy', botanicalId: h.id, botanical: h.name,
+      ruleType: 'record', subject: 'Pregnancy and breastfeeding',
+      severity: 'avoid',
+      reason: h.safe_pregnancy === false
+        ? 'Recorded as not safe in pregnancy (safe_pregnancy: false).'
+        : 'No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.',
+      flags: ['pregnancy'], source: 'herbs.ts · safe_pregnancy',
+    });
+  }
+  const cnsFlags = recordFlagsFor(h).filter(f => f !== 'pregnancy');
+  if (cnsFlags.length) {
+    const why = {
+      sedative: 'Recorded as a sedative: it adds to sleeping pills, benzodiazepines, alcohol and other sedatives.',
+      stimulant: 'Recorded as a stimulant: it raises blood pressure and clashes with MAO inhibitors, lithium and clozapine.',
+      psychoactive: 'Recorded as psychoactive: it does not belong beside psychiatric medication.',
+    }[h.cns_action];
+    rules.push({
+      id: 'safety:' + h.id + ':record:cns', botanicalId: h.id, botanical: h.name,
+      ruleType: 'record', subject: 'CNS class: ' + h.cns_action,
+      severity: 'caution', reason: why, flags: cnsFlags, source: 'herbs.ts · cns_action',
+    });
+  }
+  return rules;
 }
 
 function flagsFor(text) {
@@ -139,7 +186,11 @@ function main() {
         // The engine only reads contraindications + drug interactions
         // when inferring flags; herb-to-herb cautions are scored
         // separately. Keep that boundary so parity is exact.
-        const flags = (field === 'herb_to_herb_caution') ? [] : flagsFor(whole);
+        // A record marked safe in pregnancy mentions pregnancy only to
+        // say so ("safe in pregnancy and breastfeeding"); the word is not
+        // a flag there, and the engine agrees since 2026-09-27.
+        const flags = (field === 'herb_to_herb_caution') ? []
+          : flagsFor(whole).filter(f => !(f === 'pregnancy' && h.safe_pregnancy === true));
         flags.forEach(f => union.add(f));
 
         rules.push({
@@ -156,6 +207,12 @@ function main() {
         bySeverity[severity] = (bySeverity[severity] || 0) + 1;
         byType[ruleType]     = (byType[ruleType] || 0) + 1;
       });
+    }
+    for (const r of recordRulesFor(h)) {
+      rules.push(r);
+      r.flags.forEach(f => union.add(f));
+      bySeverity[r.severity] = (bySeverity[r.severity] || 0) + 1;
+      byType[r.ruleType]     = (byType[r.ruleType] || 0) + 1;
     }
     perHerbFlags[h.id] = engineFlagsFor(h);          // what the engine does today
     perRuleFlags[h.id] = [...union].sort();           // what the individual rules support

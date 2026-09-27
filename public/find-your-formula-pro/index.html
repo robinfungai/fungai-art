@@ -3,7 +3,16 @@
 <head>
 <meta charset="UTF-8"/>
     <meta name="color-scheme" content="dark">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<style>
+/* Zoom (2026-09-27, WCAG 1.4.4): pinch-zoom is allowed again — the page
+   used to forbid it with maximum-scale=1 / user-scalable=no. Double-tap
+   zoom stays off so quick taps on answers never zoom the page, and form
+   fields are 16px on phones because iOS zooms into any field smaller than
+   that when it is tapped (the reason the lock was added). */
+html{touch-action:manipulation}
+@media (max-width:768px){input:not([type="checkbox"]):not([type="radio"]),textarea,select{font-size:16px!important}}
+</style>
 <title>Find Your Formula · Pro · Fungai Art</title>
 <meta name="description" content="The long reading. Sixteen questions that map circadian rhythm, nervous-system state, somatic geography, and constitutional pattern — one bespoke spagyric extract, hand-poured in Berlin."/>
 <meta name="keywords" content="custom spagyric extract, deep herbal intake, constitutional profiling, nervous system typology, somatic map, Fungai Art, sublingual drops"/>
@@ -22,9 +31,7 @@
 <meta name="twitter:description" content="The long reading. Sixteen questions, one bespoke spagyric extract."/>
 <meta name="theme-color" content="#0A0D11"/>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/fonts/fonts.css">
 
 <style>
 @font-face { font-family:'TAN-PARADISO'; src:url('/fonts/TAN-PARADISO.ttf') format('truetype'); font-display:swap; }
@@ -730,7 +737,7 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 .r-bottle{margin:0 auto 22px;width:100%;max-width:420px;position:relative;filter:drop-shadow(0 30px 60px rgba(0,0,0,0.55))}
 .r-bottle-halo{position:absolute;inset:-14%;background:radial-gradient(circle,rgba(232,177,75,0.28),transparent 55%);animation:haloPulse 6s ease-in-out infinite;pointer-events:none;z-index:-1;border-radius:50%}
 @keyframes haloPulse{0%,100%{transform:scale(1);opacity:0.6}50%{transform:scale(1.08);opacity:1}}
-.formula-art-card{position:relative;border-radius:18px;overflow:hidden;background-color:#050403;background-image:url('/herbal-engine-2/bottle-bg.png');background-size:cover;background-position:center center;background-repeat:no-repeat;display:flex;flex-direction:column;aspect-ratio:3/4;min-height:440px}
+.formula-art-card{position:relative;border-radius:18px;overflow:hidden;background-color:#050403;background-image:url('/herbal-engine-2/bottle-bg.jpg');background-size:cover;background-position:center center;background-repeat:no-repeat;display:flex;flex-direction:column;aspect-ratio:3/4;min-height:440px}
 .formula-art-overlay{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,0.78) 0%,rgba(0,0,0,0.08) 28%,rgba(0,0,0,0.0) 45%,rgba(0,0,0,0.0) 58%,rgba(0,0,0,0.12) 72%,rgba(0,0,0,0.85) 100%)}
 .formula-art-inner{position:relative;z-index:1;padding:0;text-align:center;display:flex;flex-direction:column;align-items:center;flex:1;justify-content:space-between}
 .fa-top{padding:22px 20px 12px;width:100%}
@@ -1055,7 +1062,7 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 
 </main>
 
-<!-- The full 207-herb catalog (auto-generated from src/data/herbs.ts).
+<!-- The full 242-herb catalog (auto-generated from src/data/herbs.ts).
      Sets `HERBS` in the script global scope. ~1MB, worth the download
      because the alternative is duplicating 30 curated herbs here. -->
 <!-- Step 8: /herbs-data.js no longer loaded — server ships enriched herb fields in the compose response. Kept as a public file for /extraction and /mixology until they are rebuilt. -->
@@ -1079,7 +1086,7 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
    ──────────────────────────────────────────────────────────── */
 
 // ── Consumer herb pool ────────────────────────────────────
-// Sourced from the full 207-herb catalog (window.HERBS, loaded from
+// Sourced from the full 242-herb catalog (window.HERBS, loaded from
 // /herbs-data.js — auto-generated mirror of src/data/herbs.ts). We
 // don't hand-curate here; instead we EXCLUDE the legally-restricted
 // entries and then INFER the four quiz axes from each herb's own
@@ -2373,7 +2380,7 @@ function pickName(intention){
 // ── Product-photo card ────────────────────────────────────
 // Mirrors the practitioner mode's genFormulaArt so the customer
 // sees the SAME visual language that gets poured. Uses the amber
-// bottle photograph from /herbal-engine-2/bottle-bg.png as the
+// bottle photograph from /herbal-engine-2/bottle-bg.jpg as the
 // background, formula name + herbs overlaid.
 function bottleCard(intention, herbs, name){
   // Show EVERY herb in the formula. Prior version sliced to 5 which
@@ -3034,7 +3041,9 @@ async function _fyfRenderResultServerMode(a) {
     res = await fetch('/api/fyf/compose', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ profile: a }),
+      // _pro: this is the pro composer, the one place a pro-only herb
+      // (herbs.ts formula_access: 'pro' — Ephedra) may be chosen.
+      body:    JSON.stringify({ profile: Object.assign({}, a, { _pro: true }) }),
       signal:  controller.signal,
     });
     clearTimeout(timeoutId);

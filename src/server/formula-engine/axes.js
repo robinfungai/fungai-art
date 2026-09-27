@@ -79,6 +79,10 @@ function isGated(h) {
 // can never be coupled again.
 const MINOR_BANNED_NAMES = [
   'amanita muscaria','amanita_muscaria','amanita pantherina',
+  // Salicylate herbs, the plant relatives of aspirin (2026-09-27): the
+  // EMA/HMPC monographs contraindicate willow bark under 18 and advise
+  // against meadowsweet under 18.
+  'filipendula ulmaria','meadowsweet','willow bark','salix alba',
 ];
 function isMinorBanned(h) {
   const s = ((h.name || '') + ' ' + (h.botanical || '')).toLowerCase();
@@ -137,7 +141,15 @@ function inferAxes(h) {
   if (!stress.length) stress.push('ride', 'off');
 
   const flags = [];
-  if (/pregnan|lactat|breastfeed|uterine.*stim|emmenagog|abortifac|fetal|infant.*transfer/.test(con)) flags.push('pregnancy');
+  // 2026-09-27 · Pregnancy reads the record's own verdict, not its prose.
+  // Only an explicit safe_pregnancy: true lets a herb near a pregnant or
+  // breastfeeding customer. Unknown (null, 84 herbs) is avoid — it used
+  // to pass whenever the contraindication text happened not to mention
+  // pregnancy (Ginkgo, Bladderwrack, Shatavari…), and six herbs marked
+  // false (Fadogia, Tongkat Ali, Chaga…) passed the same way. The prose
+  // test also caught the 9 records whose text says "safe in pregnancy",
+  // so it is not kept as a second opinion.
+  if (h.safe_pregnancy !== true) flags.push('pregnancy');
   if (/anticoagulant|antiplatelet|blood.?thin|warfarin|heparin|inr|digoxin|cardiac glycoside|heart.*medicat|antihypertens|hypertens/.test(con)) flags.push('cardio_meds');
   if (/maoi|ssri|snri|serotonin syndrome|antidepress|mood stabili|antipsychot|bipolar|lithium|dopaminergi/.test(con)) flags.push('psych_meds');
   if (/immunostim|autoimmun|immunosuppress|lupus|MS\b|rheumatoid|multiple sclerosis/i.test(con)) flags.push('autoimmune');
@@ -147,6 +159,14 @@ function inferAxes(h) {
   if (/cyp3a4|contracepti|estrogen.*bind|birth control|oral contracepti/.test(con)) flags.push('contraceptive');
   if (/benzodiazepin|cns depress|sedative.*additive|potentiat.*sedat/.test(con)) flags.push('sedatives');
   if (/asteraceae|ragweed|daisy family|compositae|salicylat|aspirin/.test(con)) flags.push('allergy');
+  // The recorded CNS class implies the obvious medication conflicts,
+  // whatever the prose remembered to say: a sedative adds to sleeping
+  // pills and benzodiazepines; a stimulant raises blood pressure and
+  // clashes with MAOIs, lithium and clozapine; a psychoactive does not
+  // belong beside psychiatric medication.
+  if (h.cns_action === 'sedative')     flags.push('sedatives');
+  if (h.cns_action === 'stimulant')    flags.push('hypertension', 'cardio_meds', 'psych_meds');
+  if (h.cns_action === 'psychoactive') flags.push('psych_meds');
 
   const uniqIntentions = [...new Set(intentions)];
   return {
@@ -174,6 +194,9 @@ function ensurePool() {
       _ax: inferAxes(h),
       gated: isGated(h),
       minorBanned: isMinorBanned(h),
+      // formula_access: 'pro' in herbs.ts — only the pro composer may
+      // bottle it (safety.js passesAccess). Ephedra, 2026-09-27.
+      proOnly: h.formula_access === 'pro',
     }));
   return POOL;
 }

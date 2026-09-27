@@ -1,6 +1,6 @@
 // src/islands/atlas-explorer.tsx
 //
-// The Atlas: 243 organisms, navigable by facet, each opening a ten-layer
+// The Atlas: 242 organisms, navigable by facet, each opening a ten-layer
 // dossier with its synergy graph.
 //
 // Data comes from public/atlas/data/ (built by scripts/build-atlas.cjs):

@@ -25,9 +25,7 @@
 <meta name="twitter:title" content="Fungai Art · Entheobotanicals"/>
 <meta name="twitter:description" content="Living mycelial art — wild-foraged elixirs, tailored formulas, and a living foraging map."/>
 <meta name="twitter:image" content="https://www.fungai.art/fungi.png?v=3"/>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:wght@200;300;400;500&family=Pinyon+Script&family=IM+Fell+English:ital@0;1&family=Josefin+Sans:wght@100;200;300&family=Spectral:ital,wght@0,200;0,300;1,200;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/fonts/fonts.css">
 <script src="https://js.stripe.com/v3/"></script>
 
 <style>
@@ -433,7 +431,7 @@ html.reveal-anim .reveal.in { opacity: 1; transform: translateY(0); }
 }
 /* Top organism — compact (max 360 px) so the whole stack fits a
    typical 800 px viewport without scrolling. Fixed height prevents the
-   box from collapsing while the 8 MB abc.png is still streaming. */
+   box from collapsing while the hero photo (abc.webp, 92 KB since 2026-09-27) streams in. */
 .hero-organism {
   position: relative;
   width: min(360px, 62vw);
@@ -1478,7 +1476,7 @@ function toggleMobileMenu() {
      misfires we get a permanently blank hero. -->
 <div class="hero">
   <div class="hero-organism">
-    <img src="/home/abc.png" alt="Living mycelium organism" id="heroPhoto"
+    <img src="/home/abc.webp" alt="Living mycelium organism" id="heroPhoto"
          fetchpriority="high" decoding="async">
     <canvas id="sparkleCanvas"></canvas>
     <script>
@@ -3206,7 +3204,7 @@ function initStripe() {
   stripeReady = true;
   stripe = Stripe(STRIPE_PK);
   const elements = stripe.elements({
-    fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400&display=swap' }]
+    fonts: [{ cssSrc: location.origin + '/fonts/stripe.css' }]
   });
   cardElement = elements.create('card', {
     style: {

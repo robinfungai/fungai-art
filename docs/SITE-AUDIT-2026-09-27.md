@@ -13,6 +13,29 @@ measured, §9 says so.
 
 ---
 
+## Status after Robin's answers (same day, evening)
+
+| # | Robin decided | Done |
+|---|---|---|
+| C1 | Ephedra only in pro mode; HIGH / VERY HIGH herbs **stay** in customer formulas; make the stimulant/sedative call pharmacologically, with PubMed data in herbs.ts | ✅ `formula_access: 'pro'` on Ephedra (engine, validator, pro page). 65 herbs carry `cns_action` + `cns_evidence` (83 PMIDs cited, each read; 4 more read and dropped). The "glutamate" misfire is gone; nothing stimulating in evening or sleep formulas (the old engine bottled Yerba Mate and Bitter Orange there); no sedative beside a true stimulant. He Shou Wu now competes like any herb. Under-18s: no HIGH-caution, psychoactive or above-LOW calming herb, no meadowsweet or willow bark (EMA). `tests/cns-classification-verify.cjs` |
+| C2 | Fix it | ✅ Only `safe_pregnancy: true` reaches a pregnant customer. Unknown and false both mean avoid (the old rule also let six herbs marked false through, Chaga among them). Meadowsweet: EMA "not recommended" for lack of data, not known harm — written into its record |
+| C3 | "ADHD is fine" | ⚪ kept by Robin's decision |
+| C4 | "I don't run a German herbal site, do I?" | ⏳ answered in chat — the duty follows where the business is run from, not the language; decision pending |
+| C5 | "teyae as admin is fine" | ⚪ kept by Robin's decision |
+| C6 | Only logged-in members write | ✅ page side done; ⏳ **run `supabase-lab-notes-signed-in.sql`** |
+| C7 | No fines for fonts | ✅ every font self-hosted (`public/fonts/`, 16 Google families + Fontshare, 1.5 MB); Google/Fontshare removed from 46 files and from the CSP; Stripe's card fields use `/fonts/stripe.css` |
+| H1 | Shrink photos, remove unused ones | ✅ 41 unused files deleted (~92 MB); 12 heavy ones recompressed 27 MB → 3.6 MB (portrait 16 MB → 328 KB; hero now WebP). Built site 160 MB → 60 MB. Untracked uploads and the atlas's unmatched photos (catalogue-gap signals) left alone |
+| H3 | "Explain more" | answered in chat |
+| H4 | Fine as long as products claim nothing | ⚪ kept |
+| H5 | Align every herb count | ✅ all say 242; `scripts/sync-herb-counts.cjs` rewrites them on every build, `npm run test:herb-counts` fails if one drifts |
+| H6 | SQL sent | ✅ |
+| H8 | "What is right visually?" | ✅ pinch-zoom back on 4 pages; double-tap zoom off on the quiz; fields 16px on phones so iOS never jump-zooms |
+| H9 | "???" | ✅ supabase-js pinned and self-hosted (`/vendor/supabase-js-2.105.1.js`, the React app's exact build) |
+| /health | Suggestions wanted | Sci-Hub advice removed; "HerbMeister" (does not exist) replaced by the EMA herbal monographs; the rest in chat |
+| 🟡 | "Medium I do next" | open |
+
+---
+
 ## 0 · The verdict on one screen
 
 The foundations are **solid**. The site builds clean the way Netlify builds it

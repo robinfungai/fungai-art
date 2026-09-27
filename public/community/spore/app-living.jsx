@@ -3206,7 +3206,7 @@ function WeeklyReportBlock({ currentMemberId, onToast }) {
    supabase-member-herbs.sql). Visible to everyone — encourages
    cross-pollination ("oh you're also on cramp bark right now?").
 
-   Type-ahead search uses the same 203-entry catalogue as the herbal
+   Type-ahead search uses the same 242-entry catalogue as the herbal
    engine (loaded from /herb-engine-ids.json), so the herb_id stays
    compatible with admin inventory + the engine's "In stock" pool.
 ─────────────────────────────────────────────────────────────── */
@@ -3659,7 +3659,7 @@ function LiveInventoryPanel({ currentMember, onToast }) {
   const [loading,    setLoading]    = useState(true);
   const [error,      setError]      = useState('');
 
-  // Bootstrap: fetch the 201-herb catalogue + the current inventory.
+  // Bootstrap: fetch the 242-herb catalogue + the current inventory.
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -3747,7 +3747,7 @@ function LiveInventoryPanel({ currentMember, onToast }) {
   const cats = Object.keys(byCat).sort();
 
   // Collapsed by default, opened with "show ↓" exactly like Restrict
-  // features above (Robin, 2026-09-27) — 240 herbs is a lot of page.
+  // features above (Robin, 2026-09-27) — the whole catalogue is a lot of page.
   return (
     <details className="section" style={{ paddingBottom:0 }}>
       <summary style={{ cursor:'pointer', listStyle:'none', display:'flex', alignItems:'center', justifyContent:'space-between', gap:10, padding:'6px 0' }}>

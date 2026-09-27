@@ -9,8 +9,19 @@
 // alone missed these because each herb sat in a DIFFERENT categoryOf
 // bucket (mushroom / adaptogen / nervine).
 //
-// LIFTED VERBATIM from
-//   public/find-your-formula/index.html lines 2236–2270.
+// 2026-09-27 — the herb's own `cns_action` field (src/data/herbs.ts) is
+// the answer whenever a record carries one. It was added because the
+// word search below misfired both ways: it matched the id words inside
+// the prose, so 'mate' (yerba mate) fired inside "glutamate" and made
+// Lavender, St John's Wort, He Shou Wu and six others stimulants; any
+// mention of GABA made Barley and Hawthorn sedatives; and it never
+// caught Ephedra, Yohimbe or Bitter Orange. Every herb the search
+// flags now carries an explicit class with its PubMed evidence
+// (cns_evidence), and tests/cns-classification-verify.cjs keeps it so.
+//
+// The search stays only as the fallback for a record without the
+// field, with the id words matched against the herb's own id and name
+// on word boundaries, never against the prose.
 
 const GABAERGIC_IDS = [
   'valerian','passionflower','hops','magnolia','skullcap','kava',
@@ -22,48 +33,68 @@ const STIMULANT_IDS = [
   'mate','guayusa','kola_nut','coffee','green_tea','gotu_kola_stim','maca',
 ];
 
-function isGABAergic(h) {
-  const s = String(h.id || '').toLowerCase() + ' ' + String(h.name || '').toLowerCase() + ' ' +
-            ((h.primary_functions || []).join(' ') + ' ' + (h.pharmacology || '')).toLowerCase();
-  if (GABAERGIC_IDS.some(id => s.includes(id))) return true;
-  return /gaba|benzodiazepine.receptor|hypnotic|strong.sedativ|cns.depressant/.test(s);
-}
+const CNS_ACTIONS = ['stimulant', 'activating', 'neutral', 'calming', 'sedative', 'psychoactive'];
 
-// ⚠ KNOWN OVER-MATCH, deliberately left in place (2026-09-27).
-// isCNSStimulant substring-matches the id words against the PROSE, so
-// 'mate' (yerba mate) fires inside "glutamate": Lavender, St. John's
-// Wort, Amanita, Psilocybe, Rowan Berry, Jiaogulan, Cistanche, Toothed
-// Clubmoss and He Shou Wu all count as CNS stimulants — 9 of 18.
-// Fixing it here is one line, but it changes what the engine puts in a
-// bottle: the false label is what keeps He Shou Wu (caution HIGH,
-// documented liver injury) out of energy formulas, and with the fix
-// fixture 13-stim-load seats it. That is a decision for Robin — fix the
-// match AND decide whether HIGH-caution herbs belong in consumer bottles
-// at all — not a side effect of a bug fix. Until then the engine keeps
-// this behaviour, and the formula analysis (analyze.js) reads the
-// *Strict versions below so its labels are true.
-function isCNSStimulant(h) {
-  const s = String(h.id || '').toLowerCase() + ' ' + String(h.name || '').toLowerCase() + ' ' +
-            ((h.primary_functions || []).join(' ') + ' ' + (h.pharmacology || '')).toLowerCase();
-  if (STIMULANT_IDS.some(id => s.includes(id))) return true;
-  return /cns.stimulant|caffeine.rich|methylxanthine|adrenergic.stim/.test(s);
-}
-
-// The same tests with the id words matched against the herb's own id
-// and name, on word boundaries — the prose regexes are unchanged.
 function namedIn(h, ids) {
   const who = (String(h.id || '') + ' ' + String(h.name || '')).toLowerCase().replace(/_/g, ' ');
   return ids.some(id => new RegExp('(^|[^a-z])' + id.replace(/_/g, '[ _]') + '([^a-z]|$)').test(who));
 }
-function isGABAergicStrict(h) {
-  if (namedIn(h, GABAERGIC_IDS)) return true;
-  const s = ((h.primary_functions || []).join(' ') + ' ' + (h.pharmacology || '')).toLowerCase();
-  return /gaba|benzodiazepine.receptor|hypnotic|strong.sedativ|cns.depressant/.test(s);
+function proseText(h) {
+  return ((h.primary_functions || []).join(' ') + ' ' + (h.pharmacology || '')).toLowerCase();
 }
-function isCNSStimulantStrict(h) {
-  if (namedIn(h, STIMULANT_IDS)) return true;
-  const s = ((h.primary_functions || []).join(' ') + ' ' + (h.pharmacology || '')).toLowerCase();
-  return /cns.stimulant|caffeine.rich|methylxanthine|adrenergic.stim/.test(s);
+
+// The fallback, exported so the coverage test can ask what it would say.
+function guessGABAergic(h) {
+  return namedIn(h, GABAERGIC_IDS) ||
+    /gaba|benzodiazepine.receptor|hypnotic|strong.sedativ|cns.depressant/.test(proseText(h));
+}
+function guessCNSStimulant(h) {
+  return namedIn(h, STIMULANT_IDS) ||
+    /cns.stimulant|caffeine.rich|methylxanthine|adrenergic.stim/.test(proseText(h));
+}
+
+// The herb's CNS class: its recorded cns_action, or the fallback's
+// verdict ('sedative' / 'stimulant' / 'neutral') when it has none.
+function cnsAction(h) {
+  if (h && CNS_ACTIONS.includes(h.cns_action)) return h.cns_action;
+  if (!h) return 'neutral';
+  if (guessGABAergic(h)) return 'sedative';
+  if (guessCNSStimulant(h)) return 'stimulant';
+  return 'neutral';
+}
+
+// Counts toward the sedative cap (≤ 2 per formula).
+function isGABAergic(h) {
+  return cnsAction(h) === 'sedative';
+}
+
+// Counts toward the stimulant cap (≤ 2 per formula).
+function isCNSStimulant(h) {
+  const a = cnsAction(h);
+  return a === 'stimulant' || a === 'activating';
+}
+
+// Time of use. A formula taken in the evening or at night, or composed
+// for sleep, carries nothing that raises arousal: no stimulant
+// (caffeine, synephrine, ephedrine…) and no activating herb (rhodiola,
+// ginseng, cordyceps…). Sleep as a second or third wish still keeps the
+// true stimulants out. Until 2026-09-27 the engine could bottle Bitter
+// Orange for an evening sleep formula.
+function fitsTimeOfUse(h, a) {
+  const cls = cnsAction(h);
+  if (cls !== 'stimulant' && cls !== 'activating') return true;
+  if (!a) return true;
+  if (a.time === 'evening' || a.time === 'night' || a.intention === 'sleep') return false;
+  if (cls === 'stimulant' && Array.isArray(a.intentions) && a.intentions.includes('sleep')) return false;
+  return true;
+}
+
+// Push-pull. A sedative and a true stimulant in one bottle work against
+// each other (valerian with guarana, kava with bitter orange). The
+// activating herbs are allowed beside a sedative — rhodiola with
+// passionflower is a classic pairing for the anxious and exhausted.
+function isStrongStimulant(h) {
+  return cnsAction(h) === 'stimulant';
 }
 
 // Rough category of a herb — used by the balance guard in picker.js.
@@ -88,4 +119,9 @@ function categoryOf(h) {
   return 'other';
 }
 
-module.exports = { GABAERGIC_IDS, STIMULANT_IDS, isGABAergic, isCNSStimulant, isGABAergicStrict, isCNSStimulantStrict, categoryOf };
+module.exports = {
+  GABAERGIC_IDS, STIMULANT_IDS, CNS_ACTIONS,
+  cnsAction, isGABAergic, isCNSStimulant, guessGABAergic, guessCNSStimulant,
+  fitsTimeOfUse, isStrongStimulant,
+  categoryOf,
+};

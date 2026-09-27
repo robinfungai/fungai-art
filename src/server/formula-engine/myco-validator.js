@@ -31,7 +31,7 @@
 // SERVER-ONLY. Never imported by any client code.
 
 const { isTrace } = require('./traces');
-const { isGABAergic, isCNSStimulant, categoryOf } = require('./pharmacology');
+const { isGABAergic, isCNSStimulant, isStrongStimulant, categoryOf } = require('./pharmacology');
 
 // Constants must match picker.js exactly (per audit constraint #8:
 // no methodology drift). Sourced from the same load-cap block.
@@ -53,9 +53,12 @@ const TRACE_PCT_CAP    = 5;
  *   defines the bounded universe MYCO is allowed to pick from.
  * @param {boolean} params.gatedOptIn
  *   Whether the user opted into ceremonial allies (Amanita etc).
+ * @param {boolean} [params.pro]
+ *   Whether the request came from the pro composer — the only place a
+ *   pro-only herb (herbs.ts formula_access: 'pro', e.g. Ephedra) may go.
  * @returns {object} discriminated union — see file header.
  */
-function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn }) {
+function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn, pro = false }) {
   if (!mycoResponse || !Array.isArray(mycoResponse)) {
     return { ok: false, reason: 'MYCO_MALFORMED', detail: 'response is not an array of picks' };
   }
@@ -82,7 +85,7 @@ function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn }) {
   const acceptedPcts  = [];
   const acceptedReasons = [];
   const seenIds       = new Set();
-  let traceUsed = 0, gabaUsed = 0, stimUsed = 0;
+  let traceUsed = 0, gabaUsed = 0, stimUsed = 0, strongUsed = 0;
   const catCount = {};
   let pctSum = 0;
 
@@ -126,6 +129,15 @@ function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn }) {
       };
     }
 
+    // Pro-only check — the candidate set already excludes these for a
+    // consumer; this is the second lock.
+    if ((herb.proOnly || herb.formula_access === 'pro') && !pro) {
+      return {
+        ok: false, reason: 'MYCO_PRO_ONLY_HERB',
+        detail: herb.name + ' is for the pro composer only',
+      };
+    }
+
     // Trace cap — potent essential-oil herbs ≤5%.
     if (isTrace(herb)) {
       if (pct > TRACE_PCT_CAP) {
@@ -152,6 +164,13 @@ function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn }) {
           detail: 'more than ' + MAX_GABAERGIC + ' GABAergics',
         };
       }
+    }
+    if (isStrongStimulant(herb)) strongUsed += 1;
+    if (gabaUsed && strongUsed) {
+      return {
+        ok: false, reason: 'MYCO_SEDATIVE_WITH_STIMULANT',
+        detail: 'a sedative and a stimulant pull against each other in one bottle',
+      };
     }
     if (isCNSStimulant(herb)) {
       stimUsed += 1;

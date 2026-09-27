@@ -80,6 +80,38 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ---
 
+## 0.9 · 2026-09-27, late — Robin's answers to the audit, worked through (committed, not pushed)
+
+The status table at the top of `docs/SITE-AUDIT-2026-09-27.md` is the
+summary. In short:
+
+- **Stimulant / sedative is data now.** `herbs.ts` has `cns_action`
+  (stimulant · activating · neutral · calming · sedative · psychoactive) and
+  `cns_evidence` (mechanism + PMIDs, every one fetched and read) on 65
+  herbs; `pharmacology.js` reads them, the word search is only a fallback,
+  and `test:cns-classification` fails if any herb the fallback would flag is
+  unclassified. **A new herb that sounds sedating or stimulating must be
+  classified before the build passes.** Engine 2.2: nothing stimulating in
+  evening/sleep formulas, no sedative beside a true stimulant; Ephedra
+  `formula_access: 'pro'` (pro page sends `_pro: true`). HIGH-caution herbs
+  stay in adult formulas (Robin). Fixture pins moved to
+  `tests/fixtures/methodology-pins.cjs`, shared by compare + shadow.
+- **Pregnancy:** only `safe_pregnancy: true` reaches a pregnant customer.
+- **Under-18s:** no HIGH/VERY HIGH, no psychoactive, calming only at LOW,
+  no meadowsweet / willow bark (EMA).
+- **Lab notes + snippets:** signed-in members only — page side done;
+  **`supabase-lab-notes-signed-in.sql` must be run** (then read its §5).
+- **Fonts self-hosted** (`public/fonts/fonts.css`, `/fonts/g/*.woff2`,
+  `/fonts/stripe.css`); CSP has no font hosts. **supabase-js** pinned at
+  `/vendor/supabase-js-2.105.1.js` (upgrade steps in `supabase-client.js`).
+- **Photos:** 41 unused deleted, 12 recompressed; dist 160 → 60 MB.
+- **Herb counts:** `build:herb-counts` rewrites every stated count.
+- **Zoom** unlocked on 4 pages. **/health:** Sci-Hub advice and the
+  non-existent "HerbMeister" removed.
+- Open: C4 imprint (Robin's call), the 🟡 list (Robin: "medium I do next"),
+  pro page is public so `_pro` separates the quizzes but is not access
+  control, `test:forage-proxies` still fails (unchanged since before today).
+
 ## 0.8 · Whole-site audit — read `docs/SITE-AUDIT-2026-09-27.md` first
 
 Seven 🔴 items, the top three waiting on one "yes" each: HIGH-caution herbs

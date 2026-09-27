@@ -26,7 +26,7 @@
 // compare-fixtures runner flags this as SECURITY_FIX (allowed drift).
 
 const { ensurePool } = require('./axes');
-const { isGABAergic, isCNSStimulant } = require('./pharmacology');
+const { isGABAergic, isCNSStimulant, cnsAction } = require('./pharmacology');
 
 // Whitelist of safety-flag values the client is allowed to send. Any
 // other string is dropped. Matches the `options.v` list in the
@@ -123,16 +123,41 @@ function safetyFilter(h, avoid) {
 
 const MINOR_BANNED_FLAGS = new Set(['sedatives', 'psych_meds', 'contraceptive']);
 
+// 2026-09-27 · The gate reads the recorded CNS class (herbs.ts
+// cns_action) instead of the old word search, which had kept some herbs
+// away from minors only by accident: He Shou Wu counted as a stimulant
+// because "glutamate" contains "mate". With the labels true, two rules
+// keep the gate at least as tight as it was:
+//   · calming herbs pass only at caution LOW (chamomile, lemon balm,
+//     linden, rose, oatstraw — the classic children's herbs), and
+//     psychoactive ones never pass;
+//   · nothing at caution HIGH or VERY HIGH passes, whatever its class.
+//     Adults still get those herbs (Robin, 2026-09-27); a minor's
+//     formula is meant to be the gentle one.
+const MINOR_BANNED_CAUTION = new Set(['HIGH', 'VERY HIGH']);
+
 function passesMinorGate(h) {
   // Both checks, deliberately. `minorBanned` is the standing under-18
   // ban; `gated` is still honoured so anything gated in future is also
   // withheld from minors by default.
-  if (h && (h.minorBanned || h.gated)) return false;
+  if (h && (h.minorBanned || h.gated || h.proOnly)) return false;
   const flags = (h && h._ax && h._ax.flags) || [];
   for (const f of flags) if (MINOR_BANNED_FLAGS.has(f)) return false;
   if (isGABAergic(h))    return false;
   if (isCNSStimulant(h)) return false;
+  const cns = cnsAction(h);
+  if (cns === 'psychoactive') return false;
+  if (cns === 'calming' && h.caution_level !== 'LOW') return false;
+  if (h && MINOR_BANNED_CAUTION.has(h.caution_level)) return false;
   return true;
+}
+
+// Pro-only herbs (herbs.ts formula_access: 'pro') reach a bottle only
+// when the profile came from the pro composer. fyf-compose sets _pro
+// from the request; a minor is never pro.
+function passesAccess(h, profile) {
+  if (!h || !h.proOnly) return true;
+  return !!(profile && profile._pro === true && !profile._minor);
 }
 
 /**
@@ -174,9 +199,11 @@ function countFilteredOut(a) {
 module.exports = {
   KNOWN_AVOID_FLAGS,
   MINOR_BANNED_FLAGS,
+  MINOR_BANNED_CAUTION,
   validateAndNormalizeAvoid,
   safetyFilter,
   passesMinorGate,
+  passesAccess,
   applyMinorGate,
   countFilteredOut,
 };

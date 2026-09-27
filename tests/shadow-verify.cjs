@@ -68,13 +68,12 @@ const SECURITY_FIX_EXPECTATIONS = {
   },
 };
 
-// Deliberate post-baseline methodology changes — new output pinned
-// here (see tests/compare-fixtures.cjs for the same list).
-const METHODOLOGY_CHANGE_EXPECTATIONS = {
-  '18-pro-fields-carried': {
-    herbs: 'Oatstraw@21|Ashwagandha@19|Red Dates@17|Schisandra (Five-Flavour Fruit)@15|Longan@14|Fu Ling@14',
-  },
-};
+// Deliberate post-baseline methodology changes — the same pins
+// tests/compare-fixtures.cjs reads, minus the herb ids (the endpoint
+// returns display names only).
+const METHODOLOGY_CHANGE_EXPECTATIONS = Object.fromEntries(
+  Object.entries(require('./fixtures/methodology-pins.cjs')).map(([id, pin]) =>
+    [id, { herbs: pin.herbs.split('|').map(x => x.replace(/^\d+:/, '')).join('|'), rationale: pin.rationale }]));
 
 function diffCoreFormula(expected, actual) {
   // Compare display-safe fields. The endpoint sanitises the engine's
