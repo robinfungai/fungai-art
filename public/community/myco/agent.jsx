@@ -16,6 +16,66 @@
 (function () {
   const { useState, useRef, useEffect } = React;
 
+  /* ── The conversation is kept (Robin, 2026-09-27) ──────────────────
+     Every signed-in member, whatever their rank, keeps their MYCO
+     thread. Two layers:
+       · this browser — localStorage, per member, always;
+       · their account — public.myco_threads, one row per auth user,
+         owner-only RLS (supabase-myco-threads.sql). Follows them to
+         another device. Until that SQL has run the cloud layer switches
+         itself off after the first "table missing" and the local copy
+         carries on alone.
+     Visitors who are not signed in are not stored. "Clear" empties
+     both. */
+  const KEEP_MAX  = 60;                 // messages kept per member
+  const SIZE_KEY  = 'myco_panel_size';
+  const localKey  = (m) => 'myco_thread:' + m.id;
+  const trim      = (list) => list.slice(-KEEP_MAX).map(m => ({
+    role: m.role, content: String(m.content || '').slice(0, 12000),
+    ...(m.sources && m.sources.length ? { sources: m.sources.slice(0, 8) } : {}),
+    ...(m.confidence ? { confidence: m.confidence } : {}),
+  }));
+  let cloudOff = false;                 // the table is not there yet
+  const missing = (e) => !!e && (e.code === '42P01' || e.code === 'PGRST205' || /does not exist|schema cache/i.test(e.message || ''));
+
+  function readLocal(m) {
+    try { const v = JSON.parse(localStorage.getItem(localKey(m)) || 'null'); return v && Array.isArray(v.msgs) ? v : null; }
+    catch (_) { return null; }
+  }
+  function writeLocal(m, msgs) {
+    try {
+      if (msgs.length) localStorage.setItem(localKey(m), JSON.stringify({ at: Date.now(), msgs: trim(msgs) }));
+      else localStorage.removeItem(localKey(m));
+    } catch (_) {}
+  }
+  async function cloudUser() {
+    if (cloudOff || !window.SBclient || !window.SBauth) return null;
+    try { if (window.SBready) await window.SBready; } catch (_) {}
+    try { const u = await window.SBauth.getUser(); return (u && u.id) ? u : null; } catch (_) { return null; }
+  }
+  async function readCloud() {
+    const u = await cloudUser();
+    if (!u) return null;
+    const { data, error } = await window.SBclient.from('myco_threads')
+      .select('messages, updated_at').eq('user_id', u.id).maybeSingle();
+    if (error) { if (missing(error)) cloudOff = true; return null; }
+    return data ? { at: Date.parse(data.updated_at) || 0, msgs: Array.isArray(data.messages) ? data.messages : [] } : null;
+  }
+  async function writeCloud(msgs) {
+    const u = await cloudUser();
+    if (!u) return;
+    const { error } = await window.SBclient.from('myco_threads').upsert(
+      { user_id: u.id, messages: trim(msgs), updated_at: new Date().toISOString() },
+      { onConflict: 'user_id' });
+    if (error && missing(error)) cloudOff = true;
+    else if (error) console.warn('[myco] conversation not saved to your account:', error.message);
+  }
+
+  function readSize() {
+    try { const s = JSON.parse(localStorage.getItem(SIZE_KEY) || 'null'); return s && s.w && s.h ? s : null; }
+    catch (_) { return null; }
+  }
+
   function MycoAgent({ currentMember }) {
     const [open,    setOpen]    = useState(false);
     const [input,   setInput]   = useState('');
@@ -25,8 +85,78 @@
     const [chips,   setChips]   = useState(() =>
       (window.MycoPrompts?.chipsFor?.('default') || [])
     );
+    const [size,    setSize]    = useState(readSize);   // { w, h } once resized
     const endRef  = useRef(null);
     const inputRef = useRef(null);
+    const loadedFor = useRef(null);     // member id the thread was loaded for
+    const saveT     = useRef(null);
+    const fromLoad  = useRef(false);    // the next msgs change came from a load, not the member
+
+    // Load this member's thread: local first (instant), then the account
+    // copy if it is newer — that is the one from another device.
+    const memberId = currentMember ? currentMember.id : null;
+    useEffect(() => {
+      loadedFor.current = null;
+      if (!currentMember) { setMsgs([]); return; }
+      const local = readLocal(currentMember);
+      fromLoad.current = true;
+      setMsgs(local ? local.msgs : []);
+      loadedFor.current = currentMember.id;
+      let alive = true;
+      readCloud().then(cloud => {
+        if (!alive || !cloud || !cloud.msgs.length) return;
+        if (!local || cloud.at > local.at) {
+          fromLoad.current = true;
+          setMsgs(cloud.msgs);
+          writeLocal(currentMember, cloud.msgs);
+        }
+      }).catch(() => {});
+      return () => { alive = false; };
+    }, [memberId]);
+
+    // Save on every change — locally at once, to the account a moment later.
+    useEffect(() => {
+      if (!currentMember || loadedFor.current !== currentMember.id) return;
+      // A load is not an edit: writing it back would stamp an old local
+      // copy as new and push it over the account's newer thread.
+      if (fromLoad.current) { fromLoad.current = false; return; }
+      writeLocal(currentMember, msgs);
+      clearTimeout(saveT.current);
+      saveT.current = setTimeout(() => { writeCloud(msgs).catch(() => {}); }, 1200);
+    }, [msgs]);
+
+    // Resize from the top-right corner: the panel is pinned bottom-left,
+    // so dragging up and right makes it bigger. Double-click resets.
+    function startResize(e) {
+      e.preventDefault();
+      const panel = e.currentTarget.parentElement;
+      const r = panel.getBoundingClientRect();
+      const x0 = e.clientX, y0 = e.clientY, w0 = r.width, h0 = r.height;
+      let last = null;
+      const move = (ev) => {
+        const w = Math.max(300, Math.min(window.innerWidth - 40, w0 + (ev.clientX - x0)));
+        const h = Math.max(320, Math.min(window.innerHeight - 100, h0 - (ev.clientY - y0)));
+        last = { w: Math.round(w), h: Math.round(h) };
+        setSize(last);
+      };
+      const up = () => {
+        window.removeEventListener('pointermove', move);
+        window.removeEventListener('pointerup', up);
+        document.body.style.userSelect = '';
+        if (last) { try { localStorage.setItem(SIZE_KEY, JSON.stringify(last)); } catch (_) {} }
+      };
+      document.body.style.userSelect = 'none';
+      window.addEventListener('pointermove', move);
+      window.addEventListener('pointerup', up);
+    }
+    function resetSize() {
+      setSize(null);
+      try { localStorage.removeItem(SIZE_KEY); } catch (_) {}
+    }
+    // Phones get the full-width panel from the stylesheet, not a saved size.
+    const sized = size && typeof window !== 'undefined' && window.innerWidth > 600
+      ? { width: Math.min(size.w, window.innerWidth - 40), height: Math.min(size.h, window.innerHeight - 100), maxHeight: 'none' }
+      : undefined;
 
     useEffect(() => {
       if (open && endRef.current) endRef.current.scrollIntoView({ behavior:'smooth' });
@@ -128,6 +258,10 @@
     function fmtContent(text) {
       const out = [];
       let para = [], items = null;
+      // Belt and braces for replies that arrive on one line (the server's
+      // claims guard used to flatten them): put each "## " back on a line
+      // of its own.
+      text = String(text || '').replace(/[ \t]+(#{1,4}\s)/g, '\n$1');
       const flushPara = () => {
         if (para.length) { out.push(<p key={'p' + out.length} className="myco-p">{inline(para.join(' '), 'p' + out.length)}</p>); para = []; }
       };
@@ -138,6 +272,9 @@
         const line = raw.trim();
         if (!line) { flushPara(); flushList(); return; }
         const h = line.match(/^#{1,4}\s+(.*)$/);
+        // A "heading" longer than a heading is prose that lost its line
+        // break — read it as a paragraph, never as a wall of heading type.
+        if (h && h[1].length > 70) { flushList(); para.push(h[1]); return; }
         if (h) {
           flushPara(); flushList();
           out.push(<div key={'h' + i} className="myco-h">{h[1].replace(/\*\*/g, '')}</div>);
@@ -165,7 +302,15 @@
     return (
       <div className="myco-wrap">
         {open && (
-          <div className="myco-panel">
+          <div className="myco-panel" style={sized}>
+            <button
+              type="button"
+              className="myco-resize"
+              onPointerDown={startResize}
+              onDoubleClick={resetSize}
+              aria-label="Resize MYCO — drag the corner; double-click to reset"
+              title="Drag to resize · double-click to reset"
+            />
             <div className="myco-head">
               <div style={{ display:'flex', alignItems:'center', gap:9 }}>
                 <div className="myco-avatar">

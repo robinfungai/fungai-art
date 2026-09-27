@@ -3727,19 +3727,25 @@ function LiveInventoryPanel({ currentMember, onToast }) {
   }, {});
   const cats = Object.keys(byCat).sort();
 
+  // Collapsed by default, opened with "show ↓" exactly like Restrict
+  // features above (Robin, 2026-09-27) — 240 herbs is a lot of page.
   return (
-    <>
-      <div className="section" style={{ paddingBottom:0 }}>
-        <div className="section-eyebrow">
-          Live inventory &middot; {loading ? '…' : `${stockedCount} of ${totalCount} stocked`}
+    <details className="section" style={{ paddingBottom:0 }}>
+      <summary style={{ cursor:'pointer', listStyle:'none', display:'flex', alignItems:'center', justifyContent:'space-between', gap:10, padding:'6px 0' }}>
+        <div>
+          <div className="section-eyebrow">
+            Live inventory &middot; {loading ? '…' : `${stockedCount} of ${totalCount} stocked`}
+          </div>
+          <h3 style={{ fontFamily:'var(--font-display)', fontStyle:'italic', fontSize:20, color:'var(--mycelium-l)', marginTop:4, marginBottom:0 }}>The apothecary <em>shelf.</em></h3>
         </div>
-        <h3 className="section-title" style={{ fontSize:22, marginTop:2 }}>The apothecary <em>shelf.</em></h3>
-        <p className="section-blurb" style={{ marginTop:6 }}>
-          Toggle any herb to mark it in stock. The Herbal Engine's "In stock" pool reads from this list &mdash; visitors immediately see what you can actually compose with.
-        </p>
-      </div>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>show &darr;</span>
+      </summary>
+      <p className="section-blurb" style={{ marginTop:6 }}>
+        Toggle any herb to mark it in stock. The Herbal Engine's "In stock" pool reads from this list &mdash; visitors immediately see what you can actually compose with.
+        The list is the Engine's own catalogue, regenerated from herbs.ts on every build, so a new herb shows up here without anyone adding it by hand.
+      </p>
 
-      <div style={{ margin:'12px 16px 28px', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, overflow:'hidden' }}>
+      <div style={{ margin:'12px 0 28px', background:'var(--soil-2)', border:'0.5px solid var(--rule)', borderRadius:10, overflow:'hidden' }}>
         {error && (
           <div style={{ padding:'10px 14px', background:'rgba(232,177,75,0.06)', borderBottom:'0.5px solid var(--rule)', fontFamily:'var(--font-mono)', fontSize:10, color:'var(--nutrient-l)', letterSpacing:'0.12em' }}>
             ⚠ {error}
@@ -3760,7 +3766,7 @@ function LiveInventoryPanel({ currentMember, onToast }) {
 
         {loading && (
           <div style={{ padding:'20px 14px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.16em', color:'var(--mycelium-d)' }}>
-            Loading 201-herb catalogue…
+            Loading the herb catalogue…
           </div>
         )}
 
@@ -3778,7 +3784,7 @@ function LiveInventoryPanel({ currentMember, onToast }) {
                     key={h.id}
                     onClick={() => toggleHerb(h.id)}
                     disabled={isPending}
-                    title={h.b || h.n}
+                    title={h.restricted ? (h.b || h.n) + ' — restricted: in the catalogue only, the Engine never puts it in a formula' : (h.b || h.n)}
                     style={{
                       fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.08em',
                       padding:'6px 12px', borderRadius:999,
@@ -3790,7 +3796,7 @@ function LiveInventoryPanel({ currentMember, onToast }) {
                       transition: 'all 0.15s',
                     }}
                   >
-                    {isStocked ? '●' : '○'} {h.n}
+                    {isStocked ? '●' : '○'} {h.n}{h.restricted ? ' · restricted' : ''}
                   </button>
                 );
               })}
@@ -3798,7 +3804,7 @@ function LiveInventoryPanel({ currentMember, onToast }) {
           </div>
         ))}
       </div>
-    </>
+    </details>
   );
 }
 
@@ -3850,6 +3856,7 @@ function explainInventoryError(err, hasSession) {
 function ProductInventoryPanel({ currentMember, onToast }) {
   const [counts,   setCounts]   = useState({});       // { product_id: stock_count }
   const [pending,  setPending]  = useState(new Set());
+  const [savedAt,  setSavedAt]  = useState({});       // { product_id: ms } — "✓ saved 15:44" on the row
   const [loading,  setLoading]  = useState(true);
   const [error,    setError]    = useState('');
   const [productIds, setProductIds] = useState(PRODUCT_INVENTORY_FALLBACK);
@@ -3923,7 +3930,11 @@ function ProductInventoryPanel({ currentMember, onToast }) {
       // RLS can silently affect zero rows — treat "nothing came back" as refused.
       if (!saved || !saved.length) throw Object.assign(new Error('The database accepted the request but saved nothing (row-level security).'), { code: '42501' });
       setError('');
+      setSavedAt(s => ({ ...s, [product_id]: Date.now() }));
       onToast && onToast(`${product_id.replace(/ \($/, '')} → ${next} in stock`, 'success');
+      // Orders & stock at the top of this page reads the same table —
+      // refresh it now instead of on the next minute's poll.
+      try { PortalKeeper && PortalKeeper.refreshAlerts && PortalKeeper.refreshAlerts(); } catch (_) {}
     } catch (err) {
       // revert, and keep the reason on screen (a toast is too easy to miss)
       setCounts(c => ({ ...c, [product_id]: prev }));
@@ -3985,6 +3996,7 @@ function ProductInventoryPanel({ currentMember, onToast }) {
                 </div>
                 <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', color: soldOut ? '#E16B6B' : 'var(--mycelium-d)', marginTop:3 }}>
                   {soldOut ? '○ Sold out' : `● ${n} in stock`}
+                  {savedAt[pid] ? <span style={{ color:'#B6F0AE', marginLeft:8 }}>✓ saved {new Date(savedAt[pid]).toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' })}</span> : null}
                 </div>
               </div>
               <select
@@ -5136,6 +5148,10 @@ function App() {
             id: match.id, name: match.name, admin: !!match.admin,
             restrictions: match.restrictions || [],
             avatar: match.avatar || null,
+            // The site-wide banner (global-nav.js) shows rank and node.
+            // Neither was stored, so every member read "Unattached".
+            rank: match.rank || 'palawan',
+            node: match.node || null,
             cloudId: mine.id,
             // Stashing email lets SelfIdentityBlock pre-fill the renew-
             // session field next time the cloud token expires.
@@ -5198,6 +5214,8 @@ function App() {
               id: match.id, name: match.name, admin: true,
               restrictions: match.restrictions || [],
               avatar: match.avatar || null,
+              rank: match.rank || 'palawan',
+              node: match.node || null,
               cloudId: null,
               email: user.email,
             })); } catch {}

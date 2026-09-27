@@ -41,14 +41,28 @@
 
   // Destinations a member would actually want to reach from anywhere
   // on the site. Order matters: highest-value member action first.
+  // Sporing and Patronage were two more links to anchors on /members —
+  // they live inside Membership now, so the banner says it once
+  // (Robin, 2026-09-27). Homepage opens in a new tab so the member keeps
+  // their place in the portal.
   const MEMBER_LINKS = [
     { href: '/community',           label: 'Portal',     match: /^\/community(\/?$|\/(?!academy))/ },
     { href: '/community/academy/',  label: 'Academy',    match: /^\/community\/academy\// },
     { href: '/mycelium',            label: 'Mycelium',   match: /^\/mycelium\/?$/ },
     { href: '/members',             label: 'Membership', match: /^\/members\/?$/ },
-    { href: '/members#sporing',             label: 'Sporing',    match: /^\/sporing\/?$/ },
-    { href: '/members#patronage',              label: 'Patronage',  match: /^\/patron\/?$/ },
+    { href: '/',                    label: 'Homepage ↗', match: /^$/, newTab: true },
   ];
+
+  // Ranks as the portal names them (community/spore/data.jsx → RANKS).
+  // Shown where "Unattached" used to be: that was the member's node, and
+  // the portal never passed the node on, so everyone read "Unattached".
+  const RANK_LABELS = {
+    palawan:     { label: 'Palawan',     color: '#8FCB44' },
+    patron:      { label: 'Patron',      color: '#E8B14B' },
+    facilitator: { label: 'Facilitator', color: '#3DC9A5' },
+    alchemist:   { label: 'Alchemist',   color: '#9D90F0' },
+    founder:     { label: 'Founder',     color: '#F5D689' },
+  };
 
   function readMember(){
     try {
@@ -59,6 +73,7 @@
         name: cached.name || cached.character_name || '',
         admin: !!(cached.admin || cached.is_admin),
         node: cached.node || '',
+        rank: String(cached.rank || '').toLowerCase(),
         email: cached.email || '',
       };
     } catch { return null; }
@@ -78,7 +93,11 @@
     bangkok:  'Bangkok',
     bali:     'Bali',
   };
-  function nodeLabel(id){ return NODE_LABELS[id] || (id ? id : 'Unattached'); }
+  // No node → nothing, rather than the word "Unattached".
+  function nodeLabel(id){
+    if (!id || id === 'unattached') return '';
+    return NODE_LABELS[id] || id;
+  }
 
   const css = `
   /* ─── Global brand fonts ─────────────────────────────────────────
@@ -141,6 +160,28 @@
     white-space: nowrap;
   }
   #fa-member-banner .fa-mb-node::before { content: '· '; opacity: 0.5; }
+  #fa-member-banner .fa-mb-rank {
+    font-size: 9px; letter-spacing: 0.22em; white-space: nowrap;
+  }
+
+  /* Back to the portal — on every member page that is not the portal
+     itself, so leaving for Mycelium or Membership is never a dead end,
+     even after the banner has slid away on scroll. */
+  #fa-back-portal {
+    position: fixed; left: 16px; bottom: 18px; z-index: 8200;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 15px; border-radius: 999px;
+    background: rgba(7, 11, 8, 0.88);
+    border: 0.5px solid rgba(232,177,75,0.4);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+    font-family: 'Geist Mono', 'Courier New', monospace;
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: #F5D689; text-decoration: none;
+    transition: background 0.18s, transform 0.18s;
+  }
+  #fa-back-portal:hover { background: rgba(232,177,75,0.12); transform: translateY(-1px); }
+  @media print { #fa-back-portal { display: none; } }
   #fa-member-banner .fa-mb-admin-chip {
     font-size: 7.5px; letter-spacing: 0.28em;
     padding: 2px 6px; border-radius: 3px;
@@ -367,18 +408,23 @@
     const isOn = (re) => re.test(path) ? 'on' : '';
 
     if (m) {
+      const rank = RANK_LABELS[m.rank] || null;
+      const node = nodeLabel(m.node);
       bar.innerHTML = `
-        <a class="fa-mb-id" href="/community/" title="${m.email || m.name}">
+        <a class="fa-mb-id" href="/community/" title="${escapeHtml(m.email || m.name)}">
           <span class="fa-mb-dot"></span>
           <span class="fa-mb-name">${escapeHtml(m.name) || 'Member'}</span>
-          <span class="fa-mb-node">${escapeHtml(nodeLabel(m.node))}</span>
-          ${m.admin ? '<span class="fa-mb-admin-chip">Keeper</span>' : ''}
+          ${rank ? `<span class="fa-mb-rank" style="color:${rank.color}" title="Your rank in the network">${rank.label}</span>` : ''}
+          ${node ? `<span class="fa-mb-node">${escapeHtml(node)}</span>` : ''}
+          ${m.admin ? '<span class="fa-mb-admin-chip" title="Keeper: you can open Root, the admin tools, in the portal">Keeper</span>' : ''}
         </a>
         <div class="fa-mb-links" aria-label="Member destinations">
-          ${MEMBER_LINKS.map(l => `<a href="${l.href}" class="${isOn(l.match)}">${l.label}</a>`).join('')}
+          ${MEMBER_LINKS.map(l => `<a href="${l.href}" class="${isOn(l.match)}"${l.newTab ? ' target="_blank" rel="noopener"' : ''}>${l.label}</a>`).join('')}
         </div>
       `;
+      renderBackToPortal(true);
     } else {
+      renderBackToPortal(false);
       bar.innerHTML = `
         <a class="fa-mb-id" href="/community/" title="The Mycelium">
           <span class="fa-mb-dot"></span>
@@ -390,6 +436,21 @@
         </div>
       `;
     }
+  }
+
+  // Signed-in members only, and never on the portal itself (the Academy
+  // lives under /community/ but is a page you leave the portal for).
+  function renderBackToPortal(show){
+    const onPortal = /^\/community\/?(index\.html)?$/.test(window.location.pathname);
+    let pill = document.getElementById('fa-back-portal');
+    if (!show || onPortal) { if (pill) pill.remove(); return; }
+    if (pill) return;
+    pill = document.createElement('a');
+    pill.id = 'fa-back-portal';
+    pill.href = '/community/';
+    pill.textContent = '← Portal';
+    pill.setAttribute('aria-label', 'Back to the portal');
+    document.body.appendChild(pill);
   }
 
   function escapeHtml(s){

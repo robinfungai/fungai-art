@@ -13,9 +13,14 @@
   var CODE_SHA256 = '2926a2731f4b312c08982cacf8061eb14bf65c1a87cc5d70e864e079c6220731';
   var UNLOCK_DAYS = 7;
   var KEY = 'fa_gate:' + (location.pathname.replace(/\/index\.html$/, '').replace(/\/+$/, '') || '/');
+  // <script src="/code-gate.js" data-remember="0"> asks on every visit
+  // instead of remembering the code for a week (/mycelium, 2026-09-27).
+  var me = document.currentScript;
+  var REMEMBER = !(me && me.getAttribute('data-remember') === '0');
 
   try {
-    if (Number(localStorage.getItem(KEY) || 0) > Date.now()) return;
+    if (!REMEMBER) localStorage.removeItem(KEY);
+    else if (Number(localStorage.getItem(KEY) || 0) > Date.now()) return;
   } catch (_) {}
 
   var root = document.documentElement;
@@ -37,6 +42,8 @@
     '#fa-gate button{margin-top:12px;width:100%;padding:13px;font:500 11px/1 ui-monospace,monospace;letter-spacing:.28em;text-transform:uppercase;' +
       'color:#05090C;background:#E8B14B;border:0;border-radius:999px;cursor:pointer}' +
     '#fa-gate .g-err{min-height:18px;margin-top:12px;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.08em;color:#E16B6B}' +
+    '#fa-gate .g-back{display:inline-block;margin-top:18px;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#C9B894;text-decoration:none}' +
+    '#fa-gate .g-back:hover{color:#E8B14B}' +
     '#fa-gate.shake form{animation:faGateShake .35s}' +
     '@keyframes faGateShake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}';
   document.head.appendChild(style);
@@ -49,7 +56,7 @@
   }
 
   function unlock(gate) {
-    try { localStorage.setItem(KEY, String(Date.now() + UNLOCK_DAYS * 864e5)); } catch (_) {}
+    if (REMEMBER) { try { localStorage.setItem(KEY, String(Date.now() + UNLOCK_DAYS * 864e5)); } catch (_) {} }
     root.classList.remove('fa-gated');
     if (gate && gate.parentNode) gate.parentNode.removeChild(gate);
   }
@@ -65,6 +72,7 @@
         '<input type="password" inputmode="numeric" maxlength="12" aria-label="Access code" autofocus>' +
         '<button type="submit">Open</button>' +
         '<div class="g-err" role="status" aria-live="polite"></div>' +
+        '<a class="g-back" href="/community/">&larr; Back to the portal</a>' +
       '</form>';
     document.body.appendChild(gate);
     var form = gate.querySelector('form');

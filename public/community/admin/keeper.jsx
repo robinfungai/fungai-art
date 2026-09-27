@@ -32,7 +32,7 @@
   }
 
   /* ── alerts: one store, one poll, many readers ───────────────── */
-  const alerts = { ready: false, lowStock: [], toShip: [], newOrders: [], stockError: null, ordersError: null };
+  const alerts = { ready: false, busy: false, checkedAt: null, lowStock: [], toShip: [], newOrders: [], stockError: null, ordersError: null };
   const subs = new Set();
   const emit = () => subs.forEach(fn => fn());
   let timer = null, users = 0;
@@ -46,6 +46,9 @@
   }
 
   async function refreshAlerts() {
+    if (alerts.busy) return;
+    alerts.busy = true;
+    emit();
     try {
       if (window.SBready) await window.SBready;
       if (!sb()) return;
@@ -64,9 +67,11 @@
       const seen = seenAt();
       alerts.newOrders = alerts.toShip.filter(o => Date.parse(o.created_at) > seen);
       alerts.ready = true;
+      alerts.checkedAt = Date.now();
     } catch (e) {
       alerts.ordersError = (e && e.message) || String(e);
     }
+    alerts.busy = false;
     emit();
   }
 
@@ -123,7 +128,16 @@
             <p className="kp-kicker">Keeper alerts</p>
             <h3 className="kp-title">Orders &amp; stock</h3>
           </div>
-          <button type="button" className="kp-ghost" onClick={a.refresh}>Refresh</button>
+          {/* It always worked, but an unchanged list gave no sign that it
+              had — so it now says what it is doing and when it last looked. */}
+          <div className="kp-refresh">
+            <button type="button" className="kp-ghost" onClick={() => a.refresh()} disabled={a.busy}>
+              {a.busy ? 'Checking…' : 'Refresh'}
+            </button>
+            {a.checkedAt ? (
+              <span className="kp-checked">checked {new Date(a.checkedAt).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span>
+            ) : null}
+          </div>
         </div>
 
         <div className="kp-cols">
@@ -610,5 +624,5 @@
     );
   }
 
-  window.PortalKeeper = { KeeperAlerts, AnnouncementsEditor, FiguresEditor, EventsEditor, RankSelect, useKeeperAlerts };
+  window.PortalKeeper = { KeeperAlerts, AnnouncementsEditor, FiguresEditor, EventsEditor, RankSelect, useKeeperAlerts, refreshAlerts };
 })();

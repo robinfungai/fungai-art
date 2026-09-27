@@ -220,3 +220,17 @@ const herbs = parseHerbs();
 if (herbs.length === 0) { console.error('✗  No herbs parsed'); process.exit(1); }
 injectHB(herbs);
 console.log(`✓  Engine 2 synced: ${herbs.length} herbs injected into herbal-engine-2/index.html`);
+
+// ─── the apothecary shelf's list ──────────────────────────────────────────────
+// The Admin page's "apothecary shelf" (community/spore/app-living.jsx →
+// LiveInventoryPanel) marks herbs in stock by these ids, and Engine 2's
+// "In stock" pool matches them against HB. It used to be a hand-kept file:
+// by 2026-09-27 it listed 211 herbs, 48 of the Engine's were missing and 19
+// of its ids matched nothing, so ticking those did nothing at all. Now it is
+// written from the same array, every build — one source, no drift.
+const SHELF = path.resolve(__dirname, '../public/herb-engine-ids.json');
+const shelf = herbs
+  .map(h => ({ id: h.id, n: h.n, b: h.b, cat: h.cat, p: h.p, ...(h.restricted ? { restricted: true } : {}) }))
+  .sort((x, y) => x.n.localeCompare(y.n));
+fs.writeFileSync(SHELF, JSON.stringify(shelf, null, 1) + '\n', 'utf-8');
+console.log(`✓  Apothecary shelf list written: ${shelf.length} herbs → public/herb-engine-ids.json`);

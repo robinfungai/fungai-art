@@ -44,10 +44,17 @@ const WARN_REWRITES = [
   { re: /\bwill definitely\b/gi, to: 'may' },
 ];
 
-// Split on sentence ends, keeping the terminator so the text reads
-// normally after a removal.
+// Split on sentence ends, keeping the terminator AND the whitespace after
+// it. Replies are written in sections — "## Heading", "- " bullets — and
+// the line breaks are the structure. This used to split on \s+ and rejoin
+// with ' ', which flattened every reply onto one line: the client then
+// read the whole answer as a single "## …" heading and set it in
+// uppercase mono (Robin, 2026-09-27).
 function sentences(text) {
-  return String(text || '').split(/(?<=[.!?])\s+/);
+  const parts = String(text || '').split(/(?<=[.!?])(\s+)/);
+  const out = [];
+  for (let i = 0; i < parts.length; i += 2) out.push({ s: parts[i], sep: parts[i + 1] || '' });
+  return out;
 }
 
 /**
@@ -68,17 +75,31 @@ function guardReply(reply) {
   // 2 · BLOCKER claims — drop the sentence.
   const blockers = rulesOf('BLOCKER').map(r => ({ id: r.id, re: r.re() }));
   const removed = [];
-  const kept = sentences(working).filter(s => {
+  const kept = [];
+  for (const part of sentences(working)) {
+    const s = part.s;
+    let blocked = null;
     // A safety warning that names a condition is not a claim.
-    if (SAFETY_CONTEXT.test(s)) return true;
-    for (const b of blockers) {
-      b.re.lastIndex = 0;
-      if (b.re.test(s)) { removed.push({ sentence: s.trim().slice(0, 160), rule: b.id }); return false; }
+    if (!SAFETY_CONTEXT.test(s)) {
+      for (const b of blockers) {
+        b.re.lastIndex = 0;
+        if (b.re.test(s)) { blocked = b; break; }
+      }
     }
-    return true;
-  });
+    if (!blocked) { kept.push({ ...part }); continue; }
+    removed.push({ sentence: s.trim().slice(0, 160), rule: blocked.id });
+    // A dropped sentence that ended a line or a section hands its break
+    // to the sentence before it, so the next heading keeps its own line.
+    const prev = kept[kept.length - 1];
+    const breaks = s => (s.match(/\n/g) || []).length;
+    if (prev && breaks(part.sep) > breaks(prev.sep)) prev.sep = part.sep;
+  }
 
-  const text = kept.join(' ').replace(/\s{2,}/g, ' ').trim();
+  const text = kept.map(k => k.s + k.sep).join('')
+    .replace(/[ \t]{2,}/g, ' ')
+    .replace(/[ \t]+\n/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
 
   // 3 · Too little left standing → replace wholesale.
   const shrunk = text.length < Math.min(60, original.length * 0.4);

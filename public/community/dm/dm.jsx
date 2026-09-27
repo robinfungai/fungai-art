@@ -98,7 +98,11 @@
     const [rows, setRows]         = useState([]);      // newest first
     const [texts, setTexts]       = useState({});      // row id → { text } | { unreadable }
     const [extra, setExtra]       = useState({});      // profiles not in SporeData.MEMBERS: id → { name, avatar, authUserId }
-    const [draft, setDraft]       = useState('');
+    // One draft per person (Robin, 2026-09-27): a single shared draft
+    // meant a message that could not go to Acile sat pre-filled in every
+    // other chat opened after it.
+    const [drafts, setDrafts]     = useState({});      // profile id → unsent text
+    const [peerKeys, setPeerKeys] = useState({});      // profile id → their public key | null (none yet)
     const [sending, setSending]   = useState(false);
     const [error, setError]       = useState('');
     const selfCopy  = useRef(true);                    // false once we learn ciphertext_self is missing
@@ -278,7 +282,23 @@
     }, [peerId, thread && thread.rows.length, open]);
 
     /* ── send ─────────────────────────────────────────────────── */
+    const draft = (peerId && drafts[peerId]) || '';
+    const setDraft = (v) => { if (peerId) setDrafts(prev => ({ ...prev, [peerId]: v })); };
     const bytes = new TextEncoder().encode(draft).byteLength;
+
+    // Look the peer's key up when their thread opens, so "they can't
+    // receive yet" is said before anything is typed, not after Send.
+    useEffect(() => {
+      // Unknown → look once. None yet → look again on each poll, so Send
+      // wakes up by itself once they have signed in.
+      if (!peerId || phase.name !== 'ready' || peerKeys[peerId]) return;
+      let alive = true;
+      sb().from('profiles').select('dm_public_key').eq('id', peerId).maybeSingle().then(({ data, error: e }) => {
+        if (!alive || e) return;
+        setPeerKeys(prev => ({ ...prev, [peerId]: (data && data.dm_public_key) || null }));
+      }, () => {});
+      return () => { alive = false; };
+    }, [peerId, phase.name, rows]);
     const max = (crypto_() && crypto_().MAX_PLAINTEXT_BYTES) || 5900;
 
     async function send() {
@@ -290,10 +310,8 @@
         const { data: prof, error: pErr } = await sb().from('profiles').select('dm_public_key').eq('id', peerId).maybeSingle();
         if (pErr) throw pErr;
         const theirPub = prof && prof.dm_public_key;
-        if (!theirPub) {
-          setError(personByProfile(peerId).name + " hasn't opened the portal since messages arrived. They can receive as soon as they sign in once.");
-          return;
-        }
+        setPeerKeys(prev => ({ ...prev, [peerId]: theirPub || null }));
+        if (!theirPub) return;          // the notice above the composer says why
         const thread_key = await crypto_().threadKey(me, peerId);
         let res = null;
         if (selfCopy.current) {
@@ -315,7 +333,7 @@
         sentPlain.current.set(res.data.id, text);
         setTexts(prev => ({ ...prev, [res.data.id]: { text } }));
         setRows(prev => [res.data, ...prev]);
-        setDraft('');
+        setDrafts(prev => { const n = { ...prev }; delete n[peerId]; return n; });
       } catch (e) {
         setError('Could not send: ' + ((e && e.message) || 'try again'));
       } finally {
@@ -327,6 +345,7 @@
     if (!open) return null;
 
     const close = () => { setOpen(false); setPicking(false); setError(''); };
+    const noKeyYet = !!peerId && peerKeys[peerId] === null;
     const peer = peerId ? personByProfile(peerId) : null;
     const candidates = members()
       .filter(m => m.cloudId && m.cloudId !== me)
@@ -366,6 +385,12 @@
             })}
             <div ref={listEnd} />
           </div>
+          {noKeyYet ? (
+            <p className="dm-waiting">
+              {peer.name.split(' ')[0]} hasn’t signed in to the portal since messages began, so there is no key to seal a message to yet.
+              Your draft stays in this chat only — Send wakes up the moment they have.
+            </p>
+          ) : null}
           <form className="dm-compose" onSubmit={(e) => { e.preventDefault(); send(); }}>
             <textarea
               value={draft}
@@ -375,7 +400,7 @@
               rows={2}
               aria-label={'Message to ' + peer.name}
             />
-            <button type="submit" className="dm-send" disabled={sending || !draft.trim()}>{sending ? '…' : 'Send'}</button>
+            <button type="submit" className="dm-send" disabled={sending || !draft.trim() || noKeyYet}>{sending ? '…' : 'Send'}</button>
           </form>
           {bytes > max * 0.8 ? <p className="dm-count">{Math.max(0, max - bytes)} bytes left</p> : null}
         </>
@@ -394,7 +419,7 @@
           <ul className="dm-list">
             {candidates.map(m => (
               <li key={m.cloudId}>
-                <button type="button" className="dm-row" onClick={() => { setPeerId(m.cloudId); setPicking(false); setQuery(''); }}>
+                <button type="button" className="dm-row" onClick={() => { setPeerId(m.cloudId); setPicking(false); setQuery(''); setError(''); }}>
                   <Avatar person={m} />
                   <span className="dm-row-body"><span className="dm-row-name">{m.name}</span><span className="dm-row-sub">{m.focus || m.role || ''}</span></span>
                   {m.admin ? <span className="dm-chip">keeper</span> : null}
@@ -420,7 +445,7 @@
                 const preview = !lt ? '…' : lt.text !== undefined ? lt.text : '🔒 ' + UNREADABLE[lt.unreadable];
                 return (
                   <li key={t.peer}>
-                    <button type="button" className={'dm-row' + (t.unread ? ' is-unread' : '')} onClick={() => setPeerId(t.peer)}>
+                    <button type="button" className={'dm-row' + (t.unread ? ' is-unread' : '')} onClick={() => { setPeerId(t.peer); setError(''); }}>
                       <Avatar person={p} />
                       <span className="dm-row-body">
                         <span className="dm-row-name">{p.name}</span>

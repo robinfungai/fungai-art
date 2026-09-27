@@ -1,1711 +1,2228 @@
 [
-  {
-    "id": "ashwagandha",
-    "n": "Ashwagandha",
-    "cat": "Adaptogen",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "astragalus",
-    "n": "Astragalus",
-    "cat": "Adaptogen",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "ginseng",
-    "n": "Ginseng",
-    "cat": "Adaptogen",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "haritaki",
-    "n": "Haritaki",
-    "cat": "Adaptogen",
-    "p": [
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "holy_basil_tulsi",
-    "n": "Holy Basil (Tulsi)",
-    "cat": "Adaptogen",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "red_astragalus_wild",
-    "n": "Red Astragalus (Wild)",
-    "cat": "Adaptogen",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "rhodiola",
-    "n": "Rhodiola",
-    "cat": "Adaptogen",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "schisandra_five_flavour_fruit",
-    "n": "Schisandra (Five-Flavour Fruit)",
-    "cat": "Adaptogen",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "shilajit",
-    "n": "Shilajit",
-    "cat": "Adaptogen",
-    "p": [
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "tongkat_ali",
-    "n": "Tongkat Ali",
-    "cat": "Adaptogen",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "yerba_mate",
-    "n": "Yerba Mate",
-    "cat": "Adaptogen",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "angelica_dong_quai",
-    "n": "Angelica (Dong Quai)",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "aronia_berry",
-    "n": "Aronia Berry",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "barberry",
-    "n": "Barberry",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "barley",
-    "n": "Barley",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "black_cardamom",
-    "n": "Black Cardamom",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "black_cumin",
-    "n": "Black Cumin",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "broadleaf_plantain",
-    "n": "Broadleaf Plantain",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "burdock",
-    "n": "Burdock",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "butterbur",
-    "n": "Butterbur",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "calendula",
-    "n": "Calendula",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "cats_claw",
-    "n": "Cat's Claw",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "chamomile",
-    "n": "Chamomile",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "chickweed",
-    "n": "Chickweed",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "cinnamon",
-    "n": "Cinnamon",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "cloves",
-    "n": "Cloves",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "dashmool",
-    "n": "Dashmool",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "devils_claw",
-    "n": "Devil's Claw",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "eyebright",
-    "n": "Eyebright",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "galangal",
-    "n": "Galangal",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "ginger",
-    "n": "Ginger",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "goldenrod",
-    "n": "Goldenrod",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "grape_seed",
-    "n": "Grape Seed",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "guggulu",
-    "n": "Guggulu",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "tcm",
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "hadjod",
-    "n": "Hadjod",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "horsetail",
-    "n": "Horsetail",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "licorice_root",
-    "n": "Licorice Root",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "meadowsweet",
-    "n": "Meadowsweet",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "milk_thistle",
-    "n": "Milk Thistle",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "moringa",
-    "n": "Moringa",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "mullein",
-    "n": "Mullein",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "nagkesar",
-    "n": "Nagkesar",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "nirgundi",
-    "n": "Nirgundi",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "oregano",
-    "n": "Oregano",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "pau_darco",
-    "n": "Pau d'Arco",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "phyllodium_pulchellum",
-    "n": "Phyllodium pulchellum",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "pine_needles",
-    "n": "Pine Needles",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "pomegranate_skin",
-    "n": "Pomegranate Skin",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "punarnava",
-    "n": "Punarnava",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "rasna",
-    "n": "Rasna",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "rose_petals",
-    "n": "Rose Petals",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "saw_palmetto",
-    "n": "Saw Palmetto",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "spirulina",
-    "n": "Spirulina",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "st_johns_wort",
-    "n": "St. John's Wort",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "thyme",
-    "n": "Thyme",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "turmeric",
-    "n": "Turmeric",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "wild_dagga",
-    "n": "Wild Dagga",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "willow_bark",
-    "n": "Willow Bark",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "yarrow",
-    "n": "Yarrow",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "bilberry",
-    "n": "Bilberry",
-    "cat": "Antimicrobial",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "black_walnut",
-    "n": "Black Walnut",
-    "cat": "Antimicrobial",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "chilcuague",
-    "n": "Chilcuague",
-    "cat": "Antimicrobial",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "cranberry",
-    "n": "Cranberry",
-    "cat": "Antimicrobial",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "echinacea",
-    "n": "Echinacea",
-    "cat": "Antimicrobial",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "elderflower",
-    "n": "Elderflower",
-    "cat": "Antimicrobial",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "eucalyptus",
-    "n": "Eucalyptus",
-    "cat": "Antimicrobial",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "garlic",
-    "n": "Garlic",
-    "cat": "Antimicrobial",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "iceland_moss",
-    "n": "Iceland Moss",
-    "cat": "Antimicrobial",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "juniper",
-    "n": "Juniper",
-    "cat": "Antimicrobial",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "lingonberry",
-    "n": "Lingonberry",
-    "cat": "Antimicrobial",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "long_pepper",
-    "n": "Long Pepper",
-    "cat": "Antimicrobial",
-    "p": [
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "neem",
-    "n": "Neem",
-    "cat": "Antimicrobial",
-    "p": [
-      "tcm",
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "sage",
-    "n": "Sage",
-    "cat": "Antimicrobial",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "star_anise",
-    "n": "Star Anise",
-    "cat": "Antimicrobial",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "szechuan_pepper",
-    "n": "Szechuan Pepper",
-    "cat": "Antimicrobial",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "wormwood",
-    "n": "Wormwood",
-    "cat": "Antimicrobial",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "bladderwrack",
-    "n": "Bladderwrack",
-    "cat": "Cognitive",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "calamus",
-    "n": "Calamus",
-    "cat": "Cognitive",
-    "p": [
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "ginkgo",
-    "n": "Ginkgo",
-    "cat": "Cognitive",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "guayusa",
-    "n": "Guayusa",
-    "cat": "Cognitive",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "longan",
-    "n": "Longan",
-    "cat": "Cognitive",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "muira_puama",
-    "n": "Muira Puama",
-    "cat": "Cognitive",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "psilocybe_cubensis",
-    "n": "Psilocybe Cubensis",
-    "cat": "Cognitive",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "rosemary",
-    "n": "Rosemary",
-    "cat": "Cognitive",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "shankhpushpi",
-    "n": "Shankhpushpi",
-    "cat": "Cognitive",
-    "p": [
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "ajwan",
-    "n": "Ajwan",
-    "cat": "Digestive",
-    "p": [
-      "tcm",
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "bael",
-    "n": "Bael",
-    "cat": "Digestive",
-    "p": [
-      "tcm",
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "caraway",
-    "n": "Caraway",
-    "cat": "Digestive",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "cardamom",
-    "n": "Cardamom",
-    "cat": "Digestive",
-    "p": [
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "cayenne",
-    "n": "Cayenne",
-    "cat": "Digestive",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "coca_leaf",
-    "n": "Coca Leaf",
-    "cat": "Digestive",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "dandelion_root",
-    "n": "Dandelion Root",
-    "cat": "Digestive",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "fennel",
-    "n": "Fennel",
-    "cat": "Digestive",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "ground_ivy",
-    "n": "Ground Ivy",
-    "cat": "Digestive",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "lucerne_alfalfa",
-    "n": "Lucerne (Alfalfa)",
-    "cat": "Digestive",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "mugwort",
-    "n": "Mugwort",
-    "cat": "Digestive",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "peppermint",
-    "n": "Peppermint",
-    "cat": "Digestive",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "raspberry_leaf",
-    "n": "Raspberry Leaf",
-    "cat": "Digestive",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "rowan_berry",
-    "n": "Rowan Berry",
-    "cat": "Digestive",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "shatavari",
-    "n": "Shatavari",
-    "cat": "Digestive",
-    "p": [
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "yellow_dock_root",
-    "n": "Yellow Dock Root",
-    "cat": "Digestive",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "maca",
-    "n": "Maca",
-    "cat": "Hormonal",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "pomegranate_seeds",
-    "n": "Pomegranate Seeds",
-    "cat": "Hormonal",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "vitex",
-    "n": "Vitex",
-    "cat": "Hormonal",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "elderberry",
-    "n": "Elderberry",
-    "cat": "Immune",
-    "p": [
-      "tcm",
-      "european"
-    ]
-  },
-  {
-    "id": "goji_berry",
-    "n": "Goji Berry",
-    "cat": "Immune",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "guduchi",
-    "n": "Guduchi",
-    "cat": "Immune",
-    "p": [
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "kalmegh",
-    "n": "Kalmegh",
-    "cat": "Immune",
-    "p": [
-      "tcm",
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "nettle",
-    "n": "Nettle",
-    "cat": "Immune",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "pine_pollen",
-    "n": "Pine Pollen",
-    "cat": "Immune",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "rosehip",
-    "n": "Rosehip",
-    "cat": "Immune",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "birch_polypore",
-    "n": "Birch Polypore",
-    "cat": "Mushroom",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "button_mushroom",
-    "n": "Button Mushroom",
-    "cat": "Mushroom",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "chaga",
-    "n": "Chaga",
-    "cat": "Mushroom",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "cordyceps",
-    "n": "Cordyceps",
-    "cat": "Mushroom",
-    "p": [
-      "tcm",
-      "european"
-    ]
-  },
-  {
-    "id": "enoki",
-    "n": "Enoki",
-    "cat": "Mushroom",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "fu_ling",
-    "n": "Fu Ling",
-    "cat": "Mushroom",
-    "p": [
-      "tcm",
-      "european"
-    ]
-  },
-  {
-    "id": "lions_mane",
-    "n": "Lion's Mane",
-    "cat": "Mushroom",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "maitake",
-    "n": "Maitake",
-    "cat": "Mushroom",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "mesima",
-    "n": "Mesima",
-    "cat": "Mushroom",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "morels",
-    "n": "Morels",
-    "cat": "Mushroom",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "oyster_mushroom",
-    "n": "Oyster Mushroom",
-    "cat": "Mushroom",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "red_belted_polypore",
-    "n": "Red-Belted Polypore",
-    "cat": "Mushroom",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "reishi",
-    "n": "Reishi",
-    "cat": "Mushroom",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "royal_sun_mushroom",
-    "n": "Royal Sun Mushroom",
-    "cat": "Mushroom",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "shaggy_bracket",
-    "n": "Shaggy Bracket",
-    "cat": "Mushroom",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "shaggy_mane",
-    "n": "Shaggy Mane",
-    "cat": "Mushroom",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "shiitake",
-    "n": "Shiitake",
-    "cat": "Mushroom",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "tinder_fungus",
-    "n": "Tinder Fungus",
-    "cat": "Mushroom",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "tremella",
-    "n": "Tremella",
-    "cat": "Mushroom",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "turkey_tail",
-    "n": "Turkey Tail",
-    "cat": "Mushroom",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "willow_bracket",
-    "n": "Willow Bracket",
-    "cat": "Mushroom",
-    "p": [
-      "tcm",
-      "european"
-    ]
-  },
-  {
-    "id": "zhu_ling",
-    "n": "Zhu Ling",
-    "cat": "Mushroom",
-    "p": [
-      "tcm",
-      "european"
-    ]
-  },
-  {
-    "id": "african_dream_root",
-    "n": "African Dream Root",
-    "cat": "Nervine",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "bacopa",
-    "n": "Bacopa",
-    "cat": "Nervine",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "blue_lotus",
-    "n": "Blue Lotus",
-    "cat": "Nervine",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "gotu_kola",
-    "n": "Gotu Kola",
-    "cat": "Nervine",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "hops",
-    "n": "Hops",
-    "cat": "Nervine",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "kanna",
-    "n": "Kanna",
-    "cat": "Nervine",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "kava_kava",
-    "n": "Kava Kava",
-    "cat": "Nervine",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "lavender",
-    "n": "Lavender",
-    "cat": "Nervine",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "linden",
-    "n": "Linden",
-    "cat": "Nervine",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "marjoram_sweet_marjoram",
-    "n": "Marjoram (Sweet Marjoram)",
-    "cat": "Nervine",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "mistletoe",
-    "n": "Mistletoe",
-    "cat": "Nervine",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "oatstraw",
-    "n": "Oatstraw",
-    "cat": "Nervine",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "passionflower",
-    "n": "Passionflower",
-    "cat": "Nervine",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "red_dates",
-    "n": "Red Dates",
-    "cat": "Nervine",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "skullcap",
-    "n": "Skullcap",
-    "cat": "Nervine",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "valerian",
-    "n": "Valerian",
-    "cat": "Nervine",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "vervain",
-    "n": "Vervain",
-    "cat": "Nervine",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "amanita_muscaria",
-    "n": "Amanita Muscaria",
-    "cat": "Respiratory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "amanita_pantherina",
-    "n": "Amanita Pantherina",
-    "cat": "Respiratory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "chandrashoor",
-    "n": "Chandrashoor",
-    "cat": "Respiratory",
-    "p": [
-      "tcm",
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "ephedra_ma_huang",
-    "n": "Ephedra (Ma Huang)",
-    "cat": "Respiratory",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "lobelia_indian_tobacco",
-    "n": "Lobelia (Indian Tobacco)",
-    "cat": "Respiratory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "shallaki",
-    "n": "Shallaki",
-    "cat": "Respiratory",
-    "p": [
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "slippery_elm_bark",
-    "n": "Slippery Elm Bark",
-    "cat": "Respiratory",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "amaltas",
-    "n": "Amaltas",
-    "cat": "Tonic",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "amla",
-    "n": "Amla",
-    "cat": "Tonic",
-    "p": [
-      "tcm",
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "anantmul",
-    "n": "Anantmul",
-    "cat": "Tonic",
-    "p": [
-      "tcm",
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "arjuna",
-    "n": "Arjuna",
-    "cat": "Tonic",
-    "p": [
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "ashoka",
-    "n": "Ashoka",
-    "cat": "Tonic",
-    "p": [
-      "ayurvedic",
-      "european"
-    ]
-  },
-  {
-    "id": "bakuchi",
-    "n": "Bakuchi",
-    "cat": "Tonic",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "bibhitaki",
-    "n": "Bibhitaki",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "blueberry",
-    "n": "Blueberry",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "bobinsana",
-    "n": "Bobinsana",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "butchers_broom",
-    "n": "Butcher's Broom",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "calea_zacatachichi",
-    "n": "Calea Zacatachichi",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "catuaba",
-    "n": "Catuaba",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "damiana",
-    "n": "Damiana",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "fadogia",
-    "n": "Fadogia",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "gandira",
-    "n": "Gandira",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "guarana",
-    "n": "Guarana",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "hawthorn",
-    "n": "Hawthorn",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "horny_goat_weed",
-    "n": "Horny Goat Weed",
-    "cat": "Tonic",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "jasmine",
-    "n": "Jasmine",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "karanja",
-    "n": "Karanja",
-    "cat": "Tonic",
-    "p": [
-      "tcm",
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "khadira",
-    "n": "Khadira",
-    "cat": "Tonic",
-    "p": [
-      "tcm",
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "kratom",
-    "n": "Kratom",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "ladys_mantle",
-    "n": "Lady's Mantle",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "lemon_balm",
-    "n": "Lemon Balm",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "lodhra",
-    "n": "Lodhra",
-    "cat": "Tonic",
-    "p": [
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "maca_negra_black_maca",
-    "n": "Maca Negra (Black Maca)",
-    "cat": "Tonic",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "manjistha",
-    "n": "Manjistha",
-    "cat": "Tonic",
-    "p": [
-      "tcm",
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "motherwort",
-    "n": "Motherwort",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "nishoth",
-    "n": "Nishoth",
-    "cat": "Tonic",
-    "p": [
-      "tcm",
-      "ayurvedic",
-      "european"
-    ]
-  },
-  {
-    "id": "rhubarb_root",
-    "n": "Rhubarb Root",
-    "cat": "Tonic",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "rudraksha",
-    "n": "Rudraksha",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "saffron",
-    "n": "Saffron",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "senna",
-    "n": "Senna",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "shilajit_mineral_pitch",
-    "n": "Shilajit (Mineral Pitch)",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "tian_men_dong",
-    "n": "Tian Men Dong",
-    "cat": "Tonic",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "vanilla",
-    "n": "Vanilla",
-    "cat": "Tonic",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "vijaysar",
-    "n": "Vijaysar",
-    "cat": "Tonic",
-    "p": [
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "gokshura",
-    "n": "Gokshura",
-    "cat": "Urinary",
-    "p": [
-      "tcm",
-      "ayurvedic"
-    ]
-  },
-  {
-    "id": "nettle_leaf",
-    "n": "Nettle Leaf",
-    "cat": "Urinary",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "cramp_bark",
-    "n": "Cramp Bark",
-    "cat": "Nervine",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "black_haw",
-    "n": "Black Haw",
-    "cat": "Hormonal",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "wild_yam",
-    "n": "Wild Yam",
-    "cat": "Hormonal",
-    "p": [
-      "european",
-      "amazonian"
-    ]
-  },
-  {
-    "id": "jamaican_dogwood",
-    "n": "Jamaican Dogwood",
-    "cat": "Nervine",
-    "p": [
-      "amazonian"
-    ]
-  },
-  {
-    "id": "corydalis_yanhusuo",
-    "n": "Corydalis Yanhusuo",
-    "cat": "Anti-inflammatory",
-    "p": [
-      "tcm"
-    ]
-  },
-  {
-    "id": "acmella_oleracea",
-    "n": "Acmella oleracea",
-    "cat": "Antimicrobial",
-    "p": [
-      "amazonian"
-    ]
-  },
-  {
-    "id": "sassafras",
-    "n": "Sassafras",
-    "cat": "Consciousness",
-    "p": [
-      "european"
-    ]
-  },
-  {
-    "id": "sananga",
-    "n": "Sananga",
-    "cat": "Consciousness",
-    "p": [
-      "amazonian"
-    ]
-  },
-  {
-    "id": "yopo",
-    "n": "Yopo seeds",
-    "cat": "Consciousness",
-    "p": [
-      "amazonian"
-    ]
-  },
-  {
-    "id": "salvia_divinorum",
-    "n": "Salvia divinorum",
-    "cat": "Consciousness",
-    "p": [
-      "amazonian"
-    ]
-  },
-  {
-    "id": "iboga",
-    "n": "Iboga",
-    "cat": "Consciousness",
-    "p": [
-      "african"
-    ]
-  },
-  {
-    "id": "peyote",
-    "n": "Peyote",
-    "cat": "Consciousness",
-    "p": [
-      "amazonian"
-    ]
-  },
-  {
-    "id": "san_pedro",
-    "n": "San Pedro",
-    "cat": "Consciousness",
-    "p": [
-      "amazonian"
-    ]
-  },
-  {
-    "id": "mimosa_hostilis",
-    "n": "Mimosa hostilis",
-    "cat": "Consciousness",
-    "p": [
-      "amazonian"
-    ]
-  },
-  {
-    "id": "chacruna",
-    "n": "Chacruna",
-    "cat": "Consciousness",
-    "p": [
-      "amazonian"
-    ]
-  }
+ {
+  "id": "african_dream_root",
+  "n": "African Dream Root",
+  "b": "Silene undulata / Silene capensis",
+  "cat": "Nervine",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "aguaje",
+  "n": "Aguaje",
+  "b": "Mauritia flexuosa",
+  "cat": "Immune",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "ajwain",
+  "n": "Ajwain",
+  "b": "Trachyspermum ammi",
+  "cat": "Antimicrobial",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "ajwan",
+  "n": "Ajwan",
+  "b": "Apium graveolens",
+  "cat": "Digestive",
+  "p": [
+   "tcm",
+   "ayurvedic"
+  ]
+ },
+ {
+  "id": "amaltas",
+  "n": "Amaltas",
+  "b": "Cassia fistula",
+  "cat": "Tonic",
+  "p": [
+   "ayurvedic"
+  ]
+ },
+ {
+  "id": "amanita_muscaria",
+  "n": "Amanita Muscaria",
+  "b": "Amanita muscaria",
+  "cat": "Respiratory",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "amanita_pantherina",
+  "n": "Amanita Pantherina",
+  "b": "Amanita pantherina",
+  "cat": "Respiratory",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "anantmul",
+  "n": "Anantmul",
+  "b": "Hemidesmus indicus",
+  "cat": "Digestive",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "angelica_dong_quai",
+  "n": "Angelica (Dong Quai)",
+  "b": "Angelica sinensis",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "arjuna",
+  "n": "Arjuna",
+  "b": "Terminalia arjuna",
+  "cat": "Tonic",
+  "p": [
+   "ayurvedic"
+  ]
+ },
+ {
+  "id": "aronia_berry",
+  "n": "Aronia Berry",
+  "b": "Aronia melanocarpa",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "artichoke_extract",
+  "n": "Artichoke Extract",
+  "b": "Cynara scolymus",
+  "cat": "Digestive",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "ashoka",
+  "n": "Ashoka",
+  "b": "Saraca asoca",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "ashwagandha",
+  "n": "Ashwagandha",
+  "b": "Withania somnifera",
+  "cat": "Adaptogen",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "astaxanthin",
+  "n": "Astaxanthin",
+  "b": "Haematococcus pluvialis",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "astragalus",
+  "n": "Astragalus",
+  "b": "Astragalus membranaceus",
+  "cat": "Adaptogen",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "avocado_extract",
+  "n": "Avocado Extract",
+  "b": "Persea americana",
+  "cat": "Urinary",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "bacopa",
+  "n": "Bacopa",
+  "b": "Bacopa monnieri",
+  "cat": "Nervine",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "bael",
+  "n": "Bael",
+  "b": "Aegle marmelos",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "ayurvedic"
+  ]
+ },
+ {
+  "id": "bakuchi",
+  "n": "Bakuchi",
+  "b": "Psoralea corylifolia",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "barberry",
+  "n": "Barberry",
+  "b": "Berberis vulgaris",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "barley",
+  "n": "Barley",
+  "b": "Hordeum vulgare",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "bayberry",
+  "n": "Bayberry",
+  "b": "Myrica cerifera",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "bibhitaki",
+  "n": "Bibhitaki",
+  "b": "Terminalia bellirica",
+  "cat": "Antimicrobial",
+  "p": [
+   "ayurvedic"
+  ]
+ },
+ {
+  "id": "bilberry",
+  "n": "Bilberry",
+  "b": "Vaccinium myrtillus",
+  "cat": "Antimicrobial",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "birch_polypore",
+  "n": "Birch Polypore",
+  "b": "Fomitopsis betulina",
+  "cat": "Mushroom",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "black_cardamom",
+  "n": "Black Cardamom",
+  "b": "Amomum subulatum",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "black_cumin",
+  "n": "Black Cumin",
+  "b": "Nigella sativa",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "black_pepper_extract",
+  "n": "Black Pepper Extract",
+  "b": "Piper nigrum",
+  "cat": "Digestive",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "black_walnut",
+  "n": "Black Walnut",
+  "b": "Juglans nigra",
+  "cat": "Antimicrobial",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "bladderwrack",
+  "n": "Bladderwrack",
+  "b": "Fucus vesiculosus",
+  "cat": "Cognitive",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "blue_lotus",
+  "n": "Blue Lotus",
+  "b": "Nymphaea caerulea",
+  "cat": "Nervine",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "blueberry",
+  "n": "Blueberry",
+  "b": "Vaccinium corymbosum / Vaccinium angustifolium",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "bobinsana",
+  "n": "Bobinsana",
+  "b": "Calliandra angustifolia",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "broadleaf_plantain",
+  "n": "Broadleaf Plantain",
+  "b": "Plantago major",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "buckthorn_bark",
+  "n": "Buckthorn Bark",
+  "b": "Rhamnus frangula / Frangula alnus",
+  "cat": "Digestive",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "burdock",
+  "n": "Burdock",
+  "b": "Arctium lappa",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "butchers_broom",
+  "n": "Butcher's Broom",
+  "b": "Ruscus aculeatus",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "butterbur",
+  "n": "Butterbur",
+  "b": "Petasites hybridus",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "button_mushroom",
+  "n": "Button Mushroom",
+  "b": "Agaricus bisporus",
+  "cat": "Mushroom",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "calamus",
+  "n": "Calamus",
+  "b": "Acorus calamus",
+  "cat": "Cognitive",
+  "p": [
+   "ayurvedic"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "calea_zacatachichi",
+  "n": "Calea Zacatachichi",
+  "b": "Calea zacatachichi / Calea ternifolia",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "calendula",
+  "n": "Calendula",
+  "b": "Calendula officinalis",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "camu_camu",
+  "n": "Camu Camu",
+  "b": "Myrciaria dubia",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "caraway",
+  "n": "Caraway",
+  "b": "Carum carvi",
+  "cat": "Digestive",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "cardamom",
+  "n": "Cardamom",
+  "b": "Elettaria cardamomum",
+  "cat": "Digestive",
+  "p": [
+   "ayurvedic"
+  ]
+ },
+ {
+  "id": "cassia_seed_extract",
+  "n": "Cassia Seed Extract",
+  "b": "Cassia obtusifolia / Senna obtusifolia",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "cats_claw",
+  "n": "Cat's Claw",
+  "b": "Uncaria tomentosa",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "catuaba",
+  "n": "Catuaba",
+  "b": "Anemopaegma mirandum",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "cayenne",
+  "n": "Cayenne",
+  "b": "Capsicum annuum",
+  "cat": "Digestive",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "chaga",
+  "n": "Chaga",
+  "b": "Inonotus obliquus",
+  "cat": "Mushroom",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "chamomile",
+  "n": "Chamomile",
+  "b": "Matricaria chamomilla",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "chandrashoor",
+  "n": "Chandrashoor",
+  "b": "Lepidium sativum",
+  "cat": "Tonic",
+  "p": [
+   "ayurvedic"
+  ]
+ },
+ {
+  "id": "chickweed",
+  "n": "Chickweed",
+  "b": "Stellaria media",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "chilcuague",
+  "n": "Chilcuague",
+  "b": "Heliopsis longipes",
+  "cat": "Antimicrobial",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "cinnamon",
+  "n": "Cinnamon",
+  "b": "Cinnamomum verum",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "cistanche",
+  "n": "Cistanche",
+  "b": "Cistanche salsa / Cistanche deserticola",
+  "cat": "Cognitive",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "citrus_aurantium_extract",
+  "n": "Citrus Aurantium Extract",
+  "b": "Citrus aurantium",
+  "cat": "Digestive",
+  "p": [
+   "tcm"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "cloves",
+  "n": "Cloves",
+  "b": "Syzygium aromaticum",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "coca_leaf",
+  "n": "Coca Leaf",
+  "b": "Erythroxylum coca / E. novogranatense",
+  "cat": "Digestive",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "cordyceps",
+  "n": "Cordyceps",
+  "b": "Cordyceps militaris",
+  "cat": "Mushroom",
+  "p": [
+   "tcm",
+   "european"
+  ]
+ },
+ {
+  "id": "cranberry",
+  "n": "Cranberry",
+  "b": "Vaccinium macrocarpon",
+  "cat": "Antimicrobial",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "damiana",
+  "n": "Damiana",
+  "b": "Turnera diffusa",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "dan_shen_root_extract",
+  "n": "Dan Shen Root Extract",
+  "b": "Salvia miltiorrhiza",
+  "cat": "Hepatic",
+  "p": [
+   "tcm"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "dandelion_root",
+  "n": "Dandelion Root",
+  "b": "Taraxacum officinale",
+  "cat": "Digestive",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "dashmool",
+  "n": "Dashmool",
+  "b": "Ten-root compound",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "ayurvedic"
+  ]
+ },
+ {
+  "id": "devils_claw",
+  "n": "Devil's Claw",
+  "b": "Harpagophytum procumbens",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "echinacea",
+  "n": "Echinacea",
+  "b": "Echinacea purpurea",
+  "cat": "Antimicrobial",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "elderberry",
+  "n": "Elderberry",
+  "b": "Sambucus nigra / Sambucus canadensis",
+  "cat": "Immune",
+  "p": [
+   "tcm",
+   "european"
+  ]
+ },
+ {
+  "id": "elderberry_cooked_berry",
+  "n": "Elderberry (Cooked Berry)",
+  "b": "Sambucus nigra",
+  "cat": "Immune",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "elderflower",
+  "n": "Elderflower",
+  "b": "Sambucus nigra",
+  "cat": "Antimicrobial",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "enoki",
+  "n": "Enoki",
+  "b": "Flammulina velutipes",
+  "cat": "Mushroom",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "ephedra_ma_huang",
+  "n": "Ephedra (Ma Huang)",
+  "b": "Ephedra sinica",
+  "cat": "Respiratory",
+  "p": [
+   "tcm"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "eucalyptus",
+  "n": "Eucalyptus",
+  "b": "Eucalyptus globulus",
+  "cat": "Antimicrobial",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "eucommia",
+  "n": "Eucommia",
+  "b": "Eucommia ulmoides",
+  "cat": "Tonic",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "evening_primrose",
+  "n": "Evening Primrose",
+  "b": "Oenothera biennis L.",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "eyebright",
+  "n": "Eyebright",
+  "b": "Euphrasia officinalis / E. rostkoviana",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "fadogia",
+  "n": "Fadogia",
+  "b": "Fadogia agrestis",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "fennel",
+  "n": "Fennel",
+  "b": "Foeniculum vulgare",
+  "cat": "Digestive",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "fenugreek",
+  "n": "Fenugreek",
+  "b": "Trigonella foenum-graecum",
+  "cat": "Tonic",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "feverfew",
+  "n": "Feverfew",
+  "b": "Tanacetum parthenium",
+  "cat": "Digestive",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "fu_ling",
+  "n": "Fu Ling",
+  "b": "Wolfiporia cocos",
+  "cat": "Mushroom",
+  "p": [
+   "tcm",
+   "european"
+  ]
+ },
+ {
+  "id": "galangal",
+  "n": "Galangal",
+  "b": "Alpinia galanga / Alpinia officinarum",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "gandira",
+  "n": "Gandira",
+  "b": "Coleus forskohlii",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "garcinia_cambogia_extract",
+  "n": "Garcinia Cambogia Extract",
+  "b": "Garcinia gummi-gutta",
+  "cat": "Hepatic",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "garlic",
+  "n": "Garlic",
+  "b": "Allium sativum",
+  "cat": "Antimicrobial",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "genistein",
+  "n": "Genistein",
+  "b": "Sophora japonica / Glycine max",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "ginger",
+  "n": "Ginger",
+  "b": "Zingiber officinale",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "ginkgo",
+  "n": "Ginkgo",
+  "b": "Ginkgo biloba",
+  "cat": "Cognitive",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "ginseng",
+  "n": "Ginseng",
+  "b": "Panax ginseng",
+  "cat": "Adaptogen",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "goji_berry",
+  "n": "Goji Berry",
+  "b": "Lycium barbarum / Lycium chinense",
+  "cat": "Immune",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "gokshura",
+  "n": "Gokshura",
+  "b": "Tribulus terrestris",
+  "cat": "Respiratory",
+  "p": [
+   "ayurvedic",
+   "european"
+  ]
+ },
+ {
+  "id": "goldenrod",
+  "n": "Goldenrod",
+  "b": "Solidago virgaurea / S. canadensis / S. gigantea",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "goldenseal",
+  "n": "Goldenseal",
+  "b": "Hydrastis canadensis",
+  "cat": "Antimicrobial",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "gotu_kola",
+  "n": "Gotu Kola",
+  "b": "Centella asiatica",
+  "cat": "Nervine",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "grape_leaf_extract",
+  "n": "Grape Leaf Extract",
+  "b": "Vitis vinifera",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "grape_seed",
+  "n": "Grape Seed",
+  "b": "Vitis vinifera",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "gromwell_root_shikonin",
+  "n": "Gromwell Root / Shikonin",
+  "b": "Lithospermum erythrorhizon",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "tcm",
+   "european"
+  ]
+ },
+ {
+  "id": "ground_ivy",
+  "n": "Ground Ivy",
+  "b": "Glechoma hederacea",
+  "cat": "Digestive",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "guarana",
+  "n": "Guarana",
+  "b": "Paullinia cupana",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "guayusa",
+  "n": "Guayusa",
+  "b": "Ilex guayusa",
+  "cat": "Cognitive",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "guduchi",
+  "n": "Guduchi",
+  "b": "Tinospora cordifolia",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "ayurvedic"
+  ]
+ },
+ {
+  "id": "guggulu",
+  "n": "Guggulu",
+  "b": "Commiphora wightii",
+  "cat": "Tonic",
+  "p": [
+   "ayurvedic",
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "hadjod",
+  "n": "Hadjod",
+  "b": "Cissus quadrangularis",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "haritaki",
+  "n": "Haritaki",
+  "b": "Terminalia chebula",
+  "cat": "Adaptogen",
+  "p": [
+   "ayurvedic"
+  ]
+ },
+ {
+  "id": "hawthorn",
+  "n": "Hawthorn",
+  "b": "Crataegus spp.",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "he_shou_wu_fo_ti",
+  "n": "He Shou Wu / Fo-Ti",
+  "b": "Polygonum multiflorum / Fallopia multiflora",
+  "cat": "Tonic",
+  "p": [
+   "tcm",
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "hedyotis_diffusa",
+  "n": "Hedyotis Diffusa",
+  "b": "Oldenlandia diffusa / Hedyotis diffusa",
+  "cat": "Hepatic",
+  "p": [
+   "tcm"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "holy_basil_tulsi",
+  "n": "Holy Basil (Tulsi)",
+  "b": "Ocimum sanctum",
+  "cat": "Adaptogen",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "honeysuckle_flower",
+  "n": "Honeysuckle Flower",
+  "b": "Lonicera japonica",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "hops",
+  "n": "Hops",
+  "b": "Humulus lupulus",
+  "cat": "Nervine",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "horny_goat_weed",
+  "n": "Horny Goat Weed",
+  "b": "Epimedium grandiflorum",
+  "cat": "Tonic",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "horse_chestnut_extract",
+  "n": "Horse Chestnut Extract",
+  "b": "Aesculus hippocastanum",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "horsetail",
+  "n": "Horsetail",
+  "b": "Equisetum arvense",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "iceland_moss",
+  "n": "Iceland Moss",
+  "b": "Cetraria islandica",
+  "cat": "Antimicrobial",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "indian_barberry",
+  "n": "Indian Barberry",
+  "b": "Berberis aristata",
+  "cat": "Antimicrobial",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "jasmine",
+  "n": "Jasmine",
+  "b": "Jasminum officinale / Jasminum sambac",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "jiaogulan",
+  "n": "Jiaogulan",
+  "b": "Gynostemma pentaphyllum",
+  "cat": "Adaptogen",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "juniper",
+  "n": "Juniper",
+  "b": "Juniperus communis",
+  "cat": "Antimicrobial",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "kanna",
+  "n": "Kanna",
+  "b": "Sceletium tortuosum",
+  "cat": "Nervine",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "karanja",
+  "n": "Karanja",
+  "b": "Pongamia pinnata",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "ayurvedic",
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "kava_kava",
+  "n": "Kava Kava",
+  "b": "Piper methysticum",
+  "cat": "Nervine",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "kelp_extract_powder",
+  "n": "Kelp Extract Powder",
+  "b": "Ascophyllum nodosum / Laminaria spp.",
+  "cat": "Hormonal",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "khadira",
+  "n": "Khadira",
+  "b": "Acacia catechu",
+  "cat": "Antimicrobial",
+  "p": [
+   "ayurvedic",
+   "european"
+  ]
+ },
+ {
+  "id": "knotweed",
+  "n": "Knotweed",
+  "b": "Polygonum cuspidatum / P. sachalinense / Reynoutria japonica · sachalinensis",
+  "cat": "Hepatic",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "kratom",
+  "n": "Kratom",
+  "b": "Mitragyna speciosa",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "kudzu_root",
+  "n": "Kudzu Root",
+  "b": "Pueraria lobata / Pueraria montana",
+  "cat": "Tonic",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "ladys_mantle",
+  "n": "Lady's Mantle",
+  "b": "Alchemilla vulgaris / A. xanthochlora",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "lajjalu",
+  "n": "Lajjalu",
+  "b": "Mimosa pudica",
+  "cat": "Tonic",
+  "p": [
+   "ayurvedic"
+  ]
+ },
+ {
+  "id": "lavender",
+  "n": "Lavender",
+  "b": "Lavandula angustifolia",
+  "cat": "Nervine",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "lemon_balm",
+  "n": "Lemon Balm",
+  "b": "Melissa officinalis",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "licorice_root",
+  "n": "Licorice Root",
+  "b": "Glycyrrhiza glabra / G. uralensis",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "linden",
+  "n": "Linden",
+  "b": "Tilia cordata / Tilia europaea",
+  "cat": "Nervine",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "lingonberry",
+  "n": "Lingonberry",
+  "b": "Vaccinium vitis-idaea",
+  "cat": "Antimicrobial",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "lions_mane",
+  "n": "Lion's Mane",
+  "b": "Hericium erinaceus",
+  "cat": "Mushroom",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "lobelia_indian_tobacco",
+  "n": "Lobelia (Indian Tobacco)",
+  "b": "Lobelia inflata",
+  "cat": "Respiratory",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "lodhra",
+  "n": "Lodhra",
+  "b": "Symplocos racemosa",
+  "cat": "Hormonal",
+  "p": [
+   "ayurvedic"
+  ]
+ },
+ {
+  "id": "long_pepper",
+  "n": "Long Pepper",
+  "b": "Piper longum",
+  "cat": "Antimicrobial",
+  "p": [
+   "ayurvedic"
+  ]
+ },
+ {
+  "id": "longan",
+  "n": "Longan",
+  "b": "Dimocarpus longan / Euphoria longana",
+  "cat": "Cognitive",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "lotus_leaf_extract",
+  "n": "Lotus Leaf Extract",
+  "b": "Nelumbo nucifera",
+  "cat": "Digestive",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "lucerne_alfalfa",
+  "n": "Lucerne (Alfalfa)",
+  "b": "Medicago sativa",
+  "cat": "Digestive",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "maca",
+  "n": "Maca",
+  "b": "Lepidium meyenii",
+  "cat": "Hormonal",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "maca_negra_black_maca",
+  "n": "Maca Negra (Black Maca)",
+  "b": "Lepidium meyenii var. negra",
+  "cat": "Tonic",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "maitake",
+  "n": "Maitake",
+  "b": "Grifola frondosa",
+  "cat": "Mushroom",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "mangosteen_extract",
+  "n": "Mangosteen Extract",
+  "b": "Garcinia mangostana",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "manjistha",
+  "n": "Manjistha",
+  "b": "Rubia cordifolia",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "tcm",
+   "ayurvedic",
+   "european"
+  ]
+ },
+ {
+  "id": "marjoram_sweet_marjoram",
+  "n": "Marjoram (Sweet Marjoram)",
+  "b": "Origanum majorana",
+  "cat": "Nervine",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "meadowsweet",
+  "n": "Meadowsweet",
+  "b": "Filipendula ulmaria",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "mesima",
+  "n": "Mesima",
+  "b": "Phellinus linteus",
+  "cat": "Mushroom",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "milk_thistle",
+  "n": "Milk Thistle",
+  "b": "Silybum marianum",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "mistletoe",
+  "n": "Mistletoe",
+  "b": "Viscum album",
+  "cat": "Nervine",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "morels",
+  "n": "Morels",
+  "b": "Morchella esculenta / M. conica / M. importuna",
+  "cat": "Mushroom",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "moringa",
+  "n": "Moringa",
+  "b": "Moringa oleifera",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "motherwort",
+  "n": "Motherwort",
+  "b": "Leonurus cardiaca",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "mucuna",
+  "n": "Mucuna",
+  "b": "Mucuna pruriens",
+  "cat": "Tonic",
+  "p": [
+   "ayurvedic"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "mugwort",
+  "n": "Mugwort",
+  "b": "Artemisia vulgaris",
+  "cat": "Digestive",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "muira_puama",
+  "n": "Muira Puama",
+  "b": "Ptychopetalum olacoides",
+  "cat": "Cognitive",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "mulberry_leaf",
+  "n": "Mulberry Leaf",
+  "b": "Morus alba",
+  "cat": "Tonic",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "mullein",
+  "n": "Mullein",
+  "b": "Verbascum thapsus",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "nagkesar",
+  "n": "Nagkesar",
+  "b": "Mesua ferrea",
+  "cat": "Urinary",
+  "p": [
+   "ayurvedic",
+   "european"
+  ]
+ },
+ {
+  "id": "neem",
+  "n": "Neem",
+  "b": "Azadirachta indica",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "nettle",
+  "n": "Nettle",
+  "b": "Urtica dioica",
+  "cat": "Immune",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "nirgundi",
+  "n": "Nirgundi",
+  "b": "Vitex negundo",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "ayurvedic",
+   "european"
+  ]
+ },
+ {
+  "id": "nishoth",
+  "n": "Nishoth",
+  "b": "Operculina turpethum",
+  "cat": "Tonic",
+  "p": [
+   "tcm",
+   "ayurvedic",
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "oatstraw",
+  "n": "Oatstraw",
+  "b": "Avena sativa",
+  "cat": "Nervine",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "oregano",
+  "n": "Oregano",
+  "b": "Origanum vulgare",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "oyster_mushroom",
+  "n": "Oyster Mushroom",
+  "b": "Pleurotus ostreatus",
+  "cat": "Mushroom",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "passionflower",
+  "n": "Passionflower",
+  "b": "Passiflora incarnata",
+  "cat": "Nervine",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "pau_darco",
+  "n": "Pau d'Arco",
+  "b": "Handroanthus impetiginosus / Tabebuia impetiginosa",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "peppermint",
+  "n": "Peppermint",
+  "b": "Mentha × piperita",
+  "cat": "Digestive",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "phellodendron_amur_cork_tree",
+  "n": "Phellodendron / Amur Cork Tree",
+  "b": "Phellodendron amurense / chinense",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "tcm"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "phyllodium_pulchellum",
+  "n": "Phyllodium pulchellum",
+  "b": "Phyllodium pulchellum / Desmodium pulchellum",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "pine_bark_extract",
+  "n": "Pine Bark Extract",
+  "b": "Pinus pinaster / Pinus massoniana",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "pine_needles",
+  "n": "Pine Needles",
+  "b": "Pinus sylvestris / Pinus strobus",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "pine_pollen",
+  "n": "Pine Pollen",
+  "b": "Pinus densiflora / Pinus sylvestris",
+  "cat": "Immune",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "pomegranate_seeds",
+  "n": "Pomegranate Seeds",
+  "b": "Punica granatum",
+  "cat": "Hormonal",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "pomegranate_skin",
+  "n": "Pomegranate Skin",
+  "b": "Punica granatum",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "ayurvedic"
+  ]
+ },
+ {
+  "id": "psilocybe_cubensis",
+  "n": "Psilocybe Cubensis",
+  "b": "Psilocybe cubensis",
+  "cat": "Cognitive",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "punarnava",
+  "n": "Punarnava",
+  "b": "Boerhavia diffusa",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "ayurvedic",
+   "european"
+  ]
+ },
+ {
+  "id": "rasna",
+  "n": "Rasna",
+  "b": "Pluchea lanceolata",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "ayurvedic"
+  ]
+ },
+ {
+  "id": "raspberry_leaf",
+  "n": "Raspberry Leaf",
+  "b": "Rubus idaeus",
+  "cat": "Digestive",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "red_astragalus_wild",
+  "n": "Red Astragalus (Wild)",
+  "b": "Astragalus mongholicus / Astragalus membranaceus",
+  "cat": "Adaptogen",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "red_dates",
+  "n": "Red Dates",
+  "b": "Ziziphus jujuba",
+  "cat": "Nervine",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "red_wine_extract_resveratrol",
+  "n": "Red Wine Extract / Resveratrol",
+  "b": "Vitis vinifera",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "red_yeast_rice",
+  "n": "Red Yeast Rice",
+  "b": "Monascus purpureus fermented on Oryza sativa",
+  "cat": "Tonic",
+  "p": [
+   "tcm"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "red_belted_polypore",
+  "n": "Red-Belted Polypore",
+  "b": "Fomitopsis pinicola",
+  "cat": "Mushroom",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "reishi",
+  "n": "Reishi",
+  "b": "Ganoderma lucidum",
+  "cat": "Mushroom",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "rhodiola",
+  "n": "Rhodiola",
+  "b": "Rhodiola rosea",
+  "cat": "Adaptogen",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "rhubarb_root",
+  "n": "Rhubarb Root",
+  "b": "Rheum palmatum / Rheum officinale",
+  "cat": "Tonic",
+  "p": [
+   "tcm"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "rose_petals",
+  "n": "Rose Petals",
+  "b": "Rosa gallica / Rosa damascena / Rosa centifolia",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "rosehip",
+  "n": "Rosehip",
+  "b": "Rosa canina / Rosa spp.",
+  "cat": "Immune",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "rosemary",
+  "n": "Rosemary",
+  "b": "Rosmarinus officinalis",
+  "cat": "Cognitive",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "rowan_berry",
+  "n": "Rowan Berry",
+  "b": "Sorbus aucuparia",
+  "cat": "Digestive",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "royal_sun_mushroom",
+  "n": "Royal Sun Mushroom",
+  "b": "Agaricus subrufescens",
+  "cat": "Mushroom",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "rudraksha",
+  "n": "Rudraksha",
+  "b": "Elaeocarpus ganitrus",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "saffron",
+  "n": "Saffron",
+  "b": "Crocus sativus",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "sage",
+  "n": "Sage",
+  "b": "Salvia officinalis",
+  "cat": "Antimicrobial",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "saw_palmetto",
+  "n": "Saw Palmetto",
+  "b": "Serenoa repens",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "schisandra_five_flavour_fruit",
+  "n": "Schisandra (Five-Flavour Fruit)",
+  "b": "Schisandra chinensis",
+  "cat": "Adaptogen",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "senna",
+  "n": "Senna",
+  "b": "Senna alexandrina / Cassia senna",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "shaggy_bracket",
+  "n": "Shaggy Bracket",
+  "b": "Inonotus hispidus",
+  "cat": "Mushroom",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "shaggy_mane",
+  "n": "Shaggy Mane",
+  "b": "Coprinus comatus",
+  "cat": "Mushroom",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "shallaki",
+  "n": "Shallaki",
+  "b": "Boswellia serrata",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "ayurvedic"
+  ]
+ },
+ {
+  "id": "shankhpushpi",
+  "n": "Shankhpushpi",
+  "b": "Convolvulus pluricaulis",
+  "cat": "Nervine",
+  "p": [
+   "ayurvedic"
+  ]
+ },
+ {
+  "id": "shatavari",
+  "n": "Shatavari",
+  "b": "Asparagus racemosus",
+  "cat": "Digestive",
+  "p": [
+   "ayurvedic"
+  ]
+ },
+ {
+  "id": "shiitake",
+  "n": "Shiitake",
+  "b": "Lentinula edodes",
+  "cat": "Mushroom",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "shilajit_mineral_pitch",
+  "n": "Shilajit (Mineral Pitch)",
+  "b": "Asphaltum / Mineral Pitch",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "skullcap",
+  "n": "Skullcap",
+  "b": "Scutellaria lateriflora",
+  "cat": "Nervine",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "slippery_elm_bark",
+  "n": "Slippery Elm Bark",
+  "b": "Ulmus rubra",
+  "cat": "Respiratory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "sophora_flower",
+  "n": "Sophora Flower",
+  "b": "Sophora japonica / Styphnolobium japonicum",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "sophora_root",
+  "n": "Sophora Root",
+  "b": "Sophora flavescens",
+  "cat": "Antimicrobial",
+  "p": [
+   "tcm",
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "spirulina",
+  "n": "Spirulina",
+  "b": "Arthrospira platensis",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "st_johns_wort",
+  "n": "St. John's Wort",
+  "b": "Hypericum perforatum",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "star_anise",
+  "n": "Star Anise",
+  "b": "Illicium verum",
+  "cat": "Antimicrobial",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "szechuan_pepper",
+  "n": "Szechuan Pepper",
+  "b": "Zanthoxylum bungeanum / Zanthoxylum piperitum",
+  "cat": "Antimicrobial",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "thunder_god_vine",
+  "n": "Thunder God Vine",
+  "b": "Tripterygium wilfordii",
+  "cat": "Immune",
+  "p": [
+   "tcm"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "thyme",
+  "n": "Thyme",
+  "b": "Thymus vulgaris",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "tian_men_dong",
+  "n": "Tian Men Dong",
+  "b": "Asparagus cochinchinensis",
+  "cat": "Tonic",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "tinder_fungus",
+  "n": "Tinder Fungus",
+  "b": "Fomes fomentarius",
+  "cat": "Mushroom",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "tongkat_ali",
+  "n": "Tongkat Ali",
+  "b": "Eurycoma longifolia",
+  "cat": "Adaptogen",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "toothed_clubmoss",
+  "n": "Toothed Clubmoss",
+  "b": "Huperzia serrata",
+  "cat": "Cognitive",
+  "p": [
+   "tcm"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "tormentil",
+  "n": "Tormentil",
+  "b": "Potentilla erecta",
+  "cat": "Antimicrobial",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "tremella",
+  "n": "Tremella",
+  "b": "Tremella fuciformis",
+  "cat": "Mushroom",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "turkey_tail",
+  "n": "Turkey Tail",
+  "b": "Trametes versicolor",
+  "cat": "Mushroom",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "turmeric",
+  "n": "Turmeric",
+  "b": "Curcuma longa",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "valerian",
+  "n": "Valerian",
+  "b": "Valeriana officinalis",
+  "cat": "Nervine",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "vanilla",
+  "n": "Vanilla",
+  "b": "Vanilla planifolia / Vanilla tahitensis",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "vervain",
+  "n": "Vervain",
+  "b": "Verbena officinalis",
+  "cat": "Nervine",
+  "p": [
+   "tcm"
+  ]
+ },
+ {
+  "id": "vijaysar",
+  "n": "Vijaysar",
+  "b": "Pterocarpus marsupium",
+  "cat": "Tonic",
+  "p": [
+   "ayurvedic"
+  ]
+ },
+ {
+  "id": "vitex",
+  "n": "Vitex",
+  "b": "Vitex agnus-castus",
+  "cat": "Hormonal",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "white_kidney_bean_extract",
+  "n": "White Kidney Bean Extract",
+  "b": "Phaseolus vulgaris",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "wild_dagga",
+  "n": "Wild Dagga",
+  "b": "Leonotis leonurus",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "willow_bark",
+  "n": "Willow Bark",
+  "b": "Salix alba / Salix spp.",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "willow_bracket",
+  "n": "Willow Bracket",
+  "b": "Phellinus igniarius",
+  "cat": "Mushroom",
+  "p": [
+   "tcm",
+   "european"
+  ]
+ },
+ {
+  "id": "wormwood",
+  "n": "Wormwood",
+  "b": "Artemisia absinthium",
+  "cat": "Antimicrobial",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "yarrow",
+  "n": "Yarrow",
+  "b": "Achillea millefolium",
+  "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "yellow_dock_root",
+  "n": "Yellow Dock Root",
+  "b": "Rumex crispus",
+  "cat": "Digestive",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "yerba_mate",
+  "n": "Yerba Mate",
+  "b": "Ilex paraguariensis",
+  "cat": "Adaptogen",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "yohimbe_bark",
+  "n": "Yohimbe Bark",
+  "b": "Pausinystalia yohimbe",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
+  "id": "zhu_ling",
+  "n": "Zhu Ling",
+  "b": "Polyporus umbellatus",
+  "cat": "Mushroom",
+  "p": [
+   "tcm",
+   "european"
+  ]
+ }
 ]
