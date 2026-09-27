@@ -3997,7 +3997,7 @@ const HERBS = [
       'Drug interactions: hepatotoxic medications (avoid combination); otherwise minimal',
     ],
     dosage_range:
-      'Extract: 5–10 ml, up to 3× daily (1:5). Infusion: 2–4 g dried herb per cup, up to 3× daily. Duration: 2–6 weeks for catarrh episodes; lower doses intermittently for chronic patterns. Use as formula component rather than standalone.',
+      'Extract: 3–6 ml, up to 3× daily (1:3). Infusion: 2–4 g dried herb per cup, up to 3× daily. Duration: 2–6 weeks for catarrh episodes; lower doses intermittently for chronic patterns. Use as formula component rather than standalone.',
     spiritual_layer:
       'Ground Ivy is the creeping, clearing ally — she threads through dense undergrowth and stuck spaces, gently lifting and drying hidden accumulations. The old "alehoof" name reminds us she was trusted enough to preserve and clarify beer before hops replaced her — a testament to both her antimicrobial properties and her place in daily European life. She teaches that we should attend to the lingering, low-grade congestion before it hardens — that the subtle accumulations in sinuses, ears, gut and emotional body require regular gentle clearing. She whispers: Stagnant residues in my head, chest and gut are gently cleared. I breathe and think more freely. I attend to the subtle before it becomes the stuck.',
     best_preparation:
@@ -7515,7 +7515,7 @@ const HERBS = [
       'Drug interactions: diuretics (monitor electrolytes), lithium (monitor levels); otherwise minimal',
     ],
     dosage_range:
-      'Tea: 3–5 g dried herb per 150 ml boiling water, steeped 5–10 minutes, 2–4× daily (6–12 g/day total); always with ≥2 L water daily for irrigation benefit. Extract (1:5 in 45% ethanol): 0.5–1 ml, 2–4× daily. Fluid extract (1:1): 0.5–2 ml, 2–3× daily. Duration: 2–4 week therapeutic courses for urinary or allergy complaints; repeat as needed. Long-term use well tolerated when kidney and heart function are normal.',
+      'Tea: 3–5 g dried herb per 150 ml boiling water, steeped 5–10 minutes, 2–4× daily (6–12 g/day total); always with ≥2 L water daily for irrigation benefit. Extract (1:3 in 45% ethanol): 0.3–0.6 ml, 2–4× daily. Fluid extract (1:1): 0.5–2 ml, 2–3× daily. Duration: 2–4 week therapeutic courses for urinary or allergy complaints; repeat as needed. Long-term use well tolerated when kidney and heart function are normal.',
     spiritual_layer:
       'Goldenrod is the bright wand of the hedgerow — rising like a sunbeam over meadows and forest edges, she teaches uprightness and flow. When resentment, grief or fear pools and stagnates in the kidneys and mucosa we feel bogged down and leaky. Goldenrod teaches clear, warm release: flushing what no longer serves while toning the boundaries that keep us whole. She is the golden flush of autumn that clears the season, stands tall without rigidity and releases without losing herself. She whispers: I release what is stagnant. My waters flow clear and free. My boundaries are toned, not rigid. I stand upright in my own golden light. I am cleansed, steady and renewed.',
     best_preparation:
@@ -7916,7 +7916,7 @@ const HERBS = [
       'Drug interactions: diabetes meds (hypoglycaemia risk — monitor glucose), antihypertensives (monitor BP), anticoagulants (monitor INR)',
     ],
     dosage_range:
-      'Standardised extract (eurycomanone 10–30% — ESSENTIAL; most reliable clinical form): 200–400 mg daily with meals or fat source (optimal absorption). Root powder: 3–9 g daily (less reliable due to variable eurycomanone content). Extract (1:5 alcohol): 30–60 drops, 2–3× daily. CYCLING PROTOCOL MANDATORY: 8–12 weeks on, 4–6 weeks off; repeat. Sexual function and testosterone begin improving at 4–8 weeks; peak effect at 8–12 weeks. MANDATORY screening: prostate cancer (HARD BLOCK), hormone-sensitive cancers (HARD BLOCK), PSA/prostate history, BP, heart disease, diabetes medications.',
+      'Standardised extract (eurycomanone 10–30% — ESSENTIAL; most reliable clinical form): 200–400 mg daily with meals or fat source (optimal absorption). Root powder: 3–9 g daily (less reliable due to variable eurycomanone content). Extract (1:3 alcohol): 18–36 drops, 2–3× daily. CYCLING PROTOCOL MANDATORY: 8–12 weeks on, 4–6 weeks off; repeat. Sexual function and testosterone begin improving at 4–8 weeks; peak effect at 8–12 weeks. MANDATORY screening: prostate cancer (HARD BLOCK), hormone-sensitive cancers (HARD BLOCK), PSA/prostate history, BP, heart disease, diabetes medications.',
     spiritual_layer:
       'Tongkat Ali is rooted masculine vitality — not the aggression of testosterone weaponised, but the grounded, enduring strength of a man aligned with his body\'s own intelligence. She is the Malaysian ginseng that has nourished warriors and farmers in the rainforest for centuries, teaching that real vitality is earned through rootedness, that sexual confidence is an expression of embodied health, that honoring the body\'s natural testosterone rhythms is wisdom not forcing. She teaches that true masculine strength is patience, groundedness and pleasure in embodiment. She whispers: My body is strong. My vitality is natural. My sexual function is healthy. My confidence is grounded. My pleasure is sacred. I honor my masculine energy. My strength serves life.',
     best_preparation:
@@ -8228,7 +8228,7 @@ const HERBS = [
       'Drug interactions: CNS depressants (additive sedation — coordinate with prescriber), CYP3A4 substrates (caution; limited data)',
     ],
     dosage_range:
-      'Extract (1:5 in 40–70% alcohol): 2–4 ml (40–80 drops) 30–60 minutes before bed for insomnia; optional 1–2 ml afternoon dose to soften the landing. For daytime anxiety: 1–2 ml up to 3× daily. Tea: 2–3 g dried root per 250 ml, steeped 10–15 minutes, 1–2× daily (less efficient for lipophilic constituents). Standardised extract (capsules, 0.8% valerenic acids): 300–600 mg 30–60 minutes before bed. Duration: 2–4 weeks to evaluate full effect; maximum 4–6 weeks continuous high-dose before reassessing or cycling. Taper gradually on discontinuation.',
+      'Extract (1:3 in 40–70% alcohol): 1.2–2.4 ml (24–48 drops) 30–60 minutes before bed for insomnia; optional 0.6–1.2 ml afternoon dose to soften the landing. For daytime anxiety: 0.6–1.2 ml up to 3× daily. Tea: 2–3 g dried root per 250 ml, steeped 10–15 minutes, 1–2× daily (less efficient for lipophilic constituents). Standardised extract (capsules, 0.8% valerenic acids): 300–600 mg 30–60 minutes before bed. Duration: 2–4 weeks to evaluate full effect; maximum 4–6 weeks continuous high-dose before reassessing or cycling. Taper gradually on discontinuation.',
     spiritual_layer:
       'Valerian is earth-root medicine — she grows deep, smells of the subterranean, and carries the teaching that safety is felt in the body when the mind releases its grip. True rest is not collapse but consent to being held by the earth; valerian teaches that the vigilance we maintain against an imagined threat costs more than the threat itself. She is the night companion for the one whose mind will not stop — the one who solves problems in the dark, who carries the world into sleep. She reaches her roots into the ground and says: This is where the thinking can rest. The earth holds what you cannot. She whispers: My body is safe. My mind releases. Rest is allowed. Sleep comes naturally. I do not have to hold everything alone.',
     best_preparation:
@@ -8310,7 +8310,7 @@ const HERBS = [
       'Drug interactions: CNS depressants (additive — monitor), antihypertensives (monitor BP), antiepileptics (supervision required)',
     ],
     dosage_range:
-      'Extract (1:5 in 40–60% alcohol): 1–5 ml, 2–3× daily; lower end for sensitive individuals; higher end for acute tension episodes. Tea: 1–2 tsp (1–3 g) dried herb per 250 ml, steeped 10–15 minutes, 1–3× daily (bitter — combine with Lemon Balm or Mint for palatability). Duration: several months at moderate doses; often cycled (5 days on / 2 off) for long-term stress patterns. For migraines and PMS: expect 2–3 cycles or 4–8 weeks for full effect.',
+      'Extract (1:3 in 40–60% alcohol): 0.6–3 ml, 2–3× daily; lower end for sensitive individuals; higher end for acute tension episodes. Tea: 1–2 tsp (1–3 g) dried herb per 250 ml, steeped 10–15 minutes, 1–3× daily (bitter — combine with Lemon Balm or Mint for palatability). Duration: several months at moderate doses; often cycled (5 days on / 2 off) for long-term stress patterns. For migraines and PMS: expect 2–3 cycles or 4–8 weeks for full effect.',
     spiritual_layer:
       'Vervain is the overworked person\'s ally — the herb of the one who cannot put the burden down, whose mind keeps spinning, whose shoulders hold the world. She is sacred to every tradition that recognised the person who serves too much and rests too little: the intellectual, the caretaker, the duty-bound. She teaches that true service and intellect must be anchored in relaxation and flow — otherwise tension jams the liver, the head aches and the spirit cannot hear itself. She releases the sense of duty that has become suffering, the hypervigilance that has mistaken itself for care. She whispers: I release what I cannot carry. My nerves unwind, my liver and mind are at ease. I serve and create from a relaxed, steady centre.',
     best_preparation:
@@ -8392,7 +8392,7 @@ const HERBS = [
       'Drug interactions: hormonal contraceptives (efficacy — backup contraception), dopamine antagonists (counteraction — consult prescriber), HRT (consult prescriber)',
     ],
     dosage_range:
-      'Standardised extract (0.6% agnuside): 20–40 mg daily (some formulas 500 mg extract daily). Dried berry: 1–2 tsp (3–4 g), 1–2× daily. Extract (1:5 alcohol): 40–60 drops, 2× daily. MINIMUM 3 months for significant effects (hormonal changes require multiple cycles); optimal effect 3–6 months. Safe long-term indefinite with optional cycling (3 months on, 1 month off). Morning dosing standard. Continuous throughout cycle (not just luteal phase) for cycle regulation; optional luteal-phase-only timing for PMS focus.',
+      'Standardised extract (0.6% agnuside): 20–40 mg daily (some formulas 500 mg extract daily). Dried berry: 1–2 tsp (3–4 g), 1–2× daily. Extract (1:3 alcohol): 24–36 drops, 2× daily. MINIMUM 3 months for significant effects (hormonal changes require multiple cycles); optimal effect 3–6 months. Safe long-term indefinite with optional cycling (3 months on, 1 month off). Morning dosing standard. Continuous throughout cycle (not just luteal phase) for cycle regulation; optional luteal-phase-only timing for PMS focus.',
     spiritual_layer:
       'Vitex — Chaste Tree, Abraham\'s Balm — is the keeper of women\'s cycle wisdom. The monks who used her to reduce desire misunderstood her; she was never about suppression but about regulation, about the power of rhythm, about honouring the phases of the moon reflected in the female body. She teaches that the luteal phase is sacred — the inward space of integration, creativity and deep knowing that Western culture has pathologised as PMS. She teaches that cycle regularity is body confidence, that body wisdom is trustworthy, that the progesterone-nourished second half of the cycle is not a liability but a gift of depth. She whispers: My cycle is regular. My luteal phase is strong. I honour my rhythms. I am fertile. I am balanced. My body is wise. I am whole.',
     best_preparation:
@@ -8630,7 +8630,7 @@ const HERBS = [
       'Drug interactions: anticonvulsants (seizure risk — AVOID), anticoagulants (theoretical — monitor)',
     ],
     dosage_range:
-      'Tea/infusion (GENTLEST): 0.5–1 tsp dried herb steeped 10–15 minutes, 1–2× BEFORE meals (intensely bitter; pre-meal optimal). Extract (1:5 alcohol; START LOW): 10–20 drops, 2–3× daily. PARASITE PROTOCOL (INTENSIVE): 20–40 drops extract 3× daily for 2 weeks, then MANDATORY 1–2 week break; repeat 2–3 cycles maximum. ALWAYS use in antiparasitic trio (Black Walnut + Clove + Wormwood) — reduces individual herb dose and toxicity risk. MAXIMUM 3 cycles per year. ABSOLUTELY NOT for casual or indefinite use.',
+      'Tea/infusion (GENTLEST): 0.5–1 tsp dried herb steeped 10–15 minutes, 1–2× BEFORE meals (intensely bitter; pre-meal optimal). Extract (1:3 alcohol; START LOW): 6–12 drops, 2–3× daily. PARASITE PROTOCOL (INTENSIVE): 12–24 drops extract 3× daily for 2 weeks, then MANDATORY 1–2 week break; repeat 2–3 cycles maximum. ALWAYS use in antiparasitic trio (Black Walnut + Clove + Wormwood) — reduces individual herb dose and toxicity risk. MAXIMUM 3 cycles per year. ABSOLUTELY NOT for casual or indefinite use.',
     spiritual_layer:
       'Wormwood is the fierce protector — her very name tells her story: werm (worm), the ancient antiparasitic function that defined her role for every culture that knew her. She is sharp, bitter, uncompromising — the herb that removes what does not belong, that sets boundaries without apology, that teaches that fierce protection is compatible with wisdom. She grew around the graves of warriors and in the wormwood forests of Central Asia; she was the secret of absinthe and the nightmare of excess. Her teaching is precision: she is most powerful when used exactly, for exactly as long as needed, then set aside. She whispers: I am protected. My boundaries are clear and firm. I remove invaders. I stand strong. I trust my fierce wisdom. I am safe.',
     best_preparation:
@@ -8705,7 +8705,7 @@ const HERBS = [
       'Drug interactions: anticoagulants (theoretical — monitor), antihypertensives (monitor at high doses)',
     ],
     dosage_range:
-      'Tea/infusion: 1–2 tsp dried herb per 250 ml boiling water, steeped 10–15 minutes; 1–3× daily for digestion and circulation; 3–5× daily (served HOT) for acute fever and diaphoretic effect. Extract (1:5 in 40–60% alcohol): 2–4 ml, 2–3× daily; 1–2 ml every 1–3 hours for acute fever. Topical: fresh crushed leaves applied directly to wound or cut; strong infusion as wound wash or sitz bath. Duration: acute fever — days; digestive and menstrual — weeks to months with breaks.',
+      'Tea/infusion: 1–2 tsp dried herb per 250 ml boiling water, steeped 10–15 minutes; 1–3× daily for digestion and circulation; 3–5× daily (served HOT) for acute fever and diaphoretic effect. Extract (1:3 in 40–60% alcohol): 1.2–2.4 ml, 2–3× daily; 0.6–1.2 ml every 1–3 hours for acute fever. Topical: fresh crushed leaves applied directly to wound or cut; strong infusion as wound wash or sitz bath. Duration: acute fever — days; digestive and menstrual — weeks to months with breaks.',
     spiritual_layer:
       'Yarrow is named for Achilles — the warrior who was invulnerable everywhere except his heel, who knew how to fight but not how to be vulnerable in the right places. She is boundary and bridge simultaneously: she knows when to stop the bleeding (literal and emotional) and when to open channels so stagnation cannot calcify. She is the energetic shield of the empath, the boundary-keeper for those who need to learn where they end and others begin. In her warrior-healer teaching she holds both courage and care — she teaches that we can stand and mend, that strength includes the wisdom to be tender with what is genuinely wounded. She whispers: My boundaries are clear. I hold what is mine and release what is not. I am protected and free.',
     best_preparation:
@@ -8783,7 +8783,7 @@ const HERBS = [
       'Drug interactions: thiazide diuretics (potassium loss — monitor electrolytes), stimulant laxative medications (additive — avoid)',
     ],
     dosage_range:
-      'Decoction: 1–2 g root in 250 ml water, simmered 10–15 minutes, 1–3× daily for short courses only. Extract (1:5): 1–4 ml, 1–3× daily. Duration: SHORT COURSES ONLY — use in time-limited phases (1–3 weeks) with clear therapeutic goals (constipation reset, iron support phase); then reassess and discontinue or rotate. NOT for daily chronic long-term use.',
+      'Decoction: 1–2 g root in 250 ml water, simmered 10–15 minutes, 1–3× daily for short courses only. Extract (1:3): 0.6–2.4 ml, 1–3× daily. Duration: SHORT COURSES ONLY — use in time-limited phases (1–3 weeks) with clear therapeutic goals (constipation reset, iron support phase); then reassess and discontinue or rotate. NOT for daily chronic long-term use.',
     spiritual_layer:
       'Yellow Dock is the iron bitter of the hedgerow — the plant that pushes its deep taproot through the hardest, most compacted soil to pull up iron and minerals that surface-feeding plants cannot reach. She teaches that depth of nourishment sometimes requires bitterness, that the most necessary work is not always the most comfortable, that sluggish systems sometimes need a strong, temporary stimulus before they remember how to move on their own. She is the short-term clearing teacher — not the long gentle tonic but the precise, brief intervention that restores function so the body can take over again. She whispers: I move what has stagnated. I clear briefly and precisely. I restore function so life can flow again. I nourish from depth.',
     best_preparation:
@@ -9253,7 +9253,7 @@ const HERBS = [
       'Drug interactions: Digoxin (SERIOUS — hypokalaemia; CONTRAINDICATED without monitoring), diuretics and corticosteroids (potassium loss — monitor), anticoagulants (discontinue pre-surgery)',
     ],
     dosage_range:
-      'TCM decoction (3–12 g/day dried root in formula; added in last 5–10 minutes of boiling to preserve anthraquinones). Western capsule: 250–500 mg, 1–2× daily short-term only. Extract (1:5): 0.5–2 ml at bedtime as needed, short-term. ALWAYS combine with carminatives to reduce griping. Duration: MAXIMUM few days to 2 weeks per course; then complete stop. For chronic constipation: REDIRECT to safer options (bulk-forming, osmotic laxatives, dietary fibre, movement).',
+      'TCM decoction (3–12 g/day dried root in formula; added in last 5–10 minutes of boiling to preserve anthraquinones). Western capsule: 250–500 mg, 1–2× daily short-term only. Extract (1:3): 0.3–1.2 ml at bedtime as needed, short-term. ALWAYS combine with carminatives to reduce griping. Duration: MAXIMUM few days to 2 weeks per course; then complete stop. For chronic constipation: REDIRECT to safer options (bulk-forming, osmotic laxatives, dietary fibre, movement).',
     spiritual_layer:
       'Da Huang is the purging judge — the herb that says "this must go now" with uncompromising clarity. She embodies the teaching of right medicine, right moment: that strong purgation has a legitimate role in acute crisis and serious accumulation, but is dangerous when used casually or chronically. She teaches precision and respect for powerful forces — the same forceful clarity that resolves an acute toxic blockage becomes destructive when applied indefinitely to a system that needs rebuilding rather than evacuation. She is the short, fierce intervention that clears the way for something new, then steps back. She whispers: I release what is truly toxic at the right time and in the right way. I honour my body\'s need for elimination without abusing strong forces. I choose clarity and respect in cleansing.',
     best_preparation:
@@ -9327,7 +9327,7 @@ const HERBS = [
       'Drug interactions: None documented',
     ],
     dosage_range:
-      'Tea: 1–2 tsp dried petals per 250 ml hot water, steeped covered 10–15 minutes, 1–3× daily. Cold infusion (preserves volatile oils better): petals in room-temperature water for several hours; drink cool. Extract (1:5 in 40–60% alcohol): 1–4 ml, 1–3× daily; often blended with other heart herbs. Glycerite: excellent for children and highly sensitive individuals; 1–4 ml, 1–3× daily. Honey preparation: petals infused in raw honey 2–4 weeks; 1 tsp as needed for sore throat and grief ritual. Topical: rose water or hydrosol as facial toner and eye compress. Safe indefinite long-term daily use.',
+      'Tea: 1–2 tsp dried petals per 250 ml hot water, steeped covered 10–15 minutes, 1–3× daily. Cold infusion (preserves volatile oils better): petals in room-temperature water for several hours; drink cool. Extract (1:3 in 40–60% alcohol): 0.6–2.4 ml, 1–3× daily; often blended with other heart herbs. Glycerite: excellent for children and highly sensitive individuals; 1–4 ml, 1–3× daily. Honey preparation: petals infused in raw honey 2–4 weeks; 1 tsp as needed for sore throat and grief ritual. Topical: rose water or hydrosol as facial toner and eye compress. Safe indefinite long-term daily use.',
     spiritual_layer:
       'Rose is heart intelligence — the fusion of softness and discernment that distinguishes love from dissolution. She embodies the paradox of the thorned flower: that vulnerability without boundaries creates chaos, and boundaries without softness create isolation. The rose teaches that the heart can remain open even after pain — but only when thorns (healthy limits) are honoured. She is the grief companion who sits beside sorrow without rushing it, the self-love advocate who insists that beauty practices are self-honoring not vanity, the intimacy teacher who says that safe vulnerability is the most courageous act. She carries millennia of use in love, ceremony and healing across every culture that grew her. She whispers: My heart is soft and strong. I can feel deeply and remain safe. Love begins within me.',
     best_preparation:
@@ -9491,7 +9491,7 @@ const HERBS = [
       'Drug interactions: hormone therapies (anti-androgenic overlap — inform prescriber), finasteride or dutasteride (overlapping mechanism — consult urologist), anticoagulants (MONITOR INR), PSA testing (disclose use — may suppress values)',
     ],
     dosage_range:
-      'Standardised lipophilic extract (320 mg/day — CLINICAL RESEARCH FORM; 80–90% fatty acids): 160 mg twice daily with meals. Crude dried berry: 1–2 g, 2–3× daily (less standardised; weaker evidence). Extract (1:5 in 60–70% alcohol): 2–4 ml, 2–3× daily. Duration: minimum 3–6 months before evaluating symptom scores; may continue long-term if tolerated and effective. ALWAYS under clinician monitoring with regular IPSS symptom scoring and PSA awareness.',
+      'Standardised lipophilic extract (320 mg/day — CLINICAL RESEARCH FORM; 80–90% fatty acids): 160 mg twice daily with meals. Crude dried berry: 1–2 g, 2–3× daily (less standardised; weaker evidence). Extract (1:3 in 60–70% alcohol): 1.2–2.4 ml, 2–3× daily. Duration: minimum 3–6 months before evaluating symptom scores; may continue long-term if tolerated and effective. ALWAYS under clinician monitoring with regular IPSS symptom scoring and PSA awareness.',
     spiritual_layer:
       'Saw Palmetto grows in the sandy coastal lowlands of the American Southeast — a slow-growing, ancient palm that reaches its full expression only over decades, teaching that mature masculine vitality is not about urgency or force but about deep roots and steady presence. She embodies the shift from "prove myself" energy to "I am enough" groundedness — the mature masculine archetype that holds its centre in the lower body without leaking energy through anxiety, urgency or overcompensation. She teaches that true potency arises from stable roots and relaxed flow, that the pelvis can be a place of groundedness rather than pressure. She whispers: My roots are strong. My power is steady. I release pressure and trust my body\'s rhythm.',
     best_preparation:
@@ -9653,7 +9653,7 @@ const HERBS = [
       'Drug interactions: immunosuppressants (modulation risk), anticoagulants (mild theoretical — monitor), chemotherapy (coordinate with oncologist)',
     ],
     dosage_range:
-      'Decoction (traditional and optimal for gut/antiparasitic work): 3–6 g dried inner flesh slices simmered in 500–750 ml water for 30–60 minutes; 1 cup, 1–3× daily. Extract or dual extract (1:5 to 1:3 in 40–70% ethanol combined with decoction): 1–3 ml, 1–3× daily. Powder or capsules: 500–1500 mg daily in 2–3 divided doses. Duration: 1–4 weeks for acute antiparasitic or infection support; 2–3+ months for immune terrain or oncology adjunct work. Always from clean birch stands away from pollution.',
+      'Decoction (traditional and optimal for gut/antiparasitic work): 3–6 g dried inner flesh slices simmered in 500–750 ml water for 30–60 minutes; 1 cup, 1–3× daily. Extract or dual extract (1:3 in 40–70% ethanol combined with decoction): 0.6–1.8 ml, 1–3× daily. Powder or capsules: 500–1500 mg daily in 2–3 divided doses. Duration: 1–4 weeks for acute antiparasitic or infection support; 2–3+ months for immune terrain or oncology adjunct work. Always from clean birch stands away from pollution.',
     spiritual_layer:
       'Birch Polypore is the birch sentinel — a guardian that appears when birch is stressed or dying, turning breakdown into medicine. She teaches that even in decline and decay, there is protective intelligence and an opportunity for purification. She is the world\'s oldest documented human medicine — carried through an alpine crossing five thousand years ago by a traveller whose body has told us more about human health than almost anything else in history. She reclaims territory from parasites, literal and metaphorical, and resets the boundary between host and world. She whispers: I reclaim my inner territory. What feeds on me without permission is released. My defences are clear and intelligent. I am cleansed, protected, and aligned with my birch-bright resilience.',
     best_preparation:
@@ -11118,7 +11118,7 @@ const HERBS = [
       'Drug interactions: immunosuppressants and biologics (immune modulation — monitor), anticoagulants (limited data — caution in high-risk), chemotherapy and radiotherapy (integrative oncology coordination required)',
     ],
     dosage_range:
-      'Decoction (traditional and foundational): 3–6 g dried inner tissue (amadou layer or sliced conk) simmered in 500–750 ml water for 30–60 minutes; 1 cup, 1–3× daily in chronic protocols. Extract or fluid extract (40–70% ethanol, 1:5 to 1:3): approximately 1–3 ml, 1–3× daily. Purified insoluble fiber preparations (capsules or powder): hundreds of mg to a few grams daily in divided doses under practitioner supervision. Duration: designed for long-term terrain-level protocols — 2–3 months or longer with periodic reassessment. Topical wound use: processed amadou layer as styptic pad in traditional first-aid contexts.',
+      'Decoction (traditional and foundational): 3–6 g dried inner tissue (amadou layer or sliced conk) simmered in 500–750 ml water for 30–60 minutes; 1 cup, 1–3× daily in chronic protocols. Extract or fluid extract (40–70% ethanol, 1:3): approximately 0.6–1.8 ml, 1–3× daily. Purified insoluble fiber preparations (capsules or powder): hundreds of mg to a few grams daily in divided doses under practitioner supervision. Duration: designed for long-term terrain-level protocols — 2–3 months or longer with periodic reassessment. Topical wound use: processed amadou layer as styptic pad in traditional first-aid contexts.',
     spiritual_layer:
       'Tinder Fungus is the keeper of the ember — fire stored inside wood, the bridge between earth, fire, air and deep time. She has kept human fire alive for at least five thousand years; Ötzi the Iceman carried her across an alpine crossing as the technology that made warmth and cooking and survival possible. She is medicine for those walking long roads through complexity: chronic illness, multi-system failure, the exhausted terrain that has been burning low for years. Her teaching is that healing in chronic illness is a slow ember-carrying process — protect the spark of vitality, tend it carefully, and let it gradually reshape the terrain of your body and life. She whispers: My inner fire is steady, not frantic. I carry my spark through long nights. My terrain is slowly changing toward balance. I am patient, persistent, and quietly powerful.',
     best_preparation:
@@ -11877,7 +11877,7 @@ const HERBS = [
     'Drug interactions: CYP3A4/2C9 substrates — monitor closely',
   ],
   dosage_range:
-    'Dried peel decoction: 1–3 g per 250 ml, simmer 15–20 minutes, 1–2× daily for 5–10 days. Extract (1:5, 45% EtOH): 15–30 drops, 2–3× daily. Mouth rinse: stronger decoction, swish 1 min. Short cycles only — do not use the concentrated peel continuously.',
+    'Dried peel decoction: 1–3 g per 250 ml, simmer 15–20 minutes, 1–2× daily for 5–10 days. Extract (1:3, 45% EtOH): 9–18 drops, 2–3× daily. Mouth rinse: stronger decoction, swish 1 min. Short cycles only — do not use the concentrated peel continuously.',
   spiritual_layer:
     'The pomegranate peel is the boundary the fruit keeps. She is the medicine of containment — the architecture that holds the jewelled seeds safe. In the Persephone myth, she is the threshold between worlds. Her medicine is to gather what is scattered, to bind what has been leaking, to bring the wandering mucosa back to its centre. She whispers: I hold the line. I gather the scattered. Boundary is also a form of love.',
   best_preparation:
@@ -12023,7 +12023,7 @@ const HERBS = [
     'Drug interactions: extensive CYP / P-gp profile — monitor levels carefully',
   ],
   dosage_range:
-    'Extract (1:5, 50% EtOH): 5–15 drops, 2× daily. Powder: 250–500 mg, 1–2× daily with food. Trikatu blend (with Ginger and Black Pepper, 1:1:1): 500 mg before meals. Always dose downward in heat patterns.',
+    'Extract (1:3, 50% EtOH): 3–9 drops, 2× daily. Powder: 250–500 mg, 1–2× daily with food. Trikatu blend (with Ginger and Black Pepper, 1:1:1): 500 mg before meals. Always dose downward in heat patterns.',
   spiritual_layer:
     'Pippali is the spark in the kindling — the medicine of ignition. She teaches that nothing transforms without fire and that the right small heat at the right moment is the difference between digestion and decay. She whispers: I am the spark that wakes the engine. I open what is closed. I make the medicine arrive.',
   best_preparation:
@@ -12093,7 +12093,7 @@ const HERBS = [
     'Drug interactions: anticoagulants (mild additive), hypoglycemics (mild additive)',
   ],
   dosage_range:
-    'Extract (1:5, 50% EtOH): 20–40 drops, 2–3× daily. Fresh rhizome decoction: 3–5 g per 250 ml, simmered 10 min. Powder: 500 mg–1 g, 1–2× daily. Culinary use freely.',
+    'Extract (1:3, 50% EtOH): 12–24 drops, 2–3× daily. Fresh rhizome decoction: 3–5 g per 250 ml, simmered 10 min. Powder: 500 mg–1 g, 1–2× daily. Culinary use freely.',
   spiritual_layer:
     'Galangal is the aromatic compass of the SE Asian kitchen — the rhizome that points the digestive fire toward warmth and discernment. She teaches that food is the first medicine and that what we taste shapes what we become. She whispers: Wake the fire. Taste the world. Move what has been still.',
   best_preparation:
@@ -12164,7 +12164,7 @@ const HERBS = [
     'Drug interactions: antihypertensives (mild additive), anticoagulants (mild additive)',
   ],
   dosage_range:
-    'Extract (1:5, 50% EtOH): 15–30 drops, 2–3× daily. Decoction: 1–2 crushed pods per 250 ml, simmer 15 min. Powder: 250–500 mg as digestive after meals. Culinary use freely.',
+    'Extract (1:3, 50% EtOH): 9–18 drops, 2–3× daily. Decoction: 1–2 crushed pods per 250 ml, simmer 15 min. Powder: 250–500 mg as digestive after meals. Culinary use freely.',
   spiritual_layer:
     'Black Cardamom is the smoke-cured Himalayan keeper — the medicine of long winters and cooking fires that never go out. She teaches that smoke can be medicine, that what is dried in heat carries the memory of the fire, and that warming the lungs warms the whole inner geography. She whispers: I am the kept fire. I open the breath. I carry the mountain.',
   best_preparation:
@@ -12235,7 +12235,7 @@ const HERBS = [
     'Drug interactions: anticonvulsants (theoretical), local anesthetics (additive)',
   ],
   dosage_range:
-    'Extract (1:5, 65% EtOH): 8–20 drops, 2× daily. Powder: 250–500 mg, 1–2× daily with food. Topical oil infusion 5–10% for localized analgesia. Culinary use as sensory medicine.',
+    'Extract (1:3, 65% EtOH): 5–12 drops, 2× daily. Powder: 250–500 mg, 1–2× daily with food. Topical oil infusion 5–10% for localized analgesia. Culinary use as sensory medicine.',
   spiritual_layer:
     'Szechuan Pepper is the sensory shock that wakes the tongue out of its sleep. Her tingling teaches that medicine can be a doorway through sensation — that to feel more is to be more present. She whispers: I open the doors of perception in your mouth. I numb so you can sense what is beneath the noise.',
   best_preparation:
@@ -12379,7 +12379,7 @@ const HERBS = [
     'Drug interactions: lithium, digoxin, warfarin, diabetes meds — monitor',
   ],
   dosage_range:
-    'Powder: 500 mg – 2 g, 1–2× daily, often before sleep. Triphala: 1–3 g at bedtime in warm water. Decoction: 3–6 g per 250 ml. Extract (1:5, 50% EtOH): 20–40 drops, 2× daily. Long-cycle rasayana use possible.',
+    'Powder: 500 mg – 2 g, 1–2× daily, often before sleep. Triphala: 1–3 g at bedtime in warm water. Decoction: 3–6 g per 250 ml. Extract (1:3, 50% EtOH): 12–24 drops, 2× daily. Long-cycle rasayana use possible.',
   spiritual_layer:
     'Haritaki is called the Mother of Plants and the Fruit of Immortality. The Medicine Buddha holds her in his hand. She teaches that healing is regulation, not just stimulation — that wisdom medicine knows when to release and when to hold. She whispers: I balance every direction. I cleanse and I retain. I am the regulator of the inner river.',
   best_preparation:
@@ -12451,7 +12451,7 @@ const HERBS = [
     'Drug interactions: immunosuppressants (avoid), anticoagulants (mild)',
   ],
   dosage_range:
-    'Decoction: 9–30 g (often 15 g) dried sliced root per 500 ml, simmered 30–60 min. Extract (1:5, 50% EtOH): 30–60 drops, 2–3× daily. Long-cycle Qi-building protocols 8–24 weeks. Wild-foraged dosed slightly lower (more concentrated).',
+    'Decoction: 9–30 g (often 15 g) dried sliced root per 500 ml, simmered 30–60 min. Extract (1:3, 50% EtOH): 18–36 drops, 2–3× daily. Long-cycle Qi-building protocols 8–24 weeks. Wild-foraged dosed slightly lower (more concentrated).',
   spiritual_layer:
     'Wild Huang Qi is the yellow root that holds the earth and lifts the Qi. She teaches that protection is something you build slowly — that the strongest immunity is not reactive but already standing. She whispers: I am the field that holds you. I lift what is collapsed. I make you ready before the wind comes.',
   best_preparation:
@@ -12666,7 +12666,7 @@ const HERBS = [
     'Drug interactions: MAOIs/SSRIs (theoretical), hepatic drugs (caution)',
   ],
   dosage_range:
-    'Decoction: 6–15 g dried whole plant per 500 ml, simmered 20 min. Extract (1:5, 45% EtOH): 20–40 drops, 2–3× daily. Topical poultice for wounds.',
+    'Decoction: 6–15 g dried whole plant per 500 ml, simmered 20 min. Extract (1:3, 45% EtOH): 12–24 drops, 2–3× daily. Topical poultice for wounds.',
   spiritual_layer:
     'Phyllodium is the SE Asian forest understorey medicine — the quiet leaf at the foot of larger trees that knows how to clear the liver and steady the breath. She teaches that not all powerful medicines announce themselves loudly. Many of the strongest ones live close to the ground, waiting to be recognized. She whispers: I am the quiet leaf. I clear what is held in the liver. I help the spirit breathe.',
   best_preparation:
@@ -12737,7 +12737,7 @@ const HERBS = [
     'Drug interactions: sedatives, SSRIs — practitioner oversight',
   ],
   dosage_range:
-    'Traditional: 250 mg – 1 g dried powdered root chewed or whisked with water into foam at sunrise on an empty stomach, then slept on for incubation. Extract (1:5, 30% EtOH): 10–20 drops at bedtime. Use cyclically (3 nights on, 4 nights off) rather than continuously.',
+    'Traditional: 250 mg – 1 g dried powdered root chewed or whisked with water into foam at sunrise on an empty stomach, then slept on for incubation. Extract (1:3, 30% EtOH): 6–12 drops at bedtime. Use cyclically (3 nights on, 4 nights off) rather than continuously.',
   spiritual_layer:
     'Undlela Zimhlophe — "the white paths" — is the dream-teacher of the Xhosa diviner lineage. She opens the road between waking and ancestor, between confusion and answer. To take her is to enter ceremony. She teaches that the dream world has its own intelligence and that listening there is a discipline. She whispers: I open the white path. Walk it with respect. The ancestors are watching what you do with the medicine.',
   best_preparation:
@@ -12813,7 +12813,7 @@ const HERBS = [
     'Drug interactions: anticoagulants (monitor), antihypertensives (mild additive), CYP3A4 substrates (caution at high doses)',
   ],
   dosage_range:
-    'OPC extract (95% standardised): 100–300 mg daily, divided. Extract (1:5, 65% EtOH from defatted seed): 30–60 drops, 2× daily. Grape seed oil for culinary / topical use freely. Cycle 12 weeks on, 2–4 weeks off for high-dose protocols.',
+    'OPC extract (95% standardised): 100–300 mg daily, divided. Extract (1:3, 65% EtOH from defatted seed): 18–36 drops, 2× daily. Grape seed oil for culinary / topical use freely. Cycle 12 weeks on, 2–4 weeks off for high-dose protocols.',
   spiritual_layer:
     'The grape seed is the tightly-held jewel inside the wine. She teaches that the most concentrated medicine lives in the smallest, hardest place — that the seed survives the crushing and carries the next generation. She whispers: I am what remains after the wine. I protect the vessel from within. I make the small blood vessels strong enough for joy.',
   best_preparation:
@@ -12904,7 +12904,7 @@ const HERBS = [
       'Drug interactions: Immunosuppressants; antidiabetics; hepatotoxic drugs; antihypertensives',
     ],
     dosage_range:
-      'API dose: 3 to 6 g stem powder or 20 to 30 g for decoction. Fresh stem juice: 10 to 20 ml. Guduchi Sattva: 1 to 2 g. Tincture (practitioner range): 1:5 in 40 to 50% ethanol for diterpenoids and alkaloids; consider a dual extraction (hot water decoction of the marc added back) if the polysaccharide fraction matters. 2 to 5 ml daily. Courses of 4 to 12 weeks with breaks; monitor liver function with long use.',
+      'API dose: 3 to 6 g stem powder or 20 to 30 g for decoction. Fresh stem juice: 10 to 20 ml. Guduchi Sattva: 1 to 2 g. Tincture (practitioner range): 1:3 in 40 to 50% ethanol for diterpenoids and alkaloids; consider a dual extraction (hot water decoction of the marc added back) if the polysaccharide fraction matters. 1.2 to 3 ml daily. Courses of 4 to 12 weeks with breaks; monitor liver function with long use.',
     spiritual_layer:
       'Giloy roots itself wherever it touches — climbing, generous, almost impossible to kill. The medicine of the long return.',
     best_preparation:
@@ -13009,7 +13009,7 @@ const HERBS = [
       'Drug interactions: Lithium; diuretics and antihypertensives; digoxin; antidiabetics',
     ],
     dosage_range:
-      'API dose: 20 to 30 g whole plant for decoction. Powder in practice: 3 to 6 g daily. Punarnavasava: 15 to 30 ml with equal water after meals. Fresh leaf as a cooked vegetable. Tincture (practitioner range): 1:5 in 40 to 50% ethanol, 2 to 5 ml daily. Fluid effects within days; renal and liver support over weeks.',
+      'API dose: 20 to 30 g whole plant for decoction. Powder in practice: 3 to 6 g daily. Punarnavasava: 15 to 30 ml with equal water after meals. Fresh leaf as a cooked vegetable. Tincture (practitioner range): 1:3 in 40 to 50% ethanol, 1.2 to 3 ml daily. Fluid effects within days; renal and liver support over weeks.',
     spiritual_layer:
       'The plant that renews the body when the body has forgotten how to renew itself. Brings water back to its right path.',
     best_preparation:
@@ -13111,7 +13111,7 @@ const HERBS = [
       'Drug interactions: Phenytoin and antiepileptics (documented); sedatives; thyroid medication; antihypertensives',
     ],
     dosage_range:
-      'API dose: 3 to 8 g whole plant powder daily. Fresh juice: 10 to 20 ml. Syrup or ghee preparations per product. Tincture (practitioner range): 1:5 in 40 to 50% ethanol, 2 to 4 ml daily, often split with a larger evening dose for sleep. Calming effects within days; cognitive effects over 4 to 12 weeks.',
+      'API dose: 3 to 8 g whole plant powder daily. Fresh juice: 10 to 20 ml. Syrup or ghee preparations per product. Tincture (practitioner range): 1:3 in 40 to 50% ethanol, 1.2 to 2.4 ml daily, often split with a larger evening dose for sleep. Calming effects within days; cognitive effects over 4 to 12 weeks.',
     spiritual_layer:
       'Conch-flower — said to open the inner chamber where memory and intuition meet. The student\'s herb.',
     best_preparation:
@@ -13217,7 +13217,7 @@ const HERBS = [
       'Drug interactions: Antihypertensives, beta blockers, nitrates, anticoagulants (monitor); separate from iron and oral drugs',
     ],
     dosage_range:
-      'API dose: 3 to 6 g bark powder daily. Clinical trials: commonly 500 mg extract two to three times daily. Ksheerapaka (classical milk decoction): 3 to 5 g bark powder simmered in 100 ml milk plus 100 ml water until reduced to about 100 ml, strained, taken warm once or twice daily. Tincture (practitioner range): 1:5 in 45 to 60% ethanol, 2 to 4 ml daily. Effects build over 4 to 12 weeks.',
+      'API dose: 3 to 6 g bark powder daily. Clinical trials: commonly 500 mg extract two to three times daily. Ksheerapaka (classical milk decoction): 3 to 5 g bark powder simmered in 100 ml milk plus 100 ml water until reduced to about 100 ml, strained, taken warm once or twice daily. Tincture (practitioner range): 1:3 in 45 to 60% ethanol, 1.2 to 2.4 ml daily. Effects build over 4 to 12 weeks.',
     spiritual_layer:
       'The warrior\'s tree — bark that holds the strength of the wood, given to the heart that grieves. Pain is metabolised back into capacity.',
     best_preparation:
@@ -13318,7 +13318,7 @@ const HERBS = [
       'Drug interactions: Antidiabetics (monitor); corticosteroids (theoretical)',
     ],
     dosage_range:
-      'API dose: 10 to 20 ml fresh stem juice (Svarasa) or 3 to 6 g dried stem powder. Standardized extracts in trials: 300 to 1000 mg daily. Traditional food: young stems cooked as a chutney or stir fry with ghee and spices. Tincture (practitioner range): 1:5 in 45 to 55% ethanol, 2 to 5 ml daily. Bone and tendon effects over 3 to 12 weeks.',
+      'API dose: 10 to 20 ml fresh stem juice (Svarasa) or 3 to 6 g dried stem powder. Standardized extracts in trials: 300 to 1000 mg daily. Traditional food: young stems cooked as a chutney or stir fry with ghee and spices. Tincture (practitioner range): 1:3 in 45 to 55% ethanol, 1.2 to 3 ml daily. Bone and tendon effects over 3 to 12 weeks.',
     spiritual_layer:
       'The plant that knits the broken back together. Stem with four faces, four directions, four winds — what is structured can be re-structured.',
     best_preparation:
@@ -13418,7 +13418,7 @@ const HERBS = [
       'Drug interactions: NSAIDs (additive); anticoagulants and immunosuppressants (theoretical); CYP substrates (unclear)',
     ],
     dosage_range:
-      'API dose: 1 to 3 g resin daily. Standardized extracts in trials: 100 to 250 mg (AKBA enriched, e.g. 30% AKBA) or 300 to 400 mg (65% boswellic acids) two to three times daily. Tincture (practitioner range): 1:5 in 90 to 95% ethanol; boswellic acids are lipophilic and the gum fraction will not dissolve. Take with a fat containing meal to improve AKBA uptake. Joint benefit builds over 4 to 8 weeks; some trials show effects from 1 to 2 weeks.',
+      'API dose: 1 to 3 g resin daily. Standardized extracts in trials: 100 to 250 mg (AKBA enriched, e.g. 30% AKBA) or 300 to 400 mg (65% boswellic acids) two to three times daily. Tincture (practitioner range): 1:3 in 90 to 95% ethanol; boswellic acids are lipophilic and the gum fraction will not dissolve. Take with a fat containing meal to improve AKBA uptake. Joint benefit builds over 4 to 8 weeks; some trials show effects from 1 to 2 weeks.',
     spiritual_layer:
       'The tree\'s wound becomes the tree\'s medicine. Resin that has felt injury offers itself for the joints of others.',
     best_preparation:
@@ -13518,7 +13518,7 @@ const HERBS = [
       'Drug interactions: NSAIDs and steroids (additive); anticoagulants (theoretical)',
     ],
     dosage_range:
-      'API dose: 25 to 50 g leaf for decoction. In formulas: Rasna Panchaka or Rasnadi Kvatha, typically 30 to 60 ml decoction twice daily before meals. Tincture (practitioner range): 1:5 in 45 to 55% ethanol, 2 to 4 ml daily. Joint effects over 2 to 8 weeks.',
+      'API dose: 25 to 50 g leaf for decoction. In formulas: Rasna Panchaka or Rasnadi Kvatha, typically 30 to 60 ml decoction twice daily before meals. Tincture (practitioner range): 1:3 in 45 to 55% ethanol, 1.2 to 2.4 ml daily. Joint effects over 2 to 8 weeks.',
     spiritual_layer:
       'Wind-medicine. Where the nervous system has been blown into pain, Rasna brings the wind home.',
     best_preparation:
@@ -13684,7 +13684,7 @@ const HERBS = [
       'Drug interactions: Antidiabetic drugs and insulin (monitor); iron and oral drugs (binding)',
     ],
     dosage_range:
-      'API dose: 50 to 100 g heartwood for decoction (classical, large amounts reduced by boiling). Powder in practice: 2 to 4 g daily. Tumbler water: fill the Vijaysar cup at night, drink in the morning. ICMR trial used a flexible dose of heartwood. Tincture (practitioner range): 1:5 in 40 to 50% ethanol, 2 to 4 ml daily. Glucose effects over 4 to 12 weeks.',
+      'API dose: 50 to 100 g heartwood for decoction (classical, large amounts reduced by boiling). Powder in practice: 2 to 4 g daily. Tumbler water: fill the Vijaysar cup at night, drink in the morning. ICMR trial used a flexible dose of heartwood. Tincture (practitioner range): 1:3 in 40 to 50% ethanol, 1.2 to 2.4 ml daily. Glucose effects over 4 to 12 weeks.',
     spiritual_layer:
       'Wood that drinks the water and gives the sweetness back as balance. A relationship the body has to remember daily.',
     best_preparation:
@@ -13785,7 +13785,7 @@ const HERBS = [
       'Drug interactions: Hormonal and dopaminergic drugs (theoretical); NSAIDs (additive); CNS drugs (theoretical)',
     ],
     dosage_range:
-      'API dose: 10 to 20 ml fresh leaf juice (Svarasa). Ghana Vati (concentrated extract): per product, typically 250 to 500 mg two to three times daily. Tincture (practitioner range): fresh leaf 1:2 in 90% ethanol or dried leaf 1:5 in 60 to 70% ethanol to keep the volatile oil, 1 to 3 ml. External: Nirgundi Taila massage, leaf steam, hot leaf bolus fomentation. Topical relief in hours; oral pain effects over 1 to 4 weeks.',
+      'API dose: 10 to 20 ml fresh leaf juice (Svarasa). Ghana Vati (concentrated extract): per product, typically 250 to 500 mg two to three times daily. Tincture (practitioner range): fresh leaf 1:2 in 90% ethanol, 1 to 3 ml; or dried leaf 1:3 in 60 to 70% ethanol to keep the volatile oil, 0.6 to 1.8 ml. External: Nirgundi Taila massage, leaf steam, hot leaf bolus fomentation. Topical relief in hours; oral pain effects over 1 to 4 weeks.',
     spiritual_layer:
       'The hot leaf that pulls cold and stagnation out through the skin. Old fire returns to the surface to release.',
     best_preparation:
@@ -13883,7 +13883,7 @@ const HERBS = [
       'Drug interactions: Iron and oral drugs (binding, separate); anticoagulants (opposing intent)',
     ],
     dosage_range:
-      'API dose: 20 to 30 g bark for decoction (reduced to about a quarter). Ashokarishta (fermented): 15 to 30 ml with equal water after meals. Powder: 3 to 6 g daily. Tincture (practitioner range): 1:5 in 35 to 45% ethanol, 2 to 5 ml daily, often from mid cycle through menstruation. Assess over 2 to 3 cycles.',
+      'API dose: 20 to 30 g bark for decoction (reduced to about a quarter). Ashokarishta (fermented): 15 to 30 ml with equal water after meals. Powder: 3 to 6 g daily. Tincture (practitioner range): 1:3 in 35 to 45% ethanol, 1.2 to 3 ml daily, often from mid cycle through menstruation. Assess over 2 to 3 cycles.',
     spiritual_layer:
       'The "sorrowless" tree — said to bloom when a virtuous woman touches it. Holds grief stored in the pelvic bowl.',
     best_preparation:
@@ -13981,7 +13981,7 @@ const HERBS = [
       'Drug interactions: Iron and oral drugs (binding); hormonal therapies (theoretical)',
     ],
     dosage_range:
-      'API dose: 3 to 5 g bark powder, or 20 to 30 g for decoction. Lodhrasava: 15 to 30 ml with equal water after meals. Eyewash: well strained, cooled, freshly made decoction only. Tincture (practitioner range): 1:5 in 35 to 45% ethanol, 2 to 4 ml. Assess over 2 to 3 cycles for gynaecological use.',
+      'API dose: 3 to 5 g bark powder, or 20 to 30 g for decoction. Lodhrasava: 15 to 30 ml with equal water after meals. Eyewash: well strained, cooled, freshly made decoction only. Tincture (practitioner range): 1:3 in 35 to 45% ethanol, 1.2 to 2.4 ml. Assess over 2 to 3 cycles for gynaecological use.',
     spiritual_layer:
       'The astringent gather-back of what is leaking. Heat that has flooded the tissues finds its container again.',
     best_preparation:
@@ -14078,7 +14078,7 @@ const HERBS = [
       'Drug interactions: Anticoagulants (opposing intent); separate from oral drugs',
     ],
     dosage_range:
-      'API dose: 1 to 3 g stamen powder daily. Traditional: 1 to 2 g with butter and sugar candy for bleeding piles. Tincture (practitioner range): 1:5 in 65 to 75% ethanol to capture the essential oil and coumarins, 1 to 2 ml. Effects on bleeding within days.',
+      'API dose: 1 to 3 g stamen powder daily. Traditional: 1 to 2 g with butter and sugar candy for bleeding piles. Tincture (practitioner range): 1:3 in 65 to 75% ethanol to capture the essential oil and coumarins, 0.6 to 1.2 ml. Effects on bleeding within days.',
     spiritual_layer:
       'The iron-flower that staunches the wound and cools the burn at the same time. Speed and grace.',
     best_preparation:
@@ -14320,7 +14320,7 @@ const HERBS = [
       'Drug interactions: Lithium; diuretics and antihypertensives; antidiabetics; hormone therapies (theoretical)',
     ],
     dosage_range:
-      'API dose (fruit): 3 to 6 g powder or 20 to 30 g for decoction. API dose (root): 20 to 30 g for decoction. Extracts in trials: commonly 250 to 750 mg standardized saponin extract daily. Tincture (practitioner range): 1:5 in 50 to 60% ethanol to capture the saponins, 2 to 5 ml daily. Urinary effects in days; reproductive and renal support over 4 to 12 weeks.',
+      'API dose (fruit): 3 to 6 g powder or 20 to 30 g for decoction. API dose (root): 20 to 30 g for decoction. Extracts in trials: commonly 250 to 750 mg standardized saponin extract daily. Tincture (practitioner range): 1:3 in 50 to 60% ethanol to capture the saponins, 1.2 to 3 ml daily. Urinary effects in days; reproductive and renal support over 4 to 12 weeks.',
     spiritual_layer:
       'The spiky fruit that pushes through the desert floor. Tenacity offered as a medicine for stuck Yang.',
     best_preparation:
@@ -14482,7 +14482,7 @@ const HERBS = [
       'Drug interactions: Iron and oral drugs (binding); antidiabetics (monitor)',
     ],
     dosage_range:
-      'API dose: 3 to 6 g powder. Throat: 1 to 2 g powder with honey, licked slowly. Triphala: 3 to 6 g of the three fruit blend at night in warm water. Tincture (practitioner range): 1:5 in 35 to 45% ethanol, 2 to 4 ml. Effects on mucus and bowel within days; tonic effects over weeks.',
+      'API dose: 3 to 6 g powder. Throat: 1 to 2 g powder with honey, licked slowly. Triphala: 3 to 6 g of the three fruit blend at night in warm water. Tincture (practitioner range): 1:3 in 35 to 45% ethanol, 1.2 to 2.4 ml. Effects on mucus and bowel within days; tonic effects over weeks.',
     spiritual_layer:
       'The fruit that helps the breath release what it has been holding. Voice returns to its proper register.',
     best_preparation:
@@ -14590,7 +14590,7 @@ const HERBS = [
       'Drug interactions: Propranolol and diltiazem (reduced absorption); CYP3A4 substrates (induction); anticoagulants; thyroid drugs; hormone therapies',
     ],
     dosage_range:
-      'API dose: 2 to 4 g of the drug (crude resin basis). In practice most use comes through tablets of purified guggul (Shodhita Guggulu) within formulas: 250 to 500 mg purified guggul two to three times daily after food. Standardized guggulipid extracts in trials: 25 to 50 mg guggulsterones daily. Tincture: oleo gum resins need high proof (85 to 95% ethanol) for guggulsterones and essential oil; 1:5, 1 to 2 ml; the gum fraction will not dissolve and leaves a sludge. Courses of 1 to 3 months with review.',
+      'API dose: 2 to 4 g of the drug (crude resin basis). In practice most use comes through tablets of purified guggul (Shodhita Guggulu) within formulas: 250 to 500 mg purified guggul two to three times daily after food. Standardized guggulipid extracts in trials: 25 to 50 mg guggulsterones daily. Tincture: oleo gum resins need high proof (85 to 95% ethanol) for guggulsterones and essential oil; 1:3, 0.6 to 1.2 ml; the gum fraction will not dissolve and leaves a sludge. Courses of 1 to 3 months with review.',
     spiritual_layer:
       'Sister resin to myrrh — twin medicines from different continents. Moves the blood where grief has settled into the body.',
     best_preparation:
@@ -14765,7 +14765,7 @@ const HERBS = [
       'Drug interactions: Anticoagulants (theoretical); colour based urine tests',
     ],
     dosage_range:
-      'API dose: 2 to 4 g of the drug daily. Decoction: 5 to 10 g simmered 20 minutes. Manjishthadi Kvatha or Brihanmanjishthadi Kvatha per formula. Pilot RCT delivered Manjistha as a standardized capsule. Tincture (practitioner range): 1:5 in 45 to 55% ethanol, 2 to 4 ml daily; the anthraquinone glycosides extract well at mid proof. Topical: powder with honey or rose water as a face mask. Skin effects over 6 to 12 weeks.',
+      'API dose: 2 to 4 g of the drug daily. Decoction: 5 to 10 g simmered 20 minutes. Manjishthadi Kvatha or Brihanmanjishthadi Kvatha per formula. Pilot RCT delivered Manjistha as a standardized capsule. Tincture (practitioner range): 1:3 in 45 to 55% ethanol, 1.2 to 2.4 ml daily; the anthraquinone glycosides extract well at mid proof. Topical: powder with honey or rose water as a face mask. Skin effects over 6 to 12 weeks.',
     spiritual_layer:
       'The red-rooted plant that follows the blood wherever it has stagnated. Old patterns are loosened and re-circulated.',
     best_preparation:
@@ -14863,7 +14863,7 @@ const HERBS = [
       'Drug interactions: Iron and oral drugs (binding); antidiabetics (monitor)',
     ],
     dosage_range:
-      'API dose: 20 to 30 g heartwood for decoction. Khadirarishta: 15 to 30 ml with equal water after meals. Powder: 1 to 3 g. Mouth: Khadiradi Gutika dissolved slowly, or a decoction gargle. Tincture (practitioner range): 1:5 in 30 to 45% ethanol, 2 to 4 ml. Skin effects over 4 to 12 weeks.',
+      'API dose: 20 to 30 g heartwood for decoction. Khadirarishta: 15 to 30 ml with equal water after meals. Powder: 1 to 3 g. Mouth: Khadiradi Gutika dissolved slowly, or a decoction gargle. Tincture (practitioner range): 1:3 in 30 to 45% ethanol, 1.2 to 2.4 ml. Skin effects over 4 to 12 weeks.',
     spiritual_layer:
       'The catechu — what the body has dampened with old pain dries under its presence. Skin returns to its proper boundary.',
     best_preparation:
@@ -15033,7 +15033,7 @@ const HERBS = [
       'Drug interactions: Antidiabetics; immunosuppressants; hepatotoxic drugs; fertility treatment',
     ],
     dosage_range:
-      'API dose (leaf): 1 to 3 g powder, or 10 to 20 ml decoction. API dose (bark): 2 to 4 g powder; bark decoction for external use. Tincture (practitioner range): 1:5 leaf in 45 to 60% ethanol, 1 to 3 ml, courses of 2 to 6 weeks. External: leaf decoction washes, leaf paste, diluted neem seed oil (never internal). Skin effects over 2 to 8 weeks.',
+      'API dose (leaf): 1 to 3 g powder, or 10 to 20 ml decoction. API dose (bark): 2 to 4 g powder; bark decoction for external use. Tincture (practitioner range): 1:3 leaf in 45 to 60% ethanol, 0.6 to 1.8 ml, courses of 2 to 6 weeks. External: leaf decoction washes, leaf paste, diluted neem seed oil (never internal). Skin effects over 2 to 8 weeks.',
     spiritual_layer:
       'The bitter that erases what is not the self. Where you have been colonised by foreign forces, Neem clears the boundary.',
     best_preparation:
@@ -15132,7 +15132,7 @@ const HERBS = [
       'Drug interactions: Chemotherapy (coordinate); diuretics (theoretical)',
     ],
     dosage_range:
-      'API dose: 20 to 30 g root for decoction. Powder: 3 to 6 g. Sarivadyasava: 15 to 30 ml with equal water after meals. Nannari syrup: 20 to 30 ml syrup diluted in 200 ml water or soda. Tincture (practitioner range): 1:5 in 50 to 60% ethanol to capture the aromatic benzaldehyde; for beverages, a hot water infusion then syrup preserves the vanilla character best. Effects over 2 to 8 weeks.',
+      'API dose: 20 to 30 g root for decoction. Powder: 3 to 6 g. Sarivadyasava: 15 to 30 ml with equal water after meals. Nannari syrup: 20 to 30 ml syrup diluted in 200 ml water or soda. Tincture (practitioner range): 1:3 in 50 to 60% ethanol to capture the aromatic benzaldehyde; for beverages, a hot water infusion then syrup preserves the vanilla character best. Effects over 2 to 8 weeks.',
     spiritual_layer:
       'Sweet root that hands the body back its cool — pleasure as medicine, the opposite of austerity.',
     best_preparation:
@@ -15330,7 +15330,7 @@ const HERBS = [
       'Drug interactions: CYP3A4 and CYP1A2 substrates (in vitro inhibition); antidiabetics; separate from oral drugs',
     ],
     dosage_range:
-      'API dose (fruit pulp): 3 to 6 g powder daily. API dose (root): 2 to 6 g powder. Traditional: unripe pulp roasted or dried, 5 to 10 g with jaggery or buttermilk for loose stools. Sherbet (ripe): pulp soaked in water, strained, lightly sweetened. Tincture (practitioner range): 1:5 in 30 to 40% ethanol, 2 to 4 ml; water forms usually suit this fruit better because of the mucilage and pectin. Acute gut effects in hours to days; tonic effects over weeks.',
+      'API dose (fruit pulp): 3 to 6 g powder daily. API dose (root): 2 to 6 g powder. Traditional: unripe pulp roasted or dried, 5 to 10 g with jaggery or buttermilk for loose stools. Sherbet (ripe): pulp soaked in water, strained, lightly sweetened. Tincture (practitioner range): 1:3 in 30 to 40% ethanol, 1.2 to 2.4 ml; water forms usually suit this fruit better because of the mucilage and pectin. Acute gut effects in hours to days; tonic effects over weeks.',
     spiritual_layer:
       'Three-leafed leaf, Trikuta — offering to Shiva, the three eyes returned. The astringent of devotion.',
     best_preparation:
@@ -15643,7 +15643,7 @@ const HERBS = [
     'Caution: Overly cooling combinations in Yang deficiency',
     'Drug interactions: Anticoagulants, immunosuppressants, diabetes meds — monitor closely',
   ],
-  dosage_range: 'Infusion: 2–4 g steeped in 80°C water for 10–15 mins, 2–3× daily. Extract (1:5, 40% EtOH): 30–60 drops, 2× daily. Powder: 1–3 g daily.',
+  dosage_range: 'Infusion: 2–4 g steeped in 80°C water for 10–15 mins, 2–3× daily. Extract (1:3, 40% EtOH): 18–36 drops, 2× daily. Powder: 1–3 g daily.',
   spiritual_layer: 'Jiaogulan is the Southern Ginseng, the quiet observer of the forest floor. She does not force energy; she uncovers it. She teaches the body the forgotten language of balance, finding the exact point between exhaustion and overstimulation. She whispers: I am the deep well. I cool the engine and sustain the spark. I offer endurance without the fire.',
   best_preparation: 'Exceptional as a standalone water infusion (steeped at 80°C to preserve delicate volatile compounds). For clinical tincture, a standard hydroethanolic percolation (40–50% EtOH) efficiently captures the water-soluble and partially lipid-soluble gypenosides.',
   caution_level: 'LOW', safe_pregnancy: false,
@@ -15704,7 +15704,7 @@ const HERBS = [
     'Caution: Asteraceae sensitivities, heavy blood-thinning herbs',
     'Drug interactions: NSAIDs, anticoagulants — monitor',
   ],
-  dosage_range: 'Freeze-dried leaf: 50–150 mg daily (standardized to 0.2% parthenolide). Tincture (1:5, 60% EtOH): 15–30 drops, 1–3× daily. Fresh leaf: 1–3 leaves daily.',
+  dosage_range: 'Freeze-dried leaf: 50–150 mg daily (standardized to 0.2% parthenolide). Tincture (1:3, 60% EtOH): 9–18 drops, 1–3× daily. Fresh leaf: 1–3 leaves daily.',
   spiritual_layer: 'Feverfew is the tension breaker. She addresses the heat that rises to the head when we refuse to let go of control. She teaches the blood to release its grip and the vessels to breathe. She whispers: I am the cooling wind through a tight room. Unclench the jaw, drop the shoulders, let the pressure fall to the earth.',
   best_preparation: 'Best processed as a fresh plant tincture (1:2 ratio, 75% EtOH) or cold maceration. Parthenolide is highly heat-sensitive; entirely avoid decoction or heating above 40°C during extraction to preserve the medicinal sesquiterpene lactones.',
   caution_level: 'HIGH', safe_pregnancy: false,
@@ -15760,7 +15760,7 @@ const HERBS = [
     'Caution: Heavy stacking with other profound cooling bitters in cold constitutions',
     'Drug interactions: Statins, diabetes medications — requires monitoring',
   ],
-  dosage_range: 'Standardized Extract (typically 5% cynarin): 300–600 mg, 1–3× daily before meals. Tincture (1:5, 40% EtOH): 20–40 drops, 3× daily. Leaf infusion: 2–3 g steeped 15 mins.',
+  dosage_range: 'Standardized Extract (typically 5% cynarin): 300–600 mg, 1–3× daily before meals. Tincture (1:3, 40% EtOH): 12–24 drops, 3× daily. Leaf infusion: 2–3 g steeped 15 mins.',
   spiritual_layer: 'Artichoke is the armored heart of the garden. She is the deep cleanser of resentment, targeting the liver where anger and unexpressed frustration stagnate. She teaches that to digest life fully, we must maintain the flow of our internal rivers. She whispers: I break down the heavy burdens. I encourage the gallbladder to release its stone. I turn the bitter into movement.',
   best_preparation: 'Standardized extracts provide the most clinical consistency for lipid management. For fluid extracts, use a hydroethanolic percolation (40–50% EtOH) to capture both the water-soluble chlorogenic acids and the less soluble flavonoids. Keep processing temperatures below 60°C to preserve enzymatic activity.',
   caution_level: 'MEDIUM',
@@ -15925,7 +15925,7 @@ const HERBS = [
     'Caution: Heavy stacking with extreme cold laxatives',
     'Drug interactions: Antihypertensives, statins',
   ],
-  dosage_range: 'Powder: 3 g daily for metabolic support. Decoction: 9–15 g (crushed before boiling). Extract (1:5, 40% EtOH): 30–60 drops, 2× daily.',
+  dosage_range: 'Powder: 3 g daily for metabolic support. Decoction: 9–15 g (crushed before boiling). Extract (1:3, 40% EtOH): 18–36 drops, 2× daily.',
   spiritual_layer: 'Cassia is the seed of clarity. It descends what is stuck and cools what is inflamed, clearing the fog from the eyes and the heat from the liver. It teaches that clear vision requires an unburdened system.',
   best_preparation: 'Dry-frying (roasting) the seeds prior to water decoction or hydroethanolic percolation reduces the harshness of the cold/laxative properties while unlocking a deep, nutty aromatic profile.',
   caution_level: 'LOW', safe_pregnancy: false,
@@ -16608,7 +16608,7 @@ const HERBS = [
     'Caution: Overly warming formulas in severe Yin deficiency',
     'Drug interactions: Antihypertensives (monitor BP closely)',
   ],
-  dosage_range: 'Decoction: 9–15 g of bark daily (requires long boiling). Extract (1:5, 40% EtOH): 30–60 drops, 2–3× daily. Standardized Powder: 1–3 g daily.',
+  dosage_range: 'Decoction: 9–15 g of bark daily (requires long boiling). Extract (1:3, 40% EtOH): 18–36 drops, 2–3× daily. Standardized Powder: 1–3 g daily.',
   spiritual_layer: 'Eucommia is the backbone of the forest. When the bark is broken, silver threads of liquid rubber hold the two halves together. It is the medicine of resilience, of bending without breaking. It teaches structural integrity. She whispers: I reinforce the pillars. I hold the joints together. Stand tall.',
   best_preparation: 'The bark is traditionally dry-fried (often with a saltwater solution) to direct its actions into the Kidney meridian. For extraction, a long water decoction (95°C for 60 mins) pulls the water-soluble iridoids and lignans. Hydroethanolic tinctures at 40% EtOH are also highly effective.',
   caution_level: 'LOW',
@@ -16666,7 +16666,7 @@ const HERBS = [
     'Caution: Heavy laxatives (Rhubarb, Cassia)',
     'Drug interactions: Anticoagulants, CYP3A4-metabolized drugs',
   ],
-  dosage_range: 'Standardized Extract (often 50–98% trans-resveratrol): 200–1000 mg daily. Raw root decoction: 9–15 g (simmered 45 mins). Tincture (1:5, 60% EtOH): 30–60 drops, 3× daily.',
+  dosage_range: 'Standardized Extract (often 50–98% trans-resveratrol): 200–1000 mg daily. Raw root decoction: 9–15 g (simmered 45 mins). Tincture (1:3, 60% EtOH): 18–36 drops, 3× daily.',
   spiritual_layer: 'Knotweed is the ultimate biological opportunist, capable of breaking through concrete and thriving in toxic, destroyed soils. It is the medicine of invasive resilience. She teaches how to reclaim territory from the deepest, most systemic infections. She whispers: I break the stone. I occupy the wasteland. I will not be eradicated.',
   best_preparation: 'For clinical resveratrol loading, a highly standardized extract is required. For whole-plant synergy (as used in Lyme protocols), a hydroethanolic percolation at 60% EtOH captures both the water-soluble polydatin and the alcohol-soluble resveratrol and emodin.',
   caution_level: 'MEDIUM', safe_pregnancy: false,
@@ -17020,7 +17020,7 @@ const HERBS = [
     'Caution: Over-drying without demulcents',
     'Drug interactions: CYP3A4/CYP2D6 substrates (CRITICAL)',
   ],
-  dosage_range: 'Standardized Extract (typically 5% hydrastine): 250–500 mg, 3× daily. Tincture (1:5, 60–70% EtOH): 20–40 drops, 3× daily. Strictly short-term acute use, 7–14 days.',
+  dosage_range: 'Standardized Extract (typically 5% hydrastine): 250–500 mg, 3× daily. Tincture (1:3, 60–70% EtOH): 12–24 drops, 3× daily. Strictly short-term acute use, 7–14 days.',
   spiritual_layer: 'Goldenseal is the bitter medicine of the deep woods. It is an endangered elder that demands respect. It acts as the boundary keeper of the body’s wet borders, shocking stagnant, infected swamps back into tight, clean rivers. She whispers: I pull the rot from the wall. I dry the swamp. I do not stay long.',
   best_preparation: 'Because the alkaloids are poorly water-soluble, hydroethanolic tincturing at 60–75% EtOH is far superior to water decoction for acute antimicrobial use. Due to severe ecological overharvesting, ONLY purchase cultivated roots — never wildcrafted.',
   caution_level: 'HIGH', safe_pregnancy: false,
@@ -17305,7 +17305,7 @@ const HERBS = [
     'Caution: Heavy astringents, iron-rich herbs',
     'Drug interactions: Mineral supplements, alkaloid pharmaceuticals',
   ],
-  dosage_range: 'Decoction: 2–3 g of crushed rhizome boiled 15 mins. Tincture (1:5, 40–50% EtOH): 10–30 drops, up to 4× daily for acute diarrhea. Mouthwash/gargle: 30 drops of tincture in warm water.',
+  dosage_range: 'Decoction: 2–3 g of crushed rhizome boiled 15 mins. Tincture (1:3, 40–50% EtOH): 6–18 drops, up to 4× daily for acute diarrhea. Mouthwash/gargle: 18 drops of tincture in warm water.',
   spiritual_layer: 'Tormentil is the emergency brake. It is the medicine of absolute containment, used when the body’s boundaries have failed and the vital fluids are pouring out. It teaches the power of contraction. She whispers: I close the open gates. I pull the tissue back together. I stop the leak.',
   best_preparation: 'For maximum astringency, hydroethanolic extraction at 40–50% EtOH or cold maceration over several weeks pulls the tannin payload while preserving the delicate flavonoids that boiling would destroy. Given its extreme dryness, liquid extracts should always be diluted in water before administration.',
   caution_level: 'MEDIUM', safe_pregnancy: false,
@@ -17491,7 +17491,7 @@ const HERBS = [
     'Caution: Over-clearing in depleted, cold constitutions',
     'Drug interactions: Chemotherapeutics (requires expert management)',
   ],
-  dosage_range: 'TCM Decoction: 15–60 g daily, often dosed very high in oncological settings. Extract (1:5, 40% EtOH): 40–60 drops, 3× daily. Must be cycled or paired with Spleen-protecting herbs.',
+  dosage_range: 'TCM Decoction: 15–60 g daily, often dosed very high in oncological settings. Extract (1:3, 40% EtOH): 24–36 drops, 3× daily. Must be cycled or paired with Spleen-protecting herbs.',
   spiritual_layer: 'Hedyotis is the snake-needle grass. It grows low, wild, and untamed, seeking out the darkest, most venomous heat in the body. It is the medicine of deep extraction, drawing out the toxins the body has walled off. She whispers: I find the hidden venom. I break the hardened masses. I pull the heat from the deepest marrow.',
   best_preparation: 'A long water decoction at 95°C for 45–60 minutes is the clinical standard, extracting the iridoids and polysaccharides that carry the immune and oncological action. Hydroethanolic tinctures at 40–50% EtOH are effective for the triterpenes.',
   caution_level: 'HIGH', safe_pregnancy: false,
@@ -17650,7 +17650,7 @@ const HERBS = [
     'Caution: Warming tonics that neutralise its effect',
     'Drug interactions: Anticoagulants (mild observation)',
   ],
-  dosage_range: 'TCM Decoction: 9–15 g of dried buds daily. Tincture (1:5, 40–50% EtOH): 30–60 drops, 3–4× daily during acute infection. Infusion: 3–6 g steeped in hot water.',
+  dosage_range: 'TCM Decoction: 9–15 g of dried buds daily. Tincture (1:3, 40–50% EtOH): 18–36 drops, 3–4× daily during acute infection. Infusion: 3–6 g steeped in hot water.',
   spiritual_layer: 'Honeysuckle is the sweet breath of the cool morning. Unlike the harsh bitters that destroy heat, Honeysuckle coaxes the heat out through the skin with grace and aroma. It teaches the medicine of gentle extraction. She whispers: I open the pores. I breathe out the fire. I soothe the burning throat with the memory of spring.',
   best_preparation: 'Because the medicine leans on aromatic volatile oils alongside the chlorogenic acid, decoctions must be short. Do not boil Honeysuckle longer than 10–15 minutes, or simply steep at 90°C — beyond that the antiviral aromatics evaporate and efficacy plummets.',
   caution_level: 'LOW',
@@ -17942,7 +17942,7 @@ const HERBS = [
     'Caution: Heavy laxatives, Diuretics',
     'Drug interactions: Digoxin (CRITICAL), Potassium-wasting diuretics',
   ],
-  dosage_range: 'Decoction of AGED bark: 1–2 g steeped in hot water, taken before bed. Tincture (1:5, 40% EtOH): 10–30 drops. Strictly acute, short-term use — 7 days maximum.',
+  dosage_range: 'Decoction of AGED bark: 1–2 g steeped in hot water, taken before bed. Tincture (1:3, 40% EtOH): 6–18 drops. Strictly acute, short-term use — 7 days maximum.',
   spiritual_layer: 'Buckthorn is the harsh evictor. It does not ask the body to release; it demands it. It teaches the necessity of letting go of toxic accumulation, and warns that violent clearing always costs the body’s reserves. She whispers: I will break the dam. I will empty the vessel. But do not rely on my violence.',
   best_preparation: 'The bark MUST be aged a minimum of one year in open air to oxidise the toxic anthrones, or artificially aged by heating at 100°C for one hour. For extraction, a hot water decoction at 95°C pulls the glycosides. Always formulate with Fennel or Ginger.',
   caution_level: 'HIGH', safe_pregnancy: false,
@@ -18075,7 +18075,7 @@ const HERBS = [
     'Caution: Heavy astringents, iron-rich herbs',
     'Drug interactions: Mineral supplements, alkaloid drugs',
   ],
-  dosage_range: 'Decoction: 1–2 g of root bark simmered 20 mins. Tincture (1:5, 60% EtOH): 10–30 drops. Gargle: 30 drops of tincture in warm water. Avoid mega-dosing — the emetic threshold is not far above the therapeutic one.',
+  dosage_range: 'Decoction: 1–2 g of root bark simmered 20 mins. Tincture (1:3, 60% EtOH): 6–18 drops. Gargle: 18 drops of tincture in warm water. Avoid mega-dosing — the emetic threshold is not far above the therapeutic one.',
   spiritual_layer: 'Bayberry is the warming vice. It is the medicine of absolute tension, used when the body has become too relaxed, too cold, and is leaking its vital fluids. It teaches the necessity of boundaries and heat. She whispers: I pull the slack walls tight. I drive the warm blood to the frozen surface. I close the open wounds.',
   best_preparation: 'For oral washes or systemic astringency, a hydroethanolic extract at 60% EtOH captures both the lipophilic triterpenes and the tannins. Water decoction pulls the tannins efficiently but leaves some of the circulatory stimulants behind. Always dilute liquid extracts in water before taking.',
   caution_level: 'MEDIUM', safe_pregnancy: false,
@@ -18211,7 +18211,7 @@ const HERBS = [
       'Drug interactions: Anticoagulants and antihypertensives (theoretical, extract doses only); acid suppressants (opposing intent)',
     ],
     dosage_range:
-      'API dose: 3 to 6 g of powdered fruit daily. Ajwain water (Ajwain arka style): 1 teaspoon seed simmered 5 minutes in 250 ml water, sip after meals. Tincture (practitioner range): 1:5 in 70 to 80% ethanol (the volatile oil needs a high proof menstruum), 0.5 to 2 ml after meals. Chewed: a pinch of seed with rock salt for acute bloating. Effects are fast, often within 30 to 60 minutes.',
+      'API dose: 3 to 6 g of powdered fruit daily. Ajwain water (Ajwain arka style): 1 teaspoon seed simmered 5 minutes in 250 ml water, sip after meals. Tincture (practitioner range): 1:3 in 70 to 80% ethanol (the volatile oil needs a high proof menstruum), 0.3 to 1.2 ml after meals. Chewed: a pinch of seed with rock salt for acute bloating. Effects are fast, often within 30 to 60 minutes.',
     spiritual_layer:
       'Ajwain is the ember kept alive in the kitchen, the spark a grandmother drops into hot ghee so the whole house smells of warmth. She does not negotiate with stagnation. She burns through heaviness, splits the cold open and gets things moving again. She teaches that digestion is not only of food but of everything we swallow without chewing: words, days, feelings. She is small and ordinary and completely fearless. She whispers: I light what has gone out. I clear what is stuck. My fire is my own. I am ready to take in the world again.',
     best_preparation:
@@ -18310,7 +18310,7 @@ const HERBS = [
       'Drug interactions: Thyroid medication; diuretics and lithium (theoretical); CNS depressants',
     ],
     dosage_range:
-      'API dose: 10 to 20 g for decoction. Within formulas (Pushyanuga Curna and similar): per formula dose. Tincture (practitioner range): 1:5 in 35 to 45% ethanol, 1 to 3 ml, short courses. External: fresh leaf paste on wounds. Short term use preferred given mimosine; effects on bleeding and stool within days.',
+      'API dose: 10 to 20 g for decoction. Within formulas (Pushyanuga Curna and similar): per formula dose. Tincture (practitioner range): 1:3 in 35 to 45% ethanol, 0.6 to 1.8 ml, short courses. External: fresh leaf paste on wounds. Short term use preferred given mimosine; effects on bleeding and stool within days.',
     spiritual_layer:
       'Lajjalu folds her leaves the moment she is touched, then slowly opens again when she feels safe. She is the medicine of the sensitive one, the person who closes to protect and then risks opening. She does not shame the flinch. She honours it and teaches the way back. She whispers: It is safe to close. It is safe to open again. My sensitivity is intelligence, not weakness.',
     best_preparation:

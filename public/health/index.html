@@ -60,13 +60,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
 .source-desc{font-size:12px;color:var(--md);line-height:1.5;}
 .source-grade{font-family:var(--fm);font-size:7px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px;display:inline-block;margin-top:7px;}
 /* Frequency section */
-.freq-section{margin-bottom:44px;padding:22px 22px;background:rgba(168,143,224,.04);border:0.5px solid rgba(168,143,224,.2);border-radius:12px;}
-.freq-title{font-family:var(--fm);font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:#A88FE0;margin-bottom:8px;}
-.freq-blurb{font-size:13px;color:var(--m);line-height:1.65;opacity:.85;margin-bottom:16px;max-width:58ch;}
-.freq-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px;}
-.freq-card{background:var(--s2);border:0.5px solid rgba(168,143,224,.2);border-radius:7px;padding:9px 12px;display:flex;justify-content:space-between;align-items:center;}
-.freq-herb{font-family:var(--fd);font-style:italic;font-size:14px;color:var(--ml);}
-.freq-val{font-family:var(--fm);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:#C5B5F5;}
+.footnote{margin:40px 0 8px;padding:16px 18px;border-top:0.5px solid rgba(201,184,148,.16);max-width:72ch;}.footnote-title{font-family:var(--fm);font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--md);margin-bottom:8px;}.footnote p{font-size:12.5px;line-height:1.7;color:var(--md);}
 /* Case study template */
 .case-section{margin-bottom:44px;}
 .case-title{font-family:var(--fm);font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:var(--md);margin-bottom:14px;}
@@ -232,7 +226,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
   <div class="case-template">
     <div class="case-template-title">Documenting outcomes.</div>
     <div class="case-field"><span class="case-key">Client profile</span><span class="case-val">Age, sex, chief complaint, relevant history. Anonymised. Duration of symptoms.</span></div>
-    <div class="case-field"><span class="case-key">Formula</span><span class="case-val">Herbs, extraction method, ratio, alcohol %, dose, and frequency. E.g.: Reishi (D, 1:5), Ashwagandha (T, 55%, 1:5), Bacopa (T, 50%, 1:5) — 2ml each in 200ml water, 2× daily.</span></div>
+    <div class="case-field"><span class="case-key">Formula</span><span class="case-val">Herbs, extraction method, ratio, alcohol %, dose, and frequency. E.g.: Reishi (D, 1:3), Ashwagandha (T, 55%, 1:3), Bacopa (T, 50%, 1:3) — 1.2 ml each in 200 ml water, 2× daily.</span></div>
     <div class="case-field"><span class="case-key">Evidence basis</span><span class="case-val">Grade each herb in the formula (A/B/C/D). Cite specific RCTs or mechanisms. This is your informed consent documentation.</span></div>
     <div class="case-field"><span class="case-key">Week 2 check-in</span><span class="case-val">Subjective response, any adverse effects, compliance. Adjust dose if needed. Most adaptogenic herbs require 4–12 weeks for full effect.</span></div>
     <div class="case-field"><span class="case-key">Week 6 outcome</span><span class="case-val">Standardised outcome measure if possible (PHQ-9 for mood, VAS for pain, etc.). Document any changes to formula.</span></div>
@@ -242,28 +236,6 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
   </div>
 </div>
 
-<!-- Biofrequency section -->
-<div class="freq-section">
-  <div class="freq-title">⟡ Biofrequency of aromatic plants</div>
-  <p class="freq-blurb">Measured vibrational frequencies of essential-oil-bearing plants. These measurements represent the electromagnetic field frequency associated with each plant's volatile chemistry. Higher frequency generally correlates with greater aromatic complexity and broader bioactivity spectrum. Rose at 320 MHz — the highest known — correlates with its extraordinary diversity of bioactive compounds.</p>
-  <div class="freq-grid">
-    <div class="freq-card"><span class="freq-herb">Rose</span><span class="freq-val">320 MHz</span></div>
-    <div class="freq-card"><span class="freq-herb">Frankincense</span><span class="freq-val">147 MHz</span></div>
-    <div class="freq-card"><span class="freq-herb">Lavender</span><span class="freq-val">118 MHz</span></div>
-    <div class="freq-card"><span class="freq-herb">Chamomile</span><span class="freq-val">105 MHz</span></div>
-    <div class="freq-card"><span class="freq-herb">Myrrh</span><span class="freq-val">105 MHz</span></div>
-    <div class="freq-card"><span class="freq-herb">Rosemary</span><span class="freq-val">102 MHz</span></div>
-    <div class="freq-card"><span class="freq-herb">Juniper</span><span class="freq-val">98 MHz</span></div>
-    <div class="freq-card"><span class="freq-herb">Sandalwood</span><span class="freq-val">96 MHz</span></div>
-    <div class="freq-card"><span class="freq-herb">Tea Tree</span><span class="freq-val">92 MHz</span></div>
-    <div class="freq-card"><span class="freq-herb">Jasmine</span><span class="freq-val">80 MHz</span></div>
-    <div class="freq-card"><span class="freq-herb">Oregano</span><span class="freq-val">78 MHz</span></div>
-    <div class="freq-card"><span class="freq-herb">Peppermint</span><span class="freq-val">78 MHz</span></div>
-    <div class="freq-card"><span class="freq-herb">Lemon</span><span class="freq-val">52 MHz</span></div>
-    <div class="freq-card"><span class="freq-herb">Eucalyptus</span><span class="freq-val">52 MHz</span></div>
-    <div class="freq-card"><span class="freq-herb">Holy Basil</span><span class="freq-val">52 MHz</span></div>
-  </div>
-</div>
 
 <!-- Water target list -->
 <div style="margin-bottom:44px;padding:20px 22px;background:rgba(79,168,224,.04);border:0.5px solid rgba(79,168,224,.2);border-radius:12px;">
@@ -297,6 +269,13 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
     <span style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(79,168,224,.08);border:0.5px solid rgba(79,168,224,.25);color:#A6D5F2">Zhu Ling</span>
   </div>
 </div>
+
+<!-- Footnote · the biofrequency figures were removed on 2026-09-27 -->
+<aside class="footnote" id="note-biofrequency" aria-labelledby="noteBioTitle">
+  <div class="footnote-title" id="noteBioTitle">A note on &ldquo;biofrequency&rdquo;</div>
+  <p>Earlier versions of this page listed a &ldquo;biofrequency&rdquo; in megahertz for aromatic plants &mdash; rose at 320&nbsp;MHz, frankincense at 147, lavender at 118. We have taken those numbers down. They circulate widely in essential-oil marketing and go back to a frequency-monitor reading from the early 1990s whose device and method were never published for anyone to test. No peer-reviewed study has reproduced them, and a plant has no &ldquo;frequency in megahertz&rdquo; that anyone has been able to measure. We would rather show you nothing than a number we cannot stand behind.</p>
+</aside>
+
 
 <div class="foot">
   <div style="font-family:var(--fm);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--md)">Fungai Art · Health Intelligence</div>

@@ -110,13 +110,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
 .eth-card-dual{color:#A6D5F2;}
 .eth-card-water{color:#88BAC8;}
 /* Frequency table */
-.freq-section{margin-bottom:36px;padding:18px 20px;background:rgba(168,143,224,.04);border:0.5px solid rgba(168,143,224,.2);border-radius:12px;}
-.freq-title{font-family:var(--fm);font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:#A88FE0;margin-bottom:8px;}
-.freq-sub{font-size:12.5px;color:var(--m);line-height:1.6;opacity:.82;margin-bottom:14px;}
-.freq-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:6px;}
-.freq-card{background:var(--s2);border:0.5px solid rgba(168,143,224,.2);border-radius:6px;padding:8px 11px;display:flex;justify-content:space-between;align-items:center;}
-.freq-herb{font-family:var(--fd);font-style:italic;font-size:13.5px;color:var(--ml);}
-.freq-val{font-family:var(--fm);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:#C5B5F5;}
+.footnote{margin:40px 0 8px;padding:16px 18px;border-top:0.5px solid rgba(201,184,148,.16);max-width:72ch;}.footnote-title{font-family:var(--fm);font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--md);margin-bottom:8px;}.footnote p{font-size:12.5px;line-height:1.7;color:var(--md);}
 </style>
 <script src="/herb-meta.js"></script>
 <script src="/global-nav.js" defer></script>
@@ -160,11 +154,6 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
 </div>
 
 <!-- Frequency reference -->
-<div class="freq-section">
-  <div class="freq-title">⟡ Biofrequency of herbs (MHz)</div>
-  <p class="freq-sub">Measured vibrational frequencies of essential oil-bearing plants. Higher frequency correlates with greater energetic complexity. Data from clinical biofrequency research.</p>
-  <div class="freq-grid" id="freqGrid"></div>
-</div>
 
 <!-- Ethanol targets reference -->
 <div class="eth-table-wrap">
@@ -419,6 +408,12 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
   <div id="lexiconHost"></div>
 </section>
 
+<!-- Footnote · the biofrequency figures were removed on 2026-09-27 -->
+<aside class="footnote" id="note-biofrequency" aria-labelledby="noteBioTitle">
+  <div class="footnote-title" id="noteBioTitle">A note on &ldquo;biofrequency&rdquo;</div>
+  <p>Earlier versions of this page listed a &ldquo;biofrequency&rdquo; in megahertz for aromatic plants &mdash; rose at 320&nbsp;MHz, frankincense at 147, lavender at 118. We have taken those numbers down. They circulate widely in essential-oil marketing and go back to a frequency-monitor reading from the early 1990s whose device and method were never published for anyone to test. No peer-reviewed study has reproduced them, and a plant has no &ldquo;frequency in megahertz&rdquo; that anyone has been able to measure. We would rather show you nothing than a number we cannot stand behind.</p>
+</aside>
+
 <div class="foot">
   <div style="font-family:var(--fm);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--md)">Fungai Art · Alchemy Lab</div>
   <div class="foot-links">
@@ -497,14 +492,6 @@ const ETH_TARGETS = [
   {n:'Barberry',eth:'65%'},{n:'Burdock Root',eth:'30% or Dual'},
 ].filter((v,i,a)=>a.findIndex(x=>x.n===v.n)===i).sort((a,b)=>a.n.localeCompare(b.n));
 
-// Frequency data
-const FREQ_DATA=[
-  {n:'Rose',mhz:320},{n:'Frankincense',mhz:147},{n:'Lavender',mhz:118},
-  {n:'Chamomile',mhz:105},{n:'Myrrh',mhz:105},{n:'Rosemary',mhz:102},
-  {n:'Juniper',mhz:98},{n:'Sandalwood',mhz:96},{n:'Tea Tree',mhz:92},
-  {n:'Jasmine',mhz:80},{n:'Oregano',mhz:78},{n:'Peppermint',mhz:78},
-  {n:'Lemon',mhz:52},{n:'Eucalyptus',mhz:52},{n:'Holy Basil',mhz:52},
-];
 
 // ── Every herb in the catalogue (Robin, 2026-09-27) ─────────────────
 // ETH_TARGETS above is the bench table — practitioner values, and it
@@ -696,13 +683,9 @@ function closeHerbPopup(){
 }
 function esc(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-function renderFreqGrid(){
-  const grid=document.getElementById('freqGrid');
-  grid.innerHTML=FREQ_DATA.map(f=>`<div class="freq-card"><span class="freq-herb">${f.n}</span><span class="freq-val">${f.mhz} MHz</span></div>`).join('');
-}
 
 document.addEventListener('DOMContentLoaded',()=>{
-  renderEthTable('');renderFreqGrid();
+  renderEthTable('');
   if (window.AlchemyLexicon) window.AlchemyLexicon.render(document.getElementById('lexiconHost'));
 });
 </script>
