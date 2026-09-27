@@ -27,8 +27,10 @@
   var BUCKET  = 'academy-docs';
   var MAX_MB  = 50;
   var CHUNK   = 1400;               // same size as a lab-note chunk
-  var PDFJS   = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
-  var WORKER  = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  // jsdelivr, not cdnjs: the site's Content-Security-Policy (netlify.toml)
+  // allows scripts from cdn.jsdelivr.net only — cdnjs would be blocked live.
+  var PDFJS   = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js';
+  var WORKER  = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
 
   var docs = [];
   var state = 'idle';               // idle · ready · missing (SQL not run) · signed-out · error

@@ -80,6 +80,16 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ---
 
+## 0.8 · Whole-site audit — read `docs/SITE-AUDIT-2026-09-27.md` first
+
+Seven 🔴 items, the top three waiting on one "yes" each: HIGH-caution herbs
+(and Ephedra) are eligible for customer bottles (C1, ties to He Shou Wu §6);
+unknown pregnancy status counts as safe (C2); "ADHD Support" product name (C3).
+Also: no imprint/address (C4), departed admin still hard-coded (C5), lab notes
+writable by anyone → MYCO poisoning (C6), Google Fonts from Google (C7).
+Doses at 1:3 and biofrequency removal done (`e3d1e6e`); CSP fixes for the PDF
+library committed with the audit.
+
 ## 0.7 · 2026-09-27, evening — third commit, not pushed
 
 **The standard formula analysis** — `/formula-analysis/?h=A|B&p=40,30&n=Name&src=…`
