@@ -111,6 +111,8 @@ button{font-family:inherit;cursor:pointer;}
 .hc.sel.fungi{border-color:var(--ad);background:rgba(232,177,75,.05);}
 .hc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:6px;margin-bottom:5px;}
 .hname{font-family:var(--fd);font-style:italic;font-size:19px;color:var(--ml);letter-spacing:-.015em;line-height:1.1;}
+.hbin{font-family:var(--fm);font-size:8.5px;letter-spacing:.06em;font-style:italic;color:var(--md);margin:-2px 0 6px;}
+.hpic{width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0;border:0.5px solid var(--r);margin-right:2px;}
 .el-pip{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:6px;}
 .hcats{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px;}
 .hcat{font-family:var(--fm);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 6px;border-radius:3px;background:rgba(201,184,148,.07);color:var(--md);}
@@ -261,6 +263,7 @@ button{font-family:inherit;cursor:pointer;}
       <button class="fp-clr" onclick="clearF()">Clear all</button>
       <button class="fp-sv" onclick="saveF()">Save</button>
       <button class="fp-analyze" id="analyzeBtn" onclick="analyzeFormula()" disabled>✦ Analyze</button>
+      <button class="fp-analyze" id="deepBtn" onclick="openFullAnalysis(true)" disabled title="The standard formula analysis — engine ratios, synergies, cautions, and MYCO's reading. Opens in a new tab.">△ Full analysis + MYCO</button>
       <span class="fp-cnt" id="fcnt"></span>
     </div>
   </div>
@@ -460,7 +463,8 @@ function philosFor(h){
   // "All traditions" instead of polluting the European filter. If a new
   // herb is added without a PHIL_MAP entry, it's better to be invisible
   // in tradition filters than to lie about its origin.
-  const tags = PHIL_MAP[h.id] || PHIL_MAP[h.n] || [];
+  const tags = PHIL_MAP[h.id] || PHIL_MAP[h.n]
+    || (h.atlas && TRAD_PHIL[h.atlas.tradition] ? [TRAD_PHIL[h.atlas.tradition]] : []);
   return tags;
 }
 
@@ -805,11 +809,13 @@ function render(){
   list.forEach(h=>{
     const sel=F.includes(h.id);
     const ec=EL_COL[h.el]||'#8B7E62';
-    const meta=getMeta(h.id);
+    const meta=getMeta(h.id)||(h.atlas&&h.atlas.grade&&GRADE_COL[h.atlas.grade[0]]?{grade:h.atlas.grade[0]}:null);
     const gradeHtml=meta?`<span class="hc-grade grade-${meta.grade}" style="background:${GRADE_COL[meta.grade]}14;border:0.5px solid ${GRADE_COL[meta.grade]}55;color:${GRADE_COL[meta.grade]}">Grade ${meta.grade}</span>`:'';
     const d=document.createElement('div');
     d.className='hc'+(h.f?' fungi':'')+(sel?' sel':'');
-    d.innerHTML=`<div class="hc-top"><div class="hname">${h.n}</div><div class="el-pip" title="${EL_NAME[h.el]||''}" style="background:${ec}"></div></div>${gradeHtml}<div class="hcats">${h.f?'<span class="hcat fu">🍄 Fungi</span>':''}${h.c.slice(0,3).map(c=>`<span class="hcat">${cLabel(c)}</span>`).join('')}</div><div class="hprim">${h.p.length>90?h.p.slice(0,90)+'…':h.p}</div><button class="hadd">${sel?'✓':'+'}</button>`;
+    const bin=h.atlas&&h.atlas.binomial?`<div class="hbin">${h.atlas.binomial}</div>`:'';
+    const pic=h.atlas&&h.atlas.image?`<img class="hpic" src="${h.atlas.image}" alt="" loading="lazy">`:'';
+    d.innerHTML=`<div class="hc-top">${pic}<div class="hname">${h.n}</div><div class="el-pip" title="${EL_NAME[h.el]||''}${h.elDerived?' · read from the atlas energetics':''}" style="background:${ec}"></div></div>${bin}${gradeHtml}<div class="hcats">${h.f?'<span class="hcat fu">🍄 Fungi</span>':''}${h.c.slice(0,3).map(c=>`<span class="hcat">${cLabel(c)}</span>`).join('')}</div><div class="hprim">${h.p.length>90?h.p.slice(0,90)+'…':h.p}</div><button class="hadd">${sel?'✓':'+'}</button>`;
     d.querySelector('.hadd').onclick=e=>{e.stopPropagation();tog(h.id);};
     d.onclick=()=>openM(h);
     g.appendChild(d);
@@ -852,6 +858,7 @@ function updatePanel(){
   cnt.textContent=F.length>0?`${F.length}/8`:'';
   fab.textContent=F.length>0?`⚗ Formula (${F.length})`:'⚗ Formula';
   const ab=document.getElementById('analyzeBtn');if(ab)ab.disabled=F.length<1;
+  const db2=document.getElementById('deepBtn');if(db2)db2.disabled=F.length<1;
   // Summary
   if(F.length>=2){
     const s=buildSummary();
@@ -987,19 +994,19 @@ function analyzeFormula(){
   const exts=[...new Set(herbs.map(h=>h.ext||'T'))];
   let extRec;
   if(hasFungi&&herbs.length>1){
-    extRec='Double Extraction + Cold Extract combined. Decoct fungi 4h in 20× water; separately macerate remaining herbs in 60% ethanol (1:5, 4 weeks). Combine 1:1. Final alcohol: ~28–32%.';
+    extRec='Double Extraction + Cold Extract combined. Decoct fungi 4h in 20× water; separately macerate remaining herbs in 60% ethanol (1:3, 4 weeks). Combine 1:1. Final alcohol: ~28–32%.';
   }else if(hasFungi){
     extRec='Double Extraction. Decoct 4h in 20× water; cool; combine 1:1 with 95% ethanol extract. Final: 25–30% alcohol.';
   }else if(exts.includes('SP')){
     extRec='Spagyric method. 40–50% ethanol maceration, 6 weeks. Calcine dried marc to white ash — this is the mineral salt body. Reintroduce to extract. Integrate 2 weeks. Drop-dose formulation.';
   }else if(exts.includes('DC')&&exts.includes('T')){
-    extRec='Dual-solvent: decoct root/bark herbs (1:20, 90 min) and separately cold-extract leaf/flower herbs (60% ethanol, 1:5, 4 weeks). Combine at 1:1. Preserve at ~25% alcohol.';
+    extRec='Dual-solvent: decoct root/bark herbs (1:20, 90 min) and separately cold-extract leaf/flower herbs (60% ethanol, 1:3, 4 weeks). Combine at 1:1. Preserve at ~25% alcohol.';
   }else if(exts.includes('DC')){
     extRec='Decoction. Cold soak 30 min, gentle simmer 60–90 min, 1:20 plant:water. Reduce to 1:5. Add 20% alcohol to preserve. Shelf life: 6+ months.';
   }else if(exts.includes('O')){
     extRec='Oleoresin / oil infusion for fat-soluble constituents. 60°C, 6–8h, 1:8 plant:oil. Vitamin E (1%) as preservative. Cold-extract aromatic co-herbs separately and blend.';
   }else{
-    extRec='Cold Extract. 40–60% ethanol, 1:5 ratio, 4–6 weeks. Shake daily. Strain and press marc firmly. Bottle in amber glass. Shelf life: 2+ years.';
+    extRec='Cold Extract. 40–60% ethanol, 1:3 ratio (our standard), 4–6 weeks. Shake daily. Strain and press marc firmly. Bottle in amber glass. Shelf life: 2+ years.';
   }
 
   // Synergies — check herbs.ts herb_to_herb_synergy first, then fall back to shared categories
@@ -1038,11 +1045,23 @@ function analyzeFormula(){
     ?allies.map(a=>`<div class="fpa-item"><span style="color:var(--ml)">${a.a}</span><span style="color:var(--g);opacity:.6;padding:0 4px">⟷</span><span style="color:var(--ml)">${a.b}</span></div>`).join('')
     :'<div style="font-size:11.5px;color:var(--md);font-style:italic">Add more herbs</div>';
 
-  wrap.innerHTML=`<div class="fp-analysis"><div class="fp-analysis-head">Formula Intelligence · embedded engine</div><div class="fpa-name">${blendName}</div><div class="fpa-tags">${elTagsHtml}${catTagsHtml}</div><div class="fpa-rule"></div><div class="fpa-2col" style="margin-bottom:12px"><div><div class="fpa-label">Primary actions</div>${actionTexts.map((t,i)=>`<div class="fpa-text" style="margin-bottom:${i<actionTexts.length-1?'8':'0'}px">${t}</div>`).join('')}</div><div><div class="fpa-label">Element reading</div><div class="fpa-text">${elReading}</div></div></div><div class="fpa-rule"></div><div class="fpa-label" style="color:rgba(232,177,75,.75)">⚗ Extraction protocol</div><div class="fpa-text" style="margin-bottom:6px">${extRec}</div><a href="/extraction" target="_blank" style="font-family:var(--fm);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--a);text-decoration:none;opacity:.6" rel="noopener noreferrer">Full protocols → /extraction</a><div class="fpa-rule"></div><div class="fpa-3col" style="margin-bottom:12px"><div><div class="fpa-label">Herbal allies</div>${allyHtml}</div><div><div class="fpa-label">Cautions</div>${contHtml}<div style="margin-top:6px;font-family:var(--fm);font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:${riskCol}">Risk: ${maxRisk}</div></div><div><div class="fpa-label">Dosage</div><div class="fpa-text">${DOSE_GUIDE[maxRisk]}</div></div></div><div class="fpa-essence">"${essence}"</div><div class="fpa-myco-btn"><span style="font-family:var(--fm);font-size:7px;letter-spacing:.16em;text-transform:uppercase;padding:4px 10px;border-radius:4px;border:0.5px solid rgba(232,177,75,.15);color:rgba(232,177,75,.32);">✦ MYCO · $MYCEL members</span></div></div>`;
+  wrap.innerHTML=`<div class="fp-analysis"><div class="fp-analysis-head">Formula Intelligence · quick read <button type="button" onclick="openFullAnalysis(true)" style="float:right;background:none;border:0;color:#F5D689;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer">Full analysis + MYCO ↗</button></div><div class="fpa-name">${blendName}</div><div class="fpa-tags">${elTagsHtml}${catTagsHtml}</div><div class="fpa-rule"></div><div class="fpa-2col" style="margin-bottom:12px"><div><div class="fpa-label">Primary actions</div>${actionTexts.map((t,i)=>`<div class="fpa-text" style="margin-bottom:${i<actionTexts.length-1?'8':'0'}px">${t}</div>`).join('')}</div><div><div class="fpa-label">Element reading</div><div class="fpa-text">${elReading}</div></div></div><div class="fpa-rule"></div><div class="fpa-label" style="color:rgba(232,177,75,.75)">⚗ Extraction protocol</div><div class="fpa-text" style="margin-bottom:6px">${extRec}</div><a href="/extraction" target="_blank" style="font-family:var(--fm);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--a);text-decoration:none;opacity:.6" rel="noopener noreferrer">Full protocols → /extraction</a><div class="fpa-rule"></div><div class="fpa-3col" style="margin-bottom:12px"><div><div class="fpa-label">Herbal allies</div>${allyHtml}</div><div><div class="fpa-label">Cautions</div>${contHtml}<div style="margin-top:6px;font-family:var(--fm);font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:${riskCol}">Risk: ${maxRisk}</div></div><div><div class="fpa-label">Dosage</div><div class="fpa-text">${DOSE_GUIDE[maxRisk]}</div></div></div><div class="fpa-essence">"${essence}"</div><div class="fpa-myco-btn"><span style="font-family:var(--fm);font-size:7px;letter-spacing:.16em;text-transform:uppercase;padding:4px 10px;border-radius:4px;border:0.5px solid rgba(232,177,75,.15);color:rgba(232,177,75,.32);">✦ MYCO · $MYCEL members</span></div></div>`;
 }
 
-// MYCO AI is reserved for $MYCEL token holders — activated in a future release.
-function analyzeWithMYCO(){ return; }
+// ── The standard formula analysis (Robin, 2026-09-27) ──────────────
+// One analysis page for every formula, wherever it was made — Mixology,
+// Find your formula, the formula book: /formula-analysis/. It runs the
+// server formula engine on the herbs (ratios, synergies, cautions) and
+// asks MYCO for its reading, and lets you swap, add or re-weigh herbs and
+// see what changes. Opens in a new tab so this formula stays here.
+function openFullAnalysis(withMyco){
+  if(!F.length)return;
+  const names=F.map(id=>{const h=H.find(x=>x.id===id);return h?h.n:id;});
+  const q=new URLSearchParams({h:names.join('|'),src:'mixology'});
+  if(withMyco)q.set('myco','1');
+  window.open('/formula-analysis/?'+q.toString(),'_blank','noopener');
+}
+function analyzeWithMYCO(){ openFullAnalysis(true); }
 
 function saveF(){
   if(!F.length)return;
@@ -1080,6 +1099,12 @@ function saveF(){
   overlay.querySelector('#fsm-cancel').onclick=close;
   overlay.addEventListener('click',e=>{ if(e.target===overlay) close(); });
   overlay.querySelector('#fsm-save').onclick=async ()=>{
+    // A second click while the cloud write was in flight saved the
+    // formula twice — and each save is kept twice (this device + shared),
+    // which is how one formula became four in the book (2026-09-27).
+    const saveBtn=overlay.querySelector('#fsm-save');
+    if(saveBtn.disabled)return;
+    saveBtn.disabled=true;saveBtn.textContent='Saving…';
     const blendName=(overlay.querySelector('#fsm-name').value||names.split(',').slice(0,2).join(', ')).trim();
     const maker=(overlay.querySelector('#fsm-maker').value||'').trim();
     const note=(overlay.querySelector('#fsm-note').value||'').trim();
@@ -1241,7 +1266,67 @@ function openM(h){
 function closeM(){document.getElementById('mbg').classList.remove('on');}
 function closeMbg(e){if(e.target===document.getElementById('mbg'))closeM();}
 
+// ════ Aligned with the atlas (Robin, 2026-09-27) ═══════════════════
+// Every plant in the catalogue belongs in Mixology, and a Mixology card
+// must be the same plant as its atlas card. The atlas index
+// (/atlas/data/index.json — built from herbs.ts by build:atlas) is read
+// once: each hand-written card above is joined to its atlas record (by
+// name, then by the atlas's Latin binomial in the card's own text, then
+// by the aliases below) and shows the atlas's Latin name, grade and
+// portrait; every catalogue plant no card covers is then added, built
+// from its atlas record. A herb added to herbs.ts appears here on the
+// next build — nothing to copy by hand. Cards for plants outside the
+// catalogue (Cramp Bark, Iboga …) stay as they are.
+const ATLAS_ALIAS={agaricusblazei:'royalsunmushroom',goji:'gojiberry',schizandra:'schisandra',caleazacatechichi:'caleazacatachichi',verbena:'vervain'};
+const STATE_CAT={DIGESTION:'digest',IMMUNITY:'immune',REST:'sleep',GROUNDING:'adaptogen',ENERGY:'energy',MOOD:'nervine',CLARITY:'cognitive',THRESHOLD:'conscious'};
+const BODY_CAT={chest:'resp',heart:'heart',liver:'liver',kidneys:'urinary'};
+const TRAD_PHIL={NORDIC:'european',EUROPEAN:'european',MEDITERRANEAN:'european',TCM:'tcm',AYURVEDA:'ayurveda',MESOAMERICAN:'amazonian','SOUTH AMERICAN':'amazonian',AFRICAN:'african'};
+function atlasKey(s){return String(s||'').toLowerCase().replace(/\([^)]*\)/g,'').replace(/[^a-z]/g,'');}
+function atlasBinomial(a){return String(a.binomial||'').toLowerCase().replace(/[^a-z ]/g,' ').split(/\s+/).filter(Boolean).slice(0,2).join(' ');}
+function atlasFind(orgs,h){
+  const k=atlasKey(h.n), alias=ATLAS_ALIAS[k];
+  let a=orgs.find(r=>atlasKey(r.name)===k)||(alias&&orgs.find(r=>atlasKey(r.name).indexOf(alias)===0));
+  if(a)return a;
+  a=orgs.find(r=>{const rk=atlasKey(r.name);return rk.length>=4&&k.length>=4&&(rk.indexOf(k)>=0||k.indexOf(rk)>=0);});
+  if(a)return a;
+  const p=String(h.p||'').toLowerCase();
+  return orgs.find(r=>{const b=atlasBinomial(r);return b.split(' ').length===2&&p.indexOf(b)>=0;})||null;
+}
+function cardFromAtlas(a){
+  const e=(a.energetics||[]).join(' ').toLowerCase(), st=a.states||[], prep=a.preparations||[];
+  const el=st.indexOf('THRESHOLD')>=0?'S':/\b(hot|warm)/.test(e)?'F':/\b(cold|cool)/.test(e)?'W':st.indexOf('CLARITY')>=0?'A':'E';
+  const fungi=a.type==='fungus';
+  const ext=fungi?'D':(prep.indexOf('DECOCTION')>=0&&prep.indexOf('TINCTURE')<0)?'DC':(prep.indexOf('OIL')>=0&&prep.indexOf('TINCTURE')<0)?'O':'T';
+  const cats=[];st.forEach(s=>{const x=STATE_CAT[s];if(x&&cats.indexOf(x)<0)cats.push(x);});
+  (a.body||[]).forEach(b=>{const x=BODY_CAT[b];if(x&&cats.indexOf(x)<0)cats.push(x);});
+  const cl=String(a.caution_level||'').toUpperCase();
+  const x=/HIGH/.test(cl)&&cl!=='MEDIUM-HIGH'?'high':/MEDIUM/.test(cl)?'medium':'low';
+  // Card text is the atlas's own epithet and Latin name — the full
+  // record (functions, cautions, synergies) opens in the modal, as for
+  // every other card.
+  return {id:'atlas-'+a.slug,n:a.name,f:fungi?1:0,el:el,elDerived:true,ext:ext,c:cats,
+    p:[a.epithet,a.binomial].filter(Boolean).join(' — '),x:x,atlas:a};
+}
+
 render();updatePanel();
+
+(async function alignWithAtlas(){
+  try{
+    const res=await fetch('/atlas/data/index.json');
+    if(!res.ok)return;
+    const idx=await res.json();
+    const orgs=(idx&&idx.organisms)||[];
+    if(!orgs.length)return;
+    const used=new Set();
+    H.forEach(h=>{const a=atlasFind(orgs,h);if(a){h.atlas=a;used.add(a.id);}});
+    // The hand-curated order stays; the catalogue plants no card covered
+    // follow, alphabetically.
+    const added=orgs.filter(a=>!used.has(a.id)).map(cardFromAtlas).sort((p,q)=>p.n.localeCompare(q.n));
+    added.forEach(h=>H.push(h));
+    render();
+    console.log('[mixology] aligned with the atlas: '+used.size+' cards joined, '+added.length+' catalogue plants added');
+  }catch(e){console.warn('[mixology] atlas alignment skipped:',e&&e.message);}
+})();
 </script>
 <!-- Spore restriction gate — synchronous so the overlay paints before Mixology if the
      active spore member is restricted from this feature. Anonymous visitors bypass. -->

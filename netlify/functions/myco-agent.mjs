@@ -129,7 +129,7 @@ Dec 21 · Solstice Ocean Ceremony, Zanzibar · 111 Hz · 30 seats
 
 ## ALCHEMY METHODS (from Alchemy Academy)
 Spagyric (Paracelsus) — separate, purify, recombine. 3 principles: sulfur/mercury/salt. 6–10 weeks.
-Cold Extract — 40–60% ethanol maceration 2–6 weeks. 1:3 fresh / 1:5 dry.
+Cold Extract — 40–60% ethanol maceration 2–6 weeks. 1:3 plant to solvent is the Fungai Art standard, fresh or dry.
 Decoction — long simmer for roots, bark, woody mushrooms. 1:20 plant:water, 45–90 min.
 Double Extraction — hot water (beta-glucans) + alcohol (triterpenes). Essential for Reishi, Chaga, Turkey Tail.
 Oleoresin — fat-soluble constituents in lipid carrier. 60°C, 4–8 hours, 1:8 plant:oil.

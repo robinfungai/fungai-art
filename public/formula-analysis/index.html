@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="dark" />
+<title>Formula analysis · Fungai Art</title>
+<meta name="robots" content="noindex, nofollow" />
+<meta name="description" content="The standard formula analysis — the Fungai Art formula engine's reading of a formula, its synergies and cautions, and MYCO's comment. Adjust a herb and see what changes." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3" />
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=zodiak@400,500&f[]=geist-mono@400,500&display=swap" />
+<!--
+  THE STANDARD FORMULA ANALYSIS (Robin, 2026-09-27)
+  One page every formula opens into — from Mixology, Find your formula
+  and the formula book. URL: ?h=Herb|Herb|…&p=40,30,…&n=Name&src=…&myco=1
+  The analysis is the formula engine's own (netlify/functions/
+  formula-analysis.mjs → src/server/formula-engine/analyze.js); MYCO is
+  asked only when you press the button (or arrive with myco=1).
+-->
+<style>
+  :root {
+    --bg: #0A0908; --s1: #11100D; --s2: #181612; --rule: rgba(201,184,148,.14); --rule2: rgba(201,184,148,.24);
+    --m: #C9B894; --ml: #E6D9B5; --md: #8B7E62; --a: #E8B14B; --al: #F5D689; --g: #B6F0AE; --gd: #6BD66F; --r: #E16B6B; --rl: #F2B3A8;
+    --myco: #9ED438; --mycol: #C9EE8A;
+    --fd: 'Zodiak', 'Cormorant Garamond', Georgia, serif; --fs: 'Satoshi', -apple-system, 'Helvetica Neue', sans-serif; --fm: 'Geist Mono', ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--m); font-family: var(--fs); font-size: 15px; line-height: 1.55; }
+  a { color: var(--al); text-decoration: none; }
+  button { font: inherit; cursor: pointer; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 72px 16px 80px; }
+  .nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
+  .nav-name { font-family: var(--fm); font-size: 10px; letter-spacing: .28em; text-transform: uppercase; color: var(--a); }
+  .nav-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .nav-links a { font-family: var(--fm); font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--md); padding: 7px 12px; border: .5px solid var(--rule); border-radius: 999px; }
+  .nav-links a:hover { color: var(--al); border-color: rgba(232,177,75,.4); }
+  .eyebrow { font-family: var(--fm); font-size: 10px; letter-spacing: .28em; text-transform: uppercase; color: var(--a); margin-bottom: 10px; }
+  .title { width: 100%; background: none; border: 0; border-bottom: .5px dashed transparent; font-family: var(--fd); font-style: italic; font-size: clamp(32px, 5vw, 52px); color: var(--ml); line-height: 1.1; outline: none; padding: 2px 0; }
+  .title:hover, .title:focus { border-bottom-color: var(--rule2); }
+  .sub { margin-top: 8px; font-size: 13.5px; color: var(--md); }
+  .grid { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 22px; margin-top: 30px; align-items: start; }
+  @media (max-width: 960px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: var(--s1); border: .5px solid var(--rule); border-radius: 14px; padding: 20px; margin-bottom: 16px; }
+  .card h2 { font-family: var(--fd); font-style: italic; font-weight: 400; font-size: 22px; color: var(--ml); margin-bottom: 4px; }
+  .card .hint { font-size: 12.5px; color: var(--md); margin-bottom: 14px; }
+  .lbl { font-family: var(--fm); font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--md); }
+  .btn { font-family: var(--fm); font-size: 9.5px; letter-spacing: .18em; text-transform: uppercase; padding: 9px 14px; border-radius: 999px; border: .5px solid var(--rule2); background: none; color: var(--m); }
+  .btn:hover:not(:disabled) { color: var(--al); border-color: rgba(232,177,75,.5); }
+  .btn:disabled { opacity: .45; cursor: default; }
+  .btn.primary { background: linear-gradient(135deg, #E8B14B, #C48838); color: #120d05; border-color: transparent; font-weight: 600; }
+  .btn.myco { border-color: rgba(158,212,56,.5); color: var(--mycol); background: rgba(158,212,56,.07); }
+  .row-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+
+  /* The herbs */
+  .herb { display: grid; grid-template-columns: minmax(0, 1fr) 150px 70px; gap: 10px; align-items: center; padding: 12px 0; border-top: .5px solid var(--rule); }
+  .herb:first-of-type { border-top: 0; }
+  .herb-name { font-family: var(--fd); font-style: italic; font-size: 19px; color: var(--ml); line-height: 1.15; }
+  .herb-bot { font-family: var(--fm); font-size: 9.5px; color: var(--md); font-style: italic; margin-top: 2px; }
+  .flags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px; }
+  .flag { font-family: var(--fm); font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; border: .5px solid var(--rule2); color: var(--md); }
+  .flag.warn { color: var(--al); border-color: rgba(232,177,75,.4); }
+  .flag.bad { color: var(--rl); border-color: rgba(225,107,107,.45); }
+  .flag.good { color: var(--g); border-color: rgba(107,214,111,.4); }
+  .pct { display: flex; align-items: center; gap: 8px; }
+  .pct input[type=range] { flex: 1; accent-color: var(--a); min-width: 0; }
+  .pct input[type=number] { width: 56px; background: var(--s2); border: .5px solid var(--rule2); border-radius: 8px; color: var(--ml); padding: 6px 6px; font-family: var(--fm); font-size: 13px; text-align: right; }
+  .engine-pct { font-family: var(--fm); font-size: 9.5px; color: var(--md); margin-top: 3px; text-align: right; }
+  .herb-tools { display: flex; gap: 6px; justify-content: flex-end; }
+  .icon { width: 30px; height: 30px; border-radius: 50%; border: .5px solid var(--rule2); background: none; color: var(--md); font-size: 13px; }
+  .icon:hover { color: var(--al); border-color: rgba(232,177,75,.5); }
+  .total { font-family: var(--fm); font-size: 11px; color: var(--md); margin-top: 10px; text-align: right; }
+  .total.off { color: var(--al); }
+  .adder { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .adder input { flex: 1 1 220px; min-width: 0; background: var(--s2); border: .5px solid var(--rule2); border-radius: 999px; padding: 9px 16px; color: var(--ml); font: inherit; outline: none; }
+  .adder input:focus { border-color: var(--a); }
+  .note { font-size: 13px; color: var(--md); margin-top: 10px; }
+  .note.warn { color: var(--al); }
+
+  /* What changed */
+  .change { border-color: rgba(232,177,75,.35); background: linear-gradient(160deg, rgba(232,177,75,.06), var(--s1)); }
+  .diff-row { display: flex; gap: 10px; align-items: baseline; padding: 6px 0; font-size: 14px; }
+  .diff-row .k { font-family: var(--fm); font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--md); width: 118px; flex-shrink: 0; }
+  .plus { color: var(--g); } .minus { color: var(--rl); }
+
+  /* Pairs, checks */
+  .pair { padding: 10px 0; border-top: .5px solid var(--rule); }
+  .pair:first-child { border-top: 0; }
+  .pair-h { font-family: var(--fd); font-style: italic; font-size: 16px; color: var(--ml); }
+  .pair-n { font-size: 13.5px; color: var(--m); margin-top: 3px; }
+  .check { display: flex; gap: 10px; padding: 8px 0; border-top: .5px solid var(--rule); font-size: 13.5px; }
+  .check:first-child { border-top: 0; }
+  .check .dot { width: 18px; flex-shrink: 0; font-family: var(--fm); }
+  .check.ok .dot { color: var(--gd); } .check.flag .dot { color: var(--a); }
+  .check b { color: var(--ml); font-weight: 500; }
+  .bar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; background: var(--s2); margin: 10px 0 6px; }
+  .bar span { display: block; height: 100%; }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; font-family: var(--fm); font-size: 10px; color: var(--md); }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .chip { font-family: var(--fm); font-size: 10px; padding: 4px 10px; border-radius: 999px; border: .5px solid var(--rule2); color: var(--m); }
+  .arm { padding: 10px 0; border-top: .5px solid var(--rule); }
+  .arm:first-child { border-top: 0; }
+  .arm-h { font-family: var(--fm); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--al); }
+  .arm-herbs { font-family: var(--fd); font-style: italic; color: var(--ml); font-size: 16px; margin: 3px 0; }
+  details.herb-detail { border-top: .5px solid var(--rule); padding: 10px 0; }
+  details.herb-detail summary { cursor: pointer; font-family: var(--fd); font-style: italic; font-size: 17px; color: var(--ml); list-style: none; }
+  details.herb-detail summary::-webkit-details-marker { display: none; }
+  details.herb-detail summary::after { content: ' ↓'; font-family: var(--fm); font-size: 11px; color: var(--md); font-style: normal; }
+  details.herb-detail[open] summary::after { content: ' ↑'; }
+  .kv { margin-top: 8px; font-size: 13.5px; }
+  .kv .lbl { display: block; margin: 10px 0 3px; }
+  .kv ul { padding-left: 18px; }
+  .kv li { margin-bottom: 3px; }
+
+  /* MYCO */
+  .side { position: sticky; top: 64px; }
+  @media (max-width: 960px) { .side { position: static; } }
+  .myco { border-color: rgba(158,212,56,.32); background: linear-gradient(160deg, rgba(158,212,56,.05), var(--s1)); }
+  .myco h2 { color: var(--mycol); }
+  .myco textarea { width: 100%; background: var(--s2); border: .5px solid rgba(158,212,56,.28); border-radius: 10px; color: var(--ml); font: inherit; font-size: 14px; padding: 10px 12px; resize: vertical; min-height: 64px; outline: none; margin-top: 10px; }
+  .myco textarea:focus { border-color: var(--myco); }
+  .myco-out { margin-top: 14px; font-size: 14.5px; line-height: 1.6; color: #DCCFAE; }
+  .myco-out h4 { font-family: var(--fs); font-weight: 600; font-size: 15px; color: var(--mycol); margin: 14px 0 6px; }
+  .myco-out h4:first-child { margin-top: 0; }
+  .myco-out ul { list-style: none; display: grid; gap: 5px; margin-bottom: 8px; }
+  .myco-out li { position: relative; padding-left: 16px; }
+  .myco-out li::before { content: ''; position: absolute; left: 2px; top: .62em; width: 5px; height: 5px; border-radius: 50%; background: var(--myco); }
+  .myco-out p { margin-bottom: 8px; }
+  .myco-out strong { color: #F2E8CC; }
+  .myco-wait { font-family: var(--fm); font-size: 11px; color: var(--mycol); margin-top: 12px; }
+  .save input { width: 100%; background: var(--s2); border: .5px solid var(--rule2); border-radius: 10px; color: var(--ml); font: inherit; padding: 9px 12px; margin-top: 8px; outline: none; }
+  .fine { margin-top: 26px; font-size: 12px; color: var(--md); max-width: 70ch; }
+  .empty { padding: 40px 20px; text-align: center; border: .5px dashed var(--rule2); border-radius: 14px; }
+  [hidden] { display: none !important; }
+</style>
+<script src="/supabase-client.js" defer></script>
+<script src="/global-nav.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav" aria-label="Formula tools">
+    <div class="nav-name">Fungai Art &middot; formula analysis</div>
+    <div class="nav-links">
+      <a href="/mixology">Mixology</a>
+      <a href="/find-your-formula">Find your formula</a>
+      <a href="/community/academy/#formulas">Formula book</a>
+      <a href="/extraction">Extraction</a>
+    </div>
+  </nav>
+
+  <header>
+    <div class="eyebrow">The standard formula analysis</div>
+    <input class="title" id="fName" aria-label="Formula name" placeholder="Untitled formula" maxlength="80" />
+    <p class="sub" id="fSub">Reading the formula&hellip;</p>
+  </header>
+
+  <div class="empty" id="empty" hidden>
+    <p style="font-family:var(--fd);font-style:italic;font-size:22px;color:var(--ml)">No formula to read yet.</p>
+    <p class="sub">Open one from <a href="/mixology">Mixology</a>, <a href="/find-your-formula">Find your formula</a> or the <a href="/community/academy/#formulas">formula book</a> &mdash; or add herbs below.</p>
+  </div>
+
+  <div class="grid" id="grid">
+    <main>
+      <section class="card" aria-labelledby="hHerbs">
+        <h2 id="hHerbs">The herbs</h2>
+        <p class="hint">Move a share, swap a herb (&#8644;), add or remove one &mdash; the analysis updates and shows what changed against the formula as it was opened.</p>
+        <div id="herbs"></div>
+        <div class="total" id="total"></div>
+        <div class="adder">
+          <input id="addInput" list="herbList" placeholder="Add a herb from the catalogue&hellip;" aria-label="Add a herb" />
+          <button class="btn" id="addBtn" type="button">+ Add</button>
+        </div>
+        <datalist id="herbList"></datalist>
+        <div class="row-actions">
+          <button class="btn" id="engineBtn" type="button" title="Let the engine weigh the herbs — trace herbs capped at 5%">Engine balance</button>
+          <button class="btn" id="resetBtn" type="button" disabled>Back to the original</button>
+        </div>
+        <p class="note" id="unresolved" hidden></p>
+      </section>
+
+      <section class="card change" id="changeCard" hidden aria-labelledby="hChange">
+        <h2 id="hChange">What changed</h2>
+        <p class="hint">Against the formula as it was opened.</p>
+        <div id="change"></div>
+      </section>
+
+      <section class="card" aria-labelledby="hPairs">
+        <h2 id="hPairs">Synergy &amp; cautions</h2>
+        <p class="hint">Pairs our herb records name together &mdash; the same check the formula engine runs on every bottle it makes.</p>
+        <div id="pairs"></div>
+      </section>
+
+      <section class="card" aria-labelledby="hChecks">
+        <h2 id="hChecks">Engine checks</h2>
+        <p class="hint">The composition rules the formula engine holds its own bottles to.</p>
+        <div id="checks"></div>
+      </section>
+
+      <section class="card" aria-labelledby="hBalance">
+        <h2 id="hBalance">Balance</h2>
+        <p class="hint">Warming and cooling by share of the bottle, and the meridians it leans on.</p>
+        <div id="balance"></div>
+      </section>
+
+      <section class="card" aria-labelledby="hPlan">
+        <h2 id="hPlan">Making it</h2>
+        <p class="hint">How the herbs group in the lab, at our 1:3 house ratio. Each herb&rsquo;s own preparation is below.</p>
+        <div id="plan"></div>
+      </section>
+
+      <section class="card" aria-labelledby="hEach">
+        <h2 id="hEach">Each herb</h2>
+        <p class="hint">Actions, preparation, contraindications and drug interactions from the herb records.</p>
+        <div id="each"></div>
+      </section>
+    </main>
+
+    <aside class="side">
+      <section class="card myco" aria-labelledby="hMyco">
+        <h2 id="hMyco">MYCO&rsquo;s reading</h2>
+        <p class="hint" id="mycoHint">MYCO reads this analysis and comments on balance, synergy, ratio and cautions. When you have changed the formula, it reads the change first.</p>
+        <textarea id="question" maxlength="600" placeholder="Ask about this formula — e.g. &ldquo;Should passionflower replace lemon balm here?&rdquo;"></textarea>
+        <div class="row-actions">
+          <button class="btn myco" id="mycoBtn" type="button">&#9651; Ask MYCO</button>
+        </div>
+        <div class="myco-wait" id="mycoWait" hidden>MYCO is reading the formula&hellip; (10&ndash;20 seconds)</div>
+        <div class="myco-out" id="mycoOut" aria-live="polite"></div>
+      </section>
+
+      <section class="card save" aria-labelledby="hSave">
+        <h2 id="hSave">Keep this version</h2>
+        <p class="hint">Saves the formula as it stands now &mdash; with its percentages &mdash; to the formula book.</p>
+        <label class="lbl" for="saveNote">A note for the book (optional)</label>
+        <input id="saveNote" maxlength="400" placeholder="Why this version" />
+        <div class="row-actions">
+          <button class="btn primary" id="saveBtn" type="button">Save to the formula book</button>
+        </div>
+        <p class="note" id="saveMsg" role="status"></p>
+      </section>
+    </aside>
+  </div>
+
+  <p class="fine">Formulation research in the language of craft and tradition &mdash; not medical advice, not a diagnosis, not a dose for any condition. Read every caution; if you take medication, are pregnant or breastfeeding, speak to a practitioner first.</p>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var API = '/api/formula-analysis';
+  var qs = new URLSearchParams(location.search);
+  var $ = function (id) { return document.getElementById(id); };
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function clone(f) { return { herbs: f.herbs.slice(), percentages: f.percentages ? f.percentages.slice() : null }; }
+
+  var state = {
+    src: qs.get('src') || '',
+    base: null,      // the formula as opened (resolved names + percentages)
+    cur: null,       // the formula being adjusted
+    res: null,       // last response
+    unresolved: [],
+  };
+
+  var askedHerbs = (qs.get('h') || '').split('|').map(function (s) { return s.trim(); }).filter(Boolean).slice(0, 12);
+  var askedPcts = (qs.get('p') || '').split(',').map(Number);
+  if (askedPcts.length !== askedHerbs.length || askedPcts.some(function (x) { return !isFinite(x) || x < 0; })) askedPcts = null;
+  $('fName').value = (qs.get('n') || '').slice(0, 80);
+  var SRC = { mixology: 'Mixology', 'find-your-formula': 'Find your formula', book: 'the formula book', analysis: 'this page' };
+
+  // ── The catalogue, for adding and swapping ──
+  var catalogue = [];
+  fetch('/herb-engine-ids.json').then(function (r) { return r.ok ? r.json() : []; }).then(function (list) {
+    catalogue = (list || []).map(function (h) { return h.n; }).sort(function (a, b) { return a.localeCompare(b); });
+    var dl = $('herbList');
+    catalogue.forEach(function (n) { var o = document.createElement('option'); o.value = n; dl.appendChild(o); });
+  }).catch(function () {});
+
+  // ── Talking to the engine ──
+  var seq = 0, timer = null;
+  function changed() {
+    if (!state.base || !state.cur) return false;
+    return JSON.stringify(state.base) !== JSON.stringify(state.cur);
+  }
+  function payload(extra) {
+    var body = { herbs: state.base.herbs, percentages: state.base.percentages || undefined, name: $('fName').value || undefined };
+    if (changed()) body.variant = { herbs: state.cur.herbs, percentages: state.cur.percentages || undefined };
+    return Object.assign(body, extra || {});
+  }
+  function post(body) {
+    return fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json().then(function (d) { if (!r.ok) throw new Error(d && d.error || ('HTTP ' + r.status)); return d; }); });
+  }
+  function analyse(soon) {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      var mine = ++seq;
+      post(payload()).then(function (res) { if (mine === seq) { take(res); draw(); } })
+        .catch(function (e) { $('fSub').textContent = 'The analysis could not load: ' + e.message; });
+    }, soon ? 0 : 350);
+  }
+
+  // Keep the adjusted formula in step with what the engine resolved: a
+  // swapped-in name it cannot find is dropped there, so it is dropped
+  // here too, and said.
+  var missed = [];
+  function take(res) {
+    state.res = res;
+    var v = res.variant;
+    if (!v || !state.cur) return;
+    var had = state.cur.herbs.length;
+    missed = v.unresolved || [];
+    state.cur.herbs = v.herbs.map(function (h) { return h.name; });
+    if (state.cur.percentages && (state.cur.percentages.length !== had || v.herbs.length !== had)) {
+      state.cur.percentages = v.herbs.map(function (h) { return h.percentage; });
+    }
+  }
+
+  // First load: resolve the herbs, then keep the resolved names as the base.
+  function start() {
+    if (!askedHerbs.length) {
+      $('empty').hidden = false;
+      state.base = { herbs: [], percentages: null };
+      state.cur = clone(state.base);
+      $('fSub').textContent = 'Add herbs to begin.';
+      return;
+    }
+    post({ herbs: askedHerbs, percentages: askedPcts || undefined, name: $('fName').value || undefined }).then(function (res) {
+      var b = res.base;
+      state.unresolved = b.unresolved || [];
+      state.base = { herbs: b.herbs.map(function (h) { return h.name; }), percentages: b.herbs.map(function (h) { return h.percentage; }) };
+      state.cur = clone(state.base);
+      state.res = res;
+      draw();
+      if (qs.get('myco') === '1') askMyco();
+    }).catch(function (e) { $('fSub').textContent = 'The analysis could not load: ' + e.message; });
+  }
+
+  // ── Drawing ──
+  function current() { return state.res ? (state.res.variant || state.res.base) : null; }
+
+  function draw() {
+    var A = current();
+    if (!A) return;
+    $('empty').hidden = A.herbs.length > 0;
+    var from = SRC[state.src] ? ' · opened from ' + SRC[state.src] : '';
+    $('fSub').textContent = A.herbs.length + (A.herbs.length === 1 ? ' herb' : ' herbs') + from +
+      (A.percentagesFrom === 'engine' ? ' · shares set by the engine' : ' · shares set by the maker');
+    $('resetBtn').disabled = !changed();
+    drawHerbs(A);
+    drawChange();
+    drawPairs(A);
+    drawChecks(A);
+    drawBalance(A);
+    drawPlan(A);
+    drawEach(A);
+    var un = state.unresolved.concat(missed.filter(function (n) { return state.unresolved.indexOf(n) < 0; }));
+    $('unresolved').hidden = !un.length;
+    $('unresolved').textContent = un.length ? 'Not in the catalogue, so not analysed: ' + un.join(', ') + '.' : '';
+  }
+
+  function drawHerbs(A) {
+    var host = $('herbs');
+    host.innerHTML = '';
+    A.herbs.forEach(function (h, i) {
+      var row = el('div', 'herb');
+      var left = el('div');
+      left.appendChild(el('div', 'herb-name', h.name));
+      left.appendChild(el('div', 'herb-bot', h.botanical || ''));
+      var flags = el('div', 'flags');
+      function flag(t, cls, title) { var f = el('span', 'flag ' + (cls || ''), t); if (title) f.title = title; flags.appendChild(f); }
+      flag(h.category);
+      if (h.isTrace) flag('trace', 'warn', 'Potent aromatic — the engine keeps it at or under 5%');
+      if (h.isGABAergic) flag('sedative-acting', '', 'GABA-acting');
+      if (h.isStimulant) flag('stimulant', 'warn');
+      if (h.restricted) flag('restricted', 'bad', 'Catalogue only — never put in a bottle by the engine');
+      if (/HIGH/.test(h.caution || '')) flag('caution ' + h.caution.toLowerCase(), 'bad');
+      else if (/MEDIUM/.test(h.caution || '')) flag('caution ' + h.caution.toLowerCase(), 'warn');
+      if (h.safePregnancy === false) flag('not in pregnancy', 'bad');
+      row.appendChild(left);
+
+      var mid = el('div');
+      var pct = el('div', 'pct');
+      var range = el('input'); range.type = 'range'; range.min = 0; range.max = 100; range.value = h.percentage; range.setAttribute('aria-label', 'Share of ' + h.name);
+      var num = el('input'); num.type = 'number'; num.min = 0; num.max = 100; num.value = h.percentage; num.setAttribute('aria-label', 'Percent of ' + h.name);
+      function set(v) {
+        v = Math.max(0, Math.min(100, Math.round(Number(v) || 0)));
+        var p = state.cur.percentages || A.herbs.map(function (x) { return x.percentage; });
+        p[i] = v; state.cur.percentages = p;
+        range.value = v; num.value = v;
+        drawTotal();
+        analyse();
+      }
+      range.addEventListener('input', function () { num.value = range.value; });
+      range.addEventListener('change', function () { set(range.value); });
+      num.addEventListener('change', function () { set(num.value); });
+      pct.appendChild(range); pct.appendChild(num); pct.appendChild(document.createTextNode('%'));
+      mid.appendChild(pct);
+      mid.appendChild(el('div', 'engine-pct', 'engine: ' + h.enginePercentage + '%'));
+      row.appendChild(mid);
+
+      var tools = el('div', 'herb-tools');
+      var swap = el('button', 'icon', '⇄'); swap.type = 'button'; swap.title = 'Swap ' + h.name + ' for another herb';
+      swap.addEventListener('click', function () {
+        var to = prompt('Swap ' + h.name + ' for which herb? (type a name from the catalogue)', '');
+        if (!to) return;
+        state.cur.herbs[i] = to.trim();
+        analyse(true);
+      });
+      var rm = el('button', 'icon', '✕'); rm.type = 'button'; rm.title = 'Remove ' + h.name;
+      rm.addEventListener('click', function () {
+        state.cur.herbs.splice(i, 1);
+        if (state.cur.percentages) state.cur.percentages.splice(i, 1);
+        analyse(true);
+      });
+      tools.appendChild(swap); tools.appendChild(rm);
+      row.appendChild(tools);
+      row.appendChild(flags);
+      flags.style.gridColumn = '1 / -1';
+      host.appendChild(row);
+    });
+    drawTotal();
+  }
+  function drawTotal() {
+    var A = current(); if (!A) return;
+    var p = state.cur.percentages || A.herbs.map(function (h) { return h.percentage; });
+    var sum = p.reduce(function (a, b) { return a + (Number(b) || 0); }, 0);
+    var t = $('total');
+    t.textContent = 'Total ' + sum + '%' + (sum !== 100 ? ' — read as shares and scaled to 100%' : '');
+    t.className = 'total' + (sum !== 100 ? ' off' : '');
+  }
+
+  function drawChange() {
+    var d = state.res && state.res.diff;
+    var card = $('changeCard'), host = $('change');
+    card.hidden = !d;
+    host.innerHTML = '';
+    if (!d) return;
+    function row(k, content) { var r = el('div', 'diff-row'); r.appendChild(el('span', 'k', k)); var v = el('span'); if (typeof content === 'string') v.textContent = content; else v.appendChild(content); r.appendChild(v); host.appendChild(r); }
+    function pairs(list) { return list.map(function (p) { return p.a + ' + ' + p.b; }).join('; '); }
+    if (d.added.length) row('Added', el('span', 'plus', d.added.join(', ')));
+    if (d.removed.length) row('Removed', el('span', 'minus', d.removed.join(', ')));
+    if (d.ratio.length) row('Shares', d.ratio.map(function (r) { return r.name + ' ' + r.from + '% → ' + r.to + '%'; }).join(' · '));
+    if (d.synergiesGained.length) row('Synergy gained', el('span', 'plus', pairs(d.synergiesGained)));
+    if (d.synergiesLost.length) row('Synergy lost', el('span', 'minus', pairs(d.synergiesLost)));
+    if (d.cautionsGained.length) row('New cautions', el('span', 'minus', pairs(d.cautionsGained)));
+    if (d.cautionsLost.length) row('Cautions gone', el('span', 'plus', pairs(d.cautionsLost)));
+    d.checksChanged.forEach(function (c) { row(c.label, el('span', c.now === 'passes' ? 'plus' : 'minus', c.now === 'passes' ? 'now passes' : 'now flags — ' + c.detail)); });
+    var t0 = d.temperature.from, t1 = d.temperature.to;
+    if (t0.warming !== t1.warming || t0.cooling !== t1.cooling) row('Temperature', 'warming ' + t0.warming + '% → ' + t1.warming + '%, cooling ' + t0.cooling + '% → ' + t1.cooling + '%');
+    if (!host.children.length) row('Nothing', 'The adjustment changes no pair, check or balance.');
+  }
+
+  function drawPairs(A) {
+    var host = $('pairs'); host.innerHTML = '';
+    if (!A.synergies.length && !A.cautions.length) { host.appendChild(el('p', 'note', 'Our records name no pair among these herbs.')); return; }
+    A.synergies.forEach(function (p) { var d = el('div', 'pair'); d.appendChild(el('div', 'pair-h', '✦ ' + p.a + ' + ' + p.b)); d.appendChild(el('div', 'pair-n', p.note)); host.appendChild(d); });
+    A.cautions.forEach(function (p) { var d = el('div', 'pair'); var h = el('div', 'pair-h', '◆ ' + p.a + ' + ' + p.b); h.style.color = 'var(--rl)'; d.appendChild(h); d.appendChild(el('div', 'pair-n', p.note)); host.appendChild(d); });
+  }
+
+  function drawChecks(A) {
+    var host = $('checks'); host.innerHTML = '';
+    A.checks.forEach(function (c) {
+      var d = el('div', 'check ' + (c.ok ? 'ok' : 'flag'));
+      d.appendChild(el('span', 'dot', c.ok ? '✓' : '!'));
+      var t = el('span'); var b = el('b', null, c.label + ' '); t.appendChild(b); t.appendChild(document.createTextNode(c.detail)); d.appendChild(t);
+      host.appendChild(d);
+    });
+    if (A.pregnancyAvoid.length || A.highCaution.length) {
+      var n = el('p', 'note warn');
+      n.textContent = [A.pregnancyAvoid.length ? 'Not in pregnancy: ' + A.pregnancyAvoid.join(', ') + '.' : '', A.highCaution.length ? 'High caution: ' + A.highCaution.join(', ') + '.' : ''].filter(Boolean).join(' ');
+      host.appendChild(n);
+    }
+  }
+
+  function drawBalance(A) {
+    var host = $('balance'); host.innerHTML = '';
+    var t = A.temperature, bar = el('div', 'bar');
+    [['warming', '#E8714B'], ['neutral', '#8B7E62'], ['cooling', '#4FA8E0']].forEach(function (x) {
+      var s = el('span'); s.style.width = (t[x[0]] || 0) + '%'; s.style.background = x[1]; s.title = x[0] + ' ' + (t[x[0]] || 0) + '%'; bar.appendChild(s);
+    });
+    host.appendChild(bar);
+    var lg = el('div', 'legend');
+    lg.appendChild(el('span', null, 'warming ' + t.warming + '%'));
+    lg.appendChild(el('span', null, 'neutral ' + t.neutral + '%'));
+    lg.appendChild(el('span', null, 'cooling ' + t.cooling + '%'));
+    host.appendChild(lg);
+    if (A.meridians.length) {
+      host.appendChild(el('div', 'lbl', 'Meridians')).style.marginTop = '14px';
+      var ch = el('div', 'chips');
+      A.meridians.forEach(function (m) { ch.appendChild(el('span', 'chip', m.name + ' · ' + m.weight)); });
+      host.appendChild(ch);
+    }
+  }
+
+  function drawPlan(A) {
+    var host = $('plan'); host.innerHTML = '';
+    A.extraction.forEach(function (p) {
+      var d = el('div', 'arm');
+      d.appendChild(el('div', 'arm-h', p.arm));
+      d.appendChild(el('div', 'arm-herbs', p.herbs.join(', ')));
+      d.appendChild(el('div', 'pair-n', p.how));
+      host.appendChild(d);
+    });
+    var more = el('p', 'note'); more.innerHTML = 'Solvent strengths for every herb: <a href="/extraction#ethGrid">/extraction</a>.'; host.appendChild(more);
+  }
+
+  function drawEach(A) {
+    var host = $('each'); host.innerHTML = '';
+    A.herbs.forEach(function (h) {
+      var d = el('details', 'herb-detail');
+      d.appendChild(el('summary', null, h.name + ' · ' + h.percentage + '%'));
+      var kv = el('div', 'kv');
+      function list(label, items) { if (!items || !items.length) return; kv.appendChild(el('span', 'lbl', label)); var ul = el('ul'); items.forEach(function (x) { ul.appendChild(el('li', null, x)); }); kv.appendChild(ul); }
+      function text(label, t) { if (!t) return; kv.appendChild(el('span', 'lbl', label)); kv.appendChild(el('div', null, t)); }
+      list('Actions (from the record)', h.actions);
+      text('Energetics', (h.energetics || []).join(' · '));
+      text('Preparation', h.preparation);
+      list('Contraindications', h.contraindications);
+      list('Drug interactions', h.drugInteractions);
+      text('Evidence grade', h.grade);
+      d.appendChild(kv);
+      host.appendChild(d);
+    });
+  }
+
+  // ── MYCO ──
+  function renderMyco(text) {
+    var host = $('mycoOut'); host.innerHTML = '';
+    var list = null;
+    function inline(parent, s) {
+      String(s).split(/(\*\*[^*]+\*\*)/g).forEach(function (part) {
+        if (/^\*\*[^*]+\*\*$/.test(part)) parent.appendChild(el('strong', null, part.slice(2, -2)));
+        else if (part) parent.appendChild(document.createTextNode(part));
+      });
+    }
+    String(text || '').replace(/[ \t]+(#{1,4}\s)/g, '\n$1').split('\n').forEach(function (raw) {
+      var line = raw.trim();
+      if (!line) { list = null; return; }
+      var h = line.match(/^#{1,4}\s+(.*)$/);
+      if (h && h[1].length <= 70) { list = null; host.appendChild(el('h4', null, h[1].replace(/\*\*/g, ''))); return; }
+      var b = line.match(/^(?:[-•*]|\d+[.)])\s+(.*)$/);
+      if (b) { if (!list) { list = el('ul'); host.appendChild(list); } var li = el('li'); inline(li, b[1]); list.appendChild(li); return; }
+      list = null; var p = el('p'); inline(p, h ? h[1] : line); host.appendChild(p);
+    });
+  }
+  var asking = false;
+  function askMyco() {
+    if (asking || !state.base || !state.base.herbs.length) return;
+    asking = true;
+    $('mycoBtn').disabled = true; $('mycoWait').hidden = false; $('mycoOut').innerHTML = '';
+    post(payload({ myco: true, question: $('question').value.trim() || undefined })).then(function (res) {
+      take(res); draw();
+      var m = res.myco || {};
+      if (m.text) renderMyco(m.text);
+      else $('mycoOut').textContent = m.unavailable || 'MYCO could not answer.';
+    }).catch(function (e) {
+      $('mycoOut').textContent = 'MYCO could not be reached: ' + e.message;
+    }).then(function () { asking = false; $('mycoBtn').disabled = false; $('mycoWait').hidden = true; });
+  }
+  $('mycoBtn').addEventListener('click', askMyco);
+
+  // ── Editing controls ──
+  function addHerb() {
+    var v = $('addInput').value.trim();
+    if (!v || !state.cur) return;
+    if (state.cur.herbs.length >= 12) { alert('An analysis holds up to 12 herbs.'); return; }
+    if (!state.base.herbs.length) { state.base = { herbs: [v], percentages: null }; state.cur = clone(state.base); }
+    else {
+      state.cur.herbs.push(v);
+      if (state.cur.percentages) state.cur.percentages.push(10);
+    }
+    $('addInput').value = '';
+    analyse(true);
+  }
+  $('addBtn').addEventListener('click', addHerb);
+  $('addInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); addHerb(); } });
+  $('engineBtn').addEventListener('click', function () { if (!state.cur) return; state.cur.percentages = null; analyse(true); });
+  $('resetBtn').addEventListener('click', function () { state.cur = clone(state.base); analyse(true); });
+  $('fName').addEventListener('change', function () { analyse(); });
+
+  // ── Save to the formula book ──
+  // Local copy (fungai_formulas, as Mixology saves) + the shared book
+  // (formulas). The book shows the two as one entry.
+  var saving = false;
+  $('saveBtn').addEventListener('click', async function () {
+    var A = current();
+    if (saving || !A || !A.herbs.length) return;
+    saving = true; $('saveBtn').disabled = true; $('saveMsg').textContent = 'Saving…';
+    var name = ($('fName').value || A.herbs.slice(0, 2).map(function (h) { return h.name; }).join(', ')).trim().slice(0, 80);
+    var names = A.herbs.map(function (h) { return h.name; });
+    var pcts = A.herbs.map(function (h) { return h.percentage; });
+    var note = $('saveNote').value.trim().slice(0, 400);
+    try {
+      var saved = JSON.parse(localStorage.getItem('fungai_formulas') || '[]');
+      saved.unshift({ name: name, herbs: names.join(', '), percentages: pcts, maker: null, note: note || null, ts: Date.now(), source: 'analysis' });
+      localStorage.setItem('fungai_formulas', JSON.stringify(saved.slice(0, 40)));
+    } catch (_) {}
+    var cloud = false;
+    try {
+      if (window.SBready) await window.SBready;
+      if (window.SBclient) {
+        var author = null;
+        try { var me = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null'); if (me && /^[0-9a-f-]{36}$/i.test(me.cloudId || '')) author = me.cloudId; } catch (_) {}
+        var r = await window.SBclient.from('formulas').insert({
+          name: name,
+          herb_ids: A.herbs.map(function (h) { return String(h.id); }),
+          herb_names: names.map(function (n, i) { return pcts[i] + '% ' + n; }).join(', '),
+          percentages: pcts,
+          notes: note || null,
+          source: 'analysis',
+          author_id: author,
+        });
+        cloud = !r.error;
+      }
+    } catch (_) {}
+    $('saveMsg').textContent = cloud ? '✓ Saved to the formula book.' : '✓ Saved on this device (the shared book did not accept it).';
+    saving = false; $('saveBtn').disabled = false;
+  });
+
+  start();
+})();
+</script>
+</body>
+</html>

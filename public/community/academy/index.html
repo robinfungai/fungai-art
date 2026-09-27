@@ -701,7 +701,7 @@
       <h1 class="acp-title" id="acpTitle">Where the network learns to make <em>medicine by hand.</em></h1>
       <p class="acp-lede">
         Five extraction methods, <span data-academy="traditions">five</span> living traditions, a
-        <span data-academy="herb-count">240</span>-plant materia medica, whole protocols in our library,
+        <span data-academy="herb-count">242</span>-plant materia medica, whole protocols in our library,
         and a lab notebook we write together at the bench &mdash; between a lab in Berlin and the forests of Sweden.
       </p>
       <div class="acp-cta">
@@ -760,7 +760,7 @@
     <div class="hero-eyebrow">The Alchemy Academy &middot; Fungai Art</div>
     <h1 class="hero-title">The library of <em>practice.</em></h1>
     <p class="hero-blurb">
-      Five extraction methods, <span data-academy="traditions">five</span> living traditions, a <span data-academy="herb-count">240</span>-plant materia
+      Five extraction methods, <span data-academy="traditions">five</span> living traditions, a <span data-academy="herb-count">242</span>-plant materia
       medica, and a notebook the network writes together. <em>For members of the
       network &mdash; every member can contribute notes, formulas, and snippets.</em>
     </p>
@@ -770,9 +770,10 @@
       <a href="#formulas" class="hero-chip">✦ Formulas</a>
       <a href="#labSection" class="hero-chip">⌬ Lab</a>
       <a href="#snippets" class="hero-chip">▸ Snippets</a>
+      <a href="#lexicon" class="hero-chip" onclick="var d=document.getElementById('lexicon');if(d)d.open=true;">✦ Lexicon</a>
       <a href="/covenant" class="hero-chip" style="color:#F5D689;border-color:rgba(232,177,75,0.45);">⊕ The Covenant</a>
     </div>
-    <a href="/mixology" class="hero-link">⚗ Open the Herbal Engine →</a>
+    <a href="/mixology" class="hero-link">⚗ Open Mixology →</a>
   </div>
 
   <div class="sec-head" id="methods-head">
@@ -1282,6 +1283,47 @@
     }
   </style>
 
+  <!-- ══ THE ALCHEMIST'S LEXICON ═══════════════════════════════════════
+       100 terms from the lab, shared with /extraction — the list lives in
+       /alchemy-lexicon.js, so both pages always agree. Collapsed behind
+       "show ↓" here (Robin, 2026-09-27); open on /extraction. -->
+  <details class="lexicon" id="lexicon" style="margin-top:80px;">
+    <summary style="cursor:pointer;list-style:none;display:flex;align-items:flex-end;justify-content:space-between;gap:14px;">
+      <div class="sec-head" style="margin:0;">
+        <div class="sec-eyebrow">Words of the work &middot; 100 terms</div>
+        <div class="sec-title">The alchemist&rsquo;s <em>lexicon.</em></div>
+        <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:14.5px;color:#8B7E62;line-height:1.7;margin-top:8px;max-width:62ch;">Polysaccharides, decarboxylation, menstruum, marc, the tria prima &mdash; the words that trip people up, in plain language.</p>
+      </div>
+      <span class="lexicon-toggle" style="font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#F5D689;white-space:nowrap;padding-bottom:6px;">show &darr;</span>
+    </summary>
+    <div id="lexiconHost" style="margin-top:22px;"></div>
+  </details>
+  <style>
+    details.lexicon > summary::-webkit-details-marker { display:none; }
+    details.lexicon[open] .lexicon-toggle { opacity:.6; }
+  </style>
+  <script>
+  (function () {
+    // Draw the lexicon the first time it is opened — it is 100 cards.
+    var d = document.getElementById('lexicon');
+    if (!d) return;
+    var drawn = false;
+    function draw() {
+      if (drawn || !d.open || !window.AlchemyLexicon) return;
+      drawn = true;
+      window.AlchemyLexicon.render(document.getElementById('lexiconHost'));
+      var t = d.querySelector('.lexicon-toggle'); if (t) t.innerHTML = 'hide &uarr;';
+    }
+    d.addEventListener('toggle', function () {
+      var t = d.querySelector('.lexicon-toggle');
+      if (t) t.innerHTML = d.open ? 'hide &uarr;' : 'show &darr;';
+      draw();
+    });
+    if (location.hash === '#lexicon') { d.open = true; }
+    window.addEventListener('load', draw);
+  })();
+  </script>
+
   <!-- The lab notebook section below was previously gated to Robin only and
        held single-textarea-per-chapter notes. It now opens to any signed-in
        network member, supports per-entry summaries / moves, and includes
@@ -1384,7 +1426,7 @@ const METHODS = [
     name: 'Spagyric',
     tag: 'The Paracelsian Triple Separation',
     color: '#C48838',
-    ratio: '1:5 — plant to high-proof alcohol',
+    ratio: '1:3 — plant to high-proof alcohol (our standard)',
     time: '30–40 days total',
     philosophy: 'Separating and recombining the body, soul, and spirit of the plant to create a hyper-potent, bio-available evolution of the medicine.',
     steps: [
@@ -1398,7 +1440,7 @@ const METHODS = [
     name: 'Cold Extract',
     tag: 'Folk Herbalism Baseline',
     color: '#3B6D11',
-    ratio: '1:5 (dried herbs) · 1:2 (fresh herbs) · 40–60% alcohol',
+    ratio: '1:3 — our standard, dried or fresh · 40–60% alcohol',
     time: '4–6 weeks',
     philosophy: 'A slow, gentle extraction relying entirely on time and ambient temperature to pull volatile and soluble compounds without breaking down delicate molecular structures.',
     steps: [
@@ -1426,7 +1468,7 @@ const METHODS = [
     name: 'Double Extraction',
     tag: 'Chaga · Reishi · Medicinal Fungi',
     color: '#0F6E56',
-    ratio: 'Combined final ratio ~1:5',
+    ratio: 'Alcohol side 1:3 (our standard) · combined 1:1 with the decoction',
     time: '4 weeks (alcohol) + 4 hours (water)',
     philosophy: 'A comprehensive dual-solvent approach designed specifically for medicinal mushrooms, capturing both hydrophobic triterpenes and hydrophilic beta-glucans.',
     steps: [
@@ -3149,7 +3191,7 @@ function lnMoveNote(fromCat, id, toCat){
         // quiz_snapshot (health answers) and is now readable only by the
         // row's author or an admin. See supabase-formulas-health-lockdown.sql.
         .from('formulas_public')
-        .select('id, name, herb_ids, herb_names, maker_label, notes, author_id, created_at')
+        .select('id, name, herb_ids, herb_names, percentages, maker_label, notes, author_id, created_at')
         .order('created_at', { ascending: false })
         .limit(100);
       if (fErr) {
@@ -3216,9 +3258,19 @@ function lnMoveNote(fromCat, id, toCat){
     if (!Array.isArray(listA)) listA = [];
     if (!Array.isArray(listB)) listB = [];
 
+    // "40% Reishi" → { n: 'Reishi', pct: 40 }: find-your-formula and the
+    // analysis page write percentages into herb_names.
+    function herbOf(s){
+      var t = String(s || '').trim();
+      var m = t.match(/^(\d{1,3})%\s+(.+)$/);
+      return m ? { n: m[2].trim(), pct: Number(m[1]) } : { n: t };
+    }
     var listCloud = cloudFormulas.map(function(e){
       var hn = e.herb_names || '';
-      var herbs = hn ? hn.split(',').map(function(s){ return { n: s.trim() }; }).filter(function(h){ return h.n; }) : [];
+      var herbs = hn ? hn.split(',').map(herbOf).filter(function(h){ return h.n; }) : [];
+      if (Array.isArray(e.percentages) && e.percentages.length === herbs.length) {
+        herbs.forEach(function(h, i){ if (h.pct == null) h.pct = Number(e.percentages[i]); });
+      }
       return {
         cloudId: e.id,
         name: e.name || 'Untitled blend',
@@ -3233,33 +3285,55 @@ function lnMoveNote(fromCat, id, toCat){
     // {n: ...} objects, tag source = 'mixology', preserve maker/note for display).
     var listBNorm = listB.map(function(e){
       var herbs = typeof e.herbs === 'string'
-        ? e.herbs.split(',').map(function(s){ return { n: s.trim() }; }).filter(function(h){ return h.n; })
+        ? e.herbs.split(',').map(herbOf).filter(function(h){ return h.n; })
         : (Array.isArray(e.herbs) ? e.herbs : []);
+      if (Array.isArray(e.percentages) && e.percentages.length === herbs.length) {
+        herbs.forEach(function(h, i){ if (h.pct == null) h.pct = Number(e.percentages[i]); });
+      }
       return {
         name: e.name || 'Untitled blend',
         herbs: herbs,
-        source: 'mixology',
+        source: e.source === 'analysis' ? 'analysis' : 'mixology',
         ts: e.ts,
         maker: e.maker || null,
         note: e.note || null,
       };
     });
-    var list = listCloud.concat(listA).concat(listBNorm).sort(function(a,b){ return (b.ts||0) - (a.ts||0); });
+    // ONE formula, ONE card. Every save is kept twice — on this device and
+    // in the shared book — and the book used to show both (plus a second
+    // pair when Save was clicked twice): one formula, four cards (Robin,
+    // 2026-09-27). A device copy is dropped when the shared book holds the
+    // same name with the same herbs, saved within six hours of it; exact
+    // doubles saved seconds apart collapse the same way.
+    function herbKey(e){ return (e.herbs || []).map(function(h){ return String(h.n || h.name || '').toLowerCase().replace(/[^a-z]/g, ''); }).filter(Boolean).sort().join('|'); }
+    function sameAs(a, b, windowMs){
+      return String(a.name || '').trim().toLowerCase() === String(b.name || '').trim().toLowerCase()
+        && herbKey(a) === herbKey(b)
+        && Math.abs((a.ts || 0) - (b.ts || 0)) < windowMs;
+    }
+    var merged = [];
+    listCloud.concat(listA).concat(listBNorm).forEach(function(e){
+      var dup = merged.some(function(k){ return sameAs(k, e, 6 * 3600 * 1000); });
+      if (!dup) merged.push(e);
+    });
+    var list = merged.sort(function(a,b){ return (b.ts||0) - (a.ts||0); });
     window.__faFormulaCount = list.length;
     try { window.dispatchEvent(new CustomEvent('fa:formula-count', { detail: list.length })); } catch (e) {}
     if (!list.length) {
       host.innerHTML = '<div style="padding:36px 28px;border:0.5px dashed rgba(232,177,75,0.3);border-radius:12px;background:rgba(10,12,9,0.4);text-align:center;">' +
         '<div style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:#8B7E62;margin-bottom:8px;">Empty</div>' +
         '<div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-style:italic;font-size:18px;color:#C9B894;line-height:1.5;">No formulas saved on this device yet.</div>' +
-        '<div style="font-size:12.5px;color:#8B7E62;line-height:1.65;margin-top:10px;max-width:46ch;margin-left:auto;margin-right:auto;">Build one in the <a href="/herbal-engine-2/" style="color:#F5D689;border-bottom:0.5px solid rgba(245,214,137,0.4);text-decoration:none;">Herbal Engine</a> or <a href="/mixology" style="color:#F5D689;border-bottom:0.5px solid rgba(245,214,137,0.4);text-decoration:none;">Mixology</a> &mdash; it&rsquo;ll appear here.</div>' +
+        '<div style="font-size:12.5px;color:#8B7E62;line-height:1.65;margin-top:10px;max-width:46ch;margin-left:auto;margin-right:auto;">Build one in <a href="/find-your-formula" style="color:#F5D689;border-bottom:0.5px solid rgba(245,214,137,0.4);text-decoration:none;">Find your formula</a> or <a href="/mixology" style="color:#F5D689;border-bottom:0.5px solid rgba(245,214,137,0.4);text-decoration:none;">Mixology</a> &mdash; it&rsquo;ll appear here.</div>' +
         '</div>';
       return;
     }
     var rows = list.map(function(e){
       var name = e.name || e.intention || 'Untitled formula';
-      var herbs = Array.isArray(e.herbs) ? e.herbs.map(function(h){ return h.n || h.name || ''; }).filter(Boolean) : [];
+      var herbs = Array.isArray(e.herbs) ? e.herbs.map(function(h){ var n = h.n || h.name || ''; return n && typeof h.pct === 'number' && isFinite(h.pct) ? h.pct + '% ' + n : n; }).filter(Boolean) : [];
       var source = e.source === 'herbal-engine-2' ? 'Herbal Engine'
                  : e.source === 'mixology'        ? 'Mixology'
+                 : e.source === 'analysis'        ? 'Analysis'
+                 : e.source === 'find-your-formula' ? 'Find your formula'
                  : e.source === 'cloud'           ? 'Shared'
                  : (e.source || '');
       var date = fmtDate(e.ts || e.t || e.timestamp || e.date);
@@ -3281,7 +3355,17 @@ function lnMoveNote(fromCat, id, toCat){
         '</div>' : '') +
         (e.maker ? '<div style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:#9ED438;margin-bottom:6px;">by ' + esc(e.maker) + '</div>' : '') +
         (e.note ? '<blockquote style="font-family:\'Cormorant Garamond\',Georgia,serif;font-style:italic;font-size:13.5px;color:#C9B894;line-height:1.55;margin:0 0 10px;padding-left:10px;border-left:2px solid rgba(232,177,75,0.35);">' + esc(e.note) + '</blockquote>' : '') +
-        '<div>' + origin + '</div>' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">' + origin +
+          (function(){
+            var hs = (Array.isArray(e.herbs) ? e.herbs : []).filter(function(h){ return h && (h.n || h.name); });
+            if (!hs.length) return '';
+            var q = 'h=' + encodeURIComponent(hs.map(function(h){ return h.n || h.name; }).join('|'));
+            var p = hs.map(function(h){ return h.pct; });
+            if (p.every(function(x){ return typeof x === 'number' && isFinite(x); })) q += '&p=' + p.join(',');
+            q += '&n=' + encodeURIComponent(name) + '&src=book';
+            return '<a href="/formula-analysis/?' + q + '" style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:#C9EE8A;text-decoration:none;border:0.5px solid rgba(158,212,56,0.4);border-radius:999px;padding:6px 11px;background:rgba(158,212,56,0.06);">Open analysis &rarr;</a>';
+          })() +
+        '</div>' +
         // Comments — only for cloud entries with author attribution. Inline
         // list + "Add comment" trigger. Encourages community annotation
         // without bloating the card for empty threads.
@@ -3367,6 +3451,8 @@ function lnMoveNote(fromCat, id, toCat){
      endpoint the Spore portal uses — the portal's agent.jsx needs React +
      Babel, which this page does not load, so only the UI is new. -->
 <script src="/community/academy/myco-academy.js" defer></script>
+<!-- The alchemist's lexicon — shared with /extraction. -->
+<script src="/alchemy-lexicon.js" defer></script>
 <!-- Whole PDFs in the lab notebook, which MYCO reads for members. -->
 <script src="/community/academy/academy-docs.js" defer></script>
 <script src="/cookie-banner.js" defer></script>

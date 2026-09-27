@@ -3803,7 +3803,7 @@ function LiveInventoryPanel({ currentMember, onToast }) {
                     key={h.id}
                     onClick={() => toggleHerb(h.id)}
                     disabled={isPending}
-                    title={h.restricted ? (h.b || h.n) + ' — restricted: in the catalogue only, the Engine never puts it in a formula' : (h.b || h.n)}
+                    title={h.restricted ? (h.b || h.n) + ' — high caution (HIGH / VERY HIGH in herbs.ts): practitioner context, use clinical judgement' : (h.b || h.n)}
                     style={{
                       fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.08em',
                       padding:'6px 12px', borderRadius:999,
@@ -3815,7 +3815,7 @@ function LiveInventoryPanel({ currentMember, onToast }) {
                       transition: 'all 0.15s',
                     }}
                   >
-                    {isStocked ? '●' : '○'} {h.n}{h.restricted ? ' · restricted' : ''}
+                    {isStocked ? '●' : '○'} {h.n}{h.restricted ? ' · high caution' : ''}
                   </button>
                 );
               })}

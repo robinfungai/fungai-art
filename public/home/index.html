@@ -962,6 +962,12 @@ html.reveal-anim .reveal.in { opacity: 1; transform: translateY(0); }
 .footer-col ul li { margin-bottom: 10px; }
 .footer-col ul li a { font-size: 13px; color: var(--lichen); font-family: var(--serif); font-style: italic; transition: color 0.18s; }
 .footer-col ul li a:hover { color: var(--lime); }
+/* The three doors in the footer — shop, dinner, formula. */
+.footer-col ul li a.footer-door { display: block; font-style: normal; padding: 2px 0 6px; }
+.footer-door .fd-name { display: block; font-family: var(--serif); font-style: italic; font-size: 24px; line-height: 1.15; color: var(--parchment); transition: color 0.18s; }
+.footer-door .fd-sub { display: block; margin-top: 5px; font-family: inherit; font-style: normal; font-size: 8px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--amber); }
+.footer-door:hover .fd-name { color: var(--lime); }
+.footer-col ul li:has(> .footer-door) { margin-bottom: 18px; }
 .footer-bottom {
   border-top: 1px solid rgba(158,212,56,0.06); padding-top: 28px;
   display: flex; justify-content: space-between; align-items: center;
@@ -2850,33 +2856,27 @@ function toggleMobileMenu() {
       <div class="footer-brand">
         <span class="name">Fungai Art</span>
         <span class="entheo">Entheobotanicals</span>
-        <p>Living mycelial art: fusion of plants, alchemy, frequency. Berlin · Sweden · France · Lebanon.</p>
+        <p>Living mycelial art: fusion of plants, alchemy, frequency.</p>
       </div>
+      <!-- Three doors, and only three (Robin, 2026-09-27): the shop, the
+           dinner, the formula. Set larger than a link list so they read
+           as the way in, not as small print. -->
       <div class="footer-col">
         <h4>Shop</h4>
         <ul>
-          <li><a href="#shop">Fungal Extracts</a></li>
-          <li><a href="#shop">Compositions</a></li>
-          <li><a href="#shop">Sacred Flowers</a></li>
-          <li><a href="#shop">Herbal Mixes</a></li>
-          <li><a href="#shop">Specials</a></li>
+          <li><a class="footer-door" href="/shop"><span class="fd-name">Shop</span><span class="fd-sub">Extracts from our lab &rarr;</span></a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Experiences</h4>
         <ul>
-          <li><a href="#dinner"><span class="mt-name">Dinner Experience</span></a></li>
-          <li><a href="#forage">Foraging Circles</a></li>
-          <li><a href="https://www.instagram.com/fungai.art" target="_blank" rel="noopener noreferrer">Private Sessions</a></li>
-          <li><a href="#dinner">Festivals</a></li>
-          <li><a href="mailto:robin@fungai.art">Collaborations</a></li>
+          <li><a class="footer-door" href="/dinner-experience"><span class="fd-name mt-name">Dinner Experience</span><span class="fd-sub">A ceremony at the table &rarr;</span></a></li>
+          <li><a class="footer-door" href="/find-your-formula"><span class="fd-name">Find Your Formula</span><span class="fd-sub">A bottle composed for you &rarr;</span></a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Connect</h4>
         <ul>
-          <li><a href="#journal">Field Notes</a></li>
-          <li><a href="#about">About</a></li>
           <li><a href="https://www.instagram.com/fungai.art" target="_blank" rel="noopener noreferrer">Instagram</a></li>
           <li><a href="mailto:robin@fungai.art">Contact Robin</a></li>
         </ul>

@@ -1351,6 +1351,9 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
     <div class="r-actions">
       <button class="r-action" type="button" id="restartBtn">↺ Take the quiz again</button>
       <a class="r-action" href="/shop/">◈ See the full apothecary</a>
+      <!-- The standard analysis — only once the percentages are revealed
+           (after reserving), so it never shows them before. -->
+      <a class="r-action" id="rAnalysisLink" href="/formula-analysis/" target="_blank" rel="noopener" hidden>△ Open the full analysis</a>
     </div>
   </section>
 
@@ -4071,6 +4074,22 @@ function _fyfPaintServerReveal(a, body) {
       if (real) n.textContent = real;
     });
     if (herbsBox) herbsBox.classList.remove('pct-locked');
+    // The percentages are out now, so the formula can open into the
+    // standard analysis (/formula-analysis/) with them.
+    try {
+      const f = window.__authoritativeFormula;
+      const a = document.getElementById('rAnalysisLink');
+      if (f && a && Array.isArray(f.herbs) && f.herbs.length) {
+        const q = new URLSearchParams({
+          h: f.herbs.map(h => h.name).join('|'),
+          p: (f.percentages || []).join(','),
+          n: f.name || '',
+          src: 'find-your-formula',
+        });
+        a.href = '/formula-analysis/?' + q.toString();
+        a.hidden = false;
+      }
+    } catch (_) {}
   };
 
   // Synergy card — server pre-computed the pairs (with notes) so the

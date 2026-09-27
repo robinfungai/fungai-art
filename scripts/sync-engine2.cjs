@@ -120,8 +120,13 @@ function parseHerbs() {
   const src = fs.readFileSync(HERBS_PATH, 'utf-8');
   const herbs = [];
 
-  // Split on herb object boundaries (each starts with { id: N, )
-  const blocks = src.split(/(?=\s*\{\s*\n\s*id:\s*\d+)/);
+  // Split on herb object boundaries (each starts with { id: N, ).
+  // Comment lines may sit between the brace and the id — Amla (523) and
+  // Kalmegh (526) open with a paragraph of notes — and until 2026-09-27
+  // this split did not allow for them, so both records were swallowed
+  // into the herb before them: the Engine (and the apothecary shelf)
+  // had 240 herbs while herbs.ts had 242.
+  const blocks = src.split(/(?=\s*\{\s*\n(?:\s*\/\/[^\n]*\n)*\s*id:\s*\d+)/);
 
   for (const block of blocks) {
     const idM    = block.match(/id:\s*(\d+)/);

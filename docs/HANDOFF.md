@@ -80,6 +80,52 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ---
 
+## 0.7 · 2026-09-27, evening — third commit, not pushed
+
+**The standard formula analysis** — `/formula-analysis/?h=A|B&p=40,30&n=Name&src=…`
+(page) → `/api/formula-analysis` (`netlify/functions/formula-analysis.mjs`) →
+`src/server/formula-engine/analyze.js`. Deterministic: engine balance
+(`assignPercentages`), pair synergy/caution (`checkFormulaPairs`), the
+validator's caps as "engine checks", temperature, meridians, extraction plan at
+1:3, swap/add/remove/re-weigh with a before/after diff. MYCO's reading only on
+request (Opus 5, adaptive, effort medium, `fallbacks: "default"`, claims-guarded).
+Opened from Mixology (△ Full analysis + MYCO), the formula book (Open analysis →)
+and find-your-formula (only AFTER the percentages are revealed). Dev: vite
+`devFunctions()` serves the endpoint on :5173 (MYCO needs ANTHROPIC_API_KEY,
+which .env.local does not have). `npm run test:formula-analysis` — 24 checks.
+
+**Formula book ×4** — each save is kept twice (device + shared) and the book
+never deduped; Mixology's Save also stayed clickable during the cloud write.
+Both fixed; the book dedupes by name + herb set within 6 h.
+
+**Herb counts** — Amla 523 + Kalmegh 526 were swallowed by the herbs.ts parsers
+in `sync-engine2.cjs` and `build-herb-pool.cjs` (comment lines before `id:`).
+Engine, shelf, pool, Academy now **242**.
+
+**Also:** /extraction lists every catalogue herb (bench table + targets read
+from each record), 1:3 house standard (extraction page, Academy methods,
+Mixology advice, MYCO prompt, 135 protocols in `extraction.ts`, KB rebuilt),
+100-term lexicon (`public/alchemy-lexicon.js`, open on /extraction, collapsed on
+the Academy), Mixology aligned with the atlas (all 242, 55 added from atlas
+records), landing footer cut to Shop / Dinner Experience / Find Your Formula.
+
+### ⚠ Decisions waiting on Robin
+1. **Stimulant classifier.** `pharmacology.js isCNSStimulant` substring-matches
+   'mate' inside "glutamate" — 9 of 18 "stimulants" are false (Lavender, St John's
+   Wort, He Shou Wu…). Left as is ON PURPOSE: fixing it lets **He Shou Wu
+   (caution HIGH, liver injury)** into energy bottles (fixture 13 changes).
+   Decide: fix + keep HIGH-caution herbs out of consumer bottles? The analysis
+   uses `isCNSStimulantStrict`.
+2. **1:3 vs the dose lines.** 58 herbs.ts dosage lines say "Extract (1:5 …):
+   N ml". A 1:3 extract is ~1.7× stronger per ml. Those were NOT changed —
+   they need a deliberate dose decision, not a find-and-replace.
+3. `/extraction` "Biofrequency of herbs (MHz)" section — pseudo-science next to
+   the claims policy. Not touched.
+4. Untracked photos in `public/atlas/` (amla, cardamom, …) — `build:atlas` would
+   reference them; commit the photos first or they 404 live.
+
+---
+
 ## 0.6 · 2026-09-27 — two commits on `main`, not pushed
 
 `2da158a` MYCO readable (claims guard kept flattening line breaks → all-caps

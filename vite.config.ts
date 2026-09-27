@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 import fs from 'fs'
 import { createRequire } from 'module'
+import { pathToFileURL } from 'url'
 
 // vite.config.ts is bundled to ESM before it runs, so a bare require() of a
 // CJS file gets rewritten and its own require('fs') fails. createRequire
@@ -39,6 +40,9 @@ const STATIC_PAGES = [
   // hero media and the generated data, which Vite serves as static files —
   // only the bare /atlas path needs this entry.
   '/atlas',
+  // The standard formula analysis (public/formula-analysis/), opened from
+  // Mixology, Find your formula and the formula book.
+  '/formula-analysis',
 ];
 
 // Academy P0.5 · the community portal no longer ships raw JSX with
@@ -63,6 +67,42 @@ const compileJsx = () => ({
       } catch (e: any) {
         res.statusCode = 500;
         res.end('/* JSX compile error in ' + pathOnly + ': ' + String(e && e.message) + ' */');
+      }
+    });
+  },
+});
+
+// /api/* is served by Netlify Functions in production. In dev there is no
+// function runtime on :5173, so the formula analysis is wired straight to
+// its handler here — the engine part works locally; MYCO's reading needs
+// ANTHROPIC_API_KEY in the environment and otherwise says it is off.
+const devFunctions = () => ({
+  name: 'dev-netlify-functions',
+  configureServer(server: any) {
+    const ROUTES: Record<string, string> = {
+      '/api/formula-analysis': './netlify/functions/formula-analysis.mjs',
+    };
+    server.middlewares.use(async (req: any, res: any, next: any) => {
+      const pathOnly = (req.url || '').split('?')[0];
+      const file = ROUTES[pathOnly];
+      if (!file) return next();
+      try {
+        const chunks: Buffer[] = [];
+        for await (const ch of req) chunks.push(ch as Buffer);
+        const url = pathToFileURL(path.resolve(__dirname, file)).href;
+        const mod = await import(/* @vite-ignore */ url);
+        const out = await mod.handler({
+          httpMethod: req.method,
+          headers: req.headers,
+          body: Buffer.concat(chunks).toString('utf8'),
+        });
+        res.statusCode = out.statusCode || 200;
+        Object.entries(out.headers || {}).forEach(([k, v]) => res.setHeader(k, v as string));
+        res.end(out.body || '');
+      } catch (e: any) {
+        res.statusCode = 500;
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({ error: 'dev function failed: ' + String(e && e.message) }));
       }
     });
   },
@@ -117,7 +157,7 @@ export default defineConfig({
   // is what it looked like on 2026-09-25. strictPort fails loudly instead, so
   // you go and close the other server rather than re-doing a magic link.
   server: { port: 5173, strictPort: true },
-  plugins: [react(), compileJsx(), serveStaticPages()],
+  plugins: [react(), compileJsx(), devFunctions(), serveStaticPages()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

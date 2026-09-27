@@ -4632,6 +4632,32 @@
     "caution_level": "MEDIUM"
   },
   {
+    "id": 523,
+    "name": "Amla / Amalaki",
+    "primary_functions": [
+      "Tridoshic Rasayana — the premier Pitta-pacifying tonic in Ayurveda, reducing systemic heat and inflammation without extinguishing the digestive fire (Agni)",
+      "Ascorbic acid / tannin matrix — an exceptionally dense, heat-stable form of natural vitamin C protected by hydrolysable tannins (emblicanin A and B), outperforming synthetic ascorbic acid in antioxidant assays",
+      "TCM Yu Gan Zi — clears Lung heat and generates fluids",
+      "Hepatoprotective and radioprotective — shields liver parenchyma from heavy metal toxicity and protects cellular DNA from radiation-induced chromosomal damage",
+      "Connective tissue and hair tonic — stimulates procollagen synthesis and strengthens the hair follicle bed, traditionally against premature greying"
+    ],
+    "energetics": [
+      "Cool",
+      "Moistening",
+      "Sour",
+      "Sweet",
+      "Astringent",
+      "Fluid-Generating"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Liver",
+      "Stomach",
+      "Heart"
+    ],
+    "caution_level": "LOW"
+  },
+  {
     "id": 524,
     "name": "Bibhitaki",
     "primary_functions": [
@@ -4680,6 +4706,30 @@
       "Heart",
       "Liver",
       "Spleen"
+    ],
+    "caution_level": "HIGH"
+  },
+  {
+    "id": 526,
+    "name": "Kalmegh / Andrographis",
+    "primary_functions": [
+      "The ",
+      " (TCM: Chuan Xin Lian) — a premier broad-spectrum antiviral and antibacterial, halting upper respiratory infection, influenza, and pharyngitis when taken at onset",
+      "Systemic anti-spirochetal (Buhner Protocol) — acts across the blood-brain barrier to clear Borrelia burgdorferi from the central nervous system and joints",
+      "Immunostimulant — drives macrophage phagocytosis and natural killer cell activity",
+      "Hepatoprotective and choleretic — protects liver parenchyma from toxic and viral damage while strongly stimulating bile flow"
+    ],
+    "energetics": [
+      "Extremely Cold",
+      "Dry",
+      "Intensely Bitter",
+      "Heat-Clearing"
+    ],
+    "tcm_meridians": [
+      "Lung",
+      "Stomach",
+      "Large Intestine",
+      "Liver"
     ],
     "caution_level": "HIGH"
   },

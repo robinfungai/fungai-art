@@ -66,6 +66,17 @@
   "restricted": true
  },
  {
+  "id": "amla_amalaki",
+  "n": "Amla / Amalaki",
+  "b": "Emblica officinalis / Phyllanthus emblica",
+  "cat": "Digestive",
+  "p": [
+   "tcm",
+   "ayurvedic",
+   "european"
+  ]
+ },
+ {
   "id": "anantmul",
   "n": "Anantmul",
   "b": "Hemidesmus indicus",
@@ -1101,6 +1112,16 @@
   "p": [
    "european"
   ]
+ },
+ {
+  "id": "kalmegh_andrographis",
+  "n": "Kalmegh / Andrographis",
+  "b": "Andrographis paniculata",
+  "cat": "Hepatic",
+  "p": [
+   "tcm"
+  ],
+  "restricted": true
  },
  {
   "id": "kanna",

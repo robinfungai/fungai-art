@@ -10,7 +10,10 @@ function extractHerbsFromFile() {
 
   // Find all herb objects by matching the pattern: { id: NUMBER, ... caution_level: "..." }
   // This regex finds each herb object from opening brace to closing brace
-  const herbPattern = /\{\s*id:\s*(\d+),[\s\S]*?caution_level:\s*['"]([^'"]+)['"]/g;
+  // Comment lines may sit between the brace and the id (Amla 523,
+  // Kalmegh 526) — allowed since 2026-09-27; before that both were
+  // missing from the pool.
+  const herbPattern = /\{\s*(?:\/\/[^\n]*\n\s*)*id:\s*(\d+),[\s\S]*?caution_level:\s*['"]([^'"]+)['"]/g;
 
   let match;
   while ((match = herbPattern.exec(content)) !== null) {
