@@ -5,7 +5,7 @@
 <meta name="color-scheme" content="dark">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Atlas · Fungai Art</title>
-<meta name="description" content="A living intelligence of plants, fungi and human intention. 242 organisms with their taxonomy, chemistry, tradition, extraction, safety and relationships."/>
+<meta name="description" content="A living intelligence of plants, fungi and human intention. 245 organisms with their taxonomy, chemistry, tradition, extraction, safety and relationships."/>
 <meta name="author" content="Fungai Art"/>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
 <link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
@@ -13,12 +13,12 @@
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Fungai Art"/>
 <meta property="og:title" content="The Atlas · Fungai Art"/>
-<meta property="og:description" content="Explore the intelligence of the botanical world — 242 organisms, their chemistry, their traditions, and how they relate to one another."/>
+<meta property="og:description" content="Explore the intelligence of the botanical world — 245 organisms, their chemistry, their traditions, and how they relate to one another."/>
 <meta property="og:image" content="https://www.fungai.art/fungi.png?v=3"/>
 <meta property="og:url" content="https://www.fungai.art/atlas"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="The Atlas · Fungai Art"/>
-<meta name="twitter:description" content="242 organisms — taxonomy, chemistry, tradition, safety and the relationships between them."/>
+<meta name="twitter:description" content="245 organisms — taxonomy, chemistry, tradition, safety and the relationships between them."/>
 <meta name="twitter:image" content="https://www.fungai.art/fungi.png?v=3"/>
 <link rel="canonical" href="https://www.fungai.art/atlas"/>
 
@@ -143,23 +143,34 @@ a { color: inherit; }
   margin: 0 0 10px; overflow: hidden; border-radius: 2px;
   background: var(--forest-mid, #0D1619); }
 .atl-card-media img { width: 100%; height: 100%; object-fit: cover; display: block;
-  filter: saturate(.8) contrast(1.05) brightness(.82);
+  filter: saturate(1.15) contrast(1.08) brightness(.97);
   transition: transform .8s cubic-bezier(.2,.7,.3,1), filter .5s ease; }
 .atl-card:hover .atl-card-media img,
 .atl-card:focus-visible .atl-card-media img { transform: scale(1.06);
-  filter: saturate(1) contrast(1.06) brightness(.98); }
+  filter: saturate(1.28) contrast(1.1) brightness(1.05); }
 
-/* No photograph yet: the sigil, centred, on the house forest tone. */
+/* No photograph yet: the sigil, centred, glowing in its tradition's hue
+   (--hue, set per card from organism-sigil.tsx sigilHue). More vivid by
+   Robin's ask, 2026-09-28: the seal is saturated and lit, and the frame
+   carries a wash of the same colour, so a wall of cards reads as colour
+   by tradition rather than a grid of dark tiles. */
 .atl-card-media.is-sigil { display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(160deg, #0D1619 0%, #111D22 55%, #0D1619 100%);
-  border: 0.5px solid rgba(51,96,101,.28); }
-.atl-card-media.is-sigil .atl-card-sigil { opacity: .7; margin: 0 0 22px;
-  transition: opacity .35s ease, transform .5s cubic-bezier(.2,.7,.3,1); }
-.atl-card:hover .atl-card-media.is-sigil .atl-card-sigil { opacity: 1; transform: scale(1.08); }
+  background:
+    radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--hue, #88BAC8) 34%, transparent) 0%, transparent 58%),
+    radial-gradient(ellipse 90% 60% at 50% 100%, color-mix(in srgb, var(--hue, #88BAC8) 16%, transparent), transparent 70%),
+    linear-gradient(160deg, #0D1619 0%, #111D22 55%, #0D1619 100%);
+  border: 0.5px solid color-mix(in srgb, var(--hue, #88BAC8) 40%, transparent);
+  transition: border-color .35s ease; }
+.atl-card-media.is-sigil .atl-card-sigil { opacity: .95; margin: 0 0 22px;
+  filter: saturate(1.7) brightness(1.2) drop-shadow(0 0 12px color-mix(in srgb, var(--hue, #88BAC8) 70%, transparent));
+  transition: opacity .35s ease, transform .5s cubic-bezier(.2,.7,.3,1), filter .35s ease; }
+.atl-card:hover .atl-card-media.is-sigil { border-color: color-mix(in srgb, var(--hue, #88BAC8) 75%, transparent); }
+.atl-card:hover .atl-card-media.is-sigil .atl-card-sigil { opacity: 1; transform: scale(1.1);
+  filter: saturate(1.9) brightness(1.35) drop-shadow(0 0 18px var(--hue, #88BAC8)); }
 
 .atl-card-scrim { position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(to top, rgba(5,9,12,.94) 0%, rgba(5,9,12,.55) 26%,
-    rgba(5,9,12,.12) 52%, rgba(5,9,12,0) 74%); }
+  background: linear-gradient(to top, rgba(5,9,12,.9) 0%, rgba(5,9,12,.42) 24%,
+    rgba(5,9,12,.06) 46%, rgba(5,9,12,0) 64%); }
 
 .atl-card-type { position: absolute; left: 12px; right: 12px; bottom: 11px;
   display: flex; flex-direction: column; gap: 1px; text-align: left; }
@@ -496,7 +507,7 @@ a { color: inherit; }
 <noscript>
   <div class="nojs" style="display:block">
     <h1>The Atlas</h1>
-    <p>The atlas is an interactive index of 242 organisms and needs JavaScript to
+    <p>The atlas is an interactive index of 245 organisms and needs JavaScript to
     explore. The catalogue itself is also readable through the
     <a href="/find-your-formula">guided reading</a>, and the extracts are in the
     <a href="/shop">apothecary</a>.</p>

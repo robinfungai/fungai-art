@@ -28,14 +28,20 @@
    after a reload. Everything still works: the insert falls back to
    the recipient copy only, and sent rows say so instead of breaking.
 
-   No Realtime yet: the inbox polls — every 10 s while open, every
-   60 s for the badge while closed, and on window focus.
+   Live delivery (2026-09-28): the inbox listens on a Supabase Realtime
+   channel and reloads only when a message arrives or is read. While the
+   channel is connected the timer is a slow safety net (2 min open,
+   5 min closed). If it never connects (supabase-dm-realtime.sql not
+   run, socket blocked) it polls as before — 10 s open, 60 s closed —
+   and always on window focus.
    ──────────────────────────────────────────────────────────────── */
 (function () {
   const { useState, useEffect, useRef, useCallback, useMemo } = React;
 
   const POLL_OPEN_MS = 10000;
   const POLL_IDLE_MS = 60000;
+  const LIVE_OPEN_MS = 120000;
+  const LIVE_IDLE_MS = 300000;
   const FULL_COLS = 'id, from_auth_user_id, to_profile_id, ciphertext, ciphertext_self, to_key_fp, self_key_fp, created_at, read_at, thread_key';
   const BASE_COLS = 'id, from_auth_user_id, to_profile_id, ciphertext, created_at, read_at, thread_key';
 
@@ -198,13 +204,35 @@
     }, [phase.name]);
 
     useEffect(() => { load(); }, [load]);
+
+    // Realtime: RLS decides which changes reach this member, so the
+    // channel carries only their own conversations (still ciphertext).
+    // A burst of events (send + mark-read) collapses into one reload.
+    const [live, setLive] = useState(false);
+    const loadRef = useRef(load);
+    loadRef.current = load;
+    useEffect(() => {
+      if (phase.name !== 'ready' || !sb() || typeof sb().channel !== 'function') return;
+      let timer = null;
+      const kick = () => { clearTimeout(timer); timer = setTimeout(() => loadRef.current(), 250); };
+      const ch = sb()
+        .channel('dm-inbox-' + Math.random().toString(36).slice(2))
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'messages_e2e' }, kick)
+        .subscribe(status => {
+          setLive(status === 'SUBSCRIBED');
+          if (status === 'SUBSCRIBED') kick(); // catch anything missed while connecting
+        });
+      return () => { clearTimeout(timer); setLive(false); sb().removeChannel(ch); };
+    }, [phase.name]);
+
     useEffect(() => {
       if (phase.name !== 'ready') return;
-      const t = setInterval(load, open ? POLL_OPEN_MS : POLL_IDLE_MS);
+      const every = live ? (open ? LIVE_OPEN_MS : LIVE_IDLE_MS) : (open ? POLL_OPEN_MS : POLL_IDLE_MS);
+      const t = setInterval(load, every);
       const onFocus = () => load();
       window.addEventListener('focus', onFocus);
       return () => { clearInterval(t); window.removeEventListener('focus', onFocus); };
-    }, [phase.name, open, load]);
+    }, [phase.name, open, load, live]);
 
     // Senders we cannot name from SporeData.MEMBERS — look them up once.
     useEffect(() => {

@@ -66,11 +66,11 @@ section strong{color:var(--ml);font-weight:500;}
 <h1 class="hero-title">Privacy <em>policy.</em></h1>
 <p class="hero-blurb">We treat your data the way we treat the forest — minimally disturbed, ethically harvested, never sold. This page explains what we collect, why, and what your rights are.</p>
 
-<div class="meta">Last updated 27 September 2026 · Effective immediately</div>
+<div class="meta">Last updated 28 September 2026 · Effective immediately</div>
 
 <div class="tldr">
   <div class="tldr-label">⟡ In one sentence</div>
-  <div class="tldr-text">We collect only what each part of the site needs to work — no analytics, no advertising trackers, no selling your data, ever — and we tell you below exactly what goes where.</div>
+  <div class="tldr-text">We collect only what each part of the site needs to work — no third-party analytics, no advertising trackers, no selling your data, ever — and we tell you below exactly what goes where.</div>
 </div>
 
 <section>
@@ -81,7 +81,7 @@ section strong{color:var(--ml);font-weight:500;}
 <section>
   <h2>What we <em>collect</em> — feature by feature</h2>
   <ul>
-    <li><strong>Visiting the site</strong> — our host (Netlify) processes your IP address and basic request data to deliver pages and protect the site. Server logs are kept briefly. <em>Basis: legitimate interest (running a secure website).</em></li>
+    <li><strong>Visiting the site</strong> — our host (Netlify) processes your IP address and basic request data to deliver pages and protect the site. On every request our ban check compares your IP address against a short list of blocked addresses; it is not stored. Server logs are kept briefly. <em>Basis: legitimate interest (running a secure website).</em></li>
     <li><strong>Shop &amp; orders</strong> — name, email, shipping address and the items you order, used to fulfil and ship your order and to send order emails. Card payments are handled entirely by Stripe; we never see your card number. <em>Basis: contract; legal obligation (bookkeeping).</em></li>
     <li><strong>Find Your Formula</strong> — your quiz answers, which can include <strong>health-related information</strong> (for example medications, pregnancy, health conditions, sleep, how you feel, your age range) and any note you write. We store them securely in our database to compose your formula and, if you reserve it, to prepare it. An AI model (Anthropic&rsquo;s Claude) assists the composition and writes your personal reading; under Anthropic&rsquo;s commercial terms this data is not used to train its models. If you reserve a formula we also receive your name, email, city and country, and send a confirmation email. <em>Basis: your explicit consent, given on the start screen — you can withdraw it at any time by emailing us, and we will delete your answers.</em></li>
     <li><strong>Dinner Experience enquiries</strong> — the name, email and message you send through the enquiry form are emailed to Robin. <em>Basis: steps you ask for before a booking; legitimate interest in answering you.</em></li>
@@ -141,7 +141,6 @@ section strong{color:var(--ml);font-weight:500;}
     <li><strong>Resend</strong> — sends emails (formula reservations, order and enquiry notifications, newsletter). <a href="https://resend.com/legal/privacy-policy">resend.com/legal/privacy-policy</a></li>
     <li><strong>Anthropic</strong> — the AI model behind formula composition, personal readings and MYCO. <a href="https://www.anthropic.com/legal/privacy">anthropic.com/legal/privacy</a></li>
     <li><strong>Map &amp; nature data for the Foraging Map</strong> — Esri and CARTO (map tiles, loaded by your browser, so they see your IP address), BigDataCloud (place name from rounded coordinates), Open-Meteo (weather), iNaturalist and GBIF (public species observations). No names or contact details are sent to them.</li>
-    <li><strong>Instagram (Meta)</strong> — posts embedded on the homepage are loaded from Instagram, which receives your IP address and may set its own cookies. <a href="https://privacycenter.instagram.com/policy">Instagram privacy policy</a></li>
     <li><strong>Fonts &amp; code libraries</strong> — every typeface and the sign-in library are served from fungai.art itself, so no font service sees your visit. jsDelivr delivers the PDF reader in the members' Academy and sees your IP address when it does; CoinGecko provides crypto price rates when a price is shown in crypto.</li>
   </ul>
   <p>Some of these providers are based outside the EU/EEA (mainly in the United States). Where that is the case, transfers rely on the provider&rsquo;s safeguards, such as the EU–US Data Privacy Framework or the European Commission&rsquo;s Standard Contractual Clauses.</p>
@@ -149,14 +148,13 @@ section strong{color:var(--ml);font-weight:500;}
 
 <section>
   <h2>Cookies &amp; <em>local storage</em></h2>
-  <p>We use the bare minimum, and nothing for marketing or analytics:</p>
+  <p>We use the bare minimum, and nothing for marketing or analytics. Everything below exists only to make the feature you are using work, which is why the site shows no cookie banner: there is nothing to ask your consent for.</p>
   <ul>
     <li><strong>fa_cart_v1</strong> — your shopping cart (browser only)</li>
-    <li><strong>fungai_cookie_ack</strong> — remembers your choice on the cookie notice (browser only)</li>
+    <li><strong>fungai_formulas</strong> — formulas you save in Mixology (browser only)</li>
     <li><strong>Formula quiz progress</strong> — lets you pick up the quiz where you left off; cleared when you refresh the start screen or finish (browser only)</li>
     <li><strong>Foraging Map &amp; community settings</strong> — your map acknowledgement and, if you&rsquo;re a member, your sign-in session</li>
     <li><strong>Stripe cookies</strong> — only set when you check out, for fraud prevention</li>
-    <li><strong>Instagram cookies</strong> — may be set by the embedded posts on the homepage (see above)</li>
   </ul>
   <p>Clearing your browser data removes everything stored in your browser.</p>
 </section>
@@ -261,7 +259,6 @@ section strong{color:var(--ml);font-weight:500;}
 </div>
 
 </div>
-<script src="/cookie-banner.js" defer></script>
 <!-- page-view beacon · no cookie, no visitor id, honours DNT (public/visit.js) -->
 <script src="/visit.js" defer></script>
 </body>

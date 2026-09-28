@@ -564,6 +564,16 @@
   "restricted": true
  },
  {
+  "id": "comfrey",
+  "n": "Comfrey",
+  "b": "Symphytum officinale",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ],
+  "restricted": true
+ },
+ {
   "id": "cordyceps",
   "n": "Cordyceps",
   "b": "Cordyceps militaris",
@@ -908,6 +918,15 @@
   ]
  },
  {
+  "id": "green_tea",
+  "n": "Green Tea",
+  "b": "Camellia sinensis",
+  "cat": "Digestive",
+  "p": [
+   "european"
+  ]
+ },
+ {
   "id": "gromwell_root_shikonin",
   "n": "Gromwell Root / Shikonin",
   "b": "Lithospermum erythrorhizon",
@@ -1011,6 +1030,15 @@
    "tcm"
   ],
   "restricted": true
+ },
+ {
+  "id": "hibiscus",
+  "n": "Hibiscus",
+  "b": "Hibiscus sabdariffa",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
  },
  {
   "id": "holy_basil_tulsi",

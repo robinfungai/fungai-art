@@ -5976,5 +5976,71 @@
       "Large Intestine"
     ],
     "caution_level": "MEDIUM"
+  },
+  {
+    "id": 592,
+    "name": "Green Tea",
+    "primary_functions": [
+      "Calm alertness: caffeine (20 to 45 mg per cup) paired with L-theanine; in placebo-controlled human trials the pair improved attention and task switching and reduced mental fatigue more than either alone (PMID 18681988, 18006208)",
+      "Antioxidant and cardiometabolic support: catechins (EGCG, EGC, ECG) as a daily beverage",
+      "Clears heat and supports digestion after rich food, in the Chinese tradition (Lu Cha is cooling and bitter)"
+    ],
+    "energetics": [
+      "Cool",
+      "Bitter",
+      "Sweet",
+      "Slightly Astringent",
+      "Clearing"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Lung",
+      "Stomach"
+    ],
+    "caution_level": "MEDIUM"
+  },
+  {
+    "id": 593,
+    "name": "Hibiscus",
+    "primary_functions": [
+      "Blood pressure: three cups a day for six weeks lowered systolic pressure in prehypertensive and mildly hypertensive adults against placebo (PMID 20018807); a meta-analysis of RCTs confirmed a modest fall in systolic and diastolic pressure (PMID 25875025)",
+      "Cooling and refreshing: clears summer heat and thirst, in West African, Middle Eastern and Caribbean tradition",
+      "Antioxidant: anthocyanins (delphinidin and cyanidin sambubiosides) and organic acids"
+    ],
+    "energetics": [
+      "Cool",
+      "Sour",
+      "Moist",
+      "Slightly Astringent",
+      "Heat-Clearing"
+    ],
+    "tcm_meridians": [
+      "Heart",
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "LOW-MEDIUM"
+  },
+  {
+    "id": 594,
+    "name": "Comfrey",
+    "primary_functions": [
+      "Sprains, bruises and strains (external): a comfrey root ointment eased pain and swelling of ankle sprains against placebo (PMID 15500257) and was not inferior to diclofenac gel (PMID 16323288)",
+      "Back and joint pain (external): comfrey root ointment reduced acute back pain (PMID 19460762) and knee osteoarthritis pain (PMID 17169543) against placebo",
+      "Traditional bone-and-tissue mend: the ",
+      " of European folk medicine, used over closed fractures and bruised tissue"
+    ],
+    "energetics": [
+      "Cool",
+      "Moist",
+      "Sweet",
+      "Mucilaginous",
+      "Tissue-Knitting"
+    ],
+    "tcm_meridians": [
+      "Liver",
+      "Kidney"
+    ],
+    "caution_level": "HIGH"
   }
 ]

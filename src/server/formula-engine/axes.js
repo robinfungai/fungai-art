@@ -34,6 +34,10 @@ const RESTRICTED_NAMES = [
   // but the quiz must never put it in a bottle. Same treatment as
   // Kratom: catalogued, never recommended.
   'tripterygium','thunder god vine','lei gong teng',
+  // Comfrey (id 594) — external use only: its pyrrolizidine alkaloids
+  // are liver-toxic when swallowed. In the encyclopedia, the Atlas and
+  // the Moder Jord cream; never in a bottle (Robin, 2026-09-28).
+  'comfrey','symphytum',
 ];
 // Word-boundary match, NOT a bare substring test. A plain includes()
 // let a short entry ban an unrelated botanical by accident: 'lsa'

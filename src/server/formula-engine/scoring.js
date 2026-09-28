@@ -261,17 +261,20 @@ function notesBoost(h, notes) {
 function scoreHerb(h, a) {
   const ax = h._ax;
   let s = 0;
-  if (ax.intentions.includes(a.intention)) {
-    s += 5 / Math.max(1, ax.intentions.length);
-  }
-  if (Array.isArray(a.intentions) && a.intentions.length > 1) {
-    if (a.intentions[1] && ax.intentions.includes(a.intentions[1])) {
-      s += 3 / Math.max(1, ax.intentions.length);
-    }
-    if (a.intentions[2] && ax.intentions.includes(a.intentions[2])) {
-      s += 1.5 / Math.max(1, ax.intentions.length);
-    }
-  }
+  // The goal leads (engine 2.3, 2026-09-28). Until then the primary
+  // intention was worth at most 5 points against pattern + stress + time
+  // (up to 9), so people with different goals but similar bodies got
+  // near-identical bottles: 56% overlap between goals, and only 44% of
+  // the herbs seated actually served the goal asked for. Now a match is
+  // worth a flat base plus a specialist bonus (a herb serving one goal
+  // beats one that lists eight), and a herb serving none of the chosen
+  // goals keeps only half its score.
+  const n = Math.max(1, ax.intentions.length);
+  const wanted = Array.isArray(a.intentions) && a.intentions.length ? a.intentions : [a.intention];
+  let servesGoal = false;
+  if (ax.intentions.includes(a.intention)) { s += 6 + 6 / n; servesGoal = true; }
+  if (wanted[1] && ax.intentions.includes(wanted[1])) { s += 3 + 3 / n; servesGoal = true; }
+  if (wanted[2] && ax.intentions.includes(wanted[2])) { s += 1.5 + 1.5 / n; servesGoal = true; }
   if (ax.patterns.includes(a.pattern)) {
     s += 4;
   } else if (ax.patterns.length === 1 && ax.patterns[0] === 'mixed') {
@@ -300,7 +303,7 @@ function scoreHerb(h, a) {
   s += sleepBoost(h, a.sleep);
   s += nervousBoost(h, a.nervous);
   s += energyCurveBoost(h, a.energy_curve);
-  return s;
+  return servesGoal ? s : s * 0.5;
 }
 
 module.exports = {

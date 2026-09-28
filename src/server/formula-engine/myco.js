@@ -33,6 +33,7 @@ function _buildShortlistText(candidates) {
     if (h._isTrace)        tags.push('TRACE');
     if (h._isGABAergic)    tags.push('GABA');
     if (h._isCNSStimulant) tags.push('STIM');
+    if (h._isSerotonergic) tags.push('SERO');
     const tagStr = tags.length ? ' · ' + tags.join('/') : '';
     return (
       (i + 1) + '. id=' + (h.id || '') + ' · ' + (h.name || '') +
@@ -78,6 +79,7 @@ const COMPOSE_SYS =
   '    · TRACE — max 1 TRACE-marked herb in the formula, and its pct MUST be ≤ 5% (potent essential-oil, would dominate flavour + carry safety risk at higher doses).\n' +
   '    · GABA  — max 2 GABA-marked herbs (additive CNS depression risk if stacked further).\n' +
   '    · STIM  — max 2 STIM-marked herbs (additive adrenergic drive if stacked further).\n' +
+  '    · SERO  — max 1 SERO-marked herb (two serotonergic herbs stack toward serotonin syndrome).\n' +
   '- Do NOT diagnose. Do NOT prescribe. Traditional herbal support only, not medical treatment.\n' +
   '- Reference the free-text explicitly if it names a priority, prior herb experience, or contraindication history.\n\n' +
   'OUTPUT FORMAT — return ONLY valid JSON, no preamble, no code fences, matching:\n' +

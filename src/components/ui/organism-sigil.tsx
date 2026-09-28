@@ -41,6 +41,12 @@ const TRADITION_HUE: Record<string, string> = {
   'NORTH AMERICAN': '#A8B8C8', GLOBAL: '#9AA79E',
 };
 
+/** The tradition's hue, for anything drawn around the seal (the Atlas
+ *  card's glow). Same map the seal itself uses. */
+export function sigilHue(tradition?: string): string {
+  return TRADITION_HUE[tradition || 'GLOBAL'] || TRADITION_HUE.GLOBAL;
+}
+
 // Evidence closes the ring. A is a complete circle; D is a tick of one.
 const GRADE_SWEEP: Record<string, number> = {
   'A+': 1, A: 0.95, 'A-': 0.88, 'B+': 0.8, B: 0.72, 'B-': 0.64,

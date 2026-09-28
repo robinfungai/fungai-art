@@ -2619,57 +2619,25 @@ function toggleMobileMenu() {
       <h2 class="sec-title" style="font-family:'TAN-PARADISO','Cormorant Garamond',serif;margin-top:6px;">Spore <em>Stories</em></h2>
     </div>
     <div class="spore-grid reveal reveal-d1">
-      <!-- One pinned post (2026-09-25). There were three: the reel on the
-           right never rendered, and Robin kept only this one. Fallback
-           card: drop the post photo at /home/spore/DTx5LGZjM0j.webp. -->
+      <!-- One pinned post, as a plain link (2026-09-28). The live Instagram
+           embed is gone: it sent every visitor's IP to Meta and was the only
+           thing on the site that needed a cookie banner, so both went. Put the
+           post's photo at /home/spore/inner-architecture.webp — until it
+           exists the card shows its drawn placeholder. -->
       <div class="spore-embed">
-        <blockquote class="instagram-media"
-          data-instgrm-permalink="https://www.instagram.com/p/DTx5LGZjM0j/?utm_source=ig_embed"
-          data-instgrm-version="14"
-          style="background:#fff;border:0;border-radius:14px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;min-width:0;padding:0;width:100%;">
-        </blockquote>
-        <a class="spore-fallback" href="https://www.instagram.com/p/DTx5LGZjM0j/" target="_blank" rel="noopener noreferrer" data-photo="/home/spore/DTx5LGZjM0j.webp"><span class="spore-fallback-media" aria-hidden="true"></span><span class="spore-fallback-body"><span class="spore-fallback-handle">@fungai.art</span><span class="spore-fallback-title">Inner Architecture</span><span class="spore-fallback-cta">View on Instagram &rarr;</span></span></a>
+        <a class="spore-fallback" href="https://www.instagram.com/p/DTx5LGZjM0j/" target="_blank" rel="noopener noreferrer" data-photo="/home/spore/inner-architecture.webp"><span class="spore-fallback-media" aria-hidden="true"></span><span class="spore-fallback-body"><span class="spore-fallback-handle">@fungai.art</span><span class="spore-fallback-title">Inner Architecture</span><span class="spore-fallback-cta">View on Instagram &rarr;</span></span></a>
       </div>
-      <script>
-      /* Instagram's embed script sends the visitor's IP to Meta and can set
-         cookies — the only non-essential third party on the site. It loads
-         only after "accept" in the cookie banner (cookie-banner.js stores
-         the choice and fires fungai:cookie-choice). Until then each post is
-         a plain link to Instagram. (2026-09-27, audit M5) */
-      (function () {
-        function loadInstagram() {
-          if (document.getElementById('ig-embed-js')) return;
-          var s = document.createElement('script');
-          s.id = 'ig-embed-js'; s.async = true; s.src = 'https://www.instagram.com/embed.js';
-          document.body.appendChild(s);
-        }
-        var ack = null;
-        try { ack = localStorage.getItem('fungai_cookie_ack'); } catch (e) {}
-        if (ack === 'accept' || ack === '1') loadInstagram();
-        window.addEventListener('fungai:cookie-choice', function (e) {
-          if (e && e.detail && e.detail.choice === 'accept') loadInstagram();
-        });
-      })();
-      </script>
     </div>
     <div style="text-align:center;margin-top:36px;" class="reveal reveal-d2">
       <a href="https://www.instagram.com/fungai.art" target="_blank" class="btn-ghost" rel="noopener noreferrer">Follow @fungai.art</a>
     </div>
   </div>
   <style>
-    /* One post, centred at a readable width. The blockquote and the
-       iframe that Instagram's embed.js swaps in BOTH used to carry inline
-       min-width:280px which fought the grid. We strip that inline value
-       (search the HTML above for min-width:0 on the blockquote) AND
-       override aggressively below for any path embed.js takes. */
-    .spore-grid { display:grid !important; grid-template-columns: minmax(0, 440px) !important; justify-content:center; gap:18px !important; align-items:start; margin:0 auto; }
-    .spore-embed { width:100% !important; min-width:0 !important; max-width:none !important; }
-    /* Linked fallback card — hidden until the embed is known to be blank. */
-    .spore-fallback { display:none; position:relative; aspect-ratio:4/5; border-radius:14px; overflow:hidden; text-decoration:none; color:var(--parchment);
+    .spore-grid { display:grid; grid-template-columns: minmax(0, 440px); justify-content:center; gap:18px; align-items:start; margin:0 auto; }
+    .spore-embed { width:100%; min-width:0; }
+    .spore-fallback { display:block; position:relative; aspect-ratio:4/5; border-radius:14px; overflow:hidden; text-decoration:none; color:var(--parchment);
       background:radial-gradient(ellipse 80% 60% at 30% 20%, rgba(168,143,224,0.25), transparent 60%), radial-gradient(ellipse 70% 60% at 80% 90%, rgba(232,177,75,0.22), transparent 60%), var(--forest-card);
       border:0.5px solid rgba(136,186,200,0.25); box-shadow:0 12px 40px rgba(0,0,0,0.35); }
-    .spore-embed.is-fallback .spore-fallback { display:block; }
-    .spore-embed.is-fallback .instagram-media, .spore-embed.is-fallback iframe { display:none !important; }
     .spore-fallback-media { position:absolute; inset:0; background-size:cover; background-position:center; transition:transform .6s ease; }
     .spore-fallback:not(.has-photo) .spore-fallback-media::after { content:''; position:absolute; left:50%; top:42%; width:56px; height:56px; transform:translate(-50%,-50%); border-radius:16px; border:2px solid rgba(237,229,216,0.55);
       background:radial-gradient(circle at 50% 50%, transparent 11px, rgba(237,229,216,0.55) 12px, rgba(237,229,216,0.55) 14px, transparent 15px); }
@@ -2678,54 +2646,17 @@ function toggleMobileMenu() {
     .spore-fallback-handle { font-family:'Bayer',var(--sans); font-size:9.5px; letter-spacing:0.28em; text-transform:uppercase; color:var(--amber-lt); }
     .spore-fallback-title { font-family:'IM Fell English','Cormorant Garamond',Georgia,serif; font-style:italic; font-size:22px; line-height:1.15; }
     .spore-fallback-cta { font-family:'Bayer',var(--sans); font-size:9.5px; letter-spacing:0.22em; text-transform:uppercase; color:#B6F0AE; margin-top:6px; }
-    .spore-embed > * { width:100% !important; max-width:100% !important; min-width:0 !important; }
-    .spore-embed .instagram-media,
-    .spore-embed blockquote.instagram-media,
-    .spore-embed iframe {
-      max-width:100% !important;
-      min-width:0 !important;
-      width:100% !important;
-      box-sizing:border-box;
-    }
     @media (max-width: 560px) {
-      .spore-grid { grid-template-columns: minmax(0, 1fr) !important; max-width:420px; }
+      .spore-grid { grid-template-columns: minmax(0, 1fr); max-width:420px; }
     }
   </style>
   <script>
-    // Re-run Instagram's embed processor after a tick — embed.js races with
-    // the grid layout on first paint and sometimes sizes the iframes for the
-    // pre-grid width. Calling .process() again forces it to re-measure.
-    (function reprocessIG(){
-      function go(){
-        if (window.instgrm && window.instgrm.Embeds) {
-          try { window.instgrm.Embeds.process(); } catch (e) {}
-        } else {
-          setTimeout(go, 250);
-        }
-      }
-      window.addEventListener('load', () => setTimeout(go, 400));
-    })();
-    // Fallback cards — Instagram's embed frame often stays 0px tall
-    // (tracking protection, logged-out/consent walls, script blocked).
-    // If an embed hasn't sized itself after ~7s, show the linked card
-    // instead; the card uses the post photo when /home/spore/<id>.webp exists.
-    (function sporeFallbacks(){
-      document.querySelectorAll('#journal .spore-fallback[data-photo]').forEach(function(card){
-        var img = new Image();
-        img.onload = function(){ card.classList.add('has-photo'); card.querySelector('.spore-fallback-media').style.backgroundImage = 'url("' + card.getAttribute('data-photo') + '")'; };
-        img.src = card.getAttribute('data-photo');
-      });
-      function check(){
-        document.querySelectorAll('#journal .spore-embed').forEach(function(embed){
-          if (embed.classList.contains('is-fallback')) return;
-          var frame = embed.querySelector('iframe');
-          if (!frame || frame.offsetHeight < 60) embed.classList.add('is-fallback');
-        });
-      }
-      // Timers, not window 'load' — Instagram's embeds keep the page's load
-      // event from ever firing, so a load-based check never ran.
-      setTimeout(check, 9000);
-    })();
+    // Show the post photo once it has loaded; a missing file leaves the placeholder.
+    document.querySelectorAll('#journal .spore-fallback[data-photo]').forEach(function (card) {
+      var img = new Image();
+      img.onload = function () { card.classList.add('has-photo'); card.querySelector('.spore-fallback-media').style.backgroundImage = 'url("' + card.getAttribute('data-photo') + '")'; };
+      img.src = card.getAttribute('data-photo');
+    });
   </script>
 </section>
 
@@ -3505,7 +3436,6 @@ function showConfirmation(method, amount) {
   renderCart();
 }
 </script>
-<script src="/cookie-banner.js" defer></script>
 <!-- page-view beacon · no cookie, no visitor id, honours DNT (public/visit.js) -->
 <script src="/visit.js" defer></script>
 </body>

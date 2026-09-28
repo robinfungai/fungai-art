@@ -20,6 +20,8 @@ const RESTRICTED_NAMES = [
   'dmt','n,n-dmt',
   'coca leaf','erythroxylum','cocaine',
   'acorus calamus','calamus root',
+  // External use only (pyrrolizidine alkaloids) — 2026-09-28
+  'comfrey','symphytum',
 ];
 function isRestricted(name, botanical){
   const s = (String(name || '') + ' ' + String(botanical || '')).toLowerCase();

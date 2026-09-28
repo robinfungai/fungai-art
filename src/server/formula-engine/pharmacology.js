@@ -97,6 +97,29 @@ function isStrongStimulant(h) {
   return cnsAction(h) === 'stimulant';
 }
 
+// Serotonin load. St John's Wort, Kanna, Saffron and Rhodiola each act
+// on serotonin; two in one bottle stack toward serotonin syndrome, so the
+// engine bottles at most one (Robin, 2026-09-28). Read from the record's
+// `serotonergic` flag in herbs.ts — no word search.
+const MAX_SEROTONERGIC = 1;
+function isSerotonergic(h) {
+  return !!(h && h.serotonergic === true);
+}
+
+// Laxatives only when digestion (or detox) is one of the goals. Rhubarb
+// Root and Senna were reaching stress and beauty bottles because they
+// scored on the body-pattern and stress answers (Robin, 2026-09-28).
+function isLaxative(h) {
+  if (!h) return false;
+  const t = (h.energetics || []).join(' ') + ' ' + (h.primary_functions || []).slice(0, 2).join(' ');
+  return /laxativ|purgativ|cathartic/i.test(t);
+}
+function fitsGoal(h, a) {
+  if (!isLaxative(h)) return true;
+  const goals = a ? [a.intention].concat(Array.isArray(a.intentions) ? a.intentions : []) : [];
+  return goals.includes('digestion') || goals.includes('detox');
+}
+
 // Rough category of a herb — used by the balance guard in picker.js.
 // Categories: adaptogen · nervine · tonic · mover · mushroom · bitter ·
 // aromatic · nutritive · other. Pulled from primary_functions text +
@@ -123,5 +146,6 @@ module.exports = {
   GABAERGIC_IDS, STIMULANT_IDS, CNS_ACTIONS,
   cnsAction, isGABAergic, isCNSStimulant, guessGABAergic, guessCNSStimulant,
   fitsTimeOfUse, isStrongStimulant,
+  isSerotonergic, MAX_SEROTONERGIC, isLaxative, fitsGoal,
   categoryOf,
 };

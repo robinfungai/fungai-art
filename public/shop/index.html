@@ -1749,12 +1749,42 @@ if (document.readyState === 'loading') {
         card.style.opacity = '0.55';
       }
     });
+
+    // Afghan Saffron sells in three sizes, each its own stock row
+    // ('Afghan Saffron (3g)' …), behind addSaffronToCart() — the loop
+    // above never sees it. A sold-out size is disabled; if the selected
+    // size is out, the next one in stock is picked; all out = card out.
+    const sizes = [...document.querySelectorAll('#saffronSizes .saffron-size')];
+    if (sizes.length) {
+      const out = b => counts.get('Afghan Saffron (' + b.dataset.g + 'g)') === 0;
+      sizes.filter(out).forEach(b => {
+        b.disabled = true;
+        b.classList.remove('on');
+        b.style.opacity = '0.35';
+        b.style.cursor = 'not-allowed';
+        b.style.textDecoration = 'line-through';
+        b.title = 'Sold out';
+      });
+      const left = sizes.filter(b => !out(b));
+      if (!left.length) {
+        const card = sizes[0].closest('.product-card');
+        card.querySelectorAll('[onclick="addSaffronToCart()"]').forEach(b => {
+          b.disabled = true;
+          b.style.opacity = '0.35';
+          b.style.cursor = 'not-allowed';
+          b.textContent = 'Sold out';
+          b.setAttribute('onclick', '');
+        });
+        card.style.opacity = '0.55';
+      } else if (!left.some(b => b.classList.contains('on'))) {
+        pickSaffronSize(left[0]);
+      }
+    }
   } catch (e) {
     console.warn('[Shop] live stock badges failed:', e);
   }
 })();
 </script>
-<script src="/cookie-banner.js" defer></script>
 <!-- 3D gallery entrance, once per visit (src/islands/shop-gallery.tsx) -->
 <script type="module" src="/islands/shop-gallery.js"></script>
 <!-- page-view beacon · no cookie, no visitor id, honours DNT (public/visit.js) -->

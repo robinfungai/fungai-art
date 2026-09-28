@@ -3416,6 +3416,7 @@ const HERBS = [
   {
     id: 236,
     name: 'Fadogia',
+    formula_access: 'pro', // "practitioner only" — Robin 2026-09-28
     botanical: 'Fadogia agrestis (stem and root — West African)',
     tcm_meridians: ['Kidney', 'Liver'],
     tcm_element: 'Fire + Water',
@@ -5367,6 +5368,7 @@ const HERBS = [
   {
     id: 256,
     name: 'Kanna',
+    serotonergic: true, // mesembrine: serotonin reuptake inhibitor
     botanical: 'Sceletium tortuosum (fermented dried leaves — traditional Khoi preparation)',
     tcm_meridians: ['Heart', 'Liver', 'Spleen'],
     tcm_element: 'Fire + Earth',
@@ -5694,6 +5696,7 @@ const HERBS = [
   {
     id: 260,
     name: 'Lobelia (Indian Tobacco)',
+    formula_access: 'pro', // "practitioner only" — Robin 2026-09-28
     botanical: 'Lobelia inflata (aerial parts — RESTRICTED — practitioner-only herb)',
     tcm_meridians: ['Lung', 'Heart', 'Stomach'],
     tcm_element: 'Fire + Metal',
@@ -6900,6 +6903,7 @@ const HERBS = [
   {
     id: 274,
     name: "Pau d'Arco",
+    formula_access: 'pro', // "practitioner only" — Robin 2026-09-28
     botanical: "Handroanthus impetiginosus / Tabebuia impetiginosa (inner bark — CAUTION: restricted use)",
     tcm_meridians: ['Liver', 'Large Intestine', 'Immune System'],
     tcm_element: 'Water + Earth',
@@ -7053,6 +7057,7 @@ const HERBS = [
   {
     id: 276,
     name: 'Rhodiola',
+    serotonergic: true, // own record: serotonin syndrome risk with SSRIs / St John's Wort
     botanical: 'Rhodiola rosea (root and rhizome — standardised 3%+ rosavins)',
     tcm_meridians: ['Heart', 'Spleen', 'Kidney Yang'],
     tcm_element: 'Fire + Metal',
@@ -7222,6 +7227,7 @@ const HERBS = [
   {
     id: 278,
     name: 'Saffron',
+    serotonergic: true, // crocin: mild serotonin reuptake inhibitor
     botanical: 'Crocus sativus (stigmas only — three red threads per flower — "Red Gold")',
     tcm_meridians: ['Heart', 'Liver'],
     tcm_element: 'Fire + Earth',
@@ -7701,6 +7707,7 @@ const HERBS = [
   {
     id: 542,
     name: "St. John's Wort",
+    serotonergic: true, // hyperforin: serotonin / noradrenaline / dopamine reuptake inhibitor
     botanical: 'Hypericum perforatum (aerial parts — leaves, stems and flowering tops; harvested at summer solstice — "Captured Sunshine")',
     tcm_meridians: ['Heart', 'Liver', 'Solar Plexus', 'Nervous System'],
     tcm_element: 'Fire + Metal',
@@ -8672,6 +8679,7 @@ const HERBS = [
   {
     id: 293,
     name: 'Wormwood',
+    formula_access: 'pro', // "practitioner only" — Robin 2026-09-28
     botanical: 'Artemisia absinthium (aerial parts — leaves and flowering tops; "Grand Wormwood")',
     tcm_meridians: ['Liver', 'Gallbladder', 'Stomach', 'Large Intestine'],
     tcm_element: 'Wood',
@@ -9295,6 +9303,7 @@ const HERBS = [
   {
     id: 301,
     name: 'Rhubarb Root',
+    formula_access: 'pro', // "practitioner only" — Robin 2026-09-28
     botanical: 'Rheum palmatum / Rheum officinale (rhizome and root — "Da Huang / The Purging Judge")',
     tcm_meridians: ['Heart', 'Liver', 'Stomach', 'Large Intestine', 'Kidney'],
     tcm_element: 'Wood + Water',
@@ -14286,6 +14295,7 @@ const HERBS = [
     {
     id: 520,
     name: 'Bakuchi',
+    formula_access: 'pro', // "practitioner only" — Robin 2026-09-28
     botanical: 'Psoralea corylifolia (syn. Cullen corylifolium; dried ripe fruit, used as seed; "Babchi")',
     tcm_meridians: ['Kidney', 'Spleen'],
     tcm_element: 'Water + Fire',
@@ -15030,6 +15040,7 @@ const HERBS = [
   },
 {
   id: 529, name: 'Nishoth', botanical: 'Operculina turpethum (root)',
+  formula_access: 'pro', // "practitioner only" — Robin 2026-09-28
   tcm_meridians: ['Large Intestine'], tcm_element: 'Water',
   energetics: ['Hot', 'Pungent', 'Bitter', 'Drastic Purgative'],
   primary_functions: ['Drastic hydragogue purgative — clears severe lower-body damp-heat', 'Ascites, oedema, deep constipation (specialist use only)', 'TCM cousin: Fang Ji family of aggressive water-purgers', 'Classical Ayurvedic shodhana (cleansing) herb'],
@@ -15300,6 +15311,7 @@ const HERBS = [
     {
     id: 533,
     name: 'Karanja',
+    formula_access: 'pro', // "practitioner only" — Robin 2026-09-28
     botanical: 'Pongamia pinnata (syn. Millettia pinnata; seed and seed oil; also root, bark and leaf in API Vol II; "Indian Beech / Pongam")',
     tcm_meridians: ['Lung', 'Liver', 'Spleen'],
     tcm_element: 'Metal + Wood',
@@ -18487,6 +18499,261 @@ const HERBS = [
     references: [
       'Sudheendran A, Shajahan MA, Premlal S. Diuretic activity of ethanolic root extract of Mimosa pudica in albino rats. Ayu. 2021;42(1):52 to 56. PMID 36743273',
       'Ayurvedic Pharmacopoeia of India, Part I, Vol II, monograph Lajjalu (Whole plant)',
+    ],
+  },
+  // ── Added 2026-09-28 (Robin): the Atlas already held photographs of
+  //    these three; the records make them appear everywhere. Every PMID
+  //    below was looked up on PubMed the same day. ──
+  {
+    id: 592,
+    name: 'Green Tea',
+    botanical: 'Camellia sinensis (unfermented leaf, steamed or pan-fired)',
+    aliases: ['Camellia sinensis', 'Lu Cha', 'Matcha', 'Sencha'],
+    tcm_meridians: ['Heart', 'Lung', 'Stomach'],
+    tcm_element: 'Wood + Fire',
+    energetics: ['Cool', 'Bitter', 'Sweet', 'Slightly Astringent', 'Clearing'],
+    primary_functions: [
+      'Calm alertness: caffeine (20 to 45 mg per cup) paired with L-theanine; in placebo-controlled human trials the pair improved attention and task switching and reduced mental fatigue more than either alone (PMID 18681988, 18006208)',
+      'Antioxidant and cardiometabolic support: catechins (EGCG, EGC, ECG) as a daily beverage',
+      'Clears heat and supports digestion after rich food, in the Chinese tradition (Lu Cha is cooling and bitter)',
+    ],
+    secondary_benefits: [
+      'Gentle diuretic',
+      'Mouth and gum health: catechins are antibacterial against oral bacteria in vitro',
+      'A daily ritual that replaces coffee for people who want focus without the edge',
+    ],
+    pharmacology:
+      "Primary bioactives: catechins (EGCG the main one, with EGC, ECG, EC), caffeine, L-theanine, theobromine and theophylline in traces, flavonols (quercetin, kaempferol glycosides). Mechanisms: caffeine is an adenosine receptor antagonist; L-theanine raises alpha-wave activity and softens caffeine's jitter; catechins are antioxidant and inhibit P-glycoprotein and OATP drug transport in the gut. Concentrated extracts, not the tea, are linked to rare liver injury (EGCG at 800 mg a day or more from supplements, EFSA 2018; case reviews PMID 19198822, 25975988).",
+    flavor_profile: 'Grassy, fresh and vegetal, bitter-sweet with a brothy umami finish; astringent when over-steeped',
+    contraindications: [
+      'Liver disease or raised liver enzymes: avoid concentrated extracts; the tea itself in normal amounts is not implicated (PMID 25975988)',
+      'Pregnancy: keep total caffeine under 200 mg a day from all sources; no concentrated extracts',
+      'Anxiety, panic, insomnia or heart rhythm problems: caffeine can worsen them',
+      'Iron-deficiency anaemia: catechins reduce iron absorption; drink between meals, not with them',
+      'Under 18: tea as a drink only, never concentrated extracts',
+    ],
+    herb_to_herb_synergy: [
+      'Holy Basil and Gotu Kola: clear, steady focus without overstimulation',
+      'Peppermint and Lemon Balm: a lighter daytime cup',
+      'Ginger: warms the cooling nature of the leaf for cold constitutions',
+    ],
+    herb_to_herb_caution: [
+      'Other caffeine sources (Yerba Mate, Guarana, Guayusa, Coffee, Kola Nut): additive caffeine load',
+      'Other hepatotoxic-risk herbs in concentrated form (Kava, high-dose Kalmegh): additive liver load',
+    ],
+    herb_to_drug_interactions: [
+      'Nadolol (beta-blocker): green tea cut nadolol blood levels by about 85% in healthy volunteers (PMID 24419562); separate or avoid',
+      'Stimulants, including ADHD medication and decongestants: additive caffeine effects',
+      'Warfarin: vitamin K in large amounts of leaf tea may reduce its effect; keep intake steady',
+      'Iron supplements: take two hours apart',
+      'Clozapine, theophylline and other CYP1A2 substrates: caffeine competes for the same enzyme',
+    ],
+    herb_interactions: [
+      'Synergy: Holy Basil, Gotu Kola, Peppermint, Lemon Balm, Ginger',
+      'Caution: other caffeine herbs (additive); concentrated hepatotoxic-risk extracts',
+      'Drug interactions: nadolol (levels fall sharply); stimulants; warfarin; iron; CYP1A2 substrates',
+    ],
+    dosage_range:
+      'Tea: 2 to 3 g leaf per cup at 70 to 80 °C for 2 to 3 minutes, up to 3 to 5 cups a day. Matcha: 1 to 2 g powder per cup. Extract (1:3, 40 to 50% ethanol): 1.2 to 2.4 ml up to twice a day, before mid-afternoon. Concentrated EGCG extracts: stay under 800 mg EGCG a day and take with food (EFSA 2018). Focus effects within 30 to 60 minutes.',
+    spiritual_layer:
+      'Green Tea is the medicine of the awake and quiet mind. Monks drank her to sit through the night without losing their stillness; she wakes you without pushing you. She teaches that clarity and calm are not opposites, that attention can be soft. She whispers: Be here, fully, and be at ease.',
+    best_preparation:
+      'Drink it as tea: the leaf, the water temperature and the short steep are the medicine. Water just off the boil makes it bitter. As an extract, use the house 1:3 in 40 to 50% ethanol and take it in the morning or at midday; keep it out of evening and sleep formulas. Avoid high-dose EGCG capsules on an empty stomach.',
+    caution_level: 'MEDIUM',
+    cns_action: 'stimulant',
+    cns_evidence: 'Caffeine, an adenosine receptor antagonist, with L-theanine; in placebo-controlled trials the pair improved alertness and attention (PMID 18681988, 18006208).',
+    safe_pregnancy: false,
+    status:
+      'Grade B for alertness and attention (caffeine with L-theanine, human RCTs). Tea is a food; concentrated extracts carry a rare liver-injury risk (EFSA 2018). Onset within an hour.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'flat'],
+    energy_pattern:     ['am_boost', 'sustained'],
+    digestion_fit:      ['cooling', 'astringent'],
+    regional_affinity:  ['head', 'heart'],
+    onset_time:         'immediate',
+    family:             'Theaceae',
+    epithet: 'The quiet waker',
+    origin_region:      'Chinese',
+    ecology: {
+      native_range: ['Southern China', 'Northeast India', 'Mainland Southeast Asia'],
+      source: 'derived',
+    },
+    evidence_grade:     'B',
+    research_notes: [
+      'Owen et al. (2008), Nutr Neurosci: L-theanine (100 mg) with caffeine (50 mg) improved speed and accuracy on attention-switching tasks and reduced distraction, against placebo.',
+      'Haskell et al. (2008), Biol Psychol: the combination improved speed and accuracy and reduced headache and tiredness more than caffeine alone.',
+      'Misaka et al. (2014), Clin Pharmacol Ther: green tea reduced nadolol exposure by about 85% in healthy volunteers.',
+      'Mazzanti et al. (2009, 2015): case reviews of liver injury, almost all from concentrated extracts; EFSA (2018) found EGCG at 800 mg a day or more from supplements raised liver enzymes.',
+    ],
+    references: [
+      'Owen GN et al. The combined effects of L-theanine and caffeine on cognitive performance and mood. Nutr Neurosci. 2008. PMID 18681988',
+      'Haskell CF et al. The effects of L-theanine, caffeine and their combination on cognition and mood. Biol Psychol. 2008. PMID 18006208',
+      'Misaka S et al. Green tea ingestion greatly reduces plasma concentrations of nadolol in healthy subjects. Clin Pharmacol Ther. 2014. PMID 24419562',
+      'Mazzanti G et al. Hepatotoxicity from green tea: a review of the literature and two unpublished cases. Eur J Clin Pharmacol. 2009. PMID 19198822',
+      'Mazzanti G et al. Hepatotoxicity of green tea: an update. Arch Toxicol. 2015. PMID 25975988',
+      'EFSA ANS Panel. Scientific opinion on the safety of green tea catechins. EFSA Journal. 2018;16(4):5239',
+    ],
+  },
+  {
+    id: 593,
+    name: 'Hibiscus',
+    botanical: 'Hibiscus sabdariffa (dried calyces; "Roselle / Sour Tea / Karkadé / Flor de Jamaica")',
+    aliases: ['Roselle', 'Hibiscus sabdariffa', 'Karkade', 'Flor de Jamaica', 'Sour Tea'],
+    tcm_meridians: ['Heart', 'Liver', 'Kidney'],
+    tcm_element: 'Fire + Water',
+    energetics: ['Cool', 'Sour', 'Moist', 'Slightly Astringent', 'Heat-Clearing'],
+    primary_functions: [
+      'Blood pressure: three cups a day for six weeks lowered systolic pressure in prehypertensive and mildly hypertensive adults against placebo (PMID 20018807); a meta-analysis of RCTs confirmed a modest fall in systolic and diastolic pressure (PMID 25875025)',
+      'Cooling and refreshing: clears summer heat and thirst, in West African, Middle Eastern and Caribbean tradition',
+      'Antioxidant: anthocyanins (delphinidin and cyanidin sambubiosides) and organic acids',
+    ],
+    secondary_benefits: [
+      'Mild diuretic',
+      'A bright sour taste that lifts other herbs in a blend',
+      'Traditionally drunk to soothe a sluggish, heavy stomach in hot weather',
+    ],
+    pharmacology:
+      'Primary bioactives: anthocyanins (delphinidin-3-sambubioside, cyanidin-3-sambubioside), organic acids (hibiscus acid, citric, malic), polysaccharides, flavonols. Mechanisms proposed for the blood-pressure effect: ACE inhibition by the anthocyanins, mild diuresis and improved vascular function. Grade B for blood pressure (RCTs and a meta-analysis, modest effect).',
+    flavor_profile: 'Tart and cranberry-like, fruity and bright; deep ruby when steeped',
+    contraindications: [
+      'Low blood pressure: may lower it further',
+      'Pregnancy: avoid medicinal amounts (animal data suggest effects on the uterus and hormones)',
+      'Before surgery: stop two weeks ahead because of the blood-pressure effect',
+    ],
+    herb_to_herb_synergy: [
+      'Hawthorn: heart and circulation formulas',
+      'Rosehip and Elderberry: a vitamin-C-rich, immune-supporting tea',
+      'Pomegranate Seeds and Aronia: high-polyphenol blood-pressure formulas',
+    ],
+    herb_to_herb_caution: [
+      'Other blood-pressure-lowering herbs at high dose (Rauvolfia, Sarpagandha, concentrated Garlic): additive lowering',
+    ],
+    herb_to_drug_interactions: [
+      'Blood-pressure medication: additive lowering; monitor pressure',
+      'Diuretics, including hydrochlorothiazide: additive diuresis',
+      'Chloroquine and other antimalarials: reduced absorption reported; separate or avoid',
+    ],
+    herb_interactions: [
+      'Synergy: Hawthorn, Rosehip, Elderberry, Pomegranate Seeds, Aronia',
+      'Caution: other blood-pressure-lowering herbs at high dose',
+      'Drug interactions: blood-pressure medication (additive); diuretics; chloroquine',
+    ],
+    dosage_range:
+      'Tea: 1.25 to 2 g dried calyces per cup, 3 cups a day (the trial dose: 3 cups of 1.25 g). Cold infusion: steep overnight in the fridge. Extract (1:3, 25 to 40% ethanol): 1.2 to 3 ml up to three times a day. Blood-pressure effect over 4 to 6 weeks.',
+    spiritual_layer:
+      'Hibiscus is the red flower of the open heart and the cool head. She carries summer in her colour and calm in her taste, softening the pressure we hold in our chests and vessels. She teaches that joy can be cooling, that a heart can be full without being strained. She whispers: Let the pressure go. Stay bright.',
+    best_preparation:
+      'Best as a tea, hot or cold; the cold overnight infusion is smoother and keeps the colour. In an extract use lower-proof ethanol (25 to 40%): the anthocyanins and acids are water-soluble. Pairs well as the bright, sour note in a blend.',
+    caution_level: 'LOW-MEDIUM',
+    cns_action: 'neutral',
+    cns_evidence: 'No meaningful effect on arousal; its studied effects are on blood pressure (PMID 25875025).',
+    safe_pregnancy: false,
+    status:
+      'Grade B for modest blood-pressure lowering (RCTs, meta-analysis). Food-safe as a tea; take care alongside blood-pressure medication. Onset over weeks.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'reactive'],
+    energy_pattern:     ['sustained'],
+    digestion_fit:      ['cooling'],
+    regional_affinity:  ['heart', 'kidneys'],
+    onset_time:         'weeks',
+    family:             'Malvaceae',
+    epithet: 'The cooling heart',
+    origin_region:      'African',
+    ecology: {
+      native_range: ['West Africa', 'Sudan', 'now cultivated across the tropics'],
+      source: 'derived',
+    },
+    evidence_grade:     'B',
+    research_notes: [
+      'McKay et al. (2010), J Nutr: 3 cups a day of hibiscus tea for 6 weeks lowered systolic blood pressure by about 7 mmHg against about 1 mmHg on placebo in prehypertensive and mildly hypertensive adults.',
+      'Serban et al. (2015), J Hypertens: meta-analysis of RCTs found significant falls in systolic and diastolic pressure; the authors called for larger trials.',
+    ],
+    references: [
+      'McKay DL et al. Hibiscus sabdariffa L. tea (tisane) lowers blood pressure in prehypertensive and mildly hypertensive adults. J Nutr. 2010. PMID 20018807',
+      'Serban C et al. Effect of sour tea (Hibiscus sabdariffa L.) on arterial hypertension: a systematic review and meta-analysis of randomized controlled trials. J Hypertens. 2015. PMID 25875025',
+    ],
+  },
+  {
+    id: 594,
+    name: 'Comfrey',
+    botanical: 'Symphytum officinale (root and leaf; EXTERNAL USE ONLY)',
+    aliases: ['Symphytum officinale', 'Knitbone', 'Beinwell'],
+    tcm_meridians: ['Liver', 'Kidney'],
+    tcm_element: 'Earth + Water',
+    energetics: ['Cool', 'Moist', 'Sweet', 'Mucilaginous', 'Tissue-Knitting'],
+    primary_functions: [
+      'Sprains, bruises and strains (external): a comfrey root ointment eased pain and swelling of ankle sprains against placebo (PMID 15500257) and was not inferior to diclofenac gel (PMID 16323288)',
+      'Back and joint pain (external): comfrey root ointment reduced acute back pain (PMID 19460762) and knee osteoarthritis pain (PMID 17169543) against placebo',
+      'Traditional bone-and-tissue mend: the "knitbone" of European folk medicine, used over closed fractures and bruised tissue',
+    ],
+    secondary_benefits: [
+      'Skin repair on closed skin: allantoin supports cell regeneration',
+      'Mucilage soothes and softens',
+    ],
+    pharmacology:
+      'Primary bioactives: allantoin, rosmarinic acid, mucilage polysaccharides, tannins, and pyrrolizidine alkaloids (PAs: intermedine, lycopsamine, symphytine). Mechanisms for the external effect: anti-inflammatory rosmarinic acid, allantoin-driven tissue regeneration. PAs are liver-toxic and carcinogenic when swallowed; the clinical ointments use PA-depleted root extracts. Grade B for external use on sprains and pain (several RCTs; clinical overview PMID 22359388).',
+    flavor_profile: 'Not for taking internally. Root is mucilaginous and bland; leaf is green and slightly bitter',
+    contraindications: [
+      'NEVER TAKE INTERNALLY: the pyrrolizidine alkaloids cause liver damage (veno-occlusive disease) and are carcinogenic',
+      'Broken or open skin and open wounds: PAs are absorbed; use only on intact skin',
+      'Pregnancy and breastfeeding: avoid, including external use',
+      'Children under 3: avoid; older children only short, small-area use',
+      'Liver disease: avoid',
+      'Limit external use to 4 to 6 weeks a year (German Commission E)',
+    ],
+    herb_to_herb_synergy: [
+      'Arnica: bruises and sprains, both external',
+      "St. John's Wort oil: nerve-rich injuries, external",
+      'Calendula: skin and closed-tissue care',
+    ],
+    herb_to_herb_caution: [
+      'Any other pyrrolizidine-bearing plant (Borage, Coltsfoot, Butterbur that is not PA-free): additive PA load',
+    ],
+    herb_to_drug_interactions: [
+      'Drugs that stress the liver or induce CYP3A4 (which activates PAs): relevant only if comfrey were swallowed, which it must not be',
+    ],
+    herb_interactions: [
+      "Synergy (external): Arnica, St. John's Wort oil, Calendula",
+      'Caution: other pyrrolizidine-bearing plants',
+      'Drug interactions: none expected with external use on intact skin',
+    ],
+    dosage_range:
+      'External only. Ointment or cream with root extract (the trials used 35% root fluid extract in the ointment), applied 2 to 4 times a day to intact skin over the injury, for up to 10 days at a time and no more than 4 to 6 weeks a year. Oil infusion of the root for massage over bruises. No internal dose: comfrey is not taken by mouth.',
+    spiritual_layer:
+      'Comfrey is the knitbone, the plant of mending. Her roots reach deep and her leaves are soft and generous, and she brings together what has been pulled apart. She teaches that healing is patient work done from the outside in, with care and time. She whispers: Rest here. I will hold the pieces while they find each other.',
+    best_preparation:
+      'External only: a root cream or ointment (the Moder Jord comfrey cream), or a root oil infusion for massage. Apply to closed skin over sprains, bruises, strains and sore joints. Never in a tincture, tea or formula to swallow; the formula engine keeps it out of every bottle.',
+    caution_level: 'HIGH',
+    cns_action: 'neutral',
+    cns_evidence: 'Used on the skin only; no effect on arousal.',
+    safe_pregnancy: false,
+    status:
+      'EXTERNAL USE ONLY. Grade B for sprains, bruises and back and joint pain as a root ointment (RCTs). Internal use is unsafe because of pyrrolizidine alkaloids. Catalogue and topical products only; never in a formula.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    regional_affinity:  ['joints', 'skin'],
+    onset_time:         'days',
+    family:             'Boraginaceae',
+    epithet: 'The knitbone',
+    origin_region:      'European',
+    ecology: {
+      native_range: ['Europe', 'Western Asia'],
+      habitat: 'Damp meadows, riverbanks and ditches',
+      source: 'derived',
+    },
+    evidence_grade:     'B',
+    research_notes: [
+      'Koll et al. (2004), Phytomedicine: comfrey root ointment reduced pain and swelling of acute ankle sprains against placebo.',
+      'Predel et al. (2005), Phytomedicine: comfrey root ointment was at least as effective as diclofenac gel on ankle sprains.',
+      'Giannetti et al. (2010), Br J Sports Med: comfrey root ointment reduced acute upper or lower back pain against placebo.',
+      'Grube et al. (2007), Phytomedicine: comfrey root ointment reduced pain in knee osteoarthritis against placebo.',
+      'Staiger (2012), Phytother Res: clinical overview; the trial ointments use PA-depleted extracts.',
+    ],
+    references: [
+      'Koll R et al. Efficacy and tolerance of a comfrey root extract in the treatment of ankle distorsions. Phytomedicine. 2004. PMID 15500257',
+      'Predel HG et al. Efficacy of a comfrey root extract ointment in comparison to a diclofenac gel in the treatment of ankle distortions. Phytomedicine. 2005. PMID 16323288',
+      'Giannetti BM et al. Efficacy and safety of comfrey root extract ointment in the treatment of acute upper or lower back pain. Br J Sports Med. 2010. PMID 19460762',
+      'Grube B et al. Efficacy of a comfrey root extract ointment in the treatment of patients with painful osteoarthritis of the knee. Phytomedicine. 2007. PMID 17169543',
+      'Staiger C. Comfrey: a clinical overview. Phytother Res. 2012. PMID 22359388',
     ],
   },
 ];

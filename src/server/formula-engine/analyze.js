@@ -28,7 +28,7 @@ const { checkFormulaPairs } = require('./interactions');
 const { isTrace } = require('./traces');
 // The same classifiers the engine uses: each herb's recorded cns_action
 // (herbs.ts), with PubMed evidence in cns_evidence.
-const { isGABAergic, isCNSStimulant, cnsAction, categoryOf } = require('./pharmacology');
+const { isGABAergic, isCNSStimulant, isSerotonergic, MAX_SEROTONERGIC, cnsAction, categoryOf } = require('./pharmacology');
 const { isRestricted, isGated } = require('./axes');
 
 const MAX_HERBS = 12;          // what one analysis will take
@@ -153,6 +153,7 @@ function analyzeFormula(input) {
     isTrace:       isTrace(h),
     isGABAergic:   isGABAergic(h),
     isStimulant:   isCNSStimulant(h),
+    isSerotonergic: isSerotonergic(h),
     cns:           cnsAction(h),
     cnsEvidence:   h.cns_evidence ? clip(h.cns_evidence, 320) : null,
     restricted:    isRestricted(h),
@@ -175,6 +176,7 @@ function analyzeFormula(input) {
   const gaba = rows.filter(r => r.isGABAergic);
   const stim = rows.filter(r => r.isStimulant);
   const strong = rows.filter(r => r.cns === 'stimulant');
+  const sero = rows.filter(r => r.isSerotonergic);
   const over = Object.keys(catCount).filter(c => c !== 'other' && catCount[c] > RULES.MAX_PER_CATEGORY);
   const checks = [
     { id: 'size', ok: rows.length >= RULES.MIN_HERBS && rows.length <= RULES.MAX_HERBS,
@@ -187,6 +189,8 @@ function analyzeFormula(input) {
       label: 'Sedative load', detail: gaba.length ? gaba.map(r => r.name).join(', ') + (gaba.length > RULES.MAX_GABAERGIC ? ' — more than ' + RULES.MAX_GABAERGIC + ' sedating herbs stack.' : '') : 'No sedating herbs.' },
     { id: 'stim', ok: stim.length <= RULES.MAX_STIMULANT,
       label: 'Stimulant load', detail: stim.length ? stim.map(r => r.name).join(', ') + (stim.length > RULES.MAX_STIMULANT ? ' — more than ' + RULES.MAX_STIMULANT + ' stimulating herbs stack.' : '') : 'No stimulating herbs.' },
+    { id: 'serotonin', ok: sero.length <= MAX_SEROTONERGIC,
+      label: 'Serotonin load', detail: sero.length ? sero.map(r => r.name).join(', ') + (sero.length > MAX_SEROTONERGIC ? ' — two herbs that act on serotonin stack toward serotonin syndrome; the engine bottles one at most.' : '') : 'No serotonergic herbs.' },
     { id: 'push-pull', ok: !(gaba.length && strong.length),
       label: 'Sedative with stimulant', detail: gaba.length && strong.length ? gaba.concat(strong).map(r => r.name).join(', ') + ' — a sedative and a stimulant pull against each other; the engine never bottles the two together.' : 'No tug-of-war.' },
     { id: 'restricted', ok: !rows.some(r => r.restricted),

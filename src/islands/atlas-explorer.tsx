@@ -1,6 +1,6 @@
 // src/islands/atlas-explorer.tsx
 //
-// The Atlas: 242 organisms, navigable by facet, each opening a ten-layer
+// The Atlas: 245 organisms, navigable by facet, each opening a ten-layer
 // dossier with its synergy graph.
 //
 // Data comes from public/atlas/data/ (built by scripts/build-atlas.cjs):
@@ -13,7 +13,7 @@
 // presenting a pattern match as a curated fact.
 
 import { createRoot } from 'react-dom/client';
-import OrganismSigil from '../components/ui/organism-sigil';
+import OrganismSigil, { sigilHue } from '../components/ui/organism-sigil';
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 // Lazy: three + drei is the heaviest thing on the page and the grid must not
@@ -355,7 +355,8 @@ export default function AtlasExplorer() {
                 sits INSIDE the image over a scrim. Cards without a photograph
                 keep the identical frame and carry the sigil instead, so the
                 grid holds its rhythm either way. */}
-            <span className={'atl-card-media' + (o.image ? '' : ' is-sigil')}>
+            <span className={'atl-card-media' + (o.image ? '' : ' is-sigil')}
+              style={{ '--hue': sigilHue(o.tradition) } as React.CSSProperties}>
               {o.image
                 ? <img src={o.image} alt="" loading="lazy" decoding="async" width={480} height={600} />
                 : <OrganismSigil className="atl-card-sigil" record={o} size={72} />}

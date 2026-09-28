@@ -32,6 +32,8 @@ const CANDIDATES = [
   { id: 540, name: 'Hops',        primary_functions: ['nervine · GABA · hops'], energetics: ['Cool'], pharmacology: '', gated: false }, // GABAergic
   { id: 550, name: 'Rhodiola',    primary_functions: ['adaptogen · caffeine.rich · rhodiola'], energetics: ['Warm'], pharmacology: '', gated: false }, // CNS stimulant
   { id: 560, name: 'Guarana',     primary_functions: ['stimulant · caffeine.rich · guarana'], energetics: ['Warm'], pharmacology: '', gated: false }, // CNS stimulant
+  { id: 580, name: "St. John's Wort", primary_functions: ['mood · hypericum'], energetics: ['Cool'], pharmacology: '', gated: false, serotonergic: true },
+  { id: 590, name: 'Kanna',       primary_functions: ['mood · mesembrine'], energetics: ['Warm'], pharmacology: '', gated: false, serotonergic: true },
   { id: 570, name: 'Amanita',     primary_functions: ['mushroom · amanita · ceremonial'], energetics: ['Neutral'], pharmacology: '', gated: true }, // gated
 ];
 
@@ -134,6 +136,15 @@ check('three CNS stimulants → MYCO_STIMULANT_LOAD_EXCEEDED', () => {
   ];
   const r = validateMycoProposal({ mycoResponse: p, candidateSet: CANDIDATES, gatedOptIn: false });
   return { pass: r.ok === false && r.reason === 'MYCO_STIMULANT_LOAD_EXCEEDED', detail: r.reason };
+});
+
+check("St John's Wort + Kanna → MYCO_SEROTONERGIC_LOAD_EXCEEDED", () => {
+  const p = [
+    { id: 580, pct: 20, reason: 'sjw' }, { id: 590, pct: 20, reason: 'kanna' },
+    { id: 210, pct: 30, reason: 'a' }, { id: 250, pct: 20, reason: 'b' }, { id: 230, pct: 10, reason: 'c' },
+  ];
+  const r = validateMycoProposal({ mycoResponse: p, candidateSet: CANDIDATES, gatedOptIn: false });
+  return { pass: r.ok === false && r.reason === 'MYCO_SEROTONERGIC_LOAD_EXCEEDED', detail: r.reason };
 });
 
 check('three of same category → MYCO_CATEGORY_CAP_EXCEEDED', () => {

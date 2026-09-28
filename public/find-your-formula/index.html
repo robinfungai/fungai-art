@@ -1367,7 +1367,7 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 </main>
 <div id="fyfRail"></div>
 
-<!-- The full 242-herb catalog (auto-generated from src/data/herbs.ts).
+<!-- The full 245-herb catalog (auto-generated from src/data/herbs.ts).
      Sets `HERBS` in the script global scope. ~1MB, worth the download
      because the alternative is duplicating 30 curated herbs here. -->
 <!-- Step 8: /herbs-data.js no longer loaded — server ships enriched herb fields in the compose response. Kept as a public file for /extraction and /mixology until they are rebuilt. -->
@@ -1391,7 +1391,7 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
    ──────────────────────────────────────────────────────────── */
 
 // ── Consumer herb pool ────────────────────────────────────
-// Sourced from the full 242-herb catalog (window.HERBS, loaded from
+// Sourced from the full 245-herb catalog (window.HERBS, loaded from
 // /herbs-data.js — auto-generated mirror of src/data/herbs.ts). We
 // don't hand-curate here; instead we EXCLUDE the legally-restricted
 // entries and then INFER the four quiz axes from each herb's own
@@ -1415,6 +1415,8 @@ const RESTRICTED_NAMES = [
   'coca leaf','erythroxylum','cocaine',
   // Neurotoxic β-asarone — herbs.ts flags this one hard
   'acorus calamus','calamus root',
+  // External use only (pyrrolizidine alkaloids) — 2026-09-28
+  'comfrey','symphytum',
 ];
 
 // "Trace" herbs — essential-oil rich or intensely pungent. They belong

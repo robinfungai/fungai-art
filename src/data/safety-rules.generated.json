@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-09-27T20:21:00.280Z",
+  "generatedAt": "2026-09-28T11:10:19.270Z",
   "counts": {
-    "botanicals": 242,
-    "rules": 2407,
+    "botanicals": 245,
+    "rules": 2438,
     "byType": {
-      "contraindication": 1173,
-      "drug_interaction": 658,
-      "herb_interaction": 342,
-      "record": 234
+      "contraindication": 1187,
+      "drug_interaction": 667,
+      "herb_interaction": 346,
+      "record": 238
     },
     "bySeverity": {
-      "unspecified": 1070,
-      "caution": 332,
-      "monitor": 370,
-      "avoid": 507,
-      "absolute": 128
+      "unspecified": 1087,
+      "caution": 334,
+      "monitor": 371,
+      "avoid": 517,
+      "absolute": 129
     }
   },
   "flagsByBotanicalId": {
@@ -1132,6 +1132,22 @@
       "psych_meds",
       "sedatives",
       "thyroid"
+    ],
+    "592": [
+      "autoimmune",
+      "cardio_meds",
+      "hypertension",
+      "pregnancy",
+      "psych_meds"
+    ],
+    "593": [
+      "hypertension",
+      "pregnancy"
+    ],
+    "594": [
+      "contraceptive",
+      "liver_kidney",
+      "pregnancy"
     ]
   },
   "flagsPerRuleByBotanicalId": {
@@ -2243,6 +2259,22 @@
       "psych_meds",
       "sedatives",
       "thyroid"
+    ],
+    "592": [
+      "autoimmune",
+      "cardio_meds",
+      "hypertension",
+      "pregnancy",
+      "psych_meds"
+    ],
+    "593": [
+      "hypertension",
+      "pregnancy"
+    ],
+    "594": [
+      "contraceptive",
+      "liver_kidney",
+      "pregnancy"
     ]
   },
   "divergence": [
@@ -31116,6 +31148,373 @@
       "id": "safety:591:record:pregnancy",
       "botanicalId": 591,
       "botanical": "Lajjalu",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:592:contraindication:1",
+      "botanicalId": 592,
+      "botanical": "Green Tea",
+      "ruleType": "contraindication",
+      "subject": "Liver disease or raised liver enzymes: avoid concentrated extracts; the tea itself in normal amounts is not implicated (PMID 25975988)",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:592:contraindication:2",
+      "botanicalId": 592,
+      "botanical": "Green Tea",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy: keep total caffeine under 200 mg a day from all sources; no concentrated extracts",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:592:contraindication:3",
+      "botanicalId": 592,
+      "botanical": "Green Tea",
+      "ruleType": "contraindication",
+      "subject": "Anxiety, panic, insomnia or heart rhythm problems: caffeine can worsen them",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "autoimmune"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:592:contraindication:4",
+      "botanicalId": 592,
+      "botanical": "Green Tea",
+      "ruleType": "contraindication",
+      "subject": "Iron-deficiency anaemia: catechins reduce iron absorption; drink between meals, not with them",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:592:contraindication:5",
+      "botanicalId": 592,
+      "botanical": "Green Tea",
+      "ruleType": "contraindication",
+      "subject": "Under 18: tea as a drink only, never concentrated extracts",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:592:drug_interaction:1",
+      "botanicalId": 592,
+      "botanical": "Green Tea",
+      "ruleType": "drug_interaction",
+      "subject": "Nadolol (beta-blocker): green tea cut nadolol blood levels by about 85% in healthy volunteers (PMID 24419562); separate or avoid",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:592:drug_interaction:2",
+      "botanicalId": 592,
+      "botanical": "Green Tea",
+      "ruleType": "drug_interaction",
+      "subject": "Stimulants, including ADHD medication and decongestants: additive caffeine effects",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:592:drug_interaction:3",
+      "botanicalId": 592,
+      "botanical": "Green Tea",
+      "ruleType": "drug_interaction",
+      "subject": "Warfarin: vitamin K in large amounts of leaf tea may reduce its effect; keep intake steady",
+      "severity": "caution",
+      "reason": null,
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:592:drug_interaction:4",
+      "botanicalId": 592,
+      "botanical": "Green Tea",
+      "ruleType": "drug_interaction",
+      "subject": "Iron supplements: take two hours apart",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:592:drug_interaction:5",
+      "botanicalId": 592,
+      "botanical": "Green Tea",
+      "ruleType": "drug_interaction",
+      "subject": "Clozapine, theophylline and other CYP1A2 substrates: caffeine competes for the same enzyme",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:592:herb_interaction:1",
+      "botanicalId": 592,
+      "botanical": "Green Tea",
+      "ruleType": "herb_interaction",
+      "subject": "Other caffeine sources (Yerba Mate, Guarana, Guayusa, Coffee, Kola Nut): additive caffeine load",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:592:herb_interaction:2",
+      "botanicalId": 592,
+      "botanical": "Green Tea",
+      "ruleType": "herb_interaction",
+      "subject": "Other hepatotoxic-risk herbs in concentrated form (Kava, high-dose Kalmegh): additive liver load",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:592:record:pregnancy",
+      "botanicalId": 592,
+      "botanical": "Green Tea",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:592:record:cns",
+      "botanicalId": 592,
+      "botanical": "Green Tea",
+      "ruleType": "record",
+      "subject": "CNS class: stimulant",
+      "severity": "caution",
+      "reason": "Recorded as a stimulant: it raises blood pressure and clashes with MAO inhibitors, lithium and clozapine.",
+      "flags": [
+        "hypertension",
+        "cardio_meds",
+        "psych_meds"
+      ],
+      "source": "herbs.ts · cns_action"
+    },
+    {
+      "id": "safety:593:contraindication:1",
+      "botanicalId": 593,
+      "botanical": "Hibiscus",
+      "ruleType": "contraindication",
+      "subject": "Low blood pressure: may lower it further",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "hypertension"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:593:contraindication:2",
+      "botanicalId": 593,
+      "botanical": "Hibiscus",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy: avoid medicinal amounts (animal data suggest effects on the uterus and hormones)",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:593:contraindication:3",
+      "botanicalId": 593,
+      "botanical": "Hibiscus",
+      "ruleType": "contraindication",
+      "subject": "Before surgery: stop two weeks ahead because of the blood-pressure effect",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:593:drug_interaction:1",
+      "botanicalId": 593,
+      "botanical": "Hibiscus",
+      "ruleType": "drug_interaction",
+      "subject": "Blood-pressure medication: additive lowering; monitor pressure",
+      "severity": "monitor",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:593:drug_interaction:2",
+      "botanicalId": 593,
+      "botanical": "Hibiscus",
+      "ruleType": "drug_interaction",
+      "subject": "Diuretics, including hydrochlorothiazide: additive diuresis",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:593:drug_interaction:3",
+      "botanicalId": 593,
+      "botanical": "Hibiscus",
+      "ruleType": "drug_interaction",
+      "subject": "Chloroquine and other antimalarials: reduced absorption reported; separate or avoid",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:593:herb_interaction:1",
+      "botanicalId": 593,
+      "botanical": "Hibiscus",
+      "ruleType": "herb_interaction",
+      "subject": "Other blood-pressure-lowering herbs at high dose (Rauvolfia, Sarpagandha, concentrated Garlic): additive lowering",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:593:record:pregnancy",
+      "botanicalId": 593,
+      "botanical": "Hibiscus",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:594:contraindication:1",
+      "botanicalId": 594,
+      "botanical": "Comfrey",
+      "ruleType": "contraindication",
+      "subject": "NEVER TAKE INTERNALLY: the pyrrolizidine alkaloids cause liver damage (veno-occlusive disease) and are carcinogenic",
+      "severity": "absolute",
+      "reason": null,
+      "flags": [
+        "liver_kidney"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:594:contraindication:2",
+      "botanicalId": 594,
+      "botanical": "Comfrey",
+      "ruleType": "contraindication",
+      "subject": "Broken or open skin and open wounds: PAs are absorbed; use only on intact skin",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:594:contraindication:3",
+      "botanicalId": 594,
+      "botanical": "Comfrey",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and breastfeeding: avoid, including external use",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:594:contraindication:4",
+      "botanicalId": 594,
+      "botanical": "Comfrey",
+      "ruleType": "contraindication",
+      "subject": "Children under 3: avoid; older children only short, small-area use",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:594:contraindication:5",
+      "botanicalId": 594,
+      "botanical": "Comfrey",
+      "ruleType": "contraindication",
+      "subject": "Liver disease: avoid",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:594:contraindication:6",
+      "botanicalId": 594,
+      "botanical": "Comfrey",
+      "ruleType": "contraindication",
+      "subject": "Limit external use to 4 to 6 weeks a year (German Commission E)",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:594:drug_interaction:1",
+      "botanicalId": 594,
+      "botanical": "Comfrey",
+      "ruleType": "drug_interaction",
+      "subject": "Drugs that stress the liver or induce CYP3A4 (which activates PAs): relevant only if comfrey were swallowed, which it must not be",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "contraceptive"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:594:herb_interaction:1",
+      "botanicalId": 594,
+      "botanical": "Comfrey",
+      "ruleType": "herb_interaction",
+      "subject": "Any other pyrrolizidine-bearing plant (Borage, Coltsfoot, Butterbur that is not PA-free): additive PA load",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:594:record:pregnancy",
+      "botanicalId": 594,
+      "botanical": "Comfrey",
       "ruleType": "record",
       "subject": "Pregnancy and breastfeeding",
       "severity": "avoid",

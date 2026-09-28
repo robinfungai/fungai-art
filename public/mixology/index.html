@@ -4,14 +4,14 @@
 <meta charset="UTF-8"/>
     <meta name="color-scheme" content="dark"><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Mixology · Materia Medica — Fungai Art</title>
-<meta name="description" content="242 botanicals, 5 elements, 4 traditions. The Fungai Art materia medica."/>
+<meta name="description" content="245 botanicals, 5 elements, 4 traditions. The Fungai Art materia medica."/>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
     <link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
     <link rel="apple-touch-icon" href="/fungi.png?v=3"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Fungai Art"/>
 <meta property="og:title" content="Herbal Engine — Fungai Art"/>
-<meta property="og:description" content="242 botanicals, 5 elements, 4 traditions. The Fungai Art materia medica."/>
+<meta property="og:description" content="245 botanicals, 5 elements, 4 traditions. The Fungai Art materia medica."/>
 <meta property="og:image" content="https://www.fungai.art/fungi.png?v=3"/>
 <meta property="og:url" content="https://www.fungai.art/mixology"/>
 <meta name="twitter:card" content="summary_large_image"/>
@@ -211,7 +211,7 @@ button{font-family:inherit;cursor:pointer;}
       <img src="/fungai-art-logo.png" alt="Fungai Art" style="height:46px;width:auto;opacity:.94;" onerror="this.src='/logo.png';this.style.filter='brightness(0) invert(1)';this.style.height='30px'">
       <div>
         <div class="nav-title">Mixology &middot; Materia Medica</div>
-        <div class="nav-sub">Fungai Art &middot; 242 Botanicals</div>
+        <div class="nav-sub">Fungai Art &middot; 245 Botanicals</div>
       </div>
     </a>
   </div>
@@ -227,7 +227,7 @@ button{font-family:inherit;cursor:pointer;}
   Educational reference — not medical advice, not a clinical recommendation. Pregnancy, lactation, prescription medications, and underlying conditions all change which herbs are appropriate. Consult a qualified herbalist or physician before acting on anything here.
 </div>
 <div class="hero">
-  <div class="hero-ey">242 plants &middot; 20 categories &middot; 5 elements &middot; evidence graded A&ndash;D</div>
+  <div class="hero-ey">245 plants &middot; 20 categories &middot; 5 elements &middot; evidence graded A&ndash;D</div>
   <h1 class="hero-title">Know your <em>plants.</em></h1>
   <p class="hero-blurb">The complete Fungai Art botanical reference. Filter by element or category, build your formula — tap any herb for full profile and extraction method.</p>
   <!-- New Tyme Tonics cross-link — sister project, kegged living drinks built
@@ -608,11 +608,13 @@ const H=[
   // Energy
   {id:'guarana',n:'Guarana',el:'F',ext:'T',c:['energy'],p:'Energy (primary); high caffeine; endurance; stimulating; potent.',x:'medium'},
   {id:'guayusa',n:'Guayusa',el:'F',ext:'T',c:['energy'],p:'Highest caffeine plant; energy; alertness; Amazonian traditional.',x:'medium'},
+  {id:'greenTea',n:'Green Tea',el:'A',ext:'T',c:['energy','cognitive','antioxid'],p:'Calm alertness (caffeine + L-theanine); focus; antioxidant catechins. Morning or midday only; no concentrated extracts with liver disease.',x:'medium'},
   {id:'yerbaMate',n:'Yerba Mate',el:'F',ext:'T',c:['energy'],p:'Energy (primary); high caffeine; balanced; mood; social traditional.',x:'medium'},
   // Urinary
   {id:'cranberry',n:'Cranberry',el:'W',ext:'T',c:['urinary','antioxid'],p:'Urinary tract health; antioxidant; proanthocyanidin-rich; acidifying.',x:'low'},
   {id:'sawPalmetto',n:'Saw Palmetto',el:'E',ext:'T',c:['urinary','mens'],p:'Urinary/prostate support; hormonal balance; male health.',x:'low'},
   // Heart / Nervine
+  {id:'hibiscus',n:'Hibiscus',el:'F',ext:'T',c:['heart','antioxid'],p:'Roselle calyx; modest blood-pressure lowering (RCTs); cooling, sour, vitamin-C bright. Care with blood-pressure medication.',x:'low'},
   {id:'hawthorn',n:'Hawthorn',el:'E',ext:'DC',c:['heart'],p:'Cardiovascular support (primary); heart tonification; circulation; gentle long-term tonic.',x:'low'},
   {id:'butchersBroom',n:"Butcher's Broom",el:'E',ext:'T',c:['heart'],p:'Venous support; varicose veins and hemorrhoids; capillary integrity.',x:'medium'},
   {id:'verbena',n:'Verbena',el:'A',ext:'T',c:['nervine'],p:'Gentle nervine and mild bitter; stress and digestive-linked tension.',x:'low'},
@@ -1329,7 +1331,6 @@ render();updatePanel();
      active spore member is restricted from this feature. Anonymous visitors bypass. -->
 <script src="/spore-gate.js"></script>
 <script>if (window.SporeGate) SporeGate.requireAccess('mixology');</script>
-<script src="/cookie-banner.js" defer></script>
 <!-- wave-line background (src/islands/waves.tsx) -->
 <script type="module" src="/islands/waves.js"></script>
 <!-- page-view beacon · no cookie, no visitor id, honours DNT (public/visit.js) -->

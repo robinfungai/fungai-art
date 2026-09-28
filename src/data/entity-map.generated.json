@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-27T20:20:59.648Z",
+  "generatedAt": "2026-09-28T11:10:17.626Z",
   "counts": {
-    "botanicals": 242,
+    "botanicals": 245,
     "monographs": 128,
     "monographsMatched": 128,
     "products": 21,
@@ -2185,6 +2185,33 @@
       "latin": "Mimosa pudica",
       "genus": "Mimosa",
       "species": "pudica"
+    },
+    {
+      "id": 592,
+      "slug": "green-tea",
+      "name": "Green Tea",
+      "botanical": "Camellia sinensis (unfermented leaf, steamed or pan-fired)",
+      "latin": "Camellia sinensis",
+      "genus": "Camellia",
+      "species": "sinensis"
+    },
+    {
+      "id": 593,
+      "slug": "hibiscus",
+      "name": "Hibiscus",
+      "botanical": "Hibiscus sabdariffa (dried calyces; \"Roselle / Sour Tea / Karkadé / Flor de Jamaica\")",
+      "latin": "Hibiscus sabdariffa",
+      "genus": "Hibiscus",
+      "species": "sabdariffa"
+    },
+    {
+      "id": 594,
+      "slug": "comfrey",
+      "name": "Comfrey",
+      "botanical": "Symphytum officinale (root and leaf; EXTERNAL USE ONLY)",
+      "latin": "Symphytum officinale",
+      "genus": "Symphytum",
+      "species": "officinale"
     }
   ],
   "monographs": [

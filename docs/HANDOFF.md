@@ -80,7 +80,53 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ---
 
-## 0.10 · START HERE — 2026-09-27, last session of the day (committed, not pushed)
+## 0.11 · START HERE — 2026-09-28 (committed, not pushed)
+
+**SQL for Robin:** `supabase-dm-realtime.sql` (DMs arrive live; without it the
+inbox just keeps polling). **After the next push:** set real saffron counts per
+size in Admin → Product inventory (the live admin still shows the old row).
+
+**Done:**
+- **Cookie banner gone** (file + 30 script tags). Home "Spore Stories" is one
+  static card linking to the "Inner Architecture" post — drop the post photo at
+  `public/home/spore/inner-architecture.webp` (it never existed). Instagram out
+  of the CSP. Privacy page: no banner because nothing needs consent; ban check
+  reads IP, not stored; page-view counting section was already accurate.
+- **Engine 2.3** (`version.js`): the goal leads — intention now outweighs
+  body/stress/time, a herb serving no chosen goal keeps half its score.
+  Measured over 48 profiles: overlap between goals 56% → 6%, herbs serving the
+  goal 44% → 99%, same goal across bodies still varies (16% overlap).
+  Laxatives only when digestion/detox is a goal (`pharmacology.js fitsGoal`).
+  **Max 1 serotonergic herb** (`serotonergic: true` on St John's Wort, Kanna,
+  Saffron, Rhodiola) in picker, MYCO validator + prompt, formula analysis.
+  Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth,
+  Karanja → `formula_access: 'pro'`. 19 fixture pins re-captured.
+- **New herbs 592–594:** Green Tea (stimulant, everywhere incl. Mixology),
+  Hibiscus (everywhere incl. Mixology), Comfrey (encyclopedia + Atlas only;
+  on every RESTRICTED list — never bottled). Catalogue 245. Every PMID checked
+  on PubMed (5 of 9 remembered ones were wrong — always check).
+- **Atlas photos:** wild-rosemary.jpg is garden rosemary (checked by eye) and
+  wild-thyme.jpg is thyme → renamed rosemary.jpg / thyme.jpg, compressed.
+  All 22 photos match; none unmatched.
+- **Atlas cards more vivid:** photos brighter/saturated, lighter scrim; no-photo
+  cards glow in their tradition's hue (`sigilHue`). Robin to judge on localhost.
+- **/health** noindex + out of the sitemap; linked from the Academy nav
+  ("Build your practice ↗", new tab).
+- **Saffron** shop badge per size (sold-out size disabled; all out = card out).
+- Portrait 328 → 199 KB. DMs: Realtime with polling fallback (`dm.jsx`).
+- 37/37 suites green; typecheck still the known 47.
+
+**Open:**
+- **Skogens Nektar** — second sub-brand like Moder Jord (pine cones, chaga
+  syrup, pickled spruce, juniper…). Needs Robin's product list; note Chaga
+  Syrup is already a live shop product.
+- Two Amanitas can share a mood bottle on rare profiles (both 'sedative',
+  cap 2) — flagged, not changed.
+- Bot check (Turnstile): Robin said not now. Signed DMs: not worth it yet.
+- C4 imprint: parked until March (address + OÜ then). No Germany claims.
+- M1 sitemap waits for the Atlas homepage.
+
+## 0.10 · 2026-09-27, last session of the day (committed, not pushed)
 
 **SQL:** Robin ran `supabase-lab-notes-signed-in.sql` and `supabase-medium-fixes.sql`
 (2026-09-27). He still needs to set real saffron counts per size in Admin →
