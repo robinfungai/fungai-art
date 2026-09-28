@@ -191,6 +191,10 @@ function passesAccess(h, profile) {
 const PROFILE_HIGH_CAUTION = new Set(['HIGH', 'VERY HIGH']);
 function passesProfileSafety(h, profile) {
   if (!h || !profile) return true;
+  // A herb the person's note says to avoid ("allergic to chamomile",
+  // "valerian made me groggy") — set server-side by index.js
+  // prepareProfile from note-safety.js, 2026-09-28.
+  if (Array.isArray(profile._avoidHerbIds) && profile._avoidHerbIds.includes(h.id)) return false;
   if (profile.cycle === 'trying_conceive' && h.safe_pregnancy !== true) return false;
   const prior = Array.isArray(profile.prior_herbs) ? profile.prior_herbs : [];
   if (prior.includes('stimulants_sensitive') && isCNSStimulant(h)) return false;

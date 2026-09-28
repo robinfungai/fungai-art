@@ -63,4 +63,74 @@ function applyNoteSafety(avoid, notes) {
   return { avoid: ticked.concat(added), added, hits };
 }
 
-module.exports = { NOTE_SAFETY_FLAGS, detectNoteSafety, applyNoteSafety };
+// ── A named herb to avoid (2026-09-28) ─────────────────────────────
+// "Allergic to chamomile", "bad reaction to ashwagandha", "no more
+// rhodiola", "valerian made me groggy": that herb leaves the pool —
+// a hard exclusion, never a score. Each clause of the note is read on
+// its own; a herb counts when it follows an avoid-phrase in the same
+// clause (up to a turn like "but" or "helped"), or comes just before a
+// "made me …" / "didn't agree with me". Fails closed like the flags
+// above, and the reveal names every herb it left out.
+const AVOID_BEFORE = /\b(?:allerg\w*(?: (?:to|with|reaction to))?|(?:bad |adverse |strong )?reactions? (?:to|with|from)|react(?:ed|s)? (?:badly |poorly |strongly )?(?:to|with)|intoleran\w* (?:to|of)|sensitive to|can'?t (?:take|tolerate|have|use)|cannot (?:take|tolerate|have|use)|(?:do|did|does)(?:n'?t| not) (?:tolerate|want|use|like)|avoid(?:ing)?|no more|never again|stay(?:ing)? away from|not (?:allowed|supposed) to (?:take|have))\b/gi;
+const AVOID_AFTER  = /\b(?:made|makes|make|gave|gives) me (?:feel )?(?:sick|ill|nause\w*|queasy|anxious|jittery|wired|groggy|dizzy|worse|a rash|rashes|hives|headaches?|migraines?|palpitations|heartburn|insomnia)\b|\b(?:do|did|does)(?:n'?t| not) agree with me\b/gi;
+const CLAUSE_TURN  = /\b(?:but|however|though|although|except|prefer|love|loved|helps|helped|works|worked|maybe|perhaps)\b/i;
+
+// Every name a herb answers to, lower-cased: the name, its parts
+// ("He Shou Wu / Fo-Ti", "Schisandra (Five-Flavour Fruit)"), aliases and
+// the botanical binomial. Four letters or more, matched as whole words.
+const _namesCache = new WeakMap();
+function herbNames(h) {
+  let names = _namesCache.get(h);
+  if (names) return names;
+  // botanical often carries notes after the binomial ("Piper methysticum
+  // (peeled rhizome — …)"), sometimes two species split by "/": keep
+  // each binomial only.
+  const binomials = String(h.botanical || '').split('/')
+    .map(s => s.replace(/\(.*?\)/g, ' ').trim().split(/\s+/).slice(0, 2).join(' '));
+  const name = String(h.name || '');
+  const words = name.toLowerCase().split(/\s+/);
+  const raw = [name, ...(h.aliases || []), ...binomials]
+    .concat(name.split(/[()/,]/))
+    // "Kava Kava" is also written "kava".
+    .concat(words.length === 2 && words[0] === words[1] ? [words[0]] : [])
+    .map(s => String(s || '').toLowerCase().replace(/\s+/g, ' ').trim())
+    .filter(s => s.length >= 4);
+  names = [...new Set(raw)].map(s => new RegExp('\\b' + s
+    .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    .replace(/\\\./g, '\\.?')            // "St. John's" = "St John's"
+    .replace(/['’]/g, "['’]?")           // "Lion's" = "Lions" = "Lion’s"
+    + '\\b', 'i'));
+  _namesCache.set(h, names);
+  return names;
+}
+
+/**
+ * Herbs the note says to avoid.
+ * @param {string} notes
+ * @param {Array} pool — ensurePool() herbs
+ * @returns {Array<{id, name, word}>} word = the phrase that named it
+ */
+function detectNoteHerbAvoidance(notes, pool) {
+  const text = String(notes || '').slice(0, 4000);
+  if (!text.trim() || !Array.isArray(pool)) return [];
+  const found = new Map();
+  const note = (h, word) => { if (!found.has(h.id)) found.set(h.id, { id: h.id, name: h.name, word: word.trim().slice(0, 60) }); };
+  for (const clause of text.split(/[.;!?\n]+/)) {
+    AVOID_BEFORE.lastIndex = 0;
+    let m;
+    while ((m = AVOID_BEFORE.exec(clause))) {
+      let rest = clause.slice(m.index + m[0].length);
+      const turn = rest.search(CLAUSE_TURN);
+      if (turn >= 0) rest = rest.slice(0, turn);
+      for (const h of pool) if (herbNames(h).some(rx => rx.test(rest))) note(h, m[0] + rest.replace(/\s+/g, ' ').slice(0, 40));
+    }
+    AVOID_AFTER.lastIndex = 0;
+    while ((m = AVOID_AFTER.exec(clause))) {
+      const before = clause.slice(Math.max(0, m.index - 60), m.index);
+      for (const h of pool) if (herbNames(h).some(rx => rx.test(before))) note(h, before.trim().split(/\s+/).slice(-4).join(' ') + ' ' + m[0]);
+    }
+  }
+  return [...found.values()];
+}
+
+module.exports = { NOTE_SAFETY_FLAGS, detectNoteSafety, applyNoteSafety, detectNoteHerbAvoidance };

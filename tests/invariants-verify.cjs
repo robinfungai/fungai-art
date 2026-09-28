@@ -26,7 +26,8 @@ const { passesMinorGate } = R('src/server/formula-engine/safety.js');
 const { isTrace } = R('src/server/formula-engine/traces.js');
 const { targetHerbCount } = R('src/server/formula-engine/picker.js');
 const { assignPercentages } = R('src/server/formula-engine/percentages.js');
-const { detectNoteSafety } = R('src/server/formula-engine/note-safety.js');
+const { detectNoteSafety, detectNoteHerbAvoidance } = R('src/server/formula-engine/note-safety.js');
+const { isAmanita } = R('src/server/formula-engine/rules.js');
 const P = R('src/server/formula-engine/pharmacology.js');
 
 // ── Reproducible randomness (mulberry32) ──────────────────────────
@@ -39,7 +40,8 @@ const GOALS = ['stress', 'anxiety', 'sleep', 'energy', 'mood', 'cognitive', 'hor
 const FLAGS = ['pregnancy', 'cardio_meds', 'psych_meds', 'autoimmune', 'liver_kidney', 'thyroid', 'hypertension', 'contraceptive', 'sedatives', 'allergy'];
 const SLEEP = ['restorative_6plus', 'not_restorative_6plus', 'under_6', 'very_broken', 'restorative', 'hard_onset', 'wakes_middle', 'early_wake', 'sleeps_no_rest', 'vivid_restless'];
 const NOTES = ['', '', 'sleep first', 'constipated for weeks', 'energy back before anything else', 'grief since July, heavy heart',
-  'on sertraline since spring', 'just found out I am pregnant', 'Hashimoto, on levothyroxine'];
+  'on sertraline since spring', 'just found out I am pregnant', 'Hashimoto, on levothyroxine',
+  'bad reaction to ashwagandha last year', 'valerian made me groggy, reishi was lovely'];
 
 function randomProfile() {
   const goals = [pick(GOALS)];
@@ -111,6 +113,8 @@ function checkBottle(p, r, tag) {
   if (herbs.some(P.isGABAergic) && herbs.some(P.isStrongStimulant)) fail('no sedative beside a true stimulant', p, names);
   if (herbs.filter(P.isSerotonergic).length > P.MAX_SEROTONERGIC) fail('at most 1 serotonergic herb', p, names);
   if (herbs.filter(P.isLaxative).length > P.MAX_LAXATIVE) fail('at most 1 laxative', p, names);
+  if (herbs.filter(isAmanita).length > 1) fail('at most one Amanita', p, names);
+  for (const x of detectNoteHerbAvoidance(p.notes, pool)) if (herbs.some(h => h.id === x.id)) fail('a herb the note says to avoid is never seated', p, x.name + ' (' + x.word + ')');
   if (herbs.some(h => isRestricted(h))) fail('no restricted plant', p, names);
   if (herbs.some(h => h.proOnly) && !(p._pro === true && !minor)) fail('pro-only herb only for a pro adult', p, names);
   if (herbs.some(h => /yohimb/i.test(h.name)) && !(p._pro === true && !minor)) fail('Yohimbe never in a customer bottle (D11)', p, names);
@@ -181,6 +185,16 @@ expect([42], 'SAFETY_FLAG_UNKNOWN');
   const r = E.compileFormula(Object.assign({}, base, { avoid: ['psych_meds'], notes: 'on sertraline' }));
   if (r.noteSafety.flagsAdded.length) fail('a ticked flag named again in the note is not "added"', { notes: 'on sertraline' }, JSON.stringify(r.noteSafety));
 }
+// Categories · "mushroom" is exactly the fungi (recorded family), not a
+// word search: Dandelion ("lion") and Ginkgo used to count as mushrooms.
+{
+  const called = pool.filter(h => P.categoryOf(h) === 'mushroom');
+  const plants = called.filter(h => !P.isFungus(h));
+  const missed = pool.filter(h => P.isFungus(h) && P.categoryOf(h) !== 'mushroom');
+  if (plants.length || missed.length) fail('mushroom category = the fungi', {}, 'plants: ' + plants.map(h => h.name).join(', ') + ' · missed: ' + missed.map(h => h.name).join(', '));
+  else count('mushroom category = the ' + called.length + ' fungi');
+}
+
 // D3 · more safety flags no longer make a bigger bottle.
 if (targetHerbCount(Object.assign({}, base, { avoid: ['none'] })) !== targetHerbCount(Object.assign({}, base, { avoid: ['thyroid', 'allergy', 'autoimmune'] })))
   fail('safety flags do not change the bottle size (D3)', base, 'target changed with 3 flags');
@@ -258,6 +272,7 @@ else fail('NO_SAFE_MATCH check has a pool to work with', base, flagged.length + 
   const fakeMyco = async (url, init) => {
     calls++;
     const user = JSON.parse(init.body).messages[0].content;
+    if (!/<<<NOTE\n[\s\S]*\nNOTE>>>/.test(user)) fail('MYCO sees the note fenced as untrusted text', {}, user.slice(0, 120));
     const rows = [...user.matchAll(/^\d+\. id=(\S*) · .*? · category:(\S+) · pre-score:[^\s·]+(?: · (\S+))?$/gm)]
       .map(m => ({ id: m[1], cat: m[2], tags: (m[3] || '').split('/') }));
     const used = { cat: {}, TRACE: 0, GABA: 0, STIM: 0, SERO: 0, LAX: 0, STRONG: 0 };
@@ -271,7 +286,8 @@ else fail('NO_SAFE_MATCH check has a pool to work with', base, flagged.length + 
       for (const k of ['TRACE', 'GABA', 'STIM', 'SERO', 'LAX', 'STRONG']) if (t.has(k)) used[k]++;
       picked.push({ id: x.id, pct: picked.length ? 2 : 90, reason: 'test' });
     }
-    return { ok: true, status: 200, json: async () => ({ content: [{ type: 'text', text: JSON.stringify({ picked, overall: 'A test reading.' }) }] }) };
+    const overall = 'A test reading. See https://evil.example and [this](http://x.example) <b>now</b>, write to a@b.example.';
+    return { ok: true, status: 200, json: async () => ({ content: [{ type: 'text', text: JSON.stringify({ picked, overall }) }] }) };
   };
   let mycoBottles = 0;
   const log = console.log; console.log = () => {};   // compose logs every fallback
@@ -279,7 +295,10 @@ else fail('NO_SAFE_MATCH check has a pool to work with', base, flagged.length + 
     for (const p of profiles.slice(0, 120)) {
       const r = await E.composeFormulaWithMyco(p, { apiKey: 'test-stand-in', fetchImpl: fakeMyco });
       if (r.status !== 'ok') continue;
-      if (r.mycoUsed === true) { mycoBottles++; checkBottle(p, r, 'MYCO: '); }
+      if (r.mycoUsed === true) {
+        mycoBottles++; checkBottle(p, r, 'MYCO: ');
+        if (/https?:|www\.|[<>\[\]]|@/.test(r.mycoOverall)) fail('no links, markup or addresses in MYCO text', p, r.mycoOverall);
+      }
       else checkBottle(p, r, 'fallback: ');
     }
   } finally { console.log = log; }

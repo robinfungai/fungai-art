@@ -12,7 +12,8 @@ const { ensurePool, shortNote } = require('./axes');
 const { scoreHerb, scoreBreakdown } = require('./scoring');
 const { safetyFilter, applyMinorGate, passesAccess, passesProfileSafety } = require('./safety');
 const { isTrace } = require('./traces');
-const { isGABAergic, isCNSStimulant, isStrongStimulant, isSerotonergic, MAX_SEROTONERGIC, isLaxative, MAX_LAXATIVE, fitsTimeOfUse, fitsGoal, categoryOf } = require('./pharmacology');
+const { isGABAergic, isCNSStimulant, isStrongStimulant, isSerotonergic, isLaxative, fitsTimeOfUse, fitsGoal, categoryOf } = require('./pharmacology');
+const { RULES, newLoad, seatBlocker, seat } = require('./rules');
 
 // ── Tie-breaking ──────────────────────────────────────────────────
 // scoreHerb builds a score from a handful of coarse constants —
@@ -110,7 +111,7 @@ function targetHerbCount(a) {
 // A bottle needs at least three main (non-trace) herbs, so that none of
 // them carries more than 40% (percentages.js). Fewer than that is not a
 // smaller bottle, it is no bottle: NO_MATCH / NO_SAFE_MATCH.
-const MIN_MAIN_HERBS = 3;
+const MIN_MAIN_HERBS = RULES.MIN_MAIN_HERBS;
 
 // Every herb that may be offered for this profile, scored, best first,
 // one per first clause of its main use. `safety: false` skips the
@@ -151,28 +152,17 @@ function rankedCandidates(a, { safety = true } = {}) {
 function walk(uniq, a) {
   const target = targetHerbCount(a);
   const openToGated = !!a._gatedOptIn;
-  const catCount = {};
+  const load = newLoad();
   const composed = [];
-  let traceUsed = 0, gabaUsed = 0, stimUsed = 0, strongUsed = 0, seroUsed = 0, laxUsed = 0;
   for (const x of uniq) {
     if (composed.length >= target) break;
     if (x.h.gated && !openToGated) continue;
-    const cat = categoryOf(x.h);
-    if ((catCount[cat] || 0) >= 2) continue;
-    if (isTrace(x.h)) { if (traceUsed >= 1 || target < MIN_MAIN_HERBS + 1) continue; }
-    if (isGABAergic(x.h)) { if (gabaUsed >= 2 || strongUsed) continue; }
-    if (isCNSStimulant(x.h)) { if (stimUsed >= 2) continue; }
-    if (isStrongStimulant(x.h) && gabaUsed) continue;
-    if (isSerotonergic(x.h) && seroUsed >= MAX_SEROTONERGIC) continue;
-    if (isLaxative(x.h) && laxUsed >= MAX_LAXATIVE) continue;
+    if (isTrace(x.h) && target < MIN_MAIN_HERBS + 1) continue;
+    // Every other seating rule lives in rules.js, shared with the MYCO
+    // validator, so the two cannot drift apart.
+    if (seatBlocker(load, x.h)) continue;
     composed.push(x);
-    catCount[cat] = (catCount[cat] || 0) + 1;
-    if (isSerotonergic(x.h)) seroUsed += 1;
-    if (isLaxative(x.h)) laxUsed += 1;
-    if (isTrace(x.h)) traceUsed += 1;
-    if (isGABAergic(x.h)) gabaUsed += 1;
-    if (isCNSStimulant(x.h)) stimUsed += 1;
-    if (isStrongStimulant(x.h)) strongUsed += 1;
+    seat(load, x.h);
   }
   return composed;
 }

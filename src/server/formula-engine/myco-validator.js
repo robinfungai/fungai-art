@@ -35,18 +35,28 @@
 //
 // SERVER-ONLY. Never imported by any client code.
 
-const { isTrace } = require('./traces');
-const { isGABAergic, isCNSStimulant, isStrongStimulant, isSerotonergic, MAX_SEROTONERGIC, isLaxative, MAX_LAXATIVE, categoryOf } = require('./pharmacology');
-const { assignPercentages, TRACE_PCT_CAP, MAX_SHARE_PCT } = require('./percentages');
+const { categoryOf } = require('./pharmacology');
+const { assignPercentages } = require('./percentages');
+const { RULES, newLoad, seatBlocker, seat } = require('./rules');
 
-// Constants must match picker.js exactly (per audit constraint #8:
-// no methodology drift). Sourced from the same load-cap block.
-const MAX_PER_CATEGORY = 2;
-const MAX_TRACE        = 1;
-const MAX_GABAERGIC    = 2;
-const MAX_STIMULANT    = 2;
+// The seating rules are rules.js — the same code the picker walks with
+// (audit 2026-09-28: one rule engine for picker and validator). Only the
+// herb count is MYCO's own: it is asked for 5–7.
+const { MAX_PER_CATEGORY, MAX_TRACE, MAX_GABAERGIC, MAX_STIMULANT, TRACE_PCT_CAP, MAX_SHARE_PCT } = RULES;
 const MIN_HERBS        = 5;
 const MAX_HERBS        = 7;
+
+// rules.js reason → the validator's stable code and a line for the log.
+const BLOCKED = {
+  TRACE_COUNT:             ['MYCO_TRACE_COUNT_EXCEEDED',       () => 'more than ' + RULES.MAX_TRACE + ' trace herb'],
+  GABA_LOAD:               ['MYCO_GABA_LOAD_EXCEEDED',         () => 'more than ' + RULES.MAX_GABAERGIC + ' GABAergics'],
+  SEDATIVE_WITH_STIMULANT: ['MYCO_SEDATIVE_WITH_STIMULANT',    () => 'a sedative and a stimulant pull against each other in one bottle'],
+  STIMULANT_LOAD:          ['MYCO_STIMULANT_LOAD_EXCEEDED',    () => 'more than ' + RULES.MAX_STIMULANT + ' CNS stimulants'],
+  SEROTONERGIC_LOAD:       ['MYCO_SEROTONERGIC_LOAD_EXCEEDED', () => 'more than ' + RULES.MAX_SEROTONERGIC + ' serotonergic herb'],
+  LAXATIVE_LOAD:           ['MYCO_LAXATIVE_LOAD_EXCEEDED',     () => 'more than ' + RULES.MAX_LAXATIVE + ' laxative herb'],
+  AMANITA_LIMIT:           ['MYCO_AMANITA_LIMIT_EXCEEDED',     () => 'more than ' + RULES.MAX_AMANITA + ' Amanita'],
+  CATEGORY_CAP:            ['MYCO_CATEGORY_CAP_EXCEEDED',      h => 'more than ' + RULES.MAX_PER_CATEGORY + ' of category ' + categoryOf(h)],
+};
 
 /**
  * @param {object} params
@@ -89,8 +99,7 @@ function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn, pro = fa
   const acceptedHerbs = [];
   const acceptedReasons = [];
   const seenIds       = new Set();
-  let traceUsed = 0, gabaUsed = 0, stimUsed = 0, strongUsed = 0, seroUsed = 0, laxUsed = 0;
-  const catCount = {};
+  const load          = newLoad();
 
   for (const pick of mycoResponse) {
     if (!pick || typeof pick !== 'object') {
@@ -136,74 +145,15 @@ function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn, pro = fa
       };
     }
 
-    // Trace count — one potent essential-oil herb per bottle (its ≤5%
-    // share is set by assignPercentages below).
-    if (isTrace(herb)) {
-      traceUsed += 1;
-      if (traceUsed > MAX_TRACE) {
-        return {
-          ok: false, reason: 'MYCO_TRACE_COUNT_EXCEEDED',
-          detail: 'more than ' + MAX_TRACE + ' trace herb',
-        };
-      }
+    // Every seating rule — trace count, sedative / stimulant /
+    // serotonergic / laxative loads, sedative beside stimulant, one
+    // Amanita, category balance — is rules.js, shared with the picker.
+    const blocked = seatBlocker(load, herb);
+    if (blocked) {
+      const [code, explain] = BLOCKED[blocked];
+      return { ok: false, reason: code, detail: explain(herb) };
     }
-
-    // Pharmacological load caps.
-    if (isGABAergic(herb)) {
-      gabaUsed += 1;
-      if (gabaUsed > MAX_GABAERGIC) {
-        return {
-          ok: false, reason: 'MYCO_GABA_LOAD_EXCEEDED',
-          detail: 'more than ' + MAX_GABAERGIC + ' GABAergics',
-        };
-      }
-    }
-    if (isStrongStimulant(herb)) strongUsed += 1;
-    if (gabaUsed && strongUsed) {
-      return {
-        ok: false, reason: 'MYCO_SEDATIVE_WITH_STIMULANT',
-        detail: 'a sedative and a stimulant pull against each other in one bottle',
-      };
-    }
-    if (isCNSStimulant(herb)) {
-      stimUsed += 1;
-      if (stimUsed > MAX_STIMULANT) {
-        return {
-          ok: false, reason: 'MYCO_STIMULANT_LOAD_EXCEEDED',
-          detail: 'more than ' + MAX_STIMULANT + ' CNS stimulants',
-        };
-      }
-    }
-
-    if (isSerotonergic(herb)) {
-      seroUsed += 1;
-      if (seroUsed > MAX_SEROTONERGIC) {
-        return {
-          ok: false, reason: 'MYCO_SEROTONERGIC_LOAD_EXCEEDED',
-          detail: 'more than ' + MAX_SEROTONERGIC + ' serotonergic herb',
-        };
-      }
-    }
-
-    if (isLaxative(herb)) {
-      laxUsed += 1;
-      if (laxUsed > MAX_LAXATIVE) {
-        return {
-          ok: false, reason: 'MYCO_LAXATIVE_LOAD_EXCEEDED',
-          detail: 'more than ' + MAX_LAXATIVE + ' laxative herb',
-        };
-      }
-    }
-
-    // Category balance.
-    const cat = categoryOf(herb);
-    catCount[cat] = (catCount[cat] || 0) + 1;
-    if (catCount[cat] > MAX_PER_CATEGORY) {
-      return {
-        ok: false, reason: 'MYCO_CATEGORY_CAP_EXCEEDED',
-        detail: 'more than ' + MAX_PER_CATEGORY + ' of category ' + cat,
-      };
-    }
+    seat(load, herb);
 
     acceptedHerbs.push(herb);
     acceptedReasons.push(reason);

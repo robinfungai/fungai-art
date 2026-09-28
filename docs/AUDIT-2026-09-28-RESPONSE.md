@@ -98,14 +98,14 @@ re-pinned in `tests/fixtures/methodology-pins.cjs` with the reason.
 | 27 | MYCO chooses the formula, not just explains it | ✅ True, and now bounded: it chooses herbs, never shares (D2). |
 | 31 | A second AI call sends the personal note again (reading paragraph) | ✅ **D5:** removed from both pages. The compose call's MYCO text is the reading now — one AI call sees the note. |
 | 32 | The claims sanitiser is regex, not a guarantee | ✅ True; it is last-line hygiene. The MYCO prompt now also forbids treat/cure/heal/prevent wording. |
-| 39–40 | Health data, minimisation | ⏭ **D6 (Robin): 30 days.** Unreserved quiz answers are still kept **forever** — the "scheduled cleanup" the code mentions does not exist, and the privacy page says answers are kept "while we prepare and follow up". Next: the cleanup job + the privacy page naming 30 days. |
+| 39–40 | Health data, minimisation | ✅ **D6:** unreserved formulas and answers deleted after 30 days (nightly job in the database); reservations are now marked so they are kept; the privacy page says 30 days. |
 
 ### Section 5 · Abuse and robustness
 
 | # | Finding | Verdict |
 |---|---|---|
-| 41 | Rate limit is per server instance; no-origin requests pass | ⏭ **D8 (Robin): yes.** A daily MYCO budget in Supabase; past it, the deterministic engine only. |
-| 42 | No server-side idempotency | ⏭ **D8 / P0 #11 (Robin): yes.** See the tail below. |
+| 41 | Rate limit is per server instance; no-origin requests pass | ✅ **D8:** a daily MYCO budget in the database, across all instances; past it, the deterministic engine only. The per-request rate limit is still per instance. |
+| 42 | No server-side idempotency | ✅ **P0 #11:** same request id + same answers → the stored formula. |
 
 ### Section 6 · Copy, claims and the reveal
 
@@ -132,8 +132,8 @@ re-pinned in `tests/fixtures/methodology-pins.cjs` with the reason.
 | P0 8 | Reconcile the scoring maths with the brief | ✅ Done in `f72bac8`; the brief is updated again for 2.5. |
 | P0 9 | Decide whether MYCO may produce nondeterministic formulas | ✅ **D2 option C**: it may choose different herbs; never the shares. |
 | P0 10 | Percentages back to deterministic logic | ✅ Engine 2.5. |
-| P0 11 | Real server-side idempotency (`requestId`, `unique(profileHash + sessionNonce + requestId)` in `fyf-compose.mjs`) | ⏭ **D8, next.** Today a retried or double-clicked compose makes a second row and a second MYCO call. Plan: the page sends a `requestId` per reveal; the server keeps a unique key on (profile hash, requestId) in `fyf_formulas` and returns the stored formula on a repeat instead of composing again. Needs one SQL migration. |
-| P0 12 | Global / edge AI abuse protection | ⏭ **D8, next** (the daily MYCO budget above). |
+| P0 11 | Real server-side idempotency (`requestId`, `unique(profileHash + sessionNonce + requestId)` in `fyf-compose.mjs`) | ✅ The page sends one request id per visit; `request_key` = hash of that id + the exact answers, unique in `fyf_formulas`. A repeat returns the stored formula (`replayed: true`); two at once still store one. |
+| P0 12 | Global / edge AI abuse protection | ✅ The daily MYCO budget (bot protection such as Turnstile is not added). |
 | §65 | P1: cap note influence; canonical unordered inputs | ✅ Both done in `1917c9e`. |
 | §65 | P1: remove second-pass category relaxation | ✅ Engine 2.5. |
 | §65 | P1: `NO_MATCH` vs `NO_SAFE_MATCH` | ✅ Engine 2.5. |
@@ -147,6 +147,32 @@ re-pinned in `tests/fixtures/methodology-pins.cjs` with the reason.
 | §67 | A canonical "Formula Object" (profile, safety, constellation with role/fit/shareRange, constraints, composition method) | 🔭 Agreed as the target shape for the stored formula, the reveal, the pro tools, the PDF and a future batch record. First pieces are in: the engine result now carries `safetyFlags` (what the bottle was built under) and `noteSafety` (what the note added). Next pieces: `composition: { method, mycoUsed }` (the data exists as `mycoUsed`), then roles and confidence once they are engine data. It should be versioned beside `engineVersion`, since reservations store it. |
 | §68–69 | Shift from "find herbs whose descriptions resemble the answers" to "construct the best feasible constellation under explicit constraints"; make the engine internally truthful first | ✅ Agreed. The truthfulness part is what Sections 1–3 did: every structured answer scores, unknown safety fails closed, the brief matches the code (engine 2.5, safety rules 1.3). |
 
+## Second round · the "three audits" synthesis (2026-09-28)
+
+A later summary merged three audits. Its newest audit also read GitHub
+`main`, and said so: brief 2.4 vs `main` 2.1 (true — `main` is the live
+deploy, `b3beace`). Each claim checked against the local engine:
+
+| Claim | Verdict |
+|---|---|
+| Everyone must audit the same engine | ✅ The first fix. Deploying (D0) closes the gap; a small `/api/version` (commit, engine, safety, catalogue) would let anyone check what is live — proposed, not built. |
+| Minors get HIGH-caution herbs; pregnancy not explicit; laxative / stimulant / sedative caps missing; stimulant/sedative by substring | 🟢 True of `main`; fixed locally since 27–28 Sep. |
+| Word searches misclassify ("lion" → Dandelion a mushroom) | ✅ Still true locally for the category: Dandelion, Ginkgo, Milk Thistle and Schisandra counted as mushrooms; Fu Ling, Morels, Enoki, Shaggy Mane, Tinder Fungus did not. **Engine 2.6:** "mushroom" = the recorded botanical family. The other categories are still read from text. |
+| "Allergy boomerang": a herb named in the note gets a score boost | ❌ for scoring — note keywords are a fixed list of goal words; "allergic to chamomile" gives chamomile 0. But the herb was not excluded either. **Safety rules 1.4:** a herb the note says to avoid is excluded, and the reveal says so. |
+| Notes reach MYCO as possible instructions (prompt injection) | ✅ The note is now fenced and labelled untrusted; links, markup and email addresses are removed from MYCO's text before anyone sees it. |
+| One rule engine for picker and validator | ✅ `rules.js`, used by both; the pro analysis reads the same numbers. |
+| Amanita needs a genus rule | ✅ At most one per bottle (it happened in 0 of 1,500 bottles; the rule costs nothing). |
+| Denial of wallet | ✅ D8: global daily MYCO budget + one formula per request. SQL to run. |
+| Health-data retention | ✅ D6: 30 days for unreserved formulas. SQL to run. |
+| Public botanical datasets | ✅ `public/herb-engine-pool.json` (270 KB, read by nothing) removed with its build step. `/herbs-data.js` stays while `/mixology` and `/extraction` need it (D7). |
+| The pro editor can save forbidden herbs | ✅ A formula with a plant the engine never bottles cannot be saved or printed; other failed checks can, as failures. |
+| Primary goal should be a constraint, not points | ❌ Not needed today: 0 of 1,500 adult bottles lack a herb serving goal #1. A formal rule would be insurance only. |
+| Multi-goal "bridge" herbs need special maths | ❌ Already: serving #2 + #3 (up to 9 points) outranks the weakest #1 match (6.48). |
+| Consumer gets weaker safety questions than the pro | ⚖️ True: the consumer quiz does not ask about past bad reactions or stimulant sensitivity, and breastfeeding is judged by the pregnancy data (lactation safety is not the same thing). Needs Robin's wording for the questions. |
+| HIGH-caution herbs need a per-bottle cap | ⚖️ Robin's call (HIGH herbs stay in adult formulas — decided 27 Sep). Measured: 46% of adult bottles hold one, 4.7% two or more. A count cap is a different question from exclusion. |
+| Trace budget, load model, hard/soft pair cautions, roles, provenance per field, constrained optimisation, batch traceability | 🔭 Agreed direction. Optimisation pays once scores depend on pairs (bridges, synergy, budgets); an exhaustive search over the 20-herb shortlist (~132,000 bottles of 5–7) needs no solver. |
+| Test the safety question with realistic personas first | ⚖️ Agreed as the first human test. |
+
 ## Decisions (Robin, 2026-09-28)
 
 | | Question | Decided | Status |
@@ -157,9 +183,9 @@ re-pinned in `tests/fixtures/methodology-pins.cjs` with the reason.
 | D3 | 40% cap · drop "+1 herb for 2+ flags" · strict walk + NO_MATCH/NO_SAFE_MATCH | Yes to all three | ✅ Engine 2.5 |
 | D4 | Evidence grade | 0 to +2 points | ✅ Engine 2.5 |
 | D5 | Second AI call for the reading paragraph | Drop it; fold into the compose call | ✅ Both pages |
-| D6 | Unreserved quiz answers | Delete after 30 days; privacy page to match | ⏭ Next |
-| D7 | Public repo; `/herbs-data.js` | Robin makes the repo private; check what still loads the file | Checked: `/mixology`, `/extraction` (above) |
-| D8 | Daily MYCO budget + server-side idempotency (P0 #11) | Yes | ⏭ Next |
+| D6 | Unreserved quiz answers | Delete after 30 days; privacy page to match | ✅ Code + privacy page; **run `supabase-fyf-retention.sql`** |
+| D7 | Public repo; `/herbs-data.js` | Robin makes the repo private; check what still loads the file | `herb-engine-pool.json` removed; `herbs-data.js` still needed by `/mixology`, `/extraction` |
+| D8 | Daily MYCO budget + server-side idempotency (P0 #11) | Yes | ✅ Code; **run `supabase-myco-budget.sql`**; set `FYF_MYCO_DAILY_LIMIT` in Netlify (default 100) |
 | D9 | Claims pass over the formula-maker copy | Yes — draft a table for approval first | ⏭ Next |
 | D10 | Reveal ritual and visual language | Parked for a design pass | 🔭 |
 | D11 | Yohimbe | Pro composer only; no house dose; rank gate and brown logo unchanged | ✅ (pro-only since `1917c9e`; test added) |

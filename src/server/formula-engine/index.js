@@ -19,13 +19,29 @@ const { pickFormula, noMatchCode, targetHerbCount, buildScoredCandidates, explai
 const { assignPercentages } = require('./percentages');
 const { checkFormulaPairs } = require('./interactions');
 const { validateAndNormalizeAvoid, countFilteredOut } = require('./safety');
-const { applyNoteSafety } = require('./note-safety');
+const { applyNoteSafety, detectNoteHerbAvoidance } = require('./note-safety');
+const { ensurePool } = require('./axes');
 const { isTrace } = require('./traces');
 const { isGABAergic, isCNSStimulant } = require('./pharmacology');
 const { pickName } = require('./naming');
 const { askMyco } = require('./myco');
 const { validateMycoProposal } = require('./myco-validator');
 const VERSION = require('./version');
+
+// MYCO's words reach the reveal and Robin's reservation email. The
+// pages escape HTML, but a note can still try to talk MYCO into writing
+// a link or markup, so both are removed here (audit 2026-09-28). The
+// claims sanitiser runs after this, in fyf-compose.
+function plainText(s, max) {
+  return String(s || '')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')                 // [text](url) → text
+    .replace(/<[^>]*>/g, ' ')                                 // tags
+    .replace(/\b(?:https?:\/\/|www\.)\S+/gi, '')              // bare links
+    .replace(/\b[\w.+-]+@[\w-]+\.[\w.-]+\b/g, '')             // email addresses
+    .replace(/[ \t]{2,}/g, ' ')
+    .trim()
+    .slice(0, max);
+}
 
 /**
  * The one place an untrusted profile becomes the profile the engine
@@ -53,6 +69,10 @@ function prepareProfile(profile) {
   // A medicine, pregnancy or condition named in the note applies the
   // matching flag as if it had been ticked. note-safety.js.
   const noteSafety = applyNoteSafety(normalisedAvoid, profile.notes);
+  // …and a herb the note names to avoid leaves the pool (safety.js
+  // passesProfileSafety). A client-sent list is never trusted.
+  const herbsAvoided = detectNoteHerbAvoidance(profile.notes, ensurePool() || []);
+  noteSafety.herbsAvoided = herbsAvoided;
 
   // ── Round 2 · Item #0 · Age model normalisation ───────────────
   // The age question inside the quiz is the CANONICAL age input.
@@ -68,6 +88,7 @@ function prepareProfile(profile) {
   const a = Object.assign({}, profile, {
     avoid:  noteSafety.avoid,
     _minor: profile.age === 'under_18',
+    _avoidHerbIds: herbsAvoided.map(x => x.id),
   });
   return { ok: true, a, noteSafety };
 }
@@ -88,7 +109,11 @@ function compileFormula(profile) {
   const prep = prepareProfile(profile);
   if (!prep.ok) return prep.rejected;
   const profileForEngine = prep.a;
-  const noteSafety = { flagsAdded: prep.noteSafety.added, hits: prep.noteSafety.hits };
+  const noteSafety = {
+    flagsAdded:   prep.noteSafety.added,
+    hits:         prep.noteSafety.hits,
+    herbsAvoided: prep.noteSafety.herbsAvoided.map(x => ({ name: x.name, word: x.word })),
+  };
 
   // ── Deterministic pick + percentages ───────────────────────────
   const herbs = pickFormula(profileForEngine);
@@ -254,7 +279,7 @@ async function composeFormulaWithMyco(profile, opts = {}) {
       isGABAergic:     isGABAergic(h),
       isCNSStimulant:  isCNSStimulant(h),
       isGated:         !!h.gated,
-      mycoReason:      String(validation.reasons[i] || '').slice(0, 300),
+      mycoReason:      plainText(validation.reasons[i], 300),
     })),
     // AUDIT_FIX (Finding #7) — same internal field as compileFormula.
     // Carries the FULL herb metadata (the finalHerbs from validator)
@@ -265,7 +290,7 @@ async function composeFormulaWithMyco(profile, opts = {}) {
     synergies:        pairs.synergies,
     cautions:         pairs.cautions,
     mycoUsed:         true,
-    mycoOverall:      String(proposal.overall || '').slice(0, 1200),
+    mycoOverall:      plainText(proposal.overall, 1200),
   };
 }
 

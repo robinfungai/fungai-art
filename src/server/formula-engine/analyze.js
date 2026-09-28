@@ -32,10 +32,11 @@ const { isGABAergic, isCNSStimulant, isSerotonergic, MAX_SEROTONERGIC, isLaxativ
 const { isRestricted, isGated } = require('./axes');
 
 const MAX_HERBS = 12;          // what one analysis will take
-const RULES = {                // mirrored from myco-validator.js
-  MIN_HERBS: 5, MAX_HERBS: 7, MAX_PER_CATEGORY: 2,
-  MAX_TRACE: 1, TRACE_PCT_CAP: 5, MAX_SHARE_PCT: 40, MAX_GABAERGIC: 2, MAX_STIMULANT: 2,
-};
+// The engine's own rules (rules.js — the same numbers the picker and the
+// MYCO validator seat herbs with), plus the size the engine composes:
+// 3 to 7 herbs.
+const SHARED_RULES = require('./rules');
+const RULES = Object.assign({ MIN_HERBS: 3, MAX_HERBS: 7 }, SHARED_RULES.RULES);
 const HOUSE_RATIO = '1:3';     // plant : solvent — the Fungai Art standard
 
 // ── Resolving what the page sends ──────────────────────────────────
@@ -194,6 +195,7 @@ function analyzeFormula(input) {
   const strong = rows.filter(r => r.cns === 'stimulant');
   const sero = rows.filter(r => r.isSerotonergic);
   const lax = rows.filter(r => r.isLaxative);
+  const amanitas = rows.filter(r => SHARED_RULES.isAmanita(r));
   const over = Object.keys(catCount).filter(c => c !== 'other' && catCount[c] > RULES.MAX_PER_CATEGORY);
   const checks = [
     { id: 'size', ok: rows.length >= RULES.MIN_HERBS && rows.length <= RULES.MAX_HERBS,
@@ -216,6 +218,8 @@ function analyzeFormula(input) {
       label: 'Sedative with stimulant', detail: gaba.length && strong.length ? gaba.concat(strong).map(r => r.name).join(', ') + ' — a sedative and a stimulant pull against each other; the engine never bottles the two together.' : 'No tug-of-war.' },
     { id: 'restricted', ok: !rows.some(r => r.restricted),
       label: 'Restricted plants', detail: rows.some(r => r.restricted) ? rows.filter(r => r.restricted).map(r => r.name).join(', ') + ' — catalogue only; the engine never puts these in a bottle.' : 'None.' },
+    { id: 'amanita', ok: amanitas.length <= RULES.MAX_AMANITA,
+      label: 'Amanitas', detail: amanitas.length > RULES.MAX_AMANITA ? amanitas.map(r => r.name).join(', ') + ' — the engine bottles one Amanita at most.' : (amanitas.length ? amanitas[0].name + '.' : 'None.') },
     { id: 'pro-only', ok: !rows.some(r => r.proOnly),
       label: 'Pro-only plants', detail: rows.some(r => r.proOnly) ? rows.filter(r => r.proOnly).map(r => r.name).join(', ') + ' — only the pro composer bottles this; a customer formula never does.' : 'None.' },
   ];

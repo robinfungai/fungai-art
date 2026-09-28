@@ -80,7 +80,29 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ---
 
-## 0.14 · START HERE — 2026-09-28, audit decisions D1–D5, D11 (committed, not pushed)
+## 0.15 · START HERE — 2026-09-28, D6 + D8 + the second audit round (committed, not pushed)
+
+**Robin runs two SQL files BEFORE the next deploy**, in this order:
+`supabase-fyf-retention.sql` (D6: 30-day purge of unreserved formulas,
+nightly pg_cron job; its step 4 is a one-time manual clean-up of rows from
+before the deploy — do it AFTER deploying), then `supabase-myco-budget.sql`
+(D8: daily MYCO budget + request_key). Optional Netlify env var
+`FYF_MYCO_DAILY_LIMIT` (default 100). If the code deploys first nothing
+breaks: MYCO is skipped and rows are stored without the new columns.
+
+- Engine **2.6.0**, safety rules **1.4.0**. "Mushroom" comes from the
+  recorded family (Dandelion/Ginkgo/Milk Thistle/Schisandra were counted
+  as mushrooms). One rules module (`rules.js`) for picker + MYCO validator;
+  at most one Amanita. A herb the note says to avoid is excluded. The note
+  goes to MYCO fenced as untrusted; links are stripped from MYCO's text.
+- Pro editor: restricted plants cannot be saved or printed.
+- `public/herb-engine-pool.json` + its build scripts removed (nothing read it).
+- Second-round verdicts: `docs/AUDIT-2026-09-28-RESPONSE.md`, "Second round".
+- Open, needs Robin: D9 claims table; consumer safety questions (bad
+  reaction, stimulant sensitivity, breastfeeding apart from pregnancy);
+  HIGH-caution count cap; the safety-persona test; D0 deploy.
+
+## 0.14 · 2026-09-28, audit decisions D1–D5, D11 (committed, not pushed)
 
 Robin answered D0–D11; the verdicts and decisions are in
 **`docs/AUDIT-2026-09-28-RESPONSE.md`** (now including the audit's cut-off

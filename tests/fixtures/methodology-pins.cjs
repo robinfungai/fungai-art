@@ -19,8 +19,8 @@ module.exports = {
     rationale: "Engine 2.5 (2026-09-28, external audit decisions D1–D4): no herb above 40% of the bottle, percentages rounded by largest remainder; evidence grade worth 0 to +2 points; safety flags no longer add a herb; one strict fill walk; a medicine or pregnancy named in the note applies its safety flag. On top of 2.4 (recorded goals scored by position, pro answers, laxatives only for reported constipation).",
   },
   '03-conflicting-axes': {
-    herbs: "300:Red Dates@22|323:Reishi@17|311:Amanita Muscaria@16|413:Longan@16|276:Rhodiola@15|559:Cistanche@14",
-    rationale: "Engine 2.5 (2026-09-28, external audit decisions D1–D4): no herb above 40% of the bottle, percentages rounded by largest remainder; evidence grade worth 0 to +2 points; safety flags no longer add a herb; one strict fill walk; a medicine or pregnancy named in the note applies its safety flag. On top of 2.4 (recorded goals scored by position, pro answers, laxatives only for reported constipation).",
+    herbs: "300:Red Dates@21|323:Reishi@17|311:Amanita Muscaria@16|279:Schisandra (Five-Flavour Fruit)@16|413:Longan@16|276:Rhodiola@14",
+    rationale: "2026-09-28, after the second audit round: mushroom category from the recorded botanical family (Dandelion, Ginkgo, Milk Thistle, Schisandra are no longer mushrooms; Fu Ling, Morels, Enoki, Shaggy Mane, Tinder Fungus now are); one rule module shared by picker and MYCO validator (adds one Amanita per bottle); herbs the note says to avoid are excluded. On top of engine 2.5 (40% share cap, engine-set percentages, evidence 0 to +2, note safety words).",
   },
   '04-max-safety-restrictions': {
     herbs: "271:Oatstraw@40|300:Red Dates@16|275:Pine Pollen@14|579:Aguaje@14|314:Button Mushroom@11|268:Mullein@5",
@@ -43,8 +43,8 @@ module.exports = {
     rationale: "Engine 2.5 (2026-09-28, external audit decisions D1–D4): no herb above 40% of the bottle, percentages rounded by largest remainder; evidence grade worth 0 to +2 points; safety flags no longer add a herb; one strict fill walk; a medicine or pregnancy named in the note applies its safety flag. On top of 2.4 (recorded goals scored by position, pro answers, laxatives only for reported constipation).",
   },
   '09-liver-kidney': {
-    herbs: "212:Burdock@19|107:Dandelion Root@17|532:Anantmul@17|279:Schisandra (Five-Flavour Fruit)@17|502:Punarnava@15|316:Fu Ling@15",
-    rationale: "Engine 2.5 (2026-09-28, external audit decisions D1–D4): no herb above 40% of the bottle, percentages rounded by largest remainder; evidence grade worth 0 to +2 points; safety flags no longer add a herb; one strict fill walk; a medicine or pregnancy named in the note applies its safety flag. On top of 2.4 (recorded goals scored by position, pro answers, laxatives only for reported constipation).",
+    herbs: "212:Burdock@19|107:Dandelion Root@18|532:Anantmul@17|279:Schisandra (Five-Flavour Fruit)@17|316:Fu Ling@15|206:Barley@14",
+    rationale: "2026-09-28, after the second audit round: mushroom category from the recorded botanical family (Dandelion, Ginkgo, Milk Thistle, Schisandra are no longer mushrooms; Fu Ling, Morels, Enoki, Shaggy Mane, Tinder Fungus now are); one rule module shared by picker and MYCO validator (adds one Amanita per bottle); herbs the note says to avoid are excluded. On top of engine 2.5 (40% share cap, engine-set percentages, evidence 0 to +2, note safety words).",
   },
   '10-lifelong-chronic': {
     herbs: "323:Reishi@15|574:Dan Shen Root Extract@15|103:Ashwagandha@14|279:Schisandra (Five-Flavour Fruit)@14|582:Avocado Extract@14|286:Turmeric@14|220:Devil's Claw@14",

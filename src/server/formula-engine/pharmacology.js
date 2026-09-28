@@ -132,14 +132,34 @@ function fitsGoal(h, a) {
 // Categories: adaptogen · nervine · tonic · mover · mushroom · bitter ·
 // aromatic · nutritive · other. Pulled from primary_functions text +
 // energetics.
+// Fungal families recorded in herbs.ts `family` (every herb has one).
+// Until 2026-09-28 "mushroom" was a word search over the name AND the
+// prose, so "lion" put Dandelion in the mushroom category, and Ginkgo,
+// Milk Thistle and Schisandra (whose text mentions mushrooms) followed,
+// while Fu Ling and Morel were missed. The category cap then held real
+// mushrooms out of bottles for plants that are not mushrooms.
+const FUNGAL_FAMILIES = new Set([
+  'Agaricaceae', 'Amanitaceae', 'Auriculariaceae', 'Cordycipitaceae', 'Fomitopsidaceae',
+  'Ganodermataceae', 'Grifolaceae', 'Hericiaceae', 'Hymenochaetaceae', 'Marasmiaceae',
+  'Meripilaceae', 'Morchellaceae', 'Omphalotaceae', 'Ophiocordycipitaceae', 'Physalacriaceae',
+  'Pleurotaceae', 'Polyporaceae', 'Sparassidaceae', 'Tremellaceae',
+]);
+// Only for a record with no family (test fixtures): the name alone,
+// whole words, never the prose.
+const FUNGUS_NAME = /\b(mushroom|reishi|chaga|lion'?s mane|cordyceps|maitake|shiitake|tremella|turkey tail|amanita|polypore|fu ling|poria|morel)\b/;
+
+function isFungus(h) {
+  if (h && h.family) return FUNGAL_FAMILIES.has(String(h.family).trim());
+  return FUNGUS_NAME.test(String((h && h.name) || '').toLowerCase());
+}
+
 function categoryOf(h) {
   const t = (
     (h.primary_functions || []).join(' | ') + ' | ' +
     (h.energetics || []).join(' | ') + ' | ' +
     (h.pharmacology || '')
   ).toLowerCase();
-  const name = (h.name || '').toLowerCase();
-  if (/mushroom|reishi|chaga|lion|cordyceps|maitake|shiitake|tremella|turkey.tail|amanita|polypore/.test(name + ' ' + t)) return 'mushroom';
+  if (isFungus(h)) return 'mushroom';
   if (/adaptogen|cortisol|hpa|adrenal|stress.resil/.test(t))                return 'adaptogen';
   if (/nervine|gaba|anxiolytic|sedativ|calm.*nerv/.test(t))                 return 'nervine';
   if (/move.*qi|circulate|regulate.*qi|liver.*qi|disperse|open.*chest/.test(t)) return 'mover';
@@ -155,5 +175,5 @@ module.exports = {
   cnsAction, isGABAergic, isCNSStimulant, guessGABAergic, guessCNSStimulant,
   fitsTimeOfUse, isStrongStimulant,
   isSerotonergic, MAX_SEROTONERGIC, isLaxative, fitsGoal, MAX_LAXATIVE,
-  categoryOf,
+  categoryOf, isFungus, FUNGAL_FAMILIES,
 };

@@ -354,10 +354,14 @@ function sanitisedResponse({ formulaId, engineResult, profile, persisted, upgrad
 
 function noteSafetyForWire(engineResult) {
   const ns = engineResult && engineResult.noteSafety;
-  if (!ns || !Array.isArray(ns.hits) || !ns.hits.length) return { flagsAdded: [], hits: [] };
+  const hits = ns && Array.isArray(ns.hits) ? ns.hits : [];
+  const herbs = ns && Array.isArray(ns.herbsAvoided) ? ns.herbsAvoided : [];
   return {
-    flagsAdded: ns.hits.map(h => h.flag),
-    hits:       ns.hits.map(h => ({ flag: h.flag, word: String(h.word || '').slice(0, 40) })),
+    flagsAdded:   hits.map(h => h.flag),
+    hits:         hits.map(h => ({ flag: h.flag, word: String(h.word || '').slice(0, 40) })),
+    // Herbs the note named to avoid, left out of the pool — names the
+    // person wrote themselves.
+    herbsAvoided: herbs.map(h => ({ name: String(h.name || '').slice(0, 80), word: String(h.word || '').slice(0, 60) })),
   };
 }
 

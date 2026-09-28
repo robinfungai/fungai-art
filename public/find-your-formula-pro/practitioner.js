@@ -319,6 +319,7 @@
   }
 
   // ── Analysis ───────────────────────────────────────────────────
+  const herbKey = () => S.rows.map(r => r.name).join('|');
   let timer = null;
   function analyse(now) {
     clearTimeout(timer);
@@ -327,6 +328,7 @@
   async function run() {
     if (!S.rows.length) { S.analysis = null; render(); return; }
     S.analysing = true;
+    const key = herbKey();
     try {
       const res = await fetch('/api/formula-analysis', {
         method: 'POST',
@@ -339,7 +341,8 @@
       });
       const out = await res.json();
       S.analysis = out && out.base ? out.base : null;
-    } catch (_) { S.analysis = null; }
+      S.analysedHerbs = S.analysis ? key : null;
+    } catch (_) { S.analysis = null; S.analysedHerbs = null; }
     S.analysing = false;
     render();
   }
@@ -366,10 +369,25 @@
       bottle_ml: S.bottle, dose: S.dose, duration: S.duration,
     };
   }
+  // A plant the engine never bottles (restricted: catalogue only) cannot
+  // be saved to a client file or printed. Any other failed check can be —
+  // it stays on the sheet as a failure (audit 2026-09-28). Returns the
+  // reason to refuse, or '' to go ahead.
+  function blockedReason() {
+    if (!S.rows.length) return '';
+    const A = S.analysis;
+    // The check must be of THIS list of herbs, not the one before an edit.
+    if (!A || S.analysing || S.analysedHerbs !== herbKey()) { analyse(true); return 'Checking the formula first — try again in a moment.'; }
+    const r = (A.checks || []).find(c => c.id === 'restricted' && !c.ok);
+    return r ? 'Not possible: ' + r.detail : '';
+  }
+
   async function save() {
     const msg = $('fpSaveMsg');
     const say = t => { if (msg) msg.textContent = t; };
     if (!S.client.trim()) { say('Give the client a code first.'); return; }
+    const blocked = blockedReason();
+    if (blocked) { say(blocked); return; }
     const c = await client();
     if (!c) { say('Sign-in is not available on this page.'); return; }
     const row = {
@@ -429,6 +447,8 @@
 
   // ── Print / PDF ────────────────────────────────────────────────
   function printSheet() {
+    const blocked = blockedReason();
+    if (blocked) { const msg = $('fpSaveMsg'); if (msg) msg.textContent = blocked; return; }
     const A = S.analysis;
     const byName = n => (A && A.herbs || []).find(h => h.name === n) || {};
     let root = $('fpPrintRoot');

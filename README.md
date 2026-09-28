@@ -49,7 +49,6 @@ npm run build        # production build
 The static pages under `public/` are served directly by Netlify; edit them in place. Changes to `src/data/herbs.ts` need a rebuild of the derived files:
 
 ```bash
-npm run build:herb-pool    # writes public/herb-engine-pool.json
 node scripts/export-herbs.cjs   # writes public/herbs-data.js
 node scripts/sync-engine2.cjs   # injects the herb list into the engine-2 HTML
 ```

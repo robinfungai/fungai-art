@@ -1,13 +1,13 @@
 # Fungai Art — how the formula maker decides
 
-*Audit brief · engine 2.5.0 · safety rules 1.3.0 · 245 herbs · 2026-09-28*
+*Audit brief · engine 2.6.0 · safety rules 1.4.0 · 245 herbs · 2026-09-28*
 
 This document describes, as exactly as the code allows, how fungai.art turns
 a person's quiz answers into a herbal extract formula. It is written for an
 independent reviewer (human or AI) who has **not** seen the code. Every rule
 below names the file it lives in, so each claim can be checked.
 
-**Which code this describes.** Engine **2.5.0** in the repository's `main`
+**Which code this describes.** Engine **2.6.0** in the repository's `main`
 branch as developed locally. The live site at fungai.art only changes when
 that branch is deployed. **If you read the code on GitHub, first check
 `src/server/formula-engine/version.js`:** the first external audit
@@ -150,6 +150,11 @@ exclude outright; nothing downstream can bring a herb back.
    names the word it read and the filter it applied, so a wrong guess can be
    corrected. It only ever adds flags. Conditions with no flag of their own
    (epilepsy, chemotherapy) are not guessed at.
+   **A herb the note says to avoid** (safety rules 1.4) — "allergic to
+   chamomile", "bad reaction to ashwagandha", "no more kava", "valerian
+   made me groggy" — is excluded from the pool, matched on its name, parts
+   of its name, aliases or binomial. A note naming a herb never raises its
+   score (the note keywords are a fixed list of goal words, not herb names).
 5. **Pregnancy**: only a herb recorded `safe_pregnancy: true` reaches a
    pregnant person; *unknown counts as unsafe*.
 6. **Pro answers as safety** (`passesProfileSafety`, since 2026-09-28):
@@ -278,13 +283,18 @@ Walking down the ranking, a herb is skipped if seating it would break a cap:
 
 | Cap | Limit |
 |---|---|
-| Same category (adaptogen, nervine, tonic, mover, mushroom, bitter, aromatic, nutritive) | ≤ 2 |
+| Same category (adaptogen, nervine, tonic, mover, mushroom, bitter, aromatic, nutritive). "Mushroom" is the recorded botanical family since 2.6; the others are still read from the herb's text | ≤ 2 |
 | Trace herbs (potent aromatics: lavender, ginger, cinnamon, peppermint…) | ≤ 1 |
 | Sedatives (recorded class `sedative`) | ≤ 2 |
 | Stimulating (`stimulant` + `activating`) | ≤ 2 |
 | A sedative beside a true stimulant | never |
 | Serotonergic (St John's Wort, Kanna, Saffron, Rhodiola) | ≤ 1 |
 | Laxatives | ≤ 1 |
+| Amanitas (a genus rule, since 2.6: both are recorded "sedative", so the sedative cap alone allowed two) | ≤ 1 |
+
+These seating rules live in one module, `rules.js`, which both the
+picker's walk and the MYCO validator call — a rule cannot hold in one
+path and not the other. The pro analysis reads the same numbers.
 
 There is **one** walk, and no cap is ever relaxed. If it seats fewer than
 the target, the bottle is smaller. If it seats fewer than three main herbs,
@@ -345,7 +355,13 @@ Matches are **shown** to the person. **A caution never removes a herb.**
    safe template; softer phrases are rewritten.
 7. This is the **only** AI call that sees the person's note. Until
    2026-09-28 the pages sent the note to MYCO a second time for a "reading"
-   paragraph; that call was removed (decision D5).
+   paragraph; that call was removed (decision D5). The note reaches MYCO
+   fenced and labelled as untrusted text, never instructions, and links,
+   markup and email addresses are removed from what MYCO writes.
+8. **Daily budget** (decision D8): MYCO calls are counted in the database
+   across every server instance (`FYF_MYCO_DAILY_LIMIT`, default 100 a
+   day). Past it, or if the count cannot be read, the deterministic bottle
+   is used and the reason is stored with the formula.
 
 **Note for review:**
 - The baseline targets 3–7 herbs, while MYCO is asked for 5–7, so
@@ -368,8 +384,16 @@ so the client cannot alter the formula it reserves.
 
 Abuse limits:
 - 8 compose requests per minute per IP (per server instance);
+- the daily MYCO budget (§7), which holds across instances;
+- one formula per request: the page sends a request id per visit, and the
+  same id with the same answers returns the stored formula instead of
+  composing (and calling MYCO) again;
 - an allow-list of origins (a request with no origin header still passes);
 - a 32 KB body cap.
+
+Retention (decision D6): a formula that is not reserved is deleted, with
+its answers, 30 days after it was made (a nightly job in the database);
+a reservation marks the formula so it is kept.
 
 ---
 
@@ -387,7 +411,8 @@ Abuse limits:
   or add herbs. Every change is re-checked by `/api/formula-analysis`
   against the same caps, and MYCO can be asked to read the adjusted
   formula. **The practitioner's edit is not blocked by a failed check; it is
-  shown as failed.**
+  shown as failed** — except a plant the engine never bottles (restricted):
+  a formula containing one cannot be saved to a client file or printed.
 - **Dose sheet:** ml per herb for a 30, 50 or 100 ml bottle, and each herb's
   extraction arm. Each herb's ethanol strength is shown where its record
   states one. The formula dose is entered by the practitioner; there is no
@@ -410,17 +435,18 @@ Abuse limits:
 5. **Pair cautions never veto** (§6.4).
 6. *Fixed in engine 2.5:* the second fill walk that ignored the category
    cap is gone (§6.2).
-7. **Two Amanitas can share a bottle** on rare profiles: both are recorded
-   "sedative", and the sedative cap is 2.
+7. *Fixed in engine 2.6:* at most one Amanita per bottle (§6.2).
 8. **Minor status rests on the age answer**, which the person gives.
-9. **Rate limits are per server instance and in memory.**
+9. **Rate limits are per server instance and in memory.** The MYCO budget
+   (§7) is global; the per-request rate limit is not.
 10. **The serotonergic list is short** (4 herbs). Others with weaker
     serotonergic activity (e.g. Lemon Balm, Bobinsana) are not capped.
 11. *Fixed in engine 2.5:* no herb above 40% of the bottle (§6.3). Before,
     one herb reached up to 80% of a 3-herb bottle.
 12. *Fixed in engine 2.5:* safety flags no longer add a herb (§6.2).
-13. **Stored quiz answers are kept indefinitely.** The code comments refer
-    to a scheduled cleanup that does not exist.
+13. *Fixed:* unreserved formulas and their answers are deleted after 30
+    days (§8), once `supabase-fyf-retention.sql` is run and the code is
+    deployed.
 
 ---
 

@@ -2617,12 +2617,24 @@ function buildWhyText(a, herbs, pct){
 // the person's own word, so a wrong guess can be corrected.
 function _fyfNoteSafetyNotice(body) {
   const ns = body && body.noteSafety;
-  if (!ns || !Array.isArray(ns.hits) || !ns.hits.length) return;
+  const hits = ns && Array.isArray(ns.hits) ? ns.hits : [];
+  const herbs = ns && Array.isArray(ns.herbsAvoided) ? ns.herbsAvoided : [];
+  if (!hits.length && !herbs.length) return;
   const storyEl = document.getElementById('rStory');
   if (!storyEl || document.getElementById('rNoteSafety')) return;
   const q = QUESTIONS.find(x => x.key === 'avoid');
   const label = v => { const o = q && (q.options || []).find(x => x.v === v); return o ? o.label : v; };
-  const many = ns.hits.length > 1;
+  const many = hits.length > 1;
+  const said = [];
+  if (hits.length) said.push(
+    'You mentioned ' + hits.map(h => '&ldquo;' + escapeHtml(h.word) + '&rdquo;').join(', ') +
+    ', so we treated ' + hits.map(h => '<em>' + escapeHtml(label(h.flag)) + '</em>').join(' and ') +
+    ' as ticked and left out the herbs ' + (many ? 'they rule' : 'it rules') + ' out.');
+  // A herb the note named to avoid ("allergic to chamomile").
+  if (herbs.length) said.push(
+    'You wrote ' + herbs.map(h => '&ldquo;' + escapeHtml(h.word) + '&rdquo;').join(', ') +
+    ', so ' + herbs.map(h => '<em>' + escapeHtml(h.name) + '</em>').join(' and ') +
+    (herbs.length > 1 ? ' are' : ' is') + ' left out of your formula.');
   const el = document.createElement('div');
   el.id = 'rNoteSafety';
   el.style.cssText =
@@ -2631,10 +2643,7 @@ function _fyfNoteSafetyNotice(body) {
   el.innerHTML =
     '<span style="font-family:var(--mono);font-size:9px;letter-spacing:0.28em;' +
     'text-transform:uppercase;color:var(--amber-l);opacity:0.85;display:block;margin-bottom:6px">◇ Safety, from your note</span>' +
-    'You mentioned ' + ns.hits.map(h => '&ldquo;' + escapeHtml(h.word) + '&rdquo;').join(', ') +
-    ', so we treated ' + ns.hits.map(h => '<em>' + escapeHtml(label(h.flag)) + '</em>').join(' and ') +
-    ' as ticked and left out the herbs ' + (many ? 'they rule' : 'it rules') + ' out. ' +
-    'If that isn’t right, edit your note and compose again.';
+    said.join(' ') + ' If that isn’t right, edit your note and compose again.';
   storyEl.parentNode.insertBefore(el, storyEl);
 }
 
