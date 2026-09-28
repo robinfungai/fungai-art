@@ -187,8 +187,17 @@ function compileFormula(profile) {
 async function composeFormulaWithMyco(profile, opts = {}) {
   // Baseline compose. This throws only if compileFormula itself throws
   // (which returns 'rejected' for SAFETY_QUESTION_NOT_ANSWERED).
-  const baseline = compileFormula(profile);
+  // A caller that already compiled the baseline (fyf-compose, to keep a
+  // rejected profile from taking a call from the MYCO budget) passes it.
+  const baseline = opts.baseline || compileFormula(profile);
   if (baseline.status !== 'ok') return baseline;
+
+  // The caller decided not to spend a MYCO call (D8: the daily budget
+  // is used up, or could not be checked). The deterministic bottle is
+  // a complete formula, never a lesser one.
+  if (opts.skipMyco) {
+    return { ...baseline, mycoUsed: false, mycoFallbackReason: String(opts.skipMyco) };
+  }
 
   // Build the candidate set MYCO is bounded to. Uses the same safety
   // filter + scorer + dedup pipeline as pickFormula, but returns the

@@ -3389,6 +3389,15 @@ function _fyfNoteSafetyNotice(body) {
 // formula on it). Step 6 removed these alongside the shadow call, which
 // made every reveal throw "_fyfShadowKey is not defined" before the
 // compose request was sent. Identical to find-your-formula-pro.
+// One id per visit (P0 #11, 2026-09-28). The server stores each formula
+// under this id plus the exact answers, so the same answers sent again —
+// a double click, a retry after a dropped connection — get the formula
+// already made instead of a second one (and a second MYCO call).
+// Changed answers compose afresh. A page reload starts a new visit.
+const _fyfRequestId = (window.crypto && crypto.randomUUID)
+  ? crypto.randomUUID().replace(/-/g, '')
+  : (Date.now().toString(36) + Math.random().toString(36).slice(2, 12));
+
 function _fyfShadowHash(str) {
   let h = 5381;
   const s = String(str || '');
@@ -3906,7 +3915,7 @@ async function _fyfRenderResultServerMode(a) {
       // No X-FYF-Mode header — this is a REAL authoritative call.
       // Server persists (per env config) and returns a formulaId.
       headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ profile: profileForWire }),
+      body:    JSON.stringify({ profile: profileForWire, requestId: _fyfRequestId }),
       signal:  controller.signal,
     });
     clearTimeout(timeoutId);

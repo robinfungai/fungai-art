@@ -2685,6 +2685,15 @@ function safetyLine(a){
 //     swallowed. The user's reveal is never blocked or affected.
 //   · One shadow call per unique profile per session.
 // ════════════════════════════════════════════════════════════════
+// One id per visit (P0 #11, 2026-09-28). The server stores each formula
+// under this id plus the exact answers, so the same answers sent again —
+// a double click, a retry after a dropped connection — get the formula
+// already made instead of a second one (and a second MYCO call).
+// Changed answers compose afresh. A page reload starts a new visit.
+const _fyfRequestId = (window.crypto && crypto.randomUUID)
+  ? crypto.randomUUID().replace(/-/g, '')
+  : (Date.now().toString(36) + Math.random().toString(36).slice(2, 12));
+
 function _fyfShadowHash(str) {
   let h = 5381;
   const s = String(str || '');
@@ -3060,7 +3069,7 @@ async function _fyfRenderResultServerMode(a) {
       headers: Object.assign({ 'Content-Type': 'application/json' }, proAuth),
       // _pro: this is the pro composer, the one place a pro-only herb
       // (herbs.ts formula_access: 'pro') may be chosen.
-      body:    JSON.stringify({ profile: Object.assign({}, a, { _pro: true }) }),
+      body:    JSON.stringify({ profile: Object.assign({}, a, { _pro: true }), requestId: _fyfRequestId }),
       signal:  controller.signal,
     });
     clearTimeout(timeoutId);

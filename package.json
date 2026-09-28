@@ -12,6 +12,7 @@
     "test:myco-validator": "node tests/myco-validator-verify.cjs",
     "test:goals": "node tests/goals-verify.cjs",
     "test:invariants": "node tests/invariants-verify.cjs",
+    "test:fyf-compose-storage": "node tests/fyf-compose-storage-verify.cjs",
     "test:minor-gate": "node tests/minor-gate-verify.cjs",
     "test:safety-flags-conflict": "node tests/safety-flags-conflict-verify.cjs",
     "test:geo-minimisation": "node tests/geo-minimisation-verify.cjs",

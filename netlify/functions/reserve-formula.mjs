@@ -436,6 +436,24 @@ export default async function handler(req) {
       customerErr: results[1].status === 'rejected' ? String(results[1].reason)                   : (results[1].value?.detail || null),
     });
   }
+
+  // D6 (2026-09-28): mark the stored formula as reserved, so the nightly
+  // purge of unreserved readings (supabase-fyf-retention.sql) keeps it.
+  // Same rule as the reply below: one email landing makes the
+  // reservation durable. Best effort — the reservation stands if this
+  // write fails; the log line names the formula so it can be marked by
+  // hand before the 30 days are up.
+  if ((robinOk || customerOk) && sbClient) {
+    try {
+      const { error } = await sbClient.from('fyf_formulas')
+        .update({ reserved_at: new Date().toISOString() })
+        .eq('id', rawFormulaId)
+        .is('reserved_at', null);
+      if (error) throw error;
+    } catch (e) {
+      console.error('[reserve-formula] could not mark ' + rawFormulaId + ' as reserved:', e && e.message ? e.message : e);
+    }
+  }
   // ── Round 2 · Item #3 · explicit reservation semantics ──────
   // Three tri-state outcomes the client MUST branch on (never on
   // res.ok alone):

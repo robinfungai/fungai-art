@@ -29,9 +29,14 @@
 // Env vars:
 //   SUPABASE_URL              (or VITE_SUPABASE_URL)
 //   SUPABASE_SERVICE_ROLE_KEY
-//   FYF_FORMULA_RETENTION_DAYS  optional, informational only; enforced
-//                                by a separate scheduled cleanup, not
-//                                by this endpoint. 0 = retain forever.
+//   FYF_MYCO_DAILY_LIMIT      MYCO calls allowed per day, counted in the
+//                             database across every instance (default
+//                             100 — supabase-myco-budget.sql). Past it,
+//                             formulas are composed without MYCO.
+//
+// Retention (D6): rows are written with retention_tracked = true, and a
+// nightly job in the database deletes unreserved ones after 30 days
+// (supabase-fyf-retention.sql). reserve-formula marks reserved_at.
 //
 // See supabase/migrations/20260911_fyf_formulas.sql for the schema
 // this endpoint writes to (id + engine versions + profile jsonb +
@@ -70,9 +75,8 @@ function corsFor(origin) {
 // scans the herb pool + scores every entry + writes to Supabase.
 // 8 requests per minute per IP is far above a real user's cadence.
 // Netlify functions can run on multiple instances so this is best-
-// effort per-instance; the Anthropic-adjacent spend cap does not
-// apply here (no MYCO in this endpoint), but Supabase-write cost +
-// function invocation cost still matter.
+// effort per-instance. MYCO spend is capped separately, across all
+// instances, by the daily budget in the database (mycoSkipReason).
 const RATE_WINDOW_MS      = 60_000;
 const RATE_MAX_PER_WINDOW = 8;
 const rateState = new Map();
@@ -365,6 +369,114 @@ function jsonResponse(status, cors, body) {
   });
 }
 
+// ── Storage ──────────────────────────────────────────────────────
+// One Supabase client per request; null in dev without the env vars.
+// Tests hand in a stand-in so the storage paths run without a network.
+let testSupabase = null;
+export function _setSupabaseForTests(client) { testSupabase = client; }
+function getSupabase() {
+  if (testSupabase) return testSupabase;
+  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) return null;
+  return createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } });
+}
+
+// ── D8 · Daily MYCO budget ───────────────────────────────────────
+// Counted in the database (myco_budget_take), so it holds across every
+// Netlify instance, unlike the per-instance rate limit. Returns null to
+// go ahead, or the reason MYCO is skipped. It fails CLOSED: if the
+// budget cannot be checked, no MYCO call — the person still gets the
+// deterministic formula, and the reason is stored with it.
+const MYCO_DAILY_LIMIT_DEFAULT = 100;
+function mycoDailyLimit() {
+  const n = parseInt(process.env.FYF_MYCO_DAILY_LIMIT, 10);
+  return Number.isFinite(n) && n >= 0 ? n : MYCO_DAILY_LIMIT_DEFAULT;
+}
+async function mycoSkipReason(sb) {
+  if (!process.env.ANTHROPIC_API_KEY) return null;  // no key: MYCO cannot run, nothing to count
+  if (!sb) return null;                              // dev without a database: no shared counter
+  try {
+    const { data, error } = await sb.rpc('myco_budget_take', { p_limit: mycoDailyLimit() });
+    if (error) throw error;
+    return data === true ? null : 'MYCO_DAILY_BUDGET_REACHED';
+  } catch (e) {
+    console.error('[fyf-compose] MYCO budget check failed (run supabase-myco-budget.sql?) — composing without MYCO:', e && e.message ? e.message : e);
+    return 'MYCO_BUDGET_UNAVAILABLE';
+  }
+}
+
+// ── P0 #11 · One formula per request ─────────────────────────────
+// The page sends a requestId per visit. The key is that id plus the
+// exact answers, so the same answers again (double click, retry after a
+// dropped connection) return the stored formula — no second row, no
+// second MYCO call — while changed answers compose afresh.
+const REQUEST_ID_RE = /^[A-Za-z0-9_-]{8,64}$/;
+function stableJson(v) {
+  if (Array.isArray(v)) return '[' + v.map(stableJson).join(',') + ']';
+  if (v && typeof v === 'object') {
+    return '{' + Object.keys(v).sort().filter(k => v[k] !== undefined)
+      .map(k => JSON.stringify(k) + ':' + stableJson(v[k])).join(',') + '}';
+  }
+  return JSON.stringify(v);
+}
+function requestKey(requestId, profile) {
+  if (typeof requestId !== 'string' || !REQUEST_ID_RE.test(requestId)) return null;
+  return crypto.createHash('sha256').update(requestId + '|' + stableJson(profile)).digest('hex');
+}
+async function findByRequestKey(sb, key) {
+  try {
+    const { data, error } = await sb.from('fyf_formulas')
+      .select('id, profile, formula').eq('request_key', key).maybeSingle();
+    if (error) throw error;
+    return data || null;
+  } catch (e) {
+    // Most likely the column is not there yet (SQL not run). Compose
+    // normally; idempotency simply does not apply.
+    console.warn('[fyf-compose] request_key lookup failed:', e && e.message ? e.message : e);
+    return null;
+  }
+}
+
+// Store a formula. If the database does not have the D6/D8 columns yet
+// (the SQL files not run), store it without them rather than failing
+// the reveal.
+const NEW_COLUMNS = { retention_tracked: 'supabase-fyf-retention.sql', request_key: 'supabase-myco-budget.sql' };
+async function insertFormula(sb, payload) {
+  let row = payload;
+  for (;;) {
+    const { error } = await sb.from('fyf_formulas').insert(row);
+    const missing = error && Object.keys(NEW_COLUMNS).find(c => c in row && String(error.message || '').includes(c));
+    if (!missing) return error || null;
+    console.warn('[fyf-compose] column ' + missing + ' missing — run ' + NEW_COLUMNS[missing] + '; storing without it');
+    const { [missing]: _dropped, ...rest } = row;
+    row = rest;
+  }
+}
+
+// Practitioner-only: the points behind each herb and the best unseated
+// alternatives. The public response deliberately hides scores and ids
+// (AUDIT_FIX Finding #7); a verified practitioner gets them because the
+// pro tools — "why this herb", swapping — are built on them.
+function attachPro(out, profile, engineResult, practitioner) {
+  if (!(practitioner && practitioner.ok)) return out;
+  try {
+    const ids = (engineResult.herbs || []).map(h => h.id);
+    out.pro = explainForPro(profile, ids);
+    if (out.pro) out.pro.herbIds = ids;
+  } catch (e) {
+    console.warn('[fyf-compose] pro explanation failed:', e && e.message ? e.message : e);
+  }
+  return out;
+}
+
+// The response for a formula already stored under this request.
+function replayResponse(row, profile, practitioner) {
+  const out = sanitisedResponse({ formulaId: row.id, engineResult: row.formula, profile: row.profile || profile, persisted: true, upgradeEligible: false });
+  out.replayed = true;
+  return attachPro(out, profile, row.formula, practitioner);
+}
+
 // ── Handler ──────────────────────────────────────────────────────
 export default async function handler(req) {
   const origin = req.headers.get('origin') || '';
@@ -449,22 +561,36 @@ export default async function handler(req) {
     }
   }
 
+  // Shadow requests (X-FYF-Mode: shadow) are comparison calls: no
+  // MYCO, no storage, no budget, no idempotency.
+  const isShadow = String(req.headers.get('x-fyf-mode') || '').toLowerCase() === 'shadow';
+  const sb  = isShadow ? null : getSupabase();
+  const key = sb ? requestKey(body && body.requestId, vp.profile) : null;
+
+  // P0 #11 — the same request again: hand back the formula already
+  // stored instead of composing (and paying for MYCO) twice.
+  if (key) {
+    const prior = await findByRequestKey(sb, key);
+    if (prior) return jsonResponse(200, cors, replayResponse(prior, vp.profile, practitioner));
+  }
+
   // Compose. The engine internally validates avoid via
   // validateAndNormalizeAvoid — SAFETY_QUESTION_NOT_ANSWERED gets
   // surfaced as a rejected response here.
   //
   // Step 5.5f · Single-reveal blocking architecture. Robin's product
   // call — the 10-15s wait is intentional UX (growing-plant loader
-  // builds anticipation). Compose ALWAYS awaits MYCO + validator +
-  // deterministic fallback. Shadow requests still skip MYCO for
-  // fast fixture comparison.
+  // builds anticipation). Compose awaits MYCO + validator +
+  // deterministic fallback. The deterministic baseline is computed
+  // first, so a rejected profile never takes a call from the daily
+  // MYCO budget.
   let engineResult;
   try {
-    const modeHdr = String(req.headers.get('x-fyf-mode') || '').toLowerCase();
-    if (modeHdr === 'shadow') {
-      engineResult = compileFormula(vp.profile);
+    const baseline = compileFormula(vp.profile);
+    if (isShadow || baseline.status !== 'ok') {
+      engineResult = baseline;
     } else {
-      engineResult = await composeFormulaWithMyco(vp.profile);
+      engineResult = await composeFormulaWithMyco(vp.profile, { baseline, skipMyco: await mycoSkipReason(sb) });
     }
   } catch (e) {
     console.error('[fyf-compose] engine threw:', e && e.stack ? e.stack : e);
@@ -494,18 +620,8 @@ export default async function handler(req) {
 
   // Persist. Ephemeral fallback if Supabase is unconfigured (dev/
   // local). In production Robin's env vars are set and persistence
-  // is required for reservation to work later.
-  //
-  // SHADOW MODE (Step 3 of P0): if the caller sends
-  // `X-FYF-Mode: shadow`, this request is a parallel comparison call
-  // from the client (not a real reveal — the client's own engine is
-  // still authoritative). We SKIP persistence for shadow calls so
-  // real-user reveals don't create thousands of orphan rows during
-  // the shadow-testing window. Everything else — validation, engine
-  // execution, safety enforcement, response shape — is identical.
-  const mode = String(req.headers.get('x-fyf-mode') || '').toLowerCase();
-  const isShadow = mode === 'shadow';
-
+  // is required for reservation to work later. Shadow calls are never
+  // stored.
   const formulaId = newFormulaId();
   const persistPayload = {
     id:                  formulaId,
@@ -515,54 +631,38 @@ export default async function handler(req) {
     profile:             vp.profile,             // untrusted → normalised copy
     formula:             engineResult,           // full internal snapshot; reserve-formula reads this
     created_at:          engineResult.capturedAt,
+    // D6 — this code marks reservations, so the nightly purge may
+    // delete this row after 30 days if it is never reserved.
+    retention_tracked:   true,
+    ...(key ? { request_key: key } : {}),
   };
 
-  const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-  const SUPABASE_SRV = process.env.SUPABASE_SERVICE_ROLE_KEY;
   let persisted = false;
-  if (isShadow) {
-    // Shadow request — do not persist. Client uses response only for
-    // client-side comparison against its own engine output.
-  } else if (SUPABASE_URL && SUPABASE_SRV) {
-    try {
-      const sb = createClient(SUPABASE_URL, SUPABASE_SRV, {
-        auth: { autoRefreshToken: false, persistSession: false },
-      });
-      const { error } = await sb.from('fyf_formulas').insert(persistPayload);
-      if (error) throw error;
-      persisted = true;
-    } catch (e) {
+  if (sb) {
+    const error = await insertFormula(sb, persistPayload);
+    if (error && error.code === '23505' && key) {
+      // The same request arrived twice at once and the other one stored
+      // first: return that formula, so there is still only one.
+      const prior = await findByRequestKey(sb, key);
+      if (prior) return jsonResponse(200, cors, replayResponse(prior, vp.profile, practitioner));
+    }
+    if (error) {
       // Persistence failure is a real error path — surface as 500
       // rather than silently returning an ephemeral id in production.
-      // (In dev without Supabase configured, we fall through to the
-      // ephemeral path below.)
-      console.error('[fyf-compose] persist failed:', e && e.message ? e.message : e);
+      console.error('[fyf-compose] persist failed:', error.message || error);
       return jsonResponse(500, cors, {
         status: 'error',
         code:   'PERSIST_FAILED',
         message: 'Formula computed but could not be stored. Please retry.',
       });
     }
-  } else {
+    persisted = true;
+  } else if (!isShadow) {
     // Dev/test path — no Supabase configured. Return the formula with
     // persisted:false so the caller knows reservation won't work.
     console.warn('[fyf-compose] Supabase not configured — returning ephemeral formulaId');
   }
 
   const out = sanitisedResponse({ formulaId, engineResult, profile: vp.profile, persisted, upgradeEligible });
-
-  // Practitioner-only: the points behind each herb and the best unseated
-  // alternatives. The public response deliberately hides scores and ids
-  // (AUDIT_FIX Finding #7); a verified practitioner gets them because the
-  // pro tools — "why this herb", swapping — are built on them.
-  if (practitioner && practitioner.ok) {
-    try {
-      out.pro = explainForPro(vp.profile, engineResult.herbs.map(h => h.id));
-      out.pro.herbIds = engineResult.herbs.map(h => h.id);
-    } catch (e) {
-      console.warn('[fyf-compose] pro explanation failed:', e && e.message ? e.message : e);
-    }
-  }
-
-  return jsonResponse(200, cors, out);
+  return jsonResponse(200, cors, attachPro(out, vp.profile, engineResult, practitioner));
 }
