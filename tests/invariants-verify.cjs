@@ -105,7 +105,8 @@ function checkBottle(p, r, tag) {
   if (traces.length > 1) fail('at most 1 trace herb', p, names);
   if (traces.some(([, x]) => x > 5)) fail('trace herb at most 5%', p, traces.map(([h, x]) => h.name + ' ' + x).join(','));
   if (mains.some(([, x]) => x > 40)) fail('no herb above 40% (D3)', p, mains.map(([h, x]) => h.name + ' ' + x).join(','));
-  if (mains.length < 3) fail('at least three main herbs', p, names);
+  if (traces.length + herbs.filter(isAmanita).length && herbs.length < 4) fail('a small-share herb only in a bottle of four or more', p, names);
+  if (mains.filter(([h]) => !isAmanita(h)).length < 3) fail('at least three herbs at the full share', p, names);
   if (traces.length && herbs.length < 4) fail('a trace herb only in a bottle of four or more', p, names);
   if (JSON.stringify(pcts) !== JSON.stringify(assignPercentages(herbs))) fail('percentages are the engine\'s own (D2)', p, pcts.join(','));
   if (herbs.filter(P.isGABAergic).length > 2) fail('at most 2 sedatives', p, names);
@@ -114,6 +115,8 @@ function checkBottle(p, r, tag) {
   if (herbs.filter(P.isSerotonergic).length > P.MAX_SEROTONERGIC) fail('at most 1 serotonergic herb', p, names);
   if (herbs.filter(P.isLaxative).length > P.MAX_LAXATIVE) fail('at most 1 laxative', p, names);
   if (herbs.filter(isAmanita).length > 1) fail('at most one Amanita', p, names);
+  if (withPct.some(([h, x]) => isAmanita(h) && x > 10)) fail('an Amanita at most 10% of the bottle', p, withPct.filter(([h]) => isAmanita(h)).map(([h, x]) => h.name + ' ' + x).join(','));
+  if (herbs.some(isAmanita) && herbs.some(P.isStJohnsWort)) fail("never an Amanita beside St John's Wort", p, names);
   for (const x of detectNoteHerbAvoidance(p.notes, pool)) if (herbs.some(h => h.id === x.id)) fail('a herb the note says to avoid is never seated', p, x.name + ' (' + x.word + ')');
   if (herbs.some(h => isRestricted(h))) fail('no restricted plant', p, names);
   if (herbs.some(h => h.proOnly) && !(p._pro === true && !minor)) fail('pro-only herb only for a pro adult', p, names);

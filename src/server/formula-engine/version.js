@@ -28,7 +28,9 @@ module.exports = {
   //         by picker and MYCO validator; at most one Amanita per bottle.
   // 2.6.1 — note keywords match at word starts, short ones as whole
   //         words (third audit, 2026-09-29).
-  engineVersion:      '2.6.1-server',
+  // 2.7.0 — an Amanita takes at most 10% of the bottle and never sits
+  //         beside St John's Wort (Robin, 2026-09-29, third audit H2).
+  engineVersion:      '2.7.0-server',
   herbDbVersion:      '2026.09-245herbs',
   // 1.1.0 — unknown pregnancy safety = avoid; under-18s: no HIGH-caution,
   //         psychoactive, or above-LOW calming herbs (2026-09-27).

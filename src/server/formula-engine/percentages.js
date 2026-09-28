@@ -16,22 +16,25 @@
 // lines 2602–2627 (trace cap only, Math.round + drift to the top herb).
 
 const { isTrace } = require('./traces');
+const { isAmanita } = require('./pharmacology');
 
-const TRACE_PCT_CAP = 5;
-const MAX_SHARE_PCT = 40;
-const MIN_SHARE_PCT = 1;
+const TRACE_PCT_CAP   = 5;
+const AMANITA_PCT_CAP = 10;   // Robin, 2026-09-29 (third audit)
+const MAX_SHARE_PCT   = 40;
+const MIN_SHARE_PCT   = 1;
 
-// The ceiling for each herb. A bottle needs at least three main herbs
-// for 40% to be reachable (3 × 40 ≥ 100); the engine never composes a
-// smaller one (picker.js MIN_MAIN_HERBS), but the pro analysis can hand
-// us any list, so a short list gets the smallest ceiling that still adds
-// up to 100 instead of a total that cannot.
+// The ceiling for each herb: trace 5%, Amanita 10%, every other herb 40%.
+// A bottle needs at least three herbs at the full ceiling for 40% to be
+// reachable (3 × 40 ≥ 100); the engine never composes a smaller one
+// (picker.js MIN_MAIN_HERBS), but the pro analysis can hand us any list,
+// so a short list gets the smallest ceiling that still adds up to 100
+// instead of a total that cannot.
 function ceilings(herbs) {
-  const trace = herbs.map(h => isTrace(h));
-  const mains = trace.filter(t => !t).length;
-  const traceRoom = trace.filter(Boolean).length * TRACE_PCT_CAP;
-  const mainCap = mains ? Math.max(MAX_SHARE_PCT, Math.ceil((100 - traceRoom) / mains)) : 100;
-  let hi = trace.map(t => (t ? TRACE_PCT_CAP : mainCap));
+  const small = herbs.map(h => (isTrace(h) ? TRACE_PCT_CAP : isAmanita(h) ? AMANITA_PCT_CAP : 0));
+  const mains = small.filter(c => !c).length;
+  const smallRoom = small.reduce((a, b) => a + b, 0);
+  const mainCap = mains ? Math.max(MAX_SHARE_PCT, Math.ceil((100 - smallRoom) / mains)) : 100;
+  let hi = small.map(c => c || mainCap);
   if (hi.reduce((a, b) => a + b, 0) < 100) {
     const even = Math.ceil(100 / herbs.length);
     hi = hi.map(c => Math.max(c, even));
@@ -92,4 +95,4 @@ function assignPercentages(herbs) {
   return pct;
 }
 
-module.exports = { assignPercentages, TRACE_PCT_CAP, MAX_SHARE_PCT, MIN_SHARE_PCT };
+module.exports = { assignPercentages, TRACE_PCT_CAP, AMANITA_PCT_CAP, MAX_SHARE_PCT, MIN_SHARE_PCT };

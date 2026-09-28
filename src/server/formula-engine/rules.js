@@ -9,7 +9,7 @@
 
 const { isTrace } = require('./traces');
 const P = require('./pharmacology');
-const { TRACE_PCT_CAP, MAX_SHARE_PCT } = require('./percentages');
+const { TRACE_PCT_CAP, MAX_SHARE_PCT, AMANITA_PCT_CAP } = require('./percentages');
 
 const RULES = {
   MAX_PER_CATEGORY: 2,
@@ -20,19 +20,24 @@ const RULES = {
   MAX_LAXATIVE:     P.MAX_LAXATIVE,
   // Genus rule (2026-09-28): the two Amanitas are both recorded
   // 'sedative', so the sedative cap alone let both into one bottle.
-  // Taxonomy matters more than function class here.
+  // Taxonomy matters more than function class here. Robin, 2026-09-29
+  // (third audit): at most 10% of the bottle (percentages.js), and never
+  // beside St John's Wort.
   MAX_AMANITA:      1,
+  AMANITA_PCT_CAP,
   TRACE_PCT_CAP,
   MAX_SHARE_PCT,
-  MIN_MAIN_HERBS:   3,      // fewer → NO_MATCH / NO_SAFE_MATCH
+  MIN_MAIN_HERBS:   3,      // herbs at the full 40% ceiling; fewer → NO_MATCH / NO_SAFE_MATCH
 };
 
-function isAmanita(h) {
-  return !!h && (h.family === 'Amanitaceae' || /\bamanita\b/i.test(String(h.name || '') + ' ' + String(h.botanical || '')));
-}
+const isAmanita = P.isAmanita;
+
+// A herb held to a small share (trace ≤ 5%, Amanita ≤ 10%). A bottle
+// needs three herbs that are NOT, so no herb has to go above 40%.
+const isSmallShare = h => isTrace(h) || isAmanita(h);
 
 function newLoad() {
-  return { cat: {}, trace: 0, gaba: 0, stim: 0, strong: 0, sero: 0, lax: 0, amanita: 0 };
+  return { cat: {}, trace: 0, gaba: 0, stim: 0, strong: 0, sero: 0, lax: 0, amanita: 0, sjw: 0 };
 }
 
 // null when the herb may take a seat, otherwise the rule it would break.
@@ -45,6 +50,7 @@ function seatBlocker(load, h) {
   if (P.isSerotonergic(h) && load.sero >= RULES.MAX_SEROTONERGIC) return 'SEROTONERGIC_LOAD';
   if (P.isLaxative(h) && load.lax >= RULES.MAX_LAXATIVE) return 'LAXATIVE_LOAD';
   if (isAmanita(h) && load.amanita >= RULES.MAX_AMANITA) return 'AMANITA_LIMIT';
+  if ((isAmanita(h) && load.sjw) || (P.isStJohnsWort(h) && load.amanita)) return 'AMANITA_WITH_ST_JOHNS_WORT';
   if ((load.cat[P.categoryOf(h)] || 0) >= RULES.MAX_PER_CATEGORY) return 'CATEGORY_CAP';
   return null;
 }
@@ -59,7 +65,8 @@ function seat(load, h) {
   if (P.isSerotonergic(h)) load.sero += 1;
   if (P.isLaxative(h)) load.lax += 1;
   if (isAmanita(h)) load.amanita += 1;
+  if (P.isStJohnsWort(h)) load.sjw += 1;
   return load;
 }
 
-module.exports = { RULES, isAmanita, newLoad, seatBlocker, seat };
+module.exports = { RULES, isAmanita, isSmallShare, newLoad, seatBlocker, seat };

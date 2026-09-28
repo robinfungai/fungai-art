@@ -13,7 +13,7 @@ const { scoreHerb, scoreBreakdown } = require('./scoring');
 const { safetyFilter, applyMinorGate, passesAccess, passesProfileSafety } = require('./safety');
 const { isTrace } = require('./traces');
 const { isGABAergic, isCNSStimulant, isStrongStimulant, isSerotonergic, isLaxative, fitsTimeOfUse, fitsGoal, categoryOf } = require('./pharmacology');
-const { RULES, newLoad, seatBlocker, seat } = require('./rules');
+const { RULES, isSmallShare, isAmanita, newLoad, seatBlocker, seat } = require('./rules');
 
 // ── Tie-breaking ──────────────────────────────────────────────────
 // scoreHerb builds a score from a handful of coarse constants —
@@ -154,20 +154,26 @@ function walk(uniq, a) {
   const openToGated = !!a._gatedOptIn;
   const load = newLoad();
   const composed = [];
+  let smallSeated = 0;
   for (const x of uniq) {
     if (composed.length >= target) break;
     if (x.h.gated && !openToGated) continue;
-    if (isTrace(x.h) && target < MIN_MAIN_HERBS + 1) continue;
+    // A herb held to a small share (trace ≤ 5%, Amanita ≤ 10%) takes a
+    // seat only if the bottle can still hold three herbs at the full
+    // share after it — otherwise one of them would go above 40%.
+    if (isSmallShare(x.h) && target < MIN_MAIN_HERBS + 1 + smallSeated) continue;
     // Every other seating rule lives in rules.js, shared with the MYCO
     // validator, so the two cannot drift apart.
     if (seatBlocker(load, x.h)) continue;
     composed.push(x);
     seat(load, x.h);
+    if (isSmallShare(x.h)) smallSeated += 1;
   }
   return composed;
 }
 
-const mainCount = composed => composed.filter(x => !isTrace(x.h)).length;
+// Herbs that may take the full share — not a trace, not an Amanita.
+const mainCount = composed => composed.filter(x => !isSmallShare(x.h)).length;
 
 function pickFormula(a) {
   const composed = walk(rankedCandidates(a), a);
@@ -207,6 +213,7 @@ function buildScoredCandidates(a, limit = 20) {
       _isStrongStimulant: isStrongStimulant(x.h),
       _isSerotonergic: isSerotonergic(x.h),
       _isLaxative:     isLaxative(x.h),
+      _isAmanita:      isAmanita(x.h),
     }));
 }
 

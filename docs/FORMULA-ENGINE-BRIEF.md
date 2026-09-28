@@ -1,13 +1,13 @@
 # Fungai Art — how the formula maker decides
 
-*Audit brief · engine 2.6.1 · safety rules 1.4.1 · 245 herbs · 2026-09-29*
+*Audit brief · engine 2.7.0 · safety rules 1.4.1 · 245 herbs · 2026-09-29*
 
 This document describes, as exactly as the code allows, how fungai.art turns
 a person's quiz answers into a herbal extract formula. It is written for an
 independent reviewer (human or AI) who has **not** seen the code. Every rule
 below names the file it lives in, so each claim can be checked.
 
-**Which code this describes.** Engine **2.6.1** in the repository's `main`
+**Which code this describes.** Engine **2.7.0** in the repository's `main`
 branch as developed locally. The live site at fungai.art only changes when
 that branch is deployed. **If you read the code on GitHub, first check
 `src/server/formula-engine/version.js`:** the first external audit
@@ -290,7 +290,7 @@ Walking down the ranking, a herb is skipped if seating it would break a cap:
 | A sedative beside a true stimulant | never |
 | Serotonergic (St John's Wort, Kanna, Saffron, Rhodiola) | ≤ 1 |
 | Laxatives | ≤ 1 |
-| Amanitas (a genus rule, since 2.6: both are recorded "sedative", so the sedative cap alone allowed two) | ≤ 1 |
+| Amanitas (a genus rule, since 2.6: both are recorded "sedative", so the sedative cap alone allowed two). Since 2.7 (owner, 2026-09-29): at most 10% of the bottle, and never beside St John's Wort | ≤ 1 |
 
 These seating rules live in one module, `rules.js`, which both the
 picker's walk and the MYCO validator call — a rule cannot hold in one
@@ -309,8 +309,10 @@ up short. It never fired in 24,000 test profiles; neither code has fired in
 
 ### 6.3 Percentages
 - Each herb's share is proportional to its score (minimum 1).
-- Trace herbs are capped at **5%**, and since engine 2.5 **every other herb
-  at 40%**. What a capped herb cannot take is spread over the uncapped herbs
+- Trace herbs are capped at **5%**, an Amanita at **10%** (since 2.7), and
+  since engine 2.5 **every other herb at 40%**. A bottle needs three herbs
+  at the full 40% ceiling, so a trace herb or an Amanita takes a seat only
+  where three of those remain. What a capped herb cannot take is spread over the uncapped herbs
   in proportion to their scores, repeated until no herb is over its cap.
 - Values are rounded down and the missing points go to the largest
   remainders, never past a cap; every herb gets at least 1%.

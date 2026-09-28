@@ -82,9 +82,22 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ## 0.16 · START HERE — plan for 2026-09-29
 
-**Before anything else, Robin (if not done yet):** run
-`supabase-fyf-retention.sql`, then `supabase-myco-budget.sql` (§0.15);
-make the GitHub repo private (D7); decide the deploy (D0).
+**State on 2026-09-29 (night):** both SQL files are RUN. Engine **2.7.0**,
+safety rules **1.4.1**, all 39 suites green, `npm run build` passes.
+**Not pushed** — Robin said "not yet"; GitHub `main` is still the 25 Sep
+engine 2.1, so any outside audit reads old code until he says "push".
+After the deploy: step 4 of `supabase-fyf-retention.sql` (protect old
+reserved formulas by id, then delete the rest older than 30 days).
+
+Decided 2026-09-29 (third audit, Claude, read main@b3beace — verdicts in
+`docs/AUDIT-2026-09-28-RESPONSE.md`): Amanita ≤ 10% of the bottle and
+never beside St John's Wort (done, 2.7); St John's Wort stays in customer
+bottles. Fixed the same night: autoimmune "MS" false flags (26 herbs), note
+keywords matching inside words. Still open from it: L1 (a synergy note
+naming a herb not in the bottle), an "any other prescription medicine"
+answer, ethanol for under-18s (product decision), HIGH-caution count cap.
+
+Robin still to do: make the GitHub repo private (D7); say "push" (D0).
 
 ### 1 · D9 — claims-safe wording (first task)
 Go through every customer-facing string of the formula maker and draft a

@@ -186,8 +186,8 @@ are true of the live site. Re-run on the local engine (2.6.1):
 | C4 | "I am 8 weeks pregnant" in the note → Amanita, Mistletoe, Barberry | ✅ Fixed (D1): the note applies the pregnancy filter; every herb in that bottle is recorded pregnancy-safe. |
 | C5 | Ephedra, Yohimbe in the consumer pool | 🟢 Both pro-only (Robin's decision D11; the audit would restrict them outright unless a lawyer says a tincture is not food). |
 | H1 | Goal decides less than body type; detox 1% | 🟢 Fixed in 2.4 (recorded goals). |
-| H2 | A plain adult sleep bottle leads with Amanita Muscaria; two Amanitas together | ⚠️ Partly: one Amanita per bottle since 2.6, but the sleep profile it quotes still gets Amanita Muscaria as the largest share (22%). Its fix — ≤ 10% of the bottle, never beside St John's Wort, never seated by the note — ⚖️ Robin (Amanitas compete for adults by his decision; the audit cites the FDA's Dec 2024 not-GRAS memo). |
-| H3 | Ten checkboxes can't screen St John's Wort ("~50% of medicines"); no "other prescription", breastfeeding, surgery, epilepsy, alcohol questions | ⚖️ True. Needs Robin: an "any other prescription medicine" answer, St John's Wort pro-only, and the consumer safety questions already listed. |
+| H2 | A plain adult sleep bottle leads with Amanita Muscaria; two Amanitas together | ✅ **Robin, 2026-09-29 — engine 2.7:** one Amanita per bottle (2.6), at most 10% of the bottle, never beside St John's Wort. The quoted sleep profile now gets Amanita Muscaria at 10% (was 22%). The note can raise an Amanita's score by at most the +6 note cap, like any herb. |
+| H3 | Ten checkboxes can't screen St John's Wort ("~50% of medicines"); no "other prescription", breastfeeding, surgery, epilepsy, alcohol questions | ⚖️ True. **Robin, 2026-09-29: St John's Wort stays in customer bottles.** Open: an "any other prescription medicine" answer and the consumer safety questions already listed (handoff §0.16). |
 | H4 | Laxatives and sedative + stimulant without gates | 🟢 Fixed in 2.4. |
 | H5 | Validator looser than the brief; can accept a 0% herb | ✅ Fixed: MYCO's percentages are ignored (2.5) and the validator uses the picker's own rules (2.6). |
 | H6 | Herb data in `public/` | ✅ `herb-engine-pool.json` removed (2.6); `herbs-data.js` remains for `/mixology` and `/extraction` (D7). |
@@ -218,3 +218,5 @@ are true of the live site. Re-run on the local engine (2.6.1):
 | D9 | Claims pass over the formula-maker copy | Yes — draft a table for approval first | ⏭ Next |
 | D10 | Reveal ritual and visual language | Parked for a design pass | 🔭 |
 | D11 | Yohimbe | Pro composer only; no house dose; rank gate and brown logo unchanged | ✅ (pro-only since `1917c9e`; test added) |
+| H2 | Amanitas in customer bottles (third audit) | At most 10% of the bottle, never beside St John's Wort (Robin, 2026-09-29) | ✅ Engine 2.7 |
+| H3 | St John's Wort (third audit) | Stays in customer bottles (Robin, 2026-09-29) | — |

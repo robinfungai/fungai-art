@@ -55,6 +55,7 @@ const BLOCKED = {
   SEROTONERGIC_LOAD:       ['MYCO_SEROTONERGIC_LOAD_EXCEEDED', () => 'more than ' + RULES.MAX_SEROTONERGIC + ' serotonergic herb'],
   LAXATIVE_LOAD:           ['MYCO_LAXATIVE_LOAD_EXCEEDED',     () => 'more than ' + RULES.MAX_LAXATIVE + ' laxative herb'],
   AMANITA_LIMIT:           ['MYCO_AMANITA_LIMIT_EXCEEDED',     () => 'more than ' + RULES.MAX_AMANITA + ' Amanita'],
+  AMANITA_WITH_ST_JOHNS_WORT: ['MYCO_AMANITA_WITH_ST_JOHNS_WORT', () => "an Amanita beside St John's Wort"],
   CATEGORY_CAP:            ['MYCO_CATEGORY_CAP_EXCEEDED',      h => 'more than ' + RULES.MAX_PER_CATEGORY + ' of category ' + categoryOf(h)],
 };
 

@@ -153,6 +153,15 @@ function isFungus(h) {
   return FUNGUS_NAME.test(String((h && h.name) || '').toLowerCase());
 }
 
+// The two Amanitas (Muscaria, Pantherina), by recorded family or name.
+function isAmanita(h) {
+  return !!h && (h.family === 'Amanitaceae' || /\bamanita\b/i.test(String(h.name || '') + ' ' + String(h.botanical || '')));
+}
+// St John's Wort (Hypericum perforatum), however the name is spelled.
+function isStJohnsWort(h) {
+  return !!h && /\bst\.? john'?s wort\b|hypericum perforatum/i.test(String(h.name || '') + ' ' + String(h.botanical || ''));
+}
+
 function categoryOf(h) {
   const t = (
     (h.primary_functions || []).join(' | ') + ' | ' +
@@ -175,5 +184,5 @@ module.exports = {
   cnsAction, isGABAergic, isCNSStimulant, guessGABAergic, guessCNSStimulant,
   fitsTimeOfUse, isStrongStimulant,
   isSerotonergic, MAX_SEROTONERGIC, isLaxative, fitsGoal, MAX_LAXATIVE,
-  categoryOf, isFungus, FUNGAL_FAMILIES,
+  categoryOf, isFungus, FUNGAL_FAMILIES, isAmanita, isStJohnsWort,
 };

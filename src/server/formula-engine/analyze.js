@@ -196,6 +196,7 @@ function analyzeFormula(input) {
   const sero = rows.filter(r => r.isSerotonergic);
   const lax = rows.filter(r => r.isLaxative);
   const amanitas = rows.filter(r => SHARED_RULES.isAmanita(r));
+  const sjw = rows.filter(r => /\bst\.? john'?s wort\b|hypericum perforatum/i.test(String(r.name || '') + ' ' + String(r.botanical || '')));
   const over = Object.keys(catCount).filter(c => c !== 'other' && catCount[c] > RULES.MAX_PER_CATEGORY);
   const checks = [
     { id: 'size', ok: rows.length >= RULES.MIN_HERBS && rows.length <= RULES.MAX_HERBS,
@@ -218,8 +219,11 @@ function analyzeFormula(input) {
       label: 'Sedative with stimulant', detail: gaba.length && strong.length ? gaba.concat(strong).map(r => r.name).join(', ') + ' — a sedative and a stimulant pull against each other; the engine never bottles the two together.' : 'No tug-of-war.' },
     { id: 'restricted', ok: !rows.some(r => r.restricted),
       label: 'Restricted plants', detail: rows.some(r => r.restricted) ? rows.filter(r => r.restricted).map(r => r.name).join(', ') + ' — catalogue only; the engine never puts these in a bottle.' : 'None.' },
-    { id: 'amanita', ok: amanitas.length <= RULES.MAX_AMANITA,
-      label: 'Amanitas', detail: amanitas.length > RULES.MAX_AMANITA ? amanitas.map(r => r.name).join(', ') + ' — the engine bottles one Amanita at most.' : (amanitas.length ? amanitas[0].name + '.' : 'None.') },
+    { id: 'amanita', ok: amanitas.length <= RULES.MAX_AMANITA && amanitas.every(r => r.percentage <= RULES.AMANITA_PCT_CAP) && !(amanitas.length && sjw.length),
+      label: 'Amanitas', detail: !amanitas.length ? 'None.'
+        : amanitas.length > RULES.MAX_AMANITA ? amanitas.map(r => r.name).join(', ') + ' — the engine bottles one Amanita at most.'
+        : sjw.length ? amanitas[0].name + ' beside St John\'s Wort — the engine never bottles the two together.'
+        : amanitas.map(r => r.name + ' ' + r.percentage + '%').join(', ') + ' — the engine keeps an Amanita at or under ' + RULES.AMANITA_PCT_CAP + '%.' },
     { id: 'pro-only', ok: !rows.some(r => r.proOnly),
       label: 'Pro-only plants', detail: rows.some(r => r.proOnly) ? rows.filter(r => r.proOnly).map(r => r.name).join(', ') + ' — only the pro composer bottles this; a customer formula never does.' : 'None.' },
   ];

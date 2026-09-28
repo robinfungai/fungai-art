@@ -19,8 +19,8 @@ module.exports = {
     rationale: "Engine 2.5 (2026-09-28, external audit decisions D1–D4): no herb above 40% of the bottle, percentages rounded by largest remainder; evidence grade worth 0 to +2 points; safety flags no longer add a herb; one strict fill walk; a medicine or pregnancy named in the note applies its safety flag. On top of 2.4 (recorded goals scored by position, pro answers, laxatives only for reported constipation).",
   },
   '03-conflicting-axes': {
-    herbs: "300:Red Dates@21|323:Reishi@17|311:Amanita Muscaria@16|279:Schisandra (Five-Flavour Fruit)@16|413:Longan@16|276:Rhodiola@14",
-    rationale: "2026-09-28, after the second audit round: mushroom category from the recorded botanical family (Dandelion, Ginkgo, Milk Thistle, Schisandra are no longer mushrooms; Fu Ling, Morels, Enoki, Shaggy Mane, Tinder Fungus now are); one rule module shared by picker and MYCO validator (adds one Amanita per bottle); herbs the note says to avoid are excluded. On top of engine 2.5 (40% share cap, engine-set percentages, evidence 0 to +2, note safety words).",
+    herbs: "300:Red Dates@23|323:Reishi@18|311:Amanita Muscaria@10|279:Schisandra (Five-Flavour Fruit)@17|413:Longan@17|276:Rhodiola@15",
+    rationale: "Engine 2.7.0 (Robin, 2026-09-29, third audit H2): an Amanita takes at most 10% of the bottle and never sits beside St John's Wort; a small-share herb (trace or Amanita) seats only where three full-share herbs remain. On top of 2.6.1 / safety 1.4.1.",
   },
   '04-max-safety-restrictions': {
     herbs: "271:Oatstraw@40|300:Red Dates@16|275:Pine Pollen@14|579:Aguaje@14|314:Button Mushroom@11|282:Star Anise@5",
@@ -55,8 +55,8 @@ module.exports = {
     rationale: "Engine 2.5 (2026-09-28, external audit decisions D1–D4): no herb above 40% of the bottle, percentages rounded by largest remainder; evidence grade worth 0 to +2 points; safety flags no longer add a herb; one strict fill walk; a medicine or pregnancy named in the note applies its safety flag. On top of 2.4 (recorded goals scored by position, pro answers, laxatives only for reported constipation).",
   },
   '12-gaba-load': {
-    herbs: "273:Passionflower@19|281:Skullcap@19|311:Amanita Muscaria@17|252:Lemon Balm@16|103:Ashwagandha@16|323:Reishi@13",
-    rationale: "Engine 2.5 (2026-09-28, external audit decisions D1–D4): no herb above 40% of the bottle, percentages rounded by largest remainder; evidence grade worth 0 to +2 points; safety flags no longer add a herb; one strict fill walk; a medicine or pregnancy named in the note applies its safety flag. On top of 2.4 (recorded goals scored by position, pro answers, laxatives only for reported constipation).",
+    herbs: "273:Passionflower@21|281:Skullcap@21|311:Amanita Muscaria@10|252:Lemon Balm@17|103:Ashwagandha@17|323:Reishi@14",
+    rationale: "Engine 2.7.0 (Robin, 2026-09-29, third audit H2): an Amanita takes at most 10% of the bottle and never sits beside St John's Wort; a small-share herb (trace or Amanita) seats only where three full-share herbs remain. On top of 2.6.1 / safety 1.4.1.",
   },
   '13-stim-load': {
     herbs: "240:Ginseng@22|280:Shilajit (Mineral Pitch)@22|109:Guarana@21|241:Goji Berry@19|589:He Shou Wu / Fo-Ti@16",
