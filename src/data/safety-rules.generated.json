@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-28T22:07:40.735Z",
+  "generatedAt": "2026-09-28T23:31:40.713Z",
   "counts": {
-    "botanicals": 245,
-    "rules": 2438,
+    "botanicals": 247,
+    "rules": 2457,
     "byType": {
-      "contraindication": 1187,
-      "drug_interaction": 667,
-      "herb_interaction": 346,
-      "record": 238
+      "contraindication": 1195,
+      "drug_interaction": 672,
+      "herb_interaction": 349,
+      "record": 241
     },
     "bySeverity": {
-      "unspecified": 1087,
-      "caution": 334,
+      "unspecified": 1098,
+      "caution": 335,
       "monitor": 371,
-      "avoid": 517,
+      "avoid": 524,
       "absolute": 129
     }
   },
@@ -1121,6 +1121,17 @@
       "contraceptive",
       "liver_kidney",
       "pregnancy"
+    ],
+    "595": [
+      "pregnancy",
+      "psych_meds"
+    ],
+    "596": [
+      "cardio_meds",
+      "contraceptive",
+      "pregnancy",
+      "psych_meds",
+      "sedatives"
     ]
   },
   "flagsPerRuleByBotanicalId": {
@@ -2221,6 +2232,17 @@
       "contraceptive",
       "liver_kidney",
       "pregnancy"
+    ],
+    "595": [
+      "pregnancy",
+      "psych_meds"
+    ],
+    "596": [
+      "cardio_meds",
+      "contraceptive",
+      "pregnancy",
+      "psych_meds",
+      "sedatives"
     ]
   },
   "divergence": [
@@ -31408,6 +31430,237 @@
         "pregnancy"
       ],
       "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:595:contraindication:1",
+      "botanicalId": 595,
+      "botanical": "Birch Buds",
+      "ruleType": "contraindication",
+      "subject": "Birch pollen allergy: the buds may cross-react; avoid, or start with a single drop",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:595:contraindication:2",
+      "botanicalId": 595,
+      "botanical": "Birch Buds",
+      "ruleType": "contraindication",
+      "subject": "Oedema from heart or kidney failure, or any condition where fluid intake must be limited: birch is a traditional diuretic (as with birch leaf) and no substitute for treatment",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:595:contraindication:3",
+      "botanicalId": 595,
+      "botanical": "Birch Buds",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and breastfeeding: no safety data; avoid medicinal amounts",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:595:drug_interaction:1",
+      "botanicalId": 595,
+      "botanical": "Birch Buds",
+      "ruleType": "drug_interaction",
+      "subject": "Diuretics: additive fluid loss (from the traditional diuretic use; not studied)",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:595:drug_interaction:2",
+      "botanicalId": 595,
+      "botanical": "Birch Buds",
+      "ruleType": "drug_interaction",
+      "subject": "Lithium: diuretic herbs can change lithium levels; only with medical supervision",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "psych_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:595:herb_interaction:1",
+      "botanicalId": 595,
+      "botanical": "Birch Buds",
+      "ruleType": "herb_interaction",
+      "subject": "Other diuretic herbs at high dose (Dandelion leaf, Horsetail, Juniper): additive fluid loss",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:595:record:pregnancy",
+      "botanicalId": 595,
+      "botanical": "Birch Buds",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:596:contraindication:1",
+      "botanicalId": 596,
+      "botanical": "California Poppy",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and breastfeeding: avoid (alkaloid-bearing; no safety data)",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:596:contraindication:2",
+      "botanicalId": 596,
+      "botanical": "California Poppy",
+      "ruleType": "contraindication",
+      "subject": "Sleeping pills, benzodiazepines, opioids and alcohol: additive sedation; do not combine",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "sedatives"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:596:contraindication:3",
+      "botanicalId": 596,
+      "botanical": "California Poppy",
+      "ruleType": "contraindication",
+      "subject": "Driving or operating machinery after a dose",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:596:contraindication:4",
+      "botanicalId": 596,
+      "botanical": "California Poppy",
+      "ruleType": "contraindication",
+      "subject": "Children: only with professional advice",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:596:contraindication:5",
+      "botanicalId": 596,
+      "botanical": "California Poppy",
+      "ruleType": "contraindication",
+      "subject": "Prescription medicines cleared by CYP3A4, CYP2C9, CYP2C19 or CYP2D6: strong enzyme inhibition in the laboratory (PMID 27054913); ask the prescriber first",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "contraceptive"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:596:drug_interaction:1",
+      "botanicalId": 596,
+      "botanical": "California Poppy",
+      "ruleType": "drug_interaction",
+      "subject": "Benzodiazepines, sleeping pills, opioids, barbiturates and alcohol: additive CNS depression; avoid",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [
+        "sedatives"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:596:drug_interaction:2",
+      "botanicalId": 596,
+      "botanical": "California Poppy",
+      "ruleType": "drug_interaction",
+      "subject": "Medicines metabolised by CYP3A4, CYP2C9, CYP2C19 or CYP2D6 (for example warfarin, many SSRIs, some statins and anticonvulsants): the extract inhibited these enzymes in vitro and may raise drug levels (PMID 27054913); ask the prescriber",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [
+        "cardio_meds",
+        "psych_meds",
+        "contraceptive"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:596:drug_interaction:3",
+      "botanicalId": 596,
+      "botanical": "California Poppy",
+      "ruleType": "drug_interaction",
+      "subject": "MAO inhibitors: alkaloid-bearing herb; avoid the combination (precaution)",
+      "severity": "avoid",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:596:herb_interaction:1",
+      "botanicalId": 596,
+      "botanical": "California Poppy",
+      "ruleType": "herb_interaction",
+      "subject": "Other sedative herbs (Valerian, Hops, Kava, Skullcap at high dose): additive sedation",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:596:herb_interaction:2",
+      "botanicalId": 596,
+      "botanical": "California Poppy",
+      "ruleType": "herb_interaction",
+      "subject": "St. John's Wort: both act on drug-metabolising enzymes; together they make drug levels hard to predict",
+      "severity": "unspecified",
+      "reason": null,
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:596:record:pregnancy",
+      "botanicalId": 596,
+      "botanical": "California Poppy",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:596:record:cns",
+      "botanicalId": 596,
+      "botanical": "California Poppy",
+      "ruleType": "record",
+      "subject": "CNS class: sedative",
+      "severity": "caution",
+      "reason": "Recorded as a sedative: it adds to sleeping pills, benzodiazepines, alcohol and other sedatives.",
+      "flags": [
+        "sedatives"
+      ],
+      "source": "herbs.ts · cns_action"
     }
   ]
 }

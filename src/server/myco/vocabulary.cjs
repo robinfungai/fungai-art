@@ -108,6 +108,8 @@ const EQUIVALENT = [
   ['thunder god vine', 'tripterygium', 'wilfordii', 'lei gong teng'],
   ['green tea', 'camellia', 'sinensis', 'matcha', 'sencha', 'lu cha'],
   ['hibiscus', 'roselle', 'sabdariffa', 'karkade', 'sour tea', 'flor de jamaica'],
+  ['birch buds', 'birch bud', 'betula pendula', 'betula pubescens', 'bjorkknopp', 'birkenknospen'],
+  ['california poppy', 'californian poppy', 'eschscholzia', 'eschscholtzia', 'golden poppy'],
   ['comfrey', 'symphytum', 'knitbone', 'beinwell'],
   ['gromwell', 'shikonin', 'lithospermum', 'zi cao'],
   ['ginkgo', 'biloba', 'maidenhair tree'],

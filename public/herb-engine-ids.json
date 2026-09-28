@@ -241,6 +241,15 @@
   ]
  },
  {
+  "id": "birch_buds",
+  "n": "Birch Buds",
+  "b": "Betula pendula / Betula pubescens",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ]
+ },
+ {
   "id": "birch_polypore",
   "n": "Birch Polypore",
   "b": "Fomitopsis betulina",
@@ -404,6 +413,15 @@
   "n": "Calendula",
   "b": "Calendula officinalis",
   "cat": "Anti-inflammatory",
+  "p": [
+   "european"
+  ]
+ },
+ {
+  "id": "california_poppy",
+  "n": "California Poppy",
+  "b": "Eschscholzia californica",
+  "cat": "Nervine",
   "p": [
    "european"
   ]

@@ -2334,5 +2334,17 @@ export const EXTRACTION: ExtractionHerb[] = [
     ethanol: 40, methods: ["maceration", "cryo-maceration"], ratio: "1:4", days: 14, spagyric: false,
     notes: "High vitamin C and volatile terpenes; cryo-maceration preserves aromatics. Do not use needles from toxic species (Yew, Norfolk Island Pine, etc.).",
     tcm: { meridians: ["Lung", "Kidney"], element: "Metal + Water" }, synergy: ["Pine Pollen", "Rhodiola"], caution_level: "LOW"
+  },
+  {
+    id: 1810, common: "Birch Buds", botanical: "Betula pendula / B. pubescens", part: "spring buds (dried, or fresh for a macerate)",
+    ethanol: 70, methods: ["maceration", "percolation"], ratio: "1:3", days: 14, spagyric: false,
+    notes: "Resinous buds: sesquiterpenoids and flavonoids need high-proof ethanol. Fresh buds suit a gemmotherapy glycerin-ethanol macerate. Gather before the buds open. Avoid with birch-pollen allergy.",
+    tcm: { meridians: ["Kidney", "Bladder", "Lung"], element: "Wood + Water" }, synergy: ["Nettle", "Dandelion Root", "Chaga"], caution_level: "LOW"
+  },
+  {
+    id: 1811, common: "California Poppy", botanical: "Eschscholzia californica", part: "flowering aerial parts",
+    ethanol: 45, methods: ["maceration", "percolation"], ratio: "1:3", days: 14, spagyric: true,
+    notes: "Isoquinoline alkaloids (californidine, eschscholtzine, protopine) extract well at 45%; no opiates. Sedative: not with sleeping pills, benzodiazepines, opioids or alcohol. Strong CYP3A4/2C9/2C19/2D6 inhibition in vitro.",
+    tcm: { meridians: ["Heart", "Liver"], element: "Fire + Wood" }, synergy: ["Passionflower", "Valerian", "Hawthorn"], caution_level: "MEDIUM"
   }
 ];

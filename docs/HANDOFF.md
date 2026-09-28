@@ -109,11 +109,16 @@ Robin still to do: make the GitHub repo private (D7); say "push" (D0).
   (Separately fixed that night: the Dark map was broken on the live site
   because `netlify.toml`'s CSP blocked `tiles*.basemaps.cartocdn.com`,
   where the dark style's tiles, fonts and icons live.)
-- **Birch buds and California poppy are not in the herb catalogue.** They
-  are now in the shop copy (Healthy Aging, Sleepy Sleepy) but the Atlas,
-  the formula engine and MYCO don't know them. Adding them is a full
-  "herbs everywhere" job (build chain + shelf + restricted list + shop) —
-  and each needs recorded safety data before it can reach a bottle.
+- ✅ **Birch Buds (595) and California Poppy (596) added everywhere**
+  (2026-09-29): herbs.ts with PubMed-checked references, /extraction bench
+  table (70% / 45%), extraction.ts protocols, /mixology, MYCO vocabulary,
+  and every generated file (Atlas, shelf, Engine 2, safety rules, MYCO
+  KB, counts → 247). California Poppy is recorded `sedative` (off for
+  minors and anyone on sedatives) with a strong CYP-inhibition warning.
+  Neither has a photograph yet. Holy Basil gained the alias "Tulsi", so
+  tulsi.jpg now shows. **pomegranate.jpg still matches nothing** — there
+  are two records (Seeds, Skin); rename the file to pomegranate-seeds.jpg
+  or pomegranate-skin.jpg to say which it shows.
 
 ### 1 · D9 — claims-safe wording (first task)
 Go through every customer-facing string of the formula maker and draft a

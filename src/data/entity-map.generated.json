@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-28T17:16:02.230Z",
+  "generatedAt": "2026-09-28T23:31:38.513Z",
   "counts": {
-    "botanicals": 245,
+    "botanicals": 247,
     "monographs": 128,
     "monographsMatched": 128,
     "products": 21,
@@ -2212,6 +2212,24 @@
       "latin": "Symphytum officinale",
       "genus": "Symphytum",
       "species": "officinale"
+    },
+    {
+      "id": 595,
+      "slug": "birch-buds",
+      "name": "Birch Buds",
+      "botanical": "Betula pendula / Betula pubescens (resinous spring buds, gathered before they open)",
+      "latin": "Betula pendula / Betula pubescens",
+      "genus": "Betula",
+      "species": "pendula"
+    },
+    {
+      "id": 596,
+      "slug": "california-poppy",
+      "name": "California Poppy",
+      "botanical": "Eschscholzia californica (flowering aerial parts)",
+      "latin": "Eschscholzia californica",
+      "genus": "Eschscholzia",
+      "species": "californica"
     }
   ],
   "monographs": [

@@ -1,6 +1,6 @@
 # Fungai Art — how the formula maker decides
 
-*Audit brief · engine 2.7.0 · safety rules 1.4.1 · 245 herbs · 2026-09-29*
+*Audit brief · engine 2.7.0 · safety rules 1.4.1 · 247 herbs · 2026-09-29*
 
 This document describes, as exactly as the code allows, how fungai.art turns
 a person's quiz answers into a herbal extract formula. It is written for an
@@ -27,7 +27,7 @@ useful; "the engine does X" without a source here is not.
 ## 1 · The site in one page (context)
 
 Fungai Art is a one-person herbal practice in Berlin: a webshop of
-hand-made extracts, and a set of tools around a catalogue of **245 plants
+hand-made extracts, and a set of tools around a catalogue of **247 plants
 and fungi** (`src/data/herbs.ts`, the single source of truth). The parts:
 
 | Area | What it does |
@@ -36,7 +36,7 @@ and fungi** (`src/data/herbs.ts`, the single source of truth). The parts:
 | **Pro composer** (`/find-your-formula-pro`) | The same engine with 17 questions. Since 2026-09-28 it is for verified practitioners only and adds practitioner tools (§9). |
 | **Formula analysis** (`/api/formula-analysis`) | Checks *any* formula (from Mixology, the pro editor or the formula book) against the engine's own rules. Optionally asks MYCO for a reading. |
 | **Mixology** (`/mixology`) | Visitors build their own formulas by hand. |
-| **The Atlas** (`/atlas`) | An encyclopedia of all 245 organisms: chemistry, tradition, safety, relationships. |
+| **The Atlas** (`/atlas`) | An encyclopedia of all 247 organisms: chemistry, tradition, safety, relationships. |
 | **Extraction** (`/extraction`) | The lab bench table of ethanol strengths per herb, at the house ratio of 1:3 (plant : solvent). |
 | **MYCO** | The site's AI guide: Claude plus retrieval (BM25) over the catalogue. In the formula maker it may *propose* a formula, but only inside limits the deterministic engine sets (§7). |
 | Shop, Moder Jord, community portal, foraging map, academy | Not part of the decision maker; not covered here. |
@@ -217,7 +217,7 @@ points. Measured over 48 synthetic profiles:
 | Herbs in a bottle that serve the chosen goal | 44% | 100% |
 | Herbs shared between bottles for the same goal, different bodies | 2% | 18% |
 
-**The 245 goal lists were drafted by Claude from each record's primary
+**The 247 goal lists were drafted by Claude from each record's primary
 functions and have not yet been reviewed by the owner.** They are the
 highest-leverage data in the engine.
 

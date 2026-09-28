@@ -4437,6 +4437,7 @@ export const HERBS: Herb[] = [
     name: 'Holy Basil (Tulsi)',
     goals: ['stress', 'anxiety', 'immunity'],
     botanical: 'Ocimum sanctum (aerial parts — "The Incomparable One")',
+    aliases: ['Tulsi', 'Ocimum tenuiflorum', 'Ocimum sanctum'],
     tcm_meridians: ['Heart', 'Lung', 'Spleen'],
     tcm_element: 'Fire + Wood',
     energetics: ['Warm', 'Dry', 'Stimulating', 'Purifying', 'Sacred', 'Heart-Opening', 'Adaptogenic'],
@@ -19254,6 +19255,173 @@ export const HERBS: Herb[] = [
       'Giannetti BM et al. Efficacy and safety of comfrey root extract ointment in the treatment of acute upper or lower back pain. Br J Sports Med. 2010. PMID 19460762',
       'Grube B et al. Efficacy of a comfrey root extract ointment in the treatment of patients with painful osteoarthritis of the knee. Phytomedicine. 2007. PMID 17169543',
       'Staiger C. Comfrey: a clinical overview. Phytother Res. 2012. PMID 22359388',
+    ],
+  },
+  {
+    id: 595,
+    name: 'Birch Buds',
+    goals: ['detox', 'beauty'],
+    botanical: 'Betula pendula / Betula pubescens (resinous spring buds, gathered before they open)',
+    aliases: ['Birch Bud', 'Silver Birch Bud', 'Downy Birch Bud', 'Betula pendula', 'Betula pubescens', 'Björkknopp', 'Birkenknospen'],
+    tcm_meridians: ['Kidney', 'Bladder', 'Lung'],
+    tcm_element: 'Wood + Water',
+    energetics: ['Cool', 'Resinous', 'Aromatic', 'Slightly Bitter', 'Draining'],
+    primary_functions: [
+      'Spring renewal: in Nordic, Baltic and Central European folk medicine the buds are gathered as the trees wake and taken to move water and freshen the body after winter (traditional use; no clinical trials)',
+      'Skin: bud tinctures and resin are traditional in Russian, Baltic and Scandinavian folk practice for slow, dull skin and the scalp (traditional use)',
+      'Resin chemistry: the sticky bud exudate is mostly sesquiterpenoids (about 60%) and flavonoids (about 25%) (PMID 34668363); bees gather it as a plant source of northern propolis (PMID 36559670)',
+    ],
+    secondary_benefits: [
+      'A balsamic, green top note in a blend: the smell of a birch wood in April',
+      'A classic of gemmotherapy (fresh-bud macerates), where birch buds are taken for drainage and the joints',
+    ],
+    pharmacology:
+      'Bud exudate: sesquiterpenoids (about 60%) and flavonoids (about 25%), including methylated flavones such as santin and cirsimaritin, with triterpenes; 640 compounds detected by GC-MS in downy birch buds (PMID 34668363). Birch buds are a plant precursor of Baltic propolis (PMID 36559670). No clinical trials of the buds; the uses are traditional. Grade: traditional.',
+    flavor_profile: 'Resinous and balsamic, green and faintly bitter, with a pine-sap sweetness',
+    contraindications: [
+      'Birch pollen allergy: the buds may cross-react; avoid, or start with a single drop',
+      'Oedema from heart or kidney failure, or any condition where fluid intake must be limited: birch is a traditional diuretic (as with birch leaf) and no substitute for treatment',
+      'Pregnancy and breastfeeding: no safety data; avoid medicinal amounts',
+    ],
+    herb_to_herb_synergy: [
+      'Nettle: the Nordic spring-cleanse pair',
+      'Dandelion Root: drainage and liver support',
+      'Horsetail: silica for skin, hair and nails',
+      'Chaga: the birch tree and the fungus that grows on it',
+    ],
+    herb_to_herb_caution: [
+      'Other diuretic herbs at high dose (Dandelion leaf, Horsetail, Juniper): additive fluid loss',
+    ],
+    herb_to_drug_interactions: [
+      'Diuretics: additive fluid loss (from the traditional diuretic use; not studied)',
+      'Lithium: diuretic herbs can change lithium levels; only with medical supervision',
+    ],
+    herb_interactions: [
+      'Synergy: Nettle, Dandelion Root, Horsetail, Chaga',
+      'Caution: other diuretic herbs at high dose',
+      'Drug interactions: diuretics; lithium',
+    ],
+    dosage_range:
+      'Extract (1:3, 70% ethanol, dried buds): 1 to 2 ml up to twice a day (house guidance; no clinical dose). Gemmotherapy macerate of fresh buds: 5 to 15 drops a day. Tea: 1 to 2 g buds steeped 10 minutes. Taken as a spring course of 3 to 6 weeks.',
+    spiritual_layer:
+      'Birch is the first tree of the northern forest to wake. Her buds hold the whole spring folded in resin, sticky and fragrant, waiting for the light. She teaches beginning again: that what was frozen can loosen, that the old water can flow out and the new sap rise. She whispers: Let the winter go. Begin.',
+    best_preparation:
+      'Resinous: the flavonoids and sesquiterpenes need a high-proof menstruum, so dried buds are extracted in 70% ethanol; fresh buds as a gemmotherapy macerate (glycerin, ethanol and water). As a tea the aroma comes through but little of the resin.',
+    caution_level: 'LOW',
+    cns_action: 'neutral',
+    cns_evidence: 'No known effect on arousal; its traditional uses are drainage and the skin.',
+    safe_pregnancy: null,
+    status:
+      'Traditional use (Nordic, Baltic and Central European folk medicine; gemmotherapy). The bud chemistry is well characterised; there are no clinical trials. Low caution; avoid with birch-pollen allergy.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    energy_pattern:     ['sustained'],
+    regional_affinity:  ['kidneys', 'skin', 'joints'],
+    onset_time:         'weeks',
+    family:             'Betulaceae',
+    epithet: 'The waking forest',
+    origin_region:      'Nordic wild',
+    ecology: {
+      native_range: ['Fennoscandia', 'Northern Europe', 'Siberia'],
+      habitat: 'Birch woods, forest edges, heaths and bog margins; a pioneer on open, disturbed ground',
+      source: 'derived',
+    },
+    evidence_grade:     'traditional',
+    research_notes: [
+      'Isidorov et al. (2021), Z Naturforsch C: 640 compounds detected in downy birch buds by GC-MS; the exudate is about 60% sesquiterpenoids and 25% flavonoids, which protect the buds from stress.',
+      'Stanciauskaite et al. (2022), Plants: birch buds are among the plant precursors of Lithuanian propolis, compared for composition and antioxidant activity.',
+    ],
+    references: [
+      'Isidorov VA et al. Secondary metabolites of downy birch buds (Betula pubescens Erch.). Z Naturforsch C J Biosci. 2021. PMID 34668363',
+      'Stanciauskaite M et al. Evaluation of chemical composition, sun protection factor and antioxidant activity of Lithuanian propolis and its plant precursors. Plants (Basel). 2022. PMID 36559670',
+    ],
+  },
+  {
+    id: 596,
+    name: 'California Poppy',
+    goals: ['sleep', 'anxiety', 'pain'],
+    botanical: 'Eschscholzia californica (flowering aerial parts)',
+    aliases: ['Eschscholzia californica', 'Eschscholtzia', 'Californian Poppy', 'Golden Poppy', 'Kalifornischer Goldmohn'],
+    tcm_meridians: ['Heart', 'Liver'],
+    tcm_element: 'Fire + Wood',
+    energetics: ['Cool', 'Bitter', 'Dry', 'Calming', 'Antispasmodic'],
+    primary_functions: [
+      'Sleep and nervous tension: sedative and anxiolytic in mice, and both effects were blocked by the benzodiazepine antagonist flumazenil (PMID 1680240, PMID 11507727); its alkaloid (S)-reticuline modulates GABA-A receptors in the laboratory (PMID 26509084)',
+      'Anxiety: in 264 adults with mild-to-moderate generalised anxiety, a tablet of California poppy, hawthorn and magnesium lowered Hamilton anxiety scores more than placebo over three months (-10.6 against -8.9 points; PMID 14741074). A combination product, not the poppy alone',
+      'Pain and cramping: peripheral analgesic effects in mice (PMID 11507727); the traditional Californian use for toothache and colic',
+    ],
+    secondary_benefits: [
+      'No opiates: despite the poppy family, its alkaloids (californidine, eschscholtzine, protopine, allocryptopine) are not morphine-type',
+      'Antispasmodic: eases a restless, cramping body at night',
+    ],
+    pharmacology:
+      'Isoquinoline alkaloids: californidine, eschscholtzine, protopine, allocryptopine, (S)-reticuline and N-methyllaurotetanine (PMID 26509084, PMID 27054913); no morphine or codeine. In mice the sedative and anxiolytic effects were reversed by flumazenil, pointing to the benzodiazepine site (PMID 11507727). An ethanol extract strongly inhibited CYP3A4, CYP2C9 and CYP2C19 (time-dependent) and CYP2D6 in vitro (PMID 27054913), a real interaction risk. Grade C: animal studies for sleep, one RCT for anxiety in combination.',
+    flavor_profile: 'Bitter, green and slightly earthy, faintly hay-like',
+    contraindications: [
+      'Pregnancy and breastfeeding: avoid (alkaloid-bearing; no safety data)',
+      'Sleeping pills, benzodiazepines, opioids and alcohol: additive sedation; do not combine',
+      'Driving or operating machinery after a dose',
+      'Children: only with professional advice',
+      'Prescription medicines cleared by CYP3A4, CYP2C9, CYP2C19 or CYP2D6: strong enzyme inhibition in the laboratory (PMID 27054913); ask the prescriber first',
+    ],
+    herb_to_herb_synergy: [
+      'Passionflower: the classic sleep pairing',
+      'Valerian: deeper help with falling asleep',
+      'Hawthorn: the anxiety combination studied with magnesium (PMID 14741074)',
+      'Lemon Balm and Chamomile: a gentle evening blend',
+    ],
+    herb_to_herb_caution: [
+      'Other sedative herbs (Valerian, Hops, Kava, Skullcap at high dose): additive sedation',
+      "St. John's Wort: both act on drug-metabolising enzymes; together they make drug levels hard to predict",
+    ],
+    herb_to_drug_interactions: [
+      'Benzodiazepines, sleeping pills, opioids, barbiturates and alcohol: additive CNS depression; avoid',
+      'Medicines metabolised by CYP3A4, CYP2C9, CYP2C19 or CYP2D6 (for example warfarin, many SSRIs, some statins and anticonvulsants): the extract inhibited these enzymes in vitro and may raise drug levels (PMID 27054913); ask the prescriber',
+      'MAO inhibitors: alkaloid-bearing herb; avoid the combination (precaution)',
+    ],
+    herb_interactions: [
+      'Synergy: Passionflower, Valerian, Hawthorn, Lemon Balm, Chamomile',
+      "Caution: other sedative herbs; St. John's Wort",
+      'Drug interactions: sedatives, benzodiazepines, opioids, alcohol; CYP3A4/2C9/2C19/2D6 substrates; MAO inhibitors',
+    ],
+    dosage_range:
+      'Extract (1:3, 45% ethanol): 1 to 2 ml in the evening, up to 3 ml for sleep (house guidance). Tea: 1 to 2 g dried flowering herb per cup, 30 to 60 minutes before bed.',
+    spiritual_layer:
+      'California Poppy is the golden cup that closes at dusk. She folds her petals with the evening light and on grey days, and she teaches the body to do the same: to close gently, to stop reaching, to let the day end. She is sleep without surrender of the self. She whispers: The day is done. You may rest.',
+    best_preparation:
+      'The whole flowering plant, extracted in 45% ethanol, takes up the alkaloids well. As a tea it is bitter but works. Best taken 30 to 60 minutes before bed.',
+    caution_level: 'MEDIUM',
+    cns_action: 'sedative',
+    cns_evidence: 'Sedative and anxiolytic in mice, reversed by the benzodiazepine antagonist flumazenil (PMID 1680240, PMID 11507727); (S)-reticuline modulates GABA-A receptors (PMID 26509084).',
+    safe_pregnancy: false,
+    status:
+      'Grade C: sedative and anxiolytic in animal studies; one RCT for anxiety in combination with hawthorn and magnesium. No opiates. Strong CYP inhibition in vitro, so check prescription medicines. Not with other sedatives or alcohol.',
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'wired_tired', 'reactive'],
+    sleep_action:       ['onset', 'maintenance'],
+    regional_affinity:  ['head', 'whole'],
+    onset_time:         'hours',
+    family:             'Papaveraceae',
+    epithet: 'The cup that closes at dusk',
+    origin_region:      'North American',
+    ecology: {
+      native_range: ['North America', 'California', 'Oregon', 'Baja California'],
+      habitat: 'Open grassland, coastal scrub and roadsides; naturalised and grown in gardens across Europe',
+      source: 'derived',
+    },
+    evidence_grade:     'C',
+    research_notes: [
+      'Rolland et al. (1991), Planta Med: an aqueous-alcohol extract was sedative and anxiolytic in mice.',
+      'Rolland et al. (2001), Phytother Res: the sedative and anxiolytic effects were suppressed by flumazenil (benzodiazepine-site involvement); peripheral analgesic effects; no antidepressant, neuroleptic or antihistaminic effects.',
+      'Fedurco et al. (2015), Biochem Res Int: (S)-reticuline was a positive allosteric modulator at the alpha-3, alpha-5 and alpha-6 GABA-A receptor isoforms.',
+      'Manda et al. (2016), Planta Med: the ethanol extract showed strong time-dependent inhibition of CYP3A4, CYP2C9 and CYP2C19 and reversible inhibition of CYP2D6.',
+      'Hanus et al. (2004), Curr Med Res Opin: 264 adults, 3 months; the combination (with hawthorn and magnesium) beat placebo on total Hamilton anxiety score (p = 0.005); adverse events similar to placebo.',
+    ],
+    references: [
+      'Rolland A et al. Behavioural effects of the American traditional plant Eschscholzia californica: sedative and anxiolytic properties. Planta Med. 1991. PMID 1680240',
+      'Rolland A et al. Neurophysiological effects of an extract of Eschscholzia californica Cham. (Papaveraceae). Phytother Res. 2001. PMID 11507727',
+      'Fedurco M et al. Modulatory effects of Eschscholzia californica alkaloids on recombinant GABAA receptors. Biochem Res Int. 2015. PMID 26509084',
+      'Manda VK et al. Modulation of CYPs, P-gp, and PXR by Eschscholzia californica (California Poppy) and its alkaloids. Planta Med. 2016. PMID 27054913',
+      'Hanus M et al. Double-blind, randomised, placebo-controlled study to evaluate the efficacy and safety of a fixed combination containing two plant extracts (Crataegus oxyacantha and Eschscholtzia californica) and magnesium in mild-to-moderate anxiety disorders. Curr Med Res Opin. 2004. PMID 14741074',
     ],
   },
 ];

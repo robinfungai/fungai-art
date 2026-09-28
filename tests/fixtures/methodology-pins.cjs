@@ -47,8 +47,8 @@ module.exports = {
     rationale: "2026-09-28, after the second audit round: mushroom category from the recorded botanical family (Dandelion, Ginkgo, Milk Thistle, Schisandra are no longer mushrooms; Fu Ling, Morels, Enoki, Shaggy Mane, Tinder Fungus now are); one rule module shared by picker and MYCO validator (adds one Amanita per bottle); herbs the note says to avoid are excluded. On top of engine 2.5 (40% share cap, engine-set percentages, evidence 0 to +2, note safety words).",
   },
   '10-lifelong-chronic': {
-    herbs: "323:Reishi@16|574:Dan Shen Root Extract@15|103:Ashwagandha@14|279:Schisandra (Five-Flavour Fruit)@14|286:Turmeric@14|220:Devil's Claw@14|505:Hadjod@13",
-    rationale: "2026-09-29, third audit (Claude, read main@b3beace): note keywords match at the start of a word, short ones as whole words (\"partner\" no longer scores \"art\", \"reflux\" no longer \"flu\"); the autoimmune flag reads MS in capitals only (26 herbs were flagged through \"symptoms\", \"forms\"). On top of engine 2.6 / safety 1.4.",
+    herbs: "323:Reishi@16|574:Dan Shen Root Extract@15|103:Ashwagandha@14|279:Schisandra (Five-Flavour Fruit)@14|286:Turmeric@14|220:Devil's Claw@14|596:California Poppy@13",
+    rationale: "Catalogue 247 (2026-09-29): Birch Buds (595) and California Poppy (596) added everywhere, and now compete for seats. On top of engine 2.7.0 / safety 1.4.1.",
   },
   '11-trace-heavy': {
     herbs: "285:Tremella@22|241:Goji Berry@21|225:Chickweed@20|548:Astaxanthin@19|589:He Shou Wu / Fo-Ti@18",
