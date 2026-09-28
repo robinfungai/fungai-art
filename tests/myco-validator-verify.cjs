@@ -9,8 +9,15 @@
 // code the compose orchestrator uses to fall back to deterministic.
 //
 // Covers each rejection reason enum + the happy-path accept.
+//
+// Since 2026-09-28 (D2, option C) MYCO chooses herbs and the engine sets
+// the percentages: a `pct` on a pick is ignored, so the old MYCO_PCT_*
+// and MYCO_TRACE_PCT_EXCEEDED rejections are gone and their cases now
+// prove the engine's own shares come back instead.
 
 const { validateMycoProposal, MIN_HERBS, MAX_HERBS } = require('../src/server/formula-engine/myco-validator');
+const { assignPercentages } = require('../src/server/formula-engine/percentages');
+const sum = a => (a || []).reduce((x, y) => x + y, 0);
 
 // Minimal candidate herbs. Fields the validator reads:
 //   id, name, primary_functions, energetics, pharmacology,
@@ -101,14 +108,14 @@ check('gated herb WITH opt-in → accepted', () => {
   return { pass: r.ok === true, detail: JSON.stringify(r).slice(0,200) };
 });
 
-check('trace herb >5% → MYCO_TRACE_PCT_EXCEEDED', () => {
+check('MYCO asks 20% for a trace herb → the engine gives it at most 5%', () => {
   const p = [
-    { id: 500, pct: 20, reason: 'lavender heavy' }, // trace > 5%
+    { id: 500, pct: 20, reason: 'lavender heavy' }, // trace
     { id: 210, pct: 30, reason: 'a' }, { id: 250, pct: 20, reason: 'b' },
     { id: 220, pct: 20, reason: 'c' }, { id: 230, pct: 10, reason: 'd' },
   ];
   const r = validateMycoProposal({ mycoResponse: p, candidateSet: CANDIDATES, gatedOptIn: false });
-  return { pass: r.ok === false && r.reason === 'MYCO_TRACE_PCT_EXCEEDED', detail: r.reason };
+  return { pass: r.ok === true && r.percentages[0] <= 5 && sum(r.percentages) === 100, detail: r.ok ? r.percentages.join('/') : r.reason };
 });
 
 check('two trace herbs → MYCO_TRACE_COUNT_EXCEEDED', () => {
@@ -156,36 +163,23 @@ check('three of same category → MYCO_CATEGORY_CAP_EXCEEDED', () => {
   return { pass: r.ok === false && r.reason === 'MYCO_CATEGORY_CAP_EXCEEDED', detail: r.reason };
 });
 
-check('pct 0 → MYCO_PCT_INVALID', () => {
-  const p = [...VALID_PROPOSAL];
-  p[0] = { id: 210, pct: 0, reason: 'zero' };
+check('MYCO sends pct 150 / 0 → ignored, the engine percentages come back', () => {
+  const p = VALID_PROPOSAL.map((x, i) => Object.assign({}, x, { pct: i === 0 ? 150 : 0 }));
   const r = validateMycoProposal({ mycoResponse: p, candidateSet: CANDIDATES, gatedOptIn: false });
-  return { pass: r.ok === false && r.reason === 'MYCO_PCT_INVALID', detail: r.reason };
+  return { pass: r.ok === true && JSON.stringify(r.percentages) === JSON.stringify(assignPercentages(r.herbs)), detail: r.ok ? r.percentages.join('/') : r.reason };
 });
 
-check('pct > 100 → MYCO_PCT_INVALID', () => {
-  const p = [...VALID_PROPOSAL];
-  p[0] = { id: 210, pct: 150, reason: 'over' };
+check('picks with no pct at all → accepted, percentages sum to 100', () => {
+  const p = VALID_PROPOSAL.map(({ id, reason }) => ({ id, reason }));
   const r = validateMycoProposal({ mycoResponse: p, candidateSet: CANDIDATES, gatedOptIn: false });
-  return { pass: r.ok === false && r.reason === 'MYCO_PCT_INVALID', detail: r.reason };
+  return { pass: r.ok === true && sum(r.percentages) === 100 && r.percentages.every(x => x >= 1), detail: r.ok ? r.percentages.join('/') : r.reason };
 });
 
-check('pct sum wildly off (~60) → MYCO_PCT_SUM_INVALID', () => {
-  const p = [
-    { id: 210, pct: 20, reason: 'a' }, { id: 250, pct: 10, reason: 'b' }, { id: 220, pct: 10, reason: 'c' },
-    { id: 230, pct: 10, reason: 'd' }, { id: 240, pct: 10, reason: 'e' },
-  ];
-  const r = validateMycoProposal({ mycoResponse: p, candidateSet: CANDIDATES, gatedOptIn: false });
-  return { pass: r.ok === false && r.reason === 'MYCO_PCT_SUM_INVALID', detail: r.reason };
-});
-
-check('pct sum off by 1 (rounding drift) → accepted + drift adjusted', () => {
-  const p = [
-    { id: 210, pct: 33, reason: 'a' }, { id: 250, pct: 33, reason: 'b' }, { id: 220, pct: 17, reason: 'c' },
-    { id: 230, pct: 10, reason: 'd' }, { id: 240, pct: 6, reason: 'e' },
-  ]; // sum = 99
-  const r = validateMycoProposal({ mycoResponse: p, candidateSet: CANDIDATES, gatedOptIn: false });
-  return { pass: r.ok === true && r.percentages.reduce((a,b)=>a+b,0) === 100, detail: 'sum=' + (r.percentages && r.percentages.reduce((a,b)=>a+b,0)) };
+check('MYCO asks 70% for one herb → no herb above 40%, shares follow the scores', () => {
+  const scored = CANDIDATES.map((h, i) => Object.assign({}, h, { _score: i === 0 ? 60 : 8 }));
+  const p = [{ id: 210, pct: 70, reason: 'hero' }, ...VALID_PROPOSAL.slice(1).map(({ id, reason }) => ({ id, pct: 7, reason }))];
+  const r = validateMycoProposal({ mycoResponse: p, candidateSet: scored, gatedOptIn: false });
+  return { pass: r.ok === true && r.percentages[0] === 40 && Math.max(...r.percentages) === 40 && sum(r.percentages) === 100, detail: r.ok ? r.percentages.join('/') : r.reason };
 });
 
 check('malformed response (not array) → MYCO_MALFORMED', () => {

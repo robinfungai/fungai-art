@@ -15,16 +15,62 @@
 // code the caller can surface to the user or the reserve-formula
 // endpoint.
 
-const { pickFormula, targetHerbCount, buildScoredCandidates, explainPicks } = require('./picker');
+const { pickFormula, noMatchCode, targetHerbCount, buildScoredCandidates, explainPicks } = require('./picker');
 const { assignPercentages } = require('./percentages');
 const { checkFormulaPairs } = require('./interactions');
 const { validateAndNormalizeAvoid, countFilteredOut } = require('./safety');
+const { applyNoteSafety } = require('./note-safety');
 const { isTrace } = require('./traces');
 const { isGABAergic, isCNSStimulant } = require('./pharmacology');
 const { pickName } = require('./naming');
 const { askMyco } = require('./myco');
 const { validateMycoProposal } = require('./myco-validator');
 const VERSION = require('./version');
+
+/**
+ * The one place an untrusted profile becomes the profile the engine
+ * works from. compileFormula, composeFormulaWithMyco and explainForPro
+ * all go through it, so the MYCO shortlist and the pro explanation can
+ * never be built under different safety answers than the bottle.
+ *
+ * @returns {{ ok: true, a: object, noteSafety: object } | { ok: false, rejected: object }}
+ */
+function prepareProfile(profile) {
+  // ── Safety validation (SECURITY_FIX for fixture 20) ────────────
+  let normalisedAvoid;
+  try {
+    normalisedAvoid = validateAndNormalizeAvoid(profile.avoid);
+  } catch (e) {
+    // Every error validateAndNormalizeAvoid can throw is a client-fault
+    // input problem, not a server bug. Surface each with its own code
+    // so the caller can respond appropriately (retake vs. malformed).
+    if (e && (e.code === 'SAFETY_QUESTION_NOT_ANSWERED' || e.code === 'SAFETY_FLAGS_CONFLICT' || e.code === 'SAFETY_FLAG_UNKNOWN')) {
+      return { ok: false, rejected: { status: 'rejected', code: e.code, reason: e.message, ...VERSION } };
+    }
+    throw e;
+  }
+  // ── Safety words in the note (D1, 2026-09-28) ─────────────────
+  // A medicine, pregnancy or condition named in the note applies the
+  // matching flag as if it had been ticked. note-safety.js.
+  const noteSafety = applyNoteSafety(normalisedAvoid, profile.notes);
+
+  // ── Round 2 · Item #0 · Age model normalisation ───────────────
+  // The age question inside the quiz is the CANONICAL age input.
+  // profile._minor arriving from the client is NEVER trusted — the
+  // server derives it from profile.age === 'under_18'. A modified
+  // client that omits _minor (or falsifies age) still hits the same
+  // minor-gate the questionnaire promises, because the engine reads
+  // the AGE ANSWER itself, not a flag the client is free to omit.
+  //
+  // No second checkbox, no duplicate confirmation. The entry gate is
+  // GDPR-only. The age answer + this server-side derivation is the
+  // single source of truth for minor eligibility.
+  const a = Object.assign({}, profile, {
+    avoid:  noteSafety.avoid,
+    _minor: profile.age === 'under_18',
+  });
+  return { ok: true, a, noteSafety };
+}
 
 /**
  * Compile a formula from a normalised profile.
@@ -39,46 +85,36 @@ const VERSION = require('./version');
  * @returns {object} discriminated union — see file header.
  */
 function compileFormula(profile) {
-  // ── Step 1: Safety validation (SECURITY_FIX for fixture 20) ────
-  let normalisedAvoid;
-  try {
-    normalisedAvoid = validateAndNormalizeAvoid(profile.avoid);
-  } catch (e) {
-    // Both errors validateAndNormalizeAvoid can throw are client-fault
-    // input problems, not server bugs. Surface each with its own code
-    // so the caller can respond appropriately (retake vs. malformed).
-    if (e && (e.code === 'SAFETY_QUESTION_NOT_ANSWERED' || e.code === 'SAFETY_FLAGS_CONFLICT' || e.code === 'SAFETY_FLAG_UNKNOWN')) {
-      return {
-        status: 'rejected',
-        code:   e.code,
-        reason: e.message,
-        ...VERSION,
-      };
-    }
-    throw e;
-  }
-  // ── Round 2 · Item #0 · Age model normalisation ───────────────
-  // The age question inside the quiz is the CANONICAL age input.
-  // profile._minor arriving from the client is NEVER trusted — the
-  // server derives it from profile.age === 'under_18'. A modified
-  // client that omits _minor (or falsifies age) still hits the same
-  // minor-gate the questionnaire promises, because the engine reads
-  // the AGE ANSWER itself, not a flag the client is free to omit.
-  //
-  // No second checkbox, no duplicate confirmation. The entry gate is
-  // GDPR-only. The age answer + this server-side derivation is the
-  // single source of truth for minor eligibility.
-  const derivedMinor = profile.age === 'under_18';
-  const profileForEngine = Object.assign({}, profile, {
-    avoid:   normalisedAvoid,
-    _minor:  derivedMinor,
-  });
+  const prep = prepareProfile(profile);
+  if (!prep.ok) return prep.rejected;
+  const profileForEngine = prep.a;
+  const noteSafety = { flagsAdded: prep.noteSafety.added, hits: prep.noteSafety.hits };
 
-  // ── Step 2: Deterministic pick + percentages ───────────────────
+  // ── Deterministic pick + percentages ───────────────────────────
   const herbs = pickFormula(profileForEngine);
+  const filtered = countFilteredOut(profileForEngine);
+
+  // Not enough herbs for a bottle (fewer than three main herbs). Two
+  // different messages for the person: their safety answers emptied it
+  // (NO_SAFE_MATCH), or their answers do not point anywhere (NO_MATCH).
+  if (!herbs.length) {
+    const code = noMatchCode(profileForEngine);
+    return {
+      status:      'no_match',
+      code,
+      reason:      code === 'NO_SAFE_MATCH'
+        ? 'After the safety answers, too few herbs remain to build a bottle.'
+        : 'Too few herbs match these answers to build a bottle.',
+      ...VERSION,
+      safetyFlags: profileForEngine.avoid,
+      noteSafety,
+      filteredOut: filtered,
+      herbs:       [],
+    };
+  }
+
   const percentages = assignPercentages(herbs);
   const pairs = checkFormulaPairs(herbs);
-  const filtered = countFilteredOut(profileForEngine);
   const target = targetHerbCount(profileForEngine);
 
   return {
@@ -91,6 +127,10 @@ function compileFormula(profile) {
     targetHerbCount:  target,
     formulaSize:      herbs.length,
     filteredOut:      filtered,
+    // The safety flags the bottle was actually built under — the ticked
+    // ones plus any the note named — and which of them came from the note.
+    safetyFlags:      profileForEngine.avoid,
+    noteSafety,
     herbs: herbs.map((h, i) => ({
       id:              h.id,
       name:            h.name,
@@ -118,15 +158,21 @@ function compileFormula(profile) {
 // ════════════════════════════════════════════════════════════════
 // STEP 5.5 · composeFormulaWithMyco — audit-compliant MYCO path
 // ────────────────────────────────────────────────────────────────
-// The audit's constraint #11 architecture:
+// The audit's constraint #11 architecture, as decided 2026-09-28
+// (D2, option C — MYCO chooses, the engine doses):
 //
 //   Formula Engine   → candidate formula (deterministic pick, baseline)
 //   ↓
-//   MYCO             → proposal (herbs + percentages + reasoning)
+//   MYCO             → proposal (which herbs + why + the reading)
 //   ↓
-//   Deterministic validator  → accept or reject the proposal
+//   Deterministic validator  → accept or reject the herbs
+//   ↓
+//   Deterministic percentages (percentages.js, same as the baseline)
 //   ↓
 //   FINAL FORMULA
+//
+// Same answers can still give a different set of herbs when MYCO
+// composes; the share each herb gets is now always the engine's.
 //
 // The baseline deterministic formula is ALWAYS computed first — that's
 // the safety net. MYCO runs only if the deterministic composition
@@ -148,13 +194,10 @@ async function composeFormulaWithMyco(profile, opts = {}) {
   // filter + scorer + dedup pipeline as pickFormula, but returns the
   // top 20 (broader than pickFormula's cap-limited final pick).
   //
-  // Round 2 · Item #0 — server-derive _minor from the canonical age
-  // answer (identical rule as compileFormula). Ensures the candidate
-  // set MYCO is offered is minor-safe when profile.age === 'under_18'.
-  const normalisedProfile = Object.assign({}, profile, {
-    avoid:  baseline.filteredOut && Array.isArray(profile.avoid) ? profile.avoid : profile.avoid,
-    _minor: profile.age === 'under_18',
-  });
+  // prepareProfile is the same step compileFormula ran: validated
+  // avoid[] plus any flags the note named, and _minor derived from the
+  // age answer — so MYCO is offered only herbs the bottle could hold.
+  const normalisedProfile = prepareProfile(profile).a;
   const candidates = buildScoredCandidates(normalisedProfile, 20);
 
   // Ask MYCO. Returns null on any failure (no api key, network, bad
@@ -182,7 +225,8 @@ async function composeFormulaWithMyco(profile, opts = {}) {
     return { ...baseline, mycoUsed: false, mycoFallbackReason: validation.reason };
   }
 
-  // Validation passed — MYCO's picks become the final formula.
+  // Validation passed — MYCO's herbs become the final formula, at the
+  // percentages the engine sets for them (validator → assignPercentages).
   const finalHerbs = validation.herbs;
   const finalPcts  = validation.percentages;
   const pairs      = checkFormulaPairs(finalHerbs);
@@ -222,10 +266,9 @@ async function composeFormulaWithMyco(profile, opts = {}) {
  * composed from (validated avoid, server-derived _minor).
  */
 function explainForPro(profile, herbIds) {
-  let avoid;
-  try { avoid = validateAndNormalizeAvoid(profile.avoid); } catch (_) { return null; }
-  const a = Object.assign({}, profile, { avoid, _minor: profile.age === 'under_18' });
-  return explainPicks(a, herbIds);
+  const prep = prepareProfile(profile);
+  if (!prep.ok) return null;
+  return explainPicks(prep.a, herbIds);
 }
 
 module.exports = {

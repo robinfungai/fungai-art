@@ -3346,54 +3346,38 @@ function buildWhyText(a, herbs, pct){
 }
 
 // Step 6: buildShortlist + mycoCompose (client-side MYCO) removed.
-// MYCO now runs server-side inside composeFormulaWithMyco. The
-// client-side story-only mycoStory() below still exists — it calls
-// /api/myco-agent for the personal reading paragraph, not for
-// composition.
+// MYCO now runs server-side inside composeFormulaWithMyco — and since
+// 2026-09-28 it writes the personal reading there too (see below).
 
-// ── MYCO personalisation (only fires when user filled the notes) ──
-// Restored: Step 6 deleted this along with the client engine, but
-// _fyfPaintServerReveal still calls it whenever the note is > 20 chars
-// — the reveal threw a ReferenceError right after painting, the personal
-// reading never appeared and the in-flight guard stayed stuck.
-// Sends the quiz + note + resolved herbs to /api/myco-agent, asks for a
-// 3-sentence personal reading, and returns it (HTML-escaped) for the
-// reveal story. Returns null silently if MYCO is unreachable or refuses
-// — the template story already renders first.
-async function mycoStory(a, herbs, percentages, synergies){
-  if (!a.notes || !a.notes.trim()) return null;
-  const herbLines = herbs.map((h, i) => (percentages[i] || 0) + '% ' + h.name).join(', ');
-  const synergyLines = (synergies || []).length
-    ? synergies.map(s => s.a + ' + ' + s.b).join(' · ')
-    : 'none flagged';
-  const message =
-    'Write a personal 3-sentence "reading" for someone who took a plant-medicine quiz. ' +
-    'Warm, alchemical, poetic but not woo. Reference their personal note explicitly. ' +
-    'Where it fits naturally, name one of the synergy pairs from the formula so the reading ' +
-    'shows what the blend is doing. Do not diagnose, prescribe, or mention AI/MYCO. Prose only.\n\n' +
-    'Intention: '   + a.intention + '\n' +
-    'Body pattern: '+ a.pattern   + (a.patternSub ? ' / ' + a.patternSub : '') + '\n' +
-    'Hardest time: '+ a.time      + '\n' +
-    'Meets stress by: ' + a.stress + '\n' +
-    (a.duration ? 'Duration of pattern: ' + a.duration + '\n' : '') +
-    (a.age      ? 'Age bracket: '          + a.age      + '\n' : '') +
-    (a.sleep    ? 'Sleep quality: '        + a.sleep    + '\n' : '') +
-    'Personal note (also treat as priority + prior herb experience): "' + a.notes.trim().slice(0, 500) + '"\n' +
-    'Formula (with percentages): ' + herbLines + '\n' +
-    'Synergy pairs woven in: ' + synergyLines;
-  try {
-    const res = await fetch('/api/myco-agent', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ message, history: [], context: { source:'find-your-formula' } }),
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    const text = (data && data.reply) ? String(data.reply).trim() : null;
-    if (!text || /can't give medical/i.test(text)) return null;
-    // The caller assigns this to innerHTML — never inject model output raw.
-    return escapeHtml(text);
-  } catch (_) { return null; }
+// D5 (2026-09-28): mycoStory() is gone. It sent the note to /api/myco-agent a
+// second time for a "reading" paragraph. The compose call already reads the
+// note, and its MYCO reading (body.mycoOverall) is now the reading — one AI
+// call sees the note, not two.
+
+// D1 (2026-09-28): when the note names a medicine, a pregnancy or a condition,
+// the server applies that safety filter as if it had been ticked. Say so, in
+// the person's own word, so a wrong guess can be corrected.
+function _fyfNoteSafetyNotice(body) {
+  const ns = body && body.noteSafety;
+  if (!ns || !Array.isArray(ns.hits) || !ns.hits.length) return;
+  const storyEl = document.getElementById('rStory');
+  if (!storyEl || document.getElementById('rNoteSafety')) return;
+  const q = QUESTIONS.find(x => x.key === 'avoid');
+  const label = v => { const o = q && (q.options || []).find(x => x.v === v); return o ? o.label : v; };
+  const many = ns.hits.length > 1;
+  const el = document.createElement('div');
+  el.id = 'rNoteSafety';
+  el.style.cssText =
+    'font-family:var(--serif);font-size:14px;line-height:1.6;color:var(--dust);' +
+    'border-left:1.5px solid rgba(232,177,75,0.6);padding:2px 0 2px 14px;margin:0 0 14px 0';
+  el.innerHTML =
+    '<span style="font-family:var(--mono);font-size:9px;letter-spacing:0.28em;' +
+    'text-transform:uppercase;color:var(--amber-l);opacity:0.85;display:block;margin-bottom:6px">◇ Safety, from your note</span>' +
+    'You mentioned ' + ns.hits.map(h => '&ldquo;' + escapeHtml(h.word) + '&rdquo;').join(', ') +
+    ', so we treated ' + ns.hits.map(h => '<em>' + escapeHtml(label(h.flag)) + '</em>').join(' and ') +
+    ' as ticked and left out the herbs ' + (many ? 'they rule' : 'it rules') + ' out. ' +
+    'If that isn’t right, edit your note and compose again.';
+  storyEl.parentNode.insertBefore(el, storyEl);
 }
 
 
@@ -3510,6 +3494,20 @@ function _fyfRenderServerErrorState({ kind, backToSafety, retry }) {
       body:    'Your combination of intentions and safety filters left too few compatible allies. Try slightly different answers, or reach Robin directly and we\'ll compose together.',
       cta:     'Go back and adjust',
       action:  backToSafety,
+    },
+    NO_SAFE_MATCH: {
+      eyebrow: '✦ Composition paused',
+      heading: 'Your safety answers leave too few herbs for a bottle.',
+      body:    'That is the filter doing its job: every herb that could clash with what you’re managing was left out, including anything your note mentioned. Reach Robin directly and we’ll compose one together, by hand.',
+      cta:     'Go back and adjust',
+      action:  backToSafety,
+    },
+    NO_MATCH: {
+      eyebrow: '✦ Composition paused',
+      heading: 'These answers don’t point to enough herbs yet.',
+      body:    'Try a broader intention, or add a second one. Or reach Robin directly and we’ll compose together.',
+      cta:     'Start over',
+      action:  () => go(0),
     },
     RATE_LIMIT: {
       eyebrow: '✦ Please retry',
@@ -3930,7 +3928,10 @@ async function _fyfRenderResultServerMode(a) {
       return _fyfRenderServerErrorState({ kind: 'NEED_SAFETY', backToSafety, retry });
     }
     if (res.status === 422 || (body && body.code === 'NO_VIABLE_FORMULA')) {
-      return _fyfRenderServerErrorState({ kind: 'NO_VIABLE', backToSafety, retry });
+      // Engine 2.5: the safety answers emptied the pool (NO_SAFE_MATCH),
+      // or the answers point nowhere (NO_MATCH) — different words for each.
+      const kind = body && (body.code === 'NO_SAFE_MATCH' || body.code === 'NO_MATCH') ? body.code : 'NO_VIABLE';
+      return _fyfRenderServerErrorState({ kind, backToSafety, retry });
     }
     if (res.status === 429) {
       return _fyfRenderServerErrorState({ kind: 'RATE_LIMIT', backToSafety, retry });
@@ -4191,6 +4192,7 @@ function _fyfPaintServerReveal(a, body) {
       storyEl.parentNode.insertBefore(echo, storyEl);
     }
   }
+  _fyfNoteSafetyNotice(body);
 
   // MYCO's overall reasoning — surface inline (not gated behind the
   // reserve wall) whenever we have it. This is the 2-3 sentence
@@ -4206,27 +4208,12 @@ function _fyfPaintServerReveal(a, body) {
       reasoning.innerHTML =
         '<span style="font-family:var(--mono);font-size:9px;letter-spacing:0.28em;' +
         'text-transform:uppercase;color:var(--amber-l);opacity:0.85;display:block;' +
-        'margin-bottom:6px">✦ MYCO&rsquo;s reasoning</span>' +
+        'margin-bottom:6px">✦ MYCO&rsquo;s reading</span>' +
         escapeHtml(body.mycoOverall);
       storyEl.appendChild(reasoning);
     }
   }
 
-  // Ask MYCO for a lyrical narrative for the free-text reading — this
-  // is presentational only and does NOT swap herbs. mycoCompose (which
-  // WOULD swap herbs) is deliberately not fired in server mode.
-  if (hasNote && noteRaw.length > 20) {
-    mycoStory(a, enrichedHerbs, serverPct, window.__currentFormula.synergies || []).then(text => {
-      if (!text) return;
-      const storyEl = document.getElementById('rStory');
-      if (!storyEl) return;
-      // Replace ONLY the base story text — preserve the reasoning
-      // block we already appended (if any) by re-appending it after.
-      const reasoning = document.getElementById('rMycoReasoning');
-      storyEl.innerHTML = text;
-      if (reasoning) storyEl.appendChild(reasoning);
-    }).catch(() => {});
-  }
 
   _fyfServerComposeInFlight = false;
 }

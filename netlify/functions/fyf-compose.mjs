@@ -316,11 +316,16 @@ function sanitisedResponse({ formulaId, engineResult, profile, persisted, upgrad
       whyText:    display.whyText,
     },
     safetyReport: {
-      // Only the flags the user themselves set — not the count of
-      // filtered-out herbs, not their names, not the byFlag breakdown.
-      // These would let a scraper reverse-engineer the safety ontology.
-      flagsApplied:      (engineResult.filteredOut && Object.keys(engineResult.filteredOut.byFlag || {})) || [],
+      // Only the flags the bottle was built under — the ones the user
+      // ticked plus any their note named — not the count of filtered-out
+      // herbs, not their names, not the byFlag breakdown. These would let
+      // a scraper reverse-engineer the safety ontology.
+      flagsApplied:      (engineResult.safetyFlags || []).filter(f => f !== 'none'),
     },
+    // D1 (2026-09-28): safety flags the NOTE named, and the word that named
+    // each — so the reveal can say "you mentioned sertraline, so we applied
+    // the antidepressant filter". The words are the person's own.
+    noteSafety:          noteSafetyForWire(engineResult),
     // Observability fields — tells the caller (and the stored formula
     // used by reserve-formula's admin email) whether MYCO was used or
     // whether we fell back to deterministic. mycoUsed absent (undefined)
@@ -340,6 +345,15 @@ function sanitisedResponse({ formulaId, engineResult, profile, persisted, upgrad
     mycoOverall:         engineResult.mycoUsed === true ? narrativeOut.text.slice(0, 1200) : null,
     mycoNarrativeAction: narrativeOut.action,     // 'passed' | 'rewritten' | 'replaced' | null
     mycoUpgradePending:  !!upgradeEligible,
+  };
+}
+
+function noteSafetyForWire(engineResult) {
+  const ns = engineResult && engineResult.noteSafety;
+  if (!ns || !Array.isArray(ns.hits) || !ns.hits.length) return { flagsAdded: [], hits: [] };
+  return {
+    flagsAdded: ns.hits.map(h => h.flag),
+    hits:       ns.hits.map(h => ({ flag: h.flag, word: String(h.word || '').slice(0, 40) })),
   };
 }
 
@@ -466,11 +480,15 @@ export default async function handler(req) {
     });
   }
 
-  if (!Array.isArray(engineResult.herbs) || engineResult.herbs.length === 0) {
+  // Too few herbs for a bottle (engine 2.5): NO_SAFE_MATCH when the
+  // person's safety answers are what emptied it, NO_MATCH when their
+  // answers point nowhere. NO_VIABLE_FORMULA stays as the catch-all.
+  if (engineResult.status === 'no_match' || !Array.isArray(engineResult.herbs) || engineResult.herbs.length === 0) {
     return jsonResponse(422, cors, {
-      status: 'rejected',
-      code:   'NO_VIABLE_FORMULA',
-      message: 'No herbs matched the profile after safety filtering.',
+      status:     'rejected',
+      code:       engineResult.code || 'NO_VIABLE_FORMULA',
+      message:    engineResult.reason || 'No herbs matched the profile after safety filtering.',
+      noteSafety: noteSafetyForWire(engineResult),
     });
   }
 

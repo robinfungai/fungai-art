@@ -80,7 +80,31 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ---
 
-## 0.13 · START HERE — 2026-09-28, external audit (committed, not pushed)
+## 0.14 · START HERE — 2026-09-28, audit decisions D1–D5, D11 (committed, not pushed)
+
+Robin answered D0–D11; the verdicts and decisions are in
+**`docs/AUDIT-2026-09-28-RESPONSE.md`** (now including the audit's cut-off
+tail: P0 #9–12, §65–69, the Formula Object). Engine **2.5.0**, safety rules
+**1.3.0**; the brief is updated to match.
+
+- **D1** `note-safety.js`: a medicine, pregnancy or condition named in the
+  note applies its safety flag (fail-closed; English + German); the reveal
+  says which word triggered which filter (`noteSafety` on the wire).
+- **D2** MYCO picks herbs + writes the reading; `percentages.js` sets every
+  share (a MYCO `pct` is ignored). **D3** no herb above 40%; flags no longer
+  add a herb; one strict walk; < 3 main herbs → 422 `NO_SAFE_MATCH` /
+  `NO_MATCH`. **D4** evidence grade 0 to +2 points. **D5** the pages' second
+  AI call (`mycoStory` → /api/myco-agent) is gone.
+- Tests: 38 suites green; 19 fixtures re-pinned (why: in the pins file);
+  `invariants-verify.cjs` also runs the MYCO path with a stand-in (no
+  network, no cost).
+- **Next, already decided:** D6 (30-day cleanup of unreserved
+  `fyf_formulas` + privacy page), D8 (daily MYCO budget + idempotency on
+  `requestId` — both need SQL), D9 (claims-safe copy table for Robin's
+  approval before anything goes live). D7: `/mixology` and `/extraction`
+  still load `/herbs-data.js`.
+
+## 0.13 · 2026-09-28, external audit (committed, not pushed)
 
 Robin ran both SQL files (`supabase-practitioner-formulas.sql`,
 `supabase-dm-realtime.sql`). An external "forensic" audit of the formula
@@ -100,8 +124,8 @@ finding, sections, and decisions D0–D11 for Robin.
   bottles), note boost capped at +6, notes hint on both pages, Yohimbe
   pro-only (EU-prohibited in food, Reg. 2019/650), `tests/invariants-
   verify.cjs` (600 random profiles + HTTP; proves the under-18 gate).
-- The audit paste was cut off in its P0 list at item 8 — ask Robin for the
-  rest if it matters.
+- The audit paste was cut off in its P0 list at item 8 — the rest arrived
+  and is answered in the response doc (§0.14).
 
 ## 0.12 · 2026-09-28, later (committed, not pushed)
 

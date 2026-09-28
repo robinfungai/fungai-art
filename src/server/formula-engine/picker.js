@@ -93,21 +93,30 @@ function sortScored(scored, a) {
   return scored;
 }
 
+// Engine 2.5 (D3, 2026-09-28): safety flags no longer add a herb. More
+// restrictions used to force a LARGER bottle out of a SMALLER pool.
 function targetHerbCount(a) {
   let n = 4;
   if (a.notes && a.notes.trim().length > 80) n += 1;
   if (a.patternSub) n += 1;
   if (a.duration === 'year_plus' || a.duration === 'lifelong') n += 1;
   if (a.sleep === 'very_broken' || a.sleep === 'under_6') n += 1;
-  const medFlags = (a.avoid || []).filter(k => k !== 'none').length;
-  if (medFlags >= 2) n += 1;
   if (!a.notes && !a.patternSub && a.duration === 'weeks' && (a.sleep === 'restorative_6plus' || a.sleep === 'restorative')) {
     n = 3;
   }
   return Math.min(7, Math.max(3, n));
 }
 
-function pickFormula(a) {
+// A bottle needs at least three main (non-trace) herbs, so that none of
+// them carries more than 40% (percentages.js). Fewer than that is not a
+// smaller bottle, it is no bottle: NO_MATCH / NO_SAFE_MATCH.
+const MIN_MAIN_HERBS = 3;
+
+// Every herb that may be offered for this profile, scored, best first,
+// one per first clause of its main use. `safety: false` skips the
+// person's own safety answers (flags, minor gate, pregnancy / history) —
+// used ONLY to tell NO_MATCH from NO_SAFE_MATCH, never to fill a bottle.
+function rankedCandidates(a, { safety = true } = {}) {
   const pool = ensurePool();
   if (!pool || !pool.length) return [];
   // Two-stage safety: (1) user's own avoid[] filter plus pro-only
@@ -117,22 +126,31 @@ function pickFormula(a) {
   // gate — the second is a no-op unless a._minor is truthy, in which
   // case it strips gated/sedative/psych_med/contraceptive/GABA-heavy/
   // CNS-stimulant herbs regardless of what avoid[] said.
-  const safe        = pool.filter(h => safetyFilter(h, a.avoid || []) && passesAccess(h, a) && passesProfileSafety(h, a) && fitsTimeOfUse(h, a) && fitsGoal(h, a));
-  const minorGated  = applyMinorGate(safe, a);
-  const scored = minorGated.map(h => ({ h, s: scoreHerb(h, a) })).filter(x => x.s > 0);
+  const safe = pool.filter(h =>
+    (!safety || (safetyFilter(h, a.avoid || []) && passesProfileSafety(h, a))) &&
+    passesAccess(h, a) && fitsTimeOfUse(h, a) && fitsGoal(h, a));
+  const gated = safety ? applyMinorGate(safe, a) : safe;
+  const scored = gated.map(h => ({ h, s: scoreHerb(h, a) })).filter(x => x.s > 0);
   sortScored(scored, a);
 
   const seen = new Set();
-  const uniq = scored.filter(x => {
+  return scored.filter(x => {
     const key = (shortNote(x.h) || x.h.name).slice(0, 40);
     if (seen.has(key)) return false;
     seen.add(key);
     return true;
   });
+}
 
+// One strict walk down the ranking (D3, 2026-09-28). The second walk
+// that used to drop the category cap when a bottle came up short is
+// gone: a rule that bends when it is inconvenient is not a rule. (It
+// never fired in 24,000 test profiles, so no bottle lost anything.)
+// A trace herb takes a seat only in a bottle of four or more — in a
+// three-herb bottle it would leave two main herbs carrying 95%.
+function walk(uniq, a) {
   const target = targetHerbCount(a);
   const openToGated = !!a._gatedOptIn;
-
   const catCount = {};
   const composed = [];
   let traceUsed = 0, gabaUsed = 0, stimUsed = 0, strongUsed = 0, seroUsed = 0, laxUsed = 0;
@@ -141,7 +159,7 @@ function pickFormula(a) {
     if (x.h.gated && !openToGated) continue;
     const cat = categoryOf(x.h);
     if ((catCount[cat] || 0) >= 2) continue;
-    if (isTrace(x.h)) { if (traceUsed >= 1) continue; }
+    if (isTrace(x.h)) { if (traceUsed >= 1 || target < MIN_MAIN_HERBS + 1) continue; }
     if (isGABAergic(x.h)) { if (gabaUsed >= 2 || strongUsed) continue; }
     if (isCNSStimulant(x.h)) { if (stimUsed >= 2) continue; }
     if (isStrongStimulant(x.h) && gabaUsed) continue;
@@ -156,29 +174,22 @@ function pickFormula(a) {
     if (isCNSStimulant(x.h)) stimUsed += 1;
     if (isStrongStimulant(x.h)) strongUsed += 1;
   }
+  return composed;
+}
 
-  if (composed.length < target) {
-    for (const x of uniq) {
-      if (composed.length >= target) break;
-      if (composed.includes(x)) continue;
-      if (x.h.gated && !openToGated) continue;
-      if (isTrace(x.h) && traceUsed >= 1) continue;
-      if (isGABAergic(x.h) && (gabaUsed >= 2 || strongUsed)) continue;
-      if (isCNSStimulant(x.h) && stimUsed >= 2) continue;
-      if (isStrongStimulant(x.h) && gabaUsed) continue;
-      if (isSerotonergic(x.h) && seroUsed >= MAX_SEROTONERGIC) continue;
-      if (isLaxative(x.h) && laxUsed >= MAX_LAXATIVE) continue;
-      composed.push(x);
-      if (isSerotonergic(x.h)) seroUsed += 1;
-      if (isLaxative(x.h)) laxUsed += 1;
-      if (isTrace(x.h)) traceUsed += 1;
-      if (isGABAergic(x.h)) gabaUsed += 1;
-      if (isCNSStimulant(x.h)) stimUsed += 1;
-      if (isStrongStimulant(x.h)) strongUsed += 1;
-    }
-  }
+const mainCount = composed => composed.filter(x => !isTrace(x.h)).length;
 
+function pickFormula(a) {
+  const composed = walk(rankedCandidates(a), a);
+  if (mainCount(composed) < MIN_MAIN_HERBS) return [];
   return composed.map(x => Object.assign({}, x.h, { _score: x.s, _cat: categoryOf(x.h) }));
+}
+
+// Why pickFormula came back empty. NO_SAFE_MATCH: the answers alone would
+// fill a bottle, the person's safety answers are what empty it — the page
+// can say so. NO_MATCH: even without them there is not enough to build on.
+function noMatchCode(a) {
+  return mainCount(walk(rankedCandidates(a, { safety: false }), a)) >= MIN_MAIN_HERBS ? 'NO_SAFE_MATCH' : 'NO_MATCH';
 }
 
 // STEP 5.5 · Candidate set builder for the MYCO validator path.
@@ -187,21 +198,7 @@ function pickFormula(a) {
 // allowed to pick within. myco-validator.js rejects any pick outside
 // this set, then applies the same caps pickFormula applies.
 function buildScoredCandidates(a, limit = 20) {
-  const pool = ensurePool();
-  if (!pool || !pool.length) return [];
-  const safe       = pool.filter(h => safetyFilter(h, a.avoid || []) && passesAccess(h, a) && passesProfileSafety(h, a) && fitsTimeOfUse(h, a) && fitsGoal(h, a));
-  const minorGated = applyMinorGate(safe, a);
-  const scored = minorGated.map(h => ({ h, s: scoreHerb(h, a) })).filter(x => x.s > 0);
-  sortScored(scored, a);
-
-  const seen = new Set();
-  const uniq = scored.filter(x => {
-    const key = (shortNote(x.h) || x.h.name).slice(0, 40);
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-
+  const uniq = rankedCandidates(a);
   const openToGated = !!a._gatedOptIn;
   return uniq
     .filter(x => openToGated || !x.h.gated)
@@ -264,4 +261,4 @@ function explainPicks(a, chosenIds, altLimit = 12) {
   return { herbs, alternatives };
 }
 
-module.exports = { targetHerbCount, pickFormula, buildScoredCandidates, explainPicks };
+module.exports = { targetHerbCount, pickFormula, noMatchCode, MIN_MAIN_HERBS, buildScoredCandidates, explainPicks };

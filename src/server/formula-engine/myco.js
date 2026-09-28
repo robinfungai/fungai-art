@@ -1,8 +1,14 @@
 // src/server/formula-engine/myco.js
 //
 // Server-side MYCO caller. Given the deterministic candidate set +
-// the quiz profile, asks Claude Opus 5 to pick 5-7 herbs and assign
-// percentages. Returns { picks, overall } or null on any failure.
+// the quiz profile, asks Claude Opus 5 to pick 5-7 herbs, say why, and
+// write the person's reading. Returns { picks, overall } or null on any
+// failure. MYCO does not set percentages (D2 option C, 2026-09-28): the
+// engine doses whatever MYCO picks (myco-validator → percentages.js).
+//
+// This is also the ONLY AI call that sees the person's note (D5,
+// 2026-09-28): the pages used to send the note to /api/myco-agent a
+// second time for a "reading" paragraph; `overall` is that reading now.
 //
 // The prompt mirrors the one myco-agent.js already uses for its
 // client-driven compose mode — kept in sync intentionally so herb
@@ -79,25 +85,26 @@ function _buildComposeUser(quiz, shortlistText) {
 }
 
 const COMPOSE_SYS =
-  'You are MYCO — a plant-medicine formula composer. You will pick 5 to 7 herbs from a shortlist for one specific person, and explain WHY in one paragraph.\n\n' +
+  'You are MYCO — a plant-medicine formula composer. You will pick 5 to 7 herbs from a shortlist for one specific person, and write their reading.\n\n' +
   'HARD RULES (violations get the whole formula rejected by a deterministic validator downstream):\n' +
   '- Pick ONLY from the shortlist ids provided. Never invent a herb.\n' +
   '- Pick between 5 and 7 herbs. Prefer 5 unless the case genuinely calls for more (multi-axis complexity, chronic + acute together, layered request).\n' +
-  '- Percentages must sum to 100 (integers).\n' +
+  '- Do not give percentages. The house sets each herb\'s share of the bottle from the shortlist ranking.\n' +
   '- Category balance — no more than 2 herbs of the same category (adaptogen / nervine / tonic / mover / mushroom / bitter / aromatic / nutritive / other).\n' +
   '- Load caps enforced by the shortlist tags:\n' +
-  '    · TRACE — max 1 TRACE-marked herb in the formula, and its pct MUST be ≤ 5% (potent essential-oil, would dominate flavour + carry safety risk at higher doses).\n' +
+  '    · TRACE — max 1 TRACE-marked herb in the formula (potent essential oil; the house keeps it at 5% or less).\n' +
   '    · GABA  — max 2 GABA-marked herbs (additive CNS depression risk if stacked further).\n' +
   '    · STIM  — max 2 STIM-marked herbs (additive adrenergic drive if stacked further).\n' +
   '    · SERO  — max 1 SERO-marked herb (two serotonergic herbs stack toward serotonin syndrome).\n' +
   '    · LAX   — max 1 LAX-marked herb (laxatives are only shortlisted when the person reports constipation).\n' +
   '    · GABA + STRONG — never put a GABA-marked herb beside a STRONG-marked (true) stimulant; they pull against each other.\n' +
   '- Do NOT diagnose. Do NOT prescribe. Traditional herbal support only, not medical treatment.\n' +
-  '- Reference the free-text explicitly if it names a priority, prior herb experience, or contraindication history.\n\n' +
+  '- Reference the free-text explicitly if it names a priority, prior herb experience, or contraindication history.\n' +
+  '- Never say a herb or the formula treats, cures, heals or prevents a condition; speak of traditional use and support. Do not mention AI.\n\n' +
   'OUTPUT FORMAT — return ONLY valid JSON, no preamble, no code fences, matching:\n' +
   '{\n' +
-  '  "picked": [ { "id": "...", "pct": 22, "reason": "one short sentence" }, ... ],\n' +
-  '  "overall": "2-3 sentences of reasoning tying the pick to their answers"\n' +
+  '  "picked": [ { "id": "...", "reason": "one short sentence" }, ... ],\n' +
+  '  "overall": "their reading — 2 to 3 sentences spoken to them, warm and plain (poetic, not mystical), tying the herbs to their answers. If they wrote a note, answer it directly. Where it fits, name one pair of herbs in the formula and what they do together."\n' +
   '}';
 
 /**
@@ -109,7 +116,7 @@ const COMPOSE_SYS =
  * @param {Object} quiz — the user's normalised profile.
  * @param {Object} opts — { apiKey, workspaceId?, fetchImpl? }.
  *   fetchImpl is dependency-injected so tests can mock Anthropic.
- * @returns {Promise<{picks:Array<{id,pct,reason}>, overall:string} | null>}
+ * @returns {Promise<{picks:Array<{id,reason}>, overall:string} | null>}
  *   null on ANY failure: no api key, network error, non-200, malformed
  *   JSON, empty picks. Callers fall back to deterministic on null.
  */

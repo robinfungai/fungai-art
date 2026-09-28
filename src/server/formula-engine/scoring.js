@@ -376,6 +376,24 @@ function priorHerbsBoost(h, prior) {
   return h.caution_level === 'LOW' ? 1 : 0;
 }
 
+// Evidence grade (engine 2.5, Robin D4 2026-09-28): 0 to +2 points,
+// where before it only broke exact ties. Deliberately smaller than every
+// answer-driven term (body 4, stress 3, time 2), so evidence decides
+// between herbs that fit the person about equally and never overrides
+// the fit. 'traditional' (use documented, not trialled) and ungraded
+// herbs sit with C. Earned only by a herb that scored something else —
+// evidence alone never brings a herb into the ranking.
+const EVIDENCE_POINTS = {
+  'A+': 2, 'A': 2, 'A-': 2,
+  'B+': 1.5, 'B': 1, 'B-': 0.75,
+  'C+': 0.5, 'C': 0.5, 'TRADITIONAL': 0.5,
+  'C-': 0, 'D+': 0, 'D': 0, 'D-': 0,
+};
+function evidenceBoost(h) {
+  const g = String((h && h.evidence_grade) || '').trim().toUpperCase();
+  return Object.prototype.hasOwnProperty.call(EVIDENCE_POINTS, g) ? EVIDENCE_POINTS[g] : 0.5;
+}
+
 // Share of a goal's points a herb earns by where that goal sits in its
 // own recorded goals: main use, second, third, fourth.
 const GOAL_POSITION_WEIGHT = [1, 0.75, 0.625, 0.54];
@@ -437,6 +455,8 @@ function scoreBreakdown(h, a) {
   parts.history    = priorHerbsBoost(h, a.prior_herbs);
   let sum = 0;
   for (const k in parts) sum += parts[k];
+  parts.evidence = sum > 0 ? evidenceBoost(h) : 0;
+  sum += parts.evidence;
   const factor = servesGoal ? 1 : 0.5;
   return { parts, sum, factor, servesGoal, total: sum * factor };
 }
@@ -450,5 +470,6 @@ module.exports = {
   subPatternBoost, durationBoost, ageBoost, sleepBoost, notesBoost,
   nervousBoost, energyCurveBoost,
   digestionBoost, somaticBoost, emotionalBoost, supportBoost, cycleBoost, priorHerbsBoost,
+  EVIDENCE_POINTS, evidenceBoost,
   scoreBreakdown, scoreHerb,
 };

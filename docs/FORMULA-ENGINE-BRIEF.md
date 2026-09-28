@@ -1,13 +1,13 @@
 # Fungai Art — how the formula maker decides
 
-*Audit brief · engine 2.4.0 · safety rules 1.2.0 · 245 herbs · 2026-09-28*
+*Audit brief · engine 2.5.0 · safety rules 1.3.0 · 245 herbs · 2026-09-28*
 
 This document describes, as exactly as the code allows, how fungai.art turns
 a person's quiz answers into a herbal extract formula. It is written for an
 independent reviewer (human or AI) who has **not** seen the code. Every rule
 below names the file it lives in, so each claim can be checked.
 
-**Which code this describes.** Engine **2.4.0** in the repository's `main`
+**Which code this describes.** Engine **2.5.0** in the repository's `main`
 branch as developed locally. The live site at fungai.art only changes when
 that branch is deployed. **If you read the code on GitHub, first check
 `src/server/formula-engine/version.js`:** the first external audit
@@ -56,14 +56,16 @@ quiz answers ──► /api/fyf/compose  (netlify/functions/fyf-compose.mjs)
                    ▼
             compileFormula  (index.js)
                    │ 1. safety question must be answered   (safety.js)
+                   │    + safety words in the note applied  (note-safety.js)
                    │ 2. age < 18 is derived server-side     (index.js)
                    │ 3. build the eligible pool             (§4)
                    │ 4. score every eligible herb           (§5)
                    │ 5. walk the ranking under caps         (§6)
                    │ 6. assign percentages                  (§6.3)
                    ▼
-            baseline formula ──► MYCO may propose a different one (§7)
-                   │              └─ a deterministic validator accepts or rejects it
+            baseline formula ──► MYCO may choose different herbs (§7)
+                   │              ├─ a deterministic validator accepts or rejects them
+                   │              └─ the engine sets their percentages (§6.3)
                    ▼
             final formula ──► stored (fyf_formulas) ──► display strings only on the wire
 ```
@@ -72,8 +74,8 @@ Identical answers always give an identical **baseline** formula: no
 randomness, no clock. Ties are broken by evidence grade and then by a hash
 of the answers (§6.1). The **final** formula is only guaranteed identical
 when MYCO is off or falls back. When MYCO composes (§7), the same answers
-can give a different bottle — always one that keeps every rule, but not
-always the same one.
+can give a different set of herbs — always one that keeps every rule, and
+since engine 2.5 always at the engine's own percentages.
 
 ---
 
@@ -139,6 +141,15 @@ exclude outright; nothing downstream can bring a herb back.
    `sedatives`; a stimulant is flagged hypertension, cardio_meds and
    psych_meds; a psychoactive is flagged psych_meds). A herb is removed if it
    carries any flag the person ticked.
+   **Safety words in the note** (`note-safety.js`, since 2026-09-28, safety
+   rules 1.3): a medicine, a pregnancy or a condition named in the free-text
+   note — English and the common German words, e.g. "sertraline",
+   "postpartum", "Hashimoto", "Blutverdünner" — applies the matching flag
+   exactly as if it had been ticked, and "none" gives way to it. It fails
+   closed: "not pregnant" still applies the pregnancy filter. The reveal
+   names the word it read and the filter it applied, so a wrong guess can be
+   corrected. It only ever adds flags. Conditions with no flag of their own
+   (epilepsy, chemotherapy) are not guessed at.
 5. **Pregnancy**: only a herb recorded `safe_pregnancy: true` reaches a
    pregnant person; *unknown counts as unsafe*.
 6. **Pro answers as safety** (`passesProfileSafety`, since 2026-09-28):
@@ -211,13 +222,14 @@ highest-leverage data in the engine.
 | Body pattern | +4 (or +2 if the herb's only pattern is "mixed", read as neutral) | patterns inferred from the herb's text and energetics (cooling words → suits "hot", etc.) |
 | Time of day | +2 | inferred from the herb's goals (sleep → evening/night, energy → morning…) |
 | Stress style | +3 | inferred from text (adaptogen → push/collapse, nervine → off/ride…) |
-| Note keywords | +2 per keyword, +4 per phrase, **at most +6 in total** | the word appears in both the note and the herb's text; a curated misspelling table corrects common typos. The note is **not** read by the safety filter — medicines and pregnancy must be answered in the safety question, and both pages say so |
+| Note keywords | +2 per keyword, +4 per phrase, **at most +6 in total** | the word appears in both the note and the herb's text; a curated misspelling table corrects common typos. Safety words in the note are handled separately, as exclusions (§4.2 item 4); both pages still ask for medicines and pregnancy in the safety question |
 | Sub-pattern | +6 | name matches a hint list (e.g. cold_hands → cinnamon, ginger…) |
 | Duration | −2 to +4 | weeks favour fast-acting herbs; a year or more favours tonics |
 | Age | −2 to +2 | 60+ favours gentle tonics and penalises stimulants |
 | Sleep | −4 to +4 | by sleep pattern (e.g. vivid_restless penalises dream herbs −4) |
 | Nervous system | −4 to +3 | e.g. "wired" penalises stimulants −3 and rewards calming +3 |
 | Energy curve | −3 to +3 | e.g. "high but unstable" rewards blood-sugar/balancing herbs |
+| Evidence grade (since 2.5) | 0 to +2 | A 2 · B+ 1.5 · B 1 · B− 0.75 · C, "traditional" or ungraded 0.5 · D 0. Only for a herb that scored something else, so evidence never brings a herb into the ranking on its own. Smaller than every answer-driven part on purpose |
 
 **Note for review:** body pattern, time and stress style are still
 **inferred from prose by regular expressions** (`axes.js inferAxes`), the
@@ -238,7 +250,8 @@ same class of method that got the goals wrong.
 ## 6 · Building the bottle (`picker.js`, `percentages.js`)
 
 ### 6.1 Order
-Herbs are sorted by score. Ties are broken by (1) evidence grade (A+ best;
+Herbs are sorted by score (which since engine 2.5 includes 0–2 points for
+evidence, §5.2). Ties are broken by (1) evidence grade (A+ best;
 ungraded sits mid-table), then (2) a hash of the answers plus the herb's id
 (unordered answers such as the safety flags are sorted first, so their
 order never matters).
@@ -251,10 +264,15 @@ function starts with the same 40 characters count as one.
 - a note over 80 characters;
 - a sub-pattern;
 - a duration of a year or more;
-- very broken sleep, or under 6 hours;
-- two or more safety flags.
+- very broken sleep, or under 6 hours.
 
-A plain, short-term profile gets 3. The result is clamped to 3–7.
+A plain, short-term profile gets 3. The result is clamped to 3–7. (Until
+engine 2.5, two or more safety flags added a herb — more restrictions forced
+a larger bottle out of a smaller pool.)
+
+A bottle needs at least **three main (non-trace) herbs**, so that none has
+to carry more than 40% (§6.3). A trace herb is seated only in a bottle of
+four or more.
 
 Walking down the ranking, a herb is skipped if seating it would break a cap:
 
@@ -268,15 +286,30 @@ Walking down the ranking, a herb is skipped if seating it would break a cap:
 | Serotonergic (St John's Wort, Kanna, Saffron, Rhodiola) | ≤ 1 |
 | Laxatives | ≤ 1 |
 
-If the first walk seats fewer than the target, a **second walk ignores the
-category cap only** and keeps every other cap.
+There is **one** walk, and no cap is ever relaxed. If it seats fewer than
+the target, the bottle is smaller. If it seats fewer than three main herbs,
+no bottle is composed and the person is told why (HTTP 422):
+- `NO_SAFE_MATCH` — their safety answers are what emptied the pool (the
+  same walk without them would fill a bottle);
+- `NO_MATCH` — even without them, the answers point to too few herbs.
+
+Until engine 2.5 a second walk dropped the category cap when a bottle came
+up short. It never fired in 24,000 test profiles; neither code has fired in
+4,000 random profiles since.
 
 ### 6.3 Percentages
 - Each herb's share is proportional to its score (minimum 1).
-- Trace herbs are capped at **5%**; the excess is spread over the others in
-  proportion.
-- Values are rounded, and any rounding drift is added to the largest herb.
+- Trace herbs are capped at **5%**, and since engine 2.5 **every other herb
+  at 40%**. What a capped herb cannot take is spread over the uncapped herbs
+  in proportion to their scores, repeated until no herb is over its cap.
+- Values are rounded down and the missing points go to the largest
+  remainders, never past a cap; every herb gets at least 1%.
+- These are the only percentages in the system: a formula MYCO chose is
+  dosed by the same rule (§7).
 - The bottle is 30 ml at the house strength of 1:3.
+
+Measured over 4,000 random profiles against engine 2.4: 101 bottles had a
+herb above 40% (the largest 71%); now none.
 
 ### 6.4 Pairings
 Each pair of seated herbs is checked against the herbs' own
@@ -291,17 +324,17 @@ Matches are **shown** to the person. **A caution never removes a herb.**
 2. The **top 20 eligible herbs** (same filters, same scores) become MYCO's
    shortlist. Each is tagged TRACE, GABA, STIM, STRONG, SERO or LAX, and the
    person's answers are included, pro answers too.
-3. MYCO (Claude Opus) returns 5–7 herbs with integer percentages summing to
-   100, a one-line reason each, and an overall paragraph.
+3. MYCO (Claude Opus) returns 5–7 herbs, a one-line reason each, and the
+   person's reading (2–3 sentences, answering their note if they wrote one).
+   **It does not give percentages** (decision D2, 2026-09-28): the engine
+   sets them for MYCO's herbs with the rule in §6.3; any percentage MYCO
+   still sends is ignored.
 4. A **deterministic validator** re-checks the proposal and rejects it for
    any of:
    - wrong herb count;
    - a herb outside the shortlist, or a duplicate;
-   - percentages outside 1–100, or a rounded sum more than 3 away from
-     100 (a drift of up to 3 is **corrected** by adjusting the largest
-     herb — so MYCO's percentages can be nudged, not only vetoed);
    - a gated or pro-only herb without entitlement;
-   - trace count or trace % over the limit;
+   - more than one trace herb;
    - sedative, stimulant, serotonergic or laxative caps exceeded;
    - a sedative beside a true stimulant;
    - the category cap exceeded.
@@ -310,12 +343,15 @@ Matches are **shown** to the person. **A caution never removes a herb.**
 6. MYCO's paragraph passes a claims sanitiser before any customer sees it.
    A treatment, cure or diagnosis claim replaces the whole paragraph with a
    safe template; softer phrases are rewritten.
+7. This is the **only** AI call that sees the person's note. Until
+   2026-09-28 the pages sent the note to MYCO a second time for a "reading"
+   paragraph; that call was removed (decision D5).
 
 **Note for review:**
 - The baseline targets 3–7 herbs, while MYCO is asked for 5–7, so
   MYCO-composed bottles tend to be larger.
-- MYCO can only reorder and re-weight within the engine's shortlist; it
-  cannot add a herb.
+- MYCO can only choose within the engine's shortlist; it cannot add a
+  herb or set a herb's share.
 
 ---
 
@@ -323,8 +359,10 @@ Matches are **shown** to the person. **A caution never removes a herb.**
 
 The public response carries display strings only: herb name, botanical
 name, percentage, a 140-character note, the trace flag, pairings, story and
-"why" text, and the version stamps. **Scores, ids and raw herb data are
-withheld** to protect the catalogue. The full formula is stored server-side
+"why" text, and the version stamps; the safety flags the bottle was built
+under (ticked and from the note), and `noteSafety` — which flags the note
+added and the word that named each (the person's own words). **Scores, ids
+and raw herb data are withheld** to protect the catalogue. The full formula is stored server-side
 (`fyf_formulas`), and a reservation reads the stored copy by an opaque id,
 so the client cannot alter the formula it reserves.
 
@@ -370,18 +408,17 @@ Abuse limits:
 4. **One trace herb per bottle** limits aromatic digestive formulas: ginger,
    peppermint, fennel and cinnamon compete for a single slot.
 5. **Pair cautions never veto** (§6.4).
-6. **The second fill walk ignores the category cap** (§6.2).
+6. *Fixed in engine 2.5:* the second fill walk that ignored the category
+   cap is gone (§6.2).
 7. **Two Amanitas can share a bottle** on rare profiles: both are recorded
    "sedative", and the sedative cap is 2.
 8. **Minor status rests on the age answer**, which the person gives.
 9. **Rate limits are per server instance and in memory.**
 10. **The serotonergic list is short** (4 herbs). Others with weaker
     serotonergic activity (e.g. Lemon Balm, Bobinsana) are not capped.
-11. **No cap on one herb's share of the bottle.** Measured over 24,000
-    profiles: one herb reaches up to 80% (a 3-herb bottle), and 15% of
-    bottles have a herb above 40%.
-12. **The number of herbs grows with the number of safety flags** (two or
-    more flags add one herb), although flags shrink the pool.
+11. *Fixed in engine 2.5:* no herb above 40% of the bottle (§6.3). Before,
+    one herb reached up to 80% of a 3-herb bottle.
+12. *Fixed in engine 2.5:* safety flags no longer add a herb (§6.2).
 13. **Stored quiz answers are kept indefinitely.** The code comments refer
     to a scheduled cleanup that does not exist.
 
@@ -408,6 +445,9 @@ Abuse limits:
 formulas are pinned (`tests/fixtures/methodology-pins.cjs`) so any change in
 output is visible, and `tests/invariants-verify.cjs`, which turns the rules
 in §4 and §6 into checks on 600 random profiles (fixed seed) plus the real
-HTTP handler: every sum is 100, every cap holds, every minor, pregnancy and
-history rule holds, the same answers give the same bottle, and the order of
-the safety flags does not matter.*
+HTTP handler: every sum is 100, no herb above 40%, every cap holds, every
+minor, pregnancy and history rule holds, every safety word in a note applies
+its flag, the same answers give the same bottle, and the order of the safety
+flags does not matter. It also runs 120 profiles through the MYCO path with a
+stand-in for Anthropic (no network, no cost) that asks for 90% on one herb,
+and checks the same rules on the bottles MYCO chose.*

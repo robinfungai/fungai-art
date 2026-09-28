@@ -15,6 +15,11 @@
 //   node tests/myco-adversarial-verify.cjs
 
 const { validateMycoProposal } = require('../src/server/formula-engine/myco-validator');
+const { assignPercentages } = require('../src/server/formula-engine/percentages');
+// Since 2026-09-28 (D2, option C) a pick's `pct` is ignored: every
+// malformed or hostile percentage below must still produce the engine's
+// own shares, never MYCO's.
+const enginePcts = r => r.ok === true && JSON.stringify(r.percentages) === JSON.stringify(assignPercentages(r.herbs));
 const { composeFormulaWithMyco, compileFormula } = require('../src/server/formula-engine');
 
 // ── Test candidate set (mirrors myco-validator-verify.cjs shape) ──
@@ -94,65 +99,65 @@ check('pick entry:null → MYCO_PICK_INVALID', () => {
 });
 
 // ── (8) pct negative
-check('pick.pct:-5 → MYCO_PCT_INVALID', () => {
+check('pick.pct:-5 → ignored, engine percentages', () => {
   const p = [...VALID_PROPOSAL];
   p[0] = { id: 210, pct: -5, reason: 'negative' };
   const r = validateMycoProposal({ mycoResponse: p, candidateSet: CANDIDATES, gatedOptIn: false });
-  return { pass: r.ok === false && r.reason === 'MYCO_PCT_INVALID', detail: r.reason };
+  return { pass: enginePcts(r), detail: r.ok ? r.percentages.join('/') : r.reason };
 });
 
 // ── (9) pct zero
-check('pick.pct:0 → MYCO_PCT_INVALID', () => {
+check('pick.pct:0 → ignored, engine percentages', () => {
   const p = [...VALID_PROPOSAL];
   p[0] = { id: 210, pct: 0, reason: 'zero' };
   const r = validateMycoProposal({ mycoResponse: p, candidateSet: CANDIDATES, gatedOptIn: false });
-  return { pass: r.ok === false && r.reason === 'MYCO_PCT_INVALID', detail: r.reason };
+  return { pass: enginePcts(r), detail: r.ok ? r.percentages.join('/') : r.reason };
 });
 
 // ── (10) pct > 100
-check('pick.pct:150 → MYCO_PCT_INVALID', () => {
+check('pick.pct:150 → ignored, engine percentages', () => {
   const p = [...VALID_PROPOSAL];
   p[0] = { id: 210, pct: 150, reason: 'oversized' };
   const r = validateMycoProposal({ mycoResponse: p, candidateSet: CANDIDATES, gatedOptIn: false });
-  return { pass: r.ok === false && r.reason === 'MYCO_PCT_INVALID', detail: r.reason };
+  return { pass: enginePcts(r), detail: r.ok ? r.percentages.join('/') : r.reason };
 });
 
 // ── (11) pct is NaN
-check('pick.pct:NaN → MYCO_PCT_INVALID', () => {
+check('pick.pct:NaN → ignored, engine percentages', () => {
   const p = [...VALID_PROPOSAL];
   p[0] = { id: 210, pct: NaN, reason: 'nan' };
   const r = validateMycoProposal({ mycoResponse: p, candidateSet: CANDIDATES, gatedOptIn: false });
-  return { pass: r.ok === false && r.reason === 'MYCO_PCT_INVALID', detail: r.reason };
+  return { pass: enginePcts(r), detail: r.ok ? r.percentages.join('/') : r.reason };
 });
 
 // ── (12) pct is a string (unparseable)
-check('pick.pct:"lots" → MYCO_PCT_INVALID', () => {
+check('pick.pct:"lots" → ignored, engine percentages', () => {
   const p = [...VALID_PROPOSAL];
   p[0] = { id: 210, pct: 'lots', reason: 'string pct' };
   const r = validateMycoProposal({ mycoResponse: p, candidateSet: CANDIDATES, gatedOptIn: false });
-  return { pass: r.ok === false && r.reason === 'MYCO_PCT_INVALID', detail: r.reason };
+  return { pass: enginePcts(r), detail: r.ok ? r.percentages.join('/') : r.reason };
 });
 
-// ── (13) Percentages sum way off (30/30/30/30/30 = 150) — MYCO_PCT_SUM_INVALID
-check('percentages sum to 150 → MYCO_PCT_SUM_INVALID', () => {
+// ── (13) Percentages sum way off (30/30/30/30/30 = 150) — ignored since D2
+check('MYCO percentages summing to 150 → ignored, engine percentages', () => {
   const p = [
     { id: 210, pct: 30, reason: '' }, { id: 250, pct: 30, reason: '' },
     { id: 220, pct: 30, reason: '' }, { id: 230, pct: 30, reason: '' },
     { id: 240, pct: 30, reason: '' },
   ];
   const r = validateMycoProposal({ mycoResponse: p, candidateSet: CANDIDATES, gatedOptIn: false });
-  return { pass: r.ok === false && r.reason === 'MYCO_PCT_SUM_INVALID', detail: r.reason };
+  return { pass: enginePcts(r), detail: r.ok ? r.percentages.join('/') : r.reason };
 });
 
 // ── (14) Percentages sum too low (5*5=25)
-check('percentages sum to 25 → MYCO_PCT_SUM_INVALID', () => {
+check('MYCO percentages summing to 25 → ignored, engine percentages', () => {
   const p = [
     { id: 210, pct: 5, reason: '' }, { id: 250, pct: 5, reason: '' },
     { id: 220, pct: 5, reason: '' }, { id: 230, pct: 5, reason: '' },
     { id: 240, pct: 5, reason: '' },
   ];
   const r = validateMycoProposal({ mycoResponse: p, candidateSet: CANDIDATES, gatedOptIn: false });
-  return { pass: r.ok === false && r.reason === 'MYCO_PCT_SUM_INVALID', detail: r.reason };
+  return { pass: enginePcts(r), detail: r.ok ? r.percentages.join('/') : r.reason };
 });
 
 // ── (15) reason field is a giant string — validator TRUNCATES it, doesn't reject
@@ -252,7 +257,7 @@ check('String()-coercion of mycoOverall is invariant', () => {
 });
 
 // ── (21) Percentages that fit but total near the ±3 edge — accepted with drift-fix
-check('percentages sum to 98 (drift of +2, within ±3) → accepted + fixed', () => {
+check('MYCO percentages summing to 98 → ignored, engine percentages sum to 100', () => {
   const p = [
     { id: 210, pct: 30, reason: '' }, { id: 250, pct: 25, reason: '' },
     { id: 220, pct: 20, reason: '' }, { id: 230, pct: 15, reason: '' },
@@ -264,14 +269,14 @@ check('percentages sum to 98 (drift of +2, within ±3) → accepted + fixed', ()
 });
 
 // ── (22) Percentages sum to 104 (drift of -4, over ±3) → rejected
-check('percentages sum to 104 (drift beyond ±3) → MYCO_PCT_SUM_INVALID', () => {
+check('MYCO percentages summing to 104 → ignored, engine percentages', () => {
   const p = [
     { id: 210, pct: 32, reason: '' }, { id: 250, pct: 26, reason: '' },
     { id: 220, pct: 21, reason: '' }, { id: 230, pct: 15, reason: '' },
     { id: 240, pct: 10, reason: '' },
   ];
   const r = validateMycoProposal({ mycoResponse: p, candidateSet: CANDIDATES, gatedOptIn: false });
-  return { pass: r.ok === false && r.reason === 'MYCO_PCT_SUM_INVALID', detail: r.reason };
+  return { pass: enginePcts(r), detail: r.ok ? r.percentages.join('/') : r.reason };
 });
 
 // ── Runner ─────────────────────────────────────────────────────────

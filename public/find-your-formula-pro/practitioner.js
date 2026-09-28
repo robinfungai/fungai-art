@@ -127,6 +127,7 @@
     duration: 'Duration', age: 'Age', sleep: 'Sleep', nervous: 'Nervous system',
     energy: 'Energy curve', digestion: 'Digestion', somatic: 'Body area',
     emotional: 'Emotional weather', support: 'Support wanted', cycle: 'Cycle', history: 'Herb history',
+    evidence: 'Evidence grade',
   };
   const GOAL_LABEL = {
     stress: 'stress', anxiety: 'anxiety', sleep: 'sleep', energy: 'energy', mood: 'mood',

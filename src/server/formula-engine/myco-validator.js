@@ -7,10 +7,15 @@
 //                                        → FINAL FORMULA
 //
 // MYCO is untrusted creative input. This module checks that every
-// picked herb id is in the candidate set the picker produced, that
-// percentages sum to 100, that trace herbs are ≤5%, that no pool cap
-// is broken (categories, GABAergic load, CNS stimulant load), and
-// that gated herbs are only present when the user opted in.
+// picked herb id is in the candidate set the picker produced, that no
+// pool cap is broken (categories, trace count, GABAergic load, CNS
+// stimulant load, serotonergic, laxative), and that gated herbs are
+// only present when the user opted in.
+//
+// Percentages (D2 option C, 2026-09-28): MYCO no longer sets them. Any
+// `pct` it still sends is ignored; the accepted herbs get the engine's
+// own percentages (percentages.js — score-weighted, trace ≤ 5%, any
+// other herb ≤ 40%), the same rule as the deterministic bottle.
 //
 // Returns a discriminated union:
 //   { ok: true,  herbs: [...], percentages: [...], reasons: [...] }
@@ -32,6 +37,7 @@
 
 const { isTrace } = require('./traces');
 const { isGABAergic, isCNSStimulant, isStrongStimulant, isSerotonergic, MAX_SEROTONERGIC, isLaxative, MAX_LAXATIVE, categoryOf } = require('./pharmacology');
+const { assignPercentages, TRACE_PCT_CAP, MAX_SHARE_PCT } = require('./percentages');
 
 // Constants must match picker.js exactly (per audit constraint #8:
 // no methodology drift). Sourced from the same load-cap block.
@@ -41,13 +47,12 @@ const MAX_GABAERGIC    = 2;
 const MAX_STIMULANT    = 2;
 const MIN_HERBS        = 5;
 const MAX_HERBS        = 7;
-const TRACE_PCT_CAP    = 5;
 
 /**
  * @param {object} params
- * @param {Array<{id, pct, reason}>} params.mycoResponse
- *   The picks + percentages MYCO returned. Any missing/malformed field
- *   is caught below.
+ * @param {Array<{id, reason}>} params.mycoResponse
+ *   The herbs MYCO picked. A `pct` on a pick is ignored. Any missing or
+ *   malformed field is caught below.
  * @param {Array<object>} params.candidateSet
  *   The scored + safety-filtered herb set the picker produced. This
  *   defines the bounded universe MYCO is allowed to pick from.
@@ -82,12 +87,10 @@ function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn, pro = fa
   }
 
   const acceptedHerbs = [];
-  const acceptedPcts  = [];
   const acceptedReasons = [];
   const seenIds       = new Set();
   let traceUsed = 0, gabaUsed = 0, stimUsed = 0, strongUsed = 0, seroUsed = 0, laxUsed = 0;
   const catCount = {};
-  let pctSum = 0;
 
   for (const pick of mycoResponse) {
     if (!pick || typeof pick !== 'object') {
@@ -95,12 +98,7 @@ function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn, pro = fa
     }
     const rawId = pick.id != null ? String(pick.id).toLowerCase() : '';
     const rawName = typeof pick.name === 'string' ? pick.name.toLowerCase() : rawId;
-    const pct   = Number(pick.pct);
     const reason = String(pick.reason || '').slice(0, 300);
-
-    if (!Number.isFinite(pct) || pct <= 0 || pct > 100) {
-      return { ok: false, reason: 'MYCO_PCT_INVALID', detail: 'pct out of 1..100 range for ' + (rawId || rawName) };
-    }
 
     // Boundary check: herb MUST be in the deterministic candidate set.
     let herb = byId.get(rawId) || byName.get(rawName);
@@ -138,14 +136,9 @@ function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn, pro = fa
       };
     }
 
-    // Trace cap — potent essential-oil herbs ≤5%.
+    // Trace count — one potent essential-oil herb per bottle (its ≤5%
+    // share is set by assignPercentages below).
     if (isTrace(herb)) {
-      if (pct > TRACE_PCT_CAP) {
-        return {
-          ok: false, reason: 'MYCO_TRACE_PCT_EXCEEDED',
-          detail: herb.name + ' is trace and got ' + pct + '% (max ' + TRACE_PCT_CAP + '%)',
-        };
-      }
       traceUsed += 1;
       if (traceUsed > MAX_TRACE) {
         return {
@@ -213,35 +206,15 @@ function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn, pro = fa
     }
 
     acceptedHerbs.push(herb);
-    acceptedPcts.push(Math.round(pct));
     acceptedReasons.push(reason);
-    pctSum += pct;
-  }
-
-  // Percentage sum — must be 100 (integer). Allow ±1 for rounding
-  // (MYCO returns floats occasionally). We round each pct as we go +
-  // fix drift by adjusting the top herb (same pattern as
-  // assignPercentages in the deterministic path).
-  const roundedSum = acceptedPcts.reduce((a, b) => a + b, 0);
-  const drift = 100 - roundedSum;
-  if (Math.abs(drift) > 3) {
-    return {
-      ok: false, reason: 'MYCO_PCT_SUM_INVALID',
-      detail: 'rounded percentages sum to ' + roundedSum + ' (expected 100 ± 3)',
-    };
-  }
-  if (drift !== 0) {
-    // Apply drift to the largest slice (matches assignPercentages
-    // drift-fix policy).
-    let iMax = 0;
-    for (let i = 1; i < acceptedPcts.length; i++) if (acceptedPcts[i] > acceptedPcts[iMax]) iMax = i;
-    acceptedPcts[iMax] += drift;
   }
 
   return {
     ok:          true,
     herbs:       acceptedHerbs,
-    percentages: acceptedPcts,
+    // The engine's percentages for MYCO's herbs — scores come from the
+    // candidate set, so the same herb weighs the same in either path.
+    percentages: assignPercentages(acceptedHerbs),
     reasons:     acceptedReasons,
   };
 }
@@ -249,5 +222,5 @@ function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn, pro = fa
 module.exports = {
   validateMycoProposal,
   MAX_PER_CATEGORY, MAX_TRACE, MAX_GABAERGIC, MAX_STIMULANT,
-  MIN_HERBS, MAX_HERBS, TRACE_PCT_CAP,
+  MIN_HERBS, MAX_HERBS, TRACE_PCT_CAP, MAX_SHARE_PCT,
 };

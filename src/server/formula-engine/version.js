@@ -18,7 +18,12 @@ module.exports = {
   //         from prose and truncated to three; the pro quiz's support,
   //         digestion, emotional, somatic, cycle and prior_herbs answers
   //         score herbs (2026-09-28).
-  engineVersion:      '2.4.0-server',
+  // 2.5.0 — external audit decisions D2–D4 (2026-09-28): no herb above
+  //         40% of the bottle; MYCO chooses herbs, the engine sets every
+  //         percentage; safety flags no longer add a herb; one strict fill
+  //         walk (fewer than three main herbs = NO_MATCH / NO_SAFE_MATCH,
+  //         never a relaxed rule); evidence grade worth 0 to +2 points.
+  engineVersion:      '2.5.0-server',
   herbDbVersion:      '2026.09-245herbs',
   // 1.1.0 — unknown pregnancy safety = avoid; under-18s: no HIGH-caution,
   //         psychoactive, or above-LOW calming herbs (2026-09-27).
@@ -26,5 +31,8 @@ module.exports = {
   //         'sensitive to stimulants' = no stimulant or activating herb;
   //         'bad reaction before' = nothing at caution HIGH / VERY HIGH
   //         (2026-09-28).
-  safetyRulesVersion: '1.2.0',
+  // 1.3.0 — a medicine, pregnancy or condition named in the note applies
+  //         the matching safety flag, and the reveal says so (D1,
+  //         2026-09-28).
+  safetyRulesVersion: '1.3.0',
 };

@@ -34,7 +34,7 @@ const { isRestricted, isGated } = require('./axes');
 const MAX_HERBS = 12;          // what one analysis will take
 const RULES = {                // mirrored from myco-validator.js
   MIN_HERBS: 5, MAX_HERBS: 7, MAX_PER_CATEGORY: 2,
-  MAX_TRACE: 1, TRACE_PCT_CAP: 5, MAX_GABAERGIC: 2, MAX_STIMULANT: 2,
+  MAX_TRACE: 1, TRACE_PCT_CAP: 5, MAX_SHARE_PCT: 40, MAX_GABAERGIC: 2, MAX_STIMULANT: 2,
 };
 const HOUSE_RATIO = '1:3';     // plant : solvent — the Fungai Art standard
 
@@ -202,6 +202,8 @@ function analyzeFormula(input) {
       label: 'Category balance', detail: over.length ? 'More than ' + RULES.MAX_PER_CATEGORY + ' ' + over.join(', ') + ' herbs — they tend to say the same thing twice.' : 'No category crowds the bottle.' },
     { id: 'trace', ok: traces.length <= RULES.MAX_TRACE && traces.every(r => r.percentage <= RULES.TRACE_PCT_CAP),
       label: 'Trace herbs', detail: traces.length ? traces.map(r => r.name + ' ' + r.percentage + '%').join(', ') + ' — potent aromatics stay at or under ' + RULES.TRACE_PCT_CAP + '%, one per bottle.' : 'None.' },
+    { id: 'share', ok: rows.every(r => r.isTrace || r.percentage <= RULES.MAX_SHARE_PCT),
+      label: 'Largest share', detail: (() => { const big = rows.filter(r => !r.isTrace && r.percentage > RULES.MAX_SHARE_PCT); return big.length ? big.map(r => r.name + ' ' + r.percentage + '%').join(', ') + ' — the engine gives no herb more than ' + RULES.MAX_SHARE_PCT + '% of the bottle.' : 'No herb above ' + RULES.MAX_SHARE_PCT + '%.'; })() },
     { id: 'gaba', ok: gaba.length <= RULES.MAX_GABAERGIC,
       label: 'Sedative load', detail: gaba.length ? gaba.map(r => r.name).join(', ') + (gaba.length > RULES.MAX_GABAERGIC ? ' — more than ' + RULES.MAX_GABAERGIC + ' sedating herbs stack.' : '') : 'No sedating herbs.' },
     { id: 'stim', ok: stim.length <= RULES.MAX_STIMULANT,
