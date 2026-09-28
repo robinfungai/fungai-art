@@ -38,7 +38,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
 import * as THREE from 'three';
 import {
-  REGIONS, placeAll, regionCounts, tierForDistance, latLonToVec3,
+  REGIONS, REGION_COLORS, placeAll, regionCounts, tierForDistance, latLonToVec3,
   type Tier, type PlacedNode, type Placeable,
 } from '../../islands/atlas-regions';
 
@@ -340,6 +340,51 @@ function Nodes({
 }
 
 /**
+ * The regions as places you can see (2026-09-29). Each is a softly tinted
+ * cap on the globe with a thin rim in its own colour (REGION_COLORS), as
+ * wide as the region's `spread` — the same coarse area its nodes are
+ * spread over, so it claims nothing finer than the data does.
+ */
+function RegionZones({ counts }: { counts: { region: typeof REGIONS[number]; count: number }[] }) {
+  const zones = useMemo(() => counts.map(({ region }) => {
+    const color = new THREE.Color(REGION_COLORS[region.id] || '#88BAC8');
+    const s = (region.spread * Math.PI) / 180;
+    // A cap around +Y, turned to face the region's centre.
+    const q = new THREE.Quaternion().setFromUnitVectors(
+      new THREE.Vector3(0, 1, 0),
+      new THREE.Vector3(...latLonToVec3(region.lat, region.lon, 1)).normalize(),
+    );
+    const cap = new THREE.SphereGeometry(1.003, 48, 10, 0, Math.PI * 2, 0, s);
+    cap.applyQuaternion(q);
+    const rim: number[] = [];
+    for (let i = 0; i < 96; i++) {
+      const a = (i / 96) * Math.PI * 2;
+      const v = new THREE.Vector3(Math.sin(s) * Math.cos(a), Math.cos(s), Math.sin(s) * Math.sin(a))
+        .multiplyScalar(1.005).applyQuaternion(q);
+      rim.push(v.x, v.y, v.z);
+    }
+    const rimGeo = new THREE.BufferGeometry();
+    rimGeo.setAttribute('position', new THREE.Float32BufferAttribute(rim, 3));
+    return { id: region.id, color, cap, rimGeo };
+  }), [counts]);
+  useEffect(() => () => zones.forEach(z => { z.cap.dispose(); z.rimGeo.dispose(); }), [zones]);
+  return (
+    <>
+      {zones.map(z => (
+        <group key={z.id}>
+          <mesh geometry={z.cap}>
+            <meshBasicMaterial color={z.color} transparent opacity={0.11} depthWrite={false} />
+          </mesh>
+          <lineLoop geometry={z.rimGeo}>
+            <lineBasicMaterial color={z.color} transparent opacity={0.5} />
+          </lineLoop>
+        </group>
+      ))}
+    </>
+  );
+}
+
+/**
  * Region names. Nine labels, so plain DOM via drei is the right tool.
  *
  * Back-hemisphere culling is done here rather than with drei's `occlude`.
@@ -380,7 +425,7 @@ function RegionLabels({ counts, tier }: { counts: { region: typeof REGIONS[numbe
           style={{ pointerEvents: 'none' }}
         >
           <div className="atl-globe-region">
-            <span className="atl-globe-region-name">{region.label}</span>
+            <span className="atl-globe-region-name" style={{ color: REGION_COLORS[region.id] }}>{region.label}</span>
             {tier === 'WORLD' && <span className="atl-globe-region-count">{count}</span>}
           </div>
         </Html>
@@ -456,6 +501,7 @@ export default function AtlasGlobe({
         <Sphere />
         <Graticule />
         <Coastline />
+        <RegionZones counts={counts} />
         <Nodes
           placed={placed}
           selectedSlug={selectedSlug}

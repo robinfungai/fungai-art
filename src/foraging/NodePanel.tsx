@@ -95,7 +95,7 @@ export default function NodePanel({ node, activeSeason, onClose }: NodePanelProp
   const sortedSpecies = [...node.species].sort((a, b) => b.probability - a.probability);
 
   return (
-    <div style={{
+    <div data-drag-box data-drag-axis="x" style={{
       position: 'absolute',
       top: 0,
       right: 0,
@@ -118,8 +118,8 @@ export default function NodePanel({ node, activeSeason, onClose }: NodePanelProp
         .np-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
       `}</style>
 
-      {/* Header */}
-      <div style={{ padding: '18px 20px 14px', borderBottom: `0.5px solid ${color}22`, flexShrink: 0 }}>
+      {/* Header — drag it sideways to move the panel on desktop */}
+      <div data-drag-handle style={{ padding: '18px 20px 14px', borderBottom: `0.5px solid ${color}22`, flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
           <div>
             <div style={{ fontFamily: 'var(--fm, monospace)', fontSize: 8, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#8B7E62', marginBottom: 4 }}>

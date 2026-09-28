@@ -131,6 +131,20 @@ const LEGACY_SATELLITE_STYLE = {
 };
 
 const MAP_STYLE       = BASEMAP_LICENSED ? arcgisStyle('arcgis/dark-gray') : LEGACY_DARK_STYLE;
+
+// CARTO's dark-matter shows city names only between zoom 4 and 15 (and
+// towns 8–14), so on the opening view (zoom 3.6) and when zoomed right in
+// no city could be found (2026-09-29). The style is loaded once and those
+// ranges widened: the largest cities from zoom 2.5, city and town names
+// kept all the way in.
+function widenPlaceLabels(style: any) {
+  for (const l of (style && style.layers) || []) {
+    if (l.id === 'place_city_dot_r2') l.minzoom = 2.5;
+    if (l.id === 'place_city_dot_r4') l.minzoom = 4;
+    if (/^place_(city_r5|city_r6|town|villages)$/.test(l.id)) l.maxzoom = 24;
+  }
+  return style;
+}
 const SATELLITE_STYLE = BASEMAP_LICENSED ? arcgisStyle('arcgis/imagery')   : LEGACY_SATELLITE_STYLE;
 
 const SEASONS: Season[] = ['spring', 'summer', 'autumn', 'winter'];
@@ -461,6 +475,58 @@ export default function ForagingApp() {
   const [seasons, setSeasons] = useState<Season[]>([getCurrentSeason()]);
   // Satellite imagery is the default basemap; Dark stays one tap away.
   const [mapMode, setMapMode] = useState<'dark' | 'satellite'>('satellite');
+  // The dark style with city names widened (widenPlaceLabels); the plain
+  // URL until it has loaded, or for good if the fetch fails.
+  const [darkStyle, setDarkStyle] = useState<any>(MAP_STYLE);
+  useEffect(() => {
+    if (!acknowledged || BASEMAP_LICENSED || typeof MAP_STYLE !== 'string') return;
+    let alive = true;
+    fetch(MAP_STYLE).then(r => r.json()).then(s => { if (alive) setDarkStyle(widenPlaceLabels(s)); }).catch(() => {});
+    return () => { alive = false; };
+  }, [acknowledged]);
+
+  // Boxes can be moved on desktop (2026-09-29). Any element marked
+  // data-drag-box follows the pointer — from its data-drag-handle if it
+  // has one, otherwise from anywhere on it that is not a control — and
+  // stays at least 60 px on screen. It moves with the CSS `translate`
+  // property, so a box's own transform (centring, slide-in) is untouched.
+  // data-drag-axis="x" keeps a full-height drawer level. Phones and
+  // touch screens are left alone: there the boxes are laid out for them.
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 769px) and (pointer: fine)');
+    let drag: null | { box: HTMLElement; sx: number; sy: number; ox: number; oy: number; r: DOMRect; xOnly: boolean } = null;
+    const down = (e: PointerEvent) => {
+      if (!desktop.matches || e.button !== 0) return;
+      const t = e.target as HTMLElement;
+      const box = t.closest<HTMLElement>('[data-drag-box]');
+      if (!box) return;
+      const handle = box.querySelector('[data-drag-handle]');
+      if (handle && !handle.contains(t)) return;
+      if (t.closest('button, a, input, textarea, select, label, [role="button"], [data-no-drag]')) return;
+      const [ox = 0, oy = 0] = (box.style.translate || '').split(' ').map(v => parseFloat(v) || 0);
+      drag = { box, sx: e.clientX, sy: e.clientY, ox, oy, r: box.getBoundingClientRect(), xOnly: box.dataset.dragAxis === 'x' };
+      box.style.cursor = 'grabbing';
+      e.preventDefault();
+    };
+    const move = (e: PointerEvent) => {
+      if (!drag) return;
+      const r = drag.r;
+      const dx = Math.min(Math.max(e.clientX - drag.sx, 60 - r.right), window.innerWidth - 60 - r.left);
+      const dy = drag.xOnly ? 0 : Math.min(Math.max(e.clientY - drag.sy, -r.top), window.innerHeight - 40 - r.top);
+      drag.box.style.translate = (drag.ox + dx) + 'px ' + (drag.oy + dy) + 'px';
+    };
+    const up = () => { if (drag) drag.box.style.cursor = ''; drag = null; };
+    document.addEventListener('pointerdown', down);
+    document.addEventListener('pointermove', move);
+    document.addEventListener('pointerup', up);
+    document.addEventListener('pointercancel', up);
+    return () => {
+      document.removeEventListener('pointerdown', down);
+      document.removeEventListener('pointermove', move);
+      document.removeEventListener('pointerup', up);
+      document.removeEventListener('pointercancel', up);
+    };
+  }, []);
   const [habitatFilter, setHabitatFilter] = useState<HabitatType | 'all'>('all');
   // The nutrient-rich caution opens every time that habitat is selected;
   // the visitor can shrink it to a one-line pill but not dismiss it.
@@ -1404,7 +1470,7 @@ export default function ForagingApp() {
           this small honest panel instead of fabricated proximity to
           a distant node. Same anchor/position as the normal panel. */}
       {userLocation && growingPanelOpen && userInsight && userInsight.outOfRange && (
-        <div style={{
+        <div data-drag-box style={{
           position: 'absolute', top: 'calc(var(--forage-top, 64px) + 12px)', right: 16, zIndex: 9,
           width: 'min(360px, calc(100vw - 32px))',
           background: 'rgba(7,17,13,0.92)',
@@ -1442,7 +1508,7 @@ export default function ForagingApp() {
           Renders only when user has shared location AND the panel is open.
           Floats over the map, top-right on desktop / collapsible on mobile. */}
       {userLocation && growingPanelOpen && userInsight && !userInsight.outOfRange && (
-        <div style={{
+        <div data-drag-box style={{
           position: 'absolute', top: 'calc(var(--forage-top, 64px) + 12px)', right: 16, zIndex: 9,
           width: 'min(360px, calc(100vw - 32px))',
           maxHeight: 'calc(100vh - var(--forage-top, 64px) - 34px)',
@@ -1587,7 +1653,7 @@ export default function ForagingApp() {
         ref={mapRef}
         initialViewState={{ longitude: 18, latitude: 50, zoom: 3.6 }}
         style={{ width: '100%', height: '100%' }}
-        mapStyle={mapMode === 'satellite' ? SATELLITE_STYLE : MAP_STYLE}
+        mapStyle={mapMode === 'satellite' ? SATELLITE_STYLE : darkStyle}
         // Phones (and sideways phones): attribution sits behind MapLibre's
         // (i) toggle instead of a two-line strip over Harvest / Ask MYCO —
         // the full credits stay one tap away there and in the Data credits pill.
@@ -1677,9 +1743,9 @@ export default function ForagingApp() {
                 title={`${obs.species} · ${obs.habitat}`}
                 style={{
                   width: deadly ? 11 : 8, height: deadly ? 11 : 8, padding: 0, borderRadius: '50%', cursor: 'pointer',
-                  background: deadly ? '#E16B6B' : risky ? '#E8A04B' : '#B5895A',
+                  background: deadly ? '#E16B6B' : risky ? '#E8A04B' : '#B072E0',
                   border: deadly ? '1.5px solid #fff' : '0.5px solid rgba(255,235,200,0.8)',
-                  boxShadow: deadly ? '0 0 8px rgba(225,107,107,0.9)' : '0 0 4px rgba(181,137,90,0.6)',
+                  boxShadow: deadly ? '0 0 8px rgba(225,107,107,0.9)' : '0 0 4px rgba(176,114,224,0.6)',
                 }}
               />
             </Marker>
@@ -2041,7 +2107,7 @@ export default function ForagingApp() {
           collapses to a single "Habitats ▾" pill that expands inline so it
           stops eating half the map. The collapsible state lives on a CSS
           class triggered by the .legend-mobile-toggle button. */}
-      <div className={`forage-legend${isImmersive ? ' is-immersive' : ''}`} style={{
+      <div data-drag-box className={`forage-legend${isImmersive ? ' is-immersive' : ''}`} style={{
         position: 'absolute', bottom: 80, left: 20, zIndex: 10,
         background: 'rgba(7,17,13,0.9)',
         backdropFilter: 'blur(12px)',
@@ -2141,7 +2207,7 @@ export default function ForagingApp() {
 
       {/* Harvest Now panel */}
       {showHarvest && (
-        <div style={{
+        <div data-drag-box style={{
           position: 'absolute', bottom: 60, right: 20, zIndex: 15,
           width: 260, maxHeight: '55vh', overflowY: 'auto',
           background: 'rgba(7,17,13,0.97)', backdropFilter: 'blur(16px)',
@@ -2212,6 +2278,7 @@ export default function ForagingApp() {
       {mycoOpen && (
         <div
           className="myco-forage-panel"
+          data-drag-box
           style={{
             position: 'absolute', bottom: 60, left: 20, zIndex: 20,
             width: 'min(400px, calc(100vw - 40px))',
@@ -2226,8 +2293,8 @@ export default function ForagingApp() {
             overflow: 'hidden',
           }}
         >
-          {/* Header */}
-          <div style={{
+          {/* Header — drag it to move the panel on desktop */}
+          <div data-drag-handle style={{
             padding: '12px 14px 10px',
             borderBottom: '0.5px solid rgba(168,143,224,0.15)',
             display: 'flex', alignItems: 'center', gap: 10,
@@ -2503,7 +2570,7 @@ export default function ForagingApp() {
           is on. Under the top bar on desktop; just above the Habitats pill on
           phones (clear of the Growing panel). Shrinks to a pill, never hides. */}
       {habitatFilter === 'nutrient_rich' && !selectedNode && (
-        <div className={`forage-nutrient-caution${nutrientCautionOpen ? ' open' : ''}`} role="note" aria-live="polite" style={{
+        <div data-drag-box className={`forage-nutrient-caution${nutrientCautionOpen ? ' open' : ''}`} role="note" aria-live="polite" style={{
           position: 'absolute', zIndex: 11,
           top: 'calc(var(--forage-top, 64px) + 14px)', left: '50%', transform: 'translateX(-50%)',
           width: nutrientCautionOpen ? 'min(560px, calc(100vw - 24px))' : 'auto',
@@ -2558,10 +2625,10 @@ export default function ForagingApp() {
 
       {/* Tapped nutrient-rich sighting — species, habitat and danger first */}
       {selectedNutrient && habitatFilter === 'nutrient_rich' && (
-        <div role="dialog" aria-label={`Sighting: ${selectedNutrient.species}`} style={{
+        <div data-drag-box role="dialog" aria-label={`Sighting: ${selectedNutrient.species}`} style={{
           position: 'absolute', left: '50%', bottom: 118, transform: 'translateX(-50%)', zIndex: 21,
           width: 'min(380px, calc(100vw - 24px))', background: 'rgba(12,10,8,0.96)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
-          border: `0.5px solid ${selectedNutrient.danger === 'lethal' ? 'rgba(225,107,107,0.7)' : 'rgba(181,137,90,0.5)'}`,
+          border: `0.5px solid ${selectedNutrient.danger === 'lethal' ? 'rgba(225,107,107,0.7)' : 'rgba(176,114,224,0.5)'}`,
           borderRadius: 12, padding: '14px 16px', color: '#E6D9B5', boxShadow: '0 12px 40px rgba(0,0,0,0.55)',
         }}>
           <button onClick={() => setSelectedNutrient(null)} aria-label="Close" style={{ position: 'absolute', top: 8, right: 10, background: 'none', border: 'none', color: '#8B7E62', fontSize: 18, cursor: 'pointer' }}>×</button>
@@ -2570,7 +2637,7 @@ export default function ForagingApp() {
           )}
           <div style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 19, lineHeight: 1.15, paddingRight: 20 }}>{selectedNutrient.species}</div>
           {selectedNutrient.commonName && <div style={{ fontFamily: 'monospace', fontSize: 9, color: '#C9B894', marginTop: 2 }}>{selectedNutrient.commonName}</div>}
-          <div style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#B5895A', marginTop: 8 }}>Habitat · {selectedNutrient.habitat}</div>
+          <div style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#B072E0', marginTop: 8 }}>Habitat · {selectedNutrient.habitat}</div>
           <div style={{ fontSize: 13, lineHeight: 1.5, color: selectedNutrient.danger ? '#F0C9B8' : '#C9B894', marginTop: 6 }}>{selectedNutrient.note}</div>
           <div style={{ fontFamily: 'monospace', fontSize: 8.5, color: '#8B7E62', marginTop: 8, display: 'flex', justifyContent: 'space-between', gap: 8, flexWrap: 'wrap' }}>
             <span>{selectedNutrient.date || 'date unknown'}{selectedNutrient.region ? ` · ${selectedNutrient.region}` : ''}</span>

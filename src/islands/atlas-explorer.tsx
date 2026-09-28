@@ -169,9 +169,19 @@ export default function AtlasExplorer() {
     return () => window.removeEventListener('hashchange', read);
   }, []);
 
+  // A dossier closed with a click on the dim backdrop must not open the
+  // card that was underneath it: a double click, or a tap that registered
+  // twice, used to reopen a dossier straight away (2026-09-29). So for a
+  // moment after one closes, a click that would open one is ignored.
+  // Links between dossiers are unaffected — they happen while one is open.
+  const closedAt = useRef(0);
   const open = useCallback((slug: string | null) => {
+    if (slug && Date.now() - closedAt.current < 450) return;
     if (slug) window.location.hash = slug;
-    else if (window.location.hash) history.replaceState(null, '', window.location.pathname + window.location.search);
+    else {
+      closedAt.current = Date.now();
+      if (window.location.hash) history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
     setOpenSlug(slug);
   }, []);
 

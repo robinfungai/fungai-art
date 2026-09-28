@@ -946,7 +946,7 @@ export const HABITAT_COLORS: Record<string, string> = {
   birch_edge:      '#4FA8E0',
   pine_heath:      '#C48838',
   wetland:         '#6BD66F',
-  deadwood_zone:   '#A88FE0',
+  deadwood_zone:   '#9E9A90',
   boreal_forest:   '#3A6B8A',
   meadow:          '#88C864',
   coastal:         '#4FA8E0',
@@ -955,7 +955,7 @@ export const HABITAT_COLORS: Record<string, string> = {
   mediterranean:   '#E8714B',
   ancient_forest:  '#C48838',
   jungle_edge:     '#4A7A3A',
-  nutrient_rich:   '#B5895A',
+  nutrient_rich:   '#B072E0',
 };
 
 export const HABITAT_LABELS: Record<string, string> = {

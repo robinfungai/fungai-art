@@ -61,7 +61,7 @@ window.FA_EXPLORER = {
     'Sleepy Sleepy': {
       title: 'Sleepy Sleepy', label: 'Composition · Evening', size: '30ml', price: 38,
       img: '/home/products/sleepy.webp', href: '/shop/sleepy-sleepy/',
-      note: 'Valerian, passionflower, magnolia bark, lemon balm and hops. The evening ritual of letting the day go.',
+      note: 'Valerian, passionflower, lemon balm, hops, chamomile, lavender and California poppy. The evening ritual of letting the day go.',
     },
     'Blue Lotus (dried 100g)': {
       title: 'Blue Lotus', label: 'Flowers · Sacred', size: '100g', price: 44,
@@ -91,7 +91,7 @@ window.FA_EXPLORER = {
     'Healthy Aging': {
       title: 'Healthy Aging', label: 'Composition · Longevity', size: '30ml', price: 44,
       img: '/home/products/healthy-aging.webp', href: '/shop/healthy-aging/',
-      note: 'Reishi, schisandra, ashwagandha, saffron and pearl. A daily tonic for the long view.',
+      note: 'Reishi, chaga, tremella, schisandra, calendula and birch buds. A daily tonic for the long view.',
     },
     'Moon Support': {
       title: 'Moon Support', label: 'Composition · Cycle', size: '30ml', price: 44,

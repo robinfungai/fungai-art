@@ -81,6 +81,24 @@ export const REGIONS: Region[] = [
 ];
 
 /**
+ * Each region's own colour (2026-09-29): the globe draws every region as a
+ * softly tinted area with a rim in this colour, and its label matches, so
+ * the regions read as distinct places rather than nine floating words.
+ * Muted, and chosen to stay apart from each other and from the node dots.
+ */
+export const REGION_COLORS: Record<string, string> = {
+  'fennoscandia':  '#7FB2C8',   // ice blue
+  'europe':        '#9DB67A',   // sage
+  'mediterranean': '#D9A55B',   // ochre
+  'east-asia':     '#C97A86',   // cinnabar rose
+  'south-asia':    '#E08E4A',   // saffron
+  'north-america': '#8A9FD1',   // slate blue
+  'mesoamerica':   '#C9B458',   // maize
+  'south-america': '#6FB39A',   // jade
+  'africa':        '#C98F6B',   // terracotta
+};
+
+/**
  * Organisms recorded only as "Global" — cosmopolitan, or simply not
  * pinned down. They are NOT scattered across the map to fill it out.
  * They get their own off-globe tier, because pretending to know where a

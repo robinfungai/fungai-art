@@ -99,6 +99,22 @@ answer, ethanol for under-18s (product decision), HIGH-caution count cap.
 
 Robin still to do: make the GitHub repo private (D7); say "push" (D0).
 
+### 0 · From the 2026-09-29 site round (look at these too)
+- **"API key required" on /foraging** (Robin saw it). Not a string in our
+  code, so it comes from a map server. Most likely: `VITE_ARCGIS_API_KEY`
+  is set in Netlify, so both map modes use Esri's Basemap Styles service,
+  and the key is missing the Basemaps privilege or has expired. Check the
+  Netlify env var and the key in the ArcGIS developer dashboard; with no
+  key the map falls back to CARTO/Esri tiles that need none.
+  (Separately fixed that night: the Dark map was broken on the live site
+  because `netlify.toml`'s CSP blocked `tiles*.basemaps.cartocdn.com`,
+  where the dark style's tiles, fonts and icons live.)
+- **Birch buds and California poppy are not in the herb catalogue.** They
+  are now in the shop copy (Healthy Aging, Sleepy Sleepy) but the Atlas,
+  the formula engine and MYCO don't know them. Adding them is a full
+  "herbs everywhere" job (build chain + shelf + restricted list + shop) —
+  and each needs recorded safety data before it can reach a bottle.
+
 ### 1 · D9 — claims-safe wording (first task)
 Go through every customer-facing string of the formula maker and draft a
 table for Robin: **current wording → proposed wording → why**. Nothing

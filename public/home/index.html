@@ -1936,7 +1936,7 @@ function toggleMobileMenu() {
         <div class="product-info">
           <span class="product-category">Compositions · Sleep</span>
           <a href="/shop/sleepy-sleepy/" class="product-name" style="text-decoration:none;color:inherit;transition:color 0.2s" onmouseover="this.style.color='var(--mist)'" onmouseout="this.style.color=''">Sleepy Sleepy</a>
-          <p class="product-desc">Deep sleep · dream ease · full surrender. Valerian, passionflower, magnolia, lemon balm, hops, chamomile. A slow drift into nocturnal rest.</p>
+          <p class="product-desc">Deep sleep · dream ease · full surrender. Valerian, passionflower, lemon balm, hops, chamomile, lavender, California poppy. A slow drift into nocturnal rest.</p>
           <div class="product-notes">
             <span class="note-tag">Sleep</span><span class="note-tag">GABA</span><span class="note-tag">Restorative</span>
           </div>
@@ -2330,33 +2330,48 @@ function toggleMobileMenu() {
 
     /* ── Right column: photo ─────────────────────────────────── */
     .dinner-right { position: relative; }
+    /* Floating photo — the same soft rounded shape, faded edges and
+       slow levitation as the featured photo on /dinner-experience
+       (.concept-img there), so the two pages feel like one place. */
     .dinner-photo {
       position: relative;
-      overflow: hidden;
-      border-radius: 6px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 6px 18px rgba(232,177,75,0.08);
-      transform: rotate(-1deg);
-      transition: transform 0.4s;
+      margin: 0;
+      animation: dinner-float 7s ease-in-out infinite;
     }
-    .dinner-photo:hover { transform: rotate(0deg) scale(1.02); }
+    .dinner-photo::before {
+      content: '';
+      position: absolute;
+      inset: -8%;
+      background: radial-gradient(ellipse 65% 55% at 50% 45%, rgba(232,177,75,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
     .dinner-photo img {
       width: 100%;
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 1 / 1.15;
       object-fit: cover;
+      object-position: center;
       display: block;
-      filter: contrast(1.05) saturate(1.02);
+      filter: contrast(1.05) saturate(0.92);
+      border-radius: 50% 44% 52% 48% / 46% 50% 50% 54%;
+      -webkit-mask-image: radial-gradient(ellipse 92% 90% at 50% 50%, #000 55%, transparent 96%);
+              mask-image: radial-gradient(ellipse 92% 90% at 50% 50%, #000 55%, transparent 96%);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.35), 0 0 60px rgba(232,177,75,0.05);
     }
+    @keyframes dinner-float {
+      0%, 100% { transform: translateY(0) rotate(-0.5deg); }
+      50%      { transform: translateY(-14px) rotate(0.5deg); }
+    }
+    @media (prefers-reduced-motion: reduce) { .dinner-photo { animation: none; } }
     .dinner-photo figcaption {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 60px 24px 22px;
-      background: linear-gradient(180deg, rgba(5,9,12,0) 0%, rgba(5,9,12,0.92) 60%, rgba(5,9,12,0.98) 100%);
+      margin-top: 14px;
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-style: italic;
       font-size: 13.5px;
       line-height: 1.5;
       color: var(--parchment, #EDE5D8);
-      text-align: right;
+      opacity: 0.8;
+      text-align: center;
       letter-spacing: 0.01em;
     }
 
@@ -2364,7 +2379,6 @@ function toggleMobileMenu() {
     @media (max-width: 900px) {
       .dinner-inner { grid-template-columns: 1fr; gap: 40px; padding: 0 24px; }
       .dinner-right { order: -1; max-width: 460px; margin: 0 auto; }
-      .dinner-photo { transform: none; }
       .dinner-title { font-size: clamp(40px, 10vw, 60px); }
     }
     @media (max-width: 560px) {
@@ -2551,9 +2565,9 @@ function toggleMobileMenu() {
       <!-- Right: atmospheric panel -->
       <div class="reveal reveal-d2" style="display:flex;flex-direction:column;gap:16px;">
         <!-- Live map embed -->
-        <div style="background:var(--forest-card);border:0.5px solid rgba(107,214,111,0.18);padding:0;border-radius:14px;position:relative;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,0.4);">
+        <div style="background:var(--forest-card);border:0.5px solid rgba(227,215,184,0.14);padding:0;border-radius:14px;position:relative;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,0.4);">
           <div class="forage-map-chip forage-map-chip--wide" style="left:16px;">Sneak peek &middot; the Baltic arc</div>
-          <div class="forage-map-chip" style="right:16px;"><span class="forage-map-dot"></span> Each pin is a forageable</div>
+          <div class="forage-map-chip" style="right:16px;"><span class="forage-map-dot"></span> 8 habitats &middot; 40 forageables</div>
           <!-- Foraging sneak peek (2026-09-25) — zoomed into North Germany,
                Denmark, southern Sweden and the Baltics, so a visitor reads
                the pins as things they could pick. The map is
@@ -2564,47 +2578,94 @@ function toggleMobileMenu() {
           <a href="/foraging" class="forage-map-shot" aria-label="Open the Foraging Map">
             <span class="fms-stage">
               <img src="/home/forage-baltic.svg" width="1200" height="900" loading="lazy" decoding="async"
-                   alt="Map of North Germany, Denmark, southern Sweden and the Baltic states, with six forageable plants and fungi pinned: elderberry, hawthorn, chaga, bilberry, sea buckthorn and chanterelle">
-              <span class="fpin" style="left:12.1%;top:75.5%;"><i></i><span><b>Elderberry</b><em>hedgerows &middot; Aug&ndash;Sep</em></span></span>
-              <span class="fpin" style="left:21.5%;top:63.8%;"><i></i><span><b>Hawthorn</b><em>field edges &middot; Sep&ndash;Oct</em></span></span>
-              <span class="fpin" style="left:36.4%;top:47.4%;"><i></i><span><b>Chaga</b><em>on birch &middot; all year</em></span></span>
-              <span class="fpin" style="left:47.1%;top:26.3%;"><i></i><span><b>Bilberry</b><em>pine heath &middot; Jul&ndash;Aug</em></span></span>
-              <span class="fpin" style="left:64.2%;top:66.7%;"><i></i><span><b>Sea buckthorn</b><em>coastal dunes &middot; Sep&ndash;Oct</em></span></span>
-              <span class="fpin fpin--left" style="left:81.8%;top:47.7%;"><i></i><span><b>Chanterelle</b><em>mossy spruce &middot; Jul&ndash;Oct</em></span></span>
+                   alt="Map of North Germany, Denmark, southern Sweden and the Baltic states, with eight habitats pinned — pine heath, spruce forest, birch wood, coast, hedgerow, meadow, bog and beech wood — each showing in turn the common forageable plants and fungi that grow there">
+              <span class="fpin" data-habitat="hedgerow" style="left:12.1%;top:75.5%;"><i></i><span><small>Hedgerow</small><b>Elderberry</b><em>Aug&ndash;Sep</em></span></span>
+              <span class="fpin" data-habitat="meadow" style="left:21.5%;top:63.8%;"><i></i><span><small>Meadow &amp; field edge</small><b>Hawthorn</b><em>Sep&ndash;Oct</em></span></span>
+              <span class="fpin" data-habitat="birch" style="left:36.4%;top:47.4%;"><i></i><span><small>Birch wood</small><b>Chaga</b><em>all year</em></span></span>
+              <span class="fpin" data-habitat="heath" style="left:47.1%;top:26.3%;"><i></i><span><small>Pine heath</small><b>Bilberry</b><em>Jul&ndash;Aug</em></span></span>
+              <span class="fpin" data-habitat="coast" style="left:64.2%;top:66.7%;"><i></i><span><small>Coast &amp; dunes</small><b>Sea buckthorn</b><em>Sep&ndash;Oct</em></span></span>
+              <span class="fpin fpin--left" data-habitat="spruce" style="left:81.8%;top:47.7%;"><i></i><span><small>Mossy spruce</small><b>Chanterelle</b><em>Jul&ndash;Oct</em></span></span>
+              <span class="fpin fpin--left" data-habitat="bog" style="left:76%;top:57%;"><i></i><span><small>Bog &amp; wetland</small><b>Cloudberry</b><em>Jul&ndash;Aug</em></span></span>
+              <span class="fpin" data-habitat="beech" style="left:38%;top:87%;"><i></i><span><small>Beech wood</small><b>Ramsons</b><em>Apr&ndash;May</em></span></span>
             </span>
             <span class="forage-map-cta">Open the live map &rarr;</span>
             <span class="forage-map-credit">Map: Natural Earth</span>
           </a>
           <style>
-            .forage-map-chip{position:absolute;top:14px;z-index:3;display:flex;align-items:center;gap:6px;font-family:'Bayer',var(--sans);font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:#B6F0AE;background:rgba(6,11,6,0.72);backdrop-filter:blur(6px);padding:6px 11px;border-radius:99px;border:0.5px solid rgba(182,240,174,0.25);pointer-events:none;}
-            .forage-map-dot{width:6px;height:6px;border-radius:50%;background:#6BD66F;box-shadow:0 0 8px rgba(107,214,111,0.8);}
+            /* 2026-09-29: warm parchment and sage instead of neon green,
+               no glow — a field guide, not a terminal. */
+            .forage-map-chip{position:absolute;top:14px;z-index:3;display:flex;align-items:center;gap:6px;font-family:'Bayer',var(--sans);font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:#E3D7B8;background:rgba(10,13,11,0.7);backdrop-filter:blur(6px);padding:6px 11px;border-radius:99px;border:0.5px solid rgba(227,215,184,0.2);pointer-events:none;}
+            .forage-map-dot{width:6px;height:6px;border-radius:50%;background:#C9B98F;}
             .forage-map-shot{position:relative;display:block;border-radius:8px;overflow:hidden;line-height:0;text-decoration:none}
             .fms-stage{position:relative;display:block;transition:transform .6s ease;transform-origin:50% 50%}
             .fms-stage img{width:100%;height:auto;display:block}
             .forage-map-shot::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(5,9,12,.45) 0%,rgba(5,9,12,0) 20%,rgba(5,9,12,0) 72%,rgba(5,9,12,.55) 100%)}
             .forage-map-shot:hover .fms-stage{transform:scale(1.03)}
             .fpin{position:absolute;display:flex;align-items:center;gap:7px;line-height:1.15;transform:translate(-5px,-50%);pointer-events:none}
-            .fpin i{position:relative;flex:0 0 auto;width:10px;height:10px;border-radius:50%;background:#B6F0AE;box-shadow:0 0 0 3px rgba(107,214,111,0.22),0 0 14px rgba(107,214,111,0.9)}
-            .fpin i::after{content:'';position:absolute;inset:-7px;border-radius:50%;border:1px solid rgba(182,240,174,0.55);animation:fpinPulse 2.8s ease-out infinite}
-            .fpin > span{display:grid;gap:2px;padding:5px 9px 5px 8px;border-radius:8px;background:rgba(6,11,6,0.78);border:0.5px solid rgba(182,240,174,0.28);box-shadow:0 4px 14px rgba(0,0,0,0.45);white-space:nowrap}
-            .fpin b{font-family:'IM Fell English','Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:400;font-size:14px;color:var(--parchment)}
-            .fpin em{font-family:'Bayer',var(--sans);font-style:normal;font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;color:#9ED4A0}
+            .fpin i{position:relative;flex:0 0 auto;width:8px;height:8px;border-radius:50%;background:#E3D7B8;box-shadow:0 0 0 3px rgba(227,215,184,0.14)}
+            .fpin > span{display:grid;gap:1px;padding:5px 10px 6px 9px;border-radius:6px;background:rgba(10,13,11,0.74);border:0.5px solid rgba(227,215,184,0.18);box-shadow:0 4px 14px rgba(0,0,0,0.4);white-space:nowrap;transition:opacity .7s ease}
+            .fpin.is-turning > span{opacity:0}
+            .fpin small{font-family:'Bayer',var(--sans);font-size:7px;letter-spacing:.2em;text-transform:uppercase;color:#A9B79A}
+            .fpin b{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:500;font-size:15px;color:var(--parchment)}
+            .fpin em{font-family:'Bayer',var(--sans);font-style:normal;font-size:7px;letter-spacing:.18em;text-transform:uppercase;color:rgba(237,229,216,.55)}
             .fpin--left{flex-direction:row-reverse;transform:translate(calc(-100% + 5px),-50%)}
-            @keyframes fpinPulse{0%{transform:scale(.4);opacity:.9}100%{transform:scale(1.5);opacity:0}}
-            .forage-map-cta{position:absolute;left:16px;bottom:14px;z-index:2;line-height:1;font-family:'Bayer',var(--sans);font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:#05090C;background:#B6F0AE;padding:9px 14px;border-radius:999px}
+            .forage-map-cta{position:absolute;left:16px;bottom:14px;z-index:2;line-height:1;font-family:'Bayer',var(--sans);font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:#0A0D0B;background:#E3D7B8;padding:9px 14px;border-radius:999px}
             .forage-map-credit{position:absolute;right:10px;bottom:12px;z-index:2;line-height:1.2;font-size:9px;color:rgba(237,229,216,.7);text-shadow:0 1px 4px rgba(0,0,0,.9)}
             @media (max-width:560px){
-              .fpin em{display:none}
-              .fpin b{font-size:11.5px}
+              .fpin em,.fpin small{display:none}
+              .fpin b{font-size:12px}
               .fpin > span{padding:3px 7px}
               .forage-map-chip{font-size:7.5px;letter-spacing:1.4px;padding:5px 8px}
               .forage-map-chip--wide{display:none}
             }
-            @media (prefers-reduced-motion: reduce){ .fpin i::after{animation:none} .fms-stage{transition:none} }
+            @media (prefers-reduced-motion: reduce){ .fms-stage{transition:none} .fpin > span{transition:none} }
           </style>
+          <script>
+          // Forty common Nordic forageables, five per habitat. One label
+          // turns every few seconds, so the map stays calm while the whole
+          // list comes round in about two minutes. Seasons are when that
+          // part is picked. Runs only while the map is on screen, and not
+          // at all for people who ask for reduced motion.
+          (function () {
+            var FORAGE = {
+              heath:    [['Bilberry','Jul–Aug'],['Lingonberry','Aug–Oct'],['Crowberry','Aug–Sep'],['Heather','Jul–Sep'],['Juniper berry','Sep–Nov']],
+              spruce:   [['Chanterelle','Jul–Oct'],['Porcini','Jul–Oct'],['Hedgehog mushroom','Aug–Nov'],['Wood sorrel','Apr–Sep'],['Spruce tips','May–Jun']],
+              birch:    [['Chaga','all year'],['Birch leaves','May–Jun'],['Birch polypore','Aug–Nov'],['Wild strawberry','Jun–Jul'],['Raspberry','Jul–Aug']],
+              coast:    [['Sea buckthorn','Sep–Oct'],['Rose hips','Aug–Oct'],['Sea kale','May–Jun'],['Scurvy grass','Apr–Jun'],['Sea beet','May–Sep']],
+              hedgerow: [['Elderberry','Aug–Sep'],['Sloe','Oct–Nov'],['Blackberry','Aug–Sep'],['Hazelnut','Sep–Oct'],['Crab apple','Sep–Oct']],
+              meadow:   [['Hawthorn','Sep–Oct'],['Yarrow','Jun–Sep'],['Nettle','Apr–Jun'],['Dandelion','Apr–Jun'],['Meadowsweet','Jun–Aug']],
+              bog:      [['Cloudberry','Jul–Aug'],['Cranberry','Sep–Oct'],['Bog myrtle','May–Sep'],['Bogbean','May–Jul'],['Water mint','Jul–Sep']],
+              beech:    [['Ramsons','Apr–May'],['Sweet woodruff','Apr–May'],['Ground elder','Apr–Jun'],['Oyster mushroom','Oct–Feb'],['Lime blossom','Jun–Jul']]
+            };
+            if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            var pins = [].slice.call(document.querySelectorAll('.fpin[data-habitat]'));
+            if (!pins.length) return;
+            var at = {}, turn = 0, timer = null;
+            pins.forEach(function (p) { at[p.getAttribute('data-habitat')] = 0; });
+            function next() {
+              var pin = pins[turn % pins.length]; turn++;
+              var list = FORAGE[pin.getAttribute('data-habitat')];
+              if (!list) return;
+              var h = pin.getAttribute('data-habitat');
+              at[h] = (at[h] + 1) % list.length;
+              pin.classList.add('is-turning');
+              setTimeout(function () {
+                pin.querySelector('b').textContent = list[at[h]][0];
+                pin.querySelector('em').textContent = list[at[h]][1];
+                pin.classList.remove('is-turning');
+              }, 700);
+            }
+            function start() { if (!timer) timer = setInterval(next, 2800); }
+            function stop()  { clearInterval(timer); timer = null; }
+            if ('IntersectionObserver' in window) {
+              new IntersectionObserver(function (es) { es[0].isIntersecting ? start() : stop(); })
+                .observe(pins[0].closest('.forage-map-shot'));
+            } else { start(); }
+          })();
+          </script>
         </div>
-        <div style="padding:22px 26px;background:rgba(107,214,111,0.04);border:0.5px solid rgba(107,214,111,0.15);border-radius:14px;">
-          <p style="font-family:'IM Fell English','Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:400;font-size:20px;color:var(--parchment);line-height:1.5;">"Forage with us. Learn the names, properties, and stories of wild plants you walk past every day."</p>
+        <div style="padding:22px 26px;background:rgba(227,215,184,0.035);border:0.5px solid rgba(227,215,184,0.12);border-radius:14px;">
+          <p style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:400;font-size:23px;color:var(--parchment);line-height:1.45;letter-spacing:0.005em;">"Forage with us. Learn the names, properties, and stories of wild plants you walk past every day."</p>
         </div>
       </div>
     </div>
