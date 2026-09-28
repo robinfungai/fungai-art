@@ -1,13 +1,13 @@
 # Fungai Art — how the formula maker decides
 
-*Audit brief · engine 2.6.0 · safety rules 1.4.0 · 245 herbs · 2026-09-28*
+*Audit brief · engine 2.6.1 · safety rules 1.4.1 · 245 herbs · 2026-09-29*
 
 This document describes, as exactly as the code allows, how fungai.art turns
 a person's quiz answers into a herbal extract formula. It is written for an
 independent reviewer (human or AI) who has **not** seen the code. Every rule
 below names the file it lives in, so each claim can be checked.
 
-**Which code this describes.** Engine **2.6.0** in the repository's `main`
+**Which code this describes.** Engine **2.6.1** in the repository's `main`
 branch as developed locally. The live site at fungai.art only changes when
 that branch is deployed. **If you read the code on GitHub, first check
 `src/server/formula-engine/version.js`:** the first external audit
@@ -227,7 +227,7 @@ highest-leverage data in the engine.
 | Body pattern | +4 (or +2 if the herb's only pattern is "mixed", read as neutral) | patterns inferred from the herb's text and energetics (cooling words → suits "hot", etc.) |
 | Time of day | +2 | inferred from the herb's goals (sleep → evening/night, energy → morning…) |
 | Stress style | +3 | inferred from text (adaptogen → push/collapse, nervine → off/ride…) |
-| Note keywords | +2 per keyword, +4 per phrase, **at most +6 in total** | the word appears in both the note and the herb's text; a curated misspelling table corrects common typos. Safety words in the note are handled separately, as exclusions (§4.2 item 4); both pages still ask for medicines and pregnancy in the safety question |
+| Note keywords | +2 per keyword, +4 per phrase, **at most +6 in total** | the word appears in both the note and the herb's text, at the start of a word (short words such as "art", "flu", "heart" as whole words — since 2.6.1 "partner" no longer counts as "art"); a curated misspelling table corrects common typos. Safety words in the note are handled separately, as exclusions (§4.2 item 4); both pages still ask for medicines and pregnancy in the safety question |
 | Sub-pattern | +6 | name matches a hint list (e.g. cold_hands → cinnamon, ginger…) |
 | Duration | −2 to +4 | weeks favour fast-acting herbs; a year or more favours tonics |
 | Age | −2 to +2 | 60+ favours gentle tonics and penalises stimulants |

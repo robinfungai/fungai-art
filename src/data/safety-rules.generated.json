@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-28T17:16:03.525Z",
+  "generatedAt": "2026-09-28T22:07:40.735Z",
   "counts": {
     "botanicals": 245,
     "rules": 2438,
@@ -110,7 +110,6 @@
       "pregnancy"
     ],
     "206": [
-      "autoimmune",
       "pregnancy"
     ],
     "207": [
@@ -118,7 +117,6 @@
       "sedatives"
     ],
     "208": [
-      "autoimmune",
       "cardio_meds",
       "pregnancy"
     ],
@@ -140,7 +138,6 @@
       "pregnancy"
     ],
     "213": [
-      "autoimmune",
       "cardio_meds",
       "hypertension",
       "pregnancy"
@@ -182,7 +179,6 @@
       "thyroid"
     ],
     "222": [
-      "autoimmune",
       "pregnancy"
     ],
     "223": [
@@ -204,7 +200,6 @@
       "pregnancy"
     ],
     "228": [
-      "autoimmune",
       "cardio_meds",
       "pregnancy"
     ],
@@ -238,7 +233,6 @@
       "pregnancy"
     ],
     "235": [
-      "autoimmune",
       "pregnancy"
     ],
     "236": [
@@ -260,7 +254,6 @@
       "psych_meds"
     ],
     "240": [
-      "autoimmune",
       "cardio_meds",
       "hypertension",
       "pregnancy",
@@ -271,12 +264,10 @@
       "pregnancy"
     ],
     "242": [
-      "autoimmune",
       "liver_kidney",
       "pregnancy"
     ],
     "243": [
-      "autoimmune",
       "pregnancy",
       "sedatives"
     ],
@@ -341,7 +332,6 @@
       "psych_meds"
     ],
     "257": [
-      "autoimmune",
       "liver_kidney",
       "pregnancy",
       "sedatives"
@@ -413,14 +403,12 @@
       "pregnancy"
     ],
     "273": [
-      "autoimmune",
       "pregnancy",
       "psych_meds",
       "sedatives"
     ],
     "274": [
       "allergy",
-      "autoimmune",
       "cardio_meds",
       "pregnancy"
     ],
@@ -438,7 +426,6 @@
     ],
     "278": [
       "allergy",
-      "autoimmune",
       "cardio_meds",
       "pregnancy",
       "psych_meds"
@@ -459,11 +446,8 @@
       "pregnancy",
       "sedatives"
     ],
-    "282": [
-      "autoimmune"
-    ],
+    "282": [],
     "283": [
-      "autoimmune",
       "pregnancy"
     ],
     "284": [
@@ -496,13 +480,11 @@
       "sedatives"
     ],
     "290": [
-      "autoimmune",
       "contraceptive",
       "pregnancy",
       "psych_meds"
     ],
     "291": [
-      "autoimmune",
       "pregnancy",
       "sedatives"
     ],
@@ -533,7 +515,6 @@
       "psych_meds"
     ],
     "297": [
-      "autoimmune",
       "pregnancy"
     ],
     "298": [
@@ -553,11 +534,9 @@
     ],
     "302": [],
     "303": [
-      "autoimmune",
       "pregnancy"
     ],
     "304": [
-      "autoimmune",
       "cardio_meds",
       "pregnancy"
     ],
@@ -588,12 +567,10 @@
       "autoimmune"
     ],
     "311": [
-      "autoimmune",
       "pregnancy",
       "sedatives"
     ],
     "312": [
-      "autoimmune",
       "pregnancy",
       "sedatives"
     ],
@@ -624,7 +601,6 @@
       "pregnancy"
     ],
     "320": [
-      "autoimmune",
       "liver_kidney",
       "pregnancy"
     ],
@@ -745,7 +721,6 @@
       "psych_meds"
     ],
     "419": [
-      "autoimmune",
       "pregnancy",
       "psych_meds",
       "sedatives"
@@ -1009,7 +984,6 @@
       "psych_meds"
     ],
     "561": [
-      "autoimmune",
       "cardio_meds",
       "pregnancy"
     ],
@@ -1134,7 +1108,6 @@
       "thyroid"
     ],
     "592": [
-      "autoimmune",
       "cardio_meds",
       "hypertension",
       "pregnancy",
@@ -1242,7 +1215,6 @@
       "pregnancy"
     ],
     "206": [
-      "autoimmune",
       "pregnancy"
     ],
     "207": [
@@ -1250,7 +1222,6 @@
       "sedatives"
     ],
     "208": [
-      "autoimmune",
       "cardio_meds",
       "pregnancy"
     ],
@@ -1272,7 +1243,6 @@
       "pregnancy"
     ],
     "213": [
-      "autoimmune",
       "cardio_meds",
       "hypertension",
       "pregnancy"
@@ -1313,7 +1283,6 @@
       "thyroid"
     ],
     "222": [
-      "autoimmune",
       "pregnancy"
     ],
     "223": [
@@ -1335,7 +1304,6 @@
       "pregnancy"
     ],
     "228": [
-      "autoimmune",
       "cardio_meds",
       "pregnancy"
     ],
@@ -1369,7 +1337,6 @@
       "pregnancy"
     ],
     "235": [
-      "autoimmune",
       "pregnancy"
     ],
     "236": [
@@ -1391,7 +1358,6 @@
       "psych_meds"
     ],
     "240": [
-      "autoimmune",
       "cardio_meds",
       "hypertension",
       "pregnancy",
@@ -1402,12 +1368,10 @@
       "pregnancy"
     ],
     "242": [
-      "autoimmune",
       "liver_kidney",
       "pregnancy"
     ],
     "243": [
-      "autoimmune",
       "pregnancy",
       "sedatives"
     ],
@@ -1472,7 +1436,6 @@
       "psych_meds"
     ],
     "257": [
-      "autoimmune",
       "liver_kidney",
       "pregnancy",
       "sedatives"
@@ -1544,14 +1507,12 @@
       "pregnancy"
     ],
     "273": [
-      "autoimmune",
       "pregnancy",
       "psych_meds",
       "sedatives"
     ],
     "274": [
       "allergy",
-      "autoimmune",
       "cardio_meds",
       "pregnancy"
     ],
@@ -1569,7 +1530,6 @@
     ],
     "278": [
       "allergy",
-      "autoimmune",
       "cardio_meds",
       "pregnancy",
       "psych_meds"
@@ -1590,11 +1550,8 @@
       "pregnancy",
       "sedatives"
     ],
-    "282": [
-      "autoimmune"
-    ],
+    "282": [],
     "283": [
-      "autoimmune",
       "pregnancy"
     ],
     "284": [
@@ -1627,13 +1584,11 @@
       "sedatives"
     ],
     "290": [
-      "autoimmune",
       "contraceptive",
       "pregnancy",
       "psych_meds"
     ],
     "291": [
-      "autoimmune",
       "pregnancy",
       "sedatives"
     ],
@@ -1664,7 +1619,6 @@
       "psych_meds"
     ],
     "297": [
-      "autoimmune",
       "pregnancy"
     ],
     "298": [
@@ -1683,11 +1637,9 @@
     ],
     "302": [],
     "303": [
-      "autoimmune",
       "pregnancy"
     ],
     "304": [
-      "autoimmune",
       "cardio_meds",
       "pregnancy"
     ],
@@ -1718,12 +1670,10 @@
       "autoimmune"
     ],
     "311": [
-      "autoimmune",
       "pregnancy",
       "sedatives"
     ],
     "312": [
-      "autoimmune",
       "pregnancy",
       "sedatives"
     ],
@@ -1754,7 +1704,6 @@
       "pregnancy"
     ],
     "320": [
-      "autoimmune",
       "liver_kidney",
       "pregnancy"
     ],
@@ -1875,7 +1824,6 @@
       "psych_meds"
     ],
     "419": [
-      "autoimmune",
       "pregnancy",
       "psych_meds",
       "sedatives"
@@ -2139,7 +2087,6 @@
       "psych_meds"
     ],
     "561": [
-      "autoimmune",
       "pregnancy"
     ],
     "562": [
@@ -2261,7 +2208,6 @@
       "thyroid"
     ],
     "592": [
-      "autoimmune",
       "cardio_meds",
       "hypertension",
       "pregnancy",
@@ -3264,9 +3210,7 @@
       "subject": "IBS and FODMAP sensitivity",
       "severity": "monitor",
       "reason": "high fermentable fibre may exacerbate symptoms; start very low and titrate slowly",
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -3711,8 +3655,7 @@
       "severity": "caution",
       "reason": "LIKELY SAFE at culinary doses; consult provider for concentrated forms",
       "flags": [
-        "pregnancy",
-        "autoimmune"
+        "pregnancy"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -4620,7 +4563,6 @@
       "reason": "monitor BP and symptoms",
       "flags": [
         "cardio_meds",
-        "autoimmune",
         "hypertension"
       ],
       "source": "herbs.ts · herb_to_drug_interactions"
@@ -5116,9 +5058,7 @@
       "subject": "ALL OTHER PLANT PARTS (leaves, stems, bark, root)",
       "severity": "avoid",
       "reason": "TOXIC: sambunigrin present; absolutely avoid",
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -6084,8 +6024,7 @@
       "severity": "avoid",
       "reason": "AVOID concentrated forms: mixed safety data",
       "flags": [
-        "pregnancy",
-        "autoimmune"
+        "pregnancy"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -6328,9 +6267,7 @@
       "subject": "High-dose essential oil",
       "severity": "unspecified",
       "reason": "can cause nausea, vomiting and CNS symptoms at excessive doses",
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -6904,8 +6841,7 @@
       "severity": "caution",
       "reason": "culinary doses safe; consult provider for concentrated forms",
       "flags": [
-        "pregnancy",
-        "autoimmune"
+        "pregnancy"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -7350,9 +7286,7 @@
       "subject": "Pregnancy",
       "severity": "caution",
       "reason": "safe; traditional use supports immune health during pregnancy; consult provider for concentrated forms",
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -7753,9 +7687,7 @@
       "subject": "Serious eye symptoms (pain, photophobia, vision changes, corneal opacity, trauma) — URGENT MEDICAL REFERRAL: eyebright alone is not appropriate",
       "severity": "unspecified",
       "reason": null,
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -8447,8 +8379,7 @@
       "severity": "caution",
       "reason": "CAUTION: insufficient data on concentrated forms",
       "flags": [
-        "pregnancy",
-        "autoimmune"
+        "pregnancy"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -8831,9 +8762,7 @@
       "subject": "Lamiaceae allergy",
       "severity": "avoid",
       "reason": "possible; discontinue if rash or respiratory symptoms",
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -9122,8 +9051,7 @@
       "severity": "caution",
       "reason": "high-dose concentrated forms: traditional abortifacient associations; culinary tea amounts safe; consult provider",
       "flags": [
-        "pregnancy",
-        "autoimmune"
+        "pregnancy"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -9136,8 +9064,7 @@
       "severity": "caution",
       "reason": "tea generally safe; concentrated forms: consult provider",
       "flags": [
-        "pregnancy",
-        "autoimmune"
+        "pregnancy"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -9358,9 +9285,7 @@
       "subject": "Hormone therapies and SERMs",
       "severity": "monitor",
       "reason": "phytoestrogenic interaction; monitor",
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · herb_to_drug_interactions"
     },
     {
@@ -11335,7 +11260,6 @@
       "severity": "absolute",
       "reason": "NEVER USE: associated with higher hepatotoxicity risk",
       "flags": [
-        "autoimmune",
         "liver_kidney"
       ],
       "source": "herbs.ts · contraindications"
@@ -13423,8 +13347,7 @@
       "severity": "unspecified",
       "reason": "culinary amounts safe; high-dose concentrated forms insufficient data",
       "flags": [
-        "pregnancy",
-        "autoimmune"
+        "pregnancy"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -13581,8 +13504,7 @@
       "severity": "monitor",
       "reason": "MONITOR: trace alkaloid weak MAOI-like activity may produce additive serotonin effect; generally compatible; watch for rare serotonin syndrome symptoms",
       "flags": [
-        "psych_meds",
-        "autoimmune"
+        "psych_meds"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -13802,9 +13724,7 @@
       "subject": "CYP450 substrates",
       "severity": "monitor",
       "reason": "beta-lapachone metabolised via CYP systems; drug level changes possible; monitor",
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · herb_to_drug_interactions"
     },
     {
@@ -14315,8 +14235,7 @@
       "severity": "monitor",
       "reason": "MONITOR: both affect serotonin; additive serotonin effects generally manageable; rare serotonin syndrome symptoms to watch for; may eventually allow SSRI dose reduction (consult psychiatrist)",
       "flags": [
-        "psych_meds",
-        "autoimmune"
+        "psych_meds"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -15359,9 +15278,7 @@
       "subject": "Hormone-sensitive conditions (oestrogen-receptor-positive breast cancer history)",
       "severity": "monitor",
       "reason": "MONITOR: minor phytoestrogenic theoretical concern; culinary doses generally safe; consult oncologist for concentrated forms",
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -15417,8 +15334,7 @@
       "severity": "avoid",
       "reason": "essential oil and high-dose concentrated extracts have emmenagogue potential; CULINARY amounts in food are entirely safe; extracts and concentrated extracts: use caution or avoid; consult provider",
       "flags": [
-        "pregnancy",
-        "autoimmune"
+        "pregnancy"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -16290,8 +16206,7 @@
       "severity": "caution",
       "reason": "CAUTION/AVOID concentrated forms: some traditional use but insufficient modern data; consult provider",
       "flags": [
-        "pregnancy",
-        "autoimmune"
+        "pregnancy"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -16437,8 +16352,7 @@
       "severity": "caution",
       "reason": "CAUTION: theoretical alkaloid transfer to infant; LIKELY AVOID concentrated forms; consult provider",
       "flags": [
-        "pregnancy",
-        "autoimmune"
+        "pregnancy"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -17282,9 +17196,7 @@
       "subject": "Children and infants under 2",
       "severity": "avoid",
       "reason": "insufficient data; not recommended in concentrated supplement forms",
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -17882,9 +17794,7 @@
       "subject": "Seizure disorders",
       "severity": "avoid",
       "reason": "THEORETICAL CAUTION with concentrated forms only: thujone may lower seizure threshold at extreme doses; TEA IS SAFE; avoid concentrated essential oil or extracts if seizure-prone",
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -17987,9 +17897,7 @@
       "subject": "Unassessed urinary symptoms",
       "severity": "unspecified",
       "reason": "HARD BLOCK: must have medical evaluation before herbal recommendation to rule out prostate cancer, acute urinary retention and serious pathology",
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -18350,9 +18258,7 @@
       "subject": "Mushroom allergy or fungal sensitivity",
       "severity": "monitor",
       "reason": "monitor for rash, respiratory symptoms or GI upset",
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -18933,9 +18839,7 @@
       "subject": "Any concurrent CNS-active medication",
       "severity": "unspecified",
       "reason": "unpredictable interaction via GABA and glutamate systems",
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -19075,9 +18979,7 @@
       "subject": "Any concurrent medication",
       "severity": "unspecified",
       "reason": "unpredictable interactions via GABA and glutamate systems",
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -19206,9 +19108,7 @@
       "subject": "Raw consumption",
       "severity": "avoid",
       "reason": "AVOID: raw Coprinus may cause GI upset and possibly neurotoxic symptoms; always cook thoroughly",
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -19821,9 +19721,7 @@
       "subject": "Otherwise: generally well tolerated in oral and injectable forms in East Asian clinical practice; no major acute toxicity signals",
       "severity": "unspecified",
       "reason": null,
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -19895,9 +19793,7 @@
       "subject": "Raw or undercooked consumption",
       "severity": "unspecified",
       "reason": "ALWAYS cook thoroughly: raw morels can cause GI upset (nausea, vomiting, diarrhoea) and possibly neurotoxic symptoms; NEVER eat raw",
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -20138,8 +20034,7 @@
       "severity": "avoid",
       "reason": "insufficient data; avoid concentrated forms without professional guidance",
       "flags": [
-        "pregnancy",
-        "autoimmune"
+        "pregnancy"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -20579,8 +20474,7 @@
       "severity": "caution",
       "reason": "insufficient safety data for concentrated forms; traditional decoction likely lower risk; caution",
       "flags": [
-        "pregnancy",
-        "autoimmune"
+        "pregnancy"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -21737,9 +21631,7 @@
       "subject": "Raw unripe berries, stems, leaves and bark",
       "severity": "avoid",
       "reason": "AVOID: cyanogenic glycosides may cause nausea, vomiting and toxicity",
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -23298,8 +23190,7 @@
       "severity": "avoid",
       "reason": "avoid; vivid dreams can be destabilizing",
       "flags": [
-        "psych_meds",
-        "autoimmune"
+        "psych_meds"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -23311,9 +23202,7 @@
       "subject": "Sensitive trauma processing",
       "severity": "unspecified",
       "reason": "dreams can surface difficult material",
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -28498,9 +28387,7 @@
       "subject": "Not for anyone under 18",
       "severity": "unspecified",
       "reason": "dosed in micrograms, with a narrow window",
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
@@ -31189,9 +31076,7 @@
       "subject": "Anxiety, panic, insomnia or heart rhythm problems: caffeine can worsen them",
       "severity": "unspecified",
       "reason": null,
-      "flags": [
-        "autoimmune"
-      ],
+      "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {

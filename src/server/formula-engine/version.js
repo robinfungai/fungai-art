@@ -26,7 +26,9 @@ module.exports = {
   // 2.6.0 — second audit round (2026-09-28): "mushroom" from the recorded
   //         botanical family, not a word search; one rules module shared
   //         by picker and MYCO validator; at most one Amanita per bottle.
-  engineVersion:      '2.6.0-server',
+  // 2.6.1 — note keywords match at word starts, short ones as whole
+  //         words (third audit, 2026-09-29).
+  engineVersion:      '2.6.1-server',
   herbDbVersion:      '2026.09-245herbs',
   // 1.1.0 — unknown pregnancy safety = avoid; under-18s: no HIGH-caution,
   //         psychoactive, or above-LOW calming herbs (2026-09-27).
@@ -39,5 +41,7 @@ module.exports = {
   //         2026-09-28).
   // 1.4.0 — a herb the note says to avoid ("allergic to chamomile",
   //         "valerian made me groggy") is excluded (2026-09-28).
-  safetyRulesVersion: '1.4.0',
+  // 1.4.1 — the autoimmune flag reads "MS" in capitals only; 26 herbs
+  //         were flagged through "symptoms", "forms" (2026-09-29).
+  safetyRulesVersion: '1.4.1',
 };

@@ -173,6 +173,35 @@ deploy, `b3beace`). Each claim checked against the local engine:
 | Trace budget, load model, hard/soft pair cautions, roles, provenance per field, constrained optimisation, batch traceability | 🔭 Agreed direction. Optimisation pays once scores depend on pairs (bridges, synergy, budgets); an exhaustive search over the 20-herb shortlist (~132,000 bottles of 5–7) needs no solver. |
 | Test the safety question with realistic personas first | ⚖️ Agreed as the first human test. |
 
+## Third audit · Claude, "Formula Maker Audit Report" (read main@b3beace)
+
+Also read GitHub `main` (engine 2.1) and said so plainly. Its numbers
+are true of the live site. Re-run on the local engine (2.6.1):
+
+| # | Finding | Verdict |
+|---|---|---|
+| C1 | Pregnancy ignores `safe_pregnancy` (133 of 136 bottles) | 🟢 Fixed 27 Sep: only `safe_pregnancy: true` passes. |
+| C2 | Minors get HIGH-caution herbs; Dan Shen in 54% of minor bottles | 🟢 Fixed 27 Sep: Dan Shen (HIGH) fails the under-18 gate. Its point on **ethanol for minors** (EMA: ethanol-free or lowest level for children) is a product decision — ⚖️ Robin. |
+| C3 | Stimulant / sedative by substring ("glutamate" → stimulant) | 🟢 Fixed: recorded `cns_action`. Lavender, Barley, Vanilla, Hawthorn, Meadowsweet, Jiaogulan, Cistanche all read correctly now. |
+| C4 | "I am 8 weeks pregnant" in the note → Amanita, Mistletoe, Barberry | ✅ Fixed (D1): the note applies the pregnancy filter; every herb in that bottle is recorded pregnancy-safe. |
+| C5 | Ephedra, Yohimbe in the consumer pool | 🟢 Both pro-only (Robin's decision D11; the audit would restrict them outright unless a lawyer says a tincture is not food). |
+| H1 | Goal decides less than body type; detox 1% | 🟢 Fixed in 2.4 (recorded goals). |
+| H2 | A plain adult sleep bottle leads with Amanita Muscaria; two Amanitas together | ⚠️ Partly: one Amanita per bottle since 2.6, but the sleep profile it quotes still gets Amanita Muscaria as the largest share (22%). Its fix — ≤ 10% of the bottle, never beside St John's Wort, never seated by the note — ⚖️ Robin (Amanitas compete for adults by his decision; the audit cites the FDA's Dec 2024 not-GRAS memo). |
+| H3 | Ten checkboxes can't screen St John's Wort ("~50% of medicines"); no "other prescription", breastfeeding, surgery, epilepsy, alcohol questions | ⚖️ True. Needs Robin: an "any other prescription medicine" answer, St John's Wort pro-only, and the consumer safety questions already listed. |
+| H4 | Laxatives and sedative + stimulant without gates | 🟢 Fixed in 2.4. |
+| H5 | Validator looser than the brief; can accept a 0% herb | ✅ Fixed: MYCO's percentages are ignored (2.5) and the validator uses the picker's own rules (2.6). |
+| H6 | Herb data in `public/` | ✅ `herb-engine-pool.json` removed (2.6); `herbs-data.js` remains for `/mixology` and `/extraction` (D7). |
+| M1 | Dandelion is a mushroom | ✅ Fixed in 2.6 (recorded family). |
+| M2 | "MS\b" case-insensitive flags 25 herbs autoimmune via "symptoms" | ✅ **Fixed in safety 1.4.1**: "MS" in capitals only. 26 herbs lost a false autoimmune flag (75 → 49). |
+| M3 | Note keyword "art" fires on "partner", "flu" on "reflux"; +40 possible | ✅ Cap +6 since `1917c9e`; **2.6.1**: keywords match at word starts, short ones as whole words. |
+| M4 | Red Dates in 41% of bottles | 🔭 Seat concentration; revisit after the goal lists are reviewed. |
+| M5 | No-origin requests pass; limits in memory; each call can spend Opus | ✅ Wallet side fixed (D8 daily budget, idempotency). No-origin requests still pass. |
+| L1 | A synergy note names a herb not in the bottle | ⏭ True; the display shows the whole recorded sentence. Small fix, open. |
+| L2 | The MYCO path hashes an un-normalised profile | ✅ Fixed in 2.5 (one `prepareProfile`). |
+| L3 | "Give it three weeks"; templates bypass the claims sanitiser | ⏭ D9 (planned for 2026-09-29). |
+| Q5 | Cap HIGH-caution herbs for adults (≤ 1, ≤ 15%) | ⚖️ Robin (46% of adult bottles hold one today). |
+| Q8 | First human test: the safety question with personas | ⚖️ Agreed. |
+
 ## Decisions (Robin, 2026-09-28)
 
 | | Question | Decided | Status |

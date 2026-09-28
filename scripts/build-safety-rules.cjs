@@ -35,7 +35,7 @@ const FLAG_PATTERNS = {
   pregnancy:     /pregnan|lactat|breastfeed|uterine.*stim|emmenagog|abortifac|fetal|infant.*transfer/,
   cardio_meds:   /anticoagulant|antiplatelet|blood.?thin|warfarin|heparin|inr|digoxin|cardiac glycoside|heart.*medicat|antihypertens|hypertens/,
   psych_meds:    /maoi|ssri|snri|serotonin syndrome|antidepress|mood stabili|antipsychot|bipolar|lithium|dopaminergi/,
-  autoimmune:    /immunostim|autoimmun|immunosuppress|lupus|MS\b|rheumatoid|multiple sclerosis/i,
+  autoimmune:    /immunostim|autoimmun|immunosuppress|lupus|rheumatoid|multiple sclerosis/,
   liver_kidney:  /hepatotox|liver.*damage|hepatit|nephrotox|kidney.*stone|oxalate|renal fail/,
   thyroid:       /thyroid|hyperthyroid|hypothyroid|graves|hashimoto|iodine/,
   hypertension:  /hypertens|blood pressure|vasoconstrict/,
@@ -43,6 +43,11 @@ const FLAG_PATTERNS = {
   sedatives:     /benzodiazepin|cns depress|sedative.*additive|potentiat.*sedat/,
   allergy:       /asteraceae|ragweed|daisy family|compositae|salicylat|aspirin/,
 };
+
+// "MS" (multiple sclerosis) is matched on the ORIGINAL text, capitals only,
+// as axes.js does since 2026-09-29: /MS\b/i on lower-cased text matched the
+// end of "symptoms" and "forms" and flagged 26 herbs autoimmune by accident.
+const MS_RAW = /\bMS\b/;
 
 // ── Severity, read from how the entry shouts ─────────────────────
 // Ordered: the first match wins, strongest first.
@@ -82,11 +87,12 @@ function severityOf(text, reason) {
 // generated file can drive today's behaviour unchanged, while the
 // per-entry flags record what each rule actually supports.
 function engineFlagsFor(h) {
-  const con = ((h.contraindications || []).concat(h.herb_to_drug_interactions || [])).join(' | ').toLowerCase();
+  const raw = ((h.contraindications || []).concat(h.herb_to_drug_interactions || [])).join(' | ');
+  const con = raw.toLowerCase();
   const out = [];
   for (const [flag, re] of Object.entries(FLAG_PATTERNS)) {
     if (flag === 'pregnancy') continue;          // read from the record — recordFlagsFor
-    if (re.flags.includes('i') ? re.test(con) : re.test(con)) out.push(flag);
+    if (re.test(con) || (flag === 'autoimmune' && MS_RAW.test(raw))) out.push(flag);
   }
   for (const flag of recordFlagsFor(h)) if (!out.includes(flag)) out.push(flag);
   return out.sort();
@@ -142,8 +148,8 @@ function flagsFor(text) {
   const out = [];
   for (const [flag, re] of Object.entries(FLAG_PATTERNS)) {
     // The engine lowercases the joined blob before testing; match that,
-    // except for the one pattern that carries its own /i (autoimmune).
-    if (re.flags.includes('i') ? re.test(t) : re.test(t.toLowerCase())) out.push(flag);
+    // plus "MS" in capitals on the original text for autoimmune.
+    if (re.test(t.toLowerCase()) || (flag === 'autoimmune' && MS_RAW.test(t))) out.push(flag);
   }
   return out;
 }

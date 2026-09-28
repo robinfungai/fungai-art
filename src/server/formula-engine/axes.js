@@ -165,7 +165,12 @@ function finishAxes(h, text, has, con, intentions, recorded) {
   if (h.safe_pregnancy !== true) flags.push('pregnancy');
   if (/anticoagulant|antiplatelet|blood.?thin|warfarin|heparin|inr|digoxin|cardiac glycoside|heart.*medicat|antihypertens|hypertens/.test(con)) flags.push('cardio_meds');
   if (/maoi|ssri|snri|serotonin syndrome|antidepress|mood stabili|antipsychot|bipolar|lithium|dopaminergi/.test(con)) flags.push('psych_meds');
-  if (/immunostim|autoimmun|immunosuppress|lupus|MS\b|rheumatoid|multiple sclerosis/i.test(con)) flags.push('autoimmune');
+  // "MS" (multiple sclerosis) is read from the original text, capitals
+  // only: /MS\b/i on the lower-cased text matched the end of "symptoms",
+  // "forms", "stems", "systems" and flagged 26 herbs autoimmune by
+  // accident (external audit 2026-09-28, M2).
+  const conRaw = ((h.contraindications || []).concat(h.herb_to_drug_interactions || [])).join(' | ');
+  if (/immunostim|autoimmun|immunosuppress|lupus|rheumatoid|multiple sclerosis/.test(con) || /\bMS\b/.test(conRaw)) flags.push('autoimmune');
   if (/hepatotox|liver.*damage|hepatit|nephrotox|kidney.*stone|oxalate|renal fail/.test(con)) flags.push('liver_kidney');
   if (/thyroid|hyperthyroid|hypothyroid|graves|hashimoto|iodine/.test(con)) flags.push('thyroid');
   if (/hypertens|blood pressure|vasoconstrict/.test(con)) flags.push('hypertension');

@@ -223,6 +223,16 @@ const NOTES_KEYWORDS = [
   'ceremon','ritual','meditat','prayer',
 ];
 
+// A keyword matches at the START of a word, never inside one (external
+// audit 2026-09-28, M3): as a bare substring "art" fired on "partner"
+// and "heart", "flu" on "reflux", "gut" on "gutted". The short words
+// below must also END there (a plural s allowed): "open" is not
+// "opening up the chest", "heart" is not "heartburn". The longer keys
+// stay prefixes on purpose — "anxi" is meant to catch anxiety/anxious.
+const NOTES_WHOLE_WORDS = new Set(['art', 'flu', 'gut', 'ibs', 'open', 'love', 'flat', 'cold', 'wake', 'loop', 'ache', 'pain', 'skin', 'glow', 'heart']);
+const NOTES_KEYWORD_RX = new Map(NOTES_KEYWORDS.map(kw => [kw, new RegExp(
+  '\\b' + kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + (NOTES_WHOLE_WORDS.has(kw) ? 's?\\b' : ''))]));
+
 // The notes field is scored by substring match, which means a misspelling
 // does not weaken an intention — it deletes it. "anxeity" contains no
 // 'anxi', so someone who typed that got no anxiety weighting at all, and
@@ -254,7 +264,8 @@ function notesBoost(h, notes) {
   ).toLowerCase();
   let boost = 0;
   for (const kw of NOTES_KEYWORDS) {
-    if (n.includes(kw) && t.includes(kw)) boost += kw.includes(' ') ? 4 : 2;
+    const rx = NOTES_KEYWORD_RX.get(kw);
+    if (rx.test(n) && rx.test(t)) boost += kw.includes(' ') ? 4 : 2;
   }
   // Capped (audit 2026-09-28): a keyword-stuffed note reached +30, more
   // than twice the first goal (12). A real note scores at most about +4,
