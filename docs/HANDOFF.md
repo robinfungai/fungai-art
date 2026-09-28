@@ -80,7 +80,68 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ---
 
-## 0.15 · START HERE — 2026-09-28, D6 + D8 + the second audit round (committed, not pushed)
+## 0.16 · START HERE — plan for 2026-09-29
+
+**Before anything else, Robin (if not done yet):** run
+`supabase-fyf-retention.sql`, then `supabase-myco-budget.sql` (§0.15);
+make the GitHub repo private (D7); decide the deploy (D0).
+
+### 1 · D9 — claims-safe wording (first task)
+Go through every customer-facing string of the formula maker and draft a
+table for Robin: **current wording → proposed wording → why**. Nothing
+live changes until he approves it. Frame: EU health-claims rules
+(Regulation (EC) 1924/2006) — no treating, curing, preventing or healing
+a condition, no promised effect or timescale; "traditionally used for"
+and "supports" style instead.
+- Known starting points: "Slow-pace medicine. Give it three weeks." in
+  `src/server/formula-engine/display.js:134`,
+  `public/find-your-formula/index.html:3253` and
+  `public/find-your-formula-pro/index.html:2513`; "slow-pace medicine" in
+  `public/find-your-formula/index.html:1216`; the why-copy "does the
+  deeper work" (display.js).
+- Also cover: every story/why/short-note template in `display.js`, the
+  question and result copy on both pages, the reservation emails
+  (`reserve-formula.mjs`), and the MYCO compose prompt's tone rules.
+- Deliver the table as a page Robin can read and tick; apply only the
+  approved rows, in one commit.
+
+### 2 · D10 — the reveal (needs Robin's design direction)
+Parked until D9 is approved. Order, cheapest first:
+1. The five stage labels during the ~15 s wait, worded truthfully:
+   *reading your pattern · filtering for your safety · checking how the
+   herbs pair · balancing the formula · composing your formula* (pairings
+   are shown, they don't choose herbs — so not "finding relationships").
+2. Real botanical art instead of the emoji placeholders.
+3. The constellation view — needs formulation roles (§4 below) first.
+
+### 3 · Load model — NOT done yet
+Today the caps are counts ("≤ 2 sedatives"), now all in one place
+(`rules.js`). A real load model gives each herb a graded load per
+dimension and caps the bottle's total per dimension, plus a caution
+budget. What the data allows:
+- recorded, usable now: sedative (7 herbs), stimulating (18),
+  serotonergic (4), laxative (9), caution level (55 HIGH/VERY HIGH);
+- read from prose, **not usable as loads**: bleeding/blood thinners
+  (the `cardio_meds` flag is on 123 of 239 herbs — far too broad),
+  blood pressure (53), liver/kidney (32).
+Plan: record a 0–3 load per herb for bleeding, blood pressure, liver,
+sedative, stimulant, serotonergic, laxative and volatile oil (Claude
+drafts from each herb's contraindications and interactions, Robin
+reviews), then `rules.js` sums them with a ceiling per dimension.
+**Robin decides the ceilings** and whether HIGH-caution herbs get a
+per-bottle budget.
+
+### 4 · Bridge herbs and roles — partly there
+Already: goal points add up, so a herb serving goals #2 and #3 (up to 9)
+outranks the weakest goal-#1 match (6.48), and a herb serving #1 and #2
+gets up to 18 — bridges are favoured without a special rule.
+Missing: explicit roles (primary · bridge · foundation · regulator ·
+trace) assigned by the ENGINE from recorded data, so the deterministic
+bottle and MYCO's carry the same roles; then bottle rules such as "at
+least one primary" and a capped bridge bonus. Needs a role per herb —
+same draft-then-review data work as §3. Roles also unlock D10 step 3.
+
+## 0.15 · 2026-09-28, D6 + D8 + the second audit round (committed, not pushed)
 
 **Robin runs two SQL files BEFORE the next deploy**, in this order:
 `supabase-fyf-retention.sql` (D6: 30-day purge of unreserved formulas,
