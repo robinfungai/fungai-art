@@ -334,6 +334,9 @@ function ForageAcknowledgementModal({ onAcknowledge }: { onAcknowledge: () => vo
                 </ul>
                 Your precise GPS coordinates never leave your device.
               </li>
+              <li style={{ marginBottom: 6 }}>
+                <strong>Map tiles.</strong> The map pictures load straight from <strong>Esri</strong> and <strong>CARTO</strong>, so they see your IP address, as any website you load from does. Nothing else is sent to them.
+              </li>
               <li>Fungai Art accepts no liability for outcomes of foraging decisions made with this tool.</li>
             </ul>
           </div>
@@ -1577,8 +1580,10 @@ export default function ForagingApp() {
         </div>
       )}
 
-      {/* Map */}
-      <MapGL
+      {/* Map — only after the acknowledgement: the tiles come straight from
+          Esri and CARTO, so no request reaches them before the visitor has
+          read that and agreed (2026-09-28). */}
+      {acknowledged && <MapGL
         ref={mapRef}
         initialViewState={{ longitude: 18, latitude: 50, zoom: 3.6 }}
         style={{ width: '100%', height: '100%' }}
@@ -1900,7 +1905,7 @@ export default function ForagingApp() {
             </Marker>
           );
         })}
-      </MapGL>
+      </MapGL>}
 
       {/* Long-press context menu ─── "I am here" + "What is around here"
           Anchored at the touch/press position, clamped to viewport.

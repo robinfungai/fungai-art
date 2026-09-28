@@ -2622,10 +2622,11 @@ function toggleMobileMenu() {
       <!-- One pinned post, as a plain link (2026-09-28). The live Instagram
            embed is gone: it sent every visitor's IP to Meta and was the only
            thing on the site that needed a cookie banner, so both went. Put the
-           post's photo at /home/spore/inner-architecture.webp — until it
-           exists the card shows its drawn placeholder. -->
+           post's image is /home/spore/inner-architecture.jpg (880 px, from
+           src/assets/inner-architecture.webp); if it is missing the card
+           shows its drawn placeholder. -->
       <div class="spore-embed">
-        <a class="spore-fallback" href="https://www.instagram.com/p/DTx5LGZjM0j/" target="_blank" rel="noopener noreferrer" data-photo="/home/spore/inner-architecture.webp"><span class="spore-fallback-media" aria-hidden="true"></span><span class="spore-fallback-body"><span class="spore-fallback-handle">@fungai.art</span><span class="spore-fallback-title">Inner Architecture</span><span class="spore-fallback-cta">View on Instagram &rarr;</span></span></a>
+        <a class="spore-fallback" href="https://www.instagram.com/p/DTx5LGZjM0j/" target="_blank" rel="noopener noreferrer" data-photo="/home/spore/inner-architecture.jpg"><span class="spore-fallback-media" aria-hidden="true"></span><span class="spore-fallback-body"><span class="spore-fallback-handle">@fungai.art</span><span class="spore-fallback-title">Inner Architecture</span><span class="spore-fallback-cta">View on Instagram &rarr;</span></span></a>
       </div>
     </div>
     <div style="text-align:center;margin-top:36px;" class="reveal reveal-d2">
@@ -2642,6 +2643,9 @@ function toggleMobileMenu() {
     .spore-fallback:not(.has-photo) .spore-fallback-media::after { content:''; position:absolute; left:50%; top:42%; width:56px; height:56px; transform:translate(-50%,-50%); border-radius:16px; border:2px solid rgba(237,229,216,0.55);
       background:radial-gradient(circle at 50% 50%, transparent 11px, rgba(237,229,216,0.55) 12px, rgba(237,229,216,0.55) 14px, transparent 15px); }
     .spore-fallback:hover .spore-fallback-media { transform:scale(1.04); }
+    /* The post image carries its own title — don't print a second one over it. */
+    .spore-fallback.has-photo .spore-fallback-title { display:none; }
+    .spore-fallback.has-photo .spore-fallback-body { padding-top:28px; background:linear-gradient(180deg, transparent, rgba(5,9,12,0.75)); }
     .spore-fallback-body { position:absolute; left:0; right:0; bottom:0; padding:48px 18px 18px; display:flex; flex-direction:column; gap:4px; background:linear-gradient(180deg, transparent, rgba(5,9,12,0.9)); }
     .spore-fallback-handle { font-family:'Bayer',var(--sans); font-size:9.5px; letter-spacing:0.28em; text-transform:uppercase; color:var(--amber-lt); }
     .spore-fallback-title { font-family:'IM Fell English','Cormorant Garamond',Georgia,serif; font-style:italic; font-size:22px; line-height:1.15; }
