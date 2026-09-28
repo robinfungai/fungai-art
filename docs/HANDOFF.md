@@ -80,7 +80,30 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ---
 
-## 0.12 · START HERE — 2026-09-28, later (committed, not pushed)
+## 0.13 · START HERE — 2026-09-28, external audit (committed, not pushed)
+
+Robin ran both SQL files (`supabase-practitioner-formulas.sql`,
+`supabase-dm-realtime.sql`). An external "forensic" audit of the formula
+maker arrived; **read `docs/AUDIT-2026-09-28-RESPONSE.md`** — verdict per
+finding, sections, and decisions D0–D11 for Robin.
+
+- The auditor read GitHub `main` = the LIVE deploy (b3beace, 25 Sep), so
+  most "brief vs code" findings are true of the live site and fixed
+  locally. Running the live engine: Ephedra in 57/2,400 customer bottles,
+  Senna/Rhubarb/Buckthorn in 161, and 1,191/1,200 pregnancy bottles hold a
+  herb not recorded pregnancy-safe. Local engine: 0. **D0 = deploy.**
+- The GitHub repo is PUBLIC (and /herbs-data.js serves every herb field).
+  No secrets in the tree or in all 577 commits (only the anon key). D7.
+- Section 1 (safety) done: unknown safety values refused
+  (`SAFETY_FLAG_UNKNOWN`), pages no longer default `avoid` to "none",
+  tie-break seed sorts the flags (order changed 31% of multi-flag
+  bottles), note boost capped at +6, notes hint on both pages, Yohimbe
+  pro-only (EU-prohibited in food, Reg. 2019/650), `tests/invariants-
+  verify.cjs` (600 random profiles + HTTP; proves the under-18 gate).
+- The audit paste was cut off in its P0 list at item 8 — ask Robin for the
+  rest if it matters.
+
+## 0.12 · 2026-09-28, later (committed, not pushed)
 
 **For Robin to run:** `supabase-practitioner-formulas.sql` (client files in
 the pro composer) and, from §0.11, `supabase-dm-realtime.sql`.

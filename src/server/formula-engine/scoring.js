@@ -202,6 +202,7 @@ function sleepBoost(h, sleep) {
   return 0;
 }
 
+const NOTES_MAX_BOOST = 6;
 const NOTES_KEYWORDS = [
   'lucid dream','lucid travel','astral',
   'dream','vision','visionary','oneir','shamanic',
@@ -255,7 +256,10 @@ function notesBoost(h, notes) {
   for (const kw of NOTES_KEYWORDS) {
     if (n.includes(kw) && t.includes(kw)) boost += kw.includes(' ') ? 4 : 2;
   }
-  return boost;
+  // Capped (audit 2026-09-28): a keyword-stuffed note reached +30, more
+  // than twice the first goal (12). A real note scores at most about +4,
+  // so the cap only ever bites on stuffing.
+  return Math.min(NOTES_MAX_BOOST, boost);
 }
 
 // ── Pro-quiz answers (engine 2.4, 2026-09-28) ─────────────────────

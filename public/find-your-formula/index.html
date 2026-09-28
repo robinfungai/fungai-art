@@ -1206,10 +1206,10 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 
   <!-- ── ENTRY ─────────────────────────────────────────── -->
   <section id="entry" class="hero">
-    <span class="hero-eyebrow">◇ 10 questions · 90 seconds</span>
+    <span class="hero-eyebrow">◇ 10 questions · about 2 minutes</span>
     <h1>Your temple,<br><em>your formula</em>.</h1>
     <p class="hero-sub">
-      Six questions, and we have tailor-made your spagyric extract with herbal allies &amp; mushrooms foraged in Sweden. Matched to how you<u>_</u>feel.
+      Ten questions, and we have tailor-made your spagyric extract with herbal allies &amp; mushrooms foraged in Sweden. Matched to how you<u>_</u>feel.
     </p>
     <div class="hero-meta">
       <span>sublingual drops</span>
@@ -1685,7 +1685,7 @@ const QUESTIONS = [
   {
     key:'notes',
     title:'The <em>one thing</em> that matters most',
-    hint:'Mention the one thing that matters most to you right now, and/or any prior herb experience — the reading tunes tightly to what you say here.',
+    hint:'Mention the one thing that matters most to you right now, and/or any prior herb experience — the reading tunes tightly to what you say here. Medicines, pregnancy and health conditions belong in the safety question: that is the only answer the safety filter reads.',
     placeholder:'e.g. "reishi was calming but ashwagandha made me flat" · "hormones off since March, sleep first" · "energy back before anything else"',
     type:'text',
   },
@@ -3419,7 +3419,7 @@ function _fyfShadowKey(profile) {
 }
 
 // ════════════════════════════════════════════════════════════════
-// STEP 4 · Server-authoritative composition (opt-in via URL param)
+// STEP 4 · Server-authoritative composition (the only path since Step 6)
 // ────────────────────────────────────────────────────────────────
 // When the URL carries `?fyf_server=1`, the reveal is driven by the
 // server response — the client engine (pickFormula etc) never renders
@@ -3926,7 +3926,7 @@ async function _fyfRenderResultServerMode(a) {
   // The client-side pickFormula() is NEVER called as a fallback.
   if (res.status !== 200) {
     _fyfServerComposeInFlight = false;
-    if (body && (body.code === 'SAFETY_QUESTION_NOT_ANSWERED' || body.code === 'SAFETY_FLAGS_CONFLICT')) {
+    if (body && (body.code === 'SAFETY_QUESTION_NOT_ANSWERED' || body.code === 'SAFETY_FLAGS_CONFLICT' || body.code === 'SAFETY_FLAG_UNKNOWN')) {
       return _fyfRenderServerErrorState({ kind: 'NEED_SAFETY', backToSafety, retry });
     }
     if (res.status === 422 || (body && body.code === 'NO_VIABLE_FORMULA')) {
@@ -4280,7 +4280,10 @@ function renderResult(){
   a.pattern   = a.pattern   || 'mixed';    // mixed = fallback BP archetype
   a.time      = a.time      || 'any';
   a.stress    = a.stress    || 'ride';
-  a.avoid     = Array.isArray(a.avoid) ? a.avoid : ['none'];
+  // Never answer the safety question for the person (audit 2026-09-28):
+  // a missing answer goes to the server empty, the server refuses it, and
+  // the page sends the person back to the safety question.
+  a.avoid     = Array.isArray(a.avoid) ? a.avoid : [];
   _fyfRenderResultServerMode(a);
 }
 

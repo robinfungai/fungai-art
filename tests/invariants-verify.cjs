@@ -1,0 +1,180 @@
+// tests/invariants-verify.cjs
+//
+// The formula engine's rules, stated in docs/FORMULA-ENGINE-BRIEF.md, as
+// executable checks (external audit 2026-09-28: "test the engine against
+// its own documentation", "property-based fuzzing").
+//
+// Part A throws 600 random but reproducible profiles — consumer and
+// pro, adults and minors, pregnancy, every safety flag — at the engine
+// and asserts every rule on every bottle it returns. Part B checks the
+// safety question's input rules. Part C goes through the real HTTP
+// handler, because the audit's first "P0" claimed the server does not
+// derive under-18 status from the age answer: it does, and this proves
+// it on the wire, not only in the engine.
+//
+// Fixed seed: a failure reproduces exactly.
+
+const path = require('path');
+const { pathToFileURL } = require('node:url');
+const R = p => require(path.join(__dirname, '..', p));
+const E = R('src/server/formula-engine/index.js');
+const { ensurePool, isRestricted } = R('src/server/formula-engine/axes.js');
+const { passesMinorGate } = R('src/server/formula-engine/safety.js');
+const { isTrace } = R('src/server/formula-engine/traces.js');
+const P = R('src/server/formula-engine/pharmacology.js');
+
+// ── Reproducible randomness (mulberry32) ──────────────────────────
+let seed = 20260928;
+const rnd = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+const pick = arr => arr[Math.floor(rnd() * arr.length)];
+const some = (arr, max) => { const out = new Set(); const n = Math.floor(rnd() * (max + 1)); while (out.size < n) out.add(pick(arr)); return [...out]; };
+
+const GOALS = ['stress', 'anxiety', 'sleep', 'energy', 'mood', 'cognitive', 'hormones', 'digestion', 'immunity', 'pain', 'detox', 'beauty'];
+const FLAGS = ['pregnancy', 'cardio_meds', 'psych_meds', 'autoimmune', 'liver_kidney', 'thyroid', 'hypertension', 'contraceptive', 'sedatives', 'allergy'];
+const SLEEP = ['restorative_6plus', 'not_restorative_6plus', 'under_6', 'very_broken', 'restorative', 'hard_onset', 'wakes_middle', 'early_wake', 'sleeps_no_rest', 'vivid_restless'];
+
+function randomProfile() {
+  const goals = [pick(GOALS)];
+  while (goals.length < 3 && rnd() < 0.5) { const g = pick(GOALS); if (!goals.includes(g)) goals.push(g); }
+  const flags = rnd() < 0.35 ? ['none'] : some(FLAGS, 3);
+  const pro = rnd() < 0.5;
+  const p = {
+    intention: goals[0], intentions: goals,
+    pattern: pick(['hot', 'cold', 'mixed', 'depleted']),
+    time: pick(['morning', 'midday', 'evening', 'night', 'any']),
+    stress: pick(['push', 'collapse', 'numb', 'ride', 'off']),
+    duration: pick(['weeks', 'months', 'year_plus', 'lifelong']),
+    age: pick(['under_18', 'under_25', '25_40', '41_60', '60_plus']),
+    sleep: pick(SLEEP),
+    avoid: flags.length ? flags : ['none'],
+    notes: pick(['', '', 'sleep first', 'constipated for weeks', 'energy back before anything else', 'grief since July, heavy heart']),
+    nervous: pick([undefined, 'wired', 'tired', 'wired_tired', 'steady', 'reactive', 'flat']),
+    energy_curve: pick([undefined, 'low_waking', 'am_good_pm_crash', 'high_unstable', 'waves', 'crash_mental']),
+    _gatedOptIn: rnd() < 0.3, _ageConfirmed: true,
+  };
+  if (pro) Object.assign(p, {
+    _pro: rnd() < 0.5,
+    support: pick(['gentle_daily', 'noticeable', 'deep_restore', 'acute', 'constitutional', 'performance', 'seasonal', 'exploring']),
+    digestion: pick(['strong', 'bloated', 'burning', 'cold_sluggish', 'anxious_gut', 'irregular', 'constipated']),
+    emotional: pick(['spacious', 'grief_chest', 'worry_loops', 'flat', 'overwhelmed', 'angry', 'lonely']),
+    somatic: some(['head_mind', 'chest_breath', 'heart', 'gut', 'liver_right', 'pelvis', 'muscles_joints', 'skin'], 3),
+    cycle: pick(['not_applicable', 'regular', 'pms_heavy', 'painful', 'perimenopause', 'trying_conceive']),
+    prior_herbs: some(['never', 'bad_reaction', 'stimulants_sensitive', 'adaptogens_regular', 'mushrooms_regular'], 2),
+  });
+  return p;
+}
+
+const pool = ensurePool();
+const byName = new Map(pool.map(h => [h.name, h]));
+const HIGH = new Set(['HIGH', 'VERY HIGH']);
+const fails = [];
+const fail = (rule, p, detail) => { if (fails.length < 25) fails.push(rule + ' — ' + detail + '\n      profile: ' + JSON.stringify(p)); };
+const counts = {};
+const count = rule => { counts[rule] = (counts[rule] || 0) + 1; };
+
+// ── Part A · every rule, every bottle ─────────────────────────────
+const N = 600;
+let composed = 0;
+for (let i = 0; i < N; i++) {
+  const p = randomProfile();
+  const r = E.compileFormula(p);
+  if (r.status !== 'ok') { fail('valid profile rejected', p, r.code); continue; }
+  if (!r.herbs.length) continue;
+  composed++;
+  const herbs = r._engineHerbs;
+  const minor = p.age === 'under_18';
+  const flags = p.avoid.filter(f => f !== 'none');
+  const pregnant = flags.includes('pregnancy') || p.cycle === 'trying_conceive';
+  const prior = p.prior_herbs || [];
+  const goals = [p.intention].concat(p.intentions);
+  const pcts = r.herbs.map(h => h.percentage);
+  const names = herbs.map(h => h.name).join(', ');
+
+  const sum = pcts.reduce((a, b) => a + b, 0);
+  if (sum !== 100) fail('percentages sum to 100', p, sum);
+  if (pcts.some(x => x < 1)) fail('every herb at least 1%', p, pcts.join(','));
+  const traces = herbs.map((h, k) => [h, pcts[k]]).filter(([h]) => isTrace(h));
+  if (traces.length > 1) fail('at most 1 trace herb', p, names);
+  if (traces.some(([, x]) => x > 5)) fail('trace herb at most 5%', p, traces.map(([h, x]) => h.name + ' ' + x).join(','));
+  if (herbs.filter(P.isGABAergic).length > 2) fail('at most 2 sedatives', p, names);
+  if (herbs.filter(P.isCNSStimulant).length > 2) fail('at most 2 stimulating herbs', p, names);
+  if (herbs.some(P.isGABAergic) && herbs.some(P.isStrongStimulant)) fail('no sedative beside a true stimulant', p, names);
+  if (herbs.filter(P.isSerotonergic).length > P.MAX_SEROTONERGIC) fail('at most 1 serotonergic herb', p, names);
+  if (herbs.filter(P.isLaxative).length > P.MAX_LAXATIVE) fail('at most 1 laxative', p, names);
+  if (herbs.some(h => isRestricted(h))) fail('no restricted plant', p, names);
+  if (herbs.some(h => h.proOnly) && !(p._pro === true && !minor)) fail('pro-only herb only for a pro adult', p, names);
+  if (minor && herbs.some(h => !passesMinorGate(h))) fail('under-18: every herb passes the minor gate', p, names);
+  if (pregnant && herbs.some(h => h.safe_pregnancy !== true)) fail('pregnancy / conceiving: only recorded pregnancy-safe herbs', p, names);
+  if (prior.includes('stimulants_sensitive') && herbs.some(P.isCNSStimulant)) fail('stimulant-sensitive: no stimulating herb', p, names);
+  if (prior.includes('bad_reaction') && herbs.some(h => HIGH.has(h.caution_level))) fail('bad reaction before: no HIGH-caution herb', p, names);
+  for (const h of herbs) for (const f of flags) if ((h._ax.flags || []).includes(f)) fail('no herb carries a ticked safety flag', p, h.name + ' has ' + f);
+  if ((p.time === 'evening' || p.time === 'night' || p.intention === 'sleep') && herbs.some(P.isCNSStimulant)) fail('evening / sleep: nothing stimulating', p, names);
+  if (p.intentions.includes('sleep') && herbs.some(P.isStrongStimulant)) fail('sleep as any goal: no true stimulant', p, names);
+  if (herbs.some(P.isLaxative)) {
+    const constipated = p.digestion === 'constipated' || /constipat/i.test(p.notes || '');
+    if (!constipated || !(goals.includes('digestion') || goals.includes('detox'))) fail('laxative only for reported constipation with a digestion/detox goal', p, names);
+  }
+  const again = E.compileFormula(JSON.parse(JSON.stringify(p)));
+  if (JSON.stringify(again.herbs.map(h => [h.name, h.percentage])) !== JSON.stringify(r.herbs.map(h => [h.name, h.percentage]))) fail('same answers, same bottle', p, 'differs on a second run');
+  if (flags.length > 1) {
+    const flipped = E.compileFormula(Object.assign({}, p, { avoid: [...p.avoid].reverse() }));
+    if (flipped.herbs.map(h => h.name).join() !== r.herbs.map(h => h.name).join()) fail('safety answers in any order, same bottle', p, 'order changed the bottle');
+  }
+  if (minor) count('minor profiles checked');
+  if (pregnant) count('pregnancy / conceiving profiles checked');
+  if (p._pro) count('pro profiles checked');
+}
+
+// ── Part B · the safety question's input rules ────────────────────
+const base = { intention: 'stress', intentions: ['stress'], pattern: 'mixed', time: 'any', stress: 'push', duration: 'months', age: '25_40', sleep: 'restorative_6plus', _ageConfirmed: true };
+const expect = (avoid, code) => {
+  const r = E.compileFormula(Object.assign({}, base, { avoid }));
+  if (r.status !== 'rejected' || r.code !== code) fail('safety input ' + JSON.stringify(avoid) + ' → ' + code, { avoid }, r.status + ' ' + (r.code || ''));
+};
+expect(undefined, 'SAFETY_QUESTION_NOT_ANSWERED');
+expect([], 'SAFETY_QUESTION_NOT_ANSWERED');
+expect(['none', 'pregnancy'], 'SAFETY_FLAGS_CONFLICT');
+expect(['nonsense', 'none'], 'SAFETY_FLAG_UNKNOWN');
+expect(['pregnacy', 'thyroid'], 'SAFETY_FLAG_UNKNOWN');
+expect([42], 'SAFETY_FLAG_UNKNOWN');
+
+// ── Part C · through the real HTTP handler ────────────────────────
+(async () => {
+  const mod = await import(pathToFileURL(path.join(__dirname, '../netlify/functions/fyf-compose.mjs')).href);
+  const call = async (profile, ip) => {
+    const res = await mod.default(new Request('http://localhost:8888/api/fyf/compose', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-FYF-Mode': 'shadow', 'x-forwarded-for': ip },
+      body: JSON.stringify({ profile }),
+    }));
+    return { status: res.status, body: await res.json() };
+  };
+  // A modified client: under-18 age, "none" for safety, no _minor flag,
+  // asking for the ceremonial herbs. The server must still gate it.
+  const kidAsks = { intention: 'sleep', intentions: ['sleep', 'mood'], pattern: 'mixed', time: 'night', stress: 'off', duration: 'months', age: 'under_18', sleep: 'hard_onset', avoid: ['none'], _gatedOptIn: true, _ageConfirmed: true };
+  const kid = await call(kidAsks, '203.0.113.7');
+  if (kid.status !== 200) fail('HTTP under-18 profile composes', kidAsks, kid.status);
+  else {
+    const bad = kid.body.formula.herbs.map(h => byName.get(h.name)).filter(h => !h || !passesMinorGate(h));
+    if (bad.length) fail('HTTP under-18: server applies the minor gate itself', kidAsks, bad.map(h => h ? h.name : '?').join(', '));
+    count('HTTP under-18 bottle: ' + kid.body.formula.herbs.map(h => h.name).join(', '));
+  }
+  // _pro without a verified practitioner is refused.
+  const proAsk = Object.assign({}, base, { avoid: ['none'], _pro: true });
+  const pro = await call(proAsk, '203.0.113.8');
+  if (pro.status !== 403 || pro.body.code !== 'PRACTITIONER_REQUIRED') fail('HTTP _pro without a practitioner → 403', proAsk, pro.status + ' ' + pro.body.code);
+  // An unknown safety value is refused on the wire too.
+  const typo = await call(Object.assign({}, base, { avoid: ['pregnacy'] }), '203.0.113.9');
+  if (typo.status !== 400 || typo.body.code !== 'SAFETY_FLAG_UNKNOWN') fail('HTTP unknown safety value → 400 SAFETY_FLAG_UNKNOWN', { avoid: ['pregnacy'] }, typo.status + ' ' + typo.body.code);
+
+  console.log('  profiles composed: ' + composed + ' of ' + N);
+  for (const [k, v] of Object.entries(counts)) console.log('  · ' + k + (v > 1 ? ': ' + v : ''));
+  if (fails.length) {
+    console.log('\n  ✗ ' + fails.length + (fails.length === 25 ? '+' : '') + ' rule violation(s):');
+    fails.forEach(f => console.log('    ✗ ' + f));
+  } else {
+    console.log('  ✓ every documented rule held on every bottle, and on the wire');
+  }
+  console.log('\npassed: ' + (fails.length ? 0 : 1) + '\nfailed: ' + (fails.length ? 1 : 0));
+  process.exit(fails.length ? 1 : 0);
+})();

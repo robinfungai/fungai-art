@@ -47,7 +47,7 @@ function compileFormula(profile) {
     // Both errors validateAndNormalizeAvoid can throw are client-fault
     // input problems, not server bugs. Surface each with its own code
     // so the caller can respond appropriately (retake vs. malformed).
-    if (e && (e.code === 'SAFETY_QUESTION_NOT_ANSWERED' || e.code === 'SAFETY_FLAGS_CONFLICT')) {
+    if (e && (e.code === 'SAFETY_QUESTION_NOT_ANSWERED' || e.code === 'SAFETY_FLAGS_CONFLICT' || e.code === 'SAFETY_FLAG_UNKNOWN')) {
       return {
         status: 'rejected',
         code:   e.code,

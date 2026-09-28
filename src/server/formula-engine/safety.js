@@ -57,7 +57,21 @@ function validateAndNormalizeAvoid(avoid) {
     err.code = 'SAFETY_QUESTION_NOT_ANSWERED';
     throw err;
   }
-  const cleaned = avoid.filter(f => typeof f === 'string' && KNOWN_AVOID_FLAGS.has(f));
+  // Audit 2026-09-28: an unknown value used to be DROPPED, so
+  // ["pregnacy", "thyroid"] quietly became ["thyroid"] — a misspelt
+  // pregnancy flag vanished and the formula was composed as if it had
+  // never been ticked. For a safety field an unknown value is an error,
+  // never something to tidy away: the whole request is refused.
+  const unknown = avoid.filter(f => !(typeof f === 'string' && KNOWN_AVOID_FLAGS.has(f)));
+  if (unknown.length) {
+    const err = new Error(
+      'Unknown value(s) in avoid[]: ' + unknown.slice(0, 5).map(v => JSON.stringify(v)).join(', ') +
+      '. Send only the known safety flags, or ["none"].'
+    );
+    err.code = 'SAFETY_FLAG_UNKNOWN';
+    throw err;
+  }
+  const cleaned = avoid.slice();
   if (cleaned.length === 0) {
     const err = new Error(
       'No recognised safety flags in avoid[]. Send avoid:["none"] or ' +

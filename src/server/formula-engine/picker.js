@@ -55,10 +55,15 @@ function fnv1a(str) {
   return x >>> 0;
 }
 
+// Unordered answers are sorted first (audit 2026-09-28): the same safety
+// flags ticked in a different order used to seed the tie-break
+// differently, and gave a different bottle in 31% of multi-flag
+// profiles. `intentions` stays in order — its order IS the ranking.
+const setKey = v => (Array.isArray(v) ? [...new Set(v.map(String))].sort().join(',') : '');
 function profileSeed(a) {
   return [
     a.intention, (a.intentions || []).join(','), a.pattern, a.patternSub,
-    a.time, a.stress, a.duration, a.age, a.sleep, (a.avoid || []).join(','),
+    a.time, a.stress, a.duration, a.age, a.sleep, setKey(a.avoid),
   ].join('|');
 }
 

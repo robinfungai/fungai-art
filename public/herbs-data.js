@@ -16668,6 +16668,12 @@ const HERBS = [
 {
   id: 558, name: 'Yohimbe Bark', botanical: 'Pausinystalia yohimbe (bark)',
   goals: ['hormones'],
+  // Prohibited in food and food supplements across the EU: Commission
+  // Regulation (EU) 2019/650 moved yohimbe bark and its preparations to
+  // Annex III Part A of Regulation (EC) 1925/2006. Out of every customer
+  // bottle, as Ephedra is (2026-09-28); whether the pro composer may use
+  // it at all is Robin's call.
+  formula_access: 'pro',
   tcm_meridians: ['Kidney', 'Heart'], tcm_element: 'Fire + Water',
   energetics: ['Hot', 'Dry', 'Stimulating', 'Ascending'],
   primary_functions: [

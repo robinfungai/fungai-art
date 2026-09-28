@@ -23,8 +23,8 @@ module.exports = {
     rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '04-max-safety-restrictions': {
-    herbs: "271:Oatstraw@44|300:Red Dates@14|579:Aguaje@13|275:Pine Pollen@13|314:Button Mushroom@10|268:Mullein@4|302:Rose Petals@2",
-    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
+    herbs: "271:Oatstraw@44|300:Red Dates@14|275:Pine Pollen@13|579:Aguaje@13|314:Button Mushroom@10|268:Mullein@4|302:Rose Petals@2",
+    rationale: "External audit 2026-09-28: the tie-break seed sorts the safety flags (the same flags in a different order used to give a different bottle) and a note adds at most +6. On top of engine 2.4 (recorded goals scored by position, pro answers, laxatives only for reported constipation).",
   },
   '05-medication-psych': {
     herbs: "287:Vanilla@20|254:Jasmine@18|413:Longan@16|252:Lemon Balm@16|317:Lion's Mane@15|103:Ashwagandha@15",
@@ -67,8 +67,8 @@ module.exports = {
     rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '15-max-size': {
-    herbs: "413:Longan@15|300:Red Dates@15|103:Ashwagandha@15|284:Tongkat Ali@14|316:Fu Ling@14|323:Reishi@14|404:Raspberry Leaf@13",
-    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
+    herbs: "413:Longan@15|300:Red Dates@15|103:Ashwagandha@15|284:Tongkat Ali@14|316:Fu Ling@14|323:Reishi@14|554:Kelp Extract Powder@13",
+    rationale: "External audit 2026-09-28: the tie-break seed sorts the safety flags (the same flags in a different order used to give a different bottle) and a note adds at most +6. On top of engine 2.4 (recorded goals scored by position, pro answers, laxatives only for reported constipation).",
   },
   '16-gated-amanita-opt-in': {
     herbs: "302:Rose Petals@19|215:Damiana@19|287:Vanilla@17|102:Bobinsana@16|278:Saffron@15|323:Reishi@14",
@@ -83,7 +83,7 @@ module.exports = {
     rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '19-notes-heavy': {
-    herbs: "240:Ginseng@21|296:Yerba Mate@20|413:Longan@19|4:Bacopa@18|317:Lion's Mane@17|277:Rosemary@5",
-    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
+    herbs: "240:Ginseng@22|296:Yerba Mate@20|4:Bacopa@18|108:Gotu Kola@18|317:Lion's Mane@17|277:Rosemary@5",
+    rationale: "External audit 2026-09-28: the tie-break seed sorts the safety flags (the same flags in a different order used to give a different bottle) and a note adds at most +6. On top of engine 2.4 (recorded goals scored by position, pro answers, laxatives only for reported constipation).",
   },
 };

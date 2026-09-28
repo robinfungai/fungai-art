@@ -1503,7 +1503,7 @@ const QUESTIONS = [
   {
     key:'notes',
     title:'Anything else the composer should <em>hold</em>?',
-    hint:'The one thing that matters most, a specific bad reaction to name, a story the checkboxes couldn\'t catch. The reading tunes tightly to what you write here — this is where MYCO listens hardest.',
+    hint:'The one thing that matters most, or a story the checkboxes couldn\'t catch. The reading tunes tightly to what you write here — this is where MYCO listens hardest. Medicines, pregnancy, conditions and past reactions belong in the safety and history questions: those are the only answers the safety filter reads.',
     placeholder:'e.g. "reishi was calming but ashwagandha made me flat" · "hormones off since March, sleep first" · "post-antibiotic gut in ruins" · "grandmother died in July"',
     type:'text',
   },
@@ -2714,7 +2714,7 @@ const _FYF_SHADOW_EXPECTED_SECURITY = {
 // Step 6: shadowComposeToServer removed.
 
 // ════════════════════════════════════════════════════════════════
-// STEP 4 · Server-authoritative composition (opt-in via URL param)
+// STEP 4 · Server-authoritative composition (the only path since Step 6)
 // ────────────────────────────────────────────────────────────────
 // Mirrors the Basic client. When the URL carries `?fyf_server=1`,
 // the reveal is driven by the server response — the client engine
@@ -3076,7 +3076,7 @@ async function _fyfRenderResultServerMode(a) {
       if (window.FyfPro) window.FyfPro.showWall(body.reason);
       return;
     }
-    if (body && (body.code === 'SAFETY_QUESTION_NOT_ANSWERED' || body.code === 'SAFETY_FLAGS_CONFLICT')) {
+    if (body && (body.code === 'SAFETY_QUESTION_NOT_ANSWERED' || body.code === 'SAFETY_FLAGS_CONFLICT' || body.code === 'SAFETY_FLAG_UNKNOWN')) {
       return _fyfRenderServerErrorState({ kind: 'NEED_SAFETY', backToSafety, retry });
     }
     if (res.status === 422 || (body && body.code === 'NO_VIABLE_FORMULA')) {
@@ -3301,7 +3301,10 @@ function renderResult(){
   a.pattern   = a.pattern   || 'mixed';
   a.time      = a.time      || 'any';
   a.stress    = a.stress    || 'ride';
-  a.avoid     = Array.isArray(a.avoid) ? a.avoid : ['none'];
+  // Never answer the safety question for the person (audit 2026-09-28):
+  // a missing answer goes to the server empty, the server refuses it, and
+  // the page sends the person back to the safety question.
+  a.avoid     = Array.isArray(a.avoid) ? a.avoid : [];
   _fyfRenderResultServerMode(a);
 }
 // Step 6: renderRefusal removed — server has _fyfRenderServerErrorState.

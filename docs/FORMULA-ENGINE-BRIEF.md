@@ -7,6 +7,15 @@ a person's quiz answers into a herbal extract formula. It is written for an
 independent reviewer (human or AI) who has **not** seen the code. Every rule
 below names the file it lives in, so each claim can be checked.
 
+**Which code this describes.** Engine **2.4.0** in the repository's `main`
+branch as developed locally. The live site at fungai.art only changes when
+that branch is deployed. **If you read the code on GitHub, first check
+`src/server/formula-engine/version.js`:** the first external audit
+(2026-09-28) compared this brief against an older deployed engine (2.2
+era) and reported its differences as defects. Many were real defects of
+that older code; they are listed, with their status, in
+`docs/AUDIT-2026-09-28-RESPONSE.md`.
+
 **A note for AI reviewers:** two earlier audits of this system described
 files and functions that do not exist. Please tie every finding to a rule
 stated here (or a file path given here), say which rule it concerns, and say
@@ -59,9 +68,12 @@ quiz answers ──► /api/fyf/compose  (netlify/functions/fyf-compose.mjs)
             final formula ──► stored (fyf_formulas) ──► display strings only on the wire
 ```
 
-Identical answers always give an identical baseline formula: no randomness,
-no clock. Ties are broken by evidence grade and then by a hash of the
-answers (§6.1).
+Identical answers always give an identical **baseline** formula: no
+randomness, no clock. Ties are broken by evidence grade and then by a hash
+of the answers (§6.1). The **final** formula is only guaranteed identical
+when MYCO is off or falls back. When MYCO composes (§7), the same answers
+can give a different bottle — always one that keeps every rule, but not
+always the same one.
 
 ---
 
@@ -108,16 +120,20 @@ exclude outright; nothing downstream can bring a herb back.
    Pedro, Salvia divinorum, iboga, kratom, morning glory / LSA, toad venom,
    DMT, coca, Acorus calamus, thunder god vine (*Tripterygium*), comfrey
    (external use only). These are in the encyclopedia, never in a bottle.
-2. **Pro-only herbs** (`formula_access: 'pro'`): Ephedra, Fadogia, Lobelia,
-   Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja. Allowed
-   only in the pro composer, and only for a verified practitioner (§9).
+2. **Pro-only herbs** (`formula_access: 'pro'`): Ephedra, Yohimbe (both
+   prohibited in food in the EU), Fadogia, Lobelia, Pau d'Arco, Wormwood,
+   Rhubarb Root, Bakuchi, Nishoth, Karanja. Allowed only in the pro
+   composer, and only for a verified practitioner (§9).
 3. **Gated herbs** (`GATED_NAMES`): the list is currently **empty** by the
    owner's decision; the Amanitas compete like any other herb for adults.
 
 ### 4.2 Person-level exclusions
 4. **The safety question** (`safety.js`). A missing or empty `avoid` is
    **rejected** (the formula is never composed). `"none"` combined with any
-   other flag is also rejected. Each herb carries flags **derived** from its
+   other entry is also rejected, and so — since 2026-09-28 — is any value
+   that is not one of the ten flags: a misspelt `"pregnacy"` refuses the
+   request instead of quietly disappearing. The pages never fill in the
+   answer themselves. Each herb carries flags **derived** from its
    contraindication and drug-interaction text (regex, `axes.js`), plus flags
    implied by its recorded nervous-system class (a sedative is flagged
    `sedatives`; a stimulant is flagged hypertension, cardio_meds and
@@ -195,7 +211,7 @@ highest-leverage data in the engine.
 | Body pattern | +4 (or +2 if the herb's only pattern is "mixed", read as neutral) | patterns inferred from the herb's text and energetics (cooling words → suits "hot", etc.) |
 | Time of day | +2 | inferred from the herb's goals (sleep → evening/night, energy → morning…) |
 | Stress style | +3 | inferred from text (adaptogen → push/collapse, nervine → off/ride…) |
-| Note keywords | +2 per keyword, +4 per phrase | the word appears in both the note and the herb's text; a curated misspelling table corrects common typos |
+| Note keywords | +2 per keyword, +4 per phrase, **at most +6 in total** | the word appears in both the note and the herb's text; a curated misspelling table corrects common typos. The note is **not** read by the safety filter — medicines and pregnancy must be answered in the safety question, and both pages say so |
 | Sub-pattern | +6 | name matches a hint list (e.g. cold_hands → cinnamon, ginger…) |
 | Duration | −2 to +4 | weeks favour fast-acting herbs; a year or more favours tonics |
 | Age | −2 to +2 | 60+ favours gentle tonics and penalises stimulants |
@@ -223,7 +239,9 @@ same class of method that got the goals wrong.
 
 ### 6.1 Order
 Herbs are sorted by score. Ties are broken by (1) evidence grade (A+ best;
-ungraded sits mid-table), then (2) a hash of the answers plus the herb's id.
+ungraded sits mid-table), then (2) a hash of the answers plus the herb's id
+(unordered answers such as the safety flags are sorted first, so their
+order never matters).
 This is deterministic, but it rotates between equally good herbs across
 people. Near-duplicates are removed first: two herbs whose first primary
 function starts with the same 40 characters count as one.
@@ -279,7 +297,9 @@ Matches are **shown** to the person. **A caution never removes a herb.**
    any of:
    - wrong herb count;
    - a herb outside the shortlist, or a duplicate;
-   - percentages outside 1–100, or a sum ≠ 100 (±1 allowed);
+   - percentages outside 1–100, or a rounded sum more than 3 away from
+     100 (a drift of up to 3 is **corrected** by adjusting the largest
+     herb — so MYCO's percentages can be nudged, not only vetoed);
    - a gated or pro-only herb without entitlement;
    - trace count or trace % over the limit;
    - sedative, stimulant, serotonergic or laxative caps exceeded;
@@ -357,6 +377,13 @@ Abuse limits:
 9. **Rate limits are per server instance and in memory.**
 10. **The serotonergic list is short** (4 herbs). Others with weaker
     serotonergic activity (e.g. Lemon Balm, Bobinsana) are not capped.
+11. **No cap on one herb's share of the bottle.** Measured over 24,000
+    profiles: one herb reaches up to 80% (a 3-herb bottle), and 15% of
+    bottles have a herb above 40%.
+12. **The number of herbs grows with the number of safety flags** (two or
+    more flags add one herb), although flags shrink the pool.
+13. **Stored quiz answers are kept indefinitely.** The code comments refer
+    to a scheduled cleanup that does not exist.
 
 ---
 
@@ -377,6 +404,10 @@ Abuse limits:
 8. What would you test first with real people, and what outcome would you
    measure?
 
-*Test suite: 38 files, about 230 checks, including 20 fixed profiles whose
+*Test suite: 39 files, about 240 checks, including 20 fixed profiles whose
 formulas are pinned (`tests/fixtures/methodology-pins.cjs`) so any change in
-output is visible.*
+output is visible, and `tests/invariants-verify.cjs`, which turns the rules
+in §4 and §6 into checks on 600 random profiles (fixed seed) plus the real
+HTTP handler: every sum is 100, every cap holds, every minor, pregnancy and
+history rule holds, the same answers give the same bottle, and the order of
+the safety flags does not matter.*

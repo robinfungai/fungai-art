@@ -82,11 +82,14 @@ expectAccept('["pregnancy"] accepted',                    ['pregnancy'],        
 expectAccept('["pregnancy","psych_meds"] accepted',       ['pregnancy', 'psych_meds'],    ['pregnancy', 'psych_meds']);
 expectAccept('["cardio_meds","sedatives","thyroid"] ok',  ['cardio_meds','sedatives','thyroid'], ['cardio_meds','sedatives','thyroid']);
 
-// Unknown flag mixed with none — the unknown gets stripped, but the
-// remaining ["none"] is a valid sole entry. Also expressly test that
-// an unknown flag alone leaves the empty-after-cleaning path.
-expectAccept('["none","bogus_flag"] → ["none"] ok',       ['none', 'bogus_flag'],         ['none']);
-expectReject('["bogus_only"] rejected (nothing valid)',   ['bogus_only'],                 'SAFETY_QUESTION_NOT_ANSWERED');
+// Unknown values. Until the external audit of 2026-09-28 an unknown
+// value was STRIPPED, so ["none","bogus_flag"] became a valid ["none"]
+// and a misspelt "pregnacy" simply vanished — this test used to assert
+// that fail-open behaviour. An unknown safety value now refuses the
+// whole request.
+expectReject('["none","bogus_flag"] rejected (unknown value)', ['none', 'bogus_flag'],   'SAFETY_FLAG_UNKNOWN');
+expectReject('["bogus_only"] rejected (unknown value)',       ['bogus_only'],             'SAFETY_FLAG_UNKNOWN');
+expectReject('["pregnacy","thyroid"] rejected (misspelt flag)', ['pregnacy', 'thyroid'],  'SAFETY_FLAG_UNKNOWN');
 
 // ── End-to-end compileFormula path ─────────────────────────────────
 cases.push({
