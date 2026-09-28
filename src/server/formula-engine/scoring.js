@@ -258,57 +258,193 @@ function notesBoost(h, notes) {
   return boost;
 }
 
-function scoreHerb(h, a) {
+// ── Pro-quiz answers (engine 2.4, 2026-09-28) ─────────────────────
+// The pro composer asks six questions the engine used to ignore:
+// support, digestion, emotional, somatic, cycle, prior_herbs. Each now
+// nudges the ranking, read from the herb's own structured tags
+// (digestion_fit, regional_affinity, onset_time, caution_level, goals)
+// rather than from its prose. The consumer quiz never sends them, so
+// its bottles are untouched. The safety consequences of `cycle` and
+// `prior_herbs` live in safety.js (passesProfileSafety), not here —
+// a nudge can be outvoted, an exclusion cannot.
+
+// "How does your digestion usually feel?" → herbs.ts digestion_fit.
+const DIGESTION_FIT = {
+  bloated:       { plus: ['carminative', 'moving'],              minus: [] },
+  burning:       { plus: ['cooling', 'demulcent'],               minus: ['warming'] },
+  cold_sluggish: { plus: ['warming', 'bitter'],                  minus: ['cooling'] },
+  anxious_gut:   { plus: ['carminative', 'demulcent'],           minus: [] },
+  irregular:     { plus: ['carminative', 'demulcent', 'moving'], minus: [] },
+  constipated:   { plus: ['moving', 'demulcent'],                minus: ['astringent'] },
+};
+function digestionBoost(h, digestion) {
+  const rule = DIGESTION_FIT[digestion];
+  const fit = Array.isArray(h.digestion_fit) ? h.digestion_fit : [];
+  if (!rule || !fit.length) return 0;
+  let b = 0;
+  if (rule.plus.some(t => fit.includes(t)))  b += 2;
+  if (rule.minus.some(t => fit.includes(t))) b -= 2;
+  return b;
+}
+
+// "Where in the body do you feel it?" (several allowed) → regional_affinity.
+const SOMATIC_REGION = {
+  head_mind: ['head'], eyes: ['head'], jaw_neck: ['head', 'joints'],
+  chest_breath: ['chest'], heart: ['heart', 'chest'], solar_plexus: ['solar_plexus'],
+  gut: ['gut'], liver_right: ['liver'], kidneys_back: ['kidneys'],
+  pelvis: ['pelvis'], muscles_joints: ['joints'], skin: ['skin'], whole_body: ['whole'],
+};
+function somaticBoost(h, somatic) {
+  const areas = Array.isArray(somatic) ? somatic : [];
+  const aff = Array.isArray(h.regional_affinity) ? h.regional_affinity : [];
+  if (!areas.length || !aff.length) return 0;
+  let b = 0;
+  for (const s of areas) if ((SOMATIC_REGION[s] || []).some(r => aff.includes(r))) b += 2;
+  return Math.min(4, b);
+}
+
+const hasGoal = (h, g) => ((h._ax && h._ax.intentions) || []).includes(g);
+const hasRegion = (h, r) => Array.isArray(h.regional_affinity) && h.regional_affinity.includes(r);
+const isCooling = h => /cool|cold/i.test((h.energetics || []).join(' '));
+
+// "What is the emotional weather?"
+function emotionalBoost(h, emotional) {
+  if (!emotional || emotional === 'spacious') return 0;
+  const stim = isCNSStimulant(h), gaba = isGABAergic(h);
+  switch (emotional) {
+    case 'grief_chest':
+      return hasGoal(h, 'mood') || hasRegion(h, 'heart') || hasRegion(h, 'chest') ? 2 : 0;
+    case 'worry_loops':
+      if (stim) return -2;
+      return hasGoal(h, 'anxiety') || RX.calming.test(rhythmText(h)) ? 2 : 0;
+    case 'flat':
+      if (gaba) return -2;
+      return hasGoal(h, 'mood') || RX.lifting.test(rhythmText(h)) ? 2 : 0;
+    case 'overwhelmed':
+      if (stim) return -2;
+      return hasGoal(h, 'stress') || hasGoal(h, 'anxiety') ? 2 : 0;
+    case 'angry':
+      if (stim) return -2;
+      return isCooling(h) || hasRegion(h, 'liver') ? 2 : 0;
+    case 'lonely':
+      return hasGoal(h, 'mood') || hasRegion(h, 'heart') ? 2 : 0;
+  }
+  return 0;
+}
+
+// "What kind of support are you looking for?"
+const HIGH_CAUTION = new Set(['HIGH', 'VERY HIGH']);
+function supportBoost(h, support) {
+  if (!support || support === 'exploring') return 0;
+  const onset = h.onset_time || '';
+  const fast = onset === 'immediate' || onset === 'hours';
+  const slow = onset === 'weeks' || onset === 'months';
+  switch (support) {
+    case 'gentle_daily':
+      if (HIGH_CAUTION.has(h.caution_level)) return -3;
+      return h.caution_level === 'LOW' ? 2 : 0;
+    case 'noticeable':     return fast || onset === 'days' ? 1 : 0;
+    case 'deep_restore':   return slow ? 2 : 0;
+    case 'acute':          return fast ? 2 : (onset === 'months' ? -2 : 0);
+    case 'constitutional': return (slow ? 1 : 0) + (RX.restoring.test(rhythmText(h)) ? 1 : 0);
+    case 'performance':    return RX.physical.test(rhythmText(h)) || RX.focus.test(rhythmText(h)) ? 2 : 0;
+    case 'seasonal':       return hasGoal(h, 'immunity') ? 2 : 0;
+  }
+  return 0;
+}
+
+// "Where is your cycle?" — the nudge only; trying_conceive is a safety
+// rule in safety.js.
+const CYCLE_HORMONAL = new Set(['pms_heavy', 'painful', 'irregular', 'absent', 'perimenopause', 'post_menopause']);
+function cycleBoost(h, cycle) {
+  if (!CYCLE_HORMONAL.has(cycle)) return 0;
+  let b = hasGoal(h, 'hormones') ? 2 : 0;
+  if (cycle === 'painful' && hasGoal(h, 'pain')) b += 1;
+  return b;
+}
+
+// "What is your history with herbs?" — the nudge only; bad_reaction and
+// stimulants_sensitive are safety rules in safety.js.
+function priorHerbsBoost(h, prior) {
+  const p = Array.isArray(prior) ? prior : [];
+  if (!p.includes('never')) return 0;
+  if (HIGH_CAUTION.has(h.caution_level)) return -3;
+  return h.caution_level === 'LOW' ? 1 : 0;
+}
+
+// Share of a goal's points a herb earns by where that goal sits in its
+// own recorded goals: main use, second, third, fourth.
+const GOAL_POSITION_WEIGHT = [1, 0.75, 0.625, 0.54];
+
+/**
+ * Every term of a herb's score, named, so the pro composer can show a
+ * practitioner WHY a herb was seated. scoreHerb returns this total —
+ * one implementation, so the explanation can never drift from the ranking.
+ */
+function scoreBreakdown(h, a) {
   const ax = h._ax;
-  let s = 0;
-  // The goal leads (engine 2.3, 2026-09-28). Until then the primary
-  // intention was worth at most 5 points against pattern + stress + time
-  // (up to 9), so people with different goals but similar bodies got
-  // near-identical bottles: 56% overlap between goals, and only 44% of
-  // the herbs seated actually served the goal asked for. Now a match is
-  // worth a flat base plus a specialist bonus (a herb serving one goal
-  // beats one that lists eight), and a herb serving none of the chosen
-  // goals keeps only half its score.
-  const n = Math.max(1, ax.intentions.length);
+  // The goal leads (engine 2.3, 2026-09-28). The client's first goal is
+  // worth up to 12, the second up to 6, the third up to 3 — and within
+  // each, a herb earns the full amount when that goal is its MAIN use
+  // (first in its recorded goals) and less the further down its list the
+  // goal sits (GOAL_POSITION_WEIGHT). Engine 2.4 replaced a "specialist
+  // bonus" that gave full points to any herb with a single goal, which
+  // seated Dan Shen (a heart herb, calming as a side) in every sleep
+  // bottle. The hierarchy stays strict: the weakest first-goal match
+  // (12 × 0.54 = 6.48) outranks the strongest second (6), and the
+  // weakest second (3.24) outranks the strongest third (3).
+  // A herb serving none of the chosen goals keeps half its score.
   const wanted = Array.isArray(a.intentions) && a.intentions.length ? a.intentions : [a.intention];
-  let servesGoal = false;
-  if (ax.intentions.includes(a.intention)) { s += 6 + 6 / n; servesGoal = true; }
-  if (wanted[1] && ax.intentions.includes(wanted[1])) { s += 3 + 3 / n; servesGoal = true; }
-  if (wanted[2] && ax.intentions.includes(wanted[2])) { s += 1.5 + 1.5 / n; servesGoal = true; }
+  const goalPoints = (max, g) => {
+    const i = g ? ax.intentions.indexOf(g) : -1;
+    return i < 0 ? 0 : max * GOAL_POSITION_WEIGHT[Math.min(i, GOAL_POSITION_WEIGHT.length - 1)];
+  };
+  const parts = {};
+  parts.goal1 = goalPoints(12, a.intention);
+  parts.goal2 = goalPoints(6, wanted[1]);
+  parts.goal3 = goalPoints(3, wanted[2]);
+  const servesGoal = parts.goal1 > 0 || parts.goal2 > 0 || parts.goal3 > 0;
   if (ax.patterns.includes(a.pattern)) {
-    s += 4;
+    parts.body = 4;
   } else if (ax.patterns.length === 1 && ax.patterns[0] === 'mixed') {
     // 'mixed' is the fallback axes.js assigns when a plant does not sort
-    // cleanly into hot / cold / depleted. It means constitutionally
-    // NEUTRAL, not "matches nothing" — but scoring treated it as a
-    // non-match, so the three herbs whose only pattern is 'mixed' (both
-    // Amanitas and Maitake) forfeited the single largest scoring term on
-    // every profile and could never be seated. Half credit: a neutral
-    // herb is neither disqualified nor preferred over one that genuinely
-    // matches the pattern the person described.
-    //
-    // ONLY when 'mixed' is the herb's sole pattern. A herb carrying
-    // 'mixed' alongside a real one is already classified, and giving it
-    // consolation credit on every non-matching profile lifted eleven
-    // herbs at once — Cordyceps to 45% of bottles — which is the same
-    // concentration problem the tie-break fix had just undone.
-    s += 2;
+    // cleanly into hot / cold / depleted: constitutionally NEUTRAL. Half
+    // credit, and ONLY when it is the herb's sole pattern — consolation
+    // credit for herbs that also carry a real pattern once lifted
+    // Cordyceps into 45% of bottles.
+    parts.body = 2;
+  } else {
+    parts.body = 0;
   }
-  if (ax.times.includes(a.time))           s += 2;
-  if (ax.stress.includes(a.stress))        s += 3;
-  s += notesBoost(h, a.notes);
-  s += subPatternBoost(h, a.patternSub);
-  s += durationBoost(h, a.duration);
-  s += ageBoost(h, a.age);
-  s += sleepBoost(h, a.sleep);
-  s += nervousBoost(h, a.nervous);
-  s += energyCurveBoost(h, a.energy_curve);
-  return servesGoal ? s : s * 0.5;
+  parts.time       = ax.times.includes(a.time) ? 2 : 0;
+  parts.stress     = ax.stress.includes(a.stress) ? 3 : 0;
+  parts.notes      = notesBoost(h, a.notes);
+  parts.subPattern = subPatternBoost(h, a.patternSub);
+  parts.duration   = durationBoost(h, a.duration);
+  parts.age        = ageBoost(h, a.age);
+  parts.sleep      = sleepBoost(h, a.sleep);
+  parts.nervous    = nervousBoost(h, a.nervous);
+  parts.energy     = energyCurveBoost(h, a.energy_curve);
+  parts.digestion  = digestionBoost(h, a.digestion);
+  parts.somatic    = somaticBoost(h, a.somatic);
+  parts.emotional  = emotionalBoost(h, a.emotional);
+  parts.support    = supportBoost(h, a.support);
+  parts.cycle      = cycleBoost(h, a.cycle);
+  parts.history    = priorHerbsBoost(h, a.prior_herbs);
+  let sum = 0;
+  for (const k in parts) sum += parts[k];
+  const factor = servesGoal ? 1 : 0.5;
+  return { parts, sum, factor, servesGoal, total: sum * factor };
+}
+
+function scoreHerb(h, a) {
+  return scoreBreakdown(h, a).total;
 }
 
 module.exports = {
   SUBPATTERN_AFFINITY, NOTES_KEYWORDS,
   subPatternBoost, durationBoost, ageBoost, sleepBoost, notesBoost,
   nervousBoost, energyCurveBoost,
-  scoreHerb,
+  digestionBoost, somaticBoost, emotionalBoost, supportBoost, cycleBoost, priorHerbsBoost,
+  scoreBreakdown, scoreHerb,
 };

@@ -106,6 +106,12 @@ function inferAxes(h) {
   const has = re => re.test(text);
   const con = ((h.contraindications || []).concat(h.herb_to_drug_interactions || [])).join(' | ').toLowerCase();
 
+  // Recorded goals win (herbs.ts `goals`, 2026-09-28). The word search
+  // below is only a fallback for a record without the field, and it
+  // keeps its old first-three truncation so nothing that relies on it
+  // changes; recorded goals are never truncated.
+  if (Array.isArray(h.goals)) return finishAxes(h, text, has, con, h.goals.slice(), true);
+
   const intentions = [];
   if (has(/adaptogen|cortisol|stress|hpa|resilience|burnout|nervine tonic/)) intentions.push('stress');
   if (has(/anxi|nervous|gaba|tension|calm|settle|sedativ|anxiolytic|kava|panic|shen disturb/)) intentions.push('anxiety');
@@ -120,7 +126,10 @@ function inferAxes(h) {
   if (has(/detox|liver.*cleans|hepatic|phase\s?i{1,2}|glutathion|bile flow|lymphatic drain|chelat|hepatoprotect/)) intentions.push('detox');
   if (has(/skin|collagen|ceramid|beauty|glow|hydration|photo.?protect|melanin|antioxidant.*skin|hyaluron/)) intentions.push('beauty');
   if (!intentions.length) intentions.push('stress');
+  return finishAxes(h, text, has, con, intentions, false);
+}
 
+function finishAxes(h, text, has, con, intentions, recorded) {
   const patterns = [];
   const enr = (h.energetics || []).join(' ').toLowerCase();
   if (has(/cool|cold energetic|clear.*heat|liver.*heat|damp.?heat|inflam|hot.*natur/) || /cool|cold/.test(enr)) patterns.push('hot');
@@ -174,7 +183,7 @@ function inferAxes(h) {
 
   const uniqIntentions = [...new Set(intentions)];
   return {
-    intentions: uniqIntentions.slice(0, 3),
+    intentions: recorded ? uniqIntentions : uniqIntentions.slice(0, 3),
     patterns:   [...new Set(patterns)],
     times:      [...new Set(times)],
     stress:     [...new Set(stress)],

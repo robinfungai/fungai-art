@@ -11,79 +11,79 @@
 
 module.exports = {
   '01-baseline': {
-    herbs: "302:Rose Petals@30|227:Cinnamon@5|552:Grape Leaf Extract@22|323:Reishi@22|405:Rosehip@21",
-    rationale: "Engine 2.3 (2026-09-28): the goal leads — intention outweighs body/stress/time and a herb serving none of the chosen goals keeps half its score; laxatives only when digestion or detox is a goal; at most one serotonergic herb; Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja pro-only.",
+    herbs: "271:Oatstraw@25|103:Ashwagandha@21|323:Reishi@20|246:Hawthorn@17|289:Vervain@17",
+    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '02-ranked-multi-intention': {
-    herbs: "241:Goji Berry@21|275:Pine Pollen@22|280:Shilajit (Mineral Pitch)@19|103:Ashwagandha@19|323:Reishi@19",
-    rationale: "Engine 2.3 (2026-09-28): the goal leads — intention outweighs body/stress/time and a herb serving none of the chosen goals keeps half its score; laxatives only when digestion or detox is a goal; at most one serotonergic herb; Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja pro-only.",
+    herbs: "103:Ashwagandha@23|323:Reishi@22|545:Jiaogulan@20|246:Hawthorn@18|413:Longan@17",
+    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '03-conflicting-axes': {
-    herbs: "243:Hops@18|316:Fu Ling@17|508:Dashmool@17|548:Astaxanthin@16|323:Reishi@16|218:Catuaba@16",
-    rationale: "Engine 2.3 (2026-09-28): the goal leads — intention outweighs body/stress/time and a herb serving none of the chosen goals keeps half its score; laxatives only when digestion or detox is a goal; at most one serotonergic herb; Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja pro-only.",
+    herbs: "300:Red Dates@22|311:Amanita Muscaria@17|323:Reishi@17|413:Longan@17|276:Rhodiola@14|559:Cistanche@13",
+    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '04-max-safety-restrictions': {
-    herbs: "300:Red Dates@20|275:Pine Pollen@20|271:Oatstraw@17|314:Button Mushroom@17|552:Grape Leaf Extract@12|302:Rose Petals@8|579:Aguaje@6",
-    rationale: "Engine 2.3 (2026-09-28): the goal leads — intention outweighs body/stress/time and a herb serving none of the chosen goals keeps half its score; laxatives only when digestion or detox is a goal; at most one serotonergic herb; Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja pro-only.",
+    herbs: "271:Oatstraw@44|300:Red Dates@14|579:Aguaje@13|275:Pine Pollen@13|314:Button Mushroom@10|268:Mullein@4|302:Rose Petals@2",
+    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '05-medication-psych': {
-    herbs: "246:Hawthorn@17|574:Dan Shen Root Extract@18|103:Ashwagandha@17|316:Fu Ling@17|263:Maca Negra (Black Maca)@16|284:Tongkat Ali@15",
-    rationale: "Engine 2.3 (2026-09-28): the goal leads — intention outweighs body/stress/time and a herb serving none of the chosen goals keeps half its score; laxatives only when digestion or detox is a goal; at most one serotonergic herb; Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja pro-only.",
+    herbs: "287:Vanilla@20|254:Jasmine@18|413:Longan@16|252:Lemon Balm@16|317:Lion's Mane@15|103:Ashwagandha@15",
+    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '06-medication-cardio': {
-    herbs: "300:Red Dates@16|288:Valerian@18|287:Vanilla@18|103:Ashwagandha@17|234:Eucalyptus@5|405:Rosehip@13|316:Fu Ling@13",
-    rationale: "Engine 2.3 (2026-09-28): the goal leads — intention outweighs body/stress/time and a herb serving none of the chosen goals keeps half its score; laxatives only when digestion or detox is a goal; at most one serotonergic herb; Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja pro-only.",
+    herbs: "103:Ashwagandha@21|271:Oatstraw@18|288:Valerian@14|419:African Dream Root@14|316:Fu Ling@13|132:Calea Zacatachichi@10|508:Dashmool@10",
+    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '07-pregnancy': {
-    herbs: "300:Red Dates@26|128:Chamomile@20|271:Oatstraw@20|287:Vanilla@19|268:Mullein@15",
-    rationale: "Engine 2.3 (2026-09-28): the goal leads — intention outweighs body/stress/time and a herb serving none of the chosen goals keeps half its score; laxatives only when digestion or detox is a goal; at most one serotonergic herb; Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja pro-only.",
+    herbs: "128:Chamomile@27|252:Lemon Balm@25|271:Oatstraw@25|287:Vanilla@18|268:Mullein@5",
+    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '08-thyroid': {
-    herbs: "204:Astragalus@16|280:Shilajit (Mineral Pitch)@18|262:Maca@18|559:Cistanche@16|278:Saffron@16|589:He Shou Wu / Fo-Ti@16",
-    rationale: "Engine 2.3 (2026-09-28): the goal leads — intention outweighs body/stress/time and a herb serving none of the chosen goals keeps half its score; laxatives only when digestion or detox is a goal; at most one serotonergic herb; Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja pro-only.",
+    herbs: "109:Guarana@20|296:Yerba Mate@20|280:Shilajit (Mineral Pitch)@17|559:Cistanche@15|300:Red Dates@15|589:He Shou Wu / Fo-Ti@13",
+    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '09-liver-kidney': {
-    herbs: "578:Hedyotis Diffusa@19|523:Amla / Amalaki@18|220:Devil's Claw@16|206:Barley@16|212:Burdock@16|328:Willow Bracket@15",
-    rationale: "Engine 2.3 (2026-09-28): the goal leads — intention outweighs body/stress/time and a herb serving none of the chosen goals keeps half its score; laxatives only when digestion or detox is a goal; at most one serotonergic herb; Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja pro-only.",
+    herbs: "212:Burdock@18|532:Anantmul@18|107:Dandelion Root@17|279:Schisandra (Five-Flavour Fruit)@17|502:Punarnava@16|316:Fu Ling@14",
+    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '10-lifelong-chronic': {
-    herbs: "323:Reishi@15|317:Lion's Mane@15|545:Jiaogulan@15|288:Valerian@14|300:Red Dates@14|287:Vanilla@14|259:Lingonberry@13",
-    rationale: "Engine 2.3 (2026-09-28): the goal leads — intention outweighs body/stress/time and a herb serving none of the chosen goals keeps half its score; laxatives only when digestion or detox is a goal; at most one serotonergic herb; Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja pro-only.",
+    herbs: "323:Reishi@15|574:Dan Shen Root Extract@15|279:Schisandra (Five-Flavour Fruit)@14|103:Ashwagandha@14|508:Dashmool@14|582:Avocado Extract@14|286:Turmeric@14",
+    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '11-trace-heavy': {
-    herbs: "305:Senna@22|510:Vijaysar@21|285:Tremella@21|523:Amla / Amalaki@19|582:Avocado Extract@17",
-    rationale: "Engine 2.3 (2026-09-28): the goal leads — intention outweighs body/stress/time and a herb serving none of the chosen goals keeps half its score; laxatives only when digestion or detox is a goal; at most one serotonergic herb; Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja pro-only.",
+    herbs: "285:Tremella@23|241:Goji Berry@21|225:Chickweed@21|589:He Shou Wu / Fo-Ti@18|548:Astaxanthin@17",
+    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '12-gaba-load': {
-    herbs: "273:Passionflower@18|281:Skullcap@19|323:Reishi@17|311:Amanita Muscaria@16|103:Ashwagandha@15|300:Red Dates@15",
-    rationale: "Engine 2.3 (2026-09-28): the goal leads — intention outweighs body/stress/time and a herb serving none of the chosen goals keeps half its score; laxatives only when digestion or detox is a goal; at most one serotonergic herb; Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja pro-only.",
+    herbs: "273:Passionflower@20|281:Skullcap@19|311:Amanita Muscaria@17|252:Lemon Balm@16|103:Ashwagandha@15|323:Reishi@13",
+    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '13-stim-load': {
-    herbs: "262:Maca@22|280:Shilajit (Mineral Pitch)@22|241:Goji Berry@20|589:He Shou Wu / Fo-Ti@18|263:Maca Negra (Black Maca)@18",
-    rationale: "Engine 2.3 (2026-09-28): the goal leads — intention outweighs body/stress/time and a herb serving none of the chosen goals keeps half its score; laxatives only when digestion or detox is a goal; at most one serotonergic herb; Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja pro-only.",
+    herbs: "280:Shilajit (Mineral Pitch)@21|240:Ginseng@22|109:Guarana@21|241:Goji Berry@20|589:He Shou Wu / Fo-Ti@16",
+    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '14-min-size': {
-    herbs: "549:Black Pepper Extract@5|268:Mullein@48|543:Elderberry (Cooked Berry)@47",
-    rationale: "Engine 2.3 (2026-09-28): the goal leads — intention outweighs body/stress/time and a herb serving none of the chosen goals keeps half its score; laxatives only when digestion or detox is a goal; at most one serotonergic herb; Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja pro-only.",
+    herbs: "221:Echinacea@48|283:Thyme@5|268:Mullein@47",
+    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '15-max-size': {
-    herbs: "103:Ashwagandha@15|300:Red Dates@16|413:Longan@16|316:Fu Ling@14|323:Reishi@14|317:Lion's Mane@13|254:Jasmine@12",
-    rationale: "Engine 2.3 (2026-09-28): the goal leads — intention outweighs body/stress/time and a herb serving none of the chosen goals keeps half its score; laxatives only when digestion or detox is a goal; at most one serotonergic herb; Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja pro-only.",
+    herbs: "413:Longan@15|300:Red Dates@15|103:Ashwagandha@15|284:Tongkat Ali@14|316:Fu Ling@14|323:Reishi@14|404:Raspberry Leaf@13",
+    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '16-gated-amanita-opt-in': {
-    herbs: "215:Damiana@23|302:Rose Petals@21|311:Amanita Muscaria@18|277:Rosemary@5|102:Bobinsana@17|254:Jasmine@16",
-    rationale: "Engine 2.3 (2026-09-28): the goal leads — intention outweighs body/stress/time and a herb serving none of the chosen goals keeps half its score; laxatives only when digestion or detox is a goal; at most one serotonergic herb; Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja pro-only.",
+    herbs: "302:Rose Petals@19|215:Damiana@19|287:Vanilla@17|102:Bobinsana@16|278:Saffron@15|323:Reishi@14",
+    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '17-no-gate': {
-    herbs: "215:Damiana@23|302:Rose Petals@21|311:Amanita Muscaria@18|277:Rosemary@5|102:Bobinsana@17|254:Jasmine@16",
-    rationale: "Engine 2.3 (2026-09-28): the goal leads — intention outweighs body/stress/time and a herb serving none of the chosen goals keeps half its score; laxatives only when digestion or detox is a goal; at most one serotonergic herb; Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja pro-only.",
+    herbs: "302:Rose Petals@19|215:Damiana@19|287:Vanilla@17|102:Bobinsana@16|278:Saffron@15|323:Reishi@14",
+    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '18-pro-fields-carried': {
-    herbs: "103:Ashwagandha@19|271:Oatstraw@19|300:Red Dates@18|323:Reishi@16|317:Lion's Mane@14|503:Shankhpushpi@14",
-    rationale: "Engine 2.3 (2026-09-28): the goal leads — intention outweighs body/stress/time and a herb serving none of the chosen goals keeps half its score; laxatives only when digestion or detox is a goal; at most one serotonergic herb; Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja pro-only.",
+    herbs: "103:Ashwagandha@22|271:Oatstraw@21|246:Hawthorn@15|323:Reishi@15|300:Red Dates@15|316:Fu Ling@12",
+    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '19-notes-heavy': {
-    herbs: "275:Pine Pollen@18|280:Shilajit (Mineral Pitch)@18|241:Goji Berry@18|110:Holy Basil (Tulsi)@16|262:Maca@15|413:Longan@15",
-    rationale: "Engine 2.3 (2026-09-28): the goal leads — intention outweighs body/stress/time and a herb serving none of the chosen goals keeps half its score; laxatives only when digestion or detox is a goal; at most one serotonergic herb; Fadogia, Lobelia, Pau d'Arco, Wormwood, Rhubarb Root, Bakuchi, Nishoth, Karanja pro-only.",
+    herbs: "240:Ginseng@21|296:Yerba Mate@20|413:Longan@19|4:Bacopa@18|317:Lion's Mane@17|277:Rosemary@5",
+    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
 };

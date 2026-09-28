@@ -39,9 +39,10 @@
 
 import { createClient } from '@supabase/supabase-js';
 import crypto from 'node:crypto';
-import { compileFormula, composeFormulaWithMyco } from '../../src/server/formula-engine/index.js';
+import { compileFormula, composeFormulaWithMyco, explainForPro } from '../../src/server/formula-engine/index.js';
 import { buildDisplayBundle } from '../../src/server/formula-engine/display.js';
 import { sanitiseNarrative }  from '../../src/server/formula-engine/narrative-sanitiser.js';
+import { verifyPractitioner } from '../../src/server/practitioner.mjs';
 
 // ── Origin gate ──────────────────────────────────────────────────
 const ALLOWED_ORIGINS = [
@@ -58,7 +59,7 @@ function corsFor(origin) {
     'Access-Control-Allow-Origin':  allow,
     // X-FYF-Mode allows the browser preflight to permit the shadow-mode
     // header the Step 3 client sets. Content-Type is the standard one.
-    'Access-Control-Allow-Headers': 'Content-Type, X-FYF-Mode',
+    'Access-Control-Allow-Headers': 'Content-Type, X-FYF-Mode, Authorization',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Vary': 'Origin',
   };
@@ -195,10 +196,10 @@ function validateProfile(raw) {
   p._gatedOptIn = !!raw._gatedOptIn;
 
   // _pro — sent only by /find-your-formula-pro. It lets the engine
-  // consider pro-only herbs (herbs.ts formula_access: 'pro', Ephedra).
-  // Like _ageConfirmed it is a client claim, not proof: the pro page
-  // is public, so this is a separation of the two quizzes, not access
-  // control. The engine never honours it for an under-18 profile.
+  // consider pro-only herbs (herbs.ts formula_access: 'pro'). Since
+  // 2026-09-28 it is honoured only for a verified practitioner (the
+  // handler checks the caller's token — src/server/practitioner.mjs);
+  // the engine never honours it for an under-18 profile.
   p._pro = raw._pro === true;
 
   // _ageConfirmed — required boolean; the entry gate sets this at the
@@ -206,10 +207,11 @@ function validateProfile(raw) {
   // forge it) but its presence means the client acknowledged 18+.
   p._ageConfirmed = !!raw._ageConfirmed;
 
-  // Pro-only fields — accepted as pass-through, validated as short
-  // strings or short-string arrays. Currently NOT consumed by the
-  // engine per Step 2 constraint #7 — they'll influence formulation
-  // in a later separately-approved step.
+  // Pro-quiz fields — validated as short strings or short-string arrays.
+  // Since engine 2.4 (2026-09-28) the engine reads all of them: scoring
+  // nudges in scoring.js, and cycle 'trying_conceive' / prior_herbs
+  // 'stimulants_sensitive' | 'bad_reaction' as hard exclusions in
+  // safety.js passesProfileSafety.
   const PRO_STRING_FIELDS = ['nervous','energy_curve','digestion','emotional','cycle','support'];
   for (const k of PRO_STRING_FIELDS) {
     if (raw[k] !== undefined) {
@@ -415,6 +417,24 @@ export default async function handler(req) {
     });
   }
 
+  // The pro composer is for verified practitioners (Robin, 2026-09-28).
+  // A request that asks for it without a practitioner's token is refused
+  // outright — not silently downgraded — so the page can show the
+  // sign-in wall instead of a formula built under a different rule.
+  let practitioner = null;
+  if (vp.profile._pro) {
+    try { practitioner = await verifyPractitioner(req); }
+    catch (_) { practitioner = { ok: false, reason: 'IDENTITY_UNAVAILABLE' }; }
+    if (!practitioner.ok) {
+      return jsonResponse(403, cors, {
+        status:  'rejected',
+        code:    'PRACTITIONER_REQUIRED',
+        reason:  practitioner.reason,
+        message: 'The pro composer is for Fungai Art practitioners. Sign in with a practitioner account.',
+      });
+    }
+  }
+
   // Compose. The engine internally validates avoid via
   // validateAndNormalizeAvoid — SAFETY_QUESTION_NOT_ANSWERED gets
   // surfaced as a rejected response here.
@@ -511,7 +531,20 @@ export default async function handler(req) {
     console.warn('[fyf-compose] Supabase not configured — returning ephemeral formulaId');
   }
 
-  return jsonResponse(200, cors,
-    sanitisedResponse({ formulaId, engineResult, profile: vp.profile, persisted, upgradeEligible })
-  );
+  const out = sanitisedResponse({ formulaId, engineResult, profile: vp.profile, persisted, upgradeEligible });
+
+  // Practitioner-only: the points behind each herb and the best unseated
+  // alternatives. The public response deliberately hides scores and ids
+  // (AUDIT_FIX Finding #7); a verified practitioner gets them because the
+  // pro tools — "why this herb", swapping — are built on them.
+  if (practitioner && practitioner.ok) {
+    try {
+      out.pro = explainForPro(vp.profile, engineResult.herbs.map(h => h.id));
+      out.pro.herbIds = engineResult.herbs.map(h => h.id);
+    } catch (e) {
+      console.warn('[fyf-compose] pro explanation failed:', e && e.message ? e.message : e);
+    }
+  }
+
+  return jsonResponse(200, cors, out);
 }

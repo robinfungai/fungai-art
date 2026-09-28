@@ -15,7 +15,7 @@
 // code the caller can surface to the user or the reserve-formula
 // endpoint.
 
-const { pickFormula, targetHerbCount, buildScoredCandidates } = require('./picker');
+const { pickFormula, targetHerbCount, buildScoredCandidates, explainPicks } = require('./picker');
 const { assignPercentages } = require('./percentages');
 const { checkFormulaPairs } = require('./interactions');
 const { validateAndNormalizeAvoid, countFilteredOut } = require('./safety');
@@ -216,7 +216,20 @@ async function composeFormulaWithMyco(profile, opts = {}) {
   };
 }
 
+/**
+ * Pro composer only — the points behind each seated herb and the best
+ * unseated alternatives, for the same normalised profile the engine
+ * composed from (validated avoid, server-derived _minor).
+ */
+function explainForPro(profile, herbIds) {
+  let avoid;
+  try { avoid = validateAndNormalizeAvoid(profile.avoid); } catch (_) { return null; }
+  const a = Object.assign({}, profile, { avoid, _minor: profile.age === 'under_18' });
+  return explainPicks(a, herbIds);
+}
+
 module.exports = {
+  explainForPro,
   compileFormula,
   composeFormulaWithMyco,
   VERSION,

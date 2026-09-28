@@ -76,11 +76,21 @@ const compileJsx = () => ({
 // function runtime on :5173, so the formula analysis is wired straight to
 // its handler here — the engine part works locally; MYCO's reading needs
 // ANTHROPIC_API_KEY in the environment and otherwise says it is off.
+//
+// 2026-09-28: the formula endpoint and the pro-access check run here too,
+// so both quizzes compose on localhost. Without SUPABASE_SERVICE_ROLE_KEY
+// the formula is not stored (persisted:false) and MYCO falls back to the
+// deterministic engine without ANTHROPIC_API_KEY. FYF_DEV_PRACTITIONER
+// lets the pro page through without a service key — set only in THIS
+// process, which Netlify never runs (src/server/practitioner.mjs).
 const devFunctions = () => ({
   name: 'dev-netlify-functions',
   configureServer(server: any) {
+    process.env.FYF_DEV_PRACTITIONER = '1';
     const ROUTES: Record<string, string> = {
       '/api/formula-analysis': './netlify/functions/formula-analysis.mjs',
+      '/api/fyf/compose':      './netlify/functions/fyf-compose.mjs',
+      '/api/pro-access':       './netlify/functions/pro-access.mjs',
     };
     server.middlewares.use(async (req: any, res: any, next: any) => {
       const pathOnly = (req.url || '').split('?')[0];
@@ -91,10 +101,28 @@ const devFunctions = () => ({
         for await (const ch of req) chunks.push(ch as Buffer);
         const url = pathToFileURL(path.resolve(__dirname, file)).href;
         const mod = await import(/* @vite-ignore */ url);
+        const bodyText = Buffer.concat(chunks).toString('utf8');
+        // Two function styles live in netlify/functions: the classic
+        // `handler(event)` returning { statusCode, body }, and the newer
+        // `export default (Request) => Response`.
+        if (typeof mod.handler !== 'function' && typeof mod.default === 'function') {
+          const headers = new Headers();
+          Object.entries(req.headers || {}).forEach(([k, v]) => { if (typeof v === 'string') headers.set(k, v); });
+          const request = new Request('http://localhost:5173' + req.url, {
+            method: req.method,
+            headers,
+            body: req.method === 'GET' || req.method === 'HEAD' ? undefined : bodyText,
+          });
+          const response: Response = await mod.default(request);
+          res.statusCode = response.status;
+          response.headers.forEach((v, k) => res.setHeader(k, v));
+          res.end(await response.text());
+          return;
+        }
         const out = await mod.handler({
           httpMethod: req.method,
           headers: req.headers,
-          body: Buffer.concat(chunks).toString('utf8'),
+          body: bodyText,
         });
         res.statusCode = out.statusCode || 200;
         Object.entries(out.headers || {}).forEach(([k, v]) => res.setHeader(k, v as string));

@@ -28,7 +28,7 @@ const { checkFormulaPairs } = require('./interactions');
 const { isTrace } = require('./traces');
 // The same classifiers the engine uses: each herb's recorded cns_action
 // (herbs.ts), with PubMed evidence in cns_evidence.
-const { isGABAergic, isCNSStimulant, isSerotonergic, MAX_SEROTONERGIC, cnsAction, categoryOf } = require('./pharmacology');
+const { isGABAergic, isCNSStimulant, isSerotonergic, MAX_SEROTONERGIC, isLaxative, MAX_LAXATIVE, cnsAction, categoryOf } = require('./pharmacology');
 const { isRestricted, isGated } = require('./axes');
 
 const MAX_HERBS = 12;          // what one analysis will take
@@ -117,6 +117,19 @@ function extractionArm(h) {
   return 'maceration';
 }
 
+// The ethanol strength a herb's own record asks for — the same reading
+// /extraction makes (ethFromRecord there) when its bench table has no
+// entry. Used by the pro composer's dose sheet (2026-09-28).
+function ethanolTarget(h) {
+  const t = String(h.best_preparation || '') + ' ' + String(h.dosage_range || '');
+  if (/dual[- ]extract|double extract/i.test(t) || categoryOf(h) === 'mushroom') return 'Dual';
+  const m = t.match(/(\d{2})(?:\s*(?:–|-|to)\s*(\d{2}))?\s*%\s*(?:ethanol|alcohol|EtOH)/i);
+  if (m) return m[2] ? m[1] + '–' + m[2] + '%' : m[1] + '%';
+  // No strength in the record: say nothing rather than guess "water" from
+  // the word "tea". The dose sheet links to the /extraction bench table.
+  return null;
+}
+
 /**
  * Analyse one formula.
  * @param {{ herbs: string[], percentages?: number[], name?: string }} input
@@ -154,6 +167,7 @@ function analyzeFormula(input) {
     isGABAergic:   isGABAergic(h),
     isStimulant:   isCNSStimulant(h),
     isSerotonergic: isSerotonergic(h),
+    isLaxative:    isLaxative(h),
     cns:           cnsAction(h),
     cnsEvidence:   h.cns_evidence ? clip(h.cns_evidence, 320) : null,
     restricted:    isRestricted(h),
@@ -167,6 +181,8 @@ function analyzeFormula(input) {
     drugInteractions: (h.herb_to_drug_interactions || []).slice(0, 4).map(s => clip(s, 200)),
     contraindications: (h.contraindications || []).slice(0, 3).map(s => clip(s, 200)),
     arm:           extractionArm(h),
+    ethanol:       ethanolTarget(h),
+    dosage:        clip(h.dosage_range, 360),
   }));
 
   // ── The engine's own composition rules ──
@@ -177,6 +193,7 @@ function analyzeFormula(input) {
   const stim = rows.filter(r => r.isStimulant);
   const strong = rows.filter(r => r.cns === 'stimulant');
   const sero = rows.filter(r => r.isSerotonergic);
+  const lax = rows.filter(r => r.isLaxative);
   const over = Object.keys(catCount).filter(c => c !== 'other' && catCount[c] > RULES.MAX_PER_CATEGORY);
   const checks = [
     { id: 'size', ok: rows.length >= RULES.MIN_HERBS && rows.length <= RULES.MAX_HERBS,
@@ -191,6 +208,8 @@ function analyzeFormula(input) {
       label: 'Stimulant load', detail: stim.length ? stim.map(r => r.name).join(', ') + (stim.length > RULES.MAX_STIMULANT ? ' — more than ' + RULES.MAX_STIMULANT + ' stimulating herbs stack.' : '') : 'No stimulating herbs.' },
     { id: 'serotonin', ok: sero.length <= MAX_SEROTONERGIC,
       label: 'Serotonin load', detail: sero.length ? sero.map(r => r.name).join(', ') + (sero.length > MAX_SEROTONERGIC ? ' — two herbs that act on serotonin stack toward serotonin syndrome; the engine bottles one at most.' : '') : 'No serotonergic herbs.' },
+    { id: 'laxative', ok: lax.length <= MAX_LAXATIVE,
+      label: 'Laxatives', detail: lax.length ? lax.map(r => r.name).join(', ') + (lax.length > MAX_LAXATIVE ? ' — two laxatives in one bottle; the engine seats one at most, and only for reported constipation.' : ' — the engine seats a laxative only for reported constipation.') : 'None.' },
     { id: 'push-pull', ok: !(gaba.length && strong.length),
       label: 'Sedative with stimulant', detail: gaba.length && strong.length ? gaba.concat(strong).map(r => r.name).join(', ') + ' — a sedative and a stimulant pull against each other; the engine never bottles the two together.' : 'No tug-of-war.' },
     { id: 'restricted', ok: !rows.some(r => r.restricted),

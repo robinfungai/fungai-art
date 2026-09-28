@@ -80,7 +80,39 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ---
 
-## 0.11 · START HERE — 2026-09-28 (committed, not pushed)
+## 0.12 · START HERE — 2026-09-28, later (committed, not pushed)
+
+**For Robin to run:** `supabase-practitioner-formulas.sql` (client files in
+the pro composer) and, from §0.11, `supabase-dm-realtime.sql`.
+**For Robin to check:** the 245 recorded herb goals (`goals:` in herbs.ts,
+drafted by Claude). Restart `npm run dev` — vite.config.ts changed.
+
+- **Engine 2.4 / safety 1.2** — read `docs/FORMULA-ENGINE-BRIEF.md` (the
+  audit brief Robin will run through several LLMs). Goals are recorded per
+  herb and scored by position (main use 12 → 4th use 6.48 for goal #1;
+  strict #1 > #2 > #3); the six ignored pro answers now score; cycle
+  trying_conceive / stimulants_sensitive / bad_reaction are exclusions;
+  laxatives only for reported constipation, max 1; MYCO gets the pro
+  answers + LAX/STRONG tags. 19 fixture pins re-captured.
+- **Pro composer is gated**: `src/server/practitioner.mjs` (rank
+  facilitator/alchemist/founder or admin), `/api/pro-access`, fyf-compose
+  403s `_pro` without it and returns a `pro` block (score parts +
+  alternatives) to practitioners. Tools in
+  `public/find-your-formula-pro/practitioner.js`: why each herb, adjust
+  (live /api/formula-analysis checks + ask MYCO), dose sheet (ml, arm,
+  ethanol where recorded), client file + print/PDF.
+- **Local dev**: /api/fyf/compose and /api/pro-access now run on :5173
+  (they never did — neither quiz could compose locally). Pro page is open
+  locally via FYF_DEV_PRACTITIONER, set only by the Vite process.
+- **Logo**: fungi.png cut out (the black box), 140 KB; new favicon.png /
+  favicon-48.png / apple-touch-icon.png from it on every page; favicon.svg
+  removed. Home Instagram card uses inner-architecture.jpg (from
+  src/assets). Foraging map loads tiles only after the acknowledgement.
+- Open: house formula dose (none exists anywhere — dose sheet leaves it to
+  the practitioner); body pattern / time / stress still regex-inferred;
+  one-trace cap squeezes digestive formulas; Skogens Nektar product list.
+
+## 0.11 · 2026-09-28 (committed, not pushed)
 
 **SQL for Robin:** `supabase-dm-realtime.sql` (DMs arrive live; without it the
 inbox just keeps polling). **After the next push:** set real saffron counts per

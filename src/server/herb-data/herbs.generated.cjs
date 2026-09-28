@@ -10,6 +10,7 @@ const HERBS = [
   {
     id: 201,
     name: 'Bilberry',
+    goals: [],
     botanical: 'Vaccinium myrtillus (ripe berry)',
     tcm_meridians: ['Liver', 'Kidney', 'Heart'],
     tcm_element: 'Water + Wood',
@@ -84,6 +85,7 @@ const HERBS = [
   {
     id: 202,
     name: 'Angelica (Dong Quai)',
+    goals: ['hormones', 'pain'],
     botanical: 'Angelica sinensis (root — 2–3 year matured)',
     tcm_meridians: ['Heart', 'Liver', 'Spleen', 'Pericardium'],
     tcm_element: 'Wood + Fire',
@@ -164,6 +166,7 @@ const HERBS = [
   {
     id: 203,
     name: 'Aronia Berry',
+    goals: [],
     botanical: 'Aronia melanocarpa (ripe berry)',
     tcm_meridians: ['Heart', 'Liver', 'Spleen', 'Stomach'],
     tcm_element: 'Water + Earth',
@@ -239,6 +242,7 @@ const HERBS = [
   {
     id: 103,
     name: 'Ashwagandha',
+    goals: ['stress', 'anxiety', 'sleep'],
     botanical: 'Withania somnifera (root — 2–3 year matured, standardised to 5% withanolides)',
     tcm_meridians: ['Kidney', 'Spleen', 'Heart'],
     tcm_element: 'Earth + Fire',
@@ -326,6 +330,7 @@ const HERBS = [
   {
     id: 204,
     name: 'Astragalus',
+    goals: ['immunity', 'energy'],
     botanical: 'Astragalus membranaceus (root — Huang Qi)',
     tcm_meridians: ['Spleen', 'Lung', 'Kidney', 'Heart'],
     tcm_element: 'Earth + Metal',
@@ -403,6 +408,7 @@ const HERBS = [
   {
     id: 4,
     name: 'Bacopa',
+    goals: ['cognitive', 'anxiety'],
     botanical: 'Bacopa monnieri (aerial parts — Brahmi)',
     tcm_meridians: ['Heart', 'Spleen', 'Kidney'],
     tcm_element: 'Water + Fire',
@@ -482,6 +488,7 @@ const HERBS = [
   {
     id: 205,
     name: 'Barberry',
+    goals: ['digestion', 'immunity'],
     botanical: 'Berberis vulgaris (root bark and stem bark)',
     tcm_meridians: ['Liver', 'Gallbladder', 'Stomach', 'Large Intestine'],
     tcm_element: 'Wood + Metal',
@@ -561,6 +568,7 @@ const HERBS = [
   {
     id: 206,
     name: 'Barley',
+    goals: ['digestion'],
     botanical: 'Hordeum vulgare (grain, bran and young barley grass)',
     tcm_meridians: ['Spleen', 'Stomach', 'Liver'],
     tcm_element: 'Earth + Wood',
@@ -640,6 +648,7 @@ const HERBS = [
   {
     id: 126,
     name: 'Blue Lotus',
+    goals: ['sleep', 'anxiety', 'mood'],
     botanical: 'Nymphaea caerulea (petals and leaves)',
     tcm_meridians: ['Heart', 'Pericardium', 'Third Eye'],
     tcm_element: 'Water + Fire',
@@ -726,6 +735,7 @@ const HERBS = [
   {
     id: 207,
     name: 'Calamus',
+    goals: ['cognitive', 'digestion'],
     botanical: 'Acorus calamus (rhizome — Sweet Flag, Rat Root)',
     tcm_meridians: ['Heart', 'Kidney', 'Spleen'],
     tcm_element: 'Fire + Water',
@@ -805,6 +815,7 @@ const HERBS = [
   {
     id: 208,
     name: 'Black Cumin',
+    goals: ['immunity', 'pain', 'digestion'],
     botanical: 'Nigella sativa (seed and cold-pressed seed oil)',
     tcm_meridians: ['Lung', 'Spleen', 'Liver'],
     tcm_element: 'Metal + Earth',
@@ -882,6 +893,7 @@ const HERBS = [
   {
     id: 209,
     name: 'Black Walnut',
+    goals: ['digestion', 'immunity'],
     botanical: 'Juglans nigra (green hull — outer casing)',
     tcm_meridians: ['Large Intestine', 'Liver', 'Spleen'],
     tcm_element: 'Metal + Earth',
@@ -958,6 +970,7 @@ const HERBS = [
   {
     id: 210,
     name: 'Bladderwrack',
+    goals: ['hormones', 'energy'],
     botanical: 'Fucus vesiculosus (whole dried thallus — Atlantic seaweed)',
     tcm_meridians: ['Kidney', 'Spleen'],
     tcm_element: 'Water + Earth',
@@ -1039,6 +1052,7 @@ const HERBS = [
   {
     id: 211,
     name: 'Blueberry',
+    goals: ['cognitive'],
     botanical: 'Vaccinium corymbosum / Vaccinium angustifolium (ripe berry)',
     tcm_meridians: ['Liver', 'Kidney', 'Heart'],
     tcm_element: 'Water + Earth',
@@ -1116,6 +1130,7 @@ const HERBS = [
   {
     id: 102,
     name: 'Bobinsana',
+    goals: ['mood', 'anxiety'],
     botanical: 'Calliandra angustifolia (root and bark — Amazonian)',
     tcm_meridians: ['Heart', 'Liver', 'Spleen'],
     tcm_element: 'Fire + Water',
@@ -1202,6 +1217,7 @@ const HERBS = [
   {
     id: 104,
     name: 'Broadleaf Plantain',
+    goals: ['immunity', 'digestion'],
     botanical: 'Plantago major (leaf — aerial parts)',
     tcm_meridians: ['Lung', 'Kidney', 'Liver'],
     tcm_element: 'Water + Earth',
@@ -1281,6 +1297,7 @@ const HERBS = [
   {
     id: 212,
     name: 'Burdock',
+    goals: ['detox', 'beauty', 'digestion'],
     botanical: 'Arctium lappa (root — Gobo)',
     tcm_meridians: ['Liver', 'Spleen', 'Stomach', 'Large Intestine'],
     tcm_element: 'Earth + Metal',
@@ -1359,6 +1376,7 @@ const HERBS = [
   {
     id: 213,
     name: "Butcher's Broom",
+    goals: [],
     botanical: 'Ruscus aculeatus (rhizome and root — standardised to ruscogenins)',
     tcm_meridians: ['Liver', 'Spleen', 'Kidney'],
     tcm_element: 'Wood + Water',
@@ -1434,6 +1452,7 @@ const HERBS = [
   {
     id: 214,
     name: 'Butterbur',
+    goals: ['pain'],
     botanical: 'Petasites hybridus (root and rhizome — PA-FREE extract only)',
     tcm_meridians: ['Liver', 'Lung', 'Heart'],
     tcm_element: 'Wood + Metal',
@@ -1513,6 +1532,7 @@ const HERBS = [
   {
     id: 215,
     name: 'Damiana',
+    goals: ['hormones', 'mood', 'anxiety'],
     botanical: 'Turnera diffusa (leaf — aerial parts)',
     tcm_meridians: ['Liver', 'Kidney', 'Heart'],
     tcm_element: 'Fire + Water',
@@ -1598,6 +1618,7 @@ const HERBS = [
   {
     id: 107,
     name: 'Dandelion Root',
+    goals: ['detox', 'digestion'],
     botanical: 'Taraxacum officinale (root — preferred over leaf for medicinal use)',
     tcm_meridians: ['Liver', 'Stomach', 'Lung'],
     tcm_element: 'Wood + Earth',
@@ -1684,6 +1705,7 @@ const HERBS = [
   {
     id: 216,
     name: 'Elderberry',
+    goals: ['immunity'],
     botanical: 'Sambucus nigra / Sambucus canadensis (ripe berries only — never raw or unripe)',
     tcm_meridians: ['Lung', 'Spleen'],
     tcm_element: 'Metal + Earth',
@@ -1760,6 +1782,7 @@ const HERBS = [
   {
     id: 132,
     name: 'Calea Zacatachichi',
+    goals: ['sleep'],
     botanical: 'Calea zacatachichi / Calea ternifolia (aerial parts, leaves and flowering tops)',
     tcm_meridians: ['Heart', 'Third Eye', 'Pericardium'],
     tcm_element: 'Fire + Metal',
@@ -1846,6 +1869,7 @@ const HERBS = [
   {
     id: 217,
     name: 'Cardamom',
+    goals: ['digestion'],
     botanical: 'Elettaria cardamomum (seeds within dried pods — Queen of Spices)',
     tcm_meridians: ['Lung', 'Spleen', 'Stomach', 'Large Intestine'],
     tcm_element: 'Fire + Earth',
@@ -1923,6 +1947,7 @@ const HERBS = [
   {
     id: 218,
     name: 'Catuaba',
+    goals: ['hormones', 'energy', 'mood'],
     botanical: 'Anemopaegma mirandum (bark — sustainably wild-crafted Amazonian)',
     tcm_meridians: ['Kidney', 'Liver', 'Heart'],
     tcm_element: 'Fire + Water',
@@ -2005,6 +2030,7 @@ const HERBS = [
   {
     id: 219,
     name: 'Cayenne',
+    goals: ['pain', 'digestion', 'energy'],
     botanical: 'Capsicum annuum (dried fruit — potency measured in Scoville Heat Units)',
     tcm_meridians: ['Heart', 'Spleen', 'Liver'],
     tcm_element: 'Fire',
@@ -2087,6 +2113,7 @@ const HERBS = [
   {
     id: 128,
     name: 'Chamomile',
+    goals: ['sleep', 'anxiety', 'digestion'],
     botanical: 'Matricaria chamomilla (German) / Chamaemelum nobile (Roman) (flower heads)',
     tcm_meridians: ['Spleen', 'Stomach', 'Liver', 'Heart'],
     tcm_element: 'Earth + Fire',
@@ -2169,6 +2196,7 @@ const HERBS = [
   {
     id: 220,
     name: "Devil's Claw",
+    goals: ['pain'],
     botanical: 'Harpagophytum procumbens (dried secondary tuberous roots)',
     tcm_meridians: ['Liver', 'Kidney', 'Spleen'],
     tcm_element: 'Wood + Water',
@@ -2250,6 +2278,7 @@ const HERBS = [
   {
     id: 221,
     name: 'Echinacea',
+    goals: ['immunity'],
     botanical: 'Echinacea purpurea (aerial parts + root) / Echinacea angustifolia (root — most potent)',
     tcm_meridians: ['Lung', 'Spleen', 'Heart'],
     tcm_element: 'Fire + Earth',
@@ -2329,6 +2358,7 @@ const HERBS = [
   {
     id: 106,
     name: 'Calendula',
+    goals: ['beauty', 'detox'],
     botanical: 'Calendula officinalis (flower heads — petals only)',
     tcm_meridians: ['Heart', 'Liver'],
     tcm_element: 'Fire + Earth',
@@ -2407,6 +2437,7 @@ const HERBS = [
   {
     id: 222,
     name: 'Caraway',
+    goals: ['digestion'],
     botanical: 'Carum carvi (dried fruits — seeds)',
     tcm_meridians: ['Spleen', 'Stomach', 'Lung', 'Large Intestine'],
     tcm_element: 'Earth + Fire',
@@ -2483,6 +2514,7 @@ const HERBS = [
   {
     id: 223,
     name: "Cat's Claw",
+    goals: ['immunity', 'pain'],
     botanical: 'Uncaria tomentosa (inner bark — sustainably harvested Peruvian Amazon)',
     tcm_meridians: ['Spleen', 'Liver', 'Kidney'],
     tcm_element: 'Earth + Wood',
@@ -2567,6 +2599,7 @@ const HERBS = [
   {
     id: 225,
     name: 'Chickweed',
+    goals: ['beauty', 'digestion'],
     botanical: 'Stellaria media (aerial parts — fresh or dried)',
     tcm_meridians: ['Lung', 'Liver', 'Spleen'],
     tcm_element: 'Water + Earth',
@@ -2643,6 +2676,7 @@ const HERBS = [
   {
     id: 226,
     name: 'Chilcuague',
+    goals: ['pain', 'immunity'],
     botanical: 'Heliopsis longipes (root — Aztec Golden Root)',
     tcm_meridians: ['Stomach', 'Spleen', 'Lung'],
     tcm_element: 'Fire + Earth',
@@ -2718,6 +2752,7 @@ const HERBS = [
   {
     id: 227,
     name: 'Cinnamon',
+    goals: ['digestion', 'energy'],
     botanical: 'Cinnamomum verum (Ceylon/true — preferred) / Cinnamomum cassia (inner bark)',
     tcm_meridians: ['Spleen', 'Stomach', 'Kidney', 'Heart'],
     tcm_element: 'Fire + Earth',
@@ -2798,6 +2833,7 @@ const HERBS = [
   {
     id: 228,
     name: 'Cloves',
+    goals: ['pain', 'digestion', 'immunity'],
     botanical: 'Syzygium aromaticum (dried flower buds)',
     tcm_meridians: ['Stomach', 'Spleen', 'Kidney'],
     tcm_element: 'Fire + Earth',
@@ -2875,6 +2911,7 @@ const HERBS = [
   {
     id: 229,
     name: 'Coca Leaf',
+    goals: ['energy'],
     botanical: 'Erythroxylum coca / E. novogranatense (leaf — Andean traditional)',
     tcm_meridians: ['Spleen', 'Kidney', 'Heart'],
     tcm_element: 'Fire + Water',
@@ -2952,6 +2989,7 @@ const HERBS = [
   {
     id: 230,
     name: 'Cranberry',
+    goals: [],
     botanical: 'Vaccinium macrocarpon (ripe berries — PAC-standardised extract preferred)',
     tcm_meridians: ['Kidney', 'Bladder'],
     tcm_element: 'Water',
@@ -3037,6 +3075,7 @@ const HERBS = [
   {
     id: 231,
     name: 'Iceland Moss',
+    goals: ['immunity', 'digestion'],
     botanical: 'Cetraria islandica (whole dried lichen thallus)',
     tcm_meridians: ['Lung', 'Stomach'],
     tcm_element: 'Metal + Earth',
@@ -3112,6 +3151,7 @@ const HERBS = [
   {
     id: 232,
     name: 'Elderflower',
+    goals: ['immunity'],
     botanical: 'Sambucus nigra (flowers — fresh or dried; different from elderberry)',
     tcm_meridians: ['Lung', 'Liver', 'Kidney'],
     tcm_element: 'Metal + Water',
@@ -3191,6 +3231,7 @@ const HERBS = [
   {
     id: 233,
     name: 'Ephedra (Ma Huang)',
+    goals: ['energy'],
     botanical: 'Ephedra sinica (aerial stem) — BANNED/RESTRICTED — NOT FOR RECOMMENDATION',
     tcm_meridians: ['Lung', 'Heart', 'Kidney'],
     tcm_element: 'Fire + Metal',
@@ -3270,6 +3311,7 @@ const HERBS = [
   {
     id: 234,
     name: 'Eucalyptus',
+    goals: ['immunity'],
     botanical: 'Eucalyptus globulus (Blue Gum — leaves and essential oil)',
     tcm_meridians: ['Lung', 'Liver'],
     tcm_element: 'Metal + Wood',
@@ -3347,6 +3389,7 @@ const HERBS = [
   {
     id: 235,
     name: 'Eyebright',
+    goals: ['immunity'],
     botanical: 'Euphrasia officinalis / E. rostkoviana (aerial parts)',
     tcm_meridians: ['Liver', 'Lung', 'Stomach'],
     tcm_element: 'Wood + Metal',
@@ -3420,6 +3463,7 @@ const HERBS = [
   {
     id: 236,
     name: 'Fadogia',
+    goals: ['hormones', 'energy'],
     formula_access: 'pro', // "practitioner only" — Robin 2026-09-28
     botanical: 'Fadogia agrestis (stem and root — West African)',
     tcm_meridians: ['Kidney', 'Liver'],
@@ -3493,6 +3537,7 @@ const HERBS = [
   {
     id: 237,
     name: 'Fennel',
+    goals: ['digestion', 'hormones'],
     botanical: 'Foeniculum vulgare (dried ripe fruits — seeds)',
     tcm_meridians: ['Liver', 'Kidney', 'Spleen', 'Stomach'],
     tcm_element: 'Wood + Water',
@@ -3571,6 +3616,7 @@ const HERBS = [
   {
     id: 238,
     name: 'Garlic',
+    goals: ['immunity'],
     botanical: 'Allium sativum (bulb cloves — fresh-crushed for antimicrobial use)',
     tcm_meridians: ['Spleen', 'Lung', 'Heart', 'Stomach'],
     tcm_element: 'Fire + Earth',
@@ -3654,6 +3700,7 @@ const HERBS = [
   {
     id: 239,
     name: 'Ginkgo',
+    goals: ['cognitive'],
     botanical: 'Ginkgo biloba (leaf only — standardised to 24% flavones, 6% terpene lactones)',
     tcm_meridians: ['Heart', 'Liver', 'Kidney'],
     tcm_element: 'Metal + Water',
@@ -3736,6 +3783,7 @@ const HERBS = [
   {
     id: 240,
     name: 'Ginseng',
+    goals: ['energy', 'stress', 'cognitive'],
     botanical: 'Panax ginseng (Asian — most potent) / Panax quinquefolius (American — milder) (root)',
     tcm_meridians: ['Spleen', 'Lung', 'Heart'],
     tcm_element: 'Earth + Fire',
@@ -3820,6 +3868,7 @@ const HERBS = [
   {
     id: 241,
     name: 'Goji Berry',
+    goals: ['energy', 'beauty'],
     botanical: 'Lycium barbarum / Lycium chinense (dried ripe berries — Wolfberry, Gou Qi Zi)',
     tcm_meridians: ['Liver', 'Kidney', 'Lung'],
     tcm_element: 'Water + Metal',
@@ -3896,6 +3945,7 @@ const HERBS = [
   {
     id: 108,
     name: 'Gotu Kola',
+    goals: ['cognitive', 'anxiety', 'beauty'],
     botanical: 'Centella asiatica (aerial parts — Brahmi, Asiatic Pennywort)',
     tcm_meridians: ['Heart', 'Liver', 'Kidney', 'Spleen'],
     tcm_element: 'Water + Wood',
@@ -3981,6 +4031,7 @@ const HERBS = [
   {
     id: 242,
     name: 'Ground Ivy',
+    goals: ['immunity'],
     botanical: 'Glechoma hederacea (aerial parts — Gill-over-the-ground, Alehoof)',
     tcm_meridians: ['Lung', 'Spleen', 'Kidney', 'Liver'],
     tcm_element: 'Metal + Earth',
@@ -4056,6 +4107,7 @@ const HERBS = [
   {
     id: 109,
     name: 'Guarana',
+    goals: ['energy', 'cognitive'],
     botanical: 'Paullinia cupana (seed — highest caffeine of any plant)',
     tcm_meridians: ['Heart', 'Spleen', 'Kidney Yang'],
     tcm_element: 'Fire',
@@ -4138,6 +4190,7 @@ const HERBS = [
   {
     id: 110,
     name: 'Holy Basil (Tulsi)',
+    goals: ['stress', 'anxiety', 'immunity'],
     botanical: 'Ocimum sanctum (aerial parts — "The Incomparable One")',
     tcm_meridians: ['Heart', 'Lung', 'Spleen'],
     tcm_element: 'Fire + Wood',
@@ -4223,6 +4276,7 @@ const HERBS = [
   {
     id: 243,
     name: 'Hops',
+    goals: ['sleep', 'anxiety'],
     botanical: 'Humulus lupulus (strobiles — female cones)',
     tcm_meridians: ['Heart', 'Liver', 'Spleen'],
     tcm_element: 'Water + Earth',
@@ -4308,6 +4362,7 @@ const HERBS = [
   {
     id: 244,
     name: 'Horsetail',
+    goals: ['beauty', 'detox'],
     botanical: 'Equisetum arvense (sterile aerial shoots — "Living Fossil")',
     tcm_meridians: ['Kidney', 'Bladder', 'Lung'],
     tcm_element: 'Water + Metal',
@@ -4387,6 +4442,7 @@ const HERBS = [
   {
     id: 245,
     name: 'Guayusa',
+    goals: ['energy', 'cognitive'],
     botanical: 'Ilex guayusa (leaves — Ecuadorian Amazon)',
     tcm_meridians: ['Heart', 'Liver', 'Kidney'],
     tcm_element: 'Fire + Water',
@@ -4469,6 +4525,7 @@ const HERBS = [
   {
     id: 246,
     name: 'Hawthorn',
+    goals: ['stress', 'anxiety'],
     botanical: 'Crataegus spp. (leaf with flower — Crataegus folium cum flore; also berries)',
     tcm_meridians: ['Heart', 'Pericardium', 'Spleen', 'Liver'],
     tcm_element: 'Fire + Water',
@@ -4553,6 +4610,7 @@ const HERBS = [
   {
     id: 247,
     name: 'Horny Goat Weed',
+    goals: ['hormones', 'energy'],
     botanical: 'Epimedium grandiflorum (aerial parts — Yin Yang Huo)',
     tcm_meridians: ['Kidney', 'Liver', 'Ming Men'],
     tcm_element: 'Fire + Water',
@@ -4641,6 +4699,7 @@ const HERBS = [
   {
     id: 248,
     name: 'Moringa',
+    goals: ['energy', 'immunity'],
     botanical: 'Moringa oleifera (leaf — Drumstick Tree, Miracle Tree)',
     tcm_meridians: ['Spleen', 'Lung', 'Liver', 'Kidney'],
     tcm_element: 'Earth + Wood',
@@ -4719,6 +4778,7 @@ const HERBS = [
   {
     id: 249,
     name: 'Motherwort',
+    goals: ['anxiety', 'hormones'],
     botanical: 'Leonurus cardiaca (aerial parts — flowering tops)',
     tcm_meridians: ['Heart', 'Liver', 'Uterus / Chong Mai', 'Pericardium'],
     tcm_element: 'Fire + Wood',
@@ -4804,6 +4864,7 @@ const HERBS = [
   {
     id: 250,
     name: 'Kratom',
+    goals: ['pain'],
     botanical: 'Mitragyna speciosa (leaf — Southeast Asian — ADDICTION RISK — NOT FOR RECOMMENDATION)',
     tcm_meridians: ['Liver', 'Spleen', 'Heart'],
     tcm_element: 'Wood + Earth + Fire',
@@ -4883,6 +4944,7 @@ const HERBS = [
   {
     id: 105,
     name: "Lady's Mantle",
+    goals: ['hormones'],
     botanical: 'Alchemilla vulgaris / A. xanthochlora (aerial parts — leaves; "Little Alchemist")',
     tcm_meridians: ['Spleen', 'Liver', 'Uterus / Chong Mai'],
     tcm_element: 'Earth + Wood',
@@ -4963,6 +5025,7 @@ const HERBS = [
   {
     id: 251,
     name: 'Lavender',
+    goals: ['anxiety', 'sleep'],
     botanical: 'Lavandula angustifolia (flowers and aerial parts; essential oil)',
     tcm_meridians: ['Heart', 'Liver', 'Lung'],
     tcm_element: 'Metal + Fire',
@@ -5048,6 +5111,7 @@ const HERBS = [
   {
     id: 252,
     name: 'Lemon Balm',
+    goals: ['anxiety', 'sleep', 'mood'],
     botanical: 'Melissa officinalis (leaves — "Melissa")',
     tcm_meridians: ['Liver', 'Heart', 'Pericardium'],
     tcm_element: 'Metal + Wood',
@@ -5133,6 +5197,7 @@ const HERBS = [
   {
     id: 253,
     name: 'Linden',
+    goals: ['anxiety', 'sleep'],
     botanical: 'Tilia cordata / Tilia europaea (flowers with bracts)',
     tcm_meridians: ['Heart', 'Liver', 'Spleen'],
     tcm_element: 'Water + Fire',
@@ -5220,6 +5285,7 @@ const HERBS = [
   {
     id: 254,
     name: 'Jasmine',
+    goals: ['mood', 'anxiety'],
     botanical: 'Jasminum officinale / Jasminum sambac (flowers — harvested at dusk)',
     tcm_meridians: ['Heart', 'Liver', 'Kidney'],
     tcm_element: 'Fire + Earth',
@@ -5293,6 +5359,7 @@ const HERBS = [
   {
     id: 255,
     name: 'Juniper',
+    goals: ['detox', 'digestion'],
     botanical: 'Juniperus communis (ripe cone-berries — short-term use only)',
     tcm_meridians: ['Kidney', 'Bladder', 'Lung', 'Spleen'],
     tcm_element: 'Water + Metal + Fire',
@@ -5372,6 +5439,7 @@ const HERBS = [
   {
     id: 256,
     name: 'Kanna',
+    goals: ['mood', 'anxiety'],
     serotonergic: true, // mesembrine: serotonin reuptake inhibitor
     botanical: 'Sceletium tortuosum (fermented dried leaves — traditional Khoi preparation)',
     tcm_meridians: ['Heart', 'Liver', 'Spleen'],
@@ -5454,6 +5522,7 @@ const HERBS = [
   {
     id: 257,
     name: 'Kava Kava',
+    goals: ['anxiety', 'sleep'],
     botanical: 'Piper methysticum (peeled rhizome — noble cultivar, root only, never aerial parts)',
     tcm_meridians: ['Heart', 'Liver', 'Kidney'],
     tcm_element: 'Water + Earth',
@@ -5536,6 +5605,7 @@ const HERBS = [
   {
     id: 258,
     name: 'Licorice Root',
+    goals: ['digestion', 'stress'],
     botanical: 'Glycyrrhiza glabra / G. uralensis (root — two forms: whole root and DGL)',
     tcm_meridians: ['Spleen', 'Lung', 'Heart', 'Stomach'],
     tcm_element: 'Earth + Metal',
@@ -5621,6 +5691,7 @@ const HERBS = [
   {
     id: 259,
     name: 'Lingonberry',
+    goals: [],
     botanical: 'Vaccinium vitis-idaea (ripe berries — Cowberry, Nordic staple food)',
     tcm_meridians: ['Kidney', 'Bladder', 'Liver'],
     tcm_element: 'Water + Earth',
@@ -5700,6 +5771,7 @@ const HERBS = [
   {
     id: 260,
     name: 'Lobelia (Indian Tobacco)',
+    goals: ['immunity'],
     formula_access: 'pro', // "practitioner only" — Robin 2026-09-28
     botanical: 'Lobelia inflata (aerial parts — RESTRICTED — practitioner-only herb)',
     tcm_meridians: ['Lung', 'Heart', 'Stomach'],
@@ -5777,6 +5849,7 @@ const HERBS = [
   {
     id: 261,
     name: 'Lucerne (Alfalfa)',
+    goals: ['energy', 'digestion'],
     botanical: 'Medicago sativa (leaf and aerial parts — deep-rooted mineral accumulator)',
     tcm_meridians: ['Spleen', 'Liver', 'Kidney'],
     tcm_element: 'Earth + Water',
@@ -5848,6 +5921,7 @@ const HERBS = [
   {
     id: 262,
     name: 'Maca',
+    goals: ['hormones', 'energy', 'mood'],
     botanical: 'Lepidium meyenii (root/tuber — all-gender sexual vitality and energy)',
     tcm_meridians: ['Kidney', 'Spleen'],
     tcm_element: 'Water + Earth',
@@ -5928,6 +6002,7 @@ const HERBS = [
   {
     id: 263,
     name: 'Maca Negra (Black Maca)',
+    goals: ['hormones', 'energy'],
     botanical: 'Lepidium meyenii var. negra (black tuber — male-specific vitality)',
     tcm_meridians: ['Kidney', 'Liver'],
     tcm_element: 'Water + Wood',
@@ -6005,6 +6080,7 @@ const HERBS = [
   {
     id: 264,
     name: 'Marjoram (Sweet Marjoram)',
+    goals: ['digestion'],
     botanical: 'Origanum majorana (flowering aerial parts — sweet marjoram)',
     tcm_meridians: ['Spleen', 'Stomach', 'Lung'],
     tcm_element: 'Earth + Fire',
@@ -6083,6 +6159,7 @@ const HERBS = [
   {
     id: 265,
     name: 'Meadowsweet',
+    goals: ['digestion', 'pain'],
     botanical: 'Filipendula ulmaria (aerial parts — flowers and leaves — "Queen of the Meadow")',
     tcm_meridians: ['Stomach', 'Liver', 'Spleen'],
     tcm_element: 'Earth + Metal',
@@ -6168,6 +6245,7 @@ const HERBS = [
   {
     id: 266,
     name: 'Milk Thistle',
+    goals: ['detox'],
     botanical: 'Silybum marianum (seeds — standardised 70–80% silymarin)',
     tcm_meridians: ['Liver', 'Gallbladder'],
     tcm_element: 'Wood',
@@ -6246,6 +6324,7 @@ const HERBS = [
   {
     id: 267,
     name: 'Mugwort',
+    goals: ['hormones', 'digestion', 'sleep'],
     botanical: 'Artemisia vulgaris (leaves and flowering tops — "Mother of Herbs")',
     tcm_meridians: ['Liver', 'Spleen', 'Kidney'],
     tcm_element: 'Fire + Wood',
@@ -6331,6 +6410,7 @@ const HERBS = [
   {
     id: 268,
     name: 'Mullein',
+    goals: ['immunity'],
     botanical: 'Verbascum thapsus (leaf and flower — "Grandmother Herb")',
     tcm_meridians: ['Lung', 'Kidney', 'Spleen'],
     tcm_element: 'Metal + Water',
@@ -6410,6 +6490,7 @@ const HERBS = [
   {
     id: 269,
     name: 'Muira Puama',
+    goals: ['hormones', 'energy', 'cognitive'],
     botanical: 'Ptychopetalum olacoides (root and stem bark — "Potency Wood")',
     tcm_meridians: ['Kidney', 'Liver', 'Heart'],
     tcm_element: 'Water + Fire',
@@ -6493,6 +6574,7 @@ const HERBS = [
   {
     id: 544,
     name: 'Mucuna',
+    goals: ['mood', 'hormones', 'energy'],
     botanical: 'Mucuna pruriens (seed — standardised to 15–20% L-DOPA; "Velvet Bean", Kapikacchu)',
     tcm_meridians: ['Kidney', 'Liver', 'Heart'],
     tcm_element: 'Water + Fire',
@@ -6582,6 +6664,7 @@ const HERBS = [
   {
     id: 270,
     name: 'Nettle',
+    goals: ['energy', 'beauty'],
     botanical: 'Urtica dioica (leaf only — harvested spring-summer)',
     tcm_meridians: ['Kidney', 'Spleen', 'Liver'],
     tcm_element: 'Earth + Metal',
@@ -6660,6 +6743,7 @@ const HERBS = [
   {
     id: 271,
     name: 'Oatstraw',
+    goals: ['stress', 'anxiety'],
     botanical: 'Avena sativa (aerial parts — sterile stem and milky oat tops)',
     tcm_meridians: ['Spleen', 'Heart'],
     tcm_element: 'Earth + Fire',
@@ -6742,6 +6826,7 @@ const HERBS = [
   {
     id: 272,
     name: 'Oregano',
+    goals: ['immunity', 'digestion'],
     botanical: 'Origanum vulgare (leaves and flowering tops — "Joy of the Mountain")',
     tcm_meridians: ['Lung', 'Spleen', 'Liver'],
     tcm_element: 'Fire + Metal',
@@ -6824,6 +6909,7 @@ const HERBS = [
   {
     id: 273,
     name: 'Passionflower',
+    goals: ['anxiety', 'sleep'],
     botanical: 'Passiflora incarnata (aerial parts — leaves and flowering tops)',
     tcm_meridians: ['Heart', 'Liver'],
     tcm_element: 'Water + Metal',
@@ -6907,6 +6993,7 @@ const HERBS = [
   {
     id: 274,
     name: "Pau d'Arco",
+    goals: ['immunity'],
     formula_access: 'pro', // "practitioner only" — Robin 2026-09-28
     botanical: "Handroanthus impetiginosus / Tabebuia impetiginosa (inner bark — CAUTION: restricted use)",
     tcm_meridians: ['Liver', 'Large Intestine', 'Immune System'],
@@ -6987,6 +7074,7 @@ const HERBS = [
   {
     id: 275,
     name: 'Pine Pollen',
+    goals: ['hormones', 'energy'],
     botanical: 'Pinus densiflora / Pinus sylvestris (pollen — male reproductive dust)',
     tcm_meridians: ['Spleen', 'Stomach', 'Kidney'],
     tcm_element: 'Earth + Water',
@@ -7061,6 +7149,7 @@ const HERBS = [
   {
     id: 276,
     name: 'Rhodiola',
+    goals: ['stress', 'energy', 'mood'],
     serotonergic: true, // own record: serotonin syndrome risk with SSRIs / St John's Wort
     botanical: 'Rhodiola rosea (root and rhizome — standardised 3%+ rosavins)',
     tcm_meridians: ['Heart', 'Spleen', 'Kidney Yang'],
@@ -7148,6 +7237,7 @@ const HERBS = [
   {
     id: 277,
     name: 'Rosemary',
+    goals: ['cognitive'],
     botanical: 'Rosmarinus officinalis (leaves — "Dew of the Sea")',
     tcm_meridians: ['Liver', 'Heart', 'Head-Brain'],
     tcm_element: 'Fire + Metal',
@@ -7231,6 +7321,7 @@ const HERBS = [
   {
     id: 278,
     name: 'Saffron',
+    goals: ['mood'],
     serotonergic: true, // crocin: mild serotonin reuptake inhibitor
     botanical: 'Crocus sativus (stigmas only — three red threads per flower — "Red Gold")',
     tcm_meridians: ['Heart', 'Liver'],
@@ -7315,6 +7406,7 @@ const HERBS = [
   {
     id: 279,
     name: 'Schisandra (Five-Flavour Fruit)',
+    goals: ['stress', 'energy', 'detox'],
     botanical: 'Schisandra chinensis (whole dried berries — "Magnolia Vine")',
     tcm_meridians: ['Heart', 'Lung', 'Liver', 'Kidney', 'Spleen'],
     tcm_element: 'All Five Elements — integrative',
@@ -7394,6 +7486,7 @@ const HERBS = [
   {
     id: 280,
     name: 'Shilajit (Mineral Pitch)',
+    goals: ['energy', 'hormones'],
     botanical: 'Asphaltum / Mineral Pitch (Himalayan rock exudate — "Destroyer of Weakness")',
     tcm_meridians: ['Kidney', 'Spleen'],
     tcm_element: 'Water + Earth',
@@ -7475,6 +7568,7 @@ const HERBS = [
   {
     id: 281,
     name: 'Skullcap',
+    goals: ['anxiety', 'sleep'],
     botanical: 'Scutellaria lateriflora (aerial parts — flowering tops — "Helmet Flower")',
     tcm_meridians: ['Heart', 'Liver', 'Spleen'],
     tcm_element: 'Water + Metal',
@@ -7555,6 +7649,7 @@ const HERBS = [
   {
     id: 540,
     name: 'Goldenrod',
+    goals: ['detox'],
     botanical: 'Solidago virgaurea / S. canadensis / S. gigantea (aerial parts — flowering tops and leaves)',
     tcm_meridians: ['Lung', 'Kidney', 'Bladder', 'Spleen'],
     tcm_element: 'Water + Metal',
@@ -7633,6 +7728,7 @@ const HERBS = [
   {
     id: 541,
     name: 'Spirulina',
+    goals: ['energy', 'detox'],
     botanical: 'Arthrospira platensis (whole dried organism — "Ancient Blue-Green Life")',
     tcm_meridians: ['Spleen', 'Stomach', 'Liver', 'Kidney'],
     tcm_element: 'Earth + Water',
@@ -7711,6 +7807,7 @@ const HERBS = [
   {
     id: 542,
     name: "St. John's Wort",
+    goals: ['mood'],
     serotonergic: true, // hyperforin: serotonin / noradrenaline / dopamine reuptake inhibitor
     botanical: 'Hypericum perforatum (aerial parts — leaves, stems and flowering tops; harvested at summer solstice — "Captured Sunshine")',
     tcm_meridians: ['Heart', 'Liver', 'Solar Plexus', 'Nervous System'],
@@ -7804,6 +7901,7 @@ const HERBS = [
   {
     id: 282,
     name: 'Star Anise',
+    goals: ['digestion', 'immunity'],
     botanical: 'Illicium verum (seed pods — "Eight-Pointed Star of the East")',
     tcm_meridians: ['Stomach', 'Spleen', 'Kidney'],
     tcm_element: 'Fire + Earth',
@@ -7880,6 +7978,7 @@ const HERBS = [
   {
     id: 283,
     name: 'Thyme',
+    goals: ['immunity'],
     botanical: 'Thymus vulgaris (leaves and flowering tops — "Thymos: Courage")',
     tcm_meridians: ['Lung', 'Spleen', 'Liver', 'Throat/Voice'],
     tcm_element: 'Metal + Fire',
@@ -7960,6 +8059,7 @@ const HERBS = [
   {
     id: 284,
     name: 'Tongkat Ali',
+    goals: ['hormones', 'energy'],
     botanical: 'Eurycoma longifolia (root — "Malaysian Ginseng"; standardised to eurycomanone 10–30%)',
     tcm_meridians: ['Kidney Yang', 'Spleen', 'Heart'],
     tcm_element: 'Fire + Water',
@@ -8034,6 +8134,7 @@ const HERBS = [
   {
     id: 285,
     name: 'Tremella',
+    goals: ['beauty', 'immunity'],
     botanical: 'Tremella fuciformis (fruiting body — "Snow Fungus / White Wood Ear")',
     tcm_meridians: ['Lung', 'Stomach', 'Spleen', 'Kidney'],
     tcm_element: 'Water + Metal',
@@ -8111,6 +8212,7 @@ const HERBS = [
   {
     id: 286,
     name: 'Turmeric',
+    goals: ['pain', 'digestion', 'detox'],
     botanical: 'Curcuma longa (rhizome — "Golden Root")',
     tcm_meridians: ['Liver', 'Spleen', 'Heart'],
     tcm_element: 'Fire + Wood',
@@ -8194,6 +8296,7 @@ const HERBS = [
   {
     id: 287,
     name: 'Vanilla',
+    goals: ['mood', 'anxiety'],
     botanical: 'Vanilla planifolia / Vanilla tahitensis (cured pod — "The Comfort of the Orchid")',
     tcm_meridians: ['Heart', 'Spleen', 'Liver', 'Digestive System'],
     tcm_element: 'Fire + Earth',
@@ -8273,6 +8376,7 @@ const HERBS = [
   {
     id: 288,
     name: 'Valerian',
+    goals: ['sleep', 'anxiety'],
     botanical: 'Valeriana officinalis (root and rhizome — "Night Medicine for the Overthinking Mind")',
     tcm_meridians: ['Heart', 'Liver', 'Gallbladder'],
     tcm_element: 'Earth + Water',
@@ -8355,6 +8459,7 @@ const HERBS = [
   {
     id: 289,
     name: 'Vervain',
+    goals: ['anxiety', 'stress', 'digestion'],
     botanical: 'Verbena officinalis (aerial parts — flowering tops, leaves and upper stems)',
     tcm_meridians: ['Liver', 'Heart', 'Nervous System'],
     tcm_element: 'Wood + Metal',
@@ -8440,6 +8545,7 @@ const HERBS = [
   {
     id: 290,
     name: 'Vitex',
+    goals: ['hormones'],
     aliases: ['Chaste Tree', 'Chasteberry'],
     botanical: 'Vitex agnus-castus (dried berries — "Chaste Tree / Abraham\'s Balm")',
     tcm_meridians: ['Liver', 'Kidney', 'Uterus'],
@@ -8522,6 +8628,7 @@ const HERBS = [
   {
     id: 291,
     name: 'Wild Dagga',
+    goals: ['anxiety', 'mood'],
     botanical: 'Leonotis leonurus (leaves and flowers — "Lion\'s Ear")',
     tcm_meridians: ['Heart', 'Liver', 'Kidney'],
     tcm_element: 'Fire + Earth',
@@ -8603,6 +8710,7 @@ const HERBS = [
   {
     id: 292,
     name: 'Willow Bark',
+    goals: ['pain'],
     botanical: 'Salix alba / Salix spp. (inner bark — "The Original Aspirin")',
     tcm_meridians: ['Liver', 'Kidney', 'Heart'],
     tcm_element: 'Water + Wood',
@@ -8683,6 +8791,7 @@ const HERBS = [
   {
     id: 293,
     name: 'Wormwood',
+    goals: ['digestion'],
     formula_access: 'pro', // "practitioner only" — Robin 2026-09-28
     botanical: 'Artemisia absinthium (aerial parts — leaves and flowering tops; "Grand Wormwood")',
     tcm_meridians: ['Liver', 'Gallbladder', 'Stomach', 'Large Intestine'],
@@ -8762,6 +8871,7 @@ const HERBS = [
   {
     id: 294,
     name: 'Yarrow',
+    goals: ['immunity', 'hormones'],
     botanical: 'Achillea millefolium (aerial parts — leaves and flowering tops — "Soldier\'s Woundwort")',
     tcm_meridians: ['Liver', 'Spleen', 'Lung', 'Kidney'],
     tcm_element: 'Metal + Wood + Earth',
@@ -8840,6 +8950,7 @@ const HERBS = [
   {
     id: 295,
     name: 'Yellow Dock Root',
+    goals: ['digestion', 'detox'],
     botanical: 'Rumex crispus (root — "Iron Bitter of the Hedgerow")',
     tcm_meridians: ['Liver', 'Large Intestine', 'Spleen'],
     tcm_element: 'Wood + Earth',
@@ -8915,6 +9026,7 @@ const HERBS = [
   {
     id: 296,
     name: 'Yerba Mate',
+    goals: ['energy', 'cognitive'],
     botanical: 'Ilex paraguariensis (leaves — "The Social Energy of South America")',
     tcm_meridians: ['Heart', 'Liver', 'Spleen'],
     tcm_element: 'Fire + Earth',
@@ -9001,6 +9113,7 @@ const HERBS = [
   {
     id: 297,
     name: 'Slippery Elm Bark',
+    goals: ['digestion'],
     botanical: 'Ulmus rubra (inner bark — "The Healing Bark of the Red Elm")',
     tcm_meridians: ['Lung', 'Stomach', 'Large Intestine'],
     tcm_element: 'Earth + Metal',
@@ -9076,6 +9189,7 @@ const HERBS = [
   {
     id: 298,
     name: 'Peppermint',
+    goals: ['digestion', 'pain'],
     botanical: 'Mentha × piperita (leaf and essential oil — hybrid of M. aquatica × M. spicata)',
     tcm_meridians: ['Liver', 'Lung', 'Stomach', 'Large Intestine'],
     tcm_element: 'Metal + Wood',
@@ -9155,6 +9269,7 @@ const HERBS = [
   {
     id: 299,
     name: 'Pine Needles',
+    goals: ['immunity'],
     botanical: 'Pinus sylvestris / Pinus strobus (needles — safe species only; NEVER yew or toxic conifers)',
     tcm_meridians: ['Lung', 'Kidney', 'Liver'],
     tcm_element: 'Metal + Water',
@@ -9230,6 +9345,7 @@ const HERBS = [
   {
     id: 300,
     name: 'Red Dates',
+    goals: ['energy', 'sleep'],
     botanical: 'Ziziphus jujuba (whole dried fruit — "Chinese Red Date / Jujube")',
     tcm_meridians: ['Spleen', 'Stomach', 'Heart'],
     tcm_element: 'Earth + Fire',
@@ -9307,6 +9423,7 @@ const HERBS = [
   {
     id: 301,
     name: 'Rhubarb Root',
+    goals: ['digestion', 'detox'],
     formula_access: 'pro', // "practitioner only" — Robin 2026-09-28
     botanical: 'Rheum palmatum / Rheum officinale (rhizome and root — "Da Huang / The Purging Judge")',
     tcm_meridians: ['Heart', 'Liver', 'Stomach', 'Large Intestine', 'Kidney'],
@@ -9388,6 +9505,7 @@ const HERBS = [
   {
     id: 302,
     name: 'Rose Petals',
+    goals: ['mood', 'anxiety'],
     botanical: 'Rosa gallica / Rosa damascena / Rosa centifolia (dried petals — "Heart Intelligence")',
     tcm_meridians: ['Liver', 'Spleen', 'Heart'],
     tcm_element: 'Wood + Fire + Earth',
@@ -9468,6 +9586,7 @@ const HERBS = [
   {
     id: 303,
     name: 'Sage',
+    goals: ['hormones', 'immunity', 'cognitive'],
     botanical: 'Salvia officinalis (leaves — "Salvia: The Wise One")',
     tcm_meridians: ['Lung', 'Throat', 'Spleen', 'Heart'],
     tcm_element: 'Water + Metal',
@@ -9550,6 +9669,7 @@ const HERBS = [
   {
     id: 304,
     name: 'Saw Palmetto',
+    goals: ['hormones'],
     botanical: 'Serenoa repens (dried berries — "Rooted Masculine Medicine")',
     tcm_meridians: ['Kidney', 'Bladder', 'Liver'],
     tcm_element: 'Water + Wood',
@@ -9629,6 +9749,7 @@ const HERBS = [
   {
     id: 305,
     name: 'Senna',
+    goals: ['digestion'],
     botanical: 'Senna alexandrina / Cassia senna (dried leaflets and pods — "Decisive Release")',
     tcm_meridians: ['Large Intestine', 'Liver'],
     tcm_element: 'Wood',
@@ -9712,6 +9833,7 @@ const HERBS = [
   {
     id: 306,
     name: 'Birch Polypore',
+    goals: ['immunity', 'digestion'],
     botanical: 'Fomitopsis betulina (syn. Piptoporus betulinus) (fruiting body inner flesh — "Iceman\'s Mushroom")',
     tcm_meridians: ['Lung', 'Spleen', 'Large Intestine', 'Immune System'],
     tcm_element: 'Metal + Earth',
@@ -9791,6 +9913,7 @@ const HERBS = [
   {
     id: 307,
     name: 'Chaga',
+    goals: ['immunity'],
     botanical: 'Inonotus obliquus (sterile sclerotial conk from birch — "Mushroom of Immortality")',
     tcm_meridians: ['Kidney', 'Liver', 'Spleen', 'Stomach', 'Lung'],
     tcm_element: 'Water + Earth',
@@ -9874,6 +9997,7 @@ const HERBS = [
   {
     id: 308,
     name: 'Cordyceps',
+    goals: ['energy'],
     botanical: 'Cordyceps militaris (cultivated — preferred) / Ophiocordyceps sinensis (wild — ethically problematic)',
     tcm_meridians: ['Lung', 'Kidney'],
     tcm_element: 'Earth + Water',
@@ -9959,6 +10083,7 @@ const HERBS = [
   {
     id: 309,
     name: 'Shiitake',
+    goals: ['immunity'],
     botanical: 'Lentinula edodes (fruiting body and mycelia — "Kitchen Healer")',
     tcm_meridians: ['Stomach', 'Spleen', 'Liver'],
     tcm_element: 'Earth + Wood',
@@ -10042,6 +10167,7 @@ const HERBS = [
   {
     id: 311,
     name: 'Amanita Muscaria',
+    goals: ['sleep', 'anxiety'],
     botanical: 'Amanita muscaria (fruiting body — "Fly Agaric / Threshold Grandmother")',
     tcm_meridians: [],
     tcm_element: 'Fire + Water',
@@ -10118,6 +10244,7 @@ const HERBS = [
   {
     id: 312,
     name: 'Amanita Pantherina',
+    goals: ['sleep'],
     botanical: 'Amanita pantherina (fruiting body — "Panther Cap")',
     tcm_meridians: [],
     tcm_element: 'Fire + Water',
@@ -10189,6 +10316,7 @@ const HERBS = [
   {
     id: 313,
     name: 'Shaggy Mane',
+    goals: [],
     botanical: 'Coprinus comatus (young fruiting body only — "Shaggy Ink Cap / Ephemeral Glycaemic Scalpel")',
     tcm_meridians: ['Spleen', 'Stomach', 'Liver'],
     tcm_element: 'Earth + Water',
@@ -10264,6 +10392,7 @@ const HERBS = [
   {
     id: 314,
     name: 'Button Mushroom',
+    goals: ['immunity'],
     botanical: 'Agaricus bisporus (fruiting body — Button / Cremini / Portobello — "Commoner\'s Shield")',
     tcm_meridians: ['Spleen', 'Stomach', 'Kidney'],
     tcm_element: 'Earth',
@@ -10332,6 +10461,7 @@ const HERBS = [
   {
     id: 315,
     name: 'Enoki',
+    goals: ['immunity', 'beauty'],
     botanical: 'Flammulina velutipes (fruiting body — "Winter Filament / Golden Needle Mushroom")',
     tcm_meridians: ['Liver', 'Kidney', 'Spleen'],
     tcm_element: 'Water + Metal',
@@ -10407,6 +10537,7 @@ const HERBS = [
   {
     id: 316,
     name: 'Fu Ling',
+    goals: ['digestion', 'sleep'],
     botanical: 'Wolfiporia cocos (syn. Poria cocos) (sclerotium — "White Stone of Stillness")',
     tcm_meridians: ['Heart', 'Spleen', 'Kidney'],
     tcm_element: 'Earth + Water',
@@ -10486,6 +10617,7 @@ const HERBS = [
   {
     id: 317,
     name: "Lion's Mane",
+    goals: ['cognitive', 'mood'],
     botanical: 'Hericium erinaceus (fruiting body and mycelium — "Neuron Awakener")',
     tcm_meridians: ['Heart', 'Spleen', 'Kidney'],
     tcm_element: 'Water + Fire',
@@ -10564,6 +10696,7 @@ const HERBS = [
   {
     id: 318,
     name: 'Maitake',
+    goals: ['immunity'],
     botanical: 'Grifola frondosa (fruiting body — "Hen of the Woods / Dancing Sentinel")',
     tcm_meridians: ['Spleen', 'Stomach', 'Kidney', 'Immune System'],
     tcm_element: 'Earth + Water',
@@ -10642,6 +10775,7 @@ const HERBS = [
   {
     id: 319,
     name: 'Mesima',
+    goals: ['immunity'],
     botanical: 'Phellinus linteus (fruiting body — "Black Hoof / Sang-Hwang / Immune Sculptor")',
     tcm_meridians: ['Liver', 'Spleen', 'Lung', 'Immune System'],
     tcm_element: 'Wood + Metal',
@@ -10718,6 +10852,7 @@ const HERBS = [
   {
     id: 320,
     name: 'Morels',
+    goals: ['immunity', 'detox'],
     botanical: 'Morchella esculenta / M. conica / M. importuna (fruiting body — "Spring Scout")',
     tcm_meridians: ['Liver', 'Spleen', 'Stomach'],
     tcm_element: 'Wood + Earth',
@@ -10792,6 +10927,7 @@ const HERBS = [
   {
     id: 321,
     name: 'Oyster Mushroom',
+    goals: ['immunity'],
     botanical: 'Pleurotus ostreatus (fruiting body — "Metabolic Ventilator")',
     tcm_meridians: ['Lung', 'Stomach', 'Spleen', 'Large Intestine'],
     tcm_element: 'Metal + Earth',
@@ -10870,6 +11006,7 @@ const HERBS = [
   {
     id: 322,
     name: 'Red-Belted Polypore',
+    goals: ['immunity', 'pain'],
     botanical: 'Fomitopsis pinicola (fruiting body — "Forest Belt of Regulation")',
     tcm_meridians: ['Liver', 'Kidney', 'Heart', 'Spleen'],
     tcm_element: 'Wood + Water',
@@ -10948,6 +11085,7 @@ const HERBS = [
   {
     id: 323,
     name: 'Reishi',
+    goals: ['sleep', 'immunity', 'stress'],
     botanical: 'Ganoderma lucidum (fruiting body, mycelium and spores — "Mushroom of Immortality / Lingzhi")',
     tcm_meridians: ['Heart', 'Lung', 'Liver', 'Kidney'],
     tcm_element: 'Fire + Earth',
@@ -11031,6 +11169,7 @@ const HERBS = [
   {
     id: 324,
     name: 'Royal Sun Mushroom',
+    goals: ['immunity'],
     botanical: 'Agaricus subrufescens (syn. Agaricus blazei) (fruiting body — "Cogumelo do Sol / Immune Activator from Brazil")',
     tcm_meridians: ['Spleen', 'Lung', 'Liver', 'Immune System'],
     tcm_element: 'Earth + Metal',
@@ -11107,6 +11246,7 @@ const HERBS = [
   {
     id: 325,
     name: 'Shaggy Bracket',
+    goals: ['detox'],
     botanical: 'Inonotus hispidus (fruiting body — "Sanghuang Ally / Shaggy Lipid Filter")',
     tcm_meridians: ['Liver', 'Spleen', 'Lung', 'Immune System'],
     tcm_element: 'Fire + Wood',
@@ -11184,6 +11324,7 @@ const HERBS = [
   {
     id: 326,
     name: 'Tinder Fungus',
+    goals: ['immunity', 'pain'],
     botanical: 'Fomes fomentarius (fruiting body — amadou layer and insoluble fibers — "Keeper of the Ember")',
     tcm_meridians: ['Lung', 'Spleen', 'Liver', 'Large Intestine'],
     tcm_element: 'Metal + Earth',
@@ -11263,6 +11404,7 @@ const HERBS = [
   {
     id: 327,
     name: 'Turkey Tail',
+    goals: ['immunity', 'digestion'],
     botanical: 'Trametes versicolor (syn. Coriolus versicolor) (fruiting body and mycelium — "Yún Zhī / Cloud Mushroom")',
     tcm_meridians: ['Spleen', 'Lung', 'Liver'],
     tcm_element: 'Earth + Metal + Wood',
@@ -11344,6 +11486,7 @@ const HERBS = [
   {
     id: 328,
     name: 'Willow Bracket',
+    goals: ['pain'],
     botanical: 'Phellinus igniarius (fruiting body — "False Chaga / Willow Mesima / Blood-River Stone")',
     tcm_meridians: ['Liver', 'Spleen', 'Kidney', 'Immune System'],
     tcm_element: 'Fire + Earth',
@@ -11422,6 +11565,7 @@ const HERBS = [
   {
     id: 329,
     name: 'Zhu Ling',
+    goals: ['detox', 'immunity'],
     botanical: 'Polyporus umbellatus (sclerotium — "Underground Sieve / Drainage and Protection Fungus")',
     tcm_meridians: ['Kidney', 'Bladder', 'Spleen', 'Liver'],
     tcm_element: 'Water + Earth',
@@ -11501,6 +11645,7 @@ const HERBS = [
   {
     id: 330,
     name: 'Psilocybe Cubensis',
+    goals: ['mood'],
     botanical: 'Psilocybe cubensis (fruiting body — "Psychoplastogen / 5-HT2A Catalyst"; LEGAL STATUS VARIES — SCHEDULE I IN MOST JURISDICTIONS)',
     tcm_meridians: ['Heart', 'Pericardium', 'Third Eye'],
     tcm_element: 'Fire + Water',
@@ -11575,6 +11720,7 @@ const HERBS = [
   {
     id: 404,
     name: 'Raspberry Leaf',
+    goals: ['hormones'],
     botanical: 'Rubus idaeus',
     tcm_meridians: ['Uterus', 'Kidney', 'Liver', 'Spleen'],
     tcm_element: 'Earth',
@@ -11623,6 +11769,7 @@ const HERBS = [
   {
     id: 405,
     name: 'Rosehip',
+    goals: ['immunity', 'pain', 'beauty'],
     botanical: 'Rosa canina / Rosa spp. (fruit)',
     tcm_meridians: ['Lung', 'Spleen', 'Liver', 'Heart'],
     tcm_element: 'Earth + Metal',
@@ -11672,6 +11819,7 @@ const HERBS = [
   {
     id: 406,
     name: 'Shatavari',
+    goals: ['hormones', 'digestion', 'stress'],
     botanical: 'Asparagus racemosus (root)',
     tcm_meridians: ['Kidney', 'Lung', 'Stomach', 'Reproductive'],
     tcm_element: 'Water + Earth',
@@ -11723,6 +11871,7 @@ const HERBS = [
   {
     id: 537,
     name: 'Ginger',
+    goals: ['digestion', 'pain'],
     botanical: 'Zingiber officinale (rhizome — fresh or dried)',
     tcm_meridians: ['Lung', 'Spleen', 'Stomach'],
     tcm_element: 'Earth + Metal',
@@ -11802,6 +11951,7 @@ const HERBS = [
   {
   id: 543,
   name: 'Elderberry (Cooked Berry)',
+  goals: ['immunity'],
   botanical: 'Sambucus nigra (fully ripe cooked berry)',
   tcm_meridians: ['Lung', 'Spleen', 'Heart'],
   tcm_element: 'Metal + Earth',
@@ -11876,6 +12026,7 @@ const HERBS = [
 {
   id: 539,
   name: 'Rowan Berry',
+  goals: ['digestion', 'immunity'],
   botanical: 'Sorbus aucuparia (fully ripe berry, preferably cooked, dried or frost-softened)',
   tcm_meridians: ['Liver', 'Spleen', 'Kidney'],
   tcm_element: 'Wood + Earth + Water',
@@ -11949,6 +12100,7 @@ const HERBS = [
 {
   id: 407,
   name: 'Pomegranate Skin',
+  goals: ['digestion'],
   botanical: 'Punica granatum (dried pericarp / peel)',
   tcm_meridians: ['Large Intestine', 'Stomach', 'Kidney'],
   tcm_element: 'Earth + Metal',
@@ -12022,6 +12174,7 @@ const HERBS = [
 {
   id: 408,
   name: 'Pomegranate Seeds',
+  goals: ['hormones', 'beauty'],
   botanical: 'Punica granatum (whole arils / seeds, fresh or dried)',
   tcm_meridians: ['Heart', 'Liver', 'Kidney', 'Large Intestine'],
   tcm_element: 'Fire + Wood',
@@ -12094,6 +12247,7 @@ const HERBS = [
 {
   id: 409,
   name: 'Long Pepper',
+  goals: ['digestion', 'immunity'],
   botanical: 'Piper longum (dried unripe fruit catkin — Pippali)',
   tcm_meridians: ['Spleen', 'Stomach', 'Lung', 'Large Intestine'],
   tcm_element: 'Fire + Earth',
@@ -12168,6 +12322,7 @@ const HERBS = [
 {
   id: 410,
   name: 'Galangal',
+  goals: ['digestion'],
   botanical: 'Alpinia galanga / Alpinia officinarum (rhizome)',
   tcm_meridians: ['Spleen', 'Stomach', 'Lung'],
   tcm_element: 'Fire + Earth',
@@ -12239,6 +12394,7 @@ const HERBS = [
 {
   id: 411,
   name: 'Black Cardamom',
+  goals: ['digestion'],
   botanical: 'Amomum subulatum (smoke-dried pod)',
   tcm_meridians: ['Spleen', 'Stomach', 'Kidney'],
   tcm_element: 'Fire + Earth',
@@ -12310,6 +12466,7 @@ const HERBS = [
 {
   id: 412,
   name: 'Szechuan Pepper',
+  goals: ['digestion', 'pain'],
   botanical: 'Zanthoxylum bungeanum / Zanthoxylum piperitum (dried husk)',
   tcm_meridians: ['Spleen', 'Stomach', 'Kidney'],
   tcm_element: 'Fire + Metal',
@@ -12380,6 +12537,7 @@ const HERBS = [
 {
   id: 413,
   name: 'Longan',
+  goals: ['sleep', 'cognitive', 'anxiety'],
   botanical: 'Dimocarpus longan / Euphoria longana (dried aril — Long Yan Rou)',
   tcm_meridians: ['Heart', 'Spleen'],
   tcm_element: 'Fire + Earth',
@@ -12453,6 +12611,7 @@ const HERBS = [
 {
   id: 414,
   name: 'Haritaki',
+  goals: ['digestion', 'detox'],
   botanical: 'Terminalia chebula (dried mature fruit)',
   tcm_meridians: ['Large Intestine', 'Lung', 'Liver'],
   tcm_element: 'Earth + Metal + Wood',
@@ -12526,6 +12685,7 @@ const HERBS = [
 {
   id: 415,
   name: 'Red Astragalus (Wild)',
+  goals: ['immunity', 'energy'],
   botanical: 'Astragalus mongholicus / Astragalus membranaceus (wild root — Huang Qi)',
   tcm_meridians: ['Spleen', 'Lung'],
   tcm_element: 'Earth + Metal',
@@ -12599,6 +12759,7 @@ const HERBS = [
 {
   id: 416,
   name: 'Tian Men Dong',
+  goals: ['immunity'],
   botanical: 'Asparagus cochinchinensis (root tuber)',
   tcm_meridians: ['Lung', 'Kidney'],
   tcm_element: 'Water + Metal',
@@ -12669,6 +12830,7 @@ const HERBS = [
 {
   id: 417,
   name: 'Mistletoe',
+  goals: [],
   botanical: 'Viscum album (whole herb — European mistletoe)',
   tcm_meridians: ['Liver', 'Kidney', 'Heart'],
   tcm_element: 'Wood + Water',
@@ -12746,6 +12908,7 @@ const HERBS = [
 {
   id: 418,
   name: 'Phyllodium pulchellum',
+  goals: ['detox', 'immunity'],
   botanical: 'Phyllodium pulchellum / Desmodium pulchellum (whole plant — Pai Qian Cao)',
   tcm_meridians: ['Liver', 'Spleen', 'Lung'],
   tcm_element: 'Wood + Earth',
@@ -12814,6 +12977,7 @@ const HERBS = [
 {
   id: 419,
   name: 'African Dream Root',
+  goals: ['sleep'],
   botanical: 'Silene undulata / Silene capensis (root — Undlela Zimhlophe)',
   tcm_meridians: ['Heart', 'Liver', 'Kidney'],
   tcm_element: 'Water + Wood',
@@ -12889,6 +13053,7 @@ const HERBS = [
 {
   id: 420,
   name: 'Grape Seed',
+  goals: ['beauty'],
   botanical: 'Vitis vinifera (seed — standardised extract or cold-pressed oil)',
   tcm_meridians: ['Heart', 'Liver', 'Kidney'],
   tcm_element: 'Wood + Water',
@@ -12976,6 +13141,7 @@ const HERBS = [
     {
     id: 501,
     name: 'Guduchi',
+    goals: ['immunity', 'detox'],
     botanical: 'Tinospora cordifolia (dried mature stem, also used fresh; "Giloy / Amrita / Heart leaved Moonseed")',
     tcm_meridians: ['Liver', 'Spleen', 'Lung', 'Kidney'],
     tcm_element: 'Wood + Earth',
@@ -13085,6 +13251,7 @@ const HERBS = [
     {
     id: 502,
     name: 'Punarnava',
+    goals: ['detox'],
     botanical: 'Boerhavia diffusa (dried whole plant, red variety; "Hogweed / Horse Purslane / Spreading Hogweed")',
     tcm_meridians: ['Kidney', 'Bladder', 'Spleen', 'Liver'],
     tcm_element: 'Water + Earth',
@@ -13186,6 +13353,7 @@ const HERBS = [
   {
     id: 503,
     name: 'Shankhpushpi',
+    goals: ['cognitive', 'anxiety', 'sleep'],
     aliases: ['Shankhapushpi'],
     botanical: 'Convolvulus pluricaulis (dried whole plant; syn. Convolvulus prostratus; "the conch flower")',
     tcm_meridians: ['Heart', 'Liver', 'Kidney'],
@@ -13293,6 +13461,7 @@ const HERBS = [
     {
     id: 504,
     name: 'Arjuna',
+    goals: [],
     botanical: 'Terminalia arjuna (stem bark; the white barked river tree)',
     tcm_meridians: ['Heart', 'Lung', 'Liver'],
     tcm_element: 'Fire + Metal',
@@ -13398,6 +13567,7 @@ const HERBS = [
     {
     id: 505,
     name: 'Hadjod',
+    goals: ['pain'],
     botanical: 'Cissus quadrangularis (dried four angled stem; "Veld Grape / Bone Setter / Asthisamhara")',
     tcm_meridians: ['Kidney', 'Liver'],
     tcm_element: 'Water + Wood',
@@ -13497,6 +13667,7 @@ const HERBS = [
     {
     id: 506,
     name: 'Shallaki',
+    goals: ['pain', 'digestion'],
     aliases: ['Boswellia'],
     botanical: 'Boswellia serrata (oleo gum resin exudate; "Indian Frankincense / Salai Guggul"; API name Kunduru)',
     tcm_meridians: ['Heart', 'Liver', 'Spleen'],
@@ -13600,6 +13771,7 @@ const HERBS = [
     {
     id: 507,
     name: 'Rasna',
+    goals: ['pain'],
     botanical: 'Pluchea lanceolata (dried leaf per API Vol III; "Rayasan"; identity of classical Rasna is debated)',
     tcm_meridians: ['Liver', 'Kidney', 'Spleen'],
     tcm_element: 'Wood + Water',
@@ -13697,6 +13869,7 @@ const HERBS = [
   },
 {
   id: 508, name: 'Dashmool', botanical: 'Ten-root compound (traditional Ayurvedic formula)',
+  goals: ['pain', 'stress'],
   tcm_meridians: [], tcm_element: 'Earth + Air',
   energetics: ['Warm', 'Bitter', 'Astringent', 'Vata-pacifying', 'Grounding'],
   primary_functions: ['Classical compound — ten roots ground severe Vata derangement', 'Nervous exhaustion, postpartum recovery, post-illness depletion', 'Mild anti-inflammatory across multiple systems', 'Brimhana (building) action'],
@@ -13731,6 +13904,7 @@ const HERBS = [
 },
 {
   id: 509, name: 'Gandira', botanical: 'Coleus forskohlii (root)',
+  goals: [],
   tcm_meridians: [], tcm_element: 'Fire',
   energetics: ['Warm', 'Pungent', 'Bitter', 'Cardio-Respiratory'],
   primary_functions: ['Forskolin activates adenylate cyclase → cAMP — heart and lung support', 'Bronchodilation in asthma protocols', 'Vasodilation and mild blood pressure lowering', 'Modern weight-management research'],
@@ -13764,6 +13938,7 @@ const HERBS = [
     {
     id: 510,
     name: 'Vijaysar',
+    goals: [],
     botanical: 'Pterocarpus marsupium (heartwood; "Indian Kino Tree / Malabar Kino / Asana / Bijasal")',
     tcm_meridians: ['Spleen', 'Kidney', 'Liver'],
     tcm_element: 'Earth + Water',
@@ -13865,6 +14040,7 @@ const HERBS = [
     {
     id: 511,
     name: 'Nirgundi',
+    goals: ['pain'],
     botanical: 'Vitex negundo (dried leaf; "Five leaved Chaste Tree / Sambhalu")',
     tcm_meridians: ['Lung', 'Liver', 'Stomach'],
     tcm_element: 'Metal + Wood',
@@ -13964,6 +14140,7 @@ const HERBS = [
     {
     id: 512,
     name: 'Ashoka',
+    goals: ['hormones'],
     botanical: 'Saraca asoca (dried stem bark; syn. Saraca indica; "the tree without sorrow")',
     tcm_meridians: ['Liver', 'Heart', 'Spleen', 'Chong Mai (Penetrating Vessel)'],
     tcm_element: 'Wood + Water',
@@ -14063,6 +14240,7 @@ const HERBS = [
     {
     id: 513,
     name: 'Lodhra',
+    goals: ['hormones', 'digestion'],
     botanical: 'Symplocos racemosa (dried stem bark; "Symplocos bark / Lodh tree")',
     tcm_meridians: ['Liver', 'Large Intestine', 'Chong Mai (Penetrating Vessel)', 'Ren Mai (Conception Vessel)'],
     tcm_element: 'Metal + Water',
@@ -14160,6 +14338,7 @@ const HERBS = [
   {
     id: 514,
     name: 'Nagkesar',
+    goals: [],
     aliases: ['Nagakesar'],
     botanical: 'Mesua ferrea (dried stamens; "Cobra\'s Saffron / Ceylon Ironwood / Nag Champa tree")',
     tcm_meridians: ['Heart', 'Liver', 'Large Intestine'],
@@ -14258,6 +14437,7 @@ const HERBS = [
   },
 {
   id: 515, name: 'Rudraksha', botanical: 'Elaeocarpus ganitrus (seed pods)',
+  goals: ['anxiety', 'sleep'],
   tcm_meridians: ['Heart'], tcm_element: 'Water',
   energetics: ['Cool', 'Astringent', 'Calming', 'Mind-stabilising'],
   primary_functions: ['Calms central nervous system — traditional meditation aid', 'Stabilises blood pressure', 'Settles overactive mind for spiritual practice', 'Mild cardioprotective in folk use'],
@@ -14299,6 +14479,7 @@ const HERBS = [
     {
     id: 520,
     name: 'Bakuchi',
+    goals: ['beauty'],
     formula_access: 'pro', // "practitioner only" — Robin 2026-09-28
     botanical: 'Psoralea corylifolia (syn. Cullen corylifolium; dried ripe fruit, used as seed; "Babchi")',
     tcm_meridians: ['Kidney', 'Spleen'],
@@ -14401,6 +14582,7 @@ const HERBS = [
     {
     id: 522,
     name: 'Gokshura',
+    goals: ['hormones', 'detox'],
     botanical: 'Tribulus terrestris (dried ripe fruit and root; "Caltrops / Puncture Vine / Gokhru")',
     tcm_meridians: ['Kidney', 'Bladder', 'Liver'],
     tcm_element: 'Water + Wood',
@@ -14508,6 +14690,7 @@ const HERBS = [
   // survives a 95°C decoction — is the fact that changes how this herb
   // is actually prepared, and it was missing entirely.
   id: 523, name: 'Amla / Amalaki', botanical: 'Emblica officinalis / Phyllanthus emblica (fruit)',
+  goals: ['immunity', 'digestion', 'beauty'],
   tcm_meridians: ['Lung', 'Liver', 'Stomach', 'Heart'], tcm_element: 'Wood + Metal',
   energetics: ['Cool', 'Moistening', 'Sour', 'Sweet', 'Astringent', 'Fluid-Generating'],
   primary_functions: [
@@ -14568,6 +14751,7 @@ const HERBS = [
     {
     id: 524,
     name: 'Bibhitaki',
+    goals: ['immunity', 'digestion'],
     botanical: 'Terminalia bellirica (pericarp of the dried ripe fruit; "Beleric Myrobalan / Bahera")',
     tcm_meridians: ['Lung', 'Large Intestine', 'Stomach'],
     tcm_element: 'Metal',
@@ -14666,6 +14850,7 @@ const HERBS = [
     {
     id: 525,
     name: 'Guggulu',
+    goals: ['pain'],
     aliases: ['Guggul'],
     botanical: 'Commiphora wightii (syn. Commiphora mukul; oleo gum resin exudate; "Indian Bdellium / Gum Guggul")',
     tcm_meridians: ['Heart', 'Liver', 'Spleen'],
@@ -14783,6 +14968,7 @@ const HERBS = [
   // on the strength of it: an abortifacient that also suppresses sperm
   // count is not a MEDIUM herb.
   id: 526, name: 'Kalmegh / Andrographis', botanical: 'Andrographis paniculata (whole plant / aerial parts)',
+  goals: ['immunity', 'detox'],
   tcm_meridians: ['Lung', 'Stomach', 'Large Intestine', 'Liver'], tcm_element: 'Metal + Earth',
   energetics: ['Extremely Cold', 'Dry', 'Intensely Bitter', 'Heat-Clearing'],
   primary_functions: [
@@ -14846,6 +15032,7 @@ const HERBS = [
     {
     id: 527,
     name: 'Manjistha',
+    goals: ['beauty', 'detox'],
     botanical: 'Rubia cordifolia (dried stem per API Vol III; root widely used in trade; "Indian Madder")',
     tcm_meridians: ['Liver', 'Heart'],
     tcm_element: 'Wood + Fire',
@@ -14947,6 +15134,7 @@ const HERBS = [
     {
     id: 528,
     name: 'Khadira',
+    goals: ['beauty'],
     botanical: 'Acacia catechu (syn. Senegalia catechu; dried heartwood; "Black Catechu / Cutch Tree / Khair")',
     tcm_meridians: ['Lung', 'Large Intestine', 'Liver'],
     tcm_element: 'Metal',
@@ -15044,6 +15232,7 @@ const HERBS = [
   },
 {
   id: 529, name: 'Nishoth', botanical: 'Operculina turpethum (root)',
+  goals: ['digestion'],
   formula_access: 'pro', // "practitioner only" — Robin 2026-09-28
   tcm_meridians: ['Large Intestine'], tcm_element: 'Water',
   energetics: ['Hot', 'Pungent', 'Bitter', 'Drastic Purgative'],
@@ -15078,6 +15267,7 @@ const HERBS = [
 },
 {
   id: 530, name: 'Ajwan', botanical: 'Apium graveolens (celery seed)',
+  goals: ['digestion'],
   tcm_meridians: ['Liver', 'Spleen'], tcm_element: 'Wood',
   energetics: ['Cool', 'Pungent', 'Slightly Bitter', 'Aromatic'],
   primary_functions: ['TCM Qin Cai Zi — clears heat, lowers Liver Yang, promotes urination', 'Ayurvedic digestive carminative', 'Uric acid clearance — gout support', 'Mild diuretic and BP regulator'],
@@ -15113,6 +15303,7 @@ const HERBS = [
     {
     id: 531,
     name: 'Neem',
+    goals: ['beauty', 'immunity'],
     botanical: 'Azadirachta indica (dried leaf and stem bark; "Margosa / Indian Lilac / the village pharmacy")',
     tcm_meridians: ['Liver', 'Lung', 'Large Intestine', 'Stomach'],
     tcm_element: 'Wood + Metal',
@@ -15216,6 +15407,7 @@ const HERBS = [
   {
     id: 532,
     name: 'Anantmul',
+    goals: ['detox', 'digestion'],
     aliases: ['Sariva'],
     botanical: 'Hemidesmus indicus (dried root; "Indian Sarsaparilla / Anantamul / Nannari")',
     tcm_meridians: ['Heart', 'Liver', 'Kidney'],
@@ -15315,6 +15507,7 @@ const HERBS = [
     {
     id: 533,
     name: 'Karanja',
+    goals: ['beauty'],
     formula_access: 'pro', // "practitioner only" — Robin 2026-09-28
     botanical: 'Pongamia pinnata (syn. Millettia pinnata; seed and seed oil; also root, bark and leaf in API Vol II; "Indian Beech / Pongam")',
     tcm_meridians: ['Lung', 'Liver', 'Spleen'],
@@ -15414,6 +15607,7 @@ const HERBS = [
     {
     id: 534,
     name: 'Bael',
+    goals: ['digestion'],
     botanical: 'Aegle marmelos (unripe or half ripe fruit pulp; root is a Dashamula member; "Bengal Quince / Stone Apple / Bilva")',
     tcm_meridians: ['Spleen', 'Stomach', 'Large Intestine'],
     tcm_element: 'Earth',
@@ -15518,6 +15712,7 @@ const HERBS = [
     {
     id: 535,
     name: 'Chandrashoor',
+    goals: ['hormones', 'energy'],
     botanical: 'Lepidium sativum (dried seed; "Garden Cress / Halim / Aliv")',
     tcm_meridians: ['Lung', 'Kidney', 'Spleen'],
     tcm_element: 'Metal + Water',
@@ -15616,6 +15811,7 @@ const HERBS = [
     {
     id: 536,
     name: 'Amaltas',
+    goals: ['digestion', 'beauty'],
     botanical: 'Cassia fistula (fruit pulp from the long black pods; "Indian Laburnum / Golden Shower / Purging Cassia")',
     tcm_meridians: ['Large Intestine', 'Liver', 'Stomach'],
     tcm_element: 'Earth + Metal',
@@ -15738,6 +15934,7 @@ const HERBS = [
 // ════════════════════════════════════════════════════════════════
 {
   id: 545, name: 'Jiaogulan', botanical: 'Gynostemma pentaphyllum (leaf)',
+  goals: ['stress', 'energy'],
   tcm_meridians: ['Spleen', 'Lung', 'Heart'], tcm_element: 'Earth + Metal',
   energetics: ['Cool', 'Moistening', 'Sweet', 'Slightly Bitter', 'Adaptogenic'],
   primary_functions: [
@@ -15801,6 +15998,7 @@ const HERBS = [
 },
 {
   id: 546, name: 'Feverfew', botanical: 'Tanacetum parthenium (aerial parts)',
+  goals: ['pain'],
   tcm_meridians: ['Liver', 'Pericardium'], tcm_element: 'Wood',
   energetics: ['Cool', 'Dry', 'Bitter', 'Pungent', 'Relaxing'],
   primary_functions: [
@@ -15859,6 +16057,7 @@ const HERBS = [
 },
 {
   id: 547, name: 'Artichoke Extract', botanical: 'Cynara scolymus (leaf)',
+  goals: ['digestion', 'detox'],
   tcm_meridians: ['Liver', 'Gallbladder', 'Stomach'], tcm_element: 'Wood',
   energetics: ['Cool', 'Dry', 'Bitter', 'Moving'],
   primary_functions: [
@@ -15916,6 +16115,7 @@ const HERBS = [
 },
 {
   id: 548, name: 'Astaxanthin', botanical: 'Haematococcus pluvialis (microalgae)',
+  goals: ['beauty', 'energy'],
   tcm_meridians: ['Liver', 'Heart', 'Kidney', 'Stomach'], tcm_element: 'Water + Fire',
   energetics: ['Cooling', 'Moistening', 'Sweet'],
   primary_functions: [
@@ -15968,6 +16168,7 @@ const HERBS = [
 },
 {
   id: 549, name: 'Black Pepper Extract', botanical: 'Piper nigrum (fruit)',
+  goals: ['digestion'],
   tcm_meridians: ['Stomach', 'Large Intestine', 'Spleen'], tcm_element: 'Fire + Metal',
   energetics: ['Hot', 'Dry', 'Pungent', 'Stimulating'],
   primary_functions: [
@@ -16025,6 +16226,7 @@ const HERBS = [
 },
 {
   id: 550, name: 'Cassia Seed Extract', botanical: 'Cassia obtusifolia / Senna obtusifolia (seed)',
+  goals: ['digestion'],
   tcm_meridians: ['Liver', 'Large Intestine', 'Kidney'], tcm_element: 'Wood + Water',
   energetics: ['Cool', 'Moistening', 'Sweet', 'Slightly Bitter', 'Salty'],
   primary_functions: [
@@ -16080,6 +16282,7 @@ const HERBS = [
 },
 {
   id: 551, name: 'Citrus Aurantium Extract', botanical: 'Citrus aurantium (immature fruit/peel)',
+  goals: ['energy', 'digestion'],
   tcm_meridians: ['Spleen', 'Stomach', 'Large Intestine'], tcm_element: 'Earth',
   energetics: ['Slightly Cold', 'Dry', 'Bitter', 'Pungent', 'Moving'],
   primary_functions: [
@@ -16137,6 +16340,7 @@ const HERBS = [
 },
 {
   id: 552, name: 'Grape Leaf Extract', botanical: 'Vitis vinifera (red vine leaf)',
+  goals: [],
   tcm_meridians: ['Liver', 'Spleen'], tcm_element: 'Wood',
   energetics: ['Cool', 'Dry', 'Astringent'],
   primary_functions: [
@@ -16185,6 +16389,7 @@ const HERBS = [
 },
 {
   id: 553, name: 'Horse Chestnut Extract', botanical: 'Aesculus hippocastanum (seed extract)',
+  goals: [],
   tcm_meridians: ['Liver', 'Spleen', 'Stomach'], tcm_element: 'Wood',
   energetics: ['Cool', 'Dry', 'Bitter', 'Astringent'],
   primary_functions: [
@@ -16240,6 +16445,7 @@ const HERBS = [
 },
 {
   id: 554, name: 'Kelp Extract Powder', botanical: 'Ascophyllum nodosum / Laminaria spp. (thallus)',
+  goals: ['hormones'],
   tcm_meridians: ['Kidney', 'Liver', 'Stomach'], tcm_element: 'Water',
   energetics: ['Cold', 'Moistening', 'Salty', 'Softening'],
   primary_functions: [
@@ -16295,6 +16501,7 @@ const HERBS = [
 },
 {
   id: 555, name: 'Lotus Leaf Extract', botanical: 'Nelumbo nucifera (leaf)',
+  goals: ['detox', 'digestion'],
   tcm_meridians: ['Liver', 'Spleen', 'Stomach', 'Heart'], tcm_element: 'Earth + Fire',
   energetics: ['Slightly Cold', 'Dry', 'Bitter', 'Astringent'],
   primary_functions: [
@@ -16351,6 +16558,7 @@ const HERBS = [
 },
 {
   id: 556, name: 'Red Wine Extract / Resveratrol', botanical: 'Vitis vinifera (skin extract) / Polygonum cuspidatum (root)',
+  goals: [],
   tcm_meridians: ['Heart', 'Liver', 'Kidney'], tcm_element: 'Fire + Water',
   energetics: ['Cooling', 'Dry', 'Astringent'],
   primary_functions: [
@@ -16407,6 +16615,7 @@ const HERBS = [
 },
 {
   id: 557, name: 'Red Yeast Rice', botanical: 'Monascus purpureus fermented on Oryza sativa',
+  goals: [],
   tcm_meridians: ['Spleen', 'Liver', 'Large Intestine'], tcm_element: 'Earth',
   energetics: ['Warm', 'Dry', 'Sweet', 'Moving'],
   primary_functions: [
@@ -16462,6 +16671,7 @@ const HERBS = [
 },
 {
   id: 558, name: 'Yohimbe Bark', botanical: 'Pausinystalia yohimbe (bark)',
+  goals: ['hormones'],
   tcm_meridians: ['Kidney', 'Heart'], tcm_element: 'Fire + Water',
   energetics: ['Hot', 'Dry', 'Stimulating', 'Ascending'],
   primary_functions: [
@@ -16523,6 +16733,7 @@ const HERBS = [
 },
 {
   id: 559, name: 'Cistanche', botanical: 'Cistanche salsa / Cistanche deserticola (fleshy stem)',
+  goals: ['hormones', 'energy', 'cognitive'],
   tcm_meridians: ['Kidney', 'Large Intestine'], tcm_element: 'Water',
   energetics: ['Warm', 'Sweet', 'Salty', 'Moistening'],
   primary_functions: [
@@ -16600,6 +16811,7 @@ const HERBS = [
 // ════════════════════════════════════════════════════════════════
 {
   id: 560, name: 'Evening Primrose', botanical: 'Oenothera biennis L. (seed oil)',
+  goals: ['hormones', 'beauty'],
   tcm_meridians: ['Liver', 'Spleen', 'Heart'], tcm_element: 'Wood + Earth',
   energetics: ['Cool', 'Moistening', 'Sweet'],
   primary_functions: [
@@ -16654,6 +16866,7 @@ const HERBS = [
 },
 {
   id: 561, name: 'Toothed Clubmoss', botanical: 'Huperzia serrata (aerial parts)',
+  goals: ['cognitive'],
   tcm_meridians: ['Heart', 'Liver', 'Spleen'], tcm_element: 'Fire + Wood',
   energetics: ['Cold', 'Bitter', 'Pungent', 'Moving'],
   primary_functions: [
@@ -16717,6 +16930,7 @@ const HERBS = [
 },
 {
   id: 562, name: 'Eucommia', botanical: 'Eucommia ulmoides (bark)',
+  goals: ['pain'],
   tcm_meridians: ['Kidney', 'Liver'], tcm_element: 'Water + Wood',
   energetics: ['Warm', 'Sweet', 'Slightly Pungent'],
   primary_functions: [
@@ -16772,6 +16986,7 @@ const HERBS = [
 },
 {
   id: 563, name: 'Knotweed', botanical: 'Polygonum cuspidatum / P. sachalinense / Reynoutria japonica · sachalinensis (root/rhizome)',
+  goals: ['immunity', 'pain'],
   tcm_meridians: ['Liver', 'Gallbladder', 'Lung'], tcm_element: 'Wood + Metal',
   energetics: ['Cold', 'Dry', 'Bitter', 'Moving'],
   primary_functions: [
@@ -16829,6 +17044,7 @@ const HERBS = [
 },
 {
   id: 564, name: 'Thunder God Vine', botanical: 'Tripterygium wilfordii (root core/xylem — NOT FOR RECOMMENDATION — clinical supervision only)',
+  goals: ['pain'],
   tcm_meridians: ['Liver', 'Kidney', 'Spleen'], tcm_element: 'Wood',
   energetics: ['Cold', 'Bitter', 'Acrid', 'Highly Toxic'],
   primary_functions: [
@@ -16888,6 +17104,7 @@ const HERBS = [
 },
 {
   id: 565, name: 'Gromwell Root / Shikonin', botanical: 'Lithospermum erythrorhizon (root — Shikon / Zi Cao)',
+  goals: ['beauty'],
   tcm_meridians: ['Heart', 'Liver'], tcm_element: 'Fire + Wood',
   energetics: ['Cold', 'Sweet', 'Salty', 'Descending'],
   primary_functions: [
@@ -16939,6 +17156,7 @@ const HERBS = [
 },
 {
   id: 566, name: 'Camu Camu', botanical: 'Myrciaria dubia (fruit)',
+  goals: ['immunity'],
   tcm_meridians: ['Spleen', 'Stomach', 'Lung'], tcm_element: 'Earth + Metal',
   energetics: ['Cool', 'Moistening', 'Sour', 'Astringent'],
   primary_functions: [
@@ -16996,6 +17214,7 @@ const HERBS = [
 },
 {
   id: 567, name: 'Sophora Flower', botanical: 'Sophora japonica / Styphnolobium japonicum (flower bud)',
+  goals: [],
   tcm_meridians: ['Liver', 'Large Intestine'], tcm_element: 'Wood + Metal',
   energetics: ['Cold', 'Bitter', 'Astringent', 'Descending'],
   primary_functions: [
@@ -17050,6 +17269,7 @@ const HERBS = [
 },
 {
   id: 568, name: 'Indian Barberry', botanical: 'Berberis aristata (root / stem bark)',
+  goals: ['digestion', 'immunity'],
   tcm_meridians: ['Liver', 'Gallbladder', 'Large Intestine'], tcm_element: 'Wood + Earth',
   energetics: ['Cold', 'Dry', 'Intensely Bitter'],
   primary_functions: [
@@ -17127,6 +17347,7 @@ const HERBS = [
 // ════════════════════════════════════════════════════════════════
 {
   id: 569, name: 'Goldenseal', botanical: 'Hydrastis canadensis (root / rhizome)',
+  goals: ['immunity', 'digestion'],
   tcm_meridians: ['Stomach', 'Large Intestine', 'Liver'], tcm_element: 'Earth + Wood',
   energetics: ['Very Cold', 'Very Dry', 'Extremely Bitter'],
   primary_functions: [
@@ -17185,6 +17406,7 @@ const HERBS = [
 },
 {
   id: 570, name: 'White Kidney Bean Extract', botanical: 'Phaseolus vulgaris (seed extract)',
+  goals: [],
   tcm_meridians: ['Spleen', 'Stomach', 'Kidney'], tcm_element: 'Earth',
   energetics: ['Neutral', 'Bland', 'Sweet'],
   primary_functions: [
@@ -17240,6 +17462,7 @@ const HERBS = [
 },
 {
   id: 571, name: 'Genistein', botanical: 'Sophora japonica / Glycine max (purified isoflavone)',
+  goals: ['hormones'],
   tcm_meridians: ['Kidney', 'Liver'], tcm_element: 'Water',
   energetics: ['Cool', 'Moistening', 'Sweet'],
   primary_functions: [
@@ -17294,6 +17517,7 @@ const HERBS = [
 },
 {
   id: 573, name: 'Garcinia Cambogia Extract', botanical: 'Garcinia gummi-gutta (fruit rind)',
+  goals: [],
   tcm_meridians: ['Stomach', 'Spleen', 'Liver'], tcm_element: 'Earth',
   energetics: ['Cool', 'Dry', 'Sour', 'Astringent'],
   primary_functions: [
@@ -17350,6 +17574,7 @@ const HERBS = [
 },
 {
   id: 574, name: 'Dan Shen Root Extract', botanical: 'Salvia miltiorrhiza (root)',
+  goals: ['pain', 'sleep'],
   tcm_meridians: ['Heart', 'Pericardium', 'Liver'], tcm_element: 'Fire + Wood',
   energetics: ['Cool', 'Moving', 'Bitter'],
   primary_functions: [
@@ -17410,6 +17635,7 @@ const HERBS = [
 },
 {
   id: 575, name: 'Tormentil', botanical: 'Potentilla erecta (rhizome)',
+  goals: ['digestion'],
   tcm_meridians: ['Large Intestine', 'Spleen', 'Stomach'], tcm_element: 'Earth',
   energetics: ['Cold', 'Extremely Dry', 'Intensely Astringent'],
   primary_functions: [
@@ -17469,6 +17695,7 @@ const HERBS = [
 },
 {
   id: 576, name: 'Mulberry Leaf', botanical: 'Morus alba (leaf)',
+  goals: [],
   tcm_meridians: ['Lung', 'Liver'], tcm_element: 'Metal + Wood',
   energetics: ['Cold', 'Sweet', 'Bitter', 'Light'],
   primary_functions: [
@@ -17525,6 +17752,7 @@ const HERBS = [
 },
 {
   id: 577, name: 'Fenugreek', botanical: 'Trigonella foenum-graecum (seed)',
+  goals: ['hormones', 'digestion'],
   tcm_meridians: ['Kidney', 'Liver', 'Spleen'], tcm_element: 'Water + Earth',
   energetics: ['Warm', 'Dry', 'Bitter', 'Sweet'],
   primary_functions: [
@@ -17601,6 +17829,7 @@ const HERBS = [
 // ════════════════════════════════════════════════════════════════
 {
   id: 578, name: 'Hedyotis Diffusa', botanical: 'Oldenlandia diffusa / Hedyotis diffusa (whole plant)',
+  goals: ['immunity', 'detox'],
   tcm_meridians: ['Liver', 'Stomach', 'Large Intestine'], tcm_element: 'Wood + Earth',
   energetics: ['Cold', 'Bitter', 'Sweet'],
   primary_functions: [
@@ -17654,6 +17883,7 @@ const HERBS = [
 },
 {
   id: 579, name: 'Aguaje', botanical: 'Mauritia flexuosa (fruit)',
+  goals: ['beauty', 'hormones'],
   tcm_meridians: ['Spleen', 'Kidney', 'Stomach'], tcm_element: 'Earth + Water',
   energetics: ['Cooling', 'Moistening', 'Sweet', 'Nourishing'],
   primary_functions: [
@@ -17705,6 +17935,7 @@ const HERBS = [
 },
 {
   id: 580, name: 'Sophora Root', botanical: 'Sophora flavescens (root — Ku Shen)',
+  goals: ['beauty'],
   tcm_meridians: ['Heart', 'Liver', 'Stomach', 'Large Intestine', 'Bladder'], tcm_element: 'Fire + Water',
   energetics: ['Cold', 'Extremely Dry', 'Intensely Bitter'],
   primary_functions: [
@@ -17762,6 +17993,7 @@ const HERBS = [
 },
 {
   id: 581, name: 'Honeysuckle Flower', botanical: 'Lonicera japonica (flower bud / pollen)',
+  goals: ['immunity'],
   tcm_meridians: ['Lung', 'Stomach', 'Large Intestine'], tcm_element: 'Metal + Earth',
   energetics: ['Cold', 'Sweet', 'Aromatic'],
   primary_functions: [
@@ -17815,6 +18047,7 @@ const HERBS = [
 },
 {
   id: 582, name: 'Avocado Extract', botanical: 'Persea americana (unsaponifiables / leaf / seed)',
+  goals: ['pain'],
   tcm_meridians: ['Liver', 'Kidney', 'Large Intestine'], tcm_element: 'Earth + Wood',
   energetics: ['Cooling', 'Moistening', 'Nourishing'],
   primary_functions: [
@@ -17872,6 +18105,7 @@ const HERBS = [
 },
 {
   id: 583, name: 'Pine Bark Extract', botanical: 'Pinus pinaster / Pinus massoniana (inner bark)',
+  goals: ['beauty'],
   tcm_meridians: ['Kidney', 'Heart', 'Liver'], tcm_element: 'Water + Wood',
   energetics: ['Cool', 'Dry', 'Astringent'],
   primary_functions: [
@@ -17931,6 +18165,7 @@ const HERBS = [
 },
 {
   id: 584, name: 'Phellodendron / Amur Cork Tree', botanical: 'Phellodendron amurense / chinense (bark)',
+  goals: ['immunity', 'detox'],
   tcm_meridians: ['Kidney', 'Bladder', 'Large Intestine'], tcm_element: 'Water + Fire',
   energetics: ['Cold', 'Dry', 'Intensely Bitter', 'Descending'],
   primary_functions: [
@@ -17988,6 +18223,7 @@ const HERBS = [
 },
 {
   id: 585, name: 'Kudzu Root', botanical: 'Pueraria lobata / Pueraria montana (root)',
+  goals: ['pain'],
   tcm_meridians: ['Spleen', 'Stomach', 'Lung'], tcm_element: 'Earth + Metal',
   energetics: ['Cool', 'Moistening', 'Sweet', 'Acrid'],
   primary_functions: [
@@ -18046,6 +18282,7 @@ const HERBS = [
 },
 {
   id: 586, name: 'Buckthorn Bark', botanical: 'Rhamnus frangula / Frangula alnus (AGED bark — fresh bark is an emetic)',
+  goals: ['digestion'],
   tcm_meridians: ['Large Intestine', 'Liver'], tcm_element: 'Wood',
   energetics: ['Cold', 'Dry', 'Bitter'],
   primary_functions: [
@@ -18123,6 +18360,7 @@ const HERBS = [
 // ════════════════════════════════════════════════════════════════
 {
   id: 587, name: 'Mangosteen Extract', botanical: 'Garcinia mangostana (pericarp / rind)',
+  goals: ['beauty', 'immunity'],
   tcm_meridians: ['Large Intestine', 'Spleen', 'Stomach'], tcm_element: 'Earth',
   energetics: ['Cold', 'Dry', 'Astringent', 'Bitter'],
   primary_functions: [
@@ -18179,6 +18417,7 @@ const HERBS = [
 },
 {
   id: 588, name: 'Bayberry', botanical: 'Myrica cerifera (root bark)',
+  goals: ['immunity'],
   tcm_meridians: ['Spleen', 'Stomach', 'Large Intestine'], tcm_element: 'Earth',
   energetics: ['Warm', 'Extremely Dry', 'Intensely Astringent', 'Stimulating'],
   primary_functions: [
@@ -18240,6 +18479,7 @@ const HERBS = [
 },
 {
   id: 589, name: 'He Shou Wu / Fo-Ti', botanical: 'Polygonum multiflorum / Fallopia multiflora (PREPARED root — zhi he shou wu)',
+  goals: ['beauty', 'energy'],
   tcm_meridians: ['Liver', 'Kidney'], tcm_element: 'Wood + Water',
   energetics: ['Warm', 'Sweet', 'Bitter', 'Astringent'],
   primary_functions: [
@@ -18306,6 +18546,7 @@ const HERBS = [
     {
     id: 590,
     name: 'Ajwain',
+    goals: ['digestion'],
     botanical: 'Trachyspermum ammi (dried fruit, often called seed; syn. Carum copticum; "Bishop\'s weed / Carom")',
     tcm_meridians: ['Spleen', 'Stomach', 'Large Intestine', 'Lung'],
     tcm_element: 'Earth + Metal',
@@ -18407,6 +18648,7 @@ const HERBS = [
     {
     id: 591,
     name: 'Lajjalu',
+    goals: ['digestion', 'hormones'],
     botanical: 'Mimosa pudica (dried whole plant; "Touch me not / Sensitive Plant / Chhuimui")',
     tcm_meridians: ['Heart', 'Liver', 'Large Intestine'],
     tcm_element: 'Fire + Metal',
@@ -18511,6 +18753,7 @@ const HERBS = [
   {
     id: 592,
     name: 'Green Tea',
+    goals: ['energy', 'cognitive'],
     botanical: 'Camellia sinensis (unfermented leaf, steamed or pan-fired)',
     aliases: ['Camellia sinensis', 'Lu Cha', 'Matcha', 'Sencha'],
     tcm_meridians: ['Heart', 'Lung', 'Stomach'],
@@ -18601,6 +18844,7 @@ const HERBS = [
   {
     id: 593,
     name: 'Hibiscus',
+    goals: [],
     botanical: 'Hibiscus sabdariffa (dried calyces; "Roselle / Sour Tea / Karkadé / Flor de Jamaica")',
     aliases: ['Roselle', 'Hibiscus sabdariffa', 'Karkade', 'Flor de Jamaica', 'Sour Tea'],
     tcm_meridians: ['Heart', 'Liver', 'Kidney'],
@@ -18680,6 +18924,7 @@ const HERBS = [
   {
     id: 594,
     name: 'Comfrey',
+    goals: ['pain'],
     botanical: 'Symphytum officinale (root and leaf; EXTERNAL USE ONLY)',
     aliases: ['Symphytum officinale', 'Knitbone', 'Beinwell'],
     tcm_meridians: ['Liver', 'Kidney'],

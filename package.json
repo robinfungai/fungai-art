@@ -10,6 +10,7 @@
     "test:shadow": "node tests/shadow-verify.cjs",
     "test:reserve": "node tests/reserve-formula-verify.cjs",
     "test:myco-validator": "node tests/myco-validator-verify.cjs",
+    "test:goals": "node tests/goals-verify.cjs",
     "test:minor-gate": "node tests/minor-gate-verify.cjs",
     "test:safety-flags-conflict": "node tests/safety-flags-conflict-verify.cjs",
     "test:geo-minimisation": "node tests/geo-minimisation-verify.cjs",

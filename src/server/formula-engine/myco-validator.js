@@ -31,7 +31,7 @@
 // SERVER-ONLY. Never imported by any client code.
 
 const { isTrace } = require('./traces');
-const { isGABAergic, isCNSStimulant, isStrongStimulant, isSerotonergic, MAX_SEROTONERGIC, categoryOf } = require('./pharmacology');
+const { isGABAergic, isCNSStimulant, isStrongStimulant, isSerotonergic, MAX_SEROTONERGIC, isLaxative, MAX_LAXATIVE, categoryOf } = require('./pharmacology');
 
 // Constants must match picker.js exactly (per audit constraint #8:
 // no methodology drift). Sourced from the same load-cap block.
@@ -85,7 +85,7 @@ function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn, pro = fa
   const acceptedPcts  = [];
   const acceptedReasons = [];
   const seenIds       = new Set();
-  let traceUsed = 0, gabaUsed = 0, stimUsed = 0, strongUsed = 0, seroUsed = 0;
+  let traceUsed = 0, gabaUsed = 0, stimUsed = 0, strongUsed = 0, seroUsed = 0, laxUsed = 0;
   const catCount = {};
   let pctSum = 0;
 
@@ -188,6 +188,16 @@ function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn, pro = fa
         return {
           ok: false, reason: 'MYCO_SEROTONERGIC_LOAD_EXCEEDED',
           detail: 'more than ' + MAX_SEROTONERGIC + ' serotonergic herb',
+        };
+      }
+    }
+
+    if (isLaxative(herb)) {
+      laxUsed += 1;
+      if (laxUsed > MAX_LAXATIVE) {
+        return {
+          ok: false, reason: 'MYCO_LAXATIVE_LOAD_EXCEEDED',
+          detail: 'more than ' + MAX_LAXATIVE + ' laxative herb',
         };
       }
     }

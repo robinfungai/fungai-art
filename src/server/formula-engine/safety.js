@@ -160,6 +160,30 @@ function passesAccess(h, profile) {
   return !!(profile && profile._pro === true && !profile._minor);
 }
 
+// ─────────────────────────────────────────────────────────────────
+// Safety from the pro quiz's own answers (2026-09-28)
+// ─────────────────────────────────────────────────────────────────
+// The pro composer asks about the cycle and about past reactions to
+// herbs, and until now the engine ignored both. Three answers are
+// safety, not preference, so they EXCLUDE rather than nudge:
+//   · cycle 'trying_conceive'          → the pregnancy rule: only a
+//     herb recorded safe_pregnancy: true (the same rule as avoid
+//     'pregnancy'; unknown counts as avoid)
+//   · prior_herbs 'stimulants_sensitive' → no stimulant or activating
+//     herb (the CNS classes that count toward the stimulant cap)
+//   · prior_herbs 'bad_reaction'       → nothing at caution HIGH or
+//     VERY HIGH; a first formula after a bad reaction is a gentle one
+// The consumer quiz never sends these fields, so this is a no-op there.
+const PROFILE_HIGH_CAUTION = new Set(['HIGH', 'VERY HIGH']);
+function passesProfileSafety(h, profile) {
+  if (!h || !profile) return true;
+  if (profile.cycle === 'trying_conceive' && h.safe_pregnancy !== true) return false;
+  const prior = Array.isArray(profile.prior_herbs) ? profile.prior_herbs : [];
+  if (prior.includes('stimulants_sensitive') && isCNSStimulant(h)) return false;
+  if (prior.includes('bad_reaction') && PROFILE_HIGH_CAUTION.has(h.caution_level)) return false;
+  return true;
+}
+
 /**
  * Apply the minor gate ON TOP of the user's own safety filter.
  * When `profile._minor` is truthy the pool is additionally narrowed
@@ -204,6 +228,7 @@ module.exports = {
   safetyFilter,
   passesMinorGate,
   passesAccess,
+  passesProfileSafety,
   applyMinorGate,
   countFilteredOut,
 };

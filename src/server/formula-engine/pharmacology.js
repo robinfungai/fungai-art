@@ -114,10 +114,18 @@ function isLaxative(h) {
   const t = (h.energetics || []).join(' ') + ' ' + (h.primary_functions || []).slice(0, 2).join(' ');
   return /laxativ|purgativ|cathartic/i.test(t);
 }
+// Engine 2.4 tightened it: "digestion" as a goal usually means bloating
+// or indigestion, and the goal alone had put Senna AND Buckthorn in one
+// bottle. A laxative now needs digestion or detox as a goal AND the
+// person saying they are constipated — the pro quiz's digestion answer
+// 'constipated', or the word in their note. At most one per bottle
+// (MAX_LAXATIVE, picker.js / myco-validator.js / analyze.js).
+const MAX_LAXATIVE = 1;
 function fitsGoal(h, a) {
   if (!isLaxative(h)) return true;
   const goals = a ? [a.intention].concat(Array.isArray(a.intentions) ? a.intentions : []) : [];
-  return goals.includes('digestion') || goals.includes('detox');
+  if (!goals.includes('digestion') && !goals.includes('detox')) return false;
+  return !!a && (a.digestion === 'constipated' || /constipat/i.test(String(a.notes || '')));
 }
 
 // Rough category of a herb — used by the balance guard in picker.js.
@@ -146,6 +154,6 @@ module.exports = {
   GABAERGIC_IDS, STIMULANT_IDS, CNS_ACTIONS,
   cnsAction, isGABAergic, isCNSStimulant, guessGABAergic, guessCNSStimulant,
   fitsTimeOfUse, isStrongStimulant,
-  isSerotonergic, MAX_SEROTONERGIC, isLaxative, fitsGoal,
+  isSerotonergic, MAX_SEROTONERGIC, isLaxative, fitsGoal, MAX_LAXATIVE,
   categoryOf,
 };

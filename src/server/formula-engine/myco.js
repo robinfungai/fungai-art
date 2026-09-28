@@ -34,6 +34,8 @@ function _buildShortlistText(candidates) {
     if (h._isGABAergic)    tags.push('GABA');
     if (h._isCNSStimulant) tags.push('STIM');
     if (h._isSerotonergic) tags.push('SERO');
+    if (h._isLaxative)     tags.push('LAX');
+    if (h._isStrongStimulant) tags.push('STRONG');
     const tagStr = tags.length ? ' · ' + tags.join('/') : '';
     return (
       (i + 1) + '. id=' + (h.id || '') + ' · ' + (h.name || '') +
@@ -62,7 +64,15 @@ function _buildComposeUser(quiz, shortlistText) {
     '- Age: ' + (q.age || '—') + '\n' +
     '- Sleep: ' + (q.sleep || '—') + '\n' +
     '- Safety filters: ' + (Array.isArray(q.avoid) ? q.avoid.join(', ') : (q.avoid || 'none')) + '\n' +
-    '- Priority + prior herb experience: "' + String(q.notes || '').slice(0, 500) + '"\n\n' +
+    '- Priority + prior herb experience: "' + String(q.notes || '').slice(0, 500) + '"\n' +
+    // The pro quiz's own answers (engine 2.4) — absent for the consumer quiz.
+    (q.support     ? '- Support wanted: ' + q.support + '\n' : '') +
+    (q.digestion   ? '- Digestion: ' + q.digestion + '\n' : '') +
+    (q.emotional   ? '- Emotional weather: ' + q.emotional + '\n' : '') +
+    (Array.isArray(q.somatic) && q.somatic.length ? '- Felt in the body at: ' + q.somatic.join(', ') + '\n' : '') +
+    (q.cycle       ? '- Cycle: ' + q.cycle + '\n' : '') +
+    (Array.isArray(q.prior_herbs) && q.prior_herbs.length ? '- History with herbs: ' + q.prior_herbs.join(', ') + '\n' : '') +
+    '\n' +
     'Shortlist (ranked by the deterministic scorer):\n' + shortlistText + '\n\n' +
     'Return the JSON now.'
   );
@@ -80,6 +90,8 @@ const COMPOSE_SYS =
   '    · GABA  — max 2 GABA-marked herbs (additive CNS depression risk if stacked further).\n' +
   '    · STIM  — max 2 STIM-marked herbs (additive adrenergic drive if stacked further).\n' +
   '    · SERO  — max 1 SERO-marked herb (two serotonergic herbs stack toward serotonin syndrome).\n' +
+  '    · LAX   — max 1 LAX-marked herb (laxatives are only shortlisted when the person reports constipation).\n' +
+  '    · GABA + STRONG — never put a GABA-marked herb beside a STRONG-marked (true) stimulant; they pull against each other.\n' +
   '- Do NOT diagnose. Do NOT prescribe. Traditional herbal support only, not medical treatment.\n' +
   '- Reference the free-text explicitly if it names a priority, prior herb experience, or contraindication history.\n\n' +
   'OUTPUT FORMAT — return ONLY valid JSON, no preamble, no code fences, matching:\n' +

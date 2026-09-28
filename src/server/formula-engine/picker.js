@@ -9,10 +9,10 @@
 //   public/find-your-formula/index.html lines 2283–2362.
 
 const { ensurePool, shortNote } = require('./axes');
-const { scoreHerb } = require('./scoring');
-const { safetyFilter, applyMinorGate, passesAccess } = require('./safety');
+const { scoreHerb, scoreBreakdown } = require('./scoring');
+const { safetyFilter, applyMinorGate, passesAccess, passesProfileSafety } = require('./safety');
 const { isTrace } = require('./traces');
-const { isGABAergic, isCNSStimulant, isStrongStimulant, isSerotonergic, MAX_SEROTONERGIC, fitsTimeOfUse, fitsGoal, categoryOf } = require('./pharmacology');
+const { isGABAergic, isCNSStimulant, isStrongStimulant, isSerotonergic, MAX_SEROTONERGIC, isLaxative, MAX_LAXATIVE, fitsTimeOfUse, fitsGoal, categoryOf } = require('./pharmacology');
 
 // ── Tie-breaking ──────────────────────────────────────────────────
 // scoreHerb builds a score from a handful of coarse constants —
@@ -112,7 +112,7 @@ function pickFormula(a) {
   // gate — the second is a no-op unless a._minor is truthy, in which
   // case it strips gated/sedative/psych_med/contraceptive/GABA-heavy/
   // CNS-stimulant herbs regardless of what avoid[] said.
-  const safe        = pool.filter(h => safetyFilter(h, a.avoid || []) && passesAccess(h, a) && fitsTimeOfUse(h, a) && fitsGoal(h, a));
+  const safe        = pool.filter(h => safetyFilter(h, a.avoid || []) && passesAccess(h, a) && passesProfileSafety(h, a) && fitsTimeOfUse(h, a) && fitsGoal(h, a));
   const minorGated  = applyMinorGate(safe, a);
   const scored = minorGated.map(h => ({ h, s: scoreHerb(h, a) })).filter(x => x.s > 0);
   sortScored(scored, a);
@@ -130,7 +130,7 @@ function pickFormula(a) {
 
   const catCount = {};
   const composed = [];
-  let traceUsed = 0, gabaUsed = 0, stimUsed = 0, strongUsed = 0, seroUsed = 0;
+  let traceUsed = 0, gabaUsed = 0, stimUsed = 0, strongUsed = 0, seroUsed = 0, laxUsed = 0;
   for (const x of uniq) {
     if (composed.length >= target) break;
     if (x.h.gated && !openToGated) continue;
@@ -141,9 +141,11 @@ function pickFormula(a) {
     if (isCNSStimulant(x.h)) { if (stimUsed >= 2) continue; }
     if (isStrongStimulant(x.h) && gabaUsed) continue;
     if (isSerotonergic(x.h) && seroUsed >= MAX_SEROTONERGIC) continue;
+    if (isLaxative(x.h) && laxUsed >= MAX_LAXATIVE) continue;
     composed.push(x);
     catCount[cat] = (catCount[cat] || 0) + 1;
     if (isSerotonergic(x.h)) seroUsed += 1;
+    if (isLaxative(x.h)) laxUsed += 1;
     if (isTrace(x.h)) traceUsed += 1;
     if (isGABAergic(x.h)) gabaUsed += 1;
     if (isCNSStimulant(x.h)) stimUsed += 1;
@@ -160,8 +162,10 @@ function pickFormula(a) {
       if (isCNSStimulant(x.h) && stimUsed >= 2) continue;
       if (isStrongStimulant(x.h) && gabaUsed) continue;
       if (isSerotonergic(x.h) && seroUsed >= MAX_SEROTONERGIC) continue;
+      if (isLaxative(x.h) && laxUsed >= MAX_LAXATIVE) continue;
       composed.push(x);
       if (isSerotonergic(x.h)) seroUsed += 1;
+      if (isLaxative(x.h)) laxUsed += 1;
       if (isTrace(x.h)) traceUsed += 1;
       if (isGABAergic(x.h)) gabaUsed += 1;
       if (isCNSStimulant(x.h)) stimUsed += 1;
@@ -180,7 +184,7 @@ function pickFormula(a) {
 function buildScoredCandidates(a, limit = 20) {
   const pool = ensurePool();
   if (!pool || !pool.length) return [];
-  const safe       = pool.filter(h => safetyFilter(h, a.avoid || []) && passesAccess(h, a) && fitsTimeOfUse(h, a) && fitsGoal(h, a));
+  const safe       = pool.filter(h => safetyFilter(h, a.avoid || []) && passesAccess(h, a) && passesProfileSafety(h, a) && fitsTimeOfUse(h, a) && fitsGoal(h, a));
   const minorGated = applyMinorGate(safe, a);
   const scored = minorGated.map(h => ({ h, s: scoreHerb(h, a) })).filter(x => x.s > 0);
   sortScored(scored, a);
@@ -210,7 +214,49 @@ function buildScoredCandidates(a, limit = 20) {
       _isCNSStimulant: isCNSStimulant(x.h),
       _isStrongStimulant: isStrongStimulant(x.h),
       _isSerotonergic: isSerotonergic(x.h),
+      _isLaxative:     isLaxative(x.h),
     }));
 }
 
-module.exports = { targetHerbCount, pickFormula, buildScoredCandidates };
+// ── Pro composer · "why this herb" (2026-09-28) ───────────────────
+// For a practitioner only (fyf-compose checks). Re-scores the seated
+// herbs with scoreBreakdown — the same function the ranking uses, so the
+// explanation cannot drift from the decision — and lists the best herbs
+// that passed every safety filter but were not seated, for swapping.
+const round2 = x => Math.round(x * 100) / 100;
+function describe(h, a) {
+  const b = scoreBreakdown(h, a);
+  const parts = {};
+  for (const k in b.parts) if (Math.abs(b.parts[k]) > 1e-9) parts[k] = round2(b.parts[k]);
+  return {
+    id:           h.id,
+    name:         h.name,
+    score:        round2(b.total),
+    parts,
+    halved:       !b.servesGoal,
+    goals:        (h._ax && h._ax.intentions) || [],
+    grade:        h.evidence_grade || null,
+    caution:      h.caution_level || null,
+    cns:          h.cns_action || null,
+    serotonergic: isSerotonergic(h),
+    trace:        isTrace(h),
+    category:     categoryOf(h),
+    proOnly:      !!h.proOnly,
+  };
+}
+function explainPicks(a, chosenIds, altLimit = 12) {
+  const pool = ensurePool();
+  if (!pool || !pool.length) return { herbs: [], alternatives: [] };
+  const safe = pool.filter(h => safetyFilter(h, a.avoid || []) && passesAccess(h, a) && passesProfileSafety(h, a) && fitsTimeOfUse(h, a) && fitsGoal(h, a));
+  const eligible = applyMinorGate(safe, a).filter(h => !h.gated || a._gatedOptIn);
+  const byId = new Map(pool.map(h => [String(h.id), h]));
+  const chosen = new Set((chosenIds || []).map(String));
+  const herbs = (chosenIds || []).map(id => byId.get(String(id))).filter(Boolean).map(h => describe(h, a));
+  const scored = eligible.filter(h => !chosen.has(String(h.id)))
+    .map(h => ({ h, s: scoreHerb(h, a) })).filter(x => x.s > 0);
+  sortScored(scored, a);
+  const alternatives = scored.slice(0, altLimit).map(x => describe(x.h, a));
+  return { herbs, alternatives };
+}
+
+module.exports = { targetHerbCount, pickFormula, buildScoredCandidates, explainPicks };

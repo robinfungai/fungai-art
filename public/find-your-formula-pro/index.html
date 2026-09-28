@@ -17,9 +17,9 @@ html{touch-action:manipulation}
 <meta name="description" content="The long reading. Sixteen questions that map circadian rhythm, nervous-system state, somatic geography, and constitutional pattern — one bespoke spagyric extract, hand-poured in Berlin."/>
 <meta name="keywords" content="custom spagyric extract, deep herbal intake, constitutional profiling, nervous system typology, somatic map, Fungai Art, sublingual drops"/>
 <link rel="canonical" href="https://www.fungai.art/find-your-formula-pro/"/>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3"/>
-<link rel="alternate icon" type="image/png" href="/favicon.png?v=3"/>
-<link rel="apple-touch-icon" href="/fungai-art-logo.png"/>
+<link rel="icon" type="image/png" sizes="256x256" href="/favicon.png?v=4"/>
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png?v=4"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Fungai Art"/>
 <meta property="og:title" content="Find Your Formula · Pro · Fungai Art"/>
@@ -1054,6 +1054,10 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
       </div>
     </div>
 
+    <!-- Practitioner tools (practitioner.js) — why each herb, adjust,
+         dose sheet, client file. Filled after the reveal. -->
+    <div id="fyfProTools" hidden></div>
+
     <div class="r-actions">
       <button class="r-action" type="button" id="restartBtn">↺ Take the quiz again</button>
       <a class="r-action" href="/shop/">◈ See the full apothecary</a>
@@ -1070,6 +1074,9 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
      shared `formulas` table so they appear on /community/academy/'s
      Formula Book. Silently no-ops if not available. -->
 <script src="/supabase-client.js"></script>
+<!-- Practitioner access + tools (2026-09-28). Checks /api/pro-access on
+     load; the compose endpoint checks again on every request. -->
+<script src="/find-your-formula-pro/practitioner.js"></script>
 
 <script>
 /* ────────────────────────────────────────────────────────────
@@ -3040,11 +3047,14 @@ async function _fyfRenderResultServerMode(a) {
   const timeoutId  = setTimeout(() => { try { controller.abort(); } catch (_) {} }, 35000);
   let res, body;
   try {
+    const proAuth = window.FyfPro ? await window.FyfPro.authHeader() : {};
     res = await fetch('/api/fyf/compose', {
       method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
+      // The practitioner's token: the server honours _pro only for a
+      // verified practitioner (src/server/practitioner.mjs).
+      headers: Object.assign({ 'Content-Type': 'application/json' }, proAuth),
       // _pro: this is the pro composer, the one place a pro-only herb
-      // (herbs.ts formula_access: 'pro' — Ephedra) may be chosen.
+      // (herbs.ts formula_access: 'pro') may be chosen.
       body:    JSON.stringify({ profile: Object.assign({}, a, { _pro: true }) }),
       signal:  controller.signal,
     });
@@ -3061,6 +3071,11 @@ async function _fyfRenderResultServerMode(a) {
 
   if (res.status !== 200) {
     _fyfServerComposeInFlight = false;
+    if (res.status === 403 && body && body.code === 'PRACTITIONER_REQUIRED') {
+      try { _fyfStopPhaseA(); _fyfHideComposingCard(); } catch (_) {}
+      if (window.FyfPro) window.FyfPro.showWall(body.reason);
+      return;
+    }
     if (body && (body.code === 'SAFETY_QUESTION_NOT_ANSWERED' || body.code === 'SAFETY_FLAGS_CONFLICT')) {
       return _fyfRenderServerErrorState({ kind: 'NEED_SAFETY', backToSafety, retry });
     }
@@ -3268,6 +3283,9 @@ function _fyfPaintServerReveal(a, body) {
       if (reasoning) storyEl.appendChild(reasoning);
     }).catch(() => {});
   }
+
+  // Practitioner tools — why each herb, adjust, dose sheet, client file.
+  try { if (window.FyfPro) window.FyfPro.onReveal(a, body); } catch (_) {}
 
   _fyfServerComposeInFlight = false;
 }

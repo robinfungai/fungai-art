@@ -14,9 +14,17 @@ module.exports = {
   //         herb serving no chosen goal keeps half its score; laxatives
   //         only for digestion/detox; at most one serotonergic herb;
   //         8 practitioner-only herbs pro-only (2026-09-28).
-  engineVersion:      '2.3.0-server',
-  herbDbVersion:      '2026.09-242herbs',
+  // 2.4.0 — goals are recorded per herb (herbs.ts `goals`), not guessed
+  //         from prose and truncated to three; the pro quiz's support,
+  //         digestion, emotional, somatic, cycle and prior_herbs answers
+  //         score herbs (2026-09-28).
+  engineVersion:      '2.4.0-server',
+  herbDbVersion:      '2026.09-245herbs',
   // 1.1.0 — unknown pregnancy safety = avoid; under-18s: no HIGH-caution,
   //         psychoactive, or above-LOW calming herbs (2026-09-27).
-  safetyRulesVersion: '1.1.0',
+  // 1.2.0 — pro quiz: 'trying to conceive' = the pregnancy rule;
+  //         'sensitive to stimulants' = no stimulant or activating herb;
+  //         'bad reaction before' = nothing at caution HIGH / VERY HIGH
+  //         (2026-09-28).
+  safetyRulesVersion: '1.2.0',
 };
