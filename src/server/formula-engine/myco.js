@@ -33,6 +33,26 @@ const ANTHROPIC_ENDPOINT = 'https://api.anthropic.com/v1/messages';
 // genuinely stuck request block the reveal forever.
 const MYCO_TIMEOUT_MS = 25000;
 
+// What each herb's record says it suits (herbs.ts), in plain words, so
+// MYCO can match it to the person's answers (Robin, 2026-09-29: "every
+// answer counts"). `dream_soften` is shown as "acts on dreams": it is
+// recorded on dream-deepening herbs as well as calming ones.
+const FIT_WORDS = {
+  sleep_action:       { onset: 'falling asleep', maintenance: 'staying asleep', restoration: 'deeper rest', dream_soften: 'acts on dreams' },
+  energy_pattern:     { am_boost: 'morning lift', sustained: 'steady energy', pm_stabilise: 'steadies the afternoon', crash_repair: 'recovery after crashes', restorative_only: 'restores, no lift', acute_only: 'for acute use' },
+  nervous_system_fit: { wired: 'wired', tired: 'tired', wired_tired: 'wired + tired', reactive: 'reactive', flat: 'flat' },
+};
+function _fitLine(h) {
+  const part = (label, field) => {
+    const v = (h[field] || []).map(x => FIT_WORDS[field][x] || x);
+    return v.length ? label + ': ' + v.join(', ') : '';
+  };
+  const bits = [part('suits nervous system', 'nervous_system_fit'), part('energy', 'energy_pattern'), part('sleep', 'sleep_action')]
+    .concat(h.onset_time ? ['onset: ' + h.onset_time] : [])
+    .filter(Boolean);
+  return bits.length ? '\n     ' + bits.join(' · ') : '';
+}
+
 // Compose the shortlist Anthropic sees. Uses the same shape myco-agent
 // used — id + name + botanical + category + pre-score + trace flag +
 // short functions blurb — so the model's prompting is consistent.
@@ -53,7 +73,8 @@ function _buildShortlistText(candidates) {
       ' · category:' + (h._cat || 'other') +
       ' · pre-score:' + (h._score || 0) +
       tagStr +
-      '\n     ' + (((h.primary_functions || [])[0]) || '').slice(0, 220)
+      '\n     ' + (((h.primary_functions || [])[0]) || '').slice(0, 220) +
+      _fitLine(h)
     );
   }).join('\n');
 }
@@ -83,6 +104,26 @@ function _buildPairText(candidates, avoid) {
   );
 }
 
+// The rhythm answers in the quiz's own words.
+const NERVOUS_WORDS = {
+  wired: 'wired — alert, restless, hard to switch off', tired: 'tired — low activation, sluggish, easily depleted',
+  wired_tired: 'wired and tired — activated but exhausted', steady: 'steady — resilient, adapts',
+  reactive: 'reactive — easily overstimulated by sound, people, caffeine or stress', flat: 'flat — emotionally or cognitively muted',
+};
+const CURVE_WORDS = {
+  low_waking: 'low from waking, never really lifts', am_good_pm_crash: 'good morning, crash around 2–4 pm',
+  slow_am_strong_pm: 'slow morning, strong evening (night owl)', moderate: 'consistently moderate',
+  high_unstable: 'high but unstable — big peaks, hard drops', waves: 'comes and goes in waves',
+  crash_mental: 'crashes after mental effort', crash_physical: 'crashes after physical effort',
+};
+const SLEEP_WORDS = {
+  restorative: 'sleeps well', restorative_6plus: 'sleeps 6+ hours and wakes rested', not_restorative_6plus: 'sleeps 6+ hours but wakes unrested',
+  under_6: 'sleeps under 6 hours', very_broken: 'very broken sleep', hard_onset: 'hard to fall asleep',
+  wakes_middle: 'wakes in the night', early_wake: 'wakes too early', sleeps_no_rest: 'sleeps but does not feel rested',
+  vivid_restless: 'vivid, restless dreams',
+};
+const words = (map, v) => (v ? (map[v] || v) : '—');
+
 function _buildComposeUser(quiz, shortlistText, pairText) {
   const q = quiz || {};
   return (
@@ -97,7 +138,9 @@ function _buildComposeUser(quiz, shortlistText, pairText) {
     '- Meets stress by: ' + (q.stress || '—') + '\n' +
     '- Duration: ' + (q.duration || '—') + '\n' +
     '- Age: ' + (q.age || '—') + '\n' +
-    '- Sleep: ' + (q.sleep || '—') + '\n' +
+    '- Sleep: ' + words(SLEEP_WORDS, q.sleep) + '\n' +
+    '- Energy most days (nervous system): ' + words(NERVOUS_WORDS, q.nervous) + '\n' +
+    '- Energy through the day: ' + words(CURVE_WORDS, q.energy_curve) + '\n' +
     '- Safety filters: ' + (Array.isArray(q.avoid) ? q.avoid.join(', ') : (q.avoid || 'none')) + '\n' +
     // The note is the one free-text field, and it is untrusted: it goes
     // in fenced and labelled so it reads as information about the
@@ -135,6 +178,7 @@ const COMPOSE_SYS =
   '    · AMANITA — max 1 AMANITA-marked herb (the house keeps it at 10% or less), and never beside St John\'s Wort.\n' +
   '- Do NOT diagnose. Do NOT prescribe. Traditional herbal support only, not medical treatment.\n' +
   '- Reference the free-text explicitly if it names a priority, prior herb experience, or contraindication history.\n' +
+  '- EVERY ANSWER COUNTS. Weigh each one, not only the intention: the body pattern, when the day is hardest, how they meet stress, how long it has lasted, their age, their sleep, how their energy feels (nervous system) and how it moves through the day. Under each shortlisted herb is what its record says it suits (nervous system, energy, sleep, onset): match those to the answers — a wired or reactive person needs herbs that suit "wired"/"reactive", someone who wakes in the night needs "staying asleep" rather than "falling asleep", an afternoon crash needs "steadies the afternoon". Herbs marked "acts on dreams" do not suit vivid, restless dreaming unless the record also shows them calming.\n' +
   '- WHAT THE PERSON DOES NOT WANT: if the note refuses a herb, a kind of herb or an effect — "no caffeine", "nothing sedating", "I don\'t want anything that makes me drowsy", "no mushrooms", "not valerian", "ohne Koffein" — pick none of the shortlist herbs it rules out, and put the id of EVERY shortlist herb it rules out in "noteAvoid", whether or not you would have picked it. A refusal is not a need: "I can\'t sleep" asks for sleep support; "I don\'t want anything for sleep" refuses it. Read past and present too: "I used to take ashwagandha and it made me anxious" refuses ashwagandha. When unsure whether a herb is ruled out, rule it out.\n' +
   '- Never pick both herbs of a pair listed under "Never together".\n' +
   '- Pairs under "Cautions between shortlisted herbs" are known concerns: prefer not to pick both; if you do, that herb\'s reason must say why the pair still fits this person.\n' +
