@@ -713,7 +713,7 @@ const HERBS = [
     // ── Quiz-matcher + composer-quality enrichment ──
     nervous_system_fit: ['wired', 'reactive', 'flat'],
     energy_pattern: ['pm_stabilise'],
-    sleep_action: ['onset', 'dream_soften'],
+    sleep_action: ['onset', 'dream_vivid'],
     regional_affinity: ['head', 'heart'],
     onset_time: 'hours',
     family: 'Nymphaeaceae',
@@ -1195,7 +1195,7 @@ const HERBS = [
     // ── Quiz-matcher + composer-quality enrichment ──
     nervous_system_fit: ['reactive', 'wired', 'flat'],
     energy_pattern: ['pm_stabilise', 'restorative_only'],
-    sleep_action: ['dream_soften'],
+    sleep_action: ['dream_vivid'],
     regional_affinity: ['heart', 'chest'],
     onset_time: 'weeks',
     family: 'Fabaceae',
@@ -1847,7 +1847,7 @@ const HERBS = [
       'Absolute contraindication in psychosis, bipolar disorder, dissociative disorders and severe depression without therapeutic support. Not for daily use. Excellent for intentional dream work, lucid dreaming and visionary exploration when used with proper psychiatric screening, clear intention and integration practices.',
     // ── Quiz-matcher + composer-quality enrichment ──
     energy_pattern: ['pm_stabilise'],
-    sleep_action: ['dream_soften'],  // oneirogen — vivifies dreams rather than softening them; nearest tag
+    sleep_action: ['dream_vivid'],  // oneirogen — vivifies dreams
     digestion_fit: ['bitter'],
     regional_affinity: ['head'],
     onset_time: 'hours',
@@ -4511,6 +4511,7 @@ const HERBS = [
     // ── Quiz-matcher + composer-quality enrichment ──
     nervous_system_fit: ['tired', 'flat'],
     energy_pattern: ['am_boost', 'sustained'],
+    sleep_action: ['dream_vivid'],  // record: lucid dreaming facilitation
     regional_affinity: ['head', 'chest'],
     onset_time: 'immediate',
     family: 'Aquifoliaceae',
@@ -6398,7 +6399,7 @@ const HERBS = [
     // ── Quiz-matcher + composer-quality enrichment ──
     nervous_system_fit: ['flat', 'reactive'],
     energy_pattern: ['pm_stabilise'],
-    sleep_action: ['dream_soften'],
+    sleep_action: ['dream_vivid'],
     digestion_fit: ['bitter', 'warming'],
     regional_affinity: ['pelvis', 'gut', 'head'],
     onset_time: 'hours',
@@ -6654,7 +6655,7 @@ const HERBS = [
     // ── Quiz-matcher + composer-quality enrichment ──
     nervous_system_fit: ['flat', 'tired'],           // wrong ally for wired or reactive states
     energy_pattern:     ['am_boost', 'sustained'],
-    sleep_action:       [],                          // daytime herb — no sleep claim
+    sleep_action:       ['dream_vivid'],             // daytime herb; its record reports deeper, more vivid dreaming
     regional_affinity:  ['head', 'pelvis'],
     onset_time:         'hours',
     family:             'Fabaceae',
@@ -7426,8 +7427,8 @@ const HERBS = [
     primary_functions: [
       'Unique adaptogenic HPA modulation — lignans (schizandrin A/B/C; deoxyschizandrin; gomisin) modulate HPA axis WITHOUT direct hormone agonism; unique paradox: supports both cortisol normalisation AND energy maintenance simultaneously',
       'Endurance and stamina — lignan-driven ATP production support builds deep reserves (TCM jing); sustained endurance not acute stimulation; traditional Chinese athlete, martial artist and Soviet cosmonaut endurance herb',
-      'Liver detoxification support — lignans activate cytochrome P450 Phase I and glutathione S-transferase Phase II enzymes; hepatoprotection; bile production support; lipid peroxidation reduction',
-      'Sleep quality and dream enhancement — paradoxical effect: stimulating early (weeks 1–4), then sleep-deepening; REM support; dream vividness; traditionally combined with Reishi for dreamwork',
+      'Liver protection — lignans (gomisins, schisandrin B) protect the liver against toxic injury and lipid peroxidation in animal studies; NOTE: the same lignans INHIBIT CYP3A drug metabolism in people (see interactions) — not a "detox enzyme booster"',
+      'Calms the spirit and settles sleep — TCM uses Wu Wei Zi for insomnia with restless, dream-disturbed sleep (calms shen, astringes Heart qi); in rodents its lignans shorten sleep latency and lengthen sleep (schizandrin PMID 25446916; schisandrin B PMID 29677536, 33093880) and raw or wine-processed fruit regulates NREM sleep in an insomnia model (PMID 34911135). No study shows it vivifies dreams (PubMed checked 2026-09-29)',
       'Mental clarity without overstimulation — supports neurotransmitter balance (dopamine, serotonin, GABA) simultaneously; cognitive clarity plus emotional stability; scattered minds settle',
     ],
     secondary_benefits: [
@@ -7436,10 +7437,10 @@ const HERBS = [
       '2000+ years traditional use — Chinese martial arts, Soviet space programme, Korean mountain training; one of the most extensively used adaptogens in Eastern medicine',
     ],
     pharmacology:
-      'Primary bioactives: lignans (1–3%; schizandrin A/B/C, deoxyschizandrin, γ-schizandrin, gomisin — UNIQUE bioactive class; distinct from polysaccharides, alkaloids or glycosides; HPA axis modulation via glucocorticoid receptor sensitivity and catecholamine balance; NOT direct hormone agonism), polysaccharides (10–20%; immune modulation), flavonoids — quercetin, kaempferol (3–5%; antioxidant; anti-inflammatory), organic acids — citric, malic, tartaric (5–10%; astringency; mineral binding; sour taste), volatile oils (trace; CNS modulation). PREPARATION CRITICAL: decoction (heat extraction) required for lignan bioavailability; tea alone insufficient; extract acceptable alternative. INITIAL STIMULATION: weeks 1–4 often stimulating (energy boost, possible mild sleep disruption); settles into balanced adaptive equilibrium by week 4+; morning dosing initially. CRITICAL INTERACTION: CYP450 enzyme induction — many medications at risk (statins, anticonvulsants, SSRIs, oral contraceptives, HRT, Warfarin, immunosuppressants); prescriber consultation MANDATORY before recommending. Grade B+ adaptogenic properties; Grade A CYP450 interaction risk.',
+      'Primary bioactives: lignans (1–3%; schizandrin A/B/C, deoxyschizandrin, γ-schizandrin, gomisin — UNIQUE bioactive class; distinct from polysaccharides, alkaloids or glycosides; HPA axis modulation via glucocorticoid receptor sensitivity and catecholamine balance; NOT direct hormone agonism; schisandrin B is a positive allosteric modulator of GABA-A and glycine receptors, anticonvulsant in mice — PMID 38017298), polysaccharides (10–20%; immune modulation), flavonoids — quercetin, kaempferol (3–5%; antioxidant; anti-inflammatory), organic acids — citric, malic, tartaric (5–10%; astringency; mineral binding; sour taste), volatile oils (trace; CNS modulation). PREPARATION CRITICAL: decoction (heat extraction) required for lignan bioavailability; tea alone insufficient; extract acceptable alternative. INITIAL STIMULATION: weeks 1–4 often stimulating (energy boost, possible mild sleep disruption); settles into balanced adaptive equilibrium by week 4+; morning dosing initially. CRITICAL INTERACTION: CYP3A INHIBITION — in healthy volunteers a Schisandra sphenanthera extract raised midazolam exposure (AUC) by about 119% (PMID 19552749); several fruit lignans are potent CYP3A4 inhibitors (PMID 15342469); Wuzhi capsule (S. sphenanthera) raises whole-blood tacrolimus and is used in China to spare tacrolimus (meta-analysis PMID 38150711). So drugs cleared by CYP3A (midazolam and other benzodiazepines, tacrolimus, cyclosporine, many statins, calcium-channel blockers) can RISE, not fall; prescriber consultation MANDATORY. Sleep: sedative-hypnotic in rodents (see functions), in TCM for dream-disturbed sleep. Grade B+ adaptogenic properties; Grade A CYP3A interaction risk.',
     flavor_profile: 'Remarkably complex — all five flavours simultaneously: sweet, sour, salty, bitter and pungent; astringent; the most multi-dimensional herbal taste',
     contraindications: [
-      'CYP450-metabolised medications — CRITICAL INTERACTION: lignans induce CYP450 enzymes; PRESCRIBER CONSULTATION MANDATORY; medications at risk: statins, anticonvulsants, SSRIs, oral contraceptives, HRT, Warfarin, immunosuppressants (tacrolimus, cyclosporine — transplant rejection risk), and many others',
+      'CYP3A-metabolised medications — CRITICAL INTERACTION: lignans INHIBIT CYP3A in people (midazolam exposure roughly doubled, PMID 19552749; tacrolimus levels raised, PMID 38150711); PRESCRIBER CONSULTATION MANDATORY; medications at risk: tacrolimus, cyclosporine, midazolam and other benzodiazepines, many statins, calcium-channel blockers, and others cleared by CYP3A',
       'Initial stimulation phase (weeks 1–4) — EXPECTED but screen for anxiety disorders and insomnia: stimulation may temporarily worsen these; manage with morning-only dosing and lower initial dose; usually resolves week 4+',
       'Acid reflux and GERD — CAUTION: sour acidic nature may aggravate; take with food',
       'Pregnancy — stimulating early in adaptation; consult prenatal provider',
@@ -7448,7 +7449,7 @@ const HERBS = [
     herb_to_herb_synergy: [
       'Cordyceps — triple endurance powerhouse (Schisandra + Cordyceps + Ginseng = classical TCM athlete formula)',
       'Ginseng — qi tonification and adaptogenic depth combined',
-      'Reishi — sleep quality and dream enhancement protocol; Schisandra balancing plus Reishi yin tonification',
+      'Reishi — the classic shen-calming pair for restless, dream-disturbed sleep; Schisandra astringing plus Reishi yin tonification',
       'Astragalus — immune plus foundational qi tonification; comprehensive Chinese tonic combination',
     ],
     herb_to_herb_caution: [
@@ -7456,8 +7457,8 @@ const HERBS = [
       'Valerian and sedative herbs — opposite energies in early phase; stagger dosing (Schisandra morning; Valerian evening)',
     ],
     herb_to_drug_interactions: [
-      'CYP450 enzyme substrates — CRITICAL: prescriber consultation mandatory before combining; statins (levels may decrease), anticonvulsants (efficacy may decrease), SSRIs (efficacy may decrease), oral contraceptives (efficacy may decrease — backup contraception), HRT (efficacy may decrease), Warfarin (INR may decrease), immunosuppressants (TRANSPLANT REJECTION RISK — absolutely consult)',
-      'Immunosuppressants — particularly high risk; transplant patients: ABSOLUTELY CONSULT SPECIALIST',
+      'CYP3A substrates — CRITICAL: prescriber consultation mandatory before combining; levels can RISE: midazolam (AUC +119% in volunteers, PMID 19552749) and other benzodiazepines (more sedation), statins, calcium-channel blockers',
+      'Tacrolimus and cyclosporine — blood levels RISE (meta-analysis PMID 38150711); transplant patients: ABSOLUTELY CONSULT SPECIALIST, never self-add',
     ],
     herb_interactions: [
       'Synergy: Cordyceps, Ginseng, Reishi, Astragalus',
@@ -7472,13 +7473,14 @@ const HERBS = [
       'Decoction (heat extraction required) is non-negotiable for lignans. CYP450 drug interaction screening is the critical first step before recommending — verify medication list with prescriber. Educate on initial stimulation phase (weeks 1–4) as expected and manageable. Take with food (fat absorption). Morning dosing initially. One of the most rewarding long-term adaptogens when properly selected.',
     caution_level: 'MEDIUM-HIGH',
     cns_action: 'activating',
-    cns_evidence: 'Lignans (schisandrins, gomisins). The adaptogen research behind its reputation describes it as raising work capacity (reviews PMID 34445021, 31431019); rodent work also shows longer barbiturate sleep, so the profile is mixed. Its own record says stimulating early.',
+    cns_evidence: 'Lignans (schisandrins, gomisins). The adaptogen research behind its reputation describes it as raising work capacity (reviews PMID 34445021, 31431019); rodent work shows sedative-hypnotic lignans (PMID 25446916, 29677536) and NREM regulation in an insomnia model (PMID 34911135), matching its TCM use for dream-disturbed sleep, so the profile is mixed. Its own record says stimulating early.',
     safe_pregnancy: null,
     status:
       'Grade B+ adaptogenic properties (200+ studies; unique lignan mechanism; endurance evidence). Grade A CYP450 interaction risk — the defining safety concern. Decoction preparation essential. Initial stimulation phase (weeks 1–4): manage with morning dosing. CYP450 prescriber consultation mandatory before all recommendations involving prescription medications.',
     // ── Quiz-matcher + composer-quality enrichment ──
     nervous_system_fit: ['wired_tired', 'tired', 'reactive'],
     energy_pattern: ['sustained', 'am_boost'],
+    sleep_action: ['onset', 'maintenance', 'dream_soften'],  // TCM: dream-disturbed sleep; rodent: shorter latency, longer sleep (PubMed 2026-09-29)
     regional_affinity: ['liver', 'kidneys', 'chest'],
     onset_time: 'weeks',
     family: 'Schisandraceae',
@@ -7490,6 +7492,16 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade: 'B+',
+    references: [
+      'Zhang C, Zhao X, Mao X, et al. Pharmacological evaluation of sedative and hypnotic effects of schizandrin through the modification of pentobarbital-induced sleep behaviors in mice. Eur J Pharmacol. 2014. PMID 25446916',
+      'Li N, Liu J, Wang M, et al. Sedative and hypnotic effects of Schisandrin B through increasing GABA/Glu ratio and upregulating the expression of GABA(A) in mice and rats. Biomed Pharmacother. 2018. PMID 29677536',
+      'Su D, Luo J, Ge J, et al. Raw and Wine Processed Schisandra chinensis Regulate NREM-Sleep and Alleviate Cardiovascular Dysfunction Associated with Insomnia by Modulating HPA Axis. Planta Med. 2022. PMID 34911135',
+      'Wang M, Li N, Jing S, et al. Schisandrin B exerts hypnotic effects in PCPA-treated rats by increasing hypothalamic 5-HT and γ-aminobutyric acid levels. Exp Ther Med. 2020. PMID 33093880',
+      'Wu J, Zhao M, Jin YC, et al. Schisandrin B, a dual positive allosteric modulator of GABA(A) and glycine receptors, alleviates seizures in multiple mouse models. Acta Pharmacol Sin. 2024. PMID 38017298',
+      'Xin HW, Wu XC, Li Q, et al. Effects of Schisandra sphenanthera extract on the pharmacokinetics of midazolam in healthy volunteers. Br J Clin Pharmacol. 2009. PMID 19552749',
+      'Iwata H, Tezuka Y, Kadota S, et al. Identification and characterization of potent CYP3A4 inhibitors in Schisandra fruit extract. Drug Metab Dispos. 2004. PMID 15342469',
+      'Zhang C, Ren X, Liu Y, et al. Effects of Wuzhi Capsule on Whole-Blood Tacrolimus Concentration Levels: A Systematic Review and Meta-Analysis. Ther Drug Monit. 2024. PMID 38150711',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -8648,27 +8660,28 @@ const HERBS = [
     tcm_element: 'Fire + Earth',
     energetics: ['Warm', 'Moist', 'Relaxing', 'Mood-Lifting', 'Mildly Psychoactive', 'Spirit-Calming', 'Pleasure-Promoting'],
     primary_functions: [
-      'Gentle relaxation with preserved clarity — leonurine and related alkaloids (0.1–0.5%) create mild nervous-system ease and tension release; paradoxical calm-alert state (relaxation without drowsiness); non-intoxicating at normal doses; no impairment or altered perception',
-      'Mild mood elevation and euphoria — leonurine plus aromatic essential-oil compounds lift mood and create gentle non-intoxicating pleasure; non-addictive; no tolerance development; safe ongoing use',
+      'Calming and anticonvulsant (animal data) — aqueous extract (200–400 mg/kg) delayed chemically induced seizures in mice, acting on both GABAergic and glutamatergic systems (PMID 12046862); the labdane diterpenoids leoleorin A and B from its smoke were anticonvulsant and anxiolytic in zebrafish larvae (PMID 38688356). No human CNS trial',
+      'Mild euphoria when smoked — the southern African name "wilde dagga" means wild cannabis; users describe a mild euphoric, cannabis-like but weaker effect (review PMID 26292023). The compound responsible is not known: the often-quoted "leonurine" has never been found in this plant by any scientific analysis, and HPLC found none (PMID 23346757)',
       'Spirit calming and emotional ease — calms nervous system; accessible emotional vulnerability; slight heart-opening; presence deepens; tension releases at emotional level',
-      'Antioxidant and anti-inflammatory support (secondary) — polyphenols and flavonoids provide free-radical scavenging and cytokine modulation',
-      'Traditional South African relaxation and pleasure herb — centuries ceremonial and everyday use for relaxation, mild euphoria and spiritual connection',
+      'Anti-inflammatory, pain-relieving and blood-sugar-lowering in rodents — leaf extract (PMID 16082426); marrubiin, its main diterpene, eased diabetic symptoms (PMID 22326550) and was cardioprotective (PMID 21893184) in animal models',
+      'Traditional South African medicine — decoctions taken and applied for headache, muscular cramps, epilepsy, chest infections, constipation, skin complaints and bites; the dried leaves and flowers smoked for epilepsy and for a mild euphoria (review PMID 26292023)',
     ],
     secondary_benefits: [
-      'Non-addictive relaxant — no tolerance, no dependence, no withdrawal; safe indefinite daily use',
-      'Paradoxical calm-alert (unique quality) — unlike pharmaceutical sedatives or cannabis; relaxation and mental clarity coexist',
+      'Dreams — people who use it report more vivid dreams; recorded here as dream-deepening (Robin, 2026-09-29) so it is kept away from restless sleepers. No study has measured it (PubMed checked 2026-09-29)',
+      'Quality matters — products sold as Leonotis have been deliberately adulterated with synthetic cannabinoids, and it is easily confused with Leonotis nepetifolia (review PMID 26292023)',
       'Social ease and confidence — mild euphoria reduces social anxiety and enhances connection; traditional social and gathering herb',
       'Synergises with Hops and Passionflower — triple nervous-system relaxation combination with complementary mechanisms',
     ],
     pharmacology:
-      'Primary bioactives: alkaloids (leonurine and others — 0.1–0.5%; PRIMARY mild psychoactive; CNS ease; mood-lifting; non-intoxicating mechanism emerging; traditional centuries; non-addictive), essential oils (volatile aromatic compounds — mood-lifting; pleasure-inducing; aromatic synergy with alkaloids), polyphenols and flavonoids (antioxidant; anti-inflammatory — tertiary contribution). UNIQUE PROFILE: mildly psychoactive but NON-INTOXICATING at normal doses; no impairment; clarity maintained; non-addictive unlike cannabis or kratom. Grade C+ relaxation (mechanism emerging; traditional use; limited RCTs); Grade C mood elevation (mechanism plausible; traditional; limited studies); Grade B safety (centuries use; well-tolerated; alkaloid content documented).',
+      'Primary bioactives: labdane diterpenes — more than 50 compounds characterised, the major one marrubiin (also premarrubiin, leoleorins, leonurenones) (review PMID 26292023); essential oil; flavonoids and phenolics. NOT leonurine: that alkaloid, repeated in popular literature, has never been found in Leonotis leonurus (review PMID 26292023) and an HPLC study detected none (PMID 23346757). The compound behind the mild euphoria is unidentified. Animal pharmacology: anticonvulsant (mice, PMID 12046862; smoke diterpenoids in zebrafish, PMID 38688356), anti-inflammatory, analgesic and hypoglycaemic (PMID 16082426; marrubiin PMID 22326550, 21893184). Toxicology (rats, aqueous extract): deaths at 3200 mg/kg; blood-count changes at 1600 mg/kg over weeks and from 200 mg/kg in chronic dosing, with kidney and liver marker changes (PMID 19244291); in male rats 125–500 mg/kg changed haematological and biochemical values and the authors judged it may not be safe as an oral remedy (PMID 20194574). No human trials of any kind.',
     flavor_profile: 'Herbal, slightly sweet and mildly bitter — aromatic and earthy; pleasant as a tea',
     contraindications: [
       'Pregnancy — CAUTION: psychoactive alkaloid content; safety data limited; LIKELY AVOID; consult prenatal provider',
       'Breastfeeding — CAUTION: theoretical alkaloid transfer to infant; LIKELY AVOID concentrated forms; consult provider',
-      'Liver disease — MONITOR: alkaloids metabolised hepatically; monitor liver function; consult provider',
+      'Liver or kidney disease — AVOID: long-term oral extract changed kidney, liver and blood values in rats (PMID 19244291, 20194574)',
+      'Epilepsy medication — CAUTION: anticonvulsant in animals; additive with antiepileptics is possible; never a replacement for them',
       'CNS depressants — MONITOR: additive relaxation possible; generally manageable; adjust doses',
-      'Otherwise: generally safe with awareness — non-addictive; non-intoxicating; centuries traditional use',
+      'Long daily use — no human safety data; rat studies saw blood and organ-marker changes with chronic dosing; use in courses, not indefinitely',
     ],
     herb_to_herb_synergy: [
       'Hops and Passionflower — triple nervous-system support; relaxation plus sleep plus calm-alert clarity',
@@ -8676,12 +8689,12 @@ const HERBS = [
       'Kava (with caution) — deeper relaxation; reduce doses of both; monitor liver if combining',
     ],
     herb_to_herb_caution: [
-      'Kava — both hepatically metabolised; monitor liver if combining; reduce doses',
+      'Kava — both are liver-relevant (rat data for Wild Dagga); avoid combining',
       'Other mildly psychoactive herbs at high combined doses — cumulative CNS effect; use with awareness',
     ],
     herb_to_drug_interactions: [
       'CNS depressants — additive relaxation; generally manageable; monitor',
-      'Hepatically metabolised drugs — alkaloid hepatic metabolism; theoretical interactions; monitor',
+      'Antiepileptic drugs — anticonvulsant in animal models; possible additive effect; monitor',
     ],
     herb_interactions: [
       'Synergy: Hops, Passionflower, Lemon Balm',
@@ -8689,21 +8702,21 @@ const HERBS = [
       'Drug interactions: CNS depressants (additive — monitor), hepatically metabolised drugs (theoretical — monitor)',
     ],
     dosage_range:
-      'Dried leaf and flower infusion (SAFEST): 2–4 g steeped 5–10 minutes, 1–2× daily. Fresh infusion most potent. Extract (fresh plant): 20–40 drops, 1–2× daily. Traditional smoking (CEREMONIAL — use cautiously — combustion byproducts): small amounts of fresh or dried leaves; fastest onset; most potent; not recommended for daily respiratory health. Afternoon or evening timing for relaxation. Low doses fine during daytime (non-drowsy). Safe indefinite daily use (non-addictive; no tolerance).',
+      'Dried leaf and flower infusion (SAFEST): 2–4 g steeped 5–10 minutes, 1–2× daily. Fresh infusion most potent. Extract (fresh plant): 20–40 drops, 1–2× daily. Traditional smoking (CEREMONIAL — use cautiously — combustion byproducts): small amounts of fresh or dried leaves; fastest onset; most potent; not recommended for daily respiratory health. Afternoon or evening timing for relaxation. No human dose-finding exists; rat toxicity began at 200 mg/kg extract in chronic dosing, so keep to traditional amounts and courses of weeks, not indefinite daily use.',
     spiritual_layer:
       'Wild Dagga carries the joy of South African wildness — the orange-red flowers blazing like flames above the savanna, the lion\'s ear hearing what others miss. She teaches that pleasure is not earned through suffering, that mild euphoria is a gift of nature available without intoxication, that the relaxed clear mind is not a compromise of function but an enhancement of it. She carries the teaching of the paradox: that you can be fully present AND at ease, fully awake AND at rest. She is the reminder that African traditional knowledge understood something pharmaceuticals have struggled to achieve — gentle, non-addictive pleasure as medicine. She whispers: I am relaxed. I am joyful. I am clear. I am present. I am peaceful. I am connected. I am whole. I am pleased.',
     best_preparation:
-      'Infusion (tea) is the daily safest preparation — pleasant earthy flavour; portable; no combustion. Evening use for relaxation and pleasure ritual; daytime low-dose for paradoxical calm-alert work state. Pair with Passionflower for sleep or Lemon Balm for mood. EDUCATE clearly: non-intoxicating at normal doses — no impairment, no altered perception, clarity maintained. Screen for pregnancy and breastfeeding (likely avoid), liver disease (monitor). A herb for pleasure, presence and gentle joy — frame the ritual and intention as part of the medicine.',
+      'Infusion (tea) is the daily safest preparation — pleasant earthy flavour; portable; no combustion. Evening use for relaxation and pleasure ritual; daytime low-dose for paradoxical calm-alert work state. Pair with Passionflower for sleep or Lemon Balm for mood. Say plainly: mildly euphoric when smoked, milder as tea; the active compound is unknown (not leonurine). Screen for pregnancy and breastfeeding (avoid), liver or kidney disease (avoid), epilepsy medication. Keep away from restless sleepers (reported vivid dreams). A herb for pleasure, presence and gentle joy — frame the ritual and intention as part of the medicine.',
     caution_level: 'LOW-MEDIUM',
     cns_action: 'calming',
-    cns_evidence: 'Drunk and smoked in southern Africa, where its name means wild cannabis; used for epilepsy, headache and cramps (review PMID 26292023). No human CNS trial.',
+    cns_evidence: 'Drunk and smoked in southern Africa, where its name means wild cannabis; used for epilepsy, headache and cramps (review PMID 26292023). Anticonvulsant in mice (PMID 12046862); smoke diterpenoids anticonvulsant and anxiolytic in zebrafish (PMID 38688356). Contains no leonurine (PMID 23346757). No human CNS trial.',
     safe_pregnancy: false,
     status:
-      'Grade C+ relaxation (mechanism emerging; centuries traditional use). Grade B safety (traditional use; well-tolerated; alkaloid content documented). Non-addictive; non-intoxicating at normal doses; paradoxical calm-alert; safe indefinite daily use. CAUTION: pregnancy (likely avoid), breastfeeding (likely avoid), liver disease (monitor). Educate on non-intoxicating nature clearly.',
+      'Traditional use plus animal pharmacology only (anticonvulsant, anxiolytic, anti-inflammatory, hypoglycaemic); no human trials. Active psychoactive compound unidentified — not leonurine. Rat toxicity with chronic oral dosing (blood, kidney, liver markers). CAUTION: pregnancy and breastfeeding (avoid), liver or kidney disease (avoid), epilepsy medication. Reported vivid dreams: not for restless sleepers. PubMed checked 2026-09-29.',
     // ── Quiz-matcher + composer-quality enrichment ──
     nervous_system_fit: ['flat', 'wired_tired'],
     energy_pattern: ['pm_stabilise'],
-    sleep_action: ['onset', 'dream_soften'],
+    sleep_action: ['onset', 'dream_vivid'],  // vivid dreams: user reports, Robin 2026-09-29; no study
     regional_affinity: ['head', 'chest'],
     onset_time: 'immediate',
     family: 'Lamiaceae',
@@ -8716,6 +8729,17 @@ const HERBS = [
       source: 'recorded',
     },
     evidence_grade: 'traditional',
+    references: [
+      'Nsuala BN, Enslin G, Viljoen A. "Wild cannabis": A review of the traditional use and phytochemistry of Leonotis leonurus. J Ethnopharmacol. 2015. PMID 26292023',
+      'Kuchta K, Ortwein J, Rauwald HW. Leonurus japonicus, Leonurus cardiaca, Leonotis leonurus: a novel HPLC study on the occurrence and content of the pharmacologically active guanidino derivative leonurine. Pharmazie. 2012. PMID 23346757',
+      'Bienvenu E, Amabeoku GJ, Eagles PK, et al. Anticonvulsant activity of aqueous extract of Leonotis leonurus. Phytomedicine. 2002. PMID 12046862',
+      'Nsuala BN, Enslin G, Chen W, et al. Chemical profiling, anticonvulsant and anxiolytic effects of the smoke constituents isolated from Leonotis leonurus (L.) R.Br. J Ethnopharmacol. 2024. PMID 38688356',
+      'Ojewole JA. Antinociceptive, antiinflammatory and antidiabetic effects of Leonotis leonurus (L.) R. BR. [Lamiaceae] leaf aqueous extract in mice and rats. Methods Find Exp Clin Pharmacol. 2005. PMID 16082426',
+      'Mnonopi N, Levendal RA, Mzilikazi N, et al. Marrubiin, a constituent of Leonotis leonurus, alleviates diabetic symptoms. Phytomedicine. 2012. PMID 22326550',
+      'Mnonopi N, Levendal RA, Davies-Coleman MT, et al. The cardioprotective effects of marrubiin, a diterpenoid found in Leonotis leonurus extracts. J Ethnopharmacol. 2011. PMID 21893184',
+      'Maphosa V, Masika P, Adedapo A. Safety evaluation of the aqueous extract of Leonotis leonurus shoots in rats. Hum Exp Toxicol. 2008. PMID 19244291',
+      'Oyedemi SO, Yakubu MT, Afolayan AJ. Effect of aqueous extract of Leonotis leonurus (L.) R. Br. leaves in male Wistar rats. Hum Exp Toxicol. 2010. PMID 20194574',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -10198,7 +10222,9 @@ const HERBS = [
       'Glutamate receptor agonism via ibotenic acid — ibotenic acid is a structural analog of glutamate/aspartate acting as NMDA and metabotropic glutamate receptor agonist; neuroexcitatory; decarboxylated in vivo to muscimol (both compounds present after ingestion); used experimentally to induce focal brain lesions in neuroscience research',
       'Mixed excitatory-depressive neurotoxidrome — ibotenic acid produces early agitation, hallucinations and delirium (excitatory phase); muscimol produces subsequent sedation, ataxia, stupor and coma-like sleep (inhibitory phase); onset 30 min–2 hours; typical duration 6–24 hours; seizures, respiratory depression and rare fatality documented',
       'Ethnomycological entheogenic use — long record of ritual use among indigenous Siberian peoples (Khanty, Evenki and others); shamanic divination, spirit travel and healing; traditional practices included urine recycling to reuse muscimol while reducing ibotenic acid; cannot be equated with modern unstructured consumption',
-      'TOXICOLOGICAL WARNING — not a therapeutic fungus: case series document severe poisonings including fatalities; rising commercial Amanita products are creating public health concerns; no approved clinical indications exist',
+      'TOXICOLOGICAL WARNING — not a therapeutic fungus: case series document severe poisonings including a fatality (PMID 36210279); severe cases can carry cholinergic features needing atropine, even after home preparation (two elderly spouses, full recovery, PMID 41441606; muscarine\'s role re-examined, PMID 40228215); rising commercial Amanita products are a public health concern (PMID 38864780, 42272832); no approved clinical indications exist',
+      'What people who take it report (2023–2025) — in 684 social-media users, men took it mainly for stress, low mood and insomnia and women mainly for pain and skin; tincture (women) and dried mushroom (men) were the usual forms; side effects were headache (women) and nausea, vomiting, abdominal pain and drowsiness (men) (PMID 37112610). A thematic analysis of about 10,500 Reddit posts and comments found more positive than adverse reports, adverse effects mostly mild and self-limiting — and notes that no clinical studies exist (PMID 40057818)',
+      'Sleep and dreams — insomnia is among the main reasons people give for taking it (PMID 37112610) and drowsiness among its commonest effects; muscimol, a GABA-A agonist, is the sedative phase. Dream-like states and vivid dreaming are part of its traditional and user record (a woman who took it for anxiety presented with delirium, delusions and dreams, PMID 37524419); no study has measured sleep or dreams. Recorded dream-deepening (Robin, 2026-09-29): never for restless sleepers',
     ],
     secondary_benefits: [
       'Neuroscience research tool only — muscimol is used as a pharmacological research tool for reversible inactivation of specific brain regions in animal studies; not a therapeutic application',
@@ -10207,7 +10233,7 @@ const HERBS = [
       'Symbolic and folkloric richness — associated in lore with shamanism, fairy tales, Christmas iconography and numerous cultural traditions; educational and cultural significance is legitimate and separate from therapeutic claims',
     ],
     pharmacology:
-      'Primary bioactives: muscimol (GABA analog; potent GABA-A agonist; CNS inhibition — sedation, ataxia, muscle relaxation, altered perception; also partial GABA-A-rho agonist), ibotenic acid (glutamate/aspartate analog; NMDA and metabotropic glutamate receptor agonist; neuroexcitatory; neurotoxic at high exposures; decarboxylates to muscimol; used to induce brain lesions in animal models). Clinical toxidrome: mixed excitatory-depressive; onset 30 min–2 hours; mydriasis, flushing, diaphoresis, GI symptoms; alternating agitation/hallucinations and somnolence/ataxia/stupor; seizures and respiratory depression in severe cases; mostly self-limited but fatalities documented. No therapeutic dose established. Rising commercial products with unregulated muscimol/ibotenic acid content creating public health emergency.',
+      'Primary bioactives: muscimol (GABA analog; potent GABA-A agonist; CNS inhibition — sedation, ataxia, muscle relaxation, altered perception; also partial GABA-A-rho agonist), ibotenic acid (glutamate/aspartate analog; NMDA and metabotropic glutamate receptor agonist; neuroexcitatory; neurotoxic at high exposures; decarboxylates to muscimol; used to induce brain lesions in animal models). Clinical toxidrome: mixed excitatory-depressive; onset 30 min–2 hours; mydriasis, flushing, diaphoresis, GI symptoms; alternating agitation/hallucinations and somnolence/ataxia/stupor; seizures and respiratory depression in severe cases; mostly self-limited but fatalities documented. No therapeutic dose established. Rising commercial products with unregulated muscimol/ibotenic acid content creating public health emergency. Content varies widely between mushrooms, parts and preparations (review PMID 42796518); labels cannot be trusted — two gummy products sold as Amanita muscaria contained no ibotenic acid or muscimol at all but did contain psilocin and tryptamines (PMID 39977248). Two syndromes: A. muscaria poisoning more often brings hallucinations (26/32) and agitation (20/32), A. pantherina more often coma (5/17 vs 2/32) (PMID 25173077). Siberian peoples used it knowingly, for several purposes, as a psychostimulant (PMID 2023425).',
     flavor_profile: 'Not consumed therapeutically — this entry is educational/taxonomic only; do not use as a beverage or extract ingredient',
     contraindications: [
       'ABSOLUTE BLOCK FOR ALL INTERNAL USE — no safe established therapeutic dose; toxidrome unpredictable; fatalities documented',
@@ -10239,14 +10265,14 @@ const HERBS = [
       'DATABASE ENTRY IS EDUCATIONAL AND TAXONOMIC ONLY. Do not include in any extract, beverage or supplement formulation. For educational content: describe taxonomy, ethnomycology and pharmacological mechanism. Clearly distinguish from psilocybin-containing mushrooms (different mechanism entirely). Always communicate that commercial muscimol products are an emerging public health risk with unregulated content and unpredictable toxicity.',
     caution_level: 'VERY HIGH',
     cns_action: 'sedative',
-    cns_evidence: 'Muscimol, a potent GABA-A agonist, with ibotenic acid: sedative-hypnotic, and deliriant at higher doses (PMID 6130573, 37824402).',
+    cns_evidence: 'Muscimol, a potent GABA-A agonist, with ibotenic acid: sedative-hypnotic, and deliriant at higher doses (PMID 6130573, 37824402). Users report taking it for insomnia and name drowsiness as a common effect (PMID 37112610); no clinical studies (PMID 40057818).',
     safe_pregnancy: false,
     status:
       'EDUCATIONAL AND TAXONOMIC ENTRY ONLY — NOT FOR THERAPEUTIC FORMULATION. Pharmacological archetype: GABA-A agonist (muscimol) plus NMDA/mGluR agonist (ibotenic acid). Mixed excitatory-depressive toxidrome. Fatalities documented. No approved clinical indications. Rising commercial products creating public health emergency. Hard block for all internal use recommendations.',
     // ── Quiz-matcher + composer-quality enrichment ──
     nervous_system_fit: ['reactive', 'wired'],
     energy_pattern: ['restorative_only'],
-    sleep_action: ['onset', 'dream_soften'],
+    sleep_action: ['onset', 'dream_vivid'],  // vivid dreams: traditional and user reports, Robin 2026-09-29; no study
     regional_affinity: ['head', 'whole'],
     onset_time: 'immediate',
     family: 'Amanitaceae',
@@ -10257,6 +10283,22 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade: 'traditional',
+    references: [
+      'DeFeudis FV. Muscimol and GABA-receptors: basic studies and therapeutic implications. Rev Pure Appl Pharmacol Sci. 1982. PMID 6130573',
+      'Okhovat A, Cruces W, Docampo-Palacios ML, et al. Psychoactive Isoxazoles, Muscimol, and Isoxazole Derivatives from the Amanita (Agaricomycetes) Species: Review of New Trends in Synthesis, Dosage, and Biological Properties. Int J Med Mushrooms. 2023. PMID 37824402',
+      'Ordak M, Galazka A, Nasierowski T, et al. Reasons, Form of Ingestion and Side Effects Associated with Consumption of Amanita muscaria. Toxics. 2023. PMID 37112610',
+      'Hartwig J, Kendrick J, Ahmad G, et al. Exploring User Experiences with Amanita muscaria: A Thematic Analysis of Reddit Online Forum Discussions. Subst Use Misuse. 2025. PMID 40057818',
+      'Maung AC, Hennessey M, Kadiyala R. Accidental colourful mushroom poisoning - delirium, delusions and dreams. Clin Med (Lond). 2023. PMID 37524419',
+      'Saar M. Ethnomyocological data from Siberia and North-East Asia on the effect of Amanita muscaria. J Ethnopharmacol. 1991. PMID 2023425',
+      'Vendramin A, Brvar M. Amanita muscaria and Amanita pantherina poisoning: two syndromes. Toxicon. 2014. PMID 25173077',
+      'Feeney K, Kababick J, Wise S. An Examination of Cholinergic Symptoms Produced by the Fly Agaric Mushroom Amanita muscaria (Agaricomycetes): Revisiting the Role of Muscarine. Int J Med Mushrooms. 2025. PMID 40228215',
+      'Stoeva-Grigorova S, Yarabanova I, Radeva-Ilieva M, et al. Acute Amanita muscaria Toxicity: A Literature Review and Two Case Reports in Elderly Spouses Following Home Preparation. Toxins (Basel). 2025. PMID 41441606',
+      'Meisel EM, Morgan B, Schwartz M, et al. Two Cases of Severe Amanita Muscaria Poisoning Including a Fatality. Wilderness Environ Med. 2022. PMID 36210279',
+      'Günther A, Bednarczyk-Cwynar B, Tomczyk M. Ibotenic Acid and Muscimol in Amanita muscaria: Chemistry, Sources of Variability, Analytical Determination, and Toxicological Significance. Molecules. 2026. PMID 42796518',
+      'Correia MS, Gonzaga MJ, Temple C, et al. Quantitative analysis of recreational psychoactive mushroom gummies in Portland, Oregon. Clin Toxicol (Phila). 2025. PMID 39977248',
+      'Leas EC, Satybaldiyeva N, Kepner W, et al. Need for a Public Health Response to the Unregulated Sales of Amanita muscaria Mushrooms. Am J Prev Med. 2024. PMID 38864780',
+      'Ordak M. Amanita muscaria in the evolving novel psychoactive substances landscape - toxicological risks and clinical implications: a narrative review. Front Pharmacol. 2026. PMID 42272832',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -10312,13 +10354,15 @@ const HERBS = [
       'DATABASE ENTRY IS EDUCATIONAL AND TAXONOMIC ONLY. Absolutely do not include in any therapeutic formulation. More dangerous than A. muscaria due to higher and more variable alkaloid content. Misidentification with A. muscaria is a serious risk. Commercial products claiming to contain Amanita species may contain A. pantherina — this is an emerging public health hazard.',
     caution_level: 'VERY HIGH',
     cns_action: 'sedative',
-    cns_evidence: 'The same isoxazoles as Amanita muscaria. Poisoning presents with CNS depression, ataxia and hallucinations (case report and review PMID 16564061).',
+    cns_evidence: 'The same isoxazoles as Amanita muscaria. Poisoning presents with CNS depression, ataxia and hallucinations (case report and review PMID 16564061); more often coma than A. muscaria (5/17 vs 2/32, PMID 25173077); coma with confirmed epileptiform EEG activity (PMID 39662530) and prolonged convulsions (PMID 38131173) reported.',
     safe_pregnancy: false,
     status:
       'EDUCATIONAL AND TAXONOMIC ENTRY ONLY — NOT FOR THERAPEUTIC FORMULATION. Poisonous mushroom. Higher alkaloid concentration than A. muscaria = narrower safety margin = more frequent severe poisonings. Fatal cases documented. Absolutely no therapeutic use. Hard block all recommendations.',
     // ── Quiz-matcher + composer-quality enrichment ──
-    // toxic, educational entry (gated) — NOT for formulation; descriptive tags only, no fit tags on purpose
+    // toxic, educational entry (gated) — NOT for formulation; descriptive tags only, no fit tags on purpose —
+    // except the dream tag (Robin, 2026-09-29, same isoxazoles as A. muscaria), so a restless sleeper never gets it
     energy_pattern: ['acute_only'],
+    sleep_action: ['dream_vivid'],
     regional_affinity: ['head'],
     onset_time: 'hours',
     family: 'Amanitaceae',
@@ -10329,6 +10373,12 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade: 'C',
+    references: [
+      'Satora L, Pach D, Ciszowski K, et al. Panther cap Amanita pantherina poisoning case report and review. Toxicon. 2006. PMID 16564061',
+      'Vendramin A, Brvar M. Amanita muscaria and Amanita pantherina poisoning: two syndromes. Toxicon. 2014. PMID 25173077',
+      'Cirronis M, Giampreti A, Eleftheriou G, et al. Coma and confirmed epileptiform activity induced by Amanita pantherina poisoning. Toxicon. 2025. PMID 39662530',
+      'Handl L, Nováček M, Šín R, et al. Loss of Consciousness and Prolonged Convulsions Due to Amanita Pantherina Intoxication. Neuro Endocrinol Lett. 2023. PMID 38131173',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -13064,7 +13114,7 @@ const HERBS = [
   // ── Quiz-matcher + composer-quality enrichment ──
   nervous_system_fit: ['reactive', 'wired'],
   energy_pattern: ['pm_stabilise'],
-  sleep_action: ['dream_soften'],
+  sleep_action: ['dream_vivid'],
   regional_affinity: ['head'],
   onset_time: 'hours',
   family: 'Caryophyllaceae',
@@ -16952,6 +17002,7 @@ const HERBS = [
   // nervous_system_fit left unset: the epilepsy and bradycardia contraindications
   // make every typology that reads as a fit also a profile this can destabilise.
   energy_pattern: ['am_boost'],
+  sleep_action: ['dream_vivid'],  // record: enhances REM sleep and lucid dreaming
   digestion_fit: ['cooling'],
   regional_affinity: ['head'],
   onset_time: 'immediate',

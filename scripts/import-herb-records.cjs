@@ -73,7 +73,7 @@ const UNIONS = {
   caution_level:      ['LOW', 'LOW-MEDIUM', 'MEDIUM', 'MEDIUM-HIGH', 'HIGH', 'VERY HIGH'],
   nervous_system_fit: ['wired', 'tired', 'wired_tired', 'steady', 'reactive', 'flat'],
   energy_pattern:     ['am_boost', 'sustained', 'pm_stabilise', 'restorative_only', 'acute_only', 'crash_repair'],
-  sleep_action:       ['onset', 'maintenance', 'early_wake', 'restoration', 'dream_soften'],
+  sleep_action:       ['onset', 'maintenance', 'early_wake', 'restoration', 'dream_soften', 'dream_vivid'],
   digestion_fit:      ['warming', 'cooling', 'moving', 'astringent', 'demulcent', 'bitter', 'carminative'],
   regional_affinity:  ['head', 'chest', 'heart', 'solar_plexus', 'gut', 'liver', 'kidneys', 'pelvis', 'joints', 'skin', 'whole'],
   onset_time:         ['immediate', 'hours', 'days', 'weeks', 'months'],

@@ -35,10 +35,12 @@ const MYCO_TIMEOUT_MS = 25000;
 
 // What each herb's record says it suits (herbs.ts), in plain words, so
 // MYCO can match it to the person's answers (Robin, 2026-09-29: "every
-// answer counts"). `dream_soften` is shown as "acts on dreams": it is
-// recorded on dream-deepening herbs as well as calming ones.
+// answer counts"). Dreams are two tags since 2026-09-29: dream_soften
+// calms dreaming, dream_vivid deepens it (Mugwort, Blue Lotus, Calea…) —
+// and the engine keeps dream_vivid herbs out of a restless sleeper's
+// shortlist altogether (note-safety.js detectRestlessSleep).
 const FIT_WORDS = {
-  sleep_action:       { onset: 'falling asleep', maintenance: 'staying asleep', restoration: 'deeper rest', dream_soften: 'acts on dreams' },
+  sleep_action:       { onset: 'falling asleep', maintenance: 'staying asleep', restoration: 'deeper rest', dream_soften: 'calms dreaming', dream_vivid: 'deepens dreams' },
   energy_pattern:     { am_boost: 'morning lift', sustained: 'steady energy', pm_stabilise: 'steadies the afternoon', crash_repair: 'recovery after crashes', restorative_only: 'restores, no lift', acute_only: 'for acute use' },
   nervous_system_fit: { wired: 'wired', tired: 'tired', wired_tired: 'wired + tired', reactive: 'reactive', flat: 'flat' },
 };
@@ -178,7 +180,7 @@ const COMPOSE_SYS =
   '    · AMANITA — max 1 AMANITA-marked herb (the house keeps it at 10% or less), and never beside St John\'s Wort.\n' +
   '- Do NOT diagnose. Do NOT prescribe. Traditional herbal support only, not medical treatment.\n' +
   '- Reference the free-text explicitly if it names a priority, prior herb experience, or contraindication history.\n' +
-  '- EVERY ANSWER COUNTS. Weigh each one, not only the intention: the body pattern, when the day is hardest, how they meet stress, how long it has lasted, their age, their sleep, how their energy feels (nervous system) and how it moves through the day. Under each shortlisted herb is what its record says it suits (nervous system, energy, sleep, onset): match those to the answers — a wired or reactive person needs herbs that suit "wired"/"reactive", someone who wakes in the night needs "staying asleep" rather than "falling asleep", an afternoon crash needs "steadies the afternoon". Herbs marked "acts on dreams" do not suit vivid, restless dreaming unless the record also shows them calming.\n' +
+  '- EVERY ANSWER COUNTS. Weigh each one, not only the intention: the body pattern, when the day is hardest, how they meet stress, how long it has lasted, their age, their sleep, how their energy feels (nervous system) and how it moves through the day. Under each shortlisted herb is what its record says it suits (nervous system, energy, sleep, onset): match those to the answers — a wired or reactive person needs herbs that suit "wired"/"reactive", someone who wakes in the night needs "staying asleep" rather than "falling asleep", an afternoon crash needs "steadies the afternoon". Herbs marked "deepens dreams" never suit restless, broken or vivid-dream sleep, or a note about nightmares.\n' +
   '- WHAT THE PERSON DOES NOT WANT: if the note refuses a herb, a kind of herb or an effect — "no caffeine", "nothing sedating", "I don\'t want anything that makes me drowsy", "no mushrooms", "not valerian", "ohne Koffein" — pick none of the shortlist herbs it rules out, and put the id of EVERY shortlist herb it rules out in "noteAvoid", whether or not you would have picked it. A refusal is not a need: "I can\'t sleep" asks for sleep support; "I don\'t want anything for sleep" refuses it. Read past and present too: "I used to take ashwagandha and it made me anxious" refuses ashwagandha. When unsure whether a herb is ruled out, rule it out.\n' +
   '- Never pick both herbs of a pair listed under "Never together".\n' +
   '- Pairs under "Cautions between shortlisted herbs" are known concerns: prefer not to pick both; if you do, that herb\'s reason must say why the pair still fits this person.\n' +

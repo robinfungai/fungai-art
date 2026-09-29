@@ -53,8 +53,14 @@ module.exports = {
   // 2.8.2 — laxative and trace class are read from the herb record
   //         (herbs.ts `laxative`, `trace_class`), not a word search and a
   //         name list — same herbs, same bottles (external audit #26).
-  engineVersion:      '2.8.2-server',
-  herbDbVersion:      '2026.09-247herbs',
+  // 2.9.0 — restless sleepers (answers "vivid, restless dreams", "very
+  //         broken sleep", "wakes in the night", or a note about
+  //         nightmares) get no dream-deepening herb (Robin, 2026-09-29:
+  //         Mugwort, Blue Lotus, Calea…); records split dream_soften /
+  //         dream_vivid. Herb names in the note are read by herb-names.js
+  //         (typos, plurals, spacing, genus, German, curly apostrophes).
+  engineVersion:      '2.9.0-server',
+  herbDbVersion:      '2026.09.29-247herbs',
   // 1.1.0 — unknown pregnancy safety = avoid; under-18s: no HIGH-caution,
   //         psychoactive, or above-LOW calming herbs (2026-09-27).
   // 1.2.0 — pro quiz: 'trying to conceive' = the pregnancy rule;
@@ -68,5 +74,9 @@ module.exports = {
   //         "valerian made me groggy") is excluded (2026-09-28).
   // 1.4.1 — the autoimmune flag reads "MS" in capitals only; 26 herbs
   //         were flagged through "symptoms", "forms" (2026-09-29).
-  safetyRulesVersion: '1.4.1',
+  // 1.5.0 — the note's refusals are read waterproof (herb-names.js: 25 of
+  //         28 ordinary notes used to slip through, "I don’t want
+  //         valerian" among them); "no dream herbs" refuses the
+  //         dream-deepening herbs (2026-09-29).
+  safetyRulesVersion: '1.5.0',
 };

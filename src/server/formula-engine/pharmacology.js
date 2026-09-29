@@ -121,6 +121,23 @@ function laxativeInProse(h) {
   const t = (h.energetics || []).join(' ') + ' ' + (h.primary_functions || []).slice(0, 2).join(' ');
   return /laxativ|purgativ|cathartic/i.test(t);
 }
+// Dream-deepening herbs (oneirogens: Mugwort, Blue Lotus, Calea…) —
+// recorded as sleep_action 'dream_vivid' (2026-09-29). Robin: they "should
+// not be matched when people are already having restless sleep"; the
+// engine keeps them out of the pool for those answers (note-safety.js
+// detectRestlessSleep). The prose search exists only so
+// tests/herb-names-verify.cjs fails when a record's text claims it and
+// the tag is missing.
+function isDreamDeepening(h) {
+  return !!h && Array.isArray(h.sleep_action) && h.sleep_action.includes('dream_vivid');
+}
+const DREAM_DEEPENING_PROSE = /oneirogen|lucid dream|dream[- ]?(?:enhanc|induc|open|deepen)|vivid(?:,)? (?:\w+ )?dream|dream (?:vivid|lucid|recall)|REM (?:density|access)|enhances REM/i;
+function dreamDeepeningInProse(h) {
+  if (!h) return false;
+  const own = Object.entries(h).filter(([k]) => !/sleep_action|synerg|pair|combin|interact/i.test(k));
+  return DREAM_DEEPENING_PROSE.test(JSON.stringify(own));
+}
+
 // Engine 2.4 tightened it: "digestion" as a goal usually means bloating
 // or indigestion, and the goal alone had put Senna AND Buckthorn in one
 // bottle. A laxative now needs digestion or detox as a goal AND the
@@ -191,5 +208,6 @@ module.exports = {
   cnsAction, isGABAergic, isCNSStimulant, guessGABAergic, guessCNSStimulant,
   fitsTimeOfUse, isStrongStimulant,
   isSerotonergic, MAX_SEROTONERGIC, isLaxative, laxativeInProse, fitsGoal, MAX_LAXATIVE,
+  isDreamDeepening, dreamDeepeningInProse,
   categoryOf, isFungus, FUNGAL_FAMILIES, isAmanita, isStJohnsWort,
 };

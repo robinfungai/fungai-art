@@ -31,8 +31,8 @@ module.exports = {
     rationale: "Engine 2.5 (2026-09-28, external audit decisions D1–D4): no herb above 40% of the bottle, percentages rounded by largest remainder; evidence grade worth 0 to +2 points; safety flags no longer add a herb; one strict fill walk; a medicine or pregnancy named in the note applies its safety flag. On top of 2.4 (recorded goals scored by position, pro answers, laxatives only for reported constipation).",
   },
   '06-medication-cardio': {
-    herbs: "103:Ashwagandha@20|271:Oatstraw@18|288:Valerian@14|419:African Dream Root@14|316:Fu Ling@14|132:Calea Zacatachichi@10|508:Dashmool@10",
-    rationale: "Engine 2.5 (2026-09-28, external audit decisions D1–D4): no herb above 40% of the bottle, percentages rounded by largest remainder; evidence grade worth 0 to +2 points; safety flags no longer add a herb; one strict fill walk; a medicine or pregnancy named in the note applies its safety flag. On top of 2.4 (recorded goals scored by position, pro answers, laxatives only for reported constipation).",
+    herbs: "103:Ashwagandha@22|271:Oatstraw@19|288:Valerian@15|316:Fu Ling@14|300:Red Dates@14|508:Dashmool@10|212:Burdock@6",
+    rationale: "Engine 2.9.0 (Robin, 2026-09-29): a restless sleeper (here: very broken sleep) gets no dream-deepening herb — African Dream Root, Calea and (tagged dream_vivid on Robin's word, same isoxazoles as A. muscaria) Amanita Pantherina leave; Red Dates and Burdock take the seats. On top of engine 2.8.2 / safety 1.5.0.",
   },
   '07-pregnancy': {
     herbs: "128:Chamomile@27|252:Lemon Balm@25|271:Oatstraw@25|287:Vanilla@18|268:Mullein@5",
@@ -48,15 +48,15 @@ module.exports = {
   },
   '10-lifelong-chronic': {
     herbs: "323:Reishi@16|574:Dan Shen Root Extract@15|103:Ashwagandha@14|279:Schisandra (Five-Flavour Fruit)@14|286:Turmeric@14|220:Devil's Claw@14|596:California Poppy@13",
-    rationale: "Catalogue 247 (2026-09-29): Birch Buds (595) and California Poppy (596) added everywhere, and now compete for seats. On top of engine 2.7.0 / safety 1.4.1.",
+    rationale: "Engine 2.9.0 (Robin, 2026-09-29): a restless sleeper (here: very broken sleep) gets no dream-deepening herb — tested and unchanged: Schisandra was checked on PubMed and recorded as calming dream-disturbed sleep (TCM), not deepening dreams, so it stays. On top of engine 2.8.2 / safety 1.5.0.",
   },
   '11-trace-heavy': {
     herbs: "285:Tremella@22|241:Goji Berry@21|225:Chickweed@20|548:Astaxanthin@19|589:He Shou Wu / Fo-Ti@18",
     rationale: "Engine 2.5 (2026-09-28, external audit decisions D1–D4): no herb above 40% of the bottle, percentages rounded by largest remainder; evidence grade worth 0 to +2 points; safety flags no longer add a herb; one strict fill walk; a medicine or pregnancy named in the note applies its safety flag. On top of 2.4 (recorded goals scored by position, pro answers, laxatives only for reported constipation).",
   },
   '12-gaba-load': {
-    herbs: "273:Passionflower@21|281:Skullcap@21|311:Amanita Muscaria@10|252:Lemon Balm@17|103:Ashwagandha@17|323:Reishi@14",
-    rationale: "Engine 2.7.0 (Robin, 2026-09-29, third audit H2): an Amanita takes at most 10% of the bottle and never sits beside St John's Wort; a small-share herb (trace or Amanita) seats only where three full-share herbs remain. On top of 2.6.1 / safety 1.4.1.",
+    herbs: "273:Passionflower@21|281:Skullcap@21|252:Lemon Balm@17|103:Ashwagandha@17|323:Reishi@14|254:Jasmine@10",
+    rationale: "Engine 2.9.0 (Robin, 2026-09-29): a restless sleeper (here: very broken sleep) gets no dream-deepening herb — Amanita Muscaria (tagged dream_vivid, Robin to confirm) leaves, Jasmine takes the seat. On top of engine 2.8.2 / safety 1.5.0.",
   },
   '13-stim-load': {
     herbs: "240:Ginseng@22|280:Shilajit (Mineral Pitch)@22|109:Guarana@21|241:Goji Berry@19|589:He Shou Wu / Fo-Ti@16",

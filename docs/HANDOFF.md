@@ -80,6 +80,114 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ---
 
+## 0.18 · 2026-09-29 (last) — the note's naming system, restless sleepers (engine 2.9.0, safety 1.5.0)
+
+Committed on `main`, **not pushed** (goes out with the 1 October push; §0.17 still holds).
+
+**The naming system for the free-text note — `src/server/formula-engine/herb-names.js`.**
+Before: 25 of 28 ordinary notes slipped through the refusal reader. Worst: every
+iPhone curls the apostrophe, so "I don’t want valerian" / "I can’t take
+ashwagandha" refused nothing; "no licorice" (record: *Licorice Root*), "no
+dandelion", "no nettles", "no tumeric", "gingko", "camomile", "passion flower",
+"St Johns wart", "hypericum", "Baldrian vertrage ich nicht", "leave the kava out"
+all missed. Now: note and names folded the same way (case, umlauts, accents,
+curly quotes, apostrophes, dots, invisible characters); spacing ignored; a herb
+answers to its name, its parts, its name without the plant part, aliases,
+binomial, **genus** ("artemisia" → Mugwort + Wormwood), the last word of its
+name ("pepper" → every pepper; the longest name wins, so "black pepper" is only
+Black Pepper Extract), German names (≈140 now) and `EXTRA_NAMES` (liquorice, SJW,
+triphala, celery → Ajwan, berberine…); plurals; one slip in 6–7 letters, two in
+8+ (first letter must match). The refusal reader in `note-safety.js` also learned
+lists ("no valerian, kava, passionflower, hops or skullcap"), "won't take",
+"don't put … in", "leave X out", "X is a no-go", "X upsets my stomach", German
+word order ("Baldrian vertrage ich nicht", "lass den Baldrian weg"), and a
+complaint names its subject, not a herb praised earlier in the sentence.
+Fuzzy is safe here only because a match can only take a herb OUT (fails closed);
+ordinary words one slip from a herb ("grounding", "chills", "potential",
+"parasites", "medical", "barely") are guarded (`NEVER_FUZZY`, found by scanning
+the 13,000 words of the herb records, quiz pages and docs).
+`npm run test:herb-names` (new) — every herb by its own name and with a slip,
+the table above, the must-not-refuse table. **Herbs-everywhere checklist:**
+German names now live in `GERMAN_NAMES` in **herb-names.js** (moved from
+note-safety.js), other names in `EXTRA_NAMES` beside it.
+
+**Restless sleepers get no dream-deepening herb (Robin).** `dream_soften` was on
+dream-DEEPENING herbs. Split: `dream_soften` stays on Rose Petals + Reishi only;
+new `dream_vivid` on Blue Lotus, Bobinsana, Calea, Mugwort, African Dream Root,
+Guayusa, Mucuna, Schisandra, Toothed Clubmoss (each record's own text says it
+deepens / vivifies dreams — `test:herb-names` fails if a record says so and
+lacks the tag) **plus Wild Dagga and Amanita Muscaria** (tagged, no sentence
+says so — see below). They leave the pool — not a score — for the sleep answers
+*vivid, restless dreams* · *very broken sleep* · *wakes in the night*, or a note
+saying "nightmares", "bad dreams", "restless sleep", "Albträume". Deterministic
+bottle, MYCO's shortlist and the fallback alike (tested with a stand-in MYCO that
+pushes Mugwort in). The reveal mentions it only when the NOTE said it. "No dream
+herbs" / "nothing that gives vivid dreams" is now a refusable effect. MYCO sees
+"deepens dreams" / "calms dreaming" instead of "acts on dreams". Fixtures 06, 10,
+12 (all *very broken sleep*) re-pinned: African Dream Root, Calea, Schisandra,
+Amanita Muscaria left their bottles.
+
+### Decided by Robin (29 Sep) and done
+1. **Restless = all three answers** (vivid-restless, very broken, wakes in the night).
+2. **Wild Dagga and the Amanitas are dream_vivid** (Muscaria and Pantherina — same
+   isoxazoles). Cards upgraded from PubMed (every PMID and author line generated from
+   PubMed's own record, 29 Sep):
+   - **Wild Dagga:** the "leonurine" on its card was an internet myth — never found
+     in *Leonotis leonurus* (review PMID 26292023; HPLC found none, PMID 23346757).
+     Real chemistry: labdane diterpenes, marrubiin chief. Anticonvulsant in mice and
+     (smoke diterpenoids) zebrafish; anti-inflammatory, hypoglycaemic in rodents.
+     **Rat toxicity with chronic oral dosing** (blood, kidney, liver markers from
+     200 mg/kg; deaths at 3200) — so "safe indefinite daily use / non-addictive / no
+     tolerance" is gone; liver or kidney disease now AVOID. 9 references.
+   - **Amanita Muscaria:** user survey 2023 (n=684: men take it for stress, low mood,
+     insomnia; side effects nausea, vomiting, drowsiness), Reddit analysis 2025 (more
+     positive than adverse, **no clinical studies exist**), a fatality case, cholinergic
+     cases needing atropine, content variability, gummies sold as Amanita holding **no
+     muscimol but psilocin**, two syndromes vs Pantherina. 14 references.
+   - **Amanita Pantherina:** more coma than Muscaria (5/17 vs 2/32), EEG-confirmed
+     epileptiform activity, prolonged convulsions. 4 references.
+   - No study anywhere measures dreams for any of the three — the tag is Robin's call.
+3. **Schisandra — TCM is right.** No PubMed support for "dream vividness"; its lignans
+   are sedative-hypnotic in rodents (schizandrin, schisandrin B; NREM regulation in an
+   insomnia model), TCM uses it for dream-disturbed sleep → `onset, maintenance,
+   dream_soften`, back in restless sleepers' bottles. **Its drug interaction was
+   written backwards**: the card said the lignans *induce* CYP450 so drug levels
+   fall; in people they **inhibit CYP3A** — midazolam exposure +119% in volunteers
+   (PMID 19552749), tacrolimus levels raised (meta-analysis PMID 38150711). Fixed.
+   Its `cns_action` stays `activating` (mixed profile) — changing it would move many
+   bottles; Robin's call if wanted.
+4. Parked branch `engine-recorded-fits`: see below.
+
+### ⚠ Robin to decide — the Amanita cards contradict the engine
+Both Amanita cards say **"EDUCATIONAL AND TAXONOMIC ENTRY ONLY — ABSOLUTE BLOCK FOR
+ALL INTERNAL USE"** (Pantherina: "ALL populations … without exception"), yet the
+engine seats them for gated opt-in bottles (≤10%, one per bottle, never with St
+John's Wort). Before this session Panther Cap sat at 8% in fixture 06 (a cardio-meds
+profile). Either the cards are rewritten for the product Robin sells, or Pantherina
+(at least) leaves customer bottles — pro-only like Ephedra, or restricted. The cards'
+safety wording was NOT softened.
+
+### Coming up (external audit, noted 29 Sep — not started)
+- **D7, not closed:** Formula Maker no longer loads `/herbs-data.js`, but the file
+  is still public for /mixology and /extraction, and the GitHub repo is public.
+  System-wide task: serve those two pages what they need from the server (or a
+  trimmed file), and make the repo private (Robin).
+- **D10, wording:** the five-stage wait animates while the formula is already
+  computed. Fine as metaphor; the stage labels must not claim "this is the order
+  the engine found your herbs" (the truthful labels in §0.16 ¶2 already avoid it
+  — keep it that way when the botanical art goes in).
+- **D8, fail visibly:** budget exhausted → deterministic fallback (fine);
+  budget table unreachable → today also fallback + console log only. Make it an
+  ops alert (a row the Admin page shows, or an email), and in production
+  consider MYCO off until someone clears it.
+- **Observability:** the formula already carries engineVersion, herbDbVersion,
+  safetyRulesVersion, capturedAt, mycoUsed, mycoFallbackReason,
+  mycoNarrativeAction. Add `formulaRulesVersion` (rules.js + pair-rules.js),
+  `displayVersion` (display.js copy) and, once D9 is formal,
+  `claimsPolicyVersion`.
+
+---
+
 ## 0.17 · START HERE — push on 1 October, then the SQL
 
 **State on 2026-09-29 (late night):** engine **2.7.2**, safety rules 1.4.1.

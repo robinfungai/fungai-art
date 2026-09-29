@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-28T23:31:40.713Z",
+  "generatedAt": "2026-09-29T18:40:51.923Z",
   "counts": {
     "botanicals": 247,
-    "rules": 2457,
+    "rules": 2458,
     "byType": {
-      "contraindication": 1195,
+      "contraindication": 1196,
       "drug_interaction": 672,
       "herb_interaction": 349,
       "record": 241
     },
     "bySeverity": {
       "unspecified": 1098,
-      "caution": 335,
-      "monitor": 371,
-      "avoid": 524,
+      "caution": 336,
+      "monitor": 369,
+      "avoid": 526,
       "absolute": 129
     }
   },
@@ -431,11 +431,8 @@
       "psych_meds"
     ],
     "279": [
-      "autoimmune",
-      "cardio_meds",
-      "contraceptive",
       "pregnancy",
-      "psych_meds"
+      "sedatives"
     ],
     "280": [
       "cardio_meds",
@@ -1546,11 +1543,8 @@
       "psych_meds"
     ],
     "279": [
-      "autoimmune",
-      "cardio_meds",
-      "contraceptive",
       "pregnancy",
-      "psych_meds"
+      "sedatives"
     ],
     "280": [
       "cardio_meds",
@@ -14349,14 +14343,11 @@
       "botanicalId": 279,
       "botanical": "Schisandra (Five-Flavour Fruit)",
       "ruleType": "contraindication",
-      "subject": "CYP450-metabolised medications",
+      "subject": "CYP3A-metabolised medications",
       "severity": "caution",
-      "reason": "CRITICAL INTERACTION: lignans induce CYP450 enzymes; PRESCRIBER CONSULTATION MANDATORY; medications at risk: statins, anticonvulsants, SSRIs, oral contraceptives, HRT, Warfarin, immunosuppressants (tacrolimus, cyclosporine — transplant rejection risk), and many others",
+      "reason": "CRITICAL INTERACTION: lignans INHIBIT CYP3A in people (midazolam exposure roughly doubled, PMID 19552749; tacrolimus levels raised, PMID 38150711); PRESCRIBER CONSULTATION MANDATORY; medications at risk: tacrolimus, cyclosporine, midazolam and other benzodiazepines, many statins, calcium-channel blockers, and others cleared by CYP3A",
       "flags": [
-        "cardio_meds",
-        "psych_meds",
-        "autoimmune",
-        "contraceptive"
+        "sedatives"
       ],
       "source": "herbs.ts · contraindications"
     },
@@ -14413,14 +14404,11 @@
       "botanicalId": 279,
       "botanical": "Schisandra (Five-Flavour Fruit)",
       "ruleType": "drug_interaction",
-      "subject": "CYP450 enzyme substrates",
+      "subject": "CYP3A substrates",
       "severity": "caution",
-      "reason": "CRITICAL: prescriber consultation mandatory before combining; statins (levels may decrease), anticonvulsants (efficacy may decrease), SSRIs (efficacy may decrease), oral contraceptives (efficacy may decrease — backup contraception), HRT (efficacy may decrease), Warfarin (INR may decrease), immunosuppressants (TRANSPLANT REJECTION RISK — absolutely consult)",
+      "reason": "CRITICAL: prescriber consultation mandatory before combining; levels can RISE: midazolam (AUC +119% in volunteers, PMID 19552749) and other benzodiazepines (more sedation), statins, calcium-channel blockers",
       "flags": [
-        "cardio_meds",
-        "psych_meds",
-        "autoimmune",
-        "contraceptive"
+        "sedatives"
       ],
       "source": "herbs.ts · herb_to_drug_interactions"
     },
@@ -14429,12 +14417,10 @@
       "botanicalId": 279,
       "botanical": "Schisandra (Five-Flavour Fruit)",
       "ruleType": "drug_interaction",
-      "subject": "Immunosuppressants",
+      "subject": "Tacrolimus and cyclosporine",
       "severity": "caution",
-      "reason": "particularly high risk; transplant patients: ABSOLUTELY CONSULT SPECIALIST",
-      "flags": [
-        "autoimmune"
-      ],
+      "reason": "blood levels RISE (meta-analysis PMID 38150711); transplant patients: ABSOLUTELY CONSULT SPECIALIST, never self-add",
+      "flags": [],
       "source": "herbs.ts · herb_to_drug_interactions"
     },
     {
@@ -16383,14 +16369,25 @@
       "botanicalId": 291,
       "botanical": "Wild Dagga",
       "ruleType": "contraindication",
-      "subject": "Liver disease",
-      "severity": "monitor",
-      "reason": "MONITOR: alkaloids metabolised hepatically; monitor liver function; consult provider",
+      "subject": "Liver or kidney disease",
+      "severity": "avoid",
+      "reason": "AVOID: long-term oral extract changed kidney, liver and blood values in rats (PMID 19244291, 20194574)",
       "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
       "id": "safety:291:contraindication:4",
+      "botanicalId": 291,
+      "botanical": "Wild Dagga",
+      "ruleType": "contraindication",
+      "subject": "Epilepsy medication",
+      "severity": "caution",
+      "reason": "CAUTION: anticonvulsant in animals; additive with antiepileptics is possible; never a replacement for them",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:291:contraindication:5",
       "botanicalId": 291,
       "botanical": "Wild Dagga",
       "ruleType": "contraindication",
@@ -16403,13 +16400,13 @@
       "source": "herbs.ts · contraindications"
     },
     {
-      "id": "safety:291:contraindication:5",
+      "id": "safety:291:contraindication:6",
       "botanicalId": 291,
       "botanical": "Wild Dagga",
       "ruleType": "contraindication",
-      "subject": "Otherwise: generally safe with awareness",
+      "subject": "Long daily use",
       "severity": "unspecified",
-      "reason": "non-addictive; non-intoxicating; centuries traditional use",
+      "reason": "no human safety data; rat studies saw blood and organ-marker changes with chronic dosing; use in courses, not indefinitely",
       "flags": [],
       "source": "herbs.ts · contraindications"
     },
@@ -16431,9 +16428,9 @@
       "botanicalId": 291,
       "botanical": "Wild Dagga",
       "ruleType": "drug_interaction",
-      "subject": "Hepatically metabolised drugs",
+      "subject": "Antiepileptic drugs",
       "severity": "monitor",
-      "reason": "alkaloid hepatic metabolism; theoretical interactions; monitor",
+      "reason": "anticonvulsant in animal models; possible additive effect; monitor",
       "flags": [],
       "source": "herbs.ts · herb_to_drug_interactions"
     },
@@ -16443,8 +16440,8 @@
       "botanical": "Wild Dagga",
       "ruleType": "herb_interaction",
       "subject": "Kava",
-      "severity": "monitor",
-      "reason": "both hepatically metabolised; monitor liver if combining; reduce doses",
+      "severity": "avoid",
+      "reason": "both are liver-relevant (rat data for Wild Dagga); avoid combining",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
     },

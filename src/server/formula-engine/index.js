@@ -19,7 +19,7 @@ const { pickFormula, noMatchCode, targetHerbCount, buildScoredCandidates, explai
 const { assignPercentages } = require('./percentages');
 const { checkFormulaPairs } = require('./interactions');
 const { validateAndNormalizeAvoid, countFilteredOut } = require('./safety');
-const { applyNoteSafety, detectNoteHerbAvoidance, detectNoteEffectAvoidance } = require('./note-safety');
+const { applyNoteSafety, detectNoteHerbAvoidance, detectNoteEffectAvoidance, detectRestlessSleep } = require('./note-safety');
 const { ensurePool } = require('./axes');
 const { isTrace } = require('./traces');
 const { isGABAergic, isCNSStimulant } = require('./pharmacology');
@@ -81,10 +81,19 @@ function prepareProfile(profile, extraAvoid = []) {
   const extra = (extraAvoid || []).filter(x => x && x.id != null && !herbsAvoided.some(h => String(h.id) === String(x.id)));
   const avoidIds = new Set([...herbsAvoided, ...extra].map(x => String(x.id)));
   for (const e of effectsAvoided) for (const id of e.ids) avoidIds.add(String(id));
+  // …and a restless sleeper gets no dream-deepening herb (Robin,
+  // 2026-09-29: Mugwort, Blue Lotus, Calea "should not be matched when
+  // people are already having restless sleep"). note-safety.js.
+  const restless = detectRestlessSleep(profile, pool);
+  if (restless) for (const id of restless.ids) avoidIds.add(String(id));
   // What the reveal lists: each named herb, each refused effect once.
-  noteSafety.herbsAvoided = herbsAvoided
-    .concat(effectsAvoided.map(e => ({ id: 'effect:' + e.effect, name: e.label, word: e.word })))
-    .concat(extra);
+  // Restless sleep only when the NOTE said it — an answer to the sleep
+  // question shapes the bottle like any other answer, unannounced.
+  const effectsListed = effectsAvoided.map(e => ({ id: 'effect:' + e.effect, name: e.label, word: e.word }));
+  if (restless && restless.word && !effectsAvoided.some(e => e.effect === 'dreaming')) {
+    effectsListed.push({ id: 'effect:dreaming', name: 'anything that deepens dreams', word: restless.word });
+  }
+  noteSafety.herbsAvoided = herbsAvoided.concat(effectsListed).concat(extra);
 
   // ── Round 2 · Item #0 · Age model normalisation ───────────────
   // The age question inside the quiz is the CANONICAL age input.
