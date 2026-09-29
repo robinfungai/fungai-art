@@ -40,3 +40,22 @@ yet — Robin approves each change first** (Robin, 29 Sep: "check with me before
 
 ## Claude's suggested order
 1. Independent invariant checks · 2. DB rate limit · 3. "other prescription medicine" + CYP tags (top 15) · 4. Adverse-event form + batch id · 5. Shipping-country gate · 6. Goals + recorded axes review for TOP-HERBS 1–50 (with Robin) · 7. Trace budget / HIGH cap / ×0.7 when Robin decides.
+
+---
+
+# Second audit of 29 Sep (F1–F8, Find-your-formula page) — verdicts
+
+Line numbers in the audit are from the page on GitHub main (older). Checked 29 Sep,
+night, against local `main` and — for F1 — the live database (anon key, ids only).
+**Nothing edited; each item waits for Robin's OK.**
+
+| # | Verdict | Proposal | Moves bottles? |
+|---|---|---|---|
+| F1 HIGH — health answers into the shared `formulas` table | **Not readable, but still being written.** Live DB: the base table is locked (anon: "permission denied"); the view members read (`formulas_public`) has no `quiz_snapshot`. Local code no longer writes it (Formula Book entry is written server-side without answers, since the 29 Sep audit #4). BUT the live site (GitHub main) still writes `quiz_snapshot` on every reservation until the 1 Oct push. | Push on 1 Oct, run `supabase-formulas-server-writes.sql`, and **do its step 3** (clear the stored `quiz_snapshot` copies — look at the count first). Nothing to code. | No |
+| F2 MEDIUM — percentage gate is cosmetic | **True.** `/api/fyf/compose` sends every herb's percentage; the page hides them until reserve. | A: compose omits percentages for consumer bottles; `reserve-formula` returns them on confirmation (it already has the stored formula). B: keep it and change the copy so it promises a reveal, not secrecy. Robin's call (marketing vs enforcement). | No |
+| F3 MEDIUM — city required | **True.** Page requires name, city, country; server only prints city in Robin's email. | Make city optional (shipping address comes at payment anyway) — or keep it deliberately and say why in the privacy page. | No |
+| F4 LOW — `'NETWORK' : 'NETWORK'` | **True** (both pages). | A `TIMEOUT` kind with its own line ("took longer than usual — try again"). | No |
+| F5 LOW — stuck-button guard compares button text | **True** (both pages). | A boolean `reserving` flag instead of the text. | No |
+| F6 LOW — reveal before confirm | **True, deliberate.** | Goes with F2: under A the reveal waits for the server's answer. | No |
+| F7 LOW — accretion | **Partly outdated:** the legacy reserve fields went on 29 Sep (−1,150 lines). Still two escapers (`_escapeHtml`, `escapeHtml`) and two `wait` helpers. | Merge each pair; comment clean-up with D9. Low value. | No |
+| F8 LOW — no maxlength | **True** (quiz note, reserve note). | `maxlength` = the server's caps. | No |
