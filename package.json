@@ -48,6 +48,7 @@
     "test:formula-analysis": "node tests/formula-analysis-verify.cjs",
     "test:note-refusals": "node tests/note-refusals-and-pairs-verify.cjs",
     "test:herb-classes": "node tests/herb-record-classes-verify.cjs",
+    "test:myco-every-answer": "node tests/myco-every-answer-verify.cjs",
     "report:ontology": "node scripts/ontology-report.cjs",
     "test:cns-classification": "node tests/cns-classification-verify.cjs",
     "test:herb-counts": "node scripts/sync-herb-counts.cjs --check",
