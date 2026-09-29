@@ -32,7 +32,7 @@ const path = require('path');
  *   sleep              — sleep quality/pattern (client currently 4 or 7 opts)
  *   notes              — free text
  *   _gatedOptIn        — 18+ + ceremonial opt-in from entry gate
- *   _ageConfirmed      — always true at reveal time (gate ticked)
+ *   _privacyConsentAcknowledged — always true at reveal time (consent gate ticked)
  *
  * Pro-only fields (carried through, not consumed by current engine):
  *   nervous, energy_curve, digestion, emotional, somatic (array),
@@ -52,7 +52,7 @@ const PROFILES = [
       time: 'evening', stress: 'push', duration: 'weeks',
       avoid: ['none'], age: '25_40', sleep: 'restorative_6plus',
       notes: '',
-      _gatedOptIn: false, _ageConfirmed: true,
+      _gatedOptIn: false, _privacyConsentAcknowledged: true,
     },
   },
 
@@ -69,7 +69,7 @@ const PROFILES = [
       time: 'evening', stress: 'collapse', duration: 'months',
       avoid: ['none'], age: '25_40', sleep: 'not_restorative_6plus',
       notes: '',
-      _gatedOptIn: false, _ageConfirmed: true,
+      _gatedOptIn: false, _privacyConsentAcknowledged: true,
     },
   },
 
@@ -86,7 +86,7 @@ const PROFILES = [
       time: 'midday', stress: 'off', duration: 'months',
       avoid: ['none'], age: '25_40', sleep: 'under_6',
       notes: 'Wired but exhausted, need afternoon focus AND sleep',
-      _gatedOptIn: false, _ageConfirmed: true,
+      _gatedOptIn: false, _privacyConsentAcknowledged: true,
     },
   },
 
@@ -104,7 +104,7 @@ const PROFILES = [
       avoid: ['pregnancy','cardio_meds','psych_meds','autoimmune','liver_kidney','thyroid','hypertension','contraceptive','sedatives','allergy'],
       age: '41_60', sleep: 'not_restorative_6plus',
       notes: '',
-      _gatedOptIn: false, _ageConfirmed: true,
+      _gatedOptIn: false, _privacyConsentAcknowledged: true,
     },
   },
 
@@ -121,7 +121,7 @@ const PROFILES = [
       time: 'morning', stress: 'numb', duration: 'year_plus',
       avoid: ['psych_meds'], age: '25_40', sleep: 'not_restorative_6plus',
       notes: 'On an SSRI for 3 years',
-      _gatedOptIn: false, _ageConfirmed: true,
+      _gatedOptIn: false, _privacyConsentAcknowledged: true,
     },
   },
 
@@ -138,7 +138,7 @@ const PROFILES = [
       time: 'evening', stress: 'push', duration: 'year_plus',
       avoid: ['cardio_meds', 'hypertension'], age: '60_plus', sleep: 'very_broken',
       notes: 'On a beta-blocker and low-dose aspirin',
-      _gatedOptIn: false, _ageConfirmed: true,
+      _gatedOptIn: false, _privacyConsentAcknowledged: true,
     },
   },
 
@@ -155,7 +155,7 @@ const PROFILES = [
       time: 'night', stress: 'ride', duration: 'weeks',
       avoid: ['pregnancy'], age: '25_40', sleep: 'not_restorative_6plus',
       notes: 'Second trimester, gentle only',
-      _gatedOptIn: false, _ageConfirmed: true,
+      _gatedOptIn: false, _privacyConsentAcknowledged: true,
     },
   },
 
@@ -172,7 +172,7 @@ const PROFILES = [
       time: 'morning', stress: 'push', duration: 'year_plus',
       avoid: ['thyroid'], age: '41_60', sleep: 'restorative_6plus',
       notes: 'On levothyroxine for Hashimoto\'s',
-      _gatedOptIn: false, _ageConfirmed: true,
+      _gatedOptIn: false, _privacyConsentAcknowledged: true,
     },
   },
 
@@ -189,7 +189,7 @@ const PROFILES = [
       time: 'midday', stress: 'off', duration: 'year_plus',
       avoid: ['liver_kidney'], age: '41_60', sleep: 'not_restorative_6plus',
       notes: 'Elevated liver enzymes after a year of chronic stress',
-      _gatedOptIn: false, _ageConfirmed: true,
+      _gatedOptIn: false, _privacyConsentAcknowledged: true,
     },
   },
 
@@ -206,7 +206,7 @@ const PROFILES = [
       time: 'any', stress: 'push', duration: 'lifelong',
       avoid: ['none'], age: '41_60', sleep: 'very_broken',
       notes: 'Chronic pain for 15 years, fibro-adjacent, sleep interrupts nightly, stress is the trigger. Prior herb trial: turmeric helped modestly, ashwagandha was OK but flattening at high doses.',
-      _gatedOptIn: false, _ageConfirmed: true,
+      _gatedOptIn: false, _privacyConsentAcknowledged: true,
     },
   },
 
@@ -223,7 +223,7 @@ const PROFILES = [
       time: 'midday', stress: 'ride', duration: 'months',
       avoid: ['none'], age: '25_40', sleep: 'restorative_6plus',
       notes: '',
-      _gatedOptIn: false, _ageConfirmed: true,
+      _gatedOptIn: false, _privacyConsentAcknowledged: true,
     },
   },
 
@@ -240,7 +240,7 @@ const PROFILES = [
       time: 'night', stress: 'off', duration: 'months',
       avoid: ['none'], age: '25_40', sleep: 'very_broken',
       notes: 'Racing mind at 3am, tension held in neck and jaw',
-      _gatedOptIn: false, _ageConfirmed: true,
+      _gatedOptIn: false, _privacyConsentAcknowledged: true,
     },
   },
 
@@ -257,7 +257,7 @@ const PROFILES = [
       time: 'midday', stress: 'push', duration: 'months',
       avoid: ['none'], age: '25_40', sleep: 'restorative_6plus',
       notes: 'Need cognitive endurance for a long project',
-      _gatedOptIn: false, _ageConfirmed: true,
+      _gatedOptIn: false, _privacyConsentAcknowledged: true,
     },
   },
 
@@ -274,7 +274,7 @@ const PROFILES = [
       time: 'any', stress: 'ride', duration: 'weeks',
       avoid: ['none'], age: '25_40', sleep: 'restorative_6plus',
       notes: '',
-      _gatedOptIn: false, _ageConfirmed: true,
+      _gatedOptIn: false, _privacyConsentAcknowledged: true,
     },
   },
 
@@ -291,7 +291,7 @@ const PROFILES = [
       time: 'night', stress: 'collapse', duration: 'year_plus',
       avoid: ['psych_meds', 'contraceptive'], age: '25_40', sleep: 'very_broken',
       notes: 'Postpartum, second baby, deep hormonal-emotional-sleep hole. Prior herb use: passionflower did nothing, ashwagandha helped for a month then plateaued. Really need something that holds the whole weave — mood, sleep, hormonal reset all at once.',
-      _gatedOptIn: false, _ageConfirmed: true,
+      _gatedOptIn: false, _privacyConsentAcknowledged: true,
     },
   },
 
@@ -308,7 +308,7 @@ const PROFILES = [
       time: 'evening', stress: 'off', duration: 'year_plus',
       avoid: ['none'], age: '41_60', sleep: 'not_restorative_6plus',
       notes: 'Open to ceremonial allies for the deeper work',
-      _gatedOptIn: true, _ageConfirmed: true,
+      _gatedOptIn: true, _privacyConsentAcknowledged: true,
     },
   },
 
@@ -325,7 +325,7 @@ const PROFILES = [
       time: 'evening', stress: 'off', duration: 'year_plus',
       avoid: ['none'], age: '41_60', sleep: 'not_restorative_6plus',
       notes: 'Open to ceremonial allies for the deeper work',
-      _gatedOptIn: false, _ageConfirmed: true,
+      _gatedOptIn: false, _privacyConsentAcknowledged: true,
     },
   },
 
@@ -351,7 +351,7 @@ const PROFILES = [
       cycle: 'not_applicable',
       prior_herbs: ['adaptogens_regular','nootropics'],
       support: 'deep_restore',
-      _gatedOptIn: false, _ageConfirmed: true,
+      _gatedOptIn: false, _privacyConsentAcknowledged: true,
     },
   },
 
@@ -368,7 +368,7 @@ const PROFILES = [
       time: 'morning', stress: 'push', duration: 'months',
       avoid: ['none'], age: '25_40', sleep: 'not_restorative_6plus',
       notes: 'PhD write-up phase. Need focus without the crash. Prior use: bacopa was excellent for memory but too slow to feel, lion\'s mane felt clean and I want more of that, rhodiola gave me a headache above 300mg, and I gave up on caffeine 6 months ago because of anxiety spikes. Deeply prefer nootropics that also support HPA rather than push it.',
-      _gatedOptIn: false, _ageConfirmed: true,
+      _gatedOptIn: false, _privacyConsentAcknowledged: true,
     },
   },
 
@@ -385,7 +385,7 @@ const PROFILES = [
       time: 'any', stress: 'push', duration: 'weeks',
       avoid: [], age: 'under_25', sleep: 'restorative_6plus',
       notes: '',
-      _gatedOptIn: true, _ageConfirmed: true,
+      _gatedOptIn: true, _privacyConsentAcknowledged: true,
     },
   },
 ];

@@ -176,7 +176,7 @@ for (const note of NEEDS) {
 const dreamIds = new Set(pool.filter(P.isDreamDeepening).map(h => String(h.id)));
 const base = {
   pattern: 'depleted', time: 'night', stress: 'freeze', duration: 'months', age: '25_40',
-  avoid: ['none'], _ageConfirmed: true, _gatedOptIn: true,
+  avoid: ['none'], _privacyConsentAcknowledged: true, _gatedOptIn: true,
 };
 const INTENTIONS = ['sleep', 'anxiety', 'stress', 'mood', 'cognitive', 'energy', 'hormones', 'digestion'];
 {

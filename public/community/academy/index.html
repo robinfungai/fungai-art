@@ -3373,11 +3373,11 @@ function lnMoveNote(fromCat, id, toCat){
           (function(){
             var hs = (Array.isArray(e.herbs) ? e.herbs : []).filter(function(h){ return h && (h.n || h.name); });
             if (!hs.length) return '';
-            var q = 'h=' + encodeURIComponent(hs.map(function(h){ return h.n || h.name; }).join('|'));
+            // Out of the URL (handoff.js, hardening checklist #5): the
+            // formula waits in data attributes; the key is made on use.
             var p = hs.map(function(h){ return h.pct; });
-            if (p.every(function(x){ return typeof x === 'number' && isFinite(x); })) q += '&p=' + p.join(',');
-            q += '&n=' + encodeURIComponent(name) + '&src=book';
-            return '<a href="/formula-analysis/?' + q + '" style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:#C9EE8A;text-decoration:none;border:0.5px solid rgba(158,212,56,0.4);border-radius:999px;padding:6px 11px;background:rgba(158,212,56,0.06);">Open analysis &rarr;</a>';
+            var pAttr = p.every(function(x){ return typeof x === 'number' && isFinite(x); }) ? p.join(',') : '';
+            return '<a href="/formula-analysis/" data-fa-h="' + esc(hs.map(function(h){ return h.n || h.name; }).join('|')) + '" data-fa-p="' + esc(pAttr) + '" data-fa-n="' + esc(name) + '" style="font-family:\'Geist Mono\',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:#C9EE8A;text-decoration:none;border:0.5px solid rgba(158,212,56,0.4);border-radius:999px;padding:6px 11px;background:rgba(158,212,56,0.06);">Open analysis &rarr;</a>';
           })() +
         '</div>' +
         // Comments — only for cloud entries with author attribution. Inline
@@ -3597,5 +3597,23 @@ function lnMoveNote(fromCat, id, toCat){
 </script>
 <!-- page-view beacon · no cookie, no visitor id, honours DNT (public/visit.js) -->
 <script src="/visit.js" defer></script>
+<script src="/formula-analysis/handoff.js"></script>
+<script>
+// Formula book → analysis without the formula in the URL (handoff.js).
+(function () {
+  function prep(e) {
+    var a = e.target && e.target.closest && e.target.closest('a[data-fa-h]');
+    if (!a || !window.FormulaHandoff) return;
+    if (e.type === 'click' && /[?&]ref=/.test(a.getAttribute('href') || '')) return;
+    if (e.type === 'keydown' && e.key !== 'Enter') return;
+    a.href = window.FormulaHandoff.href({
+      h: a.getAttribute('data-fa-h').split('|'),
+      p: a.getAttribute('data-fa-p') ? a.getAttribute('data-fa-p').split(',').map(Number) : null,
+      n: a.getAttribute('data-fa-n') || '', src: 'book',
+    });
+  }
+  ['pointerdown', 'keydown', 'click'].forEach(function (t) { document.addEventListener(t, prep, true); });
+})();
+</script>
 </body>
 </html>

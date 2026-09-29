@@ -52,8 +52,16 @@ function normaliseNote(s) {
     .replace(/[‐-―−]/g, '-');
 }
 
+// Cyrillic and Greek letters that look Latin ("vаlerian" with a Cyrillic
+// а) read as the Latin letter, so a pasted or mixed-script name is still
+// that herb (hardening checklist #10).
+const LOOKALIKE = { 'а': 'a', 'в': 'b', 'е': 'e', 'ё': 'e', 'к': 'k', 'м': 'm', 'н': 'h', 'о': 'o', 'р': 'p', 'с': 'c',
+  'т': 't', 'у': 'y', 'х': 'x', 'і': 'i', 'ј': 'j', 'ѕ': 's', 'α': 'a', 'β': 'b', 'ε': 'e', 'ι': 'i', 'κ': 'k', 'ν': 'v',
+  'ο': 'o', 'ρ': 'p', 'τ': 't', 'υ': 'u', 'χ': 'x' };
+const LOOKALIKE_RX = new RegExp('[' + Object.keys(LOOKALIKE).join('') + ']', 'g');
+
 function fold(s) {
-  return normaliseNote(s).toLowerCase()
+  return normaliseNote(s).toLowerCase().replace(LOOKALIKE_RX, c => LOOKALIKE[c])
     .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
     .normalize('NFD').replace(/[̀-ͯ]/g, '')
     .replace(/['.]/g, '');

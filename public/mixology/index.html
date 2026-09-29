@@ -1052,9 +1052,9 @@ function analyzeFormula(){
 function openFullAnalysis(withMyco){
   if(!F.length)return;
   const names=F.map(id=>{const h=H.find(x=>x.id===id);return h?h.n:id;});
-  const q=new URLSearchParams({h:names.join('|'),src:'mixology'});
-  if(withMyco)q.set('myco','1');
-  window.open('/formula-analysis/?'+q.toString(),'_blank','noopener');
+  // Out of the URL (handoff.js, hardening checklist #5): a one-time key.
+  const href=window.FormulaHandoff?window.FormulaHandoff.href({h:names,src:'mixology',myco:!!withMyco}):'/formula-analysis/';
+  window.open(href,'_blank','noopener');
 }
 function analyzeWithMYCO(){ openFullAnalysis(true); }
 
@@ -1330,5 +1330,6 @@ render();updatePanel();
 <script type="module" src="/islands/waves.js"></script>
 <!-- page-view beacon · no cookie, no visitor id, honours DNT (public/visit.js) -->
 <script src="/visit.js" defer></script>
+<script src="/formula-analysis/handoff.js"></script>
 </body>
 </html>

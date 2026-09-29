@@ -17,7 +17,7 @@ const base = {
   pattern: 'mixed', patternSub: 'sighing',
   time: 'evening', stress: 'push', duration: 'weeks',
   avoid: ['none'], sleep: 'restorative_6plus',
-  notes: '', _gatedOptIn: false, _ageConfirmed: true,
+  notes: '', _gatedOptIn: false, _privacyConsentAcknowledged: true,
 };
 
 const cases = [];

@@ -46,7 +46,7 @@ const BASE_PROFILE = {
   pattern: 'mixed', patternSub: 'sighing',
   time: 'evening', stress: 'push', duration: 'weeks',
   avoid: ['none'], age: '25_40', sleep: 'restorative_6plus',
-  notes: '', _gatedOptIn: false, _ageConfirmed: true,
+  notes: '', _gatedOptIn: false, _privacyConsentAcknowledged: true,
 };
 
 const cases = [];

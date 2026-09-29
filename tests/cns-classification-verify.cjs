@@ -54,7 +54,7 @@ console.log('\n── Ephedra is pro-only ──');
 const eph = ensurePool().find(h => /Ephedra/.test(h.name));
 check(eph && eph.proOnly === true, 'Ephedra carries proOnly in the pool');
 const energy = { intention: 'energy', intentions: ['energy'], pattern: 'depleted', time: 'morning', stress: 'push',
-  duration: 'weeks', avoid: ['none'], age: '25_40', sleep: 'restorative_6plus', notes: 'exhausted, need energy', _gatedOptIn: false, _ageConfirmed: true };
+  duration: 'weeks', avoid: ['none'], age: '25_40', sleep: 'restorative_6plus', notes: 'exhausted, need energy', _gatedOptIn: false, _privacyConsentAcknowledged: true };
 const consumerCands = buildScoredCandidates(energy, 400).map(h => h.name);
 check(!consumerCands.some(n => /Ephedra/.test(n)), 'a consumer never sees Ephedra, even among 400 candidates');
 const proCands = buildScoredCandidates(Object.assign({}, energy, { _pro: true }), 400).map(h => h.name);
@@ -66,7 +66,7 @@ console.log('\n── every intention, three customers ──');
 const INT = ['stress', 'anxiety', 'sleep', 'energy', 'mood', 'cognitive', 'hormones', 'digestion', 'immunity', 'pain', 'detox', 'beauty'];
 const TIMES = ['morning', 'evening'];
 const base = { pattern: 'mixed', patternSub: 'sighing', stress: 'push', duration: 'weeks', avoid: ['none'], age: '25_40',
-  sleep: 'restorative_6plus', notes: '', _gatedOptIn: false, _ageConfirmed: true };
+  sleep: 'restorative_6plus', notes: '', _gatedOptIn: false, _privacyConsentAcknowledged: true };
 const herbOf = new Map(all.map(h => [h.id, h]));
 const problems = { pro: [], preg: [], minor: [], night: [], caps: [], pushpull: [], failed: [] };
 for (const time of TIMES) for (const i of INT) {

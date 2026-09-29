@@ -25,12 +25,12 @@ const results = [];
 const check = (name, ok, detail) => results.push({ name, ok: !!ok, detail });
 
 // ── Stand-ins ────────────────────────────────────────────────────
-function fakeSupabase({ rpcError = null, missingColumns = [], storedByOther = null, insertError = null } = {}) {
+function fakeSupabase({ rpcError = null, claimError = null, missingColumns = [], storedByOther = null, insertError = null } = {}) {
   const db = { rows: [], budgetCalls: 0, rpcCalls: 0, claims: new Set(), claimCalls: 0 };
   db.rpc = async (name, args) => {
     if (name === 'fyf_claim_request' || name === 'fyf_release_request') {
       db.claimCalls++;
-      if (rpcError) return { data: null, error: { message: rpcError } };
+      if (claimError) return { data: null, error: { message: claimError } };
       if (name === 'fyf_release_request') { db.claims.delete(args.p_key); return { data: null, error: null }; }
       if (db.claims.has(args.p_key)) return { data: false, error: null };
       db.claims.add(args.p_key);
@@ -68,7 +68,7 @@ process.env.ANTHROPIC_API_KEY = 'test-stand-in';
 
 const profile = extra => Object.assign({
   intention: 'stress', intentions: ['stress'], pattern: 'mixed', time: 'any', stress: 'push',
-  duration: 'months', age: '25_40', sleep: 'restorative_6plus', avoid: ['none'], _ageConfirmed: true,
+  duration: 'months', age: '25_40', sleep: 'restorative_6plus', avoid: ['none'], _privacyConsentAcknowledged: true,
 }, extra);
 let ipN = 0;
 
@@ -127,10 +127,28 @@ let ipN = 0;
     const c1 = await call({ profile: profile(), requestId: 'visit00000004' });
     check('budget check fails → no MYCO call, formula still made', c1.status === 200 && mycoCalls === 0 && c1.body.mycoFallbackReason === 'MYCO_BUDGET_UNAVAILABLE', c1.body.mycoFallbackReason);
 
-    // 6 · SQL not run yet → stored without the new columns
+    // 6 · SQL not run → production refuses (hardening checklist #6); only
+    //     local development (NETLIFY_DEV / FYF_DB_COMPAT=1) stores without.
+    db = fakeSupabase({ missingColumns: ['retention_tracked'] }); mod._setSupabaseForTests(db);
+    const d0 = await call({ profile: profile(), requestId: 'visit00000015' });
+    check('production: a missing column → 503 DB_CONTROLS_MISSING, nothing stored, the claim handed back',
+      d0.status === 503 && d0.body.code === 'DB_CONTROLS_MISSING' && db.rows.length === 0 && db.claims.size === 0, 'status ' + d0.status + ' ' + d0.body.code);
+    db = fakeSupabase({ claimError: 'function fyf_claim_request does not exist' }); mod._setSupabaseForTests(db); mycoCalls = 0;
+    const d2 = await call({ profile: profile(), requestId: 'visit00000016' });
+    check('production: claim function missing → 503 before MYCO is asked', d2.status === 503 && d2.body.code === 'DB_CONTROLS_MISSING' && mycoCalls === 0 && db.rows.length === 0, 'status ' + d2.status);
+    mod._setSupabaseForTests(null);
+    const d3 = await call({ profile: profile(), requestId: 'visit00000017' });
+    check('production: no database configured → 503, never an unstored formula', d3.status === 503 && d3.body.code === 'DB_CONTROLS_MISSING', 'status ' + d3.status);
+    const shadowNoDb = await mod.default(new Request('http://localhost:8888/api/fyf/compose', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'X-FYF-Mode': 'shadow', 'x-forwarded-for': '198.51.100.251' },
+      body: JSON.stringify({ profile: profile() }),
+    }));
+    check('… a shadow call still needs no database', shadowNoDb.status === 200, 'status ' + shadowNoDb.status);
+    process.env.FYF_DB_COMPAT = '1';
     db = fakeSupabase({ missingColumns: ['retention_tracked', 'request_key'] }); mod._setSupabaseForTests(db);
     const d1 = await call({ profile: profile(), requestId: 'visit00000005' });
-    check('new columns missing → the reveal still works and is stored', d1.status === 200 && d1.body.persisted === true && db.rows.length === 1 && !('retention_tracked' in db.rows[0]), 'status ' + d1.status);
+    check('local development (FYF_DB_COMPAT=1): new columns missing → stored without them', d1.status === 200 && d1.body.persisted === true && db.rows.length === 1 && !('retention_tracked' in db.rows[0]), 'status ' + d1.status);
+    delete process.env.FYF_DB_COMPAT;
 
     // 7 · two identical requests at once → one stored formula returned to both
     const other = 'fyf_' + 'a'.repeat(32);

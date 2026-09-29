@@ -20,6 +20,9 @@
 const path = require('path');
 const fs   = require('fs');
 const { pathToFileURL } = require('node:url');
+// These calls compose with no database, as local development does; since
+// the hardening checklist (#6) only compatibility mode allows that.
+process.env.FYF_DB_COMPAT = '1';
 
 // The handler is ESM (export default). Load it via dynamic import.
 // On Windows, dynamic-imported paths must be file:// URLs, not raw
@@ -155,7 +158,7 @@ const VALID_BASE_PROFILE = () => ({
   time: 'evening', stress: 'push', duration: 'weeks',
   avoid: ['none'], age: '25_40', sleep: 'restorative_6plus',
   notes: '',
-  _gatedOptIn: false, _ageConfirmed: true,
+  _gatedOptIn: false, _privacyConsentAcknowledged: true,
 });
 
 async function runAdversarialSuite(handler) {

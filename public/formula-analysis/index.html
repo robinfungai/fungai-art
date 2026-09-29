@@ -12,7 +12,8 @@
 <!--
   THE STANDARD FORMULA ANALYSIS (Robin, 2026-09-27)
   One page every formula opens into — from Mixology, Find your formula
-  and the formula book. URL: ?h=Herb|Herb|…&p=40,30,…&n=Name&src=…&myco=1
+  and the formula book. URL: ?ref=<one-time key> — the formula itself never
+  rides in the URL (handoff.js, hardening checklist #5, 2026-09-29).
   The analysis is the formula engine's own (netlify/functions/
   formula-analysis.mjs → src/server/formula-engine/analyze.js); MYCO is
   asked only when you press the button (or arrive with myco=1).
@@ -242,27 +243,29 @@
   <p class="fine">Formulation research in the language of craft and tradition &mdash; not medical advice, not a diagnosis, not a dose for any condition. Read every caution; if you take medication, are pregnant or breastfeeding, speak to a practitioner first.</p>
 </div>
 
+<script src="/formula-analysis/handoff.js"></script>
 <script>
 (function () {
   'use strict';
   var API = '/api/formula-analysis';
-  var qs = new URLSearchParams(location.search);
+  // The formula it was opened with, by one-time key (handoff.js).
+  var arrived = (window.FormulaHandoff && window.FormulaHandoff.take(location.search)) || { h: [], p: null, n: '', src: '', myco: false };
   var $ = function (id) { return document.getElementById(id); };
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
   function clone(f) { return { herbs: f.herbs.slice(), percentages: f.percentages ? f.percentages.slice() : null }; }
 
   var state = {
-    src: qs.get('src') || '',
+    src: arrived.src || '',
     base: null,      // the formula as opened (resolved names + percentages)
     cur: null,       // the formula being adjusted
     res: null,       // last response
     unresolved: [],
   };
 
-  var askedHerbs = (qs.get('h') || '').split('|').map(function (s) { return s.trim(); }).filter(Boolean).slice(0, 12);
-  var askedPcts = (qs.get('p') || '').split(',').map(Number);
+  var askedHerbs = (arrived.h || []).map(function (s) { return String(s).trim(); }).filter(Boolean).slice(0, 12);
+  var askedPcts = Array.isArray(arrived.p) ? arrived.p.map(Number) : [];
   if (askedPcts.length !== askedHerbs.length || askedPcts.some(function (x) { return !isFinite(x) || x < 0; })) askedPcts = null;
-  $('fName').value = (qs.get('n') || '').slice(0, 80);
+  $('fName').value = String(arrived.n || '').slice(0, 80);
   var SRC = { mixology: 'Mixology', 'find-your-formula': 'Find your formula', book: 'the formula book', analysis: 'this page' };
 
   // ── The catalogue, for adding and swapping ──
@@ -329,7 +332,7 @@
       state.cur = clone(state.base);
       state.res = res;
       draw();
-      if (qs.get('myco') === '1') askMyco();
+      if (arrived.myco) askMyco();
     }).catch(function (e) { $('fSub').textContent = 'The analysis could not load: ' + e.message; });
   }
 

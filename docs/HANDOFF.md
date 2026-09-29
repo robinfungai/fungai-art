@@ -80,6 +80,61 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ---
 
+## 0.19 · 2026-09-29 (later still) — the hardening checklist (committed, not pushed)
+
+### ⚠ Changes the 1 October order
+**Compose now FAILS CLOSED when a database protection is missing** (checklist #6).
+So **`supabase-fyf-claims.sql` must be run BEFORE the push** (check:
+`SELECT to_regproc('public.fyf_claim_request');` — not NULL = done). Without it the
+live Formula Maker answers 503 "being updated" to everyone. `supabase-fyf-retention.sql`
+and `supabase-myco-budget.sql` are already run (§0.16). `supabase-formulas-server-writes.sql`
+still goes AFTER the push (§0.17). Local development: `netlify dev` sets NETLIFY_DEV
+and keeps the old lenient behaviour; `FYF_DB_COMPAT=1` forces it anywhere (don't
+set it on Netlify).
+
+### Done (checklist numbers)
+- **#3 dead client code** — ~1,150 lines out of the two quiz pages: the client herb
+  pool + restricted list + trace list, the client synergy checker, client naming, the
+  client story/"why" copy, and the micronutrient engine. The last three were still
+  LIVE in one place: the reservation sent browser-computed story text, herb notes
+  and micronutrients, and the confirmation email printed them — so the email could
+  say something the reveal did not. Now `reserve-formula` writes all three from the
+  STORED formula (display.js + MYCO's stored reading through the sanitiser +
+  `src/server/formula-engine/micronutrients.js`, ported verbatim); the page sends
+  contact details + formula id only (no quiz answers, no herbs). Robin's email lost
+  its "UNVERIFIED / client-computed" banner. `test:micronutrient-untrusted` rewritten.
+- **#4 answers in the browser** — unfinished readings in sessionStorage (gone when
+  the tab closes); old localStorage copies deleted on every load; "✕ forget" on the
+  progress row and "✕ Forget this reading" on the result. The local formula-book
+  copy keeps no note and no location. Trade-off: if Instagram's in-app browser is
+  killed in the background, a half-done reading may be lost.
+- **#5 no formula in URLs** — `/formula-analysis/?ref=<one-time key>`; the formula
+  waits in localStorage and is deleted on arrival (`public/formula-analysis/handoff.js`,
+  used by Find your formula, Mixology, the formula book and the analysis page).
+  Not `?id=` as the audit suggested: Mixology formulas are never stored, and a new
+  public read-by-id endpoint would be a new way in. Old `?h=&p=` links still open
+  and the address is cleaned at once.
+- **#6 fail closed** — above. reserve-formula's `reserved_at` stays best-effort on
+  purpose (it runs after the emails have gone).
+- **#8** `_ageConfirmed` → `_privacyConsentAcknowledged` (server still accepts the old
+  name from pages loaded before the deploy; code `PRIVACY_CONSENT_NOT_ACKNOWLEDGED`).
+- **#9 zoom** — already fixed on 27 Sep (and on GitHub main); the auditor read older code.
+- **#10** `npm run test:adversarial` (34 checks: HTML, Unicode, duplicates, pattern
+  mismatch, concurrency, missing SQL, oversized, prompt injection, "I do NOT want
+  energy", SQL/`__proto__`, URLs, replay). Found and fixed: "I do NOT want energy"
+  used to BOOST energy herbs (a refused wish counted only before "anything"/"something");
+  Cyrillic lookalike letters ("vаlerian") hid a herb name.
+
+### Robin to decide
+- **#7 under-18 policy** — today an under-18 answer gets a restricted formula (no
+  HIGH-caution, psychoactive or stronger calming herbs). Options: keep it (and say so
+  in the UX), stop at the age question with a kind message (server refuses
+  `under_18`), or require a parent/guardian. Encode whichever in page + server.
+- **#1 load model, #2 roles** — "do later"; the plan is §0.16 ¶3–4 (Claude drafts
+  0–3 loads and roles per herb from the records, Robin reviews).
+
+---
+
 ## 0.18 · 2026-09-29 (last) — the note's naming system, restless sleepers (engine 2.9.0, safety 1.5.0)
 
 Committed on `main`, **not pushed** (goes out with the 1 October push; §0.17 still holds).

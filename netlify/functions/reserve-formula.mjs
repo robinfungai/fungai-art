@@ -36,6 +36,10 @@
 // ════════════════════════════════════════════════════════════════
 
 import { createClient } from '@supabase/supabase-js';
+import { buildDisplayBundle } from '../../src/server/formula-engine/display.js';
+import { sanitiseNarrative } from '../../src/server/formula-engine/narrative-sanitiser.js';
+import { computeMicronutrients } from '../../src/server/formula-engine/micronutrients.js';
+import { ensurePool } from '../../src/server/formula-engine/axes.js';
 
 // ── Origin gate ──────────────────────────────────────────────────
 // Locked to Fungai origins so a random site can't POST here and
@@ -358,45 +362,33 @@ export default async function handler(req) {
   console.log('[reserve-formula] source=authoritative',
     'formulaId=' + rawFormulaId,
     'engine=' + (engineVersion || '-'));
-  // ── Micronutrient allies · UNTRUSTED CLIENT INPUT (Round 2 · #6) ──
-  // The client currently computes possibleMicronutrients from the quiz
-  // and passes them through for Robin's admin-only email. Post-audit
-  // this is treated as UNTRUSTED — a hostile client could forge the
-  // list to plant misleading advisories in Robin's inbox.
-  //
-  // Two guards until the compute moves server-side (deferred):
-  //  1. Hard length + shape sanitisation (was already partial — now
-  //     also caps individual field lengths so a giant string can't
-  //     bloat the email).
-  //  2. Rendered under a bold "UNVERIFIED / client-computed" banner
-  //     in Robin's email so he knows this section is NOT authoritative
-  //     and should be sanity-checked. Removed entirely if the client
-  //     didn't send it; never fabricated server-side.
-  //
-  // Follow-up: move computeMicronutrients() to the server so the
-  // authoritative flag can flip and this banner comes off.
-  const possibleMicronutrients = Array.isArray(body.possibleMicronutrients)
-    ? body.possibleMicronutrients
-        .slice(0, 15)
-        .filter(x => x && typeof x.nutrient === 'string')
-        .map(x => ({
-          nutrient: String(x.nutrient).slice(0, 80),
-          reason:   String(x.reason || '').slice(0, 300),
-          priority: Number.isFinite(Number(x.priority)) ? Math.max(0, Math.min(10, Number(x.priority))) : 0,
-        }))
-    : [];
-
-  // Rich customer-email content — the story + per-herb one-liners
-  // the in-app reveal shows. Rendered into the confirmation email so
-  // the reveal continues in the inbox (Robin's ask: "they need to
-  // reveal more on email"). Strip any HTML tags — the client-side
-  // story generator wraps some phrases in <em>/<strong>; keep the
-  // text, drop the markup so email clients render safely.
+  // ── The email's reading, herb notes and micronutrients — from the
+  // STORED formula, computed here (hardening checklist #3, 2026-09-29).
+  // The page used to compute all three in the browser and send them with
+  // the reservation; the confirmation email could then say something the
+  // reveal did not, and Robin's micronutrient list sat under an
+  // "UNVERIFIED / client-computed" banner. Nothing the browser sends for
+  // these is read any more. The reading is the reveal's: MYCO's
+  // (sanitised) when MYCO composed it, otherwise the engine's story.
+  const storedPool   = Array.isArray(storedFormula._engineHerbs) && storedFormula._engineHerbs.length ? storedFormula._engineHerbs : null;
+  let enrichedHerbs  = storedPool;
+  if (!enrichedHerbs) {
+    let pool = ensurePool() || [];
+    if (!Array.isArray(pool)) pool = pool.herbs || Object.values(pool);
+    enrichedHerbs = storedHerbs.map(h => pool.find(x => String(x.id) === String(h.id)) || h);
+  }
+  let display = { storyText: '', herbLines: [] };
+  try { display = buildDisplayBundle({ profile: quiz, enrichedHerbs, percentages }); }
+  catch (e) { console.warn('[reserve-formula] display bundle failed:', e && e.message ? e.message : e); }
+  const mycoReading = storedFormula.mycoUsed === true && storedFormula.mycoOverall
+    ? sanitiseNarrative(storedFormula.mycoOverall, quiz).text
+    : '';
   const stripHtml = s => String(s || '').replace(/<[^>]*>/g, '').slice(0, 1200);
-  const storyText = stripHtml(body.storyText);
-  const herbNotes = Array.isArray(body.herbNotes)
-    ? body.herbNotes.slice(0, 10).map(n => stripHtml(n).slice(0, 200))
-    : [];
+  const storyText = stripHtml(mycoReading || display.storyText);
+  const herbNotes = storedHerbs.map((_, i) => stripHtml(display.herbLines && display.herbLines[i] ? display.herbLines[i].shortNote : '').slice(0, 200));
+  let possibleMicronutrients = [];
+  try { possibleMicronutrients = (computeMicronutrients(quiz, enrichedHerbs) || []).slice(0, 15); }
+  catch (e) { console.warn('[reserve-formula] micronutrients failed:', e && e.message ? e.message : e); }
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json({ error: 'Invalid email address' }, 400, cors);
   if (!name || !city || !country) return json({ error: 'Missing name / city / country' }, 400, cors);
@@ -628,15 +620,12 @@ function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, 
         ${notes ? `<div style="margin-top:20px;padding:14px 16px;background:#1A1E24;border-left:2px solid #E8B14B;border-radius:4px;"><div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#8B7E62;margin-bottom:6px;">Priority + prior herb experience</div><div style="font-family:Georgia,serif;font-style:italic;font-size:14px;color:#EDE5D8;line-height:1.7;">"${esc(notes)}"</div></div>` : ''}
 
         ${possibleMicronutrients.length ? `
-        <!-- MICRONUTRIENT ALLIES · UNVERIFIED (client-computed).
-             Round 2 · Item #6: this section is CLIENT-SUPPLIED and
-             NOT authoritative until computeMicronutrients moves
-             server-side. A hostile client could forge entries. Robin
-             should sanity-check every row before mentioning any of
-             them to the customer. Amber-warning colour reflects this. -->
+        <!-- MICRONUTRIENT ALLIES — computed on the server from the stored
+             answers and formula (micronutrients.js, 2026-09-29). A
+             suggestion from rules, not a clinical read. -->
         <div style="margin-top:20px;padding:16px 18px;background:#241a0f;border:0.5px solid rgba(232,177,75,.35);border-radius:8px;">
-          <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#E8B14B;margin-bottom:6px;">⚠ Possible micronutrient allies · UNVERIFIED (client-computed)</div>
-          <div style="font-family:Georgia,serif;font-style:italic;font-size:11.5px;color:#C9B894;line-height:1.55;margin-bottom:12px;">These entries were computed in the customer's browser and shipped as-is. Treat as directional only — a modified frontend could forge entries. Do not repeat verbatim to the customer without your own clinical read. Server-side compute is a follow-up.</div>
+          <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#E8B14B;margin-bottom:6px;">Possible micronutrient allies · a suggestion, not a clinical read</div>
+          <div style="font-family:Georgia,serif;font-style:italic;font-size:11.5px;color:#C9B894;line-height:1.55;margin-bottom:12px;">Suggested by rules from the stored answers and formula (server-side). Directional only — check before mentioning any to the customer.</div>
           <table cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:13px;color:#C9B894;">
             ${possibleMicronutrients.map(m => `<tr>
               <td style="padding:6px 8px 6px 0;vertical-align:top;color:#F5D689;font-family:'Courier New',monospace;font-size:12px;letter-spacing:.04em;white-space:nowrap;width:170px;">${esc(m.nutrient)}</td>
@@ -686,7 +675,7 @@ ${synergies && synergies.length ? 'SYNERGIES:\n' + synergies.map(s => '  • ' +
   Filters:   ${Array.isArray(q.avoid) ? q.avoid.join(', ') : (q.avoid || '—')}
   ${q.duration ? 'Duration:  ' + q.duration + '\n  ' : ''}${q.age ? 'Age:       ' + q.age + '\n  ' : ''}${q.sleep ? 'Sleep:     ' + q.sleep : ''}
 
-${notes ? 'Priority + prior herb experience:\n  "' + notes + '"\n\n' : ''}${possibleMicronutrients.length ? '⚠ POSSIBLE MICRONUTRIENT ALLIES · UNVERIFIED (client-computed):\n  Treat as directional only — computed in the customer browser and\n  shipped as-is; a modified frontend could forge entries. Do not repeat\n  verbatim to the customer without your own clinical read.\n\n' + possibleMicronutrients.map(m => '  · ' + m.nutrient + ' — ' + (m.reason || '')).join('\n') + '\n\n' : ''}${geo.country ? 'EDGE-DETECTED COUNTRY: ' + geo.country + ' (sanity check vs. form; VPN bypasses)\n\n' : ''}Reply to this email to reach the customer. Confirm the formula together first, then send the Stripe link.
+${notes ? 'Priority + prior herb experience:\n  "' + notes + '"\n\n' : ''}${possibleMicronutrients.length ? 'POSSIBLE MICRONUTRIENT ALLIES (rule-based suggestion, server-side):\n  Directional only. Do not repeat verbatim to the customer without your\n  own clinical read.\n\n' + possibleMicronutrients.map(m => '  · ' + m.nutrient + ' — ' + (m.reason || '')).join('\n') + '\n\n' : ''}${geo.country ? 'EDGE-DETECTED COUNTRY: ' + geo.country + ' (sanity check vs. form; VPN bypasses)\n\n' : ''}Reply to this email to reach the customer. Confirm the formula together first, then send the Stripe link.
 `;
 }
 

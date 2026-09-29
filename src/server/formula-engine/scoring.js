@@ -255,7 +255,11 @@ const NOTES_KEYWORD_RX = new Map(NOTES_KEYWORDS.map(kw => [kw, new RegExp(
 // helps my anxiety", "I don't want to feel tired"), so it is left alone.
 // Past and present ("I used to sleep badly") are not told apart here;
 // MYCO reads the note as a whole when it composes.
-const NEGATED_WISH = /\b(?:do\s+not|don'?t|does\s+not|doesn'?t|never|not)\s+(?:really\s+)?(?:want|need)\s+(?:anything|something|any|an?)\b[^.,;:!?\n|]*/g;
+// 2026-09-29 (hardening checklist #10): a refused wish may name the thing
+// straight away — "I do NOT want energy", "don't need more focus" — so
+// any object counts, except "to …": "I don't want to feel tired" is a
+// need and stays scored.
+const NEGATED_WISH = /\b(?:do\s+not|don'?t|does\s+not|doesn'?t|never|not)\s+(?:really\s+)?(?:want|need)\s+(?!to\b)[^.,;:!?\n|]*/g;
 
 function notesBoost(h, notes) {
   if (!notes) return 0;

@@ -73,7 +73,7 @@ for (const note of NEEDS) {
 
 const base = {
   intention: 'energy', intentions: ['energy', 'cognitive'], pattern: 'depleted', time: 'morning', stress: 'push',
-  duration: 'months', age: '25_40', sleep: 'restorative_6plus', avoid: ['none'], _ageConfirmed: true,
+  duration: 'months', age: '25_40', sleep: 'restorative_6plus', avoid: ['none'], _privacyConsentAcknowledged: true,
 };
 const P = R('src/server/formula-engine/pharmacology.js');
 {

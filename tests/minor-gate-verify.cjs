@@ -30,7 +30,7 @@ const baseProfile = {
   sleep: 'restorative_6plus',
   notes: '',
   _gatedOptIn: false,
-  _ageConfirmed: true,
+  _privacyConsentAcknowledged: true,
 };
 
 const cases = [];

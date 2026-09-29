@@ -225,10 +225,13 @@ function validateProfile(raw) {
   // the engine never honours it for an under-18 profile.
   p._pro = raw._pro === true;
 
-  // _ageConfirmed — required boolean; the entry gate sets this at the
-  // start of the flow. Not authoritative on its own (any client can
-  // forge it) but its presence means the client acknowledged 18+.
-  p._ageConfirmed = !!raw._ageConfirmed;
+  // _privacyConsentAcknowledged — required boolean; the entry gate sets
+  // it when the privacy / data-consent box is ticked. It is NOT an age
+  // statement (hardening checklist #8, 2026-09-29: it was called
+  // _ageConfirmed, which read as "adult confirmed"); age is the age
+  // question's own answer (`age`). The old name is still accepted from a
+  // page loaded before the rename.
+  p._privacyConsentAcknowledged = !!(raw._privacyConsentAcknowledged || raw._ageConfirmed);
 
   // Pro-quiz fields — validated as short strings or short-string arrays.
   // Since engine 2.4 (2026-09-28) the engine reads all of them: scoring
@@ -405,6 +408,24 @@ function getSupabase() {
   return createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } });
 }
 
+// ── Database protections fail CLOSED (hardening checklist #6, 2026-09-29) ──
+// A missing migration used to be skipped quietly — no idempotency, rows
+// stored without retention tracking — and the Formula Maker looked as if
+// nothing were wrong. Now only local development (`netlify dev` sets
+// NETLIFY_DEV) or an explicit FYF_DB_COMPAT=1 composes in that state;
+// anywhere else the request stops with 503 DB_CONTROLS_MISSING and the
+// log says which control and which SQL file.
+function dbCompatMode() {
+  return process.env.NETLIFY_DEV === 'true' || process.env.FYF_DB_COMPAT === '1';
+}
+function dbControlMissing(what, sqlFile, e) {
+  const msg = '[fyf-compose] DB control missing: ' + what + ' (run ' + sqlFile + ')' + (e && e.message ? ' — ' + e.message : '');
+  if (dbCompatMode()) { console.warn(msg + ' — compatibility mode, continuing without it'); return null; }
+  console.error(msg + ' — refusing to compose without it');
+  const err = new Error(what); err.code = 'DB_CONTROLS_MISSING'; err.control = what;
+  throw err;
+}
+
 // ── D8 · Daily MYCO budget ───────────────────────────────────────
 // Counted in the database (myco_budget_take), so it holds across every
 // Netlify instance, unlike the per-instance rate limit. Returns null to
@@ -454,10 +475,9 @@ async function findByRequestKey(sb, key) {
     if (error) throw error;
     return data || null;
   } catch (e) {
-    // Most likely the column is not there yet (SQL not run). Compose
-    // normally; idempotency simply does not apply.
-    console.warn('[fyf-compose] request_key lookup failed:', e && e.message ? e.message : e);
-    return null;
+    // Most likely the column is not there yet (SQL not run): without it
+    // there is no idempotency, so production stops here.
+    return dbControlMissing('request_key lookup', 'supabase-myco-budget.sql', e);
   }
 }
 
@@ -474,9 +494,8 @@ async function claimRequest(sb, key) {
     if (error) throw error;
     return data === true;
   } catch (e) {
-    // Most likely supabase-fyf-claims.sql not run yet: compose as before.
-    console.warn('[fyf-compose] request claim unavailable (run supabase-fyf-claims.sql?):', e && e.message ? e.message : e);
-    return null;
+    // Most likely supabase-fyf-claims.sql not run yet.
+    return dbControlMissing('request claim (fyf_claim_request)', 'supabase-fyf-claims.sql', e);
   }
 }
 async function releaseRequest(sb, key) {
@@ -491,9 +510,9 @@ async function waitForFormula(sb, key) {
   return null;
 }
 
-// Store a formula. If the database does not have the D6/D8 columns yet
-// (the SQL files not run), store it without them rather than failing
-// the reveal.
+// Store a formula. If the database does not have the D6/D8 columns
+// (the SQL files not run), production refuses (dbControlMissing); local
+// development stores the row without them.
 const NEW_COLUMNS = { retention_tracked: 'supabase-fyf-retention.sql', request_key: 'supabase-myco-budget.sql' };
 async function insertFormula(sb, payload) {
   let row = payload;
@@ -501,7 +520,7 @@ async function insertFormula(sb, payload) {
     const { error } = await sb.from('fyf_formulas').insert(row);
     const missing = error && Object.keys(NEW_COLUMNS).find(c => c in row && String(error.message || '').includes(c));
     if (!missing) return error || null;
-    console.warn('[fyf-compose] column ' + missing + ' missing — run ' + NEW_COLUMNS[missing] + '; storing without it');
+    dbControlMissing('column fyf_formulas.' + missing, NEW_COLUMNS[missing], error);
     const { [missing]: _dropped, ...rest } = row;
     row = rest;
   }
@@ -532,6 +551,20 @@ function replayResponse(row, profile, practitioner) {
 
 // ── Handler ──────────────────────────────────────────────────────
 export default async function handler(req) {
+  try {
+    return await handle(req);
+  } catch (e) {
+    if (e && e.code === 'DB_CONTROLS_MISSING') {
+      return jsonResponse(503, { ...corsFor(req.headers.get('origin') || ''), 'Retry-After': '300' }, {
+        status: 'error', code: 'DB_CONTROLS_MISSING',
+        message: 'The Formula Maker is being updated. Please try again in a few minutes.',
+      });
+    }
+    throw e;
+  }
+}
+
+async function handle(req) {
   const origin = req.headers.get('origin') || '';
   const cors   = corsFor(origin);
 
@@ -583,16 +616,15 @@ export default async function handler(req) {
     return jsonResponse(400, cors, { status: 'rejected', code: vp.code, message: vp.reason });
   }
 
-  // Age acknowledgement is a soft requirement — the profile carries
-  // _ageConfirmed which the client sets when the 18+ gate is ticked.
-  // We do NOT trust it as an actual age assertion (any client can set
-  // it to true), but its ABSENCE means the client explicitly did not
+  // Privacy consent is required — the client sets the flag when the
+  // entry gate's consent box is ticked. Any client can set it, so it
+  // proves nothing on its own, but its ABSENCE means the client did not
   // pass through the gate.
-  if (!vp.profile._ageConfirmed) {
+  if (!vp.profile._privacyConsentAcknowledged) {
     return jsonResponse(400, cors, {
       status: 'rejected',
-      code: 'AGE_GATE_NOT_ACKNOWLEDGED',
-      message: '_ageConfirmed must be true on the profile.',
+      code: 'PRIVACY_CONSENT_NOT_ACKNOWLEDGED',
+      message: '_privacyConsentAcknowledged must be true on the profile.',
     });
   }
 
@@ -663,8 +695,9 @@ export default async function handler(req) {
       engineResult = await composeFormulaWithMyco(vp.profile, { baseline, skipMyco: await mycoSkipReason(sb) });
     }
   } catch (e) {
-    console.error('[fyf-compose] engine threw:', e && e.stack ? e.stack : e);
     await release();
+    if (e && e.code === 'DB_CONTROLS_MISSING') throw e;
+    console.error('[fyf-compose] engine threw:', e && e.stack ? e.stack : e);
     return jsonResponse(500, cors, { status: 'error', code: 'INTERNAL_ERROR' });
   }
   const upgradeEligible = false; // legacy field; upgrade endpoint retired
@@ -725,7 +758,9 @@ export default async function handler(req) {
 
   let persisted = false;
   if (sb) {
-    const error = await insertFormula(sb, persistPayload);
+    let error;
+    try { error = await insertFormula(sb, persistPayload); }
+    catch (e) { await release(); throw e; }
     if (error && error.code === '23505' && key) {
       // The same request arrived twice at once and the other one stored
       // first: return that formula, so there is still only one.
@@ -745,9 +780,9 @@ export default async function handler(req) {
     }
     persisted = true;
   } else if (!isShadow) {
-    // Dev/test path — no Supabase configured. Return the formula with
-    // persisted:false so the caller knows reservation won't work.
-    console.warn('[fyf-compose] Supabase not configured — returning ephemeral formulaId');
+    // No Supabase configured: nothing stored, so no reservation and no
+    // retention. Local development only; production refuses.
+    dbControlMissing('Supabase (SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY)', 'the Netlify environment variables');
   }
 
   const out = sanitisedResponse({ formulaId, engineResult, profile: vp.profile, persisted, upgradeEligible });

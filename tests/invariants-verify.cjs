@@ -60,7 +60,7 @@ function randomProfile() {
     notes: pick(NOTES),
     nervous: pick([undefined, 'wired', 'tired', 'wired_tired', 'steady', 'reactive', 'flat']),
     energy_curve: pick([undefined, 'low_waking', 'am_good_pm_crash', 'high_unstable', 'waves', 'crash_mental']),
-    _gatedOptIn: rnd() < 0.3, _ageConfirmed: true,
+    _gatedOptIn: rnd() < 0.3, _privacyConsentAcknowledged: true,
   };
   if (pro) Object.assign(p, {
     _pro: rnd() < 0.5,
@@ -164,7 +164,7 @@ for (let i = 0; i < N; i++) {
 }
 
 // ── Part B · the safety question's input rules ────────────────────
-const base = { intention: 'stress', intentions: ['stress'], pattern: 'mixed', time: 'any', stress: 'push', duration: 'months', age: '25_40', sleep: 'restorative_6plus', _ageConfirmed: true };
+const base = { intention: 'stress', intentions: ['stress'], pattern: 'mixed', time: 'any', stress: 'push', duration: 'months', age: '25_40', sleep: 'restorative_6plus', _privacyConsentAcknowledged: true };
 const expect = (avoid, code) => {
   const r = E.compileFormula(Object.assign({}, base, { avoid }));
   if (r.status !== 'rejected' || r.code !== code) fail('safety input ' + JSON.stringify(avoid) + ' → ' + code, { avoid }, r.status + ' ' + (r.code || ''));
@@ -239,7 +239,7 @@ else fail('NO_SAFE_MATCH check has a pool to work with', base, flagged.length + 
   };
   // A modified client: under-18 age, "none" for safety, no _minor flag,
   // asking for the ceremonial herbs. The server must still gate it.
-  const kidAsks = { intention: 'sleep', intentions: ['sleep', 'mood'], pattern: 'mixed', time: 'night', stress: 'off', duration: 'months', age: 'under_18', sleep: 'hard_onset', avoid: ['none'], _gatedOptIn: true, _ageConfirmed: true };
+  const kidAsks = { intention: 'sleep', intentions: ['sleep', 'mood'], pattern: 'mixed', time: 'night', stress: 'off', duration: 'months', age: 'under_18', sleep: 'hard_onset', avoid: ['none'], _gatedOptIn: true, _privacyConsentAcknowledged: true };
   const kid = await call(kidAsks, '203.0.113.7');
   if (kid.status !== 200) fail('HTTP under-18 profile composes', kidAsks, kid.status);
   else {
