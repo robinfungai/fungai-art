@@ -128,6 +128,19 @@ effort or a faster model — Robin's call.
    the push, run step 3 of `supabase-formulas-server-writes.sql` (clears stored
    quiz_snapshot copies). After the push, check on the live site that a reservation
    reveals the percentages and the "why" text (they now come with the confirmation).
+**Later — the Engine 3.0 path** (tail of the 28 Sep audit, §65–69; Robin agreed 30 Sep).
+Today: the engine scores each herb alone, gives MYCO the top 20, MYCO picks the combination
+it judges best (in words, once), the engine checks it and sets the shares; without MYCO the
+bottle is the top of the ranking. Missing: a *measured* best — so the fallback also thinks in
+combinations, and MYCO can propose 2–3 constellations for the engine to score and choose.
+Order: (1) recorded body / time / stress fit, TOP-HERBS 1–50, Robin reviews → (2) load
+definitions (item 6b), then loads → (3) roles (primary, foundation, regulator, bridge, trace,
+flavour, mushroom axis) → (4) the optimiser + the Formula Object. Also on this path:
+confidence per bottle (high / medium / limited), pair grades below "do not combine"
+(info / caution / strong caution), extraction compatibility (solvent / ratio), D10 visuals
+after roles. Already done from that audit tail: P0 7–12, note cap, canonical inputs, no second
+pass, NO_MATCH / NO_SAFE_MATCH, percentages only after reservation (30 Sep).
+
 The monthly MYCO email: wait for the push, THEN Netlify → Functions → "Run now" (the live
 copy before the push is the old one that times out).
 
