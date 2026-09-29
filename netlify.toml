@@ -142,7 +142,11 @@
 
 # Force browsers to revalidate the favicon — avoids stale cached icons persisting across deploys
 [[headers]]
-  for = "/favicon.svg"
+  for = "/favicon.ico"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+[[headers]]
+  for = "/favicon-48.png"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 [[headers]]
@@ -225,11 +229,10 @@
 # Edge especially requests /favicon.ico unconditionally even when the
 # page links a different icon. Without an .ico response the browser
 # falls back to whatever it had cached before — for sites originally
-# built on Lovable, that's the Lovable default. Alias .ico → .svg.
-[[redirects]]
-  from   = "/favicon.ico"
-  to     = "/favicon.svg"
-  status = 200
+# built on Lovable, that's the Lovable default. public/favicon.ico is a
+# real file now (the 48 px and 256 px PNGs inside one .ico); the old
+# alias to /favicon.svg pointed at a file that no longer exists and
+# answered 404 (2026-09-29).
 
 # Root → new home design (force overrides the Vite-built /index.html that would otherwise win)
 [[redirects]]

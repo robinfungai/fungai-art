@@ -68,6 +68,10 @@
   function forChapter(id) { return docs.filter(function (d) { return d.chapter_id === id; }); }
 
   // ── Reading ────────────────────────────────────────────────────
+  function onPhone() {
+    try { return window.matchMedia('(pointer: coarse) and (max-width: 900px)').matches; } catch (_) { return false; }
+  }
+
   // One reader per chapter, full width under the grid; the card that is
   // open is marked, and its Read button closes it again.
   async function openDoc(d, holder, card) {
@@ -85,6 +89,23 @@
     var url = res.data.signedUrl;
     card.classList.add('is-open');
     btn.textContent = 'Close';
+    // Phones: Android Chrome cannot show a PDF inside the page at all and
+    // iOS shows only its first page, so hand it to the phone's own viewer
+    // — through a link the member taps, after seeing how heavy it is.
+    if (onPhone()) {
+      var big = d.bytes > 10 * 1048576;
+      holder.innerHTML =
+        '<div class="ad-viewer-head"><span class="ad-viewer-title">' + esc(d.title) + '</span>' +
+          '<button type="button" class="ad-btn ad-close">Close</button></div>' +
+        '<div class="ad-phone">' +
+          (d.bytes ? '<p class="ad-note">' + kb(d.bytes) + (d.pages ? ' · ' + d.pages + ' pages' : '') +
+            (big ? ' — a heavy file. On mobile data, Wi-Fi is kinder.' : '') + '</p>' : '') +
+          '<a class="ad-btn ad-open" href="' + esc(url) + '" target="_blank" rel="noopener">Open the PDF ↗</a>' +
+        '</div>';
+      holder.querySelector('.ad-close').addEventListener('click', function () { openDoc(d, holder, card); });
+      holder.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      return;
+    }
     holder.innerHTML =
       '<div class="ad-viewer-head"><span class="ad-viewer-title">' + esc(d.title) + '</span>' +
         '<a class="ad-link" href="' + esc(url) + '" target="_blank" rel="noopener">Open full screen ↗</a>' +
@@ -311,6 +332,8 @@
     '.ad-actions .ad-btn{padding:4px 10px}' +
     '.ad-viewer:empty{display:none}' +
     '.ad-viewer{margin:0 0 14px;border:0.5px solid rgba(232,177,75,0.35);border-radius:10px;overflow:hidden}' +
+    '.ad-phone{padding:4px 12px 14px;display:flex;flex-direction:column;align-items:flex-start;gap:10px}' +
+    '.ad-open{text-decoration:none;padding:9px 16px}' +
     '.ad-viewer-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:8px 12px}' +
     '.ad-viewer-title{flex:1;min-width:0;font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:16px;color:#E6D9B5}' +
     '.ad-btn{font-family:"Geist Mono",monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;padding:6px 12px;border-radius:999px;cursor:pointer;background:rgba(232,177,75,0.06);border:0.5px solid rgba(232,177,75,0.4);color:#F5D689}' +
