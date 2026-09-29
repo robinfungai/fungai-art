@@ -80,6 +80,38 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ---
 
+## 0.21 · START HERE (next session) — state on 29 Sep, end of day
+
+`main` = 572704b, **7 commits ahead of GitHub, not pushed** (6ed7dee … 572704b).
+All 44 test suites green; typecheck = the known 47-error backlog.
+Next session: read this §0.21, then `docs/AUDIT-2026-09-29-RESPONSE.md`
+(the newest audit — nothing edited yet, Robin approves each item), then §0.20–0.17 only as needed.
+
+### Robin's list
+1. **1 October — push.** Nothing to run first (claims + budget SQL verified live).
+   After the push: `supabase-formulas-server-writes.sql`, then step 4 of
+   `supabase-fyf-retention.sql` (by hand, look at the count first).
+2. **Netlify → Site configuration → Environment variables** — check these exist:
+   `ANTHROPIC_API_KEY` · `RESEND_API_KEY` · `SUPABASE_SERVICE_ROLE_KEY` ·
+   `SUPABASE_URL` (or `VITE_SUPABASE_URL`) · **`DIGEST_KEY` (new — any long random
+   string; it unlocks the manual MYCO-digest link)**. Optional: `FYF_MYCO_DAILY_LIMIT`
+   (default 100), `DIGEST_INBOX`, `FORMULA_FROM`. **Never** set `FYF_DB_COMPAT` there.
+3. **After the push, on the live site:** §0.17 checks, plus: Formula Maker "✕ forget"
+   and "Forget this reading"; a reveal → reserve → "Open the full analysis" (URL shows
+   only `?ref=…`); portal Dashboard shows the kingdom split; confirmation email reads
+   like the reveal.
+4. **MYCO digest:** Netlify → Functions → `myco-monthly-digest` → "Run now" (or open
+   `/.netlify/functions/myco-monthly-digest-background?key=<DIGEST_KEY>&dry=1` and read
+   the function log). Then paste its **FOR CLAUDE CODE** block into a session.
+5. **PubMed into the lab notes:** start with `docs/TOP-HERBS.md` (48 of the top 50
+   records carry no reference list).
+6. **Decide:** the audit items in `docs/AUDIT-2026-09-29-RESPONSE.md`; under-18 policy;
+   San Pedro / Syrian rue / sassafras (declined for formulas — reasons in §0.20);
+   why Vanilla is in 13% of bottles (looks like a scoring quirk — worth a look);
+   make the GitHub repo private (D7).
+
+---
+
 ## 0.20 · 2026-09-29 (night) — Amanita cards, kingdoms, MYCO digest, top herbs
 
 - **Amanita Muscaria is eligible as liquid medicine** (Robin): the "educational
