@@ -116,6 +116,11 @@ effort or a faster model — Robin's call.
    warmth), from PubMed. **Lemon balm** PubMed pass (serotonergic? — check first).
 5. **Why Vanilla is in 13% of bottles** — scoring look (`npm run report:top-herbs`).
 6. **D9** claims table. **Adverse-event form + batch id** (moved here).
+6b. **Load model — definitions only** (hardening checklist #1, "action now"; not done
+   on 29 Sep): write the 0–3 scale per dimension (sedative, stimulant, serotonergic,
+   laxative, bleeding, blood pressure, liver, volatile oil) with what 0/1/2/3 means and
+   2–3 anchor herbs each, as a doc for Robin to review. No data filled in, no caps,
+   no code. Roles (#2) stay "later".
 7. Decisions with Robin: under-18 policy (see the reply of 29 Sep), the rest of
    `docs/AUDIT-2026-09-29-RESPONSE.md`.
 The monthly MYCO email: wait for the push, THEN Netlify → Functions → "Run now" (the live
