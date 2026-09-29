@@ -124,6 +124,16 @@ const ENUMS = {
   ]),
 };
 
+// The quiz's sub-answers per body pattern (public/find-your-formula
+// Q2 stage B; display.js SUB_COPY holds their copy).
+const PATTERN_SUBS = {
+  hot:      ['anger', 'flushed', 'inflamed', 'hot_night'],
+  cold:     ['cold_hands', 'heavy', 'pale', 'low_drive'],
+  mixed:    ['stuck', 'up_down', 'tension', 'sighing'],
+  depleted: ['purposeless', 'dry', 'overworked', 'anxious_empty'],
+};
+const ALL_SUBS = new Set(Object.values(PATTERN_SUBS).flat());
+
 const NOTES_MAX_LEN     = 1000;
 const INTENTIONS_MAX    = 3;
 
@@ -161,12 +171,16 @@ function validateProfile(raw) {
   }
   p.pattern = raw.pattern;
 
-  // patternSub — optional short string (the sub-key like 'anger', 'inflamed', …)
-  if (raw.patternSub !== undefined) {
-    if (typeof raw.patternSub !== 'string' || raw.patternSub.length > 32) {
-      return { ok: false, code: 'PROFILE_INVALID', reason: 'patternSub must be a short string' };
+  // patternSub — optional, one of the four sub-answers of the chosen
+  // pattern (the quiz's Q2 stage B). Any other string is refused: it was
+  // written into the reveal's HTML (external audit 2026-09-29, XSS). The
+  // quiz sends '' when no sub-answer was picked; a real sub-answer of a
+  // different pattern (changed answer) is dropped, not refused.
+  if (raw.patternSub !== undefined && raw.patternSub !== '') {
+    if (typeof raw.patternSub !== 'string' || !ALL_SUBS.has(raw.patternSub)) {
+      return { ok: false, code: 'PROFILE_INVALID', reason: 'patternSub must be one of the sub-answers of the chosen pattern' };
     }
-    p.patternSub = raw.patternSub;
+    if (PATTERN_SUBS[p.pattern].includes(raw.patternSub)) p.patternSub = raw.patternSub;
   }
 
   // remaining single-value enums

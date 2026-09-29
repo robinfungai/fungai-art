@@ -27,6 +27,12 @@
 const { shortNote } = require('./axes');
 const { checkFormulaPairs } = require('./interactions');
 
+// storyText and whyText are HTML the browser sets with innerHTML. The
+// phrase maps below are our own copy; everything else that goes in —
+// herb names, herb summaries, the sub-answer — is escaped first
+// (external audit 2026-09-29: patternSub reached the page unescaped).
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
 // Sub-pattern refinement copy (Q2 stage B) — reads the user's second-
 // stage pick and folds it into the reveal story as a specific
 // body-reading line.
@@ -113,11 +119,11 @@ const STRESS_MAP_STORY = {
 // user's answers + herb NAMES (no pharma metadata leak).
 function storyFor(profile, herbs) {
   if (!herbs || !herbs.length) return '';
-  const heroNames = herbs.slice(0, 2).map(h => h.name).join(' and ');
-  const spineNames = herbs.slice(2, 4).map(h => h.name).join(', ');
-  const closerName = (herbs[4] && herbs[4].name)
+  const heroNames = herbs.slice(0, 2).map(h => esc(h.name)).join(' and ');
+  const spineNames = herbs.slice(2, 4).map(h => esc(h.name)).join(', ');
+  const closerName = esc((herbs[4] && herbs[4].name)
     || (herbs[herbs.length - 1] && herbs[herbs.length - 1].name)
-    || 'the closing note';
+    || 'the closing note');
   const subLine = profile.patternSub && SUB_COPY[profile.patternSub]
     ? ' Underneath, a specific signal: <em>' + SUB_COPY[profile.patternSub] + '</em>.'
     : '';
@@ -166,19 +172,19 @@ function buildWhyText(profile, herbs, percentages) {
   const patternPhrase = PATTERN_PHRASE[profile.pattern] || 'the body reading you gave';
 
   const heroLine =
-    '<strong style="color:var(--parchment);">' + hero.h.name + '</strong> takes the largest share (' +
-    hero.pct + '%) &mdash; ' + herbSummary(hero.h).toLowerCase() + '. ' +
+    '<strong style="color:var(--parchment);">' + esc(hero.h.name) + '</strong> takes the largest share (' +
+    esc(hero.pct) + '%) &mdash; ' + esc(herbSummary(hero.h).toLowerCase()) + '. ' +
     (second
-      ? 'Woven in at ' + second.pct + '%, <strong style="color:var(--parchment);">' + second.h.name +
-        '</strong> holds the second thread &mdash; ' + herbSummary(second.h).toLowerCase() + '.'
+      ? 'Woven in at ' + esc(second.pct) + '%, <strong style="color:var(--parchment);">' + esc(second.h.name) +
+        '</strong> holds the second thread &mdash; ' + esc(herbSummary(second.h).toLowerCase()) + '.'
       : '');
   const restLine = rest.length
-    ? 'The remaining allies (' + rest.map(x => x.pct + '% ' + x.h.name).join(', ') +
+    ? 'The remaining allies (' + rest.map(x => esc(x.pct + '% ' + x.h.name)).join(', ') +
       ') round the blend so the shift is <em>whole-body</em>, not narrow.'
     : '';
   const readingLine =
     'This composition targets <em>' + intentPhrase + '</em>, tuned for <em>' + patternPhrase + '</em>' +
-    (profile.patternSub ? ' &mdash; specifically the ' + profile.patternSub.replace(/_/g, ' ') + ' signature' : '') + '.';
+    (profile.patternSub ? ' &mdash; specifically the ' + esc(String(profile.patternSub).replace(/_/g, ' ')) + ' signature' : '') + '.';
   const hasSafetyFlags = (profile.avoid || []).filter(x => x && x !== 'none').length > 0;
   const openLine = hasSafetyFlags
     ? 'Your composition was <strong>filtered against the safety flags you set</strong>, then scored across intention, body signature, rhythm and stress. Cross-checked for herb-to-herb synergy in the practitioner catalog.'

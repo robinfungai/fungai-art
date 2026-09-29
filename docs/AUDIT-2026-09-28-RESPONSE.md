@@ -202,11 +202,22 @@ are true of the live site. Re-run on the local engine (2.6.1):
 | Q5 | Cap HIGH-caution herbs for adults (≤ 1, ≤ 15%) | ⚖️ Robin (46% of adult bottles hold one today). |
 | Q8 | First human test: the safety question with personas | ⚖️ Agreed. |
 
+## Fourth finding · XSS through `patternSub` (2026-09-29)
+
+**Verdict: real, fixed — severity Medium, not HIGH.** Checked on HEAD and origin/main (identical in these files).
+
+- **The chain is real.** `fyf-compose.mjs` accepted any string ≤ 32 characters as `patternSub`; `display.js` `buildWhyText()` wrote it into `whyText` unescaped; both formula pages set `whyText` with `innerHTML`. `<img src=x onerror=…>` is 28 characters.
+- **Why not HIGH.** The only browser that renders the response is the one that sent the request, and the site's quiz sends only its own button values — so as found it is self-XSS. A third-party page cannot make fungai.art's script render its payload. The stored copy (`fyf_formulas.profile`) is read back by `reserve-formula` (HTML email escapes it with `esc()`; the customer email only uses it as a map key), `fyf-upgrade` and the idempotent replay (both return to the same requester). `whyText` itself is never stored. It still had to go: one new reader of the stored profile would have made it stored XSS.
+- **Fix A — enum.** `patternSub` must be one of the 16 quiz sub-answers; anything else is refused with `PROFILE_INVALID`. `''` (no sub picked) is accepted, and a real sub-answer of a different pattern (a changed answer) is dropped rather than refused, so no genuine quiz run can fail on it.
+- **Fix B — escaping.** `display.js` escapes every non-constant string it puts into `storyText` / `whyText`: herb names, herb summaries, percentages, the sub-answer. The phrase maps are our own copy.
+- **Not done: structured data instead of HTML.** Right direction, bigger change (both formula pages render these strings). With every input either an enum or escaped at the one place the HTML is built, the class is closed for now; revisit with D10 (reveal redesign), where the reveal markup is rewritten anyway.
+- **Tested:** the audit payload → 400 `PROFILE_INVALID`; `''`, `anger` under hot, and `cold_hands` under hot → 200 with the right line in `whyText` (bundled with esbuild as Netlify builds it); `buildWhyText` with the payload emits `&lt;img`, never `<img`; `fyf-compose-storage-verify` 16/16; fixture compare 0 unexpected.
+
 ## Decisions (Robin, 2026-09-28)
 
 | | Question | Decided | Status |
 |---|---|---|---|
-| **D0** | Deploy (push) the unpushed commits? | Robin's call | Not pushed. The live site still composes Ephedra and non-pregnancy-safe bottles. |
+| **D0** | Deploy (push) the unpushed commits? | Robin's call | ✅ Pushed 2026-09-29 (`0a07052`). |
 | D1 | Safety words in the note | Apply the matching flag, fail-closed, and say so | ✅ Safety rules 1.3 |
 | D2 | MYCO's role | C: MYCO chooses herbs and writes the reasoning; the engine sets percentages | ✅ Engine 2.5 |
 | D3 | 40% cap · drop "+1 herb for 2+ flags" · strict walk + NO_MATCH/NO_SAFE_MATCH | Yes to all three | ✅ Engine 2.5 |
