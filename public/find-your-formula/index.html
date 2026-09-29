@@ -1336,10 +1336,10 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
         <input type="email"  name="email" placeholder="Your email"  required autocomplete="email"/>
         <input type="text"   name="name"  placeholder="Your name"   required autocomplete="name"/>
         <div class="row">
-          <input type="text" name="city"    placeholder="City"      required autocomplete="address-level2"/>
+          <input type="text" name="city"    placeholder="City (optional)" autocomplete="address-level2"/>
           <input type="text" name="country" placeholder="Country"   required autocomplete="country-name"/>
         </div>
-        <textarea name="notes" placeholder="Anything else? (optional)"></textarea>
+        <textarea name="notes" placeholder="Anything else? (optional)" maxlength="1000"></textarea>
         <button type="submit" class="reserve-submit" id="reserveBtn">Reserve my bottle →</button>
         <div class="err" id="reserveErr" hidden></div>
       </form>
@@ -2339,6 +2339,7 @@ function renderQuestionBody(q, opts){
   if (q.type === 'text') {
     const ta = document.createElement('textarea');
     ta.className = 'q-textarea';
+    ta.maxLength = 1000;   // the server keeps 1,000 characters (F8)
     ta.placeholder = q.placeholder || 'Optional. A sentence or two.';
     ta.value = state.answers[q.key] || '';
     ta.addEventListener('input', () => { state.answers[q.key] = ta.value; persist(); });
@@ -2458,11 +2459,6 @@ function renderQuestionBody(q, opts){
     function _uppercaseSub(sub){
       return String(sub || '').toUpperCase();
     }
-    function _escapeHtml(s){
-      return String(s || '').replace(/[&<>"']/g, c => (
-        { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]
-      ));
-    }
     q.options.forEach(o => {
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'bubble';
@@ -2475,12 +2471,12 @@ function renderQuestionBody(q, opts){
       b.innerHTML =
         '<span class="bubble-nucleus"></span>' +
         '<span class="bubble-typo">' +
-          (micro ? '<span class="bubble-micro">' + _escapeHtml(micro) + '</span>' : '') +
+          (micro ? '<span class="bubble-micro">' + escapeHtml(micro) + '</span>' : '') +
           '<span class="bubble-primary">' +
-            '<span>' + _escapeHtml(line1) + '</span>' +
-            (line2 ? '<span>' + _escapeHtml(line2) + '</span>' : '') +
+            '<span>' + escapeHtml(line1) + '</span>' +
+            (line2 ? '<span>' + escapeHtml(line2) + '</span>' : '') +
           '</span>' +
-          (meta ? '<span class="bubble-meta">' + _escapeHtml(meta) + '</span>' : '') +
+          (meta ? '<span class="bubble-meta">' + escapeHtml(meta) + '</span>' : '') +
         '</span>';
 
       b.addEventListener('click', () => {
@@ -2980,6 +2976,13 @@ function _fyfRenderServerErrorState({ kind, backToSafety, retry }) {
       cta:     'Retry',
       action:  retry,
     },
+    TIMEOUT: {
+      eyebrow: '✦ Taking longer than usual',
+      heading: 'The composer took too long to answer.',
+      body:    'Nothing is lost. Try again in a moment.',
+      cta:     'Retry',
+      action:  retry,
+    },
     NETWORK: {
       eyebrow: '✦ Connection lost',
       heading: 'We couldn\'t reach the composer.',
@@ -3372,7 +3375,7 @@ async function _fyfRenderResultServerMode(a) {
     clearTimeout(timeoutId);
     _fyfServerComposeInFlight = false;
     return _fyfRenderServerErrorState({
-      kind:         (e && e.name === 'AbortError') ? 'NETWORK' : 'NETWORK',
+      kind:         (e && e.name === 'AbortError') ? 'TIMEOUT' : 'NETWORK',
       backToSafety, retry,
     });
   }
@@ -3523,9 +3526,11 @@ function _fyfPaintServerReveal(a, body) {
       const el = document.createElement('div');
       el.className = 'r-herb';
       const trace   = !!h.isTrace;
-      const realPct = serverPct[i] > 0 ? serverPct[i] : 1;
+      // Empty until the reservation is confirmed (F2): compose no longer
+      // sends a consumer bottle's percentages.
+      const realPct = Number(serverPct[i]) > 0 ? serverPct[i] + '%' : '';
       el.innerHTML =
-        '<span class="r-herb-n" data-pct="' + realPct + '%">??%</span>' +
+        '<span class="r-herb-n" data-pct="' + realPct + '">??%</span>' +
         '<div>' +
           '<div class="r-herb-name">' + escapeHtml(h.name) + '</div>' +
           '<div class="r-herb-latin">' + escapeHtml(h.botanical || '') + '</div>' +
@@ -3535,7 +3540,22 @@ function _fyfPaintServerReveal(a, body) {
       list.appendChild(el);
     });
   });
-  window.__revealPercentages = function() {
+  window.__revealPercentages = function(revealed) {
+    // F2 (30 Sep): the percentages and the "why" text arrive with the
+    // confirmed reservation (reserve-formula's reply), matched by name.
+    if (revealed && Array.isArray(revealed.herbs)) {
+      const byName = new Map(revealed.herbs.map(h => [String(h.name), Number(h.percentage)]));
+      document.querySelectorAll('#rHerbList .r-herb').forEach(row => {
+        const nm = row.querySelector('.r-herb-name'), n = row.querySelector('.r-herb-n');
+        const pc = nm && byName.get(nm.textContent);
+        if (n && pc > 0) n.setAttribute('data-pct', pc + '%');
+      });
+      window.__revealedShares = revealed.herbs.map(h => Number(h.percentage) || 0);
+      const whyEl = document.getElementById('rWhyText');
+      if (whyEl && revealed.whyText) whyEl.innerHTML = String(revealed.whyText);
+    }
+    // Nothing to show yet (not reserved): stay locked.
+    if (![...document.querySelectorAll('#rHerbList .r-herb-n')].some(n => n.getAttribute('data-pct'))) return;
     document.querySelectorAll('#rHerbList .r-herb-n').forEach(n => {
       const real = n.getAttribute('data-pct');
       if (real) n.textContent = real;
@@ -3554,7 +3574,7 @@ function _fyfPaintServerReveal(a, body) {
           window.FormulaHandoff.arm(a, () => {
             const g = window.__authoritativeFormula;
             return g && Array.isArray(g.herbs) && g.herbs.length
-              ? { h: g.herbs.map(h => h.name), p: g.percentages || null, n: g.name || '', src: 'find-your-formula' }
+              ? { h: g.herbs.map(h => h.name), p: window.__revealedShares || g.percentages || null, n: g.name || '', src: 'find-your-formula' }
               : null;
           });
         }
@@ -3776,22 +3796,13 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(payload.email)) {
     errEl.hidden = false; errEl.textContent = 'Please enter a valid email.'; return;
   }
-  if (!payload.name || !payload.city || !payload.country) {
-    errEl.hidden = false; errEl.textContent = 'Please fill in name, city and country.'; return;
+  if (!payload.name || !payload.country) {
+    errEl.hidden = false; errEl.textContent = 'Please fill in your name and country.'; return;
   }
-  btn.disabled = true; btn.textContent = 'Reserving…';
+  btn.disabled = true; btn.textContent = 'Reserving…'; btn.dataset.reserving = '1';
 
-  // Reveal percentages + why-card unlock IMMEDIATELY on submit —
-  // don't wait for the network. Robin's feedback: the user reserves,
-  // the visual reward (real % values in amber, no more ??%) should
-  // happen right away. If the fetch fails and we re-enable the
-  // button, the reveal stays — it was earned by the intent to
-  // reserve, not by the network round-trip.
-  try {
-    const whyCardEarly = document.getElementById('rWhyCard');
-    if (whyCardEarly) whyCardEarly.classList.remove('dimmed');
-    if (window.__revealPercentages) window.__revealPercentages();
-  } catch (_) {}
+  // The reveal waits for the server's confirmation now (F2 / F6, 30 Sep):
+  // the percentages come in its reply.
 
   // Defensive re-enable: if the fetch hangs, never leave the button
   // dead. Robin reported the reserve button "gets stuck" — one likely
@@ -3799,7 +3810,7 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
   // AbortController + a hard safety timer that unlocks the button
   // if we're still on this state past 22 s.
   const stuckSafety = setTimeout(() => {
-    if (btn.disabled && btn.textContent === 'Reserving…') {
+    if (btn.disabled && btn.dataset.reserving === '1') {   // a flag, not the button's wording (F5)
       btn.disabled = false;
       btn.textContent = 'Reserve my bottle →';
       errEl.hidden = false;
@@ -3832,6 +3843,7 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     let reservationStatus = 'failed';    // safe default
     let serverErr = null;
     let serverGeo = null;
+    let serverReveal = null;             // F2: percentages + why text from the confirmation
     let partialNote = null;              // extra copy for the partial branch
     try {
       const ctrl = new AbortController();
@@ -3864,6 +3876,7 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
 
       if (reservationStatus === 'confirmed' || reservationStatus === 'partial') {
         serverGeo = bodyJson?.geo || null;
+        serverReveal = bodyJson?.formula || null;
         if (reservationStatus === 'partial') {
           // Which side failed — Robin got it or the customer did?
           if (bodyJson && bodyJson.robinOk === true && bodyJson.customerOk === false) {
@@ -3887,7 +3900,7 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
       reservationStatus = 'failed';
       console.error('[reserve] fetch failed', e);
     }
-    clearTimeout(stuckSafety);
+    clearTimeout(stuckSafety); delete btn.dataset.reserving;
 
     if (reservationStatus === 'failed') {
       // Render an honest error state. Do NOT show the success card,
@@ -3947,14 +3960,14 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     // the real values in amber.
     const whyCard = document.getElementById('rWhyCard');
     if (whyCard) whyCard.classList.remove('dimmed');
-    if (window.__revealPercentages) window.__revealPercentages();
+    if (window.__revealPercentages) window.__revealPercentages(serverReveal);
     // Archive to /community/academy/ Formula Book (local + cloud).
     try {
       const cur = window.__currentFormula;
       if (cur) await archiveFormulaToAcademy({
         name: cur.name,
         herbs: cur.herbs,
-        percentages: cur.percentages,
+        percentages: window.__revealedShares || cur.percentages,
         notes: payload.notes,
         contactName: payload.name,
         geo: serverGeo,
@@ -3962,7 +3975,7 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     } catch (_) {}
     forgetStoredReading();
   } catch (err) {
-    clearTimeout(stuckSafety);
+    clearTimeout(stuckSafety); delete btn.dataset.reserving;
     btn.disabled = false; btn.textContent = 'Reserve my bottle →';
     errEl.hidden = false; errEl.textContent = 'Something didn\'t send. Try once more, or email robin@fungai.art.';
   }
@@ -4023,11 +4036,8 @@ document.querySelectorAll('.r-action').forEach(el => {
   if (el.tagName === 'A' && /shop|apothecary/i.test(el.textContent)) {
     el.setAttribute('target', '_blank');
     el.setAttribute('rel', 'noopener');
-    el.addEventListener('click', () => {
-      const whyCard = document.getElementById('rWhyCard');
-      if (whyCard) whyCard.classList.remove('dimmed');
-      if (window.__revealPercentages) window.__revealPercentages();
-    });
+    // (Opening the shop no longer reveals the percentages — F2: the
+    // page doesn't have them until a reservation is confirmed.)
   }
 });
 

@@ -196,6 +196,21 @@ function fakeSupabase() {
     const legacy = win.FormulaHandoff.take('h=Valerian|Hops&p=60,40');
     check('11 · an old ?h=&p= link still opens, and the address is cleaned at once', legacy && legacy.h.length === 2 && /^\/formula-analysis\/\?ref=[0-9a-f]{24}$/.test(win.location.replaced || ''), win.location.replaced);
 
+    // ── 11b · the percentage gate is real (second audit F2, 30 Sep) ──
+    db = fakeSupabase(); mod._setSupabaseForTests(db);
+    const g1 = await call({ profile: base, requestId: 'adv0000000020' });
+    const wire = JSON.stringify(g1.body);
+    check('11b · a consumer compose reply carries no percentages and no "why" text',
+      g1.status === 200 && g1.body.formula.sharesLocked === true && g1.body.formula.herbs.every(h => h.percentage == null) && !g1.body.formula.whyText,
+      JSON.stringify(g1.body.formula.herbs.map(h => h.percentage)));
+    check('11b · …and no "NN%" anywhere in it', !/\b\d{1,3}\s?%/.test(wire.replace(/"totalPercentage":\d+/, '')), (wire.match(/\b\d{1,3}\s?%/) || [''])[0]);
+    const g2 = await call({ profile: base, requestId: 'adv0000000020' });
+    check('11b · a replayed request is locked too', g2.body.replayed === true && g2.body.formula.herbs.every(h => h.percentage == null));
+    const RES = read('netlify/functions/reserve-formula.mjs');
+    check('11b · reserve-formula returns them from the stored formula on confirmation', /formula: \{\s*herbs: storedHerbs\.map/.test(RES) && /status !== 'failed' \? \{ formula:/.test(RES));
+    check('11b · the page reveals only what the confirmation sends (no reveal on submit or on the shop link)',
+      /__revealPercentages\(serverReveal\)/.test(PAGE) && !/__revealPercentages\(\)/.test(PAGE));
+
     // ── 12 · replaying the same formula ───────────────────────────
     db = fakeSupabase(); mod._setSupabaseForTests(db);
     const p1 = await call({ profile: base, requestId: 'adv0000000014' });

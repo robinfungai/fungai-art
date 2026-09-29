@@ -391,7 +391,8 @@ export default async function handler(req) {
   catch (e) { console.warn('[reserve-formula] micronutrients failed:', e && e.message ? e.message : e); }
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json({ error: 'Invalid email address' }, 400, cors);
-  if (!name || !city || !country) return json({ error: 'Missing name / city / country' }, 400, cors);
+  // City is optional (F3, Robin 30 Sep) — shipping details come at payment.
+  if (!name || !country) return json({ error: 'Missing name / country' }, 400, cors);
 
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
   if (!RESEND_API_KEY) {
@@ -516,6 +517,12 @@ export default async function handler(req) {
     // Echo the (minimised, country-only per Item #2) geo back so
     // the client can include it in the Supabase Formula Book insert.
     geo: geo,
+    // F2 — the percentages and the "why" text compose withheld arrive
+    // with the confirmation, from the STORED formula.
+    ...(status !== 'failed' ? { formula: {
+      herbs: storedHerbs.map((h, i) => ({ name: h.name, percentage: percentages[i] })),
+      whyText: (display && display.whyText) || '',
+    } } : {}),
   };
 
   // Round 2 · Item #4 — cache the response under the idempotency key
@@ -566,7 +573,7 @@ function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, 
       <div style="background:#0F1014;border:0.5px solid rgba(232,177,75,.22);border-radius:12px;padding:32px 28px;">
         <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:#E8B14B;margin-bottom:14px;">✦ New formula reservation</div>
         <h1 style="font-family:Georgia,serif;font-style:italic;font-weight:400;font-size:26px;color:#E6D9B5;margin:0 0 8px;line-height:1.15;">${esc(formulaName || 'Unnamed formula')}</h1>
-        <p style="font-size:14px;color:#8B7E62;margin:0 0 22px;">for <strong style="color:#EDE5D8;">${esc(name)}</strong> · ${esc(city)}, ${esc(country)} · <strong style="color:#F5D689;">${bottleMl} ml</strong> bottle</p>
+        <p style="font-size:14px;color:#8B7E62;margin:0 0 22px;">for <strong style="color:#EDE5D8;">${esc(name)}</strong> · ${city ? esc(city) + ', ' : ''}${esc(country)} · <strong style="color:#F5D689;">${bottleMl} ml</strong> bottle</p>
 
         <!-- Source badge — server-authoritative (Step 7: only mode) -->
         <div style="margin:0 0 18px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.16em;color:#7bd4a1;">
@@ -656,7 +663,7 @@ function buildRobinText({ email, name, city, country, notes, formulaName, quiz, 
   return `NEW FORMULA RESERVATION — ${bottleMl} ML BOTTLE
 
 Formula: ${formulaName || 'Unnamed'}
-For:     ${name} · ${city}, ${country}
+For:     ${name} · ${city ? city + ', ' : ''}${country}
 Email:   ${email}
 Source:  server-authoritative · id ${formulaId} · engine ${engineVersion || '-'}
 

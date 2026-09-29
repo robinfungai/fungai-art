@@ -526,6 +526,21 @@ async function insertFormula(sb, payload) {
   }
 }
 
+// F2 (second audit of 29 Sep; Robin, 30 Sep: "A") — a consumer bottle's
+// percentages, and the "why" text that quotes them, stay on the server
+// until the reservation is confirmed: reserve-formula returns them. The
+// page used to hold them and only hide them. Practitioners see them at
+// once (the pro composer edits them); so do local development and the
+// test suites (compatibility mode). MYCO's reading loses any "NN%".
+function lockShares(out, practitioner) {
+  if ((practitioner && practitioner.ok) || dbCompatMode() || !out || !out.formula) return out;
+  const f = out.formula;
+  out.formula = { ...f, herbs: (f.herbs || []).map(h => ({ ...h, percentage: null })), whyText: '', sharesLocked: true };
+  if ('whyText' in out) out.whyText = '';
+  if (typeof out.mycoOverall === 'string') out.mycoOverall = out.mycoOverall.replace(/\s*\(?\b\d{1,3}(?:[.,]\d+)?\s?%\)?/g, '');
+  return out;
+}
+
 // Practitioner-only: the points behind each herb and the best unseated
 // alternatives. The public response deliberately hides scores and ids
 // (AUDIT_FIX Finding #7); a verified practitioner gets them because the
@@ -546,6 +561,7 @@ function attachPro(out, profile, engineResult, practitioner) {
 function replayResponse(row, profile, practitioner) {
   const out = sanitisedResponse({ formulaId: row.id, engineResult: row.formula, profile: row.profile || profile, persisted: true, upgradeEligible: false });
   out.replayed = true;
+  lockShares(out, practitioner);
   return attachPro(out, profile, row.formula, practitioner);
 }
 
@@ -785,6 +801,6 @@ async function handle(req) {
     dbControlMissing('Supabase (SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY)', 'the Netlify environment variables');
   }
 
-  const out = sanitisedResponse({ formulaId, engineResult, profile: vp.profile, persisted, upgradeEligible });
+  const out = lockShares(sanitisedResponse({ formulaId, engineResult, profile: vp.profile, persisted, upgradeEligible }), practitioner);
   return jsonResponse(200, cors, attachPro(out, vp.profile, engineResult, practitioner));
 }

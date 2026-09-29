@@ -47,7 +47,7 @@ yet — Robin approves each change first** (Robin, 29 Sep: "check with me before
 
 Line numbers in the audit are from the page on GitHub main (older). Checked 29 Sep,
 night, against local `main` and — for F1 — the live database (anon key, ids only).
-**Nothing edited; each item waits for Robin's OK.**
+**Robin, 30 Sep: F2 → A; F3 → optional; F4, F5, F7, F8 → go. Done 30 Sep** (F1 needs only the push + SQL step 3).
 
 | # | Verdict | Proposal | Moves bottles? |
 |---|---|---|---|

@@ -1035,10 +1035,10 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
         <input type="email"  name="email" placeholder="Your email"  required autocomplete="email"/>
         <input type="text"   name="name"  placeholder="Your name"   required autocomplete="name"/>
         <div class="row">
-          <input type="text" name="city"    placeholder="City"      required autocomplete="address-level2"/>
+          <input type="text" name="city"    placeholder="City (optional)" autocomplete="address-level2"/>
           <input type="text" name="country" placeholder="Country"   required autocomplete="country-name"/>
         </div>
-        <textarea name="notes" placeholder="Anything else? (optional)"></textarea>
+        <textarea name="notes" placeholder="Anything else? (optional)" maxlength="1000"></textarea>
         <button type="submit" class="reserve-submit" id="reserveBtn">Reserve my bottle →</button>
         <div class="err" id="reserveErr" hidden></div>
       </form>
@@ -1657,6 +1657,7 @@ function renderQuestionBody(q, opts){
   if (q.type === 'text') {
     const ta = document.createElement('textarea');
     ta.className = 'q-textarea';
+    ta.maxLength = 1000;   // the server keeps 1,000 characters (F8)
     ta.placeholder = q.placeholder || 'Optional. A sentence or two.';
     ta.value = state.answers[q.key] || '';
     ta.addEventListener('input', () => { state.answers[q.key] = ta.value; persist(); });
@@ -2282,6 +2283,13 @@ function _fyfRenderServerErrorState({ kind, backToSafety, retry }) {
       cta:     'Retry',
       action:  retry,
     },
+    TIMEOUT: {
+      eyebrow: '✦ Taking longer than usual',
+      heading: 'The composer took too long to answer.',
+      body:    'Nothing is lost. Try again in a moment.',
+      cta:     'Retry',
+      action:  retry,
+    },
     NETWORK: {
       eyebrow: '✦ Connection lost',
       heading: 'We couldn\'t reach the composer.',
@@ -2565,7 +2573,7 @@ async function _fyfRenderResultServerMode(a) {
     clearTimeout(timeoutId);
     _fyfServerComposeInFlight = false;
     return _fyfRenderServerErrorState({
-      kind: (e && e.name === 'AbortError') ? 'NETWORK' : 'NETWORK',
+      kind: (e && e.name === 'AbortError') ? 'TIMEOUT' : 'NETWORK',
       backToSafety, retry,
     });
   }
@@ -2842,10 +2850,10 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(payload.email)) {
     errEl.hidden = false; errEl.textContent = 'Please enter a valid email.'; return;
   }
-  if (!payload.name || !payload.city || !payload.country) {
-    errEl.hidden = false; errEl.textContent = 'Please fill in name, city and country.'; return;
+  if (!payload.name || !payload.country) {
+    errEl.hidden = false; errEl.textContent = 'Please fill in your name and country.'; return;
   }
-  btn.disabled = true; btn.textContent = 'Reserving…';
+  btn.disabled = true; btn.textContent = 'Reserving…'; btn.dataset.reserving = '1';
 
   // Reveal percentages + why-card unlock IMMEDIATELY on submit —
   // don't wait for the network. Robin's feedback: the user reserves,
@@ -2865,7 +2873,7 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
   // AbortController + a hard safety timer that unlocks the button
   // if we're still on this state past 22 s.
   const stuckSafety = setTimeout(() => {
-    if (btn.disabled && btn.textContent === 'Reserving…') {
+    if (btn.disabled && btn.dataset.reserving === '1') {   // a flag, not the button's wording (F5)
       btn.disabled = false;
       btn.textContent = 'Reserve my bottle →';
       errEl.hidden = false;
@@ -2934,7 +2942,7 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
       reservationStatus = 'failed';
       console.error('[reserve] fetch failed', e);
     }
-    clearTimeout(stuckSafety);
+    clearTimeout(stuckSafety); delete btn.dataset.reserving;
 
     if (reservationStatus === 'failed') {
       const codeCopy = {
@@ -3002,7 +3010,7 @@ document.getElementById('reserveForm').addEventListener('submit', async (e) => {
     } catch (_) {}
     forgetStoredReading();
   } catch (err) {
-    clearTimeout(stuckSafety);
+    clearTimeout(stuckSafety); delete btn.dataset.reserving;
     btn.disabled = false; btn.textContent = 'Reserve my bottle →';
     errEl.hidden = false; errEl.textContent = 'Something didn\'t send. Try once more, or email robin@fungai.art.';
   }

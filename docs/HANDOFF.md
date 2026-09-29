@@ -123,9 +123,11 @@ effort or a faster model — Robin's call.
    no code. Roles (#2) stay "later".
 7. Decisions with Robin: under-18 policy (see the reply of 29 Sep), the rest of
    `docs/AUDIT-2026-09-29-RESPONSE.md` — BOTH audits there (the second: F1–F8 on the
-   Find-your-formula page; F2 percentage gate and F3 city need Robin's call; F4, F5,
-   F7, F8 are small fixes waiting for his OK). F1: after the push, run step 3 of
-   `supabase-formulas-server-writes.sql` (clears stored quiz_snapshot copies).
+   Find-your-formula page — F2 (percentages now held on the server until the
+   reservation is confirmed), F3 (city optional), F4, F5, F7, F8 DONE 30 Sep). F1: after
+   the push, run step 3 of `supabase-formulas-server-writes.sql` (clears stored
+   quiz_snapshot copies). After the push, check on the live site that a reservation
+   reveals the percentages and the "why" text (they now come with the confirmation).
 The monthly MYCO email: wait for the push, THEN Netlify → Functions → "Run now" (the live
 copy before the push is the old one that times out).
 
