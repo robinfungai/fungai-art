@@ -27,11 +27,11 @@
    still answers and MYCO says it is unavailable).
    ════════════════════════════════════════════════════════════════ */
 
-import { createRequire } from 'module';
+// Imported, not createRequire(import.meta.url): Netlify's esbuild bundles
+// this file to CommonJS, where import.meta.url is undefined and the
+// function crashed on load (502, found live 2026-09-29).
 import { guardReply } from '../../src/server/myco/claims-guard.cjs';
-
-const require = createRequire(import.meta.url);
-const { analyzeFormula, diffAnalyses, RULES, HOUSE_RATIO } = require('../../src/server/formula-engine/analyze.js');
+import { analyzeFormula, diffAnalyses, RULES, HOUSE_RATIO } from '../../src/server/formula-engine/analyze.js';
 
 const ALLOWED_ORIGINS = [
   'https://www.fungai.art',

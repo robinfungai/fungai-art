@@ -20,7 +20,7 @@
   // The built-in fallback, and the seed in supabase-dashboard-admin.sql.
   const FIGURES = [
     { id: 'members',   label: 'Hyphae in the network',        source: 'members', note: 'members with a profile' },
-    { id: 'herbs',     label: 'Plants in the materia medica', value: 243,        note: 'as of September 2026' },
+    { id: 'herbs',     label: 'Plants in the materia medica', source: 'herbs',   note: 'counted live from the catalogue' },
     { id: 'nodes',     label: 'Network nodes',                source: 'nodes',   note: 'live on the globe' },
     { id: 'ahead',     label: 'Gatherings ahead',             source: 'ahead',   note: 'on the calendar' },
     { id: 'dinners',   label: 'Dinners hosted',               value: 24,  draft: true },
@@ -31,7 +31,13 @@
 
   /* ── the board store: figures + announcements, shared with the
         Admin page's editors so a save shows up everywhere at once ── */
-  const board = { figures: null, figuresMissing: false, announcements: [], announcementsMissing: false };
+  const board = { figures: null, figuresMissing: false, announcements: [], announcementsMissing: false, herbs: null };
+
+  // The materia medica is always counted live from the Engine's catalogue
+  // (public/herb-engine-ids.json, rewritten by every herb build), whatever
+  // the stored row says: site_figures.source only allows members, nodes
+  // and ahead, and the row seeded in September holds a fixed 243.
+  const LIVE_BY_ID = { herbs: { source: 'herbs', note: 'counted live from the catalogue' } };
   const subs = new Set();
   const emit = () => subs.forEach(fn => fn());
   let started = false;
@@ -62,18 +68,26 @@
     emit();
   }
 
+  async function loadHerbCount() {
+    try {
+      const r = await fetch('/herb-engine-ids.json', { cache: 'no-store' });
+      const list = r.ok ? await r.json() : null;
+      if (Array.isArray(list) && list.length) { board.herbs = list.length; emit(); }
+    } catch (_) {}
+  }
+
   function useBoard() {
     const [, bump] = useState(0);
     useEffect(() => {
       const fn = () => bump(n => n + 1);
       subs.add(fn);
-      if (!started) { started = true; loadFigures(); loadAnnouncements(); }
+      if (!started) { started = true; loadFigures(); loadAnnouncements(); loadHerbCount(); }
       return () => { subs.delete(fn); };
     }, []);
     return board;
   }
 
-  window.PortalBoard = { useBoard, loadFigures, loadAnnouncements, FIGURES };
+  window.PortalBoard = { useBoard, loadFigures, loadAnnouncements, FIGURES, LIVE_BY_ID };
 
   const ANN_SEEN = 'fa_announcements_seen_at';
 
@@ -145,10 +159,12 @@
       .filter(a => !a.expires_at || Date.parse(a.expires_at) > Date.now())
       .slice(0, 3);
 
-    const figures = (b.figures || FIGURES).filter(f => !f.draft || isAdmin).map(f => ({
-      ...f,
-      shown: f.source ? live[f.source] : f.value,
-    })).filter(f => f.shown != null && f.shown !== '');
+    const counts = { ...live, herbs: b.herbs };
+    const figures = (b.figures || FIGURES).filter(f => !f.draft || isAdmin).map(f => {
+      const g = { ...f, ...(LIVE_BY_ID[f.id] || {}) };
+      // Until the catalogue answers, a live figure shows its stored value.
+      return { ...g, shown: g.source && counts[g.source] != null ? counts[g.source] : f.value };
+    }).filter(f => f.shown != null && f.shown !== '');
     const month = now.getMonth() + 1;
     const first = currentMember && currentMember.name ? currentMember.name.split(' ')[0] : null;
 

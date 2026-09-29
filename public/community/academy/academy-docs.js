@@ -68,16 +68,30 @@
   function forChapter(id) { return docs.filter(function (d) { return d.chapter_id === id; }); }
 
   // ── Reading ────────────────────────────────────────────────────
-  async function openDoc(d, holder, btn) {
-    if (holder.firstChild) { holder.innerHTML = ''; btn.textContent = 'Read'; return; }
+  // One reader per chapter, full width under the grid; the card that is
+  // open is marked, and its Read button closes it again.
+  async function openDoc(d, holder, card) {
+    var grid = card.parentNode;
+    var wasOpen = card.classList.contains('is-open');
+    grid.querySelectorAll('.ad-doc.is-open').forEach(function (c) {
+      c.classList.remove('is-open'); c.querySelector('.ad-read').textContent = 'Read';
+    });
+    holder.innerHTML = '';
+    if (wasOpen) return;
+    var btn = card.querySelector('.ad-read');
     btn.textContent = 'Opening…';
     var res = await sb().storage.from(BUCKET).createSignedUrl(d.storage_path, 3600);
     if (res.error || !res.data) { btn.textContent = 'Read'; alert('Could not open it: ' + (res.error ? res.error.message : 'no link')); return; }
     var url = res.data.signedUrl;
-    holder.innerHTML =
-      '<iframe class="ad-view" src="' + esc(url) + '#view=FitH" title="' + esc(d.title) + '"></iframe>' +
-      '<a class="ad-link" href="' + esc(url) + '" target="_blank" rel="noopener">Open full screen ↗</a>';
+    card.classList.add('is-open');
     btn.textContent = 'Close';
+    holder.innerHTML =
+      '<div class="ad-viewer-head"><span class="ad-viewer-title">' + esc(d.title) + '</span>' +
+        '<a class="ad-link" href="' + esc(url) + '" target="_blank" rel="noopener">Open full screen ↗</a>' +
+        '<button type="button" class="ad-btn ad-close">Close</button></div>' +
+      '<iframe class="ad-view" src="' + esc(url) + '#view=FitH" title="' + esc(d.title) + '"></iframe>';
+    holder.querySelector('.ad-close').addEventListener('click', function () { openDoc(d, holder, card); });
+    holder.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   // ── Uploading (keepers) ────────────────────────────────────────
@@ -100,7 +114,9 @@
   async function extract(file, onPage) {
     var pdfjs = await loadPdfJs();
     var pdf = await pdfjs.getDocument({ data: await file.arrayBuffer() }).promise;
-    var chunks = [], buf = '', from = 1;
+    var chunks = [], buf = '', from = 1, heading = '';
+    var meta = null;
+    try { meta = await pdf.getMetadata(); } catch (_) {}
     function flush(to) {
       var t = buf.replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
       if (t) chunks.push({ text: t.slice(0, 3900), page_from: from, page_to: to });
@@ -111,6 +127,7 @@
       var page = await pdf.getPage(p);
       var tc = await page.getTextContent();
       var text = tc.items.map(function (it) { return it.str + (it.hasEOL ? '\n' : ' '); }).join('');
+      if (p === 1) heading = biggestLine(tc.items);
       if (!buf) from = p;
       buf += (buf ? '\n' : '') + text;
       while (buf.length > CHUNK) {
@@ -124,20 +141,42 @@
       }
     }
     flush(pdf.numPages);
-    return { pages: pdf.numPages, chunks: chunks };
+    var t = meta && meta.info && String(meta.info.Title || '').trim();
+    return { pages: pdf.numPages, chunks: chunks, title: goodTitle(t) || goodTitle(heading) };
+  }
+
+  // Editors leave junk in the Title field ("Microsoft Word - draft3.docx").
+  function goodTitle(t) {
+    t = String(t || '').replace(/\s+/g, ' ').trim();
+    if (t.length < 6 || t.length > 160) return '';
+    if (/^(untitled|document\d*|microsoft (word|powerpoint)|slide ?\d+)|\.(pdf|docx?|pptx?|indd|tex)$/i.test(t)) return '';
+    if (!/[a-z]{3}/i.test(t)) return '';
+    return t;
+  }
+  // The largest type on the first page, in reading order — for most
+  // papers and books that is the title.
+  function biggestLine(items) {
+    var size = function (it) { return Math.abs((it.transform && it.transform[3]) || it.height || 0); };
+    var words = items.filter(function (it) { return it.str && it.str.trim().length > 1; });
+    if (!words.length) return '';
+    var max = Math.max.apply(null, words.map(size));
+    return words.filter(function (it) { return size(it) >= max * 0.92; })
+      .map(function (it) { return it.str.trim(); }).join(' ').slice(0, 160);
   }
 
   async function upload(chapterId, file, status) {
     if (!file) return;
     if (file.type !== 'application/pdf' && !/\.pdf$/i.test(file.name)) { status.textContent = 'That is not a PDF.'; return; }
     if (file.size > MAX_MB * 1048576) { status.textContent = 'Over ' + MAX_MB + ' MB — too large for the library.'; return; }
-    var title = prompt('Title for this document', file.name.replace(/\.pdf$/i, '').replace(/[_-]+/g, ' ').trim());
-    if (title === null) { status.textContent = ''; return; }
-    title = (title.trim() || file.name).slice(0, 160);
-
     try {
       status.textContent = 'Reading the PDF…';
       var ex = await extract(file, function (p, n) { status.textContent = 'Reading page ' + p + ' of ' + n + '…'; });
+
+      // The card shows this as its headline — offer the PDF's own title.
+      var fromName = file.name.replace(/\.pdf$/i, '').replace(/[_-]+/g, ' ').trim();
+      var title = prompt('Title for this document — it is the headline on its card', ex.title || fromName);
+      if (title === null) { status.textContent = ''; return; }
+      title = (title.trim() || fromName || file.name).slice(0, 160);
 
       status.textContent = 'Uploading…';
       var slug = file.name.toLowerCase().replace(/\.pdf$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) || 'document';
@@ -174,6 +213,16 @@
     }
   }
 
+  async function renameDoc(d) {
+    var t = prompt('New title for this document', d.title);
+    if (t === null) return;
+    t = t.trim().slice(0, 160);
+    if (!t || t === d.title) return;
+    var r = await sb().from('academy_docs').update({ title: t }).eq('id', d.id);
+    if (r.error) { alert('Could not rename it: ' + r.error.message); return; }
+    await load();
+  }
+
   async function removeDoc(d) {
     if (!confirm('Remove “' + d.title + '” from the library? MYCO forgets its text too.')) return;
     var r = await sb().from('academy_docs').delete().eq('id', d.id);
@@ -194,26 +243,46 @@
     if (state === 'error' && isAdmin) {
       el.innerHTML = '<p class="ad-note">The library could not load: ' + esc(errorMsg) + '</p>';
     }
+    var grid = document.createElement('div');
+    grid.className = 'ad-grid';
+    var viewer = document.createElement('div');
+    viewer.className = 'ad-viewer';
+    if (list.length > 6) {
+      var find = document.createElement('input');
+      find.type = 'search';
+      find.className = 'ad-find';
+      find.placeholder = 'Search ' + list.length + ' documents…';
+      find.setAttribute('aria-label', 'Search the documents in this chapter');
+      find.addEventListener('input', function () {
+        var q = find.value.trim().toLowerCase();
+        grid.querySelectorAll('.ad-doc').forEach(function (c) {
+          c.hidden = !!q && c.dataset.title.indexOf(q) === -1;
+        });
+      });
+      el.appendChild(find);
+    }
     list.forEach(function (d) {
-      var row = document.createElement('div');
-      row.className = 'ad-doc';
-      row.innerHTML =
-        '<div class="ad-head">' +
-          '<span class="ad-icon" aria-hidden="true">▤</span>' +
-          '<span class="ad-title">' + esc(d.title) + '</span>' +
-          '<span class="ad-meta">' + (d.pages ? d.pages + ' pp · ' : '') + (d.bytes ? kb(d.bytes) : '') +
-            (d.text_chars ? ' · MYCO has read it' : ' · no text layer') + '</span>' +
+      var card = document.createElement('div');
+      card.className = 'ad-doc';
+      card.dataset.title = String(d.title || '').toLowerCase();
+      card.innerHTML =
+        '<div class="ad-title" title="' + esc(d.title) + '">' + esc(d.title) + '</div>' +
+        '<div class="ad-meta"><span class="ad-icon" aria-hidden="true">▤</span>' +
+          (d.pages ? d.pages + ' pp · ' : '') + (d.bytes ? kb(d.bytes) : '') +
+          (d.text_chars ? ' · <span title="MYCO has read it">MYCO ✓</span>' : ' · no text layer') + '</div>' +
+        '<div class="ad-actions">' +
           '<button type="button" class="ad-btn ad-read">Read</button>' +
-          (isAdmin ? '<button type="button" class="ad-btn ad-del" aria-label="Remove">✕</button>' : '') +
-        '</div>' +
-        '<div class="ad-viewer"></div>';
-      var viewer = row.querySelector('.ad-viewer');
-      var readBtn = row.querySelector('.ad-read');
-      readBtn.addEventListener('click', function () { openDoc(d, viewer, readBtn); });
-      var del = row.querySelector('.ad-del');
+          (isAdmin ? '<button type="button" class="ad-btn ad-ren" aria-label="Rename" title="Rename">✎</button>' +
+                     '<button type="button" class="ad-btn ad-del" aria-label="Remove" title="Remove">✕</button>' : '') +
+        '</div>';
+      card.querySelector('.ad-read').addEventListener('click', function () { openDoc(d, viewer, card); });
+      var ren = card.querySelector('.ad-ren');
+      if (ren) ren.addEventListener('click', function () { renameDoc(d); });
+      var del = card.querySelector('.ad-del');
       if (del) del.addEventListener('click', function () { removeDoc(d); });
-      el.appendChild(row);
+      grid.appendChild(card);
     });
+    if (list.length) { el.appendChild(grid); el.appendChild(viewer); }
     if (isAdmin && state !== 'signed-out') {
       var bar = document.createElement('div');
       bar.className = 'ad-upload';
@@ -228,16 +297,27 @@
 
   var css = document.createElement('style');
   css.textContent =
-    '.ad-doc{margin:0 0 10px;border:0.5px solid rgba(232,177,75,0.25);border-radius:10px;background:rgba(232,177,75,0.03);overflow:hidden}' +
-    '.ad-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 14px}' +
-    '.ad-icon{color:#F5D689;font-size:16px}' +
-    '.ad-title{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:16px;color:#E6D9B5;flex:1;min-width:160px}' +
-    '.ad-meta{font-family:"Geist Mono",monospace;font-size:9.5px;letter-spacing:.08em;color:#8B7E62}' +
+    '.ad-find{display:block;width:100%;max-width:320px;margin:0 0 10px;padding:7px 12px;border-radius:999px;border:0.5px solid rgba(232,177,75,0.3);background:rgba(232,177,75,0.04);color:#E6D9B5;font-family:"Geist Mono",monospace;font-size:10.5px;letter-spacing:.06em}' +
+    '.ad-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 10px}' +
+    '@media (max-width:760px){.ad-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}' +
+    '@media (max-width:440px){.ad-grid{grid-template-columns:1fr}}' +
+    '.ad-doc{display:flex;flex-direction:column;gap:6px;min-width:0;padding:9px 11px;border:0.5px solid rgba(232,177,75,0.25);border-radius:10px;background:rgba(232,177,75,0.03)}' +
+    '.ad-doc[hidden]{display:none}' +
+    '.ad-doc.is-open{border-color:rgba(245,214,137,0.7);background:rgba(232,177,75,0.09)}' +
+    '.ad-icon{color:#F5D689;font-size:11px;margin-right:5px}' +
+    '.ad-title{font-family:"Cormorant Garamond",Georgia,serif;font-size:15.5px;line-height:1.25;color:#F1E6C6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}' +
+    '.ad-meta{font-family:"Geist Mono",monospace;font-size:9px;letter-spacing:.06em;color:#8B7E62;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
+    '.ad-actions{display:flex;gap:6px;margin-top:auto}' +
+    '.ad-actions .ad-btn{padding:4px 10px}' +
+    '.ad-viewer:empty{display:none}' +
+    '.ad-viewer{margin:0 0 14px;border:0.5px solid rgba(232,177,75,0.35);border-radius:10px;overflow:hidden}' +
+    '.ad-viewer-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:8px 12px}' +
+    '.ad-viewer-title{flex:1;min-width:0;font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:16px;color:#E6D9B5}' +
     '.ad-btn{font-family:"Geist Mono",monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;padding:6px 12px;border-radius:999px;cursor:pointer;background:rgba(232,177,75,0.06);border:0.5px solid rgba(232,177,75,0.4);color:#F5D689}' +
     '.ad-btn:hover{background:rgba(232,177,75,0.14)}' +
     '.ad-del{border-color:rgba(225,107,107,0.4);color:#E1A7A0;background:rgba(225,107,107,0.05)}' +
     '.ad-view{display:block;width:100%;height:min(78vh,900px);border:0;border-top:0.5px solid rgba(232,177,75,0.2);background:#1a1a1a}' +
-    '.ad-link{display:inline-block;margin:8px 14px 12px;font-family:"Geist Mono",monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:#C9B894;text-decoration:none}' +
+    '.ad-link{display:inline-block;font-family:"Geist Mono",monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:#C9B894;text-decoration:none}' +
     '.ad-upload{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 14px}' +
     '.ad-status,.ad-note{font-family:"Geist Mono",monospace;font-size:10px;letter-spacing:.06em;color:#C9B894;line-height:1.6}';
   document.head.appendChild(css);

@@ -318,8 +318,8 @@
     return (
       <li className={'kp-fig' + (row.draft ? ' is-draft' : '')}>
         <input className="kp-input kp-fig-label" value={row.label} maxLength={80} onChange={e => set('label', e.target.value)} aria-label="Label" />
-        {row.source ? (
-          <span className="kp-live" title="Computed live by the portal">live · {row.source}</span>
+        {row.source || (window.PortalBoard && window.PortalBoard.LIVE_BY_ID[row.id]) ? (
+          <span className="kp-live" title="Computed live by the portal">live · {row.source || window.PortalBoard.LIVE_BY_ID[row.id].source}</span>
         ) : (
           <input className="kp-input kp-fig-value" type="number" value={row.value == null ? '' : row.value} onChange={e => set('value', e.target.value)} aria-label="Value" />
         )}

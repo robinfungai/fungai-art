@@ -65,7 +65,9 @@ REVOKE ALL ON public.site_figures FROM anon;
 -- placeholders Robin asked for — still drafts until edited.
 INSERT INTO public.site_figures (id, label, value, source, unit, note, draft, sort) VALUES
   ('members',   'Hyphae in the network',        NULL, 'members', NULL, 'members with a profile', false, 10),
-  ('herbs',     'Plants in the materia medica', 243,  NULL,      NULL, 'as of September 2026',   false, 20),
+  -- herbs: the portal counts this one live from public/herb-engine-ids.json
+  -- (portal/dashboard.jsx LIVE_BY_ID); the 247 here is only the fallback.
+  ('herbs',     'Plants in the materia medica', 247,  NULL,      NULL, 'counted live from the catalogue', false, 20),
   ('nodes',     'Network nodes',                NULL, 'nodes',   NULL, 'live on the globe',      false, 30),
   ('ahead',     'Gatherings ahead',             NULL, 'ahead',   NULL, 'on the calendar',        false, 40),
   ('dinners',   'Dinners hosted',               24,   NULL,      NULL, NULL,                     true,  50),

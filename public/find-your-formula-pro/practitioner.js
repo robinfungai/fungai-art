@@ -33,6 +33,7 @@
     analysis: null, analysing: false,
     bottle: 30, dose: '', duration: '', notes: '', client: '',
     savedId: null, tab: 'why', myco: null,
+    analysisFailed: false, saveMsg: '',
   };
 
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -253,7 +254,7 @@
       '<div class="fp-row">' +
         '<button type="button" class="fp-btn fp-btn-primary" id="fpSave">' + (S.savedId ? 'Update saved formula' : 'Save to client file') + '</button>' +
         '<button type="button" class="fp-btn" id="fpPrint">Print / save as PDF</button>' +
-        '<span class="fp-muted" id="fpSaveMsg"></span>' +
+        '<span class="fp-muted" id="fpSaveMsg">' + esc(S.saveMsg) + '</span>' +
       '</div>' +
       '<p class="fp-muted">Client files are visible only to you. They hold health information, so use a code rather than a name.</p>' +
       '<h4>Saved formulas</h4><div id="fpSaved" class="fp-saved"><span class="fp-muted">Loading…</span></div>';
@@ -339,10 +340,11 @@
           name: S.body && S.body.formula && S.body.formula.name,
         }),
       });
-      const out = await res.json();
+      const out = res.ok ? await res.json() : null;
       S.analysis = out && out.base ? out.base : null;
       S.analysedHerbs = S.analysis ? key : null;
     } catch (_) { S.analysis = null; S.analysedHerbs = null; }
+    S.analysisFailed = !S.analysis;
     S.analysing = false;
     render();
   }
@@ -377,6 +379,7 @@
     if (!S.rows.length) return '';
     const A = S.analysis;
     // The check must be of THIS list of herbs, not the one before an edit.
+    if (!A && S.analysisFailed && !S.analysing) { analyse(true); return 'The formula check is not answering, so it cannot be saved yet — try again in a minute.'; }
     if (!A || S.analysing || S.analysedHerbs !== herbKey()) { analyse(true); return 'Checking the formula first — try again in a moment.'; }
     const r = (A.checks || []).find(c => c.id === 'restricted' && !c.ok);
     return r ? 'Not possible: ' + r.detail : '';
@@ -384,7 +387,9 @@
 
   async function save() {
     const msg = $('fpSaveMsg');
-    const say = t => { if (msg) msg.textContent = t; };
+    // Kept in S too: the check that blockedReason() starts re-renders the
+    // panel, which would otherwise wipe the message before it is read.
+    const say = t => { S.saveMsg = t; if (msg) msg.textContent = t; };
     if (!S.client.trim()) { say('Give the client a code first.'); return; }
     const blocked = blockedReason();
     if (blocked) { say(blocked); return; }
@@ -409,6 +414,7 @@
     }
     S.savedId = data.id;
     say('Saved.');
+    S.saveMsg = '';   // "Saved." goes with the next edit
     loadSaved();
   }
   async function loadSaved() {
@@ -448,7 +454,7 @@
   // ── Print / PDF ────────────────────────────────────────────────
   function printSheet() {
     const blocked = blockedReason();
-    if (blocked) { const msg = $('fpSaveMsg'); if (msg) msg.textContent = blocked; return; }
+    if (blocked) { S.saveMsg = blocked; const msg = $('fpSaveMsg'); if (msg) msg.textContent = blocked; return; }
     const A = S.analysis;
     const byName = n => (A && A.herbs || []).find(h => h.name === n) || {};
     let root = $('fpPrintRoot');
