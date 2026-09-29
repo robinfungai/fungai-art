@@ -87,6 +87,40 @@ All 44 test suites green; typecheck = the known 47-error backlog.
 Next session: read this §0.21, then `docs/AUDIT-2026-09-29-RESPONSE.md`
 (the newest audit — nothing edited yet, Robin approves each item), then §0.20–0.17 only as needed.
 
+### Robin's answers (29 Sep, late) — and what is left for the next session
+Done that night: **two trace herbs per bottle** (`MAX_TRACE: 2`, each ≤5%, MYCO told
+the same; no pinned bottle moved); **independent invariant checks** (test:invariants
+now also checks category cap, BLOCK pairs, Amanita ≠ St John's Wort, recorded max
+share, traces ≤10% together — with its own numbers, not rules.js). Netlify keys: all
+present incl. `DIGEST_KEY` (`FYF_MYCO_DAILY_LIMIT` is optional — leave it).
+Not done: **DB rate limit** — Robin wanted it only if it makes the formula load faster;
+it adds a database round trip (slightly slower), so skipped. What makes the load faster
+is MYCO's time (the 10–15 s wait is by design, §fyf-compose); faster = lower MYCO
+effort or a faster model — Robin's call.
+
+**Next session, in order:**
+1. **Reservation code** (approved): a unique code per reserved formula (e.g.
+   `FA-7K3Q-2M9X`), stored on `fyf_formulas` and the Formula Book row, printed in both
+   emails; `/formula-analysis/` opens a reserved formula by that code (server lookup,
+   herbs + percentages only, Robin's use) — this is where Robin checks country rules
+   after a reservation. Needs one SQL column (Robin runs it).
+2. **"Another prescription medicine (incl. chemo / transplant)"** safety answer +
+   recorded CYP3A / P-gp tags for the ~15 strongest modulators (PubMed, Robin reviews).
+3. **Encyclopedia entries** for San Pedro, Syrian rue (Peganum harmala), sassafras —
+   pharmacology + interactions (pro sees them), **never formulable**; no extraction
+   method for anything controlled (San Pedro; check the existing Coca and Psilocybe
+   records for extraction text too). **Keep restricted herbs out of search engines**
+   (Robin: "encrypt the SEO", coca and psilocybe first): noindex / out of the sitemap /
+   no structured data wherever herb pages or cards are rendered — find those first.
+4. **Bobinsana → two records, bark and leaves** (Robin: the bark carries emotional
+   warmth), from PubMed. **Lemon balm** PubMed pass (serotonergic? — check first).
+5. **Why Vanilla is in 13% of bottles** — scoring look (`npm run report:top-herbs`).
+6. **D9** claims table. **Adverse-event form + batch id** (moved here).
+7. Decisions with Robin: under-18 policy (see the reply of 29 Sep), the rest of
+   `docs/AUDIT-2026-09-29-RESPONSE.md`.
+The monthly MYCO email: wait for the push, THEN Netlify → Functions → "Run now" (the live
+copy before the push is the old one that times out).
+
 ### Robin's list
 1. **1 October — push.** Nothing to run first (claims + budget SQL verified live).
    After the push: `supabase-formulas-server-writes.sql`, then step 4 of

@@ -171,7 +171,7 @@ const COMPOSE_SYS =
   '- Do not give percentages. The house sets each herb\'s share of the bottle from the shortlist ranking.\n' +
   '- Category balance — no more than 2 herbs of the same category (adaptogen / nervine / tonic / mover / mushroom / bitter / aromatic / nutritive / other).\n' +
   '- Load caps enforced by the shortlist tags:\n' +
-  '    · TRACE — max 1 TRACE-marked herb in the formula (potent essential oil; the house keeps it at 5% or less).\n' +
+  '    · TRACE — max 2 TRACE-marked herbs in the formula, and only when the formula wants them (potent essential oil; the house keeps it at 5% or less).\n' +
   '    · GABA  — max 2 GABA-marked herbs (additive CNS depression risk if stacked further).\n' +
   '    · STIM  — max 2 STIM-marked herbs (additive adrenergic drive if stacked further).\n' +
   '    · SERO  — max 1 SERO-marked herb (two serotonergic herbs stack toward serotonin syndrome).\n' +

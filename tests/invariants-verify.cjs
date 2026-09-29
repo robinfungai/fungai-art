@@ -29,6 +29,7 @@ const { assignPercentages } = R('src/server/formula-engine/percentages.js');
 const { detectNoteSafety, detectNoteHerbAvoidance } = R('src/server/formula-engine/note-safety.js');
 const { isAmanita } = R('src/server/formula-engine/rules.js');
 const P = R('src/server/formula-engine/pharmacology.js');
+const { PAIR_RULES: PAIRS } = R('src/server/formula-engine/pair-rules.js');
 
 // ── Reproducible randomness (mulberry32) ──────────────────────────
 let seed = 20260928;
@@ -102,7 +103,15 @@ function checkBottle(p, r, tag) {
   const withPct = herbs.map((h, k) => [h, pcts[k]]);
   const traces = withPct.filter(([h]) => isTrace(h));
   const mains = withPct.filter(([h]) => !isTrace(h));
-  if (traces.length > 1) fail('at most 1 trace herb', p, names);
+  if (traces.length > 2) fail('at most 2 trace herbs', p, names);
+  if (traces.reduce((t, [, x]) => t + x, 0) > 10) fail('trace herbs together at most 10%', p, names);
+  // Checked here with this test's own numbers, not rules.js (audit 29 Sep, Q7):
+  const cats = {}; for (const h of herbs) { const c = P.categoryOf(h); cats[c] = (cats[c] || 0) + 1; }
+  if (Object.values(cats).some(n => n > 2)) fail('at most 2 herbs per category', p, names);
+  if (herbs.some(isAmanita) && herbs.some(P.isStJohnsWort)) fail("an Amanita never beside St John's Wort", p, names);
+  if (withPct.some(([h, x]) => Number(h.max_share_pct) > 0 && x > Number(h.max_share_pct))) fail('a recorded max share is kept (Saffron 7%)', p, names);
+  { const ids = herbs.map(h => String(h.id));
+    if (PAIRS.some(r => r.cls === 'BLOCK' && ids.includes(String(r.a)) && ids.includes(String(r.b)))) fail('no BLOCK herb pair', p, names); }
   if (traces.some(([, x]) => x > 5)) fail('trace herb at most 5%', p, traces.map(([h, x]) => h.name + ' ' + x).join(','));
   if (mains.some(([, x]) => x > 40)) fail('no herb above 40% (D3)', p, mains.map(([h, x]) => h.name + ' ' + x).join(','));
   if (traces.length + herbs.filter(isAmanita).length && herbs.length < 4) fail('a small-share herb only in a bottle of four or more', p, names);

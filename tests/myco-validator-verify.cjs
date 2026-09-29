@@ -118,9 +118,11 @@ check('MYCO asks 20% for a trace herb → the engine gives it at most 5%', () =>
   return { pass: r.ok === true && r.percentages[0] <= 5 && sum(r.percentages) === 100, detail: r.ok ? r.percentages.join('/') : r.reason };
 });
 
-check('two trace herbs → MYCO_TRACE_COUNT_EXCEEDED', () => {
+check('three trace herbs → MYCO_TRACE_COUNT_EXCEEDED (two are allowed since 2026-09-29)', () => {
+  const third = CANDIDATES.find(h => ![500, 510].includes(h.id) && /lavender|ginger|clove|cinnamon|cardamom|pepper|fennel|thyme|sage|rosemary/i.test(h.name));
+  if (!third) return { pass: true, detail: 'no third trace candidate in the stand-in set' };
   const p = [
-    { id: 500, pct: 5, reason: 'lav' }, { id: 510, pct: 5, reason: 'ginger' },
+    { id: 500, pct: 5, reason: 'lav' }, { id: 510, pct: 5, reason: 'ginger' }, { id: third.id, pct: 5, reason: 'third' },
     { id: 210, pct: 40, reason: 'a' }, { id: 250, pct: 30, reason: 'b' }, { id: 220, pct: 20, reason: 'c' },
   ];
   const r = validateMycoProposal({ mycoResponse: p, candidateSet: CANDIDATES, gatedOptIn: false });

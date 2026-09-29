@@ -14,7 +14,7 @@ const { pairBlocker } = require('./pair-rules');
 
 const RULES = {
   MAX_PER_CATEGORY: 2,
-  MAX_TRACE:        1,
+  MAX_TRACE:        2,      // Robin 2026-09-29 (audit #4): two aromatic / pungent herbs may share a bottle, each ≤5%
   MAX_GABAERGIC:    2,      // recorded class 'sedative'
   MAX_STIMULANT:    2,      // 'stimulant' + 'activating'
   MAX_SEROTONERGIC: P.MAX_SEROTONERGIC,
