@@ -37,7 +37,16 @@ module.exports = {
   // 2.7.2 — the note scorer skips a refused wish ("I don't want anything
   //         for sleep"); symptom negation ("can't sleep") still counts
   //         (external audit, 2026-09-29).
-  engineVersion:      '2.7.2-server',
+  // 2.8.0 — Robin + fourth external audit (2026-09-29): herb pairs he ruled
+  //         out never share a bottle (pair-rules.js: 8 BLOCK, 15
+  //         CONDITIONAL); an effect the note refuses ("no caffeine",
+  //         "nothing sedating", "no mushrooms") removes every herb with
+  //         it, German herb names count, and MYCO's own reading of the
+  //         note (noteAvoid) is a hard exclusion for its picks and the
+  //         fallback; the reading and "why" name herbs in one order, the
+  //         closing line follows the duration answer, and the trace
+  //         sentence gives that herb's own reason.
+  engineVersion:      '2.8.0-server',
   herbDbVersion:      '2026.09-247herbs',
   // 1.1.0 — unknown pregnancy safety = avoid; under-18s: no HIGH-caution,
   //         psychoactive, or above-LOW calming herbs (2026-09-27).

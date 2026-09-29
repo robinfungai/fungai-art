@@ -19,9 +19,34 @@ const TRACE_IDS = [
 ];
 
 function isTrace(h) {
-  const id   = (h.id || '').toString().toLowerCase();
-  const name = (h.name || '').toLowerCase();
-  return TRACE_IDS.some(t => id.includes(t) || name.includes(t.replace(/_/g, ' ')));
+  return !!traceKey(h);
 }
 
-module.exports = { TRACE_IDS, isTrace };
+function traceKey(h) {
+  const id   = (h.id || '').toString().toLowerCase();
+  const name = (h.name || '').toLowerCase();
+  return TRACE_IDS.find(t => id.includes(t) || name.includes(t.replace(/_/g, ' '))) || null;
+}
+
+// WHY each trace herb is kept small (external audit 2026-09-29): the
+// reveal used to give every one the essential-oil reason, which does not
+// describe a bitter root or a resin. The rule itself is unchanged.
+const TRACE_REASON_BY_KEY = {
+  pungent:  ['cayenne', 'ginger', 'black_pepper', 'pepper'],
+  bitter:   ['wormwood', 'gentian', 'goldenseal', 'coptis'],
+  resin:    ['myrrh', 'frankincense', 'copal'],
+};
+const TRACE_REASON_TEXT = {
+  aromatic: 'rich in essential oil, so a little carries through the whole bottle',
+  pungent:  'pungent heat, so a little warms the blend and more would overwhelm it',
+  bitter:   'intensely bitter, so a small share is all the blend needs',
+  resin:    'a dense resin, so a small share holds its place without crowding the rest',
+};
+function traceReason(h) {
+  const k = traceKey(h);
+  if (!k) return null;
+  const kind = Object.keys(TRACE_REASON_BY_KEY).find(r => TRACE_REASON_BY_KEY[r].includes(k)) || 'aromatic';
+  return { kind, text: TRACE_REASON_TEXT[kind] };
+}
+
+module.exports = { TRACE_IDS, isTrace, traceReason };

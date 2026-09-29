@@ -19,7 +19,7 @@ const { pickFormula, noMatchCode, targetHerbCount, buildScoredCandidates, explai
 const { assignPercentages } = require('./percentages');
 const { checkFormulaPairs } = require('./interactions');
 const { validateAndNormalizeAvoid, countFilteredOut } = require('./safety');
-const { applyNoteSafety, detectNoteHerbAvoidance } = require('./note-safety');
+const { applyNoteSafety, detectNoteHerbAvoidance, detectNoteEffectAvoidance } = require('./note-safety');
 const { ensurePool } = require('./axes');
 const { isTrace } = require('./traces');
 const { isGABAergic, isCNSStimulant } = require('./pharmacology');
@@ -51,7 +51,9 @@ function plainText(s, max) {
  *
  * @returns {{ ok: true, a: object, noteSafety: object } | { ok: false, rejected: object }}
  */
-function prepareProfile(profile) {
+// extraAvoid: herbs MYCO read the note as refusing ({id, name, word}),
+// applied exactly like the ones the note-safety rules found.
+function prepareProfile(profile, extraAvoid = []) {
   // ── Safety validation (SECURITY_FIX for fixture 20) ────────────
   let normalisedAvoid;
   try {
@@ -71,8 +73,18 @@ function prepareProfile(profile) {
   const noteSafety = applyNoteSafety(normalisedAvoid, profile.notes);
   // …and a herb the note names to avoid leaves the pool (safety.js
   // passesProfileSafety). A client-sent list is never trusted.
-  const herbsAvoided = detectNoteHerbAvoidance(profile.notes, ensurePool() || []);
-  noteSafety.herbsAvoided = herbsAvoided;
+  const pool = ensurePool() || [];
+  const herbsAvoided = detectNoteHerbAvoidance(profile.notes, pool);
+  // …and so does every herb with an effect the note refuses ("no
+  // caffeine", "nothing sedating", "no mushrooms") — 2026-09-29.
+  const effectsAvoided = detectNoteEffectAvoidance(profile.notes, pool);
+  const extra = (extraAvoid || []).filter(x => x && x.id != null && !herbsAvoided.some(h => String(h.id) === String(x.id)));
+  const avoidIds = new Set([...herbsAvoided, ...extra].map(x => String(x.id)));
+  for (const e of effectsAvoided) for (const id of e.ids) avoidIds.add(String(id));
+  // What the reveal lists: each named herb, each refused effect once.
+  noteSafety.herbsAvoided = herbsAvoided
+    .concat(effectsAvoided.map(e => ({ id: 'effect:' + e.effect, name: e.label, word: e.word })))
+    .concat(extra);
 
   // ── Round 2 · Item #0 · Age model normalisation ───────────────
   // The age question inside the quiz is the CANONICAL age input.
@@ -88,7 +100,7 @@ function prepareProfile(profile) {
   const a = Object.assign({}, profile, {
     avoid:  noteSafety.avoid,
     _minor: profile.age === 'under_18',
-    _avoidHerbIds: herbsAvoided.map(x => x.id),
+    _avoidHerbIds: [...avoidIds],
   });
   return { ok: true, a, noteSafety };
 }
@@ -105,8 +117,8 @@ function prepareProfile(profile) {
  *   quiz. See tests/fixtures/profiles/*.json for canonical examples.
  * @returns {object} discriminated union — see file header.
  */
-function compileFormula(profile) {
-  const prep = prepareProfile(profile);
+function compileFormula(profile, opts = {}) {
+  const prep = prepareProfile(profile, opts.extraAvoid);
   if (!prep.ok) return prep.rejected;
   const profileForEngine = prep.a;
   const noteSafety = {
@@ -243,6 +255,21 @@ async function composeFormulaWithMyco(profile, opts = {}) {
     return { ...baseline, mycoUsed: false, mycoFallbackReason: 'MYCO_UNAVAILABLE' };
   }
 
+  // MYCO's own reading of the note (2026-09-29): every shortlist herb it
+  // says the note refuses becomes a hard exclusion — for MYCO's picks
+  // (the validator) AND for the deterministic bottle it falls back to,
+  // which is rebuilt without them. So a refusal the note-safety rules
+  // missed but MYCO understood still keeps the herb out of the bottle.
+  const mycoRefused = (proposal.noteAvoid || [])
+    .map(id => candidates.find(h => String(h.id).toLowerCase() === id))
+    .filter(Boolean)
+    .map(h => ({ id: h.id, name: h.name, word: 'MYCO read your note as refusing it' }));
+  let base = baseline;
+  if (mycoRefused.length) {
+    const rebuilt = compileFormula(profile, { extraAvoid: mycoRefused });
+    base = rebuilt.status === 'ok' ? rebuilt : { ...rebuilt, mycoUsed: false, mycoFallbackReason: 'MYCO_NOTE_REFUSALS' };
+  }
+
   // Deterministic veto. Every rule the pickFormula pipeline applies
   // is re-checked against MYCO's proposal here.
   const validation = validateMycoProposal({
@@ -250,14 +277,19 @@ async function composeFormulaWithMyco(profile, opts = {}) {
     candidateSet: candidates,
     gatedOptIn:   !!profile._gatedOptIn,
     pro:          profile._pro === true && profile.age !== 'under_18',
+    avoid:        normalisedProfile.avoid,
+    excludeIds:   mycoRefused.map(h => h.id),
   });
   if (!validation.ok) {
     // Log the specific rule MYCO broke so we can spot systematic
     // MYCO-prompting issues without silently falling through.
     // eslint-disable-next-line no-console
     console.warn('[compose] MYCO proposal rejected:', validation.reason, '·', validation.detail);
-    return { ...baseline, mycoUsed: false, mycoFallbackReason: validation.reason };
+    return { ...base, mycoUsed: false, mycoFallbackReason: base.mycoFallbackReason || validation.reason };
   }
+  // The rebuilt fallback found no bottle, but MYCO's validated picks
+  // (which respect every refusal) are one — use them, with the refusals listed.
+  if (base.status !== 'ok') base = { ...baseline, noteSafety: base.noteSafety };
 
   // Validation passed — MYCO's herbs become the final formula, at the
   // percentages the engine sets for them (validator → assignPercentages).
@@ -266,7 +298,7 @@ async function composeFormulaWithMyco(profile, opts = {}) {
   const pairs      = checkFormulaPairs(finalHerbs);
 
   return {
-    ...baseline,
+    ...base,
     formulaSize:     finalHerbs.length,
     herbs: finalHerbs.map((h, i) => ({
       id:              h.id,

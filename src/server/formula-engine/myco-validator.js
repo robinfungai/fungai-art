@@ -57,6 +57,8 @@ const BLOCKED = {
   AMANITA_LIMIT:           ['MYCO_AMANITA_LIMIT_EXCEEDED',     () => 'more than ' + RULES.MAX_AMANITA + ' Amanita'],
   AMANITA_WITH_ST_JOHNS_WORT: ['MYCO_AMANITA_WITH_ST_JOHNS_WORT', () => "an Amanita beside St John's Wort"],
   CATEGORY_CAP:            ['MYCO_CATEGORY_CAP_EXCEEDED',      h => 'more than ' + RULES.MAX_PER_CATEGORY + ' of category ' + categoryOf(h)],
+  PAIR_BLOCK:              ['MYCO_PAIR_BLOCKED',               h => h.name + ' sits beside a herb it may never share a bottle with (pair-rules.js)'],
+  PAIR_CONDITIONAL:        ['MYCO_PAIR_BLOCKED_BY_SAFETY',     h => h.name + ' sits beside a herb it may not share a bottle with under these safety answers'],
 };
 
 /**
@@ -74,7 +76,7 @@ const BLOCKED = {
  *   pro-only herb (herbs.ts formula_access: 'pro', e.g. Ephedra) may go.
  * @returns {object} discriminated union — see file header.
  */
-function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn, pro = false }) {
+function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn, pro = false, avoid = [], excludeIds = [] }) {
   if (!mycoResponse || !Array.isArray(mycoResponse)) {
     return { ok: false, reason: 'MYCO_MALFORMED', detail: 'response is not an array of picks' };
   }
@@ -100,7 +102,9 @@ function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn, pro = fa
   const acceptedHerbs = [];
   const acceptedReasons = [];
   const seenIds       = new Set();
-  const load          = newLoad();
+  const load          = newLoad(avoid);
+  // Herbs MYCO itself read the note as refusing (noteAvoid) — never seated.
+  const excluded      = new Set((excludeIds || []).map(x => String(x).toLowerCase()));
 
   for (const pick of mycoResponse) {
     if (!pick || typeof pick !== 'object') {
@@ -128,6 +132,11 @@ function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn, pro = fa
       };
     }
     seenIds.add(canonicalId);
+
+    // A herb MYCO itself read the note as refusing, picked anyway.
+    if (excluded.has(canonicalId)) {
+      return { ok: false, reason: 'MYCO_PICKED_NOTE_REFUSED', detail: herb.name + ' — the note refuses it (MYCO noteAvoid)' };
+    }
 
     // Gate check — ceremonial herbs only if user opted in.
     if (herb.gated && !gatedOptIn) {

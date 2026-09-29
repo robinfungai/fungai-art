@@ -26,6 +26,8 @@
 
 const { shortNote } = require('./axes');
 const { checkFormulaPairs } = require('./interactions');
+const { traceReason } = require('./traces');
+const { isAmanita } = require('./pharmacology');
 
 // storyText and whyText are HTML the browser sets with innerHTML. The
 // phrase maps below are our own copy; everything else that goes in —
@@ -115,10 +117,35 @@ const STRESS_MAP_STORY = {
   off: 'something is off in a way you can\'t name',
 };
 
+// Both texts name the herbs in the SAME order — largest share first,
+// ties in the engine's order (external audit 2026-09-29: the reading
+// called the first two picked herbs "the spine" while "why this
+// formula" named the largest share as the hero, and they could differ).
+// The roles work (primary / bridge / foundation / regulator / trace)
+// will replace this ordering; until then, one ordering for both.
+function byShare(herbs, percentages) {
+  return (herbs || [])
+    .map((h, i) => ({ h, pct: (percentages || [])[i] || 0, i }))
+    .sort((a, b) => b.pct - a.pct || a.i - b.i);
+}
+
+// The closing line of the reading follows how long the person has lived
+// with this ("How long have you been experiencing this rhythm?"), not a
+// fixed "give it three weeks" (external audit 2026-09-29). Pace, never a
+// promise of results — part of the D9 claims review.
+const DURATION_CLOSE = {
+  weeks:     'This is a recent shift, so start gently, notice what changes over the first weeks, and tell us. We adjust from there.',
+  months:    'This has been with you for months, so give it a steady rhythm over several weeks before you judge it, and check in with us as you go.',
+  year_plus: 'This pattern has deeper roots, so treat the bottle as a patient, steady course rather than a quick fix, and check in with us so we can adjust it.',
+  lifelong:  'This feels woven into your baseline, so this is slow, long-arc work. Take it as a steady companion, and check in with us so the formula can change as you do.',
+};
+const DURATION_CLOSE_DEFAULT = 'Slow-pace medicine: take it steadily and check in with us along the way.';
+
 // The "reading" — 3-4 sentence template narrative. Reads only the
 // user's answers + herb NAMES (no pharma metadata leak).
-function storyFor(profile, herbs) {
-  if (!herbs || !herbs.length) return '';
+function storyFor(profile, herbsIn, percentages) {
+  if (!herbsIn || !herbsIn.length) return '';
+  const herbs = byShare(herbsIn, percentages).map(x => x.h);
   const heroNames = herbs.slice(0, 2).map(h => esc(h.name)).join(' and ');
   const spineNames = herbs.slice(2, 4).map(h => esc(h.name)).join(', ');
   const closerName = esc((herbs[4] && herbs[4].name)
@@ -136,8 +163,8 @@ function storyFor(profile, herbs) {
     '<br><br>' +
     'This blend leans on <em>' + heroNames + '</em> as the spine — ' +
     'weaves in ' + spineNames + ' to hold you steady — ' +
-    'and closes with <em>' + closerName + '</em> for the deeper, slower work. ' +
-    'Slow-pace medicine. Give it three weeks.'
+    'and rounds it off with <em>' + closerName + '</em>. ' +
+    (DURATION_CLOSE[profile.duration] || DURATION_CLOSE_DEFAULT)
   );
 }
 
@@ -162,8 +189,7 @@ function herbSummary(h) {
 // dimmed reveal (unlocks after reservation) with the hero-herb reasoning.
 function buildWhyText(profile, herbs, percentages) {
   if (!herbs || !herbs.length) return '';
-  const withPct = herbs.map((h, i) => ({ h, pct: percentages[i] || 0 }));
-  withPct.sort((a, b) => b.pct - a.pct);
+  const withPct = byShare(herbs, percentages);
   const hero = withPct[0];
   const second = withPct[1];
   const rest = withPct.slice(2);
@@ -189,12 +215,21 @@ function buildWhyText(profile, herbs, percentages) {
   const openLine = hasSafetyFlags
     ? 'Your composition was <strong>filtered against the safety flags you set</strong>, then scored across intention, body signature, rhythm and stress. Cross-checked for herb-to-herb synergy in the practitioner catalog.'
     : 'Your composition was scored across intention, body signature, rhythm and stress. Cross-checked for herb-to-herb synergy in the practitioner catalog.';
-  const methodLine =
-    'Any essential-oil-rich herb (lavender, ginger, cinnamon and their kin) is capped at 5% by design &mdash; their pharmacology is strong enough that anything more would dominate the blend. The remaining share goes to the tonics, nervines and adaptogens that do the slower, foundational work.';
+  // Only what is in THIS bottle, with its own reason (external audit
+  // 2026-09-29: one essential-oil reason was given for every trace herb,
+  // and even for bottles with none).
+  const small = withPct.map(x => {
+    if (isAmanita(x.h)) return '<strong>' + esc(x.h.name) + '</strong> is held to 10% of the bottle or less by house rule.';
+    const r = traceReason(x.h);
+    return r ? '<strong>' + esc(x.h.name) + '</strong> is kept to a trace (5% or less): ' + esc(r.text) + '.' : null;
+  }).filter(Boolean);
+  const methodLine = small.length
+    ? small.join(' ') + ' The rest of the bottle goes to the herbs that do the slower, foundational work.'
+    : '';
 
   return (
     '<p>' + openLine + '</p>' +
-    '<p>' + methodLine + '</p>' +
+    (methodLine ? '<p>' + methodLine + '</p>' : '') +
     '<div class="r-why-reveal">' +
       '<p>' + readingLine + '</p>' +
       '<p>' + heroLine + '</p>' +
@@ -211,7 +246,7 @@ function buildWhyText(profile, herbs, percentages) {
 function buildDisplayBundle({ profile, enrichedHerbs, percentages }) {
   const pairs = checkFormulaPairs(enrichedHerbs);
   return {
-    storyText: storyFor(profile, enrichedHerbs),
+    storyText: storyFor(profile, enrichedHerbs, percentages),
     whyText:   buildWhyText(profile, enrichedHerbs, percentages),
     synergies: pairs.synergies,
     cautions:  pairs.cautions,

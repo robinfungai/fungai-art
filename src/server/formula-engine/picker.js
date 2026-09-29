@@ -152,7 +152,7 @@ function rankedCandidates(a, { safety = true } = {}) {
 function walk(uniq, a) {
   const target = targetHerbCount(a);
   const openToGated = !!a._gatedOptIn;
-  const load = newLoad();
+  const load = newLoad(a.avoid);
   const composed = [];
   let smallSeated = 0;
   for (const x of uniq) {

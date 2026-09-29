@@ -226,7 +226,27 @@ are true of the live site. Re-run on the local engine (2.6.1):
 
 **Verdict: accurate description — a decision, not a defect.** The compose response carries every herb's real percentage and the full `whyText`; the page shows "??%" and dims the reading until reservation; `window.__authoritativeFormula` holds the lot; "See the full apothecary" deliberately reveals it without reserving (the page's own comments call it "no hard block" and a "marketing hack"). So it is intrigue, not access control. One comment claims more than that — `public/find-your-formula/index.html` CSS: "prevents scrape-and-copy" — and is wrong.
 
-**Decision (Robin): pending.** A — keep it as a UI experience and correct the comments; or B — the server withholds percentages and the reading until a reservation, which the reveal would then fetch.
+**Decision (Robin, 2026-09-29): A**: a UI experience. The CSS comment on both formula pages now says so (no more "prevents scrape-and-copy").
+
+## Seventh finding · the browser writes the Formula Book entry (2026-09-29)
+
+**Verdict: real, fixed (Medium-High).** After a reservation both formula pages inserted into `public.formulas` from the browser. The database allowed anyone to do the same: `formulas_anon_insert_from_quiz` let anon insert any row marked `source = 'find-your-formula'` (any name, herbs, percentages), and members could insert anything (`WITH CHECK (true)`), including rows credited to another member. Those rows show in the public Formula Book (`formulas_public`). Every entry also carried `quiz_snapshot` (the health answers) into a second table the 30-day purge never touches (readable only by admins, but kept forever).
+- **Not XSS:** the Formula Book escapes every field it shows (`esc()`), so injected rows are fake content, not script.
+- **Fix (`8d8cb2e`):** `reserve-formula` writes the entry itself, from the formula stored in `fyf_formulas`, once (only when the reservation is the first for that formula), with no notes, name or quiz answers. Both formula pages no longer insert (the device-local Formula Book copy stays). New `supabase-formulas-server-writes.sql`: no anon inserts; members may insert their own Mixology / analysis saves only, credited to themselves or no one, never marked as a Find your formula entry, never with quiz answers. An optional, commented step clears the `quiz_snapshot` copies already there (irreversible; rows from before 2026-09-11 have the answers only there). **Run it only after the 1 October push** (`docs/HANDOFF.md` §0.17).
+- **Tested:** reserve tests 8/8, compose storage 19/19. The new write itself is read-reviewed, not run: `reserve-formula` has no database test hook. First live reservation after the push is the check.
+
+## Eighth finding · the AI provider is not named where consent is given (2026-09-29)
+
+**Verdict: fair, fixed (`8d8cb2e`).** The privacy page already names Anthropic's Claude for Find your formula, says the data is not used for training, and lists Anthropic as a processor. The consent checkbox did not. It now reads "...my answers, including health details and any note I write, are used to create my formula, with the help of an AI model (Anthropic's Claude)." The pro composer had no data consent at all (only "I am 18 or older") although a practitioner types a client's health answers into it: its gate now also confirms the client has agreed, AI included, and links the privacy terms.
+- **Open (Robin / legal):** the privacy page does not describe the pro composer or practitioners' client files (`practitioner_formulas`). Who is the controller of a client's data there (Robin or the practitioner) is a legal question, so it is not drafted here.
+- Also corrected in passing: a comment on the pro page said Amanita is "legal in Sweden"; muscimol is a scheduled narcotic there.
+
+## Ninth finding · herb-to-herb cautions are not hard exclusions (2026-09-29)
+
+**Verdict: accurate; decided and enforced (engine 2.8.0).** Pair cautions were prose (`herb_to_herb_caution`), matched by name after the bottle is composed and shown; they never stopped a pair.
+- **Counted:** 241 herbs, 233 with caution prose; 242 herb pairs carry a matched caution, 93 of them strongly worded.
+- **Matcher bug fixed first (engine 2.7.1, `8d8cb2e`):** names were matched anywhere in the prose, so "pine" matched "benzodiazepines", "grape" matched "Grapefruit", "tian" matched "Gentian", and a generic first word stood for the herb ("black" for Black Cumin in "Black Cohosh"). Names now match as whole words (plural allowed); generic first words no longer count alone. 279 to 242 pairs: 37 false cautions gone, none added, every removal checked by hand. Display only (the pair check runs after composition).
+- **Classes (Robin, 2026-09-29):** SHOW / CONDITIONAL / BLOCK, as the audit suggested. Row decisions at the top of `docs/PAIR-CAUTIONS-REVIEW.md`: 8 BLOCK, 15 CONDITIONAL in `src/server/formula-engine/pair-rules.js`, enforced in `rules.js` `seatBlocker`, so the deterministic picker and the MYCO validator obey them alike. MYCO is also shown the cautions among its shortlist, to steer round SHOW pairs where they do not fit. Checked by `tests/note-refusals-and-pairs-verify.cjs` (47 checks, including a 192-profile grid with no forbidden pair).
 
 ## Tenth finding · patternSub and intentions[] not validated as meaning (2026-09-29)
 
@@ -240,6 +260,16 @@ are true of the live site. Re-run on the local engine (2.6.1):
 - **Fixed (engine 2.7.2):** words after a refused wish — a negated want/need followed by *anything / something / any / a / an* — are not scored, to the end of that phrase. Deliberately narrow, because negation in symptom language is a need: "can't sleep", "no energy", "nothing helps my anxiety", "I don't want to feel tired" all still count (tested).
 - **Not fixed:** past vs present ("I used to sleep badly"), strength of statement, desire vs history. Those need structured extraction, not more keywords. When MYCO composes (engine 2.5) it reads the note as a whole; the keyword boost matters for the ranking MYCO chooses from and for the deterministic fallback. A structured extraction of the note (wants / avoid / history) is a candidate for the next engine round.
 - **Tested:** 600-profile invariants, safety rules, safety conflicts, compose storage 19/19, analysis 27/27, fixtures 0 unexpected.
+
+## Twelfth to fourteenth findings · reading vs why, "three weeks", trace reasons (2026-09-29)
+
+- **The reading and "why this formula" could disagree: real, fixed (2.8.0).** The reading called the first two picked herbs "the spine"; the why text sorted by share and named the largest as the hero. Both now use one order (largest share first, ties in the engine's order). The roles model (primary / bridge / foundation / regulator / trace) will replace it; noted for the roles work.
+- **"Give it three weeks" regardless of duration: real, fixed (2.8.0).** The closing line now follows the duration answer. The question asks how long the person has had the pattern, not how long they will take the bottle; the four lines speak of pace, never results, and go into D9 with the rest of the copy.
+- **Trace explanation overgeneralised: real, fixed (2.8.0).** Every trace herb got the essential-oil reason, and the paragraph appeared even when the bottle had no trace herb. Each trace herb now carries its reason (aromatic / pungent / bitter / resin, `traces.js`); the sentence names that herb and appears only when one is in the bottle (and an Amanita's 10% rule when one is). The rule itself (5% or less) is unchanged. Robin's note on saffron (18% in one bottle) and extract-level potency is in `docs/HANDOFF.md` §0.17 (Phase 3).
+
+## Eleventh finding, follow-up · "I don't want ..." made a hard exclusion (2026-09-29, engine 2.8.0)
+
+Robin: "this needs to be waterproof." Two layers: (1) rules, always on, even without MYCO: named herbs (English, Latin, and German names for about 50 common herbs) and refused effects ("no caffeine", "nothing sedating", "no mushrooms", "nothing psychoactive", "koffeinfrei") leave the pool; needs written with a negation ("can't sleep", "no energy") refuse nothing. (2) MYCO lists every shortlist herb the note refuses (`noteAvoid`); those are excluded from its picks and from the deterministic bottle it falls back to, which is rebuilt without them. The reveal names what was left out and why. No text reader is perfect; what makes it hold is that both layers end in the same hard exclusion, the reveal shows it to the person, and Robin reviews every formula before bottling.
 
 ## Decisions (Robin, 2026-09-28)
 

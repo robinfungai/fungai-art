@@ -10,6 +10,7 @@
 const { isTrace } = require('./traces');
 const P = require('./pharmacology');
 const { TRACE_PCT_CAP, MAX_SHARE_PCT, AMANITA_PCT_CAP } = require('./percentages');
+const { pairBlocker } = require('./pair-rules');
 
 const RULES = {
   MAX_PER_CATEGORY: 2,
@@ -36,8 +37,10 @@ const isAmanita = P.isAmanita;
 // needs three herbs that are NOT, so no herb has to go above 40%.
 const isSmallShare = h => isTrace(h) || isAmanita(h);
 
-function newLoad() {
-  return { cat: {}, trace: 0, gaba: 0, stim: 0, strong: 0, sero: 0, lax: 0, amanita: 0, sjw: 0 };
+// `avoid` = the safety answers the bottle is built under (ticked plus
+// any the note named) — CONDITIONAL pair rules read them.
+function newLoad(avoid) {
+  return { cat: {}, trace: 0, gaba: 0, stim: 0, strong: 0, sero: 0, lax: 0, amanita: 0, sjw: 0, ids: [], avoid: Array.isArray(avoid) ? avoid : [] };
 }
 
 // null when the herb may take a seat, otherwise the rule it would break.
@@ -51,6 +54,9 @@ function seatBlocker(load, h) {
   if (P.isLaxative(h) && load.lax >= RULES.MAX_LAXATIVE) return 'LAXATIVE_LOAD';
   if (isAmanita(h) && load.amanita >= RULES.MAX_AMANITA) return 'AMANITA_LIMIT';
   if ((isAmanita(h) && load.sjw) || (P.isStJohnsWort(h) && load.amanita)) return 'AMANITA_WITH_ST_JOHNS_WORT';
+  // Herb pairs Robin ruled out (pair-rules.js, 2026-09-29).
+  const pair = pairBlocker(h.id, load.ids, load.avoid);
+  if (pair) return pair.cls === 'BLOCK' ? 'PAIR_BLOCK' : 'PAIR_CONDITIONAL';
   if ((load.cat[P.categoryOf(h)] || 0) >= RULES.MAX_PER_CATEGORY) return 'CATEGORY_CAP';
   return null;
 }
@@ -66,6 +72,7 @@ function seat(load, h) {
   if (P.isLaxative(h)) load.lax += 1;
   if (isAmanita(h)) load.amanita += 1;
   if (P.isStJohnsWort(h)) load.sjw += 1;
+  load.ids.push(String(h.id));
   return load;
 }
 

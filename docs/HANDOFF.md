@@ -114,12 +114,55 @@ scorer). Verdicts: `docs/AUDIT-2026-09-28-RESPONSE.md`, findings four to nine an
   card if the same formula is reserved again.
 - `https://www.fungai.art/favicon.ico` → 200 (was 404).
 
+### Engine 2.8.0 (29 Sep, late) — also in the 1 October push
+
+- **Pair rules** (`pair-rules.js`, decided in `docs/PAIR-CAUTIONS-REVIEW.md`):
+  8 BLOCK (Kava + Valerian, Wormwood + Sage, Pau d'Arco + Garlic / Ginkgo /
+  Turmeric / Ginger, Valerian + St John's Wort, Astragalus + Echinacea),
+  15 CONDITIONAL. MYCO is shown the cautions among its shortlist.
+- **"I don't want …" is a hard exclusion, two layers.** (1) Rules, always
+  on: named herbs (English, Latin, and German names for ~50 common herbs:
+  "ohne Baldrian") and refused effects ("no caffeine", "nothing
+  sedating", "no mushrooms", "nothing psychoactive", "koffeinfrei") leave
+  the pool; needs written with a negation ("can't sleep", "no energy")
+  refuse nothing. (2) MYCO lists every shortlist herb the note refuses
+  (`noteAvoid`); those are excluded from its picks AND from the fallback
+  bottle. The reveal names what was left out. 47 checks in
+  `tests/note-refusals-and-pairs-verify.cjs` (`npm run test:note-refusals`).
+  Found on the way: the excluded-herb list compared a number to text;
+  now compared as strings.
+- Reading and "why this formula" name herbs in one order (largest share
+  first). "Give it three weeks" is gone: the closing line follows the
+  duration answer (weeks / months / a year or more / lifelong). The trace
+  sentence names that herb and its own reason (aromatic / pungent / bitter
+  / resin), and appears only when the bottle has one.
+
+### D9 (claims pass): include these
+
+- The four duration closing lines in `display.js` `DURATION_CLOSE` are new
+  customer copy (pace, never results); review them with the rest of D9.
+- The duration question asks how long the person has *had* this pattern,
+  not how long they will take the bottle. A usage-duration answer (and
+  what the reading may say about it) is a D9 / reveal-design question.
+
+### Saffron, and why the engine cannot judge potency yet: Phase 3
+
+Robin, 2026-09-29: saffron is very potent in flavour and effect, and one
+formula came out at **18% saffron**. The engine cannot judge that well: it
+knows no extract ratio, no content of the active compounds (safranal,
+crocin, essential oils), and not how a given extract was made. A share of
+the bottle is not a dose of the plant.
+
+**Phase 3:** send Fungai Art's own (and others') single-herb extracts to a
+lab for analysis and proper documentation (extract ratio, marker
+compounds, solvent) and let the engine dose from measured extracts, not
+from the plant's name. Until then, a potent herb can be held small by
+listing it as a trace or small-share herb (open question for Robin:
+should saffron be capped now?).
+
 ### Waiting on Robin
 
-- **`docs/PAIR-CAUTIONS-REVIEW.md`** — 93 strongly worded herb-pair
-  cautions with a suggested class (11 BLOCK, 15 conditional already
-  covered, 12 already blocked, 55 SHOW). Once approved: one pair table
-  read by `rules.js` `seatBlocker`, a test per class, engine 2.8.
+- **Saffron cap** (above): yes / no until Phase 3.
 - Privacy page: the pro composer and practitioners' client files are not
   described. Who is the controller of a client's data (Robin or the
   practitioner) is a legal question.

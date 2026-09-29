@@ -1,6 +1,27 @@
-# Herb-pair cautions — review draft (2026-09-29)
+# Herb-pair cautions — review (2026-09-29)
 
-**For Robin to approve.** Nothing in this table is enforced yet.
+## Decided (Robin, 2026-09-29) — enforced from engine 2.8.0
+
+Suggested classes, with these changes. The rules live in `src/server/formula-engine/pair-rules.js`, read by `rules.js` `seatBlocker` (picker and MYCO validator alike); `tests/note-refusals-and-pairs-verify.cjs` checks them.
+
+| Pair | Decision |
+|---|---|
+| Kava + Valerian | **BLOCK**, and MYCO now sees the cautions among its shortlist, so it can steer round such pairs itself. |
+| Wormwood + Sage | **BLOCK** (explicit, no longer only by the one-trace rule) |
+| Pau d'Arco + Garlic / Ginkgo / Turmeric / Ginger | **BLOCK** |
+| Valerian + St John's Wort | **BLOCK** (Robin; no caution in the records links them) |
+| Astragalus + Echinacea | BLOCK, as suggested |
+| Guarana / Guayusa + Rhodiola | **SHOW**: Robin sees every formula and checks it in Mixology / formula analysis before bottling |
+| Passionflower / Valerian + Rosemary | **SHOW**: left to MYCO, which is now shown the caution |
+| The 15 conditional pairs | CONDITIONAL, as suggested (already covered by the safety answers; now also held as pair rules) |
+| Ginkgo + Lion's Mane, Guarana / Guayusa + Yerba Mate, Hops + California Poppy, Lavender + Valerian | SHOW: Robin mixes these at modest doses; the caution is about high doses. All four are allowed in a customer bottle with the caution shown (at most two stimulants per bottle still applies). |
+| All others | as suggested |
+
+Result: 8 BLOCK, 15 CONDITIONAL; everything else composes and shows its caution.
+
+---
+
+## The draft as it was reviewed
 
 From the external audit's ninth finding (verdict in `docs/AUDIT-2026-09-28-RESPONSE.md`): a caution between two herbs is prose in the herb records (`herb_to_herb_caution`), matched by name after the bottle is made, and shown — it never stops a pair. Robin chose the audit's three classes on 2026-09-29:
 

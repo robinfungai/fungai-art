@@ -46,6 +46,7 @@
     "test:admin-board": "node tests/admin-board-verify.cjs",
     "test:fairy-ring": "node tests/fairy-ring-verify.cjs",
     "test:formula-analysis": "node tests/formula-analysis-verify.cjs",
+    "test:note-refusals": "node tests/note-refusals-and-pairs-verify.cjs",
     "test:cns-classification": "node tests/cns-classification-verify.cjs",
     "test:herb-counts": "node scripts/sync-herb-counts.cjs --check",
     "check:claims": "node scripts/check-claims.cjs",
