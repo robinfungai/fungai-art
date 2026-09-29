@@ -82,7 +82,7 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ## 0.21 · START HERE (next session) — state on 29 Sep, end of day
 
-`main` is **16 commits ahead of GitHub (0a07052), not pushed** — everything since 29 Sep morning.
+`main` is **ahead of GitHub (0a07052), not pushed** (`git log --oneline origin/main..HEAD`) — everything since 29 Sep morning.
 All 44 test suites green; typecheck = the known 47-error backlog.
 Next session: read this §0.21, then `docs/AUDIT-2026-09-29-RESPONSE.md`
 (the newest audit — nothing edited yet, Robin approves each item), then §0.20–0.17 only as needed.
