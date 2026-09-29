@@ -194,6 +194,14 @@ export interface Herb {
    *  a serotonin precursor). The engine bottles at most ONE per formula
    *  (pharmacology.js isSerotonergic). Robin, 2026-09-28. */
   serotonergic?: true;
+
+  /** The most of a bottle this herb may take, in percent, when it is
+   *  potent enough that the general rules (trace 5%, everything else up
+   *  to 40%) do not fit. The engine holds it there and counts it as a
+   *  small-share herb (percentages.js, rules.js). First entry: Saffron at
+   *  7% (Robin, 2026-09-29, until Phase 3 lab data on real extracts) —
+   *  the start of the "formulation" fields the external audit proposed. */
+  max_share_pct?: number;
   // ── AYURVEDIC PHARMACOPOEIA LAYER ───────────────────────────────
   // Added with the Ayurvedic Pharmacopoeia of India batch. Recorded
   // rather than derived: every value here is transcribed from an API
@@ -7569,6 +7577,7 @@ export const HERBS: Herb[] = [
     name: 'Saffron',
     goals: ['mood'],
     serotonergic: true, // crocin: mild serotonin reuptake inhibitor
+    max_share_pct: 7, // potent in flavour and effect; Robin, 2026-09-29, until Phase 3 lab data
     botanical: 'Crocus sativus (stigmas only — three red threads per flower — "Red Gold")',
     tcm_meridians: ['Heart', 'Liver'],
     tcm_element: 'Fire + Earth',

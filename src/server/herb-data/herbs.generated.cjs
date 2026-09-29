@@ -7324,6 +7324,7 @@ const HERBS = [
     name: 'Saffron',
     goals: ['mood'],
     serotonergic: true, // crocin: mild serotonin reuptake inhibitor
+    max_share_pct: 7, // potent in flavour and effect; Robin, 2026-09-29, until Phase 3 lab data
     botanical: 'Crocus sativus (stigmas only — three red threads per flower — "Red Gold")',
     tcm_meridians: ['Heart', 'Liver'],
     tcm_element: 'Fire + Earth',

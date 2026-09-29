@@ -24,6 +24,7 @@
 
 const { getAllHerbs } = require('../herb-data');
 const { assignPercentages } = require('./percentages');
+const { pairBlocker } = require('./pair-rules');
 const { checkFormulaPairs } = require('./interactions');
 const { isTrace } = require('./traces');
 // The same classifiers the engine uses: each herb's recorded cns_action
@@ -165,6 +166,7 @@ function analyzeFormula(input) {
     safePregnancy: h.safe_pregnancy === undefined ? null : h.safe_pregnancy,
     grade:         h.evidence_grade || null,
     isTrace:       isTrace(h),
+    maxShare:      Number.isFinite(Number(h.max_share_pct)) ? Number(h.max_share_pct) : null,
     isGABAergic:   isGABAergic(h),
     isStimulant:   isCNSStimulant(h),
     isSerotonergic: isSerotonergic(h),
@@ -198,6 +200,15 @@ function analyzeFormula(input) {
   const amanitas = rows.filter(r => SHARED_RULES.isAmanita(r));
   const sjw = rows.filter(r => /\bst\.? john'?s wort\b|hypericum perforatum/i.test(String(r.name || '') + ' ' + String(r.botanical || '')));
   const over = Object.keys(catCount).filter(c => c !== 'other' && catCount[c] > RULES.MAX_PER_CATEGORY);
+  // Herbs with a recorded ceiling (herbs.ts max_share_pct — Saffron 7%).
+  const capped = rows.filter(r => r.maxShare != null);
+  // Pairs Robin ruled out (pair-rules.js). A made formula carries no
+  // safety answers, so CONDITIONAL pairs are named, not failed.
+  const blocked = [], conditional = [];
+  for (let i = 0; i < rows.length; i++) for (let j = i + 1; j < rows.length; j++) {
+    const r = pairBlocker(rows[j].id, [rows[i].id], ['pregnancy', 'cardio_meds', 'psych_meds', 'autoimmune', 'liver_kidney', 'thyroid', 'hypertension', 'contraceptive', 'sedatives', 'allergy']);
+    if (r) (r.cls === 'BLOCK' ? blocked : conditional).push(rows[i].name + ' + ' + rows[j].name + (r.flag ? ' (' + r.flag.replace('_', ' ') + ')' : ''));
+  }
   const checks = [
     { id: 'size', ok: rows.length >= RULES.MIN_HERBS && rows.length <= RULES.MAX_HERBS,
       label: 'Formula size', detail: rows.length + ' herbs — the engine composes ' + RULES.MIN_HERBS + '–' + RULES.MAX_HERBS + '.' },
@@ -224,6 +235,12 @@ function analyzeFormula(input) {
         : amanitas.length > RULES.MAX_AMANITA ? amanitas.map(r => r.name).join(', ') + ' — the engine bottles one Amanita at most.'
         : sjw.length ? amanitas[0].name + ' beside St John\'s Wort — the engine never bottles the two together.'
         : amanitas.map(r => r.name + ' ' + r.percentage + '%').join(', ') + ' — the engine keeps an Amanita at or under ' + RULES.AMANITA_PCT_CAP + '%.' },
+    { id: 'max-share', ok: capped.every(r => r.percentage <= r.maxShare),
+      label: 'Potent herbs', detail: capped.length ? capped.map(r => r.name + ' ' + r.percentage + '% (at most ' + r.maxShare + '%)').join(', ') + ' — held small because the plant is potent.' : 'None with a recorded ceiling.' },
+    { id: 'pairs', ok: !blocked.length,
+      label: 'Herb pairs', detail: (blocked.length ? blocked.join(', ') + ' — never in one bottle (house rule). ' : '') +
+        (conditional.length ? conditional.join(', ') + ' — not together for someone with that condition or medicine.' : '') ||
+        'No ruled-out pairs.' },
     { id: 'pro-only', ok: !rows.some(r => r.proOnly),
       label: 'Pro-only plants', detail: rows.some(r => r.proOnly) ? rows.filter(r => r.proOnly).map(r => r.name).join(', ') + ' — only the pro composer bottles this; a customer formula never does.' : 'None.' },
   ];

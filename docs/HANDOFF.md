@@ -162,7 +162,8 @@ should saffron be capped now?).
 
 ### Waiting on Robin
 
-- **Saffron cap** (above): yes / no until Phase 3.
+- **Saffron cap: done** (Robin, 29 Sep: 7%). `herbs.ts` `max_share_pct: 7`, engine 2.8.1; the analysis tool flags a saffron share above 7% and any ruled-out pair.
+- **Audit 26 to 28** (design direction, verdicts in `docs/AUDIT-2026-09-28-RESPONSE.md`): record `laxative` and `trace_class` on the herbs; store the score breakdown with each customer formula; the ontology roadmap (roles, min share, lactation / age, sources). Robin to choose the order.
 - Privacy page: the pro composer and practitioners' client files are not
   described. Who is the controller of a client's data (Robin or the
   practitioner) is a legal question.

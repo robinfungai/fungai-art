@@ -23,14 +23,26 @@ const AMANITA_PCT_CAP = 10;   // Robin, 2026-09-29 (third audit)
 const MAX_SHARE_PCT   = 40;
 const MIN_SHARE_PCT   = 1;
 
-// The ceiling for each herb: trace 5%, Amanita 10%, every other herb 40%.
+// A herb held to a small share: its recorded max_share_pct (herbs.ts —
+// Saffron 7%, Robin 2026-09-29), trace 5%, Amanita 10%; the lowest that
+// applies. 0 = a main herb (up to 40%).
+function smallShareCap(h) {
+  const caps = [];
+  const rec = Number(h && h.max_share_pct);
+  if (Number.isFinite(rec) && rec >= MIN_SHARE_PCT && rec < MAX_SHARE_PCT) caps.push(rec);
+  if (isTrace(h)) caps.push(TRACE_PCT_CAP);
+  if (isAmanita(h)) caps.push(AMANITA_PCT_CAP);
+  return caps.length ? Math.min(...caps) : 0;
+}
+
+// The ceiling for each herb: its small-share cap, otherwise 40%.
 // A bottle needs at least three herbs at the full ceiling for 40% to be
 // reachable (3 × 40 ≥ 100); the engine never composes a smaller one
 // (picker.js MIN_MAIN_HERBS), but the pro analysis can hand us any list,
 // so a short list gets the smallest ceiling that still adds up to 100
 // instead of a total that cannot.
 function ceilings(herbs) {
-  const small = herbs.map(h => (isTrace(h) ? TRACE_PCT_CAP : isAmanita(h) ? AMANITA_PCT_CAP : 0));
+  const small = herbs.map(smallShareCap);
   const mains = small.filter(c => !c).length;
   const smallRoom = small.reduce((a, b) => a + b, 0);
   const mainCap = mains ? Math.max(MAX_SHARE_PCT, Math.ceil((100 - smallRoom) / mains)) : 100;
@@ -95,4 +107,4 @@ function assignPercentages(herbs) {
   return pct;
 }
 
-module.exports = { assignPercentages, TRACE_PCT_CAP, AMANITA_PCT_CAP, MAX_SHARE_PCT, MIN_SHARE_PCT };
+module.exports = { assignPercentages, smallShareCap, TRACE_PCT_CAP, AMANITA_PCT_CAP, MAX_SHARE_PCT, MIN_SHARE_PCT };

@@ -71,12 +71,14 @@ module.exports = {
     rationale: "2026-09-29, third audit (Claude, read main@b3beace): note keywords match at the start of a word, short ones as whole words (\"partner\" no longer scores \"art\", \"reflux\" no longer \"flu\"); the autoimmune flag reads MS in capitals only (26 herbs were flagged through \"symptoms\", \"forms\"). On top of engine 2.6 / safety 1.4.",
   },
   '16-gated-amanita-opt-in': {
-    herbs: "302:Rose Petals@20|215:Damiana@19|102:Bobinsana@16|287:Vanilla@15|323:Reishi@15|278:Saffron@15",
-    rationale: "2026-09-29, third audit (Claude, read main@b3beace): note keywords match at the start of a word, short ones as whole words (\"partner\" no longer scores \"art\", \"reflux\" no longer \"flu\"); the autoimmune flag reads MS in capitals only (26 herbs were flagged through \"symptoms\", \"forms\"). On top of engine 2.6 / safety 1.4.",
+    herbs: "302:Rose Petals@22|215:Damiana@21|102:Bobinsana@17|287:Vanilla@17|323:Reishi@16|278:Saffron@7",
+    rationale: "Engine 2.8.1 (Robin, 2026-09-29): Saffron is held to 7% of the bottle (herbs.ts max_share_pct, until Phase 3 lab data on real extracts) and counts as a small-share herb; the same six herbs, the 8 points spread over the other five. On top of engine 2.8.0.",
+    previousRationale: "2026-09-29, third audit (Claude, read main@b3beace): note keywords match at the start of a word, short ones as whole words (\"partner\" no longer scores \"art\", \"reflux\" no longer \"flu\"); the autoimmune flag reads MS in capitals only (26 herbs were flagged through \"symptoms\", \"forms\"). On top of engine 2.6 / safety 1.4.",
   },
   '17-no-gate': {
-    herbs: "302:Rose Petals@20|215:Damiana@19|102:Bobinsana@16|287:Vanilla@15|323:Reishi@15|278:Saffron@15",
-    rationale: "2026-09-29, third audit (Claude, read main@b3beace): note keywords match at the start of a word, short ones as whole words (\"partner\" no longer scores \"art\", \"reflux\" no longer \"flu\"); the autoimmune flag reads MS in capitals only (26 herbs were flagged through \"symptoms\", \"forms\"). On top of engine 2.6 / safety 1.4.",
+    herbs: "302:Rose Petals@22|215:Damiana@21|102:Bobinsana@17|287:Vanilla@17|323:Reishi@16|278:Saffron@7",
+    rationale: "Engine 2.8.1 (Robin, 2026-09-29): Saffron is held to 7% of the bottle (herbs.ts max_share_pct, until Phase 3 lab data on real extracts) and counts as a small-share herb; the same six herbs, the 8 points spread over the other five. On top of engine 2.8.0.",
+    previousRationale: "2026-09-29, third audit (Claude, read main@b3beace): note keywords match at the start of a word, short ones as whole words (\"partner\" no longer scores \"art\", \"reflux\" no longer \"flu\"); the autoimmune flag reads MS in capitals only (26 herbs were flagged through \"symptoms\", \"forms\"). On top of engine 2.6 / safety 1.4.",
   },
   '18-pro-fields-carried': {
     herbs: "103:Ashwagandha@22|271:Oatstraw@21|246:Hawthorn@15|323:Reishi@15|300:Red Dates@15|316:Fu Ling@12",

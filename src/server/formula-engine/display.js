@@ -220,6 +220,8 @@ function buildWhyText(profile, herbs, percentages) {
   // and even for bottles with none).
   const small = withPct.map(x => {
     if (isAmanita(x.h)) return '<strong>' + esc(x.h.name) + '</strong> is held to 10% of the bottle or less by house rule.';
+    const cap = Number(x.h.max_share_pct);
+    if (Number.isFinite(cap) && cap < 40) return '<strong>' + esc(x.h.name) + '</strong> is held to ' + cap + '% of the bottle or less: it is potent in flavour and effect, so a small share goes a long way.';
     const r = traceReason(x.h);
     return r ? '<strong>' + esc(x.h.name) + '</strong> is kept to a trace (5% or less): ' + esc(r.text) + '.' : null;
   }).filter(Boolean);

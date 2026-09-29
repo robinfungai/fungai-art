@@ -46,7 +46,11 @@ module.exports = {
   //         fallback; the reading and "why" name herbs in one order, the
   //         closing line follows the duration answer, and the trace
   //         sentence gives that herb's own reason.
-  engineVersion:      '2.8.0-server',
+  // 2.8.1 — a herb's recorded max_share_pct (herbs.ts) caps its share and
+  //         makes it a small-share herb: Saffron at 7% (Robin,
+  //         2026-09-29, until Phase 3 lab data). The analysis tool
+  //         checks it, and the ruled-out herb pairs.
+  engineVersion:      '2.8.1-server',
   herbDbVersion:      '2026.09-247herbs',
   // 1.1.0 — unknown pregnancy safety = avoid; under-18s: no HIGH-caution,
   //         psychoactive, or above-LOW calming herbs (2026-09-27).

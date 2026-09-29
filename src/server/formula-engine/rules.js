@@ -9,7 +9,7 @@
 
 const { isTrace } = require('./traces');
 const P = require('./pharmacology');
-const { TRACE_PCT_CAP, MAX_SHARE_PCT, AMANITA_PCT_CAP } = require('./percentages');
+const { TRACE_PCT_CAP, MAX_SHARE_PCT, AMANITA_PCT_CAP, smallShareCap } = require('./percentages');
 const { pairBlocker } = require('./pair-rules');
 
 const RULES = {
@@ -33,9 +33,10 @@ const RULES = {
 
 const isAmanita = P.isAmanita;
 
-// A herb held to a small share (trace ≤ 5%, Amanita ≤ 10%). A bottle
-// needs three herbs that are NOT, so no herb has to go above 40%.
-const isSmallShare = h => isTrace(h) || isAmanita(h);
+// A herb held to a small share (trace ≤ 5%, Amanita ≤ 10%, a recorded
+// max_share_pct like Saffron's 7%). A bottle needs three herbs that are
+// NOT, so no herb has to go above 40%.
+const isSmallShare = h => smallShareCap(h) > 0;
 
 // `avoid` = the safety answers the bottle is built under (ticked plus
 // any the note named) — CONDITIONAL pair rules read them.
