@@ -456,6 +456,36 @@ async function findByRequestKey(sb, key) {
   }
 }
 
+// findByRequestKey only helps once the first formula is stored: two
+// copies of one request arriving together both found nothing and both
+// called MYCO (external audit 2026-09-29, #2). So before MYCO a request
+// claims its key — one statement in the database, only one copy wins —
+// and a copy that finds the key taken waits for that formula instead.
+const CLAIM_WAIT_MS = 26_000;   // MYCO's own timeout is 25 s (formula-engine/myco.js)
+const CLAIM_POLL_MS = 1_500;
+async function claimRequest(sb, key) {
+  try {
+    const { data, error } = await sb.rpc('fyf_claim_request', { p_key: key });
+    if (error) throw error;
+    return data === true;
+  } catch (e) {
+    // Most likely supabase-fyf-claims.sql not run yet: compose as before.
+    console.warn('[fyf-compose] request claim unavailable (run supabase-fyf-claims.sql?):', e && e.message ? e.message : e);
+    return null;
+  }
+}
+async function releaseRequest(sb, key) {
+  try { await sb.rpc('fyf_release_request', { p_key: key }); } catch (_) {}
+}
+async function waitForFormula(sb, key) {
+  for (const until = Date.now() + CLAIM_WAIT_MS; Date.now() < until;) {
+    await new Promise(r => setTimeout(r, CLAIM_POLL_MS));
+    const row = await findByRequestKey(sb, key);
+    if (row) return row;
+  }
+  return null;
+}
+
 // Store a formula. If the database does not have the D6/D8 columns yet
 // (the SQL files not run), store it without them rather than failing
 // the reveal.
@@ -603,20 +633,39 @@ export default async function handler(req) {
   // first, so a rejected profile never takes a call from the daily
   // MYCO budget.
   let engineResult;
+  let claimed = false;
+  // A request that claimed its key and then fails hands it back, so a
+  // retry composes instead of waiting for a formula that never comes.
+  const release = async () => { if (claimed) { claimed = false; await releaseRequest(sb, key); } };
   try {
     const baseline = compileFormula(vp.profile);
     if (isShadow || baseline.status !== 'ok') {
       engineResult = baseline;
     } else {
+      if (key) {
+        const claim = await claimRequest(sb, key);
+        if (claim === false) {
+          const row = await waitForFormula(sb, key);
+          if (row) return jsonResponse(200, cors, replayResponse(row, vp.profile, practitioner));
+          // 503 → the page's "Please retry" state, with a Retry button.
+          return jsonResponse(503, { ...cors, 'Retry-After': '5' }, {
+            status: 'error', code: 'COMPOSE_IN_PROGRESS',
+            message: 'Your formula is still being composed. Try again in a moment.',
+          });
+        }
+        claimed = claim === true;
+      }
       engineResult = await composeFormulaWithMyco(vp.profile, { baseline, skipMyco: await mycoSkipReason(sb) });
     }
   } catch (e) {
     console.error('[fyf-compose] engine threw:', e && e.stack ? e.stack : e);
+    await release();
     return jsonResponse(500, cors, { status: 'error', code: 'INTERNAL_ERROR' });
   }
   const upgradeEligible = false; // legacy field; upgrade endpoint retired
 
   if (engineResult.status === 'rejected') {
+    await release();
     return jsonResponse(400, cors, {
       status:  'rejected',
       code:    engineResult.code,
@@ -628,6 +677,7 @@ export default async function handler(req) {
   // person's safety answers are what emptied it, NO_MATCH when their
   // answers point nowhere. NO_VIABLE_FORMULA stays as the catch-all.
   if (engineResult.status === 'no_match' || !Array.isArray(engineResult.herbs) || engineResult.herbs.length === 0) {
+    await release();
     return jsonResponse(422, cors, {
       status:     'rejected',
       code:       engineResult.code || 'NO_VIABLE_FORMULA',
@@ -668,6 +718,7 @@ export default async function handler(req) {
       // Persistence failure is a real error path — surface as 500
       // rather than silently returning an ephemeral id in production.
       console.error('[fyf-compose] persist failed:', error.message || error);
+      await release();
       return jsonResponse(500, cors, {
         status: 'error',
         code:   'PERSIST_FAILED',

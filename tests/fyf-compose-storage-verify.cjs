@@ -7,6 +7,9 @@
 //   · P0 #11 — the same requestId with the same answers returns the
 //            stored formula (no second row, no second MYCO call); changed
 //            answers compose afresh; two at once still store one.
+//   · Audit #2 (2026-09-29) — two copies at the SAME moment: only the one
+//            that claims the key (fyf_claim_request) asks MYCO; the other
+//            waits and returns that formula. A failure hands the key back.
 //   · D6   — every stored row carries retention_tracked = true, and
 //            reserve-formula marks reserved_at.
 //   · If the SQL files have not been run, reveals still work.
@@ -22,9 +25,17 @@ const results = [];
 const check = (name, ok, detail) => results.push({ name, ok: !!ok, detail });
 
 // ── Stand-ins ────────────────────────────────────────────────────
-function fakeSupabase({ rpcError = null, missingColumns = [], storedByOther = null } = {}) {
-  const db = { rows: [], budgetCalls: 0, rpcCalls: 0 };
+function fakeSupabase({ rpcError = null, missingColumns = [], storedByOther = null, insertError = null } = {}) {
+  const db = { rows: [], budgetCalls: 0, rpcCalls: 0, claims: new Set(), claimCalls: 0 };
   db.rpc = async (name, args) => {
+    if (name === 'fyf_claim_request' || name === 'fyf_release_request') {
+      db.claimCalls++;
+      if (rpcError) return { data: null, error: { message: rpcError } };
+      if (name === 'fyf_release_request') { db.claims.delete(args.p_key); return { data: null, error: null }; }
+      if (db.claims.has(args.p_key)) return { data: false, error: null };
+      db.claims.add(args.p_key);
+      return { data: true, error: null };
+    }
     db.rpcCalls++;
     if (rpcError) return { data: null, error: { message: rpcError } };
     if (db.budgetCalls >= args.p_limit) return { data: false, error: null };
@@ -34,6 +45,7 @@ function fakeSupabase({ rpcError = null, missingColumns = [], storedByOther = nu
   db.from = () => ({
     select: () => ({ eq: (col, val) => ({ maybeSingle: async () => ({ data: db.rows.find(r => r[col] === val) || null, error: null }) }) }),
     insert: async row => {
+      if (insertError) return { error: insertError };
       for (const c of missingColumns) if (c in row) return { error: { code: 'PGRST204', message: "Could not find the '" + c + "' column of 'fyf_formulas' in the schema cache" } };
       if (storedByOther && row.request_key) {
         // Another request with the same key stored first, a moment ago.
@@ -50,7 +62,8 @@ function fakeSupabase({ rpcError = null, missingColumns = [], storedByOther = nu
 }
 
 let mycoCalls = 0;
-global.fetch = async () => { mycoCalls++; return { ok: false, status: 503, json: async () => ({}) }; };
+// A moment's delay, like the real call, so two requests overlap.
+global.fetch = async () => { mycoCalls++; await new Promise(r => setTimeout(r, 200)); return { ok: false, status: 503, json: async () => ({}) }; };
 process.env.ANTHROPIC_API_KEY = 'test-stand-in';
 
 const profile = extra => Object.assign({
@@ -125,7 +138,23 @@ let ipN = 0;
       method: 'POST', headers: { 'Content-Type': 'application/json', 'X-FYF-Mode': 'shadow', 'x-forwarded-for': '198.51.100.250' },
       body: JSON.stringify({ profile: profile(), requestId: 'visit00000007' }),
     }));
-    check('shadow call → no storage, no budget, no MYCO', res.status === 200 && db.rows.length === 0 && db.rpcCalls === 0 && mycoCalls === 0, '');
+    check('shadow call → no storage, no budget, no MYCO', res.status === 200 && db.rows.length === 0 && db.rpcCalls === 0 && db.claimCalls === 0 && mycoCalls === 0, '');
+
+    // 8b · Audit #2 — two identical requests at the SAME moment
+    db = fakeSupabase(); mod._setSupabaseForTests(db); mycoCalls = 0;
+    const [f1, f2] = await Promise.all([
+      call({ profile: profile(), requestId: 'visit00000008' }),
+      call({ profile: profile(), requestId: 'visit00000008' }),
+    ]);
+    check('two at once → MYCO asked once, one row, the same formula to both',
+      f1.status === 200 && f2.status === 200 && mycoCalls === 1 && db.budgetCalls === 1 && db.rows.length === 1 &&
+      f1.body.formulaId === f2.body.formulaId && [f1, f2].filter(x => x.body.replayed).length === 1,
+      'MYCO ' + mycoCalls + ', budget ' + db.budgetCalls + ', rows ' + db.rows.length + ', ' + f1.status + '/' + f2.status);
+
+    // 8c · a request that fails after claiming hands the key back
+    db = fakeSupabase({ insertError: { code: '08006', message: 'connection lost' } }); mod._setSupabaseForTests(db);
+    const g1 = await call({ profile: profile(), requestId: 'visit00000009' });
+    check('failed after claiming → 500 and the key is free for a retry', g1.status === 500 && db.claims.size === 0, 'status ' + g1.status + ', claims ' + db.claims.size);
   } finally {
     console.log = log; console.warn = warn; console.error = err;
     mod._setSupabaseForTests(null);
@@ -138,6 +167,11 @@ let ipN = 0;
   // 10 · the SQL files exist with what the code calls
   const sqlB = fs.readFileSync(path.join(__dirname, '../supabase-myco-budget.sql'), 'utf8');
   const sqlR = fs.readFileSync(path.join(__dirname, '../supabase-fyf-retention.sql'), 'utf8');
+  const sqlC = fs.readFileSync(path.join(__dirname, '../supabase-fyf-claims.sql'), 'utf8');
+  check('SQL: fyf_claim_request and fyf_release_request, service role only',
+    /FUNCTION public\.fyf_claim_request\(p_key text, p_stale_seconds integer DEFAULT 120\)/.test(sqlC) &&
+    /FUNCTION public\.fyf_release_request\(p_key text\)/.test(sqlC) &&
+    /REVOKE ALL ON FUNCTION public\.fyf_claim_request\(text, integer\) FROM PUBLIC, anon, authenticated/.test(sqlC), '');
   check('SQL: myco_budget_take and request_key', /FUNCTION public\.myco_budget_take\(p_limit integer\)/.test(sqlB) && /ADD COLUMN IF NOT EXISTS request_key/.test(sqlB) && /UNIQUE INDEX IF NOT EXISTS fyf_formulas_request_key_uniq/.test(sqlB), '');
   check('SQL: reserved_at, retention_tracked, nightly purge of tracked unreserved rows only',
     /ADD COLUMN IF NOT EXISTS reserved_at/.test(sqlR) && /ADD COLUMN IF NOT EXISTS retention_tracked boolean NOT NULL DEFAULT false/.test(sqlR) &&

@@ -213,6 +213,21 @@ are true of the live site. Re-run on the local engine (2.6.1):
 - **Not done: structured data instead of HTML.** Right direction, bigger change (both formula pages render these strings). With every input either an enum or escaped at the one place the HTML is built, the class is closed for now; revisit with D10 (reveal redesign), where the reveal markup is rewritten anyway.
 - **Tested:** the audit payload → 400 `PROFILE_INVALID`; `''`, `anger` under hot, and `cold_hands` under hot → 200 with the right line in `whyText` (bundled with esbuild as Netlify builds it); `buildWhyText` with the payload emits `&lt;img`, never `<img`; `fyf-compose-storage-verify` 16/16; fixture compare 0 unexpected.
 
+## Fifth finding · D8 does not stop two MYCO calls at the same moment (2026-09-29)
+
+**Verdict: real, fixed — severity Medium, not HIGH.** The race was exactly as described: both copies found no stored row, both took a call from the daily budget and called MYCO, and only the second INSERT failed (23505) and replayed the first. The new test reproduces it on the old code: *MYCO 2, budget 2, rows 1*.
+
+- **Why not HIGH.** The page never retries by itself (one request, a Retry button after an error). The realistic case is a phone dropping its connection mid-reveal and the person tapping Retry while the first request is still with MYCO: one extra Opus call, inside the daily budget. Someone trying to spend money does not need the same key — a fresh requestId skips idempotency altogether — so the cost ceiling is, and stays, the daily budget (`myco_budget_take`, atomic) and the per-IP limit. Idempotency is about not charging one person twice.
+- **Fix — claim before MYCO.** New `supabase-fyf-claims.sql`: `fyf_compose_claims` and `fyf_claim_request(key)`, one `INSERT … ON CONFLICT DO UPDATE … WHERE stale` statement, so only one copy gets `true`. Flow in `fyf-compose.mjs`: stored formula? → replay. Otherwise claim → only the claimant takes the budget and asks MYCO → store. A copy that finds the key claimed polls for the stored formula (every 1.5 s, up to 26 s — MYCO's own timeout is 25 s) and replays it; if none appears it answers 503 `COMPOSE_IN_PROGRESS`, which the page shows as "Please retry". A claimant that fails (engine error, rejected, no match, store failed) releases the key; a claim older than two minutes is taken over; claims older than a day are cleared.
+- **Before the SQL is run** the claim is skipped (warning logged) and compose behaves as before — nothing breaks.
+- **Tested** (`tests/fyf-compose-storage-verify.cjs`, 19/19): two identical requests at once → MYCO once, budget once, one row, the same formulaId to both, exactly one marked replayed; a failure after claiming → 500 and the key is free; the SQL file defines both functions for the service role only. All 16 earlier checks unchanged.
+
+## Sixth finding · the percentage "lock" is a UI lock (2026-09-29)
+
+**Verdict: accurate description — a decision, not a defect.** The compose response carries every herb's real percentage and the full `whyText`; the page shows "??%" and dims the reading until reservation; `window.__authoritativeFormula` holds the lot; "See the full apothecary" deliberately reveals it without reserving (the page's own comments call it "no hard block" and a "marketing hack"). So it is intrigue, not access control. One comment claims more than that — `public/find-your-formula/index.html` CSS: "prevents scrape-and-copy" — and is wrong.
+
+**Decision (Robin): pending.** A — keep it as a UI experience and correct the comments; or B — the server withholds percentages and the reading until a reservation, which the reveal would then fetch.
+
 ## Decisions (Robin, 2026-09-28)
 
 | | Question | Decided | Status |
