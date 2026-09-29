@@ -247,9 +247,19 @@ const NOTES_KEYWORD_RX = new Map(NOTES_KEYWORDS.map(kw => [kw, new RegExp(
 // The original text is matched as well as the corrected one, so this can
 // only ever ADD an intention the member expressed, never remove one they
 // spelled correctly.
+// A refused wish is not a wish (external audit 2026-09-29): in "I don't
+// want anything for sleep" the words after the refusal, to the end of
+// that phrase, are not scored. Deliberately narrow — only a negated
+// want/need followed by anything / something / any / a / an. Negation
+// in symptom language is a NEED ("can't sleep", "no energy", "nothing
+// helps my anxiety", "I don't want to feel tired"), so it is left alone.
+// Past and present ("I used to sleep badly") are not told apart here;
+// MYCO reads the note as a whole when it composes.
+const NEGATED_WISH = /\b(?:do\s+not|don'?t|does\s+not|doesn'?t|never|not)\s+(?:really\s+)?(?:want|need)\s+(?:anything|something|any|an?)\b[^.,;:!?\n|]*/g;
+
 function notesBoost(h, notes) {
   if (!notes) return 0;
-  const raw = String(notes).toLowerCase();
+  const raw = String(notes).toLowerCase().replace(/[’‘]/g, "'").replace(NEGATED_WISH, ' ');
   const fixed = applyMisspellings(raw);
   // ' | ' between the two readings so no keyword can match across the
   // join — none of them contain a pipe.

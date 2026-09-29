@@ -160,7 +160,12 @@ function validateProfile(raw) {
     for (const v of raw.intentions) if (!ENUMS.intention.has(v)) {
       return { ok: false, code: 'PROFILE_INVALID', reason: 'intentions contains an unknown value' };
     }
-    p.intentions = raw.intentions.slice(0, INTENTIONS_MAX);
+    // The ranking the scorer reads must be a real one: `intention` is
+    // first and no goal counts twice — ['stress','stress','stress'] was
+    // three scoring events for one goal (external audit 2026-09-29).
+    // Normalised rather than refused: the quiz always sends this shape,
+    // and an old saved quiz should still compose.
+    p.intentions = [...new Set([p.intention, ...raw.intentions])].slice(0, INTENTIONS_MAX);
   } else {
     p.intentions = [p.intention];
   }

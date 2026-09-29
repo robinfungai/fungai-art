@@ -80,7 +80,55 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ---
 
-## 0.16 · START HERE — plan for 2026-09-29
+## 0.17 · START HERE — push on 1 October, then the SQL
+
+**State on 2026-09-29 (late night):** engine **2.7.2**, safety rules 1.4.1.
+GitHub `main` = `0a07052` (pushed 29 Sep). Everything after it is committed
+on `main`, **not pushed** — Robin will say "push" on **1 October**:
+502 fix for `/api/formula-analysis` (MYCO + analysis on /mixology, the pro
+client-file save), favicon.ico, lab-notebook PDF grid, live herb count on
+the Dashboard, and the fourth external audit's fixes (XSS through
+`patternSub`, one MYCO call per request, Formula Book written by the
+server, consent names the AI, pair-caution matcher, intentions and note
+scorer). Verdicts: `docs/AUDIT-2026-09-28-RESPONSE.md`, findings four to nine and on.
+
+### After the push on 1 October — Robin runs, in this order
+
+1. **`supabase-formulas-server-writes.sql`** — only AFTER the push is live.
+   Closes the anon insert into `formulas`; `reserve-formula` now writes the
+   Formula Book entry itself. Run before the push and live reservations
+   stop adding Formula Book cards until the deploy.
+   Its step 3 (clearing `quiz_snapshot` copies) is optional and cannot be
+   undone — look at the count first.
+2. **`supabase-fyf-claims.sql`** — if not already run (Robin was running it
+   on 29 Sep). Check: `SELECT to_regproc('public.fyf_claim_request');` —
+   not NULL = done. Order does not matter for this one.
+3. **Step 4 of `supabase-fyf-retention.sql`** — protect old reserved
+   formulas by id, then delete the rest older than 30 days (by hand, once).
+
+### Then check on the live site
+
+- `/mixology` → a formula → MYCO analysis answers (was 502).
+- `/find-your-formula-pro/` → Client file → Save → "Saved." and it lists.
+- One test reservation → a Formula Book card with no notes, and no second
+  card if the same formula is reserved again.
+- `https://www.fungai.art/favicon.ico` → 200 (was 404).
+
+### Waiting on Robin
+
+- **`docs/PAIR-CAUTIONS-REVIEW.md`** — 93 strongly worded herb-pair
+  cautions with a suggested class (11 BLOCK, 15 conditional already
+  covered, 12 already blocked, 55 SHOW). Once approved: one pair table
+  read by `rules.js` `seatBlocker`, a test per class, engine 2.8.
+- Privacy page: the pro composer and practitioners' client files are not
+  described. Who is the controller of a client's data (Robin or the
+  practitioner) is a legal question.
+- Still from §0.16: D9 claims table, D10 reveal order, make the repo
+  private (D7).
+
+---
+
+## 0.16 · plan for 2026-09-29 (superseded by 0.17)
 
 **State on 2026-09-29 (night):** both SQL files are RUN. Engine **2.7.0**,
 safety rules **1.4.1**, all 39 suites green, `npm run build` passes.

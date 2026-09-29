@@ -228,6 +228,19 @@ are true of the live site. Re-run on the local engine (2.6.1):
 
 **Decision (Robin): pending.** A — keep it as a UI experience and correct the comments; or B — the server withholds percentages and the reading until a reservation, which the reveal would then fetch.
 
+## Tenth finding · patternSub and intentions[] not validated as meaning (2026-09-29)
+
+**Verdict: real, fixed.**
+- **patternSub** — already fixed by the fourth finding (`5bf7aa2`): only the 16 quiz sub-answers are accepted, and one that does not belong to the chosen pattern is dropped, so `pattern = cold, patternSub = anger` earns no anger boost.
+- **intentions[]** — could repeat a goal (`['stress','stress','stress']` = three scoring events) and need not start with `intention`. `fyf-compose` now builds it as `intention` first, then the rest, each goal once, at most three. Normalised rather than refused: the quiz always sends that shape (it stores the top pick as `intention`, and a tapped goal cannot be picked twice), and an old saved quiz still composes.
+
+## Eleventh finding · the note scorer is keyword matching (2026-09-29)
+
+**Verdict: accurate — bounded, one narrow fix, the rest is the long-term plan.** `notesBoost` matches keywords at word starts (since M3, 2026-09-28) and is capped at +6 — half of the first goal's 12 — so a misread note moves a herb, it cannot lead a bottle. The audit's own example ("I do NOT want something stimulating") scores nothing: "stimulat" is not a keyword. The same shape does bite with real keywords: "I don't want anything for sleep" boosted sleep herbs.
+- **Fixed (engine 2.7.2):** words after a refused wish — a negated want/need followed by *anything / something / any / a / an* — are not scored, to the end of that phrase. Deliberately narrow, because negation in symptom language is a need: "can't sleep", "no energy", "nothing helps my anxiety", "I don't want to feel tired" all still count (tested).
+- **Not fixed:** past vs present ("I used to sleep badly"), strength of statement, desire vs history. Those need structured extraction, not more keywords. When MYCO composes (engine 2.5) it reads the note as a whole; the keyword boost matters for the ranking MYCO chooses from and for the deterministic fallback. A structured extraction of the note (wants / avoid / history) is a candidate for the next engine round.
+- **Tested:** 600-profile invariants, safety rules, safety conflicts, compose storage 19/19, analysis 27/27, fixtures 0 unexpected.
+
 ## Decisions (Robin, 2026-09-28)
 
 | | Question | Decided | Status |

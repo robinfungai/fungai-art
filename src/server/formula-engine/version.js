@@ -34,7 +34,10 @@ module.exports = {
   //         (plural allowed), and a generic first word ("black", "blue")
   //         no longer stands for the herb: 37 false cautions gone, no
   //         bottle changes (external audit, 2026-09-29).
-  engineVersion:      '2.7.1-server',
+  // 2.7.2 — the note scorer skips a refused wish ("I don't want anything
+  //         for sleep"); symptom negation ("can't sleep") still counts
+  //         (external audit, 2026-09-29).
+  engineVersion:      '2.7.2-server',
   herbDbVersion:      '2026.09-247herbs',
   // 1.1.0 — unknown pregnancy safety = avoid; under-18s: no HIGH-caution,
   //         psychoactive, or above-LOW calming herbs (2026-09-27).
