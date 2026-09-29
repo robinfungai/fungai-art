@@ -80,14 +80,59 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ---
 
+## 0.20 · 2026-09-29 (night) — Amanita cards, kingdoms, MYCO digest, top herbs
+
+- **Amanita Muscaria is eligible as liquid medicine** (Robin): the "educational
+  only / ABSOLUTE BLOCK FOR ALL INTERNAL USE" text is gone; the card says liquid
+  preparation at a small share (engine ≤10%, one Amanita, never with St John's
+  Wort), batch assay (drying and heating shift ibotenic acid ↔ muscimol, PMID
+  42796518, 27063872), Sweden scheduled, plus TOPICAL notes for **Moder Jord**
+  (in `best_preparation` — NOT in `primary_functions`: the engine reads body
+  pattern from function text, and "heat injury / inflammatory pain" there made
+  it a different herb for the picker; caught by fixture 03). 18 references.
+- **Amanita Pantherina → practitioners only** (`formula_access: 'pro'`), card
+  reworded "practitioners only", every hazard kept.
+- **Not done — Robin's call, see the reply of 29 Sep:** San Pedro, Syrian rue
+  (Peganum) and sassafras are NOT in the catalogue; the six restricted entries
+  (Calamus, Coca Leaf, Kratom, Psilocybe, Thunder God Vine, Comfrey) stay out of
+  all formulas, pro included.
+- **Kingdoms** — `kingdomOf` / `plantGroupOf` in pharmacology.js (from the record's
+  family); the shelf list `herb-engine-ids.json` carries `k` (and `g`); the portal
+  Dashboard's herb figure (all 247, restricted included) now reads
+  "207 flowering plants · 6 conifers & ginkgo · 2 clubmoss & horsetail · 26 fungi ·
+  1 lichen · 4 algae & seaweeds · 1 mineral".
+- **MYCO monthly digest** — was one scheduled function (Netlify: 30 s limit) asking
+  Opus to read a month of notes + PDFs: it would very likely have timed out. Now
+  `myco-monthly-digest.mjs` (schedule 09:00 UTC on the 1st + manual trigger) starts
+  `myco-monthly-digest-background.mjs` (15 min). MYCO now also gets the CURRENT
+  RECORD of every herb the notes/PDFs name (found with herb-names.js), and the
+  email ends with **── FOR CLAUDE CODE ──**: a block to paste into the terminal
+  (file, herb + id, field, new text, quoted source; standing orders: check PMIDs,
+  herbs-everywhere, show the diff, one commit, no push). It still never writes.
+  Needs on Netlify: ANTHROPIC_API_KEY, RESEND_API_KEY, SUPABASE_SERVICE_ROLE_KEY
+  (for the PDFs), DIGEST_KEY (for the manual link). The copy already live on
+  GitHub main is the old single function; the new one goes out with the push.
+  **Manual run:** Netlify → Functions → myco-monthly-digest → "Run now", or open
+  `/.netlify/functions/myco-monthly-digest-background?key=<DIGEST_KEY>` (add
+  `&dry=1` to log instead of email). A scheduled function can't be opened by URL
+  (Netlify docs), so the "?key=" link both digests documented never worked.
+- **Traffic email** (`visitor-digest.mjs`) — live on GitHub main, 09:00 UTC on the
+  1st and 15th, table exists; needs RESEND_API_KEY + a service key on Netlify.
+  Manual run: "Run now" in Netlify (its ?key= link can't work, see above).
+- **`npm run report:top-herbs`** → `docs/TOP-HERBS.md`: the 50 herbs the engine
+  puts in bottles most over N random consumer profiles, with each record's
+  reference count and a PubMed link (trials, meta-analyses, reviews). No MYCO, free.
+
+---
+
 ## 0.19 · 2026-09-29 (later still) — the hardening checklist (committed, not pushed)
 
-### ⚠ Changes the 1 October order
+### The 1 October order — checked, nothing new to run first
 **Compose now FAILS CLOSED when a database protection is missing** (checklist #6).
-So **`supabase-fyf-claims.sql` must be run BEFORE the push** (check:
-`SELECT to_regproc('public.fyf_claim_request');` — not NULL = done). Without it the
-live Formula Maker answers 503 "being updated" to everyone. `supabase-fyf-retention.sql`
-and `supabase-myco-budget.sql` are already run (§0.16). `supabase-formulas-server-writes.sql`
+It needs `fyf_claim_request` and `myco_budget_take`: **both exist in production**
+(checked 29 Sep from outside with the anon key: "permission denied", not "not found"),
+so `supabase-fyf-claims.sql` IS run. `page_views` exists too (the traffic email's
+table — `supabase-visits.sql` IS run; §7's "not run" is out of date). `supabase-formulas-server-writes.sql`
 still goes AFTER the push (§0.17). Local development: `netlify dev` sets NETLIFY_DEV
 and keeps the old lenient behaviour; `FYF_DB_COMPAT=1` forces it anywhere (don't
 set it on Netlify).

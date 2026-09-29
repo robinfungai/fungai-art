@@ -234,8 +234,18 @@ console.log(`✓  Engine 2 synced: ${herbs.length} herbs injected into herbal-en
 // of its ids matched nothing, so ticking those did nothing at all. Now it is
 // written from the same array, every build — one source, no drift.
 const SHELF = path.resolve(__dirname, '../public/herb-engine-ids.json');
+// Kingdom per entry (plant / fungus / lichen / seaweed / …), from the
+// record's family — the portal Dashboard counts by it (2026-09-29).
+const { kingdomOf, plantGroupOf } = require('../src/server/formula-engine/pharmacology.js');
+const RECORDS = (() => { const m = require('../src/server/herb-data/herbs.generated.cjs'); return Array.isArray(m) ? m : (m.herbs || Object.values(m)); })();
+const recordByName = new Map(RECORDS.map(r => [r.name, r]));
 const shelf = herbs
-  .map(h => ({ id: h.id, n: h.n, b: h.b, cat: h.cat, p: h.p, ...(h.restricted ? { restricted: true } : {}) }))
+  .map(h => {
+    const rec = recordByName.get(h.n);
+    const k = rec ? kingdomOf(rec) : 'plant';
+    const g = rec && k === 'plant' ? plantGroupOf(rec) : null;
+    return { id: h.id, n: h.n, b: h.b, cat: h.cat, p: h.p, k, ...(g ? { g } : {}), ...(h.restricted ? { restricted: true } : {}) };
+  })
   .sort((x, y) => x.n.localeCompare(y.n));
 fs.writeFileSync(SHELF, JSON.stringify(shelf, null, 1) + '\n', 'utf-8');
 console.log(`✓  Apothecary shelf list written: ${shelf.length} herbs → public/herb-engine-ids.json`);

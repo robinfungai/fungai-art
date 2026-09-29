@@ -31,7 +31,7 @@
 
   /* ── the board store: figures + announcements, shared with the
         Admin page's editors so a save shows up everywhere at once ── */
-  const board = { figures: null, figuresMissing: false, announcements: [], announcementsMissing: false, herbs: null };
+  const board = { figures: null, figuresMissing: false, announcements: [], announcementsMissing: false, herbs: null, kingdoms: null };
 
   // The materia medica is always counted live from the Engine's catalogue
   // (public/herb-engine-ids.json, rewritten by every herb build), whatever
@@ -72,7 +72,24 @@
     try {
       const r = await fetch('/herb-engine-ids.json', { cache: 'no-store' });
       const list = r.ok ? await r.json() : null;
-      if (Array.isArray(list) && list.length) { board.herbs = list.length; emit(); }
+      if (Array.isArray(list) && list.length) {
+        // Every entry in the catalogue, restricted ones too, split by
+        // kingdom (the shelf list carries k, and g for the plants that are
+        // not flowering herbs) — 2026-09-29.
+        board.herbs = list.length;
+        const n = pred => list.filter(pred).length;
+        const parts = [
+          [n(h => h.k === 'plant' && !h.g), 'flowering plants'],
+          [n(h => h.g === 'gymnosperm'), 'conifers & ginkgo'],
+          [n(h => h.g === 'clubmoss' || h.g === 'horsetail'), 'clubmoss & horsetail'],
+          [n(h => h.k === 'fungus'), 'fungi'],
+          [n(h => h.k === 'lichen'), 'lichen'],
+          [n(h => h.k === 'seaweed' || h.k === 'alga' || h.k === 'cyanobacterium'), 'algae & seaweeds'],
+          [n(h => h.k === 'mineral'), 'mineral'],
+        ].filter(([c]) => c > 0);
+        board.kingdoms = list.some(h => h.k) ? parts.map(([c, l]) => c + ' ' + l).join(' · ') : null;
+        emit();
+      }
     } catch (_) {}
   }
 
@@ -162,6 +179,7 @@
     const counts = { ...live, herbs: b.herbs };
     const figures = (b.figures || FIGURES).filter(f => !f.draft || isAdmin).map(f => {
       const g = { ...f, ...(LIVE_BY_ID[f.id] || {}) };
+      if (f.id === 'herbs' && b.kingdoms) g.note = b.kingdoms;
       // Until the catalogue answers, a live figure shows its stored value.
       return { ...g, shown: g.source && counts[g.source] != null ? counts[g.source] : f.value };
     }).filter(f => f.shown != null && f.shown !== '');

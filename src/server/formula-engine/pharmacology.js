@@ -138,6 +138,37 @@ function dreamDeepeningInProse(h) {
   return DREAM_DEEPENING_PROSE.test(JSON.stringify(own));
 }
 
+// Which kind of life each entry is (Robin, 2026-09-29: "divide into their
+// kingdoms — some are fungi, lichens, clubmoss, and herbs"). From the
+// recorded family. Counted on the portal Dashboard; the rules don't use it.
+const KINGDOMS = {
+  plant:          { label: 'plants',         kingdom: 'Plantae' },
+  fungus:         { label: 'fungi',          kingdom: 'Fungi' },
+  lichen:         { label: 'lichens',        kingdom: 'Lichen (fungus + alga)' },
+  seaweed:        { label: 'seaweeds',       kingdom: 'Chromista (brown algae)' },
+  alga:           { label: 'microalgae',     kingdom: 'Plantae (green algae)' },
+  cyanobacterium: { label: 'cyanobacteria',  kingdom: 'Bacteria' },
+  mineral:        { label: 'mineral',        kingdom: 'Mineral' },
+};
+function kingdomOf(h) {
+  const f = String((h && h.family) || '');
+  if (/mineral/i.test(f)) return 'mineral';
+  if (/Parmeliaceae|Cladoniaceae|Usneaceae|lichen/i.test(f)) return 'lichen';
+  if (/Fucaceae|Laminariaceae/.test(f)) return 'seaweed';
+  if (/Haematococcaceae|Chlorellaceae/.test(f)) return 'alga';
+  if (/Arthrospiraceae|Microcoleaceae|Oscillatoriaceae|cyanobacter/i.test(f)) return 'cyanobacterium';
+  if (isFungus(h) || /fung|Hymenogastraceae|Strophariaceae/i.test(f)) return 'fungus';
+  return 'plant';
+}
+// Within the plants: the ones that are not flowering herbs.
+function plantGroupOf(h) {
+  const f = String((h && h.family) || '');
+  if (/Lycopodiaceae|Selaginellaceae/.test(f)) return 'clubmoss';
+  if (/Equisetaceae/.test(f)) return 'horsetail';
+  if (/Pinaceae|Cupressaceae|Ephedraceae|Ginkgoaceae|Taxaceae/.test(f)) return 'gymnosperm';
+  return null;
+}
+
 // Engine 2.4 tightened it: "digestion" as a goal usually means bloating
 // or indigestion, and the goal alone had put Senna AND Buckthorn in one
 // bottle. A laxative now needs digestion or detox as a goal AND the
@@ -208,6 +239,6 @@ module.exports = {
   cnsAction, isGABAergic, isCNSStimulant, guessGABAergic, guessCNSStimulant,
   fitsTimeOfUse, isStrongStimulant,
   isSerotonergic, MAX_SEROTONERGIC, isLaxative, laxativeInProse, fitsGoal, MAX_LAXATIVE,
-  isDreamDeepening, dreamDeepeningInProse,
+  isDreamDeepening, dreamDeepeningInProse, kingdomOf, plantGroupOf, KINGDOMS,
   categoryOf, isFungus, FUNGAL_FAMILIES, isAmanita, isStJohnsWort,
 };

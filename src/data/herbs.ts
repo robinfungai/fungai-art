@@ -10492,9 +10492,9 @@ export const HERBS: Herb[] = [
     primary_functions: [
       'GABA-A receptor agonist via muscimol — muscimol (3-isoxazolol GABA analog) is a potent direct agonist at GABA-A receptors (same binding site as GABA, NOT benzodiazepine or barbiturate sites); produces pronounced CNS inhibition, sedation, muscle relaxation, ataxia and altered sensory perception; also partial agonist at GABA-A-rho receptors',
       'Glutamate receptor agonism via ibotenic acid — ibotenic acid is a structural analog of glutamate/aspartate acting as NMDA and metabotropic glutamate receptor agonist; neuroexcitatory; decarboxylated in vivo to muscimol (both compounds present after ingestion); used experimentally to induce focal brain lesions in neuroscience research',
-      'Mixed excitatory-depressive neurotoxidrome — ibotenic acid produces early agitation, hallucinations and delirium (excitatory phase); muscimol produces subsequent sedation, ataxia, stupor and coma-like sleep (inhibitory phase); onset 30 min–2 hours; typical duration 6–24 hours; seizures, respiratory depression and rare fatality documented',
+      'At poisoning doses, a mixed excitatory-depressive toxidrome — ibotenic acid produces early agitation, hallucinations and delirium (excitatory phase); muscimol produces subsequent sedation, ataxia, stupor and coma-like sleep (inhibitory phase); onset 30 min–2 hours; typical duration 6–24 hours; seizures, respiratory depression and rare fatality documented. This is why the share in a bottle is held small and the preparation matters',
       'Ethnomycological entheogenic use — long record of ritual use among indigenous Siberian peoples (Khanty, Evenki and others); shamanic divination, spirit travel and healing; traditional practices included urine recycling to reuse muscimol while reducing ibotenic acid; cannot be equated with modern unstructured consumption',
-      'TOXICOLOGICAL WARNING — not a therapeutic fungus: case series document severe poisonings including a fatality (PMID 36210279); severe cases can carry cholinergic features needing atropine, even after home preparation (two elderly spouses, full recovery, PMID 41441606; muscarine\'s role re-examined, PMID 40228215); rising commercial Amanita products are a public health concern (PMID 38864780, 42272832); no approved clinical indications exist',
+      'SAFETY — case series document severe poisonings including a fatality (PMID 36210279); severe cases can carry cholinergic features needing atropine, even after home preparation (two elderly spouses, full recovery, PMID 41441606; muscarine\'s role re-examined, PMID 40228215); rising commercial Amanita products are a public health concern (PMID 38864780, 42272832); no approved clinical indication and no clinical trial exists — Fungai Art offers it as a traditional liquid medicine at a small share, for adults who opt in',
       'What people who take it report (2023–2025) — in 684 social-media users, men took it mainly for stress, low mood and insomnia and women mainly for pain and skin; tincture (women) and dried mushroom (men) were the usual forms; side effects were headache (women) and nausea, vomiting, abdominal pain and drowsiness (men) (PMID 37112610). A thematic analysis of about 10,500 Reddit posts and comments found more positive than adverse reports, adverse effects mostly mild and self-limiting — and notes that no clinical studies exist (PMID 40057818)',
       'Sleep and dreams — insomnia is among the main reasons people give for taking it (PMID 37112610) and drowsiness among its commonest effects; muscimol, a GABA-A agonist, is the sedative phase. Dream-like states and vivid dreaming are part of its traditional and user record (a woman who took it for anxiety presented with delirium, delusions and dreams, PMID 37524419); no study has measured sleep or dreams. Recorded dream-deepening (Robin, 2026-09-29): never for restless sleepers',
     ],
@@ -10506,18 +10506,23 @@ export const HERBS: Herb[] = [
     ],
     pharmacology:
       'Primary bioactives: muscimol (GABA analog; potent GABA-A agonist; CNS inhibition — sedation, ataxia, muscle relaxation, altered perception; also partial GABA-A-rho agonist), ibotenic acid (glutamate/aspartate analog; NMDA and metabotropic glutamate receptor agonist; neuroexcitatory; neurotoxic at high exposures; decarboxylates to muscimol; used to induce brain lesions in animal models). Clinical toxidrome: mixed excitatory-depressive; onset 30 min–2 hours; mydriasis, flushing, diaphoresis, GI symptoms; alternating agitation/hallucinations and somnolence/ataxia/stupor; seizures and respiratory depression in severe cases; mostly self-limited but fatalities documented. No therapeutic dose established. Rising commercial products with unregulated muscimol/ibotenic acid content creating public health emergency. Content varies widely between mushrooms, parts and preparations (review PMID 42796518); labels cannot be trusted — two gummy products sold as Amanita muscaria contained no ibotenic acid or muscimol at all but did contain psilocin and tryptamines (PMID 39977248). Two syndromes: A. muscaria poisoning more often brings hallucinations (26/32) and agitation (20/32), A. pantherina more often coma (5/17 vs 2/32) (PMID 25173077). Siberian peoples used it knowingly, for several purposes, as a psychostimulant (PMID 2023425).',
-    flavor_profile: 'Not consumed therapeutically — this entry is educational/taxonomic only; do not use as a beverage or extract ingredient',
+    flavor_profile: 'Earthy and savoury as a mushroom; as a tincture bitter-earthy, carried easily in a blend at a small share',
     contraindications: [
-      'ABSOLUTE BLOCK FOR ALL INTERNAL USE — no safe established therapeutic dose; toxidrome unpredictable; fatalities documented',
+      'Internal use as a LIQUID PREPARATION only, at a small share — the engine holds it to 10% of a bottle, one Amanita per bottle, adults who opt in, never beside St John\'s Wort. No clinically established dose exists; content varies between mushrooms and preparations (PMID 42796518), so each batch should be assayed',
       'ANY use by children or adolescents — ABSOLUTE BLOCK: severe neurological harm risk',
       'Pregnancy — ABSOLUTE BLOCK: neurotoxic to developing brain',
       'Any concurrent CNS-active medication — unpredictable interaction via GABA and glutamate systems',
-      'Self-medication for any condition — ABSOLUTE BLOCK: no clinical indications; safer alternatives exist for every condition',
+      'Not a treatment for any diagnosed condition, and not in place of one',
+      'Breastfeeding — AVOID: no data; muscimol is CNS-active',
+      'Alcohol, driving and machinery — AVOID on the day of use: additive sedation and ataxia',
+      'Jurisdiction — muscimol is a scheduled narcotic in Sweden (LVFS 2011:10); legal in Germany and most of the EU. Check the destination country before shipping',
       'Seizure disorders — ABSOLUTE BLOCK: ibotenic acid is documented convulsant',
     ],
     herb_to_herb_synergy: [],
     herb_to_herb_caution: [
-      'CATEGORICALLY — no herb combinations for therapeutic use; this is an educational/taxonomic entry only',
+      'St John\'s Wort — never in the same bottle (Robin\'s rule, engine 2.7)',
+      'A second Amanita — at most one per bottle',
+      'Sedative herbs (Valerian, Kava, Passionflower, Skullcap, Hops…) — additive GABAergic sedation; the engine counts it against the sedative cap',
     ],
     herb_to_drug_interactions: [
       'CNS depressants — additive CNS depression via GABA system; dangerous',
@@ -10525,22 +10530,22 @@ export const HERBS: Herb[] = [
       'All psychoactive medications — unpredictable interaction via combined GABA and glutamate system effects',
     ],
     herb_interactions: [
-      'Synergy: None — no therapeutic formulation use',
+      'Synergy: none established',
       'Caution: All CNS-active substances (GABA system additive risk)',
       'Drug interactions: CNS depressants (additive), anticonvulsants (reduced efficacy), all psychoactive medications (unpredictable)',
     ],
     dosage_range:
-      'NO THERAPEUTIC DOSE ESTABLISHED. This entry is educational and taxonomic only. For clinical toxicology reference: onset 30 min–2 hours; duration typically 6–24 hours; management is purely supportive (airway, breathing, circulation; benzodiazepines for agitation/seizures; activated charcoal if early; IV fluids; ICU monitoring if severe). Do not attempt to use this species medicinally.',
+      'NO CLINICALLY ESTABLISHED DOSE. As a liquid preparation (tincture of the dried fruiting body) the formula engine holds it to 10% of a bottle; start low. Drying and heating change the ratio of ibotenic acid to muscimol (review PMID 42796518), and heat and mechanical processing release both faster into water or milk (PMID 27063872) — so the method must be fixed and each batch assayed (LC-MS/MS; Phase 3). For clinical toxicology reference: onset 30 min–2 hours; duration typically 6–24 hours; management is purely supportive (airway, breathing, circulation; benzodiazepines for agitation/seizures; activated charcoal if early; IV fluids; ICU monitoring if severe).',
     spiritual_layer:
       'Amanita muscaria is the threshold grandmother — a liminal fungus sitting at the edge between waking and dream, inhibition and excitation. Unlike psilocybin which reveals patterns, she collapses and scrambles ordinary patterns, forcing a more chaotic re-encounter with self and unconscious content. She is the icon of the threshold itself: simultaneously the fairy-tale mushroom of childhood, the shaman\'s gateway, and the pharmacological teacher that shows what happens when GABA and glutamate are yanked in opposite directions simultaneously. Her teaching is: Not all gateways are gentle or precise. Some medicines teach by destabilising what you take for granted. True respect includes knowing when not to cross a threshold.',
     best_preparation:
-      'DATABASE ENTRY IS EDUCATIONAL AND TAXONOMIC ONLY. Do not include in any extract, beverage or supplement formulation. For educational content: describe taxonomy, ethnomycology and pharmacological mechanism. Clearly distinguish from psilocybin-containing mushrooms (different mechanism entirely). Always communicate that commercial muscimol products are an emerging public health risk with unregulated content and unpredictable toxicity.',
+      'Liquid medicine: a tincture of the dried fruiting body, one fixed method, each batch assayed for muscimol and ibotenic acid; a small share in a blend (the engine caps it at 10%), for adults who opt in; never beside St John\'s Wort. Label it plainly and say it is not psilocybin (a different mechanism entirely). Commercial "Amanita" products are unreliable — some contain none of its compounds but other drugs (PMID 39977248). TOPICAL (for Moder Jord): no clinical study of Amanita on the skin exists (PubMed checked 2026-09-29), but three leads point that way: 95% of pain-sensing nerve fibres in the rat tongue carry the GABA-A receptor muscimol acts on, and muscimol applied locally raised their pain threshold after a heat injury (PMID 24581846); two non-psychoactive polysaccharides from the fruiting body (a fucomannogalactan and a beta-glucan) cut inflammatory pain in mice by about 90% (PMID 23987410); muscimol eased nerve-injury pain across animal studies (meta-analysis PMID 37732408). Pain and skin were the main reasons women gave for taking it, mostly as a tincture (PMID 37112610). A rub or balm is a plausible, unproven direction',
     caution_level: 'VERY HIGH',
     cns_action: 'sedative',
     cns_evidence: 'Muscimol, a potent GABA-A agonist, with ibotenic acid: sedative-hypnotic, and deliriant at higher doses (PMID 6130573, 37824402). Users report taking it for insomnia and name drowsiness as a common effect (PMID 37112610); no clinical studies (PMID 40057818).',
     safe_pregnancy: false,
     status:
-      'EDUCATIONAL AND TAXONOMIC ENTRY ONLY — NOT FOR THERAPEUTIC FORMULATION. Pharmacological archetype: GABA-A agonist (muscimol) plus NMDA/mGluR agonist (ibotenic acid). Mixed excitatory-depressive toxidrome. Fatalities documented. No approved clinical indications. Rising commercial products creating public health emergency. Hard block for all internal use recommendations.',
+      'Eligible as a liquid preparation at a small share (engine: ≤10%, one Amanita, never with St John\'s Wort), for adults who opt in (Robin, 2026-09-29). GABA-A agonist (muscimol) plus NMDA/mGluR agonist (ibotenic acid). VERY HIGH caution: poisonings, including a fatality, are documented; no clinical trials; content varies with mushroom and method; commercial products unreliable. Scheduled in Sweden. Topical use a promising, untested direction (Moder Jord). PubMed checked 2026-09-29.',
     // ── Quiz-matcher + composer-quality enrichment ──
     nervous_system_fit: ['reactive', 'wired'],
     energy_pattern: ['restorative_only'],
@@ -10569,6 +10574,10 @@ export const HERBS: Herb[] = [
       'Günther A, Bednarczyk-Cwynar B, Tomczyk M. Ibotenic Acid and Muscimol in Amanita muscaria: Chemistry, Sources of Variability, Analytical Determination, and Toxicological Significance. Molecules. 2026. PMID 42796518',
       'Correia MS, Gonzaga MJ, Temple C, et al. Quantitative analysis of recreational psychoactive mushroom gummies in Portland, Oregon. Clin Toxicol (Phila). 2025. PMID 39977248',
       'Leas EC, Satybaldiyeva N, Kepner W, et al. Need for a Public Health Response to the Unregulated Sales of Amanita muscaria Mushrooms. Am J Prev Med. 2024. PMID 38864780',
+      'Tan SN, Song E, Dong XD, et al. Peripheral GABAA receptor activation modulates rat tongue afferent mechanical sensitivity. Arch Oral Biol. 2014. PMID 24581846',
+      'Ruthes AC, Carbonero ER, Córdova MM, et al. Fucomannogalactan and glucan from mushroom Amanita muscaria: structure and inflammatory pain inhibition. Carbohydr Polym. 2013. PMID 23987410',
+      'Ramawad HA, Paridari P, Jabermoradi S, et al. Muscimol as a treatment for nerve injury-related neuropathic pain: a systematic review and meta-analysis of preclinical studies. Korean J Pain. 2023. PMID 37732408',
+      'Lumpert M, Kreft S. Catching flies with Amanita muscaria: traditional recipes from Slovenia and their efficacy in the extraction of ibotenic acid. J Ethnopharmacol. 2016. PMID 27063872',
       'Ordak M. Amanita muscaria in the evolving novel psychoactive substances landscape - toxicological risks and clinical implications: a narrative review. Front Pharmacol. 2026. PMID 42272832',
     ],
   },
@@ -10600,8 +10609,8 @@ export const HERBS: Herb[] = [
       'Same mechanism as A. muscaria: muscimol (GABA-A agonist) plus ibotenic acid (NMDA and mGluR agonist) but HIGHER and MORE VARIABLE concentrations than typical A. muscaria. This higher alkaloid density = narrower safety margin = more frequent severe poisonings in case literature. Clinical presentation: seizures, deep coma, respiratory depression and documented fatalities more common than with A. muscaria. Management: purely supportive (no specific antidote); ICU-level monitoring required. Rising commercial risk: Amanita products increasingly contain A. pantherina or mixed species with unverified alkaloid content.',
     flavor_profile: 'NOT for consumption — educational and taxonomic entry only',
     contraindications: [
-      'ABSOLUTE BLOCK FOR ALL USE — poisonous mushroom; no established therapeutic dose; serious neurological toxicity and fatalities documented',
-      'ALL populations — children, adults, elderly, pregnant, all without exception: ABSOLUTE BLOCK',
+      'PRACTITIONERS ONLY (pro composer; Robin, 2026-09-29) — never in a consumer formula. A poisonous mushroom at modest doses: no established therapeutic dose; coma, convulsions and fatalities documented',
+      'Children, adolescents, pregnancy, breastfeeding, the elderly — ABSOLUTE BLOCK',
       'Any CNS condition — ibotenic acid is convulsant; seizure risk',
       'Any concurrent medication — unpredictable interactions via GABA and glutamate systems',
     ],
@@ -10623,18 +10632,19 @@ export const HERBS: Herb[] = [
     spiritual_layer:
       'Amanita pantherina is the panther teacher — sleek, powerful and inherently risky. Where A. muscaria stands as a liminal grandmother at the threshold, A. pantherina embodies concentrated, volatile power with little room for error. She teaches: Power without proportion is peril. Some forces do not invite casual contact; they exist as reminders that not every gateway is meant to be walked through. Respect includes knowing when to abstain.',
     best_preparation:
-      'DATABASE ENTRY IS EDUCATIONAL AND TAXONOMIC ONLY. Absolutely do not include in any therapeutic formulation. More dangerous than A. muscaria due to higher and more variable alkaloid content. Misidentification with A. muscaria is a serious risk. Commercial products claiming to contain Amanita species may contain A. pantherina — this is an emerging public health hazard.',
+      'Practitioners only. If used at all: a fixed method, each batch assayed, the smallest share, and a practitioner who has examined the person. More dangerous than A. muscaria (higher, more variable alkaloid content), and easily mistaken for it or for edible brown Amanitas. Commercial Amanita products may contain A. pantherina.',
     caution_level: 'VERY HIGH',
     cns_action: 'sedative',
     cns_evidence: 'The same isoxazoles as Amanita muscaria. Poisoning presents with CNS depression, ataxia and hallucinations (case report and review PMID 16564061); more often coma than A. muscaria (5/17 vs 2/32, PMID 25173077); coma with confirmed epileptiform EEG activity (PMID 39662530) and prolonged convulsions (PMID 38131173) reported.',
     safe_pregnancy: false,
     status:
-      'EDUCATIONAL AND TAXONOMIC ENTRY ONLY — NOT FOR THERAPEUTIC FORMULATION. Poisonous mushroom. Higher alkaloid concentration than A. muscaria = narrower safety margin = more frequent severe poisonings. Fatal cases documented. Absolutely no therapeutic use. Hard block all recommendations.',
+      'PRACTITIONERS ONLY (Robin, 2026-09-29): available in the pro composer, never in consumer formulas. Poisonous mushroom — higher and more variable isoxazole content than A. muscaria, a narrower margin, more coma in case series (PMID 25173077). No established therapeutic dose. Tagged dream-deepening: never for restless sleepers.',
     // ── Quiz-matcher + composer-quality enrichment ──
     // toxic, educational entry (gated) — NOT for formulation; descriptive tags only, no fit tags on purpose —
     // except the dream tag (Robin, 2026-09-29, same isoxazoles as A. muscaria), so a restless sleeper never gets it
     energy_pattern: ['acute_only'],
     sleep_action: ['dream_vivid'],
+    formula_access: 'pro', // practitioners only — Robin 2026-09-29
     regional_affinity: ['head'],
     onset_time: 'hours',
     family: 'Amanitaceae',

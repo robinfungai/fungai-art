@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-29T18:40:51.923Z",
+  "generatedAt": "2026-09-29T20:11:06.586Z",
   "counts": {
     "botanicals": 247,
-    "rules": 2458,
+    "rules": 2463,
     "byType": {
-      "contraindication": 1196,
+      "contraindication": 1199,
       "drug_interaction": 672,
-      "herb_interaction": 349,
+      "herb_interaction": 351,
       "record": 241
     },
     "bySeverity": {
-      "unspecified": 1098,
+      "unspecified": 1101,
       "caution": 336,
       "monitor": 369,
-      "avoid": 526,
+      "avoid": 528,
       "absolute": 129
     }
   },
@@ -18820,9 +18820,9 @@
       "botanicalId": 311,
       "botanical": "Amanita Muscaria",
       "ruleType": "contraindication",
-      "subject": "ABSOLUTE BLOCK FOR ALL INTERNAL USE",
+      "subject": "Internal use as a LIQUID PREPARATION only, at a small share",
       "severity": "unspecified",
-      "reason": "no safe established therapeutic dose; toxidrome unpredictable; fatalities documented",
+      "reason": "the engine holds it to 10% of a bottle, one Amanita per bottle, adults who opt in, never beside St John's Wort. No clinically established dose exists; content varies between mushrooms and preparations (PMID 42796518), so each batch should be assayed",
       "flags": [],
       "source": "herbs.ts · contraindications"
     },
@@ -18866,14 +18866,49 @@
       "botanicalId": 311,
       "botanical": "Amanita Muscaria",
       "ruleType": "contraindication",
-      "subject": "Self-medication for any condition",
+      "subject": "Not a treatment for any diagnosed condition, and not in place of one",
       "severity": "unspecified",
-      "reason": "ABSOLUTE BLOCK: no clinical indications; safer alternatives exist for every condition",
+      "reason": null,
       "flags": [],
       "source": "herbs.ts · contraindications"
     },
     {
       "id": "safety:311:contraindication:6",
+      "botanicalId": 311,
+      "botanical": "Amanita Muscaria",
+      "ruleType": "contraindication",
+      "subject": "Breastfeeding",
+      "severity": "avoid",
+      "reason": "AVOID: no data; muscimol is CNS-active",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:311:contraindication:7",
+      "botanicalId": 311,
+      "botanical": "Amanita Muscaria",
+      "ruleType": "contraindication",
+      "subject": "Alcohol, driving and machinery",
+      "severity": "avoid",
+      "reason": "AVOID on the day of use: additive sedation and ataxia",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:311:contraindication:8",
+      "botanicalId": 311,
+      "botanical": "Amanita Muscaria",
+      "ruleType": "contraindication",
+      "subject": "Jurisdiction",
+      "severity": "unspecified",
+      "reason": "muscimol is a scheduled narcotic in Sweden (LVFS 2011:10); legal in Germany and most of the EU. Check the destination country before shipping",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:311:contraindication:9",
       "botanicalId": 311,
       "botanical": "Amanita Muscaria",
       "ruleType": "contraindication",
@@ -18923,9 +18958,31 @@
       "botanicalId": 311,
       "botanical": "Amanita Muscaria",
       "ruleType": "herb_interaction",
-      "subject": "CATEGORICALLY",
+      "subject": "St John's Wort",
       "severity": "unspecified",
-      "reason": "no herb combinations for therapeutic use; this is an educational/taxonomic entry only",
+      "reason": "never in the same bottle (Robin's rule, engine 2.7)",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:311:herb_interaction:2",
+      "botanicalId": 311,
+      "botanical": "Amanita Muscaria",
+      "ruleType": "herb_interaction",
+      "subject": "A second Amanita",
+      "severity": "unspecified",
+      "reason": "at most one per bottle",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:311:herb_interaction:3",
+      "botanicalId": 311,
+      "botanical": "Amanita Muscaria",
+      "ruleType": "herb_interaction",
+      "subject": "Sedative herbs (Valerian, Kava, Passionflower, Skullcap, Hops…)",
+      "severity": "unspecified",
+      "reason": "additive GABAergic sedation; the engine counts it against the sedative cap",
       "flags": [],
       "source": "herbs.ts · herb_to_herb_caution"
     },
@@ -18960,9 +19017,9 @@
       "botanicalId": 312,
       "botanical": "Amanita Pantherina",
       "ruleType": "contraindication",
-      "subject": "ABSOLUTE BLOCK FOR ALL USE",
+      "subject": "PRACTITIONERS ONLY (pro composer; Robin, 2026-09-29)",
       "severity": "unspecified",
-      "reason": "poisonous mushroom; no established therapeutic dose; serious neurological toxicity and fatalities documented",
+      "reason": "never in a consumer formula. A poisonous mushroom at modest doses: no established therapeutic dose; coma, convulsions and fatalities documented",
       "flags": [],
       "source": "herbs.ts · contraindications"
     },
@@ -18971,9 +19028,9 @@
       "botanicalId": 312,
       "botanical": "Amanita Pantherina",
       "ruleType": "contraindication",
-      "subject": "ALL populations",
+      "subject": "Children, adolescents, pregnancy, breastfeeding, the elderly",
       "severity": "unspecified",
-      "reason": "children, adults, elderly, pregnant, all without exception: ABSOLUTE BLOCK",
+      "reason": "ABSOLUTE BLOCK",
       "flags": [
         "pregnancy"
       ],
