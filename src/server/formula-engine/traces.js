@@ -18,10 +18,18 @@ const TRACE_IDS = [
   'eucalyptus','tea_tree','wintergreen','camphor',
 ];
 
+// Recorded on the herb (herbs.ts `trace_class`, 2026-09-29, external
+// audit #26): the record says whether a herb is a trace herb and why.
+const TRACE_CLASSES = ['aromatic', 'pungent', 'bitter', 'resin'];
 function isTrace(h) {
-  return !!traceKey(h);
+  return !!h && TRACE_CLASSES.includes(h.trace_class);
 }
 
+// The old name list — kept only so tests/herb-record-classes-verify.cjs
+// can fail when a herb named like a trace herb has no trace_class.
+function nameSuggestsTrace(h) {
+  return !!traceKey(h);
+}
 function traceKey(h) {
   const id   = (h.id || '').toString().toLowerCase();
   const name = (h.name || '').toLowerCase();
@@ -43,10 +51,14 @@ const TRACE_REASON_TEXT = {
   resin:    'a dense resin, so a small share holds its place without crowding the rest',
 };
 function traceReason(h) {
+  if (!isTrace(h)) return null;
+  return { kind: h.trace_class, text: TRACE_REASON_TEXT[h.trace_class] };
+}
+// What the old name list would have said — for the build check.
+function suggestedTraceClass(h) {
   const k = traceKey(h);
   if (!k) return null;
-  const kind = Object.keys(TRACE_REASON_BY_KEY).find(r => TRACE_REASON_BY_KEY[r].includes(k)) || 'aromatic';
-  return { kind, text: TRACE_REASON_TEXT[kind] };
+  return Object.keys(TRACE_REASON_BY_KEY).find(r => TRACE_REASON_BY_KEY[r].includes(k)) || 'aromatic';
 }
 
-module.exports = { TRACE_IDS, isTrace, traceReason };
+module.exports = { TRACE_IDS, TRACE_CLASSES, isTrace, traceReason, nameSuggestsTrace, suggestedTraceClass };

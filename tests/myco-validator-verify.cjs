@@ -32,8 +32,8 @@ const CANDIDATES = [
   { id: 220, name: 'Rose Petals', primary_functions: ['nervine · GABA · calm'], energetics: ['Cool'], pharmacology: '', gated: false },
   { id: 230, name: 'Nettle',      primary_functions: ['nutritive · mineral-rich · deeply nourishing'], energetics: ['Cool'], pharmacology: '', gated: false },
   { id: 240, name: 'Damiana',     primary_functions: ['tonic · nourishing'], energetics: ['Warm'], pharmacology: '', gated: false },
-  { id: 500, name: 'Lavender',    primary_functions: ['aromatic · essential-oil · carminative'], energetics: ['Cool'], pharmacology: '', gated: false }, // trace via TRACE_IDS name
-  { id: 510, name: 'Ginger',      primary_functions: ['aromatic · essential-oil'], energetics: ['Warm'], pharmacology: '', gated: false }, // trace
+  { id: 500, name: 'Lavender',    primary_functions: ['aromatic · essential-oil · carminative'], energetics: ['Cool'], pharmacology: '', gated: false, trace_class: 'aromatic' }, // trace — recorded, as in herbs.ts since 2026-09-29
+  { id: 510, name: 'Ginger',      primary_functions: ['aromatic · essential-oil'], energetics: ['Warm'], pharmacology: '', gated: false, trace_class: 'pungent' }, // trace — recorded
   { id: 520, name: 'Valerian',    primary_functions: ['nervine · GABA · sedative valerian'], energetics: ['Warm'], pharmacology: '', gated: false }, // GABAergic
   { id: 530, name: 'Passionflower', primary_functions: ['nervine · GABA · passionflower'], energetics: ['Cool'], pharmacology: '', gated: false }, // GABAergic
   { id: 540, name: 'Hops',        primary_functions: ['nervine · GABA · hops'], energetics: ['Cool'], pharmacology: '', gated: false }, // GABAergic

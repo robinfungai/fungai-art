@@ -50,7 +50,10 @@ module.exports = {
   //         makes it a small-share herb: Saffron at 7% (Robin,
   //         2026-09-29, until Phase 3 lab data). The analysis tool
   //         checks it, and the ruled-out herb pairs.
-  engineVersion:      '2.8.1-server',
+  // 2.8.2 — laxative and trace class are read from the herb record
+  //         (herbs.ts `laxative`, `trace_class`), not a word search and a
+  //         name list — same herbs, same bottles (external audit #26).
+  engineVersion:      '2.8.2-server',
   herbDbVersion:      '2026.09-247herbs',
   // 1.1.0 — unknown pregnancy safety = avoid; under-18s: no HIGH-caution,
   //         psychoactive, or above-LOW calming herbs (2026-09-27).

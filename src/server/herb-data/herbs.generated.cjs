@@ -1869,6 +1869,7 @@ const HERBS = [
   {
     id: 217,
     name: 'Cardamom',
+    trace_class: 'aromatic', // held to a trace (5%); recorded 2026-09-29 (was a name list)
     goals: ['digestion'],
     botanical: 'Elettaria cardamomum (seeds within dried pods — Queen of Spices)',
     tcm_meridians: ['Lung', 'Spleen', 'Stomach', 'Large Intestine'],
@@ -2030,6 +2031,7 @@ const HERBS = [
   {
     id: 219,
     name: 'Cayenne',
+    trace_class: 'pungent', // held to a trace (5%); recorded 2026-09-29 (was a name list)
     goals: ['pain', 'digestion', 'energy'],
     botanical: 'Capsicum annuum (dried fruit — potency measured in Scoville Heat Units)',
     tcm_meridians: ['Heart', 'Spleen', 'Liver'],
@@ -2752,6 +2754,7 @@ const HERBS = [
   {
     id: 227,
     name: 'Cinnamon',
+    trace_class: 'aromatic', // held to a trace (5%); recorded 2026-09-29 (was a name list)
     goals: ['digestion', 'energy'],
     botanical: 'Cinnamomum verum (Ceylon/true — preferred) / Cinnamomum cassia (inner bark)',
     tcm_meridians: ['Spleen', 'Stomach', 'Kidney', 'Heart'],
@@ -2833,6 +2836,7 @@ const HERBS = [
   {
     id: 228,
     name: 'Cloves',
+    trace_class: 'aromatic', // held to a trace (5%); recorded 2026-09-29 (was a name list)
     goals: ['pain', 'digestion', 'immunity'],
     botanical: 'Syzygium aromaticum (dried flower buds)',
     tcm_meridians: ['Stomach', 'Spleen', 'Kidney'],
@@ -3311,6 +3315,7 @@ const HERBS = [
   {
     id: 234,
     name: 'Eucalyptus',
+    trace_class: 'aromatic', // held to a trace (5%); recorded 2026-09-29 (was a name list)
     goals: ['immunity'],
     botanical: 'Eucalyptus globulus (Blue Gum — leaves and essential oil)',
     tcm_meridians: ['Lung', 'Liver'],
@@ -3537,6 +3542,7 @@ const HERBS = [
   {
     id: 237,
     name: 'Fennel',
+    trace_class: 'aromatic', // held to a trace (5%); recorded 2026-09-29 (was a name list)
     goals: ['digestion', 'hormones'],
     botanical: 'Foeniculum vulgare (dried ripe fruits — seeds)',
     tcm_meridians: ['Liver', 'Kidney', 'Spleen', 'Stomach'],
@@ -5026,6 +5032,7 @@ const HERBS = [
   {
     id: 251,
     name: 'Lavender',
+    trace_class: 'aromatic', // held to a trace (5%); recorded 2026-09-29 (was a name list)
     goals: ['anxiety', 'sleep'],
     botanical: 'Lavandula angustifolia (flowers and aerial parts; essential oil)',
     tcm_meridians: ['Heart', 'Liver', 'Lung'],
@@ -5360,6 +5367,7 @@ const HERBS = [
   {
     id: 255,
     name: 'Juniper',
+    trace_class: 'aromatic', // held to a trace (5%); recorded 2026-09-29 (was a name list)
     goals: ['detox', 'digestion'],
     botanical: 'Juniperus communis (ripe cone-berries — short-term use only)',
     tcm_meridians: ['Kidney', 'Bladder', 'Lung', 'Spleen'],
@@ -6827,6 +6835,7 @@ const HERBS = [
   {
     id: 272,
     name: 'Oregano',
+    trace_class: 'aromatic', // held to a trace (5%); recorded 2026-09-29 (was a name list)
     goals: ['immunity', 'digestion'],
     botanical: 'Origanum vulgare (leaves and flowering tops — "Joy of the Mountain")',
     tcm_meridians: ['Lung', 'Spleen', 'Liver'],
@@ -7238,6 +7247,7 @@ const HERBS = [
   {
     id: 277,
     name: 'Rosemary',
+    trace_class: 'aromatic', // held to a trace (5%); recorded 2026-09-29 (was a name list)
     goals: ['cognitive'],
     botanical: 'Rosmarinus officinalis (leaves — "Dew of the Sea")',
     tcm_meridians: ['Liver', 'Heart', 'Head-Brain'],
@@ -7903,6 +7913,7 @@ const HERBS = [
   {
     id: 282,
     name: 'Star Anise',
+    trace_class: 'aromatic', // held to a trace (5%); recorded 2026-09-29 (was a name list)
     goals: ['digestion', 'immunity'],
     botanical: 'Illicium verum (seed pods — "Eight-Pointed Star of the East")',
     tcm_meridians: ['Stomach', 'Spleen', 'Kidney'],
@@ -7980,6 +7991,7 @@ const HERBS = [
   {
     id: 283,
     name: 'Thyme',
+    trace_class: 'aromatic', // held to a trace (5%); recorded 2026-09-29 (was a name list)
     goals: ['immunity'],
     botanical: 'Thymus vulgaris (leaves and flowering tops — "Thymos: Courage")',
     tcm_meridians: ['Lung', 'Spleen', 'Liver', 'Throat/Voice'],
@@ -8793,6 +8805,7 @@ const HERBS = [
   {
     id: 293,
     name: 'Wormwood',
+    trace_class: 'bitter', // held to a trace (5%); recorded 2026-09-29 (was a name list)
     goals: ['digestion'],
     formula_access: 'pro', // "practitioner only" — Robin 2026-09-28
     botanical: 'Artemisia absinthium (aerial parts — leaves and flowering tops; "Grand Wormwood")',
@@ -8952,6 +8965,7 @@ const HERBS = [
   {
     id: 295,
     name: 'Yellow Dock Root',
+    laxative: true, // recorded 2026-09-29 (was a prose search)
     goals: ['digestion', 'detox'],
     botanical: 'Rumex crispus (root — "Iron Bitter of the Hedgerow")',
     tcm_meridians: ['Liver', 'Large Intestine', 'Spleen'],
@@ -9191,6 +9205,7 @@ const HERBS = [
   {
     id: 298,
     name: 'Peppermint',
+    trace_class: 'aromatic', // held to a trace (5%); recorded 2026-09-29 (was a name list)
     goals: ['digestion', 'pain'],
     botanical: 'Mentha × piperita (leaf and essential oil — hybrid of M. aquatica × M. spicata)',
     tcm_meridians: ['Liver', 'Lung', 'Stomach', 'Large Intestine'],
@@ -9425,6 +9440,7 @@ const HERBS = [
   {
     id: 301,
     name: 'Rhubarb Root',
+    laxative: true, // recorded 2026-09-29 (was a prose search)
     goals: ['digestion', 'detox'],
     formula_access: 'pro', // "practitioner only" — Robin 2026-09-28
     botanical: 'Rheum palmatum / Rheum officinale (rhizome and root — "Da Huang / The Purging Judge")',
@@ -9588,6 +9604,7 @@ const HERBS = [
   {
     id: 303,
     name: 'Sage',
+    trace_class: 'aromatic', // held to a trace (5%); recorded 2026-09-29 (was a name list)
     goals: ['hormones', 'immunity', 'cognitive'],
     botanical: 'Salvia officinalis (leaves — "Salvia: The Wise One")',
     tcm_meridians: ['Lung', 'Throat', 'Spleen', 'Heart'],
@@ -9751,6 +9768,7 @@ const HERBS = [
   {
     id: 305,
     name: 'Senna',
+    laxative: true, // recorded 2026-09-29 (was a prose search)
     goals: ['digestion'],
     botanical: 'Senna alexandrina / Cassia senna (dried leaflets and pods — "Decisive Release")',
     tcm_meridians: ['Large Intestine', 'Liver'],
@@ -9835,6 +9853,7 @@ const HERBS = [
   {
     id: 306,
     name: 'Birch Polypore',
+    laxative: true, // recorded 2026-09-29 (was a prose search)
     goals: ['immunity', 'digestion'],
     botanical: 'Fomitopsis betulina (syn. Piptoporus betulinus) (fruiting body inner flesh — "Iceman\'s Mushroom")',
     tcm_meridians: ['Lung', 'Spleen', 'Large Intestine', 'Immune System'],
@@ -11873,6 +11892,7 @@ const HERBS = [
   {
     id: 537,
     name: 'Ginger',
+    trace_class: 'pungent', // held to a trace (5%); recorded 2026-09-29 (was a name list)
     goals: ['digestion', 'pain'],
     botanical: 'Zingiber officinale (rhizome — fresh or dried)',
     tcm_meridians: ['Lung', 'Spleen', 'Stomach'],
@@ -12249,6 +12269,7 @@ const HERBS = [
 {
   id: 409,
   name: 'Long Pepper',
+  trace_class: 'pungent', // held to a trace (5%); recorded 2026-09-29 (was a name list)
   goals: ['digestion', 'immunity'],
   botanical: 'Piper longum (dried unripe fruit catkin — Pippali)',
   tcm_meridians: ['Spleen', 'Stomach', 'Lung', 'Large Intestine'],
@@ -12396,6 +12417,7 @@ const HERBS = [
 {
   id: 411,
   name: 'Black Cardamom',
+  trace_class: 'aromatic', // held to a trace (5%); recorded 2026-09-29 (was a name list)
   goals: ['digestion'],
   botanical: 'Amomum subulatum (smoke-dried pod)',
   tcm_meridians: ['Spleen', 'Stomach', 'Kidney'],
@@ -12468,6 +12490,7 @@ const HERBS = [
 {
   id: 412,
   name: 'Szechuan Pepper',
+  trace_class: 'pungent', // held to a trace (5%); recorded 2026-09-29 (was a name list)
   goals: ['digestion', 'pain'],
   botanical: 'Zanthoxylum bungeanum / Zanthoxylum piperitum (dried husk)',
   tcm_meridians: ['Spleen', 'Stomach', 'Kidney'],
@@ -12613,6 +12636,7 @@ const HERBS = [
 {
   id: 414,
   name: 'Haritaki',
+  laxative: true, // recorded 2026-09-29 (was a prose search)
   goals: ['digestion', 'detox'],
   botanical: 'Terminalia chebula (dried mature fruit)',
   tcm_meridians: ['Large Intestine', 'Lung', 'Liver'],
@@ -15234,6 +15258,7 @@ const HERBS = [
   },
 {
   id: 529, name: 'Nishoth', botanical: 'Operculina turpethum (root)',
+  laxative: true, // recorded 2026-09-29 (was a prose search)
   goals: ['digestion'],
   formula_access: 'pro', // "practitioner only" — Robin 2026-09-28
   tcm_meridians: ['Large Intestine'], tcm_element: 'Water',
@@ -15813,6 +15838,7 @@ const HERBS = [
     {
     id: 536,
     name: 'Amaltas',
+    laxative: true, // recorded 2026-09-29 (was a prose search)
     goals: ['digestion', 'beauty'],
     botanical: 'Cassia fistula (fruit pulp from the long black pods; "Indian Laburnum / Golden Shower / Purging Cassia")',
     tcm_meridians: ['Large Intestine', 'Liver', 'Stomach'],
@@ -16170,6 +16196,7 @@ const HERBS = [
 },
 {
   id: 549, name: 'Black Pepper Extract', botanical: 'Piper nigrum (fruit)',
+  trace_class: 'pungent', // held to a trace (5%); recorded 2026-09-29 (was a name list)
   goals: ['digestion'],
   tcm_meridians: ['Stomach', 'Large Intestine', 'Spleen'], tcm_element: 'Fire + Metal',
   energetics: ['Hot', 'Dry', 'Pungent', 'Stimulating'],
@@ -16228,6 +16255,7 @@ const HERBS = [
 },
 {
   id: 550, name: 'Cassia Seed Extract', botanical: 'Cassia obtusifolia / Senna obtusifolia (seed)',
+  laxative: true, // recorded 2026-09-29 (was a prose search)
   goals: ['digestion'],
   tcm_meridians: ['Liver', 'Large Intestine', 'Kidney'], tcm_element: 'Wood + Water',
   energetics: ['Cool', 'Moistening', 'Sweet', 'Slightly Bitter', 'Salty'],
@@ -17355,6 +17383,7 @@ const HERBS = [
 // ════════════════════════════════════════════════════════════════
 {
   id: 569, name: 'Goldenseal', botanical: 'Hydrastis canadensis (root / rhizome)',
+  trace_class: 'bitter', // held to a trace (5%); recorded 2026-09-29 (was a name list)
   goals: ['immunity', 'digestion'],
   tcm_meridians: ['Stomach', 'Large Intestine', 'Liver'], tcm_element: 'Earth + Wood',
   energetics: ['Very Cold', 'Very Dry', 'Extremely Bitter'],
@@ -18290,6 +18319,7 @@ const HERBS = [
 },
 {
   id: 586, name: 'Buckthorn Bark', botanical: 'Rhamnus frangula / Frangula alnus (AGED bark — fresh bark is an emetic)',
+  laxative: true, // recorded 2026-09-29 (was a prose search)
   goals: ['digestion'],
   tcm_meridians: ['Large Intestine', 'Liver'], tcm_element: 'Wood',
   energetics: ['Cold', 'Dry', 'Bitter'],

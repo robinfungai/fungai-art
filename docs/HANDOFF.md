@@ -163,7 +163,9 @@ should saffron be capped now?).
 ### Waiting on Robin
 
 - **Saffron cap: done** (Robin, 29 Sep: 7%). `herbs.ts` `max_share_pct: 7`, engine 2.8.1; the analysis tool flags a saffron share above 7% and any ruled-out pair.
-- **Audit 26 to 28** (design direction, verdicts in `docs/AUDIT-2026-09-28-RESPONSE.md`): record `laxative` and `trace_class` on the herbs; store the score breakdown with each customer formula; the ontology roadmap (roles, min share, lactation / age, sources). Robin to choose the order.
+- **Audit 26 to 28: first steps done (engine 2.8.2).** Every stored formula carries its score breakdown and runners-up (server-side only). `laxative` (9) and `trace_class` (21) are recorded in `herbs.ts` and the engine reads them; `npm run test:herb-classes` fails if a herb's text and its record disagree — **add it to the herbs-everywhere checklist**. `npm run report:ontology` writes `docs/ONTOLOGY.md` (coverage per section, 11 items missing).
+- **Decide:** three recorded fields the engine never reads — `energy_pattern` (245 herbs), `nervous_system_fit` (108), `sleep_action` (37). The sleep / nervous-system / energy-curve parts of the score come from prose instead. Wiring them in would change bottles (a methodology change, fixtures re-pinned). Robin's call.
+- **Roles** (primary / bridge / foundation / regulator / trace) and minimum share: the next ontology step; needs Robin's data.
 - Privacy page: the pro composer and practitioners' client files are not
   described. Who is the controller of a client's data (Robin or the
   practitioner) is a legal question.

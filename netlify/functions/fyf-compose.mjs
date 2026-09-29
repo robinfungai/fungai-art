@@ -696,13 +696,26 @@ export default async function handler(req) {
   // is required for reservation to work later. Shadow calls are never
   // stored.
   const formulaId = newFormulaId();
+  // Why each herb got its seat, part by part (goal, body, rhythm, note,
+  // duration, sleep, nervous system, …), and the best herbs that did not
+  // — stored with the formula so "why did X beat Y?" can be answered for
+  // any stored bottle, not only live in the pro composer (external audit
+  // 2026-09-29, #27). Server-side only: the response is built field by
+  // field (sanitisedResponse) and never carries it.
+  let scoreBreakdown = null;
+  try {
+    scoreBreakdown = explainForPro(vp.profile, (engineResult.herbs || []).map(h => h.id));
+  } catch (e) {
+    console.warn('[fyf-compose] score breakdown failed:', e && e.message ? e.message : e);
+  }
   const persistPayload = {
     id:                  formulaId,
     engine_version:      engineResult.engineVersion,
     herb_db_version:     engineResult.herbDbVersion,
     safety_rules_version:engineResult.safetyRulesVersion,
     profile:             vp.profile,             // untrusted → normalised copy
-    formula:             engineResult,           // full internal snapshot; reserve-formula reads this
+    // full internal snapshot; reserve-formula reads this
+    formula:             scoreBreakdown ? { ...engineResult, scoreBreakdown } : engineResult,
     created_at:          engineResult.capturedAt,
     // D6 — this code marks reservations, so the nightly purge may
     // delete this row after 30 days if it is never reserved.

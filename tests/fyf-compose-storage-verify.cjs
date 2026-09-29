@@ -94,6 +94,12 @@ let ipN = 0;
     check('… stored once, MYCO asked once', db.rows.length === 1 && mycoCalls === 1, 'rows ' + db.rows.length + ', MYCO calls ' + mycoCalls);
     check('… row carries retention_tracked and a request_key', db.rows[0] && db.rows[0].retention_tracked === true && /^[0-9a-f]{64}$/.test(db.rows[0].request_key || ''), JSON.stringify({ t: db.rows[0] && db.rows[0].retention_tracked }));
     check('… the replay shows the same herbs', JSON.stringify(a1.body.formula.herbs) === JSON.stringify(a2.body.formula.herbs), '');
+    // Audit #27 — the score breakdown is stored with the formula, never sent.
+    const sb0 = db.rows[0] && db.rows[0].formula && db.rows[0].formula.scoreBreakdown;
+    check('… the stored formula carries the score breakdown of every herb and the runners-up',
+      sb0 && sb0.herbs.length === db.rows[0].formula.herbs.length && sb0.herbs.every(h => h.parts && typeof h.score === 'number') && Array.isArray(sb0.alternatives) && sb0.alternatives.length > 0,
+      sb0 ? sb0.herbs.length + ' herbs, ' + sb0.alternatives.length + ' alternatives' : 'missing');
+    check('… and the response never carries it', !JSON.stringify(a1.body).includes('scoreBreakdown') && !JSON.stringify(a1.body).includes('"alternatives"'), '');
 
     // 2 · same requestId, changed answers → a new formula
     const a3 = await call({ profile: profile({ intention: 'sleep', intentions: ['sleep'] }), requestId: 'visit00000001' });

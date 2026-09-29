@@ -109,7 +109,14 @@ function isSerotonergic(h) {
 // Laxatives only when digestion (or detox) is one of the goals. Rhubarb
 // Root and Senna were reaching stress and beauty bottles because they
 // scored on the body-pattern and stress answers (Robin, 2026-09-28).
+// Recorded on the herb (herbs.ts `laxative: true`, 2026-09-29, external
+// audit #26: the herb record, not a word search, is the source of truth).
 function isLaxative(h) {
+  return !!h && h.laxative === true;
+}
+// The old word search — kept only so tests/herb-record-classes-verify.cjs
+// can fail when a herb's prose says laxative and its record does not.
+function laxativeInProse(h) {
   if (!h) return false;
   const t = (h.energetics || []).join(' ') + ' ' + (h.primary_functions || []).slice(0, 2).join(' ');
   return /laxativ|purgativ|cathartic/i.test(t);
@@ -183,6 +190,6 @@ module.exports = {
   GABAERGIC_IDS, STIMULANT_IDS, CNS_ACTIONS,
   cnsAction, isGABAergic, isCNSStimulant, guessGABAergic, guessCNSStimulant,
   fitsTimeOfUse, isStrongStimulant,
-  isSerotonergic, MAX_SEROTONERGIC, isLaxative, fitsGoal, MAX_LAXATIVE,
+  isSerotonergic, MAX_SEROTONERGIC, isLaxative, laxativeInProse, fitsGoal, MAX_LAXATIVE,
   categoryOf, isFungus, FUNGAL_FAMILIES, isAmanita, isStJohnsWort,
 };
