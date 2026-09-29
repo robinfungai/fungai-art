@@ -25,6 +25,22 @@
 // Shankhapushpi, Anantmul is also Sariva, Guggulu is also Guggul. Another
 // herb's prose naming it by any of those has to match, or the synergy is
 // written down and invisible — the Schisandra failure, generalised.
+//
+// 2026-09-29 (external audit, herb-to-herb cautions) — two false-match
+// sources found while counting the caution pairs:
+//   · keys matched anywhere inside the prose, so "pine" fired on
+//     "benzodiazepines" and gave every Pine a caution with Blue Lotus;
+//     keys now match whole words only;
+//   · a generic first word stood for the whole herb, so Black Cumin
+//     answered to "Black Cohosh" and Blue Lotus to "Blue Cohosh". Such
+//     words (GENERIC_FIRST) no longer count on their own — the herb's
+//     full name and its aliases still do.
+const GENERIC_FIRST = new Set([
+  'black', 'blue', 'white', 'green', 'golden', 'yellow', 'purple', 'wild', 'sweet', 'sour',
+  'bitter', 'long', 'royal', 'evening', 'holy', 'sacred', 'common', 'great', 'lesser', 'true',
+  'false', 'water', 'mountain', 'giant', 'chinese', 'indian', 'siberian', 'korean', 'american',
+  'european', 'african', 'japanese', 'tibetan', 'mexican', 'peruvian', 'brazilian',
+]);
 function nameKeys(herb) {
   const names = typeof herb === 'string'
     ? [herb]
@@ -55,9 +71,18 @@ function collectKeys(raw, keys) {
     // matches the record called 'Dan Shen Root Extract'.
     const toks = clean.split(' ').filter(Boolean);
     for (let n = 2; n < toks.length; n++) add(toks.slice(0, n).join(' '));
-    // The original single-first-word key, unchanged, 4+ chars only.
-    if (toks[0] && toks[0].length >= 4) keys.add(toks[0]);
+    // The single first word, 4+ chars — unless it is a generic word and
+    // the name has more to it ("Black Cumin" is not "black").
+    if (toks[0] && toks[0].length >= 4 && !(toks.length > 1 && GENERIC_FIRST.has(toks[0]))) keys.add(toks[0]);
   }
+}
+
+// A key as a whole word (or words), plural allowed ("Ginsengs"): not
+// inside a longer word ("pine" in "benzodiazepines").
+const reCache = new Map();
+function wordRe(k) {
+  if (!reCache.has(k)) reCache.set(k, new RegExp('(^|[^a-z0-9])' + k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?:e?s)?(?![a-z0-9])'));
+  return reCache.get(k);
 }
 
 function checkFormulaPairs(herbs) {
@@ -66,9 +91,10 @@ function checkFormulaPairs(herbs) {
   function match(h, target) {
     const keys = nameKeys(target);
     if (!keys.length) return null;
+    const res = keys.map(wordRe);
     const hit = list => (list || []).find(s => {
       const t = String(s).toLowerCase();
-      return keys.some(k => t.includes(k));
+      return res.some(re => re.test(t));
     });
     return { syn: hit(h.herb_to_herb_synergy), cau: hit(h.herb_to_herb_caution) };
   }

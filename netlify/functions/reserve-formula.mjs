@@ -156,6 +156,32 @@ export function normaliseBottleMl(raw) {
   return n;
 }
 
+// The Formula Book (/community/academy/) entry for a reserved formula.
+// Written here, from the STORED formula, with the service role — the
+// browser used to insert it itself under an anon INSERT policy, so
+// anyone could put any blend into the book as a "Find your formula"
+// (external audit 2026-09-29, #4; supabase-formulas-server-writes.sql
+// closes that policy). The book is shared, so no notes, no name and no
+// quiz answers: those stay in fyf_formulas and the two emails.
+async function archiveToFormulaBook(sbClient, { formulaId, name, herbs, percentages, bottleMl, pro, country }) {
+  try {
+    const { error } = await sbClient.from('formulas').insert({
+      name:        String(name || 'Untitled formula').slice(0, 120),
+      herb_ids:    herbs.map(h => String(h.id || '')).filter(Boolean),
+      herb_names:  herbs.map((h, i) => (Number(percentages[i]) || 0) + '% ' + h.name).join(', '),
+      percentages: percentages.map(p => Number(p) || 0),
+      bottle_ml:   bottleMl,
+      maker_label: null,
+      notes:       null,
+      source:      pro ? 'find-your-formula-pro' : 'find-your-formula',
+      origin_country: country || null,
+    });
+    if (error) throw error;
+  } catch (e) {
+    console.error('[reserve-formula] Formula Book entry for ' + formulaId + ' failed:', e && e.message ? e.message : e);
+  }
+}
+
 export async function resolveAuthoritativeFormula({ rawFormulaId, sbClient }) {
   const id = String(rawFormulaId || '').trim();
   // Step 7: formulaId is REQUIRED. Absent id → missing_id (handler
@@ -444,14 +470,25 @@ export default async function handler(req) {
   // write fails; the log line names the formula so it can be marked by
   // hand before the 30 days are up.
   if ((robinOk || customerOk) && sbClient) {
+    let firstReservation = false;
     try {
-      const { error } = await sbClient.from('fyf_formulas')
+      const { data, error } = await sbClient.from('fyf_formulas')
         .update({ reserved_at: new Date().toISOString() })
         .eq('id', rawFormulaId)
-        .is('reserved_at', null);
+        .is('reserved_at', null)
+        .select('id');
       if (error) throw error;
+      firstReservation = Array.isArray(data) && data.length > 0;
     } catch (e) {
       console.error('[reserve-formula] could not mark ' + rawFormulaId + ' as reserved:', e && e.message ? e.message : e);
+    }
+    // The Formula Book entry, once per formula (a second reservation of
+    // the same formula does not add a second card).
+    if (firstReservation) {
+      await archiveToFormulaBook(sbClient, {
+        formulaId: rawFormulaId, name: formulaName, herbs: formula, percentages,
+        bottleMl, pro: !!quiz._pro, country: geo.country,
+      });
     }
   }
   // ── Round 2 · Item #3 · explicit reservation semantics ──────
