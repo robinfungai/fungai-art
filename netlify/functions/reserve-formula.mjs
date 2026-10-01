@@ -766,7 +766,7 @@ function buildCustomerHtml({ name, formulaName, herbList, herbLines, storyText, 
         <div style="padding:18px 20px;background:#1A1E24;border:0.5px solid rgba(232,177,75,.18);border-radius:10px;margin:20px 0;">
           <div style="font-family:'Courier New',monospace;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:#E8B14B;margin-bottom:10px;">◈ Fully tailored · 30 ml amber-glass</div>
           <p style="font-size:13.5px;color:#EDE5D8;line-height:1.7;margin:0 0 8px;">Every bottle is <strong>full-spectrum spagyric</strong> — each herb separated into its three principles (sulfur / mercury / salt), purified individually over weeks, then recombined so nothing living gets lost in translation. Not a simple maceration. The plant's complete alchemical signature — alkaloids, essential oils, mineral salts — in balance.</p>
-          <p style="font-size:13.5px;color:#C9B894;line-height:1.7;margin:0;">Hand-poured in the Berlin lab. Small-batch, single-pour, from scratch for you.</p>
+          <p style="font-size:13.5px;color:#C9B894;line-height:1.7;margin:0;">Hand-poured. Small-batch, single-pour, from scratch for you.</p>
         </div>
 
         <p style="font-size:13px;color:#8B7E62;line-height:1.7;margin:22px 0 0;font-style:italic;">Traditional herbal support only. Not a treatment or replacement for medical care.</p>
@@ -793,7 +793,7 @@ ${lines.map((h, i) => (h.pct ? h.pct.toString().padStart(3) + '%  ' : '     ') +
 ${synergies.length ? 'WOVEN SYNERGIES:\n' + synergies.map(s => '  · ' + s.a + ' + ' + s.b + ' — ' + (s.note || '').replace(/^[^—:]*[—:]\s*/, '')).join('\n') + '\n\n' : ''}Robin will follow up personally to confirm the formula together with you first — a short exchange to make sure this blend is genuinely matched to what you're bringing. The payment link comes AFTER that confirmation, once we're both sure the composition is right. Only then does the pour begin.
 
 Fully tailored · 30 ml amber-glass:
-Every bottle is a full-spectrum spagyric — each herb separated into its three principles (sulfur / mercury / salt), purified individually over weeks, then recombined so nothing living gets lost in translation. Not a simple maceration. The plant's complete alchemical signature — alkaloids, essential oils, mineral salts — in balance. Hand-poured in the Berlin lab. Small-batch, single-pour, from scratch for you.
+Every bottle is a full-spectrum spagyric — each herb separated into its three principles (sulfur / mercury / salt), purified individually over weeks, then recombined so nothing living gets lost in translation. Not a simple maceration. The plant's complete alchemical signature — alkaloids, essential oils, mineral salts — in balance. Hand-poured. Small-batch, single-pour, from scratch for you.
 
 Traditional herbal support only. Not a treatment or replacement for medical care.
 

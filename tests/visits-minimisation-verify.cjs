@@ -51,6 +51,9 @@ console.log('\n── THE COLLECTOR ──');
 test('reads country and city from x-nf-geo, and nothing else',
   COLLECT.includes('geoOf') && /parsed\.city/.test(COLLECT) &&
   !/parsed\.(latitude|longitude|subdivision|timezone)/.test(COLLECT));
+test('reads only city and country from context.geo, too',
+  /ctxGeo\.city/.test(COLLECT) &&
+  !/ctxGeo\.(latitude|longitude|subdivision|timezone|postalCode)/.test(COLLECT));
 test('city is length-capped and stripped to place-name characters',
   /slice\(0, 64\)/.test(COLLECT) && /\p\{L\}/.test(COLLECT));
 test('never stores the raw User-Agent',

@@ -275,7 +275,7 @@ function WeavePathGraph() {
     { num:'01', tier:'Spore',     title:'Arrive',        desc:'Cross the threshold. Create your thread. Watch what others tend.',                         color:'#D49B3E' },
     { num:'02', tier:'Palawan',   title:'Contribute',    desc:'First act — a forage, a meal, a photo, a translation. The network notices.',              color:'#8FCB44' },
     { num:'03', tier:'Mycelium',  title:'Earn $MYCEL',   desc:'Each contribution flows back as currency. Stack it, save it, or spend it.',               color:'#3DC9A5' },
-    { num:'04', tier:'Forager',   title:'Unlock access', desc:'Burn $MYCEL for keys. Walk into the Berlin Lab, the Lisbon Studio, a Trance ceremony.',   color:'#9D90F0' },
+    { num:'04', tier:'Forager',   title:'Unlock access', desc:'Burn $MYCEL for keys. Walk into a lab night, a residency, a Trance ceremony.',   color:'#9D90F0' },
     { num:'05', tier:'Root Node', title:'Hold vision',   desc:'You steward. Propose new nodes. Teach. Carry weight others can lean on.',                 color:'#B7AEFF' },
   ];
   // Positions on a 900×320 canvas. Slight vertical sine offset gives the
@@ -388,6 +388,56 @@ function WeavePathGraph() {
 }
 
 /* ── Welcome portal ───────────────────────────────────────── */
+
+// "Enter the mycelium" — the shiny button and email form the Academy
+// uses for visitors (styles shared in /mycelium-cta.css). A visitor
+// without an invite code can still leave an email: it goes to
+// /api/subscribe-newsletter like the Academy's, tagged with `source`.
+function MyceliumJoin({ source }) {
+  const [open, setOpen]   = useState(false);
+  const [email, setEmail] = useState('');
+  const [busy, setBusy]   = useState(false);
+  const [msg, setMsg]     = useState('');
+  const [done, setDone]   = useState('');
+  const inputRef = useRef(null);
+  useEffect(() => { if (open && inputRef.current) inputRef.current.focus(); }, [open]);
+
+  async function submit(e) {
+    e.preventDefault();
+    const v = email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { setMsg('That email doesn’t look right.'); return; }
+    setBusy(true); setMsg('');
+    try {
+      const res = await fetch('/api/subscribe-newsletter', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: v, source }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+      setDone(v);
+    } catch (err) {
+      setMsg('That didn’t go through (' + ((err && err.message) || 'network') + '). Try again, or write to robin@fungai.art.');
+      setBusy(false);
+    }
+  }
+
+  if (done) return <p className="myc-done">Welcome. A letter is on its way to {done} — the way in starts there.</p>;
+  if (!open) return (
+    <button type="button" className="shiny-cta fa-myc" aria-expanded="false" onClick={() => setOpen(true)}>
+      <span>Enter the mycelium</span>
+    </button>
+  );
+  return (
+    <form className="myc-form" onSubmit={submit} noValidate>
+      <label htmlFor={'myc-email-' + source} className="myc-sr">Email address</label>
+      <input ref={inputRef} id={'myc-email-' + source} type="email" required autoComplete="email" inputMode="email"
+             placeholder="you@forest.earth" value={email} onChange={e => { setEmail(e.target.value); setMsg(''); }} />
+      <button type="submit" disabled={busy}>{busy ? 'Sending…' : 'Send me the way in'}</button>
+      <p className="myc-fine">A welcome letter, then monthly field notes. Unsubscribe any time. <a href="/privacy">Privacy</a></p>
+      <p className="myc-msg" role="status" aria-live="polite">{msg}</p>
+    </form>
+  );
+}
 
 function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
   const [selected, setSelected]     = useState(null);
@@ -561,35 +611,27 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
           <div className="welcome-eyebrow">A decentralized mycelium · no centre · no CEO</div>
           <h1 className="welcome-title">There is no <em>centre.</em><br/>Only the threads<br/>that <em>hold.</em></h1>
           <p className="welcome-blurb">
-            Fungai Art isn't a brand with a headquarters. It's a <strong style={{ color:'var(--mycelium-l)' }}>living mycelium</strong> spread across Berlin labs, Nordic forests, Lisbon studios, Beirut kitchens — and growing. Each member is a <em>hypha</em>: a thread tending soil. Each gathering, a fruiting body.
-          </p>
-          <p className="welcome-blurb" style={{ marginTop:14 }}>
-            We forage, ferment, ceremony, teach. The network grows when you do. <strong style={{ color:'var(--spore-l)' }}>Reputation cannot be bought — only earned.</strong> Tiers run: <span style={{ fontFamily:'var(--font-mono)', fontSize:12, color:'var(--mycelium)' }}>Spore → Palawan → Mycelium → Forager → Root Node</span>.
+            Fungai Art isn't a brand with a headquarters. It's a <strong style={{ color:'var(--mycelium-l)' }}>living mycelium</strong> of foragers, makers, cooks and healers — and growing. Each member is a <em>hypha</em>: a thread tending soil. Each gathering, a fruiting body.
           </p>
 
-          {/* Single CTA. Three states:
-              (a) Not signed in → Create profile button (opens invite gate)
+          {/* The way in, straight under the first paragraph (Robin,
+              2026-10-01: convert harder, no cities). Three states:
+              (a) Not signed in → "Enter the mycelium" (email → welcome
+                  letter), with the invite code and sign-in as quiet links
               (b) Signed in but no profile yet (dead state) → Continue your thread button + sign out link
               (c) Signed in with profile → nothing here (App routes to MembersPage) */}
           {!sbUser && !signInSent && (
             <>
-              <div style={{ marginTop:32, display:'flex', justifyContent:'flex-end', width:'100%' }}>
+              <div className="welcome-join">
+                <MyceliumJoin source="community-hero" />
+              </div>
+              <div style={{ marginTop:16, display:'flex', flexWrap:'wrap', gap:'6px 22px', alignItems:'center' }}>
                 <button
                   onClick={() => { setShowInviteGate(true); setInviteError(''); }}
-                  style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.24em', textTransform:'uppercase', padding:'16px 36px', borderRadius:999, background:'linear-gradient(135deg, rgba(232,177,75,0.18), rgba(232,177,75,0.06))', border:'0.5px solid rgba(232,177,75,0.55)', color:'var(--nutrient-l)', fontWeight:500, cursor:'pointer', boxShadow:'0 0 24px rgba(232,177,75,0.15)' }}
+                  style={{ background:'none', border:'none', color:'var(--nutrient-l)', fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.18em', textTransform:'uppercase', cursor:'pointer', padding:'8px 0', textDecoration:'underline', textUnderlineOffset:4 }}
                 >
-                  ✦ Cross the threshold
+                  ✦ Have an invite code? Cross the threshold
                 </button>
-              </div>
-              <div style={{ marginTop:10, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mycelium-d)', width:'100%', textAlign:'right' }}>
-                New here? Cross the threshold above.
-              </div>
-
-              {/* Returning-member sign-in by NAME + PIN.
-                  No email. They type their character name (robert, emil, remi…)
-                  → PinModal opens for that member → they enter their 4-digit
-                  code (or set one if first time on this device). */}
-              <div style={{ marginTop:18, width:'100%', display:'flex', flexDirection:'column', alignItems:'flex-end', gap:10 }}>
                 {!showSignInBox && (
                   <button
                     onClick={() => { setShowSignInBox(true); setSignInNameError(''); }}
@@ -598,9 +640,16 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
                     ✦ Already a thread? Sign in
                   </button>
                 )}
+              </div>
+
+              {/* Returning-member sign-in by NAME + PIN.
+                  No email. They type their character name (robert, emil, remi…)
+                  → PinModal opens for that member → they enter their 4-digit
+                  code (or set one if first time on this device). */}
+              <div style={{ marginTop:10, width:'100%', display:'flex', flexDirection:'column', alignItems:'flex-start', gap:10 }}>
                 {showSignInBox && (
                   <form onSubmit={handleNameSignIn} style={{ width:'100%', maxWidth:360, display:'flex', flexDirection:'column', gap:6 }}>
-                    <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--spore-l)', textAlign:'right' }}>
+                    <div style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--spore-l)' }}>
                       ✦ Sign in · your name
                     </div>
                     <div style={{ display:'flex', gap:8 }}>
@@ -617,9 +666,9 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
                       </button>
                     </div>
                     {signInNameError && (
-                      <div style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--coral)', textAlign:'right', lineHeight:1.5 }}>{signInNameError}</div>
+                      <div style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'var(--coral)', lineHeight:1.5 }}>{signInNameError}</div>
                     )}
-                    <button type="button" onClick={() => { setShowSignInBox(false); setSignInName(''); setSignInNameError(''); }} style={{ background:'none', border:'none', color:'var(--mycelium-d)', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', cursor:'pointer', alignSelf:'flex-end', padding:0 }}>
+                    <button type="button" onClick={() => { setShowSignInBox(false); setSignInName(''); setSignInNameError(''); }} style={{ background:'none', border:'none', color:'var(--mycelium-d)', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', cursor:'pointer', alignSelf:'flex-start', padding:0 }}>
                       cancel
                     </button>
                   </form>
@@ -689,6 +738,10 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
             )}
           </div>
           )}
+
+          <p className="welcome-blurb" style={{ marginTop:36 }}>
+            We forage, ferment, ceremony, teach. The network grows when you do. <strong style={{ color:'var(--spore-l)' }}>Reputation cannot be bought — only earned.</strong> Tiers run: <span style={{ fontFamily:'var(--font-mono)', fontSize:12, color:'var(--mycelium)' }}>Spore → Palawan → Mycelium → Forager → Root Node</span>.
+          </p>
 
           {/* Invite-code gate modal */}
           {showInviteGate && (
@@ -927,7 +980,7 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
               icon:'⬡', color:'var(--fungal-l)',
               title:'Access Keys', subtitle:'Non-transferable NFTs',
               desc:'Each key unlocks a specific experience, lab residency, or retreat. Limited by real-world seats, not artificial scarcity. They cannot be sold or transferred — they live in the wallet of the person who earned them.',
-              example:'Burn 80 $H → mint a key for the Berlin Lab Night. The key is yours forever.',
+              example:'Burn 80 $H → mint a key for a Lab Night. The key is yours forever.',
             },
             {
               icon:'◈', color:'var(--nutrient-l)',
@@ -983,7 +1036,6 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(180px, 1fr))', gap:10 }}>
           {SporeData.MEMBERS.map(m => {
             const tier = SporeData.rankOf(m);
-            const node = SporeData.NETWORK_NODES.find(n => n.id === m.node);
             return (
               <div key={m.id} style={{
                 background:'var(--soil-2)',
@@ -993,19 +1045,30 @@ function LoginScreen({ onLogin, sbUser, onContinueCreating, onSignOut }) {
                 display:'flex', flexDirection:'column', gap:6,
               }}>
                 <div style={{ display:'flex', alignItems:'center', gap:8 }}>
+                  {/* The photo over the initial, as on the Members page —
+                      these cards only ever drew the letter. A photo that
+                      fails to load hides itself and the initial shows. */}
                   <div style={{
+                    position:'relative', overflow:'hidden',
                     width:30, height:30, borderRadius:'50%',
                     background: tier.color, color:'var(--soil)',
                     display:'flex', alignItems:'center', justifyContent:'center',
                     fontFamily:'var(--font-display)', fontSize:14, fontWeight:600,
                     flexShrink:0,
-                  }}>{m.name[0]}</div>
+                  }}>
+                    {m.name[0]}
+                    {m.avatar && (
+                      <img src={m.avatar} alt="" loading="lazy"
+                           style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover' }}
+                           onError={e => { e.currentTarget.style.display = 'none'; }} />
+                    )}
+                  </div>
                   <div style={{ minWidth:0 }}>
                     <div style={{ color:'var(--mycelium-l)', fontSize:13.5, fontWeight:600, lineHeight:1.15 }}>{m.name}</div>
                     <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.14em', textTransform:'uppercase', color: tier.color, marginTop:2 }}>{tier.label}{m.founding ? ' · founding' : ''}</div>
                   </div>
                 </div>
-                <div style={{ color:'var(--mycelium)', fontSize:11, lineHeight:1.45 }}>{m.role}{node ? ` · ${node.name}` : ''}</div>
+                <div style={{ color:'var(--mycelium)', fontSize:11, lineHeight:1.45 }}>{m.role}</div>
                 {m.focus && <div style={{ color:'var(--mycelium-d)', fontSize:10, lineHeight:1.5 }}>{m.focus}</div>}
                 {m.favoritePlant && (
                   <div style={{ marginTop:4, paddingTop:5, borderTop:'0.5px solid var(--rule)', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', textTransform:'uppercase', color:'var(--mycelium-d)' }}>
@@ -1256,11 +1319,11 @@ const EXCLUSIVE = [
     badge:'RARE · 12 units',
     bg:'#2A1A10',
     accent:'#C48838',
-    desc:'72% Peru cacao infused with a micro-dose spagyric Amanita muscaria extract. Sourced, processed, and poured in the Berlin lab.',
+    desc:'72% Peru cacao infused with a micro-dose spagyric Amanita muscaria extract. Sourced, processed and poured by hand.',
     note:'Effects: warmth, dream-depth, creative clarity.',
     pEur:28, pH:20,
     vol:'2 × 15g bars',
-    season:'Berlin LAB · Q2',
+    season:'Small batch · Q2',
   },
   {
     id:'ex2', name:'Reishi Rose Gummies',
@@ -1320,7 +1383,7 @@ const EXCLUSIVE = [
     note:'Effects: mental clarity, focus, nerve regeneration.',
     pEur:24, pH:18,
     vol:'20g × 2 bars',
-    season:'Berlin LAB · year-round',
+    season:'Small batch · year-round',
   },
 ];
 
@@ -1458,7 +1521,7 @@ function ApothecaryPage({ economy, onToast }) {
       <div className="apo-header">
         <div className="apo-eyebrow">◈ Members-only chamber · rare editions</div>
         <h2 className="apo-title">The <em>Apothecary</em>.</h2>
-        <p className="apo-sub">Small-batch confections, elixirs, and neurochemical rituals — poured in the Berlin lab, never sold in any shop. Priced in <span className="apo-token">$H</span> or &euro;.</p>
+        <p className="apo-sub">Small-batch confections, elixirs, and neurochemical rituals — poured by hand, never sold in any shop. Priced in <span className="apo-token">$H</span> or &euro;.</p>
         <div className="apo-balance">
           <div className="apo-balance-ring">
             <span className="apo-balance-val">{economy.state.balance}</span>
@@ -2547,15 +2610,19 @@ function MembersPage({ currentMember, economy }) {
     setSignInEmail('');
   }
   async function handleSignOut() {
-    await window.SBauth.signOut();
+    // Clear the session AND the member snapshot (spore_active_member_full)
+    // so the next visitor in this browser doesn't inherit the identity —
+    // see handleLogout in App.
+    if (window.faSignOut) {
+      await window.faSignOut();
+    } else {
+      try { await window.SBauth.signOut(); } catch {}
+      try {
+        ['spore_active_member', 'spore_active_member_full', 'fungai_profile', 'fungai_profile_draft']
+          .forEach(k => localStorage.removeItem(k));
+      } catch {}
+    }
     setSbUser(null);
-    // Clear cached profile + draft so the next visitor in this browser
-    // doesn't inherit the previous user's identity.
-    try {
-      localStorage.removeItem('fungai_profile');
-      localStorage.removeItem('fungai_profile_draft');
-      localStorage.removeItem('spore_active_member');
-    } catch {}
     // Reload to fully reset in-memory currentMember and force re-render
     setTimeout(() => { window.location.reload(); }, 200);
   }
@@ -4965,7 +5032,7 @@ function App() {
       // Fall back to the cached snapshot if MEMBERS hasn't loaded yet — it's
       // enough to render TopBar + most pages; tryAutoLogin will replace this
       // with the live member once Supabase profiles arrive.
-      return { id: cached.id, name: cached.name, admin: !!cached.admin || forceAdmin, restrictions: cached.restrictions || [], avatar: cached.avatar || null, rep: 0, node: 'berlin' };
+      return { id: cached.id, name: cached.name, admin: !!cached.admin || forceAdmin, restrictions: cached.restrictions || [], avatar: cached.avatar || null, rep: 0, node: cached.node || null };
     } catch { return null; }
   });
   // The open section lives in the URL hash (#calendar) so Back works, a
@@ -5082,19 +5149,23 @@ function App() {
     try { localStorage.setItem('spore_active_member', member.id); } catch {}
   }
 
+  // Sign out for real (Robin, 2026-10-01: "it keeps me logged in"). This
+  // used to leave spore_active_member_full behind, and the portal, the
+  // Academy and the site banner all restore a member from it — so a
+  // reload signed you straight back in. faSignOut (global-nav.js) clears
+  // it with the Supabase session; the reload resets every page's state.
   async function handleLogout() {
     setCurrentMember(null);
-    setTab('home');
-    try {
-      localStorage.removeItem('spore_active_member');
-      localStorage.removeItem('fungai_profile');
-      localStorage.removeItem('fungai_profile_draft');
-    } catch {}
-    // If signed in via Supabase too, sign out there so the next visitor
-    // on this browser truly starts fresh.
-    if (window.SBauth) {
-      try { await window.SBauth.signOut(); } catch {}
+    if (window.faSignOut) {
+      await window.faSignOut();
+    } else {
+      try {
+        ['spore_active_member', 'spore_active_member_full', 'fungai_profile', 'fungai_profile_draft']
+          .forEach(k => localStorage.removeItem(k));
+      } catch {}
+      if (window.SBauth) { try { await window.SBauth.signOut(); } catch {} }
     }
+    window.location.replace('/community/');
   }
 
   useEffect(() => {

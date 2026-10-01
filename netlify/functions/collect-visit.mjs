@@ -73,12 +73,22 @@ function classifyUA(ua) {
   return { is_bot, device, os, browser };
 }
 
+/** Letters, spaces and the punctuation real place names use. */
+function cleanCity(city) {
+  if (!city || typeof city !== 'string' || !city.trim()) return null;
+  return city.trim().replace(/[^\p{L}\p{M}\s.'-]/gu, '').slice(0, 64) || null;
+}
+
 /**
- * Country and city out of Netlify's geo header — and nothing else from it.
- * The same payload carries latitude, longitude, subdivision and timezone;
- * those are deliberately not read.
+ * Country and city out of Netlify's geo data — and nothing else from it.
+ * The same payload carries latitude, longitude, subdivision, postcode and
+ * timezone; those are deliberately not read.
+ *
+ * Two sources, same two fields: `context.geo`, Netlify's documented API
+ * for functions (wins when present), and the base64 `x-nf-geo` header
+ * underneath it, kept as the fallback.
  */
-function geoOf(headers) {
+function geoOf(headers, ctxGeo) {
   const out = { country: null, city: null };
   const direct = headers.get('x-country') || headers.get('x-nf-country');
   if (direct && /^[A-Za-z]{2}$/.test(direct)) out.country = direct.toUpperCase();
@@ -88,12 +98,13 @@ function geoOf(headers) {
       const parsed = JSON.parse(Buffer.from(raw, 'base64').toString('utf8'));
       const code = parsed && parsed.country && parsed.country.code;
       if (/^[A-Za-z]{2}$/.test(String(code || ''))) out.country = String(code).toUpperCase();
-      const city = parsed && parsed.city;
-      if (city && typeof city === 'string' && city.trim()) {
-        // Letters, spaces and the punctuation real place names use.
-        out.city = city.trim().replace(/[^\p{L}\p{M}\s.'-]/gu, '').slice(0, 64) || null;
-      }
+      out.city = cleanCity(parsed && parsed.city);
     } catch (_) { /* header absent or malformed — country stays whatever it was */ }
+  }
+  if (ctxGeo && typeof ctxGeo === 'object') {
+    const code = ctxGeo.country && ctxGeo.country.code;
+    if (/^[A-Za-z]{2}$/.test(String(code || ''))) out.country = String(code).toUpperCase();
+    out.city = cleanCity(ctxGeo.city) || out.city;
   }
   return out;
 }
@@ -125,7 +136,7 @@ function primaryLang(header, given) {
   return m ? s.slice(0, 8) : null;
 }
 
-export default async (request) => {
+export default async (request, context) => {
   const cors = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'content-type',
@@ -139,7 +150,7 @@ export default async (request) => {
   try { body = await request.json(); } catch (_) { body = {}; }
 
   const ua = classifyUA(request.headers.get('user-agent'));
-  const geo = geoOf(request.headers);
+  const geo = geoOf(request.headers, context && context.geo);
   const row = {
     path:     cleanPath(body.p),
     country:  geo.country,

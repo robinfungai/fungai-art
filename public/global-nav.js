@@ -79,25 +79,29 @@
     } catch { return null; }
   }
 
-  // The hardcoded node labels live in spore data. We don't import that
-  // file from arbitrary pages so use a small local map; falls back to
-  // the raw id if no friendly label is known.
-  const NODE_LABELS = {
-    berlin:   'Berlin · Lab',
-    sweden:   'Sweden · Forage',
-    festival: 'Festival circuit',
-    lisbon:   'Lisbon · Studio',
-    beirut:   'Beirut',
-    atitlan:  'Lake Atitlán',
-    zanzibar: 'Zanzibar',
-    bangkok:  'Bangkok',
-    bali:     'Bali',
-  };
-  // No node → nothing, rather than the word "Unattached".
-  function nodeLabel(id){
-    if (!id || id === 'unattached') return '';
-    return NODE_LABELS[id] || id;
+  // The banner no longer shows the member's node ("Berlin · Lab") — Robin,
+  // 2026-10-01: the Berlin lab is gone. Name, rank and Keeper only.
+
+  // Sign out for real, from any page. The portal's snapshot
+  // (spore_active_member_full) is what the Academy and this banner read,
+  // and the portal restores a member from it on load — so it has to go
+  // with the Supabase session, or "signed out" lasts until the next page.
+  // spore_gate_device stays on purpose: a restricted member must not be
+  // able to sign out to get round a restriction (/spore-gate.js).
+  async function faSignOut(){
+    try {
+      ['spore_active_member', 'spore_active_member_full', 'fungai_profile', 'fungai_profile_draft']
+        .forEach(k => localStorage.removeItem(k));
+    } catch {}
+    try { if (window.SBauth) await window.SBauth.signOut(); } catch {}
+    // Belt and braces: Supabase keeps its session under sb-<ref>-auth-token,
+    // and signOut leaves it behind if the network call fails.
+    try {
+      Object.keys(localStorage).filter(k => /^sb-.*-auth-token$/.test(k))
+        .forEach(k => localStorage.removeItem(k));
+    } catch {}
   }
+  window.faSignOut = faSignOut;
 
   const css = `
   /* ─── Global brand fonts ─────────────────────────────────────────
@@ -155,11 +159,12 @@
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     max-width: 28ch;
   }
-  #fa-member-banner .fa-mb-node {
-    font-size: 9px; letter-spacing: 0.22em; color: #8B7E62;
-    white-space: nowrap;
+  #fa-member-banner .fa-mb-links button.fa-mb-signout {
+    font: inherit; letter-spacing: inherit; text-transform: inherit;
+    color: #8B7E62; background: none; border: 0; cursor: pointer;
+    padding: 5px 10px; border-radius: 999px; white-space: nowrap;
   }
-  #fa-member-banner .fa-mb-node::before { content: '· '; opacity: 0.5; }
+  #fa-member-banner .fa-mb-links button.fa-mb-signout:hover { color: #E8A07C; }
   #fa-member-banner .fa-mb-rank {
     font-size: 9px; letter-spacing: 0.22em; white-space: nowrap;
   }
@@ -227,7 +232,6 @@
   @media (max-width: 760px) {
     #fa-member-banner { padding: 6px 12px; gap: 8px; }
     #fa-member-banner .fa-mb-name { font-size: 13px; max-width: 16ch; }
-    #fa-member-banner .fa-mb-node { display: none; }
     #fa-member-banner .fa-mb-links a { padding: 4px 8px; font-size: 9.5px; }
     body.fa-has-member-banner { padding-top: 34px; }
   }
@@ -409,19 +413,24 @@
 
     if (m) {
       const rank = RANK_LABELS[m.rank] || null;
-      const node = nodeLabel(m.node);
       bar.innerHTML = `
         <a class="fa-mb-id" href="/community/" title="${escapeHtml(m.email || m.name)}">
           <span class="fa-mb-dot"></span>
           <span class="fa-mb-name">${escapeHtml(m.name) || 'Member'}</span>
           ${rank ? `<span class="fa-mb-rank" style="color:${rank.color}" title="Your rank in the network">${rank.label}</span>` : ''}
-          ${node ? `<span class="fa-mb-node">${escapeHtml(node)}</span>` : ''}
           ${m.admin ? '<span class="fa-mb-admin-chip" title="Keeper: you can open Root, the admin tools, in the portal">Keeper</span>' : ''}
         </a>
         <div class="fa-mb-links" aria-label="Member destinations">
           ${MEMBER_LINKS.map(l => `<a href="${l.href}" class="${isOn(l.match)}"${l.newTab ? ' target="_blank" rel="noopener"' : ''}>${l.label}</a>`).join('')}
+          <button type="button" class="fa-mb-signout" title="Sign out on this browser">Sign out</button>
         </div>
       `;
+      bar.querySelector('.fa-mb-signout').addEventListener('click', async (e) => {
+        e.currentTarget.disabled = true;
+        e.currentTarget.textContent = 'Signing out…';
+        await faSignOut();
+        window.location.reload();
+      });
       renderBackToPortal(true);
     } else {
       renderBackToPortal(false);

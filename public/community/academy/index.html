@@ -480,7 +480,7 @@
 <style id="ac-preview-css">
   #acPreview { display: none; }
   html.ac-preview #acPreview { display: block; }
-  html.ac-preview .wrap > :not(.nav):not(#acPreview):not(#myceliumCta):not(.footer) { display: none !important; }
+  html.ac-preview .wrap > :not(.nav):not(#acPreview):not(.footer) { display: none !important; }
   html.ac-preview #fbFab, html.ac-preview #fbDrawer, html.ac-preview #fbOverlay, html.ac-preview #mycelGate { display: none !important; }
   .acp-hero { padding: 72px 0 36px; max-width: 760px; }
   .acp-eyebrow { font-family: var(--font-mono); font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: var(--nutrient); margin-bottom: 18px; }
@@ -491,6 +491,9 @@
   .acp-btn { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase; padding: 14px 24px; border-radius: 999px; text-decoration: none; border: 0.5px solid rgba(232,177,75,.5); color: var(--nutrient-l); background: rgba(232,177,75,.06); transition: background .2s, transform .2s; }
   .acp-btn:hover { background: rgba(232,177,75,.14); transform: translateY(-1px); }
   .acp-btn.is-primary { background: linear-gradient(135deg, #E8B14B, #C48838); color: #0d1610; border-color: transparent; font-weight: 600; }
+  .acp-cta { align-items: center; gap: 12px 24px; margin-top: 18px; }
+  .acp-link { font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--mycelium); text-decoration: none; border-bottom: .5px solid rgba(201,184,148,.4); padding: 4px 0; }
+  .acp-link:hover { color: var(--nutrient-l); border-color: var(--nutrient-l); }
   .acp-sec { margin-top: 56px; }
   .acp-sec-title { font-family: var(--font-display); font-style: italic; font-size: 28px; color: var(--mycelium-l); margin-bottom: 18px; }
   .acp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
@@ -537,53 +540,7 @@
   @media (max-width:640px){.fb-fab{right:16px;bottom:16px}.fb-drawer{padding:22px 16px 44px}}
   @media (prefers-reduced-motion:reduce){.fb-drawer,.fb-overlay,.fb-fab{transition:none}}
 </style>
-<style id="fa-shiny-cta">
-  /* Mirrors src/components/ui/shiny-button.css — keep the two in step. */
-  @property --gradient-angle{syntax:"<angle>";initial-value:0deg;inherits:false}
-  @property --gradient-angle-offset{syntax:"<angle>";initial-value:0deg;inherits:false}
-  @property --gradient-percent{syntax:"<percentage>";initial-value:5%;inherits:false}
-  @property --gradient-shine{syntax:"<color>";initial-value:white;inherits:false}
-  .shiny-cta{--shiny-cta-bg:#000;--shiny-cta-bg-subtle:#1a1818;--shiny-cta-fg:#fff;--shiny-cta-highlight:blue;--shiny-cta-highlight-subtle:#8484ff;--animation:gradient-angle linear infinite;--duration:3s;--shadow-size:2px;--transition:800ms cubic-bezier(.25,1,.5,1);isolation:isolate;position:relative;overflow:hidden;cursor:pointer;outline-offset:4px;padding:1.25rem 2.5rem;font-family:"Inter",sans-serif;font-size:1.125rem;line-height:1.2;font-weight:500;border:1px solid transparent;border-radius:360px;color:var(--shiny-cta-fg);background:linear-gradient(var(--shiny-cta-bg),var(--shiny-cta-bg)) padding-box,conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),transparent,var(--shiny-cta-highlight) var(--gradient-percent),var(--gradient-shine) calc(var(--gradient-percent) * 2),var(--shiny-cta-highlight) calc(var(--gradient-percent) * 3),transparent calc(var(--gradient-percent) * 4)) border-box;box-shadow:inset 0 0 0 1px var(--shiny-cta-bg-subtle);transition:var(--transition);transition-property:--gradient-angle-offset,--gradient-percent,--gradient-shine}
-  .shiny-cta::before,.shiny-cta::after,.shiny-cta span::before{content:"";pointer-events:none;position:absolute;inset-inline-start:50%;inset-block-start:50%;translate:-50% -50%;z-index:-1}
-  .shiny-cta:active{translate:0 1px}
-  .shiny-cta::before{--size:calc(100% - var(--shadow-size) * 3);--position:2px;--space:calc(var(--position) * 2);width:var(--size);height:var(--size);background:radial-gradient(circle at var(--position) var(--position),white calc(var(--position) / 4),transparent 0) padding-box;background-size:var(--space) var(--space);background-repeat:space;mask-image:conic-gradient(from calc(var(--gradient-angle) + 45deg),black,transparent 10% 90%,black);border-radius:inherit;opacity:.4;z-index:-1}
-  .shiny-cta::after{--animation:shimmer linear infinite;width:100%;aspect-ratio:1;background:linear-gradient(-50deg,transparent,var(--shiny-cta-highlight),transparent);mask-image:radial-gradient(circle at bottom,transparent 40%,black);opacity:.6}
-  .shiny-cta span{z-index:1}
-  .shiny-cta span::before{--size:calc(100% + 1rem);width:var(--size);height:var(--size);box-shadow:inset 0 -1ex 2rem 4px var(--shiny-cta-highlight);opacity:0;transition:opacity var(--transition);animation:calc(var(--duration) * 1.5) breathe linear infinite}
-  .shiny-cta,.shiny-cta::before,.shiny-cta::after{animation:var(--animation) var(--duration),var(--animation) calc(var(--duration) / .4) reverse paused;animation-composition:add}
-  .shiny-cta:is(:hover,:focus-visible){--gradient-percent:20%;--gradient-angle-offset:95deg;--gradient-shine:var(--shiny-cta-highlight-subtle)}
-  .shiny-cta:is(:hover,:focus-visible),.shiny-cta:is(:hover,:focus-visible)::before,.shiny-cta:is(:hover,:focus-visible)::after{animation-play-state:running}
-  .shiny-cta:is(:hover,:focus-visible) span::before{opacity:1}
-  @keyframes gradient-angle{to{--gradient-angle:360deg}}
-  @keyframes shimmer{to{rotate:360deg}}
-  @keyframes breathe{from,to{scale:1}50%{scale:1.2}}
-  @media (prefers-reduced-motion:reduce){.shiny-cta,.shiny-cta::before,.shiny-cta::after,.shiny-cta span::before{animation:none}}
-
-  /* Fungai palette on the shiny button: forest ground, gold light. */
-  .shiny-cta.fa-myc{--shiny-cta-bg:#07110d;--shiny-cta-bg-subtle:#1d2a1f;--shiny-cta-fg:#F1E9D2;--shiny-cta-highlight:#E8B14B;--shiny-cta-highlight-subtle:#F5D689}
-
-  .myc-cta{position:relative;max-width:660px;margin:110px auto 30px;padding:56px 20px 44px;text-align:center}
-  .myc-cta[hidden]{display:none}
-  .myc-cta::before{content:"";position:absolute;inset:-40px 0 0;background:radial-gradient(ellipse at 50% 35%,rgba(232,177,75,.12),transparent 62%);pointer-events:none;z-index:-1}
-  .myc-admin-note{font-family:'Geist Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:#9ED438;margin-bottom:18px}
-  .myc-eyebrow{font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:#8B7E62}
-  .myc-title{font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-size:clamp(30px,4.6vw,46px);line-height:1.08;color:#E6D9B5;margin:14px 0 14px}
-  .myc-title em{color:#F5D689}
-  .myc-lede{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:17.5px;line-height:1.6;color:#C9B894;max-width:46ch;margin:0 auto 32px}
-  .myc-form{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:470px;margin:0 auto;animation:mycIn .5s ease both}
-  .myc-form[hidden]{display:none}
-  .myc-form input{flex:1 1 240px;min-width:0;padding:14px 20px;border-radius:999px;border:1px solid rgba(232,177,75,.4);background:rgba(7,17,13,.85);color:#F1E9D2;font-size:15px;font-family:inherit}
-  .myc-form input:focus{outline:none;border-color:#F5D689;box-shadow:0 0 0 3px rgba(232,177,75,.15)}
-  .myc-form button{padding:14px 22px;border-radius:999px;border:0;background:#E8B14B;color:#0a0c09;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer}
-  .myc-form button:disabled{opacity:.6;cursor:wait}
-  .myc-fine{flex-basis:100%;margin-top:10px;font-size:11.5px;color:#8B7E62}
-  .myc-fine a{color:#C9B894}
-  .myc-msg{flex-basis:100%;min-height:1.2em;font-size:12.5px;color:#E8A07C}
-  .myc-done{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:19px;color:#E6D9B5;line-height:1.5;animation:mycIn .5s ease both}
-  .myc-more{display:block;width:fit-content;margin:26px auto 0;font-family:'Geist Mono',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:#8B7E62;text-decoration:none;border-bottom:.5px solid rgba(139,126,98,.45)}
-  .myc-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-  @keyframes mycIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-</style>
+<link rel="stylesheet" href="/mycelium-cta.css">
 </head>
 <style>
 /* ── Login gate overlay ── */
@@ -701,11 +658,26 @@
       <p class="acp-lede">
         Five extraction methods, <span data-academy="traditions">five</span> living traditions, a
         <span data-academy="herb-count">247</span>-plant materia medica, whole protocols in our library,
-        and a lab notebook we write together at the bench &mdash; between a lab in Berlin and the forests of Sweden.
+        and a lab notebook we write together at the bench &mdash; and in the forests of Sweden.
       </p>
+      <!-- ══ ENTER THE MYCELIUM ═══════════════════════════════════════
+           Moved up from the foot of the page into the hero (Robin,
+           2026-10-01). The shiny button opens an email form →
+           /api/subscribe-newsletter, source "academy-mycelium". Styles in
+           /mycelium-cta.css, shared with the portal's welcome. -->
+      <div class="acp-join" id="myceliumCta">
+        <button type="button" class="shiny-cta fa-myc" id="mycCtaBtn" aria-expanded="false" aria-controls="mycCtaForm"><span>Enter the mycelium</span></button>
+        <form class="myc-form" id="mycCtaForm" hidden novalidate>
+          <label for="mycEmail" class="myc-sr">Email address</label>
+          <input type="email" id="mycEmail" name="email" required autocomplete="email" inputmode="email" placeholder="you@forest.earth">
+          <button type="submit" id="mycSubmit">Send me the way in</button>
+          <p class="myc-fine">A welcome letter, then monthly field notes. Unsubscribe any time. <a href="/privacy">Privacy</a></p>
+          <p class="myc-msg" id="mycMsg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
       <div class="acp-cta">
-        <a class="acp-btn is-primary" href="/community/#signin">Sign in to enter &rarr;</a>
-        <a class="acp-btn" href="/members#become">Become a thread</a>
+        <a class="acp-link" href="/community/#signin">Already a member? Sign in &rarr;</a>
+        <a class="acp-link" href="/members">What membership includes &rarr;</a>
       </div>
     </div>
 
@@ -1372,28 +1344,6 @@
     <button id="snippetOpenCompose" style="margin-top:14px;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:0.24em;text-transform:uppercase;padding:11px 20px;border-radius:999px;background:rgba(232,177,75,0.06);border:0.5px solid rgba(232,177,75,0.45);color:#F5D689;cursor:pointer;">+ Create a snippet</button>
 
     <div id="snippetList" style="margin-top:22px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;"></div>
-  </section>
-
-  <!-- ══ ENTER THE MYCELIUM ═════════════════════════════════════════════
-       Shown to visitors who aren't members (admins see it as a preview).
-       The shiny button reveals an email form → /api/subscribe-newsletter
-       with source "academy-mycelium". Same design as the React component
-       src/components/ui/shiny-button.tsx — this static page can't import
-       it, so the CSS is mirrored in the <style id="fa-shiny-cta"> block. -->
-  <section class="myc-cta" id="myceliumCta" hidden aria-labelledby="mycTitle">
-    <p class="myc-admin-note" hidden>Admin preview · visitors who aren't members see this</p>
-    <p class="myc-eyebrow">The Mycelium</p>
-    <h2 class="myc-title" id="mycTitle">There is more <em>beneath the surface.</em></h2>
-    <p class="myc-lede">Every lab note, every shared formula and the study chapters live inside the member network. Leave your email and we&rsquo;ll send you the way in.</p>
-    <button type="button" class="shiny-cta fa-myc" id="mycCtaBtn" aria-expanded="false" aria-controls="mycCtaForm"><span>Enter the mycelium</span></button>
-    <form class="myc-form" id="mycCtaForm" hidden novalidate>
-      <label for="mycEmail" class="myc-sr">Email address</label>
-      <input type="email" id="mycEmail" name="email" required autocomplete="email" inputmode="email" placeholder="you@forest.earth">
-      <button type="submit" id="mycSubmit">Send me the way in</button>
-      <p class="myc-fine">A welcome letter, then monthly field notes. Unsubscribe any time. <a href="/privacy">Privacy</a></p>
-      <p class="myc-msg" id="mycMsg" role="status" aria-live="polite"></p>
-    </form>
-    <a class="myc-more" href="/members">What membership includes &rarr;</a>
   </section>
 
   <div class="footer">
@@ -3520,16 +3470,11 @@ function lnMoveNote(fromCat, id, toCat){
 })();
 
 // ── Enter the mycelium · email capture ───────────────────────────────
+// Lives in the visitor view's hero (#acPreview), so only a visitor ever
+// sees it — to see it as a keeper, sign out from the banner.
 (function(){
   var sec = document.getElementById('myceliumCta');
   if (!sec) return;
-  var member = null;
-  try { member = JSON.parse(localStorage.getItem('spore_active_member_full') || 'null'); } catch (e) {}
-  var isMember = !!(member && member.id);
-  var isAdmin = !!(member && (member.admin || member.is_admin));
-  if (isMember && !isAdmin) return;           // members are already inside
-  sec.hidden = false;
-  if (isAdmin) sec.querySelector('.myc-admin-note').hidden = false;
 
   var btn = document.getElementById('mycCtaBtn'), form = document.getElementById('mycCtaForm');
   var input = document.getElementById('mycEmail'), submit = document.getElementById('mycSubmit');

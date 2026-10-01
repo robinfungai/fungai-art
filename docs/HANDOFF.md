@@ -80,7 +80,39 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ---
 
-## 0.21 · START HERE (next session) — state on 29 Sep, end of day
+## 0.22 · 1 Oct — portal welcome converts, real sign-out, no Berlin lab (committed, not pushed)
+
+Read this, then §0.21 (still the open list — the push has not happened).
+- **/community/ signed out:** no cities in the hero; **"Enter the mycelium"** (shiny
+  button → email → `/api/subscribe-newsletter`, source `community-hero`) sits under the
+  first paragraph; invite code ("Cross the threshold") and sign-in are quiet links under
+  it. Who's-in cards show members' photos (they only ever drew the initial) and no city.
+- **Academy visitor view:** the same button moved from the foot of the page into the hero
+  (source `academy-mycelium`). The shiny CSS is one file now, `public/mycelium-cta.css`
+  (portal, Academy, /members) — `src/components/ui/shiny-button.css` is the React copy.
+- **Sign-out was not real:** nothing cleared `spore_active_member_full`, and the portal,
+  the Academy and the banner all restore a member from it. `window.faSignOut`
+  (global-nav.js) clears it with the Supabase session (and any `sb-*-auth-token`); the
+  banner has **Sign out** on every page. `spore_gate_device` stays on purpose.
+- **"Berlin lab" is gone (Robin no longer has it):** banner shows name · rank · Keeper,
+  no node. Removed from present-tense copy: find-your-formula (+pro), both reservation
+  emails, moder-jord, the-house-ethos, tymetonics, portal apothecary/path. Left alone:
+  map nodes + `NODE_INTROS`, past events, the dinner bio, MYCO's node list in
+  `myco-agent.mjs` ("Berlin Studio / LAB — primary hub") — Robin to say.
+- **Traffic cities** were already collected and emailed (CITIES block, since 24 Sep;
+  privacy page says so). The collector now reads `context.geo` first (city + country
+  only), header as fallback. No IP is stored or needed.
+- **Proposals, not done:** digestive actions on the herb cards (`digestion_fit` on
+  135/247; Gentian, Marshmallow Root, Agrimony, Blackberry Root not in the catalogue;
+  Raspberry Leaf untagged). The welcome letter links back to /community, where the
+  invite code still blocks — the funnel needs Robin's call.
+- **Antigravity** (Gemini) also edits this folder: its curriculum files are untracked
+  and were NOT committed; its one-line link in the Academy hero was kept out of the
+  commit (still in the working tree). Never `git add -A` here.
+
+---
+
+## 0.21 · state on 29 Sep, end of day
 
 `main` is **ahead of GitHub (0a07052), not pushed** (`git log --oneline origin/main..HEAD`) — everything since 29 Sep morning.
 All 44 test suites green; typecheck = the known 47-error backlog.
