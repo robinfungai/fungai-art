@@ -80,6 +80,44 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ---
 
+## 0.23 · 1 Oct, evening — engine 2.10.0, PubMed on 45 herbs, MYCO digest on the 2nd (pushed 1 Oct)
+
+Robin said "push tonight", so this went out with everything since 0a07052. **Robin runs, in this order:**
+[supabase-formulas-server-writes.sql](../supabase-formulas-server-writes.sql) (with step 3), then step 4 of
+[supabase-fyf-retention.sql](../supabase-fyf-retention.sql), then
+[supabase-board-tasks-2026-10-01.sql](../supabase-board-tasks-2026-10-01.sql) (two board cards: audit #3, §12).
+- **Engine 2.10.0:** trace herbs share 7% (4% + 3%; one alone 4%). There is a new
+  **extreme caution** class (`extreme_caution`: both Amanitas, St John's Wort, Calea): one per
+  consumer bottle, no limit for pro. It is checked in picker, validator, MYCO prompt (EXTREME tag) and
+  test:invariants (its own code). Three fixtures re-pinned (lone trace 5% → 4%, same herbs).
+  herbDbVersion 2026.10.01. Suggested for the class, waiting for Robin: Kava, Blue Lotus, African
+  Dream Root, Bobinsana, Rhodiola, Goldenseal.
+- **PubMed references:** 45 of the TOP-HERBS 1–50 now carry 1–3 references each (103 in total,
+  fetched from PubMed's own records and hand-picked; off-topic hits were dropped, e.g. agronomy,
+  dental and injections). 80 herbs now have references. Still none: Jasmine (its one trial
+  is likely another species), Phyllodium pulchellum, Dashmool. **Cards:** Atlas (Formulation → Digestive action; Evidence → Sources
+  with PMID links; extreme-caution badge) and the Mixology modal (same three).
+- **Digestive actions:** shown on the cards from `digestion_fit` (Robin's four: bitter,
+  carminative, demulcent, astringent). Raspberry Leaf is tagged astringent. The other ~110
+  untagged herbs are NOT filled (that would be prose inference; do it with Robin's review).
+- **MYCO digest → 09:00 UTC on the 2nd** (it was the 1st). It now also reads
+  `src/server/myco/catalogue-requests.cjs` (Gentian, Marshmallow Root, Agrimony, Blackberry Root,
+  Cramp Bark, Elecampane, Bobinsana Leaf) and drafts a NEW RECORDS outline for each one, with PubMed
+  search strings and no PMIDs. An entry drops out by exact name once the herb is in herbs.ts. It
+  runs even in a month with no notes.
+- **Bobinsana split NOT done:** PubMed has no paper on *Calliandra angustifolia* (bark or leaf),
+  so a leaf record would be invented. Queued as "Bobinsana Leaf" for MYCO's outline (traditional
+  only). Noticed: Bobinsana's record says origin "Central American" but its habitat text says Peru,
+  Ecuador, Colombia, Brazil. Not changed; Robin to OK.
+- **Lemon balm:** no serotonergic tag. The human-relevant mechanism is GABA (GABA-T inhibition);
+  serotonin rests on one rat study. The record already says calming, not serotonergic.
+- **Curriculum (Antigravity):** review + fix list in
+  [CURRICULUM-FIXES-FOR-ANTIGRAVITY.md](CURRICULUM-FIXES-FOR-ANTIGRAVITY.md). Robin: free for
+  all, he renames the levels. NOT committed yet: it goes live on the push after Antigravity's
+  fixes. The third-party scrape in docs/ must never be committed.
+
+---
+
 ## 0.22 · 1 Oct — portal welcome converts, real sign-out, no Berlin lab (committed, not pushed)
 
 Read this, then §0.21 (still the open list — the push has not happened).

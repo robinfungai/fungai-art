@@ -104,7 +104,7 @@ function checkBottle(p, r, tag) {
   const traces = withPct.filter(([h]) => isTrace(h));
   const mains = withPct.filter(([h]) => !isTrace(h));
   if (traces.length > 2) fail('at most 2 trace herbs', p, names);
-  if (traces.reduce((t, [, x]) => t + x, 0) > 10) fail('trace herbs together at most 10%', p, names);
+  if (traces.reduce((t, [, x]) => t + x, 0) > 7) fail('trace herbs together at most 7% (Robin, 1 Oct)', p, names);
   // Checked here with this test's own numbers, not rules.js (audit 29 Sep, Q7):
   const cats = {}; for (const h of herbs) { const c = P.categoryOf(h); cats[c] = (cats[c] || 0) + 1; }
   if (Object.values(cats).some(n => n > 2)) fail('at most 2 herbs per category', p, names);
@@ -112,7 +112,7 @@ function checkBottle(p, r, tag) {
   if (withPct.some(([h, x]) => Number(h.max_share_pct) > 0 && x > Number(h.max_share_pct))) fail('a recorded max share is kept (Saffron 7%)', p, names);
   { const ids = herbs.map(h => String(h.id));
     if (PAIRS.some(r => r.cls === 'BLOCK' && ids.includes(String(r.a)) && ids.includes(String(r.b)))) fail('no BLOCK herb pair', p, names); }
-  if (traces.some(([, x]) => x > 5)) fail('trace herb at most 5%', p, traces.map(([h, x]) => h.name + ' ' + x).join(','));
+  if (traces.some(([, x]) => x > 4)) fail('trace herb at most 4%', p, traces.map(([h, x]) => h.name + ' ' + x).join(','));
   if (mains.some(([, x]) => x > 40)) fail('no herb above 40% (D3)', p, mains.map(([h, x]) => h.name + ' ' + x).join(','));
   if (traces.length + herbs.filter(isAmanita).length && herbs.length < 4) fail('a small-share herb only in a bottle of four or more', p, names);
   if (mains.filter(([h]) => !isAmanita(h)).length < 3) fail('at least three herbs at the full share', p, names);
@@ -130,6 +130,8 @@ function checkBottle(p, r, tag) {
   if (herbs.some(h => isRestricted(h))) fail('no restricted plant', p, names);
   if (herbs.some(h => h.proOnly) && !(p._pro === true && !minor)) fail('pro-only herb only for a pro adult', p, names);
   if (herbs.some(h => /yohimb/i.test(h.name)) && !(p._pro === true && !minor)) fail('Yohimbe never in a customer bottle (D11)', p, names);
+  // Robin, 1 Oct (audit Q5): one extremely-high-caution herb per consumer bottle; pro is free.
+  if (!(p._pro === true && !minor) && herbs.filter(h => h.extreme_caution === true).length > 1) fail('at most one extreme-caution herb in a consumer bottle', p, names);
   if (minor && herbs.some(h => !passesMinorGate(h))) fail('under-18: every herb passes the minor gate', p, names);
   if (pregnant && herbs.some(h => h.safe_pregnancy !== true)) fail('pregnancy / conceiving: only recorded pregnancy-safe herbs', p, names);
   if (prior.includes('stimulants_sensitive') && herbs.some(P.isCNSStimulant)) fail('stimulant-sensitive: no stimulating herb', p, names);

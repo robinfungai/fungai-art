@@ -1219,6 +1219,29 @@ function openM(h){
     <div style="font-size:12.5px;color:var(--m);line-height:1.65;margin-bottom:6px">${db.best_preparation}</div>
   `:'';
 
+  // Digestive action — the record's digestion_fit, in Robin's four
+  // actions (2026-10-01); the tone words (warming, moving…) stay in the record.
+  const DIG={bitter:'Bitter — stimulates bile, stomach acid and digestive enzymes',carminative:'Carminative — relieves gas, relaxes gut smooth muscle',demulcent:'Demulcent — soothes and protects an inflamed gut lining',astringent:'Astringent — tones lax gut tissue, reduces diarrhoea'};
+  const digActs=db&&Array.isArray(db.digestion_fit)?db.digestion_fit.filter(d=>DIG[d]):[];
+  const digHtml=digActs.length?`
+    <div class="m-sec">Digestive action</div>
+    ${digActs.map(d=>`<div style="font-size:12.5px;color:var(--m);line-height:1.6">◦ ${DIG[d]}</div>`).join('')}
+  `:'';
+
+  // Sources — the record's references as numbered footnotes, each linked
+  // to its PubMed entry (Robin, 2026-10-01).
+  const escT=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const refs=db&&Array.isArray(db.references)?db.references:[];
+  const srcHtml=refs.length?`
+    <div class="m-sec">Sources</div>
+    <ol style="margin:0 0 6px;padding-left:18px">${refs.map(r=>{
+      const m=/PMID\s*(\d+)/.exec(String(r));
+      const t=String(r).replace(/\.?\s*PMID\s*\d+\s*$/,'');
+      return `<li style="font-size:11px;color:var(--md);line-height:1.55;margin-bottom:6px">${escT(t)}${m?`. <a href="https://pubmed.ncbi.nlm.nih.gov/${m[1]}/" target="_blank" rel="noopener noreferrer" style="color:var(--gl);white-space:nowrap">PMID ${m[1]}</a>`:''}</li>`;
+    }).join('')}</ol>
+  `:'';
+  const extremeHtml=db&&db.extreme_caution?`<span class="m-caut cH" style="margin-left:6px" title="At most one herb of this class goes into a Find Your Formula bottle">▲ Extreme caution</span>`:'';
+
   const meta=getMeta(h.id);
   const gradeModalHtml=meta?`<div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:10px">
     <span class="grade-badge grade-${meta.grade}">Grade ${meta.grade} Evidence</span>
@@ -1245,14 +1268,16 @@ function openM(h){
     ${compoundsHtml}
     ${pharmaHtml}
     <div class="m-sec">Caution level</div>
-    <span class="m-caut ${{'low':'cL','medium':'cM','high':'cH'}[h.x]}">${{'low':'● Low risk','medium':'◆ Medium — check context','high':'▲ High — professional / caution'}[h.x]}</span>
+    <span class="m-caut ${{'low':'cL','medium':'cM','high':'cH'}[h.x]}">${{'low':'● Low risk','medium':'◆ Medium — check context','high':'▲ High — professional / caution'}[h.x]}</span>${extremeHtml}
     ${pregHtml}
+    ${digHtml}
     ${synergyHtml}
     ${prepHtml}
     <div style="margin-top:10px">
       <a class="m-extract" href="/extraction#${extAnchor}" target="_blank" rel="noopener noreferrer">⚗ How to extract — ${extLabel} →</a>
     </div>
     ${spiritHtml}
+    ${srcHtml}
     <button id="madd" class="m-add ${h.f?'fub':''} ${sel?'in':''}" onclick="tog('${h.id}');document.getElementById('madd').textContent=F.includes('${h.id}')?'✓ In formula':'+ Add to formula';document.getElementById('madd').classList.toggle('in',F.includes('${h.id}'));">${sel?'✓ In formula':'+ Add to formula'}</button>
   `;
   document.getElementById('mbg').classList.add('on');

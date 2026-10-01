@@ -3,7 +3,7 @@
  * A background function (Netlify gives those 15 minutes; a scheduled
  * function gets 30 seconds, and MYCO reading a month of notes and PDFs
  * takes longer — 2026-09-29). myco-monthly-digest.mjs is the schedule
- * (09:00 UTC on the 1st) and the manual trigger; it starts this and
+ * (09:00 UTC on the 2nd) and the manual trigger; it starts this and
  * returns at once. Only a caller holding the internal token (derived
  * from the Anthropic key, or DIGEST_KEY) can start it.
  *
@@ -121,7 +121,23 @@ Never invent a number the document does not contain. Never propose
 removing a safety warning. If a document teaches nothing the site lacks,
 say so in one line.
 
-LAST — a third section, headed exactly: ── FOR CLAUDE CODE ──
+NEW RECORDS — a section headed exactly: ── NEW RECORDS TO DRAFT ──, only
+when CATALOGUE REQUESTS lists any. These are plants Robin asked for; no
+note need mention them. For each, an outline Claude Code can turn into a
+herbs.ts record after checking sources:
+  HERB  · <common name> — <botanical name>, <family>
+  PART  · <part(s) used in Western/Nordic practice>
+  ACTIONS · <primary actions; for digestive herbs name the action class:
+            bitter, carminative, demulcent or astringent>
+  SAFETY · <main contraindications and drug interactions you are confident
+            of; say "uncertain" rather than guess; flag any toxicity>
+  CAUTION · <suggested caution level LOW … VERY HIGH, one line why>
+  PUBMED · <two or three search strings to run, e.g.
+            "Gentiana lutea"[tiab] AND (randomized controlled trial[pt] OR review[pt])>
+Never write a PMID or a citation here — the searches are run and checked
+when the record is written. Never invent a dose.
+
+LAST — a final section, headed exactly: ── FOR CLAUDE CODE ──
 Robin pastes this block, unchanged, into Claude Code in his terminal, in
 the repository. Write it as instructions to that assistant:
   - one numbered item per suggestion above that is concrete enough to
@@ -129,6 +145,9 @@ the repository. Write it as instructions to that assistant:
     field, the exact new text, and the quoted source line it rests on;
   - leave out anything marked "assertion, unsourced" or needing a
     number you do not have — list those under "Robin to decide first";
+  - one numbered item per NEW RECORD outline: "Add <herb> (<botanical>)
+    as a new herbs.ts record from the outline above — run its PUBMED
+    searches, keep only papers you have fetched";
   - end with these standing orders, verbatim:
     "Before writing: check every PMID on PubMed. Apply herb changes in
     src/data/herbs.ts and follow the herbs-everywhere checklist (build
@@ -218,8 +237,26 @@ export default async (req) => {
   }
   if (!SERVICE_KEY) console.warn('[digest] no SUPABASE_SERVICE_ROLE_KEY — library documents skipped');
 
-  if (!recent.length && !docs.length) {
-    console.log('[digest] no notes or documents this period — nothing sent');
+  // Herbs Robin asked for that are not in the catalogue yet
+  // (src/server/myco/catalogue-requests.cjs). One that has since been
+  // added drops out here — by exact name, not the Formula Maker matcher:
+  // "Bobinsana Leaf" must not count as present because Bobinsana is.
+  let requests = [];
+  try {
+    const reqMod = await import('../../src/server/myco/catalogue-requests.cjs');
+    const all = reqMod.default || [];
+    const hmod = await import('../../src/server/herb-data/herbs.generated.cjs');
+    const hm = hmod.default || hmod;
+    const herbs = Object.values(hm).find(Array.isArray) || [];
+    const key = s => String(s || '').toLowerCase().replace(/[^a-z]/g, '');
+    const have = new Set(herbs.map(h => key(h.name)));
+    requests = all.filter(r => !have.has(key(r.name)));
+  } catch (e) {
+    console.warn('[digest] catalogue requests unavailable:', e.message);
+  }
+
+  if (!recent.length && !docs.length && !requests.length) {
+    console.log('[digest] no notes, documents or catalogue requests this period — nothing sent');
     return new Response(JSON.stringify({ ok: true, sent: false, reason: 'nothing new' }), { status: 200 });
   }
 
@@ -277,6 +314,10 @@ export default async (req) => {
                       String(d.text || '').slice(0, Math.floor(120000 / docs.length))).join('\n\n')
       : '(none)') +
     '\n\nCURRENT RECORDS of the herbs named above (as they stand today):\n\n' + (currentRecords || '(none named)') +
+    '\n\nCATALOGUE REQUESTS — herbs Robin wants added that are NOT in the database (' + requests.length + '):\n' +
+    (requests.length
+      ? requests.map(r => '- ' + r.name + ' (' + r.botanical + ') — ' + r.why + ' · asked ' + r.asked).join('\n')
+      : '(none)') +
     '\n\nProduce the digest now.';
 
   // ── Ask ─────────────────────────────────────────────────────

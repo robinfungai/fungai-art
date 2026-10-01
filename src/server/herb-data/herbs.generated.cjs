@@ -158,6 +158,12 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade: 'B+',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Zhang Y, Zhu Z, Li X, et al. Angelica sinensis: Botany, Traditional Uses, Phytochemistry, Pharmacology, Safety, and Applications. Am J Chin Med. 2026. PMID 42366516',
+      'Kupfersztain C, Rotem C, Fagot R, et al. The immediate effect of natural plant extract, Angelica sinensis and Matricaria chamomilla (Climex) for the treatment of hot flushes during menopause. A preliminary report. Clin Exp Obstet Gynecol. 2003. PMID 14664413',
+      'Chen XP, Li W, Xiao XF, et al. Phytochemical and pharmacological studies on Radix Angelica sinensis. Chin J Nat Med. 2013. PMID 24345498',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -322,6 +328,12 @@ const HERBS = [
       source: 'recorded',
     },
     evidence_grade:     'A',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Alsanie SA, Alhodieb FS, Askarpour M. Effects of ashwagandha (Withania somnifera) on mental health in adults: A systematic review and dose-response meta-analysis of randomized controlled trials. Complement Ther Med. 2026. PMID 41644067',
+      'Albalawi AA. Dual impact of Ashwagandha: Significant cortisol reduction but no effects on perceived stress - A systematic review and meta-analysis. Nutr Health. 2025. PMID 40746175',
+      'Gómez Afonso A, Fernandez-Lazaro D, Adams DP, et al. Effects of Withania somnifera (Ashwagandha) on Hematological and Biochemical Markers, Hormonal Behavior, and Oxidant Response in Healthy Adults: A Systematic Review. Curr Nutr Rep. 2023. PMID 37428341',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -400,6 +412,11 @@ const HERBS = [
       source: 'mixed',
     },
     evidence_grade:     'B+',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Sheng X, Yang L, Huang B, et al. Efficacy of Astragalus Membranaceus (Huang Qi) for Cancer-Related Fatigue: A Systematic Review and Meta-Analysis of Randomized Controlled Studies. Integr Cancer Ther. 2025. PMID 40302232',
+      'Lin YQ, Yu F, Chen HJ, et al. Efficacy of astragalus combined with renin-angiotensin-aldosterone system blockers in the treatment of stage III diabetic nephropathy: a systematic review and meta-analysis. Ren Fail. 2024. PMID 38836372',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -636,6 +653,11 @@ const HERBS = [
     epithet: 'The field grain',
     origin_region: 'Global',
     evidence_grade: 'B+',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Rzeski W, Rzeska W. Young Barley (Hordeum vulgare L.) Preparations: From Phytochemical Complexity to Clinical Relevance. Molecules. 2026. PMID 42357586',
+      'Guo Z, Wang Z, Huang X, et al. Hull-Less Barley (Hordeum vulgare L. var. nudum Hook. f.): A Review of Its Phytochemistry, Bioactivities, Pharmacology and Applications. J Agric Food Chem. 2026. PMID 42304686',
+    ],
   },
   // ============================================================
   // BATCH 02 — Herbs converted from monographs
@@ -1122,6 +1144,11 @@ const HERBS = [
       source: 'recorded',
     },
     evidence_grade: 'A',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Tucci M, Del Bo\' C, Martini D, et al. A serving of blueberry (Vaccinium corymbosum) improves peripheral vascular function but not metabolic and functional markers in older subjects: A randomized, controlled, crossover study. Food Res Int. 2024. PMID 39593399',
+      'Del Bó C, Riso P, Campolo J, et al. A single portion of blueberry (Vaccinium corymbosum L) improves protection against DNA damage but not vascular function in healthy male volunteers. Nutr Res. 2013. PMID 23507228',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -1368,6 +1395,11 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade: 'B',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Jin X, Liu S, Chen S, et al. A systematic review on botany, ethnopharmacology, quality control, phytochemistry, pharmacology and toxicity of Arctium lappa L. fruit. J Ethnopharmacol. 2023. PMID 36781057',
+      'Maghsoumi-Norouzabad L, Alipoor B, Abed R, et al. Effects of Arctium lappa L. (Burdock) root tea on inflammatory status and oxidative stress in patients with knee osteoarthritis. Int J Rheum Dis. 2016. PMID 25350500',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -1610,6 +1642,11 @@ const HERBS = [
       source: 'mixed',
     },
     evidence_grade:     'B',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Szewczyk K, Zidorn C. Ethnobotany, phytochemistry, and bioactivity of the genus Turnera (Passifloraceae) with a focus on damiana--Turnera diffusa. J Ethnopharmacol. 2014. PMID 24468305',
+      'Parra-Naranjo A, Delgado-Montemayor C, Salazar-Aranda R, et al. Bioactivity of the Genus Turnera: A Review of the Last 10 Years. Pharmaceuticals (Basel). 2023. PMID 38004438',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -1840,6 +1877,7 @@ const HERBS = [
     best_preparation:
       'Ceremonial tea with clear intention setting before bed — intention shapes the dream trajectory. Extract in warm water for convenient preparation. Journal dreams immediately upon waking for integration. Use in safe, quiet sleeping environment. Combine with Mugwort for amplified dream protocols.',
     caution_level: 'HIGH',
+    extreme_caution: true,   // one per consumer bottle (Robin, 2026-10-01)
     cns_action: 'psychoactive',
     cns_evidence: 'Oneirogen. In a controlled nap study it deepened only the light stages of sleep, caused more awakenings and more dream reports than placebo or diazepam (PMID 3821139).',
     safe_pregnancy: false,
@@ -2190,6 +2228,12 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade: 'A',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Kazemi A, Shojaei-Zarghani S, Eskandarzadeh P, et al. Effects of chamomile (Matricaria chamomilla L.) on sleep: A systematic review and meta-analysis of clinical trials. Complement Ther Med. 2024. PMID 39106912',
+      'Mohsenzadeh-Ledari F, Agajani Delavar M, Moghadamnia AA, et al. Efficacy and safety of Matricaria chamomilla intervention in managing menopausal symptoms: a triple-blind clinical trial. Menopause. 2025. PMID 39836709',
+      'Keefe JR, Mao JJ, Soeller I, et al. Short-term open-label chamomile (Matricaria chamomilla L.) therapy of moderate to severe generalized anxiety disorder. Phytomedicine. 2016. PMID 27912871',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -3943,6 +3987,11 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade:     'B',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Zeng X, Zhao W, Wang S, et al. L. barbarum (Lycium barbarum L.) supplementation for lipid profiles in adults: A systematic review and meta-analysis of RCTs. Medicine (Baltimore). 2023. PMID 37773857',
+      'Zhou B, Xia H, Yang L, et al. The Effect of Lycium Barbarum Polysaccharide on the Glucose and Lipid Metabolism: A Systematic Review and Meta-Analysis. J Am Nutr Assoc. 2022. PMID 34213407',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -4029,6 +4078,11 @@ const HERBS = [
       source: 'mixed',
     },
     evidence_grade: 'B',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Puttarak P, Dilokthornsakul P, Saokaew S, et al. Effects of Centella asiatica (L.) Urb. on cognitive function and mood related outcomes: A Systematic Review and Meta-analysis. Sci Rep. 2017. PMID 28878245',
+      'Pointel JP, Boccalon H, Cloarec M, et al. Titrated extract of Centella asiatica (TECA) in the treatment of venous insufficiency of the lower limbs. Angiology. 1987. PMID 3544968',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -4275,6 +4329,12 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade: 'B+',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Jamshidi N, Cohen MM. The Clinical Efficacy and Safety of Tulsi in Humans: A Systematic Review of the Literature. Evid Based Complement Alternat Med. 2017. PMID 28400848',
+      'Mondal S, Varma S, Bamola VD, et al. Double-blinded randomized controlled trial for immunomodulatory effects of Tulsi (Ocimum sanctum Linn.) leaf extract on healthy volunteers. J Ethnopharmacol. 2011. PMID 21619917',
+      'Sampath S, Mahapatra SC, Padhi MM, et al. Holy basil (Ocimum sanctum Linn.) leaf extract enhances specific cognitive parameters in healthy adult volunteers: A placebo controlled study. Indian J Physiol Pharmacol. 2015. PMID 26571987',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -4441,6 +4501,11 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade: 'B',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Waterstradt A, Winker M, Zimmermann-Klemd AM, et al. Silicon Resorption from Equisetum arvense Tea - A Randomized, Three-Armed Pilot Study. Planta Med. 2022. PMID 34706374',
+      'Schoendorfer N, Sharp N, Seipel T, et al. Urox containing concentrated extracts of Crataeva nurvala stem bark, Equisetum arvense stem and Lindera aggregata root, in the treatment of symptoms of overactive bladder and urinary incontinence: a phase 2, randomised, double-blind placebo controlled trial. BMC Complement Altern Med. 2018. PMID 29385990',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -4610,6 +4675,12 @@ const HERBS = [
       source: 'mixed',
     },
     evidence_grade: 'A',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Pittler MH, Guo R, Ernst E. Hawthorn extract for treating chronic heart failure. Cochrane Database Syst Rev. 2008. PMID 18254076',
+      'Zick SM, Vautaw BM, Gillespie B, et al. Hawthorn Extract Randomized Blinded Chronic Heart Failure (HERB CHF) trial. Eur J Heart Fail. 2009. PMID 19789403',
+      'Weihmayr T, Ernst E. [Therapeutic effectiveness of Crataegus]. Fortschr Med. 1996. PMID 8647566',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -4778,6 +4849,10 @@ const HERBS = [
       source: 'mixed',
     },
     evidence_grade: 'B',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Louisa M, Patintingan CGH, Wardhani BWK. Moringa Oleifera Lam. in Cardiometabolic Disorders: A Systematic Review of Recent Studies and Possible Mechanism of Actions. Front Pharmacol. 2022. PMID 35431967',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -4864,6 +4939,11 @@ const HERBS = [
       source: 'recorded',
     },
     evidence_grade: 'B',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Wojtyniak K, Szymański M, Matławska I. Leonurus cardiaca L. (motherwort): a review of its phytochemistry and pharmacology. Phytother Res. 2013. PMID 23042598',
+      'Orhan IE, Gokbulut A, Senol FS. Adonis sp., Convallaria sp., Strophanthus sp., Thevetia sp., and Leonurus sp. - Cardiotonic Plants with Known Traditional Use and a Few Preclinical and Clinical Studies. Curr Pharm Des. 2017. PMID 27748195',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -5198,6 +5278,12 @@ const HERBS = [
       source: 'mixed',
     },
     evidence_grade: 'B+',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Ghazizadeh J, Sadigh-Eteghad S, Marx W, et al. The effects of lemon balm (Melissa officinalis L.) on depression and anxiety in clinical trials: A systematic review and meta-analysis. Phytother Res. 2021. PMID 34449930',
+      'Heshmati J, Morvaridzadeh M, Sepidarkish M, et al. Effects of Melissa officinalis (Lemon Balm) on cardio-metabolic outcomes: A systematic review and meta-analysis. Phytother Res. 2020. PMID 32614129',
+      'Shahsavari K, Shams Ardekani MR, Khanavi M, et al. Effects of Melissa officinalis (lemon balm) consumption on serum lipid profile: a meta-analysis of randomized controlled trials. BMC Complement Med Ther. 2024. PMID 38575930',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -5693,6 +5779,11 @@ const HERBS = [
       source: 'mixed',
     },
     evidence_grade: 'A',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Bisht D, Rashid M, Arya RKK, et al. Revisiting liquorice (Glycyrrhiza glabra L.) as anti-inflammatory, antivirals and immunomodulators: Potential pharmacological applications with mechanistic insight. Phytomed Plus. 2022. PMID 35403088',
+      'Prajapati K, Mishra R, Jain V. A comprehensive review of Glycyrrhiza glabra in the management of rheumatoid arthritis: ethnopharmacology, pharmacological mechanisms and synergistic therapeutic strategies. J Ethnopharmacol. 2026. PMID 41177239',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -6824,6 +6915,10 @@ const HERBS = [
       source: 'recorded',
     },
     evidence_grade:     'B+',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Jibril AT, Arero AG, Kankam SB, et al. Effect of Avena sativa (Oats) on cognitive function: A systematic review of randomized controlled trials. Clin Nutr ESPEN. 2023. PMID 36657906',
+    ],
   },
   // ============================================================
   // BATCH 07 — 10 herbs converted from monographs
@@ -7325,6 +7420,11 @@ const HERBS = [
       source: 'mixed',
     },
     evidence_grade: 'B',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Pengelly A, Snow J, Mills SY, et al. Short-term study on the effects of rosemary on cognitive function in an elderly population. J Med Food. 2012. PMID 21877951',
+      'Momeni Safarabadi A, Gholami M, Kordestani-Moghadam P, et al. The effect of rosemary hydroalcoholic extract on cognitive function and activities of daily living of patients with chronic obstructive pulmonary disease (COPD): A clinical trial. Explore (NY). 2024. PMID 37758539',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -7411,6 +7511,12 @@ const HERBS = [
       source: 'mixed',
     },
     evidence_grade: 'A',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Tóth B, Hegyi P, Lantos T, et al. The Efficacy of Saffron in the Treatment of Mild to Moderate Depression: A Meta-analysis. Planta Med. 2019. PMID 30036891',
+      'Hausenblas HA, Saha D, Dubyak PJ, et al. Saffron (Crocus sativus L.) and major depressive disorder: a meta-analysis of randomized clinical trials. J Integr Med. 2013. PMID 24299602',
+      'Ulbricht C, Conquer J, Costa D, et al. An evidence-based systematic review of saffron (Crocus sativus) by the Natural Standard Research Collaboration. J Diet Suppl. 2011. PMID 22432635',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -7584,6 +7690,12 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade:     'B',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Agarwal SP, Khanna R, Karmarkar R, et al. Shilajit: a review. Phytother Res. 2007. PMID 17295385',
+      'Pandit S, Biswas S, Jana U, et al. Clinical evaluation of purified Shilajit on testosterone levels in healthy volunteers. Andrologia. 2016. PMID 26395129',
+      'Pingali U, Nutalapati C. Shilajit extract reduces oxidative stress, inflammation, and bone loss to dose-dependently preserve bone mineral density in postmenopausal women with osteopenia: A randomized, double-blind, placebo-controlled trial. Phytomedicine. 2022. PMID 35933897',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -7666,6 +7778,12 @@ const HERBS = [
       source: 'recorded',
     },
     evidence_grade: 'B',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Brock C, Whitehouse J, Tewfik I, et al. American Skullcap (Scutellaria lateriflora): a randomised, double-blind placebo-controlled crossover study of its effects on mood in healthy volunteers. Phytother Res. 2014. PMID 23878109',
+      'Wolfson P, Hoffmann DL. An investigation into the efficacy of Scutellaria lateriflora in healthy volunteers. Altern Ther Health Med. 2003. PMID 12652886',
+      'Di Minno A, Morone MV, Buccato DG, et al. Efficacy and Tolerability of a Chemically Characterized Scutellaria lateriflora L. Extract-Based Food Supplement for Sleep Management: A Single-Center, Controlled, Randomized, Crossover, Double-Blind Clinical Trial. Nutrients. 2025. PMID 40362800',
+    ],
   },
   // ─────────────────────────────────────────────
   // GOLDENROD / SOLIDAGO
@@ -7823,6 +7941,12 @@ const HERBS = [
       source: 'recorded',
     },
     evidence_grade: 'B+',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Diniz AFA, Barros BC, da Silva JMA, et al. Pharmacological insights into Arthrospira platensis (Oscillatoriaceae): Ethnopharmacology, mechanisms, and therapeutic potential in smooth muscle disorders. Front Pharmacol. 2025. PMID 41244839',
+      'Ghaem Far Z, Babajafari S, Kojuri J, et al. Antihypertensive and antihyperlipemic of spirulina (Arthrospira platensis) sauce on patients with hypertension: A randomized triple-blind placebo-controlled clinical trial. Phytother Res. 2021. PMID 34542204',
+      'Lacurezeanu A, Vodnar DC. Arthrospira platensis and Chlorella vulgaris Consumption on Iron Status: A Systematic Review of In Vivo Studies. Mol Nutr Food Res. 2025. PMID 41255135',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -7898,6 +8022,7 @@ const HERBS = [
     best_preparation:
       'Standardised 0.3% hypericin extract for consistent antidepressant efficacy. COMPREHENSIVE SCREENING MANDATORY before recommendation: full medication list review against CYP3A4/CYP2C9 interaction database; bipolar disorder or family history (HARD BLOCK); pregnancy/breastfeeding (BLOCK); transplant or immunosuppressant (ABSOLUTE CONTRAINDICATION). Oral contraceptive users must use backup contraception or switch. 4–8 week timeline education is non-negotiable — identical to pharmaceutical SSRIs. Best used in combination with psychotherapy and morning light exposure.',
     caution_level: 'HIGH',
+    extreme_caution: true,   // one per consumer bottle (Robin, 2026-10-01)
     cns_action: 'calming',
     cns_evidence: 'Hyperforin inhibits reuptake of serotonin, noradrenaline and dopamine: an antidepressant, not a sedative, with major drug interactions (reviews PMID 36246064, 41465351).',
     safe_pregnancy: false,
@@ -8152,6 +8277,11 @@ const HERBS = [
     epithet: 'The long jack',
     origin_region: 'Global',
     evidence_grade: 'B+',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Kotirum S, Ismail SB, Chaiyakunapruk N. Efficacy of Tongkat Ali (Eurycoma longifolia) on erectile function improvement: systematic review and meta-analysis of randomized controlled trials. Complement Ther Med. 2015. PMID 26365449',
+      'Leisegang K, Finelli R, Sikka SC, et al. Eurycoma longifolia (Jack) Improves Serum Total Testosterone in Men: A Systematic Review and Meta-Analysis of Clinical Trials. Medicina (Kaunas). 2022. PMID 36013514',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -8230,6 +8360,11 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade: 'B',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Ban S, Lee SL, Jeong HS, et al. Efficacy and Safety of Tremella fuciformis in Individuals with Subjective Cognitive Impairment: A Randomized Controlled Trial. J Med Food. 2018. PMID 29319408',
+      'Luan F, Guo H, Lei Z, et al. Research progress in polysaccharides from the Tremella fuciformis (silver ear): extraction, purification, structural features, health-promoting activities, and potential applications. Int J Biol Macromol. 2026. PMID 42019856',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -8314,6 +8449,12 @@ const HERBS = [
       source: 'mixed',
     },
     evidence_grade: 'A',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Liu AJ, Wu PC, Chen YP, et al. Effects of curcumin and Curcuma longa extract on inflammatory biomarkers in patients with rheumatoid arthritis (RA) and systemic lupus erythematosus (SLE): a systematic review and meta-analysis of randomized controlled trials. Inflamm Res. 2025. PMID 41372521',
+      'Amgain K, Shah R, Md Noh SM, et al. Antidiabetic and Metabolic Effects of Turmeric (Curcuma Longa) in Patients with Type 2 Diabetes Mellitus or Hyperglycemia - A Systematic Meta-Review and Meta-Analysis. J Nepal Health Res Counc. 2025. PMID 41319069',
+      'Inprasit C, Bunyamahote S, Boonpattharatthiti K, et al. Evaluating the efficacy and safety of Curcuma longa, Boswellia serrata, and their mixed formulation in treating knee osteoarthritis: A systematic review and network meta-analysis. Complement Ther Med. 2026. PMID 41082950',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -8394,6 +8535,10 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade: 'traditional',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Tan BL, Zulkifli F, Norhaizan ME. The therapeutic potential of Vanilla planifolia: how its phytochemicals combat diabetes?. Front Pharmacol. 2026. PMID 42051268',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -9222,6 +9367,11 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade: 'B',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'LiverTox: Clinical and Research Information on Drug-Induced Liver Injury. Slippery Elm. National Institute of Diabetes and Digestive and Kidney Diseases. 2012. PMID 38289993',
+      'Ried K, Travica N, Dorairaj R, et al. Herbal formula improves upper and lower gastrointestinal symptoms and gut health in Australian adults with digestive disorders. Nutr Res. 2020. PMID 32151878',
+    ],
   },
   // ─────────────────────────────────────────────
   // PEPPERMINT
@@ -9456,6 +9606,11 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade:     'B',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Coyle ME, Liu J, Yang H, et al. Licorice (Glycyrrhiza spp.) and jujube (Ziziphus jujuba Mill.) formula for menopausal symptoms: Classical records, clinical evidence and experimental data. Complement Ther Clin Pract. 2021. PMID 34237667',
+      'Mashhadi F, Ghaebi NK, Rakhshandeh H, et al. Effects of Ziziphus jujuba, metformin, and myoinositol on pregnancy rates and metabolic parameters in infertile women with PCOS: a randomized controlled trial. J Ovarian Res. 2026. PMID 41618368',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -9620,6 +9775,10 @@ const HERBS = [
       source: 'recorded',
     },
     evidence_grade:     'B',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Mileva M, Ilieva Y, Jovtchev G, et al. Rose Flowers-A Delicate Perfume or a Natural Healer?. Biomolecules. 2021. PMID 33478154',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -10269,6 +10428,7 @@ const HERBS = [
     best_preparation:
       'Liquid medicine: a tincture of the dried fruiting body, one fixed method, each batch assayed for muscimol and ibotenic acid; a small share in a blend (the engine caps it at 10%), for adults who opt in; never beside St John\'s Wort. Label it plainly and say it is not psilocybin (a different mechanism entirely). Commercial "Amanita" products are unreliable — some contain none of its compounds but other drugs (PMID 39977248). TOPICAL (for Moder Jord): no clinical study of Amanita on the skin exists (PubMed checked 2026-09-29), but three leads point that way: 95% of pain-sensing nerve fibres in the rat tongue carry the GABA-A receptor muscimol acts on, and muscimol applied locally raised their pain threshold after a heat injury (PMID 24581846); two non-psychoactive polysaccharides from the fruiting body (a fucomannogalactan and a beta-glucan) cut inflammatory pain in mice by about 90% (PMID 23987410); muscimol eased nerve-injury pain across animal studies (meta-analysis PMID 37732408). Pain and skin were the main reasons women gave for taking it, mostly as a tincture (PMID 37112610). A rub or balm is a plausible, unproven direction',
     caution_level: 'VERY HIGH',
+    extreme_caution: true,   // one per consumer bottle (Robin, 2026-10-01)
     cns_action: 'sedative',
     cns_evidence: 'Muscimol, a potent GABA-A agonist, with ibotenic acid: sedative-hypnotic, and deliriant at higher doses (PMID 6130573, 37824402). Users report taking it for insomnia and name drowsiness as a common effect (PMID 37112610); no clinical studies (PMID 40057818).',
     safe_pregnancy: false,
@@ -10362,6 +10522,7 @@ const HERBS = [
     best_preparation:
       'Practitioners only. If used at all: a fixed method, each batch assayed, the smallest share, and a practitioner who has examined the person. More dangerous than A. muscaria (higher, more variable alkaloid content), and easily mistaken for it or for edible brown Amanitas. Commercial Amanita products may contain A. pantherina.',
     caution_level: 'VERY HIGH',
+    extreme_caution: true,   // one per consumer bottle (Robin, 2026-10-01)
     cns_action: 'sedative',
     cns_evidence: 'The same isoxazoles as Amanita muscaria. Poisoning presents with CNS depression, ataxia and hallucinations (case report and review PMID 16564061); more often coma than A. muscaria (5/17 vs 2/32, PMID 25173077); coma with confirmed epileptiform EEG activity (PMID 39662530) and prolonged convulsions (PMID 38131173) reported.',
     safe_pregnancy: false,
@@ -10690,6 +10851,11 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade:     'B+',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Li L, Zuo ZT, Wang YZ. The Traditional Usages, Chemical Components and Pharmacological Activities of Wolfiporia cocos: A Review. Am J Chin Med. 2022. PMID 35300566',
+      'Nie A, Chao Y, Zhang X, et al. Phytochemistry and Pharmacological Activities of Wolfiporia cocos (F.A. Wolf) Ryvarden & Gilb. Front Pharmacol. 2020. PMID 33071776',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -10769,6 +10935,12 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade: 'B+',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Menon A, Jalal A, Arshad Z, et al. Benefits, side effects, and uses of Hericium erinaceus as a supplement: a systematic review. Front Nutr. 2025. PMID 40959699',
+      'Docherty S, Doughty FL, Smith EF. The Acute and Chronic Effects of Lion\'s Mane Mushroom Supplementation on Cognitive Function, Stress and Mood in Young Adults: A Double-Blind, Parallel Groups, Pilot Study. Nutrients. 2023. PMID 38004235',
+      'Mori K, Inatomi S, Ouchi K, et al. Improving effects of the mushroom Yamabushitake (Hericium erinaceus) on mild cognitive impairment: a double-blind placebo-controlled clinical trial. Phytother Res. 2009. PMID 18844328',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -11242,6 +11414,12 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade:     'B+',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Cizmarikova M. The Efficacy and Toxicity of Using the Lingzhi or Reishi Medicinal Mushroom, Ganoderma lucidum (Agaricomycetes), and Its Products in Chemotherapy (Review). Int J Med Mushrooms. 2017. PMID 29256841',
+      'Zhong L, Yan P, Lam WC, et al. Coriolus Versicolor and Ganoderma Lucidum Related Natural Products as an Adjunct Therapy for Cancers: A Systematic Review and Meta-Analysis of Randomized Controlled Trials. Front Pharmacol. 2019. PMID 31333449',
+      'Wang X, Wang X, Zhao L, et al. Clinical Evaluation of Ganoderma lucidum Spore Oil for Triglyceride Reduction: A Randomized, Double-Blind, Crossover Study. Nutrients. 2025. PMID 40077714',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -11638,6 +11816,10 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade: 'traditional',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Sułkowska-Ziaja K, Balik M, Muszyńska B. Selected Species of the Genus Phellinus - Chemical Composition, Biological Activity, and Medicinal Applications. Chem Biodivers. 2021. PMID 34705323',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -11832,6 +12014,7 @@ const HERBS = [
     spiritual_layer: 'Raspberry leaf teaches resilient softness. She strengthens by toning the container, helping the body hold itself with dignity and grounded intelligence. She whispers: I am held. My tissues are strong and supple.',
     best_preparation: 'Long Infusion (Tea) is superior for mineral extraction.',
     caution_level: 'LOW',
+    digestion_fit: ['cooling', 'astringent'],   // its own text: digestive astringent (2026-10-01)
     safe_pregnancy: null,
     status: 'Gentle, mineral-rich tonic. Excellent long-game herb for tissue resilience.',
     // ── Quiz-matcher + composer-quality enrichment ──
@@ -11896,6 +12079,12 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade: 'A',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Christensen R, Bartels EM, Altman RD, et al. Does the hip powder of Rosa canina (rosehip) reduce pain in osteoarthritis patients?--a meta-analysis of randomized controlled trials. Osteoarthritis Cartilage. 2008. PMID 18407528',
+      'Chrubasik C, Roufogalis BD, Müller-Ladner U, et al. A systematic review on the Rosa canina effect and efficacy profiles. Phytother Res. 2008. PMID 18384191',
+      'Gruenwald J, Uebelhack R, Moré MI. Rosa canina - Rose hip pharmacological ingredients and molecular mechanics counteracting osteoarthritis - A systematic review. Phytomedicine. 2019. PMID 31138475',
+    ],
   },
   {
     id: 406,
@@ -11948,6 +12137,12 @@ const HERBS = [
       source: 'derived',
     },
     evidence_grade: 'B',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Sharma S, Ramji S, Kumari S, et al. Randomized controlled trial of Asparagus racemosus (Shatavari) as a lactogogue in lactational inadequacy. Indian Pediatr. 1996. PMID 8979551',
+      'Ajgaonkar A, Debnath T, Bhatnagar S, et al. Shatavari (Asparagus racemosus Willd) root extract for postpartum lactation: A randomised, double-blind, placebo-controlled study. J Obstet Gynaecol. 2025. PMID 41055223',
+      'Yadav P, Yadav S, Vedururu SS, et al. A Standardized Asparagus Racemosus Root Extract Improves Hormonal Balance and Menstrual Health and Reduces Vasomotor Symptoms in Perimenopausal Women: A Randomized, Double-Blind, Placebo-Controlled Study. J Am Nutr Assoc. 2025. PMID 40434025',
+    ],
   },
   {
     id: 537,
@@ -12325,6 +12520,12 @@ const HERBS = [
       source: 'derived',
     },
   evidence_grade: 'B',
+  // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+  references: [
+    'Ghaemi F, Emadzadeh M, Atkin SL, et al. Impact of pomegranate juice on blood pressure: A systematic review and meta-analysis. Phytother Res. 2023. PMID 37461211',
+    'Jandari S, Hatami E, Ziaei R, et al. The effect of pomegranate (Punica granatum) supplementation on metabolic status in patients with type 2 diabetes: A systematic review and meta-analysis. Complement Ther Med. 2020. PMID 32951728',
+    'de Carvalho JF, Hautz E. Pomegranate (Punica granatum) as an adjunctive therapy in rheumatic diseases: A systematic review. Clin Nutr ESPEN. 2026. PMID 41265522',
+  ],
 },
 {
   id: 409,
@@ -12692,6 +12893,11 @@ const HERBS = [
       source: 'derived',
     },
   evidence_grade:     'traditional',
+  // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+  references: [
+    'Zhao ZQ, Luo FH, He Y, et al. Longan Arillus: A comprehensive review of botany, traditional uses, phytochemistry, pharmacologic activities, pharmacokinetics, quality control, toxicity, and clinical applications. J Ethnopharmacol. 2025. PMID 40505758',
+    'Hu Y, Zhang X, Li D, et al. A review on the chemical composition, biological activity, and potential health benefits applications of Longan (Dimocarpus longan Lour.). Food Chem. 2025. PMID 40907437',
+  ],
 },
 {
   id: 414,
@@ -12841,6 +13047,11 @@ const HERBS = [
       source: 'derived',
     },
   evidence_grade: 'B',
+  // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+  references: [
+    'Dong Q, Li Z, Zhang Q, et al. Astragalus mongholicus Bunge (Fabaceae): Bioactive Compounds and Potential Therapeutic Mechanisms Against Alzheimer\'s Disease. Front Pharmacol. 2022. PMID 35837291',
+    'Zhu Y, Chai Y, Xiao G, et al. Astragalus and its formulas as a therapeutic option for fibrotic diseases: Pharmacology and mechanisms. Front Pharmacol. 2022. PMID 36408254',
+  ],
 },
 {
   id: 416,
@@ -16083,6 +16294,12 @@ const HERBS = [
       source: 'derived',
     },
   evidence_grade: 'B',
+  // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+  references: [
+    'Dai N, Zhao FF, Fang M, et al. Gynostemma pentaphyllum for dyslipidemia: A systematic review of randomized controlled trials. Front Pharmacol. 2022. PMID 36091752',
+    'Li Y, Ouyang Q, Li X, et al. The Role of Gynostemma pentaphyllum in Regulating Hyperlipidemia. Am J Chin Med. 2023. PMID 37129524',
+    'Wang R, Wang Y, Mo Y, et al. Efficacy and mechanisms of Gynostemma pentaphyllum as a medicine food homology herb in glycemic control: a meta-analysis with review. Front Pharmacol. 2026. PMID 42064816',
+  ],
 },
 {
   id: 546, name: 'Feverfew', botanical: 'Tanacetum parthenium (aerial parts)',
@@ -16882,6 +17099,11 @@ const HERBS = [
       source: 'derived',
     },
   evidence_grade: 'A',
+  // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+  references: [
+    'Lei H, Wang X, Zhang Y, et al. Herba Cistanche (Rou Cong Rong): A Review of Its Phytochemistry and Pharmacology. Chem Pharm Bull (Tokyo). 2020. PMID 32741910',
+    'Li Z, Lin H, Gu L, et al. Herba Cistanche (Rou Cong-Rong): One of the Best Pharmaceutical Gifts of Traditional Chinese Medicine. Front Pharmacol. 2016. PMID 26973528',
+  ],
 },
 // ════════════════════════════════════════════════════════════════
 // 2026-09-24 · Clinical-extract expansion, batch 2 (ids 560–568)
@@ -17730,6 +17952,11 @@ const HERBS = [
       source: 'derived',
     },
   evidence_grade: 'A',
+  // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+  references: [
+    'Ren J, Fu L, Nile SH, et al. Salvia miltiorrhiza in Treating Cardiovascular Diseases: A Review on Its Pharmacological and Clinical Applications. Front Pharmacol. 2019. PMID 31338034',
+    'Jia Q, Zhu R, Tian Y, et al. Salvia miltiorrhiza in diabetes: A review of its pharmacology, phytochemistry, and safety. Phytomedicine. 2019. PMID 30851580',
+  ],
 },
 {
   id: 575, name: 'Tormentil', botanical: 'Potentilla erecta (rhizome)',
@@ -18200,6 +18427,11 @@ const HERBS = [
       source: 'derived',
     },
   evidence_grade: 'A',
+  // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+  references: [
+    'Collignon TE, Webber K, Piasecki J, et al. Avocado (Persea americana Mill) and its phytoconstituents: potential for cancer prevention and intervention. Crit Rev Food Sci Nutr. 2024. PMID 37830928',
+    'Sousa FH, Valenti VE, Pereira LC, et al. Avocado (Persea americana) pulp improves cardiovascular and autonomic recovery following submaximal running: a crossover, randomized, double-blind and placebo-controlled trial. Sci Rep. 2020. PMID 32612186',
+  ],
 },
 {
   id: 583, name: 'Pine Bark Extract', botanical: 'Pinus pinaster / Pinus massoniana (inner bark)',
@@ -18513,6 +18745,11 @@ const HERBS = [
       source: 'derived',
     },
   evidence_grade: 'A',
+  // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+  references: [
+    'Purwoko Y, Nugroho KH, Setiati S, et al. Effects of Garcinia mangostana Peel Extract on Glycemic Control in Type 2 Diabetes Mellitus: A Systematic Review of Human Studies. Acta Med Indones. 2026. PMID 41978307',
+    'Dean OM, Cotton SM, Ashton MM, et al. The efficacy of adjunctive Garcinia mangostana Linn. (mangosteen) pericarp extract for bipolar depression: 24-week randomised controlled trial. Br J Psychiatry. 2025. PMID 40637133',
+  ],
 },
 {
   id: 588, name: 'Bayberry', botanical: 'Myrica cerifera (root bark)',
@@ -18637,6 +18874,12 @@ const HERBS = [
       source: 'derived',
     },
   evidence_grade: 'B',
+  // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+  references: [
+    'Lin L, Ni B, Lin H, et al. Traditional usages, botany, phytochemistry, pharmacology and toxicology of Polygonum multiflorum Thunb.: a review. J Ethnopharmacol. 2015. PMID 25449462',
+    'Liu Y, Wang W, Sun M, et al. Polygonum multiflorum-Induced Liver Injury: Clinical Characteristics, Risk Factors, Material Basis, Action Mechanism and Current Challenges. Front Pharmacol. 2019. PMID 31920657',
+    'Lei X, Chen J, Ren J, et al. Liver Damage Associated with Polygonum multiflorum Thunb.: A Systematic Review of Case Reports and Case Series. Evid Based Complement Alternat Med. 2015. PMID 25648693',
+  ],
 },
 
   // ─────────────────────────────────────────────

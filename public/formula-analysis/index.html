@@ -172,7 +172,7 @@
         </div>
         <datalist id="herbList"></datalist>
         <div class="row-actions">
-          <button class="btn" id="engineBtn" type="button" title="Let the engine weigh the herbs — trace herbs capped at 5%">Engine balance</button>
+          <button class="btn" id="engineBtn" type="button" title="Let the engine weigh the herbs — trace herbs capped at 4% each, 7% together">Engine balance</button>
           <button class="btn" id="resetBtn" type="button" disabled>Back to the original</button>
         </div>
         <p class="note" id="unresolved" hidden></p>
@@ -370,7 +370,7 @@
       var flags = el('div', 'flags');
       function flag(t, cls, title) { var f = el('span', 'flag ' + (cls || ''), t); if (title) f.title = title; flags.appendChild(f); }
       flag(h.category);
-      if (h.isTrace) flag('trace', 'warn', 'Potent aromatic — the engine keeps it at or under 5%');
+      if (h.isTrace) flag('trace', 'warn', 'Potent aromatic — the engine keeps it at or under 4%');
       if (h.isGABAergic) flag('sedative-acting', '', 'GABA-acting');
       if (h.isStimulant) flag('stimulant', 'warn');
       if (h.restricted) flag('restricted', 'bad', 'Catalogue only — never put in a bottle by the engine');

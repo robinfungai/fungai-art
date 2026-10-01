@@ -14,7 +14,7 @@
 //
 // Percentages (D2 option C, 2026-09-28): MYCO no longer sets them. Any
 // `pct` it still sends is ignored; the accepted herbs get the engine's
-// own percentages (percentages.js — score-weighted, trace ≤ 5%, any
+// own percentages (percentages.js — score-weighted, trace ≤ 4% (7% together), any
 // other herb ≤ 40%), the same rule as the deterministic bottle.
 //
 // Returns a discriminated union:
@@ -56,6 +56,7 @@ const BLOCKED = {
   LAXATIVE_LOAD:           ['MYCO_LAXATIVE_LOAD_EXCEEDED',     () => 'more than ' + RULES.MAX_LAXATIVE + ' laxative herb'],
   AMANITA_LIMIT:           ['MYCO_AMANITA_LIMIT_EXCEEDED',     () => 'more than ' + RULES.MAX_AMANITA + ' Amanita'],
   AMANITA_WITH_ST_JOHNS_WORT: ['MYCO_AMANITA_WITH_ST_JOHNS_WORT', () => "an Amanita beside St John's Wort"],
+  EXTREME_CAUTION_LIMIT:   ['MYCO_EXTREME_CAUTION_LIMIT',      () => 'more than ' + RULES.MAX_EXTREME + ' extremely-high-caution herb in a consumer bottle'],
   CATEGORY_CAP:            ['MYCO_CATEGORY_CAP_EXCEEDED',      h => 'more than ' + RULES.MAX_PER_CATEGORY + ' of category ' + categoryOf(h)],
   PAIR_BLOCK:              ['MYCO_PAIR_BLOCKED',               h => h.name + ' sits beside a herb it may never share a bottle with (pair-rules.js)'],
   PAIR_CONDITIONAL:        ['MYCO_PAIR_BLOCKED_BY_SAFETY',     h => h.name + ' sits beside a herb it may not share a bottle with under these safety answers'],
@@ -102,7 +103,7 @@ function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn, pro = fa
   const acceptedHerbs = [];
   const acceptedReasons = [];
   const seenIds       = new Set();
-  const load          = newLoad(avoid);
+  const load          = newLoad(avoid, { pro: pro === true });
   // Herbs MYCO itself read the note as refusing (noteAvoid) — never seated.
   const excluded      = new Set((excludeIds || []).map(x => String(x).toLowerCase()));
 

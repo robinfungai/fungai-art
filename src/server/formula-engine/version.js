@@ -59,8 +59,12 @@ module.exports = {
   //         Mugwort, Blue Lotus, Calea…); records split dream_soften /
   //         dream_vivid. Herb names in the note are read by herb-names.js
   //         (typos, plurals, spacing, genus, German, curly apostrophes).
-  engineVersion:      '2.9.0-server',
-  herbDbVersion:      '2026.09.29-247herbs',
+  // 2.10.0 — trace herbs share 7% of the bottle (4% + 3%; one alone 4%),
+  //         and a consumer bottle holds at most one extremely-high-caution
+  //         herb (herbs.ts extreme_caution: both Amanitas, St John's Wort,
+  //         Calea); pro is not limited (Robin, 2026-10-01, audit 29 Sep #4, Q5).
+  engineVersion:      '2.10.0-server',
+  herbDbVersion:      '2026.10.01-247herbs',
   // 1.1.0 — unknown pregnancy safety = avoid; under-18s: no HIGH-caution,
   //         psychoactive, or above-LOW calming herbs (2026-09-27).
   // 1.2.0 — pro quiz: 'trying to conceive' = the pregnancy rule;

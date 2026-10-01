@@ -18,13 +18,18 @@
 const { isTrace } = require('./traces');
 const { isAmanita } = require('./pharmacology');
 
-const TRACE_PCT_CAP   = 5;
+// Trace herbs share ONE budget of 7% of the bottle (Robin, 2026-10-01,
+// audit #4: "3.5 + 3.5"). Shares are whole numbers, so two traces are
+// 4% + 3% (the stronger-scored one takes 4) and a lone trace is held to 4%.
+// Was 5% each / 10% together (29 Sep).
+const TRACE_PCT_CAP       = 4;
+const TRACE_TOTAL_PCT_CAP = 7;
 const AMANITA_PCT_CAP = 10;   // Robin, 2026-09-29 (third audit)
 const MAX_SHARE_PCT   = 40;
 const MIN_SHARE_PCT   = 1;
 
 // A herb held to a small share: its recorded max_share_pct (herbs.ts —
-// Saffron 7%, Robin 2026-09-29), trace 5%, Amanita 10%; the lowest that
+// Saffron 7%, Robin 2026-09-29), trace 4%, Amanita 10%; the lowest that
 // applies. 0 = a main herb (up to 40%).
 function smallShareCap(h) {
   const caps = [];
@@ -41,8 +46,17 @@ function smallShareCap(h) {
 // (picker.js MIN_MAIN_HERBS), but the pro analysis can hand us any list,
 // so a short list gets the smallest ceiling that still adds up to 100
 // instead of a total that cannot.
-function ceilings(herbs) {
+function ceilings(herbs, weights) {
   const small = herbs.map(smallShareCap);
+  // The trace budget: the stronger-scored trace keeps its own cap, the
+  // next gets what is left of the 7%.
+  let budget = TRACE_TOTAL_PCT_CAP;
+  herbs.map((h, i) => i).filter(i => isTrace(herbs[i]))
+    .sort((a, b) => ((weights ? weights[b] - weights[a] : 0) || a - b))
+    .forEach(i => {
+      small[i] = Math.max(MIN_SHARE_PCT, Math.min(small[i], budget));
+      budget -= small[i];
+    });
   const mains = small.filter(c => !c).length;
   const smallRoom = small.reduce((a, b) => a + b, 0);
   const mainCap = mains ? Math.max(MAX_SHARE_PCT, Math.ceil((100 - smallRoom) / mains)) : 100;
@@ -78,7 +92,7 @@ function cappedShares(weights, hi, total) {
 function assignPercentages(herbs) {
   if (!herbs || !herbs.length) return [];
   const weights = herbs.map(h => Math.max(1, h._score || 1));
-  const hi = ceilings(herbs);
+  const hi = ceilings(herbs, weights);
   const val = cappedShares(weights, hi, 100);
 
   // Whole numbers that still add to 100 and respect every ceiling:
@@ -107,4 +121,4 @@ function assignPercentages(herbs) {
   return pct;
 }
 
-module.exports = { assignPercentages, smallShareCap, TRACE_PCT_CAP, AMANITA_PCT_CAP, MAX_SHARE_PCT, MIN_SHARE_PCT };
+module.exports = { assignPercentages, smallShareCap, TRACE_PCT_CAP, TRACE_TOTAL_PCT_CAP, AMANITA_PCT_CAP, MAX_SHARE_PCT, MIN_SHARE_PCT };

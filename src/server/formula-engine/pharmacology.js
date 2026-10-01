@@ -217,6 +217,12 @@ function isStJohnsWort(h) {
   return !!h && /\bst\.? john'?s wort\b|hypericum perforatum/i.test(String(h.name || '') + ' ' + String(h.botanical || ''));
 }
 
+// Extremely high caution (herbs.ts `extreme_caution`, Robin 2026-10-01):
+// at most one in a consumer bottle (rules.js); the pro composer is free.
+function isExtremeCaution(h) {
+  return !!h && h.extreme_caution === true;
+}
+
 function categoryOf(h) {
   const t = (
     (h.primary_functions || []).join(' | ') + ' | ' +
@@ -240,5 +246,5 @@ module.exports = {
   fitsTimeOfUse, isStrongStimulant,
   isSerotonergic, MAX_SEROTONERGIC, isLaxative, laxativeInProse, fitsGoal, MAX_LAXATIVE,
   isDreamDeepening, dreamDeepeningInProse, kingdomOf, plantGroupOf, KINGDOMS,
-  categoryOf, isFungus, FUNGAL_FAMILIES, isAmanita, isStJohnsWort,
+  categoryOf, isFungus, FUNGAL_FAMILIES, isAmanita, isStJohnsWort, isExtremeCaution,
 };

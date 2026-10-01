@@ -12,7 +12,7 @@ const { ensurePool, shortNote } = require('./axes');
 const { scoreHerb, scoreBreakdown } = require('./scoring');
 const { safetyFilter, applyMinorGate, passesAccess, passesProfileSafety } = require('./safety');
 const { isTrace } = require('./traces');
-const { isGABAergic, isCNSStimulant, isStrongStimulant, isSerotonergic, isLaxative, fitsTimeOfUse, fitsGoal, categoryOf } = require('./pharmacology');
+const { isGABAergic, isCNSStimulant, isStrongStimulant, isSerotonergic, isLaxative, fitsTimeOfUse, fitsGoal, categoryOf, isExtremeCaution } = require('./pharmacology');
 const { RULES, isSmallShare, isAmanita, newLoad, seatBlocker, seat } = require('./rules');
 
 // ── Tie-breaking ──────────────────────────────────────────────────
@@ -152,13 +152,13 @@ function rankedCandidates(a, { safety = true } = {}) {
 function walk(uniq, a) {
   const target = targetHerbCount(a);
   const openToGated = !!a._gatedOptIn;
-  const load = newLoad(a.avoid);
+  const load = newLoad(a.avoid, { pro: a._pro === true && !a._minor });
   const composed = [];
   let smallSeated = 0;
   for (const x of uniq) {
     if (composed.length >= target) break;
     if (x.h.gated && !openToGated) continue;
-    // A herb held to a small share (trace ≤ 5%, Amanita ≤ 10%) takes a
+    // A herb held to a small share (trace ≤ 4%, Amanita ≤ 10%) takes a
     // seat only if the bottle can still hold three herbs at the full
     // share after it — otherwise one of them would go above 40%.
     if (isSmallShare(x.h) && target < MIN_MAIN_HERBS + 1 + smallSeated) continue;
@@ -214,6 +214,9 @@ function buildScoredCandidates(a, limit = 20) {
       _isSerotonergic: isSerotonergic(x.h),
       _isLaxative:     isLaxative(x.h),
       _isAmanita:      isAmanita(x.h),
+      // Only a consumer bottle is limited to one (rules.js MAX_EXTREME),
+      // so only a consumer shortlist carries the tag.
+      _isExtreme:      isExtremeCaution(x.h) && !(a._pro === true && !a._minor),
     }));
 }
 

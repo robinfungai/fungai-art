@@ -68,6 +68,7 @@ function _buildShortlistText(candidates) {
     if (h._isLaxative)     tags.push('LAX');
     if (h._isStrongStimulant) tags.push('STRONG');
     if (h._isAmanita)      tags.push('AMANITA');
+    if (h._isExtreme)      tags.push('EXTREME');
     const tagStr = tags.length ? ' · ' + tags.join('/') : '';
     return (
       (i + 1) + '. id=' + (h.id || '') + ' · ' + (h.name || '') +
@@ -171,13 +172,14 @@ const COMPOSE_SYS =
   '- Do not give percentages. The house sets each herb\'s share of the bottle from the shortlist ranking.\n' +
   '- Category balance — no more than 2 herbs of the same category (adaptogen / nervine / tonic / mover / mushroom / bitter / aromatic / nutritive / other).\n' +
   '- Load caps enforced by the shortlist tags:\n' +
-  '    · TRACE — max 2 TRACE-marked herbs in the formula, and only when the formula wants them (potent essential oil; the house keeps it at 5% or less).\n' +
+  '    · TRACE — max 2 TRACE-marked herbs in the formula, and only when the formula wants them (potent essential oil; the house keeps each at 4% or less, two at 7% together).\n' +
   '    · GABA  — max 2 GABA-marked herbs (additive CNS depression risk if stacked further).\n' +
   '    · STIM  — max 2 STIM-marked herbs (additive adrenergic drive if stacked further).\n' +
   '    · SERO  — max 1 SERO-marked herb (two serotonergic herbs stack toward serotonin syndrome).\n' +
   '    · LAX   — max 1 LAX-marked herb (laxatives are only shortlisted when the person reports constipation).\n' +
   '    · GABA + STRONG — never put a GABA-marked herb beside a STRONG-marked (true) stimulant; they pull against each other.\n' +
   '    · AMANITA — max 1 AMANITA-marked herb (the house keeps it at 10% or less), and never beside St John\'s Wort.\n' +
+  '    · EXTREME — max 1 EXTREME-marked herb (extremely high caution: the Amanitas, St John\'s Wort, Calea).\n' +
   '- Do NOT diagnose. Do NOT prescribe. Traditional herbal support only, not medical treatment.\n' +
   '- Reference the free-text explicitly if it names a priority, prior herb experience, or contraindication history.\n' +
   '- EVERY ANSWER COUNTS. Weigh each one, not only the intention: the body pattern, when the day is hardest, how they meet stress, how long it has lasted, their age, their sleep, how their energy feels (nervous system) and how it moves through the day. Under each shortlisted herb is what its record says it suits (nervous system, energy, sleep, onset): match those to the answers — a wired or reactive person needs herbs that suit "wired"/"reactive", someone who wakes in the night needs "staying asleep" rather than "falling asleep", an afternoon crash needs "steadies the afternoon". Herbs marked "deepens dreams" never suit restless, broken or vivid-dream sleep, or a note about nightmares.\n' +

@@ -390,14 +390,22 @@ const records = HERBS.map(h => {
         tradition:    { meridians: h.tcm_meridians || [], element: h.tcm_element || '',
                         energetics: h.energetics || [], flavor: h.flavor_profile || '',
                         spiritual: h.spiritual_layer || '' },
-        evidence:     { grade: h.evidence_grade || '', status: h.status || '' },
+        // Sources: the record's references, PMID split out for the link
+        // (Robin, 2026-10-01: a footnote on every card that has them).
+        evidence:     { grade: h.evidence_grade || '', status: h.status || '',
+                        references: (h.references || []).map(r => {
+                          const m = /PMID\s*(\d+)/.exec(String(r));
+                          return { text: String(r).replace(/\.?\s*PMID\s*\d+\s*$/, ''), pmid: m ? m[1] : '' };
+                        }) },
         extraction:   { best: h.best_preparation || '', dosage: h.dosage_range || '', methods: preps },
         safety:       { level: h.caution_level || '', pregnancy: h.safe_pregnancy,
+                        extreme: h.extreme_caution === true,
                         contraindications: h.contraindications || [],
                         drugInteractions: h.herb_to_drug_interactions || [] },
         relationship: { synergy, caution },
         formulation:  { primary: h.primary_functions || [], secondary: h.secondary_benefits || [],
                         body: h.regional_affinity || [], onset: h.onset_time || '',
+                        digestion: h.digestion_fit || [],
                         energyPattern: h.energy_pattern || [],
                         states, statesAlso: stateTiers.secondary },
       },

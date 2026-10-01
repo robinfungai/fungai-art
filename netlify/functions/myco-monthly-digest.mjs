@@ -1,6 +1,7 @@
 /* MYCO · monthly lab-notebook + library digest — the SCHEDULE
  * ────────────────────────────────────────────────────────────────
- * 09:00 UTC on the 1st of each month. Starts the worker
+ * 09:00 UTC on the 2nd of each month (moved from the 1st, Robin
+ * 2026-10-01, so it reads the whole of the 1st). Starts the worker
  * (myco-monthly-digest-background.mjs) and returns at once: Netlify
  * stops a scheduled function after 30 seconds, and MYCO reading a month
  * of lab notes and Academy PDFs takes longer, so the reading happens in a
@@ -14,7 +15,7 @@
 
 import { digestToken } from './myco-monthly-digest-background.mjs';
 
-export const config = { schedule: '0 9 1 * *' };   // 09:00 UTC, 1st of the month
+export const config = { schedule: '0 9 2 * *' };   // 09:00 UTC, 2nd of the month (Robin, 2026-10-01)
 
 export default async (req) => {
   const url = new URL(req.url);

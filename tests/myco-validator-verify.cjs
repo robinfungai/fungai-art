@@ -108,14 +108,14 @@ check('gated herb WITH opt-in → accepted', () => {
   return { pass: r.ok === true, detail: JSON.stringify(r).slice(0,200) };
 });
 
-check('MYCO asks 20% for a trace herb → the engine gives it at most 5%', () => {
+check('MYCO asks 20% for a trace herb → the engine gives it at most 4%', () => {
   const p = [
     { id: 500, pct: 20, reason: 'lavender heavy' }, // trace
     { id: 210, pct: 30, reason: 'a' }, { id: 250, pct: 20, reason: 'b' },
     { id: 220, pct: 20, reason: 'c' }, { id: 230, pct: 10, reason: 'd' },
   ];
   const r = validateMycoProposal({ mycoResponse: p, candidateSet: CANDIDATES, gatedOptIn: false });
-  return { pass: r.ok === true && r.percentages[0] <= 5 && sum(r.percentages) === 100, detail: r.ok ? r.percentages.join('/') : r.reason };
+  return { pass: r.ok === true && r.percentages[0] <= 4 && sum(r.percentages) === 100, detail: r.ok ? r.percentages.join('/') : r.reason };
 });
 
 check('three trace herbs → MYCO_TRACE_COUNT_EXCEEDED (two are allowed since 2026-09-29)', () => {

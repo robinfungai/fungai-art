@@ -34,7 +34,7 @@ check(cleanPercentages([10, -1], 2) === null, 'a negative share is refused');
 const eng = analyzeFormula({ herbs: ['Reishi', 'Lemon Balm', 'Lavender', 'Chamomile'] });
 check(eng.percentagesFrom === 'engine', 'no shares given → the engine balances');
 const lav = eng.herbs.find(h => h.name === 'Lavender');
-check(lav && lav.isTrace && lav.percentage <= 5, 'the engine keeps a trace herb at or under 5% (' + (lav && lav.percentage) + '%)');
+check(lav && lav.isTrace && lav.percentage <= 4, 'the engine keeps a trace herb at or under 4% (' + (lav && lav.percentage) + '%)');
 check(eng.herbs.reduce((a, h) => a + h.percentage, 0) === 100, 'engine shares sum to 100');
 
 console.log('\n── labels are true ──');

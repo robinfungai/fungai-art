@@ -23,8 +23,8 @@ module.exports = {
     rationale: "Engine 2.7.0 (Robin, 2026-09-29, third audit H2): an Amanita takes at most 10% of the bottle and never sits beside St John's Wort; a small-share herb (trace or Amanita) seats only where three full-share herbs remain. On top of 2.6.1 / safety 1.4.1.",
   },
   '04-max-safety-restrictions': {
-    herbs: "271:Oatstraw@40|300:Red Dates@16|275:Pine Pollen@14|579:Aguaje@14|314:Button Mushroom@11|282:Star Anise@5",
-    rationale: "2026-09-29, third audit (Claude, read main@b3beace): note keywords match at the start of a word, short ones as whole words (\"partner\" no longer scores \"art\", \"reflux\" no longer \"flu\"); the autoimmune flag reads MS in capitals only (26 herbs were flagged through \"symptoms\", \"forms\"). On top of engine 2.6 / safety 1.4.",
+    herbs: "271:Oatstraw@40|300:Red Dates@16|275:Pine Pollen@14|579:Aguaje@14|314:Button Mushroom@12|282:Star Anise@4",
+    rationale: "Engine 2.10.0 (Robin, 2026-10-01, audit 29 Sep #4): trace herbs share 7% of the bottle (4% + 3%), so a lone trace is held to 4% instead of 5% and the point goes to a main herb — same herbs. On top of engine 2.9.0 / safety 1.5.0.",
   },
   '05-medication-psych': {
     herbs: "287:Vanilla@19|254:Jasmine@17|252:Lemon Balm@16|103:Ashwagandha@16|317:Lion's Mane@16|413:Longan@16",
@@ -39,8 +39,8 @@ module.exports = {
     rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '08-thyroid': {
-    herbs: "240:Ginseng@22|296:Yerba Mate@22|280:Shilajit (Mineral Pitch)@19|241:Goji Berry@16|300:Red Dates@16|227:Cinnamon@5",
-    rationale: "2026-09-29, third audit (Claude, read main@b3beace): note keywords match at the start of a word, short ones as whole words (\"partner\" no longer scores \"art\", \"reflux\" no longer \"flu\"); the autoimmune flag reads MS in capitals only (26 herbs were flagged through \"symptoms\", \"forms\"). On top of engine 2.6 / safety 1.4.",
+    herbs: "240:Ginseng@22|296:Yerba Mate@22|280:Shilajit (Mineral Pitch)@19|241:Goji Berry@17|300:Red Dates@16|227:Cinnamon@4",
+    rationale: "Engine 2.10.0 (Robin, 2026-10-01, audit 29 Sep #4): trace herbs share 7% of the bottle (4% + 3%), so a lone trace is held to 4% instead of 5% and the point goes to a main herb — same herbs. On top of engine 2.9.0 / safety 1.5.0.",
   },
   '09-liver-kidney': {
     herbs: "212:Burdock@19|107:Dandelion Root@18|532:Anantmul@17|279:Schisandra (Five-Flavour Fruit)@17|316:Fu Ling@15|206:Barley@14",
@@ -85,7 +85,7 @@ module.exports = {
     rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
   },
   '19-notes-heavy': {
-    herbs: "240:Ginseng@21|296:Yerba Mate@20|317:Lion's Mane@18|413:Longan@18|4:Bacopa@18|277:Rosemary@5",
-    rationale: "2026-09-29, third audit (Claude, read main@b3beace): note keywords match at the start of a word, short ones as whole words (\"partner\" no longer scores \"art\", \"reflux\" no longer \"flu\"); the autoimmune flag reads MS in capitals only (26 herbs were flagged through \"symptoms\", \"forms\"). On top of engine 2.6 / safety 1.4.",
+    herbs: "240:Ginseng@21|296:Yerba Mate@20|317:Lion's Mane@19|413:Longan@18|4:Bacopa@18|277:Rosemary@4",
+    rationale: "Engine 2.10.0 (Robin, 2026-10-01, audit 29 Sep #4): trace herbs share 7% of the bottle (4% + 3%), so a lone trace is held to 4% instead of 5% and the point goes to a main herb — same herbs. On top of engine 2.9.0 / safety 1.5.0.",
   },
 };

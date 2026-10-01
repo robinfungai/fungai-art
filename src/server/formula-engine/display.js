@@ -223,7 +223,7 @@ function buildWhyText(profile, herbs, percentages) {
     const cap = Number(x.h.max_share_pct);
     if (Number.isFinite(cap) && cap < 40) return '<strong>' + esc(x.h.name) + '</strong> is held to ' + cap + '% of the bottle or less: it is potent in flavour and effect, so a small share goes a long way.';
     const r = traceReason(x.h);
-    return r ? '<strong>' + esc(x.h.name) + '</strong> is kept to a trace (5% or less): ' + esc(r.text) + '.' : null;
+    return r ? '<strong>' + esc(x.h.name) + '</strong> is kept to a trace (4% or less): ' + esc(r.text) + '.' : null;
   }).filter(Boolean);
   const methodLine = small.length
     ? small.join(' ') + ' The rest of the bottle goes to the herbs that do the slower, foundational work.'

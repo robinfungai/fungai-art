@@ -60,13 +60,14 @@ interface Dossier {
     material: { parts: string[]; preparationNote: string };
     chemistry: { classes: string[]; pharmacology: string };
     tradition: { meridians: string[]; element: string; energetics: string[]; flavor: string; spiritual: string };
-    evidence: { grade: string; status: string };
+    evidence: { grade: string; status: string; references?: { text: string; pmid: string }[] };
     extraction: { best: string; dosage: string; methods: string[] };
-    safety: { level: string; pregnancy: string | null; contraindications: string[]; drugInteractions: string[] };
+    safety: { level: string; pregnancy: string | null; extreme?: boolean; contraindications: string[]; drugInteractions: string[] };
     relationship: { synergy: Mention[]; caution: Mention[] };
     formulation: {
       primary: string[]; secondary: string[]; body: string[];
       onset: string; energyPattern: string[]; states: string[]; statesAlso: string[];
+      digestion?: string[];
     };
   };
 }
@@ -469,6 +470,9 @@ function DossierPanel({
                     caution {doc.layers.safety.level}
                   </span>
                 )}
+                {doc.layers.safety.extreme && (
+                  <span className="atl-badge" style={{ color: '#E8826B' }} title={EXTREME_NOTE}>extreme caution</span>
+                )}
               </div>
             </header>
 
@@ -510,6 +514,41 @@ const Empty = ({ what = 'Not recorded' }: { what?: string }) => <span className=
 const Prose = ({ text }: { text: string }) => text ? <p className="atl-prose">{text}</p> : <Empty />;
 const List = ({ items }: { items: string[] }) =>
   items.length ? <ul className="atl-list">{items.map((i, n) => <li key={n}>{i}</li>)}</ul> : <Empty />;
+
+// Robin's four digestive actions (2026-10-01) — the record's digestion_fit.
+const DIGESTIVE_ACTION: Record<string, string> = {
+  bitter:      'Bitter — stimulates bile, stomach acid and digestive enzymes',
+  carminative: 'Carminative — relieves gas, relaxes gut smooth muscle',
+  demulcent:   'Demulcent — soothes and protects an inflamed gut lining',
+  astringent:  'Astringent — tones lax gut tissue, reduces diarrhoea',
+};
+const EXTREME_NOTE = 'At most one herb of this class goes into a Find Your Formula bottle.';
+
+function Digestion({ items }: { items: string[] }) {
+  const actions = items.filter(i => DIGESTIVE_ACTION[i]);
+  const tone = items.filter(i => !DIGESTIVE_ACTION[i]);
+  if (!items.length) return <Empty />;
+  return (
+    <>
+      {actions.length > 0 && <List items={actions.map(a => DIGESTIVE_ACTION[a])} />}
+      {tone.length > 0 && <div className="atl-tags">{tone.map(t => <span className="atl-tag" key={t}>{t}</span>)}</div>}
+    </>
+  );
+}
+
+// Numbered footnotes, each linking to its PubMed record.
+function Sources({ refs }: { refs: { text: string; pmid: string }[] }) {
+  if (!refs.length) return <Empty what="No reference recorded yet." />;
+  return (
+    <ol className="atl-list atl-sources">
+      {refs.map((r, n) => (
+        <li key={n}>
+          {r.text}{r.pmid && <>{'. '}<a href={'https://pubmed.ncbi.nlm.nih.gov/' + r.pmid + '/'} target="_blank" rel="noopener noreferrer">PMID {r.pmid}</a></>}
+        </li>
+      ))}
+    </ol>
+  );
+}
 
 function Botanical({ doc }: { doc: Dossier }) {
   const { identity, ecology, material } = doc.layers;
@@ -582,8 +621,10 @@ function Formulation({ doc }: { doc: Dossier }) {
       <Field label="Body affinity"><Tags items={formulation.body} /></Field>
       <Field label="Onset">{formulation.onset || <Empty />}</Field>
       <Field label="Energy pattern"><Tags items={formulation.energyPattern} /></Field>
+      <Field label="Digestive action"><Digestion items={formulation.digestion || []} /></Field>
       <h4 className="atl-layer">Layer 06 · Evidence</h4>
       <Field label="Grade">{evidence.grade || <Empty />}</Field>
+      <Field label="Sources"><Sources refs={evidence.references || []} /></Field>
     </>
   );
 }
@@ -595,6 +636,7 @@ function Safety({ doc }: { doc: Dossier }) {
       <h4 className="atl-layer">Layer 08 · Safety</h4>
       <Field label="Caution level">
         <span style={{ color: CAUTION_TONE[safety.level] || '#88BAC8' }}>{safety.level || <Empty />}</span>
+        {safety.extreme && <p className="atl-prose" style={{ color: '#E8826B', marginTop: 6 }}>Extreme caution. {EXTREME_NOTE}</p>}
       </Field>
       <Field label="Pregnancy">{safety.pregnancy || <Empty what="Not assessed" />}</Field>
       <Field label="Contraindications"><List items={safety.contraindications} /></Field>

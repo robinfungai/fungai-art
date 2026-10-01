@@ -13,7 +13,7 @@
 //   · synergy/caution  checkFormulaPairs — the pair checker the engine uses
 //   · sedative/stimulant/trace flags, restricted/gated lists
 //   · the composition caps myco-validator enforces on every bottle the
-//     engine makes (5–7 herbs, ≤2 per category, ≤1 trace at ≤5%,
+//     engine makes (5–7 herbs, ≤2 per category, ≤2 traces, ≤4% each, ≤7% together,
 //     ≤2 GABAergic, ≤2 CNS stimulants)
 //
 // Deterministic and free: no model is called here. MYCO's reading is a
@@ -214,8 +214,8 @@ function analyzeFormula(input) {
       label: 'Formula size', detail: rows.length + ' herbs — the engine composes ' + RULES.MIN_HERBS + '–' + RULES.MAX_HERBS + '.' },
     { id: 'category', ok: !over.length,
       label: 'Category balance', detail: over.length ? 'More than ' + RULES.MAX_PER_CATEGORY + ' ' + over.join(', ') + ' herbs — they tend to say the same thing twice.' : 'No category crowds the bottle.' },
-    { id: 'trace', ok: traces.length <= RULES.MAX_TRACE && traces.every(r => r.percentage <= RULES.TRACE_PCT_CAP),
-      label: 'Trace herbs', detail: traces.length ? traces.map(r => r.name + ' ' + r.percentage + '%').join(', ') + ' — potent aromatics stay at or under ' + RULES.TRACE_PCT_CAP + '%, one per bottle.' : 'None.' },
+    { id: 'trace', ok: traces.length <= RULES.MAX_TRACE && traces.every(r => r.percentage <= RULES.TRACE_PCT_CAP) && traces.reduce((t, r) => t + r.percentage, 0) <= RULES.TRACE_TOTAL_PCT_CAP,
+      label: 'Trace herbs', detail: traces.length ? traces.map(r => r.name + ' ' + r.percentage + '%').join(', ') + ' — potent aromatics: at most ' + RULES.MAX_TRACE + ' per bottle, each at or under ' + RULES.TRACE_PCT_CAP + '%, ' + RULES.TRACE_TOTAL_PCT_CAP + '% together.' : 'None.' },
     { id: 'share', ok: rows.every(r => r.isTrace || r.percentage <= RULES.MAX_SHARE_PCT),
       label: 'Largest share', detail: (() => { const big = rows.filter(r => !r.isTrace && r.percentage > RULES.MAX_SHARE_PCT); return big.length ? big.map(r => r.name + ' ' + r.percentage + '%').join(', ') + ' — the engine gives no herb more than ' + RULES.MAX_SHARE_PCT + '% of the bottle.' : 'No herb above ' + RULES.MAX_SHARE_PCT + '%.'; })() },
     { id: 'gaba', ok: gaba.length <= RULES.MAX_GABAERGIC,

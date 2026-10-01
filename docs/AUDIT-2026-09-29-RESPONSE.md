@@ -30,10 +30,10 @@ yet — Robin approves each change first** (Robin, 29 Sep: "check with me before
 
 ## Robin's decisions (formulation / product, not bugs)
 
-- **#4 One trace herb per bottle** — audit wants a budget of 2 (≤10% combined). Changes aromatic digestive formulas.
-- **Q5 HIGH-caution cap** — Robin decided HIGH herbs stay in adult bottles; a *count* cap (≤1 HIGH per consumer bottle) is a different, still-open question. 42 HIGH / VERY HIGH herbs in the pool.
+- **#4 Trace herbs** — DONE. 29 Sep: two per bottle, each ≤5%, ≤10% together. **1 Oct (Robin): 7% together, "3.5 + 3.5".** Shares are whole numbers, so it is 4% + 3% (the stronger-scored trace takes 4), and a lone trace gets 4% (engine 2.10.0). The trace herbs' records carry `trace_class` (aromatic / pungent / bitter / resin) since 2.8.2, and `test:herb-classes` fails when a herb's text and record disagree.
+- **Q5 HIGH-caution cap** — DONE as Robin chose on 1 Oct. HIGH / VERY HIGH stay uncapped. A new class sits above them: **extreme caution** (herbs.ts `extreme_caution`), one per consumer bottle, no limit for pro. On it now: Amanita Muscaria, Amanita Pantherina, St John's Wort, Calea zacatechichi. Suggested, waiting for Robin: Kava Kava, Blue Lotus, African Dream Root, Bobinsana, Rhodiola, Goldenseal.
 - **Q1/Q2 non-goal ×0.5 → ×0.7** — would reshuffle many bottles; run `npm run report:top-herbs` before and after to see it.
-- **#3 validation** — 20 practitioners, blind review (the audit's Q8 design is good). Organisational; Claude can build the review page.
+- **#3 validation** — 20 practitioners, blind review (the audit's Q8 design is good). Organisational; Claude can build the review page. Robin is on it (1 Oct). It is a card on the admin board (`supabase-board-tasks-2026-10-01.sql`), and so is §12.
 - **#8 self-reported age** — standard; the under-18 policy itself is still open (§0.19).
 - **§12 regulatory** — not code. Agree: an EU/DE herbal-medicine lawyer before scaling the consumer funnel. The claims wording (D9) is the biggest lever on "medicinal product by presentation".
 - CSRF / missing origin — low: nothing uses cookie auth (compose is anonymous; pro uses a bearer token). No change proposed.
