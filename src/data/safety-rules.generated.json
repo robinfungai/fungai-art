@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-10-01T21:40:25.771Z",
+  "generatedAt": "2026-10-01T22:08:16.108Z",
   "counts": {
-    "botanicals": 252,
-    "rules": 2502,
+    "botanicals": 253,
+    "rules": 2517,
     "byType": {
-      "contraindication": 1219,
-      "drug_interaction": 680,
-      "herb_interaction": 357,
-      "record": 246
+      "contraindication": 1227,
+      "drug_interaction": 684,
+      "herb_interaction": 359,
+      "record": 247
     },
     "bySeverity": {
-      "unspecified": 1120,
+      "unspecified": 1127,
       "caution": 336,
       "monitor": 375,
-      "avoid": 542,
+      "avoid": 550,
       "absolute": 129
     }
   },
@@ -1146,6 +1146,14 @@
     ],
     "601": [
       "pregnancy"
+    ],
+    "602": [
+      "cardio_meds",
+      "contraceptive",
+      "liver_kidney",
+      "pregnancy",
+      "psych_meds",
+      "sedatives"
     ]
   },
   "flagsPerRuleByBotanicalId": {
@@ -2271,6 +2279,14 @@
     ],
     "601": [
       "pregnancy"
+    ],
+    "602": [
+      "cardio_meds",
+      "contraceptive",
+      "liver_kidney",
+      "pregnancy",
+      "psych_meds",
+      "sedatives"
     ]
   },
   "divergence": [
@@ -7299,6 +7315,190 @@
       "subject": "Pregnancy and breastfeeding",
       "severity": "avoid",
       "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:602:contraindication:1",
+      "botanicalId": 602,
+      "botanical": "Cannabis (CBD Oil 10%)",
+      "ruleType": "contraindication",
+      "subject": "Antidepressants (SSRIs, SNRIs, tricyclics) and mood stabilisers",
+      "severity": "avoid",
+      "reason": "CBD inhibits their breakdown; avoid",
+      "flags": [
+        "psych_meds"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:602:contraindication:2",
+      "botanicalId": 602,
+      "botanical": "Cannabis (CBD Oil 10%)",
+      "ruleType": "contraindication",
+      "subject": "Benzodiazepines and sedatives",
+      "severity": "avoid",
+      "reason": "additive CNS depression and raised drug levels; avoid",
+      "flags": [
+        "sedatives"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:602:contraindication:3",
+      "botanicalId": 602,
+      "botanical": "Cannabis (CBD Oil 10%)",
+      "ruleType": "contraindication",
+      "subject": "Anticoagulants (warfarin) and antiplatelets",
+      "severity": "avoid",
+      "reason": "CBD raises INR and drug levels; avoid",
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:602:contraindication:4",
+      "botanicalId": 602,
+      "botanical": "Cannabis (CBD Oil 10%)",
+      "ruleType": "contraindication",
+      "subject": "Antiepileptics (clobazam, valproate)",
+      "severity": "unspecified",
+      "reason": "interactions and liver-enzyme rises; prescriber only",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:602:contraindication:5",
+      "botanicalId": 602,
+      "botanical": "Cannabis (CBD Oil 10%)",
+      "ruleType": "contraindication",
+      "subject": "Liver disease or hepatotoxic medicines",
+      "severity": "avoid",
+      "reason": "dose-dependent hepatotoxicity (raised transaminases); avoid",
+      "flags": [
+        "liver_kidney"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:602:contraindication:6",
+      "botanicalId": 602,
+      "botanical": "Cannabis (CBD Oil 10%)",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "avoid",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:602:contraindication:7",
+      "botanicalId": 602,
+      "botanical": "Cannabis (CBD Oil 10%)",
+      "ruleType": "contraindication",
+      "subject": "Under 18",
+      "severity": "unspecified",
+      "reason": "not in this house",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:602:contraindication:8",
+      "botanicalId": 602,
+      "botanical": "Cannabis (CBD Oil 10%)",
+      "ruleType": "contraindication",
+      "subject": "Driving or machinery",
+      "severity": "unspecified",
+      "reason": "drowsiness possible; full-spectrum products can carry traces of THC",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:602:drug_interaction:1",
+      "botanicalId": 602,
+      "botanical": "Cannabis (CBD Oil 10%)",
+      "ruleType": "drug_interaction",
+      "subject": "CYP3A4 and CYP2C19 substrates",
+      "severity": "unspecified",
+      "reason": "CBD inhibits both; raised levels of many medicines",
+      "flags": [
+        "contraceptive"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:602:drug_interaction:2",
+      "botanicalId": 602,
+      "botanical": "Cannabis (CBD Oil 10%)",
+      "ruleType": "drug_interaction",
+      "subject": "Warfarin",
+      "severity": "avoid",
+      "reason": "raised INR; avoid",
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:602:drug_interaction:3",
+      "botanicalId": 602,
+      "botanical": "Cannabis (CBD Oil 10%)",
+      "ruleType": "drug_interaction",
+      "subject": "Clobazam and valproate",
+      "severity": "unspecified",
+      "reason": "raised levels and liver enzymes; prescriber only",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:602:drug_interaction:4",
+      "botanicalId": 602,
+      "botanical": "Cannabis (CBD Oil 10%)",
+      "ruleType": "drug_interaction",
+      "subject": "SSRIs, benzodiazepines, opioids",
+      "severity": "unspecified",
+      "reason": "raised levels and additive sedation",
+      "flags": [
+        "psych_meds",
+        "sedatives"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:602:herb_interaction:1",
+      "botanicalId": 602,
+      "botanical": "Cannabis (CBD Oil 10%)",
+      "ruleType": "herb_interaction",
+      "subject": "St. John's Wort, Kava Kava, Valerian",
+      "severity": "avoid",
+      "reason": "CYP interactions and stacked sedation; avoid together",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:602:herb_interaction:2",
+      "botanicalId": 602,
+      "botanical": "Cannabis (CBD Oil 10%)",
+      "ruleType": "herb_interaction",
+      "subject": "Other hepatotoxic herbs",
+      "severity": "unspecified",
+      "reason": "cumulative liver burden",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:602:record:pregnancy",
+      "botanicalId": 602,
+      "botanical": "Cannabis (CBD Oil 10%)",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
       "flags": [
         "pregnancy"
       ],

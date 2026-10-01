@@ -64,7 +64,9 @@ module.exports = {
   //         herb (herbs.ts extreme_caution: both Amanitas, St John's Wort,
   //         Calea); pro is not limited (Robin, 2026-10-01, audit 29 Sep #4, Q5).
   engineVersion:      '2.10.0-server',
-  herbDbVersion:      '2026.10.01-252herbs',   // + Cassia Cinnamon (597, Cinnamon now Ceylon only); Gentian, Marshmallow Root, Agrimony, Blackberry Root (598-601)
+  // 2026.10.01: + Cassia Cinnamon (597; Cinnamon now Ceylon only), Gentian, Marshmallow Root,
+  //   Agrimony, Blackberry Root (598–601). 2026.10.02: + Cannabis (CBD Oil 10%, 602, pro-only).
+  herbDbVersion:      '2026.10.02-253herbs',
   // 1.1.0 — unknown pregnancy safety = avoid; under-18s: no HIGH-caution,
   //         psychoactive, or above-LOW calming herbs (2026-09-27).
   // 1.2.0 — pro quiz: 'trying to conceive' = the pregnancy rule;

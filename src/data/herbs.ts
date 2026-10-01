@@ -3549,6 +3549,93 @@ export const HERBS: Herb[] = [
     },
     evidence_grade: 'C',
   },
+  {
+    // Added 2026-10-02 (Robin): hemp CBD oil, practitioner-only. THC is never
+    // in a bottle (no legal commercial sale in Germany). Extraction of THC and
+    // CBD lives in the members-only Academy library, not on /extraction.
+    id: 602,
+    name: 'Cannabis (CBD Oil 10%)',
+    formula_access: 'pro',
+    extreme_caution: true,   // one per consumer bottle - and pro-only anyway
+    aliases: ['CBD', 'CBD oil', 'cannabidiol', 'hemp oil', 'hemp extract'],
+    goals: ['anxiety', 'sleep', 'pain'],
+    botanical: 'Cannabis sativa L. (industrial hemp, flowering tops — CBD-dominant, THC under 0.3%; as a 10% CBD oil, 100 mg/ml)',
+    tcm_meridians: ['Heart', 'Liver'],
+    tcm_element: 'Fire + Wood',
+    energetics: ['Neutral to Cool', 'Calming', 'Relaxing', 'Moistening (oil)'],
+    primary_functions: [
+      'Anxiety — a 2024 meta-analysis of 8 studies (316 participants) found a significant effect of CBD on anxiety; the authors stress the clinical evidence is still small',
+      'Calming without intoxication — CBD-dominant hemp, THC under 0.3%',
+      'Pain and inflammation — supportive preclinical and early clinical evidence',
+    ],
+    secondary_benefits: [
+      'Sleep — a 2024 randomised pilot trial of 150 mg nightly in moderate-to-severe insomnia found sleep outcomes no better than placebo, with better well-being; sleep support is unproven',
+    ],
+    pharmacology:
+      'Primary bioactive: cannabidiol (CBD), a non-intoxicating phytocannabinoid — 5-HT1A partial agonism, TRPV1 activity, negative allosteric modulation of CB1, among others — plus minor cannabinoids and terpenes in full-spectrum oils. A 10% oil holds about 100 mg CBD per ml (a drop is roughly 5 mg — check the dropper). CBD inhibits CYP3A4 and CYP2C19 and interacts with many medicines (systematic review: Nachnani 2024, PMID 38868665); dose-dependent liver-enzyme rises are documented (Chen 2024, PMID 38904421). Evidence: anxiety — meta-analysis, small (Han 2024, PMID 38924898); insomnia — pilot RCT negative on sleep outcomes (Narayan 2024, PMID 38174873). Evidence grade C+.',
+    flavor_profile: 'Grassy, earthy, slightly bitter (full-spectrum); neutral in isolate oils',
+    contraindications: [
+      'Antidepressants (SSRIs, SNRIs, tricyclics) and mood stabilisers — CBD inhibits their breakdown; avoid',
+      'Benzodiazepines and sedatives — additive CNS depression and raised drug levels; avoid',
+      'Anticoagulants (warfarin) and antiplatelets — CBD raises INR and drug levels; avoid',
+      'Antiepileptics (clobazam, valproate) — interactions and liver-enzyme rises; prescriber only',
+      'Liver disease or hepatotoxic medicines — dose-dependent hepatotoxicity (raised transaminases); avoid',
+      'Pregnancy and breastfeeding — avoid',
+      'Under 18 — not in this house',
+      'Driving or machinery — drowsiness possible; full-spectrum products can carry traces of THC',
+    ],
+    herb_to_herb_synergy: [
+      'Lemon Balm and Passionflower — gentle calming partners (watch total sedation)',
+    ],
+    herb_to_herb_caution: [
+      'St. John\'s Wort, Kava Kava, Valerian — CYP interactions and stacked sedation; avoid together',
+      'Other hepatotoxic herbs — cumulative liver burden',
+    ],
+    herb_to_drug_interactions: [
+      'CYP3A4 and CYP2C19 substrates — CBD inhibits both; raised levels of many medicines',
+      'Warfarin — raised INR; avoid',
+      'Clobazam and valproate — raised levels and liver enzymes; prescriber only',
+      'SSRIs, benzodiazepines, opioids — raised levels and additive sedation',
+    ],
+    herb_interactions: [
+      'Synergy: Lemon Balm, Passionflower (watch sedation)',
+      'Caution: St. John\'s Wort, Kava Kava, Valerian, hepatotoxic herbs',
+      'Drug interactions: CYP3A4/2C19 substrates, warfarin, antiepileptics, SSRIs, benzodiazepines, opioids',
+    ],
+    dosage_range:
+      'Practitioner-only. 10% oil = about 100 mg CBD/ml (a drop is roughly 5 mg — check the dropper). Start low, e.g. 5–10 mg once or twice daily, and titrate slowly; the insomnia trial used 150 mg nightly. Higher doses raise the interaction and liver-enzyme risks.',
+    spiritual_layer:
+      'Hemp is the old companion plant — rope, cloth, food and medicine. Its calm is the unintoxicating one: a quieting rather than a journey, best given with care and an eye on everything else the person takes.',
+    best_preparation:
+      'Dispensed as its own oil, or as an ethanolic full-spectrum extract. An MCT-oil product does not blend into a water-alcohol tincture. Use lab-tested hemp material (CBD content, THC under 0.3%). Extraction protocols for CBD and THC: members-only Academy library.',
+    caution_level: 'HIGH',
+    cns_action: 'calming',
+    cns_evidence: 'Anxiolytic in a 2024 meta-analysis of 8 studies, 316 participants (small; PMID 38924898); drowsiness possible at higher doses. Non-intoxicating as a CBD-dominant hemp oil (THC under 0.3%).',
+    safe_pregnancy: false,
+    status:
+      'Practitioner-only. Germany: hemp CBD (THC under 0.3%) — ingestible CBD is a novel food without an EU authorisation, so selling it is legally contested; THC products cannot be sold commercially (KCanG). Sweden: illegal with any THC. Strong drug interactions (CYP3A4/2C19) and dose-dependent liver-enzyme rises. Anxiety evidence promising but small; sleep unproven.',
+    // PubMed, fetched and checked 2026-10-02
+    references: [
+      'Han K, Wang JY, Wang PY, et al. Therapeutic potential of cannabidiol (CBD) in anxiety disorders: A systematic review and meta-analysis. Psychiatry Res. 2024. PMID 38924898',
+      'Narayan AJ, Downey LA, Rose S, et al. Cannabidiol for moderate-severe insomnia: a randomized controlled pilot trial of 150 mg of nightly dosing. J Clin Sleep Med. 2024. PMID 38174873',
+      'Nachnani R, Knehans A, Neighbors JD, et al. Systematic review of drug-drug interactions of delta-9-tetrahydrocannabinol, cannabidiol, and Cannabis. Front Pharmacol. 2024. PMID 38868665',
+      'Chen S, Li Y, Li X, et al. Metabolism and liver toxicity of cannabidiol. J Environ Sci Health C Toxicol Carcinog. 2024. PMID 38904421',
+    ],
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['wired', 'reactive', 'wired_tired'],
+    sleep_action: ['onset'],
+    regional_affinity: ['head', 'whole'],
+    onset_time: 'hours',
+    family: 'Cannabaceae',
+    epithet: 'The quiet hemp',
+    origin_region: 'Global',
+    ecology: {
+      native_range: ['Central Asia'],
+      biomes: ['STEPPE', 'GARDEN'],
+      source: 'derived',
+    },
+    evidence_grade: 'C+',
+  },
 
   // ─────────────────────────────────────────────
   // CLOVES

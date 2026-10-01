@@ -98,6 +98,7 @@ const GERMAN_NAMES = {
   'Cassia Cinnamon': ['zimt', 'kassia', 'kassiazimt', 'zimtkassie', 'chinesischer zimt'],
   'Gentian': ['enzian', 'gelber enzian', 'enzianwurzel'], 'Marshmallow Root': ['eibisch', 'eibischwurzel'],
   'Agrimony': ['odermennig'], 'Blackberry Root': ['brombeere', 'brombeerwurzel', 'brombeerblätter'],
+  'Cannabis (CBD Oil 10%)': ['hanf', 'hanföl', 'cbd-öl', 'cannabidiol'],
   'Cloves': ['nelken', 'gewürznelken'], 'Cardamom': ['kardamom'], 'Saffron': ['safran'],
   "Lion's Mane": ['igelstachelbart'], 'Birch Buds': ['birkenknospen'], 'Horsetail': ['schachtelhalm', 'zinnkraut'],
   'Calendula': ['ringelblume'], 'Echinacea': ['sonnenhut'], 'Juniper': ['wacholder'],

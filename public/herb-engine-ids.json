@@ -503,6 +503,17 @@
   "k": "plant"
  },
  {
+  "id": "cannabis_cbd_oil_10",
+  "n": "Cannabis (CBD Oil 10%)",
+  "b": "Cannabis sativa L.",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ],
+  "k": "plant",
+  "restricted": true
+ },
+ {
   "id": "caraway",
   "n": "Caraway",
   "b": "Carum carvi",

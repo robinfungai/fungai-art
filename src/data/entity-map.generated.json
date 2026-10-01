@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-01T21:40:23.770Z",
+  "generatedAt": "2026-10-01T22:08:14.927Z",
   "counts": {
-    "botanicals": 252,
+    "botanicals": 253,
     "monographs": 128,
     "monographsMatched": 128,
     "products": 21,
@@ -367,6 +367,15 @@
       "latin": "Rubus fruticosus",
       "genus": "Rubus",
       "species": "fruticosus"
+    },
+    {
+      "id": 602,
+      "slug": "cannabis-cbd-oil-10",
+      "name": "Cannabis (CBD Oil 10%)",
+      "botanical": "Cannabis sativa L. (industrial hemp, flowering tops — CBD-dominant, THC under 0.3%; as a 10% CBD oil, 100 mg/ml)",
+      "latin": "Cannabis sativa L.",
+      "genus": "Cannabis",
+      "species": "sativa"
     },
     {
       "id": 228,
