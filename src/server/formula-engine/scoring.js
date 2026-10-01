@@ -9,7 +9,7 @@
 // nervousBoost / energyCurveBoost and the 7-pattern sleep branches were
 // added later (engine 2.1) so those quiz answers shape the formula.
 
-const { isGABAergic, isCNSStimulant } = require('./pharmacology');
+const { isGABAergic, isCNSStimulant, isWarmingAromatic, avoidsWarming } = require('./pharmacology');
 const { applyMisspellings } = require('../myco/terminology.cjs');
 
 const SUBPATTERN_AFFINITY = {
@@ -422,6 +422,8 @@ function evidenceBoost(h) {
 // Share of a goal's points a herb earns by where that goal sits in its
 // own recorded goals: main use, second, third, fourth.
 const GOAL_POSITION_WEIGHT = [1, 0.75, 0.625, 0.54];
+// What a herb serving none of the chosen goals keeps of its score.
+const NON_GOAL_FACTOR = 0.3;
 
 /**
  * Every term of a herb's score, named, so the pro composer can show a
@@ -440,7 +442,10 @@ function scoreBreakdown(h, a) {
   // bottle. The hierarchy stays strict: the weakest first-goal match
   // (12 × 0.54 = 6.48) outranks the strongest second (6), and the
   // weakest second (3.24) outranks the strongest third (3).
-  // A herb serving none of the chosen goals keeps half its score.
+  // A herb serving none of the chosen goals keeps 30% of its score
+  // (half until 2026-10-02 — Robin's verdict 6: Shatavari took 17% of a
+  // bottle for "reproductive nourishment" nobody asked for; having a
+  // property does not earn a main share).
   const wanted = Array.isArray(a.intentions) && a.intentions.length ? a.intentions : [a.intention];
   const goalPoints = (max, g) => {
     const i = g ? ax.intentions.indexOf(g) : -1;
@@ -478,11 +483,15 @@ function scoreBreakdown(h, a) {
   parts.support    = supportBoost(h, a.support);
   parts.cycle      = cycleBoost(h, a.cycle);
   parts.history    = priorHerbsBoost(h, a.prior_herbs);
+  // A hot, pungent herb for a wired nervous system or a body that reads
+  // hot (Robin, 2026-10-02, verdict 8: Ajwain 17% beside Cinnamon for a
+  // wired client). rules.js also seats only one such herb in that bottle.
+  parts.warming    = isWarmingAromatic(h) && avoidsWarming(a) ? -4 : 0;
   let sum = 0;
   for (const k in parts) sum += parts[k];
   parts.evidence = sum > 0 ? evidenceBoost(h) : 0;
   sum += parts.evidence;
-  const factor = servesGoal ? 1 : 0.5;
+  const factor = servesGoal ? 1 : NON_GOAL_FACTOR;
   return { parts, sum, factor, servesGoal, total: sum * factor };
 }
 

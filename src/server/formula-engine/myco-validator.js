@@ -37,7 +37,7 @@
 
 const { categoryOf } = require('./pharmacology');
 const { assignPercentages } = require('./percentages');
-const { RULES, newLoad, seatBlocker, seat } = require('./rules');
+const { RULES, newLoad, seatBlocker, seat, primaryGoal, uncovered } = require('./rules');
 
 // The seating rules are rules.js — the same code the picker walks with
 // (audit 2026-09-28: one rule engine for picker and validator). Only the
@@ -57,6 +57,7 @@ const BLOCKED = {
   AMANITA_LIMIT:           ['MYCO_AMANITA_LIMIT_EXCEEDED',     () => 'more than ' + RULES.MAX_AMANITA + ' Amanita'],
   AMANITA_WITH_ST_JOHNS_WORT: ['MYCO_AMANITA_WITH_ST_JOHNS_WORT', () => "an Amanita beside St John's Wort"],
   EXTREME_CAUTION_LIMIT:   ['MYCO_EXTREME_CAUTION_LIMIT',      () => 'more than ' + RULES.MAX_EXTREME + ' extremely-high-caution herb in a consumer bottle'],
+  WARMING_LIMIT:           ['MYCO_WARMING_LIMIT',              () => 'more than ' + RULES.MAX_WARMING + ' warming aromatic for a wired, reactive or hot person'],
   CATEGORY_CAP:            ['MYCO_CATEGORY_CAP_EXCEEDED',      h => 'more than ' + RULES.MAX_PER_CATEGORY + ' of category ' + categoryOf(h)],
   PAIR_BLOCK:              ['MYCO_PAIR_BLOCKED',               h => h.name + ' sits beside a herb it may never share a bottle with (pair-rules.js)'],
   PAIR_CONDITIONAL:        ['MYCO_PAIR_BLOCKED_BY_SAFETY',     h => h.name + ' sits beside a herb it may not share a bottle with under these safety answers'],
@@ -77,7 +78,7 @@ const BLOCKED = {
  *   pro-only herb (herbs.ts formula_access: 'pro', e.g. Ephedra) may go.
  * @returns {object} discriminated union — see file header.
  */
-function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn, pro = false, avoid = [], excludeIds = [] }) {
+function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn, pro = false, avoid = [], excludeIds = [], coolOnly = false, coverFor = null }) {
   if (!mycoResponse || !Array.isArray(mycoResponse)) {
     return { ok: false, reason: 'MYCO_MALFORMED', detail: 'response is not an array of picks' };
   }
@@ -103,7 +104,7 @@ function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn, pro = fa
   const acceptedHerbs = [];
   const acceptedReasons = [];
   const seenIds       = new Set();
-  const load          = newLoad(avoid, { pro: pro === true });
+  const load          = newLoad(avoid, { pro: pro === true, coolOnly: coolOnly === true });
   // Herbs MYCO itself read the note as refusing (noteAvoid) — never seated.
   const excluded      = new Set((excludeIds || []).map(x => String(x).toLowerCase()));
 
@@ -168,6 +169,16 @@ function validateMycoProposal({ mycoResponse, candidateSet, gatedOptIn, pro = fa
 
     acceptedHerbs.push(herb);
     acceptedReasons.push(reason);
+  }
+
+  // Coverage (rules.js, verdict 7): a top-two intention the shortlist
+  // could have covered with a herb whose main goal it is, and MYCO's
+  // bottle does not. `coverFor` = the profile (intention, intentions).
+  if (coverFor) {
+    const missing = uncovered(acceptedHerbs, coverFor).filter(g => candidateSet.some(h => primaryGoal(h) === g));
+    if (missing.length) {
+      return { ok: false, reason: 'MYCO_GOAL_UNCOVERED', detail: 'no herb whose main goal is ' + missing.join(', ') };
+    }
   }
 
   return {

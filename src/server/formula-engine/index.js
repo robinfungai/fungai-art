@@ -22,7 +22,7 @@ const { validateAndNormalizeAvoid, countFilteredOut } = require('./safety');
 const { applyNoteSafety, detectNoteHerbAvoidance, detectNoteEffectAvoidance, detectRestlessSleep } = require('./note-safety');
 const { ensurePool } = require('./axes');
 const { isTrace } = require('./traces');
-const { isGABAergic, isCNSStimulant } = require('./pharmacology');
+const { isGABAergic, isCNSStimulant, avoidsWarming } = require('./pharmacology');
 const { pickName } = require('./naming');
 const { askMyco } = require('./myco');
 const { validateMycoProposal } = require('./myco-validator');
@@ -288,6 +288,8 @@ async function composeFormulaWithMyco(profile, opts = {}) {
     pro:          profile._pro === true && profile.age !== 'under_18',
     avoid:        normalisedProfile.avoid,
     excludeIds:   mycoRefused.map(h => h.id),
+    coolOnly:     avoidsWarming(normalisedProfile),
+    coverFor:     normalisedProfile,
   });
   if (!validation.ok) {
     // Log the specific rule MYCO broke so we can spot systematic

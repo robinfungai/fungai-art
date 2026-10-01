@@ -31,16 +31,16 @@ module.exports = {
     rationale: "Engine 2.5 (2026-09-28, external audit decisions D1–D4): no herb above 40% of the bottle, percentages rounded by largest remainder; evidence grade worth 0 to +2 points; safety flags no longer add a herb; one strict fill walk; a medicine or pregnancy named in the note applies its safety flag. On top of 2.4 (recorded goals scored by position, pro answers, laxatives only for reported constipation).",
   },
   '06-medication-cardio': {
-    herbs: "103:Ashwagandha@22|271:Oatstraw@19|288:Valerian@15|316:Fu Ling@14|300:Red Dates@14|508:Dashmool@10|212:Burdock@6",
-    rationale: "Engine 2.9.0 (Robin, 2026-09-29): a restless sleeper (here: very broken sleep) gets no dream-deepening herb — African Dream Root, Calea and (tagged dream_vivid on Robin's word, same isoxazoles as A. muscaria) Amanita Pantherina leave; Red Dates and Burdock take the seats. On top of engine 2.8.2 / safety 1.5.0.",
+    herbs: "103:Ashwagandha@22|271:Oatstraw@19|288:Valerian@16|316:Fu Ling@15|300:Red Dates@15|508:Dashmool@10|212:Burdock@3",
+    rationale: "Engine 2.11.0 (Robin, 2026-10-02, formula verdicts): a herb serving none of the chosen goals keeps 30% of its score, was 50% (verdict 6) — Burdock falls from 6% to 3% and the points go to the herbs that serve the goals. Same herbs. On top of engine 2.10.0 / safety 1.5.0.",
   },
   '07-pregnancy': {
-    herbs: "128:Chamomile@27|252:Lemon Balm@25|271:Oatstraw@25|287:Vanilla@18|268:Mullein@5",
-    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
+    herbs: "128:Chamomile@28|252:Lemon Balm@26|271:Oatstraw@25|287:Vanilla@18|268:Mullein@3",
+    rationale: "Engine 2.11.0 (Robin, 2026-10-02, formula verdicts): a herb serving none of the chosen goals keeps 30% of its score, was 50% (verdict 6) — Mullein falls from 5% to 3%. Same herbs. On top of engine 2.10.0 / safety 1.5.0.",
   },
   '08-thyroid': {
-    herbs: "240:Ginseng@22|296:Yerba Mate@22|280:Shilajit (Mineral Pitch)@19|241:Goji Berry@17|300:Red Dates@16|227:Cinnamon@4",
-    rationale: "Engine 2.10.0 (Robin, 2026-10-01, audit 29 Sep #4): trace herbs share 7% of the bottle (4% + 3%), so a lone trace is held to 4% instead of 5% and the point goes to a main herb — same herbs. On top of engine 2.9.0 / safety 1.5.0.",
+    herbs: "240:Ginseng@23|296:Yerba Mate@23|280:Shilajit (Mineral Pitch)@19|211:Blueberry@14|300:Red Dates@17|227:Cinnamon@4",
+    rationale: "Engine 2.11.0 (Robin, 2026-10-02, formula verdicts): coverage (verdict 7) — the second goal, cognitive, had no herb whose main goal it is; Blueberry (main goal cognitive) takes the seat of Goji Berry, the weakest energy herb. On top of engine 2.10.0 / safety 1.5.0.",
   },
   '09-liver-kidney': {
     herbs: "212:Burdock@19|107:Dandelion Root@18|532:Anantmul@17|279:Schisandra (Five-Flavour Fruit)@17|316:Fu Ling@15|206:Barley@14",
@@ -51,24 +51,24 @@ module.exports = {
     rationale: "Engine 2.9.0 (Robin, 2026-09-29): a restless sleeper (here: very broken sleep) gets no dream-deepening herb — tested and unchanged: Schisandra was checked on PubMed and recorded as calming dream-disturbed sleep (TCM), not deepening dreams, so it stays. On top of engine 2.8.2 / safety 1.5.0.",
   },
   '11-trace-heavy': {
-    herbs: "285:Tremella@22|241:Goji Berry@21|225:Chickweed@20|548:Astaxanthin@19|589:He Shou Wu / Fo-Ti@18",
-    rationale: "Engine 2.5 (2026-09-28, external audit decisions D1–D4): no herb above 40% of the bottle, percentages rounded by largest remainder; evidence grade worth 0 to +2 points; safety flags no longer add a herb; one strict fill walk; a medicine or pregnancy named in the note applies its safety flag. On top of 2.4 (recorded goals scored by position, pro answers, laxatives only for reported constipation).",
+    herbs: "285:Tremella@25|241:Goji Berry@23|225:Chickweed@22|548:Astaxanthin@20|258:Licorice Root@10",
+    rationale: "Engine 2.11.0 (Robin, 2026-10-02, formula verdicts): coverage (verdict 7) — the second goal, digestion, had no herb whose main goal it is; Licorice Root takes the seat of He Shou Wu, held to 10% (verdict 3: whole root, glycyrrhizin). This profile ticks no blood-pressure, heart or liver / kidney flag. On top of engine 2.10.0 / safety 1.5.0.",
   },
   '12-gaba-load': {
     herbs: "273:Passionflower@21|281:Skullcap@21|252:Lemon Balm@17|103:Ashwagandha@17|323:Reishi@14|254:Jasmine@10",
     rationale: "Engine 2.9.0 (Robin, 2026-09-29): a restless sleeper (here: very broken sleep) gets no dream-deepening herb — Amanita Muscaria (tagged dream_vivid, Robin to confirm) leaves, Jasmine takes the seat. On top of engine 2.8.2 / safety 1.5.0.",
   },
   '13-stim-load': {
-    herbs: "240:Ginseng@22|280:Shilajit (Mineral Pitch)@22|109:Guarana@21|241:Goji Berry@19|589:He Shou Wu / Fo-Ti@16",
-    rationale: "Engine 2.5 (2026-09-28, external audit decisions D1–D4): no herb above 40% of the bottle, percentages rounded by largest remainder; evidence grade worth 0 to +2 points; safety flags no longer add a herb; one strict fill walk; a medicine or pregnancy named in the note applies its safety flag. On top of 2.4 (recorded goals scored by position, pro answers, laxatives only for reported constipation).",
+    herbs: "240:Ginseng@23|280:Shilajit (Mineral Pitch)@22|109:Guarana@21|241:Goji Berry@20|317:Lion's Mane@14",
+    rationale: "Engine 2.11.0 (Robin, 2026-10-02, formula verdicts): coverage (verdict 7) — the second goal, cognitive, had no herb whose main goal it is; Lion's Mane takes the seat of He Shou Wu. On top of engine 2.10.0 / safety 1.5.0.",
   },
   '14-min-size': {
     herbs: "221:Echinacea@34|268:Mullein@33|294:Yarrow@33",
     rationale: "Engine 2.5 (2026-09-28, external audit decisions D1–D4): no herb above 40% of the bottle, percentages rounded by largest remainder; evidence grade worth 0 to +2 points; safety flags no longer add a herb; one strict fill walk; a medicine or pregnancy named in the note applies its safety flag. On top of 2.4 (recorded goals scored by position, pro answers, laxatives only for reported constipation).",
   },
   '15-max-size': {
-    herbs: "300:Red Dates@23|252:Lemon Balm@20|275:Pine Pollen@19|579:Aguaje@16|287:Vanilla@12|405:Rosehip@5|321:Oyster Mushroom@5",
-    rationale: "2026-09-29, third audit (Claude, read main@b3beace): note keywords match at the start of a word, short ones as whole words (\"partner\" no longer scores \"art\", \"reflux\" no longer \"flu\"); the autoimmune flag reads MS in capitals only (26 herbs were flagged through \"symptoms\", \"forms\"). On top of engine 2.6 / safety 1.4.",
+    herbs: "300:Red Dates@24|252:Lemon Balm@21|275:Pine Pollen@20|579:Aguaje@17|287:Vanilla@12|405:Rosehip@3|321:Oyster Mushroom@3",
+    rationale: "Engine 2.11.0 (Robin, 2026-10-02, formula verdicts): a herb serving none of the chosen goals keeps 30% of its score, was 50% (verdict 6) — Rosehip and Oyster Mushroom fall from 5% to 3% each. Same herbs. On top of engine 2.10.0 / safety 1.5.0.",
   },
   '16-gated-amanita-opt-in': {
     herbs: "302:Rose Petals@22|215:Damiana@21|102:Bobinsana@17|287:Vanilla@17|323:Reishi@16|278:Saffron@7",
@@ -81,11 +81,11 @@ module.exports = {
     previousRationale: "2026-09-29, third audit (Claude, read main@b3beace): note keywords match at the start of a word, short ones as whole words (\"partner\" no longer scores \"art\", \"reflux\" no longer \"flu\"); the autoimmune flag reads MS in capitals only (26 herbs were flagged through \"symptoms\", \"forms\"). On top of engine 2.6 / safety 1.4.",
   },
   '18-pro-fields-carried': {
-    herbs: "103:Ashwagandha@22|271:Oatstraw@21|246:Hawthorn@15|323:Reishi@15|300:Red Dates@15|316:Fu Ling@12",
-    rationale: "Engine 2.4 (2026-09-28): goals recorded per herb (herbs.ts goals) and scored by position (main use counts most); the pro answers support, digestion, emotional, somatic, cycle and prior_herbs now score herbs; laxatives only for reported constipation, one per bottle. Builds on 2.3: the goal leads, one serotonergic herb, 8 practitioner-only herbs pro-only.",
+    herbs: "103:Ashwagandha@22|271:Oatstraw@21|246:Hawthorn@16|323:Reishi@16|289:Vervain@12|316:Fu Ling@13",
+    rationale: "Engine 2.11.0 (Robin, 2026-10-02, formula verdicts): coverage (verdict 7) — the second goal, anxiety, had no herb whose main goal it is; Vervain (main goal anxiety) takes the seat of Red Dates. On top of engine 2.10.0 / safety 1.5.0.",
   },
   '19-notes-heavy': {
-    herbs: "240:Ginseng@21|296:Yerba Mate@20|317:Lion's Mane@19|413:Longan@18|4:Bacopa@18|277:Rosemary@4",
-    rationale: "Engine 2.10.0 (Robin, 2026-10-01, audit 29 Sep #4): trace herbs share 7% of the bottle (4% + 3%), so a lone trace is held to 4% instead of 5% and the point goes to a main herb — same herbs. On top of engine 2.9.0 / safety 1.5.0.",
+    herbs: "240:Ginseng@22|103:Ashwagandha@16|317:Lion's Mane@20|413:Longan@19|4:Bacopa@19|277:Rosemary@4",
+    rationale: "Engine 2.11.0 (Robin, 2026-10-02, formula verdicts): coverage (verdict 7) — the second goal, stress, had no herb whose main goal it is; Ashwagandha takes the seat of Yerba Mate (a calming herb may not sit beside a strong stimulant, so the stimulant is the one that goes). On top of engine 2.10.0 / safety 1.5.0.",
   },
 };

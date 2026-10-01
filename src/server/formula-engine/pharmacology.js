@@ -183,6 +183,33 @@ function fitsGoal(h, a) {
   return !!a && (a.digestion === 'constipated' || /constipat/i.test(String(a.notes || '')));
 }
 
+// Extraction compatibility (Robin, 2026-10-02, verdict 1). Every bottle
+// is an ethanol tincture, and a herb whose medicine is water-soluble
+// mucilage (herbs.ts menstruum: 'water' — Slippery Elm, Marshmallow)
+// gives almost nothing to it. Such a herb stays out of the bottle; a
+// glycerite or a separate tea would be the place for it.
+function fitsMenstruum(h) {
+  return !h || h.menstruum !== 'water';
+}
+
+// A strongly warming aromatic (Robin, 2026-10-02, verdict 8): the hot
+// spices, read from the recorded energetics — Hot (or Very Warm) and
+// pungent, or Warm, Dry and pungent. Ajwain, both cinnamons, the
+// peppers, Clove, Ginger, Galangal, Caraway; not Jasmine, Turmeric or
+// Mugwort, which are warm without being a hot spice. Wrong for a wired
+// nervous system or a heat pattern: penalised in scoring.js and one per
+// such bottle (rules.js MAX_WARMING).
+function isWarmingAromatic(h) {
+  const e = ((h && h.energetics) || []).join(' | ').toLowerCase();
+  if (/\bcool|\bcold/.test(e) || !/pungent|acrid/.test(e)) return false;
+  return /\bhot\b|very warm/.test(e) || (/\bwarm/.test(e) && /\bdry\b/.test(e));
+}
+// The person a warming aromatic does not suit: wired, wired and tired,
+// or reactive, or a body that reads hot.
+function avoidsWarming(a) {
+  return !!a && (['wired', 'wired_tired', 'reactive'].includes(a.nervous) || a.pattern === 'hot');
+}
+
 // Rough category of a herb — used by the balance guard in picker.js.
 // Categories: adaptogen · nervine · tonic · mover · mushroom · bitter ·
 // aromatic · nutritive · other. Pulled from primary_functions text +
@@ -247,4 +274,5 @@ module.exports = {
   isSerotonergic, MAX_SEROTONERGIC, isLaxative, laxativeInProse, fitsGoal, MAX_LAXATIVE,
   isDreamDeepening, dreamDeepeningInProse, kingdomOf, plantGroupOf, KINGDOMS,
   categoryOf, isFungus, FUNGAL_FAMILIES, isAmanita, isStJohnsWort, isExtremeCaution,
+  fitsMenstruum, isWarmingAromatic, avoidsWarming,
 };

@@ -63,10 +63,19 @@ module.exports = {
   //         and a consumer bottle holds at most one extremely-high-caution
   //         herb (herbs.ts extreme_caution: both Amanitas, St John's Wort,
   //         Calea); pro is not limited (Robin, 2026-10-01, audit 29 Sep #4, Q5).
-  engineVersion:      '2.10.0-server',
+  // 2.11.0 — Robin's formula verdicts of 2 Oct (docs/AUDIT-2026-10-02-
+  //         FORMULA-VERDICTS.md): whole licorice ≤ 10% and out with high
+  //         blood pressure, heart medication, liver / kidney (3); one hot
+  //         spice at most, and scored down, for a wired / reactive / hot
+  //         person (8); each of the top two goals keeps a herb whose main
+  //         goal it is (7); a herb serving no goal keeps 30% of its score,
+  //         was 50% (6); water-only mucilage herbs stay out of a tincture
+  //         (1); the reveal's line names the function serving the goal (4).
+  engineVersion:      '2.11.0-server',
   // 2026.10.01: + Cassia Cinnamon (597; Cinnamon now Ceylon only), Gentian, Marshmallow Root,
   //   Agrimony, Blackberry Root (598–601). 2026.10.02: + Cannabis (CBD Oil 10%, 602, pro-only).
-  herbDbVersion:      '2026.10.02-253herbs',
+  // 2026.10.02b: Licorice Root ≤ 10% + safety_flags; Marshmallow, Slippery Elm menstruum 'water'.
+  herbDbVersion:      '2026.10.02b-253herbs',
   // 1.1.0 — unknown pregnancy safety = avoid; under-18s: no HIGH-caution,
   //         psychoactive, or above-LOW calming herbs (2026-09-27).
   // 1.2.0 — pro quiz: 'trying to conceive' = the pregnancy rule;

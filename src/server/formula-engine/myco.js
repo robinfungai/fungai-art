@@ -69,12 +69,14 @@ function _buildShortlistText(candidates) {
     if (h._isStrongStimulant) tags.push('STRONG');
     if (h._isAmanita)      tags.push('AMANITA');
     if (h._isExtreme)      tags.push('EXTREME');
+    if (h._isWarming)      tags.push('WARM');
     const tagStr = tags.length ? ' · ' + tags.join('/') : '';
     return (
       (i + 1) + '. id=' + (h.id || '') + ' · ' + (h.name || '') +
       ' (' + (h.botanical || '') + ')' +
       ' · category:' + (h._cat || 'other') +
       ' · pre-score:' + (h._score || 0) +
+      (h._primaryGoal ? ' · main goal:' + h._primaryGoal : '') +
       tagStr +
       '\n     ' + (((h.primary_functions || [])[0]) || '').slice(0, 220) +
       _fitLine(h)
@@ -180,6 +182,8 @@ const COMPOSE_SYS =
   '    · GABA + STRONG — never put a GABA-marked herb beside a STRONG-marked (true) stimulant; they pull against each other.\n' +
   '    · AMANITA — max 1 AMANITA-marked herb (the house keeps it at 10% or less), and never beside St John\'s Wort.\n' +
   '    · EXTREME — max 1 EXTREME-marked herb (extremely high caution: the Amanitas, St John\'s Wort, Calea).\n' +
+  '    · WARM — max 1 WARM-marked herb (a hot, pungent aromatic; this person is wired, reactive or runs hot, so warming spice works against them).\n' +
+  '- Each of the first two goals the person ranked needs at least one herb whose "main goal" (on the shortlist) it is. A herb that merely has a property does not carry a goal: the calming layer someone asked for must not be lost to digestion herbs.\n' +
   '- Do NOT diagnose. Do NOT prescribe. Traditional herbal support only, not medical treatment.\n' +
   '- Keep what the person reports as their own words (a white tongue, neck tension, shame). Never turn it into a diagnosis or a mechanism — no "toxins", "a blocked liver", "gut dysbiosis", "inflammation", "anger stored in the neck" or "trauma stored in tissue" — unless they framed it that way themselves.\n' +
   '- Reference the free-text explicitly if it names a priority, prior herb experience, or contraindication history.\n' +

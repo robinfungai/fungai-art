@@ -7,9 +7,29 @@ arithmetic is right. What fails is **relevance → hierarchy → extraction
 compatibility → ingredient identity → safety**.
 
 **Done on 2 Oct:** item 9, the no-pseudo-diagnosis rule, in MYCO's composer
-prompt and the analysis prompt. **Nothing else is edited** — each item below
-waits for Robin's OK. Most of them belong to the Engine 3.0 path (handoff
-§0.21, "Later — the Engine 3.0 path").
+prompt and the analysis prompt. **Robin approved every proposal the same
+evening ("OK on props", licorice cap 10%) — engine 2.11.0 does 1, 3, 4, 6,
+7, 8:**
+
+- **3** Licorice Root: `max_share_pct: 10`, `safety_flags` hypertension /
+  cardio_meds / liver_kidney, and `max_share_note` (a 4–6 week course,
+  then pause) in "why this formula".
+- **8** `pharmacology.js isWarmingAromatic` (Hot + pungent, or Warm + Dry +
+  pungent: 21 hot spices, not Jasmine / Turmeric / Mugwort) scores −4 and
+  seats once (`rules.js MAX_WARMING`, tag WARM for MYCO) when the person is
+  wired / wired-tired / reactive or reads hot.
+- **7** `rules.js coverageGoals / uncovered`: the picker swaps in the best
+  herb whose main goal is an uncovered top-two goal; the validator rejects
+  a MYCO bottle that misses one the shortlist had.
+- **6** A herb serving no chosen goal keeps 30% of its score (was 50%).
+- **1** `menstruum: 'water'` on Slippery Elm and Marshmallow — left out of
+  the tincture (`fitsMenstruum`).
+- **4** The reveal's line per herb is `axes.js goalNote` — the first
+  function serving the person's goals.
+
+Eight test bottles moved, each re-pinned with its reason. **Still open:**
+2 (licorice whole / DGL split) and 5 (barley split) — new records, herbs
+everywhere.
 
 | # | Verdict | Proposal | Moves bottles? | Size |
 |---|---|---|---|---|

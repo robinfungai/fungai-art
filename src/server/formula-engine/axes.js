@@ -93,6 +93,23 @@ function isMinorBanned(h) {
   return MINOR_BANNED_NAMES.some(r => s.includes(r));
 }
 
+// The word search behind each goal — the fallback for a record without
+// recorded goals, and the way goalNote() finds the line that serves a goal.
+const INTENTION_RE = {
+  stress: /adaptogen|cortisol|stress|hpa|resilience|burnout|nervine tonic/,
+  anxiety: /anxi|nervous|gaba|tension|calm|settle|sedativ|anxiolytic|kava|panic|shen disturb/,
+  sleep: /sleep|somno|insomni|circadian|melaton|hypnotic|deep sleep|night wake/,
+  energy: /vital|stamina|adren|fatigue|exhaustion|athletic|endurance|yang tonic|qi tonic|energizer|mitochondri/,
+  mood: /mood|antidepress|serotonergi|dopamin|heart open|emotional|grief|depression|melanchol|lift|euphoric/,
+  cognitive: /cognit|memory|attention|focus|clarity|neuroplast|ngf|nootropi|acetylcholi|neuroprotect|bdnf|concentrat|neurogen/,
+  hormones: /hormon|endocrine|estrogen|progester|testoster|libido|cycle|menopaus|luteal|pms|amenorr|dysmenor|androgen|thyroid.*support/,
+  digestion: /digest|gastroint|gut|stomach|bloating|ibs|carminativ|bitter|liver.*bile|gastric|dyspepsia|nausea|colon|microbiome|prebiotic/,
+  immunity: /immun|antiviral|antibacterial|antimicrobial|innate|leukocyt|lymphocyt|resistance|cold.*flu/,
+  pain: /anti.?inflammat|cox|pain|analgesic|arthriti|joint|muscle.*spasm|neuralg|headache|migraine|nsaid/,
+  detox: /detox|liver.*cleans|hepatic|phase\s?i{1,2}|glutathion|bile flow|lymphatic drain|chelat|hepatoprotect/,
+  beauty: /skin|collagen|ceramid|beauty|glow|hydration|photo.?protect|melanin|antioxidant.*skin|hyaluron/,
+};
+
 function inferAxes(h) {
   const text = [
     ...(h.primary_functions   || []),
@@ -112,19 +129,7 @@ function inferAxes(h) {
   // changes; recorded goals are never truncated.
   if (Array.isArray(h.goals)) return finishAxes(h, text, has, con, h.goals.slice(), true);
 
-  const intentions = [];
-  if (has(/adaptogen|cortisol|stress|hpa|resilience|burnout|nervine tonic/)) intentions.push('stress');
-  if (has(/anxi|nervous|gaba|tension|calm|settle|sedativ|anxiolytic|kava|panic|shen disturb/)) intentions.push('anxiety');
-  if (has(/sleep|somno|insomni|circadian|melaton|hypnotic|deep sleep|night wake/)) intentions.push('sleep');
-  if (has(/vital|stamina|adren|fatigue|exhaustion|athletic|endurance|yang tonic|qi tonic|energizer|mitochondri/)) intentions.push('energy');
-  if (has(/mood|antidepress|serotonergi|dopamin|heart open|emotional|grief|depression|melanchol|lift|euphoric/)) intentions.push('mood');
-  if (has(/cognit|memory|attention|focus|clarity|neuroplast|ngf|nootropi|acetylcholi|neuroprotect|bdnf|concentrat|neurogen/)) intentions.push('cognitive');
-  if (has(/hormon|endocrine|estrogen|progester|testoster|libido|cycle|menopaus|luteal|pms|amenorr|dysmenor|androgen|thyroid.*support/)) intentions.push('hormones');
-  if (has(/digest|gastroint|gut|stomach|bloating|ibs|carminativ|bitter|liver.*bile|gastric|dyspepsia|nausea|colon|microbiome|prebiotic/)) intentions.push('digestion');
-  if (has(/immun|antiviral|antibacterial|antimicrobial|innate|leukocyt|lymphocyt|resistance|cold.*flu/)) intentions.push('immunity');
-  if (has(/anti.?inflammat|cox|pain|analgesic|arthriti|joint|muscle.*spasm|neuralg|headache|migraine|nsaid/)) intentions.push('pain');
-  if (has(/detox|liver.*cleans|hepatic|phase\s?i{1,2}|glutathion|bile flow|lymphatic drain|chelat|hepatoprotect/)) intentions.push('detox');
-  if (has(/skin|collagen|ceramid|beauty|glow|hydration|photo.?protect|melanin|antioxidant.*skin|hyaluron/)) intentions.push('beauty');
+  const intentions = Object.keys(INTENTION_RE).filter(k => has(INTENTION_RE[k]));
   if (!intentions.length) intentions.push('stress');
   return finishAxes(h, text, has, con, intentions, false);
 }
@@ -185,6 +190,9 @@ function finishAxes(h, text, has, con, intentions, recorded) {
   if (h.cns_action === 'sedative')     flags.push('sedatives');
   if (h.cns_action === 'stimulant')    flags.push('hypertension', 'cardio_meds', 'psych_meds');
   if (h.cns_action === 'psychoactive') flags.push('psych_meds');
+  // Recorded flags (herbs.ts safety_flags) — the record's own verdict
+  // where the prose is not enough (whole Licorice Root, 2026-10-02).
+  if (Array.isArray(h.safety_flags)) flags.push(...h.safety_flags);
 
   const uniqIntentions = [...new Set(intentions)];
   return {
@@ -228,7 +236,24 @@ function shortNote(h) {
   return chunk.length > 140 ? chunk.slice(0, 137) + '…' : chunk;
 }
 
+// The line a client reads for a herb on the reveal (Robin, 2026-10-02,
+// verdict 4): the first function or benefit that serves the person's
+// goals, in their ranked order — Barley showed "LDL cholesterol" to a
+// client who asked for digestion and calm. Falls back to shortNote.
+function goalNote(h, goals) {
+  const lines = (h.primary_functions || []).concat(h.secondary_benefits || []);
+  for (const g of (goals || []).filter(Boolean)) {
+    const re = INTENTION_RE[g];
+    const hit = re && lines.find(l => re.test(String(l).toLowerCase()));
+    if (hit) {
+      const chunk = String(hit).split(/[—.–:;]/)[0].trim();
+      return chunk.length > 140 ? chunk.slice(0, 137) + '…' : chunk;
+    }
+  }
+  return shortNote(h);
+}
+
 module.exports = {
   RESTRICTED_NAMES, GATED_NAMES, MINOR_BANNED_NAMES, isMinorBanned,
-  isRestricted, isGated, inferAxes, ensurePool, shortNote,
+  isRestricted, isGated, inferAxes, ensurePool, shortNote, goalNote, INTENTION_RE,
 };

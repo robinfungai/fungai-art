@@ -3097,6 +3097,7 @@ const HERBS = [
     best_preparation:
       'Cold maceration in water — mucilage dissolves in cold water, heat draws starch. Glycerites and low-alcohol extracts keep more mucilage than strong tinctures.',
     caution_level: 'LOW',
+    menstruum: 'water', // mucilage: water only — kept out of a tincture (Robin, 2026-10-02, verdict 1)
     cns_action: 'neutral',
     cns_evidence: 'No CNS action in its records — a soothing demulcent.',
     safe_pregnancy: null,
@@ -6243,6 +6244,13 @@ const HERBS = [
       'DGL for long-term GI use — all the demulcent and anti-inflammatory benefit without the cardiovascular risk. Whole root for short-term respiratory formulas (4–6 weeks maximum; screen contraindications). As formula harmoniser in teas and blends — 5–15% of formula composition is traditional.',
     caution_level: 'MEDIUM-HIGH',
     safe_pregnancy: null,
+    // Robin, 2026-10-02 (verdict 3): the bottle carries whole root, so
+    // glycyrrhizin sets the rules — 10% at most, never with high blood
+    // pressure, heart medication or kidney / liver disease (the prose
+    // flags miss "kidney disease"), and a course, not a habit.
+    max_share_pct: 10,
+    max_share_note: 'whole licorice root (glycyrrhizin) can raise blood pressure and lower potassium with long use, so take this bottle as a course of 4 to 6 weeks, then pause',
+    safety_flags: ['hypertension', 'cardio_meds', 'liver_kidney'],
     status:
       'Grade A- anti-ulcer mucosal protection (especially DGL). Grade B+ hepatoprotective. CRITICAL safety distinction: DGL vs. whole root. Whole root: well-documented dose-dependent pseudoaldosteronism risk; maximum 4–6 weeks; contraindicated in hypertension, CV disease, kidney disease, diuretics, corticosteroids. DGL: safe for extended GI use.',
     // ── Quiz-matcher + composer-quality enrichment ──
@@ -9834,6 +9842,7 @@ const HERBS = [
     best_preparation:
       'Cold or warm water slurry is the optimal preparation — never use boiling water (reduces mucilage). Take between meals and at minimum 2 hours from ALL medications (this instruction is the most important clinical detail). For GERD: 1 tsp slurry before meals and before bed. For sore throat: lozenges or powder dissolved in room-temperature water, gargled and swallowed slowly. For IBD flares: 1–2 tsp slurry 2–3× daily as an adjunct to medical treatment. Screen for pregnancy (conservative caution) and enforce medication separation strictly.',
     caution_level: 'LOW',
+    menstruum: 'water', // mucilage: water only — kept out of a tincture (Robin, 2026-10-02, verdict 1)
     safe_pregnancy: null,
     status:
       'Grade B+ demulcent and mucosal soothing (mechanism confirmed; traditional evidence). FDA GRAS for oral use. CRITICAL DRUG INTERACTION: reduces absorption of ALL oral medications — 2-hour separation is non-negotiable and applies to every pharmaceutical. Conservative caution in pregnancy (folkloric history; oral use probably safe but insufficient concentrated-supplement data). Safe long-term for GI, respiratory and urinary mucosal soothing when medications are appropriately separated.',

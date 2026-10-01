@@ -12,8 +12,8 @@ const { ensurePool, shortNote } = require('./axes');
 const { scoreHerb, scoreBreakdown } = require('./scoring');
 const { safetyFilter, applyMinorGate, passesAccess, passesProfileSafety } = require('./safety');
 const { isTrace } = require('./traces');
-const { isGABAergic, isCNSStimulant, isStrongStimulant, isSerotonergic, isLaxative, fitsTimeOfUse, fitsGoal, categoryOf, isExtremeCaution } = require('./pharmacology');
-const { RULES, isSmallShare, isAmanita, newLoad, seatBlocker, seat } = require('./rules');
+const { isGABAergic, isCNSStimulant, isStrongStimulant, isSerotonergic, isLaxative, fitsTimeOfUse, fitsGoal, categoryOf, isExtremeCaution, fitsMenstruum, isWarmingAromatic, avoidsWarming } = require('./pharmacology');
+const { RULES, isSmallShare, isAmanita, newLoad, seatBlocker, seat, primaryGoal, coverageGoals, uncovered } = require('./rules');
 
 // ── Tie-breaking ──────────────────────────────────────────────────
 // scoreHerb builds a score from a handful of coarse constants —
@@ -129,7 +129,7 @@ function rankedCandidates(a, { safety = true } = {}) {
   // CNS-stimulant herbs regardless of what avoid[] said.
   const safe = pool.filter(h =>
     (!safety || (safetyFilter(h, a.avoid || []) && passesProfileSafety(h, a))) &&
-    passesAccess(h, a) && fitsTimeOfUse(h, a) && fitsGoal(h, a));
+    passesAccess(h, a) && fitsTimeOfUse(h, a) && fitsGoal(h, a) && fitsMenstruum(h));
   const gated = safety ? applyMinorGate(safe, a) : safe;
   const scored = gated.map(h => ({ h, s: scoreHerb(h, a) })).filter(x => x.s > 0);
   sortScored(scored, a);
@@ -152,7 +152,7 @@ function rankedCandidates(a, { safety = true } = {}) {
 function walk(uniq, a) {
   const target = targetHerbCount(a);
   const openToGated = !!a._gatedOptIn;
-  const load = newLoad(a.avoid, { pro: a._pro === true && !a._minor });
+  const load = loadFor(a);
   const composed = [];
   let smallSeated = 0;
   for (const x of uniq) {
@@ -175,8 +175,49 @@ function walk(uniq, a) {
 // Herbs that may take the full share — not a trace, not an Amanita.
 const mainCount = composed => composed.filter(x => !isSmallShare(x.h)).length;
 
+// The load a bottle is built under: a practitioner's bottle has no
+// extreme-caution limit; a wired / reactive / hot person gets one
+// warming aromatic at most.
+function loadFor(a) {
+  return newLoad(a.avoid, { pro: a._pro === true && !a._minor, coolOnly: avoidsWarming(a) });
+}
+
+// Coverage (rules.js, verdict 7): when a top-two intention has no herb
+// whose main goal it is, the best-ranked such herb takes the seat of the
+// weakest herb it can replace without breaking a rule — never the only
+// herb covering the other intention, never leaving fewer than three
+// main herbs.
+function ensureCoverage(composed, uniq, a) {
+  const goals = coverageGoals(a);
+  for (const g of uncovered(composed.map(x => x.h), a)) {
+    const seated = new Set(composed.map(x => String(x.h.id)));
+    const cands = uniq.filter(x => primaryGoal(x.h) === g && !seated.has(String(x.h.id)) &&
+      !(x.h.gated && !a._gatedOptIn)).slice(0, 12);
+    const weakest = composed.map((x, i) => i).sort((i, j) => composed[i].s - composed[j].s || j - i);
+    let swapped = null;
+    for (const c of cands) {
+      for (const i of weakest) {
+        const pg = primaryGoal(composed[i].h);
+        if (goals.includes(pg) && composed.filter(x => primaryGoal(x.h) === pg).length === 1) continue;
+        const rest = composed.filter((_, k) => k !== i);
+        const load = loadFor(a);
+        rest.forEach(x => seat(load, x.h));
+        if (seatBlocker(load, c.h)) continue;
+        const trial = rest.slice(0, i).concat([c], rest.slice(i));
+        if (mainCount(trial) < MIN_MAIN_HERBS) continue;
+        swapped = trial;
+        break;
+      }
+      if (swapped) break;
+    }
+    if (swapped) composed = swapped;
+  }
+  return composed;
+}
+
 function pickFormula(a) {
-  const composed = walk(rankedCandidates(a), a);
+  const uniq = rankedCandidates(a);
+  const composed = ensureCoverage(walk(uniq, a), uniq, a);
   if (mainCount(composed) < MIN_MAIN_HERBS) return [];
   return composed.map(x => Object.assign({}, x.h, { _score: x.s, _cat: categoryOf(x.h) }));
 }
@@ -217,6 +258,11 @@ function buildScoredCandidates(a, limit = 20) {
       // Only a consumer bottle is limited to one (rules.js MAX_EXTREME),
       // so only a consumer shortlist carries the tag.
       _isExtreme:      isExtremeCaution(x.h) && !(a._pro === true && !a._minor),
+      // One warming aromatic at most for a wired / reactive / hot person
+      // (rules.js MAX_WARMING), so only that shortlist carries the tag.
+      _isWarming:      isWarmingAromatic(x.h) && avoidsWarming(a),
+      // The herb's main recorded goal — the coverage rule reads it.
+      _primaryGoal:    primaryGoal(x.h),
     }));
 }
 

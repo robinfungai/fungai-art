@@ -29,6 +29,10 @@ const RULES = {
   // John's Wort, Calea): one per CONSUMER bottle; a practitioner's bottle
   // is not limited (Robin, 2026-10-01, audit 29 Sep Q5).
   MAX_EXTREME:      1,
+  // A strongly warming aromatic (pharmacology.js isWarmingAromatic) in
+  // the bottle of a wired / reactive person or a hot body: one at most
+  // (Robin, 2026-10-02, verdict 8).
+  MAX_WARMING:      1,
   AMANITA_PCT_CAP,
   TRACE_PCT_CAP,
   TRACE_TOTAL_PCT_CAP,
@@ -45,9 +49,10 @@ const isSmallShare = h => smallShareCap(h) > 0;
 
 // `avoid` = the safety answers the bottle is built under (ticked plus
 // any the note named) — CONDITIONAL pair rules read them. `pro` = a
-// practitioner's bottle (no extreme-caution limit).
-function newLoad(avoid, { pro = false } = {}) {
-  return { cat: {}, trace: 0, gaba: 0, stim: 0, strong: 0, sero: 0, lax: 0, amanita: 0, sjw: 0, extreme: 0, pro: pro === true, ids: [], avoid: Array.isArray(avoid) ? avoid : [] };
+// practitioner's bottle (no extreme-caution limit). `coolOnly` = the
+// person is wired / reactive or reads hot (pharmacology.js avoidsWarming).
+function newLoad(avoid, { pro = false, coolOnly = false } = {}) {
+  return { cat: {}, trace: 0, gaba: 0, stim: 0, strong: 0, sero: 0, lax: 0, amanita: 0, sjw: 0, extreme: 0, warm: 0, pro: pro === true, coolOnly: coolOnly === true, ids: [], avoid: Array.isArray(avoid) ? avoid : [] };
 }
 
 // null when the herb may take a seat, otherwise the rule it would break.
@@ -62,12 +67,26 @@ function seatBlocker(load, h) {
   if (isAmanita(h) && load.amanita >= RULES.MAX_AMANITA) return 'AMANITA_LIMIT';
   if ((isAmanita(h) && load.sjw) || (P.isStJohnsWort(h) && load.amanita)) return 'AMANITA_WITH_ST_JOHNS_WORT';
   if (!load.pro && P.isExtremeCaution(h) && load.extreme >= RULES.MAX_EXTREME) return 'EXTREME_CAUTION_LIMIT';
+  if (load.coolOnly && P.isWarmingAromatic(h) && load.warm >= RULES.MAX_WARMING) return 'WARMING_LIMIT';
   // Herb pairs Robin ruled out (pair-rules.js, 2026-09-29).
   const pair = pairBlocker(h.id, load.ids, load.avoid);
   if (pair) return pair.cls === 'BLOCK' ? 'PAIR_BLOCK' : 'PAIR_CONDITIONAL';
   if ((load.cat[P.categoryOf(h)] || 0) >= RULES.MAX_PER_CATEGORY) return 'CATEGORY_CAP';
   return null;
 }
+
+// Coverage (Robin, 2026-10-02, verdict 7): the calming layer a client
+// ranked second was lost to digestion herbs. Each of the top two ranked
+// intentions keeps at least one herb whose MAIN recorded goal it is
+// (first in herbs.ts goals) — the picker swaps one in, the validator
+// rejects a MYCO bottle without one when the shortlist had one.
+const primaryGoal = h => (h && h._ax && h._ax.intentions[0]) || null;
+function coverageGoals(a) {
+  const wanted = Array.isArray(a && a.intentions) && a.intentions.length ? a.intentions : [a && a.intention];
+  return [...new Set([a && a.intention, wanted[1]].filter(Boolean))];
+}
+// The covered goals a list of herbs misses.
+const uncovered = (herbs, a) => coverageGoals(a).filter(g => !herbs.some(h => primaryGoal(h) === g));
 
 function seat(load, h) {
   const cat = P.categoryOf(h);
@@ -81,8 +100,9 @@ function seat(load, h) {
   if (isAmanita(h)) load.amanita += 1;
   if (P.isStJohnsWort(h)) load.sjw += 1;
   if (P.isExtremeCaution(h)) load.extreme += 1;
+  if (P.isWarmingAromatic(h)) load.warm += 1;
   load.ids.push(String(h.id));
   return load;
 }
 
-module.exports = { RULES, isAmanita, isSmallShare, newLoad, seatBlocker, seat };
+module.exports = { RULES, isAmanita, isSmallShare, newLoad, seatBlocker, seat, primaryGoal, coverageGoals, uncovered };

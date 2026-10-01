@@ -24,7 +24,11 @@
 //     SUB_COPY / INTENT_PHRASE / PATTERN_PHRASE constant maps
 // so the browser can be a pure rendering shell.
 
-const { shortNote } = require('./axes');
+const { shortNote, goalNote } = require('./axes');
+
+// The person's goals in ranked order — the reveal's line for each herb
+// names the function that serves them (axes.js goalNote, verdict 4).
+const goalsOf = p => [...new Set([p && p.intention].concat((p && p.intentions) || []).filter(Boolean))];
 const { checkFormulaPairs } = require('./interactions');
 const { traceReason } = require('./traces');
 const { isAmanita } = require('./pharmacology');
@@ -176,11 +180,9 @@ function stripLead(s) {
 // primary_functions[0] first clause, capped. Also lives client-side
 // as shortNote() in axes.js — here we keep a 120-char cap version
 // used by whyText's hero/second lines.
-function herbSummary(h) {
-  const src = (h.primary_functions && h.primary_functions[0])
-    || h.spiritual_layer
-    || h.pharmacology
-    || '';
+function herbSummary(h, goals) {
+  const src = goals && goals.length ? goalNote(h, goals)
+    : ((h.primary_functions && h.primary_functions[0]) || h.spiritual_layer || h.pharmacology || '');
   const s = stripLead(src);
   return s.length > 120 ? s.slice(0, 117) + '…' : s;
 }
@@ -199,10 +201,10 @@ function buildWhyText(profile, herbs, percentages) {
 
   const heroLine =
     '<strong style="color:var(--parchment);">' + esc(hero.h.name) + '</strong> takes the largest share (' +
-    esc(hero.pct) + '%) &mdash; ' + esc(herbSummary(hero.h).toLowerCase()) + '. ' +
+    esc(hero.pct) + '%) &mdash; ' + esc(herbSummary(hero.h, goalsOf(profile)).toLowerCase()) + '. ' +
     (second
       ? 'Woven in at ' + esc(second.pct) + '%, <strong style="color:var(--parchment);">' + esc(second.h.name) +
-        '</strong> holds the second thread &mdash; ' + esc(herbSummary(second.h).toLowerCase()) + '.'
+        '</strong> holds the second thread &mdash; ' + esc(herbSummary(second.h, goalsOf(profile)).toLowerCase()) + '.'
       : '');
   const restLine = rest.length
     ? 'The remaining allies (' + rest.map(x => esc(x.pct + '% ' + x.h.name)).join(', ') +
@@ -221,7 +223,8 @@ function buildWhyText(profile, herbs, percentages) {
   const small = withPct.map(x => {
     if (isAmanita(x.h)) return '<strong>' + esc(x.h.name) + '</strong> is held to 10% of the bottle or less by house rule.';
     const cap = Number(x.h.max_share_pct);
-    if (Number.isFinite(cap) && cap < 40) return '<strong>' + esc(x.h.name) + '</strong> is held to ' + cap + '% of the bottle or less: it is potent in flavour and effect, so a small share goes a long way.';
+    if (Number.isFinite(cap) && cap < 40) return '<strong>' + esc(x.h.name) + '</strong> is held to ' + cap + '% of the bottle or less: ' +
+      (x.h.max_share_note ? esc(x.h.max_share_note) + '.' : 'it is potent in flavour and effect, so a small share goes a long way.');
     const r = traceReason(x.h);
     return r ? '<strong>' + esc(x.h.name) + '</strong> is kept to a trace (4% or less): ' + esc(r.text) + '.' : null;
   }).filter(Boolean);
@@ -258,7 +261,7 @@ function buildDisplayBundle({ profile, enrichedHerbs, percentages }) {
       // arrays (primary_functions, secondary_benefits, energetics,
       // spiritual_layer, pharmacology, tcm_element, synergy, caution)
       // are dropped before the response leaves the server.
-      shortNote: shortNote(h),
+      shortNote: goalNote(h, goalsOf(profile)),
     })),
   };
 }
