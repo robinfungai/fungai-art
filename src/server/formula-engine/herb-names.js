@@ -96,6 +96,8 @@ const GERMAN_NAMES = {
   'Skullcap': ['helmkraut'], 'Motherwort': ['herzgespann'], 'Cinnamon': ['zimt', 'ceylon-zimt', 'ceylonzimt'],
   // Both cinnamons answer to "Zimt" - a note saying "kein Zimt" refuses both (2026-10-01).
   'Cassia Cinnamon': ['zimt', 'kassia', 'kassiazimt', 'zimtkassie', 'chinesischer zimt'],
+  'Gentian': ['enzian', 'gelber enzian', 'enzianwurzel'], 'Marshmallow Root': ['eibisch', 'eibischwurzel'],
+  'Agrimony': ['odermennig'], 'Blackberry Root': ['brombeere', 'brombeerwurzel', 'brombeerblätter'],
   'Cloves': ['nelken', 'gewürznelken'], 'Cardamom': ['kardamom'], 'Saffron': ['safran'],
   "Lion's Mane": ['igelstachelbart'], 'Birch Buds': ['birkenknospen'], 'Horsetail': ['schachtelhalm', 'zinnkraut'],
   'Calendula': ['ringelblume'], 'Echinacea': ['sonnenhut'], 'Juniper': ['wacholder'],
@@ -131,6 +133,7 @@ const EXTRA_NAMES = {
   'Licorice Root': ['liquorice', 'glycyrrhizin'],
   'Chamomile': ['camomile'],
   'Cassia Cinnamon': ['cassia'],
+  'Marshmallow Root': ['marshmallow', 'althea'], 'Blackberry Root': ['blackberry'],
   'Ashwagandha': ['indian ginseng', 'winter cherry'],
   'Rhodiola': ['golden root', 'roseroot', 'rose root', 'arctic root'],
   'Schisandra (Five-Flavour Fruit)': ['schizandra', 'wu wei zi', 'magnolia vine'],

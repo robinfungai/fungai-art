@@ -3249,6 +3249,306 @@ export const HERBS: Herb[] = [
     },
     evidence_grade: 'B',
   },
+  {
+    // Added 2026-10-01 from Robin's digestive-actions list.
+    id: 598,
+    name: 'Gentian',
+    trace_class: 'bitter', // intensely bitter - a trace herb (4%, 7% with another trace)
+    aliases: ['Yellow gentian','gentian root','great yellow gentian'],
+    goals: ['digestion','detox'],
+    botanical: 'Gentiana lutea (root — yellow gentian)',
+    tcm_meridians: ['Liver','Gallbladder','Stomach'],
+    tcm_element: 'Wood',
+    energetics: ['Cold','Very Bitter','Drying','Descending'],
+    primary_functions: [
+      'Digestive bitter — intensely bitter secoiridoids (gentiopicroside, amarogentin) stimulate appetite, gastric secretion and bile flow',
+      'Bitter tonic for weak digestion — traditional for poor appetite, sluggish digestion and fullness after meals',
+      'Cholagogue — supports bile flow (traditional; little clinical data)',
+    ],
+    secondary_benefits: [
+      'The classic aperitif and digestif bitter of European tradition',
+      'Vascular and metabolic effects studied mostly in the laboratory (reviews, not clinical)',
+    ],
+    pharmacology:
+      'Primary bioactives: bitter secoiridoid glycosides — gentiopicroside, swertiamarin, sweroside and amarogentin, among the most bitter natural compounds known — and xanthones (gentisin, isogentisin). Bitters act through taste receptors and cephalic-phase digestive reflexes (McMullen 2015, PMID 26074998). Phytochemistry and bioactivity reviewed systematically (Ponticelli 2023, PMID 36423749); vascular effects mostly preclinical (PMID 32469702). Evidence grade C — long traditional use, little clinical data.',
+    flavor_profile: 'Intensely bitter — the reference bitter of European herbalism',
+    contraindications: [
+      'Gastric or duodenal ulcer, hyperacidity — bitters increase gastric secretion; avoid',
+      'Pregnancy and breastfeeding — insufficient safety data; avoid',
+      'Children — not advised (insufficient data)',
+      'High doses — may cause nausea or stomach upset',
+    ],
+    herb_to_herb_synergy: [
+      'Dandelion Root and Artichoke Extract — classic bitter digestive combination',
+      'Ginger and Cardamom — warming carminatives soften the cold bitterness',
+    ],
+    herb_to_herb_caution: [
+      'Other strong bitters (Wormwood, Goldenseal) — stacked bitterness; a bottle holds at most two trace herbs',
+    ],
+    herb_to_drug_interactions: [
+      'Acid-suppressing medicines (proton-pump inhibitors, H2 blockers) — bitters work against them; take advice',
+    ],
+    herb_interactions: [
+      'Synergy: Dandelion Root, Artichoke Extract, Ginger, Cardamom',
+      'Caution: other strong bitters',
+      'Drug interactions: acid-suppressing medicines',
+    ],
+    dosage_range:
+      'Extract: 10–20 drops 15–30 minutes before meals — an intense bitter, a little is enough. Tea: up to 1 g dried root per cup before meals. Short courses.',
+    spiritual_layer:
+      'Gentian is the mountain bitter — a tall yellow flower of high meadows whose root holds one of the bitterest tastes in nature. It wakes the appetite the way cold air wakes the body: briefly, sharply, and for the good of what follows.',
+    best_preparation:
+      'Tincture or cold-steeped root, taken before meals so the bitterness reaches the tongue. In this house it stays a trace — intensely bitter.',
+    caution_level: 'LOW-MEDIUM',
+    cns_action: 'neutral',
+    cns_evidence: 'No CNS action in its records — a digestive bitter.',
+    safe_pregnancy: false,
+    status:
+      'The reference European digestive bitter. Good traditional evidence for appetite and digestion, little clinical data. Avoid with ulcers or hyperacidity, in pregnancy and in children.',
+    // PubMed, fetched and checked 2026-10-01
+    references: [
+      'Ponticelli M, Lela L, Moles M, et al. The healing bitterness of Gentiana lutea L., phytochemistry and biological activities: A systematic review. Phytochemistry. 2023. PMID 36423749',
+      'McMullen MK, Whitehouse JM, Towell A. Bitters: Time for a New Paradigm. Evid Based Complement Alternat Med. 2015. PMID 26074998',
+      'Joksic G, Radak D, Sudar-Milovanovic E, et al. Effects of Gentiana lutea Root on Vascular Diseases. Curr Vasc Pharmacol. 2021. PMID 32469702',
+    ],
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired'],
+    digestion_fit: ['bitter','cooling'],
+    regional_affinity: ['gut','liver'],
+    onset_time: 'immediate',
+    family: 'Gentianaceae',
+    epithet: 'The mountain bitter',
+    origin_region: 'European',
+    ecology: {
+      native_range: ['Central and Southern European mountains'],
+      biomes: ['MOUNTAIN','MEADOW'],
+      source: 'derived',
+    },
+    evidence_grade: 'C',
+  },
+  {
+    // Added 2026-10-01 from Robin's digestive-actions list.
+    id: 599,
+    name: 'Marshmallow Root',
+    aliases: ['Althaea','marsh mallow','Althaea root'],
+    goals: ['digestion'],
+    botanical: 'Althaea officinalis (root)',
+    tcm_meridians: ['Lung','Stomach','Large Intestine'],
+    tcm_element: 'Water + Metal',
+    energetics: ['Cool','Moist','Sweet','Demulcent','Soothing'],
+    primary_functions: [
+      'Demulcent — root mucilage (polysaccharides) coats and soothes irritated mucous membranes of the mouth, throat and gut',
+      'Soothes an inflamed gut lining — traditional for gastritis, reflux discomfort and an irritated bowel',
+      'Dry, irritating cough — mucilage soothes the throat (reviewed; mostly traditional and small studies)',
+    ],
+    secondary_benefits: [
+      'Urinary tract soothing (traditional demulcent)',
+      'Skin and wound soothing as a poultice (traditional)',
+    ],
+    pharmacology:
+      'Primary bioactives: mucilage — water-soluble polysaccharides that form a protective film on mucous membranes (structure and bioactivity reviewed: Xue 2023, PMID 37245776) — with pectin, starch, flavonoids and phenolic acids. Use for cough reviewed (Mahboubi 2020, PMID 31770755). Evidence grade C.',
+    flavor_profile: 'Mild, sweet and slippery',
+    contraindications: [
+      'Other oral medicines — mucilage can slow their absorption; take them about 1 hour apart',
+      'Diabetes medications — may lower blood sugar (limited data); monitor',
+      'Pregnancy and breastfeeding — insufficient data; avoid medicinal doses',
+    ],
+    herb_to_herb_synergy: [
+      'Slippery Elm Bark and Licorice Root — demulcent trio for an irritated gut',
+      'Chamomile — soothing and antispasmodic for an inflamed gut',
+      'Meadowsweet — protects the stomach lining',
+    ],
+    herb_to_herb_caution: [
+      'Herbs taken at the same moment — their absorption may be slowed by the mucilage',
+    ],
+    herb_to_drug_interactions: [
+      'All oral medicines — mucilage may delay absorption; separate by about 1 hour',
+      'Diabetes medications — possible additive glucose lowering; monitor',
+    ],
+    herb_interactions: [
+      'Synergy: Slippery Elm Bark, Licorice Root, Chamomile, Meadowsweet',
+      'Caution: anything taken at the same time (slowed absorption)',
+      'Drug interactions: oral medicines (separate by an hour), diabetes medications (monitor)',
+    ],
+    dosage_range:
+      'Cold infusion: 2–5 g root soaked in cold water for 1–2 hours, then strained — cold water draws the mucilage and leaves the starch. Extract (glycerite or low-alcohol): 2–4 ml up to 3× daily.',
+    spiritual_layer:
+      'Marshmallow is the soft hand — a tall pale plant of salt marshes whose root turns water into balm. It does not fight; it covers, cools and lets the raw places rest.',
+    best_preparation:
+      'Cold maceration in water — mucilage dissolves in cold water, heat draws starch. Glycerites and low-alcohol extracts keep more mucilage than strong tinctures.',
+    caution_level: 'LOW',
+    cns_action: 'neutral',
+    cns_evidence: 'No CNS action in its records — a soothing demulcent.',
+    safe_pregnancy: null,
+    status:
+      'A gentle, well-tolerated demulcent for an irritated gut and throat. Traditional evidence with supportive reviews. Separate it from oral medicines by about an hour.',
+    // PubMed, fetched and checked 2026-10-01
+    references: [
+      'Xue T, Ruan K, Tang Z, et al. Isolation, structural properties, and bioactivities of polysaccharides from Althaea officinalis Linn.: A review. Int J Biol Macromol. 2023. PMID 37245776',
+      'Mahboubi M. Marsh Mallow (Althaea officinalis L.) and Its Potency in the Treatment of Cough. Complement Med Res. 2020. PMID 31770755',
+    ],
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['reactive'],
+    digestion_fit: ['cooling','demulcent'],
+    regional_affinity: ['gut','chest'],
+    onset_time: 'immediate',
+    family: 'Malvaceae',
+    epithet: 'The soft hand',
+    origin_region: 'European',
+    ecology: {
+      native_range: ['Europe','Western Asia'],
+      biomes: ['MEADOW','COAST'],
+      source: 'derived',
+    },
+    evidence_grade: 'C',
+  },
+  {
+    // Added 2026-10-01 from Robin's digestive-actions list.
+    id: 600,
+    name: 'Agrimony',
+    aliases: ['Common agrimony','church steeples'],
+    goals: ['digestion'],
+    botanical: 'Agrimonia eupatoria (aerial parts)',
+    tcm_meridians: ['Spleen','Liver','Large Intestine'],
+    tcm_element: 'Earth + Metal',
+    energetics: ['Cool','Dry','Astringent','Mildly Bitter'],
+    primary_functions: [
+      'Astringent — tannins tone lax gut tissue; traditional for mild, non-specific diarrhoea',
+      'Mild bitter — supports digestion and bile flow (traditional)',
+      'Liver markers — in an 8-week randomised, placebo-controlled trial of 80 adults with mildly raised ALT, the extract lowered ALT and triglycerides (Cho 2018)',
+    ],
+    secondary_benefits: [
+      'Gargle for a sore throat (traditional astringent)',
+      'Topical astringent for minor skin irritation (traditional)',
+    ],
+    pharmacology:
+      'Primary bioactives: tannins (ellagitannins such as agrimoniin), flavonoids and triterpenes — reviewed in Paluch 2020 (PMID 33646008). Randomised, double-blind trial: aqueous extract for 8 weeks in adults with elevated ALT reduced ALT and serum triglycerides versus placebo, no severe adverse events (Cho 2018, PMID 29486131). Evidence grade C+.',
+    flavor_profile: 'Astringent, mildly bitter, faintly apricot-scented',
+    contraindications: [
+      'Constipation — astringent; avoid',
+      'High doses or long use — tannins can irritate the stomach and bind iron and other minerals',
+      'Pregnancy and breastfeeding — insufficient data; avoid',
+    ],
+    herb_to_herb_synergy: [
+      'Chamomile — soothing alongside the astringent for an unsettled gut',
+      'Meadowsweet — gentle gut protection and tone',
+    ],
+    herb_to_herb_caution: [
+      'Other strong astringents (Blackberry Root, Raspberry Leaf) — stacked tannins; constipation',
+    ],
+    herb_to_drug_interactions: [
+      'Oral iron and other medicines — tannins may bind them; take about 2 hours apart',
+    ],
+    herb_interactions: [
+      'Synergy: Chamomile, Meadowsweet',
+      'Caution: other strong astringents',
+      'Drug interactions: oral iron and other medicines (separate by 2 hours)',
+    ],
+    dosage_range:
+      'Tea: 2–4 g dried herb per cup, up to 3× daily. Extract: 1–3 ml up to 3× daily.',
+    spiritual_layer:
+      'Agrimony is the church steeple of the meadow — a spire of small yellow flowers that tightens what has gone slack and holds what wants to run.',
+    best_preparation:
+      'Infusion of the dried flowering tops, or a tincture. Short courses for loose stools; as a gargle for the throat.',
+    caution_level: 'LOW',
+    cns_action: 'neutral',
+    cns_evidence: 'No CNS action in its records — an astringent digestive.',
+    safe_pregnancy: null,
+    status:
+      'A gentle astringent for mild, non-specific diarrhoea, with one controlled trial on liver markers. Avoid with constipation; separate from iron.',
+    // PubMed, fetched and checked 2026-10-01
+    references: [
+      'Paluch Z, Biriczová L, Pallag G, et al. The therapeutic effects of Agrimonia eupatoria L. Physiol Res. 2020. PMID 33646008',
+      'Cho YM, Kwon JE, Lee M, et al. Agrimonia eupatoria L. (Agrimony) Extract Alters Liver Health in Subjects with Elevated Alanine Transaminase Levels: A Controlled, Randomized, and Double-Blind Trial. J Med Food. 2018. PMID 29486131',
+    ],
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['steady'],
+    digestion_fit: ['astringent','bitter','cooling'],
+    regional_affinity: ['gut','liver'],
+    onset_time: 'immediate',
+    family: 'Rosaceae',
+    epithet: 'The church steeple',
+    origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['MEADOW'],
+      source: 'derived',
+    },
+    evidence_grade: 'C+',
+  },
+  {
+    // Added 2026-10-01 from Robin's digestive-actions list.
+    id: 601,
+    name: 'Blackberry Root',
+    aliases: ['Bramble root','blackberry leaf','bramble'],
+    goals: ['digestion'],
+    botanical: 'Rubus fruticosus (root bark and leaf — blackberry)',
+    tcm_meridians: ['Large Intestine','Spleen'],
+    tcm_element: 'Metal',
+    energetics: ['Cool','Dry','Strongly Astringent'],
+    primary_functions: [
+      'Astringent — tannin-rich root bark and leaf tone lax gut tissue; traditional for mild diarrhoea',
+      'Gargle and mouthwash for an inflamed mouth or throat (traditional astringent)',
+    ],
+    secondary_benefits: [
+      'Leaf tea as a gentle astringent and a source of antioxidant polyphenols',
+    ],
+    pharmacology:
+      'Primary bioactives: hydrolysable tannins (ellagitannins), flavonoids and phenolic acids — the root bark richest in tannins, the leaf milder. Reviews: Zia-Ul-Haq 2014 (PMID 25072202), Verma 2014 (PMID 25125882). Evidence grade C — traditional use.',
+    flavor_profile: 'Strongly astringent, earthy',
+    contraindications: [
+      'Constipation — strongly astringent; avoid',
+      'Diarrhoea lasting more than 3 days, or with fever or blood — see a doctor; not for self-treatment',
+      'High doses — tannins can irritate the stomach',
+      'Pregnancy — insufficient data on the root; avoid medicinal doses',
+    ],
+    herb_to_herb_synergy: [
+      'Chamomile — soothing and antispasmodic beside the astringent',
+      'Marshmallow Root — coats while the astringent tones',
+    ],
+    herb_to_herb_caution: [
+      'Other strong astringents (Agrimony, Raspberry Leaf) — stacked tannins; constipation',
+    ],
+    herb_to_drug_interactions: [
+      'Oral iron and other medicines — tannins may bind them; take about 2 hours apart',
+    ],
+    herb_interactions: [
+      'Synergy: Chamomile, Marshmallow Root',
+      'Caution: other strong astringents',
+      'Drug interactions: oral iron and other medicines (separate by 2 hours)',
+    ],
+    dosage_range:
+      'Root decoction: 1–2 g per cup, simmered 10–15 minutes, up to 3× daily for short periods. Leaf tea: 2–4 g per cup.',
+    spiritual_layer:
+      'Blackberry is the bramble — the hedge that holds the field together. Its root draws tight what has loosened, as its thorns hold the edge of the wood.',
+    best_preparation:
+      'Decoction of the root bark for its tannins; infusion of the leaf for a milder astringent. Short courses only.',
+    caution_level: 'LOW',
+    cns_action: 'neutral',
+    cns_evidence: 'No CNS action in its records — an astringent.',
+    safe_pregnancy: null,
+    status:
+      'A strong traditional astringent for mild, short-lived diarrhoea and as a gargle. Traditional evidence. Avoid with constipation; separate from iron.',
+    // PubMed, fetched and checked 2026-10-01
+    references: [
+      'Zia-Ul-Haq M, Riaz M, De Feo V, et al. Rubus fruticosus L.: constituents, biological activities and health related uses. Molecules. 2014. PMID 25072202',
+      'Verma R, Gangrade T, Punasiya R, et al. Rubus fruticosus (blackberry) use as an herbal medicine. Pharmacogn Rev. 2014. PMID 25125882',
+    ],
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['steady'],
+    digestion_fit: ['astringent','cooling'],
+    regional_affinity: ['gut'],
+    onset_time: 'immediate',
+    family: 'Rosaceae',
+    epithet: 'The bramble',
+    origin_region: 'European',
+    ecology: {
+      native_range: ['Europe'],
+      biomes: ['FOREST','MEADOW'],
+      source: 'derived',
+    },
+    evidence_grade: 'C',
+  },
 
   // ─────────────────────────────────────────────
   // CLOVES

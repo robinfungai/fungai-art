@@ -10,6 +10,16 @@
   "k": "plant"
  },
  {
+  "id": "agrimony",
+  "n": "Agrimony",
+  "b": "Agrimonia eupatoria",
+  "cat": "Digestive",
+  "p": [
+   "european"
+  ],
+  "k": "plant"
+ },
+ {
   "id": "aguaje",
   "n": "Aguaje",
   "b": "Mauritia flexuosa",
@@ -327,6 +337,16 @@
   ],
   "k": "plant",
   "restricted": true
+ },
+ {
+  "id": "blackberry_root",
+  "n": "Blackberry Root",
+  "b": "Rubus fruticosus",
+  "cat": "Tonic",
+  "p": [
+   "european"
+  ],
+  "k": "plant"
  },
  {
   "id": "bladderwrack",
@@ -944,6 +964,16 @@
   ],
   "k": "plant",
   "restricted": true
+ },
+ {
+  "id": "gentian",
+  "n": "Gentian",
+  "b": "Gentiana lutea",
+  "cat": "Digestive",
+  "p": [
+   "european"
+  ],
+  "k": "plant"
  },
  {
   "id": "ginger",
@@ -1592,6 +1622,16 @@
   "n": "Marjoram (Sweet Marjoram)",
   "b": "Origanum majorana",
   "cat": "Nervine",
+  "p": [
+   "european"
+  ],
+  "k": "plant"
+ },
+ {
+  "id": "marshmallow_root",
+  "n": "Marshmallow Root",
+  "b": "Althaea officinalis",
+  "cat": "Tonic",
   "p": [
    "european"
   ],

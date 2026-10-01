@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-01T21:10:05.088Z",
+  "generatedAt": "2026-10-01T21:40:23.770Z",
   "counts": {
-    "botanicals": 248,
+    "botanicals": 252,
     "monographs": 128,
     "monographsMatched": 128,
     "products": 21,
@@ -331,6 +331,42 @@
       "latin": "Cinnamomum cassia",
       "genus": "Cinnamomum",
       "species": "cassia"
+    },
+    {
+      "id": 598,
+      "slug": "gentian",
+      "name": "Gentian",
+      "botanical": "Gentiana lutea (root — yellow gentian)",
+      "latin": "Gentiana lutea",
+      "genus": "Gentiana",
+      "species": "lutea"
+    },
+    {
+      "id": 599,
+      "slug": "marshmallow-root",
+      "name": "Marshmallow Root",
+      "botanical": "Althaea officinalis (root)",
+      "latin": "Althaea officinalis",
+      "genus": "Althaea",
+      "species": "officinalis"
+    },
+    {
+      "id": 600,
+      "slug": "agrimony",
+      "name": "Agrimony",
+      "botanical": "Agrimonia eupatoria (aerial parts)",
+      "latin": "Agrimonia eupatoria",
+      "genus": "Agrimonia",
+      "species": "eupatoria"
+    },
+    {
+      "id": 601,
+      "slug": "blackberry-root",
+      "name": "Blackberry Root",
+      "botanical": "Rubus fruticosus (root bark and leaf — blackberry)",
+      "latin": "Rubus fruticosus",
+      "genus": "Rubus",
+      "species": "fruticosus"
     },
     {
       "id": 228,

@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-10-01T21:10:06.352Z",
+  "generatedAt": "2026-10-01T21:40:25.771Z",
   "counts": {
-    "botanicals": 248,
-    "rules": 2475,
+    "botanicals": 252,
+    "rules": 2502,
     "byType": {
-      "contraindication": 1205,
-      "drug_interaction": 675,
-      "herb_interaction": 353,
-      "record": 242
+      "contraindication": 1219,
+      "drug_interaction": 680,
+      "herb_interaction": 357,
+      "record": 246
     },
     "bySeverity": {
-      "unspecified": 1106,
+      "unspecified": 1120,
       "caution": 336,
-      "monitor": 373,
-      "avoid": 531,
+      "monitor": 375,
+      "avoid": 542,
       "absolute": 129
     }
   },
@@ -1134,6 +1134,18 @@
       "cardio_meds",
       "liver_kidney",
       "pregnancy"
+    ],
+    "598": [
+      "pregnancy"
+    ],
+    "599": [
+      "pregnancy"
+    ],
+    "600": [
+      "pregnancy"
+    ],
+    "601": [
+      "pregnancy"
     ]
   },
   "flagsPerRuleByBotanicalId": {
@@ -2246,6 +2258,18 @@
     "597": [
       "cardio_meds",
       "liver_kidney",
+      "pregnancy"
+    ],
+    "598": [
+      "pregnancy"
+    ],
+    "599": [
+      "pregnancy"
+    ],
+    "600": [
+      "pregnancy"
+    ],
+    "601": [
       "pregnancy"
     ]
   },
@@ -6962,6 +6986,319 @@
       "subject": "Pregnancy and breastfeeding",
       "severity": "avoid",
       "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:598:contraindication:1",
+      "botanicalId": 598,
+      "botanical": "Gentian",
+      "ruleType": "contraindication",
+      "subject": "Gastric or duodenal ulcer, hyperacidity",
+      "severity": "avoid",
+      "reason": "bitters increase gastric secretion; avoid",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:598:contraindication:2",
+      "botanicalId": 598,
+      "botanical": "Gentian",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "insufficient safety data; avoid",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:598:contraindication:3",
+      "botanicalId": 598,
+      "botanical": "Gentian",
+      "ruleType": "contraindication",
+      "subject": "Children",
+      "severity": "unspecified",
+      "reason": "not advised (insufficient data)",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:598:contraindication:4",
+      "botanicalId": 598,
+      "botanical": "Gentian",
+      "ruleType": "contraindication",
+      "subject": "High doses",
+      "severity": "unspecified",
+      "reason": "may cause nausea or stomach upset",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:598:drug_interaction:1",
+      "botanicalId": 598,
+      "botanical": "Gentian",
+      "ruleType": "drug_interaction",
+      "subject": "Acid-suppressing medicines (proton-pump inhibitors, H2 blockers)",
+      "severity": "unspecified",
+      "reason": "bitters work against them; take advice",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:598:herb_interaction:1",
+      "botanicalId": 598,
+      "botanical": "Gentian",
+      "ruleType": "herb_interaction",
+      "subject": "Other strong bitters (Wormwood, Goldenseal)",
+      "severity": "unspecified",
+      "reason": "stacked bitterness; a bottle holds at most two trace herbs",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:598:record:pregnancy",
+      "botanicalId": 598,
+      "botanical": "Gentian",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:599:contraindication:1",
+      "botanicalId": 599,
+      "botanical": "Marshmallow Root",
+      "ruleType": "contraindication",
+      "subject": "Other oral medicines",
+      "severity": "unspecified",
+      "reason": "mucilage can slow their absorption; take them about 1 hour apart",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:599:contraindication:2",
+      "botanicalId": 599,
+      "botanical": "Marshmallow Root",
+      "ruleType": "contraindication",
+      "subject": "Diabetes medications",
+      "severity": "monitor",
+      "reason": "may lower blood sugar (limited data); monitor",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:599:contraindication:3",
+      "botanicalId": 599,
+      "botanical": "Marshmallow Root",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "insufficient data; avoid medicinal doses",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:599:drug_interaction:1",
+      "botanicalId": 599,
+      "botanical": "Marshmallow Root",
+      "ruleType": "drug_interaction",
+      "subject": "All oral medicines",
+      "severity": "unspecified",
+      "reason": "mucilage may delay absorption; separate by about 1 hour",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:599:drug_interaction:2",
+      "botanicalId": 599,
+      "botanical": "Marshmallow Root",
+      "ruleType": "drug_interaction",
+      "subject": "Diabetes medications",
+      "severity": "monitor",
+      "reason": "possible additive glucose lowering; monitor",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:599:herb_interaction:1",
+      "botanicalId": 599,
+      "botanical": "Marshmallow Root",
+      "ruleType": "herb_interaction",
+      "subject": "Herbs taken at the same moment",
+      "severity": "unspecified",
+      "reason": "their absorption may be slowed by the mucilage",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:599:record:pregnancy",
+      "botanicalId": 599,
+      "botanical": "Marshmallow Root",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:600:contraindication:1",
+      "botanicalId": 600,
+      "botanical": "Agrimony",
+      "ruleType": "contraindication",
+      "subject": "Constipation",
+      "severity": "avoid",
+      "reason": "astringent; avoid",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:600:contraindication:2",
+      "botanicalId": 600,
+      "botanical": "Agrimony",
+      "ruleType": "contraindication",
+      "subject": "High doses or long use",
+      "severity": "unspecified",
+      "reason": "tannins can irritate the stomach and bind iron and other minerals",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:600:contraindication:3",
+      "botanicalId": 600,
+      "botanical": "Agrimony",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "insufficient data; avoid",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:600:drug_interaction:1",
+      "botanicalId": 600,
+      "botanical": "Agrimony",
+      "ruleType": "drug_interaction",
+      "subject": "Oral iron and other medicines",
+      "severity": "unspecified",
+      "reason": "tannins may bind them; take about 2 hours apart",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:600:herb_interaction:1",
+      "botanicalId": 600,
+      "botanical": "Agrimony",
+      "ruleType": "herb_interaction",
+      "subject": "Other strong astringents (Blackberry Root, Raspberry Leaf)",
+      "severity": "unspecified",
+      "reason": "stacked tannins; constipation",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:600:record:pregnancy",
+      "botanicalId": 600,
+      "botanical": "Agrimony",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:601:contraindication:1",
+      "botanicalId": 601,
+      "botanical": "Blackberry Root",
+      "ruleType": "contraindication",
+      "subject": "Constipation",
+      "severity": "avoid",
+      "reason": "strongly astringent; avoid",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:601:contraindication:2",
+      "botanicalId": 601,
+      "botanical": "Blackberry Root",
+      "ruleType": "contraindication",
+      "subject": "Diarrhoea lasting more than 3 days, or with fever or blood",
+      "severity": "unspecified",
+      "reason": "see a doctor; not for self-treatment",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:601:contraindication:3",
+      "botanicalId": 601,
+      "botanical": "Blackberry Root",
+      "ruleType": "contraindication",
+      "subject": "High doses",
+      "severity": "unspecified",
+      "reason": "tannins can irritate the stomach",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:601:contraindication:4",
+      "botanicalId": 601,
+      "botanical": "Blackberry Root",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "avoid",
+      "reason": "insufficient data on the root; avoid medicinal doses",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:601:drug_interaction:1",
+      "botanicalId": 601,
+      "botanical": "Blackberry Root",
+      "ruleType": "drug_interaction",
+      "subject": "Oral iron and other medicines",
+      "severity": "unspecified",
+      "reason": "tannins may bind them; take about 2 hours apart",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:601:herb_interaction:1",
+      "botanicalId": 601,
+      "botanical": "Blackberry Root",
+      "ruleType": "herb_interaction",
+      "subject": "Other strong astringents (Agrimony, Raspberry Leaf)",
+      "severity": "unspecified",
+      "reason": "stacked tannins; constipation",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:601:record:pregnancy",
+      "botanicalId": 601,
+      "botanical": "Blackberry Root",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
       "flags": [
         "pregnancy"
       ],
