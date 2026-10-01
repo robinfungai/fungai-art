@@ -84,11 +84,15 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 Waiting for Robin's "push": lab-notebook grid; Herbalism Module PDF removed from the site (copy at
 `Desktop/fungai art/`); PDF title fallback; Atlas SOURCES tab + "N PubMed sources" badge; kidney-bean
-icon as inline SVG (Windows 10 has no 🫘); **Pro quiz in clinical wording** (labels only, values
-unchanged); **client profile** — `client-profile.js` prints every answer + note + MYCO's reading in
+icon as inline SVG (Windows 10 has no 🫘); Pro quiz clinical wording tried and **reverted** (Robin
+wants the consumer quiz's questions; values were never changed); **client profile** — `client-profile.js` prints every answer + note + MYCO's reading in
 Robin's reservation email (no name/email/city), and /formula-analysis has a "+ Client profile" field
 MYCO reads ("For this client"); **Cassia Cinnamon (597)** added everywhere, Cinnamon (227) now Ceylon
-only, "Zimt"/"cinnamon" refuse both. Antigravity's curriculum (3 Academy buttons, curriculum pages,
+only, "Zimt"/"cinnamon" refuse both; **Gentian, Marshmallow Root, Agrimony, Blackberry Root
+(598–601)** added everywhere — **252 herbs**; PubMed added for Cardamom, Black Cardamom, Rose Petals;
+Mixology opens the exact-name record first. Mixology shows 277 cards = 252 catalogue + 18
+deliberate non-catalogue cards (Cannabis, San Pedro, Cramp Bark…) + 7 variant cards (Nettle Root…).
+MYCO's request list: Cramp Bark, Elecampane, Wood Sorrel, Spruce, Bobinsana Leaf. Antigravity's curriculum (3 Academy buttons, curriculum pages,
 scripts, its edits to the brief) is NOT committed — Robin decides when.
 
 ---
