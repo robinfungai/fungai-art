@@ -717,11 +717,13 @@ const TCM_MERIDIANS = ['All meridians','Lung','Large Intestine','Stomach','Splee
 
 function getDB(herbName){
   if(typeof window.HERB_DB === 'undefined') return null;
-  return window.HERB_DB.find(d => {
-    const dn = d.name.toLowerCase().replace(/[^a-z]/g,'');
-    const hn = herbName.toLowerCase().replace(/[^a-z]/g,'');
-    return dn === hn || dn.includes(hn) || hn.includes(dn);
-  }) || null;
+  const key = s => String(s||'').toLowerCase().replace(/[^a-z]/g,'');
+  const hn = key(herbName);
+  // An exact name wins over a partial one — "Black Cardamom" used to open
+  // Cardamom, the first record whose name it contains (2026-10-01).
+  return window.HERB_DB.find(d => key(d.name) === hn)
+    || window.HERB_DB.find(d => { const dn = key(d.name); return dn.includes(hn) || hn.includes(dn); })
+    || null;
 }
 
 // Build Traditions & Philosophies bar

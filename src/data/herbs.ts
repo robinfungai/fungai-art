@@ -2258,6 +2258,12 @@ export const HERBS: Herb[] = [
       source: 'derived',
     },
     evidence_grade: 'B',
+    // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+    references: [
+      'Shekarchizadeh-Esfahani P, Arab A, Ghaedi E, et al. Effects of cardamom supplementation on lipid profile: A systematic review and meta-analysis of randomized controlled clinical trials. Phytother Res. 2020. PMID 31755188',
+      'Nameni G, Moradi Y, Zaroudi M, et al. Effect of cardamom supplementation on a number of metabolic factors: A systematic review and meta-analysis. Diabetes Metab Syndr. 2022. PMID 35691204',
+      'Daneshi-Maskooni M, Keshavarz SA, Qorbani M, et al. Green cardamom supplementation improves serum irisin, glucose indices, and lipid profiles in overweight or obese non-alcoholic fatty liver disease patients: a double-blind randomized placebo-controlled clinical trial. BMC Complement Altern Med. 2019. PMID 30871514',
+    ],
   },
 
   // ─────────────────────────────────────────────
@@ -10148,6 +10154,8 @@ export const HERBS: Herb[] = [
     // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
     references: [
       'Mileva M, Ilieva Y, Jovtchev G, et al. Rose Flowers-A Delicate Perfume or a Natural Healer?. Biomolecules. 2021. PMID 33478154',
+      'Wang H. Beneficial medicinal effects and material applications of rose. Heliyon. 2024. PMID 38169957',
+      'Mohebitabar S, Shirazi M, Bioos S, et al. Therapeutic efficacy of rose oil: A comprehensive review of clinical evidence. Avicenna J Phytomed. 2017. PMID 28748167',
     ],
   },
 
@@ -13117,6 +13125,11 @@ export const HERBS: Herb[] = [
       source: 'derived',
     },
   evidence_grade: 'traditional',
+  // PubMed, fetched and checked 2026-10-01 (TOP-HERBS.md pass)
+  references: [
+    'Kumar A, Kumar SS. A comprehensive review on phytoconstituents, health benefits and post-harvest processing of Amomum subulatum Roxb. J Food Sci Technol. 2026. PMID 41788440',
+    'Thomas JV, Mohan ME, Das SS, et al. A full-spectrum aqueous extract of black cardamom (Amomum subulatum) improves focus/alertness and executive function: a randomized, double-blinded, placebo- and active-controlled, comparative study in healthy working-class participants. Front Neurosci. 2026. PMID 42027681',
+  ],
 },
 {
   id: 412,
