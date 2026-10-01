@@ -3565,6 +3565,7 @@ function AdminPage({ onToast, currentMember }) {
       {PortalKeeper && <PortalKeeper.EventsEditor onToast={onToast} freqColors={FREQ_COLORS} />}
       {PortalKeeper && <PortalKeeper.AnnouncementsEditor onToast={onToast} />}
       {PortalKeeper && <PortalKeeper.FiguresEditor onToast={onToast} />}
+      {PortalKeeper && PortalKeeper.FormulaFlagsBook && <PortalKeeper.FormulaFlagsBook onToast={onToast} />}
 
       {/* Self-identity tools — make it easy to link this signed-in account to
           the right hardcoded MEMBERS entry without back-and-forth. */}

@@ -626,5 +626,133 @@
     );
   }
 
-  window.PortalKeeper = { KeeperAlerts, AnnouncementsEditor, FiguresEditor, EventsEditor, RankSelect, useKeeperAlerts, refreshAlerts };
+  /* ── Formula e-book · flagged (Robin, 2026-10-02) ───────────────
+     Formulas flagged with "⚑ Flag this formula" (formula-flag.js) in
+     the pro composer and the formula analysis. Admin-only by RLS
+     (supabase-formula-flags-2026-10-02.sql). Mark each one explained or
+     fixed, with a note; the MYCO monthly digest proposes a fix for the
+     open ones. */
+  const FLAG_TAGS = { relevance: 'Relevance', hierarchy: 'Hierarchy', extraction: 'Extraction', identity: 'Ingredient identity', safety: 'Safety', other: 'Other' };
+  const answerLines = a => !a || typeof a !== 'object' ? [] : Object.keys(a)
+    .filter(k => a[k] !== null && a[k] !== '' && !(Array.isArray(a[k]) && !a[k].length) && !/^_/.test(k))
+    .map(k => k.replace(/_/g, ' ') + ': ' + (Array.isArray(a[k]) ? a[k].join(', ') : typeof a[k] === 'object' ? JSON.stringify(a[k]) : String(a[k])));
+
+  function FormulaFlagsBook({ onToast }) {
+    const [rows, setRows] = useState(null);
+    const [err, setErr] = useState(null);
+    const [show, setShow] = useState('open');
+    const [open, setOpen] = useState(null);
+    const [notes, setNotes] = useState({});
+    const toast = m => onToast && onToast(m);
+
+    async function load() {
+      if (window.SBready) { try { await window.SBready; } catch (_) {} }
+      if (!sb()) { setErr('Sign-in is not available.'); return; }
+      let q = sb().from('formula_flags').select('*').order('created_at', { ascending: false }).limit(100);
+      if (show !== 'all') q = q.eq('status', show);
+      const { data, error } = await q;
+      if (error) { setErr(missingTable(error) ? 'missing' : error.message); setRows([]); return; }
+      setErr(null); setRows(data || []);
+    }
+    useEffect(() => { load(); }, [show]);
+
+    async function mark(f, status) {
+      const note = notes[f.id] != null ? notes[f.id] : (f.admin_note || '');
+      const { error } = await sb().from('formula_flags').update({
+        status, admin_note: note.trim().slice(0, 2000) || null,
+        resolved_at: status === 'open' ? null : new Date().toISOString(),
+      }).eq('id', f.id);
+      if (error) { toast('Not saved: ' + error.message); return; }
+      toast(status === 'open' ? '⚑ Reopened' : '✓ Marked ' + status);
+      load();
+    }
+    async function remove(f) {
+      if (!confirm('Delete this flag for good?')) return;
+      const { error } = await sb().from('formula_flags').delete().eq('id', f.id);
+      if (error) { toast('Not deleted: ' + error.message); return; }
+      load();
+    }
+    function analysisHref(f) {
+      const H = window.FormulaHandoff;
+      const herbs = f.herbs || [];
+      return H ? H.href({ h: herbs.map(h => h.name), p: herbs.map(h => h.percentage), n: f.formula_name || '', src: 'flag' }) : '/formula-analysis/';
+    }
+    function copyProfile(f) {
+      const lines = answerLines(f.answers);
+      const text = (f.answers && f.answers.client_profile) || lines.join('\n');
+      if (!text) { toast('No client profile on this flag'); return; }
+      navigator.clipboard.writeText(text).then(() => toast('✓ Client profile copied — paste it into the analysis'), () => toast('Could not copy'));
+    }
+
+    const list = rows || [];
+    return (
+      <div className="kp-panel">
+        <div className="kp-head">
+          <div>
+            <p className="kp-kicker">Formula e-book</p>
+            <h3 className="kp-title">Flagged formulas</h3>
+          </div>
+          <div className="kp-refresh">
+            <select className="kp-select" value={show} onChange={e => setShow(e.target.value)} aria-label="Which flags">
+              <option value="open">Open</option>
+              <option value="explained">Explained</option>
+              <option value="fixed">Fixed</option>
+              <option value="all">All</option>
+            </select>
+            <button type="button" className="kp-ghost" onClick={load}>Refresh</button>
+          </div>
+        </div>
+        <p className="kp-muted">Formulas flagged in the pro composer and the formula analysis. MYCO reads the open ones on the 2nd of each month and proposes a fix for each.</p>
+        {err === 'missing' ? <p className="kp-warn">The e-book is not set up yet — run <code>supabase-formula-flags-2026-10-02.sql</code>.</p>
+          : err ? <p className="kp-warn">{err}</p> : null}
+        {rows === null ? <p className="kp-muted">Loading…</p>
+          : !list.length && !err ? <p className="kp-muted">No {show === 'all' ? '' : show + ' '}flags.</p> : null}
+        {list.length ? (
+          <ul className="kp-list">
+            {list.map(f => {
+              const herbs = (f.herbs || []).map(h => h.percentage + '% ' + h.name).join(' · ');
+              const isOpen = open === f.id;
+              const lines = answerLines(f.answers);
+              return (
+                <li key={f.id} className={f.status !== 'open' ? 'is-out' : ''}>
+                  <div className="kp-row-top">
+                    <span className="kp-name">⚑ {f.formula_name || 'Formula'} <span className="kp-muted">· {f.source}{f.engine_version ? ' · engine ' + f.engine_version : ''}</span></span>
+                    <button type="button" className="kp-link" onClick={() => setOpen(isOpen ? null : f.id)}>{isOpen ? 'Close' : 'Open'}</button>
+                  </div>
+                  <div className="kp-row-sub">
+                    {ago(f.created_at)} · {f.status}{(f.tags || []).length ? ' · ' + f.tags.map(t => FLAG_TAGS[t] || t).join(', ') : ''}
+                  </div>
+                  <div className="kp-row-sub" style={{ whiteSpace: 'normal' }}>{herbs}</div>
+                  <div style={{ fontSize: 13, margin: '6px 0 2px', whiteSpace: 'pre-wrap' }}>{f.reason}</div>
+                  {isOpen ? (
+                    <div style={{ marginTop: 8 }}>
+                      {lines.length ? (
+                        <details>
+                          <summary className="kp-muted" style={{ cursor: 'pointer' }}>Client profile ({lines.length})</summary>
+                          <pre style={{ whiteSpace: 'pre-wrap', fontSize: 12, opacity: .85, margin: '6px 0' }}>{(f.answers && f.answers.client_profile) || lines.join('\n')}</pre>
+                        </details>
+                      ) : <p className="kp-muted">No client profile on this flag.</p>}
+                      <textarea className="kp-input" rows={2} maxLength={2000} placeholder="What was done, or why it stands"
+                        value={notes[f.id] != null ? notes[f.id] : (f.admin_note || '')}
+                        onChange={e => setNotes(Object.assign({}, notes, { [f.id]: e.target.value }))} aria-label="Admin note" />
+                      <div className="kp-form-row" style={{ flexWrap: 'wrap', gap: 8 }}>
+                        <a className="kp-ghost" href={analysisHref(f)} target="_blank" rel="noopener">Open in formula analysis ↗</a>
+                        <button type="button" className="kp-ghost" onClick={() => copyProfile(f)}>Copy client profile</button>
+                        {f.status !== 'explained' ? <button type="button" className="kp-ghost" onClick={() => mark(f, 'explained')}>Explained</button> : null}
+                        {f.status !== 'fixed' ? <button type="button" className="kp-primary" onClick={() => mark(f, 'fixed')}>Fixed</button> : null}
+                        {f.status !== 'open' ? <button type="button" className="kp-ghost" onClick={() => mark(f, 'open')}>Reopen</button> : null}
+                        <button type="button" className="kp-link" onClick={() => remove(f)}>Delete</button>
+                      </div>
+                    </div>
+                  ) : null}
+                </li>
+              );
+            })}
+          </ul>
+        ) : null}
+      </div>
+    );
+  }
+
+  window.PortalKeeper = { KeeperAlerts, AnnouncementsEditor, FiguresEditor, EventsEditor, RankSelect, FormulaFlagsBook, useKeeperAlerts, refreshAlerts };
 })();

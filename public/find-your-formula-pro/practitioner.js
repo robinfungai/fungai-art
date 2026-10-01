@@ -177,6 +177,21 @@
     root.querySelectorAll('.fp-tab').forEach(b => b.addEventListener('click', () => { S.tab = b.dataset.tab; render(); }));
     root.querySelectorAll('.fp-herb-open').forEach(b => b.addEventListener('click', () => toggleHerb(b)));
     bind(root);
+    // ⚑ Flag this formula (formula-flag.js) — below the tools, outside the
+    // part render() rewrites, so a half-written reason survives a tab switch.
+    // It flags the ENGINE's bottle, not the practitioner's adjustments.
+    if (window.FormulaFlag && !$('fpFlagBox')) {
+      const f = document.createElement('div');
+      f.id = 'fpFlagBox';
+      root.after(f);
+      window.FormulaFlag.mount(f, () => ({
+        source: 'pro',
+        name: (S.body && S.body.formula && S.body.formula.name) || null,
+        herbs: (S.engineRows || []).map(r => ({ name: r.name, percentage: Number(r.pct) || 0 })),
+        engineVersion: (S.body && S.body.engineVersion) || null,
+        answers: S.a || null,
+      }));
+    }
   }
 
   // ── Tap a herb → its record (Robin, 2026-10-02: "like in formula-analysis").

@@ -249,6 +249,7 @@
           <button class="btn primary" id="saveBtn" type="button">Save to the formula book</button>
         </div>
         <p class="note" id="saveMsg" role="status"></p>
+        <div id="flagBox"></div>
       </section>
     </aside>
   </div>
@@ -257,6 +258,7 @@
 </div>
 
 <script src="/formula-analysis/handoff.js"></script>
+<script src="/formula-flag.js"></script>
 <script>
 (function () {
   'use strict';
@@ -635,6 +637,20 @@
     } catch (_) {}
     $('saveMsg').textContent = cloud ? '✓ Saved to the formula book.' : '✓ Saved on this device (the shared book did not accept it).';
     saving = false; $('saveBtn').disabled = false;
+  });
+
+  // ⚑ Flag this formula (formula-flag.js): the formula as it stands, with
+  // the client profile if one was pasted (pseudonymous by design).
+  if (window.FormulaFlag) window.FormulaFlag.mount($('flagBox'), function () {
+    var A = current();
+    var prof = ($('client') && $('client').value.trim()) || '';
+    return A ? {
+      source: 'analysis',
+      name: $('fName').value || null,
+      herbs: A.herbs.map(function (h) { return { name: h.name, percentage: h.percentage }; }),
+      engineVersion: (state.res && state.res.engineVersion) || null,
+      answers: prof ? { client_profile: prof.slice(0, 3000) } : null,
+    } : null;
   });
 
   start();
