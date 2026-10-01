@@ -1795,6 +1795,12 @@ updateStartBtn();
 
 startBtn.addEventListener('click', () => {
   if (!gateAdult || !gateAdult.checked) return; // belt+braces
+  // A new reading starts EMPTY (Robin, 2026-10-02: a second quiz in the same
+  // tab sent the first one's note - it was blank on screen, yet MYCO quoted
+  // it). Any way back to this gate other than "Take the quiz again" used to
+  // keep the previous answers in memory.
+  state.answers = {};
+  state.progressiveKey = null;
   state.answers._privacyConsentAcknowledged = true;
   state.answers._gatedOptIn   = true;
   persist();

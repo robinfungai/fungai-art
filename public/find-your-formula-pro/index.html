@@ -1119,11 +1119,17 @@ main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:0 20px 60
 const QUESTIONS = [
   {
     key:'intention',
+    eyebrow:'01 of 06 · The calling',
     title:'What are you <em>calling in</em>?',
     hint:'Tap up to three — in the order they matter to you. 1 = most important. MYCO reads the ranking to compose with the right emphasis.',
     type:'bubbles',
     ranked:true, maxRanks:3,
     options:[
+      // Each intention is an "alchemical species" — the sub line
+      // names the biological territory it addresses. Kept dense and
+      // low-fi (·-separated fragments, not sentences) so it reads as
+      // a taxonomy tag on hover, not a marketing line. Related keys
+      // set up the mycelial-network reward (future depth pass).
       { v:'stress',    hue:'#E8B14B', label:'Stress & resilience', sub:'HPA axis · Nervous system · Adaptogens', related:'anxiety sleep mood' },
       { v:'anxiety',   hue:'#88BAC8', label:'Anxiety & calm',      sub:'GABA · Serotonin · Nervines',              related:'stress sleep mood' },
       { v:'sleep',     hue:'#A88FE0', label:'Sleep & restoration', sub:'Circadian · Restoration · Recovery',      related:'anxiety stress hormones' },
@@ -1162,9 +1168,13 @@ const QUESTIONS = [
     ],
   },
   {
+    // Two-stage question: pick an archetype, then a refining sub.
+    // Mirrors /herbal-engine-2's BP → subs flow, giving real heat-map
+    // depth without ever surfacing TCM jargon.
     key:'pattern',
-    title:'How does your body <em>actually feel</em>?',
-    hint:'Not what you want it to feel — what it actually feels most days.',
+    eyebrow:'02 of 06 · The body',
+    title:'How does your body <em>feel</em>?',
+    hint:'Not what you want it to feel — what it feels like most days.',
     type:'branch',
     options:[
       { v:'hot',      hue:'#E16B6B', label:'A lit match',    desc:'Warm, reactive, inflamed.',
@@ -1198,36 +1208,32 @@ const QUESTIONS = [
     ],
   },
   {
-    // NEW · Nervous-system typology. Highest-value Pro axis. The
-    // same "I need energy" answer reads very differently for a
-    // wired-tired sympathetic-flare person (needs down-regulation
-    // first) vs a flat/hypo-aroused parasympathetic person (needs
-    // gentle activation) vs a genuinely steady person who just
-    // wants performance support. The composer weights adaptogen
-    // class (stimulating vs restorative), nervines, and pace
-    // heavily off this signal.
+    // Nervous-system typology — highest-value single axis in the whole
+    // reading. The same "give me energy" reads very differently from a
+    // wired-tired burnout person (needs down-regulation first), from a
+    // flat person (needs gentle activation), from a steady person
+    // (just performance). Composer weights adaptogen class + nervines
+    // + pace heavily off this signal.
     key:'nervous',
-    title:'Your <em>nervous system</em>, most days',
-    hint:'The closest one. If none feel right, pick the least wrong.',
+    title:'How does your <em>energy usually feel</em>?',
+    hint:'Choose the state that comes closest to most days. Not what it should be — what it feels like.',
     type:'compact-single',
     options:[
-      { v:'wired',       glyph:'⚡', label:'Wired',             desc:'Alert, restless, hard to switch off.' },
-      { v:'tired',       glyph:'◌',  label:'Tired',             desc:'Low activation, sluggish, easily depleted.' },
-      { v:'wired_tired', glyph:'◍',  label:'Wired + tired',     desc:'Activated but exhausted — the classic burnout curve.' },
-      { v:'steady',      glyph:'◇',  label:'Steady',            desc:'Generally regulated. Resilient.' },
-      { v:'reactive',    glyph:'✦',  label:'Reactive',          desc:'Easily overstimulated by sound, people, caffeine, stress.' },
+      { v:'wired',       glyph:'⚡', label:'Wired',             desc:'Alert, restless, and hard to switch off.' },
+      { v:'tired',       glyph:'◌',  label:'Tired',             desc:'Low activation, sluggish, and easily depleted.' },
+      { v:'wired_tired', glyph:'◍',  label:'Wired + tired',     desc:'Activated but exhausted.' },
+      { v:'steady',      glyph:'◇',  label:'Steady',            desc:'Generally resilient and able to adapt.' },
+      { v:'reactive',    glyph:'✦',  label:'Reactive',          desc:'Easily overstimulated by sound, people, caffeine, or stress.' },
       { v:'flat',        glyph:'○',  label:'Flat',              desc:'Emotionally or cognitively muted. Nothing quite reaches.' },
     ],
   },
   {
-    // NEW · Circadian / metabolic energy signature. "Low energy" is
-    // meaningless without knowing when it collapses. A morning-slow
-    // + evening-strong person is a very different herb read than a
-    // good-morning + afternoon-crash cortisol-curve profile, or a
-    // wave-pattern person. Feeds pace + timing recommendations, and
-    // biases the composer toward mitochondrial (cordyceps, rhodiola)
-    // vs regulatory (schisandra, licorice) vs restorative (reishi,
-    // ashwagandha) allies.
+    // Energy curve — circadian / metabolic signature. "Low energy" is
+    // meaningless without knowing when it collapses. AM-good/PM-crash
+    // reads cortisol; slow-am/strong-pm reads night owl; wave pattern
+    // reads dysautonomia-adjacent. Biases the composer between
+    // mitochondrial (cordyceps, rhodiola), regulatory (schisandra,
+    // licorice) and restorative (reishi, ashwagandha) allies.
     key:'energy_curve',
     title:'How does your <em>energy behave</em> through the day?',
     hint:'The shape of the day, not the average.',
@@ -1237,7 +1243,7 @@ const QUESTIONS = [
       { v:'am_good_pm_crash',glyph:'▼', label:'Good morning → afternoon crash', desc:'Cortisol curve collapses around 2–4pm.' },
       { v:'slow_am_strong_pm',glyph:'▲',label:'Slow morning → strong evening',  desc:'Night owl. Comes online late.' },
       { v:'moderate',        glyph:'◇', label:'Consistently moderate',           desc:'Flat and steady. Never peaks, never crashes.' },
-      { v:'high_unstable',   glyph:'⚡', label:'High but unstable',              desc:'Big peaks + hard drops. Blood-sugar / dopamine-y feel.' },
+      { v:'high_unstable',   glyph:'⚡', label:'High but unstable',              desc:'Big peaks + hard drops. Blood-sugar / dopamine-y.' },
       { v:'waves',           glyph:'∿', label:'Waves',                           desc:'Comes and goes without clear pattern.' },
       { v:'crash_mental',    glyph:'◍', label:'Crashes after mental effort',    desc:'Focus depletes the tank fast.' },
       { v:'crash_physical',  glyph:'○', label:'Crashes after physical effort',  desc:'Post-exertion drop is disproportionate.' },
@@ -1245,41 +1251,51 @@ const QUESTIONS = [
   },
   {
     key:'time',
-    title:'What time of day is <em>hardest</em>?',
-    hint:'Tells us about your rhythm and where the extract needs to land.',
+    title:'When does the day feel <em>most difficult</em>?',
+    hint:'Choose the time when your energy, focus, or calm feels hardest to work with.',
     type:'compact-single',
+    // Per-answer visual motifs (Round 2 visual brief). Each SVG reads
+    // as its time — sun rising/at-peak/setting, crescent + stars, full-day
+    // orbit — never a health-symbolic assessment. Motifs stay decorative
+    // (aria-hidden) and inherit currentColor from the pill's selected/idle
+    // state; the text label + desc remain the accessible content.
     options:[
-      { v:'morning',  glyph:'◐',  label:'Morning',            desc:'Getting started is slow.' },
-      { v:'midday',   glyph:'●',  label:'Midday',             desc:'The 2pm dip. Focus collapses.' },
-      { v:'evening',  glyph:'◑',  label:'Evening',            desc:'Can\'t drop out of the day.' },
-      { v:'night',    glyph:'○',  label:'Deep night',         desc:'Waking at 3am. Racing mind.' },
-      { v:'any',      glyph:'◈',  label:'Not time-specific',  desc:'Whole-day thing.' },
+      { v:'morning',  glyph:'◐',  label:'Morning',            desc:'Getting started is slow.',
+        motif:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M4 18h16" opacity="0.5"/><path d="M12 6v-2" opacity="0.7"/><path d="M5.5 11l-1.4-1.4" opacity="0.55"/><path d="M18.5 11l1.4-1.4" opacity="0.55"/><circle cx="12" cy="14" r="4" fill="currentColor" opacity="0.18"/><path d="M8 18a4 4 0 0 1 8 0"/></svg>' },
+      { v:'midday',   glyph:'●',  label:'Midday',             desc:'The 2pm dip. Focus collapses.',
+        motif:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" opacity="0.25"/><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4l1.4-1.4M17 7l1.4-1.4" opacity="0.7"/></svg>' },
+      { v:'evening',  glyph:'◑',  label:'Evening',            desc:'Can\'t drop out of the day.',
+        motif:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M4 18h16" opacity="0.5"/><circle cx="12" cy="17" r="4" fill="currentColor" opacity="0.16"/><path d="M8 18a4 4 0 0 1 8 0"/><path d="M12 12v-3M8.5 12l-1.2-1.2M15.5 12l1.2-1.2" opacity="0.45"/></svg>' },
+      { v:'night',    glyph:'○',  label:'Deep night',         desc:'Waking at 3am. Racing mind.',
+        motif:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 13.5a5.5 5.5 0 1 1-5-8 4 4 0 0 0 5 8z" fill="currentColor" opacity="0.14"/><path d="M15.5 13.5a5.5 5.5 0 1 1-5-8 4 4 0 0 0 5 8z"/><circle cx="18" cy="7" r="0.55" fill="currentColor" opacity="0.75"/><circle cx="20" cy="12" r="0.4" fill="currentColor" opacity="0.55"/></svg>' },
+      { v:'any',      glyph:'◈',  label:'Not time-specific',  desc:'Whole-day thing.',
+        motif:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><circle cx="12" cy="12" r="7.5" opacity="0.55"/><circle cx="12" cy="12" r="7.5" stroke-dasharray="1 3" opacity="0.35"/><circle cx="12" cy="12" r="1.6" fill="currentColor" opacity="0.75"/></svg>' },
     ],
   },
   {
     key:'stress',
-    title:'How do you <em>meet stress</em> lately?',
-    hint:'No wrong answer. This shapes which allies fit you now.',
+    title:'What happens when <em>stress begins to build</em>?',
+    hint:'Choose the response that feels closest to how you have been lately.',
     type:'compact-single',
     options:[
-      { v:'push',     glyph:'▲',  label:'Push through',    desc:'Chin down, keep going.' },
-      { v:'collapse', glyph:'▽',  label:'Collapse',        desc:'Shutdown. Recover-mode.' },
-      { v:'numb',     glyph:'○',  label:'Numb it out',     desc:'Distraction, a drink.' },
-      { v:'ride',     glyph:'◇',  label:'Ride it well',    desc:'Mostly rolling with it.' },
-      { v:'off',      glyph:'◌',  label:'Something\'s off',desc:'Not-quite-right.' },
+      { v:'push',     glyph:'▲',  label:'Push through',      desc:'You keep moving, even when your reserves are low.' },
+      { v:'collapse', glyph:'▽',  label:'Collapse',          desc:'You shut down and need recovery mode.' },
+      { v:'numb',     glyph:'○',  label:'Numb it out',       desc:'You reach for distraction, stimulation, or something to take the edge off.' },
+      { v:'ride',     glyph:'◇',  label:'Ride it well',      desc:'You adapt and keep moving with the wave.' },
+      { v:'off',      glyph:'◌',  label:'Something feels off',desc:'Nothing is clearly wrong, but you do not feel quite right.' },
     ],
   },
   {
     // NEW · Duration axis — acute vs chronic → different herb families.
     key:'duration',
-    title:'How long has this been the <em>pattern</em>?',
-    hint:'Acute needs different allies than chronic.',
+    title:'How long have you been experiencing <em>this rhythm</em>?',
+    hint:'Choose the option that feels most accurate.',
     type:'compact-single',
     options:[
-      { v:'weeks',      glyph:'◌', label:'A few weeks',     desc:'Recent shift, still fresh.' },
-      { v:'months',     glyph:'◐', label:'A few months',    desc:'Longer arc, settling in.' },
-      { v:'year_plus',  glyph:'●', label:'A year or more',  desc:'Chronic, layered.' },
-      { v:'lifelong',   glyph:'◈', label:'As long as I remember', desc:'Constitutional / lifelong.' },
+      { v:'weeks',      glyph:'◌', label:'A few weeks',            desc:'A recent shift; it still feels fresh.' },
+      { v:'months',     glyph:'◐', label:'A few months',           desc:'A longer arc; it may be settling in.' },
+      { v:'year_plus',  glyph:'●', label:'A year or more',         desc:'A longstanding pattern with deeper roots.' },
+      { v:'lifelong',   glyph:'◈', label:'As long as I remember',  desc:'It feels woven into your baseline.' },
     ],
   },
   {
@@ -1309,31 +1325,41 @@ const QUESTIONS = [
     title:'I am',
     type:'compact-single',
     options:[
-      { v:'under_25', glyph:'🌱', label:'Under 25' },
-      { v:'25_40',    glyph:'🌿', label:'25–40'    },
-      { v:'41_60',    glyph:'🌳', label:'41–60'    },
-      { v:'60_plus',  glyph:'🍂', label:'60+'      },
+      // under_18 is the safety option. If picked, the compose payload
+      // silently gets sedatives + psych_meds + contraceptive appended
+      // to avoid[] so the engine filters those categories out, and a
+      // _minor flag is stamped on answers so Robin sees it in the
+      // reservation email + can review before shipping.
+      { v:'under_18', glyph:'✿', label:'Under 18',    desc:'Non-psychoactive, gentle formula. Robin will confirm personally.' },
+      { v:'under_25', glyph:'🌱', label:'18–25'                                                                              },
+      { v:'25_40',    glyph:'🌿', label:'25–40'                                                                              },
+      { v:'41_60',    glyph:'🌳', label:'41–60'                                                                              },
+      { v:'60_plus',  glyph:'🍂', label:'60+'                                                                                },
     ],
   },
   {
-    // PRO · Sleep architecture. The basic reading asked a coarse
-    // quality question; here we split onset vs maintenance vs early-
-    // waking vs restoration, because each maps to a different herb
-    // family (passionflower/valerian for onset; magnolia/kava for
-    // maintenance; reishi/ashwagandha for restoration; jujube/albizia
-    // for the 3am wake typical of Liver Qi stagnation).
+    // NEW · Sleep quality — fundamental axis, always ask.
+    // Lunar-phase / sleep-state emoji matching the entheobotanical
+    // brand: full moon = deep restorative, waning = partial, new =
+    // depleted, storm = broken.
     key:'sleep',
-    title:'How does your <em>sleep</em> actually behave?',
-    hint:'The pattern, not just the hours.',
+    title:'Your <em>sleep</em>',
     type:'compact-single',
+    // Sleep architecture — 7 patterns instead of a coarse quality
+    // rating. Each pattern maps to a distinct herb family:
+    // passionflower/valerian for onset; magnolia/kava for maintenance;
+    // jujube/albizia for the 3am wake typical of Liver Qi stagnation;
+    // reishi/ashwagandha for the "sleeps but not restored" pattern.
+    title:'How does your <em>sleep</em> behave?',
+    hint:'The pattern, not just the hours.',
     options:[
-      { v:'restorative',     glyph:'🌕', label:'Sleeps well · wakes restored',   desc:'The reference case. Herbs will maintain, not correct.' },
-      { v:'hard_onset',      glyph:'🌑', label:'Hard to fall asleep',            desc:'Lie awake with the mind still running.' },
-      { v:'wakes_middle',    glyph:'🌘', label:'Wakes in the middle of the night', desc:'Falls asleep fine, wakes at 2–4am.' },
-      { v:'early_wake',      glyph:'🌒', label:'Wakes too early, can\'t return', desc:'5am eyes-open, low mood. Classic depression pattern.' },
-      { v:'sleeps_no_rest',  glyph:'🌗', label:'Sleeps hours but not restored',  desc:'Wakes tired despite duration.' },
-      { v:'vivid_restless',  glyph:'🌪', label:'Vivid dreams · restless',        desc:'Dreams heavy, body tosses, no depth.' },
-      { v:'very_broken',     glyph:'⚡', label:'Very broken',                    desc:'Barely any coherent block. Survival mode.' },
+      { v:'restorative',    glyph:'🌕', label:'Sleeps well · wakes restored',    desc:'The reference case.' },
+      { v:'hard_onset',     glyph:'🌑', label:'Hard to fall asleep',             desc:'Mind still running.' },
+      { v:'wakes_middle',   glyph:'🌘', label:'Wakes in the middle of the night',desc:'Falls asleep fine, wakes at 2–4am.' },
+      { v:'early_wake',     glyph:'🌒', label:'Wakes too early, can\'t return',  desc:'5am eyes-open, low mood.' },
+      { v:'sleeps_no_rest', glyph:'🌗', label:'Sleeps hours but not restored',   desc:'Wakes tired despite duration.' },
+      { v:'vivid_restless', glyph:'🌪', label:'Vivid dreams · restless',         desc:'Dreams heavy, body tosses.' },
+      { v:'very_broken',    glyph:'⚡', label:'Very broken',                     desc:'Barely any coherent block.' },
     ],
   },
   {
@@ -1453,9 +1479,9 @@ const QUESTIONS = [
   },
   {
     key:'notes',
-    title:'Anything else the composer should <em>hold</em>?',
-    hint:'The one thing that matters most, or a story the checkboxes couldn\'t catch. The reading tunes tightly to what you write here — this is where MYCO listens hardest. Medicines, pregnancy, conditions and past reactions belong in the safety and history questions: those are the only answers the safety filter reads.',
-    placeholder:'e.g. "reishi was calming but ashwagandha made me flat" · "hormones off since March, sleep first" · "post-antibiotic gut in ruins" · "grandmother died in July"',
+    title:'The <em>one thing</em> that matters most',
+    hint:'Mention the one thing that matters most to you right now, and/or any prior herb experience — the reading tunes tightly to what you say here. Medicines, pregnancy and health conditions belong in the safety question: that is the only answer the safety filter reads.',
+    placeholder:'e.g. "reishi was calming but ashwagandha made me flat" · "hormones off since March, sleep first" · "energy back before anything else"',
     type:'text',
   },
 ];
@@ -1539,6 +1565,11 @@ updateStartBtn();
 
 startBtn.addEventListener('click', () => {
   if (!gateAdult || !gateAdult.checked) return; // belt+braces
+  // A new reading starts EMPTY (Robin, 2026-10-02: a second quiz in the same
+  // tab sent the first one's note - it was blank on screen, yet MYCO quoted
+  // it). Any way back to this gate other than "Take the quiz again" used to
+  // keep the previous answers in memory.
+  state.answers = {};
   state.answers._privacyConsentAcknowledged = true;
   state.answers._gatedOptIn   = true;
   persist();
