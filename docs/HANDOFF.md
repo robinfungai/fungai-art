@@ -80,6 +80,19 @@ Robin looked at Phase 1 and redirected it. Everything below is in the
 
 ---
 
+## 0.24 · 1 Oct, late — after the push (committed, NOT pushed)
+
+Waiting for Robin's "push": lab-notebook grid; Herbalism Module PDF removed from the site (copy at
+`Desktop/fungai art/`); PDF title fallback; Atlas SOURCES tab + "N PubMed sources" badge; kidney-bean
+icon as inline SVG (Windows 10 has no 🫘); **Pro quiz in clinical wording** (labels only, values
+unchanged); **client profile** — `client-profile.js` prints every answer + note + MYCO's reading in
+Robin's reservation email (no name/email/city), and /formula-analysis has a "+ Client profile" field
+MYCO reads ("For this client"); **Cassia Cinnamon (597)** added everywhere, Cinnamon (227) now Ceylon
+only, "Zimt"/"cinnamon" refuse both. Antigravity's curriculum (3 Academy buttons, curriculum pages,
+scripts, its edits to the brief) is NOT committed — Robin decides when.
+
+---
+
 ## 0.23 · 1 Oct, evening — engine 2.10.0, PubMed on 45 herbs, MYCO digest on the 2nd (pushed 1 Oct)
 
 Robin said "push tonight", so this went out with everything since 0a07052. **Robin runs, in this order:**
