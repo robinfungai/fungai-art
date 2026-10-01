@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-10-01T16:34:34.767Z",
+  "generatedAt": "2026-10-01T21:10:06.352Z",
   "counts": {
-    "botanicals": 247,
-    "rules": 2463,
+    "botanicals": 248,
+    "rules": 2475,
     "byType": {
-      "contraindication": 1199,
-      "drug_interaction": 672,
-      "herb_interaction": 351,
-      "record": 241
+      "contraindication": 1205,
+      "drug_interaction": 675,
+      "herb_interaction": 353,
+      "record": 242
     },
     "bySeverity": {
-      "unspecified": 1101,
+      "unspecified": 1106,
       "caution": 336,
-      "monitor": 369,
-      "avoid": 528,
+      "monitor": 373,
+      "avoid": 531,
       "absolute": 129
     }
   },
@@ -1129,6 +1129,11 @@
       "pregnancy",
       "psych_meds",
       "sedatives"
+    ],
+    "597": [
+      "cardio_meds",
+      "liver_kidney",
+      "pregnancy"
     ]
   },
   "flagsPerRuleByBotanicalId": {
@@ -2237,6 +2242,11 @@
       "pregnancy",
       "psych_meds",
       "sedatives"
+    ],
+    "597": [
+      "cardio_meds",
+      "liver_kidney",
+      "pregnancy"
     ]
   },
   "divergence": [
@@ -6808,6 +6818,150 @@
       "subject": "Pregnancy and breastfeeding",
       "severity": "avoid",
       "reason": "No pregnancy safety record (safe_pregnancy unknown), so it is kept away from pregnant and breastfeeding customers.",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · safe_pregnancy"
+    },
+    {
+      "id": "safety:597:contraindication:1",
+      "botanicalId": 597,
+      "botanical": "Cassia Cinnamon",
+      "ruleType": "contraindication",
+      "subject": "Liver disease or hepatotoxic medicines",
+      "severity": "avoid",
+      "reason": "coumarin; avoid",
+      "flags": [
+        "liver_kidney"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:597:contraindication:2",
+      "botanicalId": 597,
+      "botanical": "Cassia Cinnamon",
+      "ruleType": "contraindication",
+      "subject": "Long-term daily use",
+      "severity": "unspecified",
+      "reason": "coumarin accumulates; use Ceylon cinnamon (Cinnamon) for long protocols",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:597:contraindication:3",
+      "botanicalId": 597,
+      "botanical": "Cassia Cinnamon",
+      "ruleType": "contraindication",
+      "subject": "Pregnancy",
+      "severity": "avoid",
+      "reason": "avoid medicinal doses (TCM contraindicates Rou Gui in pregnancy)",
+      "flags": [
+        "pregnancy"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:597:contraindication:4",
+      "botanicalId": 597,
+      "botanical": "Cassia Cinnamon",
+      "ruleType": "contraindication",
+      "subject": "Diabetes medications",
+      "severity": "monitor",
+      "reason": "additive glucose lowering; monitor glucose",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:597:contraindication:5",
+      "botanicalId": 597,
+      "botanical": "Cassia Cinnamon",
+      "ruleType": "contraindication",
+      "subject": "Anticoagulants and antiplatelets",
+      "severity": "monitor",
+      "reason": "monitor",
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:597:contraindication:6",
+      "botanicalId": 597,
+      "botanical": "Cassia Cinnamon",
+      "ruleType": "contraindication",
+      "subject": "Heat patterns",
+      "severity": "unspecified",
+      "reason": "fever, active inflammation, yin-deficient heat (TCM)",
+      "flags": [],
+      "source": "herbs.ts · contraindications"
+    },
+    {
+      "id": "safety:597:drug_interaction:1",
+      "botanicalId": 597,
+      "botanical": "Cassia Cinnamon",
+      "ruleType": "drug_interaction",
+      "subject": "Diabetes medications",
+      "severity": "monitor",
+      "reason": "additive blood sugar lowering; monitor and adjust",
+      "flags": [],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:597:drug_interaction:2",
+      "botanicalId": 597,
+      "botanical": "Cassia Cinnamon",
+      "ruleType": "drug_interaction",
+      "subject": "Hepatotoxic medications",
+      "severity": "unspecified",
+      "reason": "cumulative liver burden from coumarin",
+      "flags": [
+        "liver_kidney"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:597:drug_interaction:3",
+      "botanicalId": 597,
+      "botanical": "Cassia Cinnamon",
+      "ruleType": "drug_interaction",
+      "subject": "Anticoagulants",
+      "severity": "monitor",
+      "reason": "monitor",
+      "flags": [
+        "cardio_meds"
+      ],
+      "source": "herbs.ts · herb_to_drug_interactions"
+    },
+    {
+      "id": "safety:597:herb_interaction:1",
+      "botanicalId": 597,
+      "botanical": "Cassia Cinnamon",
+      "ruleType": "herb_interaction",
+      "subject": "Cinnamon (Ceylon)",
+      "severity": "unspecified",
+      "reason": "the same spice twice; choose one",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:597:herb_interaction:2",
+      "botanicalId": 597,
+      "botanical": "Cassia Cinnamon",
+      "ruleType": "herb_interaction",
+      "subject": "Other hepatotoxic herbs",
+      "severity": "unspecified",
+      "reason": "cumulative liver burden (coumarin)",
+      "flags": [],
+      "source": "herbs.ts · herb_to_herb_caution"
+    },
+    {
+      "id": "safety:597:record:pregnancy",
+      "botanicalId": 597,
+      "botanical": "Cassia Cinnamon",
+      "ruleType": "record",
+      "subject": "Pregnancy and breastfeeding",
+      "severity": "avoid",
+      "reason": "Recorded as not safe in pregnancy (safe_pregnancy: false).",
       "flags": [
         "pregnancy"
       ],

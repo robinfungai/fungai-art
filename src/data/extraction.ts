@@ -538,6 +538,22 @@ export const EXTRACTION: ExtractionHerb[] = [
     caution_level: "MEDIUM"
   },
   { 
+    // Split from Cinnamon (Ceylon) on 2026-10-01 - cassia, high in coumarin.
+    id: 1812, 
+    common: "Cassia Cinnamon", 
+    botanical: "Cinnamomum cassia", 
+    part: "bark", 
+    ethanol: 60,
+    methods: ["maceration", "percolation"], 
+    ratio: "1:10", 
+    days: 7,
+    spagyric: true,
+    notes: "Order: Macerate in 60% ethanol, as for Ceylon cinnamon. Cassia carries far more coumarin than Ceylon - keep it to short courses and small shares; Ceylon is the long-term choice.",
+    tcm: { meridians: ["Kidney", "Spleen", "Heart", "Liver"], element: "Fire" },
+    synergy: ["Ginger", "Cardamom"],
+    caution_level: "MEDIUM"
+  },
+  { 
     id: 560, 
     common: "Nettle Leaf", 
     botanical: "Urtica dioica", 

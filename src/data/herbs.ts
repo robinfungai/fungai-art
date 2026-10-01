@@ -3080,13 +3080,15 @@ export const HERBS: Herb[] = [
     name: 'Cinnamon',
     trace_class: 'aromatic', // held to a trace (5%); recorded 2026-09-29 (was a name list)
     goals: ['digestion', 'energy'],
-    botanical: 'Cinnamomum verum (Ceylon/true — preferred) / Cinnamomum cassia (inner bark)',
+    aliases: ['Ceylon cinnamon', 'true cinnamon'],
+    // Ceylon only since 2026-10-01 - cassia has its own record (Cassia Cinnamon, id 597).
+    botanical: 'Cinnamomum verum (Ceylon / true cinnamon, inner bark)',
     tcm_meridians: ['Spleen', 'Stomach', 'Kidney', 'Heart'],
     tcm_element: 'Fire + Earth',
     energetics: ['Warming to Hot', 'Sweet', 'Pungent', 'Aromatic', 'Slightly Astringent', 'Circulatory-Stimulating'],
     primary_functions: [
       'Digestive warming and carminative — cinnamaldehyde stimulates digestion, resolves cold-damp patterns and reduces gas',
-      'Blood sugar modulation — cassia polyphenols improve insulin receptor signalling; modest RCT evidence for glucose and lipid reduction',
+      'Blood sugar modulation — cinnamon polyphenols improve insulin receptor signalling; modest RCT evidence for glucose and lipid reduction (most trials used cassia)',
       'Circulatory stimulant — warming, vasodilatory action supports cold constitutions and poor peripheral circulation',
       'Antimicrobial and antifungal — cinnamaldehyde significant activity against bacteria and fungi',
       'Anti-inflammatory and antioxidant — phenolic compounds and procyanidins reduce oxidative stress',
@@ -3128,7 +3130,7 @@ export const HERBS: Herb[] = [
       'Drug interactions: diabetes meds (monitor glucose), anticoagulants (monitor INR), hepatotoxic meds with cassia (prefer verum)',
     ],
     dosage_range:
-      'Culinary: 0.5–2 g daily in food and tea — widely safe for most populations. Medicinal cassia for glycaemic support: 1–2 g/day for 3 months (monitor liver function in at-risk individuals). Prefer C. verum for long-term daily use. Extract: 20–40 drops, 2–3× daily.',
+      'Culinary: 0.5–2 g daily in food and tea — widely safe for most populations. Ceylon is the choice for long-term daily use (only traces of coumarin; cassia has its own record). Extract: 20–40 drops, 2–3× daily.',
     spiritual_layer:
       'Cinnamon is the hearth spice — the warmth that awakens digestion, circulation and emotional comfort. She is ancient trade, ancient medicine and ancient comfort: written in the oldest texts of Ayurveda, TCM and European herbalism as the warming companion for cold constitutions, sluggish digestion and the chill of winter. She teaches that warmth must be proportionate — healing when wisely measured, potentially damaging when excessive. Like the hearth fire itself, she requires tending and calibration. She whispers: I welcome gentle, proportionate warmth into my system. My digestion, blood and mood are warmed but not inflamed. I calibrate warmth with wisdom.',
     best_preparation:
@@ -3152,6 +3154,94 @@ export const HERBS: Herb[] = [
       source: 'derived',
     },
     evidence_grade: 'A',
+  },
+  {
+    // Split from Cinnamon (id 227) on 2026-10-01 (Robin: "we should have
+    // both"). Cinnamon is now Ceylon (C. verum) only; this is cassia - the
+    // high-coumarin species, so it carries its own cautions.
+    id: 597,
+    name: 'Cassia Cinnamon',
+    trace_class: 'aromatic', // a trace herb like Ceylon cinnamon (4%, 7% with another trace)
+    aliases: ['Chinese cinnamon', 'Rou Gui', 'cassia bark'],
+    goals: ['digestion', 'energy'],
+    botanical: 'Cinnamomum cassia (bark — Chinese cinnamon, Rou Gui)',
+    tcm_meridians: ['Kidney', 'Spleen', 'Heart', 'Liver'],
+    tcm_element: 'Fire',
+    energetics: ['Hot', 'Pungent', 'Sweet', 'Aromatic', 'Warms Kidney and Spleen Yang', 'Circulatory-Stimulating'],
+    primary_functions: [
+      'Digestive warming and carminative — cinnamaldehyde-rich bark; resolves cold patterns of the stomach and reduces gas',
+      'Blood sugar modulation — a meta-analysis of 10 RCTs (cinnamon, mostly cassia) found lower fasting glucose but no significant HbA1c change, with high heterogeneity',
+      'Warms the interior (TCM Rou Gui) — deep warming of Kidney and Spleen yang for cold constitutions, cold limbs and cold-pattern pain',
+      'Circulatory stimulant — warming, vasodilatory action supports poor peripheral circulation',
+      'Antimicrobial — cinnamaldehyde activity against bacteria and fungi',
+    ],
+    secondary_benefits: [
+      'Cold-pattern dysmenorrhoea — warming and antispasmodic',
+      'Cold and flu warming support — part of warming winter formulas',
+      'Hearth spice — the strong, sweet-hot cinnamon of most supermarket shelves',
+    ],
+    pharmacology:
+      'Primary bioactives: cinnamaldehyde (bark essential oil), cinnamic acid, procyanidins and other polyphenols — and COUMARIN. Ceylon bark (C. verum) contains only traces of coumarin; barks of all three cassia species contain substantial amounts, and most cinnamon sold as food is cassia (Wang 2013, PMID 23627682). Coumarin is the reason cassia is kept to short courses and small shares. Glycaemic evidence: lower fasting glucose and better lipids in a meta-analysis of 10 RCTs (120 mg–6 g/day, 4–18 weeks), no significant HbA1c effect, high heterogeneity (Allen 2013, PMID 24019277). Evidence grade B.',
+    flavor_profile: 'Hot, sweet, pungent and strongly aromatic — bolder and coarser than Ceylon',
+    contraindications: [
+      'Liver disease or hepatotoxic medicines — coumarin; avoid',
+      'Long-term daily use — coumarin accumulates; use Ceylon cinnamon (Cinnamon) for long protocols',
+      'Pregnancy — avoid medicinal doses (TCM contraindicates Rou Gui in pregnancy)',
+      'Diabetes medications — additive glucose lowering; monitor glucose',
+      'Anticoagulants and antiplatelets — monitor',
+      'Heat patterns — fever, active inflammation, yin-deficient heat (TCM)',
+    ],
+    herb_to_herb_synergy: [
+      'Ginger and Cardamom — warming digestive spice trio',
+      'Cloves — warming antimicrobial and digestive spice combination',
+    ],
+    herb_to_herb_caution: [
+      'Cinnamon (Ceylon) — the same spice twice; choose one',
+      'Other hepatotoxic herbs — cumulative liver burden (coumarin)',
+    ],
+    herb_to_drug_interactions: [
+      'Diabetes medications — additive blood sugar lowering; monitor and adjust',
+      'Hepatotoxic medications — cumulative liver burden from coumarin',
+      'Anticoagulants — monitor',
+    ],
+    herb_interactions: [
+      'Synergy: Ginger, Cardamom, Cloves',
+      'Caution: Cinnamon (Ceylon) in the same bottle; hepatotoxic herbs (coumarin)',
+      'Drug interactions: diabetes medications (monitor glucose), hepatotoxic medications, anticoagulants (monitor)',
+    ],
+    dosage_range:
+      'Culinary: small amounts in food. Medicinal: 1–2 g/day for up to 3 months only (coumarin); prefer Ceylon cinnamon for anything long-term. Extract: 20–40 drops, 2–3× daily, short courses.',
+    spiritual_layer:
+      'Cassia is the fire in the bark — the hotter, rougher sister of Ceylon cinnamon. Where Ceylon comforts, cassia kindles: it reaches down to the cold places and lights them, and like any strong fire it is used briefly and watched.',
+    best_preparation:
+      'Decoction or tincture of the bark, in short courses. In this house it stays a trace, and never a long daily protocol — Ceylon cinnamon is the long-term choice.',
+    caution_level: 'MEDIUM',
+    cns_action: 'neutral',
+    cns_evidence: 'No CNS effect in its records — a warming digestive and circulatory spice.',
+    safe_pregnancy: false,
+    status:
+      'Strong warming digestive spice with modest glycaemic evidence. High coumarin compared with Ceylon cinnamon: short courses, small shares, never for long daily use or with liver disease. Research grade B.',
+    // PubMed, fetched and checked 2026-10-01
+    references: [
+      'Wang YH, Avula B, Nanayakkara NP, et al. Cassia cinnamon as a source of coumarin in cinnamon-flavored food and food supplements in the United States. J Agric Food Chem. 2013. PMID 23627682',
+      'Allen RW, Schwartzman E, Baker WL, et al. Cinnamon use in type 2 diabetes: an updated systematic review and meta-analysis. Ann Fam Med. 2013. PMID 24019277',
+      'Zhang C, Fan L, Fan S, et al. Cinnamomum cassia Presl: A Review of Its Traditional Uses, Phytochemistry, Pharmacology and Toxicology. Molecules. 2019. PMID 31557828',
+    ],
+    // ── Quiz-matcher + composer-quality enrichment ──
+    nervous_system_fit: ['tired', 'flat'],
+    energy_pattern: ['am_boost', 'sustained'],
+    digestion_fit: ['warming', 'carminative'],
+    regional_affinity: ['gut', 'kidneys', 'whole'],
+    onset_time: 'immediate',
+    family: 'Lauraceae',
+    epithet: 'The fire in the bark',
+    origin_region: 'Chinese',
+    ecology: {
+      native_range: ['Southern China', 'Southeast Asia'],
+      biomes: ['TROPICAL'],
+      source: 'derived',
+    },
+    evidence_grade: 'B',
   },
 
   // ─────────────────────────────────────────────

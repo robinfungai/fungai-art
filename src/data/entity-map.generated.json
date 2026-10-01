@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-01T16:34:33.283Z",
+  "generatedAt": "2026-10-01T21:10:05.088Z",
   "counts": {
-    "botanicals": 247,
+    "botanicals": 248,
     "monographs": 128,
     "monographsMatched": 128,
     "products": 21,
@@ -318,10 +318,19 @@
       "id": 227,
       "slug": "cinnamon",
       "name": "Cinnamon",
-      "botanical": "Cinnamomum verum (Ceylon/true — preferred) / Cinnamomum cassia (inner bark)",
+      "botanical": "Cinnamomum verum (Ceylon / true cinnamon, inner bark)",
       "latin": "Cinnamomum verum",
       "genus": "Cinnamomum",
       "species": "verum"
+    },
+    {
+      "id": 597,
+      "slug": "cassia-cinnamon",
+      "name": "Cassia Cinnamon",
+      "botanical": "Cinnamomum cassia (bark — Chinese cinnamon, Rou Gui)",
+      "latin": "Cinnamomum cassia",
+      "genus": "Cinnamomum",
+      "species": "cassia"
     },
     {
       "id": 228,

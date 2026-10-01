@@ -64,7 +64,7 @@ module.exports = {
   //         herb (herbs.ts extreme_caution: both Amanitas, St John's Wort,
   //         Calea); pro is not limited (Robin, 2026-10-01, audit 29 Sep #4, Q5).
   engineVersion:      '2.10.0-server',
-  herbDbVersion:      '2026.10.01-247herbs',
+  herbDbVersion:      '2026.10.01-248herbs',   // + Cassia Cinnamon (597); Cinnamon is Ceylon only
   // 1.1.0 — unknown pregnancy safety = avoid; under-18s: no HIGH-caution,
   //         psychoactive, or above-LOW calming herbs (2026-09-27).
   // 1.2.0 — pro quiz: 'trying to conceive' = the pregnancy rule;

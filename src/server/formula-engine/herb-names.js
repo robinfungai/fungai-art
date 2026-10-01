@@ -93,7 +93,9 @@ const GERMAN_NAMES = {
   'Rosehip': ['hagebutte'], 'Yarrow': ['schafgarbe'], 'Mugwort': ['beifuß'],
   'Wormwood': ['wermut'], 'Garlic': ['knoblauch'], 'Licorice Root': ['süßholz', 'lakritz', 'lakritze'],
   'Linden': ['linde', 'lindenblüten'], 'Oatstraw': ['hafer', 'haferstroh'],
-  'Skullcap': ['helmkraut'], 'Motherwort': ['herzgespann'], 'Cinnamon': ['zimt'],
+  'Skullcap': ['helmkraut'], 'Motherwort': ['herzgespann'], 'Cinnamon': ['zimt', 'ceylon-zimt', 'ceylonzimt'],
+  // Both cinnamons answer to "Zimt" - a note saying "kein Zimt" refuses both (2026-10-01).
+  'Cassia Cinnamon': ['zimt', 'kassia', 'kassiazimt', 'zimtkassie', 'chinesischer zimt'],
   'Cloves': ['nelken', 'gewürznelken'], 'Cardamom': ['kardamom'], 'Saffron': ['safran'],
   "Lion's Mane": ['igelstachelbart'], 'Birch Buds': ['birkenknospen'], 'Horsetail': ['schachtelhalm', 'zinnkraut'],
   'Calendula': ['ringelblume'], 'Echinacea': ['sonnenhut'], 'Juniper': ['wacholder'],
@@ -128,6 +130,7 @@ const EXTRA_NAMES = {
   "St. John's Wort": ['saint johns wort', 'sjw'],
   'Licorice Root': ['liquorice', 'glycyrrhizin'],
   'Chamomile': ['camomile'],
+  'Cassia Cinnamon': ['cassia'],
   'Ashwagandha': ['indian ginseng', 'winter cherry'],
   'Rhodiola': ['golden root', 'roseroot', 'rose root', 'arctic root'],
   'Schisandra (Five-Flavour Fruit)': ['schizandra', 'wu wei zi', 'magnolia vine'],

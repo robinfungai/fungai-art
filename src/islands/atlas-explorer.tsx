@@ -1,6 +1,6 @@
 // src/islands/atlas-explorer.tsx
 //
-// The Atlas: 247 organisms, navigable by facet, each opening a ten-layer
+// The Atlas: 248 organisms, navigable by facet, each opening a ten-layer
 // dossier with its synergy graph.
 //
 // Data comes from public/atlas/data/ (built by scripts/build-atlas.cjs):
@@ -775,7 +775,7 @@ function Allies({
 export const LAYER_VIEWS = {
   BOTANICAL: Botanical, CHEMISTRY: Chemistry, TRADITION: TraditionTab,
   EXTRACTION: Extraction, FORMULATION: Formulation, SAFETY: Safety,
-  ALLIES: Allies, 'FIELD NOTES': FieldNotes,
+  ALLIES: Allies, 'FIELD NOTES': FieldNotes, SOURCES: SourcesTab,
 };
 export { TABS };
 

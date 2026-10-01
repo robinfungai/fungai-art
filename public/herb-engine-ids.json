@@ -503,6 +503,16 @@
   "k": "plant"
  },
  {
+  "id": "cassia_cinnamon",
+  "n": "Cassia Cinnamon",
+  "b": "Cinnamomum cassia",
+  "cat": "Antimicrobial",
+  "p": [
+   "tcm"
+  ],
+  "k": "plant"
+ },
+ {
   "id": "cassia_seed_extract",
   "n": "Cassia Seed Extract",
   "b": "Cassia obtusifolia / Senna obtusifolia",
