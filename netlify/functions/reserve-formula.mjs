@@ -40,6 +40,7 @@ import { buildDisplayBundle } from '../../src/server/formula-engine/display.js';
 import { sanitiseNarrative } from '../../src/server/formula-engine/narrative-sanitiser.js';
 import { computeMicronutrients } from '../../src/server/formula-engine/micronutrients.js';
 import { ensurePool } from '../../src/server/formula-engine/axes.js';
+import { clientProfileText } from '../../src/server/formula-engine/client-profile.js';
 
 // ── Origin gate ──────────────────────────────────────────────────
 // Locked to Fungai origins so a random site can't POST here and
@@ -385,6 +386,12 @@ export default async function handler(req) {
     : '';
   const stripHtml = s => String(s || '').replace(/<[^>]*>/g, '').slice(0, 1200);
   const storyText = stripHtml(mycoReading || display.storyText);
+  // The client profile Robin pastes into /formula-analysis (2026-10-01):
+  // every answer in clinical words + the note + MYCO's reading. No name,
+  // email or city - it goes into an AI tool.
+  let profileBlock = '';
+  try { profileBlock = clientProfileText(quiz, { formulaId: rawFormulaId, country, reading: storyText, engineVersion }); }
+  catch (e) { console.warn('[reserve-formula] client profile failed:', e && e.message); }
   const herbNotes = storedHerbs.map((_, i) => stripHtml(display.herbLines && display.herbLines[i] ? display.herbLines[i].shortNote : '').slice(0, 200));
   let possibleMicronutrients = [];
   try { possibleMicronutrients = (computeMicronutrients(quiz, enrichedHerbs) || []).slice(0, 15); }
@@ -434,8 +441,8 @@ export default async function handler(req) {
 
   // ── 1. Notify Robin ────────────────────────────────────────────
   const robinSubject = `✦ Formula reservation · ${formulaName || 'unnamed'} · ${name}${geo.country ? ' · ' + geo.country : ''}`;
-  const robinHtml = buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients, formulaId: rawFormulaId, engineVersion });
-  const robinText = buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients, formulaId: rawFormulaId, engineVersion });
+  const robinHtml = buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients, formulaId: rawFormulaId, engineVersion, profileBlock });
+  const robinText = buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients, formulaId: rawFormulaId, engineVersion, profileBlock });
 
   // ── 2. Confirm to customer ─────────────────────────────────────
   const customerSubject = `Your formula is reserved · ${formulaName || 'Fungai Art'}`;
@@ -562,7 +569,7 @@ function json(body, status = 200, cors = {}) {
 
 // ── Email bodies ─────────────────────────────────────────────────
 
-function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients, formulaId, engineVersion }){
+function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients, formulaId, engineVersion, profileBlock }){
   geo = geo || {};
   possibleMicronutrients = Array.isArray(possibleMicronutrients) ? possibleMicronutrients : [];
   const q = quiz || {};
@@ -625,6 +632,7 @@ function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, 
         </table>
 
         ${notes ? `<div style="margin-top:20px;padding:14px 16px;background:#1A1E24;border-left:2px solid #E8B14B;border-radius:4px;"><div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#8B7E62;margin-bottom:6px;">Priority + prior herb experience</div><div style="font-family:Georgia,serif;font-style:italic;font-size:14px;color:#EDE5D8;line-height:1.7;">"${esc(notes)}"</div></div>` : ''}
+        ${profileBlock ? `<div style="margin-top:20px;"><div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#7bd4a1;margin-bottom:6px;">Client profile · copy into Formula Analysis</div><div style="font-family:Georgia,serif;font-style:italic;font-size:11.5px;color:#8B7E62;margin-bottom:8px;">No name, email or city in it — select the box, copy, and paste it into the analysis's "Client profile" field.</div><pre style="white-space:pre-wrap;word-break:break-word;margin:0;padding:14px 16px;background:#141821;border:0.5px solid rgba(123,212,161,.3);border-radius:8px;font-family:'Courier New',monospace;font-size:12px;line-height:1.6;color:#EDE5D8;">${esc(profileBlock)}</pre></div>` : ''}
 
         ${possibleMicronutrients.length ? `
         <!-- MICRONUTRIENT ALLIES — computed on the server from the stored
@@ -653,7 +661,7 @@ function buildRobinHtml({ email, name, city, country, notes, formulaName, quiz, 
   </body></html>`;
 }
 
-function buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients, formulaId, engineVersion }){
+function buildRobinText({ email, name, city, country, notes, formulaName, quiz, herbLines, synergies, bottleMl, geo, possibleMicronutrients, formulaId, engineVersion, profileBlock }){
   geo = geo || {};
   possibleMicronutrients = Array.isArray(possibleMicronutrients) ? possibleMicronutrients : [];
   const q = quiz || {};
@@ -682,7 +690,7 @@ ${synergies && synergies.length ? 'SYNERGIES:\n' + synergies.map(s => '  • ' +
   Filters:   ${Array.isArray(q.avoid) ? q.avoid.join(', ') : (q.avoid || '—')}
   ${q.duration ? 'Duration:  ' + q.duration + '\n  ' : ''}${q.age ? 'Age:       ' + q.age + '\n  ' : ''}${q.sleep ? 'Sleep:     ' + q.sleep : ''}
 
-${notes ? 'Priority + prior herb experience:\n  "' + notes + '"\n\n' : ''}${possibleMicronutrients.length ? 'POSSIBLE MICRONUTRIENT ALLIES (rule-based suggestion, server-side):\n  Directional only. Do not repeat verbatim to the customer without your\n  own clinical read.\n\n' + possibleMicronutrients.map(m => '  · ' + m.nutrient + ' — ' + (m.reason || '')).join('\n') + '\n\n' : ''}${geo.country ? 'EDGE-DETECTED COUNTRY: ' + geo.country + ' (sanity check vs. form; VPN bypasses)\n\n' : ''}Reply to this email to reach the customer. Confirm the formula together first, then send the Stripe link.
+${notes ? 'Priority + prior herb experience:\n  "' + notes + '"\n\n' : ''}${profileBlock ? profileBlock + '\n\n' : ''}${possibleMicronutrients.length ? 'POSSIBLE MICRONUTRIENT ALLIES (rule-based suggestion, server-side):\n  Directional only. Do not repeat verbatim to the customer without your\n  own clinical read.\n\n' + possibleMicronutrients.map(m => '  · ' + m.nutrient + ' — ' + (m.reason || '')).join('\n') + '\n\n' : ''}${geo.country ? 'EDGE-DETECTED COUNTRY: ' + geo.country + ' (sanity check vs. form; VPN bypasses)\n\n' : ''}Reply to this email to reach the customer. Confirm the formula together first, then send the Stripe link.
 `;
 }
 

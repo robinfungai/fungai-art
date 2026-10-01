@@ -119,6 +119,11 @@
   .myco h2 { color: var(--mycol); }
   .myco textarea { width: 100%; background: var(--s2); border: .5px solid rgba(158,212,56,.28); border-radius: 10px; color: var(--ml); font: inherit; font-size: 14px; padding: 10px 12px; resize: vertical; min-height: 64px; outline: none; margin-top: 10px; }
   .myco textarea:focus { border-color: var(--myco); }
+  .client-prof { margin-top: 10px; }
+  .client-prof summary { cursor: pointer; font-family: var(--fm, monospace); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--myco); list-style: none; }
+  .client-prof summary::-webkit-details-marker { display: none; }
+  .client-prof .cp-state { color: var(--md, #8B7E62); letter-spacing: .08em; text-transform: none; margin-left: 6px; }
+  .client-prof textarea { min-height: 150px; font-family: var(--fm, monospace); font-size: 12px; line-height: 1.55; }
   .myco-out { margin-top: 14px; font-size: 14.5px; line-height: 1.6; color: #DCCFAE; }
   .myco-out h4 { font-family: var(--fs); font-weight: 600; font-size: 15px; color: var(--mycol); margin: 14px 0 6px; }
   .myco-out h4:first-child { margin-top: 0; }
@@ -220,6 +225,14 @@
         <h2 id="hMyco">MYCO&rsquo;s reading</h2>
         <p class="hint" id="mycoHint">MYCO reads this analysis and comments on balance, synergy, ratio and cautions. When you have changed the formula, it reads the change first.</p>
         <textarea id="question" maxlength="600" placeholder="Ask about this formula — e.g. &ldquo;Should passionflower replace lemon balm here?&rdquo;"></textarea>
+        <!-- Client profile (Robin, 2026-10-01): the block from the
+             reservation email. MYCO then reads the formula for that person
+             (age, contraindications, medicines, constitution). It has no
+             name or contact; an email or phone number is stripped anyway. -->
+        <details class="client-prof" id="clientWrap">
+          <summary>+ Client profile <span class="cp-state" id="clientState"></span></summary>
+          <textarea id="client" maxlength="3000" placeholder="Paste the &ldquo;Client profile&rdquo; block from the reservation email &mdash; MYCO then checks every herb against this person."></textarea>
+        </details>
         <div class="row-actions">
           <button class="btn myco" id="mycoBtn" type="button">&#9651; Ask MYCO</button>
         </div>
@@ -549,7 +562,7 @@
     if (asking || !state.base || !state.base.herbs.length) return;
     asking = true;
     $('mycoBtn').disabled = true; $('mycoWait').hidden = false; $('mycoOut').innerHTML = '';
-    post(payload({ myco: true, question: $('question').value.trim() || undefined })).then(function (res) {
+    post(payload({ myco: true, question: $('question').value.trim() || undefined, client: $('client').value.trim() || undefined })).then(function (res) {
       take(res); draw();
       var m = res.myco || {};
       if (m.text) renderMyco(m.text);
@@ -559,6 +572,12 @@
     }).then(function () { asking = false; $('mycoBtn').disabled = false; $('mycoWait').hidden = true; });
   }
   $('mycoBtn').addEventListener('click', askMyco);
+  // Shows that a profile is attached even with the box folded. It lives in
+  // the page only — never saved in the browser (it is health information).
+  $('client').addEventListener('input', function () {
+    var v = $('client').value.trim();
+    $('clientState').textContent = v ? '· attached — MYCO reads the formula for this client' : '';
+  });
 
   // ── Editing controls ──
   function addHerb() {
