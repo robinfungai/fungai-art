@@ -111,6 +111,14 @@ Robin said "push tonight", so this went out with everything since 0a07052. **Rob
   Ecuador, Colombia, Brazil. Not changed; Robin to OK.
 - **Lemon balm:** no serotonergic tag. The human-relevant mechanism is GABA (GABA-T inhibition);
   serotonin rests on one rat study. The record already says calming, not serotonergic.
+- **Lab notebook (Academy), later that evening — committed, not pushed:** chapters are a
+  3-column grid of closed cards (newest entry's first sentence + two PDF titles); every
+  chapter starts closed and a rebuild re-opens only the ones opened on the page
+  (`LAB_OPEN`); an open chapter spans the row. PDF cards: title, pages, size ("no text
+  layer" for keepers only). MYCO checked: 41 live lab notes readable with the anon key,
+  the section name counts in retrieval, PDFs reach signed-in members' MYCO.
+  `public/community/academy/Herbalism Module 1_V3.pdf` is committed (May) and public by
+  URL and on GitHub — Robin to decide.
 - **Curriculum (Antigravity):** review + fix list in
   [CURRICULUM-FIXES-FOR-ANTIGRAVITY.md](CURRICULUM-FIXES-FOR-ANTIGRAVITY.md). Robin: free for
   all, he renames the levels. NOT committed yet: it goes live on the push after Antigravity's

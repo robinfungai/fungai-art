@@ -288,9 +288,11 @@
       card.dataset.title = String(d.title || '').toLowerCase();
       card.innerHTML =
         '<div class="ad-title" title="' + esc(d.title) + '">' + esc(d.title) + '</div>' +
+        // Title, pages and size only (Robin, 2026-10-01). A keeper still
+        // sees "no text layer": that one means MYCO cannot read the PDF.
         '<div class="ad-meta"><span class="ad-icon" aria-hidden="true">▤</span>' +
-          (d.pages ? d.pages + ' pp · ' : '') + (d.bytes ? kb(d.bytes) : '') +
-          (d.text_chars ? ' · <span title="MYCO has read it">MYCO ✓</span>' : ' · no text layer') + '</div>' +
+          (d.pages ? d.pages + ' pages · ' : '') + (d.bytes ? kb(d.bytes) : '') +
+          (!d.text_chars && isAdmin ? ' · no text layer' : '') + '</div>' +
         '<div class="ad-actions">' +
           '<button type="button" class="ad-btn ad-read">Read</button>' +
           (isAdmin ? '<button type="button" class="ad-btn ad-ren" aria-label="Rename" title="Rename">✎</button>' +
@@ -348,6 +350,8 @@
   window.AcademyDocs = {
     render: render,
     count: function (id) { return forChapter(id).length; },
+    // Newest first — the closed chapter card shows the first two.
+    titles: function (id) { return forChapter(id).map(function (d) { return d.title || ''; }).filter(Boolean); },
     reload: load,
   };
 

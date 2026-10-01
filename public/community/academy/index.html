@@ -302,20 +302,43 @@
     }
     .lab-title em { color:var(--nutrient); }
 
-    .lab-chapters { display:flex; flex-direction:column; gap:12px; }
+    /* Chapters as a 3-column grid of closed cards (Robin, 2026-10-01): each
+       card previews its newest entry and two PDF titles; an open chapter
+       spans the whole row so the writing space stays wide. */
+    .lab-chapters { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; align-items:start; }
+    .lab-chapters > :not(.lab-chapter) { grid-column:1 / -1; }
+    @media (max-width:900px) { .lab-chapters { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width:560px) { .lab-chapters { grid-template-columns:1fr; } }
 
     .lab-chapter {
       border:0.5px solid var(--rule); border-radius:10px;
       background:var(--soil-2); overflow:hidden;
       transition:border-color 0.2s;
+      min-width:0;
     }
-    .lab-chapter.open { border-color:var(--rule-strong); }
+    .lab-chapter.open { border-color:var(--rule-strong); grid-column:1 / -1; }
 
     .lab-ch-header {
       display:flex; align-items:center; gap:12px;
       padding:16px 18px; cursor:pointer;
       transition:background 0.15s;
+      flex-wrap:wrap;
     }
+    .lab-chapter:not(.open) .lab-ch-header { min-height:210px; align-content:flex-start; }
+    .lab-ch-preview { flex-basis:100%; min-width:0; margin-top:4px; padding-top:12px; border-top:0.5px solid var(--rule); }
+    .lab-chapter.open .lab-ch-preview { display:none; }
+    .lab-ch-quote {
+      font-family:'Cormorant Garamond',Georgia,serif; font-style:italic;
+      font-size:14.5px; line-height:1.5; color:var(--mycelium);
+      display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+      margin:0 0 10px;
+    }
+    .lab-ch-pdf {
+      font-family:'Cormorant Garamond',Georgia,serif; font-size:13.5px; color:#F1E6C6;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:4px;
+    }
+    .lab-ch-pdf span { color:#F5D689; font-size:11px; margin-right:6px; }
+    .lab-ch-empty { font-family:var(--font-mono); font-size:9px; letter-spacing:0.16em; text-transform:uppercase; color:var(--mycelium-d); margin:0; }
     .lab-ch-header:hover { background:var(--soil-3); }
 
     .lab-ch-icon {
@@ -2149,6 +2172,11 @@ async function commitEdit(chapterId, index){
   try { renderLabSyncBar(); } catch {}
 }
 
+// The chapters YOU opened on this page. Every chapter starts closed, and
+// a rebuild (after a save, an upload, a sync) re-opens only these — it
+// used to re-open every chapter with notes or PDFs (Robin, 2026-10-01).
+const LAB_OPEN = new Set();
+
 function toggleLab(id) {
   const body    = document.getElementById(`lab-body-${id}`);
   const tog     = document.getElementById(`lab-toggle-${id}`);
@@ -2157,7 +2185,18 @@ function toggleLab(id) {
   body.style.display = isOpen ? 'none' : 'block';
   tog.textContent    = isOpen ? '▾' : '▴';
   chapter.classList.toggle('open', !isOpen);
+  if (isOpen) LAB_OPEN.delete(id); else LAB_OPEN.add(id);
   if (!isOpen) renderEntries(id);
+}
+
+// One sentence of a note for the closed card.
+function labFirstSentence(text) {
+  const t = String(text || '').replace(/\s+/g, ' ').trim();
+  const m = t.match(/^.{15,220}?[.!?](?=\s|$)/);
+  return m ? m[0] : (t.length > 160 ? t.slice(0, 160).replace(/\s+\S*$/, '') + '…' : t);
+}
+function labEsc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
 function buildLabNotebook() {
@@ -2267,12 +2306,18 @@ function buildLabNotebook() {
         </div>
     `;
 
-    // Auto-expand any chapter that already has entries — that way notes
-    // are visible the moment the page loads. Chapters with no entries stay
-    // collapsed so the section doesn't feel overwhelming.
-    // A chapter holding PDFs opens too (academy-docs.js).
-    const docCount = (window.AcademyDocs && isSignedIn) ? window.AcademyDocs.count(ch.id) : 0;
-    const bodyOpen = hasEntries || docCount > 0;
+    // Closed unless you opened it on this page (LAB_OPEN). The closed card
+    // previews its newest entry and two PDF titles instead.
+    const bodyOpen = LAB_OPEN.has(ch.id);
+    const sentence = hasEntries ? labFirstSentence(entriesForChapter[0].text) : '';
+    const docTitles = (window.AcademyDocs && window.AcademyDocs.titles && isSignedIn)
+      ? window.AcademyDocs.titles(ch.id).slice(0, 2) : [];
+    const preview = `
+          <div class="lab-ch-preview">
+            ${sentence ? `<p class="lab-ch-quote">“${labEsc(sentence)}”</p>` : ''}
+            ${docTitles.map(t => `<div class="lab-ch-pdf" title="${labEsc(t)}"><span aria-hidden="true">▤</span>${labEsc(t)}</div>`).join('')}
+            ${(!sentence && !docTitles.length) ? '<p class="lab-ch-empty">Nothing here yet</p>' : ''}
+          </div>`;
     // Admin can rename / delete custom chapters they (or any admin)
     // created. Hardcoded chapters can't be renamed from the UI — they
     // live in the HTML source. The stopPropagation calls prevent the
@@ -2299,6 +2344,7 @@ function buildLabNotebook() {
         </div>
         ${adminChapterCtrls}
         <div class="lab-ch-toggle" id="lab-toggle-${ch.id}">${bodyOpen ? '▴' : '▾'}</div>
+        ${preview}
       </div>
       <div class="lab-ch-body" id="lab-body-${ch.id}" style="display:${bodyOpen ? 'block' : 'none'}">
         <div class="lab-docs" id="docs-${ch.id}"></div>
