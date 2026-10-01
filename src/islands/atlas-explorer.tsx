@@ -89,7 +89,7 @@ const RAILS: { key: keyof AtlasIndex['facets'] & string; label: string; sub: str
 
 const TABS = [
   'BOTANICAL', 'CHEMISTRY', 'TRADITION', 'EXTRACTION',
-  'FORMULATION', 'SAFETY', 'ALLIES', 'FIELD NOTES',
+  'FORMULATION', 'SAFETY', 'ALLIES', 'FIELD NOTES', 'SOURCES',
 ] as const;
 type Tab = typeof TABS[number];
 
@@ -473,6 +473,15 @@ function DossierPanel({
                 {doc.layers.safety.extreme && (
                   <span className="atl-badge" style={{ color: '#E8826B' }} title={EXTREME_NOTE}>extreme caution</span>
                 )}
+                {(doc.layers.evidence.references || []).length > 0 && (
+                  <button
+                    type="button" className="atl-badge" onClick={() => setTab('SOURCES')}
+                    style={{ cursor: 'pointer', color: '#9ED438', background: 'none' }}
+                    title="Open the PubMed sources"
+                  >
+                    {doc.layers.evidence.references!.length} PubMed source{doc.layers.evidence.references!.length === 1 ? '' : 's'} ↗
+                  </button>
+                )}
               </div>
             </header>
 
@@ -496,6 +505,7 @@ function DossierPanel({
               {tab === 'SAFETY'      && <Safety doc={doc} />}
               {tab === 'ALLIES'      && <Allies doc={doc} byId={byId} onNavigate={onNavigate} />}
               {tab === 'FIELD NOTES' && <FieldNotes doc={doc} />}
+              {tab === 'SOURCES'     && <SourcesTab doc={doc} />}
             </div>
           </>
         )}
@@ -624,7 +634,6 @@ function Formulation({ doc }: { doc: Dossier }) {
       <Field label="Digestive action"><Digestion items={formulation.digestion || []} /></Field>
       <h4 className="atl-layer">Layer 06 · Evidence</h4>
       <Field label="Grade">{evidence.grade || <Empty />}</Field>
-      <Field label="Sources"><Sources refs={evidence.references || []} /></Field>
     </>
   );
 }
@@ -647,6 +656,19 @@ function Safety({ doc }: { doc: Dossier }) {
         own medication, pregnancy or condition — the reading at Find Your Formula does
         screen for those.
       </p>
+    </>
+  );
+}
+
+// Its own tab (Robin, 2026-10-01: "I don't see them" — they sat at the
+// foot of FORMULATION). The header badge "N PubMed sources" opens it.
+function SourcesTab({ doc }: { doc: Dossier }) {
+  const { evidence } = doc.layers;
+  return (
+    <>
+      <h4 className="atl-layer">Layer 06 · Evidence · Sources</h4>
+      <Field label="Evidence grade">{evidence.grade || <Empty />}</Field>
+      <Field label="PubMed"><Sources refs={evidence.references || []} /></Field>
     </>
   );
 }
