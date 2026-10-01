@@ -1,0 +1,415 @@
+# -*- coding: utf-8 -*-
+"""
+Alchemy — Magnum Opus Curriculum Dataset
+Levels:
+1. Advanced Tincture Making — Percolation, Fresh Plant & High-Potency Extracts
+2. Oxymels, Elixirs, Herbal Wines & Fermented Medicines
+3. Topical Pharmacy — Salves, Liniments, Poultices & Compresses (Calendula, St. John's Wort, Comfrey, Arnica, Plantain)
+4. Suppositories, Enemas & Advanced Delivery Forms
+5. The Spagyric Magnum Opus — Calcination & The Plant Stone
+"""
+
+ALCHEMY_LEVELS = {
+    1: "Advanced Tincture Making — Percolation, Fresh Plant & High-Potency Extracts",
+    2: "Oxymels, Elixirs, Herbal Wines & Fermented Medicines",
+    3: "Topical Pharmacy — Salves, Liniments, Poultices & Compresses",
+    4: "Suppositories, Enemas & Advanced Delivery Forms",
+    5: "The Spagyric Magnum Opus — Calcination & The Plant Stone"
+}
+
+def get_alchemy_questions():
+    return [
+        # ─────────────────────────────────────────────────────────────
+        # LEVEL 1: ADVANCED TINCTURE MAKING & PERCOLATION
+        # ─────────────────────────────────────────────────────────────
+        {
+            "num": 1,
+            "level_num": 1,
+            "module": "Module 1: Hydraulic Column Percolation",
+            "lesson": "Lesson 1: Gravity Velocity & Menstruum Flow",
+            "herb": "Percolation Craft",
+            "badges": ["[MECHANISTIC]"],
+            "question": "In a conical glass percolation cone, what is the ideal drip velocity for exhausting a powdered herbal bed?",
+            "options": [
+                "Approximately 1 to 2 milliliters (about 20 to 40 drops) per minute under steady gravity displacement",
+                "A continuous roaring liquid stream flowing at roughly one liter every five minutes",
+                "One single drop discharged every two hours to allow deep molecular settling in the cone",
+                "The flow rate does not matter as long as the menstruum is heated to a rolling boil"
+            ],
+            "correct": 0,
+            "explanation": "Classical pharmacopoeial percolation requires a slow, regulated drip rate (typically 1–2 mL per minute for a standard 500g run) ensuring continuous laminar solvent exchange across every plant particle."
+        },
+        {
+            "num": 2,
+            "level_num": 1,
+            "module": "Module 1: Hydraulic Column Percolation",
+            "lesson": "Lesson 2: Pre-Moistening & Packing Density",
+            "herb": "Percolation Craft",
+            "badges": ["[MECHANISTIC]"],
+            "question": "Why must finely ground dry herbal powder be pre-moistened with menstruum and rested before packing into a percolator?",
+            "options": [
+                "To allow plant cellular starch and mucilage to swell evenly, preventing dry fissures and liquid channeling",
+                "To completely bleach out unwanted dark chlorophyll pigments before extraction begins in the glass column",
+                "To kill natural fungal spores with high alcohol so the powder turns into a sterile dry cake",
+                "Pre-moistening is only done to sweeten bitter roots before packing into the extraction vessel"
+            ],
+            "correct": 0,
+            "explanation": "If dry powder is packed directly, the swelling of cellulose upon contact with alcohol/water will either crack the glass column or create channels where menstruum bypasses unextracted pockets."
+        },
+        {
+            "num": 3,
+            "level_num": 1,
+            "module": "Module 2: Fresh Plant Maceration & Water Displacement",
+            "lesson": "Lesson 1: The 1:2 Fresh Ratio Calculation",
+            "herb": "Galenical Mathematics",
+            "badges": ["[MECHANISTIC]"],
+            "question": "When tincturing freshly harvested, succulent botanicals at a 1:2 ratio, why must you start with 95% pure ethanol?",
+            "options": [
+                "Succulent plant tissue is 70–85% cellular water, which naturally dilutes the final menstruum down to ~45–55% ABV",
+                "High proof alcohol is needed to burn off the tough outer epidermal cuticles of fresh leaves",
+                "Fresh plants release toxic gases unless submerged in pure industrial proof alcohol immediately after clipping",
+                "95% alcohol converts mild plant flavonoids into heavy resinous alkaloids within twenty-four hours"
+            ],
+            "correct": 0,
+            "explanation": "Fresh plant moisture contributes significant water volume to the menstruum. Using 95% ABV ensures that after accounting for the plant's internal water, the final tincture settles into a safe preserving range of 45–55% ABV."
+        },
+        {
+            "num": 4,
+            "level_num": 1,
+            "module": "Module 3: High-Potency Fluidextracts",
+            "lesson": "Lesson 1: 1:1 Ratio Physics",
+            "herb": "Pharmacopoeial Galenicals",
+            "badges": ["[MECHANISTIC]"],
+            "question": "What defines an official pharmacopoeial 'Fluidextract' (1:1 weight-to-volume ratio) compared to a standard 1:5 tincture?",
+            "options": [
+                "One milliliter of the finished liquid extract contains the soluble medicinal bioactives of exactly one gram of crude dried herb",
+                "It is diluted with equal parts vegetable glycerin and distilled spring water to reduce alcohol taste",
+                "It is boiled down until it forms a solid crystalline candy that can be chewed orally",
+                "It is manufactured exclusively using synthetic mineral acids without any water or ethanol"
+            ],
+            "correct": 0,
+            "explanation": "A 1:1 fluidextract is a high-potency galenical preparation where 1 mL of finished liquid represents 1 gram of original dry botanical matter, requiring fractional percolation or vacuum recovery."
+        },
+
+        # ─────────────────────────────────────────────────────────────
+        # LEVEL 2: OXYMELS, ELIXIRS & FERMENTED MEDICINES
+        # ─────────────────────────────────────────────────────────────
+        {
+            "num": 5,
+            "level_num": 2,
+            "module": "Module 1: The Art of the Oxymel",
+            "lesson": "Lesson 1: Acetic Acid & Raw Honey Chemistry",
+            "herb": "Oxymel Craft",
+            "badges": ["[TRADITIONAL]", "[MECHANISTIC]"],
+            "question": "In classical Greco-Roman and Persian medicine, what two foundational solvents define a true therapeutic Oxymel?",
+            "options": [
+                "Raw unpasteurized apple cider vinegar (acetic acid) and unheated wildflower honey, typically in a 1:1 to 1:3 ratio",
+                "Distilled pure ethyl alcohol and refined white sugar syrup boiled over intense flame",
+                "Fresh whole dairy milk and clarified butter combined with ground aromatic seed powders",
+                "Carbonated mineral spring water and sour lemon juice sweetened with artificial syrups"
+            ],
+            "correct": 0,
+            "explanation": "From the Greek oxymeli ('acid and honey'), an oxymel combines raw vinegar (extracting alkaloidal, mineral, and pungent principles) with raw enzymatic honey (soothing tissue and preserving the medicine)."
+        },
+        {
+            "num": 6,
+            "level_num": 2,
+            "module": "Module 1: The Art of the Oxymel",
+            "lesson": "Lesson 2: Respiratory & Lymphatic Formulations",
+            "herb": "Oxymel Craft",
+            "badges": ["[TRADITIONAL]"],
+            "question": "Why is an oxymel the premier galenical preparation when formulating pungent and sour herbs for children or respiratory tension?",
+            "options": [
+                "The acidic vinegar cuts through stagnant bronchial phlegm while raw honey coats raw throat mucosa without alcohol sting",
+                "Oxymels permanently eliminate the need for pulmonary gas exchange during seasonal winter colds",
+                "The high sugar content numbs taste buds entirely so children do not taste the herbs",
+                "Vinegar converts plant aromatics into a heavy gas that is exhaled directly through the skin"
+            ],
+            "correct": 0,
+            "explanation": "Oxymels are non-alcoholic, highly palatable, and synergistically therapeutic: acetic acid acts as an expectorant and sialagogue, while raw honey buffers gastric irritation and soothes airway spasm."
+        },
+        {
+            "num": 7,
+            "level_num": 2,
+            "module": "Module 2: Herbal Wines & Cordials",
+            "lesson": "Lesson 1: Vinous Extraction & Polyphenol Solubility",
+            "herb": "Herbal Wines",
+            "badges": ["[TRADITIONAL]"],
+            "question": "Why did historical European apothecaries (like Dioscorides and Hildegard von Bingen) formulate medicinal herbs in wine?",
+            "options": [
+                "The 12–14% natural alcohol plus tartaric and malic fruit acids extract both polar tannins and delicate aromatics efficiently",
+                "Wine was the only liquid solvent known to exist in medieval Europe before the invention of water wells",
+                "Wine completely breaks down toxic plant alkaloids, turning every wild plant species into safe medicine",
+                "Fermented grapes create an airtight seal inside glass bottles that prevents liquid from ever evaporating"
+            ],
+            "correct": 0,
+            "explanation": "Natural wine provides a gentle dual solvent: mild alcohol (10–14% ABV) dissolves volatile terpenes and resins, while organic fruit acids extract minerals and alkaloids with immediate bioavailability."
+        },
+        {
+            "num": 8,
+            "level_num": 2,
+            "module": "Module 3: Lacto-Fermented Botanicals",
+            "lesson": "Lesson 1: Microbial Biotransformation",
+            "herb": "Fermentation Pharmacognosy",
+            "badges": ["[MECHANISTIC]"],
+            "question": "How does probiotic lacto-fermentation transform the medicinal properties of botanical matrices (like Ginseng or Garlic)?",
+            "options": [
+                "Bacterial enzymes deglycosylate bound plant glycosides into smaller, highly bioavailable aglycones",
+                "Fermentation burns all active secondary metabolites into inert carbon ash within several days",
+                "Lactic acid bacteria permanently double the molecular weight of all botanical compounds",
+                "Fermentation removes all natural aroma and flavor, leaving completely tasteless water"
+            ],
+            "correct": 0,
+            "explanation": "Lactobacillus fermentation cleaves bulky sugar moieties from plant glycosides (e.g. converting ginsenosides into compound K, or alliin into bioactive thiosulfinates), dramatically enhancing intestinal absorption."
+        },
+
+        # ─────────────────────────────────────────────────────────────
+        # LEVEL 3: TOPICAL PHARMACY
+        # ─────────────────────────────────────────────────────────────
+        {
+            "num": 9,
+            "level_num": 3,
+            "module": "Module 1: Oil Infusion Physics",
+            "lesson": "Lesson 1: Solar Infusion of St. John's Wort",
+            "herb": "St. John's Wort",
+            "badges": ["[TRADITIONAL]", "[MECHANISTIC]"],
+            "question": "When fresh St. John's Wort flowers (*Hypericum perforatum*) are steeped in olive oil under sunlight, what causes the brilliant ruby-red color?",
+            "options": [
+                "Solar radiation and gentle warmth liberate and dissolve red-pigmented naphthodianthrones (hypericin and pseudohypericin)",
+                "The green chlorophyll in the leaves reacts with olive oil fatty acids, turning bright fluorescent red",
+                "Sunlight scorches the fresh yellow petals, creating caramelized red vegetable sugars in the oil",
+                "The plant absorbs iron ions directly from ambient air, creating red rust nanoparticles in the jar"
+            ],
+            "correct": 0,
+            "explanation": "The vibrant red hue of true Hypericum oil comes from lipophilic naphthodianthrones (hypericin, pseudohypericin) released from the flower's dark glandular dots, celebrated topically for nerve trauma."
+        },
+        {
+            "num": 10,
+            "level_num": 3,
+            "module": "Module 1: Oil Infusion Physics",
+            "lesson": "Lesson 2: Moisture Evaporation & Preventing Anaerobic Spoilage",
+            "herb": "Topical Pharmacy",
+            "badges": ["[SAFETY]"],
+            "question": "Why is infusing freshly harvested, damp herbs into vegetable oil a severe hazard if left sealed at room temperature?",
+            "options": [
+                "Trapped moisture in an anaerobic, low-oxygen oil environment creates an ideal incubation medium for *Clostridium botulinum*",
+                "Fresh plant water causes the oil to solidify into an unbreakable crystalline block within hours",
+                "Damp leaves absorb ambient nitrogen from the air, turning the carrier oil highly acidic",
+                "Water molecules degrade glass mason jars, causing the container to spontaneously shatter"
+            ],
+            "correct": 0,
+            "explanation": "Water introduced into oil creates an anaerobic microbial interface where deadly *Clostridium botulinum* spores can germinate; herbs should be thoroughly wilted or heated to drive off moisture."
+        },
+        {
+            "num": 11,
+            "level_num": 3,
+            "module": "Module 2: The Core Topical Materia Medica",
+            "lesson": "Lesson 1: Calendula, Comfrey, Arnica & Plantain",
+            "herb": "Topical Formulations",
+            "badges": ["[TRADITIONAL]", "[SAFETY]"],
+            "question": "Why must an herbalist NEVER apply high-allantoin Comfrey (*Symphytum officinale*) salves over a deep, dirty puncture wound?",
+            "options": [
+                "Comfrey stimulates rapid surface tissue granulation, sealing the top skin before anaerobic bacteria can drain from the depth",
+                "Comfrey contains caustic acids that dissolve healthy skin cells on contact with open air",
+                "The allantoin in comfrey attracts wild outdoor insects directly to the open wound surface",
+                "Comfrey reacts with human hemoglobin to cause immediate systemic blood coagulation"
+            ],
+            "correct": 0,
+            "explanation": "Allantoin drives rapid cell proliferation (vulnerary action). If applied over deep or uncleaned puncture wounds, it closes the epidermal surface prematurely, trapping pathogens in an anaerobic abscess."
+        },
+        {
+            "num": 12,
+            "level_num": 3,
+            "module": "Module 2: The Core Topical Materia Medica",
+            "lesson": "Lesson 2: Arnica Montana & Broken Skin Warnings",
+            "herb": "Arnica",
+            "badges": ["[SAFETY]"],
+            "question": "What is the crucial clinical boundary when applying topical Arnica (*Arnica montana*) oil or liniments for blunt trauma?",
+            "options": [
+                "It is strictly used for unbroken bruises, sprains, and closed hematomas; it should never be applied to broken skin",
+                "It must only be applied during the full moon phase to align with lymphatic tissue drainage cycles",
+                "It should be rubbed into open lacerations to cauterize active arterial capillary bleeding",
+                "It must be washed off within forty seconds to prevent the carrier oil from clogging pores"
+            ],
+            "correct": 0,
+            "explanation": "Arnica's sesquiterpene lactones (helenalin) are potent irritants; on broken skin or mucous membranes, they can cause severe blistering dermatitis, delayed healing, and toxic systemic absorption."
+        },
+        {
+            "num": 13,
+            "level_num": 3,
+            "module": "Module 3: Compresses, Poultices & Liniments",
+            "lesson": "Lesson 1: Counter-Irritant Evaporating Liniments",
+            "herb": "Liniment Craft",
+            "badges": ["[TRADITIONAL]", "[MECHANISTIC]"],
+            "question": "How do evaporating alcohol-and-camphor liniments relieve deep muscular aches and tendon stiffness?",
+            "options": [
+                "Rapid alcohol evaporation creates surface cooling, followed by rubefacient stimulation that dilates deep capillaries",
+                "The liniment permanently dissolves calcium deposits in muscle fibers within ten minutes of application",
+                "It numbs the entire spinal cord by entering systemic circulation through dermal sweat pores",
+                "The camphor oil creates an impermeable plastic film that traps internal body heat in the bone"
+            ],
+            "correct": 0,
+            "explanation": "Rubefacient liniments act via counter-irritation: evaporating spirits cool the surface while stimulating TRPM8 and TRPV1 thermoreceptors, followed by reflex hyperemia that flushes metabolic waste from tight muscles."
+        },
+
+        # ─────────────────────────────────────────────────────────────
+        # LEVEL 4: SUPPOSITORIES, ENEMAS & ADVANCED DELIVERY
+        # ─────────────────────────────────────────────────────────────
+        {
+            "num": 14,
+            "level_num": 4,
+            "module": "Module 1: Transmucosal Rectal & Vaginal Delivery",
+            "lesson": "Lesson 1: First-Pass Hepatic Bypass",
+            "herb": "Advanced Galenicals",
+            "badges": ["[MECHANISTIC]", "[HUMAN EVIDENCE]"],
+            "question": "What primary pharmacokinetic advantage does rectal botanical suppository delivery offer over oral administration?",
+            "options": [
+                "The middle and inferior rectal veins drain directly into systemic circulation, bypassing first-pass liver metabolism",
+                "Rectal mucosal tissue completely destroys all pharmaceutical drugs while absorbing only organic herbs",
+                "Suppositories absorb four times slower than oral capsules, preventing any cellular action for several days",
+                "The lower colon lacks blood vessels, so herbs act exclusively on superficial mucosal linings"
+            ],
+            "correct": 0,
+            "explanation": "The lower rectal venous plexus drains into the internal iliac veins and inferior vena cava, avoiding the hepatic portal system; this prevents first-pass metabolic breakdown and spares gastric irritation."
+        },
+        {
+            "num": 15,
+            "level_num": 4,
+            "module": "Module 1: Transmucosal Rectal & Vaginal Delivery",
+            "lesson": "Lesson 2: Cocoa Butter Polymorphism & Melting Curves",
+            "herb": "Suppository Craft",
+            "badges": ["[MECHANISTIC]"],
+            "question": "Why is pure unrefined Cocoa Butter (*Theobroma cacao*) the classical base for handcrafted botanical suppositories?",
+            "options": [
+                "It remains firm and easy to handle at room temperature, but melts cleanly at human body temperature (34–37°C)",
+                "It is a caustic drying agent that absorbs fifty times its volume in vaginal fluids within minutes",
+                "It permanently freezes botanical bioactives in a solid state so they never disperse into tissues",
+                "It is the only natural vegetable lipid that does not burn or catch fire when heated in ovens"
+            ],
+            "correct": 0,
+            "explanation": "Cocoa butter displays unique polymorphism, with stable beta crystals melting right at human physiological body temperature (34–37°C), releasing suspended herbal bioactives smoothly across mucosa."
+        },
+        {
+            "num": 16,
+            "level_num": 4,
+            "module": "Module 2: Botanical Retention Enemas",
+            "lesson": "Lesson 1: Soothing Astringents in Lower Bowel Inflammation",
+            "herb": "Clinical Delivery",
+            "badges": ["[TRADITIONAL]", "[SAFETY]"],
+            "question": "When formulating a low-volume botanical retention enema for lower bowel tenesmus, what safety parameter is critical?",
+            "options": [
+                "The liquid must be strictly body-temperature (37°C), isotonic, and free from harsh high-proof alcohol or irritants",
+                "The infusion must be administered boiling hot to sterilize colon bacteria in the sigmoid flexure",
+                "The liquid should contain at least 40% ethanol to ensure rapid absorption across the hemorrhoidal veins",
+                "Retention enemas must always use pure unbuffered lemon juice to acidify the rectal vault"
+            ],
+            "correct": 0,
+            "explanation": "Rectal mucosa is extremely delicate. Solutions must be body-temperature (37°C), low-volume (60–120 mL), strictly non-alcoholic (infusions, decoctions, or mucilage), and administered gently."
+        },
+        {
+            "num": 17,
+            "level_num": 4,
+            "module": "Module 3: Liposomal & Phospholipid Encapsulation",
+            "lesson": "Lesson 1: Phosphatidylcholine Bilayers",
+            "herb": "Modern Formulation Physics",
+            "badges": ["[MECHANISTIC]"],
+            "question": "How does sonicating an herbal extract (like Curcumin or Silymarin) with sunflower lecithin create a liposomal delivery system?",
+            "options": [
+                "Amphiphilic phospholipid molecules form microscopic lipid bilayers that encapsulate both hydrophobic and hydrophilic bioactives",
+                "Lecithin binds all botanical bioactives into insoluble rocks that pass unabsorbed through the stomach",
+                "Sound waves convert liquid herbal extracts into dry gaseous vapors that are inhaled into the lungs",
+                "Phospholipids break down plant flavonoids into simple sugars to accelerate metabolic clearance"
+            ],
+            "correct": 0,
+            "explanation": "Phospholipids self-assemble in aqueous media into microscopic liposomal vesicles; this shields unstable bioactives from gastric breakdown and facilitates direct chylomicron uptake in the intestines."
+        },
+
+        # ─────────────────────────────────────────────────────────────
+        # LEVEL 5: THE SPAGYRIC MAGNUM OPUS
+        # ─────────────────────────────────────────────────────────────
+        {
+            "num": 18,
+            "level_num": 5,
+            "module": "Module 1: The Three Philosophical Principles",
+            "lesson": "Lesson 1: Sulphur, Mercury & Salt in Plants",
+            "herb": "Spagyric Philosophy",
+            "badges": ["[TRADITIONAL]"],
+            "question": "In the Paracelsian spagyric tradition, what do the Three Principles (Sulphur, Mercury, Salt) represent in a physical plant?",
+            "options": [
+                "Sulphur represents the volatile essential oils/soul, Mercury the alcohol/spirit, and Salt the mineral body from the ashes",
+                "Sulphur represents toxic impurities, Mercury represents industrial quicksilver, and Salt represents common sea salt",
+                "Sulphur represents plant roots, Mercury represents green foliage, and Salt represents morning dew on petals",
+                "The three principles are metaphorical poetry with zero physical laboratory operations attached"
+            ],
+            "correct": 0,
+            "explanation": "Spagyric alchemy ('spao' = separate, 'ageiro' = recombine) separates the plant into Sulphur (essential oil/soul), Mercury (fermented alcohol/spirit), and Salt (purified crystalline mineral salts/body)."
+        },
+        {
+            "num": 19,
+            "level_num": 5,
+            "module": "Module 2: Calcination of the Marc",
+            "lesson": "Lesson 1: Incineration to Grey-White Ash",
+            "herb": "Laboratory Calcination",
+            "badges": ["[MECHANISTIC]"],
+            "question": "After pressing out the tincture, what physical laboratory procedure is performed on the remaining exhausted plant residue (marc)?",
+            "options": [
+                "It is calcined in a crucible over high heat until all black carbon burns away, leaving pure grey-white mineral ash",
+                "It is thrown away into a compost pile because all medicinal value has already been completely exhausted",
+                "It is frozen in liquid nitrogen to crystalize the remaining cellulose fibers into structural glass",
+                "It is soaked in petroleum solvents to dissolve the plant's outer waxy cuticles"
+            ],
+            "correct": 0,
+            "explanation": "Calcination subjects the pressed plant marc to intense crucible heat (400–600°C), oxidizing organic carbon into CO2 until only the plant's purified water-soluble and insoluble mineral salts remain."
+        },
+        {
+            "num": 20,
+            "level_num": 5,
+            "module": "Module 2: Calcination of the Marc",
+            "lesson": "Lesson 2: Water Leaching & Filtration of Fixed Salts",
+            "herb": "Laboratory Extraction",
+            "badges": ["[MECHANISTIC]"],
+            "question": "How are the purified 'Salt of Tartar' (potassium carbonate and trace plant minerals) separated from insoluble crucible ash?",
+            "options": [
+                "The white ash is leached with hot distilled water, filtered through unbleached paper, and evaporated to yield sparkling crystals",
+                "The ash is mixed with sand and melted into solid colored glass beads in an artisan kiln",
+                "The ash is dissolved in concentrated battery acid to generate toxic hydrogen sulfide gas",
+                "The ash is placed under a magnet to extract magnetic iron particles from the plant tissue"
+            ],
+            "correct": 0,
+            "explanation": "Water leaching (dissolution and filtration) isolates the soluble mineral fraction (predominantly potassium carbonates, phosphates, and trace bio-minerals); gentle evaporation produces pure crystalline salts."
+        },
+        {
+            "num": 21,
+            "level_num": 5,
+            "module": "Module 3: Cohobation & The Spagyric Tincture",
+            "lesson": "Lesson 1: Recombining Salt with Spirit",
+            "herb": "Cohobation Craft",
+            "badges": ["[TRADITIONAL]", "[MECHANISTIC]"],
+            "question": "What happens chemically when the purified, alkaline plant mineral salts are recombined (cohobated) with the original tincture?",
+            "options": [
+                "The alkaline potassium carbonate salts neutralize harsh plant acids, buffering the extract and saponifying delicate resins",
+                "The liquid instantly ferments into thick, high-proof ethanol that bubbles over the top of the bottle",
+                "The salts precipitate all active flavonoids, leaving an inert, completely clear water liquid behind",
+                "The tincture turns into a toxic caustic lye that can no longer be safely consumed by humans"
+            ],
+            "correct": 0,
+            "explanation": "Cohobation reintroduces the plant's purified mineral body: the alkaline salts elevate pH, esterify fatty acids, saponify stubborn resins, and form bioavailable mineral-constituent complexes."
+        },
+        {
+            "num": 22,
+            "level_num": 5,
+            "module": "Module 4: The Vegetable Stone (Magnum Opus)",
+            "lesson": "Lesson 1: Circulation in the Pelican Vessel",
+            "herb": "The Plant Stone",
+            "badges": ["[TRADITIONAL]"],
+            "question": "In classical laboratory spagyria, what is the ultimate completed preparation known as the 'Vegetable Stone'?",
+            "options": [
+                "A fully circulated crystalline matrix that dissolves completely in both water and alcohol, delivering the unified trinity of the plant",
+                "A petrified fossilized piece of wood found in ancient geological bog strata",
+                "A compressed tablet of synthetic vitamin powders manufactured with heavy industrial hydraulic tablet presses",
+                "A decorative semi-precious quartz crystal placed inside a tincture bottle for aesthetic visual appeal"
+            ],
+            "correct": 0,
+            "explanation": "The Vegetable Stone represents the apex of plant alchemy: through repeated circulation in a sealed Pelican vessel, the separated Sulphur, Mercury, and Salt are exalted into an open, highly bioavailable matrix."
+        }
+    ]

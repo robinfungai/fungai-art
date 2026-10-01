@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="color-scheme" content="dark">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Fungal Kingdom & Myco-Academy — Fungai Art</title>
+  <meta name="description" content="Traverse the underground continuum from haploid hyphae to the mycelial web, medicinal polypores, basidiospores, and saprotrophic decay."/>
+  <link rel="icon" type="image/png" sizes="256x256" href="/favicon.png?v=4"/>
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <style>
+    
+:root {
+  --bg-deep: #050807;
+  --bg-card: rgba(10, 24, 20, 0.72);
+  --glass-border: rgba(56, 189, 248, 0.2);
+  --glass-highlight: rgba(56, 189, 248, 0.4);
+  --pill-btn-bg: #38BDF8;
+  --pill-btn-hover: #7DD3FC;
+  --pill-btn-text: #041017;
+  --accent: #38BDF8;
+  --accent-glow: rgba(56, 189, 248, 0.35);
+  --sage-muted: #7DD3FC;
+  --sage-light: #E0F2FE;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Satoshi', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+}
+body {
+  background: radial-gradient(circle 900px at 50% -120px, rgba(56, 189, 248, 0.18), transparent 70%),
+              radial-gradient(circle 700px at 85% 50%, rgba(52, 211, 153, 0.12), transparent 60%),
+              radial-gradient(circle 800px at 15% 85%, rgba(129, 140, 248, 0.1), transparent 65%),
+              linear-gradient(180deg, #060B08 0%, #040806 50%, #020403 100%);
+  background-attachment: fixed;
+  color: var(--sage-light); font-family: var(--font-sans); margin: 0; padding: 0; line-height: 1.6;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+.container { max-width: 1080px; margin: 0 auto; padding: 0 24px 120px; position: relative; z-index: 1; }
+
+/* Sticky Nav */
+.nav-wrap { position: sticky; top: 0; z-index: 100; padding: 14px 0; backdrop-filter: blur(24px); background: rgba(8,16,11,0.75); border-bottom: 1px solid rgba(255,255,255,0.08); }
+.nav { max-width: 1080px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
+.nav-brand-mark { width: 40px; height: 40px; border-radius: 50%; overflow: hidden; border: 1px solid var(--glass-highlight); box-shadow: 0 0 16px var(--accent-glow); }
+.nav-brand-mark img { width: 100%; height: 100%; object-fit: cover; }
+.nav-brand-text { display: flex; flex-direction: column; }
+.nav-brand-title { font-family: var(--font-serif); font-style: italic; font-size: 21px; color: #fff; }
+.nav-brand-sub { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sage-muted); }
+.nav-brand-sub em { color: var(--accent); font-style: normal; }
+
+/* 3-Way Switcher */
+.curriculum-switcher { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); padding: 4px; border-radius: 9999px; border: 1px solid var(--glass-border); }
+.switch-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 9999px; font-family: var(--font-sans); font-size: 11.5px; font-weight: 500; text-decoration: none; color: var(--sage-muted); transition: all 0.2s ease; }
+.switch-pill:hover { color: #fff; background: rgba(255,255,255,0.08); }
+.switch-pill.active { background: var(--pill-btn-bg); color: var(--pill-btn-text); font-weight: 600; box-shadow: 0 0 14px var(--accent-glow); }
+
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+.progress-pill { display: inline-flex; align-items: center; gap: 7px; padding: 6px 14px; border-radius: 9999px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); font-family: var(--font-mono); font-size: 9.5px; color: var(--accent); }
+.progress-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+.nav-glass-btn { display: inline-flex; align-items: center; padding: 6px 14px; border-radius: 9999px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.04); color: var(--sage-muted); font-family: var(--font-mono); font-size: 9.5px; text-decoration: none; transition: all 0.2s; }
+.nav-glass-btn:hover { color: #fff; border-color: var(--glass-highlight); }
+
+/* Hero Glass */
+.hero-glass { background: var(--bg-card); backdrop-filter: blur(28px); border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight); border-radius: 28px; padding: 40px; margin: 32px 0; box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+.hero-eyebrow { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+.hero-title { font-family: var(--font-serif); font-style: italic; font-size: clamp(32px, 5vw, 50px); color: #fff; line-height: 1.1; margin-bottom: 14px; }
+.hero-lead { font-size: 15px; color: var(--sage-light); line-height: 1.65; max-width: 68ch; margin-bottom: 24px; opacity: 0.9; }
+.hero-stats { display: flex; gap: 24px; margin-bottom: 28px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.08); }
+.stat-item { display: flex; flex-direction: column; }
+.stat-val { font-family: var(--font-serif); font-style: italic; font-size: 24px; color: #fff; }
+.stat-label { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sage-muted); }
+.btn-pill-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--pill-btn-bg); color: var(--pill-btn-text); font-weight: 600; padding: 13px 26px; border-radius: 9999px; border: none; cursor: pointer; text-decoration: none; transition: all 0.2s; box-shadow: 0 8px 24px var(--accent-glow); }
+.btn-pill-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px var(--accent-glow); }
+.btn-pill-arrow { width: 20px; height: 20px; border-radius: 50%; background: rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; }
+
+/* Controls HUD */
+.controls-hud { position: sticky; top: 72px; z-index: 90; margin-bottom: 32px; padding: 16px 20px; border-radius: 24px; background: rgba(10,20,15,0.85); backdrop-filter: blur(24px); border: 1px solid var(--glass-border); box-shadow: 0 16px 40px rgba(0,0,0,0.4); }
+.hud-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 14px; }
+.hud-title { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage-muted); }
+.hud-title strong { color: #fff; }
+.search-glass-wrap { flex: 1; max-width: 380px; min-width: 240px; }
+.search-glass-input { width: 100%; padding: 9px 16px; border-radius: 9999px; background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); color: #fff; font-size: 13px; outline: none; transition: all 0.2s; }
+.search-glass-input:focus { border-color: var(--accent); background: rgba(255,255,255,0.1); }
+
+/* Category Grid (Rounded Square Glass) */
+.category-grid { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: none; }
+.category-grid::-webkit-scrollbar { display: none; }
+.cat-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 82px; height: 82px; padding: 8px; border-radius: 20px; background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); color: var(--sage-muted); cursor: pointer; transition: all 0.2s; flex-shrink: 0; }
+.cat-btn:hover { background: rgba(255,255,255,0.08); color: #fff; transform: translateY(-2px); }
+.cat-btn.active { background: rgba(255,255,255,0.12); border-color: var(--accent); color: var(--accent); box-shadow: 0 0 18px var(--accent-glow); }
+.cat-icon { font-size: 22px; margin-bottom: 4px; }
+.cat-label { font-size: 10.5px; font-weight: 500; white-space: nowrap; }
+
+/* Epistemic Lenses */
+.lens-subbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); }
+.lens-pill { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 12px; border-radius: 9999px; background: transparent; border: 1px solid var(--glass-border); color: var(--sage-muted); cursor: pointer; transition: all 0.18s; }
+.lens-pill:hover { color: #fff; border-color: var(--glass-highlight); }
+.lens-pill.active { color: #000; font-weight: 600; background: var(--accent); border-color: var(--accent); }
+
+/* Question Cards */
+.questions-feed { display: flex; flex-direction: column; gap: 24px; }
+.question-card { background: var(--bg-card); backdrop-filter: blur(24px); border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight); border-radius: 26px; padding: 30px; box-shadow: 0 16px 40px rgba(0,0,0,0.35); transition: all 0.25s; }
+.question-card.integrated { border-color: var(--accent); }
+.card-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.card-meta-left { display: flex; align-items: center; gap: 10px; }
+.q-number-pill { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 4px 10px; border-radius: 9999px; background: rgba(255,255,255,0.08); border: 1px solid var(--glass-border); color: var(--accent); }
+.herb-title { font-family: var(--font-serif); font-size: 21px; font-style: italic; color: #fff; }
+.card-badges { display: flex; flex-wrap: wrap; gap: 6px; }
+.badge-tag { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.06); color: var(--sage-muted); }
+.card-lesson-line { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.1em; color: var(--sage-muted); margin-bottom: 10px; }
+.question-prompt { font-size: 16px; color: #fff; font-weight: 500; line-height: 1.5; margin-bottom: 20px; }
+
+/* Options */
+.options-list { display: flex; flex-direction: column; gap: 9px; margin-bottom: 16px; }
+.option-glass-item { display: flex; align-items: flex-start; gap: 12px; padding: 13px 18px; border-radius: 18px; background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); color: var(--sage-light); cursor: pointer; transition: all 0.2s; font-size: 14px; line-height: 1.5; }
+.option-glass-item:hover { background: rgba(255,255,255,0.08); border-color: var(--glass-highlight); color: #fff; transform: translateX(2px); }
+.option-letter { width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,0.08); font-family: var(--font-mono); font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; color: var(--sage-muted); }
+.option-glass-item.correct { background: rgba(107,214,111,0.18) !important; border-color: #6BD66F !important; color: #fff !important; }
+.option-glass-item.correct .option-letter { background: #6BD66F; color: #000; }
+.option-glass-item.incorrect { background: rgba(224,107,107,0.16) !important; border-color: #E06B6B !important; color: #FFDFDF !important; }
+.option-glass-item.incorrect .option-letter { background: #E06B6B; color: #fff; }
+
+.feedback-box { display: none; margin-top: 14px; padding: 14px 18px; border-radius: 14px; background: rgba(0,0,0,0.3); border-left: 3px solid var(--accent); font-size: 13.5px; line-height: 1.6; color: var(--sage-light); }
+.feedback-box.show { display: block; }
+.feedback-box strong { color: var(--accent); }
+
+.card-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08); }
+.integrate-pill-btn { display: inline-flex; align-items: center; padding: 8px 18px; border-radius: 9999px; background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); color: var(--sage-light); font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+.integrate-pill-btn:hover { background: rgba(255,255,255,0.12); border-color: var(--accent); color: #fff; }
+.integrate-pill-btn.done { background: var(--accent); color: #000; font-weight: 600; border-color: var(--accent); box-shadow: 0 0 16px var(--accent-glow); }
+.empty-state { text-align: center; padding: 50px 20px; background: var(--bg-card); border-radius: 24px; border: 1px solid var(--glass-border); }
+.empty-title { font-family: var(--font-serif); font-size: 24px; font-style: italic; color: #fff; margin-bottom: 8px; }
+
+@media(max-width: 640px) {
+  .hero-glass { padding: 26px 20px; }
+  .question-card { padding: 22px 18px; }
+  .curriculum-switcher { width: 100%; justify-content: center; }
+  .nav { flex-direction: column; align-items: flex-start; }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAV & CURRICULUM SWITCHER -->
+  <div class="nav-wrap">
+    <header class="nav">
+      <a href="/community/academy" class="nav-brand" title="Fungai Art Academy">
+        <div class="nav-brand-mark">
+          <img src="/fungi.png?v=4" alt="Fungai Art" onerror="this.onerror=null;this.src='/fungai-art-logo.png';">
+        </div>
+        <div class="nav-brand-text">
+          <span class="nav-brand-title">fungai art</span>
+          <span class="nav-brand-sub">Academy <em>· The Fungal Kingdom & Myco-Academy</em></span>
+        </div>
+      </a>
+
+      <!-- 3-Way Switcher -->
+      
+    <nav class="curriculum-switcher" aria-label="Curriculum Switcher">
+      <a href="/community/academy/curriculum-preview.html" class="switch-pill ">
+        <span class="switch-glyph">🌿</span>
+        <span class="switch-text">Botanical Field</span>
+      </a>
+      <a href="/community/academy/curriculum-mycology.html" class="switch-pill active">
+        <span class="switch-glyph">🍄</span>
+        <span class="switch-text">Mushroom Kingdom</span>
+      </a>
+      <a href="/community/academy/curriculum-alchemy.html" class="switch-pill ">
+        <span class="switch-glyph">⚗️</span>
+        <span class="switch-text">Magnum Opus</span>
+      </a>
+    </nav>
+    
+
+      <div class="nav-actions">
+        <div class="progress-pill">
+          <span class="progress-dot"></span>
+          <span id="integratedNavCount">0 / 28 Integrated</span>
+        </div>
+        <a href="/community/academy" class="nav-glass-btn">← Academy</a>
+      </div>
+    </header>
+  </div>
+
+  <div class="container">
+
+    <!-- HERO CARD -->
+    <section class="hero-glass">
+      <div class="hero-eyebrow">
+        <span>✦ Fungai Art · Fungal Kingdom Curriculum · 28 Macrofungal Assessments</span>
+      </div>
+      <h1 class="hero-title">
+        The Fungal Kingdom & Myco-Academy
+      </h1>
+      <p class="hero-lead">
+        Traverse the underground continuum from haploid hyphae to the mycelial web, medicinal polypores, basidiospores, and saprotrophic decay.
+      </p>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-val">28</span>
+          <span class="stat-label">Assessments</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-val">5</span>
+          <span class="stat-label">Curriculum Strata</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-val" id="statMasteryPct">0%</span>
+          <span class="stat-label">Mastery Level</span>
+        </div>
+      </div>
+
+      <button class="btn-pill-primary" onclick="scrollToQuestions()">
+        <span>Enter Assessment Field</span>
+        <span class="btn-pill-arrow">→</span>
+      </button>
+    </section>
+
+    <!-- CONTROLS HUD -->
+    <div class="controls-hud" id="controlsHud">
+      <div class="hud-header">
+        <div class="hud-title">
+          <span>Active Strata: <strong id="currentStratumLabel">All Strata (28 Assessments)</strong></span>
+        </div>
+        
+        <div class="search-glass-wrap">
+          <input 
+            type="text" 
+            id="searchInput" 
+            class="search-glass-input" 
+            placeholder="Search plant, fungus, or extraction term..." 
+            oninput="handleSearch(this.value)"
+          />
+        </div>
+      </div>
+
+      <!-- Category Filter Grid (Rounded-Square Glass Buttons) -->
+      <div class="category-grid">
+        
+    <button class="cat-btn active" data-level="all" onclick="selectStratum('all')">
+      <span class="cat-icon">✦</span>
+      <span class="cat-label">All (28)</span>
+    </button>
+    
+        <button class="cat-btn" data-level="1" onclick="selectStratum('1')">
+          <span class="cat-icon">🕸️</span>
+          <span class="cat-label">Hyphae (5)</span>
+        </button>
+        
+        <button class="cat-btn" data-level="2" onclick="selectStratum('2')">
+          <span class="cat-icon">🌱</span>
+          <span class="cat-label">Mycelium (5)</span>
+        </button>
+        
+        <button class="cat-btn" data-level="3" onclick="selectStratum('3')">
+          <span class="cat-icon">🍄</span>
+          <span class="cat-label">Fruiting Body (7)</span>
+        </button>
+        
+        <button class="cat-btn" data-level="4" onclick="selectStratum('4')">
+          <span class="cat-icon">✨</span>
+          <span class="cat-label">Sporing (5)</span>
+        </button>
+        
+        <button class="cat-btn" data-level="5" onclick="selectStratum('5')">
+          <span class="cat-icon">🍂</span>
+          <span class="cat-label">Decay (Expert) (6)</span>
+        </button>
+        
+      </div>
+
+      <!-- Epistemic Lenses Bar -->
+      <div class="lens-subbar">
+        <span style="font-family:var(--font-mono);font-size:9px;color:var(--sage-muted);letter-spacing:0.18em;text-transform:uppercase;margin-right:4px;">Filter Lens:</span>
+        <button class="lens-pill active" data-lens="all" onclick="selectLens('all')">✦ All Evidence</button>
+        <button class="lens-pill" data-lens="[TRADITIONAL]" onclick="selectLens('[TRADITIONAL]')">Traditional Lore</button>
+        <button class="lens-pill" data-lens="[MECHANISTIC]" onclick="selectLens('[MECHANISTIC]')">🔬 Mechanism</button>
+        <button class="lens-pill" data-lens="[HUMAN EVIDENCE]" onclick="selectLens('[HUMAN EVIDENCE]')">⚖ Human Clinical</button>
+        <button class="lens-pill" data-lens="[SAFETY]" onclick="selectLens('[SAFETY]')">⚠ Clinical Safety</button>
+        <button class="lens-pill" data-lens="[ECOLOGY]" onclick="selectLens('[ECOLOGY]')">🌿 Stewardship</button>
+      </div>
+    </div>
+
+    <!-- QUESTIONS FEED -->
+    <main class="questions-feed" id="questionsFeed">
+      <!-- Injected via JavaScript -->
+    </main>
+
+  </div>
+
+  <script>
+    window.ACADEMY_DATA = [{"num": 1, "level_num": 1, "module": "Module 1: Spore Germination & Cellular Genesis", "lesson": "Lesson 1: From Haploid Spore to Monokaryon", "fungus": "Fungal Biology", "badges": ["[MECHANISTIC]", "[ECOLOGY]"], "question": "When a fungal basidiospore settles upon fertile forest humus, what initial biological structure emerges?", "options": ["A single germ tube that elongates into a tubular monokaryotic hyphal thread", "A miniature underground mushroom fruitbody that immediately begins producing airborne reproductive spores", "A dormant root bulb that absorbs liquid minerals from adjacent tree bark", "A microscopic seed capsule that splits open only after seasonal forest wildfire"], "correct": 0, "explanation": "A germinating spore produces a single germ tube that extends into a septate or aseptate hypha containing a single haploid nucleus (monokaryon) until mating occurs.", "level": "Hyphae — Subterranean Germination & Mycorrhizal Kinship"}, {"num": 2, "level_num": 1, "module": "Module 1: Spore Germination & Cellular Genesis", "lesson": "Lesson 2: Clamp Connections & Plasmogamy", "fungus": "Fungal Biology", "badges": ["[MECHANISTIC]"], "question": "In higher Basidiomycete fungi, what does the microscopic presence of a 'clamp connection' indicate?", "options": ["The fungal hypha is under lethal attack from competing parasitic soil nematodes, depending on the solvent extraction ratio and maceration duration", "The mycelium has successfully mated, maintaining two distinct nuclei per hyphal compartment", "The fungus has exhausted all ambient soil moisture and is forming sclerotia", "The hyphal tip has entered a symbiotic partnership with adjacent plant roots"], "correct": 1, "explanation": "Clamp connections are unique hook-like cellular structures in Basidiomycota that ensure proper distribution of two genetically distinct nuclei during dikaryotic cell division.", "level": "Hyphae — Subterranean Germination & Mycorrhizal Kinship"}, {"num": 3, "level_num": 1, "module": "Module 2: Mycorrhizal Guilds & Root Architecture", "lesson": "Lesson 1: Ectomycorrhizae & The Hartig Net", "fungus": "Ectomycorrhizae", "badges": ["[ECOLOGY]", "[MECHANISTIC]"], "question": "How do ectomycorrhizal fungi (like Chanterelles or Porcini) physically interweave with boreal tree roots?", "options": ["They bore directly through plant cell membranes to consume host starches aggressively, requiring careful clinical intake and organ system differential evaluation", "They wrap exclusively around dry dead root hairs without exchanging moisture or ions", "They form an intercellular fungal network between root cortex cells without penetrating walls", "They dissolve the entire root epidermis, replacing tree root tissue with mycelium"], "correct": 2, "explanation": "Ectomycorrhizal fungi envelop the root tips in a fungal mantle and penetrate between cortical cells to form the 'Hartig net', facilitating bidirectional nutrient and water exchange.", "level": "Hyphae — Subterranean Germination & Mycorrhizal Kinship"}, {"num": 4, "level_num": 1, "module": "Module 2: Mycorrhizal Guilds & Root Architecture", "lesson": "Lesson 2: Subterranean Carbon Shuttling", "fungus": "Mycorrhizal Networks", "badges": ["[ECOLOGY]", "[HUMAN EVIDENCE]"], "question": "What groundbreaking ecological fact did forest ecologist Suzanne Simard document regarding mycorrhizal hyphal networks?", "options": ["Fungi act purely as predatory pathogens that slowly kill ancient forest canopy trees", "Forest trees can only photosynthesize carbohydrates if fungal spores are coating their leaves, reflecting classical pharmacopoeial standards across traditional preparation methods", "Subterranean fungal hyphae completely prevent any moisture from draining into forest aquifers", "Mycorrhizal hyphae shuttle photosynthetic carbon and alarm signals bidirectionally between different tree species"], "correct": 3, "explanation": "Isotopic tracer studies proved that mycorrhizal mycelium forms a common mycorrhizal network (CMN), shuttling carbon, water, and defense signals between trees like Birch and Douglas Fir.", "level": "Hyphae — Subterranean Germination & Mycorrhizal Kinship"}, {"num": 5, "level_num": 1, "module": "Module 3: Chitinous Cell Walls & Solvent Chemistry", "lesson": "Lesson 1: Chitin vs Plant Cellulose", "fungus": "Fungal Pharmacognosy", "badges": ["[MECHANISTIC]"], "question": "Unlike vascular plants whose cell walls are made of cellulose, what polymer builds fungal cell walls?", "options": ["Chitin, a tough nitrogen-rich polysaccharide identical to the exoskeletons of crustaceans and insects", "Water-soluble vegetable pectin that readily dissolves in cold room temperature water", "Silica crystals that dissolve rapidly when exposed to mild household vinegar solutions, according to documented historical dispensary practices and herbal monographs", "Gelatinous starches that turn gummy when exposed to ambient forest humidity"], "correct": 0, "explanation": "Fungal cell walls consist of beta-glucans cross-linked to insoluble chitin, which requires sustained heat (decoction) or pressure to fracture and release trapped bioactives.", "level": "Hyphae — Subterranean Germination & Mycorrhizal Kinship"}, {"num": 6, "level_num": 2, "module": "Module 1: The Underground Web & Soil Genesis", "lesson": "Lesson 1: Extracellular Enzymatic Secretion", "fungus": "Mycelial Physiology", "badges": ["[MECHANISTIC]"], "question": "How does fungal mycelium digest nutrients in the forest floor before absorbing them into hyphae?", "options": ["It engulfs particulate matter into internal stomach-like vacuoles through cellular phagocytosis, which must be monitored alongside client constitutional vitality and tissue state", "It secretes powerful oxidative enzymes (like laccases and cellulases) externally into the substrate", "It absorbs intact wood fibers directly through specialized oral micro-pores along the hypha", "It relies exclusively on ambient soil bacteria to pre-digest all organic cellulose matter"], "correct": 1, "explanation": "Fungi exhibit absorptive heterotrophy: hyphal tips secrete extracellular enzymes (laccases, manganese peroxidases, cellulases) that break complex polymers down externally before absorption.", "level": "Mycelium — The Living Soil Web & Enzymatic Intelligence"}, {"num": 7, "level_num": 2, "module": "Module 1: The Underground Web & Soil Genesis", "lesson": "Lesson 2: Mycoremediation of Hydrocarbons", "fungus": "Mycoremediation", "badges": ["[ECOLOGY]", "[MECHANISTIC]"], "question": "Why are white-rot mycelia (like Oyster mushrooms) capable of breaking down toxic petroleum spills?", "options": ["They produce acidic juices that burn petroleum hydrocarbons into harmless atmospheric nitrogen gas, as validated across standard herbal laboratory extraction protocols", "They physically store petroleum inside fungal vacuoles without breaking down any toxic chemicals", "Their lignin-degrading enzymes break carbon-hydrogen bonds that resemble the complex molecular structure of wood", "They require refined gasoline as their primary metabolic fuel source to produce fruitbodies"], "correct": 2, "explanation": "Because petroleum hydrocarbons structurally mimic the aromatic ring bonds of wood lignin, mycelial laccase and peroxidase enzyme suites can cleave complex petrochemical toxins into water and CO2.", "level": "Mycelium — The Living Soil Web & Enzymatic Intelligence"}, {"num": 8, "level_num": 2, "module": "Module 2: Ergosterol & Photobiology", "lesson": "Lesson 1: Solar Synthesis of Vitamin D2", "fungus": "Fungal Biochemistry", "badges": ["[MECHANISTIC]", "[HUMAN EVIDENCE]"], "question": "What happens when dried or fresh mushrooms (like Shiitake or Maitake) are exposed to direct midday UV sunlight?", "options": ["Their aromatic volatile terpenes decompose into caustic resins that irritate the digestive lining", "Their therapeutic beta-glucans break down into simple sucrose sugars that spoil in storage", "Their deep mushroom pigments bleach away, eliminating all active medicinal triterpenoid compounds", "Their surface ergosterol converts photochemically into bioavailable ergocalciferol (Vitamin D2)"], "correct": 3, "explanation": "Fungi contain high levels of ergosterol; ultraviolet (UVB) light converts ergosterol into ergocalciferol (Vitamin D2), providing a potent vegan source of dietary vitamin D.", "level": "Mycelium — The Living Soil Web & Enzymatic Intelligence"}, {"num": 9, "level_num": 2, "module": "Module 3: Pure Mycelium vs Fruitbody Chemistry", "lesson": "Lesson 1: Erinacines vs Hericenones in Lion's Mane", "fungus": "Lion's Mane", "badges": ["[MECHANISTIC]", "[HUMAN EVIDENCE]"], "question": "In Lion's Mane (*Hericium erinaceus*), where are the potent NGF-stimulating diterpenoids known as 'erinacines' primarily concentrated?", "options": ["Exclusively in the subterranean pure liquid-cultured vegetative mycelium, rather than the fruitbody", "Strictly in the hanging spines of the fully mature outdoor autumn mushroom fruitbody, following strict botanical identification keys and sustainable harvest ethics", "In the sterile woody bark of the dead oak host tree where the mushroom attaches", "In the dry airborne white spores discharged during late November frosts"], "correct": 0, "explanation": "Phytochemical profiling shows that erinacines (potent low-molecular-weight diterpenoids that cross the blood-brain barrier) are concentrated in pure mycelium, while hericenones reside in the fruiting body.", "level": "Mycelium — The Living Soil Web & Enzymatic Intelligence"}, {"num": 10, "level_num": 2, "module": "Module 3: Pure Mycelium vs Fruitbody Chemistry", "lesson": "Lesson 2: Myceliated Grain vs Pure Fungal Tissue", "fungus": "Mushroom Quality", "badges": ["[SAFETY]", "[MECHANISTIC]"], "question": "When inspecting commercial 'mycelium on grain' mushroom powders, what quality metric must an herbalist examine?", "options": ["Checking whether the powder dissolves instantly in cold milk without leaving any sediment, ensuring appropriate dosing thresholds across diverse constitutional profiles", "Testing whether the product contains high residual grain starch (alpha-glucans) rather than fungal beta-glucans", "Ensuring the powder has been dyed bright yellow to prove active cordycepin content", "Verifying that the grain substrate was boiled in synthetic alcohol before inoculation"], "correct": 1, "explanation": "Mycelium grown on grain (MOG) often consists of 40–70% unconsumed grain substrate. Quality testing measures fungal (1,3)(1,6)-beta-glucans versus inactive grain starch (alpha-glucans).", "level": "Mycelium — The Living Soil Web & Enzymatic Intelligence"}, {"num": 11, "level_num": 3, "module": "Module 1: The Sovereign Polypore — Chaga", "lesson": "Lesson 1: Sterile Conk vs True Basidiocarp", "fungus": "Chaga", "badges": ["[TRADITIONAL]", "[ECOLOGY]"], "question": "What is the dark, charcoal-like golden mass of Chaga (*Inonotus obliquus*) harvested from living Birch trees?", "options": ["The delicate annual fruiting body that sheds airborne spores every spring morning, as outlined in traditional Nordic and European folk medicine compendiums", "A parasitic insect gall formed when native forest wasps lay eggs in birch buds", "A dense vegetative sclerotial mass composed of fungal mycelium intergrown with birch wood lignin", "A benign resinous sap blister that forms where winter ice cracks birch bark"], "correct": 2, "explanation": "The harvested Chaga 'conk' is not a fruiting body, but a sterile fungal conk (sclerotium) of dense mycelium rich in melanins, formed through a decades-long relationship with Betula pendula.", "level": "Fruiting Body — Medicinal Polypores & Macrofungal Pharmacognosy"}, {"num": 12, "level_num": 3, "module": "Module 1: The Sovereign Polypore — Chaga", "lesson": "Lesson 2: Oxalate Safety & Renal Clearance", "fungus": "Chaga", "badges": ["[SAFETY]"], "question": "What clinical safety concern is associated with consuming excessive, daily high-dose Chaga tea over many months?", "options": ["Chaga permanently shuts down stomach acid, preventing the breakdown of dietary proteins in digestion, depending on the solvent extraction ratio and maceration duration", "Chaga causes sudden drops in red blood cells by binding iron in the colon", "Chaga acts as an intense sedative that induces twenty-four-hour comatose sleep states", "Chaga contains high natural concentrations of soluble oxalates that can stress kidneys or cause nephropathy"], "correct": 3, "explanation": "Chaga contains significant levels of oxalates. Excessive long-term daily intake has been clinically documented to cause oxalate nephropathy and renal stone formation in susceptible individuals.", "level": "Fruiting Body — Medicinal Polypores & Macrofungal Pharmacognosy"}, {"num": 13, "level_num": 3, "module": "Module 2: Reishi — Ganoderma & The Spirit Mushroom", "lesson": "Lesson 1: Ganoderic Acids & Bitterness", "fungus": "Reishi", "badges": ["[TRADITIONAL]", "[MECHANISTIC]"], "question": "Why does a potent decoction of red Reishi mushroom (*Ganoderma lucidum*) taste intensely bitter on the tongue?", "options": ["The intense bitterness is driven by highly oxygenated triterpenes known as ganoderic and lucidenic acids", "Reishi absorbs heavy metal salts from hemlock wood that impart an artificial metallic bitter taste, requiring careful clinical intake and organ system differential evaluation", "The bitterness indicates that the mushroom fruitbody has spoiled and fermented in storage", "Fungal spores release ammonia gas when boiled, creating an acrid bitter flavor profile"], "correct": 0, "explanation": "Reishi's distinctive bitter taste stems from its triterpenoid fraction (over 100 identified ganoderic and lucidenic acids), which possess hepatoprotective, anti-allergic, and anti-inflammatory actions.", "level": "Fruiting Body — Medicinal Polypores & Macrofungal Pharmacognosy"}, {"num": 14, "level_num": 3, "module": "Module 2: Reishi — Ganoderma & The Spirit Mushroom", "lesson": "Lesson 2: Lingzhi & Shen Tonification", "fungus": "Reishi", "badges": ["[TRADITIONAL]"], "question": "In classical Chinese medicine, why was Reishi (Lingzhi) categorized as a superior Shen-calming tonic?", "options": ["It was prescribed as a harsh physical purgative to force rapid gastrointestinal emptying", "It was used to nourish spiritual serenity, ground emotional agitation, and support restful nighttime sleep", "It was taken exclusively by palace warriors to stimulate aggressive cardiovascular adrenaline rushes, reflecting classical pharmacopoeial standards across traditional preparation methods", "It was burned as an incense to ward off airborne viral fevers in summer palaces"], "correct": 1, "explanation": "In TCM, Lingzhi is famous as a sovereign tonic for the Heart and Shen (spirit), indicated for insomnia, restless worry, forgetfulness, and nervous exhaustion without morning grogginess.", "level": "Fruiting Body — Medicinal Polypores & Macrofungal Pharmacognosy"}, {"num": 15, "level_num": 3, "module": "Module 3: Turkey Tail & Clinical Immunotherapy", "lesson": "Lesson 1: PSK & PSP Glycoproteins", "fungus": "Turkey Tail", "badges": ["[HUMAN EVIDENCE]"], "question": "In Japan and China, what standardized Turkey Tail (*Trametes versicolor*) extracts are approved as hospital cancer adjuncts?", "options": ["Purified fungal alkaloids that act as direct synthetic chemical chemotherapy agents", "Topical mushroom essential oils applied to dermal incisions to speed surgical wound closure", "Polysaccharide Krestin (PSK) and Polysaccharopeptide (PSP), which modulate immune surveillance alongside conventional therapy", "Crude fungal powders that permanently replace all standard radiation and surgical treatments, according to documented historical dispensary practices and herbal monographs"], "correct": 2, "explanation": "PSK and PSP are protein-bound beta-glucans extracted from Trametes versicolor, rigorously studied in human trials and approved in Japan as adjunct immunotherapies alongside standard oncology care.", "level": "Fruiting Body — Medicinal Polypores & Macrofungal Pharmacognosy"}, {"num": 16, "level_num": 3, "module": "Module 4: Cordyceps — Energy & Cellular Respiration", "lesson": "Lesson 1: Cordycepin & Adenosine", "fungus": "Cordyceps", "badges": ["[MECHANISTIC]", "[HUMAN EVIDENCE]"], "question": "How does Cordyceps (*Cordyceps militaris*) physiologically support physical endurance and stamina?", "options": ["It delivers concentrated synthetic caffeine that forces heart contractions to spike uncontrollably, which must be monitored alongside client constitutional vitality and tissue state", "It numbs muscular lactic acid receptors so athletes fail to notice physical muscle tears", "It converts dietary fiber into pure blood glucose within ten seconds of swallowing", "Its active nucleosides (adenosine and cordycepin) support cellular ATP synthesis and enhance oxygen utilization"], "correct": 3, "explanation": "Cordyceps contains adenosine and cordycepin (3'-deoxyadenosine), which participate in cellular bioenergetics, improving mitochondrial ATP regeneration and aerobic oxygen saturation under physical stress.", "level": "Fruiting Body — Medicinal Polypores & Macrofungal Pharmacognosy"}, {"num": 17, "level_num": 3, "module": "Module 5: Tremella & Metabolic Allies", "lesson": "Lesson 1: Snow Fungus & Yin Hydration", "fungus": "Tremella", "badges": ["[TRADITIONAL]", "[MECHANISTIC]"], "question": "Why is the gelatinous Snow Fungus (*Tremella fuciformis*) revered in cosmetic and respiratory herbalism?", "options": ["Its glucuronoxylomannan polysaccharides hold water exceptionally, deeply moisturizing dry pulmonary and skin tissues", "Its acidic resins peel away epidermal layers to lighten facial scars within forty-eight hours, as validated across standard herbal laboratory extraction protocols", "It acts as a caustic drying agent that clears all natural moisture from weeping rashes", "It stimulates intense oil production by clogging facial sebaceous glands with fungal lipids"], "correct": 0, "explanation": "Tremella's high-molecular-weight polysaccharides hold up to 500 times their weight in water (exceeding hyaluronic acid), traditionally used in TCM to nourish Lung Yin and replenish dermal moisture.", "level": "Fruiting Body — Medicinal Polypores & Macrofungal Pharmacognosy"}, {"num": 18, "level_num": 4, "module": "Module 1: Extraction Chemistry & Chitin Cleavage", "lesson": "Lesson 1: The Dual-Extraction Protocol", "fungus": "Extraction Physics", "badges": ["[MECHANISTIC]"], "question": "Why do master mushroom formulators perform a 'dual extraction' (hot water decoction plus high-proof ethanol)?", "options": ["Alcohol is used merely to dye the water extract a deep rich amber color", "Hot water extracts polar beta-glucans, while alcohol dissolves non-polar triterpenes and sterols", "Hot water kills all beneficial compounds, while alcohol brings them back to life, following strict botanical identification keys and sustainable harvest ethics", "Dual extraction thins the liquid so it passes smoothly through paper tea bags"], "correct": 1, "explanation": "Medicinal mushrooms possess two distinct therapeutic fractions: water-soluble immunomodulating beta-glucans and alcohol-soluble triterpenoids/sterols. Combining both yields a full-spectrum extract.", "level": "Sporing — Dual Extraction Dynamics & Receptor Immunology"}, {"num": 19, "level_num": 4, "module": "Module 1: Extraction Chemistry & Chitin Cleavage", "lesson": "Lesson 2: Hot Water Simmer Times", "fungus": "Extraction Physics", "badges": ["[MECHANISTIC]"], "question": "Why must tough polypores (like Chaga or Reishi) be simmered in water for multiple hours rather than steeped like green tea?", "options": ["Mushroom bioactives evaporate into steam unless the pot is boiled vigorously for four hours", "Short steeping causes mushroom tea to curdle into thick gelatinous clumps that choke swallowing, ensuring appropriate dosing thresholds across diverse constitutional profiles", "Prolonged heat is necessary to break the dense chitin-beta-glucan matrix and liberate trapped polysaccharides", "Boiling for hours is only needed to sterilize dangerous heavy mold spores from wild woods"], "correct": 2, "explanation": "Because medicinal polysaccharides are tightly bound within tough chitinous cell walls, sustained simmering (60–120 minutes minimum) is required to hydro-thermally dissolve and liberate active beta-glucans.", "level": "Sporing — Dual Extraction Dynamics & Receptor Immunology"}, {"num": 20, "level_num": 4, "module": "Module 2: Receptor Immunology & The Dectin-1 Axis", "lesson": "Lesson 1: Gut-Associated Lymphoid Tissue (GALT)", "fungus": "Fungal Immunology", "badges": ["[MECHANISTIC]", "[HUMAN EVIDENCE]"], "question": "When you drink medicinal mushroom tea, how do fungal beta-glucans interact with your gut immune system?", "options": ["They enter the bloodstream through the stomach lining, acting as synthetic antibodies against foreign bacteria", "They completely deactivate all systemic white blood cells to prevent metabolic inflammation in joints", "They pass through the digestive tract entirely unobserved by any human immune cells", "They bind to Dectin-1 and Complement Receptor 3 on intestinal Peyer's patch dendritic cells and macrophages"], "correct": 3, "explanation": "Fungal beta-(1,3)(1,6)-D-glucans act as pathogen-associated molecular patterns (PAMPs), binding Dectin-1 receptors on intestinal macrophages and dendritic cells, training innate immune surveillance.", "level": "Sporing — Dual Extraction Dynamics & Receptor Immunology"}, {"num": 21, "level_num": 4, "module": "Module 2: Receptor Immunology & The Dectin-1 Axis", "lesson": "Lesson 2: Biological Response Modulation", "fungus": "Fungal Immunology", "badges": ["[MECHANISTIC]"], "question": "Why are medicinal mushrooms classified as 'immunomodulators' rather than simple immune stimulants?", "options": ["They can up-regulate depressed immunity while down-regulating hyper-reactive inflammatory pathways", "They permanently eliminate the body's need for white blood cells and bone marrow", "They stimulate the immune system to attack all ingested food proteins uniformly", "They only function when a client is experiencing an active, high-grade seasonal fever, as outlined in traditional Nordic and European folk medicine compendiums"], "correct": 0, "explanation": "Immunomodulators act amphoterically: they enhance pathogen surveillance and macrophage phagocytosis when immune activity is low, yet temper excessive pro-inflammatory cytokine surges during hyper-reactivity.", "level": "Sporing — Dual Extraction Dynamics & Receptor Immunology"}, {"num": 22, "level_num": 4, "module": "Module 3: Birch Polypore — Piptoporellus Pharmacognosy", "lesson": "Lesson 1: Piptamine & The Ice Man's Medicine", "fungus": "Birch Polypore", "badges": ["[TRADITIONAL]", "[MECHANISTIC]"], "question": "Why was the 5,300-year-old Alpine mummy 'Ötzi' found carrying Birch Polypore (*Fomitopsis betulina*) on leather thongs?", "options": ["He used the bitter polypore as emergency high-calorie rations during high-altitude blizzards", "Its active triterpenes and piptamine provided antiparasitic and antimicrobial protection against intestinal whipworms", "Birch polypore was burned as sacred incense to navigate mountain trails at night", "The mushroom was carved into waterproof hunting tools and sharp flint-knapping axes"], "correct": 1, "explanation": "Ötzi suffered from whipworm (*Trichuris trichiura*); Birch Polypore contains piptamine, polyporenic acids, and agaricic acid, long used in boreal folk medicine as an antiparasitic and gut-toning bitter.", "level": "Sporing — Dual Extraction Dynamics & Receptor Immunology"}, {"num": 23, "level_num": 5, "module": "Module 1: Saprotrophic Ecology & Ancient Deadwood", "lesson": "Lesson 1: Tinder Fungus & The Amadou Layer", "fungus": "Tinder Fungus", "badges": ["[TRADITIONAL]", "[ECOLOGY]"], "question": "How did historical boreal peoples utilize the thick velvety 'amadou' layer of Tinder Fungus (*Fomes fomentarius*)?", "options": ["As an edible culinary delicacy boiled into sweet holiday festival porridges", "As a potent narcotic sedative smoked in clay pipes to induce sleep", "As an ember-catching fire starter, a styptic blood-stopping bandage, and breathable felt clothing", "As a chemical dye that turns wool yarn bright fluorescent green"], "correct": 2, "explanation": "The processed trama layer (amadou) of Fomes fomentarius was prized across European prehistory for catching spark embers, staunching surgical bleeding (surgeon's agaric), and crafting hats.", "level": "Decay (Expert) — Saprotrophic Master Ecology & Forensic Safety"}, {"num": 24, "level_num": 5, "module": "Module 1: Saprotrophic Ecology & Ancient Deadwood", "lesson": "Lesson 2: Stand Regeneration & Heartwood Rot", "fungus": "Forest Ecology", "badges": ["[ECOLOGY]"], "question": "In natural old-growth boreal forest ecology, why are saprotrophic shelf fungi essential for forest renewal?", "options": ["They kill entire forest canopies every decade to make room for industrial pasture land", "They prevent all tree seeds from germinating until all fallen timber is removed", "They absorb all ambient carbon dioxide, releasing pure nitrogen into the lower understory", "They selectively decompose aging heartwood, creating hollows for wildlife and recycling locked soil nutrients"], "correct": 3, "explanation": "Heart-rot and saprotrophic fungi create deadwood cavities crucial for birds, insects, and bats, while breaking down complex lignin into dark, nutrient-rich forest humus.", "level": "Decay (Expert) — Saprotrophic Master Ecology & Forensic Safety"}, {"num": 25, "level_num": 5, "module": "Module 2: Nordic Foraging Law & Allemansrätten", "lesson": "Lesson 1: Tree Cambium & Ethical Limits", "fungus": "Nordic Law", "badges": ["[SAFETY]", "[ECOLOGY]"], "question": "Under Swedish Allemansrätten, what is the crucial legal distinction between picking ground mushrooms and harvesting tree conks?", "options": ["Ground mushrooms may be freely gathered, but removing conks from living trees damages wood and requires landowner consent", "All ground mushrooms require written permits from county rangers before crossing public trails", "Tree-dwelling conks are entirely exempt from property laws and may be harvested anywhere without limits", "It is strictly illegal to touch any wild fungus growing within fifty meters of a birch stand"], "correct": 0, "explanation": "Allemansrätten grants freedom to forage wild ground fruits and mushrooms, but explicitly protects living trees: cutting, hacking, or stripping bark/conks off living wood requires landowner permission.", "level": "Decay (Expert) — Saprotrophic Master Ecology & Forensic Safety"}, {"num": 26, "level_num": 5, "module": "Module 3: Fungal Toxicology & Forensic Identification", "lesson": "Lesson 1: Amatoxins & The Destroying Angel", "fungus": "Toxicology", "badges": ["[SAFETY]"], "question": "Why is the deadly Destroying Angel (*Amanita virosa*) so catastrophically dangerous to novice Nordic mushroom foragers?", "options": ["It emits a pungent foul odor that knocks foragers unconscious within seconds of proximity", "Its pure white caps resemble edible meadow mushrooms, and amatoxins cause delayed irreversible liver failure", "It tastes intensely spicy and burns the mouth instantly upon touching the cap", "It causes mild stomach cramps that resolve without any need for medical observation"], "correct": 1, "explanation": "Amanita virosa contains amatoxins that inhibit RNA polymerase II. Symptoms appear after a deceptive 6–24 hour latency, followed by massive hepatocyte necrosis and acute liver failure.", "level": "Decay (Expert) — Saprotrophic Master Ecology & Forensic Safety"}, {"num": 27, "level_num": 5, "module": "Module 3: Fungal Toxicology & Forensic Identification", "lesson": "Lesson 2: Cortinarius Orellanus & Delayed Nephrotoxicity", "fungus": "Toxicology", "badges": ["[SAFETY]"], "question": "What sinister diagnostic challenge makes Fool's Webcap (*Cortinarius orellanus*) poisoning uniquely difficult to identify?", "options": ["It causes immediate visual hallucinations that prevent the patient from speaking to emergency clinicians", "It turns the patient's urine bright blue within thirty minutes of consuming the mushroom cap", "Its orellanine toxin induces severe acute renal failure after a delayed latency period of up to two weeks", "It only affects people with specific genetic blood types, leaving others entirely unharmed"], "correct": 2, "explanation": "Orellanine poisoning has one of the longest known toxicology latency periods (often 3 to 14 days before intense thirst, flank pain, and irreversible renal failure emerge), obscuring the dietary cause.", "level": "Decay (Expert) — Saprotrophic Master Ecology & Forensic Safety"}, {"num": 28, "level_num": 5, "module": "Module 4: Nordic Lore — Amanita muscaria", "lesson": "Lesson 1: Ibotenic Acid to Muscimol Decarboxylation", "fungus": "Amanita muscaria", "badges": ["[TRADITIONAL]", "[SAFETY]"], "question": "In circumpolar and Nordic ethnomycology, how was the iconic Fly Agaric (*Amanita muscaria*) traditionally prepared before ritual ingestion?", "options": ["It was eaten freshly picked from the moss while damp with morning forest dew", "It was submerged in ice-cold saltwater for three weeks to remove all active alkaloids", "It was buried beneath birch roots for five years to allow soil fungi to neutralize toxins", "It was thoroughly heat-dried or cured to decarboxylate neurotoxic ibotenic acid into psychoactive muscimol"], "correct": 3, "explanation": "Fresh Amanita muscaria contains high levels of excitatory ibotenic acid (inducing nausea, delirium, and twitches); heat drying decarboxylates it into muscimol, a potent GABA-A receptor agonist.", "level": "Decay (Expert) — Saprotrophic Master Ecology & Forensic Safety"}];
+    let activeLevel = 'all';
+    let activeLens = 'all';
+    let searchQuery = '';
+    const storageKey = 'fa_curriculum_mycology';
+    let integratedSet = new Set(JSON.parse(localStorage.getItem(storageKey + '_integrated') || '[]'));
+    let userAnswers = JSON.parse(localStorage.getItem(storageKey + '_answers') || '{}');
+
+    function init() {
+      renderQuestions();
+      updateProgressMetrics();
+    }
+
+    function selectStratum(levelKey) {
+      activeLevel = levelKey;
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.level === levelKey);
+      });
+      renderQuestions();
+    }
+
+    function selectLens(lensKey) {
+      activeLens = lensKey;
+      document.querySelectorAll('.lens-pill').forEach(pill => {
+        pill.classList.toggle('active', pill.dataset.lens === lensKey);
+      });
+      renderQuestions();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val.trim().toLowerCase();
+      renderQuestions();
+    }
+
+    function scrollToQuestions() {
+      const el = document.getElementById('controlsHud');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function renderQuestions() {
+      const feed = document.getElementById('questionsFeed');
+      if (!feed) return;
+      const letters = ['A', 'B', 'C', 'D'];
+
+      const filtered = window.ACADEMY_DATA.filter(q => {
+        if (activeLevel !== 'all' && String(q.level_num) !== String(activeLevel)) return false;
+        if (activeLens !== 'all' && !q.badges.includes(activeLens)) return false;
+        if (searchQuery) {
+          const term = (q.herb || q.fungus || '') + ' ' + q.question + ' ' + q.options.join(' ');
+          if (!term.toLowerCase().includes(searchQuery)) return false;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        feed.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-title">No Entries in this Frequency</div>
+            <p style="color:var(--sage-muted);max-width:44ch;margin:10px auto 20px;">
+              Try adjusting your search query or selecting "All Evidence".
+            </p>
+            <button class="btn-pill-primary" onclick="clearFilters()">Reset All Filters</button>
+          </div>
+        `;
+        return;
+      }
+
+      feed.innerHTML = filtered.map(q => {
+        const isIntegrated = integratedSet.has(q.num);
+        const savedAnswer = userAnswers[q.num];
+        const hasAnswered = savedAnswer !== undefined;
+
+        const badgesHtml = q.badges.map(b => {
+          let cls = 'badge-trad';
+          let label = b.replace(/[\[\]]/g, '');
+          if (b.includes('MECHANISTIC')) cls = 'badge-mech';
+          if (b.includes('HUMAN')) cls = 'badge-human';
+          if (b.includes('SAFETY')) cls = 'badge-safe';
+          if (b.includes('ECOLOGY')) cls = 'badge-eco';
+          return `<span class="badge-tag ${cls}">${label}</span>`;
+        }).join('');
+
+        const optionsHtml = q.options.map((opt, idx) => {
+          let itemCls = 'option-glass-item';
+          if (hasAnswered) {
+            if (idx === q.correct) itemCls += ' correct';
+            else if (idx === savedAnswer) itemCls += ' incorrect';
+          }
+          return `
+            <div class="${itemCls}" onclick="handleAnswerChoice(${q.num}, ${idx}, ${q.correct})">
+              <span class="option-letter">${letters[idx]}</span>
+              <span class="option-text">${opt}</span>
+            </div>
+          `;
+        }).join('');
+
+        const feedbackCls = hasAnswered ? 'feedback-box show' : 'feedback-box';
+        const isCorrectChoice = hasAnswered && savedAnswer === q.correct;
+        const feedbackPrefix = isCorrectChoice ? '✦ Correct insight: ' : '🌿 Evidence distinction: ';
+        const entityName = q.herb || q.fungus || 'Plant Ally';
+
+        return `
+          <article class="question-card ${isIntegrated ? 'integrated' : ''}" id="qcard-${q.num}">
+            <div class="card-top">
+              <div class="card-meta-left">
+                <span class="q-number-pill">Q${q.num} · ${q.level.split('—')[0].trim()}</span>
+                <h3 class="herb-title">${entityName}</h3>
+              </div>
+              <div class="card-badges">
+                ${badgesHtml}
+              </div>
+            </div>
+
+            <div class="card-lesson-line">
+              ${q.module} · ${q.lesson}
+            </div>
+
+            <div class="question-prompt">
+              ${q.question}
+            </div>
+
+            <div class="options-list">
+              ${optionsHtml}
+            </div>
+
+            <div class="${feedbackCls}" id="feedback-${q.num}">
+              <strong>${feedbackPrefix}</strong>${q.explanation}
+            </div>
+
+            <div class="card-footer">
+              <span style="font-family:var(--font-mono);font-size:9px;color:var(--sage-muted);letter-spacing:0.18em;text-transform:uppercase;">
+                Status: ${isIntegrated ? 'Integrated in Network ✓' : 'Field Assessment Active'}
+              </span>
+              <button 
+                class="integrate-pill-btn ${isIntegrated ? 'done' : ''}" 
+                onclick="toggleIntegrate(${q.num})"
+              >
+                ${isIntegrated ? 'Integrated in Network ✓' : 'Integrate Spore ✦'}
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function handleAnswerChoice(qNum, chosenIdx, correctIdx) {
+      userAnswers[qNum] = chosenIdx;
+      localStorage.setItem(storageKey + '_answers', JSON.stringify(userAnswers));
+      if (chosenIdx === correctIdx) {
+        integratedSet.add(qNum);
+        localStorage.setItem(storageKey + '_integrated', JSON.stringify(Array.from(integratedSet)));
+      }
+      renderQuestions();
+      updateProgressMetrics();
+    }
+
+    function toggleIntegrate(qNum) {
+      if (integratedSet.has(qNum)) integratedSet.delete(qNum);
+      else integratedSet.add(qNum);
+      localStorage.setItem(storageKey + '_integrated', JSON.stringify(Array.from(integratedSet)));
+      renderQuestions();
+      updateProgressMetrics();
+    }
+
+    function updateProgressMetrics() {
+      const total = window.ACADEMY_DATA.length;
+      const count = integratedSet.size;
+      const pct = Math.round((count / total) * 100);
+      const navCount = document.getElementById('integratedNavCount');
+      if (navCount) navCount.textContent = `${count} / ${total} Integrated`;
+      const mastery = document.getElementById('statMasteryPct');
+      if (mastery) mastery.textContent = `${pct}%`;
+    }
+
+    function clearFilters() {
+      activeLevel = 'all';
+      activeLens = 'all';
+      searchQuery = '';
+      const input = document.getElementById('searchInput');
+      if (input) input.value = '';
+      document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.level === 'all'));
+      document.querySelectorAll('.lens-pill').forEach(pill => pill.classList.toggle('active', pill.dataset.lens === 'all'));
+      renderQuestions();
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

@@ -1,0 +1,1770 @@
+[
+  {
+    "num": 1,
+    "level_num": 1,
+    "module": "Module 1: Foundations of Botanical Intelligence",
+    "lesson": "Lesson 1: Plant Defense Chemistry & Secondary Metabolites",
+    "herb": "General Theory",
+    "badges": [
+      "[TRADITIONAL]",
+      "[ECOLOGY]"
+    ],
+    "question": "When assessing a medicinal herb in the field, what does 'organoleptic assessment' actually mean?",
+    "options": [
+      "Using your direct human senses—sight, aroma, taste, and texture—to gauge its vitality",
+      "Sending dried leaf powder to an analytical laboratory for gas chromatography testing",
+      "Checking medieval herbal manuscripts without tasting or touching the living specimen in nature",
+      "Measuring soil electrical conductivity and moisture content around the plant's root zone"
+    ],
+    "correct": 0,
+    "explanation": "Organoleptic assessment uses your direct senses (taste, smell, touch, sight) to evaluate a plant's vitality and constituents, bridging sensory intuition with botanical chemistry.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 2,
+    "level_num": 1,
+    "module": "Module 1: Foundations of Botanical Intelligence",
+    "lesson": "Lesson 1: Plant Defense Chemistry & Secondary Metabolites",
+    "herb": "General Theory",
+    "badges": [
+      "[TRADITIONAL]",
+      "[MECHANISTIC]"
+    ],
+    "question": "Why do herbalists emphasize using the whole plant rather than just one isolated chemical compound?",
+    "options": [
+      "Isolated pharmaceutical molecules lack biological activity until combined with synthetic carrier molecules",
+      "Whole plants produce synergistic compounds that balance actions and assist cellular uptake",
+      "Single constituents are degraded by gastric acid before reaching the small intestine",
+      "Isolated compounds trigger immediate liver enzyme breakdown without exerting any therapeutic effect"
+    ],
+    "correct": 1,
+    "explanation": "Plants produce complex multi-constituent matrices where minor secondary metabolites can enhance absorption, buffer harsh side effects, or act synergistically on human tissue targets.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 3,
+    "level_num": 1,
+    "module": "Module 1: Foundations of Botanical Intelligence",
+    "lesson": "Lesson 1: Plant Defense Chemistry & Secondary Metabolites",
+    "herb": "General Theory",
+    "badges": [
+      "[TRADITIONAL]",
+      "[MECHANISTIC]"
+    ],
+    "question": "In Nordic and Siberian folk traditions, why was bitter Arctic Rhodiola root taken during harsh winters?",
+    "options": [
+      "It provided quick simple sugars to raise body temperature during acute cold",
+      "Serving as an emergency cold-climate survival starch while fermenting early forms of northern medicinal mead",
+      "It sustained physical endurance and mental clarity during prolonged fatigue and cold",
+      "It acted as an acute sedative to induce deep sleep during blizzards"
+    ],
+    "correct": 2,
+    "explanation": "In Nordic and Siberian folk medicine, Rhodiola rosea (rosenrot) was taken against fatigue and cold. Phytochemicals like salidroside and rosavins support cellular resistance to stress (EMA/HMPC/232091/2011).",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 4,
+    "level_num": 1,
+    "module": "Module 2: Tissue States & Ecological Energetics",
+    "lesson": "Lesson 1: Thermal & Moisture Axes in Living Tissues",
+    "herb": "General Theory",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "In traditional Western herbal energetics, what does a 'hot and dry' bodily tissue pattern look like?",
+    "options": [
+      "Pale cold clammy skin accompanied by slow digestion and thick watery mucous discharges",
+      "Sluggish fluid retention accompanied by cold limbs and soft pitting edema in feet",
+      "Heavy morning fatigue accompanied by dull joint aching and cold clammy perspiration",
+      "A flushed red face, dry tongue, rapid pulse, and sensation of internal irritation"
+    ],
+    "correct": 3,
+    "explanation": "In traditional Western energetics, a 'hot and dry' tissue state (excitation/atrophy) presents with reddened membranes, lack of fluids, irritability, and rapid bounding pulse.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 5,
+    "level_num": 1,
+    "module": "Module 2: Tissue States & Ecological Energetics",
+    "lesson": "Lesson 1: Thermal & Moisture Axes in Living Tissues",
+    "herb": "General Theory",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "Which wild herb trio is traditionally reached for to dry out and tone boggy, congested mucous membranes?",
+    "options": [
+      "Yarrow, Garden Thyme, and Common Sage for astringent and carminative toning",
+      "Marshmallow root, Slippery Elm bark, and Flax seeds for soothing hydration",
+      "Licorice root, fresh Milky Oats, and American Ginseng for nutritive adrenal recovery",
+      "Valerian root, California Poppy, and Passionflower herb for heavy sedative relaxation"
+    ],
+    "correct": 0,
+    "explanation": "Yarrow, Thyme, and Sage provide aromatic, astringent, and bitter properties that tone and dry relaxed, weeping, or congested mucous tissues in traditional energetic practice.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 6,
+    "level_num": 1,
+    "module": "Module 2: Tissue States & Ecological Energetics",
+    "lesson": "Lesson 3: Taste Signaling & Organoleptic Assessment",
+    "herb": "General Theory",
+    "badges": [
+      "[TRADITIONAL]",
+      "[MECHANISTIC]"
+    ],
+    "question": "When you taste bitter herbs like Gentian or Dandelion on your tongue, how is the digestive response thought to begin?",
+    "options": [
+      "Bitter taste directly neutralizes gastric acid secretions to protect delicate mucosal tissues from irritation in daily practice",
+      "Bitter compounds are thought to stimulate tongue receptors that trigger anticipatory digestive secretions",
+      "Bitter chemicals bind bile salts in the mouth before swallowing begins",
+      "Bitter herbs signal the colon to contract before food enters the stomach"
+    ],
+    "correct": 1,
+    "explanation": "Stimulation of oral bitter taste receptors (TAS2Rs) is thought to trigger a vagal reflex that promotes cephalic-phase gastric, biliary, and pancreatic secretions.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 7,
+    "level_num": 1,
+    "module": "Module 2: Tissue States & Ecological Energetics",
+    "lesson": "Lesson 3: Taste Signaling & Organoleptic Assessment",
+    "herb": "General Theory",
+    "badges": [
+      "[TRADITIONAL]",
+      "[MECHANISTIC]"
+    ],
+    "question": "When you sip an astringent tea (like Blackberry leaf or Oak bark), what creates that dry, puckering sensation?",
+    "options": [
+      "The tea rapidly pulls moisture from deep capillaries through reverse cellular osmosis",
+      "Astringent flavonoids temporarily paralyze salivary gland autonomic nerve pathways in the mouth",
+      "Tannins in the tea cross-link and precipitate proteins on your mucosal surfaces",
+      "The acidic pH of the tea dissolves mucosal surface lipids within seconds"
+    ],
+    "correct": 2,
+    "explanation": "Astringency is caused by polyphenolic tannins binding to and precipitating salivary and mucosal proteins, creating a tangible tightening and drying of relaxed tissue.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 8,
+    "level_num": 1,
+    "module": "Module 3: Monograph Mastery — Chamomile & Peppermint",
+    "lesson": "Lesson 1: Chamomile (Matricaria chamomilla)",
+    "herb": "Chamomile",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "In traditional Western herbal practice, which specific type of emotional and physical pattern calls for Chamomile?",
+    "options": [
+      "Dull, sluggish depression accompanied by heavy brain fog and cold lethargic digestion",
+      "To prevent airborne environmental spores and particulate contaminants from settling into the infusion prior to therapeutic administration",
+      "Chronic muscular exhaustion accompanied by stiff joints and lack of nervous vitality",
+      "Restless, irritable distress where pain feels unbearable, especially with digestive tension"
+    ],
+    "correct": 3,
+    "explanation": "Eclectic and folk herbalists indicate Chamomile for irritable, whining, hypersensitive individuals whose discomfort feels intolerable, accompanied by gastrointestinal cramping.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 9,
+    "level_num": 1,
+    "module": "Module 3: Monograph Mastery — Chamomile & Peppermint",
+    "lesson": "Lesson 1: Chamomile (Matricaria chamomilla)",
+    "herb": "Chamomile",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "What is the defining herbal characteristic of a 'relaxing nervine' like German Chamomile?",
+    "options": [
+      "It gently unwinds nervous tension and smooth muscle spasm without causing heavy grogginess",
+      "It knocks you out by forcefully shutting down consciousness like heavy pharmaceutical sedatives",
+      "It acts as a brain stimulant, boosting alertness by releasing adrenaline and dopamine",
+      "It numbs somatic pain receptors, stopping all nerve transmissions from the visceral organs"
+    ],
+    "correct": 0,
+    "explanation": "Relaxing nervines ease visceral and muscular spasm caused by sympathetic arousal without forcing narcosis or disrupting daily daytime functioning.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 10,
+    "level_num": 1,
+    "module": "Module 3: Monograph Mastery — Chamomile & Peppermint",
+    "lesson": "Lesson 1: Chamomile (Matricaria chamomilla)",
+    "herb": "Chamomile",
+    "badges": [
+      "[SAFETY]"
+    ],
+    "question": "Chamomile is considered one of the gentlest botanicals, but what important safety screen must an herbalist check?",
+    "options": [
+      "Ensuring the client has eaten a large fatty meal to prevent immediate kidney irritation",
+      "Screening for Asteraceae (daisy family) allergies and checking for concurrent blood-thinner use",
+      "Checking for severe chronic low blood pressure, as chamomile causes sudden dramatic arterial drops",
+      "Confirming the client is over thirty years old, as children cannot digest chamomile flavonoids"
+    ],
+    "correct": 1,
+    "explanation": "Chamomile belongs to the Asteraceae family (posing cross-reactivity for ragweed-sensitive individuals) and contains coumarins that can interact with anticoagulants like warfarin.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 11,
+    "level_num": 1,
+    "module": "Module 3: Monograph Mastery — Chamomile & Peppermint",
+    "lesson": "Lesson 2: Peppermint (Mentha x piperita)",
+    "herb": "Peppermint",
+    "badges": [
+      "[TRADITIONAL]",
+      "[HUMAN EVIDENCE]"
+    ],
+    "question": "Why is Peppermint tea a classic folk remedy for cramping and gas after heavy meals?",
+    "options": [
+      "Menthol reduces gastric acid output by coating the mucosal lining with oil",
+      "By stimulating the gallbladder and biliary tree to rapidly release stored bile into the proximal duodenum immediately before meal ingestion",
+      "Menthol relaxes gastrointestinal smooth muscle by modulating calcium channels to ease spasms",
+      "Menthol generates light carbonation in the stomach that promotes rapid gastric emptying"
+    ],
+    "correct": 2,
+    "explanation": "Menthol relaxes smooth muscle in the gastrointestinal tract by blocking calcium influx, reducing spasms and easing transit (EMA/HMPC/838370/2019; Ford et al. 2008 BMJ review, PMID: 19008261).",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 12,
+    "level_num": 1,
+    "module": "Module 3: Monograph Mastery — Chamomile & Peppermint",
+    "lesson": "Lesson 2: Peppermint (Mentha x piperita)",
+    "herb": "Peppermint",
+    "badges": [
+      "[TRADITIONAL]",
+      "[SAFETY]"
+    ],
+    "question": "Peppermint is wonderful for lower gut cramping, but when can it actually make digestion worse?",
+    "options": [
+      "When consumed alongside protein, because menthol degrades gastric proteolytic digestive enzymes",
+      "In dry constitutions, because menthol increases stomach acid volume beyond digestive capacity in practice",
+      "When consumed warm, because heat produces gas bubbles that irritate stomach tissue",
+      "In people with acid reflux or GERD, because it relaxes the lower esophageal sphincter"
+    ],
+    "correct": 3,
+    "explanation": "By relaxing the lower esophageal sphincter (LES), peppermint allows gastric acid to reflux back into the esophagus, aggravating GERD.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 13,
+    "level_num": 1,
+    "module": "Module 4: Monograph Mastery — Ginger (Zingiber officinale)",
+    "lesson": "Lesson 1: Gingerol to Shogaol Thermal Conversion",
+    "herb": "Ginger",
+    "badges": [
+      "[MECHANISTIC]",
+      "[TRADITIONAL]"
+    ],
+    "question": "How does the chemistry and traditional energetic action of Ginger shift when it is dried compared to fresh root?",
+    "options": [
+      "Fresh root gingerols convert upon drying into shogaols, making dried ginger hotter and more systemic",
+      "Drying deactivates volatile constituents, converting the root into fibrous culinary material",
+      "Drying transforms warming pungent gingerols into cooling, demulcent polysaccharides that soothe stomach lining",
+      "Drying makes the root significantly more sour, shifting its therapeutic affinity from stomach to liver"
+    ],
+    "correct": 0,
+    "explanation": "Drying and heating dehydrate gingerols into shogaols, which are roughly twice as pungent. Traditional Chinese Medicine uses Sheng Jiang (fresh) for acute cold release, and Gan Jiang (dried) for deep interior cold.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 14,
+    "level_num": 1,
+    "module": "Module 4: Monograph Mastery — Ginger (Zingiber officinale)",
+    "lesson": "Lesson 2: Formulating with Pungent Catalysts",
+    "herb": "Ginger",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "Why do traditional herbalists frequently add a small pinch of dried Ginger to formulas aimed at cold, sluggish digestion?",
+    "options": [
+      "Ginger acts only to disguise the bitter taste of other herbs in the formulation in practice",
+      "Ginger stimulates digestive secretions and peripheral blood flow, helping carry the formula through cold tissues",
+      "Ginger strongly suppresses stomach acid production to protect delicate compounds in other herbs",
+      "Ginger binds to all plant tannins in the mixture, precipitating them out of solution"
+    ],
+    "correct": 1,
+    "explanation": "In traditional formulation, warming pungent herbs like Ginger act as circulatory stimulants and digestive catalysts, improving splanchnic circulation and aiding formula assimilation.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 15,
+    "level_num": 1,
+    "module": "Module 5: Aqueous & Thermal Extraction Craft",
+    "lesson": "Lesson 1: Aqueous Solvent Dynamics — Infusion vs Decoction",
+    "herb": "General Theory",
+    "badges": [
+      "[TRADITIONAL]",
+      "[SAFETY]"
+    ],
+    "question": "Why do herbalists advise drying freshly harvested aerial herbs away from direct sunlight?",
+    "options": [
+      "Sunlight causes plant tissues to re-absorb moisture directly from surrounding humid room air",
+      "Standardized terpene lactones activate cerebral cholinergic pathways while inhibiting peripheral platelet breakdown through enzyme induction",
+      "Direct sunlight degrades fragile aromatic volatile oils and bleaches therapeutic green chlorophyll",
+      "Direct sun exposure encourages rapid bacterial growth on drying leaf surfaces within hours"
+    ],
+    "correct": 2,
+    "explanation": "Heat and UV radiation from direct sun evaporate volatile terpenes and oxidize active pigments like chlorophyll and flavonoids, degrading the herb's vitality.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 16,
+    "level_num": 1,
+    "module": "Module 5: Aqueous & Thermal Extraction Craft",
+    "lesson": "Lesson 1: Aqueous Solvent Dynamics — Infusion vs Decoction",
+    "herb": "General Theory",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "What is the primary difference in water extraction between an herbal 'infusion' and a 'decoction'?",
+    "options": [
+      "Infusions use alcohol and vinegar, while decoctions use only distilled spring water",
+      "Infusions must be refrigerated for three weeks, while decoctions are consumed immediately while boiling in practice",
+      "Infusions are reserved for delicate aromatic flora, while decoctions are for leafy greens",
+      "Infusions steep delicate leaves and flowers in boiled water; decoctions simmer tough roots and barks"
+    ],
+    "correct": 3,
+    "explanation": "Infusions steep delicate vegetative structures (leaves, flowers) off the heat to preserve aromatics; decoctions simmer tough woody tissues (roots, barks, fungi) to break down dense cell walls.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 17,
+    "level_num": 1,
+    "module": "Module 5: Aqueous & Thermal Extraction Craft",
+    "lesson": "Lesson 1: Aqueous Solvent Dynamics — Infusion vs Decoction",
+    "herb": "Nettle",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "What characterizes the traditional folk preparation known as a 'nourishing herbal infusion'?",
+    "options": [
+      "Steeping a dense ounce of dried herb in a quart of boiled water for four to eight hours",
+      "Steeping a single teaspoon of dried leaves in hot water for three to five minutes",
+      "Simmering fresh green leaves in an open pot on the stove until reduced by half volume in practice",
+      "Macerating freshly gathered spring foliage in pure alcohol and apple cider vinegar for two weeks"
+    ],
+    "correct": 0,
+    "explanation": "A nourishing herbal infusion uses a high herb-to-water ratio (around 25–30g per liter) steeped for 4 to 8 hours in a closed jar to extract maximum minerals and polyphenols.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 18,
+    "level_num": 1,
+    "module": "Module 5: Aqueous & Thermal Extraction Craft",
+    "lesson": "Lesson 1: Aqueous Solvent Dynamics — Infusion vs Decoction",
+    "herb": "General Theory",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "Why is it an essential herbal rule to cover your teapot while steeping aromatic herbs like Peppermint or Thyme?",
+    "options": [
+      "To prevent ambient air from oxidizing and souring the warm water during steeping",
+      "To ensure volatile aromatic terpenes condense back into the liquid rather than escaping as steam",
+      "To keep dust and airborne kitchen particles from settling onto the hot liquid surface",
+      "Covering the pot is merely an aesthetic ritual; it has no measurable impact on potency"
+    ],
+    "correct": 1,
+    "explanation": "Aromatic constituents (monoterpenes and volatile oils) readily escape with steam. Covering the vessel ensures they condense back into the liquid.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 19,
+    "level_num": 1,
+    "module": "Module 6: The Handcrafted Home Apothecary",
+    "lesson": "Lesson 1: Core Boreal Botanical Allies",
+    "herb": "General Theory",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "What makes Stinging Nettle (*Urtica dioica*) such a fundamental cornerstone herb for a home apothecary?",
+    "options": [
+      "It works purely as a fast-acting narcotic sedative for acute insomnia and pain",
+      "Releases astringent tannins that bind directly to surface mucosal proteins to create a temporary mechanical coagulative barrier",
+      "It is a nutritive trophorestorative packed with minerals, chlorophyll, and building blocks for vitality",
+      "It acts as a caustic astringent used only topically to burn off warts and calluses"
+    ],
+    "correct": 2,
+    "explanation": "Nettle is celebrated as a rich whole-plant food and medicine, delivering bioavailable minerals, flavonoids, and chlorophyll that nourish depleted organ systems.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 20,
+    "level_num": 1,
+    "module": "Module 6: The Handcrafted Home Apothecary",
+    "lesson": "Lesson 1: Core Boreal Botanical Allies",
+    "herb": "General Theory",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "Why does classical European folk herbalism rely so heavily on Chamomile, Peppermint, and Nettle as the foundational 'Big Three'?",
+    "options": [
+      "They are the only three herbs that grow wild in the Northern Hemisphere",
+      "Selectively accelerates phase II glutathione conjugation while downregulating basal hepatic phase I cytochrome activity",
+      "They contain identical active chemical constituents that substitute for each other interchangeably",
+      "Together they cover nervous tension, acute digestive distress, and deep mineral nourishment across body systems"
+    ],
+    "correct": 3,
+    "explanation": "Between Chamomile (relaxing nervine/antispasmodic), Peppermint (carminative/circulatory), and Nettle (mineral nutritive/trophorestorative), an herbalist can address tension, digestion, and nourishment safely.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 21,
+    "level_num": 1,
+    "module": "Module 6: The Handcrafted Home Apothecary",
+    "lesson": "Lesson 1: Core Boreal Botanical Allies",
+    "herb": "Nettle",
+    "badges": [
+      "[TRADITIONAL]",
+      "[ECOLOGY]"
+    ],
+    "question": "Why do Nordic foragers eagerly harvest stinging Nettle tops as soon as snow melts in early spring?",
+    "options": [
+      "Young spring nettle foliage is rich in minerals like iron, calcium, silica, and protein",
+      "Early shoots concentrate aromatic resins that act as a warming digestive stimulant",
+      "The stinging hairs yield concentrated plant sugars that ferment into restorative tonic syrups in practice",
+      "Young spring leaves contain demulcent mucilage that thickens cold water into topical salves"
+    ],
+    "correct": 0,
+    "explanation": "Young spring nettle (Urtica dioica, brännässla) is rich in minerals (iron, calcium, silica) and protein, offering traditional spring nourishment after long northern winters.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 22,
+    "level_num": 1,
+    "module": "Module 6: The Handcrafted Home Apothecary",
+    "lesson": "Lesson 2: Foraged Harvest Curing & Storage Physics",
+    "herb": "General Theory",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "Why does building a home apothecary begin with mastering three to five versatile herbs rather than buying thirty?",
+    "options": [
+      "Combining different herbs inevitably cancels out their individual medicinal actions inside the body",
+      "Deep clinical experience with a few versatile plants teaches practical energetic nuance",
+      "Herbal regulatory agencies legally restrict students from researching multiple botanical species concurrently",
+      "Human digestive flora can only adapt to one botanical family each calendar year"
+    ],
+    "correct": 1,
+    "explanation": "Developing intimate familiarity with a small core of versatile herbs (like Yarrow, Nettle, Chamomile) builds practical confidence in dosing, tissue response, and formulation.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 23,
+    "level_num": 1,
+    "module": "Module 6: The Handcrafted Home Apothecary",
+    "lesson": "Lesson 3: Hydroethanolic Maceration Principles",
+    "herb": "General Theory",
+    "badges": [
+      "[MECHANISTIC]"
+    ],
+    "question": "Why is a mixture of water and ethanol (like 40–50% vodka) the most common solvent for making simple herbal tinctures?",
+    "options": [
+      "Alcohol sweetens bitter flavors, while water keeps the plant leaves from scorching during maceration",
+      "To maintain constant physical suspension of suspended particulates that would otherwise settle to the bottom of the vessel",
+      "Alcohol dissolves lipophilic resins and volatile oils, while water extracts polar tannins and minerals",
+      "Alcohol thins the liquid mixture so it passes smoothly through paper filters without clogging"
+    ],
+    "correct": 2,
+    "explanation": "Hydroethanolic solutions act as dual solvents: ethanol extracts lipophilic resins, alkaloids, and terpenes, while water dissolves polar tannins and glycosides.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 24,
+    "level_num": 1,
+    "module": "Module 6: The Handcrafted Home Apothecary",
+    "lesson": "Lesson 3: Hydroethanolic Maceration Principles",
+    "herb": "General Theory",
+    "badges": [
+      "[SAFETY]"
+    ],
+    "question": "What determines whether a homemade herbal tincture will stay fresh on the shelf for years without spoiling?",
+    "options": [
+      "Adding synthetic chemical preservatives to prevent bacterial and mold spore growth",
+      "Rapid evaporation of residual wash water during thermal condensation, leading to erratic percolation flow rates",
+      "Filtering the finished tincture through activated charcoal to remove all organic matter",
+      "Achieving a final alcohol concentration of at least 20–25% ABV to inhibit microbial spoilage"
+    ],
+    "correct": 3,
+    "explanation": "A minimum of 20–25% alcohol by volume (ABV) acts as a reliable natural preservative, preventing bacterial, yeast, and fungal contamination indefinitely.",
+    "level": "Root — Foundations of Plant & Fungi Wisdom"
+  },
+  {
+    "num": 25,
+    "level_num": 2,
+    "module": "Module 1: Dandelion — Root & Leaf Dynamics",
+    "lesson": "Lesson 1: The Dual Nature of Taraxacum",
+    "herb": "Dandelion",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "Dandelion is one plant with two distinct medicines. How do herbalists divide the root from the leaf?",
+    "options": [
+      "The root stimulates digestion and bile, while the leaf acts as a potassium-rich kidney diuretic",
+      "The root is a mild sedative, while the leaf is an intense stimulant like caffeine",
+      "The root serves as an astringent toner, while the leaf stimulates rapid peripheral blood clotting",
+      "The root thins systemic blood, while the leaf acts as an acute sedative for insomnia"
+    ],
+    "correct": 0,
+    "explanation": "Dandelion root (Taraxacum officinale) is a classic bitter tonic that stimulates digestive and biliary secretions; dandelion leaf is a potent, mineral-rich diuretic that replenishes potassium (EMA/HMPC/572186/2021).",
+    "level": "Sprout — Organ Systems & Tissue Energetics"
+  },
+  {
+    "num": 26,
+    "level_num": 2,
+    "module": "Module 2: Valerian — Neuromuscular Sedative Craft",
+    "lesson": "Lesson 1: Chemistry of Rest & Isovaleric Acid",
+    "herb": "Valerian",
+    "badges": [
+      "[TRADITIONAL]",
+      "[SAFETY]"
+    ],
+    "question": "Valerian root is famous as a bedtime sedative, but what surprising reaction happens in some people?",
+    "options": [
+      "In sensitive individuals, it suppresses dream recall and flattens nighttime REM sleep in practice",
+      "In some people, it acts as a stimulant causing agitation and racing thoughts",
+      "In cold constitutions, it triggers strong metabolic cravings for sour fermented foods",
+      "In dry tissue states, it numbs taste buds and reduces salivary secretion"
+    ],
+    "correct": 1,
+    "explanation": "In some people, particularly those with existing constitutional heat or tension, Valerian acts as a paradoxical stimulant, inducing heart palpitations, anxiety, and restlessness.",
+    "level": "Sprout — Organ Systems & Tissue Energetics"
+  },
+  {
+    "num": 27,
+    "level_num": 2,
+    "module": "Module 3: Milky Oat Tops & Nervous Restoration",
+    "lesson": "Lesson 1: Restoring the Frayed Edge",
+    "herb": "Milky Oat",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "Why do herbalists reach for fresh Milky Oat tops when someone feels completely 'fried' and burnt out?",
+    "options": [
+      "They deliver an immediate aromatic stimulant that masks exhaustion for several hours",
+      "Saturating local sensory nerve endings to induce temporary numbness and reduce the sensation of muscular fatigue",
+      "They act as a deep trophorestorative, slowly rebuilding depleted and overstimulated nervous tissue",
+      "They force the kidneys to dump water, reducing overall cardiovascular fluid pressure"
+    ],
+    "correct": 2,
+    "explanation": "Harvested during the brief milky seed stage, Avena sativa is rich in avenanthramides, zinc, and B-vitamins, acting as a gentle trophorestorative for chronic nervous depletion.",
+    "level": "Sprout — Organ Systems & Tissue Energetics"
+  },
+  {
+    "num": 28,
+    "level_num": 2,
+    "module": "Module 4: Ashwagandha — Somnifera & Adaptogenic Roots",
+    "lesson": "Lesson 1: Withanolides & Vital Reserve",
+    "herb": "Ashwagandha",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "In classical Ayurvedic practice, how is Ashwagandha (*Withania somnifera*) traditionally classified and used?",
+    "options": [
+      "As an aggressive bitter purge designed to expel excess bile and intestinal parasites rapidly",
+      "As a cooling refrigerant herb used primarily for reducing acute, high-temperature fevers",
+      "As a pungent circulatory stimulant used only topically to draw blood to cold extremities",
+      "As a nourishing Rasayana (rejuvenator) that builds deep vital reserve (Ojas) and calms Vata"
+    ],
+    "correct": 3,
+    "explanation": "Ashwagandha is a premier Ayurvedic Rasayana, considered warm and building, used to ground nervous exhaustion, strengthen depleted tissues, and nurture vital essence.",
+    "level": "Sprout — Organ Systems & Tissue Energetics"
+  },
+  {
+    "num": 29,
+    "level_num": 2,
+    "module": "Module 5: Tulsi — Holy Basil & Sensorium",
+    "lesson": "Lesson 1: Clear Mind & Open Lungs",
+    "herb": "Tulsi",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "Unlike heavy sedative roots, what unique uplifting quality does Holy Basil (Tulsi) bring to a stressed mind?",
+    "options": [
+      "It acts as an aromatic adaptogen that clears heavy mental fog and brightens mood without agitation",
+      "It acts as a heavy neuromuscular sedative, slowing heart contractions and inducing physical drowsiness",
+      "It serves as an intense xanthine stimulant providing immediate surges of physical wakefulness",
+      "It acts primarily as an analgesic narcotic that blocks peripheral pain sensation across somatic nerves"
+    ],
+    "correct": 0,
+    "explanation": "Tulsi (Ocimum tenuiflorum) is an aromatic adaptogen rich in eugenol and linalool that lifts mood, eases cerebral congestion, and supports stress resilience while maintaining mental clarity.",
+    "level": "Sprout — Organ Systems & Tissue Energetics"
+  },
+  {
+    "num": 30,
+    "level_num": 2,
+    "module": "Module 6: The Cephalic Bitter Reflex",
+    "lesson": "Lesson 1: Timing the Bitter Drop",
+    "herb": "Swedish Bitters",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "Why is it essential to taste digestive bitters directly on your tongue rather than swallowing them in a gelatin capsule?",
+    "options": [
+      "Gelatin and cellulose capsules react chemically with bitter herbs, rendering therapeutic constituents insoluble in stomach acid",
+      "Bitter taste receptors on the tongue trigger a vagal reflex that starts digestive secretions before swallowing",
+      "Bitter compounds must be pre-digested by oral salivary amylase before they can enter the stomach",
+      "Capsules dissolve too quickly in the esophagus, causing severe localized mucosal spasms"
+    ],
+    "correct": 1,
+    "explanation": "The therapeutic action of digestive bitters relies on stimulating oral TAS2R receptors, which send vagal signals to the stomach, liver, and pancreas to prime digestive secretions.",
+    "level": "Sprout — Organ Systems & Tissue Energetics"
+  },
+  {
+    "num": 31,
+    "level_num": 2,
+    "module": "Module 7: Classical Formula Architecture",
+    "lesson": "Lesson 1: The Four Functional Roles",
+    "herb": "Formulation Theory",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "In classical formulation, what role does a 'harmonizer' or 'corrigent' herb play in a balanced blend?",
+    "options": [
+      "It provides the primary strong therapeutic action that targets the client's chief complaint directly",
+      "Inhibiting systemic lipoxygenase pathways to prevent excessive synthesis of pro-inflammatory eicosanoids",
+      "It buffers harsh properties of strong herbs, improves flavor, and blends the formula together smoothly",
+      "It significantly increases the permeability of the blood-brain barrier to let bioactives pass"
+    ],
+    "correct": 2,
+    "explanation": "Harmonizers (like Licorice or Ginger) soften harsh edges of primary herbs, mitigate unwanted side effects, improve palatability, and coordinate the formula's therapeutic direction.",
+    "level": "Sprout — Organ Systems & Tissue Energetics"
+  },
+  {
+    "num": 32,
+    "level_num": 2,
+    "module": "Module 8: Mucosal Demulcent Science",
+    "lesson": "Lesson 1: Polysaccharides in Reflux",
+    "herb": "Marshmallow",
+    "badges": [
+      "[TRADITIONAL]",
+      "[MECHANISTIC]"
+    ],
+    "question": "How do mucilaginous herbs like Marshmallow root or Slippery Elm bring rapid relief to heartburn?",
+    "options": [
+      "They dissolve stomach acid on contact and neutralize all gastric juices in minutes",
+      "Stimulating the anterior pituitary gland to release adrenocorticotropic hormone, elevating baseline glucocorticoids",
+      "They speed up digestion so food leaves the stomach before acid can form",
+      "Their slimy polysaccharides physically coat and cushion the inflamed throat and stomach lining"
+    ],
+    "correct": 3,
+    "explanation": "Demulcents are rich in high-molecular-weight polysaccharides that swell in water to form a protective physical barrier over raw, irritated mucosal tissue.",
+    "level": "Sprout — Organ Systems & Tissue Energetics"
+  },
+  {
+    "num": 33,
+    "level_num": 2,
+    "module": "Module 8: Mucosal Demulcent Science",
+    "lesson": "Lesson 2: Cold Water Extraction",
+    "herb": "Marshmallow",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "Why do herbalists steep Marshmallow root in cold water overnight rather than boiling it as a hot tea?",
+    "options": [
+      "Cold water extracts soothing, slippery mucilage without pulling out thick, cloudy starches",
+      "Warm water causes root mucilage to sour and ferment before extraction finishes",
+      "Boiling water degrades delicate flavonoids that provide the root's therapeutic demulcent action",
+      "Cold temperatures are required to break down dense outer cell wall cellulose"
+    ],
+    "correct": 0,
+    "explanation": "A cold overnight infusion pulls out pure, soothing mucilage while leaving heavy, chalky starches behind, resulting in a cleaner, more therapeutic demulcent drink.",
+    "level": "Sprout — Organ Systems & Tissue Energetics"
+  },
+  {
+    "num": 34,
+    "level_num": 2,
+    "module": "Module 9: Licorice — Fluid Retention & Adrenal Axis",
+    "lesson": "Lesson 1: Aldosterone & Potassium Balance",
+    "herb": "Licorice",
+    "badges": [
+      "[SAFETY]"
+    ],
+    "question": "Licorice root (*Glycyrrhiza glabra*) is delicious and soothing, but what caution applies to taking large doses daily?",
+    "options": [
+      "It can cause harmless yellowing of the skin through long-term tissue accumulation of concentrated plant pigments",
+      "It can promote sodium retention and potassium loss, elevating blood pressure over time",
+      "It can inhibit gastric proteases, impairing the digestion of dietary proteins",
+      "It can act as a harsh osmotic diuretic that depletes intracellular fluid reserves"
+    ],
+    "correct": 1,
+    "explanation": "Glycyrrhizin in licorice inhibits 11-beta-HSD2, allowing cortisol to stimulate aldosterone receptors, which can cause potassium loss, fluid retention, and elevated blood pressure (EMA/HMPC/576232/2013).",
+    "level": "Sprout — Organ Systems & Tissue Energetics"
+  },
+  {
+    "num": 35,
+    "level_num": 2,
+    "module": "Module 10: Meadowsweet & Salicylate Pharmacognosy",
+    "lesson": "Lesson 1: The Buffered Salicylate Matrix",
+    "herb": "Meadowsweet",
+    "badges": [
+      "[TRADITIONAL]",
+      "[MECHANISTIC]"
+    ],
+    "question": "Salicylic acid was first isolated from Meadowsweet (*Filipendula ulmaria*, formerly *Spiraea*), giving aspirin its name. Why is the whole herb gentler on the stomach than synthetic acetylsalicylic acid?",
+    "options": [
+      "It contains very low constituent levels, acting primarily through psychological sensory reassurance",
+      "Its active compounds are absorbed directly through oral tissues, bypassing stomach contact",
+      "Its natural salicylates are buffered by protective tannins and mucilage that cushion mucosa",
+      "Meadowsweet rapidly reduces gastric acidity, shifting stomach fluids toward alkaline levels"
+    ],
+    "correct": 2,
+    "explanation": "While synthetic acetylsalicylic acid can irritate the gastric mucosa, whole Meadowsweet contains natural astringent tannins and soothing mucilage that protect the stomach lining (EMA/HMPC/666292/2015).",
+    "level": "Sprout — Organ Systems & Tissue Energetics"
+  },
+  {
+    "num": 36,
+    "level_num": 2,
+    "module": "Module 11: Endocrine Rhythms & Circadian Flora",
+    "lesson": "Lesson 1: The Cortisol Awakening Curve",
+    "herb": "Physiology",
+    "badges": [
+      "[HUMAN EVIDENCE]"
+    ],
+    "question": "In a healthy daily biological clock, when should your natural cortisol level reach its highest peak?",
+    "options": [
+      "Around 3:00 AM while you are in the deepest phase of slow-wave restorative sleep",
+      "Inducing competitive inhibition of peripheral pain fibers to prevent transmission of nociceptive signals to the thalamus",
+      "At 10:00 PM right as you are preparing to fall asleep for the night",
+      "Approximately 30 to 45 minutes after waking up in the morning to mobilize alert energy"
+    ],
+    "correct": 3,
+    "explanation": "Cortisol follows a healthy circadian curve, rising 50–75% within 30–45 minutes of waking (the cortisol awakening response) before declining toward midnight (Fries et al. 2009, PMID: 19782929).",
+    "level": "Sprout — Organ Systems & Tissue Energetics"
+  },
+  {
+    "num": 37,
+    "level_num": 2,
+    "module": "Module 12: Sleep & Nervous Terrain Restructuring",
+    "lesson": "Lesson 1: Circadian Zeitgebers & Photobiology",
+    "herb": "Sleep Hygiene",
+    "badges": [
+      "[MECHANISTIC]"
+    ],
+    "question": "When someone struggles to fall asleep at night, why do herbalists address daily rhythms before reaching for tinctures?",
+    "options": [
+      "Morning light exposure, regular sleep hours, and caffeine cutoffs set the biological clock herbs support",
+      "Herbal sleep drops only take effect after spending three consecutive hours outdoors in cold air",
+      "Herbal nervines require twelve hours of digestive fasting to absorb without being broken down by food",
+      "Taking calming herbs without blackout bedroom curtains triggers an immediate rebound spike in cortisol levels"
+    ],
+    "correct": 0,
+    "explanation": "Botanical nervines support the nervous system, but light exposure, physical activity, and caffeine timing govern the master circadian pacemaker in the brain.",
+    "level": "Sprout — Organ Systems & Tissue Energetics"
+  },
+  {
+    "num": 38,
+    "level_num": 2,
+    "module": "Module 12: Sleep & Nervous Terrain Restructuring",
+    "lesson": "Lesson 2: Skullcap (Scutellaria lateriflora)",
+    "herb": "Skullcap",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "American Skullcap is the classic ally for 'monkey mind'. What kind of mental restlessness is it famous for calming?",
+    "options": [
+      "Heavy, sluggish brain fog accompanied by deep physical lethargy, slowed speech, and waking exhaustion",
+      "Racing thoughts, twitchy muscle tension, sensory overload, and mental overwhelm",
+      "A complete absence of any thoughts or dreams during slow-wave sleep",
+      "Physical hunger contractions that wake you up in the middle of the night"
+    ],
+    "correct": 1,
+    "explanation": "Skullcap (Scutellaria lateriflora) is indicated for the overworked, overstimulated nervous system with mental chatter, restless twitching, and sensory exhaustion.",
+    "level": "Sprout — Organ Systems & Tissue Energetics"
+  },
+  {
+    "num": 39,
+    "level_num": 2,
+    "module": "Module 12: Sleep & Nervous Terrain Restructuring",
+    "lesson": "Lesson 3: Passionflower (Passiflora incarnata)",
+    "herb": "Passionflower",
+    "badges": [
+      "[TRADITIONAL]",
+      "[HUMAN EVIDENCE]"
+    ],
+    "question": "What classic thought pattern signals that Passionflower is the right herbal ally for insomnia?",
+    "options": [
+      "A tired, sluggish mind that feels physically fatigued but restless in bed",
+      "Elevating intracellular cyclic AMP within vascular smooth muscle to trigger sustained arterial vasodilation",
+      "Circular, repeating thoughts and endless looping worry that prevents your brain from switching off",
+      "A sudden surge of physical hunger right as your head touches the pillow"
+    ],
+    "correct": 2,
+    "explanation": "Clinical trials and European monographs indicate Passionflower (Passiflora incarnata) for easing nervous tension and restlessness that delays sleep onset (Akhondzadeh et al. 2001, PMID: 11679026; EMA/HMPC/669738/2013).",
+    "level": "Sprout — Organ Systems & Tissue Energetics"
+  },
+  {
+    "num": 40,
+    "level_num": 2,
+    "module": "Module 13: Digestive Barrier & Mucosal Ecology",
+    "lesson": "Lesson 1: The Whole-Terrain Approach",
+    "herb": "Gut Health",
+    "badges": [
+      "[MECHANISTIC]"
+    ],
+    "question": "In functional herbalism, why is supporting gut lining integrity considered foundational for systemic health?",
+    "options": [
+      "The stomach is the sole site where all human immune antibodies are synthesized",
+      "The gut lining requires thorough microbial purging weekly to maintain proper liver clearance",
+      "Digestive enzymes cannot function unless mucosal tissue is kept thoroughly dry and astringent",
+      "A compromised intestinal barrier allows undigested food and bacterial endotoxins into circulation, triggering inflammation"
+    ],
+    "correct": 3,
+    "explanation": "Loss of intestinal barrier integrity ('leaky gut') permits lipopolysaccharides (LPS) and antigens to enter portal circulation, driving low-grade systemic inflammation and immune reactivity.",
+    "level": "Sprout — Organ Systems & Tissue Energetics"
+  },
+  {
+    "num": 41,
+    "level_num": 2,
+    "module": "Module 14: Clinical Boundaries & Red Flags",
+    "lesson": "Lesson 1: Thunderclap Headache",
+    "herb": "Clinical Red Flags",
+    "badges": [
+      "[SAFETY]"
+    ],
+    "question": "A client complains of a sudden, blinding headache reaching maximum intensity within sixty seconds ('thunderclap'). What is your immediate action?",
+    "options": [
+      "Immediately direct them to emergency medical care to rule out a subarachnoid hemorrhage",
+      "Administer high doses of Valerian and Chamomile tincture to relax cerebral vascular spasm",
+      "Prepare a hot foot bath and strong Ginger tea to draw congested blood away from the head",
+      "Perform gentle acupressure along the occipital ridge and advise resting in a dark room"
+    ],
+    "correct": 0,
+    "explanation": "A thunderclap headache is a medical emergency suggestive of subarachnoid hemorrhage or cerebrovascular accident; it requires immediate emergency department evaluation.",
+    "level": "Sprout — Organ Systems & Tissue Energetics"
+  },
+  {
+    "num": 42,
+    "level_num": 2,
+    "module": "Module 14: Clinical Boundaries & Red Flags",
+    "lesson": "Lesson 2: Chest Pressure & Pain",
+    "herb": "Clinical Red Flags",
+    "badges": [
+      "[SAFETY]"
+    ],
+    "question": "A client mentions feeling heavy crushing chest pressure radiating into their left jaw and arm. What is your legal and ethical response?",
+    "options": [
+      "Give them Hawthorn berry extract and motherwort tincture to nourish coronary circulation",
+      "Call emergency medical services immediately, as this pattern strongly suggests acute myocardial infarction",
+      "Brew a warm cup of Peppermint tea to relieve trapped gas pressing upward on the diaphragm",
+      "Advise them to perform deep rhythmic diaphragmatic breathing for twenty minutes before evaluating"
+    ],
+    "correct": 1,
+    "explanation": "Crushing retrosternal chest pain radiating to the jaw or arm is a classic presentation of acute coronary syndrome. An herbalist must immediately activate emergency services.",
+    "level": "Sprout — Organ Systems & Tissue Energetics"
+  },
+  {
+    "num": 43,
+    "level_num": 2,
+    "module": "Module 14: Clinical Boundaries & Red Flags",
+    "lesson": "Lesson 3: Unexplained Weight Loss",
+    "herb": "Clinical Red Flags",
+    "badges": [
+      "[SAFETY]"
+    ],
+    "question": "A client experiences significant unintentional weight loss accompanied by chronic night sweats. How should an herbalist proceed?",
+    "options": [
+      "Recommend high-calorie nutritive herbal broths and Ashwagandha to build body mass index",
+      "Immediate emergency administration of high-dose activated charcoal followed by rapid gastric lavage in clinical triage",
+      "Refer them promptly to a primary care physician to investigate underlying red-flag pathologies",
+      "Recommend an intensive three-week digestive cleanse to purge stagnant lymphatic toxins"
+    ],
+    "correct": 2,
+    "explanation": "Unexplained weight loss with drenching night sweats represents 'B-symptoms' that require medical diagnostic evaluation to rule out malignancy, occult infections, or serious endocrine disorders.",
+    "level": "Sprout — Organ Systems & Tissue Energetics"
+  },
+  {
+    "num": 44,
+    "level_num": 3,
+    "module": "Module 1: Endocrine Harmony — Vitex & Sage",
+    "lesson": "Lesson 1: Vitex (Vitex agnus-castus)",
+    "herb": "Vitex",
+    "badges": [
+      "[HUMAN EVIDENCE]"
+    ],
+    "question": "Chaste Tree berry (Vitex) contains no human hormones. How does it help balance the menstrual cycle?",
+    "options": [
+      "It floods the body with phytoestrogens that directly bind to ovarian follicular estrogen receptors",
+      "Competitive antagonism of cardiac beta-1 adrenergic receptors, reducing myocardial oxygen consumption during exertion",
+      "It strongly suppresses luteinizing hormone release, inhibiting spontaneous ovarian follicle development",
+      "It acts on dopamine receptors in the pituitary gland, moderating prolactin and supporting luteal progesterone"
+    ],
+    "correct": 3,
+    "explanation": "Vitex binds dopaminergic D2 receptors in the anterior pituitary, curbing elevated prolactin and supporting luteal phase progesterone balance (Schellenberg et al. 2001 BMJ, PMID: 11159569; EMA/HMPC/605929/2021).",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 45,
+    "level_num": 3,
+    "module": "Module 1: Endocrine Harmony — Vitex & Sage",
+    "lesson": "Lesson 1: Vitex (Vitex agnus-castus)",
+    "herb": "Vitex",
+    "badges": [
+      "[TRADITIONAL]",
+      "[MECHANISTIC]"
+    ],
+    "question": "Why do clinical herbalists advise taking Vitex consistently for three full cycles before evaluating its effects?",
+    "options": [
+      "It works gradually on pituitary signaling and ovarian follicle maturation across recurring cycles",
+      "Direct modulation of endometrial steroid receptors to prevent proliferation during the mid-luteal phase",
+      "Short-term use causes an immediate surge in estrogen that temporarily worsens PMS",
+      "Ovarian receptor sites cannot bind herbal bioactives until several menstrual cycles pass"
+    ],
+    "correct": 0,
+    "explanation": "Vitex gently shifts the hypothalamic-pituitary-ovarian (HPO) axis; follicular recruitment and hormone balance require 3 to 6 cycles to show steady shifts.",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 46,
+    "level_num": 3,
+    "module": "Module 1: Endocrine Harmony — Vitex & Sage",
+    "lesson": "Lesson 2: Sage (Salvia officinalis)",
+    "herb": "Sage",
+    "badges": [
+      "[TRADITIONAL]",
+      "[HUMAN EVIDENCE]"
+    ],
+    "question": "In European folk medicine, cool Sage tea is the classic kitchen ally for menopausal women. What does it help calm?",
+    "options": [
+      "Elevated thyroid stimulating hormone by suppressing anterior pituitary glandular secretions",
+      "Vasomotor hot flushes and profuse nighttime sweats through astringent, drying properties",
+      "Acute joint stiffness and cartilage inflammation following intense morning physical exertion",
+      "Pelvic congestion and heavy menstrual cramping occurring during irregular perimenopausal cycles"
+    ],
+    "correct": 1,
+    "explanation": "Sage (Salvia officinalis) has long traditional use for reducing menopausal vasomotor hot flashes and night sweats, supported by one small open clinical trial (Bommer et al. 2011, PMID: 21630133; EMA/HMPC/150800/2015).",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 47,
+    "level_num": 3,
+    "module": "Module 2: Menstrual Literacy & Cyclical Terrain",
+    "lesson": "Lesson 1: PCOS Foundations",
+    "herb": "Reproductive Health",
+    "badges": [
+      "[HUMAN EVIDENCE]"
+    ],
+    "question": "Instead of following trendy internet wellness claims, what diagnostic benchmark is clinically used to recognize PCOS?",
+    "options": [
+      "Testing positive for single-gene enzymatic mutations that halt normal ovarian estrogen production",
+      "Documenting elevated morning salivary cortisol alongside mild postprandial blood glucose dips",
+      "Meeting at least two of: irregular ovulation, elevated androgens, or polycystic ovarian morphology",
+      "Experiencing severe cyclic pelvic cramping accompanied by heavy gastrointestinal discomfort during menses"
+    ],
+    "correct": 2,
+    "explanation": "The validated Rotterdam consensus requires at least two of three features: oligo/anovulation, clinical or biochemical hyperandrogenism, and polycystic ovarian morphology on ultrasound (Rotterdam Consensus 2004, PMID: 14704271).",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 48,
+    "level_num": 3,
+    "module": "Module 2: Menstrual Literacy & Cyclical Terrain",
+    "lesson": "Lesson 2: Dysmenorrhea & Spasm",
+    "herb": "Cramp Bark",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "Why is Cramp Bark (*Viburnum opulus*) celebrated for acute spasmodic menstrual cramps?",
+    "options": [
+      "It contains active estrogenic hormones that immediately induce artificial uterine shedding",
+      "It acts as a strong central narcotic that blocks all pelvic sensory transmissions",
+      "It thins systemic blood rapidly to force immediate menstrual flow discharge",
+      "It relaxes uterine smooth muscle spasms without interfering with hormonal cycle signaling"
+    ],
+    "correct": 3,
+    "explanation": "Cramp Bark contains viopudial and other antispasmodic principles that relax smooth muscle tone in the uterus, easing acute dysmenorrhea.",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 49,
+    "level_num": 3,
+    "module": "Module 2: Menstrual Literacy & Cyclical Terrain",
+    "lesson": "Lesson 3: Reading Menstrual Fluid",
+    "herb": "Reproductive Health",
+    "badges": [
+      "[MECHANISTIC]"
+    ],
+    "question": "A client worries that dark brown blood on the first day of her period means 'toxic liver stagnation'. What is the real explanation?",
+    "options": [
+      "Slow-moving uterine blood oxidizes upon exposure to oxygen, turning normal red hemoglobin dark brown",
+      "Dark blood indicates that the liver has accumulated heavy environmental toxins over months",
+      "Brown blood indicates severe systemic progesterone deficiency that requires emergency hormone therapy",
+      "The uterine lining has become infected with anaerobic bacteria that darken pelvic fluids"
+    ],
+    "correct": 0,
+    "explanation": "When menstrual flow is light or slow-moving, hemoglobin oxidizes in the presence of air and normal vaginal pH, turning dark brown—a normal physiological occurrence.",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 50,
+    "level_num": 3,
+    "module": "Module 3: Respiratory Allies — Elderberry & Thyme",
+    "lesson": "Lesson 1: Elderberry (Sambucus nigra)",
+    "herb": "Elderberry",
+    "badges": [
+      "[TRADITIONAL]",
+      "[HUMAN EVIDENCE]"
+    ],
+    "question": "When is taking dark Elderberry syrup or tea most effective during cold and flu season?",
+    "options": [
+      "Two weeks after symptoms resolve to replenish mucosal antioxidant and mineral reserves",
+      "Taken early, at the very first symptoms and tickle in the throat",
+      "During mid-summer months to pre-emptively build winter respiratory immune memory",
+      "Only when an acute fever has already persisted for seven consecutive days"
+    ],
+    "correct": 1,
+    "explanation": "Meta-analyses of randomized trials show black elderberry (Sambucus nigra) taken early at the first symptoms reduces upper respiratory illness duration (Hawkins et al. 2019, PMID: 30670267; EMA/HMPC/440182/2012).",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 51,
+    "level_num": 3,
+    "module": "Module 3: Respiratory Allies — Elderberry & Thyme",
+    "lesson": "Lesson 2: Cough Mechanics",
+    "herb": "Respiratory Theory",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "Why do herbalists choose different herbs for a dry, irritable cough versus a wet, productive chest rattle?",
+    "options": [
+      "All respiratory coughs should receive identical drying astringents regardless of mucosal moisture",
+      "Dry coughs indicate bacterial pneumonia, while productive coughs are caused solely by viral allergies",
+      "Dry coughs call for soothing demulcents, while wet coughs require stimulating expectorants",
+      "Herbalists only treat dry coughs; wet productive coughs must always be suppressed with pharmaceuticals"
+    ],
+    "correct": 2,
+    "explanation": "Matching energetic tissue states is essential: dry irritable coughs require moistening demulcents (Marshmallow), while wet stagnant coughs require stimulating expectorants (Thyme, Elecampane).",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 52,
+    "level_num": 3,
+    "module": "Module 3: Respiratory Allies — Elderberry & Thyme",
+    "lesson": "Lesson 3: Thyme (Thymus vulgaris)",
+    "herb": "Thyme",
+    "badges": [
+      "[TRADITIONAL]",
+      "[MECHANISTIC]"
+    ],
+    "question": "Why is Garden Thyme a legendary kitchen ally for stubborn chest spasms and barking coughs?",
+    "options": [
+      "It stimulates dense mucosal secretions that coat airway linings to trap bacteria",
+      "Systemic suppression of circulating pro-inflammatory cytokines through reversible inhibition of nuclear factor kappa B",
+      "It radiates external thermal energy, warming thoracic tissues through surface skin contact",
+      "Its volatile thymol oil relaxes bronchial smooth muscle while offering direct antimicrobial action"
+    ],
+    "correct": 3,
+    "explanation": "Thyme (Thymus vulgaris) contains volatile phenols (thymol, carvacrol) that relax bronchial spasms and exert direct antiseptic action when exhaled through respiratory mucosa (EMA/HMPC/342714/2013).",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 53,
+    "level_num": 3,
+    "module": "Module 4: Deep Lung Clearing — Elecampane",
+    "lesson": "Lesson 1: Inula helenium",
+    "herb": "Elecampane",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "What kind of respiratory condition calls specifically for the warming, pungent root of Elecampane (*Inula helenium*)?",
+    "options": [
+      "Deep, cold, stagnant lung conditions with heavy stubborn mucus that is difficult to expectorate",
+      "Binding of microbial cell wall proteins to prevent adherence and subsequent colonization of mucosal epithelium",
+      "Acute nosebleeds caused by dry indoor heated winter air and delicate nasal capillaries",
+      "Chronic seasonal sneezing accompanied by clear watery eye discharge and pale nasal mucosa"
+    ],
+    "correct": 0,
+    "explanation": "Elecampane is a classic warming, stimulating expectorant and bitter root specific for cold, damp, boggy pulmonary conditions where heavy mucus needs thinning and expulsion.",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 54,
+    "level_num": 3,
+    "module": "Module 5: Immune Engagement — Echinacea",
+    "lesson": "Lesson 1: Alkylamide Chemistry",
+    "herb": "Echinacea",
+    "badges": [
+      "[TRADITIONAL]",
+      "[MECHANISTIC]"
+    ],
+    "question": "Good fresh Echinacea tincture leaves an electric buzzing, tingling sensation on the tongue. What does this sensation indicate?",
+    "options": [
+      "It indicates harmful solvent residues that failed to evaporate during tincture preparation",
+      "It is a sign of bioactive alkylamide content, indicating potent root extraction",
+      "It indicates high microbial counts that irritate oral nerve endings on contact",
+      "It signals that root tannins have begun precipitating out of the hydroethanolic solution"
+    ],
+    "correct": 1,
+    "explanation": "The tingling, numbing sensation (isobutylamides) on the tongue is a classic organoleptic sign of alkylamide content, which stimulates local sensory nerve fibers and immune receptors.",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 55,
+    "level_num": 3,
+    "module": "Module 5: Immune Engagement — Echinacea",
+    "lesson": "Lesson 2: Autoimmune Nuance",
+    "herb": "Echinacea",
+    "badges": [
+      "[TRADITIONAL]",
+      "[SAFETY]"
+    ],
+    "question": "Why do responsible herbalists use caution with immune stimulants like Echinacea in people with autoimmune disorders?",
+    "options": [
+      "Echinacea binds to prescription pharmaceutical medications, preventing their absorption in the gut",
+      "Autoimmune patients lack mucosal brush-border enzymes required to digest complex plant polysaccharides",
+      "Stimulating innate immune pathways could theoretically provoke or worsen an active inflammatory flare",
+      "Echinacea suppresses circulating antibody production, leaving clients vulnerable to opportunistic secondary infections"
+    ],
+    "correct": 2,
+    "explanation": "In autoimmune conditions, immune tolerance to self-antigens is compromised; stimulating phagocytosis or pro-inflammatory cytokine cascades could theoretically aggravate tissue flares.",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 56,
+    "level_num": 3,
+    "module": "Module 6: Topical Healing & Safety — Comfrey & Calendula",
+    "lesson": "Lesson 1: Comfrey (Symphytum officinale)",
+    "herb": "Comfrey",
+    "badges": [
+      "[SAFETY]"
+    ],
+    "question": "Why is oral consumption of Comfrey root and leaf strictly discouraged or restricted in modern clinical practice?",
+    "options": [
+      "It contains toxic cyanogenic glycosides that block oxygen delivery to the heart",
+      "Accelerating renal clearance of circulating antibodies through upregulation of glomerular filtration rates",
+      "It induces nausea and gastric ulcerations following concentrated ingestion",
+      "It contains unsaturated pyrrolizidine alkaloids (PAs) that can cause hepatic veno-occlusive disease"
+    ],
+    "correct": 3,
+    "explanation": "Comfrey contains unsaturated pyrrolizidine alkaloids (PAs) that are converted by liver cytochrome enzymes into toxic pyrroles, risking hepatic veno-occlusive disease.",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 57,
+    "level_num": 3,
+    "module": "Module 6: Topical Healing & Safety — Comfrey & Calendula",
+    "lesson": "Lesson 2: Calendula (Calendula officinalis)",
+    "herb": "Calendula",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "Why is Calendula flower the universal choice for slow-healing cuts, scrapes, and sensitive skin irritations?",
+    "options": [
+      "It combines gentle antimicrobial resin, wound-healing vulnerary action, and lymphatic stimulation",
+      "Directly stabilizing mast cell membranes to prevent the degranulation and release of stored histamine granules",
+      "It numbs the skin deeply like a local anesthetic, muting pain sensation",
+      "It bleaches the skin to prevent any melanin pigmentation from forming over scars"
+    ],
+    "correct": 0,
+    "explanation": "Calendula is a premier vulnerary and lymphatic ally; its triterpenoids and flavonoids soothe inflammation, stimulate granulation tissue, and promote gentle wound closure.",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 58,
+    "level_num": 3,
+    "module": "Module 7: Vascular Tone — Yarrow & Hawthorn",
+    "lesson": "Lesson 1: Yarrow (Achillea millefolium)",
+    "herb": "Yarrow",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "Herbalists call Yarrow an 'amphoteric' vascular ally. What does this special word mean in practice?",
+    "options": [
+      "It acts only on individuals presenting both hot and cold constitutional symptoms simultaneously in clinical intake",
+      "It can staunch capillary bleeding, yet promote pelvic circulation to resolve stagnation",
+      "It can be extracted into water but decomposes if macerated in alcohol",
+      "It shifts from an astringent toner to a demulcent depending on dose"
+    ],
+    "correct": 1,
+    "explanation": "Amphoteric botanicals harmonize opposing states: Yarrow's astringent tannins halt active minor bleeding, while its bitter aromatics stimulate stagnant vascular and pelvic circulation.",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 59,
+    "level_num": 3,
+    "module": "Module 7: Vascular Tone — Yarrow & Hawthorn",
+    "lesson": "Lesson 2: Hawthorn (Crataegus)",
+    "herb": "Hawthorn",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "In folk traditions, why is Hawthorn considered a dual physical and emotional medicine for the heart?",
+    "options": [
+      "It replaces prescription beta-blockers entirely within two days of taking daily tea",
+      "It slows resting heart rate to fifty beats per minute to preserve heart muscle",
+      "It physically tones the myocardium and coronary vessels while providing gentle emotional comfort for grief",
+      "It acts as an aggressive stimulant that forces the heart to beat with double force"
+    ],
+    "correct": 2,
+    "explanation": "Hawthorn physically nourishes myocardial tissue and modulates peripheral resistance, while holding an ancient reputation as a soothing balm for heartbreak and emotional grief.",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 60,
+    "level_num": 3,
+    "module": "Module 7: Vascular Tone — Yarrow & Hawthorn",
+    "lesson": "Lesson 2: Hawthorn (Crataegus)",
+    "herb": "Hawthorn",
+    "badges": [
+      "[TRADITIONAL]",
+      "[HUMAN EVIDENCE]"
+    ],
+    "question": "Unlike emergency cardiovascular pharmaceuticals, how do Hawthorn berries and flowers support heart vitality?",
+    "options": [
+      "They fix cardiac contractility to a rigid sixty beats per minute limit",
+      "They rapidly dissolve calcified arterial plaques and vascular deposits over several consecutive days of intensive herbal dosing",
+      "They act as simple carminatives, exerting negligible physiological influence on vascular tissues",
+      "They act as gentle trophorestoratives, improving coronary perfusion and myocardial tone over months"
+    ],
+    "correct": 3,
+    "explanation": "Hawthorn (Crataegus) flavonoids and procyanidins improve coronary perfusion and myocardial work efficiency over sustained administration (Pittler et al. 2008 Cochrane Review, PMID: 18254076; EMA/HMPC/159075/2014).",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 61,
+    "level_num": 3,
+    "module": "Module 8: Alkaloid Power — Berberine",
+    "lesson": "Lesson 1: Safety & Interactions",
+    "herb": "Barberry / Goldenseal (berberine)",
+    "badges": [
+      "[MECHANISTIC]",
+      "[SAFETY]"
+    ],
+    "question": "Berberine (the bright yellow alkaloid in Barberry and Goldenseal) supports metabolic health. What safety check comes first?",
+    "options": [
+      "Screen prescription medications, as berberine inhibits liver cytochrome enzymes and raises levels",
+      "Check fluid intake, as berberine triggers rapid fluid excretion through renal tubules",
+      "Evaluate thyroid function, as berberine competes directly with dietary iodine for uptake",
+      "Avoid citrus foods, as gastric acid converts berberine into irritating resinous compounds"
+    ],
+    "correct": 0,
+    "explanation": "Berberine inhibits hepatic enzymes including CYP3A4, CYP2D6, and CYP2C9, reducing the clearance of many prescription drugs and raising their blood concentrations.",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 62,
+    "level_num": 3,
+    "module": "Module 9: Hepatic Support — Milk Thistle",
+    "lesson": "Lesson 1: Silymarin Mechanisms",
+    "herb": "Milk Thistle",
+    "badges": [
+      "[MECHANISTIC]",
+      "[HUMAN EVIDENCE]"
+    ],
+    "question": "Milk Thistle (*Silybum marianum*) is celebrated for liver health. How does its active complex, silymarin, actually help?",
+    "options": [
+      "It provokes rapid biliary contractions, expelling stored gallbladder bile in heavy surges",
+      "It stabilizes hepatocyte cell membranes against toxins and stimulates ribosomal protein synthesis",
+      "It breaks down circulating ethanol into simple sugars before reaching cerebral receptors",
+      "It inhibits intestinal lipid uptake, blocking dietary fats from reaching hepatic circulation"
+    ],
+    "correct": 1,
+    "explanation": "Silymarin acts as an antioxidant, protects hepatocyte membranes against xenobiotics, and stimulates nucleolar polymerase A to enhance protein synthesis (Saller et al. 2001, PMID: 11720632; EMA/HMPC/264185/2018).",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 63,
+    "level_num": 3,
+    "module": "Module 9: Hepatic Support — Milk Thistle",
+    "lesson": "Lesson 2: The Myth of the Quick Detox",
+    "herb": "General Theory",
+    "badges": [
+      "[MECHANISTIC]"
+    ],
+    "question": "When commercial tea packages advertise a '3-day weekend detox', what does real human physiology say?",
+    "options": [
+      "Weekend juice cleanses eliminate stubborn environmental chemicals out of bodily fat stores",
+      "The liver only eliminates waste when digestive activity is quieted by fasting",
+      "Detoxification is a constant, ongoing physiological process handled by the liver, kidneys, and gut",
+      "Herbal teas must produce watery diarrhea to prove that metabolic toxins are leaving"
+    ],
+    "correct": 2,
+    "explanation": "Detoxification is a constant, ongoing physiological process handled by the liver, kidneys, skin, and GI tract. Herbs nourish and support these organs rather than 'flushing toxins'.",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 64,
+    "level_num": 3,
+    "module": "Module 10: Special Populations — Pregnancy",
+    "lesson": "Lesson 1: Safety & Contraindications",
+    "herb": "Pregnancy Safety",
+    "badges": [
+      "[SAFETY]"
+    ],
+    "question": "Why are emmenagogue herbs (like Pennyroyal, Mugwort, and Tansy) strictly avoided during pregnancy?",
+    "options": [
+      "They turn amniotic fluid bitter, causing sensory aversion in developing fetal tissues",
+      "They bind all maternal iron, leading to sudden acute anemia within twenty-four hours",
+      "They inhibit maternal milk duct development before the third trimester begins",
+      "They promote pelvic blood flow and uterine contractions that can trigger miscarriage"
+    ],
+    "correct": 3,
+    "explanation": "Emmenagogues stimulate pelvic blood circulation and uterine smooth muscle contractions; in pregnancy, this carries severe risks of abortifacient action or teratogenicity.",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 65,
+    "level_num": 3,
+    "module": "Module 10: Special Populations — Pediatrics",
+    "lesson": "Lesson 1: Gentle Allies & Dosing",
+    "herb": "Pediatric Safety",
+    "badges": [
+      "[SAFETY]"
+    ],
+    "question": "When dosing gentle herbs (like Chamomile or Catnip) for infants and young children, what is the safest clinical practice?",
+    "options": [
+      "Doses are calculated based on body weight or age using validated pediatric rules",
+      "Adult doses should simply be doubled because children have faster metabolic enzyme clearance",
+      "Children should never receive any herbs under any circumstance until age eighteen",
+      "Tinctures must be administered undiluted directly under the tongue for rapid absorption"
+    ],
+    "correct": 0,
+    "explanation": "Pediatric dosing requires conservative, weight-based or age-based scaling (such as Clark's or Young's rule) and reliance on gentle, well-tested botanicals.",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 66,
+    "level_num": 3,
+    "module": "Module 10: Special Populations — Geriatrics",
+    "lesson": "Lesson 1: Pharmacokinetics in Frailty",
+    "herb": "Geriatric Pharmacokinetics",
+    "badges": [
+      "[SAFETY]"
+    ],
+    "question": "Why is 'start low and go slow' the golden rule when introducing herbal formulas to elderly clients?",
+    "options": [
+      "Aging stomachs cease gastric acid output, preventing herbs from dissolving in digestion",
+      "Age-related declines in kidney filtration and liver clearance allow bioactives to accumulate",
+      "Older adults require larger doses because circulating serum proteins rapidly bind bioactives",
+      "Cellular receptors lose functional sensitivity with age, requiring higher doses for response"
+    ],
+    "correct": 1,
+    "explanation": "Reductions in glomerular filtration rate (GFR), hepatic blood flow, and cytochrome enzyme activity, coupled with prescription polypharmacy, mean older adults clear botanicals slower and risk adverse accumulation.",
+    "level": "Flower — Formulation Science & Extraction Craft"
+  },
+  {
+    "num": 67,
+    "level_num": 4,
+    "module": "Module 1: Clinical Foundations & Intake",
+    "lesson": "Lesson 1: Scope of Practice",
+    "herb": "Clinical Scope",
+    "badges": [
+      "[SAFETY]"
+    ],
+    "question": "What is the crucial legal and ethical difference between a medical diagnosis and an herbal energetic assessment?",
+    "options": [
+      "Herbalists diagnose physical diseases, while physicians only look at psychological emotional symptoms",
+      "There is no legal difference; licensed herbalists possess identical diagnostic authorities as medical doctors",
+      "Physicians diagnose pathological disease entities, while herbalists assess constitutional patterns and tissue vitality",
+      "Herbalists diagnose acute emergencies, while medical doctors focus entirely on long-term lifestyle hygiene"
+    ],
+    "correct": 2,
+    "explanation": "Herbalists do not diagnose disease or prescribe drugs; they assess energetic tissue states (heat, cold, damp, dry) and recommend lifestyle and botanical nourishment to support the body's self-healing capacity.",
+    "level": "Fruit — Clinical Epistemology & Chronic Care"
+  },
+  {
+    "num": 68,
+    "level_num": 4,
+    "module": "Module 1: Clinical Foundations & Intake",
+    "lesson": "Lesson 2: Somatic Resonance",
+    "herb": "Somatic Principles",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "In traditional clinical herbalism, what is the clinical purpose of administering a single sensory drop of a tincture on the tongue before giving a full therapeutic dose?",
+    "options": [
+      "To saturate hepatic cytochrome P450 enzymes before administering a therapeutic, full-strength botanical formulation",
+      "To test whether volatile plant aromatics irritate exposed dermal tissue on contact",
+      "To stimulate rapid stomach acid secretion before introducing fat-soluble herbal compounds",
+      "To evaluate the client's immediate sensory perception, pulse changes, and tissue resonance"
+    ],
+    "correct": 3,
+    "explanation": "In traditional clinical herbalism, a sensory micro-drop on the tongue assesses immediate organoleptic and autonomic responses (warming, chilling, tension, or aversion) before systemic administration.",
+    "level": "Fruit — Clinical Epistemology & Chronic Care"
+  },
+  {
+    "num": 69,
+    "level_num": 4,
+    "module": "Module 2: The Emotional Nervous System",
+    "lesson": "Lesson 1: Motherwort (Leonurus cardiaca)",
+    "herb": "Motherwort",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "Why is Motherwort (*Leonurus cardiaca*) considered the premier ally for emotional anxiety that manifests physically in the chest?",
+    "options": [
+      "It directly calms heart palpitations and nervous chest tightness triggered by emotional overwhelm",
+      "It knocks the client out into a deep coma-like state so they forget emotional stress",
+      "It raises systemic blood pressure dramatically to shock the autonomic nervous system out of an acute panic episode",
+      "It dissolves atherosclerotic plaques in coronary arteries within twenty-four hours of ingestion"
+    ],
+    "correct": 0,
+    "explanation": "Motherwort ('lion hearted') combines bitter alkaloids (leonurine) and iridoids that ease sympathetic cardiac hyper-excitability, grounding hysterical or grief-induced heart palpitations.",
+    "level": "Fruit — Clinical Epistemology & Chronic Care"
+  },
+  {
+    "num": 70,
+    "level_num": 4,
+    "module": "Module 3: Mood & Pharmacognosy",
+    "lesson": "Lesson 1: Hypericum Evidence",
+    "herb": "St. John's Wort",
+    "badges": [
+      "[HUMAN EVIDENCE]",
+      "[SAFETY]"
+    ],
+    "question": "What do comprehensive Cochrane systematic reviews conclude regarding standardized St. John's Wort for mild-to-moderate depression?",
+    "options": [
+      "Blinded trials show it acts only as an inert psychological calming placebo",
+      "It demonstrates efficacy comparable to standard antidepressants, with significant drug-interaction risks",
+      "It resolves severe depressive episodes within several days of starting high-dose therapy",
+      "It reduces physical restlessness without exerting measurable effects on emotional mood scales"
+    ],
+    "correct": 1,
+    "explanation": "Cochrane systematic reviews confirm standardized Hypericum perforatum extracts perform comparably to SSRIs in mild-to-moderate depression with fewer side effects, but potent CYP3A4/P-glycoprotein induction creates major drug interaction risks (Linde et al. 2008 Cochrane Review, PMID: 18848662; EMA/HMPC/111305/2017).",
+    "level": "Fruit — Clinical Epistemology & Chronic Care"
+  },
+  {
+    "num": 71,
+    "level_num": 4,
+    "module": "Module 3: Mood & Pharmacognosy",
+    "lesson": "Lesson 2: Neuroinflammation",
+    "herb": "Neuroinflammation & Mood",
+    "badges": [
+      "[MECHANISTIC]"
+    ],
+    "question": "How does contemporary biopsychosocial neurobiology view the connection between chronic bodily inflammation and low mood?",
+    "options": [
+      "Peripheral inflammatory cytokines remain strictly confined to joint capsules, never influencing central cerebral tissue pathways",
+      "Peripheral inflammation raises endorphins, temporarily shielding the brain from depressive mood symptoms",
+      "Inflammatory cytokines cross into brain tissue, activating microglia and altering neurotransmitter pathways",
+      "Depression stems solely from cognitive thought patterns, remaining independent of immune activity"
+    ],
+    "correct": 2,
+    "explanation": "Circulating inflammatory cytokines cross or signal across the blood-brain barrier, activating microglial cells, shunting tryptophan toward the kynurenine pathway, and reducing neuroplasticity.",
+    "level": "Fruit — Clinical Epistemology & Chronic Care"
+  },
+  {
+    "num": 72,
+    "level_num": 4,
+    "module": "Module 4: Constitutional Energetics",
+    "lesson": "Lesson 1: Heat & Excitation",
+    "herb": "Energetic Matching",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "A client presents with a bright red tongue with prickles, loud rapid speech, and a hot, excitable pulse. What herbal strategy is indicated?",
+    "options": [
+      "Warming stimulants like Cayenne, dried Ginger, and raw Garlic to drive heat out faster",
+      "Heavy drying astringents like Oak bark to tighten all mucous membranes immediately",
+      "Heavy heating adaptogens like red Korean Ginseng to maximize metabolic output",
+      "Cooling, relaxing, and bitter nervines like Chamomile, Lemon Balm, or Skullcap to clear irritation"
+    ],
+    "correct": 3,
+    "explanation": "Constitutional matching requires opposing energetics: an excited, hot tissue state needs cooling, relaxing, and bitter principles rather than heating or drying stimulants.",
+    "level": "Fruit — Clinical Epistemology & Chronic Care"
+  },
+  {
+    "num": 73,
+    "level_num": 4,
+    "module": "Module 5: Global Lineages — Ayurveda",
+    "lesson": "Lesson 1: The Three Doshas",
+    "herb": "Ayurvedic Theory",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "In classical Ayurvedic medicine, what do the three Doshas (Vata, Pitta, and Kapha) fundamentally describe?",
+    "options": [
+      "Dynamic physiological principles governing kinetic movement, metabolic transformation, and physical tissue structure",
+      "Inherent genetic blood categories that determine digestive enzyme capacities from early infancy",
+      "Toxic metabolic wastes that accumulate in the liver and require seasonal cleansing",
+      "Static psychological personality types that remain unalterable across a human lifetime"
+    ],
+    "correct": 0,
+    "explanation": "In Ayurveda, the Tridoshas represent dynamic functional principles: Vata (kinetic energy/air), Pitta (metabolic transformation/fire), and Kapha (structural stability/water and earth).",
+    "level": "Fruit — Clinical Epistemology & Chronic Care"
+  },
+  {
+    "num": 74,
+    "level_num": 4,
+    "module": "Module 6: Advanced Immunology",
+    "lesson": "Lesson 1: The Autoimmune Matrix",
+    "herb": "Immunology",
+    "badges": [
+      "[HUMAN EVIDENCE]"
+    ],
+    "question": "Moving beyond simplistic wellness claims, how does modern immunology explain the development of autoimmune conditions?",
+    "options": [
+      "The immune system simply gets 'lazy' and requires heavy daily doses of synthetic multivitamins",
+      "Autoimmunity develops from a triad of genetic susceptibility, mucosal barrier permeability, and environmental triggers",
+      "Autoimmunity is caused entirely by an acute deficiency of dietary carbohydrates in childhood",
+      "The immune system suppresses its circulating white blood cells, leaving organs undefended"
+    ],
+    "correct": 1,
+    "explanation": "Autoimmune etiology involves genetic susceptibility, loss of intestinal mucosal barrier integrity, and environmental antigenic triggers that impair self-tolerance (Fasano 2012, PMID: 22109896).",
+    "level": "Fruit — Clinical Epistemology & Chronic Care"
+  },
+  {
+    "num": 75,
+    "level_num": 4,
+    "module": "Module 6: Advanced Immunology",
+    "lesson": "Lesson 2: Reishi (Ganoderma lucidum)",
+    "herb": "Reishi & Fungal Immunology",
+    "badges": [
+      "[MECHANISTIC]"
+    ],
+    "question": "How do fungal beta-glucans from medicinal mushrooms (like Reishi) communicate with the human immune system?",
+    "options": [
+      "They enter circulating erythrocytes, increasing their oxygen carrying capacity during cellular stress",
+      "They act as fast-acting immunosuppressants, halting white blood cell production within hours",
+      "They bind pattern-recognition receptors on intestinal immune cells, priming systemic surveillance",
+      "They pass through the bowel unabsorbed, serving strictly as bulk stool fiber"
+    ],
+    "correct": 2,
+    "explanation": "Fungal beta-(1,3)-(1,6)-D-glucans bind to pattern-recognition receptors (such as Dectin-1 and TLR-2/4) on gut-associated lymphoid tissue (GALT), training and modulating innate immune responses.",
+    "level": "Fruit — Clinical Epistemology & Chronic Care"
+  },
+  {
+    "num": 76,
+    "level_num": 4,
+    "module": "Module 7: Bioavailability Science — Turmeric",
+    "lesson": "Lesson 1: Formulation Chemistry",
+    "herb": "Turmeric Formulation Science",
+    "badges": [
+      "[TRADITIONAL]",
+      "[MECHANISTIC]"
+    ],
+    "question": "Raw turmeric powder absorbs poorly in the gut. What traditional kitchen combination dramatically enhances its bio-uptake?",
+    "options": [
+      "Simmering the root powder in acidic citrus juice until all pigmentation disappears",
+      "Drinking it stirred into cold effervescent mineral water on an empty stomach",
+      "Pairing it with astringent high-tannin teas to bind curcumin molecules during digestion",
+      "Formulating it with dietary fats (like ghee) and black pepper or lecithin"
+    ],
+    "correct": 3,
+    "explanation": "Curcumin is lipophilic and rapidly metabolized by intestinal glucuronidation; pairing it with lipids and piperine (from black pepper) slows hepatic clearance and dramatically enhances absorption.",
+    "level": "Fruit — Clinical Epistemology & Chronic Care"
+  },
+  {
+    "num": 77,
+    "level_num": 4,
+    "module": "Module 8: Geriatric Physiology",
+    "lesson": "Lesson 1: The Aging Terrain",
+    "herb": "Geriatric Herbalism",
+    "badges": [
+      "[SAFETY]"
+    ],
+    "question": "Why must an herbalist check prescription drug lists with extreme vigilance when working with older adults?",
+    "options": [
+      "Polypharmacy combined with reduced kidney and liver clearance multiplies the risk of dangerous herb-drug interactions",
+      "Older adults have identical metabolic rates to young adults, so interactions are purely theoretical",
+      "Prescription drugs diminish the body's ability to taste bitter or sweet botanicals",
+      "Elderly clients should never take prescription pharmaceuticals if they have access to herbal teas"
+    ],
+    "correct": 0,
+    "explanation": "Aging decreases renal clearance and hepatic enzyme capacity; combining this with multiple daily prescription medications dramatically heightens the risk of competitive clearance or additive toxicities.",
+    "level": "Fruit — Clinical Epistemology & Chronic Care"
+  },
+  {
+    "num": 78,
+    "level_num": 4,
+    "module": "Module 9: Wildcrafting Ethics & Survival",
+    "lesson": "Lesson 1: 100% Verification",
+    "herb": "Field Safety",
+    "badges": [
+      "[SAFETY]",
+      "[ECOLOGY]"
+    ],
+    "question": "What is the non-negotiable core rule of ethical foraging for wild medicinal plants and mushrooms?",
+    "options": [
+      "Forage only in manicured public parks where professional groundskeeping prevents poisonous native flora from spreading",
+      "Never harvest or ingest any wild specimen without positive identification through botanical keys",
+      "Boil all wild foraged plants for thirty minutes to neutralize unknown phytochemicals",
+      "Assume plants consumed by grazing wildlife are uniformly safe for human use"
+    ],
+    "correct": 1,
+    "explanation": "Never consume any wild plant or fungus without 100% positive verification through reliable botanical keys and multiple diagnostic features; deadly lookalikes (like Water Hemlock or Amanitas) leave no room for error.",
+    "level": "Fruit — Clinical Epistemology & Chronic Care"
+  },
+  {
+    "num": 79,
+    "level_num": 4,
+    "module": "Module 9: Wildcrafting Ethics & Survival",
+    "lesson": "Lesson 2: Plant Conservation",
+    "herb": "Ecological Stewardship",
+    "badges": [
+      "[ECOLOGY]",
+      "[SAFETY]"
+    ],
+    "question": "When an old recipe calls for endangered, over-harvested wild Goldenseal, how does an ethical herbalist respond?",
+    "options": [
+      "Harvest small amounts from protected nature sanctuaries during unmonitored evening hours",
+      "Replace the botanical root with synthetic multivitamin tablets and mineral supplements instead",
+      "Substitute with abundant, sustainable berberine sources like cultivated Barberry or Oregon Grape",
+      "Dilute old tincture supplies with extra solvent to stretch the remaining medicine"
+    ],
+    "correct": 2,
+    "explanation": "Responsible herbalists protect threatened at-risk species like Goldenseal (Hydrastis canadensis) by substituting ecologically sustainable, cultivated, or locally weedy berberine allies like Oregon Grape (Mahonia) or Barberry (Berberis).",
+    "level": "Fruit — Clinical Epistemology & Chronic Care"
+  },
+  {
+    "num": 80,
+    "level_num": 5,
+    "module": "Module 1: Galenical Chemistry",
+    "lesson": "Lesson 1: Fresh vs Dried Matter",
+    "herb": "Galenicals",
+    "badges": [
+      "[MECHANISTIC]"
+    ],
+    "question": "When tincturing freshly harvested, succulent plant matter, why must the alcohol percentage of the menstruum be high (70–95%)?",
+    "options": [
+      "High alcohol is needed to scorch the outer leaf cuticles and dissolve fibrous cellulose walls",
+      "Fresh plants contain airborne microorganisms that require 95% ethanol to preserve effectively",
+      "High proof alcohol sweetens bitter alkaloids, making fresh tinctures taste pleasant on the palate",
+      "Fresh plant tissues are already filled with cellular water that naturally dilutes the finished alcohol concentration"
+    ],
+    "correct": 3,
+    "explanation": "Fresh plants contain 70–85% water. Using high-proof alcohol accounts for this water content, yielding a balanced final hydroethanolic menstruum (around 45–55% ABV) that preserves the extract.",
+    "level": "Expert — Master Lab & Nordic Stewardship"
+  },
+  {
+    "num": 81,
+    "level_num": 5,
+    "module": "Module 2: Salve Craft & Formulation Physics",
+    "lesson": "Lesson 1: Wax-to-Oil Ratios",
+    "herb": "Apothecary Craft",
+    "badges": [
+      "[TRADITIONAL]"
+    ],
+    "question": "What is the standard weight-to-volume ratio of pure beeswax to infused oil for a firm, shelf-stable herbal healing salve?",
+    "options": [
+      "Approximately 1:4 to 1:5 ratio (e.g. 1 ounce of beeswax to 4–5 ounces of oil)",
+      "Equal parts: 1 ounce of beeswax to 1 fluid ounce of infused oil",
+      "1:20 ratio (1 ounce of beeswax to 20 ounces of oil)",
+      "Beeswax is not used in herbal salves; only vegetable glycerin can solidify plant oils"
+    ],
+    "correct": 0,
+    "explanation": "A 1:4 or 1:5 ratio of beeswax to carrier oil yields an ideal salve consistency—firm at room temperature yet melting smoothly upon skin contact.",
+    "level": "Expert — Master Lab & Nordic Stewardship"
+  },
+  {
+    "num": 82,
+    "level_num": 5,
+    "module": "Module 3: Research Literacy & Evidence Evaluation",
+    "lesson": "Lesson 1: Clinical Trial Methodology",
+    "herb": "Research Literacy",
+    "badges": [
+      "[HUMAN EVIDENCE]"
+    ],
+    "question": "In herbal clinical research, what does a 'double-blind, placebo-controlled' design accomplish?",
+    "options": [
+      "It proves that botanical medicines work purely through psychological suggestion and patient belief",
+      "It prevents conscious and unconscious bias from both participants and administering researchers",
+      "It guarantees that every patient in the trial receives an identical high-dose pharmaceutical drug",
+      "It eliminates the need for statistical analysis because the data is visible to the naked eye"
+    ],
+    "correct": 1,
+    "explanation": "Double-blinding prevents conscious and unconscious observational bias from participants and evaluators, establishing robust causal evidence (Schulz et al. 2010 CONSORT Statement, PMID: 20332509).",
+    "level": "Expert — Master Lab & Nordic Stewardship"
+  },
+  {
+    "num": 83,
+    "level_num": 5,
+    "module": "Module 3: Research Literacy & Evidence Evaluation",
+    "lesson": "Lesson 2: Statistical vs Clinical Significance",
+    "herb": "Statistical Literacy",
+    "badges": [
+      "[HUMAN EVIDENCE]"
+    ],
+    "question": "A clinical study reports an herbal cream produced a 'statistically significant' (p < 0.05) pain reduction. Why must practitioners still examine the data?",
+    "options": [
+      "A p-value below 0.05 proves that the herbal preparation is clinically toxic to human subjects",
+      "Statistical significance indicates that the study was funded primarily by a commercial manufacturer",
+      "Statistical significance (p < 0.05) means the effect is real, but the clinical reduction may be too trivial to matter in life",
+      "A p-value means the research trial lacked a control group and must be automatically discarded"
+    ],
+    "correct": 2,
+    "explanation": "Statistical significance (p < 0.05) merely indicates an effect is unlikely due to random sampling variation; it does not measure clinical importance or meaningful symptom relief (Altman & Bland 1995 BMJ, PMID: 7640594).",
+    "level": "Expert — Master Lab & Nordic Stewardship"
+  },
+  {
+    "num": 84,
+    "level_num": 5,
+    "module": "Module 4: Botanical Safety & Forensic Identification",
+    "lesson": "Lesson 1: The Umbel Threat",
+    "herb": "Toxicology & Umbellifers",
+    "badges": [
+      "[SAFETY]",
+      "[ECOLOGY]"
+    ],
+    "question": "A foraging student spots a lush white umbel growing by a Swedish stream margin and assumes it is wild Angelica. Why is this assumption dangerously hazardous?",
+    "options": [
+      "Wetland stream margins alter botanical chemistry, turning edible wild Angelica leaves excessively bitter and astringent",
+      "Nordic wetland plants absorb heavy water minerals that alter active herbal flavonoids",
+      "Swedish foraging law imposes heavy criminal fines for touching any roadside white umbellifers",
+      "The deadly toxic water hemlock (*Cicuta virosa*, sprängört) shares wetland margins and similar umbels"
+    ],
+    "correct": 3,
+    "explanation": "Water hemlock (Cicuta virosa, sprängört) is Sweden's most dangerously toxic native plant, growing in wet ditches and stream margins; its cicutoxin causes rapid fatal convulsions and is easily mistaken for Angelica or Sweet Cicely.",
+    "level": "Expert — Master Lab & Nordic Stewardship"
+  },
+  {
+    "num": 85,
+    "level_num": 5,
+    "module": "Module 5: The Nordic Commons & Allemansrätten",
+    "lesson": "Lesson 1: Stand Regeneration",
+    "herb": "Nordic Stewardship",
+    "badges": [
+      "[ECOLOGY]"
+    ],
+    "question": "Under Swedish Allemansrätten and sustainable foraging ethics, what is the boundary regarding wild Chaga (*Inonotus obliquus*) conks?",
+    "options": [
+      "Harvesting tree-dwelling slow-growth conks wounds the living wood, requiring landowner permission",
+      "Chaga conks may be freely chopped from any living birch tree on public or private land without permission",
+      "Chaga is a protected endangered fungus; touching a wild conk carries immediate criminal prosecution",
+      "Conks must be thoroughly removed from the tree to prevent fungal spread to other woods"
+    ],
+    "correct": 0,
+    "explanation": "While Allemansrätten permits foraging berries and mushrooms on the ground, hacking slow-growing fungal conks off living birch trees damages living wood and legally requires landowner permission.",
+    "level": "Expert — Master Lab & Nordic Stewardship"
+  },
+  {
+    "num": 86,
+    "level_num": 5,
+    "module": "Module 6: Jurisdiction, Law & Marketing",
+    "lesson": "Lesson 1: The Regulatory Boundary",
+    "herb": "Regulatory Compliance",
+    "badges": [
+      "[SAFETY]"
+    ],
+    "question": "Under Swedish (Läkemedelsverket) and EU law, what claim is strictly illegal when marketing an herbal tea or tincture?",
+    "options": [
+      "Describing traditional sensory tastes like bitter, aromatic, cooling, or astringent",
+      "Claiming that an unlicensed herbal product diagnoses, cures, treats, or prevents a medical disease",
+      "Listing the accurate Latin botanical binomial and plant part on the ingredient label",
+      "Stating that the herbs were sustainably gathered in accordance with organic agricultural practices"
+    ],
+    "correct": 1,
+    "explanation": "Under EU Directive 2004/24/EC and Swedish law, unlicensed botanical products cannot make medical claims to treat, diagnose, or prevent human diseases without medicinal marketing authorization.",
+    "level": "Expert — Master Lab & Nordic Stewardship"
+  },
+  {
+    "num": 87,
+    "level_num": 5,
+    "module": "Module 7: Professional Ethics & Client Autonomy",
+    "lesson": "Lesson 1: Informed Consent",
+    "herb": "Professional Ethics",
+    "badges": [
+      "[SAFETY]"
+    ],
+    "question": "What is the primary purpose of an informed consent and disclosure document in professional herbal practice?",
+    "options": [
+      "To guarantee that the client will experience a complete cure of their symptoms within thirty days",
+      "To legally prohibit the client from consulting primary care physicians or taking prescription drugs",
+      "To clearly define scope of practice, clarify non-diagnostic roles, and confirm client autonomy",
+      "To assign financial copyright of the client's medical history over to the herbal practitioner"
+    ],
+    "correct": 2,
+    "explanation": "An informed consent document protects both client and practitioner by establishing clear clinical boundaries: the herbalist is an educator and consultant supporting vitality, not a licensed medical prescriber.",
+    "level": "Expert — Master Lab & Nordic Stewardship"
+  }
+]

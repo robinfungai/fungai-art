@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="color-scheme" content="dark">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Magnum Opus — Laboratory Spagyrics — Fungai Art</title>
+  <meta name="description" content="Advanced percolation, oxymels, topical pharmacopoeia, suppositories, and the Paracelsian calcination of the Vegetable Stone."/>
+  <link rel="icon" type="image/png" sizes="256x256" href="/favicon.png?v=4"/>
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <style>
+    
+:root {
+  --bg-deep: #0E0C09;
+  --bg-card: rgba(26, 20, 14, 0.72);
+  --glass-border: rgba(232, 177, 75, 0.22);
+  --glass-highlight: rgba(245, 214, 137, 0.45);
+  --pill-btn-bg: #F5D689;
+  --pill-btn-hover: #FDE68A;
+  --pill-btn-text: #171105;
+  --accent: #E8B14B;
+  --accent-glow: rgba(232, 177, 75, 0.35);
+  --sage-muted: #D4A373;
+  --sage-light: #FEF3C7;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Satoshi', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+}
+body {
+  background: radial-gradient(circle 900px at 50% -120px, rgba(232, 177, 75, 0.18), transparent 70%),
+              radial-gradient(circle 700px at 90% 50%, rgba(217, 119, 6, 0.12), transparent 60%),
+              radial-gradient(circle 800px at 10% 85%, rgba(180, 83, 9, 0.1), transparent 65%),
+              linear-gradient(180deg, #120E0A 0%, #0D0A07 50%, #070503 100%);
+  background-attachment: fixed;
+  color: var(--sage-light); font-family: var(--font-sans); margin: 0; padding: 0; line-height: 1.6;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+.container { max-width: 1080px; margin: 0 auto; padding: 0 24px 120px; position: relative; z-index: 1; }
+
+/* Sticky Nav */
+.nav-wrap { position: sticky; top: 0; z-index: 100; padding: 14px 0; backdrop-filter: blur(24px); background: rgba(8,16,11,0.75); border-bottom: 1px solid rgba(255,255,255,0.08); }
+.nav { max-width: 1080px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
+.nav-brand-mark { width: 40px; height: 40px; border-radius: 50%; overflow: hidden; border: 1px solid var(--glass-highlight); box-shadow: 0 0 16px var(--accent-glow); }
+.nav-brand-mark img { width: 100%; height: 100%; object-fit: cover; }
+.nav-brand-text { display: flex; flex-direction: column; }
+.nav-brand-title { font-family: var(--font-serif); font-style: italic; font-size: 21px; color: #fff; }
+.nav-brand-sub { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sage-muted); }
+.nav-brand-sub em { color: var(--accent); font-style: normal; }
+
+/* 3-Way Switcher */
+.curriculum-switcher { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); padding: 4px; border-radius: 9999px; border: 1px solid var(--glass-border); }
+.switch-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 9999px; font-family: var(--font-sans); font-size: 11.5px; font-weight: 500; text-decoration: none; color: var(--sage-muted); transition: all 0.2s ease; }
+.switch-pill:hover { color: #fff; background: rgba(255,255,255,0.08); }
+.switch-pill.active { background: var(--pill-btn-bg); color: var(--pill-btn-text); font-weight: 600; box-shadow: 0 0 14px var(--accent-glow); }
+
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+.progress-pill { display: inline-flex; align-items: center; gap: 7px; padding: 6px 14px; border-radius: 9999px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); font-family: var(--font-mono); font-size: 9.5px; color: var(--accent); }
+.progress-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+.nav-glass-btn { display: inline-flex; align-items: center; padding: 6px 14px; border-radius: 9999px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.04); color: var(--sage-muted); font-family: var(--font-mono); font-size: 9.5px; text-decoration: none; transition: all 0.2s; }
+.nav-glass-btn:hover { color: #fff; border-color: var(--glass-highlight); }
+
+/* Hero Glass */
+.hero-glass { background: var(--bg-card); backdrop-filter: blur(28px); border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight); border-radius: 28px; padding: 40px; margin: 32px 0; box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+.hero-eyebrow { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+.hero-title { font-family: var(--font-serif); font-style: italic; font-size: clamp(32px, 5vw, 50px); color: #fff; line-height: 1.1; margin-bottom: 14px; }
+.hero-lead { font-size: 15px; color: var(--sage-light); line-height: 1.65; max-width: 68ch; margin-bottom: 24px; opacity: 0.9; }
+.hero-stats { display: flex; gap: 24px; margin-bottom: 28px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.08); }
+.stat-item { display: flex; flex-direction: column; }
+.stat-val { font-family: var(--font-serif); font-style: italic; font-size: 24px; color: #fff; }
+.stat-label { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sage-muted); }
+.btn-pill-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--pill-btn-bg); color: var(--pill-btn-text); font-weight: 600; padding: 13px 26px; border-radius: 9999px; border: none; cursor: pointer; text-decoration: none; transition: all 0.2s; box-shadow: 0 8px 24px var(--accent-glow); }
+.btn-pill-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px var(--accent-glow); }
+.btn-pill-arrow { width: 20px; height: 20px; border-radius: 50%; background: rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; }
+
+/* Controls HUD */
+.controls-hud { position: sticky; top: 72px; z-index: 90; margin-bottom: 32px; padding: 16px 20px; border-radius: 24px; background: rgba(10,20,15,0.85); backdrop-filter: blur(24px); border: 1px solid var(--glass-border); box-shadow: 0 16px 40px rgba(0,0,0,0.4); }
+.hud-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 14px; }
+.hud-title { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sage-muted); }
+.hud-title strong { color: #fff; }
+.search-glass-wrap { flex: 1; max-width: 380px; min-width: 240px; }
+.search-glass-input { width: 100%; padding: 9px 16px; border-radius: 9999px; background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); color: #fff; font-size: 13px; outline: none; transition: all 0.2s; }
+.search-glass-input:focus { border-color: var(--accent); background: rgba(255,255,255,0.1); }
+
+/* Category Grid (Rounded Square Glass) */
+.category-grid { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: none; }
+.category-grid::-webkit-scrollbar { display: none; }
+.cat-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 82px; height: 82px; padding: 8px; border-radius: 20px; background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); color: var(--sage-muted); cursor: pointer; transition: all 0.2s; flex-shrink: 0; }
+.cat-btn:hover { background: rgba(255,255,255,0.08); color: #fff; transform: translateY(-2px); }
+.cat-btn.active { background: rgba(255,255,255,0.12); border-color: var(--accent); color: var(--accent); box-shadow: 0 0 18px var(--accent-glow); }
+.cat-icon { font-size: 22px; margin-bottom: 4px; }
+.cat-label { font-size: 10.5px; font-weight: 500; white-space: nowrap; }
+
+/* Epistemic Lenses */
+.lens-subbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); }
+.lens-pill { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 12px; border-radius: 9999px; background: transparent; border: 1px solid var(--glass-border); color: var(--sage-muted); cursor: pointer; transition: all 0.18s; }
+.lens-pill:hover { color: #fff; border-color: var(--glass-highlight); }
+.lens-pill.active { color: #000; font-weight: 600; background: var(--accent); border-color: var(--accent); }
+
+/* Question Cards */
+.questions-feed { display: flex; flex-direction: column; gap: 24px; }
+.question-card { background: var(--bg-card); backdrop-filter: blur(24px); border: 1px solid var(--glass-border); border-top: 1px solid var(--glass-highlight); border-radius: 26px; padding: 30px; box-shadow: 0 16px 40px rgba(0,0,0,0.35); transition: all 0.25s; }
+.question-card.integrated { border-color: var(--accent); }
+.card-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.card-meta-left { display: flex; align-items: center; gap: 10px; }
+.q-number-pill { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 4px 10px; border-radius: 9999px; background: rgba(255,255,255,0.08); border: 1px solid var(--glass-border); color: var(--accent); }
+.herb-title { font-family: var(--font-serif); font-size: 21px; font-style: italic; color: #fff; }
+.card-badges { display: flex; flex-wrap: wrap; gap: 6px; }
+.badge-tag { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.06); color: var(--sage-muted); }
+.card-lesson-line { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.1em; color: var(--sage-muted); margin-bottom: 10px; }
+.question-prompt { font-size: 16px; color: #fff; font-weight: 500; line-height: 1.5; margin-bottom: 20px; }
+
+/* Options */
+.options-list { display: flex; flex-direction: column; gap: 9px; margin-bottom: 16px; }
+.option-glass-item { display: flex; align-items: flex-start; gap: 12px; padding: 13px 18px; border-radius: 18px; background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); color: var(--sage-light); cursor: pointer; transition: all 0.2s; font-size: 14px; line-height: 1.5; }
+.option-glass-item:hover { background: rgba(255,255,255,0.08); border-color: var(--glass-highlight); color: #fff; transform: translateX(2px); }
+.option-letter { width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,0.08); font-family: var(--font-mono); font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; color: var(--sage-muted); }
+.option-glass-item.correct { background: rgba(107,214,111,0.18) !important; border-color: #6BD66F !important; color: #fff !important; }
+.option-glass-item.correct .option-letter { background: #6BD66F; color: #000; }
+.option-glass-item.incorrect { background: rgba(224,107,107,0.16) !important; border-color: #E06B6B !important; color: #FFDFDF !important; }
+.option-glass-item.incorrect .option-letter { background: #E06B6B; color: #fff; }
+
+.feedback-box { display: none; margin-top: 14px; padding: 14px 18px; border-radius: 14px; background: rgba(0,0,0,0.3); border-left: 3px solid var(--accent); font-size: 13.5px; line-height: 1.6; color: var(--sage-light); }
+.feedback-box.show { display: block; }
+.feedback-box strong { color: var(--accent); }
+
+.card-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08); }
+.integrate-pill-btn { display: inline-flex; align-items: center; padding: 8px 18px; border-radius: 9999px; background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); color: var(--sage-light); font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+.integrate-pill-btn:hover { background: rgba(255,255,255,0.12); border-color: var(--accent); color: #fff; }
+.integrate-pill-btn.done { background: var(--accent); color: #000; font-weight: 600; border-color: var(--accent); box-shadow: 0 0 16px var(--accent-glow); }
+.empty-state { text-align: center; padding: 50px 20px; background: var(--bg-card); border-radius: 24px; border: 1px solid var(--glass-border); }
+.empty-title { font-family: var(--font-serif); font-size: 24px; font-style: italic; color: #fff; margin-bottom: 8px; }
+
+@media(max-width: 640px) {
+  .hero-glass { padding: 26px 20px; }
+  .question-card { padding: 22px 18px; }
+  .curriculum-switcher { width: 100%; justify-content: center; }
+  .nav { flex-direction: column; align-items: flex-start; }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAV & CURRICULUM SWITCHER -->
+  <div class="nav-wrap">
+    <header class="nav">
+      <a href="/community/academy" class="nav-brand" title="Fungai Art Academy">
+        <div class="nav-brand-mark">
+          <img src="/fungi.png?v=4" alt="Fungai Art" onerror="this.onerror=null;this.src='/fungai-art-logo.png';">
+        </div>
+        <div class="nav-brand-text">
+          <span class="nav-brand-title">fungai art</span>
+          <span class="nav-brand-sub">Academy <em>· The Magnum Opus — Laboratory Spagyrics</em></span>
+        </div>
+      </a>
+
+      <!-- 3-Way Switcher -->
+      
+    <nav class="curriculum-switcher" aria-label="Curriculum Switcher">
+      <a href="/community/academy/curriculum-preview.html" class="switch-pill ">
+        <span class="switch-glyph">🌿</span>
+        <span class="switch-text">Botanical Field</span>
+      </a>
+      <a href="/community/academy/curriculum-mycology.html" class="switch-pill ">
+        <span class="switch-glyph">🍄</span>
+        <span class="switch-text">Mushroom Kingdom</span>
+      </a>
+      <a href="/community/academy/curriculum-alchemy.html" class="switch-pill active">
+        <span class="switch-glyph">⚗️</span>
+        <span class="switch-text">Magnum Opus</span>
+      </a>
+    </nav>
+    
+
+      <div class="nav-actions">
+        <div class="progress-pill">
+          <span class="progress-dot"></span>
+          <span id="integratedNavCount">0 / 22 Integrated</span>
+        </div>
+        <a href="/community/academy" class="nav-glass-btn">← Academy</a>
+      </div>
+    </header>
+  </div>
+
+  <div class="container">
+
+    <!-- HERO CARD -->
+    <section class="hero-glass">
+      <div class="hero-eyebrow">
+        <span>✦ Fungai Art · Magnum Opus Curriculum · 22 Laboratory Assessments</span>
+      </div>
+      <h1 class="hero-title">
+        The Magnum Opus — Laboratory Spagyrics
+      </h1>
+      <p class="hero-lead">
+        Advanced percolation, oxymels, topical pharmacopoeia, suppositories, and the Paracelsian calcination of the Vegetable Stone.
+      </p>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-val">22</span>
+          <span class="stat-label">Assessments</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-val">5</span>
+          <span class="stat-label">Curriculum Strata</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-val" id="statMasteryPct">0%</span>
+          <span class="stat-label">Mastery Level</span>
+        </div>
+      </div>
+
+      <button class="btn-pill-primary" onclick="scrollToQuestions()">
+        <span>Enter Assessment Field</span>
+        <span class="btn-pill-arrow">→</span>
+      </button>
+    </section>
+
+    <!-- CONTROLS HUD -->
+    <div class="controls-hud" id="controlsHud">
+      <div class="hud-header">
+        <div class="hud-title">
+          <span>Active Strata: <strong id="currentStratumLabel">All Strata (22 Assessments)</strong></span>
+        </div>
+        
+        <div class="search-glass-wrap">
+          <input 
+            type="text" 
+            id="searchInput" 
+            class="search-glass-input" 
+            placeholder="Search plant, fungus, or extraction term..." 
+            oninput="handleSearch(this.value)"
+          />
+        </div>
+      </div>
+
+      <!-- Category Filter Grid (Rounded-Square Glass Buttons) -->
+      <div class="category-grid">
+        
+    <button class="cat-btn active" data-level="all" onclick="selectStratum('all')">
+      <span class="cat-icon">✦</span>
+      <span class="cat-label">All (22)</span>
+    </button>
+    
+        <button class="cat-btn" data-level="1" onclick="selectStratum('1')">
+          <span class="cat-icon">⚗️</span>
+          <span class="cat-label">Advanced Tincture Making (4)</span>
+        </button>
+        
+        <button class="cat-btn" data-level="2" onclick="selectStratum('2')">
+          <span class="cat-icon">🍯</span>
+          <span class="cat-label">Oxymels, Elixirs, Herbal Wines & Fermented Medicines (4)</span>
+        </button>
+        
+        <button class="cat-btn" data-level="3" onclick="selectStratum('3')">
+          <span class="cat-icon">🌿</span>
+          <span class="cat-label">Topical Pharmacy (5)</span>
+        </button>
+        
+        <button class="cat-btn" data-level="4" onclick="selectStratum('4')">
+          <span class="cat-icon">🕯️</span>
+          <span class="cat-label">Suppositories, Enemas & Advanced Delivery Forms (4)</span>
+        </button>
+        
+        <button class="cat-btn" data-level="5" onclick="selectStratum('5')">
+          <span class="cat-icon">💎</span>
+          <span class="cat-label">The Spagyric Magnum Opus (5)</span>
+        </button>
+        
+      </div>
+
+      <!-- Epistemic Lenses Bar -->
+      <div class="lens-subbar">
+        <span style="font-family:var(--font-mono);font-size:9px;color:var(--sage-muted);letter-spacing:0.18em;text-transform:uppercase;margin-right:4px;">Filter Lens:</span>
+        <button class="lens-pill active" data-lens="all" onclick="selectLens('all')">✦ All Evidence</button>
+        <button class="lens-pill" data-lens="[TRADITIONAL]" onclick="selectLens('[TRADITIONAL]')">Traditional Lore</button>
+        <button class="lens-pill" data-lens="[MECHANISTIC]" onclick="selectLens('[MECHANISTIC]')">🔬 Mechanism</button>
+        <button class="lens-pill" data-lens="[HUMAN EVIDENCE]" onclick="selectLens('[HUMAN EVIDENCE]')">⚖ Human Clinical</button>
+        <button class="lens-pill" data-lens="[SAFETY]" onclick="selectLens('[SAFETY]')">⚠ Clinical Safety</button>
+        <button class="lens-pill" data-lens="[ECOLOGY]" onclick="selectLens('[ECOLOGY]')">🌿 Stewardship</button>
+      </div>
+    </div>
+
+    <!-- QUESTIONS FEED -->
+    <main class="questions-feed" id="questionsFeed">
+      <!-- Injected via JavaScript -->
+    </main>
+
+  </div>
+
+  <script>
+    window.ACADEMY_DATA = [{"num": 1, "level_num": 1, "module": "Module 1: Hydraulic Column Percolation", "lesson": "Lesson 1: Gravity Velocity & Menstruum Flow", "herb": "Percolation Craft", "badges": ["[MECHANISTIC]"], "question": "In a conical glass percolation cone, what is the ideal drip velocity for exhausting a powdered herbal bed?", "options": ["Approximately 1 to 2 milliliters (about 20 to 40 drops) per minute under steady gravity displacement", "A continuous roaring liquid stream flowing at roughly one liter every five minutes", "One single drop discharged every two hours to allow deep molecular settling in the cone, depending on the solvent extraction ratio and maceration duration", "The flow rate does not matter as long as the menstruum is heated to a rolling boil"], "correct": 0, "explanation": "Classical pharmacopoeial percolation requires a slow, regulated drip rate (typically 1–2 mL per minute for a standard 500g run) ensuring continuous laminar solvent exchange across every plant particle.", "level": "Advanced Tincture Making — Percolation, Fresh Plant & High-Potency Extracts"}, {"num": 2, "level_num": 1, "module": "Module 1: Hydraulic Column Percolation", "lesson": "Lesson 2: Pre-Moistening & Packing Density", "herb": "Percolation Craft", "badges": ["[MECHANISTIC]"], "question": "Why must finely ground dry herbal powder be pre-moistened with menstruum and rested before packing into a percolator?", "options": ["To completely bleach out unwanted dark chlorophyll pigments before extraction begins in the glass column, requiring careful clinical intake and organ system differential evaluation", "To allow plant cellular starch and mucilage to swell evenly, preventing dry fissures and liquid channeling", "To kill natural fungal spores with high alcohol so the powder turns into a sterile dry cake", "Pre-moistening is only done to sweeten bitter roots before packing into the extraction vessel"], "correct": 1, "explanation": "If dry powder is packed directly, the swelling of cellulose upon contact with alcohol/water will either crack the glass column or create channels where menstruum bypasses unextracted pockets.", "level": "Advanced Tincture Making — Percolation, Fresh Plant & High-Potency Extracts"}, {"num": 3, "level_num": 1, "module": "Module 2: Fresh Plant Maceration & Water Displacement", "lesson": "Lesson 1: The 1:2 Fresh Ratio Calculation", "herb": "Galenical Mathematics", "badges": ["[MECHANISTIC]"], "question": "When tincturing freshly harvested, succulent botanicals at a 1:2 ratio, why must you start with 95% pure ethanol?", "options": ["High proof alcohol is needed to burn off the tough outer epidermal cuticles of fresh leaves", "Fresh plants release toxic gases unless submerged in pure industrial proof alcohol immediately after clipping, reflecting classical pharmacopoeial standards across traditional preparation methods", "Succulent plant tissue is 70–85% cellular water, which naturally dilutes the final menstruum down to ~45–55% ABV", "95% alcohol converts mild plant flavonoids into heavy resinous alkaloids within twenty-four hours"], "correct": 2, "explanation": "Fresh plant moisture contributes significant water volume to the menstruum. Using 95% ABV ensures that after accounting for the plant's internal water, the final tincture settles into a safe preserving range of 45–55% ABV.", "level": "Advanced Tincture Making — Percolation, Fresh Plant & High-Potency Extracts"}, {"num": 4, "level_num": 1, "module": "Module 3: High-Potency Fluidextracts", "lesson": "Lesson 1: 1:1 Ratio Physics", "herb": "Pharmacopoeial Galenicals", "badges": ["[MECHANISTIC]"], "question": "What defines an official pharmacopoeial 'Fluidextract' (1:1 weight-to-volume ratio) compared to a standard 1:5 tincture?", "options": ["It is diluted with equal parts vegetable glycerin and distilled spring water to reduce alcohol taste, according to documented historical dispensary practices and herbal monographs", "It is boiled down until it forms a solid crystalline candy that can be chewed orally", "It is manufactured exclusively using synthetic mineral acids without any water or ethanol", "One milliliter of the finished liquid extract contains the soluble medicinal bioactives of exactly one gram of crude dried herb"], "correct": 3, "explanation": "A 1:1 fluidextract is a high-potency galenical preparation where 1 mL of finished liquid represents 1 gram of original dry botanical matter, requiring fractional percolation or vacuum recovery.", "level": "Advanced Tincture Making — Percolation, Fresh Plant & High-Potency Extracts"}, {"num": 5, "level_num": 2, "module": "Module 1: The Art of the Oxymel", "lesson": "Lesson 1: Acetic Acid & Raw Honey Chemistry", "herb": "Oxymel Craft", "badges": ["[TRADITIONAL]", "[MECHANISTIC]"], "question": "In classical Greco-Roman and Persian medicine, what two foundational solvents define a true therapeutic Oxymel?", "options": ["Raw unpasteurized apple cider vinegar (acetic acid) and unheated wildflower honey, typically in a 1:1 to 1:3 ratio", "Distilled pure ethyl alcohol and refined white sugar syrup boiled over intense flame", "Fresh whole dairy milk and clarified butter combined with ground aromatic seed powders, which must be monitored alongside client constitutional vitality and tissue state", "Carbonated mineral spring water and sour lemon juice sweetened with artificial syrups"], "correct": 0, "explanation": "From the Greek oxymeli ('acid and honey'), an oxymel combines raw vinegar (extracting alkaloidal, mineral, and pungent principles) with raw enzymatic honey (soothing tissue and preserving the medicine).", "level": "Oxymels, Elixirs, Herbal Wines & Fermented Medicines"}, {"num": 6, "level_num": 2, "module": "Module 1: The Art of the Oxymel", "lesson": "Lesson 2: Respiratory & Lymphatic Formulations", "herb": "Oxymel Craft", "badges": ["[TRADITIONAL]"], "question": "Why is an oxymel the premier galenical preparation when formulating pungent and sour herbs for children or respiratory tension?", "options": ["Oxymels permanently eliminate the need for pulmonary gas exchange during seasonal winter colds, as validated across standard herbal laboratory extraction protocols", "The acidic vinegar cuts through stagnant bronchial phlegm while raw honey coats raw throat mucosa without alcohol sting", "The high sugar content numbs taste buds entirely so children do not taste the herbs", "Vinegar converts plant aromatics into a heavy gas that is exhaled directly through the skin"], "correct": 1, "explanation": "Oxymels are non-alcoholic, highly palatable, and synergistically therapeutic: acetic acid acts as an expectorant and sialagogue, while raw honey buffers gastric irritation and soothes airway spasm.", "level": "Oxymels, Elixirs, Herbal Wines & Fermented Medicines"}, {"num": 7, "level_num": 2, "module": "Module 2: Herbal Wines & Cordials", "lesson": "Lesson 1: Vinous Extraction & Polyphenol Solubility", "herb": "Herbal Wines", "badges": ["[TRADITIONAL]"], "question": "Why did historical European apothecaries (like Dioscorides and Hildegard von Bingen) formulate medicinal herbs in wine?", "options": ["Wine was the only liquid solvent known to exist in medieval Europe before the invention of water wells", "Wine completely breaks down toxic plant alkaloids, turning every wild plant species into safe medicine", "The 12–14% natural alcohol plus tartaric and malic fruit acids extract both polar tannins and delicate aromatics efficiently", "Fermented grapes create an airtight seal inside glass bottles that prevents liquid from ever evaporating, following strict botanical identification keys and sustainable harvest ethics"], "correct": 2, "explanation": "Natural wine provides a gentle dual solvent: mild alcohol (10–14% ABV) dissolves volatile terpenes and resins, while organic fruit acids extract minerals and alkaloids with immediate bioavailability.", "level": "Oxymels, Elixirs, Herbal Wines & Fermented Medicines"}, {"num": 8, "level_num": 2, "module": "Module 3: Lacto-Fermented Botanicals", "lesson": "Lesson 1: Microbial Biotransformation", "herb": "Fermentation Pharmacognosy", "badges": ["[MECHANISTIC]"], "question": "How does probiotic lacto-fermentation transform the medicinal properties of botanical matrices (like Ginseng or Garlic)?", "options": ["Fermentation burns all active secondary metabolites into inert carbon ash within several days, ensuring appropriate dosing thresholds across diverse constitutional profiles", "Lactic acid bacteria permanently double the molecular weight of all botanical compounds", "Fermentation removes all natural aroma and flavor, leaving completely tasteless water", "Bacterial enzymes deglycosylate bound plant glycosides into smaller, highly bioavailable aglycones"], "correct": 3, "explanation": "Lactobacillus fermentation cleaves bulky sugar moieties from plant glycosides (e.g. converting ginsenosides into compound K, or alliin into bioactive thiosulfinates), dramatically enhancing intestinal absorption.", "level": "Oxymels, Elixirs, Herbal Wines & Fermented Medicines"}, {"num": 9, "level_num": 3, "module": "Module 1: Oil Infusion Physics", "lesson": "Lesson 1: Solar Infusion of St. John's Wort", "herb": "St. John's Wort", "badges": ["[TRADITIONAL]", "[MECHANISTIC]"], "question": "When fresh St. John's Wort flowers (*Hypericum perforatum*) are steeped in olive oil under sunlight, what causes the brilliant ruby-red color?", "options": ["Solar radiation and gentle warmth liberate and dissolve red-pigmented naphthodianthrones (hypericin and pseudohypericin)", "The green chlorophyll in the leaves reacts with olive oil fatty acids, turning bright fluorescent red, as outlined in traditional Nordic and European folk medicine compendiums", "Sunlight scorches the fresh yellow petals, creating caramelized red vegetable sugars in the oil", "The plant absorbs iron ions directly from ambient air, creating red rust nanoparticles in the jar"], "correct": 0, "explanation": "The vibrant red hue of true Hypericum oil comes from lipophilic naphthodianthrones (hypericin, pseudohypericin) released from the flower's dark glandular dots, celebrated topically for nerve trauma.", "level": "Topical Pharmacy — Salves, Liniments, Poultices & Compresses"}, {"num": 10, "level_num": 3, "module": "Module 1: Oil Infusion Physics", "lesson": "Lesson 2: Moisture Evaporation & Preventing Anaerobic Spoilage", "herb": "Topical Pharmacy", "badges": ["[SAFETY]"], "question": "Why is infusing freshly harvested, damp herbs into vegetable oil a severe hazard if left sealed at room temperature?", "options": ["Fresh plant water causes the oil to solidify into an unbreakable crystalline block within hours, depending on the solvent extraction ratio and maceration duration", "Trapped moisture in an anaerobic, low-oxygen oil environment creates an ideal incubation medium for *Clostridium botulinum*", "Damp leaves absorb ambient nitrogen from the air, turning the carrier oil highly acidic", "Water molecules degrade glass mason jars, causing the container to spontaneously shatter"], "correct": 1, "explanation": "Water introduced into oil creates an anaerobic microbial interface where deadly *Clostridium botulinum* spores can germinate; herbs should be thoroughly wilted or heated to drive off moisture.", "level": "Topical Pharmacy — Salves, Liniments, Poultices & Compresses"}, {"num": 11, "level_num": 3, "module": "Module 2: The Core Topical Materia Medica", "lesson": "Lesson 1: Calendula, Comfrey, Arnica & Plantain", "herb": "Topical Formulations", "badges": ["[TRADITIONAL]", "[SAFETY]"], "question": "Why must an herbalist NEVER apply high-allantoin Comfrey (*Symphytum officinale*) salves over a deep, dirty puncture wound?", "options": ["Comfrey contains caustic acids that dissolve healthy skin cells on contact with open air", "The allantoin in comfrey attracts wild outdoor insects directly to the open wound surface, requiring careful clinical intake and organ system differential evaluation", "Comfrey stimulates rapid surface tissue granulation, sealing the top skin before anaerobic bacteria can drain from the depth", "Comfrey reacts with human hemoglobin to cause immediate systemic blood coagulation"], "correct": 2, "explanation": "Allantoin drives rapid cell proliferation (vulnerary action). If applied over deep or uncleaned puncture wounds, it closes the epidermal surface prematurely, trapping pathogens in an anaerobic abscess.", "level": "Topical Pharmacy — Salves, Liniments, Poultices & Compresses"}, {"num": 12, "level_num": 3, "module": "Module 2: The Core Topical Materia Medica", "lesson": "Lesson 2: Arnica Montana & Broken Skin Warnings", "herb": "Arnica", "badges": ["[SAFETY]"], "question": "What is the crucial clinical boundary when applying topical Arnica (*Arnica montana*) oil or liniments for blunt trauma?", "options": ["It must only be applied during the full moon phase to align with lymphatic tissue drainage cycles, reflecting classical pharmacopoeial standards across traditional preparation methods", "It should be rubbed into open lacerations to cauterize active arterial capillary bleeding", "It must be washed off within forty seconds to prevent the carrier oil from clogging pores", "It is strictly used for unbroken bruises, sprains, and closed hematomas; it should never be applied to broken skin"], "correct": 3, "explanation": "Arnica's sesquiterpene lactones (helenalin) are potent irritants; on broken skin or mucous membranes, they can cause severe blistering dermatitis, delayed healing, and toxic systemic absorption.", "level": "Topical Pharmacy — Salves, Liniments, Poultices & Compresses"}, {"num": 13, "level_num": 3, "module": "Module 3: Compresses, Poultices & Liniments", "lesson": "Lesson 1: Counter-Irritant Evaporating Liniments", "herb": "Liniment Craft", "badges": ["[TRADITIONAL]", "[MECHANISTIC]"], "question": "How do evaporating alcohol-and-camphor liniments relieve deep muscular aches and tendon stiffness?", "options": ["Rapid alcohol evaporation creates surface cooling, followed by rubefacient stimulation that dilates deep capillaries", "The liniment permanently dissolves calcium deposits in muscle fibers within ten minutes of application, according to documented historical dispensary practices and herbal monographs", "It numbs the entire spinal cord by entering systemic circulation through dermal sweat pores", "The camphor oil creates an impermeable plastic film that traps internal body heat in the bone"], "correct": 0, "explanation": "Rubefacient liniments act via counter-irritation: evaporating spirits cool the surface while stimulating TRPM8 and TRPV1 thermoreceptors, followed by reflex hyperemia that flushes metabolic waste from tight muscles.", "level": "Topical Pharmacy — Salves, Liniments, Poultices & Compresses"}, {"num": 14, "level_num": 4, "module": "Module 1: Transmucosal Rectal & Vaginal Delivery", "lesson": "Lesson 1: First-Pass Hepatic Bypass", "herb": "Advanced Galenicals", "badges": ["[MECHANISTIC]", "[HUMAN EVIDENCE]"], "question": "What primary pharmacokinetic advantage does rectal botanical suppository delivery offer over oral administration?", "options": ["Rectal mucosal tissue completely destroys all pharmaceutical drugs while absorbing only organic herbs", "The middle and inferior rectal veins drain directly into systemic circulation, bypassing first-pass liver metabolism", "Suppositories absorb four times slower than oral capsules, preventing any cellular action for several days, which must be monitored alongside client constitutional vitality and tissue state", "The lower colon lacks blood vessels, so herbs act exclusively on superficial mucosal linings"], "correct": 1, "explanation": "The lower rectal venous plexus drains into the internal iliac veins and inferior vena cava, avoiding the hepatic portal system; this prevents first-pass metabolic breakdown and spares gastric irritation.", "level": "Suppositories, Enemas & Advanced Delivery Forms"}, {"num": 15, "level_num": 4, "module": "Module 1: Transmucosal Rectal & Vaginal Delivery", "lesson": "Lesson 2: Cocoa Butter Polymorphism & Melting Curves", "herb": "Suppository Craft", "badges": ["[MECHANISTIC]"], "question": "Why is pure unrefined Cocoa Butter (*Theobroma cacao*) the classical base for handcrafted botanical suppositories?", "options": ["It is a caustic drying agent that absorbs fifty times its volume in vaginal fluids within minutes, as validated across standard herbal laboratory extraction protocols", "It permanently freezes botanical bioactives in a solid state so they never disperse into tissues", "It remains firm and easy to handle at room temperature, but melts cleanly at human body temperature (34–37°C)", "It is the only natural vegetable lipid that does not burn or catch fire when heated in ovens"], "correct": 2, "explanation": "Cocoa butter displays unique polymorphism, with stable beta crystals melting right at human physiological body temperature (34–37°C), releasing suspended herbal bioactives smoothly across mucosa.", "level": "Suppositories, Enemas & Advanced Delivery Forms"}, {"num": 16, "level_num": 4, "module": "Module 2: Botanical Retention Enemas", "lesson": "Lesson 1: Soothing Astringents in Lower Bowel Inflammation", "herb": "Clinical Delivery", "badges": ["[TRADITIONAL]", "[SAFETY]"], "question": "When formulating a low-volume botanical retention enema for lower bowel tenesmus, what safety parameter is critical?", "options": ["The infusion must be administered boiling hot to sterilize colon bacteria in the sigmoid flexure", "The liquid should contain at least 40% ethanol to ensure rapid absorption across the hemorrhoidal veins, following strict botanical identification keys and sustainable harvest ethics", "Retention enemas must always use pure unbuffered lemon juice to acidify the rectal vault", "The liquid must be strictly body-temperature (37°C), isotonic, and free from harsh high-proof alcohol or irritants"], "correct": 3, "explanation": "Rectal mucosa is extremely delicate. Solutions must be body-temperature (37°C), low-volume (60–120 mL), strictly non-alcoholic (infusions, decoctions, or mucilage), and administered gently.", "level": "Suppositories, Enemas & Advanced Delivery Forms"}, {"num": 17, "level_num": 4, "module": "Module 3: Liposomal & Phospholipid Encapsulation", "lesson": "Lesson 1: Phosphatidylcholine Bilayers", "herb": "Modern Formulation Physics", "badges": ["[MECHANISTIC]"], "question": "How does sonicating an herbal extract (like Curcumin or Silymarin) with sunflower lecithin create a liposomal delivery system?", "options": ["Amphiphilic phospholipid molecules form microscopic lipid bilayers that encapsulate both hydrophobic and hydrophilic bioactives", "Lecithin binds all botanical bioactives into insoluble rocks that pass unabsorbed through the stomach, ensuring appropriate dosing thresholds across diverse constitutional profiles", "Sound waves convert liquid herbal extracts into dry gaseous vapors that are inhaled into the lungs", "Phospholipids break down plant flavonoids into simple sugars to accelerate metabolic clearance"], "correct": 0, "explanation": "Phospholipids self-assemble in aqueous media into microscopic liposomal vesicles; this shields unstable bioactives from gastric breakdown and facilitates direct chylomicron uptake in the intestines.", "level": "Suppositories, Enemas & Advanced Delivery Forms"}, {"num": 18, "level_num": 5, "module": "Module 1: The Three Philosophical Principles", "lesson": "Lesson 1: Sulphur, Mercury & Salt in Plants", "herb": "Spagyric Philosophy", "badges": ["[TRADITIONAL]"], "question": "In the Paracelsian spagyric tradition, what do the Three Principles (Sulphur, Mercury, Salt) represent in a physical plant?", "options": ["Sulphur represents toxic impurities, Mercury represents industrial quicksilver, and Salt represents common sea salt", "Sulphur represents the volatile essential oils/soul, Mercury the alcohol/spirit, and Salt the mineral body from the ashes", "Sulphur represents plant roots, Mercury represents green foliage, and Salt represents morning dew on petals", "The three principles are metaphorical poetry with zero physical laboratory operations attached"], "correct": 1, "explanation": "Spagyric alchemy ('spao' = separate, 'ageiro' = recombine) separates the plant into Sulphur (essential oil/soul), Mercury (fermented alcohol/spirit), and Salt (purified crystalline mineral salts/body).", "level": "The Spagyric Magnum Opus — Calcination & The Plant Stone"}, {"num": 19, "level_num": 5, "module": "Module 2: Calcination of the Marc", "lesson": "Lesson 1: Incineration to Grey-White Ash", "herb": "Laboratory Calcination", "badges": ["[MECHANISTIC]"], "question": "After pressing out the tincture, what physical laboratory procedure is performed on the remaining exhausted plant residue (marc)?", "options": ["It is thrown away into a compost pile because all medicinal value has already been completely exhausted", "It is frozen in liquid nitrogen to crystalize the remaining cellulose fibers into structural glass", "It is calcined in a crucible over high heat until all black carbon burns away, leaving pure grey-white mineral ash", "It is soaked in petroleum solvents to dissolve the plant's outer waxy cuticles"], "correct": 2, "explanation": "Calcination subjects the pressed plant marc to intense crucible heat (400–600°C), oxidizing organic carbon into CO2 until only the plant's purified water-soluble and insoluble mineral salts remain.", "level": "The Spagyric Magnum Opus — Calcination & The Plant Stone"}, {"num": 20, "level_num": 5, "module": "Module 2: Calcination of the Marc", "lesson": "Lesson 2: Water Leaching & Filtration of Fixed Salts", "herb": "Laboratory Extraction", "badges": ["[MECHANISTIC]"], "question": "How are the purified 'Salt of Tartar' (potassium carbonate and trace plant minerals) separated from insoluble crucible ash?", "options": ["The ash is mixed with sand and melted into solid colored glass beads in an artisan kiln", "The ash is dissolved in concentrated battery acid to generate toxic hydrogen sulfide gas", "The ash is placed under a magnet to extract magnetic iron particles from the plant tissue", "The white ash is leached with hot distilled water, filtered through unbleached paper, and evaporated to yield sparkling crystals"], "correct": 3, "explanation": "Water leaching (dissolution and filtration) isolates the soluble mineral fraction (predominantly potassium carbonates, phosphates, and trace bio-minerals); gentle evaporation produces pure crystalline salts.", "level": "The Spagyric Magnum Opus — Calcination & The Plant Stone"}, {"num": 21, "level_num": 5, "module": "Module 3: Cohobation & The Spagyric Tincture", "lesson": "Lesson 1: Recombining Salt with Spirit", "herb": "Cohobation Craft", "badges": ["[TRADITIONAL]", "[MECHANISTIC]"], "question": "What happens chemically when the purified, alkaline plant mineral salts are recombined (cohobated) with the original tincture?", "options": ["The alkaline potassium carbonate salts neutralize harsh plant acids, buffering the extract and saponifying delicate resins", "The liquid instantly ferments into thick, high-proof ethanol that bubbles over the top of the bottle", "The salts precipitate all active flavonoids, leaving an inert, completely clear water liquid behind", "The tincture turns into a toxic caustic lye that can no longer be safely consumed by humans"], "correct": 0, "explanation": "Cohobation reintroduces the plant's purified mineral body: the alkaline salts elevate pH, esterify fatty acids, saponify stubborn resins, and form bioavailable mineral-constituent complexes.", "level": "The Spagyric Magnum Opus — Calcination & The Plant Stone"}, {"num": 22, "level_num": 5, "module": "Module 4: The Vegetable Stone (Magnum Opus)", "lesson": "Lesson 1: Circulation in the Pelican Vessel", "herb": "The Plant Stone", "badges": ["[TRADITIONAL]"], "question": "In classical laboratory spagyria, what is the ultimate completed preparation known as the 'Vegetable Stone'?", "options": ["A petrified fossilized piece of wood found in ancient geological bog strata", "A fully circulated crystalline matrix that dissolves completely in both water and alcohol, delivering the unified trinity of the plant", "A compressed tablet of synthetic vitamin powders manufactured with heavy industrial hydraulic tablet presses", "A decorative semi-precious quartz crystal placed inside a tincture bottle for aesthetic visual appeal"], "correct": 1, "explanation": "The Vegetable Stone represents the apex of plant alchemy: through repeated circulation in a sealed Pelican vessel, the separated Sulphur, Mercury, and Salt are exalted into an open, highly bioavailable matrix.", "level": "The Spagyric Magnum Opus — Calcination & The Plant Stone"}];
+    let activeLevel = 'all';
+    let activeLens = 'all';
+    let searchQuery = '';
+    const storageKey = 'fa_curriculum_alchemy';
+    let integratedSet = new Set(JSON.parse(localStorage.getItem(storageKey + '_integrated') || '[]'));
+    let userAnswers = JSON.parse(localStorage.getItem(storageKey + '_answers') || '{}');
+
+    function init() {
+      renderQuestions();
+      updateProgressMetrics();
+    }
+
+    function selectStratum(levelKey) {
+      activeLevel = levelKey;
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.level === levelKey);
+      });
+      renderQuestions();
+    }
+
+    function selectLens(lensKey) {
+      activeLens = lensKey;
+      document.querySelectorAll('.lens-pill').forEach(pill => {
+        pill.classList.toggle('active', pill.dataset.lens === lensKey);
+      });
+      renderQuestions();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val.trim().toLowerCase();
+      renderQuestions();
+    }
+
+    function scrollToQuestions() {
+      const el = document.getElementById('controlsHud');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function renderQuestions() {
+      const feed = document.getElementById('questionsFeed');
+      if (!feed) return;
+      const letters = ['A', 'B', 'C', 'D'];
+
+      const filtered = window.ACADEMY_DATA.filter(q => {
+        if (activeLevel !== 'all' && String(q.level_num) !== String(activeLevel)) return false;
+        if (activeLens !== 'all' && !q.badges.includes(activeLens)) return false;
+        if (searchQuery) {
+          const term = (q.herb || q.fungus || '') + ' ' + q.question + ' ' + q.options.join(' ');
+          if (!term.toLowerCase().includes(searchQuery)) return false;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        feed.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-title">No Entries in this Frequency</div>
+            <p style="color:var(--sage-muted);max-width:44ch;margin:10px auto 20px;">
+              Try adjusting your search query or selecting "All Evidence".
+            </p>
+            <button class="btn-pill-primary" onclick="clearFilters()">Reset All Filters</button>
+          </div>
+        `;
+        return;
+      }
+
+      feed.innerHTML = filtered.map(q => {
+        const isIntegrated = integratedSet.has(q.num);
+        const savedAnswer = userAnswers[q.num];
+        const hasAnswered = savedAnswer !== undefined;
+
+        const badgesHtml = q.badges.map(b => {
+          let cls = 'badge-trad';
+          let label = b.replace(/[\[\]]/g, '');
+          if (b.includes('MECHANISTIC')) cls = 'badge-mech';
+          if (b.includes('HUMAN')) cls = 'badge-human';
+          if (b.includes('SAFETY')) cls = 'badge-safe';
+          if (b.includes('ECOLOGY')) cls = 'badge-eco';
+          return `<span class="badge-tag ${cls}">${label}</span>`;
+        }).join('');
+
+        const optionsHtml = q.options.map((opt, idx) => {
+          let itemCls = 'option-glass-item';
+          if (hasAnswered) {
+            if (idx === q.correct) itemCls += ' correct';
+            else if (idx === savedAnswer) itemCls += ' incorrect';
+          }
+          return `
+            <div class="${itemCls}" onclick="handleAnswerChoice(${q.num}, ${idx}, ${q.correct})">
+              <span class="option-letter">${letters[idx]}</span>
+              <span class="option-text">${opt}</span>
+            </div>
+          `;
+        }).join('');
+
+        const feedbackCls = hasAnswered ? 'feedback-box show' : 'feedback-box';
+        const isCorrectChoice = hasAnswered && savedAnswer === q.correct;
+        const feedbackPrefix = isCorrectChoice ? '✦ Correct insight: ' : '🌿 Evidence distinction: ';
+        const entityName = q.herb || q.fungus || 'Plant Ally';
+
+        return `
+          <article class="question-card ${isIntegrated ? 'integrated' : ''}" id="qcard-${q.num}">
+            <div class="card-top">
+              <div class="card-meta-left">
+                <span class="q-number-pill">Q${q.num} · ${q.level.split('—')[0].trim()}</span>
+                <h3 class="herb-title">${entityName}</h3>
+              </div>
+              <div class="card-badges">
+                ${badgesHtml}
+              </div>
+            </div>
+
+            <div class="card-lesson-line">
+              ${q.module} · ${q.lesson}
+            </div>
+
+            <div class="question-prompt">
+              ${q.question}
+            </div>
+
+            <div class="options-list">
+              ${optionsHtml}
+            </div>
+
+            <div class="${feedbackCls}" id="feedback-${q.num}">
+              <strong>${feedbackPrefix}</strong>${q.explanation}
+            </div>
+
+            <div class="card-footer">
+              <span style="font-family:var(--font-mono);font-size:9px;color:var(--sage-muted);letter-spacing:0.18em;text-transform:uppercase;">
+                Status: ${isIntegrated ? 'Integrated in Network ✓' : 'Field Assessment Active'}
+              </span>
+              <button 
+                class="integrate-pill-btn ${isIntegrated ? 'done' : ''}" 
+                onclick="toggleIntegrate(${q.num})"
+              >
+                ${isIntegrated ? 'Integrated in Network ✓' : 'Integrate Spore ✦'}
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function handleAnswerChoice(qNum, chosenIdx, correctIdx) {
+      userAnswers[qNum] = chosenIdx;
+      localStorage.setItem(storageKey + '_answers', JSON.stringify(userAnswers));
+      if (chosenIdx === correctIdx) {
+        integratedSet.add(qNum);
+        localStorage.setItem(storageKey + '_integrated', JSON.stringify(Array.from(integratedSet)));
+      }
+      renderQuestions();
+      updateProgressMetrics();
+    }
+
+    function toggleIntegrate(qNum) {
+      if (integratedSet.has(qNum)) integratedSet.delete(qNum);
+      else integratedSet.add(qNum);
+      localStorage.setItem(storageKey + '_integrated', JSON.stringify(Array.from(integratedSet)));
+      renderQuestions();
+      updateProgressMetrics();
+    }
+
+    function updateProgressMetrics() {
+      const total = window.ACADEMY_DATA.length;
+      const count = integratedSet.size;
+      const pct = Math.round((count / total) * 100);
+      const navCount = document.getElementById('integratedNavCount');
+      if (navCount) navCount.textContent = `${count} / ${total} Integrated`;
+      const mastery = document.getElementById('statMasteryPct');
+      if (mastery) mastery.textContent = `${pct}%`;
+    }
+
+    function clearFilters() {
+      activeLevel = 'all';
+      activeLens = 'all';
+      searchQuery = '';
+      const input = document.getElementById('searchInput');
+      if (input) input.value = '';
+      document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.level === 'all'));
+      document.querySelectorAll('.lens-pill').forEach(pill => pill.classList.toggle('active', pill.dataset.lens === 'all'));
+      renderQuestions();
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

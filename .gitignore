@@ -81,3 +81,6 @@ public/home/markdowns all plants/generated/
 
 # Generated card thumbnails — npm run build:thumbnails
 public/atlas/thumb/
+
+# Python bytecode (Antigravity curriculum scripts)
+__pycache__/
