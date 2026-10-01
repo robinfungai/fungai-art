@@ -40,6 +40,18 @@
   function isMissing(e) { return !!e && (e.code === '42P01' || e.code === 'PGRST205' || /does not exist|schema cache/i.test(e.message || '')); }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function kb(n) { return n > 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB'; }
+  // The card's headline. On the live site (1 Oct) every card drew no title
+  // at all: a stored title can be empty to the eye - control, zero-width or
+  // private-use characters a PDF's font maps to nothing. Strip those; if
+  // nothing is left, use the file name the PDF was uploaded under, which
+  // the storage path keeps ("<chapter>/<time>-<file-name>.pdf").
+  var INVISIBLE = /[\u0000-\u001F\u007F-\u009F\u00AD\u200B-\u200F\u2028-\u202F\u2060-\u206F\uFEFF\uE000-\uF8FF]/g;
+  function shownTitle(d) {
+    var t = String((d && d.title) || '').replace(INVISIBLE, '').trim();
+    if (t) return t;
+    var m = /\/\d+-([^\/]+)\.pdf$/i.exec(String((d && d.storage_path) || ''));
+    return m ? m[1].replace(/-+/g, ' ').trim() : 'Untitled PDF';
+  }
 
   async function ready() {
     try { if (window.SBready) await window.SBready; } catch (_) {}
@@ -95,7 +107,7 @@
     if (onPhone()) {
       var big = d.bytes > 10 * 1048576;
       holder.innerHTML =
-        '<div class="ad-viewer-head"><span class="ad-viewer-title">' + esc(d.title) + '</span>' +
+        '<div class="ad-viewer-head"><span class="ad-viewer-title">' + esc(shownTitle(d)) + '</span>' +
           '<button type="button" class="ad-btn ad-close">Close</button></div>' +
         '<div class="ad-phone">' +
           (d.bytes ? '<p class="ad-note">' + kb(d.bytes) + (d.pages ? ' · ' + d.pages + ' pages' : '') +
@@ -107,10 +119,10 @@
       return;
     }
     holder.innerHTML =
-      '<div class="ad-viewer-head"><span class="ad-viewer-title">' + esc(d.title) + '</span>' +
+      '<div class="ad-viewer-head"><span class="ad-viewer-title">' + esc(shownTitle(d)) + '</span>' +
         '<a class="ad-link" href="' + esc(url) + '" target="_blank" rel="noopener">Open full screen ↗</a>' +
         '<button type="button" class="ad-btn ad-close">Close</button></div>' +
-      '<iframe class="ad-view" src="' + esc(url) + '#view=FitH" title="' + esc(d.title) + '"></iframe>';
+      '<iframe class="ad-view" src="' + esc(url) + '#view=FitH" title="' + esc(shownTitle(d)) + '"></iframe>';
     holder.querySelector('.ad-close').addEventListener('click', function () { openDoc(d, holder, card); });
     holder.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
@@ -197,7 +209,7 @@
       var fromName = file.name.replace(/\.pdf$/i, '').replace(/[_-]+/g, ' ').trim();
       var title = prompt('Title for this document — it is the headline on its card', ex.title || fromName);
       if (title === null) { status.textContent = ''; return; }
-      title = (title.trim() || fromName || file.name).slice(0, 160);
+      title = (title.replace(INVISIBLE, '').trim() || fromName || file.name).slice(0, 160);
 
       status.textContent = 'Uploading…';
       var slug = file.name.toLowerCase().replace(/\.pdf$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) || 'document';
@@ -235,7 +247,7 @@
   }
 
   async function renameDoc(d) {
-    var t = prompt('New title for this document', d.title);
+    var t = prompt('New title for this document', shownTitle(d));
     if (t === null) return;
     t = t.trim().slice(0, 160);
     if (!t || t === d.title) return;
@@ -245,7 +257,7 @@
   }
 
   async function removeDoc(d) {
-    if (!confirm('Remove “' + d.title + '” from the library? MYCO forgets its text too.')) return;
+    if (!confirm('Remove “' + shownTitle(d) + '” from the library? MYCO forgets its text too.')) return;
     var r = await sb().from('academy_docs').delete().eq('id', d.id);
     if (r.error) { alert('Could not remove it: ' + r.error.message); return; }
     await sb().storage.from(BUCKET).remove([d.storage_path]);
@@ -285,9 +297,9 @@
     list.forEach(function (d) {
       var card = document.createElement('div');
       card.className = 'ad-doc';
-      card.dataset.title = String(d.title || '').toLowerCase();
+      card.dataset.title = shownTitle(d).toLowerCase();
       card.innerHTML =
-        '<div class="ad-title" title="' + esc(d.title) + '">' + esc(d.title) + '</div>' +
+        '<div class="ad-title" title="' + esc(shownTitle(d)) + '">' + esc(shownTitle(d)) + '</div>' +
         // Title, pages and size only (Robin, 2026-10-01). A keeper still
         // sees "no text layer": that one means MYCO cannot read the PDF.
         '<div class="ad-meta"><span class="ad-icon" aria-hidden="true">▤</span>' +
@@ -351,7 +363,7 @@
     render: render,
     count: function (id) { return forChapter(id).length; },
     // Newest first — the closed chapter card shows the first two.
-    titles: function (id) { return forChapter(id).map(function (d) { return d.title || ''; }).filter(Boolean); },
+    titles: function (id) { return forChapter(id).map(shownTitle); },
     reload: load,
   };
 
