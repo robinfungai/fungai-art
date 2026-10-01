@@ -151,7 +151,8 @@
       w.proOnly ? 'Pro-only' : null,
     ].filter(Boolean);
     return '<div class="fp-why">' +
-      '<div class="fp-why-head"><span class="fp-why-name">' + esc(w.name) + '</span><span class="fp-why-score">' + w.score + ' pts</span></div>' +
+      '<div class="fp-why-head"><button type="button" class="fp-why-name fp-herb-open" data-herb-id="' + esc(w.id) + '" aria-expanded="false" title="Show the herb\'s record">' + esc(w.name) + ' <span aria-hidden="true">▾</span></button><span class="fp-why-score">' + w.score + ' pts</span></div>' +
+      '<div class="fp-herb-detail" hidden></div>' +
       '<div class="fp-chips">' + chips + '</div>' +
       (w.halved ? '<div class="fp-note">Serves none of the chosen goals, so it kept half its points.</div>' : '') +
       '<div class="fp-meta">Goals: ' + (w.goals.length ? w.goals.map(g => esc(GOAL_LABEL[g] || g)).join(', ') : 'none recorded') + ' · ' + flags.map(esc).join(' · ') + '</div>' +
@@ -174,7 +175,56 @@
         '<div class="fp-panel">' + panel() + '</div>' +
       '</div>';
     root.querySelectorAll('.fp-tab').forEach(b => b.addEventListener('click', () => { S.tab = b.dataset.tab; render(); }));
+    root.querySelectorAll('.fp-herb-open').forEach(b => b.addEventListener('click', () => toggleHerb(b)));
     bind(root);
+  }
+
+  // ── Tap a herb → its record (Robin, 2026-10-02: "like in formula-analysis").
+  // Read from the Atlas's own files (built from herbs.ts), fetched once each.
+  let atlasIndex = null;
+  const dossiers = {};
+  async function herbRecord(id) {
+    if (!atlasIndex) {
+      const r = await fetch('/atlas/data/index.json');
+      atlasIndex = r.ok ? (await r.json()).organisms || [] : [];
+    }
+    const o = atlasIndex.find(x => String(x.id) === String(id));
+    if (!o) return null;
+    if (!dossiers[o.slug]) {
+      const r = await fetch('/atlas/data/organism/' + encodeURIComponent(o.slug) + '.json');
+      dossiers[o.slug] = r.ok ? await r.json() : null;
+    }
+    return dossiers[o.slug];
+  }
+  function list(title, items) {
+    return items && items.length ? '<div class="fp-hd-sec">' + esc(title) + '</div><ul class="fp-hd-list">' + items.map(i => '<li>' + esc(i) + '</li>').join('') + '</ul>' : '';
+  }
+  async function toggleHerb(btn) {
+    const box = btn.closest('.fp-why').querySelector('.fp-herb-detail');
+    const open = box.hidden;
+    box.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
+    if (!open || box.dataset.loaded) return;
+    box.innerHTML = '<div class="fp-muted">Opening the record…</div>';
+    try {
+      const d = await herbRecord(btn.dataset.herbId);
+      if (!d) { box.innerHTML = '<div class="fp-muted">No record found for this herb.</div>'; return; }
+      const L = d.layers || {};
+      const refs = (L.evidence && L.evidence.references) || [];
+      box.innerHTML =
+        (d.epithet ? '<div class="fp-hd-ep">' + esc(d.epithet) + ' · <i>' + esc(d.binomial || d.botanical || '') + '</i></div>' : '') +
+        list('Primary functions', L.formulation && L.formulation.primary) +
+        (L.chemistry && L.chemistry.pharmacology ? '<div class="fp-hd-sec">Pharmacology</div><p class="fp-hd-p">' + esc(L.chemistry.pharmacology) + '</p>' : '') +
+        list('Contraindications', L.safety && L.safety.contraindications) +
+        list('Drug interactions', L.safety && L.safety.drugInteractions) +
+        (L.extraction && L.extraction.best ? '<div class="fp-hd-sec">Preparation</div><p class="fp-hd-p">' + esc(L.extraction.best) + '</p>' : '') +
+        (L.extraction && L.extraction.dosage ? '<div class="fp-hd-sec">Dosage</div><p class="fp-hd-p">' + esc(L.extraction.dosage) + '</p>' : '') +
+        (refs.length ? '<div class="fp-hd-sec">Sources</div><ol class="fp-hd-list">' + refs.map(r => '<li>' + esc(r.text) + (r.pmid ? ' · <a href="https://pubmed.ncbi.nlm.nih.gov/' + esc(r.pmid) + '/" target="_blank" rel="noopener noreferrer">PMID ' + esc(r.pmid) + '</a>' : '') + '</li>').join('') + '</ol>' : '') +
+        '<a class="fp-hd-atlas" href="/atlas/#' + encodeURIComponent(d.slug) + '" target="_blank" rel="noopener">Full dossier in the Atlas ↗</a>';
+      box.dataset.loaded = '1';
+    } catch (e) {
+      box.innerHTML = '<div class="fp-muted">The record could not load (' + esc(e && e.message || 'network') + ').</div>';
+    }
   }
 
   function checksHtml() {
@@ -491,7 +541,7 @@
   const css = `
 #fyfProTools{margin:48px auto 24px;max-width:880px;padding:0 16px}
 .fp-wrap{border:0.5px solid rgba(232,177,75,.3);border-radius:14px;background:rgba(7,17,13,.72);padding:22px 20px}
-.fp-eyebrow{font-family:var(--mono,monospace);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:#E8B14B;margin-bottom:12px}
+.fp-eyebrow{font-family:'Geist Mono','DM Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:#E8B14B;margin-bottom:12px}
 .fp-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
 .fp-tab{font:inherit;font-size:12px;padding:8px 14px;border-radius:999px;border:0.5px solid rgba(232,177,75,.3);background:none;color:#C9B894;cursor:pointer}
 .fp-tab.on{background:rgba(232,177,75,.16);color:#F5D689;border-color:#E8B14B}
@@ -502,16 +552,25 @@
 .fp-why{border:0.5px solid rgba(201,184,148,.18);border-radius:10px;padding:12px 14px}
 .fp-why-head{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
 .fp-why-name{color:#EDE5D8;font-size:15px}
-.fp-why-score{font-family:var(--mono,monospace);font-size:11px;color:#B6F0AE}
+button.fp-why-name{background:none;border:0;padding:0;cursor:pointer;font-family:inherit;text-align:left;border-bottom:0.5px dotted rgba(237,229,216,.4)}
+button.fp-why-name:hover{color:#F5D689}
+.fp-herb-detail{margin:10px 0 4px;padding:12px 14px;border-radius:8px;background:rgba(7,17,13,.55);border:0.5px solid rgba(232,177,75,.22);font-size:13.5px;line-height:1.6;color:#C9B894}
+.fp-hd-ep{font-family:var(--serif,Georgia,serif);font-style:italic;font-size:15px;color:#E6D9B5;margin-bottom:6px}
+.fp-hd-sec{font-family:'Geist Mono','DM Mono',ui-monospace,monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#8B7E62;margin:10px 0 4px}
+.fp-hd-list{margin:0;padding-left:18px}.fp-hd-list li{margin-bottom:4px}
+.fp-hd-p{margin:0}
+.fp-hd-list a,.fp-hd-atlas{color:#B6F0AE}
+.fp-hd-atlas{display:inline-block;margin-top:10px;font-family:'Geist Mono','DM Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none}
+.fp-why-score{font-family:'Geist Mono','DM Mono',ui-monospace,monospace;font-size:11px;color:#B6F0AE}
 .fp-chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
-.fp-chip{font-family:var(--mono,monospace);font-size:10.5px;padding:3px 8px;border-radius:999px;background:rgba(107,214,111,.1);color:#B6F0AE}
+.fp-chip{font-family:'Geist Mono','DM Mono',ui-monospace,monospace;font-size:10.5px;padding:3px 8px;border-radius:999px;background:rgba(107,214,111,.1);color:#B6F0AE}
 .fp-chip.neg{background:rgba(225,107,107,.12);color:#F2A5A5}
 .fp-meta{font-size:11.5px;color:#8B7E62}
 .fp-alts{display:grid;gap:6px}
 .fp-alt,.fp-saved-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 0;border-bottom:0.5px solid rgba(201,184,148,.1);color:#C9B894;font-size:13px;flex-wrap:wrap}
 .fp-table{width:100%;border-collapse:collapse;font-size:13px;color:#C9B894}
 .fp-table th,.fp-table td{text-align:left;padding:7px 6px;border-bottom:0.5px solid rgba(201,184,148,.12);vertical-align:top}
-.fp-table th{font-family:var(--mono,monospace);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8B7E62;font-weight:400}
+.fp-table th{font-family:'Geist Mono','DM Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8B7E62;font-weight:400}
 .fp-table input[type=number]{width:64px}
 .fp-table details{margin-top:4px}.fp-table summary{cursor:pointer;font-size:11px;color:#8B7E62}
 .fp-warn{color:#F2A5A5}
@@ -532,7 +591,7 @@
 .fp-checks b{color:#EDE5D8;font-weight:500;margin-right:4px}
 .fp-plan{padding-left:18px;color:#C9B894;font-size:13px}
 .fp-myco{margin-top:10px;padding:12px 14px;border-left:1.5px solid rgba(232,177,75,.4);font-size:13.5px;line-height:1.6;color:#C9B894}
-#fpBadge{position:fixed;right:14px;bottom:14px;z-index:60;font-family:var(--mono,monospace);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#E8B14B;background:rgba(7,17,13,.85);border:0.5px solid rgba(232,177,75,.35);border-radius:999px;padding:6px 12px}
+#fpBadge{position:fixed;right:14px;bottom:14px;z-index:60;font-family:'Geist Mono','DM Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#E8B14B;background:rgba(7,17,13,.85);border:0.5px solid rgba(232,177,75,.35);border-radius:999px;padding:6px 12px}
 #fpWall{position:fixed;inset:0;z-index:9000;background:rgba(5,9,12,.92);display:flex;align-items:center;justify-content:center;padding:16px}
 #fpWall[hidden]{display:none}
 .fp-wall-card{max-width:460px;background:#0B1612;border:0.5px solid rgba(232,177,75,.35);border-radius:14px;padding:28px 24px;color:#C9B894}
